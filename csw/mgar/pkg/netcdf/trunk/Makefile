@@ -39,6 +39,7 @@ RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibhdf5hl7
 RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibz1
 
+
 PACKAGES += CSWlibnetcdf-c++4
 CATALOGNAME_CSWlibnetcdf-c++4 = libnetcdf_c++4
 PKGFILES_CSWlibnetcdf-c++4 += $(call baseisadirs,$(libdir),libnetcdf_c\+\+\.so\.4\.1\.0)
@@ -48,7 +49,7 @@ RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibhdf5-7
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibhdf5hl7
-RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibgcc-s1
 
@@ -57,7 +58,6 @@ CATALOGNAME_CSWlibnetcdff5 = libnetcdff5
 PKGFILES_CSWlibnetcdff5 += $(call baseisadirs,$(libdir),libnetcdff\.so\.5\.0\.0)
 PKGFILES_CSWlibnetcdff5 += $(call baseisadirs,$(libdir),libnetcdff\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibnetcdff5 = Fortran shared libraries for netcdf - libnetcdff.so.5 
-RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWlibnetcdff5_i386 += CSWlibquadmath0
 # GARCH is either sparc or i386, covers 32 and 64 bit
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += $(RUNTIME_DEP_PKGS_CSWlibnetcdff5_$(GARCH))
@@ -67,6 +67,7 @@ RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibhdf5hl7
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf7
 
 
 PACKAGES += CSWnetcdf-dev
