@@ -82,7 +82,6 @@ RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdff5
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf-c++4
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWnetcdf
-OBSOLETED_BY_CSWnetcdf-dev = CSWnetcdf-devel
 
 GARCOMPILER = GCC4
 
