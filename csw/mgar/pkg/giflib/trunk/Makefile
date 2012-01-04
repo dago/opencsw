@@ -12,87 +12,43 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+VENDOR_URL = http://giflib.sourceforge.net/
 
-PACKAGES = CSWgiflib CSWgiflibrt CSWx11giflib CSWx11giflibrt CSWgiflibdoc CSWungif
-
-CATALOGNAME_CSWgiflib = giflib
-CATALOGNAME_CSWgiflibrt = giflib_rt
-CATALOGNAME_CSWx11giflib = x11_giflib
-CATALOGNAME_CSWx11giflibrt = x11_giflib_rt
-CATALOGNAME_CSWgiflibdoc = giflib_doc
-CATALOGNAME_CSWungif = libungif
-
+PACKAGES = CSWgiflib
 SPKG_DESC_CSWgiflib = A library for reading and writing gif images
-SPKG_DESC_CSWgiflibrt = Runtime library for giflib (Sun X11 binding)
-SPKG_DESC_CSWx11giflib = Package for giflib bound against OpenCSW X11
-SPKG_DESC_CSWx11giflibrt = Runtime libraries for giflib bound against OpenCSW X11
-SPKG_DESC_CSWgiflibdoc = Documentation for giflib
-SPKG_DESC_CSWungif = Stub which links to giflib now the patent is dropped
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWgiflib += CSWlibgif4
+OBSOLETED_BY_CSWgiflib += CSWgiflibdoc
+CATALOGNAME_CSWgiflibdoc = giflib_doc_stub
 
-SPKG_SOURCEURL = http://giflib.sourceforge.net/
+# Just docs, override for now
+CHECKPKG_OVERRIDES_CSWgiflib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/giflib/INSTALL
 
-BUILD_DEP_PKGS = CSWlibicedevel CSWlibsmdevel CSWlibx11devel
+PACKAGES += CSWlibgif4
+SPKG_DESC_CSWlibgif4 = A library for reading and writing GIF images, libgif.so.4
+PKGFILES_CSWlibgif4 += $(call pkgfiles_lib,libgif.so.4)
+OBSOLETED_BY_CSWlibgif4 += CSWgiflibrt
+CATALOGNAME_CSWgiflibrt = giflib_rt_stub
 
-RUNTIME_DEP_PKGS_CSWx11giflibrt = CSWlibice CSWlibsm CSWlibx11
-RUNTIME_DEP_PKGS_CSWx11giflib = CSWlibice CSWlibsm CSWlibx11 CSWx11giflibrt
-RUNTIME_DEP_PKGS_CSWgiflib = CSWgiflibrt
-RUNTIME_DEP_PKGS_CSWungif = CSWgiflib
+PACKAGES += CSWlibungif4
+SPKG_DESC_CSWlibungif4 = GIF access library, previously without compression, now a link to libgif.so.4, libungif.so.4
+PKGFILES_CSWlibungif4 += $(call pkgfiles_lib,libungif.so.4)
+ARCHALL_CSWlibungif4 = 1
+RUNTIME_DEP_PKGS_CSWlibungif4 += CSWlibgif4
+OBSOLETED_BY_CSWlibungif4 += CSWungif
+CATALOGNAME_CSWungif = libungif_stub
 
-
-EXTRA_MODULATORS = X11
-MODULATIONS_X11 = sunwx11 cswx11
-
-# EXTRA_INC_cswx11 = $(prefix)/X11/include
-# EXTRA_LIB_cswx11 = $(prefix)/X11/lib
-# EXTRA_PKG_CONFIG_DIRS_cswx11 = $(prefix)/X11/lib
-
-# EXTRA_INC = $(EXTRA_INC_$(X11))
-# EXTRA_LIB = $(EXTRA_LIB_$(X11))
-# EXTRA_PKG_CONFIG_DIRS = $(EXTRA_PKG_CONFIG_DIRS_$(X11))
-
-STRIP_LIBTOOL = 1
+PACKAGES += CSWlibgif-dev
+SPKG_DESC_CSWlibgif-dev = Development files for libgif.so.4 and legacy libungif.so.4
+PKGFILES_CSWlibgif-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibgif-dev += CSWlibgif4
+RUNTIME_DEP_PKGS_CSWlibgif-dev += CSWlibungif4
 
 BUILD64 = 1
 
-prefix_cswx11 = $(BUILD_PREFIX)/X11
-prefix = $(or $(prefix_$(X11)),$(BUILD_PREFIX))
-
 CONFIGURE_ARGS = $(DIRPATHS)
-
-CONFIGURE_ARGS_sunwx11  = --x-includes=/usr/openwin/include
-CONFIGURE_ARGS_sunwx11 += --x-libraries=$(abspath /usr/openwin/lib/$(MM_LIBDIR))
-CONFIGURE_ARGS_cswx11  = --x-include=$(prefix)/include
-CONFIGURE_ARGS_cswx11 += --x-libraries=$(abspath $(prefix)/lib/$(MM_LIBDIR))
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(X11))
-
-TEST_TARGET = check
-
-# We don't want 64 bit executables as they gain no speed
-NOISAEXEC = 1
-
-MERGE_SCRIPTS_isa-default-x11-sunwx11 = copy-all
-MERGE_SCRIPTS_isa-default64-x11-sunwx11 = copy-relocated-only
-MERGE_DIRS_isa-default64-x11-sunwx11 = $(libdir)
-MERGE_SCRIPTS_isa-default-x11-cswx11 = copy-only
-MERGE_DIRS_isa-default-x11-cswx11 = $(libdir) $(bindir)
-MERGE_SCRIPTS_isa-default64-x11-cswx11 = copy-relocated-only
-MERGE_DIRS_isa-default64-x11-cswx11 = $(libdir)
-
-ARCHALL_CSWgiflibdoc = 1
-ARCHALL_CSWungif = 1
-
-PKGFILES_CSWgiflibrt = $(call baseisadirs,$(libdir),libgif\.so.*)
-PKGFILES_CSWx11giflibrt = $(call baseisadirs,$(prefix)/X11/lib,[^/]*\.so(\.\d+)*)
-PKGFILES_CSWx11giflib = $(prefix)/X11/bin/.*
-PKGFILES_CSWgiflibdoc = $(PKGFILES_DOC)
-PKGFILES_CSWungif = .*/libungif\..*
-
-CHECKPKG_OVERRIDES_CSWungif += surplus-dependency|CSWgiflib
-CHECKPKG_OVERRIDES_CSWgiflibrt += bad-rpath-entry|/usr/openwin/lib/64|opt/csw/lib/sparcv9/libgif.so.4.1.6
-CHECKPKG_OVERRIDES_CSWgiflibrt += bad-rpath-entry|/usr/openwin/lib/64|opt/csw/lib/amd64/libgif.so.4.1.6
-CHECKPKG_OVERRIDES_CSWgiflibrt += linked-against-discouraged-library|libgif.so.4.1.6|libX11.so.4
+CONFIGURE_ARGS += --x-includes=/usr/openwin/include
+CONFIGURE_ARGS += --x-libraries=$(abspath /usr/openwin/lib/$(MM_LIBDIR))
 
 include gar/category.mk
 
