@@ -14,7 +14,9 @@ endef
 MASTER_SITES = http://samba.org/samba/ftp/stable/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswsamba
+DISTFILES += cswwinbind
 EXPANDVARS += cswsamba
+EXPANDVARS += cswwinbind
 EXPANDVARS += smb.conf
 
 # From http://www.reallylinux.com/docs/smb.conf
@@ -254,6 +256,7 @@ PKGFILES_CSWsamba-winbind += $(mandir)/man7/winbind_krb5_locator\.7
 PKGFILES_CSWsamba-winbind += $(mandir)/man8/pam_winbind\.8
 PKGFILES_CSWsamba-winbind += $(call baseisadirs,$(sbindir),winbindd)
 PKGFILES_CSWsamba-winbind += $(mandir)/man8/winbindd\.8
+PKGFILES_CSWsamba-winbind += /etc/opt/csw/init.d/cswwinbind
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibz1
@@ -287,9 +290,12 @@ CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-socket-wrapper
 CONFIGURE_ARGS += --enable-nss-wrapper
+CONFIGURE_ARGS += --with-acl-support
+CONFIGURE_ARGS += --with-aio-support
+CONFIGURE_ARGS += --with-pam
+# CONFIGURE_ARGS += --with-krb5=$(prefix)
 CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
 CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
-
 CONFIGURE_ARGS += --with-lockdir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-statedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-cachedir=$(SMBLOCKDIR)
@@ -311,9 +317,10 @@ SKIPTEST ?= 1
 INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
 INITSMF += /etc/opt/csw/init.d/cswsamba
+INITSMF += /etc/opt/csw/init.d/cswwinbind
 
 MIGRATE_FILES_CSWsamba += samba
-PRESERVECONF_CSWsamba += $(sysconfdir)/samba/smb.conf
+PRESERVECONF += $(sysconfdir)/samba/smb.conf
 
 include gar/category.mk
 

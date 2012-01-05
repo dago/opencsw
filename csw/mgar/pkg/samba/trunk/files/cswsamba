@@ -4,14 +4,12 @@
 #RC_SNUM 89         # Number used for start script symlink, e.g. S80cswfoo
 #RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
 #RC_SLEV 3          # Run levels that should have a start script symlink
+#AUTOENABLE no      # Before running always manual adjustment of smb.conf is needed
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export PATH
 
 SMBCONF=@sysconfdir@/samba/smb.conf
-KRBCONF=@sysconfdir@/krb5.conf
-export SMBCONF
-export KRBCONF
 
 case "$1" in
 	start)
@@ -19,10 +17,6 @@ case "$1" in
 			echo "Starting samba..."
 			@sbindir@/nmbd -D
 			@sbindir@/smbd -D
-			if [ -f $KRBCONF ]; then
-			    echo "Starting winbind..."
-			    @sbindir@/winbindd -B
-			fi    
 		else
 			echo "No $SMBCONF found. Not starting";
 		fi
@@ -31,9 +25,6 @@ case "$1" in
 		echo "Stopping Samba..."
 		kill "`cat @SMBLOCKDIR@/smbd.pid`"
 		kill "`cat @SMBLOCKDIR@/nmbd.pid`"
-		if [ -f $KRBCONF ]; then
-		    echo "Stopping Winbind..."
-		fi    
 	;;
 	restart)
 		$0 stop
