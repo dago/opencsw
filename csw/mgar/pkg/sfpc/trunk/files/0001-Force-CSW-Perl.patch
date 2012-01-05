@@ -1,0 +1,30 @@
+From b302d6f3120583bbcecc491c993a8ae471f74835 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 5 Jan 2012 22:06:02 +0100
+Subject: [PATCH] Force CSW Perl
+
+---
+ sfpC.pl |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+ mode change 100755 => 100644 sfpC.pl
+
+diff --git a/sfpC.pl b/sfpC.pl
+old mode 100755
+new mode 100644
+index df6e600..b59f71c
+--- a/sfpC.pl
++++ b/sfpC.pl
+@@ -1,6 +1,7 @@
+-:
+-eval 'exec perl $0 ${1+"$@"}'
+-if 0; 
++#!/opt/csw/bin/perl
++
++use strict;
++use warnings;
+ 
+ #
+ # Version of sfpC.pl modified by Thomas Gouverneur <thomas@espix.org>
+-- 
+1.7.8.2
+
