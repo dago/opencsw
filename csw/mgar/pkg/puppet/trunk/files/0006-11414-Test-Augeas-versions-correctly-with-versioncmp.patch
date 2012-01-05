@@ -1,0 +1,72 @@
+From 735acad5ff07f3efa77097aa75d83d92b695fa9e Mon Sep 17 00:00:00 2001
+From: Dominic Cleal <dcleal@redhat.com>
+Date: Fri, 16 Dec 2011 20:32:27 +0000
+Subject: [PATCH 2/2] (#11414) Test Augeas versions correctly with versioncmp
+
+The release of Augeas 0.10.0 broke simplistic version comparisons with the >=
+operator, so now use versioncmp.
+---
+ lib/puppet/provider/augeas/augeas.rb     |    8 +++++---
+ spec/unit/provider/augeas/augeas_spec.rb |    2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/lib/puppet/provider/augeas/augeas.rb b/lib/puppet/provider/augeas/augeas.rb
+index 7098ebd..703a01b 100644
+--- a/lib/puppet/provider/augeas/augeas.rb
++++ b/lib/puppet/provider/augeas/augeas.rb
+@@ -17,10 +17,12 @@ require 'augeas' if Puppet.features.augeas?
+ require 'strscan'
+ require 'puppet/util'
+ require 'puppet/util/diff'
++require 'puppet/util/package'
+ 
+ Puppet::Type.type(:augeas).provide(:augeas) do
+   include Puppet::Util
+   include Puppet::Util::Diff
++  include Puppet::Util::Package
+ 
+   confine :true => Puppet.features.augeas?
+ 
+@@ -149,7 +151,7 @@ Puppet::Type.type(:augeas).provide(:augeas) do
+       debug("Opening augeas with root #{root}, lens path #{load_path}, flags #{flags}")
+       @aug = Augeas::open(root, load_path,flags)
+ 
+-      debug("Augeas version #{get_augeas_version} is installed") if get_augeas_version >= "0.3.6"
++      debug("Augeas version #{get_augeas_version} is installed") if versioncmp(get_augeas_version, "0.3.6") >= 0
+ 
+       if resource[:incl]
+         aug.set("/augeas/load/Xfm/lens", resource[:lens])
+@@ -285,7 +287,7 @@ Puppet::Type.type(:augeas).provide(:augeas) do
+         # If we have a verison of augeas which is at least 0.3.6 then we
+         # can make the changes now, see if changes were made, and
+         # actually do the save.
+-        if return_value and get_augeas_version >= "0.3.6"
++        if return_value and versioncmp(get_augeas_version, "0.3.6") >= 0
+           debug("Will attempt to save and only run if files changed")
+           set_augeas_save_mode(SAVE_NEWFILE)
+           do_execute_changes
+@@ -337,7 +339,7 @@ Puppet::Type.type(:augeas).provide(:augeas) do
+         end
+       else
+         debug("No saved files, re-executing augeas")
+-        set_augeas_save_mode(SAVE_OVERWRITE) if get_augeas_version >= "0.3.6"
++        set_augeas_save_mode(SAVE_OVERWRITE) if versioncmp(get_augeas_version, "0.3.6") >= 0
+         do_execute_changes
+         success = @aug.save
+         fail("Save failed with return code #{success}") if success != true
+diff --git a/spec/unit/provider/augeas/augeas_spec.rb b/spec/unit/provider/augeas/augeas_spec.rb
+index 059f5aa..52ebb34 100755
+--- a/spec/unit/provider/augeas/augeas_spec.rb
++++ b/spec/unit/provider/augeas/augeas_spec.rb
+@@ -353,7 +353,7 @@ describe provider_class do
+         @augeas_stub = stub("augeas")
+         @provider.aug = @augeas_stub
+ 
+-        @augeas_stub.stubs("get").with("/augeas/version").returns("0.7.2")
++        @augeas_stub.stubs("get").with("/augeas/version").returns("0.10.0")
+         @augeas_stub.stubs(:set).returns(true)
+         @augeas_stub.stubs(:save).returns(true)
+       end
+-- 
+1.7.7.4
+
