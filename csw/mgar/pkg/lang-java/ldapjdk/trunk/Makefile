@@ -18,7 +18,7 @@ MASTER_SITES = http://www-archive.mozilla.org/directory
 DISTFILES  = $(NAME)_$(VERSION).tar.gz
 DISTFILES += COPYING
 
-PACKAGES = CSWldapsdk
+PACKAGES = CSWldapjdk
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
@@ -38,8 +38,6 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
-
-CHECKPKG_OVERRIDES_CSWldapsdk += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console
 
 include gar/category.mk
 
