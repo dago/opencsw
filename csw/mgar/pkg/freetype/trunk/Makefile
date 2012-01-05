@@ -1,5 +1,5 @@
 NAME = freetype
-VERSION = 2.4.2
+VERSION = 2.4.8
 CATEGORIES = lib
 
 DESCRIPTION = A free and portable TrueType font rendering engine
@@ -15,27 +15,31 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+DISTFILES += $(NAME)-$(VERSION).tar.bz2
 
 LICENSE = docs/LICENSE.TXT
 
-PACKAGES = CSWftype2
-CATALOGNAME_CSWftype2 = freetype2
-SPKG_SOURCEURL = http://www.freetype.org/
+VENDOR_URL = http://www.freetype.org/
 
-RUNTIME_DEP_PKGS_CSWftype2 = CSWzlib
+PACKAGES += CSWlibfreetype6
+SPKG_DESC_CSWlibfreetype6 = A free and portable TrueType font rendering engine, libfreetype.so.6
+PKGFILES_CSWlibfreetype6 += $(call pkgfiles_lib,libfreetype.so.6)
+RUNTIME_DEP_PKGS_CSWlibfreetype6 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibfreetype6 += CSWlibz1
+OBSOLETED_BY_CSWlibfreetype6 += CSWftype2
+CATALOGNAME_CSWftype2 = freetype2_stub
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# This is inside a comment
+CHECKPKG_OVERRIDES_CSWlibfreetype-dev += file-with-bad-content|/usr/local|root/opt/csw/include/ft2build.h
+
+PACKAGES += CSWlibfreetype-dev
+SPKG_DESC_CSWlibfreetype-dev = Development files for libfreetype.so.6
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibfreetype-dev += CSWlibfreetype6
+
 GNUMAKE = gmake
 EXTRA_CONFIGURE_EXPORTS = GNUMAKE
 
 BUILD64 = 1
-NOISAEXEC = 1
-
-TEST_TARGET = check
 
 include gar/category.mk
