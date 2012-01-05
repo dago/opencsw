@@ -16,16 +16,20 @@ endef
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-PACKAGES = CSWidmconsolebase
+PACKAGES = CSWidm-console-base
 # RUNTIME_DEP_PKGS = CSWldapjdk CSWjss4
 
 ARCHALL = 1
 
-CATALOGNAME_CSWidm-console-base = idm-console-base
+CATALOGNAME_CSWidm-console-base = idm_console_base
 
 LICENSE = LICENSE
 
 WORKSRC = $(WORKDIR)
+# EXTRAJARSPATH = /opt/csw/share/java
+EXTRAJARSPATH = /home/cgrzemba/java
+
+CHECKPKG_OVERRIDES_CSWidm-console-base += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Framework
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
@@ -57,5 +61,5 @@ install-custom:
 build-custom:
 	@( cd $(WORKSRC)/$(DISTNAME); \
 	  pwd; \
-	  ant -Dbuilt.dir=`pwd`/built -Dldapjdk.local.location=/opt/csw/share/java -Djss.local.location=/opt/csw/share/java )
+	  ant -Dbuilt.dir=`pwd`/built -Dldapjdk.local.location=$(EXTRAJARSPATH) -Djss.local.location=$(EXTRAJARSPATH) )
 	@$(MAKECOOKIE)
