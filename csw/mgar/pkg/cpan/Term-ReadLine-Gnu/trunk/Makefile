@@ -1,5 +1,5 @@
 NAME = Term-ReadLine-Gnu
-VERSION = 1.19
+VERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = HAYASHI
 
@@ -9,19 +9,20 @@ define BLURB
   Library.
 endef
 
-PACKAGES = CSWpmtermreadlineg
-CATALOGNAME = pm_termreadlineg
+DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS = CSWreadline
+BUILD_DEP_PKGS += CSWlibreadline-dev
 
-# readline.h (CSWreadline) is inconsistent and breaks our test, therefor we
-# will patch that test for the time beeing
-PATCHFILES = patch-readline.t
+PACKAGES += CSWpm-term-readline-gnu
+SPKG_DESC_CSWpm-term-readline-gnu = Perl extension for the GNU Readline library
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpm-term-readline-gnu += CSWlibreadline6
+OBSOLETED_BY_CSWpm-term-readline-gnu += CSWpmtermreadlineg
+CATALOGNAME_CSWpmtermreadlineg = pm_termreadlineg_stub
+
+REINPLACEMENTS += cswperl
+REINPLACE_MATCH_cswperl = \#!/usr/local/bin/perl
+REINPLACE_WITH_cswperl = \#!$(bindir)/perl
+REINPLACE_FILES_cswperl += Gnu/XS.pm
 
 include gar/category.mk
-
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
