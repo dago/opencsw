@@ -18,23 +18,27 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWidm-console-base
 # RUNTIME_DEP_PKGS = CSWldapjdk CSWjss4
+DEP_PKGS = CSWldapjdk CSWjss4
 
 ARCHALL = 1
+PACKAGING_PLATFORMS = solaris10-sparc
 
 CATALOGNAME_CSWidm-console-base = idm_console_base
 
 LICENSE = LICENSE
 
 WORKSRC = $(WORKDIR)
-# EXTRAJARSPATH = /opt/csw/share/java
-EXTRAJARSPATH = /home/cgrzemba/java
+EXTRAJARSPATH = /opt/csw/share/java
+# EXTRAJARSPATH = /home/cgrzemba/java
 
-CHECKPKG_OVERRIDES_CSWidm-console-base += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Framework
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
+
+CHECKPKG_OVERRIDES_CSWidm-console-base += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Framework
+# CHECKPKG_OVERRIDES_CSWidm-console-base += pkginfo-opencsw-repository-uncommitted
 
 include gar/category.mk
 
