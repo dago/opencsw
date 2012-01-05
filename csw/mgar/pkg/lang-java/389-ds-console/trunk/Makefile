@@ -7,7 +7,7 @@ VERSION = 1.2.6
 GARTYPE = v2
 CATEGORIES = java
 
-DESCRIPTION = 389 Directory Server - Management Console
+DESCRIPTION = 389 Directory Server - Management Console Plugin
 define BLURB
 A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
@@ -17,7 +17,7 @@ MASTER_SITES = http://port389/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSW389-ds-console
-RUNTIME_DEP_PKGS = CSWidm-console-base CSWldapjdk CSWjss4
+RUNTIME_DEP_PKGS = CSW389-admin
 
 ARCHALL = 1
 
