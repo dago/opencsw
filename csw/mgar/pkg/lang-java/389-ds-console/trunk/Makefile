@@ -13,7 +13,7 @@ A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
 endef
 
-MASTER_SITES = http://port389/sources
+MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSW389-ds-console
@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS = CSW389-admin
 
 ARCHALL = 1
 
-CATALOGNAME_CSW389-ds-console = 389-ds-console
+CATALOGNAME_CSW389-ds-console = 389_ds_console
 
 LICENSE = LICENSE
 
@@ -31,6 +31,12 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
+
+
+CHECKPKG_OVERRIDES_CSW389-ds-console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Plugin
+CHECKPKG_OVERRIDES_CSW389-ds-console += unidentified-dependency|CSW389-admin
+CHECKPKG_OVERRIDES_CSW389-ds-console += surplus-dependency|CSW389-admin
+# CHECKPKG_OVERRIDES_CSW389-ds-console += pkginfo-opencsw-repository-uncommitted
 
 include gar/category.mk
 
