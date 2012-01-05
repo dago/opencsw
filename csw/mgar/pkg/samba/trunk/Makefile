@@ -339,5 +339,6 @@ post-extract-modulated:
 post-merge:
 	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
 	ginstall $(WORKDIR)/cswsamba $(PKGROOT)/etc/opt/csw/init.d/cswsamba
+	ginstall $(WORKDIR)/cswwinbind $(PKGROOT)/etc/opt/csw/init.d/cswwinbind
 	ginstall -d $(PKGROOT)/etc/opt/csw/samba
 	ginstall $(WORKDIR)/smb.conf $(PKGROOT)/etc/opt/csw/samba/smb.conf
