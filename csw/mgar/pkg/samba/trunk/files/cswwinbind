@@ -14,17 +14,15 @@ SMBCONF=@sysconfdir@/samba/smb.conf
 case "$1" in
 	start)
 		if [ -f $SMBCONF ]; then
-			echo "Starting samba..."
-			@sbindir@/nmbd -D
-			@sbindir@/smbd -D
+			echo "Starting winbind..."
+			@sbindir@/winbindd -D
 		else
 			echo "No $SMBCONF found. Not starting";
 		fi
 	;;
 	stop)
-		echo "Stopping Samba..."
-		kill "`cat @SMBLOCKDIR@/smbd.pid`"
-		kill "`cat @SMBLOCKDIR@/nmbd.pid`"
+		echo "Stopping Winbind..."
+		pkill winbindd
 	;;
 	restart)
 		$0 stop
