@@ -26,12 +26,13 @@ CATALOGNAME_CSW389-ds-console = 389_ds_console
 LICENSE = LICENSE
 
 WORKSRC = $(WORKDIR)
+# EXTRAJARSPATH = /opt/csw/share/java
+EXTRAJARSPATH = /home/cgrzemba/java
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
-
 
 CHECKPKG_OVERRIDES_CSW389-ds-console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Plugin
 CHECKPKG_OVERRIDES_CSW389-ds-console += unidentified-dependency|CSW389-admin
@@ -56,5 +57,5 @@ install-custom:
 
 build-custom:
 	@( cd $(WORKSRC)/$(DISTNAME); \
-	  ant -Dbuilt.dir=`pwd`/built -Dconsole.location=/opt/csw/share/java )
+	  ant -Dbuilt.dir=`pwd`/built -Dconsole.location=$(EXTRAJARSPATH) -Dldapjdk.location=$(EXTRAJARSPATH) )
 	@$(MAKECOOKIE)
