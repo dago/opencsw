@@ -50,7 +50,7 @@ PKGFILES_CSWlibldif60 += $(call baseisadirs,$(libdir),libldif60\.so(\.\d+)*)
 SPKG_DESC_CSWlibldif60 += $(DESCRIPTION), libldif60.so
 CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/libldif60.so
 CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libldif60.so
-CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/adm64/libldif60.so
+CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/amd64/libldif60.so
 
 PACKAGES += CSWlibprldap60
 CATALOGNAME_CSWlibprldap60 = libprldap60
