@@ -100,6 +100,7 @@ RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWsasl
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibiconv2
 
 PACKAGES += CSWmozldap-dev
 CATALOGNAME_CSWmozldap-dev = mozldap_dev
@@ -117,14 +118,19 @@ CHECKPKG_OVERRIDES_CSWmozldap-dev += archall-devel-package
 # Move the include files to include/nspr to prevent polluting the main
 # header file namespace.
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+# override the standard paths
+bindir=$(prefix)/bin/dirsrv
+includedir=$(prefix)/include/dirsrv
+
+CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_isa-sparcv9 = --enable-64bit
 CONFIGURE_ARGS_isa-amd64 = --enable-64bit
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
+CONFIGURE_ARGS_OPT += --with-svrcore=$(prefix)
 CONFIGURE_ARGS_OPT += --with-sasl
+CONFIGURE_ARGS_OPT += --with-sasl-inc=$(prefix)/include/sasl
 CONFIGURE_ARGS_OPT += --with-sasl-lib=$(libdir)
 CONFIGURE_ARGS_OPT += --enable-clu
-CONFIGURE_ARGS_OPT += --with-system-svrcore
 CONFIGURE_ARGS_OPT += --enable-optimize="-xO3"
 CONFIGURE_ARGS_OPT += --disable-debug
 CONFIGURE_ARGS_OPT += --enable-strip
@@ -132,11 +138,7 @@ CONFIGURE_ARGS_OPT += --with-nss-inc=$(prefix)/include/nss
 CONFIGURE_ARGS_OPT += --with-nss-lib=$(libdir)
 CONFIGURE_ARGS_OPT += --with-nspr-inc=$(prefix)/include/nspr
 CONFIGURE_ARGS_OPT += --with-nspr-lib=$(libdir)
-CONFIGURE_ARGS_OPT += --with-svrcore-inc=$(prefix)/include/nspr
-CONFIGURE_ARGS_OPT += --with-svrcore-lib=$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
-CONFIGURE_ARGS_OPT += --includedir=$(prefix)/include/ldap
-CONFIGURE_ARGS_OPT += --bindir=$(prefix)/dirsrv/bin
 
 CPPFLAGS=
 
@@ -145,8 +147,8 @@ BUILD_SCRIPTS = c-sdk
 INSTALL_SCRIPTS = c-sdk
 TEST_TARGET = 
 TEST_SCRIPTS = 
-EXTRA_LDFLAGS = -L/opt/csw/lib
 BUILD64 = 1
+EXTRA_LINKER_FLAGS = -liconv
 
 configure-c-sdk:
 	(cd $(WORKSRC) && mkdir -p build inst)
@@ -166,33 +168,38 @@ install-c-sdk:
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libprldap60.so $(DESTDIR)$(libdir)
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libssldap60.so $(DESTDIR)$(libdir)
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapsearch $(DESTDIR)$(bindir)
+	ln -s $(DESTDIR)$(bindir)/ldapsearch $(DESTDIR)$(prefix)/bin/ldapsearch389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapmodify $(DESTDIR)$(bindir)
+	ln -s $(DESTDIR)$(bindir)/ldapmodify $(DESTDIR)$(prefix)/bin/ldapmodify389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapdelete $(DESTDIR)$(bindir)
+	ln -s $(DESTDIR)$(bindir)/ldapdelete $(DESTDIR)$(prefix)/bin/ldapdelete389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapcmp $(DESTDIR)$(bindir)
+	ln -s $(DESTDIR)$(bindir)/ldapcmp $(DESTDIR)$(prefix)/bin/ldapcmp389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldappasswd $(DESTDIR)$(bindir)
+	ln -s $(DESTDIR)$(bindir)/ldappasswd $(DESTDIR)$(prefix)/bin/ldappasswd389
+	ginstall -m 755 $(WORKSRC)/c-sdk/mozldap.pc.in $(DESTDIR)$(libdir)/pkgconfig
 	@for f in $(WORKSRC)/../dist/etc/*; do \
 		ginstall -m 644 $$f  $(DESTDIR)$(sysconfdir); \
 	done
 	@for f in $(WORKSRC)/../dist/public/ldap/*h; do \
 		ginstall -m 644 $$f  $(DESTDIR)$(includedir); \
 	done
-	@cat $(WORKSRC)/mozilla/dirctory/c-sdk/mozldap.pc.in | \
-		| @gsed -e "s,%%libdir%%,$(libdir),g" \
-          -e "s,%%prefix%%,$(prefix),g" \
-          -e "s,%%major%%,$(MAJOR),g" \
-          -e "s,%%minor%%,$(MINOR),g" \
-          -e "s,%%submin%%,$(SUBMIN),g" \
-          -e "s,%%libsuffix%%,$(libdir),g" \
-          -e "s,%%bindir%%,$(bindir),g" \
-          -e "s,%%exec_prefix%%,$(bindir),g" \
-          -e "s,%%includedir%%,$(includedir),g" \
-          -e "s,%%NSPR_VERSION%%,$(NSPR_VERSION),g" \
-          -e "s,%%NSS_VERSION%%,$(NSS_VERSION),g" \
-          -e "s,%%SVRCORE_VERSION%%,$(SVRCORE_VERSION),g" \
-          -e "s,%%MOZLDAP_VERSION%%,$(VERSION),g" \
-    > $(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc
+	@gsed -i -e 's,%libdir%,$(libdir),g' \
+          -e 's,%prefix%,$(prefix),g' \
+          -e "s,%major%,$(MAJOR),g" \
+          -e "s,%minor%,$(MINOR),g" \
+          -e "s,%submin%,$(SUBMIN),g" \
+          -e "s,%libsuffix%,$(libdir),g" \
+          -e "s,%bindir%,$(bindir),g" \
+          -e "s,%exec_prefix%,$(bindir),g" \
+          -e "s,%includedir%,$(includedir),g" \
+          -e "s,%NSPR_VERSION%,$(NSPR_VERSION),g" \
+          -e "s,%NSS_VERSION%,$(NSS_VERSION),g" \
+          -e "s,%SVRCORE_VERSION%,$(SVRCORE_VERSION),g" \
+          -e "s,%MOZLDAP_VERSION%,$(VERSION),g" \
+     		$(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc.in
+	@mv $(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc.in $(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc
 	@$(MAKECOOKIE)
 
 include gar/category.mk
-
 
