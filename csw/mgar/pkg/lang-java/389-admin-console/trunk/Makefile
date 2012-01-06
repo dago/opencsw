@@ -13,7 +13,7 @@ A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
 endef
 
-MASTER_SITES = http://port389/sources
+MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSW389-admin-console
