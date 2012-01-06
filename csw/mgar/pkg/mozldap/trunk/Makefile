@@ -21,8 +21,9 @@ MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/directory/c-sdk/releases/v
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
+BUILD_DEP_PKGS = CSWlibsvrcore0-dev
 PACKAGING_PLATFORMS += solaris10-sparc
-# PACKAGING_PLATFORMS += solaris10-i386
+PACKAGING_PLATFORMS += solaris10-i386
 GARCOMPILER = SOS12U2
 
 PACKAGES += CSWlibldap60
