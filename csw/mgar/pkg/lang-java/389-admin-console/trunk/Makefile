@@ -7,7 +7,7 @@ VERSION = 1.1.8
 GARTYPE = v2
 CATEGORIES = java
 
-DESCRIPTION = 389 Directory Server - Management Console
+DESCRIPTION = 389 Directory Server - Management Console Plugin AdminServer
 define BLURB
 A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
@@ -15,18 +15,21 @@ endef
 
 MASTER_SITES = http://port389/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES  += startconsole
 
 PACKAGES = CSW389-admin-console
 RUNTIME_DEP_PKGS = CSW389-admin
+# BUILD_DEP_PKGS = CSWidm-console-base
 
 ARCHALL = 1
+PACKAGING_PLATFORMS = solaris10-sparc
 
-CATALOGNAME_CSW389-admin-console = 389-admin-console
+CATALOGNAME_CSW389-admin-console = 389_admin_console
 
 LICENSE = LICENSE
 
 WORKSRC = $(WORKDIR)
+# EXTRAJARSPATH = /opt/csw/share/java
+EXTRAJARSPATH = /home/cgrzemba/java
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
@@ -51,5 +54,5 @@ install-custom:
 
 build-custom:
 	@( cd $(WORKSRC)/$(DISTNAME); \
-	  ant -Dbuilt.dir=`pwd`/built -Dconsole.location=/opt/csw/share/java )
+	  ant -Dbuilt.dir=`pwd`/built -Dldapjdk.location=$(EXTRAJARSPATH) -Dconsole.location=$(EXTRAJARSPATH) )
 	@$(MAKECOOKIE)
