@@ -1,0 +1,5 @@
+cfengine3 (3.2.3,REV=2012.01.06)
+
+  * Obsoleted CSWlibpromises1.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Fri, 06 Jan 2012 16:24:39 +0100
