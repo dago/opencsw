@@ -21,7 +21,10 @@ DISTFILES += csw$(NAME)-cfexecd
 DISTFILES += csw$(NAME)-cfmonitord
 DISTFILES += csw$(NAME)-cfserverd
 DISTFILES += README.CSW
+DISTFILES += changelog.CSW
 VENDOR_URL = http://www.cfengine.com/community
+
+UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
@@ -40,21 +43,14 @@ cfengine_workdir_bin	= $(cfengine_workdir)/bin
 initddir		= $(sysconfdir)/init.d
 
 PACKAGES = CSW$(NAME)rt
+# Catch all
 CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt
 SPKG_DESC_CSW$(NAME)rt = CFEngine 3 runtime and documentation
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWlibpromises1
 CHECKPKG_OVERRIDES_CSW$(NAME)rt += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)rt|catalogname=$(NAME)_rt|expected-catalogname=$(NAME)rt
-
-PACKAGES += CSWlibpromises1
-SPKG_DESC_CSWlibpromises1 = CFEngine 3 promises library
-RUNTIME_DEP_PKGS_CSWlibpromises1 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpromises1 += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWlibpromises1 += CSWbdb48
-PKGFILES_CSWlibpromises1 = $(PKGFILES_RT)
-PKGFILES_CSWlibpromises1 += .*/libpromises1/README.CSW
+OBSOLETED_BY_CSW$(name)rt = CSWlibpromises1
 
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
@@ -63,7 +59,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSW$(NAME)rt
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpromises1
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-serverd
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-runagent
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-serverd.*
@@ -80,7 +75,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)rt
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpromises1
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-agent
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-execd
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-monitord
