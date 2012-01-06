@@ -41,6 +41,7 @@ SPKG_DESC_CSWlibldap60 += $(DESCRIPTION), libldap60.so
 RUNTIME_DEP_PKGS_CSWlibldap60 += CSWsasl
 CHECKPKG_OVERRIDES_CSWlibldap60 += soname-equals-filename|file=/opt/csw/lib/libldap60.so
 CHECKPKG_OVERRIDES_CSWlibldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libldap60.so
+CHECKPKG_OVERRIDES_CSWlibldap60 += soname-equals-filename|file=/opt/csw/lib/amd64/libldap60.so
 
 PACKAGES += CSWlibldif60
 CATALOGNAME_CSWlibldif60 = libldif60
@@ -49,6 +50,7 @@ PKGFILES_CSWlibldif60 += $(call baseisadirs,$(libdir),libldif60\.so(\.\d+)*)
 SPKG_DESC_CSWlibldif60 += $(DESCRIPTION), libldif60.so
 CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/libldif60.so
 CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libldif60.so
+CHECKPKG_OVERRIDES_CSWlibldif60 += soname-equals-filename|file=/opt/csw/lib/adm64/libldif60.so
 
 PACKAGES += CSWlibprldap60
 CATALOGNAME_CSWlibprldap60 = libprldap60
@@ -61,6 +63,7 @@ RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibldap60
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/libprldap60.so
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libprldap60.so
+CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/amd64/libprldap60.so
 
 PACKAGES += CSWlibssldap60
 CATALOGNAME_CSWlibssldap60 = libssldap60
@@ -75,6 +78,7 @@ RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibprldap60
 CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/libssldap60.so
 CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libssldap60.so
+CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/amd64/libssldap60.so
 
 PACKAGES += CSWmozldap-tools
 CATALOGNAME_CSWmozldap-tools= mozldap_tools
@@ -202,4 +206,3 @@ install-c-sdk:
 	@$(MAKECOOKIE)
 
 include gar/category.mk
-
