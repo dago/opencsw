@@ -1,12 +1,19 @@
 # $Id$
 #
 NAME = mozldap
-MAJOR_VERSION = 6
-MIN_VERSION = 0.7
-VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
+MAJOR = 6
+MINOR = 0
+SUBMIN = 7
+VERSION = $(MAJOR).$(MINOR).$(SUBMIN)
 GARTYPE = v2
 CATEGORIES = lib
-# remove this before release !!
+
+NSPR_NAME = nspr
+NSPR_VERSION = 4.6
+NSS_NAME = nss
+NSS_VERSION = 3.11
+SVRCORE_NAME = svrcore
+SVR_CORE_VERSION = 4.0.3
 
 DESCRIPTION = Mozilla LDAP C-SDK
 define BLURB
@@ -93,7 +100,6 @@ RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWsasl
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplds4
-INCOMPATIBLE_PKGS_CSWmozldap-tools = CSWoldapclient
 
 PACKAGES += CSWmozldap-dev
 CATALOGNAME_CSWmozldap-dev = mozldap_dev
@@ -130,6 +136,7 @@ CONFIGURE_ARGS_OPT += --with-svrcore-inc=$(prefix)/include/nspr
 CONFIGURE_ARGS_OPT += --with-svrcore-lib=$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_OPT += --includedir=$(prefix)/include/ldap
+CONFIGURE_ARGS_OPT += --bindir=$(prefix)/dirsrv/bin
 
 CPPFLAGS=
 
@@ -151,7 +158,7 @@ build-c-sdk:
 
 install-c-sdk:
 	ginstall -m 755 -d $(DESTDIR)/$(bindir)
-	ginstall -m 755 -d $(DESTDIR)/$(libdir)
+	ginstall -m 755 -d $(DESTDIR)/$(libdir)/pkgconfig
 	ginstall -m 755 -d $(DESTDIR)/$(sysconfdir)
 	ginstall -m 755 -d $(DESTDIR)/$(includedir)
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libldif60.so $(DESTDIR)$(libdir)
@@ -169,6 +176,21 @@ install-c-sdk:
 	@for f in $(WORKSRC)/../dist/public/ldap/*h; do \
 		ginstall -m 644 $$f  $(DESTDIR)$(includedir); \
 	done
+	@cat $(WORKSRC)/mozilla/dirctory/c-sdk/mozldap.pc.in | \
+		| @gsed -e "s,%%libdir%%,$(libdir),g" \
+          -e "s,%%prefix%%,$(prefix),g" \
+          -e "s,%%major%%,$(MAJOR),g" \
+          -e "s,%%minor%%,$(MINOR),g" \
+          -e "s,%%submin%%,$(SUBMIN),g" \
+          -e "s,%%libsuffix%%,$(libdir),g" \
+          -e "s,%%bindir%%,$(bindir),g" \
+          -e "s,%%exec_prefix%%,$(bindir),g" \
+          -e "s,%%includedir%%,$(includedir),g" \
+          -e "s,%%NSPR_VERSION%%,$(NSPR_VERSION),g" \
+          -e "s,%%NSS_VERSION%%,$(NSS_VERSION),g" \
+          -e "s,%%SVRCORE_VERSION%%,$(SVRCORE_VERSION),g" \
+          -e "s,%%MOZLDAP_VERSION%%,$(VERSION),g" \
+    > $(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc
 	@$(MAKECOOKIE)
 
 include gar/category.mk
