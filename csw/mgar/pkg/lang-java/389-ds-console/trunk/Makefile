@@ -42,11 +42,11 @@ include gar/category.mk
 
 install-custom: 
 	@ginstall -d $(DESTDIR)$(datadir)/dirsrv/html/java
-	@ginstall -d $(DESTDIR)$(datadir)/dirsrv/manual/en/admin/help
+	@ginstall -d $(DESTDIR)$(datadir)/dirsrv/manual/en/slapd/help
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/built/package/$(SHORTNAME)* $(DESTDIR)$(datadir)/dirsrv/html/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/help/en/*.html $(DESTDIR)$(datadir)/dirsrv/manual/en/admin
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/help/en/tokens.map $(DESTDIR)$(datadir)/dirsrv/manual/en/admin
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/help/en/help/*.html $(DESTDIR)$(datadir)/dirsrv/manual/en/admin/help
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/help/en/*.html $(DESTDIR)$(datadir)/dirsrv/manual/en/slapd
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/help/en/tokens.map $(DESTDIR)$(datadir)/dirsrv/manual/en/slapd
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/help/en/help/*.html $(DESTDIR)$(datadir)/dirsrv/manual/en/slapd/help
 	@( cd $(DESTDIR)$(datadir)/dirsrv/html/java ; \
 	   ln -s $(SHORTNAME)-$(VERSION).jar $(SHORTNAME)-$(MAJOR_VERSION).jar ; \
 	   ln -s $(SHORTNAME)-$(VERSION).jar $(SHORTNAME).jar ; \
