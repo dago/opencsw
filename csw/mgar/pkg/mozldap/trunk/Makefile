@@ -172,15 +172,15 @@ install-c-sdk:
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libprldap60.so $(DESTDIR)$(libdir)
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libssldap60.so $(DESTDIR)$(libdir)
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapsearch $(DESTDIR)$(bindir)
-	ln -s $(DESTDIR)$(bindir)/ldapsearch $(prefix)/bin/ldapsearch389
+#	ln -s $(DESTDIR)$(bindir)/ldapsearch ../ldapsearch389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapmodify $(DESTDIR)$(bindir)
-	ln -s $(DESTDIR)$(bindir)/ldapmodify $(prefix)/bin/ldapmodify389
+#	ln -s $(DESTDIR)$(bindir)/ldapmodify ../ldapmodify389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapdelete $(DESTDIR)$(bindir)
-	ln -s $(DESTDIR)$(bindir)/ldapdelete $(prefix)/bin/ldapdelete389
+#	ln -s $(DESTDIR)$(bindir)/ldapdelete ../ldapdelete389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapcmp $(DESTDIR)$(bindir)
-	ln -s $(DESTDIR)$(bindir)/ldapcmp $(prefix)/bin/ldapcmp389
+#	ln -s $(DESTDIR)$(bindir)/ldapcmp ../ldapcmp389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldappasswd $(DESTDIR)$(bindir)
-	ln -s $(DESTDIR)$(bindir)/ldappasswd $(prefix)/bin/ldappasswd389
+#	ln -s $(DESTDIR)$(bindir)/ldappasswd ../ldappasswd389
 	ginstall -m 755 $(WORKSRC)/c-sdk/mozldap.pc.in $(DESTDIR)$(libdir)/pkgconfig
 	@for f in $(WORKSRC)/../dist/etc/*; do \
 		ginstall -m 644 $$f  $(DESTDIR)$(sysconfdir); \
