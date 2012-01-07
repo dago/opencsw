@@ -26,6 +26,8 @@ VENDOR_URL = http://www.cfengine.com/community
 
 UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386 solaris9-sparc solaris9-i386
+
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
 #       does not work for your package
@@ -50,7 +52,11 @@ RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWlibpcre0
 CHECKPKG_OVERRIDES_CSW$(NAME)rt += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)rt|catalogname=$(NAME)_rt|expected-catalogname=$(NAME)rt
-OBSOLETED_BY_CSW$(name)rt = CSWlibpromises1
+# Moved to runtime, since there are no header files for this library.
+CHECKPKG_OVERRIDES_CSW$(NAMES)rt += shared-lib-pkgname-mismatch
+OBSOLETED_BY_CSW$(NAME)rt = CSWlibpromises1
+CATALOGNAME_CSWlibpromises1 = libpromises1_stub
+
 
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
@@ -64,9 +70,8 @@ PKGFILES_CSW$(NAME)server += $(sbindir)/cf-runagent
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-serverd.*
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-runagent.*
 PKGFILES_CSW$(NAME)server += $(initddir)/csw$(NAME)-cfserverd
-PKGFILES_CSW$(NAME)server += $(docdir)/$(NAME)_server/README.CSW
+PKGFILES_CSW$(NAME)server += $(docdir)/$(NAME)_server/.*\.CSW
 CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)server|catalogname=$(NAME)_server|expected-catalogname=$(NAME)server
-CHECKPKG_OVERRIDES_CSW$(NAME)server += surplus-dependency|CSW$(NAME)rt
 
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
@@ -84,7 +89,7 @@ PKGFILES_CSW$(NAME)client += $(mandir)/.*/cf-monitord.*
 PKGFILES_CSW$(NAME)client += $(cfengine_workdir_bin)/cf-agent
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfexecd
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfmonitord
-PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/README.CSW
+PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/.*\.CSW
 CHECKPKG_OVERRIDES_CSW$(NAME)client += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)client|catalogname=$(NAME)_client|expected-catalogname=$(NAME)client
 
 # CFEngine provides three daemons
@@ -125,6 +130,9 @@ EXTRA_INC = $(prefix)/bdb48/include
 EXTRA_RUNPATH_DIRS = $(prefix)/bdb48/lib
 EXTRA_RUNPATH_ISALIST   = $(EXTRA_RUNPATH_DIRS)
 EXTRA_LDFLAGS = -L$(prefix)/bdb48/lib/$(MM_LIBDIR)
+
+# Those libs are used by configure to detect getaddrinfo()
+EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
 
 include gar/category.mk
 
@@ -179,3 +187,8 @@ fix-paths-in-files: rename-cfengine-dir
 			done ; \
 		fi ; \
 	done
+
+post-merge:
+# Get rid of the .so files. Since there are no header files provided,
+# .so files are pretty much useless
+	find $(PKGROOT)$(libdir) -name libpromises.so -exec rm \{\} \;
