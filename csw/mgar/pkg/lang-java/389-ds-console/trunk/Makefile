@@ -20,6 +20,7 @@ PACKAGES = CSW389-ds-console
 RUNTIME_DEP_PKGS = CSW389-admin
 
 ARCHALL = 1
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 CATALOGNAME_CSW389-ds-console = 389_ds_console
 
