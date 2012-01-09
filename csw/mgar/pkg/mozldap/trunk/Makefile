@@ -123,7 +123,7 @@ CHECKPKG_OVERRIDES_CSWmozldap-dev += archall-devel-package
 # header file namespace.
 
 # override the standard paths
-bindir=$(prefix)/bin/dirsrv
+bindir=$(prefix)/dirsrv/bin
 includedir=$(prefix)/include/dirsrv
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -164,6 +164,7 @@ build-c-sdk:
 
 install-c-sdk:
 	ginstall -m 755 -d $(DESTDIR)/$(bindir)
+	ginstall -m 755 -d $(DESTDIR)/$(prefix)/bin
 	ginstall -m 755 -d $(DESTDIR)/$(libdir)/pkgconfig
 	ginstall -m 755 -d $(DESTDIR)/$(sysconfdir)
 	ginstall -m 755 -d $(DESTDIR)/$(includedir)
@@ -172,16 +173,17 @@ install-c-sdk:
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libprldap60.so $(DESTDIR)$(libdir)
 	ginstall -m 755 $(WORKSRC)/../dist/lib/libssldap60.so $(DESTDIR)$(libdir)
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapsearch $(DESTDIR)$(bindir)
-#	ln -s $(DESTDIR)$(bindir)/ldapsearch ../ldapsearch389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapmodify $(DESTDIR)$(bindir)
-#	ln -s $(DESTDIR)$(bindir)/ldapmodify ../ldapmodify389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapdelete $(DESTDIR)$(bindir)
-#	ln -s $(DESTDIR)$(bindir)/ldapdelete ../ldapdelete389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapcmp $(DESTDIR)$(bindir)
-#	ln -s $(DESTDIR)$(bindir)/ldapcmp ../ldapcmp389
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldappasswd $(DESTDIR)$(bindir)
-#	ln -s $(DESTDIR)$(bindir)/ldappasswd ../ldappasswd389
 	ginstall -m 755 $(WORKSRC)/c-sdk/mozldap.pc.in $(DESTDIR)$(libdir)/pkgconfig
+	( cd $(DESTDIR)$(bindir); \
+	  gln -sf ldapsearch ../../bin/ldapsearch389 ; \
+ 	  gln -sf ldapmodify ../../bin/ldapmodify389 ; \
+	  gln -sf ldapdelete ../../bin/ldapdelete389 ; \
+	  gln -sf ldapcmp ../../bin/ldapcmp389 ; \
+	  gln -sf ldappasswd ../../bin/ldappasswd389 )
 	@for f in $(WORKSRC)/../dist/etc/*; do \
 		ginstall -m 644 $$f  $(DESTDIR)$(sysconfdir); \
 	done
