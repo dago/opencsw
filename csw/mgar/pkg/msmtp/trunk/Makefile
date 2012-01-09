@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.26
+VERSION = 1.4.27
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -25,20 +25,8 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-PACKAGES += CSWmsmtp
-SPKG_DESC_CSWmsmtp = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnome-keyring0
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWglib2
-
-RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt0
-RUNTIME_DEP_PKGS_CSWmsmtp += $(RUNTIME_DEP_PKGS_$(GAROSREL))
-
-EXTRA_LINKER_FLAGS_5.9 = -lgnugetopt
-EXTRA_LINKER_FLAGS = $(EXTRA_LINKER_FLAGS_$(GAROSREL))
+# New glib2 is only available for Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://msmtp.sourceforge.net/
 
@@ -46,6 +34,16 @@ BUILD_DEP_PKGS += CSWlibgnutls-dev
 BUILD_DEP_PKGS += CSWlibgsasl-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWgnomekeyring-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+
+PACKAGES += CSWmsmtp
+SPKG_DESC_CSWmsmtp = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibglib2-0-0
 
 PRESERVECONF = $(sysconfdir)/msmtprc
 
