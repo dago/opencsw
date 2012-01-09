@@ -26,8 +26,8 @@ CATALOGNAME_CSW389-ds-console = 389_ds_console
 LICENSE = LICENSE
 
 WORKSRC = $(WORKDIR)
-# EXTRAJARSPATH = /opt/csw/share/java
-EXTRAJARSPATH = /home/cgrzemba/java
+EXTRAJARSPATH = /opt/csw/share/java
+# EXTRAJARSPATH = /home/cgrzemba/java
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
