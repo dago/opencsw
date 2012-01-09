@@ -193,7 +193,7 @@ install-c-sdk:
           -e "s,%major%,$(MAJOR),g" \
           -e "s,%minor%,$(MINOR),g" \
           -e "s,%submin%,$(SUBMIN),g" \
-          -e "s,%libsuffix%,$(libdir),g" \
+          -e "s,%libsuffix%,$(MAJOR)$(MINOR),g" \
           -e "s,%bindir%,$(bindir),g" \
           -e "s,%exec_prefix%,$(bindir),g" \
           -e "s,%includedir%,$(includedir),g" \
