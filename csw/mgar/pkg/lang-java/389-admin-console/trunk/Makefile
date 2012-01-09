@@ -18,7 +18,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSW389-admin-console
 RUNTIME_DEP_PKGS = CSW389-admin
-# BUILD_DEP_PKGS = CSWidm-console-base
+BUILD_DEP_PKGS = CSWidm-console-base
 
 ARCHALL = 1
 PACKAGING_PLATFORMS = solaris10-sparc
@@ -28,8 +28,8 @@ CATALOGNAME_CSW389-admin-console = 389_admin_console
 LICENSE = LICENSE
 
 WORKSRC = $(WORKDIR)
-# EXTRAJARSPATH = /opt/csw/share/java
-EXTRAJARSPATH = /home/cgrzemba/java
+EXTRAJARSPATH = /opt/csw/share/java
+# EXTRAJARSPATH = /home/cgrzemba/java
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
