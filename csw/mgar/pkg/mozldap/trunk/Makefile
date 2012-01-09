@@ -105,6 +105,8 @@ RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWsasl
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibiconv2
+# it not depends on oldapclient!
+CHECKPKG_OVERRIDES_CSWmozldap-tools += missing-dependency|CSWoldapclient
 
 PACKAGES += CSWmozldap-dev
 CATALOGNAME_CSWmozldap-dev = mozldap_dev
