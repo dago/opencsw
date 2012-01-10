@@ -1,0 +1,44 @@
+From d0ae6040f0b211a6ce51d090213bf7a6c8fbc26b Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 10 Jan 2012 14:29:50 +0100
+Subject: [PATCH 6/7] replace SV sh with Posix sh
+
+---
+ ldap/admin/src/scripts/restart-dirsrv.in |    2 +-
+ ldap/admin/src/scripts/start-dirsrv.in   |    2 +-
+ ldap/admin/src/scripts/stop-dirsrv.in    |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/ldap/admin/src/scripts/restart-dirsrv.in b/ldap/admin/src/scripts/restart-dirsrv.in
+index 76fb176..cd4a9b0 100644
+--- a/ldap/admin/src/scripts/restart-dirsrv.in
++++ b/ldap/admin/src/scripts/restart-dirsrv.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+ # Script that restarts the ns-slapd server.
+ # Exit status can be:
+diff --git a/ldap/admin/src/scripts/start-dirsrv.in b/ldap/admin/src/scripts/start-dirsrv.in
+index 291c821..dfdce06 100755
+--- a/ldap/admin/src/scripts/start-dirsrv.in
++++ b/ldap/admin/src/scripts/start-dirsrv.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+ # Script that starts the ns-slapd server.
+ # Exit status can be:
+diff --git a/ldap/admin/src/scripts/stop-dirsrv.in b/ldap/admin/src/scripts/stop-dirsrv.in
+index 4d88585..40b646d 100755
+--- a/ldap/admin/src/scripts/stop-dirsrv.in
++++ b/ldap/admin/src/scripts/stop-dirsrv.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+ # Script that stops the ns-slapd server.
+ # Exit status can be:
+-- 
+1.7.6.1
+
