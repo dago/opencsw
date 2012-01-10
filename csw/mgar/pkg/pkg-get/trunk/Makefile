@@ -12,7 +12,6 @@ A deprecated tool for automated package download and installation.
 endef
 
 MASTER_SITES = http://opencsw.org
-DISTFILES = CSWpkgget.postinstall
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
