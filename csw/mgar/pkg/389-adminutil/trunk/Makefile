@@ -64,6 +64,9 @@ SPKG_DESC_CSW389-adminutil-dev += $(DESCRIPTION), development files
 # PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir)/pkgconfig,389adminutil\.pc)
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadmsslutil0
+CHECKPKG_OVERRIDES_CSW389-adminutil-dev += archall-devel-package
+CHECKPKG_OVERRIDES_CSW389-adminutil-dev += file-with-bad-content|/usr/share|root/opt/csw/include/libadminutil/resource.h
+
 
 TEST_SCRIPTS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
