@@ -24,6 +24,7 @@ PACKAGES += CSWlibadminutil0
 CATALOGNAME_CSWlibadminutil0 = libadminutil0
 SPKG_DESC_CSWlibadminutil0 += $(DESCRIPTION), libadminutil
 PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(libdir),libadminutil\.so(\.\d+)+)
+PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(sharedstatedir),.*\.res)
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldif60
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnspr4
@@ -55,14 +56,14 @@ RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibadminutil0
 
 PACKAGES += CSW389-adminutil-dev
 CATALOGNAME_CSW389-adminutil-dev = 389_adminutil_dev
+ARCHALL_CSW389-adminutil-dev = 1
 SPKG_DESC_CSW389-adminutil-dev += $(DESCRIPTION), development files
-PKGFILES_CSW389-adminutil-dev += $(PKGFILES_DEV)
-PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadminutil\.so)
-PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadmsslutil\.so)
-PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir)/pkgconfig,389adminutil\.pc)
+# PKGFILES_CSW389-adminutil-dev += $(PKGFILES_DEV)
+# PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadminutil\.so)
+# PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadmsslutil\.so)
+# PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir)/pkgconfig,389adminutil\.pc)
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadmsslutil0
-
 
 TEST_SCRIPTS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
