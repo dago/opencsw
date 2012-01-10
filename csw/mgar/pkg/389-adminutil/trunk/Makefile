@@ -14,8 +14,10 @@ LICENSE = LICENSE
 
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-# BUILD64 = 1
 
+# BUILD64 = 1
+PACKAGING_PLATFORMS += solaris10-sparc
+# PACKAGING_PLATFORMS += solaris10-i386
 # GARCOMPILER = SOS12U2
 
 PACKAGES += CSWlibadminutil0
@@ -53,6 +55,7 @@ SPKG_DESC_CSW389-adminutil-dev += $(DESCRIPTION), development files
 PKGFILES_CSW389-adminutil-dev += $(PKGFILES_DEV)
 PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadminutil\.so)
 PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadmsslutil\.so)
+PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir)/pkgconfig,389adminutil\.pc)
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadmsslutil0
 
@@ -61,7 +64,7 @@ TEST_SCRIPTS =
 EXTRA_CFLAGS = -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/ldap 
+CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
 CONFIGURE_ARGS_OPT += --with-ldapsdk-lib=/opt/csw/lib 
 CONFIGURE_ARGS_OPT += --with-icu-inc=/opt/csw/include 
 CONFIGURE_ARGS_OPT += --with-icu-lib=/opt/csw/lib 
