@@ -180,12 +180,12 @@ install-c-sdk:
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldapcmp $(DESTDIR)$(bindir)
 	ginstall -m 755 $(WORKSRC)/../dist/bin/ldappasswd $(DESTDIR)$(bindir)
 	ginstall -m 755 $(WORKSRC)/c-sdk/mozldap.pc.in $(DESTDIR)$(libdir)/pkgconfig
-	( cd $(DESTDIR)$(bindir); \
-	  gln -sf ldapsearch ../../bin/ldapsearch389 ; \
- 	  gln -sf ldapmodify ../../bin/ldapmodify389 ; \
-	  gln -sf ldapdelete ../../bin/ldapdelete389 ; \
-	  gln -sf ldapcmp ../../bin/ldapcmp389 ; \
-	  gln -sf ldappasswd ../../bin/ldappasswd389 )
+	( cd $(DESTDIR)$(prefix)/bin; \
+	  gln -sf ../dirsrv/bin/ldapsearch ldapsearch389 ; \
+	  gln -sf ../dirsrv/bin/ldapmodify ldapmodify389 ; \
+	  gln -sf ../dirsrv/bin/ldapdelete ldapdelete389 ; \
+	  gln -sf ../dirsrv/bin/ldapcmp ldapcmp389 ; \
+	  gln -sf ../dirsrv/bin/ldappasswd ldappasswd389 )
 	@for f in $(WORKSRC)/../dist/etc/*; do \
 		ginstall -m 644 $$f  $(DESTDIR)$(sysconfdir); \
 	done
