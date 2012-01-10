@@ -18,7 +18,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # BUILD64 = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
-# GARCOMPILER = SOS12U2
+GARCOMPILER = SOS12U2
 
 PACKAGES += CSWlibadminutil0
 CATALOGNAME_CSWlibadminutil0 = libadminutil0
@@ -28,7 +28,9 @@ RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldif60
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicu46
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWsasl
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibplc4
@@ -42,7 +44,9 @@ RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibldif60
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicu46
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWsasl
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibplc4
@@ -61,7 +65,7 @@ RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadmsslutil0
 
 
 TEST_SCRIPTS = 
-EXTRA_CFLAGS = -norunpath
+EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
@@ -77,5 +81,15 @@ CONFIGURE_ARGS_OPT += --with-nspr-lib=/opt/csw/lib
 CONFIGURE_ARGS_OPT += --with-nspr-inc=/opt/csw/include/nspr
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
+# CHECKPKG_OVERRIDES_CSWlibadmsslutil0 += pkginfo-opencsw-repository-uncommitted
+# CHECKPKG_OVERRIDES_CSWlibadminutil0 += pkginfo-opencsw-repository-uncommitted
+# CHECKPKG_OVERRIDES_CSW389-adminutil-dev += pkginfo-opencsw-repository-uncommitted
 include gar/category.mk
+
+pre-configure-modulated:
+	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
+	cd $(WORKSRC) && aclocal
+	cd $(WORKSRC) && autoconf --force
+	cd $(WORKSRC) && automake -a -c -f
+	@$(MAKECOOKIE)
 
