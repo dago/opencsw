@@ -22,7 +22,7 @@ LICENSE = LICENSE LICENSE.GPLv2
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0003-add-user-and-var-run-dirsrv.patch
-PATHCFILES += 0004-move-include-path.patch
+PATCHFILES += 0004-move-include-path.patch
 
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibprldap60
