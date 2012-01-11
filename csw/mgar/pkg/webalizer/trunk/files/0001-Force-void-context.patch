@@ -1,0 +1,25 @@
+From 185f509e80d9b2f53a7235b9572ad0c461959cd7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 11 Jan 2012 23:17:40 +0100
+Subject: [PATCH] Force void context
+
+---
+ webalizer.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/webalizer.c b/webalizer.c
+index 702c532..612b94d 100644
+--- a/webalizer.c
++++ b/webalizer.c
+@@ -579,7 +579,7 @@ int main(int argc, char *argv[])
+ #ifdef USE_BZIP
+       (gz_log==COMP_BZIP)?bz2_rewind(&zlog_fp, log_fname, "rb"):
+ #endif
+-      (gz_log==COMP_GZIP)?gzrewind(zlog_fp):
++      (gz_log==COMP_GZIP)?(void)gzrewind(zlog_fp):
+       (log_fname)?rewind(log_fp):exit(0);
+    }
+ 
+-- 
+1.7.8.2
+
