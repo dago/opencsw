@@ -24,6 +24,10 @@ RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibz1
 
+# Fix config file later
+CHECKPKG_OVERRIDES_CSWwebalizer += file-with-bad-content|/usr/share|root/etc/opt/csw/webalizer.conf.CSW
+
+# No BDB support yet as detection bails out on long long
 #EXTRA_INC = $(prefix)/bdb48/include
 #EXTRA_LIB = $(prefix)/bdb48/lib
 
