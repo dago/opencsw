@@ -14,10 +14,15 @@ endef
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # BUILD64	= 1
+PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
+
+LICENSE = LICENSE LICENSE.GPLv2
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
-PATCHFILES += 0007-create-var-run-dirsrv.patch
+PATCHFILES += 0003-add-user-and-var-run-dirsrv.patch
+PATHCFILES += 0004-move-include-path.patch
 
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibprldap60
@@ -46,6 +51,9 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += soname-not-found|libdb-4.8.so|is|needed|by|
 CHECKPKG_OVERRIDES_CSW389-ds-base += soname-not-found|libdb-4.8.so|is|needed|by|opt/csw/lib/dirsrv/plugins/libreplication-plugin.so
 
 # GARCOMPILER = SOS12U2
+EXTRA_LIB = /opt/csw/bdb48/lib
+# remove -I/opt/csw/include
+CPPFLAGS = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
