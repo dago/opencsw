@@ -1,25 +1,37 @@
-From 185f509e80d9b2f53a7235b9572ad0c461959cd7 Mon Sep 17 00:00:00 2001
+From 974bb8cab5847f85b527d1f276eed4575d55096d Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 11 Jan 2012 23:17:40 +0100
+Date: Thu, 12 Jan 2012 11:31:37 +0100
 Subject: [PATCH] Force void context
 
 ---
- webalizer.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ webalizer.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/webalizer.c b/webalizer.c
-index 702c532..612b94d 100644
+index 702c532..9d5777f 100644
 --- a/webalizer.c
 +++ b/webalizer.c
-@@ -579,7 +579,7 @@ int main(int argc, char *argv[])
+@@ -577,9 +577,9 @@ int main(int argc, char *argv[])
+       fflush(stdout);
+       (gz_log)?dns_resolver(zlog_fp):dns_resolver(log_fp);
  #ifdef USE_BZIP
-       (gz_log==COMP_BZIP)?bz2_rewind(&zlog_fp, log_fname, "rb"):
+-      (gz_log==COMP_BZIP)?bz2_rewind(&zlog_fp, log_fname, "rb"):
++      (gz_log==COMP_BZIP)?(void)bz2_rewind(&zlog_fp, log_fname, "rb"):
  #endif
 -      (gz_log==COMP_GZIP)?gzrewind(zlog_fp):
 +      (gz_log==COMP_GZIP)?(void)gzrewind(zlog_fp):
        (log_fname)?rewind(log_fp):exit(0);
     }
  
+@@ -1418,7 +1418,7 @@ int main(int argc, char *argv[])
+ 
+    /* close log file if needed */
+ #ifdef USE_BZIP
+-   if (gz_log) (gz_log==COMP_BZIP)?BZ2_bzclose(zlog_fp):gzclose(zlog_fp);
++   if (gz_log) (gz_log==COMP_BZIP)?BZ2_bzclose(zlog_fp):(void)gzclose(zlog_fp);
+ #else
+    if (gz_log) gzclose(zlog_fp);
+ #endif
 -- 
 1.7.8.2
 

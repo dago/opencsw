@@ -1,0 +1,25 @@
+From 46c41630bb7db3f95df0ad81fe3161270ee9b360 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 12 Jan 2012 11:05:56 +0100
+Subject: [PATCH] Re-add definition on u_int64_t
+
+---
+ webalizer.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/webalizer.h b/webalizer.h
+index 7a3941c..158c4d1 100644
+--- a/webalizer.h
++++ b/webalizer.h
+@@ -1,6 +1,8 @@
+ #ifndef _WEBALIZER_H
+ #define _WEBALIZER_H
+ 
++typedef unsigned long long u_int64_t;
++
+ #define PCENT(val,max) ((val)?((double)val/(double)max)*100.0 : 0.0)
+ #define IDX_2C(c1,c2)       (((c1-'a'+1)<<7)+(c2-'a'+1) )
+ #define IDX_3C(c1,c2,c3)    (((c1-'a'+1)<<12)+((c2-'a'+1)<<7)+(c3-'a'+1) )
+-- 
+1.7.8.2
+
