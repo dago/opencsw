@@ -17,13 +17,15 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
-LICENSE = LICENSE LICENSE.GPLv2
+LICENSE = LICENSE
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0003-add-user-and-var-run-dirsrv.patch
-PATCHFILES += 0004-move-include-path.patch
+# until Red Hat Bugzilla Bug 773617 is open do it yourself
+PATCHFILES += 0004-add-i386-platform-to-Makefile.am-and-configure.ac.patch
 
+INITSMF = /etc/opt/csw/init.d/dirsrv
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWperl
@@ -32,28 +34,31 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWsasl
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldif60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicu46
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWnetsnmp
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplds4
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWbdb48
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
+CHECKPKG_OVERRIDES_CSW389-ds-base += pkginfo-opencsw-repository-uncommitted
+
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/dbgen.pl.1
-CHECKPKG_OVERRIDES_CSW389-ds-base += license-missing|/opt/csw/share/doc/389_ds_base/license
-CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv|class=none
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
-CHECKPKG_OVERRIDES_CSW389-ds-base += soname-not-found|libdb-4.8.so|is|needed|by|opt/csw/lib/dirsrv/plugins/libback-ldbm.so
-CHECKPKG_OVERRIDES_CSW389-ds-base += soname-not-found|libdb-4.8.so|is|needed|by|opt/csw/bin/dbscan-bin
-CHECKPKG_OVERRIDES_CSW389-ds-base += soname-not-found|libdb-4.8.so|is|needed|by|opt/csw/lib/dirsrv/plugins/libreplication-plugin.so
 
-# GARCOMPILER = SOS12U2
+GARCOMPILER = SOS12U2
 EXTRA_LIB = /opt/csw/bdb48/lib
 # remove -I/opt/csw/include
 CPPFLAGS = 
+EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
@@ -81,4 +86,5 @@ pre-configure-modulated:
 	cd $(WORKSRC) && aclocal
 	cd $(WORKSRC) && autoconf --force
 	cd $(WORKSRC) && automake -a -c -f
+	cd $(WORKSRC) && autoheader
 	@$(MAKECOOKIE)
