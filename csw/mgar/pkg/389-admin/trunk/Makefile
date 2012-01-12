@@ -1,0 +1,51 @@
+# $Id$
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+NAME = 389-admin
+VERSION = 1.1.23
+GARTYPE = v2
+CATEGORIES = lib
+
+DESCRIPTION = The enterprise-class Open Source LDAP server
+define BLURB
+The enterprise-class Open Source LDAP server for Linux. It is hardened by real-world use, is full-featured, supports multi-master replication, and already handles many of the largest LDAP deployments in the world. The 389 Directory Server can be downloaded for free and set up in less than an hour using the graphical console.
+endef
+
+MASTER_SITES = http://port389.org/sources
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+# BUILD64	= 1
+PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
+
+LICENSE = LICENSE LICENSE.GPLv2
+
+GARCOMPILER = SOS12U2
+# remove -I/opt/csw/include
+CPPFLAGS = 
+EXTRA_CFLAGS = --disable-threading
+EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
+CONFIGURE_ARGS_OPT += --with-ldapsdk-lib=/opt/csw/lib
+CONFIGURE_ARGS_OPT += --with-icu-inc=/opt/csw/include 
+CONFIGURE_ARGS_OPT += --with-icu-lib=/opt/csw/lib
+CONFIGURE_ARGS_OPT += --with-icu-bin=/opt/csw/bin 
+CONFIGURE_ARGS_OPT += --with-sasl-inc=/opt/csw/include/sasl 
+CONFIGURE_ARGS_OPT += --with-sasl-lib=/opt/csw/lib
+CONFIGURE_ARGS_OPT += --with-nss-lib=/opt/csw/lib
+CONFIGURE_ARGS_OPT += --with-nss-inc=/opt/csw/include/nss 
+CONFIGURE_ARGS_OPT += --with-apxs=/opt/csw/apache2/sbin/apxs
+CONFIGURE_ARGS_OPT += --with-httpd=/opt/csw/apache2/sbin/httpd
+CONFIGURE_ARGS_OPT += --with-modnss-lib=/opt/csw/apache2/libexec
+CONFIGURE_ARGS_OPT += --with-modnss-bin=/opt/csw/apache2/sbin
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+
+include gar/category.mk
+
+pre-configure-modulated:
+	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
+	cd $(WORKSRC) && aclocal
+	cd $(WORKSRC) && autoconf --force
+	cd $(WORKSRC) && automake -a -c -f
+	@$(MAKECOOKIE)
