@@ -43,6 +43,8 @@ BUILD_DEP_PKGS += CSWcloog-dev
 # Could be used to break out of the /opt/csw/$(PKG_VERSION_TOKEN) prefix
 PROGRAM_SUFFIX = -$(BASE_VERSION)
 
+libdir_install = $(prefix)/lib/gcc/$(BASE_VERSION)
+
 ## build options
 # http://gcc.gnu.org/install/configure.html
 
@@ -528,7 +530,7 @@ post-install-modulated:
 PATH := /opt/csw/gnu:$(PATH)
 
 # This override sets the right RPATH on libstdc++ and other libraries.
-LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST
+LD_OPTIONS := -R$(libdir_install) -R$(libdir_install)/\$$ISALIST
 CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)"
 BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)"
 INSTALL_ENV := PATH=$(PATH)
