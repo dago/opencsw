@@ -43,18 +43,13 @@ CHECKPKG_OVERRIDES_CSWwebalizer += file-with-bad-content|/usr/share|root/etc/opt
 EXTRA_INC = $(prefix)/bdb48/include
 EXTRA_LIB = $(prefix)/bdb48/lib
 
-REINPLACEMENTS += geodb
-REINPLACE_MATCH_geodb = GeoDB\.dat
-REINPLACE_WITH_geodb = GeoIP.dat
-REINPLACE_FILES_geodb += dns_resolv.c
-
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dns
 CONFIGURE_ARGS += --enable-bz2
 CONFIGURE_ARGS += --enable-geoip
 #CONFIGURE_ARGS += --with-geoip=DIR        Alternate location for libGeoIP header files
 #CONFIGURE_ARGS += --with-geoiplib=DIR     Alternate location for geoip library
-CONFIGURE_ARGS += --with-geodb=$(sharedstatedir)/GeoIP
+CONFIGURE_ARGS += --with-geodb=$(sharedstatedir)/GeoDB
 
 # This is also defined in db.h from BerkeleyDB and causes trouble when being defined twice (see patch above)
 CONFIGURE_ARGS += ac_cv_type_u_int64_t=yes
