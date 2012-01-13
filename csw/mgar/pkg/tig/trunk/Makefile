@@ -1,5 +1,5 @@
 NAME = tig
-VERSION = 0.17
+VERSION = 0.18
 CATEGORIES = utils
 
 DESCRIPTION = A git repository browser
