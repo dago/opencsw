@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = recutils
-VERSION = 1.4
+VERSION = 1.5
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -16,16 +16,34 @@ MASTER_SITES = $(GNU_MIRROR)
 MASTER_SITES += ftp://alpha.gnu.org/gnu/$(GNU_PROJ)/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PACKAGES += CSWrecutils
+SPKG_DESC_CSWrecutils = GNU recutils
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWrecutils += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWrecutils += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrecutils += CSWemacscommon
 RUNTIME_DEP_PKGS_CSWrecutils += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWrecutils += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWrecutils += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWrecutils += CSWlibrec0
+RUNTIME_DEP_PKGS_CSWrecutils += CSWlibreadline6
+# This is just an emacs mode. It can be used when emacs is installed, no need to force dependency
+CHECKPKG_OVERRIDES_CSWrecutils += missing-dependency|CSWemacscommon
 
-# I am not sure if anyone is actually developing against te library
-# Looks like it is more like a private lib. Overwrite for now.
-CHECKPKG_OVERRIDES_CSWrecutils += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/librec.so
-CHECKPKG_OVERRIDES_CSWrecutils += shared-lib-pkgname-mismatch|file=opt/csw/lib/librec.so.0.0.0|soname=librec.so.0|pkgname=CSWrecutils|expected=CSWlibrec0
+PACKAGES += CSWlibrec0
+SPKG_DESC_CSWlibrec0 = GNU recutils library, librec.so.0
+PKGFILES_CSWlibrec0 += $(call pkgfiles_lib,librec.so.0)
+RUNTIME_DEP_PKGS_CSWlibrec0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibrec0 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibrec0 += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWlibrec0 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibrec0 += CSWlibreadline6
+
+PACKAGES += CSWlibrec-dev
+SPKG_DESC_CSWlibrec-dev = Development files for librec.so.0
+PKGFILES_CSWlibrec-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibrec-dev += CSWlibrec0
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --disable-static
 
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset\.alias
 
