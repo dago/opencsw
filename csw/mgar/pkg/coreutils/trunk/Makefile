@@ -1,5 +1,5 @@
 NAME = coreutils
-VERSION = 8.13
+VERSION = 8.15
 CATEGORIES = utils
 
 # seq has issues related to the handling of long double's with -O2.
@@ -30,7 +30,7 @@ Previously these utilities were offered as three individual sets of GNU utilitie
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.xz
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
