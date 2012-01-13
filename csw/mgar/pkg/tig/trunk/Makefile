@@ -24,8 +24,8 @@ BUILD_DEP_PKGS += CSWasciidoc
 BUILD_DEP_PKGS += CSWxmlto
 BUILD_DEP_PKGS += CSWiconv
 
-RUNTIME_DEP_PKGS += CSWncurses
-RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWlibncursesw5
+RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWgit
 # Yes, we do need git
 CHECKPKG_OVERRIDES_CSWtig += surplus-dependency|CSWgit
