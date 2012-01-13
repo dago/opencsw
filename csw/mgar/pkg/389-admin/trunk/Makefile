@@ -19,14 +19,15 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 LICENSE = LICENSE LICENSE.GPLv2
 
+PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
+
 PACKAGES = CSW389admin
 RUNTIME_DEP_PKGS_CSW389admin = CSWap2modnss
 
 GARCOMPILER = SOS12U2
 # remove -I/opt/csw/include
 CPPFLAGS = 
-EXTRA_CFLAGS = --disable-threading
-EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
+EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
