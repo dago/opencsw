@@ -44,6 +44,5 @@ RUNTIME_DEP_PKGS_CSWpm-mozldap += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWpm-mozldap += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWpm-mozldap += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWpm-mozldap += CSWlibssldap60
-CHECKPKG_OVERRIDES_CSWpm-mozldap += pkginfo-opencsw-repository-uncommitted
 
 include gar/category.mk
