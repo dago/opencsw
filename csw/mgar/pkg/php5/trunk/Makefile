@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.8
+VERSION  = 5.3.9
 CATEGORIES  = lang
 SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJ)-$(VERSION)
@@ -228,6 +228,7 @@ CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --enable-simplexml
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-xml
+CONFIGURE_ARGS += --enable-intl
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-config-file-path=$(sysconfdir)
 CONFIGURE_ARGS += --with-config-file-scan-dir=$(sysconfdir)/conf.d
