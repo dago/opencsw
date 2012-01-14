@@ -15,7 +15,7 @@ BASEDIR="${prefix}"
 MYSQL_HOME="/var${prefix}/mysql5"
 sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
-DEFAULTS_FILE="${sysconfdir}/my.cnf"
+DEFAULTS_FILE="${prefix}/share/mysql/5.0/mysql/my-small.cnf"
 MYSQLD_USER="mysql"
 # Provide the default data directory
 MYSQLD_DATADIR="${MYSQL_HOME}"
