@@ -1,5 +1,5 @@
 NAME = xmlstarlet
-VERSION = 1.3.0
+VERSION = 1.3.1
 CATEGORIES = utils
 
 DESCRIPTION = XML transformation utility
@@ -18,7 +18,7 @@ DISTFILES = $(DISTNAME).tar.gz
 VENDOR_URL = http://xmlstar.sourceforge.net/
 
 BUILD_DEP_PKGS += CSWlibxml2-dev
-BUILD_DEP_PKGS += CSWlibxsltdevel
+BUILD_DEP_PKGS += CSWlibxslt-dev
 
 RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxslt1
@@ -27,8 +27,8 @@ RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibexslt0
 BUILD64 = 1
 ISAEXEC = 1
 
-CONFIGURE_ENV += LIBXML_CONFIG=$(bindir)/xml2-config
-CONFIGURE_ENV += LIBXSLT_CONFIG=$(bindir)/xslt-config
+EXTRA_CONFIGURE_ENV += LIBXML_CONFIG=$(bindir)/xml2-config
+EXTRA_CONFIGURE_ENV += LIBXSLT_CONFIG=$(bindir)/xslt-config
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static-libs
