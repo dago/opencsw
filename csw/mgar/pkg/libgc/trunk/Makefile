@@ -1,5 +1,5 @@
 NAME = libgc
-VERSION = 7.0
+VERSION = 7.1
 CATEGORIES = lib
 
 DESCRIPTION = A garbage collector for C and C++
@@ -13,19 +13,33 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/
-DISTFILES  = gc-$(VERSION).tar.gz
-
 DISTNAME = gc-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.hpl.hp.com/personal/Hans_Boehm/gc/
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+LICENSE = README.QUICK
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES += CSWlibcord1
+SPKG_DESC_CSWlibcord1 = A garbage collector for C and C++, libcord.so.1
+PKGFILES_CSWlibcord1 += $(call pkgfiles_lib,libcord.so.1)
+RUNTIME_DEP_PKGS_CSWlibcord1 += CSWlibgc1
+OBSOLETED_BY_CSWlibcord1 += CSWlibgc
 
-TEST_TARGET = check
+PACKAGES += CSWlibgc1
+SPKG_DESC_CSWlibgc1 = A garbage collector for C and C++, libgc.so.1
+PKGFILES_CSWlibgc1 += $(call pkgfiles_lib,libgc.so.1)
+OBSOLETED_BY_CSWlibgc1 += CSWlibgc
+
+PACKAGES += CSWlibgc-dev
+SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 and libcord.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibcord1
+RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgc1
+
+# This is just docs, ignore for now
+CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw/share/gc/README.autoconf
+
+BUILD64 = 1
 
 include gar/category.mk
