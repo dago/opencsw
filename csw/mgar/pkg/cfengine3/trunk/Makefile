@@ -16,7 +16,7 @@ DISTNAME = cfengine-$(VERSION)
 MASTER_SITES = http://www.cfengine.com/source-code/download?file=
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(NAME)rc
-DISTFILES += CSW$(NAME)rt.postinstall
+DISTFILES += CSW$(NAME)utils.postinstall
 DISTFILES += csw$(NAME)-cfexecd
 DISTFILES += csw$(NAME)-cfmonitord
 DISTFILES += csw$(NAME)-cfserverd
@@ -26,6 +26,8 @@ VENDOR_URL = http://www.cfengine.com/community
 
 UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 
+# Cfengine probes for Solaris 10 specific functionality (i.e. zones),
+# so a we build it for Sol9 and Sol10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386 solaris9-sparc solaris9-i386
 
 # File name regex to get notifications about upstream software releases
@@ -44,19 +46,17 @@ cfengine_workdir	= $(localstatedir)/$(NAME)
 cfengine_workdir_bin	= $(cfengine_workdir)/bin
 initddir		= $(sysconfdir)/init.d
 
-PACKAGES = CSW$(NAME)rt
+PACKAGES = CSW$(NAME)utils
 # Catch all
-CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt
-SPKG_DESC_CSW$(NAME)rt = CFEngine 3 runtime and documentation
-RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWbdb48
-RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWlibpcre0
-CHECKPKG_OVERRIDES_CSW$(NAME)rt += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)rt|catalogname=$(NAME)_rt|expected-catalogname=$(NAME)rt
-# Moved to runtime, since there are no header files for this library.
-CHECKPKG_OVERRIDES_CSW$(NAMES)rt += shared-lib-pkgname-mismatch
-OBSOLETED_BY_CSW$(NAME)rt = CSWlibpromises1
+CATALOGNAME_CSW$(NAME)utils = $(NAME)_utils
+SPKG_DESC_CSW$(NAME)utils = CFEngine 3 utilities and documentation
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWbdb48
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibpcre0
+CHECKPKG_OVERRIDES_CSW$(NAME)utils += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)utils|catalogname=$(NAME)_utils|expected-catalogname=$(NAME)utils
+OBSOLETED_BY_CSW$(NAME)utils = CSWlibpromises1 CSW$(NAME)rt
 CATALOGNAME_CSWlibpromises1 = libpromises1_stub
-
+CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
 
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
@@ -64,7 +64,7 @@ SPKG_DESC_CSW$(NAME)server = CFEngine 3 server binary
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSW$(NAME)rt
+RUNTIME_DEP_PKGS_CSW$(NAME)server += CSW$(NAME)utils
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-serverd
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-runagent
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-serverd.*
@@ -79,7 +79,7 @@ SPKG_DESC_CSW$(NAME)client = CFEngine 3 client binaries
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)rt
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)utils
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-agent
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-execd
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-monitord
@@ -102,7 +102,7 @@ INITSMF += $(initddir)/csw$(NAME)-cfserverd
 
 LICENSE = LICENSE
 
-# This file gets installed by CSW$(NAME)rt since it is used by
+# This file gets installed by CSW$(NAME)util since it is used by
 # the server and client component
 PRESERVECONF = $(sysconfdir)/$(NAME)rc
 
@@ -130,13 +130,16 @@ EXTRA_INC = $(prefix)/bdb48/include
 EXTRA_RUNPATH_DIRS = $(prefix)/bdb48/lib
 EXTRA_RUNPATH_ISALIST   = $(EXTRA_RUNPATH_DIRS)
 EXTRA_LDFLAGS = -L$(prefix)/bdb48/lib/$(MM_LIBDIR)
+# We use this because libpromises will be moved to this private
+# directory (see also move-libpromises:)
+EXTRA_LDFLAGS += -R$(libdir)/$(NAME)
 
 # Those libs are used by configure to detect getaddrinfo()
 EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
 
 include gar/category.mk
 
-post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc fix-paths-in-files
+post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc fix-paths-in-files move-libpromises
 	@$(MAKECOOKIE)
 
 rename-cfengine-dir:
@@ -187,6 +190,12 @@ fix-paths-in-files: rename-cfengine-dir
 			done ; \
 		fi ; \
 	done
+
+# We move libpromises to a prive directory, since there is no publicly
+# available API. Please note, the rpath has to be set appropriately
+move-libpromises:
+	ginstall -d $(DESTDIR)$(libdir)/$(NAME)
+	mv $(DESTDIR)$(libdir)/libpromises.* $(DESTDIR)$(libdir)/$(NAME)/
 
 post-merge:
 # Get rid of the .so files. Since there are no header files provided,
