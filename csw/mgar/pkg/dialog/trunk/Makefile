@@ -2,9 +2,9 @@
 #   gmake package-CSWdialog-minimal
 
 NAME = dialog
-VERSION = 1.1r20110118
+VERSION = 1.1r20111020
 VERSION2 = 1.1
-RELEASE = 20110118
+RELEASE = 20111020
 DISTNAME = $(NAME)-$(VERSION2)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = utils
@@ -16,6 +16,7 @@ endef
 
 MASTER_SITES = http://invisible-island.net/datafiles/release/
 DISTFILES = $(NAME).tar.gz
+VENDOR_URL = http://invisible-island.net/dialog
 
 EXTRA_MODULATORS = CURSES
 MODULATIONS_CURSES = ncurses minimal
@@ -28,7 +29,7 @@ SPKG_DESC_CSWdialog-minimal = A script-interpreter which provides a set of curse
 CATALOGNAME_CSWdialog = dialog
 CATALOGNAME_CSWdialog-minimal = dialog_minimal
 
-RUNTIME_DEP_PKGS_CSWdialog += CSWncurses
+RUNTIME_DEP_PKGS_CSWdialog += CSWlibncurses5
 
 CHECKPKG_OVERRIDES_CSWdialog += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
