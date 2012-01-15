@@ -40,6 +40,10 @@ RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgc1
 # This is just docs, ignore for now
 CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw/share/gc/README.autoconf
 
-BUILD64 = 1
+# One test is failing on amd64, disable for now:
+#   FAIL: gctest
+# The bugreport has been posted on
+#   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/thread.html
+# BUILD64 = 1
 
 include gar/category.mk
