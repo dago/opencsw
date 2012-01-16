@@ -1,0 +1,56 @@
+From 5ec3920b9ad8351ccbe372682ebc5a9843708b62 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Mon, 16 Jan 2012 15:29:00 +0100
+Subject: [PATCH 4/5] fix xarch and add SQLITE_LIB_DIR var
+
+---
+ mozilla/security/coreconf/SunOS5.mk         |    6 +-----
+ mozilla/security/nss/lib/softoken/config.mk |    6 ++++--
+ 2 files changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/mozilla/security/coreconf/SunOS5.mk b/mozilla/security/coreconf/SunOS5.mk
+index c0f8e63..a836398 100644
+--- a/mozilla/security/coreconf/SunOS5.mk
++++ b/mozilla/security/coreconf/SunOS5.mk
+@@ -132,11 +132,7 @@ endif
+ 	DSO_LDOPTS += -shared -h $(notdir $@)
+ else
+ ifeq ($(USE_64), 1)
+-	ifeq ($(OS_TEST),i86pc)
+-	    DSO_LDOPTS +=-xarch=amd64
+-	else
+-	    DSO_LDOPTS +=-xarch=v9
+-	endif
++	DSO_LDOPTS += -m64
+ endif
+ 	DSO_LDOPTS += -G -h $(notdir $@)
+ endif
+diff --git a/mozilla/security/nss/lib/softoken/config.mk b/mozilla/security/nss/lib/softoken/config.mk
+index 3a35944..75826b8 100644
+--- a/mozilla/security/nss/lib/softoken/config.mk
++++ b/mozilla/security/nss/lib/softoken/config.mk
+@@ -52,9 +52,11 @@ IMPORT_LIBRARY = $(OBJDIR)/$(IMPORT_LIB_PREFIX)$(LIBRARY_NAME)$(LIBRARY_VERSION)
+ RES = $(OBJDIR)/$(LIBRARY_NAME).res
+ RESNAME = $(LIBRARY_NAME).rc
+ 
++SQLITE_LIB_DIR ?= $(DIST)/lib
++
+ ifdef NS_USE_GCC
+ EXTRA_SHARED_LIBS += \
+-	-L$(DIST)/lib \
++	-L$(SQLITE_LIB_DIR) \
+ 	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+@@ -79,7 +81,7 @@ else
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
+-	-L$(DIST)/lib \
++	-L$(SQLITE_LIB_DIR) \
+ 	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+-- 
+1.7.8.3
+
