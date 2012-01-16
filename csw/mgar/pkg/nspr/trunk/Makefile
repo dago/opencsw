@@ -107,7 +107,6 @@ LICENSE = LICENSE
 # CHECKPKG_OVERRIDES_CSWlibnspr4 += shared-lib-pkgname-mismatch
 
 CPPFLAGS = 
-PREFIX = $(prefix)
 
 include gar/category.mk
 
@@ -140,7 +139,8 @@ install-nspr:
 	ginstall -m 755 $(WORKSRC)/build/config/nspr-config \
 		$(DESTDIR)$(bindir)
 	ginstall -m 755 -d $(DESTDIR)$(libdir)/pkgconfig
-	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc $(DESTDIR)$(libdir)/pkgconfig
+	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \ 
+		$(DESTDIR)$(libdir)/pkgconfig
 	if [ $(MEMORYMODEL) = 64 ]; then \
 		gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nspr.pc ; \
 	fi
