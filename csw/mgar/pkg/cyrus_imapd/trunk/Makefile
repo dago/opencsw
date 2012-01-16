@@ -33,19 +33,6 @@ PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
 
 SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
 CATALOGNAME_CSWcyrusimapd = cyrus_imapd
-RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWnetsnmp CSWzlib CSWtcpwrap CSWlibpcreposix0 CSWlibpcre0
-#SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
-
-SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
-CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWzlib CSWlibpcreposix0 CSWlibpcre0
-#SPKG_CLASSES_CSWcyrusimapdutils = none 
-
-SPKG_DESC_CSWpmcyrus = Perl interface to Cyrus Imap functions
-CATALOGNAME_CSWpmcyrus = pm_cyrus
-RUNTIME_DEP_PKGS_CSWpmcyrus = CSWperl CSWbdb42 CSWosslrt CSWsasl CSWzlib
-#SPKG_CLASSES_CSWpmcyrus = none
-
 PKGFILES_CSWcyrusimapd = $(sbindir)/.*
 PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus
 PKGFILES_CSWcyrusimapd += $(docdir)/cyrus_imapd/.*
@@ -57,6 +44,52 @@ PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/cyrus.conf.CSW
 PKGFILES_CSWcyrusimapd += /etc$(prefix)/init.d/cswcyrus
 PKGFILES_CSWcyrusimapd += /var$(prefix)/svc/manifest/network/cswcyrus\.xml
 PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus.*
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWbdb47
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcreposix0
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWnetsnmp
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWsasl
+
+# Expected catalogname: cyrusimapd, not cyrus_imapd
+CHECKPKG_OVERRIDES_CSWcyrusimapd += catalogname-does-not-match-pkgname
+
+SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
+CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
+PKGFILES_CSWcyrusimapdutils = $(bindir)/.*
+PKGFILES_CSWcyrusimapdutils += $(mandir)/man1/.*
+PKGFILES_CSWcyrusimapdutils += $(docdir)/cyrus_imapd_utils/.*
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWbdb47
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcreposix0
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWsasl
+# Expected catalogname: cyrusimapdutils, not cyrus_imapd_utils
+CHECKPKG_OVERRIDES_CSWcyrusimapdutils += catalogname-does-not-match-pkgname
+
+SPKG_DESC_CSWpmcyrus = Perl interface to Cyrus Imap functions
+CATALOGNAME_CSWpmcyrus = pm_cyrus
+PKGFILES_CSWpmcyrus = $(perllib)/.*
+PKGFILES_CSWpmcyrus += $(mandir)/man3/Cyrus::.*
+PKGFILES_CSWpmcyrus += $(docdir)/pm_cyrus/.*
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWbdb47
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWperl
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWsasl
 
 PROTOTYPE_MODIFIERS = cyrusdir
 PROTOTYPE_FILES_cyrusdir = $(localstatedir)/cyrus.*
@@ -69,15 +102,6 @@ INITSMF = /etc$(prefix)/init.d/cswcyrus
 ETCSERVICES = /etc/$(prefix)/pkg/CSWcyrusimapd/services
 
 LICENSE = COPYRIGHT
-
-PKGFILES_CSWcyrusimapdutils = $(bindir)/.*
-PKGFILES_CSWcyrusimapdutils += $(mandir)/man1/.*
-PKGFILES_CSWcyrusimapdutils += $(docdir)/cyrus_imapd_utils/.*
-
-PKGFILES_CSWpmcyrus = $(perllib)/.*
-PKGFILES_CSWpmcyrus += $(mandir)/man3/Cyrus::.*
-PKGFILES_CSWpmcyrus += $(docdir)/pm_cyrus/.*
-
 
 CHECKPKG_OVERRIDES_CSWcyrusimapdutils += surplus-dependency|CSWpmcyrus
 
@@ -181,8 +205,8 @@ CONFIGURE_ARGS += --with-cyrus-prefix=$(prefix)
 CONFIGURE_ARGS += --with-service-path=$(libexecdir)/cyrus 
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/cyrus 
 CONFIGURE_ARGS += --with-bdb=db-4.2
-CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb42/lib 
-CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb42/include 
+CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb47/lib 
+CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb47/include 
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-perl=$(prefix)/bin/perl 
@@ -192,6 +216,10 @@ CONFIGURE_ARGS += --enable-replication
 CONFIGURE_ARGS += --with-snmp=$(prefix)
 CONFIGURE_ARGS += --with-libwrap=$(prefix)
 CONFIGURE_ARGS += --disable-nntp
+
+# To link against BerkeleyDB 4.7 explicitly
+EXTRA_LINKER_FLAGS = -R$(prefix)/bdb47/lib/\$$ISALIST
+LD_OPTIONS += -R$(prefix)/bdb47/lib/\$$ISALIST
 
 # we add the args so perl libraries are installed
 # in the correct path
