@@ -55,7 +55,6 @@ usrin=`/usr/bin/ckpath -f -d [default] \
 if [ $usrin = "[default]" ]; then
     if [ ! -f "$DEFAULTS_FILE" ]; then
         IN_DEFAULTS_FILE=$MYSQL_HOME/share/mysql/5.0/mysql/my-small.cnf
-        /share/mysql/my-small.cnf
         echo "Using $IN_DEFAULTS_FILE to create the options file."
     else
         IN_DEFAULTS_FILE=$DEFAULTS_FILE
