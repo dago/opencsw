@@ -8,7 +8,7 @@
 
 NAME = nspr
 MAJOR_VERSION = 4
-MIN_VERSION = 8.7
+MIN_VERSION = 8.9
 VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 
@@ -18,10 +18,12 @@ define BLURB
   many of Red Hat's, Sun's, and other software offerings.
 endef
 
-MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v$(VERSION)/src/
+MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v$(VERSION)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 PATCHFILES  = nspr-4.6.1-config.patch
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES = CSWnspr-dev
 CATALOGNAME_CSWnspr-dev = nspr_dev
@@ -104,6 +106,9 @@ LICENSE = LICENSE
 # # three libraries to be in one package.
 # CHECKPKG_OVERRIDES_CSWlibnspr4 += shared-lib-pkgname-mismatch
 
+CPPFLAGS = 
+PREFIX = $(prefix)
+
 include gar/category.mk
 
 configure-nspr:
@@ -135,8 +140,7 @@ install-nspr:
 	ginstall -m 755 $(WORKSRC)/build/config/nspr-config \
 		$(DESTDIR)$(bindir)
 	ginstall -m 755 -d $(DESTDIR)$(libdir)/pkgconfig
-	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \
-		$(DESTDIR)$(libdir)/pkgconfig
+	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc $(DESTDIR)$(libdir)/pkgconfig
 	if [ $(MEMORYMODEL) = 64 ]; then \
 		gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nspr.pc ; \
 	fi
