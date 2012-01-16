@@ -17,7 +17,7 @@
 NAME = nss
 MAJOR_VERSION = 3
 MINOR_VERSION = 12
-PATCHLEVEL    = 4
+PATCHLEVEL    = 11
 VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
 define BLURB
@@ -29,29 +29,31 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
 # TODO: Generate RTM_NAME from VERSION
-RTM_NAME = NSS_3_12_4_RTM
-MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
+RTM_NAME = NSS_$(MAJOR_VERSION)_$(MINOR_VERSION)_$(PATCHLEVEL)_RTM
+MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += mpl-tri-license-txt
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWlibnss3 CSWlibnss3-devel CSWlibnss3-tools
+PACKAGES = CSWlibnss3 CSWlibnss-dev CSWlibnss3-tools
 
 SPKG_DESC_CSWlibnss3 = Network Security Services library, implements crypto, PKI, SSL, and S/MIME support
-SPKG_DESC_CSWlibnss3-devel = libnss3 development files
+SPKG_DESC_CSWlibnss-dev = libnss development files
 SPKG_DESC_CSWlibnss3-tools = libnss3 command-line utilities
 
-PKGFILES_CSWlibnss3-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibnss-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibnss3-tools = $(bindir).*
 
-CATALOGNAME_CSWlibnss3-devel = libnss3_devel
+CATALOGNAME_CSWlibnss-dev = libnss_dev
 CATALOGNAME_CSWlibnss3-tools = libnss3_tools
+OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-devel
 
 RUNTIME_DEP_PKGS_CSWlibnss3 = CSWnspr CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWlibnss3-devel += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWnspr
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-devel CSWsqlite3devel
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-dev CSWlibsqlite3-dev
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = nss
 INSTALL_SCRIPTS = nss
@@ -72,7 +74,7 @@ ifneq (DBG,$(GARFLAVOR))
 endif
 
 # NSPR is installed in /opt/csw/lib/nspr, nspr.pc is in /opt/csw/lib/pkgconfig
-NSPR_INCLUDE_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --cflags-only-I nspr | gsed 's/-I//')
+NSPR_INCLUDE_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --cflags-only-I nspr | gsed 's/-I//')
 export NSPR_INCLUDE_DIR
 
 NSS_ENABLE_ECC = 1
@@ -81,22 +83,27 @@ export NSS_ENABLE_ECC
 # To avoid creating /opt/csw/lib/libsqlite3.so (already exists)
 NSS_USE_SYSTEM_SQLITE = 1
 export NSS_USE_SYSTEM_SQLITE
+SQLITE_LIB_DIR = /opt/csw/lib
+export SQLITE_LIB_DIR
+SQLITE_INCLUDE_DIR = /opt/csw/include
+export SQLITE_INCLUDE_DIR
 
 # 64-bit suppport
 ifeq ($(MODULATION),isa-sparcv9)
 	USE_64 = 1
 	export USE_64
-	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
+	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
 else
 ifeq ($(MODULATION),isa-amd64)
 	USE_64 = 1
 	export USE_64
-	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
+	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
 else
-	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
+	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
 endif
 endif
 export NSPR_LIB_DIR
+
 
 # Based on:
 # http://mxr.mozilla.org/security/source/security/nss/pkg/solaris/SUNWtlsu/prototype_com
@@ -113,21 +120,25 @@ NSS_BINARIES += ssltap
 LICENSE = mpl-tri-license-txt
 
 # For DBG builds
-PATCHFILES  = whoami.patch
+# PATCHFILES  = whoami.patch
 
 # Required patches.
 PATCHFILES += include.patch
 PATCHFILES += ld-options.patch
-PATCHFILES += platlibs-sqlite3.patch
+# PATCHFILES += platlibs-sqlite3.patch
 PATCHFILES_isa-sparcv8 = sqlite3-32.patch
 PATCHFILES_isa-i386 = sqlite3-32.patch
 PATCHFILES_isa-sparcv9  = sqlite3-64.patch
-PATCHFILES_isa-sparcv9 += platlibs-sqlite3-64.patch
+# PATCHFILES_isa-sparcv9 += platlibs-sqlite3-64.patch
 PATCHFILES_isa-amd64  = sqlite3-64.patch
-PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
+# PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
+PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
+PATCHFILES += 0005-platlibs.mk-linking-bltest.patch
 
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-February/000167.html
-NOISAEXEC = 1
+# NOISAEXEC = 1
+
+CPPFLAGS=
 
 include gar/category.mk
 
