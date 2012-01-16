@@ -24,6 +24,7 @@ BUILD_SCRIPTS ?= $(WORKSRC)/setup.py
 INSTALL_SCRIPTS ?= $(WORKSRC)/setup.py
 INSTALL_ARGS ?= --root=$(DESTDIR) --prefix=$(prefix)
 TEST_SCRIPTS ?= $(WORKSRC)/setup.py
+TEST_TARGET ?= test
 LICENSE ?= PKG-INFO
 SPKG_SOURCEURL ?= http://pypi.python.org/pypi/$(NAME)
 MASTER_SITES ?= $(PYPI_MIRROR)
