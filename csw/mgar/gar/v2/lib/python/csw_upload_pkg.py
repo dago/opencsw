@@ -27,22 +27,32 @@ import getpass
 BASE_URL = "http://buildfarm.opencsw.org"
 RELEASES_APP = "/releases"
 DEFAULT_CATREL = "unstable"
-USAGE = """%prog [ options ] <pkg1> [ <pkg2> [ ... ] ]
+USAGE = """%prog [ options ] <file1.pkg.gz> [ <file2.pkg.gz> [ ... ] ]
 
 Uploads a set of packages to the unstable catalog in opencsw-future.
 
-- When an ARCH=all package is sent, it's added to both sparc and i386 catalogs
+- When an architecture-independent package is uploaded, it gets added to both
+	sparc and i386 catalogs
+
 - When a SunOS5.x package is sent, it's added to catalogs SunOS5.x,
   SunOS5.(x+1), up to SunOS5.11, but only if there are no packages specific to
   5.10 (and/or 5.11).
-- If a package update is sent, the tool uses catalogname to identify the
-  package it's supposed to replace
 
-The --remove option affects the same catalogs as the regular use, except that
-it removes assignments of a given package to catalogs, instead of adding them.
+- If a package update is sent, the tool uses both the catalogname and the
+	pkgname to identify the package it's updating. For example, you might upload
+	foo_stub/CSWfoo and mean to replace foo/CSWfoo with it.
 
 The --os-release flag makes %prog only insert the package to catalog with the
 given OS release.
+
+= Removing packages from the catalog =
+
+The --remove option works the same way as the regular use, except that it
+removes assignments of a given package to catalogs, instead of adding them.
+
+When removing packages from catalogs, files on disk are passed as arguments.
+On the buildfarm, all files are available under the /home/mirror/opencsw
+directory.
 
 For more information, see:
 http://wiki.opencsw.org/automated-release-process#toc0
