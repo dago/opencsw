@@ -43,7 +43,7 @@ CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw
 # One test is failing on amd64, disable for now:
 #   FAIL: gctest
 # The bugreport has been posted on
-#   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/thread.html
+#   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/004904.html
 # BUILD64 = 1
 
 include gar/category.mk
