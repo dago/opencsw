@@ -83,10 +83,6 @@ export NSS_ENABLE_ECC
 # To avoid creating /opt/csw/lib/libsqlite3.so (already exists)
 NSS_USE_SYSTEM_SQLITE = 1
 export NSS_USE_SYSTEM_SQLITE
-SQLITE_LIB_DIR = /opt/csw/lib
-export SQLITE_LIB_DIR
-SQLITE_INCLUDE_DIR = /opt/csw/include
-export SQLITE_INCLUDE_DIR
 
 # 64-bit suppport
 ifeq ($(MODULATION),isa-sparcv9)
@@ -104,6 +100,14 @@ endif
 endif
 export NSPR_LIB_DIR
 
+ifeq ($(USE_64),1) 
+SQLITE_LIB_DIR = /opt/csw/lib/64
+else
+SQLITE_LIB_DIR = /opt/csw/lib
+endif
+export SQLITE_LIB_DIR
+SQLITE_INCLUDE_DIR = /opt/csw/include
+export SQLITE_INCLUDE_DIR
 
 # Based on:
 # http://mxr.mozilla.org/security/source/security/nss/pkg/solaris/SUNWtlsu/prototype_com
