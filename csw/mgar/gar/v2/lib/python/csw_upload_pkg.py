@@ -45,6 +45,15 @@ Uploads a set of packages to the unstable catalog in opencsw-future.
 The --os-release flag makes %prog only insert the package to catalog with the
 given OS release.
 
+= General considerations =
+
+This tool operates on a database of packages and a package file store. It
+modifies a number of package catalogs, a cartesian product of:
+
+  {legacy,dublin,unstable}x{sparc,i386}x{5.8,5.9.5.10,5.11}
+
+This amounts to 3x2x4 = 24 package catalogs total.
+
 = Removing packages from the catalog =
 
 The --remove option works the same way as the regular use, except that it
