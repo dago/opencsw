@@ -1,6 +1,0 @@
-%var            bitname rubydoc
-%var            pkgname CSWrubydoc
-%var            arch all
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%var            desc Ruby documentation
-%copyright      url file://%{WORKSRC}/COPYING

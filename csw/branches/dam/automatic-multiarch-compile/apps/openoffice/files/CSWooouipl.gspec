@@ -1,4 +1,0 @@
-%var            bitname ooouipl
-%var            pkgname CSWooouipl
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/readlicense_oo/source/license/unx/LICENSE_en-US

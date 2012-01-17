@@ -1,4 +1,0 @@
-%var            bitname xrestop
-%var            pkgname CSWxrestop
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      

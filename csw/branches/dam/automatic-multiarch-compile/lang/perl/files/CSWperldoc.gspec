@@ -1,6 +1,0 @@
-%var            bitname perldoc
-%var            pkgname CSWperldoc
-%var            arch all
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%var            desc Perl documentation
-%copyright      url file://%{WORKSRC}/Copying

@@ -1,4 +1,0 @@
-%var            bitname xfce_mcs_manager
-%var            pkgname CSWxfcemcsmanager
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

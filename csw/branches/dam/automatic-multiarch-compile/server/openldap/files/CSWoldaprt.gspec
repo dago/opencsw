@@ -1,5 +1,0 @@
-%var            bitname openldap_rt
-%var            pkgname CSWoldaprt
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var		desc OpenLDAP runtime libraries (oldaprt)
-%copyright      url file://%{WORKSRC}/COPYRIGHT

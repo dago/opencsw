@@ -1,9 +1,0 @@
-aff487543845a82fe262e6e2922b4c8e  download/expat-1.95.8.tar.gz
-ee8b492592568805593f81f8cdf2a04c  download/expat-2.0.1.tar.gz
-7145f62799b8019b4636811f22eed0dc  download/CSWexpat.gspec
-d41d8cd98f00b204e9800998ecf8427e  download/CSWexpat.depend
-2ee9a8ce89f28371461302eea3a706ce  download/CSWexpat.prototype
-2fb9c175c9f5d1e21f0531c1cada0994  download/CSWexpat-devel.gspec
-9c8bed940180401cb0bfcd7761ad5c1a  download/CSWexpat-devel.depend
-d99c92a8836db5f6baedec6912a968fb  download/CSWexpat-devel.prototype
-da9dfd74eb2b44102d137ff1d0993842  download/patch-libexpat-1.95.8-destdir.diff

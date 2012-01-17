@@ -1,5 +1,0 @@
-%var            bitname berkeleydb44_devel
-%var            pkgname CSWbdb44-devel
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc BerkeleyDB 4.4 development support
-%copyright      url file://%{WORKSRC}/../LICENSE

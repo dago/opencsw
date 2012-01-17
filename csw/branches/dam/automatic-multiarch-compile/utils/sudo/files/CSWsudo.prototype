@@ -1,2 +1,0 @@
-d none /opt/csw/bin 0755 root bin
-f none /opt/csw/bin/sudo.minimal=/opt/csw/bin/sudo 4111 root root

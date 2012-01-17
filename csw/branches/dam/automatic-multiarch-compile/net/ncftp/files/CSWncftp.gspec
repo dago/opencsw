@@ -1,4 +1,0 @@
-%var            bitname ncftp
-%var            pkgname CSWncftp
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/doc/LICENSE.txt

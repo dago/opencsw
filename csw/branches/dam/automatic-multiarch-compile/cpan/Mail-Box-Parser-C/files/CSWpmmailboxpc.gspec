@@ -1,4 +1,0 @@
-%var            bitname pm_mailboxpc
-%var            pkgname CSWpmmailboxpc
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

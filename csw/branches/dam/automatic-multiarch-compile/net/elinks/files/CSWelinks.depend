@@ -1,6 +1,0 @@
-P CSWbzip2 bzip2 - a high-quality block-sorting file compressor
-P CSWexpat expat -  XML Parser Toolkit
-P CSWiconv libiconv - GNU iconv library
-P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
-P CSWosslrt openssl - The Open Source toolkit for SSL and TLS.
-P CSWzlib zlib - Zlib Data Compression Library

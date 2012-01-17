@@ -1,8 +1,0 @@
-P CSWexpat expat -  XML Parser Toolkit
-P CSWfconfig fontconfig - A library for configuring and customizing font access.
-P CSWftype2 freetype2 - The free and portable high quality font engine
-P CSWiconv libiconv - GNU iconv library
-P CSWjpeg jpeg - JPEG library and tools by the Independent JPEG Group
-P CSWpng png - library for Portable Network Graphics format (PNG)
-P CSWxpm xpm - library for X11 PixMap format (libXpm.so.4.11)
-P CSWzlib zlib - Zlib Data Compression Library

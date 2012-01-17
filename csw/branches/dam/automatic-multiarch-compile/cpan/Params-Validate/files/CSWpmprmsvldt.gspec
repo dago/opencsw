@@ -1,4 +1,0 @@
-%var            bitname pm_prmsvldt
-%var            pkgname CSWpmprmsvldt
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

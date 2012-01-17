@@ -1,3 +1,0 @@
-%var            bitname jicmp
-%var            pkgname CSWjicmp
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec

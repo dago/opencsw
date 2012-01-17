@@ -1,8 +1,0 @@
-P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
-P CSWbzip2 bzip2 - a high-quality block-sorting file compressor
-P CSWgdbm gdbm - GNU dbm
-P CSWggettext ggettext - GNU gettext
-P CSWncurses ncurses - ncurses library and utilities
-P CSWosslrt openssl_rt - Openssl runtime libraries
-P CSWreadline readline - library to enable interactive line editing
-P CSWzlib zlib - Zlib Data Compression Library

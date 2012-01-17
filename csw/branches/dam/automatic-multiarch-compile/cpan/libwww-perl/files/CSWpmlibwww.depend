@@ -1,4 +1,0 @@
-P CSWpmcryptssleay pm_cryptssleay - OpenSSL glue that provides LWP https support
-P CSWpmdatadump pm_datadump - pretty printing of data structures
-P CSWpmhtmlparser pm_htmlparser - HTML parser class
-P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)

@@ -1,4 +1,0 @@
-%var            bitname squid
-%var            pkgname CSWsquid
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

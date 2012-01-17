@@ -1,5 +1,0 @@
-P      CSWlibcups     libcups - Libraries for the Common UNIX Printing System
-P      CSWgcrypt      libgcrypt - GNU libcrypt
-P      CSWgnutls      gnutls - GNU Transport Layer Security lib and tools
-P      CSWgpgerr      libgpg_error - GNU gpg related library
-P      CSWzlib        zlib - Zlib Data Compression Library

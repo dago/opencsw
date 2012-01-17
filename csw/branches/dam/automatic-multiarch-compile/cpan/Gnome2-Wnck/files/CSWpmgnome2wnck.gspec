@@ -1,4 +1,0 @@
-%var            bitname pm_gnome2wnck
-%var            pkgname CSWpmgnome2wnck
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
