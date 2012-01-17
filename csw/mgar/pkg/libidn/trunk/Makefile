@@ -1,5 +1,5 @@
 NAME = libidn
-VERSION = 1.23
+VERSION = 1.24
 CATEGORIES = lib
 
 DESCRIPTION = GNU IDN Library
@@ -12,12 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-MASTER_SITES += http://daily.josefsson.org/libidn/
+# MASTER_SITES += http://daily.josefsson.org/libidn/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://www.gnu.org/software/libidn/
-
-# PACKAGING_PLATFORMS = solaris10-sparc
 
 PACKAGES += CSWlibidn11
 SPKG_DESC_CSWlibidn11 = GNU IDN library, libidn.so.11
@@ -32,6 +30,8 @@ PKGFILES_CSWlibidn-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibidn-dev += $(sharedstatedir)/emacs/.*
 PKGFILES_CSWlibidn-dev += $(infodir)/.*
 RUNTIME_DEP_PKGS_CSWlibidn-dev += CSWlibidn11
+# This is just a file for the emacs mode
+CHECKPKG_OVERRIDES_CSWlibidn-dev += missing-dependency|CSWemacscommon
 
 PACKAGES += CSWlibidn-utils
 SPKG_DESC_CSWlibidn-utils = GNU IDN utilities
@@ -58,7 +58,5 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 # What's this? Windows DLLs? How do they end up in the Solaris build?
 EXTRA_MERGE_EXCLUDE_FILES = .*\.dll
-
-CHECKPKG_OVERRIDES_CSWlibidn-dev += missing-dependency|CSWemacscommon
 
 include gar/category.mk
