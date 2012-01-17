@@ -1,4 +1,0 @@
-%var            bitname pm_glib
-%var            pkgname CSWpmglib
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

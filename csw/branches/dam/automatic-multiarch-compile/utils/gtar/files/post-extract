@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ -d work/$1.d/tar-$2 ]; then
-	if [ -d work/$1.d/gtar-$2 ]; then
-		rm -rf work/$1.d/gtar-$2
-	fi
-	mv work/$1.d/tar-$2 work/$1.d/gtar-$2
-fi
-

@@ -1,4 +1,0 @@
-%var            bitname swig
-%var            pkgname CSWswig
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

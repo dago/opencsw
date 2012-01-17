@@ -1,4 +1,0 @@
-%var            bitname xfce_mousepad
-%var            pkgname CSWxfcemousepad
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

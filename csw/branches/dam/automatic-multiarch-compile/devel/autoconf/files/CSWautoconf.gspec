@@ -1,4 +1,0 @@
-%var            bitname autoconf
-%var            pkgname CSWautoconf
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

@@ -1,5 +1,0 @@
-%var            bitname trac
-%var            pkgname CSWtrac
-%var            arch all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

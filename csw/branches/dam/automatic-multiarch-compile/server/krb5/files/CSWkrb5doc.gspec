@@ -1,5 +1,0 @@
-%var            bitname krb5_doc
-%var            pkgname CSWkrb5doc
-%var		desc MIT Kerberos 5 documentation
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-#%copyright      url file://%{WORKSRC}/COPYRIGHT

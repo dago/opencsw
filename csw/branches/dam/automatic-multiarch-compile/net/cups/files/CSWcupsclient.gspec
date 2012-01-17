@@ -1,5 +1,0 @@
-%var            bitname cupsclient
-%var            pkgname CSWcupsclient
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%var            desc Client portion of the Common UNIX Printing System
-%copyright      url file://%{WORKSRC}/LICENSE.txt

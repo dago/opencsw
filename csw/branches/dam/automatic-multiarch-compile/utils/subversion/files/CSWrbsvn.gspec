@@ -1,5 +1,0 @@
-%var            bitname rbsvn
-%var            pkgname CSWrbsvn
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Subversion Ruby language binding
-%copyright      url file://%{WORKSRC}/COPYING

@@ -1,7 +1,0 @@
-%var            bitname pymysql
-%var            pkgname CSWpymysql
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      
-License
-
-  GPL or the original license based on Python 1.5.2's license.

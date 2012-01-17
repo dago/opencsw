@@ -1,4 +1,0 @@
-%var            bitname slrn
-%var            pkgname CSWslrn
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYRIGHT

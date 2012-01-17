@@ -1,5 +1,0 @@
-P CSWapache2     apache2 - Apache 2.2 web server
-P CSWap2modphp5  ap2_modphp5 - PHP 5 - Apache 2.2.x Module
-P CSWphp5ldap    php5_ldap - PHP 5 - OpenLDAP Extension
-P CSWphp5gettext php5_gettext - PHP 5 - GNU gettext Extension
-P CSWphp5session php5_session - PHP 5 - Session Extension

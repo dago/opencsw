@@ -1,4 +1,0 @@
-%var            bitname cfengine
-%var            pkgname CSWcfengine
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYRIGHT

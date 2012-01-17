@@ -1,4 +1,0 @@
-%var            bitname flex_new
-%var            pkgname CSWflex-new
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

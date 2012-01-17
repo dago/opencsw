@@ -1,3 +1,0 @@
-%var            bitname emacs
-%var            pkgname CSWemacs
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec

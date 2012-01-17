@@ -1,1 +1,0 @@
-../../php5/files/rules.mk

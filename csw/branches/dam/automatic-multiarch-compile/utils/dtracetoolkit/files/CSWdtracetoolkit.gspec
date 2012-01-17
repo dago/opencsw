@@ -1,5 +1,0 @@
-%var            bitname dtracetoolkit
-%var            pkgname CSWdtracetoolkit
-%var            arch all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/License

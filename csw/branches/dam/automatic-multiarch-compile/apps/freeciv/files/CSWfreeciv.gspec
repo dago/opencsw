@@ -1,4 +1,0 @@
-%var            bitname freeciv
-%var            pkgname CSWfreeciv
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

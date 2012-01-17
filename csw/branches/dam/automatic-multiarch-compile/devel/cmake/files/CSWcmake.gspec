@@ -1,4 +1,0 @@
-%var            bitname cmake
-%var            pkgname CSWcmake
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/Docs/Copyright.txt

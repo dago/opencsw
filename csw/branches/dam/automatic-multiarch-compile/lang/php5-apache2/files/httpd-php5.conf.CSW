@@ -1,8 +1,0 @@
-
-<IfModule php5_module>
-    <IfModule mime_module>
-        AddType application/x-httpd-php .php
-        AddType application/x-httpd-php-source .phps
-    </IfModule>
-</IfModule>
-

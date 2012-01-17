@@ -1,6 +1,0 @@
-d none /opt/csw/bin 0755 root bin
-f none /opt/csw/bin/memcached 0755 root bin
-d none /opt/csw/share 0755 root bin
-d none /opt/csw/share/man 0755 root bin
-d none /opt/csw/share/man/man1 0755 root bin
-f none /opt/csw/share/man/man1/memcached.1 0644 root bin

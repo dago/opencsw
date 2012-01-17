@@ -1,4 +1,0 @@
-d none /opt/csw/lib 0755 root bin
-d none /opt/csw/lib/python 0755 root bin
-d none /opt/csw/lib/python/site-packages 0755 root bin
-f none /opt/csw/lib/python/site-packages/neo_cgi.so=/opt/csw/lib/python2.5/site-packages/neo_cgi.so 0755 root bin

@@ -1,9 +1,0 @@
-%var            bitname pm_ipcsharelite
-%var            pkgname CSWpmipcsharelite
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
-Copyright 1998-2002, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>. 
-All rights reserved.
-
-This module is free software; you may redistribute it and/or
-modify it under the same terms as Perl itself. 

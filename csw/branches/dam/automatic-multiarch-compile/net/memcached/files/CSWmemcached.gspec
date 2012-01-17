@@ -1,4 +1,0 @@
-%var            bitname memcached
-%var            pkgname CSWmemcached
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

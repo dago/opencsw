@@ -1,5 +1,0 @@
-%var            bitname libxfcegui4dev
-%var            pkgname CSWlibxfcegui4dev
-%var		desc	Xfce Widget Library Headers
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

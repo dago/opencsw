@@ -1,5 +1,0 @@
-%var            bitname pyclearsilver
-%var            pkgname CSWpycs
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Clearsilver Python language binding
-%copyright      url file://%{WORKSRC}/LICENSE

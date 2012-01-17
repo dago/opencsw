@@ -1,8 +1,0 @@
-%var            bitname php5_mhash
-%var            pkgname CSWphp5mhash
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%include        url file://%{WORKDIR}/CSWphp5_ext.depend
-%postinstall    url file://%{WORKDIR}/CSWphp5_ext_enable.sh
-%postremove     url file://%{WORKDIR}/CSWphp5_ext_disable.sh
-%var            desc PHP 5 - libmhash Extension
-%copyright      url file://%{WORKSRC}/LICENSE

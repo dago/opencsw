@@ -1,4 +1,0 @@
-%var            bitname pixman
-%var            pkgname CSWpixman
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      

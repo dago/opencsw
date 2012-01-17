@@ -1,3 +1,0 @@
-d none /opt/csw/apache 0755 root bin
-d none /opt/csw/apache/libexec 0755 root bin
-f none /opt/csw/apache/libexec/libphp5.so 0755 root bin

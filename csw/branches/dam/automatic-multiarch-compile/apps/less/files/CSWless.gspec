@@ -1,4 +1,0 @@
-%var            bitname less
-%var            pkgname CSWless
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

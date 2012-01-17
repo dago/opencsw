@@ -1,4 +1,0 @@
-%var            bitname kde_gcc_dtlogin
-%var            pkgname CSWkdegccdtlogin
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKDIR}/LICENSE

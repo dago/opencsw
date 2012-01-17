@@ -1,4 +1,0 @@
-P CSWexpat expat -  XML Parser Toolkit
-P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
-P CSWosslrt openssl_rt - Openssl runtime libraries
-P CSWzlib zlib - Zlib Data Compression Library

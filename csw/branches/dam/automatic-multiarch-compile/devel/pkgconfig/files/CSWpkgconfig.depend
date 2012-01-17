@@ -1,4 +1,0 @@
-P CSWggettext ggettext - GNU gettext
-P CSWglib2    glib2 - the low-level core library for GTK+ and GNOME
-P CSWiconv    libiconv - GNU iconv library
-P CSWsunmath  libsunmath - Sun maths library

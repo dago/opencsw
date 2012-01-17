@@ -1,8 +1,0 @@
-%var            bitname pm_classretval
-%var            pkgname CSWpmclassretval
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
-Copyright (c) 2002, Jesse Vincent <jesse@bestpractical.com>
-You may use, modify, fold, spindle or mutilate this module under
-the same terms as perl itself.
