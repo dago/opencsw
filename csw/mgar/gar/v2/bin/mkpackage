@@ -65,6 +65,7 @@ $SELF = basename $0;
     prog_exec_error     => 9,
     spec_error          => 10,
     dumped_env          => 11,
+    bad_ziplevel        => 12,
     unknown             => 42,
 );
 
@@ -317,6 +318,7 @@ sub process_arguments {
         'transfer!'    => \$config{transfer},
         'overwrite!'   => \$config{overwrite},
         'compress!'    => \$config{compress},
+        'ziplevel|z=i' => \$config{ziplevel},
         'usebzip'      => \$config{usebzip},
         'usepigz'      => \$config{usepigz},
         'quiet|q'      => \$config{quiet},
@@ -399,6 +401,9 @@ sub process_arguments {
     $config{overwrite} = 0 unless defined $config{overwrite};
     $config{usebzip}   = 0 unless defined $config{usebzip};
     $config{usepigz}   = 0 unless defined $config{usepigz};
+    $config{ziplevel}  = 9 unless defined $config{ziplevel};
+    Die( $exit{bad_ziplevel}, "Invalid --ziplevel '$config{ziplevel}'" )
+      if $config{ziplevel} < 1 or $config{ziplevel} > 9;
 
     # Export variables to the spec
     $ENV{$_} = $config{$_} foreach qw/
@@ -912,10 +917,10 @@ sub transfer_package {
     if ( $config{compress} ) {
         my $compress =
           $config{usebzip}
-          ? 'bzip2 -9 -f %s'
-          : ($config{usepigz} ? 'pigz -9 -f %s' : 'gzip -9 -f %s');
+          ? 'bzip2 -%d -f %s'
+          : ($config{usepigz} ? 'pigz -%d -f %s' : 'gzip -%d -f %s');
 
-        vexec( sprintf( $compress, $tmppkg ), "Failed to compress $tmppkg" );
+        vexec( sprintf( $compress, $config{ziplevel}, $tmppkg ), "Failed to compress $tmppkg" );
         $tmppkg .= $config{usebzip} ? ".bz2" : ".gz";
     }
 
@@ -954,9 +959,10 @@ mkpackage - Create one or more Solaris packages from a 'spec' file.
 
  mkpackage --spec <path> [--destdir <path>] [--workdir <path>]
         [--spooldir <path>] [--pkgroot <path>] [--tmpdir <path>]
-        [--[no]transfer] [--[no]overwrite] [--[no]compress]
-        [--usebzip] [--usepigz] [-v var=value...] [--dump <var>|-dumpall]
-        [--quiet] [--help] [--manual] [--version]
+        [--[no]transfer] [--[no]overwrite] [--[no]compress] 
+        [--ziplevel N] [--usebzip] [--usepigz] [-v var=value...] 
+        [--dump <var>|-dumpall] [--quiet] [--help] [--manual]
+        [--version]
 
 =head1 DESCRIPTION
 
@@ -1027,6 +1033,11 @@ will compress the bitstream with gzip or, if --usebzip is specified, with
 bzip2.  Either command is executed with -9 for minimum archive size.  Note that
 this option is ignored when --notransfer is specified, as in this case no
 bistream package will be created.
+
+=head2 --ziplevel,-z
+
+Set compression level. Option accepts a single integer from 1 to 9.
+The meaning is the same as for -# gzip option. (Default: 9)
 
 =head2 --usebzip
 
