@@ -186,6 +186,10 @@ PATCHFILES += 0001-Force-linkage-to-libperl.so.patch
 # "CC="/opt/SUNWspro/bin/cc -xrunpath"
 PATCHFILES += 0002-fix-config2header.patch
 
+# Changes location of imapd.conf from /etc/imapd.conf to
+# /etc/opt/csw/cyrus/imapd.conf in mkimap (mkdirs)
+PATCHFILES += cyrus-imapd-fix-path-in-mkimap.patch
+
 # cyradmrc.pl should be in /etc/opt/csw/etc/cyrus, not in /usr/local/etc/
 PATCHFILES += cyradmrc.pl-path-modification.patch
 
@@ -270,7 +274,7 @@ post-merge: install-tools cyrus-rename install-docs libexec-in-sbin install-cyru
 install-additional-files:
 	# we provide our class action scripts to modify /etc/inet/services
 	ginstall -D $(WORKDIR_FIRSTMOD)/services $(PKGROOT)/etc/opt/csw/pkg/CSWcyrusimapd/services
-	
+		
 	# configuration and init file installation
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswcyrus" "$(PKGROOT)/etc/opt/csw/init.d/cswcyrus"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswcyrus.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswcyrus.xml"
@@ -324,6 +328,8 @@ fix2build:
 
 # we rename some tools with too generic names
 cyrus-rename:
+# I don't think renaming mkimap is clever, the online documentation
+# refers to mkimap. Renaming it may confuse users --raos
 	mv $(PKGROOT)/$(sbindir)/mkimap $(PKGROOT)/$(sbindir)/mkdirs
 	( for FILE in mkdirs mknewsgroups dohash undohash rehash; do \
 		mv $(PKGROOT)/$(sbindir)/$$FILE $(PKGROOT)/$(sbindir)/cyrus-$$FILE; \
