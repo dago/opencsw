@@ -1,0 +1,11 @@
+--- cyrus-imapd-2.4.10/tools/mkimap.orig	Tue Jan 17 20:14:11 2012
++++ cyrus-imapd-2.4.10/tools/mkimap	Tue Jan 17 20:13:14 2012
+@@ -90,7 +90,7 @@
+     close CONF;
+ }
+ 
+-$imapdconf = shift || "/etc/imapd.conf";
++$imapdconf = shift || "/etc/opt/csw/cyrus/imapd.conf";
+ 
+ push @configs, $imapdconf;
+ 
