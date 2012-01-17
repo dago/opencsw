@@ -32,7 +32,7 @@ the library, and once this is done, old versions can be removed.
 However, even when all dependent packages are already recompiled against
 libcurl.so.4, there are no useful indicators that libcurl.so.2 is no
 longer linked to.  To verify this, all dependent packages have to be
-unpacked, and examined using /usr/ccs/bin/dump that the no longer list
+unpacked, and examined using /usr/ccs/bin/dump that they no longer list
 libcurl.so.2 in their NEEDED field.
 
 Once the detection problem is solved, removing the old version of
