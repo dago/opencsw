@@ -56,7 +56,7 @@ RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWnetsnmp
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWsasl
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibsasl2-2
 
 # Expected catalogname: cyrusimapd, not cyrus_imapd
 CHECKPKG_OVERRIDES_CSWcyrusimapd += catalogname-does-not-match-pkgname
@@ -76,7 +76,7 @@ RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcreposix0
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWsasl
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibsasl2-2
 # Expected catalogname: cyrusimapdutils, not cyrus_imapd_utils
 CHECKPKG_OVERRIDES_CSWcyrusimapdutils += catalogname-does-not-match-pkgname
 
@@ -89,7 +89,7 @@ RUNTIME_DEP_PKGS_CSWpmcyrus += CSWbdb47
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWperl
-RUNTIME_DEP_PKGS_CSWpmcyrus += CSWsasl
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibsasl2-2
 
 PROTOTYPE_MODIFIERS = cyrusdir
 PROTOTYPE_FILES_cyrusdir = $(localstatedir)/cyrus.*
