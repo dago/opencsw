@@ -40,7 +40,7 @@ install-policy:
 post-install-modulated: copy-to-web
 	@$(MAKECOOKIE)
 
-copy-to-web: $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-policy)/index.html
+copy-to-web:
 	if [ -d $(HOME)/public_html/policy ]; then \
 		rsync -r $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-policy)/ \
 		$(HOME)/public_html/policy; \
