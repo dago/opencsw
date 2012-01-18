@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.07
+VERSION = 5.10
 CATEGORIES = utils
 
 define BLURB
@@ -13,61 +13,46 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.astron.com/pub/file/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-SPKG_SOURCEURL = http://www.darwinsys.com/file/
-CONFIGURE_ARGS = $(DIRPATHS)
-# These flags are not understood by Sun Studio
-CONFIGURE_ARGS += --disable-warnings
-TEST_TARGET = check
+DISTFILES  = $(DISTNAME).tar.gz
 
-# Patches specific to the 5.04 version:
-# PATCHFILES += 0001-libtool-dir-used-for-linking.patch 
-# PATCHFILES += 0002-CSW-runpath.patch
-
-# Patches specific to the 5.05 version:
-PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
 PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 
+VENDOR_URL = http://www.darwinsys.com/file/
+
 PACKAGES += CSWgfile
-PKGFILES_CSWgfile += $(bindir)/gfile
-PKGFILES_CSWgfile += $(bindir)/$(ISA_DEFAULT64)/gfile
+SPKG_DESC_CSWgfile = A file type guesser
+PKGFILES_CSWgfile += $(call baseisadirs,$(bindir),gfile)
 PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
 PKGFILES_CSWgfile += $(prefix)/gnu/file
-SPKG_DESC_CSWgfile = A file type guesser
-RUNTIME_DEP_PKGS_CSWgfile += CSWzlib
+RUNTIME_DEP_PKGS_CSWgfile += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgfile += CSWlibmagic1
-EXTRA_MERGE_EXCLUDE_FILES = .*\.py[oc]
+# EXTRA_MERGE_EXCLUDE_FILES = .*\.py[oc]
 
 PACKAGES += CSWpy-libmagic
-PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
-CATALOGNAME_CSWpy-libmagic = py_libmagic
+PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
 
 PACKAGES += CSWlibmagic-data
-CATALOGNAME_CSWlibmagic-data = libmagic_data
 SPKG_DESC_CSWlibmagic-data = Database for libmagic
+# PKGFILES is catchall
 ARCHALL_CSWlibmagic-data = 1
 # The magic file contains /usr/local as one of the magic constants to detect
 # file types.
 CHECKPKG_OVERRIDES_CSWlibmagic-data += file-with-bad-content
 
 PACKAGES += CSWlibmagic1
-CATALOGNAME_CSWlibmagic1 = libmagic1
-PKGFILES_CSWlibmagic1 += $(call baseisadirs,$(libdir),libmagic\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibmagic1 += The library behind file(1), libmagic.so.1
-RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibmagic-data
+PKGFILES_CSWlibmagic1 += $(call pkgfiles_lib,libmagic.so.1)
+RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibz1
 CHECKPKG_OVERRIDES_CSWlibmagic1 += surplus-dependency|CSWlibmagic-data
+OBSOLETED_BY_CSWlibmagic1 += CSWlibmagic
 
 PACKAGES += CSWlibmagic-dev
-SPKG_DESC_CSWlibmagic-dev = Development files for libmagic
-CATALOGNAME_CSWlibmagic-dev = libmagic_dev
+SPKG_DESC_CSWlibmagic-dev = Development files for libmagic.so.1
 PKGFILES_CSWlibmagic-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibmagic-dev += /opt/csw/lib/libmagic.so
 RUNTIME_DEP_PKGS_CSWlibmagic-dev += CSWlibmagic1
 
 # The "file" util is used during stripbin. As the newly build binary
@@ -76,17 +61,23 @@ RUNTIME_DEP_PKGS_CSWlibmagic-dev += CSWlibmagic1
 IGNORE_DESTDIR = 1
 
 # Doesn't hurt to have this on.
-DISTUTILS_DEBUG = 1
-export DISTUTILS_DEBUG
+EXTRA_CONFIGURE_EXPORTS = DISTUTILS_DEBUG
+CONFIGURE_ENV_DISTUTILS_DEBUG = 1
+
+CONFIGURE_ARGS = $(DIRPATHS)
+# These flags are not understood by Sun Studio
+CONFIGURE_ARGS += --disable-warnings
 
 BUILD64 = 1
+
+PYCOMPILE = 1
 
 include gar/category.mk
 
 post-build-modulated:
 	# This fails for a mysterious reason.  Can't find libmagic (-lmagic).
-	# (cd $(WORKSRC)/python && python setup.py build --compiler=unix)
-	(cd $(WORKSRC)/python && python setup.py build)
+	(cd $(WORKSRC)/python && python setup.py build --compiler=unix)
+	###(cd $(WORKSRC)/python && python setup.py build)
 	@$(MAKECOOKIE)
 
 post-install-modulated:
