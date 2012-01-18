@@ -1,0 +1,35 @@
+From 4d7a3366cfa5a60d39b14677dca940b5720a9130 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 9 Mar 2011 10:27:30 +0100
+Subject: [PATCH] Do not use find_library at runtime
+
+---
+ python/magic.py |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/python/magic.py b/python/magic.py
+index 35a7182..7807ce2 100644
+--- a/python/magic.py
++++ b/python/magic.py
+@@ -6,14 +6,16 @@ Python bindings for libmagic
+ import ctypes
+ 
+ from ctypes import *
+-from ctypes.util import find_library
+ 
+ def _init():
+     """
+     Loads the shared library through ctypes and returns a library
+     L{ctypes.CDLL} instance 
+     """
+-    return ctypes.cdll.LoadLibrary(find_library('magic'))
++    # the find_library function depends on a compiler being installed at
++    # runtime, which would be unacceptable even if it worked (it doesn't).
++    # Removing the call to find_library and hardcoding the library name.
++    return ctypes.cdll.LoadLibrary('libmagic.so.1')
+ 
+ _libraries = {}
+ _libraries['magic'] = _init()
+-- 
+1.7.3.2
+
