@@ -308,7 +308,7 @@ build-dbm:
 build-nss-compile:
 	(cd $(WORKSRC)/mozilla/security/nss \
 		&& \
-	gmake -j1 RPATH=-R\'\$$\$$ORIGIN\')
+	gmake -j1 RPATH=-R\'/opt/csw/lib/\$$\$$ISALIST\')
 	@$(MAKECOOKIE)
 
 install-nss:
