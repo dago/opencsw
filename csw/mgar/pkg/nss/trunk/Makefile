@@ -252,7 +252,7 @@ PATCHFILES += 0005-platlibs.mk-linking-bltest.patch
 
 CPPFLAGS =
 LD_OPTIONS = 
-NSS_LD_OPTIONS = -R/opt/csw/lib/$$ISALIST
+# NSS_LD_OPTIONS = -R'$$ORIGIN'
 
 include gar/category.mk
 
@@ -278,8 +278,7 @@ build-dbm:
 build-nss-compile:
 	(cd $(WORKSRC)/mozilla/security/nss \
 		&& \
-	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS) $(NSS_LD_OPTIONS)' \
-	gmake -j1)
+	gmake -j1 RPATH=-R\'\$$\$$ORIGIN\')
 	@$(MAKECOOKIE)
 
 install-nss:
