@@ -28,6 +28,7 @@ MINOR_VERSION = 12
 PATCHLEVEL    = 11
 VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
+DESCRIPTION = Network Security Services library
 define BLURB
   Network Security Services (NSS) is a set of libraries designed to support
   cross-platform development of security-enabled client and server
@@ -45,109 +46,107 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-PACKAGES += CSWlibfreebl32fpu3
-CATALOGNAME_CSWlibfreebl32fpu3 = libfreebl32fpu3
-SPKG_DESC_CSWlibfreebl32fpu3 = Network Security Services library, libfreebl_32fpu_3
-PKGFILES_CSWlibfreebl32fpu3 += $(call baseisadirs,$(libdir),libfreebl_32fpu_3\.so)
-PKGFILES_CSWlibfreebl32fpu3 += $(call baseisadirs,$(libdir),libfreebl_32fpu_3\.so(\.\d+)*)
-SPKG_DESC_CSWlibfreebl32fpu3 += $(DESCRIPTION), libfreebl_32fpu_3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl32fpu3
-
-PACKAGES += CSWlibfreebl32int64-3
-CATALOGNAME_CSWlibfreebl32int64-3 = libfreebl32int64_3
-SPKG_DESC_CSWlibfreebl32int64-3 = Network Security Services library, libfreebl_32int64_3
-PKGFILES_CSWlibfreebl32int64-3 += $(call baseisadirs,$(libdir),libfreebl_32int64_3\.so)
-PKGFILES_CSWlibfreebl32int64-3 += $(call baseisadirs,$(libdir),libfreebl_32int64_3\.so(\.\d+)*)
-SPKG_DESC_CSWlibfreebl32int64-3 += $(DESCRIPTION), libfreebl_32int64_3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl32int64-3
-
-PACKAGES += CSWlibfreebl32int3
-CATALOGNAME_CSWlibfreebl32int3 = libfreebl32int3
-SPKG_DESC_CSWlibfreebl32int3 = Network Security Services library, libfreebl_32int_3
-PKGFILES_CSWlibfreebl32int3 += $(call baseisadirs,$(libdir),libfreebl_32int_3\.so)
-PKGFILES_CSWlibfreebl32int3 += $(call baseisadirs,$(libdir),libfreebl_32int_3\.so(\.\d+)*)
-SPKG_DESC_CSWlibfreebl32int3 += $(DESCRIPTION), libfreebl_32int_3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl32int3
-
 PACKAGES += CSWlibnss3
 CATALOGNAME_CSWlibnss3 = libnss3
-SPKG_DESC_CSWlibnss3 = Network Security Services library, implements crypto, PKI, SSL, and S/MIME support
+SPKG_DESC_CSWlibnss3 += $(DESCRIPTION), libnss3.so
 PKGFILES_CSWlibnss3 += $(call baseisadirs,$(libdir),libnss3\.so)
 PKGFILES_CSWlibnss3 += $(call baseisadirs,$(libdir),libnss3\.so(\.\d+)*)
-SPKG_DESC_CSWlibnss3 += $(DESCRIPTION), libnss3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibnssutil3
+RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibplc4
 
 PACKAGES += CSWlibnssckbi
 CATALOGNAME_CSWlibnssckbi = libnssckbi
-SPKG_DESC_CSWlibnssckbi = Network Security Services library, libnssckbi
 PKGFILES_CSWlibnssckbi += $(call baseisadirs,$(libdir),libnssckbi\.so)
 PKGFILES_CSWlibnssckbi += $(call baseisadirs,$(libdir),libnssckbi\.so(\.\d+)*)
 SPKG_DESC_CSWlibnssckbi += $(DESCRIPTION), libnssckbi.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssckbi
+RUNTIME_DEP_PKGS_CSWlibnssckbi += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibnssckbi += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibnssckbi += CSWlibplc4
 
 PACKAGES += CSWlibnssdbm3
 CATALOGNAME_CSWlibnssdbm3 = libnssdbm3
-SPKG_DESC_CSWlibnssdbm3 = Network Security Services library, libnssdbm3
 PKGFILES_CSWlibnssdbm3 += $(call baseisadirs,$(libdir),libnssdbm3\.so)
 PKGFILES_CSWlibnssdbm3 += $(call baseisadirs,$(libdir),libnssdbm3\.so(\.\d+)*)
 SPKG_DESC_CSWlibnssdbm3 += $(DESCRIPTION), libnssdbm3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssdbm3
+RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibnssutil3 
+RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibplc4
 
 PACKAGES += CSWlibnssutil3
 CATALOGNAME_CSWlibnssutil3 = libnssutil3
-SPKG_DESC_CSWlibnssutil3 = Network Security Services library, libnssutil3
 PKGFILES_CSWlibnssutil3 += $(call baseisadirs,$(libdir),libnssutil3\.so)
-PKGFILES_CSWlibnssutil3 += $(call baseisadirs,$(libdir),libnssutil3\.so(\.\d+)*)SPKG_DESC_CSWlibnssutil3 += $(DESCRIPTION), libnssutil3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssutil3
+PKGFILES_CSWlibnssutil3 += $(call baseisadirs,$(libdir),libnssutil3\.so(\.\d+)*)
+SPKG_DESC_CSWlibnssutil3 += $(DESCRIPTION), libnssutil3.so
+RUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibplc4
 
 PACKAGES += CSWlibsmime3
 CATALOGNAME_CSWlibsmime3 = libsmime3
-SPKG_DESC_CSWlibsmime3 = Network Security Services library, libsmime3
+SPKG_DESC_CSWlibsmime3 += $(DESCRIPTION), libsmime3.so
 PKGFILES_CSWlibsmime3 += $(call baseisadirs,$(libdir),libsmime3\.so)
 PKGFILES_CSWlibsmime3 += $(call baseisadirs,$(libdir),libsmime3\.so(\.\d+)*)
-SPKG_DESC_CSWlibsmime3 += $(DESCRIPTION), libsmime3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibnssutil3 
+RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibplc4
 
 PACKAGES += CSWlibsoftokn3
 CATALOGNAME_CSWlibsoftokn3 = libsoftokn3
-SPKG_DESC_CSWlibsoftokn3 = Network Security Services library, libsoftokn3
 PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so)
-PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so(\.\d+)*)SPKG_DESC_CSWlibsoftokn3 += $(DESCRIPTION), libsoftokn3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsoftokn3
+PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so(\.\d+)*)
+SPKG_DESC_CSWlibsoftokn3 += $(DESCRIPTION), libsoftokn3.so
+RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnssutil3 
+RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibplds4
 
 PACKAGES += CSWlibssl3
 CATALOGNAME_CSWlibssl3 = libssl3
-SPKG_DESC_CSWlibssl3 = Network Security Services library, libssl3
+SPKG_DESC_CSWlibssl3 += $(DESCRIPTION), libssl3.so
 PKGFILES_CSWlibssl3 += $(call baseisadirs,$(libdir),libssl3\.so)
 PKGFILES_CSWlibssl3 += $(call baseisadirs,$(libdir),libssl3\.so(\.\d+)*)
-SPKG_DESC_CSWlibssl3 += $(DESCRIPTION), libssl3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibplc4
 
-PACKAGES += CSWlibfreebl64fpu3
-CATALOGNAME_CSWlibfreebl64fpu3 = libfreebl64fpu3
-SPKG_DESC_CSWlibfreebl64fpu3 = Network Security Services library, libfreebl64fpu3
-PKGFILES_CSWlibfreebl64fpu3 += $(call baseisadirs,$(libdir),libfreebl_64fpu_3\.so)
-PKGFILES_CSWlibfreebl64fpu3 += $(call baseisadirs,$(libdir),libfreebl_64fpu_3\.so(\.\d+)*)
-SPKG_DESC_CSWlibfreebl64fpu3 += $(DESCRIPTION), libfreebl_64fpu_3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl64fpu3
-
-PACKAGES += CSWlibfreebl64int3
-CATALOGNAME_CSWlibfreebl64int3 = libfreebl64int3
-SPKG_DESC_CSWlibfreebl64int3 = Network Security Services library, libfreebl64int3
+PACKAGES += CSWlibfreebl
+CATALOGNAME_CSWlibfreebl = libfreebl
+SPKG_DESC_CSWlibfreebl+= $(DESCRIPTION), libfreebl
+PKGFILES_CSWlibfreebl+= $(call baseisadirs,$(libdir),libfreebl_64fpu_3\.so)
+PKGFILES_CSWlibfreebl+= $(call baseisadirs,$(libdir),libfreebl_64fpu_3\.so(\.\d+)*)
 PKGFILES_CSWlibfreebl64int3 += $(call baseisadirs,$(libdir),libfreebl_64int_3\.so)
 PKGFILES_CSWlibfreebl64int3 += $(call baseisadirs,$(libdir),libfreebl_64int_3\.so(\.\d+)*)
-SPKG_DESC_CSWlibfreebl64int3 += $(DESCRIPTION), libfreebl_64int_3.so
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl64int3
+PKGFILES_CSWlibfreebl32fpu3 += $(call baseisadirs,$(libdir),libfreebl_32fpu_3\.so)
+PKGFILES_CSWlibfreebl32fpu3 += $(call baseisadirs,$(libdir),libfreebl_32fpu_3\.so(\.\d+)*)
+PKGFILES_CSWlibfreebl32int64-3 += $(call baseisadirs,$(libdir),libfreebl_32int64_3\.so)
+PKGFILES_CSWlibfreebl32int64-3 += $(call baseisadirs,$(libdir),libfreebl_32int64_3\.so(\.\d+)*)
+PKGFILES_CSWlibfreebl32int3 += $(call baseisadirs,$(libdir),libfreebl_32int_3\.so)
+PKGFILES_CSWlibfreebl32int3 += $(call baseisadirs,$(libdir),libfreebl_32int_3\.so(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibfreebl += CSWlibnssutil3
 
 PACKAGES += CSWlibnss-dev
 CATALOGNAME_CSWlibnss-dev = libnss_dev
 SPKG_DESC_CSWlibnss-dev = Network Security Services library, development files
-PKGFILES_CSWlibnss-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibnss-dev = $(call baseisadirs,$(includedir),*\.h*)
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibssl3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsoftokn3
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssutil3
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssdbm3
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssckbi
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl
 OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-devel
 
 PACKAGES += CSWlibnss3-tools
@@ -158,7 +157,6 @@ RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibplds4
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnss-dev
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-dev CSWlibsqlite3-dev
 
@@ -253,6 +251,38 @@ PATCHFILES += 0005-platlibs.mk-linking-bltest.patch
 CPPFLAGS =
 LD_OPTIONS = 
 # NSS_LD_OPTIONS = -R'$$ORIGIN'
+
+CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int64_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64int_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/libfreebl_32fpu_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl += non-uniform-lib-versions-in-package|sonames=libfreebl_32fpu_3.so,libfreebl_32int64_3.so,libfreebl_32int_3.so,libfreebl_64fpu_3.so,libfreebl_64int_3.so
+CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/libnss3.so
+CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnss3.so
+CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/libnssutil3.so
+CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssutil3.so
+CHECKPKG_OVERRIDES_CSWlibsoftokn3 += soname-equals-filename|file=/opt/csw/lib/libsoftokn3.so
+CHECKPKG_OVERRIDES_CSWlibsoftokn3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsoftokn3.so
+CHECKPKG_OVERRIDES_CSWlibssl3 += soname-equals-filename|file=/opt/csw/lib/libssl3.so
+CHECKPKG_OVERRIDES_CSWlibssl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libssl3.so
+CHECKPKG_OVERRIDES_CSWlibsmime3 += soname-equals-filename|file=/opt/csw/lib/libsmime3.so
+CHECKPKG_OVERRIDES_CSWlibsmime3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsmime3.so
+CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/libnssckbi.so
+CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssckbi.so
+CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/libnssdbm3.so
+CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssdbm3.so
+HECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/addbuiltin
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/certutil
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/cmsutil
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/crlutil
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/modutil
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/pk12util
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/signtool
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/signver
+CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/ssltap
+
 
 include gar/category.mk
 
