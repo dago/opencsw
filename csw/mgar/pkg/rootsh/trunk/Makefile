@@ -24,7 +24,16 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --with-logdir=/var/opt/csw/rootsh
+
+PROTOTYPE_MODIFIERS = rootsshdir 
+PROTOTYPE_FILES_rootsshdir =  /var/opt/csw/rootsh  # a normal Perl regexp. Watch out for links!
+PROTOTYPE_PERMS_rootsshdir = 0733
+PROTOTYPE_USER_rootsshdir = root
+PROTOTYPE_GROUP_rootsshdir = root
 
 include gar/category.mk
 
+post-install-modulated:
+	ginstall --mode=733 -d $(DESTDIR)/var/opt/csw/rootsh
+	@$(MAKECOOKIE)
