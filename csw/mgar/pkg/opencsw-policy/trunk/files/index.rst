@@ -3,18 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-===================================
-Welcome to OpenCSW's documentation!
-===================================
+==============================
+Welcome to the OpenCSW manual!
+==============================
 
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   o2a-index
-   o2d-index
-   o2m-index
+   for-administrators/index
+   for-developers/index
+   for-maintainers/index
 
 .. Indices and tables
    ==================

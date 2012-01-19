@@ -1,11 +1,19 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+#
+# Testing
+# =======
+#
+# mkdir -p ~/public_html/opencsw-manual
+# mgar install copy-to-web
+# point your browser at:
+# http://buildfarm.opencsw.org/~${LOGNAME}/opencsw-manual/
 
-NAME = opencsw-policy
+NAME = opencsw-manual
 VERSION = 0.1
 CATEGORIES = lib
-DESCRIPTION = OpenCSW packaging policy
+DESCRIPTION = OpenCSW manual
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.opencsw.org
@@ -15,8 +23,8 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = policy
 INSTALL_SCRIPTS = policy
 TEST_SCRIPTS =
-ARCHALL_CSWopencsw-policy = 1
-CATALOGNAME_CSWopencsw-policy = opencsw_policy
+ARCHALL_CSWopencsw-manual = 1
+CATALOGNAME_CSWopencsw-manual = opencsw_policy
 LICENSE = fdl-1.3.txt
 
 BUILD_DEP_PKGS += CSWpy-sphinx
@@ -33,17 +41,17 @@ build-policy:
 	(cd $(WORKSRC); gmake html)
 
 install-policy:
-	ginstall -m 755 -d $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-policy)
-	rsync -rv $(WORKSRC)/_build/html/ $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-policy)
+	ginstall -m 755 -d $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
+	rsync -rv $(WORKSRC)/_build/html/ $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
 	@$(MAKECOOKIE)
 
 post-install-modulated: copy-to-web
 	@$(MAKECOOKIE)
 
 copy-to-web:
-	if [ -d $(HOME)/public_html/policy ]; then \
-		rsync -r $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-policy)/ \
-		$(HOME)/public_html/policy; \
+	if [ -d $(HOME)/public_html/opencsw-manual ]; then \
+		rsync -r $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)/ \
+		$(HOME)/public_html/opencsw-manual; \
 	fi
 
 .PHONY: copy-to-web
