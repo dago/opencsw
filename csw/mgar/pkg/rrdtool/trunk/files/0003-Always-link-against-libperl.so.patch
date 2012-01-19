@@ -1,0 +1,37 @@
+From d9cd315cb85caf2e4c5237d4a055367b776feda0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 19 Jan 2012 16:42:41 +0100
+Subject: [PATCH] Always link against libperl.so
+
+---
+ bindings/perl-piped/Makefile.PL  |    1 +
+ bindings/perl-shared/Makefile.PL |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/bindings/perl-piped/Makefile.PL b/bindings/perl-piped/Makefile.PL
+index 5c1a98f..2aa47db 100644
+--- a/bindings/perl-piped/Makefile.PL
++++ b/bindings/perl-piped/Makefile.PL
+@@ -5,6 +5,7 @@ use ExtUtils::MakeMaker;
+ WriteMakefile(
+     'NAME'         => 'RRDp',
+     'VERSION'      => '0.99.0', # finds $VERSION
++    'LIBS'         => '-lperl',
+     'linkext'   => {LINKTYPE => ''},
+     'dist'    =>    {COMPRESS=>'gzip', SUFFIX=>'gz'},
+ );
+diff --git a/bindings/perl-shared/Makefile.PL b/bindings/perl-shared/Makefile.PL
+index 85e2629..094b48f 100644
+--- a/bindings/perl-shared/Makefile.PL
++++ b/bindings/perl-shared/Makefile.PL
+@@ -52,6 +52,7 @@ if (($Config{'osname'} eq 'MSWin32' && $ENV{'OSTYPE'} eq '')) {
+ 		'VERSION_FROM' => 'RRDs.pm', # finds $VERSION
+ 		'DEFINE'	   => "-DPERLPATCHLEVEL=$Config{PATCHLEVEL}",
+ 		'INC'          => '-I../../src',
++		'LIBS'         => '-lperl',
+ 		# Perl will figure out which one is valid
+ 		#'dynamic_lib'  => {'OTHERLDFLAGS' => "$librrd -lm"},
+ 		'depend'       => {'RRDs.c' => "../../src/librrd.la"},
+-- 
+1.7.8.3
+

@@ -1,0 +1,26 @@
+From 0e9bcfe4f39134290074fb44b664590ee855f17b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 19 Jan 2012 21:40:56 +0100
+Subject: [PATCH] Do not pass LDFLAGS to pysetup or the system lib is pulled
+ in before the newly build one
+
+---
+ bindings/Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/bindings/Makefile.in b/bindings/Makefile.in
+index 1c8548e..5200f60 100644
+--- a/bindings/Makefile.in
++++ b/bindings/Makefile.in
+@@ -670,7 +670,7 @@ ruby:   Makefile
+ 
+ # rules for building the pyton module
+ python: Makefile
+-	cd python && env BUILDLIBDIR=../../src/.libs $(PYTHON) setup.py build_ext --rpath=$(libdir) && env LIBDIR=../../src/.libs $(PYTHON) setup.py build
++	cd python && env BUILDLIBDIR=../../src/.libs LDFLAGS= $(PYTHON) setup.py build_ext --rpath=$(libdir) && env LIBDIR=../../src/.libs $(PYTHON) setup.py build
+ 
+ # rules for building the perl module
+ perl_piped: perl-piped/Makefile
+-- 
+1.7.8.3
+

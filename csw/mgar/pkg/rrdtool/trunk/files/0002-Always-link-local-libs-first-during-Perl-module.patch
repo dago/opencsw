@@ -1,0 +1,25 @@
+From 29ea3c2cccc14da8b3cbcd02a0965563dfbe680a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 19 Jan 2012 16:39:18 +0100
+Subject: [PATCH] Always link local libs first during Perl module
+
+---
+ bindings/perl-shared/Makefile.PL |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/bindings/perl-shared/Makefile.PL b/bindings/perl-shared/Makefile.PL
+index 781682c..85e2629 100644
+--- a/bindings/perl-shared/Makefile.PL
++++ b/bindings/perl-shared/Makefile.PL
+@@ -57,7 +57,7 @@ if (($Config{'osname'} eq 'MSWin32' && $ENV{'OSTYPE'} eq '')) {
+ 		'depend'       => {'RRDs.c' => "../../src/librrd.la"},
+ 		'LDFROM'       => '$(OBJECT) '.$librrd, 
+ 		'realclean'    => {FILES => 't/demo?.rrd t/demo?.png' },
+-		($^O eq 'darwin') ? ( 'LDDLFLAGS'    => "-L../../src/.libs/ $Config{lddlflags}" ) : ()
++		'LDDLFLAGS'    => "-L../../src/.libs/ $Config{lddlflags}"
+ 	);
+ }
+ 
+-- 
+1.7.8.3
+
