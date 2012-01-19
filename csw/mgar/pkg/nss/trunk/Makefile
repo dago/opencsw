@@ -255,7 +255,6 @@ CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/spa
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int64_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32fpu_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch|sonames=libfreebl_32fpu_3.so,libfreebl_32int64_3.so,libfreebl_32int_3.so,libfreebl_64fpu_3.so,libfreebl_64int_3.so|pkgname=CSWlibfreebl3|expected=CSWlibfreebl|
 CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/libnss3.so
 CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnss3.so
 CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/libnssutil3.so
