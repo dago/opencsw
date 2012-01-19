@@ -20,8 +20,11 @@ LICENSE = LICENSE
 
 PACKAGES += CSWlibevent1-4-2
 SPKG_DESC_CSWlibevent1-4-2 = Event notification library, libevent-1.4.so.2
-PKGFILES_CSWlibevent1-4-2 = $(call pkgfiles_lib,libevent-1.4.so.2)
+PKGFILES_CSWlibevent1-4-2 = $(PKGFILES_RT)
 OBSOLETED_BY_CSWlibevent1-4-2 += CSWlibevent
+
+# This is a unified lib package
+CHECKPKG_OVERRIDES_CSWlibevent1-4-2 += shared-lib-pkgname-mismatch
 
 VENDOR_URL = http://www.monkey.org/~provos/libevent/
 
@@ -30,6 +33,9 @@ BUILD64 = 1
 TEST_TARGET = verify
 
 include gar/category.mk
+
+# For "make" to be GNU make
+PATH := /opt/csw/gnu:$(PATH)
 
 post-extract-modulated:
 	-test -f $(WORKSRC)/test/test.sh && perl -pi -e 's,#!/bin/sh,#!/bin/bash,' $(WORKSRC)/test/test.sh
