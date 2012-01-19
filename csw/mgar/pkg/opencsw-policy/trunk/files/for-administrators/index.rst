@@ -2,21 +2,15 @@
 OpenCSW for Administrators
 ==========================
 
-A usage manual for people who manage Solaris systems with OpenCSW packages.
+A user's manual for people who manage Solaris systems with OpenCSW packages.
 
-.. contents::
+.. toctree::
+  :maxdepth: 2
 
-Bootstrapping
--------------
+  bootstrapping
+  configuring-services
 
-On a Solaris 10 system, you can use the capacity of pkgadd to download
-packages via http::
-
-  pkgadd -d http://get.opencsw.org/now
-
-On Solaris 8 and 9 (best effort support only), you need to download the
-package using e.g. wget and install it with::
-
-  wget http://mirror.opencsw.org/opencsw/pkgutil.pkg
-  pkgadd -d pkgutil.pkg
-
+.. [#dagosscrapebook]
+   `Dago's Scrapebook`_
+.. _Dago's Scrapebook:
+   http://sourceforge.net/apps/trac/gar/wiki/DagosScrapbook
