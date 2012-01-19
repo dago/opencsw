@@ -1,3 +1,11 @@
+cyrus_imapd (2.4.10,REV=2012.01.19)
+
+  * Manpages in section 8 have been moved to 1m due to collision with
+    courier's manpages. See also
+    http://lists.opencsw.org/pipermail/maintainers/2012-January/015940.html
+
+ -- Rafael Ostertag <raos@opencsw.org>  Thu, 19 Jan 2012 21:31:22 +0100
+
 cyrus_imapd (2.4.10,rev=2011.07.20) unstable
 
   * New upstream version.
