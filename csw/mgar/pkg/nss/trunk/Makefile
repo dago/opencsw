@@ -130,8 +130,6 @@ RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnspr4
 PACKAGES += CSWlibnss-dev
 CATALOGNAME_CSWlibnss-dev = libnss_dev
 SPKG_DESC_CSWlibnss-dev = Network Security Services library, development files
-ARCHALL_CSWlibnss-dev = 1
-# PKGFILES_CSWlibnss-dev = $(call baseisadirs,$(includedir),*\.h*)
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibssl3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsqlite3-0
@@ -247,7 +245,6 @@ LD_OPTIONS =
 # NSS_LD_OPTIONS = -R'$$ORIGIN'
 
 # CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch|sonames=libfreebl_32fpu_3.so,libfreebl_32int64_3.so,libfreebl_32int_3.so,libfreebl_64fpu_3.so,libfreebl_64int_3.so|pkgname=CSWlibfreebl3|expected=CSWlibfreebl|
-CHECKPKG_OVERRIDES_CSWlibnss-dev += archall-devel-package
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64int_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
@@ -277,8 +274,6 @@ CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/amd
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/libnssdbm3.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssdbm3.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/amd64/libnssdbm3.so
-CHECKPKG_OVERRIDES_CSWlibnss-dev += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig
-CHECKPKG_OVERRIDES_CSWlibnss-dev += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig/nss.pc
 
 
 include gar/category.mk
