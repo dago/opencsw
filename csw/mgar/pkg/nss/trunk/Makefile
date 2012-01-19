@@ -237,13 +237,6 @@ LICENSE = mpl-tri-license-txt
 # Required patches.
 PATCHFILES += include.patch
 PATCHFILES += ld-options.patch
-# PATCHFILES += platlibs-sqlite3.patch
-PATCHFILES_isa-sparcv8 = sqlite3-32.patch
-PATCHFILES_isa-i386 = sqlite3-32.patch
-PATCHFILES_isa-sparcv9  = sqlite3-64.patch
-# PATCHFILES_isa-sparcv9 += platlibs-sqlite3-64.patch
-PATCHFILES_isa-amd64  = sqlite3-64.patch
-# PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
 PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
 PATCHFILES += 0005-platlibs.mk-linking-bltest.patch
 PATCHFILES += 0005-change-rpath-for-bins-in-platlibs.mk.patch
