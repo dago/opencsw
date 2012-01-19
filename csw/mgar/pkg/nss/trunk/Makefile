@@ -119,22 +119,15 @@ RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibnssutil3
 PACKAGES += CSWlibfreebl3
 CATALOGNAME_CSWlibfreebl3 = libfreebl3
 SPKG_DESC_CSWlibfreebl3 += $(DESCRIPTION), libfreebl libs
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_64fpu_3\.so)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_64fpu_3\.so(\.\d+)*)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_64int_3\.so)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_64int_3\.so(\.\d+)*)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_32fpu_3\.so)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_32fpu_3\.so(\.\d+)*)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_32int64_3\.so)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_32int64_3\.so(\.\d+)*)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_32int_3\.so)
-PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl_32int_3\.so(\.\d+)*)
+PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.so)
+PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.so(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnssutil3
 RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnspr4
 
 PACKAGES += CSWlibnss-dev
 CATALOGNAME_CSWlibnss-dev = libnss_dev
 SPKG_DESC_CSWlibnss-dev = Network Security Services library, development files
+ARCHALL_CSWlibnss-dev = 1
 PKGFILES_CSWlibnss-dev = $(call baseisadirs,$(includedir),*\.h*)
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibssl3
@@ -256,20 +249,30 @@ CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/spa
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int64_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32fpu_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/amd64/libfreebl3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl3.so
 CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/libnss3.so
 CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnss3.so
+CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/amd64/libnss3.so
 CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/libnssutil3.so
 CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssutil3.so
+CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/amd64/libnssutil3.so
 CHECKPKG_OVERRIDES_CSWlibsoftokn3 += soname-equals-filename|file=/opt/csw/lib/libsoftokn3.so
 CHECKPKG_OVERRIDES_CSWlibsoftokn3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsoftokn3.so
+CHECKPKG_OVERRIDES_CSWlibsoftokn3 += soname-equals-filename|file=/opt/csw/lib/amd64/libsoftokn3.so
 CHECKPKG_OVERRIDES_CSWlibssl3 += soname-equals-filename|file=/opt/csw/lib/libssl3.so
 CHECKPKG_OVERRIDES_CSWlibssl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libssl3.so
+CHECKPKG_OVERRIDES_CSWlibssl3 += soname-equals-filename|file=/opt/csw/lib/amd64/libssl3.so
 CHECKPKG_OVERRIDES_CSWlibsmime3 += soname-equals-filename|file=/opt/csw/lib/libsmime3.so
 CHECKPKG_OVERRIDES_CSWlibsmime3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsmime3.so
+CHECKPKG_OVERRIDES_CSWlibsmime3 += soname-equals-filename|file=/opt/csw/lib/amd64/libsmime3.so
 CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/libnssckbi.so
 CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssckbi.so
+CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/amd64/libnssckbi.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/libnssdbm3.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssdbm3.so
+CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/amd64/libnssdbm3.so
 
 include gar/category.mk
 
