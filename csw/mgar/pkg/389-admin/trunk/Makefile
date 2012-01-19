@@ -17,17 +17,39 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
+# GARCOMPILER = SOS12U2
+
 LICENSE = LICENSE LICENSE.GPLv2
 
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 
 PACKAGES = CSW389admin
+INITSMF = /etc/opt/csw/init.d/dirsrv-admin
 RUNTIME_DEP_PKGS_CSW389admin = CSWap2modnss
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibprldap60
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibldif60
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSW389admin += CSWperl
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibadmsslutil0
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibplc4
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibssldap60
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss-dev
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibadminutil0
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibplds4
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibldap60
+CHECKPKG_OVERRIDES_CSW389admin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libds-admin-serv.so
+CHECKPKG_OVERRIDES_CSW389admin += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSW389admin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libds-admin-serv.so.0.0.0|soname=libds-admin-serv.so.0|pkgname=CSW389admin|expected=CSWlibds-admin-serv0
+CHECKPKG_OVERRIDES_CSW389admin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libds-admin-serv.so
 
-GARCOMPILER = SOS12U2
 # remove -I/opt/csw/include
 CPPFLAGS = 
-EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
+# EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
+EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
