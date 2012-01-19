@@ -1,5 +1,5 @@
 NAME = pca
-VERSION = 20111018-01
+VERSION = 20120119-01
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
