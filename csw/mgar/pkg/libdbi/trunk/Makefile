@@ -13,19 +13,20 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://libdbi.sourceforge.net/
 
 PACKAGES += CSWlibdbi1
-CATALOGNAME_CSWlibdbi1 = libdbi1
 SPKG_DESC_CSWlibdbi1 = A database-independent abstraction layer, libdbi.so.1
 PKGFILES_CSWlibdbi1 = $(call pkgfiles_lib,libdbi.so.1)
 
 PACKAGES += CSWlibdbi-dev
-CATALOGNAME_CSWlibdbi-dev = libdbi_dev
 SPKG_DESC_CSWlibdbi-dev = Development files for libdbi.so.1
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibdbi-dev = CSWlibdbi1
 OBSOLETED_BY_CSWlibdbi-dev = CSWlibdbi-devel
+
+REINPLACE_USRLOCAL += doc/programmers-guide/x276.html
+REINPLACE_USRLOCAL += doc/programmers-guide/quickstart-code.html
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -39,15 +40,7 @@ EXTRA_CFLAGS = -w -fsimple
 BUILD_OVERRIDE_VARS = CFLAGS
 BUILD_OVERRIDE_VAR_CFLAGS = $(CFLAGS)
 
-TEST_TARGET = check
-
 INSTALL_OVERRIDE_VARS = docdir
 INSTALL_OVERRIDE_VAR_docdir = $(docdir)/libdbi_dev
 
 include gar/category.mk
-
-post-install-modulated:
-	perl -pi -e 's,/usr/local,$(prefix),g' \
-		$(DESTDIR)$(docdir)/libdbi_dev/programmers-guide/x276.html \
-		$(DESTDIR)$(docdir)/libdbi_dev/programmers-guide/quickstart-code.html
-	@$(MAKECOOKIE)
