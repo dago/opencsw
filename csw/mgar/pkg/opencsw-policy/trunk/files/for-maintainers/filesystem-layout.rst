@@ -15,3 +15,8 @@ The outermost installation directories are:
 * /opt/csw (base of the hierarchy)
 * /etc/opt/csw (configuration files)
 * /var/opt/csw (data files)
+
+The /opt/csw directory and everything below is considered read-only. It's
+a common practice to set up non-global sparse zones with shared /opt/csw. In
+this setup, non-global zones see /opt/csw as mounted read-only. Any local
+state needs to be kept under /var/opt/csw.
