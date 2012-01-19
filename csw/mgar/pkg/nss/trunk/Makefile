@@ -69,6 +69,7 @@ PACKAGES += CSWlibnssdbm3
 CATALOGNAME_CSWlibnssdbm3 = libnssdbm3
 PKGFILES_CSWlibnssdbm3 += $(call baseisadirs,$(libdir),libnssdbm3\.so)
 PKGFILES_CSWlibnssdbm3 += $(call baseisadirs,$(libdir),libnssdbm3\.so(\.\d+)*)
+PKGFILES_CSWlibnssdbm3 += $(call baseisadirs,$(libdir),libnssdbm3\.chk)
 SPKG_DESC_CSWlibnssdbm3 += $(DESCRIPTION), libnssdbm3.so
 RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibnssutil3 
 RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibplds4
@@ -99,6 +100,7 @@ PACKAGES += CSWlibsoftokn3
 CATALOGNAME_CSWlibsoftokn3 = libsoftokn3
 PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so)
 PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so(\.\d+)*)
+PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.chk)
 SPKG_DESC_CSWlibsoftokn3 += $(DESCRIPTION), libsoftokn3.so
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibplc4
@@ -121,6 +123,7 @@ CATALOGNAME_CSWlibfreebl3 = libfreebl3
 SPKG_DESC_CSWlibfreebl3 += $(DESCRIPTION), libfreebl libs
 PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.so)
 PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.so(\.\d+)*)
+PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.chk)
 RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnssutil3
 RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnspr4
 
@@ -128,7 +131,7 @@ PACKAGES += CSWlibnss-dev
 CATALOGNAME_CSWlibnss-dev = libnss_dev
 SPKG_DESC_CSWlibnss-dev = Network Security Services library, development files
 ARCHALL_CSWlibnss-dev = 1
-PKGFILES_CSWlibnss-dev = $(call baseisadirs,$(includedir),*\.h*)
+# PKGFILES_CSWlibnss-dev = $(call baseisadirs,$(includedir),*\.h*)
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibssl3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsqlite3-0
@@ -274,6 +277,9 @@ CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/amd
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/libnssdbm3.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssdbm3.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/amd64/libnssdbm3.so
+CHECKPKG_OVERRIDES_CSWlibnss-dev += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig
+CHECKPKG_OVERRIDES_CSWlibnss-dev += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig/nss.pc
+
 
 include gar/category.mk
 
@@ -334,10 +340,9 @@ install-nss:
 			false \
 		)
 	ginstall -d -m 755 $(DESTDIR)$(libdir)/pkgconfig
-	ginstall -m 644 \
-		$(FILEDIR)/nss.pc \
+	ginstall -m 644 $(FILEDIR)/nss.pc \
 		$(DESTDIR)$(libdir)/pkgconfig
 	if [ $(MEMORYMODEL) = 64 ]; then \
-		gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nss.pc ; \
+	    gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nss.pc ; \
 	fi
 	@$(MAKECOOKIE)
