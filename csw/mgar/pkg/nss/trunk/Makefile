@@ -100,7 +100,6 @@ CATALOGNAME_CSWlibsoftokn3 = libsoftokn3
 PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so)
 PKGFILES_CSWlibsoftokn3 += $(call baseisadirs,$(libdir),libsoftokn3\.so(\.\d+)*)
 SPKG_DESC_CSWlibsoftokn3 += $(DESCRIPTION), libsoftokn3.so
-RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibsqlite3-0
@@ -148,7 +147,7 @@ RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibsmime3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssutil3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssckbi
-RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl
+RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl3
 OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-devel
 
 PACKAGES += CSWlibnss3-tools
@@ -159,6 +158,9 @@ RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnssutil3
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-dev CSWlibsqlite3-dev
 
@@ -248,13 +250,12 @@ CPPFLAGS =
 LD_OPTIONS = 
 # NSS_LD_OPTIONS = -R'$$ORIGIN'
 
-CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int64_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64int_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/libfreebl_32fpu_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
-CHECKPKG_OVERRIDES_CSWlibfreebl += non-uniform-lib-versions-in-package|sonames=libfreebl_32fpu_3.so,libfreebl_32int64_3.so,libfreebl_32int_3.so,libfreebl_64fpu_3.so,libfreebl_64int_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64int_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int64_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32fpu_3.so
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch|sonames=libfreebl_32fpu_3.so,libfreebl_32int64_3.so,libfreebl_32int_3.so,libfreebl_64fpu_3.so,libfreebl_64int_3.so|pkgname=CSWlibfreebl3|expected=CSWlibfreebl|
 CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/libnss3.so
 CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnss3.so
 CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename|file=/opt/csw/lib/libnssutil3.so
@@ -269,16 +270,6 @@ CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/lib
 CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssckbi.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/libnssdbm3.so
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libnssdbm3.so
-HECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/addbuiltin
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/certutil
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/cmsutil
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/crlutil
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/modutil
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/pk12util
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/signtool
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/signver
-CHECKPKG_OVERRIDES_CSWlibnss3-tools += bad-rpath-entry|$ORIGIN/../lib|opt/csw/bin/ssltap
-
 
 include gar/category.mk
 
