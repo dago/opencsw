@@ -28,6 +28,7 @@ CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws/sudo/
 RUNTIME_DEP_PKGS_CSWsudo += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsudo += CSWsudo-common
 
 CATALOGNAME_CSWsudo-common = sudo_common
 SPKG_DESC_CSWsudo-common = Common files for sudo
