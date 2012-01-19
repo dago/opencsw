@@ -19,33 +19,15 @@ DISTFILES += LICENSE
 LICENSE = LICENSE
 
 PACKAGES += CSWlibevent1-4-2
-CATALOGNAME_CSWlibevent1-4-2 = libevent1_4_2
 SPKG_DESC_CSWlibevent1-4-2 = Event notification library, libevent-1.4.so.2
-PKGFILES_CSWlibevent1-4-2 = $(PKGFILES_RT)
+PKGFILES_CSWlibevent1-4-2 = $(call pkgfiles_lib,libevent-1.4.so.2)
+OBSOLETED_BY_CSWlibevent1-4-2 += CSWlibevent
 
-PACKAGES += CSWlibevent
-CATALOGNAME_CSWlibevent = libevent
-SPKG_DESC_CSWlibevent = Legacy package as contents moved to soname-specific packages
-RUNTIME_DEP_PKGS_CSWlibevent = CSWlibevent1-4-2
-ARCHALL_CSWlibevent = 1
-PKGFILES_CSWlibevent = NOFILES
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-stable.tar.gz
-
-SPKG_SOURCEURL = http://www.monkey.org/~provos/libevent/
+VENDOR_URL = http://www.monkey.org/~provos/libevent/
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS  = $(DIRPATHS) 
 
 TEST_TARGET = verify
-
-# This is a legacy dependancy
-CHECKPKG_OVERRIDES_CSWlibevent += surplus-dependency|CSWlibevent1-4-2
-
-# This is a bug in checkpkg, remove after fixing
-CHECKPKG_OVERRIDES_CSWlibevent1-4-2 += shared-lib-pkgname-mismatch
 
 include gar/category.mk
 
