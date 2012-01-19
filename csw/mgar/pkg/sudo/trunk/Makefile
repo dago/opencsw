@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = sudo
-VERSION = 1.7.4p2
+VERSION = 1.8.3p1
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
@@ -14,11 +14,12 @@ endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
-PATCHFILES = install.diff
+#PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
 UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
+
 
 PACKAGES += CSWsudo
 PACKAGES += CSWsudo-common
@@ -26,15 +27,13 @@ PACKAGES += CSWsudo-common
 CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws/sudo/
-RUNTIME_DEP_PKGS_CSWsudo += CSWsudo-common
-RUNTIME_DEP_PKGS_CSWsudo += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWsudo += CSWlibintl8
 
 CATALOGNAME_CSWsudo-common = sudo_common
 SPKG_DESC_CSWsudo-common = Common files for sudo
 SPKG_SOURCEURL_CSWsudo-common = http://www.sudo.ws
-RUNTIME_DEP_PKGS_CSWsudo-common = CSWggettextrt
-RUNTIME_DEP_PKGS_CSWsudo += CSWzlib
-RUNTIME_DEP_PKGS_CSWsudo-common += CSWzlib
+RUNTIME_DEP_PKGS_CSWsudo-common += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsudo-common += CSWlibz1
 
 DISTFILES += CSWsudo-common.postinstall 
 
@@ -46,13 +45,17 @@ CONFIGURE_ARGS += --with-logging=both
 CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
 CONFIGURE_ARGS += --disable-path-info
+
+# Not sure if this is good for timedir and iologdir
+CONFIGURE_ARGS += --with-timedir=/var/opt/csw/sudo   
+CONFIGURE_ARGS +=  --with-iologdir=$(LOGPATH)/sudolog  
 CONFIGURE_ARGS += --with-logpath=$(LOGPATH)/sudolog
 ifneq ($(shell uname -r),5.8)
     CONFIGURE_ARGS += --with-project
 endif
 
-# sysconfdir to be enabled later
-# sysconfdir = /etc/opt/csw
+# sysconfdir to be enabled later needs migrate conf stuff
+#sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
 TEST_TARGET = check
@@ -65,7 +68,7 @@ PROTOTYPE_MODIFIERS = sudo
 PROTOTYPE_FILES_sudo = $(bindir)/sudo(edit)?.minimal
 PROTOTYPE_PERMS_sudo = 4755
 
-LICENSE = LICENSE
+LICENSE = doc/LICENSE
 ALTERNATIVES_CSWsudo = minimal
 ALTERNATIVE_minimal  = $(bindir)/sudo     sudo     $(bindir)/sudo.minimal     50
 ALTERNATIVE_minimal += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.minimal
