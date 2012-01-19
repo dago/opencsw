@@ -246,6 +246,7 @@ PATCHFILES_isa-amd64  = sqlite3-64.patch
 # PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
 PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
 PATCHFILES += 0005-platlibs.mk-linking-bltest.patch
+PATCHFILES += 0005-change-rpath-for-bins-in-platlibs.mk.patch
 
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-February/000167.html
 # NOISAEXEC = 1
