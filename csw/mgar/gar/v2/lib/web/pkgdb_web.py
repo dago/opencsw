@@ -63,7 +63,7 @@ class Srv4List(object):
     def Ago(timedelta):
       # Not sure why there is a time difference between mysql and the datetime
       # module.
-      timezone_diff = 2.0
+      timezone_diff = 1.0
       return "%.1fh" % (timedelta.seconds / 60.0 / 60.0 - timezone_diff)
     pkgs_ago = [(x, Ago(now - x.mtime)) for x in pkgs]
     return render.Srv4List(pkgs_ago)
