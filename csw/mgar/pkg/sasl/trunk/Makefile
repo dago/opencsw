@@ -41,7 +41,7 @@ VENDOR_URL = http://asg.web.cmu.edu/sasl/
 PACKAGES += CSWsasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt
-RUNTIME_DEP_PKGS_CSWsasl += CSWbdb47
+RUNTIME_DEP_PKGS_CSWsasl += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
 
 PACKAGES += CSWsaslauthd
@@ -126,7 +126,7 @@ BUILD_DEP_PKGS += CSWlibpq
 BUILD_DEP_PKGS += CSWoldapdevel 
 BUILD_DEP_PKGS += CSWlibsqlite3-dev
 BUILD_DEP_PKGS += CSWossldevel
-BUILD_DEP_PKGS += CSWbdb47devel
+BUILD_DEP_PKGS += CSWbdb48devel
 
 EXTRA_CFLAGS = -D__EXTENSIONS__
 
@@ -134,16 +134,15 @@ EXTRA_BUILD_ENV = _REENTRANT=1
 
 EXTRA_INC  = $(includedir)/gssapi
 EXTRA_INC += $(includedir)/mysql
+EXTRA_INC += $(prefix)/bdb48/include
 EXTRA_INC += /opt/csw/postgresql/include
+
+EXTRA_LIB  = $(prefix)/bdb48/lib
+EXTRA_LIB += $(prefix)/postgresql/lib
 
 # Do not use LD_OPTIONS as it breaks tests by using the installed libraries
 # before the newly built ones.
 EXTRA_RUNPATH_ISALIST	= $(EXTRA_RUNPATH_DIRS)
-# We use EXTRA_RUNPATH for bdb to make sure it is linked against $(prefix)/bdb47/lib/$(MM_LIBDIR))
-# which silences the check deprecated-library message.
-EXTRA_RUNPATH_DIRS = $(prefix)/bdb47/lib/$(MM_LIBDIR)
-EXTRA_LDFLAGS	 = -L$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR))
-EXTRA_LDFLAGS	+= -L$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
 
 BUILD64 = 1
 NOISALIST = 1
@@ -162,8 +161,9 @@ CONFIGURE_ARGS += --enable-digest
 CONFIGURE_ARGS += --enable-scram
 CONFIGURE_ARGS += --enable-otp
 CONFIGURE_ARGS += --enable-gssapi
-CONFIGURE_ARGS += --with-bdb-libdir=$(abspath /opt/csw/bdb47/lib/$(MM_LIBDIR))
-CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/ 
+CONFIGURE_ARGS += --with-bdb-libdir=$(abspath /opt/csw/bdb48/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb48/include/ 
+CONFIGURE_ARGS += --with-bdb=db-4.8
 CONFIGURE_ARGS += --with-saslauthd=$(localstatedir)/saslauthd 
 CONFIGURE_ARGS += --with-ipctype=unix 
 CONFIGURE_ARGS += --with-ldap=$(libdir)
