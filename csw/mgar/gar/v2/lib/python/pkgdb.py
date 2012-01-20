@@ -438,8 +438,20 @@ def main():
         logger=logging,
         debug=options.debug)
     file_list = args
-    stats_list = collector.CollectStatsFromFiles(file_list, None,
-        force_unpack=options.force_unpack)
+    try:
+      stats_list = collector.CollectStatsFromFiles(file_list, None,
+          force_unpack=options.force_unpack)
+    except sqlobject.dberrors.OperationalError, e:
+      exception_msg = ("DELETE command denied to user "
+                       "'pkg_maintainer'@'192.168.1.2' for table 'csw_file'")
+      if exception_msg in str(e):
+        logging.fatal(
+            "You don't have sufficient privileges to overwrite previously "
+            "imported package. Did you run checkpkg before running "
+            "csw-upload-pkg?")
+        sys.exit(1)
+      else:
+        raise e
     for stats in stats_list:
       logging.debug(
           "Importing %s, %s",
