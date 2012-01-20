@@ -6,7 +6,7 @@ VERSION = 1.1.23
 GARTYPE = v2
 CATEGORIES = lib
 
-DESCRIPTION = The enterprise-class Open Source LDAP server
+DESCRIPTION = The 389 LDAP server Admin Tools
 define BLURB
 The enterprise-class Open Source LDAP server for Linux. It is hardened by real-world use, is full-featured, supports multi-master replication, and already handles many of the largest LDAP deployments in the world. The 389 Directory Server can be downloaded for free and set up in less than an hour using the graphical console.
 endef
@@ -23,7 +23,24 @@ LICENSE = LICENSE LICENSE.GPLv2
 
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 
-PACKAGES = CSW389admin
+PACKAGES += CSWlibds-admin-serv0
+CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0
+PKGFILES_CSWlibds-admin-serv0 += $(call baseisadirs,$(libdir),libds-admin-serv\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibds-admin-serv0 += $(DESCRIPTION), libds-admin-serv.so.0
+RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibadmsslutil0
+RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibadminutil0
+RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplc4
+
+PACKAGES += CSW389admin-dev
+CATALOGNAME_CSW389admin-dev = 389admin_dev
+SPKG_DESC_CSW389admin-dev += $(DESCRIPTION), development files
+PKGFILES_CSW389admin-dev += /opt/csw/lib/libds-admin-serv.so
+CHECKPKG_OVERRIDES_CSW389admin-dev += missing-dependency|CSWlibds-admin-serv0
+
+PACKAGES += CSW389admin
+SPKG_DESC_CSW389admin += $(DESCRIPTION)
 INITSMF = /etc/opt/csw/init.d/dirsrv-admin
 RUNTIME_DEP_PKGS_CSW389admin = CSWap2modnss
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibprldap60
@@ -38,13 +55,11 @@ RUNTIME_DEP_PKGS_CSW389admin += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss-dev
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibds-admin-serv0
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibldap60
-CHECKPKG_OVERRIDES_CSW389admin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libds-admin-serv.so
-CHECKPKG_OVERRIDES_CSW389admin += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSW389admin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libds-admin-serv.so.0.0.0|soname=libds-admin-serv.so.0|pkgname=CSW389admin|expected=CSWlibds-admin-serv0
-CHECKPKG_OVERRIDES_CSW389admin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libds-admin-serv.so
+CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
