@@ -23,7 +23,7 @@ PACKAGES = CSW389-console
 RUNTIME_DEP_PKGS = CSWidm-console-base CSWldapjdk CSWjss4
 ARCHALL = 1
 CATALOGNAME_CSW389-console = 389_console
-CHECKPKG_OVERRIDES_CSW389console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Client
+CHECKPKG_OVERRIDES_CSW389-console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Client
 
 LICENSE = LICENSE
 
