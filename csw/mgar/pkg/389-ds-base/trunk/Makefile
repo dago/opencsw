@@ -47,7 +47,6 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
-CHECKPKG_OVERRIDES_CSW389-ds-base += pkginfo-opencsw-repository-uncommitted
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
