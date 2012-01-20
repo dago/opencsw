@@ -1,0 +1,103 @@
+*** Important information - please make sure you read this ! ***
+
+*** Migrating from older versions ***
+
+If you have upgraded from a previous 8.0, 8.1 or 8.2 version of PostgreSQL, 
+your databases will NOT work on this 8.3.x version. Before upgrading, you 
+should dump your databases using the old utilities. You can then create a
+new data directory using this 8.3.x package, and import your dumps. 
+See the "64-bit support" section below for pointers to documentation on t
+his.
+
+Another point to note is that the location of the PostgreSQL install has 
+changed. Previous 7.3.x packages used /opt/csw as the base - this package 
+uses /opt/csw/postgresql. You will need to add /opt/csw/postgresql/bin to your
+$PATH, and any scripts you have written using the old locations will have to
+be changed.
+
+
+*** User configuration of server options ***
+
+Configuration of the server start-up options is now done through a user-
+configuration file, /opt/csw/etc/postgresql.conf. A sample template has been
+provided for you at /opt/csw/etc/postgresql.conf.csw. If you want to change
+any of the server options discussed below, make a copy of this file to 
+/opt/csw/etc/postgresql.conf and edit it accordingly.
+
+If you cannot modify this file (for instance, you are mounting /opt/csw
+from a read-only NFS server), you can use /etc/opt/csw/postgresql.conf 
+instead, and it will take precedence over /opt/csw/etc/postgresql.conf.
+
+*** Networking ***
+
+By default, the cswpostgres init script will start the server up listening on
+localhost only. If you want to allow other hosts on your network to connect, you
+will need to add "-o -i" to the value of SERVEROPTS in the user configuration
+file and restart your server. The included template has the line already
+entered, you just need to uncomment it (remove the leading #).
+
+Once this is done, PostgreSQL will now bind to all network interfaces and
+listen for connections. You will still need to configure which hosts are allowed
+access by modifying the pg_hba.conf file in your data directory - read the manual
+for more information on this.
+
+*** 64-bit support ***
+
+The SPARC packages have been built with 64-bit support, but by default, the
+32-bit version of the server will be run. If you need the 64-bit version,
+edit the user configuration file and change the values of PGINIT and PGCTL
+accordingly.
+
+It is important to note that the 64-bit server WILL NOT WORK with databases
+created with the 32-bit version, and vice versa. You will get an error
+message if you attempt this.
+
+In order to migrate your system to the 64-bit server, you will need to dump
+your databases while running the 32-bit client, stop and upgrade the server,
+initialise a new database directory, and import your dumps. For more information
+on this procedure, see the PostgreSQL manual (included with this package),
+chapter 9 - Backup and restore. This is located at :
+
+/opt/csw/postgresql/share/doc/html/backup.html
+
+All other PostgreSQL binaries in /opt/csw/postgresql/bin/ are copies of the 
+'isaexec' wrapper, which will run the appropriate binary for your
+architecture and/or kernel.
+
+*** Starting the server ***
+
+The PostgreSQL database runs under the user 'postgres' - this has been created 
+for you by the installation script.
+
+The default PostgreSQL data directory is /opt/csw/var/pgdata. As this does not 
+exist, you will need to create it yourself before the database will start.
+You can change the location of the data directory by altering the user
+configuration file, and modifying the value of PGDATA.
+
+A startup script has been provided for you that handles database initialisation,
+startup and shutdown functions - it is located at /etc/init.d/cswpostgres. You
+should always use this script to start or stop the server, otherwise you may 
+find that you are running the wrong binaries (64-bit instead of 32-bit).
+ 
+It is set to start the database the next time the system enters runlevel 3 - 
+usually, this will be at the next boot. 
+
+To create the data directory, the startup script accepts the "init" argument :
+
+/etc/init.d/cswpostgres init
+
+This will create and initialise the data directory. After this step has been
+completed succesfully, the database can be started with :
+
+/etc/init.d/cswpostgres start
+
+If you get errors relating to shared memory on startup, make sure you have read 
+the section entitled "Manging Kernel Resources" - this is in Chapter 3 of the 
+PostgreSQL HTML Administrator's Guide, located at 
+
+/opt/csw/postgresql/share/doc/html/index.html 
+
+
+Mark Round,
+mark@blastwave.org
+
