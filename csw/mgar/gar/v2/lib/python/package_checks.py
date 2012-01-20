@@ -1330,7 +1330,8 @@ def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
              "that shared library.  This problem has occurred with relation "
              "to libnet. "
              "For information how to update such library, please see: "
-             "http://wiki.opencsw.org/project-libnet")
+             "http://wiki.opencsw.org/project-libnet" %
+             binary_info["path"])
       messenger.Message(msg)
       error_mgr.ReportError(
           "soname-equals-filename",
