@@ -33,6 +33,7 @@ RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibiconv2
 
 PACKAGES += CSW389admin-dev
 CATALOGNAME_CSW389admin-dev = 389admin_dev
@@ -61,6 +62,11 @@ RUNTIME_DEP_PKGS_CSW389admin += CSWlibds-admin-serv0
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibldap60
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibsoftokn3
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibssl3
+RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss3
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
 
 # remove -I/opt/csw/include
