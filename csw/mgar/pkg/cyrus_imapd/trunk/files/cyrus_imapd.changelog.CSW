@@ -1,3 +1,9 @@
+cyrus_imapd (2.4.10,REV=2012.01.20)
+
+  * Linked against Berkeley DB 4.8.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Fri, 20 Jan 2012 18:01:09 +0100
+
 cyrus_imapd (2.4.10,REV=2012.01.19)
 
   * Manpages in section 8 have been moved to 1m due to collision with
