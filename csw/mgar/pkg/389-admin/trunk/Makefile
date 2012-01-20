@@ -37,6 +37,7 @@ PACKAGES += CSW389admin-dev
 CATALOGNAME_CSW389admin-dev = 389admin_dev
 SPKG_DESC_CSW389admin-dev += $(DESCRIPTION), development files
 PKGFILES_CSW389admin-dev += /opt/csw/lib/libds-admin-serv.so
+RUNTIME_DEP_PKGS_CSW389admin-dev += CSWlibds-admin-serv0
 CHECKPKG_OVERRIDES_CSW389admin-dev += missing-dependency|CSWlibds-admin-serv0
 
 PACKAGES += CSW389admin
