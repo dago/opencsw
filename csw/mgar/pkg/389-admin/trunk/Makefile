@@ -22,6 +22,7 @@ PACKAGING_PLATFORMS += solaris10-i386
 LICENSE = LICENSE LICENSE.GPLv2
 
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
+PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
 
 PACKAGES += CSWlibds-admin-serv0
 CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0
