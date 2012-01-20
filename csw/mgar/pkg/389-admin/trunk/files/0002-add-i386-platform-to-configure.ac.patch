@@ -1,0 +1,40 @@
+From e1dbbdb2e7b8a79d47e28f600bfd4d3cd9921a5a Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 20 Jan 2012 15:15:30 +0100
+Subject: [PATCH] add i386 platform to configure.ac
+
+---
+ configure.ac |    5 +----
+ 1 files changed, 1 insertions(+), 4 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 1a438e3..d9850f2 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -192,13 +192,12 @@ case $host in
+     # HPUX doesn't use /etc for this
+     initdir=/init.d
+ 	;;
+-  sparc-sun-solaris*)
++  *-*-solaris*)
+     AC_DEFINE([XP_UNIX], [1], [UNIX])
+     AC_DEFINE([SVR4], [1], [SVR4])
+     AC_DEFINE([__svr4], [1], [SVR4])
+     AC_DEFINE([__svr4__], [1], [SVR4])
+     AC_DEFINE([_SVID_GETTOD], [1], [SVID_GETTOD])
+-    AC_DEFINE([CPU_sparc], [], [cpu type sparc])
+     AC_DEFINE([OS_solaris], [1], [OS SOLARIS])
+     AC_DEFINE([sunos5], [1], [SunOS5])
+     AC_DEFINE([OSVERSION], [509], [OS version])
+@@ -215,8 +214,6 @@ dnl Cstd and Crun are required to link any C++ related code (ICU)
+     AC_SUBST([LIBCRUN], [$LIBCRUN])
+     CXXLINK_REQUIRED=1
+     platform="solaris"
+-    # assume 64 bit
+-    perlexec='/usr/lib/sparcv9/dirsec/perl5x/bin/perl'
+     initdir='$(sysconfdir)/init.d'
+ 	;;
+   *)
+-- 
+1.7.8.3
+
