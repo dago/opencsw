@@ -74,7 +74,6 @@ list.
 Advantages:
 
 * easy and complete lifecycle of shared libraries
-
 * phasing out of shared libraries can become part of standard catalog
   update procedures
 * simpler packages, simpler builds (no need for version modulations and
@@ -88,7 +87,6 @@ Advantages:
   there were, say, 4 packages to release with each Python update, the
   number remains: 4 per release.  There will be one new CSWlibpython*
   package, and the old CSWlibpython library won't be upgraded.
-
 
 Disadvantages:
 
@@ -130,23 +128,23 @@ libpython3.1.so.1.0       CSWlibpython3-1-1-0     libpython3_1_1_0
 libapr-1.so.10.0.0        CSWlibapr1-10-0-0       libapr1_10_0_0
 ========================= ======================= =========================
 
-Separators
-^^^^^^^^^^
-
-Separators are added between two adjacent numbers, and removed if a number and a letter are next to each other.  For example, ``libfoo.so.0`` becomes ``CSWlibfoo0``, and ``libfoo-1.so.0`` becomes ``CSWlibfoo1-0``.
+Separators are added between two adjacent numbers, and removed if a number and
+a letter are next to each other.  For example, ``libfoo.so.0`` becomes
+``CSWlibfoo0``, and ``libfoo-1.so.0`` becomes ``CSWlibfoo1-0``.
 
 Linkable shared objects
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The policy or recommendation shall refer to libraries which are //linkable,// meaning other binaries can link against them.  Shared objects in private directories, such as /opt/csw/lib/someproject/foo.so (think Python modules) are not shared libraries which other projects can link to, and therefore there is no benefit in placing them in separate packages.
+The policy or recommendation shall refer to libraries which are //linkable,//
+meaning other binaries can link against them.  Shared objects in private
+directories, such as /opt/csw/lib/someproject/foo.so (think Python modules)
+are not shared libraries which other projects can link to, and therefore there
+is no benefit in placing them in separate packages.
 
-Special cases
-^^^^^^^^^^^^^
-
-Some packages (e.g. Kerberos libraries) put private shared libraries into /opt/csw/lib.  They don't expose any public API, and only own Kerberos binaries link to them.  Private shared libraries can be bundled with the main package, without splitting them off.
-
-Examples
-^^^^^^^^
+Some packages (e.g. Kerberos libraries) put private shared libraries into
+/opt/csw/lib.  They don't expose any public API, and only own Kerberos
+binaries link to them.  Private shared libraries can be bundled with the main
+package, without splitting them off.
 
 ============================================================================== ============
 file                                                                           linkable?
@@ -169,7 +167,7 @@ sources [#is-library-linkable-implementation]_ and corresponding unit
 tests. [#is-library-linkable-unit-tests]_
 
 Private shared libraries
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some software projects install private (non-linkable) shared libraries
 into libdir (e.g. ``/opt/csw/lib``) by default.  To ensure that they are
