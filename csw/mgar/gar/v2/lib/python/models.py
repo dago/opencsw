@@ -63,6 +63,13 @@ class Maintainer(sqlobject.SQLObject):
         self.full_name or "Maintainer full name unknown",
         self.ObfuscatedEmail())
 
+  def GetRestRepr(self):
+    return {
+        'maintainer_email': self.email,
+        'maintainer_full_name': self.full_name,
+        'maintainer_id': self.id,
+    }
+
 class Host(sqlobject.SQLObject):
   "Hostname, as returned by socket.getfqdn()"
   fqdn = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
@@ -262,6 +269,7 @@ class Srv4FileStats(sqlobject.SQLObject):
         'filename_arch': self.filename_arch.name,
         'maintainer_email': self.maintainer.email,
         'maintainer_full_name': self.maintainer.full_name,
+        'maintainer_id': self.maintainer.id,
         'md5_sum': self.md5_sum,
         'mtime': unicode(self.mtime),
         'osrel': self.os_rel.short_name,

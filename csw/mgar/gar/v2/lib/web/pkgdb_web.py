@@ -35,6 +35,7 @@ urls_rest = (
   # Query by catalog release, arch, OS release and catalogname
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
+  r'/rest/maintainers/([0-9]+)/', 'RestMaintainerDetail',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
   r'/rest/srv4/([0-9a-f]{32})/pkg-stats/', 'RestSrv4FullStats',
@@ -185,6 +186,13 @@ class MaintainerDetail(object):
         ),
     ).orderBy('basename')
     return render.MaintainerDetail(maintainer, pkgs)
+
+
+class RestMaintainerDetail(object):
+  def GET(self, id):
+    ConnectToDatabase()
+    maintainer = models.Maintainer.selectBy(id=id).getOne()
+    return json.dumps(maintainer.GetRestRepr())
 
 
 class MaintainerCheckpkgReport(object):
