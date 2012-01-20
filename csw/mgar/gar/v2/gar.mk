@@ -943,12 +943,12 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 	)
 	@$(MAKECOOKIE)
 
-CONFIG_FILES ?= $(bindir)/.*_config $(bindir)/.*-config
+DEVEL_EXECUTABLES ?= $(bindir)/.*_config $(bindir)/.*-config
 
 # Copy 
 merge-copy-config-only:
 	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy \
-		-m $(foreach C,$(CONFIG_FILES),-s ",^\(\.$C\)\$$,\1,p" ) \
+		-m $(foreach C,$(DEVEL_EXECUTABLES),-s ",^\(\.$C\)\$$,\1,p" ) \
 		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
