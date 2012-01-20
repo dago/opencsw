@@ -13,6 +13,8 @@ endef
 
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES += CSW389-ds-base.postinstall
+DISTFILES += CSW389-ds-base.postremove
 # BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
@@ -24,6 +26,7 @@ PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0003-add-user-and-var-run-dirsrv.patch
 # until Red Hat Bugzilla Bug 773617 is open do it yourself
 PATCHFILES += 0004-add-i386-platform-to-Makefile.am-and-configure.ac.patch
+PATCHFILES += 0005-smf-autoenable-no.patch
 
 INITSMF = /etc/opt/csw/init.d/dirsrv
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60

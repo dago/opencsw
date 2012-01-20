@@ -1,0 +1,25 @@
+From a600e648d88ce1967d7d1d68efc5b23e2403a60a Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 20 Jan 2012 16:27:00 +0100
+Subject: [PATCH] smf autoenable no
+
+---
+ wrappers/initscript.in |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/wrappers/initscript.in b/wrappers/initscript.in
+index 7632749..84392cb 100644
+--- a/wrappers/initscript.in
++++ b/wrappers/initscript.in
+@@ -9,6 +9,8 @@
+ # piddir:      @localstatedir@/run/@package_name@
+ # datadir:     @localstatedir@/lib/@package_name@/slapd-<instance name>
+ #
++#AUTOENABLE no
++#
+ 
+ # Source function library.
+ if [ -f /etc/rc.d/init.d/functions ] ; then
+-- 
+1.7.8.3
+
