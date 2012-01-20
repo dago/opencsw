@@ -44,7 +44,7 @@ PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/cyrus.conf.CSW
 PKGFILES_CSWcyrusimapd += /etc$(prefix)/init.d/cswcyrus
 PKGFILES_CSWcyrusimapd += /var$(prefix)/svc/manifest/network/cswcyrus\.xml
 PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus.*
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWbdb47
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWbdb48
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibk5crypto3
@@ -66,7 +66,7 @@ CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
 PKGFILES_CSWcyrusimapdutils = $(bindir)/.*
 PKGFILES_CSWcyrusimapdutils += $(mandir)/man1/.*
 PKGFILES_CSWcyrusimapdutils += $(docdir)/cyrus_imapd_utils/.*
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWbdb47
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWbdb48
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibk5crypto3
@@ -85,7 +85,7 @@ CATALOGNAME_CSWpmcyrus = pm_cyrus
 PKGFILES_CSWpmcyrus = $(perllib)/.*
 PKGFILES_CSWpmcyrus += $(mandir)/man3/Cyrus::.*
 PKGFILES_CSWpmcyrus += $(docdir)/pm_cyrus/.*
-RUNTIME_DEP_PKGS_CSWpmcyrus += CSWbdb47
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWbdb48
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWperl
@@ -205,9 +205,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-cyrus-prefix=$(prefix)
 CONFIGURE_ARGS += --with-service-path=$(libexecdir)/cyrus
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/cyrus
-CONFIGURE_ARGS += --with-bdb=db-4.7
-CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb47/lib
-CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb47/include
+CONFIGURE_ARGS += --with-bdb=db-4.8
+CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb48/lib
+CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb48/include
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-perl=$(prefix)/bin/perl
@@ -218,9 +218,9 @@ CONFIGURE_ARGS += --with-snmp=$(prefix)
 CONFIGURE_ARGS += --with-libwrap=$(prefix)
 CONFIGURE_ARGS += --disable-nntp
 
-# To link against BerkeleyDB 4.7 explicitly
-EXTRA_LINKER_FLAGS = -R$(prefix)/bdb47/lib/\$$ISALIST
-LD_OPTIONS += -R$(prefix)/bdb47/lib/\$$ISALIST
+# To link against BerkeleyDB 4.8 explicitly
+EXTRA_LINKER_FLAGS = -R$(prefix)/bdb48/lib/\$$ISALIST
+LD_OPTIONS += -R$(prefix)/bdb48/lib/\$$ISALIST
 
 # we add the args so perl libraries are installed
 # in the correct path
