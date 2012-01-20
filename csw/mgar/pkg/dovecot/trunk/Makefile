@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.0.16
+VERSION = 2.0.17
 CATEGORIES = server
 
 DESCRIPTION = Secure IMAP server
