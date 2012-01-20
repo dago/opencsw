@@ -47,13 +47,15 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-mozldap
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/dbgen.pl.1
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
+CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpm-mozldap
 
-GARCOMPILER = SOS12U2
+# GARCOMPILER = SOS12U2
 EXTRA_LIB = /opt/csw/bdb48/lib
 # remove -I/opt/csw/include
 CPPFLAGS = 
