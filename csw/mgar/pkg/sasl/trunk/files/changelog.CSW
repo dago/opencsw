@@ -1,3 +1,9 @@
+sasl (2.1.25,REV=2012.01.20)
+
+  * Link against Berkeley DB 4.8.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Fri, 20 Jan 2012 19:20:16 +0100
+
 sasl (2.1.25,REV=2012.01.04)
 
   * README.sasl, README.saslauthd: moved changelog entries to
