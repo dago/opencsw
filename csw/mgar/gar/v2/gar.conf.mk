@@ -773,7 +773,7 @@ PYPI_MIRROR = http://pypi.python.org/packages/source/$(PYPI_SUBDIR)/$(PYPI_PROJE
 # Package dir
 GARPACKAGE = $(shell basename $(CURDIR))
 
-STANDARD_EXPORTS ?= PATH
+STANDARD_EXPORTS ?= HOME PATH
 LANG_EXPORTS ?= LC_ALL
 
 CONFIGURE_ENV_LC_ALL ?= C
