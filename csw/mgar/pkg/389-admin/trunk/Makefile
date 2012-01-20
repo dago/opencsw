@@ -44,7 +44,7 @@ RUNTIME_DEP_PKGS_CSW389admin-dev += CSWlibds-admin-serv0
 PACKAGES += CSW389admin
 SPKG_DESC_CSW389admin += $(DESCRIPTION)
 INITSMF = /etc/opt/csw/init.d/dirsrv-admin
-RUNTIME_DEP_PKGS_CSW389admin += CSWapche2
+RUNTIME_DEP_PKGS_CSW389admin += CSWapache2
 RUNTIME_DEP_PKGS_CSW389admin += CSWap2modnss
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibldif60
@@ -67,7 +67,7 @@ RUNTIME_DEP_PKGS_CSW389admin += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss3
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
-CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWapche2
+CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWapache2
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
