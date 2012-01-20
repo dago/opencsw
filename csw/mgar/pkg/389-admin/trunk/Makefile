@@ -64,8 +64,7 @@ CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
-# EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
-EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
+EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
