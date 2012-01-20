@@ -7,8 +7,10 @@ A user's manual for people who manage Solaris systems with OpenCSW packages.
 .. toctree::
   :maxdepth: 2
 
+  introduction
   bootstrapping
   configuring-services
+  pkgutil-reference
 
 .. [#dagosscrapbook]
    `Dago's Scrapbook`_
