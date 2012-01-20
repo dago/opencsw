@@ -14,15 +14,16 @@ A Java based remote management console used for managing 389
 Administration Server and 389 Directory Server.
 endef
 
-MASTER_SITES = http://port389/source
+MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-PACKAGES = CSW389console
+PACKAGING_PLATFORMS = solaris10x
+
+PACKAGES = CSW389-console
 RUNTIME_DEP_PKGS = CSWidm-console-base CSWldapjdk CSWjss4
-
 ARCHALL = 1
-
-CATALOGNAME_CSW389console = 389-console
+CATALOGNAME_CSW389-console = 389_console
+CHECKPKG_OVERRIDES_CSW389console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Client
 
 LICENSE = LICENSE
 
