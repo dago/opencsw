@@ -33,13 +33,6 @@ newpkg-%: dir = $(subst ::,-,$*)
 newpkg-%:
 	@svn mkdir $(dir) $(dir)/tags $(dir)/branches $(dir)/trunk $(dir)/trunk/files
 	@svn cp ../template/Makefile $(dir)/Makefile
-	@if [ -d ../../gar/v2 ]; then \
-	  ln -s ../../../../gar/v2 $(dir)/trunk/gar; \
-	  cd $(dir)/trunk/gar; svn update; \
-	else \
-	  svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $(dir)/trunk/gar; \
-	fi
-	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $(dir)/trunk
 	@echo "work\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
 	@(cd $(dir)/trunk/; gem fetch $*; gar/bin/gem2pkg *gem > Makefile; rm *gem)
 	@( cd $(dir)/trunk; gmake fetch; gmake makesums; gmake garchive );

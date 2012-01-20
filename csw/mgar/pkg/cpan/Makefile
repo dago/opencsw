@@ -40,11 +40,5 @@ newpkg-%:
 	@touch $(dir)/trunk/checksums
 	@svn add $(dir)/trunk/Makefile $(dir)/trunk/checksums
 	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
-	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $(dir)/trunk
-	@if [ -d ../../gar/v2 ]; then \
-	  ln -s ../../../../gar/v2 $(dir)/trunk/gar; \
-	else \
-	  svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $(dir)/trunk/gar; \
-	fi
 	@echo
 	@echo "Your package is set up for editing at $(dir)/trunk"
