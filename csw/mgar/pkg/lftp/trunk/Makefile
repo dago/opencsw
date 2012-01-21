@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.3.3
+VERSION = 4.3.4
 CATEGORIES = net
 
 DESCRIPTION = A sophisticated command-line ftp/http client
