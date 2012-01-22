@@ -1,0 +1,5 @@
+This location (/opt/csw/etc) is deprecated.
+
+Configuration files are currently being placed in /etc/opt/csw.  Please make
+sure your new configuration is in /etc/opt/csw and remove the old one from
+/opt/csw/etc.
