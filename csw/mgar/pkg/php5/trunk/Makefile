@@ -33,7 +33,7 @@ PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 
 VENDOR_URL     = http://www.php.net/
 MASTER_SITES   = http://us.php.net/distributions/
-INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
+EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
 
 LICENSE = LICENSE
 
@@ -215,9 +215,14 @@ $(eval $(call php5_subpackage,zip,CSWlibz1))
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 EXTRA_LIB = /opt/csw/postgresql/lib
 
+# We link with /usr/ccs/bin/ld which requires setting the path to libCstd.so,
+# using CC as linker would have made this automatic.
+SUBDIR64-sparc = v9
+SUBDIR64-i386 = amd64
+EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
+
 NOISALIST = 1
 STRIP_LIBTOOL = 1
-# PACKAGING_PLATFORMS = solaris10-i386
 
 sysconfdir = /etc$(prefix)/php5
 
@@ -320,6 +325,7 @@ CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
 endif
+
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
