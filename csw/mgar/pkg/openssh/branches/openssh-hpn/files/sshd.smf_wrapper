@@ -1,0 +1,16 @@
+#!/sbin/sh
+
+PATH=/usr/bin:/opt/csw/bin:/usr/sbin
+
+KEYDIR=/etc/opt/csw/ssh
+PIDFILE=/var/run/cswsshd.pid
+if [ -x /opt/csw/bin/ssh-keygen ]; then
+	for ALGO in rsa dsa ecdsa; do
+		if [ ! -f "$KEYDIR/ssh_host_${ALGO}_key" ]; then
+			echo "Creating new ${ALGO} public/private host key pair"
+			ssh-keygen -f $KEYDIR/ssh_host_${ALGO}_key -t ${ALGO} -N ''
+		fi
+	done
+fi
+
+/opt/csw/sbin/sshd

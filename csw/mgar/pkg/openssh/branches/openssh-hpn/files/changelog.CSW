@@ -1,0 +1,154 @@
+openssh (5.9p1,REV=2011.12.16) unstable
+
+  * Fixed an error in server key generation (Closes: #4876)
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 16 Dec 2011 20:46:24 +0100
+
+openssh (5.9p1,REV=2011.09.19) unstable
+
+  * New upstream release.
+  * Updated dependancies name:
+     CSWzlib -> CSWlibz1
+     CSWtcpwrap -> CSWlibwrap1
+     CSWkrb5lib -> CSWlibkrb5-3
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 19 Sep 2011 22:31:03 +0200
+
+openssh (5.8p1,REV=2011.07.25) unstable
+
+  * Added the generation of eliptic curve algoritm host keys in init script.
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 25 Jul 2011 19:55:16 +0200
+
+openssh (5.8p1,REV=2011.02.12) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 12 Feb 2011 17:53:23 +0100
+
+openssh (5.6p1,REV=2010.12.19) unstable
+
+  * New upstream release.
+  * Removed patch applied upstream (derelativise_path_bugfix.patch 
+  and dont_derelativise_authorizedkeysfile_option.patch).
+  * Moved conf from /opt/csw/etc to /etc/opt/csw.
+  * Moved privilege separation directory from /var/empty to /var/opt/csw/empty.
+  * Added 0004-no-lastlog-file.patch patch to workaround a bug with
+  Lastlog information printed at login time (see bug #4494).
+  * Added 0005-rename-pidfile.patch to rename pidfile from sshd.pid to
+  cswsshd.pid. This avoids a conflict with sun native ssh (Closes: #4398).
+  * [Build system] Switched to dynamic prototype.
+  * [Build system] Switched to cswclassutils for user/group creation.
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 19 Dec 2010 23:25:24 +0200
+
+openssh (5.4p1,REV=2010.03.25) unstable
+
+  * Added derelativise_path_bugfix.patch patch to solve a bug in the
+  derelativise_path function (Closes: #4367).
+  * Added dont_derelativise_authorizedkeysfile_option.patch so the
+  AuthorizedKeysFile option can be relative as explained in the man page.
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 25 Mar 2010 19:15:55 +0100
+
+openssh (5.4p1,REV=2010.03.13) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 12 Mar 2010 23:53:43 +0100
+
+openssh (5.3p1,REV=2010.02.28) unstable
+
+  * Added ssh-copy-id contrib script (Closes: #4306)
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 28 Feb 2010 17:03:52 +0100
+
+openssh (5.3p1,REV=2009.12.14) unstable
+
+  * Package rebuild to solve an incorrect upload in the repository tree.
+  * Changed package version numbering scheme.
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 14 Dec 2009 21:19:33 +0100
+
+openssh (5.3,REV=2009.10.10_rev=p1) unstable
+
+  * New upstream release.
+  * PrintMotd is now no in the default config file to avoid a double login
+  banner (Closes: #3829)
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 10 Oct 2009 21:47:46 +0200
+
+openssh (5.2,REV=2009.07.25_rev=p1) unstable
+
+  * Fixed missing /opt/csw/etc/ssh in prototype (Closes: #3765)
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 25 Jul 2009 12:57:35 +0200
+
+openssh (5.2,REV=2009.06.30_rev=p1) unstable
+
+  * Switched to cswclassutils for SMF support.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 30 Jun 2009 10:34:39 +0100
+
+openssh (5.2,REV=2008.03.28_rev=p1) unstable
+
+  * New upstream version.
+  * Split the client in a distinct package.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 22 Mar 2009 10:34:39 +0100
+
+openssh (5.1,REV=2008.02.15_rev=p1) unstable
+
+  * Package rebuild to solve incorrect package push in repository tree.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 06 Dec 2008 15:36:48 +0100
+
+openssh (5.1,REV=2008.12.06_rev=p1) unstable
+
+  * Added test for configuration file existence in sysV init script 
+  (Closes: #2878) 
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 06 Dec 2008 15:36:48 +0100
+
+openssh (5.1,REV=2008.10.04_rev=p1) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 21:25:09 +0200
+
+openssh (5.0,REV=2008.06.02_rev=p1) unstable
+
+  * New upstream version.
+  * Added solaris fix for X11 forwarding bug on ipv4 only machine.
+
+ -- Yann Rouillard <yann@blastwave.org>  Wed, 30 Apr 2008 14:23:40 +0200
+
+openssh (4.9,REV=2008.04.01_rev=p1) unstable
+
+  * New upstream version.
+  * Added documentation files in the package.
+
+ -- Yann Rouillard <yann@blastwave.org>  Tue, 01 Apr 2008 20:37:51 +0200
+
+openssh (4.7,REV=2008.04.04_rev=p1) unstable
+
+  * Added security fixes for CVE-2008-1483 and CVE-2008-1657
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 04 Apr 2008 23:44:19 +0200
+
+openssh (4.7,REV=2007.11.02_rev=p1) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 02 Nov 2007 22:02:23 +0100
+
+openssh (4.6,REV=2007.08.24_rev=p1) unstable
+
+  * Added GSSAPI key exchange patch.
+  * Added spurious error log patch (see openssh bug 1306).
+  * Enabled Solaris contract support for Solaris 10 to avoid
+  ssh disconnections when ssh daemon is restarted.
+  * Re-enabled tcpwrapper support.
+  * replaced \"? ? ?\" with \"0755 root bin\" in the prototype
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 17 Aug 2007 21:15:51 +0200

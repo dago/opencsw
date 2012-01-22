@@ -1,0 +1,26 @@
+From 4cc2f5de9ac2c0fdaf53040f2f1c279b36df37e2 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Mon, 20 Dec 2010 22:37:53 +0100
+Subject: [PATCH] Rename pidfile from sshd.pid to cswsshd.pid to avoid clash with
+ Sun native ssh.
+
+---
+ pathnames.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/pathnames.h b/pathnames.h
+index 9e50950..5fdd47a 100644
+--- a/pathnames.h
++++ b/pathnames.h
+@@ -51,7 +51,7 @@
+  * The process id of the daemon listening for connections is saved here to
+  * make it easier to kill the correct daemon when necessary.
+  */
+-#define _PATH_SSH_DAEMON_PID_FILE	_PATH_SSH_PIDDIR "/sshd.pid"
++#define _PATH_SSH_DAEMON_PID_FILE	_PATH_SSH_PIDDIR "/cswsshd.pid"
+ 
+ /*
+  * The directory in user's home directory in which the files reside. The
+-- 
+1.7.3.2
+

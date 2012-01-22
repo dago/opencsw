@@ -1,0 +1,24 @@
+#!/bin/sh
+
+err=0
+
+if [ `uname -r` = "5.8" ] ; then
+
+if [ ! -c $PKG_ROOT_DIR/dev/random ] ; then
+	echo ERROR: /dev/random must exist
+	err=1
+fi
+
+if [ ! -c $PKG_ROOT_DIR/dev/urandom ] ; then
+	echo ERROR: /dev/urandom must exist
+	err=1
+fi
+
+fi
+
+if [ "$err" = "1" ] ; then
+	echo "For solaris 8 sparc, install patch 112438"
+	echo "For solaris 8 x86,   install patch 112439"
+	exit 1
+fi
+
