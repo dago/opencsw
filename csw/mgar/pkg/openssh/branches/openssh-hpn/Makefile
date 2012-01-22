@@ -10,6 +10,8 @@
 # software causes damage.
 #####################################################################
 
+HPN = 1
+
 ###### Package information #######
 
 NAME = openssh
@@ -137,6 +139,14 @@ PATCHFILES += 0004-no-lastlog-file.patch
 # avoid a clash with sun native ssh pid file
 # see https://www.opencsw.org/mantis/view.php?id=4398
 PATCHFILES += 0005-rename-pidfile.patch
+
+ifdef HPN
+MASTER_SITES += http://www.psc.edu/networking/projects/hpn-ssh/
+PATCHFILES += openssh5.9-dynwindow_noneswitch.diff.gz
+PATCHFILES += openssh5.9-CTR-threading.diff
+PATCHFILES += openssh5.9-peaktput.diff
+#PATCHFILES += openssh5.9-server-logging.diff
+endif
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
