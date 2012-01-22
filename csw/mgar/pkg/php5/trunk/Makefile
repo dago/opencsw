@@ -61,6 +61,7 @@ BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql-dev CSWunixodbc
 BUILD_DEP_PKGS += CSWlibpq CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWhtmltidy CSWpostgresql
+BUILD_DEP_PKGS += CSWlibfreetype-dev
 # NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
 # of sqlite...
 BUILD_DEP_PKGS += CSWlibsqlite3-0
