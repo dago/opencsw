@@ -1,1 +1,4 @@
 afe17eee7e98d3b8550cc349834a85d0  openssh-5.9p1.tar.gz
+0735e4d4e1bcb158b02cfaa93aa67f58  openssh5.9-CTR-threading.diff
+c2813a4f5226cad77ec2cd78a503fe9c  openssh5.9-dynwindow_noneswitch.diff.gz
+de968b6c2ae998e9b6ac4a41648dc1a8  openssh5.9-peaktput.diff
