@@ -44,17 +44,7 @@ CHECKPKG_OVERRIDES_CSWlibmatroska3 += surplus-dependency|CSWlibebml3
 
 LICENSE = LICENSE.LGPL
 
-BUILD64 = 1
-NOISALIST = 1
-
-CONFIGURE_SCRIPTS = 
-
-# Needed for shared library
-EXTRA_CFLAGS = -xcode=pic32
-EXTRA_CXXFLAGS = -xcode=pic32
-
 EXTRA_LINKER_FLAGS = -norunpath
-
 
 RUNTIME_DEP_PKGS = CSWlibebml3
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
