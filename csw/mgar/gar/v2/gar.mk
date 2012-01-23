@@ -844,7 +844,7 @@ endef
 # has not, so we use this one for appending.
 
 
-_PAX_ARGS = $(_INC_EXT_RULE) $(_EXTRA_PAX_ARGS) $(EXTRA_PAX_ARGS_$(MODULATION)) $(EXTRA_PAX_ARGS)
+_PAX_ARGS = $(_INC_EXT_RULE) $(_EXTRA_PAX_ARGS) $(call modulationvalue,EXTRA_PAX_ARGS) $(EXTRA_PAX_ARGS)
 
 define killprocandparent
 cpids() { \
