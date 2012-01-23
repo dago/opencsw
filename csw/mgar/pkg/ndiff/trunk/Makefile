@@ -28,4 +28,3 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-TEST_TARGET = check

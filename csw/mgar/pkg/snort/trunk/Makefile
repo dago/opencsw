@@ -26,8 +26,6 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=/opt/csw/lib
 CONFIGURE_ARGS += --enable-dynamicplugin
 
-TEST_TARGET = check
-
 SAMPLECONF = /etc/opt/csw/snort/snort.conf
 
 include gar/category.mk

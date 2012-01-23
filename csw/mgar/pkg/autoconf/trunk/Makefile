@@ -28,8 +28,6 @@ VENDOR_URL = http://www.gnu.org/software/autoconf/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # Tests take a loooooonnng time.
 # TEST_SCRIPTS =
 

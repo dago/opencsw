@@ -58,7 +58,5 @@ CONFIGURE_ARGS += --disable-dns-pka
 CONFIGURE_ARGS += --disable-dns-cert
 
 RUNPATHQUOTE = 1
-TEST_TARGET = check
-
 include gar/category.mk
 

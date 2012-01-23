@@ -17,7 +17,6 @@ PACKAGES = CSWgnomeicontheme
 CATALOGNAME_CSWgnomeicontheme = gnome_icon_theme
 RUNTIME_DEP_PKGS_CSWgnomeicontheme = CSWicon-naming-utils
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnomeicontheme)
-TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 ARCHALL_CSWgnomeicontheme = 1
 include gar/category.mk

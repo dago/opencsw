@@ -11,7 +11,6 @@ CATEGORIES = lang
 # [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543805
 # [2] http://redmine.ruby-lang.org/issues/show/2609
 ifneq ($(VERSION)$(PATCHLEVEL), 1.9.1p376)
-TEST_TARGET = check
 else
 TEST_SCRIPTS = 
 endif

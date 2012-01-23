@@ -25,6 +25,4 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
 
-TEST_TARGET = check
-
 include gar/category.mk

@@ -15,6 +15,5 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME_CSWicon-naming-utils = icon_naming_utils
 ARCHALL_CSWicon-naming-utils = 1
 RUNTIME_DEP_PKGS_CSWicon-naming-utils = CSWpmxmlsimple
-TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 include gar/category.mk

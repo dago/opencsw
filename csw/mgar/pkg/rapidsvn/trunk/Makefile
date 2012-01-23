@@ -65,8 +65,6 @@ CONFIGURE_ARGS += --with-docbook-xsl-manpages=$(DOCBOOK_MANPAGE)
 # libdb.so is found at the correct place.
 EXTRA_LIB = $(SVNLIBDIR) $(prefix)/bdb48/lib
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibsvncpp3 = $(PKGFILES_RT)
 PKGFILES_CSWlibsvncpp3 += $(PKGFILES_DEVEL)
 

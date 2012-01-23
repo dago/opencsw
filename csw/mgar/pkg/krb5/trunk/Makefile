@@ -79,8 +79,6 @@ BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 BUILD_SCRIPTS += $(WORKSRC)/doc/Makefile
 
 TEST_SCRIPTS = $(WORKSRC)/src/Makefile
-TEST_TARGET = check
-
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile custom
 
 ARCHALL_CSWkrb5doc = 1

@@ -36,8 +36,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g  
 CONFIGURE_ARGS += --with-included-gettext
 
-TEST_TARGET = check
-
 SHELL = /bin/bash
 
 EXTRA_MERGE_EXCLUDE_FILES = $(sharedstatedir)/.*locale.alias

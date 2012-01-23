@@ -38,8 +38,6 @@ RUNTIME_DEP_PKGS_CSWlibtorrentdevel = CSWlibtorrent
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static --disable-libtool-lock --disable-debug
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibtorrentdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibtorrentdevel += $(docdir)/.*
 PKGFILES_CSWlibtorrentdevel += .*\.h

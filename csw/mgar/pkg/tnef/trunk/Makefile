@@ -18,7 +18,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 NOISALIST = 1
 
-TEST_TARGET = check
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk

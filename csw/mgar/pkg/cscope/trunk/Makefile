@@ -24,8 +24,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # Test suite won't run as root!
 TEST_SCRIPTS =
 

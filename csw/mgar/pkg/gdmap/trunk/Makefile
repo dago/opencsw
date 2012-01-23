@@ -30,8 +30,6 @@ EXTRA_LDFLAGS = -lm
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 # For GNU gettext

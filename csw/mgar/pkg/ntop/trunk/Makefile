@@ -74,8 +74,6 @@ CONFIGURE_ARGS += --enable-jumbo-frames
 # CONFIGURE_ARGS += --enable-fc
 # CONFIGURE_ARGS += --enable-mysql
 
-TEST_TARGET = check
-
 # We don't have a separate devel-package, so this is ok
 CHECKPKG_OVERRIDES_CSWntop += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libcpacketPlugin.so
 CHECKPKG_OVERRIDES_CSWntop += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libicmpPlugin.so

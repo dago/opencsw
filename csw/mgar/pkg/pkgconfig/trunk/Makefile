@@ -32,6 +32,4 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --docdir=$(docdir)/$(CATALOGNAME)
 CONFIGURE_ARGS += --with-installed-glib
 
-TEST_TARGET = check
-
 include gar/category.mk

@@ -68,6 +68,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # CONFIGURE_ARGS += --with-icu=$(prefix)
 # CONFIGURE_ARGS += --with-curl=$(prefix)
 
-TEST_TARGET = check
-
 include gar/category.mk

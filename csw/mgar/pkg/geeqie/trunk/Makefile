@@ -12,7 +12,6 @@ SPKG_SOURCEURL = http://geeqie.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_LDFLAGS = -lsocket
 

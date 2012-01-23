@@ -32,8 +32,6 @@ RUNTIME_DEP_PKGS_CSWlibschrodevel = CSWlibschro
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibschrodevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibschrodevel += $(sharedstatedir)/gtk-doc/.*
 

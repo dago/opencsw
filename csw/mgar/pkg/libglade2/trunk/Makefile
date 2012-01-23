@@ -34,6 +34,4 @@ EXTRA_LDFLAGS = -lm /usr/openwin/lib/$(SUNX11SUB_$(ISA))libXext.so
 BUILD64 = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk

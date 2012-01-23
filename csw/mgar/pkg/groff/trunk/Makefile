@@ -24,6 +24,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 INSTALL_OVERRIDE_DIRS = bindir datadir
 
-TEST_TARGET = check
-
 include gar/category.mk

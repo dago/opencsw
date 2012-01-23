@@ -31,8 +31,6 @@ PATCHFILES += 0001-fix-compiling-on-solaris.patch \
 # NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 CHECKPKG_OVERRIDES_CSWaugeas += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWaugeas += non-uniform-lib-versions-in-package|sonames=libaugeas.so.0,libfa.so.1
 CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-package-contains-so-symlink

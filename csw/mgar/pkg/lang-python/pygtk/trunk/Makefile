@@ -31,7 +31,6 @@ EXTRA_EXPORTS = PKG_CONFIG_PATH
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-TEST_TARGET = check
 #TEST_SCRIPTS = 
 
 include gar/category.mk

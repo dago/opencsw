@@ -28,8 +28,6 @@ sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-curses
 
-TEST_TARGET = check
-
 PRESERVECONF = /etc/opt/csw/joe/.*
 MIGRATE_FILES = jmacsrc joerc jpicorc jstarrc rjoerc
 

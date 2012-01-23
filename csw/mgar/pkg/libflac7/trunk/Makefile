@@ -50,8 +50,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # This is a legacy library, built XMMS plugin against newest one
 CONFIGURE_ARGS += --with-xmms-prefix=/notthere
 
-TEST_TARGET = check
-
 # There is one test failing, but as this is really a long-outdated legacy library
 # I don't care much for now.
 SKIPTEST ?= 1

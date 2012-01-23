@@ -55,8 +55,6 @@ CONFIGURE_SCRIPTS = $(WORKSRC)/autogen.sh $(WORKSRC)/configure
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 MSGFMT= /opt/csw/bin/gmsgfmt
 MSGMERGE= /opt/csw/bin/gmsgmerge
 XGETTEXT = /opt/csw/bin/gxgettext

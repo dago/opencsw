@@ -39,8 +39,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibemf1 = $(PKGFILES_RT)
 PKGFILES_CSWlibemf-devel = $(PKGFILES_DEVEL)
 

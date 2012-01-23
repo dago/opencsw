@@ -48,7 +48,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --without-ffi
 
 ## Tests require gtk, but gtk requries gobject
-TEST_TARGET = check
 TEST_SCRIPTS =
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc

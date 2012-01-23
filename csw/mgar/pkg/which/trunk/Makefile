@@ -18,8 +18,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --disable-dependency-tracking
 
-TEST_TARGET = check
-
 BUILD64 = 1
 
 include gar/category.mk

@@ -24,6 +24,4 @@ CONFIGURE_ARGS += --disable-ipv6
 
 EXTRA_LDFLAGS = -lresolv
 
-TEST_TARGET = check
-
 include gar/category.mk

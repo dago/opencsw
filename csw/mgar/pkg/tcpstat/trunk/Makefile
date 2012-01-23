@@ -29,8 +29,6 @@ EXTRA_LINKER_FLAGS = -lsocket -lnsl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 EXTRA_MERGE_EXCLUDE_FILES = .*/tcpprof\.1
 
 include gar/category.mk

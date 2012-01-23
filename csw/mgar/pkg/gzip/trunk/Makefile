@@ -42,8 +42,6 @@ RUNTIME_DEP_PKGS_CSWgzipextras = CSWgzip CSWggrep
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 PKGFILES_CSWgzip  = $(bindir)/gzip

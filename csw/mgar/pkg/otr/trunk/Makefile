@@ -25,8 +25,6 @@ MERGE_EXCLUDE_FILES = /opt/csw/bin/$(ISA)/.*
 RUNTIME_DEP_PKGS_CSWotr = CSWgcrypt CSWgpgerr
 RUNTIME_DEP_PKGS_CSWotrdevel = CSWotr
 
-TEST_TARGET = check
-
 PKGFILES_CSWotrdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk

@@ -50,6 +50,4 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 #CONFIGURE_ARGS += --enable-python
 CONFIGURE_ARGS += --enable-gtk-doc
 
-TEST_TARGET = check
-
 include gar/category.mk

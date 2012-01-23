@@ -22,8 +22,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes
 CONFIGURE_ARGS += --enable-static=no
 
-TEST_TARGET = check
-
 # delta.c contains inlined functions without storage qualifiers, treat them
 # as static as the only references are within delta.c itself. Otherwise the
 # linking will fail to resolve those references. See "inline functions"

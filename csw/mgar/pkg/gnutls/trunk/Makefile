@@ -69,8 +69,6 @@ LD_OPTIONS =
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # We put all libs in one package as they are .so.26 and are all bumped together
 CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
 

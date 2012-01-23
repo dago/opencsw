@@ -37,6 +37,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-TEST_TARGET = check
-
 include gar/category.mk

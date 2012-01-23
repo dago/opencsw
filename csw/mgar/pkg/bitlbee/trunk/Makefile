@@ -46,8 +46,6 @@ CONFIGURE_ARGS += --ssl=openssl --events=libevent
 
 # Critical check.h is missing on Solaris
 SKIPTEST ?= 1
-TEST_TARGET = check
-
 PRESERVECONF = $(sysconfdir)/bitlbee.conf
 
 include gar/category.mk

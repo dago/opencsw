@@ -38,8 +38,6 @@ OPT_FLAGS_GCC = -pipe
 prefix = $(BUILD_PREFIX)/kde-gcc
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # This is a legacy lib, don't care too much about the naming for now.
 CHECKPKG_OVERRIDES_CSWtaglibgcc += shared-lib-package-contains-so-symlink|file=/opt/csw/kde-gcc/lib/libtag.so
 CHECKPKG_OVERRIDES_CSWtaglibgcc += shared-lib-package-contains-so-symlink|file=/opt/csw/kde-gcc/lib/libtag_c.so

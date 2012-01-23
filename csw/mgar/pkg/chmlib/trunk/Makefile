@@ -26,8 +26,6 @@ BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-examples
 
-TEST_TARGET = check
-
 MERGE_DIRS_isa-extra = $(libdir)
 
 DOCS  = NEWS README

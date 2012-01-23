@@ -17,7 +17,6 @@ MASTER_SITES = $(GOOGLE_MIRROR)
 GOOGLE_PROJECT = google-gflags
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)

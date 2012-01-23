@@ -18,8 +18,6 @@ VENDOR_URL = http://www.haible.de/bruno/packages-ffcall.html
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 pre-install-modulated:

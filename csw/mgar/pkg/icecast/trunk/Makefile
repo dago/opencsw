@@ -26,8 +26,6 @@ PRESERVECONF = $(sysconfdir)/icecast.xml
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 post-install-modulated:

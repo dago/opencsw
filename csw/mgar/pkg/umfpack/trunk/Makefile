@@ -35,6 +35,4 @@ LAPACK =
 
 BUILD_OVERRIDE_DIRS = CFLAGS FFLAGS BLAS LAPACK
 
-TEST_TARGET = check
-
 include gar/category.mk

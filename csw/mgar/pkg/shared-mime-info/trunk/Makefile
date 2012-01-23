@@ -43,8 +43,6 @@ RUNTIME_DEP_PKGS += CSWlibglib2-0-0 CSWlibintl8 CSWlibxml2-2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)

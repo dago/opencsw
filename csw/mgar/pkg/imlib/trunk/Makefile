@@ -35,8 +35,6 @@ RUNTIME_DEP_PKGS_CSWimlib += CSWgtk
 # Building the test cases misses -lX11, disable for now
 SKIPTEST ?= 1
 
-TEST_TARGET = check
-
 # No package refactoring for now
 CHECKPKG_OVERRIDES_CSWimlib += shared-lib-package-contains-so-symlink
 CHECKPKG_OVERRIDES_CSWimlib += non-uniform-lib-versions-in-package

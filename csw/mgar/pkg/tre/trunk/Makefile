@@ -18,8 +18,6 @@ BUILD64 = 1
 # PATCHFILES += 0002-manual-gnulib-integration-steps.patch
 # EXTRA_LD_OPTIONS = -lgnugetopt
 CONFIGURE_ARGS = $(DIRPATHS) --disable-agrep
-TEST_TARGET = check
-
 PACKAGES += CSWlibtre5
 SPKG_DESC_CSWlibtre5 = Approximate regex matching library (libtre.so.5)
 PKGFILES_CSWlibtre5 = /opt/csw/lib/.*libtre\.so\.5.*

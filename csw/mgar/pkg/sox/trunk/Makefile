@@ -73,8 +73,6 @@ CONFIGURE_ARGS +=  --without-libltdl
 
 BUILD64 = 1
 
-TEST_TARGET = check
-
 MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

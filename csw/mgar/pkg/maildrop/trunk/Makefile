@@ -18,8 +18,6 @@ DEP_PKGS = CSWlibidn CSWgdbm CSWpcrert
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 # We need whoami

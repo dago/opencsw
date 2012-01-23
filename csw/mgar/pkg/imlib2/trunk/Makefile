@@ -23,8 +23,6 @@ RUNTIME_DEP_PKGS += CSWpng CSWtiff CSWzlib
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
 

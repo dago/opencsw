@@ -83,8 +83,6 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 # XXX: Assembler optimization just doesn't work. Disable for now.
 CONFIGURE_ARGS += --disable-asm-optimizations
 
-TEST_TARGET = check
-
 MERGE_SCRIPTS_isa-i386-version-1.0.4 = copy-only
 MERGE_DIRS_isa-i386-version-1.0.4 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-version-1.0.4 = copy-relocated-only

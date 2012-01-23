@@ -50,8 +50,6 @@ CONFIGURE_ARGS += --with-external-zlib=$(prefix)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-TEST_TARGET = check
-
 # The testsuite runs for more than one hour!
 # SKIPTEST ?= 1
 

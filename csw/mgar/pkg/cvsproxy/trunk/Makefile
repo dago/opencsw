@@ -18,8 +18,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 ETCSERVICES = /opt/csw/etc/pkg/$(NAME)/services
 INETDCONF = /opt/csw/etc/pkg/$(NAME)/inetd.conf
 

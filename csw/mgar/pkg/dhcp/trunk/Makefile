@@ -31,8 +31,6 @@ SPKG_DESC_CSWdhcp-dev = ISC DHCP development package
 CATALOGNAME_CSWdhcp-dev = dhcp_dev
 
 GARCOMPILER = GNU
-TEST_TARGET = check
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/dhcp

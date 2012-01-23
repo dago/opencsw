@@ -18,6 +18,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += LDFLAGS=-lrt
 CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
 
-TEST_TARGET = check
-
 include gar/category.mk

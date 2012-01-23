@@ -17,8 +17,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 
-TEST_TARGET = check
-
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib

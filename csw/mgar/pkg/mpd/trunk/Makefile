@@ -30,8 +30,6 @@ DISTFILES += mpd.conf
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-TEST_TARGET = check
-
 SPKG_CLASSES = none cswcpsampleconf cswusergroup ugfiles cswinitsmf
 PROTOTYPE_FILTER  = awk ' \
     $$$$3 ~ /\/init.d\/cswmpd$$$$/ { $$$$2 = "cswinitsmf" } \

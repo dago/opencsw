@@ -53,8 +53,6 @@ EXTRA_LD_FLAGS += -lCstd -lCrun -lc -lm
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # There are collisions with the existing taglib_gcc at the moment. These will go away
 # as soon as the updated taglib_gcc has been released.
 CHECKPKG_OVERRIDES_CSWlibtag-c0 += file-collision

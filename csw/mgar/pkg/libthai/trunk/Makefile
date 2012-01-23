@@ -37,8 +37,6 @@ PREREQUISUITE_PKGS = $(RUNTIME_DEP_PKGS_CSWlibthai)
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibthaidevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibthaidevel += $(docdir)/.*
 

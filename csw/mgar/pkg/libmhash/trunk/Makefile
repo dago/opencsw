@@ -31,8 +31,6 @@ endif
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Always run testsuite as the code is prone to optimization errors
-TEST_TARGET = check
-
 PACKAGES = CSWlibmhash
 
 include gar/category.mk

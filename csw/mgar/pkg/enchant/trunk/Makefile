@@ -75,8 +75,6 @@ STRIP_LIBTOOL = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)

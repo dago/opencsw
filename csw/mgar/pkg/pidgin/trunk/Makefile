@@ -41,7 +41,6 @@ LIBS=-lm
 EXTRA_CONFIGURE_EXPORTS  = DOT XGETTEXT MSGFMT MSGMERGE SED PKG_CONFIG_PATH
 EXTRA_CONFIGURE_EXPORTS += X11_CFLAGS X11_LIBS LIBS
 EXTRA_INC = /opt/csw/include/ncurses
-TEST_TARGET = check
 TEST_SCRIPTS =
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1

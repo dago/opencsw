@@ -22,6 +22,4 @@ VENDOR_URL = http://www.mktemp.org/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
