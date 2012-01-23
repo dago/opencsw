@@ -74,6 +74,8 @@ CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-admin-console
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-ds-console
+CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-admin-console
+CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-ds-console
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
