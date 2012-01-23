@@ -117,10 +117,8 @@ SKIPTEST ?= 1
 # We do special 32/64 merging for this one, see post-merge
 EXTRA_MERGE_EXCLUDE_FILES += $(includedir)/curl/curlbuild.h
 
-EXTRA_PAX_ARGS_isa-sparcv8-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
-EXTRA_PAX_ARGS_isa-i386-features-full    += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
-EXTRA_PAX_ARGS_isa-sparcv9-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\.$(libdir)/libcurl\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libcurl-feature\1,p"
-EXTRA_PAX_ARGS_isa-amd64-features-full   += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\.$(libdir)/libcurl\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libcurl-feature\1,p"
+EXTRA_PAX_ARGS_isa-default-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
+EXTRA_PAX_ARGS_isa-extra-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\.$(libdir)/libcurl\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libcurl-feature\1,p"
 
 # We select pkgconfig for minimal library bindings. As libneon is self-contained (links
 # to all necessary libs directly) the full version can simly be linked in.
