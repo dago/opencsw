@@ -17,7 +17,7 @@ MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSW389-ds-console
-RUNTIME_DEP_PKGS = CSW389-admin
+BUILD_DEP_PKGS = CSWidm-console-base
 
 ARCHALL = 1
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -36,9 +36,6 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSW389-ds-console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Plugin
-CHECKPKG_OVERRIDES_CSW389-ds-console += unidentified-dependency|CSW389-admin
-CHECKPKG_OVERRIDES_CSW389-ds-console += surplus-dependency|CSW389-admin
-# CHECKPKG_OVERRIDES_CSW389-ds-console += pkginfo-opencsw-repository-uncommitted
 
 include gar/category.mk
 
