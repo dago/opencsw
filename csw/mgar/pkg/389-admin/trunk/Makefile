@@ -23,8 +23,7 @@ LICENSE = LICENSE LICENSE.GPLv2
 
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
-PATCHFILES += 0004-disable-SMF-service-at-install.patch
-PATCHFILES += 0005-comment-out-httpd-thread-options-in-httpd.conf.patch
+PATCHFILES += 0003-correct-initscript-and-http.conf.in.patch
 
 PACKAGES += CSWlibds-admin-serv0
 CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0

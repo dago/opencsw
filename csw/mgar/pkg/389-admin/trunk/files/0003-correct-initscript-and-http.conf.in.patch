@@ -1,0 +1,66 @@
+From 285470791f9eb6dbb196075e0f1945a09c4ad9ea Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Mon, 23 Jan 2012 15:51:51 +0100
+Subject: [PATCH] correct initscript and http.conf.in
+
+---
+ admserv/cfgstuff/httpd.conf.in |   10 +++++-----
+ wrappers/initscript.in         |    6 ++++--
+ 2 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/admserv/cfgstuff/httpd.conf.in b/admserv/cfgstuff/httpd.conf.in
+index a66eb21..b4098d9 100644
+--- a/admserv/cfgstuff/httpd.conf.in
++++ b/admserv/cfgstuff/httpd.conf.in
+@@ -99,12 +99,12 @@ ServerTokens Minor
+ # start one server in multi threaded mode
+ StartServers 1
+ # mtm
+-ServerLimit 1
++ServerLimit 4
+ 
+-MaxClients 64
+-MinSpareThreads 32
+-MaxSpareThreads 64
+-ThreadsPerChild 64
++MaxClients 4
++# MinSpareThreads 32
++# MaxSpareThreads 64
++# ThreadsPerChild 64
+ 
+ #
+ # Dynamic Shared Object (DSO) Support
+diff --git a/wrappers/initscript.in b/wrappers/initscript.in
+index 82dd20e..8fd03da 100644
+--- a/wrappers/initscript.in
++++ b/wrappers/initscript.in
+@@ -7,6 +7,8 @@
+ # processname: @sbindir@/httpd
+ # piddir:      @localstatedir@/run/@PACKAGE_BASE_NAME@
+ #
++#AUTOENABLE no # no SMF enable at install!
++#
+ 
+ # Source function library.
+ if [ -f /etc/rc.d/init.d/functions ] ; then
+@@ -94,7 +96,7 @@ prog="@package_name@"
+ piddir="@localstatedir@/run/@PACKAGE_BASE_NAME@"
+ # PID file
+ pidfile=$piddir/admin-serv.pid
+-lockfile=/var/lock/subsys/@package_name@
++lockfile=@localstatedir@/lock/subsys/@package_name@
+ 
+ [ -f $exec ] || exit 0
+ 
+@@ -163,7 +165,7 @@ start() {
+             RETVAL=1
+         fi
+     fi
+-    [ $RETVAL -eq 0 -a -d /var/lock/subsys ] && touch $lockfile
++    [ $RETVAL -eq 0 -a -d @localstatedir@/lock/subsys ] && touch $lockfile
+ }
+ 
+ stop() {
+-- 
+1.7.8.3
+
