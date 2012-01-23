@@ -38,7 +38,6 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWglib)
 
 # glib 1.x doesn't seem to be 64 bit clean
 BUILD64 = 1
-NOISAEXEC = 1
 
 # Only needed for 1.3.x
 SGML_CATALOG_FILES = /etc/opt/csw/sgml/catalog

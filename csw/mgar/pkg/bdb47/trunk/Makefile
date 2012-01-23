@@ -27,7 +27,6 @@ PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 RELEASE = p$(words $(filter patch.$(VERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 

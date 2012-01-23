@@ -23,7 +23,6 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 RUNTIME_DEP_PKGS = CSWgpgerr CSWpth
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

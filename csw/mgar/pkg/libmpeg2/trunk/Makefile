@@ -37,7 +37,6 @@ BUILD64_platform-solaris10-sparc = 1
 BUILD64_platform-solaris10-i386 = 1
 BUILD64 = $(BUILD64_platform-$(PLATFORM))
 
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_ARGS_garosrel-5.8  = --x-includes=/usr/openwin/include

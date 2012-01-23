@@ -20,7 +20,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 VENDOR_URL = http://code.entropywave.com/projects/orc/
 
 BUILD64 = 1
-NOISAEXEC = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -40,7 +40,6 @@ PKGFILES_CSWlibxpmdevel += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxpm      += $(PKGFILES_RT)
 
 BUILD64 = 1
-NOISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-silent-rules

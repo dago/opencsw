@@ -53,7 +53,6 @@ PRESERVECONF = $(sysconfdir)/esd.conf
 MIGRATE_FILES_CSWesound = esd.conf
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

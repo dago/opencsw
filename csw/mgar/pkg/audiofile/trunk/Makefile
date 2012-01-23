@@ -38,7 +38,6 @@ SPKG_DESC_CSWlibaudiofile-dev = Development files for libaudiofile.so.0
 RUNTIME_DEP_PKGS_CSWlibaudiofile-dev = CSWlibaudiofile0
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

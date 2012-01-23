@@ -22,5 +22,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-amd64   = $(libdir)
-NOISAEXEC = 1
 include gar/category.mk

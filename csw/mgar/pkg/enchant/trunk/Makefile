@@ -66,7 +66,6 @@ CHECKPKG_OVERRIDES_CSWenchant += soname-not-found|libenchant.so.1|is|needed|by|o
 #CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_myspell.so
 
 
-NOISAEXEC = 1
 #NOISALIST = 1
 # libdbus not 64-bit yet
 #BUILD64 = 1

@@ -74,7 +74,6 @@ CONFIGURE_ARGS += --disable-static --disable-profiled
 CONFIGURE_ARGS += --with-ldap
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 BUILD_SCRIPTS += $(WORKSRC)/doc/Makefile

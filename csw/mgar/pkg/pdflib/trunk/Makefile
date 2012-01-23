@@ -47,7 +47,6 @@ SPKG_DESC_CSWpdflib-utils = PDFlib utilities
 CPPFLAGS =
 EXTRA_CFLAGS = -I/opt/csw/include
 
-NOISAEXEC = 1
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-icu
