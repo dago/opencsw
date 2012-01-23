@@ -23,9 +23,9 @@ TEST_SCRIPTS =
 
 EXTRA_MODULATORS = VERSION
 MODULATIONS_VERSION = 1.0 1.1 2.0
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.0 = copy-all
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.1 = copy-all
-MERGE_SCRIPTS_isa-sparcv8-garversion-2.0 = copy-all
+MERGE_SCRIPTS_isa-sparcv8-version-1.0 = copy-all
+MERGE_SCRIPTS_isa-sparcv8-version-1.1 = copy-all
+MERGE_SCRIPTS_isa-sparcv8-version-2.0 = copy-all
 
 # A really simple installator, creating different files for each VERSION.
 install-example:

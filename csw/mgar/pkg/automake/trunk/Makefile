@@ -58,12 +58,12 @@ ARCHALL = 1
 $(foreach VERSION,$(MODULATIONS_VERSION),$(eval MERGE_SCRIPTS_isa-$(ISA)-version-$(VERSION) = copy-all))
 
 # These are hardlinks to the versioned versions and will confuse the merging
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.6.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.7.9 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.8.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.9.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.10.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.11.2 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.6.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.7.9 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.8.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.9.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.10.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.11.2 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 
 #     alternatives [options] --install link name path priority  [-
 #     -slave link name path]...  [--initscript service]

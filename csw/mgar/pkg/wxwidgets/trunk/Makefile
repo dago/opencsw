@@ -25,12 +25,12 @@ EXTRA_MODULATORS = VERSION
 # files copied from the old package have been provided.
 MODULATIONS_VERSION = 2.8.10
 
-MERGE_SCRIPTS_isa-i386-garversion-2.8.5 = copy-only
-MERGE_DIRS_isa-i386-garversion-2.8.5 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.5 = copy-only
-MERGE_DIRS_isa-sparcv8-garversion-2.8.5 = $(libdir)
-MERGE_SCRIPTS_isa-i386-garversion-2.8.10 = copy-all
-MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.10 = copy-all
+MERGE_SCRIPTS_isa-i386-version-2.8.5 = copy-only
+MERGE_DIRS_isa-i386-version-2.8.5 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-version-2.8.5 = copy-only
+MERGE_DIRS_isa-sparcv8-version-2.8.5 = $(libdir)
+MERGE_SCRIPTS_isa-i386-version-2.8.10 = copy-all
+MERGE_SCRIPTS_isa-sparcv8-version-2.8.10 = copy-all
 
 SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tar.gz)
 NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
@@ -44,26 +44,26 @@ MASTER_SITES  = $(SF_MIRRORS)
 SF_PROJ = wxwindows
 
 
-PATCHFILES_isa-i386-garversion-2.8.5  = 0500-wxT-macro-first-iteration.patch
-PATCHFILES_isa-i386-garversion-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
-PATCHFILES_isa-i386-garversion-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
-PATCHFILES_isa-i386-garversion-2.8.5 += 0003-vsscanf-support-via-ncursesw.patch
-PATCHFILES_isa-i386-garversion-2.8.5 += 0004-add-monodll_appbase.so-to-wxrc.patch
-PATCHFILES_isa-i386-garversion-2.8.5 += 0005-stupid-vwscanf-workaround.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.5  = 0500-wxT-macro-first-iteration.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0003-vsscanf-support-via-ncursesw.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0004-add-monodll_appbase.so-to-wxrc.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0005-stupid-vwscanf-workaround.patch
-PATCHFILES_isa-i386-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
-PATCHFILES_isa-i386-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
-PATCHFILES_isa-i386-garversion-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
-PATCHFILES_isa-i386-garversion-2.8.10 += 0005-stupid-vwscanf-workaround.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
-PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0005-stupid-vwscanf-workaround.patch
+PATCHFILES_isa-i386-version-2.8.5  = 0500-wxT-macro-first-iteration.patch
+PATCHFILES_isa-i386-version-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
+PATCHFILES_isa-i386-version-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-i386-version-2.8.5 += 0003-vsscanf-support-via-ncursesw.patch
+PATCHFILES_isa-i386-version-2.8.5 += 0004-add-monodll_appbase.so-to-wxrc.patch
+PATCHFILES_isa-i386-version-2.8.5 += 0005-stupid-vwscanf-workaround.patch
+PATCHFILES_isa-sparcv8-version-2.8.5  = 0500-wxT-macro-first-iteration.patch
+PATCHFILES_isa-sparcv8-version-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
+PATCHFILES_isa-sparcv8-version-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-sparcv8-version-2.8.5 += 0003-vsscanf-support-via-ncursesw.patch
+PATCHFILES_isa-sparcv8-version-2.8.5 += 0004-add-monodll_appbase.so-to-wxrc.patch
+PATCHFILES_isa-sparcv8-version-2.8.5 += 0005-stupid-vwscanf-workaround.patch
+PATCHFILES_isa-i386-version-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
+PATCHFILES_isa-i386-version-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-i386-version-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
+PATCHFILES_isa-i386-version-2.8.10 += 0005-stupid-vwscanf-workaround.patch
+PATCHFILES_isa-sparcv8-version-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
+PATCHFILES_isa-sparcv8-version-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-sparcv8-version-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
+PATCHFILES_isa-sparcv8-version-2.8.10 += 0005-stupid-vwscanf-workaround.patch
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
@@ -160,8 +160,8 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 # The 2.8.5 version has been compiled as a monolithic library.  Building it the
 # same way for backwards compatibility.
-CONFIGURE_ARGS_garversion-2.8.5 = --enable-monolithic
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_garversion-$(VERSION))
+CONFIGURE_ARGS_version-2.8.5 = --enable-monolithic
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_version-$(VERSION))
 
 INSTALL_SCRIPTS = wxwidgets
 

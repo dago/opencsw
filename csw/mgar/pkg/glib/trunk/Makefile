@@ -5,7 +5,7 @@ CATEGORIES = lib
 EXTRA_MODULATORS = VERSION
 MODULATIONS_VERSION = 1.2.10 1.3.15
 
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.2.10 isa-amd64-garversion-1.2.10
+SKIP_MODULATIONS = isa-sparcv9-version-1.2.10 isa-amd64-version-1.2.10
 
 DESCRIPTION = Utility library commonly associated with GNOME programs
 define BLURB
@@ -20,9 +20,9 @@ DISTFILES  = $(SOURCEFILES)
 NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 PATCHFILES-1.3.15  = 0001-gtkdoc-mkhtml-returns-1-even-on-warnings.patch
 PATCHFILES-1.3.15 += 0002-Don-t-break-when-index.sgml-is-not-there.patch
-PATCHFILES_isa-i386-garversion-1.3.15 = $(PATCHFILES-1.3.15)
-PATCHFILES_isa-sparcv8-garversion-1.3.15 = $(PATCHFILES-1.3.15)
-PATCHFILES_isa-sparcv9-garversion-1.3.15 = $(PATCHFILES-1.3.15)
+PATCHFILES_isa-i386-version-1.3.15 = $(PATCHFILES-1.3.15)
+PATCHFILES_isa-sparcv8-version-1.3.15 = $(PATCHFILES-1.3.15)
+PATCHFILES_isa-sparcv9-version-1.3.15 = $(PATCHFILES-1.3.15)
 
 PACKAGES = CSWglib CSWglibdevel
 
@@ -51,8 +51,8 @@ CONFIGURE_ARGS += --with-libiconv
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # There are three possible harmless tests failing for 1.3.15 64 bit, so skip for now
-TEST_SCRIPTS_isa-default-garversion-1.2.10 = $(WORKSRC)/Makefile
-TEST_SCRIPTS_isa-default-garversion-1.3.15 = $(WORKSRC)/Makefile
+TEST_SCRIPTS_isa-default-version-1.2.10 = $(WORKSRC)/Makefile
+TEST_SCRIPTS_isa-default-version-1.3.15 = $(WORKSRC)/Makefile
 TEST_SCRIPTS = $(call modulationvalue,TEST_SCRIPTS)
 
 TEST_TARGET = check
@@ -60,11 +60,11 @@ TEST_TARGET = check
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
 
-MERGE_SCRIPTS_isa-default-garversion-1.2.10 = copy-only
-MERGE_DIRS_isa-default-garversion-1.2.10 = $(libdir)
-MERGE_SCRIPTS_isa-default-garversion-1.3.15 = copy-all
-MERGE_DIRS_isa-extra-garversion-1.3.15 = $(libdir)
-MERGE_SCRIPTS_isa-extra-garversion-1.3.15 = copy-relocated-only
+MERGE_SCRIPTS_isa-default-version-1.2.10 = copy-only
+MERGE_DIRS_isa-default-version-1.2.10 = $(libdir)
+MERGE_SCRIPTS_isa-default-version-1.3.15 = copy-all
+MERGE_DIRS_isa-extra-version-1.3.15 = $(libdir)
+MERGE_SCRIPTS_isa-extra-version-1.3.15 = copy-relocated-only
 
 PKGFILES_CSWglibdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWglibdevel += $(sharedstatedir)/gtk-doc/.*

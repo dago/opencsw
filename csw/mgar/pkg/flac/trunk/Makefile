@@ -8,10 +8,10 @@ MODULATIONS_VERSION = 1.0.4 1.1.2 1.2.1
 
 # There was no 64 bit legacy version. Do not provide it as new binaries should
 # link against the new version.
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.0.4
-SKIP_MODULATIONS += isa-amd64-garversion-1.0.4
-SKIP_MODULATIONS += isa-sparcv9-garversion-1.1.2
-SKIP_MODULATIONS += isa-amd64-garversion-1.1.2
+SKIP_MODULATIONS = isa-sparcv9-version-1.0.4
+SKIP_MODULATIONS += isa-amd64-version-1.0.4
+SKIP_MODULATIONS += isa-sparcv9-version-1.1.2
+SKIP_MODULATIONS += isa-amd64-version-1.1.2
 
 DESCRIPTION = Free lossless audio codec
 define BLURB
@@ -32,16 +32,16 @@ DISTFILES = $(SOURCEFILES)
 
 NOEXTRACT = $(filter-out $(SF_PROJ)-$(VERSION).tar.gz,$(SOURCEFILES))
 
-PATCHFILES_isa-sparcv8-garversion-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-sparcv9-garversion-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-sparcv8-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
-PATCHFILES_isa-sparcv9-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-sparcv8-version-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-sparcv9-version-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-sparcv8-version-1.2.1 = libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-sparcv9-version-1.2.1 = libtool-64bit.patch no-stdint.patch
 
-PATCHFILES_isa-i386-garversion-1.0.4 = strip-nasm-1.0.4.patch
-PATCHFILES_isa-i386-garversion-1.1.2 = strip-nasm-1.1.2.patch libtool-64bit.patch
-PATCHFILES_isa-amd64-garversion-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-i386-garversion-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
-PATCHFILES_isa-amd64-garversion-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-i386-version-1.0.4 = strip-nasm-1.0.4.patch
+PATCHFILES_isa-i386-version-1.1.2 = strip-nasm-1.1.2.patch libtool-64bit.patch
+PATCHFILES_isa-amd64-version-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-i386-version-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-amd64-version-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
 
 PACKAGES = CSWflac CSWxmmsflac
 CATALOGNAME_CSWflac = libflac
@@ -85,33 +85,33 @@ CONFIGURE_ARGS += --disable-asm-optimizations
 
 TEST_TARGET = check
 
-MERGE_SCRIPTS_isa-i386-garversion-1.0.4 = copy-only
-MERGE_DIRS_isa-i386-garversion-1.0.4 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-garversion-1.0.4 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-i386-version-1.0.4 = copy-only
+MERGE_DIRS_isa-i386-version-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-version-1.0.4 = copy-relocated-only
+MERGE_DIRS_isa-amd64-version-1.0.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-1.1.2 = copy-only
-MERGE_DIRS_isa-i386-garversion-1.1.2 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-garversion-1.1.2 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-i386-version-1.1.2 = copy-only
+MERGE_DIRS_isa-i386-version-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-version-1.1.2 = copy-relocated-only
+MERGE_DIRS_isa-amd64-version-1.1.2 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-1.2.1 = copy-all
-MERGE_SCRIPTS_isa-amd64-garversion-1.2.1 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-i386-version-1.2.1 = copy-all
+MERGE_SCRIPTS_isa-amd64-version-1.2.1 = copy-relocated-only
+MERGE_DIRS_isa-amd64-version-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.0.4 = copy-only
-MERGE_DIRS_isa-sparcv8-garversion-1.0.4 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.0.4 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-version-1.0.4 = copy-only
+MERGE_DIRS_isa-sparcv8-version-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-version-1.0.4 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-version-1.0.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.1.2 = copy-only
-MERGE_DIRS_isa-sparcv8-garversion-1.1.2 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.1.2 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-version-1.1.2 = copy-only
+MERGE_DIRS_isa-sparcv8-version-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-version-1.1.2 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-version-1.1.2 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.2.1 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.2.1 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-version-1.2.1 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-version-1.2.1 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-version-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWxmmsflac = $(libdir)/xmms/.*
 
@@ -121,18 +121,18 @@ CC := $(abspath ./bin/cc)
 CXX := $(abspath ./bin/CC)
 PATH := ./bin:$(PATH):/usr/ccs/bin
 
-post-patch-isa-i386-garversion-1.0.4:
+post-patch-isa-i386-version-1.0.4:
 	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
 	$(MAKECOOKIE)
 
-post-patch-isa-i386-garversion-1.1.2:
+post-patch-isa-i386-version-1.1.2:
 	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
 	$(MAKECOOKIE)
 
-post-patch-isa-sparcv8-garversion-1.0.4:
+post-patch-isa-sparcv8-version-1.0.4:
 	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
 	$(MAKECOOKIE)
 
-post-patch-isa-sparcv8-garversion-1.1.2:
+post-patch-isa-sparcv8-version-1.1.2:
 	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
 	$(MAKECOOKIE)
