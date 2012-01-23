@@ -59,6 +59,4 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-magick
 CONFIGURE_ARGS += --with-pstoedit
 
-TEST_TARGET = check
-
 include gar/category.mk

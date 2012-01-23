@@ -219,8 +219,6 @@ EXTRA_LINKER_FLAGS = -xnorunpath
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
 #      ~/.bashrc, etc. during build.
-TEST_TARGET = check
-
 #provided by iconv
 MERGE_EXCLUDE_FILES  = .*/charset.alias
 MERGE_EXCLUDE_FILES += .*/locale.alias

@@ -21,6 +21,4 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)/ssl
 CONFIGURE_ARGS += --with-x
 
-TEST_TARGET = check
-
 include gar/category.mk

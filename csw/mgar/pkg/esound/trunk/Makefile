@@ -55,8 +55,6 @@ MIGRATE_FILES_CSWesound = esd.conf
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 MERGE_SCRIPTS_isa-extra += copy-relocated-only
 MERGE_SCRIPTS_isa-extra += copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)

@@ -57,8 +57,6 @@ CONFIGURE_ARGS += --with-dl
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 
-TEST_TARGET = check
-
 PROTOTYPE_MODIFIERS      = varuser
 PROTOTYPE_FILES_varuser  = /var/opt/csw/squid/cache
 PROTOTYPE_FILES_varuser += /var/opt/csw/squid/logs

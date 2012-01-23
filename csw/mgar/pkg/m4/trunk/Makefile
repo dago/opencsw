@@ -23,8 +23,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 
-TEST_TARGET = check
-
 # This must only be shipped by libiconv
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 

@@ -27,6 +27,4 @@ BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
 
-TEST_TARGET = check
-
 include gar/category.mk

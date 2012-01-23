@@ -40,8 +40,6 @@ CONFIGURE_SCRIPTS += $(WORKSRC)/autogen.sh
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 #pre-configure-modulated:

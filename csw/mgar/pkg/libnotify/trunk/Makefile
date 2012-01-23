@@ -35,8 +35,6 @@ EXTRA_INC = $(libdir_install)/dbus-1.0/include
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibnotifydevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibnotifydevel += $(sharedstatedir)/gtk-doc/.*
 

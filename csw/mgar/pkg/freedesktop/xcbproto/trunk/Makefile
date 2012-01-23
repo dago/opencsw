@@ -59,7 +59,6 @@ CHECKPKG_OVERRIDES_CSWpyxcbproto += surplus-dependency|CSWxcbproto
 CHECKPKG_OVERRIDES_CSWxcbproto += surplus-dependency|CSWx11common
 CHECKPKG_OVERRIDES_CSWpyxcbproto += pkgname-does-not-start-with-CSWpy-
 
-TEST_TARGET = check
 EXTRA_MERGE_EXCLUDE_FILES = .*.py[co]
 
 include gar/category.mk

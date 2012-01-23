@@ -22,8 +22,6 @@ RUNTIME_DEP_PKGS = CSWzsh
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 ARCHALL = 1
 
 include gar/category.mk

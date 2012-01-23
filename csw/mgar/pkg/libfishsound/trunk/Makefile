@@ -26,8 +26,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD_ARGS = AM_CFLAGS= SHLIB_VERSION_ARG= libfishsound_la_LDFLAGS=
 
-TEST_TARGET = check
-
 # We have one failing test, so disable tests for now:
 # encdec-comments.c:68: Recently inserted ARTIST1 not retrieved
 # FAIL: encdec-comments

@@ -28,8 +28,6 @@ RUNTIME_DEP_PKGS = CSWggettextrt
 NOISALIST = 1
 CONFIGURE_ARGS = --prefix=$(libexecdir)/$(NAME)-$(VERSION)
 
-TEST_TARGET = check
-
 EXTRA_MERGE_EXCLUDE_FILES = $(prefix)/.*\.a
 
 include gar/category.mk

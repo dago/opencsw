@@ -38,8 +38,6 @@ PKGFILES_CSWlibeggdbusdevel = $(PKGFILES_DEVEL)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 pre-configure-modulated:

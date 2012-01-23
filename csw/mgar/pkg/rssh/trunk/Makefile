@@ -40,8 +40,6 @@ CONFIGURE_ARGS += --with-cvs=$(bindir)/cvs
 CONFIGURE_ARGS += --with-rdist=$(bindir)/rdist
 CONFIGURE_ARGS += --with-rsync=$(bindir)/rsync
 
-TEST_TARGET = check
-
 PROTOTYPE_MODIFIERS = makesuid
 PROTOTYPE_FILES_makesuid = $(libexecdir)/rssh_chroot_helper
 PROTOTYPE_PERMS_makesuid = 4755

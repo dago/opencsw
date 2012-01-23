@@ -56,8 +56,6 @@ CONFIGURE_ARGS += --with-spellcheck-prog=$(bindir)/aspell
 LIBS += -lm -lgssapi_krb5 -lkrb5 -lintl -liconv
 export LIBS
 
-TEST_TARGET = check
-
 RUNTIME_DEP_PKGS  = CSWggettextrt CSWiconv CSWtcl CSWsasl CSWosslrt
 RUNTIME_DEP_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWoldaprt
 

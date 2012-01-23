@@ -21,8 +21,6 @@ EXTRA_CXXFLAGS = -D_RWSTD_ALLOCATOR -mt
 EXTRA_LDFLAGS  = -Wl,-zignore -Wl,-zcombreloc -Wl,-Bdirect
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-debug
-TEST_TARGET = check
-
 include gar/category.mk
 
 pre-configure-modulated:

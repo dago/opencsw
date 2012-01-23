@@ -29,8 +29,6 @@ EXTRA_CFLAGS = -I/opt/csw/include -DSUN_OGL_NO_VERTEX_MACROS
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # No 64 bit libs on Solaris 9 x86
 CHECKPKG_OVERRIDES_CSWfreeglut += soname-not-found|libXxf86vm.so.1|is|needed|by|opt/csw/lib/amd64/libglut.so.3.9.0
 

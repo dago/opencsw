@@ -55,8 +55,6 @@ CONFIGURE_ARGS += --enable-gtk-doc
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)

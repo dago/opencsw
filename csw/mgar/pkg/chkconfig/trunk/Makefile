@@ -37,8 +37,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-alt-links-dir=/etc/opt/csw/alternatives
 CONFIGURE_ARGS += --with-alt-admin-dir=/var/opt/csw/alternatives
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 post-merge:

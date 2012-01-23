@@ -47,6 +47,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # This is for amd64 checked on i386
 CHECKPKG_OVERRIDES = soname-not-found|libm.so.2
 
-TEST_TARGET = check
-
 include gar/category.mk

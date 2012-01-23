@@ -30,8 +30,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # required libraries don't offer optimized versions, hence no $ISALIST.
 NORUNPATH = 1
 
-TEST_TARGET = check
-
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 # Are these really needed? May investigate deeply later.

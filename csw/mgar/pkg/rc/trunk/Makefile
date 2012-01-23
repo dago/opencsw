@@ -20,6 +20,4 @@ DEP_PKGS = CSWreadline
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-readline
 
-TEST_TARGET = check
-
 include gar/category.mk

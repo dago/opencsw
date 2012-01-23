@@ -107,8 +107,6 @@ MIGRATE_DEST_DIR_CSWclamav   = /etc/opt/csw
 SPKG_SOURCEURL = http://www.clamav.net
 
 #SKIPTEST = 1
-TEST_TARGET = check
-
 # These are harmless examples
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamd.conf.CSW
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/README

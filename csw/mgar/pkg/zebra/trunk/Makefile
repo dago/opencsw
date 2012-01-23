@@ -25,8 +25,6 @@ localstatedir = /var/opt/csw
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 EXTRA_PAX_ARGS = -s ",\.conf.sample\(.*\),.conf\1.CSW,p"
 
 SAMPLECONF = /etc/opt/csw/bgpd.conf

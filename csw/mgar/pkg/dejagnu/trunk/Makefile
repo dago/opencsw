@@ -17,6 +17,4 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk

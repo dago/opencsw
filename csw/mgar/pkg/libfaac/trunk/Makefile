@@ -31,8 +31,6 @@ PATCHFILES += mpeg4ip.h.diff psych.h.diff
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

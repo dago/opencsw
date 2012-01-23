@@ -53,8 +53,6 @@ EXTRA_LINKER_FLAGS = -liconv -lexpat -lz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-boost=/opt/csw
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 pre-configure-modulated:

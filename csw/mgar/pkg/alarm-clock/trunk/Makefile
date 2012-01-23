@@ -32,8 +32,6 @@ EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 
 STRIP_LIBTOOL = 1
 
-TEST_TARGET = check
-
 INSTALL_OVERRIDE_VARS = alarmclockdocdir
 INSTALL_OVERRIDE_VAR_alarmclockdocdir = $(docdir)/$(CATALOGNAME)
 

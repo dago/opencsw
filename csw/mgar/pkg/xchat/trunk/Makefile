@@ -54,8 +54,6 @@ CONFIGURE_ARGS += --enable-ipv6
 
 ## run checkpkg manually
 ENABLE_CHECK = 0
-TEST_TARGET = check
-
 EXTRA_INC = $(prefix)/bdb44/include
 EXTRA_LIB = $(prefix)/bdb44/lib
 

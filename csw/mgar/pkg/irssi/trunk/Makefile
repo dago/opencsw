@@ -39,6 +39,4 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWggettextrt
 RUNTIME_DEP_PKGS += CSWbdb47
 
-TEST_TARGET = check
-
 include gar/category.mk

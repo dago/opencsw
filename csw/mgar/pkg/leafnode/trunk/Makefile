@@ -17,6 +17,4 @@ RUNTIME_DEP_PKGS = CSWpcrert
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk

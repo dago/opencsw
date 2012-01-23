@@ -24,8 +24,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # the long forms of -P (--no-dereference) and -p (--preserve).
 PATCHFILES = gcp-explicit-args.patch
 
-TEST_TARGET = check
-
 CHECKPKG_OVERRIDES_CSWxmlto += unidentified-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWdocbookdtds

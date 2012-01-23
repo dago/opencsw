@@ -15,7 +15,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 CATALOGNAME_CSWgnomekeyring = gnomekeyring
 PACKAGES = CSWgnomekeyring
 CONFIGURE_ARGS = $(DIRPATHS)
-TEST_TARGET = check
 PATCHFILES += inttypes.patch
 PATCHFILES += inttypes-gck-rpc-module.c.patch
 STRIP_LIBTOOL = 1

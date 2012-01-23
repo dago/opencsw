@@ -28,8 +28,6 @@ CONFIGURE_ARGS += --program-prefix=g
 EXTRA_LINKER_FLAGS = -lgnugetopt
 BUILD_ARGS = SHELL=bash
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 post-extract-modulated:

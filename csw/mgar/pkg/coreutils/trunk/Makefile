@@ -54,7 +54,6 @@ PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print
 
 # move the pegs forward
 ifneq ($(VERSION), 8.13)
-TEST_TARGET = check
 else
 TEST_SCRIPTS =
 endif

@@ -20,8 +20,6 @@ PATCHFILES = zh.diff
 INSTALL_SCRIPTS = $(WORKSRC)/Makefile $(WORKSRC)/Makefile-root
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # Some tests require a controlling terminal
 TEST_SCRIPTS =
 

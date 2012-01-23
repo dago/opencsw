@@ -31,6 +31,4 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-xslt-prefix=$(prefix)
 CONFIGURE_ARGS += --with-xml-prefix=$(prefix)
 
-TEST_TARGET = check
-
 include gar/category.mk

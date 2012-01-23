@@ -29,8 +29,6 @@ CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo
 EXTRA_CONFIGURE_EXPORTS += CAIRO_LIBS CAIRO_CFLAGS
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 

@@ -41,7 +41,5 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pango
 
-TEST_TARGET = check
-
 GARCOMPILER = GCC4
 include gar/category.mk

@@ -18,6 +18,4 @@ EXTRA_LINKER_FLAGS = -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk

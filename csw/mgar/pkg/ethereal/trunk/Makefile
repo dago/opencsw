@@ -28,8 +28,6 @@ CONFIGURE_ARGS += --without-ucdsnmp
 CONFIGURE_ARGS += --enable-gtk2
 CONFIGURE_ARGS += --with-ssl=$(tool_prefix)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 LDFLAGS += -lnsl -lsocket

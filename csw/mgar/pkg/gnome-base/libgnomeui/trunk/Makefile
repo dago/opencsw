@@ -73,8 +73,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
 
-TEST_TARGET = check
-
 ARCHALL_CSWlibgnomeui = 1
 ARCHALL_CSWlibgnomeui-doc = 1
 

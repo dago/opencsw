@@ -21,8 +21,6 @@ VENDOR_URL = http://www2m.biglobe.ne.jp/~dolphin/lha/lha-unix.htm
 EXTRA_LINKER_FLAGS = -liconv
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # License is really unknown
 CHECKPKG_OVERRIDES_CSWlha += license-missing|/opt/csw/share/doc/lha/license
 

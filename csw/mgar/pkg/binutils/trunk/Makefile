@@ -26,8 +26,6 @@ CONFIGURE_ARGS += --disable-werror
 CONFIGURE_ARGS += --enable-targets=all
 CONFIGURE_ARGS += --enable-64-bit-bfd
 
-TEST_TARGET = check
-
 # Do not run tests until this is fixed:
 #   <http://sourceware.org/bugzilla/show_bug.cgi?id=11128>
 SKIPTEST ?= 1

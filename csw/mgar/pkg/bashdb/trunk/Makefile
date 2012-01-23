@@ -30,8 +30,6 @@ RUNTIME_DEP_PKGS = CSWbash
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 ARCHALL = 1
 
 include gar/category.mk

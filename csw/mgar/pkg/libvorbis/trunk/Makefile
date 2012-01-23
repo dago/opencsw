@@ -58,6 +58,4 @@ EXTRA_LD_FLAGS = -L$(libdir) -lsunmath -lm
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk

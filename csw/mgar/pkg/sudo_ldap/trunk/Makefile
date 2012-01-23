@@ -47,7 +47,6 @@ endif
 # sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 PKGFILES_CSWsudoldap  = $(bindir)/sudo\.ldap

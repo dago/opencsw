@@ -54,8 +54,6 @@ TEST_SCRIPTS_isa-default-version-1.2.10 = $(WORKSRC)/Makefile
 TEST_SCRIPTS_isa-default-version-1.3.15 = $(WORKSRC)/Makefile
 TEST_SCRIPTS = $(call modulationvalue,TEST_SCRIPTS)
 
-TEST_TARGET = check
-
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
 

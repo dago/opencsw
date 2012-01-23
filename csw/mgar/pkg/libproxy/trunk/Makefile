@@ -123,8 +123,6 @@ CONFIGURE_ARGS += --without-mozjs
 CONFIGURE_ARGS += --with-python
 CONFIGURE_ARGS += --disable-silent-rules
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 #pre-configure-modulated:

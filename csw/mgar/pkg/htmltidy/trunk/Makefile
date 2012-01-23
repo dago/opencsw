@@ -24,8 +24,6 @@ PATCHFILES = configure.diff
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # It's useless, but it's there...
-TEST_TARGET = check
-
 include gar/category.mk
 
 pre-configure:

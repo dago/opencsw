@@ -75,7 +75,6 @@ EXTRA_LD_OPTIONS = -L/opt/csw/lib -liconv -lrt
 CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk --disable-silent-rules
 STRIP_LIBTOOL = 1
 
-TEST_TARGET = check
 CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += surplus-dependency|CSWtransmission
 CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += surplus-dependency|CSWdbus
 

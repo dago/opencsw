@@ -59,7 +59,6 @@ endif
 #sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 PKGFILES_CSWsudo  = $(bindir)/sudo\.minimal

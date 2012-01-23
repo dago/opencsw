@@ -24,8 +24,6 @@ NOISALIST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 SPKG_VERSION := $(SPKG_VERSION)_rev=$(REV)

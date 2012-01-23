@@ -20,6 +20,5 @@ DISTFILES  = $(DISTNAME).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-gflags
 CATALOGNAME = py_gflags
-TEST_TARGET = check
 ARCHALL_CSWpy-gflags = 1
 include gar/category.mk

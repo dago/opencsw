@@ -43,6 +43,4 @@ export LIBTIFF LIBJPEG LIBPNG
 
 # Tests don't quite work properly
 TEST_SCRIPTS =
-TEST_TARGET = check
-
 include gar/category.mk

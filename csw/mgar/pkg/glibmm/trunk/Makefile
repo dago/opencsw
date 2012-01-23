@@ -22,6 +22,4 @@ EXTRA_CONFIGURE_EXPORTS = MAKE
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-TEST_TARGET = check
-
 include gar/category.mk

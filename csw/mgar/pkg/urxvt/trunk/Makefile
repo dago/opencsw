@@ -37,7 +37,6 @@ RUNTIME_DEP_PKGS_CSWurxvt += CSWlibx11
 RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxft2
 RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxrender
 GARCOMPILER = GNU
-TEST_TARGET = check
 EXTRA_INC = /opt/csw/X11/include
 EXTRA_LIB = /opt/csw/X11/lib
 EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib

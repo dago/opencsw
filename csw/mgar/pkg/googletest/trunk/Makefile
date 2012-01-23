@@ -23,6 +23,4 @@ EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
 # EXTRA_LDFLAGS = -lCrun -lm
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-TEST_TARGET = check
-
 include gar/category.mk

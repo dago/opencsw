@@ -17,8 +17,6 @@ SPKG_SOURCEURL = http://plib.sourceforge.net
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # This library contains only static libs, so it is more like a developer library
 MERGE_EXCLUDE_STATICLIBS =
 

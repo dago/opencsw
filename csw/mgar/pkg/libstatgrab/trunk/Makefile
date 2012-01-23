@@ -28,6 +28,4 @@ NORUNPATH = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses-prefix=/usr
 
-TEST_TARGET = check
-
 include gar/category.mk

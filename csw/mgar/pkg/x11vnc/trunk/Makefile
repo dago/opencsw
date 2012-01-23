@@ -20,6 +20,4 @@ RUNTIME_DEP_PKGS = CSWosslrt CSWzlib CSWjpeg
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk

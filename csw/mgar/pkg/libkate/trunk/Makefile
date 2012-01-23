@@ -60,8 +60,6 @@ PYCOMPILE = 1
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # Disable testsuite until this is fixed:
 #   http://code.google.com/p/libkate/issues/detail?id=20
 SKIPTEST ?= 1

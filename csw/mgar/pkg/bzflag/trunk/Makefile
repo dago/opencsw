@@ -21,8 +21,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 RUNTIME_DEP_PKGS_CSWbzflag += CSWglew
 RUNTIME_DEP_PKGS_CSWbzflag += CSWlibsdl
 RUNTIME_DEP_PKGS_CSWbzflag += CSWcurlrt

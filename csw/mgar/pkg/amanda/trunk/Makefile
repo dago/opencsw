@@ -61,6 +61,4 @@ CONFIGURE_ARGS += --with-gnutar=/opt/csw/bin/gtar
 CONFIGURE_ARGS += --disable-installperms
 CONFIGURE_ARGS += --with-amperldir=/opt/csw/lib/perl/csw
 
-TEST_TARGET = check
-
 include gar/category.mk

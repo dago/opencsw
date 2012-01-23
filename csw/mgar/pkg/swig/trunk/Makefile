@@ -54,7 +54,6 @@ CONFIGURE_ARGS += --with-javaincl=/usr/j2se/include
 MAKE_ARGS += docs
 
 # Not sure if this was meant to run by non-developers
-TEST_TARGET = check
 TEST_SCRIPTS =
 
 #SWIG doesn't DEPEND on the languages it supports being installed

@@ -26,7 +26,5 @@ CONFIGURE_SCRIPTS =
 
 BUILD_ARGS = man
 
-TEST_TARGET = check
-
 include gar/category.mk
 

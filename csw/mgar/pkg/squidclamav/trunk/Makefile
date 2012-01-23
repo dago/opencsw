@@ -29,8 +29,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 
 EXTRA_LINKER_FLAGS += -lrt -lnsl -lsocket
 
-TEST_TARGET = check
-
 EXTRA_DOCFILES = AUTHORS ChangeLog INSTALL NEWS README
 
 post-install-modulated:

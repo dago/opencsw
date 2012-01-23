@@ -26,8 +26,6 @@ SPKG_SOURCEURL = http://cyberelk.net/tim/software/patchutils/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 # gendiff is still not found, but the results look otherwise pretty good.
 # Ignore for now.
 SKIPTEST ?= 1

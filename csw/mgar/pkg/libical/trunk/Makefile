@@ -38,8 +38,6 @@ RUNTIME_DEP_PKGS_CSWlibicaldevel = CSWlibical
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 PKGFILES_CSWlibicaldevel = $(PKGFILES_DEVEL)
 
 CHECKPKG_OVERRIDES_CSWlibicaldevel += surplus-dependency|CSWlibical

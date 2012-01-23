@@ -22,7 +22,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWlibxdgbasedir
 CATALOGNAME = libxdg_basedir
-TEST_TARGET = check
 # These settings do not do anything.  xdg-basedir has the paths hardcoded in
 # basedir.c, there's a separate patch for it.
 # sysconfdir = /etc$(prefix)

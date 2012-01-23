@@ -38,6 +38,4 @@ CONFIGURE_ARGS += --with-berkeleydb=/opt/csw/bdb33
 
 GARCOMPILER = GCC3
 
-TEST_TARGET = check
-
 include gar/category.mk

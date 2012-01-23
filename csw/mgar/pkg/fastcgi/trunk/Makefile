@@ -26,8 +26,6 @@ UFILES_REGEX = fcgi-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 WORKSRC ?= $(WORKDIR)/$(DLNAME)
 
 datadir = $(docdir)/$(NAME)

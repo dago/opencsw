@@ -17,8 +17,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 
 BUILD64 = 1
 
-TEST_TARGET = check
-
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)

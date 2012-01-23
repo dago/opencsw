@@ -45,8 +45,6 @@ OPT_FLAGS_SOS =
 CONFIGURE_ARGS = $(DIRPATHS) \
 	--enable-static=no
 
-TEST_TARGET = check
-
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 include gar/category.mk

@@ -12,8 +12,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpidginotr,)
 PATCHFILES = otr_priority.patch
 
-TEST_TARGET = check
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 

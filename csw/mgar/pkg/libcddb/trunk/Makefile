@@ -30,8 +30,6 @@ http_proxy='$(http_proxy)'
 EXTRA_TEST_EXPORTS = http_proxy
 
 export http_proxy
-TEST_TARGET = check
-
 PKGFILES_CSWlibcddbutil = $(bindir)/.*
 
 include gar/category.mk
