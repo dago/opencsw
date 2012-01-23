@@ -41,7 +41,7 @@ index 7f9dd8f..f024586 100644
      LD_PRELOAD=/usr/lib/libumem.so
      export LD_PRELOAD
  fi
-@@ -41,6 +43,16 @@ if [ "$OS" = "SunOS" -a -f /usr/lib/64/libumem.so ] ; then
+@@ -41,6 +43,17 @@ if [ "$OS" = "SunOS" -a -f /usr/lib/64/libumem.so ] ; then
      export LD_PRELOAD_64
  fi
  

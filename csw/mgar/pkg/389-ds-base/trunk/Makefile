@@ -33,7 +33,6 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWperl
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpython
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWsasl
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldif60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
@@ -51,6 +50,9 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-mozldap
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssl3
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
+
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
