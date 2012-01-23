@@ -68,8 +68,7 @@ BUILD_DEP_PKGS += CSWautomake
 # Overwrite existing -L/opt/csw/lib or installed libs will be picked up first
 LINKER_FLAGS = -lsocket -lnsl
 
-BUILD64 = 1
-MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(libexecdir)
+BUILD64_LIBS_ONLY = 1
 
 # This is not passed to configure, although it is defined (but wrong) in configure.in
 EXTRA_CONFIGURE_EXPORTS += ENV_CFLAGS

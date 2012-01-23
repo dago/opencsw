@@ -65,7 +65,7 @@ REINPLACE_WITH_xdg = $(sharedstatedir)
 REINPLACE_FILES_xdg = libgnomevfs/xdgmime.c
 
 NOISALIST = 1
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # STRIP_LIBTOOL = 1
 

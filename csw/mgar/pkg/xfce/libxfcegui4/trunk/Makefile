@@ -41,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWlibxfcegui4     += CSWsunmath
 RUNTIME_DEP_PKGS_CSWlibxfcegui4devel = 
 RUNTIME_DEP_PKGS_CSWlibxfcegui4doc   = 
 
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 # NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-xinerama

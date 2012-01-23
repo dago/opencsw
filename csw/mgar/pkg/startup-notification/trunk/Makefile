@@ -15,7 +15,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = startup_notif
 PACKAGES = CSWstartupnotif
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 EXTRA_PKG_CONFIG_DIRS = /opt/csw/lib
 include gar/category.mk
 

@@ -27,7 +27,7 @@ RUNTIME_DEP_PKGS_CSWlibunistring-dev += CSWlibunistring0
 CHECKPKG_OVERRIDES_CSWlibunistring-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libunistring/libunistring_15.html
 CHECKPKG_OVERRIDES_CSWlibunistring-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/libunistring.info
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset\.alias
 

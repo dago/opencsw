@@ -23,7 +23,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 SPKG_SOURCEURL = http://gmplib.org/
 
 GARCOMPILER = GCC4
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv8plus+vis 
 EXTRA_BUILD_ISAS_i386  = pentium

@@ -65,7 +65,7 @@ OBSOLETED_BY_CSWlibpcreposix0 += CSWpcrert
 REINPLACE_USRLOCAL += doc/pcre-config.1
 REINPLACE_USRLOCAL += doc/pcresample.3
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_LINKER_FLAGS = -norunpath
 

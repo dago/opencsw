@@ -26,6 +26,6 @@ SPKG_DESC_CSWlibspectre-dev = Development files for libspectre.so.1
 RUNTIME_DEP_PKGS_CSWlibspectre-dev = CSWlibspectre1
 
 # Disable for now as libgs is missing 64 bit
-#BUILD64 = 1
+#BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

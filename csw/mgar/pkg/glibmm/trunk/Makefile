@@ -14,7 +14,7 @@ SPKG_DESC_CSWglibmm_devel = C++ interface to glib2 development files
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 MAKE = gmake

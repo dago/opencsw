@@ -31,7 +31,7 @@ SPKG_DESC_CSWlibreadline5 = GNU readline library, libreadline.so.5
 PKGFILES_CSWlibreadline5 = $(call pkgfiles_lib,libreadline.so.5)
 RUNTIME_DEP_PKGS_CSWlibreadline5 += CSWlibncurses5
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NORUNPATH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)

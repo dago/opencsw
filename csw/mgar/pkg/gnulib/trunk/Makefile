@@ -21,7 +21,7 @@ SPKG_DESC_CSWlibgnu-dev = ISO C / POSIX substitution library libgnu.a and header
 
 WORKSRC = $(WORKDIR)/posixlib
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 INSTALL_SCRIPTS = custom
 

@@ -19,7 +19,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 # PATCHFILES  = 0001-Do-not-use-Wall-on-Sun-Compiler.patch
 
 # There's a problem with the 64-bit build.
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 STRIP_LIBTOOL = 1
 

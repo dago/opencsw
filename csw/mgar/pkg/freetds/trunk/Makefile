@@ -60,7 +60,7 @@ CHECKPKG_OVERRIDES_CSWfreetds-dev += file-with-bad-content
 # Make sure library is self-sufficient
 EXTRA_LINKER_FLAGS = -liconv
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Testsuite needs a running Sybase/SQLServer database
 SKIPTEST ?= 1

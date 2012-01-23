@@ -48,7 +48,7 @@ RUNTIME_DEP_PKGS_CSWliblasi-dev += CSWliblasi0
 # That is ok
 CHECKPKG_OVERRIDES_CSWliblasi-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liblasi/examples/README
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_CXX_FLAGS = -lCstd -norunpath
 

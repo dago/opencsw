@@ -104,7 +104,7 @@ CONFIGURE_ARGS += --with-xml=expat
 # Needed for sockaddr_in6
 EXTRA_CFLAGS += -D__EXTENSIONS__
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

@@ -30,7 +30,7 @@ SPKG_DESC_CSWlibexif-dev = Development files for libexif.so.12
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibexif-dev += CSWlibexif12
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-docs

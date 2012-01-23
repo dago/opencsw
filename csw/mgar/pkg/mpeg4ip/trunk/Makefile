@@ -32,7 +32,7 @@ PATCHFILES += 0003-Change-type-from-Void-to-void.patch
 PATCHFILES += 0004-Add-one-more-scratch-channel-or-compilation-fails.patch
 
 GARCOMPILER = GNU
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # EXTRA_CPPFLAGS = -D_GETOPT_H=1 -DHAVE_GETOPT_H
 EXTRA_CPPFLAGS = -DHAVE_GETOPT_H -D__GNU_LIBRARY__

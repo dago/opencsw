@@ -31,7 +31,7 @@ SPKG_DESC_CSWlibfbopenssl-dev = Development files for libfbopenssl.so.0
 # These are no header files in there, is this correct?
 RUNTIME_DEP_PKGS_CSWlibfbopenssl-dev += CSWlibfbopenssl0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = custom

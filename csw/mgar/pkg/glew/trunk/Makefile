@@ -42,7 +42,7 @@ RUNTIME_DEP_PKGS_CSWlibglew-dev += CSWlibglew1-6
 OBSOLETED_BY_CSWlibglew-dev = CSWglew
 
 NOISALIST = 1
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 LDOPT-64 = -64
 EXTRA_CFLAGS-sparc = -xcode=pic32

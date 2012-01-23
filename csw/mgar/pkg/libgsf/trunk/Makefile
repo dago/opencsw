@@ -77,7 +77,7 @@ CONFIGURE_ARGS += --without-python
 
 # Missing 64-bit libs:
 # libgnomevfs-2.so libgconf-2.so libbonobo-2.so libbonobo-activation.so
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 STRIP_LIBTOOL = 1
 

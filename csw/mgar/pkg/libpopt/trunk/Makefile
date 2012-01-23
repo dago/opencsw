@@ -38,7 +38,7 @@ RUNTIME_DEP_PKGS_CSWlibpopt-dev = CSWlibpopt0
 PKGFILES_CSWlibpopt-dev += $(PKGFILES_DEVEL)
 OBSOLETES_CSWlibpopt-dev += CSWlibpopt
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NORUNPATH = 1
 
 include gar/category.mk

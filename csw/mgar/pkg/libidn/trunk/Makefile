@@ -50,7 +50,7 @@ TEST_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
 INSTALL_OVERRIDE_VARS = SHELL
 INSTALL_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =

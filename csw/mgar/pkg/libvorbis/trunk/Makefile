@@ -52,7 +52,7 @@ RUNTIME_DEP_PKGS_CSWlibvorbis-dev += CSWlibvorbisenc2
 
 VENDOR_URL = http://www.vorbis.com/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_LD_FLAGS = -L$(libdir) -lsunmath -lm
 

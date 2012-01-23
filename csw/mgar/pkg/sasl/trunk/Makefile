@@ -144,7 +144,7 @@ EXTRA_LIB += $(prefix)/postgresql/lib
 # before the newly built ones.
 EXTRA_RUNPATH_ISALIST	= $(EXTRA_RUNPATH_DIRS)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 NODIRPATHS = --docdir

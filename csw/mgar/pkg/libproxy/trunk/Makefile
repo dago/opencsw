@@ -104,10 +104,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_LINKER_FLAGS = -lnsl
 
-BUILD64 = 1
-
-# Skip 64 bit binaries - they are just big and gain nothing
-MERGE_DIRS_isa-extra = $(libdir)
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

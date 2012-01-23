@@ -89,7 +89,7 @@ CATALOGNAME_CSWlibwmfgtk = libwmf_gtk_stub
 # This *must* be the same as in the GD package
 CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-x

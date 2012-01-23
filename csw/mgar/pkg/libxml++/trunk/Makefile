@@ -16,7 +16,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 EXTRA_CONFIGURE_EXPORTS = MAKE
 MAKE = gmake
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk

@@ -37,11 +37,7 @@ SPKG_DESC_CSWlibaudiofile-dev = Development files for libaudiofile.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibaudiofile-dev = CSWlibaudiofile0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_SCRIPTS_isa-extra += copy-config-only
-MERGE_SCRIPTS_isa-extra += copy-relocated-only
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

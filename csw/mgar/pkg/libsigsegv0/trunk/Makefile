@@ -18,7 +18,7 @@ PKGFILES_CSWlibsigsegv0 += $(call pkgfiles_lib,libsigsegv.so.0)
 
 VENDOR_URL = http://www.gnu.org/software/libsigsegv/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-static
 

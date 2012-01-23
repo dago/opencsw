@@ -32,6 +32,6 @@ SPKG_DESC_CSWlibwavpack-dev = Development files for libwavpack.so.1
 PKGFILES_CSWlibwavpack-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibwavpack-dev = CSWlibwavpack1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

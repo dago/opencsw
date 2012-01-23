@@ -55,7 +55,7 @@ CONFIGURE_ARGS_OPT += --with-nspr-inc=$(includedir)/nspr
 CONFIGURE_ARGS_OPT += --with-nspr-lib=/$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

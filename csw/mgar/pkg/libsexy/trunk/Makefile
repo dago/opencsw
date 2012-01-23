@@ -30,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWlibsexydevel = CSWlibsexy
 
 VENDOR_URL = http://www.chipx86.com/blog/tag/libsexy/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWlibsexydevel  = $(PKGFILES_DEVEL)

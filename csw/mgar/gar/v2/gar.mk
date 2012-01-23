@@ -767,7 +767,7 @@ MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 else
 ISAEXEC_DIRS ?= $(if $(ISAEXEC),$(bindir) $(sbindir) $(libexecdir))
 MERGE_DIRS_isa-default ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
-MERGE_DIRS_isa-extra ?= $(if $(ISAEXEC),$(bindir) $(sbindir) $(libexecdir)) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-extra) $(EXTRA_MERGE_DIRS_isa-$(ISA))
+MERGE_DIRS_isa-extra ?= $(if $(or $(BUILD64),$(ISAEXEC)),$(bindir) $(sbindir) $(libexecdir)) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-extra) $(EXTRA_MERGE_DIRS_isa-$(ISA))
 MERGE_DIRS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSEDEXTRA))
 MERGE_DIRS_$(MODULATION) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSED))
 

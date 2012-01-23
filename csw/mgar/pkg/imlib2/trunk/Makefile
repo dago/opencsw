@@ -20,11 +20,8 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 RUNTIME_DEP_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
 RUNTIME_DEP_PKGS += CSWpng CSWtiff CSWzlib
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
-MERGE_DIRS_isa-extra = $(libdir)
 
 CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/bmp.so
 CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/tiff.so

@@ -40,7 +40,7 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 STRIP_LIBTOOL = 1
 

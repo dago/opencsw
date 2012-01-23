@@ -30,7 +30,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS  = $(DIRPATHS) 
 CONFIGURE_ARGS += --enable-error-on-warning=no
 

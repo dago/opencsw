@@ -31,7 +31,7 @@ SPKG_DESC_CSWlibconfuse-dev = Development files for libconfuse.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibconfuse-dev += CSWlibconfuse0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-nls

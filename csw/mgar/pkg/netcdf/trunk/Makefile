@@ -98,7 +98,7 @@ CONFIGURE_ARGS += --disable-logging
 CONFIGURE_ARGS += --with-hdf5=/opt/csw
 CONFIGURE_ARGS += --with-zlib=/opt/csw
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64

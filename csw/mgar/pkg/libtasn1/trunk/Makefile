@@ -40,7 +40,7 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 # we don't really need it anyway, so disable for now.
 NOISALIST = 1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

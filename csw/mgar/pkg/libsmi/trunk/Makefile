@@ -42,7 +42,7 @@ ARCHALL_CSWlibsmi-mibs = 1
 OBSOLETED_BY_CSWlibsmi-mibs = CSWlibsmimibs
 CATALOGNAME_CSWlibsmimibs = libsmi_mibs_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_CPPFLAGS_isa-sparcv8 = -Dfabsf=fabs
 EXTRA_CPPFLAGS_isa-sparcv9 = -Dfabsf=fabs

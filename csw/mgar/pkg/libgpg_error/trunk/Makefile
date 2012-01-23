@@ -38,6 +38,6 @@ VENDOR_URL = http://www.gnupg.org/download/
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

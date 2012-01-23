@@ -36,6 +36,6 @@ SPKG_DESC_CSWlibexplain-dev = Development files for libexplain.so.30
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibexplain-dev += CSWlibexplain30
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

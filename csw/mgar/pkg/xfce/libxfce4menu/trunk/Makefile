@@ -33,7 +33,7 @@ RUNTIME_DEP_PKGS_CSWlibxfce4menu    = CSWggettextrt CSWglib2
 RUNTIME_DEP_PKGS_CSWlibxfce4menudev = CSWlibxfce4menu
 RUNTIME_DEP_PKGS_CSWlibxfce4menudoc = CSWlibxfce4menu
 
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 # NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

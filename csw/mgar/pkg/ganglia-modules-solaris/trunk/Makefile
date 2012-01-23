@@ -34,7 +34,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 BUILD_DEP_PKGS = CSWlibapr1-0 CSWganglia-dev
 

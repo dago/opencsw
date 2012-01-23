@@ -106,7 +106,7 @@ LICENSE = LICENSE
 # the server and client component
 PRESERVECONF = $(sysconfdir)/$(NAME)rc
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 BUILD_DEP_PKGS = CSWbdb48devel
 BUILD_DEP_PKGS += CSWlibpcre-dev

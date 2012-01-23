@@ -24,7 +24,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://gmplib.org/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Disabling sparcv8plus with GCC
 # /var/tmp//ccPKyHnL.s: Assembler messages:

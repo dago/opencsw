@@ -22,7 +22,7 @@ RUNTIME_DEP_PKGS_CSWlibcpptest-dev = CSWlibcpptest0
 OBSOLETED_BY_CSWlibcpptest-dev += CSWlibcpptestdevel
 CATALOGNAME_CSWlibcpptestdevel = libcpptest_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_CXXFLAGS = -norunpath
 

@@ -28,9 +28,7 @@ PATCHFILES += configure.diff faac.h.diff faaccfg.h.diff frame.h.diff
 PATCHFILES += input.c.diff ltp.c.diff mp4property.h.diff mp4util.h.diff
 PATCHFILES += mpeg4ip.h.diff psych.h.diff
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

@@ -44,6 +44,6 @@ VENDOR_URL = http://toxygen.net/libgadu
 # There are zero-sized structs
 EXTRA_CFLAGS += -features=extensions
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

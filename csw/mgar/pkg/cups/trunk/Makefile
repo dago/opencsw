@@ -302,7 +302,7 @@ OBSOLETED_BY_CSWlibcupsppdc1 += CSWlibcups
 # For some reason -norunpath is not used here, investigate later
 CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_LINKER_FLAGS += -liconv
 EXTRA_LINKER_FLAGS += -norunpath

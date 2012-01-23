@@ -60,7 +60,7 @@ SPKG_DESC_CSWlibspeexdsp1 = Speex audio codec support library, libspeexdsp.so.1
 PKGFILES_CSWlibspeexdsp1 += $(call pkgfiles_lib,libspeexdsp.so.1)
 
 # 64-bit doesn't build on x86.
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 # TEST_SCRIPTS =
 
 CONFIGURE_ARGS += $(DIRPATHS)

@@ -44,7 +44,7 @@ SPKG_DESC_CSWpyxcbproto = $(SPKG_DESC_CSWxcbproto) Python Bindings
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

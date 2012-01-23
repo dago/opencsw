@@ -27,7 +27,7 @@ CATALOGNAME_CSWlibreadline4 = libreadline4
 SPKG_DESC_CSWlibreadline4 = GNU readline library, libreadline.so.4
 PKGFILES_CSWlibreadline4 = $(call pkgfiles_lib,libreadline.so.4)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NORUNPATH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)

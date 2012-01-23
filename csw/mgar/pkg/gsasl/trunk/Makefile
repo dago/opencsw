@@ -65,7 +65,7 @@ LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 # Disable 64 bit until krb5 is available in 64 bit
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 

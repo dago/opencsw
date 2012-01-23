@@ -30,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWwebp += CSWlibwebp0
 RUNTIME_DEP_PKGS_CSWwebp += CSWpng
 RUNTIME_DEP_PKGS_CSWwebp += CSWjpeg
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # On amd64 -xO3 results in an assembler error
 OPT_FLAGS_SOS-amd64 = -xO2

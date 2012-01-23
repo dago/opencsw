@@ -28,7 +28,7 @@ SPKG_DESC_CSWlibbabl-dev = Development files for libbabl-0.1.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Replace manually until this is fixed:
 #   https://bugzilla.gnome.org/show_bug.cgi?id=664800

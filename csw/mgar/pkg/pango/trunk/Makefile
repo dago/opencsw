@@ -108,9 +108,6 @@ SKIPTEST ?= 1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/preload\.1\.gz
 
-# We need the binaries to query 64 bit modules
-MERGE_DIRS_isa-extra = $(bindir) $(libdir)
-
 include gar/category.mk
 
 post-extract-modulated:

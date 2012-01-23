@@ -17,7 +17,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWlibxml2
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -35,7 +35,7 @@ SPKG_DESC_CSWlibicaldevel = Developer files for libical
 
 RUNTIME_DEP_PKGS_CSWlibicaldevel = CSWlibical
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWlibicaldevel = $(PKGFILES_DEVEL)

@@ -28,7 +28,7 @@ CHECKPKG_OVERRIDES_CSWlibevent1-4-2 += shared-lib-pkgname-mismatch
 
 VENDOR_URL = http://www.monkey.org/~provos/libevent/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 TEST_TARGET = verify
 

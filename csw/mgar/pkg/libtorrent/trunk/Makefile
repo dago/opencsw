@@ -35,7 +35,7 @@ SPKG_DESC_CSWlibtorrentdevel = Development files for libtorrent
 RUNTIME_DEP_PKGS_CSWlibtorrent      = CSWosslrt CSWlibsigc++
 RUNTIME_DEP_PKGS_CSWlibtorrentdevel = CSWlibtorrent
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static --disable-libtool-lock --disable-debug
 
 PKGFILES_CSWlibtorrentdevel = $(PKGFILES_DEVEL)

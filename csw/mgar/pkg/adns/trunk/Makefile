@@ -29,7 +29,7 @@ PACKAGES += CSWlibadns1
 SPKG_DESC_CSWlibadns1 = Advanced, easy to use, asynchronous-capable DNS client library, libadns.so.1
 PKGFILES_CSWlibadns1 += $(call pkgfiles_lib,libadns.so.1)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 BUILD_OVERRIDE_VARS = MKSHLIB_1 MKSHLIB_3
 BUILD_OVERRIDE_VAR_MKSHLIB_1 = $(CC) $(LDFLAGS) -G -h $$(SHLIBSONAME) -o

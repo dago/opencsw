@@ -19,7 +19,7 @@ DEP_PKGS = CSWyaz CSWgcrypt CSWexpat CSWlibxml2 CSWlibxslt CSWbzip2 CSWgpgerr CS
 VENDOR_URL = http://www.indexdata.com/zebra
 
 # Just wait a _little_ longer until yaz is ready in 64 bit, which itself needs libicu in 64 bit
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk

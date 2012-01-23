@@ -24,6 +24,6 @@ RUNTIME_DEP_PKGS_CSWlibogg-dev = CSWlibogg0
 
 VENDOR_URL = http://www.vorbis.com/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

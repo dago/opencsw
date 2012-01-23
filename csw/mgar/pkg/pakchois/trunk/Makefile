@@ -25,7 +25,7 @@ SPKG_DESC_CSWlibpakchois-dev = Development files for libpakchois.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibpakchois-dev = CSWlibpakchois0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 EXTRA_LINKER_FLAGS = -lintl
 

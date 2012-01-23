@@ -36,6 +36,6 @@ CHECKPKG_OVERRIDES_CSWlibargtable2-dev += file-with-bad-content|/usr/share|root/
 
 EXTRA_LDFLAGS = -lintl
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

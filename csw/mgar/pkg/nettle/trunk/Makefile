@@ -43,7 +43,7 @@ RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibhogweed2
 RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibnettle4
 RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibgmp10
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared

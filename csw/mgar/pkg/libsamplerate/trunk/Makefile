@@ -45,7 +45,7 @@ RUNTIME_DEP_PKGS_CSWlibsamplerate-utils += CSWlibsndfile
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
 

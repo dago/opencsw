@@ -19,7 +19,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 STRIP_LIBTOOL = 1
 
 include gar/category.mk

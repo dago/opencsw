@@ -15,7 +15,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 #SPKG_SOURCEURL = http://projects.gnome.org/gconf/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

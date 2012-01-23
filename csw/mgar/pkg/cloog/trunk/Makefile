@@ -12,7 +12,7 @@ VENDOR_URL = http://www.cloog.org/
 MASTER_SITES = http://www.bastoul.net/cloog/pages/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 GARCOMPILER = GNU
 
 LICENSE = $(FILEDIR)/COPYING

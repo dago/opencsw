@@ -26,6 +26,6 @@ SPKG_DESC_CSWlibksba-dev = Development files for libksba.so.8
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibksba-dev += CSWlibksba8
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

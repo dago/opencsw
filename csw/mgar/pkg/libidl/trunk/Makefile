@@ -23,7 +23,7 @@ SPKG_DESC_CSWlibidl-dev = Development files for libIDL-2.so.0
 # pkgfiles is catchall
 RUNTIME_DEP_PKGS_CSWlibidl-dev += CSWlibidl2-0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CPP = /usr/lib/cpp
 EXTRA_COMMON_EXPORTS += CPP

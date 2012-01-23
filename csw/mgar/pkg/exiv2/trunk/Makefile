@@ -17,7 +17,7 @@ PATCHFILES = 0001-Remove-unknown-flag-to-Sun-Studio.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Sun Studio doesn't unerstand g++ features

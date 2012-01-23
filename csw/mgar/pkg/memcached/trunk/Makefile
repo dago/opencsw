@@ -43,7 +43,7 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 # Make special version for Solaris 10 with enabled DTrace
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 # SASL is not 64 bit yet!
 #CONFIGURE_ARGS += --enable-sasl

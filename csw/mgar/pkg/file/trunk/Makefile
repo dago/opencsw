@@ -68,7 +68,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 PYCOMPILE = 1
 

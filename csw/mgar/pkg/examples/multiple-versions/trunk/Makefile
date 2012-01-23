@@ -40,7 +40,7 @@ CATALOGNAME = multiple_versions
 TEST_SCRIPTS =
 WORKSRC = $(WORKDIR)/hello-$(VERSION)
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

@@ -31,7 +31,7 @@ SUNX11SUB_sparcv9 = sparcv9/
 SUNX11SUB_amd64 = amd64/
 EXTRA_LDFLAGS = -lm /usr/openwin/lib/$(SUNX11SUB_$(ISA))libXext.so
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 include gar/category.mk

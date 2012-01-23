@@ -36,7 +36,7 @@ SPKG_DESC_CSWlibspf2-dev = Development files for libspf2.so.2
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibspf2-dev = CSWlibspf2-2
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_LINKER_FLAGS = -lresolv  -lsocket  -lnsl 
 

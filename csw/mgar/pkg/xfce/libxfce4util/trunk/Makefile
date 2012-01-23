@@ -36,7 +36,7 @@ RUNTIME_DEP_PKGS_CSWlibxfce4util    = CSWggettextrt CSWglib2
 RUNTIME_DEP_PKGS_CSWlibxfce4utildevel = 
 RUNTIME_DEP_PKGS_CSWlibxfce4utildoc = 
 
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 # NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

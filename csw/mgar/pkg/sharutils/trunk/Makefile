@@ -17,7 +17,7 @@ MASTER_SITES = ftp://ftp.gnu.org/gnu/sharutils/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # Apparently, 64 bit builds are frown upon:
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-June/000907.html
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 
 # To make the test use gmd5sum
 MD5SUM = gmd5sum

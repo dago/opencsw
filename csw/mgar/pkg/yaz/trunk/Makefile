@@ -76,11 +76,8 @@ RUNTIME_DEP_PKGS_CSWyaz += CSWreadline
 RUNTIME_DEP_PKGS_CSWyaz += CSWgcrypt
 RUNTIME_DEP_PKGS_CSWyaz += CSWlibicu46
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
 

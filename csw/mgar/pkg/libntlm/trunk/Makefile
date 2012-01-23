@@ -29,6 +29,6 @@ RUNTIME_DEP_PKGS_CSWlibntlm-dev += CSWlibntlm0
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

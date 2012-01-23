@@ -57,14 +57,12 @@ ARCHALL_CSWpy-libkate = 1
 RUNTIME_DEP_PKGS_CSWpy-libkate += CSWpython
 PYCOMPILE = 1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Disable testsuite until this is fixed:
 #   http://code.google.com/p/libkate/issues/detail?id=20
 SKIPTEST ?= 1
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
 

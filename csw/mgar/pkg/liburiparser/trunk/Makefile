@@ -30,7 +30,7 @@ SPKG_DESC_CSWliburiparserdevel = $(DESCRIPTION) Development Files
 RUNTIME_DEP_PKGS_CSWliburiparserdevel = CSWliburiparser1
 CHECKPKG_OVERRIDES_CSWliburiparserdevel += surplus-dependency|CSWliburiparser1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_SCRIPTS  = $(WORKSRC)/configure
 CONFIGURE_SCRIPTS += $(WORKSRC)/doc/configure
 

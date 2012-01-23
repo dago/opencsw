@@ -105,7 +105,7 @@ PATCHFILES += missing-includes.patch
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
 # when relinking libpoppler-glib during install phaze

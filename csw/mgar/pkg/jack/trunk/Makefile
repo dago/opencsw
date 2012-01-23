@@ -20,7 +20,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/waf
 CONFIGURE_ARGS = configure --prefix=$(prefix)

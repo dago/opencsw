@@ -26,7 +26,7 @@ SPKG_DESC_CSWlibxkbuidevel = X11 keyboard UI presentation library development fi
 RUNTIME_DEP_PKGS_CSWlibxkbui = CSWlibice CSWlibsm CSWlibx11 CSWlibxkbfile CSWlibxt
 RUNTIME_DEP_PKGS_CSWlibxkbuidevel = CSWlibxkbui
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

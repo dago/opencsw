@@ -71,8 +71,6 @@ BUILD_DEP_PKGS += CSWlame-devel
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS +=  --without-libltdl
 
-BUILD64 = 1
-
-MERGE_DIRS_isa-extra = $(libdir)
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

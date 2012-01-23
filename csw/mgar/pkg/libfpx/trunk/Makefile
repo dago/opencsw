@@ -51,7 +51,7 @@ EXTRA_LINKER_FLAGS += -L$(COMPILERLIBS-$(GARCH)-$(MEMORYMODEL)) -lCrun -lCstd
 # For sqrt, atan2, pow
 EXTRA_LINKER_FLAGS += -lm
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

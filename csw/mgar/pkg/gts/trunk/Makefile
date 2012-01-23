@@ -33,6 +33,6 @@ CONFIGURE_ARGS = $(DIRPATHS) --disable-glibtest
 
 PATCHFILES = gts-fabsf.diff
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

@@ -36,6 +36,6 @@ RUNTIME_DEP_PKGS_CSWliblqr-dev += CSWliblqr1-0
 OBSOLETED_BY_CSWliblqr-dev += CSWliblqrdevel
 CATALOGNAME_CSWliblqrdevel = liblqr_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

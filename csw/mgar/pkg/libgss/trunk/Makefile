@@ -27,7 +27,7 @@ SPKG_DESC_CSWgss = GNU Generic Security Service
 RUNTIME_DEP_PKGS_CSWgss += CSWlibgss3
 RUNTIME_DEP_PKGS_CSWgss += CSWlibintl8
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

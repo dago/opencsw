@@ -72,7 +72,7 @@ PKGFILES_CSWlibsndfile-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsndfile-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWlibsndfile-dev += CSWlibsndfile1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Relocate docs to standard location
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(prefix)/share/doc/$(NAME),'

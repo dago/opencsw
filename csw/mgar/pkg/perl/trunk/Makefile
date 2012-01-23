@@ -128,9 +128,6 @@ EXTRA_CFLAGS = $(CPPFLAGS)
 EXTRA_LDFLAGS-32 = -L$(libdir)
 EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) 
 
-# We want 64 bit binaries
-MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
-
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 

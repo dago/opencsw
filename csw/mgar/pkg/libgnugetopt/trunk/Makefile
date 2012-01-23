@@ -26,6 +26,6 @@ RUNTIME_DEP_PKGS_CSWlibgnugetopt-dev += CSWlibgnugetopt0
 
 EXTRA_CFLAGS += -Xc
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

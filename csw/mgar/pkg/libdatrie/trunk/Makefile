@@ -29,7 +29,7 @@ SPKG_DESC_CSWlibdatrie-utils = Utility programs using libdatrie
 RUNTIME_DEP_PKGS_CSWlibdatrie-utils += CSWlibdatrie1
 RUNTIME_DEP_PKGS_CSWlibdatrie-utils += CSWiconv
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-html-docdir=$(docdir)/libdatrie-dev/html

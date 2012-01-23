@@ -36,7 +36,7 @@ RUNTIME_DEP_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau CSWlibxdmcp
 
 ARCHALL_CSWlibxcbdoc = 1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

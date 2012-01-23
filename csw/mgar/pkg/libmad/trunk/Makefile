@@ -27,7 +27,7 @@ SPKG_DESC_CSWlibmad-dev = Development files for libmad.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibmad-dev = CSWlibmad0
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

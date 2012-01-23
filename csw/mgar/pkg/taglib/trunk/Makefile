@@ -50,7 +50,7 @@ RUNTIME_DEP_PKGS_CSWlibtag-c0 += CSWzlib
 
 EXTRA_LD_FLAGS += -lCstd -lCrun -lc -lm
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # There are collisions with the existing taglib_gcc at the moment. These will go away

@@ -21,6 +21,6 @@ DISTNAME = gtest-$(VERSION)
 UFILES_REGEX = gtest-(\d+(?:\.\d+)*).tar.gz
 EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
 # EXTRA_LDFLAGS = -lCrun -lm
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 include gar/category.mk

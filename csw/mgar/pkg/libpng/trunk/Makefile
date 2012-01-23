@@ -41,6 +41,6 @@ RUNTIME_DEP_PKGS_CSWlibpng15-15 += CSWlibz1
 # The CSWpng package must also pull in libpng.so.3 and libpng12.so.0
 OBSOLETED_BY_CSWlibpng15-15 = CSWpng
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

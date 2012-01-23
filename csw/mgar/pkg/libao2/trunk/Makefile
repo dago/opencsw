@@ -28,6 +28,6 @@ EXTRA_CPPFLAGS = -DAO_SYSTEM_CONFIG=\\\"$(LIBAO_CONF)\\\"
 
 # The file libao.conf is delivered with the newer libao4
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
