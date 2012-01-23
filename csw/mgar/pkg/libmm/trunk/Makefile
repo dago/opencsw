@@ -42,23 +42,13 @@ DISTNAME = mm-$(VERSION)
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-MERGE_SCRIPTS_isa-i386-version-1.3.1 = copy-only
-MERGE_DIRS_isa-i386-version-1.3.1 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-version-1.3.1 = copy-relocated-only
-MERGE_DIRS_isa-amd64-version-1.3.1 = $(libdir)
+MERGE_SCRIPTS_isa-default-version-1.3.1 = copy-only
+MERGE_DIRS_isa-default-version-1.3.1 = $(libdir)
+MERGE_SCRIPTS_isa-extra-version-1.3.1 = copy-relocated-only
+MERGE_DIRS_isa-extra-version-1.3.1 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-version-1.4.2 = copy-all
-MERGE_SCRIPTS_isa-amd64-version-1.4.2 = copy-relocated-only
-MERGE_DIRS_isa-amd64-version-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-
-MERGE_SCRIPTS_isa-sparcv8-version-1.3.1 = copy-only
-MERGE_DIRS_isa-sparcv8-version-1.3.1 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-version-1.3.1 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-version-1.3.1 = $(libdir)
-
-MERGE_SCRIPTS_isa-sparcv8-version-1.4.2 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-version-1.4.2 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-version-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-
+MERGE_SCRIPTS_isa-default-version-1.4.2 = copy-all
+MERGE_SCRIPTS_isa-extra-version-1.4.2 = copy-relocated-only
+MERGE_DIRS_isa-extra-version-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 include gar/category.mk
