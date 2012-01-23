@@ -23,6 +23,8 @@ LICENSE = LICENSE LICENSE.GPLv2
 
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
+PATCHFILES += 0004-disable-SMF-service-at-install.patch
+PATCHFILES += 0005-comment-out-httpd-thread-options-in-httpd.conf.patch
 
 PACKAGES += CSWlibds-admin-serv0
 CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0
@@ -66,11 +68,17 @@ RUNTIME_DEP_PKGS_CSW389admin += CSWlibsmime3
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss3
+RUNTIME_DEP_PKGS_CSW389admin += CSW389-admin-console
+RUNTIME_DEP_PKGS_CSW389admin += CSW389-ds-console
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-admin-console
+CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-ds-console
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
+# no optimization
+CFLAGS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
