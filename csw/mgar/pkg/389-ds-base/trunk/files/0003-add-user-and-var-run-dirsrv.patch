@@ -47,13 +47,14 @@ index 7f9dd8f..f024586 100644
  
 +USER=`/usr/xpg4/bin/id -u -n`
 +export USER
-+[ -d /var/run/dirsrv ] && mkdir -p /var/run/dirsrv
++[ ! -d /var/opt/csw/run/dirsrv ] && mkdir -p /var/opt/csw/run/dirsrv
 +if [ -f /etc/opt/csw/dirsrv/admin-serv/adm.conf ]; then
 +  slapd-user=`grep SuiteSpotUserID /etc/opt/csw/dirsrv/admin-serv/adm.conf | cut -d: -f2 | tr -d [:space:]`
 +  slapd-group=`grep SuiteSpotGroup /etc/opt/csw/dirsrv/admin-serv/adm.conf | cut -d: -f2 | tr -d [:space:]`
-+  chown $slapd-user:$slapd-group /var/run/dirsrv
++  chown $slapd-user:$slapd-group /var/opt/csw/run/dirsrv
 +fi
-+chmod g+w /var/run/dirsrv
++chmod g+w /var/opt/csw/run/dirsrv
++chmod +rx /var/opt/csw/run
 +
  # how many seconds to wait for the startpid file to show
  # up before we assume there is a problem and fail to start
