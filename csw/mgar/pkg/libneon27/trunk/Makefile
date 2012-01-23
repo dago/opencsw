@@ -100,10 +100,8 @@ INSTALL_OVERRIDE_VAR_docdir = $(datadir)/doc/neon
 EXTRA_PAX_ARGS_features-full = -s ",.*/pkgconfig.*,,"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_features-$(FEATURES))
 
-EXTRA_PAX_ARGS_isa-sparcv8-features-full += -s ",.*/libneon\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libneon\)\(\.so\.\d+\..*\),\1-feature\2,p"
-EXTRA_PAX_ARGS_isa-i386-features-full    += -s ",.*/libneon\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libneon\)\(\.so\.\d+\..*\),\1-feature\2,p"
-EXTRA_PAX_ARGS_isa-sparcv9-features-full += -s ",.*/libneon\.so(\.\d+)?$$,," -s ",\.$(libdir)/libneon\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libneon-feature\1,p"
-EXTRA_PAX_ARGS_isa-amd64-features-full   += -s ",.*/libneon\.so(\.\d+)?$$,," -s ",\.$(libdir)/libneon\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libneon-feature\1,p"
+EXTRA_PAX_ARGS_isa-default-features-full += -s ",.*/libneon\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libneon\)\(\.so\.\d+\..*\),\1-feature\2,p"
+EXTRA_PAX_ARGS_isa-extra-features-full += -s ",.*/libneon\.so(\.\d+)?$$,," -s ",\.$(libdir)/libneon\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libneon-feature\1,p"
 
 MERGE_SCRIPTS_isa-default-features-minimal = copy-all
 MERGE_SCRIPTS_isa-default64-features-minimal = copy-relocated-only
@@ -117,8 +115,8 @@ EXTRA_LINKER_FLAGS = -lintl
 
 include gar/category.mk
 
-post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: EXTRA_LD_OPTIONS = -f libneon-feature.so.27
-post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: 
+post-build-isa-$(ISA_DEFAULT)-features-minimal post-build-isa-$(ISA_DEFAULT64)-features-minimal: EXTRA_LD_OPTIONS = -f libneon-feature.so.27
+post-build-isa-$(ISA_DEFAULT)-features-minimal post-build-isa-$(ISA_DEFAULT64)-features-minimal:
 	rm -f $(WORKSRC)/src/libneon.la
 	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
