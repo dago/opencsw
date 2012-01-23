@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWliblbxutildevel = CSWliblbxutil
 
 PKGFILES_CSWliblbxutildevel  = $(PKGFILES_DEVEL)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 include gar/category.mk

@@ -65,7 +65,7 @@ CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 STRIP_LIBTOOL = 1
 
 # Not working until gconf2 is 64-bit
-#BUILD64 = 1
+#BUILD64_LIBS_ONLY = 1
 
 # One test fails for some unknown reason
 #TEST_TARGET = check

@@ -40,6 +40,6 @@ RUNTIME_DEP_PKGS_CSWlibfreetype-dev += CSWlibfreetype6
 GNUMAKE = gmake
 EXTRA_CONFIGURE_EXPORTS = GNUMAKE
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

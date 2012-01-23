@@ -30,15 +30,13 @@ RUNTIME_DEP_PKGS_CSWa52dec = CSWsunmath CSWliba52
 
 EXTRA_LINKER_FLAGS = -lsunmath
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-static
 
 # This stupid configure script adds '-fast' overwriting -xarch and
 # especially activating 64 bit.
 BUILD_ARGS = CFLAGS="$(CFLAGS)"
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 PKGFILES_CSWa52dec = $(bindir)/.*
 PKGFILES_CSWa52dec += $(mandir)/man1/.*

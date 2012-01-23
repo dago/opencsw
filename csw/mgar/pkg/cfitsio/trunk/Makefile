@@ -22,7 +22,7 @@ SPKG_SOURCEURL = http://heasarc.gsfc.nasa.gov/fitsio/
 
 LICENSE = License.txt
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD_ARGS = all testprog

@@ -19,10 +19,8 @@ GARCOMPILER = GNU
 
 RUNTIME_DEP_PKGS = CSWgcc4corert CSWgcc4g++rt CSWiconv
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 # There is a minor test regarding timezones failing.
 # Disable tests for now until this is fixed:

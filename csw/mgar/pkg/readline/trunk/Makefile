@@ -53,7 +53,7 @@ SPKG_DESC_CSWlibreadline-dev = GNU readline development files for libreadline.so
 RUNTIME_DEP_PKGS_CSWlibreadline-dev += CSWlibhistory6
 RUNTIME_DEP_PKGS_CSWlibreadline-dev += CSWlibreadline6
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NORUNPATH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)

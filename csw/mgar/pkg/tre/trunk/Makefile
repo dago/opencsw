@@ -11,7 +11,7 @@ endef
 SPKG_SOURCEURL = http://laurikari.net/tre/
 MASTER_SITES = http://laurikari.net/tre/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 # agrep needs getopt_long
 # TODO: Solve the getopt_long problem and build agrep.
 # PATCHFILES += 0001-gnulib-import-getopt-gnu.patch

@@ -78,7 +78,7 @@ EXTRA_LIB += $(prefix)/bdb48/lib
 # EXTRA_INC += $(prefix)/instantclient_10_2/$(MM_LIBDIR)/sdk/include
 # EXTRA_LIB += $(prefix)/instantclient_10_2
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)

@@ -37,7 +37,7 @@ CHECKPKG_OVERRIDES_CSWlibbz2-dev += file-with-bad-content|/usr/local|root/opt/cs
 
 LICENSE = LICENSE
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_CFLAGS += -KPIC
 EXTRA_CFLAGS += -D_FILE_OFFSET_BITS=64

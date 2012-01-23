@@ -284,9 +284,6 @@ BUILD64 = 1
 sysconfdir-suffix-64 = /64
 sysconfdir = /etc/opt/csw$(sysconfdir-suffix-$(MEMORYMODEL))
 
-# We need the binaries to query 64 bit modules
-MERGE_DIRS_isa-extra = $(bindir) $(libdir)
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shm
 CONFIGURE_ARGS += --enable-xkb

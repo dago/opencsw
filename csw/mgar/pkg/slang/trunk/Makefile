@@ -80,6 +80,6 @@ REINPLACE_FILES_slshrc_man_skip = slsh/doc/man/slsh.1
 # definitions if the installed lib is older than the newly built one.
 LINKER_FLAGS =
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

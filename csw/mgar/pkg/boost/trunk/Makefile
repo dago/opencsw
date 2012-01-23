@@ -80,7 +80,7 @@ JAMDIR_sparc = solarissparc
 JAMDIR_i386 = solarisx86
 JAMDIR = $(JAMDIR_$(GARCH))
 
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 
 # These can't be just passed from Make's PARALLELMFLAGS because of the -l flag.
 BJAM_PARALLELMFLAGS_current9s = -j 32

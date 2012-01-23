@@ -41,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc3
 CONFIGURE_ARGS  = $(DIRPATHS)
 #CONFIGURE_ARGS += --disable-visibility
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 GARFLAVOR = DBG
 

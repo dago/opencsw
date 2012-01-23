@@ -60,7 +60,7 @@ CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 # This is evaluated twice, quote properly
 EXTRA_CPPFLAGS = -DDEFAULT_FONTPATH=\\\"$(CSW_DEFAULT_FONTPATH)\\\"
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -74,8 +74,6 @@ CONFIGURE_ARGS += --disable-fast-install
 
 # GD does not have a testsuite
 TEST_SCRIPTS =
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 # This is ok as there are a number of search pathes for fonts in there.
 # We made sure that the $CSW_DEFAULT_FONTPATH is the first one in the list.

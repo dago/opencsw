@@ -14,7 +14,7 @@ MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(NAME)-datumgrid-1.5.zip
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

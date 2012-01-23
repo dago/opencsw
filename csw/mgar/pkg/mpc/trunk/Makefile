@@ -13,7 +13,7 @@ MASTER_SITES = http://www.multiprecision.org/mpc/download/
 DISTFILES  = $(DISTNAME).tar.gz
 
 STRIP_LIBTOOL = 1
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

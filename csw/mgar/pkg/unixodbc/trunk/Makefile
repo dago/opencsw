@@ -60,7 +60,7 @@ SPKG_DESC_CSWlibodbcinst2 = $(DESCRIPTION), libodbcinst.so.2
 PKGFILES_CSWlibodbcinst2 += $(call pkgfiles_lib,libodbcinst.so.2)
 RUNTIME_DEP_PKGS_CSWlibodbcinst2 += CSWlibltdl7
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS += $(DIRPATHS)
 
 PRESERVECONF += $(sysconfdir)/odbc.ini

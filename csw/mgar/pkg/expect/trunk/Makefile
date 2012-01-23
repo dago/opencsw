@@ -72,7 +72,7 @@ CONFIGURE_ARGS += --with-tkinclude=$(includedir)
 
 TEST_TARGET = 
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

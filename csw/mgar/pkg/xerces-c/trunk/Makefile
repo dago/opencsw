@@ -59,7 +59,7 @@ RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicu46
 VENDOR_URL = http://xerces.apache.org/xerces-c/
 LICENSE = LICENSE
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 icu_config = $(bindir)/icu-config
 EXTRA_CONFIGURE_EXPORTS = icu_config

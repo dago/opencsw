@@ -25,7 +25,7 @@ OBSOLETED_BY_CSWliblzo2-2 = CSWlzo
 
 VENDOR_URL = http://www.oberhumer.com/opensource/lzo/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-static
 

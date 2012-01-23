@@ -32,10 +32,10 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 # This stupid configure script adds '-fast' overwriting -xarch ande especially activating 64 bit.
 BUILD_ARGS = MPEG2DEC_CFLAGS= OPT_CFLAGS=
 
-BUILD64_platform-solaris8-sparc = 1
-BUILD64_platform-solaris10-sparc = 1
-BUILD64_platform-solaris10-i386 = 1
-BUILD64 = $(BUILD64_platform-$(PLATFORM))
+BUILD64_LIBS_ONLY_platform-solaris8-sparc = 1
+BUILD64_LIBS_ONLY_platform-solaris10-sparc = 1
+BUILD64_LIBS_ONLY_platform-solaris10-i386 = 1
+BUILD64_LIBS_ONLY = $(BUILD64_platform-$(PLATFORM))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -45,8 +45,6 @@ CONFIGURE_ARGS_garosrel-5.10  = --x-includes=/usr/X11/include
 CONFIGURE_ARGS_garosrel-5.10 += --x-libraries=/usr/X11/lib 
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_garosrel-$(GAROSREL))
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 PKGFILES_CSWmpeg2dec = $(bindir)/.*
 PKGFILES_CSWmpeg2dec += $(mandir)/man1/.*

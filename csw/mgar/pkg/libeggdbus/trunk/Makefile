@@ -34,7 +34,7 @@ CHECKPKG_OVERRIDES_CSWlibeggdbusdevel += surplus-dependency|CSWlibeggdbus
 PKGFILES_CSWlibeggdbusdevel = $(PKGFILES_DEVEL)
 
 # libdbus isn't 64-bit yet
-#BUILD64 = 1
+#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

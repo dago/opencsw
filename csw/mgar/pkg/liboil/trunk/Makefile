@@ -31,6 +31,6 @@ RUNTIME_DEP_PKGS_CSWliboil-dev += CSWliboil0-3-0
 OBSOLETED_BY_CSWliboil-dev += CSWliboildevel
 CATALOGNAME_CSWliboildevel = liboil_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

@@ -75,7 +75,7 @@ CATALOGNAME_CSWlibcairodoc = libcairo_doc_stub
 # We do NOT want -L/opt/csw/lib in there as the pathes are detected properly and this disturbs libtool later on
 LINKER_FLAGS =
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-full-testing

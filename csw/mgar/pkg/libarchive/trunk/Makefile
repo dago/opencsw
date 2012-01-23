@@ -47,7 +47,7 @@ BUILD_DEP_PKGS += CSWossldevel
 
 EXTRA_INC = $(includedir)/cryptopp
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # There is currently one test failing. Skip until this is fixed:
 #   http://code.google.com/p/libarchive/issues/detail?id=171

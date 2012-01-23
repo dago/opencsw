@@ -36,7 +36,7 @@ PKGFILES_CSWlibebml3 = $(call baseisadirs,$(libdir),libebml\.so\.3(\.\d+)*)
 
 LICENSE = LICENSE.LGPL
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 CONFIGURE_SCRIPTS = 

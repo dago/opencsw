@@ -17,7 +17,7 @@ MASTER_SITES = http://dist.schmorp.de/libev/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = $(DIRPATHS)
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 LICENSE = LICENSE
 CHECKPKG_OVERRIDES_CSWlibev += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libev.so.3.0.0
 include gar/category.mk

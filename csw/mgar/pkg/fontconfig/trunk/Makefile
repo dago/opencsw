@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 PACKAGES = CSWfconfig
 CATALOGNAME = fontconfig
 

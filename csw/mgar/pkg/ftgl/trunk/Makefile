@@ -40,7 +40,7 @@ PKGFILES_CSWftgl = $(PKGFILES_RT)
 NOISALIST = 1
 # Unless the Solaris 10 compilation problem with both SUNW mesa and CSW mesa
 # installed exists disable 64 bit for now.
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)

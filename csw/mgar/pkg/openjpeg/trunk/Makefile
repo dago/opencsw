@@ -16,7 +16,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NORUNPATH = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

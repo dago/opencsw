@@ -155,7 +155,7 @@ EXTRA_INC += $(libdir)/glib-2.0/include
 
 EXTRA_LINKER_FLAGS = -lintl
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Verbose build output
 # BUILD_ARGS += V=1
@@ -181,7 +181,6 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 # TEST_TARGET = check
 
-MERGE_DIRS_isa-extra = $(libdir)
 # MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*/\.packlist
 EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(NAME)-$(VERSION),.$(BUILD_PREFIX)/share/doc/rrdtool,'

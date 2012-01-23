@@ -30,7 +30,7 @@ PKGFILES_CSWliblzma-dev += $(docdir)/xz/examples/.*
 PKGFILES_CSWliblzma-dev += $(docdir)/xz/.*-file-format.txt
 RUNTIME_DEP_PKGS_CSWliblzma-dev += CSWliblzma5
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # This test fails as SOS12 cc is not real c99 (stdbool.h is missing)

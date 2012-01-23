@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWlibsigc-dev = CSWlibsigc2-0-0
 OBSOLETED_BY_CSWlibsigc-dev = CSWlibsigc++devel
 CATALOGNAME_CSWlibsigc++devel = libsigc++_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 EXTRA_CXXFLAGS += -norunpath
 EXTRA_CONFIGURE_ENV = MAKE=gmake
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static

@@ -37,7 +37,7 @@ CHECKPKG_OVERRIDES_CSWlibbonobo2 += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWlibbonobo2 += shared-lib-package-contains-so-symlink
 CHECKPKG_OVERRIDES_CSWlibbonobo2 += non-uniform-lib-versions-in-package
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CPP = /usr/lib/cpp
 EXTRA_COMMON_EXPORTS += CPP

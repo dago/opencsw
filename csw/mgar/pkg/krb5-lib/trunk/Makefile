@@ -126,7 +126,7 @@ EXTRA_CPPFLAGS += -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # We turn off almost everything as we are just interested in the library.
 NODIRPATHS = --docdir

@@ -69,7 +69,7 @@ RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibintl8
 #
 # OBSOLETED_BY_CSWlibiconv-utils += CSWiconv
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # 'gmake test' shows three errors of coredumping printf's
 #

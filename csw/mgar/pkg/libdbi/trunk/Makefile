@@ -28,7 +28,7 @@ OBSOLETED_BY_CSWlibdbi-dev = CSWlibdbi-devel
 REINPLACE_USRLOCAL += doc/programmers-guide/x276.html
 REINPLACE_USRLOCAL += doc/programmers-guide/quickstart-code.html
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --docdir=$(docdir)/libdbi
 

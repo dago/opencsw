@@ -190,7 +190,7 @@ CHECKPKG_OVERRIDES_CSWffmpeg += file-with-bad-content|/usr/share|root/opt/csw/sh
 #EXTRA_MODULATORS = SHARED
 #MODULATIONS_SHARED = yes no
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 GARCOMPILER = GNU
 

@@ -23,7 +23,7 @@ SPKG_DESC_CSWlibcddbutil = A CDDB query tool
 
 RUNTIME_DEP_PKGS_CSWlibcddbutil = CSWlibcddb CSWlibcdio
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 http_proxy='$(http_proxy)'

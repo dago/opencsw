@@ -38,7 +38,7 @@ PACKAGES += CSWlibmp3lame0
 SPKG_DESC_CSWlibmp3lame0 = Library for LAME, libmp3lame.so.0
 PKGFILES_CSWlibmp3lame0 = $(call pkgfiles_lib,libmp3lame.so.0)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
 
 # Disable intrinsics until this has been resolved:

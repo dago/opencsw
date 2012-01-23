@@ -68,6 +68,6 @@ REINPLACE_MATCH = (\|-xarch=)
 REINPLACE_WITH = |-norunpath$$1
 REINPLACE_FILES += ltmain.sh
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

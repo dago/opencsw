@@ -20,7 +20,7 @@ EXTRA_CPPFLAGS = -D__FUNCTION__=
 
 CPPFLAGS = abc
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk

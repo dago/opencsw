@@ -78,7 +78,7 @@ NOISALIST = 1
 
 # Unfortunately GNU PTH does not handle 64 bit sanely:
 #   "/opt/csw/include/pth.h", line 93: #error: "FD_SETSIZE is larger than what GNU Pth can handle."
-#BUILD64 = 1
+#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl=$(prefix)

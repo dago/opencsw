@@ -40,7 +40,7 @@ RUNTIME_DEP_PKGS_CSWoggz += CSWliboggz2
 OBSOLETED_BY_CSWoggz = CSWliboggz
 CATALOGNAME_CSWliboggz = liboggz_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # This is just docs
 CHECKPKG_OVERRIDES_CSWliboggz-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liboggz/html/group__install.html

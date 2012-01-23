@@ -28,7 +28,7 @@ SPKG_DESC_CSWlibshout-dev = Development files for libshout.so.3
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibshout-dev = CSWlibshout3
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 #         GAR default: -xO3 -xarch=v8 -I/opt/csw/include
 # Configure hardwired: -xO4 -fast -w -fsimple -native -xcg92

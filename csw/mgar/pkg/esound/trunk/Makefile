@@ -52,11 +52,7 @@ sysconfdir = /etc/opt/csw
 PRESERVECONF = $(sysconfdir)/esd.conf
 MIGRATE_FILES_CSWesound = esd.conf
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_SCRIPTS_isa-extra += copy-relocated-only
-MERGE_SCRIPTS_isa-extra += copy-config-only
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

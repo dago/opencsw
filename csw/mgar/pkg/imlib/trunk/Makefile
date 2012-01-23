@@ -15,7 +15,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 STRIP_LIBTOOL = 1
 
 # Make glib and gtk 64 bit first
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 

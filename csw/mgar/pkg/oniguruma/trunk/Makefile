@@ -26,6 +26,6 @@ SPKG_DESC_CSWlibonig-dev = Development files for libonig.so.2
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibonig-dev += CSWlibonig2
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

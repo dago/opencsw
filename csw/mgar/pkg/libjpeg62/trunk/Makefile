@@ -17,7 +17,7 @@ PACKAGES += CSWlibjpeg62
 SPKG_DESC_CSWlibjpeg62 += JPEG library and tools by the Independent JPEG Group, libjpeg.so.62
 PKGFILES_CSWlibjpeg62 = $(call pkgfiles_lib,libjpeg.so.62)
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Ok, here comes a good one: a dynamic library is only generated when warnings are suppressed.
 # This is because in ltconfig the test to look if -KPIC actually works detects if there are

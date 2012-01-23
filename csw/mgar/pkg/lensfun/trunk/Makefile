@@ -26,7 +26,7 @@ SPKG_SOURCEURL = http://developer.berlios.de/projects/lensfun/
 LD=$(CC)
 EXTRA_COMMON_EXPORTS = LD
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 # This is not autoconf, but some hand-hacked Python thingie.
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --bindir=$(bindir)

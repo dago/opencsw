@@ -51,7 +51,7 @@ RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWpython-devel
 RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWpy-talloc
 RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWlibpytalloc-util2
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NODIRPATHS = --exec_prefix
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --exec-prefix=$(exec_prefix)

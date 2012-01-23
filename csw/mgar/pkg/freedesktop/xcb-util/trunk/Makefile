@@ -21,7 +21,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CATALOGNAME = xcbutil
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

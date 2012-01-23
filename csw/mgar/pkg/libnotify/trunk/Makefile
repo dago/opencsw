@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibnotifydevel = CSWlibnotify CSWglib2devel CSWgtk2devel CSW
 EXTRA_INC = $(libdir_install)/dbus-1.0/include
 
 # Enable when CSWdbusglib is done in 64 bit
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWlibnotifydevel  = $(PKGFILES_DEVEL)

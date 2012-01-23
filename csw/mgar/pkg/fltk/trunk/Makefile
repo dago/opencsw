@@ -18,7 +18,7 @@ VENDOR_URL = http://www.fltk.org/
 
 DEP_PKGS = CSWzlib CSWjpeg CSWpng
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --disable-localpng
@@ -30,9 +30,6 @@ CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-shared 
 
 EXTRA_BUILD_EXPORTS = libdir
-
-MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
-MERGE_DIRS_isa-extra = $(libdir)
 
 CHECKPKG_OVERRIDES_CSWfltk += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libfltk.so.1.1
 CHECKPKG_OVERRIDES_CSWfltk += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libfltk_forms.so.1.1

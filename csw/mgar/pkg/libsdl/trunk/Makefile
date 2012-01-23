@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS += CSWlibsdl1-2-0
 OBSOLETED_BY_CSWlibsdl-dev += CSWlibsdldevel
 CATALOGNAME_CSWlibsdldevel = libsdl_devel
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 
 TEST_TARGET = test

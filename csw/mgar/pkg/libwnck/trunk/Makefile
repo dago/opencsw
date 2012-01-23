@@ -51,7 +51,7 @@ RUNTIME_DEP_PKGS_CSWlibwnck-dev += CSWgtk2devel
 # For cos(3m)
 EXTRA_LINKER_FLAGS = -lm 
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

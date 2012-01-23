@@ -21,9 +21,7 @@ SPKG_SOURCEURL = http://www.ibr.cs.tu-bs.de/projects/libsmi/
 
 RUNTIME_DEP_PKGS = CSWlibsmi
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

@@ -55,7 +55,7 @@ CHECKPKG_OVERRIDES_CSWlibdbus-glib-dev += file-with-bad-content|/usr/share|root/
 CHECKPKG_OVERRIDES_CSWlibdbus-glib-dev += file-with-bad-content|/usr/share|root/opt/csw/share/gtk-doc/html/dbus-glib/dbus-glib-DBus-GObject-related-functions.html
 CHECKPKG_OVERRIDES_CSWlibdbus-glib-dev += file-with-bad-content|/usr/share|root/opt/csw/share/gtk-doc/html/dbus-glib/dbus-glib-DBusGProxy.html
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

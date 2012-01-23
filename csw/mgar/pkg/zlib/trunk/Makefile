@@ -32,7 +32,7 @@ SPKG_DESC_CSWlibz-dev = Development files for libz.so.1
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibz-dev = CSWlibz1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 

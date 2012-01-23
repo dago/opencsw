@@ -28,10 +28,8 @@ RUNTIME_DEP_PKGS_CSWlibxspfdevel += CSWlibxspf4
 RUNTIME_DEP_PKGS_CSWlibxspfdevel += CSWliburiparser1
 RUNTIME_DEP_PKGS_CSWlibxspfdevel += CSWexpat
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 PKGFILES_CSWlibxspf4 = $(PKGFILES_RT)
 

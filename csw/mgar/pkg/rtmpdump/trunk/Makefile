@@ -36,7 +36,7 @@ RUNTIME_DEP_PKGS_CSWrtmpdump += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSWrtmpdump += CSWosslrt
 RUNTIME_DEP_PKGS_CSWrtmpdump += CSWzlib
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_CFLAGS += -features=extensions -D__FUNCTION__=__func__
 EXTRA_CFLAGS += -DINADDR_NONE=0xffffffffU

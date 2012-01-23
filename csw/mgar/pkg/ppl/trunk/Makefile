@@ -43,7 +43,7 @@ VENDOR_URL = http://www.cs.unipr.it/ppl/
 # C++ bindings require the consistency between GMP, PPL and GCC.
 GARCOMPILER = GNU
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 ISA_DEFAULT_i386 = pentium_pro
 

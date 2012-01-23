@@ -44,6 +44,6 @@ CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw
 #   FAIL: gctest
 # The bugreport has been posted on
 #   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/004904.html
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

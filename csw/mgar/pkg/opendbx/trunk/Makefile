@@ -38,7 +38,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 GARCOMPILER = GCC3
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus

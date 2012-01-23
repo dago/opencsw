@@ -18,7 +18,7 @@ SPKG_SOURCEURL = http://mhash.sourceforge.net/
 
 EXTRA_CPPFLAGS = -D__const=const
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 # sparcv9 compile fails with optimization beyond -xO1 at HAVAL256: FAIL: frag_test

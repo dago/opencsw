@@ -41,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWqhull = CSWqhullrt
 
 SPKG_SOURCEURL = http://www.qhull.org/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # This is for amd64 checked on i386

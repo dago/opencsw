@@ -57,7 +57,7 @@ RUNTIME_DEP_PKGS_CSWlibgconf-dev += CSWlibgio2-0-0
 # man-page only, override for now
 CHECKPKG_OVERRIDES_CSWlibgconf-dev += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/gsettings-data-convert.1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 STRIP_LIBTOOL = 1
 

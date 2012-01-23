@@ -44,7 +44,7 @@ PATCHFILES = xf-conf-locking-utils.h.diff xfconf-gvaluefuncs.h.diff Makefile.PL.
 SITEPREFIX = /opt/csw/share
 export SITEPREFIX
 
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 # NOISALIST = 1
 
 TEST_SCRIPTS = 

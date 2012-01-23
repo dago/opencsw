@@ -90,9 +90,6 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAM
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-# We need the binaries
-EXTRA_MERGE_DIRS_isa-extra = $(bindir)
-
 include gar/category.mk
 
 LIBS += -lnsl

@@ -20,7 +20,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modnss.postinstall
 DISTFILES += CSWap2modnss.preremove
 
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 GARCOMPILER = SOS12U2

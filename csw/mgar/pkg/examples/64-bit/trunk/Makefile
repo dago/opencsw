@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS_CSWhello += CSWlibhello0
 
 prefix = $(BUILD_PREFIX)/foo
 libdir = $(BUILD_PREFIX)/lib
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

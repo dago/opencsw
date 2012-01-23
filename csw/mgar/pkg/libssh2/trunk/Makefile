@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibssh2-dev += CSWlibssh2-1
 OBSOLETED_BY_CSWlibssh2-dev += CSWlibssh2devel
 CATALOGNAME_CSWlibssh2devel = libssh2_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz

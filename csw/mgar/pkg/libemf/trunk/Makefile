@@ -36,7 +36,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # *We* can do 64 bit, but the tests dump core in CSWglib2 2.23.5,REV=2010.03.09
 # Re-enable when glib2 gets refreshed.
-# BUILD64 = 1
+# BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWlibemf1 = $(PKGFILES_RT)

@@ -68,7 +68,7 @@ CHECKPKG_OVERRIDES_CSWenchant += soname-not-found|libenchant.so.1|is|needed|by|o
 
 #NOISALIST = 1
 # libdbus not 64-bit yet
-#BUILD64 = 1
+#BUILD64_LIBS_ONLY = 1
 
 STRIP_LIBTOOL = 1
 

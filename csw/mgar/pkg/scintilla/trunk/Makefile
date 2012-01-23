@@ -36,7 +36,7 @@ RUNTIME_DEP_PKGS_CSWlibscintilla-dev += CSWpython
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/gtk
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # pic13 is too small

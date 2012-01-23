@@ -26,7 +26,7 @@ BUILD_DEP_PKGS += CSWgcc4core
 RUNTIME_DEP_PKGS = CSWlibmhash
 
 # 64-bit build enables buffers >= 2GB (see README).
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Required for updated libmhash (mbuffer builds against it) which allows for
 # flexible const/non-const definitions.  There should be a more intelligent 

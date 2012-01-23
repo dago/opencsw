@@ -31,7 +31,7 @@ SPKG_DESC_CSWlibgcrypt-utils = Utility programs for libgcrypt
 OBSOLETED_BY_CSWlibgcrypt-utils = CSWgcrypt
 CATALOGNAME_CSWgcrypt = libgcrypt_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-asm

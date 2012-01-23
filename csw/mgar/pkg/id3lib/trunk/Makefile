@@ -46,6 +46,6 @@ SUBDIR64-sparc = v9
 SUBDIR64-i386 = amd64
 EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk

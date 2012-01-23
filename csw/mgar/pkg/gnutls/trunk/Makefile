@@ -66,7 +66,7 @@ BUILD_DEP_PKGS += CSWlibtasn1devel
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # We put all libs in one package as they are .so.26 and are all bumped together

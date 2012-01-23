@@ -42,7 +42,7 @@ RUNTIME_DEP_PKGS_CSWlibtheora-dev += CSWlibtheora0
 RUNTIME_DEP_PKGS_CSWlibtheora-dev += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibtheora-dev += CSWlibtheoraenc1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-examples

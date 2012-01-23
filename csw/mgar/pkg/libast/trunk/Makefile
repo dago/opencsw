@@ -21,9 +21,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 STRIP_LIBTOOL = 1
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibatk-dev += CSWglib2devel
 OBSOLETED_BY_CSWlibatk-dev = CSWlibatkdevel
 CATALOGNAME_CSWlibatkdevel = libatk_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-debug=yes

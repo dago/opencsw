@@ -37,7 +37,7 @@ PKGFILES_CSWopenexr-dev += $(PKGFILES_DEVEL)
 OBSOLETED_BY_CSWopenexr-dev += CSWopenexrdevel
 CATALOGNAME_CSWopenexrdevel = openexr_devel_stub
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 

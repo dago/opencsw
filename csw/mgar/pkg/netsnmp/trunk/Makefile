@@ -79,8 +79,6 @@ TEST_TARGET = test
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
-MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(sbindir) $(libexecdir)
-
 # Overriding specific libs is not possible right now. Refine when finished.
 # CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found|opt/csw/lib/python/site-packages/netsnmp/client_intf.so
 CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found

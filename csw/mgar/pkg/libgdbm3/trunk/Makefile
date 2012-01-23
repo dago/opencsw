@@ -36,7 +36,7 @@ SPKG_DESC_CSWlibgdbm-dev = Development Files for libgdbm
 # This is catchall
 RUNTIME_DEP_PKGS_CSWlibgdbm-dev = CSWlibgdbm3
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # gdbm package has no test suite

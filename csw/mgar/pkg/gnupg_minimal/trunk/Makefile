@@ -18,7 +18,7 @@ PKGFILES_CSWgnupgminimal = .*/bin/.*
 RUNTIME_DEP_PKGS_CSWgnupgminimal = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
 RUNTIME_DEP_PKGS_CSWgnupgminimal += CSWoldaprt CSWreadline CSWzlib
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-suffix=-minimal

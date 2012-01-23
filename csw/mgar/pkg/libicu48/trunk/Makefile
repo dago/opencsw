@@ -90,7 +90,7 @@ CPPFLAGS =
 # packages using the libs will bail out as they assume the libs are self-contained.
 LINKER_FLAGS = -lCrun -lCstd -norunpath
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 include gar/category.mk

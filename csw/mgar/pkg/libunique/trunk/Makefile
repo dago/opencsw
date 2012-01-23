@@ -51,7 +51,7 @@ RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibatk-dev
 RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibcairo-dev
 RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWpangodevel
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 EXTRA_LINKER_FLAGS = -lsocket -lnsl

@@ -29,7 +29,7 @@ SPKG_DESC_CSWlibschrodevel = libschroedinger developer files
 RUNTIME_DEP_PKGS_CSWlibschro = CSWliboil
 RUNTIME_DEP_PKGS_CSWlibschrodevel = CSWlibschro
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWlibschrodevel = $(PKGFILES_DEVEL)

@@ -28,6 +28,6 @@ CATALOGNAME = libxdg_basedir
 # localstatedir = /var$(prefix)
 #
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 PATCHFILES += opencsw-paths.patch
 include gar/category.mk

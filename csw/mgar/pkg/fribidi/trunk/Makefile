@@ -14,7 +14,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.fribidi.org/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

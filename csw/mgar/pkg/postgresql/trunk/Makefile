@@ -447,7 +447,6 @@ EXTRA_CONFIGURE_ENV = LIBS=$(LIBS)
 
 BUILD64 = 1
 #ISAEXEC = 0
-MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(libexecdir)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 # This is one of the quirks mentioned at the beginning: --program-suffix is not

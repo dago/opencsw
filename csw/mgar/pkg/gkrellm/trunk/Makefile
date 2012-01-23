@@ -38,7 +38,7 @@ CONFIGURE_SCRIPTS =
 
 #Disable build64 until fix linking:
 #ld: fatal: file main.o: wrong ELF class: ELFCLASS64
-#BUILD64 = 1
+#BUILD64_LIBS_ONLY = 1
 
 BUILD_ARGS    = INSTALLROOT=$(prefix)
 BUILD_ARGS   += LOCALEDIR=$(sharedstatedir)/locale

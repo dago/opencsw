@@ -44,7 +44,7 @@ PKGFILES_CSWlibgif-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibgif-dev += CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibgif-dev += CSWlibungif4
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --x-includes=/usr/openwin/include

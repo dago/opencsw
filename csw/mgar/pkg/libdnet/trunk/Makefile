@@ -14,13 +14,11 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 LICENSE = LICENSE
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PATCHFILES  = 0001-Using-the-m4-subdirectory-for-macros.patch
 PATCHFILES += 0002-Moved-acinclude.m4-to-the-m4-directory.patch
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 PACKAGES = CSWlibdnet1
 CATALOGNAME_CSWlibdnet1 = libdnet1

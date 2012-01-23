@@ -14,7 +14,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.arl.wustl.edu/~jaf/lpc/
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 
 # Some way to go for the manual build
 

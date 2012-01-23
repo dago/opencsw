@@ -29,7 +29,7 @@ OBSOLETED_BY_CSWlibcares-dev = CSWlibcaresdevel
 
 RUNTIME_DEP_PKGS_CSWlibcaresdevel = CSWlibcares
 
-BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/ares_build.h$$,.$(includedir)/ares_build-32.h,p"
