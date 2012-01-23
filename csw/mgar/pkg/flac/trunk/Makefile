@@ -83,33 +83,19 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 # XXX: Assembler optimization just doesn't work. Disable for now.
 CONFIGURE_ARGS += --disable-asm-optimizations
 
-MERGE_SCRIPTS_isa-i386-version-1.0.4 = copy-only
-MERGE_DIRS_isa-i386-version-1.0.4 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-version-1.0.4 = copy-relocated-only
-MERGE_DIRS_isa-amd64-version-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-default-version-1.0.4 = copy-only
+MERGE_DIRS_isa-default-version-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-extra-version-1.0.4 = copy-relocated-only
+MERGE_DIRS_isa-extra-version-1.0.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-version-1.1.2 = copy-only
-MERGE_DIRS_isa-i386-version-1.1.2 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-version-1.1.2 = copy-relocated-only
-MERGE_DIRS_isa-amd64-version-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-default-version-1.1.2 = copy-only
+MERGE_DIRS_isa-default-version-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-extra-version-1.1.2 = copy-relocated-only
+MERGE_DIRS_isa-extra-version-1.1.2 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-version-1.2.1 = copy-all
-MERGE_SCRIPTS_isa-amd64-version-1.2.1 = copy-relocated-only
-MERGE_DIRS_isa-amd64-version-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-
-MERGE_SCRIPTS_isa-sparcv8-version-1.0.4 = copy-only
-MERGE_DIRS_isa-sparcv8-version-1.0.4 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-version-1.0.4 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-version-1.0.4 = $(libdir)
-
-MERGE_SCRIPTS_isa-sparcv8-version-1.1.2 = copy-only
-MERGE_DIRS_isa-sparcv8-version-1.1.2 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-version-1.1.2 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-version-1.1.2 = $(libdir)
-
-MERGE_SCRIPTS_isa-sparcv8-version-1.2.1 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-version-1.2.1 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-version-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-version-1.2.1 = copy-all
+MERGE_SCRIPTS_isa-extra-version-1.2.1 = copy-relocated-only
+MERGE_DIRS_isa-extra-version-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWxmmsflac = $(libdir)/xmms/.*
 
