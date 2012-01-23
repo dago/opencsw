@@ -33,7 +33,6 @@ EXTRA_INC = $(libdir_install)/dbus-1.0/include
 
 # Enable when CSWdbusglib is done in 64 bit
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

@@ -72,7 +72,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS +=  --without-libltdl
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 TEST_TARGET = check
 

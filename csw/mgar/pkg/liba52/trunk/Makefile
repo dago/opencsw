@@ -31,7 +31,6 @@ RUNTIME_DEP_PKGS_CSWa52dec = CSWsunmath CSWliba52
 EXTRA_LINKER_FLAGS = -lsunmath
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-static
 

@@ -29,7 +29,6 @@ RUNTIME_DEP_PKGS_CSWlibxspfdevel += CSWliburiparser1
 RUNTIME_DEP_PKGS_CSWlibxspfdevel += CSWexpat
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_DIRS_isa-extra = $(libdir)

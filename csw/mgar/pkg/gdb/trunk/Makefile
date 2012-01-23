@@ -25,7 +25,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWncurses
 
 BUILD64 = 1
-NOISAEXEC = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

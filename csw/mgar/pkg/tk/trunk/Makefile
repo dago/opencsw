@@ -36,7 +36,6 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*)-src.tar.gz
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

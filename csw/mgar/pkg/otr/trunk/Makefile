@@ -19,7 +19,6 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 MERGE_EXCLUDE_FILES = /opt/csw/bin/$(ISA)/.*
 

@@ -16,7 +16,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 TEST_TARGET = check
 

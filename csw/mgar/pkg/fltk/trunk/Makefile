@@ -19,7 +19,6 @@ VENDOR_URL = http://www.fltk.org/
 DEP_PKGS = CSWzlib CSWjpeg CSWpng
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --disable-localpng

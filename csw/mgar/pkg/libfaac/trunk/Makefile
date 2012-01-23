@@ -29,7 +29,6 @@ PATCHFILES += input.c.diff ltp.c.diff mp4property.h.diff mp4util.h.diff
 PATCHFILES += mpeg4ip.h.diff psych.h.diff
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

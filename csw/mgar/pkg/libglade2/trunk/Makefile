@@ -32,7 +32,6 @@ SUNX11SUB_amd64 = amd64/
 EXTRA_LDFLAGS = -lm /usr/openwin/lib/$(SUNX11SUB_$(ISA))libXext.so
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = check

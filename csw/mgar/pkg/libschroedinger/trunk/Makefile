@@ -30,7 +30,6 @@ RUNTIME_DEP_PKGS_CSWlibschro = CSWliboil
 RUNTIME_DEP_PKGS_CSWlibschrodevel = CSWlibschro
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

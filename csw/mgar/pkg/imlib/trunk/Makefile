@@ -16,7 +16,6 @@ STRIP_LIBTOOL = 1
 
 # Make glib and gtk 64 bit first
 # BUILD64 = 1
-NOISAEXEC = 1
 sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 

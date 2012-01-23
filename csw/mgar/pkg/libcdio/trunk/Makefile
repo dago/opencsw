@@ -20,7 +20,6 @@ GARCOMPILER = GNU
 RUNTIME_DEP_PKGS = CSWgcc4corert CSWgcc4g++rt CSWiconv
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_DIRS_isa-extra = $(libdir)

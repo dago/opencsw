@@ -37,7 +37,6 @@ CHECKPKG_OVERRIDES_CSWftgldevel = surplus-dependency|CSWftgl
 
 PKGFILES_CSWftgl = $(PKGFILES_RT)
 
-NOISAEXEC = 1
 NOISALIST = 1
 # Unless the Solaris 10 compilation problem with both SUNW mesa and CSW mesa
 # installed exists disable 64 bit for now.

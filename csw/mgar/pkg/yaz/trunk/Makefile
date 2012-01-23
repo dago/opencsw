@@ -79,7 +79,6 @@ RUNTIME_DEP_PKGS_CSWyaz += CSWlibicu46
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-NOISAEXEC = 1
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
 

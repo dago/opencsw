@@ -27,7 +27,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)/build_unix
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 
