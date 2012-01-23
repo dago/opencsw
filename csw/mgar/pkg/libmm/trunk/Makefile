@@ -6,8 +6,8 @@ EXTRA_MODULATORS = VERSION
 MODULATIONS_VERSION = 1.3.1 1.4.2
 
 # No 64 bit for old version as it wasn't provided in the legacy version also
-SKIP_MODULATIONS = isa-amd64-garversion-1.3.1
-SKIP_MODULATIONS += isa-sparcv9-garversion-1.3.1
+SKIP_MODULATIONS = isa-amd64-version-1.3.1
+SKIP_MODULATIONS += isa-sparcv9-version-1.3.1
 
 DESCRIPTION = Shared Memory Allocation abstraction library
 define BLURB
@@ -42,23 +42,23 @@ DISTNAME = mm-$(VERSION)
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-MERGE_SCRIPTS_isa-i386-garversion-1.3.1 = copy-only
-MERGE_DIRS_isa-i386-garversion-1.3.1 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-garversion-1.3.1 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-1.3.1 = $(libdir)
+MERGE_SCRIPTS_isa-i386-version-1.3.1 = copy-only
+MERGE_DIRS_isa-i386-version-1.3.1 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-version-1.3.1 = copy-relocated-only
+MERGE_DIRS_isa-amd64-version-1.3.1 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-1.4.2 = copy-all
-MERGE_SCRIPTS_isa-amd64-garversion-1.4.2 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-i386-version-1.4.2 = copy-all
+MERGE_SCRIPTS_isa-amd64-version-1.4.2 = copy-relocated-only
+MERGE_DIRS_isa-amd64-version-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.3.1 = copy-only
-MERGE_DIRS_isa-sparcv8-garversion-1.3.1 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.3.1 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-1.3.1 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-version-1.3.1 = copy-only
+MERGE_DIRS_isa-sparcv8-version-1.3.1 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-version-1.3.1 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-version-1.3.1 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.4.2 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.4.2 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-version-1.4.2 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-version-1.4.2 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-version-1.4.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 
 include gar/category.mk
