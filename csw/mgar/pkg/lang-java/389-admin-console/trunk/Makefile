@@ -37,8 +37,6 @@ INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSW389-admin-console += file-with-bad-content|/usr/local|root/opt/csw/share/dirsrv/manual/en/admin/help/create_user_administrator_posix_user.html
 CHECKPKG_OVERRIDES_CSW389-admin-console += pkginfo-description-not-starting-with-uppercase|389|Directory|Server|-|Management|Console|Plugin|AdminServer
-CHECKPKG_OVERRIDES_CSW389-admin-console += unidentified-dependency|CSW389-admin
-CHECKPKG_OVERRIDES_CSW389-admin-console += surplus-dependency|CSW389-admin
 
 include gar/category.mk
 
