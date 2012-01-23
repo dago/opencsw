@@ -138,23 +138,14 @@ CONFIGURE_ARGS += --without-xterm-new
 
 TEST_TARGET = test
 
-MERGE_SCRIPTS_isa-sparcv8-widec-disable = copy-only copy-config-only
-   MERGE_DIRS_isa-sparcv8-widec-disable = $(libdir) $(includedir)
-MERGE_SCRIPTS_isa-sparcv9-widec-disable = copy-relocated-only copy-config-only
-   MERGE_DIRS_isa-sparcv9-widec-disable = $(libdir)
+MERGE_SCRIPTS_isa-default-widec-disable = copy-only copy-config-only
+   MERGE_DIRS_isa-default-widec-disable = $(libdir) $(includedir)
+MERGE_SCRIPTS_isa-extra-widec-disable = copy-relocated-only copy-config-only
+   MERGE_DIRS_isa-extra-widec-disable = $(libdir)
 
- MERGE_SCRIPTS_isa-sparcv8-widec-enable = copy-all
- MERGE_SCRIPTS_isa-sparcv9-widec-enable = copy-relocated-only copy-config-only
-    MERGE_DIRS_isa-sparcv9-widec-enable = $(libdir)
-
-   MERGE_SCRIPTS_isa-i386-widec-disable = copy-only copy-config-only
-      MERGE_DIRS_isa-i386-widec-disable = $(libdir) $(includedir)
-  MERGE_SCRIPTS_isa-amd64-widec-disable = copy-relocated-only copy-config-only
-     MERGE_DIRS_isa-amd64-widec-disable = $(libdir)
-
-    MERGE_SCRIPTS_isa-i386-widec-enable = copy-all
-   MERGE_SCRIPTS_isa-amd64-widec-enable = copy-relocated-only copy-config-only
-      MERGE_DIRS_isa-amd64-widec-enable = $(libdir)
+ MERGE_SCRIPTS_isa-default-widec-enable = copy-all
+ MERGE_SCRIPTS_isa-extra-widec-enable = copy-relocated-only copy-config-only
+    MERGE_DIRS_isa-extra-widec-enable = $(libdir)
 
 # This is termcap location which defaults to 
 #   /etc/termcap, /usr/share/misc/termcap and $HOME/.termcap
