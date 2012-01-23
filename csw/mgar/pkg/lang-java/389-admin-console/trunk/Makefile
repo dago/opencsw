@@ -17,7 +17,6 @@ MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSW389-admin-console
-RUNTIME_DEP_PKGS = CSW389-admin
 BUILD_DEP_PKGS = CSWidm-console-base
 
 ARCHALL = 1
