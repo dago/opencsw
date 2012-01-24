@@ -4,6 +4,7 @@
 NAME = 389-admin-console
 SHORTNAME = 389-admin
 VERSION = 1.1.8
+MAJOR_VERSION = 1.1
 GARTYPE = v2
 CATEGORIES = java
 
