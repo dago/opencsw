@@ -4,6 +4,7 @@
 NAME = 389-ds-console
 SHORTNAME = 389-ds
 VERSION = 1.2.6
+MAJOR_VERSION = 1.2
 GARTYPE = v2
 CATEGORIES = java
 
