@@ -1,5 +1,5 @@
 NAME = rrdtool
-VERSION = 1.4.6
+VERSION = 1.4.7
 CATEGORIES = utils
 
 DESCRIPTION = Time-series data logging and graphing
@@ -11,10 +11,6 @@ endef
 
 MASTER_SITES = http://oss.oetiker.ch/$(NAME)/pub/
 DISTFILES = $(DISTNAME).tar.gz
-
-# Use patch until this is fixed:
-#   http://oss.oetiker.ch/rrdtool-trac/ticket/330
-PATCHFILES += 0001-Do-not-reference-tm.tm_gmtoff-on-Solaris.patch
 
 PATCHFILES += 0002-Always-link-local-libs-first-during-Perl-module.patch
 
@@ -49,40 +45,40 @@ RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibdbi1
-RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd3
-RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd-th3
+RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd4
+RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd-th4
 OBSOLETED_BY_CSWrrdtool = CSWrrd
 CATALOGNAME_CSWrrd = rrd_stub
 
 PACKAGES += CSWrrdtool-dev
-SPKG_DESC_CSWrrdtool-dev = Development files for librrd.so.3
+SPKG_DESC_CSWrrdtool-dev = Development files for librrd.so.4
 # Explicitly do not include *.3perl
 PKGFILES_DEVEL_MAN3_MANPAGE = $(mandir)/man3/.*\.3
 PKGFILES_CSWrrdtool-dev = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWrrdtool-dev += CSWlibrrd3
-RUNTIME_DEP_PKGS_CSWrrdtool-dev += CSWlibrrd-th3
+RUNTIME_DEP_PKGS_CSWrrdtool-dev += CSWlibrrd4
+RUNTIME_DEP_PKGS_CSWrrdtool-dev += CSWlibrrd-th4
 
-PACKAGES += CSWlibrrd3
-SPKG_DESC_CSWlibrrd3 = Runtime library for RRDtool, librrd.so.3
-PKGFILES_CSWlibrrd3 += $(call pkgfiles_lib,librrd.so.3)
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWlibwrap1
-RUNTIME_DEP_PKGS_CSWlibrrd3 += CSWlibdbi1
+PACKAGES += CSWlibrrd4
+SPKG_DESC_CSWlibrrd4 = Runtime library for RRDtool, librrd.so.4
+PKGFILES_CSWlibrrd4 += $(call pkgfiles_lib,librrd.so.4)
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWlibdbi1
 
-PACKAGES += CSWlibrrd-th3
-SPKG_DESC_CSWlibrrd-th3 = Runtime library for RRDtool, librrd_th.so.3
-PKGFILES_CSWlibrrd-th3 += $(call pkgfiles_lib,librrd_th.so.3)
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWlibwrap1
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibrrd-th3 += CSWlibdbi1
+PACKAGES += CSWlibrrd-th4
+SPKG_DESC_CSWlibrrd-th4 = Runtime library for RRDtool, librrd_th.so.4
+PKGFILES_CSWlibrrd-th4 += $(call pkgfiles_lib,librrd_th.so.4)
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibrrd-th4 += CSWlibdbi1
 
 PACKAGES += CSWpm-rrdtool
 SPKG_DESC_CSWpm-rrdtool = RRDs: Access RRDtool as a shared module (part of RRDtool)
@@ -92,21 +88,21 @@ PKGFILES_CSWpm-rrdtool += $(sharedstatedir)/rrdtool/examples/.*
 PKGFILES_CSWpm-rrdtool += .*\.3perl
 
 RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWperl
-RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWlibrrd3
+RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWlibrrd4
 OBSOLETED_BY_CSWpm-rrdtool = CSWrrd
 
 PACKAGES += CSWpy-rrdtool
 SPKG_DESC_CSWrb-rrdtool = Ruby binding for RRD access (part of RRDtool)
 PKGFILES_CSWpy-rrdtool = $(libdir)/python/.*
 RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibrrd3
+RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibrrd4
 OBSOLETED_BY_CSWpy-rrdtool = CSWrrd
 
 PACKAGES += CSWrb-rrdtool
 SPKG_DESC_CSWpy-rrdtool = Python egg for RRD access (part of RRDtool)
 PKGFILES_CSWrb-rrdtool = $(libdir)/ruby/.*
 RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibruby18-1
-RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibrrd3
+RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibrrd4
 OBSOLETED_BY_CSWrb-rrdtool = CSWrrd
 # This is crappy and needs fixing, unfortunately inside extconf.rb which is hard.
 CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry
