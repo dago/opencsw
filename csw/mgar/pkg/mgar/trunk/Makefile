@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mgar
-VERSION = 0.94
+VERSION = 0.95
 CATEGORIES = apps
 
 DESCRIPTION = Command line interface to the OpenCSW build system
@@ -12,7 +12,7 @@ endef
 
 VENDOR_URL = http://gar.opencsw.org
 SVNROOT    = https://opencsw.svn.sourceforge.net/svnroot/opencsw/gar-wrapper
-SVNREV     = 564
+SVNREV     = 597
 
 ARCHALL = 1
 
