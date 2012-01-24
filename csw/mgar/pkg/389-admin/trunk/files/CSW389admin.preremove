@@ -1,0 +1,5 @@
+( cd /etc/opt/csw/dirsrv/adm-serv
+  cp -p console.conf console.conf.configured
+  cp -p httpd.conf httpd.conf.configured
+  cp -p admserv.conf admserv.conf.configured
+)
