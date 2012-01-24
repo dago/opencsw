@@ -1,3 +1,8 @@
+mgar (0.95,REV=2012.01.24)
+
+  * Bump to version 0.95.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue, 24 Jan 2012 17:27:54 +0100
 mgar (0.94,REV=2011.09.28)
 
   * Depend on CSWgar-dev instead of obsolete CSWgardevel
