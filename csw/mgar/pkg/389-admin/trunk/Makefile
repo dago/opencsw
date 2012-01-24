@@ -79,7 +79,12 @@ CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-ds-console
 # remove -I/opt/csw/include
 CPPFLAGS = 
 # no optimization
-CFLAGS = 
+CFLAGS = -g
+FFLAGS=
+FCFLAGS=
+OPTFLAGS=
+CXXFLAGS=
+
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -96,6 +101,7 @@ CONFIGURE_ARGS_OPT += --with-apxs=/opt/csw/apache2/sbin/apxs
 CONFIGURE_ARGS_OPT += --with-httpd=/opt/csw/apache2/sbin/httpd
 CONFIGURE_ARGS_OPT += --with-modnss-lib=/opt/csw/apache2/libexec
 CONFIGURE_ARGS_OPT += --with-modnss-bin=/opt/csw/apache2/sbin
+CONFIGURE_ARGS_OPT += --disable-threading
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 include gar/category.mk

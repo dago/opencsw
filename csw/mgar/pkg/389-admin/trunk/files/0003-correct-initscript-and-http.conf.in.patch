@@ -4,14 +4,14 @@ Date: Mon, 23 Jan 2012 15:51:51 +0100
 Subject: [PATCH] correct initscript and http.conf.in
 
 ---
- admserv/cfgstuff/httpd.conf.in |   10 +++++-----
+ admserv/cfgstuff/httpd-2.2.conf.in |   10 +++++-----
  wrappers/initscript.in         |    6 ++++--
  2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/admserv/cfgstuff/httpd.conf.in b/admserv/cfgstuff/httpd.conf.in
+diff --git a/admserv/cfgstuff/httpd-2.2.conf.in b/admserv/cfgstuff/httpd-2.2.conf.in
 index a66eb21..b4098d9 100644
---- a/admserv/cfgstuff/httpd.conf.in
-+++ b/admserv/cfgstuff/httpd.conf.in
+--- a/admserv/cfgstuff/httpd-2.2.conf.in
++++ b/admserv/cfgstuff/httpd-2.2.conf.in
 @@ -99,12 +99,12 @@ ServerTokens Minor
  # start one server in multi threaded mode
  StartServers 1
@@ -43,24 +43,27 @@ index 82dd20e..8fd03da 100644
  
  # Source function library.
  if [ -f /etc/rc.d/init.d/functions ] ; then
-@@ -94,7 +96,7 @@ prog="@package_name@"
+@@ -94,7 +96,8 @@ prog="@package_name@"
  piddir="@localstatedir@/run/@PACKAGE_BASE_NAME@"
  # PID file
  pidfile=$piddir/admin-serv.pid
 -lockfile=/var/lock/subsys/@package_name@
 +lockfile=@localstatedir@/lock/subsys/@package_name@
++lockdir=`dirname $lockfile`
  
  [ -f $exec ] || exit 0
  
-@@ -163,7 +165,7 @@ start() {
+@@ -163,7 +166,8 @@ start() {
              RETVAL=1
          fi
      fi
 -    [ $RETVAL -eq 0 -a -d /var/lock/subsys ] && touch $lockfile
-+    [ $RETVAL -eq 0 -a -d @localstatedir@/lock/subsys ] && touch $lockfile
++    [ ! -d $lockdir ] && mkdir -p $lockdir
++    [ $RETVAL -eq 0 -a -d $lockdir ] && touch $lockfile
  }
  
  stop() {
+
 -- 
 1.7.8.3
 
