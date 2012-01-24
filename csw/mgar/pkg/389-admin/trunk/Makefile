@@ -13,6 +13,8 @@ endef
 
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES += CSW389admin.preremove
+
 # BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
