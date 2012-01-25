@@ -86,6 +86,8 @@ PACKAGES = CSWphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWlibiconv2 CSWlibexpat1 CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuio48 CSWlibicuuc48 CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicudata48
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
@@ -132,83 +134,85 @@ CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2 CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibexpat1 CSWlibz1
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuio48 CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n48 CSWlibicudata48 
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache2/libexec/libphp5.so
 
-$(eval $(call php5_subpackage,bcmath))
-$(eval $(call php5_subpackage,bz2,CSWlibbz2-1-0))
-$(eval $(call php5_subpackage,calendar))
-$(eval $(call php5_subpackage,ctype))
+$(eval $(call php5_subpackage,bcmath,CSWlibz1))
+$(eval $(call php5_subpackage,bz2,CSWlibbz2-1-0 CSWlibz1))
+$(eval $(call php5_subpackage,calendar,CSWlibz1))
+$(eval $(call php5_subpackage,ctype,CSWlibz1))
 $(eval $(call php5_subpackage,curl,CSWlibcurl4 CSWlibidn11 CSWosslrt CSWlibz1))
-$(eval $(call php5_subpackage,dba,CSWlibgdbm3 CSWbdb42))
+$(eval $(call php5_subpackage,dba,CSWlibgdbm4 CSWbdb42, CSWlibz1))
 $(eval $(call php5_subpackage,dom,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
-$(eval $(call php5_subpackage,exif))
-$(eval $(call php5_subpackage,ftp,CSWosslrt))
-$(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWlibpng12-0 CSWt1lib CSWxpm CSWlibz1))
+$(eval $(call php5_subpackage,exif,CSWlibz1))
+$(eval $(call php5_subpackage,ftp,CSWosslrt CSWlibz1))
+$(eval $(call php5_subpackage,gd,CSWlibfreetype6 CSWlibgd2 CSWlibjpeg7 CSWlibpng12-0 CSWt1lib CSWxpm CSWlibz1))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
-$(eval $(call php5_subpackage,gettext,CSWlibintl8))
-$(eval $(call php5_subpackage,gmp,CSWlibgmp10))
-$(eval $(call php5_subpackage,hash))
+$(eval $(call php5_subpackage,gettext,CSWlibintl8 CSWlibz1))
+$(eval $(call php5_subpackage,gmp,CSWlibgmp10 CSWlibz1))
+$(eval $(call php5_subpackage,hash,CSWlibz1))
 PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
-$(eval $(call php5_subpackage,iconv,CSWlibiconv2))
+$(eval $(call php5_subpackage,iconv,CSWlibiconv2 CSWlibz))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
-$(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWosslrt))
-$(eval $(call php5_subpackage,json))
-$(eval $(call php5_subpackage,ldap,CSWoldaprt CSWsasl))
-$(eval $(call php5_subpackage,mbstring))
+$(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWosslrt CSWlibz1))
+$(eval $(call php5_subpackage,json,CSWlibz1))
+$(eval $(call php5_subpackage,ldap,CSWoldaprt CSWlibsasl2-2 CSWlibz1))
+$(eval $(call php5_subpackage,mbstring,CSWlibz1))
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
-$(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt CSWlibltdl7))
-$(eval $(call php5_subpackage,mssql,CSWfreetds))
-$(eval $(call php5_subpackage,mysql,CSWlibmysqlclient15))
+$(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4 CSWlibltdl7 CSWlibz1))
+$(eval $(call php5_subpackage,mssql,CSWlibsybdb5 CSWlibz1))
+$(eval $(call php5_subpackage,mysql,CSWlibmysqlclient15 CSWlibz1))
 $(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient15 CSWlibz1))
-$(eval $(call php5_subpackage,odbc,CSWunixodbc))
-$(eval $(call php5_subpackage,openssl,CSWosslrt CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3))
-$(eval $(call php5_subpackage,pcntl))
-$(eval $(call php5_subpackage,pdo))
+$(eval $(call php5_subpackage,odbc,CSWlibodbc2 CSWlibz1))
+$(eval $(call php5_subpackage,openssl,CSWosslrt CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3 CSWlibz1))
+$(eval $(call php5_subpackage,pcntl,CSWlibz1))
+$(eval $(call php5_subpackage,pdo,CSWlibz1))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
 $(eval $(call php5_subpackage,pdomysql,CSWlibmysqlclient15 CSWlibz1 CSWphp5-pdo))
 PKGFILES_CSWphp5-pdomysql += .*/lib/php/extensions/.*/pdo_mysql.so
 PKGFILES_CSWphp5-pdomysql += .*extensions/pdo_mysql
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pdoodbc,CSWunixodbc CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdoodbc,CSWlibodbc2 CSWphp5-pdo CSWlibz1))
 PKGFILES_CSWphp5-pdoodbc += .*/lib/php/extensions/.*/pdo_odbc.so
 PKGFILES_CSWphp5-pdoodbc += .*extensions/pdo_odbc
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pdopgsql,CSWlibpq CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdopgsql,CSWlibpq CSWphp5-pdo CSWlibz1))
 PKGFILES_CSWphp5-pdopgsql += .*/lib/php/extensions/.*/pdo_pgsql.so
 PKGFILES_CSWphp5-pdopgsql += .*extensions/pdo_pgsql
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pdosqlite,CSWlibsqlite3-0 CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdosqlite,CSWlibsqlite3-0 CSWphp5-pdo CSWlibz1))
 PKGFILES_CSWphp5-pdosqlite += .*/lib/php/extensions/.*/pdo_sqlite.so
 PKGFILES_CSWphp5-pdosqlite += .*extensions/pdo_sqlite
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pgsql,CSWlibpq))
-$(eval $(call php5_subpackage,posix))
-$(eval $(call php5_subpackage,pspell,CSWaspell))
-$(eval $(call php5_subpackage,readline,CSWlibreadline6 CSWlibncurses5))
-$(eval $(call php5_subpackage,session,CSWlibmm))
+$(eval $(call php5_subpackage,pgsql,CSWlibpq CSWlibz1))
+$(eval $(call php5_subpackage,posix,CSWlibz1))
+$(eval $(call php5_subpackage,pspell,CSWaspell CSWlibz1))
+$(eval $(call php5_subpackage,readline,CSWlibreadline6 CSWlibncurses5 CSWlibz1))
+$(eval $(call php5_subpackage,session,CSWlibmm CSWlibz1))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
-$(eval $(call php5_subpackage,shmop))
-$(eval $(call php5_subpackage,snmp,CSWnetsnmp))
+$(eval $(call php5_subpackage,shmop,CSWlibz1))
+$(eval $(call php5_subpackage,snmp,CSWnetsnmp CSWlibz1))
 $(eval $(call php5_subpackage,soap,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
-$(eval $(call php5_subpackage,sockets))
-$(eval $(call php5_subpackage,sqlite,CSWsqlite))
+$(eval $(call php5_subpackage,sockets,CSWlibz1))
+$(eval $(call php5_subpackage,sqlite,CSWsqlite CSWlibz1))
 PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
-$(eval $(call php5_subpackage,sysvmsg))
-$(eval $(call php5_subpackage,sysvsem))
-$(eval $(call php5_subpackage,sysvshm))
-$(eval $(call php5_subpackage,tidy,CSWhtmltidy))
-$(eval $(call php5_subpackage,tokenizer))
-$(eval $(call php5_subpackage,wddx))
+$(eval $(call php5_subpackage,sysvmsg,CSWlibz1))
+$(eval $(call php5_subpackage,sysvsem,CSWlibz1))
+$(eval $(call php5_subpackage,sysvshm,CSWlibz1))
+$(eval $(call php5_subpackage,tidy,CSWhtmltidy CSWlibz1))
+$(eval $(call php5_subpackage,tokenizer,CSWlibz1))
+$(eval $(call php5_subpackage,wddx,CSWlibz1))
 $(eval $(call php5_subpackage,xmlreader,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
-$(eval $(call php5_subpackage,xmlrpc,CSWlibiconv2 CSWlibexpat1))
+$(eval $(call php5_subpackage,xmlrpc,CSWlibiconv2 CSWlibexpat1 CSWlibz1))
 $(eval $(call php5_subpackage,xmlwriter,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 $(eval $(call php5_subpackage,xsl,CSWlibiconv2 CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0 CSWlibz1))
 $(eval $(call php5_subpackage,zip,CSWlibz1))
