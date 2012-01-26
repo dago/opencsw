@@ -1,0 +1,25 @@
+From 75a3e53349b14539b1d3325af7df7e35b4d5e6d5 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 26 Jan 2012 16:12:09 +0100
+Subject: [PATCH] change include preferences in Makefile.am
+
+---
+ Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 25ae853..51327db 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -371,7 +371,7 @@ ds_snmpctrl_LINK = $(MYLINK)
+ 
+ ############## mod_admserv ################
+ mod_admserv_la_SOURCES = mod_admserv/mod_admserv.c
+-mod_admserv_la_CPPFLAGS = -I@apache_inc@ @apr_inc@ $(AM_CPPFLAGS) @extra_cppflags@
++mod_admserv_la_CPPFLAGS = -I@apache_inc@ $(AM_CPPFLAGS) @apr_inc@ @extra_cppflags@
+ mod_admserv_la_LDFLAGS = -module -avoid-version
+ mod_admserv_la_LIBADD = $(DEFAULT_LIBS)
+ mod_admserv_la_LINK = $(MYLINK) $(mod_admserv_la_LDFLAGS)
+-- 
+1.7.8.3
+

@@ -28,6 +28,7 @@ LICENSE = LICENSE LICENSE.GPLv2
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
 PATCHFILES += 0003-correct-initscript-and-http.conf.in.patch
+PATCHFILES += 0004-change-include-preferences-in-Makefile.am.patch
 
 PACKAGES += CSWlibds-admin-serv0
 CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0
@@ -86,21 +87,19 @@ CPPFLAGS =
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
-CONFIGURE_ARGS_OPT += --with-ldapsdk-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-icu-inc=/opt/csw/include 
-CONFIGURE_ARGS_OPT += --with-icu-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-icu-bin=/opt/csw/bin 
-CONFIGURE_ARGS_OPT += --with-sasl-inc=/opt/csw/include/sasl 
-CONFIGURE_ARGS_OPT += --with-sasl-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nss-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nss-inc=/opt/csw/include/nss 
-CONFIGURE_ARGS_OPT += --with-apxs=/opt/csw/apache2/sbin/apxs
-CONFIGURE_ARGS_OPT += --with-httpd=/opt/csw/apache2/sbin/httpd
-CONFIGURE_ARGS_OPT += --with-modnss-lib=/opt/csw/apache2/libexec
-CONFIGURE_ARGS_OPT += --with-modnss-bin=/opt/csw/apache2/sbin
-CONFIGURE_ARGS_OPT += --disable-threading
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+CONFIGURE_ARGS += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
+CONFIGURE_ARGS += --with-ldapsdk-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-icu-inc=/opt/csw/include 
+CONFIGURE_ARGS += --with-icu-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-icu-bin=/opt/csw/bin 
+CONFIGURE_ARGS += --with-sasl-inc=/opt/csw/include/sasl 
+CONFIGURE_ARGS += --with-sasl-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nss-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nss-inc=/opt/csw/include/nss 
+CONFIGURE_ARGS += --with-apxs=/opt/csw/apache2/sbin/apxs
+CONFIGURE_ARGS += --with-httpd=/opt/csw/apache2/sbin/httpd
+CONFIGURE_ARGS += --with-modnss-lib=/opt/csw/apache2/libexec
+CONFIGURE_ARGS += --with-modnss-bin=/opt/csw/apache2/sbin
 
 include gar/category.mk
 
