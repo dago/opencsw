@@ -23,6 +23,8 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 LICENSE = LICENSE LICENSE.GPLv2
 
+# GARFLAVOR=DBG
+
 PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
 PATCHFILES += 0003-correct-initscript-and-http.conf.in.patch
@@ -47,7 +49,7 @@ RUNTIME_DEP_PKGS_CSW389admin-dev += CSWlibds-admin-serv0
 PACKAGES += CSW389admin
 SPKG_DESC_CSW389admin += $(DESCRIPTION)
 INITSMF = /etc/opt/csw/init.d/dirsrv-admin
-RUNTIME_DEP_PKGS_CSW389admin += CSWapache2
+RUNTIME_DEP_PKGS_CSW389admin += CSWap2worker
 RUNTIME_DEP_PKGS_CSW389admin += CSWap2modnss
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSW389admin += CSWlibldif60
@@ -72,7 +74,7 @@ RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389admin += CSW389-admin-console
 RUNTIME_DEP_PKGS_CSW389admin += CSW389-ds-console
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
-CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2worker
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-admin-console
 CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-ds-console
 CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-admin-console
@@ -80,12 +82,6 @@ CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-ds-console
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
-# no optimization
-CFLAGS = -g
-FFLAGS=
-FCFLAGS=
-OPTFLAGS=
-CXXFLAGS=
 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 

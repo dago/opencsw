@@ -8,28 +8,6 @@ Subject: [PATCH] correct initscript and http.conf.in
  wrappers/initscript.in         |    6 ++++--
  2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/admserv/cfgstuff/httpd-2.2.conf.in b/admserv/cfgstuff/httpd-2.2.conf.in
-index a66eb21..b4098d9 100644
---- a/admserv/cfgstuff/httpd-2.2.conf.in
-+++ b/admserv/cfgstuff/httpd-2.2.conf.in
-@@ -99,12 +99,12 @@ ServerTokens Minor
- # start one server in multi threaded mode
- StartServers 1
- # mtm
--ServerLimit 1
-+ServerLimit 4
- 
--MaxClients 64
--MinSpareThreads 32
--MaxSpareThreads 64
--ThreadsPerChild 64
-+MaxClients 4
-+# MinSpareThreads 32
-+# MaxSpareThreads 64
-+# ThreadsPerChild 64
- 
- #
- # Dynamic Shared Object (DSO) Support
 diff --git a/wrappers/initscript.in b/wrappers/initscript.in
 index 82dd20e..8fd03da 100644
 --- a/wrappers/initscript.in
