@@ -49,7 +49,8 @@ RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibplc4
-CHECKPKG_OVERRIDES_CSWap2modnss += pkginfo-opencsw-repository-uncommitted
+RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibssl3
 
 
 include gar/category.mk
