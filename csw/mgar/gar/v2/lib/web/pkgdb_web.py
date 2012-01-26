@@ -318,6 +318,18 @@ class RestSrv4DetailFiles(object):
 
 class RestSrv4FullStats(object):
 
+  def GetUnicodeOrNone(self, s):
+    """Tries to decode UTF-8"""
+    if s is None:
+      return None
+    if type(s) != unicode:
+      try:
+        s = unicode(s, 'utf-8')
+      except UnicodeDecodeError, e:
+        s = s.decode("utf-8", "ignore")
+        s = s + u" (bad unicode detected)"
+    return s
+
   def GET(self, md5_sum):
     ConnectToDatabase()
     class PkgStatsEncoder(json.JSONEncoder):
@@ -336,14 +348,8 @@ class RestSrv4FullStats(object):
       # There was a problem with bad utf-8 in the VENDOR field.
       # This is a workaround.
       if "VENDOR" in data_structure["pkginfo"]:
-        vendor = data_structure["pkginfo"]["VENDOR"]
-        if type(vendor) != unicode:
-          try:
-            vendor = unicode(vendor, 'utf-8')
-          except UnicodeDecodeError, e:
-            vendor = vendor.decode("utf-8", "ignore")
-          data_structure["pkginfo"]["VENDOR"] = (
-              vendor + " (bad unicode detected)")
+        data_structure["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
+            data_structure["pkginfo"]["VENDOR"])
       # The end of the hack.
       return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
