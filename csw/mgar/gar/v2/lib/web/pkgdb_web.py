@@ -351,6 +351,13 @@ class RestSrv4FullStats(object):
         data_structure["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
             data_structure["pkginfo"]["VENDOR"])
       # The end of the hack.
+      #
+      # One more workaround
+      for d in data_structure["pkgmap"]:
+        if "path" in d:
+          d["path"] = self.GetUnicodeOrNone(d["path"])
+          d["line"] = self.GetUnicodeOrNone(d["line"])
+      # End of the workaround
       return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
