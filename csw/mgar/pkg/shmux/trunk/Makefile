@@ -3,6 +3,7 @@
 NAME = shmux
 VERSION = 1.0.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Executes the same command on many hosts in parallel
 define BLURB

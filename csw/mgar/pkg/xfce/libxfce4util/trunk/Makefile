@@ -1,5 +1,6 @@
 NAME = libxfce4util
 CATEGORIES = xfce
+GARTYPE = v2
 
 DESCRIPTION = Xfce Utilities Library 
 define BLURB

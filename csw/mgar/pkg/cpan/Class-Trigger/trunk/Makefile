@@ -1,6 +1,7 @@
 NAME = Class-Trigger
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = mixin to add / call inheritable triggers

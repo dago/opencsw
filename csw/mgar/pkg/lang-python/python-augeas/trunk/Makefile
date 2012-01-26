@@ -1,6 +1,7 @@
 NAME = python-augeas
 VERSION = 0.3.0
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Augeas Python Bindings
 define BLURB

@@ -1,6 +1,7 @@
 NAME = SMS-Send
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Driver-based API for sending SMS messages

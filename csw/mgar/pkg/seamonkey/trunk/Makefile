@@ -1,6 +1,7 @@
 NAME = seamonkey
 VERSION = 1.1.19
 CATEGORIES = apps
+GARTYPE = v2
 DISTNAME = mozilla
 
 DESCRIPTION = Seamonkey all-in-one internet application suite

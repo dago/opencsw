@@ -1,6 +1,7 @@
 NAME = db
 VERSION = 4.7.25
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Stub package as contents moved to CSWbdb47
 define BLURB

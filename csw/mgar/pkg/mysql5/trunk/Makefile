@@ -7,6 +7,7 @@ BASE_VERSION = 5.5
 PATCHLEVEL = 9
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
+GARTYPE = v2
 
 # Useful when making a series of builds on the same day
 GARFLAVOR ?= DBG

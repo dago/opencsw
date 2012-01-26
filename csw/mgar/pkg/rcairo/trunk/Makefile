@@ -1,6 +1,7 @@
 NAME      = rcairo
 VERSION   = 1.8.0
 CATEGORIES   = lib
+GARTYPE = v2
 
 DESCRIPTION  = Ruby Bindings for Cairo
 define BLURB

@@ -1,6 +1,7 @@
 NAME = fastthread
 VERSION = 1.0.7
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Optimized replacement for thread.rb primitives
 define BLURB

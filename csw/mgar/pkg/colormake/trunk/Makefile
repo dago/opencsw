@@ -1,6 +1,7 @@
 NAME = colormake
 VERSION = 0.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A colorizer for make
 define BLURB

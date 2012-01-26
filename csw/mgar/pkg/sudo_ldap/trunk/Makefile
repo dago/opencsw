@@ -1,6 +1,7 @@
 NAME = sudo
 VERSION = 1.8.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Provides limited super user privileges (LDAP Enabled)
 define BLURB

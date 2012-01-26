@@ -1,6 +1,7 @@
 NAME = tcl8.5
 VERSION = 8.5.10
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = Tcl programming language v8.5
 define BLURB

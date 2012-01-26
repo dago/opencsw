@@ -1,6 +1,7 @@
 NAME = ldns
 VERSION = 1.6.10
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
 define BLURB

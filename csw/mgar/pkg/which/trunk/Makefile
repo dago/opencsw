@@ -1,6 +1,7 @@
 NAME = which
 VERSION = 2.20
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = locate a command and display its pathname or alias
 define BLURB

@@ -1,6 +1,7 @@
 NAME = GDTextUtil
 VERSION = 0.86
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MVERB
 
 DESCRIPTION = Text utilities for use with GD

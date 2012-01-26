@@ -1,6 +1,7 @@
 NAME = JIRA-Client
 VERSION = 0.24
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GNUSTAVO
 
 DESCRIPTION = An extended interface to JIRA's SOAP API

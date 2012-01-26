@@ -1,6 +1,7 @@
 NAME = Class-Inspector
 VERSION = 1.24
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Get information about a class and its structure

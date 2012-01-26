@@ -1,6 +1,7 @@
 NAME = Perl6-Slurp
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DCONWAY
 
 DESCRIPTION = Perl6::Slurp - Implements the Perl 6 'slurp' built-in

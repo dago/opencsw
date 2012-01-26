@@ -1,6 +1,7 @@
 NAME = maven3
 VERSION = 3.0
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Java software project management and comprehension tool
 define BLURB

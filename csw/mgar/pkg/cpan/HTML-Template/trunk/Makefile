@@ -1,6 +1,7 @@
 NAME = HTML-Template
 VERSION = 2.9
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SAMTREGAR
 
 DESCRIPTION = Perl module to use HTML Templates from CGI scripts

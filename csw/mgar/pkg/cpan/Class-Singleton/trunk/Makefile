@@ -1,6 +1,7 @@
 NAME = Class-Singleton
 VERSION = 1.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABW
 
 DESCRIPTION = Implementation of a "Singleton" class

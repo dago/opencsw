@@ -1,6 +1,7 @@
 NAME = liboil
 VERSION = 0.3.17
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library of simple functions that are optimized for various CPUs
 define BLURB

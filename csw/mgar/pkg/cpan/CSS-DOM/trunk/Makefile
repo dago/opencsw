@@ -1,6 +1,7 @@
 NAME = CSS-DOM
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SPROUT
 
 DESCRIPTION = Document Object Model for Cascading Style Sheets

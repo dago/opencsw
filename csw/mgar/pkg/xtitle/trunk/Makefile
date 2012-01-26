@@ -1,6 +1,7 @@
 NAME = xtitle
 VERSION = 1.0.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Set the window's title and/or icon name to the script's arguments
 define BLURB

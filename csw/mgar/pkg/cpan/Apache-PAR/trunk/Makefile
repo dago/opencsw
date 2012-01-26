@@ -1,6 +1,7 @@
 NAME = Apache-PAR
 VERSION = 0.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NBYRD
 
 DESCRIPTION = PAR extension for mod_perl

@@ -1,6 +1,7 @@
 NAME = atk
 VERSION = 2.2.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = An accessibility toolkit for GNOME
 define BLURB

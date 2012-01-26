@@ -2,6 +2,7 @@
 NAME = conserver
 VERSION = 8.1.7
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Client/Server console server software
 define BLURB

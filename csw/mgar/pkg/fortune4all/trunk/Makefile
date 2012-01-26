@@ -1,6 +1,7 @@
 NAME = fortune4all
 VERSION = 1023
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = 
 define BLURB

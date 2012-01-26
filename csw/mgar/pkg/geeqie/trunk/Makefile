@@ -5,6 +5,7 @@
 NAME = geeqie
 VERSION = 1.0
 CATEGORIES = gnome
+GARTYPE = v2
 DESCRIPTION = A lightweight image viewer, forked from GQview
 define BLURB
 endef

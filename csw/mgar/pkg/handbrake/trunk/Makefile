@@ -1,6 +1,7 @@
 NAME = HandBrake
 VERSION = 0.9.4
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Brief description
 define BLURB

@@ -1,6 +1,7 @@
 NAME = HTML-Tree
 VERSION = 4.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETEK
 
 DESCRIPTION = Modules for making parse trees from HTML source

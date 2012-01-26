@@ -2,6 +2,7 @@
 NAME = nautilus
 VERSION = 2.91.91
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = File manager for the GNOME desktop
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Devel-NYTProf
 VERSION = 4.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TIMB
 
 DESCRIPTION = Powerful fast feature-rich perl source code profiler

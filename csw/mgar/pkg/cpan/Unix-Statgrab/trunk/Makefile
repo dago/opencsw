@@ -1,6 +1,7 @@
 NAME = Unix-Statgrab
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VPARSEVAL
 
 DESCRIPTION = Perl extension for collecting information about the machine

@@ -1,6 +1,7 @@
 NAME = libmpeg2
 VERSION = 0.5.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A free MPEG-2 video stream decoder
 define BLURB

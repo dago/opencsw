@@ -2,6 +2,7 @@
 NAME = cswpki
 VERSION = 1.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = The OpenCSW PKI Collection
 define BLURB

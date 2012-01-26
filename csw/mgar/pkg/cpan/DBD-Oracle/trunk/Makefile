@@ -1,6 +1,7 @@
 NAME = DBD-Oracle
 VERSION = 1.23
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PYTHIAN
 
 DESCRIPTION = Oracle database driver for the DBI module

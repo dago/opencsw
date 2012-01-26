@@ -2,6 +2,7 @@
 NAME = bitlbee
 VERSION = 1.2.8
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = An IRC to other chat networks gateway
 define BLURB

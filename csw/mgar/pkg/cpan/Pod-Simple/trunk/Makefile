@@ -1,6 +1,7 @@
 NAME = Pod-Simple
 VERSION = 3.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DWHEELER
 
 DESCRIPTION = Framework for parsing Pod

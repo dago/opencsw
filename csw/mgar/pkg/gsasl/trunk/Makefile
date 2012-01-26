@@ -1,6 +1,7 @@
 NAME = gsasl
 VERSION = 1.6.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GNU SASL binary
 define BLURB

@@ -1,6 +1,7 @@
 NAME = actionmailer
 VERSION = 2.3.8
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Test and deliver emails sent from a single service layer
 define BLURB

@@ -1,6 +1,7 @@
 NAME = pyorbit
 VERSION = 2.24.0
 CATEGORIES = lang
+GARTYPE = v2
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 
 DESCRIPTION = ORBit2 CORBA support for Python

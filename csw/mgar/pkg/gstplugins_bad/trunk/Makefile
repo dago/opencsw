@@ -1,6 +1,7 @@
 NAME = gst-plugins-bad
 VERSION = 0.10.20
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GStreamer plugins (Bad)
 define BLURB

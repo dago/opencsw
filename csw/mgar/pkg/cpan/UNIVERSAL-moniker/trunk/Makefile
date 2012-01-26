@@ -1,6 +1,7 @@
 NAME = UNIVERSAL-moniker
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KASEI
 
 DESCRIPTION = add a moniker method to UNIVERSAL

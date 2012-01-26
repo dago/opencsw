@@ -2,6 +2,7 @@
 NAME = sipcalc
 VERSION = 1.1.5
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Advanced console-based ip subnet calculator
 define BLURB

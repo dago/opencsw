@@ -1,6 +1,7 @@
 NAME = Test-NoWarnings
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Make sure you didn't emit any warnings while testing

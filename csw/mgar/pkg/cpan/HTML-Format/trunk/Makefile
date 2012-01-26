@@ -1,6 +1,7 @@
 NAME = HTML-Format
 VERSION = 2.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBURKE
 
 DESCRIPTION = Format HTML as plaintext

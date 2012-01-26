@@ -1,6 +1,7 @@
 NAME = Log-Log4perl
 VERSION = 1.32
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHILLI
 
 DESCRIPTION = Log4j implementation for Perl

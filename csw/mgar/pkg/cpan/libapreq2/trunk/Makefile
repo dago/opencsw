@@ -1,6 +1,7 @@
 NAME = libapreq2
 VERSION = 2.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JOESUF
 
 DESCRIPTION = methods for dealing with Apache request data

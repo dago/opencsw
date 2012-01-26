@@ -2,6 +2,7 @@
 NAME = xmltoman
 VERSION = 0.4
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A man page creation tool
 define BLURB

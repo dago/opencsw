@@ -8,6 +8,7 @@ NAME = docbookdtds
 VERSION = 4.5
 
 CATEGORIES = xtra
+GARTYPE = v2
 
 PACKAGES = CSWdocbookdtds
 RUNTIME_DEP_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2

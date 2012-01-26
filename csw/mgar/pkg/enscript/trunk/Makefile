@@ -1,6 +1,7 @@
 NAME = enscript
 VERSION = 1.6.5.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU enscript converts ASCII files to PostScript
 define BLURB

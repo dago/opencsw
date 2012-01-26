@@ -1,6 +1,7 @@
 NAME = PerlIO-via-Bzip2
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ARJEN
 
 DESCRIPTION = PerlIO layer for Bzip2 (de)compression

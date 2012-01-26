@@ -4,6 +4,7 @@ GARRELEASE =
 DISTVERSION = $(VERSION)$(GARRELEASE)
 DISTNAME = $(NAME)-$(DISTVERSION)
 CATEGORIES = lang
+GARTYPE = v2
 
 SPKG_SOURCEURL = http://www.python.org/download/releases/$(VERSION)
 

@@ -1,6 +1,7 @@
 NAME = Hash-MultiValue
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Store multiple values per key

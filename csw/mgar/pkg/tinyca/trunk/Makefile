@@ -2,6 +2,7 @@
 NAME = tinyca2
 VERSION = 0.7.5
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Graphical userinterface to manage a small CA
 define BLURB

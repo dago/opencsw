@@ -1,6 +1,7 @@
 NAME = Text-Autoformat
 VERSION = 1.669002
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DCONWAY
 
 DESCRIPTION = Automatic text wrapping and reformatting

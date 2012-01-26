@@ -1,6 +1,7 @@
 NAME = tkdiff
 VERSION = 4.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A graphical diff tool
 define BLURB

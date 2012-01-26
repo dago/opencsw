@@ -1,6 +1,7 @@
 NAME = Digest-HMAC
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = Keyed-hashing for message authentication

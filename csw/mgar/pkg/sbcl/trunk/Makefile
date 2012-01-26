@@ -5,6 +5,7 @@
 NAME = sbcl
 VERSION = 1.0.23
 CATEGORIES = apps
+GARTYPE = v2
 DESCRIPTION = High performance Common Lisp compiler
 define BLURB
 	Steel Bank Common Lisp (SBCL) is a high performance Common Lisp compiler. It

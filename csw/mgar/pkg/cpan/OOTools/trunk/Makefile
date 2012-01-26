@@ -1,6 +1,7 @@
 NAME = OOTools
 VERSION = 2.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DOMIZIO
 
 DESCRIPTION = Easily create constructors and lvalue accessors

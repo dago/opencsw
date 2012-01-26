@@ -1,6 +1,7 @@
 NAME = Math-Interpolate
 VERSION = 1.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BZAJAC
 
 DESCRIPTION = Useful routines for interpolating data sets

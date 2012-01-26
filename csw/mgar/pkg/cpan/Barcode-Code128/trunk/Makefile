@@ -1,6 +1,7 @@
 NAME = Barcode-Code128
 VERSION = 2.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = WRW
 
 DESCRIPTION = Generate CODE 128 bar codes

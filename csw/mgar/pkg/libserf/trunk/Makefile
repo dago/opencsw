@@ -2,6 +2,7 @@ NAME = libserf
 VERSION = 1.0.0
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = HTTP client library built on APR, multiplexes connections
 define BLURB

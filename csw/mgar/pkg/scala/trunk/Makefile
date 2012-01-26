@@ -1,6 +1,7 @@
 NAME = scala
 VERSION = 2.8.1
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = The Scala programming language
 define BLURB

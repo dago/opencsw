@@ -1,6 +1,7 @@
 NAME = Carp-Clan
 VERSION = 6.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = STBEY
 
 DESCRIPTION = report errors from perspective of caller of a "clan" of modules

@@ -1,6 +1,7 @@
 NAME = Unicode-Stringprep
 VERSION = 1.103
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CFAERBER
 
 DESCRIPTION = Preparation of Internationalized Strings (RFC 3454)

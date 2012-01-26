@@ -1,6 +1,7 @@
 NAME = Text-vFile-asData
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCLAMP
 
 DESCRIPTION = Parse vFile formatted files into data structures

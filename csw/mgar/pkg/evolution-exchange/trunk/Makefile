@@ -1,6 +1,7 @@
 NAME = evolution-exchange
 VERSION = 2.28.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Evolution Web Calendar
 define BLURB

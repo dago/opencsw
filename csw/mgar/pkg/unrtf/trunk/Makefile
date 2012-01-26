@@ -1,6 +1,7 @@
 NAME = unrtf
 VERSION = 0.21.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A tool which converts documents from Rich Text Format
 define BLURB

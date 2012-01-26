@@ -4,6 +4,7 @@
 NAME = twill
 VERSION = 0.9
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = An easy to use web automation kit
 define BLURB

@@ -1,6 +1,7 @@
 NAME = nano
 VERSION = 2.2.6
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Enhanced clone of the Pico text editor
 define BLURB

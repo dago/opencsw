@@ -1,6 +1,7 @@
 NAME = euler
 VERSION = 1.61.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = EULER interactive computing with real, complex numbers and matrices
 define BLURB

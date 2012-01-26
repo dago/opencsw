@@ -3,6 +3,7 @@
 NAME = file
 VERSION = 5.10
 CATEGORIES = utils
+GARTYPE = v2
 
 define BLURB
   The file command is "a file type guesser", that is, a command-line tool that

@@ -1,6 +1,7 @@
 NAME = Params-Check
 VERSION = 0.28
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = A generic input parsing/checking mechanism.

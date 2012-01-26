@@ -5,6 +5,7 @@
 NAME = xmms
 VERSION = 1.2.11
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = The X MultiMedia System
 define BLURB

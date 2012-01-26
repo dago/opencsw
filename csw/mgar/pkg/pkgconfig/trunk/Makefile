@@ -1,6 +1,7 @@
 NAME = pkg-config
 VERSION = 0.25
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Tool for determining the configuration of installed software
 define BLURB

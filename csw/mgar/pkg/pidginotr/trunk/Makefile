@@ -1,6 +1,7 @@
 NAME = pidgin-otr
 VERSION = 3.2.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Off-The-Record Messaging plugin for pidgin
 define BLURB

@@ -1,6 +1,7 @@
 NAME = TimeDate
 VERSION = 1.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GBARR
 
 DESCRIPTION = parse date strings into time values

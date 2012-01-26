@@ -1,6 +1,7 @@
 NAME = bacon
 VERSION = 1.1.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A small RSpec clone
 define BLURB

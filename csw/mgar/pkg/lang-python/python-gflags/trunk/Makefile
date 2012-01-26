@@ -5,6 +5,7 @@
 NAME = python-gflags
 VERSION = 1.3
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = python equivalent of google-gflags, a Google commandline flag implementation
 define BLURB
 	This project is the python equivalent of google-gflags, a Google commandline

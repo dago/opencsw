@@ -1,6 +1,7 @@
 NAME = XML-RegExp
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TJMATHER
 
 DESCRIPTION = regular expressions for XML tokens

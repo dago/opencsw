@@ -5,6 +5,7 @@
 NAME = cherrypy
 VERSION = 3.1.2
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = A pythonic, object-oriented web framework
 define BLURB

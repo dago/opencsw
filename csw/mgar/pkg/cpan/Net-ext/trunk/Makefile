@@ -1,6 +1,7 @@
 NAME = Net-ext
 VERSION = 1.011
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SPIDB
 
 DESCRIPTION = Perl Net::Inet module

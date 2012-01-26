@@ -1,6 +1,7 @@
 NAME = Convert-ASN1
 VERSION = 0.22
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GBARR
 
 DESCRIPTION = ASN.1 Encode/Decode library

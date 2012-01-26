@@ -1,6 +1,7 @@
 NAME = Net-CIDR
 VERSION = 0.14
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MRSAM
 
 DESCRIPTION = Manipulate IPv4/IPv6 netblocks in CIDR notation

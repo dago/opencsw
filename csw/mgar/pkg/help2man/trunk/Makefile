@@ -1,6 +1,7 @@
 NAME = help2man
 VERSION = 1.39.2
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
 define BLURB

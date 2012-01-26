@@ -1,6 +1,7 @@
 NAME = mbuffer
 VERSION = 20110724
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A tool for buffering data streams
 define BLURB

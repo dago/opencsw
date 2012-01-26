@@ -1,6 +1,7 @@
 NAME = Locale-Maketext-Lexicon
 VERSION = 0.77
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DRTECH
 
 DESCRIPTION = Use other catalog formats in Maketext

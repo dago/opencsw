@@ -1,6 +1,7 @@
 NAME = Snowball-Norwegian
 VERSION = 1.2
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ASKSH
 
 DESCRIPTION = Porters stemming algorithm for Norwegian

@@ -2,6 +2,7 @@
 NAME = ss12f95rt
 VERSION = 20100927
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Sun Studio 12u1 Fortran 95 Runtime Libraries
 define BLURB

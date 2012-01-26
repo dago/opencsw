@@ -1,6 +1,7 @@
 NAME = tnef
 VERSION = 1.4.8
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Unpacks Microsoft TNEF MIME attachments
 define BLURB

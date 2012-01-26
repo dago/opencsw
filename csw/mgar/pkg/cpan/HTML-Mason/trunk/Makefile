@@ -1,6 +1,7 @@
 NAME = HTML-Mason
 VERSION = 1.45
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = High-performance, dynamic web site authoring system

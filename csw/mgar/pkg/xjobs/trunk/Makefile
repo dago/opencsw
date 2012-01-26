@@ -1,6 +1,7 @@
 NAME = xjobs
 VERSION = 20110730
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Executes jobs in parallel similar to xargs
 define BLURB

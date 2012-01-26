@@ -1,6 +1,7 @@
 NAME = Email-Valid
 VERSION = 0.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MAURICE
 
 DESCRIPTION = check validity of Internet email addresses

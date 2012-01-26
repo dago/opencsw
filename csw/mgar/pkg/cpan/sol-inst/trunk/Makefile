@@ -1,6 +1,7 @@
 NAME = sol-inst
 VERSION = 0.90a
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHRISJ
 
 DESCRIPTION = access basic Solaris installation information

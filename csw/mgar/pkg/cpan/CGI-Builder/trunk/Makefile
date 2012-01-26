@@ -1,6 +1,7 @@
 NAME = CGI-Builder
 VERSION = 1.36
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DOMIZIO
 
 DESCRIPTION = Framework to build simple or complex web-apps

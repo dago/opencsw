@@ -1,6 +1,7 @@
 NAME = tin
 VERSION = 2.0.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Terminal-based news reader
 define BLURB

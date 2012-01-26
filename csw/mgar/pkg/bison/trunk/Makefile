@@ -1,6 +1,7 @@
 NAME = bison
 VERSION = 2.5
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = GNU Project parser generator (yacc replacement)
 define BLURB

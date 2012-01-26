@@ -1,6 +1,7 @@
 NAME = libvorbis
 VERSION = 1.3.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Vorbis codec library
 define BLURB

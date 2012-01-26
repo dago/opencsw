@@ -1,6 +1,7 @@
 NAME = gnome-media
 VERSION = 2.28.5
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Multimedia applications for the GNOME 2 desktop
 define BLURB

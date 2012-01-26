@@ -1,6 +1,7 @@
 NAME = Smart-Comments
 VERSION = 1.0.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHORNY
 
 DESCRIPTION = Smart::Comments - Comments that do more than just sit there

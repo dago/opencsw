@@ -1,6 +1,7 @@
 NAME = Filesys-Df
 VERSION = 0.92
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IGUTHRIE
 
 DESCRIPTION = Perl extension for filesystem disk space information

@@ -5,6 +5,7 @@
 NAME = Amara
 VERSION = 2.0a4
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Library for XML processing in Python
 define BLURB
 endef

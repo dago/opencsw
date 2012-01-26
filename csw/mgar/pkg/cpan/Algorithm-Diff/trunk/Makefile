@@ -1,6 +1,7 @@
 NAME = Algorithm-Diff
 VERSION = 1.1902
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TYEMQ
 
 DESCRIPTION = Compute intelligent differences between two files/lists

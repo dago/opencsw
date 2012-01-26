@@ -2,6 +2,7 @@
 NAME = liburiparser
 VERSION = 0.7.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = RFC 3986 Compliant URI Parsing Library
 define BLURB

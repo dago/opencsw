@@ -1,6 +1,7 @@
 NAME = Net-SSH-Perl
 VERSION = 1.25
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = client Interface to SSH

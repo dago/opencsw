@@ -1,6 +1,7 @@
 NAME = Algorithm-Annotate
 VERSION = 0.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = Represent a series of changes in annotate form

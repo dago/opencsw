@@ -8,6 +8,7 @@
 NAME = lua
 VERSION = 5.2.0
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = Light-weight language designed for extending applications
 define BLURB

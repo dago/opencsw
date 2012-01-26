@@ -3,6 +3,7 @@
 NAME = libxcb
 VERSION = 1.5
 CATEGORIES = x11
+GARTYPE = v2
 
 DESCRIPTION = The XCB library
 define BLURB

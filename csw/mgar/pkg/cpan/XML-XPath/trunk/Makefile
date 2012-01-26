@@ -1,6 +1,7 @@
 NAME = XML-XPath
 VERSION = 1.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSERGEANT
 
 DESCRIPTION = A set of modules for parsing and evaluating XPath statements

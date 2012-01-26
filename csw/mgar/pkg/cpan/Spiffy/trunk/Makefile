@@ -1,6 +1,7 @@
 NAME = Spiffy
 VERSION = 0.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = INGY
 
 DESCRIPTION = Spiffy Perl Interface Framework For You

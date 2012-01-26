@@ -1,6 +1,7 @@
 NAME = CSWmeta_example
 VERSION = 1.0
 CATEGORIES = meta
+GARTYPE = v2
 
 DESCRIPTION = Example meta package
 define BLURB

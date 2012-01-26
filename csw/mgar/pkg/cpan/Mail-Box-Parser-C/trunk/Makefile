@@ -1,6 +1,7 @@
 NAME = Mail-Box-Parser-C
 VERSION = 3.006
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKOV
 
 DESCRIPTION = parsing folders for MailBox with C routines

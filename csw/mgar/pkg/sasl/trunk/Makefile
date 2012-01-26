@@ -2,6 +2,7 @@ NAME = sasl
 VERSION = 2.1.25
 FILEVERSION = $(VERSION)
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Simple Authentication and Security Layer
 define BLURB

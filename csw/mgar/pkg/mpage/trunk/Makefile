@@ -2,6 +2,7 @@
 NAME = mpage
 VERSION = 2.5.6
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Print several pages on a single sheet of paper.
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Gnome2-Print
 VERSION = 0.94
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RMCFARLA
 
 DESCRIPTION = wrappers for the Gnome Print utilities.

@@ -1,6 +1,7 @@
 NAME = perl
 VERSION = 5.12.4
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = A high-level, general-purpose programming language
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Class-DBI
 VERSION = 3.0.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TMTM
 
 DESCRIPTION = simple database abstraction

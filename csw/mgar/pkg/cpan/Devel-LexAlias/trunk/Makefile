@@ -1,6 +1,7 @@
 NAME = Devel-LexAlias
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCLAMP
 
 DESCRIPTION = Alias lexical variables

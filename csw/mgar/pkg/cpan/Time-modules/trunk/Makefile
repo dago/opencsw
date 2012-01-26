@@ -1,6 +1,7 @@
 NAME = Time-modules
 VERSION = 2006.0814
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MUIR
 
 DESCRIPTION = Various time manipulation modules

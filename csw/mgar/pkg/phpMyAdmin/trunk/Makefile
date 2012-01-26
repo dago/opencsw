@@ -1,6 +1,7 @@
 NAME = phpMyAdmin
 VERSION = 3.4.7.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Effective MySQL Management
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Date-Simple
 VERSION = 3.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = YVES
 
 DESCRIPTION = a simple date object

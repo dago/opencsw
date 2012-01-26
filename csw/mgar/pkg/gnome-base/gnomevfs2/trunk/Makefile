@@ -2,6 +2,7 @@ NAME = gnomevfs2
 GNOME_PROJ = gnome-vfs
 VERSION = 2.24.4
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GnomeVFS - Filesystem Abstraction library
 define BLURB

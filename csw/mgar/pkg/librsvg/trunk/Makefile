@@ -1,6 +1,7 @@
 NAME = librsvg
 VERSION = 2.35.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Scalable Vector Graphics library
 define BLURB

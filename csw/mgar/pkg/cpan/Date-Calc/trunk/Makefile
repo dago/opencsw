@@ -1,6 +1,7 @@
 NAME = Date-Calc
 VERSION = 6.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = STBEY
 
 DESCRIPTION = Gregorian calendar date calculations.

@@ -1,6 +1,7 @@
 NAME = Tie-MLDBM
 VERSION = 1.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROBAU
 
 DESCRIPTION = multi-level storage and locking class

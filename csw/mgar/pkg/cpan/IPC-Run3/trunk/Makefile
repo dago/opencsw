@@ -1,6 +1,7 @@
 NAME = IPC-Run3
 VERSION = 0.043
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = Run a subprocess with input/ouput redirection

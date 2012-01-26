@@ -1,6 +1,7 @@
 NAME = nagios
 VERSION = 3.2.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Nagios network monitoring base package (no plugins)
 define BLURB

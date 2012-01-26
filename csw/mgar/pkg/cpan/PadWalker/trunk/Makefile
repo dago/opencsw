@@ -1,6 +1,7 @@
 NAME = PadWalker
 VERSION = 1.7
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROBIN
 
 DESCRIPTION = Play with other peoples' lexical variables

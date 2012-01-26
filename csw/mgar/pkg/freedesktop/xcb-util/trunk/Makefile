@@ -3,6 +3,7 @@
 NAME = xcb-util
 VERSION = 0.3.6
 CATEGORIES = x11
+GARTYPE = v2
 
 DESCRIPTION = The XCB utility library
 define BLURB

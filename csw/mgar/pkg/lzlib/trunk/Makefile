@@ -1,6 +1,7 @@
 NAME = lzlib
 VERSION = 1.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A lossless data compression library based on the LZMA algorithm
 define BLURB

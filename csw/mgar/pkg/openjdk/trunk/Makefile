@@ -2,6 +2,7 @@ NAME = openjdk
 SPKG_VERSION = 7.ea.b118.11
 VERSION = 7.b118.11
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = OpenJDK 7
 define BLURB

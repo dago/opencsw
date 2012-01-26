@@ -1,6 +1,7 @@
 NAME = rdesktop
 VERSION = 1.7.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = RDP client for Windows NT/2000/2003/XP Terminal Server
 define BLURB

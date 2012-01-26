@@ -1,6 +1,7 @@
 NAME = rbldnsd
 VERSION = 0.996b
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Small and fast DNS daemon which is especially made to serve DNSBL zones
 define BLURB

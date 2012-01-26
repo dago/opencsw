@@ -1,6 +1,7 @@
 NAME = cfitsio
 VERSION = 3.24
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library of C and Fortran subroutines for reading and writing data files in FITS
 define BLURB

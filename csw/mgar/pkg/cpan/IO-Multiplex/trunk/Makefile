@@ -1,6 +1,7 @@
 NAME = IO-Multiplex
 VERSION = 1.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BBB
 
 DESCRIPTION = Manage IO on many file handles

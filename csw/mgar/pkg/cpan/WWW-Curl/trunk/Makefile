@@ -1,6 +1,7 @@
 NAME = WWW-Curl
 VERSION = 4.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SZBALINT
 
 DESCRIPTION = Perl extension interface for libcurl

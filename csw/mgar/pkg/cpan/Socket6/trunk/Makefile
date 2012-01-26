@@ -1,6 +1,7 @@
 NAME = Socket6
 VERSION = 0.23
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = UMEMOTO
 
 DESCRIPTION = IPv6 related part of the C socket.h defines and structure manipulators

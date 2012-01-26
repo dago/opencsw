@@ -1,6 +1,7 @@
 NAME = Gtk2-GladeXML
 VERSION = 1.004
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RMCFARLA
 
 DESCRIPTION = wrappers for the Gtk2::GladeXML utilities.

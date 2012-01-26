@@ -1,6 +1,7 @@
 NAME = Lingua-Stem-Ru
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ALGDR
 
 DESCRIPTION = Porter's stemming algorithm for Russian (KOI8-R only)

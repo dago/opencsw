@@ -5,6 +5,7 @@
 NAME = guppy
 VERSION = 0.1.9
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION  = Programming environment providing object and heap memory sizing,
 DESCRIPTION += profiling and analysis
 define BLURB

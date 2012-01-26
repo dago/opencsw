@@ -2,6 +2,7 @@
 NAME = getopt
 VERSION = 1.1.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Help shell scripts parse command-line parameters
 define BLURB

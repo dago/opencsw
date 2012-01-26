@@ -1,6 +1,7 @@
 NAME = pdns
 VERSION = 2.9.22
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = An advanced DNS server with multiple backends
 define BLURB

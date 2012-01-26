@@ -1,6 +1,7 @@
 NAME = Net-UCP-IntTimeout
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NEMUX
 
 DESCRIPTION = Perl Timeout Manager for Net::UCP Module

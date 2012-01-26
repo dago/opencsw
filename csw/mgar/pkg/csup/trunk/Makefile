@@ -2,6 +2,7 @@ NAME = csup
 VERSION = snap
 PATCHLEVEL = 20060318
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A replacement for CVSup
 define BLURB

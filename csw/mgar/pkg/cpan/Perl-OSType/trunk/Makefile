@@ -1,6 +1,7 @@
 NAME = Perl-OSType
 VERSION = 1.002
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAGOLDEN
 
 DESCRIPTION = Map Perl operating system names to generic types

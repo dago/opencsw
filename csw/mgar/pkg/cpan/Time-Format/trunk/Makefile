@@ -1,6 +1,7 @@
 NAME = Time-Format
 VERSION = 1.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROODE
 
 DESCRIPTION = Easy-to-use date/time formatting

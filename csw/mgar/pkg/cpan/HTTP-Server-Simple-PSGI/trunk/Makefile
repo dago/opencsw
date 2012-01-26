@@ -1,6 +1,7 @@
 NAME = HTTP-Server-Simple-PSGI
 VERSION = 0.14
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = PSGI handler for HTTP::Server::Simple

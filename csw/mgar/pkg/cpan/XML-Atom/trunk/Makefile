@@ -1,6 +1,7 @@
 NAME = XML-Atom
 VERSION = 0.39
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Atom feed and API implementation

@@ -1,6 +1,7 @@
 NAME = Apache2-AuthzNIS
 VERSION = 0.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ITEAHAUS
 
 DESCRIPTION = mod_perl2 NIS Group Authorization module

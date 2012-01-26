@@ -5,6 +5,7 @@
 NAME = bridge
 VERSION = 0.4.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = General purpose XML library for CPython and IronPython
 define BLURB
 endef

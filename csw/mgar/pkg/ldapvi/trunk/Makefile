@@ -1,6 +1,7 @@
 NAME = ldapvi
 VERSION = 1.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Interactive LDAP client for Unix terminals
 define BLURB

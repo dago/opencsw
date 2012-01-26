@@ -1,6 +1,7 @@
 NAME = ack
 VERSION = 1.94
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = grep-like text finder, aimed at programmers

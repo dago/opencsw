@@ -1,6 +1,7 @@
 NAME = GSSAPI
 VERSION = 0.28
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AGROLMS
 
 DESCRIPTION = Providing access to the GSSAPIv2 library

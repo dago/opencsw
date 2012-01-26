@@ -1,6 +1,7 @@
 NAME = dsniff
 VERSION = 2.4b1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = a collection of tools for network auditing and penetration testing
 define BLURB

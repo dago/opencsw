@@ -2,6 +2,7 @@
 NAME = gpicview
 VERSION = 0.2.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A Simple and Fast Image Viewer for X
 define BLURB

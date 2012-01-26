@@ -1,6 +1,7 @@
 NAME = Graphics-ColorNames
 VERSION = 2.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RRWO
 
 DESCRIPTION = Defines RGB values for common color names

@@ -1,6 +1,7 @@
 NAME = PDF-API2
 VERSION = 0.73
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AREIBENS
 
 DESCRIPTION = Create and modify PDF files

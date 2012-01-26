@@ -4,6 +4,7 @@
 NAME = bind
 VERSION = 9.8.1
 CATEGORIES = net
+GARTYPE = v2
 
 # Enable these for Px-releases
 RELEASE = P1

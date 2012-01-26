@@ -1,6 +1,7 @@
 NAME = proftpd
 VERSION = 1.3.4a
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
 define BLURB

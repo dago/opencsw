@@ -9,6 +9,7 @@ UNDER_VERSION = 3_6_0
 # VERSION = bleeding_edge
 DESCRIPTION = Open source JavaScript engine from Google
 CATEGORIES = lib
+GARTYPE = v2
 define BLURB
 Google's open source JavaScript engine
 endef

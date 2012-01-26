@@ -1,6 +1,7 @@
 NAME = nsd
 VERSION = 3.2.8
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = An authoritative only non-recursive name server
 define BLURB

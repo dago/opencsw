@@ -1,6 +1,7 @@
 NAME = File-NFSLock
 VERSION = 1.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BBB
 
 DESCRIPTION = Perl module to do NFS (or not) locking

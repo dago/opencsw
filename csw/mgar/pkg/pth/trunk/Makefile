@@ -1,6 +1,7 @@
 NAME = pth
 VERSION = 2.0.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU Pth - The GNU Portable Threads
 define BLURB

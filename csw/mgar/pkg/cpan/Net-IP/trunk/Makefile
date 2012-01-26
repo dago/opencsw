@@ -1,6 +1,7 @@
 NAME = Net-IP
 VERSION = 1.25
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MANU
 
 DESCRIPTION = Perl extension for manipulating IPv4/IPv6 addresses

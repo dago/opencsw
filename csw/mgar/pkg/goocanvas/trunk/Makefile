@@ -1,6 +1,7 @@
 NAME = goocanvas
 VERSION = 0.15
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = A cairo-based canvas widget for GTK
 define BLURB

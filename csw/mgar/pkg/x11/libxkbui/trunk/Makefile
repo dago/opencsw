@@ -1,6 +1,7 @@
 NAME = libxkbui
 VERSION = 1.0.2
 CATEGORIES = x11
+GARTYPE = v2
 
 DESCRIPTION = X11 keyboard UI presentation library
 define BLURB

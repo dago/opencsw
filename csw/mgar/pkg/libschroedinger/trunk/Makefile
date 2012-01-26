@@ -1,6 +1,7 @@
 NAME = libschroedinger
 VERSION = 1.0.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A cross-platform implementation of the Dirac video compression specification
 define BLURB

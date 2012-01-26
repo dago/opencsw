@@ -1,6 +1,7 @@
 NAME = duplicity
 VERSION = 0.6.08b
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Encrypted bandwidth-efficient backup using the rsync algorithm
 define BLURB

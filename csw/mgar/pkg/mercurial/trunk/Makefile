@@ -1,6 +1,7 @@
 NAME = mercurial
 VERSION = 2.0.2
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Fast, lightweight Source Control Management system
 

@@ -1,6 +1,7 @@
 NAME = NetAddr-IP
 VERSION = 4.040
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIKER
 
 DESCRIPTION = Manages IPv4 and IPv6 addresses and subnets

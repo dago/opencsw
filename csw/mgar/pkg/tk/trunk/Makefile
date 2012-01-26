@@ -1,6 +1,7 @@
 NAME = tk
 VERSION = 8.5.8
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = GUI toolkit for tcl
 define BLURB

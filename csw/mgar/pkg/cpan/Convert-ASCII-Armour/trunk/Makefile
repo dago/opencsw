@@ -1,6 +1,7 @@
 NAME = Convert-ASCII-Armour
 VERSION = 1.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIPUL
 
 DESCRIPTION = convert binary octets into ASCII armoured messages.

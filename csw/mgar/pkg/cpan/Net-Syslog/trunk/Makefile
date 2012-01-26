@@ -1,6 +1,7 @@
 NAME = Net-Syslog
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LHOWARD
 
 DESCRIPTION = Perl extension for sending syslog messages directly to a remote syslogd

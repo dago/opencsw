@@ -1,6 +1,7 @@
 NAME = image-editor
 VERSION = 2.1.355
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Java Image Editor
 define BLURB

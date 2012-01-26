@@ -1,6 +1,7 @@
 NAME = xchat
 VERSION = 2.8.6
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GTK+ based IRC client, similar to AmIRC (Amiga).
 define BLURB

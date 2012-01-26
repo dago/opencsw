@@ -8,6 +8,7 @@ BASEVERSION = 7.6
 RELEASE = ipv6.4
 VERSION = $(BASEVERSION)-$(RELEASE)
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Socket wrappers for pre-screening tcp connections (ipv6.4 patched)
 define BLURB

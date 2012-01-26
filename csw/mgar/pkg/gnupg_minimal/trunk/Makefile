@@ -1,6 +1,7 @@
 NAME    = gnupg
 VERSION = 1.4.9
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GnuPG without keyserver access and optional algorithms, except RSA (enable-minimal configure)
 define BLURB

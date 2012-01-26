@@ -1,6 +1,7 @@
 NAME = Filesys-Notify-Simple
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Simple and dumb file system watcher

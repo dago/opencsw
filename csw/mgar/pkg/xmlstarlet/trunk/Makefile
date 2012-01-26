@@ -1,6 +1,7 @@
 NAME = xmlstarlet
 VERSION = 1.3.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = XML transformation utility
 define BLURB

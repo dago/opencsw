@@ -1,6 +1,7 @@
 NAME = MARC-XML
 VERSION = 0.92
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GMCHARLT
 
 DESCRIPTION = Work with MARC data encoded as XML

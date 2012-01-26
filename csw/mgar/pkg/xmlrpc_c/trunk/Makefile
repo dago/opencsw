@@ -1,6 +1,7 @@
 NAME = xmlrpc-c
 VERSION = 1.16.39
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A lightweight RPC library based on XML and HTTP
 define BLURB

@@ -1,6 +1,7 @@
 NAME = ExtUtils-ParseXS
 VERSION = 2.2206
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAGOLDEN
 
 DESCRIPTION = Converts Perl XS code into C code

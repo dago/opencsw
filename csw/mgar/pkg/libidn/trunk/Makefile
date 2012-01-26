@@ -1,6 +1,7 @@
 NAME = libidn
 VERSION = 1.24
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU IDN Library
 define BLURB

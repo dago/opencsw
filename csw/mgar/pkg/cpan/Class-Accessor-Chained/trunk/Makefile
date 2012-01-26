@@ -1,6 +1,7 @@
 NAME = Class-Accessor-Chained
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCLAMP
 
 DESCRIPTION = Make chained accessors

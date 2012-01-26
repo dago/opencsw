@@ -1,6 +1,7 @@
 NAME = I18N-LangTags
 VERSION = 0.35
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBURKE
 
 DESCRIPTION = functions for dealing with RFC3066-style language tags

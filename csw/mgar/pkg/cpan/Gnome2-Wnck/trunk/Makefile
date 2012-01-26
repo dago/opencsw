@@ -1,6 +1,7 @@
 NAME = Gnome2-Wnck
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MLEHMANN
 
 DESCRIPTION = interface to the Window Navigator Construction Kit

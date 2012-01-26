@@ -1,6 +1,7 @@
 NAME = IPC-Cmd
 VERSION = 0.70
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Finding and running system commands made easy

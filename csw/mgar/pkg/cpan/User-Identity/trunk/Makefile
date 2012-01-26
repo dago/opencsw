@@ -1,6 +1,7 @@
 NAME = User-Identity
 VERSION = 0.93
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKOV
 
 DESCRIPTION = Maintains info about a physical person

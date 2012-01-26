@@ -3,6 +3,7 @@
 NAME = mcrypt
 VERSION = 2.5.8
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GPL replacement for Unix crypt that supports a wide range of algorithms and modes
 define BLURB

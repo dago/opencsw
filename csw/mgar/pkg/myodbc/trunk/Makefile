@@ -7,6 +7,7 @@ VERSION = 3.51.27
 PATCHLEVEL = r695
 DL_NAME = mysql-connector-odbc
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = MySQL Connector/ODBC 3.51
 define BLURB
   This provides database connectivity for mysql, best used together with unixODBC

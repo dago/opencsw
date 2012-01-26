@@ -1,6 +1,7 @@
 NAME = libgnomeui
 VERSION = 2.24.3
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = The main GNOME 2 UI library
 define BLURB

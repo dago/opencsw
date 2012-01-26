@@ -1,6 +1,7 @@
 NAME = Parse-Syslog
 VERSION = 1.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DSCHWEI
 
 DESCRIPTION = parse Unix syslog files

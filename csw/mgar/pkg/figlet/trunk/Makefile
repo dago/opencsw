@@ -2,6 +2,7 @@ NAME = figlet
 VERSION = 2.2.2
 RELEASE = 222
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = FIGlet is a program for making large letters out of ordinary text
 define BLURB

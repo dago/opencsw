@@ -15,6 +15,7 @@
 NAME = vsftpd
 VERSION = 2.3.4
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = A very secure and fast FTP server.
 define BLURB

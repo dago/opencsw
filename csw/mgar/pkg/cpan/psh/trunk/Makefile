@@ -1,6 +1,7 @@
 NAME = psh
 VERSION = 1.8
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GREGOR
 
 DESCRIPTION = simple interactive Perl shell

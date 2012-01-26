@@ -11,6 +11,7 @@
 NAME = yad
 VERSION = 0.10.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Display GTK dialog boxes from shell scripts (zenity fork)
 define BLURB

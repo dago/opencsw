@@ -1,6 +1,7 @@
 NAME = aide
 VERSION = 0.13.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Advanced Intrusion Detection Environment
 define BLURB

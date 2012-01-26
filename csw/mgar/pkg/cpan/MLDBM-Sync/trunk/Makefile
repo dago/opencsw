@@ -1,6 +1,7 @@
 NAME = MLDBM-Sync
 VERSION = 0.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHAMAS
 
 DESCRIPTION = safe concurrent access to MLDBM databases

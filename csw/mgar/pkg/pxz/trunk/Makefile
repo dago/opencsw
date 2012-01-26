@@ -1,6 +1,7 @@
 NAME = pxz
 VERSION = 4.999.9beta.20091201git
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = pxz is a lossless data compressor based on the LZMA algorithm.
 define BLURB

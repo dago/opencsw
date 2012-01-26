@@ -15,6 +15,7 @@
 NAME = bash
 VERSION = 4.2.10
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = A sh-compatible command language interpreter
 define BLURB

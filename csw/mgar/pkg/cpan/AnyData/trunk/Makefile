@@ -1,6 +1,7 @@
 NAME = AnyData
 VERSION = 0.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JZUCKER
 
 DESCRIPTION = easy access to data in many formats

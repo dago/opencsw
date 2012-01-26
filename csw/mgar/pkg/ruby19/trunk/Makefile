@@ -2,6 +2,7 @@ NAME = ruby19
 VERSION = 1.9.2
 PATCHLEVEL = p290
 CATEGORIES = lang
+GARTYPE = v2
 
 # Working with Jens Deppe, we've determined that the two failing tests
 # in 1.9.1p376 are bad tests (as documented here[1] and here[2]).

@@ -2,6 +2,7 @@ NAME = fping
 VERSION = 2.4
 REV = b2_to
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A ping like program accepting any number of hosts
 define BLURB

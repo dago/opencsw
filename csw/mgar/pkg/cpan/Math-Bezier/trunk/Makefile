@@ -1,6 +1,7 @@
 NAME = Math-Bezier
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABW
 
 DESCRIPTION = solution of Bezier curves

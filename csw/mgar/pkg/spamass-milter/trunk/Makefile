@@ -1,6 +1,7 @@
 NAME = spamass-milter
 VERSION = 0.3.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Plugin for the Sendmail Milter library for SpamAssassin
 define BLURB

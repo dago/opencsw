@@ -1,6 +1,7 @@
 NAME = activeresource
 VERSION = 2.3.8
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Wraps web resources in model classes
 define BLURB

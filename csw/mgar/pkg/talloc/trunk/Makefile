@@ -2,6 +2,7 @@
 NAME = talloc
 VERSION = 2.0.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A hierarchical, reference counted memory pool system
 define BLURB

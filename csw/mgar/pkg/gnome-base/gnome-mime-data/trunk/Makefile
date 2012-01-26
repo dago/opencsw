@@ -1,6 +1,7 @@
 NAME = gnome-mime-data
 VERSION = 2.18.0
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Contains the base set of file types and applications for GNOME-2
 define BLURB

@@ -1,6 +1,7 @@
 NAME = chrpath
 VERSION = 0.13
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A program to fix/change runpaths
 define BLURB

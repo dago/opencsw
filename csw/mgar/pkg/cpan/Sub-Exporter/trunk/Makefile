@@ -1,6 +1,7 @@
 NAME = Sub-Exporter
 VERSION = 0.982
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = A sophisticated exporter for custom-built routines

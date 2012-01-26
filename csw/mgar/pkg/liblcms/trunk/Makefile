@@ -4,6 +4,7 @@ NAME = lcms
 VERSION = 1.19
 GARSUBREV = 
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = The little color management system and tools
 define BLURB

@@ -2,6 +2,7 @@
 NAME = gdal
 VERSION = 1.8.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Geospatial Data Abstraction Library
 define BLURB

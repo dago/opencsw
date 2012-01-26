@@ -1,6 +1,7 @@
 NAME = namebench
 VERSION = 1.3.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = DNS benchmark utility
 define BLURB

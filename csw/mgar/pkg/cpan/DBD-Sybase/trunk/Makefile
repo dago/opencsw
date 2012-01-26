@@ -1,6 +1,7 @@
 NAME = DBD-Sybase
 VERSION = 1.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MEWP
 
 DESCRIPTION = Sybase database driver for the DBI module

@@ -1,6 +1,7 @@
 NAME = CGP-CLI
 VERSION = 2.7.5
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JBUHACOFF
 
 DESCRIPTION = CommunigatePro Command Line Interface perl module

@@ -1,6 +1,7 @@
 NAME = Crypt-RC5
 VERSION = 2.00
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SIFUKURT
 
 DESCRIPTION = Perl implementation of the RC5 encryption algorithm

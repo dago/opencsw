@@ -3,6 +3,7 @@
 NAME = poppler
 VERSION = 0.12.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Poppler is a PDF rendering library based on the xpdf-3.0 code base
 define BLURB

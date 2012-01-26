@@ -5,6 +5,7 @@
 NAME = shunit2
 VERSION = 2.1.5
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = a xUnit unit test framework for Bourne based shell scripts
 define BLURB
 

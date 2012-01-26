@@ -1,6 +1,7 @@
 NAME = autoconf
 VERSION = 2.68
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = GNU auto-configuration tool
 define BLURB

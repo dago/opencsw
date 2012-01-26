@@ -1,6 +1,7 @@
 NAME = m4
 VERSION = 1.4.16
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU m4 Unix macro processor
 define BLURB

@@ -1,6 +1,7 @@
 NAME = XML-Stream
 VERSION = 1.23
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAPATRICK
 
 DESCRIPTION = Creates an XML Stream connection and parses return data

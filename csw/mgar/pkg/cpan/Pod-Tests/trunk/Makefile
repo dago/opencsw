@@ -1,6 +1,7 @@
 NAME = Pod-Tests
 VERSION = 1.19
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Extracts embedded tests and code examples from POD

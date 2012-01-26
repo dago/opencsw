@@ -1,6 +1,7 @@
 NAME = Exception-Class-DBI
 VERSION = 0.95
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DWHEELER
 
 DESCRIPTION = DBI exception objects

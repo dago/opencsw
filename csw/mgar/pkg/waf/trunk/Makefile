@@ -7,6 +7,7 @@
 NAME = waf
 VERSION = 1.6.3
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python-based build automation tool
 define BLURB

@@ -1,6 +1,7 @@
 NAME = ganglia
 VERSION = 3.2.0
 CATEGORIES = utils
+GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 

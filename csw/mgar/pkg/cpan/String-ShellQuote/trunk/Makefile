@@ -1,6 +1,7 @@
 NAME = String-ShellQuote
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROSCH
 
 DESCRIPTION = quote strings for passing through the shell

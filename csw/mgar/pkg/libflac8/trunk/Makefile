@@ -1,6 +1,7 @@
 NAME = libflac
 VERSION = 1.2.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Free lossless audio codec
 define BLURB

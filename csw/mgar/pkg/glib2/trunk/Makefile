@@ -8,6 +8,7 @@
 NAME = glib
 VERSION = 2.28.8
 CATEGORIES = lib
+GARTYPE = v2
 GARCOMPILER = SOS12U1
 
 DESCRIPTION = The GLib library of C routines.

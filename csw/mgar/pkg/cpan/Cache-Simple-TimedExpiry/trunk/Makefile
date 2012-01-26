@@ -1,6 +1,7 @@
 NAME = Cache-Simple-TimedExpiry
 VERSION = 0.27
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JESSE
 
 DESCRIPTION = A lightweight cache with timed expiration

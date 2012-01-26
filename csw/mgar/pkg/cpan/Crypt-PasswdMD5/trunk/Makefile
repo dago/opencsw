@@ -1,6 +1,7 @@
 NAME = Crypt-PasswdMD5
 VERSION = 1.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LUISMUNOZ
 
 DESCRIPTION = Provides interoperable MD5-based crypt() functions

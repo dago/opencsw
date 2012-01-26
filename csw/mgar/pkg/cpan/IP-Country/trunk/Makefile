@@ -1,6 +1,7 @@
 NAME = IP-Country
 VERSION = 2.27
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NWETTERS
 
 DESCRIPTION = Fast lookup of country codes from IP addresses

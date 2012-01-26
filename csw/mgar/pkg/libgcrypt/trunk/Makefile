@@ -1,6 +1,7 @@
 NAME = libgcrypt
 VERSION = 1.5.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU libgcrypt
 define BLURB

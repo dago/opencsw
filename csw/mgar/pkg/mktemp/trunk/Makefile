@@ -1,6 +1,7 @@
 NAME = mktemp
 VERSION = 1.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A small program to allow safe temporary file creation from shell scripts
 define BLURB

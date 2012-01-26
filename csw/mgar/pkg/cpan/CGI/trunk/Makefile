@@ -1,6 +1,7 @@
 NAME = CGI.pm
 VERSION = 3.27
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LDS
 
 DESCRIPTION = simple common gateway interface class

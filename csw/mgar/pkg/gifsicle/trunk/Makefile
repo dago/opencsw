@@ -2,6 +2,7 @@
 NAME = gifsicle
 VERSION = 1.63
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Tool for creating, editing, and getting information about GIF images
 define BLURB

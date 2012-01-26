@@ -1,6 +1,7 @@
 NAME = opendbx
 VERSION = 1.4.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A C library for accessing databases with a single API
 define BLURB

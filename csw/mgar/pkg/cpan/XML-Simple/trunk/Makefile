@@ -1,6 +1,7 @@
 NAME = XML-Simple
 VERSION = 2.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GRANTM
 
 DESCRIPTION = easy API for maintaining XML

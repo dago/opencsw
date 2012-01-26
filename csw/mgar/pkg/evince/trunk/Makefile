@@ -6,6 +6,7 @@ NAME = evince
 GNOME_VERSION = 2.24
 VERSION = $(GNOME_VERSION).2
 CATEGORIES = gnome
+GARTYPE = v2
 DESCRIPTION = Document viewer for multiple document formats
 define BLURB
 endef

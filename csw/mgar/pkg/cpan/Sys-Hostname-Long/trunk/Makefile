@@ -1,6 +1,7 @@
 NAME = Sys-Hostname-Long
 VERSION = 1.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SCOTT
 
 DESCRIPTION = Try every conceivable way to get full hostname

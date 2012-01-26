@@ -1,6 +1,7 @@
 NAME = munin
 VERSION = 1.4.6
 CATEGORIES = apps
+GARTYPE = v2
 
 SPKG_DESC_CSWmunin-master = Master component of the graphical network and system monitoring munin
 SPKG_DESC_CSWmunin-node = Node component of the graphical network and system monitoring munin

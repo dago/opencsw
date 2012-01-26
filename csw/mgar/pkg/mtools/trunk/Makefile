@@ -1,6 +1,7 @@
 NAME = mtools
 VERSION = 4.0.17
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Read/write/list/format DOS disks under Unix
 define BLURB

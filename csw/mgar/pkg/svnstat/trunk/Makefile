@@ -1,6 +1,7 @@
 NAME = svnstat
 VERSION = 1.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Statistic reports and report graphs similar to StatCvs from Subversion
 define BLURB

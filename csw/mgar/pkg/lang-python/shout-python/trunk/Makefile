@@ -5,6 +5,7 @@
 NAME = shout-python
 VERSION = 0.2.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python bindings for libshout 2
 

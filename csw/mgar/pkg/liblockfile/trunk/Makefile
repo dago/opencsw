@@ -1,6 +1,7 @@
 NAME = liblockfile
 VERSION = 1.08
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Liblockfile is a shared library with NFS-safe locking functions.
 define BLURB

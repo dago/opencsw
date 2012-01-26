@@ -1,6 +1,7 @@
 NAME = xsel
 VERSION = 1.2.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Command-line tool to access X clipboard and selection buffers
 define BLURB

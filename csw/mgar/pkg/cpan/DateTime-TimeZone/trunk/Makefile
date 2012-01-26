@@ -1,6 +1,7 @@
 NAME = DateTime-TimeZone
 VERSION = 1.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Time zone object base class and factory

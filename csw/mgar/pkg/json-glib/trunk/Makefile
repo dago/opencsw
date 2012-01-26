@@ -1,6 +1,7 @@
 NAME = json-glib
 VERSION = 0.9.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Library providing serialization and deserialization support for the JSON format
 define BLURB

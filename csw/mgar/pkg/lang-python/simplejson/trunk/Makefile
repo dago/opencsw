@@ -5,6 +5,7 @@
 NAME = simplejson
 VERSION = 2.2.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = JSON encoder and decoder
 define BLURB

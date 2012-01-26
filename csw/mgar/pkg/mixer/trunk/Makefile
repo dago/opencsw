@@ -5,6 +5,7 @@
 NAME = mixer
 VERSION = 1.3
 CATEGORIES = apps
+GARTYPE = v2
 DESCRIPTION = A command line utility to set audio volume
 define BLURB
   <please fill in>

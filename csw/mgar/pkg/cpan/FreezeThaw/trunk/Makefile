@@ -1,6 +1,7 @@
 NAME = FreezeThaw
 VERSION = 0.5001
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ILYAZ
 
 DESCRIPTION = Converting Perl structures to strings and back.

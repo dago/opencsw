@@ -1,6 +1,7 @@
 NAME = hoe
 VERSION = 2.6.1
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A rake/rubygems helper for project Rakefiles
 define BLURB

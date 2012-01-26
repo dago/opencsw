@@ -3,6 +3,7 @@ VERSION = 2.1.3rc5
 FILEVERSION = 2.1.3-rc5
 DISTVERSION = 2.1.3~rc5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library that uses Freetype2 to simplify rendering fonts in OpenGL applications
 define BLURB

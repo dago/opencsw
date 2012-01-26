@@ -1,6 +1,7 @@
 NAME = webkit
 VERSION = 1.1.15.4
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Portable web rendering engine
 define BLURB

@@ -1,6 +1,7 @@
 NAME = SDL_mixer
 VERSION = 1.2.11
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Multi-channel audio mixer library
 define BLURB

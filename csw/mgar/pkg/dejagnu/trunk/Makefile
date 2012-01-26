@@ -1,6 +1,7 @@
 NAME = dejagnu
 VERSION = 1.5
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = DejaGnu is a framework for testing other programs
 define BLURB

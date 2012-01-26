@@ -5,6 +5,7 @@
 NAME = curl
 VERSION = 7.23.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Command line tool and library for client-side URL transfers
 define BLURB

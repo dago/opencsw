@@ -1,6 +1,7 @@
 NAME = Tree-DAG_Node
 VERSION = 1.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = COGENT
 
 DESCRIPTION = Class for representing nodes in a tree

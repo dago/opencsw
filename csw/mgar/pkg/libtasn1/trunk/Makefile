@@ -1,6 +1,7 @@
 NAME = libtasn1
 VERSION = 2.11
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU ASN1 Library
 define BLURB

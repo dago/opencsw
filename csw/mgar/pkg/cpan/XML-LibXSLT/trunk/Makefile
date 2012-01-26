@@ -1,6 +1,7 @@
 NAME = XML-LibXSLT
 VERSION = 1.70
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PAJAS
 
 DESCRIPTION = interface to the gnome libxslt library

@@ -1,6 +1,7 @@
 NAME = Class-Loader
 VERSION = 2.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIPUL
 
 DESCRIPTION = load modules and create objects on demand.

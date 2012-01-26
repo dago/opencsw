@@ -1,6 +1,7 @@
 NAME = Gtk2-Ex-PodViewer
 VERSION = 0.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GBROWN
 
 DESCRIPTION = a Gtk2 widget for displaying Plain old Documentation (POD).

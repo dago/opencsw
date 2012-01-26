@@ -5,6 +5,7 @@
 NAME = p4
 VERSION = 09.1
 CATEGORIES = utils
+GARTYPE = v2
 DESCRIPTION = Perforce command-line client
 define BLURB
   The purpose of this build to be able to easily package it up for in-house

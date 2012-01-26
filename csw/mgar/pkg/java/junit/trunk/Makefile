@@ -1,6 +1,7 @@
 NAME = junit
 VERSION = 4.5
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = JUnit regression testing
 define BLURB

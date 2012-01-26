@@ -1,6 +1,7 @@
 NAME = GDGraph
 VERSION = 1.44
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BWARFIELD
 
 DESCRIPTION = Graph plotting module

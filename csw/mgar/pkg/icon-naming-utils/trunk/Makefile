@@ -5,6 +5,7 @@
 NAME = icon-naming-utils
 VERSION = 0.8.90
 CATEGORIES = gnome
+GARTYPE = v2
 DESCRIPTION = Icon naming utils
 define BLURB
 endef

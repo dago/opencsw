@@ -1,6 +1,7 @@
 NAME = botnet
 VERSION = 0.8
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Botnet detector plugin for SpamAssassin
 define BLURB

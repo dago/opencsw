@@ -1,6 +1,7 @@
 NAME = Readonly
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROODE
 
 DESCRIPTION = Readonly - Facility for creating read-only scalars, arrays, hashes.

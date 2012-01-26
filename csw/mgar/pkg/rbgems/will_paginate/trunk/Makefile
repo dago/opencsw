@@ -1,6 +1,7 @@
 NAME = will_paginate
 VERSION = 2.3.14
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = An API for ActiveRecord pagination
 define BLURB

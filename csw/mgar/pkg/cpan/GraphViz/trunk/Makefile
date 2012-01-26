@@ -1,6 +1,7 @@
 NAME = GraphViz
 VERSION = 2.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LBROCARD
 
 DESCRIPTION = interface to the GraphViz graphing tool

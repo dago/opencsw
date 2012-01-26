@@ -1,6 +1,7 @@
 NAME = Devel-Symdump
 VERSION = 2.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ANDK
 
 DESCRIPTION = Dump symbol names or the symbol table

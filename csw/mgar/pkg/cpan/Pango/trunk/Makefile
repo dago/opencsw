@@ -1,6 +1,7 @@
 NAME = Pango
 VERSION = 1.221
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TSCH
 
 DESCRIPTION = Layout and render international text

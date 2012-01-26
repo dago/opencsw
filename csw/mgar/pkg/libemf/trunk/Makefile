@@ -2,6 +2,7 @@
 NAME = libemf
 VERSION = 1.0.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library implementation of ECMA-234 API for the generation of enhanced metafiles
 define BLURB

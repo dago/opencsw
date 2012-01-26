@@ -1,6 +1,7 @@
 NAME = Term-ReadLine-Gnu
 VERSION = 1.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = HAYASHI
 
 DESCRIPTION = Perl extension for the GNU Readline/History Library

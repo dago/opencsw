@@ -1,6 +1,7 @@
 NAME = rubygems
 VERSION = 1.7.2
 CATEGORIES = xtra
+GARTYPE = v2
 
 DESCRIPTION = Ruby package manager
 define BLURB

@@ -2,6 +2,7 @@ NAME = VCP
 DISTVERSION = 0.9-20050110
 VERSION = $(subst -,.,$(DISTVERSION))
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUTRIJUS
 
 DESCRIPTION = svk destination driver

@@ -2,6 +2,7 @@ NAME = jdk6
 SPKG_VERSION = 1.6.0_22
 VERSION = 6u22
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = Java Development Kit 6
 define BLURB

@@ -1,6 +1,7 @@
 NAME = di
 VERSION = 4.31
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Disk information utility
 define BLURB

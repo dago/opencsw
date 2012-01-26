@@ -1,6 +1,7 @@
 NAME = liboggz
 VERSION = 1.1.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A commandline tool for manipulating Ogg files
 define BLURB

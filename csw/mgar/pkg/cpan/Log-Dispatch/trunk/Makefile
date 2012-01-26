@@ -1,6 +1,7 @@
 NAME = Log-Dispatch
 VERSION = 2.26
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Dispatch messages to noe or more outputs

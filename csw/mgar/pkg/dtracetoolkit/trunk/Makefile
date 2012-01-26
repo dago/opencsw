@@ -1,6 +1,7 @@
 NAME = DTraceToolkit
 VERSION = 0.99
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A collection of dtrace scripts developed by the DTrace community
 define BLURB

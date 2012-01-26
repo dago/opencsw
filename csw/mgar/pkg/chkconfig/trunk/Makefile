@@ -5,6 +5,7 @@
 NAME = chkconfig
 VERSION = 1.3.30c
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = RedHat alternatives engine with CSW customizations
 define BLURB

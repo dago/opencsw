@@ -1,6 +1,7 @@
 NAME = rspec
 VERSION = 2.4.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Meta-gem that depends on the other rspec gems
 

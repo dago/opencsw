@@ -1,6 +1,7 @@
 NAME = Pod-Escapes
 VERSION = 1.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBURKE
 
 DESCRIPTION = For resolving Pod E sequences

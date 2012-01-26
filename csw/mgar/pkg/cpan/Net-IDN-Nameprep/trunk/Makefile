@@ -1,6 +1,7 @@
 NAME = Net-IDN-Nameprep
 VERSION = 1.100
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CFAERBER
 
 DESCRIPTION = A Stringprep Profile for Internationalized Domain Names (RFC 3491)

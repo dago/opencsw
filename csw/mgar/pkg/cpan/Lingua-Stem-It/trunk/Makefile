@@ -1,6 +1,7 @@
 NAME = Lingua-Stem-It
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ACALPINI
 
 DESCRIPTION = Porter's stemming algorithm for Italian

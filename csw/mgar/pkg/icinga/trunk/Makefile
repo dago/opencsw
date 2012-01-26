@@ -1,6 +1,7 @@
 NAME = icinga
 VERSION = 0.8.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = icinga network monitoring base package (no plugins)
 define BLURB

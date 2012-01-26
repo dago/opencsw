@@ -1,6 +1,7 @@
 NAME = Convert-UUlib
 VERSION = 1.33
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MLEHMANN
 
 DESCRIPTION = Perl interface to the uulib library

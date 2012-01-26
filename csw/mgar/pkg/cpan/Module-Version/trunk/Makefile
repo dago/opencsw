@@ -1,6 +1,7 @@
 NAME = Module-Version
 VERSION = 0.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = XSAWYERX
 
 DESCRIPTION = Get module versions

@@ -1,6 +1,7 @@
 NAME = Image-Info
 VERSION = 1.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = extract meta information from image files

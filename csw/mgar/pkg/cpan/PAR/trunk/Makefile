@@ -1,6 +1,7 @@
 NAME = PAR
 VERSION = 0.90
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUTRIJUS
 
 DESCRIPTION = Perl ARchive toolkit

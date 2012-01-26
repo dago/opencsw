@@ -1,6 +1,7 @@
 NAME = Scope-Guard
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHOCOLATE
 
 DESCRIPTION = lexically scoped resource management

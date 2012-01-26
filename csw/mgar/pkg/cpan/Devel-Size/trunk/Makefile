@@ -1,6 +1,7 @@
 NAME = Devel-Size
 VERSION = 0.71
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TELS
 
 DESCRIPTION = Extension for finding the memory usage of Perl variables

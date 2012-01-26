@@ -1,6 +1,7 @@
 NAME = rdiff-backup
 VERSION = 1.2.8
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Remote incremental backup
 define BLURB

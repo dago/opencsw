@@ -1,6 +1,7 @@
 NAME = Image-Size
 VERSION = 3.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJRAY
 
 DESCRIPTION = read the dimensions of an image in several popular formats

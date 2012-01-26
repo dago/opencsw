@@ -1,6 +1,7 @@
 NAME = MP3-Tag
 VERSION = 1.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ILYAZ
 
 DESCRIPTION = Perl module to read/write ID3v1, ID3v1.1 and ID3v2.3 tags of mp3-files

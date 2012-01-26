@@ -1,6 +1,7 @@
 NAME = libunique
 VERSION = 1.1.6
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Library for writing single instance application
 define BLURB

@@ -1,6 +1,7 @@
 NAME = ncftp
 VERSION = 3.2.5
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Array-Compare
 VERSION = 1.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAVECROSS
 
 DESCRIPTION = extension for comparing arrays.

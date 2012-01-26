@@ -1,6 +1,7 @@
 NAME = libbonobo
 VERSION = 2.32.1
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GNOME component and compound document system
 define BLURB

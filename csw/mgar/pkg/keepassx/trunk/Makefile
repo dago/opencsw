@@ -1,6 +1,7 @@
 NAME = keepassx
 VERSION = 0.4.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Cross platform password manager
 define BLURB

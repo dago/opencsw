@@ -5,6 +5,7 @@
 NAME = libsamplerate
 VERSION = 0.1.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Secret Rabbit Code (aka libsamplerate) is a Sample Rate Converter for audio
 define BLURB

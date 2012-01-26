@@ -7,6 +7,7 @@ VERSION = 1.6.3
 
 # http://fastdl.mongodb.org/src/mongodb-src-r1.6.3.tar.gz
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = A scalable, high-performance, open source, document-oriented database
 define BLURB
 endef

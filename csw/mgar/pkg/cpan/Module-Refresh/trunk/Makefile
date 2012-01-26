@@ -1,6 +1,7 @@
 NAME = Module-Refresh
 VERSION = 0.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JESSE
 
 DESCRIPTION = Refresh %INC files when updated on disk

@@ -2,6 +2,7 @@ NAME = bzr
 VERSION = 1.17
 #PATCHREV = .1
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Bazaar is a distributed version control system.
 define BLURB

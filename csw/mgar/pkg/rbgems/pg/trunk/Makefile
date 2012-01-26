@@ -1,6 +1,7 @@
 NAME = pg
 VERSION = 0.9.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Access a PostgreSQL database from Ruby
 define BLURB

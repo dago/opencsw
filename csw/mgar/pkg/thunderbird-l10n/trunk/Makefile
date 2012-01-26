@@ -1,6 +1,7 @@
 NAME = thunderbird-l10n
 VERSION = 2.0.0.23
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Thunderbird language pack :
 define BLURB

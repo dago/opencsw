@@ -1,6 +1,7 @@
 NAME = gsm
 VERSION = 1.0.13
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GSM 06.10 lossy speech compression
 define BLURB

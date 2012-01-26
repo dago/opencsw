@@ -5,6 +5,7 @@
 NAME    = gnupg
 VERSION = 2.0.18
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP
 define BLURB

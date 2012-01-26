@@ -7,6 +7,7 @@
 NAME = libmp4v2
 VERSION = 1.5.0.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A free library to read and manipulate the mp4 container format
 define BLURB

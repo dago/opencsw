@@ -1,6 +1,7 @@
 NAME = Sub-Override
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = OVID
 
 DESCRIPTION = Perl extension for easily overriding subroutines

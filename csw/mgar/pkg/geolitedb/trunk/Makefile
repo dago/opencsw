@@ -1,6 +1,7 @@
 NAME = geolitedb
 VERSION = 110201
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Geolite country database
 

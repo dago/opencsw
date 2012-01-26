@@ -1,6 +1,7 @@
 NAME = pakchois
 VERSION = 0.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Just another PKCS \#11 wrapper library
 define BLURB

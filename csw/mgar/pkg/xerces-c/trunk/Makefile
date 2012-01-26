@@ -1,6 +1,7 @@
 NAME = xerces-c
 VERSION = 3.1.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Xerces XML parser for C++
 define BLURB

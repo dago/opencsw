@@ -1,6 +1,7 @@
 NAME = cache-money
 VERSION = 0.2.5
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Write-through and Read-through Cacheing for ActiveRecord
 

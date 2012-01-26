@@ -1,6 +1,7 @@
 NAME = CGI-Session
 VERSION = 4.43
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKSTOS
 
 DESCRIPTION = Persistent session data in CGI applications

@@ -2,6 +2,7 @@
 NAME = mako
 VERSION = 0.4.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Fast and lightweight templating for Python
 define BLURB

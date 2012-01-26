@@ -1,6 +1,7 @@
 NAME = Test-ClassAPI
 VERSION = 1.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Provides basic first-pass API testing for large class trees

@@ -1,6 +1,7 @@
 NAME = jpeg
 VERSION = 7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = JPEG library and tools by the Independent JPEG Group
 define BLURB

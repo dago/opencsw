@@ -1,6 +1,7 @@
 NAME = npadmin
 VERSION = 0.14
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION =  Command line SNMP based network adminstration tool for printers
 define BLURB

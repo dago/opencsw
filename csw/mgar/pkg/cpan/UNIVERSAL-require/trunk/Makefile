@@ -1,6 +1,7 @@
 NAME = UNIVERSAL-require
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHWERN
 
 DESCRIPTION = require modules from a variable

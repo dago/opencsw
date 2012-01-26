@@ -1,6 +1,7 @@
 NAME = stalonetray
 VERSION = 0.7.6
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Stand-alone freedesktop.org and KDE system tray
 define BLURB

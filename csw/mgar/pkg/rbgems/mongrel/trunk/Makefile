@@ -1,6 +1,7 @@
 NAME = mongrel
 VERSION = 1.1.5
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A small fast HTTP library and server that runs Rails, Camping, Nitro and Iowa apps
 define BLURB

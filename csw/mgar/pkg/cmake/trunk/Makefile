@@ -3,6 +3,7 @@
 NAME = cmake
 VERSION = 2.8.7
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Cross-platform make
 define BLURB

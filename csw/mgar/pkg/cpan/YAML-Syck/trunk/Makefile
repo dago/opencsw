@@ -1,6 +1,7 @@
 NAME = YAML-Syck
 VERSION = 1.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUDREYT
 
 DESCRIPTION = Fast, lightweight YAML loader and dumper

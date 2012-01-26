@@ -1,6 +1,7 @@
 NAME = OpenGL
 VERSION = 0.62
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHM
 
 DESCRIPTION = OpenGL Perl Bindings

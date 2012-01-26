@@ -8,6 +8,7 @@
 NAME = guile
 VERSION = 1.8.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU extensibility library
 define BLURB

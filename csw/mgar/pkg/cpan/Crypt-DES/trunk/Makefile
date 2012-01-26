@@ -1,6 +1,7 @@
 NAME = Crypt-DES
 VERSION = 2.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DPARIS
 
 DESCRIPTION = Perl DES encryption module

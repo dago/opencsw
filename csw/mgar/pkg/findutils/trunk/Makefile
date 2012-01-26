@@ -1,6 +1,7 @@
 NAME = findutils
 VERSION = 4.4.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A set of utilities for searching a filesystem
 define BLURB

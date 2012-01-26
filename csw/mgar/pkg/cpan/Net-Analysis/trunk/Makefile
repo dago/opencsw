@@ -1,6 +1,7 @@
 NAME = Net-Analysis
 VERSION = 0.40
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = WORRALL
 
 DESCRIPTION = Modules for analysing network traffic

@@ -1,6 +1,7 @@
 NAME = HTML-CalendarMonth
 VERSION = 1.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSISK
 
 DESCRIPTION = extension for generating and manipulating HTML calendar

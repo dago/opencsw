@@ -1,6 +1,7 @@
 NAME = pwgen
 VERSION = 2.06
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = pwgen generates passwords which can be easily memorized by a human
 define BLURB

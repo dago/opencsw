@@ -2,6 +2,7 @@
 NAME = ddrescue
 VERSION = 1.14
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A data recovery tool
 define BLURB

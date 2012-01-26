@@ -1,6 +1,7 @@
 NAME = alarm-clock
 VERSION = 1.4.1
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = A simple interface for reminding about birthdays, appointments and important dates
 define BLURB

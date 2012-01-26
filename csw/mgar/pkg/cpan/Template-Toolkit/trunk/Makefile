@@ -1,6 +1,7 @@
 NAME = Template-Toolkit
 VERSION = 2.22
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABW
 
 DESCRIPTION = Template Toolkit 2

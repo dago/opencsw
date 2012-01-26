@@ -1,6 +1,7 @@
 NAME = babl
 VERSION = 0.1.6
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = A dynamic, any to any, pixel format translation library
 define BLURB

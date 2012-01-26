@@ -1,6 +1,7 @@
 NAME = Tie-EncryptedHash
 VERSION = 1.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIPUL
 
 DESCRIPTION = hashes (and objects based on hashes) with encrypting fields.

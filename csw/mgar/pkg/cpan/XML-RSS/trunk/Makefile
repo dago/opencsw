@@ -1,6 +1,7 @@
 NAME = XML-RSS
 VERSION = 1.47
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SHLOMIF
 
 DESCRIPTION = Creates and updates RSS files

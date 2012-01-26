@@ -1,6 +1,7 @@
 NAME = wesnoth
 VERSION = 1.6.5
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A free turn-based strategy game with a fanasy theme
 define BLURB

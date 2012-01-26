@@ -1,6 +1,7 @@
 NAME = libgpod
 VERSION = 0.7.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Interface to Apple iPods
 define BLURB

@@ -9,6 +9,7 @@
 NAME = stunnel
 VERSION = 4.44
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Universal SSL Wrapper
 define BLURB

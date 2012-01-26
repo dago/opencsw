@@ -1,6 +1,7 @@
 NAME = prawn
 VERSION = 0.8.4
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A fast and nimble PDF generator for Ruby
 

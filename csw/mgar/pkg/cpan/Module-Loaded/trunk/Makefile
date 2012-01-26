@@ -1,6 +1,7 @@
 NAME = Module-Loaded
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Mark modules as loaded or unloaded

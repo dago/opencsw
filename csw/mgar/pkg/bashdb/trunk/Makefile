@@ -2,6 +2,7 @@ NAME = bashdb
 VERSION = 4.0-0.4
 # PATCHLEVEL = 75eadce
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Bash Debugger
 define BLURB

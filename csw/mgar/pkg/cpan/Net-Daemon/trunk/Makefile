@@ -1,6 +1,7 @@
 NAME = Net-Daemon
 VERSION = 0.43
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MNOONING
 
 DESCRIPTION = Perl extension for portable daemons

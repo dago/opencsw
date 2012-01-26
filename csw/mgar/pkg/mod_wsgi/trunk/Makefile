@@ -3,6 +3,7 @@
 NAME = mod_wsgi
 VERSION = 3.3
 CATEGORIES = lib
+GARTYPE = v2
 
 
 DESCRIPTION = Apache/Python WSGI adapter module.

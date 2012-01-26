@@ -1,6 +1,7 @@
 NAME = File-Remove
 VERSION = 1.42
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Remove files and directories

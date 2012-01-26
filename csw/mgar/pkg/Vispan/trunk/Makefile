@@ -1,6 +1,7 @@
 NAME = Vispan
 VERSION = 3.1.1
 CATEGORIES = cpan
+GARTYPE = v2
 
 DESCRIPTION = VIrus and SPam ANalyser
 define BLURB

@@ -1,6 +1,7 @@
 NAME      = pycairo
 VERSION   = 1.8.10
 CATEGORIES   = lib
+GARTYPE = v2
 
 DESCRIPTION  = Python binding for Cairo library
 define BLURB

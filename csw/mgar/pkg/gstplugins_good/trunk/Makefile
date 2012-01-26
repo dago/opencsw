@@ -1,6 +1,7 @@
 NAME = gst-plugins-good
 VERSION = 0.10.18
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GStreamer plugins (Good)
 define BLURB

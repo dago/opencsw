@@ -5,6 +5,7 @@
 NAME = atomixlib
 VERSION = 0.6.1a
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A module to generate Atom 1.0 documents through a simple API
 define BLURB
 endef

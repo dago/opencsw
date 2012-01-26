@@ -1,6 +1,7 @@
 NAME = String-CRC32
 VERSION = 1.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SOENKE
 
 DESCRIPTION = Interface for cyclic redundency check generation

@@ -1,6 +1,7 @@
 NAME = Data-Buffer
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = read/write buffer class

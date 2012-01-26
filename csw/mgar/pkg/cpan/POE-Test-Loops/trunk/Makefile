@@ -1,6 +1,7 @@
 NAME = POE-Test-Loops
 VERSION = 1.033
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCAPUTO
 
 DESCRIPTION = Reusable tests for POE::Loop authors

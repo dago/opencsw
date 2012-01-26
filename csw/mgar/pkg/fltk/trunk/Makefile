@@ -1,6 +1,7 @@
 NAME = fltk
 VERSION = 1.1.10
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Fast light Tool Kit
 define BLURB

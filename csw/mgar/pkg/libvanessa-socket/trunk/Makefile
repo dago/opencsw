@@ -1,6 +1,7 @@
 NAME = libvanessa-socket
 VERSION = 0.0.9
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library to simplify common socket operations.
 define BLURB

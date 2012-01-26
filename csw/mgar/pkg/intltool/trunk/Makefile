@@ -4,6 +4,7 @@ MINOR_VER = 6
 VERSION = $(MAJOR_VER).$(MINOR_VER)
 GNOME_SUBV = $(MAJOR_VER)
 CATEGORIES = utils
+GARTYPE = v2
 ARCHALL_CSWintltool = 1
 
 DESCRIPTION =  A collection of tools for internationalization

@@ -2,6 +2,7 @@
 NAME = quixote
 VERSION = 2.7
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Web framework targeted at flexibility and high-performance
 define BLURB

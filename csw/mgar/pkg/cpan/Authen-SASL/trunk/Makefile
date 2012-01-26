@@ -1,6 +1,7 @@
 NAME = Authen-SASL
 VERSION = 2.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GBARR
 
 DESCRIPTION = SASL Authentication framework

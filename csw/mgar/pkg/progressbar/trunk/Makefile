@@ -5,6 +5,7 @@
 NAME = progressbar
 VERSION = 2.2
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Text progressbar library for Python
 define BLURB
 endef

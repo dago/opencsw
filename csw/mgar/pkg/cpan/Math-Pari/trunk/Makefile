@@ -1,6 +1,7 @@
 NAME = Math-Pari
 VERSION = 2.010709
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ILYAZ
 
 # Note: This package does not use CSWparigp -- it builds a local

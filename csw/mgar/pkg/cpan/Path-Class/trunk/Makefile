@@ -1,6 +1,7 @@
 NAME = Path-Class
 VERSION = 0.24
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KWILLIAMS
 
 DESCRIPTION = Cross-platform path specification manipulation

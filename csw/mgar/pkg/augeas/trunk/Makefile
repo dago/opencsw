@@ -1,6 +1,7 @@
 NAME = augeas
 VERSION = 0.10.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A configuration editing tool
 define BLURB

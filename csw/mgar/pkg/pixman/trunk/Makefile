@@ -1,6 +1,7 @@
 NAME      = pixman
 VERSION   = 0.22.2
 CATEGORIES   = lib
+GARTYPE = v2
 
 DESCRIPTION = The pixel-manipulation library for X and cairo
 define BLURB

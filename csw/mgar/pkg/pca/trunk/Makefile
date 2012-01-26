@@ -1,6 +1,7 @@
 NAME = pca
 VERSION = 20120119-01
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Patch Check Advanced
 define BLURB

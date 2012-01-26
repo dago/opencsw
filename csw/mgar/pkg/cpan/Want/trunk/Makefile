@@ -1,6 +1,7 @@
 NAME = Want
 VERSION = 0.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROBIN
 
 DESCRIPTION = a generalisation of wantarray

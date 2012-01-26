@@ -1,6 +1,7 @@
 NAME = Apache-AuthPAM
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = HDANIEL
 
 DESCRIPTION = authenticate apache request using PAM services

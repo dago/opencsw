@@ -1,6 +1,7 @@
 NAME = IO-Pager
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JPIERCE
 
 DESCRIPTION = Select a pager, optionally pipe it output if destination is a TTY

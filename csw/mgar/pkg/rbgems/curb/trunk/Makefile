@@ -1,6 +1,7 @@
 NAME = curb
 VERSION = 0.7.8
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = libcurl bindings for ruby
 define BLURB

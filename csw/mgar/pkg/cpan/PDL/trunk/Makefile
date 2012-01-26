@@ -1,6 +1,7 @@
 NAME = PDL
 VERSION = 2.4.6
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHM
 
 DESCRIPTION = The Perl Data Language

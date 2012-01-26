@@ -1,6 +1,7 @@
 NAME = irssi
 VERSION = 0.8.15
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = IRC client with IPv6, proxy, bot, socks and Perl support
 define BLURB

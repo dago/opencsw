@@ -1,6 +1,7 @@
 NAME = XML-Parser
 VERSION = 2.36
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSERGEANT
 
 DESCRIPTION = A module for parsing XML documents

@@ -1,6 +1,7 @@
 NAME = top
 VERSION = 3.8beta1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Unix system state reporter
 define BLURB

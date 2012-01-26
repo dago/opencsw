@@ -1,6 +1,7 @@
 NAME = URI
 VERSION = 1.59
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION =  Uniform Resource Identifiers (absolute and relative)

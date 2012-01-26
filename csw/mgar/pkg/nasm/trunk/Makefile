@@ -2,6 +2,7 @@
 NAME = nasm
 VERSION = 2.09.04
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = The Netwide Assembler
 define BLURB

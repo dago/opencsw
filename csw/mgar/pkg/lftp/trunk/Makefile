@@ -15,6 +15,7 @@
 NAME = lftp
 VERSION = 4.3.4
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = A sophisticated command-line ftp/http client
 define BLURB

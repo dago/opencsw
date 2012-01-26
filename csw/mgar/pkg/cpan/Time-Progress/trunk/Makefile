@@ -1,6 +1,7 @@
 NAME = Time-Progress
 VERSION = 1.5
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CADE
 
 DESCRIPTION = Elapsed and estimated finish time reporting

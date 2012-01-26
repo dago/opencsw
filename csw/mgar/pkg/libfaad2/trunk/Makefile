@@ -1,6 +1,7 @@
 NAME = faad2
 VERSION = 2.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Freeware Advanced Audio (AAC) Decoder including SBR decoding
 define BLURB

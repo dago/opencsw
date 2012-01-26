@@ -1,6 +1,7 @@
 NAME = activerecord
 VERSION = 3.0.7
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Implements the ActiveRecord pattern (Fowler, PoEAA) for ORM
 define BLURB

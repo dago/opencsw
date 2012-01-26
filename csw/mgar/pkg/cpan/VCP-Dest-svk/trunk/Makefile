@@ -1,6 +1,7 @@
 NAME = VCP-Dest-svk
 VERSION = 0.29
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = svk destination driver

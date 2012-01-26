@@ -1,6 +1,7 @@
 NAME = colordiff
 VERSION = 1.0.9
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Wrapper for for the diff command producing colored output
 define BLURB

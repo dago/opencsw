@@ -1,6 +1,7 @@
 NAME = OLE-Storage_Lite
 VERSION = 0.19
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JMCNAMARA
 
 DESCRIPTION = Simple Class for OLE document interface

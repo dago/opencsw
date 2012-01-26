@@ -1,6 +1,7 @@
 NAME = Unicode-Map
 VERSION = 0.112
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHWARTZ
 
 DESCRIPTION = Maps charsets from and to utf16 unicode

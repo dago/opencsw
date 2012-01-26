@@ -1,6 +1,7 @@
 NAME = Term-Cap
 VERSION = 1.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JSTOWE
 
 DESCRIPTION = termcap interface

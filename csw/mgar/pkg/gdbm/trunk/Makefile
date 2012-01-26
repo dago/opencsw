@@ -1,6 +1,7 @@
 NAME = gdbm
 VERSION = 1.9
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU database library for C
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Graph
 VERSION = 0.81
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JHI
 
 DESCRIPTION = graph operations

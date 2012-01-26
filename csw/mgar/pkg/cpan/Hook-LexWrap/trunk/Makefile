@@ -1,6 +1,7 @@
 NAME = Hook-LexWrap
 VERSION = 0.24
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHORNY
 
 DESCRIPTION = Lexically scoped subroutine wrappers

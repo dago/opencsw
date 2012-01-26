@@ -1,6 +1,7 @@
 NAME = CGI-Application-Plugin-LogDispatch
 VERSION = 1.00
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CEESHEK
 
 DESCRIPTION = Add Log::Dispatch support to CGI::Application

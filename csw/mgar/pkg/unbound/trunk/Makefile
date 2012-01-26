@@ -1,6 +1,7 @@
 NAME = unbound
 VERSION = 1.4.13
 CATEGORIES = server
+GARTYPE = v2
 DESCRIPTION = A validating, recursive, and caching DNS resolver
 define BLUR
   Unbound is designed as a set of modular components, so that also

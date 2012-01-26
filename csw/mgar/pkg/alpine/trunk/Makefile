@@ -1,6 +1,7 @@
 NAME = alpine
 VERSION = 2.00
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Alpine Messaging System
 define BLURB

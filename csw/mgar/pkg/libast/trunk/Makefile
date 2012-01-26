@@ -1,6 +1,7 @@
 NAME = libast
 VERSION = 0.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = The Library of Assorted Spiffy Things (LibAST - formerly libmej)
 define BLURB

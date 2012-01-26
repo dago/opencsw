@@ -2,6 +2,7 @@ NAME = qpopper
 VERSION = 4.1.0
 WORKSRC = $(WORKDIR)/$(NAME)$(VERSION)
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = The most widely-used POP3 server for Unix
 define BLURB

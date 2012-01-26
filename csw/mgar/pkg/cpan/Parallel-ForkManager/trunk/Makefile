@@ -1,6 +1,7 @@
 NAME = Parallel-ForkManager
 VERSION = 0.7.9
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DLUX
 
 DESCRIPTION = A simple parallel processing fork manager

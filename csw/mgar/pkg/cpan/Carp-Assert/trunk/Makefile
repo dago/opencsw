@@ -1,6 +1,7 @@
 NAME = Carp-Assert
 VERSION = 0.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHWERN
 
 DESCRIPTION = Executable comments

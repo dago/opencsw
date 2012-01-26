@@ -1,6 +1,7 @@
 NAME = dbus-glib
 VERSION = 0.98
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = DBus GLib Bindings
 define BLURB

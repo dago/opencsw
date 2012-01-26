@@ -1,6 +1,7 @@
 NAME = SVN-Simple
 VERSION = 0.27
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = a simple interface for driving svn delta editors

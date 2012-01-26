@@ -1,6 +1,7 @@
 NAME = PAR-Dist
 VERSION = 0.47
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SMUELLER
 
 DESCRIPTION = create and manipulate PAR distributions

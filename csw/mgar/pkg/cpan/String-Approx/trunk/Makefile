@@ -1,6 +1,7 @@
 NAME = String-Approx
 VERSION = 3.26
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JHI
 
 DESCRIPTION = Approximate matching (fuzzy matching)

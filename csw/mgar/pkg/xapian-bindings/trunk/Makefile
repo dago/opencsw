@@ -1,6 +1,7 @@
 NAME = xapian-bindings
 VERSION = 1.2.7
 CATEGORIES = lib
+GARTYPE = v2
 
 #EXTRA_MODULATORS = BINDING
 #MODULATIONS_BINDING = ruby python

@@ -2,6 +2,7 @@
 NAME = erlang
 VERSION = R14B03
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = A functional programming language from Ericsson
 define BLURB

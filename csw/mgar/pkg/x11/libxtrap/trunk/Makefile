@@ -1,6 +1,7 @@
 NAME = libXTrap
 VERSION = 1.0.0
 CATEGORIES = x11
+GARTYPE = v2
 
 DESCRIPTION = X11 event trapping extension library
 define BLURB

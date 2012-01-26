@@ -1,6 +1,7 @@
 NAME = SVN-Notify
 VERSION = 2.64
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DWHEELER
 
 DESCRIPTION = Subversion activity notification

@@ -5,6 +5,7 @@
 NAME = python-graph
 VERSION = 1.8.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A library for working with graphs in Python
 define BLURB
 endef

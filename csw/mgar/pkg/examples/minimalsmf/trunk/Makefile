@@ -1,6 +1,7 @@
 NAME = minimalsmf
 VERSION = 0.3
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = A test of an SMF-enabled package and mGAR SMF support
 define BLURB

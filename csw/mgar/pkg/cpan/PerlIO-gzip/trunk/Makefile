@@ -1,6 +1,7 @@
 NAME = PerlIO-gzip
 VERSION = 0.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NWCLARK
 
 DESCRIPTION = Perl extension to provide a PerlIO layer to gzip/gunzip

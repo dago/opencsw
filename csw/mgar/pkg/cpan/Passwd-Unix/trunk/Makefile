@@ -1,6 +1,7 @@
 NAME = Passwd-Unix
 VERSION = 0.52
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = STRZELEC
 
 DESCRIPTION = Abstract interface to /etc/passwd, /etc/shadow and /etc/group format files

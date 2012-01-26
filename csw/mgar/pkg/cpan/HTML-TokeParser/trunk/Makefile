@@ -1,6 +1,7 @@
 NAME = HTML-TokeParser-Simple
 VERSION = 3.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = OVID
 
 DESCRIPTION = HTML::TokeParser - Alternative HTML::Parser interface

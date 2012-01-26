@@ -5,6 +5,7 @@
 NAME = rake
 VERSION = 0.8.7
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Simple ruby build program similar to make
 define BLURB

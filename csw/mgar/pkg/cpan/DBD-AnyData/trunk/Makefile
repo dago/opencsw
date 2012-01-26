@@ -1,6 +1,7 @@
 NAME = DBD-AnyData
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JZUCKER
 
 DESCRIPTION = DBI access to XML, CSV and other formats

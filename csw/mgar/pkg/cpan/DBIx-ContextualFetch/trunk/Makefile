@@ -1,6 +1,7 @@
 NAME = DBIx-ContextualFetch
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TMTM
 
 DESCRIPTION = add contextual fetches to DBI

@@ -1,6 +1,7 @@
 NAME = XML-NamespaceSupport
 VERSION = 1.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PERIGRIN
 
 DESCRIPTION = Simple generic namespace support class

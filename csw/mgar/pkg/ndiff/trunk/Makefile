@@ -1,6 +1,7 @@
 NAME = ndiff
 VERSION = 2.00
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Compare putatively similar files, ignoring small numeric differences
 define BLURB

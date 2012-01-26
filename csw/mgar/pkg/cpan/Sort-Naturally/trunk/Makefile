@@ -1,6 +1,7 @@
 NAME = Sort-Naturally
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBURKE
 
 DESCRIPTION = Sort lexically, but sort numeral parts numerically

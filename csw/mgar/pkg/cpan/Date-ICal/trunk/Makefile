@@ -1,6 +1,7 @@
 NAME = Date-ICal
 VERSION = 1.72
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RBOW
 
 DESCRIPTION = Perl extension for ICalendar date objects

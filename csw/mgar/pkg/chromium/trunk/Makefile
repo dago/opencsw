@@ -6,6 +6,7 @@ NAME = chromium
 CHROMIUM_REVISION = 32797
 VERSION = 0.$(CHROMIUM_REVISION)
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = An open-source web browser
 define BLURB
 endef

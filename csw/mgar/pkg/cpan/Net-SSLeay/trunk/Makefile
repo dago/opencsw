@@ -1,6 +1,7 @@
 NAME = Net-SSLeay
 VERSION = 1.36
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = FLORA
 
 DESCRIPTION = Extension for using OpenSSL

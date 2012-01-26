@@ -1,6 +1,7 @@
 NAME = Font-FreeType
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GEOFFR
 
 DESCRIPTION = Read font files and render glyphs from Perl using FreeType2

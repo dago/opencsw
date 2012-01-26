@@ -1,6 +1,7 @@
 NAME = fftw
 VERSION = 3.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library for computing the discrete Fourier transform (DFT)
 define BLURB

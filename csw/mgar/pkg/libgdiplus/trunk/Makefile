@@ -1,6 +1,7 @@
 NAME = libgdiplus
 VERSION = 2.6
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Mono library that provide a GDI+ comptible API
 define BLURB

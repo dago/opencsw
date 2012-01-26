@@ -1,6 +1,7 @@
 NAME = rcs
 VERSION = 5.7
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GNU Revision Control System
 define BLURB

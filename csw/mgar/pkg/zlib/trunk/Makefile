@@ -1,6 +1,7 @@
 NAME = zlib
 VERSION = 1.2.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Zlib data compression library
 define BLURB

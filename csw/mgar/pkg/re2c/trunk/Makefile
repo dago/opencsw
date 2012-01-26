@@ -1,6 +1,7 @@
 NAME = re2c
 VERSION = 0.13.5
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Utility for writing fast and flexible scanners.
 define BLURB

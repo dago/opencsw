@@ -1,6 +1,7 @@
 NAME = Archive-Extract
 VERSION = 0.48
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = A generic archive extracting mechanism

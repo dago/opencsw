@@ -1,6 +1,7 @@
 NAME = Object-MultiType
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GMPASSOS
 
 DESCRIPTION = objects as hash, array, scalar, code and glob at same time.

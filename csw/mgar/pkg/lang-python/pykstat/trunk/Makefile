@@ -5,6 +5,7 @@
 NAME = pykstat
 VERSION = 0.5
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = a Python interface to the Solaris kstat(3k) and utmpx APIs
 define BLURB
 endef

@@ -5,6 +5,7 @@
 NAME = schily
 VERSION = 2011-08-29
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Software by Joerg Shilling
 define BLURB
 endef

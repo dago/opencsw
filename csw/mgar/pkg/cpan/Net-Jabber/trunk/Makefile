@@ -1,6 +1,7 @@
 NAME = Net-Jabber
 VERSION = 2.0
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = REATMON
 
 DESCRIPTION = Jabber Perl Library

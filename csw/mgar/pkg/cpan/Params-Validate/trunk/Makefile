@@ -1,6 +1,7 @@
 NAME = Params-Validate
 VERSION = 0.95
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Validate method/function parameters

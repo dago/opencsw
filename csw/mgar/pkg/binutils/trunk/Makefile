@@ -1,6 +1,7 @@
 NAME = binutils
 VERSION = 2.21.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU binary utilities: gas, gld, gprof, and others
 define BLURB

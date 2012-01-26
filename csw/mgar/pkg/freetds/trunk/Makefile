@@ -2,6 +2,7 @@
 NAME = freetds
 VERSION = 0.91
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Implementation of the TDS protocol used by MS SQL Server and Sybase
 define BLURB

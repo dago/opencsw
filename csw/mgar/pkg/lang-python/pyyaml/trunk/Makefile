@@ -5,6 +5,7 @@
 NAME = pyyaml
 VERSION = 3.09
 CATEGORIES = python
+GARTYPE = v2
 
 PROJ_NAME = PyYAML
 

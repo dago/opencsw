@@ -1,6 +1,7 @@
 NAME = Class-ISA
 VERSION = 0.33
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBURKE
 
 DESCRIPTION = report the search path for a class ISA tree

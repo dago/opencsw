@@ -1,6 +1,7 @@
 NAME = Test-Manifest
 VERSION = 1.23
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BDFOY
 
 DESCRIPTION = interact with a t/test_manifest file

@@ -1,6 +1,7 @@
 NAME = leafnode
 VERSION = 1.11.6
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = An NNTP server for small leaf sites
 define BLURB

@@ -1,6 +1,7 @@
 NAME = stmpclean
 VERSION = 0.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Removes old files from the specified directory
 define BLURB

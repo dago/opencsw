@@ -3,6 +3,7 @@
 NAME = fio
 VERSION = 1.44.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Flexible I/O Tester
 define BLURB

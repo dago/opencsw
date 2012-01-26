@@ -1,6 +1,7 @@
 NAME = arel
 VERSION = 2.0.9
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Arel is a SQL AST manager for Ruby
 

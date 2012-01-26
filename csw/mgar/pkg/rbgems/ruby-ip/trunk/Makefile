@@ -1,6 +1,7 @@
 NAME = ruby-ip
 VERSION = 0.9.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = IP address manipulation library
 

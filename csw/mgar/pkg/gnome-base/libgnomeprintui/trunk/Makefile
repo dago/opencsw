@@ -1,6 +1,7 @@
 NAME = libgnomeprintui
 VERSION = 2.18.4
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = TODO
 define BLURB

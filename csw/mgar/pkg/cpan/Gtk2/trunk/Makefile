@@ -1,6 +1,7 @@
 NAME = Gtk2
 VERSION = 1.221
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TSCH
 
 DESCRIPTION = Perl interface to the 2.x series of the Gimp Toolkit library

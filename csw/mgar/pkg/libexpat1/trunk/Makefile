@@ -1,6 +1,7 @@
 NAME = expat
 VERSION = 2.0.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = XML parser toolkit
 define BLURB

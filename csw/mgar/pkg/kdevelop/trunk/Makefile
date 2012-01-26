@@ -1,5 +1,6 @@
 NAME = kdevelop
 CATEGORIES = kde
+GARTYPE = v2
 
 DESCRIPTION = KDE Integrated Development Environment (gcc3)
 define BLURB

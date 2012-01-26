@@ -1,6 +1,7 @@
 NAME = Net-Server
 VERSION = 0.97
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RHANDOM
 
 DESCRIPTION = Extensible, general Perl server engine

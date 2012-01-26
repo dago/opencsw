@@ -1,6 +1,7 @@
 NAME = lame
 VERSION = 3.99.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = LAME is an LGPL MP3 encoder
 define BLURB

@@ -1,6 +1,7 @@
 NAME = gnulinks
 VERSION = 1.4
 CATEGORIES = xtra
+GARTYPE = v2
 
 VENDOR_URL = http://opencsw.org
 

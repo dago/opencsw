@@ -1,6 +1,7 @@
 NAME = x11vnc
 VERSION = 0.9.12
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Allows one to view remotely and interact with real X displays
 define BLURB

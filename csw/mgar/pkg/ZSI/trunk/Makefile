@@ -4,6 +4,7 @@
 NAME = ZSI
 VERSION = 2.0
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Web services for Python programmers, both client and servers.
 define BLURB

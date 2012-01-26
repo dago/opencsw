@@ -1,6 +1,7 @@
 NAME = Unicode-Map8
 VERSION = 0.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = mapping table between 8-bit chars and Unicode

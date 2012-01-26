@@ -1,6 +1,7 @@
 NAME = snort
 VERSION = 2.8.5
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = The open source Network Intrusion Detection System
 define BLURB

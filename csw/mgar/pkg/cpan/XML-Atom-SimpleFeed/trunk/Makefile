@@ -1,6 +1,7 @@
 NAME = XML-Atom-SimpleFeed
 VERSION = 0.86
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ARISTOTLE
 
 DESCRIPTION = No-fuss generation of Atom syndication feeds

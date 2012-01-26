@@ -1,6 +1,7 @@
 NAME = pound2
 VERSION = 2.4.5
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = reverse proxy load balancer
 define BLURB

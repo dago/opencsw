@@ -1,6 +1,7 @@
 NAME = Try-Tiny
 VERSION = 0.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DOY
 
 DESCRIPTION = Minimal try/catch with proper localization of errors

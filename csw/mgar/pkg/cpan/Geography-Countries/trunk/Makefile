@@ -1,6 +1,7 @@
 NAME = Geography-Countries
 VERSION = 2009041301
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABIGAIL
 
 DESCRIPTION = 2-letter, 3-letter, and numerical codes for countries

@@ -1,6 +1,7 @@
 NAME = IO-Zlib
 VERSION = 1.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TOMHUGHES
 
 DESCRIPTION = IO:: style interface to Compress::Zlib

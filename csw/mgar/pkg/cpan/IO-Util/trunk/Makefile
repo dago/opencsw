@@ -1,6 +1,7 @@
 NAME = IO-Util
 VERSION = 1.5
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DOMIZIO
 
 DESCRIPTION = A selection of general-utility IO functions

@@ -1,6 +1,7 @@
 NAME = libotr
 VERSION = 3.2.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Off-The-Record Messaging plugin for pidgin
 define BLURB

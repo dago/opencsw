@@ -1,6 +1,7 @@
 NAME = daemons
 VERSION = 1.1.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Brief description
 define BLURB

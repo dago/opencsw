@@ -1,6 +1,7 @@
 NAME = Date-Manip
 VERSION = 6.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBECK
 
 DESCRIPTION = Date manipulation routines

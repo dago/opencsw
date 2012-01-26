@@ -1,6 +1,7 @@
 NAME      = apache-tomcat7
 VERSION   = 7.0.4
 CATEGORIES   = server
+GARTYPE = v2
 
 DESCRIPTION  =  Apache Jakarta Tomcat 7 Servlet/JSP Container
 define BLURB

@@ -5,6 +5,7 @@
 NAME = gdata-python-client
 VERSION = 2.0.13
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION  = Google Data Protocol, a REST-inspired technology
 define BLURB
 endef

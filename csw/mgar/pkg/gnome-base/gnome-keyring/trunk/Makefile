@@ -6,6 +6,7 @@ NAME = gnome-keyring
 GNOME_VERSION = 2.28
 VERSION = $(GNOME_VERSION).2
 CATEGORIES = gnome
+GARTYPE = v2
 DESCRIPTION = Stores passwords and encryption keys in an encrypted file
 define BLURB
 endef

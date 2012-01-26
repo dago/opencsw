@@ -1,6 +1,7 @@
 NAME = parallel-forkmanager
 VERSION = 1.5.1
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A simple parallel processing fork manager
 define BLURB

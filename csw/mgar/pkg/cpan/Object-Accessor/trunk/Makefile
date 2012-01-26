@@ -1,6 +1,7 @@
 NAME = Object-Accessor
 VERSION = 0.42
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = An interface to create per object accessors

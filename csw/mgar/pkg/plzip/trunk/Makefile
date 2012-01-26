@@ -1,6 +1,7 @@
 NAME = plzip
 VERSION = 0.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A lossless data compressor based on the LZMA algorithm
 define BLURB

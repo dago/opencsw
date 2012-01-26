@@ -1,6 +1,7 @@
 NAME = Class-Data-Inheritable
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TMTM
 
 DESCRIPTION = Inheritable, overridable class data

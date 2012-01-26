@@ -5,6 +5,7 @@
 NAME = gxmessage
 VERSION = 2.12.4
 CATEGORIES = gnome
+GARTYPE = v2
 DESCRIPTION = An xmessage clone for GTK based desktops
 define BLURB
 endef

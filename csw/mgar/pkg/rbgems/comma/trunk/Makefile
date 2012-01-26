@@ -1,6 +1,7 @@
 NAME = comma
 VERSION = 0.4.1
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Ruby Comma Seperated Values generation library
 

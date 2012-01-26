@@ -1,6 +1,7 @@
 NAME = libebml
 VERSION = 1.2.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library for Extensible Binary Meta Language
 define BLURB

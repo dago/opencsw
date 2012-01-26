@@ -1,6 +1,7 @@
 NAME = UNIVERSAL-can
 VERSION = 1.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHROMATIC
 
 DESCRIPTION = Hack around people calling UNIVERSAL::can() as a function

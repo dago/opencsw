@@ -1,6 +1,7 @@
 NAME = apr
 VERSION = 1.4.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime
 define BLURB

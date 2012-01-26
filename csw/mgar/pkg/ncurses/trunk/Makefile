@@ -8,6 +8,7 @@
 NAME = ncurses
 VERSION = 5.9
 CATEGORIES = lib
+GARTYPE = v2
 
 define BLURB
  The ncurses (new curses) library is a free software emulation of curses

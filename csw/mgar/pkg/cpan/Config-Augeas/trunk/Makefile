@@ -1,6 +1,7 @@
 NAME = Config-Augeas
 VERSION = 0.701
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DDUMONT
 
 DESCRIPTION = Augeas Perl Binding

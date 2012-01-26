@@ -1,6 +1,7 @@
 NAME = apr-util
 VERSION = 1.3.12
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime Utilities
 define BLURB

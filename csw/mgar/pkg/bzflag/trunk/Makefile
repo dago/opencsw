@@ -2,6 +2,7 @@
 NAME = bzflag
 VERSION = 2.0.16
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A free multiplayer multiplatform 3D tank battle game
 define BLURB

@@ -6,6 +6,7 @@
 NAME = privoxy
 VERSION = 3.0.12
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = A web proxy with advanced filtering capabilities
 define BLURB

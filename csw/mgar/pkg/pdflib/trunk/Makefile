@@ -2,6 +2,7 @@
 NAME = pdflib
 VERSION = 7.0.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Toolbox for generating and manipulating files in PDF
 define BLURB

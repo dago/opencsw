@@ -1,6 +1,7 @@
 NAME = pen
 VERSION = 0.18.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Simple load balancer
 define BLURB

@@ -1,6 +1,7 @@
 NAME = perlconsole
 VERSION = 0.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SUKRIA
 
 DESCRIPTION = Evaluate Perl code interactively

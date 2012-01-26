@@ -1,6 +1,7 @@
 NAME = Solaris-DeviceTree
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAGOBERT
 
 DESCRIPTION = access to Solaris device information.

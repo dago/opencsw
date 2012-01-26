@@ -7,6 +7,7 @@
 NAME = mtr
 VERSION = 0.75
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Combined traceroute and ping utility
 define BLURB

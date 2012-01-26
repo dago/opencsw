@@ -1,6 +1,7 @@
 NAME = gar_dev
 VERSION = 1.0
 CATEGORIES = devel
+GARTYPE = v2
 
 VENDOR_URL = http://opencsw.org
 

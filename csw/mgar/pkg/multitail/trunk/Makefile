@@ -1,6 +1,7 @@
 NAME = multitail
 VERSION = 5.2.8
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = View one or multiple files like the original tail program
 define BLURB

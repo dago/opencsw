@@ -1,6 +1,7 @@
 NAME = nmap
 VERSION = 5.59BETA1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = A network exploration tool and security/port scanner
 define BLURB

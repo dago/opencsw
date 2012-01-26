@@ -1,6 +1,7 @@
 NAME = hexdump
 VERSION = 1.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A hex dumper that can handle EBCDIC
 define BLURB

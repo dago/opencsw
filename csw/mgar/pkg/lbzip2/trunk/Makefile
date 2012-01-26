@@ -1,6 +1,7 @@
 NAME = lbzip2
 VERSION = 2.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
 define BLURB

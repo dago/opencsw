@@ -1,6 +1,7 @@
 NAME = Template-TAL
 VERSION = 0.9
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TOMI
 
 DESCRIPTION = Process TAL templates with Perl

@@ -1,6 +1,7 @@
 NAME = File-Slurp
 VERSION = 9999.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Efficient Reading/Writing of Complete Files

@@ -1,6 +1,7 @@
 NAME = Params-Util
 VERSION = 1.00
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Simple, compact and correct param-checking functions

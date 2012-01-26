@@ -1,6 +1,7 @@
 NAME = Data-UUID
 VERSION = 1.203
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = extension for generating unique identifiers

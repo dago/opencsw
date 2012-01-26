@@ -1,6 +1,7 @@
 NAME = JSON-Any
 VERSION = 1.25
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PERIGRIN
 
 DESCRIPTION = Wrapper Class for the various JSON classes

@@ -1,6 +1,7 @@
 NAME = Tie-IxHash
 VERSION = 1.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GSAR
 
 DESCRIPTION = Ordered associative arrays for Perl

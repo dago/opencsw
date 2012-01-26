@@ -9,6 +9,7 @@
 NAME = puppet
 VERSION = 2.7.9
 CATEGORIES = apps
+GARTYPE = v2
 
 define BLURB
   Puppet helps accomplish the goal of a hands-off, automated infrastructure.

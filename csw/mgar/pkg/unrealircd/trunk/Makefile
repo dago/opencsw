@@ -5,6 +5,7 @@
 NAME = Unreal
 VERSION = 3.2.8.1
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Open Source IRC Server
 DISTNAME = $(NAME)3.2

@@ -1,6 +1,7 @@
 NAME = MIME-tools
 VERSION = 5.428
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ERYQ
 
 DESCRIPTION = Modules for parsing and creating MIME entities

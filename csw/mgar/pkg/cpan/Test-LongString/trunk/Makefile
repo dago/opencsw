@@ -1,6 +1,7 @@
 NAME = Test-LongString
 VERSION = 0.14
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RGARCIA
 
 DESCRIPTION = Tests strings for equality

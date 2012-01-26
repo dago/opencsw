@@ -1,6 +1,7 @@
 NAME = Lingua-Stem-Snowball-Da
 VERSION = 1.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CINE
 
 DESCRIPTION = Porters stemming algorithm for Denmark

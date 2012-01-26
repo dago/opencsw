@@ -1,6 +1,7 @@
 NAME = gmp
 VERSION = 4.3.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU Multiple Precision Arithmetic Library
 define BLURB

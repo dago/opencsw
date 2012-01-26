@@ -1,6 +1,7 @@
 NAME = Calendar-CSA
 VERSION = 0.8
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KJALB
 
 DESCRIPTION = Perl extension to interface with CDE Calendar Manager

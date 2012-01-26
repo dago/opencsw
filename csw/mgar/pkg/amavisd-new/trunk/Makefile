@@ -1,6 +1,7 @@
 NAME = amavisd-new
 VERSION = 2.6.4
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Interface between MTA and content checkers
 define BLURB

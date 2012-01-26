@@ -1,6 +1,7 @@
 NAME = mediawiki
 VERSION = 1.17.0
 CATEGORIES = apps
+GARTYPE = v2
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 DESCRIPTION = A free software wiki package written in PHP
 define BLURB

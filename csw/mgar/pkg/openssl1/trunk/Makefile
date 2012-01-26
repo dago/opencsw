@@ -15,6 +15,7 @@
 NAME = openssl
 VERSION = 1.0.0e
 CATEGORIES = lib
+GARTYPE = v2
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS

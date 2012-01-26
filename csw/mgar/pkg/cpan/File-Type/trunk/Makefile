@@ -1,6 +1,7 @@
 NAME = File-Type
 VERSION = 0.22
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PMISON
 
 DESCRIPTION = determine file type using magic

@@ -1,6 +1,7 @@
 NAME = ghostscript
 VERSION = 8.70
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Ghostscript, a PostScript and PDF interpreter for previewing, conversion and printing
 define BLURB

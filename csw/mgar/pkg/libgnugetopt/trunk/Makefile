@@ -1,6 +1,7 @@
 NAME = libgnugetopt
 VERSION = 1.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library containing getopt_long
 define BLURB

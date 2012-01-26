@@ -1,6 +1,7 @@
 NAME = cronedit
 VERSION = 0.3.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A Ruby editor library for the crontab
 

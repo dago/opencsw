@@ -9,6 +9,7 @@
 NAME    = ipython
 VERSION = 0.10.2
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Enhanced interactive python shell
 define BLURB

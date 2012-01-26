@@ -2,6 +2,7 @@
 NAME = bacula
 VERSION = 5.0.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = The Open Source Network Backup Solution
 define BLURB

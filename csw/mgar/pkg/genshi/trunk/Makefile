@@ -1,6 +1,7 @@
 NAME    = Genshi
 VERSION = 0.6
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python toolkit for generation of output for the web
 define BLURB

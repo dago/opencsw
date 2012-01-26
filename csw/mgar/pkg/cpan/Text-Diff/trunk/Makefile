@@ -1,6 +1,7 @@
 NAME = Text-Diff
 VERSION = 0.35
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RBS
 
 DESCRIPTION = perform diffs on files and record sets

@@ -6,6 +6,7 @@ NAME = fontforge
 VERSION_DATESTAMP = 20090923
 VERSION = 0.$(VERSION_DATESTAMP)
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = An outline font editor
 define BLURB
 endef

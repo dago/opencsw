@@ -1,6 +1,7 @@
 NAME = Authen-PAM
 VERSION = 0.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NIKIP
 
 DESCRIPTION = interface to PAM library

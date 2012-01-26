@@ -1,6 +1,7 @@
 NAME = Text-Wrapper
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CJM
 
 DESCRIPTION = Simple word wrapping routine

@@ -2,6 +2,7 @@
 NAME = ocrad
 VERSION = 0.19
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GNU Optical Character Recognition
 define BLURB

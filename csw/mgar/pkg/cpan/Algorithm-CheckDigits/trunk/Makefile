@@ -1,6 +1,7 @@
 NAME = Algorithm-CheckDigits
 VERSION = v1.1.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MAMAWE
 
 DESCRIPTION = Generate and test check digits

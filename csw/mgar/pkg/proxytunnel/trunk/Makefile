@@ -1,6 +1,7 @@
 NAME = proxytunnel
 VERSION = 1.9.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Tunnels network connections through a HTTPS proxy
 define BLURB

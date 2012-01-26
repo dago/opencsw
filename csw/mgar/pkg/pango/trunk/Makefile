@@ -1,6 +1,7 @@
 NAME = pango
 VERSION = 1.28.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A framework for the layout and rendering of international text
 define BLURB

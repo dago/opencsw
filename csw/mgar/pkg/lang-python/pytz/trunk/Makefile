@@ -2,6 +2,7 @@
 NAME = pytz
 VERSION = 2011n
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Pytz brings the Olson timezone database into Python.
 define BLURB

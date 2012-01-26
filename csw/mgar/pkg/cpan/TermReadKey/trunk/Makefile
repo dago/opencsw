@@ -1,6 +1,7 @@
 NAME = TermReadKey
 VERSION = 2.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JSTOWE
 
 DESCRIPTION = module for simple terminal control

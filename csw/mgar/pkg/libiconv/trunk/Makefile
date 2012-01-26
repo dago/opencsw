@@ -6,6 +6,7 @@
 NAME = libiconv
 VERSION = 1.14
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU iconv library
 define BLURB

@@ -2,6 +2,7 @@ NAME = jdk5
 SPKG_VERSION = 1.5.0_19
 VERSION = $(shell echo $(SPKG_VERSION) | sed -e 's/\./_/g')
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = Java Development Kit 5.0
 define BLURB

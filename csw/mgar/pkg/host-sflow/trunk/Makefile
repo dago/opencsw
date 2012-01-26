@@ -1,6 +1,7 @@
 NAME = hsflowd
 VERSION = 1.19
 CATEGORIES = utils
+GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 

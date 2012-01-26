@@ -23,6 +23,7 @@
 NAME = postfix
 VERSION = 2.8.6
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = A high-performance mail transport agent
 define BLURB

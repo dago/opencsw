@@ -1,6 +1,7 @@
 NAME = Event-Lib
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VPARSEVAL
 
 DESCRIPTION = Perl extentions for event-based programming

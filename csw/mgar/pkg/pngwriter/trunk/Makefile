@@ -1,6 +1,7 @@
 NAME = pngwriter
 VERSION = 0.5.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A C++ library for creating PNG images
 define BLURB

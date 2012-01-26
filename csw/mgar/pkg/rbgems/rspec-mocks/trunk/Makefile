@@ -1,6 +1,7 @@
 NAME = rspec-mocks
 VERSION = 2.4.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = RSpecs 'test double' framework
 

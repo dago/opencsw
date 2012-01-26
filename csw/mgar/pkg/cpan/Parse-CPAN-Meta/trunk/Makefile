@@ -1,6 +1,7 @@
 NAME = Parse-CPAN-Meta
 VERSION = 1.40
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SMUELLER
 
 DESCRIPTION = Parse META.yml and other similar CPAN metadata files

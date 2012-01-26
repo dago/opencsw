@@ -1,6 +1,7 @@
 NAME = Crypt-RIPEMD160
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHGEUER
 
 DESCRIPTION = Perl extension for the RIPEMD-160 Hash function

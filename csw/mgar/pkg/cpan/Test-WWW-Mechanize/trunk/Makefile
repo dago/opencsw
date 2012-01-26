@@ -1,6 +1,7 @@
 NAME = Test-WWW-Mechanize
 VERSION = 1.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = Testing-specific WWW::Mechanize subclass

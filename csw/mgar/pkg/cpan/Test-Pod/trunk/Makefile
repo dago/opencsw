@@ -1,6 +1,7 @@
 NAME = Test-Pod
 VERSION = 1.44
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DWHEELER
 
 DESCRIPTION = Check for POD errors in files

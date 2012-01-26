@@ -1,6 +1,7 @@
 NAME = setxkbmap
 VERSION = 6.8.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Set the keyboard mapping under X
 define BLURB

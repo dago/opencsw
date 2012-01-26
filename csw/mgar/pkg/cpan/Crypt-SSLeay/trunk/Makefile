@@ -1,6 +1,7 @@
 NAME = Crypt-SSLeay
 VERSION = 0.57
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DLAND
 
 DESCRIPTION = OpenSSL glue that provides LWP https support

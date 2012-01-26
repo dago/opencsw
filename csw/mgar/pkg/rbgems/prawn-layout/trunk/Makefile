@@ -1,6 +1,7 @@
 NAME = prawn-layout
 VERSION = 0.8.4
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = An extension to Prawn that provides table support and other layout functionality
 

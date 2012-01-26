@@ -1,6 +1,7 @@
 NAME = CGI-Application-Dispatch
 VERSION = 2.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = WONKO
 
 DESCRIPTION = Dispatch requests to CGI::Application based objects

@@ -5,6 +5,7 @@
 NAME = mechanize
 VERSION = 0.2.4
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Stateful programmatic web browsing in Python
 define BLURB
 endef

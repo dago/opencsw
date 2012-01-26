@@ -1,6 +1,7 @@
 NAME = enumerated_attribute
 VERSION = 0.2.13
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Enumerated model attributes and view helpers
 define BLURB

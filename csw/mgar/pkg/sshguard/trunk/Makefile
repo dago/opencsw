@@ -1,6 +1,7 @@
 NAME = sshguard
 VERSION = 1.5rc3
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Protects networked hosts from brute force attacks
 define BLURB

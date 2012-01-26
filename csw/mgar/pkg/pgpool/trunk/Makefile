@@ -2,6 +2,7 @@
 NAME = pgpool
 VERSION = 3.0.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = A middleware that works between PostgreSQL servers and a PostgreSQL database client
 define BLURB

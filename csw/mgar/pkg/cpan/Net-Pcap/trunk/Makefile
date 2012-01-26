@@ -1,6 +1,7 @@
 NAME = Net-Pcap
 VERSION = 0.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SAPER
 
 DESCRIPTION = Interface to pcap(3) LBL packet capture library

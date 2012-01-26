@@ -15,6 +15,7 @@
 NAME = elinks
 VERSION = 0.11.7
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = An advanced text mode web browser
 define BLURB

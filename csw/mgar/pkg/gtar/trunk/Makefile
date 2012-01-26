@@ -1,6 +1,7 @@
 NAME = tar
 VERSION = 1.26
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU tape archiver
 define BLURB

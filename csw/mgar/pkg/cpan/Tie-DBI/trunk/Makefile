@@ -1,6 +1,7 @@
 NAME = Tie-DBI
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LDS
 
 DESCRIPTION = tie hashes to DBI relational databases

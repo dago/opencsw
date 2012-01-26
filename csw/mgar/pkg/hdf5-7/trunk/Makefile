@@ -1,6 +1,7 @@
 NAME = hdf5
 VERSION = 1.8.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Event notification library
 define BLURB

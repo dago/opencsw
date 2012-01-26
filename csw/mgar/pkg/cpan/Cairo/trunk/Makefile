@@ -1,6 +1,7 @@
 NAME = Cairo
 VERSION = 1.061
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TSCH
 
 DESCRIPTION = Perl interface to the cairo library

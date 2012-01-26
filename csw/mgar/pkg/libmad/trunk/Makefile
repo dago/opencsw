@@ -1,6 +1,7 @@
 NAME = libmad
 VERSION = 0.15.1b
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = MPEG Audio Decoder
 define BLURB

@@ -3,6 +3,7 @@
 NAME = tcpdrop
 VERSION = 1.4
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Tool to drop TCP sessions
 define BLURB

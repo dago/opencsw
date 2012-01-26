@@ -1,6 +1,7 @@
 NAME = Text-Tabs+Wrap
 VERSION = 2006.0711
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MUIR
 
 DESCRIPTION = Text wrapping and tab expansion.

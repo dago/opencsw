@@ -1,6 +1,7 @@
 NAME = Module-ScanDeps
 VERSION = 0.54
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUTRIJUS
 
 DESCRIPTION = recursively scan Perl code for dependencies

@@ -1,6 +1,7 @@
 NAME = B-Generate
 VERSION = 1.26
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RURBAN
 
 DESCRIPTION = Create your own op trees

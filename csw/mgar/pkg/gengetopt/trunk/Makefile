@@ -1,6 +1,7 @@
 NAME = gengetopt
 VERSION = 2.22.4
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = parses the command line options
 define BLURB

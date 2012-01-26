@@ -5,6 +5,7 @@
 NAME = libxpm
 VERSION = 3.5.8
 CATEGORIES = x11
+GARTYPE = v2
 
 DESCRIPTION = X11 pixmap library
 define BLURB

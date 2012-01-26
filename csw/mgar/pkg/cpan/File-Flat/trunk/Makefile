@@ -1,6 +1,7 @@
 NAME = File-Flat
 VERSION = 1.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Implements a flat filesystem

@@ -1,6 +1,7 @@
 NAME = DateTime-Locale
 VERSION = 0.45
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Localization support for DateTime.pm

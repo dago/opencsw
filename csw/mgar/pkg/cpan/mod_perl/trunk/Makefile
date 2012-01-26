@@ -1,6 +1,7 @@
 NAME = mod_perl
 VERSION = 1.31
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GOZER
 
 DESCRIPTION = Persistent Perl interpreter for Apache 1.3.x

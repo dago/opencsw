@@ -1,6 +1,7 @@
 NAME = Mail-Sender
 VERSION = 0.8.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JENDA
 
 DESCRIPTION = Module for sending mails with attachments through an SMTP server

@@ -2,6 +2,7 @@
 NAME = tcpstat
 VERSION = 1.5
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Report network interface statistics
 define BLURB

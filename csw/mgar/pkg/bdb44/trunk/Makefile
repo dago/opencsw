@@ -1,6 +1,7 @@
 NAME = db
 VERSION = 4.4.20
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = embedded database libraries and utilities
 define BLURB

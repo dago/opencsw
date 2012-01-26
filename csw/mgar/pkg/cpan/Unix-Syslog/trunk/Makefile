@@ -1,6 +1,7 @@
 NAME = Unix-Syslog
 VERSION = 1.0
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MHARNISCH
 
 DESCRIPTION = Perl interface to the UNIX syslog(3) calls

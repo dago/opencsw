@@ -1,6 +1,7 @@
 NAME = PDF-Reuse-Barcode
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LARSLUND
 
 DESCRIPTION = Reuse and mass produce PDF documents

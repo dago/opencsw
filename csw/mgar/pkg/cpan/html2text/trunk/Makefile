@@ -1,6 +1,7 @@
 NAME = html2text
 VERSION = 0.003
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AWRIGLEY
 
 DESCRIPTION = Script for generating formatted text from HTML

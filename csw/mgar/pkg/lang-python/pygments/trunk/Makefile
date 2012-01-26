@@ -5,6 +5,7 @@
 NAME = Pygments
 VERSION = 1.4
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Syntax highlighting for Python
 PACKAGES = CSWpy-pygments
 ARCHALL_CSWpy-pygments = 1

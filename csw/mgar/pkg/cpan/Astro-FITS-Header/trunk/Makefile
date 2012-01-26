@@ -1,6 +1,7 @@
 NAME = Astro-FITS-Header
 VERSION = 3.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TJENNESS
 
 DESCRIPTION = Object Orientated interface to FITS HDUs

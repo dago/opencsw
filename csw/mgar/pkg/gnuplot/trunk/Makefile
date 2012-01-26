@@ -1,6 +1,7 @@
 NAME = gnuplot
 VERSION = 4.4.3
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = The Gnuplot Plotting Utility
 define BLURB

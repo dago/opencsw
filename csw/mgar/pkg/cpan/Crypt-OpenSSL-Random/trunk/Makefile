@@ -1,6 +1,7 @@
 NAME = Crypt-OpenSSL-Random
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IROBERTS
 
 DESCRIPTION = Perl Crypt::OpenSSL::Random module

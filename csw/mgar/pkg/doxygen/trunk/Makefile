@@ -1,6 +1,7 @@
 NAME = doxygen
 VERSION = 1.7.6.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A documentation system for programming languages
 define BLURB

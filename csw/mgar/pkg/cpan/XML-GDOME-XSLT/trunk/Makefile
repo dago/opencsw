@@ -1,6 +1,7 @@
 NAME = XML-GDOME-XSLT
 VERSION = 0.75
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TJMATHER
 
 DESCRIPTION = interface to the gnome libxslt library

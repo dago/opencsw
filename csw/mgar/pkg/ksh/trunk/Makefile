@@ -1,6 +1,7 @@
 NAME = ksh
 VERSION = 93t+
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = The KornShell Command and Programming Language
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Mail-Box
 VERSION = 2.093
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKOV
 
 DESCRIPTION = Manage a mailbox, a folder with messages

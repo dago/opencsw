@@ -2,6 +2,7 @@
 NAME = django-sorting
 VERSION = 0.1
 CATEGORIES = python
+GARTYPE = v2
 PACKAGES = CSWpy-django-sorting
 CATALOGNAME = py_django_sorting
 ARCHALL_CSWpy-django-sorting = 1

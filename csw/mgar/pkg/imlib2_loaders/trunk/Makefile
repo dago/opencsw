@@ -1,6 +1,7 @@
 NAME = imlib2_loaders
 VERSION = 1.4.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Imlib 2 image loaders for XCF, EDB and EET
 

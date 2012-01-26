@@ -1,6 +1,7 @@
 NAME      = cairomm
 VERSION   = 1.8.0
 CATEGORIES   = lib
+GARTYPE = v2
 
 DESCRIPTION  = C++ bindings for Cairo
 define BLURB

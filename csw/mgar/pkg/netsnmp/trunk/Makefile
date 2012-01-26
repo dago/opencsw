@@ -7,6 +7,7 @@
 NAME = netsnmp
 VERSION = 5.6.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A suite of applications used to implement SNMP
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Attribute-Handlers
 VERSION = 0.78
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABERGMAN
 
 DESCRIPTION = simpler definition of attribute handlers

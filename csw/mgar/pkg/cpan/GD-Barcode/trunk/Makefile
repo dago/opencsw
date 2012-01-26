@@ -1,6 +1,7 @@
 NAME = GD-Barcode
 VERSION = 1.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KWITKNR
 
 DESCRIPTION = Create barcode images with GD

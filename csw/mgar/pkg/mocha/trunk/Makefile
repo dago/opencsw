@@ -5,6 +5,7 @@
 NAME = mocha
 VERSION = 0.9.7
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = a library for mocking and stubbing using a syntax like that of JMock
 define BLURB
   Mocha is a library for mocking and stubbing using a syntax like that of

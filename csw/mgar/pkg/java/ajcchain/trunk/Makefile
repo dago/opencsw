@@ -3,6 +3,7 @@ VERSION = 1.2
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons Chain : Chain of Responsibility pattern API
 define BLURB

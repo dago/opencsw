@@ -5,6 +5,7 @@
 NAME = oracle
 VERSION = 10.2.0
 CATEGORIES = apps
+GARTYPE = v2
 define BLURB
 endef
 SPKG_SOURCEURL =

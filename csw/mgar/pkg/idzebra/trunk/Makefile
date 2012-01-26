@@ -2,6 +2,7 @@
 NAME = idzebra
 VERSION = 2.0.43
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A high-performance, general-purpose structured text indexing and retrieval engine
 define BLURB

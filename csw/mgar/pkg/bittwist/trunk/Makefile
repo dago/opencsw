@@ -4,6 +4,7 @@
 NAME = bittwist
 VERSION = 1.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Libpcap-based ethernet packet generator
 define BLURB

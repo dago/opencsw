@@ -1,6 +1,7 @@
 NAME = argtable
 VERSION = 2.13
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Parsing GNU style command line options with a minimum of fuss
 define BLURB

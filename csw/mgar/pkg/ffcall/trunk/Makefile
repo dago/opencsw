@@ -2,6 +2,7 @@
 NAME = ffcall
 VERSION = 1.10
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Foreign function call libraries
 define BLURB

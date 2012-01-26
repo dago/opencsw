@@ -5,6 +5,7 @@
 NAME = cups
 VERSION = 1.5.0
 CATEGORIES = net
+GARTYPE = v2
 
 define BLURB
   CUPS provides a portable printing layer for UNIX(R)-based operating

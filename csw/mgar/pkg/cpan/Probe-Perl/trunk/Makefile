@@ -1,6 +1,7 @@
 NAME = Probe-Perl
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KWILLIAMS
 
 DESCRIPTION = Information about the currently running perl

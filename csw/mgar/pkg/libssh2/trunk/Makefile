@@ -1,6 +1,7 @@
 NAME = libssh2
 VERSION = 1.3.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library for impementing the SSH2 protocol
 define BLURB

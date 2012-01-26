@@ -1,6 +1,7 @@
 NAME = Term-UI
 VERSION = 0.26
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Term::ReadLine UI made easy

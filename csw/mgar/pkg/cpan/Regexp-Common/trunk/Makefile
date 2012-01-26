@@ -1,6 +1,7 @@
 NAME = Regexp-Common
 VERSION = 2010010201
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABIGAIL
 
 DESCRIPTION = Provide commonly requested regular expressions

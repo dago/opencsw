@@ -1,6 +1,7 @@
 NAME = Test-Warn
 VERSION = 0.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHORNY
 
 DESCRIPTION = Extension to test methods for warnings

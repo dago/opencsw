@@ -11,6 +11,7 @@
 NAME = watch
 VERSION = 0.2.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Watch a program output change over time
 define BLURB

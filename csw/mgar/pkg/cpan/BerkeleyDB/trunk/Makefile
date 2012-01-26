@@ -1,6 +1,7 @@
 NAME = BerkeleyDB
 VERSION = 0.43
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PMQS
 
 DESCRIPTION = BerkeleyDB module

@@ -1,6 +1,7 @@
 NAME = Digest-BubbleBabble
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = Create bubble-babble fingerprints

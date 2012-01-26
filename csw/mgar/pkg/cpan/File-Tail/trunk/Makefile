@@ -1,6 +1,7 @@
 NAME = File-Tail
 VERSION = 0.99.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MGRABNAR
 
 DESCRIPTION = Perl extension for reading from continously updated files

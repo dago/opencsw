@@ -5,6 +5,7 @@
 NAME = mock
 VERSION = 0.7.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A Python Mocking and Patching Library for Testing
 define BLURB
 endef

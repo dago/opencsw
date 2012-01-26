@@ -5,6 +5,7 @@
 NAME = cheetah
 VERSION = 2.4.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A template engine and code generation tool
 define BLURB
   Cheetah is an open source template engine and code generation tool, written

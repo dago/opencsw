@@ -1,6 +1,7 @@
 NAME = Apache-DBI
 VERSION = 1.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABH
 
 DESCRIPTION = Initiate a persistent database connection

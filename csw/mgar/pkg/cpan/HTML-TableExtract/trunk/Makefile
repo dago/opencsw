@@ -1,6 +1,7 @@
 NAME = HTML-TableExtract
 VERSION = 2.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSISK
 
 DESCRIPTION = module for extracting the contents of tables within an HTML document.

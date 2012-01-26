@@ -1,6 +1,7 @@
 NAME = UNIVERSAL-isa
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHROMATIC
 
 DESCRIPTION = Attempt to recover from people calling UNIVERSAL::isa as a function

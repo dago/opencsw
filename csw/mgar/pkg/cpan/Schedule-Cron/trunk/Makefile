@@ -1,6 +1,7 @@
 NAME = Schedule-Cron
 VERSION = 0.97
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ROLAND
 
 DESCRIPTION = cron-like scheduler for Perl subroutines

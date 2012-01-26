@@ -1,6 +1,7 @@
 NAME = quilt
 VERSION = 0.48
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A patch management tooln
 define BLURB

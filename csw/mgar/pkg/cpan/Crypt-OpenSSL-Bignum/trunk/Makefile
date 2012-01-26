@@ -1,6 +1,7 @@
 NAME = Crypt-OpenSSL-Bignum
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IROBERTS
 
 DESCRIPTION = OpenSSL's multiprecision integer arithmetic

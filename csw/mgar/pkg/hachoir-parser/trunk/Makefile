@@ -5,6 +5,7 @@
 NAME = hachoir-parser
 VERSION = 1.3.4
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Allows to view and edit a binary stream field by field (core)
 define BLURB
   Hachoir is a Python library that allows to view and edit a binary stream

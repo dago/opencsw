@@ -1,6 +1,7 @@
 NAME = Catalyst
 VERSION = 5.61
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SRI
 
 DESCRIPTION = The Elegant MVC Web Application Framework

@@ -1,6 +1,7 @@
 NAME = libsoup
 VERSION = 2.26.3
 CATEGORIES = lib
+GARTYPE = v2
   
 
 DESCRIPTION = HTTP client/server library for GNOME

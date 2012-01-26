@@ -1,6 +1,7 @@
 NAME = Class-BlackHole
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SBURKE
 
 DESCRIPTION = base class to treat unhandled method calls as no-ops

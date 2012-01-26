@@ -1,6 +1,7 @@
 NAME = cacti
 VERSION = 0.8.7e
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = a network graphing solution based on RRDtool
 define BLURB

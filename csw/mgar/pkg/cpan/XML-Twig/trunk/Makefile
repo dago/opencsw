@@ -1,6 +1,7 @@
 NAME = XML-Twig
 VERSION = 3.34
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIROD
 
 DESCRIPTION = A module for processing huge XML documents in tree mode.

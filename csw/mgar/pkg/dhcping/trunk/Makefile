@@ -1,6 +1,7 @@
 NAME = dhcping
 VERSION = 1.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = DHCP daemon ping program
 define BLURB

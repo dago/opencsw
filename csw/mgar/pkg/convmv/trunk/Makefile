@@ -1,6 +1,7 @@
 NAME = convmv
 VERSION = 1.14
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Converts filenames from one encoding to another
 define BLURB

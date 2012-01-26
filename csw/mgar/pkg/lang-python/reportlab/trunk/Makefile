@@ -5,6 +5,7 @@
 NAME = reportlab
 VERSION = 2.5
 CATEGORIES = python
+GARTYPE = v2
 SPKG_DESC_CSWpy-reportlab = Programatically creating documents in PDF format
 define BLURB
   Free Open Source PDF library is suitable for web publishers, developers

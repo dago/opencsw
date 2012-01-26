@@ -1,6 +1,7 @@
 NAME = bundler
 VERSION = 1.0.14
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Manages an application's dependencies through its entire life,
 define BLURB

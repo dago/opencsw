@@ -1,6 +1,7 @@
 NAME = Mail-DKIM
 VERSION = 0.37
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JASLONG
 
 DESCRIPTION = Signs/verifies Internet mail with DKIM/DomainKey signatures

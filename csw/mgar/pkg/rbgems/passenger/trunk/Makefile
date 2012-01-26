@@ -1,6 +1,7 @@
 NAME = passenger
 VERSION = 2.2.15
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Passenger is an Apache module for Ruby on Rails support
 define BLURB

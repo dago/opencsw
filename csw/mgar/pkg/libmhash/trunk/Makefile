@@ -1,6 +1,7 @@
 NAME = mhash
 VERSION = 0.9.9.9
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A uniform interface to a large number of hash algorithms
 define BLURB

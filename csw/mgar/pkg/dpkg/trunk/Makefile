@@ -8,6 +8,7 @@
 NAME = dpkg
 VERSION = 1.15.5.3
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Debian package manager
 PACKAGES = CSWalternatives
 ARCHALL_CSWalternatives = 1

@@ -1,6 +1,7 @@
 NAME = Crypt-CBC
 VERSION = 2.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LDS
 
 DESCRIPTION = Encrypt Data with Cipher Block Chaining Mode

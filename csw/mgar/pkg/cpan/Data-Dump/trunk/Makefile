@@ -1,6 +1,7 @@
 NAME = Data-Dump
 VERSION = 1.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = pretty printing of data structures

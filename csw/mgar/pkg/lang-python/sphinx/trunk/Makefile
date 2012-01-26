@@ -6,6 +6,7 @@ NAME = Sphinx
 VERSION = 1.1.2
 PACKAGES = CSWpy-sphinx
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Helps create documentation consisting of reStructuredText sources
 define BLURB
 endef

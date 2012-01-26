@@ -23,6 +23,7 @@ VERSION = 2.5.5
 ## apps, cpan, devel, gnome, java, kde, lang, lib, meta, net, python, server,
 ## utils, x11, xfce, xorg, xtra
 CATEGORIES = python
+GARTYPE = v2
 ##
 ## A one-line description of the package, which will appear in the pkginfo.
 DESCRIPTION = A small but fast and easy to use stand-alone template engine

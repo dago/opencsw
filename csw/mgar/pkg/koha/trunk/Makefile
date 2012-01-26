@@ -1,6 +1,7 @@
 NAME = koha
 VERSION = 3.00.06
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Integrated Library System
 define BLURB

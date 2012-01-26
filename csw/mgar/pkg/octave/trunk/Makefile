@@ -1,6 +1,7 @@
 NAME = octave
 VERSION = 3.2.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = The GNU Octave language for numerical computations
 define BLURB

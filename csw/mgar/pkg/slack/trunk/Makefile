@@ -5,6 +5,7 @@
 NAME = slack
 VERSION = 0.15.2
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = A glorified wrapper around rsync
 define BLURB
 endef

@@ -2,6 +2,7 @@
 NAME = x3270
 VERSION = $(BASEREL).11ga6
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = An IBM 3270 terminal emulator
 define BLURB

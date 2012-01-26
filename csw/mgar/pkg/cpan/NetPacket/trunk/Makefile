@@ -1,6 +1,7 @@
 NAME = NetPacket
 VERSION = 0.41.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = YANICK
 
 DESCRIPTION = Modules to assemble/disassemble network packets

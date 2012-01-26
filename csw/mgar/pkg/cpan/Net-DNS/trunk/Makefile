@@ -1,6 +1,7 @@
 NAME = Net-DNS
 VERSION = 0.67
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = OLAF
 
 DESCRIPTION = Interface to the DNS resolver

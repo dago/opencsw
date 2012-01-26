@@ -1,6 +1,7 @@
 NAME = CGI-Application
 VERSION = 4.31
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKSTOS
 
 DESCRIPTION = Framework for building reusable web-applications

@@ -2,6 +2,7 @@ NAME = imagemagick
 VERSION = 6.7.3
 GARSUBREV = 10
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
 define BLURB

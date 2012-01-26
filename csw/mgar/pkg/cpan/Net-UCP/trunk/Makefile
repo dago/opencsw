@@ -1,6 +1,7 @@
 NAME = Net-UCP
 VERSION = 0.41
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NEMUX
 
 DESCRIPTION = Perl extension for EMI UCP Protocol

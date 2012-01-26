@@ -1,6 +1,7 @@
 NAME = nrpe
 VERSION = 2.12
 CATEGORIES = apps
+GARTYPE = v2
 
 SPKG_DESC_CSWnrpe = Nagios remote plugin executor
 SPKG_DESC_CSWnrpeplugin =  Nagios plugin that connects to nrpe demon

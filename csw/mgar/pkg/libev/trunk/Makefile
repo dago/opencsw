@@ -5,6 +5,7 @@
 NAME = libev
 VERSION = 3.9
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = A high performance event handling library
 define BLURB
   A full-featured and high-performance (see benchmark) event loop that is

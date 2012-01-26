@@ -1,6 +1,7 @@
 NAME = libapreq
 VERSION = 1.34
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ISAAC
 
 DESCRIPTION = Apache Request C Library

@@ -1,6 +1,7 @@
 NAME = Number-Format
 VERSION = 1.73
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = WRW
 
 DESCRIPTION = Perl extension for formatting numbers

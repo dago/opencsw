@@ -15,6 +15,7 @@
 NAME = cacertificates
 VERSION = $(shell date '+%Y%m%d')
 CATEGORIES = xtra
+GARTYPE = v2
 
 DESCRIPTION = CA certificates
 define BLURB

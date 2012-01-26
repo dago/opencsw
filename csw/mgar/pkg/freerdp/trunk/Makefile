@@ -6,6 +6,7 @@
 NAME = freerdp
 VERSION = 0.8.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = RDP client. Fork of the rdesktop project.
 define BLURB

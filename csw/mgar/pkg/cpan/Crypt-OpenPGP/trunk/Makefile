@@ -1,6 +1,7 @@
 NAME = Crypt-OpenPGP
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = pure-Perl OpenPGP implementation

@@ -1,6 +1,7 @@
 NAME = ratom
 VERSION = 0.6.7
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = RAtom is a library for working with the Atom Syndication Format and the Atom Publishing Protocol
 

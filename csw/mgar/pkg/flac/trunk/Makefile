@@ -1,6 +1,7 @@
 NAME = libflac
 VERSION = 1.2.1
 CATEGORIES = lib
+GARTYPE = v2
 
 EXTRA_MODULATORS = VERSION
 # Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on

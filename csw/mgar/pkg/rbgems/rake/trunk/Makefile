@@ -1,6 +1,7 @@
 NAME = rake
 VERSION = 0.8.7
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Make-like program implemented in Ruby
 define BLURB

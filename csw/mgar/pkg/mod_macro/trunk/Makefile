@@ -1,6 +1,7 @@
 NAME = mod_macro
 VERSION = 1.1.10
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Create macros inside apache2 config files 
 define BLURB

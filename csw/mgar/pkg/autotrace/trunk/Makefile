@@ -1,6 +1,7 @@
 NAME = autotrace
 VERSION = 0.31.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A program for converting bitmap to vector graphics
 define BLURB

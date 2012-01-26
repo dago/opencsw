@@ -5,6 +5,7 @@
 NAME = FormEncode
 VERSION = 1.2.2
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A validation and form generation package
 define BLURB
 endef

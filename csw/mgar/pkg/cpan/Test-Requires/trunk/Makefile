@@ -1,6 +1,7 @@
 NAME = Test-Requires
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TOKUHIROM
 
 DESCRIPTION = Checks to see if the module can be loaded

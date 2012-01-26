@@ -1,6 +1,7 @@
 NAME = gtk-doc
 VERSION = 1.11
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GTK-Doc is used to document C code.
 define BLURB

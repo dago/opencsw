@@ -1,6 +1,7 @@
 NAME = libassuan
 VERSION = 2.0.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = IPC library used by some GnuPG related software
 define BLURB

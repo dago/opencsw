@@ -1,6 +1,7 @@
 NAME = qhull
 VERSION = 2003.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Qhull computes the convex hull and other hulls (with poly.c-qh_gethash.patch)
 define BLURB

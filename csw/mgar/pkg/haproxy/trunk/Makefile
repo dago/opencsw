@@ -11,6 +11,7 @@
 NAME = haproxy
 VERSION = 1.4.18
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Reliable, high performance TCP/HTTP load balancer
 define BLURB

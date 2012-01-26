@@ -3,6 +3,7 @@ VERSION = 0.4
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons Discovery
 define BLURB

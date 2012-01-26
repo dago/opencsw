@@ -1,6 +1,7 @@
 NAME = popt
 VERSION = 1.16
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Popt is a C library for parsing command line parameters
 define BLURB

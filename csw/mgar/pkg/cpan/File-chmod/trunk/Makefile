@@ -1,6 +1,7 @@
 NAME = File-chmod
 VERSION = 0.32
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PINYAN
 
 DESCRIPTION = Implements symbolic and ls chmod modes

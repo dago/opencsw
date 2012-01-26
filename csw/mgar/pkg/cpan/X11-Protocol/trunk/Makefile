@@ -1,6 +1,7 @@
 NAME = X11-Protocol
 VERSION = 0.56
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SMCCAM
 
 DESCRIPTION = Perl module for the X Window System Protocol, version 11

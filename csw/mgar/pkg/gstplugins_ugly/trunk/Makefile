@@ -1,6 +1,7 @@
 NAME = gst-plugins-ugly
 VERSION = 0.10.13
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GStreamer plugins (Ugly)
 define BLURB
