@@ -3,6 +3,7 @@ VERSION = 3.2.1
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons Collections
 define BLURB

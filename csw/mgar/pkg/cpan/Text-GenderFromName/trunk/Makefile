@@ -1,6 +1,7 @@
 NAME = Text-GenderFromName
 VERSION = 0.32
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = EDALY
 
 DESCRIPTION = Guess the gender of an American first name

@@ -1,6 +1,7 @@
 NAME = Module-Load
 VERSION = 0.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Runtime require of both modules and files

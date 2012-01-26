@@ -1,6 +1,7 @@
 NAME = XML-Records
 VERSION = 0.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = EBOHLMAN
 
 DESCRIPTION = Perl XML::Records module

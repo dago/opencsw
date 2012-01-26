@@ -1,6 +1,7 @@
 NAME = DBIx-Password
 VERSION = 1.8
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KROW
 
 DESCRIPTION = create a global password file for DB passwords

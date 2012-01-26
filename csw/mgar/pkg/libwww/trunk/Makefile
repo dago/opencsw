@@ -1,6 +1,7 @@
 NAME = w3c-libwww
 VERSION = 5.4.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library used for dynamic image creation
 define BLURB

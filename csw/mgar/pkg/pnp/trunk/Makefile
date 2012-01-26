@@ -1,6 +1,7 @@
 NAME = pnp
 VERSION = 0.4.14
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = visualization of nagios performance data using RRD databases
 define BLURB

@@ -1,6 +1,7 @@
 NAME = tzinfo
 VERSION = 0.3.27
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Daylight-savings aware timezone library
 

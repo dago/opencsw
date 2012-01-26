@@ -1,6 +1,7 @@
 NAME = lcms2
 VERSION = 2.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = The little color management system and tools
 define BLURB

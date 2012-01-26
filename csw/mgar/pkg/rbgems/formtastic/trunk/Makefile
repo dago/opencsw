@@ -1,6 +1,7 @@
 NAME = formtastic
 VERSION = 0.9.10
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A Rails form builder plugin
 define BLURB

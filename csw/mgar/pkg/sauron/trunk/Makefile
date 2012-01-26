@@ -1,6 +1,7 @@
 NAME = sauron
 VERSION = 0.6.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Scalable system for management of DNS & DHCP services
 define BLURB

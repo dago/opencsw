@@ -2,6 +2,7 @@
 NAME = tor
 VERSION = 0.2.1.28
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
 define BLURB

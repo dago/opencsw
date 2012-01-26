@@ -1,6 +1,7 @@
 NAME = IPC-Run
 VERSION = 0.89
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TODDR
 
 DESCRIPTION = Provides system() and background procs w/ piping, redirs, ptys

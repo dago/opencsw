@@ -1,6 +1,7 @@
 NAME = sox
 VERSION = 14.3.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Swiss Army Knife of sound processing utilities
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Config-General
 VERSION = 2.44
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TLINDEN
 
 DESCRIPTION = Generic Config Module

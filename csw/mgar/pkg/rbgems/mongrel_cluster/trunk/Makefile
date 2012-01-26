@@ -1,6 +1,7 @@
 NAME = mongrel_cluster
 VERSION = 1.0.5
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Mongrel plugin for managing multiple Mongrel processes
 define BLURB

@@ -1,6 +1,7 @@
 NAME = HTML-Element-Extended
 VERSION = 1.17
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSISK
 
 DESCRIPTION = manipulate a table composed of HTML::Element style components.

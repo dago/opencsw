@@ -1,6 +1,7 @@
 NAME = cdecl
 VERSION = 2.5
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = C declaration guide/tool
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Gtk2-TrayIcon
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MLEHMANN
 
 DESCRIPTION = interface to the EggTrayIcon library

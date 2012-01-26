@@ -7,6 +7,7 @@ MAJ_VERSION = 10.2
 PATCHLEVEL = 0
 VERSION = $(MAJ_VERSION).$(PATCHLEVEL)
 CATEGORIES = python
+GARTYPE = v2
 
 define BLURB
   Twisted is a networking engine written in Python, supporting numerous

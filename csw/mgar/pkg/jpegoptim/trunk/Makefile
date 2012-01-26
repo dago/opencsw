@@ -1,6 +1,7 @@
 NAME = jpegoptim
 VERSION = 1.2.4
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Utility to optimize jpeg files
 define BLURB

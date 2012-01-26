@@ -1,6 +1,7 @@
 NAME = tightvnc
 VERSION = 1.3.10
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = TightVNC server is a free remote control package derived from the popular VNC software
 

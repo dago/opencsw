@@ -3,6 +3,7 @@
 NAME = cfengine3
 VERSION = 3.2.3
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Open source configuration management system
 define BLURB

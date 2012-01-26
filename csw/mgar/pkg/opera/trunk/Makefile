@@ -1,6 +1,7 @@
 NAME = opera
 VERSION = 9.62
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Full-featured, standards-compliant browser
 define BLURB

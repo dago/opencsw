@@ -5,6 +5,7 @@
 NAME = pylint
 VERSION = 0.21.3
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Python code static checker
 define BLURB
 endef

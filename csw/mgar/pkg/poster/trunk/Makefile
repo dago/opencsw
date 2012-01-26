@@ -1,6 +1,7 @@
 NAME = poster
 VERSION = 20050907
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Create large posters out of PostScript pages
 define BLURB

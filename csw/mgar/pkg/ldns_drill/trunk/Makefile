@@ -1,6 +1,7 @@
 NAME = ldns_drill
 VERSION = 1.6.9
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool (ldns)
 define BLURB

@@ -1,6 +1,7 @@
 NAME = File-ShareDir
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Locate per-dist and per-module shared files

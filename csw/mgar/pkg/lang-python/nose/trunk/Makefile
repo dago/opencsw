@@ -3,6 +3,7 @@
 NAME = nose
 VERSION = 0.11.3
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Nose extends unittest to make testing easier
 define BLURB

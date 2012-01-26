@@ -1,6 +1,7 @@
 NAME = json
 VERSION = 1.5.3
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = JSON Implementation for Ruby
 

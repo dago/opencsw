@@ -1,6 +1,7 @@
 NAME = sysstat
 VERSION = 20111025
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Key system statistics at a glance
 define BLURB

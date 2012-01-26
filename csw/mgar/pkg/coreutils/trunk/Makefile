@@ -1,6 +1,7 @@
 NAME = coreutils
 VERSION = 8.15
 CATEGORIES = utils
+GARTYPE = v2
 
 # seq has issues related to the handling of long double's with -O2.
 # this issue manifested on sol8 and sol9 x86 only.  sparc was unaffected

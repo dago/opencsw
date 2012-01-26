@@ -2,6 +2,7 @@
 NAME = mtwrite
 VERSION = r100528
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library to enable tar and unzip to write multiple files in parallel
 define BLURB

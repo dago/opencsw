@@ -1,6 +1,7 @@
 NAME = gts
 VERSION = 0.7.6
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU Triangulated Surface Library
 define BLURB

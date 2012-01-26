@@ -1,6 +1,7 @@
 NAME = APC
 VERSION = 3.1.9
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = APC Extention for PHP
 define BLURB

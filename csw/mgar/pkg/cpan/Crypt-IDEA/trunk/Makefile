@@ -1,6 +1,7 @@
 NAME = Crypt-IDEA
 VERSION = 1.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DPARIS
 
 DESCRIPTION = Perl interface to IDEA block cipher

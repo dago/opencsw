@@ -2,6 +2,7 @@
 NAME = openldap
 VERSION = 2.4.26
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Brief description
 define BLURB

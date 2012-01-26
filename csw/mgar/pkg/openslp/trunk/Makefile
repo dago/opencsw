@@ -6,6 +6,7 @@ NAME = openslp
 VERSION = 1.2.1
 # http://prdownloads.sourceforge.net/openslp/openslp-1.2.1.tar.gz?download
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Service Location Protocol
 define BLURB
 endef

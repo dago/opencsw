@@ -15,6 +15,7 @@
 NAME = dante
 VERSION = 1.2.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Dante SOCKS packages
 define BLURB

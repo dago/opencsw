@@ -1,6 +1,7 @@
 NAME = Text-German
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ULPFR
 
 DESCRIPTION = German grundform reduction

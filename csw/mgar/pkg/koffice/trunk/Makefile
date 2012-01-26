@@ -1,6 +1,7 @@
 NAME = koffice
 VERSION = 1.6.3
 CATEGORIES = kde
+GARTYPE = v2
 
 DESCRIPTION = KDE Web Development Environment (gcc3)
 define BLURB

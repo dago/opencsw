@@ -27,6 +27,7 @@
 NAME = subversion
 VERSION = 1.7.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Version control rethought
 define BLURB

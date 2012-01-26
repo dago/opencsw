@@ -2,6 +2,7 @@
 NAME = geos
 VERSION = 3.2.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Geometry Engine, Open Source
 define BLURB

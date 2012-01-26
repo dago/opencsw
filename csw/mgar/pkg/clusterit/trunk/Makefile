@@ -1,6 +1,7 @@
 NAME = clusterit
 VERSION = 2.5
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Suite of tools for managing large clusters of machines
 define BLURB

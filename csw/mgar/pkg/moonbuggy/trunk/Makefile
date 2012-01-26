@@ -2,6 +2,7 @@
 NAME = moonbuggy
 VERSION = 1.0.51
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Moon-buggy is a simple character graphics game
 define BLURB

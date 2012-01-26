@@ -1,6 +1,7 @@
 NAME = pari
 VERSION = 2.3.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Efficient computations in number theory
 define BLURB

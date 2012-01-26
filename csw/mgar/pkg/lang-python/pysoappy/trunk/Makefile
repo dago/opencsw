@@ -4,6 +4,7 @@
 NAME = pysoappy
 VERSION = 0.11.4
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = SOAP library for python
 define BLURB

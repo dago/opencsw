@@ -1,6 +1,7 @@
 NAME = Clone
 VERSION = 0.31
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RDF
 
 DESCRIPTION = Recursively copy Perl datatypes

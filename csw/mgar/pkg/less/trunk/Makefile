@@ -1,6 +1,7 @@
 NAME = less
 VERSION = 444
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Less is a free, open-source file pager
 define BLURB

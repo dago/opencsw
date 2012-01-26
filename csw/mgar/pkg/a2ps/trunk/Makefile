@@ -3,6 +3,7 @@ NAME = a2ps
 VERSION = 4.13
 SPKG_VERSION = 4.13b
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Any to PostScript filter
 define BLURB

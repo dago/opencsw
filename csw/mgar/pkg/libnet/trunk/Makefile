@@ -1,6 +1,7 @@
 NAME = libnet
 VERSION = 1.0.2a
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = The libnet packet construction library
 define BLURB

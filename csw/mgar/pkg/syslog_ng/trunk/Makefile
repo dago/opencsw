@@ -3,6 +3,7 @@
 NAME = syslog-ng
 VERSION = 3.3.3
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = A powerful syslogd replacement
 define BLURB

@@ -1,6 +1,7 @@
 NAME = fam
 VERSION = 2.7.0
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = File Alteration Monitor, daemon and interface library
 define BLURB

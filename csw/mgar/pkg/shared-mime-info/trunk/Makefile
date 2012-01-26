@@ -1,6 +1,7 @@
 NAME = shared-mime-info
 VERSION = 0.71
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Freedesktop.org common MIME database
 define BLURB

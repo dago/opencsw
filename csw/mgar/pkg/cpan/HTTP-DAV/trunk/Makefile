@@ -1,6 +1,7 @@
 NAME = HTTP-DAV
 VERSION = 0.31
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PCOLLINS
 
 DESCRIPTION = A WebDAV client library for Perl5

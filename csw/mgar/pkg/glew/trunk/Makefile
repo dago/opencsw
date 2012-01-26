@@ -8,6 +8,7 @@
 NAME = glew
 VERSION = 1.6.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = OpenGL Extension Wrangler Library (GLEW)
 define BLURB

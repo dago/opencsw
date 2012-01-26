@@ -1,6 +1,7 @@
 NAME = gpgme
 VERSION = 1.1.8
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GPGME - GnuPG Made Easy
 define BLURB

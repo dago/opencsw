@@ -1,6 +1,7 @@
 NAME = gawk
 VERSION = 4.0.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU awk
 define BLURB

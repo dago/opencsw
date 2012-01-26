@@ -1,6 +1,7 @@
 NAME = firefox-l10n
 VERSION = 3.0.14
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Firefox language pack :
 define BLURB

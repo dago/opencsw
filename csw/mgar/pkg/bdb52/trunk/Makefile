@@ -1,6 +1,7 @@
 NAME = db
 VERSION = 5.2.36
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Berkeley DB 5.2
 define BLURB

@@ -1,6 +1,7 @@
 NAME = gnumeric
 VERSION = 1.9.5
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GNOME spreadsheet program
 define BLURB

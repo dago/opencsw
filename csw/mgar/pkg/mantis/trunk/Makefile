@@ -1,6 +1,7 @@
 NAME = mantisbt
 VERSION = 1.2.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
 define BLURB

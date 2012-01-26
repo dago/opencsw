@@ -1,6 +1,7 @@
 NAME = jxplorer
 VERSION = 3.2
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = JXplorer - A Java Ldap Browser
 define BLURB

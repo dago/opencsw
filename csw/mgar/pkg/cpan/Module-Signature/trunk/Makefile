@@ -1,6 +1,7 @@
 NAME = Module-Signature
 VERSION = 0.66
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = FLORA
 
 DESCRIPTION = Module signature file manipulation

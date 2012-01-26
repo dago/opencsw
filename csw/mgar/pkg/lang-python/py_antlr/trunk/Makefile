@@ -5,6 +5,7 @@
 NAME = py_antlr
 VERSION = 3.1.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python ANTLR runtime
 define BLURB

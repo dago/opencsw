@@ -1,6 +1,7 @@
 NAME = Convert-TNEF
 VERSION = 0.17
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DOUGW
 
 DESCRIPTION = Perl module to read TNEF files

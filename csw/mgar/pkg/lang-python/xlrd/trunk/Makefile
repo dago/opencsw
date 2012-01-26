@@ -1,6 +1,7 @@
 NAME = xlrd
 VERSION = 0.7.1
 CATEGORIES = python
+GARTYPE = v2
 PACKAGES = CSWpy-xlrd
 CATALOGNAME = py_xlrd
 LICENSE = xlrd/licences.py

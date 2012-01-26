@@ -13,6 +13,7 @@
 NAME = synergy
 VERSION = 1.4.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Software-based TCP/IP "KVM" switch
 define BLURB

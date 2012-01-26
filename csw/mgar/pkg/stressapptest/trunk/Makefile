@@ -5,6 +5,7 @@
 NAME = stressapptest
 VERSION = 1.0.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Stress test application for simulating high load situations
 define BLURB

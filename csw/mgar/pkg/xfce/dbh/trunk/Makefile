@@ -1,6 +1,7 @@
 NAME      = dbh
 VERSION   = 1.0.24
 CATEGORIES   = xfce
+GARTYPE = v2
 XFCE_VERSION = 4.2.3.2
 
 DESCRIPTION = Disk based hash tables, dbh

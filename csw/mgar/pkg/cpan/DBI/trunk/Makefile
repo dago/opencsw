@@ -1,6 +1,7 @@
 NAME = DBI
 VERSION = 1.616
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TIMB
 
 DESCRIPTION = Database independent interface for Perl

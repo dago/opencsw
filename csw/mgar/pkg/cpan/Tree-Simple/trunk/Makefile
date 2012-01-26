@@ -1,6 +1,7 @@
 NAME = Tree-Simple
 VERSION = 1.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = STEVAN
 
 DESCRIPTION = a simple tree object

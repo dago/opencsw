@@ -1,6 +1,7 @@
 NAME = Crypt-Blowfish
 VERSION = 2.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DPARIS
 
 DESCRIPTION = Perl Blowfish encryption module

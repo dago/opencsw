@@ -6,6 +6,7 @@ NAME = pychecker
 VERSION = 0.8.18
 # pychecker-0.8.18.tar.gz
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = static analysis tool for Python
 define BLURB
 endef

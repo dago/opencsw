@@ -1,6 +1,7 @@
 NAME = libiptcdata
 VERSION = 1.0.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = IPTC Tag Parsing Library
 define BLURB

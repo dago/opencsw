@@ -6,6 +6,7 @@ DISTVERSION = $(VERSION)
 DISTNAME = milter-greylist-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Greylist mail filtering method
 define BLURB

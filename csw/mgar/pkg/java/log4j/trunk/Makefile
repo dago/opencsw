@@ -1,6 +1,7 @@
 NAME = log4j
 VERSION = 1.2.15
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache log4j Logging Services
 define BLURB

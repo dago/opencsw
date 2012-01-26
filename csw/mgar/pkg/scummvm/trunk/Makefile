@@ -1,6 +1,7 @@
 NAME = scummvm
 VERSION = 1.4.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Virtual machine for several classic graphical point-and-click adventure games
 define BLURB

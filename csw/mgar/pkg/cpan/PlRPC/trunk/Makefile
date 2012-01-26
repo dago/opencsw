@@ -1,6 +1,7 @@
 NAME = PlRPC
 VERSION = 0.2020
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MNOONING
 
 DESCRIPTION = Perl extension for writing perl RPC servers and clients

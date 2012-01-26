@@ -1,6 +1,7 @@
 NAME = prefork
 VERSION = 1.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Optimized module loading for forking or non-forking processes

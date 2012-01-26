@@ -1,6 +1,7 @@
 NAME = WWW-Mechanize
 VERSION = 1.66
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = Handy web browsing in a Perl object

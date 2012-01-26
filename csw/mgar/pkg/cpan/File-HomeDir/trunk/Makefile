@@ -1,6 +1,7 @@
 NAME = File-HomeDir
 VERSION = 0.86
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Get the home directory for yourself or other users

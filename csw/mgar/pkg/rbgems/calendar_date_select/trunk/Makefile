@@ -1,6 +1,7 @@
 NAME = calendar_date_select
 VERSION = 1.16.3
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Calendar date picker for rails
 

@@ -1,6 +1,7 @@
 NAME = Geo-IP-PurePerl
 VERSION = 1.25
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BORISZ
 
 DESCRIPTION = Look up country by IP Address

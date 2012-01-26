@@ -1,6 +1,7 @@
 NAME = pkgutil
 VERSION = 2.6.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Installs Solaris packages easily
 define BLURB

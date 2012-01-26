@@ -1,6 +1,7 @@
 NAME = tkcvs
 VERSION = 8.2.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A graphical front-end to CVS and Subversion
 define BLURB

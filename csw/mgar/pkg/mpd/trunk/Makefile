@@ -1,6 +1,7 @@
 NAME = mpd
 VERSION = 0.15.8
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = The Music Player Daemon
 define BLURB

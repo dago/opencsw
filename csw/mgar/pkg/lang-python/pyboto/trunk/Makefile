@@ -1,6 +1,7 @@
 NAME = pyboto
 VERSION = 1.9b
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python interfaces to Amazon Web Services
 define BLURB

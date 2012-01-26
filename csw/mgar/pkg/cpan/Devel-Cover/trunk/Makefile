@@ -1,6 +1,7 @@
 NAME = Devel-Cover
 VERSION = 0.65
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PJCJ
 
 DESCRIPTION = Code coverage metrics for Perl 

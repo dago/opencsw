@@ -1,6 +1,7 @@
 NAME = supybot
 VERSION = 0.83.4.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Robust, user-friendly, and extensible IRC bot
 define BLURB

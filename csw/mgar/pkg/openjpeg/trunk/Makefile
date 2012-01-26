@@ -1,6 +1,7 @@
 NAME = openjpeg
 VERSION = 1.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Open-source JPEG 2000 codec written in C
 define BLURB

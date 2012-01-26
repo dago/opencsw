@@ -1,6 +1,7 @@
 NAME = libnids
 VERSION = 1.23
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = implementation of an e-component of network intrusion detection
 define BLURB

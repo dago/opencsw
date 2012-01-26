@@ -1,6 +1,7 @@
 NAME = centerim
 VERSION = 4.22.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Text mode menu- and window-driven IM interface
 define BLURB

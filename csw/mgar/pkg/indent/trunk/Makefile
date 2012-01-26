@@ -1,6 +1,7 @@
 NAME = indent
 VERSION = 2.2.10
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = C language source code formatting program 
 define BLURB

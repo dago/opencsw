@@ -1,6 +1,7 @@
 NAME = Lexical-Persistence
 VERSION = 0.98
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCAPUTO
 
 DESCRIPTION = Persistent lexical variable values for arbitrary calls

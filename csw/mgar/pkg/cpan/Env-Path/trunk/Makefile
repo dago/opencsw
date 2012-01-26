@@ -1,6 +1,7 @@
 NAME = Env-Path
 VERSION = 0.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DSB
 
 DESCRIPTION = advanced operations on path variables

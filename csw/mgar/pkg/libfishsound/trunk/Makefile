@@ -1,6 +1,7 @@
 NAME = libfishsound
 VERSION = 1.0.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Decoding and encoding audio data using the Xiph.org codecs
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Apache-Test
 VERSION = 1.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PHRED
 
 DESCRIPTION = Test.pm wrapper with helpers for testing Apache

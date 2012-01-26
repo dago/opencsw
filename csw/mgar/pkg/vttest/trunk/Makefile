@@ -1,6 +1,7 @@
 NAME = vttest
 VERSION = 20071216
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Tool for testing VT100 compatibility of terminals
 define BLURB

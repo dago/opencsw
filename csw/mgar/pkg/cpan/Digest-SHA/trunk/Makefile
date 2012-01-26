@@ -1,6 +1,7 @@
 NAME = Digest-SHA
 VERSION = stub
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSHELOR
 
 DESCRIPTION = Stub to the Perl build-in module Digest::SHA

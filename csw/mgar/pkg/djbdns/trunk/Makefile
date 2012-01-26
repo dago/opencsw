@@ -1,6 +1,7 @@
 NAME = djbdns
 VERSION = 1.05
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Retrieve and publish Domain Name System information
 define BLURB

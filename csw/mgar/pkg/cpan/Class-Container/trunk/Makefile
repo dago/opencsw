@@ -1,6 +1,7 @@
 NAME = Class-Container
 VERSION = 0.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KWILLIAMS
 
 DESCRIPTION = Glues object frameworks together transparently

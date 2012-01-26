@@ -4,6 +4,7 @@ VERSION = 0.2
 # release/0.2
 PATCHLEVEL = 73a03
 CATEGORIES = python
+GARTYPE = v2
 
 VENDOR_URL = http://eagain.net/gitweb/?p=gitosis.git
 

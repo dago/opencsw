@@ -1,6 +1,7 @@
 NAME = gperf
 VERSION = 3.0.4
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = A perfect hash function generator
 define BLURB

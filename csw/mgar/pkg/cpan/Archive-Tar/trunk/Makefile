@@ -1,6 +1,7 @@
 NAME = Archive-Tar
 VERSION = stub
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Stub to the Perl build-in module Archive::Tar

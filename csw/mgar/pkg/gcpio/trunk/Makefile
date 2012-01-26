@@ -1,6 +1,7 @@
 NAME = cpio
 VERSION = 2.10
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU cpio
 define BLURB

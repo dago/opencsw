@@ -1,6 +1,7 @@
 NAME = pidgin-sipe
 VERSION = 1.5.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Pidgin Plug-in SIPE (Sip Exchange Protocol)
 define BLURB

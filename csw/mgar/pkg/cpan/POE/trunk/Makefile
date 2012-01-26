@@ -1,6 +1,7 @@
 NAME = POE
 VERSION = 1.287
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCAPUTO
 
 DESCRIPTION = Portable multitasking and networking framework for Perl

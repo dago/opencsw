@@ -1,6 +1,7 @@
 NAME = PatchReader
 VERSION = 0.9.5
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JKEISER
 
 DESCRIPTION = Utilities to read and manipulate patches and CVS

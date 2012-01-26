@@ -2,6 +2,7 @@
 NAME = ascii
 VERSION = 3.11
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Interactive ASCII name and synonym chart
 define BLURB

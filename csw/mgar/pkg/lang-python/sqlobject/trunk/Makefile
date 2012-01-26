@@ -5,6 +5,7 @@
 NAME = SQLObject
 VERSION = 0.15.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Object Relational Manager for Python
 define BLURB
 endef

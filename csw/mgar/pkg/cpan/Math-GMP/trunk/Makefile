@@ -1,6 +1,7 @@
 NAME = Math-GMP
 VERSION = 2.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHIPT
 
 DESCRIPTION = high speed arbitrary size integer math

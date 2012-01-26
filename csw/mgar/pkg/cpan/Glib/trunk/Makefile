@@ -1,6 +1,7 @@
 NAME = Glib
 VERSION = 1.223
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TSCH
 
 DESCRIPTION = wrappers for the GLib utility and Object libraries

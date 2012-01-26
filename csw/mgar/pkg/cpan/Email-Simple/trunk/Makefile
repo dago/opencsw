@@ -1,6 +1,7 @@
 NAME = Email-Simple
 VERSION = 2.100
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = Perl Email::Simple module for RFC2822 message format and headers

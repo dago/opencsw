@@ -2,6 +2,7 @@
 NAME = varnish
 VERSION = 2.1.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Varnish Web Cache
 define BLURB

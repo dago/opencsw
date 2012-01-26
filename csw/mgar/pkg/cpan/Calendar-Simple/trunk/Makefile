@@ -1,6 +1,7 @@
 NAME = Calendar-Simple
 VERSION = 1.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAVECROSS
 
 DESCRIPTION = Perl extension to create simple calendars

@@ -1,6 +1,7 @@
 NAME = XML-SemanticDiff
 VERSION = 0.95
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KHAMPTON
 
 DESCRIPTION = extension for comparing XML documents.

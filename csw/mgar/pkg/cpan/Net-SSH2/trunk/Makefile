@@ -1,6 +1,7 @@
 NAME = Net-SSH2
 VERSION = 0.40
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RKITOVER
 
 DESCRIPTION = Support for the SSH2 protocol via libssh2

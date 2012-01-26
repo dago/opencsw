@@ -1,6 +1,7 @@
 NAME = phpsysinfo
 VERSION = 3.0.11
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Displays information about the host being accessed
 define BLURB

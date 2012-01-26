@@ -1,6 +1,7 @@
 NAME = spidermonkey
 VERSION = 1.7.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = The Mozilla SpiderMonkey JavaScript interpreter and library
 define BLURB

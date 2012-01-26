@@ -1,6 +1,7 @@
 NAME = SQL-Statement
 VERSION = 1.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JZUCKER
 
 DESCRIPTION = SQL parsing and processing engine

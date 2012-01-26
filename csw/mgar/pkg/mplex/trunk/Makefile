@@ -1,6 +1,7 @@
 NAME = mplex
 VERSION = 0.9.3
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Allows multiplexing of port 443 for ssh and https at the same time
 define BLURB

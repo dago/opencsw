@@ -1,6 +1,7 @@
 NAME = libtorrent
 VERSION = 0.12.6
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = BitTorrent library written in C++ for *nix.
 define BLURB

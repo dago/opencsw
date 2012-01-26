@@ -1,6 +1,7 @@
 NAME = notification-daemon
 VERSION = 0.3.7
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Daemon to aid libnotify
 define BLURB

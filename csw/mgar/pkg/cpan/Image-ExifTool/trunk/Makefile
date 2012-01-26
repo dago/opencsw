@@ -1,6 +1,7 @@
 NAME = exiftool
 VERSION = 7.73
 CATEGORIES = cpan
+GARTYPE = v2
 
 DESCRIPTION = Read, Write and Edit Image File Meta Information
 define BLURB

@@ -1,6 +1,7 @@
 NAME = ExtUtils-XSBuilder
 VERSION = 0.28
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GRICHTER
 
 DESCRIPTION = parse C header files and create XS glue code

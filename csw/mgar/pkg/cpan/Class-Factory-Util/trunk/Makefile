@@ -1,6 +1,7 @@
 NAME = Class-Factory-Util
 VERSION = 1.7
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Provide utility methods for factory classes

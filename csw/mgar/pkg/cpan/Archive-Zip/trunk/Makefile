@@ -1,6 +1,7 @@
 NAME = Archive-Zip
 VERSION = 1.30
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Provides an interface to ZIP archive files

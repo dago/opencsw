@@ -1,6 +1,7 @@
 NAME = XML-Smart
 VERSION = 1.6.9
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GMPASSOS
 
 DESCRIPTION = a smart, easy and powerful way to access/create XML files/data.

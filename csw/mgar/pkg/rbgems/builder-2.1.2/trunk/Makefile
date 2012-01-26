@@ -1,6 +1,7 @@
 NAME = builder
 VERSION = 2.1.2
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Builder provides a number of builder objects that make creating structured data simple to do
 

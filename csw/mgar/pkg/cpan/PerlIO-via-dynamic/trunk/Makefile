@@ -1,6 +1,7 @@
 NAME = PerlIO-via-dynamic
 VERSION = 0.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = Dynamic PerlIO layers

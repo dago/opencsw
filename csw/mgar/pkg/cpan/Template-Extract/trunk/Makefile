@@ -1,6 +1,7 @@
 NAME = Template-Extract
 VERSION = 0.40
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUTRIJUS
 
 DESCRIPTION = use TT2 syntax to extract data from documents

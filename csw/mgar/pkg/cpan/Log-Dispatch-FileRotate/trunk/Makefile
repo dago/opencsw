@@ -1,6 +1,7 @@
 NAME = Log-Dispatch-FileRotate
 VERSION = 1.19
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKPF
 
 DESCRIPTION = Log to files that archive/rotate themselves

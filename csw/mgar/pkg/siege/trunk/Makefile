@@ -1,6 +1,7 @@
 NAME = siege
 VERSION = 2.69
 CATEGORIES = xtra
+GARTYPE = v2
 
 DESCRIPTION = A http regression testing and benchmarking utility
 define BLURB

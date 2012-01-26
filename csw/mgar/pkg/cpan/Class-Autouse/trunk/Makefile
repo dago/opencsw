@@ -1,6 +1,7 @@
 NAME = Class-Autouse
 VERSION = 1.29
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Run-time class loading on first method call

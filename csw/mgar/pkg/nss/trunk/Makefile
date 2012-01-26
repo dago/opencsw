@@ -28,6 +28,7 @@ MINOR_VERSION = 12
 PATCHLEVEL    = 11
 VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Network Security Services library
 define BLURB
   Network Security Services (NSS) is a set of libraries designed to support

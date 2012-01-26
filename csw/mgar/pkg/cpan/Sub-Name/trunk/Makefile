@@ -1,6 +1,7 @@
 NAME = Sub-Name
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = XMATH
 
 DESCRIPTION = (re)name a sub

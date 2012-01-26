@@ -1,6 +1,7 @@
 NAME = eggdbus
 VERSION = 0.6
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = D-Bus bindings for GObject
 define BLURB

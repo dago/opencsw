@@ -2,6 +2,7 @@
 NAME = dia-shapes
 VERSION = 1.0
 CATEGORIES = category
+GARTYPE = v2
 
 DESCRIPTION = Shapes for dia
 define BLURB

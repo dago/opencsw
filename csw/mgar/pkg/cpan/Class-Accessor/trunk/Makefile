@@ -1,6 +1,7 @@
 NAME = Class-Accessor
 VERSION = 0.33
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KASEI
 
 DESCRIPTION = Automated accessor generation

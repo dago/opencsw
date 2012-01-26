@@ -1,6 +1,7 @@
 NAME = Test-Deep
 VERSION = 0.108
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = Extremely flexible deep comparison

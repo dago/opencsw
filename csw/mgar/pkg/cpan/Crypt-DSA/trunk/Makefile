@@ -1,6 +1,7 @@
 NAME = Crypt-DSA
 VERSION = 0.14
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = DSA signatures and key generation

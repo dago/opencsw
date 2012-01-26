@@ -1,6 +1,7 @@
 NAME = yasm
 VERSION = 1.2.0
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = A complete rewrite of the NASM assembler
 define BLURB

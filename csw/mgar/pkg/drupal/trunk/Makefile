@@ -1,6 +1,7 @@
 NAME = drupal
 VERSION = 6.14
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = An open source content management platform
 define BLURB

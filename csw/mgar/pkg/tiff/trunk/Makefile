@@ -1,6 +1,7 @@
 NAME = tiff
 VERSION = 3.9.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Lib and tools for Tag Image File Format
 define BLURB

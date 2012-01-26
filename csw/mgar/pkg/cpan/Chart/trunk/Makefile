@@ -1,6 +1,7 @@
 NAME = Chart
 VERSION = 2.4.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHARTGRP
 
 DESCRIPTION = A series of charting modules based on GD

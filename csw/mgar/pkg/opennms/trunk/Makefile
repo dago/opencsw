@@ -1,6 +1,7 @@
 NAME = opennms
 VERSION = 1.6.10
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = enterprise grade network management platform
 define BLURB

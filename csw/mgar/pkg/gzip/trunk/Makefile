@@ -1,6 +1,7 @@
 NAME = gzip
 VERSION = 1.4
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU zip
 define BLURB

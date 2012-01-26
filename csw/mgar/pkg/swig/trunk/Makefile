@@ -3,6 +3,7 @@
 NAME = swig
 VERSION = 2.0.4
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
 define BLURB

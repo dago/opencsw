@@ -1,6 +1,7 @@
 NAME = IO-Tty
 VERSION = 1.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RGIERSIG
 
 DESCRIPTION = Low-level allocate a pseudo-Tty, import constants

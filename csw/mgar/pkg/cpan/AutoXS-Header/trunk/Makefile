@@ -1,6 +1,7 @@
 NAME = AutoXS-Header
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SMUELLER
 
 DESCRIPTION = Container for the AutoXS header files

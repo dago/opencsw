@@ -5,6 +5,7 @@
 NAME = wxWidgets
 VERSION = 2.8.10
 CATEGORIES = lib
+GARTYPE = v2
 define BLURB
   wxWidgets lets developers create applications for Win32, Mac OS X, GTK+, X11,
   Motif, WinCE, and more using one codebase. It can be used from languages such

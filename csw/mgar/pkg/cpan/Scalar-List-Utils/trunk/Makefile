@@ -1,6 +1,7 @@
 NAME = Scalar-List-Utils
 VERSION = 1.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GBARR
 
 DESCRIPTION = a selection of general-utility list and scalar subroutines.

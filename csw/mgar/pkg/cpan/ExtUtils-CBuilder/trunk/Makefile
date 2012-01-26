@@ -1,6 +1,7 @@
 NAME = ExtUtils-CBuilder
 VERSION = 0.2703
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAGOLDEN
 
 DESCRIPTION = Compile and link C code for Perl modules

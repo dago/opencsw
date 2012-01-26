@@ -1,6 +1,7 @@
 NAME = libevent
 VERSION = 2.0.16
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Event notification library
 define BLURB

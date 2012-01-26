@@ -1,6 +1,7 @@
 NAME = Graphics-ColorNames-WWW
 VERSION = 1.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CFAERBER
 
 DESCRIPTION = WWW color names and equivalent RGB values

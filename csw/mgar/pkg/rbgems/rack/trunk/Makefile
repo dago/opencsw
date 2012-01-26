@@ -1,6 +1,7 @@
 NAME = rack
 VERSION = 1.1.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A minimal interface for developing web applications in Ruby
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Data-Hierarchy
 VERSION = 0.34
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = Handle data in a hierarchical structure

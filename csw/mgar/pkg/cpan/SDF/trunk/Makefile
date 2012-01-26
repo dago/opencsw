@@ -1,6 +1,7 @@
 NAME = sdf
 VERSION = 2.001
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IANC
 
 DESCRIPTION = Simple Document Format

@@ -1,6 +1,7 @@
 NAME = DBD-File
 VERSION = 0.35
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JZUCKER
 
 DESCRIPTION = base class for writing DBI drivers for plain files

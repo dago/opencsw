@@ -1,6 +1,7 @@
 NAME = IO-Socket-SSL
 VERSION = 1.39
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SULLR
 
 DESCRIPTION = Nearly transparent SSL encapsulation for IO::Socket::INET.

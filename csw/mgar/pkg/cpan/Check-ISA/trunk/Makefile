@@ -1,6 +1,7 @@
 NAME = Check-ISA
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NUFFIN
 
 DESCRIPTION = DWIM, correct checking of an object's class

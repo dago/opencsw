@@ -1,6 +1,7 @@
 NAME        = remake
 VERSION     = 3.82+dbg0.8
 CATEGORIES  = devel
+GARTYPE = v2
 
 DESCRIPTION = GNU Make debugger
 define BLURB

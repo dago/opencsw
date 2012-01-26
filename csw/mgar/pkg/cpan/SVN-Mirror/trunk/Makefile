@@ -1,6 +1,7 @@
 NAME = SVN-Mirror
 VERSION = 0.75
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = Mirror remote repository to local Subversion repository

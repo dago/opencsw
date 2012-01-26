@@ -6,6 +6,7 @@ NAME = liberation-fonts
 VERSION = 1.05.2.20091019
 FONTDIR = /usr/openwin/lib/X11/fonts/TrueType
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = replacements for Times New Roman, Arial, and Courier New
 define BLURB
 

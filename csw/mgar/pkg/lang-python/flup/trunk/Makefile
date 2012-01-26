@@ -5,6 +5,7 @@
 NAME = flup
 VERSION = 1.0.2
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Web Server Gateway Interface (WSGI) implementation for Python
 define BLURB
 endef

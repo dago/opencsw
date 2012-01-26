@@ -1,6 +1,7 @@
 NAME = esound
 VERSION = 0.2.41
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = EsounD, The Enlightened Sound Daemon
 define BLURB

@@ -1,6 +1,7 @@
 NAME = pmtools
 VERSION = 1.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MLFISHER
 
 DESCRIPTION = Tools for managing installed Perl modules.

@@ -5,6 +5,7 @@
 NAME = libxdg-basedir
 VERSION = 1.0.2
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Implements functions according to the XDG Base Directory Specification
 define BLURB
 

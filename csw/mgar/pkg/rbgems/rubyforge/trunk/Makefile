@@ -1,6 +1,7 @@
 NAME = rubyforge
 VERSION = 2.0.4
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A script which automates a limited set of rubyforge operations
 define BLURB

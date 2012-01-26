@@ -1,6 +1,7 @@
 NAME = eterm
 VERSION = 1.0
 CATEGORIES = category
+GARTYPE = v2
 
 DESCRIPTION = Brief description
 define BLURB

@@ -1,6 +1,7 @@
 NAME = libstatgrab
 VERSION = 0.16
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library that provides cross platform access to statistics
 define BLURB

@@ -3,6 +3,7 @@ VERSION    = 0.97.3
 #VERSION    = 0.97rc
 #DISTNAME   = $(NAME)-devel-latest
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Clam AntiVirus
 define BLURB

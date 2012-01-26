@@ -1,6 +1,7 @@
 NAME = wput
 VERSION = 0.6.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = the opposite of wget: a command line ftp client
 define BLURB

@@ -15,6 +15,7 @@
 NAME = bash_completion
 VERSION = 1.1
 CATEGORIES = xtra
+GARTYPE = v2
 
 DESCRIPTION = Programmable completion for bash
 define BLURB

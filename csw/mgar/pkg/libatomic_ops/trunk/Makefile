@@ -5,6 +5,7 @@
 NAME = libatomic-ops
 VERSION = 1.2
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Portable library for atomic operations
 define BLURB
 endef

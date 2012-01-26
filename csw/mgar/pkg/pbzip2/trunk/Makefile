@@ -1,6 +1,7 @@
 NAME = pbzip2
 VERSION = 1.1.6
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
 define BLURB

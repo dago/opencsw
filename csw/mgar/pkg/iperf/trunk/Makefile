@@ -9,6 +9,7 @@
 NAME = iperf
 VERSION = 2.0.4
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Internet Protocol bandwidth measuring tool 
 define BLURB

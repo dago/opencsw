@@ -1,6 +1,7 @@
 NAME = Crypt-Rijndael
 VERSION = 1.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BDFOY
 
 DESCRIPTION = Crypt::CBC compliant Rijndael encryption module

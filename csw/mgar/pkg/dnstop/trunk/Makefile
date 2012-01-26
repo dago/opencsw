@@ -1,6 +1,7 @@
 NAME       = dnstop
 VERSION    = 20110502
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Displays various tables of DNS traffic
 define BLURB

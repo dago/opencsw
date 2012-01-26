@@ -1,6 +1,7 @@
 NAME = gst-plugins-base
 VERSION = 0.10.26
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Base GStreamer plugins handling various media types
 define BLURB

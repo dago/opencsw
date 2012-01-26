@@ -1,6 +1,7 @@
 NAME = Shout
 VERSION = 2.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MYSELF
 
 DESCRIPTION = Perl bindings for libshout 2

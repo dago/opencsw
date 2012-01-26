@@ -1,6 +1,7 @@
 NAME = imlib2
 VERSION = 1.4.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Imlib 2 is the successor to Imlib, a powerful graphics library
 define BLURB

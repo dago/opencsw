@@ -1,6 +1,7 @@
 NAME = krb5
 VERSION = 1.9
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = MIT Kerberos 5
 define BLURB

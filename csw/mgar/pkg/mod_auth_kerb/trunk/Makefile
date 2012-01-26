@@ -1,6 +1,7 @@
 NAME = mod_auth_kerb
 VERSION = 5.4
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Apache Kerberos authentication module
 define BLURB

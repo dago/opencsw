@@ -6,6 +6,7 @@ NAME = autoproject
 VERSION = 0.20
 
 CATEGORIES = apps
+GARTYPE = v2
 DESCRIPTION = A utility for automated configuration of GNU autotools
 define BLURB
 

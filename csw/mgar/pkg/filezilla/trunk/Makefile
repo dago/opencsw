@@ -1,6 +1,7 @@
 NAME = filezilla
 VERSION = 3.2.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Cross-platform FTP, FTPS and SFTP client
 define BLURB

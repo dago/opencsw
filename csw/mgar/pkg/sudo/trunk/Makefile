@@ -3,6 +3,7 @@
 NAME = sudo
 VERSION = 1.8.3p1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Provides limited super user privileges
 define BLURB

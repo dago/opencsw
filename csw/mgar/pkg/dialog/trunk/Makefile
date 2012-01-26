@@ -8,6 +8,7 @@ RELEASE = 20111020
 DISTNAME = $(NAME)-$(VERSION2)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A script-interpreter which provides a set of curses widgets
 define BLURB

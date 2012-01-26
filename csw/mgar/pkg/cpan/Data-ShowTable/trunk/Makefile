@@ -1,6 +1,7 @@
 NAME = Data-ShowTable
 VERSION = 3.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AKSTE
 
 DESCRIPTION = routines to display tabular data in several formats.

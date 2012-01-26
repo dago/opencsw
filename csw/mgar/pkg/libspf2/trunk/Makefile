@@ -1,6 +1,7 @@
 NAME = libspf2
 VERSION = 1.2.9
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library that implements Sender Policy Framework
 define BLURB

@@ -5,6 +5,7 @@
 NAME = snownews
 VERSION = 1.5.12
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Text mode RSS/RDF news reader
 define BLURB

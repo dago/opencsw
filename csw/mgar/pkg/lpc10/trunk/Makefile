@@ -1,6 +1,7 @@
 NAME = lpc10
 VERSION = 1.5
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = LPC-10 speech coder software
 define BLURB

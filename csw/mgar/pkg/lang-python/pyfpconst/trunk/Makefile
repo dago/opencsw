@@ -7,6 +7,7 @@ VERSION = 0.7.2
 PACKAGES = CSWpyfpconst
 CATALOGNAME_CSWpyfpconst = py_fpconst
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Utilities for handling IEEE 754 floating point special values
 define BLURB
   This python module implements constants and functions for working with

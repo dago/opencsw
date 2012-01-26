@@ -1,6 +1,7 @@
 NAME = HTTP-Server-Simple
 VERSION = 0.43
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JESSE
 
 DESCRIPTION = Lightweight HTTP server

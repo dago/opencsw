@@ -1,6 +1,7 @@
 NAME = DateTime
 VERSION = 0.55
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = A date and time object

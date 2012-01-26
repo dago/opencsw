@@ -1,6 +1,7 @@
 NAME = Cache-Memcached
 VERSION = 1.29
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DORMANDO
 
 DESCRIPTION = Client library for memcached

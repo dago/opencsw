@@ -1,6 +1,7 @@
 NAME = ExtUtils-AutoInstall
 VERSION = 0.63
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUTRIJUS
 
 DESCRIPTION = Automatic install of dependencies via CPAN

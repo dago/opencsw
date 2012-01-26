@@ -5,6 +5,7 @@
 NAME = pius
 VERSION = 2.0.8
 CATEGORIES = apps
+GARTYPE = v2
 DESCRIPTION = A tool for signing and email all UIDs on a set of PGP keys.
 define BLURB
 endef

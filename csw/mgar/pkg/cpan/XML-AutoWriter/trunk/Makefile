@@ -1,6 +1,7 @@
 NAME = XML-AutoWriter
 VERSION = 0.39
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RBS
 
 DESCRIPTION = DOCTYPE driven XML output

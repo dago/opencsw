@@ -2,6 +2,7 @@
 NAME = libarchive
 VERSION = 2.8.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = C library for reading and writing various archive formats
 define BLURB

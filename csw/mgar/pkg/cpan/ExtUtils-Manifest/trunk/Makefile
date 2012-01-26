@@ -1,6 +1,7 @@
 NAME = ExtUtils-Manifest
 VERSION = 1.58
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RKOBES
 
 DESCRIPTION = Utilities to write and check a MANIFEST file

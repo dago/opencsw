@@ -1,6 +1,7 @@
 NAME = gobject-introspection
 VERSION = 0.6.7
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Package for extending API for GObject based libraries
 define BLURB

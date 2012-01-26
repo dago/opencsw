@@ -1,6 +1,7 @@
 NAME = Text-DoubleMetaphone
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MAURICE
 
 DESCRIPTION = Phonetic encoding of words

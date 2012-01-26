@@ -3,6 +3,7 @@ VERSION = 1.5
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons Codec
 define BLURB

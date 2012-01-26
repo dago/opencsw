@@ -1,6 +1,7 @@
 NAME = Digest-MD2
 VERSION = 2.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = interface to the MD2 Algorithm

@@ -2,6 +2,7 @@
 NAME = fakeroot
 VERSION = 1.12.4
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A fake root environment by means of LD_PRELOAD and SYSV IPC (or TCP) trickery.
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Curses-UI
 VERSION = 0.95
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARCUS
 
 DESCRIPTION = a curses based OO user interface framework

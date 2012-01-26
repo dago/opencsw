@@ -1,6 +1,7 @@
 NAME = PerlIO-via-symlink
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = PerlIO layers for creating symlinks

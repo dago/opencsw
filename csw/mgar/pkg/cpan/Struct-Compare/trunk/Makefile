@@ -1,6 +1,7 @@
 NAME = Struct-Compare
 VERSION = 1.0.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ZENSPIDER
 
 DESCRIPTION = Recursive diff for perl structures

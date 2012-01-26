@@ -1,6 +1,7 @@
 NAME = i18n
 VERSION = 0.5.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = New wave Internationalization support for Ruby
 

@@ -1,6 +1,7 @@
 NAME = cgi_multipart_eof_fix
 VERSION = 2.5.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Fix an exploitable bug in CGI multipart parsing
 define BLURB

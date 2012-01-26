@@ -1,6 +1,7 @@
 NAME = common-sense
 VERSION = 3.0
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MLEHMANN
 
 DESCRIPTION = Some sane defaults for Perl programs

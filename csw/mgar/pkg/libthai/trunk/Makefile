@@ -1,6 +1,7 @@
 NAME = libthai
 VERSION = 0.1.12
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Thai language support routines
 define BLURB

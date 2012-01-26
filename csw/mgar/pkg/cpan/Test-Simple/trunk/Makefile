@@ -1,6 +1,7 @@
 NAME = Test-Simple
 VERSION = 0.96
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHWERN
 
 DESCRIPTION = Basic utilities for writing tests

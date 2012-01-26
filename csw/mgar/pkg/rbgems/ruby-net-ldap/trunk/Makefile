@@ -1,6 +1,7 @@
 NAME = ruby-net-ldap
 VERSION = 0.0.4
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = An LDAP support library written in pure Ruby
 define BLURB

@@ -2,6 +2,7 @@ NAME = libpaper
 VERSION = 1.1.23+nmu1
 #GARSUBREV = nmu1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library and tools for handling papersize
 define BLURB

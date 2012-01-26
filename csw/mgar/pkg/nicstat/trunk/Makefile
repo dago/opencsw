@@ -1,6 +1,7 @@
 NAME = nicstat
 VERSION = 1.90
 CATEGORIES = net
+GARTYPE = v2
 WORKSRC = $(WORKDIR)/$(NAME)-src-$(VERSION)
 
 DESCRIPTION = Network monitoring tool

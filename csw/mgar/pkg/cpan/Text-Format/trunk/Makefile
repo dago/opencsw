@@ -1,6 +1,7 @@
 NAME = Text-Format
 VERSION = 0.52
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GABOR
 
 DESCRIPTION = Various subroutines to format text

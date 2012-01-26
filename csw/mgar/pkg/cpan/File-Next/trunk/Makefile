@@ -1,6 +1,7 @@
 NAME = File-Next
 VERSION = 1.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = File-finding iterator

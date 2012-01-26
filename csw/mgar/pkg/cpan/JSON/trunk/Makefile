@@ -1,6 +1,7 @@
 NAME = JSON
 VERSION = 2.50
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MAKAMAKA
 
 DESCRIPTION = JSON (JavaScript Object Notation) encoder/decoder

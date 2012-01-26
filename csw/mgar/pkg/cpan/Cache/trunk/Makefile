@@ -1,6 +1,7 @@
 NAME = Cache
 VERSION = 2.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLEISHMAN
 
 DESCRIPTION = new cache interface.

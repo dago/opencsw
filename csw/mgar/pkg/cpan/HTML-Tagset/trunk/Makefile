@@ -1,6 +1,7 @@
 NAME = HTML-Tagset
 VERSION = 3.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = Data tables useful in parsing HTML

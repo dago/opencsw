@@ -1,6 +1,7 @@
 NAME = Unicode-MapUTF8
 VERSION = 1.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SNOWHARE
 
 DESCRIPTION = conversions to and from arbitrary character sets and UTF8

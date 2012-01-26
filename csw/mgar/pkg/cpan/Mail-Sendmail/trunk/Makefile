@@ -1,6 +1,7 @@
 NAME = Mail-Sendmail
 VERSION = 0.79
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIVKOVIC
 
 DESCRIPTION = Simple platform independent mailer

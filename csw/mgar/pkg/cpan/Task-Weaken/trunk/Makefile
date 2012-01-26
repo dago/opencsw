@@ -1,6 +1,7 @@
 NAME = Task-Weaken
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Ensure that a platform has weaken support

@@ -7,6 +7,7 @@ VERSION = 1.5.1
 PACKAGES = CSWpy-virtualenv
 CATALOGNAME_CSWpy-virtualenv = py_virtualenv
 CATEGORIES = python
+GARTYPE = v2
 SPKG_DESC_CSWpy-virtualenv = Virtual Python Environment builder
 ARCHALL_CSWpy-virtualenv = 1
 define BLURB

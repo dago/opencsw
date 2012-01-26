@@ -7,6 +7,7 @@ VERSION = 0.3.1
 PACKAGES = CSWpy-magic
 CATALOGNAME_CSWpy-magic = py_magic
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A python wrapper for libmagic, can classify files according to magic number tests
 define BLURB
 endef

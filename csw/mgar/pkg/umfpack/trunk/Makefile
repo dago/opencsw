@@ -1,6 +1,7 @@
 NAME = umfpack
 VERSION = 5.5.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A set of routines for solving unsymmetric sparse linear systems
 define BLURB

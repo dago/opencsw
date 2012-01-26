@@ -1,6 +1,7 @@
 NAME = Statistics-Descriptive
 VERSION = 2.6
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = COLINK
 
 DESCRIPTION = module of basic descriptive statistical functions.

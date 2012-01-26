@@ -1,6 +1,7 @@
 NAME = qucs
 VERSION = 0.0.15
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Integrated circuit simulator
 #define BLURB

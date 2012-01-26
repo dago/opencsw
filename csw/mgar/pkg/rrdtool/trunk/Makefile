@@ -1,6 +1,7 @@
 NAME = rrdtool
 VERSION = 1.4.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Time-series data logging and graphing
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Schedule-At
 VERSION = 1.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JOSERODR
 
 DESCRIPTION = OS independent interface to the Unix 'at' command

@@ -1,6 +1,7 @@
 NAME = Convert-BinHex
 VERSION = 1.119
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ERYQ
 
 DESCRIPTION = Perl module to extract data from Macintosh BinHex files

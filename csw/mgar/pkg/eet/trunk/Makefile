@@ -1,6 +1,7 @@
 NAME = eet
 VERSION = 1.2.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Write an arbitary set of chunks of data to a file and optionally compress each chunk
 define BLURB

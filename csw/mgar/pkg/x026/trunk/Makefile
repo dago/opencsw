@@ -2,6 +2,7 @@
 NAME = x026
 VERSION = 1.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = IBM 026 Keypunch Emulator for X11
 define BLURB

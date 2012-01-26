@@ -1,6 +1,7 @@
 NAME = HTML-Scrubber
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PODMASTER
 
 DESCRIPTION = Perl extension for scrubbing/sanitizing html

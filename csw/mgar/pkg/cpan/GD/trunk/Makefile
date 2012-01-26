@@ -1,6 +1,7 @@
 NAME = GD
 VERSION = 2.45
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LDS
 
 DESCRIPTION = Interface to GD Graphics Library

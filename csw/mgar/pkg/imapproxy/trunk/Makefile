@@ -15,6 +15,7 @@
 NAME = imapproxy
 VERSION = 1.2.7
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = A caching IMAP proxy server
 define BLURB

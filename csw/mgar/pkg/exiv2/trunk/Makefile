@@ -1,6 +1,7 @@
 NAME = exiv2
 VERSION = 0.19
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Image metadata library and tools
 define BLURB

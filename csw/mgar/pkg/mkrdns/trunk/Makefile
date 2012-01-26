@@ -2,6 +2,7 @@ NAME = mkrdns
 VERSION = 3.3
 REAL_VERSION = $(subst .,_,$(VERSION))
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = An automatic reverse DNS zone generator
 define BLURB

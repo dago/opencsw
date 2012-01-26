@@ -1,6 +1,7 @@
 NAME = Sub-Install
 VERSION = 0.925
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = Install subroutines into packages easily

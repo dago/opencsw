@@ -1,6 +1,7 @@
 NAME = XML-Encoding
 VERSION = 2.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SHAY
 
 DESCRIPTION = module for parsing XML encoding maps.

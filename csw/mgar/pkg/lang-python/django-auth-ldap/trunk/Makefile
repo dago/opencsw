@@ -2,6 +2,7 @@
 NAME = django-auth-ldap
 VERSION = 1.0.6
 CATEGORIES = python
+GARTYPE = v2
 PACKAGES = CSWpy-django-auth-ldap
 CATALOGNAME = py_django_auth_ldap
 ARCHALL_CSWpy-django-auth-ldap = 1

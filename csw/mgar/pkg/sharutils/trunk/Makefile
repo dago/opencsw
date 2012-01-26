@@ -9,6 +9,7 @@
 NAME = sharutils
 VERSION = 4.11.1
 CATEGORIES = utils
+GARTYPE = v2
 DESCRIPTION = Makes so-called shell archives out of many files
 define BLURB
 endef

@@ -1,6 +1,7 @@
 NAME = IO-Compress
 VERSION = 2.033
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PMQS
 
 DESCRIPTION = A Perl interface to allow reading and writing of compressed data

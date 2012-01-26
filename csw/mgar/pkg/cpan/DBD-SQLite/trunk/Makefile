@@ -1,6 +1,7 @@
 NAME = DBD-SQLite
 VERSION = 1.31
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Self contained RDBMS in a DBI driver

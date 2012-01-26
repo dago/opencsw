@@ -1,6 +1,7 @@
 NAME = Devel-Cycle
 VERSION = 1.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LDS
 
 DESCRIPTION = find memory cycles in objects

@@ -1,6 +1,7 @@
 NAME = Module-Build
 VERSION = stub
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = EWILHELM
 
 DESCRIPTION = Stub to the Perl build-in module Module::Build

@@ -1,6 +1,7 @@
 NAME = Curses
 VERSION = 1.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = WPS
 
 DESCRIPTION = terminal screen handling and optimization

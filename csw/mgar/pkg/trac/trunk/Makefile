@@ -3,6 +3,7 @@
 NAME = Trac
 VERSION = 0.12.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Integrated SCM and Project Management
 define BLURB

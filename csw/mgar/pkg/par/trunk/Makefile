@@ -1,6 +1,7 @@
 NAME = par
 VERSION = 1.52
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Paragraph reformatter similar to fmt
 define BLURB

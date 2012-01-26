@@ -1,6 +1,7 @@
 NAME = twolame
 VERSION = 0.3.12
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = An optimised MPEG Audio Layer 2 (MP2) encoder based on tooLAME
 define BLURB

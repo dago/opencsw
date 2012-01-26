@@ -1,6 +1,7 @@
 NAME = libgnomecanvas
 VERSION = 2.26.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNOME Canvas Lib
 define BLURB

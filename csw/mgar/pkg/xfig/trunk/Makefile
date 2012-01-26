@@ -2,6 +2,7 @@
 NAME = xfig
 VERSION = 3.2.5b
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = An interactive drawing tool
 define BLURB

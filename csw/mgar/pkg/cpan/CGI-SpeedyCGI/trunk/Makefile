@@ -1,6 +1,7 @@
 NAME = CGI-SpeedyCGI
 VERSION = 2.22
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = HORROCKS
 
 DESCRIPTION = Speed up perl scripts by running them persistently

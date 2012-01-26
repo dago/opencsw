@@ -1,6 +1,7 @@
 NAME = Regexp-Shellish
 VERSION = 0.93
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RBS
 
 DESCRIPTION = shell-like regular expressions

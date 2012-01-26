@@ -1,6 +1,7 @@
 NAME = Test-Pod-Coverage
 VERSION = 1.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = Check for pod coverage in your distribution

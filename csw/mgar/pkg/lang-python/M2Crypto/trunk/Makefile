@@ -5,6 +5,7 @@
 NAME = M2Crypto
 VERSION = 0.21.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = The most complete Python wrapper for OpenSSL
 define BLURB

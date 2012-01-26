@@ -1,6 +1,7 @@
 NAME = Module-Versions-Report
 VERSION = 1.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JESSE
 
 DESCRIPTION = Report versions of all modules in memory

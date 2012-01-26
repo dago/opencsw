@@ -5,6 +5,7 @@
 NAME = ply
 VERSION = 3.4
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python Lex-Yacc
 define BLURB

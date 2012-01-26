@@ -1,6 +1,7 @@
 NAME = denyhosts
 VERSION = 2.6
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = A tool to limit SSH brute force attacks
 define BLURB

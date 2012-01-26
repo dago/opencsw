@@ -1,6 +1,7 @@
 NAME = Time-HiRes
 VERSION = 1.9707
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JHI
 
 DESCRIPTION = high resolution alarm, sleep, gettimeofday, interval timers

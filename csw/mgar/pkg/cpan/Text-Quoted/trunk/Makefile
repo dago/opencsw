@@ -1,6 +1,7 @@
 NAME = Text-Quoted
 VERSION = 2.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RUZ
 
 DESCRIPTION = extract the structure of a quoted mail message

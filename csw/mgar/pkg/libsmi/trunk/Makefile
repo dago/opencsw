@@ -1,6 +1,7 @@
 NAME = libsmi
 VERSION = 0.4.8
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Allows management applications to access SMI MIB module definitions
 define BLURB

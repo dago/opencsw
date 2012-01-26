@@ -1,6 +1,7 @@
 NAME = libcddb
 VERSION = 1.3.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A C library to access data on a CDDB server
 define BLURB

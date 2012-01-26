@@ -1,6 +1,7 @@
 NAME = Crypt-OpenSSL-RSA
 VERSION = 0.25
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IROBERTS
 
 DESCRIPTION = RSA encoding and decoding, using the openSSL libraries

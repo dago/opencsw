@@ -1,6 +1,7 @@
 NAME = Solaris-Sysconf
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AGOLOMSH
 
 DESCRIPTION = get configurable system variables

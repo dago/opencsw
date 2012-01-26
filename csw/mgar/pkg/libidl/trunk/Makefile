@@ -1,6 +1,7 @@
 NAME = libIDL
 VERSION = 0.8.14
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library for handling CORBA IDL
 define BLURB

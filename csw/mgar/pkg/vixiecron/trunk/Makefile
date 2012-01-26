@@ -5,6 +5,7 @@
 NAME = vixiecron
 VERSION = 3.0pl1
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Paul Vixie cron
 define BLURB

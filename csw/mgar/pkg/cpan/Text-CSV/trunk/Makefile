@@ -1,6 +1,7 @@
 NAME = Text-CSV
 VERSION = 1.15
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MAKAMAKA
 
 DESCRIPTION = Perl Text::CSV module

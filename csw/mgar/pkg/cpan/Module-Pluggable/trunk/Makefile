@@ -1,6 +1,7 @@
 NAME = Module-Pluggable
 VERSION = 3.9
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SIMONW
 
 DESCRIPTION = Automatically give your module the ability to have plugins

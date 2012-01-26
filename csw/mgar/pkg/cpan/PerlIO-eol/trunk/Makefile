@@ -1,6 +1,7 @@
 NAME = PerlIO-eol
 VERSION = 0.14
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUDREYT
 
 DESCRIPTION = PerlIO layer for normalizing line endings

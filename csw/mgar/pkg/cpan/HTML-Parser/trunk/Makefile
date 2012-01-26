@@ -1,6 +1,7 @@
 NAME = HTML-Parser
 VERSION = 3.68
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = HTML parser class

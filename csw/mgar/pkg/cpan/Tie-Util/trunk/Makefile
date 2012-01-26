@@ -1,6 +1,7 @@
 NAME = Tie-Util
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SPROUT
 
 DESCRIPTION = Utility functions for fiddling with tied variables

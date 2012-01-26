@@ -1,6 +1,7 @@
 NAME = Devel-LeakTrace
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCLAMP
 
 DESCRIPTION = indicate where leaked variables are coming from

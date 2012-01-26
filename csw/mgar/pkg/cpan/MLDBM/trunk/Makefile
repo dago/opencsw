@@ -1,6 +1,7 @@
 NAME = MLDBM
 VERSION = 2.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHORNY
 
 DESCRIPTION = Store multi-level hash structure in single level tied hash

@@ -1,6 +1,7 @@
 NAME = pcb
 VERSION = 20081128
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = PCB is a tool for the layout of printed circuit boards
 define BLURB

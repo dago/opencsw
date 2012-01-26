@@ -1,6 +1,7 @@
 NAME = Test-Differences
 VERSION = 0.47
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RBS
 
 DESCRIPTION = test strings and data structures and show differences

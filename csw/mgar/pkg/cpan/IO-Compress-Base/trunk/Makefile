@@ -1,6 +1,7 @@
 NAME = IO-Compress-Base
 VERSION = 2.020
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PMQS
 
 DESCRIPTION = This is a stub, the contents has been integrated into CSWpmiocompress

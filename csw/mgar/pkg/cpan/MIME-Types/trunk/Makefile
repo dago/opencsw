@@ -1,6 +1,7 @@
 NAME = MIME-Types
 VERSION = 1.29
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKOV
 
 DESCRIPTION = Perl MIME::Types module

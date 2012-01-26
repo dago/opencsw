@@ -6,6 +6,7 @@
 NAME = graphviz
 VERSION = 2.28.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Graph visualization tools 
 define BLURB

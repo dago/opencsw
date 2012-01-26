@@ -1,6 +1,7 @@
 NAME = Apache-Session
 VERSION = 1.6
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JBAKER
 
 DESCRIPTION = a persistence framework for session data

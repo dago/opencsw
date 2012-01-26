@@ -1,6 +1,7 @@
 NAME = libgda
 VERSION = 3.99.14
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GNU Data Access
 define BLURB

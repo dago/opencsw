@@ -1,6 +1,7 @@
 NAME = ar-extensions
 VERSION = 0.9.2
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Extends ActiveRecord functionality
 define BLURB

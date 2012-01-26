@@ -1,6 +1,7 @@
 NAME      = tomcat6
 VERSION   = 6.0.32
 CATEGORIES   = server
+GARTYPE = v2
 
 DESCRIPTION  =  Apache Jakarta Tomcat 6 Servlet/JSP Container
 define BLURB

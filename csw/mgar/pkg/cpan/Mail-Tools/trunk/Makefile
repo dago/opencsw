@@ -1,6 +1,7 @@
 NAME = MailTools
 VERSION = 2.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKOV
 
 DESCRIPTION = various mail manipulation modules

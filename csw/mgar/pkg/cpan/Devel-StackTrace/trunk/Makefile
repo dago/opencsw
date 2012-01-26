@@ -1,6 +1,7 @@
 NAME = Devel-StackTrace
 VERSION = 1.27
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = An object representing a stack trace

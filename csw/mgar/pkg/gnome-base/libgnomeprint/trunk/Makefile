@@ -1,6 +1,7 @@
 NAME = libgnomeprint
 VERSION = 2.18.6
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = TODO
 define BLURB

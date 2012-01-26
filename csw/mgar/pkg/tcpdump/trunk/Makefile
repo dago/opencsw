@@ -1,6 +1,7 @@
 NAME = tcpdump
 VERSION = 4.2.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Dump network traffic
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Inline
 VERSION = 0.46
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SISYPHUS
 
 DESCRIPTION = Write Perl subroutines in other programming languages

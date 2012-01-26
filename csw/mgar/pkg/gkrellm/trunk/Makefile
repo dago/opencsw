@@ -1,6 +1,7 @@
 NAME = gkrellm
 VERSION = 2.3.4
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = System monitor package
 define BLURB

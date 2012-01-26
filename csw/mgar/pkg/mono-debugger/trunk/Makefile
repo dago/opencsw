@@ -1,6 +1,7 @@
 NAME = mono-debugger
 VERSION = 2.6
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Mono Runtime
 define BLURB

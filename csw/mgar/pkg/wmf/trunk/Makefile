@@ -1,6 +1,7 @@
 NAME = wmf
 VERSION = 0.2.8.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library and tools for manipulating Windows metafiles
 define BLURB

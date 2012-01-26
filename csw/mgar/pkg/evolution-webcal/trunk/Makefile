@@ -1,6 +1,7 @@
 NAME = evolution-webcal
 VERSION = 2.28.0
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Evolution Web Calendar
 define BLURB

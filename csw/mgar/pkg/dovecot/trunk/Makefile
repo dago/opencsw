@@ -4,6 +4,7 @@
 NAME = dovecot
 VERSION = 2.0.17
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Secure IMAP server
 define BLURB

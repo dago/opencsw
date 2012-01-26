@@ -1,6 +1,7 @@
 NAME = libao
 VERSION = 0.8.8
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Cross-platform audio library
 define BLURB

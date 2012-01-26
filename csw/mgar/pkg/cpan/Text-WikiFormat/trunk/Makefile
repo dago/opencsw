@@ -1,6 +1,7 @@
 NAME = Text-WikiFormat
 VERSION = 0.79
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHROMATIC
 
 DESCRIPTION = Module for translating Wiki formatted text into other formats

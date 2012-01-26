@@ -5,6 +5,7 @@
 NAME = pinentry
 VERSION = 0.8.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Allows entering passwords into gpg-agent
 define BLURB

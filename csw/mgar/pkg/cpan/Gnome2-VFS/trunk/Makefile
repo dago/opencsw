@@ -1,6 +1,7 @@
 NAME = Gnome2-VFS
 VERSION = 1.003
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RMCFARLA
 
 DESCRIPTION = interface to the 2.x series of the GNOME VFS library

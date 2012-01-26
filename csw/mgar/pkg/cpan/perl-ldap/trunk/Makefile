@@ -1,6 +1,7 @@
 NAME = perl-ldap
 VERSION = 0.4001
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GBARR
 
 DESCRIPTION = Lightweight Directory Access Protocol

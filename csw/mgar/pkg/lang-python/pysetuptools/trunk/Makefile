@@ -3,6 +3,7 @@
 NAME = setuptools
 VERSION = 0.6c11
 CATEGORIES = python
+GARTYPE = v2
 
 SPKG_SOURCEURL = http://peak.telecommunity.com/DevCenter/setuptools
 PYSETUPTOOLS_VERSION := $(shell echo $(VERSION) | sed -e 's/[a-z].*//')

@@ -5,6 +5,7 @@
 NAME = xlwt
 VERSION = 0.7.2
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Library to create MS Excel 97/2000/XP/2003 compatible XLS files
 define BLURB
 endef

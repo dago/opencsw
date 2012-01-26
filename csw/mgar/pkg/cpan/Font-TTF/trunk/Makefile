@@ -1,6 +1,7 @@
 NAME = Font-TTF
 VERSION = 0.48
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MHOSKEN
 
 DESCRIPTION = Perl module for TrueType Font hacking

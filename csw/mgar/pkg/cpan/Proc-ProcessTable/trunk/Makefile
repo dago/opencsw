@@ -1,6 +1,7 @@
 NAME = Proc-ProcessTable
 VERSION = 0.45
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DURIST
 
 DESCRIPTION = Perl interface to the unix process table

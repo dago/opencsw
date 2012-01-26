@@ -1,6 +1,7 @@
 NAME = Perl6-Export-Attrs
 VERSION = 0.0.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DCONWAY
 
 DESCRIPTION = Perl6::Export::Attrs - The Perl 6 'is export(...)' trait as a Perl 5 attribute

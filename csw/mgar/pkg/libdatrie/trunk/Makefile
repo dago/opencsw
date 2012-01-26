@@ -1,6 +1,7 @@
 NAME = libdatrie
 VERSION = 0.2.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Double array tree library
 define BLURB

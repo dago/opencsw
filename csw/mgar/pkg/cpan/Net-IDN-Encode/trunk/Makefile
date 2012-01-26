@@ -1,6 +1,7 @@
 NAME = Net-IDN-Encode
 VERSION = 1.100
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CFAERBER
 
 DESCRIPTION = Internationalizing Domain Names in Applications (RFC 3490)

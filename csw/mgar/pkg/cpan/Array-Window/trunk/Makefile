@@ -1,6 +1,7 @@
 NAME = Array-Window
 VERSION = 1.00
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = calculate windows/subsets/pages of arrays.

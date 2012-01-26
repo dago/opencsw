@@ -1,6 +1,7 @@
 NAME = audiofile
 VERSION = 0.2.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Silicon Graphics Audio File Library
 define BLURB

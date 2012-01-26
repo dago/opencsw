@@ -1,6 +1,7 @@
 NAME = Module-Load-Conditional
 VERSION = 0.44
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Query module information and load at runtime

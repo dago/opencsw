@@ -1,6 +1,7 @@
 NAME = B-Keywords
 VERSION = 1.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JJORE
 
 DESCRIPTION = Lists of reserved barewords and symbol names

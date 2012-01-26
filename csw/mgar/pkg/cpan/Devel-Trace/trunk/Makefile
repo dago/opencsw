@@ -1,6 +1,7 @@
 NAME = Devel-Trace
 VERSION = 0.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MJD
 
 DESCRIPTION = print out each line before it is executed

@@ -1,6 +1,7 @@
 NAME = Devel-StackTrace-AsHTML
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Displays stack trace in HTML

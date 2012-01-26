@@ -1,6 +1,7 @@
 NAME = rspec-expectations
 VERSION = 2.4.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Rspec expectations (should[_not] and matchers)
 

@@ -1,6 +1,7 @@
 NAME = zutils
 VERSION = 0.9
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Utilities to deal with compressed and non-compressed files
 define BLURB

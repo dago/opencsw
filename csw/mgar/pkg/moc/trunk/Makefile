@@ -5,6 +5,7 @@
 NAME = moc
 VERSION = 2.4.4
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Music On Console
 define BLURB
 endef

@@ -6,6 +6,7 @@ NAME = multiple-versions
 BASE_VERSION = 0.1
 VERSION = $(BASE_VERSION).0
 CATEGORIES = apps
+GARTYPE = v2
 DESCRIPTION = Example layout that supports multiple versions of a program.
 define BLURB
 

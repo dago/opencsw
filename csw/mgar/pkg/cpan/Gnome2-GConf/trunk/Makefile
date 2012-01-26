@@ -1,6 +1,7 @@
 NAME = Gnome2-GConf
 VERSION = 1.000
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RMCFARLA
 
 DESCRIPTION = wrappers for the GConf configuration engine.

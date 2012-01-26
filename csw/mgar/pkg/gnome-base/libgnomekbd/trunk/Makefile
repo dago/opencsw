@@ -1,6 +1,7 @@
 NAME = libgnomekbd
 VERSION = 2.28.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Package contains xkb hooks used by the GNOME desktop. 
 define BLURB

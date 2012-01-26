@@ -2,6 +2,7 @@
 NAME = maildrop
 VERSION = 2.4.3
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Mail delivery agent with filtering abilities
 define BLURB

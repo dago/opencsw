@@ -1,6 +1,7 @@
 NAME = Crypt-Twofish
 VERSION = 2.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AMS
 
 DESCRIPTION = the Twofish encryption algorithm

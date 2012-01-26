@@ -1,5 +1,6 @@
 NAME = libxfce4menu
 CATEGORIES = xfce
+GARTYPE = v2
 
 DESCRIPTION = Xfce Desktop Menu Library 
 define BLURB

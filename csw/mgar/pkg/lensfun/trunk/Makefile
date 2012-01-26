@@ -1,6 +1,7 @@
 NAME = lensfun
 VERSION = 0.2.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library to correct images based on intimate knowledge of lens characteristics
 define BLURB

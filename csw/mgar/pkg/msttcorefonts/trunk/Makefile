@@ -14,6 +14,7 @@ FONTDIR = /usr/openwin/lib/X11/fonts/TrueType
 NAME = msttcorefonts
 VERSION = 1.3_4
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Microsoft True Type fonts
 define BLURB
 endef

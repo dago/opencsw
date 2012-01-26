@@ -3,6 +3,7 @@
 NAME = libffi
 VERSION = 3.0.9
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A portable foreign function interface library
 define BLURB

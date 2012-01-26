@@ -2,6 +2,7 @@ NAME = mod_perl
 DISTVERSION = 2.0.4
 VERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GOZER
 
 DESCRIPTION = Persistent Perl interpreter for Apache 2.x

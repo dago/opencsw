@@ -1,6 +1,7 @@
 NAME = gtksourceview
 VERSION = 2.9.3
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = A text widget with features typical of a source code editor
 define BLURB

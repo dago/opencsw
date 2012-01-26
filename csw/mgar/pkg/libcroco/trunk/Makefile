@@ -1,6 +1,7 @@
 NAME = libcroco
 VERSION = 0.6.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = A CSS parsing and manipulation toolkit
 define BLURB

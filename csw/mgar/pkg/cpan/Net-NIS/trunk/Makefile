@@ -1,6 +1,7 @@
 NAME = Net-NIS
 VERSION = 0.43
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ESM
 
 DESCRIPTION = Interface to Sun's Network Information Service

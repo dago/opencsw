@@ -3,6 +3,7 @@ VERSION = 2.1
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons Digester
 define BLURB

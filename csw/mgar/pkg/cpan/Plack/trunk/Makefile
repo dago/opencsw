@@ -1,6 +1,7 @@
 NAME = Plack
 VERSION = 0.9970
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)

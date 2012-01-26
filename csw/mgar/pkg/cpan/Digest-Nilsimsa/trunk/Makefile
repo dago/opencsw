@@ -1,6 +1,7 @@
 NAME = Digest-Nilsimsa
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIPUL
 
 DESCRIPTION = Perl version of Nilsimsa code

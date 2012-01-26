@@ -1,6 +1,7 @@
 NAME = memconf
 VERSION = 2.21
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Perl script that displays memory modules installed
 define BLURB

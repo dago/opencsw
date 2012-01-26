@@ -1,6 +1,7 @@
 NAME = libgnomedb
 VERSION = 3.99.7
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = The libgnomedb library
 define BLURB

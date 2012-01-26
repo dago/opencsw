@@ -2,6 +2,7 @@
 NAME = pacparser
 VERSION = 1.2.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library to parse proxy auto-config (PAC) files
 define BLURB

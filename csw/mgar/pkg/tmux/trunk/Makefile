@@ -1,6 +1,7 @@
 NAME = tmux
 VERSION = 1.5
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Terminal Multiplexer
 

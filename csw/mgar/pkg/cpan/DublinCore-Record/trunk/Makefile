@@ -1,6 +1,7 @@
 NAME = DublinCore-Record
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BRICAS
 
 DESCRIPTION = Container for Dublin Core metadata elements

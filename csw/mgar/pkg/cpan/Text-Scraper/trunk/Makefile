@@ -1,6 +1,7 @@
 NAME = Text-Scraper
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MCEWAN
 
 DESCRIPTION = Structured data from (un)structured text

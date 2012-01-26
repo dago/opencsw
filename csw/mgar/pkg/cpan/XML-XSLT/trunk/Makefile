@@ -1,6 +1,7 @@
 NAME = XML-XSLT
 VERSION = 0.48
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JSTOWE
 
 DESCRIPTION = A perl module for processing XSLT

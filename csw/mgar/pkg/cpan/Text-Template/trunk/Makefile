@@ -1,6 +1,7 @@
 NAME = Text-Template
 VERSION = 1.45
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MJD
 
 DESCRIPTION = Expand template text with embedded Perl

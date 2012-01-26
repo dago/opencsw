@@ -1,6 +1,7 @@
 NAME = Class-DBI-Loader
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IKEBE
 
 DESCRIPTION = dynamic definition of Class::DBI sub classes.

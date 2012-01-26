@@ -1,6 +1,7 @@
 NAME = Date-Leapyear
 VERSION = 1.72
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RBOW
 
 DESCRIPTION = Perl module to determine leap years

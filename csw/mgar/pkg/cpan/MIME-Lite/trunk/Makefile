@@ -1,6 +1,7 @@
 NAME = MIME-Lite
 VERSION = 3.027
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = Perl low-calorie MIME generator

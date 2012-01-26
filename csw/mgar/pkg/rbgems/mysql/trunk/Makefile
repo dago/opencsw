@@ -1,6 +1,7 @@
 NAME = mysql
 VERSION = 2.8.1
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = This is the MySQL API module for Ruby
 

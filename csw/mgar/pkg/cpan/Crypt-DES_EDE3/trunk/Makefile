@@ -1,6 +1,7 @@
 NAME = Crypt-DES_EDE3
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = Triple-DES EDE encryption/decryption

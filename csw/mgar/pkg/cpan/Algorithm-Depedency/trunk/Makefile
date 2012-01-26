@@ -1,6 +1,7 @@
 NAME = Algorithm-Dependency
 VERSION = 1.110
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Base class for implementing various dependency trees

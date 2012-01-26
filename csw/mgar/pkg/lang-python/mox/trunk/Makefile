@@ -5,6 +5,7 @@
 NAME = mox
 VERSION = 0.5.3
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Mock object framework for Python
 ARCHALL = 1
 define BLURB

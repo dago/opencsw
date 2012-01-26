@@ -1,6 +1,7 @@
 NAME = fastercsv
 VERSION = 1.5.3
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = FasterCSV is CSV, but this is faster, smaller, and cleaner
 

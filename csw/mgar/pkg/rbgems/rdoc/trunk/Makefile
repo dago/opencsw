@@ -1,6 +1,7 @@
 NAME = rdoc
 VERSION = 2.5.9
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Produce documentation for one or more Ruby source files
 define BLURB

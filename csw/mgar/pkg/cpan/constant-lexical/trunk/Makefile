@@ -1,6 +1,7 @@
 NAME = constant-lexical
 VERSION = 2
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SPROUT
 
 DESCRIPTION = Perl pragma to declare lexical compile-time constants

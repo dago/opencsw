@@ -2,6 +2,7 @@ NAME = zshdb
 VERSION = 0_gitcurrent
 # PATCHLEVEL = 75eadce
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = ZSH Debugger
 define BLURB

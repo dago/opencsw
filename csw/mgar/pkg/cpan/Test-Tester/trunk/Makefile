@@ -1,6 +1,7 @@
 NAME = Test-Tester
 VERSION = 0.107
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = FDALY
 
 DESCRIPTION = Ease testing test modules built with Test::Builder

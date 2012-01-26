@@ -1,6 +1,7 @@
 NAME = imlib
 VERSION = 1.9.15
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = An advanced replacement library for libraries like libXpm
 define BLURB

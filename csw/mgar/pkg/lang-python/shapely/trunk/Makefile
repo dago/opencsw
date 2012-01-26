@@ -5,6 +5,7 @@
 NAME = Shapely
 VERSION = 1.2.9
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Geometric objects, predicates, and operations
 define BLURB
 endef

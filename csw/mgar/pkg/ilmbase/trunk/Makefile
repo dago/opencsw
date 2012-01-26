@@ -1,6 +1,7 @@
 NAME = ilmbase
 VERSION = 1.0.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Base libraries used by OpenEXR
 define BLURB

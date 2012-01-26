@@ -1,6 +1,7 @@
 NAME = Test-Inline
 VERSION = 2.212
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = inlining your tests next to the code being tested.

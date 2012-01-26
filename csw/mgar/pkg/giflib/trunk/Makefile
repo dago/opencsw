@@ -1,6 +1,7 @@
 NAME = giflib
 VERSION = 4.1.6
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library for reading and writing gif images
 define BLURB

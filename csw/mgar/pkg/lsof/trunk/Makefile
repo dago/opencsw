@@ -3,6 +3,7 @@
 NAME = lsof
 VERSION = 4.85
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = List open files
 define BLURB

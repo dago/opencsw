@@ -1,6 +1,7 @@
 NAME = ORBit2
 VERSION = 2.14.19
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = ORBit 2.x CORBA tools and libs
 define BLURB

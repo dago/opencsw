@@ -1,6 +1,7 @@
 NAME = Test-Builder-Tester
 VERSION = 1.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKF
 
 DESCRIPTION = Test testsuites built with Test::Builder

@@ -1,6 +1,7 @@
 NAME = Net-UCP-Common
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NEMUX
 
 DESCRIPTION = Common Stuff for Net::UCP Module

@@ -1,6 +1,7 @@
 NAME = gdb
 VERSION = 6.8
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = The GNU Project Debugger
 define BLURB

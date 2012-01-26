@@ -1,6 +1,7 @@
 NAME = Net-UCP-TransactionManager
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NEMUX
 
 DESCRIPTION = Perl extension to manage UCP session transaction numbers 

@@ -3,6 +3,7 @@ VERSION = 3.1.11
 DISTVERSION = $(VERSION)
 DISTNAME = $(NAME)-$(DISTVERSION)
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Library for MOD audio files and other types
 define BLURB
   Library supporting many formats, including mod, s3m, it, and xm. Originally a player for MS-DOS,

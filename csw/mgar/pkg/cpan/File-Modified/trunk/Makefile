@@ -1,6 +1,7 @@
 NAME = File-Modified
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CORION
 
 DESCRIPTION = checks intelligently if files have changed

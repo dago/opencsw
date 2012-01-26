@@ -1,6 +1,7 @@
 NAME = scrollkeeper
 VERSION = 0.3.14
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = a cataloging system for documentation on open systems
 define BLURB

@@ -8,6 +8,7 @@
 NAME = sqlalchemy
 VERSION = 0.6.1
 CATEGORIES = python
+GARTYPE = v2
 PACKAGES = CSWpy-sqlalchemy
 CATALOGNAME_CSWpy-sqlalchemy = py_sqlalchemy
 DESCRIPTION = Python SQL toolkit and Object Relational Mapper

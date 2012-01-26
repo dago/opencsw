@@ -1,6 +1,7 @@
 NAME = Package-Constants
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KANE
 
 DESCRIPTION = List all constants declared in a package

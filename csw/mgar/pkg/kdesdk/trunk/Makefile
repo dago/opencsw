@@ -1,5 +1,6 @@
 NAME = kdesdk
 CATEGORIES = kde
+GARTYPE = v2
 
 DESCRIPTION = Software Development Kit for KDE (gcc3)
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Apache-Template
 VERSION = 0.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABW
 
 DESCRIPTION = apache/mod_perl interface to the Template Toolkit

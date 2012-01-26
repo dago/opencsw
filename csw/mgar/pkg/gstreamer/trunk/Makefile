@@ -1,6 +1,7 @@
 NAME = gstreamer
 VERSION = 0.10.26
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Open source multimedia framework
 define BLURB

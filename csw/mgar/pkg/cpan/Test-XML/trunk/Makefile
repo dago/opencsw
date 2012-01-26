@@ -1,6 +1,7 @@
 NAME = Test-XML
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SEMANTICO
 
 DESCRIPTION = Compare XML in perl tests

@@ -1,6 +1,7 @@
 NAME = gnutls
 VERSION = 2.10.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
 define BLURB

@@ -24,6 +24,7 @@ VERSION = 0.0.1
 ## apps, cpan, devel, gnome, java, kde, lang, lib, meta, net, python, server,
 ## utils, x11, xfce, xorg, xtra
 CATEGORIES = lib
+GARTYPE = v2
 ##
 ## A one-line description of the package, which will appear in the pkginfo.
 DESCRIPTION = Go language compiler using gcc backend

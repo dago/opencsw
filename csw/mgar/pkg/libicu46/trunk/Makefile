@@ -2,6 +2,7 @@
 NAME = libicu
 VERSION = 4.6.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = International Components for Unicode
 define BLURB

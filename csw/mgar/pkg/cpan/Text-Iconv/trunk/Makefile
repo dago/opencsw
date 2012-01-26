@@ -1,6 +1,7 @@
 NAME = Text-Iconv
 VERSION = 1.7
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MPIOTR
 
 DESCRIPTION = Perl interface to iconv() codeset conversion function

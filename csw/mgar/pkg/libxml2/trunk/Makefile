@@ -1,6 +1,7 @@
 NAME = libxml2
 VERSION = 2.7.8
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = XML Parser Library
 define BLURB

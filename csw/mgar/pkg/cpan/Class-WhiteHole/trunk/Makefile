@@ -1,6 +1,7 @@
 NAME = Class-WhiteHole
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHWERN
 
 DESCRIPTION = base class to treat unhandled method calls as errors

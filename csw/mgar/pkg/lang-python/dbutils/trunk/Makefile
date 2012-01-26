@@ -5,6 +5,7 @@
 NAME = DBUtils
 VERSION = 1.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Database connection pooling for Python
 define BLURB
 endef

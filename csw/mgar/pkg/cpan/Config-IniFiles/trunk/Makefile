@@ -1,6 +1,7 @@
 NAME = Config-IniFiles
 VERSION = 2.66
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SHLOMIF
 
 DESCRIPTION = A module for reading .ini-style configuration files.

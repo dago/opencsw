@@ -1,6 +1,7 @@
 NAME = bind2nsd
 VERSION = 0.7.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = scripts to translate DNS information in BIND format to NSD format
 define BLURB

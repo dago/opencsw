@@ -1,6 +1,7 @@
 NAME = pyzor
 VERSION = 0.4.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A collaborative, networked system to detect and block spam
 define BLURB

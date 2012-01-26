@@ -1,6 +1,7 @@
 NAME = gdmap
 VERSION = 0.8.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GdMap is a tool which allows to visualize disk space
 define BLURB

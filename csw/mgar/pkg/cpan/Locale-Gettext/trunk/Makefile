@@ -1,6 +1,7 @@
 NAME = gettext
 VERSION = 1.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PVANDRY
 
 DESCRIPTION = Message handling functions

@@ -6,6 +6,7 @@ NAME = gnome-icon-theme
 GNOME_VERSION = 2.22
 VERSION = $(GNOME_VERSION).0
 CATEGORIES = gnome
+GARTYPE = v2
 DESCRIPTION = GNOME icon theme
 define BLURB
 endef

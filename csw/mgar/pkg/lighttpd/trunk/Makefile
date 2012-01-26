@@ -2,6 +2,7 @@
 NAME = lighttpd
 VERSION = 1.4.29
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = HTTP server built for security, speed, compliance, and flexibility
 define BLURB

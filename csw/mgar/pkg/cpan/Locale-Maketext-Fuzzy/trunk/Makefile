@@ -1,6 +1,7 @@
 NAME = Locale-Maketext-Fuzzy
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = AUTRIJUS
 
 DESCRIPTION = maketext from already interpolated strings

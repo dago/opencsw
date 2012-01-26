@@ -2,6 +2,7 @@
 NAME = bc
 VERSION = 1.06
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = An interactive algebraic language with arbitrary precision which follows the POSIX 1003.2
 define BLURB

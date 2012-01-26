@@ -1,6 +1,7 @@
 NAME = ss5
 VERSION = 3.6.7-1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A SOCKS server that implements SOCKS v4 and v5 protocol
 define BLURB

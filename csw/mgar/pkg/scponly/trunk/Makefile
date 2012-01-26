@@ -1,6 +1,7 @@
 NAME = scponly
 VERSION = 4.8
 CATEGORIES = xtra
+GARTYPE = v2
 
 DESCRIPTION = A Restricted Shell
 define BLURB

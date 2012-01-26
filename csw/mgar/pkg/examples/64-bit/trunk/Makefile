@@ -5,6 +5,7 @@
 NAME = hello
 VERSION = 0.1.1
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = A test of a 64-bit build
 define BLURB
 endef

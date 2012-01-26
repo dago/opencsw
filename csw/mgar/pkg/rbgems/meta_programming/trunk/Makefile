@@ -1,6 +1,7 @@
 NAME = meta_programming
 VERSION = 0.2.2
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Collection of meta-programming methods for Ruby
 define BLURB

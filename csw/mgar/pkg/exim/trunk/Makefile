@@ -1,6 +1,7 @@
 NAME = exim
 VERSION = 4.76
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = The Exim Mail Transfer Agent
 define BLURB

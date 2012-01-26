@@ -1,6 +1,7 @@
 NAME = gegl
 VERSION = 0.1.8
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = A graph based image processing framework
 define BLURB

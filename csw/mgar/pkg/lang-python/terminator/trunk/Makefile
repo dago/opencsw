@@ -1,6 +1,7 @@
 NAME = terminator
 VERSION = 0.95
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Multiple GNOME terminals in one window
 define BLURB

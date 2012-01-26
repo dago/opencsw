@@ -10,6 +10,7 @@
 NAME = protobuf
 VERSION = 2.3.0
 CATEGORIES = lib
+GARTYPE = v2
 define BLURB
 	Protocol Buffers are a way of encoding structured data in an efficient yet
 	extensible format. Google uses Protocol Buffers for almost all of its

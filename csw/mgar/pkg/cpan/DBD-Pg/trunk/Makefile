@@ -1,6 +1,7 @@
 NAME = DBD-Pg
 VERSION = 2.17.2
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TURNSTEP
 
 DESCRIPTION = PostgreSQL database driver for the DBI module

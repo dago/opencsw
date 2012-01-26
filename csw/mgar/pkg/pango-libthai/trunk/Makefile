@@ -1,6 +1,7 @@
 NAME = pango-libthai
 VERSION = 0.1.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Pango bindings for Thai language support
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Devel-Caller
 VERSION = 2.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCLAMP
 
 DESCRIPTION = Meatier versions of caller

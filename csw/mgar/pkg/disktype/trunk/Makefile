@@ -1,6 +1,7 @@
 NAME = disktype
 VERSION = 9
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Detection of content format of a disk or disk image
 define BLURB

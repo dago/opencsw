@@ -1,6 +1,7 @@
 NAME = libksba
 VERSION = 1.2.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Libksba is a CMS and X.509 access library
 define BLURB

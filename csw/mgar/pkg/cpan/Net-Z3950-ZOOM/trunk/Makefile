@@ -1,6 +1,7 @@
 NAME = Net-Z3950-ZOOM
 VERSION = 1.26
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIRK
 
 DESCRIPTION = Perl extension for invoking the ZOOM-C API

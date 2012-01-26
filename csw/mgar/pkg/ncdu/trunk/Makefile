@@ -1,6 +1,7 @@
 NAME = ncdu
 VERSION = 1.8
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Ncurses version of the famous old 'du' unix
 define BLURB

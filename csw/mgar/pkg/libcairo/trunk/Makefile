@@ -1,6 +1,7 @@
 NAME = cairo
 VERSION = 1.10.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = The Cairo 2D Graphics Library
 define BLURB

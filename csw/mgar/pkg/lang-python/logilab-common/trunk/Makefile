@@ -5,6 +5,7 @@
 NAME = logilab-common
 VERSION = 0.52.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Python Abstract Syntax Tree New Generation
 PACKAGES = CSWpy-logilab-common
 CATALOGNAME_CSWpy-logilab-common = py_logilab_common

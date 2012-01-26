@@ -1,6 +1,7 @@
 NAME = ExtUtils-F77
 VERSION = 1.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KGB
 
 DESCRIPTION = Simple interface to F77 libs

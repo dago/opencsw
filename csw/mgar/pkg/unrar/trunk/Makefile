@@ -1,6 +1,7 @@
 NAME = unrar
 VERSION = 4.0.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = RAR archive extractor
 define BLURB

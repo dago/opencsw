@@ -3,6 +3,7 @@
 NAME = MySQL-python
 VERSION = 1.2.3
 CATEGORIES = python
+GARTYPE = v2
 
 define BLURB
   MySQL support for Python

@@ -1,6 +1,7 @@
 NAME = IO-Socket-INET6
 VERSION = 2.67
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SHLOMIF
 
 DESCRIPTION = Object interface for AF_INET|AF_INET6 domain sockets

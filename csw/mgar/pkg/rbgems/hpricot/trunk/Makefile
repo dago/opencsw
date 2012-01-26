@@ -1,6 +1,7 @@
 NAME = hpricot
 VERSION = 0.8.4
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A swift, liberal HTML parser with a fantastic library
 

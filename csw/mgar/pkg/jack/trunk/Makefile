@@ -1,6 +1,7 @@
 NAME = jack
 VERSION = 1.9.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A system for handling real-time, low latency audio and MIDI
 define BLURB

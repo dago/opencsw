@@ -1,6 +1,7 @@
 NAME = XML-DOM
 VERSION = 1.44
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TJMATHER
 
 DESCRIPTION = module for building DOM Level 1 compliant document structures

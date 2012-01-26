@@ -1,6 +1,7 @@
 NAME = IDNA-Punycode
 VERSION = 1.001
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CFAERBER
 
 DESCRIPTION = Deprecated module for IDNA and Punyode

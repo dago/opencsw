@@ -3,6 +3,7 @@
 NAME = eventlog
 VERSION = 0.2.12
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Replacement of the simple syslog() API providing structure to messages.
 define BLURB

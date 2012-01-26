@@ -5,6 +5,7 @@
 NAME = web
 VERSION = 0.34
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Simple web framework for Python
 define BLURB
 endef

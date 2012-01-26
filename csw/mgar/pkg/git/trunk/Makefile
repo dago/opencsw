@@ -2,6 +2,7 @@ NAME = git
 VERSION = 1.7.8.3
 #PATCHLEVEL = rc1
 CATEGORIES = devel
+GARTYPE = v2
 
 VENDOR_URL = http://git-scm.org/
 

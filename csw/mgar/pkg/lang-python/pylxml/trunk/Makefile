@@ -4,6 +4,7 @@
 NAME = pylxml
 VERSION = 2.2.4
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Easy to use and powerful libxml2/libxslt binding for Python
 define BLURB

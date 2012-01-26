@@ -1,6 +1,7 @@
 NAME = webmin
 VERSION = 1.510
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Web-based interface for system administration
 define BLURB

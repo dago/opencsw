@@ -1,6 +1,7 @@
 NAME = Mail-SPF-Query
 VERSION = 1.999.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JMEHNLE
 
 DESCRIPTION = Query Sender Policy Framework for an IP,email,helo

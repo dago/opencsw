@@ -2,6 +2,7 @@ NAME = gconfeditor
 GNOME_PROJ = gconf-editor
 VERSION = 2.30.0
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GNOME configuration system editor
 define BLURB

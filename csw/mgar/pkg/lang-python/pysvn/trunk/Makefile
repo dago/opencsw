@@ -5,6 +5,7 @@
 NAME = pysvn
 VERSION = 1.7.1
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Python SVN Extension and WorkBench GUI
 define BLURB
 

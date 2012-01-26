@@ -1,6 +1,7 @@
 NAME = Lingua-Stem-Fr
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SDP
 
 DESCRIPTION = Perl French Stemming

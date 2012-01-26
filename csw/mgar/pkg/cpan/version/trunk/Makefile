@@ -1,6 +1,7 @@
 NAME = version
 VERSION = 0.88
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JPEACOCK
 
 DESCRIPTION = Perl extension for Version Objects

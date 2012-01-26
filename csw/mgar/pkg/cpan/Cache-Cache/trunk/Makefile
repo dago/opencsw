@@ -1,6 +1,7 @@
 NAME = Cache-Cache
 VERSION = 1.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JSWARTZ
 
 DESCRIPTION = Cache interface

@@ -2,6 +2,7 @@
 NAME = xorriso
 VERSION = 1.1.8
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = ISO 9660 Rock Ridge Filesystem Manipulator
 define BLURB

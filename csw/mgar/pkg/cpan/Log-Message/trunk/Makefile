@@ -1,6 +1,7 @@
 NAME = Log-Message
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KANE
 
 DESCRIPTION = A generic message storage mechanism

@@ -1,6 +1,7 @@
 NAME = Tk
 VERSION = 804.028
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SREZIC
 
 DESCRIPTION = A Graphical User Interface ToolKit perl module

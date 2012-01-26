@@ -5,6 +5,7 @@
 NAME = iotop
 VERSION = 0.4
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = shows of behalf of which process is the I/O going on
 define BLURB
 endef

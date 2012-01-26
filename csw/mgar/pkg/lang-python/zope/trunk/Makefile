@@ -8,6 +8,7 @@
 NAME = Zope
 VERSION = 3.4.1
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Web application server
 define BLURB
 endef

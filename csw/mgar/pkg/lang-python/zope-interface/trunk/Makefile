@@ -5,6 +5,7 @@
 NAME = zope.interface
 VERSION = 3.6.1
 CATEGORIES = python
+GARTYPE = v2
 RUNTIME_DEP_PKGS_CSWpy-zope-interface += CSWlibpython2-6-1-0
 LICENSE = LICENSE.txt
 DESCRIPTION = Implementation of object interfaces in Python

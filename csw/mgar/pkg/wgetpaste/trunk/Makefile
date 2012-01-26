@@ -3,6 +3,7 @@
 NAME = wgetpaste
 VERSION = 2.18
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A command-line utility for text pasting websites.
 define BLURB

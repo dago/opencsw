@@ -1,6 +1,7 @@
 NAME = Net-SNMP
 VERSION = v6.0.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DTOWN
 
 DESCRIPTION = Object oriented interface to SNMP

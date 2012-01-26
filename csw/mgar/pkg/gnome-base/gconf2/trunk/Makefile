@@ -1,6 +1,7 @@
 NAME = gconf2
 VERSION = 2.32.4
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = GNOME configuration database system
 define BLURB

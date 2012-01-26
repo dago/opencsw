@@ -1,6 +1,7 @@
 NAME = Log-Dispatch-Config
 VERSION = 1.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Log4j for Perl

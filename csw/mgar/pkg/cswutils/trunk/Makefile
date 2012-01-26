@@ -3,6 +3,7 @@
 NAME = cswutils
 VERSION = 1.23
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Utilities for CSW maintainers
 define BLURB

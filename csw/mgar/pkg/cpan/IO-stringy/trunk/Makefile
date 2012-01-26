@@ -1,6 +1,7 @@
 NAME = IO-stringy
 VERSION = 2.110
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DSKOLL
 
 DESCRIPTION = I/O on in-core objects like strings and arrays

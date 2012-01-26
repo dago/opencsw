@@ -1,6 +1,7 @@
 NAME = rdoc-data
 VERSION = 2.5.3
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Core ri data for use with RDoc
 define BLURB

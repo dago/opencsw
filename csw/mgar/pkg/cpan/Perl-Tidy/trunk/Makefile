@@ -1,6 +1,7 @@
 NAME = Perl-Tidy
 VERSION = 20090616
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SHANCOCK
 
 DESCRIPTION = Indent and reformat Perl scripts.

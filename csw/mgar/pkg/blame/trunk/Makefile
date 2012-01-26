@@ -2,6 +2,7 @@
 NAME = blame
 VERSION = 1.3.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Displays the last modification for each line in an RCS file
 define BLURB

@@ -1,6 +1,7 @@
 NAME = perl-mozldap
 VERSION = 1.5.2
 CATEGORIES = cpan
+GARTYPE = v2
 
 DESCRIPTION = Mozilla SDK based Lightweight Directory Access Protocol
 define BLURB

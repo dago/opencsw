@@ -1,6 +1,7 @@
 NAME = dbus-python
 VERSION = 0.83.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = DBUS Bindings for Python
 define BLURB

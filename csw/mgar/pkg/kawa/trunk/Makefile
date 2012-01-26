@@ -1,6 +1,7 @@
 NAME = kawa
 VERSION = 1.9.1
 CATEGORIES = utils
+GARTYPE = v2
 ARCHALL = 1
 
 DESCRIPTION = Java implementation of Scheme and a framework for implementing high-level and dynamic languages

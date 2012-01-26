@@ -1,6 +1,7 @@
 NAME = libnotify
 VERSION = 0.4.5
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Notification library of the Galago desktop presence framework
 define BLURB

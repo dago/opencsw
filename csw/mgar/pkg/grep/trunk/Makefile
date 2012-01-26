@@ -1,6 +1,7 @@
 NAME = grep
 VERSION = 2.10
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = GNU grep
 define BLURB

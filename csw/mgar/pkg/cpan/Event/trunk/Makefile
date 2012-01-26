@@ -1,6 +1,7 @@
 NAME = Event
 VERSION = 1.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JPRIT
 
 DESCRIPTION = event loop processing

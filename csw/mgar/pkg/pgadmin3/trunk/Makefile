@@ -5,6 +5,7 @@
 NAME = pgadmin3
 VERSION = 1.10.0
 CATEGORIES = apps
+GARTYPE = v2
 DESCRIPTION = An administration and development platform for PostgreSQL
 define BLURB
 endef

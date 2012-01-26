@@ -1,6 +1,7 @@
 NAME = SVK
 VERSION = 2.2.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CLKAO
 
 DESCRIPTION = A distributed version control system

@@ -1,6 +1,7 @@
 NAME = Test-Distribution
 VERSION = 2.00
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SRSHAH
 
 DESCRIPTION = Perform tests on all modules of a distribution

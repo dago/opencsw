@@ -1,6 +1,7 @@
 NAME = p7zip
 VERSION = 9.20.1
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = File archiver with high compression ratio
 define BLURB

@@ -1,6 +1,7 @@
 NAME = phpldapadmin
 VERSION = 1.2.0.5
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server
 define BLURB

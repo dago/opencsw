@@ -1,6 +1,7 @@
 NAME = ExtUtils-Depends
 VERSION = 0.304
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = FLORA
 
 DESCRIPTION = easily build XS extensions that depend on XS extensions

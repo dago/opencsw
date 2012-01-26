@@ -1,6 +1,7 @@
 NAME = Crypt-Primes
 VERSION = 0.50
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIPUL
 
 DESCRIPTION = prime number generator suitable for cryptographic applications.

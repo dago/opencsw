@@ -1,6 +1,7 @@
 NAME = RADIUS-UserFile
 VERSION = 1.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = OEVANS
 
 DESCRIPTION = Perl RADIUS::UserFile module

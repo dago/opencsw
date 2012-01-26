@@ -2,6 +2,7 @@
 NAME = psycopg2
 VERSION = 2.2.2
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Psycopg2 is a PostgreSQL adapter for Python
 define BLURB

@@ -1,6 +1,7 @@
 NAME = autobench
 VERSION = 2.1.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Wrapper around httperf which automates the benchmarking process
 define BLURB

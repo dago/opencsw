@@ -1,6 +1,7 @@
 NAME = HTML-Template-Pro
 VERSION = 0.9504
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIY
 
 DESCRIPTION = Perl/XS module to use HTML Templates from CGI scripts

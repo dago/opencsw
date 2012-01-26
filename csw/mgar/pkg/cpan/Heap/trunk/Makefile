@@ -1,6 +1,7 @@
 NAME = Heap
 VERSION = 0.80
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JMM
 
 DESCRIPTION = Extensions for keeping data partially sorted

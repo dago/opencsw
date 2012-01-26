@@ -3,6 +3,7 @@ VERSION = 1.3.1
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons Validator
 define BLURB

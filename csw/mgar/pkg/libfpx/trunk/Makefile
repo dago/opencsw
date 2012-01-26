@@ -1,6 +1,7 @@
 NAME = libfpx
 VERSION = 1.3.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = FlashPIX library
 define BLURB

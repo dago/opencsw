@@ -1,6 +1,7 @@
 NAME = glpk
 VERSION = 4.47
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU Linear Programming Kit
 define BLURB

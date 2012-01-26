@@ -3,6 +3,7 @@
 NAME = pil
 VERSION = 1.1.7
 CATEGORIES = python
+GARTYPE = v2
 DISTNAME = Imaging-$(VERSION)
 
 define BLURB

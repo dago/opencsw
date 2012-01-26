@@ -1,6 +1,7 @@
 NAME = Dancer
 VERSION = 1.3080
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = XSAWYERX
 
 DESCRIPTION = A minimal-effort oriented web application framework

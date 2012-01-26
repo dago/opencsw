@@ -1,6 +1,7 @@
 NAME = Module-CoreList
 VERSION = 2.26
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = What modules shipped with versions of Perl

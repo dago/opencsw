@@ -1,6 +1,7 @@
 NAME = xboard
 VERSION = 4.4.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = X graphical chessboard
 define BLURB

@@ -2,6 +2,7 @@
 NAME = python-ldap
 VERSION = 2.3.12
 CATEGORIES = python
+GARTYPE = v2
 PACKAGES = CSWpy-ldap
 CATALOGNAME = py_ldap
 LICENSE = LICENCE

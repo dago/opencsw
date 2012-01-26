@@ -1,6 +1,7 @@
 NAME = thunderbird
 VERSION = 2.0.0.23
 CATEGORIES = apps
+GARTYPE = v2
 DISTNAME = $(NAME)
 
 DESCRIPTION =  Mozilla Thunderbird Mail Client

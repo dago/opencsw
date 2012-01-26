@@ -2,6 +2,7 @@
 NAME = django-filter
 VERSION = 0.5.3
 CATEGORIES = python
+GARTYPE = v2
 PACKAGES = CSWpy-django-filter
 CATALOGNAME = py_django_filter
 ARCHALL_CSWpy-django-filter = 1

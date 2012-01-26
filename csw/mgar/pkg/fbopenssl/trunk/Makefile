@@ -1,6 +1,7 @@
 NAME = fbopenssl
 VERSION = 0.0.4
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Extensions to OpenSSL including support for GSS-API and SPNEGO
 define BLURB

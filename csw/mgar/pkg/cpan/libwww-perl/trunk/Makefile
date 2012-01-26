@@ -1,6 +1,7 @@
 NAME = libwww-perl
 VERSION = 5.837
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = A general-purpose Web API for Perl, based on W3C libwww

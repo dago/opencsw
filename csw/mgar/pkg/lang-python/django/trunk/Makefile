@@ -9,6 +9,7 @@
 NAME = django
 VERSION = 1.2.3
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = A high-level Python Web framework
 define BLURB

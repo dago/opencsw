@@ -29,6 +29,7 @@
 NAME = sendmail
 VERSION = 8.14.5
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Sendmail MTA
 define BLURB

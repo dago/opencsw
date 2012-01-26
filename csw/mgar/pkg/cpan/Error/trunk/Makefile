@@ -1,6 +1,7 @@
 NAME = Error
 VERSION = 0.17016
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SHLOMIF
 
 DESCRIPTION = Error/exception handling in an OO-ish way

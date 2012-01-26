@@ -1,6 +1,7 @@
 NAME = Net-CIDR-Lite
 VERSION = 0.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DOUGW
 
 DESCRIPTION = Extension for merging IPv4 or IPv6 CIDR addresses

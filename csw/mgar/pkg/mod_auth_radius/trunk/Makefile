@@ -1,6 +1,7 @@
 NAME = mod_auth_radius
 VERSION = 1.5.8
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Apache RADIUS authentication module
 define BLURB

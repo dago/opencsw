@@ -1,6 +1,7 @@
 NAME = rake-compiler
 VERSION = 0.7.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Build and package Ruby extensions in C and Java
 define BLURB

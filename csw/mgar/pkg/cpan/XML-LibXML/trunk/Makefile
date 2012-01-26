@@ -1,6 +1,7 @@
 NAME = XML-LibXML
 VERSION = 1.70
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PAJAS
 
 DESCRIPTION = binding for libxml2

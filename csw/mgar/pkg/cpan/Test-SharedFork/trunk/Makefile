@@ -1,6 +1,7 @@
 NAME = Test-SharedFork
 VERSION = 0.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TOKUHIROM
 
 DESCRIPTION = fork test

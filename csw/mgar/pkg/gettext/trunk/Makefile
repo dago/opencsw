@@ -1,6 +1,7 @@
 NAME = gettext
 VERSION = 0.18.1.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = GNU locale utilities
 define BLURB

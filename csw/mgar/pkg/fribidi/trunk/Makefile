@@ -1,6 +1,7 @@
 NAME = fribidi
 VERSION = 0.19.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = An implementation of the Unicode Bidirectional Algorithm (bidi)
 define BLURB

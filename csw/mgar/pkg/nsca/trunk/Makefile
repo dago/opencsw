@@ -1,6 +1,7 @@
 NAME = nsca
 VERSION = 2.7.2
 CATEGORIES = apps
+GARTYPE = v2
 
 SPKG_DESC_CSWnsca = Nagios service check acceptor
 SPKG_DESC_CSWsendnsca = Sends check results to nsca daemon

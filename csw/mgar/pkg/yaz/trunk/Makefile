@@ -1,6 +1,7 @@
 NAME = yaz
 VERSION = 4.1.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Toolkit for Z39.50/SRW/SRU clients and servers
 define BLURB

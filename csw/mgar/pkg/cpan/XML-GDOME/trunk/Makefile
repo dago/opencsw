@@ -1,6 +1,7 @@
 NAME = XML-GDOME
 VERSION = 0.86
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TJMATHER
 
 DESCRIPTION = interface to Level 2 DOM gdome2 library

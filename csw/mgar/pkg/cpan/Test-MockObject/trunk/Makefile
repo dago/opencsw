@@ -1,6 +1,7 @@
 NAME = Test-MockObject
 VERSION = 1.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CHROMATIC
 
 DESCRIPTION = extension for emulating troublesome interfaces

@@ -3,6 +3,7 @@
 NAME = boost
 VERSION = 1.45.0
 CATEGORIES = lib
+GARTYPE = v2
 
 define BLURB
   Boost was begun by members of the C++ standards committee Library Working

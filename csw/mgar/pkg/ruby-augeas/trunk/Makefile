@@ -1,6 +1,7 @@
 NAME       = ruby-augeas
 VERSION    = 0.4.1
 CATEGORIES = lang
+GARTYPE = v2
 
 DESCRIPTION = Augeas Ruby Bindings
 define BLURB

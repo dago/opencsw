@@ -1,6 +1,7 @@
 NAME = cvsps
 VERSION = 2.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Patchsets for CVS
 define BLURB

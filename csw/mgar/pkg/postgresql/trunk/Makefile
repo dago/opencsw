@@ -93,6 +93,7 @@ BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
 PATCHLEVEL = 2
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
+GARTYPE = v2
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG

@@ -1,6 +1,7 @@
 NAME = tmpreaper
 VERSION = 1.6.13
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Cleans up files in directories based on their age
 define BLURB

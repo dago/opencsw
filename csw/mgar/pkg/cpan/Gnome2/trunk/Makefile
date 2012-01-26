@@ -1,6 +1,7 @@
 NAME = Gnome2
 VERSION = 1.001
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RMCFARLA
 
 DESCRIPTION = interface to the 2.x series of the GNOME libraries

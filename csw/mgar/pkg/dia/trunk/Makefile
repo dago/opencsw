@@ -2,6 +2,7 @@
 NAME = dia
 VERSION = 0.97
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A GTK+ based diagram creation program
 define BLURB

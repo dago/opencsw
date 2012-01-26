@@ -1,6 +1,7 @@
 NAME = openmpi
 VERSION = 1.4.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A High Performance Message Passing Library
 define BLURB

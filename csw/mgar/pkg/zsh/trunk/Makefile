@@ -1,6 +1,7 @@
 NAME = zsh
 VERSION = 4.3.15
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Powerful UNIX shell
 define BLURB

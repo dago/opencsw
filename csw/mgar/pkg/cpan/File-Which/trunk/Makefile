@@ -1,6 +1,7 @@
 NAME = File-Which
 VERSION = 1.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Portable implementation of the `which' utility

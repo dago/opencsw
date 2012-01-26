@@ -2,6 +2,7 @@
 NAME = rc
 VERSION = 1.7.1
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A reimplementation of the Plan 9 shell
 define BLURB

@@ -5,6 +5,7 @@
 NAME = scfdot
 VERSION = 1.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = SMF Dependency Graph Generator
 define BLURB

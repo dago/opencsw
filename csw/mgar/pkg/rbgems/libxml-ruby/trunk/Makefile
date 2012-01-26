@@ -1,6 +1,7 @@
 NAME = libxml-ruby
 VERSION = 1.1.4
 CATEGORIES = rbgems
+GARTYPE = v2
 
 # we don't want -ruby in the name of the gem, so we override GEMNAME.
 # doing that forces us to also override the default GEMFILE.

@@ -11,6 +11,7 @@ MAJOR_VERSION = 4
 MIN_VERSION = 8.9
 VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
+GARTYPE = v2
 
 define BLURB
   Netscape Portable Runtime (NSPR) provides a platform-neutral API for system

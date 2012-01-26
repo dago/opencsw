@@ -1,6 +1,7 @@
 NAME = MARC-Crosswalk-DublinCore
 VERSION = 0.02
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BRICAS
 
 DESCRIPTION = Convert data between MARC and Dublin Core

@@ -1,6 +1,7 @@
 NAME = cfengine
 VERSION = 2.2.10
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A tool for administering Networks of Diverse Machines
 define BLURB

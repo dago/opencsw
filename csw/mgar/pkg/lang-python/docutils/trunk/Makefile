@@ -5,6 +5,7 @@
 NAME = docutils
 VERSION = 0.7
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Plaintext documentation processing system
 SPKG_DESC_CSWpy-docutils = $(DESCRIPTION)
 define BLURB

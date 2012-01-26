@@ -2,6 +2,7 @@
 NAME = python-dateutil
 VERSION = 1.5
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Dateutil provides powerful extensions to the standard python datetime module
 define BLURB

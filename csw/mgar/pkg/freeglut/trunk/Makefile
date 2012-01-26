@@ -1,6 +1,7 @@
 NAME = freeglut
 VERSION = 2.6.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = OpenSourced alternative to the OpenGL Utility Toolkit
 define BLURB

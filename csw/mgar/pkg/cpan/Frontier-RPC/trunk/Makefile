@@ -1,6 +1,7 @@
 NAME = Frontier-RPC
 VERSION = 0.07b4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KMACLEOD
 
 DESCRIPTION = XML-RPC client interface

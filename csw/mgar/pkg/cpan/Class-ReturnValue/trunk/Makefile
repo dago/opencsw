@@ -1,6 +1,7 @@
 NAME = Class-ReturnValue
 VERSION = 0.55
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JESSE
 
 DESCRIPTION = Treat a return value as boolean, array or object

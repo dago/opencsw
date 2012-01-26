@@ -1,6 +1,7 @@
 NAME = Locale-Maketext-Simple
 VERSION = 0.21
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JESSE
 
 DESCRIPTION = Simple interface to Locale::Maketext::Lexicon

@@ -4,6 +4,7 @@
 NAME = django-tagging
 VERSION = 0.3.1
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A generig tagging application for Django projects
 define BLURB
 	A generic tagging application for Django projects, which allows association 

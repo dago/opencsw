@@ -1,6 +1,7 @@
 NAME = Class-DBI-mysql
 VERSION = 1.00
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TMTM
 
 DESCRIPTION = extensions to Class::DBI for MySQL

@@ -1,6 +1,7 @@
 NAME = Log-Any
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JSWARTZ
 
 DESCRIPTION = Bringing loggers and listeners together

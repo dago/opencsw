@@ -5,6 +5,7 @@
 NAME = libyaml
 VERSION = 0.1.3
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = a YAML 1.1 parser and emitter written in C
 define BLURB
 endef

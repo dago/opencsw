@@ -1,6 +1,7 @@
 NAME = Test-Class
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADIE
 
 DESCRIPTION = easily create test classes in an xUnit style.

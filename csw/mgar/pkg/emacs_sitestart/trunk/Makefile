@@ -1,6 +1,7 @@
 NAME = emacs_sitestart
 VERSION = 1.0
 CATEGORIES = xtra
+GARTYPE = v2
 
 PACKAGES = CSWemacssitestart
 CATALOGNAME = $(NAME)

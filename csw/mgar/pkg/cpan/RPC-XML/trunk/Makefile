@@ -1,6 +1,7 @@
 NAME = RPC-XML
 VERSION = 0.74
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RJRAY
 
 DESCRIPTION = A set of classes for core data, message and XML handling

@@ -1,6 +1,7 @@
 NAME = File-Fetch
 VERSION = 0.32
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = A generic file fetching mechanism

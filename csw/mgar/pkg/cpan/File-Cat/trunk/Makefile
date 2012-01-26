@@ -1,6 +1,7 @@
 NAME = File-Cat
 VERSION = 1.2
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = FIMM
 
 DESCRIPTION = Perl implementation of cat(1)

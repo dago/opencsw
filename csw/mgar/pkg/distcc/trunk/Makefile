@@ -1,6 +1,7 @@
 NAME = distcc
 VERSION = 3.1
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = A fast, free distributed C/C++ compiler
 define BLURB

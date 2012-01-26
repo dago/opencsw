@@ -18,6 +18,7 @@
 NAME = openssl
 VERSION = 0.9.8t
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB

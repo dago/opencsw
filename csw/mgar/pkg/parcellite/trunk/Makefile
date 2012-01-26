@@ -1,6 +1,7 @@
 NAME = parcellite
 VERSION = 0.9.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = Lightweight GTK+ clipboard manager
 define BLURB

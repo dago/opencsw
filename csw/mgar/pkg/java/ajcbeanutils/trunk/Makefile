@@ -3,6 +3,7 @@ VERSION = 1.8.3
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
+GARTYPE = v2
 
 DESCRIPTION = Apache Jakarta Commons BeanUtils
 define BLURB

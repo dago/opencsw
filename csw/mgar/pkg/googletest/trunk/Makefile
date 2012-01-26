@@ -5,6 +5,7 @@
 NAME = googletest
 VERSION = 1.4.0
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = a framework for writing C++ tests on a variety of platforms
 define BLURB
   Google's framework for writing C++ tests on a variety of platforms (Linux,

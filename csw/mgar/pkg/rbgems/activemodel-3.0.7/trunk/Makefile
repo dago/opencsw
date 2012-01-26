@@ -1,6 +1,7 @@
 NAME = activemodel
 VERSION = 3.0.7
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A toolkit for building modeling frameworks like Active Record and Active Resource
 define BLURB

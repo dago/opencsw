@@ -1,6 +1,7 @@
 NAME = Data-ICal
 VERSION = 0.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ALEXMV
 
 DESCRIPTION = Generates iCalendar (RFC 2445) calendar files

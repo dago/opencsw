@@ -1,6 +1,7 @@
 NAME = libmatio
 VERSION = 1.3.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = An ISO C library for reading and writing Matlab MAT files
 define BLURB

@@ -2,6 +2,7 @@
 NAME = libsigc++
 VERSION = 2.2.10
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Typesafe signal and callback system for C++
 define BLURB

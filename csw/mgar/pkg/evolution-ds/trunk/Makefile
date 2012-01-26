@@ -1,6 +1,7 @@
 NAME = evolution-data-server
 VERSION = 2.28.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Evolution database backend server
 define BLURB

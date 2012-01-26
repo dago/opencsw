@@ -1,6 +1,7 @@
 NAME = XML-Dumper
 VERSION = 0.81
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIKEWONG
 
 DESCRIPTION = Perl module for dumping Perl objects from/to XML

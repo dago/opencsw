@@ -1,6 +1,7 @@
 NAME = DateTime-Format-W3CDTF
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Parse and format W3CDTF datetime strings

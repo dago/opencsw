@@ -1,6 +1,7 @@
 NAME = App-CLI
 VERSION = 0.313
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CORNELIUS
 
 DESCRIPTION = Dispatcher module for command line interface programs

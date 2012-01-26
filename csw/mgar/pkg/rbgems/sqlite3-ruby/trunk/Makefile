@@ -1,6 +1,7 @@
 NAME = sqlite3-ruby
 VERSION = 1.3.1
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Ruby interface to SQLite3
 define BLURB

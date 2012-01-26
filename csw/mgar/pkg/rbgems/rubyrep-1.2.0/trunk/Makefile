@@ -1,6 +1,7 @@
 NAME = rubyrep
 VERSION = 1.2.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = SQL replication
 

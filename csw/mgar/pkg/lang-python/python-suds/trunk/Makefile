@@ -5,6 +5,7 @@
 NAME = python-suds
 VERSION = 0.3.9
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION =  lightweight SOAP python client for consuming Web Services
 define BLURB
 endef

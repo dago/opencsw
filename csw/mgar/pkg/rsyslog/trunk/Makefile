@@ -1,6 +1,7 @@
 NAME = rsyslog
 VERSION = 5.8.6
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = Enhanced multi-threaded syslogd with a focus on security and reliability
 define BLURB

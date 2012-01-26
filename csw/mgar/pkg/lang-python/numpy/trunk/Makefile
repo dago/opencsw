@@ -5,6 +5,7 @@
 NAME = numpy
 VERSION = 1.5.1rc1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Standard numerical array library for python
 define BLURB

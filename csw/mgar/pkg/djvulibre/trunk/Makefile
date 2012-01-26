@@ -1,6 +1,7 @@
 NAME = djvulibre
 VERSION = 3.5.24
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = DjVu standalone viewer, browser plug-in, command line tools
 define BLURB

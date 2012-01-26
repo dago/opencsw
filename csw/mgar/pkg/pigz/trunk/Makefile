@@ -1,6 +1,7 @@
 NAME = pigz
 VERSION = 2.1.7
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A parallel implementation of gzip
 define BLURB

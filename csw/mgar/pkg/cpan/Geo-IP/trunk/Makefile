@@ -1,6 +1,7 @@
 NAME = Geo-IP
 VERSION = 1.38
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BORISZ
 
 DESCRIPTION = Look up location and network information by IP Address

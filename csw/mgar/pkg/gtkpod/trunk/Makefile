@@ -1,6 +1,7 @@
 NAME = gtkpod
 VERSION = 0.99.14
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = gtk2 application for Apple iPods
 define BLURB

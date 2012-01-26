@@ -6,6 +6,7 @@ NAME = buildbot
 VERSION = 0.7.12
 PATCHLEVEL =
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = A system to automate the compile/test cycle
 define BLURB

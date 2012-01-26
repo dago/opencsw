@@ -1,6 +1,7 @@
 NAME = Ima-DBI
 VERSION = 0.34
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TMTM
 
 DESCRIPTION = database connection caching and organization

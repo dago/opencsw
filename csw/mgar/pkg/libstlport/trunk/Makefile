@@ -1,6 +1,7 @@
 NAME = libstlport
 VERSION = 5.2.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A multiplatform C++ standard library implementation
 define BLURB

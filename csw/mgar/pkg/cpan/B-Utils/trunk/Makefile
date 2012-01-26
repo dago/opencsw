@@ -1,6 +1,7 @@
 NAME = B-Utils
 VERSION = 0.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JJORE
 
 DESCRIPTION = Helper functions for op tree manipulation

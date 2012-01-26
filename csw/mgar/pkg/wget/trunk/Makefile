@@ -6,6 +6,7 @@
 NAME = wget
 VERSION = 1.13.4
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = A network utility to retrieve files from the Web
 define BLURB

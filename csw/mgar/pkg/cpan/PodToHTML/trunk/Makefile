@@ -1,6 +1,7 @@
 NAME = PodToHTML
 VERSION = 0.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NI-S
 
 DESCRIPTION = Convert POD to trees of HTML::Element

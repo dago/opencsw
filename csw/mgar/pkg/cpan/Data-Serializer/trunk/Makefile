@@ -1,6 +1,7 @@
 NAME = Data-Serializer
 VERSION = 0.49
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = NEELY
 
 DESCRIPTION = Modules that serialize data structures

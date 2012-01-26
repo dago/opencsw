@@ -1,6 +1,7 @@
 NAME = httpd
 VERSION = 2.2.13
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = A high performance Unix-based HTTP server.
 define BLURB

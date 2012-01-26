@@ -1,6 +1,7 @@
 NAME = Number-Compare
 VERSION = 0.01
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RCLAMP
 
 DESCRIPTION = Numeric comparisons

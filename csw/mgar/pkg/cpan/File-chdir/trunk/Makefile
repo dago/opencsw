@@ -1,6 +1,7 @@
 NAME = File-chdir
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MSCHWERN
 
 DESCRIPTION = a more sensible way to change directories

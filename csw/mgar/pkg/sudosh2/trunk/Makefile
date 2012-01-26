@@ -4,6 +4,7 @@
 NAME = sudosh2
 VERSION = 1.0.4
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Extensive auditing of user shell usage
 define BLURB

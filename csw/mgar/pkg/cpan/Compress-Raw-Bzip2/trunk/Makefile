@@ -1,6 +1,7 @@
 NAME = Compress-Raw-Bzip2
 VERSION = 2.033
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PMQS
 
 DESCRIPTION = Low-Level Interface to bzip2 compression library

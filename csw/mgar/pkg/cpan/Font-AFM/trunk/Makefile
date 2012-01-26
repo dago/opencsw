@@ -1,6 +1,7 @@
 NAME = Font-AFM
 VERSION = 1.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = Interface to Adobe Font Metrics files

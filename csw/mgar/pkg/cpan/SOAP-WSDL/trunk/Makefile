@@ -1,6 +1,7 @@
 NAME = SOAP-WSDL
 VERSION = 1.20
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MKUTTER
 
 DESCRIPTION = Web Service Descriptor Language support for SOAP::Lite

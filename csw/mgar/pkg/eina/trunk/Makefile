@@ -1,6 +1,7 @@
 NAME = eina
 VERSION = 0.9.9.063
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Provides optimized data types
 define BLURB

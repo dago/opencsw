@@ -1,6 +1,7 @@
 NAME = libpcap
 VERSION = 1.2.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = System-independent interface for user-level packet capture
 define BLURB

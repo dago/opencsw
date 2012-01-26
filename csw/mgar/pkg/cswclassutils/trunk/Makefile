@@ -3,6 +3,7 @@
 NAME = cswclassutils
 VERSION = 1.45
 CATEGORIES = utils
+GARTYPE = v2
 
 # a few handy functions for defining 'generic' things dynamically
 set = $(eval $1 := $2)

@@ -1,6 +1,7 @@
 NAME = Text-CSV_XS
 VERSION = 0.81
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = HMBRAND
 
 DESCRIPTION = Comma-separated values manipulation routines

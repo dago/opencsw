@@ -4,6 +4,7 @@
 NAME = pyxdg
 VERSION = 0.19
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = Python library to access freedesktop.org standards
 define BLURB

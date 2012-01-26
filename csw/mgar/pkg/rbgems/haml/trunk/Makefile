@@ -1,6 +1,7 @@
 NAME = haml
 VERSION = 3.0.15
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = HTML Abstraction Markup Language
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Sub-Uplevel
 VERSION = 0.2002
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DAGOLDEN
 
 DESCRIPTION = Apparently run a function in a higher stack frame

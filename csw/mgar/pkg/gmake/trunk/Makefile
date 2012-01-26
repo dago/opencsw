@@ -1,6 +1,7 @@
 NAME = make
 VERSION = 3.82
 CATEGORIES = devel
+GARTYPE = v2
 
 DESCRIPTION = Controls generation of executables and other compile-related tasks
 define BLURB

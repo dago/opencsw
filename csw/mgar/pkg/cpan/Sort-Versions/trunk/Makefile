@@ -1,6 +1,7 @@
 NAME = Sort-Versions
 VERSION = 1.5
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = EDAVIS
 
 DESCRIPTION = A module for sorting of revision-like numbers

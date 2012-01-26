@@ -1,6 +1,7 @@
 NAME = rspec-core
 VERSION = 2.4.0
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A Behaviour-Driven Development Tool
 

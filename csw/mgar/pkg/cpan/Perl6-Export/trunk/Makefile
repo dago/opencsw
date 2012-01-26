@@ -1,6 +1,7 @@
 NAME = Perl6-Export
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DCONWAY
 
 DESCRIPTION = Perl6::Export - Implements the Perl 6 'is export(...)' trait

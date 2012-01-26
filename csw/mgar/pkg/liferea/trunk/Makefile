@@ -2,6 +2,7 @@
 NAME = liferea
 VERSION = 1.6.3
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = An aggregator for online news feeds
 define BLURB

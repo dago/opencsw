@@ -1,6 +1,7 @@
 NAME = ExtUtils-PkgConfig
 VERSION = 1.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TSCH
 
 DESCRIPTION = simplistic interface to pkg-config

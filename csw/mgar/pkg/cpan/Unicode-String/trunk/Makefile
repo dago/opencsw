@@ -1,6 +1,7 @@
 NAME = Unicode-String
 VERSION = 2.09
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = String of Unicode characters (UCS2/UTF16)

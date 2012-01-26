@@ -1,6 +1,7 @@
 NAME = Digest-SHA1
 VERSION = 2.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = Interface to the SHA-1 Algorithm

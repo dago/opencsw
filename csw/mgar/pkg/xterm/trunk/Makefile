@@ -2,6 +2,7 @@
 NAME = xterm
 VERSION = 267
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Terminal emulator for the X Window System
 define BLURB

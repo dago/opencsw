@@ -1,6 +1,7 @@
 NAME = Convert-PEM
 VERSION = 0.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = read/write encrypted ASN.1 PEM files

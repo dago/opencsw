@@ -2,6 +2,7 @@
 NAME = xsnow
 VERSION = 1.42
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A classic X toy that displays falling snow on the X11 root window
 define BLURB

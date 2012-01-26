@@ -1,6 +1,7 @@
 NAME = Parse-RecDescent
 VERSION = 1.963
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DCONWAY
 
 DESCRIPTION = Generate recursive-descent parsers

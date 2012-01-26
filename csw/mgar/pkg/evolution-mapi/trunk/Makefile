@@ -1,6 +1,7 @@
 NAME = evolution-mapi
 VERSION = 0.28.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Evolution extension for MS Exchange 2007 servers
 define BLURB

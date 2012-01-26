@@ -1,6 +1,7 @@
 NAME = Carp-Assert-More
 VERSION = 1.12
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = Convenience wrappers around Carp::Assert

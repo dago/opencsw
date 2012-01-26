@@ -1,6 +1,7 @@
 NAME = File-MMagic
 VERSION = 1.27
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = KNOK
 
 DESCRIPTION = Guess file type

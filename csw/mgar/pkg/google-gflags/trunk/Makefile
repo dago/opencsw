@@ -5,6 +5,7 @@
 NAME = gflags
 VERSION = 1.3
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = a library that implements commandline flags processing
 define BLURB
 	The gflags package contains a library that implements commandline flags

@@ -1,6 +1,7 @@
 NAME = DBD-mysql
 VERSION = 4.013
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = CAPTTOFU
 
 DESCRIPTION = MySQL driver for the Perl5 Database Interface (DBI)

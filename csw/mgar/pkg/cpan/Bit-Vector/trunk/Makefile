@@ -1,6 +1,7 @@
 NAME = Bit-Vector
 VERSION = 7.1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = STBEY
 
 DESCRIPTION = Efficient bit vector, set of integers and big int math library.

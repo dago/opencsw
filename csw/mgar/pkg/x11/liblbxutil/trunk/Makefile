@@ -1,6 +1,7 @@
 NAME = liblbxutil
 VERSION = 1.0.1
 CATEGORIES = x11
+GARTYPE = v2
 
 DESCRIPTION = LBX utilities library from modular X.org.
 define BLURB

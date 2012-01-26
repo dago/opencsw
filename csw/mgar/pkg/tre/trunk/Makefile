@@ -5,6 +5,7 @@
 NAME = tre
 VERSION = 0.8.0
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Approximate regex matching library
 define BLURB
 endef

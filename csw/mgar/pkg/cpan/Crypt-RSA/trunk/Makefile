@@ -1,6 +1,7 @@
 NAME = Crypt-RSA
 VERSION = 1.58
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VIPUL
 
 DESCRIPTION = RSA public-key cryptosystem.

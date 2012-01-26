@@ -1,6 +1,7 @@
 NAME = gdome2
 VERSION = 0.8.1
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A DOM Level 2 Implementation
 define BLURB

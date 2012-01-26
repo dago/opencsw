@@ -1,6 +1,7 @@
 NAME = capitalization
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = No capitalization on method names

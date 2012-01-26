@@ -1,6 +1,7 @@
 NAME = Exception-Class
 VERSION = 1.32
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Declare real exception classes in Perl

@@ -1,6 +1,7 @@
 NAME = Class-DBI-Pg
 VERSION = 0.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = IKEBE
 
 DESCRIPTION = Class::DBI extension for Postgres

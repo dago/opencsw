@@ -1,6 +1,7 @@
 NAME = AppConfig
 VERSION = 1.66
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ABW
 
 DESCRIPTION = Perl5 module for configuration files and command line arguments.

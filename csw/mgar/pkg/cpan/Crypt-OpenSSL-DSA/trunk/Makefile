@@ -1,6 +1,7 @@
 NAME = Crypt-OpenSSL-DSA
 VERSION = 0.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TJMATHER
 
 DESCRIPTION = digital signature algorithm using OpenSSL

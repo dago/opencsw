@@ -1,6 +1,7 @@
 NAME = enchant
 VERSION = 1.6.0
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A wrapper library for various spell checking engines
 define BLURB

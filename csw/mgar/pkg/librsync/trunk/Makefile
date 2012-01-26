@@ -1,6 +1,7 @@
 NAME = librsync
 VERSION = 0.9.7
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library with the rolling-checksum algorithm known from rsync
 define BLURB

@@ -5,6 +5,7 @@
 NAME = libsndfile
 VERSION = 1.0.25
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = C library for reading and writing files containing sampled sound
 

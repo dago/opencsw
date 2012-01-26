@@ -1,6 +1,7 @@
 NAME = ntop
 VERSION = 4.0.3
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = A network traffic usage monitor
 define BLURB

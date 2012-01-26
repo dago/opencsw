@@ -1,6 +1,7 @@
 NAME = List-MoreUtils
 VERSION = 0.22
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = VPARSEVAL
 
 DESCRIPTION = Provide the stuff missing in List::Util

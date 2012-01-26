@@ -2,6 +2,7 @@
 NAME = mailutils
 VERSION = 2.2
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A collection of mail related utilities
 define BLURB

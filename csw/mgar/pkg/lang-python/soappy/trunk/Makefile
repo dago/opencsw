@@ -5,6 +5,7 @@
 NAME = SOAPpy
 VERSION = 0.12.0
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = SOAP library for Python
 define BLURB
 endef

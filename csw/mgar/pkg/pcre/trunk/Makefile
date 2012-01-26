@@ -1,6 +1,7 @@
 NAME = pcre
 VERSION = 8.21
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Perl-compatible regular expression tools
 define BLURB

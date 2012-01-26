@@ -1,6 +1,7 @@
 NAME = fontconfig
 VERSION = 2.8.0
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A library for configuring and customizing font access.
 define BLURB

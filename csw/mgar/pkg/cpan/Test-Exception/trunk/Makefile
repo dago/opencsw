@@ -1,6 +1,7 @@
 NAME = Test-Exception
 VERSION = 0.29
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADIE
 
 DESCRIPTION = Test exception based code

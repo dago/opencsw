@@ -1,6 +1,7 @@
 NAME = Gimp
 VERSION = 2.2pre1
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SJBURGES
 
 DESCRIPTION = Perl extension for writing Gimp extensions

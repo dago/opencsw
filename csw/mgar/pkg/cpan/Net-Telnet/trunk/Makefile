@@ -1,6 +1,7 @@
 NAME = Net-Telnet
 VERSION = 3.03
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = JROGERS
 
 DESCRIPTION = Interact with TELNET port or other TCP ports

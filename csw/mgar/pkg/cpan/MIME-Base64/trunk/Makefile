@@ -1,6 +1,7 @@
 NAME = MIME-Base64
 VERSION = 3.13
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = Encoding and decoding of base64 strings

@@ -1,6 +1,7 @@
 NAME = nagios-plugins
 VERSION = 1.4.14
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = plugins for nagios
 define BLURB

@@ -1,6 +1,7 @@
 NAME = Test-TCP
 VERSION = 1.11
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = TOKUHIROM
 
 DESCRIPTION = testing TCP program

@@ -5,6 +5,7 @@
 NAME = httping
 VERSION = 1.4.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = Httping is like 'ping' but for http-requests.
 define BLURB

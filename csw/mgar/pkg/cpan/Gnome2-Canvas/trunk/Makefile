@@ -1,6 +1,7 @@
 NAME = Gnome2-Canvas
 VERSION = 1.001
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RMCFARLA
 
 DESCRIPTION = interface to the Gnome Canvas

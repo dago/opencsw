@@ -1,6 +1,7 @@
 NAME = Crypt-OpenSSL-X509
 VERSION = 0.4
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = DANIEL
 
 DESCRIPTION = Perl extension to OpenSSL X509 API.

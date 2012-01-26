@@ -7,6 +7,7 @@
 NAME = pureftpd
 VERSION = 1.0.27
 CATEGORIES = net
+GARTYPE = v2
 SRCNAME = pure-ftpd
 
 DESCRIPTION = A secure FTP daemon

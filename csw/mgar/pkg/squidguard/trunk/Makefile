@@ -2,6 +2,7 @@
 NAME = squidguard
 VERSION = 1.4
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = URL redirector used to use blacklists with the proxysoftware Squid
 define BLURB

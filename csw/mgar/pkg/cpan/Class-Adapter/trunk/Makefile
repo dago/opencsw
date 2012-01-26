@@ -1,6 +1,7 @@
 NAME = Class-Adapter
 VERSION = 1.07
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Perl implementation of the "Adapter" Design Pattern

@@ -1,6 +1,7 @@
 NAME = scons
 VERSION = 2.0.1
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = A next-generation build tool
 define BLURB

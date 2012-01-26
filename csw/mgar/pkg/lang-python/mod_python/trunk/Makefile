@@ -1,6 +1,7 @@
 NAME = mod_python
 VERSION = 3.3.1
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = an Apache/Python integration module
 define BLURB

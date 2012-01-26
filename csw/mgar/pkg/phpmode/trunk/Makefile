@@ -1,6 +1,7 @@
 NAME = php-mode
 VERSION = 1.5.0
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = An Emacs mode for editting PHP code
 define BLURB

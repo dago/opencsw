@@ -1,6 +1,7 @@
 NAME = libxslt
 VERSION = 1.1.26
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = XSLT engine for the XML Toolkit
 

@@ -5,6 +5,7 @@
 NAME = facter
 VERSION = 1.6.4
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = A system fact gatherer
 define BLURB

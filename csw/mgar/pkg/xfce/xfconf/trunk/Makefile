@@ -1,5 +1,6 @@
 NAME = xfconf
 CATEGORIES = xfce
+GARTYPE = v2
 
 DESCRIPTION = Xfconf is a simple client-server configuration storage and query system
 define BLURB

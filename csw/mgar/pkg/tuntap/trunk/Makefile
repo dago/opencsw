@@ -1,6 +1,7 @@
 NAME = tuntap
 VERSION = 1.1
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = TUN and TAP virtual network kernel drivers
 define BLURB

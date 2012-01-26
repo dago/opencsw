@@ -1,6 +1,7 @@
 NAME = libshout
 VERSION = 2.2.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Icecast library
 define BLURB

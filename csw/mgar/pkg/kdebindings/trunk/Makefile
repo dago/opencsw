@@ -1,5 +1,6 @@
 NAME = kdebindings
 CATEGORIES = kde
+GARTYPE = v2
 
 DESCRIPTION = Key bindings for KDE (gcc3)
 define BLURB

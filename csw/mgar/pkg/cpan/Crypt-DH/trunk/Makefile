@@ -1,6 +1,7 @@
 NAME = Crypt-DH
 VERSION = 0.06
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BTROTT
 
 DESCRIPTION = Diffie-Hellman key exchange system

@@ -1,6 +1,7 @@
 NAME = libogg
 VERSION = 1.2.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Ogg bitstream format support library
 define BLURB

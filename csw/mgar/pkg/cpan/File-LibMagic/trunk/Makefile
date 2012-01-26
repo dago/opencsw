@@ -1,6 +1,7 @@
 NAME = File-LibMagic
 VERSION = 0.96
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = FITZNER
 
 DESCRIPTION = Perlwrapper for libmagic

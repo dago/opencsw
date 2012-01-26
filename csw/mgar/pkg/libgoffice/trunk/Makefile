@@ -1,6 +1,7 @@
 NAME = libgoffice
 VERSION = 0.7.4
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = Document centric objects library
 define BLURB

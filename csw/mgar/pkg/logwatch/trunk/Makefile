@@ -1,6 +1,7 @@
 NAME = logwatch
 VERSION = 7.3.6
 CATEGORIES = utils
+GARTYPE = v2
 
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWperl CSWggrep CSWfortune CSWgawk CSWcoreutils

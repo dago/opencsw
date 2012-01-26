@@ -1,6 +1,7 @@
 NAME = Digest
 VERSION = stub
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GAAS
 
 DESCRIPTION = Stub to the Perl build-in module Digest

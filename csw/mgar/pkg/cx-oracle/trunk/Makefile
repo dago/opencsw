@@ -5,6 +5,7 @@
 NAME = cx-oracle
 VERSION = 5.0.2
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = a Python db API conforming module for Oracle database access
 define BLURB
   cx_Oracle is a Python extension module that allows access to Oracle databases

@@ -1,6 +1,7 @@
 NAME = PDF-Reuse
 VERSION = 0.35
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = LARSLUND
 
 DESCRIPTION = Reuse and mass produce PDF documents

@@ -5,6 +5,7 @@
 NAME = unittest2
 VERSION = 0.5.1
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = The new features in unittest for Python 2.7 backported to Python 2.3+
 define BLURB
 endef

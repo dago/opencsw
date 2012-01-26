@@ -1,6 +1,7 @@
 NAME = Test-Memory-Cycle
 VERSION = 1.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PETDANCE
 
 DESCRIPTION = check for memory leaks and circular memory references

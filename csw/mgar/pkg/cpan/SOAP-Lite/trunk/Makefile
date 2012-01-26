@@ -1,6 +1,7 @@
 NAME = SOAP-Lite
 VERSION = 0.710.10
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MKUTTER
 
 DESCRIPTION = Client and server side SOAP implementation

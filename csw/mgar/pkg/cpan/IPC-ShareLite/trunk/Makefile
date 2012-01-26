@@ -1,6 +1,7 @@
 NAME = IPC-ShareLite
 VERSION = 0.17
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = ANDYA
 
 DESCRIPTION = Lightweight interface to shared memory

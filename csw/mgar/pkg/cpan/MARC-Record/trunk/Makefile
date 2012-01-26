@@ -1,6 +1,7 @@
 NAME = MARC-Record
 VERSION = 2.0.2
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GMCHARLT
 
 DESCRIPTION = Perl module for handling files of MARC::Record objects

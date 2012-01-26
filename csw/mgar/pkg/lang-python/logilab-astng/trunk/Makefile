@@ -5,6 +5,7 @@
 NAME = logilab-astng
 VERSION = 0.20.3
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = Python Abstract Syntax Tree New Generation
 PACKAGES = CSWpy-logilab-astng
 CATALOGNAME_CSWpy-logilab-astng = py_logilab_astng

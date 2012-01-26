@@ -1,6 +1,7 @@
 NAME = rails
 VERSION = 2.3.8
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = A framework for building web-application
 define BLURB

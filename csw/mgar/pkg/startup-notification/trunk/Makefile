@@ -5,6 +5,7 @@
 NAME = startup-notification
 VERSION = 0.9
 CATEGORIES = lib
+GARTYPE = v2
 DESCRIPTION = Reference implementation of the startup notification protocol
 define BLURB
 endef

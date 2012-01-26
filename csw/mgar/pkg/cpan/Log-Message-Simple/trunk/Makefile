@@ -1,6 +1,7 @@
 NAME = Log-Message-Simple
 VERSION = 0.08
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = BINGOS
 
 DESCRIPTION = Simplified interface to Log::Message

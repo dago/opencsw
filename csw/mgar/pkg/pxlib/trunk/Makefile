@@ -1,6 +1,7 @@
 NAME = pxlib
 VERSION = 0.6.3
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library to read and write Paradox databases
 define BLURB

@@ -1,6 +1,7 @@
 NAME = B-Flags
 VERSION = 0.04
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = RURBAN
 
 DESCRIPTION = Friendlier flags for B

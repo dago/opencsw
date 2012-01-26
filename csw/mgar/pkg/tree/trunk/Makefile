@@ -5,6 +5,7 @@
 NAME = tree
 VERSION = 1.6.0
 CATEGORIES = utils
+GARTYPE = v2
 DESCRIPTION = A recursive directory listing program
 define BLURB
   Tree is a recursive directory listing program that produces a depth indented

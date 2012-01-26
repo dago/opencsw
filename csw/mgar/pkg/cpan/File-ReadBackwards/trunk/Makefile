@@ -1,6 +1,7 @@
 NAME = File-ReadBackwards
 VERSION = 1.05
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = URI
 
 DESCRIPTION = Read a file backwards by lines

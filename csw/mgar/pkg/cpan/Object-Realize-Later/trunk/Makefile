@@ -1,6 +1,7 @@
 NAME = Object-Realize-Later
 VERSION = 0.18
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = MARKOV
 
 DESCRIPTION = Delayed creation of objects

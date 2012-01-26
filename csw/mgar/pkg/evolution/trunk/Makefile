@@ -1,6 +1,7 @@
 NAME = evolution
 VERSION = 2.28.2
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GNOME mail client and PIM
 define BLURB

@@ -1,6 +1,7 @@
 NAME = ndoutils
 VERSION = 1.4b7
 CATEGORIES = apps
+GARTYPE = v2
 
 SPKG_DESC_CSWndoutils2x = NDOutils for nagios 2.x
 SPKG_DESC_CSWndoutils3x = NDOutils for nagios 3.x

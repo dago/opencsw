@@ -1,6 +1,7 @@
 NAME = diff-lcs
 VERSION = 1.1.2
 CATEGORIES = rbgems
+GARTYPE = v2
 
 DESCRIPTION = Provides a list of changes that represent the difference between two sequenced collections.
 

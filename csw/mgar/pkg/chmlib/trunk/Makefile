@@ -1,6 +1,7 @@
 NAME = chmlib
 VERSION = 0.40
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = Library designed for accessing MS ITSS files (chm)
 define BLURB

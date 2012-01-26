@@ -8,6 +8,7 @@ PACKAGES = CSWpy-pexpect
 CATALOGNAME_CSWpy-pexpect = py_pexpect
 ARCHALL_CSWpy-pexpect = 1
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = A module for spawning child processes and interacting with them
 define BLURB
 endef

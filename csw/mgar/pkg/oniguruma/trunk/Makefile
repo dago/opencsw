@@ -1,6 +1,7 @@
 NAME = oniguruma
 VERSION = 5.9.2
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = A regular expression library
 define BLURB

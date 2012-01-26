@@ -1,6 +1,7 @@
 NAME = db
 VERSION = 4.3.29
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = BerkeleyDB 4.3 libraries and utilities
 define BLURB

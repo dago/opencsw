@@ -2,6 +2,7 @@
 NAME = minicom
 VERSION = 2.4
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = Serial communication program
 define BLURB

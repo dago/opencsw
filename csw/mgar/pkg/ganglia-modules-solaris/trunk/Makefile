@@ -1,6 +1,7 @@
 NAME = ganglia-modules-solaris
 VERSION = 1.0.1
 CATEGORIES = utils
+GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 

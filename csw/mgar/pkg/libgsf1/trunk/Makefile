@@ -1,6 +1,7 @@
 NAME = libgsf
 VERSION = 1.9.1
 CATEGORIES = gnome
+GARTYPE = v2
 
 DESCRIPTION = GNOME Structured File Library
 define BLURB

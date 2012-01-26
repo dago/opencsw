@@ -5,6 +5,7 @@
 NAME = textile
 VERSION = 2.1.4
 CATEGORIES = python
+GARTYPE = v2
 DESCRIPTION = XHTML generator using simple markup
 define BLURB
 endef

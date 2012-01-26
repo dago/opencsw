@@ -23,6 +23,7 @@ VERSION = 0.3.0
 ## apps, cpan, devel, gnome, java, kde, lang, lib, meta, net, python, server,
 ## utils, x11, xfce, xorg, xtra
 CATEGORIES = lib
+GARTYPE = v2
 ##
 ## A one-line description of the package, which will appear in the pkginfo.
 DESCRIPTION = Software framework for scalable cross-language services development

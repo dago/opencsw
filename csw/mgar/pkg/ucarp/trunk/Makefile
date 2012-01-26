@@ -5,6 +5,7 @@
 NAME = ucarp
 VERSION = 1.5.2
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = UCARP is a portable implementation of the CARP protocol. 
 define BLURB

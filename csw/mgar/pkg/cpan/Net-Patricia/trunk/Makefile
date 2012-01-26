@@ -1,6 +1,7 @@
 NAME = Net-Patricia
 VERSION = 1.16
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = PHILIPP
 
 DESCRIPTION = Patricia Trie perl module for fast IP address lookups

@@ -1,6 +1,7 @@
 NAME = tomcat-connectors
 VERSION = 1.2.30
 CATEGORIES = server
+GARTYPE = v2
 
 DESCRIPTION = AJP connector module for Apache 2
 define BLURB

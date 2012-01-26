@@ -5,6 +5,7 @@
 NAME = pycurl
 VERSION = 7.19.0
 CATEGORIES = python
+GARTYPE = v2
 
 DESCRIPTION = PycURL is a Python interface to libcurl
 define BLURB

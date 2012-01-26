@@ -1,6 +1,7 @@
 NAME = Archive-SelfExtract
 VERSION = 1.3
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = GREGFAST
 
 DESCRIPTION = bundle compressed archives with Perl code

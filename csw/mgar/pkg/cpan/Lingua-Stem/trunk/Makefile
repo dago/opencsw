@@ -1,6 +1,7 @@
 NAME = Lingua-Stem
 VERSION = 0.84
 CATEGORIES = cpan
+GARTYPE = v2
 AUTHOR = SNOWHARE
 
 DESCRIPTION = Stemming of words

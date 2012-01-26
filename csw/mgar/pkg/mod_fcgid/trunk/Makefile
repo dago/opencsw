@@ -1,6 +1,7 @@
 NAME = mod_fcgid
 VERSION = 2.3.5
 CATEGORIES = lib
+GARTYPE = v2
 
 DESCRIPTION = FastCGI module with fine grained process spawn/lifetime control
 define BLURB

@@ -1,6 +1,7 @@
 NAME = loudmouth
 VERSION = 1.4.3
 CATEGORIES = net
+GARTYPE = v2
 
 DESCRIPTION = The Loudmouth XMPP API for Jabber
 define BLURB

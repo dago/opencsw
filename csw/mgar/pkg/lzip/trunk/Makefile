@@ -1,6 +1,7 @@
 NAME = lzip
 VERSION = 1.11
 CATEGORIES = utils
+GARTYPE = v2
 
 DESCRIPTION = A lossless data compressor based on the LZMA algorithm
 define BLURB

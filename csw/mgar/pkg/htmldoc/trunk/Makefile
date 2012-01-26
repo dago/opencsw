@@ -1,6 +1,7 @@
 NAME = htmldoc
 VERSION = 1.8.27
 CATEGORIES = apps
+GARTYPE = v2
 
 DESCRIPTION = converts HTML files and web pages into indexed HTML PostScript and PDF
 define BLURB
