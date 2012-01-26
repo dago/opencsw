@@ -52,6 +52,7 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-mozldap
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
