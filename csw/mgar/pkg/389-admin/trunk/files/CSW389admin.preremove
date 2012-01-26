@@ -2,4 +2,5 @@
   cp -p console.conf console.conf.configured
   cp -p httpd.conf httpd.conf.configured
   cp -p admserv.conf admserv.conf.configured
+  cp -p nss.conf nss.conf.configured
 )
