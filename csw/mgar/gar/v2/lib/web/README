@@ -3,7 +3,8 @@ Web-serving components of the checkpkg infrastructure.
 Configuring scripts with mod_python on Apache:
 
 modpython_gateway.py needs to be downloaded from [1] and put into the
-lib/web/ directory.
+lib/web/ directory. This is done via an external reference in svn
+and pulled in automatically.
 
 [1] http://svn.aminus.net/misc/modpython_gateway.py
 
