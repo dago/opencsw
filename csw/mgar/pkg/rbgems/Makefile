@@ -34,10 +34,10 @@ newpkg-%:
 	@svn mkdir $(dir) $(dir)/tags $(dir)/branches $(dir)/trunk $(dir)/trunk/files
 	@svn cp ../template/Makefile $(dir)/Makefile
 	@echo "work\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
-	@(cd $(dir)/trunk/; gem fetch $*; gar/bin/gem2pkg *gem > Makefile; rm *gem)
-	@( cd $(dir)/trunk; gmake fetch; gmake makesums; gmake garchive );
+	@(cd $(dir)/trunk/; gem fetch $*; ../../../.buildsys/v2/gar/bin/gem2pkg *gem > Makefile; rm *gem)
+	@#( cd $(dir)/trunk; gmake fetch; gmake makesums; gmake garchive );
+	@touch $(dir)/trunk/checksums
 	@svn add $(dir)/trunk/Makefile $(dir)/trunk/checksums
-	@echo "work\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
 	@echo
 	@echo "Your package is set up for editing at $(dir)/trunk"
 
