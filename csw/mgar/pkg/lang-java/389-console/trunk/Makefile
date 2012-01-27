@@ -17,6 +17,8 @@ endef
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+PATCHFILES += 0001-add-java-version-check-in-389-console.patch
+
 PACKAGING_PLATFORMS = solaris10x
 
 PACKAGES = CSW389-console
@@ -51,7 +53,7 @@ install-custom:
 		-e 's+@mcclangjar@+idm-console-mcc_en.jar+' \
 		-e 's+@nmclfjar@+idm-console-nmclf.jar+' \
 		-e 's+@nmclflangjar@+idm-console-nmclf_en.jar+' \
-		-e 's+@themejar@+$(NAME).jar+' \
+		-e 's+@themejar@+$(NAME)_en.jar+' \
 		-e 's+@classdest@+$(datadir)/java+' \
 		-e 's+@prefsdir@+389-console+' \
 		-e 's+@libdir@+$(libdir)+' \

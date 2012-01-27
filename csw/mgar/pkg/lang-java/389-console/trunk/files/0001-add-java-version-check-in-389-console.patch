@@ -1,0 +1,38 @@
+From 844773a46daf4618d6bdd233d3183d6ac3f247c8 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 27 Jan 2012 10:29:18 +0100
+Subject: [PATCH] add java version check in 389-console
+
+---
+ 389-console |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/389-console b/389-console
+index cd42ef3..8f06d30 100755
+--- a/389-console
++++ b/389-console
+@@ -25,6 +25,12 @@ then
+   echo "$0: The java program is not in your path, or is not executable.";
+   exit 1
+ fi
++VER=`$JAVA -version 2>&1 | grep version | cut -d. -f2`
++if [ $VER -lt 6 ]; then
++  echo "$0: The java program is not the right version. JDK 1.6 or newer is needed";
++  exit 1
++fi
++
+ 
+ CLASSDEST=@classdest@
+ 
+@@ -39,7 +45,7 @@ fi
+ #
+ # Launch the Console
+ #
+-java \
++$JAVA \
+     -cp @jssjar@:@ldapjdkjar@:$CLASSDEST/@basejar@:$CLASSDEST/@mccjar@:$CLASSDEST/@mcclangjar@:$CLASSDEST/@nmclfjar@:$CLASSDEST/@nmclflangjar@:$CLASSDEST/@themejar@ \
+     -Djava.util.prefs.systemRoot="$HOME/.@prefsdir@" \
+     -Djava.util.prefs.userRoot="$HOME/.@prefsdir@" \
+-- 
+1.7.8.3
+
