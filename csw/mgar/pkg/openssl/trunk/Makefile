@@ -11,7 +11,7 @@
 #####################################################################
 
 # Uncomment to enable PKCS11 engine
-# PKCS11 = 1
+PKCS11 = 1
 
 ###### Package information #######
 
