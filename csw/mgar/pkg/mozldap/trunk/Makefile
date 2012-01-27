@@ -38,7 +38,7 @@ CATALOGNAME_CSWlibldap60 = libldap60
 PKGFILES_CSWlibldap60 += $(call baseisadirs,$(libdir),libldap60\.so)
 PKGFILES_CSWlibldap60 += $(call baseisadirs,$(libdir),libldap60\.so(\.\d+)*)
 SPKG_DESC_CSWlibldap60 += $(DESCRIPTION), libldap60.so
-RUNTIME_DEP_PKGS_CSWlibldap60 += CSWsasl
+RUNTIME_DEP_PKGS_CSWlibldap60 += CSWsasl2-2
 CHECKPKG_OVERRIDES_CSWlibldap60 += soname-equals-filename|file=/opt/csw/lib/libldap60.so
 CHECKPKG_OVERRIDES_CSWlibldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libldap60.so
 CHECKPKG_OVERRIDES_CSWlibldap60 += soname-equals-filename|file=/opt/csw/lib/amd64/libldap60.so
@@ -102,7 +102,7 @@ RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsvrcore0
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWsasl
+RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWsasl2-2
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibiconv2
 # it not depends on oldapclient!
