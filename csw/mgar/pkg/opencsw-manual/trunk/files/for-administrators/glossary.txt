@@ -1,0 +1,8 @@
+--------
+Glossary
+--------
+
+catalog
+
+A catalog contains a list of packages together with their catalog names, version, checksum
+and a list of dependencies to other packages.

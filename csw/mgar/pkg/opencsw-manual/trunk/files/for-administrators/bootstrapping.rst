@@ -100,7 +100,7 @@ released. First you need to install ``pgp`` (of course with pkgutil!)::
 
 Then you need to import the public key::
 
-  root# wget -O - http://www.opencsw.org/get-it/mirrors/  | gpg --import -
+  root# wget -O - http://www.opencsw.org/security/  | gpg --import -
   
 The current fingerprint looks like this::
 
@@ -109,6 +109,9 @@ The current fingerprint looks like this::
         Key fingerprint = 4DCE 3C80 AAB2 CAB1 E60C  9A3C 05F4 2D66 9306 CC77
   uid                  OpenCSW catalog signing <board@opencsw.org>
   sub   2048g/971EDE93 2011-08-31
+
+You may also trust the key once you verified the fingerprint::
+  root# /opt/csw/bin/gpg --edit-key board@opencsw.org trust
 
 Now everything is in place for enabling security in ``pkgutil``. Edit the ``/etc/opt/csw/pkgutil.conf``
 and uncomment the two lines with ``use_gpg`` and ``use_md5`` so they look like this::
@@ -138,3 +141,66 @@ On the next ``pkgutil -U`` you should see a catalog integrity verification wit `
   ==> 3173 packages loaded from /var/opt/csw/pkgutil/catalog.mirror_opencsw_current_sparc_5.10
   ...
 
+
+--------------------
+Package dependencies
+--------------------
+
+The OpenCSW packages have been compiled to allow easy forward migration and
+crossgrades/mixing between Sparc and x64 CPUs. That means the same version of the
+package is available for Solaris 10 and 11 for both Sparc and i386. There are
+some exceptions where the software is absolutely not available or has a version
+mismatch (e.g. acroread). To allow this there are usually no dependencies to
+SUNW packages. This sometimes leads to large dependency chains (and people
+thinking of OpenCSW packages as "bloated") but that is the price to pay for
+the interoperability and we feel that in times of ever growing disks the
+flexibility is worth more than the saved bytes.
+
+Package dependencies are modeled in the OpenCSW `catalog`_s" to allow automatic
+dependency resolution via pkgutil. To view the current dependencies for a
+package you can use
+::
+  pkgutil --deptree <pkg>
+
+
+Solaris 9/10/11 sparc vs. i386
+packaging strategy IPS may change
+graphviz tree
+pkgutil --deptree
+
+TBD: Identify packages depending on obsolete ones
+
+
+---------------------------
+Setting up a private mirror
+---------------------------
+
+Sometimes it is sufficient to just go on with a mirror on the internet. However, there are situations
+where a local mirror can be useful. When you have a lot of servers accessing the repository, want to control
+the package updates exactly or when your production servers just can't access the internet at all
+a local mirror is necessary.
+
+To set up the mirror you should use rsync as it can update your local copy quickly and with low
+bandwidth use and also preserves hardlinks. Not all mirrors provide access via the rsync protocol,
+a list can be found at http://www.opencsw.org/get-it/mirrors/ .
+To make a full copy of the OpenCSW repository use this::
+
+  pkgutil -y -i rsync
+  rsync -aH --delete rsync://rsync.opencsw.org/opencsw /my/server/repo
+
+The directory ``repo`` can either be shared via HTTP or via NFS to the pkgutil clients.
+Use http://myserver/url-to-repo/ for HTTP and file:///myserver/dir-to-repo for NFS as
+mirror option in pkgutil.
+
+
+Mirroring only a subset
+=======================
+
+You can also mirror only a subset of the repository, e.g. the 'unstable' catalog or even
+just a few packages.
+
+pkgutil --stream
+
+
+Layout of the mirror
+====================
