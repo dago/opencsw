@@ -39,6 +39,9 @@ RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibssldap60
+RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibsoftokn3
+RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibssl3
 CHECKPKG_OVERRIDES_CSW389-dsgw += file-with-bad-content|/usr/local|root/opt/csw/share/dirsrv/manual/en/dsgw/attribut.htm
 
 PATCHFILES += 0001-change-include-path-preference-in-Makefile.am.patch
