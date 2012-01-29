@@ -54,7 +54,7 @@ SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
 CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expected-catalogname=svn
 RUNTIME_DEP_PKGS_CSWsvn      = CSWbdb48
-RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
+RUNTIME_DEP_PKGS_CSWsvn      += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibexpat1
@@ -64,7 +64,7 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWsvn += CSWosslrt
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
@@ -129,8 +129,8 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWosslrt
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWsasl
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
@@ -176,8 +176,8 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWosslrt
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWsasl
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsasl2-2
 
 
 PACKAGES += CSWpythonsvn
@@ -187,24 +187,6 @@ PKGFILES_CSWpythonsvn            = $(libdir)/python.*
 PKGFILES_CSWpythonsvn            = $(SVNLIB)/python.*
 PKGFILES_CSWpythonsvn           += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn           += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/repos.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/wc.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/__init__.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/client.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/core.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/delta.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/diff.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/fs.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/ra.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/repos.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/wc.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/__init__.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/client.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/core.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/delta.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/diff.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/fs.pyc
-CHECKPKG_OVERRIDES_CSWpythonsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/ra.pyc
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibexpat1
@@ -214,10 +196,10 @@ RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsasl
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
 
 
@@ -371,7 +353,7 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(libdir)/python
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(DESTDIR)/lib/python
 	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
