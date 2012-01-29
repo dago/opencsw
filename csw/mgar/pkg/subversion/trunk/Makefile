@@ -371,7 +371,7 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(DESTDIR)
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(libdir)/python
 	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
