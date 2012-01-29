@@ -6,10 +6,11 @@
 # should make it pass, though. --raos
 
 NAME = glib
-VERSION = 2.28.8
+VERSION = 2.30.2
 CATEGORIES = lib
 GARTYPE = v2
 GARCOMPILER = SOS12U1
+GARFLAVOR=DBG
 
 DESCRIPTION = The GLib library of C routines.
 define BLURB
@@ -22,39 +23,42 @@ MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-PATCHFILES = 0001-Use-proper-locale-for-collate-tests.patch
-PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
-PATCHFILES += 0003-Ad-hoc-macro-for-comparing-double.patch
-PATCHFILES += 0004-Use-smtp-instead-of-http-in-network-address-test.patch
-PATCHFILES += 0005-Fix-hard-coded-paths.patch
-PATCHFILES += 0006-Fix-path-to-dbus-machine-id.patch
-PATCHFILES += 0007-Fix-configure-_XOPEN_SOURCE.patch
-PATCHFILES += 0009-make-gsocket.c-word-with-solaris.patch
-# Disabled until fixed:
-#  https://bugzilla.gnome.org/show_bug.cgi?id=659306
-PATCHFILES += 0010-Disable-GFileMonitor-tests-in-gio-tests-file.patch
-PATCHFILES += 0011-Remove-support-for-abstract-sockets-from-g_socket_ad.patch
-PATCHFILES += 0012-Use-proper-locale-for-collate-tests-2.patch
-PATCHFILES += 0013-Fix-test-shell-script.patch
-PATCHFILES += 0019-Fix-gdbus-peer-tests.patch
-# Disable test on sparc v9
-#  https://bugzilla.gnome.org/show_bug.cgi?id=660638
-PATCHFILES += 0020-Disable-buffered-input-stream-set-buffer-size-on-spa.patch
+# Reported: https://bugzilla.gnome.org/show_bug.cgi?id=668973
+PATCHFILES += 0001-Disable-inf-nan-mini-test.patch
 
-# Those patches are for tests that fail on the build farm
-# but not on other build hosts.
-PATCHFILES += 0015-Do-not-ellipses-in-switch-cases.patch
-PATCHFILES += 0016-Format-string-for-Solaris-lt.-10u9.patch
-PATCHFILES += 0017-Disable-gapplication-gapplication-basic-test.patch
-PATCHFILES += 0017-Fix-disable-testglib-tests.patch
-PATCHFILES += 0018-Disable-gdbus-connection-large_message-on-sparc.patch
-PATCHFILES += 0019-Disable-gdbus-threading-gdbus-method-calls-in-thread.patch
-PATCHFILES += 0019-Disable-volumemonitor-tests.patch
-PATCHFILES += 0023-Disable-data-input-stream-read-int-test-on-sparc.patch
-PATCHFILES += 0023-Disable-failing-gsettings-tests.patch
+# PATCHFILES = 0001-Use-proper-locale-for-collate-tests.patch
+# PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
+# PATCHFILES += 0003-Ad-hoc-macro-for-comparing-double.patch
+# PATCHFILES += 0004-Use-smtp-instead-of-http-in-network-address-test.patch
+# PATCHFILES += 0005-Fix-hard-coded-paths.patch
+# PATCHFILES += 0006-Fix-path-to-dbus-machine-id.patch
+# PATCHFILES += 0007-Fix-configure-_XOPEN_SOURCE.patch
+# PATCHFILES += 0009-make-gsocket.c-word-with-solaris.patch
+# # Disabled until fixed:
+# #  https://bugzilla.gnome.org/show_bug.cgi?id=659306
+# PATCHFILES += 0010-Disable-GFileMonitor-tests-in-gio-tests-file.patch
+# PATCHFILES += 0011-Remove-support-for-abstract-sockets-from-g_socket_ad.patch
+# PATCHFILES += 0012-Use-proper-locale-for-collate-tests-2.patch
+# PATCHFILES += 0013-Fix-test-shell-script.patch
+# PATCHFILES += 0019-Fix-gdbus-peer-tests.patch
+# # Disable test on sparc v9
+# #  https://bugzilla.gnome.org/show_bug.cgi?id=660638
+# PATCHFILES += 0020-Disable-buffered-input-stream-set-buffer-size-on-spa.patch
 
-# SPARCv9 Specific Patches
-PATCHFILES_isa-sparcv9 += 0023-Disable-run-assert-msg-test.sh.patch
+# # Those patches are for tests that fail on the build farm
+# # but not on other build hosts.
+# PATCHFILES += 0015-Do-not-ellipses-in-switch-cases.patch
+# PATCHFILES += 0016-Format-string-for-Solaris-lt.-10u9.patch
+# PATCHFILES += 0017-Disable-gapplication-gapplication-basic-test.patch
+# PATCHFILES += 0017-Fix-disable-testglib-tests.patch
+# PATCHFILES += 0018-Disable-gdbus-connection-large_message-on-sparc.patch
+# PATCHFILES += 0019-Disable-gdbus-threading-gdbus-method-calls-in-thread.patch
+# PATCHFILES += 0019-Disable-volumemonitor-tests.patch
+# PATCHFILES += 0023-Disable-data-input-stream-read-int-test-on-sparc.patch
+# PATCHFILES += 0023-Disable-failing-gsettings-tests.patch
+
+# # SPARCv9 Specific Patches
+# PATCHFILES_isa-sparcv9 += 0023-Disable-run-assert-msg-test.sh.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -154,14 +158,14 @@ BUILD_DEP_PKGS += CSWgsed
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
-EXTRA_CFLAGS = -features=extensions
+EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6
 
-EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
-EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
+#EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
+#EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
 
 EXTRA_LDFLAGS = -lsocket
 
-BUILD64_LIBS_ONLY = 1
+BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
