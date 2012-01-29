@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = subvertpy
-VERSION = 0.8.9
+VERSION = 0.8.10
 GARTYPE = v2
 CATEGORIES = python
 
