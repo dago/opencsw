@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = Trac
-VERSION = 0.12.1
+VERSION = 0.12.2
 CATEGORIES = python
 GARTYPE = v2
 
