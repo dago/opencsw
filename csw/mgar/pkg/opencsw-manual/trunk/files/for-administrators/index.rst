@@ -11,6 +11,7 @@ A user's manual for people who manage Solaris systems with OpenCSW packages.
   bootstrapping
   configuring-services
   pkgutil-reference
+  glossary
 
 .. [#dagosscrapbook]
    `Dago's Scrapbook`_
