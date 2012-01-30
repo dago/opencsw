@@ -2,8 +2,8 @@
 Bootstrapping
 -------------
 
-OpenCSW uses a tool named pkgutil on top of the Solaris packaging utilities
-to automatically download, install and update packages. This has to be installed
+OpenCSW uses a tool named pkgutil on top of the Solaris packaging utilities to
+automatically download, install and update packages. It needs to be installed
 manually once, after that all maintenance is done via pkgutil.
 
 On a Solaris 10 system, you can use the capacity of pkgadd to download
@@ -11,28 +11,21 @@ and install it via http in one step::
 
   pkgadd -d http://get.opencsw.org/now
 
-On Solaris 8 and 9 you need to download the package manually e.g. using wget
+On Solaris 8 and 9 you need to download the package manually, e.g. using wget
 and then install it::
 
   wget http://mirror.opencsw.org/opencsw/pkgutil.pkg
-  pkgadd -d pkgutil.pkg
+  pkgadd -d pkgutil.pkg all
 
-Now is a good time to modify your profile to honour the OpenCSW programs.
-For a bourne shell add the following lines to your ``.profile``::
+For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of PATH,
+and ``/opt/csw/share/man`` in front of MANPATH.
 
-  PATH=$PATH:/opt/csw/bin
-  MANPATH=$MANPATH:/opt/csw/share/man
-
-Please source it or logout and login again to make sure the environment is adjusted.
-
-You can now start installing packages. For a list of available packages use
-::
+You can now start installing packages. For a list of available packages use::
 
   pkgutil -l
 
 As the list is quite long and you probably have an idea what you are looking for the
-list can be fuzzy-matched with
-::
+list can be fuzzy-matched with::
 
   root# pkgutil -a vim
   common               package              catalog                        size
@@ -55,12 +48,11 @@ Selecting a mirror
 
 Now that you are about to install lots of stuff it may be a good time to select
 one of the mirrors from ``mirror.opencsw.org`` close to you. The official mirrors
-are listed at
-::
+are listed at::
 
   http://www.opencsw.org/get-it/mirrors/
 
-It is important to note that ``pkgutil`` has **two** configuration files:
+It is important to note that ``pkgutil`` can use **two** configuration files:
 
 - ``/etc/opt/csw/pkgutil.conf``
 - ``/opt/csw/etc/pkgutil.conf``
@@ -156,10 +148,10 @@ thinking of OpenCSW packages as "bloated") but that is the price to pay for
 the interoperability and we feel that in times of ever growing disks the
 flexibility is worth more than the saved bytes.
 
-Package dependencies are modeled in the OpenCSW `catalog`_s" to allow automatic
+Package dependencies are modeled in the OpenCSW `catalogs`_ to allow automatic
 dependency resolution via pkgutil. To view the current dependencies for a
-package you can use
-::
+package you can use::
+
   pkgutil --deptree <pkg>
 
 

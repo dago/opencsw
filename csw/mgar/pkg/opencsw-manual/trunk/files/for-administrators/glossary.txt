@@ -3,6 +3,15 @@ Glossary
 --------
 
 catalog
+    A directory with packages and an index, for a specific architecture (SPARC
+    or Intel) and OS release (e.g. Solaris 9 or Solaris 10).  A catalog index
+    file contains a list of packages together with their catalog names,
+    version, checksum and a list of dependencies to other packages.
 
-A catalog contains a list of packages together with their catalog names, version, checksum
-and a list of dependencies to other packages.
+catalogname
+    A name of a package as it shows in the catalog index file, and in pkgutil
+    output.
+
+pkgname
+    A name of a package as it shows in the output of the ``pkginfo`` command.
+    Usually has the form of CSWfoo.
