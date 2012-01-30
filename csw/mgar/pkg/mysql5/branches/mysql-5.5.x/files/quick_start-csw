@@ -8,10 +8,13 @@
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
-BASEDIR=/opt/csw/mysql51
-MYSQL_VAR=/var/opt/csw/mysql51
-DEFAULTS_FILE=$BASEDIR/my.cnf
-SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
+# TODO: This file should be integrated with CSWmysql5.postinstall file.
+
+prefix=/opt/csw
+MYSQL_HOME=${prefix}
+MYSQL_VAR=/var${prefix}
+sysconfdir=/etc${prefix}
+DEFAULTS_FILE=${prefix}/support-files/my-small.cnf
 MYSQLD_USER=mysql
 #
 # Provide a default data directory
@@ -21,7 +24,7 @@ echo
 echo  "This is the start script to setup a MySQL-5 database"
 echo  "  directory."
 echo
-echo  "  The base directory is $BASEDIR."
+echo  "  The base directory is $MYSQL_HOME."
 echo  "  The default database directory is $MYSQLD_DATADIR."
 echo
 echo  "  If you have not setup a partition for the database and"
@@ -51,7 +54,7 @@ usrin=`/usr/bin/ckpath -f -d [default] \
     ` || exit $?
 if [ $usrin = "[default]" ]; then
     if [ ! -f "$DEFAULTS_FILE" ]; then
-        IN_DEFAULTS_FILE=$BASEDIR/share/mysql/my-small.cnf
+        IN_DEFAULTS_FILE=$MYSQL_HOME/support-files/my-small.cnf
         echo "Using $IN_DEFAULTS_FILE to create the options file."
     else
         IN_DEFAULTS_FILE=$DEFAULTS_FILE
@@ -102,10 +105,10 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-$BASEDIR/bin/mysql_install_db \
+$MYSQL_HOME/bin/mysql_install_db \
     --defaults-extra-file=$DEFAULTS_FILE \
     --user=$MYSQLD_USER \
-    --basedir=$BASEDIR \
+    --basedir=$MYSQL_HOME \
     --datadir=$MYSQLD_DATADIR
 
 #
@@ -115,7 +118,7 @@ chown -R mysql:mysql $MYSQLD_DATADIR
 #
 # Update --datadir in the cnf file with the correct value if file was copied
 if [ x"$CNFCOPIED" = xyes ]; then
-    sed -e "s|/var/opt/csw/mysql51|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
+    sed -e "s|/var/opt/csw|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
     mv $DEFAULTS_FILE.new $DEFAULTS_FILE
 fi
 
@@ -123,17 +126,17 @@ fi
 # Ending message
 echo
 echo "###  The following messages are from quick_start-csw."
-echo "See /opt/csw/mysql51/share/mysql/doc/README.CSW for packaging changes."
+echo "See /opt/csw/share/mysql/doc/README.CSW for packaging changes."
 echo "Please ignore references to starting mysqld_safe in the messages above."
 echo "  These messages are from mysql_install_db.  See the following"
-echo "  for starting CSWmysql51."
+echo "  for starting CSWmysql55."
 smf=no
 if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
 if [ $smf = yes ]
 then
-    echo "To start mysqld; run \`svcadm enable cswmysql51\` on Solaris 10 or later"
+    echo "To start mysqld; run \`svcadm enable cswmysql55\` on Solaris 10 or later"
 else
-    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql51 start\` on Solaris 9 or earlier"
+    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql55 start\` on Solaris 9 or earlier"
 fi
 
 exit 0
