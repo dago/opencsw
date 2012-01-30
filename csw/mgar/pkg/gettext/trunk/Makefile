@@ -14,11 +14,8 @@ BUILD_DEP_PKGS += CSWlibncurses-dev CSWlibxml2-dev
 PACKAGES += CSWggettext
 PACKAGES += CSWggettextdoc
 PACKAGES += CSWlibasprintf0
-PACKAGES += CSWlibgettextlib0-14-1
-PACKAGES += CSWlibgettextlib0-17
 PACKAGES += CSWlibgettextlib0-18-1
 PACKAGES += CSWlibgettextpo0
-PACKAGES += CSWlibgettextsrc0-17
 PACKAGES += CSWlibgettextsrc0-18-1
 PACKAGES += CSWlibintl2
 PACKAGES += CSWlibintl3
@@ -30,11 +27,8 @@ PACKAGES += CSWggettextrt
 CATALOGNAME_CSWlibasprintf0 = libasprintf0
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettextdoc = ggettextdoc
-CATALOGNAME_CSWlibgettextlib0-14-1 = libgettextlib0_14_1
-CATALOGNAME_CSWlibgettextlib0-17 = libgettextlib0_17
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
 CATALOGNAME_CSWlibgettextpo0 = libgettextpo0
-CATALOGNAME_CSWlibgettextsrc0-17 = libgettextsrc0_17
 CATALOGNAME_CSWlibgettextsrc0-18-1 = libgettextsrc0_18_1
 CATALOGNAME_CSWlibintl2 = libintl2
 CATALOGNAME_CSWlibintl3 = libintl3
@@ -48,10 +42,8 @@ SPKG_DESC_CSWggettext = GNU locale utilities
 SPKG_DESC_CSWggettextdoc = GNU locale utility documentation
 SPKG_DESC_CSWlibasprintf0 += GNU locale utilities, libasprintf.so.0
 SPKG_DESC_CSWggettext-dev = GNU locale utilities, development files
-SPKG_DESC_CSWlibgettextlib0-17 += GNU locale utilities, libgettextlib-0.17.so
 SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
 SPKG_DESC_CSWlibgettextpo0 += GNU locale utilities, libgettextpo.so.0
-SPKG_DESC_CSWlibgettextsrc0-17 += GNU locale utilities, libgettextsrc-0.17.so
 SPKG_DESC_CSWlibgettextsrc0-18-1 += GNU locale utilities, libgettextsrc-0.18.1.so
 SPKG_DESC_CSWlibintl2 += GNU locale utilities, libintl.so.2
 SPKG_DESC_CSWlibintl3 += GNU locale utilities, libintl.so.3
@@ -62,8 +54,6 @@ SPKG_DESC_CSWggettextrt += GNU locale utilities, transitional dependency package
 
 RUNTIME_DEP_PKGS_CSWggettext += CSWexpat
 RUNTIME_DEP_PKGS_CSWggettext += CSWiconv
-RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-14-1
-RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-17
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl2
@@ -75,7 +65,6 @@ RUNTIME_DEP_PKGS_CSWggettext += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibasprintf0
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextpo0
-RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-17
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibasprintf0
@@ -85,11 +74,6 @@ RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl3
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibasprintf0 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWlibintl3
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2-2
@@ -98,9 +82,6 @@ RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWlibgettextlib0-17
-RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibintl8
@@ -119,8 +100,6 @@ PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\
 PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0\.4\.0)
 PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0(\.\d+)*)
 PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0\.5\.1)
-PKGFILES_CSWlibgettextsrc0-17 += $(call baseisadirs,$(libdir),libgettextsrc-0\.17\.so)
-PKGFILES_CSWlibgettextsrc0-17 += $(call baseisadirs,$(libdir),libgettextsrc-0\.17\.so(\.\d+)*)
 PKGFILES_CSWlibgettextsrc0-18-1 += $(call baseisadirs,$(libdir),libgettextsrc-0\.18\.1\.so)
 PKGFILES_CSWlibgettextsrc0-18-1 += $(call baseisadirs,$(libdir),libgettextsrc-0\.18\.1\.so(\.\d+)*)
 PKGFILES_CSWlibintl2 += $(call baseisadirs,$(libdir),libintl\.so\.2)
@@ -134,11 +113,6 @@ PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
 PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0\.0\.0)
 PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0(\.\d+)*)
-PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so)
-PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so(\.\d+)*)
-SPKG_DESC_CSWlibgettextlib0-14-1 += GNU locale utilities, libgettextlib-0.14.1.so
-PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so)
-PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so(\.\d+)*)
 PKGFILES_CSWggettext-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
 PKGFILES_CSWggettextrt += /opt/csw/share/.*ggettextrt.*
@@ -159,11 +133,6 @@ CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl2
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl3
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibasprintf0
 CHECKPKG_OVERRIDES_CSWlibgettextpo0 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextpo.so.0.4.0
-CHECKPKG_OVERRIDES_CSWlibgettextlib0-14-1 += soname-equals-filename|file=/opt/csw/lib/libgettextlib-0.14.1.so
-CHECKPKG_OVERRIDES_CSWlibgettextlib0-17 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextlib-0.17.so
-CHECKPKG_OVERRIDES_CSWlibgettextlib0-17 += soname-equals-filename|file=/opt/csw/lib/libgettextlib-0.17.so
-CHECKPKG_OVERRIDES_CSWlibgettextsrc0-17 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextsrc-0.17.so
-CHECKPKG_OVERRIDES_CSWlibgettextsrc0-17 += soname-equals-filename|file=/opt/csw/lib/libgettextsrc-0.17.so
 CHECKPKG_OVERRIDES_CSWlibgettextpo0 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-1 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-1 += soname-equals-filename
@@ -176,8 +145,6 @@ CHECKPKG_OVERRIDES_CSWlibasprintf0 += surplus-dependency|CSWggettext-data
 
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl2
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl3
-CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibgettextlib0-14-1
-CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibgettextlib0-17
 CHECKPKG_OVERRIDES_CSWggettext += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/lib-prefix.m4
 CHECKPKG_OVERRIDES_CSWggettext += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/lib-link.m4
 
@@ -237,23 +204,19 @@ PATH := /opt/csw/gnu:$(PATH)
 post-install-isa-sparcv8:
 	@mkdir $(INSTALLISADIR)/opt/csw/share/java
 	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
-	@( for f in $(FILEDIR)/*.s; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .s); done )
 	$(MAKECOOKIE)
 
 post-install-isa-sparcv9:
 	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
-	@( for f in $(FILEDIR)/*.s9; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .s9); done )
 	$(MAKECOOKIE)
 
 post-install-isa-i386:
 	@mkdir $(INSTALLISADIR)/opt/csw/share/java
 	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
-	@( for f in $(FILEDIR)/*.i; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .i); done )
 	$(MAKECOOKIE)
 
 post-install-isa-amd64:
 	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
-	@( for f in $(FILEDIR)/*.amd64; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .amd64); done )
 	$(MAKECOOKIE)
 
 post-merge:
