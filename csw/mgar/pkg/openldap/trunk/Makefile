@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = openldap
 VERSION = 2.4.28
 GARTYPE = v2
