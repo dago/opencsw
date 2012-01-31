@@ -52,10 +52,10 @@ PACKAGES                      = CSWsendmail
 CATALOGNAME_CSWsendmail       = sendmail
 SPKG_DESC_CSWsendmail         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWsendmail  = CSWoldaprt
-RUNTIME_DEP_PKGS_CSWsendmail += CSWosslrt
-RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWsendmail += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWsendmail += CSWlibsasl2-2
 
 PACKAGES                += CSWlibmilter 
 CATALOGNAME_CSWlibmilter = libmilter
@@ -115,11 +115,15 @@ MIGRATE_FILES_CSWsendmail     += submit.cf trusted-users
 MIGRATE_SOURCE_DIR_CSWsendmail = /opt/csw/etc/mail
 MIGRATE_DEST_DIR_CSWsendmail   = /etc/opt/csw/mail
 
-PROTOTYPE_MODIFIERS = 1
+PROTOTYPE_MODIFIERS = 1 2
 PROTOTYPE_FILES_1   = /var/opt/csw/spool/clientmqueue
 PROTOTYPE_USER_1    = smmsp
 PROTOTYPE_GROUP_1   = smmsp
 PROTOTYPE_PERMS_1   = 0750
+PROTOTYPE_FILES_2   = /opt/csw/lib/sendmail
+PROTOTYPE_USER_2    = root
+PROTOTYPE_GROUP_2   = smmsp
+PROTOTYPE_PERMS_2   = 2555
 
 CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
