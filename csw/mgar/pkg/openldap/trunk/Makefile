@@ -41,17 +41,20 @@ PACKAGES += CSWopenldap
 SPKG_DESC_CSWopenldap = OpenLDAP server for Lightweight Directory Access Protocol
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWopenldap += CSWbdb48
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWopenldap += CSWosslrt
-RUNTIME_DEP_PKGS_CSWopenldap += CSWsasl
-RUNTIME_DEP_PKGS_CSWopenldap += CSWunixodbc
-RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
+# We do not want that dependency.
+# RUNTIME_DEP_PKGS_CSWopenldap += CSWlibnet
+# RUNTIME_DEP_PKGS_CSWopenldap += CSWlibnet1
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibodbc2
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
 OBSOLETED_BY_CSWopenldap += CSWoldap
 CATALOGNAME_CSWoldap = openldap_stub
 
@@ -62,10 +65,10 @@ PACKAGES += CSWopenldap-client
 SPKG_DESC_CSWopenldap-client = OpenLDAP client executables
 PKGFILES_CSWopenldap-client += $(bindir)/.*
 PKGFILES_CSWopenldap-client += $(mandir)/man1/.*
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWosslrt
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWsasl 
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibssl0-9-8
 OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
 CATALOGNAME_CSWoldapclient = openldap_client_stub
 
@@ -82,6 +85,8 @@ CATALOGNAME_CSWoldapdevel = openldap_devel_stub
 PACKAGES += CSWliblber2-4-2
 SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
 PKGFILES_CSWliblber2-4-2 += $(call pkgfiles_lib,liblber-2.4.so.2)
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibssl0-9-8
 OBSOLETED_BY_CSWliblber2-4-2 += CSWoldaprt
 CATALOGNAME_CSWoldaprt = openldap_rt_stub
 
@@ -91,8 +96,6 @@ PKGFILES_CSWlibldap2-4-2 += $(call pkgfiles_lib,libldap-2.4.so.2)
 PKGFILES_CSWlibldap2-4-2 += $(sysconfdir)/ldap.conf
 PKGFILES_CSWlibldap2-4-2 += $(mandir)/man5/ldap.conf.5
 RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWsasl
 OBSOLETED_BY_CSWlibldap2-4-2 += CSWoldaprt
 
 # Evaluate later
@@ -102,8 +105,8 @@ PACKAGES += CSWlibldap-r2-4-2
 SPKG_DESC_CSWlibldap-r2-4-2 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.2
 PKGFILES_CSWlibldap-r2-4-2 += $(call pkgfiles_lib,libldap_r-2.4.so.2)
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWsasl
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl0-9-8
 OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
 
 FOREIGN_PACKAGES += CSWliblber2-3-0
@@ -161,6 +164,7 @@ CONFIGURE_ARGS += --disable-ndb
 # is completely unrelated. Disable the linkage until this is fixed:
 #   http://www.openldap.org/its/index.cgi?findid=7071
 CONFIGURE_ARGS += ac_cv_lib_net_main=no
+CONFIGURE_ARGS += ac_cv_lib_net_socket=no
 
 # spasswd requires Cyrus SASL
 CONFIGURE_ARGS_32 += --enable-spasswd
