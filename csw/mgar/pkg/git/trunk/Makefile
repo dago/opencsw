@@ -1,13 +1,13 @@
 NAME = git
-VERSION = 1.7.8.3
+VERSION = 1.7.9
 #PATCHLEVEL = rc1
 CATEGORIES = devel
 GARTYPE = v2
 
 VENDOR_URL = http://git-scm.org/
 
-NO_SVN_TESTS=YesPlease
-EXTRA_TEST_EXPORTS = NO_SVN_TESTS
+# NO_SVN_TESTS=YesPlease
+# EXTRA_TEST_EXPORTS = NO_SVN_TESTS
 
 # disable tests until next version bump (at the top so it stands out)
 # 1.7.2.1 and 1.7.3 have a failure on current9s when fr.UFT-8 is
@@ -111,7 +111,7 @@ PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # to the selection of available utf8 locales.
 PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
 PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
-PATCHFILES += 0007-Use-perl-instead-of-sed-for-t8006-blame-textconv-tes.patch
+PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
