@@ -23,11 +23,16 @@ MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-# Reported: https://bugzilla.gnome.org/show_bug.cgi?id=668973
+# Reported: https://bugzilla.gnome.org/show_bug.cgi?id=668973. New in glib-2.30.2
 PATCHFILES += 0001-Disable-inf-nan-mini-test.patch
+# The test looks for sh and expects it to be in /bin, but it is found
+# in /opt/csw/bin. So the patch makes it look for svcs. New in glib-2.30.2
+PATCHFILES += 0002-Replace-sh-by-svcs-in-utils-find-program.patch
+# Patch from glib-2.28.8
+PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
 
 # PATCHFILES = 0001-Use-proper-locale-for-collate-tests.patch
-# PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
+
 # PATCHFILES += 0003-Ad-hoc-macro-for-comparing-double.patch
 # PATCHFILES += 0004-Use-smtp-instead-of-http-in-network-address-test.patch
 # PATCHFILES += 0005-Fix-hard-coded-paths.patch
