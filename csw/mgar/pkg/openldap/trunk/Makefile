@@ -201,7 +201,7 @@ include gar/category.mk
 CFLAGS := $(filter-out -I%,$(CFLAGS))
 DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
-post-merge:
+post-merge-modulated:
 	ginstall -D $(WORKDIR)/cswopenldap \
 		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
 	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(NAME)/$F;)
