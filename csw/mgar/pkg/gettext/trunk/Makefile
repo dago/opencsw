@@ -115,10 +115,6 @@ PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
 PKGFILES_CSWggettextrt += /opt/csw/share/.*ggettextrt.*
 PKGFILES_CSWggettextdoc = $(PKGFILES_DOC)
 
-# override all file collissions for now.  release updated gnulinks with this
-# update and then remove this file and include
-include gnulinks.checkpkg.mk
-
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWggettext += discouraged-path-in-pkgmap|/opt/csw/share/gettext/archive.git.tar.gz
