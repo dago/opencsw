@@ -14,8 +14,9 @@ endef
 MASTER_SITES = https://github.com/cgrzemba/Posix-Winsync-Plugin-for-389-directory-server/tarball/master
 # DISTFILES = cgrzemba-Posix-Winsync-Plugin-for-389-directory-server-7a12af0.zip 
 GIT_REPOS = git://github.com/cgrzemba/Posix-Winsync-Plugin-for-389-directory-server.git
-GIT_USE_PROXY = 1
+# GIT_USE_PROXY = 1
 # GIT_TREEISH_Posix-Winsync-Plugin-for-389-directory-server.git = $(VERSION)
+GIT_TREEISH_389-posix-ws-plugin.git = $(VERSION)
 
 BUILDDEPS += CSW389-ds-base-dev
 BUILDDEPS += CSWnspr-dev
