@@ -1,5 +1,5 @@
 NAME = spamass-milter
-VERSION = 0.3.1
+VERSION = 0.3.2
 CATEGORIES = net
 GARTYPE = v2
 
@@ -8,7 +8,7 @@ define BLURB
   Plugin for the Sendmail Milter library for SpamAssassin
 endef
 
-MASTER_SITES = http://mirrors.aixtools.net/sv/spamass-milt/
+MASTER_SITES = http://download.savannah.gnu.org/releases/spamass-milt/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
