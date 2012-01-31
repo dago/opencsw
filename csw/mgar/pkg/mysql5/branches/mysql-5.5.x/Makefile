@@ -78,7 +78,7 @@ PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibgcc-s1
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
@@ -118,7 +118,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
 # RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl0-9-8
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
@@ -136,7 +136,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
 # RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibssl0-9-8
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
