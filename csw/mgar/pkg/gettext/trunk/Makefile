@@ -8,6 +8,13 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
+# a few legacy packages that we still need to depend on for dependency reasons
+# that we no longer want to rebuild and carry.
+FOREIGN_PACKAGES += CSWlibgettextlib0-14-1
+FOREIGN_PACKAGES += CSWlibgettextlib0-17
+FOREIGN_PACKAGES += CSWlibgettextsrc0-17
+FOREIGN_PACKAGES += CSWlibintl2
+FOREIGN_PACKAGES += CSWlibintl3
 
 BUILD_DEP_PKGS += CSWlibncurses-dev CSWlibxml2-dev
 
@@ -17,8 +24,6 @@ PACKAGES += CSWlibasprintf0
 PACKAGES += CSWlibgettextlib0-18-1
 PACKAGES += CSWlibgettextpo0
 PACKAGES += CSWlibgettextsrc0-18-1
-PACKAGES += CSWlibintl2
-PACKAGES += CSWlibintl3
 PACKAGES += CSWlibintl8
 PACKAGES += CSWggettext-dev
 PACKAGES += CSWggettext-data
@@ -30,8 +35,6 @@ CATALOGNAME_CSWggettextdoc = ggettextdoc
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
 CATALOGNAME_CSWlibgettextpo0 = libgettextpo0
 CATALOGNAME_CSWlibgettextsrc0-18-1 = libgettextsrc0_18_1
-CATALOGNAME_CSWlibintl2 = libintl2
-CATALOGNAME_CSWlibintl3 = libintl3
 CATALOGNAME_CSWlibintl8 = libintl8
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
 CATALOGNAME_CSWggettext-dev = ggettext_dev
@@ -45,8 +48,6 @@ SPKG_DESC_CSWggettext-dev = GNU locale utilities, development files
 SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
 SPKG_DESC_CSWlibgettextpo0 += GNU locale utilities, libgettextpo.so.0
 SPKG_DESC_CSWlibgettextsrc0-18-1 += GNU locale utilities, libgettextsrc-0.18.1.so
-SPKG_DESC_CSWlibintl2 += GNU locale utilities, libintl.so.2
-SPKG_DESC_CSWlibintl3 += GNU locale utilities, libintl.so.3
 SPKG_DESC_CSWlibintl8 += GNU locale utilities, libintl.so.8
 SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
 SPKG_DESC_CSWggettext-data += GNU locale utilities, translation files
@@ -54,6 +55,8 @@ SPKG_DESC_CSWggettextrt += GNU locale utilities, transitional dependency package
 
 RUNTIME_DEP_PKGS_CSWggettext += CSWexpat
 RUNTIME_DEP_PKGS_CSWggettext += CSWiconv
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-14-1
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-17
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl2
@@ -65,6 +68,7 @@ RUNTIME_DEP_PKGS_CSWggettext += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibasprintf0
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextpo0
+RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-17
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibasprintf0
@@ -88,10 +92,6 @@ RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibintl2 += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibintl2 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibintl3 += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibintl3 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibintl8 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibintl8 += CSWggettext-data
 
@@ -102,10 +102,6 @@ PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0(\.
 PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0\.5\.1)
 PKGFILES_CSWlibgettextsrc0-18-1 += $(call baseisadirs,$(libdir),libgettextsrc-0\.18\.1\.so)
 PKGFILES_CSWlibgettextsrc0-18-1 += $(call baseisadirs,$(libdir),libgettextsrc-0\.18\.1\.so(\.\d+)*)
-PKGFILES_CSWlibintl2 += $(call baseisadirs,$(libdir),libintl\.so\.2)
-PKGFILES_CSWlibintl2 += $(call baseisadirs,$(libdir),libintl\.so\.2(\.\d+)*)
-PKGFILES_CSWlibintl3 += $(call baseisadirs,$(libdir),libintl\.so\.3)
-PKGFILES_CSWlibintl3 += $(call baseisadirs,$(libdir),libintl\.so\.3(\.\d+)*)
 PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8\.0\.2)
 PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8\.1\.1)
 PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8(\.\d+)*)
@@ -129,8 +125,6 @@ CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibgettextpo0
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWggettext-data
-CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl2
-CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl3
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibasprintf0
 CHECKPKG_OVERRIDES_CSWlibgettextpo0 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextpo.so.0.4.0
 CHECKPKG_OVERRIDES_CSWlibgettextpo0 += surplus-dependency|CSWggettext-data
@@ -138,13 +132,9 @@ CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-1 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-1 += soname-equals-filename
 CHECKPKG_OVERRIDES_CSWlibgettextlib0-18-1 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextlib0-18-1 += soname-equals-filename
-CHECKPKG_OVERRIDES_CSWlibintl2 += surplus-dependency|CSWggettext-data
-CHECKPKG_OVERRIDES_CSWlibintl3 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibintl8 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibasprintf0 += surplus-dependency|CSWggettext-data
 
-CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl2
-CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl3
 CHECKPKG_OVERRIDES_CSWggettext += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/lib-prefix.m4
 CHECKPKG_OVERRIDES_CSWggettext += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/lib-link.m4
 
