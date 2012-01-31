@@ -16,7 +16,8 @@ FOREIGN_PACKAGES += CSWlibgettextsrc0-17
 FOREIGN_PACKAGES += CSWlibintl2
 FOREIGN_PACKAGES += CSWlibintl3
 
-BUILD_DEP_PKGS += CSWlibncurses-dev CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev CSWlibxml2-dev CSWlibexpat-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev CSWggettext-dev
 
 PACKAGES += CSWggettext
 PACKAGES += CSWggettextdoc
@@ -53,8 +54,8 @@ SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.s
 SPKG_DESC_CSWggettext-data += GNU locale utilities, translation files
 SPKG_DESC_CSWggettextrt += GNU locale utilities, transitional dependency package
 
-RUNTIME_DEP_PKGS_CSWggettext += CSWexpat
-RUNTIME_DEP_PKGS_CSWggettext += CSWiconv
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-14-1
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-17
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
@@ -78,21 +79,21 @@ RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl3
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibasprintf0 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWggettext-data
-RUNTIME_DEP_PKGS_CSWlibintl8 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibintl8 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibintl8 += CSWggettext-data
 
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
