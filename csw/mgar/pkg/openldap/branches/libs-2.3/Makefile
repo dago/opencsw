@@ -34,22 +34,6 @@ CATALOGNAME_CSWliblber2-3-0 = liblber2_3_0
 PKGFILES_CSWliblber2-3-0 += $(call baseisadirs,$(libdir),liblber-2\.3\.so\.0(\.\d+)*)
 SPKG_DESC_CSWliblber2-3-0 += $(DESCRIPTION), liblber-2.3.so.0
 
-# Because of splitting of the CSWoldaprt package - it hasn't been done yet.
-# It's a transient override, once 2.4 libs are released aond CSWoldaprt is
-# split, these overrides can be removed.
-CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/sparcv9/liblber-2.3.so.0.2.31|CSWliblber2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/liblber-2.3.so.0|CSWliblber2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/sparcv9/liblber-2.3.so.0|CSWliblber2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/liblber-2.3.so.0.2.31|CSWliblber2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/libldap_r-2.3.so.0|CSWlibldap-r2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap_r-2.3.so.0|CSWlibldap-r2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap_r-2.3.so.0.2.31|CSWlibldap-r2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/libldap_r-2.3.so.0.2.31|CSWlibldap-r2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/libldap-2.3.so.0.2.31|CSWlibldap2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap-2.3.so.0.2.31|CSWlibldap2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/libldap-2.3.so.0|CSWlibldap2-3-0|CSWoldaprt
-CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap-2.3.so.0|CSWlibldap2-3-0|CSWoldaprt
-
 PACKAGES += CSWlibldap2-3-0
 CATALOGNAME_CSWlibldap2-3-0 = libldap2_3_0
 PKGFILES_CSWlibldap2-3-0 += $(call baseisadirs,$(libdir),libldap-2\.3\.so\.0(\.\d+)*)
@@ -72,6 +56,28 @@ RUNTIME_DEP_PKGS_CSWlibldap-r2-3-0 += CSWlibsasl2-2
 CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += missing-dependency|CSWoldaprt
 # We aren't rebuilding this library, so we can't remove the linking.
 CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += deprecated-library|file=opt/csw/lib/libldap_r-2.3.so.0.2.31|lib=/opt/csw/lib/libnet.so
+
+# Because of splitting of the CSWoldaprt package - it hasn't been done yet.
+# It's a transient override, once 2.4 libs are released aond CSWoldaprt is
+# split, these overrides can be removed.
+CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/sparcv9/liblber-2.3.so.0.2.31|CSWliblber2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/liblber-2.3.so.0|CSWliblber2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/sparcv9/liblber-2.3.so.0|CSWliblber2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/liblber-2.3.so.0.2.31|CSWliblber2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/libldap_r-2.3.so.0|CSWlibldap-r2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap_r-2.3.so.0|CSWlibldap-r2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap_r-2.3.so.0.2.31|CSWlibldap-r2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/libldap_r-2.3.so.0.2.31|CSWlibldap-r2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/libldap-2.3.so.0.2.31|CSWlibldap2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap-2.3.so.0.2.31|CSWlibldap2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/libldap-2.3.so.0|CSWlibldap2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/sparcv9/libldap-2.3.so.0|CSWlibldap2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/amd64/libldap-2.3.so.0|CSWlibldap2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += file-collision|/opt/csw/lib/amd64/libldap-2.3.so.0.2.31|CSWlibldap2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/amd64/libldap_r-2.3.so.0.2.31|CSWlibldap-r2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWlibldap-r2-3-0 += file-collision|/opt/csw/lib/amd64/libldap_r-2.3.so.0|CSWlibldap-r2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/amd64/liblber-2.3.so.0|CSWliblber2-3-0|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWliblber2-3-0 += file-collision|/opt/csw/lib/amd64/liblber-2.3.so.0.2.31|CSWliblber2-3-0|CSWoldaprt
 
 include gar/category.mk
 
