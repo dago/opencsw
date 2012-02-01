@@ -15,7 +15,7 @@ define(`confSHAREDLIBDIR', `/opt/csw/lib')
 dnl define(`confMANROOT', `/opt/csw/share/man/cat')
 dnl define(`confMANROOTMAN', `/opt/csw/share/man/man')
 define(`confNO_STATISTICS_INSTALL',`True')
-define(`confHFDIR', `/opt/csw/share/mail')
+define(`confHFDIR', `/opt/csw/share/sendmail')
 define(`confMSP_QUEUE_DIR', `/var/opt/csw/spool/clientmqueue')
 dnl ### add OpenCSW lib and include directories
 APPENDDEF(`confLIBDIRS', `-L/opt/csw/lib -R/opt/csw/lib')

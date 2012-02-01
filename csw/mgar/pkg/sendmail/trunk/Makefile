@@ -4,6 +4,10 @@
 # - Build separate 9/10 packages?
 # - One big "mta" switch in alternatives between sendmail/postfix
 
+# + add symlink from /etc/opt/csw/mail/cf to /opt/csw/share/mail/cf/cf
+# + add ostype solaris9csw.m4
+# + add sendmail.mc in cf dir
+# + /opt/csw/lib/sendmail 2555 root smmsp (Rafael Ostertag)
 # + remove statistics
 # + csw-sm-client.pid, csw-sendmail.pid
 # + smmsp:smmsp /var/opt/csw/spool/clientmqueue
@@ -45,6 +49,7 @@ DISTFILES += submit.cf trusted-users
 DISTFILES += README.CSW sendmail.schema site.config.m4
 DISTFILES += oracle-sendmail-deactivate.sh oracle-sendmail-reactivate.sh
 DISTFILES += cswsendmail cswusergroup
+DISTFILES += sendmail.mc solaris9csw.m4
 
 LICENSE = LICENSE
 
@@ -106,9 +111,10 @@ EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 # Do not remove the static libs from libmilter
 MERGE_EXCLUDE_STATICLIBS =
 
-# Patch away GNUism
+# Patches
 PATCHFILES += 0001-add-libmilter-to-the-Makefile.patch
 PATCHFILES += 0002-no-gnuism.patch
+PATCHFILES += 0003-fix-Makefile-in-cf-dir.patch
 
 MIGRATE_FILES_CSWsendmail      = aliases helpfile local-host-names sendmail.cf
 MIGRATE_FILES_CSWsendmail     += submit.cf trusted-users
@@ -139,30 +145,30 @@ ALTERNATIVE_sendmail += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/
 ALTERNATIVE_sendmail += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail
 
 # Look thru these to see if they are harmless, e.g. examples
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/mail/cf/README
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smrsh.8
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sendmail.8
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/freebsd6.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/freebsd5.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/powerux.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/dragonfly.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/feature/local_procmail.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/cf/mail.cs.mc
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/cf/mail.eecs.mc
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/cf/knecht.mc
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/qpage.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/fax.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/procmail.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/phquery.m4
 CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/etc/opt/csw/movemail.conf
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sendmail_contrib/mmuegel
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/etrn.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/doublebounce.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/movemail.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/expn.pl
 CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/bounce-resender.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/etrn.pl
 CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/re-mqueue.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/movemail.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/doublebounce.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/expn.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sendmail_contrib/mmuegel
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/README
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/fax.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/qpage.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/procmail.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/phquery.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/dragonfly.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/freebsd5.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/freebsd6.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/powerux.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/cf/mail.cs.mc
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/cf/mail.eecs.mc
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/cf/knecht.mc
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/feature/local_procmail.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sendmail.8
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smrsh.8
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/sendmail/cf/README
 
 # The static libs from libmilter
 CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsmutil.a
@@ -224,7 +230,7 @@ install-custom:
 	ginstall -d $(DESTDIR)$(mandir)/man5
 	ginstall -d $(DESTDIR)$(mandir)/man8
 	ginstall -d $(DESTDIR)/var/opt/csw/spool/clientmqueue
-	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
+	ginstall -d $(DESTDIR)$(sharedstatedir)/sendmail
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 	ginstall -d $(DESTDIR)/opt/csw/include
@@ -274,7 +280,9 @@ install-custom:
 
 	@# Install m4/cf macros
 	find $(WORKSRC)/cf -type f -exec chmod 644 {} +
-	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/mail
+	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/sendmail
+	cp -p $(DOWNLOADDIR)/sendmail.mc $(DESTDIR)$(sharedstatedir)/sendmail/cf/cf/
+	cp -p $(DOWNLOADDIR)/solaris9csw.m4 $(DESTDIR)$(sharedstatedir)/sendmail/cf/ostype/
 
 	@# Install startup script
 	chmod +x $(DOWNLOADDIR)/cswsendmail && \
@@ -285,6 +293,7 @@ install-custom:
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
+	ln -s $(sharedstatedir)/sendmail/cf $(DESTDIR)$(sysconfdir)/mail/cf
 
 	@# usergroup
 	ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
