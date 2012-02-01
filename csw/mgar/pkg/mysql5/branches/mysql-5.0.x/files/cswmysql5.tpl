@@ -79,12 +79,12 @@ MYSQLD_PID_FILE=${MYSQLD_PID_FILE:=$MYSQL_HOME/mysql.pid}
 start_it() {
     if test -r $MYSQLD_PID_FILE ; then
         if kill -0 `cat $MYSQLD_PID_FILE` > /dev/null 2>&1 ; then
-            echo "mysqld-${BASE_VERSION} (`cat $MYSQLD_PID_FILE`) seems to be running."
+            echo "${MYSQLD_PROG} (`cat $MYSQLD_PID_FILE`) seems to be running."
             return 1
         fi
     fi
 
-    printf "%-60s" "Starting mysqld-${BASE_VERSION}: "
+    printf "%-60s" "Starting ${MYSQLD_PROG}: "
 
     # 2006-03-11
     # This script no longer creates the default database. You may create the
@@ -193,7 +193,7 @@ case $1 in
 
     restart)
     stop_it
-    while pgrep `pgrep_opts` mysqld-${BASE_VERSION} > /dev/null
+    while pgrep `pgrep_opts` ${MYSQLD_PROG} > /dev/null
       do
       sleep 1
     done
