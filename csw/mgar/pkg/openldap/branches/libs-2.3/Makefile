@@ -40,8 +40,9 @@ PKGFILES_CSWlibldap2-3-0 += $(call baseisadirs,$(libdir),libldap-2\.3\.so\.0(\.\
 SPKG_DESC_CSWlibldap2-3-0 += $(DESCRIPTION), libldap-2.3.so.0
 RUNTIME_DEP_PKGS_CSWlibldap2-3-0 += CSWlibnet
 RUNTIME_DEP_PKGS_CSWlibldap2-3-0 += CSWlibssl0-9-8
-RUNTIME_DEP_PKGS_CSWlibldap2-3-0 += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWlibldap2-3-0 += CSWlibsasl2-2
+# Because of a file collision at the moment.
+CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += missing-dependency|CSWoldaprt
 # We aren't rebuilding this library, so we can't remove the linking.
 CHECKPKG_OVERRIDES_CSWlibldap2-3-0 += deprecated-library|file=opt/csw/lib/libldap-2.3.so.0.2.31|lib=/opt/csw/lib/libnet.so
 
