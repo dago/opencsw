@@ -20,10 +20,16 @@ PACKAGES += CSWlibjbig2
 SPKG_DESC_CSWlibjbig2 = A data compression library for bi-level high-resolution images, libjbig.so.2
 PKGFILES_CSWlibjbig2 += $(call pkgfiles_lib,libjbig.so.2)
 
+PACKAGES += CSWlibjbig85-2
+SPKG_DESC_CSWlibjbig85-2 = T.85 light version of the libjbig.so.2 library, libjbig85.so.2
+PKGFILES_CSWlibjbig85-2 += $(call pkgfiles_lib,libjbig85.so.2)
+
 PACKAGES += CSWlibjbig-dev
-SPKG_DESC_CSWlibjbig-dev = Development files for libjbig.so.2
+SPKG_DESC_CSWlibjbig-dev = Development files for libjbig.so.2 and libjbig85.so.2
 PKGFILES_CSWlibjbig-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibjbig-dev += $(docdir)/libjbig_dev/.*
 RUNTIME_DEP_PKGS_CSWlibjbig-dev += CSWlibjbig2
+RUNTIME_DEP_PKGS_CSWlibjbig-dev += CSWlibjbig85-2
 
 PACKAGES += CSWjbigkit
 SPKG_DESC_CSWjbigkit = JBIG kit, a data compression algorithm for bi-level high-resolution images
@@ -41,6 +47,9 @@ REINPLACE_WITH_gmake = gmake
 REINPLACE_FILES_gmake += Makefile
 REINPLACE_FILES_gmake += pbmtools/Makefile
 
+# Generate position independent code for shared library
+EXTRA_CFLAGS = -xcode=pic13
+
 # There is no configure
 CONFIGURE_SCRIPTS =
 
@@ -56,13 +65,18 @@ include gar/category.mk
 
 install-custom:
 	ginstall -d $(DESTDIR)$(includedir)
-	cd $(WORKSRC)/libjbig && ginstall jbig.h jbig_ar.h $(DESTDIR)$(includedir)
+	cd $(WORKSRC)/libjbig && ginstall jbig.h jbig_ar.h jbig85.h $(DESTDIR)$(includedir)
 	ginstall -d $(DESTDIR)$(bindir)
 	cd $(WORKSRC)/pbmtools && ginstall jbgtopbm jbgtopbm85 pbmtojbg pbmtojbg85 $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(libdir)
-	$(CC) $(LDFLAGS) -G -h libjbig.so.2 -o $(DESTDIR)$(libdir)/libjbig.so.2.0 $(WORKSRC)/libjbig/libjbig.a
+	$(CC) $(LDFLAGS) -z allextract -G -h libjbig.so.2 -o $(DESTDIR)$(libdir)/libjbig.so.2.0 $(WORKSRC)/libjbig/libjbig.a
 	gln -s libjbig.so.2 $(DESTDIR)$(libdir)/libjbig.so
 	gln -s libjbig.so.2.0 $(DESTDIR)$(libdir)/libjbig.so.2
+	$(CC) $(LDFLAGS) -z allextract -G -h libjbig85.so.2 -o $(DESTDIR)$(libdir)/libjbig85.so.2.0 $(WORKSRC)/libjbig/libjbig85.a
+	gln -s libjbig85.so.2 $(DESTDIR)$(libdir)/libjbig85.so
+	gln -s libjbig85.so.2.0 $(DESTDIR)$(libdir)/libjbig85.so.2
+	ginstall -d $(DESTDIR)$(docdir)/libjbig_dev
+	cd $(WORKSRC)/libjbig && ginstall jbig.txt jbig85.txt $(DESTDIR)$(docdir)/libjbig_dev
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	cd $(WORKSRC)/pbmtools && ginstall *.1 $(DESTDIR)$(mandir)/man1
 	@$(MAKECOOKIE)
