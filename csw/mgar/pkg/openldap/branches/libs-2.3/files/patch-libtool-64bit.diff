@@ -1,0 +1,15 @@
+diff -Naur openldap-2.4.17.orig/build/ltmain.sh openldap-2.4.17.patched/build/ltmain.sh
+--- openldap-2.4.17.orig/build/ltmain.sh	2009-01-22 01:00:41.000000000 +0100
++++ openldap-2.4.17.patched/build/ltmain.sh	2009-09-11 14:26:06.136891084 +0200
+@@ -4745,7 +4745,10 @@
+ 	    case "$compile_command " in
+ 	    *" -static "*) ;;
+ 	    *) pic_flag_for_symtable=" $pic_flag";;
+-	    esac
++	    esac;;
++          *-*-solaris*)
++            LTCFLAGS="$compiler_flags"
++            ;;
+ 	  esac
+ 
+ 	  # Now compile the dynamic symbol file.
