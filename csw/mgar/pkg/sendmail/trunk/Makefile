@@ -56,11 +56,12 @@ LICENSE = LICENSE
 PACKAGES                      = CSWsendmail 
 CATALOGNAME_CSWsendmail       = sendmail
 SPKG_DESC_CSWsendmail         = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWsendmail  = CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsendmail += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsendmail += CSWlibldap2-4-2
 
 PACKAGES                += CSWlibmilter 
 CATALOGNAME_CSWlibmilter = libmilter
