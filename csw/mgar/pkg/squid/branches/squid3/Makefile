@@ -4,7 +4,7 @@
 NAME = squid
 VERSION = 3.1
 CATEGORIES = server
-RELEASE = 15
+RELEASE = 18
 DISTVERSION = $(VERSION).$(RELEASE)
 DISTNAME = squid-$(DISTVERSION)
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
