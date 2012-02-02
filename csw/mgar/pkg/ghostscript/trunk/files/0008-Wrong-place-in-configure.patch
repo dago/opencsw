@@ -1,0 +1,25 @@
+From f44f599849020abd2cbff12de84f36e4087316f6 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 2 Feb 2012 14:56:52 +0100
+Subject: [PATCH] Wrong place in configure
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index ecd8317..e98175e 100755
+--- a/configure
++++ b/configure
+@@ -5170,7 +5170,7 @@ HAVE_LIBIDN=''
+ UTF8DEVS=''
+ if test x$with_libidn != xno; then
+   HAVE_LIBIDN=-DHAVE_LIBIDN
+-  LIBS="$LIBS -lidn"
++  LIBS="$LIBS -L/opt/csw/lib -lidn"
+ 
+   if test x$found_iconv != xno; then
+     UTF8DEVS='$(PSD)utf8.dev'
+-- 
+1.7.8.3
+
