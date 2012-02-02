@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWlibltdl7
 RUNTIME_DEP_PKGS += CSWsambacommon
 
-PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
