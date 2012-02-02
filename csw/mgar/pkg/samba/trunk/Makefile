@@ -3,7 +3,7 @@
 # - secrets.tdb is searched in /opt/csw/private/secrets.tdb instead of /etc/opt/csw/samba/private/secrets.tdb
 
 NAME = samba
-VERSION = 3.6.1
+VERSION = 3.6.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -48,7 +48,8 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWsamba += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsamba += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibwbclient0
 
 # Just docs override for now
@@ -82,7 +83,8 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWsamba-client += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtdb1
 OBSOLETED_BY_CSWsamba-client += CSWsambaclient
@@ -113,7 +115,8 @@ RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibtalloc2
@@ -155,7 +158,8 @@ RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibldap2-4-2
 
 PACKAGES += CSWlibsmbsharemodes0
 PKGFILES_CSWlibsmbsharemodes0 += $(call pkgfiles_lib,libsmbsharemodes.so.0)
@@ -197,7 +201,8 @@ RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWsamba-swat += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsamba-swat += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibtdb1
 OBSOLETED_BY_CSWsamba-swat = CSWsambaswat
@@ -269,7 +274,8 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawb
 CATALOGNAME_CSWsambawb = samba_wb_stub
 
