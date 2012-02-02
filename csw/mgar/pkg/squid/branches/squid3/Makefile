@@ -95,7 +95,7 @@ PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
 # Needed for CSWsambacommon: ntlm_auth and winbindd
-CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWsambacommon
+CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWlibsmbclient0
 
 include gar/category.mk
 
