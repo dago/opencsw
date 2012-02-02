@@ -24,7 +24,7 @@ RUNTIME_DEP_PKGS += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS += CSWlibsasl2-2
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWlibltdl7
-RUNTIME_DEP_PKGS += CSWsambacommon
+RUNTIME_DEP_PKGS += CSWlibsmbclient0
 
 PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
