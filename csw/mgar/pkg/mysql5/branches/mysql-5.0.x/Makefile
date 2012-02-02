@@ -55,8 +55,10 @@ OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config-$(BASE_VERSION).1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
 ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs))-$(BASE_VERSION) $(ALTS_PRIO)
+ALTERNATIVE_mysql_dev += $(bindir)/$(ISA_DEFAULT64)/$(firstword $(CSWmysql-dev_programs)) mysql_dev64 $(bindir)/$(ISA_DEFAULT64)/$(firstword $(CSWmysql-dev_programs))-$(BASE_VERSION) $(ALTS_PRIO)
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
-	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION) \
+	$(bindir)/$(ISA_DEFAULT64)/$(C)64 $C $(bindir)/$(ISA_DEFAULT64)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
@@ -246,13 +248,17 @@ EXECUTABLES += resolveip
 
 ALTERNATIVES_CSW$(NAME) = mysql$(BASE_VERSION)_main
 ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES))-$(BASE_VERSION) $(ALTS_PRIO)
+ALTERNATIVE_mysql$(BASE_VERSION)_main += $(bindir)/$(ISA_DEFAULT64)/$(firstword $(EXECUTABLES)) mysql_main64 $(bindir)/$(ISA_DEFAULT64)/$(firstword $(EXECUTABLES))-$(BASE_VERSION) $(ALTS_PRIO)
 ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
-	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION) \
+	$(bindir)/$(ISA_DEFAULT64)/$C $(C)64 $(bindir)/$(ISA_DEFAULT64)/$C-$(BASE_VERSION))
 
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)_client
 ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(client_programs)) mysql_client $(bindir)/$(firstword $(client_programs)) $(ALTS_PRIO)
+ALTERNATIVE_mysql$(BASE_VERSION)_client += $(bindir)/$(ISA_DEFAULT64)/$(firstword $(client_programs)) mysql_client64 $(bindir)/$(ISA_DEFAULT64)/$(firstword $(client_programs)) $(ALTS_PRIO)
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
-	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION) \
+	$(bindir)/$(ISA_DEFAULT64)/$C $(C)64 $(bindir)/$(ISA_DEFAULT64)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
