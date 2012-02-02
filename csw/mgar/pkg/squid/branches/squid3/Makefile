@@ -24,7 +24,6 @@ RUNTIME_DEP_PKGS += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS += CSWlibsasl2-2
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWlibltdl7
-RUNTIME_DEP_PKGS += CSWlibsmbclient0
 
 PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
@@ -94,8 +93,8 @@ PROTOTYPE_CLASS_varuser  = ugfiles
 PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
-# Needed for CSWsambacommon: ntlm_auth and winbindd
-CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWlibsmbclient0
+# Needed for CSWlibsmbclient0: ntlm_auth and winbindd
+# CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWlibsmbclient0
 
 include gar/category.mk
 
