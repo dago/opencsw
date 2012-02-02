@@ -1,0 +1,25 @@
+From ded20c08df2aee8ab5cc43cbe2287784c7f82162 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 2 Feb 2012 14:43:12 +0100
+Subject: [PATCH] libidn needs -L/opt/csw/lib
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 9ccd15d..ecd8317 100755
+--- a/configure
++++ b/configure
+@@ -5116,7 +5116,7 @@ if test "${ac_cv_lib_idn_stringprep+set}" = set; then :
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lidn  $LIBS"
++LIBS="-L/opt/csw/lib -lidn  $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+-- 
+1.7.8.3
+
