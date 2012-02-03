@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.9
+VERSION  = 5.3.10
 CATEGORIES  = lang
 GARTYPE = v2
 SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
@@ -334,7 +334,7 @@ endif
 
 
 # Disable Tests (report submitted to PHP QA)
-SKIPTEST = 1
+#SKIPTEST = 1
 #ENABLE_CHECK = 0
 TEST_TARGET = test
 
