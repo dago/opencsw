@@ -25,7 +25,7 @@ index 2b0f4b3..6e25162 100644
  RM=	rm -f
  # use our own install program; should be really confINSTALL
 -INSTALL=../../devtools/bin/install.sh
-+INSTALL=/usr/sbin/install
++INSTALL=/usr/ucb/install
  # CF file ownership/permissions
  CFOWN=root
  CFGRP=bin
