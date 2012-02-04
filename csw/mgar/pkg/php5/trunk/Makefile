@@ -162,7 +162,7 @@ $(eval $(call php5_subpackage,iconv,CSWlibiconv2 CSWlibz1))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
 $(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWlibssl0-9-8 CSWlibz1))
 $(eval $(call php5_subpackage,json,CSWlibz1))
-$(eval $(call php5_subpackage,ldap,CSWoldaprt CSWlibsasl2-2 CSWlibz1))
+$(eval $(call php5_subpackage,ldap,CSWliblber2-4-2 CSWlibldap2-4-2 CSWlibsasl2-2 CSWlibz1))
 $(eval $(call php5_subpackage,mbstring,CSWlibz1))
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4 CSWlibltdl7 CSWlibz1))
