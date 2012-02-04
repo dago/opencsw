@@ -152,8 +152,15 @@ endif
 
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
-EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
-EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
+BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
+EXTRA_BUILD_ISAS_i386 = pentium_pro 
+EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis
+
+# we keep building the i386 even under 5.10 to keep the 
+# same prototype file for Solaris 9 and Solaris 10 packages
+# (could switch to dynamic prototype to avoid that)
+ISA_DEFAULT_i386-5.10 = i386
 
 # GAR wants and puts sparcv9 in lib/64 but openssl build system
 # isn't the standard autoconf/automake one so we disable this
