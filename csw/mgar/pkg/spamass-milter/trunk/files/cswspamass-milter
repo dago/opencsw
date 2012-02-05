@@ -11,8 +11,6 @@
 #                     being useful, would otherwise leave service in
 #                     maintenance mode
 #
-# /etc/init.d/ sample script for Solaris
-# Modified for CSW
 # $Id$
 
 # The defaults. They can be overwritten by /opt/csw/etc/spamass-milter
@@ -106,6 +104,7 @@ stop() {
     if [ $? -ne 0 ]
     then
 	warning "spamass-milter not running. Nothing to stop."
+	rm -f "${SPAMASS_PID}"
 	return 0
     fi
 

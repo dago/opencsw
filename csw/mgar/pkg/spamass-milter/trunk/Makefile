@@ -14,6 +14,7 @@ DISTFILES += cswspamass-milter
 DISTFILES += spamass-milter.CSW
 DISTFILES += README.CSW
 DISTFILES += changelog.CSW
+DISTFILES += COPYING
 
 PATCHFILES  = 0000-Workaround-for-missing-paths.h.patch
 
@@ -21,12 +22,13 @@ INITSMF = $(sysconfdir)/init.d/cswspamass-milter
 PRESERVECONF = $(sysconfdir)/spamass-milter
 
 PACKAGES = CSWspamass-milter
-CATALOGNAME = spamass_milter
 RUNTIME_DEP_PKGS = CSWspamassassin
 
 BUILD_DEP_PKGS  = CSWspamassassin
 BUILD_DEP_PKGS += CSWsendmail
 BUILD_DEP_PKGS += CSWlibmilter
+
+LICENSE = COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -34,6 +36,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SENDMAIL = $(libdir)/sendmail
 
 EXTRA_CONFIGURE_ENV = SENDMAIL=$(SENDMAIL)
+EXTRA_CXX_FLAGS = -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
