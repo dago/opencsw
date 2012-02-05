@@ -46,8 +46,8 @@ DOCLIST = AUTHORS ChangeLog NEWS README TODO
 
 post-merge-modulated:
 	@echo " ==> Installing $(NAME) (custom)"
-	@ginstall -m 755 -d $(PKGROOT)$(docdir)/$(NAME)
-	@$(foreach DOC,$(DOCLIST),ginstall -m 444 $(WORKSRC)/$(DOC) $(PKGROOT)$(docdir)/$(NAME);)
+	@ginstall -m 755 -d $(PKGROOT)$(docdir)/$(subst -,_,$(NAME))
+	@$(foreach DOC,$(DOCLIST),ginstall -m 444 $(WORKSRC)/$(DOC) $(PKGROOT)$(docdir)/$(subst -,_,$(NAME));)
 	@$(MAKECOOKIE)
 
 post-merge:
