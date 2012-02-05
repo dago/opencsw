@@ -55,4 +55,5 @@ post-merge:
 	@ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
 	@ginstall -m 755 $(FILEDIR)/cswspamass-milter $(PKGROOT)$(sysconfdir)/init.d/
 	@ginstall -m 755 $(FILEDIR)/spamass-milter.CSW $(PKGROOT)$(sysconfdir)/
+	@ginstall -m 755 -d $(PKGROOT)$(localstatedir)/run
 	@$(MAKECOOKIE)
