@@ -1,0 +1,7 @@
+spamass-milter (0.3.2,REV=2012.02.05)
+
+  * New upstream release 0.3.2
+
+  * Added startup script and configuration file for startup script
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 05 Feb 2012 15:10:36 +0100

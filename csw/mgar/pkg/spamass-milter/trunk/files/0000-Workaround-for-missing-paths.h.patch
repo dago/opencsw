@@ -1,0 +1,28 @@
+From 76a4a08fce40dab85084d56686e34b37e3b70ffd Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@opencsw.org>
+Date: Sun, 5 Feb 2012 12:01:08 +0100
+Subject: [PATCH] Workaround for missing paths.h
+
+---
+ daemon.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index dd54571..d1245f6 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -39,7 +39,11 @@ static char sccsid[] = "@(#)daemon.c	8.1 (Berkeley) 6/4/93";
+ /* $Id: daemon.c,v 1.1 2003/10/21 21:40:32 dnelson Exp $ */
+ 
+ #include <fcntl.h>
++#ifndef __sun
+ #include <paths.h>
++#else
++#define _PATH_DEVNULL "/dev/null"
++#endif
+ #include <unistd.h>
+ 
+ int
+-- 
+1.7.9
+
