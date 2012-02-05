@@ -86,11 +86,15 @@ class Pkgmap(object):
       prototype_class = fields[2]
     elif line_type in ('s', 'l'):
       # soft- and hardlinks
-      link_from, link_to = fields[3].split("=")
-      installed_path = link_from
-      line_to_add = "%s --> %s" % (link_from, link_to)
-      target = struct_util.ResolveSymlink(link_from, link_to)
-      prototype_class = fields[2]
+      # This breaks if PAX is broken. A rare case, but can happen.
+      if "=" not in fields[3]:
+        line_to_add = "broken link entry: %s" % fields[3]
+      else:
+        link_from, link_to = fields[3].split("=")
+        installed_path = link_from
+        line_to_add = "%s --> %s" % (link_from, link_to)
+        target = struct_util.ResolveSymlink(link_from, link_to)
+        prototype_class = fields[2]
     if line_to_add:
       self.paths.add(line_to_add)
     entry = {
