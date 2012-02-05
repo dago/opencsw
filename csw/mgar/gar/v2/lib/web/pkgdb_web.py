@@ -49,6 +49,19 @@ urls = urls_html + urls_rest
 render = web.template.render('/home/maciej/src/opencsw-git/gar/v2/'
                              'lib/web/templates/')
 
+
+class PkgStatsEncoder(json.JSONEncoder):
+  """Maps frozensets to lists."""
+  def default(self, obj):
+    if isinstance(obj, frozenset):
+      # Python 2.6 doesn't have the dictionary comprehension
+      # return {x: None for x in obj}
+      return list(obj)
+    if isinstance(obj, datetime.datetime):
+      return obj.isoformat()
+    return json.JSONEncoder.default(self, obj)
+
+
 def ConnectToDatabase():
   """Connect to the database only if necessary.
 
@@ -328,46 +341,12 @@ class RestSrv4DetailFiles(object):
 
 class RestSrv4FullStats(object):
 
-  def GetUnicodeOrNone(self, s):
-    """Tries to decode UTF-8"""
-    if s is None:
-      return None
-    if type(s) != unicode:
-      try:
-        s = unicode(s, 'utf-8')
-      except UnicodeDecodeError, e:
-        s = s.decode("utf-8", "ignore")
-        s = s + u" (bad unicode detected)"
-    return s
-
   def GET(self, md5_sum):
     ConnectToDatabase()
-    class PkgStatsEncoder(json.JSONEncoder):
-      def default(self, obj):
-        if isinstance(obj, frozenset):
-          # Python 2.6 doesn't have the dictionary comprehension
-          # return {x: None for x in obj}
-          return list(obj)
-        if isinstance(obj, datetime.datetime):
-          return obj.isoformat()
-        return json.JSONEncoder.default(self, obj)
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       data_structure = pkg.GetStatsStruct()
       web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
-      # There was a problem with bad utf-8 in the VENDOR field.
-      # This is a workaround.
-      if "VENDOR" in data_structure["pkginfo"]:
-        data_structure["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
-            data_structure["pkginfo"]["VENDOR"])
-      # The end of the hack.
-      #
-      # One more workaround
-      for d in data_structure["pkgmap"]:
-        if "path" in d:
-          d["path"] = self.GetUnicodeOrNone(d["path"])
-          d["line"] = self.GetUnicodeOrNone(d["line"])
-      # End of the workaround
       return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()

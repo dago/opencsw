@@ -222,9 +222,34 @@ class Srv4FileStats(sqlobject.SQLObject):
         u"Package: %s-%s, %s"
         % (self.catalogname, self.version_string, self.arch.name))
 
+  def GetUnicodeOrNone(self, s):
+    """Tries to decode UTF-8"""
+    if s is None:
+      return None
+    if type(s) != unicode:
+      try:
+        s = unicode(s, 'utf-8')
+      except UnicodeDecodeError, e:
+        s = s.decode("utf-8", "ignore")
+        s = s + u" (bad unicode detected)"
+    return s
+
   def GetStatsStruct(self):
     if not self._cached_pkgstats:
       self._cached_pkgstats = cPickle.loads(str(self.data_obj.pickle))
+      # There was a problem with bad utf-8 in the VENDOR field.
+      # This is a workaround.
+      if "VENDOR" in self._cached_pkgstats["pkginfo"]:
+        self._cached_pkgstats["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
+            self._cached_pkgstats["pkginfo"]["VENDOR"])
+      # The end of the hack.
+      #
+      # One more workaround
+      for d in self._cached_pkgstats["pkgmap"]:
+        if "path" in d:
+          d["path"] = self.GetUnicodeOrNone(d["path"])
+          d["line"] = self.GetUnicodeOrNone(d["line"])
+      # End of the workaround
     return self._cached_pkgstats
 
   def _GetBuildSource(self):
