@@ -14,6 +14,8 @@ endef
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES = $(DISTNAME).tar.gz
 
+VENDOR_URL = http://www.freewisdom.org/projects/python-markdown/
+
 PACKAGES = CSWpy-markdown
 ARCHALL_CSWpy-markdown = 1
 
