@@ -1,6 +1,9 @@
 spamass-milter README.CSW
 =========================
 
+As of version 0.3.2,REV=2012.02.05, spamass-milter comes with a startup script
+for Solaris 9 and 10+ including SMF support on Solaris 10+.
+
 You can customize spamass-milter startup options by editing
 /etc/opt/csw/spamass-milter. Please see /etc/opt/csw/spamass-milter.CSW for
 more information.
@@ -8,3 +11,38 @@ more information.
 Site wide configuration can be put into
 /opt/csw/etc/spamass-milter. Configuration in /etc/opt/csw/spamass-milter takes
 precedence over /opt/csw/etc/spamass-milter, though.
+
+You can start spamass-milter on Solaris 9 by issuing
+
+ /etc/opt/csw/init.d/cswspamass-milter start
+
+Symlinks to /etc/rc?.d will be created by the package automatically.
+
+On Solaris 10, the preferred method is using SMF. You can start
+spamass-milter by issuing
+
+ svcadm enable cswspamass-milter.
+
+The startup script will log warnings and errors to the DAEMON syslog facility.
+
+
+Sendmail Integration
+--------------------
+
+We recommend using OpenCSW Sendmail. Solaris Sendmail has not been tested with
+spamass-milter and is not guaranteed to work.
+
+In order to make sendmail talk to spamass-milter, add the following lines to
+your sendmail.mc file
+
+INPUT_MAIL_FILTER(`spamassassin', `S=local:/var/run/spamass.sock, F=, T=C:15m;S:4m;R:4m;E:10m')dnl
+define(`confMILTER_MACROS_CONNECT',`t, b, j, _, {daemon_name}, {if_name}, {if_addr}')dnl
+define(`confMILTER_MACROS_HELO',`s, {tls_version}, {cipher}, {cipher_bits}, {cert_subject}, {cert_issuer}')dnl
+define(`confMILTER_MACROS_ENVRCPT',`r, v, Z')dnl
+
+and recreate sendmail.cf. For more details, please refer to the README file in
+/opt/csw/share/doc/spamass_milter.
+
+Please keep in mind that spamass-milter uses Spamassassin's spamc which in turn
+talks to spamd. So, besides configuring sendmail to talk to spamass-milter you
+also need a running spamassassin installation.
