@@ -293,28 +293,29 @@ class Srv4FileStats(sqlobject.SQLObject):
     #  - GetVendorUrl unpickles the object (very slow)
     #  - GetSvnUrl unpickles the object (very slow)
     data = {
-        'arch': self.arch.name,
         'basename': self.basename,
         # For compatibility with the catalog parser from catalog.py
         'file_basename': self.basename,
         'catalogname': self.catalogname,
-        'filename_arch': self.filename_arch.name,
-        'maintainer_email': self.maintainer.email,
-        'maintainer_full_name': self.maintainer.full_name,
-        'maintainer_id': self.maintainer.id,
         'md5_sum': self.md5_sum,
         'mtime': unicode(self.mtime),
-        'osrel': self.os_rel.short_name,
-        'pkgname': self.pkginst.pkgname,
         'rev': self.rev,
         'size': self.size,
         'version_string': self.version_string,
         # For compatibility with the catalog parser from catalog.py
         'version': self.version_string,
-        # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
-        'vendor_url': self.GetVendorUrl(),
-        'repository_url': self.GetSvnUrl(),
     }
+    if not quick:
+       data['arch'] = self.arch.name
+       data['filename_arch'] = self.filename_arch.name
+       data['maintainer_email'] = self.maintainer.email
+       data['maintainer_full_name'] = self.maintainer.full_name
+       data['maintainer_id'] = self.maintainer.id
+       data['osrel'] = self.os_rel.short_name
+       data['pkgname'] = self.pkginst.pkgname
+       data['vendor_url'] = self.GetVendorUrl()
+       data['repository_url'] = self.GetSvnUrl()
+       # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
     return mimetype, data
 
 
