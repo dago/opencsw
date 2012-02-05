@@ -1,0 +1,243 @@
+#!/sbin/sh
+#RC_KNUM 20         # Number used for kill script symlink, e.g. K20cswfoo
+#RC_SNUM 80         # Number used for start script symlink, e.g. S80cswfoo
+#RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+#RC_SLEV 3          # Run levels that should have a start script symlink
+#FMRI network       # FMRI path for service (S10+), default is /network.
+#                     Changing the value here, yields a generated FMRI of
+#                     "svc:/somethingelse/cswfoo:default"
+#AUTOENABLE no     # If set to no will not enable service regardless of
+#                     local csw.conf, use when a package needs setup before
+#                     being useful, would otherwise leave service in
+#                     maintenance mode
+#
+# /etc/init.d/ sample script for Solaris
+# Modified for CSW
+# $Id$
+
+# The defaults. They can be overwritten by /opt/csw/etc/spamass-milter
+# or /etc/opt/csw/spamass-milter. The latter takes precedence over the
+# former.
+SPAMASS_SOCK=/var/run/spamass.sock
+SPAMASS_PID=/var/opt/csw/run/spamass-milter.pid
+DONTMODIFY=ignore
+MAILADDR_EXPANSION=no
+PREFIX=/opt/csw
+
+if [ -n "${SMF_FMRI}" ]
+then
+    . /lib/svc/share/smf_include.sh
+fi
+
+warning() {
+    if [ -n "${SMF_FMRI}" ]
+    then
+	/usr/bin/logger -p daemon.warning "$@"
+    else
+	echo "WARNING: $@"
+    fi
+    return 0
+}
+
+error() {
+    if [ -n "${SMF_FMRI}" ]
+    then
+	/usr/bin/logger -p daemon.error "$@"
+    else
+	echo "ERROR: $@"
+    fi
+    return 0
+}
+
+start() {
+    if [ -f "${SPAMASS_PID}" ]
+    then
+	kill -0 "`cat ${SPAMASS_PID}`"
+	if [ $? -eq 0 ]
+	then
+	    warning "spamass-milter already running with pid `cat ${SPAMASS_PID}`"
+	    exit 0
+	else
+	    warning "Removing stale pid file ${SPAMASS_PID}"
+	    rm -f "${SPAMASS_PID}"
+	fi
+    fi
+    rm -f "${SPAMASS_SOCK}" > /dev/null 2>&1
+    if [ ! -n "${SMF_FMRI}" ]
+    then
+	printf "%-60s" "Starting spamass-milter: "
+    fi
+    ${PREFIX}/sbin/spamass-milter ${BASE_ARGS} ${ARGS}
+    RETVAL=$?
+    if [ ${RETVAL} -eq 0 ] ; then
+	if [ ! -n "${SMF_FMRI}" ]
+	then
+	    echo "[  OK  ]"
+	fi
+    else
+	if [ -n "${SMF_FMRI}" ]
+	then
+	    exit ${SMF_EXIT_MON_OFFLINE}
+	fi
+	echo "[FAILED]"
+	exit 1
+
+    fi
+    if [ ! -f "${SPAMASS_PID}" ]
+    then
+	warning "PID File ${SPAMASS_PID} not existent after launch."
+	if [ -n "${SMF_FMRI}" ]
+	then
+	    exit ${SMF_EXIT_MON_DEGRADE}
+	fi
+	exit 2
+    fi
+    return 0
+}
+
+stop() {
+    if [ ! -f "${SPAMASS_PID}" ]
+    then
+	warning "${SPAMASS_PID} not found. Assuming daemon not running"
+	return 0
+    fi
+
+    kill -0 "`cat ${SPAMASS_PID}`"
+    if [ $? -ne 0 ]
+    then
+	warning "spamass-milter not running. Nothing to stop."
+	return 0
+    fi
+
+    if [ ! -n "${SMF_FMRI}" ]
+    then
+	printf "%-60s" "Shutting down spamass-milter: "
+    fi
+    kill "`cat ${SPAMASS_PID}`"
+    RETVAL=$?
+    if [ ${RETVAL} -eq 0 ] ; then
+	if [ ! -n "${SMF_FMRI}" ]
+	then
+	    echo "[  OK  ]"
+	fi
+    else
+	if [ ! -n "${SMF_FMRI}" ]
+	then
+	    echo "[FAILED]"
+	    exit 3
+	fi
+	error "Error while terminating spamass-milter"
+	exit ${SMF_EXIT_ERR_FATAL}
+    fi
+    return 0
+}
+
+if [ ! -x "${PREFIX}/sbin/spamass-milter" ]
+then
+    error "${PREFIX}/sbin/spamass-milter does not exist or not executable."
+    if [ -n "${SMF_FMRI}" ]
+    then
+	exit ${SMF_EXIT_ERR_FATAL}
+    fi
+
+    exit 1
+fi
+
+
+# Source config files
+if [ -f /opt/csw/etc/spamass-milter ]
+then
+    . /opt/csw/etc/spamass-milter
+fi
+if [ -f /etc/opt/csw/spamass-milter ]
+then
+    . /etc/opt/csw/spamass-milter
+fi
+
+BASE_ARGS="-f -p ${SPAMASS_SOCK} -P ${SPAMASS_PID}"
+ARGS=""
+
+# Assemble arguments for spamass-milter. SPAMASS_SOCK and SPAMASS_PID
+# are already taken care of in BASE_ARGS.
+if [ -n "${BUCKET}" ]
+then
+    ARGS="${ARGS} -b ${BUCKET}"
+fi
+if [ -n "${BUCKET_BCC}" ]
+then
+    if [ -n "${BUCKET}" ]
+    then
+	warning "BUCKET already set. Ignoring BUCKET_BCC"
+    else
+	ARGS="${ARGS} -B ${BUCKET_BCC}"
+    fi
+fi
+if [ -n "${DEFAULTDOMAIN}" ]
+then
+    ARGS="${ARGS} -e ${DEFAULTDOMAIN}"
+fi
+if [ -n "${IGNORE}" ]
+then
+    ARGS="${ARGS} -i ${IGNORE}"
+fi
+if [ -n "${DONTMODIFY}" ]
+then
+    case "${DONTMODIFY}" in
+	'any')
+	    ARGS="${ARGS} -M"
+	    ;;
+	'some')
+	    ARGS="${ARGS} -m"
+	    ;;
+	'ignore')
+	    :
+	    ;;
+	*)
+	    warning "${DONTMODIFY} is not a valid value for DONTMODIFY. Assuming 'ignore'."
+	    ;;
+    esac
+fi
+if [ -n "${REJECT}" ]
+then
+    ARGS="${ARGS} -r ${REJECT}"
+fi
+if [ -n "${DEFAULTUSER}" ]
+then
+    ARGS="${ARGS} -u ${DEFAULTUSER}"
+fi
+if [ -n "${MAILADDR_EXPANSION}" ]
+then
+    case "${MAILADDR_EXPANSION}" in
+	'yes')
+	    ARGS="${ARGS} -x"
+	    ;;
+	'no')
+	    :
+	    ;;
+	*)
+	    warning "${MAILADDR_EXPANSION} is not a valid value for MAILADDR_EXPANSION. Assuming 'no'."
+	    ;;
+    esac
+fi
+if [ -n "${SPAMC_FLAGS}" ]
+then
+    ARGS="${ARGS} -- ${SPAMC_FLAGS}"
+fi
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart)
+	stop
+	start
+	;;
+*)
+	echo "Usage: `basename $0` {start|stop|restart}" >&2
+	;;
+esac
+
+exit 0

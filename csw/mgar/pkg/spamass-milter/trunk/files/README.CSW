@@ -1,0 +1,10 @@
+spamass-milter README.CSW
+=========================
+
+You can customize spamass-milter startup options by editing
+/etc/opt/csw/spamass-milter. Please see /etc/opt/csw/spamass-milter.CSW for
+more information.
+
+Site wide configuration can be put into
+/opt/csw/etc/spamass-milter. Configuration in /etc/opt/csw/spamass-milter takes
+precedence over /opt/csw/etc/spamass-milter, though.

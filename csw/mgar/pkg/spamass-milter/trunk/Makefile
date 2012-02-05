@@ -10,28 +10,46 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/spamass-milt/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += COPYING
+DISTFILES += cswspamass-milter
+DISTFILES += spamass-milter.CSW
+DISTFILES += README.CSW
+DISTFILES += changelog.CSW
+
+PATCHFILES  = 0000-Workaround-for-missing-paths.h.patch
+
+INITSMF = $(sysconfdir)/init.d/cswspamass-milter
+PRESERVECONF = $(sysconfdir)/spamass-milter
 
 PACKAGES = CSWspamass-milter
 CATALOGNAME = spamass_milter
 RUNTIME_DEP_PKGS = CSWspamassassin
 
+BUILD_DEP_PKGS  = CSWspamassassin
+BUILD_DEP_PKGS += CSWsendmail
+BUILD_DEP_PKGS += CSWlibmilter
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-TEST_SCRIPTS = 
-INSTALL_SCRIPTS = custom
+SENDMAIL = $(libdir)/sendmail
+
+EXTRA_CONFIGURE_ENV = SENDMAIL=$(SENDMAIL)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-DOCLIST = AUTHORS Changelog NEWS README TODO
+DOCLIST = AUTHORS ChangeLog NEWS README TODO
 
-install-custom:
+post-merge-modulated:
 	@echo " ==> Installing $(NAME) (custom)"
-	@( cd $(WORKSRC) ; \
-	  gmake DESTDIR=$(DESTDIR) install )
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
-	@$(foreach DOC,$(DOCLIST),ginstall -m 444 $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
+	@ginstall -m 755 -d $(PKGROOT)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),ginstall -m 444 $(WORKSRC)/$(DOC) $(PKGROOT)$(docdir)/$(NAME);)
+	@$(MAKECOOKIE)
+
+post-merge:
+	@echo " ==> Installing startup script"
+	@ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
+	@ginstall -m 755 $(FILEDIR)/cswspamass-milter $(PKGROOT)$(sysconfdir)/init.d/
+	@ginstall -m 755 $(FILEDIR)/spamass-milter.CSW $(PKGROOT)$(sysconfdir)/
 	@$(MAKECOOKIE)

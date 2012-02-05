@@ -1,0 +1,97 @@
+# This is a shell script fragment. It will be sourced by
+# /etc/opt/csw/init.d/cswspamass-milter.
+#
+# Use this file to pass flags to spamass-milter during startup.
+#
+# $Id$
+
+# path to create socket.
+#
+# Equivalent to: -p
+#
+# Default: /var/run/spamass.sock
+#SPAMASS_SOCK=/var/run/spamass.sock
+
+# Redirect spam to this mail address.  The orignal recipient(s) will
+# not receive anything.
+#
+# BUCKET and BUCKET_BCC are mutually exclusive.
+#
+# Equivalent to: -b
+#
+# Default: none
+#BUCKET=
+
+# add this mail address as a BCC recipient of spam.
+#
+# Equivalent to: -B
+#
+# BUCKET and BUCKET_BCC are mutually exclusive.
+#
+# Default: none
+#BUCKET_BCC=
+
+# Pass full email address to spamc instead of just username.  Uses
+# 'defaultdomain' if there was none.
+#
+# Equivalent to: -e
+#
+# Default: none
+#DEFAULTDOMAIN=
+
+# skip (ignore) checks from these IPs or netblocks. Example:
+#
+#  192.168.12.5,10.0.0.0/8,172.16.0.0/255.255.0.0
+#
+# Equivalent to: -i
+#
+# Default: none
+#IGNORE=
+
+# Values: any,some,ignore
+# 
+# any: don't modify the message at all (-M)
+#
+# some: don't modify body, Content-type: or Subject: (-m)
+#
+# ignore: ignore this flag, and use default behavior of spamass-milter
+#
+# Default: ignore
+#DONTMODIFY=ignore
+
+# pidfile: Put processid in pidfile
+#
+# Equivalent to: -P
+#
+# Default: /var/opt/csw/run/spamass-milter.pid
+#SPAMASS_PID=/var/opt/csw/run/spamass-milter.pid
+
+# reject messages with a score >= nn with an SMTP error. Use -1 to
+# reject any messages tagged by SA.
+#
+# Equivalent to: -r
+#
+# Default: none
+#REJECT=5
+
+# pass the recipient's username to spamc. Uses 'defaultuser' if there
+# are multiple recipients.
+#
+# Equivalent to: -u
+#
+# Default: none
+#DEFAULTUSER=
+
+# pass email address through alias and virtusertable expansion.
+#
+# Values: yes,no (yes: -x)
+#
+# Default: no
+#MAILADDR_EXPANSION=no
+
+# Pass flags to spamc.
+#
+# Equivalent to: --
+#
+# Default: none
+#SPAMC_FLAGS=
