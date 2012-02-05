@@ -260,6 +260,13 @@ class Srv4FileStats(sqlobject.SQLObject):
 
   def GetRestRepr(self):
     mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
+    # Slow subqueries, could be solved by caching in the db schema:
+    #  - self.pkginst.pkgname
+    #  - self.maintainer.full_name
+    #  - self.maintainer_email
+    #  - self.maintainer_id
+    #  - GetVendorUrl unpickles the object (very slow)
+    #  - GetSvnUrl unpickles the object (very slow)
     data = {
         'arch': self.arch.name,
         'basename': self.basename,
