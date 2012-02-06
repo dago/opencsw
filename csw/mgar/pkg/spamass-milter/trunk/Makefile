@@ -15,6 +15,7 @@ DISTFILES += spamass-milter.CSW
 DISTFILES += README.CSW
 DISTFILES += changelog.CSW
 DISTFILES += COPYING
+DISTFILES += spamass-milter.m4
 
 PATCHFILES  = 0000-Workaround-for-missing-paths.h.patch
 
@@ -54,6 +55,9 @@ post-merge:
 	@echo " ==> Installing startup script"
 	@ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
 	@ginstall -m 755 $(FILEDIR)/cswspamass-milter $(PKGROOT)$(sysconfdir)/init.d/
-	@ginstall -m 755 $(FILEDIR)/spamass-milter.CSW $(PKGROOT)$(sysconfdir)/
+	@ginstall -m 644 $(FILEDIR)/spamass-milter.CSW $(PKGROOT)$(sysconfdir)/
 	@ginstall -m 755 -d $(PKGROOT)$(localstatedir)/run
+	@echo " ==> Installing spamass-milter sendmail macor"
+	@ginstall -m 755 -d $(PKGROOT)$(sharedstatedir)/sendmail/cf/feature
+	@ginstall -m 644 $(FILEDIR)/spamass-milter.m4 $(PKGROOT)$(sharedstatedir)/sendmail/cf/feature/
 	@$(MAKECOOKIE)
