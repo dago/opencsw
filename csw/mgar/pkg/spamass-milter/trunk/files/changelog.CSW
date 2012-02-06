@@ -1,3 +1,10 @@
+spamass-milter (0.3.2,REV=2012.02.06)
+
+  * spamass-milter.m4: Added Sendmail feature macro
+
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 06 Feb 2012 22:04:52 +0100
+
+
 spamass-milter (0.3.2,REV=2012.02.05)
 
   * New upstream release 0.3.2
@@ -5,3 +12,4 @@ spamass-milter (0.3.2,REV=2012.02.05)
   * Added startup script and configuration file for startup script
 
  -- Rafael Ostertag <raos@opencsw.org>  Sun, 05 Feb 2012 15:10:36 +0100
+
