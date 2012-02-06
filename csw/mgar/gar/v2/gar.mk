@@ -999,11 +999,15 @@ imageclean:
 	@echo " ==> Removing $(COOKIEDIR)"
 	@-rm -rf $(COOKIEDIR)
 	@echo " ==> Removing $(WORKDIR)"
-	@-rm -rf $(WORKDIR)
+	@-rm -rf tmp-deleteme-workdir
+	@-mv $(WORKDIR) tmp-deleteme-workdir
+	@-rm -rf tmp-deleteme-workdir &
 
 spotless: imageclean
 	@echo " ==> Removing $(DESTDIR)"
-	@-rm -rf work
+	@-rm -rf work-old
+	@-mv work work-old
+	@-rm -rf work-old &
 
 # Print package dependencies
 PKGDEP_LIST = $(filter-out $(BUILDDEPS),$(DEPEND_LIST))
