@@ -29,11 +29,6 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
-GARCOMPILER-5.9 = SOS12
-GARCOMPILER-5.10 = SOS12
-GARCOMPILER-5.11 = SOS12U2
-GARCOMPILER = $(GARCOMPILER-$(GAROSREL))
-
 VENDOR_URL = http://people.freebsd.org/~abe/
 LICENSE = lsof-license
 
