@@ -5,6 +5,8 @@ GARTYPE = v2
 SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJ)-$(VERSION)
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DESCRIPTION = A high-level scripting language.
 define BLURB
 PHP is a widely-used Open Source general-purpose scripting language that is
