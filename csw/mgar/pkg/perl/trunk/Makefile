@@ -24,7 +24,7 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PACKAGES                 += CSWperl
 SPKG_DESC_CSWperl         = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm3
+RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm4
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
 PACKAGES                   += CSWperldoc
@@ -38,10 +38,6 @@ CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
-# We contain libperl.so and libperl.so.5.12.3
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch
-
 # Core module updates
 # Not used at the moment, leave one as example
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
@@ -54,16 +50,14 @@ DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1
+INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.12.2 5.12.3
 
 # Force use of db-4.8
 # TBD: Reinsert libperl.so, see below.
-#PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl 
 PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc
-PERL_LIBS-64 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc 
 PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL)) 
 
-BUILD64 = 1
+#BUILD64 = 1
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
@@ -129,6 +123,9 @@ EXTRA_CFLAGS = $(CPPFLAGS)
 EXTRA_LDFLAGS-32 = -L$(libdir)
 EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) 
 
+# We want 64 bit binaries
+#MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
+
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 
@@ -138,7 +135,7 @@ EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
 EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
 # Tests take a long time, run once for every release
-#TEST_SCRIPTS =
+TEST_SCRIPTS =
 
 BUILD_SCRIPTS = perl
 
@@ -158,8 +155,7 @@ PROTOTYPE_FILTER_CSWperl = ( cat; echo "i cswperlincpath=CSWperl.cswperlincpath"
 # Splitting of a separate libperl.so requires more work and careful planning.
 # Override for now.
 CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.12.3|soname=libperl.so.5.12.3|pkgname=CSWperl|expected=CSWlibperl5-12-3
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.12.4|soname=libperl.so.5.12.4|pkgname=CSWperl|expected=CSWlibperl5-12-4
 
 include gar/category.mk
 
