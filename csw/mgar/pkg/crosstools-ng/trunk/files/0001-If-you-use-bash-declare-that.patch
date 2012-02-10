@@ -1,0 +1,22 @@
+From 53ffecb08029331678e8f54d4e33cad8d7e9c6be Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 10 Feb 2012 16:51:57 +0100
+Subject: [PATCH] If you use bash, declare that.
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 6a68b38..ecd4dc0 100755
+--- a/configure
++++ b/configure
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ myname="${0##*/}"
+ 
+-- 
+1.7.8.3
+
