@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = Python
-VERSION = 2.6.6
+VERSION = 2.6.7
 CATEGORIES = lang
 GARTYPE = v2
 VER = 2.6
@@ -35,6 +35,14 @@ MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
+
+PACKAGING_PLATFORMS = solaris9_sparc solaris9_i386
+# Some features are missing on Solaris 9, e.g. functionality required for the
+# multiprocessing support.
+# http://osdir.com/ml/opensolaris-discuss/2009-07/msg00865.html
+# http://bugs.python.org/issue3770
+# It's a platform deficiency.
+PACKAGING_PLATFORMS += solaris10_sparc solaris10_i386
 
 # Patches
 PATCHFILES += faqwiz.diff
@@ -128,17 +136,17 @@ ARCHALL_CSWidle$(CVER)        = 1
 RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbdb47
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm3
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpanel5
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
