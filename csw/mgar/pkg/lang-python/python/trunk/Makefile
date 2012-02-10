@@ -41,8 +41,9 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 # multiprocessing support.
 # http://osdir.com/ml/opensolaris-discuss/2009-07/msg00865.html
 # http://bugs.python.org/issue3770
-# It's a platform deficiency.
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+# However, this bug is about better detection of SEM_VALUE_MAX in Solaris
+# http://bugs.python.org/issue3110
+# PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # Patches
 PATCHFILES += faqwiz.diff
