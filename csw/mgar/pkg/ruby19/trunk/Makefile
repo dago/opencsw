@@ -4,6 +4,8 @@ PATCHLEVEL = p0
 CATEGORIES = lang
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # Working with Jens Deppe, we've determined that the two failing tests
 # in 1.9.1p376 are bad tests (as documented here[1] and here[2]).
 # They make assumptions about kernel behaviour that don't hold for
@@ -78,6 +80,7 @@ PKGFILES_CSWruby19-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.r
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Skip-a-chmod-fileutils-test-on-solaris.patch
 PATCHFILES += 0003-Use-echo-port-instead-of-http-for-gem-server-test.patch
 
 # We define upstream file regex so we can be notifed of new upstream
