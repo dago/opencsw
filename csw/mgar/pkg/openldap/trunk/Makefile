@@ -37,6 +37,15 @@ VENDOR_URL = http://www.openldap.org
 
 LICENSE = COPYRIGHT
 
+BUILD_DEP_PKGS += CSWbdb48devel
+BUILD_DEP_PKGS += CSWlibicu-dev
+BUILD_DEP_PKGS += CSWlibtool
+BUILD_DEP_PKGS += CSWunixodbc-dev
+BUILD_DEP_PKGS += CSWsasl-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibwrap-dev
+BUILD_DEP_PKGS += CSWperl
+
 PACKAGES += CSWopenldap
 SPKG_DESC_CSWopenldap = OpenLDAP server for Lightweight Directory Access Protocol
 # PKGFILES is catchall
@@ -153,6 +162,8 @@ CONFIGURE_ARGS += --enable-slp
 CONFIGURE_ARGS += --enable-wrappers
 CONFIGURE_ARGS += --enable-backends=mod
 CONFIGURE_ARGS += --enable-overlays=mod
+CONFIGURE_ARGS += --enable-spasswd
+CONFIGURE_ARGS += --with-cyrus-sasl
 
 # Is the absence of this arg causing https://www.opencsw.org/mantis/view.php?id=4468 ?
 CONFIGURE_ARGS += --enable-dynamic
@@ -165,13 +176,6 @@ CONFIGURE_ARGS += --disable-ndb
 #   http://www.openldap.org/its/index.cgi?findid=7071
 CONFIGURE_ARGS += ac_cv_lib_net_main=no
 CONFIGURE_ARGS += ac_cv_lib_net_socket=no
-
-# spasswd requires Cyrus SASL
-CONFIGURE_ARGS_32 += --enable-spasswd
-
-# Disable Cyrus SASL in 64 bit until the libraries are available
-#   <http://opencsw.org/mantis/view.php?id=3749>
-CONFIGURE_ARGS_64 += --without-cyrus-sasl
 
 # We have Perl only for 32 bit:
 #   <http://opencsw.org/mantis/view.php?id=4484>
