@@ -1,0 +1,29 @@
+From 884a805cc4484712dc72ded825d3a8e5f399d8a6 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 11 Feb 2012 02:20:57 +0100
+Subject: [PATCH] Skip a chmod fileutils test on solaris
+
+Setting sticky bits on regular files doesn't work, so add solaris to
+the list of systems where this fileutils mode setting test is skipped.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ test/fileutils/test_fileutils.rb |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/test/fileutils/test_fileutils.rb b/test/fileutils/test_fileutils.rb
+index 70a6fb8..271a5e8 100644
+--- a/test/fileutils/test_fileutils.rb
++++ b/test/fileutils/test_fileutils.rb
+@@ -914,7 +914,7 @@ class TestFileUtils
+     # regular file. It's slightly strange. Anyway it's no effect bit.
+     # see /usr/src/sys/ufs/ufs/ufs_chmod()
+     # NetBSD and OpenBSD also denies it.
+-    if /freebsd|netbsd|openbsd/ !~ RUBY_PLATFORM
++    if /solaris|freebsd|netbsd|openbsd/ !~ RUBY_PLATFORM
+       chmod "u+t,o+t", 'tmp/a'
+       assert_equal 07500, File.stat('tmp/a').mode & 07777
+       chmod "a-t,a-s", 'tmp/a'
+-- 
+1.7.8.3
+
