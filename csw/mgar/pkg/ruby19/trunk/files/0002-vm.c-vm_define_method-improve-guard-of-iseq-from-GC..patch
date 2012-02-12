@@ -1,20 +1,23 @@
-From 8457bea9ab5394cb43f4d5019ccb8836675366ad Mon Sep 17 00:00:00 2001
-From: ngoto <ngoto@b2dd03c8-39d4-4d8f-98ff-823fe69b080e>
-Date: Sun, 18 Dec 2011 09:58:31 +0000
-Subject: [PATCH] * vm.c (vm_define_method): improve guard of iseq from GC. 
- Fix   failure or segmentation fault in
- test_singleton_method(TestGc)   on sparc Solaris10 compiled
- with Oracle Solaris Studio 12.2.   [Bug #5762]
- [ruby-dev:45000] [Bug #4178]
+From 1209f5bd59e6bf404e5a9954ef1a55db3ac68372 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 12 Feb 2012 14:52:23 +0100
+Subject: [PATCH] * vm.c (vm_define_method): improve guard of iseq from GC.
 
-git-svn-id: svn+ssh://ci.ruby-lang.org/ruby/trunk@34071 b2dd03c8-39d4-4d8f-98ff-823fe69b080e
+Fix failure or segmentation fault in test_singleton_method(TestGc) on
+sparc Solaris10 compiled with Oracle Solaris Studio 12.2.
+
+[Bug #5762] [ruby-dev:45000] [Bug #4178]
+
+git-svn-id: svn+ssh://ci.ruby-lang.org/ruby/trunk@34071b2dd03c8-39d4-4d8f-98ff-823fe69b080e
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
  ChangeLog |    7 +++++++
  vm.c      |    3 +--
  2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/ChangeLog b/ChangeLog
-index 01be941..8dd6907 100644
+index c4ea779..0dfbe0f 100644
 --- a/ChangeLog
 +++ b/ChangeLog
 @@ -1,3 +1,10 @@
@@ -25,14 +28,14 @@ index 01be941..8dd6907 100644
 +	  on sparc Solaris10 compiled with Oracle Solaris Studio 12.2.
 +	  [Bug #5762] [ruby-dev:45000] [Bug #4178]
 +
- Sun Dec 18 14:34:31 2011  Nobuyoshi Nakada  <nobu@ruby-lang.org>
+ Mon Oct 10 22:33:12 2011  KOSAKI Motohiro  <kosaki.motohiro@gmail.com>
  
- 	* ext/bigdecimal/bigdecimal.c (Init_bigdecimal): does not follow
+ 	* test/-ext-/old_thread_select/test_old_thread_select.rb:
 diff --git a/vm.c b/vm.c
-index e04a44b..67ca439 100644
+index f2cdcf5..7340a15 100644
 --- a/vm.c
 +++ b/vm.c
-@@ -1912,8 +1912,7 @@ vm_define_method(rb_thread_t *th, VALUE obj, ID id, VALUE iseqval,
+@@ -1917,8 +1917,7 @@ vm_define_method(rb_thread_t *th, VALUE obj, ID id, VALUE iseqval,
      GetISeqPtr(iseqval, miseq);
  
      if (miseq->klass) {
@@ -43,5 +46,5 @@ index e04a44b..67ca439 100644
      }
  
 -- 
-1.7.5.4
+1.7.8.3
 
