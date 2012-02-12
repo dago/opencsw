@@ -3,6 +3,25 @@ divert(-1)
 #
 # Part of CSWspamass-milter.
 #
+#
+# Use it like this in your sendmail.mc file:
+#
+#  FEATURE(`spamass-milter')dnl
+#
+# This will add the necessary configuration to use spamass-milter. It
+# expects the spamass-milter socket to be /var/run/spamass.sock.
+#
+# If your spamass-milter socket is not at the default location, add
+# something like
+#
+#  FEATURE(`spamass-milter', `<pathtosocket>')dnl
+#
+# to your sendmail.mc file. <pathtosocket> is the absolute path to the
+# spamass-milter socket.
+#
+# In any case, the filter will be called `spamass-milter'.
+#
+# Direct comments and/or suggestions to raos@opencsw.org.
 
 divert(0)
 VERSIONID(`$Id')dnl

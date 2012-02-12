@@ -1,16 +1,18 @@
 spamass-milter README.CSW
 =========================
 
-As of version 0.3.2,REV=2012.02.05, spamass-milter comes with a startup script
-for Solaris 9 and 10+ including SMF support on Solaris 10+.
+As of version 0.3.2,REV=2012.02.05, spamass-milter comes with a
+startup script for Solaris 9 and 10+ including SMF support on Solaris
+10+.
 
 You can customize spamass-milter startup options by editing
-/etc/opt/csw/spamass-milter. Please see /etc/opt/csw/spamass-milter.CSW for
-more information.
+/etc/opt/csw/spamass-milter. Please see
+/etc/opt/csw/spamass-milter.CSW for more information.
 
 Site wide configuration can be put into
-/opt/csw/etc/spamass-milter. Configuration in /etc/opt/csw/spamass-milter takes
-precedence over /opt/csw/etc/spamass-milter, though.
+/opt/csw/etc/spamass-milter. Configuration in
+/etc/opt/csw/spamass-milter takes precedence over
+/opt/csw/etc/spamass-milter, though.
 
 You can start spamass-milter on Solaris 9 by issuing
 
@@ -23,26 +25,54 @@ spamass-milter by issuing
 
  svcadm enable cswspamass-milter.
 
-The startup script will log warnings and errors to the DAEMON syslog facility.
+The startup script will log warnings and errors to the DAEMON syslog
+facility.
 
 
 Sendmail Integration
 --------------------
 
-We recommend using OpenCSW Sendmail. Solaris Sendmail has not been tested with
-spamass-milter and is not guaranteed to work.
+We recommend using OpenCSW Sendmail. Solaris Sendmail has not been
+tested with spamass-milter and is not guaranteed to work.
 
-In order to make sendmail talk to spamass-milter, add the following lines to
-your sendmail.mc file
+In order to make sendmail talk to spamass-milter, add the following
+lines to your sendmail.mc file
 
 INPUT_MAIL_FILTER(`spamassassin', `S=local:/var/run/spamass.sock, F=, T=C:15m;S:4m;R:4m;E:10m')dnl
 define(`confMILTER_MACROS_CONNECT',`t, b, j, _, {daemon_name}, {if_name}, {if_addr}')dnl
 define(`confMILTER_MACROS_HELO',`s, {tls_version}, {cipher}, {cipher_bits}, {cert_subject}, {cert_issuer}')dnl
 define(`confMILTER_MACROS_ENVRCPT',`r, v, Z')dnl
 
-and recreate sendmail.cf. For more details, please refer to the README file in
-/opt/csw/share/doc/spamass_milter.
+and recreate sendmail.cf. For more details, please refer to the README
+file in /opt/csw/share/doc/spamass_milter.
 
-Please keep in mind that spamass-milter uses Spamassassin's spamc which in turn
-talks to spamd. So, besides configuring sendmail to talk to spamass-milter you
-also need a running spamassassin installation.
+Please keep in mind that spamass-milter uses Spamassassin's spamc
+which in turn talks to spamd. So, besides configuring sendmail to talk
+to spamass-milter you also need a running spamassassin installation.
+
+
+Sendmail Feature Macro
+----------------------
+
+This package provides a Sendmail FEATURE macro, that can be used with
+the CSW Sendmail package. Add the following to your sendmail.mc file:
+
+  FEATURE(`spamass-milter')dnl
+
+and it will add the necessary configuration (see `Sendmail
+Integration' above) in order to use spamass-milter.
+
+Calling the FEATURE macro without parameter, it will expect the
+spamass-milter socket to be /var/run/spamass.sock.
+
+If your spamass-milter socket is not at the default location, add
+something like
+
+  FEATURE(`spamass-milter', `<pathtosocket>')dnl
+
+to your sendmail.mc file. <pathtosocket> is the absolute path to the
+spamass-milter socket.
+
+In any case, the filter will be called `spamass-milter'.
+
+Direct comments and/or suggestions to raos@opencsw.org.
