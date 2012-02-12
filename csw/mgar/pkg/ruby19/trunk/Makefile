@@ -136,7 +136,7 @@ PI_TARGETS  = samples rbconfig rbscripts
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
-multiconfig: RBCONFIG=/opt/csw/lib/ruby19/$(VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
+multiconfig: RBCONFIG=/opt/csw/lib/ruby/$(VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS12
@@ -151,7 +151,7 @@ multiconfig:
 # Fix up rbconfig
 rbconfig:
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/$(NAME)/$(VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
+		$(DESTDIR)$(libdir)/ruby/$(VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Copy samples
