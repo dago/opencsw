@@ -4,6 +4,9 @@ PATCHLEVEL = p0
 CATEGORIES = lang
 GARTYPE = v2
 
+# patchfile 0002-vm.c... is a backport from upstream
+VERSION_FLAG_PATCH = 1
+
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # Working with Jens Deppe, we've determined that the two failing tests
@@ -81,6 +84,7 @@ MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-Skip-a-chmod-fileutils-test-on-solaris.patch
+PATCHFILES += 0002-vm.c-vm_define_method-improve-guard-of-iseq-from-GC..patch
 PATCHFILES += 0003-Use-echo-port-instead-of-http-for-gem-server-test.patch
 
 # We define upstream file regex so we can be notifed of new upstream
