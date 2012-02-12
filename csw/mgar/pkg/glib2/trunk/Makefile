@@ -30,6 +30,8 @@ PATCHFILES += 0001-Disable-inf-nan-mini-test.patch
 PATCHFILES += 0002-Replace-sh-by-svcs-in-utils-find-program.patch
 # Patch from glib-2.28.8
 PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
+# Disabled. Need to report, but wait on outcome on x86.
+PATCHFILES += 0004-Disable-check-glib-642026-ec.patch
 
 # PATCHFILES = 0001-Use-proper-locale-for-collate-tests.patch
 
@@ -153,7 +155,8 @@ OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
 
 
-BUILD_DEP_PKGS = CSWggettext CSWlibpcre-dev CSWlibiconv-dev CSWlibffi5
+BUILD_DEP_PKGS = CSWggettext CSWlibiconv-dev CSWlibffi-dev
+BUILD_DEP_PKGS += CSWlibdbus-dev CSWlibgamin-dev
 # To make the tests working
 BUILD_DEP_PKGS += CSWpython CSWdbuspython CSWsharedmimeinfo
 # This is used to adjust paths in documentation
@@ -163,7 +166,7 @@ BUILD_DEP_PKGS += CSWgsed
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
-EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6
+EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 
 
 #EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
 #EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
@@ -178,14 +181,15 @@ CONFIGURE_ARGS += --with-pcre=included
 CONFIGURE_ARGS += --enable-included-printf
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --with-threads=posix
+CONFIGURE_ARGS += --disable-silent-rules
 # CONFIGURE_ARGS += --enable-static
 
 # DTrace compilation fails, disable for now
 CONFIGURE_ARGS += --disable-dtrace
 
 # DEBUGGING
-# CONFIGURE_ARGS += --enable-debug=yes
-# EXTRA_CFLAGS += -xO0 -g
+CONFIGURE_ARGS += --enable-debug=yes
+EXTRA_CFLAGS += -xO0 -g
 
 # Those are to make the checks work
 EXTRA_COMMON_EXPORTS = TZ
