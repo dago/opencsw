@@ -100,7 +100,7 @@ CONFIGURE_ARGS += --enable-shared
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 
-GARCOMPILER = GCC4
+#GARCOMPILER = GCC4
 # RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
 # RUNTIME_DEP_PKGS_CSWruby19-dev += CSWgcc4core
 # # This is for rbconfig.rb: without this, modules built may not get a
@@ -112,6 +112,14 @@ GARCOMPILER = GCC4
 # endif
 
 include gar/category.mk
+
+# these are after the include so GARCH is set.
+# attempting to get a usable build on sparc:
+# i think we're fighting a byte alignment issue
+ifeq ($(GARCH),sparc)
+EXTRA_CFLAGS = -xmemalign=1i
+endif
+
 
 SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
