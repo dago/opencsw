@@ -37,7 +37,7 @@ CONFIGURE_ARGS-isa-sparcv9 = $(DIRPATHS) --enable-shared --enable-pic --disable-
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-isa-$(ISA))
 
 RUNTIME_DEP_PKGS_CSWlibx264-120 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWx264-dev += CSWlibx264-120
+RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-120
 
 PACKAGES += CSWx264
 SPKG_DESC_CSWx264 = $(DESCRIPTION)
@@ -49,14 +49,15 @@ PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.120)
 PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.120(\.\d+)*)
 SPKG_DESC_CSWlibx264-120 += $(DESCRIPTION), libx264.so.120
 
-PACKAGES += CSWx264-dev
-CATALOGNAME_CSWx264-dev = x264_dev
-SPKG_DESC_CSWx264-dev += $(DESCRIPTION), development files
-PKGFILES_CSWx264-dev += /opt/csw/lib/libx264.so
-PKGFILES_CSWx264-dev += $(PKGFILES_DEVEL)
+PACKAGES += CSWlibx264-dev
+CATALOGNAME_CSWlibx264-dev = libx264_dev
+SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
+PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
 
 #Some overrides
 CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
+CHECKPKG_OVERRIDES_CSWlibx264-120 += pkginfo-description-not-starting-with-uppercase
 # seems to be checkpkg bug:
 CHECKPKG_OVERRIDES_CSWlibx264-120 += non-uniform-lib-versions-in-package|sonames=libx264.so.120
 
