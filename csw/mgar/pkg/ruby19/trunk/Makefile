@@ -44,22 +44,17 @@ ARCHALL_CSWruby19-samples = 1
 ARCHALL_CSWruby19-ri = 1
 
 # checkpkg overrides
-CHECKPKG_OVERRIDES_CSWruby19-dev += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19-dev += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby19-samples += surplus-dependency|CSWruby19
-CHECKPKG_OVERRIDES_CSWruby19-tk += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19-tk += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19-ri += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19-tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
 CHECKPKG_OVERRIDES_CSWruby19-tk += soname-not-found|libruby19.so
 CHECKPKG_OVERRIDES_CSWruby19 += soname-not-found|libruby19.so
 
-RUNTIME_DEP_PKGS_CSWruby19 = CSWgdbm CSWiconv CSWncurses CSWosslrt
-RUNTIME_DEP_PKGS_CSWruby19 += CSWreadline CSWzlib
+RUNTIME_DEP_PKGS_CSWruby19 = CSWlibgdbm4 CSWlibiconv2 CSWncurses CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWruby19 += CSWlibreadline6 CSWlibz1 CSWlibffi4
 RUNTIME_DEP_PKGS_CSWruby19-samples = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19-tk = CSWruby19 CSWtk CSWtcl
 RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby19
