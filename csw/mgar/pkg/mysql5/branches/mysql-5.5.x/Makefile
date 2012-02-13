@@ -143,7 +143,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 
-PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
+# PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 
 # Enable 64 bits build
 BUILD64 = 1
