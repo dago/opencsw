@@ -15,7 +15,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.tortall.net/projects/yasm/releases/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
+
+VENDOR_URL = http://yasm.tortall.net/
 
 RUNTIME_DEP_PKGS_CSWyasm += CSWlibintl8
 
