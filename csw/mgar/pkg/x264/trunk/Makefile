@@ -32,6 +32,8 @@ BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS-isa-pentium_pro = $(DIRPATHS) --enable-shared --enable-pic
 CONFIGURE_ARGS-isa-amd64 = $(DIRPATHS) --enable-shared --enable-pic --host=amd64-pc-solaris2.10
+CONFIGURE_ARGS-isa-sparcv8plus = $(DIRPATHS) --enable-shared --enable-pic --disable-asm
+CONFIGURE_ARGS-isa-sparcv9 = $(DIRPATHS) --enable-shared --enable-pic --disable-asm
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-isa-$(ISA))
 
 RUNTIME_DEP_PKGS_CSWlibx264-120 += CSWlibgcc-s1
