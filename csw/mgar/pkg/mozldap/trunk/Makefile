@@ -118,6 +118,7 @@ CATALOGNAME_CSWmozldap-dev = mozldap_dev
 SPKG_DESC_CSWmozldap-dev += $(DESCRIPTION), development files
 PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWmozldap-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
+PKGFILES_CSWmozldap-dev = $(PKGFILES_DEVEL_PKGCONFIG)
 ARCHALL_CSWmozldap-dev = 1
 RUNTIME_DEP_PKGS_CSWmozldap-dev += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSWmozldap-dev += CSWlibprldap60
