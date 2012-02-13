@@ -353,7 +353,8 @@ post-merge:
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/$(NAME)/doc
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README-$(BASE_VERSION).CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README-$(BASE_VERSION).CSW
-	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
+	[ -d $(PKGROOT)$(datadir)/mysql55 ]
+	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql55
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
