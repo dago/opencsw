@@ -1,0 +1,121 @@
+From 1ce453bb7c5c0814c90a8dbc5addf2b1d2aa8f60 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Tue, 14 Feb 2012 11:09:15 +0100
+Subject: [PATCH] fix_a_few_shells
+
+---
+ libavcodec/codec_names.sh    |    2 +-
+ tests/codec-regression.sh    |    2 +-
+ tests/copycooker.sh          |    2 +-
+ tests/fate-run.sh            |    2 +-
+ tests/fate-update.sh         |    2 +-
+ tests/fate.sh                |    2 +-
+ tests/ffserver-regression.sh |    2 +-
+ tests/lavf-regression.sh     |    2 +-
+ tests/lavfi-regression.sh    |    2 +-
+ tests/regression-funcs.sh    |    2 +-
+ 10 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/libavcodec/codec_names.sh b/libavcodec/codec_names.sh
+index 0e499c9..89ccd45 100755
+--- a/libavcodec/codec_names.sh
++++ b/libavcodec/codec_names.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ # Copyright (c) 2011 Nicolas George
+ #
+diff --git a/tests/codec-regression.sh b/tests/codec-regression.sh
+index 7676074..8362677 100755
+--- a/tests/codec-regression.sh
++++ b/tests/codec-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # automatic regression test for avconv
+ #
+diff --git a/tests/copycooker.sh b/tests/copycooker.sh
+index 4b5811d..9b0f125 100755
+--- a/tests/copycooker.sh
++++ b/tests/copycooker.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ LC_ALL=C
+ export LC_ALL
+diff --git a/tests/fate-run.sh b/tests/fate-run.sh
+index 350ff57..ae5be45 100755
+--- a/tests/fate-run.sh
++++ b/tests/fate-run.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ 
+ export LC_ALL=C
+ 
+diff --git a/tests/fate-update.sh b/tests/fate-update.sh
+index 6b4668f..bc356fe 100755
+--- a/tests/fate-update.sh
++++ b/tests/fate-update.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ 
+ set -e
+ 
+diff --git a/tests/fate.sh b/tests/fate.sh
+index e04c871..2a75ef5 100755
+--- a/tests/fate.sh
++++ b/tests/fate.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ 
+ config=$1
+ 
+diff --git a/tests/ffserver-regression.sh b/tests/ffserver-regression.sh
+index 11e4a54..2e1c474 100755
+--- a/tests/ffserver-regression.sh
++++ b/tests/ffserver-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ #perl -e 'chomp($wd = `pwd`); print map { s!tests/data/!!; "<Stream $_>\nFile $wd/tests/data/$_\n</Stream>\n\n" } @ARGV' tests/data/a* >> tests/data/ffserver.conf
+ #perl -e 'chomp($wd = `pwd`); print map { s!tests/data/!!; "<Stream $_.asf>\nFile $wd/tests/data/$_\n</Stream>\n\n" } @ARGV' tests/data/a* >> tests/data/ffserver.conf
+diff --git a/tests/lavf-regression.sh b/tests/lavf-regression.sh
+index f2b2624..d2b6168 100755
+--- a/tests/lavf-regression.sh
++++ b/tests/lavf-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # automatic regression test for libavformat
+ #
+diff --git a/tests/lavfi-regression.sh b/tests/lavfi-regression.sh
+index 74e5373..8d3a660 100755
+--- a/tests/lavfi-regression.sh
++++ b/tests/lavfi-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # automatic regression test for libavfilter
+ #
+diff --git a/tests/regression-funcs.sh b/tests/regression-funcs.sh
+index b0a9b85..c7d59e3 100755
+--- a/tests/regression-funcs.sh
++++ b/tests/regression-funcs.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # common regression functions for avconv
+ #
+-- 
+1.7.9
+

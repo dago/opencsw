@@ -8,7 +8,7 @@
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
 
 NAME = ffmpeg
-VERSION = 0.8.6
+VERSION = 0.9.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -23,7 +23,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 
 PATCHFILES += 0001-fix-version.sh.patch
 PATCHFILES += 0002-change-linker-flags.patch
-PATCHFILES += 0003-fix-testsuite-shells.patch
+PATCHFILES += 0003-fix_a_few_shells.patch
 
 LICENSE = COPYING.GPLv3
 
@@ -38,10 +38,11 @@ PKGFILES_CSWlibavcodec53 += $(call pkgfiles_lib,libavcodec.so.53)
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibavfilter2
+RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibtheoradec1
@@ -55,7 +56,7 @@ RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibavformat53
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibavcodec53
@@ -63,7 +64,7 @@ RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibtheoraenc1
-RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibspeex1
 
 PACKAGES += CSWlibavfilter2
@@ -74,12 +75,12 @@ RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavcodec53
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibspeex1
@@ -92,10 +93,10 @@ RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibavcodec53
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibtheoradec1
@@ -107,11 +108,11 @@ SPKG_DESC_CSWlibavutil51 = FFMPEG library libavutil.so.51
 PKGFILES_CSWlibavutil51 += $(call pkgfiles_lib,libavutil.so.51)
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibvorbisenc2
-RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibspeex1
@@ -123,10 +124,10 @@ PKGFILES_CSWlibpostproc51 += $(call pkgfiles_lib,libpostproc.so.51)
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibtheoradec1
@@ -139,15 +140,32 @@ PKGFILES_CSWlibswscale2 += $(call pkgfiles_lib,libswscale.so.2)
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibspeex1
+
+PACKAGES += CSWlibswresample0
+SPKG_DESC_CSWlibswresample0 = FFMPEG library libswresample.so.0
+PKGFILES_CSWlibswresample0 += $(call pkgfiles_lib,libswresample.so.0)
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibtheoraenc1
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibspeex1
+
 
 PACKAGES += CSWffmpeg-dev
 SPKG_DESC_CSWffmpeg-dev = Development files for several FFMPEG shared libraries
@@ -159,6 +177,8 @@ RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavformat53
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavutil51
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibpostproc51
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibswscale2
+RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibswresample0
+
 
 PACKAGES += CSWffmpeg
 SPKG_DESC_CSWffmpeg = Very fast video and audio converter
@@ -168,12 +188,13 @@ RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibz1
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavcodec53
-RUNTIME_DEP_PKGS_CSWffmpeg += CSWftype2
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavdevice53
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibswresample0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibtheoradec1
@@ -202,11 +223,11 @@ NODIRPATHS += --sysconfdir
 NODIRPATHS += --sharedstatedir
 
 #EXTRA_CFLAGS-64 += -xcode=pic32
-EXTRA_CFLAGS-64 += -fPIC
-EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(MEMORYMODEL))
+#EXTRA_CFLAGS-64 += -fPIC
+#EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(MEMORYMODEL))
 
-EXTRA_CXXFLAGS-64 += -fPIC
-EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(MEMORYMODEL))
+#EXTRA_CXXFLAGS-64 += -fPIC
+#EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(MEMORYMODEL))
 
 CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --bindir=$(bindir)
@@ -220,10 +241,15 @@ CONFIGURE_ARGS += --enable-gpl
 CONFIGURE_ARGS += --enable-version3
 CONFIGURE_ARGS += --enable-runtime-cpudetect
 
-# All ASM code is broke no clue if it yasm that breaks it or solaris in gerneral. As it is disabled in pkgsrc too probably a global problem.
-CONFIGURE_ARGS += --disable-asm
+#Needs sse to get asm stuff to work on x86
+CONFIGURE_ARGS_i386 += --extra-cflags="-mfpmath=sse -msse"
+CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
+#no asm on sparc
+CONFIGURE_ARGS_sparc = --disable-asm
 
-# Needs two builds one shared one static
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+
+# Needs two builds one shared one static maybe in the future
 #CONFIGURE_ARGS-SHARED-yes += --enable-shared
 #CONFIGURE_ARGS += $(CONFIGURE_ARGS-SHARED-$(SHARED))
 
@@ -238,6 +264,7 @@ CONFIGURE_ARGS += --enable-libspeex
 # No libtheora
 CONFIGURE_ARGS += --enable-libtheora
 CONFIGURE_ARGS += --enable-libvorbis
+#CONFIGURE_ARGS += --enable-libx264
 
 # Tests only work with static build
 #SKIPTEST-SHARED-yes = 1
