@@ -15,7 +15,7 @@ BASEDIR="${prefix}"
 MYSQL_HOME="/var${prefix}/mysql5"
 sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
-DEFAULTS_FILE="${prefix}/share/mysql/5.0/mysql/my-small.cnf"
+DEFAULTS_FILE="${prefix}/share/mysql/my-small.cnf"
 MYSQLD_USER="mysql"
 # Provide the default data directory
 MYSQLD_DATADIR="${MYSQL_HOME}"
@@ -64,7 +64,7 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-"$BASEDIR/bin/mysql_install_db-5.0" \
+"$BASEDIR/bin/mysql_install_db" \
     --defaults-extra-file="$DEFAULTS_FILE" \
     --user="$MYSQLD_USER" \
     --basedir="$BASEDIR" \
