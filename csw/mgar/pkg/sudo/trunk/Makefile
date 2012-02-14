@@ -1,6 +1,5 @@
 # $Id$
 #
-# Make sudo-ldap with AUXV-linkage of /opt/csw/libexec/sudoers.so, which is the file differing between minimal and ldap
 
 NAME = sudo
 VERSION = 1.8.3p2
@@ -20,30 +19,21 @@ endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES += $(DISTNAME).tar.gz 
+DISTFILES += sudo.conf.CSW
 
 LICENSE = doc/LICENSE
 
 VENDOR_URL = http://www.sudo.ws
-
-LDAP_DOCFILES += $(docdir)/sudo/README.LDAP
-LDAP_DOCFILES += $(docdir)/sudo/schema.ActiveDirectory
-LDAP_DOCFILES += $(docdir)/sudo/schema.OpenLDAP
-LDAP_DOCFILES += $(docdir)/sudo/schema.iPlanet
-LDAP_DOCFILES += $(docdir)/sudo/sudoers2ldif
-
-LDAP_MANFILES += $(mandir)/man4/sudoers.ldap.4
 
 PACKAGES += CSWsudo
 SPKG_DESC_CSWsudo = Provides limited super user privileges
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWsudo += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsudo += CSWlibz1
-# Logical dependency, no tracking via checkpkg
-RUNTIME_DEP_PKGS_CSWsudo += CSWsudo-common
-CHECKPKG_OVERRIDES_CSWsudo += surplus-dependency|CSWsudo-common
 OBSOLETED_BY_CSWsudo = CSWsudo-common
 
 # These are just docs
+CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1m/sudo.1m
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1m/sudoedit.1m
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/man/man4/sudoers.4
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sudo/UPGRADE
@@ -52,19 +42,35 @@ CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/shar
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sudo/ChangeLog
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/etc/opt/csw/sudoers.CSW
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/share|root/opt/csw/share/doc/sudo/ChangeLog
-CHECKPKG_OVERRIDES_CSWsudo += pkginfo-opencsw-repository-uncommitted
+
+# This is a private library
 CHECKPKG_OVERRIDES_CSWsudo += soname-not-part-of-filename|soname=libsudo_noexec.so|filename=sudo_noexec.so
+
+LDAP_DOCFILES += $(docdir)/sudo/README.LDAP
+LDAP_DOCFILES += $(docdir)/sudo/schema.ActiveDirectory
+LDAP_DOCFILES += $(docdir)/sudo/schema.OpenLDAP
+LDAP_DOCFILES += $(docdir)/sudo/schema.iPlanet
+LDAP_DOCFILES += $(docdir)/sudo/sudoers2ldif
+LDAP_MANFILES += $(mandir)/man4/sudoers.ldap.4
 
 PACKAGES += CSWsudo-ldap
 SPKG_DESC_CSWsudo-ldap = LDAP bindings for SUDO
-PKGFILES_CSWsudo-ldap  = $(bindir)/sudo\.ldap
-PKGFILES_CSWsudo-ldap += $(bindir)/sudoedit\.ldap
-PKGFILES_CSWsudo-ldap += $(LDAP_MANFILES)
+PKGFILES_CSWsudo-ldap += $(libexecdir)/sudoers-ldap.so
 PKGFILES_CSWsudo-ldap += $(LDAP_DOCFILES)
+PKGFILES_CSWsudo-ldap += $(LDAP_MANFILES)
 RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibz1
+# This logical dependency can not be tracked via checkpkg
 RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWsudo
+CHECKPKG_OVERRIDES_CSWsudo-ldap += surplus-dependency|CSWsudo
 OBSOLETED_BY_CSWsudo-ldap += CSWsudoldap
 CATALOGNAME_CSWsudoldap = sudo_ldap_stub
+CHECKPKG_OVERRIDES_CSWsudo-ldap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sudo/README.LDAP
+
+# This is a private library
+CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-not-part-of-filename|soname=sudoers.so|filename=sudoers-ldap.so
 
 LOGPATH    = $(localstatedir)/log/sudo
 TIMEPATH   = $(localstatedir)/sudo
@@ -115,28 +121,20 @@ PROTOTYPE_GROUP_iodir = bin
 MERGE_SCRIPTS_isa-default-ldap-disabled = copy-all
 MERGE_SCRIPTS_isa-default-ldap-enabled = copy-all
 
-EXTRA_PAX_ARGS_LDAP-disabled += -s ',($(bindir)/sudo.*),$$1.minimal,'
-EXTRA_PAX_ARGS_LDAP-enabled += -s ',($(bindir)/sudo.*),$$1.ldap,'
+EXTRA_PAX_ARGS_LDAP-enabled += -s ',($(libexecdir))/sudoers.so,$$1/sudoers-ldap.so,'
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_LDAP-$(LDAP))
 
 MIGRATE_FILES_CSWsudo += sudoers
 
 PRESERVECONF += $(sysconfdir)/sudoers
-
-ALTERNATIVES_CSWsudo += minimal
-ALTERNATIVE_minimal += $(bindir)/sudo sudo $(bindir)/sudo.minimal 50
-ALTERNATIVE_minimal += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.minimal
-
-ALTERNATIVES_CSWsudo-ldap += ldap
-ALTERNATIVE_ldap += $(bindir)/sudo sudo $(bindir)/sudo.ldap 60
-ALTERNATIVE_ldap += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.ldap
+PRESERVECONF += $(sysconfdir)/sudo.conf
 
 include gar/category.mk
 
 post-install-modulated:
-	#@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.minimal )
-	#@( cd $(DESTDIR)$(bindir) ; gmv sudoedit sudoedit.minimal )
-	@ginstall -d $(DESTDIR)$(IOLOGPATH)
-	@ginstall -d $(DESTDIR)$(TIMEPATH)
+	ginstall -d $(DESTDIR)$(IOLOGPATH)
+	ginstall -d $(DESTDIR)$(TIMEPATH)
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall $(WORKDIR)/sudo.conf.CSW $(DESTDIR)$(sysconfdir)
 	@$(MAKECOOKIE)
 
