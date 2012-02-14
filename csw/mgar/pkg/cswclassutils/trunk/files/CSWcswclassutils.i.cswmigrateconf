@@ -262,7 +262,7 @@ while read confsrc confdst ; do
       elif [ -f "${archpath}" ]; then
         debug cp "${archpath}" "${dstpath}"
         mkdir -p "${PKG_INSTALL_ROOT}${dstdir}"
-        cp "${archpath}" "${dstpath}"
+        cp -p "${archpath}" "${dstpath}"
       else
         echo "WARNING: ${archpath} is neither a file or directory."
       fi

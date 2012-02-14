@@ -1,7 +1,7 @@
 # $HeadURL$
 
 NAME = cswclassutils
-VERSION = 1.45
+VERSION = 1.47
 CATEGORIES = utils
 GARTYPE = v2
 
