@@ -1,0 +1,89 @@
+From b30b1b21d6becceaf2fe18f646e14c4953c72d2a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 14 Feb 2012 11:41:10 +0100
+Subject: [PATCH] Add substitutes for err, errx, warn, warnx
+
+---
+ err.c |   34 ++++++++++++++++++++++++++++++++++
+ err.h |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 0 deletions(-)
+ create mode 100644 err.c
+ create mode 100644 err.h
+
+diff --git a/err.c b/err.c
+new file mode 100644
+index 0000000..52af1c6
+--- /dev/null
++++ b/err.c
+@@ -0,0 +1,34 @@
++/*
++ * emulations of common functions from err.h
++ * Fabian Groffen <grobian@xxxxxxxxxx>
++ */
++
++#include <stdio.h>
++#include <stdarg.h>
++#include <string.h>
++#include <errno.h>
++
++#include "err.h"
++
++extern char **__xargv;
++
++void
++errmsg(char doexit, int excode, char adderr, const char *fmt, ...)
++{
++	fprintf(stderr, "%s: ", *__xargv);
++	if (fmt != NULL) {
++		va_list argp;
++		va_start(argp, fmt);
++		vfprintf(stderr, fmt, argp);
++		va_end(argp);
++		if (adderr)
++			fprintf(stderr, ": ");
++	}
++	if (adderr)
++		fprintf(stderr, "%s", strerror(errno));
++	fprintf(stderr, "\n");
++	if (doexit)
++		exit(excode);
++}
++
++
+diff --git a/err.h b/err.h
+new file mode 100644
+index 0000000..7d03c75
+--- /dev/null
++++ b/err.h
+@@ -0,0 +1,28 @@
++/*
++ * emulations of common functions from err.h
++ * Fabian Groffen <grobian@xxxxxxxxxx>
++ */
++
++#ifndef REPLACEMENT_ERR_H
++#define REPLACEMENT_ERR_H 1
++
++void errmsg(char doexit, int excode, char adderr, const char *fmt, ...);
++
++#ifndef HAVE_ERR
++# define err(E, FMT...) errmsg(1, E, 1, FMT)
++#endif
++
++#ifndef HAVE_ERRX
++# define errx(E, FMT...) errmsg(1, E, 0, FMT)
++#endif
++
++#ifndef HAVE_WARN
++# define warn(FMT...) errmsg(0, 0, 1, FMT)
++#endif
++
++#ifndef HAVE_WARNX
++# define warnx(FMT...) errmsg(0, 0, 0, FMT)
++#endif
++
++#endif
++
+-- 
+1.7.9
+
