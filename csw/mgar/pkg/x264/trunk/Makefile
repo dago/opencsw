@@ -30,9 +30,11 @@ SKIPTEST = 1
 BUILD64_LIBS_ONLY = 1
 
 
-CONFIGURE_ARGS-isa-pentium_pro = $(DIRPATHS) --enable-shared --enable-pic
-CONFIGURE_ARGS-isa-amd64 = $(DIRPATHS) --enable-shared --enable-pic --host=amd64-pc-solaris2.10
-CONFIGURE_ARGS-isa-sparcv8plus = $(DIRPATHS) --enable-shared --enable-pic --disable-asm
+#More info on mimpure-text: http://blogs.everycity.co.uk/alasdair/2009/05/text-relocation-remains-against-symbol-libx264/
+
+CONFIGURE_ARGS-isa-pentium_pro = $(DIRPATHS) --enable-shared --extra-ldflags="-mimpure-text -lrt"
+CONFIGURE_ARGS-isa-amd64 = $(DIRPATHS) --enable-shared --extra-ldflags="-mimpure-text -lrt" --host=amd64-pc-solaris2.10
+CONFIGURE_ARGS-isa-sparcv8plus = $(DIRPATHS) --enable-shared --extra-ldflags="-mimpure-text -lrt" --disable-asm
 CONFIGURE_ARGS-isa-sparcv9 = $(DIRPATHS) --enable-shared --enable-pic --disable-asm
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-isa-$(ISA))
 
