@@ -26,7 +26,6 @@ BASE_VERSION="@BASE_VERSION@"
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
 CONFFILE=${sysconfdir}/my.cnf
-MYSQLD_PROG=${MYSQLD_PROG:-mysqld-${BASE_VERSION}}
 
 # Source the configuration
 [ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
@@ -98,8 +97,7 @@ start_it() {
     #    fi
 
     # 2006-04-16  --defaults-file is changed to --defaults-extra-file
-    ${BINDIR}/mysqld_safe-${BASE_VERSION} \
-        --mysqld-version=${BASE_VERSION} \
+    ${BINDIR}/mysqld_safe \
         `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
         --pid-file=$MYSQLD_PID_FILE \
         `[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \
