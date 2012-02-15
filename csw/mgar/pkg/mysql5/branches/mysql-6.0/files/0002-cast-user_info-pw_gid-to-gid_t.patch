@@ -1,0 +1,27 @@
+From 8536f5925a96634950decd8779b2c6a60d183134 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Wed, 16 Sep 2009 01:29:57 +0100
+Subject: [PATCH 2/4] cast user_info->pw_gid to gid_t
+
+---
+ sql/mysqld.cc |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/sql/mysqld.cc b/sql/mysqld.cc
+index 592ae3e..695fbb9 100644
+--- a/sql/mysqld.cc
++++ b/sql/mysqld.cc
+@@ -1436,7 +1436,9 @@ static void set_user(const char *user, struct passwd *user_info_arg)
+     output a specific message to help the user resolve this problem.
+   */
+   calling_initgroups= TRUE;
+-  initgroups((char*) user, user_info_arg->pw_gid);
++/* Solaris patch */
++/*  initgroups((char*) user, user_info->pw_gid); */
++  initgroups((char*) user,(gid_t) user_info->pw_gid);
+   calling_initgroups= FALSE;
+ #endif
+   if (setgid(user_info_arg->pw_gid) == -1)
+-- 
+1.6.3.2
+
