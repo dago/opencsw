@@ -3,7 +3,7 @@
 # $Id$
 
 PROJ_NAME = mysql
-NAME = $(PROJ_NAME)51
+NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.1
 PATCHLEVEL = 59
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
@@ -21,21 +21,16 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# Change prefix to /opt/csw/$(NAME)
-prefix = $(BUILD_PREFIX)/$(NAME)
-localstatedir = /var$(prefix)
-sysconfdir = /etc$(prefix)
-libdir = $(BUILD_PREFIX)/lib
-includedir = $(BUILD_PREFIX)/include
-
-# Where to put the init script
-global_sysconfdir = /etc$(BUILD_PREFIX)
-# Where to link the binaries
-global_bindir = $(BUILD_PREFIX)/bin
-
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
+# Existing databases are in this location
+localstatedir = /var$(BUILD_PREFIX)/$(NAME)
+# To avoid file conflicts
+# datadir = $(prefix)/share/mysql/$(BASE_VERSION)
+
 MYSQL_LIB_VER = 16
+
+MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(sbindir) $(libexecdir)
 
 PACKAGES += CSWmysql-dev
 SPKG_DESC_CSWmysql-dev = MySQL development files
@@ -56,29 +51,14 @@ PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWosslrt
 OBSOLETED_BY_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWosslrt
 OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
-PACKAGES += CSW$(NAME)client
-SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
-RPKGFILES_CSW$(NAME)client  = $(bindir)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
-CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
 CSW$(NAME)client_programs += myisamlog
@@ -97,6 +77,19 @@ CSW$(NAME)client_programs += mysqlshow
 CSW$(NAME)client_programs += mysql_zap
 CSW$(NAME)client_programs += perror
 CSW$(NAME)client_programs += replace
+PACKAGES += CSW$(NAME)client
+SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
+RPKGFILES_CSW$(NAME)client  = $(bindir)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
+CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
