@@ -256,7 +256,11 @@ CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
 #no asm on sparc
 CONFIGURE_ARGS_sparc = --disable-asm
 
+#sparcv9 needs --enable-pic
+CONFIGURE_ARGS_sparcv9 += --enable-pic
+
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(ISA))
 
 # Needs two builds one shared one static maybe in the future
 #CONFIGURE_ARGS-SHARED-yes += --enable-shared
