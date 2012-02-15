@@ -129,14 +129,14 @@ echo "###  The following messages are from quick_start-csw."
 echo "See /opt/csw/share/mysql/doc/README.CSW for packaging changes."
 echo "Please ignore references to starting mysqld_safe in the messages above."
 echo "  These messages are from mysql_install_db.  See the following"
-echo "  for starting CSWmysql55."
+echo "  for starting CSWmysql5."
 smf=no
 if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
 if [ $smf = yes ]
 then
-    echo "To start mysqld; run \`svcadm enable cswmysql55\` on Solaris 10 or later"
+    echo "To start mysqld; run \`svcadm enable cswmysql5\` on Solaris 10 or later"
 else
-    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql55 start\` on Solaris 9 or earlier"
+    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql start\` on Solaris 9 or earlier"
 fi
 
 exit 0

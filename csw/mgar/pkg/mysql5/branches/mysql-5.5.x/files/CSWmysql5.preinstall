@@ -4,7 +4,7 @@
 # $Id$
 #
 
-obsolete_directories="/opt/csw/mysql51/var:/var/opt/csw/mysql51"
+obsolete_directories="/opt/csw/mysql5/var:/var/opt/csw/mysql5"
 
 obsolete_dir_information="
 This directory is obsolete.  Files in this directory are going to be ignored.
