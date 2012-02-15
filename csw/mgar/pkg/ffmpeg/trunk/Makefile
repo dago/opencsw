@@ -264,7 +264,7 @@ CONFIGURE_ARGS += --enable-libspeex
 # No libtheora
 CONFIGURE_ARGS += --enable-libtheora
 CONFIGURE_ARGS += --enable-libvorbis
-#CONFIGURE_ARGS += --enable-libx264
+CONFIGURE_ARGS += --enable-libx264
 
 # Tests only work with static build
 #SKIPTEST-SHARED-yes = 1
