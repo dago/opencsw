@@ -149,36 +149,18 @@ GARCOMPILER = SUN
 SOS12_LD_FLAGS =
 endif
 
-# Transitional overrides.  Once the packages with 18 in the names are
-# released, these can be removed...oh and checkpkg will need a tweak too
-CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby18-doc += surplus-dependency|CSWruby18
-CHECKPKG_OVERRIDES_CSWruby18-dev += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby18 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWruby18-dev += surplus-dependency|CSWcoreutils
-CHECKPKG_OVERRIDES_CSWruby18-dev += surplus-dependency|CSWruby18
-CHECKPKG_OVERRIDES_CSWruby18-tk += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby18-tk += surplus-dependency|CSWruby18
-CHECKPKG_OVERRIDES_CSWruby18 += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWrubydev += archall-devel-package
-# End of transitional overrides.
-
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
-
-CHECKPKG_OVERRIDES_CSWruby18-gcc4 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWruby18-gcc4 += surplus-dependency|CSWgcc4core
-
-CHECKPKG_OVERRIDES_CSWruby18 += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWrubydev += archall-devel-package
 
 # usr/local overrides
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby18.1
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/bin/ri18
 CHECKPKG_OVERRIDES_CSWruby18-doc += file-with-bad-content
-
-CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/1.8/tk/dialog.rb
-CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itcl/setup.rb
-CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itk/setup.rb
 
 include gar/category.mk
 
