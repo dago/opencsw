@@ -29,6 +29,8 @@ GARCOMPILER = GCC4
 SKIPTEST = 1
 BUILD64_LIBS_ONLY = 1
 
+BUILD_DEP_PKGS += CSWffmpeg-dev
+
 
 #More info on mimpure-text: http://blogs.everycity.co.uk/alasdair/2009/05/text-relocation-remains-against-symbol-libx264/
 
@@ -38,24 +40,28 @@ CONFIGURE_ARGS-isa-sparcv8plus = $(DIRPATHS) --enable-shared --extra-ldflags="-m
 CONFIGURE_ARGS-isa-sparcv9 = $(DIRPATHS) --enable-shared --enable-pic --disable-asm
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-isa-$(ISA))
 
-RUNTIME_DEP_PKGS_CSWlibx264-120 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-120
 
 PACKAGES += CSWx264
 SPKG_DESC_CSWx264 = $(DESCRIPTION)
 # PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWx264 += CSWlibavformat53
+RUNTIME_DEP_PKGS_CSWx264 += CSWlibavcodec53
+RUNTIME_DEP_PKGS_CSWx264 += CSWlibswscale2
+RUNTIME_DEP_PKGS_CSWx264 += CSWlibavutil51
 
 PACKAGES += CSWlibx264-120
 CATALOGNAME_CSWlibx264-120 = libx264_120
 PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.120)
 PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.120(\.\d+)*)
 SPKG_DESC_CSWlibx264-120 += $(DESCRIPTION), libx264.so.120
+RUNTIME_DEP_PKGS_CSWlibx264-120 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
 CATALOGNAME_CSWlibx264-dev = libx264_dev
 SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
 PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-120
 
 #Some overrides
 CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
