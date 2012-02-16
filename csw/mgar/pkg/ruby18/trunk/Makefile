@@ -8,8 +8,9 @@ GARTYPE = v2
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm3 CSWcoreutils CSWiconv CSWncurses
-BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
+BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm-dev CSWcoreutils CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibz-dev CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev
 
 PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
 PACKAGES += CSWruby18-mode-el CSWlibruby18-1 CSWruby18-gcc4
