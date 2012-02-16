@@ -116,7 +116,6 @@ PATCHFILES += 0004-Patch-a-few-more-usr-local-references.patch
 PATCHFILES += 0005-Correct-a-usr-local-reference-in-mkmf.rb.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-pthread
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl-dir=$(prefix)
 CONFIGURE_ARGS += --with-tk-dir=$(prefix)
