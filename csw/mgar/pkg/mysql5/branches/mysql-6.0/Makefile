@@ -12,9 +12,8 @@
 
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
-BASE_VERSION = 5.5
-PATCHLEVEL = 20
-ALTS_PRIO = 55
+BASE_VERSION = 6.0
+PATCHLEVEL = 11-alpha
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -66,8 +65,8 @@ PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
-PATCHFILES += 0003-I-HATE-CMAKE.patch
-PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
+# PATCHFILES += 0003-I-HATE-CMAKE.patch
+# PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
