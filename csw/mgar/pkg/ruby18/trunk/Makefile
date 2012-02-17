@@ -119,14 +119,6 @@ PATCHFILES += 0005-Correct-a-usr-local-reference-in-mkmf.rb.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-tcl-dir=$(prefix)
-CONFIGURE_ARGS += --with-tk-dir=$(prefix)
-CONFIGURE_ARGS += --with-dbm-dir=$(prefix)/bdb48
-CONFIGURE_ARGS += --with-gdbm-dir=$(prefix)
-CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
-CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
-CONFIGURE_ARGS += --with-readline-dir=$(prefix)
-CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --program-suffix=18
 EXTRA_CONFIGURE_ARGS_isa-default-compiler-sun = --enable-install-doc
 
