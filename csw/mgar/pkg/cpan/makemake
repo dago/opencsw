@@ -12,6 +12,10 @@ use Module::Version 'get_version';
 use version 0.77; # get latest bug-fixes and API
 use Data::Dumper;
 
+# For online retreival of catalogname for package
+use LWP::UserAgent;
+use JSON;
+
 # TBD:
 # [10:14] El_Che: no fix for require, but it gives you filenames of the source
 # [10:16] Dagobert: Ahhhh.... sorry, I missed that
@@ -275,8 +279,16 @@ if( @build_dep_pkgs ) {
 print MF "CATALOG_RELEASE = unstable\n";
 print MF "\n";
 
+foreach (qw(LICENSE LICENSE.LGPL COPYING Copying COPYRIGHT Artistic ARTISTIC GPL)) {
+  if( -f "$distdir/$_" ) {
+    print MF "LICENSE = $_\n\n";
+    last;
+  }
+}
+
 print MF "PACKAGES += $cswpkg\n";
 print MF "CATALOGNAME_$cswpkg = $cswcatalog\n";
+print MF "SPKG_DESC_$cswpkg = $description\n";
 
 # Do we have the package in the catalog and has it the same name?
 # dam@login [login]:/home/dam >  curl -s http://buildfarm.opencsw.org/pkgdb/rest/catalogs/current/sparc/SunOS5.9/pkgnames/CSWvim/
@@ -288,6 +300,42 @@ print MF "ARCHALL_$cswpkg = 1\n" if( $archall );
 
 foreach my $p (@runtime_dep_pkgs) {
   print MF "RUNTIME_DEP_PKGS_$cswpkg += $p\n";
+}
+
+# Is this an obsoletion for an old package?
+my @oldpkgs = mod2pkg( $modname );
+if( @oldpkgs > 1 ) {
+  print STDERR "ERROR: More than one package for module '$modname' found: @oldpkgs\n";
+}
+my $oldpkg = shift @oldpkgs;
+if( $oldpkg ne $cswpkg ) {
+  print MF "OBSOLETED_BY_$cswpkg += $oldpkg\n";
+
+  my $ua = LWP::UserAgent->new;
+  $ua->timeout(300);
+  $ua->proxy(['http', 'ftp'], 'http://proxy:3128' );
+
+  my $catalog = "unstable";
+  my $arch = "sparc";
+  my $rel = "SunOS5.10";
+  
+  my $url = "http://buildfarm.opencsw.org/pkgdb/rest/catalogs/$catalog/$arch/$rel/pkgnames/$oldpkg/";
+
+  my $response = $ua->get( $url );
+
+  if ($response->is_success) {
+    my $json_string = $response->decoded_content;  # or whatever
+    if( $json_string eq "null" ) {
+      print "Couldn't find package $oldpkg in $catalog:$arch:$rel\n";
+    } else {
+      my $data = decode_json $json_string;
+      my $cname = $data->{catalogname};
+      print MF "CATALOGNAME_$oldpkg = ${cname}_stub\n";
+    }
+  } else {
+    print "Error getting $url\n" . $response->status_line;
+  }
+
 }
 
 print MF "\n";
