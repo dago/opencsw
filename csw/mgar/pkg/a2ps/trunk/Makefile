@@ -1,7 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = a2ps
-VERSION = 4.13
-SPKG_VERSION = 4.13b
+VERSION = 4.14
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -10,27 +9,32 @@ define BLURB
   Any to PostScript filter
 endef
 
-MASTER_SITES = http://ftp.gnu.org/pub/gnu/a2ps/
-DISTFILES  = $(NAME)-$(VERSION)b.tar.gz
+MASTER_SITES = $(GNU_MIRROR)
+DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWa2ps
+SPKG_DESC_CSWa2ps = Any to PostScript filter
+RUNTIME_DEP_PKGS_CSWa2ps += CSWlibintl8
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# These are just docs
+CHECKPKG_OVERRIDES_CSWa2ps += file-with-bad-content|/usr/local|root/opt/csw/share/info/a2ps.info
+CHECKPKG_OVERRIDES_CSWa2ps += file-with-bad-content|/usr/local|root/opt/csw/share/emacs/site-lisp/a2ps.el
+CHECKPKG_OVERRIDES_CSWa2ps += file-with-bad-content|/usr/local|root/opt/csw/share/emacs/site-lisp/a2ps.elc
+CHECKPKG_OVERRIDES_CSWa2ps += file-with-bad-content|/usr/share|root/opt/csw/share/info/a2ps.info
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# Just for one .el file? No.
+CHECKPKG_OVERRIDES_CSWa2ps += missing-dependency|CSWemacscommon
 
-TEST_SCRIPTS =
+PRESERVECONF += $(sysconfdir)/a2ps.cfg
+PRESERVECONF += $(sysconfdir)/a2ps-site.cfg
+
+MIGATE_FILES += a2ps.cfg
+MIGATE_FILES += a2ps-site.cfg
+
+# There is one test failing:
+SKIPTEST ?= 1
 
 include gar/category.mk
 
-#
-PRESERVECONF = /opt/csw/etc/a2ps-site.cfg
-PRESERVECONF = /opt/csw/etc/a2ps.cfg
 
-#RUNTIME_DEP_PKGS += 
-RUNTIME_DEP_PKGS_CSWa2ps += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWa2ps += CSWemacscommon
 
