@@ -296,4 +296,4 @@ print MF "include gar/category.mk\n";
 
 close( MF );
 
-system( "cd $name/trunk; gmake makesum; gmake package ");
+system( "cd $name/trunk; mgar makesum; mgar package ");
