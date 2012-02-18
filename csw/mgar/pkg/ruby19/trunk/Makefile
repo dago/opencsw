@@ -1,4 +1,4 @@
-NAME = ruby19
+83;40003;0cNAME = ruby19
 VERSION = 1.9.3
 PATCHLEVEL = p0
 CATEGORIES = lang
@@ -102,8 +102,8 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-suffix=19
-CONFIGURE_ARGS += --enable-pthread
 CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --with-soname=ruby19
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
