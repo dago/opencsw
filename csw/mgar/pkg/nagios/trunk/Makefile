@@ -1,5 +1,5 @@
 NAME = nagios
-VERSION = 3.2.3
+VERSION = 3.3.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -9,6 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
+DISTNAME   = nagios
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWnagios.preinstall
 DISTFILES += CSWnagios.postinstall
@@ -16,24 +17,23 @@ DISTFILES += cswnagios
 DISTFILES += cswusergroup
 DISTFILES += README.CSW
 
-PATCHFILES = patch.diff	# cgi/cmd.c - GNU macro __attribute__ unknown to compiler
-			# http://article.gmane.org/gmane.network.nagios.devel/4726
-			# (Error 2)
-PATCHFILES += 0002-changed-options-for-ginstall.patch
-
-PACKAGES = CSWnagios
-CATALOGNAME = nagios
-
-PACKAGING_PLATFORMS = solaris9-sparc
-PACKAGING_PLATFORMS += solaris9-i386
+PATCHFILES	+= 0001-Removed-gcc-macro.patch
+PATCHFILES	+= 0001-changed-install-and-command-options-in-configure.patch
+PATCHFILES	+= 0003-changed-syntax-of-define-statement.patch
+PATCHFILES	+= 0005-changed-object-files-to-executables.patch
+PATCHFILES 	+= 0005-Adjusted-CFLAGS-to-solaris-compiler.patch
+PATCHFILES 	+= 0006-path-to-csw-perl.patch
+PATCHFILES 	+= 0007-nagios-bug-244.patch
+PATCHFILES 	+= 0008-changed-paths-to-match-csw-standards.patch
 
 RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWjpeg CSWlibtoolrt CSWggettextrt
-RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWnagiosp CSWap2modphp5 CSWbdb
-RUNTIME_DEP_PKGS_CSWnagios += CSWcswclassutils 
+RUNTIME_DEP_PKGS_CSWnagios += CSWperl CSWnagiosp CSWap2-modphp5 
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibz1
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWnagios += CSWfreetype
 
 LICENSE = LICENSE
 
@@ -48,11 +48,6 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /\/etc\/opt\/csw\/nagios/ { $$$$2 = "cswcptempla
 		        $$$$3 ~ /\/var\/opt\/csw\/nagios\/rw/ { $$$$2 = "cswcptemplates" ; $$$$4 = "2755" ; $$$$5 = "nagios" ; $$$$6 = "nagioscm" } \
 		        { print }'
 
-#
-# CSW class action utilities
-#
-
-SPKG_CLASSES = none cswusergroup ugfiles cswmigrateconf cswcptemplates cswinitsmf cswpostmsg 
 
 INITSMF          = /etc/opt/csw/init.d/cswnagios
 USERGROUP        = /etc/opt/csw/pkg/CSWnagios/cswusergroup
@@ -78,11 +73,16 @@ CONFIGURE_ARGS += --enable-embedded-perl
 CONFIGURE_ARGS += --with-checkresult-dir=/var/opt/csw/nagios/spool/checkresults
 CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/nagios/nagios.lock
 CONFIGURE_ARGS += --localstatedir=/var$(prefix)
-CONFIGURE_ENV  += install_user=$(USER) install_group=csw # see PATCHFILES
+CONFIGURE_ENV  += install_user=$(USER) install_grp=csw # see PATCHFILES
+CONFIGURE_ENV   += PATH=/usr/bin:/usr/ccs/bin:/opt/csw/bin:/opt/csw/bin/
+CONFIGURE_ENV  += CC=/opt/SUNWspro/bin/cc
+CONFIGURE_ENV  += PERL=/opt/csw/bin/perl
 
 #
 # build
 #
+
+BUILD_ENV_PATH = $(bindir):$(PATH)
 
 EXTRA_LIB = $(BUILD_PREFIX)/lib
 
@@ -93,56 +93,21 @@ BUILD_ARGS = all
 
 # ENABLE_CHECK = 0
 
-TEST_TARGET = none
+#TEST_TARGET = none
+TEST_SCRIPTS =
 
 #
 # install
+# Nagios Makefile calls install-basic by default
 #
 
-#INSTALL_ARGS += install-init
-#INSTALL_ARGS += install-config
 INSTALL_ARGS += install-commandmode
 
 #
 # override chkpkg
-# (in all html and cfg files the string /usr/local appears, which is uncritical.
-#  the string appears in /opt/csw/nagios/bin/nagios and opt/csw/nagios/bin/p1.pl too, where it is a comment)
+# (in all html and cfg files the string /usr/local appears, which is uncritical.)
 #
 
-CHECKPKG_OVERRIDES_CSWnagios += action-class-only-in-pkginfo|ugfiles
-CHECKPKG_OVERRIDES_CSWnagios += action-class-only-in-pkginfo|cswmigrateconf
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/bin/nagios
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/bin/p1.pl
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/cgisecurity.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/monitoring-windows.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/volatileservices.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/faststartup.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/freshness.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/macros.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/config.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/upgrading.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/quickstart-opensuse.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/notifications.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/verifyconfig.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/redundancy.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/perfdata.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configmain.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/monitoring-printers.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/quickstart-ubuntu.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/security.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/eventhandlers.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/startstop.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/cgiincludes.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configcgi.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/distributed.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/int-tcpwrappers.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/cgiauth.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/objectdefinitions.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/monitoring-routers.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/clusters.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/nagiostats.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/quickstart-fedora.html
-CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configobject.html
 CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnagios/etc/opt/csw/nagios/nagios.cfg
 CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnagios/etc/opt/csw/nagios/cgi.cfg
 
@@ -150,15 +115,15 @@ CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/et
 # yes, we need this dependencies
 #
 
-CHECKPKG_OVERRIDES_CSWnagios += obsolete-dependency|CSWcswclassutils
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWgd
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWglib2
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWnagiosp
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWlibtoolrt
-CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWap2modphp5
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWap2-modphp5
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
-CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWbdb
-CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWosslrt
+
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWjpeg
 
 include gar/category.mk
 
@@ -204,21 +169,6 @@ post-install-modulated:
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/windows.cfg $(DESTDIR)$(TEMPLATEDIR)/objects/windows.cfg
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/printer.cfg $(DESTDIR)$(TEMPLATEDIR)/objects/printer.cfg
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/switch.cfg $(DESTDIR)$(TEMPLATEDIR)/objects/switch.cfg
-	@#
-	@#ginstall -m 775 -d $(DESTDIR)$(TEMPLATEDIR)
-	@#ginstall -m 775 -d $(DESTDIR)$(TEMPLATEDIR)/objects
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/nagios.cfg $(DESTDIR)$(CFGDIR)/nagios.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/cgi.cfg $(DESTDIR)$(CFGDIR)/cgi.cfg.CSW
-	@#ginstall -b -m 660 $(WORKSRC)/sample-config/resource.cfg $(DESTDIR)$(CFGDIR)/resource.cfg.CSW
-	@#ginstall -b -m 644 $(WORKSRC)/sample-config/httpd.conf $(DESTDIR)$(CFGDIR)/httpd-nagios.conf.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/templates.cfg $(DESTDIR)$(CFGDIR)/objects/templates.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/commands.cfg $(DESTDIR)$(CFGDIR)/objects/commands.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/contacts.cfg $(DESTDIR)$(CFGDIR)/objects/contacts.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/timeperiods.cfg $(DESTDIR)$(CFGDIR)/objects/timeperiods.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/localhost.cfg $(DESTDIR)$(CFGDIR)/objects/localhost.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/windows.cfg $(DESTDIR)$(CFGDIR)/objects/windows.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/printer.cfg $(DESTDIR)$(CFGDIR)/objects/printer.cfg.CSW
-	@#ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/switch.cfg $(DESTDIR)$(CFGDIR)/objects/switch.cfg.CSW
 	@#
 	@# create user and group -> cswusergroup
 	@#

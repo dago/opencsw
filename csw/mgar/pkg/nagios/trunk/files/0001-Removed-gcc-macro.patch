@@ -1,0 +1,25 @@
+From 3546f5148c875d715698f904f50f65b348afb15e Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sat, 11 Feb 2012 18:45:15 +0100
+Subject: [PATCH] Removed gcc macro
+
+---
+ cgi/cmd.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/cgi/cmd.c b/cgi/cmd.c
+index 2adc06d..6671af5 100755
+--- a/cgi/cmd.c
++++ b/cgi/cmd.c
+@@ -1891,7 +1891,7 @@ void commit_command_data(int cmd) {
+ 	return;
+ 	}
+ 
+-__attribute__((format(printf, 2, 3)))
++/* __attribute__((format(printf, 2, 3))) */
+ static int cmd_submitf(int id, const char *fmt, ...) {
+ 	char cmd[MAX_EXTERNAL_COMMAND_LENGTH];
+ 	const char *command;
+-- 
+1.7.8.3
+

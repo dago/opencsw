@@ -1,0 +1,39 @@
+From 928321930443886384a517e4ed976cc38bac1f6e Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sat, 11 Feb 2012 22:13:43 +0100
+Subject: [PATCH] Adjusted CFLAGS to solaris compiler
+
+---
+ base/Makefile.in |    2 +-
+ cgi/Makefile.in  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/base/Makefile.in b/base/Makefile.in
+index 868e1d1..e82524a 100755
+--- a/base/Makefile.in
++++ b/base/Makefile.in
+@@ -11,7 +11,7 @@ SRC_INCLUDE=../include
+ SRC_XDATA=../xdata
+ 
+ CC=@CC@
+-CFLAGS=-Wall @CFLAGS@ @DEFS@ -DNSCORE
++CFLAGS=@CFLAGS@ @DEFS@ -DNSCORE
+ 
+ # Compiler flags for use with gprof
+ #CFLAGS=-pg -DHAVE_CONFIG_H -DNSCORE
+diff --git a/cgi/Makefile.in b/cgi/Makefile.in
+index e45b126..59ac0a8 100755
+--- a/cgi/Makefile.in
++++ b/cgi/Makefile.in
+@@ -26,7 +26,7 @@ CGIEXTRAS=@CGIEXTRAS@
+ 
+ CP=@CP@
+ CC=@CC@
+-CFLAGS=-Wall @CFLAGS@ @DEFS@ -DNSCGI
++CFLAGS=@CFLAGS@ @DEFS@ -DNSCGI
+ 
+ # Compiler flags for optimization (overrides default)
+ #CFLAGS=-O3 -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -DHAVE_CONFIG_H -DNSCGI
+-- 
+1.7.8.3
+

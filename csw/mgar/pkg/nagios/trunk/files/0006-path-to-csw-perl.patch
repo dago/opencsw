@@ -1,0 +1,91 @@
+From 6702010ea490949aeeeec4ce83cf775319092adc Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Tue, 14 Feb 2012 20:46:54 +0100
+Subject: [PATCH] path to csw perl
+
+---
+ configure |   44 ++++++++++++++++++++++----------------------
+ 1 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/configure b/configure
+index bf774a8..20c39a4 100755
+--- a/configure
++++ b/configure
+@@ -7184,15 +7184,15 @@ cat >>confdefs.h <<_ACEOF
+ #define EMBEDDEDPERL
+ _ACEOF
+ 
+-	PERLLIBS="`perl -MExtUtils::Embed -e ldopts`"
+-	PERLDIR="`perl -MConfig -e 'print $Config{installsitearch}'`"
+-	CFLAGS="${CFLAGS} `perl -MExtUtils::Embed -e ccopts`"
++	PERLLIBS="`/opt/csw/bin/perl -MExtUtils::Embed -e ldopts`"
++	PERLDIR="`/opt/csw/bin/perl -MConfig -e 'print $Config{installsitearch}'`"
++	CFLAGS="${CFLAGS} `/opt/csw/bin/perl -MExtUtils::Embed -e ccopts`"
+ 	USEPERL=yes
+ 	INSTALLPERLSTUFF=yes;
+ 	PERLXSI_O=perlxsi.o
+ 	OBJS="${OBJS} ${PERLXSI_O}"
+ 	echo "creating base/perlxsi.c"
+-	perl -MExtUtils::Embed -e xsinit -- -o base/perlxsi.c
++	/opt/csw/bin/perl -MExtUtils::Embed -e xsinit -- -o base/perlxsi.c
+ 
+ 	echo "Embedded Perl interpreter will be compiled in..."
+ 
+@@ -7215,7 +7215,7 @@ _ACEOF
+ fi
+ 
+ if test x$USEPERL = xyes; then
+-	if (perl -e 'use Config;exit -1 unless ($Config{'usethreads'});'); then
++	if (/opt/csw/bin/perl -e 'use Config;exit -1 unless ($Config{'usethreads'});'); then
+ 		echo "Using threaded perl"
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -8761,28 +8761,28 @@ fi
+ 
+ 
+ 
+-perl subst include/locations.h
+-perl subst html/config.inc.php
++/opt/csw/bin/perl subst include/locations.h
++/opt/csw/bin/perl subst html/config.inc.php
+ 
+ 
+ echo ""
+ echo "Creating sample config files in sample-config/ ..."
+ 
+-perl subst sample-config/nagios.cfg
+-perl subst sample-config/cgi.cfg
+-perl subst sample-config/resource.cfg
+-perl subst sample-config/httpd.conf
+-perl subst sample-config/mrtg.cfg
+-
+-perl subst sample-config/template-object/templates.cfg
+-perl subst sample-config/template-object/commands.cfg
+-perl subst sample-config/template-object/timeperiods.cfg
+-perl subst sample-config/template-object/contacts.cfg
+-
+-perl subst sample-config/template-object/localhost.cfg
+-perl subst sample-config/template-object/windows.cfg
+-perl subst sample-config/template-object/printer.cfg
+-perl subst sample-config/template-object/switch.cfg
++/opt/csw/bin/perl subst sample-config/nagios.cfg
++/opt/csw/bin/perl subst sample-config/cgi.cfg
++/opt/csw/bin/perl subst sample-config/resource.cfg
++/opt/csw/bin/perl subst sample-config/httpd.conf
++/opt/csw/bin/perl subst sample-config/mrtg.cfg
++
++/opt/csw/bin/perl subst sample-config/template-object/templates.cfg
++/opt/csw/bin/perl subst sample-config/template-object/commands.cfg
++/opt/csw/bin/perl subst sample-config/template-object/timeperiods.cfg
++/opt/csw/bin/perl subst sample-config/template-object/contacts.cfg
++
++/opt/csw/bin/perl subst sample-config/template-object/localhost.cfg
++/opt/csw/bin/perl subst sample-config/template-object/windows.cfg
++/opt/csw/bin/perl subst sample-config/template-object/printer.cfg
++/opt/csw/bin/perl subst sample-config/template-object/switch.cfg
+ 
+ 
+ 
+-- 
+1.7.9
+
