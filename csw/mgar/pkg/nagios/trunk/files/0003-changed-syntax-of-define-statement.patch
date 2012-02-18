@@ -1,0 +1,25 @@
+From 3eac415f8cf5068c253b909e2bce23daf8df7af4 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sat, 11 Feb 2012 18:48:33 +0100
+Subject: [PATCH 3/3] changed syntax of define statement
+
+---
+ include/nebmodules.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/include/nebmodules.h b/include/nebmodules.h
+index a3992f4..17c456b 100755
+--- a/include/nebmodules.h
++++ b/include/nebmodules.h
+@@ -31,7 +31,7 @@ extern "C" {
+ 
+ 	/***** MODULE VERSION INFORMATION *****/
+ 
+-#define NEB_API_VERSION(x) int __neb_api_version = x;
++#define NEB_API_VERSION(x) int __neb_api_version = x
+ #define CURRENT_NEB_API_VERSION    3
+ 
+ 
+-- 
+1.7.8.3
+

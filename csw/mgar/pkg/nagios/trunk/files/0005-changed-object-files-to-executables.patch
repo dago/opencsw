@@ -1,0 +1,34 @@
+From ff6ff7c6d8ad5a08cbf13c722f5d058e99663ebb Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sat, 11 Feb 2012 18:53:35 +0100
+Subject: [PATCH 5/5] changed object files to executables
+
+---
+ module/Makefile.in |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/module/Makefile.in b/module/Makefile.in
+index a0eb7c5..2184405 100755
+--- a/module/Makefile.in
++++ b/module/Makefile.in
+@@ -25,13 +25,13 @@ STRIP=@STRIP@
+ 
+ CP=@CP@
+ 
+-all:	helloworld.o
++all:	helloworld
+ 
+-helloworld.o: helloworld.c
+-	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o helloworld.o helloworld.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
++helloworld: helloworld.c
++	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o helloworld helloworld.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
+ 
+ clean:
+-	rm -f helloworld.o
++	rm -f helloworld
+ 	rm -f core *.o
+ 	rm -f *~ *.*~
+ 
+-- 
+1.7.8.3
+

@@ -1,0 +1,28 @@
+From 8099eab91753c9a721edc68da1f72c42f89ca83e Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Fri, 17 Feb 2012 20:52:05 +0100
+Subject: [PATCH] nagios bug 244
+
+---
+ html/Makefile.in |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/html/Makefile.in b/html/Makefile.in
+index c89d72f..4c9c019 100755
+--- a/html/Makefile.in
++++ b/html/Makefile.in
+@@ -75,9 +75,9 @@ install:
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/images/logos; done
+ 	for file in includes/*.*; \
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes; done
+-	for file in includes/rss/*; \
++	for file in includes/rss/*.*; \
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss; done
+-	for file in includes/rss/extlib/*; \
++	for file in includes/rss/extlib/*.*; \
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss/extlib; done
+ 
+ install-unstripped:
+-- 
+1.7.9
+
