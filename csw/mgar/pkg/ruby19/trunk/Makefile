@@ -38,7 +38,7 @@ define BLURB
 endef
 
 PACKAGES  =  CSWruby19 CSWruby19-samples CSWruby19-ri CSWruby19-tk
-PACKAGES += CSWruby19-dev
+PACKAGES += CSWruby19-dev CSWlibruby19-1
 
 ARCHALL_CSWruby19-samples = 1
 ARCHALL_CSWruby19-ri = 1
@@ -52,21 +52,22 @@ CHECKPKG_OVERRIDES_CSWruby19-samples += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19-ri += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19-tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
-CHECKPKG_OVERRIDES_CSWruby19-tk += soname-not-found|libruby19.so
 CHECKPKG_OVERRIDES_CSWruby19-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby-static.a
 CHECKPKG_OVERRIDES_CSWruby19-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
-CHECKPKG_OVERRIDES_CSWruby19 += soname-not-found|libruby19.so
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby|or|CSWruby18
 
 RUNTIME_DEP_PKGS_CSWruby19  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWruby19 += CSWlibssl0-9-8 CSWlibyaml
 RUNTIME_DEP_PKGS_CSWruby19 += CSWlibreadline6 CSWlibz1 CSWlibffi4
+RUNTIME_DEP_PKGS_CSWruby19 += CSWlibruby19-1
 RUNTIME_DEP_PKGS_CSWruby19-samples = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19-tk = CSWruby19 CSWtk CSWtcl CSWlibx11
 RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19-ri = CSWruby19
 
 SPKG_DESC_CSWruby19 = $(DESCRIPTION)
+
+SPKG_DESC_CSWlibruby19-1 = The libruby shared object files (Ruby 1.9)
 
 SPKG_DESC_CSWruby19-samples = Example programs for Ruby 1.9
 
@@ -75,6 +76,8 @@ SPKG_DESC_CSWruby19-ri = Ruby 1.9 Interactive Reference
 SPKG_DESC_CSWruby19-tk = Ruby 1.9 Tcl/TK Extension
 
 SPKG_DESC_CSWruby19-dev = Ruby 1.9 Extension Development Files
+
+PKGFILES_CSWlibruby19-1 = /opt/csw/lib/libruby*
 
 PKGFILES_CSWruby19-samples = $(docdir)/ruby19/sample.*
 
