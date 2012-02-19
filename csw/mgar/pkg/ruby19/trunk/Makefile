@@ -61,7 +61,7 @@ RUNTIME_DEP_PKGS_CSWruby19 += CSWlibssl0-9-8 CSWlibyaml
 RUNTIME_DEP_PKGS_CSWruby19 += CSWlibreadline6 CSWlibz1 CSWlibffi4
 RUNTIME_DEP_PKGS_CSWruby19 += CSWlibruby19-1
 RUNTIME_DEP_PKGS_CSWruby19-samples = CSWruby19
-RUNTIME_DEP_PKGS_CSWruby19-tk = CSWruby19 CSWtk CSWtcl CSWlibx11
+RUNTIME_DEP_PKGS_CSWruby19-tk = CSWruby19 CSWlibruby19-1 CSWtk CSWtcl CSWlibx11
 RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19-ri = CSWruby19
 
@@ -77,11 +77,11 @@ SPKG_DESC_CSWruby19-tk = Ruby 1.9 Tcl/TK Extension
 
 SPKG_DESC_CSWruby19-dev = Ruby 1.9 Extension Development Files
 
-PKGFILES_CSWlibruby19-1 = /opt/csw/lib/libruby*
+PKGFILES_CSWlibruby19-1 += $(call baseisadirs,$(libdir),libruby19\.so\.1.*)
 
-PKGFILES_CSWruby19-samples = $(docdir)/ruby19/sample.*
+PKGFILES_CSWruby19-samples = $(docdir)/ruby/sample.*
 
-PKGFILES_CSWruby19-ri = $(datadir)/ri19.* $(bindir)/ri19
+PKGFILES_CSWruby19-ri = $(datadir)/ri/.* $(bindir)/ri19
 
 PKGFILES_CSWruby19-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
