@@ -46,15 +46,10 @@ ARCHALL_CSWruby19-ri = 1
 # checkpkg overrides
 CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWruby19-samples += surplus-dependency|CSWruby19
-CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWruby|or|CSWruby18
 CHECKPKG_OVERRIDES_CSWruby19-samples += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19-ri += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19-tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
-CHECKPKG_OVERRIDES_CSWruby19-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby-static.a
 CHECKPKG_OVERRIDES_CSWruby19-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
-CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby|or|CSWruby18
 
 RUNTIME_DEP_PKGS_CSWruby19  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWruby19 += CSWlibssl0-9-8 CSWlibyaml
