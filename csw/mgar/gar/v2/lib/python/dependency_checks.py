@@ -32,7 +32,7 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.pl$",   (u"CSWperl",)),
     (r".*\.pm$",   (u"CSWperl",)),
     (r".*\.py$",   (u"CSWpython",)),
-    (r".*\.rb$",   (u"CSWruby", u"CSWruby18")),
+    (r".*\.rb$",   (u"CSWruby", u"CSWruby18", u"CSWruby19")),
     (r".*\.elc?$", (u"CSWemacscommon",)),
     (r"/opt/csw/apache2/", (u"CSWapache2",)),
 )
