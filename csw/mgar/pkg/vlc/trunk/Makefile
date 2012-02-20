@@ -39,9 +39,9 @@ BUILD_DEP_PKGS += CSWlibxdmcpdevel
 BUILD_DEP_PKGS += CSWlibx11devel
 
 # This is for libxcb
-#EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
-#EXTRA_LIB = /opt/csw/X11/lib
-#EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
+EXTRA_LIB = /opt/csw/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 # Sun Studio implements packed attributes differently and compilations bails out:
 #   "include/vlc_codecs.h", line 36: #error: FIXME
