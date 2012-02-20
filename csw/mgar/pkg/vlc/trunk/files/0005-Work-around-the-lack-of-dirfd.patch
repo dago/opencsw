@@ -1,0 +1,126 @@
+From 7501269c2b9df09861a82662d175ade4cfce3941 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 19 Feb 2012 17:52:00 +0100
+Subject: [PATCH 2/2] Work around the lack of dirfd()
+
+Detect whether the system supports dirfd(). There was a Solaris-specific
+workaround in one of the files, but it's a better idea to test for the
+function and not rely on the OS detection.
+---
+ configure.ac               |    2 ++
+ include/vlc_common.h       |    6 ++++++
+ include/vlc_fixups.h       |    7 +++++++
+ modules/access/directory.c |   11 ++---------
+ modules/misc/gnutls.c      |    2 +-
+ src/misc/filesystem.c      |    2 +-
+ 6 files changed, 19 insertions(+), 11 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index fa99eb7..6904bdd1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2334,6 +2334,8 @@ AS_IF([test "${have_ipv6}" = "yes"], [
+ AC_CHECK_FUNCS(inet_ntop,[
+   AC_DEFINE(HAVE_INET_NTOP, 1, [Define to 1 if you have inet_ntop().])])
+ 
++AC_CHECK_FUNCS(dirfd,[
++  AC_DEFINE(HAVE_DIRFD, 1, [Define to 1 if you have the dirfd() function.])])
+ 
+ dnl
+ dnl  GME demux plugin
+diff --git a/include/vlc_common.h b/include/vlc_common.h
+index 7f488a5..efd3b79 100644
+--- a/include/vlc_common.h
++++ b/include/vlc_common.h
+@@ -887,4 +887,10 @@ VLC_EXPORT( const char *, VLC_Compiler, ( void ) LIBVLC_USED );
+     "Public License;\nsee the file named COPYING for details.\n" \
+     "Written by the VideoLAN team; see the AUTHORS file.\n")
+ 
++#ifndef HAVE_DIRFD
++#define DIRFD(a) ((a)->dd_fd)
++#else
++#define DIRFD(a) (dirfd(a))
++#endif
++
+ #endif /* !VLC_COMMON_H */
+diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
+index ef37367..8808b0e 100644
+--- a/include/vlc_fixups.h
++++ b/include/vlc_fixups.h
+@@ -275,4 +275,11 @@ long jrand48 (unsigned short subi[3]);
+ long nrand48 (unsigned short subi[3]);
+ #endif
+ 
++/* dirfd() not available on some systems, e.g. Solaris 9 and 10 */
++#ifndef HAVE_DIRFD
++#define DIRFD(a) ((a)->dd_fd)
++#else
++#define DIRFD(a) (dirfd(a))
++#endif
++
+ #endif /* !LIBVLC_FIXUPS_H */
+diff --git a/modules/access/directory.c b/modules/access/directory.c
+index 7f29547..35fe91b 100644
+--- a/modules/access/directory.c
++++ b/modules/access/directory.c
+@@ -46,13 +46,6 @@
+ #   include <io.h>
+ #endif
+ 
+-#ifdef __sun__
+-static inline int dirfd (DIR *dir)
+-{
+-    return dir->dd_fd;
+-}
+-#endif
+-
+ #include <vlc_fs.h>
+ #include <vlc_url.h>
+ #include <vlc_strings.h>
+@@ -155,7 +148,7 @@ int DirInit (access_t *p_access, DIR *handle)
+     root->i = 0;
+ #ifdef HAVE_OPENAT
+     struct stat st;
+-    if (fstat (dirfd (handle), &st))
++    if (fstat (DIRFD (handle), &st))
+     {
+         free (root);
+         free (uri);
+@@ -315,7 +308,7 @@ block_t *DirBlock (access_t *p_access)
+     {
+         DIR *handle;
+ #ifdef HAVE_OPENAT
+-        int fd = vlc_openat (dirfd (current->handle), entry, O_RDONLY);
++        int fd = vlc_openat (DIRFD (current->handle), entry, O_RDONLY);
+         if (fd == -1)
+             goto skip; /* File cannot be opened... forget it */
+ 
+diff --git a/modules/misc/gnutls.c b/modules/misc/gnutls.c
+index 1aba7da..5df560e 100644
+--- a/modules/misc/gnutls.c
++++ b/modules/misc/gnutls.c
+@@ -538,7 +538,7 @@ gnutls_Addx509Directory( vlc_object_t *p_this,
+     else
+     {
+         struct stat st1, st2;
+-        int fd = dirfd( dir );
++        int fd = DIRFD( dir );
+ 
+         /*
+          * Gets stats for the directory path, checks that it is not a
+diff --git a/src/misc/filesystem.c b/src/misc/filesystem.c
+index 9138ae9..bb3186f 100644
+--- a/src/misc/filesystem.c
++++ b/src/misc/filesystem.c
+@@ -190,7 +190,7 @@ char *vlc_readdir( DIR *dir )
+     struct dirent *ent;
+     char *path = NULL;
+ 
+-    long len = fpathconf (dirfd (dir), _PC_NAME_MAX);
++    long len = fpathconf (DIRFD (dir), _PC_NAME_MAX);
+     if (len == -1)
+     {
+ #ifdef NAME_MAX
+-- 
+1.7.5.4
+
