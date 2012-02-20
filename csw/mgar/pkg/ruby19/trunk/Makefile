@@ -6,6 +6,7 @@ GARTYPE = v2
 
 #NOTE: Some things below use version 1.9.1.  As of 1.9.3, the api of
 #the libs is 1.9.1, so that is why we can't use $(VERSION).
+RUBY_API = 1.9.1
 
 # patchfile 0002-vm.c... is a backport from upstream
 VERSION_FLAG_PATCH = 1
@@ -38,7 +39,7 @@ define BLURB
 endef
 
 PACKAGES  =  CSWruby19 CSWruby19-samples CSWruby19-ri CSWruby19-tk
-PACKAGES += CSWruby19-dev CSWlibruby19-1
+PACKAGES += CSWruby19-dev CSWlibruby191-1
 
 ARCHALL_CSWruby19-samples = 1
 ARCHALL_CSWruby19-ri = 1
@@ -99,9 +100,9 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --program-suffix=19
+CONFIGURE_ARGS += --program-suffix=$(RUBY_API)
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-soname=ruby19
+CONFIGURE_ARGS += --with-soname=ruby$(RUBY_API)
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
@@ -138,7 +139,7 @@ PI_TARGETS  = samples rbconfig rbscripts
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
-multiconfig: RBCONFIG=/opt/csw/lib/ruby/1.9.1/$(GARCH)-solaris2.10/rbconfig.rb
+multiconfig: RBCONFIG=/opt/csw/lib/ruby/$(RUBY_API)/$(GARCH)-solaris2.10/rbconfig.rb
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS12
@@ -153,7 +154,7 @@ multiconfig:
 # Fix up rbconfig
 rbconfig:
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/ruby/1.9.1/$(GARCH)-solaris2.10/rbconfig.rb
+		$(DESTDIR)$(libdir)/ruby/$(RUBY_API)/$(GARCH)-solaris2.10/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Copy samples
