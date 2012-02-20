@@ -1,4 +1,4 @@
-83;40003;0cNAME = ruby19
+NAME = ruby19
 VERSION = 1.9.3
 PATCHLEVEL = p0
 CATEGORIES = lang
