@@ -9,9 +9,11 @@ use YAML qw(LoadFile);
 use File::Path;
 use File::Temp qw(:POSIX);
 use Module::Version 'get_version';
+use Parallel::ForkManager;
 use version 0.77;   # get latest bug-fixes and API
 use Data::Dumper;
 use LWP::UserAgent; # For online retreival of catalogname for package
+use Parallel::ForkManager;
 use JSON;
 
 # TBD:
@@ -132,6 +134,7 @@ open( my $mf_fh, '>', "$name/trunk/Makefile" ) or die "Couldn't write to $name/t
 say {$mf_fh} "NAME = $name";
 say {$mf_fh} "VERSION = $fileversion";
 say {$mf_fh} 'CATEGORIES = cpan';
+say {$mf_fh} 'GARTYPE = v2';
 say {$mf_fh} "AUTHOR = $author";
 say {$mf_fh} "";
 say {$mf_fh} "DESCRIPTION = $description";
@@ -332,16 +335,51 @@ sub logoutput {
 
 sub mod2pkg {
 	my $modname = shift @_;
-	my @result;
-	my $path = `/opt/csw/bin/perl -S /opt/csw/bin/pmpath $modname 2>&1`;
-	chomp $path;
-	if ( $path =~ /Can't locate/ ) {
-		print STDERR "$modname is missing\n";
-		return;
+
+	my %pkgs;
+	my $ua = LWP::UserAgent->new;
+	$ua->timeout(600);
+
+	my $modpath = $modname;
+	$modpath =~ s,::,/,g;
+	$modpath .= '.pm';
+
+	my $pm = new Parallel::ForkManager( 15, "/tmp/makemake" );
+
+	$pm -> run_on_finish ( # called BEFORE the first call to start()
+		sub {
+			my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
+
+			if (defined($data_structure_reference)) {
+				my ($pkg) = @{$data_structure_reference};
+				$pkgs{$pkg} = 1 if( defined $pkg );
+			} else {
+				print qq|No message received from child process $pid!\n|;
+			}
+		}
+	);
+
+	foreach my $prefix (@INC) {
+		$pm->start() and next;
+		my $response = $ua->get( "http://buildfarm.opencsw.org/pkgdb/rest/catalogs/unstable/sparc/SunOS5.10/pkgname-by-filename?filename=$prefix/$modpath" );
+		my $json;
+		if ($response->is_success) {
+			$json = $response->decoded_content;  # or whatever
+		} else {
+			print Dumper( $response );
+			die $response->status_line;
+		}
+
+		my $p = defined $json ? decode_json( $json ) : [];
+
+		$pm->finish( 0, $p );
 	}
 
-	my %pkgs = path2pkg($path);
-	return ( map { @{ $pkgs{$_} or ["undef $_"] } } keys %pkgs );
+	$pm->wait_all_children;
+
+	print "Matched packages: ", join( ", ", keys %pkgs ), "\n";
+
+	return keys %pkgs;
 }
 
 
