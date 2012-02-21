@@ -1,0 +1,119 @@
+From 4eb30bd5822a48708d85cbbc27939d81842a8f22 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Mon, 20 Feb 2012 14:09:37 +0100
+Subject: [PATCH] make patch
+
+---
+ Makefile  |    6 +++---
+ module.mk |   23 +++++++++++++----------
+ rules.mk  |   10 +++++-----
+ 3 files changed, 21 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c52f29c..17aec4e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -147,7 +147,7 @@ endif # MODE == debug
+ # |   VERBOSE MODE AND INITIALIZATION                                        |
+ # +--------------------------------------------------------------------------+
+ 
+-V := 
++V :=  1
+ ifeq ($(V),1) 
+ 	Q := 
+ else
+@@ -377,13 +377,13 @@ distclean: clean
+ $(DEFFILE): Makefile $(patsubst %, %/module.mk, $(SUBDIRS)) module.mk
+ 	@echo -n "     GEN               $(DEFFILE)"
+ 	@echo "" > $@
+-	@make -s -C ./ _depsreload
++	@gmake -C ./ _depsreload
+ 
+ .PHONY: _depsreload
+ _depsreload:
+ 	@echo -n "."
+ 	@echo "DEFLOADED := 1" > $(DEFFILE)
+ 	@echo "_SUBDIRS := $(SUBDIRS)" >> $(DEFFILE)
+-	@if [ "$(SUBDIRS)" != "$(_SUBDIRS)" ]; then make -j 1 -s -C ./ _depsreload; \
++	@if [ "$(SUBDIRS)" != "$(_SUBDIRS)" ]; then gmake -j 1 -C ./ _depsreload; \
+ 		else echo "DEFDONE := 1" >> $(DEFFILE); echo ""; fi
+ 
+diff --git a/module.mk b/module.mk
+index 966d927..f30b51f 100644
+--- a/module.mk
++++ b/module.mk
+@@ -26,13 +26,16 @@ DISABLE_BLACKOPTIM	?= 0
+ 
+ 
+ # Flags
+-CXXFLAGS		+= `cups-config --cflags` -Iinclude -Wall -I/opt/local/include
++CXXFLAGS_cups   := $(shell cups-config --cflags)
++LDFLAGS_cups    := $(shell cups-config --ldflags)
++LIBS_cups       := -lcups # $(shell cups-config --libs)
++CXXFLAGS		+= $(CXXFLAGS_cups) -Iinclude -Wall -I/opt/csw/include
+ DEBUG_CXXFLAGS		+= -DDEBUG  -DDUMP_CACHE
+-OPTIM_CXXFLAGS 		+= -g
+-rastertoqpdl_LDFLAGS	:= `cups-config --ldflags` -L/opt/local/lib
+-rastertoqpdl_LIBS	:= `cups-config --libs` -lcupsimage
+-pstoqpdl_LDFLAGS	:= `cups-config --ldflags`
+-pstoqpdl_LIBS		:= `cups-config --libs` -lcupsimage
++OPTIM_CXXFLAGS 		+=
++rastertoqpdl_LDFLAGS	:= $(LDFLAGS_cups) -L/opt/csw/lib
++rastertoqpdl_LIBS	:= $(LIBS_cups) -lcupsimage
++pstoqpdl_LDFLAGS	:= $(LDFLAGS_cups)
++pstoqpdl_LIBS		:= $(LIBS_cups) -lcupsimage
+ 
+ 
+ # Update compilation flags with defined options
+@@ -54,15 +57,15 @@ endif
+ 
+ 
+ # Get some information
+-CUPSFILTER		:= `cups-config --serverbin`/filter
+-CUPSPPD			:= `cups-config --datadir`/model
++CUPSFILTER		:= $(shell cups-config --serverbin)/filter
++CUPSPPD			:= $(shell cups-config --datadir)/model
+ ifeq ($(ARCHI),Darwin)
+ PSTORASTER		:= pstocupsraster
+ else
+ PSTORASTER		:= pstoraster
+ endif
+ GSTORASTER		:= gstoraster
+-CUPSPROFILE			:= `cups-config --datadir`/profiles
++CUPSPROFILE			:= $(shell cups-config --datadir)/profiles
+ export CUPSFILTER CUPSPPD
+ 
+ 
+diff --git a/rules.mk b/rules.mk
+index 7f99787..c7cbebd 100644
+--- a/rules.mk
++++ b/rules.mk
+@@ -19,11 +19,11 @@ cmd_install_raster	= INSTALL           $(rastertoqpdl_TARGET)
+ cmd_install_ps		= INSTALL           $(pstoqpdl_TARGET)
+ cmd_install_cms		= INSTALL           color profile files
+ install: $(rastertoqpdl_TARGET) $(pstoqpdl_TARGET)
+-	$(Q)mkdir -p $(DESTDIR)${CUPSFILTER}
++	$(Q)ginstall -d $(DESTDIR)${CUPSFILTER}
+ 	$(call printCmd, $(cmd_install_raster))
+-	$(Q)install -m 755 -s $(rastertoqpdl_TARGET) $(DESTDIR)${CUPSFILTER}
++	$(Q)ginstall -m 755 $(rastertoqpdl_TARGET) $(DESTDIR)${CUPSFILTER}
+ 	$(call printCmd, $(cmd_install_ps))
+-	$(Q)install -m 755 -s $(pstoqpdl_TARGET) $(DESTDIR)${CUPSFILTER}
++	$(Q)ginstall -m 755 $(pstoqpdl_TARGET) $(DESTDIR)${CUPSFILTER}
+ 	$(Q)$(MAKE) --no-print-directory -C ppd install Q=$(Q) \
+ 		DESTDIR=$(abspath $(DESTDIR)) DISABLE_JBIG=$(DISABLE_JBIG)
+ 	@echo ""
+@@ -34,8 +34,8 @@ install: $(rastertoqpdl_TARGET) $(pstoqpdl_TARGET)
+ installcms:
+ 	@if [ "$$CMSDIR" -a -d "$$CMSDIR" ]; then \
+ 		CMSBASE=$(CUPSPROFILE)/$$MANUFACTURER; \
+-		mkdir -p $(DESTDIR)$$CMSBASE; \
+-		install -m 644 "$(CMSDIR)"/* $(DESTDIR)$$CMSBASE; \
++		ginstall -d $(DESTDIR)$$CMSBASE; \
++		ginstall -m 644 "$(CMSDIR)"/* $(DESTDIR)$$CMSBASE; \
+ 		if [ $$? = 0 ]; then \
+ 			echo "Color profile files has been copied."; \
+ 		fi; \
+-- 
+1.7.9
+
