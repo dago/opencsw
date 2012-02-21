@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = web
-VERSION = 0.34
+VERSION = 0.36
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Simple web framework for Python
