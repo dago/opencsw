@@ -4,29 +4,49 @@
 
 NAME = openslp
 VERSION = 1.2.1
-# http://prdownloads.sourceforge.net/openslp/openslp-1.2.1.tar.gz?download
 CATEGORIES = lib
 GARTYPE = v2
-DESCRIPTION = Service Location Protocol
+
+DESCRIPTION = Service location protocol
 define BLURB
 endef
-SPKG_SOURCEURL = http://www.openslp.org/
+
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-CONFIGURE_ARGS = $(DIRPATHS)
+DISTFILES  = $(DISTNAME).tar.gz
+
+VENDOR_URL = http://www.openslp.org/
 
 PACKAGES += CSWlibslp1
-CATALOGNAME_CSWlibslp1 = libslp1
-PKGFILES_CSWlibslp1 += $(call baseisadirs,$(libdir),libslp\.so\.1\.0\.1)
-PKGFILES_CSWlibslp1 += $(call baseisadirs,$(libdir),libslp\.so\.1(\.\d+)*)
-SPKG_DESC_CSWlibslp1 += Service Location Protocol, libslp.so.1
-RUNTIME_DEP_PKGS_CSWlibslp1 += CSWosslrt
+PKGFILES_CSWlibslp1 += $(call pkgfiles_lib,libslp.so.1)
+SPKG_DESC_CSWlibslp1 += Service location protocol, libslp.so.1
+RUNTIME_DEP_PKGS_CSWlibslp1 += CSWlibssl0-9-8
 
-PACKAGES += CSWopenslp-devel
-CATALOGNAME_CSWopenslp-devel = openslp_devel
-SPKG_DESC_CSWopenslp-devel = $(DESCRIPTION), development files
-PKGFILES_CSWopenslp-devel += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWopenslp += CSWosslrt
+PACKAGES += CSWlibslp-dev
+SPKG_DESC_CSWlibslp-dev = Development files for libslp.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibslp-dev += CSWlibslp1
+RUNTIME_DEP_PKGS_CSWlibslp-dev += CSWlibssl-dev
+OBSOLETED_BY_CSWlibslp-dev += CSWopenslp-devel
+
+# These are just docs
+CHECKPKG_OVERRIDES_CSWlibslp-dev += file-with-bad-content|/usr/local|root/opt/csw/doc/openslp-1.2.1/html/UsersGuide/Installation.html
+CHECKPKG_OVERRIDES_CSWlibslp-dev += file-with-bad-content|/usr/share|root/opt/csw/doc/openslp-1.2.1/html/UsersGuide/FileLocations.html
+
+PACKAGES += CSWopenslp
+SPKG_DESC_CSWopenslp = Open service locator protocol
+PKGFILES_CSWopenslp += $(sysconfdir)/.*
+PKGFILES_CSWopenslp += $(bindir)/.*
+PKGFILES_CSWopenslp += $(sbindir)/.*
+RUNTIME_DEP_PKGS_CSWopenslp += CSWlibslp1
+RUNTIME_DEP_PKGS_CSWopenslp += CSWlibssl0-9-8
+
+BUILD64_LIBS_ONLY = 1
+
+PRESERVECONF += $(sysconfdir)/slp.conf
+PRESERVECONF += $(sysconfdir)/slp.reg
+PRESERVECONF += $(sysconfdir)/slp.spi
+
+# Testsuite must be run as root
+SKIPTEST ?= 1
 
 include gar/category.mk
