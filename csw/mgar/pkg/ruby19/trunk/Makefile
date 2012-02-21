@@ -45,7 +45,6 @@ CHECKPKG_OVERRIDES_CSWruby193-samples += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby193-samples += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby193-samples += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWruby193 += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby193-tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
 CHECKPKG_OVERRIDES_CSWruby193-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
 CHECKPKG_OVERRIDES_CSWruby193-ri += file-with-bad-content
 
