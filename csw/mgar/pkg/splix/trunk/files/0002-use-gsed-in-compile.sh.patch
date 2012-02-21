@@ -1,0 +1,31 @@
+From 73362724d0a0b9b1ed55fa351e5f4078b4de6925 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 21 Feb 2012 13:38:17 +0100
+Subject: [PATCH] use gsed in compile.sh
+
+---
+ ppd/compile.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ppd/compile.sh b/ppd/compile.sh
+index f4947fe..80184e6 100755
+--- a/ppd/compile.sh
++++ b/ppd/compile.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ #
+ #       compile.sh                      (C) 2007, Aurélien Croc (AP²C)
+ #
+@@ -16,7 +16,7 @@
+ parseFile() {
+     while read LINE; do
+         if [ -n "`echo "$LINE" | grep '^[ \t]*#import[ \t]*"[a-zA-Z0-9\.\-]*"'`" ]; then
+-            FILE=`echo "$LINE" | sed -re 's/[ \t]*#import[ \t]"([a-zA-Z0-9\.\-]*)"/\1/'`
++            FILE=`echo "$LINE" | gsed -re 's/[ \t]*#import[ \t]"([a-zA-Z0-9\.\-]*)"/\1/'`
+             parseFile $FILE $2
+         else
+             echo "$LINE" >> $2
+-- 
+1.7.9
+

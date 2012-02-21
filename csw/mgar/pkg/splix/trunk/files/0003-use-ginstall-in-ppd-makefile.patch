@@ -1,0 +1,75 @@
+From f4b1db15e8df233603eaff8f8a951719748dcf6a Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 21 Feb 2012 14:06:18 +0100
+Subject: [PATCH] use ginstall in ppd makefile
+
+---
+ ppd/Makefile |   30 +++++++++++++++---------------
+ 1 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/ppd/Makefile b/ppd/Makefile
+index 618388b..48bd80b 100644
+--- a/ppd/Makefile
++++ b/ppd/Makefile
+@@ -97,43 +97,43 @@ cmd_install_toshiba	= INSTALL           Toshiba PPD files
+ .PHONY: install
+ install:
+ 	$(call printCmd, $(cmd_install_samsung))
+-	$(Q)install -d -m 755 ${DESTDIR}${CUPSPPD}/samsung
++	$(Q)ginstall -d -m 755 ${DESTDIR}${CUPSPPD}/samsung
+ 	$(Q)for filename in ${SAMSUNG}; do \
+-		install -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/samsung;\
++		ginstall -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/samsung;\
+ 		for lang in ${LANGUAGES}; do \
+-			install -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/samsung;\
++			ginstall -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/samsung;\
+ 		done; \
+ 	done;
+ 	$(call printCmd, $(cmd_install_xerox))
+-	$(Q)install -d -m 755 ${DESTDIR}${CUPSPPD}/xerox
++	$(Q)ginstall -d -m 755 ${DESTDIR}${CUPSPPD}/xerox
+ 	$(Q)for filename in ${XEROX}; do \
+-		install -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/xerox;\
++		ginstall -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/xerox;\
+ 		for lang in ${LANGUAGES}; do \
+-			install -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/xerox;\
++			ginstall -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/xerox;\
+ 		done; \
+ 	done;
+ 	$(call printCmd, $(cmd_install_dell))
+-	$(Q)install -d -m 755 ${DESTDIR}${CUPSPPD}/dell
++	$(Q)ginstall -d -m 755 ${DESTDIR}${CUPSPPD}/dell
+ 	$(Q)for filename in ${DELL}; do \
+-		install -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/dell;\
++		ginstall -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/dell;\
+ 		for lang in ${LANGUAGES}; do \
+-			install -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/dell;\
++			ginstall -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/dell;\
+ 		done; \
+ 	done;
+ 	$(call printCmd, $(cmd_install_lexmark))
+-	$(Q)install -d -m 755 ${DESTDIR}${CUPSPPD}/lexmark
++	$(Q)ginstall -d -m 755 ${DESTDIR}${CUPSPPD}/lexmark
+ 	$(Q)for filename in ${LEXMARK}; do \
+-		install -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/lexmark;\
++		ginstall -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/lexmark;\
+ 		for lang in ${LANGUAGES}; do \
+-			install -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/lexmark;\
++			ginstall -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/lexmark;\
+ 		done; \
+ 	done;
+ 	$(call printCmd, $(cmd_install_toshiba))
+-	$(Q)install -d -m 755 ${DESTDIR}${CUPSPPD}/toshiba
++	$(Q)ginstall -d -m 755 ${DESTDIR}${CUPSPPD}/toshiba
+ 	$(Q)for filename in ${TOSHIBA}; do \
+-		install -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/toshiba;\
++		ginstall -m 644 $$filename.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/toshiba;\
+ 		for lang in ${LANGUAGES}; do \
+-			install -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/toshiba;\
++			ginstall -m 644 $$filename$$lang.${DRIVERSEXT} ${DESTDIR}${CUPSPPD}/toshiba;\
+ 		done; \
+ 	done;
+ 
+-- 
+1.7.9
+

@@ -1,0 +1,31 @@
+#/bin/ksh
+
+MANUFACTURER=samsung
+CMS_ARCH=${MANUFACTURER}_cms.tar.bz2
+SITE=splix.ap2c.org
+DESTDIR=$(cups-config --datadir)/profiles/$MANAUFACTURER
+
+echo "try to download CMS Profile from $SITE for $MANUFACTURER, now"
+echo "for other Manufacturers see hints on Web"
+
+mkdir /tmp/splixcms$$
+cd /tmp/splixcms$$
+# download
+wget  http://$SITE/${CMS_ARCH}
+if [ $? -ne 0 ]; then
+	echo "ERROR: Download failed, clould not install Color Management Profiles"
+	echo "You must install CMS files manually!"
+	exit;
+fi
+# extract
+bzcat ${CMS_ARCH} | tar xf -
+cd cms; pwd
+# create destination 
+ginstall -d -m 755 $DESTDIR
+# copy cms files
+for f in $(ls) ; do
+  ginstall -m 644 $f $DESTDIR
+done
+cd
+# cleanup
+rm -rf /tmp/splixcms$$
