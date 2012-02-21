@@ -1,23 +1,23 @@
 NAME = Sub-Uplevel
-VERSION = 0.2002
+VERSION = 0.22
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DAGOLDEN
 
 DESCRIPTION = Apparently run a function in a higher stack frame
 define BLURB
-  Like Tcl's uplevel() function, but not quite so dangerous. The idea is just
-  to fool caller(). All the really naughty bits of Tcl's uplevel() are
-  avoided.  THIS IS NOT THE SORT OF THING YOU WANT TO DO EVERYDAY
 endef
+
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-PACKAGES = CSWpmsubuplevel
-CATALOGNAME = pm_subuplevel
-
-ARCHALL = 1
-
-SPKG_VERSION = 0.20.02
+PACKAGES += CSWpm-sub-uplevel
+CATALOGNAME_CSWpm-sub-uplevel = pm_sub_uplevel
+SPKG_DESC_CSWpm-sub-uplevel = Apparently run a function in a higher stack frame
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-sub-uplevel = 1
+OBSOLETED_BY_CSWpm-sub-uplevel += CSWpmsubuplevel
+CATALOGNAME_CSWpmsubuplevel = pm_subuplevel_stub
 
 include gar/category.mk
