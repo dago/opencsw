@@ -1,21 +1,23 @@
 NAME = Test-Exception
-VERSION = 0.29
+VERSION = 0.31
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ADIE
 
 DESCRIPTION = Test exception based code
 define BLURB
-  This module provides a few convenience methods for testing exception 
-  based code. It is built with Test::Builder and plays happily with 
-  Test::More and friends.
 endef
 
-PACKAGES = CSWpmtstexception
-CATALOGNAME = pm_tstexception
+DISTFILES += COPYING
 
-ARCHALL = 1
+CATALOG_RELEASE = unstable
 
-LICENSE = $(FILEDIR)/LICENSE
+PACKAGES += CSWpm-test-exception
+CATALOGNAME_CSWpm-test-exception = pm_test_exception
+SPKG_DESC_CSWpm-test-exception = Test exception based code
+ARCHALL_CSWpm-test-exception = 1
+RUNTIME_DEP_PKGS_CSWpm-test-exception += CSWpm-sub-uplevel
+OBSOLETED_BY_CSWpm-test-exception += CSWpmtstexcept
+CATALOGNAME_CSWpmtstexcept = pm_tstexcept_stub
 
 include gar/category.mk
