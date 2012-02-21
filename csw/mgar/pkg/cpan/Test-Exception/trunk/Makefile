@@ -17,7 +17,7 @@ CATALOGNAME_CSWpm-test-exception = pm_test_exception
 SPKG_DESC_CSWpm-test-exception = Test exception based code
 ARCHALL_CSWpm-test-exception = 1
 RUNTIME_DEP_PKGS_CSWpm-test-exception += CSWpm-sub-uplevel
-OBSOLETED_BY_CSWpm-test-exception += CSWpmtstexcept
-CATALOGNAME_CSWpmtstexcept = pm_tstexcept_stub
+OBSOLETED_BY_CSWpm-test-exception += CSWpmtstexception
+CATALOGNAME_CSWpmtstexception = pm_tstexception_stub
 
 include gar/category.mk
