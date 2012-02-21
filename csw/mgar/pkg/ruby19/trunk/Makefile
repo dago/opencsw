@@ -47,8 +47,7 @@ CHECKPKG_OVERRIDES_CSWruby193-samples += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWruby193 += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby193-tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
 CHECKPKG_OVERRIDES_CSWruby193-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
-CHECKPKG_OVERRIDES_CSWruby193-ri += file-with-bad-content|/usr/share
-CHECKPKG_OVERRIDES_CSWruby193-ri += file-with-bad-content|/usr/local
+CHECKPKG_OVERRIDES_CSWruby193-ri += file-with-bad-content
 
 RUNTIME_DEP_PKGS_CSWruby193  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWruby193 += CSWlibssl0-9-8 CSWlibyaml
