@@ -1,0 +1,25 @@
+From 0fce78cdc5e186ec46881d054fc66d6232c21006 Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Tue, 21 Feb 2012 15:16:11 +0100
+Subject: [PATCH] piddir
+
+---
+ bin/mule |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/bin/mule b/bin/mule
+index 467b4c6..f9a9c7f 100755
+--- a/bin/mule
++++ b/bin/mule
+@@ -125,7 +125,7 @@ JPDA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+ PRIORITY=
+ 
+ # Location of the pid file.
+-PIDDIR="."
++PIDDIR="/var/opt/csw/mule/pid"
+ 
+ # If uncommented, causes the Wrapper to be shutdown using an anchor file.
+ #  When launched with the 'start' command, it will also ignore all INT and
+-- 
+1.7.9
+

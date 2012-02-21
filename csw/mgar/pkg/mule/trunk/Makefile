@@ -13,9 +13,12 @@ DISTNAME = $(NAME)-standalone-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswmule.xml
+DISTFILES += cswmule
+DISTFILES += CSWmule.postinstall
 
 PATCHFILES += 0001-javapath.patch
 PATCHFILES += 0001-runasusermule.patch
+PATCHFILES += 0001-piddir.patch
 
 PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 
@@ -37,11 +40,11 @@ INSTALL_SCRIPTS = custom
 
 SPKG_CLASSES  = none cswinitsmf cswsampleconf cswusergroup ugfiles
 INITSMF       = /etc/opt/csw/init.d/cswmule
-PRESERVECONF  = /opt/csw/mule/conf/.*
+PRESERVECONF  = /etc/opt/csw/mule/.*
 USERGROUP     = /etc/opt/csw/pkg/CSWmule/cswusergroup
 
 PROTOTYPE_MODIFIERS          = mule_ugfiles
-MULE_UGFILES                 = /var/opt/csw/mule/logs
+MULE_UGFILES                 = /var/opt/csw/mule/logs /var/opt/csw/mule/pid
 PROTOTYPE_FILES_mule_ugfiles = $(MULE_UGFILES)
 PROTOTYPE_USER_mule_ugfiles  = mule
 PROTOTYPE_GROUP_mule_ugfiles = mule
@@ -53,12 +56,16 @@ install-custom:
 	@ginstall -d $(DESTDIR)/var/opt/csw/mule
 	@mv $(DESTDIR)/opt/csw/mule/logs $(DESTDIR)/var/opt/csw/mule
 	@ln -s /var/opt/csw/mule/logs $(DESTDIR)/opt/csw/mule/logs
+	@ginstall -d $(DESTDIR)/etc/opt/csw
+	@mv $(DESTDIR)/opt/csw/mule/conf $(DESTDIR)/etc/opt/csw/mule
+	@ln -s /etc/opt/csw/mule $(DESTDIR)/opt/csw/mule/conf
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswmule $(DESTDIR)/etc/opt/csw/init.d/cswmule
 	@ginstall -d $(DESTDIR)/var/opt/csw/svc/manifest/application
 	@ginstall -m 644 $(FILEDIR)/cswmule.xml $(DESTDIR)/var/opt/csw/svc/manifest/application/cswmule.xml
 	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWmule
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWmule/cswusergroup
+	@ginstall -d $(DESTDIR)/var/opt/csw/mule/pid
 	@$(MAKECOOKIE)
 
 include gar/category.mk
