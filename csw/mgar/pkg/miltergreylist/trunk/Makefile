@@ -1,8 +1,8 @@
 NAME = miltergreylist
-VERSION = 4.2.7
-#RELEASE = rc1
-#DISTVERSION = $(VERSION)$(RELEASE)
-DISTVERSION = $(VERSION)
+VERSION = 4.4
+RELEASE = a1
+DISTVERSION = $(VERSION)$(RELEASE)
+#DISTVERSION = $(VERSION)
 DISTNAME = milter-greylist-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
@@ -17,12 +17,16 @@ MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
 DISTFILES    = milter-greylist-$(DISTVERSION).tgz
 DISTFILES   += COPYING
 
-RUNTIME_DEP_PKGS = CSWcurlrt CSWgeoip CSWlibspf2
+BUILD_DEP_PKGS = CSWlibspf2-dev
+GARCOMPILER = GNU
+
+RUNTIME_DEP_PKGS  = CSWgeoip
+RUNTIME_DEP_PKGS += CSWlibspf2-2
+#RUNTIME_DEP_PKGS += CSWcurlrt
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-CHECKPKG_OVERRIDES += surplus-dependency|CSWgeoip
 CHECKPKG_OVERRIDES += file-with-bad-content
 
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
@@ -37,9 +41,9 @@ CONFIGURE_ARGS += --enable-dnsrbl
 CONFIGURE_ARGS += --enable-stdio-hack
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/miltergreylist
 CONFIGURE_ARGS += --with-libGeoIP=/opt/csw/lib
-CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
 CONFIGURE_ARGS += --with-libspf2=/opt/csw/lib
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
+#CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
 
 # milter-greylist has no tests
 TEST_SCRIPTS = 
@@ -63,9 +67,7 @@ PROTOTYPE_USER_1    = greylist
 
 include gar/category.mk
 
-#WORKSRC := $(WORKDIR)/$(NAME)-$(VERSION)b1
 SPKG_SOURCEURL = http://hcpnet.free.fr/milter-greylist
-#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 DOCLIST = README ChangeLog greylist.conf greylist2.conf milter-greylist.m4
 
@@ -74,12 +76,9 @@ install-custom:
 	@( cd $(WORKSRC) ; \
 	   gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw
-	@mv $(DESTDIR)/etc/mail/greylist.conf $(DESTDIR)/etc/opt/csw/greylist.conf
-	@rmdir $(DESTDIR)/etc/mail
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
 	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	@ginstall -d -m 755 $(DESTDIR)/var/opt/csw/$(NAME)
-	@rmdir $(DESTDIR)/var/milter-greylist
 	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/CSW$(NAME)
 	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/CSW$(NAME)/cswusergroup
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
