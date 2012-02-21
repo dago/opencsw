@@ -22,7 +22,7 @@ DISTFILES += postinstall
 
 VENDOR_URL = http://splix.ap2c.org
 
-PACKAGING_PLATFORMS = solaris10-i386 solaris-sparc
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 GARCOMPILER = GNU
 PATCHFILES += 0001-make-patch.patch
 PATCHFILES += 0002-use-gsed-in-compile.sh.patch
