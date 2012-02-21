@@ -1,0 +1,62 @@
+From 1d62f1c52525338a4724a62b233f9b1a45cc9e8b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 21 Feb 2012 01:11:20 +0100
+Subject: [PATCH] Adjust variables in Makefile.Solaris
+
+---
+ Makefile.Solaris |   24 +++++++++++++-----------
+ 1 files changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/Makefile.Solaris b/Makefile.Solaris
+index 429db06..4830c22 100644
+--- a/Makefile.Solaris
++++ b/Makefile.Solaris
+@@ -13,10 +13,10 @@ DB	= NDEBUG
+ # Optimization: -O<n> or debugging: -g
+ OPT	= -xO2
+ 
+-LDLIBS	=
++LDLIBS	+=
+ 
+-CFLAGS	= $(OPT) -D$(DB)
+-LDFLAGS	=
++CFLAGS	+= $(OPT) -D$(DB)
++LDFLAGS	+=
+ 
+ OBJS	=\
+ 	main_u.o asc85enc.o blocklist.o chartrans.o datalist.o depot.o\
+@@ -34,9 +34,9 @@ PROGS =\
+ LOCAL_INSTALL_DIR = $(HOME)/bin
+ LOCAL_RESOURCES_DIR = $(HOME)/.antiword
+ 
+-GLOBAL_INSTALL_DIR = /usr/local/bin
+-GLOBAL_RESOURCES_DIR = /usr/local/share/antiword
+-MAN_DIR = /usr/local/man/man1
++GLOBAL_INSTALL_DIR = /opt/csw/bin
++GLOBAL_RESOURCES_DIR = /opt/csw/share/antiword
++MAN_DIR = /opt/csw/share/man/man1
+ 
+ all:		$(PROGS)
+ 
+@@ -48,11 +48,13 @@ local_install:	all
+ 
+ # NOTE: you must be root to do this
+ install:	all
+-	$(INSTALL) -c -o bin -g bin -m 755 $(PROGS) $(GLOBAL_INSTALL_DIR)
+-	$(INSTALL) -c -o bin -g bin -m 644 Docs/antiword.1 $(MAN_DIR)
+-	$(INSTALL) -d -o bin -g bin -m 755 $(GLOBAL_RESOURCES_DIR)
+-	$(INSTALL) -c -o bin -g bin -m 644 Resources/*.txt $(GLOBAL_RESOURCES_DIR)
+-	$(INSTALL) -c -o bin -g bin -m 644 Resources/fontnames $(GLOBAL_RESOURCES_DIR)
++	$(INSTALL) -c -o bin -g bin -m 755 -d $(DESTDIR)$(GLOBAL_INSTALL_DIR)
++	$(INSTALL) -c -o bin -g bin -m 755 -d $(DESTDIR)$(MAN_DIR)
++	$(INSTALL) -c -o bin -g bin -m 755 $(PROGS) $(DESTDIR)$(GLOBAL_INSTALL_DIR)
++	$(INSTALL) -c -o bin -g bin -m 644 Docs/antiword.1 $(DESTDIR)$(MAN_DIR)
++	$(INSTALL) -d -o bin -g bin -m 755 -d $(DESTDIR)$(GLOBAL_RESOURCES_DIR)
++	$(INSTALL) -c -o bin -g bin -m 644 Resources/*.txt $(DESTDIR)$(GLOBAL_RESOURCES_DIR)
++	$(INSTALL) -c -o bin -g bin -m 644 Resources/fontnames $(DESTDIR)$(GLOBAL_RESOURCES_DIR)
+ 
+ clean:
+ 	rm -f $(OBJS)
+-- 
+1.7.9
+
