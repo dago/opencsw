@@ -1,0 +1,42 @@
+From a4c99c1614cc51cf4d8b8972386a1f24051a243a Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Tue, 21 Feb 2012 10:58:51 +0100
+Subject: [PATCH] javapath
+
+---
+ bin/launcher |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/bin/launcher b/bin/launcher
+index 4c2c359..33ea58d 100755
+--- a/bin/launcher
++++ b/bin/launcher
+@@ -1,8 +1,17 @@
+ #! /bin/sh
+ 
++# Use CSWjre6 if installed
++if [ -x /opt/csw/java/jre/jre6/bin/java ]
++then
++	echo "==> using CSWjre6"
++	JAVA=/opt/csw/java/jre/jre6/bin/java
++else
++	echo "==> CSWjre6 not installed"
++	JAVA=
++fi
++
+ # Check for java in path
+ 
+-JAVA=
+ if [ -n "`which java 2>/dev/null`" ]
+ then
+     JAVA=java
+@@ -32,4 +41,4 @@ cp=${cp}:${commonsCliJar}
+ 
+ # The string passed to eval must handle spaces in paths correctly.
+ COMMAND_LINE="\"${JAVA}\" -Dmule.home=\"${MULE_HOME}\" -cp \"${cp}\" org.codehaus.groovy.tools.GroovyStarter --main groovy.ui.GroovyMain --conf \"${MULE_HOME}/bin/launcher.conf\" $@"
+-eval $COMMAND_LINE
+\ No newline at end of file
++eval $COMMAND_LINE
+-- 
+1.7.9
+

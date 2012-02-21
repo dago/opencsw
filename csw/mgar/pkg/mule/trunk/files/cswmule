@@ -1,0 +1,27 @@
+#!/sbin/sh
+
+#FMRI application
+#MANIFEST /var/opt/csw/svc/manifest/application/cswmule.xml
+
+DAEMON=/opt/csw/mule/bin/mule
+
+echo
+echo "**********************************************************************"
+echo "* You are running Solaris 9. This package might run on Solaris 9,    *"
+echo "* but it is only supported on Solaris 10 and later releases.         *"
+echo "**********************************************************************"
+echo
+
+case $1 in
+'start')
+	$DAEMON start
+	;;
+'stop')
+	$DAEMON stop
+        ;;
+*)
+
+	echo "Usage: $0 { start | stop }"
+	exit 1
+	;;
+esac
