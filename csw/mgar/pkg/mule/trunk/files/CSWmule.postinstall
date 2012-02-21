@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ ! /etc/opt/csw/mule/wrapper-additional.conf ]
+then
+	touch /etc/opt/csw/mule/wrapper-additional.conf
+	chown mule:mule /etc/opt/csw/mule/wrapper-additional.conf
+fi
