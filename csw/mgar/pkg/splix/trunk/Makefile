@@ -37,6 +37,7 @@ RUNTIME_DEP_PKGS_CSWsplix += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsplix += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWsplix += CSWlibjbig85-2
 RUNTIME_DEP_PKGS_CSWsplix += CSWcups
+CHECKPKG_OVERRIDES_CSWsplix += surplus-dependency|CSWcups
 
 include gar/category.mk
 
