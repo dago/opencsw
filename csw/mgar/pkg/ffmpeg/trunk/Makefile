@@ -8,7 +8,7 @@
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
 
 NAME = ffmpeg
-VERSION = 0.9.1
+VERSION = 0.10
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -31,6 +31,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 BUILD_DEP_PKGS += CSWlibtheora-dev
 BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWx264-dev
 
 PACKAGES += CSWlibavcodec53
 SPKG_DESC_CSWlibavcodec53 = FFMPEG library libavcodec.so.53
@@ -81,6 +82,7 @@ RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavcodec53
+RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibswresample0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibmp3lame0
@@ -123,22 +125,22 @@ RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibx264-120
 
-PACKAGES += CSWlibpostproc51
-SPKG_DESC_CSWlibpostproc51 = FFMPEG library libpostproc.so.51
-PKGFILES_CSWlibpostproc51 += $(call pkgfiles_lib,libpostproc.so.51)
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibvorbisenc2
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibsdl1-2-0
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibmp3lame0
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibtheoradec1
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibtheoraenc1
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibpostproc51 += CSWlibx264-120
+PACKAGES += CSWlibpostproc52
+SPKG_DESC_CSWlibpostproc52 = FFMPEG library libpostproc.so.52
+PKGFILES_CSWlibpostproc52 += $(call pkgfiles_lib,libpostproc.so.52)
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibtheoraenc1
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibx264-120
 
 PACKAGES += CSWlibswscale2
 SPKG_DESC_CSWlibswscale2 = FFMPEG library libswscale.so.2
@@ -183,7 +185,7 @@ RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavdevice53
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavfilter2
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavformat53
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibpostproc51
+RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibpostproc52
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibswresample0
 
@@ -209,7 +211,7 @@ RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavfilter2
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibpostproc51
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibpostproc52
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibx264-120
 
 # These are all examples
