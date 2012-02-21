@@ -45,6 +45,11 @@ CHECKPKG_OVERRIDES_CSWruby193-samples += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby193-samples += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby193-samples += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWruby193 += missing-dependency|CSWruby
+# the next two have /usr/local/bin from dln_find.c.  it should be innocuous and
+# not worth patching
+CHECKPKG_OVERRIDES_CSWlibruby193-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby193.so.1
+CHECKPKG_OVERRIDES_CSWruby193-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby193-static.a
+#
 CHECKPKG_OVERRIDES_CSWruby193-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
 CHECKPKG_OVERRIDES_CSWruby193-ri += file-with-bad-content
 
