@@ -1,0 +1,47 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+
+<service_bundle type='manifest' name='cswmule:cswmule'>
+
+<service
+  name='application/cswmule'
+  type='service'
+  version='1'>
+  <create_default_instance enabled='false' />
+  <single_instance />
+
+  <dependency name='fs'
+    grouping='require_all'
+    restart_on='none'
+    type='service'>
+    <service_fmri value='svc:/system/filesystem/local' />
+  </dependency>
+
+  <dependency name='net'
+    grouping='require_all'
+    restart_on='none'
+    type='service'>
+    <service_fmri value='svc:/network/loopback' />
+  </dependency>
+
+  <method_context>
+    <method_credential user='mule' group='mule'/>
+  </method_context>
+
+  <exec_method
+    type='method'
+    name='start'
+    exec='/opt/csw/mule/bin/mule start'
+    timeout_seconds='120'>
+  </exec_method>
+
+  <exec_method
+    type='method'
+    name='stop'
+    exec='/opt/csw/mule/bin/mule stop'
+    timeout_seconds='60'>
+  </exec_method>
+
+</service>
+
+</service_bundle>
