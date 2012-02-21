@@ -14,7 +14,7 @@ endef
 
 MASTER_SITES =$(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += postinstall
+DISTFILES += CSWsplix.postinstall
 # MASTER_SITES  = svn-http://$(NAME).svn.sourceforge.net/svnroot/$(NAME)
 # DISTFILES = $(VERSION)
 # NOCHECKSUM = $(VERSION)
