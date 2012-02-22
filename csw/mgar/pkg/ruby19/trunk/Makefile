@@ -75,6 +75,7 @@ SPKG_DESC_CSWruby193-tk = Ruby $(VERSION) Tcl/TK Extension
 SPKG_DESC_CSWruby193-dev = Ruby $(VERSION) Extension Development Files
 
 PKGFILES_CSWlibruby193-1 += $(call baseisadirs,$(libdir),lib$(NAME)\.so\.1.*)
+PKGFILES_CSWlibruby193-1 += $(libdir)/ruby/.*
 
 PKGFILES_CSWruby193-samples = $(docdir)/$(NAME)/sample.*
 
