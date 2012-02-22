@@ -1,6 +1,6 @@
 # $Id$
 NAME = lighttpd
-VERSION = 1.4.29
+VERSION = 1.4.30
 CATEGORIES = server
 GARTYPE = v2
 
