@@ -1,20 +1,23 @@
 NAME = Email-Simple
-VERSION = 2.100
+VERSION = 2.101
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RJBS
 
-DESCRIPTION = Perl Email::Simple module for RFC2822 message format and headers
+DESCRIPTION = RFC2822 message format and headers
 define BLURB
 endef
 
-RUNTIME_DEP_PKGS = CSWpmemaildateformat
-
-PACKAGES = CSWpmemailsimple
-CATALOGNAME = pm_emailsimple
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-email-simple
+CATALOGNAME_CSWpm-email-simple = pm_email_simple
+SPKG_DESC_CSWpm-email-simple = RFC2822 message format and headers
+ARCHALL_CSWpm-email-simple = 1
+RUNTIME_DEP_PKGS_CSWpm-email-simple += CSWpm-email-date-format
+OBSOLETED_BY_CSWpm-email-simple += CSWpmemailsimple
+CATALOGNAME_CSWpmemailsimple = pm_emailsimple_stub
 
 include gar/category.mk
