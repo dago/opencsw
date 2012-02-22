@@ -1,5 +1,7 @@
-NAME = ruby193
+NAME = ruby191
 VERSION = 1.9.3
+# Change this when the build starts putting files in $(libdir)/ruby/$(newver)
+API_VERSION = 1.9.1
 PATCHLEVEL = p0
 CATEGORIES = lang
 GARTYPE = v2
@@ -34,56 +36,56 @@ define BLURB
   closures.
 endef
 
-PACKAGES  =  CSWruby193 CSWruby193-samples CSWruby193-ri CSWruby193-tk
-PACKAGES += CSWruby193-dev CSWlibruby193-1
+PACKAGES  =  CSWruby191 CSWruby191-samples CSWruby191-ri CSWruby191-tk
+PACKAGES += CSWruby191-dev CSWlibruby191-1
 
-ARCHALL_CSWruby193-samples = 1
-ARCHALL_CSWruby193-ri = 1
+ARCHALL_CSWruby191-samples = 1
+ARCHALL_CSWruby191-ri = 1
 
 # checkpkg overrides
-CHECKPKG_OVERRIDES_CSWruby193-samples += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWruby193-samples += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWruby193-samples += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWruby193 += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby191-samples += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWruby191-samples += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWruby191-samples += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWruby191 += missing-dependency|CSWruby
 # the next two have /usr/local/bin from dln_find.c.  it should be innocuous and
 # not worth patching
-CHECKPKG_OVERRIDES_CSWlibruby193-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby193.so.1
-CHECKPKG_OVERRIDES_CSWruby193-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby193-static.a
+CHECKPKG_OVERRIDES_CSWlibruby191-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby191.so.1
+CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby191-static.a
 #
-CHECKPKG_OVERRIDES_CSWruby193-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
-CHECKPKG_OVERRIDES_CSWruby193-ri += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
+CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
 
-RUNTIME_DEP_PKGS_CSWruby193  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWruby193 += CSWlibssl0-9-8 CSWlibyaml
-RUNTIME_DEP_PKGS_CSWruby193 += CSWlibreadline6 CSWlibz1 CSWlibffi4
-RUNTIME_DEP_PKGS_CSWruby193 += CSWlibruby193-1
-RUNTIME_DEP_PKGS_CSWruby193-samples = CSWruby193
-RUNTIME_DEP_PKGS_CSWruby193-tk = CSWruby193 CSWlibruby193-1 CSWtk CSWtcl CSWlibx11
-RUNTIME_DEP_PKGS_CSWruby193-dev = CSWruby193
-RUNTIME_DEP_PKGS_CSWruby193-ri = CSWruby193
+RUNTIME_DEP_PKGS_CSWruby191  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWruby191 += CSWlibssl0-9-8 CSWlibyaml
+RUNTIME_DEP_PKGS_CSWruby191 += CSWlibreadline6 CSWlibz1 CSWlibffi4
+RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby191-1
+RUNTIME_DEP_PKGS_CSWruby191-samples = CSWruby191
+RUNTIME_DEP_PKGS_CSWruby191-tk = CSWruby191 CSWlibruby191-1 CSWtk CSWtcl CSWlibx11
+RUNTIME_DEP_PKGS_CSWruby191-dev = CSWruby191
+RUNTIME_DEP_PKGS_CSWruby191-ri = CSWruby191
 
-SPKG_DESC_CSWruby193 = $(DESCRIPTION)
+SPKG_DESC_CSWruby191 = $(DESCRIPTION)
 
-SPKG_DESC_CSWlibruby193-1 = The libruby shared object files (Ruby $(VERSION))
+SPKG_DESC_CSWlibruby191-1 = The libruby shared object files (Ruby $(VERSION), API $(API_VERSION))
 
-SPKG_DESC_CSWruby193-samples = Example programs for Ruby $(VERSION)
+SPKG_DESC_CSWruby191-samples = Example programs for Ruby $(VERSION)
 
-SPKG_DESC_CSWruby193-ri = Ruby $(VERSION) Interactive Reference
+SPKG_DESC_CSWruby191-ri = Ruby $(VERSION) Interactive Reference
 
-SPKG_DESC_CSWruby193-tk = Ruby $(VERSION) Tcl/TK Extension
+SPKG_DESC_CSWruby191-tk = Ruby $(VERSION) Tcl/TK Extension
 
-SPKG_DESC_CSWruby193-dev = Ruby $(VERSION) Extension Development Files
+SPKG_DESC_CSWruby191-dev = Ruby $(VERSION) Extension Development Files
 
-PKGFILES_CSWlibruby193-1 += $(call baseisadirs,$(libdir),lib$(NAME)\.so\.1.*)
-PKGFILES_CSWlibruby193-1 += $(libdir)/ruby/.*
+PKGFILES_CSWlibruby191-1 += $(call baseisadirs,$(libdir),lib$(NAME)\.so\.1.*)
+PKGFILES_CSWlibruby191-1 += $(libdir)/ruby/.*
 
-PKGFILES_CSWruby193-samples = $(docdir)/$(NAME)/sample.*
+PKGFILES_CSWruby191-samples = $(docdir)/$(NAME)/sample.*
 
-PKGFILES_CSWruby193-ri = $(datadir)/ri/.* $(bindir)/ri19
+PKGFILES_CSWruby191-ri = $(datadir)/ri/.* $(bindir)/ri19
 
-PKGFILES_CSWruby193-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
+PKGFILES_CSWruby191-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
-PKGFILES_CSWruby193-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+PKGFILES_CSWruby191-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -102,26 +104,16 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --program-suffix=$(subst .,,$(VERSION))
+CONFIGURE_ARGS += --program-suffix=$(subst ruby,,$(NAME))
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-soname=$(NAME)
-
-#NOTE: We force this so that we can sanely provide multiple versions
-#of ruby 1.9.x if required.  The API (as of 1.9.3) was still 1.9.1.
-#This makes it challenging to deliver multiple CSWlibruby19 packages,
-#leave binary gem paths unaltered, etc.  Instead, we override the API
-#version which affects .so naming and a few directory paths.  It's
-#ugly but it should make progressing through potential API changes
-#later much easier as we can deliver multiple versions of 1.9.x side
-#by side.
-CONFIGURE_ARGS += --with-ruby-version=$(VERSION)
+CONFIGURE_ARGS += --with-soname=ruby$(API_VERSION)
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 
 #GARCOMPILER = GCC4
-# RUNTIME_DEP_PKGS_CSWruby193 += CSWgcc4corert
-# RUNTIME_DEP_PKGS_CSWruby193-dev += CSWgcc4core
+# RUNTIME_DEP_PKGS_CSWruby191 += CSWgcc4corert
+# RUNTIME_DEP_PKGS_CSWruby191-dev += CSWgcc4core
 # # This is for rbconfig.rb: without this, modules built may not get a
 # # proper setting.
 # EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
@@ -151,7 +143,7 @@ PI_TARGETS  = samples rbconfig rbscripts
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
-multiconfig: RBCONFIG=/opt/csw/lib/ruby/$(VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
+multiconfig: RBCONFIG=/opt/csw/lib/ruby/$(API_VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS12
@@ -166,7 +158,7 @@ multiconfig:
 # Fix up rbconfig
 rbconfig:
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/ruby/$(VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
+		$(DESTDIR)$(libdir)/ruby/$(API_VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Copy samples
