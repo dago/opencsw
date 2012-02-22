@@ -40,7 +40,7 @@ CONFIGURE_ARGS += --with-user=`/usr/xpg4/bin/id -u`
 CONFIGURE_ARGS += --with-conffile=/etc/opt/csw/greylist.conf
 CONFIGURE_ARGS += --enable-dnsrbl
 CONFIGURE_ARGS += --enable-stdio-hack
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw/miltergreylist
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 CONFIGURE_ARGS += --with-libGeoIP=/opt/csw/lib
 CONFIGURE_ARGS += --with-libspf2=/opt/csw/lib
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
@@ -61,7 +61,7 @@ MIGRATE_SOURCE_DIR = /opt/csw/etc/mail
 MIGRATE_DEST_DIR   = /etc/opt/csw
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1   = /var/opt/csw/miltergreylist
+PROTOTYPE_FILES_1   = /var/opt/csw/milter-greylist
 PROTOTYPE_CLASS_1   = ugfiles
 PROTOTYPE_PERMS_1   = 0700
 PROTOTYPE_USER_1    = greylist
@@ -79,7 +79,6 @@ install-custom:
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
 	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
-	@ginstall -d -m 755 $(DESTDIR)/var/opt/csw/$(NAME)
 	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/CSW$(NAME)
 	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/CSW$(NAME)/cswusergroup
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
