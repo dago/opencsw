@@ -37,10 +37,10 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 PACKAGES += CSWlighttpd
 CATALOGNAME_CSWlighttpd = lighttpd
 SPKG_DESC_CSWlighttpd = HTTP server built for security, speed, compliance, and flexibility
-RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlighttpd += CSWosslrt
 
 EXTRA_LINKER_FLAGS += -lsendfile
 
