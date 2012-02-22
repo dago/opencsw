@@ -1,0 +1,48 @@
+From d677e25bf0b5092fb780b2caa8989809f30a0808 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Wed, 22 Feb 2012 20:25:29 +0100
+Subject: [PATCH] upstream-bug-fixes
+
+---
+ urlcheck.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/urlcheck.c b/urlcheck.c
+index df627fb..d34b313 100644
+--- a/urlcheck.c
++++ b/urlcheck.c
+@@ -299,7 +299,7 @@ find_boundary(priv, boundary)
+ 				goto next;
+ 			
+ 		TAILQ_FOREACH(l, &priv->priv_body, l_list)
+-			if (strstr(l->l_lines, boundary) != NULL)
++			if (strstr(l->l_line, boundary) != NULL)
+ 				goto next;
+ 
+ 		return 0;
+@@ -362,7 +362,7 @@ curl_post(buffer, size, nmemb, userp)
+ 			 * the body on next time we are called.
+ 			 */
+ 			if (pd->pd_curhdr == NULL) 
+-				pd->pd_curptr = pd->pd_curbody->b_lines;
++				pd->pd_curptr = pd->pd_curbody->l_line;
+ 			else
+ 				pd->pd_curptr = pd->pd_curhdr->l_line;
+ 
+@@ -388,11 +388,11 @@ curl_post(buffer, size, nmemb, userp)
+ 
+ 			/* Move to the next one */
+ 			pd->pd_curbody = 
+-			    TAILQ_NEXT(pd->pd_curbody, b_list);
++			    TAILQ_NEXT(pd->pd_curbody, l_list);
+ 
+ 			/* If it's not the last one... */
+ 			if (pd->pd_curbody != NULL)
+-				pd->pd_curptr = pd->pd_curbody->b_lines;
++				pd->pd_curptr = pd->pd_curbody->l_line;
+ 			else
+ 				pd->pd_curptr = NULL;
+ 		} else {
+-- 
+1.7.9
+

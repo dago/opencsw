@@ -21,8 +21,8 @@ BUILD_DEP_PKGS = CSWlibspf2-dev
 GARCOMPILER = GNU
 
 RUNTIME_DEP_PKGS  = CSWgeoip
+RUNTIME_DEP_PKGS += CSWlibcurl4
 RUNTIME_DEP_PKGS += CSWlibspf2-2
-#RUNTIME_DEP_PKGS += CSWcurlrt
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
@@ -31,6 +31,7 @@ CHECKPKG_OVERRIDES += file-with-bad-content
 
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
 PATCHFILES += 0002-change-socket-path.patch
+PATCHFILES += 0003-upstream-bug-fixes.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  = --prefix=/opt/csw
@@ -43,7 +44,7 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/miltergreylist
 CONFIGURE_ARGS += --with-libGeoIP=/opt/csw/lib
 CONFIGURE_ARGS += --with-libspf2=/opt/csw/lib
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
-#CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
+CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
 
 # milter-greylist has no tests
 TEST_SCRIPTS = 
