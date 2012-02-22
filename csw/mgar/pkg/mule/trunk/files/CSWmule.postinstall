@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ ! /etc/opt/csw/mule/wrapper-additional.conf ]
+if [ ! $PKG_INSTALL_ROOT/etc/opt/csw/mule/wrapper-additional.conf ]
 then
-	touch /etc/opt/csw/mule/wrapper-additional.conf
-	chown mule:mule /etc/opt/csw/mule/wrapper-additional.conf
+	touch $PKG_INSTALL_ROOT/etc/opt/csw/mule/wrapper-additional.conf
+	chown mule:mule $PKG_INSTALL_ROOT/etc/opt/csw/mule/wrapper-additional.conf
 fi
