@@ -12,12 +12,12 @@ define BLURB
 endef
 
 # Main archive location
-MASTER_SITES = http://www.research.att.com/~gsf/download/tgz/
-DISTFILES += ast-ksh.2010-02-02.tgz
-DISTFILES += INIT.2010-02-02.tgz
+MASTER_SITES = http://www2.research.att.com/~gsf/download/tgz/
+DISTFILES += ast-ksh.2011-02-08.tgz
+DISTFILES += INIT.2012-01-01.tgz
 #DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-WGET_OPTS = --user="I accept www.opensource.org/licenses/cpl" --password="."
+WGET_OPTS = --user="I accept www.opensource.org/licenses/eclipse" --password="."
 # We define upstream file regex so we can be notifed of new upstream software release
 # UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
