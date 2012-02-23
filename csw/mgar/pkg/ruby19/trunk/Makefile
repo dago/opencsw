@@ -44,8 +44,8 @@ RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191 += missing-dependency|CSWruby
 
 SPKG_DESC_CSWlibruby1-9-1-1 = The libruby shared object files (Ruby $(VERSION), API $(API_VERSION))
-RUNTIME_DEP_PKGS_CSWlibruby-1-9-1-1  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWlibruby1-9-1- += CSWlibssl0-9-8 CSWlibyaml
+RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1 += CSWlibssl0-9-8 CSWlibyaml
 RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1 += CSWlibreadline6 CSWlibz1 CSWlibffi4
 PKGFILES_CSWlibruby1-9-1-1 += $(call baseisadirs,$(libdir),libruby$(API_VERSION)\.so\.1.*)
 PKGFILES_CSWlibruby1-9-1-1 += $(libdir)/ruby/.*
