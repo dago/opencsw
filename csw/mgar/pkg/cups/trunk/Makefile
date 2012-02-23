@@ -65,11 +65,11 @@ VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
 
-BUILD_DEP_PKGS  = CSWggettext
-BUILD_DEP_PKGS += CSWjpeg
-BUILD_DEP_PKGS += CSWoldapdevel
-BUILD_DEP_PKGS += CSWossldevel
-BUILD_DEP_PKGS += CSWtiff
+BUILD_DEP_PKGS  = CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibjpeg-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibtiff-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
@@ -143,7 +143,7 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibz1
-RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
 
 PACKAGES += CSWcupsclient
 SPKG_DESC_CSWcupsclient = CUPS client binaries
@@ -154,6 +154,7 @@ PKGFILES_CSWcupsclient += $(bindir)/(cancel|cupstest(dsc|ppd))
 PKGFILES_CSWcupsclient += $(bindir)/(lp(|options|passwd|q|r|rm|stat))
 PKGFILES_CSWcupsclient += $(bindir)/ipptool
 PKGFILES_CSWcupsclient += $(mandir)/man1/ipptool.1
+PKGFILES_CSWcupsclient += $(mandir)/man5/ipptoolfile.5
 PKGFILES_CSWcupsclient += $(sharedstatedir)/cups/ipptool/.*
 PKGFILES_CSWcupsclient += $(mandir)/man1/(cancel|cupstest(dsc|ppd)|lp).1
 PKGFILES_CSWcupsclient += $(mandir)/man1/(lpoptions|lppasswd|lpq|lpr|lprm).1
@@ -261,7 +262,7 @@ OBSOLETED_BY_CSWlibcupsdriver1 += CSWlibcups
 PACKAGES += CSWlibcupsimage2
 SPKG_DESC_CSWlibcupsimage2 = CUPS libraries, libcupsimage.so.2
 PKGFILES_CSWlibcupsimage2 += $(call pkgfiles_lib,libcupsimage.so.2)
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgcrypt11
@@ -271,7 +272,7 @@ RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWtiff
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibtiff3
 OBSOLETED_BY_CSWlibcupsimage2 += CSWlibcups
 
 PACKAGES += CSWlibcupsmime1
@@ -350,6 +351,8 @@ SKIPTEST ?= 1
 INSTALL_OVERRIDE_VARS = DSTROOT
 INSTALL_OVERRIDE_VAR_DSTROOT = $(DESTDIR)
 
+EXTRA_MERGE_EXCLUDE_FILES += .*\.default
+
 PROTOTYPE_MODIFIERS = lp_group_etc
 PROTOTYPE_FILES_lp_group_etc = $(sysconfdir).*
 PROTOTYPE_GROUP_lp_group_etc = lp
@@ -359,34 +362,27 @@ PROTOTYPE_FILES_lp_group_var = $(localstatedir).*
 PROTOTYPE_GROUP_lp_group_var = lp
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
-SAMPLECONF += $(sysconfdir)/cups/client\.conf\.CSW
+PRESERVECONF += $(sysconfdir)/cups/client\.conf
+PRESERVECONF += $(sysconfdir)/cups/cupsd\.conf
 INITSMF = $(sysconfdir)/init\.d/cswcups
 
 include gar/category.mk
 
-dont-post-install-modulated: $(CUPSLINKS_TARGET)
-	(cd $(DESTDIR)$(sysconfdir)/cups; \
-	echo "Making .CSW configs in $(DESTDIR)$(sysconfdir)/cups"; \
-	for i in cupsd.conf; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW"; \
-			chmod 0644 "$$i.CSW"; \
-		fi \
-	done)
+post-install-modulated:
 	ginstall -m 644 \
-		$(FILEDIR)/client.conf.CSW \
+		$(WORKDIR)/client.conf.CSW \
 		$(DESTDIR)$(sysconfdir)/cups/client.conf.CSW
-	for f in $(DESTDIR)$(libdir)/cups/backend/*; do \
+	for f in $(DESTDIR)$(libdir_install)/cups/backend/*; do \
 		chmod 0700 $${f}; \
 	done
 	# https://www.opencsw.org/mantis/view.php?id=4532
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/doc/cupsclient
-	ginstall -m 755 $(DOWNLOADDIR)/CSWcupsclient.README \
+	ginstall -m 755 $(WORKDIR)/CSWcupsclient.README \
 		$(DESTDIR)$(datadir)/doc/cupsclient/README
 	@$(MAKECOOKIE)
 
-dont-cupslinks:
+# This has been disabled and should be pulled in through post-install-modulated
+cupslinks:
 	# https://www.opencsw.org/mantis/view.php?id=2924
 	ginstall -d -m 755 $(DESTDIR)/usr/bin
 	for f in cancel lp lpoptions lppassd lpq lpr lprm lpstat; do \
