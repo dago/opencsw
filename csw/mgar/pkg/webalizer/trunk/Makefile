@@ -21,6 +21,8 @@ PATCHFILES += 0001-Force-void-context.patch
 # so we disable the test below and re-add the definition manually in webalizer.h
 PATCHFILES += 0002-Re-add-definition-on-u_int64_t.patch
 
+VENDOR_URL = http://www.webalizer.org
+
 BUILD_DEP_PKGS += CSWlibgd-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWlibz-dev
