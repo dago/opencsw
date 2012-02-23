@@ -1,6 +1,1 @@
-41205c14cbd86632806578448e29bd30  gobject-introspection-0.6.7.tar.bz2
-948f52dc7a6649f6e83a7b5bb4f905e8  gobject-introspection-01-ginvoke.diff
-e09b30913029fffced1d9dc6f96e6a2e  gobject-introspection-02-glib-compilation.diff
-aa7aa32091d3c7a4cddbf78abe20d5d1  gobject-introspection-03-ginfo.diff
-ab2070d09322745c666f303da35c837f  gobject-introspection-04-big-ending.diff
-924f1a75b7190abbf49183b1081448cd  sunstudio.patch
+b5da58a5327d13b4d1e08b8e42b2456d  gobject-introspection-0.10.8.tar.bz2
