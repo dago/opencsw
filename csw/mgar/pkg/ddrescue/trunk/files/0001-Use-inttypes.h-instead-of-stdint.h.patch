@@ -1,20 +1,21 @@
-From 1663750c7ed123dc247d26a41a4fdbdead4ccb1c Mon Sep 17 00:00:00 2001
+From 15db7fb3672d81bed1b00e2f4a94cab3bb331d55 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Tue, 25 Jan 2011 09:52:33 +0100
+Date: Thu, 23 Feb 2012 10:39:18 +0100
 Subject: [PATCH] Use inttypes.h instead of stdint.h
 
 ---
- block.cc      |    2 +-
- ddrescue.cc   |    2 +-
- fillbook.cc   |    2 +-
- genbook.cc    |    2 +-
- logbook.cc    |    2 +-
- main.cc       |    2 +-
- rescuebook.cc |    2 +-
- 7 files changed, 7 insertions(+), 7 deletions(-)
+ block.cc       |    2 +-
+ ddrescuelog.cc |    2 +-
+ fillbook.cc    |    2 +-
+ genbook.cc     |    2 +-
+ io.cc          |    2 +-
+ logbook.cc     |    2 +-
+ main.cc        |    2 +-
+ rescuebook.cc  |    2 +-
+ 8 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/block.cc b/block.cc
-index 5b80fdc..2ec989b 100644
+index 2f14ada..b8d29e9 100644
 --- a/block.cc
 +++ b/block.cc
 @@ -23,7 +23,7 @@
@@ -26,21 +27,21 @@ index 5b80fdc..2ec989b 100644
  
  #include "block.h"
  #include "ddrescue.h"
-diff --git a/ddrescue.cc b/ddrescue.cc
-index 3acca37..6b4657d 100644
---- a/ddrescue.cc
-+++ b/ddrescue.cc
+diff --git a/ddrescuelog.cc b/ddrescuelog.cc
+index 40a64ae..b908392 100644
+--- a/ddrescuelog.cc
++++ b/ddrescuelog.cc
 @@ -28,7 +28,7 @@
- #include <ctime>
+ #include <cstring>
  #include <string>
  #include <vector>
 -#include <stdint.h>
 +#include <inttypes.h>
- #include <unistd.h>
  
+ #include "arg_parser.h"
  #include "block.h"
 diff --git a/fillbook.cc b/fillbook.cc
-index 7c7be61..533b346 100644
+index 5b249a5..66aed40 100644
 --- a/fillbook.cc
 +++ b/fillbook.cc
 @@ -22,7 +22,7 @@
@@ -53,7 +54,7 @@ index 7c7be61..533b346 100644
  #include "block.h"
  #include "ddrescue.h"
 diff --git a/genbook.cc b/genbook.cc
-index 0106edd..5760fe7 100644
+index d864a8f..b74bb64 100644
 --- a/genbook.cc
 +++ b/genbook.cc
 @@ -24,7 +24,7 @@
@@ -65,8 +66,21 @@ index 0106edd..5760fe7 100644
  #include <unistd.h>
  
  #include "block.h"
+diff --git a/io.cc b/io.cc
+index 902ce12..a921b87 100644
+--- a/io.cc
++++ b/io.cc
+@@ -28,7 +28,7 @@
+ #include <ctime>
+ #include <string>
+ #include <vector>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ 
+ #include "block.h"
 diff --git a/logbook.cc b/logbook.cc
-index c5bed8d..13eb69d 100644
+index bee8754..12c5bad 100644
 --- a/logbook.cc
 +++ b/logbook.cc
 @@ -27,7 +27,7 @@
@@ -79,7 +93,7 @@ index c5bed8d..13eb69d 100644
  
  #include "block.h"
 diff --git a/main.cc b/main.cc
-index 9397965..dbcfd1d 100644
+index a200763..7238998 100644
 --- a/main.cc
 +++ b/main.cc
 @@ -32,7 +32,7 @@
@@ -92,7 +106,7 @@ index 9397965..dbcfd1d 100644
  #include <sys/stat.h>
  
 diff --git a/rescuebook.cc b/rescuebook.cc
-index 8da4269..dce76ab 100644
+index 0dbbeb9..562e442 100644
 --- a/rescuebook.cc
 +++ b/rescuebook.cc
 @@ -24,7 +24,7 @@
@@ -105,5 +119,5 @@ index 8da4269..dce76ab 100644
  
  #include "block.h"
 -- 
-1.7.3.2
+1.7.9
 
