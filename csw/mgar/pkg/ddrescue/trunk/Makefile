@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = ddrescue
-VERSION = 1.14
+VERSION = 1.15
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -11,12 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.lz
+DISTFILES  = $(DISTNAME).tar.lz
 
 PATCHFILES += 0001-Use-inttypes.h-instead-of-stdint.h.patch
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.lz
+EXTRA_LDFLAGS += -norunpath
 
 CONFIGURE_ARGS = --prefix=$(prefix)
 CONFIGURE_ARGS += CXX="$(CXX)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(LDFLAGS)"
