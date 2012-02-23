@@ -37,21 +37,21 @@ define BLURB
 endef
 
 PACKAGES  =  CSWruby191 CSWruby191-samples CSWruby191-ri
-PACKAGES += CSWruby191-dev CSWlibruby191-1
+PACKAGES += CSWruby191-dev CSWlibruby1-9-1-1
 
 SPKG_DESC_CSWruby191 = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby191-1
+RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191 += missing-dependency|CSWruby
 
-SPKG_DESC_CSWlibruby191-1 = The libruby shared object files (Ruby $(VERSION), API $(API_VERSION))
-RUNTIME_DEP_PKGS_CSWlibruby191  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWlibruby191 += CSWlibssl0-9-8 CSWlibyaml
-RUNTIME_DEP_PKGS_CSWlibruby191 += CSWlibreadline6 CSWlibz1 CSWlibffi4
-PKGFILES_CSWlibruby191-1 += $(call baseisadirs,$(libdir),libruby$(API_VERSION)\.so\.1.*)
-PKGFILES_CSWlibruby191-1 += $(libdir)/ruby/.*
+SPKG_DESC_CSWlibruby1-9-1-1 = The libruby shared object files (Ruby $(VERSION), API $(API_VERSION))
+RUNTIME_DEP_PKGS_CSWlibruby-1-9-1-1  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlibruby1-9-1- += CSWlibssl0-9-8 CSWlibyaml
+RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1 += CSWlibreadline6 CSWlibz1 CSWlibffi4
+PKGFILES_CSWlibruby1-9-1-1 += $(call baseisadirs,$(libdir),libruby$(API_VERSION)\.so\.1.*)
+PKGFILES_CSWlibruby1-9-1-1 += $(libdir)/ruby/.*
 # the next two have /usr/local/bin from dln_find.c.  it should be innocuous and
 # not worth patching
-CHECKPKG_OVERRIDES_CSWlibruby191-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1.so.1
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1.so.1
 
 ARCHALL_CSWruby191-samples = 1
 SPKG_DESC_CSWruby191-samples = Example programs for Ruby $(VERSION)
@@ -68,13 +68,13 @@ RUNTIME_DEP_PKGS_CSWruby191-ri = CSWruby191
 CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
 
 # SPKG_DESC_CSWruby191-tk = Ruby $(VERSION) Tcl/TK Extension
-# RUNTIME_DEP_PKGS_CSWruby191-tk = CSWruby191 CSWlibruby191-1 CSWtk CSWtcl CSWlibx11
+# RUNTIME_DEP_PKGS_CSWruby191-tk = CSWruby191 CSWlibruby1-9-1-1 CSWtk CSWtcl CSWlibx11
 # PKGFILES_CSWruby191-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 SPKG_DESC_CSWruby191-dev = Ruby $(VERSION) Extension Development Files
 PKGFILES_CSWruby191-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 RUNTIME_DEP_PKGS_CSWruby191-dev = CSWruby191
-CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby191-static.a
+CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1-static.a
 CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
