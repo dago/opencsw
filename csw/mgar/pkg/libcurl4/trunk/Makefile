@@ -1,9 +1,5 @@
-# TBD:
-# - Link against new libfbopenssl0
-# - Link against new librtmp0
-
 NAME = curl
-VERSION = 7.23.1
+VERSION = 7.24.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -33,7 +29,7 @@ CATALOGNAME_CSWlibcurl4 = libcurl4
 SPKG_DESC_CSWlibcurl4 = Library for client-side URL transfers, libcurl.so.4
 PKGFILES_CSWlibcurl4 = $(call pkgfiles_lib,libcurl.so.4)
 OBSOLETED_BY_CSWlibcurl4 = CSWcurlrt
-RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibidn11
 
@@ -44,9 +40,10 @@ PKGFILES_CSWlibcurl4-feature = $(call pkgfiles_lib,libcurl-feature.so.4)
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibfbopenssl0
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibrtmp0
 
@@ -71,7 +68,7 @@ SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfer
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWcurl += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibssl0-9-8
 # Double-legacy packages may not even depend on CSWcurlrt, so we must
 # also directly depend on CSWlibcurl2 and CSWlibcurl3
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl2
@@ -79,10 +76,10 @@ RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl3
 CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibcurl2
 CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibcurl3
 
-BUILD_DEP_PKGS += CSWoldapdevel
-BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibcares-dev
-BUILD_DEP_PKGS += CSWlibssh2devel
+BUILD_DEP_PKGS += CSWlibssh2-dev
 BUILD_DEP_PKGS += CSWlibfbopenssl-dev
 BUILD_DEP_PKGS += CSWlibrtmp-dev
 
