@@ -1,5 +1,5 @@
 NAME = help2man
-VERSION = 1.39.2
+VERSION = 1.40.5
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -13,19 +13,21 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWhelp2man
+SPKG_DESC_CSWhelp2man = A tool for automatically generating simple manual pages from program output
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWhelp2man += CSWpm-locale-gettext
+# Perl module dependency cannot be tracked by checkpkg
+CHECKPKG_OVERRIDES_CSWhelp2man += surplus-dependency|CSWpm-locale-gettext
 
-DEP_PKGS = CSWpmlocalegettext
+REINPLACE_USRSHARE += help2man.info
 
-CONFIGURE_ARGS = $(DIRPATHS)
+REINPLACEMENTS += usrlib
+REINPLACE_MATCH_usrlib = /usr/lib
+REINPLACE_WITH_usrlib = $(libdir)
+REINPLACE_FILES_usrlib += help2man.info
 
+# There is no testsuite
 TEST_SCRIPTS =
 
-CHECKPKG_OVERRIDES_CSWhelp2man += surplus-dependency|CSWpmlocalegettext
-
 include gar/category.mk
-
-post-install-modulated:
-	-perl -pi -e 's,/usr/lib,$(libdir),g;' \
-		-e 's,/usr/share,$(sharedstatedir),g;' \
-		$(DESTDIR)$(infodir)/help2man.info
