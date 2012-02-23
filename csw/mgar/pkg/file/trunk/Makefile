@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.10
+VERSION = 5.11
 CATEGORIES = utils
 GARTYPE = v2
 
