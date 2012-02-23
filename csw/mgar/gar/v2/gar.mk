@@ -234,6 +234,7 @@ MODULATION_ISACOLLAPSEDEXTRA = $(strip $(call __isacollapsedmodulation,$(strip $
 define modulationvalue
 $(strip $(or $($(1)_$(MODULATION)),\
              $($(1)_$(MODULATION_ISACOLLAPSED)),\
+             $($(1)_$(MODULATION_ISACOLLAPSEDEXTRA)),\
 ))
 endef
 
