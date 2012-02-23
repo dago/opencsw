@@ -109,6 +109,7 @@ PKGFILES_CSWcupsd += $(datadir)/cups
 PKGFILES_CSWcupsd += $(datadir)/cups/(banners|data|profiles|charsets).*
 PKGFILES_CSWcupsd += $(datadir)/cups/(fonts|templates|charmaps|model).*
 PKGFILES_CSWcupsd += $(datadir)/cups/mime.*
+PKGFILES_CSWcupsd += $(datadir)/doc/cups/.*
 PKGFILES_CSWcupsd += $(datadir)/icons.*
 PKGFILES_CSWcupsd += $(datadir)/locale/.*
 PKGFILES_CSWcupsd += $(libdir)/cups/.*
@@ -144,6 +145,17 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
+
+# Just docs
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-banner.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/api-cups.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/api-httpipp.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/ref-cupsd-conf.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-ppd.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/translation.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/options.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/ref-cupsd-conf.html
+CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/network.html
 
 PACKAGES += CSWcupsclient
 SPKG_DESC_CSWcupsclient = CUPS client binaries
@@ -186,7 +198,6 @@ CATALOGNAME_CSWcups-dev = cups_dev
 PKGFILES_CSWcups-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWcups-dev += $(datadir)/cups/ppdc.*
 PKGFILES_CSWcups-dev += $(datadir)/cups/drv.*
-PKGFILES_CSWcups-dev += $(datadir)/doc/cups/.*
 PKGFILES_CSWcups-dev += $(datadir)/cups/examples.*
 # The development package needs all the libraries
 RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsppdc1
@@ -198,17 +209,6 @@ RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupscgi1
 OBSOLETED_BY_CSWcups-dev += CSWcups-devel
 OBSOLETED_BY_CSWcups-dev += CSWcupsdev
 OBSOLETED_BY_CSWcups-dev += CSWcupsdoc
-
-# Just docs
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-banner.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/api-cups.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/api-httpipp.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/ref-cupsd-conf.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-ppd.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/translation.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/options.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/ref-cupsd-conf.html
-CHECKPKG_OVERRIDES_CSWcups-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/network.html
 
 # The problematic cupslinks package
 # PACKAGES += CSWcupslinks
