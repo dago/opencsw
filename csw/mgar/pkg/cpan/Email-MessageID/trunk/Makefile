@@ -10,7 +10,13 @@ define BLURB
 endef
 
 PACKAGES = CSWpm-email-messageid
-CATALOGNAME = pm_email-messageid
+CATALOGNAME = pm_email_messageid
+
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS = CSWpm-email-address
+
+LICENSE = LICENSE
 
 include gar/category.mk
 
