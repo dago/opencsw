@@ -15,6 +15,7 @@ CATALOGNAME = pm_email_mime
 RUNTIME_DEP_PKGS  = CSWpm-email-simple
 RUNTIME_DEP_PKGS += CSWpm-email-messageid
 RUNTIME_DEP_PKGS += CSWpm-email-mime-contenttype
+RUNTIME_DEP_PKGS += CSWpmmimetypes
 
 include gar/category.mk
 
