@@ -42,7 +42,7 @@ EXTRA_BUILD_ISAS_i386   = pentium_pro
 EXTRA_BUILD_ISAS_sparc  = sparcv8plus
 EXTRA_BUILD_ISAS_sparc += sparcv8plus+vis
 
-RUNTIME_DEP_PKGS_CSWlibldns1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibldns1 += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlibldns-devel += CSWlibldns1
 
 INCOMPATIBLE_PKGS_CSWlibldns1 = CSWldns
