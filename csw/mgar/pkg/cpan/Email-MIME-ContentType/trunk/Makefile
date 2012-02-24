@@ -12,6 +12,8 @@ endef
 PACKAGES = CSWpm-email-mime-contenttype
 CATALOGNAME = pm_email_mime_contenttype
 
+LICENCSE = LICENSE
+
 ARCHALL = 1
 
 include gar/category.mk
