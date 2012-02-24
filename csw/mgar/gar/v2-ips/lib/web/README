@@ -1,0 +1,52 @@
+Web-serving components of the checkpkg infrastructure.
+
+Configuring scripts with mod_python on Apache:
+
+modpython_gateway.py needs to be downloaded from [1] and put into the
+lib/web/ directory. This is done via an external reference in svn
+and pulled in automatically.
+
+[1] http://svn.aminus.net/misc/modpython_gateway.py
+
+A piece of Apache configuration:
+
+  Alias /pkgdb .../pkgdb_web
+  <Directory .../pkgdb_web>
+    Order allow,deny
+    Allow from all
+
+    <IfModule python_module>
+      SetHandler python-program
+      PythonPath "sys.path + ['.../gar/v2/lib/web', '.../gar/v2']"
+      PythonHandler modpython_gateway::handler
+      PythonOption wsgi.application pkgdb_web::main
+      PythonOption SCRIPT_NAME /pkgdb
+      PythonDebug on
+    </IfModule>
+  </Directory>
+
+  # I don't know why the Deny/Allow rules need to be duplicated, but I haven't
+  # been able to run the thing with just one set of permissions.
+  # The directory does not need to exist, but the name must match
+  # location ("releases").
+  <Directory /virtual/host/root/releases>
+    Order deny,allow
+    Deny from all
+
+    Allow from <internal IPs>
+
+  </Directory>
+  <Location /releases>
+    Order deny,allow
+    Deny from all
+    Allow from <internal IPs>
+
+    <IfModule python_module>
+      SetHandler python-program
+      PythonPath "sys.path + ['.../gar/v2/lib/web', '.../gar/v2']"
+      PythonHandler modpython_gateway::handler
+      PythonOption wsgi.application releases_web::main
+      PythonOption SCRIPT_NAME /releases
+      PythonDebug on
+    </IfModule>
+  </Location>
