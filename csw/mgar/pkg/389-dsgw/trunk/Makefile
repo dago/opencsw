@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-dsgw
-VERSION = 1.1.7
+VERSION = 1.1.9
 GARTYPE = v2
 CATEGORIES = server
 
@@ -44,19 +44,19 @@ RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibsmime3
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibssl3
 CHECKPKG_OVERRIDES_CSW389-dsgw += file-with-bad-content|/usr/local|root/opt/csw/share/dirsrv/manual/en/dsgw/attribut.htm
 
-PATCHFILES += 0001-change-include-path-preference-in-Makefile.am.patch
+PATCHFILES += 0001-change-include-path-preferences-in-Makefile.am.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
-CONFIGURE_ARGS_OPT += --with-ldapsdk-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-ldapsdk-bin=/opt/csw/dirsrv/bin 
-CONFIGURE_ARGS_OPT += --with-icu-inc=/opt/csw/include 
-CONFIGURE_ARGS_OPT += --with-icu-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-icu-bin=/opt/csw/bin 
-CONFIGURE_ARGS_OPT += --with-sasl-inc=/opt/csw/include/sasl 
-CONFIGURE_ARGS_OPT += --with-sasl-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nspr-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nspr-inc=/opt/csw/include/nspr
+CONFIGURE_ARGS += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
+CONFIGURE_ARGS += --with-ldapsdk-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-ldapsdk-bin=/opt/csw/dirsrv/bin 
+CONFIGURE_ARGS += --with-icu-inc=/opt/csw/include 
+CONFIGURE_ARGS += --with-icu-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-icu-bin=/opt/csw/bin 
+CONFIGURE_ARGS += --with-sasl-inc=/opt/csw/include/sasl 
+CONFIGURE_ARGS += --with-sasl-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nspr-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nspr-inc=/opt/csw/include/nspr
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 include gar/category.mk
