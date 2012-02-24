@@ -8,9 +8,11 @@ DESCRIPTION = Pseudo ttys and constants
 define BLURB
 endef
 
-BUILD_DEP_PKGS += CSWpm-test-simple
-
 CATALOG_RELEASE = unstable
+
+LICENSE = README
+
+BUILD_DEP_PKGS += CSWpm-test-simple
 
 PACKAGES += CSWpm-io-tty
 CATALOGNAME_CSWpm-io-tty = pm_io_tty
