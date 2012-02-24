@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-admin
-VERSION = 1.1.23
+VERSION = 1.1.27
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += CSW389admin.preremove
+DISTFILES += CSW389-admin.preremove
 
 # BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
@@ -41,45 +41,44 @@ RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibiconv2
 
-PACKAGES += CSW389admin-dev
-CATALOGNAME_CSW389admin-dev = 389admin_dev
-SPKG_DESC_CSW389admin-dev += $(DESCRIPTION), development files
-PKGFILES_CSW389admin-dev += /opt/csw/lib/libds-admin-serv.so
-RUNTIME_DEP_PKGS_CSW389admin-dev += CSWlibds-admin-serv0
+PACKAGES += CSW389-admin-dev
+SPKG_DESC_CSW389-admin-dev += $(DESCRIPTION), development files
+PKGFILES_CSW389-admin-dev += /opt/csw/lib/libds-admin-serv.so
+RUNTIME_DEP_PKGS_CSW389-admin-dev += CSWlibds-admin-serv0
 
-PACKAGES += CSW389admin
-SPKG_DESC_CSW389admin += $(DESCRIPTION)
+PACKAGES += CSW389-admin
+SPKG_DESC_CSW389-admin += $(DESCRIPTION)
 INITSMF = /etc/opt/csw/init.d/dirsrv-admin
-RUNTIME_DEP_PKGS_CSW389admin += CSWap2worker
-RUNTIME_DEP_PKGS_CSW389admin += CSWap2modnss
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibprldap60
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibldif60
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSW389admin += CSWperl
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibadmsslutil0
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibplc4
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibicui18n48
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibds-admin-serv0
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibadminutil0
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibplds4
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibldap60
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibsoftokn3
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibsmime3
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibssl3
-RUNTIME_DEP_PKGS_CSW389admin += CSWlibnss3
-RUNTIME_DEP_PKGS_CSW389admin += CSW389-admin-console
-RUNTIME_DEP_PKGS_CSW389admin += CSW389-ds-console
-CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2modnss
-CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSWap2worker
-CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-admin-console
-CHECKPKG_OVERRIDES_CSW389admin += surplus-dependency|CSW389-ds-console
-CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-admin-console
-CHECKPKG_OVERRIDES_CSW389admin += unidentified-dependency|CSW389-ds-console
+RUNTIME_DEP_PKGS_CSW389-admin += CSWap2worker
+RUNTIME_DEP_PKGS_CSW389-admin += CSWap2modnss
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibprldap60
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibldif60
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSW389-admin += CSWperl
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibadmsslutil0
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibplc4
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibssldap60
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibds-admin-serv0
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibadminutil0
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibplds4
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibldap60
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibsoftokn3
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibssl3
+RUNTIME_DEP_PKGS_CSW389-admin += CSWlibnss3
+RUNTIME_DEP_PKGS_CSW389-admin += CSW389-admin-console
+RUNTIME_DEP_PKGS_CSW389-admin += CSW389-ds-console
+CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWap2modnss
+CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWap2worker
+CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSW389-admin-console
+CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSW389-ds-console
+CHECKPKG_OVERRIDES_CSW389-admin += unidentified-dependency|CSW389-admin-console
+CHECKPKG_OVERRIDES_CSW389-admin += unidentified-dependency|CSW389-ds-console
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
