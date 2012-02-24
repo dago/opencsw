@@ -1,31 +1,30 @@
 NAME = POE
-VERSION = 1.287
+VERSION = 1.350
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RCAPUTO
 
-DESCRIPTION = Portable multitasking and networking framework for Perl
+DESCRIPTION = Portable, event-loop agnostic eventy networking and multitasking
 define BLURB
-  POE is a framework for cooperative, event driven multitasking in Perl. Other
-  languages have similar frameworks. Python has Twisted. TCL has "the event
-  loop".
-
-  POE originally was developed as the core of a persistent object server and
-  runtime environment. It has evolved into a general purpose multitasking and
-  networking framework, encompassing and providing a consistent interface to
-  other event loops such as Event and the Tk and Gtk toolkits.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmpoe
-CATALOGNAME = pm_poe
+LICENSE = README
 
-RUNTIME_DEP_PKGS = CSWpmiotty
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpoetestloops
+BUILD_DEP_PKGS += CSWpm-poe-test-loops
 
-ARCHALL = 1
+PACKAGES += CSWpm-poe
+CATALOGNAME_CSWpm-poe = pm_poe
+SPKG_DESC_CSWpm-poe = Portable, event-loop agnostic eventy networking and multitasking.
+ARCHALL_CSWpm-poe = 1
+RUNTIME_DEP_PKGS_CSWpm-poe += CSWpm-io-tty
+RUNTIME_DEP_PKGS_CSWpm-poe += CSWpm-poe-test-loops
+OBSOLETED_BY_CSWpm-poe += CSWpmpoe
+CATALOGNAME_CSWpmpoe = pm_poe_stub
 
-CONFIGURE_ARGS = --default
+# These are just examples:
+CHECKPKG_OVERRIDES_CSWpm-poe += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/POE.3perl
+CHECKPKG_OVERRIDES_CSWpm-poe += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/POE.pm
 
 include gar/category.mk
