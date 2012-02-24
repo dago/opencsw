@@ -1,5 +1,5 @@
 NAME = zsh
-VERSION = 4.3.15
+VERSION = 4.3.17
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -19,7 +19,7 @@ CATALOGNAME_CSWzsh = zsh
 
 LICENSE = LICENCE
 
-RUNTIME_DEP_PKGS = CSWlibiconv2 CSWlibncursesw5 CSWlibpcre0 CSWlibgdbm4
+RUNTIME_DEP_PKGS = CSWlibiconv2 CSWlibncursesw5 CSWlibpcre1 CSWlibgdbm4
 BUILD_DEP_PKGS = CSWpcre
 
 SPKG_SOURCEURL = http://www.zsh.org
