@@ -1,5 +1,5 @@
 NAME = ldns_drill
-VERSION = 1.6.9
+VERSION = 1.6.12
 CATEGORIES = utils
 GARTYPE = v2
 
