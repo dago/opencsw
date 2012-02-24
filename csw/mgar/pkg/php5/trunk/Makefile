@@ -234,6 +234,8 @@ STRIP_LIBTOOL = 1
 
 sysconfdir = /etc$(prefix)/php5
 
+MYSQL_VER = 5.0
+
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 ## build this static, php can not run without it.
@@ -245,10 +247,6 @@ CONFIGURE_ARGS += --enable-intl
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-config-file-path=$(sysconfdir)
 CONFIGURE_ARGS += --with-config-file-scan-dir=$(sysconfdir)/conf.d
-
-ifeq ($(SAPI),ap2)
-MYSQL_VER = 5.0
-
 CONFIGURE_ARGS += --enable-bcmath=shared
 CONFIGURE_ARGS += --enable-calendar=shared
 CONFIGURE_ARGS += --enable-cli
@@ -332,8 +330,6 @@ CONFIGURE_ARGS += --with-xpm-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
-endif
-
 
 # Disable Tests (report submitted to PHP QA)
 #SKIPTEST = 1
