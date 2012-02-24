@@ -41,6 +41,8 @@ CONFIGURE_ARGS += --with-dbfile=/var/opt/csw/nsd/nsd.db
 CONFIGURE_ARGS += --with-difffile=/var/opt/csw/nsd/ixfr.db
 CONFIGURE_ARGS += --with-xfrdfile=/var/opt/csw/nsd/xfrd.state
 
+SKIPTEST = 1
+
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/var/opt/csw/nsd
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
