@@ -1,18 +1,22 @@
 NAME = Test-Differences
-VERSION = 0.47
+VERSION = 0.61
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = RBS
+AUTHOR = OVID
 
-DESCRIPTION = test strings and data structures and show differences
+DESCRIPTION = Test strings and data structures and show differences if not ok
 define BLURB
-  When the code you're testing returns multiple lines, records or data
-  structures and they're just plain wrong, an equivalent to the Unix diff
-  utility may be just what's needed.
 endef
 
-DISTFILES += $(call admfiles,CSWpmtestdiff,depend prototype)
+CATALOG_RELEASE = unstable
 
-DEPENDS += cpan/Text-Diff
+LICENSE = README
+
+PACKAGES += CSWpm-test-differences
+CATALOGNAME_CSWpm-test-differences = pm_test_differences
+SPKG_DESC_CSWpm-test-differences = Test strings and data structures and show differences if not ok
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-test-differences = 1
+RUNTIME_DEP_PKGS_CSWpm-test-differences += CSWpmtextdiff
 
 include gar/category.mk
