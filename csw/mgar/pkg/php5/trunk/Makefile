@@ -234,8 +234,6 @@ STRIP_LIBTOOL = 1
 
 sysconfdir = /etc$(prefix)/php5
 
-MYSQL_VER = 5.0
-
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 ## build this static, php can not run without it.
@@ -304,14 +302,14 @@ CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
-CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/bin/mysql_config-$(MYSQL_VER)
+CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --with-pcre-dir=$(prefix)
 CONFIGURE_ARGS += --with-pcre-regex
 # not documented, but you can pass the path to mysql_config directly
 # we need the 32-bit version, so we have to force this
-CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config-$(MYSQL_VER)
+CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(prefix)/postgresql
 CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
