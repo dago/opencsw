@@ -52,6 +52,20 @@ PKGFILES_CSWlibruby1-9-1-1 += $(libdir)/ruby/.*
 # the next two have /usr/local/bin from dln_find.c.  it should be innocuous and
 # not worth patching
 CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1.so.1
+# a few examples in the comment
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/1.9.1/open3.rb
+# comments
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/minitest/unit.rb
+# comments
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/rubygems/gem_path_searcher.rb
+# comments
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/rubygems/specification.rb
+# a fallback if $PATH isn't set.  let it stand.
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
+# comments
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/fileutils.rb
+# comments
+CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/pathname.rb
 
 ARCHALL_CSWruby191-samples = 1
 SPKG_DESC_CSWruby191-samples = Example programs for Ruby $(VERSION)
@@ -75,7 +89,6 @@ SPKG_DESC_CSWruby191-dev = Ruby $(VERSION) Extension Development Files
 PKGFILES_CSWruby191-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*static.a
 RUNTIME_DEP_PKGS_CSWruby191-dev = CSWruby191
 CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1-static.a
-CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/mkmf.rb
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
