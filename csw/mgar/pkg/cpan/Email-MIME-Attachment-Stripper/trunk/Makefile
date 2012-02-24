@@ -10,7 +10,13 @@ define BLURB
 endef
 
 PACKAGES = CSWpm-email-mime-attachment-stripper
-CATALOGNAME = pm_email-mime-attachment-stripper
+CATALOGNAME = pm_email_mime-attachment_stripper
+
+ARCHALL = 1
+LICENSE = LICENSE
+
+RUNTIME_DEP_PKGS += CSWpm-email-mime-contenttype
+RUNTIME_DEP_PKGS += CSWpm-email-mime
 
 include gar/category.mk
 
