@@ -32,10 +32,12 @@ RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWsasl
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldap60
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibsasl2-2
+
 
 PACKAGES += CSWlibadmsslutil0
 CATALOGNAME_CSWlibadmsslutil0 = libadmsslutil0
@@ -48,11 +50,12 @@ RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWsasl
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibadminutil0
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibsasl2-2
 
 PACKAGES += CSW389-adminutil-dev
 CATALOGNAME_CSW389-adminutil-dev = 389_adminutil_dev
