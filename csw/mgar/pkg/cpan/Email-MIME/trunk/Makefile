@@ -12,6 +12,9 @@ endef
 PACKAGES = CSWpm-email-mime
 CATALOGNAME = pm_email_mime
 
+ARCHALL = 1
+LICENSE = LICENSE
+
 RUNTIME_DEP_PKGS  = CSWpm-email-simple
 RUNTIME_DEP_PKGS += CSWpm-email-messageid
 RUNTIME_DEP_PKGS += CSWpm-email-mime-contenttype
