@@ -1,20 +1,24 @@
 NAME = Text-Diff
-VERSION = 0.35
+VERSION = 1.41
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = RBS
+AUTHOR = OVID
 
-DESCRIPTION = perform diffs on files and record sets
+DESCRIPTION = Perform diffs on files and record sets
 define BLURB
-  diff() provides a basic set of services akin to the GNU diff utility. It is
-  not anywhere near as feature complete as GNU diff, but it is better
-  integrated with Perl and available on all platforms. It is often faster than
-  shelling out to a system's diff executable for small files, and generally
-  slower on larger files.
 endef
 
-DISTFILES = $(call admfiles,CSWpmtextdiff,depend prototype)
+CATALOG_RELEASE = unstable
 
-DEPENDS += cpan/Algorithm-Diff
+LICENSE = LICENSE
+
+PACKAGES += CSWpm-text-diff
+CATALOGNAME_CSWpm-text-diff = pm_text_diff
+SPKG_DESC_CSWpm-text-diff = Perform diffs on files and record sets
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-text-diff = 1
+RUNTIME_DEP_PKGS_CSWpm-text-diff += CSWpm-algorithm-diff
+OBSOLETED_BY_CSWpm-text-diff += CSWpmtextdiff
+CATALOGNAME_CSWpmtextdiff = pm_textdiff_stub
 
 include gar/category.mk
