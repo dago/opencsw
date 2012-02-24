@@ -88,14 +88,14 @@ SPKG_DESC_CSWunbound         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibunbound2
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWunbound += CSWosslrt
+RUNTIME_DEP_PKGS_CSWunbound += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibevent2-0-5
 
 CATALOGNAME_CSWlibunbound2       = libunbound2
 SPKG_DESC_CSWlibunbound2         = Library implementing DNS resolution and validation
 PKGFILES_CSWlibunbound2         += $(PKGFILES_RT)
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibevent2-0-5
 
 CATALOGNAME_CSWunbound-devel       = unbound_devel
@@ -108,7 +108,7 @@ SPKG_DESC_CSWunbound-host         = Unbound DNS lookup utility
 PKGFILES_CSWunbound-host         += $(sbindir)/unbound-host
 PKGFILES_CSWunbound-host         += $(mandir)/man1/unbound-host.1
 RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWunbound-host += CSWosslrt
+RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibunbound2
 RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibevent2-0-5
 
