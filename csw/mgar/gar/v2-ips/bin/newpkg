@@ -1,0 +1,55 @@
+#!/bin/ksh
+#
+# $Id$
+# $URL$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# newpkg - copy the system package template to one or more
+#          package directories.
+#
+
+repo="http://svn:5957/csw/trunk"
+template="$repo/template"
+
+if [ -z "$@" ]; then
+    print "Usage: $0 <distname>..."
+    exit 1
+fi
+
+CWD=`pwd`
+for distname in $@
+do
+    svn export $template $distname 1>/dev/null
+    if [ ! -d $distname ]; then
+        print "Error: failed to export template to $distname"
+        exit 2
+    fi
+
+    category=`basename $CWD`
+    softname=`echo $distname | tr '[A-Z]' '[a-z]' | tr -d '-'`
+    pkgname="CSW$softname"
+
+    if [ "$category" = "cpan" ]; then
+        pkgname="CSWpm$softname"
+        softname="pm_$softname"
+    fi
+
+    gsed -i -e s,PACKAGE,$distname, \
+           -e s,CATEGORY,$category, \
+           -e s,CSWpackage,$pkgname, $distname/Makefile
+
+    mv $distname/files/CSWpackage.gspec $distname/files/$pkgname.gspec
+    gsed -i -e s,CSWpackage,$pkgname, \
+           -e s,package,$softname, $distname/files/$pkgname.gspec
+
+    print "Created skeleton build dir for $distname"
+
+done
+

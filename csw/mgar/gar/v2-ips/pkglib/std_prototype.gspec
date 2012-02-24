@@ -1,0 +1,1 @@
+%prototype      exec pkgproto %{DESTDIR}=/
