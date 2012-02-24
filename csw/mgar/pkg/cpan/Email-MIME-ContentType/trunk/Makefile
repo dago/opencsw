@@ -12,7 +12,7 @@ endef
 PACKAGES = CSWpm-email-mime-contenttype
 CATALOGNAME = pm_email_mime_contenttype
 
-LICENCSE = LICENSE
+LICENSE = LICENSE
 
 ARCHALL = 1
 
