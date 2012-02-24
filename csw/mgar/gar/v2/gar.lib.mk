@@ -882,7 +882,7 @@ build-%/setup.rb:
 # WAF build, for details see http://code.google.com/p/waf/
 build-%/waf:
 	@echo " ==> Running waf build in $*"
-	@$(cd $* ; (BUILD_ENV) ./waf build $(BUILD_ARGS) )
+	(cd $* ; $(BUILD_ENV) ./waf build $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
 # This can be: build, build_py, build_ext, build_clib, build_scripts
@@ -957,6 +957,12 @@ test-%/Rakefile:
 test-%/rakefile:
 	@echo " ==> Running rake $(TEST_TARGET) in $*"
 	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
+	@$(MAKECOOKIE)
+
+# WAF build, for details see http://code.google.com/p/waf/
+test-%/waf:
+	@echo " ==> Running waf $(TEST_TARGET) in $*"
+	(cd $* ; $(BUILD_ENV) ./waf $(TEST_TARGET) )
 	@$(MAKECOOKIE)
 
 test-%/setup.py:
