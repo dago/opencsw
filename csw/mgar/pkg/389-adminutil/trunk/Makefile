@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = 389-adminutil
-VERSION = 1.1.14
+VERSION = 1.1.15
 GARTYPE = v2
 CATEGORIES = lib
 
