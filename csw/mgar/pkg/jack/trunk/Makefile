@@ -1,5 +1,5 @@
 NAME = jack
-VERSION = 1.9.3
+VERSION = 1.9.8
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,20 +16,24 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.grame.fr/~letz/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES += $(DISTNAME).tgz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+# libcelt is only available on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+GARCOMPILER = GCC4
 
 BUILD64_LIBS_ONLY = 1
 
-CONFIGURE_SCRIPTS = $(WORKSRC)/waf
+CONFIGURE_SCRIPTS = $(WORKSRC)/$(DISTNAME)/waf
 CONFIGURE_ARGS = configure --prefix=$(prefix)
 
-BUILD_SCRIPTS = $(WORKSRC)/waf
-BUILD_ARGS = build
+BUILD_SCRIPTS = $(WORKSRC)/$(DISTNAME)/waf
+# BUILD_ARGS = build
 
-INSTALL_SCRIPTS = $(WORKSRC)/waf
-INSTALL_ARGS = install --destdir=$(DESTDIR)
+TEST_SCRIPTS = $(WORKSRC)/$(DISTNAME)/waf
+
+INSTALL_SCRIPTS = $(WORKSRC)/$(DISTNAME)/waf
+INSTALL_ARGS = --destdir=$(DESTDIR)
 
 include gar/category.mk
