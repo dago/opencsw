@@ -1,5 +1,5 @@
 NAME = nsd
-VERSION = 3.2.8
+VERSION = 3.2.10
 CATEGORIES = server
 GARTYPE = v2
 
@@ -20,7 +20,7 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWnsd
-RUNTIME_DEP_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWlibssl0-9-8
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
