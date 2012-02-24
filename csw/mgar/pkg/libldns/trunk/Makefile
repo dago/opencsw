@@ -1,5 +1,5 @@
 NAME = ldns
-VERSION = 1.6.10
+VERSION = 1.6.12
 CATEGORIES = lib
 GARTYPE = v2
 
