@@ -2,6 +2,7 @@ NAME = ruby191
 VERSION = 1.9.3
 # Change this when the build starts putting files in $(libdir)/ruby/$(newver)
 API_VERSION = 1.9.1
+API_SHORT = $(subst .,,$(API_VERSION))
 PATCHLEVEL = p0
 CATEGORIES = lang
 GARTYPE = v2
@@ -77,7 +78,7 @@ CHECKPKG_OVERRIDES_CSWruby191-samples += file-with-bad-content
 
 ARCHALL_CSWruby191-ri = 1
 SPKG_DESC_CSWruby191-ri = Ruby $(VERSION) Interactive Reference
-PKGFILES_CSWruby191-ri = $(datadir)/ri/.* $(bindir)/ri$(API_VERSION)
+PKGFILES_CSWruby191-ri = $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
 RUNTIME_DEP_PKGS_CSWruby191-ri = CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
 
