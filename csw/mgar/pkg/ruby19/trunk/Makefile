@@ -77,8 +77,8 @@ CHECKPKG_OVERRIDES_CSWruby191-samples += file-with-bad-content
 
 ARCHALL_CSWruby191-ri = 1
 SPKG_DESC_CSWruby191-ri = Ruby $(VERSION) Interactive Reference
-PKGFILES_CSWruby191-ri = $(datadir)/ri/.* $(bindir)/ri19
-RUNTIME_DEP_PKGS_CSWruby191-ri = CSWruby191
+PKGFILES_CSWruby191-ri = $(datadir)/ri/.* $(bindir)/ri$(API_VERSION)
+RUNTIME_DEP_PKGS_CSWruby191-ri = CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
 
 # SPKG_DESC_CSWruby191-tk = Ruby $(VERSION) Tcl/TK Extension
@@ -87,7 +87,7 @@ CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
 
 SPKG_DESC_CSWruby191-dev = Ruby $(VERSION) Extension Development Files
 PKGFILES_CSWruby191-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*static.a
-RUNTIME_DEP_PKGS_CSWruby191-dev = CSWruby191
+RUNTIME_DEP_PKGS_CSWruby191-dev = CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1-static.a
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
