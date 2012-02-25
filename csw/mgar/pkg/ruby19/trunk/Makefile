@@ -75,12 +75,14 @@ RUNTIME_DEP_PKGS_CSWruby191-samples = CSWruby191
 CHECKPKG_OVERRIDES_CSWruby191-samples += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby191-samples += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby191-samples += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWruby191-samples += surplus-dependency|CSWruby191
 
 ARCHALL_CSWruby191-ri = 1
 SPKG_DESC_CSWruby191-ri = Ruby $(VERSION) Interactive Reference
 PKGFILES_CSWruby191-ri = $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
-RUNTIME_DEP_PKGS_CSWruby191-ri = CSWlibruby1-9-1-1
+RUNTIME_DEP_PKGS_CSWruby191-ri = CSWruby$(API_SHORT)
 CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWruby191-ri += surplus-dependency|CSWruby$(API_SHORT)
 
 # SPKG_DESC_CSWruby191-tk = Ruby $(VERSION) Tcl/TK Extension
 # RUNTIME_DEP_PKGS_CSWruby191-tk = CSWruby191 CSWlibruby1-9-1-1 CSWtk CSWtcl CSWlibx11
