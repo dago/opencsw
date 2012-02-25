@@ -143,7 +143,7 @@ MERGE_EXCLUDE_STATICLIBS =
 
 COMPILE_ELISP = 1
 
-PI_TARGETS  = samples rbconfig rbscripts
+PI_TARGETS  = samples rbconfig pathfixes
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
@@ -176,8 +176,10 @@ samples:
 	@$(MAKECOOKIE)
 
 # Some scripts come with /usr/local/bin/ruby hard coded.
-rbscripts:
+pathfixes:
 	@echo " ==> Fixing shebang path in distributed ruby scripts"
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(NAME)}g" {} \;
+	@echo " ==> Fixing paths in manpages"
+	@( cd $(DESTDIR)$(mandir)/man1; perl -pi -e 's/usr\/local\/bin\/ruby/opt\/csw\/bin\/ruby191/g' ruby191.1 )
 	@$(MAKECOOKIE)
