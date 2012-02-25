@@ -86,7 +86,7 @@ CHECKPKG_OVERRIDES_CSWruby191-ri += file-with-bad-content
 # PKGFILES_CSWruby191-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 SPKG_DESC_CSWruby191-dev = Ruby $(VERSION) Extension Development Files
-PKGFILES_CSWruby191-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*static.a
+PKGFILES_CSWruby191-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWruby191-dev = CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1-static.a
 
