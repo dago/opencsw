@@ -39,7 +39,7 @@ endef
 
 PACKAGES  =  CSWruby191 CSWruby191-samples CSWruby191-ri
 PACKAGES += CSWruby191-dev CSWlibruby1-9-1-1
-PACKAGES += CSWruby19
+PACKAGES += CSWruby19 CSWruby19-ri CSWruby19-dev
 
 SPKG_DESC_CSWruby191 = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby1-9-1-1
@@ -72,7 +72,17 @@ CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/op
 ARCHALL_CSWruby19 = 1
 SPKG_DESC_CSWruby19 = A meta package for ruby 1.9 (v$(VERSION)/api$(API_VERSION))
 RUNTIME_DEP_PKGS_CSWruby19 = CSWruby$(API_SHORT)
-PKGFILES_CSWruby19 = $(bindir)/.*19 $(mandir).*19.1
+PKGFILES_CSWruby19 = $(foreach RB,erb gem irb rake rdoc ruby testrb,$(bindir)/$(RB)19 $(mandir).*19.1)
+
+ARCHALL_CSWruby19-dev = 1
+SPKG_DESC_CSWruby19-dev = A meta devel package ruby 1.9 (v$(VERSION)/api$(API_VERSION))
+RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby$(API_SHORT)-dev
+PKGFILES_CSWruby19-dev = NOFILES
+
+ARCHALL_CSWruby19-ri = 1
+SPKG_DESC_CSWruby19-ri = A meta package ruby ri 1.9 (v$(VERSION)/api$(API_VERSION))
+RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby$(API_SHORT)-ri
+PKGFILES_CSWruby19-ri = $(bindir)/ri19
 
 ARCHALL_CSWruby191-samples = 1
 SPKG_DESC_CSWruby191-samples = Example programs for Ruby $(VERSION)
