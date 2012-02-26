@@ -151,13 +151,21 @@ MERGE_EXCLUDE_STATICLIBS =
 
 COMPILE_ELISP = 1
 
-PI_TARGETS = samples rbconfig
+post-install-modulated:
+	@echo " ==> Fixing the paths in rbconfig."
+	@gsed -i -e s,$(DESTDIR),, \
+		$(DESTDIR)$(libdir)/ruby/$(API_VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 
-
-post-install-modulated: $(PI_TARGETS)
+	@echo " ==> Installing sample code files."
+	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/$(NAME)/
+	@for ext in bigdecimal tk win32ole ; do \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/$(NAME)/sample/$$ext ; \
+	done
 	@$(MAKECOOKIE)
 
-
+# leave this out of post-install for now...we're not modulating on compiler
+# just yet.
 multiconfig: RBCONFIG=/opt/csw/lib/ruby/$(API_VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
@@ -170,23 +178,7 @@ multiconfig:
 	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/$(NAME)/
 	@$(MAKECONFIG)
 
-# Fix up rbconfig
-rbconfig:
-	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/ruby/$(API_VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
-	@$(MAKECOOKIE)
 
-# Copy samples
-samples:
-	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)/
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/$(NAME)/
-	@for ext in bigdecimal tk win32ole ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/$(NAME)/sample/$$ext ; \
-	done
-	@$(MAKECOOKIE)
-
-# Some scripts come with /usr/local/bin/ruby hard coded.
-# Provide a few symlinks for the ruby19 metapackage
 post-merge:
 	@echo " ==> Fixing shebang path in distributed ruby scripts"
 	@find $(PKGROOT)$(prefix) -type f -name '*.rb' -exec \
@@ -194,7 +186,7 @@ post-merge:
 	@echo " ==> Fixing paths in manpages"
 	@( cd $(PKGROOT)$(mandir)/man1; perl -pi -e 's!usr/local/bin/ruby!opt/csw/bin/ruby191!g' ruby191.1 )
 	@echo " ==> Installing symlinks from foo19 -> foo191"
-	( cd $(PKGROOT)/$(bindir); \
+	@( cd $(PKGROOT)/$(bindir); \
 		for bin in ri erb gem irb rake rdoc ruby testrb; do \
 			ln -s $${bin}$(API_SHORT) $${bin}19; \
 		done; \
