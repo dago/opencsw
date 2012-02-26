@@ -69,7 +69,10 @@ CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/op
 # comments
 CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/pathname.rb
 
-SPKG_DESC_CSWruby19 = A meta package for ruby 1.9 to pull Ruby $(VERSION) (api: $(API_VERSION)
+ARCHALL_CSWruby19 = 1
+SPKG_DESC_CSWruby19 = A meta package for ruby 1.9 (v$(VERSION)/api$(API_VERSION))
+RUNTIME_DEP_PKGS_CSWruby19 = CSWruby$(API_SHORT)
+PKGFILES_CSWruby19 = $(bindir)/.*19 $(mandir).*19.1
 
 ARCHALL_CSWruby191-samples = 1
 SPKG_DESC_CSWruby191-samples = Example programs for Ruby $(VERSION)
