@@ -12,7 +12,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 # Use patch until this is fixed:
 #   https://sourceforge.net/tracker/?func=detail&aid=3494835&group_id=53066&atid=469573
-PATCHFILES += Use-expr-instead-of-bashism.patch
+PATCHFILES += 0001-Use-expr-instead-of-bashism.patch
 
 VENDOR_URL = http://www.tcpdump.org/
 
