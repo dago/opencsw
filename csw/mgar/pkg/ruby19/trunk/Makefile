@@ -152,13 +152,11 @@ MERGE_EXCLUDE_STATICLIBS =
 COMPILE_ELISP = 1
 
 PI_TARGETS = samples rbconfig
-PM_TARGETS = pathfixes ruby19links
+
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
-post-merge: $(PM_TARGETS)
-	@$(MAKECOOKIE)
 
 multiconfig: RBCONFIG=/opt/csw/lib/ruby/$(API_VERSION)/$(GARCH)-solaris2.10/rbconfig.rb
 multiconfig:
@@ -188,23 +186,20 @@ samples:
 	@$(MAKECOOKIE)
 
 # Some scripts come with /usr/local/bin/ruby hard coded.
-pathfixes:
+# Provide a few symlinks for the ruby19 metapackage
+post-merge:
 	@echo " ==> Fixing shebang path in distributed ruby scripts"
 	@find $(PKGROOT)$(prefix) -type f -name '*.rb' -exec \
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(NAME)}g" {} \;
 	@echo " ==> Fixing paths in manpages"
 	@( cd $(PKGROOT)$(mandir)/man1; perl -pi -e 's!usr/local/bin/ruby!opt/csw/bin/ruby191!g' ruby191.1 )
-	@$(MAKECOOKIE)
-
-# Provide a few symlinks for the ruby19 metapackage
-ruby19links:
 	@echo " ==> Installing symlinks from foo19 -> foo191"
-	@( cd $(PKGROOT)/$(bindir); \
-		ln -s erb191 erb19; \
-		ln -s gem191 gem19; \
-		ln -s irb191 irb19; \
-		ln -s rake191 rake19; \
-		ln -s rdoc191 rdoc19; \
-		ln -s ruby191 ruby19; \
-		ln -s testrb191 testrb19 )
+	( cd $(PKGROOT)/$(bindir); \
+		for bin in ri erb gem irb rake rdoc ruby testrb; do \
+			ln -s $${bin}$(API_SHORT) $${bin}19; \
+		done; \
+	   cd $(PKGROOT)/$(mandir)/man1; \
+		for man in erb irb rake ri ruby; do \
+			ln -s $${man}$(API_SHORT).1 $${man}19.1; \
+		done; )
 	@$(MAKECOOKIE)
