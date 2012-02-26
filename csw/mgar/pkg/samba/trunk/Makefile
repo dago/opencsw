@@ -64,7 +64,9 @@ CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/sha
 
 # Make one unified package for now
 OBSOLETED_BY_CSWsamba += CSWsambacommon
+CATALOGNME_CSWsambacommon = samba_common_stub
 OBSOLETED_BY_CSWsamba += CSWsambadoc
+CATALOGNAME_CSWsambadoc = samba_doc_stub
 
 PACKAGES += CSWsamba-client
 SPKG_DESC_CSWsamba-client = Client binaries for samba
