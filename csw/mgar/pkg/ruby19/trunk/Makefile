@@ -39,6 +39,7 @@ endef
 
 PACKAGES  =  CSWruby191 CSWruby191-samples CSWruby191-ri
 PACKAGES += CSWruby191-dev CSWlibruby1-9-1-1
+PACKAGES += CSWruby19
 
 SPKG_DESC_CSWruby191 = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby1-9-1-1
@@ -68,6 +69,8 @@ CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/op
 # comments
 CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.9.1/pathname.rb
 
+SPKG_DESC_CSWruby19 = A meta package for ruby 1.9 to pull Ruby $(VERSION) (api: $(API_VERSION)
+
 ARCHALL_CSWruby191-samples = 1
 SPKG_DESC_CSWruby191-samples = Example programs for Ruby $(VERSION)
 PKGFILES_CSWruby191-samples = $(docdir)/$(NAME)/sample.*
@@ -92,6 +95,9 @@ SPKG_DESC_CSWruby191-dev = Ruby $(VERSION) Extension Development Files
 PKGFILES_CSWruby191-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWruby191-dev = CSWlibruby1-9-1-1
 CHECKPKG_OVERRIDES_CSWruby191-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1-static.a
+
+ALTERNATIVES_CSWruby191 = ruby
+ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby$(API_SHORT) 1 $(bindir)/irb irb $(bindir)/irb$(API_SHORT) $(bindir)/erb erb $(bindir)/erb$(API_SORT) $(bindir)/rdoc rdoc $(bindir)/rdoc$(API_SHORT) $(bindir)/ri ri $(bindir)/ri$(API_SHORT) $(bindir)/testrb testrb $(bindir)/testrb$(API_SHORT) $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby$(API_SHORT).1
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -146,7 +152,7 @@ MERGE_EXCLUDE_STATICLIBS =
 COMPILE_ELISP = 1
 
 PI_TARGETS = samples rbconfig
-PM_TARGETS = pathfixes
+PM_TARGETS = pathfixes ruby19links
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
@@ -188,4 +194,17 @@ pathfixes:
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(NAME)}g" {} \;
 	@echo " ==> Fixing paths in manpages"
 	@( cd $(PKGROOT)$(mandir)/man1; perl -pi -e 's!usr/local/bin/ruby!opt/csw/bin/ruby191!g' ruby191.1 )
+	@$(MAKECOOKIE)
+
+# Provide a few symlinks for the ruby19 metapackage
+ruby19links:
+	@echo " ==> Installing symlinks from foo19 -> foo191"
+	@( cd $(PKGROOT)/$(bindir); \
+		ln -s erb191 erb19; \
+		ln -s gem191 gem19; \
+		ln -s irb191 irb19; \
+		ln -s rake191 rake19; \
+		ln -s rdoc191 rdoc19; \
+		ln -s ruby191 ruby19; \
+		ln -s testrb191 testrb19 )
 	@$(MAKECOOKIE)
