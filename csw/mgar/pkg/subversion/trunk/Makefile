@@ -306,8 +306,8 @@ post-configure-modulated:
 		-e 's,-mt|*,,' \
 		-e 's,-xO3,-pipe -O2,' \
 		-e 's,KPIC,fPIC,' \
-		-e 's,/opt/SUNWspro/bin/cc,/opt/csw/gcc4/bin/gcc,' \
-		-e 's,/opt/SUNWspro/bin/CC,/opt/csw/gcc4/bin/g++,' \
+		-e 's,/opt/SUNWspro/bin/cc,/opt/csw/bin/gcc,' \
+		-e 's,/opt/SUNWspro/bin/CC,/opt/csw/bin/g++,' \
 		 $(WORKSRC)/*.gcc
 	gsed -i -e 's,libtool,libtool.gcc,' $(WORKSRC)/Makefile.gcc
 	gsed -i -e 's,postdeps=.*,postdeps="",' $(WORKSRC)/libtool.gcc
