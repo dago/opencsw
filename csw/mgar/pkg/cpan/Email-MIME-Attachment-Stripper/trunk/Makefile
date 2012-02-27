@@ -4,12 +4,12 @@ GARTYPE = v2
 CATEGORIES = cpan
 AUTHOR = RJBS
 
-DESCRIPTION = strip the attachments from an email
+DESCRIPTION = Strip the attachments from an email.
 define BLURB
-  strip the attachments from an email
+  Strip the attachments from an email
 endef
 
-PACKAGES = CSWpm-email-mime-attachment-stripper
+PACKAGES = CSWpmemailmimeattachmentstripper
 CATALOGNAME = pm_email_mime-attachment_stripper
 
 ARCHALL = 1
