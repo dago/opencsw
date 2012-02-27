@@ -43,7 +43,6 @@ PACKAGES += CSWruby19 CSWruby19-ri CSWruby19-dev
 
 SPKG_DESC_CSWruby191 = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby1-9-1-1
-CHECKPKG_OVERRIDES_CSWruby191 += missing-dependency|CSWruby
 
 SPKG_DESC_CSWlibruby1-9-1-1 = The libruby shared object files (Ruby $(VERSION), API $(API_VERSION))
 RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
@@ -92,7 +91,6 @@ RUNTIME_DEP_PKGS_CSWruby191-samples = CSWruby191
 CHECKPKG_OVERRIDES_CSWruby191-samples += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby191-samples += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby191-samples += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWruby191-samples += surplus-dependency|CSWruby191
 
 ARCHALL_CSWruby191-ri = 1
 SPKG_DESC_CSWruby191-ri = Ruby $(VERSION) Interactive Reference
