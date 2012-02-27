@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.2.9.9
+VERSION = 1.2.10.2
 GARTYPE = v2
 CATEGORIES = server
 
@@ -23,10 +23,12 @@ LICENSE = LICENSE
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
-PATCHFILES += 0003-add-user-and-var-run-dirsrv.patch
-# until Red Hat Bugzilla Bug 773617 is open do it yourself
-PATCHFILES += 0004-add-i386-platform-to-Makefile.am-and-configure.ac.patch
 PATCHFILES += 0005-smf-autoenable-no.patch
+PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
+# until Red Hat Bugzilla Bug 773617 is open do it yourself
+PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
+PATCHFILES += 0007-fixup-Makefile.am.patch
+PATCHFILES += 0007-fixup-plugin_syntax.c.patch
 
 INITSMF = /etc/opt/csw/init.d/dirsrv
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
@@ -39,7 +41,6 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWnetsnmp
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplds4
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicudata48
@@ -54,6 +55,7 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnssdbm3
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre1
 
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
