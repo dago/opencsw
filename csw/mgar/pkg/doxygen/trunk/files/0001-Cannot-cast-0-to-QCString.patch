@@ -1,0 +1,26 @@
+From 8de9063649a747a8d0570043970ca1736b7e5007 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 26 Feb 2012 23:04:01 +0100
+Subject: [PATCH] Cannot cast 0 to QCString
+
+---
+ src/htmldocvisitor.cpp |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/src/htmldocvisitor.cpp b/src/htmldocvisitor.cpp
+index 14be9d7..7d604f3 100644
+--- a/src/htmldocvisitor.cpp
++++ b/src/htmldocvisitor.cpp
+@@ -1376,7 +1376,8 @@ void HtmlDocVisitor::visitPre(DocRef *ref)
+   {
+     // when ref->isSubPage()==TRUE we use ref->file() for HTML and
+     // ref->anchor() for LaTeX/RTF
+-    startLink(ref->ref(),ref->file(),ref->relPath(),ref->isSubPage() ? 0 : ref->anchor());
++    QCString empty = "";
++    startLink(ref->ref(),ref->file(),ref->relPath(),ref->isSubPage() ? empty : ref->anchor());
+   }
+   if (!ref->hasLinkText()) filter(ref->targetTitle());
+ }
+-- 
+1.7.9
+
