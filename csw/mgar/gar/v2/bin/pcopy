@@ -130,7 +130,7 @@ sub docopy {
       }
     }
   }
-  if( -d $whole ) {
+  if( -d $whole && ! -l $whole ) {
     make_path( $todir . '/' . $target );
     return;
   }
@@ -147,6 +147,7 @@ sub docopy {
     } elsif( -e $linktarget ) {
       print "Could not link to $linktarget as there is some file already there\n";
     } else {
+print "symlink\n";
       symlink( $link, $todir . '/' . $target ) or print "Could not link to $todir/$target\n";
     }
   } else {
