@@ -1,9 +1,9 @@
 # $Id$
 
 NAME = boost
-VERSION = 1.45.0
-GARTYPE = v1
+VERSION = 1.49.0
 CATEGORIES = lib
+GARTYPE = v2
 
 define BLURB
   Boost was begun by members of the C++ standards committee Library Working
@@ -22,12 +22,16 @@ DISTVERSION = $(subst .,_,$(VERSION))
 DISTNAME = $(NAME)_$(DISTVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
-prefix = /opt/csw/boost-gcc
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+# ISA_DEFAULT_sparc-5.10 = sparcv8plus
+
+PATCHFILES += 0001-Don-t-try-to-use-fchmodat.patch
+
+prefix = /opt/csw/gcc
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7586
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
 
 GARCOMPILER = GNU
 TOOLSET = gcc
@@ -35,13 +39,13 @@ COMPILER_SUFFIX_PKG = -gcc
 COMPILER_SUFFIX_CAT = _gcc
 
 PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG) += boost
+CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG) += boost$(COMPILER_SUFFIX_CAT)
 SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG) = Boost libraries
 # The boost build system is hard to harness.
 CHECKPKG_OVERRIDES_CSWboost$(COMPILER_SUFFIX_PKG) += bad-rpath-entry
 
 PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)devel
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG)devel = boost_devel
+CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG)devel = boost$(COMPILER_SUFFIX_CAT)_devel
 SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG)devel = Boost libraries, development files
 PKGFILES_CSWboost$(COMPILER_SUFFIX_PKG)devel = $(PKGFILES_DEVEL)
 
@@ -50,19 +54,23 @@ LICENSE = LICENSE_1_0.txt
 
 BUILD_DEP_PKGS += CSWstar
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = bjam
+CONFIGURE_SCRIPTS = boost
+BUILD_SCRIPTS = boost
 INSTALL_SCRIPTS = bjam
 
 BUILD_ARGS += toolset=$(TOOLSET)
 BUILD_ARGS += --prefix=$(DESTDIR)$(prefix)
+BUILD_ARGS += --libdir=$(DESTDIR)$(libdir)
 BUILD_ARGS += link=shared
 BUILD_ARGS += cflags="$(CFLAGS)"
 BUILD_ARGS += cxxflags="$(CXXFLAGS)"
 BUILD_ARGS += linkflags="$(LDFLAGS) $(LD_OPTIONS)"
 # Stop on the first error
 BUILD_ARGS += -q
-BUILD_ARGS += include="/opt/csw/boost-gcc/include"
+# Display commands as you run them, I want to know what you are doing there
+BUILD_ARGS += -d+2
+BUILD_ARGS += include="/opt/csw/gcc/include"
+BUILD_ARGS += --debug-building
 
 TEST_SCRIPTS =
 
@@ -89,16 +97,17 @@ tar-bz-extract-%:
 	/opt/csw/bin/star -bz -x -C $(EXTRACTDIR) -f $(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
 
-pre-configure-modulated:
-	( cd $(WORKSRC)/tools/jam/src && \
-	  ./build.sh $(TOOLSET) && \
-	  mkdir -p $(DESTDIR)$(bindir) && \
-	  cp bin.$(JAMDIR)/bjam $(DESTDIR)$(bindir) )
+configure-boost:
+	( cd $(WORKSRC) && \
+	  ./bootstrap.sh $(TOOLSET))
+	# && \
+	#  mkdir -p $(DESTDIR)$(bindir) && \
+	#  cp bin.$(JAMDIR)/bjam $(DESTDIR)$(bindir) )
 	@$(MAKECOOKIE)
 
-build-bjam:
+build-boost:
 	cd $(WORKSRC) && \
-		$(DESTDIR)$(bindir)/bjam \
+		./b2 \
 		  -d+2 \
 			$(BJAM_PARALLELMFLAGS) \
 			$(BUILD_ARGS)
@@ -106,8 +115,7 @@ build-bjam:
 
 install-bjam:
 	cd $(WORKSRC) && \
-		$(DESTDIR)$(bindir)/bjam \
-		  -d+2 \
+		./b2 \
 			$(BJAM_PARALLELMFLAGS) \
 			$(BUILD_ARGS) \
 			install
