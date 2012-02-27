@@ -30,6 +30,7 @@ ARCHALL_CSWdoxygen-doc = 1
 # for these tiny examples seems overkill.
 CHECKPKG_OVERRIDES_CSWdoxygen-doc = missing-dependency|CSWpython
 OBSOLETED_BY_CSWdoxygen-doc = CSWdoxygendoc
+CATALOGNAME_CSWdoxygendoc = doxygen_doc_stub
 # These are pure examples
 CHECKPKG_OVERRIDES_CSWdoxygen-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/doxygen/html/config.html
 CHECKPKG_OVERRIDES_CSWdoxygen-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/doxygen/html/install.html
