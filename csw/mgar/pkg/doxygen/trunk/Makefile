@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.7.6.1
+VERSION = 1.8.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -12,14 +12,14 @@ endef
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
 DISTFILES  = $(DISTNAME).src.tar.gz
 
+# Use patch until this is fixed:
+#   https://bugzilla.gnome.org/show_bug.cgi?id=670853
+PATCHFILES += 0001-Cannot-cast-0-to-QCString.patch
+
 PACKAGES += CSWdoxygen
 CATALOGNAME_CSWdoxygen = doxygen
 SPKG_DESC_CSWdoxygen = A documentation system for programming languages
 # PKGFILES is catchall
-
-# That is from the BibTeX-style:
-#   %%% Modification of BibTeX style file /usr/local/texlive/2008/texmf-dist/bibtex/bst/base/plain.bst
-CHECKPKG_OVERRIDES_CSWdoxygen += file-with-bad-content|/usr/local|root/opt/csw/bin/doxygen
 
 PACKAGES += CSWdoxygen-doc
 CATALOGNAME_CSWdoxygen-doc = doxygen_doc
