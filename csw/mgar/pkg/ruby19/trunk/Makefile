@@ -78,10 +78,11 @@ ARCHALL_CSWruby19-dev = 1
 SPKG_DESC_CSWruby19-dev = A meta devel package ruby 1.9 (v$(VERSION)/api$(API_VERSION))
 RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby$(API_SHORT)-dev
 PKGFILES_CSWruby19-dev = NOFILES
+CHECKPKG_OVERRIDES_CSWruby19-dev += archall-devel-package
 
 ARCHALL_CSWruby19-ri = 1
 SPKG_DESC_CSWruby19-ri = A meta package ruby ri 1.9 (v$(VERSION)/api$(API_VERSION))
-RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby$(API_SHORT)-ri
+RUNTIME_DEP_PKGS_CSWruby19-ri = CSWruby$(API_SHORT)-ri
 PKGFILES_CSWruby19-ri = $(bindir)/ri19
 
 ARCHALL_CSWruby191-samples = 1
