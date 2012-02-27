@@ -35,8 +35,6 @@ INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
 PRESERVECONF = /etc/opt/csw/$(NAME)/conf/.*
 
-CLASSES=none cswusergroup cswpreserveconf
-
 PROTOTYPE_MODIFIERS     = varuser etcperm
 PROTOTYPE_FILES_varuser = /var/opt/csw/$(NAME)/.*
 PROTOTYPE_USER_varuser  = tomcat
