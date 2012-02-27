@@ -39,6 +39,7 @@ PROTOTYPE_MODIFIERS     = varuser etcperm
 PROTOTYPE_FILES_varuser = /var/opt/csw/$(NAME)/.*
 PROTOTYPE_USER_varuser  = tomcat
 PROTOTYPE_GROUP_varuser = tomcat
+PROTOTYPE_CLASS_varuser = ugfiles
 PROTOTYPE_FILES_etcperm = /etc/opt/csw/$(NAME)/conf/.*\.CSW
 PROTOTYPE_PERMS_etcperm = 0640
 PROTOTYPE_USER_etcperm  = tomcat
