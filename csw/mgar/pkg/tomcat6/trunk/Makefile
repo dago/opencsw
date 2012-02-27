@@ -1,5 +1,5 @@
 NAME      = tomcat6
-VERSION   = 6.0.32
+VERSION   = 6.0.35
 CATEGORIES   = server
 GARTYPE = v2
 
@@ -34,6 +34,8 @@ prefix            = /
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
 PRESERVECONF = /etc/opt/csw/$(NAME)/conf/.*
+
+CLASSES=none cswusergroup cswpreserveconf
 
 PROTOTYPE_MODIFIERS     = varuser etcperm
 PROTOTYPE_FILES_varuser = /var/opt/csw/$(NAME)/.*
@@ -94,10 +96,10 @@ install-tomcat:
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/work $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/temp $(DESTDIR)/var/opt/csw/$(NAME) )
 	( rm $(DESTDIR)/var/opt/csw/tomcat6/temp/safeToDelete.tmp )
-	( ln -s /etc/opt/csw/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
-	( ln -s /var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs )
-	( ln -s /var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work )
-	( ln -s /var/opt/csw/$(NAME)/temp $(DESTDIR)/opt/csw/share/$(NAME)/temp )
+	( ln -s ../../../../etc/opt/csw/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
+	( ln -s ../../../../var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs )
+	( ln -s ../../../../var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work )
+	( ln -s ../../../../var/opt/csw/$(NAME)/temp $(DESTDIR)/opt/csw/share/$(NAME)/temp )
 	( ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME) )
 	@$(MAKECOOKIE)
 
