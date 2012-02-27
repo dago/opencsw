@@ -1,0 +1,61 @@
+From db06cf05345797aabaaa727e4b8c613c3f6e067e Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Mon, 27 Feb 2012 15:36:21 +0100
+Subject: [PATCH] fixup Makefile.am
+
+---
+ Makefile.am |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index bb761e3..0bd9fb3 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -696,7 +696,7 @@ libslapd_la_SOURCES = ldap/servers/slapd/add.c \
+ 	$(libavl_a_SOURCES)
+ 
+ libslapd_la_CPPFLAGS = $(PLUGIN_CPPFLAGS) @sasl_inc@ @db_inc@ @svrcore_inc@ @kerberos_inc@ @pcre_inc@
+-if SOLARIS
++if SPARC
+ libslapd_la_SOURCES += ldap/servers/slapd/slapi_counter_sunos_sparcv9.S
+ endif
+ 
+@@ -886,7 +886,7 @@ libcollation_plugin_la_SOURCES = ldap/servers/plugins/collation/collate.c \
+         ldap/servers/plugins/collation/config.c \
+         ldap/servers/plugins/collation/orfilter.c
+ 
+-libcollation_plugin_la_CPPFLAGS = @icu_inc@ $(PLUGIN_CPPFLAGS)
++libcollation_plugin_la_CPPFLAGS = $(PLUGIN_CPPFLAGS) @icu_inc@
+ libcollation_plugin_la_LIBADD = libslapd.la $(LDAPSDK_LINK) $(NSPR_LINK) $(ICU_LINK) $(LIBCSTD) $(LIBCRUN)
+ libcollation_plugin_la_LDFLAGS = -avoid-version
+ libcollation_plugin_la_LINK = $(CXXLINK) -avoid-version
+@@ -1439,7 +1439,7 @@ fixupcmd = sed \
+ 	-e 's,@systemdsystemconfdir\@,$(systemdsystemconfdir),g' \
+ 	-e 's,@systemdgroupname\@,$(systemdgroupname),g'
+ else
+-fixupcmd = sed \
++fixupcmd = $(SED) \
+ 	-e 's,@bindir\@,$(bindir),g' \
+ 	-e 's,@sbindir\@,$(sbindir),g' \
+ 	-e 's,@libdir\@,$(libdir),g' \
+@@ -1519,7 +1519,7 @@ endif
+ if SYSTEMD
+ 	$(fixupcmd) $^ | sed -e 's/@preamble@/# This file is in systemd EnvironmentFile format - see man systemd.exec/' > $@
+ else
+-	$(fixupcmd) $^ | sed -n -e 's/@preamble@//' -e '/^#/{p;d}' -e '/^$$/{p;d}' -e 's/^\([^=]*\)\(=.*\)$$/\1\2 ; export \1/ ; p' > $@
++	$(fixupcmd) $^ | $(SED) -n -e 's/@preamble@//' -e '/^#/{p;d}' -e '/^$$/{p;d}' -e 's/^\([^=]*\)\(=.*\)$$/\1\2 ; export \1/ ; p' > $@
+ 	$(fixupcmd) $(srcdir)/ldap/admin/src/initconfig.in >> $@
+ endif
+ 
+@@ -1528,7 +1528,7 @@ endif
+ if SYSTEMD
+ 	$(fixupcmd) $^ | sed -e 's/@preamble@/# This file is in systemd EnvironmentFile format - see man systemd.exec/' > $@
+ else
+-	$(fixupcmd) $^ | sed -n -e 's/@preamble@//' -e '/^#/{p;d}' -e '/^$$/{p;d}' -e 's/^\([^=]*\)\(=.*\)$$/\1\2 ; export \1/ ; p' > $@
++	$(fixupcmd) $^ | $(SED) -n -e 's/@preamble@//' -e '/^#/{p;d}' -e '/^$$/{p;d}' -e 's/^\([^=]*\)\(=.*\)$$/\1\2 ; export \1/ ; p' > $@
+ endif
+ 
+ %/$(PACKAGE_NAME).pc: %/dirsrv.pc.in
+-- 
+1.7.9
+

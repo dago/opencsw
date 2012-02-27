@@ -1,0 +1,40 @@
+From 02d3fc96b22f79ca5562949790b53ce7ae63f019 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Mon, 27 Feb 2012 10:16:15 +0100
+Subject: [PATCH] add var run create initconfig.in
+
+---
+ ldap/admin/src/initconfig.in |   15 ++++++++++++++-
+ 1 files changed, 14 insertions(+), 1 deletions(-)
+
+diff --git a/ldap/admin/src/initconfig.in b/ldap/admin/src/initconfig.in
+index 134e82c..8a73573 100644
+--- a/ldap/admin/src/initconfig.in
++++ b/ldap/admin/src/initconfig.in
+@@ -4,9 +4,22 @@ OS=`uname -s`
+ # this requires Solaris 9 update 3 or later
+ if [ "$OS" = "SunOS" -a -f /usr/lib/libumem.so ] ; then
+     LD_PRELOAD=/usr/lib/libumem.so
+-    export LD_PRELOAD
++#   UMEM_DEBUG=default
++#   UMEM_LOGGING=transaction
++    export LD_PRELOAD # UMEM_DEBUG UMEM_LOGGING
+ fi
+ if [ "$OS" = "SunOS" -a -f /usr/lib/64/libumem.so ] ; then
+     LD_PRELOAD_64=/usr/lib/64/libumem.so
+     export LD_PRELOAD_64
+ fi
++
++USER=`/usr/xpg4/bin/id -u -n`
++export USER
++[ ! -d @localstatedir@/opt/csw/run/dirsrv ] && mkdir -p @localstatedir@/opt/csw/run/dirsrv
++if [ -f @instconfigdir@/admin-serv/adm.conf ]; then
++  slapduser=`grep SuiteSpotUserID @instconfigdir@/admin-serv/adm.conf | cut -d: -f2 | tr -d ' '`
++  slapdgroup=`grep SuiteSpotGroup @instconfigdir@/admin-serv/adm.conf | cut -d: -f2 | tr -d ' '`
++  chown $slapduser:$slapdgroup @localstatedir@/opt/csw/run/dirsrv
++fi
++chmod g+w @localstatedir@/opt/csw/run/dirsrv
++chmod +rx @localstatedir@/opt/csw/run
+-- 
+1.7.9
+

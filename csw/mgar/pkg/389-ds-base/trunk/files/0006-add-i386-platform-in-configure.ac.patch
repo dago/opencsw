@@ -1,40 +1,17 @@
-From f4315b6b8516a8bfd9b09d2723b78c90e4581652 Mon Sep 17 00:00:00 2001
+From 84b9164a4de6e6a31fe9b1fb239f09debd71b001 Mon Sep 17 00:00:00 2001
 From: Carsten Grzemba <cgrzemba@opencsw.org>
-Date: Thu, 12 Jan 2012 12:09:34 +0100
-Subject: [PATCH] add i386 platform to Makefile.am and configure.ac
+Date: Mon, 27 Feb 2012 10:26:02 +0100
+Subject: [PATCH] add i386 platform in configure.ac
 
 ---
- Makefile.am  |    4 ++--
  configure.ac |   18 ++++++++++++++----
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index 4bf1966..6b01783 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -682,7 +682,7 @@ libslapd_la_SOURCES = ldap/servers/slapd/add.c \
- 	$(libavl_a_SOURCES)
- 
- libslapd_la_CPPFLAGS = $(PLUGIN_CPPFLAGS) @sasl_inc@ @db_inc@ @svrcore_inc@ @kerberos_inc@ @pcre_inc@
--if SOLARIS
-+if SPARC
- libslapd_la_SOURCES += ldap/servers/slapd/slapi_counter_sunos_sparcv9.S
- endif
- 
-@@ -863,7 +863,7 @@ libcollation_plugin_la_SOURCES = ldap/servers/plugins/collation/collate.c \
-         ldap/servers/plugins/collation/config.c \
-         ldap/servers/plugins/collation/orfilter.c
- 
--libcollation_plugin_la_CPPFLAGS = @icu_inc@ $(PLUGIN_CPPFLAGS)
-+libcollation_plugin_la_CPPFLAGS = $(PLUGIN_CPPFLAGS) @icu_inc@
- libcollation_plugin_la_LIBADD = libslapd.la $(LDAPSDK_LINK) $(NSPR_LINK) $(ICU_LINK) $(LIBCSTD) $(LIBCRUN)
- libcollation_plugin_la_LDFLAGS = -avoid-version
- libcollation_plugin_la_LINK = $(CXXLINK) -avoid-version
 diff --git a/configure.ac b/configure.ac
-index 6d8e277..ad94787 100644
+index f993e37..a773763 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -460,20 +460,18 @@ case $host in
+@@ -524,20 +524,18 @@ case $host in
      # HPUX doesn't use /etc for this
      initdir=/init.d
      ;;
@@ -56,7 +33,7 @@ index 6d8e277..ad94787 100644
  dnl socket nsl and dl are required to link several programs and libdb
      LIBSOCKET=-lsocket
      AC_SUBST([LIBSOCKET], [$LIBSOCKET])
-@@ -488,8 +486,19 @@ dnl Cstd and Crun are required to link any C++ related code
+@@ -552,8 +550,19 @@ dnl Cstd and Crun are required to link any C++ related code
      AC_SUBST([LIBCRUN], [$LIBCRUN])
      platform="solaris"
      # assume 64 bit
@@ -71,20 +48,20 @@ index 6d8e277..ad94787 100644
 +dnl includes some assembler stuff in counter.o
 +        AC_DEFINE([ATOMIC_64BIT_OPERATIONS], [1], [enabling atomic counter])
 +        AC_DEFINE([CPU_sparc], [], [cpu type sparc])
-+	TARGET='SPARC'
++       TARGET='SPARC'
 +        ;;
 +    esac
      ;;
    *)
      platform=""
-@@ -519,6 +528,7 @@ AC_SUBST(initconfigdir)
+@@ -584,6 +593,7 @@ AC_SUBST(initconfigdir)
  
- AM_CONDITIONAL(HPUX,test "$platform" = "hpux")
- AM_CONDITIONAL(SOLARIS,test "$platform" = "solaris")
-+AM_CONDITIONAL(SPARC, test x$TARGET = xSPARC)
+ AM_CONDITIONAL([HPUX],[test "$platform" = "hpux"])
+ AM_CONDITIONAL([SOLARIS],[test "$platform" = "solaris"])
++AM_CONDITIONAL(SPARC, [test "$TARGET" = "SPARC"])
+ AM_CONDITIONAL([SYSTEMD],[test -n "$with_systemdsystemunitdir" -o -n "$with_systemdsystemconfdir"])
  
  # Check for library dependencies
- m4_include(m4/nspr.m4)
 -- 
-1.7.8.2
+1.7.9
 
