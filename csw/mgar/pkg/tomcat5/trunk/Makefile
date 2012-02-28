@@ -46,12 +46,12 @@ PRESERVECONF += /etc/opt/csw/$(NAME)/conf/server.xml
 PRESERVECONF += /etc/opt/csw/$(NAME)/conf/tomcat-users.xml
 PRESERVECONF += /etc/opt/csw/$(NAME)/conf/web.xml
 
-CLASSES=none cswusergroup cswpreserveconf
 
 PROTOTYPE_MODIFIERS     = varuser etcperm
 PROTOTYPE_FILES_varuser = /var/opt/csw/$(NAME)/.*
 PROTOTYPE_USER_varuser  = tomcat
 PROTOTYPE_GROUP_varuser = tomcat
+PROTOTYPE_CLASS_varuser = ugfile
 PROTOTYPE_FILES_etcperm = /etc/opt/csw/$(NAME)/conf/.*\.CSW
 PROTOTYPE_PERMS_etcperm = 0640
 PROTOTYPE_USER_etcperm  = tomcat
