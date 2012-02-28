@@ -4,7 +4,7 @@
 #
 # Configuration file documentation
 #
-# tomcat6
+# tomcat7
 #
 #     This file let you change the values of a few variables used 
 #     by the init script to control the environment of tomcat6
@@ -18,12 +18,12 @@
 #     /opt/csw/etc
 #         This directory contain global config files
 #
-#     If there exist a /etc/opt/csw/tomcat6 config file, then the
+#     If there exist a /etc/opt/csw/tomcat7 config file, then the
 #     environment variables defined in this file are used and the
 #     /opt/csw/etc/tomcat6/conf/tomcat6 file is ignored even if it 
 #     exist.
 #
-#     If there exist only a /opt/csw/etc/tomcat6/conf/tomcat6 config
+#     If there exist only a /opt/csw/etc/tomcat7/conf/tomcat7 config
 #     file, then the environnement variables defined in this file are
 #     used.
 #
@@ -73,8 +73,8 @@
 # Use the configuration file to supered their value
 #
 
-SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat6
-GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat6/conf/tomcat6
+SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat7
+GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat7/conf/tomcat7
 
 JAVA_HOME=/usr/java
 TOMCAT_USER=tomcat
@@ -120,7 +120,7 @@ then
         fi
 fi
 
-CATALINA_HOME=/opt/csw/share/tomcat6
+CATALINA_HOME=/opt/csw/share/tomcat7
 export JAVA_HOME
 export CATALINA_HOME
 
