@@ -12,6 +12,9 @@ endef
 PACKAGES = CSWpm-email-mime-attachment-stri
 CATALOGNAME = pm_email_mime_attachment_stripper
 
+CHECKPKG_OVERRIDES_CSWpm-email-mime-attachment-stri += catalogname-does-not-match-pkgname|pkgname=CSWpm-email-mime-attachment-stri|catalogname=pm_email_mime_attachment_stripper|expected-catalogname=pm_email_mime_attachment_stri
+CHECKPKG_OVERRIDES_CSWpm-email-mime-attachment-stri += catalogname-too-long
+
 ARCHALL = 1
 LICENSE = LICENSE
 
