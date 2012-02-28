@@ -1,0 +1,26 @@
+From 36215256640bc2c5381b436e7c03aae6d37f4f5a Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 28 Feb 2012 12:36:47 +0100
+Subject: [PATCH] replace strnlen
+
+---
+ configure.in |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index d3e46cc..d5318f2 100755
+--- a/configure.in
++++ b/configure.in
+@@ -526,6 +526,9 @@ if test "$hpijs_only_build" = "no" && test "$lite_build" = "no" && test "$hpcups
+    AC_MSG_ERROR([fax requires dbus support], 15)
+ fi
+ 
++AC_CHECK_DECLS(strnlen)
++AC_REPLACE_FUNCS(strnlen)
++
+ # AC_DEFINE_DIR([DATADIR], [datadir])
+ # Copyright © 2006 Stepan Kasal  <kasal@ucw.cz>
+ # Copyright © 2006 Andreas Schwab <schwab@suse.de>
+-- 
+1.7.9
+
