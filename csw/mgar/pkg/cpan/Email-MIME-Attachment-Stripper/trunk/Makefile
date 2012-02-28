@@ -10,7 +10,7 @@ define BLURB
 endef
 
 PACKAGES = CSWpm-email-mime-attachment-stri
-CATALOGNAME = pm_email_mime-attachment_stripper
+CATALOGNAME = pm_email_mime_attachment_stripper
 
 ARCHALL = 1
 LICENSE = LICENSE
