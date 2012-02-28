@@ -9,7 +9,7 @@ define BLURB
   Strip the attachments from an email
 endef
 
-PACKAGES = CSWpmemailmimeattachmentstripper
+PACKAGES = CSWpm-email-mime-attachment-stri
 CATALOGNAME = pm_email_mime-attachment_stripper
 
 ARCHALL = 1
