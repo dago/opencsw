@@ -1,0 +1,26 @@
+From 747c3b88a9b64a507e9af6c5b00f8bbc78de9795 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 28 Feb 2012 13:35:49 +0100
+Subject: [PATCH] add strnlen def
+
+---
+ prnt/hpijs/config.h |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/prnt/hpijs/config.h b/prnt/hpijs/config.h
+index 7fe03be..4be5cd5 100644
+--- a/prnt/hpijs/config.h
++++ b/prnt/hpijs/config.h
+@@ -394,4 +394,9 @@ in "auto-include.h").
+ */
+ //#define  APDK_AUTO_INCLUDE
+ 
++#if HAVE_DECL_STRNLEN == 0
++#include <sys/types.h>
++ size_t strnlen(const char *s,size_t maxlen);
++#endif
++
+ #endif //APDK_CONFIG_H
+-- 
+1.7.9
+
