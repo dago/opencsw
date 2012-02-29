@@ -1,0 +1,49 @@
+From 143b48c61ae48dc35002a46fe0ec1e0c07e0abd7 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 28 Feb 2012 17:09:23 +0100
+Subject: [PATCH] add strnlen
+
+---
+ prnt/hpijs/context2.cpp   |    7 +++++++
+ prnt/hpijs/ljzjscolor.cpp |    7 +++++++
+ 2 files changed, 14 insertions(+), 0 deletions(-)
+
+diff --git a/prnt/hpijs/context2.cpp b/prnt/hpijs/context2.cpp
+index 92a0089..3240d7b 100644
+--- a/prnt/hpijs/context2.cpp
++++ b/prnt/hpijs/context2.cpp
+@@ -38,6 +38,13 @@
+ #include "colormatch.h"
+ //#include "bug.h"
+ 
++static size_t
++strnlen (const char *string, size_t maxlen)
++{
++  const char *end = (const char *)memchr (string, '\0', maxlen);
++  return end ? (size_t) (end - string) : maxlen;
++}
++
+ APDK_BEGIN_NAMESPACE
+ extern ColorMatcher* Create_ColorMatcher
+ (
+diff --git a/prnt/hpijs/ljzjscolor.cpp b/prnt/hpijs/ljzjscolor.cpp
+index ebb45e3..302da42 100644
+--- a/prnt/hpijs/ljzjscolor.cpp
++++ b/prnt/hpijs/ljzjscolor.cpp
+@@ -38,6 +38,13 @@
+ #include "ljzjs.h"
+ #include "ljzjscolor.h"
+ 
++static size_t
++strnlen (const char *string, size_t maxlen)
++{
++  const char *end = (const char *)memchr (string, '\0', maxlen);
++  return end ? (size_t) (end - string) : maxlen;
++}
++
+ APDK_BEGIN_NAMESPACE
+ 
+ #define LJZJSCOLOR2DEVICESCOUNT 8
+-- 
+1.7.9
+
