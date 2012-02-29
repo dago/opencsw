@@ -31,6 +31,7 @@ EXTRA_LINKER_FLAGS += -norunpath -xnorunpath
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-hpijs-only-build
 CONFIGURE_ARGS += --enable-hpijs-install
+CONFIGURE_ARGS += --with-hpppddir=/opt/csw/share/cups/model/HP
 # CONFIGURE_ARGS += --enable-hpcups-only-build
 
 CHECKPKG_OVERRIDES_CSWhplip += file-with-bad-content|/usr/share|root/opt/csw/share/doc/hplip-3.12.2/upgrading.html
