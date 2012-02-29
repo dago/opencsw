@@ -1,0 +1,25 @@
+From 9f614a8c7b35954fdf61b3f794fe3e81e8eb54b7 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Wed, 29 Feb 2012 09:50:31 +0100
+Subject: [PATCH] set csw path hpijs.cpp
+
+---
+ prnt/hpijs/hpijs.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/prnt/hpijs/hpijs.cpp b/prnt/hpijs/hpijs.cpp
+index e3af856..77da6dc 100644
+--- a/prnt/hpijs/hpijs.cpp
++++ b/prnt/hpijs/hpijs.cpp
+@@ -76,7 +76,7 @@ void setLogLevel(UXServices *pSS)
+     FILE    *fp;
+     char    str[258];
+     char    *p;
+-    fp = fopen ("/etc/cups/cupsd.conf", "r");
++    fp = fopen ("/etc/opt/csw/cups/cupsd.conf", "r");
+     if (fp == NULL)
+         return;
+     while (!feof (fp))
+-- 
+1.7.9
+

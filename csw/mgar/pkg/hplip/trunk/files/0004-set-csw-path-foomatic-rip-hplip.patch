@@ -1,0 +1,38 @@
+From 66df2cbc1dd9ee5c4edd6e4212cb8a9e03e56eda Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Wed, 29 Feb 2012 09:55:30 +0100
+Subject: [PATCH 4/4] set csw path foomatic-rip-hplip
+
+---
+ prnt/hpijs/foomatic-rip-hplip |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/prnt/hpijs/foomatic-rip-hplip b/prnt/hpijs/foomatic-rip-hplip
+index dc23519..53a585e 100644
+--- a/prnt/hpijs/foomatic-rip-hplip
++++ b/prnt/hpijs/foomatic-rip-hplip
+@@ -44,10 +44,10 @@ my $ripversion='$Revision=3.0.2.131$';
+ # possibly other stuff.	 The default path is often fine on Linux, but
+ # may not be on other systems.
+ #
+-my $execpath = "/usr/bin:/usr/local/bin:/usr/bin:/bin";
++my $execpath = "/opt/csw/bin:/usr/bin:/usr/local/bin:/usr/bin:/bin";
+ 
+ # CUPS raster drivers are searched here
+-my $cupsfilterpath = "/usr/lib/cups/filter:/usr/local/lib/cups/filter:/usr/local/libexec/cups/filter:/opt/cups/filter:/usr/lib/cups/filter";
++my $cupsfilterpath = "/usr/lib/cups/filter:/opt/csw/lib/cups/filter";
+ 
+ # Location of the configuration file "filter.conf", this file can be
+ # used to change the settings of foomatic-rip without editing
+@@ -56,7 +56,7 @@ my $cupsfilterpath = "/usr/lib/cups/filter:/usr/local/lib/cups/filter:/usr/local
+ # "/etc/foomatic".
+ # Some versions of configure do not fully expand $sysconfdir
+ my $prefix = "/usr";
+-my $configpath = "/etc/foomatic";
++my $configpath = "/etc/opt/csw/foomatic";
+ 
+ # For the stuff below, the settings in the configuration file have priority.
+ 
+-- 
+1.7.9
+
