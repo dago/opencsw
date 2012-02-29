@@ -46,7 +46,7 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call bas
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1)
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
+PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
@@ -255,11 +255,11 @@ pre-configure-modulated:
 
 post-configure-modulated:
 	gsed \
-		-e 's+@prefix@+$(prefix)+' \
-		-e 's+@localstatedir@+$(localstatedir)+' \
-		-e 's+@sysconfdir@+$(sysconfdir)+' \
-		-e 's+@bindir@+$(bindir)+' \
-		-e 's+@BASE_VERSION@+$(BASE_VERSION)+' \
+		-e 's+@prefix@+$(prefix)+g' \
+		-e 's+@localstatedir@+$(localstatedir)+g' \
+		-e 's+@sysconfdir@+$(sysconfdir)+g' \
+		-e 's+@bindir@+$(bindir)+g' \
+		-e 's+@BASE_VERSION@+$(BASE_VERSION)+g' \
 		< $(WORKDIR)/csw$(NAME).tpl \
 		> $(WORKDIR)/csw$(NAME)
 	@$(MAKECOOKIE)
