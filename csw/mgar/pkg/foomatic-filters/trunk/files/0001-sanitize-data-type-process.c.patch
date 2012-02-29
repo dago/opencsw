@@ -1,0 +1,40 @@
+From 10a38e3a17a28a05eba93883690cc76f68aa1817 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 28 Feb 2012 08:28:32 +0100
+Subject: [PATCH] sanitize data type process.c
+
+---
+ process.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/process.c b/process.c
+index f5763bd..d5a7709 100644
+--- a/process.c
++++ b/process.c
+@@ -90,7 +90,7 @@ void kill_all_processes()
+     clear_proc_list();
+ }
+ 
+-static int _start_process(const char *name,
++static pid_t _start_process(const char *name,
+                           int (*proc_func)(FILE *, FILE *, void *),
+                           void *user_arg, FILE **pipe_in, FILE **pipe_out,
+                           int createprocessgroup)
+@@ -182,12 +182,12 @@ int exec_command(FILE *in, FILE *out, void *cmd)
+     return EXIT_PRNERR_NORETRY_BAD_SETTINGS;
+ }
+ 
+-int start_system_process(const char *name, const char *command, FILE **fdin, FILE **fdout)
++pid_t start_system_process(const char *name, const char *command, FILE **fdin, FILE **fdout)
+ {
+     return _start_process(name, exec_command, (void*)command, fdin, fdout, 1);
+ }
+ 
+-int start_process(const char *name, int (*proc_func)(FILE *, FILE *, void *), void *user_arg, FILE **fdin, FILE **fdout)
++pid_t start_process(const char *name, int (*proc_func)(FILE *, FILE *, void *), void *user_arg, FILE **fdin, FILE **fdout)
+ {
+     return _start_process(name, proc_func, user_arg, fdin, fdout, 0);
+ }
+-- 
+1.7.9
+
