@@ -1,0 +1,25 @@
+From b2d7dc97a2498339e01cc2799e6e27640f83cca2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 1 Mar 2012 13:43:07 +0100
+Subject: [PATCH] Add includes for Solaris
+
+---
+ upnp/inc/UpnpInet.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/upnp/inc/UpnpInet.h b/upnp/inc/UpnpInet.h
+index 6269c4a..a51cdc5 100644
+--- a/upnp/inc/UpnpInet.h
++++ b/upnp/inc/UpnpInet.h
+@@ -30,6 +30,8 @@
+ 	#if defined(__sun)
+ 		#include <fcntl.h>
+ 		#include <sys/sockio.h>
++		#include <sys/types.h>
++		#include <sys/socket.h>
+ 	#elif (defined(BSD) && BSD >= 199306) || defined (__FreeBSD_kernel__)
+ 		#include <ifaddrs.h>
+ 		/* Do not move or remove the include below for "sys/socket"!
+-- 
+1.7.9
+
