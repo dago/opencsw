@@ -1,5 +1,11 @@
 #!/opt/csw/bin/perl
 
+# This is a tool to make Makefiles for CPAN modules
+# Usage:
+#   makemake My::Module
+# It generate My-Module/trunk/Makefile and modified it accordingly. If the Makefile is already there it
+# it overwritten and can be inspected with "svn diff".
+
 use strict;
 use warnings;
 use feature ':5.10';
@@ -16,20 +22,10 @@ use LWP::UserAgent; # For online retreival of catalogname for package
 use Parallel::ForkManager;
 use JSON;
 
-# TBD:
-# [10:14] El_Che: no fix for require, but it gives you filenames of the source
-# [10:16] Dagobert: Ahhhh.... sorry, I missed that
-# [10:16] Dagobert: How does it work? Does it access a static copy of the CPAN database?
-# [10:17] El_Che: I guess it looks locally looking at the deployed modules
-# [10:17] El_Che: looks looking
-# [10:17] El_Che: goodmorning
-# [10:18] El_Che: there is also a path option
-
 # These three routines are used to capture the output of sub processes and
 # perl routines (such as CPAN::Module::get) into a log file.  If the command
 # completes successfuly, the log file is thrown away.  If the command fails,
 # the log file is printed along with an error message by calling fail.
-
 
 ### Variables ###
 my ( $verbose, $logfile, $pgm );
@@ -115,11 +111,12 @@ if ( -f "$distdir/META.yml" ) {
 	@runtime_dep_pkgs = dep_pkgs($req);
 }
 
-$description //= $mod->description; # Changed to defined from false or
+$description //= $mod->description;	# Changed to defined from false or
 $description //= $mod->manpage_headline;
 $description //= $mod->distribution->as_glimpse;
 $description //= "";
 $description = ucfirst($description);
+$description =~ s/\.$//;		# Strip trailing .
 chomp($description);
 
 # Come back from cpan module build directory to GAR cpan/
@@ -153,13 +150,6 @@ if ( $fileonly ne "${name}-${fileversion}.tar.gz" ) {
 }
 say {$mf_fh} "" if ($upstreaminfo);
 
-if (@build_dep_pkgs) {
-	foreach my $p (@build_dep_pkgs) {
-		say {$mf_fh} "BUILD_DEP_PKGS += $p";
-	}
-	say {$mf_fh} "";
-}
-
 say {$mf_fh} "CATALOG_RELEASE = unstable";
 say {$mf_fh} "";
 
@@ -168,6 +158,13 @@ foreach my $file (qw(LICENSE LICENSE.LGPL COPYING Copying COPYRIGHT Artistic ART
 		say {$mf_fh} "LICENSE = $file\n";
 		last;
 	}
+}
+
+if (@build_dep_pkgs) {
+	foreach my $p (@build_dep_pkgs) {
+		say {$mf_fh} "BUILD_DEP_PKGS += $p";
+	}
+	say {$mf_fh} "";
 }
 
 say {$mf_fh} "PACKAGES += $cswpkg";
@@ -191,33 +188,19 @@ my @oldpkgs = mod2pkg($modname);
 if ( @oldpkgs > 1 ) {
 	say STDERR "ERROR: More than one package for module '$modname' found: @oldpkgs";
 }
-my $oldpkg = shift @oldpkgs;
-if ( $oldpkg ne $cswpkg ) {
+foreach my $oldpkg (@oldpkgs) {
+	if( $cswpkg eq $oldpkg ) {
+		say STDERR "A previous version of this package $cswpkg has been released";
+		next;
+	}
+	say STDERR "A previous version of this package $cswpkg was released, but was named $oldpkg then";
+
 	say {$mf_fh} "OBSOLETED_BY_$cswpkg += $oldpkg";
 
-	my $ua = LWP::UserAgent->new;
-	$ua->timeout(300);
-	$ua->proxy( [ 'http', 'ftp' ], 'http://proxy:3128' );
-
-	my $catalog = "unstable";
-	my $arch    = "sparc";
-	my $rel     = "SunOS5.10";
-
-	my $url = "http://buildfarm.opencsw.org/pkgdb/rest/catalogs/$catalog/$arch/$rel/pkgnames/$oldpkg/";
-
-	my $response = $ua->get($url);
-
-	if ( $response->is_success ) {
-		my $json_string = $response->decoded_content; # or whatever
-		if ( $json_string eq "null" ) {
-			say "Couldn't find package $oldpkg in $catalog:$arch:$rel";
-		} else {
-			my $data  = decode_json $json_string;
-			my $cname = $data->{catalogname};
-			say {$mf_fh} "CATALOGNAME_$oldpkg = ${cname}_stub";
-		}
-	} else {
-		print "Error getting $url\n" . $response->status_line;
+	my $data = getpkgdata( $oldpkg );
+	if( $data ) {
+		my $cname = $data->{catalogname};
+		say {$mf_fh} "CATALOGNAME_$oldpkg = ${cname}_stub";
 	}
 
 }
@@ -236,7 +219,7 @@ say 'Done.';
 
 sub dep_pkgs {
 	my $req = shift @_;
-	my @result;
+	my %result;
 	foreach my $modname ( keys %$req ) {
 		my $version = version->parse( $req->{$modname} );
 		if ( $modname eq "perl" ) {
@@ -245,19 +228,34 @@ sub dep_pkgs {
 			}
 			next;
 		}
-		if ( $version > version->parse( get_version($modname) ) ) {
-			print STDERR "Version of $modname is too old. Required is $version, installed is ",
-				( get_version($modname) or "nothing" ), "\n";
+
+		if( get_version( $modname ) ) {
+			if ( $version > version->parse( get_version($modname) ) ) {
+				say STDERR "Version of $modname is too old. Required is $version, installed is ",
+					get_version($modname);
+				# XXX: Is there something newer in the catalog?
+				# XXX: If not, recommend updating the recipe with makemake
+			}
+		} else {
+			# The module is not installed
+			# XXX: Compare against package version in the catalog
 		}
 
 		my @pkgs = mod2pkg($modname);
 		if ( @pkgs > 1 ) {
 			print STDERR "ERROR: More than one package for module '$modname' found: @pkgs\n";
 		}
-		my $pkg = shift @pkgs;
+		my $pkg = $pkgs[0];
 		if ($pkg) {
-			print STDERR "Packages for module '$modname': $pkg\n";
+			say STDERR "Packages for module '$modname': ", join( ", ", @pkgs );
 			next if ( $pkg eq 'CSWperl' );
+
+			my ( $guessedpkg, $dirname ) = guess_name_from_module($modname);
+
+			if( $pkg ne $guessedpkg ) {
+				print STDERR "ERROR: Found package name '$pkg' is not consistent to the " .
+					"canonical '$guessedpkg', please invoke  makemake $modname\n";
+			}
 		} else {
 			print STDERR "MISSING package for '$modname'\n";
 
@@ -272,10 +270,10 @@ sub dep_pkgs {
 				}
 			}
 		}
-		push @result, $pkg if ($pkg);
+		$result{$pkg} = 1 if ($pkg);
 	}
 
-	return @result;
+	return keys %result;
 }
 
 sub endlog {
@@ -377,9 +375,10 @@ sub mod2pkg {
 
 	$pm->wait_all_children;
 
-	print "Matched packages: ", join( ", ", keys %pkgs ), "\n";
+	# print "Matched packages: ", join( ", ", keys %pkgs ), "\n";
 
-	return keys %pkgs;
+	# Perl may provide the functionality itself, although there is a more up-to-date module
+	return ( exists $pkgs{CSWperl} ? "CSWperl" : keys %pkgs );
 }
 
 
@@ -398,4 +397,36 @@ sub path2pkg {
 	close P;
 
 	return %pkgs;
+}
+
+sub getpkgdata {
+	my ($pkg) = @_;
+
+	my $ua = LWP::UserAgent->new;
+	$ua->timeout(300);
+	$ua->proxy( [ 'http', 'ftp' ], 'http://proxy:3128' );
+
+	my $catalog = "unstable";
+	my $arch    = "sparc";
+	my $rel     = "SunOS5.10";
+
+	my $url = "http://buildfarm.opencsw.org/pkgdb/rest/catalogs/$catalog/$arch/$rel/pkgnames/$pkg/";
+
+	my $response = $ua->get($url);
+
+	# version is "version": "1.6.4,REV=2011.11.24"
+
+	my $data;
+	if ( $response->is_success ) {
+		my $json_string = $response->decoded_content; # or whatever
+		if ( $json_string eq "null" ) {
+			say STDERR "Couldn't find package $pkg in $catalog:$arch:$rel";
+		} else {
+			$data  = decode_json $json_string;
+		}
+	} else {
+		print STDERR "Error getting $url\n" . $response->status_line;
+	}
+
+	return $data;
 }
