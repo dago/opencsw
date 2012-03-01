@@ -1,0 +1,28 @@
+From b32cacc18632995c2ac265eb323b30e2c2ee1b56 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 1 Mar 2012 14:09:24 +0100
+Subject: [PATCH] Use inttypes.h if stdint.h is not available
+
+---
+ upnp/inc/UpnpStdInt.h |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/upnp/inc/UpnpStdInt.h b/upnp/inc/UpnpStdInt.h
+index 9256f57..f87c095 100644
+--- a/upnp/inc/UpnpStdInt.h
++++ b/upnp/inc/UpnpStdInt.h
+@@ -4,7 +4,11 @@
+ #if !defined(UPNP_USE_BCBPP)
+ 
+ /* Sized integer types. */
++#if defined( HAVE_STDINT_H )
+ #include <stdint.h>
++#elsif defined( HAVE_INTTYPES_H )
++#include <inttypes.h>
++#endif
+ 
+ #ifdef UPNP_USE_MSVCPP
+ 	/* no ssize_t defined for VC */
+-- 
+1.7.9
+
