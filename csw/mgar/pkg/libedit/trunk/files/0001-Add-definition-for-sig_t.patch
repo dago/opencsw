@@ -1,0 +1,24 @@
+From 0c52ba0a8b12b1eccbe87a7c03591b28d8c23a6f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 1 Mar 2012 16:53:53 +0100
+Subject: [PATCH] Add definition for sig_t
+
+---
+ sig.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/sig.h b/sig.h
+index e7231b6..5a68e8a 100644
+--- a/sig.h
++++ b/sig.h
+@@ -62,6 +62,7 @@
+ 	_DO(SIGCONT)	\
+ 	_DO(SIGWINCH)
+ 
++typedef int	sig_t;
+ typedef sig_t	*el_signal_t;
+ 
+ protected void	sig_end(EditLine*);
+-- 
+1.7.9
+
