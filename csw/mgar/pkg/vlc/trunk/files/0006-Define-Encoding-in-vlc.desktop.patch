@@ -1,0 +1,26 @@
+From 5d548d76d99791231058e1650bb608aa454a2d0d Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 28 Feb 2012 09:04:51 +0100
+Subject: [PATCH] Define "Encoding" in vlc.desktop
+
+"Encoding" is an obsolete key, but on Solaris 10 it seems to be necessary for
+VLC to build.
+---
+ share/vlc.desktop.in |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/share/vlc.desktop.in b/share/vlc.desktop.in
+index 741e983..141686e 100644
+--- a/share/vlc.desktop.in
++++ b/share/vlc.desktop.in
+@@ -3,6 +3,7 @@ Version=1.0
+ Name=VLC media player
+ GenericName=Media player
+ Comment=Read, capture, broadcast your multimedia streams
++Encoding=UTF-8
+ Name[bn]=VLC মিডিয়া প্লেয়ার
+ Comment[bn]=আপনার মাল্টিমিডিয়া স্ট্রীম পড়ুন, ধরে রাখুন এবং ছড়িয়ে দিন
+ Name[br]=VLC lenner mediaoù
+-- 
+1.7.9
+
