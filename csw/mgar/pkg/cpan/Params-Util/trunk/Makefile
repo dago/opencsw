@@ -1,16 +1,21 @@
 NAME = Params-Util
-VERSION = 1.00
+VERSION = 1.06
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Simple, compact and correct param-checking functions
 define BLURB
-  "Params::Util" provides a basic set of importable functions that makes
-  checking parameters a hell of a lot easier
 endef
 
-PACKAGES = CSWpmparamsutil
-CATALOGNAME = pm_paramsutil
+CATALOG_RELEASE = unstable
+
+LICENSE = LICENSE
+
+PACKAGES += CSWpm-params-util
+CATALOGNAME_CSWpm-params-util = pm_params_util
+SPKG_DESC_CSWpm-params-util = Simple, compact and correct param-checking functions
+OBSOLETED_BY_CSWpm-params-util += CSWpmparamsutil
+CATALOGNAME_CSWpmparamsutil = pm_paramsutil_stub
 
 include gar/category.mk
