@@ -67,10 +67,9 @@ CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-qt4
 CONFIGURE_ARGS += --disable-skins2
 
-CONFIGURE_ARGS_i386 += --extra-cflags="-mfpmath=sse -msse"
-CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
-
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+EXTRA_CFLAGS_i386 += -mfpmath=sse -msse
+EXTRA_CXXFLAGS_i386 += -mfpmath=sse -msse
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))
 
 CONFIGURE_ARGS += --disable-mmx
 CONFIGURE_ARGS += --disable-sse
