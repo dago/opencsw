@@ -8,11 +8,15 @@ DESCRIPTION = Alternative to Test::More::use_ok
 define BLURB
 endef
 
-DISTFILES = COPYING
+DISTFILES += COPYING
 
-PACKAGES = CSWpmtestuseok
-CATALOGNAME = pm_testuseok
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+PACKAGES += CSWpm-ok
+CATALOGNAME_CSWpm-ok = pm_ok
+SPKG_DESC_CSWpm-ok = Alternative to Test::More::use_ok
+ARCHALL_CSWpm-ok = 1
+OBSOLETED_BY_CSWpm-ok += CSWpmtestuseok
+CATALOGNAME_CSWpmtestuseok = pm_testuseok_stub
 
 include gar/category.mk
