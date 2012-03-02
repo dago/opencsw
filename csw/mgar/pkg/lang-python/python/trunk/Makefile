@@ -43,7 +43,11 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 # http://bugs.python.org/issue3770
 # However, this bug is about better detection of SEM_VALUE_MAX in Solaris
 # http://bugs.python.org/issue3110
-# PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+# There are header differences between Solaris 9 and 10. Programs that include
+# pyconfig.h from Solaris 9 installed on Solaris 10 can get wrong settings,
+# e.g. wrt _X_OPEN_SOURCE.
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # Patches
 PATCHFILES += faqwiz.diff
