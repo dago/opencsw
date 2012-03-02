@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = vlc
-VERSION = 1.2-git
+VERSION = 2.1-git
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -13,19 +13,15 @@ endef
 # MASTER_SITES = http://download.videolan.org/pub/videolan/vlc/$(VERSION)/
 # DISTFILES  = $(DISTNAME).tar.bz2
 
-# Solaris port
+# Building from the git master which has patches submitted by Maciej
 MASTER_SITES = http://repo.or.cz/w/vlc/solaris.git/snapshot/
-DISTFILES = 36ddbe70462f36a16c30c75e424cdc768f429fcd.tar.gz
+DISTFILES = d843a2fc47bf6b9f4277310736b25caee8309ee7.tar.gz
+
+NOTGITPATCH = 1
 
 DISTNAME = solaris
 
-# WORKSRC = $(WORKDIR)/solaris
-
-# PATCHFILES += 0001-Disable-strange-check-this-may-be-dangerous.patch
-# PATCHFILES += 0002-Hack-around-missing-packed-pragma.patch
-# PATCHFILES += 0003-Do-not-propagate-vlc-CFLAGS-to-linking.patch
-PATCHFILES += 0004-Bootstrap-on-Solaris.patch
-PATCHFILES += 0005-Work-around-the-lack-of-dirfd.patch
+PATCHFILES += 0006-Define-Encoding-in-vlc.desktop.patch
 
 # We need e.g. stdbool.h
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -39,9 +35,9 @@ BUILD_DEP_PKGS += CSWlibxdmcpdevel
 BUILD_DEP_PKGS += CSWlibx11devel
 
 # This is for libxcb
-EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
-EXTRA_LIB = /opt/csw/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+# EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
+# EXTRA_LIB = /opt/csw/X11/lib
+# EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 # Sun Studio implements packed attributes differently and compilations bails out:
 #   "include/vlc_codecs.h", line 36: #error: FIXME
@@ -65,17 +61,19 @@ STRIP_LIBTOOL = 1
 CONFIGURE_ARGS += $(DIRPATHS)
 
 # Not there yet, part of ffmpeg
-CONFIGURE_ARGS += --disable-avcodec
-
-# x264.c:431:9: error: 'x264_open_gop_names' undeclared (first use in this
-# function)
-CONFIGURE_ARGS += --disable-x264
-
-# No libpostproc yet
-#CONFIGURE_ARGS += --disable-postproc
+# CONFIGURE_ARGS += --disable-avcodec
 
 # No QT4 yet
-CONFIGURE_ARGS += --disable-qt4 --disable-skins2
+CONFIGURE_ARGS += --disable-qt4
+CONFIGURE_ARGS += --disable-skins2
+
+CONFIGURE_ARGS_i386 += --extra-cflags="-mfpmath=sse -msse"
+CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+
+CONFIGURE_ARGS += --disable-mmx
+CONFIGURE_ARGS += --disable-sse
 
 # Taken from http://wiki.videolan.org/Solaris
 # CONFIGURE_ARGS += --disable-libgcrypt
@@ -88,7 +86,7 @@ CONFIGURE_ARGS += --disable-qt4 --disable-skins2
 # CONFIGURE_ARGS += --disable-a52
 # CONFIGURE_ARGS += --disable-fribidi
 # CONFIGURE_ARGS += --with-gnu-ld=no
-# CONFIGURE_ARGS += --disable-xcb
+CONFIGURE_ARGS += --disable-xcb
 
 SKIPTEST = 1
 
@@ -96,40 +94,59 @@ PACKAGES = CSWvlc
 # The catch-all package
 SPKG_DESC_CSWvlc = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWvlc += CSWfconfig
+RUNTIME_DEP_PKGS_CSWvlc += CSWfribidi
+RUNTIME_DEP_PKGS_CSWvlc += CSWliba52
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibavcodec53
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibavformat53
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibavutil51
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibdvdread
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibflac8
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibkate1
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibmad0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibpostproc52
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibrsvg2-2
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibsamplerate0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibsmbclient0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibspeexdsp1
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibtheora0
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibvlc5
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibvlccore5
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWvlc += CSWlibx264-120
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWvlc += CSWlua
 RUNTIME_DEP_PKGS_CSWvlc += CSWsdlimage
+
 CHECKPKG_OVERRIDES_CSWvlc += file-with-bad-content|/usr/share|root/opt/csw/share/vlc/utils/audio-vlc-default.sh
 CHECKPKG_OVERRIDES_CSWvlc += file-with-bad-content|/usr/share|root/opt/csw/share/vlc/utils/video-vlc-default.sh
 CHECKPKG_OVERRIDES_CSWvlc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/vlc/intf-vcd.txt
+CHECKPKG_OVERRIDES_CSWvlc += file-with-bad-content|/usr/share|root/opt/csw/share/doc/vlc/vlc-thumb.c
 
 PACKAGES += CSWvlc-dev
 CATALOGNAME_CSWvlc-dev = vlc_dev
@@ -155,9 +172,18 @@ RUNTIME_DEP_PKGS_CSWlibvlccore5 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibvlccore5 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibvlccore5 += CSWlibiconv2
 
+# Doesn't work...?
+# CONFIG_SHELL = /opt/csw/bin/bash
+# EXTRA_EXPORTS += CONFIG_SHELL
+
 include gar/category.mk
 
 pre-configure-modulated:
 	# bootstrap defines #!/bin/sh and $(dirname ...)
-	(cd $(WORKSRC) && $(CONFIGURE_ENV) bash ./bootstrap)
+	(cd $(WORKSRC) && $(CONFIGURE_ENV) \
+		CONFIG_SHELL=/opt/csw/bin/bash \
+		/opt/csw/bin/bash \
+		./bootstrap)
 	@$(MAKECOOKIE)
+
+PATH := /opt/csw/gnu:$(PATH)
