@@ -171,70 +171,6 @@ def GetSharedLibs(pkg_data):
   return shared_libs
 
 
-def GetCommonVersion(sonames):
-  versions = []
-  for soname in sonames:
-    m = SONAME_VERSION_RE.search(soname)
-    if m:
-      versions.append(m.groupdict()["version"])
-    else:
-      versions.append("")
-  versions_set = set(versions)
-  if len(versions_set) > 1 or not versions_set:
-    return (False, None)
-  else:
-    return (True, versions_set.pop())
-
-
-def ValidateCollectionName(l):
-  letters = "".join(re.findall(r"[a-zA-Z]", l))
-  # Special case for libz
-  if len(letters) == 1 and letters[0] == 'z': return True
-  if len(letters) <= 1:
-    return False
-  return True
-
-
-def MakePackageNameBySonameCollection(sonames):
-  """Finds a name for a collection of sonames.
-
-  Try to find the largest common prefix in the sonames, and establish
-  whether there is a common version to them.
-  """
-  common_version_exists, common_version = GetCommonVersion(sonames)
-  if not common_version_exists:
-    # If the sonames don't have a common version, they shouldn't be together
-    # in one package.
-    return None
-  common_substring_candidates = []
-  for soname in sonames:
-    candidate = soname
-    # We always want such package to start with the prefix "lib".  Therefore,
-    # we're stripping the prefix "lib" if it exists, and we're adding it back
-    # to the pkgname and soname at the end of the function.
-    if candidate.startswith("lib"):
-      candidate = candidate[3:]
-    m = re.search("\.so", candidate)
-    candidate = re.sub("\.so.*$", "", candidate)
-    common_substring_candidates.append(candidate)
-  lcs = CollectionLongestCommonSubstring(copy.copy(common_substring_candidates))
-  if not ValidateCollectionName(lcs):
-    return None
-  pkgnames = [
-      "CSW" + SonameToStringWithChar("lib%s%s" % (lcs, common_version), "-"),
-  ]
-  dashed = "CSW" + SonameToStringWithChar("lib%s-%s" % (lcs, common_version), "-")
-  if dashed not in pkgnames:
-    pkgnames.append(dashed)
-  catalognames = [
-      SonameToStringWithChar("lib%s%s" % (lcs, common_version), "_"),
-  ]
-  underscored = SonameToStringWithChar("lib%s_%s" % (lcs, common_version), "_")
-  if underscored not in catalognames:
-    catalognames.append(underscored)
-  return pkgnames, catalognames
-
-
 def LongestCommonSubstring(S, T):
   """Stolen from Wikibooks
 
@@ -254,16 +190,6 @@ def LongestCommonSubstring(S, T):
         if v == longest:
           LCS.add(S[i-v+1:i+1])
   return LCS
-
-
-def CollectionLongestCommonSubstring(collection):
-  current_substring = collection.pop()
-  while collection and current_substring:
-    substring_set = LongestCommonSubstring(current_substring,
-                                           collection.pop())
-    if substring_set:
-      current_substring = list(substring_set)[0]
-  return current_substring
 
 
 def IsBinary(file_info):
