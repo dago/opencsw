@@ -1033,104 +1033,46 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         else:
           soname = os.path.split(binary_info["path"])[1]
         linkable_shared_libs.append((soname, binary_info))
-  check_names = True
   logging.debug("CheckSharedLibraryNamingPolicy(): "
                 "linkable shared libs of %s: %s"
                 % (pkgname, linkable_shared_libs))
-  if len(linkable_shared_libs) > 1:
-    sonames = sorted(set([x[0] for x in linkable_shared_libs]))
-    tmp = su.MakePackageNameBySonameCollection(sonames)
-    if tmp:
-      multilib_pkgnames, multilib_catalogname = tmp
-    else:
-      multilib_pkgnames, multilib_catalogname = (None, None)
-    if not multilib_pkgnames:
+  for soname, binary_info in linkable_shared_libs:
+    tmp = su.MakePackageNameBySoname(soname)
+    policy_pkgname_list, policy_catalogname_list = tmp
+    if pkgname not in policy_pkgname_list:
       error_mgr.ReportError(
-          "non-uniform-lib-versions-in-package",
-          "sonames=%s"
-          % (",".join(sonames)))
-      messenger.Message(
-          "Package %s contains shared libraries, and their soname "
-          "versions are not in sync: %s.  This means that "
-          "each soname is likely to be retired at a different time "
-          "and each soname is best placed in a separate package, "
-          "named after soname and version. "
-          % (pkgname, sonames))
-      # If the sonames aren't uniform, there's no point in trying to match
-      # sonames versus pkgname.
-      messenger.SuggestGarLine(
-          "# Suggesting how to separate out shared libraries.")
-      messenger.SuggestGarLine(
-          "# You will most probably need to further edit these lines. "
-          "Use with caution!")
-      for soname, binary_info in linkable_shared_libs:
-        lib_path, lib_basename = os.path.split(binary_info["path"])
-        tmp = su.MakePackageNameBySoname(soname)
-        policy_pkgname_list, policy_catalogname_list = tmp
-        pkginfo = pkg_data["pkginfo"]
-        description = " ".join(pkginfo["NAME"].split(" ")[2:])
-        depchecks.SuggestLibraryPackage(error_mgr, messenger,
-          policy_pkgname_list[0],
-          policy_catalogname_list[0],
-          description,
-          lib_path, lib_basename, soname,
-          pkgname)
+          "shared-lib-pkgname-mismatch",
+          "file=%s "
+          "soname=%s "
+          "pkgname=%s "
+          "expected=%s"
+          % (binary_info["path"],
+             soname, pkgname,
+             ",".join(policy_pkgname_list)))
 
-      check_names = False
-    else: # len(linkable_shared_libs) > 1
-      if pkgname not in multilib_pkgnames:
-        error_mgr.ReportError(
-            "shared-lib-pkgname-mismatch",
-            "sonames=%s "
-            "pkgname=%s "
-            "expected=%s "
-            % (",".join(sonames), pkgname, ",".join(multilib_pkgnames)))
-        messenger.Message(
-            "The collection of sonames (%s) "
-            "is expected to be in package "
-            "named %s, but the package name is %s. "
-            "More information: "
-            "http://wiki.opencsw.org/checkpkg-error-tags"
-            % (sonames, multilib_pkgnames, pkgname))
-        check_names = False
-  if check_names:
-    for soname, binary_info in linkable_shared_libs:
-      tmp = su.MakePackageNameBySoname(soname)
-      policy_pkgname_list, policy_catalogname_list = tmp
-      if pkgname not in policy_pkgname_list:
-        error_mgr.ReportError(
-            "shared-lib-pkgname-mismatch",
-            "file=%s "
-            "soname=%s "
-            "pkgname=%s "
-            "expected=%s"
-            % (binary_info["path"],
-               soname, pkgname,
-               ",".join(policy_pkgname_list)))
+      suggested_pkgname = policy_pkgname_list[0]
+      lib_path, lib_basename = os.path.split(binary_info["path"])
+      pkginfo = pkg_data["pkginfo"]
+      description = " ".join(pkginfo["NAME"].split(" ")[2:])
+      depchecks.SuggestLibraryPackage(error_mgr, messenger,
+        suggested_pkgname,
+        policy_catalogname_list[0],
+        description,
+        lib_path, lib_basename, soname,
+        pkgname)
 
-        suggested_pkgname = policy_pkgname_list[0]
-        lib_path, lib_basename = os.path.split(binary_info["path"])
-        pkginfo = pkg_data["pkginfo"]
-        description = " ".join(pkginfo["NAME"].split(" ")[2:])
-        depchecks.SuggestLibraryPackage(error_mgr, messenger,
-          suggested_pkgname,
-          policy_catalogname_list[0],
-          description,
-          lib_path, lib_basename, soname,
-          pkgname)
-
-        messenger.OneTimeMessage(
-            soname,
-            "This shared library (%s) is in a directory indicating that it "
-            "is likely to be linked to by other programs.  If this is the "
-            "case, the library is best packaged separately, in a package "
-            "with a library-specific name.  Examples of such names include: "
-            "%s. If this library is not meant to be linked to by other "
-            "packages, it's best moved to a 'private' directory.  "
-            "For example, instead of /opt/csw/lib/foo.so, "
-            "try /opt/csw/lib/projectname/foo.so. "
-            "More information: http://wiki.opencsw.org/checkpkg-error-tags"
-            % (binary_info["path"], policy_pkgname_list))
+      messenger.OneTimeMessage(
+          soname,
+          "This shared library (%s) is in a directory indicating that it "
+          "is likely to be linked to by other programs.  If this is the "
+          "case, the library is best packaged separately, in a package "
+          "with a library-specific name.  Examples of such names include: "
+          "%s. If this library is not meant to be linked to by other "
+          "packages, it's best moved to a 'private' directory.  "
+          "For example, instead of /opt/csw/lib/foo.so, "
+          "try /opt/csw/lib/projectname/foo.so. "
+          "More information: http://wiki.opencsw.org/checkpkg-error-tags"
+          % (binary_info["path"], policy_pkgname_list))
 
 
 def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messenger):
