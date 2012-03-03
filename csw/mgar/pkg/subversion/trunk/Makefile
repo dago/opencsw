@@ -25,7 +25,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.7.2
+VERSION = 1.7.3
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -217,7 +217,7 @@ PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 # Relocate locations of foreign language bindings
 PATCHFILES += 0002-Fix-location-of-bindings.patch
 
-SVNLIB     = $(prefix)/lib/svn
+SVNLIB     = $(prefix)/lib
 JAVA_HOME  = /usr/jdk1.6.0_20
 
 #EXTRA_INC += $(prefix)/apache2/include
