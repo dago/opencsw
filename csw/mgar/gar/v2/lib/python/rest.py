@@ -49,7 +49,7 @@ class RestClient(object):
   def GetCatalog(self, catrel, arch, osrel):
     if not catrel:
       raise ArgumentError("Missing catalog release.")
-    url = self.rest_url + self.PKGDB_APP + "/catalogs/%s/%s/%s/" % (catrel, arch, osrel)
+    url = self.rest_url + self.PKGDB_APP + "/catalogs/%s/%s/%s/?quick=true" % (catrel, arch, osrel)
     logging.debug("GetCatalog(): GET %s", url)
     try:
       data = urllib2.urlopen(url).read()
