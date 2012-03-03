@@ -1,5 +1,5 @@
 NAME = apr
-VERSION = 1.4.5
+VERSION = 1.4.6
 CATEGORIES = lib
 GARTYPE = v2
 
