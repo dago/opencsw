@@ -28,7 +28,7 @@ BEFORE_OVERRIDES = """If any of the reported errors were false positives, you
 can override them pasting the lines below to the GAR recipe."""
 
 AFTER_OVERRIDES = """Please note that checkpkg isn't suggesting you should
-simply add these overrides do the Makefile.  It only informs what the overrides
+simply add these overrides to the Makefile.  It only informs what the overrides
 could look like.  You need to understand what are the reported issues about and
 use your best judgement to decide whether to fix the underlying problems or
 override them. For more information, scroll up and read the detailed
