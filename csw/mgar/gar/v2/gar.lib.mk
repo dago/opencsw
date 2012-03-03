@@ -78,25 +78,21 @@ gitrepo//%:
 git-http//%:
 	@git clone --bare http://$* $(PARTIALDIR)/$(call GITPROJ,$*)
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
-		git remote add origin http://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
 
 git//%:
 	@$(GIT_MAYBEPROXY) git clone --bare git://$* $(PARTIALDIR)/$(call GITPROJ,$*)
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
-		git remote add origin git://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
 
 git-file//%:
 	@git clone --bare file:///$* $(PARTIALDIR)/$(call GITPROJ,$*)
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
-		git remote add origin file://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
 
 git-ssh//%:
 	@git clone --bare ssh://$* $(PARTIALDIR)/$(call GITPROJ,$*)
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
-		git remote add origin ssh://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
 
 
