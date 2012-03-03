@@ -86,6 +86,8 @@ CONFIGURE_ARGS += --disable-sse
 # CONFIGURE_ARGS += --disable-fribidi
 # CONFIGURE_ARGS += --with-gnu-ld=no
 CONFIGURE_ARGS += --disable-xcb
+CONFIGURE_ARGS += --enable-theora
+CONFIGURE_ARGS += --enable-sqlite
 
 SKIPTEST = 1
 
@@ -126,10 +128,8 @@ RUNTIME_DEP_PKGS_CSWvlc += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibsmbclient0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibspeexdsp1
-RUNTIME_DEP_PKGS_CSWvlc += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibswscale2
-RUNTIME_DEP_PKGS_CSWvlc += CSWlibtheora0
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibvlc5
@@ -141,6 +141,11 @@ RUNTIME_DEP_PKGS_CSWvlc += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWvlc += CSWlibz1
 RUNTIME_DEP_PKGS_CSWvlc += CSWlua
 RUNTIME_DEP_PKGS_CSWvlc += CSWsdlimage
+
+# Only needed on Sparc. Not sure why, to be investigated.
+RUNTIME_DEP_PKGS_CSWvlc_sparc += CSWlibtheora0
+RUNTIME_DEP_PKGS_CSWvlc_sparc += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWvlc += $(RUNTIME_DEP_PKGS_CSWvlc_$(GARCH))
 
 CHECKPKG_OVERRIDES_CSWvlc += file-with-bad-content|/usr/share|root/opt/csw/share/vlc/utils/audio-vlc-default.sh
 CHECKPKG_OVERRIDES_CSWvlc += file-with-bad-content|/usr/share|root/opt/csw/share/vlc/utils/video-vlc-default.sh
