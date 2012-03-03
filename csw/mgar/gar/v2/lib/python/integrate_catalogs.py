@@ -101,12 +101,25 @@ def IndexByCatalogname(catalog):
 def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades):
   rest_client = rest.RestClient()
   diffs_by_catalogname = {}
+  def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
+    catalog = rest_client.GetCatalog(r_catrel, r_arch, r_osrel)
+    return ((r_catrel, r_arch, r_osrel), catalog)
+  # TODO(maciej): Enable this once the multiprocessing module is fixed.
+  # https://www.opencsw.org/mantis/view.php?id=4894
+  # proc_pool = multiprocessing.Pool(20)
+  catalogs_to_fetch_args = []
+  for arch in common_constants.PHYSICAL_ARCHITECTURES:
+    for osrel in common_constants.OS_RELS:
+      for catrel in (catrel_from, catrel_to):
+        catalogs_to_fetch_args.append((rest_client, catrel, arch, osrel))
+  # Convert this to pool.map when multiprocessing if fixed.
+  catalogs = dict(map(lambda x: GetCatalog(*x), catalogs_to_fetch_args))
   for arch in common_constants.PHYSICAL_ARCHITECTURES:
     logging.debug("Architecture: %s", arch)
     for osrel in common_constants.OS_RELS:
       logging.debug("OS release: %s", osrel)
-      cat_from = rest_client.GetCatalog(catrel_from, arch, osrel)
-      cat_to = rest_client.GetCatalog(catrel_to, arch, osrel)
+      cat_from = catalogs[(catrel_from, arch, osrel)]
+      cat_to = catalogs[(catrel_to, arch, osrel)]
       # Should use catalog comparator, but the data format is different
       if cat_from is None:
         cat_from = []
