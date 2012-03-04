@@ -1341,12 +1341,6 @@ class TestCheckWrongArchitecture(CheckTestHelper, unittest.TestCase):
 
 class TestCheckSharedLibraryNamingPolicy(CheckTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckSharedLibraryNamingPolicy'
-  def testNonUniformLibs(self):
-    self.pkg_data = neon_stats[0]
-    self.error_mgr_mock.ReportError(
-        'non-uniform-lib-versions-in-package',
-        "sonames=libneon.so.26,libneon.so.27")
-
   def testGood(self):
     self.pkg_data = bdb48_stats[0]
 
