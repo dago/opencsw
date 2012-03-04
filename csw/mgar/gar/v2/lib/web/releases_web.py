@@ -2,6 +2,10 @@
 
 # A webpy application to allow HTTP access to the checkpkg database.
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
+
 import web
 import sqlobject
 import json
@@ -13,8 +17,6 @@ from lib.python import package_stats
 from lib.python import opencsw
 from lib.python import common_constants
 import datetime
-import os
-import os.path
 import hashlib
 import logging
 
@@ -257,8 +259,11 @@ def SaveToAllpkgs(basename, data):
 
 web.webapi.internalerror = web.debugerror
 
-app = web.application(urls, globals(), autoreload=False)
-main = app.wsgifunc()
+app = web.application(urls, globals())
+# main = app.wsgifunc()
+application = app.wsgifunc()
+from paste.exceptions.errormiddleware import ErrorMiddleware
+application = ErrorMiddleware(application, debug=True)
 
 if __name__ == "__main__":
   logging.basicConfig(level=logging.INFO)
