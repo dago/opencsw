@@ -21,7 +21,6 @@ import opencsw
 import configuration
 
 def main():
-  configuration.SetUpSqlobjectConnection()
   usage = "Usage: %prog [ options ] file | md5 [ file | md5 [ ... ] ]"
   parser = optparse.OptionParser(usage)
   parser.add_option("-d", "--debug", dest="debug",
@@ -35,6 +34,7 @@ def main():
   else:
     logging.basicConfig(level=logging.INFO)
   logging.debug("Collecting statistics about given package files.")
+  configuration.SetUpSqlobjectConnection()
   pkgstat_objs = checkpkg.GetPackageStatsByFilenamesOrMd5s(
       args,
       options.debug)
