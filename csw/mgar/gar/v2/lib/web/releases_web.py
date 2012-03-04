@@ -124,7 +124,7 @@ class Srv4CatalogAssignment(object):
     sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-    logging.warning("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
+    logging.debug("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
     srv4_in_c = models.Srv4FileInCatalog.selectBy(
         osrel=sqo_osrel,
         arch=sqo_arch,
