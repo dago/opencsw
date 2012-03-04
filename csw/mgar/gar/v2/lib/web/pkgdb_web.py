@@ -405,6 +405,7 @@ class Srv4ByCatAndCatalogname(object):
       srv4 = res.getOne()
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
+      web.header('Access-Control-Allow-Origin', '*')
       return json.dumps(data)
     except sqlobject.main.SQLObjectNotFound:
       return json.dumps(None)
