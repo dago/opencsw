@@ -283,7 +283,7 @@ class Srv4FileStats(sqlobject.SQLObject):
       vendor_url = re.split(r"\s+", data["pkginfo"]["VENDOR"])[0]
     return vendor_url
 
-  def GetRestRepr(self):
+  def GetRestRepr(self, quick=False):
     mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
     # Slow subqueries, could be solved by caching in the db schema:
     #  - self.pkginst.pkgname
