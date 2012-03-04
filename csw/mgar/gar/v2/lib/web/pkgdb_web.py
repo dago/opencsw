@@ -38,6 +38,8 @@ urls_rest = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames-and-paths-by-basename',
+      'PkgnamesAndPathsByBasename',
   # Query by catalog release, arch, OS release and catalogname
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
@@ -304,6 +306,28 @@ class PkgnameByFilename(object):
       web.header('Content-Disposition',
                  'attachment; filename=%s' % send_filename)
       return json.dumps(sorted(pkgs))
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class PkgnamesAndPathsByBasename(object):
+  def GET(self, catrel, arch, osrel):
+    ConnectToDatabase()
+    user_data = web.input()
+    basename = user_data.basename
+    send_filename = (
+        '%s-%s-%s-%s-packages.txt'
+        % (catrel, arch, osrel, basename.replace('/', '-')))
+    db_catalog = checkpkg_lib.Catalog()
+    try:
+      data = db_catalog.GetPathsAndPkgnamesByBasename(
+          basename, osrel, arch, catrel)
+      web.header(
+          'Content-type',
+          'application/x-vnd.opencsw.pkg;type=pkgname-list')
+      web.header('Content-Disposition',
+                 'attachment; filename=%s' % send_filename)
+      return json.dumps(data)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
