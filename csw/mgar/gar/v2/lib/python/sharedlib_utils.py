@@ -230,3 +230,13 @@ def EscapeRegex(s):
   """Needs to be improved to escape more characters."""
   s = s.replace(r'.', r'\.')
   return s
+
+
+def CollectionLongestCommonSubstring(collection):
+  current_substring = collection.pop()
+  while collection and current_substring:
+    substring_set = LongestCommonSubstring(current_substring,
+                                           collection.pop())
+    if substring_set:
+      current_substring = list(substring_set)[0]
+  return current_substring
