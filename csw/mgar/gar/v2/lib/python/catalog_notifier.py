@@ -267,7 +267,7 @@ def main():
       from_address = "Catalog update notifier <noreply@opencsw.org>"
       msg['From'] = from_address
       msg['To'] = email
-      s = smtplib.SMTP('localhost')
+      s = smtplib.SMTP('mail.opencsw.org')
       try:
         s.sendmail(from_address, [email], msg.as_string())
       except smtplib.SMTPRecipientsRefused, e:
