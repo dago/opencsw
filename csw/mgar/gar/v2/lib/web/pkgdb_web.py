@@ -2,6 +2,10 @@
 
 # A webpy application to allow HTTP access to the checkpkg database.
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
+
 import web
 import sqlobject
 import json
@@ -44,9 +48,7 @@ urls_rest = (
 )
 urls = urls_html + urls_rest
 
-# render = web.template.render('templates/')
-# render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
-render = web.template.render('/home/maciej/src/opencsw-git/gar/v2/'
+render = web.template.render('/home/web/bin/gar/'
                              'lib/web/templates/')
 
 
@@ -425,6 +427,7 @@ web.webapi.internalerror = web.debugerror
 
 app = web.application(urls, globals())
 main = app.wsgifunc()
+application = app.wsgifunc()
 
 
 if __name__ == "__main__":
