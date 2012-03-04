@@ -101,10 +101,15 @@ class PackageStatsMixin(object):
     """
     pkg_stats = self.GetDbObject()
     if not pkg_stats:
+      logging.debug("Could not get db object for %s", self.GetMd5sum())
       return False
     if pkg_stats.stats_version != PACKAGE_STATS_VERSION:
+      logging.debug("Stats version mismatch: package=%s code=%s",
+                    pkg_stats.stats_version,
+                    PACKAGE_STATS_VERSION)
       return False
     elif pkg_stats.data_obj is None:
+      logging.debug("Could not find data object for %s", self.GetMd5sum())
       return False
     else:
       return True
