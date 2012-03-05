@@ -14,7 +14,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpy-gtk
-BUILD_DEP_PKGS = CSWpkgconfig CSWpy-gobject CSWglib2devel CSWlibatkdevel CSWpangodevel CSWpy-cairo CSWlibcairodevel CSWlibxcbdevel
+BUILD_DEP_PKGS = CSWpkgconfig CSWpygobject CSWlibglib2-dev CSWlibatk-dev CSWpangodevel CSWpycairo  CSWlibcairo-dev CSWlibxcbdevel
 RUNTIME_DEP_PKGS_CSWpy-gtk  = CSWpython CSWfconfig CSWftype2 CSWggettextrt
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibglade2 CSWlibxml2 CSWpango
@@ -27,8 +27,8 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print 
 SPKG_CLASSES = none cswpycompile
 RUNTIME_DEP_PKGS += CSWcswclassutils
 
-PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
-EXTRA_EXPORTS = PKG_CONFIG_PATH
+# PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+# EXTRA_EXPORTS = PKG_CONFIG_PATH
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
