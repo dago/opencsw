@@ -28,6 +28,9 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # ISA_DEFAULT_sparc-5.10 = sparcv8plus
 
+# It takes an awful lot of time.
+NOTGITPATCH = 1
+
 PATCHFILES += 0001-Don-t-try-to-use-fchmodat.patch
 
 prefix = /opt/csw/gxx
