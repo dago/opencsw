@@ -3,8 +3,7 @@
 NAME = boost
 VERSION = 1.49.0
 CATEGORIES = lib
-# GARTYPE = v2
-GARTYPE = v2-build64only
+GARTYPE = v2
 
 define BLURB
   Boost was begun by members of the C++ standards committee Library Working
@@ -64,7 +63,7 @@ INSTALL_SCRIPTS = bjam
 
 EXTRA_FLAGS = -std=c99
 EXTRA_LINKER_FLAGS = -R/opt/csw/lib/\\\$$ISALIST
-BUILD64_ONLY = 1
+BUILD64 = 1
 
 BUILD_ARGS += toolset=$(TOOLSET)
 BUILD_ARGS += --prefix=$(DESTDIR)$(prefix)
@@ -79,9 +78,13 @@ BUILD_ARGS += -q
 BUILD_ARGS += -d+2
 BUILD_ARGS += include='/opt/csw/gcc/include'
 BUILD_ARGS += --debug-building
-BUILD_ARGS += address-model=64
+BUILD_ARGS += address-model=$(MEMORYMODEL)
 # We don't have 64-bit Python
 BUILD_ARGS += --without-python
+
+BUILD_ARGS_sparcv8plus = instruction-set=v9
+BUILD_ARGS_sparcv9 = instruction-set=v9
+BUILD_ARGS += $(BUILD_ARGS_$(ISA))
 
 TEST_SCRIPTS =
 
