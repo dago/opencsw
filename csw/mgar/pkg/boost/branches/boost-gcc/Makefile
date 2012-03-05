@@ -3,8 +3,8 @@
 NAME = boost
 VERSION = 1.49.0
 CATEGORIES = lib
-GARTYPE = v2
-# GARTYPE = v2-build64only
+# GARTYPE = v2
+GARTYPE = v2-build64only
 
 define BLURB
   Boost was begun by members of the C++ standards committee Library Working
