@@ -43,12 +43,6 @@ TOOLSET = gcc
 COMPILER_SUFFIX_PKG = -gcc
 COMPILER_SUFFIX_CAT = _gcc
 
-PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG) += boost$(COMPILER_SUFFIX_CAT)
-SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG) = $(DESCRIPTION)
-# The boost build system is hard to harness.
-CHECKPKG_OVERRIDES_CSWboost$(COMPILER_SUFFIX_PKG) += bad-rpath-entry
-
 PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)-dev
 SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG)-dev = $(DESCRIPTION), development files
 PKGFILES_CSWboost$(COMPILER_SUFFIX_PKG)-dev = $(PKGFILES_DEVEL)
@@ -314,6 +308,8 @@ CHECKPKG_OVERRIDES_CSWlibboost-ut-fwk1-49-0-gxx += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWlibboost-prog-opts1-49-0-gxx += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWlibboost-prexmon1-49-0-gxx += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWlibboost-ws13n1-49-0-gxx += shared-lib-pkgname-mismatch
+
+CHECKPKG_OVERRIDES_CSWboost-gcc-dev += file-with-bad-content|/usr/share|root/opt/csw/gxx/include/boost/locale/generator.hpp
 
 include gar/category.mk
 
