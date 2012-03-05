@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = SQLObject
-VERSION = 0.15.0
+VERSION = 1.2.2
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Object Relational Manager for Python
@@ -12,7 +12,6 @@ endef
 SPKG_SOURCEURL = http://www.sqlobject.org/
 MASTER_SITES = http://pypi.python.org/packages/source/S/$(NAME)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = docs/SQLObject.txt
 PACKAGES = CSWpy-sqlobject
 RUNTIME_DEP_PKGS_CSWpy-sqlobject = CSWpy-formencode
