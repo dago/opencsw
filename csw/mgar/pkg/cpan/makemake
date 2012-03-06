@@ -97,18 +97,26 @@ endlog();
 #$mod->distribution->make;
 my $distdir = $mod->distribution->dir;
 
-my ( @build_dep_pkgs, @runtime_dep_pkgs );
+my ( @build_dep_pkgs, @recommended_pkgs, @runtime_dep_pkgs );
 
+my $license;
+my $license_resource;
 my $description;
 if ( -f "$distdir/META.yml" ) {
 	my $meta = LoadFile("$distdir/META.yml");
-	$description = $meta->{abstract} if ( exists $meta->{abstract} );
+
+	$description      = $meta->{abstract} if ( exists $meta->{abstract} );
+	$license          = $meta->{license};
+        $license_resource = $meta->{resources}->{license};
+
 	my $req            = $meta->{requires};
-	my $recommends     = $meta->{recommends};
+	# my $recommends     = $meta->{recommends};
 	my $build_requires = $meta->{build_requires};
 
 	@build_dep_pkgs   = dep_pkgs($build_requires);
+	# @recommended_pkgs = dep_pkgs($recommends);
 	@runtime_dep_pkgs = dep_pkgs($req);
+
 }
 
 $description //= $mod->description;	# Changed to defined from false or
@@ -153,11 +161,18 @@ say {$mf_fh} "" if ($upstreaminfo);
 say {$mf_fh} "CATALOG_RELEASE = unstable";
 say {$mf_fh} "";
 
+my $license_found;
 foreach my $file (qw(LICENSE LICENSE.LGPL COPYING Copying COPYRIGHT Artistic ARTISTIC GPL)) {
 	if ( -f "$distdir/$file" ) {
 		say {$mf_fh} "LICENSE = $file\n";
+		$license_found = 1;
 		last;
 	}
+}
+unless( $license_found ) {
+  print {$mf_fh} "LICENSE_TEXT = This module is licensed under the $license license";
+  print {$mf_fh} ", please see for details $license_resource" if( defined $license_resource );
+  print {$mf_fh} "\n\n";
 }
 
 if (@build_dep_pkgs) {
@@ -210,6 +225,7 @@ say {$mf_fh} "include gar/category.mk";
 
 close($mf_fh) or warn($!);
 chdir("$name/trunk") or die($!);
+system('mgar', 'spotless') == 0 or die($!);
 system('mgar', 'makesum') == 0 or die($!);
 system('mgar', 'package') == 0 or die($!);
 
@@ -224,7 +240,7 @@ sub dep_pkgs {
 		my $version = version->parse( $req->{$modname} );
 		if ( $modname eq "perl" ) {
 			if ( version->parse($^V) < $version ) {
-				die "requires perl version $version";
+				die "requires perl version $version, this is " . version->parse($^V);
 			}
 			next;
 		}
@@ -255,6 +271,20 @@ sub dep_pkgs {
 			if( $pkg ne $guessedpkg ) {
 				print STDERR "ERROR: Found package name '$pkg' is not consistent to the " .
 					"canonical '$guessedpkg', please invoke  makemake $modname\n";
+			}
+
+			system( '/usr/bin/pkginfo', '-q', $pkg );
+
+			if ($? == -1) {
+				print "failed to execute: $!\n";
+			} elsif ($? & 127) {
+				printf "child died with signal %d, %s coredump\n",
+				($? & 127),  ($? & 128) ? 'with' : 'without';
+			} else {
+				my $ev = $? >> 8;
+				if( $ev ne 0 ) {
+					say STDERR "ERROR: The needed package $pkg is not installed";
+				}
 			}
 		} else {
 			print STDERR "MISSING package for '$modname'\n";
