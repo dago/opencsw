@@ -1,0 +1,24 @@
+From 97a2692cce15dc08ba1fc0d6ce99526338c697b0 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 6 Mar 2012 13:37:40 +0100
+Subject: [PATCH] add csw include path to common.mk
+
+---
+ common.mk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/common.mk b/common.mk
+index 40aff8a..24a6e3a 100644
+--- a/common.mk
++++ b/common.mk
+@@ -15,6 +15,7 @@ INTROSPECTION_SCANNER = \
+ INTROSPECTION_SCANNER_ARGS = \
+     --verbose \
+     -I$(top_srcdir) \
++    -I$(includedir) \
+     --add-include-path=$(srcdir) \
+     --add-include-path=$(top_srcdir)/gir \
+     --add-include-path=$(builddir) \
+-- 
+1.7.9
+
