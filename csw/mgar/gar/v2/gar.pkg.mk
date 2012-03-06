@@ -714,15 +714,21 @@ merge-license-%: $(WORKDIR)
 		$(if $(and $(filter $*,$(_PKG_SPECS)),$(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*))), \
 		LICENSEFILE=$(or $(call licensefile,$*),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file for package $*))); \
 		LICENSEDIR=$(call licensedir,$*); \
-		if [ -n "$$LICENSEFILE" ]; then \
-		$(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
-		    if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
-		    echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
-		) \
+		$(if $(LICENSE_TEXT_$*)$(LICENSE_TEXT),\
 		  umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
-		  rm -f $(PKGROOT)$$LICENSEDIR/license && \
-		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
-		fi \
+		  echo "$(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT))" > $(PKGROOT)$$LICENSEDIR/license;\
+		  echo "$(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT))" > $(WORKDIR)/$*.copyright;\
+		,\
+		  if [ -n "$$LICENSEFILE" ]; then \
+		    $(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
+		      if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
+		      echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
+		    ) \
+		    umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
+		    rm -f $(PKGROOT)$$LICENSEDIR/license && \
+		    cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
+		  fi \
+		) \
 	)
 	@$(MAKECOOKIE)
 
