@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = scons
-VERSION = 2.0.1
+VERSION = 2.1.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -15,12 +17,13 @@ endef
 SF_PROJ = scons
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.scons.org/
 LICENSE = LICENSE.txt
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS = 
 EXTRA_PAX_ARGS = -s ",\./opt/csw/man,./opt/csw/share/man,"
 ARCHALL = 1
+PACKAGES = CSWscons
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/$(NAME)-$(VERSION)/SCons/.*\.py[co]
+CHECKPKG_OVERRIDES_CSWscons += file-with-bad-content
 include gar/category.mk
