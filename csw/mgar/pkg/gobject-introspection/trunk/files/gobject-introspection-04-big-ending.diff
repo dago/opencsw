@@ -1,5 +1,3 @@
-diff --git a/girepository/ginfo.c b/girepository/ginfo.c
-index b11cc8f..f099ee6 100644
 --- a/girepository/ginfo.c
 +++ b/girepository/ginfo.c
 @@ -997,18 +997,38 @@ GIBaseInfo *
