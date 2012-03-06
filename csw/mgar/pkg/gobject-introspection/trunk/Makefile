@@ -57,9 +57,9 @@ RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibffi4
 RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibglib2-0-0
 
 CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/share/gir-1.0/Gio-2.0.gir
-CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/lib/gobject-introspection/giscanner/transformer.pyc
+# CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/lib/gobject-introspection/giscanner/transformer.pyc
 CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/lib/gobject-introspection/giscanner/transformer.py
-CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/lib/gobject-introspection/giscanner/transformer.pyo
+# CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/lib/gobject-introspection/giscanner/transformer.pyo
 # CHECKPKG_OVERRIDES_CSWgobject-introspection += discouraged-path-in-pkgmap|/opt/csw/lib/gobject-introspection/giscanner/__init__.pyc
 # CHECKPKG_OVERRIDES_CSWgobject-introspection += discouraged-path-in-pkgmap|/opt/csw/lib/gobject-introspection/giscanner/__init__.pyo
 # CHECKPKG_OVERRIDES_CSWgobject-introspection += discouraged-path-in-pkgmap|/opt/csw/lib/gobject-introspection/giscanner/annotationmain.pyc
