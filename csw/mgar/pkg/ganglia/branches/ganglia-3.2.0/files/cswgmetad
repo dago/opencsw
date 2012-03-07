@@ -1,0 +1,29 @@
+#!/bin/sh
+
+GANGLIA_BASEDIR=/opt/csw
+GMETAD=${GANGLIA_BASEDIR}/sbin/gmetad
+GMETAD_CONF=/etc/opt/csw/ganglia/gmetad.conf
+
+test -f /etc/default/gmetad && . /etc/default/gmetad
+
+[ ! -d ${GANGLIA_BASEDIR} ] && exit 1
+
+case "$1" in
+
+    'start')
+        ${GMETAD} -c "${GMETAD_CONF}"
+        ;;
+
+    'stop')
+        /usr/bin/pkill -x gmetad
+        ;;
+
+    *)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+
+esac
+exit 0
+
+
