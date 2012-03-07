@@ -26,7 +26,7 @@ RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibpyglib2-0python0
-OBSOLETED_BY_CSWpy-gobject = CSWpygobject
+OBSOLETED_BY_CSWpy-gobject += CSWpygobject
 
 PACKAGES += CSWlibpyglib2-0python0
 CATALOGNAME_CSWlibpyglib2-0python0 = libpyglib2_0python0
@@ -51,6 +51,7 @@ PACKAGES += CSWpy-gobject-dev
 SPKG_DESC_CSWpy-gobject-dev = Development files for the Python GObject library
 RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibpyglib2-0python0
 RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWpython
+OBSOLETED_BY_CSWpy-gobject-dev += CSWpygobject
 
 # These are just comments
 CHECKPKG_OVERRIDES_CSWpy-gobject-dev += file-with-bad-content|/usr/local|root/opt/csw/share/pygobject/2.0/codegen/defsgen.py
