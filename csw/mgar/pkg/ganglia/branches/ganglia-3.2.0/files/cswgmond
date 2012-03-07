@@ -1,0 +1,29 @@
+#!/bin/sh
+
+GANGLIA_BASEDIR=/opt/csw
+GMOND=${GANGLIA_BASEDIR}/sbin/gmond
+GMOND_CONF=/etc/opt/csw/ganglia/gmond.conf
+
+test -f /etc/default/gmond && . /etc/default/gmond
+
+[ ! -d ${GANGLIA_BASEDIR} ] && exit 1
+
+case "$1" in
+
+    'start')
+        ${GMOND} -c "${GMOND_CONF}"
+        ;;
+
+    'stop')
+        /usr/bin/pkill -x gmond
+        ;;
+
+    *)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+
+esac
+exit 0
+
+
