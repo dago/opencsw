@@ -139,6 +139,9 @@ endif
 ifeq ($(VERSION),3.2.0)
 TEST_SCRIPTS =
 endif
+ifeq ($(VERSION),3.3.1)
+TEST_SCRIPTS =
+endif
 
 #INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
