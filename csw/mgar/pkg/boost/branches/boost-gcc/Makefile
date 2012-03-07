@@ -25,7 +25,9 @@ DISTNAME = $(NAME)_$(DISTVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-# ISA_DEFAULT_sparc-5.10 = sparcv8plus
+
+# If we wanted to build on 5.9, we'll need to build for sparcv8plus
+ISA_DEFAULT_sparc-5.9 = sparcv8plus
 
 # It takes an awful lot of time.
 NOGITPATCH = 1
