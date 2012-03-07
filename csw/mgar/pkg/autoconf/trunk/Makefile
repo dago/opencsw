@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = autoconf
 VERSION = 2.68
 CATEGORIES = devel
@@ -13,8 +15,6 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = 0001-Prefer-CSW-tools.patch
 
