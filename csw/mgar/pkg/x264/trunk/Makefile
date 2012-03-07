@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = x264
-VERSION = snapshot-20120211-2245
+VERSION = snapshot-20120306-2245
 GARTYPE = v2
 CATEGORIES = apps
 
