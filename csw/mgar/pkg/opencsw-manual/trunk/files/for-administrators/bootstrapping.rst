@@ -155,14 +155,6 @@ package you can use::
   pkgutil --deptree <pkg>
 
 
-Solaris 9/10/11 sparc vs. i386
-packaging strategy IPS may change
-graphviz tree
-pkgutil --deptree
-
-TBD: Identify packages depending on obsolete ones
-
-
 ---------------------------
 Setting up a private mirror
 ---------------------------
