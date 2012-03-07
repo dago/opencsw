@@ -3,6 +3,9 @@ VERSION = 3.1.9
 CATEGORIES = lang
 GARTYPE = v2
 
+# to match php5
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DESCRIPTION = APC Extention for PHP
 define BLURB
 	The Alternative PHP Cache (APC) is a free and open opcode cache for PHP.
