@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = autoconf
-VERSION = 2.68
+VERSION = 2.13
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -16,7 +16,11 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-PATCHFILES = 0001-Prefer-CSW-tools.patch
+# PATCHFILES = 0001-Prefer-CSW-tools.patch
+PATCHFILES += 0002-Use-DESTDIR.patch
+
+PACKAGES += CSWautoconf2-13
+ARCHALL_CSWautoconf2-13 = 1
 
 BUILD_DEP_PKGS = CSWhelp2man
 
@@ -27,16 +31,21 @@ RUNTIME_DEP_PKGS = CSWgawk CSWgm4 CSWperl
 
 VENDOR_URL = http://www.gnu.org/software/autoconf/
 
+datadir = $(prefix)/share/autoconf-$(VERSION)
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --program-suffix="-$(VERSION)"
 
 # Tests take a loooooonnng time.
 # TEST_SCRIPTS =
 
 EXTRA_MERGE_EXCLUDE_FILES = $(infodir)/standards.info
+EXTRA_MERGE_EXCLUDE_FILES += $(infodir)/autoconf.info
 
-CHECKPKG_OVERRIDES_CSWautoconf += missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWautoconf += surplus-dependency|CSWgm4
-CHECKPKG_OVERRIDES_CSWautoconf += surplus-dependency|CSWgawk
+CHECKPKG_OVERRIDES_CSWautoconf2-13 += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWautoconf2-13 += surplus-dependency|CSWgm4
+CHECKPKG_OVERRIDES_CSWautoconf2-13 += surplus-dependency|CSWgawk
+CHECKPKG_OVERRIDES_CSWautoconf2-13 += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWautoconf2-13 += file-with-bad-content
 
 include gar/category.mk
 
