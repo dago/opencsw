@@ -606,7 +606,7 @@ lzma-extract-%:
 # to supply an alternate target at their discretion
 git-extract-%:
 	@echo " ===> Extracting Git Repo $(DOWNLOADDIR)/$* (Treeish: $(call GIT_TREEISH,$*))"
-	git --bare archive --prefix=$(NAME)-$(VERSION)/ --remote=file://$(abspath $(DOWNLOADDIR))/$*/ $(call GIT_TREEISH,$*) | gtar -xf - -C $(EXTRACTDIR)
+	( cd $(abspath $(DOWNLOADDIR))/$*/; git --bare archive --prefix=$(NAME)-$(VERSION)/ $(call GIT_TREEISH,$*)) | gtar -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
 # rule to extract files with unzip
