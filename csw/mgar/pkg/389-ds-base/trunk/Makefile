@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.2.10.2
+VERSION = 1.2.10.3
 GARTYPE = v2
 CATEGORIES = server
 
@@ -21,6 +21,8 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 LICENSE = LICENSE
 
+GARCOMPILER = SOS12U3
+
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0005-smf-autoenable-no.patch
@@ -28,7 +30,7 @@ PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
 # until Red Hat Bugzilla Bug 773617 is open do it yourself
 PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
-PATCHFILES += 0007-fixup-plugin_syntax.c.patch
+# PATCHFILES += 0007-fixup-plugin_syntax.c.patch
 
 INITSMF = /etc/opt/csw/init.d/dirsrv
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
@@ -67,7 +69,6 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibfreebl3
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 
 
-# GARCOMPILER = SOS12U2
 EXTRA_LIB = /opt/csw/bdb48/lib
 # remove -I/opt/csw/include
 CPPFLAGS = 
