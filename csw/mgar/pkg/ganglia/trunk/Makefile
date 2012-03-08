@@ -1,6 +1,6 @@
 NAME = ganglia
 VERSION = 3.3.1
-VERSION_U = 3_3_1
+VERSION_U = 3-3-1
 CATEGORIES = utils
 GARTYPE = v2
 
