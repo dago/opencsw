@@ -635,7 +635,14 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
         'depends': (('CSWlibfoo', None),),
         'isalist': (),
         'pkgmap': [],
-        }
+        'files_metadata': [
+                    {'endian': 'Little endian',
+                     'machine_id': 3,
+                     'mime_type': 'application/x-sharedlib; charset=binary',
+                     'mime_type_by_hachoir': u'application/x-executable',
+                     'path': 'opt/csw/bin/bar/libfoo.so.1'},
+        ],
+  }
   CSWlibfoo_DATA = {
         'basic_stats': {'catalogname': 'libfoo',
                         'pkgname': 'CSWlibfoo',
@@ -1341,9 +1348,39 @@ class TestCheckWrongArchitecture(CheckTestHelper, unittest.TestCase):
 
 class TestCheckSharedLibraryNamingPolicy(CheckTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckSharedLibraryNamingPolicy'
-  def testGood(self):
+  def testBad(self):
     self.pkg_data = bdb48_stats[0]
-
+    self.error_mgr_mock.ReportError(
+        'shared-lib-pkgname-mismatch',
+        'file=opt/csw/bdb48/lib/libdb-4.8.so soname=libdb-4.8.so '
+        'pkgname=CSWbdb48 expected=CSWlibdb4-8-bdb48')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-pkgname-mismatch',
+        'file=opt/csw/bdb48/lib/libdb_cxx-4.8.so soname=libdb_cxx-4.8.so '
+        'pkgname=CSWbdb48 expected=CSWlibdb-cxx4-8-bdb48')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-pkgname-mismatch',
+        'file=opt/csw/bdb48/lib/libdb_java-4.8.so '
+        'soname=libdb_java-4.8.so pkgname=CSWbdb48 '
+        'expected=CSWlibdb-java4-8-bdb48')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-pkgname-mismatch',
+        'file=opt/csw/bdb48/lib/libdb_tcl-4.8.so soname=libdb_tcl-4.8.so '
+        'pkgname=CSWbdb48 expected=CSWlibdb-tcl4-8-bdb48')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-pkgname-mismatch',
+        'file=opt/csw/bdb48/lib/sparcv9/libdb-4.8.so soname=libdb-4.8.so '
+        'pkgname=CSWbdb48 expected=CSWlibdb4-8-bdb48')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-pkgname-mismatch',
+        'file=opt/csw/bdb48/lib/sparcv9/libdb_cxx-4.8.so '
+        'soname=libdb_cxx-4.8.so pkgname=CSWbdb48 '
+        'expected=CSWlibdb-cxx4-8-bdb48')
+    self.error_mgr_mock.ReportError(
+          'shared-lib-pkgname-mismatch',
+          'file=opt/csw/bdb48/lib/sparcv9/libdb_java-4.8.so '
+          'soname=libdb_java-4.8.so pkgname=CSWbdb48 '
+          'expected=CSWlibdb-java4-8-bdb48')
 
 class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckTestHelper,
                                                     unittest.TestCase):
