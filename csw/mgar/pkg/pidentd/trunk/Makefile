@@ -21,6 +21,10 @@ PATCHFILES += pidentd-3.0.19-ipv6-20080101.diff.gz
 # From http://www.vlakno.cz/~rdivacky/pidentd.diff
 PATCHFILES += pidentd.diff
 
+# We need a specific version for each release
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://www.lysator.liu.se/~pen/pidentd/
 
 LICENSE = README
