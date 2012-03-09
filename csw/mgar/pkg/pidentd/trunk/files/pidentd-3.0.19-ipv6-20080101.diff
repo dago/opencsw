@@ -1,0 +1,1096 @@
+;; IPv6 patch for pidentd-3.0.18
+;; Sep 27, 2005 by Johan van Selst <johans@stack.nl>
+;; based on an earlier patch
+;; Feb 27, 2004 by Hajimu UMEMOTO <ume@mahoroba.org>
+;;
+--- configure.orig	Tue Sep 27 20:47:40 2005
++++ configure	Tue Sep 27 20:47:42 2005
+@@ -2292,6 +2292,13 @@ case "$host" in
+ 	*-aix4.2* | *-aix4.3*)
+ 		host_os=aix42
+ 		;;
++	*-freebsd2* | *-freebsd3*)
++		host_os=freebsd2
++		;;
++	*-freebsd* )
++		host_os=freebsd2
++		CPPFLAGS="$CPPFLAGS -DHAVE_IPV6=1"
++		;;
+ 	*-irix4*)
+ 		host_os=irix4
+ 		cat >>confdefs.h <<\_ACEOF
+--- src/conf.c.orig	Thu Jan 21 01:00:33 1999
++++ src/conf.c	Tue Sep 27 20:45:52 2005
+@@ -115,15 +115,13 @@
+ 		       path, line, arg);
+ 	}
+ 
+-#if 0 /* Enable when we have a str2addr() */
+ 	else if (strcasecmp(cp, "server:address") == 0)
+ 	{
+-	    if (str2addr(arg, &listen_address) < 0)
++	    if (str2addr(arg, &listen_addr) < 0)
+ 		syslog(LOG_ERR, "%s: %d: invalid address: %s",
+ 		       path, line, arg);
+ 	}
+-#endif
+-	
++
+ 	else if (strcasecmp(cp, "server:user") == 0)
+ 	{
+ 	    if (str2uid(arg, &server_uid, &server_gid) < 0)
+--- src/idecrypt.c.orig	Mon Apr 23 22:40:15 2001
++++ src/idecrypt.c	Tue Sep 27 20:45:52 2005
+@@ -90,14 +90,14 @@
+ 
+ 
+ static char *
+-decrypt_packet(unsigned char *packet)
++decrypt_packet(unsigned char *packet, int len)
+ {
+     union data r;
+-    int i, j;
++    int i, j, count;
+     time_t date_in_sec;
+     char *date_in_ascii;
+     char keybuf[1024+1];
+-    char buf1[32], buf2[32];
++    char buf1[40], buf2[40];
+     struct sockaddr_gen ip_local, ip_remote;
+     int keyfile_fd;
+     des_cblock key_bin;
+@@ -120,32 +120,29 @@
+ 	keybuf[sizeof(keybuf)-1] = '\0';
+ 	des_string_to_key(keybuf, &key_bin);
+ 	des_set_key(&key_bin, sched);
+-	
+-	
+-	for (i = 0, j = 0; i < 24; i += 3, j += 4)
++
++	count = (len == 32) ? 24 : 48;
++	for (i = 0, j = 0; i < count; i += 3, j += 4)
+ 	{
+ 	    r.chars[i  ] = (to_bin[packet[j  ]] << 2) + (to_bin[packet[j+1]] >> 4);
+ 	    r.chars[i+1] = (to_bin[packet[j+1]] << 4) + (to_bin[packet[j+2]] >> 2);
+ 	    r.chars[i+2] = (to_bin[packet[j+2]] << 6) + (to_bin[packet[j+3]]);
+ 	}
+-    
+-	des_ecb_encrypt((des_cblock *)&(r.longs[4]),
+-			(des_cblock *)&(r.longs[4]),
+-			sched, DES_DECRYPT);
+-	r.longs[4] ^= r.longs[2];
+-	r.longs[5] ^= r.longs[3];
+-	
+-	des_ecb_encrypt((des_cblock *)&(r.longs[2]),
+-			(des_cblock *)&(r.longs[2]),
+-			sched, DES_DECRYPT);
+-	
+-	r.longs[2] ^= r.longs[0];
+-	r.longs[3] ^= r.longs[1]; 
++
++	count = (len == 32) ? 2 : 8;
++	for (i = count; i >= 0; i -= 2) {
++	    des_ecb_encrypt((des_cblock *)&(r.longs[i+2]),
++			    (des_cblock *)&(r.longs[i+2]),
++			    sched, DES_DECRYPT);
++	    r.longs[i+2] ^= r.longs[i  ];
++	    r.longs[i+3] ^= r.longs[i+1];
++	}
+ 	des_ecb_encrypt((des_cblock *)&(r.longs[0]),
+ 			(des_cblock *)&(r.longs[0]),
+ 			sched, DES_DECRYPT);
+ 
+-	for (i = 1; i < 6; i++)
++	count = (len == 32) ? 6 : 12;
++	for (i = 1; i < count; i++)
+ 	{
+ 	    r.longs[0] ^= r.longs[i];
+ 	}
+@@ -159,9 +156,37 @@
+   GoodKey:
+     date_in_sec = ntohl(r.fields.date);
+     date_in_ascii = ctime(&date_in_sec);
+-    
++
++#ifdef HAVE_IPV6
++    if (len ==32) {
++	ip_local.sg_family = ip_remote.sg_family = AF_INET;
++#ifdef SIN6_LEN
++	ip_local.sg_sa.sa_len = sizeof(struct sockaddr_in);
++	ip_remote.sg_sa.sa_len = sizeof(struct sockaddr_in);
++#endif
++	ip_local.sg_sin.sin_addr.s_addr = r.fields.ip_local;
++	ip_remote.sg_sin.sin_addr.s_addr = r.fields.ip_remote;
++	ip_local.sg_sin.sin_port = r.fields.port_local;
++	ip_remote.sg_sin.sin_port = r.fields.port_remote;
++    } else {
++	ip_local.sg_family = ip_remote.sg_family = AF_INET6;
++#ifdef SIN6_LEN
++	ip_local.sg_sa.sa_len = sizeof(struct sockaddr_in6);
++	ip_remote.sg_sa.sa_len = sizeof(struct sockaddr_in6);
++#endif
++	memcpy(&ip_local.sg_sin6.sin6_addr, &r.fields6.ip_local,
++	       sizeof(struct in6_addr));
++	memcpy(&ip_remote.sg_sin6.sin6_addr, &r.fields6.ip_remote,
++	       sizeof(struct in6_addr));
++	ip_local.sg_sin6.sin6_port = r.fields6.port_local;
++	ip_remote.sg_sin6.sin6_port = r.fields6.port_remote;
++    }
++#else
+     memcpy(SGADDRP(ip_local), &(r.fields.ip_local), sizeof(ip_local));
+     memcpy(SGADDRP(ip_remote), &(r.fields.ip_remote), sizeof(ip_remote));
++    SGPORT(ip_local) = r.fields.port_local;
++    SGPORT(ip_remote) = r.fields.port_remote;
++#endif
+ 
+     /* FIXME: uid_t isn't necessarily short.  */
+ #ifdef HAVE_SNPRINTF
+@@ -173,10 +198,10 @@
+ 	    date_in_ascii,
+ 	    ntohs(r.fields.uid),
+ 	    s_inet_ntox(&ip_local, buf1, sizeof(buf1)),
+-	    (unsigned) ntohs(r.fields.port_local),
++	    (unsigned) ntohs(SGPORT(ip_local)),
+ 	    s_inet_ntox(&ip_remote, buf2, sizeof(buf2)),
+-	    (unsigned) ntohs(r.fields.port_remote));
+-    
++	    (unsigned) ntohs(SGPORT(ip_remote)));
++
+     close(keyfile_fd);
+     return readable;
+ }
+@@ -187,7 +212,7 @@
+ {
+     int c;
+     int i;
+-    char buf[32];
++    char buf[64];
+     char *result;
+ 
+     
+@@ -204,32 +229,38 @@
+ 	    putchar(c);
+ 	    continue;
+ 	}
+-	
+-	for (i = 0; i < 32; i++)
++
++	for (i = 0; i < 64; i++)
+ 	{
+ 	    c = getc(f);
+ 	    if (c == EOF || c < 0 || c > 255)
+ 		break;
++#ifdef HAVE_IPV6
++	    if (i == 32 && c == ']')	/* `]' is not base64 char */
++		break;
++#else
++	    if (i == 32)
++		break;
++#endif
+ 	    if (!is_base_64[c])
+ 		break;
+ 	    buf[i] = c;
+ 	}
+-	
+-	if (i == 32)
++
++	if (i == 64)
+ 	    c = getc(f);
+-	
+-	if (i < 32 || c != ']')
++
++	if ((i != 32 && i != 64) || c != ']')
+ 	{
+ 	    putchar('[');
+ 	    fwrite(buf, 1, i, stdout);
+ 	    goto Same;
+ 	}
+-	
+-	
+-	if ((result = decrypt_packet((unsigned char *) buf)) == NULL)
++
++	if ((result = decrypt_packet((unsigned char *) buf, i)) == NULL)
+ 	{
+ 	    putchar('[');
+-	    fwrite(buf, 1, 32, stdout);
++	    fwrite(buf, 1, i, stdout);
+ 	    putchar(']');
+ 	}
+ 	else
+--- src/k_freebsd2.c.orig	Tue Sep 27 20:26:06 2005
++++ src/k_freebsd2.c	Tue Sep 27 20:26:06 2005
+@@ -0,0 +1,293 @@
++/*
++** freebsd2.c - FreeBSD kernel access functions.
++**
++** Copyright (c) 1997      Peter Eriksson <pen@lysator.liu.se>
++** Copyright (c) 2000-2004 Hajimu UMEMOTO <ume@mahoroba.org>
++**
++** This program is free software; you can redistribute it and/or
++** modify it as you wish - as long as you don't claim that you wrote
++** it.
++**
++** This program is distributed in the hope that it will be useful,
++** but WITHOUT ANY WARRANTY; without even the implied warranty of
++** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
++*/
++
++#include "config.h"
++
++#include <sys/param.h>
++#include <sys/types.h>
++#include <sys/sysctl.h>
++#include <sys/socket.h>
++#include <sys/user.h>
++#if __FreeBSD_version >= 800000
++# define _WANT_FILE
++# include <sys/file.h>
++#else	/* __FreeBSD < 8 */
++# define _KERNEL
++# include <sys/file.h>
++# undef _KERNEL
++#endif	/* __FreeBSD__ */
++#include <netinet/in.h>
++#include <netinet/in_pcb.h>
++#include <fcntl.h>
++#include <kvm.h>
++#include <nlist.h>
++#include <stdio.h>
++#include <syslog.h>
++#include <string.h>
++
++#include "pidentd.h"
++
++struct kainfo {
++    kvm_t *kd;
++    int nfile;
++    struct nlist nl[3];
++};
++
++static int getbuf(struct kainfo *, u_long, char *, u_int, char *);
++static struct socket *getlist(struct kainfo *, struct inpcbhead *,
++			      struct sockaddr_gen *, struct sockaddr_gen *);
++
++int
++ka_init(void)
++{
++    return 0;
++}
++
++int
++ka_open(void **misc)
++{
++    struct kainfo *kp = s_malloc(sizeof(struct kainfo));
++
++    /*
++    ** Open the kernel memory device
++    */
++    kp->kd = (kvm_t *)kvm_openfiles(NULL, NULL, NULL, O_RDONLY, NULL);
++    if (kp->kd == NULL)
++    {
++	syslog(LOG_ERR, "kvm_open: %m");
++	s_free(kp);
++	return -1;
++    }
++
++#define N_TCB	0
++#define N_BTEXT	1
++    kp->nl[N_TCB].n_name = "_tcb";
++    kp->nl[N_BTEXT].n_name = "_btext";
++    kp->nl[2].n_name = "";
++    /*
++    ** Extract offsets to the needed variables in the kernel
++    */
++    if (kvm_nlist(kp->kd, kp->nl) < 0)
++    {
++	syslog(LOG_ERR, "kvm_nlist: %m");
++	kvm_close(kp->kd);
++	s_free(kp);
++	return -1;
++    }
++
++    *misc = (void *)kp;
++    return 0;
++}
++
++/*
++** Get a piece of kernel memory with error handling.
++** Returns 1 if call succeeded, else 0 (zero).
++*/
++static int
++getbuf(struct kainfo *kp, unsigned long addr, char *buf, unsigned int len,
++       char *what)
++{
++    if (addr < kp->nl[N_BTEXT].n_value ||		/* Overkill.. */
++	addr >= (unsigned long)0xFFC00000 ||
++	(addr + len) < kp->nl[N_BTEXT].n_value ||
++	(addr + len) >= (unsigned long)0xffc00000)
++    {
++	syslog(LOG_ERR,
++	       "getbuf: bad address (%08x not in %08x-0xFFC00000) - %s",
++	       addr, kp->nl[N_BTEXT].n_value, what);
++	return 0;
++    }
++
++    if (kvm_read(kp->kd, addr, buf, len) < 0)
++    {
++	syslog(LOG_ERR, "getbuf: kvm_read(%08x, %d) - %s : %m",
++	       addr, len, what);
++	return 0;
++    }
++
++    return 1;
++}
++
++/*
++** Traverse the inpcb list until a match is found.
++** Returns NULL if no match.
++*/
++static struct socket *
++getlist(struct kainfo *kp, struct inpcbhead *pcbhead,
++	struct sockaddr_gen *remote, struct sockaddr_gen *local)
++{
++    struct inpcb *head, pcbp;
++    struct sockaddr_gen fsg, lsg;
++    int fam, fport, lport, alen;
++    char *faddr, *laddr, *paddr;
++
++#ifdef HAVE_IPV6
++    if (SGFAM(*remote) == AF_INET6 &&
++	IN6_IS_ADDR_V4MAPPED(&remote->sg_sin6.sin6_addr))
++    {
++	memset(&fsg, 0, sizeof(fsg));
++	fsg.sg_family = AF_INET;
++	fsg.sg_sin.sin_port = remote->sg_sin6.sin6_port;
++	memcpy(&fsg.sg_sin.sin_addr, &remote->sg_sin6.sin6_addr.s6_addr[12],
++	       sizeof(fsg.sg_sin.sin_addr));
++	remote = &fsg;
++    }
++    if (SGFAM(*local) == AF_INET6 &&
++	IN6_IS_ADDR_V4MAPPED(&local->sg_sin6.sin6_addr))
++    {
++	memset(&lsg, 0, sizeof(fsg));
++	lsg.sg_family = AF_INET;
++	lsg.sg_sin.sin_port = local->sg_sin6.sin6_port;
++	memcpy(&lsg.sg_sin.sin_addr, &local->sg_sin6.sin6_addr.s6_addr[12],
++	       sizeof(lsg.sg_sin.sin_addr));
++	local = &lsg;
++    }
++    if ((fam = SGFAM(*remote)) != SGFAM(*local))
++	return NULL;
++#endif
++    faddr = (char *)SGADDRP(*remote);
++    laddr = (char *)SGADDRP(*local);
++    fport = SGPORT(*remote);
++    lport = SGPORT(*local);
++
++    for (head = pcbhead->lh_first; head != NULL;
++	 head = pcbp.inp_list.le_next)
++    {
++	if (!getbuf(kp, (u_long)head, (char *)&pcbp, sizeof(struct inpcb),
++		    "tcblist"))
++	    break;
++#ifdef HAVE_IPV6
++	if (pcbp.inp_vflag & INP_IPV4)
++	{
++	    if (fam != AF_INET)
++		continue;
++	    paddr = (char *)&pcbp.inp_faddr;
++	    alen = sizeof(struct in_addr);
++	}
++	else if (pcbp.inp_vflag & INP_IPV6)
++	{
++	    if (fam != AF_INET6)
++		continue;
++	    paddr = (char *)&pcbp.in6p_faddr;
++	    alen = sizeof(struct in6_addr);
++	}
++	else
++	    continue;
++#else
++	paddr = (char *)&pcbp.inp_faddr;
++	alen = sizeof(struct in_addr);
++#endif
++	if (memcmp(paddr, faddr, alen) == 0 && pcbp.inp_fport == fport &&
++	    pcbp.inp_lport == lport)
++	    return pcbp.inp_socket;
++    }
++
++    return NULL;
++}
++
++#if __FreeBSD_version < 500000
++#define ki_fd		kp_proc.p_fd
++#define ki_ruid		kp_eproc.e_pcred.p_ruid
++#define ki_uid		kp_eproc.e_ucred.cr_uid
++#endif
++
++/*
++** Return the user number for the connection owner
++*/
++int
++ka_lookup(void *vp, struct kernel *kp)
++{
++    struct inpcbhead tcb;
++    struct socket *sockp;
++    struct kinfo_proc *kgp;
++    int i, nentries;
++    struct kainfo *kip = vp;
++
++    kgp = kvm_getprocs(kip->kd, KERN_PROC_ALL, 0, &nentries);
++    if (kgp == NULL)
++    {
++	syslog(LOG_ERR, "kvm_getprocs: %m");
++	return -1;
++    }
++
++    /* -------------------- TCP PCB LIST -------------------- */
++    if (!getbuf(kip, kip->nl[N_TCB].n_value, (char*)&tcb, sizeof(tcb), "tcb"))
++	return -1;
++
++    if ((sockp = getlist(kip, &tcb, &kp->remote, &kp->local)) == NULL)
++	return 0;
++
++    /*
++    ** Locate the file descriptor that has the socket in question
++    ** open so that we can get the 'ucred' information
++    */
++    for (i = 0; i < nentries; i++)
++    {
++	if (kgp[i].ki_fd != NULL)
++	{
++	    struct filedesc	pfd;
++	    struct file **ofiles, ofile;
++	    int j;
++
++	    if (!getbuf(kip, (u_long)kgp[i].ki_fd, (char *)&pfd, sizeof(pfd),
++			"pfd"))
++		return -1;
++
++	    ofiles = (struct file **)s_malloc(pfd.fd_nfiles *
++					      sizeof(struct file *));
++	    if (!ofiles)
++	    {
++		syslog(LOG_ERR, "s_malloc failed");
++		return -1;
++	    }
++
++	    if (!getbuf(kip, (u_long)pfd.fd_ofiles, (char *)ofiles,
++			pfd.fd_nfiles * sizeof(struct file *), "ofiles"))
++	    {
++		s_free(ofiles);
++		return -1;
++	    }
++
++	    for (j = 0; j < pfd.fd_nfiles; j++)
++	    {
++		if (!ofiles[j])	/* might be sparse */
++		    continue;
++
++		if (!getbuf(kip, (u_long)ofiles[j], (char *)&ofile,
++			    sizeof(struct file), "ofile"))
++		{
++		    s_free(ofiles);
++		    return -1;
++		}
++
++		if (ofile.f_count == 0)
++		    continue;
++
++		if (ofile.f_type == DTYPE_SOCKET &&
++		    (struct socket *)ofile.f_data == sockp)
++		{
++		    kp->ruid = kgp[i].ki_ruid;
++		    kp->euid = kgp[i].ki_uid;
++		    s_free(ofiles);
++		    return 1;
++		}
++	    }
++
++	    s_free(ofiles);
++	}
++    }
++
++    return -1;
++}
+--- src/kernel.c.orig	Sun Jun 13 09:47:52 2004
++++ src/kernel.c	Tue Sep 27 20:45:52 2005
+@@ -81,7 +81,7 @@
+ {
+     struct kernel *kp;
+     int attempt;
+-    char buf1[32];
++    char buf1[40];
+ 
+     
+     if (debug)
+--- src/main.c.orig	Wed Jan  8 22:57:05 2003
++++ src/main.c	Tue Sep 27 20:45:52 2005
+@@ -133,6 +133,8 @@
+     int log_header = 0;
+     
+ 
++    SGINIT(listen_addr);
++
+     if (argv[0] != NULL)
+     {
+ 	char *cp;
+@@ -166,7 +168,7 @@
+     conf_parse(PATH_CFGFILE, 1);
+ 
+     
+-    while ((c = getopt(argc, argv, "lNVEdhbwiIemnop:u:g:t:C:P:K:L:")) != -1)
++    while ((c = getopt(argc, argv, "lNVEdhbwiIemnop:a:u:g:t:C:P:K:L:")) != -1)
+ 	switch (c)
+ 	{
+ #ifdef HAVE_LIBDES
+@@ -231,6 +233,13 @@
+ 	    }
+ 	    break;
+ 
++	case 'a':
++	    if (str2addr(optarg, &listen_addr) < 0)
++		return EXIT_FAILURE;
++	    if (SGPORT(listen_addr) != 0)
++		listen_port = ntohs(SGPORT(listen_addr));
++	    break;
++
+ 	  case 't':
+ 	    if (str2int(optarg, &request_timeout) < 0)
+ 	    {
+@@ -324,6 +333,9 @@
+ 	    
+ 	    return EXIT_FAILURE;
+ 	}
++
++    if (SGFAM(listen_addr) != AF_UNSPEC)
++	SGPORT(listen_addr) = htons(listen_port);
+ 
+     if (debug)
+ 	program_header(stderr);
+--- src/pdes.c.orig	Sun May 21 21:07:05 2000
++++ src/pdes.c	Tue Sep 27 20:45:52 2005
+@@ -109,13 +109,14 @@
+ 
+ 
+ int
+-pdes_encrypt(struct kernel *kp,
+-	     char result[33])
++pdes_encrypt(struct kernel *kp, char result[PDES_BUFSIZ])
+ {
+     union data r;
+     int i, j;
+     time_t bt;
+-    
++    int family = AF_INET;
++    int count;
++
+ 
+     r.fields.random = s_random();
+     /* FIXME: uid_t isn't necessarily short.  */
+@@ -126,39 +127,62 @@
+ 
+     time(&bt);
+     r.fields.date = htonl(bt);
+-       
++
++#ifdef HAVE_IPV6
++    if (SGFAM(kp->remote) == AF_INET) {
++	r.fields.ip_local    = kp->local.sg_sin.sin_addr.s_addr;
++	r.fields.ip_remote   = kp->remote.sg_sin.sin_addr.s_addr;
++	r.fields.port_local  = kp->local.sg_sin.sin_port;
++	r.fields.port_remote = kp->remote.sg_sin.sin_port;
++    } else if (IN6_IS_ADDR_V4MAPPED(&kp->remote.sg_sin6.sin6_addr)) {
++	memcpy(&r.fields.ip_local, &kp->local.sg_sin6.sin6_addr.s6_addr[12],
++	       sizeof(r.fields.ip_local));
++	memcpy(&r.fields.ip_remote, &kp->remote.sg_sin6.sin6_addr.s6_addr[12],
++	       sizeof(r.fields.ip_remote));
++	r.fields.port_local  = kp->local.sg_sin6.sin6_port;
++	r.fields.port_remote = kp->remote.sg_sin6.sin6_port;
++    } else {
++	family = AF_INET6;
++	memcpy(r.fields6.ip_local, &kp->local.sg_sin6.sin6_addr,
++	       sizeof(r.fields6.ip_local));
++	memcpy(r.fields6.ip_remote, &kp->remote.sg_sin6.sin6_addr,
++	       sizeof(r.fields6.ip_remote));
++	r.fields6.port_local  = kp->local.sg_sin6.sin6_port;
++	r.fields6.port_remote = kp->remote.sg_sin6.sin6_port;
++    }
++#else
+     r.fields.ip_local    = kp->local.sin_addr.s_addr;
+     r.fields.ip_remote   = kp->remote.sin_addr.s_addr;
+     r.fields.port_local  = kp->local.sin_port;
+     r.fields.port_remote = kp->remote.sin_port;
++#endif
+ 
+     r.fields.checksum = 0;
+-    for (i = 1; i < 6; i++)
++    count = (family == AF_INET) ? 6 : 12;
++    for (i = 1; i < count; i++)
+ 	r.longs[0] ^= r.longs[i];
+ 
+     des_ecb_encrypt((des_cblock *)&(r.longs[0]), (des_cblock *)&(r.longs[0]),
+ 		    sched, DES_ENCRYPT);
+-    
+-    r.longs[2] ^= r.longs[0];
+-    r.longs[3] ^= r.longs[1];
+-    
+-    des_ecb_encrypt((des_cblock *)&(r.longs[2]), (des_cblock *)&(r.longs[2]),
+-		    sched, DES_ENCRYPT);
+-    
+-    r.longs[4] ^= r.longs[2];
+-    r.longs[5] ^= r.longs[3];
+-    
+-    des_ecb_encrypt((des_cblock *)&(r.longs[4]), (des_cblock *)&(r.longs[4]),
+-		    sched, DES_ENCRYPT);
+ 
+-    for (i = 0, j = 0; i < 24; i+=3, j+=4)
++    count = (family == AF_INET) ? 4 : 10;
++    for (i = 0; i < count; i += 2) {
++	r.longs[i+2] ^= r.longs[i  ];
++	r.longs[i+3] ^= r.longs[i+1];
++
++	des_ecb_encrypt((des_cblock *)&(r.longs[i+2]),
++			(des_cblock *)&(r.longs[i+2]), sched, DES_ENCRYPT);
++    }
++
++    count = (family == AF_INET) ? 24 : 48;
++    for (i = 0, j = 0; i < count; i+=3, j+=4)
+     {
+ 	result[j  ] = to_asc[63 & (r.chars[i  ] >> 2)];
+ 	result[j+1] = to_asc[63 & ((r.chars[i  ] << 4) + (r.chars[i+1] >> 4))];
+ 	result[j+2] = to_asc[63 & ((r.chars[i+1] << 2) + (r.chars[i+2] >> 6))];
+ 	result[j+3] = to_asc[63 & (r.chars[i+2])];
+     }
+-    result[32] = '\0';
++    result[(family == AF_INET) ? 32 : 64] = '\0';
+ 
+     return 0;
+ }
+--- src/pdes.h.orig	Thu Jan 21 00:59:26 1999
++++ src/pdes.h	Tue Sep 27 20:45:52 2005
+@@ -28,17 +28,44 @@
+     uint16_t port_remote;
+ };
+ 
++#ifdef HAVE_IPV6
++struct info6
++{
++    uint32_t checksum;
++    uint16_t random;
++    /* FIXME: uid_t isn't necessarily short.  */
++    uint16_t uid;
++    uint32_t date;
++    uint32_t ip_local[4];
++    uint32_t ip_remote[4];
++    uint16_t port_local;
++    uint16_t port_remote;
++};
++#endif
++
+ typedef union data
+ {
+     struct info   fields;
++#ifdef HAVE_IPV6
++    struct info6  fields6;
++    uint32_t        longs[12];
++    unsigned char chars[48];
++#else
+     uint32_t        longs[6];
+     unsigned char chars[24];
++#endif
+ } data;
+ 
++#ifdef HAVE_IPV6
++#define PDES_BUFSIZ	65
++#else
++#define PDES_BUFSIZ	33
++#endif
++
+ struct kernel;
+ 
+ extern int pdes_init(char *keyfile);
+-extern int pdes_encrypt(struct kernel *kp, char buffer[33]);
++extern int pdes_encrypt(struct kernel *kp, char buffer[PDES_BUFSIZ]);
+ extern int pdes_decrypt(void);
+      
+ #endif
+--- src/send.c.orig	Mon Nov 25 08:46:11 2002
++++ src/send.c	Tue Sep 27 20:45:52 2005
+@@ -67,7 +67,7 @@
+ 	   struct sockaddr_gen *remote_addr)
+ {
+     char buf[1024];
+-    char buf2[32];
++    char buf2[40];
+ 
+     
+     s_snprintf(buf, sizeof(buf),
+@@ -86,7 +86,7 @@
+ send_result(int fd,
+ 	    struct kernel *kp)
+ {
+-    char buf[2048], pbuf[2048], buf2[32];
++    char buf[2048], pbuf[2048], buf2[40];
+     struct passwd pwb, *pp = NULL;
+     uid_t uid;
+ 
+@@ -118,7 +118,7 @@
+ #ifdef HAVE_LIBDES
+     if (encrypt_flag)
+     {
+-	char buffer[33];
++	char buffer[PDES_BUFSIZ];
+ 
+ 	pdes_encrypt(kp, buffer);
+ 	s_snprintf(buf, sizeof(buf),
+@@ -167,7 +167,7 @@
+ send_version(int fd,
+ 	     struct sockaddr_gen *remote_addr)
+ {
+-    char buf[1024], buf2[32];
++    char buf[1024], buf2[40];
+     
+     s_snprintf(buf, sizeof(buf),
+ 	     "0 , 0 : X-VERSION : pidentd %s for %s (%s %s)\r\n",
+--- src/server.c.orig	Fri Mar 22 22:42:33 2002
++++ src/server.c	Tue Sep 27 20:45:52 2005
+@@ -25,11 +25,13 @@
+ 
+ 
+ 
+-int listen_sock = -1;
++int listen_sock;
+ int listen_port = IPPORT_IDENT;
+-int listen_addr = INADDR_ANY;
++struct sockaddr_gen listen_addr;
+ int listen_backlog = 256;
+ 
++static int listen_fd[2] = { -1, -1 };
++static int listen_nfds = 0;
+ 
+ static int
+ unlimit_nofile(void)
+@@ -58,14 +60,49 @@
+ }
+ 
+ 
++static int
++server_socket(void)
++{
++    static int one = 1;
++
++
++    listen_fd[listen_nfds] = socket(SGFAM(listen_addr), SOCK_STREAM, 0);
++    if (listen_fd[listen_nfds] < 0)
++    {
++	syslog(LOG_DEBUG, "socket(AF_INET, SOCK_STREAM) failed: %m");
++	return -1;
++    }
++
++    (void) setsockopt(listen_fd[listen_nfds], SOL_SOCKET, SO_REUSEADDR,
++		      (void *) &one, sizeof(one));
++#ifdef IPV6_V6ONLY
++    if (SGFAM(listen_addr) == AF_INET6)
++	(void) setsockopt(listen_fd[listen_nfds], IPPROTO_IPV6, IPV6_V6ONLY,
++			  (void *) &one, sizeof(one));
++#endif
++
++    if (bind(listen_fd[listen_nfds], (struct sockaddr *) &listen_addr,
++	     SGSOCKSIZE(listen_addr)) < 0)
++    {
++	syslog(LOG_DEBUG, "bind(port=%d) failed: %m",
++	       ntohs(SGPORT(listen_addr)));
++	s_close(listen_fd[listen_nfds]);
++	listen_fd[listen_nfds] = -1;
++	return -1;
++    }
++
++    listen_nfds++;
++
++    return 0;
++}
++
++
+ int
+ server_init(void)
+ {
+-    static int one = 1;
+-    int nofile;
+-    struct sockaddr_in sin;
+-    
+-    
++    int nofile, i, err = 1;
++
++
+     /*
+     ** Increase the number of available file descriptors
+     ** to the maximum possible.
+@@ -77,34 +114,49 @@
+ 
+     if (listen_sock < 0)
+     {
+-	listen_sock = socket(AF_INET, SOCK_STREAM, 0);
+-	if (listen_sock < 0)
++	if (SGFAM(listen_addr) == AF_UNSPEC)
+ 	{
+-	    syslog(LOG_ERR, "socket(AF_INET, SOCK_STREAM) failed: %m");
+-	    return -1;
++#ifdef HAVE_IPV6
++	    SGFAM(listen_addr) = AF_INET6;
++	    SGPORT(listen_addr) = htons(listen_port);
++	    SGSETLEN(listen_addr);
++	    err = (server_socket() < 0);
++	    SGINIT(listen_addr);
++#endif
++	    SGFAM(listen_addr) = AF_INET;
++	    SGPORT(listen_addr) = htons(listen_port);
++	    SGSETLEN(listen_addr);
++	    err = (server_socket() < 0 && err);
+ 	}
+-
+-	(void) setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR,
+-		   (void *) &one, sizeof(one));
+-	
+-	memset(&sin, 0, sizeof(sin));
+-	sin.sin_family = AF_INET;
+-	sin.sin_addr.s_addr = htonl(listen_addr);
+-	sin.sin_port = htons(listen_port);
+-
+-	if (bind(listen_sock, (struct sockaddr *) &sin, sizeof(sin)) < 0)
+-	{
+-	    syslog(LOG_ERR, "bind(port=%d) failed: %m",
+-		   listen_port);
++	else
++	    err = (server_socket() < 0);
++	if (err) {
++	    syslog(LOG_ERR, "server_init: no socket is available");
+ 	    return -1;
+ 	}
+     }
++    else
++    {
++	listen_fd[0] = listen_sock;
++	listen_nfds++;
++    }
+ 
+     /* We do this outside of the 'if' statement to support
+        some broken 'inetd' daemons... */
+-    if (listen(listen_sock, listen_backlog) < 0)
++    err = 1;
++    for (i = 0; i < listen_nfds; i++)
+     {
+-	syslog(LOG_ERR, "listen(backlog=%d) failed: %m", listen_backlog);
++	if (listen(listen_fd[i], listen_backlog) < 0)
++	{
++	    syslog(LOG_DEBUG, "listen(backlog=%d) failed: %m", listen_backlog);
++	    s_close(listen_fd[i]);
++	    listen_fd[i] = -1;
++	}
++	else
++	    err = 0;
++    }
++    if (err) {
++	syslog(LOG_ERR, "server_init: failed to listen socket");
+ 	return -1;
+     }
+ 
+@@ -115,28 +167,54 @@
+ int
+ server_run(void)
+ {
+-    int fd;
+-    
++    fd_set readfds;
++    int fd, nfds, maxfd = -1, i;
++
++    for (i = 0; i < listen_nfds; i++)
++	if (listen_fd[i] >= 0)
++	    if (maxfd < listen_fd[i])
++		maxfd = listen_fd[i];
++    if (maxfd < 0)
++	return -1;
++
+     while (1)
+     {
+-	fd = s_accept(listen_sock, NULL, NULL);
+-	if (fd < 0)
+-	{
+-	    syslog(LOG_ERR, "accept() failed: %m");
+-	    
+-	    switch (errno)
+-	    {
+-	      case EBADF:
+-	      case EMFILE:
+-	      case ENODEV:
+-	      case ENOMEM:
+-	      case ENOTSOCK:
+-	      case EOPNOTSUPP:
+-	      case EWOULDBLOCK:
++	FD_ZERO(&readfds);
++	for (i = 0; i < listen_nfds; i++)
++	    if (listen_fd[i] >= 0)
++		FD_SET(listen_fd[i], &readfds);
++	if (maxfd < 0)
++	    return -1;
++	nfds = select(maxfd + 1, &readfds, NULL, NULL, NULL);
++	if (listen_nfds <= 0) {
++	    if (nfds < 0 && errno != EINTR) {
++		syslog(LOG_ERR, "select() failed: %m");
+ 		return -1;
+ 	    }
++	    continue;
+ 	}
++	for (i = 0; i < listen_nfds; i++) {
++	    if (FD_ISSET(listen_fd[i], &readfds)) {
++		fd = s_accept(listen_fd[i], NULL, NULL);
++		if (fd < 0)
++		{
++		    syslog(LOG_ERR, "accept() failed: %m");
++
++		    switch (errno)
++		    {
++		    case EBADF:
++		    case EMFILE:
++		    case ENODEV:
++		    case ENOMEM:
++		    case ENOTSOCK:
++		    case EOPNOTSUPP:
++		    case EWOULDBLOCK:
++			return -1;
++		    }
++		}
+ 
+-	request_run(fd, 0);
++		request_run(fd, 0);
++	    }
++	}
+     }
+ }
+--- src/server.h.orig	Thu Jan 21 00:59:27 1999
++++ src/server.h	Tue Sep 27 20:26:06 2005
+@@ -17,7 +17,7 @@
+ 
+ extern int listen_sock;
+ extern int listen_port;
+-extern int listen_addr;
++extern struct sockaddr_gen listen_addr;
+ extern int listen_backlog;
+ 
+ 
+--- src/sockaddr.h.orig	Fri Jan 14 23:46:31 2000
++++ src/sockaddr.h	Tue Sep 27 20:45:52 2005
+@@ -48,6 +48,14 @@
+ #define SGADDRP(sag)	((SGFAM(sag) == AF_INET6 ? \
+                             (char *) &(sag).sg_sin6.sin6_addr : \
+ 			    (char *) &(sag).sg_sin.sin_addr))
++
++#define SGINIT(sag)	(memset(&(sag), 0, sizeof((sag))), \
++			((sag).sg_family = AF_UNSPEC))
++#ifdef SIN6_LEN
++#define SGSETLEN(sag)	((sag).sg_sa.sa_len = SGSOCKSIZE(sag))
++#else
++#define SGSETLEN(sag)
++#endif
+ #else /* !HAVE_IPV6 */
+ 
+ #define	sockaddr_gen	sockaddr_in
+@@ -56,6 +64,10 @@
+ #define SGSOCKSIZE(sag)	sizeof(struct sockaddr_in)
+ #define SGPORT(sag)	((sag).sin_port)
+ #define SGADDRP(sag)	((char *) &(sag).sin_addr)
++
++#define SGINIT(sag)	(memset(&(sag), 0, sizeof((sag))), \
++			((sag).sin_family = AF_INET))
++#define SGSETLEN(sag)
+ 
+ #endif /* HAVE_IPV6 */
+ #endif
+--- src/str2.c.orig	Thu Jan 21 00:59:26 1999
++++ src/str2.c	Tue Sep 27 20:45:52 2005
+@@ -155,6 +155,75 @@
+ 
+ 
+ 
++/* XXX: Todo: Support hostnames and not just numbers */
++int
++str2addr(const char *str,
++	 struct sockaddr_gen *sg)
++{
++    char *buf, *cp, *pp = NULL;
++
++
++    SGINIT(*sg);
++
++    buf = s_strdup(str);
++    cp = buf;
++
++#ifdef HAVE_IPV6
++    if (*cp == '[')
++    {
++	/* IPv6 ala RFC 2732 */
++
++	++cp;
++	pp = strchr(cp, ']');
++	if (pp == NULL)
++	    return -1;
++
++	*pp++ = '\0';
++	if (*pp == ':')
++	    ++pp;
++	else
++	    pp = NULL;
++
++	SGFAM(*sg) = AF_INET6;
++    }
++    else
++    {
++	/* IPv4 */
++	pp = strrchr(cp, ':');
++	if (pp)
++	    *pp++ = '\0';
++
++	SGFAM(*sg) = AF_INET;
++    }
++
++    if (inet_pton(SGFAM(*sg), cp, SGADDRP(*sg)) != 1)
++    {
++	s_free(buf);
++	return -1;
++    }
++
++#else
++
++    /* Locate port part */
++    pp = strrchr(cp, ':');
++    if (pp)
++	*pp++ = '\0';
++
++    SGFAM(*sg) = AF_INET;
++    *(unsigned long *) SGADDRP(*sg) = inet_addr(cp);
++
++#endif
++
++    if (pp)
++	SGPORT(*sg) = htons(atoi(pp));
++    SGSETLEN(*sg);
++
++    s_free(buf);
++    return 0;
++}
++
++
++
+ int
+ str2gid(const char *str, gid_t *out)
+ {
+--- src/str2.h.orig	Thu Jan 21 00:59:26 1999
++++ src/str2.h	Tue Sep 27 20:45:52 2005
+@@ -21,6 +21,7 @@
+ extern int str2str(char *buf, char **out);
+ extern int str2bool(const char *buf, int *out);
+ extern int str2port(const char *str, int *out);
++extern int str2addr(const char *str, struct sockaddr_gen *sg);
+ extern int str2gid(const char *str, gid_t *out);
+ extern int str2uid(const char *str, uid_t *uid, gid_t *gid);
+ 
