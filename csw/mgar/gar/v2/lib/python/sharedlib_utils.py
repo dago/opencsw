@@ -1,4 +1,5 @@
 # $Id$
+# coding=utf-8
 
 import copy
 import re
@@ -46,20 +47,26 @@ class ArchitectureError(Error):
   pass
 
 
-def IsLibraryLinkable(file_path):
+def ParseLibPath(directory):
   arch_subdirs = (SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS
                   + INTEL_386_PATHS + AMD64_PATHS)
   # Need to escape the plus signs because of the regex usage below.
   arch_subdirs = [x.replace(r"+", r"\+") for x in arch_subdirs]
-  linkable_re = re.compile(r"^opt/csw(/[a-z-_]+)?/lib(/(%s))?$"
+  linkable_re = re.compile(r"^/?opt/csw"
+                           r"(/(?P<prefix>[a-z0-9-_]+))?"
+                           r"/lib(/(%s))?$"
                            % "|".join(arch_subdirs))
+  m = linkable_re.match(directory)
+  return m.groupdict() if m else False
+
+def IsLibraryLinkable(file_path):
   blacklist = [
       # If it has two lib components, it's a private lib.
       re.compile(r"^opt/csw/.*lib.*lib.*"),
       re.compile(r"^opt/csw/share.*lib.*"),
   ]
   file_dir, file_basename = os.path.split(file_path)
-  if linkable_re.match(file_dir):
+  if ParseLibPath(file_dir):
     for regex in blacklist:
       if regex.match(file_dir):
         return False
@@ -106,7 +113,15 @@ def SanitizeWithChar(s, c):
   return c.join(parts).lower()
 
 
-def MakePackageNameBySoname(soname):
+def ExtractPrefix(path):
+  parsed = ParseLibPath(path)
+  if parsed:
+    return parsed["prefix"]
+  else:
+    return parsed
+
+
+def MakePackageNameBySoname(soname, path=None):
   """Find the package name based on the soname.
 
   Returns a pair of pkgname, catalogname.
@@ -149,14 +164,20 @@ def MakePackageNameBySoname(soname):
     else:
       keywords_pkgname[key] = ""
       keywords_catalogname[key] = ""
-  pkgname_list = []
+  if path:
+    prefix = ExtractPrefix(path)
+  else:
+    prefix = None
   keywords_pkgname = AddSeparator(keywords_pkgname, "-")
-  pkgname_list.append(
-      "CSW%(basename)s%(sep)s%(version)s" % keywords_pkgname)
+  pkgname = "CSW%(basename)s%(sep)s%(version)s" % keywords_pkgname
+  if prefix:
+    pkgname += "-%s" % prefix
+  pkgname_list = [pkgname]
   keywords_catalogname = AddSeparator(keywords_catalogname, "_")
-  catalogname_list = [
-      "%(basename)s%(sep)s%(version)s" % keywords_catalogname,
-  ]
+  catalogname = "%(basename)s%(sep)s%(version)s" % keywords_catalogname
+  if prefix:
+    catalogname += "_%s" % prefix
+  catalogname_list = [catalogname]
   return pkgname_list, catalogname_list
 
 

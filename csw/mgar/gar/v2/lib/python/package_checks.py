@@ -1033,11 +1033,14 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         else:
           soname = os.path.split(binary_info["path"])[1]
         linkable_shared_libs.append((soname, binary_info))
+      else:
+        logging.debug("%r is not linkable", binary_info["path"])
   logging.debug("CheckSharedLibraryNamingPolicy(): "
                 "linkable shared libs of %s: %s"
                 % (pkgname, linkable_shared_libs))
   for soname, binary_info in linkable_shared_libs:
-    tmp = su.MakePackageNameBySoname(soname)
+    path = os.path.split(binary_info["path"])[0]
+    tmp = su.MakePackageNameBySoname(soname, path)
     policy_pkgname_list, policy_catalogname_list = tmp
     if pkgname not in policy_pkgname_list:
       error_mgr.ReportError(

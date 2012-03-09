@@ -64,6 +64,10 @@ class UtilitiesUnitTest(unittest.TestCase):
       "opt/csw/boost-gcc/lib"
       "/libboost_wserialization.so.1.44.0"))
 
+  def testIsLibraryLinkableWithPrefix(self):
+    self.assertTrue(
+        su.IsLibraryLinkable("opt/csw/bdb48/lib/libdb-4.8.so"))
+
 
 class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
@@ -173,6 +177,36 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
 
+  def testMakePackageNameBySonameWithPath(self):
+    soname = "libfoo.so.0"
+    path = "/opt/csw/gxx/lib"
+    expected = (
+        ["CSWlibfoo0-gxx"],
+        ["libfoo0-gxx"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySoname(soname, path))
+
+  def testMakePackageNameBySonameWithPathSparcv9(self):
+    soname = "libfoo.so.0"
+    path = "/opt/csw/gxx/lib/sparcv9"
+    expected = (
+        ["CSWlibfoo0-gxx"],
+        ["libfoo0-gxx"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySoname(soname, path))
+
+
+class ParseLibPathTest(unittest.TestCase):
+
+  def testSimple(self):
+    self.assertEquals({"prefix": None}, su.ParseLibPath("/opt/csw/lib"))
+
+  def testPrefix(self):
+    self.assertEquals({"prefix": "gxx"}, su.ParseLibPath("/opt/csw/gxx/lib"))
+
+  def testWithArch(self):
+    self.assertEquals({"prefix": "gxx"}, su.ParseLibPath("/opt/csw/gxx/lib/amd64"))
+
 
 class SanitizationUnitTest(unittest.TestCase):
 
@@ -199,6 +233,18 @@ class GetIsalistUnitTest(unittest.TestCase):
 
   def testGetIsalistSparc(self):
     self.assertTrue("sparcv8plus+vis" in su.GetIsalist("sparc"))
+
+
+class ExtractPrefixTest(unittest.TestCase):
+
+  def testNoPrefix(self):
+    self.assertEquals(None, su.ExtractPrefix("/opt/csw/lib"))
+
+  def testSimple(self):
+    self.assertEquals("gxx", su.ExtractPrefix("/opt/csw/gxx/lib"))
+
+  def testWithArch(self):
+    self.assertEquals("gxx", su.ExtractPrefix("/opt/csw/gxx/lib/sparcv9"))
 
 
 if __name__ == '__main__':
