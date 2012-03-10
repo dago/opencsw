@@ -1,7 +1,7 @@
-From 6970ef60a3217ef5d3af9aa9af6dcd258f63a563 Mon Sep 17 00:00:00 2001
+From 4a181b296780fc80b4f2fb653324d37b2a611883 Mon Sep 17 00:00:00 2001
 From: Maciej Blizinski <maciej@opencsw.org>
 Date: Sat, 10 Mar 2012 10:29:42 +0100
-Subject: [PATCH 2/2] Do not use fpclassify on Solaris
+Subject: [PATCH 1/2] Do not use fpclassify on Solaris
 
 This one comes up when building with GCC 4.6.2 on Solaris 10:
 
