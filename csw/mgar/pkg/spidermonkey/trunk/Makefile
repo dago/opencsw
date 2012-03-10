@@ -42,11 +42,13 @@ PACKAGES = CSWlibmozjs185-gxx-dev
 SPKG_DESC_CSWlibmozjs185-gxx-dev += $(DESCRIPTION), header files
 PKGFILES_CSWlibmozjs185-gxx-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibmozjs185-gxx-dev += $(libdir)/libmozjs185.so
+RUNTIME_DEP_PKGS_CSWlibmozjs185-gxx-dev += CSWlibmozjs185-1-0-gxx
 
 PACKAGES += CSWlibmozjs185-1-0-gxx
 PKGFILES_CSWlibmozjs185-1-0-gxx += $(call baseisadirs,$(libdir),libmozjs185\.so\.1\.0(\.\d+)*)
 SPKG_DESC_CSWlibmozjs185-1-0-gxx += $(DESCRIPTION), libmozjs185.so.1.0
-RUNTIME_DEP_PKGS_CSWlibmozjs185-gxx += CSWlibmozjs185-1-0-gxx
+RUNTIME_DEP_PKGS_CSWlibmozjs185-1-0-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmozjs185-1-0-gxx += CSWlibstdc++6
 
 include gar/category.mk
 
