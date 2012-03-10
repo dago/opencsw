@@ -1,0 +1,84 @@
+From 6970ef60a3217ef5d3af9aa9af6dcd258f63a563 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 10 Mar 2012 10:29:42 +0100
+Subject: [PATCH 2/2] Do not use fpclassify on Solaris
+
+This one comes up when building with GCC 4.6.2 on Solaris 10:
+
+/opt/csw/bin/g++ -o conversions.o -c   -DOSTYPE=\"SunOS5\" -DOSARCH=SunOS
+-DEXPORT_JS_API -D__STDC_LIMIT_MACROS  -I../src -I. -I./dist/include
+-I./dist/include/nsprpub  -I/opt/csw/include/nspr   -I../src
+-I../src/assembler -I../src/yarr  -fPIC  -fno-rtti -fno-exceptions
+-fshort-enums -DJS_C_STRINGS_ARE_UTF8 -fno-strict-aliasing -pthread
+ -DNDEBUG -DTRIMMED -O3 -fstrict-aliasing -fomit-frame-pointer -mcpu=v9
+-DUSE_SYSTEM_MALLOC=1 -DENABLE_ASSEMBLER=1 -DENABLE_JIT=1
+-DMOZILLA_CLIENT -include ./js-confdefs.h -MD -MF .deps/conversions.pp
+../src/v8-dtoa/conversions.cc
+In file included from ../src/v8-dtoa/v8.h:47:0,
+                 from ../src/v8-dtoa/conversions.cc:30:
+../src/v8-dtoa/platform.h:70:5: error: expected unqualified-id before
+'__extension__'
+gmake[3]: *** [conversions.o] Error 1
+
+I looked up this file: js/src/v8-dtoa/platform.h:70
+
+And saw:
+
+  #ifdef SOLARIS
+  int fpclassify(double x);
+  #endif // SOLARIS
+
+This looks innocent enough. But there's nothing about __extension__. So I
+ran it through the preprocessor and saw what it expands to:
+
+  # 70 "../src/v8-dtoa/platform.h"
+int __extension__( { __typeof(double x) __x_c = (double x);
+__builtin_isnan(__x_c) ? 4 : __builtin_isinf(__x_c) ? 3 : __extension__( {
+__typeof(__x_c) __x_r = (__x_c); __extension__( { __typeof(__x_r) __x_f =
+(__x_r); !__builtin_isnan(__x_f) && !__builtin_isinf(__x_f); }) && (sizeof
+(__x_r) == sizeof (float) ? __builtin_fabsf(__x_r) >=
+1.17549435082228750796873653722224568e-38F : sizeof (__x_r) == sizeof
+(double) ? __builtin_fabs(__x_r) >=
+double(2.22507385850720138309023271733240406e-308L) :
+__builtin_fabsl(__x_r) >= 3.36210314311209350626267781732175260e-4932L); })
+? 2 : __x_c == (__typeof(__x_c)) 0 ? 0 : 1; });
+
+This is rather scary. Also, seems like this bit of code is activated
+specifically on Solaris. There is a similar ifdef in the platform.cc file.
+I changed both "#ifdef SOLARIS" lines into "#ifdef
+DO_NOT_TREAT_SOLARIS_DIFFERENTLY" and this made the compilation pass in
+these files.
+---
+ js/src/v8-dtoa/platform.cc |    2 +-
+ js/src/v8-dtoa/platform.h  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/js/src/v8-dtoa/platform.cc b/js/src/v8-dtoa/platform.cc
+index 97ec6b9..6af17af 100644
+--- a/js/src/v8-dtoa/platform.cc
++++ b/js/src/v8-dtoa/platform.cc
+@@ -110,7 +110,7 @@ int fpclassify(double x) {
+ 
+ #endif  // _MSC_VER
+ 
+-#ifdef SOLARIS
++#ifdef DO_NOT_TREAT_SOLARIS_DIFFERENTLY
+ 
+ #include <ieeefp.h>
+ 
+diff --git a/js/src/v8-dtoa/platform.h b/js/src/v8-dtoa/platform.h
+index 047f75a..69ace08 100644
+--- a/js/src/v8-dtoa/platform.h
++++ b/js/src/v8-dtoa/platform.h
+@@ -66,7 +66,7 @@ int strncasecmp(const char* s1, const char* s2, int n);
+ 
+ #endif  // WIN32
+ 
+-#ifdef SOLARIS
++#ifdef DO_NOT_TREAT_SOLARIS_DIFFERENTLY
+ int fpclassify(double x);
+ #endif // SOLARIS
+ 
+-- 
+1.7.9
+
