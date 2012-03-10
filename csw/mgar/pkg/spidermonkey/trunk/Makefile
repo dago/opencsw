@@ -24,6 +24,8 @@ PATCHFILES += 0002-Specify-the-right-SONAME-for-the-library.patch
 
 LICENSE = js/src/README.html
 
+# EXTRA_LINKER_FLAGS = -mimpure-text
+
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = 
@@ -41,11 +43,10 @@ SPKG_DESC_CSWlibmozjs185-gxx-dev += $(DESCRIPTION), header files
 PKGFILES_CSWlibmozjs185-gxx-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibmozjs185-gxx-dev += $(libdir)/libmozjs185.so
 
-PACKAGES += CSWlibmozjs185-gxx
-PKGFILES_CSWlibmozjs185-gxx += $(call baseisadirs,$(libdir),libmozjs185\.so\.1\.0\.0)
-SPKG_DESC_CSWlibmozjs185-gxx += $(DESCRIPTION), libmozjs185.so
-RUNTIME_DEP_PKGS_CSWlibmozjs185-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmozjs185-gxx += CSWlibstdc++6
+PACKAGES += CSWlibmozjs185-1-0-gxx
+PKGFILES_CSWlibmozjs185-1-0-gxx += $(call baseisadirs,$(libdir),libmozjs185\.so\.1\.0(\.\d+)*)
+SPKG_DESC_CSWlibmozjs185-1-0-gxx += $(DESCRIPTION), libmozjs185.so.1.0
+RUNTIME_DEP_PKGS_CSWlibmozjs185-gxx += CSWlibmozjs185-1-0-gxx
 
 include gar/category.mk
 
@@ -63,13 +64,15 @@ pre-configure-modulated:
 configure-custom:
 	(cd $(WORKSRC)/js && mkdir -p objdir && cd objdir && \
 	CFLAGS="-DJS_C_STRINGS_ARE_UTF8" \
-	       CXXFLAGS="-fshort-enums -DJS_C_STRINGS_ARE_UTF8" \
-	       CXX=/opt/csw/bin/g++ CC=/opt/csw/bin/gcc \
+	       CXXFLAGS="-fshort-enums -mimpure-text -DJS_C_STRINGS_ARE_UTF8" \
+	       CXX=/opt/csw/bin/g++ \
+	       CC=/opt/csw/bin/gcc \
 	       ../src/configure \
 	       --disable-pedantic \
 	       --with-nspr-prefix=/opt/csw \
 	       --prefix=/opt/csw/gxx \
 	       --with-system-nspr \
+	       --with-pthreads \
 	       --enable-threadsasafe \
 	       --with-ctypes)
 	@$(MAKECOOKIE)
