@@ -19,7 +19,8 @@ prefix = $(BUILD_PREFIX)/gxx
 
 DISTNAME = js-1.8.5
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PATCHFILES += 0001-Do-not-use-fpclassify-on-Solaris.patch
+PATCHFILES += 0002-Specify-the-right-SONAME-for-the-library.patch
 
 LICENSE = js/src/README.html
 
@@ -35,10 +36,10 @@ BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWgcc4core
 BUILD_DEP_PKGS += CSWgcc4g++
 
-PACKAGES = CSWspidermonkey-dev
-SPKG_DESC_CSWspidermonkey-dev += $(DESCRIPTION), header files
-PKGFILES_CSWspidermonkey-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWspidermonkey-dev += $(libdir)/libmozjs185.so
+PACKAGES = CSWlibmozjs185-gxx-dev
+SPKG_DESC_CSWlibmozjs185-gxx-dev += $(DESCRIPTION), header files
+PKGFILES_CSWlibmozjs185-gxx-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibmozjs185-gxx-dev += $(libdir)/libmozjs185.so
 
 PACKAGES += CSWlibmozjs185-gxx
 PKGFILES_CSWlibmozjs185-gxx += $(call baseisadirs,$(libdir),libmozjs185\.so\.1\.0\.0)
@@ -75,7 +76,7 @@ configure-custom:
 
 build-custom:
 	# cd $(WORKSRC)/js/src && DISABLE_JIT=1 BUILD_OPT=1 $(MAKE) -f Makefile.ref
-	cd $(WORKSRC)/js/objdir && $(MAKE)
+	cd $(WORKSRC)/js/objdir && $(MAKE) $(PARALLELMFLAGS)
 	@$(MAKECOOKIE)
 
 install-custom:
