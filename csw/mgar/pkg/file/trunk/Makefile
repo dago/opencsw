@@ -48,6 +48,7 @@ PACKAGES += CSWlibmagic1
 SPKG_DESC_CSWlibmagic1 += The library behind file(1), libmagic.so.1
 PKGFILES_CSWlibmagic1 += $(call pkgfiles_lib,libmagic.so.1)
 RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibmagic-data
 CHECKPKG_OVERRIDES_CSWlibmagic1 += surplus-dependency|CSWlibmagic-data
 OBSOLETED_BY_CSWlibmagic1 += CSWlibmagic
 
