@@ -89,6 +89,16 @@ TEST_SCRIPTS = custom
 
 LD_OPTIONS =
 
+# These checks fail on Solaris 9, because there is no libgcc_s.so.1 installed
+# on Solaris 9. However, the library does exist on Solaris 10, where these
+# libraries would be run. Checkpkg currently doesn't handle this special case,
+# so overrides are used.
+CHECKPKG_OVERRIDES_CSWlibpcrecpp0-gxx += soname-not-found|libstdc++.so.6|is|needed|by|opt/csw/gxx/lib/amd64/libpcrecpp.so.0.0.0
+CHECKPKG_OVERRIDES_CSWlibpcrecpp0-gxx += soname-not-found|libgcc_s.so.1|is|needed|by|opt/csw/gxx/lib/amd64/libpcrecpp.so.0.0.0
+CHECKPKG_OVERRIDES_CSWlibpcre1-gxx += soname-not-found|libgcc_s.so.1|is|needed|by|opt/csw/gxx/lib/amd64/libpcre.so.1.0.0
+CHECKPKG_OVERRIDES_CSWlibpcreposix0-gxx += soname-not-found|libgcc_s.so.1|is|needed|by|opt/csw/gxx/lib/amd64/libpcreposix.so.0.0.0
+CHECKPKG_OVERRIDES_CSWlibpcre16-0-gxx += soname-not-found|libgcc_s.so.1|is|needed|by|opt/csw/gxx/lib/amd64/libpcre16.so.0.0.0
+
 include gar/category.mk
 
 # The testcases need 'diff -u' which Solaris 8 diff does not have,
