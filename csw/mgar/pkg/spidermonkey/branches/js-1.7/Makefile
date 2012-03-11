@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = spidermonkey
-VERSION = 1.0.0
+VERSION = 1.7.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -12,43 +12,52 @@ endef
 
 VENDOR_URL   = http://www.mozilla.org/js/spidermonkey/
 MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/js/
-DISTFILES    = js185-$(VERSION).tar.gz
+DISTFILES    = js-$(VERSION).tar.gz
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+# the sun5.8 x86 config file is missing so
+# we are using our own
+#DISTFILES += SunOS5.8_i86pc.mk
+
+PATCHFILES += 0001-Set-the-SONAME-of-the-shared-library.patch
+
 prefix = $(BUILD_PREFIX)/gxx
+GARCOMPILER = GNU
 
-DISTNAME = js-1.8.5
+DISTNAME = js
 
-PATCHFILES += 0001-Do-not-use-fpclassify-on-Solaris.patch
-PATCHFILES += 0002-Specify-the-right-SONAME-for-the-library.patch
+LICENSE = src/README.html
 
-LICENSE = js/src/README.html
+# we find the os string used by the makefile by using
+# the same code (from config.mk)
+OS_ARCH := $(subst /,_,$(shell uname -s | sed /\ /s//_/))
+# Attempt to differentiate between SunOS 5.4 and x86 5.4
+OS_CPUARCH := $(shell uname -m)
+ifeq ($(OS_CPUARCH),i86pc)
+OS_RELEASE := $(shell uname -r)_$(OS_CPUARCH)
+else
+OS_RELEASE := $(shell uname -r)
+endif
+OS_CONFIG := $(OS_ARCH)$(OS_OBJTYPE)$(OS_RELEASE)
 
-# EXTRA_LINKER_FLAGS = -mimpure-text
+CONFIGURE_ARGS = $(DIRPATHS)
 
-CONFIGURE_SCRIPTS = custom
+CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
 
-GARCOMPILER = GNU
+PACKAGES += CSWlibjs-gxx-dev
+SPKG_DESC_CSWlibjs-gxx-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibjs-gxx-dev += $(libdir)/libjs.so
+PKGFILES_CSWlibjs-gxx-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibjs-gxx-dev += CSWlibjs1-7-0-gxx
 
-BUILD_DEP_PKGS = CSWautoconf2-13
-BUILD_DEP_PKGS += CSWnspr-dev
-BUILD_DEP_PKGS += CSWgcc4core
-BUILD_DEP_PKGS += CSWgcc4g++
+PACKAGES += CSWlibjs1-7-0-gxx
+PKGFILES_CSWlibjs1-7-0-gxx += $(call baseisadirs,$(libdir),libjs\.so\.1\.7\.0)
+SPKG_DESC_CSWlibjs1-7-0-gxx += $(DESCRIPTION), libjs.so.1.7.0
+RUNTIME_DEP_PKGS_CSWspidermonkey += CSWlibjs1-7-0-gxx
 
-PACKAGES = CSWlibmozjs185-gxx-dev
-SPKG_DESC_CSWlibmozjs185-gxx-dev += $(DESCRIPTION), header files
-PKGFILES_CSWlibmozjs185-gxx-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibmozjs185-gxx-dev += $(libdir)/libmozjs185.so
-RUNTIME_DEP_PKGS_CSWlibmozjs185-gxx-dev += CSWlibmozjs185-1-0-gxx
-
-PACKAGES += CSWlibmozjs185-1-0-gxx
-PKGFILES_CSWlibmozjs185-1-0-gxx += $(call baseisadirs,$(libdir),libmozjs185\.so\.1\.0(\.\d+)*)
-SPKG_DESC_CSWlibmozjs185-1-0-gxx += $(DESCRIPTION), libmozjs185.so.1.0
-RUNTIME_DEP_PKGS_CSWlibmozjs185-1-0-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmozjs185-1-0-gxx += CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSWlibjs1-7-0-gxx += binary-architecture-does-not-match-placement|file=opt/csw/gxx/lib/libjs.so.1.7.0|arch_id=18|arch_name=sparcv8+
 
 include gar/category.mk
 
@@ -57,38 +66,36 @@ post-patch:
 	# it seems to be used to define special debug functions,
 	# for developper only I suppose.
 	# we just change it by echo to avoid error messages
-	# perl -pi -e 's/whoami/echo/g' $(WORKSRC)/src/config.mk
-
-pre-configure-modulated:
-	(cd $(WORKSRC)/js/src && autoconf-2.13)
+	perl -pi -e 's/whoami/echo/g' $(WORKSRC)/src/config.mk
 	@$(MAKECOOKIE)
 
-configure-custom:
-	(cd $(WORKSRC)/js && mkdir -p objdir && cd objdir && \
-	CFLAGS="-DJS_C_STRINGS_ARE_UTF8" \
-	       CXXFLAGS="-fshort-enums -mimpure-text -DJS_C_STRINGS_ARE_UTF8" \
-	       CXX=/opt/csw/bin/g++ \
-	       CC=/opt/csw/bin/gcc \
-	       ../src/configure \
-	       --disable-pedantic \
-	       --with-nspr-prefix=/opt/csw \
-	       --prefix=/opt/csw/gxx \
-	       --with-system-nspr \
-	       --with-pthreads \
-	       --enable-threadsasafe \
-	       --with-ctypes)
+pre-build:
+	# if we are on x86, we install our own config file
+	# and remove the lock_SunOS.s cause the makefile
+	# always tries to compile it (why so ?)
+	( if [ "$(OS_CPUARCH)" = "i86pc" ]; then \
+		cp $(WORKDIR)/SunOS5.8_i86pc.mk $(WORKSRC)/src/config; \
+		rm -f $(WORKSRC)/src/lock_SunOS.s; \
+	fi )
 	@$(MAKECOOKIE)
 
 build-custom:
-	# cd $(WORKSRC)/js/src && DISABLE_JIT=1 BUILD_OPT=1 $(MAKE) -f Makefile.ref
-	cd $(WORKSRC)/js/objdir && $(MAKE) $(PARALLELMFLAGS)
+	# Looks like it doesn't work with parallel builds.
+	# $(PARALLELMFLAGS)
+	cd $(WORKSRC)/src && BUILD_OPT=1 $(MAKE) -f Makefile.ref
 	@$(MAKECOOKIE)
 
 install-custom:
-	cd $(WORKSRC)/js/objdir && $(MAKE) $(INSTALL_ENV) install
-	# Symlinks after installation are broken: they use absolute paths.
-	grm -v $(DESTDIR)/opt/csw/gxx/lib/libmozjs185.so
-	grm -v $(DESTDIR)/opt/csw/gxx/lib/libmozjs185.so.1.0
-	gln -vs libmozjs185.so.1.0 $(DESTDIR)/opt/csw/gxx/lib/libmozjs185.so
-	gln -vs libmozjs185.so.1.0.0 $(DESTDIR)/opt/csw/gxx/lib/libmozjs185.so.1.0
+	ginstall -d $(DESTDIR)$(includedir)
+	cp $(WORKSRC)/src/*.h $(DESTDIR)$(includedir)
+	cp $(WORKSRC)/src/$(OS_CONFIG)_OPT.OBJ/*.h $(DESTDIR)$(includedir)
+	# 
+	ginstall -d $(DESTDIR)$(libdir)
+	ginstall -D $(WORKSRC)/src/$(OS_CONFIG)_OPT.OBJ/libjs.so $(DESTDIR)$(libdir)/libjs.so
+	# ginstall -D $(WORKSRC)/src/$(OS_CONFIG)_OPT.OBJ/libjs.a $(DESTDIR)$(libdir)/libjs.a
+	(cd $(DESTDIR)/$(libdir); mv libjs.so libjs.so.1.7.0; ln -s libjs.so.1.7.0 libjs.so)
+	#
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall -D $(WORKSRC)/src/$(OS_CONFIG)_OPT.OBJ/js $(DESTDIR)$(bindir)/js
+	ginstall -D $(WORKSRC)/src/$(OS_CONFIG)_OPT.OBJ/jscpucfg $(DESTDIR)$(bindir)/jscpucfg
 	@$(MAKECOOKIE)
