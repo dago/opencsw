@@ -1,0 +1,25 @@
+From c09f2e7582231cbe2548093769c29efd488f5363 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 11 Mar 2012 09:50:19 +0100
+Subject: [PATCH] Set the SONAME of the shared library.
+
+---
+ src/rules.mk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/rules.mk b/src/rules.mk
+index 8d484db..c3efbf6 100644
+--- a/src/rules.mk
++++ b/src/rules.mk
+@@ -115,7 +115,7 @@ $(LIBRARY): $(LIB_OBJS)
+ 	$(RANLIB) $@
+ 
+ $(SHARED_LIBRARY): $(LIB_OBJS)
+-	$(MKSHLIB) -o $@ $(LIB_OBJS) $(LDFLAGS) $(OTHER_LIBS)
++	$(MKSHLIB) -o $@ -h libjs.so.1.7.0 $(LIB_OBJS) $(LDFLAGS) $(OTHER_LIBS)
+ endif
+ endif
+ 
+-- 
+1.7.9
+
