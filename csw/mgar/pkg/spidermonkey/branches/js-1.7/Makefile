@@ -46,6 +46,9 @@ BUILD_SCRIPTS = custom
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
 
+EXTRA_CFLAGS="-DJS_C_STRINGS_ARE_UTF8"
+EXTRA_CXXFLAGS="-DJS_C_STRINGS_ARE_UTF8"
+
 PACKAGES += CSWlibjs-gxx-dev
 SPKG_DESC_CSWlibjs-gxx-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibjs-gxx-dev += $(libdir)/libjs.so
@@ -69,7 +72,7 @@ post-patch:
 	perl -pi -e 's/whoami/echo/g' $(WORKSRC)/src/config.mk
 	@$(MAKECOOKIE)
 
-pre-build:
+pre-build-modulated:
 	# if we are on x86, we install our own config file
 	# and remove the lock_SunOS.s cause the makefile
 	# always tries to compile it (why so ?)
