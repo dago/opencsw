@@ -54,7 +54,7 @@ build-mongo:
 	(cd $(WORKSRC); \
 		$(SCONS_ENV) \
 		scons \
-		$(SCONS_FLAGS) \
+		$(SCONS_FLAGS))
 	@$(MAKECOOKIE)
 
 install-mongo:
