@@ -21,57 +21,57 @@ PATCHFILES += 0002-Remove-bashism.patch
 
 VENDOR_URL = http://www.pcre.org
 
-PACKAGES = CSWpcre
-CATALOGNAME_CSWpcre = pcre
-SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
-RUNTIME_DEP_PKGS_CSWpcre += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcre16-0
-RUNTIME_DEP_PKGS_CSWpcre += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWpcre += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcreposix0
+prefix = $(BUILD_PREFIX)/gxx
+GARCOMPILER = GNU
 
-PACKAGES += CSWlibpcre-dev
-SPKG_DESC_CSWlibpcre-dev = Development files for libpcre.so.1, libpcre16.so.0, libpcrecpp.so.0 and libpcreposix.so.0
-RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcre16-0
-RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcreposix0
-RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcrecpp0
-PKGFILES_CSWlibpcre-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpcre-dev += $(docdir)/.*
-OBSOLETED_BY_CSWlibpcre-dev += CSWpcre-devel
+PACKAGES = CSWpcre-gxx
+CATALOGNAME_CSWpcre-gxx = pcre
+SPKG_DESC_CSWpcre-gxx = Perl-compatible regular expression tools
+RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibpcre1-gxx
+RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibpcre16-0-gxx
+RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibpcreposix0-gxx
+
+PACKAGES += CSWlibpcre-gxx-dev
+SPKG_DESC_CSWlibpcre-gxx-dev = Development files for libpcre.so.1, libpcre16.so.0, libpcrecpp.so.0 and libpcreposix.so.0
+RUNTIME_DEP_PKGS_CSWlibpcre-gxx-dev += CSWlibpcre1-gxx
+RUNTIME_DEP_PKGS_CSWlibpcre-gxx-dev += CSWlibpcre16-0-gxx
+RUNTIME_DEP_PKGS_CSWlibpcre-gxx-dev += CSWlibpcreposix0-gxx
+RUNTIME_DEP_PKGS_CSWlibpcre-gxx-dev += CSWlibpcrecpp0-gxx
+PKGFILES_CSWlibpcre-gxx-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpcre-gxx-dev += $(docdir)/.*
 # Leave these in the docs for now
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/pcre-config.txt
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/pcre.txt
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/README
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcre-config.html
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcresample.html
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcredemo.html
+CHECKPKG_OVERRIDES_CSWlibpcre-gxx-dev += file-with-bad-content
 
-PACKAGES += CSWlibpcre1
-SPKG_DESC_CSWlibpcre1 = Perl-compatible regular expression tools, libpcre.so.1
-PKGFILES_CSWlibpcre1 = $(call pkgfiles_lib,libpcre.so.1)
+PACKAGES += CSWlibpcre1-gxx
+SPKG_DESC_CSWlibpcre1-gxx = Perl-compatible regular expression tools, libpcre.so.1
+PKGFILES_CSWlibpcre1-gxx = $(call pkgfiles_lib,libpcre.so.1)
+RUNTIME_DEP_PKGS_CSWlibpcre1-gxx += CSWlibgcc-s1
 
-PACKAGES += CSWlibpcre16-0
-SPKG_DESC_CSWlibpcre16-0 = Perl-compatible regular expression tools, libpcre16.so.0
-PKGFILES_CSWlibpcre16-0 = $(call pkgfiles_lib,libpcre16.so.0)
+PACKAGES += CSWlibpcre16-0-gxx
+SPKG_DESC_CSWlibpcre16-0-gxx = Perl-compatible regular expression tools, libpcre16.so.0
+PKGFILES_CSWlibpcre16-0-gxx = $(call pkgfiles_lib,libpcre16.so.0)
+RUNTIME_DEP_PKGS_CSWlibpcre16-0-gxx += CSWlibgcc-s1
 
-PACKAGES += CSWlibpcrecpp0
-SPKG_DESC_CSWlibpcrecpp0 += Perl-compatible regular expression tools, libpcrecpp.so.0
-PKGFILES_CSWlibpcrecpp0 += $(call pkgfiles_lib,libpcrecpp.so.0)
-RUNTIME_DEP_PKGS_CSWlibpcrecpp0 += CSWlibpcre0
+PACKAGES += CSWlibpcrecpp0-gxx
+SPKG_DESC_CSWlibpcrecpp0-gxx += Perl-compatible regular expression tools, libpcrecpp.so.0
+PKGFILES_CSWlibpcrecpp0-gxx += $(call pkgfiles_lib,libpcrecpp.so.0)
+RUNTIME_DEP_PKGS_CSWlibpcrecpp0-gxx += CSWlibpcre1-gxx
+RUNTIME_DEP_PKGS_CSWlibpcrecpp0-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpcrecpp0-gxx += CSWlibstdc++6
 
-PACKAGES += CSWlibpcreposix0
-SPKG_DESC_CSWlibpcreposix0 += Perl-compatible regular expression tools, libpcreposix.so.0
-PKGFILES_CSWlibpcreposix0 += $(call pkgfiles_lib,libpcreposix.so.0)
-RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre0
+PACKAGES += CSWlibpcreposix0-gxx
+SPKG_DESC_CSWlibpcreposix0-gxx += Perl-compatible regular expression tools, libpcreposix.so.0
+PKGFILES_CSWlibpcreposix0-gxx += $(call pkgfiles_lib,libpcreposix.so.0)
+RUNTIME_DEP_PKGS_CSWlibpcreposix0-gxx += CSWlibpcre1-gxx
+RUNTIME_DEP_PKGS_CSWlibpcreposix0-gxx += CSWlibgcc-s1
 
 REINPLACE_USRLOCAL += doc/pcre-config.1
 REINPLACE_USRLOCAL += doc/pcresample.3
 
 BUILD64_LIBS_ONLY = 1
-
-EXTRA_LINKER_FLAGS = -norunpath
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-unicode-properties
@@ -85,6 +85,8 @@ CONFIGURE_ARGS += --enable-pcre16
 
 # We need more than the default 8 MB of stack space
 TEST_SCRIPTS = custom
+
+LD_OPTIONS =
 
 include gar/category.mk
 
