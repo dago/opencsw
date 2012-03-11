@@ -19,6 +19,8 @@ PATCHFILES = 0001-Allow-norunpath-for-libtool.patch
 #   http://bugs.exim.org/show_bug.cgi?id=1206
 PATCHFILES += 0002-Remove-bashism.patch
 
+ISA_DEFAULT_i386-5.9 = pentium_pro
+
 VENDOR_URL = http://www.pcre.org
 
 prefix = $(BUILD_PREFIX)/gxx
