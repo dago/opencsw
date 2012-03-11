@@ -64,7 +64,7 @@ RUNTIME_DEP_PKGS_CSWspidermonkey += CSWlibjs1-7-0-gxx
 CHECKPKG_OVERRIDES_CSWlibjs1-7-0-gxx += binary-architecture-does-not-match-placement|file=opt/csw/gxx/lib/libjs.so.1.7.0|arch_id=18|arch_name=sparcv8+
 
 BUILD_OPT = 1
-EXTRA_BUILD_EXPORTS = BUILD_OPT
+EXTRA_BUILD_EXPORTS = BUILD_OPT CC CXX
 
 include gar/category.mk
 
@@ -89,7 +89,15 @@ pre-build-modulated:
 build-custom:
 	# Looks like it doesn't work with parallel builds.
 	# $(PARALLELMFLAGS)
-	cd $(WORKSRC)/src && $(BUILD_ENV) $(MAKE) -f Makefile.ref
+	# This doesn't work.
+	#	$(BUILD_ENV)
+	cd $(WORKSRC)/src && \
+		CC=/opt/csw/bin/gcc \
+		CXX=/opt/csw/bin/g++ \
+		BUILD_OPT="$(BUILD_OPT)" \
+		CFLAGS="-DJS_C_STRINGS_ARE_UTF8" \
+		CXXFLAGS="-DJS_C_STRINGS_ARE_UTF8" \
+		$(MAKE) -f Makefile.ref
 	@$(MAKECOOKIE)
 
 install-custom:
