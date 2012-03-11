@@ -18,7 +18,6 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = mongo
 INSTALL_SCRIPTS = mongo
 TEST_SCRIPTS =
-CONFIGURE_ARGS = $(DIRPATHS)
 
 GARCOMPILER = GNU
 
@@ -33,20 +32,36 @@ PACKAGING_PLATFORMS = solaris10-i386
 
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWgcc4g++
-BUILD_DEP_PKGS += CSWlibmozjs185-gxx-dev
-BUILD_DEP_PKGS += CSWlibpcre-dev
+# BUILD_DEP_PKGS += CSWlibmozjs185-gxx-dev
+BUILD_DEP_PKGS += CSWlibjs-gxx-dev
+BUILD_DEP_PKGS += CSWlibpcap-dev
+BUILD_DEP_PKGS += CSWlibpcre-gxx-dev
 BUILD_DEP_PKGS += CSWscons
+BUILD_DEP_PKGS += CSWsnappy-gxx-dev
+
+SCONS_FLAGS += --libpath=/opt/csw/gxx/lib
+SCONS_FLAGS += --extrapath=/opt/csw,/opt/csw/gxx
+SCONS_FLAGS += --cxx=/opt/csw/bin/g++
+SCONS_FLAGS += --use-system-all
+SCONS_FLAGS += --extralib=rt,pcre
+SCONS_FLAGS += --release all
+
+SCONS_ENV = LIBPATH=/opt/csw/gxx/lib
 
 include gar/category.mk
 
 build-mongo:
-	(cd $(WORKSRC); LIBPATH=/opt/csw/gxx/lib \
+	(cd $(WORKSRC); \
+		$(SCONS_ENV) \
 		scons \
-		--extrapath=/opt/csw,/opt/csw/gxx \
-		--cxx=/opt/csw/bin/g++ \
-		--release all)
+		$(SCONS_FLAGS) \
 	@$(MAKECOOKIE)
 
 install-mongo:
-	(cd $(WORKSRC); $(INSTALL_ENV) scons -Q --prefix=$(DESTDIR)/opt/csw install)
+	(cd $(WORKSRC); \
+		$(SCONS_ENV) \
+		scons  \
+		$(SCONS_FLAGS) \
+		-Q --prefix=$(DESTDIR)/opt/csw \
+		install)
 	@$(MAKECOOKIE)
