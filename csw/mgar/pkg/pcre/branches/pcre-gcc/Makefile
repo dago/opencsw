@@ -27,7 +27,6 @@ prefix = $(BUILD_PREFIX)/gxx
 GARCOMPILER = GNU
 
 PACKAGES = CSWpcre-gxx
-CATALOGNAME_CSWpcre-gxx = pcre
 SPKG_DESC_CSWpcre-gxx = Perl-compatible regular expression tools
 RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWpcre-gxx += CSWlibpcre1-gxx
