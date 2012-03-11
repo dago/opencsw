@@ -1,0 +1,72 @@
+From 964e24f35eaefccd996af4e698e61be2c3ad0145 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 10 Mar 2012 10:28:33 +0100
+Subject: [PATCH 2/2] Specify the right SONAME for the library
+
+This patch solves two problems:
+
+1. It cannot be assumed that GCC is used with GNU ld. Therefore, it needs to
+   be tested whether we can add the -soname option to the linker.
+
+2.  There are two places in the code that specify the SONAME. One of them is
+    wrong, because specifies the SONAME equal to the file name.
+---
+ js/src/Makefile.in           |    4 ++++
+ js/src/config/autoconf.mk.in |    1 +
+ js/src/configure.in          |    5 +++--
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/js/src/Makefile.in b/js/src/Makefile.in
+index a85e055..1d9da83 100644
+--- a/js/src/Makefile.in
++++ b/js/src/Makefile.in
+@@ -871,7 +871,11 @@ else
+ SHLIB_ANY_VER   := $(DESTDIR)$(libdir)/$(SHARED_LIBRARY)
+ SHLIB_ABI_VER   := $(DESTDIR)$(libdir)/$(SHARED_LIBRARY).$(SRCREL_ABI_VERSION)
+ SHLIB_EXACT_VER := $(DESTDIR)$(libdir)/$(SHARED_LIBRARY).$(SRCREL_VERSION)
++ifeq (1,$(GCC_USE_GNU_LD))
+ $(SHARED_LIBRARY): EXTRA_DSO_LDOPTS += -Wl,-soname,$(notdir $(SHLIB_ABI_VER))
++else
++$(SHARED_LIBRARY): EXTRA_DSO_LDOPTS += -Wl,-h,$(notdir $(SHLIB_ABI_VER))
++endif
+ endif
+ endif
+ 
+diff --git a/js/src/config/autoconf.mk.in b/js/src/config/autoconf.mk.in
+index f4c8150..9ecccf6 100644
+--- a/js/src/config/autoconf.mk.in
++++ b/js/src/config/autoconf.mk.in
+@@ -202,6 +202,7 @@ CXX_VERSION	= @CXX_VERSION@
+ 
+ GNU_AS		= @GNU_AS@
+ GNU_LD		= @GNU_LD@
++GCC_USE_GNU_LD  = @GCC_USE_GNU_LD@
+ GNU_CC		= @GNU_CC@
+ GNU_CXX		= @GNU_CXX@
+ HAVE_GCC3_ABI	= @HAVE_GCC3_ABI@
+diff --git a/js/src/configure.in b/js/src/configure.in
+index 5d5365b..7d8f901 100644
+--- a/js/src/configure.in
++++ b/js/src/configure.in
+@@ -549,6 +549,7 @@ fi
+ if test "$GNU_CC"; then
+     if `$CC -print-prog-name=ld` -v 2>&1 | grep -c GNU >/dev/null; then
+         GCC_USE_GNU_LD=1
++        AC_SUBST(GCC_USE_GNU_LD)
+     fi
+ fi
+ 
+@@ -1558,8 +1559,8 @@ dnl ========================================================
+ if test "$GNU_CC"; then
+     # FIXME: Let us build with strict aliasing. bug 414641.
+     CFLAGS="$CFLAGS -fno-strict-aliasing"
+-    MKSHLIB='$(CXX) $(CXXFLAGS) $(DSO_PIC_CFLAGS) $(DSO_LDOPTS) -Wl,-h,$@ -o $@'
+-    MKCSHLIB='$(CC) $(CFLAGS) $(DSO_PIC_CFLAGS) $(DSO_LDOPTS) -Wl,-h,$@ -o $@'
++    MKSHLIB='$(CXX) $(CXXFLAGS) $(DSO_PIC_CFLAGS) $(DSO_LDOPTS) -o $@'
++    MKCSHLIB='$(CC) $(CFLAGS) $(DSO_PIC_CFLAGS) $(DSO_LDOPTS) -o $@'
+     DSO_LDOPTS='-shared'
+     if test "$GCC_USE_GNU_LD"; then
+         # Don't allow undefined symbols in libraries
+-- 
+1.7.9
+
