@@ -1,0 +1,28 @@
+From 6ea5d8231df11e63384b0236ab4485294ca2f104 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 11 Mar 2012 17:48:51 +0000
+Subject: [PATCH] Hardcode OpenCSW specifics in the Solaris section
+
+If SConstruct has hardcoded Solaris paths, why not add OpenCSW specific
+paths.
+---
+ SConstruct              |    5 +-
+ shell/mongo_vstudio.cpp |  204 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 208 insertions(+), 1 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index 2d0c86f..787a81c 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -543,7 +543,10 @@ elif "sunos5" == os.sys.platform:
+      nix = True
+      solaris = True
+      env.Append( CPPDEFINES=[ "__sunos__" ] )
+-     env.Append( LIBS=["socket","resolv"] )
++     env.Append( LIBS=["socket","resolv","rt"] )
++     env.Append( CPPPATH=[ "/opt/csw/gxx/include", "/opt/csw/include" ] )
++     env.Append( LIBPATH=[ "/opt/csw/gxx/lib", "/opt/csw/lib" ] )
++     env.Append( LINKFLAGS=[ "-R/opt/csw/gxx/lib", "-R/opt/csw/lib" ] )
+ 
+ elif os.sys.platform.startswith( "freebsd" ):
+     nix = True

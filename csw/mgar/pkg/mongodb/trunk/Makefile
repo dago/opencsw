@@ -21,14 +21,14 @@ TEST_SCRIPTS =
 
 GARCOMPILER = GNU
 
-# PATCHFILES += 0001-Disabling-the-libstdc-check.patch
 PATCHFILES += 0002-library-checking-by-locating-.so-files.patch
+PATCHFILES += 0003-Hardcode-OpenCSW-specifics-in-the-Solaris-section.patch
 
 # Depends on V8 which is available on Solaris 10 x86 only.
 # Can only run on little-endian machines.
 PACKAGING_PLATFORMS = solaris10-i386
 
-# scons libboost-dev libpcre++-dev xulrunner-1.9.1-dev
+EXTRA_RUNPATH_DIRS = $(prefix)/gxx/lib
 
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWgcc4g++
@@ -39,14 +39,14 @@ BUILD_DEP_PKGS += CSWlibpcre-gxx-dev
 BUILD_DEP_PKGS += CSWscons
 BUILD_DEP_PKGS += CSWsnappy-gxx-dev
 
-SCONS_FLAGS += --libpath=$(libdir)
-SCONS_FLAGS += --extrapath=$(BUILD_PREFIX),$(prefix)
-SCONS_FLAGS += --cxx=$(BUILD_PREFIX)/bin/g++
+SCONS_FLAGS += --libpath=$(prefix)/gxx/lib
+SCONS_FLAGS += --extrapath=$(prefix)/gxx,$(prefix)
+SCONS_FLAGS += --cxx=$(prefix)/bin/g++
 SCONS_FLAGS += --use-system-all
 SCONS_FLAGS += --extralib=rt,pcre
 SCONS_FLAGS += --release all
 
-SCONS_ENV = LIBPATH=$(libdir)
+SCONS_ENV = LIBPATH=$(prefix)/gxx/lib
 
 include gar/category.mk
 
