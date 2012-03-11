@@ -294,7 +294,7 @@ install-custom:
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-	ln -s $(sharedstatedir)/sendmail/cf $(DESTDIR)$(sysconfdir)/mail/cf
+	ln -s $(sharedstatedir)/sendmail/cf/cf $(DESTDIR)$(sysconfdir)/mail/cf
 
 	@# usergroup
 	ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
