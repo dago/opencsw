@@ -16,6 +16,11 @@ DISTFILES  = $(DISTNAME).tar.gz
 prefix = $(BUILD_PREFIX)/gxx
 GARCOMPILER = GNU
 
+# Undefined                       first referenced
+#  symbol                             in file
+# __sync_fetch_and_add_4              snappy_unittest-snappy_unittest.o
+ISA_DEFAULT_i386 = pentium_pro
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PACKAGES += CSWsnappy-gcc-dev
