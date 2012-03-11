@@ -1,0 +1,20 @@
+From b28bb55e3f340ec646914e283748a75779da639a Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 11 Mar 2012 12:04:44 +0100
+Subject: [PATCH] Add a x86 configuration file.
+
+---
+ src/config/SunOS5.9_i86pc.mk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 src/config/SunOS5.9_i86pc.mk
+
+diff --git a/src/config/SunOS5.9_i86pc.mk b/src/config/SunOS5.9_i86pc.mk
+new file mode 100644
+index 0000000..e6df87f
+--- /dev/null
++++ b/src/config/SunOS5.9_i86pc.mk
+@@ -0,0 +1 @@
++include $(DEPTH)/config/SunOS5.5.mk
+-- 
+1.7.9
+
