@@ -92,6 +92,7 @@ build-custom:
 install-custom:
 	ginstall -d $(DESTDIR)$(includedir)
 	cp $(WORKSRC)/src/*.h $(DESTDIR)$(includedir)
+	cp $(WORKSRC)/src/*.tbl $(DESTDIR)$(includedir)
 	cp $(WORKSRC)/src/$(OS_CONFIG)_OPT.OBJ/*.h $(DESTDIR)$(includedir)
 	# 
 	ginstall -d $(DESTDIR)$(libdir)
