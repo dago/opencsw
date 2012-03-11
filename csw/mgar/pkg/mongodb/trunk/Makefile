@@ -39,14 +39,14 @@ BUILD_DEP_PKGS += CSWlibpcre-gxx-dev
 BUILD_DEP_PKGS += CSWscons
 BUILD_DEP_PKGS += CSWsnappy-gxx-dev
 
-SCONS_FLAGS += --libpath=/opt/csw/gxx/lib
-SCONS_FLAGS += --extrapath=/opt/csw,/opt/csw/gxx
-SCONS_FLAGS += --cxx=/opt/csw/bin/g++
+SCONS_FLAGS += --libpath=$(libdir)
+SCONS_FLAGS += --extrapath=$(BUILD_PREFIX),$(prefix)
+SCONS_FLAGS += --cxx=$(BUILD_PREFIX)/bin/g++
 SCONS_FLAGS += --use-system-all
 SCONS_FLAGS += --extralib=rt,pcre
 SCONS_FLAGS += --release all
 
-SCONS_ENV = LIBPATH=/opt/csw/gxx/lib
+SCONS_ENV = LIBPATH=$(libdir)
 
 include gar/category.mk
 
@@ -62,6 +62,6 @@ install-mongo:
 		$(SCONS_ENV) \
 		scons  \
 		$(SCONS_FLAGS) \
-		-Q --prefix=$(DESTDIR)/opt/csw \
+		-Q --prefix=$(DESTDIR)$(BUILD_PREFIX) \
 		install)
 	@$(MAKECOOKIE)
