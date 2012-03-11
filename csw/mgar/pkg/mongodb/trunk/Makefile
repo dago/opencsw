@@ -14,6 +14,9 @@ SPKG_SOURCEURL = http://www.mongodb.org/
 MASTER_SITES = http://fastdl.mongodb.org/src/
 DISTNAME = $(NAME)-src-r$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
+
+LICENSE = APACHE-2.0.txt
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = mongo
 INSTALL_SCRIPTS = mongo
@@ -47,6 +50,18 @@ SCONS_FLAGS += --extralib=rt,pcre
 SCONS_FLAGS += --release all
 
 SCONS_ENV = LIBPATH=$(prefix)/gxx/lib
+
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-filesystem1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-prog-opts1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-system1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-thread1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibjs1-7-0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcap1
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcre1-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcrecpp0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibsnappy1-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibstdc++6
 
 include gar/category.mk
 
