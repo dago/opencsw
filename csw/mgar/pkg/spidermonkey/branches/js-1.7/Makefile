@@ -19,6 +19,7 @@ DISTFILES    = js-$(VERSION).tar.gz
 #DISTFILES += SunOS5.8_i86pc.mk
 
 PATCHFILES += 0001-Set-the-SONAME-of-the-shared-library.patch
+PATCHFILES += 0003-Add-a-x86-configuration-file.patch
 
 prefix = $(BUILD_PREFIX)/gxx
 GARCOMPILER = GNU
