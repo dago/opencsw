@@ -18,15 +18,13 @@ GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-PACKAGES += CSWsnappy-dev
-CATALOGNAME_CSWsnappy-dev = snappy_dev
-SPKG_DESC_CSWsnappy-dev += $(DESCRIPTION), development files
-PKGFILES_CSWsnappy-dev += /opt/csw/gxx/lib/libsnappy.so
-PKGFILES_CSWsnappy-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWsnappy-dev += CSWlibsnappy1-gxx
+PACKAGES += CSWsnappy-gcc-dev
+SPKG_DESC_CSWsnappy-gcc-dev += $(DESCRIPTION), development files
+PKGFILES_CSWsnappy-gcc-dev += /opt/csw/gxx/lib/libsnappy.so
+PKGFILES_CSWsnappy-gcc-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWsnappy-gcc-dev += CSWlibsnappy1-gxx
 
 PACKAGES += CSWlibsnappy1-gxx
-CATALOGNAME_CSWlibsnappy1-gxx = libsnappy1_gxx
 PKGFILES_CSWlibsnappy1-gxx += $(call baseisadirs,$(libdir),libsnappy\.so\.1\.1\.3)
 PKGFILES_CSWlibsnappy1-gxx += $(call baseisadirs,$(libdir),libsnappy\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibsnappy1-gxx += $(DESCRIPTION), libsnappy.so.1
