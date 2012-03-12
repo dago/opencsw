@@ -247,7 +247,6 @@ CONFIGURE_ARGS += --with-config-file-path=$(sysconfdir)
 CONFIGURE_ARGS += --with-config-file-scan-dir=$(sysconfdir)/conf.d
 CONFIGURE_ARGS += --enable-bcmath=shared
 CONFIGURE_ARGS += --enable-calendar=shared
-CONFIGURE_ARGS += --enable-cli
 CONFIGURE_ARGS += --enable-ctype=shared
 CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --enable-dom=shared
@@ -277,7 +276,6 @@ CONFIGURE_ARGS += --enable-wddx=shared
 CONFIGURE_ARGS += --enable-xmlreader=shared
 CONFIGURE_ARGS += --enable-xmlwriter=shared
 CONFIGURE_ARGS += --enable-zip=shared
-CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-bz2=shared,$(prefix)
 CONFIGURE_ARGS += --with-curl=shared,$(prefix)
 CONFIGURE_ARGS += --with-curlwrappers
@@ -328,9 +326,14 @@ CONFIGURE_ARGS += --with-xpm-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --enable-cli
+
+ifeq ($(SAPI),ap2)
+CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
+endif
 
 # Disable Tests (report submitted to PHP QA)
-#SKIPTEST = 1
+SKIPTEST = 1
 #ENABLE_CHECK = 0
 TEST_TARGET = test
 
