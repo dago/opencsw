@@ -26,6 +26,7 @@ GARCOMPILER = GNU
 
 PATCHFILES += 0002-library-checking-by-locating-.so-files.patch
 PATCHFILES += 0003-Hardcode-OpenCSW-specifics-in-the-Solaris-section.patch
+PATCHFILES += 0004-Try-Boost-libs-without-the-mt-suffix-first.patch
 
 # Depends on V8 which is available on Solaris 10 x86 only.
 # Can only run on little-endian machines.
@@ -35,8 +36,7 @@ EXTRA_RUNPATH_DIRS = $(prefix)/gxx/lib
 
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWgcc4g++
-# BUILD_DEP_PKGS += CSWlibmozjs185-gxx-dev
-BUILD_DEP_PKGS += CSWlibjs-gxx-dev
+BUILD_DEP_PKGS += CSWlibjs-dev
 BUILD_DEP_PKGS += CSWlibpcap-dev
 BUILD_DEP_PKGS += CSWlibpcre-gxx-dev
 BUILD_DEP_PKGS += CSWscons
@@ -44,7 +44,7 @@ BUILD_DEP_PKGS += CSWsnappy-gxx-dev
 
 SCONS_FLAGS += --libpath=$(prefix)/gxx/lib
 SCONS_FLAGS += --extrapath=$(prefix)/gxx,$(prefix)
-SCONS_FLAGS += --cxx=$(prefix)/bin/g++
+SCONS_FLAGS += --cxx=$(CXX)
 SCONS_FLAGS += --use-system-all
 SCONS_FLAGS += --extralib=rt,pcre
 SCONS_FLAGS += --release all
@@ -56,7 +56,7 @@ RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-system1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-thread1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWmongodb += CSWlibjs1-7-0-gxx
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibjs1-7-0
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcap1
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcre1-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcrecpp0-gxx
