@@ -90,7 +90,6 @@ CONFIGURE_ARGS += --disable-path-info
 CONFIGURE_ARGS += --with-logpath=$(LOGPATH)/sudolog
 CONFIGURE_ARGS += --with-iologdir=$(IOLOGPATH)
 CONFIGURE_ARGS += --with-timedir=$(TIMEPATH)
-CONFIGURE_ARGS += --disable-root-sudo
 CONFIGURE_ARGS += --with-project
 
 CONFIGURE_ARGS_LDAP-enabled += --with-ldap=$(prefix)
