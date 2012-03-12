@@ -64,7 +64,7 @@ REINPLACE_FILES_localconf += etc/identd.conf
 
 REINPLACEMENTS += daemon
 REINPLACE_MATCH_daemon = /usr/sbin/in.identd
-REINPLACE_WITH_daemon = $(sbindir)/identd
+REINPLACE_WITH_daemon = $(sbindir)/identd -b
 REINPLACE_FILES_daemon = etc/identd.xml
 
 REINPLACEMENTS += customsmf
