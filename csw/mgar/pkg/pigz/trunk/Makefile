@@ -1,5 +1,5 @@
 NAME = pigz
-VERSION = 2.1.7
+VERSION = 2.2.4
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -13,7 +13,6 @@ endef
 
 MASTER_SITES = http://www.zlib.net/pigz/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTNAME = $(NAME)
 DISTFILES += pigz-wrapper
 DISTFILES += unpigz-wrapper
 
