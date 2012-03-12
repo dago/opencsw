@@ -116,8 +116,8 @@ PROTOTYPE_USER_iodir = root
 PROTOTYPE_GROUP_iodir = bin
 
 PROTOTYPE_MODIFIERS += sudoers
-PROTOTYPE_FILES_iodir =  /etc/opt/csw/sudoers.CSW
-PROTOTYPE_PERMS_iodir = 0440
+PROTOTYPE_FILES_sudoers =  /etc/opt/csw/sudoers.CSW
+PROTOTYPE_PERMS_sudoers = 0440
 
 # Just copy the stuff together, the ldap modulations contains some more file,
 # apart from that they are the same.
