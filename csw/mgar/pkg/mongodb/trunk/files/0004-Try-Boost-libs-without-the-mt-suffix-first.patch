@@ -1,0 +1,34 @@
+From 7b0401af0182b887a7070ce4efbb3e7acd9ab9c4 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 12 Mar 2012 19:10:49 +0100
+Subject: [PATCH] Try Boost libs without the mt suffix first
+
+---
+ SConstruct |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index 787a81c..db429ee 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -945,13 +945,13 @@ def doConfigure( myenv , shell=False ):
+             print( "WARNING: old version of boost - you should consider upgrading" )
+ 
+     # this will add it if it exists and works
+-    myCheckLib( [ "boost_system" + boostCompiler + "-mt" + boostVersion ,
+-                  "boost_system" + boostCompiler + boostVersion ] )
++    myCheckLib( [ "boost_system" + boostCompiler + boostVersion ,
++                  "boost_system" + boostCompiler + "-mt" + boostVersion ] )
+ 
+     for b in boostLibs:
+         l = "boost_" + b
+-        myCheckLib( [ l + boostCompiler + "-mt" + boostVersion ,
+-                      l + boostCompiler + boostVersion ] ,
++        myCheckLib( [ l + boostCompiler + boostVersion ,
++                      l + boostCompiler + "-mt" + boostVersion ] ,
+                     release or not shell)
+ 
+     if not conf.CheckCXXHeader( "execinfo.h" ):
+-- 
+1.7.9
+
