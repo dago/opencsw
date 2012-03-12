@@ -21,9 +21,6 @@ DISTFILES    = js-$(VERSION).tar.gz
 PATCHFILES += 0001-Set-the-SONAME-of-the-shared-library.patch
 PATCHFILES += 0003-Add-a-x86-configuration-file.patch
 
-prefix = $(BUILD_PREFIX)/gxx
-GARCOMPILER = GNU
-
 DISTNAME = js
 
 LICENSE = src/README.html
@@ -50,18 +47,18 @@ INSTALL_SCRIPTS = custom
 EXTRA_CFLAGS="-DJS_C_STRINGS_ARE_UTF8"
 EXTRA_CXXFLAGS="-DJS_C_STRINGS_ARE_UTF8"
 
-PACKAGES += CSWlibjs-gxx-dev
-SPKG_DESC_CSWlibjs-gxx-dev += $(DESCRIPTION), development files
-PKGFILES_CSWlibjs-gxx-dev += $(libdir)/libjs.so
-PKGFILES_CSWlibjs-gxx-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibjs-gxx-dev += CSWlibjs1-7-0-gxx
+PACKAGES += CSWlibjs-dev
+SPKG_DESC_CSWlibjs-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibjs-dev += $(libdir)/libjs.so
+PKGFILES_CSWlibjs-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibjs-dev += CSWlibjs1-7-0
 
-PACKAGES += CSWlibjs1-7-0-gxx
-PKGFILES_CSWlibjs1-7-0-gxx += $(call baseisadirs,$(libdir),libjs\.so\.1\.7\.0)
-SPKG_DESC_CSWlibjs1-7-0-gxx += $(DESCRIPTION), libjs.so.1.7.0
-RUNTIME_DEP_PKGS_CSWspidermonkey += CSWlibjs1-7-0-gxx
+PACKAGES += CSWlibjs1-7-0
+PKGFILES_CSWlibjs1-7-0 += $(call baseisadirs,$(libdir),libjs\.so\.1\.7\.0)
+SPKG_DESC_CSWlibjs1-7-0 += $(DESCRIPTION), libjs.so.1.7.0
+RUNTIME_DEP_PKGS_CSWspidermonkey += CSWlibjs1-7-0
 
-CHECKPKG_OVERRIDES_CSWlibjs1-7-0-gxx += binary-architecture-does-not-match-placement|file=opt/csw/gxx/lib/libjs.so.1.7.0|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWlibjs1-7-0 += binary-architecture-does-not-match-placement|file=opt/csw/lib/libjs.so.1.7.0|arch_id=18|arch_name=sparcv8+
 
 BUILD_OPT = 1
 EXTRA_BUILD_EXPORTS = BUILD_OPT CC CXX
