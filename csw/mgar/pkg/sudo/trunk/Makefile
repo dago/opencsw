@@ -115,6 +115,10 @@ PROTOTYPE_PERMS_iodir = 0700
 PROTOTYPE_USER_iodir = root
 PROTOTYPE_GROUP_iodir = bin
 
+PROTOTYPE_MODIFIERS += sudoers
+PROTOTYPE_FILES_iodir =  /etc/opt/csw/sudoers.CSW
+PROTOTYPE_PERMS_iodir = 0440
+
 # Just copy the stuff together, the ldap modulations contains some more file,
 # apart from that they are the same.
 MERGE_SCRIPTS_isa-default-ldap-disabled = copy-all
