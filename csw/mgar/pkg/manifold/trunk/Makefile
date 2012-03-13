@@ -22,6 +22,9 @@ ARCHALL_CSWmanifold = 1
 # Python dependencies cannot be detected by checkpkg
 RUNTIME_DEP_PKGS_CSWmanifold += CSWgenshi
 CHECKPKG_OVERRIDES_CSWmanifold += surplus-dependency|CSWgenshi
+# As reported in https://www.opencsw.org/mantis/view.php?id=4920
+RUNTIME_DEP_PKGS_CSWmanifold += CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWmanifold += surplus-dependency|CSWpysetuptools
 
 # That is the URL of the DTD to check against
 CHECKPKG_OVERRIDES_CSWmanifold += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/manifold/manifold.py
