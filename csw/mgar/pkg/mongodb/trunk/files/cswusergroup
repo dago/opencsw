@@ -1,0 +1,1 @@
+mongo:mongo:MongoDB database user:/var/opt/csw/mongodb:/bin/false::
