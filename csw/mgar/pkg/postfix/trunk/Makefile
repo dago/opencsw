@@ -173,7 +173,7 @@ AUXLIBS = $(LDFLAGS)
 FEATURES += -DHAS_PCRE
 AUXLIBS  += -lpcre
 BUILD_DEP_PKGS += CSWlibpcre-dev
-RUNTIME_DEP_PKGS += CSWlibpcre0
+RUNTIME_DEP_PKGS += CSWlibpcre1
 
 # Activate support for hash and btree lookup tables
 # http://www.postfix.org/DB_README.html. !! Takeaway: Use same DB as SASL !!
@@ -182,32 +182,33 @@ RUNTIME_DEP_PKGS += CSWlibpcre0
 # the SASL library, or Postfix itself ends up using the wrong version."
 #
 FEATURES += -DHAS_DB
-INCLUDES += -I/opt/csw/bdb42/include 
-AUXLIBS  += -L/opt/csw/bdb42/lib -R/opt/csw/bdb42/lib -ldb-4.2
-BUILD_DEP_PKGS += CSWbdb42devel
-RUNTIME_DEP_PKGS += CSWbdb42
+INCLUDES += -I/opt/csw/bdb48/include 
+AUXLIBS  += -L/opt/csw/bdb48/lib -R/opt/csw/bdb48/lib -ldb-4.8
+BUILD_DEP_PKGS += CSWbdb48devel
+RUNTIME_DEP_PKGS += CSWbdb48
 
 # Activate support for SSL/TLS
 # http://www.postfix.org/TLS_README.html
 FEATURES += -DUSE_TLS
 AUXLIBS  += -lssl -lcrypto
-BUILD_DEP_PKGS += CSWossldevel
-RUNTIME_DEP_PKGS += CSWosslrt
+BUILD_DEP_PKGS += CSWlibssl-dev
+RUNTIME_DEP_PKGS += CSWlibssl0-9-8
 
 # Activate support for Cyrus SASL (dovecot is incl. automatically)
 # http://www.postfix.org/SASL_README.html
 FEATURES += -DUSE_SASL_AUTH -DUSE_CYRUS_SASL
 INCLUDES += -I/opt/csw/include/sasl/
 AUXLIBS  += -lsasl2
-BUILD_DEP_PKGS += CSWsasl
-RUNTIME_DEP_PKGS += CSWsasl
+BUILD_DEP_PKGS += CSWsasl-dev
+RUNTIME_DEP_PKGS += CSWlibsasl2-2
 
 # Activate support for OpenLDAP
 # http://www.postfix.org/LDAP_README.html
 FEATURES += -DHAS_LDAP
 AUXLIBS  += -lldap -llber
-BUILD_DEP_PKGS += CSWoldapdevel
-RUNTIME_DEP_PKGS += CSWoldaprt
+BUILD_DEP_PKGS += CSWopenldap-dev
+RUNTIME_DEP_PKGS += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS += CSWliblber2-4-2
 
 # Activate support for MySQL
 # http://www.postfix.org/MYSQL_README.html
@@ -225,7 +226,7 @@ INCLUDES += -I/opt/csw/postgresql/include/
 AUXLIBS  += -L/opt/csw/postgresql/lib/ -R/opt/csw/postgresql/lib/
 AUXLIBS  += -lpq
 BUILD_DEP_PKGS += CSWlibpq
-RUNTIME_DEP_PKGS += CSWlibpq
+RUNTIME_DEP_PKGS += CSWlibpq5
 endif
 
 # Postgres package outdated, libs aren't located below /opt/csw/lib/
