@@ -12,4 +12,6 @@ endef
 TEST_SCRIPTS =
 DISTFILES = $(DISTNAME).tar.gz
 PACKAGES = CSWpy-mongo
+RUNTIME_DEP_PKGS_CSWpy-mongo_i386 += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-mongo += $(RUNTIME_DEP_PKGS_CSWpy-mongo_$(GARCH))
 include gar/category.mk
