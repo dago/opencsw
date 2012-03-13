@@ -4,7 +4,7 @@
         Created by Manifold
 --><service_bundle type="manifest" name="mongodb">
 
-    <service name="/application/database/mongodb" type="service" version="1">
+    <service name="application/database/mongodb" type="service" version="1">
 
         <create_default_instance enabled="false"/>
         
@@ -24,7 +24,7 @@
         
         
         <method_context>
-              <method_credential user='mongo' group='mongo' />
+            <method_credential user="mongo" group="mongo"/>
         </method_context>
 
         <exec_method type="method" name="start" exec="/opt/csw/bin/mongod -f %{config_file}" timeout_seconds="60"/>
