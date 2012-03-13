@@ -74,6 +74,9 @@ PROTOTYPE_CLASS_datadir = ugfiles
 USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
 INITSMF = $(sysconfdir)/init.d/mongodb
 
+# The DTD triggers the error tag.
+CHECKPKG_OVERRIDES_CSWmongodb += file-with-bad-content|/usr/share|root/etc/opt/csw/pkg/CSWmongodb/mongodb.xml
+
 include gar/category.mk
 
 build-mongo:
