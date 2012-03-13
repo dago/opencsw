@@ -63,6 +63,16 @@ RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcrecpp0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibsnappy1-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibstdc++6
 
+PRESERVECONF = $(sysconfdir)/mongodb.conf
+
+PROTOTYPE_MODIFIERS = datadir
+PROTOTYPE_FILES_datadir = $(localstatedir)/mongodb
+PROTOTYPE_PERMS_datadir = 0700
+PROTOTYPE_USER_datadir = mongo
+PROTOTYPE_CLASS_datadir = ugfiles
+
+USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
+
 include gar/category.mk
 
 build-mongo:
@@ -79,4 +89,15 @@ install-mongo:
 		$(SCONS_FLAGS) \
 		-Q --prefix=$(DESTDIR)$(BUILD_PREFIX) \
 		install)
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)
+	ginstall -m 644 $(FILEDIR)/mongodb.conf $(DESTDIR)$(sysconfdir)/mongodb.conf
+	ginstall -m 700 -d $(DESTDIR)$(localstatedir)/mongodb
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/pkg/CSW$(NAME)
+	ginstall -m 644 $(FILEDIR)/cswusergroup \
+		        $(DESTDIR)$(sysconfdir)/pkg/CSW$(NAME)
+	ginstall -m 644 $(FILEDIR)/mongodb.xml \
+		        $(DESTDIR)$(sysconfdir)/pkg/CSW$(NAME)
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 644 $(FILEDIR)/mongodb-smf-cas-trigger \
+		$(DESTDIR)$(sysconfdir)/init.d/mongodb
 	@$(MAKECOOKIE)
