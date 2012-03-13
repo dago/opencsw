@@ -72,6 +72,7 @@ PROTOTYPE_USER_datadir = mongo
 PROTOTYPE_CLASS_datadir = ugfiles
 
 USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
+INITSMF = $(sysconfdir)/init.d/mongodb
 
 include gar/category.mk
 
