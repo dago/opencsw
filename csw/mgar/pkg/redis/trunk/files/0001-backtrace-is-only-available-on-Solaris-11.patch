@@ -1,0 +1,25 @@
+From d1163310acf3800e43c3d0cf92dfc543b1c874a8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Wed, 14 Mar 2012 15:27:11 +0100
+Subject: [PATCH] backtrace() is only available on Solaris 11+
+
+---
+ src/config.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/config.h b/src/config.h
+index 77fed7d..1057b8b 100644
+--- a/src/config.h
++++ b/src/config.h
+@@ -25,7 +25,7 @@
+ #endif
+ 
+ /* Test for backtrace() */
+-#if defined(__APPLE__) || defined(__linux__) || defined(__sun)
++#if defined(__APPLE__) || defined(__linux__)
+ #define HAVE_BACKTRACE 1
+ #endif
+ 
+-- 
+1.7.9
+
