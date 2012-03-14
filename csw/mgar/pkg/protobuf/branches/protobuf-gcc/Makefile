@@ -3,12 +3,9 @@
 # $Id$
 
 # http://code.google.com/p/protobuf/issues/detail?id=166
-#
-# About using stlport4
-# http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html
 
 NAME = protobuf
-VERSION = 2.3.0
+VERSION = 2.4.1
 CATEGORIES = lib
 GARTYPE = v2
 define BLURB
@@ -20,80 +17,57 @@ SPKG_SOURCEURL = http://code.google.com/p/protobuf/
 DESCRIPTION = Google Protocol buffers
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-PATCHFILES += 0001-Patches-from-GAR.patch
-PATCHFILES += 0002-std-map-in-two-more-files.patch
-PATCHFILES += OutputDirectoryIsFileError-unittest.patch
-PATCHFILES += trailing-slash-test-fails-on-solaris-8-x86.patch
 LICENSE = COPYING.txt
-EXTRA_CFLAGS = 
-EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
-EXTRA_LDFLAGS = -lCrun -lm
-BUILD64_LIBS_ONLY = 1
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 PYCOMPILE = 1
 
-PACKAGES  = CSWprotobuf
-SPKG_DESC_CSWprotobuf = $(DESCRIPTION)
+EXTRA_MERGE_EXCLUDE_FILES = .*.pyc
 
-RUNTIME_DEP_PKGS_CSWprotobuf += CSWstlport
-RUNTIME_DEP_PKGS_CSWprotobuf += CSWzlib
-RUNTIME_DEP_PKGS_CSWprotobuf += CSWlibprotoc6
-RUNTIME_DEP_PKGS_CSWprotobuf += CSWlibprotobuf6
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+GARCOMPILER = GNU
+prefix = $(BUILD_PREFIX)/gxx
 
-# Libraries
-PACKAGES += CSWlibprotobuf-lite6
-CATALOGNAME_CSWlibprotobuf-lite6 = libprotobuf_lite6
-SPKG_DESC_CSWlibprotobuf-lite6 = $(DESCRIPTION), libprotobuf-lite.so.6
-RUNTIME_DEP_PKGS_CSWlibprotobuf-lite6 += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibprotobuf-lite6 += CSWstlport
-PKGFILES_CSWlibprotobuf-lite6  = .*libprotobuf-lite\.so\..*
-CHECKPKG_OVERRIDES_CSWlibprotobuf-lite6 += bad-rpath-entry
+PACKAGES += CSWlibprotobuf-lite7-gxx
+PKGFILES_CSWlibprotobuf-lite7-gxx += $(call baseisadirs,$(libdir),libprotobuf-lite\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibprotobuf-lite7-gxx += $(DESCRIPTION), libprotobuf-lite.so.7
+RUNTIME_DEP_PKGS_CSWlibprotobuf-lite7-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibprotobuf-lite7-gxx += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibprotobuf-lite7-gxx += CSWlibz1
 
-PACKAGES += CSWlibprotobuf6
-CATALOGNAME_CSWlibprotobuf6 = libprotobuf6
-SPKG_DESC_CSWlibprotobuf6 = $(DESCRIPTION), libprotobuf.so.6
-RUNTIME_DEP_PKGS_CSWlibprotobuf6 += CSWstlport
-RUNTIME_DEP_PKGS_CSWlibprotobuf6 += CSWzlib
-PKGFILES_CSWlibprotobuf6  = .*libprotobuf\.so\..*
-CHECKPKG_OVERRIDES_CSWlibprotobuf6 += bad-rpath-entry
+PACKAGES += CSWlibprotoc7-gxx
+PKGFILES_CSWlibprotoc7-gxx += $(call baseisadirs,$(libdir),libprotoc\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibprotoc7-gxx += $(DESCRIPTION), libprotoc.so.7
+RUNTIME_DEP_PKGS_CSWlibprotoc7-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibprotoc7-gxx += CSWlibprotobuf7-gxx
+RUNTIME_DEP_PKGS_CSWlibprotoc7-gxx += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibprotoc7-gxx += CSWlibz1
 
-PACKAGES += CSWlibprotoc6
-CATALOGNAME_CSWlibprotoc6 = libprotoc6
-SPKG_DESC_CSWlibprotoc6 = $(DESCRIPTION), libprotoc.so.6
-RUNTIME_DEP_PKGS_CSWlibprotoc6 += CSWstlport
-RUNTIME_DEP_PKGS_CSWlibprotoc6 += CSWzlib
-PKGFILES_CSWlibprotoc6  = .*libprotoc\.so\..*
-RUNTIME_DEP_PKGS_CSWlibprotoc6 += CSWlibprotobuf6
-CHECKPKG_OVERRIDES_CSWlibprotoc6 += bad-rpath-entry
+PACKAGES += CSWlibprotobuf7-gxx
+PKGFILES_CSWlibprotobuf7-gxx += $(call baseisadirs,$(libdir),libprotobuf\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibprotobuf7-gxx += $(DESCRIPTION), libprotobuf.so.7
+RUNTIME_DEP_PKGS_CSWlibprotobuf7-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibprotobuf7-gxx += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibprotobuf7-gxx += CSWlibz1
 
 # Devel package
-PACKAGES                           += CSWprotobuf-devel
-CATALOGNAME_CSWprotobuf-devel       = protobuf_devel
-SPKG_DESC_CSWprotobuf-devel         = $(DESCRIPTION), header files
-RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWprotobuf
-RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWpy-protobuf
-RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWlibprotobuf-lite6
-RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWlibprotobuf6
-RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWlibprotoc6
-PKGFILES_CSWprotobuf-devel          = $(PKGFILES_DEVEL)
+PACKAGES                           += CSWprotobuf-gxx-dev
+SPKG_DESC_CSWprotobuf-gxx-dev         = $(DESCRIPTION), header files
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWpy-protobuf
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWlibz1
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWlibprotobuf7-gxx
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWlibprotobuf-lite7-gxx
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWprotobuf-gxx-dev += CSWlibprotoc7-gxx
+# Catch-all package
 
 # Python support
 PACKAGES += CSWpy-protobuf
-CATALOGNAME_CSWpy-protobuf = py_protobuf
-SPKG_DESC_CSWpy-protobuf= $(DESCRIPTION), Python support
-RUNTIME_DEP_PKGS_CSWpy-protobuf += CSWprotobuf
+SPKG_DESC_CSWpy-protobuf = $(DESCRIPTION), Python support
 RUNTIME_DEP_PKGS_CSWpy-protobuf += CSWpython
 PKGFILES_CSWpy-protobuf = $(libdir)/python.*
 ARCHALL_CSWpy-protobuf = 1
-CHECKPKG_OVERRIDES_CSWpy-protobuf += surplus-dependency|CSWprotobuf
-
-# Empty transitional package
-PACKAGES += CSWprotobuf-rt
-CATALOGNAME_CSWprotobuf-rt = protobuf_rt
-SPKG_DESC_CSWprotobuf-rt = An empty transitional package
-PKGFILES_CSWprotobuf-rt = an-empty-package
-ARCHALL_CSWprotobuf-rt = 1
 
 include gar/category.mk
 
