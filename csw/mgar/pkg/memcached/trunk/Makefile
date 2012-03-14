@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = memcached
-VERSION = 1.4.9
+VERSION = 1.4.13
 CATEGORIES = net
 GARTYPE = v2
 
@@ -22,7 +22,7 @@ PATCHFILES += 0002-Take-endianness-into-account-on-alignment-check.patch
 #
 ## The addition of more status field made the data arrive in multiple packets
 ## leading to broken tests when it is not waited for more packages.
-PATCHFILES += 0003-Make-sure-to-wait-for-data.patch
+# PATCHFILES += 0003-Make-sure-to-wait-for-data.patch
 #
 ## Looks like the data structure is not clean on sparcv9 (only!)
 PATCHFILES += 0004-Make-sure-to-clean-ai_flags-in-testsuite-or-test-fai.patch
@@ -47,8 +47,9 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 # SASL is not 64 bit yet!
-#CONFIGURE_ARGS += --enable-sasl
-#CONFIGURE_ARGS += --enable-sasl-pwdb
+CONFIGURE_ARGS_32 += --enable-sasl
+CONFIGURE_ARGS_32 += --enable-sasl-pwdb
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORY_MODEL))
 
 CONFIGURE_ARGS-sol5.10 += --enable-dtrace
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-sol$(GAROSREL))
