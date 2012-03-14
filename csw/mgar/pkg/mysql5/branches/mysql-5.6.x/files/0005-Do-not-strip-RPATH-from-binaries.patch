@@ -1,0 +1,27 @@
+From fd25893088c1f89c69e2bf81ee091a258fe99ca5 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 14 Mar 2012 16:47:21 +0100
+Subject: [PATCH] Do not strip RPATH from binaries
+
+---
+ configure.cmake |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/configure.cmake b/configure.cmake
+index bd5c4a4..caf8408 100644
+--- a/configure.cmake
++++ b/configure.cmake
+@@ -57,6 +57,10 @@ ENDIF()
+ # other threads.
+ SET(SIGNAL_WITH_VIO_CLOSE 1)
+ 
++# Don't strip runpath as it breaks the binaries that need libraries in
++# /opt/csw/lib.
++SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
++
+ # Always enable -Wall for gnu C/C++
+ IF(CMAKE_COMPILER_IS_GNUCXX)
+   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unused-parameter")
+-- 
+1.7.9
+
