@@ -42,6 +42,8 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE      = LICENSE TLS_LICENSE
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 # Tag configuration files for handling via cswclassutils
 CONFIG_BASE  := /etc/opt/csw/postfix/
 CONFIG_FILES := access 
