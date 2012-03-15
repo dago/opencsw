@@ -951,7 +951,15 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
     if "machine_id" not in metadata:
       continue
     logger.debug("CheckArchitecture(): %s", metadata)
-    machine_data = HACHOIR_MACHINES[metadata["machine_id"]]
+    machine_id = metadata["machine_id"]
+    if machine_id not in HACHOIR_MACHINES:
+      error_mgr.ReportError(
+          "binary-architecture-unknown",
+          "file=%s arch_id=%s" % (
+            metadata["path"],
+            metadata["machine_id"]))
+      continue
+    machine_data = HACHOIR_MACHINES[machine_id]
     cpu_type = machine_data["name"]
     # allowed_paths needs to depend on the OS release. The OS release is
     # only available from the file name.
@@ -967,7 +975,7 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
           "binary-architecture-does-not-match-placement",
           "file=%s arch_id=%s arch_name=%s" % (
             metadata["path"],
-            metadata["machine_id"],
+            machine_id,
             cpu_type))
       messenger.OneTimeMessage(
           "binary-placement",
@@ -988,7 +996,7 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
           "binary-disallowed-placement",
           "file=%s arch_id=%s arch_name=%s bad_path=%s" % (
             metadata["path"],
-            metadata["machine_id"],
+            machine_id,
             cpu_type,
             bad_path))
         messenger.Message(
