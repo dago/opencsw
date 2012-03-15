@@ -21,7 +21,7 @@
 # $Id$
 # 
 NAME = postfix
-VERSION = 2.8.6
+VERSION = 2.8.9
 CATEGORIES = server
 GARTYPE = v2
 
