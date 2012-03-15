@@ -11,7 +11,7 @@ necessary to bring one catalog to the state of another catalog.
 """
 
 from Cheetah import Template
-import cPickle
+import json
 import catalog
 import common_constants
 import logging
@@ -165,11 +165,11 @@ def main():
       dest="catrel_to",
       default="testing",
       help="Catalog release to integrate to, e.g. 'testing'.")
-  parser.add_option("--from-pickle", dest="from_pickle",
-      help=("If specified, loads data from a pickle file instead of polling "
+  parser.add_option("--from-json", dest="from_json",
+      help=("If specified, loads data from a JSON file instead of polling "
             "the database."))
-  parser.add_option("--save-pickle", dest="save_pickle",
-      help="If specified, saves pickled data to a file.")
+  parser.add_option("--save-json", dest="save_json",
+      help="If specified, saves JSON data to a file.")
   parser.add_option("-o", "--output-file", dest="output_file",
       help="Filename to save output to.")
   parser.add_option("--no-include-downgrades", dest="include_downgrades",
@@ -181,9 +181,9 @@ def main():
     raise UsageError("Please specify the output file.  See --help.")
   catrel_from = options.catrel_from
   catrel_to = options.catrel_to
-  if options.from_pickle:
-    with open("tmp.pickle", "rb") as fd:
-      diffs_by_catalogname = cPickle.load(fd)
+  if options.from_json:
+    with open(options.from_json, "rb") as fd:
+      diffs_by_catalogname = json.load(fd)
   else:
     diffs_by_catalogname = GetDiffsByCatalogname(
         catrel_from, catrel_to, options.include_downgrades)
@@ -193,9 +193,9 @@ def main():
       "catrel_from": catrel_from,
       "prog": sys.argv[0],
   }
-  if options.save_pickle:
-    with open(options.save_pickle, "wb") as fd:
-      cPickle.dump(diffs_by_catalogname, fd)
+  if options.save_json:
+    with open(options.save_json, "wb") as fd:
+      json.dump(diffs_by_catalogname, fd)
   t = Template.Template(CATALOG_MOD_TMPL, searchList=[namespace])
   if options.output_file:
     logging.info("Saving output to %s", options.output_file)
