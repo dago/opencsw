@@ -23,7 +23,7 @@ BUILD_DEP_PKGS += CSWpygobject
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibatk-dev
 BUILD_DEP_PKGS += CSWpangodevel
-BUILD_DEP_PKGS += CSWpycairo
+BUILD_DEP_PKGS += CSWpy-cairo
 BUILD_DEP_PKGS += CSWlibcairo-dev
 BUILD_DEP_PKGS += CSWlibxcbdevel
 
@@ -48,8 +48,14 @@ RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gtk += CSWpygobject
+RUNTIME_DEP_PKGS_CSWpy-gtk += CSWpy-cairo
 CHECKPKG_OVERRIDES_CSWpy-gtk += file-with-bad-content|/usr/share|root/opt/csw/share/gtk-doc/html/pygtk/class-gtkfilechooser.html
 CHECKPKG_OVERRIDES_CSWpy-gtk += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/pygtk/class-gtkrcstyle.html
+# pygtk do not work without this
+CHECKPKG_OVERRIDES_CSWpy-gtk += surplus-dependency|CSWpygobject
+# gtk do not work without this
+CHECKPKG_OVERRIDES_CSWpy-gtk += surplus-dependency|CSWpy-cairo
 
 # pkg and classaction is obsolete
 CHECKPKG_OVERRIDES_CSWpygtk += action-class-only-in-pkginfo|cswpycompile
