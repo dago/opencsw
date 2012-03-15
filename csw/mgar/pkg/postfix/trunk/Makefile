@@ -10,6 +10,15 @@
 #
 #
 # TODO (release-critical prefixed with !, non release-critical with *)
+# * Some files collide with CSWsendmail, the following are alternatives lines from
+#   the Sendmail package, they should be adapted to Postfix so Postfix and Sendmail
+#   can co-exist on the same system (and pass checkpkg file collision detection).
+#     ALTERNATIVES_CSWsendmail  = sendmail
+#     ALTERNATIVE_sendmail  = $(bindir)/mailq sendmail $(bindir)/mailq.sendmail 100
+#     ALTERNATIVE_sendmail += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail
+#     ALTERNATIVE_sendmail += $(mandir)/man1/mailq.1 mailq.1 $(mandir)/man1/mailq1.1.sendmail
+#     ALTERNATIVE_sendmail += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail
+#     ALTERNATIVE_sendmail += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail
 # * Ship simple default configuration (restrict mynetworks to 127.0.0.1?)
 # * alias_database points to /etc/mail/aliases, symlink
 #   /etc/opt/csw/postfix/aliases to /etc/mail/aliases?
