@@ -26,6 +26,7 @@ RUNTIME_DEP_PKGS_CSWre2c = CSWgcc4corert CSWgcc4g++rt
 # Compiling with GNU based on upstream bug-id
 # [ 2535084 ] re2c 0.13.5 not compile with Sun C
 GARCOMPILER = GNU
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
