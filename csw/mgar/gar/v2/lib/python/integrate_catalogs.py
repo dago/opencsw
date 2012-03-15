@@ -81,7 +81,8 @@ downgrade_#
 #else
 upgrade_#
 #end if
-$catalogname
+$catalogname#
+ # $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["type"]
 #end if
 #end for
 """
@@ -98,7 +99,8 @@ def IndexByCatalogname(catalog):
   return dict((x["catalogname"], x) for x in catalog)
 
 
-def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades):
+def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
+                          include_version_changes):
   rest_client = rest.RestClient()
   diffs_by_catalogname = {}
   def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
@@ -139,17 +141,13 @@ def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades):
         catalogname_d = diffs_by_catalogname.setdefault(pkg["catalogname"], {})
         catalogname_d.setdefault("removed_pkgs", []).append((arch, osrel, pkg))
       for pkg_pair in updated_pkgs:
-        # Upgrade or downgrade?
-        cmp_result = opencsw.CompareVersions(
-            pkg_pair["from"]["version"],
-            pkg_pair["to"]["version"])
-        if cmp_result < 0:
-          direction = "upgrade"
-        else:
-          direction = "downgrade"
-        pkg_pair["direction"] = direction
-        pkg = pkg_pair["from"]
-        if direction == "upgrade" or include_downgrades:
+        update_decision_by_type = {
+            "revision": True,
+            "version": include_version_changes
+        }
+        if (update_decision_by_type[pkg_pair["type"]]
+            and (pkg_pair["direction"] == "upgrade" or include_downgrades)):
+          pkg = pkg_pair["from"]
           catalogname_d = diffs_by_catalogname.setdefault(pkg["catalogname"], {})
           catalogname_d.setdefault("updated_pkgs", []).append((arch, osrel, pkg_pair))
   return diffs_by_catalogname
@@ -175,6 +173,10 @@ def main():
   parser.add_option("--no-include-downgrades", dest="include_downgrades",
       default=True, action="store_false",
       help="Skip package downgrades.")
+  parser.add_option("--no-include-version-changes",
+      dest="include_version_changes",
+      default=True, action="store_false",
+      help="Skip version upgrades (only accept revision upgrades).")
   options, args = parser.parse_args()
   logging.basicConfig(level=logging.DEBUG)
   if not options.output_file:
@@ -186,7 +188,8 @@ def main():
       diffs_by_catalogname = json.load(fd)
   else:
     diffs_by_catalogname = GetDiffsByCatalogname(
-        catrel_from, catrel_to, options.include_downgrades)
+        catrel_from, catrel_to, options.include_downgrades,
+        options.include_version_changes)
   namespace = {
       "diffs_by_catalogname": diffs_by_catalogname,
       "catrel_to": catrel_to,

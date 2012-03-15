@@ -106,6 +106,15 @@ class CatalogComparatorUnitTest(unittest.TestCase):
     self.assertFalse(updated_pkgs)
     self.assertEqual(1, len(removed_pkgs))
 
+  def testUpdateOnly(self):
+    oc1 = catalog.OpencswCatalog(StringIO(CATALOG_LINE_1))
+    oc2 = catalog.OpencswCatalog(StringIO(CATALOG_LINE_2))
+    c = catalog.CatalogComparator()
+    new_pkgs, removed_pkgs, updated_pkgs = c.GetCatalogDiff(oc1, oc2)
+    self.assertFalse(new_pkgs)
+    self.assertFalse(removed_pkgs)
+    self.assertEquals("revision", updated_pkgs[0]["type"])
+
 
 if __name__ == '__main__':
   unittest.main()

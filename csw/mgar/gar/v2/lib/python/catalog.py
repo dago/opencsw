@@ -3,6 +3,7 @@
 import os
 import re
 import logging
+import opencsw
 
 
 class Error(Exception):
@@ -202,5 +203,29 @@ class CatalogComparator(object):
         updated_catalognames.add(catalogname)
     new_pkgs = [bc_b[x] for x in new_catalognames]
     removed_pkgs = [bc_a[x] for x in removed_catalognames]
-    updated_pkgs = [{"from": bc_a[x], "to": bc_b[x]} for x in updated_catalognames]
+    def UpdateData(_bc_a, _bc_b, catalogname):
+      a = bc_a[x]
+      b = bc_b[x]
+      cmp_result = opencsw.CompareVersions(
+          a["version"],
+          b["version"])
+      if cmp_result < 0:
+        direction = "upgrade"
+      else:
+        direction = "downgrade"
+      return {
+          "from": a,
+          "to": b,
+          "type": self.DiffType(a, b),
+          "direction": direction,
+      }
+    updated_pkgs = [UpdateData(bc_a, bc_b, x) for x in updated_catalognames]
     return new_pkgs, removed_pkgs, updated_pkgs
+
+  def DiffType(self, a, b):
+    va = opencsw.ParseVersionString(a["version"])
+    vb = opencsw.ParseVersionString(b["version"])
+    if va[0] == vb[0]:
+      return "revision"
+    else:
+      return "version"
