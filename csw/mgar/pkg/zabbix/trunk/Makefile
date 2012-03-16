@@ -3,7 +3,7 @@
 #
 NAME = zabbix
 VERSION = 1.8.10
-GARTYPE = v2-build64only
+GARTYPE = v2
 CATEGORIES = server
 
 DESCRIPTION = Zabbix monitoring system
