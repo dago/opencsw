@@ -20,6 +20,7 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 BUILD64-5.9 =
 BUILD64-5.10 = 1
 BUILD64 = $(BUILD64-$(GAROSREL))
+ISAEXEC = 1
 
 PACKAGES += CSWzabbix-agent
 SPKG_DESC_CSWzabbix-agent = Zabbix monitoring system agent
