@@ -1,0 +1,25 @@
+From 39ff9ff0e2e8704279cad9acbeb49d6986ee8972 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Fri, 16 Mar 2012 10:42:08 +0100
+Subject: [PATCH] Do not use gcc-specific flags
+
+---
+ Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 3bddc33..a90e040 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -320,7 +320,7 @@ EXTRA_DIST = $(srcdir)/debian/* $(srcdir)/doc/* $(srcdir)/test/test_files/*/*
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = libmspack.pc
+ ACLOCAL_AMFLAGS = -I m4
+-AM_CFLAGS = -Wall -W -Wno-unused $(MSPACK_FLAGS)
++AM_CFLAGS = $(MSPACK_FLAGS)
+ AM_CPPFLAGS = -I$(top_srcdir)/mspack -I$(top_srcdir)/test 
+ lib_LTLIBRARIES = libmspack.la
+ include_HEADERS = mspack/mspack.h
+-- 
+1.7.9
+
