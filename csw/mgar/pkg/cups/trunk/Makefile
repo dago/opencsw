@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cups
-VERSION = 1.5.0
+VERSION = 1.5.2
 CATEGORIES = net
 GARTYPE = v2
 
