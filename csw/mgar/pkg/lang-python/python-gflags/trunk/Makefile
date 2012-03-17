@@ -3,10 +3,10 @@
 # $Id$
 
 NAME = python-gflags
-VERSION = 1.3
+VERSION = 2.0
 CATEGORIES = python
 GARTYPE = v2
-DESCRIPTION = python equivalent of google-gflags, a Google commandline flag implementation
+DESCRIPTION = Commandline flags module for Python
 define BLURB
 	This project is the python equivalent of google-gflags, a Google commandline
 	flag implementation for C++. It is intended to be used in situations where a
@@ -18,7 +18,10 @@ SPKG_SOURCEURL = http://code.google.com/p/python-gflags/
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
+
+UPSTREAM_MASTER_SITES = http://code.google.com/p/$(NAME)/downloads/list
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+
 PACKAGES = CSWpy-gflags
 CATALOGNAME = py_gflags
 ARCHALL_CSWpy-gflags = 1
