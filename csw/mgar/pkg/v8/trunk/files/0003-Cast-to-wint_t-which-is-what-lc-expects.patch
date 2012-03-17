@@ -1,0 +1,25 @@
+From 4a75db1a8ceffd45248e773b1bbf062938446b60 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 17 Mar 2012 16:15:13 +0100
+Subject: [PATCH 3/3] Cast to wint_t which is what %lc expects.
+
+---
+ test/cctest/test-compiler.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/test/cctest/test-compiler.cc b/test/cctest/test-compiler.cc
+index 9ca0b0a..2345449 100644
+--- a/test/cctest/test-compiler.cc
++++ b/test/cctest/test-compiler.cc
+@@ -75,7 +75,7 @@ v8::Handle<v8::Value> PrintExtension::Print(const v8::Arguments& args) {
+     uint16_t* string = NewArray<uint16_t>(length + 1);
+     string_obj->Write(string);
+     for (int j = 0; j < length; j++)
+-      printf("%lc", static_cast<wchar_t>(string[j]));
++      printf("%lc", static_cast<wint_t>(string[j]));
+     DeleteArray(string);
+   }
+   printf("\n");
+-- 
+1.7.5.4
+
