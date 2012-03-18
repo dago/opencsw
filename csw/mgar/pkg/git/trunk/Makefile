@@ -1,6 +1,6 @@
 NAME = git
-VERSION = 1.7.9.3
-#PATCHLEVEL = rc1
+VERSION = 1.7.10
+PATCHLEVEL = rc1
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -102,7 +102,7 @@ SPKG_DESC_CSWgit-completion = Bash completion support for Git
 SPKG_DESC_CSWgit-dev = Headers and static libraries for Git
 
 MASTER_SITES = http://git-core.googlecode.com/files/
-DISTFILES += $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(NAME)-$(VERSION).$(PATCHLEVEL).tar.gz
 DISTFILES += CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
