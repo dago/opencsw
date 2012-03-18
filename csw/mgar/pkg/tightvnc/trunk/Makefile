@@ -23,7 +23,6 @@ CATALOGNAME_CSWvncv = vncviewer
 SPKG_SOURCEURL = http://www.tightvnc.org/
 UPSTREAM_USE_SF = 1
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=14067
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)_unixsrc.tar.bz2
 DISTNAME = vnc_unixsrc
 PKGFILES_CSWvncv  = $(bindir)/vncviewer
 PKGFILES_CSWvncv += $(mandir)/man1/vncviewer\.1

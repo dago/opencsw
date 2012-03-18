@@ -6,6 +6,7 @@
 # description: Starts and stops vncserver. \
 #              used to provide remote X administration services.
 
+PATH=/opt/csw/bin:/usr/openwin/bin:/usr/bin
 VNCSERVERS=""
 ARGS=""
 VNCSERVERS_CONF="/etc/opt/csw/vncservers/vncservers"
