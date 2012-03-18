@@ -65,9 +65,14 @@ include gar/category.mk
 PI_SCRIPTS  = cleanup-web
 PI_SCRIPTS += install-mlock
 PI_SCRIPTS += install-web
+PI_SCRIPTS += install-pine-symlink
 
 post-install-modulated: $(PI_SCRIPTS)
 
+install-pine-symlink:
+	@(echo "==> Installing the pine symlink")
+	@(cd $(DESTDIR)/$(bindir); ln -s alpine pine)
+	@$(MAKECOOKIE)
 
 install-mlock:
 	@(echo "==> Installing mlock")
