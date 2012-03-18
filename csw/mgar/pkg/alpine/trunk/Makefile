@@ -37,6 +37,8 @@ GARCOMPILER = GCC4
 # http://mailman2.u.washington.edu/pipermail/alpine-info/2007-December/000047.html
 PATCHFILES = pubcookie.diff
 
+LICENSE = LICENSE
+
 NOISALIST = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-quotas
