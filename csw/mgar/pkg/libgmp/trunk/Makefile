@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gmp
-VERSION = 5.0.2
+VERSION = 5.0.4
 CATEGORIES = lib
 GARTYPE = v2
 
