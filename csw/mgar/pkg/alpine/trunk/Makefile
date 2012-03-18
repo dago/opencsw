@@ -8,7 +8,7 @@ define BLURB
 	Alpine is a fast, easy to use email client that is suitable for both 
 	the inexperienced email user as well as for the most demanding of power 
 	users. Alpine is based on the Pine® Message System, which was also
-   	developed at the University of Washington. Alpine can be learned by 
+	developed at the University of Washington. Alpine can be learned by 
 	exploration and the use of context-sensitive help. The user experience 
 	is highly customizable through the use of the Alpine Setup command. 
 endef
@@ -54,7 +54,7 @@ CONFIGURE_ARGS += --with-web-bin=$(libexecdir)/alpine/bin
 CONFIGURE_ARGS += --with-spellcheck-prog=$(bindir)/aspell
 
 ## Libs that are not get set correctly in Makefiles
-EXTRA_LIBS += -lm -lgssapi_krb5 -lkrb5 -lintl -liconv
+EXTRA_LDFLAGS += -lm -lgssapi_krb5 -lkrb5 -lintl -liconv
 
 RUNTIME_DEP_PKGS  = CSWggettextrt CSWiconv CSWtcl CSWsasl CSWosslrt
 RUNTIME_DEP_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWoldaprt
