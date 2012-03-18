@@ -3,10 +3,15 @@
 # $Id$
 #
 
-if [ -x /usr/sbin/svcadm ]; then
-  echo "Disabling svc:/system/system-log:default"
-  /usr/sbin/svcadm disable svc:/system/system-log:default
-fi
+# Until we have a better solution.
+# https://www.opencsw.org/mantis/view.php?id=4409
+# if [ -x /usr/sbin/svcadm ]; then
+#   echo "Disabling svc:/system/system-log:default"
+#   /usr/sbin/svcadm disable svc:/system/system-log:default
+# fi
+#
+# When autoenable_daemons is not set to off, syslog_ng will attempt to start
+# in the presence of the stock Solaris syslogd, and will fail.
 
 # The assumption is that this script is going to be run from the global zone
 # first. The -f option is for the rm command not to complain if it can't remove
