@@ -20,6 +20,7 @@ DISTFILES  = $(NAME).tar.bz2
 PACKAGES = CSWalpine
 CATALOGNAME_CSWalpine = alpine
 SPKG_DESC_CSWalpine = $(DESCRIPTION)
+OBSOLETED_BY_CSWalpine = CSWpine
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
