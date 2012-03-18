@@ -126,5 +126,6 @@ SPKG_DESC_CSWlibqtxml4-gxx += $(DESCRIPTION), libQtXml.so.4
 
 # These are code examples.
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += file-with-bad-content
 
 include gar/category.mk
