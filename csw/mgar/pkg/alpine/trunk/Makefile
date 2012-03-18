@@ -59,8 +59,16 @@ CONFIGURE_ARGS += --with-spellcheck-prog=$(bindir)/aspell
 ## Libs that are not get set correctly in Makefiles
 EXTRA_LDFLAGS += -lm -lgssapi_krb5 -lkrb5 -lintl -liconv
 
-RUNTIME_DEP_PKGS  = CSWggettextrt CSWiconv CSWtcl CSWsasl CSWosslrt
-RUNTIME_DEP_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWoldaprt
+RUNTIME_DEP_PKGS_CSWalpine += CSWtcl
+RUNTIME_DEP_PKGS_CSWalpine += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibldap2-4-2
 
 include gar/category.mk
 
@@ -84,6 +92,7 @@ install-mlock:
 
 cleanup-web:
 	@(grm -fr $(DESTDIR)/home)
+	@$(MAKECOOKIE)
 
 install-web:
 	@(echo "==> Installing Web Interface")
@@ -104,6 +113,4 @@ install-web:
 	@(gln -s $(bindir)/tclsh  \
 		$(DESTDIR)$(libexecdir)/alpine-2.00/bin/tclsh)
 	@(cd $(DESTDIR)$(libexecdir); gln -s ./alpine-2.00 ./alpine)
-
-
-
+	@$(MAKECOOKIE)
