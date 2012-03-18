@@ -34,11 +34,15 @@ PACKAGING_PLATFORMS = solaris10-i386
 
 EXTRA_RUNPATH_DIRS = $(prefix)/gxx/lib
 
+# It is also possible to build MongoDB with SpiderMonkey.
+# BUILD_DEP_PKGS += CSWlibjs-dev
+# RUNTIME_DEP_PKGS_CSWmongodb += CSWlibjs1-7-0
+
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWgcc4g++
-BUILD_DEP_PKGS += CSWlibjs-dev
 BUILD_DEP_PKGS += CSWlibpcap-dev
 BUILD_DEP_PKGS += CSWlibpcre-gxx-dev
+BUILD_DEP_PKGS += CSWlibv8-dev
 BUILD_DEP_PKGS += CSWscons
 BUILD_DEP_PKGS += CSWsnappy-gxx-dev
 
@@ -48,6 +52,7 @@ SCONS_FLAGS += --cxx=$(CXX)
 SCONS_FLAGS += --use-system-all
 SCONS_FLAGS += --extralib=rt,pcre
 SCONS_FLAGS += --release all
+SCONS_FLAGS += --usev8
 
 SCONS_ENV = LIBPATH=$(prefix)/gxx/lib
 
@@ -56,7 +61,7 @@ RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-system1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibboost-thread1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWmongodb += CSWlibjs1-7-0
+RUNTIME_DEP_PKGS_CSWmongodb += CSWlibv8-0-2012-03
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcap1
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcre1-gxx
 RUNTIME_DEP_PKGS_CSWmongodb += CSWlibpcrecpp0-gxx
