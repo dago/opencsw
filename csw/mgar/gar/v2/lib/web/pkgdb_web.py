@@ -50,8 +50,10 @@ urls_rest = (
 )
 urls = urls_html + urls_rest
 
-render = web.template.render('/home/web/bin/gar/'
-                             'lib/web/templates/')
+render = web.template.render(
+    os.path.join(
+      os.path.split(__file__)[0],
+      "lib/web/templates/"))
 
 
 class PkgStatsEncoder(json.JSONEncoder):
