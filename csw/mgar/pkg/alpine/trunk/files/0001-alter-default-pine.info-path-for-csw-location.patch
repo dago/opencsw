@@ -1,0 +1,26 @@
+From c57d7ce0db92908089ca9ea4cc213a5192ccc79f Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 19 Mar 2012 18:46:54 +0100
+Subject: [PATCH] alter default pine.info path for csw location
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ pith/filter.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/pith/filter.c b/pith/filter.c
+index b471164..e17b8f3 100644
+--- a/pith/filter.c
++++ b/pith/filter.c
+@@ -3134,7 +3134,7 @@ typedef	struct _html_opts {
+ #endif
+ 
+ #ifndef SYSTEM_PINE_INFO_PATH
+-#define SYSTEM_PINE_INFO_PATH "/usr/local/lib/pine.info"
++#define SYSTEM_PINE_INFO_PATH "/opt/csw/lib/pine.info"
+ #endif
+ #define CHTML_VAR_EXPAND(S) (!strcmp(S, "PINE_INFO_PATH")   \
+ 			     ? SYSTEM_PINE_INFO_PATH : S)
+-- 
+1.7.9
+
