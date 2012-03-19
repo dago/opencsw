@@ -121,7 +121,7 @@ BUILD64 = 1
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
-MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL/
+MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-5.0/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME).tpl
 DISTFILES += quick_start-csw
