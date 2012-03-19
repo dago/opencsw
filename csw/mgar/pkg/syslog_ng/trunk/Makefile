@@ -61,6 +61,7 @@ RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibwrap1
 
 OBSOLETED_BY_CSWsyslog-ng = CSWsyslogng
+CATALOGNAME_CSWsyslogng = syslog_ng_stub
 
 # It it were split, it'd look like this:
 # PACKAGES += CSWlibsyslog-ng0
