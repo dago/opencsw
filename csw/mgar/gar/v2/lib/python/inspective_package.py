@@ -426,6 +426,12 @@ class FileMagic(object):
         logging.error("magic_cookie.file(%s) returned None. Retrying.",
                       full_path)
         self.magic_cookie = self._GetCookie()
+        # In practice, this retrying doesn't help.  There seems to be
+        # something process-related which prevents libmagic from
+        # functioning.  The only known workaround is to shutdown the
+        # process and run it again.
+        #
+        # The issues have been observed with file-5.04.
     return mime
 
 
