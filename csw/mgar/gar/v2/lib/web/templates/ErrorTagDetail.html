@@ -18,7 +18,10 @@ $def with (tag_name, tags)
     </tr>
 $for tag in tags:
   $if tag.srv4_file.registered:
-    <tr>
+    <tr
+    $if tag.overridden:
+      class="overridden"
+    >
     <td>
     <a href="../../srv4/$tag.srv4_file.md5_sum/">$tag.srv4_file.basename</a>
     </td>
@@ -31,7 +34,7 @@ $for tag in tags:
     <td>
     $tag.catrel.name
     </td>
-    <td>
+    <td class="wordbag">
     $tag.tag_info
     </td>
     </tr>

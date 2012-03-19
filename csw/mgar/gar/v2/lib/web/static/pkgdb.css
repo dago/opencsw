@@ -1,15 +1,12 @@
-body {
+body, p, th, td {
   font-family: sans-serif;
   font-size: 13px;
 }
 .annotation {
   font-size: 80%;
 }
-.overridden {
-  color: gray;
-}
-.overridden a {
-  color: gray;
+.overridden, .overridden a, tr.overridden > td {
+  color: #DDD;
 }
 ul.catalogname-list {
   list-style: none;
@@ -19,4 +16,7 @@ ul.catalogname-list {
 ul.catalogname-list > li {
   margin: 0.2em;
   padding: 0;
+}
+td.wordbag {
+  width: 30em;
 }
