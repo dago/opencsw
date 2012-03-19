@@ -1,6 +1,6 @@
 NAME = iozone
 VERSION = 3.398
-DISTVERSION = $(shell echo $(VERSION) | sed -e 's/\./_/g')
+DISTVERSION = $(subst .,_,$(VERSION))
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -14,17 +14,12 @@ define BLURB
   read, pread ,mmap, aio_read, aio_write
 endef
 
-VENDOR_URL    = http://www.iozone.org/
-MASTER_SITES  = http://www.iozone.org/src/current/
-#MASTER_SITES += http://www.iozone.org/docs/
-UFILES_REGEX  = $(NAME)(\d+(?:\.\d+)*).tar
-DISTFILES     = $(NAME)$(DISTVERSION).tar
-#DISTFILES    += vx_ioctl.h
-#DISTFILES    += $(call admfiles,CSWiozone)
-
-DISTNAME      = $(NAME)$(DISTVERSION)
-
+MASTER_SITES += http://www.iozone.org/src/current/
+DISTNAME = $(NAME)$(DISTVERSION)
+DISTFILES += $(DISTNAME).tar
 #PATCHFILES = patch-vx_ioctl.diff
+
+VENDOR_URL    = http://www.iozone.org/
 
 DOCS  = IOzone_msword_98.pdf
 DOCS += IOzone_msword_98.doc
@@ -33,13 +28,6 @@ DOCS += Run_rules.doc
 
 WORKSRC = $(WORKDIR)$(DISTNAME)/src/current
 DOCSRC  = $(WORKDIR)$(DISTNAME)/docs
-
-# Make sure the VxFS header is in place (for Solaris8-64-VXFS)
-#EXTRA_INC = $(WORKSRC)/include/sys/fs
-#post-extract:
-#	@mkdir -p $(WORKSRC)/include/sys/fs
-#	@cp $(WORKDIR)/vx_ioctl.h $(WORKSRC)
-#	@$(MAKECOOKIE)
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
@@ -53,6 +41,6 @@ include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(NAME)"
-	@ginstall -D $(WORKSRC)/iozone $(DESTDIR)$(bindir)/iozone
-	@ginstall -D $(DOCSRC)/iozone.1 $(DESTDIR)$(mandir)/man6/iozone.1
+	ginstall -D $(WORKSRC)/iozone $(DESTDIR)$(bindir)/iozone
+	ginstall -D $(DOCSRC)/iozone.1 $(DESTDIR)$(mandir)/man6/iozone.1
 	@$(MAKECOOKIE)
