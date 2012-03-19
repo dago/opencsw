@@ -738,6 +738,11 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
 
+merge-README.CSW: $(WORKDIR)
+	$(_DBG)if test -f $(WORKDIR)/README.CSW; then \
+		$(foreach P,$(_PKG_SPECS),mkdir -p $(PKGROOT)$(docdir)/$(call catalogname,$P);) \
+		$(foreach P,$(_PKG_SPECS),cp $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(call catalogname,$P)/README.CSW;) \
+
 merge-distfile-%: $(DOWNLOADDIR)
 	$(_DBG_MERGE)if test -f $(DOWNLOADDIR)/$*; then \
 		$(foreach P,$(_PKG_SPECS),mkdir -p $(PKGROOT)$(docdir)/$(call catalogname,$P);) \
