@@ -122,3 +122,9 @@ install-web:
 		$(DESTDIR)$(libexecdir)/alpine-2.00/bin/tclsh)
 	@(cd $(DESTDIR)$(libexecdir); gln -s ./alpine-2.00 ./alpine)
 	@$(MAKECOOKIE)
+
+post-merge:
+	@echo " ==> Fixing usr/local references..."
+	@(cd $(PKGROOT)/$(mandir)/man1/; \
+		perl -pi -e 's#/usr/local#/opt/csw#g' alpine.1 )
+	@$(MAKECOOKIE)
