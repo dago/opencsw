@@ -44,6 +44,7 @@ GARCOMPILER = GCC4
 # Patch for solaris explained in the following thread
 # http://mailman2.u.washington.edu/pipermail/alpine-info/2007-December/000047.html
 PATCHFILES = pubcookie.diff
+PATCHFILES += 0001-alter-default-pine.info-path-for-csw-location.patch
 
 LICENSE = LICENSE
 
