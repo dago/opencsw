@@ -426,6 +426,8 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
 
   def MakeAbsolutePath(self, p):
     return os.path.join(self.pkgpath, p)
+
+
 class PackageComparator(object):
 
   def __init__(self, file_name_a, file_name_b,
