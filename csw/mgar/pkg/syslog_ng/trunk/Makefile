@@ -24,6 +24,11 @@ SPKG_SOURCEURL = http://www.balabit.com/network-security/syslog-ng/opensource-lo
 INITSMF = /etc/opt/csw/init\.d/cswsyslog_ng
 SAMPLECONF = /etc/opt/csw/syslog-ng\.conf\.CSW
 
+# Syslog links against glib2, which is packaged in different packages on
+# Solaris 9 and Solaris 10. Therefore, we need to build separately on 9 and
+# 10, and declare different dependencies.
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # shared /opt/csw support:
 localstatedir = /var/opt/csw
@@ -50,7 +55,6 @@ BUILD_DEP_PKGS += CSWpkgconfig
 
 PACKAGES = CSWsyslog-ng
 SPKG_DESC_CSWsyslog-ng = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWglib2
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibdbi1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibevtlog0
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgcc-s1
@@ -59,6 +63,15 @@ RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibwrap1
+
+# Specifying different dependencies for 5.9 and 5.10.
+RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgmodule2-0-0
+
+RUNTIME_DEP_PKGS_CSWsyslog-ng_5.9 += CSWglib2
+
+RUNTIME_DEP_PKGS_CSWsyslog-ng += $(RUNTIME_DEP_PKGS_CSWsyslog-ng_$(GAROSREL))
 
 OBSOLETED_BY_CSWsyslog-ng = CSWsyslogng
 CATALOGNAME_CSWsyslogng = syslog_ng_stub
