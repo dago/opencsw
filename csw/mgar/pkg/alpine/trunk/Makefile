@@ -22,6 +22,14 @@ CATALOGNAME_CSWalpine = alpine
 SPKG_DESC_CSWalpine = $(DESCRIPTION)
 OBSOLETED_BY_CSWalpine = CSWpine
 
+# from the looks of things, I don't think this will work anyway.  as this
+# is a 'simple' update to stub out the original pine, i'm going to get these
+# stand as they are
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/libexec/alpine-2.00/INSTALL
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/libexec/alpine-2.00/bin/usage.tcl
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/libexec/alpine-2.00/bin/debug.cgi
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/libexec/alpine-2.00/config/alpine.tcl
+
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
