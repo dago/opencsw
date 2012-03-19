@@ -23,5 +23,7 @@ TEST_SCRIPTS =
 LICENSE = LICENSE
 
 ARCHALL_CSWpy-mongoengine = 1
+RUNTIME_DEP_PKGS_CSWpy-mongoengine = CSWpy-mongo
+CHECKPKG_OVERRIDES_CSWpy-mongoengine += surplus-dependency|CSWpy-mongo
 
 include gar/category.mk
