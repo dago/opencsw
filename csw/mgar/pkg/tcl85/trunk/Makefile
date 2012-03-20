@@ -12,8 +12,9 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(SF_PROJ)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
-UPSTREAM_USE_SF = 1
+# Separate build for Solaris 10 with DTrace support
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
@@ -36,12 +37,10 @@ PATCHFILES += tcl.m4.patch
 #              # with sunmath to get floating point rounding control
 
 PACKAGES  = CSWtcl
-SPKG_DESC_CSWtcl = Tcl meta package
+SPKG_DESC_CSWtcl = Tcl programming language 8.5
 RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-5-0
 RUNTIME_DEP_PKGS_CSWtcl-i386 = CSWsunmath
 RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
-
-SPKG_DESC_CSWtcl8-5       = Tcl programming language v8.5
 
 PACKAGES += CSWlibtcl8-5-0
 SPKG_DESC_CSWlibtcl8-5-0 = $(DESCRIPTION), libraries
