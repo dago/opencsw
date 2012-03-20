@@ -30,6 +30,13 @@ CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/li
 CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/libexec/alpine-2.00/bin/debug.cgi
 CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/libexec/alpine-2.00/config/alpine.tcl
 
+# these are embedded strings in help text, etc that reference various
+# defaults, possibile paths, etc.
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/local|root/opt/csw/bin/alpine
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/share|root/opt/csw/bin/rpdump
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/share|root/opt/csw/bin/rpload
+CHECKPKG_OVERRIDES_CSWalpine += file-with-bad-content|/usr/share|root/opt/csw/bin/alpine
+
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
