@@ -558,7 +558,14 @@ makepatch-modulated: $(FILEDIR)
 			echo; \
 			echo "	svn add" $$FILES_PATCHES; \
 			echo; \
-			mv $$NEWPATCHES $(abspath $(FILEDIR)); ) \
+			mv $$NEWPATCHES $(abspath $(FILEDIR)); \
+			for p in $$NEWPATCHES; do \
+				touch $(abspath $(COOKIEDIR))/normal-patch-$$p; \
+				touch $(abspath $(COOKIEDIR))/patch-extract-$$p; \
+			done; \
+			touch $(abspath $(COOKIEDIR))/extract-modulated; \
+			touch $(abspath $(COOKIEDIR))/patch-modulated; \
+			touch $(abspath $(COOKIEDIR))/post-patch-gitsnap; ) \
 		fi; \
 	    else \
 		echo "No extracted sources so we can't create patches..."; \
