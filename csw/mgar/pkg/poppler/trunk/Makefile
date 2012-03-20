@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = poppler
-VERSION = 0.12.4
+VERSION = 0.14.4
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -15,102 +15,90 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
-PACKAGES = CSWpoppler CSWlibpoppler CSWlibpopplerdev CSWlibpopplerdoc
-CATALOGNAME_CSWpoppler = poppler
-CATALOGNAME_CSWlibpoppler = libpoppler
-CATALOGNAME_CSWlibpopplerdev = libpoppler_devel
-CATALOGNAME_CSWlibpopplerdoc = libpoppler_doc
-SPKG_DESC_CSWpoppler = $(DESCRIPTION) - legacy compat package
-SPKG_DESC_CSWlibpoppler = $(DESCRIPTION)
-SPKG_DESC_CSWlibpopplerdev = $(DESCRIPTION) - developer package
-SPKG_DESC_CSWlibpopplerdoc = $(DESCRIPTION) - documentation
-
-PKGFILES_CSWpoppler=  no files
-PKGFILES_CSWlibpoppler= $(PKGFILES_RT)
-PKGFILES_CSWlibpopplerdev = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpopplerdoc = $(sharedstatedir)/gtk-doc/.*
-
-#INCOMPATIBLE_PKGS_CSWpoppler = CSWxpdf
-
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWfconfig
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWftype2
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWjpeg
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWlcmsrt
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWpng
-
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlcmsrt
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpng
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWglib2
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWjpeg
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpango
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
-
-RUNTIME_DEP_PKGS_CSWlibpopplerdev += CSWlibpoppler
-
-ARCHALL_CSWpoppler = 1
-ARCHALL_CSWlibpopplerdoc = 1
-
-CHECKPKG_OVERRIDES_CSWpoppler += surplus-dependency|CSWlibpoppler
-CHECKPKG_OVERRIDES_CSWlibpopplerdev += surplus-dependency|CSWlibpoppler
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/amd64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/amd64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/usr/ccs/lib/amd64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/usr/lib/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/amd64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/amd64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/usr/ccs/lib/amd64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/usr/lib/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/rw7
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/rw7
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/v8
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/v8
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/v8
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/v8
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib/sparcv9
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/sparc/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/v9
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/sparc/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib/sparcv9
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/SUNWspro/lib/sparc/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/v9
-CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/sparc/64
-CHECKPKG_OVERRIDES_CSWlibpoppler += surplus-dependency|CSWiconv
+GARCOMPILER = SOS12U3
+PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
 
 PATCHFILES += missing-includes.patch
 
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD64_LIBS_ONLY = 1
+# BUILD64_LIBS_ONLY = 1
+
+PACKAGES += CSWlibpoppler-cpp0
+CATALOGNAME_CSWlibpoppler-cpp0 = libpoppler_cpp0
+PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpoppler-cpp\.so\.0\.1\.0)
+PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpoppler-cpp\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibpoppler-cpp0 += $(DESCRIPTION), libpoppler-cpp.so.0
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibiconv2
+
+PACKAGES += CSWlibpoppler-glib5
+CATALOGNAME_CSWlibpoppler-glib5 = libpoppler_glib5
+OBSOLETED_BY_CSWlibpoppler-glib5 = CSWlibpoppler
+
+PKGFILES_CSWlibpoppler-glib5 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.5\.0\.0)
+PKGFILES_CSWlibpoppler-glib5 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.5(\.\d+)*)
+SPKG_DESC_CSWlibpoppler-glib5 += $(DESCRIPTION), libpoppler-glib.so.5
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibpoppler7
+
+PACKAGES += CSWlibpoppler7
+CATALOGNAME_CSWlibpoppler7 = libpoppler7
+PKGFILES_CSWlibpoppler7 += $(call baseisadirs,$(libdir),libpoppler\.so\.7\.0\.0)
+PKGFILES_CSWlibpoppler7 += $(call baseisadirs,$(libdir),libpoppler\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibpoppler7 += $(DESCRIPTION), libpoppler.so.7
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWliblcms1
+
+PACKAGES += CSWpoppler-dev
+CATALOGNAME_CSWpoppler-dev = poppler_dev
+OBSOLETED_BY_CSWpoppler-dev = CSWlibpopplerdev 
+SPKG_DESC_CSWpoppler-dev += $(DESCRIPTION), development files
+PKGFILES_CSWpoppler-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-cpp0
+RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-glib5
+
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler-cpp0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpoppler += CSWpango
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWpoppler += CSWfconfig
+RUNTIME_DEP_PKGS_CSWpoppler += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler-glib5
 
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
 # when relinking libpoppler-glib during install phaze
 EXTRA_SOS_LD_FLAGS += -L$(abspath $(WORKSRC)/poppler/.libs)
+# EXTRA_CXXFLAGS += -D__EXTENSIONS__
+EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
