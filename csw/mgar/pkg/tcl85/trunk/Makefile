@@ -1,5 +1,5 @@
 NAME = tcl8.5
-VERSION = 8.5.10
+VERSION = 8.5.11
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -28,32 +28,33 @@ REN_TCLSH   = tclsh8.5
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 PATCHFILES  = soname.diff
 PATCHFILES += tcl.m4.patch
-PATCHFILES += tcl-dtrace.patch
-
-PACKAGES  = CSWtcl
-PACKAGES += CSWlibtcl8-5-0
-PACKAGES += CSWtcl-dev
-
-ALTERNATIVES_PRIO = 850
+# PATCHFILES += tcl-dtrace.patch
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
 #              # On Solaris 5.x i386 with the sunpro compiler we need to link
 #              # with sunmath to get floating point rounding control
-#
-RUNTIME_DEP_PKGS_CSWtcl-i386          = CSWsunmath
-RUNTIME_DEP_PKGS_CSWtcl              += CSWlibtcl8-5-0
-RUNTIME_DEP_PKGS_CSWtcl              += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
+
+PACKAGES  = CSWtcl
+SPKG_DESC_CSWtcl = Tcl meta package
+RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-5-0
+RUNTIME_DEP_PKGS_CSWtcl-i386 = CSWsunmath
+RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
+
+SPKG_DESC_CSWtcl8-5       = Tcl programming language v8.5
+
+PACKAGES += CSWlibtcl8-5-0
+SPKG_DESC_CSWlibtcl8-5-0 = $(DESCRIPTION), libraries
+PKGFILES_CSWlibtcl8-5-0 += $(call pkgfiles_lib,libtcl8.5.so.0)
 RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-i386 += CSWsunmath
-RUNTIME_DEP_PKGS_CSWlibtcl8-5-0      += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
-RUNTIME_DEP_PKGS_CSWtcl-dev          += CSWlibtcl8-5-0
+RUNTIME_DEP_PKGS_CSWlibtcl8-5-0 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
 
-SPKG_DESC_CSWtcl8-5       = $(DESCRIPTION)
-SPKG_DESC_CSWlibtcl8-5-0  = $(DESCRIPTION), libraries
-SPKG_DESC_CSWtcl-dev      = $(DESCRIPTION), development files
+PACKAGES += CSWtcl-dev
+SPKG_DESC_CSWtcl-dev = $(DESCRIPTION), development files
+PKGFILES_CSWtcl-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWtcl-dev += CSWlibtcl8-5-0
 
-PKGFILES_CSWlibtcl8-5-0   = $(call pkgfiles_lib,libtcl8.5.so.0)
-PKGFILES_CSWtcl8-5-dev    = $(PKGFILES_DEVEL)
+ALTERNATIVES_PRIO = 850
 
 ALTERNATIVES_CSWtcl8_5 += tcl8_5
 ALTERNATIVE_tcl8_5     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
@@ -89,13 +90,13 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 pre-configure-modulated:
 	@echo " ==> Regenerating build tools..."
-	@(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
+	(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
 	@$(MAKECOOKIE)
 
 pre-test-modulated:
 	@# Need to manually create symlink to latest version
 	@echo Creating symlinks for libtcl8.5.so
-	@(cd $(WORKSRC) ; \
+	(cd $(WORKSRC) ; \
 		mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
 		ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
 	@$(MAKECOOKIE)
@@ -103,8 +104,8 @@ pre-test-modulated:
 post-install-modulated:
 	@# Need to manually create symlink to latest version - it will be handled by alternatives
 	@echo Creating tclsh link
-	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
-	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(libdir)/tclConfig.sh
-	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(prefix)/share/man/man1/tclsh.1
+	ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
+	perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(libdir)/tclConfig.sh
+	perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(prefix)/share/man/man1/tclsh.1
 	@$(MAKECOOKIE)
 
