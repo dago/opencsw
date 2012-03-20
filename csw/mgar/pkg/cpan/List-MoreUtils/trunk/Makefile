@@ -1,23 +1,21 @@
 NAME = List-MoreUtils
-VERSION = 0.22
+VERSION = 0.33
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = VPARSEVAL
+AUTHOR = ADAMK
 
 DESCRIPTION = Provide the stuff missing in List::Util
 define BLURB
-  List::MoreUtils provides some trivial but commonly needed functionality on
-  lists which is not going to go into List::Util.
 endef
 
-PACKAGES = CSWpmlistmoreutils
-CATALOGNAME = pm_listmoreutils
+CATALOG_RELEASE = unstable
 
-# This is the old package with the broken name
-INCOMPATIBLE_PKGS = CSWpmlistmoreut
+LICENSE = LICENSE
+
+PACKAGES += CSWpm-list-moreutils
+CATALOGNAME_CSWpm-list-moreutils = pm_list_moreutils
+SPKG_DESC_CSWpm-list-moreutils = Provide the stuff missing in List::Util
+OBSOLETED_BY_CSWpm-list-moreutils += CSWpmlistmoreutils
+CATALOGNAME_CSWpmlistmoreutils = pm_listmoreutils_stub
 
 include gar/category.mk
-
-pre-merge-modulated:
-	@cd $(WORKSRC) && sed -n '/^Copyright/,$$p' README > COPYING
-	@$(MAKECOOKIE)
