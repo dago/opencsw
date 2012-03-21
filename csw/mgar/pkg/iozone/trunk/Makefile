@@ -18,7 +18,6 @@ VENDOR_URL   = http://www.iozone.org/
 MASTER_SITES = http://www.iozone.org/src/current/
 
 DISTNAME     = $(NAME)$(DISTVERSION)
-WORKSRC      = $(WORKDIR)/$(DISTNAME)/src/current
 DOCSRC       = $(WORKDIR)$(DISTNAME)/docs
 
 DISTFILES    = $(DISTNAME).tar
@@ -37,20 +36,20 @@ CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
 BUILD_ARGS = Solaris8-64-VXFS
-BUILD_SCRIPTS = $(WORKSRC)/makefile
+BUILD_SCRIPTS = $(WORKSRC)/src/current/makefile
 
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
 post-extract-modulated:
-	mkdir -p work/solaris9-sparc/build-isa-sparcv8/$(DISTNAME)/src/current
-	cp $(FILEDIR)/vx_ioctl.h work/solaris9-sparc/build-isa-sparcv8/$(DISTNAME)/src/current
+	mkdir -p $(WORKSRC)/src/current
+	cp $(FILEDIR)/vx_ioctl.h $(WORKSRC)/src/current
 	@$(MAKECOOKIE)
 
 install-custom:
 	@echo " ==> Installing $(NAME)"
-	ginstall -D $(WORKSRC)/iozone $(DESTDIR)$(bindir)/iozone
+	ginstall -D $(WORKSRC)/src/current/iozone $(DESTDIR)$(bindir)/iozone
 	ginstall -D $(DOCSRC)/iozone.1 $(DESTDIR)$(mandir)/man8/iozone.8
 	ginstall -D $(DOCSRC)/IOzone_msword_98.pdf $(DESTDIR)$(docdir)/iozone/IOzone_msword_98.pdf
 	ginstall $(DOCSRC)/IOzone_msword_98.doc $(DESTDIR)$(docdir)/iozone/IOzone_msword_98.doc
