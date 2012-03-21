@@ -1,0 +1,22 @@
+From 6fd37055f0e15d77b18e9ff64f248e86ee793ecb Mon Sep 17 00:00:00 2001
+From: Stefan Schnyder <aironskin@opencsw.org>
+Date: Wed, 21 Mar 2012 11:29:04 +0100
+Subject: [PATCH] Move from man1 to man8
+
+---
+ docs/iozone.1 |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/docs/iozone.1 b/docs/iozone.1
+index 170b9d3..f7ccacd 100644
+--- a/docs/iozone.1
++++ b/docs/iozone.1
+@@ -1,4 +1,4 @@
+-.TH IOZONE 1
++.TH IOZONE 8
+ .SH NAME
+ Iozone \- Filesystem Benchmark
+ .SH SYNOPSIS
+-- 
+1.7.9
+

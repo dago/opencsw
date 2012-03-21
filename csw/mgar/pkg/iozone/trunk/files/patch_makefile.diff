@@ -1,0 +1,51 @@
+From 0cdc6ee9569d94b7c720f0b9210e3ce08e73f484 Mon Sep 17 00:00:00 2001
+From: Stefan Schnyder <aironskin@opencsw.org>
+Date: Wed, 21 Mar 2012 12:30:26 +0100
+Subject: [PATCH] Replaced deprecated option (generic64) and removed include
+
+---
+ src/current/makefile |   16 ++++++----------
+ 1 files changed, 6 insertions(+), 10 deletions(-)
+
+diff --git a/src/current/makefile b/src/current/makefile
+index eb1fbec..70bb6b3 100644
+--- a/src/current/makefile
++++ b/src/current/makefile
+@@ -443,10 +443,9 @@ Solaris8-64: iozone_solaris8-64.o libasync.o libbif.o
+ # Solaris 64 bit build with threads, largefiles, async I/O, and Vxfs
+ #
+ Solaris8-64-VXFS: iozone_solaris8-64-VXFS.o libasync.o libbif.o
+-	$(CC) $(LDFLAGS) -fast -xtarget=generic64 -v -I/opt/VRTSvxfs/include/ 
+-		iozone_solaris8-64-VXFS.o libasync.o libbif.o \
+-		-lthread -lpthread -lposix4 -lnsl -laio \
+-		-lsocket -o iozone
++	$(CC) $(LDFLAGS) -fast -m64 -v iozone_solaris8-64-VXFS.o \
++		libasync.o libbif.o -lthread -lpthread -lposix4 -lnsl \
++		-laio -lsocket -o iozone
+ 
+ #
+ # Windows build requires Cygwin development environment. You
+@@ -1196,17 +1195,14 @@ iozone_solaris8-64-VXFS.o: iozone.c libasync.c libbif.c
+ 	@echo ""
+ 	@echo "Building iozone for Solaris8-64-VXFS"
+ 	@echo ""
+-	$(CC) -fast -xtarget=generic64 -v -c -I/opt/VRTSvxfs/include/ -Dunix \
+-		-DVXFS -DHAVE_ANSIC_C -DASYNC_IO \
++	$(CC) -fast -m64 -v -c -Dunix -DVXFS -DHAVE_ANSIC_C -DASYNC_IO \
+ 		-D__LP64__ -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 \
+ 		-DNAME='"Solaris8-64"' -Dsolaris -DHAVE_PREAD \
+ 		$(CFLAGS) iozone.c -o iozone_solaris8-64-VXFS.o
+-	$(CC) -fast -xtarget=generic64 -v -c  -I/opt/VRTSvxfs/include/ -Dunix \
+-		-DVXFS -DHAVE_ANSIC_C -DASYNC_IO \
++	$(CC) -fast -m64 -v -c -Dunix -DVXFS -DHAVE_ANSIC_C -DASYNC_IO \
+ 		-D__LP64__ -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 \
+ 		-Dsolaris -DHAVE_PREAD $(CFLAGS) libasync.c -o libasync.o
+-	$(CC) -fast -xtarget=generic64 -v -c -I/opt/VRTSvxfs/include/ -Dunix \
+-		-DVXFS -DHAVE_ANSIC_C -DASYNC_IO \
++	$(CC) -fast -m64 -v -c -Dunix -DVXFS -DHAVE_ANSIC_C -DASYNC_IO \
+ 		-D__LP64__ -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 \
+ 		-Dsolaris -DHAVE_PREAD $(CFLAGS) libbif.c -o libbif.o
+ 
+-- 
+1.7.9
+
