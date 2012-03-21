@@ -33,10 +33,6 @@ DOCS        += IOzone_msword_98.doc
 DOCS        += Iozone_ps.gz
 DOCS        += Run_rules.doc
 
-post-extract-modulated:
-	cp $(FILEDIR)/vx_ioctl.h $(WORKSRC)/
-	@$(MAKECOOKIE)
-
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
@@ -46,6 +42,11 @@ BUILD_SCRIPTS = $(WORKSRC)/makefile
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
+
+post-extract-modulated:
+	mkdir -p work/solaris9-sparc/build-isa-sparcv8/$(DISTNAME)/src/current
+	cp $(FILEDIR)/vx_ioctl.h work/solaris9-sparc/build-isa-sparcv8/$(DISTNAME)/src/current
+	@$(MAKECOOKIE)
 
 install-custom:
 	@echo " ==> Installing $(NAME)"
