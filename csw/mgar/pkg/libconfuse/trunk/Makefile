@@ -18,7 +18,7 @@ MASTER_SITES = http://savannah.nongnu.org/download/confuse/
 DISTNAME = confuse-$(VERSION)
 DISTFILES += $(DISTNAME).tar.gz
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 LICENSE = AUTHORS
 
