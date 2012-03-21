@@ -1,0 +1,40 @@
+From 07945d661f107a4f7fd4b9dd06207ffa43a3e99d Mon Sep 17 00:00:00 2001
+From: Stefan Schnyder <aironskin@opencsw.org>
+Date: Wed, 21 Mar 2012 12:37:43 +0100
+Subject: [PATCH] Use vx_ioctl.h in BUILDSRC instead of
+ /opt/VRTSvxfs/include/sys/fs/
+
+---
+ src/current/iozone.c   |    2 +-
+ src/current/libasync.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/current/iozone.c b/src/current/iozone.c
+index 38f9da8..de96dcb 100644
+--- a/src/current/iozone.c
++++ b/src/current/iozone.c
+@@ -369,7 +369,7 @@ typedef long long off64_t;
+ #endif
+ 
+ #ifdef VXFS
+-#include <sys/fs/vx_ioctl.h>
++#include "vx_ioctl.h"
+ #endif
+ 
+ #ifdef unix
+diff --git a/src/current/libasync.c b/src/current/libasync.c
+index adb14a6..01b5a85 100644
+--- a/src/current/libasync.c
++++ b/src/current/libasync.c
+@@ -106,7 +106,7 @@
+ #include <malloc.h>
+ #endif
+ #ifdef VXFS
+-#include <sys/fs/vx_ioctl.h>
++#include "vx_ioctl.h"
+ #endif
+ 
+ #if defined(OSFV5) || defined(linux)
+-- 
+1.7.9
+

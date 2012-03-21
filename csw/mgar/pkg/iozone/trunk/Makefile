@@ -14,25 +14,33 @@ define BLURB
   read, pread ,mmap, aio_read, aio_write
 endef
 
-MASTER_SITES += http://www.iozone.org/src/current/
-DISTNAME = $(NAME)$(DISTVERSION)
-DISTFILES += $(DISTNAME).tar
-#PATCHFILES = patch-vx_ioctl.diff
+VENDOR_URL   = http://www.iozone.org/
+MASTER_SITES = http://www.iozone.org/src/current/
 
-VENDOR_URL    = http://www.iozone.org/
+DISTNAME     = $(NAME)$(DISTVERSION)
+WORKSRC      = $(WORKDIR)/$(DISTNAME)/src/current
+DOCSRC       = $(WORKDIR)$(DISTNAME)/docs
 
-DOCS  = IOzone_msword_98.pdf
-DOCS += IOzone_msword_98.doc
-DOCS += Iozone_ps.gz
-DOCS += Run_rules.doc
+DISTFILES    = $(DISTNAME).tar
+DISTFILES   += vx_ioctl.h
 
-WORKSRC = $(WORKDIR)$(DISTNAME)/src/current
-DOCSRC  = $(WORKDIR)$(DISTNAME)/docs
+PATCHFILES   = patch_makefile.diff
+PATCHFILES  += patch_manfile.diff
+PATCHFILES  += patch_vxioctl.diff
+
+DOCS         = IOzone_msword_98.pdf
+DOCS        += IOzone_msword_98.doc
+DOCS        += Iozone_ps.gz
+DOCS        += Run_rules.doc
+
+post-extract-modulated:
+	cp $(FILEDIR)/vx_ioctl.h $(WORKSRC)/
+	@$(MAKECOOKIE)
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
-BUILD_ARGS = Solaris10
+BUILD_ARGS = Solaris8-64-VXFS
 BUILD_SCRIPTS = $(WORKSRC)/makefile
 
 INSTALL_SCRIPTS = custom
@@ -42,5 +50,9 @@ include gar/category.mk
 install-custom:
 	@echo " ==> Installing $(NAME)"
 	ginstall -D $(WORKSRC)/iozone $(DESTDIR)$(bindir)/iozone
-	ginstall -D $(DOCSRC)/iozone.1 $(DESTDIR)$(mandir)/man6/iozone.1
+	ginstall -D $(DOCSRC)/iozone.1 $(DESTDIR)$(mandir)/man8/iozone.8
+	ginstall -D $(DOCSRC)/IOzone_msword_98.pdf $(DESTDIR)$(docdir)/iozone/IOzone_msword_98.pdf
+	ginstall $(DOCSRC)/IOzone_msword_98.doc $(DESTDIR)$(docdir)/iozone/IOzone_msword_98.doc
+	ginstall $(DOCSRC)/Iozone_ps.gz $(DESTDIR)$(docdir)/iozone/Iozone_ps.gz
+	ginstall $(DOCSRC)/Run_rules.doc $(DESTDIR)$(docdir)/iozone/Run_rules.doc
 	@$(MAKECOOKIE)
