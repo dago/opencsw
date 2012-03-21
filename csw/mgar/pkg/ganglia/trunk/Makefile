@@ -4,7 +4,7 @@ VERSION_U = 3-3-3
 CATEGORIES = utils
 GARTYPE = v2
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # How should we set this?
 # There is a release number in configure.in, maybe use that?
@@ -141,6 +141,9 @@ ifeq ($(VERSION),3.2.0)
 TEST_SCRIPTS =
 endif
 ifeq ($(VERSION),3.3.1)
+TEST_SCRIPTS =
+endif
+ifeq ($(VERSION),3.3.3)
 TEST_SCRIPTS =
 endif
 
