@@ -1,5 +1,5 @@
 NAME = libtasn1
-VERSION = 2.11
+VERSION = 2.12
 CATEGORIES = lib
 GARTYPE = v2
 
