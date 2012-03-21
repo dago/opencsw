@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = x264
-VERSION = snapshot-20120306-2245
+VERSION = 5c85e0a
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -12,8 +12,13 @@ define BLURB
 endef
 
 VENDOR_URL = http://www.videolan.org/developers/x264.html
-MASTER_SITES = ftp://ftp.videolan.org/pub/videolan/x264/snapshots/ 
-DISTFILES  = $(DISTNAME).tar.bz2
+#MASTER_SITES = http://repo.or.cz/w/x264.git/snapshot/  
+#DISTFILES  = c522ad1fed167d0e985e4f9dcdee042473cf74db.tar.gz
+GIT_REPOS = http://git.videolan.org/git/x264.git
+GIT_TREEISH_tig.git = 5c85e0a2b7992fcaab09418e3fcefc613cffc743
+
+# This Patch file needs to be updated on every new version! 
+PATCHFILES += 0001-replace-version.sh.patch
 
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
@@ -49,25 +54,25 @@ RUNTIME_DEP_PKGS_CSWx264 += CSWlibavcodec53
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibavutil51
 
-PACKAGES += CSWlibx264-120
-CATALOGNAME_CSWlibx264-120 = libx264_120
-PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.120)
-PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.120(\.\d+)*)
-SPKG_DESC_CSWlibx264-120 += $(DESCRIPTION), libx264.so.120
-RUNTIME_DEP_PKGS_CSWlibx264-120 += CSWlibgcc-s1
+PACKAGES += CSWlibx264-122
+CATALOGNAME_CSWlibx264-122 = libx264_122
+PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.122)
+PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.122(\.\d+)*)
+SPKG_DESC_CSWlibx264-120 += $(DESCRIPTION), libx264.so.122
+RUNTIME_DEP_PKGS_CSWlibx264-122 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
 CATALOGNAME_CSWlibx264-dev = libx264_dev
 SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
 PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-120
+RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-122
 
 #Some overrides
 CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
-CHECKPKG_OVERRIDES_CSWlibx264-120 += pkginfo-description-not-starting-with-uppercase
+CHECKPKG_OVERRIDES_CSWlibx264-122 += pkginfo-description-not-starting-with-uppercase
 # seems to be checkpkg bug:
-CHECKPKG_OVERRIDES_CSWlibx264-120 += non-uniform-lib-versions-in-package|sonames=libx264.so.120
+CHECKPKG_OVERRIDES_CSWlibx264-122 += non-uniform-lib-versions-in-package|sonames=libx264.so.122
 
 
 
