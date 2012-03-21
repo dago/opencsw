@@ -8,7 +8,7 @@
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
 
 NAME = ffmpeg
-VERSION = 0.10
+VERSION = 0.10.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -31,7 +31,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 BUILD_DEP_PKGS += CSWlibtheora-dev
 BUILD_DEP_PKGS += CSWlibvorbis-dev
-BUILD_DEP_PKGS += CSWx264-dev
+BUILD_DEP_PKGS += CSWlibx264-dev
 
 PACKAGES += CSWlibavcodec53
 SPKG_DESC_CSWlibavcodec53 = FFMPEG library libavcodec.so.53
