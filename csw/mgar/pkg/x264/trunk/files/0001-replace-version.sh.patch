@@ -1,0 +1,47 @@
+From 6d62d0bfa41a80d0afb547ec87e20ea8cc9c0740 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Wed, 21 Mar 2012 10:12:19 +0100
+Subject: [PATCH] replace version.sh
+
+---
+ version.sh |   29 ++++++-----------------------
+ 1 files changed, 6 insertions(+), 23 deletions(-)
+
+diff --git a/version.sh b/version.sh
+index 5466ef2..a1d43eb 100755
+--- a/version.sh
++++ b/version.sh
+@@ -1,24 +1,7 @@
+ #!/bin/bash
+-[ -n "$1" ] && cd $1
+-git rev-list HEAD | sort > config.git-hash
+-LOCALVER=`wc -l config.git-hash | awk '{print $1}'`
+-if [ $LOCALVER \> 1 ] ; then
+-    VER=`git rev-list origin/master | sort | join config.git-hash - | wc -l | awk '{print $1}'`
+-    VER_DIFF=$(($LOCALVER-$VER))
+-    echo "#define X264_REV $VER"
+-    echo "#define X264_REV_DIFF $VER_DIFF"
+-    if [ $VER_DIFF != 0 ] ; then
+-        VER="$VER+$VER_DIFF"
+-    fi
+-    if git status | grep -q "modified:" ; then
+-        VER="${VER}M"
+-    fi
+-    VER="$VER $(git rev-list HEAD -n 1 | cut -c 1-7)"
+-    echo "#define X264_VERSION \" r$VER\""
+-else
+-    echo "#define X264_VERSION \"\""
+-    VER="x"
+-fi
+-rm -f config.git-hash
+-API=`grep '#define X264_BUILD' < x264.h | sed -e 's/.* \([1-9][0-9]*\).*/\1/'`
+-echo "#define X264_POINTVER \"0.$API.$VER\""
++
++echo "#define X264_REV 2184"
++echo "#define X264_REV_DIFF 0"
++echo '#define X264_VERSION " r2184 5c85e0a"'
++echo '#define X264_POINTVER "0.122.2184 5c85e0a"'
++exit 0
+-- 
+1.7.9
+
