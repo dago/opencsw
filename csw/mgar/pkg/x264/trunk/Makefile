@@ -56,9 +56,9 @@ RUNTIME_DEP_PKGS_CSWx264 += CSWlibavutil51
 
 PACKAGES += CSWlibx264-122
 CATALOGNAME_CSWlibx264-122 = libx264_122
-PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.122)
-PKGFILES_CSWlibx264-120 += $(call baseisadirs,$(libdir),libx264\.so\.122(\.\d+)*)
-SPKG_DESC_CSWlibx264-120 += $(DESCRIPTION), libx264.so.122
+PKGFILES_CSWlibx264-122 += $(call baseisadirs,$(libdir),libx264\.so\.122)
+PKGFILES_CSWlibx264-122 += $(call baseisadirs,$(libdir),libx264\.so\.122(\.\d+)*)
+SPKG_DESC_CSWlibx264-122 += $(DESCRIPTION), libx264.so.122
 RUNTIME_DEP_PKGS_CSWlibx264-122 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
