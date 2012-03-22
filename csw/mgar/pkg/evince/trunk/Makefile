@@ -11,9 +11,6 @@ DESCRIPTION = Document viewer for multiple document formats
 define BLURB
 endef
 
-# GARFLAVOR = DBG
-# GARCOMPILER=GNU
-GARCOMPILER=SOS12U3
 SPKG_SOURCEURL = http://projects.gnome.org/evince/
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(GNOME_VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
@@ -21,7 +18,13 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += 0001-honor-aclocal_flags.patch
 
+# GARFLAVOR = DBG
+# GARCOMPILER=GNU
+GARCOMPILER=SOS12U3
+STRIP_LIBTOOL = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-introspection 
 # CONFIGURE_ARGS_DBG = --enable-debug
 # CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
@@ -29,6 +32,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARFLAVOR))
 # EXTRA_CXXFLAGS += -DPOPPLER_WITH_GDK
 EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO
+EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0
 
 STRIP_LIBTOOL = 1
 EXTRA_LD_OPTIONS = -lm
@@ -65,7 +69,33 @@ RUNTIME_DEP_PKGS_CSWevince += CSWpango
 RUNTIME_DEP_PKGS_CSWevince += CSWtiff
 RUNTIME_DEP_PKGS_CSWevince += CSWzlib
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWevince)
+BUILD_DEP_PKGS += CSWlibglib2-dev
+BUILD_DEP_PKGS += CSWlibgconf-dev
+BUILD_DEP_PKGS += CSWgnomedocutils
+BUILD_DEP_PKGS += CSWintltool
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWgnomeicontheme
+BUILD_DEP_PKGS += CSWsunx11devel
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWgnomekeyring-dev
+BUILD_DEP_PKGS += CSWlibdbus-glib-dev
+BUILD_DEP_PKGS += CSWpoppler-dev
+BUILD_DEP_PKGS += CSWlibcairo-dev
+BUILD_DEP_PKGS += CSWlibspectre-dev
+BUILD_DEP_PKGS += CSWlibdjvulibre-dev
+BUILD_DEP_PKGS += CSWgobject-introspection-dev
+BUILD_DEP_PKGS += CSWbinutils
+BUILD_DEP_PKGS += CSWgnulinks
+BUILD_DEP_PKGS += CSWtetex
+BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibpixman-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibatk-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWgnomevfs2-dev
+BUILD_DEP_PKGS += CSWpy-libxml2
 
 include gar/category.mk
 
@@ -75,3 +105,4 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 PATH := /opt/csw/gnu:$(PATH)
+AM_DEFAULT_VERBOSITY := 1
