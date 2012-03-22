@@ -31,7 +31,7 @@ CONFIGURE_ARGS += --with-group=$(shell /opt/csw/gnu/id -ng)
 
 PROTOTYPE_MODIFIERS += data
 PROTOTYPE_FILES_data += $(sysconfdir)/?.*
-PROTOTYPE_FILES_data += $(datarootdir)/?.*
+PROTOTYPE_FILES_data += $(datadir)/?.*
 PROTOTYPE_USER_data = nobody
 PROTOTYPE_GROUP_data = nobody
 
