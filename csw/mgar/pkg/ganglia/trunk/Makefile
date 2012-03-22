@@ -77,6 +77,8 @@ RUNTIME_DEP_PKGS_CSWgangliaweb += CSWphp5-json
 CHECKPKG_OVERRIDES_CSWgangliaweb += surplus-dependency|CSWgangliagmetad
 CHECKPKG_OVERRIDES_CSWgangliaweb += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWgangliaweb += surplus-dependency|CSWrrdtool
+CHECKPKG_OVERRIDES_CSWgangliaweb += surplus-dependency|CSWphp5-gd
+CHECKPKG_OVERRIDES_CSWgangliaweb += surplus-dependency|CSWphp5-json
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=43021
