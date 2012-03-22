@@ -1,6 +1,12 @@
 NAME = ganglia
 VERSION = 3.3.3
 VERSION_U = 3-3-3
+# Unit tests don't seem to run on Solaris, so it is disabled
+# As soon as Ganglia test cases are fixed to run on Solaris,
+# this line should be commented out so that mgar will call `make check'
+# automatically for us
+TEST_SCRIPTS =
+
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -118,35 +124,6 @@ CONFIGURE_ARGS += --disable-python
 # modgstatus - for Ganglia version and internal status metrics
 CONFIGURE_ARGS += --enable-status
 
-# For Ganglia 3.1.2, the test suite doesn't compile cleanly on Solaris,
-# so we skip it.  This should be re-assessed with each new release
-# from upstream.  Proposed fixes for the test suite to be submitted
-# upstream.
-ifeq ($(VERSION),3.1.3)
-TEST_SCRIPTS = 
-endif
-ifeq ($(VERSION),3.1.4)
-TEST_SCRIPTS =
-endif
-ifeq ($(VERSION),3.1.5)
-TEST_SCRIPTS =
-endif
-ifeq ($(VERSION),3.1.6)
-TEST_SCRIPTS =
-endif
-ifeq ($(VERSION),3.1.7)
-TEST_SCRIPTS =
-endif
-ifeq ($(VERSION),3.2.0)
-TEST_SCRIPTS =
-endif
-ifeq ($(VERSION),3.3.1)
-TEST_SCRIPTS =
-endif
-ifeq ($(VERSION),3.3.3)
-TEST_SCRIPTS =
-endif
-
 #INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
 WWWROOT = /opt/csw/share/www
@@ -175,9 +152,9 @@ PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/moddisk.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modproc.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modgstatus.so
 
-PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-$(VERSION).0.so.0)
+PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-$(VERSION).so.0)
 
-CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-$(VERSION).0.so.0.0.0|soname=libganglia-$(VERSION).0.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia$(VERSION_U)-0-0
+CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-$(VERSION).so.0.0.0|soname=libganglia-$(VERSION).so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia$(VERSION_U)-0
 
 PKGFILES_CSWgangliamodpython = .*python.*
 
