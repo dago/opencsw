@@ -13,6 +13,9 @@ endef
 MASTER_SITES =  http://www.open-mpi.org/software/hwloc/v1.4/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+BUILD64_LIBS_ONLY = 1
+
 PACKAGES  = CSWhwloc
 PACKAGES += CSWhwloc-dev
 PACKAGES += CSWhwloc-doc
@@ -40,10 +43,6 @@ RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc3
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 #CONFIGURE_ARGS += --disable-visibility
-
-BUILD64_LIBS_ONLY = 1
-
-#GARFLAVOR = DBG
 
 include gar/category.mk
 
