@@ -19,25 +19,25 @@ BUILD64_LIBS_ONLY = 1
 PACKAGES  = CSWhwloc
 PACKAGES += CSWhwloc-dev
 PACKAGES += CSWhwloc-doc
-PACKAGES += CSWlibhwloc3
+PACKAGES += CSWlibhwloc5
 
 ARCHALL_CSWhwloc-doc = 1
 
 SPKG_DESC_CSWhwloc        += $(DESCRIPTION)
 SPKG_DESC_CSWhwloc-dev    += $(DESCRIPTION), development files
 SPKG_DESC_CSWhwloc-doc    += $(DESCRIPTION), documentation
-SPKG_DESC_CSWlibhwloc3    += $(DESCRIPTION), runtime
+SPKG_DESC_CSWlibhwloc5    += $(DESCRIPTION), runtime
 
-PKGFILES_CSWlibhwloc3      = $(call pkgfiles_lib,libhwloc.so.3)
+PKGFILES_CSWlibhwloc5      = $(call pkgfiles_lib,libhwloc.so.5)
 PKGFILES_CSWhwloc-dev      = $(PKGFILES_DEVEL)
 PKGFILES_CSWhwloc-doc      = $(PKGFILES_DOC)
 
 RUNTIME_DEP_PKGS_CSWhwloc      = CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibhwloc3
-RUNTIME_DEP_PKGS_CSWlibhwloc3 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibhwloc5
+RUNTIME_DEP_PKGS_CSWlibhwloc5 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWhwloc-dev  = CSWhwloc
-RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc3
+RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc5
 
 #BUILDDEPS = CSWautoconf
 
