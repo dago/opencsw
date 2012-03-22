@@ -19,6 +19,7 @@ GARCOMPILER = SOS12U3
 PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
 
 PATCHFILES += missing-includes.patch
+PATCHFILES += ltmain.patch
 
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
