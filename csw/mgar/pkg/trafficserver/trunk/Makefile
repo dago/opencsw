@@ -14,7 +14,12 @@ endef
 MASTER_SITES = http://people.apache.org/~zwoop/rel-candidates/
 DISTFILES  = $(DISTNAME).tar.bz2
 
+PACKAGING_PLATFORMS = solaris10-i386
+BUILD64_ONLY = 1
+ISAEXEC = 1
+
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/$(NAME)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
@@ -24,17 +29,11 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-user=$(shell /opt/csw/gnu/id -nu)
 CONFIGURE_ARGS += --with-group=$(shell /opt/csw/gnu/id -ng)
 
-PROTOTYPE_MODIFIERS = config data
-PROTOTYPE_FILES_config = $(sysconfdir)
-PROTOTYPE_CLASS_config = cswconffile
-PROTOTYPE_USER_config = nobody
-PROTOTYPE_GROUP_config = $(shell id -ng nobody)
-PROTOTYPE_FILES_data = $(datadir)
-PROTOTYPE_FILES_data = $(datadir)
-
-PACKAGING_PLATFORMS = solaris10-i386
-SKIP_MODULATIONS = isa-i386 isa-pentium_pro
-BUILD64 = 1
+PROTOTYPE_MODIFIERS += data
+PROTOTYPE_FILES_data += $(sysconfdir)/?.*
+PROTOTYPE_FILES_data += $(datarootdir)/?.*
+PROTOTYPE_USER_data = nobody
+PROTOTYPE_GROUP_data = nobody
 
 include gar/category.mk
 
