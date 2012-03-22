@@ -215,6 +215,8 @@ post-install-modulated:
 	@cd $(WORKSRC)/web; \
 		cp -R * $(DESTDIR)$(WWWGANGLIA)
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/conf.php
+	@rm -rf $(DESTDIR)$(WWWGANGLIA)/debian
+	@rm -rf $(DESTDIR)$(WWWGANGLIA)/ganglia-web/debian
 	@ginstall -D $(FILEDIR)/conf.php \
 		$(DESTDIR)$(WWWGANGLIA)/conf.php.CSW
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/*.in
