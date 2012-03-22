@@ -1,6 +1,6 @@
 NAME = ganglia
 VERSION = 3.3.4
-VERSION_U = 3-3-4
+VERSION_U = $(subst .,-,$(VERSION))
 # Unit tests don't seem to run on Solaris, so it is disabled
 # As soon as Ganglia test cases are fixed to run on Solaris,
 # this line should be commented out so that mgar will call `make check'
