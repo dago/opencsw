@@ -24,9 +24,12 @@ GARCOMPILER=SOS12U3
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-introspection 
+# CONFIGURE_ARGS += --enable-introspection 
 # CONFIGURE_ARGS_DBG = --enable-debug
 # CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+
+# use dogtail which we dont have
+TEST_TARGET = 
 
 # EXTRA_CFLAGS_DBG = -g
 # EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARFLAVOR))
@@ -34,16 +37,10 @@ CONFIGURE_ARGS += --enable-introspection
 EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO
 EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0
 
-STRIP_LIBTOOL = 1
 EXTRA_LD_OPTIONS = -lm
 # EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
 # There are no shared-object dependencies on CSWdbus, but it's required for
 # evince to work.
-RUNTIME_DEP_PKGS_CSWevince += CSWdbus
-CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
-# Shared MIME info is needed to detect file types
-RUNTIME_DEP_PKGS_CSWevince += CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWsharedmimeinfo
 
 # Shared libraries
 RUNTIME_DEP_PKGS_CSWevince += CSWdbusglib
@@ -68,6 +65,11 @@ RUNTIME_DEP_PKGS_CSWevince += CSWnautilus
 RUNTIME_DEP_PKGS_CSWevince += CSWpango
 RUNTIME_DEP_PKGS_CSWevince += CSWtiff
 RUNTIME_DEP_PKGS_CSWevince += CSWzlib
+RUNTIME_DEP_PKGS_CSWevince += CSWdbus
+CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
+# Shared MIME info is needed to detect file types
+RUNTIME_DEP_PKGS_CSWevince += CSWsharedmimeinfo
+CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWsharedmimeinfo
 
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibgconf-dev
