@@ -44,7 +44,7 @@ RUNTIME_DEP_PKGS_CSWpdns += CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWpdns += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWpdns += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWpdns += CSWboostrt
-BUILD_DEP_PKGS  = CSWmysql5devel CSWboostdevel
+BUILD_DEP_PKGS  = CSWmysql-dev CSWboostdevel
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
