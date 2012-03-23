@@ -7,7 +7,7 @@ GNOME_VERSION = 2.30
 VERSION = $(GNOME_VERSION).3
 CATEGORIES = gnome
 GARTYPE = v2
-DESCRIPTION = Document viewer for multiple document formats
+DESCRIPTION = Document viewer for multiple document formats: pdf, ps ,dvi
 define BLURB
 endef
 
@@ -38,11 +38,86 @@ EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO
 EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0
 
 EXTRA_LD_OPTIONS = -lm
+EXTRA_LINKER_FLAG = -norunpath -xnorunpath
 # EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
 # There are no shared-object dependencies on CSWdbus, but it's required for
 # evince to work.
 
-# Shared libraries
+PACKAGES += CSWlibevdocument2
+CATALOGNAME_CSWlibevdocument2 = libevdocument2
+PKGFILES_CSWlibevdocument2 += $(call baseisadirs,$(libdir),libevdocument\.so\.2\.0\.0)
+PKGFILES_CSWlibevdocument2 += $(call baseisadirs,$(libdir),libevdocument\.so\.2(\.\d+)*)
+SPKG_DESC_CSWlibevdocument2 += $(DESCRIPTION), libevdocument.so.2
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgio2-0-0
+
+PACKAGES += CSWlibevview2
+CATALOGNAME_CSWlibevview2 = libevview2
+PKGFILES_CSWlibevview2 += $(call baseisadirs,$(libdir),libevview\.so\.2\.0\.0)
+PKGFILES_CSWlibevview2 += $(call baseisadirs,$(libdir),libevview\.so\.2(\.\d+)*)
+SPKG_DESC_CSWlibevview2 += $(DESCRIPTION), libevview.so.2
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibevdocument2
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevdocument2
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevview2
+
+PACKAGES += CSWevince-dev
+CATALOGNAME_CSWevince-dev = evince_dev
+SPKG_DESC_CSWevince-dev += $(DESCRIPTION), development files
+PKGFILES_CSWevince-dev += $(PKGFILES_DEVEL)
+
+SPKG_DESC_CSWevince += $(DESCRIPTION), base
+RUNTIME_DEP_PKGS_CSWevince += CSWlibevdocument2
+RUNTIME_DEP_PKGS_CSWevince += CSWlibevview2
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibdjvulibre21
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler-glib5
+RUNTIME_DEP_PKGS_CSWevince += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWevince += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWevince += CSWlibz1
+RUNTIME_DEP_PKGS_CSWevince += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWevince += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWevince += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWevince += CSWlibspectre1
+RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWevince += CSWlibatk1-0-0
+
 RUNTIME_DEP_PKGS_CSWevince += CSWdbusglib
 RUNTIME_DEP_PKGS_CSWevince += CSWdjvulibrert
 RUNTIME_DEP_PKGS_CSWevince += CSWfconfig
@@ -70,6 +145,16 @@ CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
 # Shared MIME info is needed to detect file types
 RUNTIME_DEP_PKGS_CSWevince += CSWsharedmimeinfo
 CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWsharedmimeinfo
+# Solaris10 paths: these are resuts of cmd: 
+# $ scrollkeeper-config --pkglocalstatedir
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper/C
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper/C/scrollkeeper_cl.xml
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper/C/scrollkeeper_extended_cl.xml
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper/TOC
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper/index
+CHECKPKG_OVERRIDES_CSWevince += bad-location-of-file|file=/var/lib/scrollkeeper/scrollkeeper_docs
 
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibgconf-dev
