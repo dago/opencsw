@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = supybot
 VERSION = 0.83.4.1
 CATEGORIES = python
@@ -20,7 +22,7 @@ DISTNAME     = Supybot-$(VERSION)
 LICENSE      = LICENSE
 
 ARCHALL = 1
-RUNTIME_DEP_PKGS = CSWpysqlite CSWtwisted
+RUNTIME_DEP_PKGS = CSWtwisted
 
 EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
 TEST_SCRIPTS = 
@@ -29,7 +31,6 @@ CHECKPKG_OVERRIDES_CSWsupybot += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWsupybot += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWsupybot += surplus-dependency|CSWtwisted
 CHECKPKG_OVERRIDES_CSWsupybot += surplus-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWsupybot += surplus-dependency|CSWpysqlite
 
 include gar/category.mk
 
