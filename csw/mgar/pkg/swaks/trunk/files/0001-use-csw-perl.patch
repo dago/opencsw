@@ -1,0 +1,22 @@
+From 12a3030c7f6627cda8fb7cca288d4121a9c13669 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Sat, 24 Mar 2012 22:23:04 +0100
+Subject: [PATCH] use csw perl
+
+---
+ swaks |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/swaks b/swaks
+index 57aec45..24ac49f 100755
+--- a/swaks
++++ b/swaks
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ 
+ # use 'swaks --help' to view documentation for this program
+ #
+-- 
+1.7.9
+
