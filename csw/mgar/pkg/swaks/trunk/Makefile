@@ -1,21 +1,21 @@
 NAME = swaks
-VERSION = 20061116.0
-GARTYPE = v1
+VERSION = 20120320.0
+GARTYPE = v2
 CATEGORIES = utils
 
 DESCRIPTION = Swiss Army Knife SMTP
 define BLURB
-Command line SMTP testing, including TLS and AUTH
+  Command line SMTP testing, including TLS and AUTH
 endef
 
-#http://jetmore.net/john/code/swaks.20061116.0
+MASTER_SITES = http://jetmore.net/john/code/swaks/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-MASTER_SITES = http://jetmore.net/john/code/swaks
-DISTFILES  = $(NAME)-$(VERSION)
-DISTFILES += $(call admfiles,CSW$(NAME), depend)
+LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
+PATCHFILES += 0001-use-csw-perl.patch
+
+ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -26,6 +26,8 @@ include gar/category.mk
 
 install-custom:
 	@echo "==> Installing $(NAME) in $(WORKSRC)"
-	@mkdir $(DESTDIR)/opt/csw/bin
-	@cp $(DOWNLOADDIR)/$(NAME)-$(VERSION) $(DESTDIR)/opt/csw/bin/swaks
+	@ginstall -d -m 755 $(DESTDIR)$(bindir)
+	@cp $(WORKSRC)/$(NAME) $(DESTDIR)$(bindir)
+	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)
