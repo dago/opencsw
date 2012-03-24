@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.6.4
+VERSION = 1.6.6
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -26,8 +26,6 @@ LICENSE        = LICENSE
 
 RUNTIME_DEP_PKGS = CSWruby18
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
-
-# PATCHFILES += 0001-puppetlabs-bug-7038-prtdiag.patch
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
