@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = twisted
-MAJ_VERSION = 10.2
+MAJ_VERSION = 12.0
 PATCHLEVEL = 0
 VERSION = $(MAJ_VERSION).$(PATCHLEVEL)
 CATEGORIES = python
@@ -17,7 +17,7 @@ endef
 
 UPSTREAM_NAME = Twisted
 DISTNAME      = $(UPSTREAM_NAME)-$(VERSION)
-MASTER_SITES  = http://tmrc.mit.edu/mirror/$(NAME)/$(UPSTREAM_NAME)/$(MAJ_VERSION)/
+MASTER_SITES  = http://pypi.python.org/packages/source/T/Twisted/
 DISTFILES     = $(DISTNAME).tar.bz2
 TEST_SCRIPTS  = 
 LICENSE       = LICENSE
