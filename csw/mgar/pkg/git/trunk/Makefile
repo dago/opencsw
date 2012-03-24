@@ -1,6 +1,7 @@
 NAME = git
 VERSION = 1.7.10
-PATCHLEVEL = rc1
+PATCHLEVEL = rc2
+DISTNAME = $(NAME)-$(VERSION).$(PATCHLEVEL)
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -102,7 +103,7 @@ SPKG_DESC_CSWgit-completion = Bash completion support for Git
 SPKG_DESC_CSWgit-dev = Headers and static libraries for Git
 
 MASTER_SITES = http://git-core.googlecode.com/files/
-DISTFILES += $(NAME)-$(VERSION).$(PATCHLEVEL).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
@@ -152,7 +153,7 @@ CONFIGURE_ARGS += --without-python
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ASCIIDOC_NO_ROFF=YesPlease \
-		all doc
+		all
 
 INSTALL_ARGS = 	INSTALLDIRS=vendor \
 		install-man install-html
