@@ -66,7 +66,7 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         file_info["endian"] = parser["/header/endian"].display
       except hachoir_core.field.field.MissingField, e:
         logging.warning(
-            "Error in hachoir_parser processing %s", file_path)
+            "Error in hachoir_parser processing %s: %r", file_path, e)
   return file_info
 
 
