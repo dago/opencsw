@@ -9,14 +9,6 @@ import os.path
 from sqlobject import sqlbuilder
 import cPickle
 
-class DataSource(sqlobject.SQLObject):
-  """Represents: a /var/sadm/install/contents file, or CSW catalog.
-
-  - "filesystem"
-  - "catalog"
-  """
-  name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
-
 class CatalogReleaseType(sqlobject.SQLObject):
   "Unstable, testing, stable."
   name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
