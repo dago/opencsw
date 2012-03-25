@@ -182,7 +182,7 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     path = "/opt/csw/gxx/lib"
     expected = (
         ["CSWlibfoo0-gxx"],
-        ["libfoo0-gxx"],
+        ["libfoo0_gxx"],
     )
     self.assertEqual(expected, su.MakePackageNameBySoname(soname, path))
 
@@ -191,7 +191,7 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     path = "/opt/csw/gxx/lib/sparcv9"
     expected = (
         ["CSWlibfoo0-gxx"],
-        ["libfoo0-gxx"],
+        ["libfoo0_gxx"],
     )
     self.assertEqual(expected, su.MakePackageNameBySoname(soname, path))
 
