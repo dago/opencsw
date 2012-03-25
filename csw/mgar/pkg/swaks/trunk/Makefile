@@ -15,7 +15,12 @@ LICENSE = LICENSE
 
 PATCHFILES += 0001-use-csw-perl.patch
 
+RUNTIME_DEP_PKGS += CSWperl
+
 ARCHALL = 1
+
+# Checkpkg does not know we forced CSW perl to be used
+CHECKPKG_OVERRIDES_CSWswaks += surplus-dependency|CSWperl
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
