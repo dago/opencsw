@@ -13,6 +13,7 @@ class CatalogReleaseType(sqlobject.SQLObject):
   "Unstable, testing, stable."
   name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
 
+
 class CatalogRelease(sqlobject.SQLObject):
   "Release names: potato, etc."
   name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
@@ -29,12 +30,14 @@ class OsRelease(sqlobject.SQLObject):
   def __unicode__(self):
     return u"OS release: %s" % self.full_name
 
+
 class Architecture(sqlobject.SQLObject):
   "One of: 'sparc', 'x86'."
   name = sqlobject.UnicodeCol(length=40, unique=True, notNone=True)
 
   def __unicode__(self):
     return u"Architecture: %s" % self.name
+
 
 class Maintainer(sqlobject.SQLObject):
   """The maintainer of the package, identified by the e-mail address."""
@@ -67,17 +70,20 @@ class Host(sqlobject.SQLObject):
   fqdn = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   arch = sqlobject.ForeignKey('Architecture', notNone=True)
 
+
 class CswConfig(sqlobject.SQLObject):
   option_key = sqlobject.UnicodeCol(length=255, unique=True)
   float_value = sqlobject.FloatCol(default=None)
   int_value = sqlobject.IntCol(default=None)
   str_value = sqlobject.UnicodeCol(default=None)
 
+
 class Pkginst(sqlobject.SQLObject):
   pkgname = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   catalogname = sqlobject.UnicodeCol(default=None)
   pkg_desc = sqlobject.UnicodeCol(default=None)
   srv4_files = sqlobject.MultipleJoin('Srv4FileStats')
+
 
 class CswFile(sqlobject.SQLObject):
   """Represents a file in a catalog.
@@ -104,6 +110,7 @@ class CswFile(sqlobject.SQLObject):
 
   def __unicode__(self):
     return u"File: %s" % os.path.join(self.path, self.basename)
+
 
 class Srv4FileStatsBlob(sqlobject.SQLObject):
   """Holds pickled data structures.
