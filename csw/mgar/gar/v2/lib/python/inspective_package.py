@@ -21,6 +21,55 @@ hachoir parser takes quite a while to import.
 import hachoir_core.config
 hachoir_core.config.quiet = True
 
+
+ROOT_RE = re.compile(r"^(reloc|root)/")
+
+
+def StripRe(x, strip_re):
+  return re.sub(strip_re, "", x)
+
+
+def GetFileMetadata(file_magic, base_dir, file_path):
+  full_path = unicode(os.path.join(base_dir, file_path))
+  if not os.access(full_path, os.R_OK):
+    return {}
+  file_info = {
+      "path": StripRe(file_path, ROOT_RE),
+      "mime_type": file_magic.GetFileMimeType(full_path)
+  }
+  if base_dir:
+    file_info["path"] = os.path.join(base_dir, file_info["path"])
+  if not file_info["mime_type"]:
+    logging.error("Could not establish the mime type of %s",
+                  full_path)
+    # We really don't want that, as it misses binaries.
+    msg = (
+        "It was not possible to establish the mime type of %s.  "
+        "It's a known problem which occurs when indexing a large "
+        "number of packages in a single run.  "
+        "It's probably caused by a bug in libmagic, or a bug in "
+        "libmagic Python bindings. "
+        "Currently, there is no fix for it.  "
+        "You have to restart your process - it "
+        "will probably finish successfully when do you that."
+        % full_path)
+    raise package.PackageError(msg)
+  if sharedlib_utils.IsBinary(file_info):
+    parser = hp.createParser(full_path)
+    if not parser:
+      logging.warning("Can't parse file %s", file_path)
+    else:
+      try:
+        file_info["mime_type_by_hachoir"] = parser.mime_type
+        machine_id = parser["/header/machine"].value
+        file_info["machine_id"] = machine_id
+        file_info["endian"] = parser["/header/endian"].display
+      except hachoir_core.field.field.MissingField, e:
+        logging.warning(
+            "Error in hachoir_parser processing %s", file_path)
+  return file_info
+
+
 class InspectivePackage(package.DirectoryFormatPackage):
   """Extends DirectoryFormatPackage to allow package inspection."""
 
@@ -41,41 +90,11 @@ class InspectivePackage(package.DirectoryFormatPackage):
       all_files = self.GetAllFilePaths()
       def StripRe(x, strip_re):
         return re.sub(strip_re, "", x)
-      root_re = re.compile(r"^(reloc|root)/")
       file_magic = FileMagic()
       basedir = self.GetBasedir()
       for file_path in all_files:
         full_path = unicode(self.MakeAbsolutePath(file_path))
-        file_info = {
-            "path": StripRe(file_path, root_re),
-            "mime_type": file_magic.GetFileMimeType(full_path)
-        }
-        if basedir:
-          file_info["path"] = os.path.join(basedir, file_info["path"])
-        if not file_info["mime_type"]:
-          logging.error("Could not establish the mime type of %s",
-                        full_path)
-          # We really don't want that, as it misses binaries.
-          msg = (
-              "It was not possible to establish the mime type of %s.  "
-              "It's a known problem which occurs when indexing a large "
-              "number of packages in a single run.  "
-              "It's probably caused by a bug in libmagic, or a bug in "
-              "libmagic Python bindings. "
-              "Currently, there is no fix for it.  "
-              "You have to restart your process - it "
-              "will probably finish successfully when do you that."
-              % full_path)
-          raise package.PackageError(msg)
-        if sharedlib_utils.IsBinary(file_info):
-          parser = hp.createParser(full_path)
-          if not parser:
-            logging.warning("Can't parse file %s", file_path)
-          else:
-            file_info["mime_type_by_hachoir"] = parser.mime_type
-            machine_id = parser["/header/machine"].value
-            file_info["machine_id"] = machine_id
-            file_info["endian"] = parser["/header/endian"].display
+        file_info = GetFileMetadata(file_magic, self.pkgpath, full_path)
         self.files_metadata.append(file_info)
     return self.files_metadata
 
