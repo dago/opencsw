@@ -2,7 +2,7 @@ import package
 import os
 import re
 import logging
-import hachoir_parser as hp
+import hachoir_parser
 import sharedlib_utils
 import magic
 import copy
@@ -55,7 +55,7 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         % full_path)
     raise package.PackageError(msg)
   if sharedlib_utils.IsBinary(file_info):
-    parser = hp.createParser(full_path)
+    parser = hachoir_parser.createParser(full_path)
     if not parser:
       logging.warning("Can't parse file %s", file_path)
     else:
