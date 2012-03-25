@@ -1,0 +1,31 @@
+From 108e986bc5da901b6447afb3ce9687384ad90249 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 24 Mar 2012 22:10:17 -0400
+Subject: [PATCH 2/2] Makefile: Set EXTRA_CPPFLAGS during the compilation of
+ run-command
+
+When building run-command.o, we want to pass in a define for
+SHELL_PATH to ensure that the shell configured at build time is used
+at run time when spawning external commands.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index be1957a..344e2e0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1913,6 +1913,8 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_MAN_PATH="$(mandir_SQ)"' \
+ 	'-DGIT_INFO_PATH="$(infodir_SQ)"'
+ 
++run-command.o: EXTRA_CPPFLAGS = -DSHELL_PATH='"$(SHELL_PATH)"'
++
+ $(BUILT_INS): git$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
+ 	ln git$X $@ 2>/dev/null || \
+-- 
+1.7.5.4
+
