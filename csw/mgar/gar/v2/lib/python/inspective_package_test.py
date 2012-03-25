@@ -21,12 +21,14 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 
 class InspectivePackageUnitTest(mox.MoxTestBase):
 
-  def testInstantiate(self):
+  def testListBinaries(self):
     self.mox.StubOutWithMock(hachoir_parser, 'createParser',
         use_mock_anything=True)
     hachoir_parser_mock = self.mox.CreateMockAnything()
     hachoir_parser.createParser(
         u'/fake/path/CSWfoo/root/foo-file').AndReturn(hachoir_parser_mock)
+    self.mox.StubOutWithMock(os, 'access')
+    os.access(u'/fake/path/CSWfoo/root/foo-file', os.R_OK).AndReturn(True)
     machine_mock = self.mox.CreateMockAnything()
     machine_mock.value = 2
     hachoir_parser_mock.__getitem__('/header/machine').AndReturn(machine_mock)
@@ -64,7 +66,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     ip.pkginfo_dict = {
         "BASEDIR": "",
     }
-    self.assertEqual(["foo-file"], ip.ListBinaries())
+    self.assertEqual([u'/fake/path/CSWfoo/root/foo-file'], ip.ListBinaries())
 
 
 class PackageStatsUnitTest(unittest.TestCase):
