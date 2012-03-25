@@ -74,6 +74,7 @@ tests as means to run various bits of code.  Here's the dependency list
 for Ubuntu.
 
 sudo aptitude install \
+  python-mysql \
   python-cheetah \
   python-hachoir-parser \
   python-magic \
