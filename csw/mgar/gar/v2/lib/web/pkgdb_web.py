@@ -87,7 +87,6 @@ class index(object):
 
 class Srv4List(object):
   def GET(self):
-    ConnectToDatabase()
     pkgs = models.Srv4FileStats.select().orderBy('-mtime')[:30]
     now = datetime.datetime.now()
     def Ago(timedelta):
@@ -101,7 +100,6 @@ class Srv4List(object):
 
 class Srv4Detail(object):
   def GET(self, md5_sum):
-    ConnectToDatabase()
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       overrides = pkg.GetOverridesResult()
@@ -131,7 +129,6 @@ class Srv4Detail(object):
 
 class Catalogname(object):
   def GET(self, catalogname):
-    ConnectToDatabase()
     try:
       pkgs = models.Srv4FileStats.selectBy(
           catalogname=catalogname,
@@ -143,7 +140,6 @@ class Catalogname(object):
 
 class CatalognameList(object):
   def GET(self):
-    ConnectToDatabase()
     try:
       connection = models.Srv4FileStats._connection
       rows = connection.queryAll(connection.sqlrepr(
@@ -161,7 +157,6 @@ class CatalognameList(object):
 
 class Srv4DetailFiles(object):
   def GET(self, md5_sum):
-    ConnectToDatabase()
     srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
     files = models.CswFile.selectBy(srv4_file=srv4)
     return render.Srv4DetailFiles(srv4, files)
@@ -169,7 +164,6 @@ class Srv4DetailFiles(object):
 
 class CatalogList(object):
   def GET(self):
-    ConnectToDatabase()
     archs = models.Architecture.select()
     osrels = models.OsRelease.select()
     catrels = models.CatalogRelease.select()
@@ -188,7 +182,6 @@ class CatalogList(object):
 
 class CatalogDetail(object):
   def GET(self, catrel_name, arch_name, osrel_name):
-    ConnectToDatabase()
     cat_name = " ".join((catrel_name, arch_name, osrel_name))
     sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
@@ -198,7 +191,6 @@ class CatalogDetail(object):
 
 class MaintainerList(object):
   def GET(self):
-    ConnectToDatabase()
     maintainers = models.Maintainer.select().orderBy('email')
     names = [tuple(x.email.split("@") + [x]) for x in maintainers]
     return render.MaintainerList(names)
@@ -206,7 +198,6 @@ class MaintainerList(object):
 
 class MaintainerDetail(object):
   def GET(self, id):
-    ConnectToDatabase()
     maintainer = models.Maintainer.selectBy(id=id).getOne()
     pkgs = models.Srv4FileStats.select(
         sqlobject.AND(
@@ -219,14 +210,12 @@ class MaintainerDetail(object):
 
 class RestMaintainerDetail(object):
   def GET(self, id):
-    ConnectToDatabase()
     maintainer = models.Maintainer.selectBy(id=id).getOne()
     return json.dumps(maintainer.GetRestRepr())
 
 
 class MaintainerCheckpkgReport(object):
   def GET(self, id):
-    ConnectToDatabase()
     maintainer = models.Maintainer.selectBy(id=id).getOne()
     pkgs = models.Srv4FileStats.select(
         sqlobject.AND(
@@ -249,7 +238,6 @@ class MaintainerCheckpkgReport(object):
 
 class ErrorTagDetail(object):
   def GET(self, tag_name):
-    ConnectToDatabase()
     join = [
         sqlbuilder.INNERJOINOn(None,
           models.Srv4FileStats,
@@ -267,7 +255,6 @@ class ErrorTagDetail(object):
 
 class ErrorTagList(object):
   def GET(self):
-    ConnectToDatabase()
     connection = models.CheckpkgErrorTag._connection
     rows = connection.queryAll(connection.sqlrepr(
       sqlbuilder.Select(
@@ -279,7 +266,6 @@ class ErrorTagList(object):
 
 class Catalogs(object):
   def GET(self, catrel_name, arch_name, osrel_name):
-    ConnectToDatabase()
     sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
@@ -294,7 +280,6 @@ class Catalogs(object):
 
 class PkgnameByFilename(object):
   def GET(self, catrel, arch, osrel):
-    ConnectToDatabase()
     user_data = web.input()
     filename = user_data.filename
     send_filename = (
@@ -314,7 +299,6 @@ class PkgnameByFilename(object):
 
 class PkgnamesAndPathsByBasename(object):
   def GET(self, catrel, arch, osrel):
-    ConnectToDatabase()
     user_data = web.input()
     basename = user_data.basename
     send_filename = (
@@ -337,7 +321,6 @@ class PkgnamesAndPathsByBasename(object):
 class RestSrv4Detail(object):
 
   def GET(self, md5_sum):
-    ConnectToDatabase()
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       mimetype, data_structure = pkg.GetRestRepr()
@@ -351,7 +334,6 @@ class RestSrv4Detail(object):
 class RestSrv4DetailFiles(object):
 
   def GET(self, md5_sum):
-    ConnectToDatabase()
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       files = models.CswFile.selectBy(srv4_file=pkg)
@@ -372,7 +354,6 @@ class RestSrv4DetailFiles(object):
 class RestSrv4FullStats(object):
 
   def GET(self, md5_sum):
-    ConnectToDatabase()
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       data_structure = pkg.GetStatsStruct()
@@ -452,9 +433,14 @@ class Srv4ByCatAndPkgname(object):
 
 web.webapi.internalerror = web.debugerror
 
-app = web.application(urls, globals())
-main = app.wsgifunc()
-application = app.wsgifunc()
+
+def app_wrapper():
+  ConnectToDatabase()
+  app = web.application(urls, globals())
+  logging.basicConfig(level=logging.DEBUG)
+  return app.wsgifunc()
+
+application = app_wrapper()
 
 
 if __name__ == "__main__":
