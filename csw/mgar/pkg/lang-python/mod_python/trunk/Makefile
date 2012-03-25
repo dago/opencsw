@@ -36,7 +36,6 @@ CATALOGNAME_CSWap2modpython = ap2_modpython
 RUNTIME_DEP_PKGS_CSWap2modpython += CSWpython
 RUNTIME_DEP_PKGS_CSWap2modpython += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWap2modpython += CSWapache2
-RUNTIME_DEP_PKGS_CSWap2modpython += CSWap2prefork
 
 CHECKPKG_OVERRIDES_CSWap2modpython += file-with-bad-content|/usr/local|root/opt/csw/share/doc/ap2_modpython/README
 CHECKPKG_OVERRIDES_CSWap2modpython += file-with-bad-content|/usr/local|root/opt/csw/share/doc/ap2_modpython/doc-html/dir-other-pp.html
@@ -50,7 +49,6 @@ CHECKPKG_OVERRIDES_CSWap2modpython += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWap2modpython += catalogname-does-not-start-with-py_
 
 CHECKPKG_OVERRIDES_CSWap2modpython += missing-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2modpython += surplus-dependency|CSWap2prefork
 
 include gar/category.mk
 
