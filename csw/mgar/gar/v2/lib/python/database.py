@@ -19,7 +19,6 @@ TABLES = TABLES_THAT_NEED_UPDATES + (
             m.CheckpkgErrorTag,
             m.CheckpkgOverride,
             m.CswConfig,
-            m.DataSource,
             m.Host,
             m.Maintainer,
             m.OsRelease,
