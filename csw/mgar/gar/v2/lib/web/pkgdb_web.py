@@ -9,7 +9,9 @@ sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
 import web
 import sqlobject
 import json
+import logging
 import pprint
+
 from lib.python import models
 from lib.python import configuration
 from lib.python import pkgdb
