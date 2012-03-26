@@ -52,10 +52,8 @@ urls_rest = (
 )
 urls = urls_html + urls_rest
 
-render = web.template.render(
-    os.path.join(
-      os.path.split(__file__)[0],
-      "lib/web/templates/"))
+templatedir = os.path.join(os.path.dirname(__file__), "templates/")
+render = web.template.render(templatedir)
 
 
 class PkgStatsEncoder(json.JSONEncoder):
