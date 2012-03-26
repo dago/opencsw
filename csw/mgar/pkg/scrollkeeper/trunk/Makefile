@@ -42,6 +42,8 @@ CHECKPKG_OVERRIDES_CSWscrollkeeper += file-with-bad-content|/usr/local|root/opt/
 CHECKPKG_OVERRIDES_CSWscrollkeeper += file-with-bad-content|/usr/share|root/opt/csw/share/doc/scrollkeeper-0.3.14/scrollkeeper-spec.txt
 CHECKPKG_OVERRIDES_CSWscrollkeeper += file-with-bad-content|/usr/share|root/opt/csw/share/man/man5/scrollkeeper.conf.5
 CHECKPKG_OVERRIDES_CSWscrollkeeper += file-with-bad-content|/usr/share|root/opt/csw/share/scrollkeeper/doc/writing_scrollkeeper_omf_files/C/writing_scrollkeeper_omf_files.xml
+# path /usr/share/omf is not bad in general
+CHECKPKG_OVERRIDES_CSWscrollkeeper += file-with-bad-content|/usr/share|root/etc/opt/csw/scrollkeeper.conf.CSW
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-omfdirs=/opt/csw/share/omf:/usr/share/omf
