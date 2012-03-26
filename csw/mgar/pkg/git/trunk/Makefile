@@ -202,6 +202,11 @@ include gar/category.mk
 # gnu must come first so xpg4/sed isn't found first.
 PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
 
+post-configure-modulated:
+	@echo "Forcing GIT_TEST_CMP tool"
+	@( cd $(WORKSRC); echo 'GIT_TEST_CMP=gdiff' > config.mak )
+	@$(MAKECOOKIE)
+
 # force the elisp extension to be built too.
 post-build-modulated:
 	@echo Builing Emacs Git extension
