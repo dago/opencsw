@@ -93,6 +93,7 @@ CATALOGNAME_CSWevince-dev = evince_dev
 SPKG_DESC_CSWevince-dev += $(DESCRIPTION), development files
 PKGFILES_CSWevince-dev += $(PKGFILES_DEVEL)
 
+PACKAGES += CSWevince
 SPKG_DESC_CSWevince += $(DESCRIPTION), base
 RUNTIME_DEP_PKGS_CSWevince += CSWlibevdocument2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibevview2
