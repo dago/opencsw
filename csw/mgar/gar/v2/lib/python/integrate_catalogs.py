@@ -82,7 +82,10 @@ downgrade_#
 upgrade_#
 #end if
 $catalogname#
- # $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["type"]
+ # $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["type"] #
+#if $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["type"] == 'version'
+$diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["from"]["version"] to $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["to"]["version"]
+#end if
 #end if
 #end for
 """
