@@ -16,12 +16,14 @@ MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(GNOME_VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES += 0001-honor-aclocal_flags.patch
-
 # GARFLAVOR = DBG
 # GARCOMPILER=GNU
 GARCOMPILER=SOS12U3
 STRIP_LIBTOOL = 1
+
+PATCHFILES += 0001-honor-aclocal_flags.patch
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # CONFIGURE_ARGS += --enable-introspection 
