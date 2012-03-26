@@ -40,7 +40,7 @@ EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO
 EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0
 
 EXTRA_LD_OPTIONS = -lm
-EXTRA_LINKER_FLAG = -norunpath -xnorunpath
+EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
 # EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
 # There are no shared-object dependencies on CSWdbus, but it's required for
 # evince to work.
