@@ -183,6 +183,7 @@ PKGFILES_CSWgangliagmetad += /opt/csw/share/man/man1/gmetad.1
 
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.*
 PKGFILES_CSWgangliaweb += /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
+PKGFILES_CSWgangliaweb += $(VARGANGLIA)/dwoo_cache
 PKGFILES_CSWgangliaweb += $(VARGANGLIA)/dwoo
 PKGFILES_CSWgangliaweb += $(VARGANGLIA)/conf
 
@@ -204,6 +205,7 @@ $$$$3 ~ /\/var\/opt\/csw\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" }
 
 PROTOTYPE_FILTER_CSWgangliaweb = awk '\
 $$$$3 ~ /\/var\/opt\/csw\/ganglia\/dwoo/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
+$$$$3 ~ /\/var\/opt\/csw\/ganglia\/dwoo_cache/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
 $$$$3 ~ /\/var\/opt\/csw\/ganglia\/conf/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
 { print }'
 
@@ -251,6 +253,7 @@ ifeq ($(VERSION),3.1.2)
 endif
 	@ginstall -d $(DESTDIR)$(VARGANGLIA)/rrds
 	@ginstall -d $(DESTDIR)$(VARGANGLIA)/dwoo
+	@ginstall -d $(DESTDIR)$(VARGANGLIA)/dwoo_cache
 	@ginstall -d $(DESTDIR)$(VARGANGLIA)/conf
 	@ginstall -D $(WORKSRC)/gmond/gmond.conf.5 $(DESTDIR)$(mandir)/man5/gmond.conf.5
 	@ginstall -D $(WORKSRC)/mans/gmetad.1 $(DESTDIR)$(mandir)/man1/gmetad.1
