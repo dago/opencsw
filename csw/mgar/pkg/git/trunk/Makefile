@@ -202,13 +202,6 @@ include gar/category.mk
 # gnu must come first so xpg4/sed isn't found first.
 PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
 
-# git doesn't track the configure file, it needs to be built when using
-# source right from the repo.
-pre-configure-modulated:
-	@(cd $(WORKSRC); echo $(VERSION) > version; \
-		$(MAKE) configure )
-	@$(MAKECOOKIE)
-
 # force the elisp extension to be built too.
 post-build-modulated:
 	@echo Builing Emacs Git extension
