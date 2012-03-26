@@ -188,6 +188,7 @@ def main():
   catrel_to = options.catrel_to
   if options.from_json:
     with open(options.from_json, "rb") as fd:
+      logging.info("Loading %s", options.from_json)
       diffs_by_catalogname = json.load(fd)
   else:
     diffs_by_catalogname = GetDiffsByCatalogname(
