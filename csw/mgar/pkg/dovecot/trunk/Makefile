@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.0.17
+VERSION = 2.0.19
 CATEGORIES = server
 GARTYPE = v2
 
@@ -40,8 +40,9 @@ RUNTIME_DEP_PKGS_CSWdovecot += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWdovecot += CSWosslrt
-RUNTIME_DEP_PKGS_CSWdovecot += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWdovecot += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWdovecot += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWdovecot += CSWlibldap2-4-2
 
 PKGFILES_CSWdovecot-dev = $(PKGFILES_DEVEL)
 
