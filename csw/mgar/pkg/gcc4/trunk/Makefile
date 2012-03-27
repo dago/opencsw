@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.6.3
+VERSION   = 4.7.0
 CATEGORIES   = lang
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
@@ -72,11 +72,14 @@ CONFIGURE_ARGS += --with-system-zlib=/opt/csw
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
 #
-# This avoids the sparcv8+ binaries.
-CPU_sparc_32 = v8
+# // This avoids the sparcv8+ binaries.
+# We no longer avoid sparcv8+ binaries.
+ISA_DEFAULT_sparc = sparcv8plus
+CPU_sparc_32 = v9
 CPU_sparc_64 = v9
 CPU_i386_32 = i386
 CPU_i386_64 = x86-64
+
 
 CONFIGURE_ARGS_sparc += --with-cpu=$(CPU_$(GARCH)_32)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
@@ -484,7 +487,7 @@ PKGFILES_$(PKG_BASENAME)ada += $(prefix)/bin/gnat(?!ive).*
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += discouraged-path-in-pkgmap
 # It needs the core compiler.
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += surplus-dependency|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_CSWgcc4ada += file-with-bad-content
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += file-with-bad-content
 
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl-c4
