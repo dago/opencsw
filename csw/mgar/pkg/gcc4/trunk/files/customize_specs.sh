@@ -20,5 +20,10 @@ if [[ -x "${gcc_bin}" ]]; then
     -e \
     '/\*lib:/,+1 s+%.*+& %{m64:-R /opt/csw/lib/64 } %{!m64:-R /opt/csw/lib}+' \
     specs
-  gmv -v specs "$(gfind ${DESTDIR}/opt/csw/lib -name ${VERSION} -type d -print)"
+  # Since the inclusion of the Go language, there are 3 directories named
+  # $(VERSION). Two of them are related to the language, and can be filtered
+  # out by matching "/go/".
+  target="$(gfind ${DESTDIR}/opt/csw/lib -name ${VERSION} -type d -print \
+	    | ggrep -v /go/)"
+  gmv -v specs "${target}"
 fi
