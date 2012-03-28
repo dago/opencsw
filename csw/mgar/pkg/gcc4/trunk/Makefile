@@ -19,9 +19,11 @@ endef
 DISTFILES    = $(DISTNAME).tar.bz2
 MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
-LIBOBJC = 3
+LIBOBJC = 4
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+# We're not building GCC-4.7 on Solaris 9, because GCC-4.7 requires the
+# sparcv8+ architecture.
+# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # GIT init takes a long time.
@@ -66,8 +68,8 @@ CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix 
-CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
-CONFIGURE_ARGS += --with-system-zlib=/opt/csw
+CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,go,java,objc
+CONFIGURE_ARGS += --with-system-zlib=$(BUILD_PREFIX)
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
@@ -113,7 +115,7 @@ GARCOMPILER = GNU
 SKIPTEST ?= 1
 
 # Used multiple times in package definitions
-JAVA_LIB_VERSION = 12
+JAVA_LIB_VERSION = 13
 
 ALTERNATIVES_PRIO = 460
 
@@ -458,8 +460,8 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmpxx4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibisl7
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc3
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc3
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc$(LIBOBJC)
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibppl9
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibpwl5
@@ -513,6 +515,27 @@ JAVA_BINARIES  = gcj gij aot-compile grmiregistry
 JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
 JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
 JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
+
+# GCC-4.7 contains assembler specific to sparcv9, incompatible with sparcv8.
+# If we wanted to build it on Solaris 9, we would have to add these overrides.
+# CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibffi4 += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibgcc-s1 += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibgfortran3 += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibgomp1 += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibobjc$(LIBOBJC) += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibobjc-gc$(LIBOBJC) += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibssp0 += binary-architecture-does-not-match-placement
+# CHECKPKG_OVERRIDES_CSWlibstdc++6 += binary-architecture-does-not-match-placement
 
 include files/scripts.mk
 include gar/category.mk
