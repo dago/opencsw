@@ -73,6 +73,9 @@ SPKG_DESC_CSWbindchroot = ISC BIND DNS chroot package
 RUNTIME_DEP_PKGS_CSWbindchroot = CSWbind
 ARCHALL_CSWbindchroot = 1
 
+# Make sure to have -I/opt/csw/include in CFLAGS or just the libxml2 include path is added and compilation fails on readline.h
+EXTRA_CFLAGS += $(CPPFLAGS)
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libtool
 CONFIGURE_ARGS += --with-openssl=/opt/csw
