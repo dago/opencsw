@@ -7,6 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
+# 2.7.12 is broken, don't use it! (http://projects.puppetlabs.com/issues/13204)
 VERSION = 2.7.12
 CATEGORIES = apps
 GARTYPE = v2
