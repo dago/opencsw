@@ -85,13 +85,13 @@ RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibevview2 += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevdocument2
-RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevview2
 
 PACKAGES += CSWevince-dev
 CATALOGNAME_CSWevince-dev = evince_dev
 SPKG_DESC_CSWevince-dev += $(DESCRIPTION), development files
 PKGFILES_CSWevince-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevdocument2
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevview2
 
 PACKAGES += CSWevince
 SPKG_DESC_CSWevince += $(DESCRIPTION), base
@@ -120,11 +120,13 @@ RUNTIME_DEP_PKGS_CSWevince += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWevince += CSWlibatk1-0-0
-
 RUNTIME_DEP_PKGS_CSWevince += CSWfconfig
 RUNTIME_DEP_PKGS_CSWevince += CSWgnomevfs2
 RUNTIME_DEP_PKGS_CSWevince += CSWnautilus
 RUNTIME_DEP_PKGS_CSWevince += CSWpango
+RUNTIME_DEP_PKGS_CSWevince += CSWdbus
+# at least the machine-id file must exist, dbus-daemon creates this
+CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
 # Solaris10 paths: these are resuts of cmd: 
 # $ scrollkeeper-config --pkglocalstatedir
 CHECKPKG_OVERRIDES_CSWevince += discouraged-path-in-pkgmap|/opt/csw/var/lib
