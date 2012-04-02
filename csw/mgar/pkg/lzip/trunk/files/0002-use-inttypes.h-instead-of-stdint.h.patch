@@ -1,0 +1,25 @@
+From 0102a612dbf0de47be5e988774b0a92f61bf4d8c Mon Sep 17 00:00:00 2001
+From: THURNER rupert <rupert@opencsw.org>
+Date: Mon, 2 Apr 2012 07:02:32 +0200
+Subject: [PATCH] use inttypes.h instead of stdint.h
+
+---
+ main.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/main.cc b/main.cc
+index 276fe30..bd497f6 100644
+--- a/main.cc
++++ b/main.cc
+@@ -33,7 +33,7 @@
+ #include <string>
+ #include <vector>
+ #include <fcntl.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ #include <utime.h>
+ #include <sys/stat.h>
+-- 
+1.7.9
+
