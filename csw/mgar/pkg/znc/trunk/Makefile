@@ -18,11 +18,23 @@ PATCHFILES += 0001-fix-man-pages.patch
 PATCHFILES += 0002-fix-znc.1-manpage.patch
 LICENSE = LICENSE
 
+PACKAGES += CSWznc
+SPKG_DESC_CSWznc = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWznc += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWznc += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWznc += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWznc += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWznc += CSWlibgnugetopt0
+
+PACKAGES += CSWznc-dev
+SPKG_DESC_CSWznc-dev += $(DESCRIPTION), development files
+PKGFILES_CSWznc-dev += /opt/csw/bin/znc-buildmod
+PKGFILES_CSWznc-dev += /opt/csw/bin/znc-config
+PKGFILES_CSWznc-dev += /opt/csw/lib/pkgconfig/znc.pc
+PKGFILES_CSWznc-dev += /opt/csw/include/znc/.*
+RUNTIME_DEP_PKGS_CSWznc-dev += CSWznc
+RUNTIME_DEP_PKGS_CSWznc-dev += CSWgcc4g++
+RUNTIME_DEP_PKGS_CSWznc-dev += CSWlibcares-dev
 
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
