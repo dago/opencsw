@@ -1,0 +1,53 @@
+From 94cd14c20757910525df7b74c3bc48d6138cba68 Mon Sep 17 00:00:00 2001
+From: THURNER rupert <rupert@opencsw.org>
+Date: Mon, 2 Apr 2012 06:53:46 +0200
+Subject: [PATCH] use inttypes.h instead of stdint.h
+
+---
+ decoder.cc      |    2 +-
+ encoder.cc      |    2 +-
+ fast_encoder.cc |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/decoder.cc b/decoder.cc
+index ae37563..bd7aa0c 100644
+--- a/decoder.cc
++++ b/decoder.cc
+@@ -24,7 +24,7 @@
+ #include <cstring>
+ #include <string>
+ #include <vector>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ 
+ #include "lzip.h"
+diff --git a/encoder.cc b/encoder.cc
+index 56820b5..9c3ca06 100644
+--- a/encoder.cc
++++ b/encoder.cc
+@@ -23,7 +23,7 @@
+ #include <cstring>
+ #include <string>
+ #include <vector>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #include "lzip.h"
+ #include "encoder.h"
+diff --git a/fast_encoder.cc b/fast_encoder.cc
+index 2d99b04..a89e984 100644
+--- a/fast_encoder.cc
++++ b/fast_encoder.cc
+@@ -23,7 +23,7 @@
+ #include <cstring>
+ #include <string>
+ #include <vector>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #include "lzip.h"
+ #include "encoder.h"
+-- 
+1.7.9
+
