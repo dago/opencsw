@@ -1,0 +1,34 @@
+From 42f231dc87753e120b4416b3a3af658bc3316621 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Mon, 2 Apr 2012 09:09:12 +0200
+Subject: [PATCH] fix-znc.1-manpage
+
+---
+ man/znc.1 |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/man/znc.1 b/man/znc.1
+index 7578adc..68e140e 100644
+--- a/man/znc.1
++++ b/man/znc.1
+@@ -98,14 +98,14 @@ Rewrite znc.conf. This is equivalent to
+ .I /znc saveconfig
+ .SH FILES
+ .TP
+-.I /usr/local/share/znc/
++.I /opt/csw/share/znc/
+ Static module data like webadmin skins
+ .TP
+-.I /usr/local/lib/znc/
++.I /opt/csw/lib/znc/
+ .B znc
+ installs its modules to this directory.
+ .TP
+-.I /usr/local/include/znc/
++.I /opt/csw/include/znc/
+ These are the headers needed for compiling own modules.
+ .TP
+ .I ~/.znc
+-- 
+1.7.9
+
