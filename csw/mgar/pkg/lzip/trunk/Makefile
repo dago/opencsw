@@ -15,8 +15,7 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
 DISTFILES = $(NAME)-$(VERSION).tar.gz
-#PATCHFILES  = 0001-inttypes.h-instead-of-stdint.h.patch
-#PATCHFILES += 0002-inttypes.h-instead-of-stdint.h.patch
+PATCHFILES  = 0001-use-inttypes.h-instead-of-stdint.h.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
