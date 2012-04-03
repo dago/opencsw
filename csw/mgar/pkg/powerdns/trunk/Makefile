@@ -19,7 +19,7 @@ DISTFILES += LICENSE
 DISTFILES += cswpdns
 PATCHFILES += 0003-Make-checking-for-LUA-behave-correctly.patch
 PATCHFILES += 0004-Use-sys-isa_defs.h-instead-of-endian.h.patch
-PATCHFILES += 0004-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
+PATCHFILES += 0006-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
 PATCHFILES += 0005-Include-correct-sys-ethernet.h.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
