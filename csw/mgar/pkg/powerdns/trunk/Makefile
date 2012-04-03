@@ -52,14 +52,45 @@ CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include/mysql
 EXTRA_INC = /opt/csw/gxx/include
 LDFLAGS += -L/opt/csw/gxx/lib
 
-RUNTIME_DEP_PKGS_CSWpdns += CSWzlib
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWpdns += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWpdns += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
 BUILD_DEP_PKGS  = CSWmysql-dev CSWboostdevel
+
+PACKAGES += CSWlibgeobackend
+CATALOGNAME_CSWlibgeobackend = libgeobackend
+PKGFILES_CSWlibgeobackend += $(call baseisadirs,$(libdir),libgeobackend\.so)
+PKGFILES_CSWlibgeobackend += $(call baseisadirs,$(libdir),libgeobackend\.so(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibz1
+SPKG_DESC_CSWlibgeobackend += $(DESCRIPTION), libgeobackend.so
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibgeobackend
+
+PACKAGES += CSWlibgmysqlbackend
+CATALOGNAME_CSWlibgmysqlbackend = libgmysqlbackend
+PKGFILES_CSWlibgmysqlbackend += $(call baseisadirs,$(libdir),libgmysqlbackend\.so)
+PKGFILES_CSWlibgmysqlbackend += $(call baseisadirs,$(libdir),libgmysqlbackend\.so(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibz1
+SPKG_DESC_CSWlibgmysqlbackend += $(DESCRIPTION), libgmysqlbackend.so
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibgmysqlbackend
+
+PACKAGES += CSWlibpipebackend
+CATALOGNAME_CSWlibpipebackend = libpipebackend
+PKGFILES_CSWlibpipebackend += $(call baseisadirs,$(libdir),libpipebackend\.so)
+PKGFILES_CSWlibpipebackend += $(call baseisadirs,$(libdir),libpipebackend\.so(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibpipebackend += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpipebackend += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibpipebackend += CSWlibz1
+SPKG_DESC_CSWlibpipebackend += $(DESCRIPTION), libpipebackend.so
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibpipebackend
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
