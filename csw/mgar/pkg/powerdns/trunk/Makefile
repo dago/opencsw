@@ -83,10 +83,10 @@ SPKG_DESC_CSWlibgmysqlbackend += $(DESCRIPTION), libgmysqlbackend.so
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibgmysqlbackend
 
 # These are not errors!
-CHECKPKG_OVERRIDES_CSWlibgeobackend += soname-equals-filename|file=/opt/csw/lib/libgeobackend.so
-CHECKPKG_OVERRIDES_CSWlibgeobackend += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += soname-equals-filename|file=/opt/csw/lib/libgmysqlbackend.so
-CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += pkginfo-opencsw-repository-uncommitted
+#CHECKPKG_OVERRIDES_CSWlibgeobackend += soname-equals-filename|file=/opt/csw/lib/libgeobackend.so
+#CHECKPKG_OVERRIDES_CSWlibgeobackend += pkginfo-opencsw-repository-uncommitted
+#CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += soname-equals-filename|file=/opt/csw/lib/libgmysqlbackend.so
+#CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += pkginfo-opencsw-repository-uncommitted
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
