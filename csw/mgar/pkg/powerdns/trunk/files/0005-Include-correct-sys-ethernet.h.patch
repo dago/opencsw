@@ -1,0 +1,28 @@
+From c20fa0d61171f461fc5c13be4303815e88d4892c Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Tue, 3 Apr 2012 22:27:38 +0200
+Subject: [PATCH 5/5] Include correct sys/ethernet.h
+
+---
+ pdns/dnspcap.hh |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/pdns/dnspcap.hh b/pdns/dnspcap.hh
+index 66e07b9..60596ff 100644
+--- a/pdns/dnspcap.hh
++++ b/pdns/dnspcap.hh
+@@ -10,7 +10,11 @@
+ #include <netinet/in_systm.h>
+ #include <netinet/ip.h>
+ #include <netinet/udp.h>
++#ifdef sun
++#include <sys/ethernet.h>
++#else
+ #include <net/ethernet.h>
++#endif
+ #include <vector>
+ #include <boost/format.hpp>
+ #include "namespaces.hh"
+-- 
+1.7.9
+
