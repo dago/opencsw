@@ -31,7 +31,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CATALOGNAME = powerdns
 LICENSE = $(FILEDIR)/LICENSE
 
 GARCOMPILER = GNU
@@ -52,10 +51,12 @@ CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
 EXTRA_INC = /opt/csw/gxx/include
 LDFLAGS += -L/opt/csw/gxx/lib
 
+PACKAGES = CSWpdns
+CATALOGNAME_CSWpdns = powerdns
+SPKG_DESC_CSWpdns = PowerDNS
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibmysqlclient15
-RUNTIME_DEP_PKGS_CSWpdns += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
@@ -69,7 +70,6 @@ RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibz1
 SPKG_DESC_CSWlibgeobackend += $(DESCRIPTION), libgeobackend.so
-RUNTIME_DEP_PKGS_CSWpdns += CSWlibgeobackend
 
 PACKAGES += CSWlibgmysqlbackend
 CATALOGNAME_CSWlibgmysqlbackend = libgmysqlbackend
@@ -80,7 +80,6 @@ RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibz1
 SPKG_DESC_CSWlibgmysqlbackend += $(DESCRIPTION), libgmysqlbackend.so
-RUNTIME_DEP_PKGS_CSWpdns += CSWlibgmysqlbackend
 
 # These are not errors!
 #CHECKPKG_OVERRIDES_CSWlibgeobackend += soname-equals-filename|file=/opt/csw/lib/libgeobackend.so
