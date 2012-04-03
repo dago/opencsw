@@ -1,10 +1,5 @@
 # $Id$
 #
-# TODO (release-critical prefixed with !, non release-critical with *)
-#
-# ! Install does not work as there is no contrib any more. Where is this stuff?
-#   contrib was removed from the svn upstream delivery.
-#
 # * How about shipping a changelog.CSW (example in files/)?
 # * The language binding packages all have a whole stack of dependencies
 #   (mostly the same libs that the main svn package has). Are those really
@@ -135,7 +130,6 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 PACKAGES += CSWpmsvn
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
@@ -217,6 +211,11 @@ PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 # Relocate locations of foreign language bindings
 PATCHFILES += 0002-Fix-location-of-bindings.patch
 
+# should be in lib ... put something below to at least make it compile.
+# on the svn mailing list people say we should not build the package
+# with svn installed, and here it seems basic that we build with svn
+# installed.
+# SVNLIB     = $(prefix)/lib
 SVNLIB     = $(prefix)/lib/svn
 JAVA_HOME  = /usr/jdk1.6.0_20
 
