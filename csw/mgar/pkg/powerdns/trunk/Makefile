@@ -48,7 +48,7 @@ CONFIGURE_ARGS += --with-lua=no
 CONFIGURE_ARGS += --with-boost=/opt/csw/gxx
 CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-mysql-lib=$(prefix)/lib
-CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include/mysql
+CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
 EXTRA_INC = /opt/csw/gxx/include
 LDFLAGS += -L/opt/csw/gxx/lib
 
@@ -82,15 +82,9 @@ RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibz1
 SPKG_DESC_CSWlibgmysqlbackend += $(DESCRIPTION), libgmysqlbackend.so
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibgmysqlbackend
 
-PACKAGES += CSWlibpipebackend
-CATALOGNAME_CSWlibpipebackend = libpipebackend
-PKGFILES_CSWlibpipebackend += $(call baseisadirs,$(libdir),libpipebackend\.so)
-PKGFILES_CSWlibpipebackend += $(call baseisadirs,$(libdir),libpipebackend\.so(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibpipebackend += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibpipebackend += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibpipebackend += CSWlibz1
-SPKG_DESC_CSWlibpipebackend += $(DESCRIPTION), libpipebackend.so
-RUNTIME_DEP_PKGS_CSWpdns += CSWlibpipebackend
+# These are not errors!
+CHECKPKG_OVERRIDES_CSWlibgeobackend += soname-equals-filename|file=/opt/csw/lib/libgeobackend.so
+CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += soname-equals-filename|file=/opt/csw/lib/libgmysqlbackend.so
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
