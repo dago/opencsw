@@ -11,7 +11,7 @@ define BLURB
   Apache Traffic Server is fast, scalable and extensible HTTP/1.1 compliant caching proxy server
 endef
 
-MASTER_SITES = http://people.apache.org/~zwoop/rel-candidates/
+MASTER_SITES = http://people.apache.org/~zwoop/rel-candidates/ 
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGING_PLATFORMS = solaris10-i386
@@ -26,8 +26,9 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-pcre=$(prefix)
 CONFIGURE_ARGS += --with-lzma=$(prefix)
 CONFIGURE_ARGS += --with-expat=$(prefix)
-CONFIGURE_ARGS += --with-user=$(shell /opt/csw/gnu/id -nu)
-CONFIGURE_ARGS += --with-group=$(shell /opt/csw/gnu/id -ng)
+
+export pkgsysuser  = $(shell /opt/csw/gnu/id -nu)
+export pkgsysgroup = $(shell /opt/csw/gnu/id -ng)
 
 PROTOTYPE_MODIFIERS += data
 PROTOTYPE_FILES_data += $(sysconfdir)/?.*
