@@ -1,3 +1,6 @@
+# PowerDNS
+# $Id$
+#
 NAME = pdns
 VERSION = 3.0.1
 CATEGORIES = server
