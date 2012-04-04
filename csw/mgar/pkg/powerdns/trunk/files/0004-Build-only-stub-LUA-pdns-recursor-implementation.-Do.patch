@@ -1,7 +1,7 @@
 From 0fa2d44583c27e481565a38c8f8c331cb9c858e1 Mon Sep 17 00:00:00 2001
 From: Juraj Lutter <wilbury@opencsw.org>
 Date: Tue, 3 Apr 2012 23:19:42 +0200
-Subject: [PATCH] Build only stub LUA pdns recursor implementation. Do not
+Subject: [PATCH 4/4] Build only stub LUA pdns recursor implementation. Do not
  check for LIBDIR
 
 ---

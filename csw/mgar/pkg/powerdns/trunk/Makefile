@@ -9,18 +9,16 @@ define BLURB
   backends. Current backends include MySQL, PostgreSQL, bind, etc.
 endef
 
-# XXX: Open Issues:
-# - build recursor
-
 MASTER_SITES = http://downloads.powerdns.com/releases/
 SPKG_SOURCEURL = http://www.powerdns.com/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 DISTFILES += cswpdns
-PATCHFILES += 0003-Make-checking-for-LUA-behave-correctly.patch
-PATCHFILES += 0004-Use-sys-isa_defs.h-instead-of-endian.h.patch
-PATCHFILES += 0006-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
-PATCHFILES += 0005-Include-correct-sys-ethernet.h.patch
+PATCHFILES += 0001-Make-checking-for-LUA-behave-correctly.patch
+PATCHFILES += 0002-Use-sys-isa_defs.h-instead-of-endian.h.patch
+PATCHFILES += 0003-Include-correct-sys-ethernet.h.patch
+PATCHFILES += 0004-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
+PATCHFILES += 0005-Use-correct-namespace-for-timegm.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
@@ -37,18 +35,30 @@ GARCOMPILER = GNU
 #PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
 #PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 PACKAGING_PLATFORMS +=  solaris10-i386
+NORUNPATH = 1
+
+REINPLACEMENTS += usrlocaletc
+REINPLACE_MATCH_usrlocaletc = /usr/local/etc
+REINPLACE_WITH_usrlocaletc = /etc/$(prefix)/pdns
+REINPLACE_FILES_usrlocaletc = /etc/$(prefix)/pdns/pdns.conf.CSW
 
 # PowerDNS does not have any "test" target
 SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/pdns
+CONFIGURE_ARGS += --disable-recursor
 CONFIGURE_ARGS += --with-lua=no
 CONFIGURE_ARGS += --with-boost=/opt/csw/gxx
 CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-mysql-lib=$(prefix)/lib
 CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
+CONFIGURE_ARGS += --with-modules="ldap geo gmysql"
 EXTRA_INC = /opt/csw/gxx/include
+
+# Extra libs for LDAP backend
+EXTRA_LIB = lber
+
 LDFLAGS += -L/opt/csw/gxx/lib
 
 PACKAGES = CSWpdns
@@ -60,6 +70,8 @@ RUNTIME_DEP_PKGS_CSWpdns += CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWpdns += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibldap-r2-4-2
 BUILD_DEP_PKGS  = CSWmysql-dev CSWboostdevel
 
 PACKAGES += CSWlibgeobackend
@@ -82,10 +94,11 @@ RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibz1
 SPKG_DESC_CSWlibgmysqlbackend += $(DESCRIPTION), libgmysqlbackend.so
 
 # These are not errors!
-#CHECKPKG_OVERRIDES_CSWlibgeobackend += soname-equals-filename|file=/opt/csw/lib/libgeobackend.so
-#CHECKPKG_OVERRIDES_CSWlibgeobackend += pkginfo-opencsw-repository-uncommitted
-#CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += soname-equals-filename|file=/opt/csw/lib/libgmysqlbackend.so
-#CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSWlibgeobackend += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSWpdns += file-with-bad-content|/usr/local|root/etc/opt/csw/pdns/pdns.conf.CSW
+CHECKPKG_OVERRIDES_CSWpdns += catalogname-does-not-match-pkgname|pkgname=CSWpdns|catalogname=powerdns|expected-catalogname=pdns
+CHECKPKG_OVERRIDES_CSWpdns += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += pkginfo-opencsw-repository-uncommitted
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf

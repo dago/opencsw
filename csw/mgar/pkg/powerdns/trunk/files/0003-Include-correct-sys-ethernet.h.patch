@@ -1,7 +1,7 @@
 From c20fa0d61171f461fc5c13be4303815e88d4892c Mon Sep 17 00:00:00 2001
 From: Juraj Lutter <wilbury@opencsw.org>
 Date: Tue, 3 Apr 2012 22:27:38 +0200
-Subject: [PATCH 5/5] Include correct sys/ethernet.h
+Subject: [PATCH 3/4] Include correct sys/ethernet.h
 
 ---
  pdns/dnspcap.hh |    4 ++++
