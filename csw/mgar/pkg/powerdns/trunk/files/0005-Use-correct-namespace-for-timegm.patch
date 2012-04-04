@@ -15,8 +15,8 @@ index ba60f9f..25392c3 100644
  
          if( tmp != NULL && *tmp == 0 )
          {
--        	return timegm( &tm );
-+        	return Utility::timegm( &tm );
+-		return timegm( &tm );
++		return Utility::timegm( &tm );
          }
  
          return 0;

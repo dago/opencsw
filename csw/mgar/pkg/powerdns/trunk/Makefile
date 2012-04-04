@@ -19,6 +19,7 @@ PATCHFILES += 0002-Use-sys-isa_defs.h-instead-of-endian.h.patch
 PATCHFILES += 0003-Include-correct-sys-ethernet.h.patch
 PATCHFILES += 0004-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
 PATCHFILES += 0005-Use-correct-namespace-for-timegm.patch
+PATCHFILES += 0007-Add-llber-to-lldap-for-ldapbackend-to-make-OpenLDAP-.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
@@ -38,7 +39,12 @@ NORUNPATH = 1
 REINPLACEMENTS += usrlocaletc
 REINPLACE_MATCH_usrlocaletc = /usr/local/etc
 REINPLACE_WITH_usrlocaletc = /etc$(prefix)/pdns
-REINPLACE_FILES_usrlocaletc = pdns/pdns.conf-dist
+REINPLACE_FILES_usrlocaletc = pdns/pdns.conf
+
+REINPLACEMENTS += usrlocallib
+REINPLACE_MATCH_usrlocallib = /usr/local/lib
+REINPLACE_WITH_usrlocallib = $(prefix)/lib/pdns
+REINPLACE_FILES_usrlocallib = pdns/pdns.conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/pdns
@@ -50,10 +56,9 @@ CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-mysql-lib=$(prefix)/lib
 CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
 CONFIGURE_ARGS += --with-modules="ldap geo gmysql"
-EXTRA_INC = /opt/csw/gxx/include
 
-# Extra libs for LDAP backend
-EXTRA_LIB = lber
+# Prepend Boost 1.49 installation in paths so we pick up the correct one
+EXTRA_INC = /opt/csw/gxx/include
 LDFLAGS += -L/opt/csw/gxx/lib
 
 # PowerDNS does not have any "test" target
