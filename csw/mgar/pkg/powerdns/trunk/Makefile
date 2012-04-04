@@ -22,7 +22,7 @@ PATCHFILES += 0002-Use-sys-isa_defs.h-instead-of-endian.h.patch
 PATCHFILES += 0003-Include-correct-sys-ethernet.h.patch
 PATCHFILES += 0004-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
 PATCHFILES += 0005-Use-correct-namespace-for-timegm.patch
-PATCHFILES += 0007-Add-llber-to-lldap-for-ldapbackend-to-make-OpenLDAP-.patch
+PATCHFILES += 0006-Use-also-llber-with-lldap.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
