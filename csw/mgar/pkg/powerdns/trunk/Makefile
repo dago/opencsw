@@ -30,23 +30,19 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 LICENSE = $(FILEDIR)/LICENSE
+PACKAGING_PLATFORMS +=  solaris10-i386 solaris10-sparc
 
 GARCOMPILER = GNU
-#PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
-#PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS +=  solaris10-i386
 NORUNPATH = 1
 
 REINPLACEMENTS += usrlocaletc
 REINPLACE_MATCH_usrlocaletc = /usr/local/etc
-REINPLACE_WITH_usrlocaletc = /etc/$(prefix)/pdns
-REINPLACE_FILES_usrlocaletc = /etc/$(prefix)/pdns/pdns.conf.CSW
-
-# PowerDNS does not have any "test" target
-SKIPTEST = 1
+REINPLACE_WITH_usrlocaletc = /etc$(prefix)/pdns
+REINPLACE_FILES_usrlocaletc = pdns/pdns.conf-dist
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/pdns
+CONFIGURE_ARGS += --libdir=$(prefix)/lib/pdns
 CONFIGURE_ARGS += --disable-recursor
 CONFIGURE_ARGS += --with-lua=no
 CONFIGURE_ARGS += --with-boost=/opt/csw/gxx
@@ -58,8 +54,10 @@ EXTRA_INC = /opt/csw/gxx/include
 
 # Extra libs for LDAP backend
 EXTRA_LIB = lber
-
 LDFLAGS += -L/opt/csw/gxx/lib
+
+# PowerDNS does not have any "test" target
+SKIPTEST = 1
 
 PACKAGES = CSWpdns
 CATALOGNAME_CSWpdns = powerdns
@@ -74,31 +72,8 @@ RUNTIME_DEP_PKGS_CSWpdns += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibldap-r2-4-2
 BUILD_DEP_PKGS  = CSWmysql-dev CSWboostdevel
 
-PACKAGES += CSWlibgeobackend
-CATALOGNAME_CSWlibgeobackend = libgeobackend
-PKGFILES_CSWlibgeobackend += $(call baseisadirs,$(libdir),libgeobackend\.so)
-PKGFILES_CSWlibgeobackend += $(call baseisadirs,$(libdir),libgeobackend\.so(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibgeobackend += CSWlibz1
-SPKG_DESC_CSWlibgeobackend += $(DESCRIPTION), libgeobackend.so
-
-PACKAGES += CSWlibgmysqlbackend
-CATALOGNAME_CSWlibgmysqlbackend = libgmysqlbackend
-PKGFILES_CSWlibgmysqlbackend += $(call baseisadirs,$(libdir),libgmysqlbackend\.so)
-PKGFILES_CSWlibgmysqlbackend += $(call baseisadirs,$(libdir),libgmysqlbackend\.so(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibmysqlclient15
-RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgmysqlbackend += CSWlibz1
-SPKG_DESC_CSWlibgmysqlbackend += $(DESCRIPTION), libgmysqlbackend.so
-
 # These are not errors!
-CHECKPKG_OVERRIDES_CSWlibgeobackend += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWpdns += file-with-bad-content|/usr/local|root/etc/opt/csw/pdns/pdns.conf.CSW
 CHECKPKG_OVERRIDES_CSWpdns += catalogname-does-not-match-pkgname|pkgname=CSWpdns|catalogname=powerdns|expected-catalogname=pdns
-CHECKPKG_OVERRIDES_CSWpdns += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWlibgmysqlbackend += pkginfo-opencsw-repository-uncommitted
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
