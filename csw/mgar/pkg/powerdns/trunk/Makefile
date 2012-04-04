@@ -42,12 +42,12 @@ NORUNPATH = 1
 REINPLACEMENTS += usrlocaletc
 REINPLACE_MATCH_usrlocaletc = /usr/local/etc
 REINPLACE_WITH_usrlocaletc = /etc$(prefix)/pdns
-REINPLACE_FILES_usrlocaletc = pdns/pdns.conf
+REINPLACE_FILES_usrlocaletc = pdns/pdns.conf-dist
 
 REINPLACEMENTS += usrlocallib
 REINPLACE_MATCH_usrlocallib = /usr/local/lib
 REINPLACE_WITH_usrlocallib = $(prefix)/lib/pdns
-REINPLACE_FILES_usrlocallib = pdns/pdns.conf
+REINPLACE_FILES_usrlocallib = pdns/pdns.conf-dist
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/pdns
