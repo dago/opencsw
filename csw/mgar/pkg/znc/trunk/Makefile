@@ -33,7 +33,6 @@ PKGFILES_CSWznc-dev += /opt/csw/bin/znc-config
 PKGFILES_CSWznc-dev += /opt/csw/lib/pkgconfig/znc.pc
 PKGFILES_CSWznc-dev += /opt/csw/include/znc/.*
 RUNTIME_DEP_PKGS_CSWznc-dev += CSWznc
-RUNTIME_DEP_PKGS_CSWznc-dev += CSWgcc4g++
 RUNTIME_DEP_PKGS_CSWznc-dev += CSWlibcares-dev
 
 # File name regex to get notifications about upstream software releases
