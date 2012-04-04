@@ -1,0 +1,36 @@
+From e72393802b2f4f786f7b7383c8a25a80ff289f33 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Wed, 4 Apr 2012 22:26:31 +0200
+Subject: [PATCH] Add -llber to -lldap for ldapbackend to make OpenLDAP happy.
+
+---
+ modules/ldapbackend/Makefile.am |    2 +-
+ modules/ldapbackend/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/modules/ldapbackend/Makefile.am b/modules/ldapbackend/Makefile.am
+index 8709848..abf762e 100644
+--- a/modules/ldapbackend/Makefile.am
++++ b/modules/ldapbackend/Makefile.am
+@@ -5,4 +5,4 @@ EXTRA_DIST = OBJECTFILES OBJECTLIBS
+ lib_LTLIBRARIES = libldapbackend.la
+ libldapbackend_la_SOURCES = ldapbackend.cc ldapbackend.hh powerldap.hh powerldap.cc utils.hh
+ libldapbackend_la_LDFLAGS =-module -avoid-version
+-libldapbackend_la_LIBADD =-l@LIBLDAP@
++libldapbackend_la_LIBADD =-l@LIBLDAP@ -llber
+diff --git a/modules/ldapbackend/Makefile.in b/modules/ldapbackend/Makefile.in
+index 8d3b0d9..ccf27c5 100644
+--- a/modules/ldapbackend/Makefile.in
++++ b/modules/ldapbackend/Makefile.in
+@@ -257,7 +257,7 @@ EXTRA_DIST = OBJECTFILES OBJECTLIBS
+ lib_LTLIBRARIES = libldapbackend.la
+ libldapbackend_la_SOURCES = ldapbackend.cc ldapbackend.hh powerldap.hh powerldap.cc utils.hh
+ libldapbackend_la_LDFLAGS = -module -avoid-version
+-libldapbackend_la_LIBADD = -l@LIBLDAP@
++libldapbackend_la_LIBADD = -l@LIBLDAP@ -llber
+ all: all-am
+ 
+ .SUFFIXES:
+-- 
+1.7.9
+
