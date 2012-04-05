@@ -10,7 +10,7 @@
 #   pentium_pro
 
 NAME = libpng
-VERSION = 1.2.46
+VERSION = 1.2.49
 CATEGORIES = lib
 DESCRIPTION = The official library for Portable Network Graphics format (PNG)
 define BLURB
