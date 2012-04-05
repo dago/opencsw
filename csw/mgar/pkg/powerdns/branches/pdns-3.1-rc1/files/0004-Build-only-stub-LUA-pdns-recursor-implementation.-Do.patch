@@ -1,0 +1,25 @@
+From 0fa2d44583c27e481565a38c8f8c331cb9c858e1 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Tue, 3 Apr 2012 23:19:42 +0200
+Subject: [PATCH 4/4] Build only stub LUA pdns recursor implementation. Do not
+ check for LIBDIR
+
+---
+ pdns/lua-pdns-recursor.cc |    2 +-
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+
+diff --git a/pdns/lua-pdns-recursor.cc b/pdns/lua-pdns-recursor.cc
+index 5e0dd7f..eb6c380 100644
+--- a/pdns/lua-pdns-recursor.cc
++++ b/pdns/lua-pdns-recursor.cc
+@@ -1,6 +1,6 @@
+ #include "lua-pdns-recursor.hh"
+ 
+-#if !defined(PDNS_ENABLE_LUA) && !defined(LIBDIR)
++#if !defined(PDNS_ENABLE_LUA)
+ 
+ // stub implementation
+ 
+-- 
+1.7.9
+

@@ -1,0 +1,25 @@
+From fa26498bf683e466fcbcf8b21c2bce06d9024423 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Tue, 3 Apr 2012 22:06:09 +0200
+Subject: [PATCH 1/4] Make checking for LUA behave correctly.
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 1067417..55b5d20 100755
+--- a/configure
++++ b/configure
+@@ -16494,7 +16494,7 @@ $as_echo_n "checking if with lua... " >&6; }
+ 
+ # Check whether --with-lua was given.
+ if test "${with_lua+set}" = set; then :
+-  withval=$with_lua; WITH_LUA=$withval]
++  withval=$with_lua; WITH_LUA=$withval
+ else
+   WITH_LUA=yes
+ fi
+-- 
+1.7.9
+

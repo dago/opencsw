@@ -1,0 +1,20 @@
+From f1b652f0be4c9f5ef6512a7d2207920bbe74179f Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Wed, 4 Apr 2012 23:17:47 +0200
+Subject: [PATCH] Use also -llber with -lldap
+
+---
+ modules/ldapbackend/OBJECTLIBS |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules/ldapbackend/OBJECTLIBS b/modules/ldapbackend/OBJECTLIBS
+index a787b8d..4adc2f0 100644
+--- a/modules/ldapbackend/OBJECTLIBS
++++ b/modules/ldapbackend/OBJECTLIBS
+@@ -1 +1 @@
+--lldap_r
+\ No newline at end of file
++-lldap_r -llber
+-- 
+1.7.9
+
