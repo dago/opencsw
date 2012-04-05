@@ -1,0 +1,25 @@
+From abd2e92b705c96a9422cdaff295ac9a3fbee4793 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Tue, 3 Apr 2012 22:12:41 +0200
+Subject: [PATCH 2/4] Use sys/isa_defs.h instead of endian.h
+
+---
+ pdns/ext/polarssl/library/net.c |    2 +
+ 1 file changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/pdns/ext/polarssl/library/net.c b/pdns/ext/polarssl/library/net.c
+index 67b52a7..8106b74 100644
+--- a/pdns/ext/polarssl/library/net.c
++++ b/pdns/ext/polarssl/library/net.c
+@@ -59,6 +59,8 @@ static int wsa_init_done = 0;
+ #include <sys/endian.h>
+ #elif defined(__APPLE__)
+ #include <machine/endian.h>
++#elif defined(sun)
++#include <sys/isa_defs.h>
+ #else
+ #include <endian.h>
+ #endif
+-- 
+1.7.9
+

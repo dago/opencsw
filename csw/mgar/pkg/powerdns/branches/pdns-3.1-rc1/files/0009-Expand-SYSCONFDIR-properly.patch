@@ -1,0 +1,45 @@
+From 788b727662983e877d1ea7c0762212a4a11e7ea6 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Thu, 5 Apr 2012 13:36:22 +0200
+Subject: [PATCH] Expand @@SYSCONFDIR@@ properly.
+
+---
+ pdns/dynloader.cc |    4 ++--
+ pdns/receiver.cc  |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/pdns/dynloader.cc b/pdns/dynloader.cc
+index d810278..b7691a7 100644
+--- a/pdns/dynloader.cc
++++ b/pdns/dynloader.cc
+@@ -53,9 +53,9 @@ int main(int argc, char **argv)
+   string s_programname="pdns";
+   string localdir;
+ 
+-  static char pietje[128]="!@@SYSCONFDIR@@:";
++  static char pietje[128]="!/etc/opt/csw/pdns:";
+   ::arg().set("config-dir","Location of configuration directory (pdns.conf)")=
+-    strcmp(pietje+1,"@@SYSCONFDIR@@:") ? pietje+strlen("@@SYSCONFDIR@@:")+1 : SYSCONFDIR;
++    strcmp(pietje+1,"/etc/opt/csw/pdns:") ? pietje+strlen("/etc/opt/csw/pdns:")+1 : SYSCONFDIR;
+   
+   ::arg().set("socket-dir","Where the controlsocket will live")=LOCALSTATEDIR;
+   ::arg().set("remote-address","Remote address to query");
+diff --git a/pdns/receiver.cc b/pdns/receiver.cc
+index e92e67e..887b3eb 100644
+--- a/pdns/receiver.cc
++++ b/pdns/receiver.cc
+@@ -333,9 +333,9 @@ static int guardian(int argc, char **argv)
+ 
+ static void UNIX_declareArguments()
+ {
+-  static char pietje[128]="!@@SYSCONFDIR@@:";
++  static char pietje[128]="!/etc/opt/csw/pdns:";
+   ::arg().set("config-dir","Location of configuration directory (pdns.conf)")=
+-    strcmp(pietje+1,"@@SYSCONFDIR@@:") ? pietje+strlen("@@SYSCONFDIR@@:")+1 : SYSCONFDIR;
++    strcmp(pietje+1,"/etc/opt/csw/pdns:") ? pietje+strlen("/etc/opt/csw/pdns:")+1 : SYSCONFDIR;
+   
+   ::arg().set("config-name","Name of this virtual configuration - will rename the binary image")="";
+   ::arg().set("socket-dir","Where the controlsocket will live")=LOCALSTATEDIR;
+-- 
+1.7.9
+
