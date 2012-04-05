@@ -1,0 +1,160 @@
+From 050de1b8fdc43e512e71b1e1c3119f8a07d60f89 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Thu, 5 Apr 2012 22:45:30 +0200
+Subject: [PATCH] Patch for Solaris compilation.
+
+---
+ modules/ldapbackend/utils.hh             |    2 +-
+ pdns/backends/gsql/gsqlbackend.cc        |   71 ++++++++++++++
+ pdns/dnspcap.hh                          |    4 +
+ pdns/ext/polarssl-1.1.1/library/Makefile |    2 +-
+ pdns/ext/polarssl-1.1.1/library/net.c    |    2 +
+ 5 files changed, 157 insertions(+), 80 deletions(-)
+
+diff --git a/modules/ldapbackend/utils.hh b/modules/ldapbackend/utils.hh
+index ba60f9f..25392c3 100644
+--- a/modules/ldapbackend/utils.hh
++++ b/modules/ldapbackend/utils.hh
+@@ -147,7 +147,7 @@ inline time_t str2tstamp( const string& str )
+ 
+         if( tmp != NULL && *tmp == 0 )
+         {
+-        	return timegm( &tm );
++        	return Utility::timegm( &tm );
+         }
+ 
+         return 0;
+diff --git a/pdns/backends/gsql/gsqlbackend.cc b/pdns/backends/gsql/gsqlbackend.cc
+index 2bd8ffc..aede8e6 100644
+--- a/pdns/backends/gsql/gsqlbackend.cc
++++ b/pdns/backends/gsql/gsqlbackend.cc
+@@ -21,6 +21,7 @@
+ # pragma warning ( disable: 4786 )
+ #endif // WIN32
+ 
++#include <sys/varargs.h>
+ #include <string>
+ #include <map>
+ 
+@@ -760,6 +761,76 @@ bool GSQLBackend::get(DNSResourceRecord &r)
+   return false;
+ }
+ 
++#if (defined (__SVR4) && defined (__sun))
++
++extern "C" {
++#define	INIT_SZ	128
++
++/* VARARGS2 */
++int
++vasprintf(char **str, const char *format, va_list ap)
++{
++   char string[INIT_SZ];
++   char *newstr;
++   int ret;
++   size_t len;
++
++   *str = NULL;
++   ret = vsnprintf(string, INIT_SZ, format, ap);
++   if (ret < 0)	/* retain the value of errno from vsnprintf() */
++      return (-1);
++   if (ret < INIT_SZ) {
++      len = ret + 1;
++      if ((newstr = (char*) malloc(len)) == NULL)
++	 return (-1);	/* retain errno from malloc() */
++      (void) strlcpy(newstr, string, len);
++      *str = newstr;
++      return (ret);
++   }
++   /*
++    * We will perform this loop more than once only if some other
++    * thread modifies one of the vasprintf() arguments after our
++    * previous call to vsnprintf().
++    */
++   for (;;) {
++      if (ret == INT_MAX) {	/* Bad length */
++	 errno = ENOMEM;
++	 return (-1);
++      }
++      len = ret + 1;
++      if ((newstr = (char*) malloc(len)) == NULL)
++	 return (-1);	/* retain errno from malloc() */
++      ret = vsnprintf(newstr, len, format, ap);
++      if (ret < 0) {		/* retain errno from vsnprintf() */
++	 free(newstr);
++	 return (-1);
++      }
++      if (ret < len) {
++	 *str = newstr;
++	 return (ret);
++      }
++      free(newstr);
++   }
++}
++
++int
++asprintf(char **str, const char *format, ...)
++{
++   va_list ap;
++   int ret;
++
++   *str = NULL;
++   va_start(ap, format);
++   ret = vasprintf(str, format, ap);
++   va_end(ap);
++
++   return (ret);
++}
++
++} /* extern "C" */
++
++#endif
++
+ bool GSQLBackend::feedRecord(const DNSResourceRecord &r)
+ {
+   char *output;
+diff --git a/pdns/dnspcap.hh b/pdns/dnspcap.hh
+index 66e07b9..607a397 100644
+--- a/pdns/dnspcap.hh
++++ b/pdns/dnspcap.hh
+@@ -10,7 +10,11 @@
+ #include <netinet/in_systm.h>
+ #include <netinet/ip.h>
+ #include <netinet/udp.h>
++#if defined (__sun)
++#include <sys/ethernet.h>
++#else
+ #include <net/ethernet.h>
++#endif
+ #include <vector>
+ #include <boost/format.hpp>
+ #include "namespaces.hh"
+diff --git a/pdns/ext/polarssl-1.1.1/library/Makefile b/pdns/ext/polarssl-1.1.1/library/Makefile
+index 26de4d7..624994c 100644
+--- a/pdns/ext/polarssl-1.1.1/library/Makefile
++++ b/pdns/ext/polarssl-1.1.1/library/Makefile
+@@ -49,7 +49,7 @@ libpolarssl.a: $(OBJS)
+ 	echo "  AR    $@"
+ 	$(AR) r $@ $(OBJS)
+ 	echo "  RL    $@"
+-	$(AR) s $@
++	ranlib $@
+ 
+ libpolarssl.so: libpolarssl.a
+ 	echo "  LD    $@"
+diff --git a/pdns/ext/polarssl-1.1.1/library/net.c b/pdns/ext/polarssl-1.1.1/library/net.c
+index 9724c07..e30aebb 100644
+--- a/pdns/ext/polarssl-1.1.1/library/net.c
++++ b/pdns/ext/polarssl-1.1.1/library/net.c
+@@ -63,6 +63,8 @@ static int wsa_init_done = 0;
+ #include <sys/endian.h>
+ #elif defined(__APPLE__)
+ #include <machine/endian.h>
++#elif defined(sun)
++#include <sys/isa_defs.h>
+ #else
+ #include <endian.h>
+ #endif
+-- 
+1.7.9
+

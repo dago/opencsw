@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = pdns
-VERSION = 3.0.1
+VERSION = 3.1-rc1
 CATEGORIES = server
 GARTYPE = v2
 
@@ -12,27 +12,31 @@ define BLURB
   backends. Current backends include MySQL, PostgreSQL, bind, etc.
 endef
 
-MASTER_SITES = http://downloads.powerdns.com/releases/
+# Open issues:
+# -llber
+# timegm() in utils.hh ldapbackend
+# endian.h net.c
+# 
+#   AR    libpolarssl.a
+#   ar: creating libpolarssl.a
+#     RL    libpolarssl.a
+#     ar: one of [drqtpmx] must be specified
+#     gmake[5]: *** [libpolarssl.a] Error 1 
+#   ^^^ treba pouzit ranlib
+#
+# @@SYSCONFDIR@@
+# asprintf http://blogs.everycity.co.uk/alasdair/2011/07/vasprintf-and-asprintf-on-solaris-10/
+#
+MASTER_SITES = http://powerdnssec.org/downloads/
 SPKG_SOURCEURL = http://www.powerdns.com/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 DISTFILES += cswpdns
-PATCHFILES += 0001-Make-checking-for-LUA-behave-correctly.patch
-PATCHFILES += 0002-Use-sys-isa_defs.h-instead-of-endian.h.patch
-PATCHFILES += 0003-Include-correct-sys-ethernet.h.patch
-PATCHFILES += 0004-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
-PATCHFILES += 0005-Use-correct-namespace-for-timegm.patch
-PATCHFILES += 0006-Use-also-llber-with-lldap.patch
-PATCHFILES += 0009-Expand-SYSCONFDIR-properly.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PATCHFILES = 0003-Patch-for-Solaris-compilation.patch
+PATCHFILES += 0004-Add-llber-to-make-OpenLDAP-happy.patch
 
 LICENSE = $(FILEDIR)/LICENSE
 PACKAGING_PLATFORMS +=  solaris10-i386 solaris10-sparc
