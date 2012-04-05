@@ -23,6 +23,7 @@ PATCHFILES += 0003-Include-correct-sys-ethernet.h.patch
 PATCHFILES += 0004-Build-only-stub-LUA-pdns-recursor-implementation.-Do.patch
 PATCHFILES += 0005-Use-correct-namespace-for-timegm.patch
 PATCHFILES += 0006-Use-also-llber-with-lldap.patch
+PATCHFILES += 0009-Expand-SYSCONFDIR-properly.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
