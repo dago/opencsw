@@ -39,7 +39,7 @@ PATCHFILES = 0003-Patch-for-Solaris-compilation.patch
 PATCHFILES += 0004-Add-llber-to-make-OpenLDAP-happy.patch
 
 LICENSE = $(FILEDIR)/LICENSE
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+PACKAGING_PLATFORMS = solaris10-i386
 
 GARCOMPILER = GNU
 NORUNPATH = 1
