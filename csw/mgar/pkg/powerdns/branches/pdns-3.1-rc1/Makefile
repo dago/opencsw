@@ -63,10 +63,7 @@ CONFIGURE_ARGS += --with-boost=/opt/csw/gxx
 CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-mysql-lib=$(prefix)/lib
 CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
-CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
-CONFIGURE_ARGS += --with-pgsql-lib=$(prefix)/postgresql/lib
-CONFIGURE_ARGS += --with-pgsql-includes=$(prefix)/postgresql/include
-CONFIGURE_ARGS += --with-modules="ldap geo gmysql gpgsql"
+CONFIGURE_ARGS += --with-modules="ldap geo gmysql"
 
 # Prepend Boost 1.49 installation in paths so we pick up the correct one
 EXTRA_INC = /opt/csw/gxx/include
