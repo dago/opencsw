@@ -2,28 +2,18 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = libxslt-ruby
-VERSION = x.y
+VERSION = 1.0.9
 GARTYPE = v2
-CATEGORIES = category
+CATEGORIES = rbgems
 
-DESCRIPTION = Brief description
+DESCRIPTION = "The libxslt gem provides Ruby language bindings for GNOME's Libxslt toolkit."
 define BLURB
-  Long description
+The Libxslt-Ruby project provides Ruby language bindings for the GNOME XSLT C library. It is free software, released under the MIT License.
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(DISTNAME).tar.gz
+GEM_DEPS = CSWrb18-libxml-1-1-4
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-CONFIGURE_ARGS = $(DIRPATHS)
+RUNTIME_DEP_PKGS_CSWrb18-libxslt-1-0-9 = $(GEM_DEPS)
 
 include gar/category.mk
 
