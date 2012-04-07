@@ -50,5 +50,4 @@ copy-contrib:
 	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
 	@gcp -v  $(WORKSRC)/README.rdoc $(DESTDIR)$(docdir)/$(NAME)
 	@gcp -v  $(WORKSRC)/LICENSE.txt $(DESTDIR)$(docdir)/$(NAME)
-	@gcp -v  $(WORKSRC)/GPL.txt $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)
