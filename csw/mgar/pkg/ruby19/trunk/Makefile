@@ -3,7 +3,7 @@ VERSION = 1.9.3
 # Change this when the build starts putting files in $(libdir)/ruby/$(newver)
 API_VERSION = 1.9.1
 API_SHORT = $(subst .,,$(API_VERSION))
-PATCHLEVEL = p0
+PATCHLEVEL = p125
 CATEGORIES = lang
 GARTYPE = v2
 
