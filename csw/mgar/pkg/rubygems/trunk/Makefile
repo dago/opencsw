@@ -33,6 +33,8 @@ INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSWrubygems += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/rubygems/gem_path_searcher.rb
 CHECKPKG_OVERRIDES_CSWrubygems += surplus-dependency|CSWalternatives
+# all comments
+CHECKPKG_OVERRIDES_CSWrubygems += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/rubygems/specification.rb
 
 ALTERNATIVE = $(bindir)/gem gem $(bindir)/gem18 5
 
