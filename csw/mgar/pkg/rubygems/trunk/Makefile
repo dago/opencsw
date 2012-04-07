@@ -1,5 +1,5 @@
 NAME = rubygems
-VERSION = 1.7.2
+VERSION = 1.8.21
 CATEGORIES = xtra
 GARTYPE = v2
 
