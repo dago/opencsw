@@ -1,0 +1,26 @@
+From cf185c8a645cc261fa0725e992a67b2c7d882195 Mon Sep 17 00:00:00 2001
+From: William Bonnet <wbonnet@opencsw.org>
+Date: Mon, 9 Apr 2012 16:24:31 +0200
+Subject: [PATCH] void function cannot return value
+
+---
+ src/appfinder-window.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/src/appfinder-window.c b/src/appfinder-window.c
+index 68a6bb6..37df6a9 100644
+--- a/src/appfinder-window.c
++++ b/src/appfinder-window.c
+@@ -437,7 +437,9 @@ xfce_appfinder_window_unmap (GtkWidget *widget)
+   xfconf_channel_set_int (window->channel, "/last/window-width", width);
+   xfconf_channel_set_int (window->channel, "/last/pane-position", position);
+ 
++/*
+   return (*GTK_WIDGET_CLASS (xfce_appfinder_window_parent_class)->unmap) (widget);
++*/
+ }
+ 
+ 
+-- 
+1.7.9
+
