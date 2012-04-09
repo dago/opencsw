@@ -17,7 +17,7 @@ PACKAGES = CSWxfcedtlogin
 # Package description
 SPKG_DESC_CSWxfcedtlogin       = $(DESCRIPTION)
 
-ARCHALL_CSWxfcedtlogin-dev     = 1
+ARCHALL_CSWxfcedtlogin         = 1
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
