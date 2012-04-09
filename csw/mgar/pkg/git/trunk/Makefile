@@ -117,6 +117,7 @@ PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
 PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
 PATCHFILES += 0008-run-command.c-Define-SHELL_PATH-macro-for-use-in-pre.patch
 PATCHFILES += 0009-Makefile-Set-EXTRA_CPPFLAGS-during-the-compilation-o.patch
+PATCHFILES += 0009-Avoid-bug-in-Solaris-xpg4-sed-as-used-in-submodule.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
@@ -152,7 +153,6 @@ CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 CONFIGURE_ARGS += --with-gitconfig=$(sysconfdir)/gitconfig
 CONFIGURE_ARGS += --with-pager=/opt/csw/bin/less
 CONFIGURE_ARGS += --without-python
-CONFIGURE_ARGS += --with-sane-tool-path=/opt/csw/gnu:/opt/csw/bin:/usr/xpg6/bin:/usr/xpg4/bin
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ASCIIDOC_NO_ROFF=YesPlease \
