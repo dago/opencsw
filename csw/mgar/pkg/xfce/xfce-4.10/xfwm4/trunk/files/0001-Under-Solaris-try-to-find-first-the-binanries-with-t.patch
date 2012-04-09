@@ -1,0 +1,56 @@
+From c3c8ff9af6ada88124c791107ee65f01cdc6eeca Mon Sep 17 00:00:00 2001
+From: William Bonnet <wbonnet@opencsw.org>
+Date: Mon, 9 Apr 2012 15:55:58 +0200
+Subject: [PATCH] Under Solaris try to find first the binanries with the g
+ prefix
+
+---
+ aclocal.m4 |   32 ++++++++++++++++++++++++++++----
+ 1 files changed, 28 insertions(+), 4 deletions(-)
+
+diff --git a/aclocal.m4 b/aclocal.m4
+index 665b4ca..64c09fb 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -551,10 +551,34 @@ _IT_SUBST(INTLTOOL_SERVICE_RULE)
+ _IT_SUBST(INTLTOOL_POLICY_RULE)
+ 
+ # Check the gettext tools to make sure they are GNU
+-AC_PATH_PROG(XGETTEXT, xgettext)
+-AC_PATH_PROG(MSGMERGE, msgmerge)
+-AC_PATH_PROG(MSGFMT, msgfmt)
+-AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
++OS_NAME=`uname -s`
++
++# Under Solaris try to find first the binanries with the g prefix 
++# If not found, then switch to regular name
++if test ${OS_NAME} = "SunOS"; then
++    AC_PATH_PROG(XGETTEXT, gxgettext)
++    if test -z "${XGETTEXT}" ; then
++        AC_PATH_PROG(XGETTEXT, xgettext)
++    fi
++ 
++    AC_PATH_PROG(MSGMERGE, gmsgmerge)
++    if test -z "${MSGMERGE}" ; then
++        AC_PATH_PROG(MSGMERGE, msgmerge)
++    fi
++
++    AC_PATH_PROG(MSGFMT, gmsgfmt)
++    if test -z "${MSGFMT}" ; then
++        AC_PATH_PROG(MSGFMT, msgfmt)
++    fi
++
++    AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
++else
++    AC_PATH_PROG(XGETTEXT, xgettext)
++    AC_PATH_PROG(MSGMERGE, msgmerge)
++    AC_PATH_PROG(MSGFMT, msgfmt)
++    AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
++fi
++
+ if test -z "$XGETTEXT" -o -z "$MSGMERGE" -o -z "$MSGFMT"; then
+     AC_MSG_ERROR([GNU gettext tools not found; required for intltool])
+ fi
+-- 
+1.7.9
+
