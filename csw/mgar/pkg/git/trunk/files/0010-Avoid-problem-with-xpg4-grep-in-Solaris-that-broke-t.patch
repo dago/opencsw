@@ -1,0 +1,36 @@
+From 7b0ec3913cca1607e6777ef527c39773c908ed4d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Mon, 9 Apr 2012 03:43:40 +0200
+Subject: [PATCH] Avoid problem with xpg4 grep in Solaris that broke t9400
+
+The grep in Solaris' /usr/xpg4/bin as found by the default
+SANE_TOOL_PATH was not properly handling the 'cvs co -c (shows module
+database)' test.  The [\t ] character set selection does not properly
+trigger so the first grep in the test fails.
+
+Instead of working around this issue, switch to using the standard
+test_cmp() shell function to perform the comparison instead.
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ t/t9400-git-cvsserver-server.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 9199550..df1405f 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -500,8 +500,8 @@ test_expect_success 'cvs status (no subdirs in header)' '
+ cd "$WORKDIR"
+ test_expect_success 'cvs co -c (shows module database)' '
+     GIT_CONFIG="$git_config" cvs co -c > out &&
+-    grep "^master[	 ]\+master$" < out &&
+-    ! grep -v "^master[	 ]\+master$" < out
++    echo "master	master" > out.expected &&
++    test_cmp out out.expected
+ '
+ 
+ #------------
+-- 
+1.7.9
+
