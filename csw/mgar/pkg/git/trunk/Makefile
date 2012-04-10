@@ -118,6 +118,7 @@ PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
 PATCHFILES += 0008-run-command.c-Define-SHELL_PATH-macro-for-use-in-pre.patch
 PATCHFILES += 0009-Makefile-Set-EXTRA_CPPFLAGS-during-the-compilation-o.patch
 PATCHFILES += 0009-Avoid-bug-in-Solaris-xpg4-sed-as-used-in-submodule.patch
+PATCHFILES += 0010-Avoid-problem-with-xpg4-grep-in-Solaris-that-broke-t.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
