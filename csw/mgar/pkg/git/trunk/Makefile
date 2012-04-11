@@ -8,7 +8,7 @@ GARTYPE = v2
 VENDOR_URL = http://git-scm.org/
 
 NO_SVN_TESTS=YesPlease
-GIT_TEST_OPTS="-i -v -d"
+GIT_TEST_OPTS=-i -v -d
 EXTRA_TEST_EXPORTS = NO_SVN_TESTS GIT_TEST_OPTS
 
 # disable tests until next version bump (at the top so it stands out)
