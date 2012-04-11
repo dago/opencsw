@@ -3,7 +3,7 @@
 # - secrets.tdb is searched in /opt/csw/private/secrets.tdb instead of /etc/opt/csw/samba/private/secrets.tdb
 
 NAME = samba
-VERSION = 3.6.3
+VERSION = 3.6.4
 CATEGORIES = apps
 GARTYPE = v2
 
