@@ -345,9 +345,9 @@ post-extract-modulated:
 	-perl -pi -e 's!/\@INCLUDE_des\@//!,-I$(includedir),,!' \
 		$(WORKSRC)/source3/configure
 
-post-merge:
-	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
-	ginstall $(WORKDIR)/cswsamba $(PKGROOT)/etc/opt/csw/init.d/cswsamba
-	ginstall $(WORKDIR)/cswwinbind $(PKGROOT)/etc/opt/csw/init.d/cswwinbind
-	ginstall -d $(PKGROOT)/etc/opt/csw/samba
-	ginstall $(WORKDIR)/smb.conf $(PKGROOT)/etc/opt/csw/samba/smb.conf
+post-install-modulated:
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall $(WORKDIR)/cswsamba $(DESTDIR)/etc/opt/csw/init.d/cswsamba
+	ginstall $(WORKDIR)/cswwinbind $(DESTDIR)/etc/opt/csw/init.d/cswwinbind
+	ginstall -d $(DESTDIR)/etc/opt/csw/samba
+	ginstall $(WORKDIR)/smb.conf $(DESTDIR)/etc/opt/csw/samba/smb.conf
