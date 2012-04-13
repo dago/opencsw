@@ -90,6 +90,8 @@ SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWlibiconv2 CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWliblber2-4-2 CSWlibldap2-4-2 
+# the loadable ldap module dynamically opens files in this apr sub-package
+RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-ldap
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibssl0-9-8 CSWlibz1
 RUNTIME_DEP_PKGS_CSWapache2       += CSWbdb48 CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-0 CSWlibapr1-0
