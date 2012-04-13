@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.24.0
+VERSION = 7.25.0
 CATEGORIES = net
 GARTYPE = v2
 
