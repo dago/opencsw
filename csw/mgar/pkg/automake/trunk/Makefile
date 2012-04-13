@@ -1,10 +1,10 @@
 NAME = automake
-VERSION = 1.11.2
+VERSION = 1.11.5
 CATEGORIES = devel
 GARTYPE = v2
 
 EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.2
+MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.5
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
@@ -64,7 +64,7 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.7.9 = $(bindir)/automake $(bindi
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.8.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.9.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.10.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.11.2 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.11.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 
 #     alternatives [options] --install link name path priority  [-
 #     -slave link name path]...  [--initscript service]
