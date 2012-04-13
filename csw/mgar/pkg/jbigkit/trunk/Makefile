@@ -48,7 +48,15 @@ REINPLACE_FILES_gmake += Makefile
 REINPLACE_FILES_gmake += pbmtools/Makefile
 
 # Generate position independent code for shared library
-EXTRA_CFLAGS = -xcode=pic13
+EXTRA_CFLAGS-sparc = -xcode=pic13
+
+# Use -Kpic on amd64 or this error will be thrown on ldd -r:
+#   ld.so.1: lddstub: fatal: relocation error: R_AMD64_32: file /opt/csw/lib/amd64/libjbig.so.2: symbol (unknown): value 0xfffffd7fff37aa9c does not fit
+# See for details
+#   http://developers.sun.com/solaris/articles/about_amd64_abi.html
+EXTRA_CFLAGS-i386 = -Kpic
+
+EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GARCH))
 
 # There is no configure
 CONFIGURE_SCRIPTS =
@@ -69,10 +77,10 @@ install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	cd $(WORKSRC)/pbmtools && ginstall jbgtopbm jbgtopbm85 pbmtojbg pbmtojbg85 $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(libdir)
-	$(CC) $(LDFLAGS) -z allextract -G -h libjbig.so.2 -o $(DESTDIR)$(libdir)/libjbig.so.2.0 $(WORKSRC)/libjbig/libjbig.a
+	$(CC) $(LDFLAGS) -z allextract -z defs -G -h libjbig.so.2 -o $(DESTDIR)$(libdir)/libjbig.so.2.0 $(WORKSRC)/libjbig/libjbig.a -lc
 	gln -s libjbig.so.2 $(DESTDIR)$(libdir)/libjbig.so
 	gln -s libjbig.so.2.0 $(DESTDIR)$(libdir)/libjbig.so.2
-	$(CC) $(LDFLAGS) -z allextract -G -h libjbig85.so.2 -o $(DESTDIR)$(libdir)/libjbig85.so.2.0 $(WORKSRC)/libjbig/libjbig85.a
+	$(CC) $(LDFLAGS) -z allextract -z defs -G -h libjbig85.so.2 -o $(DESTDIR)$(libdir)/libjbig85.so.2.0 $(WORKSRC)/libjbig/libjbig85.a -lc
 	gln -s libjbig85.so.2 $(DESTDIR)$(libdir)/libjbig85.so
 	gln -s libjbig85.so.2.0 $(DESTDIR)$(libdir)/libjbig85.so.2
 	ginstall -d $(DESTDIR)$(docdir)/libjbig_dev
