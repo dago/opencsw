@@ -1,0 +1,27 @@
+From f8ff56d203f10bda91368020a57030dd9915a429 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Fri, 13 Apr 2012 11:03:45 +0200
+Subject: [PATCH] Always use LDFLAGS during linkage
+
+---
+ src/current/makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/current/makefile b/src/current/makefile
+index 70bb6b3..d3ef9f6 100644
+--- a/src/current/makefile
++++ b/src/current/makefile
+@@ -384,8 +384,8 @@ Solaris10cc:	iozone_solaris10cc.o libasync10cc.o libbif10cc.o fileop_Solaris10cc
+ 	$(CC)  -O $(LDFLAGS) iozone_solaris10cc.o libasync10cc.o libbif10cc.o \
+ 		-lthread -lpthread -lposix4 -lnsl -laio \
+ 		-lsocket -o iozone
+-	$(CC)  -O fileop_Solaris10cc.o -o fileop
+-	$(CC)  -O pit_server.o -lthread -lpthread -lposix4 -lnsl -laio \
++	$(CC)  -O $(LDFLAGS) fileop_Solaris10cc.o -o fileop
++	$(CC)  -O $(LDFLAGS) pit_server.o -lthread -lpthread -lposix4 -lnsl -laio \
+                 -lsocket -o pit_server
+ 
+ #
+-- 
+1.7.9
+
