@@ -68,6 +68,9 @@ PATCHFILES += 0016-CSW-mimetypes.patch
 PATCHFILES += 0017-Random-insignificant-removals-of-usr-local.patch
 PATCHFILES += 0018-Removing-usr-local-from-mailcap.patch
 
+PATCHFILES_5.10 += 0019-Force-multiprocess-to-compile.patch
+PATCHFILES += $(PATCHFILES_$(GAROSREL))
+
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
