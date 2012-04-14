@@ -80,22 +80,7 @@ get_line_with() {
         | grep "${__s}"
 }
 
-get_pid_file() {
-    # The default pid file is /var/opt/csw/puppet/run/agent.pid
-    # but a different pid file can be set in puppet.conf.
-    __pidfile="/var/opt/csw/puppet/run/agent.pid"
-    conffile="/etc/opt/csw/puppet/puppet.conf"
-    if [ -r "$conffile" ]; then
-        pid_line=`get_line_with pidfile ${conffile}`
-        if [ -n "${pid_line}" ]; then
-            echo "${pid_line}" | cut -d= -f2 | tr -d ' '
-            return
-        fi
-    fi
-    echo "${__pidfile}"
-}
-
-pidfile=`$prefix/bin/puppet agent --genconf | awk '/pidfile/ { print $3 }'`
+pidfile=`$prefix/bin/puppet agent --configprint pidfile`
 
 case "$1" in
     start)
