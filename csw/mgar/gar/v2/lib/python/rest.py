@@ -38,6 +38,22 @@ class RestClient(object):
         # Other HTTP errors are should be thrown.
         raise
 
+  def GetPkgstatsByMd5(self, md5_sum):
+    url = self.rest_url + self.PKGDB_APP + "/srv4/%s/pkg-stats/" % md5_sum
+    logging.debug("GetPkgstatsByMd5(): GET %s", url)
+    try:
+      data = urllib2.urlopen(url).read()
+      return cjson.decode(data)
+    except urllib2.HTTPError, e:
+      logging.warning("%s -- %s", url, e)
+      if e.code == 404:
+        # Code 404 is fine, it means that the package with given md5 does not
+        # exist.
+        return None
+      else:
+        # Other HTTP errors are should be thrown.
+        raise
+
   def GetMaintainerByMd5(self, md5_sum):
     pkg = self.GetPkgByMd5(md5_sum)
     if not pkg:

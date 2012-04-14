@@ -12,6 +12,7 @@ necessary to bring one catalog to the state of another catalog.
 
 from Cheetah import Template
 import cjson
+import gdbm
 import json
 import catalog
 import common_constants
@@ -71,10 +72,10 @@ $catalogname {
 #end for
 #for catalogname in $sorted($diffs_by_catalogname):
 #if "new_pkgs" in $diffs_by_catalogname[$catalogname]:
-new_pkg_$catalogname
+new_pkg_$catalogname#
 #end if
 #if "removed_pkgs" in $diffs_by_catalogname[$catalogname]:
-remove_pkg_$catalogname
+remove_pkg_$catalogname#
 #end if
 #if "updated_pkgs" in $diffs_by_catalogname[$catalogname]:
 #if $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["direction"] == "downgrade":
@@ -85,9 +86,14 @@ upgrade_#
 $catalogname#
  # $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["type"] #
 #if $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["type"] == 'version'
-$diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["from"]["version"] to $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["to"]["version"]
+$diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["from"]["version"] to $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["to"]["version"]#
 #end if
 #end if
+ # bundles:#
+#for bundle in $bundles_by_catalogname[$catalogname]:
+$bundle #
+#end for
+
 #end for
 """
 
@@ -99,17 +105,41 @@ class UsageError(Error):
   """Wrong usage."""
 
 
-def IndexByCatalogname(catalog):
-  return dict((x["catalogname"], x) for x in catalog)
+def IndexDictByField(d, field):
+  return dict((x[field], x) for x in d)
+
+
+class CachedPkgstats(object):
+  """Class responsible for holding and caching package stats.
+
+  Wraps RestClient and provides a caching layer.
+  """
+
+  def __init__(self, filename):
+    self.filename = filename
+    self.d = gdbm.open(filename, "c")
+    self.rest_client = rest.RestClient()
+    self.local_cache = {}
+
+  def GetPkgstats(self, md5):
+    if md5 in self.local_cache:
+      return self.local_cache[md5]
+    elif str(md5) in self.d:
+      return cjson.decode(self.d[md5])
+    else:
+      pkgstats = self.rest_client.GetPkgstatsByMd5(md5)
+      self.d[md5] = cjson.encode(pkgstats)
+      self.local_cache[md5] = pkgstats
+      return pkgstats
 
 
 def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
                           include_version_changes):
   rest_client = rest.RestClient()
-  diffs_by_catalogname = {}
   def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
-    catalog = rest_client.GetCatalog(r_catrel, r_arch, r_osrel)
-    return ((r_catrel, r_arch, r_osrel), catalog)
+    key = r_catrel, r_arch, r_osrel
+    catalog = rest_client.GetCatalog(*key)
+    return (key, catalog)
   # TODO(maciej): Enable this once the multiprocessing module is fixed.
   # https://www.opencsw.org/mantis/view.php?id=4894
   # proc_pool = multiprocessing.Pool(20)
@@ -120,6 +150,43 @@ def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
         catalogs_to_fetch_args.append((rest_client, catrel, arch, osrel))
   # Convert this to pool.map when multiprocessing if fixed.
   catalogs = dict(map(lambda x: GetCatalog(*x), catalogs_to_fetch_args))
+  diffs_by_catalogname = ComposeDiffsByCatalogname(
+      catalogs, catrel_from, catrel_to, include_version_changes)
+  return catalogs, diffs_by_catalogname
+
+def ComposeDiffsByCatalogname(catalogs, catrel_from, catrel_to,
+                              include_version_changes):
+  """Get a data structure indexed with catalognames.
+
+  {
+    catalogname: {
+      "updated_pkgs": [
+        [
+          "sparc",
+          "SunOS5.9",
+          {
+            "basename": ...,
+            "catalogname": ...,
+            "file_basename": ...,
+            "md5_sum": ...,
+            "mtime": ...,
+            "rev": ...,
+            "size": ...,
+            "version": ...,
+            "version_string": ...,
+          }
+        ],
+      ],
+      "new_pkgs": [
+        ...
+      ],
+      "removed_pkgs": [
+        ...
+      ],
+    },
+  }
+  """
+  diffs_by_catalogname = {}
   for arch in common_constants.PHYSICAL_ARCHITECTURES:
     logging.debug("Architecture: %s", arch)
     for osrel in common_constants.OS_RELS:
@@ -131,8 +198,8 @@ def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
         cat_from = []
       if cat_to is None:
         cat_to = []
-      cat_from_by_c = IndexByCatalogname(cat_from)
-      cat_to_by_c = IndexByCatalogname(cat_to)
+      cat_from_by_c = IndexDictByField(cat_from, "catalogname")
+      cat_to_by_c = IndexDictByField(cat_to, "catalogname")
       comparator = catalog.CatalogComparator()
       new_pkgs, removed_pkgs, updated_pkgs = comparator.GetCatalogDiff(
           cat_to_by_c, cat_from_by_c)
@@ -147,7 +214,7 @@ def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
       for pkg_pair in updated_pkgs:
         update_decision_by_type = {
             "revision": True,
-            "version": include_version_changes
+            "version": include_version_changes,
         }
         if (update_decision_by_type[pkg_pair["type"]]
             and (pkg_pair["direction"] == "upgrade" or include_downgrades)):
