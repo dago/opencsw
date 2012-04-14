@@ -1,0 +1,24 @@
+From ac3e2204b79ffe6060559f385e3e76bee1fe7318 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Sat, 14 Apr 2012 16:20:02 +0200
+Subject: [PATCH] Use /opt/csw/bin/gar
+
+---
+ pdns/ext/polarssl-1.1.1/library/Makefile |    3 +
+ 1 file changed, 3 insertion(+), 0 deletions(-)
+
+--- a/pdns/ext/polarssl-1.1.1/library/Makefile
++++ b/pdns/ext/polarssl-1.1.1/library/Makefile
+@@ -13,6 +13,9 @@ OFLAGS	= -O
+ # To compile as a shared library:
+ # CFLAGS += -fPIC
+ 
++# OpenCSW ``ar''
++AR=/opt/csw/bin/gar
++
+ SONAME=libpolarssl.so.0
+ 
+ DLEXT=so
+-- 
+1.7.9
+
