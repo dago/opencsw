@@ -40,11 +40,4 @@ CHECKPKG_OVERRIDES_CSWap2modwsgi += catalogname-does-not-match-pkgname|pkgname=C
 # checkpkg doesn't know why CSWpython is needed
 CHECKPKG_OVERRIDES_CSWap2modwsgi += surplus-dependency|CSWpython
 
-# <maciej>: As far as I can tell, python-config returns good values
-#
-## Fix Makefile LDFLAGS to correct broken python-config return values
-# post-configure-modulated:
-# 	@( perl -i -plne 's|^LDFLAGS = .*|LDFLAGS = -L/opt/csw/lib|' \
-# 		$(WORKSRC)/Makefile )
-
 include gar/category.mk
