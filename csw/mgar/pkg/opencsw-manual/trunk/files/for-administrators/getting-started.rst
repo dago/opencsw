@@ -1,6 +1,6 @@
--------------
-Bootstrapping
--------------
+---------------
+Getting started
+---------------
 
 OpenCSW uses a tool named pkgutil on top of the Solaris packaging utilities to
 automatically download, install and update packages. It needs to be installed
