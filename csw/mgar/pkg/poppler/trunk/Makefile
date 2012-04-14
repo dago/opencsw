@@ -16,7 +16,7 @@ DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
 GARCOMPILER = SOS12U3
-PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PATCHFILES += missing-includes.patch
 PATCHFILES += ltmain.patch
