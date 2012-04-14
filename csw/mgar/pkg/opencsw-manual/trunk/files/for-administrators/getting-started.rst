@@ -177,9 +177,12 @@ Mirroring only a subset
 =======================
 
 You can also mirror only a subset of the repository, e.g. the 'unstable'
-catalog or even just a few packages.
+catalog or even just a few packages.::
 
-pkgutil --stream
+  pkgutil --stream vim
+
+This option is useful when you want to install a package with dependencies on a
+host with no direct Internet access.
 
 
 Layout of the mirror
