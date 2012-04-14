@@ -8,7 +8,7 @@ A user's manual for people who manage Solaris systems with OpenCSW packages.
   :maxdepth: 2
 
   introduction
-  gettint-started
+  getting-started
   configuring-services
   pkgutil-reference
   glossary
