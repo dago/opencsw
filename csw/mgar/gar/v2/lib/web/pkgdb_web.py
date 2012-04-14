@@ -6,11 +6,12 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
 
-import web
-import sqlobject
+import cjson
 import json
 import logging
 import pprint
+import sqlobject
+import web
 
 from lib.python import models
 from lib.python import configuration
@@ -56,6 +57,7 @@ templatedir = os.path.join(os.path.dirname(__file__), "templates/")
 render = web.template.render(templatedir)
 
 
+# TODO(maciej): Convert this extension to cjson.
 class PkgStatsEncoder(json.JSONEncoder):
   """Maps frozensets to lists."""
   def default(self, obj):
@@ -211,7 +213,7 @@ class MaintainerDetail(object):
 class RestMaintainerDetail(object):
   def GET(self, id):
     maintainer = models.Maintainer.selectBy(id=id).getOne()
-    return json.dumps(maintainer.GetRestRepr())
+    return cjson.encode(maintainer.GetRestRepr())
 
 
 class MaintainerCheckpkgReport(object):
@@ -275,7 +277,7 @@ class Catalogs(object):
       raise web.notfound()
     web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=srv4-list')
     pkgs_data = [p.GetRestRepr(quick)[1] for p in pkgs]
-    return json.dumps(pkgs_data)
+    return cjson.encode(pkgs_data)
 
 
 class PkgnameByFilename(object):
@@ -292,7 +294,7 @@ class PkgnameByFilename(object):
       web.header('X-Rest-Info', 'I could tell you about the format, but I won\'t')
       web.header('Content-Disposition',
                  'attachment; filename=%s' % send_filename)
-      return json.dumps(sorted(pkgs))
+      return cjson.encode(sorted(pkgs))
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
@@ -313,7 +315,7 @@ class PkgnamesAndPathsByBasename(object):
           'application/x-vnd.opencsw.pkg;type=pkgname-list')
       web.header('Content-Disposition',
                  'attachment; filename=%s' % send_filename)
-      return json.dumps(data)
+      return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
@@ -326,7 +328,7 @@ class RestSrv4Detail(object):
       mimetype, data_structure = pkg.GetRestRepr()
       web.header('Content-type', mimetype)
       web.header('Access-Control-Allow-Origin', '*')
-      return json.dumps(data_structure)
+      return cjson.encode(data_structure)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
@@ -346,7 +348,7 @@ class RestSrv4DetailFiles(object):
             "line": file_obj.line,
         }
       serializable_files = [FileDict(x) for x in files]
-      return json.dumps(serializable_files)
+      return cjson.encode(serializable_files)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
@@ -389,9 +391,9 @@ class Srv4ByCatAndCatalogname(object):
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
       web.header('Access-Control-Allow-Origin', '*')
-      return json.dumps(data)
+      return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
-      return json.dumps(None)
+      return cjson.encode(None)
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
 
@@ -424,9 +426,9 @@ class Srv4ByCatAndPkgname(object):
       srv4 = res.getOne()
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
-      return json.dumps(data)
+      return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
-      return json.dumps(None)
+      return cjson.encode(None)
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
 

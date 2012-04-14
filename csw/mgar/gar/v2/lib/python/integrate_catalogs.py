@@ -11,6 +11,7 @@ necessary to bring one catalog to the state of another catalog.
 """
 
 from Cheetah import Template
+import cjson
 import json
 import catalog
 import common_constants
@@ -189,12 +190,51 @@ def main():
   if options.from_json:
     with open(options.from_json, "rb") as fd:
       logging.info("Loading %s", options.from_json)
-      diffs_by_catalogname = json.load(fd)
+      bundles_by_md5, jsonable_catalogs, diffs_by_catalogname = cjson.decode(fd.read())
+      catalogs = dict((tuple(cjson.decode(x)), jsonable_catalogs[x]) for x in jsonable_catalogs)
   else:
-    diffs_by_catalogname = GetDiffsByCatalogname(
+    catalogs, diffs_by_catalogname = GetDiffsByCatalogname(
         catrel_from, catrel_to, options.include_downgrades,
         options.include_version_changes)
+    bundles_by_md5 = {}
+    bundles_missing = set()
+    cp = CachedPkgstats("pkgstats.db")
+    for key in catalogs:
+      for pkg in catalogs[key]:
+        # logging.debug("%r", pkg)
+        md5 = pkg["md5_sum"]
+        if md5 not in bundles_by_md5 and md5 not in bundles_missing:
+          stats = cp.GetPkgstats(md5)
+          bundle_key = "OPENCSW_BUNDLE"
+          # pprint.pprint(stats)
+          if stats:
+            if bundle_key in stats["pkginfo"]:
+              bundles_by_md5[md5] = stats["pkginfo"][bundle_key]
+            else:
+              logging.info(
+                  "%r (%r) does not have the bundle set",
+                  stats["basic_stats"]["pkg_basename"], md5)
+              bundles_missing.add(md5)
+  # Here's a good place to calculate the mapping between catalognames and
+  # bundle names.
+  change_types = "new_pkgs", "removed_pkgs", "updated_pkgs"
+  bundles_by_catalogname = {}
+  for catalogname in diffs_by_catalogname:
+    l = bundles_by_catalogname.setdefault(catalogname, set())
+    for change_type in change_types:
+      if change_type in diffs_by_catalogname[catalogname]:
+        for change_info in diffs_by_catalogname[catalogname][change_type]:
+          pkg = change_info[2]
+          if "to" in pkg:
+            md5s = [x["md5_sum"] for x in (pkg["from"], pkg["to"])]
+          else:
+            md5s = [pkg["md5_sum"]]
+          for md5 in md5s:
+            if md5 in bundles_by_md5:
+              l.add(bundles_by_md5[md5])
   namespace = {
+      "bundles_by_catalogname": bundles_by_catalogname,
+      "bundles_by_md5": bundles_by_md5,
       "diffs_by_catalogname": diffs_by_catalogname,
       "catrel_to": catrel_to,
       "catrel_from": catrel_from,
@@ -202,7 +242,9 @@ def main():
   }
   if options.save_json:
     with open(options.save_json, "wb") as fd:
-      json.dump(diffs_by_catalogname, fd)
+      jsonable_catalogs = dict((cjson.encode(x), catalogs[x]) for x in catalogs)
+      fd.write(cjson.encode(
+        (bundles_by_md5, jsonable_catalogs, diffs_by_catalogname)))
   t = Template.Template(CATALOG_MOD_TMPL, searchList=[namespace])
   if options.output_file:
     logging.info("Saving output to %s", options.output_file)

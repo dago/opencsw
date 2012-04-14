@@ -2,7 +2,7 @@
 
 import logging
 import urllib2
-import json
+import cjson
 
 DEFAULT_URL = "http://buildfarm.opencsw.org"
 
@@ -27,7 +27,7 @@ class RestClient(object):
     logging.debug("GetPkgByMd5(): GET %s", url)
     try:
       data = urllib2.urlopen(url).read()
-      return json.loads(data)
+      return cjson.decode(data)
     except urllib2.HTTPError, e:
       logging.warning("%s -- %s", url, e)
       if e.code == 404:
@@ -53,7 +53,7 @@ class RestClient(object):
     logging.debug("GetCatalog(): GET %s", url)
     try:
       data = urllib2.urlopen(url).read()
-      return json.loads(data)
+      return cjson.decode(data)
     except urllib2.HTTPError, e:
       logging.warning("%s -- %s", url, e)
       return None
@@ -67,4 +67,4 @@ class RestClient(object):
     # The server is no longer returning 404 when the package is absent.  If
     # a HTTP error code is returned, we're letting the application fail.
     data = urllib2.urlopen(url).read()
-    return json.loads(data)
+    return cjson.decode(data)
