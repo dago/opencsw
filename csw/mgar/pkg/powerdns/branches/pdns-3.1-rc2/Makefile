@@ -33,9 +33,11 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 DISTFILES += cswpdns
 
-WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
+PATCHFILES += 0003-Use-opt-csw-bin-gar.patch
+PATCHFILES += 0004-Use-gethrtime-on-SPARC.patch
+PATCHFILES += 0006-Use-empty-epollmplexer.cc-on-Solaris.patch
 
-PATCHFILES = 0003-Patch-for-Solaris-compilation.patch
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
 LICENSE = $(FILEDIR)/LICENSE
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
@@ -77,6 +79,12 @@ LDFLAGS += -L/opt/csw/gxx/lib
 
 # Needed for BOOST on SPARC
 ARCHFLAGS_GCC4_sparcv8plus = -mcpu=v9
+
+EXTRA_CFLAGS_sparc = -D__SPARC__
+EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH))
+
+EXTRA_CXXFLAGS_sparc = -D__SPARC__
+EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH))
 
 # PowerDNS does not have any "test" target
 SKIPTEST = 1

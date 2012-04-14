@@ -1,0 +1,46 @@
+From d2a6a26e669ba42229fbc735224635cf38b4face Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Sun, 15 Apr 2012 01:18:42 +0200
+Subject: [PATCH] Use gethrtime() on SPARC.
+
+---
+ pdns/htimer.cc |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/pdns/htimer.cc b/pdns/htimer.cc
+index b2881c2..e94a20a 100644
+--- a/pdns/htimer.cc
++++ b/pdns/htimer.cc
+@@ -2,6 +2,10 @@
+ #include "htimer.hh"
+ #include <iostream>
+ 
++#ifdef __SPARC__
++#include <sys/time.h>
++#endif // __SPARC__
++
+ HTimer::timers_t HTimer::s_timers;
+ 
+ #include "namespaces.hh"
+@@ -35,12 +39,17 @@ HTimer::timers_t HTimer::s_timers;
+    Waiting for packets
+ */
+ 
++#ifdef __SPARC__ 
++#define RDTSC(qp) \
++    qp = (unsigned long long) gethrtime(); 
++#else
+ #define RDTSC(qp) \
+ do { \
+-  unsigned long lowPart, highPart;        				\
++  unsigned long lowPart, highPart;                                      \
+   __asm__ __volatile__("rdtsc" : "=a" (lowPart), "=d" (highPart)); \
+     qp = (((unsigned long long) highPart) << 32) | lowPart; \
+ } while (0)
++#endif
+ 
+ HTimer::HTimer(const std::string& name) : d_accumulated(0), d_started(0)
+ {
+-- 
+1.7.10
+
