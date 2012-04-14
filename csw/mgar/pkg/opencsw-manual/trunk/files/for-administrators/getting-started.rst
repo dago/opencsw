@@ -57,6 +57,9 @@ URL replaced by the mirror you picked::
 
   mirror=http://mirror.opencsw.org/opencsw/unstable
 
+By default, pkgutil is configured to use the ``testing`` catalog. You might
+change it to ``unstable`` if you want to use newer versions of packages.
+
 You can verify the setting with ``pkgutil -V``::
 
   ...
