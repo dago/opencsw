@@ -102,6 +102,8 @@ EXTRA_SOS_LD_FLAGS += -L$(abspath $(WORKSRC)/poppler/.libs)
 EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
+### Install unsupported xpdf headers.
+CONFIGURE_ARGS += --enable-xpdf-headers 
 
 include gar/category.mk
 
