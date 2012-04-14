@@ -2,7 +2,10 @@
 
 import sys
 import os
+import re
 from optparse import OptionParser
+from datetime import date
+from datetime import timedelta
 
 catalog = {};
 
@@ -97,22 +100,58 @@ class Package:
 	""" Defines a package. A package has a name (CSWfoo), a list of dependencies (same syntax as
 	    catalog (CSWfoo|CSWbar) and a tier (1, 2, 3 or None if undefined)
 	"""
-	def __init__(self, name=None, depends=None, tier=None):
+	def __init__(self, name=None, version=None, depends=None):
+		# Copy the name, depend lsit and tier
 		self.name = name
 		if (depends != "none"):
 			self.depends = depends
 		else:
 			self.depends = None		
+
+		# By default tier is set to 3. If the package is less than one year old, then it
+		# will be promoted to tier 2 later. This is pretty crappy, but at this time there is
+		# no way to be sure the catalog is fully parsed
 		self.tier = 3
+	
+		# Compute the date. This information can be missing in some packages
+		# Thus date is initialized to None. If it is possible to extract one from
+		# revision string, then it will be set
+		self.date = None
+
+	        # Retrieve the date from the revision string, if it exists
+                re_revisionString = re.compile(',REV=(?P<date>20\d\d\.\d\d\.\d\d)')
+		d1 = re_revisionString.search(version)
+		
+		# Check if d1 is defined, if not, the regexp matched no revision string	
+		if d1:	
+			# Split the date to retrieve the year month day components
+			d2 = d1.group('date').split('.')
+			self.date = date(year=int(d2[0]) , month=int(d2[1]), day=int(d2[2]))
+			
+			# Compute the time elapsed between today and the update date
+			delta = date.today() - self.date
+
+			# If the delta between date is more than 365 days, then it has not been updated for a year
+			# it goes to tier 3
+			if delta.days > 365:
+				self.tier = 3
+			# Otherwise there is a quite recent update, it moves to tier 2
+			else:
+				self.tier = 2
+		
 
 	def setTier(self, tier):
 		# Access to the global variable storing the catalog
 		global catalog
 
 		# Check if tier is lower or undefined, then we need to do something
-		if self.tier > tier :
+		if self.tier >= tier :
+			if self.tier > tier :
+				print "%(pkg)s : %(t1)d => %(t2)d" % { 'pkg' : self.name , 't1' : self.tier , 't2' : tier }
+
 			# Set the new tier value
 			self.tier = tier
+			
 			# And iterate the list of dependencies to recursivly call the setTier method
 			if (self.depends != None):
 				for pkg in self.depends.split('|'):
@@ -130,11 +169,16 @@ def main():
 
 	# Read catalog content
 	for line in open(configParser.getCatalog(), 'r'):
-		pkgInfo = line.split(' ')	
-		name = pkgInfo[2]		
-		depends = pkgInfo[6]
-		catalog[name] = Package(name,depends)
+		pkgInfo       = line.split(' ')	
+		version       = pkgInfo[1]		
+		name          = pkgInfo[2]		
+		depends       = pkgInfo[6]
+		catalog[name] = Package(name, version, depends)
 
+	# Iterates the catalog once parsed to propagated tier values to depends
+	for pkg in catalog:
+		catalog[pkg].setTier(catalog[pkg].tier)
+	
 	for tier in (1 ,2 ,3):
 		# Create the three files for outputing tier content
 		outputFile[tier] = open(configParser.getTierOutputFile(tier), 'w') 
