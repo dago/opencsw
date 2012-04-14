@@ -52,19 +52,8 @@ mirrors are listed at::
 
   http://www.opencsw.org/get-it/mirrors/
 
-It is important to note that ``pkgutil`` can use **two** configuration files:
-
-- ``/etc/opt/csw/pkgutil.conf``
-- ``/opt/csw/etc/pkgutil.conf``
-
-This may seem confusing, the reason why there are two is that it is possible to
-run OpenCSW in a `sparse root environment`_ where ``/opt`` is not writable. In
-this scenario you use configurations in ``/opt/csw/etc`` for global settings
-and ``/etc/opt/csw`` for zone-specific setting. Both ``pkgutil.conf`` are
-identical on installation with all configuration options commented out, so you
-can just pick one for now. As a rule of thumb it is recommended to prefer the
-more prominent ``/etc/opt/csw``. Please uncomment the line with ``mirror`` so
-it looks similar to this with the URL replaced by the mirror you picked::
+Please uncomment the line with ``mirror`` so it looks similar to this with the
+URL replaced by the mirror you picked::
 
   mirror=http://mirror.opencsw.org/opencsw/unstable
 
