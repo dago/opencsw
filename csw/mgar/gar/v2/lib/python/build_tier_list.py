@@ -225,9 +225,9 @@ def main():
 
 
 	if configParser.getSimulate() == True:
-		print "\tInit\tProp\tFile"
+		print "\tInit\tProp\tFile\tImpact"
 		for tier in (0, 1 ,2 ):
-			print "tier %(tier)d\t%(1)d\t%(2)d\t%(3)d" % { 'tier' : tier + 1 , '1' : countPkg[0][tier], '2' : countPkg[1][tier],'3' : countPkg[2][tier] }
+			print "tier %(tier)d\t%(1)d\t%(2)d\t%(3)d\t%(4)d" % { 'tier' : tier + 1 , '1' : countPkg[0][tier], '2' : countPkg[1][tier],'3' : countPkg[2][tier] , '4' : countPkg[2][tier] - countPkg[1][tier] }
 
 # On sort en rendant le code de retour de main
 if __name__ == '__main__':
