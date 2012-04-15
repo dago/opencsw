@@ -1,13 +1,19 @@
 NAME = geolitedb
-VERSION = 110201
+VERSION = 20120403
 CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = Geolite country database
 
-MASTER_SITES = http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/
-DISTFILES  = GeoIP.dat.gz
+MASTER_SITES += http://geolite.maxmind.com/download/geoip/database/
+MASTER_SITES += http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/
+MASTER_SITES += http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/
+DISTFILES += GeoIP.dat.gz
+DISTFILES += GeoLiteCity.dat.xz
+DISTFILES += GeoLiteCityv6.dat.gz
 DISTFILES += COPYING
+
+VENDOR_URL = http://www.maxmind.com/app/geolitecountry
 
 ARCHALL = 1
 
@@ -18,12 +24,10 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-WORKSRC = $(WORKDIR)
-SPKG_SOURCEURL = http://www.maxmind.com/app/geolitecountry
-
 install-custom:
 	@echo " ==> Installing $(NAME)"
-	@ginstall -d $(DESTDIR)/opt/csw/share/GeoIP
-	@ginstall -d $(DESTDIR)/opt/csw/share/doc/geolitedb
-	@cp -r $(WORKSRC)/GeoIP.dat $(DESTDIR)/opt/csw/share/GeoIP/
+	ginstall -d $(DESTDIR)/opt/csw/share/GeoIP
+	ginstall $(WORKDIR)/GeoIP.dat $(DESTDIR)/opt/csw/share/GeoIP/GeoIP.dat
+	ginstall $(WORKDIR)/GeoLiteCity.dat $(DESTDIR)/opt/csw/share/GeoIP/GeoIPCity.dat
+	ginstall $(WORKDIR)/GeoLiteCityv6.dat $(DESTDIR)/opt/csw/share/GeoIP/GeoIPCityv6.dat
 	@$(MAKECOOKIE)
