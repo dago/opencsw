@@ -14,8 +14,11 @@ endef
 MASTER_SITES = http://tidy.sourceforge.net
 DISTFILES  = $(DISTNAME).tar.gz
 
+LICENSE = LICENSE
+
 include gar/category.mk
 
 pre-configure-modulated:
-	@(cd $(WORKSRC); bash build/gnuauto/setup.sh )
+	@(cd $(WORKSRC); bash build/gnuauto/setup.sh; \
+		lynx --dump htmldoc/license.html > LICENSE )
 	@$(MAKECOOKIE)
