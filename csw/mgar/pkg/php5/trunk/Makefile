@@ -63,7 +63,7 @@ BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWimap-devel
 BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql-dev CSWunixodbc
 BUILD_DEP_PKGS += CSWlibpq CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp
-BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWhtmltidy CSWpostgresql
+BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 # NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
 # of sqlite...
@@ -211,7 +211,7 @@ PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
 $(eval $(call php5_subpackage,sysvmsg,CSWlibz1))
 $(eval $(call php5_subpackage,sysvsem,CSWlibz1))
 $(eval $(call php5_subpackage,sysvshm,CSWlibz1))
-$(eval $(call php5_subpackage,tidy,CSWhtmltidy CSWlibz1))
+$(eval $(call php5_subpackage,tidy,CSWlibtidy0-99 CSWlibz1))
 $(eval $(call php5_subpackage,tokenizer,CSWlibz1))
 $(eval $(call php5_subpackage,wddx,CSWlibz1))
 $(eval $(call php5_subpackage,xmlreader,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
