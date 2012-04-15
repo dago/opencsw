@@ -5,7 +5,7 @@
 #
 
 NAME = netsnmp
-VERSION = 5.6.1
+VERSION = 5.6.1.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -32,7 +32,7 @@ VENDOR_URL = http://www.net-snmp.org/
 BUILD_DEP_PKGS = CSWpysetuptools
 RUNTIME_DEP_PKGS = CSWosslrt CSWtcpwrap CSWpython
 
-BUILD64 = 1
+# BUILD64 = 1
 
 # The -I/opt/csw/include pulls in installed version before built version and breaks testsuite
 CPPFLAGS =
@@ -63,8 +63,8 @@ CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 # Solaris /bin/bash does not allow empty lists in "for i in ; do echo; done"
-CONFIG_SHELL = /opt/csw/bin/bash
-EXTRA_CONFIGURE_ENV = CONFIG_SHELL
+EXTRA_CONFIGURE_EXPORTS = CONFIG_SHELL
+EXTRA_CONFIGURE_ENV_CONFIG_SHELL = /opt/csw/bin/bash
 
 # TBD: Make alternatives
 # - with embedded Perl and disabled modules
@@ -74,7 +74,7 @@ EXTRA_CONFIGURE_ENV = CONFIG_SHELL
 
 # Disable testsuite until this has been fixed or /tmp will fill up:
 #   https://sourceforge.net/tracker/?func=detail&aid=3006962&group_id=12694&atid=112694
-# SKIPTEST ?= 1
+SKIPTEST ?= 1
 
 TEST_TARGET = test
 
