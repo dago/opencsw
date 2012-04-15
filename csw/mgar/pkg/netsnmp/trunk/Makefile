@@ -30,21 +30,23 @@ PATCHFILES += Makefile.in.diff
 VENDOR_URL = http://www.net-snmp.org/
 
 BUILD_DEP_PKGS = CSWpysetuptools
-RUNTIME_DEP_PKGS = CSWosslrt CSWtcpwrap CSWpython
+RUNTIME_DEP_PKGS_CSWnetsnmp += CSWpython
+RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWnetsnmp += CSWperl
+
 
 # BUILD64 = 1
 
 # The -I/opt/csw/include pulls in installed version before built version and breaks testsuite
 CPPFLAGS =
 EXTRA_CFLAGS = $(INCLUDE_FLAGS)
+# link not to the old already installed libs
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -xnorunpath
 
 CONFIGURE_ARGS_mm-32  = --disable-embedded-perl --with-perl-modules=yes
 # Enable Perl for 64 bit later
-# CONFIGURE_ARGS_mm-32  = --enable-embedded-perl --with-perl-modules=yes
-
-# This throws compile error, investigate later
-# CONFIGURE_ARGS_mm-32 += --with-python-modules=yes
-
+#
 # CONFIGURE_ARGS_mm-64  = --disable-embedded-perl --without-perl-modules
 CONFIGURE_ARGS_mm-64  = --enable-embedded-perl --with-perl-modules
 CONFIGURE_ARGS_mm-64 += --without-python-modules
@@ -78,12 +80,25 @@ SKIPTEST ?= 1
 
 TEST_TARGET = test
 
+INSTALL_OVERRIDE_VARS += SHELL
+INSTALL_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
+
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
 # Overriding specific libs is not possible right now. Refine when finished.
 # CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found|opt/csw/lib/python/site-packages/netsnmp/client_intf.so
-CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found
-CHECKPKG_OVERRIDES_CSWnetsnmp += missing-dependency|CSWperl
+# CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/site_perl/NetSNMP/TrapReceiver.pm
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/bin/traptoemail
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/bin/ipf-mod.pl
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/snmp/mib2c-data/mfd-makefile.m2m
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/snmpcmd.1
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/snmpconf.1
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/snmpd.8
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/snmpd.conf.5
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/NetSNMP::TrapReceiver.3perl
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/share|root/opt/csw/bin/net-snmp-cert
+
 
 include gar/category.mk
 
