@@ -22,6 +22,10 @@ class CommandLineParser(object):
         self.parser = OptionParser()
 
         # Add the different command line options to the parser
+        self.parser.add_option("-m", "--min-age", help="Defines the minimum age of the package",
+                                action="store", dest="minage", type="int")
+        self.parser.add_option("-M", "--max-age", help="Defines the maximum age of the package",
+                                action="store", dest="maxage", type="int")
         self.parser.add_option("-c", "--catalog", help="Defines the catalog to parse. Default is ./catalog",
                                 action="store", dest="catalog", type="string")
         self.parser.add_option("-1", "--tier1-list", help="List of tier 1 packages",
@@ -76,6 +80,10 @@ class ConfigurationParser(object):
         else:
             self.tier3 = "./tier3"
 
+	# This members can be undefined (None) if the option was not passed on the CLI
+	self.minage = args.minage
+	self.maxage = args.maxage
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def getCatalog(self):
@@ -102,6 +110,12 @@ class ConfigurationParser(object):
     def getVerbose(self):
         return self.verbose
 
+    def getMinAge(self):
+        return self.minage
+
+    def getMaxAge(self):
+        return self.maxage
+
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #
@@ -126,6 +140,7 @@ class Package:
 		# Thus date is initialized to None. If it is possible to extract one from
 		# revision string, then it will be set
 		self.date = None
+		self.age  = None
 
 	        # Retrieve the date from the revision string, if it exists
                 re_revisionString = re.compile(',REV=(?P<date>20\d\d\.\d\d\.\d\d)')
@@ -138,16 +153,18 @@ class Package:
 			self.date = date(year=int(d2[0]) , month=int(d2[1]), day=int(d2[2]))
 			
 			# Compute the time elapsed between today and the update date
-			delta = date.today() - self.date
+			self.age = date.today() - self.date
 
 			# If the delta between date is more than 365 days, then it has not been updated for a year
 			# it goes to tier 3
-			if delta.days > 365:
+			if self.age.days > 365:
 				self.tier = 3
 			# Otherwise there is a quite recent update, it moves to tier 2
 			else:
 				self.tier = 2
-		
+
+		# Store the inital tier	
+		self.original = self.tier
 
 	def setTier(self, tier):
 		# Access to the global variable storing the catalog
@@ -215,8 +232,16 @@ def main():
 	for pkg in catalog:
 		# If simulation mode is off the output to the file
 		if configParser.getSimulate() == False:
-			outputFile[catalog[pkg].tier].write("%(name)s\n" % { 'name' : catalog[pkg].name })
-		
+			# Output the package to the file only if its age is betwwen min and max
+			if (configParser.getMinAge() == None) and (configParser.getMaxAge() == None):
+					outputFile[catalog[pkg].tier].write("%(name)s\n" % { 'name' : catalog[pkg].name })
+			else:		
+				# The filter can apply only if the age has been set
+				if (catalog[pkg].age != None):
+					if (configParser.getMinAge() == None) or ( (configParser.getMinAge() != None) and (catalog[pkg].age.days > configParser.getMinAge()) ):
+						if (configParser.getMaxAge() == None) or ( (configParser.getMaxAge() != None) and (catalog[pkg].age.days < configParser.getMaxAge()) ):
+							outputFile[catalog[pkg].tier].write("%(age)d\t%(name)s\n" % { 'name' : catalog[pkg].name , 'age' : catalog[pkg].age.days })
+
 		# Iterates the catalog to compute the tiering after rule propagation 
 		countPkg[2][catalog[pkg].tier-1] += 1
 
