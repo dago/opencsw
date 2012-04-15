@@ -118,6 +118,13 @@ class ParsePackageFileNameTest(unittest.TestCase):
     self.assertEqual(parsed["catalogname"], "boost-jam")
     self.assertEqual(parsed["vendortag"], "UNCOMMITTED")
 
+  def testParsePackageFileName_Achievo(self):
+    file_name = ("achievo-0.8.4-all-CSW.pkg.gz")
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEqual(parsed["arch"], "all")
+    self.assertEqual(parsed["catalogname"], "achievo")
+    self.assertEqual(parsed["osrel"], "unspecified")
+
   def testParsePackageFileName_Nonsense(self):
     """Checks if the function can sustain a non-conformant string."""
     file_name = "What if I wrote a letter to my grandma here?"
