@@ -2,28 +2,20 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tidy
-VERSION = x.y
+VERSION = 20090325cvs
 GARTYPE = v2
-CATEGORIES = category
+CATEGORIES = utils
 
-DESCRIPTION = Brief description
+DESCRIPTION = An HTML Syntax Checker and Reformatter
 define BLURB
-  Long description
+An HTML Syntax Checker and Reformatter
 endef
 
-MASTER_SITES = 
+MASTER_SITES = http://tidy.sourceforge.net
 DISTFILES  = $(DISTNAME).tar.gz
-
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
+pre-configure-modulated:
+	@(cd $(WORKSRC); bash build/gnuauto/setup.sh )
+	@$(MAKECOOKIE)
