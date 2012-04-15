@@ -1,5 +1,5 @@
 NAME = poppler-data
-VERSION = 0.4.0
+VERSION = 0.4.5
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -7,8 +7,10 @@ DESCRIPTION = Poppler is a PDF rendering library based on the xpdf-3.0 code base
 define BLURB
 endef
 
-PACKAGES = CSWpopplerdata
-CATALOGNAME_CSWpopplerdata = poppler_data
+PACKAGES = CSWpoppler-data
+CATALOGNAME_CSWpoppler-data = poppler_data
+SPKG_DESC_CSWpoppler-data = $(DESCRIPTION), encoding data
+OBSOLETED_BY_CSWpoppler-data = CSWpopplerdata
 
 MASTER_SITES = http://poppler.freedesktop.org/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
