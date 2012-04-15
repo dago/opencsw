@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<!--
+	William Pool (Puddle) 02/05
+	Service manifest for MySQL
+	E-mail:
+	Modified for CSWjboss4 by william Bonnet 12/07
+-->
+
+<service_bundle type='manifest' name='jboss:jboss'>
+	<service name='network/cswjboss4' type='service' version='1'>
+		<create_default_instance enabled='false' />
+	 	<single_instance />
+
+		<dependency name='fs' grouping='require_all' restart_on='none' type='service'>
+			<service_fmri value='svc:/system/filesystem/local' />
+		</dependency>
+	
+		<dependency name='net' grouping='require_all' restart_on='none' type='service'>
+			<service_fmri value='svc:/network/loopback' />
+		</dependency>
+	
+		<exec_method type='method' name='start' exec='/opt/csw/lib/svc/method/svc-jboss4 start' timeout_seconds='-1'>
+            <method_context working_directory='/opt/csw/jboss4'>
+			<method_credential user='jboss' group='jboss' />
+			</method_context>
+		</exec_method>
+	
+		<exec_method type='method' name='stop' exec='/opt/csw/lib/svc/method/svc-jboss4 stop' timeout_seconds='-1'>
+            <method_context working_directory='/opt/csw/jboss4'>
+			<method_credential user='jboss' group='jboss' />
+			</method_context>
+		</exec_method>
+	
+		<exec_method type='method' name='restart' exec='/opt/csw/lib/svc/method/svc-jboss4 restart' timeout_seconds='-1'>
+            <method_context working_directory='/opt/csw/jboss4'>
+			<method_credential user='jboss' group='jboss' />
+			</method_context>
+		</exec_method>
+	
+	</service>
+
+</service_bundle>
