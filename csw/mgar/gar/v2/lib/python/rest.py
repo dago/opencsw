@@ -1,8 +1,9 @@
 #!/usr/bin/env python2.6
 
+import cjson
+import gdbm
 import logging
 import urllib2
-import cjson
 
 DEFAULT_URL = "http://buildfarm.opencsw.org"
 
@@ -84,3 +85,27 @@ class RestClient(object):
     # a HTTP error code is returned, we're letting the application fail.
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
+
+
+class CachedPkgstats(object):
+  """Class responsible for holding and caching package stats.
+
+  Wraps RestClient and provides a caching layer.
+  """
+
+  def __init__(self, filename):
+    self.filename = filename
+    self.d = gdbm.open(filename, "c")
+    self.rest_client = RestClient()
+    self.local_cache = {}
+
+  def GetPkgstats(self, md5):
+    if md5 in self.local_cache:
+      return self.local_cache[md5]
+    elif str(md5) in self.d:
+      return cjson.decode(self.d[md5])
+    else:
+      pkgstats = self.rest_client.GetPkgstatsByMd5(md5)
+      self.d[md5] = cjson.encode(pkgstats)
+      self.local_cache[md5] = pkgstats
+      return pkgstats

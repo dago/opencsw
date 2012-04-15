@@ -109,30 +109,6 @@ def IndexDictByField(d, field):
   return dict((x[field], x) for x in d)
 
 
-class CachedPkgstats(object):
-  """Class responsible for holding and caching package stats.
-
-  Wraps RestClient and provides a caching layer.
-  """
-
-  def __init__(self, filename):
-    self.filename = filename
-    self.d = gdbm.open(filename, "c")
-    self.rest_client = rest.RestClient()
-    self.local_cache = {}
-
-  def GetPkgstats(self, md5):
-    if md5 in self.local_cache:
-      return self.local_cache[md5]
-    elif str(md5) in self.d:
-      return cjson.decode(self.d[md5])
-    else:
-      pkgstats = self.rest_client.GetPkgstatsByMd5(md5)
-      self.d[md5] = cjson.encode(pkgstats)
-      self.local_cache[md5] = pkgstats
-      return pkgstats
-
-
 def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
                           include_version_changes):
   rest_client = rest.RestClient()
@@ -265,7 +241,7 @@ def main():
         options.include_version_changes)
     bundles_by_md5 = {}
     bundles_missing = set()
-    cp = CachedPkgstats("pkgstats.db")
+    cp = rest.CachedPkgstats("pkgstats.db")
     for key in catalogs:
       for pkg in catalogs[key]:
         # logging.debug("%r", pkg)
