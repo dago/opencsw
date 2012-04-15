@@ -502,11 +502,15 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
   reasons_to_be_arch_specific = []
   pkgmap_paths = [x["path"] for x in pkgmap]
   for pkgmap_path in pkgmap_paths:
-    if re.search(ARCH_RE, str(pkgmap_path)):
-      reasons_to_be_arch_specific.append((
-          "archall-with-arch-paths",
-          pkgmap_path,
-          "path %s looks arch-specific" % pkgmap_path))
+    try:
+      path_str = str(pkgmap_path)
+      if re.search(ARCH_RE, path_str):
+        reasons_to_be_arch_specific.append((
+            "archall-with-arch-paths",
+            pkgmap_path,
+            "path %s looks arch-specific" % pkgmap_path))
+    except UnicodeDecodeError, e:
+      logging.warning(e)
   for binary in binaries:
     reasons_to_be_arch_specific.append((
         "archall-with-binaries",
