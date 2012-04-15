@@ -18,6 +18,7 @@ import logging
 import sys
 import os
 import cjson
+import subprocess
 
 
 class RevDeps(object):
@@ -68,7 +69,7 @@ class RevDeps(object):
 
 class PackageRemover(object):
 
-  def RemovePackage(self, catalogname):
+  def RemovePackage(self, catalogname, execute=False):
     # Get md5 sums
     rest_client = rest.RestClient()
     rd = RevDeps()
@@ -95,9 +96,11 @@ class PackageRemover(object):
       pprint.pprint(rev_deps)
     else:
       for osrel in to_remove:
-        print (
-            "csw-upload-pkg --remove --os-release %s %s"
-            % (osrel, " ".join(to_remove[osrel])))
+        args = ["csw-upload-pkg", "--remove", "--os-release",
+            osrel] + to_remove[osrel]
+        print " ".join(args)
+        if execute:
+          subprocess.call(args)
 
 
 
@@ -105,11 +108,12 @@ def main():
   parser = optparse.OptionParser()
   parser.add_option("-c", "--catalogname", dest="catalogname")
   parser.add_option("--debug", dest="debug", action="store_true")
+  parser.add_option("--execute", dest="execute", action="store_true")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
   pr = PackageRemover()
-  pr.RemovePackage(options.catalogname)
+  pr.RemovePackage(options.catalogname, options.execute)
 
 
 if __name__ == '__main__':
