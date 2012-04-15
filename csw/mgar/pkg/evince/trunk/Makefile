@@ -26,6 +26,8 @@ PATCHFILES += 0001-honor-aclocal_flags.patch
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-dbus
+CONFIGURE_ARGS += --disable-nautilus
 # CONFIGURE_ARGS += --enable-introspection 
 # CONFIGURE_ARGS_DBG = --enable-debug
 # CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
