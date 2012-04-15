@@ -76,7 +76,8 @@ BUILD_ARGS += include='/opt/csw/gcc/include'
 BUILD_ARGS += --debug-building
 BUILD_ARGS += address-model=$(MEMORYMODEL)
 # We don't have 64-bit Python
-BUILD_ARGS += --without-python
+BUILD_ARGS_64 += --without-python
+BUILD_ARGS += $(BUILD_ARGS_$(MEMORYMODEL))
 
 BUILD_ARGS_sparcv8plus = instruction-set=v9
 BUILD_ARGS_sparcv9 = instruction-set=v9
