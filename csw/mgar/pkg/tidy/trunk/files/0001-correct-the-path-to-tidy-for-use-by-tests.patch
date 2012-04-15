@@ -1,0 +1,26 @@
+From 92890f40847267999c547496090af8bae7d744a3 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 15 Apr 2012 04:05:54 +0200
+Subject: [PATCH] correct the path to tidy for use by tests
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ test/testone.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/testone.sh b/test/testone.sh
+index 8abb3b9..b3dbd0f 100755
+--- a/test/testone.sh
++++ b/test/testone.sh
+@@ -24,7 +24,7 @@ set +f
+ 
+ TESTNO=$1
+ EXPECTED=$2
+-TIDY=../bin/tidy
++TIDY=../console/tidy
+ INFILES=./input/in_${TESTNO}.*ml
+ CFGFILE=./input/cfg_${TESTNO}.txt
+ 
+-- 
+1.7.10
+

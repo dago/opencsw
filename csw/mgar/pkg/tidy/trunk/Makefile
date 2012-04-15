@@ -13,6 +13,7 @@ endef
 
 MASTER_SITES = http://tidy.sourceforge.net
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES += 0001-correct-the-path-to-tidy-for-use-by-tests.patch
 
 LICENSE = LICENSE
 
@@ -36,4 +37,8 @@ include gar/category.mk
 pre-configure-modulated:
 	@(cd $(WORKSRC); bash build/gnuauto/setup.sh; \
 		lynx --dump htmldoc/license.html > LICENSE )
+	@$(MAKECOOKIE)
+
+test-modulated:
+	@(cd $(WORKSRC)/test; ./testall.sh)
 	@$(MAKECOOKIE)
