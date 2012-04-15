@@ -1,99 +1,30 @@
-From 75432862a6a889ebfcfbb9305b12df021e209188 Mon Sep 17 00:00:00 2001
+From b0b1ebe1c567fe17c1f44d71b0dba956849bb31d Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <daÂm@opencsw.org>
-Date: Sat, 14 Apr 2012 19:17:40 +0200
-Subject: [PATCH 2/2] Do not use unnamed union
+Date: Sun, 15 Apr 2012 18:58:16 +0200
+Subject: [PATCH] Do not use unnamed union
 
 ---
- apps/geoiplookup.c     |    6 +++---
- apps/geoiplookup6.c    |    2 +-
- libGeoIP/GeoIPCity.c   |    2 +-
- libGeoIP/GeoIPCity.h   |    2 +-
- test/test-geoip-city.c |    2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
+ libGeoIP/GeoIPCity.h |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/apps/geoiplookup.c b/apps/geoiplookup.c
-index bd3c6fc..43915e6 100644
---- a/apps/geoiplookup.c
-+++ b/apps/geoiplookup.c
-@@ -309,7 +309,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
- 			}
- 			else {
- 				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
--				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
-+				       gir->latitude, gir->longitude, gir->code.metro_code, gir->area_code);
-                                 _say_range_by_ip(gi, ipnum);
-                                 GeoIPRecord_delete(gir);
- 			}
-@@ -327,7 +327,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
-                                 _mk_conf_str(gir->postal_conf,  postal_str,  5);
- 
- 				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d, %s, %s, %s, %s\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
--				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code,
-+				       gir->latitude, gir->longitude, gir->code.metro_code, gir->area_code,
-                                        country_str, region_str, city_str, postal_str                       
-                                      );
-                                 _say_range_by_ip(gi, ipnum);
-@@ -351,7 +351,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
-                                 strcpy(accuracy_radius_str,"N/A");}
-   
- 				printf("%s: %s, %s, %s, %s, %f, %f, %d, %d, %s, %s, %s, %s, %s\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
--				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code,
-+				       gir->latitude, gir->longitude, gir->code.metro_code, gir->area_code,
-                                        country_str, region_str, city_str, postal_str, accuracy_radius_str
-                                      );
-                                 _say_range_by_ip(gi, ipnum);
-diff --git a/apps/geoiplookup6.c b/apps/geoiplookup6.c
-index dc0ff9b..00c9101 100644
---- a/apps/geoiplookup6.c
-+++ b/apps/geoiplookup6.c
-@@ -175,7 +175,7 @@ geoiplookup(GeoIP * gi, char *hostname, int i)
- 		        }
- 		        else {
- 		                printf("%s: %s, %s, %s, %s, %f, %f, %d, %d\n", GeoIPDBDescription[i], gir->country_code, _mk_NA(gir->region), _mk_NA(gir->city), _mk_NA(gir->postal_code),
--				       gir->latitude, gir->longitude, gir->metro_code, gir->area_code);
-+				       gir->latitude, gir->longitude, gir->code.metro_code, gir->area_code);
-                         }
- 	        }
- 	
-diff --git a/libGeoIP/GeoIPCity.c b/libGeoIP/GeoIPCity.c
-index d308b45..d716e79 100644
---- a/libGeoIP/GeoIPCity.c
-+++ b/libGeoIP/GeoIPCity.c
-@@ -228,7 +228,7 @@ _extract_record(GeoIP * gi, unsigned int seek_record, int *next_record_ptr)
-       record_buf += 3;
-       for (j = 0; j < 3; ++j)
- 	metroarea_combo += (record_buf[j] << (j * 8));
--      record->metro_code = metroarea_combo / 1000;
-+      record->code.metro_code = metroarea_combo / 1000;
-       record->area_code = metroarea_combo % 1000;
-     }
-   }
 diff --git a/libGeoIP/GeoIPCity.h b/libGeoIP/GeoIPCity.h
-index f6f8fc8..0ed752f 100644
+index f6f8fc8..d9de181 100644
 --- a/libGeoIP/GeoIPCity.h
 +++ b/libGeoIP/GeoIPCity.h
-@@ -42,7 +42,7 @@ typedef struct GeoIPRecordTag {
- 	union {
- 	  int metro_code; /* metro_code is a alias for dma_code */
- 	  int dma_code;
+@@ -39,10 +39,9 @@ typedef struct GeoIPRecordTag {
+ 	char *postal_code;
+ 	float latitude;
+ 	float longitude;
+-	union {
+-	  int metro_code; /* metro_code is a alias for dma_code */
+-	  int dma_code;
 -        };
-+        } code;
++	int dma_code;
++/* metro_code is a alias for dma_code */
++#define metro_code dma_code
  	int area_code;
  	int charset;
  	char *continent_code;
-diff --git a/test/test-geoip-city.c b/test/test-geoip-city.c
-index 4a48fde..c32291a 100644
---- a/test/test-geoip-city.c
-+++ b/test/test-geoip-city.c
-@@ -68,7 +68,7 @@ main(int argc, char *argv[])
- 	     _mk_NA(gir->postal_code),
- 	     gir->latitude,
- 	     gir->longitude,
--	     gir->metro_code,
-+	     gir->code.metro_code,
- 	     gir->area_code,
- 	     _mk_NA(time_zone),
- 	     ret[0],
 -- 
 1.7.10
 
