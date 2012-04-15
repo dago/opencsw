@@ -1,0 +1,58 @@
+# Environment variables documentation
+#
+# JAVA_HOME
+#
+#     JAVA_HOME specify which version of Java should be used
+#     by JBOSS. You can supered the default value in the jboss4
+#     configuration file. The value of this variable must be a path
+#     pointing to the root of a valid JRE or JDK (the root dir not
+#     the bin dir !). The default value is /usr/java.
+#
+
+# JAVA_HOME=/usr/java
+
+# JBOSS_USER
+#
+#     JBOSS_USER variable defines the Solaris user running the
+#     JBOSS server. You can supered the default valude in the
+#     jboss4 configuration file. The value of this variable must
+#     be a valid Solaris user (ie: root, nobody). The default value
+#     is jboss.
+#
+#     WARNING : By default the directory permissions are set for
+#     the JBOSS user (no write access for 'nobody').
+#     The logs are stored in /opt/csw/jboss4/server/<config>/log, and 
+#     do belong  to root user. If you change the JBOSS_USER, be sure 
+#     that this user can write in the log directory.
+#
+
+JBOSS_USER=jboss
+
+# RUN_CONF
+#
+#     RUN_CONF variable defines the optionnal configuration file
+#     used by the JBOSS server. 
+
+# RUN_CONF= /opt/csw/jboss4/bin/run.conf
+
+# JBOSS_RUN_ARGS
+#
+#     JBOSS_RUN_ARGS variable defines the optionnal arguments 
+#     passed to run.sh command line. According to JBoss documentation
+#     the followings switches are availables :
+#
+#     -d, --bootdir=<dir>           Set the boot patch directory; Must be absolute or url
+#     -p, --patchdir=<dir>          Set the patch directory; Must be absolute or url
+#     -n, --netboot=<url>           Boot from net with the given url as base
+#     -c, --configuration=<name>    Set the server configuration name
+#     -B, --bootlib=<filename>      Add an extra library to the front bootclasspath
+#     -L, --library=<filename>      Add an extra library to the loaders classpath
+#     -C, --classpath=<url>         Add an extra url to the loaders classpath
+#     -P, --properties=<url>        Load system properties from the given url
+#     -b, --host=<host or ip>       Bind address for all JBoss services. Further explanation below.
+#     -g, --partition=<name>        HA Partition name (default=DefaultDomain)
+#     -u, --udp=<ip>                UDP multicast address
+
+# JBOSS_RUN_ARGS=
+
+
