@@ -1,0 +1,62 @@
+From 8697780bf0c23c0cbd47711eefceb6d383c4df9b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Sat, 14 Apr 2012 19:56:55 +0200
+Subject: [PATCH] Explicitly print NULL when passed nullpointer instead of
+ dumping core
+
+---
+ test/test-geoip.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/test/test-geoip.c b/test/test-geoip.c
+index 4bb209e..63bc38e 100644
+--- a/test/test-geoip.c
++++ b/test/test-geoip.c
+@@ -63,22 +63,22 @@ int main () {
+ 		while (fscanf(f, "%s%s%s", ipAddress, expectedCountry, expectedCountry3) != EOF) {
+ 			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
+ 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+-				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
++				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,(returnedCountry == NULL ? "NULL" : returnedCountry),expectedCountry);
+ 				failed = 1;
+ 			}
+ 			returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
+ 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+-				fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
++				fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,(returnedCountry == NULL ? "NULL" : returnedCountry),expectedCountry);
+ 				failed = 1;
+ 			}
+ 			returnedCountry = GeoIP_country_code3_by_addr(gi,ipAddress);
+ 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry3) != 0) {
+-				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
++				fprintf(stderr,"Test addr %d for %s failed, got %s, expected %s\n",test_num,ipAddress,(returnedCountry == NULL ? "NULL" : returnedCountry),expectedCountry);
+ 				failed = 1;
+ 			}
+ 			returnedCountry = GeoIP_country_code3_by_name(gi,ipAddress);
+ 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry3) != 0) {
+-				fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
++				fprintf(stderr,"Test name %d for %s failed, got %s, expected %s\n",test_num,ipAddress,(returnedCountry == NULL ? "NULL" : returnedCountry),expectedCountry);
+ 				failed = 1;
+ 			}
+ 			test_num++;
+@@ -89,7 +89,7 @@ int main () {
+ 		while (fscanf(f, "%s%s", ipAddress, expectedCountry ) != EOF) {
+ 			returnedCountry = GeoIP_country_code_by_addr(gi,ipAddress);
+ 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+-				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
++				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,(returnedCountry == NULL ? "NULL" : returnedCountry),expectedCountry);
+ 				failed = 1;
+ 			}
+ 			test_num++;
+@@ -100,7 +100,7 @@ int main () {
+ 		while (fscanf(f, "%s%s", ipAddress, expectedCountry) != EOF) {
+ 			returnedCountry = GeoIP_country_code_by_name(gi,ipAddress);
+ 			if (returnedCountry == NULL || strcmp(returnedCountry, expectedCountry) != 0) {
+-				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,returnedCountry,expectedCountry);
++				fprintf(stderr,"Test addr %d %s failed, got %s, expected %s\n",test_num,ipAddress,(returnedCountry == NULL ? "NULL" : returnedCountry),expectedCountry);
+ 				failed = 1;
+ 			}
+ 			test_num++;
+-- 
+1.7.10
+

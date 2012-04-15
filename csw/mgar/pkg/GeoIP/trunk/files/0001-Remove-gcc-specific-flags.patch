@@ -1,0 +1,67 @@
+From 91d2141f9891e71491609a8cd1295b1722db568a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Sat, 14 Apr 2012 19:04:53 +0200
+Subject: [PATCH 1/2] Remove gcc-specific flags
+
+---
+ Makefile.am          |    2 +-
+ apps/Makefile.am     |    6 +++---
+ libGeoIP/Makefile.am |    2 +-
+ test/Makefile.am     |    4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index bd4da3a..5c12337 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,4 +1,4 @@
+-INCLUDES = -Wall -ansi
++INCLUDES = 
+ 
+ SUBDIRS =		\
+ 	libGeoIP	\
+diff --git a/apps/Makefile.am b/apps/Makefile.am
+index 46cf501..19fac17 100644
+--- a/apps/Makefile.am
++++ b/apps/Makefile.am
+@@ -1,8 +1,8 @@
+ INCLUDES = 	\
+-	-I$(top_srcdir)/libGeoIP		\
+-	-Wall
++	-I$(top_srcdir)/libGeoIP
++	
+ 
+-AM_CPPFLAGS = -DSYSCONFDIR=\"$(sysconfdir)\" -Wall
++AM_CPPFLAGS = -DSYSCONFDIR=\"$(sysconfdir)\" 
+ 
+ DEPS = $(top_builddir)/libGeoIP/libGeoIP.la
+ LDADDS = $(top_builddir)/libGeoIP/libGeoIP.la
+diff --git a/libGeoIP/Makefile.am b/libGeoIP/Makefile.am
+index 5fa0a90..90c2cdf 100644
+--- a/libGeoIP/Makefile.am
++++ b/libGeoIP/Makefile.am
+@@ -2,7 +2,7 @@ lib_LTLIBRARIES = libGeoIP.la libGeoIPUpdate.la
+ 
+ EXTRA_DIST = Makefile.vc md5.h global.h types.h GeoIP_internal.h
+ 
+-AM_CPPFLAGS = -DGEOIPDATADIR=\"$(pkgdatadir)\" -Wall
++AM_CPPFLAGS = -DGEOIPDATADIR=\"$(pkgdatadir)\"
+ 
+ libGeoIP_la_SOURCES = GeoIP.c GeoIPCity.c regionName.c timeZone.c
+ include_HEADERS = GeoIP.h GeoIPCity.h GeoIPUpdate.h
+diff --git a/test/Makefile.am b/test/Makefile.am
+index fffcbed..2745604 100644
+--- a/test/Makefile.am
++++ b/test/Makefile.am
+@@ -1,6 +1,6 @@
+ INCLUDES =	\
+-	-I$(top_srcdir)/libGeoIP		\
+-	-Wall
++	-I$(top_srcdir)/libGeoIP
++	
+ 
+ check_PROGRAMS = test-geoip
+ 
+-- 
+1.7.10
+
