@@ -918,7 +918,6 @@ post-merge-php5ext:
 
 # This merges the 
 merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
-	$(warning M: $(MERGE_DIRS))
 	@$(MAKECOOKIE)
 
 # Copy the whole tree verbatim
