@@ -11,10 +11,8 @@ endef
 
 DISTFILES = COPYING
 
-PACKAGES = CSWpmmimecharset
-CATALOGNAME = pm_mimecharset
-
-BUILD_DEP_PKGS = CSWpmtestpod
+PACKAGES += CSWpm-mimecharset
+BUILD_DEP_PKGS_CSWpm-mimecharset = CSWpmtestpod
 
 ARCHALL = 1
 
