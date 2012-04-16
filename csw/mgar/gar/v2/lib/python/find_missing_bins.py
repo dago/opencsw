@@ -21,6 +21,8 @@ import cjson
 import subprocess
 
 catrel = 'unstable'
+cache_file_bins = 'bins-%s-%s-%s.json'
+cache_file_needed_bins = 'needed-bins-%s-%s-%s.json'
 
 class FindBins(object):
 
@@ -34,13 +36,13 @@ class FindBins(object):
     key = (catrel, arch, osrel)
     if key in self.cached_catalogs_bins:
       return
-    fn_bins = "bins-%s-%s-%s.json" % key
+    fn_bins = cache_file_bins% key
     if os.path.exists(fn_bins):
       with open(fn_bins, "r") as fd:
         self.cached_catalogs_bins[key] = cjson.decode(fd.read())
-    fn_needed_bins = "needed-bins-%s-%s-%s.json" % key
+    fn_needed_bins = cache_file_needed_bins % key
     if os.path.exists(fn_needed_bins):
-      with open(fn, "r") as fd:
+      with open(fn_needed_bins, "r") as fd:
         self.cached_catalogs_needed_bins[key] = cjson.decode(fd.read())
       return
     catalog = self.rest_client.GetCatalog(*key)
@@ -102,13 +104,16 @@ class PackageScanner(object):
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
         bins = rd.getBins(catrel, arch, osrel)
         needed_bins = rd.getNeededBins(catrel, arch, osrel)
-        for pkg in bins:
-          print pkg, bins[pkg]
-        
-
-    print "found:"
-    pprint.pprint(needed_bins)
-
+        for pkg in needed_bins:
+          for nb in needed_bins[pkg]:
+            found = False
+            for npkg in bins:
+              if nb in bins[npkg]:
+		found = True
+                break
+            if found == False: 
+              print "%s not found, needed in pkg %s" % (nb,pkg)
+ 
 def main():
   parser = optparse.OptionParser()
   parser.add_option("--debug", dest="debug", action="store_true")
