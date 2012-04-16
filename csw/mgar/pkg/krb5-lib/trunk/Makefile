@@ -135,7 +135,8 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 # --enable-ipv6 is deprecated and autodetected
 #CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-kdc-replay-cache --enable-dns-for-realm
-CONFIGURE_ARGS += --disable-thread-support
+#CONFIGURE_ARGS += --disable-thread-support
+CONFIGURE_ARGS += --enable-thread-support
 CONFIGURE_ARGS += --disable-static --disable-profiled
 CONFIGURE_ARGS += --without-ldap
 
