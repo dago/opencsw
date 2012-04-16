@@ -13,17 +13,15 @@ MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES += $(DISTNAME).tar.xz
 
 PACKAGES = CSWlibsigc2-0-0-gxx
-SPKG_DESC_CSWlibsigc2-0-0-gxx = Typesafe signal and callback system for C++, libsigc-2.0.so.0-gxx
+SPKG_DESC_CSWlibsigc2-0-0-gxx = Typesafe signal and callback system for C++, libsigc-2.0.so.0 compiled with g++
 PKGFILES_CSWlibsigc2-0-0-gxx += $(call pkgfiles_lib,libsigc-2.0.so.0)
 RUNTIME_DEP_PKGS_CSWlibsigc2-0-0-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibsigc2-0-0-gxx += CSWlibstdc++6
 
-PACKAGES += CSWlibsigc-dev-gxx
-SPKG_DESC_CSWlibsigc-dev-gxx = Header files for libsigc-2.0.so.0-gxx
+PACKAGES += CSWlibsigc-gxx-dev
+SPKG_DESC_CSWlibsigc-gxx-dev = Header files for libsigc-2.0.so.0 compiled with g++
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibsigc-dev-gxx = CSWlibsigc2-0-0-gxx
-#OBSOLETED_BY_CSWlibsigc-dev = CSWlibsigc++devel
-#CATALOGNAME_CSWlibsigc++devel = libsigc++_devel_stub
+RUNTIME_DEP_PKGS_CSWlibsigc-gxx-dev = CSWlibsigc2-0-0-gxx
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 GARCOMPILER = GNU
