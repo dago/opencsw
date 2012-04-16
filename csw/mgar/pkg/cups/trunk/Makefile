@@ -65,6 +65,8 @@ VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
 
+GARCOMPILER = SOS12U3
+
 BUILD_DEP_PKGS  = CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
 BUILD_DEP_PKGS += CSWopenldap-dev
@@ -76,7 +78,7 @@ BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += SUNWhea
 BUILD_DEP_PKGS += SUNWlibm
-BUILD_DEP_PKGS += SUNWslpu
+BUILD_DEP_PKGS += CSWlibslp-dev
 
 # The main metapackage
 PACKAGES += CSWcups
@@ -304,7 +306,8 @@ OBSOLETED_BY_CSWlibcupsppdc1 += CSWlibcups
 # For some reason -norunpath is not used here, investigate later
 CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
 
-BUILD64_LIBS_ONLY = 1
+# commented out because libtasn1.so.3 needed by libgnutls is not availible for 64bit (at the moment)
+# BUILD64_LIBS_ONLY = 1
 
 EXTRA_LINKER_FLAGS += -liconv
 EXTRA_LINKER_FLAGS += -norunpath
