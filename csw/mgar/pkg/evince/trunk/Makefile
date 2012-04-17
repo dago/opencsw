@@ -104,13 +104,13 @@ RUNTIME_DEP_PKGS_CSWevince += CSWlibdjvulibre21
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler-glib5
 RUNTIME_DEP_PKGS_CSWevince += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus1-3
+# RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWevince += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWevince += CSWlibz1
 RUNTIME_DEP_PKGS_CSWevince += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWevince += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus-glib1-2
+# RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibspectre1
 RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler7
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgdk-x11-2-0-0
@@ -123,12 +123,12 @@ RUNTIME_DEP_PKGS_CSWevince += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWevince += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWfconfig
-RUNTIME_DEP_PKGS_CSWevince += CSWgnomevfs2
-RUNTIME_DEP_PKGS_CSWevince += CSWnautilus
+# RUNTIME_DEP_PKGS_CSWevince += CSWgnomevfs2
+# RUNTIME_DEP_PKGS_CSWevince += CSWnautilus
 RUNTIME_DEP_PKGS_CSWevince += CSWpango
-RUNTIME_DEP_PKGS_CSWevince += CSWdbus
+# RUNTIME_DEP_PKGS_CSWevince += CSWdbus
 # at least the machine-id file must exist, dbus-daemon creates this
-CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
+# CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
 # Solaris10 paths: these are resuts of cmd: 
 # $ scrollkeeper-config --pkglocalstatedir
 CHECKPKG_OVERRIDES_CSWevince += discouraged-path-in-pkgmap|/opt/csw/var/lib
