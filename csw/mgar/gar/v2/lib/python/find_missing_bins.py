@@ -23,6 +23,7 @@ import subprocess
 catrel = 'unstable'
 cache_file_bins = 'bins-%s-%s-%s.json'
 cache_file_needed_bins = 'needed-bins-%s-%s-%s.json'
+fn_stdlibs = 'stdlibs.json'
 
 class FindBins(object):
 
@@ -98,6 +99,8 @@ class PackageScanner(object):
     rest_client = rest.RestClient()
     rd = FindBins()
     needed_bins = {}
+    with open(fn_stdlibs, "r") as fd:
+        stdlibs = cjson.decode(fd.read())
     for osrel in common_constants.OS_RELS:
       if osrel in common_constants.OBSOLETE_OS_RELS:
         continue
@@ -111,6 +114,9 @@ class PackageScanner(object):
               if nb in bins[npkg]:
 		found = True
                 break
+              if nb in stdlibs:
+                found = True
+		break
             if found == False: 
               print "%s not found, needed in pkg %s" % (nb,pkg)
  
@@ -120,6 +126,9 @@ def main():
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
+  if not os.path.exists(fn_stdlibs):
+    print "needed file %s not found, exit" % fn_stdlibs
+    sys.exit()
   pr = PackageScanner()
   pr.scanPackage()
 
