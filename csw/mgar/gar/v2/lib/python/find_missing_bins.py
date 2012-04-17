@@ -1,12 +1,7 @@
-#!/usr/bin/env python2.6
+#!/usr/bin/env python2.6 -t
 
-"""Helps to safely remove a package (by catalogname) from the catalog.
+"""Helps to check if all needed libs are in the catalog.
 
-Takes a catalog name and:
-
-  - checks all the catalogs and gets the md5 sums for each catalog
-  - checks for reverse dependencies; if there are any, stops
-  - when there are no rev deps, prints a csw-upload-pkg --remove call
 """
 
 import optparse
@@ -24,6 +19,7 @@ catrel = 'unstable'
 cache_file_bins = 'bins-%s-%s-%s.json'
 cache_file_needed_bins = 'needed-bins-%s-%s-%s.json'
 fn_stdlibs = 'stdlibs.json'
+fn_report = 'missing_libs.txt'
 
 class FindBins(object):
 
@@ -99,26 +95,60 @@ class PackageScanner(object):
     rest_client = rest.RestClient()
     rd = FindBins()
     needed_bins = {}
+    osrel_list = []
     with open(fn_stdlibs, "r") as fd:
         stdlibs = cjson.decode(fd.read())
+    fl = open(fn_report, "w")
+    r = -1
     for osrel in common_constants.OS_RELS:
+      r = r+1
       if osrel in common_constants.OBSOLETE_OS_RELS:
+        logging.debug("scanPackage: %s is obsoleted" % osrel)
         continue
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
+        # get the list of binaries of a package
         bins = rd.getBins(catrel, arch, osrel)
+        # get the list of libs which a package needs
         needed_bins = rd.getNeededBins(catrel, arch, osrel)
+        i = 0
+        checked = []
         for pkg in needed_bins:
+          i = i+1
           for nb in needed_bins[pkg]:
+            if nb in checked: continue
+            checked.append(nb)
             found = False
             for npkg in bins:
-              if nb in bins[npkg]:
-		found = True
-                break
+              for b in bins[npkg]:
+                # if lib in the package
+                if nb in b:
+                  found = True
+                  # logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,b,npkg))
+                  break
+              if found: break
               if nb in stdlibs:
                 found = True
-		break
+                # logging.debug ("\nfound %s" % nb)
+                break
             if found == False: 
-              print "%s not found, needed in pkg %s" % (nb,pkg)
+              # if not found iterate over older OS releases
+              logging.debug ("\ncompare lower osrel %s [%s]: %s" % (osrel,pkg,nb))
+              while r > 0:
+                r = r - 1
+                bins = rd.getBins(catrel, arch, common_constants.OS_RELS[r])
+                for npkg in bins:
+                  for b in bins[npkg]:
+                    if nb in b:
+                      found = True
+                      logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,b,npkg))
+                      break
+                  if found: break
+            if found == False: 
+              fl.write("%s:%s:%s:%s\n" % (nb,pkg,arch,osrel) )
+              print "\nNOT FOUND: %s, needed in pkg %s %s %s" % (nb,pkg,arch,osrel)
+            sys.stdout.write("\r%d" % i)
+            sys.stdout.flush()
+    fl.close()
  
 def main():
   parser = optparse.OptionParser()
