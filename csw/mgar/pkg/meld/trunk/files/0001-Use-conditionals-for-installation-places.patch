@@ -1,0 +1,47 @@
+From 31e237b7e89875429013490c5750e86efdf7958e Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 17 Apr 2012 17:56:42 +0200
+Subject: [PATCH] Use conditionals for installation places.
+
+---
+ INSTALL |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 30f150a..fe65279 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -34,18 +34,18 @@
+ ## If you need to, you can customise the install paths used here:
+ ##
+ PYTHON ?= python
+-prefix := /usr/local
+-bindir := $(prefix)/bin
+-libdir := $(prefix)/lib
+-docdir := $(prefix)/share/doc
+-sharedir := $(prefix)/share
+-helpdir := $(sharedir)/gnome/help
+-localedir := $(prefix)/share/locale
+-localstatedir := $(prefix)/var
+-libdir_ := $(libdir)/meld
+-docdir_ := $(docdir)/meld
+-sharedir_ := $(sharedir)/meld
+-helpdir_ := $(helpdir)/meld
++prefix ?= /usr/local
++bindir ?= $(prefix)/bin
++libdir ?= $(prefix)/lib
++docdir ?= $(prefix)/share/doc
++sharedir ?= $(prefix)/share
++helpdir ?= $(sharedir)/gnome/help
++localedir ?= $(prefix)/share/locale
++localstatedir ?= $(prefix)/var
++libdir_ ?= $(libdir)/meld
++docdir_ ?= $(docdir)/meld
++sharedir_ ?= $(sharedir)/meld
++helpdir_ ?= $(helpdir)/meld
+ ## 
+ ## Python Version
+ ## **************
+-- 
+1.7.10
+

@@ -1,0 +1,73 @@
+From b297bc4c5f1c87088840f18e0a128b6cb32825ad Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 17 Apr 2012 15:06:41 +0200
+Subject: [PATCH] Allow to use a different install utility
+
+---
+ Makefile |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2dd6e7a..6ab615f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -45,41 +45,41 @@ install: $(addsuffix .install,$(SPECIALS)) meld.desktop
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/48x48/apps \
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/scalable/apps \
+ 		$(DESTDIR)$(helpdir_)
+-	install -m 755 bin/meld.install \
++	$(INSTALL) -m 755 bin/meld.install \
+ 		$(DESTDIR)$(bindir)/meld
+-	install -m 644 meld/*.py \
++	$(INSTALL) -m 644 meld/*.py \
+ 		$(DESTDIR)$(libdir_)/meld
+-	install -m 644 meld/ui/*.py \
++	$(INSTALL) -m 644 meld/ui/*.py \
+ 		$(DESTDIR)$(libdir_)/meld/ui
+-	install -m 644 meld/util/*.py \
++	$(INSTALL) -m 644 meld/util/*.py \
+ 		$(DESTDIR)$(libdir_)/meld/util
+-	install -m 644 meld/vc/*.py \
++	$(INSTALL) -m 644 meld/vc/*.py \
+ 		$(DESTDIR)$(libdir_)/meld/vc
+-	install -m 644 meld/paths.py.install \
++	$(INSTALL) -m 644 meld/paths.py.install \
+ 		$(DESTDIR)$(libdir_)/meld/paths.py
+-	install -m 644 data/meld.desktop \
++	$(INSTALL) -m 644 data/meld.desktop \
+ 		$(DESTDIR)$(sharedir)/applications
+ 	$(PYTHON)    -c 'import compileall; compileall.compile_dir("$(DESTDIR)$(libdir_)",10,"$(libdir_)")'
+ 	$(PYTHON) -O -c 'import compileall; compileall.compile_dir("$(DESTDIR)$(libdir_)",10,"$(libdir_)")'
+-	install -m 644 \
++	$(INSTALL) -m 644 \
+ 		data/ui/*.ui \
+ 		$(DESTDIR)$(sharedir_)/ui
+-	install -m 644 \
++	$(INSTALL) -m 644 \
+ 		data/ui/*.xml \
+ 		$(DESTDIR)$(sharedir_)/ui
+-	install -m 644 \
++	$(INSTALL) -m 644 \
+ 		data/icons/*.xpm \
+ 		data/icons/*.png \
+ 		$(DESTDIR)$(sharedir_)/icons
+-	install -m 644 data/icons/hicolor/16x16/apps/meld.png \
++	$(INSTALL) -m 644 data/icons/hicolor/16x16/apps/meld.png \
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/16x16/apps/meld.png
+-	install -m 644 data/icons/hicolor/22x22/apps/meld.png \
++	$(INSTALL) -m 644 data/icons/hicolor/22x22/apps/meld.png \
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/22x22/apps/meld.png
+-	install -m 644 data/icons/hicolor/32x32/apps/meld.png \
++	$(INSTALL) -m 644 data/icons/hicolor/32x32/apps/meld.png \
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/32x32/apps/meld.png
+-	install -m 644 data/icons/hicolor/48x48/apps/meld.png \
++	$(INSTALL) -m 644 data/icons/hicolor/48x48/apps/meld.png \
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/48x48/apps/meld.png
+-	install -m 644 data/icons/hicolor/scalable/apps/meld.svg \
++	$(INSTALL) -m 644 data/icons/hicolor/scalable/apps/meld.svg \
+ 		$(DESTDIR)$(sharedir)/icons/hicolor/scalable/apps/meld.svg
+ 	$(MAKE) -C po install
+ 	$(MAKE) -C help install
+-- 
+1.7.10
+
