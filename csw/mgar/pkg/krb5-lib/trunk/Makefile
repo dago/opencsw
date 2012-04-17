@@ -35,16 +35,17 @@ BUILD_DEP_PKGS = CSWtcl
 # PACKAGES = CSWdo-not-use
 # SPKG_DESC_CSWdo-not-use = Do not use this catch all package
 
-PACKAGES += CSWkrb5doc
+# These packages are not part of the krb5libs build, but only the main server
+#PACKAGES += CSWkrb5doc
 PKGFILES_CSWkrb5doc = NOFILES
 SPKG_DESC_CSWkrb5doc = Unused package 1
-PACKAGES += CSWkrb5user
+#PACKAGES += CSWkrb5user
 PKGFILES_CSWkrb5user = NOFILES
 SPKG_DESC_CSWkrb5user = Unused package 2
-PACKAGES += CSWkrb5kdc
+#PACKAGES += CSWkrb5kdc
 PKGFILES_CSWkrb5kdc = NOFILES
 SPKG_DESC_CSWkrb5kdc = Unused package 3
-PACKAGES += CSWkrb5adminserver
+#PACKAGES += CSWkrb5adminserver
 PKGFILES_CSWkrb5adminserver = NOFILES
 SPKG_DESC_CSWkrb5adminserver = Unused package 4
 
