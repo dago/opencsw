@@ -1,0 +1,10 @@
+--- cppunit-1.12.1.orig/configure.in	2008-02-19 23:59:25.000000000 -0600
++++ cppunit-1.12.1/configure.in	2012-02-02 17:36:56.215835516 -0600
+@@ -88,6 +89,7 @@
+ AC_CXX_HAVE_STRSTREAM
+ AX_CXX_HAVE_ISFINITE
+ AC_CHECK_FUNCS(finite)
++AC_CHECK_LIB([m],[fabs])
+ 
+ cppunit_val='CPPUNIT_HAVE_RTTI'
+ AC_ARG_ENABLE(typeinfo-name,

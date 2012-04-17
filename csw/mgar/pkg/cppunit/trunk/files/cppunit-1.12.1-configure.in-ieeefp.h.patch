@@ -1,0 +1,24 @@
+diff -ur cppunit-1.12.1.orig/configure.in cppunit-1.12.1/configure.in
+--- cppunit-1.12.1.orig/configure.in	2008-02-19 23:59:25.000000000 -0600
++++ cppunit-1.12.1/configure.in	2012-02-02 17:21:28.767587739 -0600
+@@ -73,6 +73,7 @@
+ # ----------------------------------------------------------------------------
+ 
+ AC_CHECK_HEADERS(cmath,[],[],[/**/])
++AC_CHECK_HEADERS(ieeefp.h,[],[],[/**/])
+ 
+ # Check for compiler characteristics 
+ # ----------------------------------------------------------------------------
+--- cppunit-1.12.1.orig/include/cppunit/portability/FloatingPoint.h	2007-03-04 21:16:42.000000000 -0600
++++ cppunit-1.12.1/include/cppunit/portability/FloatingPoint.h	2012-02-02 17:32:43.339423624 -0600
+@@ -4,6 +4,10 @@
+ #include <cppunit/Portability.h>
+ #include <math.h>
+ 
++#if defined(CPPUNIT_HAVE_IEEEFP_H)
++#include <ieeefp.h>
++#endif
++
+ CPPUNIT_NS_BEGIN
+ 
+ /// \brief Tests if a floating-point is a NaN.
