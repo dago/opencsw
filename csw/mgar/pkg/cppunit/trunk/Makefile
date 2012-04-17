@@ -46,3 +46,8 @@ include gar/category.mk
 post-patch-modulated:
 	-cd $(WORKSRC) && autoreconf -fi
 	@$(MAKECOOKIE)
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(BUILD_PREFIX)/share/aclocal
+	ln -s $(sharedstatedir)/aclocal/cppunit.m4 $(DESTDIR)$(BUILD_PREFIX)/share/aclocal/cppunit.m4
+	@$(MAKECOOKIE)
