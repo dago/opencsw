@@ -37,19 +37,24 @@ PATCHFILES = 0001-Install-plugin-at-proper-location.patch
 # patch libtool discards -R options passed with LDFLAGS
 PATCHFILES += ltmain.diff
 
+# Use patch until it is fixed upstream:
+#   http://www.spinics.net/lists/cyrus-sasl/msg02004.html
+PATCHFILES += check-realloc.patch
+
 VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
 PACKAGES += CSWsasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
-RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt
+RUNTIME_DEP_PKGS_CSWsasl += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsasl += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
 
 PACKAGES += CSWsaslauthd
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWsasl
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWosslrt
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibk5crypto3
