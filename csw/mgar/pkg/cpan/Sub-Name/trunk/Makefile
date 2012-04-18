@@ -1,17 +1,21 @@
 NAME = Sub-Name
-VERSION = 0.04
+VERSION = 0.05
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = XMATH
+AUTHOR = FLORA
 
 DESCRIPTION = (re)name a sub
 define BLURB
-  Assigns a new name to referenced sub. If package specification is
-  omitted in the name, then the current package is used. The return value
-  is the sub.
 endef
 
-PACKAGES = CSWpmsubname
-CATALOGNAME = pm_subname
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the unknown license
+
+PACKAGES += CSWpm-sub-name
+CATALOGNAME_CSWpm-sub-name = pm_sub_name
+SPKG_DESC_CSWpm-sub-name = (re)name a sub
+OBSOLETED_BY_CSWpm-sub-name += CSWpmsubname
+CATALOGNAME_CSWpmsubname = pm_subname_stub
 
 include gar/category.mk
