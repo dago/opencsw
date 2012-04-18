@@ -12,13 +12,10 @@ CATALOG_RELEASE = unstable
 
 LICENSE = ARTISTIC
 
-BUILD_DEP_PKGS += CSWpm-test-simple
-
 PACKAGES += CSWpm-mime-charset
 CATALOGNAME_CSWpm-mime-charset = pm_mime_charset
 SPKG_DESC_CSWpm-mime-charset = Charset Informations for MIME
 # There was no information if this is pure Perl or not. Please remove if necessary.
 ARCHALL_CSWpm-mime-charset = 1
-RUNTIME_DEP_PKGS_CSWpm-mime-charset += CSWpm-encode
 
 include gar/category.mk
