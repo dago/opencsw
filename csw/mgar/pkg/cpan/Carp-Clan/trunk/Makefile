@@ -4,14 +4,20 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = STBEY
 
-DESCRIPTION = report errors from perspective of caller of a "clan" of modules
+DESCRIPTION = Report errors from perspective of caller of a "clan" of modules
 define BLURB
-  This module is based on "Carp.pm" from Perl 5.005_03. It has been modified
-  to skip all package names matching the pattern given in the "use" statement
-  inside the "qw()" term (or argument list).
 endef
 
-PACKAGES = CSWpmcarpclan
-CATALOGNAME = pm_carpclan
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-carp-clan
+CATALOGNAME_CSWpm-carp-clan = pm_carp_clan
+SPKG_DESC_CSWpm-carp-clan = Report errors from perspective of caller of a "clan" of modules
+ARCHALL_CSWpm-carp-clan = 1
+RUNTIME_DEP_PKGS_CSWpm-carp-clan += CSWpm-test-exception
+OBSOLETED_BY_CSWpm-carp-clan += CSWpmcarpclan
+CATALOGNAME_CSWpmcarpclan = pm_carpclan_stub
 
 include gar/category.mk
