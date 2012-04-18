@@ -1,28 +1,33 @@
 NAME = Module-Build
-VERSION = stub
+VERSION = 0.40
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = EWILHELM
+AUTHOR = LEONT
 
-DESCRIPTION = Stub to the Perl build-in module Module::Build
+DESCRIPTION = Build and install Perl modules
 define BLURB
 endef
 
-MODDIST =
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmmodulebuild
-CATALOGNAME = pm_modulebuild
+LICENSE = LICENSE
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS =
+BUILD_DEP_PKGS += CSWpm-cpan-meta-yaml
 
-ARCHALL = 1
+PACKAGES += CSWpm-module-build
+CATALOGNAME_CSWpm-module-build = pm_module_build
+SPKG_DESC_CSWpm-module-build = Build and install Perl modules
+ARCHALL_CSWpm-module-build = 1
+RUNTIME_DEP_PKGS_CSWpm-module-build += CSWpm-perl-ostype
+RUNTIME_DEP_PKGS_CSWpm-module-build += CSWpm-cpan-meta
+RUNTIME_DEP_PKGS_CSWpm-module-build += CSWpm-module-metadata
 
-# This package is completely empty, so it hasn't got any files
-# and no license either.
-CHECKPKG_OVERRIDES  = action-class-only-in-pkginfo|none
-CHECKPKG_OVERRIDES += license-missing
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
+
+# We have a ton of collisions with CSWperl, this is intended.
+CHECKPKG_OVERRIDES_CSWpm-module-build += file-collision
 
 include gar/category.mk
