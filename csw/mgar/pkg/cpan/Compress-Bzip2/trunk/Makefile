@@ -4,13 +4,19 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ARJAY
 
-DESCRIPTION = Interface to Bzip2 compression library
+DESCRIPTION = Interface to the Bzip2 compression library
 define BLURB
 endef
 
-RUNTIME_DEP_PKGS = CSWbzip2
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmcompressbzip2
-CATALOGNAME = pm_compressbzip2
+LICENSE = COPYING
+
+PACKAGES += CSWpm-compress-bzip2
+CATALOGNAME_CSWpm-compress-bzip2 = pm_compress_bzip2
+SPKG_DESC_CSWpm-compress-bzip2 = Interface to the Bzip2 compression library
+RUNTIME_DEP_PKGS_CSWpm-compress-bzip2 += CSWlibbz2-1-0
+OBSOLETED_BY_CSWpm-compress-bzip2 += CSWpmcompressbzip2
+CATALOGNAME_CSWpmcompressbzip2 = pm_compressbzip2_stub
 
 include gar/category.mk
