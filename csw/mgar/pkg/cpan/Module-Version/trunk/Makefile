@@ -8,11 +8,14 @@ DESCRIPTION = Get module versions
 define BLURB
 endef
 
-PACKAGES = CSWpm-module-version 
-CATALOGNAME = pm_module_version 
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-module-version
+CATALOGNAME_CSWpm-module-version = pm_module_version
+SPKG_DESC_CSWpm-module-version = Get module versions
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-module-version = 1
 
 include gar/category.mk
