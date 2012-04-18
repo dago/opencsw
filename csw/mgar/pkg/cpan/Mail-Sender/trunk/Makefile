@@ -4,19 +4,19 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = JENDA
 
-DESCRIPTION = Module for sending mails with attachments through an SMTP server
+DESCRIPTION = Send mails with attachments through a SMTP server, socket()s based
 define BLURB
 endef
 
-DISTFILES = COPYING
-PATCHFILES = 0001-Don-t-ask-questions.patch
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmmailsender
-CATALOGNAME = pm_mailsender
+LICENSE_TEXT = This module is licensed under the Perl license
 
-DEP_PKGS = CSWpmfileremove CSWpmiostringy CSWpmtimedate CSWpmdigesthmac CSWpmmailtools CSWpmuri CSWpmmimetypes
-
-ARCHALL = 1
+PACKAGES += CSWpm-mail-sender
+CATALOGNAME_CSWpm-mail-sender = pm_mail_sender
+SPKG_DESC_CSWpm-mail-sender = Send mails with attachments through a SMTP server, socket()s based
+ARCHALL_CSWpm-mail-sender = 1
+OBSOLETED_BY_CSWpm-mail-sender += CSWpmmailsender
+CATALOGNAME_CSWpmmailsender = pm_mailsender_stub
 
 include gar/category.mk
-
