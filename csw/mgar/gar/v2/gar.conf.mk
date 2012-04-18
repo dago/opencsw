@@ -160,6 +160,8 @@ sbinpath_install   ?= $(BUILD_PREFIX)/sbin
 sbinpath           ?= $(abspath $(sbinpath_install)/$(MM_BINDIR))
 libpath_install    ?= $(BUILD_PREFIX)/lib
 libpath            ?= $(abspath $(libpath_install)/$(MM_LIBDIR))
+includepath_install ?= $(BUILD_PREFIX)/include
+includepath        ?= $(BUILD_PREFIX)/include
 
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
@@ -457,12 +459,16 @@ FLAVOR_FLAGS += $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH)) $(EXTRA_$(GA
 # Raise these in your .garrc if needed
 ISA_DEFAULT_sparc-5.9    ?= sparcv8
 ISA_DEFAULT_sparc-5.10   ?= sparcv8plus
+ISA_DEFAULT_sparc-5.11   ?= sparcv8plus
 ISA_DEFAULT_i386-5.9     ?= i386
 ISA_DEFAULT_i386-5.10    ?= pentium_pro
+ISA_DEFAULT_i386-5.11    ?= pentium_pro
 ISA_DEFAULT64_sparc-5.9  ?= sparcv9
 ISA_DEFAULT64_sparc-5.10 ?= sparcv9
+ISA_DEFAULT64_sparc-5.11 ?= sparcv9
 ISA_DEFAULT64_i386-5.9   ?= amd64
 ISA_DEFAULT64_i386-5.10  ?= amd64
+ISA_DEFAULT64_i386-5.11  ?= amd64
 
 ISA_DEFAULT_sparc   ?= $(ISA_DEFAULT_sparc-$(GAROSREL))
 ISA_DEFAULT_i386    ?= $(ISA_DEFAULT_i386-$(GAROSREL))
@@ -586,7 +592,9 @@ SOS12U3_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
  SOS12U2_AS_FLAGS ?= $(EXTRA_SOS12U2_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
  SOS12U3_AS_FLAGS ?= $(EXTRA_SOS12U3_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
     GCC3_LD_FLAGS ?= -L$(GCC3_CC_HOME)/lib/$(MM_LIBDIR) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
-    GCC4_LD_FLAGS ?= -L$(GCC4_CC_HOME)/lib/$(MM_LIBDIR) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+    GCC3_LD_FLAGS ?= $(foreach D,$(filter-out $(libpath,$(abspath $(GCC3_CC_HOME)/lib/$(MM_LIBDIR))),-L$D) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+    GCC4_LD_FLAGS ?= $(foreach D,$(filter-out $(libpath),$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR))),-L$D) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+
    SOS11_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
    SOS12_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
  SOS12U1_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
@@ -647,7 +655,7 @@ F77_VERSION = $($(GARCOMPILER)_F77_VERSION)
 #
 
 ifeq ($(origin INCLUDE_FLAGS), undefined)
-INCLUDE_FLAGS = $(foreach EINC,$(EXTRA_INC) $(abspath $(includedir)),-I$(EINC))
+INCLUDE_FLAGS = $(foreach EINC,$(EXTRA_INC) $(filter-out $(includepath),$(includedir)) $(includepath),-I$(EINC))
 # DESTDIR is an old concept, disable for now
 #INCLUDE_FLAGS += $(if $(IGNORE_DESTDIR),,-I$(abspath $(DESTDIR)$(includedir)))
 endif
@@ -699,8 +707,8 @@ OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(_CATEGORY_OPTFLAGS) $(EXTRA_OPT
 FFLAGS   ?= $(strip $($(GARCOMPILER)_FFLAGS) $(_CATEGORY_FFLAGS) $(EXTRA_FFLAGS))
 FCFLAGS  ?= $(strip $($(GARCOMPILER)_FCFLAGS) $(_CATEGORY_FCFLAGS) $(EXTRA_FCFLAGS))
 
-GCC3_LD_OPTIONS = -R$(GCC3_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
-GCC4_LD_OPTIONS = -R$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR)) $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
+GCC3_LD_OPTIONS = $(foreach D,$(filter-out $(libpath),$(abspath $(GCC3_CC_HOME)/lib/$(MM_LIBDIR))),-R$D) $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
+GCC4_LD_OPTIONS = $(foreach D,$(filter-out $(libpath),$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR))),-R$D) $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
 SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12U1_LD_OPTIONS = $(EXTRA_SOS12U1_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
@@ -716,7 +724,7 @@ LD_OPTIONS ?= $(strip $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS) $(EXT
 PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(binpath_install)/$(MM_BINDIR)):$(DESTDIR)$(binpath_install):$(abspath $(DESTDIR)$(sbinpath_install)/$(MM_BINDIR)):$(DESTDIR)$(sbinpath_install):)$(abspath $(binpath_install)/$(MM_BINDIR)):$(binpath_install):$(abspath $(sbinpath_install)/$(MM_BINDIR)):$(sbinpath_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/openwin/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_DIRS ?= $(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_PKG_CONFIG_DIRS)
+PKG_CONFIG_DIRS ?= $(EXTRA_PKG_CONFIG_DIRS) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 ifneq (,$(findstring $(origin PKG_CONFIG_PATH),undefined environment))
 PKG_CONFIG_PATH = $(call MAKEPATH,$(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig)) $(_CATEGORY_PKG_CONFIG_PATH) $(EXTRA_PKG_CONFIG_PATH))
 endif
@@ -903,4 +911,6 @@ _modenv-modulated:
 	echo "        LDFLAGS = $(LDFLAGS)";				\
 	echo "     LD_OPTIONS = $(LD_OPTIONS)";				\
 	echo "        ASFLAGS = $(ASFLAGS)";				\
-	echo "       OPTFLAGS = $(OPTFLAGS)"
+	echo "       OPTFLAGS = $(OPTFLAGS)";				\
+	echo "   Merge Scripts: $(MERGE_SCRIPTS)";			\
+	echo "   Merge Targets: $(MERGE_TARGETS)"
