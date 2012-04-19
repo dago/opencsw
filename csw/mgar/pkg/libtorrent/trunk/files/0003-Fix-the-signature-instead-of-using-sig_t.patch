@@ -1,0 +1,54 @@
+From 3f3dd168d995127193a1043e8fd15f1258458f69 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Tue, 17 Apr 2012 18:52:22 +0200
+Subject: [PATCH] Fix the signature instead of using sig_t
+
+---
+ test/data/hash_check_queue_test.cc |    4 ++--
+ test/data/hash_queue_test.cc       |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/test/data/hash_check_queue_test.cc b/test/data/hash_check_queue_test.cc
+index 59b8522..87daf06 100644
+--- a/test/data/hash_check_queue_test.cc
++++ b/test/data/hash_check_queue_test.cc
+@@ -67,13 +67,13 @@ verify_hash(const done_chunks_type* done_chunks, int index, const torrent::HashS
+ 
+ static torrent::Poll* create_select_poll() { return torrent::PollSelect::create(256); }
+ 
+-static void do_nothing() {}
++static void do_nothing(int s) {}
+ 
+ void
+ HashCheckQueueTest::setUp() {
+   torrent::Poll::slot_create_poll() = tr1::bind(&create_select_poll);
+ 
+-  signal(SIGUSR1, (sig_t)&do_nothing);
++  signal(SIGUSR1, &do_nothing);
+ }
+ 
+ void
+diff --git a/test/data/hash_queue_test.cc b/test/data/hash_queue_test.cc
+index f31b5f3..f5fc88c 100644
+--- a/test/data/hash_queue_test.cc
++++ b/test/data/hash_queue_test.cc
+@@ -38,14 +38,14 @@ check_for_chunk_done(torrent::HashQueue* hash_queue, done_chunks_type* done_chun
+ 
+ static torrent::Poll* create_select_poll() { return torrent::PollSelect::create(256); }
+ 
+-static void do_nothing() {}
++static void do_nothing(int s) {}
+ 
+ void
+ HashQueueTest::setUp() {
+   CPPUNIT_ASSERT(torrent::taskScheduler.empty());
+ 
+   torrent::Poll::slot_create_poll() = tr1::bind(&create_select_poll);
+-  signal(SIGUSR1, (sig_t)&do_nothing);
++  signal(SIGUSR1, &do_nothing);
+ }
+ 
+ void
+-- 
+1.7.10
+
