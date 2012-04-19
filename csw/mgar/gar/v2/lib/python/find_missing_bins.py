@@ -126,9 +126,7 @@ class PackageScanner(object):
     with open(fn_stdlibs, "r") as fd:
         stdlibs = cjson.decode(fd.read())
     fl = open(fn_report, "w")
-    rIdx = -1
     for osrel in common_constants.OS_RELS:
-      rIdx = rIdx+1
       if osrel in common_constants.OBSOLETE_OS_RELS:
         logging.debug("scanPackage: %s is obsoleted" % osrel)
         continue
@@ -173,20 +171,6 @@ class PackageScanner(object):
                     # logging.debug ("\nfound %s" % nb)
             # at last search the lib in earlier os releases
             if not found: 
-              # if not found iterate over older OS releases
-              r = rIdx
-              while r > 0:
-                r = r - 1
-                logging.debug ("\nscanPackage: compare lower osrel %s [%s]: %s %d %d" % (common_constants.OS_RELS[r],pkg,nb,rIdx,r))
-                lbins = rd.getBins(catrel, arch, common_constants.OS_RELS[r])
-                for lnpkg in lbins:
-                  for lb in lbins[lnpkg]:
-                    if nb in lb:
-                      found = True
-                      logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,lb,lnpkg))
-                      break
-                  if found: break
-            if not found: 
               fl.write("%s:%s:%s:%s\n" % (nb,pkg,arch,osrel) )
               print "\nNOT FOUND: %s, needed in pkg %s %s %s" % (nb,pkg,arch,osrel)
             sys.stdout.write("\rscanPackage %4d %s" % (i,pkg))
@@ -204,6 +188,7 @@ def main():
     makeStdLibDb.buildStdlibList()
   pr = PackageScanner()
   pr.scanPackage()
+  print ""
 
 
 if __name__ == '__main__':
