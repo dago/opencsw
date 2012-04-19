@@ -15,6 +15,9 @@ LICENSE = LICENSE
 BUILD_DEP_PKGS += CSWpm-module-implementation
 BUILD_DEP_PKGS += CSWpm-test-fatal
 
+# The Module::Build from CSWperl is too old
+BUILD_DEP_PKGS += CSWpm-module-build
+
 PACKAGES += CSWpm-params-validate
 CATALOGNAME_CSWpm-params-validate = pm_params_validate
 SPKG_DESC_CSWpm-params-validate = Validate method/function parameters
