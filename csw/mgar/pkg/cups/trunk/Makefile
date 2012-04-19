@@ -65,7 +65,7 @@ VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
 
-GARCOMPILER = SOS12U3
+GARCOMPILER ?= SOS12U3
 
 BUILD_DEP_PKGS  = CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
