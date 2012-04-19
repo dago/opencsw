@@ -21,11 +21,12 @@ SPKG_SOURCEURL = http://www.opencsw.org
 MASTER_SITES = http://www.gnu.org/licenses/
 DISTFILES  = fdl-1.3.txt
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = policy
-INSTALL_SCRIPTS = policy
+BUILD_SCRIPTS = manual
+INSTALL_SCRIPTS = manual
 TEST_SCRIPTS =
 ARCHALL_CSWopencsw-manual = 1
-CATALOGNAME_CSWopencsw-manual = opencsw_policy
+# This line is necessary for copy-to-web to work.
+CATALOGNAME_CSWopencsw-manual = opencsw_manual
 LICENSE = fdl-1.3.txt
 
 BUILD_DEP_PKGS += CSWpy-sphinx
@@ -38,10 +39,11 @@ post-extract-modulated:
 	rsync -r $(FILEDIR)/ $(WORKSRC)
 	@$(MAKECOOKIE)
 
-build-policy:
+build-manual:
 	(cd $(WORKSRC); gmake html)
+	@$(MAKECOOKIE)
 
-install-policy:
+install-manual:
 	ginstall -m 755 -d $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
 	rsync -rv $(WORKSRC)/_build/html/ $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
 	@$(MAKECOOKIE)
