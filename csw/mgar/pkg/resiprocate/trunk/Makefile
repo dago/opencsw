@@ -18,7 +18,12 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --disable-nls
 CONFIGURE_ARGS += --with-ssl
-CONFIGURE_ARGS += --enable-ipv6
+#CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --with-c-ares
+
+BDB_HOME = $(prefix)/bdb48
+EXTRA_LIB = $(BDB_HOME)/lib 
+EXTRA_INC = $(BDB_HOME)/include
 
 # There are multiple test suites, regular `make check' and tfm
 TEST_SCRIPTS = check
