@@ -1,6 +1,1 @@
-a60c38bec6f1f18c6055894b15e3cb82  0001-Ignore-__UNUSED.patch
-037499ed708aaf72988cee60e5a8d96b  libtorrent-0.12.6.tar.gz
-eb30844ace9f064a8fca5212f5a99fef  rlibtorrent-01-madvise.diff
-f2f3738edcbc8d7ccfa14e784f3af9c6  rlibtorrent-03-dh-generate.diff
-c13befd35c91a36f78151accdc70c62c  rlibtorrent-04-sunpro.diff
-0d1545bbc1e7c9f5d4de059c855b0f81  rlibtorrent-05-tracker-usable.diff
+0448407e23f53a182311236a96b9a83b  libtorrent-rasterbar-0.16.0.tar.gz
