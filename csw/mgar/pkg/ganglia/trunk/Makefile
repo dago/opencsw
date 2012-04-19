@@ -1,5 +1,5 @@
 NAME = ganglia
-VERSION = 3.3.5
+VERSION = 3.3.7
 VERSION_U = $(subst .,-,$(VERSION))
 # Unit tests don't seem to run on Solaris, so it is disabled
 # As soon as Ganglia test cases are fixed to run on Solaris,
