@@ -10,6 +10,7 @@ use strict;
 use warnings;
 use feature ':5.10';
 use Cwd; # was use File::chdir;
+use Carp;
 use CPAN;
 use YAML qw(LoadFile);
 use File::Path;
@@ -41,6 +42,7 @@ if ( !defined $modname ) {
 
 ### Main ###
 
+say STDERR "Expanding CPAN module name";
 logoutput(); # Start logging
 my $mod = ( CPAN::Shell->expand( "Module", $modname ) )[0]
 	or die "can not locate CPAN module $modname";
@@ -53,6 +55,7 @@ endlog();    # End logging
 #endlog();
 # print "Make done\n";
 
+say STDERR "Analyzing filename";
 my $filename = $mod->cpan_file;
 my $author   = ( split( /\//, $filename ) )[2];
 my $author1  = substr( $author, 0, 1 );
@@ -64,7 +67,9 @@ my ( $notstandard, $fileonly ) = ( $filename =~ m,^${author1}/${author2}/${autho
 
 # That is the version of the module which may be different than the one from the file
 # my $version = $mod->cpan_version;
-my ( $name, $fileversion ) = ( $fileonly =~ /^(\D+)-(\d+(?:\.\d+)*)/ );
+my ( $name, $fileversion ) = ( $fileonly =~ /^(.*)-(\d+(?:\.\d+)*)/ );
+
+croak( "The package name is not defined on file $fileonly" ) if( !$name );
 
 #print "filename: $filename\n";
 #print "notstandard: $notstandard\n";
@@ -83,6 +88,7 @@ $cswcatalog = "pm_" . $cswcatalog;
 
 
 # print "DSLIP: ", Dumper( $mod->dslip_status() );
+say STDERR "Getting DSLIP";
 my $dslip   = $mod->dslip_status;
 my $archall = (
 	  !defined $dslip->{L} ? 2
@@ -90,6 +96,7 @@ my $archall = (
 	: 0
 );
 
+say STDERR "Getting distribution file";
 logoutput();
 $mod->distribution->get;
 endlog();
@@ -102,6 +109,7 @@ my ( @build_dep_pkgs, @recommended_pkgs, @runtime_dep_pkgs );
 my $license;
 my $license_resource;
 my $description;
+say STDERR "Processing META.yml";
 if ( -f "$distdir/META.yml" ) {
 	my $meta = LoadFile("$distdir/META.yml");
 
@@ -113,8 +121,10 @@ if ( -f "$distdir/META.yml" ) {
 	# my $recommends     = $meta->{recommends};
 	my $build_requires = $meta->{build_requires};
 
+	say STDERR "- build dependencies";
 	@build_dep_pkgs   = dep_pkgs($build_requires);
 	# @recommended_pkgs = dep_pkgs($recommends);
+	say STDERR "- runtime dependencies";
 	@runtime_dep_pkgs = dep_pkgs($req);
 
 }
@@ -133,6 +143,8 @@ chdir($cpandir) or die($!);
 if ( !-d $name ) {
 	system("pwd; gmake newpkg-$name");
 }
+
+say STDERR "Writing GAR Makefile";
 
 open( my $mf_fh, '>', "$name/trunk/Makefile" ) or die "Couldn't write to $name/trunk/Makefile";
 
@@ -208,6 +220,12 @@ foreach my $oldpkg (@oldpkgs) {
 		say STDERR "A previous version of this package $cswpkg has been released";
 		next;
 	}
+
+	if( $oldpkg eq 'CSWperl' ) {
+		say STDERR "This functionality is also in CSWperl, this is probably an update";
+		next;
+	}
+
 	say STDERR "A previous version of this package $cswpkg was released, but was named $oldpkg then";
 
 	say {$mf_fh} "OBSOLETED_BY_$cswpkg += $oldpkg";
@@ -218,6 +236,14 @@ foreach my $oldpkg (@oldpkgs) {
 		say {$mf_fh} "CATALOGNAME_$oldpkg = ${cname}_stub";
 	}
 
+}
+
+if ( -f "$distdir/Build.PL" ) {
+  say {$mf_fh} '';
+  say {$mf_fh} 'CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL';
+  say {$mf_fh} 'BUILD_SCRIPTS = $(WORKSRC)/Build';
+  say {$mf_fh} 'TEST_SCRIPTS = $(WORKSRC)/Build';
+  say {$mf_fh} 'INSTALL_SCRIPTS = $(WORKSRC)/Build';
 }
 
 say {$mf_fh} "";
@@ -344,7 +370,7 @@ sub guess_name_from_module {
 		return;
 	}
 	my $filename = $mod->distribution->base_id;
-	my ( $name, $fileversion ) = ( $filename =~ /^(\D+)-(\d+(?:\.\d+)*)/ );
+	my ( $name, $fileversion ) = ( $filename =~ /^(\D+\d*)-(\d+(?:\.\d+)*)/ );
 	my $dirname = $name;
 	my $pkgname = lc($name);
 	$pkgname = "CSWpm-" . $pkgname;
