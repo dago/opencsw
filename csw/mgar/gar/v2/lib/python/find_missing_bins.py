@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.6 -t
 
 """Helps to check if all needed libs are in the catalog.
-
+writes all missings libs in a file missing_libs.txt in the format: libname:pkg:arch:osrel
 """
 
 import optparse
@@ -14,9 +14,11 @@ import sys
 import os
 import cjson
 import subprocess
+import makeStdLibDb
 
 catrel = 'unstable'
 cache_file_bins = 'bins-%s-%s-%s.json'
+cache_file_links = 'links-%s-%s-%s.json'
 cache_file_needed_bins = 'needed-bins-%s-%s-%s.json'
 fn_stdlibs = 'stdlibs.json'
 fn_report = 'missing_libs.txt'
@@ -25,6 +27,7 @@ class FindBins(object):
 
   def __init__(self):
     self.cached_catalogs_bins = {}
+    self.cached_catalogs_links = {}
     self.cached_catalogs_needed_bins = {}
     self.rest_client = rest.RestClient()
     self.cp = rest.CachedPkgstats("pkgstats.db")
@@ -34,54 +37,78 @@ class FindBins(object):
     if key in self.cached_catalogs_bins:
       return
     fn_bins = cache_file_bins% key
-    if os.path.exists(fn_bins):
+    fn_links = cache_file_links% key
+    fn_needed_bins = cache_file_needed_bins % key
+    if os.path.exists(fn_bins) and os.path.exists(fn_needed_bins) and os.path.exists(fn_links):
       with open(fn_bins, "r") as fd:
         self.cached_catalogs_bins[key] = cjson.decode(fd.read())
-    fn_needed_bins = cache_file_needed_bins % key
-    if os.path.exists(fn_needed_bins):
+      with open(fn_links, "r") as fd:
+        self.cached_catalogs_links[key] = cjson.decode(fd.read())
       with open(fn_needed_bins, "r") as fd:
         self.cached_catalogs_needed_bins[key] = cjson.decode(fd.read())
       return
     catalog = self.rest_client.GetCatalog(*key)
     bins = {}
+    links = {}
     needed_bins = {}
+    i = 0
     for pkg_simple in catalog:
+      i = i+1
       cb = []
+      cl = []
       nb = []
       # pprint.pprint(pkg_simple)
       md5 = pkg_simple["md5_sum"]
       pkg = self.cp.GetPkgstats(md5)
       if not pkg:
-        logging.warning("No package for %r", md5)
+        logging.warning("MakeRevIndex: No package for %r", md5)
         continue
       try:   
         pkg_name = pkg["basic_stats"]["pkgname"]
         for p in pkg['binaries_dump_info']:
           for b in p['needed sonames']:
-            if b not in needed_bins:
+            if b not in nb:
               nb.append(b)
         for b in pkg['binaries']:
-            if b not in bins:
+            if b not in cb:
               cb.append(b)
-        bins[pkg_name] = cb
-        needed_bins[pkg_name] = nb
-        sys.stdout.write(".")
-        sys.stdout.flush()
+            else:
+              logging.debug("MakeRevIndex: %s already in cache")
+        for pm in pkg['pkgmap']:
+            if pm['type'] == 's': # symbolic link
+              cl.append(pm['line'].split(' ')[3].split('=')[0]) # take the linkname
+                
       except KeyError:
         logging.warning("MakeRevIndex: no pkg structure: ")
         # logging.warning(pkg)
+      bins[pkg_name] = cb
+      needed_bins[pkg_name] = nb
+      links[pkg_name] = cl
+      sys.stdout.write("\rMakeRevIndex:%4d %s" % (i,pkg_name))
+      sys.stdout.flush()
     sys.stdout.write("\n")
     self.cached_catalogs_bins[key] = bins
+    self.cached_catalogs_links[key] = links
     self.cached_catalogs_needed_bins[key] = needed_bins
     with open(fn_bins, "w") as fd:
       fd.write(cjson.encode(self.cached_catalogs_bins[key]))
+    fd.close()
+    with open(fn_links, "w") as fd:
+      fd.write(cjson.encode(self.cached_catalogs_links[key]))
+    fd.close()
     with open(fn_needed_bins, "w") as fd:
       fd.write(cjson.encode(self.cached_catalogs_needed_bins[key]))
+    fd.close()
 
   def getBins(self, catrel, arch, osrel):
     self.MakeRevIndex(catrel, arch, osrel)
     key = (catrel, arch, osrel)
     return self.cached_catalogs_bins[key]
+
+  def getLinks(self, catrel, arch, osrel):
+    self.MakeRevIndex(catrel, arch, osrel)
+    key = (catrel, arch, osrel)
+    return self.cached_catalogs_links[key]
 
   def getNeededBins(self, catrel, arch, osrel):
     self.MakeRevIndex(catrel, arch, osrel)
@@ -99,9 +126,9 @@ class PackageScanner(object):
     with open(fn_stdlibs, "r") as fd:
         stdlibs = cjson.decode(fd.read())
     fl = open(fn_report, "w")
-    r = -1
+    rIdx = -1
     for osrel in common_constants.OS_RELS:
-      r = r+1
+      rIdx = rIdx+1
       if osrel in common_constants.OBSOLETE_OS_RELS:
         logging.debug("scanPackage: %s is obsoleted" % osrel)
         continue
@@ -110,6 +137,8 @@ class PackageScanner(object):
         bins = rd.getBins(catrel, arch, osrel)
         # get the list of libs which a package needs
         needed_bins = rd.getNeededBins(catrel, arch, osrel)
+        # get the list of links in a package
+        links = rd.getLinks(catrel, arch, osrel)
         i = 0
         checked = []
         for pkg in needed_bins:
@@ -118,6 +147,7 @@ class PackageScanner(object):
             if nb in checked: continue
             checked.append(nb)
             found = False
+            # at first search the lib in any other package
             for npkg in bins:
               for b in bins[npkg]:
                 # if lib in the package
@@ -126,27 +156,40 @@ class PackageScanner(object):
                   # logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,b,npkg))
                   break
               if found: break
-              if nb in stdlibs:
-                found = True
-                # logging.debug ("\nfound %s" % nb)
-                break
-            if found == False: 
-              # if not found iterate over older OS releases
-              logging.debug ("\ncompare lower osrel %s [%s]: %s" % (osrel,pkg,nb))
-              while r > 0:
-                r = r - 1
-                bins = rd.getBins(catrel, arch, common_constants.OS_RELS[r])
-                for npkg in bins:
-                  for b in bins[npkg]:
-                    if nb in b:
+            if not found:
+                # second search is there a link with this name            
+                for lpkg in links:
+                  for l in links[lpkg]:
+                    # if lib in the package
+                    if nb in l:
                       found = True
-                      logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,b,npkg))
+                      # logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,b,npkg))
                       break
                   if found: break
-            if found == False: 
+            if not found:
+                # third is the need lib a std solaris lib
+                if nb in stdlibs:
+                    found = True
+                    # logging.debug ("\nfound %s" % nb)
+            # at last search the lib in earlier os releases
+            if not found: 
+              # if not found iterate over older OS releases
+              r = rIdx
+              while r > 0:
+                r = r - 1
+                logging.debug ("\nscanPackage: compare lower osrel %s [%s]: %s %d %d" % (common_constants.OS_RELS[r],pkg,nb,rIdx,r))
+                lbins = rd.getBins(catrel, arch, common_constants.OS_RELS[r])
+                for lnpkg in lbins:
+                  for lb in lbins[lnpkg]:
+                    if nb in lb:
+                      found = True
+                      logging.debug ("\nfound %s [%s]: %s in %s (%s)" % (osrel,pkg,nb,lb,lnpkg))
+                      break
+                  if found: break
+            if not found: 
               fl.write("%s:%s:%s:%s\n" % (nb,pkg,arch,osrel) )
               print "\nNOT FOUND: %s, needed in pkg %s %s %s" % (nb,pkg,arch,osrel)
-            sys.stdout.write("\r%d" % i)
+            sys.stdout.write("\rscanPackage %4d %s" % (i,pkg))
             sys.stdout.flush()
     fl.close()
  
@@ -157,8 +200,8 @@ def main():
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
   if not os.path.exists(fn_stdlibs):
-    print "needed file %s not found, exit" % fn_stdlibs
-    sys.exit()
+    print "needed file %s not found, will create this" % fn_stdlibs
+    makeStdLibDb.buildStdlibList()
   pr = PackageScanner()
   pr.scanPackage()
 
