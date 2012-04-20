@@ -1,9 +1,1 @@
-89db4313293372653371a66171268e4a  configure.diff
-160398f59781477186c4ae0502d3beb2  generator_private.hpp.diff
-21dfaf10701d0f3a58c25d79a99cff1a  global.hpp.diff
-5c51a1a28e56d5725f99841dbbc30530  image.cpp.diff
-59968804e93a18220d7d18e8252fff8d  language.cpp.diff
-29edd308920e8e44317fffb92eb19eb4  marked-up_text.cpp.diff
-3a8d9b365df3c142bac7dd4188e963b5  simple_wml.cpp.diff
-57b2396fad674a80f0dd1edab3e3063c  time.hpp.diff
-493826bbd9ba355930765a7e8fe3749a  wesnoth-1.6.5.tar.bz2
+61f93437ba13a27a048e5ee2ee63736a  wesnoth-1.10.2.tar.bz2
