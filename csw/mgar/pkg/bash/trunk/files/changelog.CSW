@@ -1,6 +1,7 @@
 bash (4.2.24,REV=2012.04.20) unstable
 
   * Added bash patches bash42-011 and bash42-024.
+  * Updated dependancy names (CSWiconv -> CSWlibiconv2)
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 20 Apr 2012 22:41:44 +0200
 
