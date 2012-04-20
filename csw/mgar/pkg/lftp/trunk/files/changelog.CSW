@@ -1,6 +1,7 @@
 lftp (4.3.6,REV=2012.04.20) unstable
 
   * New upstream release.
+  * Updayed dependancy name: = CSWosslrt -> CSWlibssl0-9-8
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 20 Apr 2012 22:46:45 +0200
 
