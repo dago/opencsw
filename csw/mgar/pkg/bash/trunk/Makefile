@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash
-VERSION = 4.2.10
+VERSION = 4.2.24
 CATEGORIES = devel
 GARTYPE = v2
 
