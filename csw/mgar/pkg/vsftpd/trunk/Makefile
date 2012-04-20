@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = vsftpd
-VERSION = 2.3.4
+VERSION = 3.0.0
 CATEGORIES = server
 GARTYPE = v2
 
