@@ -60,7 +60,7 @@ index 4539216..8ac45c1 100755
 +        . /opt/csw/share/libtool/gcc3.conf
 +        tagspath=/opt/csw/share/libtool/gcc3.tags
 +        ;;
-+      /opt/csw/gcc4/bin/*)
++      /opt/csw/gcc4/bin/*|/opt/csw/bin/gcc|/opt/csw/bin/gcc-4.6)
 +        . /opt/csw/share/libtool/gcc4.conf
 +        tagspath=/opt/csw/share/libtool/gcc4.tags
 +        ;;
