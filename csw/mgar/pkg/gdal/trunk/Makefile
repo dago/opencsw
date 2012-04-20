@@ -66,6 +66,9 @@ PKGFILES_CSWgdal-dev += $(PKGFILES_DEVEL)
 
 GARCOMPILER = GNU
 
+# c++ libraries, so move things around a bit
+prefix = /opt/csw/gxx
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz=$(prefix)
 CONFIGURE_ARGS += --with-png=$(prefix)
