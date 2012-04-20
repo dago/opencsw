@@ -65,7 +65,7 @@ VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
 
-GARCOMPILER ?= SOS12U3
+GARCOMPILER ?= SOS12 # SOS12U3
 
 BUILD_DEP_PKGS  = CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
@@ -318,6 +318,8 @@ CONFIGURE_ARGS += --with-menudir=$(datadir)/applications
 CONFIGURE_ARGS += --localedir=$(datadir)/locale
 CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
+CONFIGURE_ARGS += --with-openslp-includes=/opt/csw/include
+CONFIGURE_ARGS += --with-openslp-lib=/opt/csw/lib
 
 # This breaks non-global sparse zone support.  The class action script is
 # executed in the global zone, but not in the non-global zones, if /opt is
