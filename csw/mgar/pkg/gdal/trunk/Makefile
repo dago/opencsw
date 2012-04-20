@@ -95,3 +95,10 @@ endif
 
 # to avoid the __sync_fetch_and_add4 issue (must be after including category)
 ARCHFLAGS_GCC4_sparcvv8 = -m32
+
+post-merge:
+	@( cd $(PKGROOT)/opt/csw; mkdir bin; cd bin; \
+		for f in ../gxx/bin/*; do \
+			gln -s $$f; \
+		done; )
+	@$(MAKECOOKIE)
