@@ -102,6 +102,12 @@ CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/share|root/opt/csw/b
 
 include gar/category.mk
 
+pre-configure-modulated:
+	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
+	cd $(WORKSRC) && autoreconf
+	@$(MAKECOOKIE)
+
+
 #post-install-isa-sparcv8:
 #	( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/old_libs_s.tar.gz |tar xf -)
 #	ln -s libnetsnmp.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmp.so.10
