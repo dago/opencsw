@@ -1,3 +1,9 @@
+vsftpd (3.0.0,REV=2012.04.20) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 20 Apr 2012 22:52:55 +0200
+
 vsftpd (2.3.4,REV=2011.07.19) unstable
 
   * New upstream release.
