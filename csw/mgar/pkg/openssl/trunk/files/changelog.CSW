@@ -1,3 +1,10 @@
+openssl (0.9.8v,REV=2012.04.20) unstable
+
+  * New upstream release.
+  * Enabled PKCS11 crypto-engine.
+  
+   -- Yann Rouillard <yann@opencsw.org>  Fri, 20 Apr 2012 22:35:55 +0200
+
 openssl (0.9.8t,REV=2012.01.21) unstable
 
   * New upstream release.
