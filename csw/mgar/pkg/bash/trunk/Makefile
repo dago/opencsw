@@ -28,7 +28,7 @@ BASH_PATCHLEVEL = $(shell echo -n $(VERSION) | cut -d. -f3)
 PACKAGES = CSWbash
 
 RUNTIME_DEP_PKGS = CSWlibintl8
-RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWlibiconv2
 
 SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 
