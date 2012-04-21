@@ -1,18 +1,19 @@
-diff --speed-large-files --minimal -Nru vsftpd-2.0.4.orig/Makefile vsftpd-2.0.4/Makefile
---- vsftpd-2.0.4.orig/Makefile	2006-04-12 18:18:06.382923000 -0400
-+++ vsftpd-2.0.4/Makefile	2006-04-12 18:17:58.522360000 -0400
-@@ -1,9 +1,9 @@
+--- vsftpd-3.0.0.orig/Makefile	Tue Apr  3 09:21:18 2012
++++ vsftpd-3.0.0/Makefile	Sat Apr 21 13:59:59 2012
+@@ -1,16 +1,8 @@
  # Makefile for systems with GNU tools
 -CC 	=	gcc
-+
 -INSTALL	=	install
-+
 -IFLAGS  = -idirafter dummyinc
-+
  #CFLAGS = -g
--CFLAGS	=	-O2 -Wall -W -Wshadow #-pedantic -Werror -Wconversion
-+
+-CFLAGS	=	-O2 -fPIE -fstack-protector --param=ssp-buffer-size=4 \
+-	-Wall -W -Wshadow -Werror -Wformat-security \
+-	-D_FORTIFY_SOURCE=2 \
+-	#-pedantic -Wconversion
  
  LIBS	=	`./vsf_findlibs.sh`
--LINK	=	-Wl,-s
-+LINK	=	-Wl,-s $(LDFLAGS)
+ LINK	=	-Wl,-s
+-LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
+ 
+ OBJS	=	main.o utility.o prelogin.o ftpcmdio.o postlogin.o privsock.o \
+ 		tunables.o ftpdataio.o secbuf.o ls.o \

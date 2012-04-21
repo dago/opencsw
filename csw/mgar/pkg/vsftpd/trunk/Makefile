@@ -31,8 +31,8 @@ UPSTREAM_MASTER_SITES = https://security.appspot.com/vsftpd.html
 
 PACKAGES = CSWvsftpd
 
-RUNTIME_DEP_PKGS  = CSWtcpwrap 
-RUNTIME_DEP_PKGS += CSWosslrt 
+RUNTIME_DEP_PKGS  = CSWlibwrap1
+RUNTIME_DEP_PKGS += CSWlibssl0-9-8
 
 # Reference to DTD path, can be safely ignored
 CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswvsftpd.xml
@@ -90,6 +90,10 @@ PATCHFILES += set_priv_sep_user.patch
 # patch to add DESTDIR support to 
 # vsftpd makfile
 PATCHFILES += destdir.patch
+
+# patch to avoid an incompatible pointer type
+# error when compiling under Solaris with -Werror
+PATCHFILES += avoid_pam_conv_warning.patch
 
 # Documentation files
 DOCFILES  = AUDIT BENCHMARKS BUGS COPYING COPYRIGHT Changelog FAQ INSTALL LICENSE REFS
