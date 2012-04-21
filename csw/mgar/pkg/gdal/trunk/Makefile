@@ -62,12 +62,12 @@ PACKAGES += CSWgdal-dev
 CATALOGNAME_CSWgdal-dev = gdal_dev
 SPKG_DESC_CSWgdal-dev += Geospatial Data Abstraction Library, development files
 RUNTIME_DEP_PKGS_CSWgdal-dev += CSWlibgdal1
-PKGFILES_CSWgdal-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWgdal-dev += $(PKGFILES_DEVEL) /opt/csw/bin/gdal-config
 
 GARCOMPILER = GNU
 
 # c++ libraries, so move things around a bit
-prefix = /opt/csw/gxx
+libdir = $(abspath /opt/csw/gxx/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz=$(prefix)
@@ -95,10 +95,3 @@ endif
 
 # to avoid the __sync_fetch_and_add4 issue (must be after including category)
 ARCHFLAGS_GCC4_sparcvv8 = -m32
-
-post-merge:
-	@( cd $(PKGROOT)/opt/csw; mkdir bin; cd bin; \
-		for f in ../gxx/bin/*; do \
-			gln -s $$f; \
-		done; )
-	@$(MAKECOOKIE)
