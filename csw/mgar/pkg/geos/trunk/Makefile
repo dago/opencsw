@@ -1,6 +1,6 @@
 # $Id$
 NAME = geos
-VERSION = 3.2.2
+VERSION = 3.3.3
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -9,8 +9,11 @@ define BLURB
 GEOS (Geometry Engine - Open Source) is a C++ port of the  Java Topology Suite (JTS). As such, it aims to contain the complete functionality of JTS in C++. This includes all the  OpenGIS Simple Features for SQL spatial predicate functions and spatial operators, as well as specific JTS enhanced topology functions.
 endef
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.bz2
+PATCHFILES += 0001-use-namespace-std-on-isnan-when-building-on-solaris-.patch
 
 GARCOMPILER = GNU
 
@@ -62,7 +65,11 @@ PKGFILES_CSWgeos-dev += .*libgeos.so .*libgeos_c.so
 RUNTIME_DEP_PKGS_CSWgeos-dev = CSWlibgeos3-2-2 CSWlibgeos-c1
 OBSOLETED_BY_CSWlibgeos-dev = CSWgeos
 
+# c++ libraries, so move things around a bit
+libdir = $(abspath /opt/csw/gxx/lib/$(MM_LIBDIR))
+
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-inline
 CONFIGURE_ARGS += --enable-ruby
 
 include gar/category.mk
