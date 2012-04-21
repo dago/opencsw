@@ -1,27 +1,17 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = grass
-VERSION = x.y
+VERSION = 6.4.2
 GARTYPE = v2
-CATEGORIES = category
+CATEGORIES = apps
 
-DESCRIPTION = Brief description
+DESCRIPTION = Geographic Resources Analysis Support System
 define BLURB
-  Long description
+Commonly referred to as GRASS, this is free Geographic Information System (GIS) software used for geospatial data management and analysis, image processing, graphics/maps production, spatial modeling, and visualization. GRASS is currently used in academic and commercial settings around the world, as well as by many governmental agencies and environmental consulting companies. GRASS is an official project of the Open Source Geospatial Foundation.
 endef
 
-MASTER_SITES = 
+MASTER_SITES = http://grass.osgeo.org/grass64/source/
 DISTFILES  = $(DISTNAME).tar.gz
-
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
