@@ -6,7 +6,7 @@ VERSION 	= 0.16
 GARTYPE 	= v2
 CATEGORIES 	= apps
 
-DESCRIPTION = print information about the contents and structure of a DVD
+DESCRIPTION = Print information about the contents and structure of a DVD
 define BLURB
   Print information about the contents and structure of a DVD
 endef
