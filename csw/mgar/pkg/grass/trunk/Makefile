@@ -19,7 +19,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS += CSWgdal-dev
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibncurses-dev
-BUILD_DEP_PKGS += CSWproj_dev
+BUILD_DEP_PKGS += CSWproj-dev
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
