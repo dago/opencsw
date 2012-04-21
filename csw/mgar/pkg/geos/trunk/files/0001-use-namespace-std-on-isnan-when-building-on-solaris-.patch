@@ -1,0 +1,27 @@
+From 27c0baa1a85d3ae19d869979591cf41924a2c4b5 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 21 Apr 2012 23:01:26 +0200
+Subject: [PATCH] use namespace std on isnan when building on solaris with g++
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ include/geos/platform.h.in |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/include/geos/platform.h.in b/include/geos/platform.h.in
+index effcdb5..2504b15 100644
+--- a/include/geos/platform.h.in
++++ b/include/geos/platform.h.in
+@@ -95,6 +95,9 @@ extern "C"
+    // Hack for OS/X <cmath> incorrectly re-defining isnan() into oblivion.
+    // It does leave a version in std.
+ #  define ISNAN(x) (std::isnan(x))
++# elif (defined(__sun) || defined(__sun__)) && defined(__GNUG__)
++#  include <math.h>
++#  define ISNAN(x) (std::isnan(x))
+ # elif defined(__sun) || defined(__sun__)
+ #  include <math.h>
+ #  define ISNAN(x) (::isnan(x))
+-- 
+1.7.10
+
