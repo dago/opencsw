@@ -13,6 +13,11 @@ endef
 MASTER_SITES = http://grass.osgeo.org/grass64/source/
 DISTFILES  = $(DISTNAME).tar.gz
 
+BUILD_DEP_PKGS += CSWgdal-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWproj_dev
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
