@@ -361,23 +361,23 @@ svn-perl:
 	touch \
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.c \
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
-	$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
-	$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
+	/usr/bin/env -i $(BUILD_ENV) /opt/csw/bin/gmake -C $(WORKSRC) swig-pl
+	/usr/bin/env -i $(INSTALL_ENV) /opt/csw/bin/gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
 	@$(MAKECOOKIE)
 
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
-	$(BUILD_ENV) gmake -C $(WORKSRC) swig-rb
-	$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-rb
+	/usr/bin/env -i $(BUILD_ENV) /opt/csw/bin/gmake -C $(WORKSRC) swig-rb
+	/usr/bin/env -i $(INSTALL_ENV) /opt/csw/bin/gmake -C $(WORKSRC) install-swig-rb
 	@$(MAKECOOKIE)
 
 svn-java: EXTRA_LINKER_FLAGS += -norunpath
 svn-java:
 	@echo " ==> Building Java bindings"
 	touch $(WORKSRC)/subversion/bindings/javahl/native/*.c
-	$(BUILD_ENV)   gmake -C $(WORKSRC) javahl;
-	$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl;
+	/usr/bin/env -i $(BUILD_ENV) /opt/csw/bin/gmake -C $(WORKSRC) javahl;
+	/usr/bin/env -i $(INSTALL_ENV) /opt/csw/bin/gmake -C $(WORKSRC) install-javahl;
 	@$(MAKECOOKIE)
 
 #post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
