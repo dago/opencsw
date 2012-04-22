@@ -413,3 +413,7 @@ install-man:
 		$(DESTDIR)$(mandir)/man1
 	@$(MAKECOOKIE)
 
+
+post-merge:
+	@(cd $(PKGROOT)/opt/csw/lib/svn/python; find . -name '*pyc' -exec rm {} \;)
+	@$(MAKECOOKIE)
