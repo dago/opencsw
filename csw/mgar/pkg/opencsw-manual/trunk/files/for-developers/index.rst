@@ -24,3 +24,5 @@ If you're building a 64-bit binary, use these::
   CPPFLAGS="-I/opt/csw/include"
   LDFLAGS="-L/opt/csw/lib/64 -R/opt/csw/lib/64"
   PKG_CONFIG_PATH="/opt/csw/lib/64/pkgconfig"
+
+XXX: LD_LIBRARY_PATH considered harmful, http://linuxmafia.com/faq/Admin/ld-lib-path.html
