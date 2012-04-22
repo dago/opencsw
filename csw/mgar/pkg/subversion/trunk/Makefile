@@ -351,8 +351,8 @@ svn-python:
 	touch \
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
-	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(DESTDIR)
+	@/usr/bin/env -i $(BUILD_ENV) /opt/csw/bin/gmake -C $(WORKSRC) swig-py
+	@/usr/bin/env -i $(INSTALL_ENV) /opt/csw/bin/gmake -C $(WORKSRC) install-swig-py DESTDIR=$(DESTDIR)
 	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
