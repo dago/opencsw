@@ -2,23 +2,29 @@
 Getting started
 ---------------
 
-OpenCSW uses a tool named pkgutil on top of the Solaris packaging utilities to
+OpenCSW uses a tool named pkgutil_ on top of the Solaris packaging utilities to
 automatically download, install and update packages. It needs to be installed
 manually once, after that all maintenance is done via pkgutil.
+
+.. _pkgutil: http://pkgutil.net
 
 On a Solaris 10 system, you can use the capacity of pkgadd to download
 and install it via http in one step::
 
   pkgadd -d http://get.opencsw.org/now
 
-On Solaris 8 and 9 you need to download the package manually, e.g. using wget
+You may need to specify a proxy with ``-x <proxy>:<port>``, be aware that there are
+known issues with Squid and possibly other proxies.
+
+On Solaris 8 and 9 (or 10 if you have issues with the above ``pkgadd``)
+you need to download the package manually, e.g. using wget
 and then install it::
 
   wget http://mirror.opencsw.org/opencsw/pkgutil.pkg
   pkgadd -d pkgutil.pkg all
 
-For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of PATH,
-and ``/opt/csw/share/man`` in front of MANPATH.
+For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of ``PATH``,
+and ``/opt/csw/share/man`` in front of ``MANPATH``.
 
 You can now start installing packages. For a list of available packages use::
 
@@ -187,3 +193,7 @@ host with no direct Internet access.
 
 Layout of the mirror
 ====================
+
+Footnotes
+=========
+
