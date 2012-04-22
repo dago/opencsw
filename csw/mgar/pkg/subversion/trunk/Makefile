@@ -64,129 +64,6 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
 
-# temporary include this to get it built to analyze ...
-CHECKPKG_OVERRIDES_CSWrbsvn += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWpythonsvn += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsasl2-2
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWbdb48
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibssl0-9-8
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWsvn
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibneon27
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibapr1-0
-CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWpmsvn += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/__init__.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/client.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/core.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/delta.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/diff.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/fs.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/ra.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/repos.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/wc.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/__init__.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/client.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/core.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/delta.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/diff.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/fs.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/ra.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/repos.pyc
-CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/lib/python/opt/csw/lib/svn/python/site-packages/svn/wc.pyc
-
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/libsvn_swig_py-1.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/libsvn_swig_py-1.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/libsvn_swig_py-1.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/libsvn_swig_py-1.so.0
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/libsvn_swig_py-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/__init__.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/__init__.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_client.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_client.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_client.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_core.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_core.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_core.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_delta.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_delta.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_delta.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_diff.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_diff.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_diff.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_fs.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_fs.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_fs.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_ra.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_ra.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_ra.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_repos.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_repos.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_repos.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_wc.a
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_wc.la
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_wc.so
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/client.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/client.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/core.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/core.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/delta.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/delta.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/diff.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/diff.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/fs.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/fs.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/ra.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/ra.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/repos.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/repos.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/wc.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/libsvn/wc.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/__init__.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/__init__.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/client.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/client.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/core.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/core.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/delta.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/delta.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/diff.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/diff.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/fs.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/fs.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/ra.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/ra.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/repos.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/repos.pyc
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/wc.py
-CHECKPKG_OVERRIDES_CSWsvn += bad-location-of-file|file=/lib/python/opt/csw/lib/svn/python/site-packages/svn/wc.pyc
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_repos.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_wc.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_fs.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_client.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_diff.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_core.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_delta.so
-CHECKPKG_OVERRIDES_CSWsvn += soname-not-found|libsvn_swig_py-1.so.0|is|needed|by|lib/python/opt/csw/lib/svn/python/site-packages/libsvn/_ra.so
-CHECKPKG_OVERRIDES_CSWsvn += missing-dependency|CSWpython
-# end test entries ...
-
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
 OBSOLETED_BY_CSWsvn-dev    = CSWsvn-devel
@@ -475,7 +352,7 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(DESTDIR)/lib/python
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py DESTDIR=$(DESTDIR)
 	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
