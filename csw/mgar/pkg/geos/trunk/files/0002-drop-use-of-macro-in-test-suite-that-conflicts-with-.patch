@@ -1,0 +1,50 @@
+From d4f1d807146bfe7c406fd3cc30e59f9e7e4c52a0 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 22 Apr 2012 03:24:14 +0200
+Subject: [PATCH] drop use of macro in test suite that conflicts with required
+ change for real code (a bad hack, yes)
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ tests/unit/geom/CoordinateArraySequenceTest.cpp |    2 +-
+ tests/unit/io/WKBWriterTest.cpp                 |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tests/unit/geom/CoordinateArraySequenceTest.cpp b/tests/unit/geom/CoordinateArraySequenceTest.cpp
+index e46f102..67b666a 100644
+--- a/tests/unit/geom/CoordinateArraySequenceTest.cpp
++++ b/tests/unit/geom/CoordinateArraySequenceTest.cpp
+@@ -30,7 +30,7 @@ namespace tut
+           Filter() : is3d(false) {}
+           void filter_rw(geos::geom::Coordinate* c) const {
+             if ( is3d ) {
+-              if ( ISNAN(c->z) ) c->z = 0.0;
++              if ( __builtin_isnan(c->z) ) c->z = 0.0;
+             }
+             else c->z = DoubleNotANumber;
+           }
+diff --git a/tests/unit/io/WKBWriterTest.cpp b/tests/unit/io/WKBWriterTest.cpp
+index 13f158f..43c0318 100644
+--- a/tests/unit/io/WKBWriterTest.cpp
++++ b/tests/unit/io/WKBWriterTest.cpp
+@@ -76,7 +76,7 @@ namespace tut
+             ensure( geom->getCoordinateDimension() == 2 );
+             ensure( geom->getCoordinate()->x == -117.0 );
+             ensure( geom->getCoordinate()->y == 33.0 );
+-            ensure( ISNAN(geom->getCoordinate()->z) != 0 );
++            ensure( __builtin_isnan(geom->getCoordinate()->z) != 0 );
+ 
+             delete geom;
+     }
+@@ -128,7 +128,7 @@ namespace tut
+             ensure( geom->getCoordinateDimension() == 2 );
+             ensure( geom->getCoordinate()->x == -117.0 );
+             ensure( geom->getCoordinate()->y == 33.0 );
+-            ensure( ISNAN(geom->getCoordinate()->z) != 0);
++            ensure( __builtin_isnan(geom->getCoordinate()->z) != 0);
+ 
+             delete geom;
+     }
+-- 
+1.7.10
+
