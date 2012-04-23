@@ -11,6 +11,7 @@ A user's manual for people who manage Solaris systems with OpenCSW packages.
   getting-started
   configuring-services
   pkgutil-reference
+  mirror-setup
   glossary
 
 .. [#dagosscrapbook]
