@@ -16,9 +16,8 @@ and install it via http in one step::
 You may need to specify a proxy with ``-x <proxy>:<port>``, be aware that there are
 known issues with Squid and possibly other proxies.
 
-On Solaris 8 and 9 (or 10 if you have issues with the above ``pkgadd``)
-you need to download the package manually, e.g. using wget
-and then install it::
+On Solaris 8 and 9 (or 10 if you have issues with the above ``pkgadd``) you
+need to download the package manually (e.g. using wget) and then install it::
 
   wget http://mirror.opencsw.org/opencsw/pkgutil.pkg
   pkgadd -d pkgutil.pkg all
@@ -27,8 +26,10 @@ You can now start installing packages. For a list of available packages use::
 
   /opt/csw/bin/pkgutil -l
 
-For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of ``PATH``,
-and ``/opt/csw/share/man`` in front of ``MANPATH``.
+For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of
+``PATH``, and ``/opt/csw/share/man`` in front of ``MANPATH``. On Solaris 10,
+you can do that by editing the ``/etc/default/login`` file, and logging out
+and back in.
 
 As the list is quite long and you probably have an idea what you are looking for the
 list can be fuzzy-matched with::
@@ -93,7 +94,7 @@ with pkgutil!)::
 Then you need to import the public key::
 
   root# wget -O - http://www.opencsw.org/security/  | gpg --import -
-  
+
 The current fingerprint looks like this::
 
   root# gpg --fingerprint board@opencsw.org
@@ -113,7 +114,7 @@ and uncomment the two lines with ``use_gpg`` and ``use_md5`` so they look like t
 
 You can verify that it worked with ``pkgutil -V``::
 
-  root@login [login]:/etc/opt/csw > pkgutil -V             
+  root@login [login]:/etc/opt/csw > pkgutil -V
   ...
   show_current            true (default: true)
   stop_on_hook_soft_error not set (default: false)
@@ -148,52 +149,21 @@ thinking of OpenCSW packages as "bloated") but that is the price to pay for
 the interoperability and we feel that in times of ever growing disks the
 flexibility is worth more than the saved bytes.
 
-Package dependencies are modeled in the OpenCSW `catalogs`_ to allow automatic
+Package dependencies are modeled in the OpenCSW catalogs to allow automatic
 dependency resolution via pkgutil. To view the current dependencies for a
 package you can use::
 
   pkgutil --deptree <pkg>
 
 
----------------------------
-Setting up a private mirror
----------------------------
+--------------------------------------------------------------
+Creating a .pkg file for a host without an Internet connection
+--------------------------------------------------------------
 
-Sometimes it is sufficient to just go on with a mirror on the internet.
-However, there are situations where a local mirror can be useful. When you have
-a lot of servers accessing the repository, want to control the package updates
-exactly or when your production servers just can't access the internet at all a
-local mirror is necessary.
-
-To set up the mirror you should use rsync as it can update your local copy
-quickly and with low bandwidth use and also preserves hardlinks. Not all
-mirrors provide access via the rsync protocol, a list can be found at
-http://www.opencsw.org/get-it/mirrors/ .  To make a full copy of the OpenCSW
-repository use this::
-
-  pkgutil -y -i rsync
-  rsync -aH --delete rsync://rsync.opencsw.org/opencsw /my/server/repo
-
-The directory ``repo`` can either be shared via HTTP or via NFS to the pkgutil
-clients.  Use http://myserver/url-to-repo/ for HTTP and
-file:///myserver/dir-to-repo for NFS as mirror option in pkgutil.
-
-
-Mirroring only a subset
-=======================
-
-You can also mirror only a subset of the repository, e.g. the 'unstable'
-catalog or even just a few packages.::
+You can also mirror only a subset of the repository, e.g. the ``unstable``
+catalog or even just a few packages::
 
   pkgutil --stream vim
 
 This option is useful when you want to install a package with dependencies on a
 host with no direct Internet access.
-
-
-Layout of the mirror
-====================
-
-Footnotes
-=========
-
