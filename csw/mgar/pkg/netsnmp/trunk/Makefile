@@ -98,13 +98,8 @@ CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/snmpd.conf.5
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/NetSNMP::TrapReceiver.3perl
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/share|root/opt/csw/bin/net-snmp-cert
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/NetSNMP/ASN/ASN.so
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/NetSNMP/OID/OID.so
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/NetSNMP/TrapReceiver/TrapReceiver.so
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/NetSNMP/agent/agent.so
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/NetSNMP/agent/default_store/default_store.so
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/NetSNMP/default_store/default_store.so
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry|/opt/csw/lib/|root/opt/csw/lib/perl/site_perl/auto/SNMP/SNMP.so
+# override bad-rpath-entry becasue of /opt/csw/lib/ in perl module libs
+CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry
 
 include gar/category.mk
 
