@@ -14,6 +14,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.bz2
 PATCHFILES += 0001-use-namespace-std-on-isnan-when-building-on-solaris-.patch
+PATCHFILES += 0002-drop-use-of-macro-in-test-suite-that-conflicts-with-.patch
 
 GARCOMPILER = GNU
 
