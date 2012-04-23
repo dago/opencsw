@@ -160,10 +160,28 @@ package you can use::
 Creating a .pkg file for a host without an Internet connection
 --------------------------------------------------------------
 
-You can also mirror only a subset of the repository, e.g. the ``unstable``
-catalog or even just a few packages::
+If you need to install a package with multiple dependencies on a host with no
+Internet access, you can use pkgutil to prepare a .pkg file with the whole
+dependency chain. This wasy is much easier than copying dependencies one by
+one::
 
-  pkgutil --stream vim
+  pkgutil \
+    --stream \
+    --target=sparc:5.10 \
+    --output imagemagick-and-others.pkg \
+    --yes \
+    --download \
+    imagemagick coreutils vim ggrep gsed
 
-This option is useful when you want to install a package with dependencies on a
-host with no direct Internet access.
+At the end of the run, pkgutil displays the correct order to install the
+packages in.
+
+The resulting package stream will be placed in the ``~/.pkgutil/packages``
+directory.
+
+This topic is also `discussed`_ on the community site.
+
+.. _discussed:
+   http://www.opencsw.org/community/
+   questions/92/
+   installing-without-a-direct-internet-access
