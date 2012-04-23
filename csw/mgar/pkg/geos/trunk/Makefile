@@ -39,7 +39,6 @@ PKGFILES_CSWlibgeos3-3-3 += $(call baseisadirs,$(libdir),libgeos-3\.3\.3\.so(\.\
 RUNTIME_DEP_PKGS_CSWlibgeos3-3-3 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgeos3-3-3 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgeos3-3-3 = CSWgeos
-CHECKPKG_OVERRIDES_CSWlibgeos3-3-3 += soname-equals-filename|file=/opt/csw/lib/libgeos-3.2.2.so
 
 SPKG_DESC_CSWlibgeos-c1 += Geometry Engine, Open Source, libgeos_c.so.1
 PKGFILES_CSWlibgeos-c1 += $(call baseisadirs,$(libdir),libgeos_c\.so\.1\.6\.2)
