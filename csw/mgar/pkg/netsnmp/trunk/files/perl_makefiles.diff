@@ -49,7 +49,7 @@
      else {
  	$opts = NetSNMPGetOpts();
 -	$Params{'LDDLFLAGS'} = "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
-+	$Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L/opt/csw/lib/\$$ISALIST -L/opt/csw/lib $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	$Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L../../apps/.libs -L../../agent/.libs -L/opt/csw/lib/\$$ISALIST -L/opt/csw/lib $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	$Params{'LIBS'}   = `$opts->{'nsconfig'} --base-agent-libs`;
  	chomp($Params{'LIBS'});
  	$Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
@@ -60,7 +60,7 @@
      else {
  	$opts = NetSNMPGetOpts();
 -	$Params{'LDDLFLAGS'} = "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
-+	$Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L/opt/csw/lib/\$$ISALIST -L/opt/csw/lib $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	$Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L../../apps/.libs -L../../agent/.libs -L/opt/csw/lib/\$$ISALIST -L/opt/csw/lib $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	$Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
  	chomp($Params{'LIBS'});
  	$Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
