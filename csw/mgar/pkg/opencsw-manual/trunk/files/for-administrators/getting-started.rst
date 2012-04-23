@@ -23,12 +23,12 @@ and then install it::
   wget http://mirror.opencsw.org/opencsw/pkgutil.pkg
   pkgadd -d pkgutil.pkg all
 
-For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of ``PATH``,
-and ``/opt/csw/share/man`` in front of ``MANPATH``.
-
 You can now start installing packages. For a list of available packages use::
 
-  pkgutil -l
+  /opt/csw/bin/pkgutil -l
+
+For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of ``PATH``,
+and ``/opt/csw/share/man`` in front of ``MANPATH``.
 
 As the list is quite long and you probably have an idea what you are looking for the
 list can be fuzzy-matched with::
