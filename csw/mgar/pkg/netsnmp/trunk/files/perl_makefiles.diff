@@ -69,9 +69,8 @@
 @@ -69,6 +69,7 @@ sub InitMakeParams {
      }
      else {
-        $opts = NetSNMPGetOpts("../../");
-+       $Params{'LDDLFLAGS'} = "-L../../../snmplib/.libs $Config{lddlflags}";
-        $Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
-        chomp($Params{'LIBS'});
-        $Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
-
+ 	$opts = NetSNMPGetOpts("../../");
++	$Params{'LDDLFLAGS'} = "-L../../../snmplib/.libs $Config{lddlflags}";
+ 	$Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
+ 	chomp($Params{'LIBS'});
+ 	$Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
