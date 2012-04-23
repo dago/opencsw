@@ -70,7 +70,7 @@
      }
      else {
         $opts = NetSNMPGetOpts("../../");
-+       $Params{'LDDLFLAGS'} = "$Config{lddlflags} -L../../../snmplib/.libs";
++       $Params{'LDDLFLAGS'} = "-L../../../snmplib/.libs $Config{lddlflags}";
         $Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
         chomp($Params{'LIBS'});
         $Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
