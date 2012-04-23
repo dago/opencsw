@@ -86,10 +86,10 @@ Setting up cryptographic verification
 The catalog is signed with PGP and it is a good idea to set up your system to
 verify the integrity of the catalog. As the catalog itself contains hashes for
 all packages in the catalog this ensures you actually install the packages
-which were officially released. First you need to install ``pgp`` (of course
+which were officially released. First you need to install ``gnupg`` (of course
 with pkgutil!)::
 
-  pkgutil -y -i gpg
+  pkgutil -y -i gnupg
 
 Then you need to import the public key::
 
