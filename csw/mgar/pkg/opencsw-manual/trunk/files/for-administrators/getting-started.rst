@@ -140,12 +140,12 @@ Package dependencies
 --------------------
 
 The OpenCSW packages have been compiled to allow easy forward migration and
-crossgrades/mixing between Sparc and x64 CPUs. That means the same version of the
-package is available for Solaris 10 and 11 for both Sparc and i386. There are
+crossgrades/mixing between SPARC and x86_64 CPUs. That means the same version of the
+package is available for Solaris 10 and 11 for both SPARC and x86. There are
 some exceptions where the software is absolutely not available or has a version
-mismatch (e.g. acroread). To allow this there are usually no dependencies to
+mismatch (e.g. acroread). To allow this, there are usually no dependencies on
 SUNW packages. This sometimes leads to large dependency chains (and people
-thinking of OpenCSW packages as "bloated") but that is the price to pay for
+thinking of OpenCSW packages as bloated) but that is the price to pay for
 the interoperability and we feel that in times of ever growing disks the
 flexibility is worth more than the saved bytes.
 
