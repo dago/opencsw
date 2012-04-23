@@ -64,3 +64,14 @@
  	$Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
  	chomp($Params{'LIBS'});
  	$Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
+--- a/perl/agent/default_store/Makefile.PL
++++ b/perl/agent/default_store/Makefile.PL
+@@ -69,6 +69,7 @@ sub InitMakeParams {
+     }
+     else {
+        $opts = NetSNMPGetOpts("../../");
++       $Params{'LDDLFLAGS'} = "$Config{lddlflags} -L../../../snmplib/.libs";
+        $Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
+        chomp($Params{'LIBS'});
+        $Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
+
