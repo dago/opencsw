@@ -1,0 +1,26 @@
+From 7bbb71c6ce9873cf1c53f555fd7f7a5726ba1248 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Sat, 14 Apr 2012 16:00:42 +0200
+Subject: [PATCH] Test on inttypes.h in addition to stdint.h and don't bail
+ out
+
+---
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 528a7a9..2e03605 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -101,7 +101,7 @@ AS_IF([test x"$with_skalibs" != xno],
+    AC_SUBST([STDDJB_LDFLAGS], ["$SKALIBS_LDFLAGS -lstddjb"])])
+ 
+ # Checks for header files.
+-AC_CHECK_HEADERS([arpa/inet.h curses.h fcntl.h langinfo.h limits.h locale.h netinet/in.h stddef.h stdint.h stdlib.h string.h sys/ioctl.h sys/resource.h sys/socket.h sys/time.h term.h termios.h unistd.h wchar.h wctype.h], [], [AC_MSG_ERROR([Missing required header file.])])
++AC_CHECK_HEADERS([arpa/inet.h curses.h fcntl.h langinfo.h limits.h locale.h netinet/in.h stddef.h stdint.h inttypes.h stdlib.h string.h sys/ioctl.h sys/resource.h sys/socket.h sys/time.h term.h termios.h unistd.h wchar.h wctype.h], [], [])
+ 
+ AC_CHECK_HEADERS([pty.h util.h])
+ 
+-- 
+1.7.9
+
