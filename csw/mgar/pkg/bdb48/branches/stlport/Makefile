@@ -17,9 +17,6 @@ endef
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
@@ -31,7 +28,10 @@ BUILD64 = 1
 
 CONFIGURE_SCRIPTS = dist
 
-prefix = $(BUILD_PREFIX)/bdb48
+# prefix = $(BUILD_PREFIX)/bdb48
+prefix = $(BUILD_PREFIX)/stlport4
+EXTRA_CXXFLAGS += -library=stlport4
+
 docdir = $(BUILD_PREFIX)/share/doc
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -40,6 +40,7 @@ CONFIGURE_ARGS += --enable-o_direct
 # No longer there in 4.8
 #CONFIGURE_ARGS += --enable-rpc
 CONFIGURE_ARGS += --enable-cxx
+# CONFIGURE_ARGS += --enable-stl
 CONFIGURE_ARGS += --enable-java
 
 # Exclude TCL support for 64 bit until we have a 64 bit TCL
@@ -49,39 +50,18 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-PACKAGES = CSWbdb48 CSWbdb48devel CSWbdb48doc
-
-CATALOGNAME_CSWbdb48      = berkeleydb48
-CATALOGNAME_CSWbdb48devel = berkeleydb48_devel
-CATALOGNAME_CSWbdb48doc   = berkeleydb48_doc
-
-ARCHALL_CSWbdb48doc = 1
-
-SPKG_DESC_CSWbdb48      = BerkeleyDB 4.8 embedded database libraries and utilities
-SPKG_DESC_CSWbdb48devel = BerkeleyDB 4.8 development support
-SPKG_DESC_CSWbdb48doc   = BerkeleyDB 4.8 documentation
-
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
-
-RUNTIME_DEP_PKGS_CSWbdb48devel = CSWbdb48
-CHECKPKG_OVERRIDES_CSWbdb48devel += surplus-dependency|CSWbdb48
-CHECKPKG_OVERRIDES_CSWbdb48 += missing-dependency|CSWbdb48devel
+VENDOR_URL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 LICENSE = LICENSE
 
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb48),'
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.* $(libdir)/db.jar
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
+PACKAGES += CSWlibdb-cxx4-8-stlport
+SPKG_DESC_CSWlibdb-cxx4-8-stlport = BerkeleyDB 4.8 bindings for C++ with STLPort
+PKGFILES_CSWlibdb-cxx4-8-stlport += $(call baseisadirs,$(libdir),libdb_cxx(-\d+(\.\d+)*)?\.so)
+# Change later on to new stlport package CSWlibstlport1-stlport
+RUNTIME_DEP_PKGS_CSWlibdb-cxx4-8-stlport += CSWstlport
 
-# Remove the license from share/doc/berkeleydb/license/.*
-# because GAR expects license to be a file instead of a directory
-EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
-
-PKGFILES_CSWbdb48doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb48devel = $(includedir)/.*
-
-# Compiler run pathes, skip for now.
-CHECKPKG_OVERRIDES_CSWbdb48 += bad-rpath-entry
+# Compiler run pathes, skip for now
+CHECKPKG_OVERRIDES_CSWlibdb-cxx4-8-stlport += bad-rpath-entry
 
 include gar/category.mk
 
