@@ -33,13 +33,9 @@ DISTFILES  = $(DISTNAME).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 BUILD_DEP_PKGS		=	\
-						CSWlibxmudevel \
-						CSWlibxawdevel \
 						CSWlibfreetype-dev \
 						CSWlibz-dev
 RUNTIME_DEP_PKGS	=	\
-						CSWlibxmu \
-						CSWlibxaw \
 						CSWlibfreetype6 \
 						CSWlibz1
 CONFIGURE_ARGS = $(DIRPATHS)
