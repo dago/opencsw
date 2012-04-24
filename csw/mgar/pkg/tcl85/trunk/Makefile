@@ -72,7 +72,13 @@ WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threads
-CONFIGURE_ARGS += --enable-dtrace
+
+# DTrace support is currently broken, disable for now
+#  Text relocation remains                         referenced
+#      against symbol                  offset      in file
+#  st                                  0x634       tclDTrace.o
+#  ld: fatal: relocations remain against allocatable but non-writable sections
+#CONFIGURE_ARGS += --enable-dtrace
 
 INSTALL_ARGS = install install-private-headers install-tzdata install-msgs
 
