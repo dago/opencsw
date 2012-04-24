@@ -34,29 +34,38 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 BUILD_DEP_PKGS		=	\
 						CSWlibfreetype-dev \
-						CSWlibz-dev
+						CSWlibz-dev \
+						CSWlibbz2-dev
 RUNTIME_DEP_PKGS	=	\
+						CSWlibgcc-s1 \
 						CSWlibfreetype6 \
-						CSWlibz1
+						CSWlibz1 \
+						CSWlibbz2-1-0
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
 
-PACKAGES				+=	CSWlibotf0
-SPKG_DESC_CSWlibotf0	=	A Library for handling OpenType Font - runtime
-PKGFILES_CSWlibotf0		+=	$(call pkgfiles_lib,libotf.so.0.0.0)
-OBSOLETED_BY_CSWlibotf0 +=	CSWlibotf
-
+PACKAGES					+=	CSWlibotf0
+SPKG_DESC_CSWlibotf0		=	A Library for handling OpenType Font - runtime
+PKGFILES_CSWlibotf0			+=	$(call pkgfiles_lib,libotf.so.0.0.0)
+OBSOLETED_BY_CSWlibotf0 	+=	CSWlibotf
+RUNTIME_DEP_PKGS_CSWlibotf0	+=	\
+								CSWlibgcc-s1 \
+								CSWlibbz2-1-0
 PACKAGES						+=	CSWlibotf-dev
 SPKG_DESC_CSWlibotf-dev			=	A Library for handling OpenType Font - development
 PKGFILES_CSWlibotf-dev			=	$(PKGFILES_DEVEL)
 CATALOGNAME_CSWlibotf-dev		=	libotf_dev
+OBSOLETED_BY_CSWlibotf-dev		=	CSWlibotfdevel
 RUNTIME_DEP_PKGS_CSWlibotf-dev	+=	CSWlibotf0
 
 PACKAGES							+=	CSWlibotf-utils
 SPKG_DESC_CSWlibotf-utils			=	A Library for handling OpenType Font - utilities
 CATALOGNAME_CSWlibotf-utils			=	libotf_utils
-OBSOLETED_BY_CSWlibotf-utils		 +=	CSWlibotf
-RUNTIME_DEP_PKGS_CSWlibotf-utils	+=	CSWlibotf0
-
+OBSOLETED_BY_CSWlibotf-utils		+=	CSWlibotf
+RUNTIME_DEP_PKGS_CSWlibotf-utils	+=	\
+										CSWlibotf0 \
+										CSWlibfreetype6 \
+										CSWlibz1 \
+										CSWlibbz2-1-0
 include gar/category.mk
 
