@@ -1,3 +1,9 @@
+openssl (0.9.8w,REV=2012.04.24) unstable
+
+  * New upstream release.
+  
+   -- Yann Rouillard <yann@opencsw.org>  Tue, 24 Apr 2012 11:20:32 +0200
+
 openssl (0.9.8v,REV=2012.04.20) unstable
 
   * New upstream release.
