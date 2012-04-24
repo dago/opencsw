@@ -34,6 +34,46 @@ BUILD_DEP_PKGS = CSWpysetuptools
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWperl
 
+PACKAGES += CSWnetsnmp-dev
+CATALOGNAME_CSWnetsnmp-dev = netsnmp_dev
+SPKG_DESC_CSWnetsnmp-dev += $(DESCRIPTION), development files
+PKGFILES_CSWnetsnmp-dev += $(PKGFILES_DEVEL)
+
+PACKAGES += CSWlibnetsnmp25
+CATALOGNAME_CSWlibnetsnmp25 = libnetsnmp25
+SPKG_DESC_CSWlibnetsnmp25 += $(DESCRIPTION), libsnmp.so.25
+PKGFILES_CSWlibnetsnmp25 += $(call baseisadirs,$(libdir),libnetsnmp\.so\.25(\.\d+)*)
+
+PACKAGES += CSWlibnetsnmpagent25
+CATALOGNAME_CSWlibnetsnmpagent25 = libnetsnmpagent25
+SPKG_DESC_CSWlibnetsnmpagent25 += $(DESCRIPTION), libsnmpagent.so.25
+PKGFILES_CSWlibnetsnmpagent25 += $(call baseisadirs,$(libdir),libnetsnmpagent\.so\.25(\.\d+)*)
+
+PACKAGES += CSWlibnetsnmphelpers25
+CATALOGNAME_CSWlibnetsnmphelpers25 = libnetsnmphelpers25
+SPKG_DESC_CSWlibnetsnmphelpers25 += $(DESCRIPTION), libsnmphelpers.so.25
+PKGFILES_CSWlibnetsnmphelpers25 += $(call baseisadirs,$(libdir),libnetsnmphelpers\.so\.25(\.\d+)*)
+
+PACKAGES += CSWlibnetsnmpmibs25
+CATALOGNAME_CSWlibnetsnmpmibs25 = libnetsnmpmibs25
+SPKG_DESC_CSWlibnetsnmpmibs25 += $(DESCRIPTION), libsnmpmibs.so.25
+PKGFILES_CSWlibnetsnmpmibs25 += $(call baseisadirs,$(libdir),libnetsnmpmibs\.so\.25(\.\d+)*)
+
+PACKAGES += CSWlibnetsnmptrapd25
+CATALOGNAME_CSWlibnetsnmptrapd25 = libnetsnmptrapd25
+SPKG_DESC_CSWlibnetsnmptrapd25 += $(DESCRIPTION), libsnmptrapd.so.25
+PKGFILES_CSWlibnetsnmptrapd25 += $(call baseisadirs,$(libdir),libnetsnmptrapd\.so\.25(\.\d+)*)
+
+PACKAGES += CSWpmnetsnmp
+SPKG_DESC_CSWpmnetsnmp+= $(DESCRIPTION), Perl binding
+PKGFILES_CSWpmnetsnmp += $(libdir)/perl
+
+PACKAGES += CSWpynetsnmp
+SPKG_DESC_CSWpynetsnmp += $(DESCRIPTION), Python binding
+PKGFILES_CSWpynetsnmp = $(libdir)/python.*
+
+PACKAGES += CSWnetsnmp
+SPKG_DESC_CSWnetsnmp += $(DESCRIPTION), Base
 
 # BUILD64 = 1
 
@@ -44,7 +84,9 @@ EXTRA_CFLAGS = $(INCLUDE_FLAGS)
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -xnorunpath
 
-CONFIGURE_ARGS_mm-32  = --disable-embedded-perl --with-perl-modules=yes
+CONFIGURE_ARGS_mm-32  = --disable-embedded-perl
+CONFIGURE_ARGS_mm-32  += --with-perl-modules=yes
+CONFIGURE_ARGS_mm-32  += --with-python-modules=yes
 # Enable Perl for 64 bit later
 #
 # CONFIGURE_ARGS_mm-64  = --disable-embedded-perl --without-perl-modules
@@ -55,8 +97,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-snmp-version=1
 CONFIGURE_ARGS += --with-sys-contact=unknown
 CONFIGURE_ARGS += --with-sys-location=unknown
-CONFIGURE_ARGS += --with-logfile=/var/log/snmpd.log
-CONFIGURE_ARGS += --with-persistent-directory=/opt/csw/var/net-snmp
+CONFIGURE_ARGS += --with-logfile=/var/opt/csw/log/snmpd.log
+CONFIGURE_ARGS += --with-persistent-directory=/var/opt/csw/net-snmp
 CONFIGURE_ARGS += --with-mib-modules="ucd-snmp/diskio agentx mibII/mta_sendmail"
 # Disable for now
 # CONFIGURE_ARGS += --with-libwrap=/opt/csw/lib
@@ -108,6 +150,9 @@ pre-configure-modulated:
 	cd $(WORKSRC) && autoreconf
 	@$(MAKECOOKIE)
 
+# if find the header in /opt/csw/include first use the old header from
+# installed older version, thats why remove /opt/csw/include
+CFLAGS := $(filter-out -I/opt/csw/include,$(CFLAGS))
 
 #post-install-isa-sparcv8:
 #	( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/old_libs_s.tar.gz |tar xf -)
