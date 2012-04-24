@@ -34,7 +34,6 @@ DISTFILES	=	$(DISTNAME).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
-EXTRA_INC			=	/opt/csw/X11/include
 EXTRA_LINKER_FLAGS	=	-lintl
 CONFIGURE_ARGS	+=	\
 					--without-included-gettext \
