@@ -30,7 +30,7 @@ PATCHFILES += Makefile.in.diff
 VENDOR_URL = http://www.net-snmp.org/
 
 BUILD_DEP_PKGS = CSWpysetuptools
-RUNTIME_DEP_PKGS_CSWnetsnmp += CSWpython
+# RUNTIME_DEP_PKGS_CSWnetsnmp += CSWpython
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWperl
 
