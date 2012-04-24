@@ -1,0 +1,5 @@
+* X11/Xaw/Command.h usability failure
+  when using the Sun provided Xaw the test and the generation of
+  example/otfview fails; using the headers provided by the OCSW X11
+  project solves this issue but we decided to fade our XWindows
+  project..
