@@ -1,22 +1,26 @@
 NAME = Geo-IP
-VERSION = 1.38
+VERSION = 1.40
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = BORISZ
 
-DESCRIPTION = Look up location and network information by IP Address
+DESCRIPTION = Maxmind GeoIP native C bindings
 define BLURB
-  This Perl module enables the user to find geographical and network
-  information of an IP address.
 endef
 
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmgeoip
-CATALOGNAME = pm_geoip
+LICENSE = README
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWpm-geo-ip
+SPKG_DESC_CSWpm-geo-ip = Maxmind GeoIP native C bindings
+RUNTIME_DEP_PKGS_CSWpm-geo-ip += CSWlibgeoip1
 
-RUNTIME_DEP_PKGS = CSWgeolitedb
+# Adjust location of GeoIP database
+REINPLACEMENTS += geoip
+REINPLACE_MATCH_geoip = /usr/local/share/GeoIP
+REINPLACE_WITH_geoip = $(sharedstatedir)/GeoIP
+REINPLACE_FILES_geoip += lib/Geo/IP/Record.pod
+REINPLACE_FILES_geoip += lib/Geo/IP.pm
 
 include gar/category.mk
