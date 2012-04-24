@@ -152,6 +152,18 @@ svn-http//%:
 svn-https//%:
 	@svn co $(SVNHTTP_CO_ARGS) https://$* $(PARTIALDIR)/$(notdir $*)
 
+# Sometimes files must be downloaded manually (e.g. for license reasons)
+manual//%:
+	@echo
+	@echo "Please download the file"
+	@echo "  $*"
+	@echo "manually from"
+	@echo "  $(SPKG_SOURCEURL)"
+	@echo "and copy it to"
+	@echo "  $(GARCHIVEDIR)"
+	@echo
+
+
 #################### CHECKSUM RULES ####################
 
 # check a given file's checksum against $(CHECKSUM_FILE) and
