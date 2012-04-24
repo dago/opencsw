@@ -44,7 +44,6 @@ RUNTIME_DEP_PKGS	=	\
 						CSWlibz1
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
-EXTRA_INC			=	/opt/csw/X11/include
 
 PACKAGES				+=	CSWlibotf0
 SPKG_DESC_CSWlibotf0	=	A Library for handling OpenType Font - runtime
