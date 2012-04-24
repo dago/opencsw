@@ -46,17 +46,19 @@ RUNTIME_DEP_PKGS	=	\
 						CSWggettext \
 						CSWlibthai \
 						CSWlibotf
-PACKAGES							+=	CSWlibn17n0
-SPKG_DESC_CSWlibn17n0				+=	A multilingual text processing library for the C language - runtime.
-PKGFILES_CSWlibn17n0				+=	$(call pkgfiles_lib,libm17n-core.so.0.4.0) $(call pkgfiles_lib,libm17n-flt.so.0.4.0) $(call pkgfiles_lib,libm17n-gui.so.0.4.0) $(call pkgfiles_lib,libm17n.so.0.4.0) $(call pkgfiles_lib,m17n/1.0/libm17n-X.so) $(call pkgfiles_lib,m17n/1.0/libm17n-gd.so) $(call pkgfiles_lib,m17n/1.0/libmimx-anthy.so) $(call pkgfiles_lib,m17n/1.0/libmimx-ispell.so)
-PACKAGES							+=	CSWlibn17n-dev
-SPKG_DESC_CSWlibn17n-dev			+=	A multilingual text processing library for the C language - development.
-PKGFILES_CSWlibn17n-dev				=	$(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibn17n-dev		+=	CSWlibn17n0
+PACKAGES							+=	CSWlibm17n0
+SPKG_DESC_CSWlibm17n0				+=	A multilingual text processing library for the C language - runtime.
+PKGFILES_CSWlibm17n0				+=	$(call pkgfiles_lib,libm17n-core.so.0.4.0) $(call pkgfiles_lib,libm17n-flt.so.0.4.0) $(call pkgfiles_lib,libm17n-gui.so.0.4.0) $(call pkgfiles_lib,libm17n.so.0.4.0) $(call pkgfiles_lib,m17n/1.0/libm17n-X.so) $(call pkgfiles_lib,m17n/1.0/libm17n-gd.so) $(call pkgfiles_lib,m17n/1.0/libmimx-anthy.so) $(call pkgfiles_lib,m17n/1.0/libmimx-ispell.so)
+OBSOLETED_BY_CSWlibm17n0 +=	CSWlibm17n
+PACKAGES							+=	CSWlibm17n-dev
+SPKG_DESC_CSWlibm17n-dev			+=	A multilingual text processing library for the C language - development.
+PKGFILES_CSWlibm17n-dev				=	$(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	CSWlibm17n0
 
-PACKAGES							+=	CSWlibn17n-utils
-SPKG_DESC_CSWlibn17n-utils			+=	A multilingual text processing library for the C language - utilities.
-RUNTIME_DEP_PKGS_CSWlibn17n-utils	+=	CSWlibn17n0
+PACKAGES							+=	CSWlibm17n-utils
+SPKG_DESC_CSWlibm17n-utils			+=	A multilingual text processing library for the C language - utilities.
+OBSOLETED_BY_CSWlibm17n +=	CSWlibm17n
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibm17n0
 
 include gar/category.mk
 
