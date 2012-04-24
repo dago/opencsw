@@ -61,6 +61,11 @@ SPKG_DESC_CSWlibltdl7 = Libtool libltdl.so.7 from libtool 2.x
 PKGFILES_CSWlibltdl7 += $(PKGFILES_RT)
 OBSOLETED_BY_CSWlibltdl7 += CSWlibtoolrt
 
+# To get around __sync_fetch_and_add_4 either the buildlevel could be raised to Solaris 10
+# which is not acceptable for libtool or the base ISA could be raised to pentium_pro allowing
+# the specific command set.
+ISA_DEFAULT_i386-5.9 = pentium_pro
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD64 = 1
