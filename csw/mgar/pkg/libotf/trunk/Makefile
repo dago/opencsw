@@ -23,24 +23,13 @@ endef
 MASTER_SITES = http://www.m17n.org/libotf/
 DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
+# centralize the build dependencies (it seems that the run-time
+# dependencies must be given for each package)
 BUILD_DEP_PKGS		=	\
 						CSWlibfreetype-dev \
 						CSWlibz-dev \
 						CSWlibbz2-dev
-RUNTIME_DEP_PKGS	=	\
-						CSWlibgcc-s1 \
-						CSWlibfreetype6 \
-						CSWlibz1 \
-						CSWlibbz2-1-0
+
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
 
@@ -50,6 +39,8 @@ PKGFILES_CSWlibotf0			+=	$(call pkgfiles_lib,libotf.so.0.0.0)
 OBSOLETED_BY_CSWlibotf0 	+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf0	+=	\
 								CSWlibgcc-s1 \
+								CSWlibfreetype6 \
+								CSWlibz1 \
 								CSWlibbz2-1-0
 PACKAGES						+=	CSWlibotf-dev
 SPKG_DESC_CSWlibotf-dev			=	A Library for handling OpenType Font - development
