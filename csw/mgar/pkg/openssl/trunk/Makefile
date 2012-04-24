@@ -16,7 +16,7 @@ PKCS11 = 1
 ###### Package information #######
 
 NAME = openssl
-VERSION = 0.9.8v
+VERSION = 0.9.8w
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -67,7 +67,7 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 #CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += surplus-dependency|CSWcacertificates
 
 # this package contains several libraries files and we will not split
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
+#CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
 
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
