@@ -47,7 +47,7 @@ PACKAGES							+=	CSWlibm17n0
 SPKG_DESC_CSWlibm17n0				+=	$(DESCRIPTION) - runtime.
 PKGFILES_CSWlibm17n0				+=	$(call pkgfiles_lib,libm17n-core.so.0.4.0) $(call pkgfiles_lib,libm17n-flt.so.0.4.0) $(call pkgfiles_lib,libm17n-gui.so.0.4.0) $(call pkgfiles_lib,libm17n.so.0.4.0) $(call pkgfiles_lib,m17n/1.0/libm17n-X.so) $(call pkgfiles_lib,m17n/1.0/libm17n-gd.so) $(call pkgfiles_lib,m17n/1.0/libmimx-anthy.so) $(call pkgfiles_lib,m17n/1.0/libmimx-ispell.so)
 OBSOLETED_BY_CSWlibm17n0 			+=	CSWlibm17n
-RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	\
+RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 										CSWlibotf0 \
 										CSWlibthai \
 										CSWlibiconv2 \
