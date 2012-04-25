@@ -1,0 +1,11 @@
+--- a/python/setup.py
++++ b/python/setup.py
+@@ -41,6 +41,7 @@ setup(
+        Extension("netsnmp.client_intf", ["netsnmp/client_intf.c"],
+                  library_dirs=libdirs,
+                  include_dirs=incdirs,
+-                 libraries=libs )
++                 libraries=libs,
++                 extra_link_args = ["-R/opt/csw/lib/$ISALIST","-R/opt/csw/lib"] )
+        ]
+     )
