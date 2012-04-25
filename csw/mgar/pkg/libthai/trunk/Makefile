@@ -1,5 +1,5 @@
 NAME = libthai
-VERSION = 0.1.12
+VERSION = 0.1.17
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -14,31 +14,30 @@ define BLURB
 endef
 
 MASTER_SITES = http://linux.thai.net/pub/thailinux/software/libthai/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES = 0001-Remove-unknown-compiler-macro.patch
+DISTFILES += $(DISTNAME).tar.gz
 
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES += 0001-Remove-unknown-compiler-macro.patch
+PATCHFILES += 0002-Use-stdint.h-only-when-available-and-use-limits.h-fo.patch
 
-PACKAGES = CSWlibthai CSWlibthaidevel
+VENDOR_URL = http://linux.thai.net/projects/libthai/
 
-CATALOGNAME_CSWlibthai = libthai
-CATALOGNAME_CSWlibthaidevel = libthai_devel
+BUILD_DEP_PKGS += CSWlibdatrie-dev
+BUILD_DEP_PKGS += CSWlibdatrie-utils
 
-SPKG_DESC_CSWlibthai = Thai language support routines
-SPKG_DESC_CSWlibthaidevel = Thai language support routines development files
+PACKAGES += CSWlibthai0
+SPKG_DESC_CSWlibthai0 = Thai language support routines, libthai.so.0
+PKGFILES_CSWlibthai0 += $(call pkgfiles_lib,libthai.so.0)
+PKGFILES_CSWlibthai0 += $(sharedstatedir)/libthai/thbrk.tri
+RUNTIME_DEP_PKGS_CSWlibthai0 = CSWlibdatrie1
+OBSOLETED_BY_CSWlibthai0 += CSWlibthai
 
-SPKG_SOURCEURL = http://linux.thai.net/projects/libthai/
-
-RUNTIME_DEP_PKGS_CSWlibthai = CSWlibdatrie
-RUNTIME_DEP_PKGS_CSWlibthaidevel = CSWlibthai
-PREREQUISUITE_PKGS = $(RUNTIME_DEP_PKGS_CSWlibthai)
+PACKAGES += CSWlibthai-dev
+SPKG_DESC_CSWlibthai-dev = Thai language support routines development files
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibthai-dev = CSWlibthai0
+OBSOLETED_BY_CSWlibthai-dev += CSWlibthaidevel
+CATALOGNAME_CSWlibthaidevel = libthai_devel_stub
 
 BUILD64_LIBS_ONLY = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-PKGFILES_CSWlibthaidevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibthaidevel += $(docdir)/.*
 
 include gar/category.mk

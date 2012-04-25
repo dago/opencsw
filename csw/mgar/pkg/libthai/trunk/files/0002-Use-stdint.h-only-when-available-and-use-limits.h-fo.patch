@@ -1,0 +1,72 @@
+From 09758dc94dd2f70a92120843c7d28754bef85ef2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Wed, 25 Apr 2012 14:23:49 +0200
+Subject: [PATCH] Use stdint.h only when available and use limits.h for
+ SIZE_MAX
+
+---
+ src/thbrk/brk-maximal.c |    6 ++++++
+ src/thbrk/thbrk.c       |    8 ++++++++
+ src/thwbrk/thwbrk.c     |    7 +++++++
+ 3 files changed, 21 insertions(+)
+
+diff --git a/src/thbrk/brk-maximal.c b/src/thbrk/brk-maximal.c
+index 2ee9842..663013b 100644
+--- a/src/thbrk/brk-maximal.c
++++ b/src/thbrk/brk-maximal.c
+@@ -26,7 +26,13 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
++
++#if defined( HAVE_STDINT_H )
+ #include <stdint.h>
++#elif defined( HAVE_INTTYPES_H )
++#include <inttypes.h>
++#endif
++
+ #include <stdio.h>
+ #include <limits.h>
+ #include <datrie/trie.h>
+diff --git a/src/thbrk/thbrk.c b/src/thbrk/thbrk.c
+index 2fefffa..2b221d5 100644
+--- a/src/thbrk/thbrk.c
++++ b/src/thbrk/thbrk.c
+@@ -26,7 +26,15 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
++
++#if defined( HAVE_STDINT_H )
+ #include <stdint.h>
++#elif defined( HAVE_INTTYPES_H )
++#include <inttypes.h>
++#endif
++
++#include <limits.h>
++
+ #include <thai/tis.h>
+ #include <thai/thctype.h>
+ #include <thai/thbrk.h>
+diff --git a/src/thwbrk/thwbrk.c b/src/thwbrk/thwbrk.c
+index 8543df9..2ef8173 100644
+--- a/src/thwbrk/thwbrk.c
++++ b/src/thwbrk/thwbrk.c
+@@ -26,7 +26,14 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++
++#if defined( HAVE_STDINT_H )
+ #include <stdint.h>
++#elif defined( HAVE_INTTYPES_H )
++#include <inttypes.h>
++#endif
++
++#include <limits.h>
+ #include <stdlib.h>
+ 
+ #include <thai/thailib.h>
+-- 
+1.7.10
+
