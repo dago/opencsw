@@ -29,7 +29,6 @@ RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibgcc-s1
 
 # These may be problematic, override for now
 CHECKPKG_OVERRIDES_CSWfreeradius += file-with-bad-content|/usr/local|root/etc/opt/csw/freeradius/radiusd.conf.CSW
@@ -57,7 +56,6 @@ RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWfreeradius
-RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibgcc-s1
 
 PACKAGES += CSWfreeradius-ldap
 SPKG_DESC_CSWfreeradius-ldap = LDAP Module rlm_ldap for FreeRADIUS
@@ -71,7 +69,6 @@ PKGFILES_CSWfreeradius-ldap += /opt/csw/lib/freeradius/rlm_ldap\.so
 PKGFILES_CSWfreeradius-ldap += /opt/csw/lib/freeradius/rlm_ldap-2\.1\.[0-9]+\.so
 RUNTIME_DEP_PKGS_CSWfreeradius-ldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWfreeradius-ldap += CSWfreeradius
-RUNTIME_DEP_PKGS_CSWfreeradius-ldap += CSWlibgcc-s1
 
 ## Disabling Perl due to linker issues and weird makefiles
 #PACKAGES += CSWfreeradius-perl
@@ -108,7 +105,8 @@ CONFIGURE_ARGS += --without-rlm_sql_mysql
 EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql
 EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql/.*
 ## End mysql exclusion lines
-GARCOMPILER = GCC4
+
+# GARCOMPILER = GCC4
 
 CSWfreeradius_usergroup = radius:radius:FreeRADIUS:/var/opt/csw/freeradius:/bin/false::
 
