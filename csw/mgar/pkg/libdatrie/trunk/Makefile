@@ -1,5 +1,5 @@
 NAME = libdatrie
-VERSION = 0.2.4
+VERSION = 0.2.5
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -28,7 +28,7 @@ PACKAGES += CSWlibdatrie-utils
 SPKG_DESC_CSWlibdatrie-utils = Utility programs using libdatrie
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibdatrie-utils += CSWlibdatrie1
-RUNTIME_DEP_PKGS_CSWlibdatrie-utils += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibdatrie-utils += CSWlibiconv2
 
 BUILD64_LIBS_ONLY = 1
 
