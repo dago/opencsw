@@ -47,23 +47,34 @@ PACKAGES							+=	CSWlibm17n0
 SPKG_DESC_CSWlibm17n0				+=	$(DESCRIPTION) - runtime.
 PKGFILES_CSWlibm17n0				+=	$(call pkgfiles_lib,libm17n-core.so.0.4.0) $(call pkgfiles_lib,libm17n-flt.so.0.4.0) $(call pkgfiles_lib,libm17n-gui.so.0.4.0) $(call pkgfiles_lib,libm17n.so.0.4.0) $(call pkgfiles_lib,m17n/1.0/libm17n-X.so) $(call pkgfiles_lib,m17n/1.0/libm17n-gd.so) $(call pkgfiles_lib,m17n/1.0/libmimx-anthy.so) $(call pkgfiles_lib,m17n/1.0/libmimx-ispell.so)
 OBSOLETED_BY_CSWlibm17n0 			+=	CSWlibm17n
-
+RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	\
+										CSWlibotf0 \
+										CSWlibthai \
+										CSWlibiconv2 \
+										CSWlibxml2-2 \
+										CSWlibxft2 \
+										CSWlibxrender \
+										CSWfribidi \
+										CSWlibgd2 \
+										CSWfconfig
 PACKAGES							+=	CSWlibm17n-dev
 SPKG_DESC_CSWlibm17n-dev			+=	$(DESCRIPTION) - development.
 PKGFILES_CSWlibm17n-dev				=	$(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	CSWlibm17n0 \
+RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	\
+										CSWlibm17n0 \
 										CSWggettext \
 										CSWlibthai \
-										CSWlibotf
+										CSWlibotf0
 OBSOLETED_BY_CSWlibm17n-dev			+=	CSWlibm17ndevel
 
 PACKAGES							+=	CSWlibm17n-utils
 SPKG_DESC_CSWlibm17n-utils			+=	$(DESCRIPTION) - utilities.
 OBSOLETED_BY_CSWlibm17n-utils		+=	CSWlibm17n
-RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibm17n0 \
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	\
+										CSWlibm17n0 \
 										CSWggettext \
 										CSWlibthai \
-										CSWlibotf
+										CSWlibotf0
 
 include gar/category.mk
 
