@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = autoconf
-VERSION = 2.68
+VERSION = 2.69
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -18,25 +18,40 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Prefer-CSW-tools.patch
 
-BUILD_DEP_PKGS = CSWhelp2man
+VENDOR_URL = http://www.gnu.org/software/autoconf/
+
+BUILD_DEP_PKGS += CSWhelp2man
 
 # We need the Fortran runtime libs or the Fortran tests with fail
 BUILD_DEP_PKGS += CSWss12f95rt
 
-RUNTIME_DEP_PKGS = CSWgawk CSWgm4 CSWperl
-
-VENDOR_URL = http://www.gnu.org/software/autoconf/
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-# Tests take a loooooonnng time.
-# TEST_SCRIPTS =
-
-EXTRA_MERGE_EXCLUDE_FILES = $(infodir)/standards.info
-
-CHECKPKG_OVERRIDES_CSWautoconf += missing-dependency|CSWemacscommon
+PACKAGES += CSWautoconf
+SPKG_DESC_CSWautoconf = GNU auto-configuration tool
+# PKGFILES is catchall
+ARCHALL_CSWautoconf = 1
+RUNTIME_DEP_PKGS_CSWautoconf += CSWperl
+RUNTIME_DEP_PKGS_CSWautoconf += CSWgawk
+RUNTIME_DEP_PKGS_CSWautoconf += CSWgm4
+# checkpkg cannot track these
 CHECKPKG_OVERRIDES_CSWautoconf += surplus-dependency|CSWgm4
 CHECKPKG_OVERRIDES_CSWautoconf += surplus-dependency|CSWgawk
+
+# This is just for the emacs style
+CHECKPKG_OVERRIDES_CSWautoconf += missing-dependency|CSWemacscommon
+
+# These are just docs
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/autoconf/INSTALL
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/info/autoconf.info
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/share|root/opt/csw/share/info/autoconf.info
+
+# The search pathes also include /usr/local among others
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/autoconf/autoconf/autoconf.m4f
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/autoconf/autoconf/functions.m4
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/autoconf/autoconf/general.m4
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/autoconf/autoconf/fortran.m4
+CHECKPKG_OVERRIDES_CSWautoconf += file-with-bad-content|/usr/local|root/opt/csw/share/autoconf/autoconf/libs.m4
+
+EXTRA_MERGE_EXCLUDE_FILES = $(infodir)/standards.info
 
 include gar/category.mk
 
