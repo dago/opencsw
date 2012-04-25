@@ -1,0 +1,166 @@
+From e2eecb5db07a5b453cf65ca1169201721c3af2f0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Wed, 25 Apr 2012 17:23:11 +0200
+Subject: [PATCH] More Solaris fixes
+
+---
+ include/libtorrent/config.hpp |    1 +
+ src/enum_net.cpp              |   48 ++++++++++++++++++++---------------------
+ src/escape_string.cpp         |    2 +-
+ 3 files changed, 26 insertions(+), 25 deletions(-)
+
+diff --git a/include/libtorrent/config.hpp b/include/libtorrent/config.hpp
+index bea1e2f..bf60162 100644
+--- a/include/libtorrent/config.hpp
++++ b/include/libtorrent/config.hpp
+@@ -211,6 +211,7 @@ POSSIBILITY OF SUCH DAMAGE.
+ #define TORRENT_COMPLETE_TYPES_REQUIRED 1
+ #define TORRENT_USE_IFCONF 1
+ #define TORRENT_HAS_SALEN 0
++#define TORRENT_HAS_FALLOCATE 0
+ 
+ // ==== BEOS ===
+ #elif defined __BEOS__ || defined __HAIKU__
+diff --git a/src/enum_net.cpp b/src/enum_net.cpp
+index bab1b11..b0a0a7a 100644
+--- a/src/enum_net.cpp
++++ b/src/enum_net.cpp
+@@ -207,14 +207,14 @@ namespace libtorrent { namespace
+ 		}
+ 
+ 		if_indextoname(if_index, rt_info->name);
+-		ifreq req;
++		lifreq req;
+ 		memset(&req, 0, sizeof(req));
+-		if_indextoname(if_index, req.ifr_name);
++		if_indextoname(if_index, req.lifr_name);
+ 		ioctl(s, SIOCGIFMTU, &req);
+-		rt_info->mtu = req.ifr_mtu;
++		rt_info->mtu = req.lifr_mtu;
+ //		obviously this doesn't work correctly. How do you get the netmask for a route?
+ //		if (ioctl(s, SIOCGIFNETMASK, &req) == 0) {
+-//			rt_info->netmask = sockaddr_to_address(&req.ifr_addr, req.ifr_addr.sa_family);
++//			rt_info->netmask = sockaddr_to_address(&req.lifr_addr, req.lifr_addr.sa_family);
+ //		}
+ 		return true;
+ 	}
+@@ -260,11 +260,11 @@ namespace libtorrent { namespace
+ 			, rt_info->destination.is_v4() ? AF_INET : AF_INET6);
+ 		if_indextoname(rtm->rtm_index, rt_info->name);
+ 
+-		ifreq req;
++		lifreq req;
+ 		memset(&req, 0, sizeof(req));
+-		if_indextoname(rtm->rtm_index, req.ifr_name);
++		if_indextoname(rtm->rtm_index, req.lifr_name);
+ 		if (ioctl(s, SIOCGIFMTU, &req) < 0) return false;
+-		rt_info->mtu = req.ifr_mtu;
++		rt_info->mtu = req.lifr_mtu;
+ 
+ 		return true;
+ 	}
+@@ -420,15 +420,15 @@ namespace libtorrent
+ 				ip_interface iface;
+ 				if (iface_from_ifaddrs(ifa, iface, ec))
+ 				{
+-					ifreq req;
++					lifreq req;
+ 					memset(&req, 0, sizeof(req));
+ 					// -1 to leave a null terminator
+-					strncpy(req.ifr_name, iface.name, IF_NAMESIZE - 1);
++					strncpy(req.lifr_name, iface.name, IF_NAMESIZE - 1);
+ 					if (ioctl(s, SIOCGIFMTU, &req) < 0)
+ 					{
+ 						continue;
+ 					}
+-					iface.mtu = req.ifr_mtu;
++					iface.mtu = req.lifr_mtu;
+ 					ret.push_back(iface);
+ 				}
+ 			}
+@@ -454,37 +454,37 @@ namespace libtorrent
+ 			return ret;
+ 		}
+ 
+-		char *ifr = (char*)ifc.ifc_req;
++		char *lifr = (char*)ifc.ifc_req;
+ 		int remaining = ifc.ifc_len;
+ 
+ 		while (remaining)
+ 		{
+-			ifreq const& item = *reinterpret_cast<ifreq*>(ifr);
++			lifreq const& item = *reinterpret_cast<lifreq*>(lifr);
+ 
+-			if (item.ifr_addr.sa_family == AF_INET
++			if (item.lifr_addr.ss_family == AF_INET
+ #if TORRENT_USE_IPV6
+-				|| item.ifr_addr.sa_family == AF_INET6
++				|| item.lifr_addr.ss_family == AF_INET6
+ #endif
+ 				)
+ 			{
+ 				ip_interface iface;
+-				iface.interface_address = sockaddr_to_address(&item.ifr_addr);
+-				strcpy(iface.name, item.ifr_name);
++				iface.interface_address = sockaddr_to_address( (const sockaddr*) &item.lifr_addr );
++				strcpy(iface.name, item.lifr_name);
+ 
+-				ifreq req;
++				lifreq req;
+ 				memset(&req, 0, sizeof(req));
+ 				// -1 to leave a null terminator
+-				strncpy(req.ifr_name, item.ifr_name, IF_NAMESIZE - 1);
++				strncpy(req.lifr_name, item.lifr_name, IF_NAMESIZE - 1);
+ 				if (ioctl(s, SIOCGIFMTU, &req) < 0)
+ 				{
+ 					ec = error_code(errno, asio::error::system_category);
+ 					close(s);
+ 					return ret;
+ 				}
+-				iface.mtu = req.ifr_mtu;
++				iface.mtu = req.lifr_mtu;
+ 
+ 				memset(&req, 0, sizeof(req));
+-				strncpy(req.ifr_name, item.ifr_name, IF_NAMESIZE - 1);
++				strncpy(req.lifr_name, item.lifr_name, IF_NAMESIZE - 1);
+ 				if (ioctl(s, SIOCGIFNETMASK, &req) < 0)
+ 				{
+ #if TORRENT_USE_IPV6
+@@ -503,17 +503,17 @@ namespace libtorrent
+ 				}
+ 				else
+ 				{
+-					iface.netmask = sockaddr_to_address(&req.ifr_addr, item.ifr_addr.sa_family);
++					iface.netmask = sockaddr_to_address( (const sockaddr*) &req.lifr_addr, item.lifr_addr.ss_family);
+ 				}
+ 				ret.push_back(iface);
+ 			}
+ 
+ #if defined TORRENT_BSD
+-			int current_size = item.ifr_addr.sa_len + IFNAMSIZ;
++			int current_size = item.lifr_addr.sa_len + IFNAMSIZ;
+ #else
+-			int current_size = sizeof(ifreq);
++			int current_size = sizeof(lifreq);
+ #endif
+-			ifr += current_size;
++			lifr += current_size;
+ 			remaining -= current_size;
+ 		}
+ 		close(s);
+diff --git a/src/escape_string.cpp b/src/escape_string.cpp
+index 021e6c7..d2f1b8e 100644
+--- a/src/escape_string.cpp
++++ b/src/escape_string.cpp
+@@ -624,7 +624,7 @@ namespace libtorrent
+ 		// posix has a weird iconv signature. implementations
+ 		// differ on what this signature should be, so we use
+ 		// a macro to let config.hpp determine it
+-		size_t retval = iconv(h, TORRENT_ICONV_ARG &in, &insize,
++		size_t retval = iconv(h, (const char**) TORRENT_ICONV_ARG &in, &insize,
+ 			&out, &outsize);
+ 		if (retval == (size_t)-1) return s;
+ 		// if this string has an invalid utf-8 sequence in it, don't touch it
+-- 
+1.7.10
+
