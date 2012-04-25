@@ -34,7 +34,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
 
 PACKAGES					+=	CSWlibotf0
-SPKG_DESC_CSWlibotf0		=	A Library for handling OpenType Font - runtime
+SPKG_DESC_CSWlibotf0		=	$(DESCRIPTION) - runtime
 PKGFILES_CSWlibotf0			+=	$(call pkgfiles_lib,libotf.so.0.0.0)
 OBSOLETED_BY_CSWlibotf0 	+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf0	+=	\
@@ -43,14 +43,14 @@ RUNTIME_DEP_PKGS_CSWlibotf0	+=	\
 								CSWlibz1 \
 								CSWlibbz2-1-0
 PACKAGES						+=	CSWlibotf-dev
-SPKG_DESC_CSWlibotf-dev			=	A Library for handling OpenType Font - development
+SPKG_DESC_CSWlibotf-dev			=	$(DESCRIPTION) - development
 PKGFILES_CSWlibotf-dev			=	$(PKGFILES_DEVEL)
 CATALOGNAME_CSWlibotf-dev		=	libotf_dev
 OBSOLETED_BY_CSWlibotf-dev		=	CSWlibotfdevel
 RUNTIME_DEP_PKGS_CSWlibotf-dev	+=	CSWlibotf0
 
 PACKAGES							+=	CSWlibotf-utils
-SPKG_DESC_CSWlibotf-utils			=	A Library for handling OpenType Font - utilities
+SPKG_DESC_CSWlibotf-utils			=	$(DESCRIPTION) - utilities
 CATALOGNAME_CSWlibotf-utils			=	libotf_utils
 OBSOLETED_BY_CSWlibotf-utils		+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf-utils	+=	\
