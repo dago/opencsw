@@ -4,7 +4,7 @@
 # * inspect failed tests from the testsuite
 
 NAME = libexplain
-VERSION = 0.46.D001
+VERSION = 0.52.D002
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -14,6 +14,8 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
+
+PATCHFILES += 0001-Solaris-fixes.patch
 
 LICENSE = LICENSE
 
