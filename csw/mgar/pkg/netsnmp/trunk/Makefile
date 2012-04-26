@@ -41,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmptrapd25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmpagent25
-CHECKPKG_OVERRIDES_CSWpmnetsnmp-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/site_perl/NetSNMP/TrapReceiver.pm
+CHECKPKG_OVERRIDES_CSWnetsnmp-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/NetSNMP::TrapReceiver.3perl
 
 PACKAGES += CSWlibnetsnmp25
 CATALOGNAME_CSWlibnetsnmp25 = libnetsnmp25
@@ -83,7 +83,7 @@ RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmptrapd25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmpagent25
-
+CHECKPKG_OVERRIDES_CSWpmnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/site_perl/NetSNMP/TrapReceiver.pm
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/*.pyc
 PACKAGES += CSWpy-netsnmp
