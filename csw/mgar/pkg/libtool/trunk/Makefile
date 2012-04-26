@@ -86,19 +86,27 @@ post-install-modulated: $(if $(PATCHFILES_POSTINSTALL_$(MODULATION)),patch-libto
 post-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-$(COMPILER_TAGNAME_$(GARCOMPILER)))
 	ginstall -d $(DESTDIR)$(docdir)/libtool
 	ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/libtool/README.CSW
+	@$(MAKECOOKIE)
 
 patch-libtool:
-	cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && gpatch -p1)
+	-cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && gpatch --forward -p1)
 	# Remove arch-specific flags from the libtool-compilation so they don't spoil the target build
-	perl -pi -e 's/^LTCFLAGS=.*/LTCFLAGS="-O"/' $(DESTDIR)$(bindir)/libtool
-	@$(MAKECOOKIE)
+	# Instead we inherit from CFLAGS as removing the arch specified leads to the default arch which
+	# may very well be wrong (especially on sparc default is v8+ instead of the requested default v8
+	# thus resulting in a different binary being generated).
+	perl -pi -e 's/^LTCFLAGS=.*/if [ -z "\$$LTCFLAGS" ]; then \
+  if [ -z "\$$CFLAGS" ]; then \
+    LTCFLAGS="-O" \
+  else \
+    LTCFLAGS="\$$CFLAGS" \
+  fi \
+fi/' $(DESTDIR)$(bindir)/libtool
 
 install-libtool-%:
 	perl -ane 'print if( /^available_tags/ ); $$p = 1 if( /^# ### BEGIN LIBTOOL CONFIG/ ); print if( $$p ); $$p = 0 if( /^# ### END LIBTOOL CONFIG/ )' \
 		<$(DESTDIR)$(bindir)/libtool >$(DESTDIR)$(datadir)/libtool/$*.conf
 	perl -ane '$$p = 1 if( /^# ### BEGIN LIBTOOL TAG CONFIG/ ); print if( $$p ); if( /^# ### END LIBTOOL TAG CONFIG/ ) { $$p = 0; print "\n"; }' \
 		<$(DESTDIR)$(bindir)/libtool >$(DESTDIR)$(datadir)/libtool/$*.tags
-	@$(MAKECOOKIE)
 
 merge-copy-tags: $(PKGROOT)
 	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
