@@ -1,0 +1,116 @@
+From d46d1fd0a78f99a172aba96b2f5ee16583720e1d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Thu, 26 Apr 2012 14:01:23 +0200
+Subject: [PATCH] Solaris fixes
+
+---
+ libexplain/buffer/errno/shmat.c |    2 ++
+ libexplain/buffer/ipc_perm.c    |    8 ++++----
+ libexplain/buffer/shm_info.c    |    2 +-
+ libexplain/buffer/shminfo.c     |    4 ++++
+ test_shmctl/main.c              |    2 ++
+ 5 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/libexplain/buffer/errno/shmat.c b/libexplain/buffer/errno/shmat.c
+index 41bb26f..ce147f8 100644
+--- a/libexplain/buffer/errno/shmat.c
++++ b/libexplain/buffer/errno/shmat.c
+@@ -153,11 +153,13 @@ explain_buffer_errno_shmat_explanation(explain_string_buffer_t *sb, int errnum,
+         break;
+ 
+     case EINVAL:
++#ifdef SHM_REMAP
+         if ((shmflg & SHM_REMAP) && !shmaddr)
+         {
+             explain_buffer_is_the_null_pointer(sb, "shmaddr");
+             return;
+         }
++#endif
+         /* use shmctl to find this out */
+         if (!shmid_exists(shmid))
+         {
+diff --git a/libexplain/buffer/ipc_perm.c b/libexplain/buffer/ipc_perm.c
+index 94305dc..ba2912c 100644
+--- a/libexplain/buffer/ipc_perm.c
++++ b/libexplain/buffer/ipc_perm.c
+@@ -96,8 +96,8 @@ explain_buffer_ipc_perm(explain_string_buffer_t *sb,
+     explain_string_buffer_puts(sb, "{ ");
+     if (extra)
+     {
+-        explain_string_buffer_puts(sb, "__key = ");
+-        explain_buffer_int(sb, data->__key);
++        explain_string_buffer_puts(sb, "key = ");
++        explain_buffer_int(sb, data->key);
+         explain_string_buffer_puts(sb, ", ");
+     }
+     explain_string_buffer_puts(sb, "uid = ");
+@@ -115,8 +115,8 @@ explain_buffer_ipc_perm(explain_string_buffer_t *sb,
+     explain_buffer_ipc_perm_mode(sb, data->mode);
+     if (extra)
+     {
+-        explain_string_buffer_puts(sb, ", __seq = ");
+-        explain_buffer_ushort(sb, data->__seq);
++        explain_string_buffer_puts(sb, ", seq = ");
++        explain_buffer_ushort(sb, data->seq);
+     }
+     explain_string_buffer_puts(sb, " }");
+ #else
+diff --git a/libexplain/buffer/shm_info.c b/libexplain/buffer/shm_info.c
+index 56aecda..20c5c02 100644
+--- a/libexplain/buffer/shm_info.c
++++ b/libexplain/buffer/shm_info.c
+@@ -29,7 +29,7 @@ void
+ explain_buffer_shm_info(explain_string_buffer_t *sb,
+     const struct shm_info *data)
+ {
+-#ifdef HAVE_SYS_SHM_H
++#if 0
+     if (explain_is_efault_pointer(data, sizeof(*data)))
+     {
+         explain_buffer_pointer(sb, data);
+diff --git a/libexplain/buffer/shminfo.c b/libexplain/buffer/shminfo.c
+index 01aab9f..050a096 100644
+--- a/libexplain/buffer/shminfo.c
++++ b/libexplain/buffer/shminfo.c
+@@ -38,14 +38,18 @@ explain_buffer_shminfo(explain_string_buffer_t *sb,
+     explain_string_buffer_puts(sb, "{ shmmax = ");
+     explain_buffer_ulong(sb, data->shmmax);
+     explain_string_buffer_puts(sb, ", shmmin = ");
++#if 0
+     explain_buffer_ulong(sb, data->shmmin);
+     explain_string_buffer_puts(sb, ", shmmni = ");
++#endif
+     explain_buffer_ulong(sb, data->shmmni);
+     explain_string_buffer_puts(sb, ", shmseg = ");
++#if 0
+     explain_buffer_ulong(sb, data->shmseg);
+     explain_string_buffer_puts(sb, ", shmall = ");
+     explain_buffer_ulong(sb, data->shmall);
+     explain_string_buffer_puts(sb, " }");
++#endif
+ #else
+     explain_buffer_pointer(sb, data);
+ #endif
+diff --git a/test_shmctl/main.c b/test_shmctl/main.c
+index 98b4be7..9f9ce2c 100644
+--- a/test_shmctl/main.c
++++ b/test_shmctl/main.c
+@@ -84,6 +84,7 @@ print_shmid_ds(int shmid, const struct shmid_ds *data)
+ static void
+ list(void)
+ {
++#if defined SHM_INFO
+     struct shminfo  shminfo;
+     struct shm_info shm_info;
+     int             maxid;
+@@ -113,6 +114,7 @@ list(void)
+         }
+         print_shmid_ds(shmid, &shmseg);
+     }
++#endif
+ }
+ 
+ 
+-- 
+1.7.10
+
