@@ -64,6 +64,17 @@ RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 										CSWlibxml2-2 \
 										CSWlibxrender \
 										CSWlibz1
+# added this overrides because checkpkg evaluates them incorrectly,
+# e.g. libthai0 doesn't exist and how the heck it determines that it
+# depends on libgs2?
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibm17n-utils \
+										missing-dependency|CSWlibgd2 \
+										missing-dependency|CSWlibotf-utils \
+										missing-dependency|CSWlibthai0 \
+										surplus-dependency|CSWlibdatrie1 \
+										surplus-dependency|CSWlibexpat1 \
+										surplus-dependency|CSWlibthai \
+										surplus-dependency|CSWlibotf0
 
 PACKAGES							+=	CSWlibm17n-dev
 SPKG_DESC_CSWlibm17n-dev			+=	$(DESCRIPTION) - development.
@@ -71,12 +82,28 @@ PKGFILES_CSWlibm17n-dev				=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	\
 										CSWlibm17n0
 OBSOLETED_BY_CSWlibm17n-dev			+=	CSWlibm17ndevel
+CHECKPKG_OVERRIDES_CSWlibm17n-dev	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/m17n-config
+ARCHALL_CSWlibm17n-dev				=	1
 
 PACKAGES							+=	CSWlibm17n-utils
 SPKG_DESC_CSWlibm17n-utils			+=	$(DESCRIPTION) - utilities.
 OBSOLETED_BY_CSWlibm17n-utils		+=	CSWlibm17n
 RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	\
 										CSWlibm17n0
+
+# added this overrides because checkpkg evaluates them incorrectly,
+# i.e., doesn't use transitivity:
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWfribidi \
+										missing-dependency|CSWlibthai0 \
+										missing-dependency|CSWlibbz2-1-0 \
+										missing-dependency|CSWlibiconv2 \
+										missing-dependency|CSWlibotf-utils \
+										missing-dependency|CSWlibz1 \
+										missing-dependency|CSWlibintl8 \
+										missing-dependency|CSWlibfreetype6 \
+										missing-dependency|CSWlibgd2 \
+										missing-dependency|CSWlibxml2-2 \
+										missing-dependency|CSWfconfig
 
 include gar/category.mk
 
