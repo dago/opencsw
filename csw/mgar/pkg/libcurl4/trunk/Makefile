@@ -46,6 +46,10 @@ RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibrtmp0
+# Without the base lib the feature lib is not pulled in
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcurl4
+# There is no dependency from feature to base as feature is an optional dependency
+CHECKPKG_OVERRIDES_CSWlibcurl4-feature += surplus-dependency|CSWlibcurl4
 
 # These are artifacts of the feature lib being a regular one.
 # As it is never linked against the soname doesn't matter here and the package name
