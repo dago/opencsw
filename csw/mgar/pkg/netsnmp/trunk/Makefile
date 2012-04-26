@@ -36,12 +36,12 @@ PACKAGES += CSWnetsnmp-dev
 CATALOGNAME_CSWnetsnmp-dev = netsnmp_dev
 SPKG_DESC_CSWnetsnmp-dev += $(DESCRIPTION), development files
 PKGFILES_CSWnetsnmp-dev += $(PKGFILES_DEVEL)
-CHECKPKG_OVERRIDES_CSWnetsnmp-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/NetSNMP::TrapReceiver.3perl
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmphelpers25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmptrapd25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmpagent25
+CHECKPKG_OVERRIDES_CSWpmnetsnmp-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/site_perl/NetSNMP/TrapReceiver.pm
 
 PACKAGES += CSWlibnetsnmp25
 CATALOGNAME_CSWlibnetsnmp25 = libnetsnmp25
@@ -74,7 +74,7 @@ RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibnetsnmpagent25
 
-EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
+EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
 PACKAGES += CSWpmnetsnmp
 SPKG_DESC_CSWpmnetsnmp+= $(DESCRIPTION), Perl binding
 PKGFILES_CSWpmnetsnmp += $(libdir)/perl.*
@@ -84,9 +84,8 @@ RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmptrapd25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmpagent25
 
-CHECKPKG_OVERRIDES_CSWpmnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/site_perl/NetSNMP/TrapReceiver.pm
 
-EXTRA_MERGE_EXCLUDE_FILES = .*/*.pyc
+EXTRA_MERGE_EXCLUDE_FILES += .*/*.pyc
 PACKAGES += CSWpy-netsnmp
 OBSOLETED_BY_CSWpy-netsnmp = CSWnetsnmp-py
 SPKG_DESC_CSWpy-netsnmp += $(DESCRIPTION), Python binding
@@ -106,13 +105,13 @@ CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/snmpconf.1
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/snmpd.8
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/snmpd.conf.5
-CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/NetSNMP::TrapReceiver.3perl
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/bin/traptoemail
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/bin/ipf-mod.pl
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/snmp/mib2c-data/mfd-makefile.m2m
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/share|root/opt/csw/bin/net-snmp-cert
 
 # BUILD64 = 1
+NOISALIST = 1
 
 # The -I/opt/csw/include pulls in installed version before built version and breaks testsuite
 CPPFLAGS =
@@ -166,8 +165,6 @@ INSTALL_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
 # Overriding specific libs is not possible right now. Refine when finished.
 # CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found|opt/csw/lib/python/site-packages/netsnmp/client_intf.so
 # CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found
-# override bad-rpath-entry becasue of /opt/csw/lib/ in perl module libs
-CHECKPKG_OVERRIDES_CSWnetsnmp += bad-rpath-entry
 
 include gar/category.mk
 
@@ -179,8 +176,7 @@ pre-configure-modulated:
 # if find the header in /opt/csw/include first use the old header from
 # installed older version, thats why remove /opt/csw/include
 CFLAGS := $(filter-out -I/opt/csw/include,$(CFLAGS))
-LDFLAGS := $(filter-out -R/opt/csw/lib% -L/opt/csw/lib,$(LDFLAGS))
-# LDFLAGS := $(filter-out -L/opt/csw/lib,$(LDFLAGS))
+# LDFLAGS := $(filter-out -R/opt/csw/lib% -L/opt/csw/lib,$(LDFLAGS))
 
 #post-install-isa-sparcv8:
 #	( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/old_libs_s.tar.gz |tar xf -)

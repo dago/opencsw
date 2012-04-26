@@ -1,6 +1,13 @@
---- ../build-global/net-snmp-5.4.2.1/Makefile.in	2007-06-08 22:32:56.000000000 +0200
-+++ net-snmp-5.4.2.1/Makefile.in	2009-03-26 10:14:41.623488796 +0100
-@@ -207,7 +207,7 @@
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -198,13 +198,13 @@ perlrealclean:
+ #
+ PYMAKE=$(PYTHON) setup.py $(PYTHONARGS)
+ pythonmodules: subdirs
+-	@(dir=`pwd`; cd python; $(PYMAKE) build --basedir=$$dir) ; \
++	@(dir=`pwd`; cd python; LDFLAGS= $(PYMAKE) build --basedir=$$dir) ; \
+         if test $$? != 0 ; then \
+            exit 1 ; \
          fi
  
  pythoninstall:
