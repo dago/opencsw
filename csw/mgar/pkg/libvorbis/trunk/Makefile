@@ -1,5 +1,5 @@
 NAME = libvorbis
-VERSION = 1.3.2
+VERSION = 1.3.3
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -11,11 +11,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.xz
 
-# This is obsoleted
-PACKAGES += CSWvorbis
-CATALOGNAME_CSWvorbis = libvorbis
+VENDOR_URL = http://www.vorbis.com/
 
 PACKAGES += CSWlibvorbis0
 CATALOGNAME_CSWlibvorbis0 = libvorbis0
@@ -24,6 +22,7 @@ PKGFILES_CSWlibvorbis0 += $(call baseisadirs,$(libdir),libvorbis\.so\.0(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibvorbis0 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibvorbis0 += CSWsunmath
 OBSOLETED_BY_CSWlibvorbis0 = CSWvorbis
+CATALOGNAME_CSWvorbis = libvorbis_stub
 
 PACKAGES += CSWlibvorbisenc2
 CATALOGNAME_CSWlibvorbisenc2 = libvorbisenc2
@@ -50,8 +49,6 @@ SPKG_DESC_CSWlibvorbis-dev = Development files for libvorbis*.so
 RUNTIME_DEP_PKGS_CSWlibvorbis-dev += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibvorbis-dev += CSWlibvorbisfile3
 RUNTIME_DEP_PKGS_CSWlibvorbis-dev += CSWlibvorbisenc2
-
-VENDOR_URL = http://www.vorbis.com/
 
 BUILD64_LIBS_ONLY = 1
 
