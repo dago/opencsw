@@ -4,19 +4,25 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = An implementation of the Unicode Bidirectional Algorithm (bidi)
-define BLURB
-endef
 
 MASTER_SITES = http://fribidi.org/download/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.fribidi.org/
 
-SPKG_SOURCEURL = http://www.fribidi.org/
+PACKAGES += CSWlibfribidi0
+SPKG_DESC_CSWlibfribidi0 = An implementation of the Unicode Bidirectional Algorithm (bidi), libfribidi.so.0
+PKGFILES_CSWlibfribidi0 += $(call pkgfiles_lib,libfribidi.so.0)
+OBSOLETED_BY_CSWlibfribidi0 += CSWfribidi
+
+PACKAGES += CSWlibfribidi-dev
+SPKG_DESC_CSWlibfribidi-dev = Development files for libfribidi.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibfribidi-dev += CSWlibfribidi0
 
 BUILD64_LIBS_ONLY = 1
-NOISALIST = 1
-CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_OVERRIDE_VARS += TESTS_ENVIRONMENT
+TEST_OVERRIDE_VAR_TESTS_ENVIRONMENT = /opt/csw/bin/bash
 
 include gar/category.mk
