@@ -67,14 +67,15 @@ RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 # added this overrides because checkpkg evaluates them incorrectly,
 # e.g. libthai0 doesn't exist and how the heck it determines that it
 # depends on libgs2?
-CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibm17n-utils \
-										missing-dependency|CSWlibgd2 \
-										missing-dependency|CSWlibotf-utils \
-										missing-dependency|CSWlibthai0 \
-										surplus-dependency|CSWlibdatrie1 \
-										surplus-dependency|CSWlibexpat1 \
-										surplus-dependency|CSWlibthai \
-										surplus-dependency|CSWlibotf0
+# Remark: checkpkg doesn't support multi-line macro-commands...
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibm17n-utils
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibgd2
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibotf-utils
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibthai0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibdatrie1
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibthai
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibotf0
 
 PACKAGES							+=	CSWlibm17n-dev
 SPKG_DESC_CSWlibm17n-dev			+=	$(DESCRIPTION) - development.
@@ -83,6 +84,8 @@ RUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	\
 										CSWlibm17n0
 OBSOLETED_BY_CSWlibm17n-dev			+=	CSWlibm17ndevel
 CHECKPKG_OVERRIDES_CSWlibm17n-dev	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/m17n-config
+# why this? especially when the package is declared architecture neutral
+CHECKPKG_OVERRIDES_CSWlibm17n-dev 	+= 	archall-devel-package
 ARCHALL_CSWlibm17n-dev				=	1
 
 PACKAGES							+=	CSWlibm17n-utils
@@ -93,17 +96,18 @@ RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	\
 
 # added this overrides because checkpkg evaluates them incorrectly,
 # i.e., doesn't use transitivity:
-CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWfribidi \
-										missing-dependency|CSWlibthai0 \
-										missing-dependency|CSWlibbz2-1-0 \
-										missing-dependency|CSWlibiconv2 \
-										missing-dependency|CSWlibotf-utils \
-										missing-dependency|CSWlibz1 \
-										missing-dependency|CSWlibintl8 \
-										missing-dependency|CSWlibfreetype6 \
-										missing-dependency|CSWlibgd2 \
-										missing-dependency|CSWlibxml2-2 \
-										missing-dependency|CSWfconfig
+# Remark: checkpkg doesn't support multi-line macro-commands...
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWfribidi
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibthai0
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibotf-utils
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibgd2
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibxml2-2
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWfconfig
 
 include gar/category.mk
 
