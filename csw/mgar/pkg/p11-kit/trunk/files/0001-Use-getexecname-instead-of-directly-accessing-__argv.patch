@@ -1,0 +1,34 @@
+From 2826e9f33625e56ae9c44f7441c3b65882822b60 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Fri, 27 Apr 2012 14:00:32 +0200
+Subject: [PATCH] Use getexecname() instead of directly accessing __argv
+
+---
+ tools/compat.c |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/tools/compat.c b/tools/compat.c
+index 93ba77c..fd596a2 100644
+--- a/tools/compat.c
++++ b/tools/compat.c
+@@ -42,6 +42,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdarg.h>
++#include <errno.h>
+ 
+ static const char *
+ calc_prog_name (void)
+@@ -51,6 +52,9 @@ calc_prog_name (void)
+ 
+ 	if(!prepared)
+ 	{
++		const char *__argv[1];
++
++		__argv[0] = getexecname();
+ 		const char* beg = strrchr(__argv[0], '\\');
+ 		const char* temp = strrchr(__argv[0], '/');
+ 		beg = (beg > temp) ? beg : temp;
+-- 
+1.7.10
+
