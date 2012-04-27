@@ -71,8 +71,9 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
+#CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis
+#CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry
 else
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
