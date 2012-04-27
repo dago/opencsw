@@ -2,18 +2,18 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = p11-kit
-VERSION = 0.8
+VERSION = 0.12
 GARTYPE = v2
 CATEGORIES = lib
 
 DESCRIPTION = Load and enumerate PKCS#11 modules
-define BLURB
-endef
 
 MASTER_SITES = http://p11-glue.freedesktop.org/releases/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-Hack-around-missing-__argv.patch
+# Use patch until this has been fixed:
+#   http://bugs.freedesktop.org/show_bug.cgi?id=49218
+PATCHFILES += 0001-Use-getexecname-instead-of-directly-accessing-__argv.patch
 
 VENDOR_URL = http://p11-glue.freedesktop.org/p11-kit.html
 
