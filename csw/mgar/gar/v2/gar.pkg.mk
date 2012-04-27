@@ -74,8 +74,8 @@ CATALOGNAME_$(1) ?= $(subst -,_,$(patsubst CSW%,%,$(1)))_stub
 # the string is cut (no longer on word boundaries).
 SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETED_BY_$P)),$P)) | perl -npe 's/(.{100}).+/substr($$1,0,96) . " ..."/e')
 RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETED_BY_$P)),$P))
-PKGFILES_$(1) = NOFILES
-ARCHALL_$(1) = 1
+PKGFILES_$(1) ?= NOFILES
+ARCHALL_$(1) ?= 1
 # For legacy packages we know that the dependency is correct because we deliberately set it
 # A legacy dependency from another package may not have been released
 # The catalog name may not match for legacy packages
@@ -318,7 +318,10 @@ endef
 # Canned command for generating admin file names
 # Usage: $(call admfiles,SUNWpackage,depend copyright)
 # pkg.gspec is added by default.
-admfiles = $(1).gspec $(foreach PKG,$(1),$(foreach ADM,$(2),$(PKG).$(ADM)))
+#admfiles = $(1).gspec $(foreach PKG,$(1),$(foreach ADM,$(2),$(PKG).$(ADM)))
+# The problem is that with the new ruleset the expansion of admfiles is too late leading to
+# files not be in the list of generated download URLs, deprecate use
+admfiles = $(error The use of admfiles is deprecated. Please use a manual list of files)
 
 # Standard sets of admin files for use with admfiles
 ADMSTANDARD = prototype depend

@@ -48,8 +48,10 @@ endif
 # 1) we have to strip the colon from the URLs
 # 2) the download is very costly with bigger Makefiles as they will be
 #    re-evaluated for every URL (nested gmake invocation, room for improvement)
+$(DOWNLOADDIR)/%: _FLIST=$(filter %/$*,$(URLS))
 $(DOWNLOADDIR)/%:  
-	@if test -f $(COOKIEDIR)/checksum-$*; then : ; else \
+	$(if $(_FLIST),,$(error INTERNAL ERROR: The file $* is requested but not in the list of generated URLs))
+	if test -f $(COOKIEDIR)/checksum-$*; then : ; else \
 		echo " ==> Grabbing $@"; \
 		( for i in $(filter %/$*,$(URLS)); do  \
 			echo " 	==> Trying $$i"; \
