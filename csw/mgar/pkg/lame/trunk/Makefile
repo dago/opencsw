@@ -1,5 +1,5 @@
 NAME = lame
-VERSION = 3.99.1
+VERSION = 3.99.5
 CATEGORIES = apps
 GARTYPE = v2
 

@@ -1,0 +1,50 @@
+From 618d62f4c4c859a5b9683f7a78cd85fa2e2cc80b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Fri, 27 Apr 2012 11:23:11 +0200
+Subject: [PATCH] Use intrinsics only when usable
+
+---
+ configure.in |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 2f8fa66..dd5b03f 100644
+--- a/configure.in
++++ b/configure.in
+@@ -96,9 +96,14 @@ AC_CHECK_HEADERS( \
+ 		 sys/soundcard.h \
+ 		 sys/time.h \
+ 		 unistd.h \
+-		 xmmintrin.h \
+ 		 linux/soundcard.h)
+ 
++dnl Checks if xmmintrin.h is there and actually usable
++dnl It may not be usable if the requested architecture is too old for intrinsics, but the os contains the headers
++AC_MSG_CHECKING(whether xmmintrin.h is usable)
++AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <xmmintrin.h>]],[[float f=1.0f;volatile __m128 vec_fabs_mask = _mm_loadu_ps(&f);]])],[XMMINTRIN_H=yes],[XMMINTRIN_H=no])
++AC_MSG_RESULT(${XMMINTRIN_H})
++
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ AC_C_CONST
+ AC_C_INLINE
+@@ -635,7 +640,7 @@ WITH_VECTOR=no
+ case $host_cpu in
+ x86_64|amd64)
+ 	CPUTYPE="no"
+-	if test $ac_cv_header_xmmintrin_h = yes ; then
++	if test $XMMINTRIN_H = yes ; then
+ 		WITH_XMM=yes
+ 		WITH_VECTOR=yes
+ 	fi
+@@ -646,7 +651,7 @@ h precission)
+ 	;;
+ *86)
+ 	CPUTYPE="i386"
+-	if test $ac_cv_header_xmmintrin_h = yes ; then
++	if test $XMMINTRIN_H = yes ; then
+ 		WITH_XMM=yes
+ 		WITH_VECTOR=yes
+ 	fi
+-- 
+1.7.10
+
