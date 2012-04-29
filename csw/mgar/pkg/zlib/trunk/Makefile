@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = zlib
-VERSION = 1.2.5
+VERSION = 1.2.6
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -37,8 +39,11 @@ BUILD64_LIBS_ONLY = 1
 
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 
+# https://blogs.oracle.com/d/entry/building_shared_libraries_for_sparcv9
+EXTRA_CFLAGS = -xcode=pic32
+
 CONFIGURE_ARGS += --prefix=$(prefix)
-CONFIGURE_ARGS += --eprefix=$(exec_prefix) 
+CONFIGURE_ARGS += --eprefix=$(exec_prefix)
 CONFIGURE_ARGS += --libdir=$(libdir)
 CONFIGURE_ARGS += --includedir=$(includedir)
 CONFIGURE_ARGS += --shared
