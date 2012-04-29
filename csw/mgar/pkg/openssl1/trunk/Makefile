@@ -53,23 +53,23 @@ PRESERVECONF = $(prefix)/etc/ssl/openssl.cnf
 #CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
 # We ship the .a files in the devel package
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
-ifeq ($(GARCH),sparc)
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
-else
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
-endif
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
+#ifeq ($(GARCH),sparc)
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
+#else
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
+#endif
 #CHECKPKG_OVERRIDES_CSWlibssl-dev += surplus-dependency|CSWlibssl1-0-0
 
 # We do ship libcrypto in libssl package
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+#CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
 #CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/pentium_pro/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+#CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
 
 
 # References to default path in documentation files, can be safely ignored
@@ -84,7 +84,7 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt
 CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
 
 # We have a lot of collision until libssl1.0.0 will replace libssl0.9.8
-include checkpkg.overrides
+#include checkpkg.overrides
 
 ###### Upstream and opencsw files information #######
 
@@ -133,7 +133,7 @@ EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
 # we include *.a files in the devel package so we don't want them excluded
-MERGE_EXCLUDE_STATICLIBS = 
+#MERGE_EXCLUDE_STATICLIBS = 
 
 # No .so files in libraries
 EXTRA_MERGE_EXCLUDE_FILES = .*/libcrypto.so .*/libssl.so
