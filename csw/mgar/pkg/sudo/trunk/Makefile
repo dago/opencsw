@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.3p2
+VERSION = 1.8.4p4
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -33,7 +33,6 @@ RUNTIME_DEP_PKGS_CSWsudo += CSWlibz1
 OBSOLETED_BY_CSWsudo = CSWsudo-common
 
 # These are just docs
-CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1m/sudo.1m
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1m/sudoedit.1m
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/man/man4/sudoers.4
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sudo/UPGRADE
