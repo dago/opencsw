@@ -11,6 +11,7 @@ PACKAGES = CSWpoppler-data
 CATALOGNAME_CSWpoppler-data = poppler_data
 SPKG_DESC_CSWpoppler-data = $(DESCRIPTION), encoding data
 OBSOLETED_BY_CSWpoppler-data = CSWpopplerdata
+CATALOGNAME_CSWpopplerdata = poppler_data_stub
 
 MASTER_SITES = http://poppler.freedesktop.org/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
