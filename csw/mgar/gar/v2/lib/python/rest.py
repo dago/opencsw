@@ -95,9 +95,10 @@ class CachedPkgstats(object):
 
   def __init__(self, filename):
     self.filename = filename
-    self.d = gdbm.open(filename, "c")
+    self.d = gdbm.open("%s.db" % self.filename, "c")
     self.rest_client = RestClient()
     self.local_cache = {}
+    self.deps = gdbm.open("%s-deps.db" % self.filename, "c")
 
   def GetPkgstats(self, md5):
     if md5 in self.local_cache:
@@ -109,3 +110,13 @@ class CachedPkgstats(object):
       self.d[md5] = cjson.encode(pkgstats)
       self.local_cache[md5] = pkgstats
       return pkgstats
+
+  def GetDeps(self, md5):
+    if str(md5) in self.deps:
+      return cjson.decode(self.deps[md5])
+    else:
+      pkgstats = self.GetPkgstats(md5)
+      data = {"deps": pkgstats["depends"],
+              "pkgname": pkgstats["basic_stats"]["pkgname"]}
+      self.deps[md5] = cjson.encode(data)
+      return data

@@ -21,12 +21,15 @@ import cjson
 import subprocess
 
 
+class Error(Exception):
+  """A generic error."""
+
 class RevDeps(object):
 
   def __init__(self):
     self.cached_catalogs = {}
     self.rest_client = rest.RestClient()
-    self.cp = rest.CachedPkgstats("pkgstats.db")
+    self.cp = rest.CachedPkgstats("pkgstats")
 
   def MakeRevIndex(self, catrel, arch, osrel):
     key = (catrel, arch, osrel)
@@ -42,16 +45,12 @@ class RevDeps(object):
     for pkg_simple in catalog:
       # pprint.pprint(pkg_simple)
       md5 = pkg_simple["md5_sum"]
-      pkg = self.cp.GetPkgstats(md5)
-      if not pkg:
-        logging.warning("No package for %r", md5)
-        continue
-      for dep_pkgname, _ in pkg["depends"]:
+      # pkg = self.cp.GetPkgstats(md5)
+      short_data = self.cp.GetDeps(md5)
+      pkgname = short_data["pkgname"]
+      for dep_pkgname, _ in short_data["deps"]:
         rev_dep_set = rev_deps.setdefault(dep_pkgname, list())
-        rev_dep_set.append((md5, pkg["basic_stats"]["pkgname"]))
-      sys.stdout.write(".")
-      sys.stdout.flush()
-    sys.stdout.write("\n")
+        rev_dep_set.append((md5, pkgname))
     self.cached_catalogs[key] = rev_deps
     with open(fn, "w") as fd:
       fd.write(cjson.encode(self.cached_catalogs[key]))
