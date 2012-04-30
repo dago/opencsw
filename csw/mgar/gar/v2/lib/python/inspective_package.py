@@ -88,13 +88,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
       self.files_metadata = []
       files_root = self.GetFilesDir()
       all_files = self.GetAllFilePaths()
-      def StripRe(x, strip_re):
-        return re.sub(strip_re, "", x)
       file_magic = FileMagic()
       basedir = self.GetBasedir()
       for file_path in all_files:
         full_path = unicode(self.MakeAbsolutePath(file_path))
         file_info = GetFileMetadata(file_magic, self.pkgpath, full_path)
+        # To prevent files from containing the full temporary path.
+        file_info["path"] = StripRe(file_path, ROOT_RE)
         self.files_metadata.append(file_info)
     return self.files_metadata
 
