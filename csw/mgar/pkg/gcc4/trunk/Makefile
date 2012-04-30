@@ -226,9 +226,6 @@ CATALOGNAME_CSWlibgcc-s1 = libgcc_s1
 PKGFILES_CSWlibgcc-s1 += $(call baseisadirs,$(libdir),libgcc_s\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibgcc-s1 += $(DESCRIPTION), libgcc_s.so.1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlibgcc-s1
-# For reference, the old CSWgcc3corert:
-# http://buildfarm.opencsw.org/pkgdb/srv4/1991387f2cb9f545b2a1b254b50638ef/
-OBSOLETED_BY_CSWlibgcc-s1 = CSWgcc3corert
 
 PACKAGES += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 CATALOGNAME_CSWlibgcj-tools$(JAVA_LIB_VERSION) = libgcj_tools$(JAVA_LIB_VERSION)
@@ -250,7 +247,6 @@ PKGFILES_CSWlibgfortran3 += $(call baseisadirs,$(libdir),libgfortran\.so\.3(\.\d
 SPKG_DESC_CSWlibgfortran3 += $(DESCRIPTION), libgfortran.so.3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibgfortran3 = $(PKG_BASENAME)gfortranrt
 
 PACKAGES += CSWlibgij$(JAVA_LIB_VERSION)
 CATALOGNAME_CSWlibgij$(JAVA_LIB_VERSION) = libgij$(JAVA_LIB_VERSION)
@@ -263,7 +259,6 @@ CATALOGNAME_CSWlibgomp1 = libgomp1
 PKGFILES_CSWlibgomp1 += $(call baseisadirs,$(libdir),libgomp\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibgomp1 += $(PKG_BASENAME)corert
 
 
 PACKAGES += CSWlibobjc$(LIBOBJC)
@@ -283,7 +278,6 @@ CATALOGNAME_CSWlibssp0 = libssp0
 PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibssp0 += $(PKG_BASENAME)corert
 
 PACKAGES += CSWlibgo0
 PKGFILES_CSWlibgo0 += $(call baseisadirs,$(libdir),libgo\.so\.0(\.\d+)*)
@@ -304,7 +298,6 @@ CATALOGNAME_CSWlibstdc++$(LIBSTDCXX_VERSION) = libstdc++$(LIBSTDCXX_VERSION)
 PKGFILES_CSWlibstdc++$(LIBSTDCXX_VERSION) += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.$(LIBSTDCXX_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlibstdc++$(LIBSTDCXX_VERSION) += $(DESCRIPTION), libstdc++.so.$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_CSWlibstdc++$(LIBSTDCXX_VERSION) += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibstdc++$(LIBSTDCXX_VERSION) = $(PKG_BASENAME)g++rt
 
 # The libquadmath.so.0 library is only build on Intel
 PACKAGES_i386 += CSWlibquadmath0
@@ -349,7 +342,6 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(PKG_BASENAME)core
 ALTERNATIVES_$(PKG_BASENAME)g++ += $(PKG_VERSION_TOKEN)g++
 ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
-OBSOLETED_BY_CSWlibgcc-s1 += $(PKG_BASENAME)corert
 RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += $(PKG_BASENAME)gfortran
@@ -373,9 +365,6 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl9
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibpwl5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
-
-OBSOLETED_BY_$(PKG_BASENAME)gfortran  = $(PKG_BASENAME)g95
-OBSOLETED_BY_$(PKG_BASENAME)gfortran += $(PKG_BASENAME)g95rt
 
 ALTERNATIVES_$(PKG_BASENAME)gfortran += gfortran
 ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
