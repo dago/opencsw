@@ -127,11 +127,12 @@ def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
   # Convert this to pool.map when multiprocessing if fixed.
   catalogs = dict(map(lambda x: GetCatalog(*x), catalogs_to_fetch_args))
   diffs_by_catalogname = ComposeDiffsByCatalogname(
-      catalogs, catrel_from, catrel_to, include_version_changes)
+      catalogs, catrel_from, catrel_to, include_version_changes,
+      include_downgrades)
   return catalogs, diffs_by_catalogname
 
 def ComposeDiffsByCatalogname(catalogs, catrel_from, catrel_to,
-                              include_version_changes):
+                              include_version_changes, include_downgrades):
   """Get a data structure indexed with catalognames.
 
   {
