@@ -139,6 +139,8 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibppl9
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibpwl5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibssp0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibitm1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo0
 
 # checkpkg-undetectable dependencies
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWbinutils
@@ -282,6 +284,16 @@ PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibssp0 += $(PKG_BASENAME)corert
+
+PACKAGES += CSWlibgo0
+PKGFILES_CSWlibgo0 += $(call baseisadirs,$(libdir),libgo\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibgo0 += $(DESCRIPTION), libgo.so.0
+RUNTIME_DEP_PKGS_CSWlibgo0 += CSWlibgcc-s1
+
+PACKAGES += CSWlibitm1
+PKGFILES_CSWlibitm1 += $(call baseisadirs,$(libdir),libitm\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibitm1 += $(DESCRIPTION), libitm.so.1
+RUNTIME_DEP_PKGS_CSWlibitm1 += CSWlibgcc-s1
 
 LIBSTDCXX_VERSION = 6
 
