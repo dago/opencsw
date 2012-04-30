@@ -117,8 +117,8 @@ PATCHFILES += block_bad_certificates.patch
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
 ifdef PKCS11
         PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
-ifneq ($(findstring solaris9,$(GAR_PLATFORM)), solaris9)
-        PATCHFILES += pkcs11_engine-0.9.8o.patch.2010-09-03
+ifneq ($(shell /usr/bin/uname -r),5.9)
+        PATCHFILES += pkcs11_engine-1.0.1b.patch.2012-04-30
         CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
 endif
 endif 
