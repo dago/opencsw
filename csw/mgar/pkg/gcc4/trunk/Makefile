@@ -289,6 +289,8 @@ PACKAGES += CSWlibgo0
 PKGFILES_CSWlibgo0 += $(call baseisadirs,$(libdir),libgo\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgo0 += $(DESCRIPTION), libgo.so.0
 RUNTIME_DEP_PKGS_CSWlibgo0 += CSWlibgcc-s1
+# Hasn't been investigated. I feel lucky.
+CHECKPKG_OVERRIDES_CSWlibgo0 += file-with-bad-content
 
 PACKAGES += CSWlibitm1
 PKGFILES_CSWlibitm1 += $(call baseisadirs,$(libdir),libitm\.so\.1(\.\d+)*)
