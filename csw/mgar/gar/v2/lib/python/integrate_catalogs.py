@@ -242,7 +242,7 @@ def main():
         options.include_version_changes)
     bundles_by_md5 = {}
     bundles_missing = set()
-    cp = rest.CachedPkgstats("pkgstats.db")
+    cp = rest.CachedPkgstats("pkgstats")
     for key in catalogs:
       for pkg in catalogs[key]:
         # logging.debug("%r", pkg)
