@@ -114,15 +114,6 @@ PATCHFILES += opencsw_paths.patch
 # (patchs taken from Debian Package)
 PATCHFILES += block_bad_certificates.patch
 
-# support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
-ifdef PKCS11
-        PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
-ifneq ($(shell /usr/bin/uname -r),5.9)
-        PATCHFILES += pkcs11_engine-1.0.1b.patch.2012-04-30
-        CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
-endif
-endif 
-
 LICENSE = LICENSE
 
 ##### Build and installation information #####
@@ -151,6 +142,17 @@ sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
 CONFIGURE_ARGS = --prefix=$(prefix) --openssldir=$(prefix)/etc/ssl shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
+
+
+# support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
+ifdef PKCS11
+        PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+ifneq ($(shell /usr/bin/uname -r),5.9)
+        PATCHFILES += pkcs11_engine-1.0.1b.patch.2012-04-30
+        CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
+endif
+endif 
+
 
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
