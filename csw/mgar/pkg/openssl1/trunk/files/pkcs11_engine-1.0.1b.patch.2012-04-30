@@ -2898,7 +2898,7 @@ diff -uNr openssl-0.9.8o.orig//crypto/engine/hw_pk11.c openssl-0.9.8o//crypto/en
 +		case NID_aes_128_ctr:
 +			*cipher = &pk11_aes_128_ctr;
 +			break;
-+		case NID_aes_192Ã_ctr:
++		case NID_aes_192_ctr:
 +			*cipher = &pk11_aes_192_ctr;
 +			break;
 +		case NID_aes_256_ctr:
