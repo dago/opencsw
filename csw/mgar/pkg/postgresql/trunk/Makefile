@@ -90,7 +90,7 @@ NAME = postgresql
 BASE_VERSION = 9.1
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 2
+PATCHLEVEL = 3
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 GARTYPE = v2
@@ -250,6 +250,7 @@ POSTMSG = $(foreach n,$(myALTERNATIVES),\
 MASTER_SITES = http://ftp.postgresql.org/pub/source/v$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += README.CSW
+DISTFILES += changelog.CSW
 DISTFILES += $(SERVERPOSTINSTTMPL)
 DISTFILES += $(INITSCRIPTFILETMPL)
 DISTFILES += $(USERGROUPFILETMPL)
@@ -321,7 +322,7 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/alternatives/$(NAME)$(BASE
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-server.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_server/README.CSW
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgnugetopt0
@@ -339,7 +340,7 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*/alternatives/$(NAME)$(BASE
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-client.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_client/README.CSW
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibgnugetopt0
@@ -360,7 +361,7 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*$(docdir)/$(NAME)/$(BASE_V
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_contrib.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-contrib.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_contrib/README.CSW
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgnugetopt0
@@ -390,7 +391,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibssl0-9-8
 # Those '/usr/local' are ok, they are in a HPUX section of the file
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
 # That's ok too, it's docbook stuff which we don't use in this build
@@ -425,14 +426,14 @@ PKGFILES_CSWlibpgtypes3  = $(call pkgfiles_lib,libpgtypes.so.3)
 PACKAGES += CSWlibpq5
 SPKG_DESC_CSWlibpq5 = PostgreSQL $(VERSION), libpq
 PKGFILES_CSWlibpq5  = $(call pkgfiles_lib,libpq.so.5)
-RUNTIME_DEP_PKGS_CSWlibpq5  = CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibpq5  = CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWlibgssapi-krb5-2
 
 BUILD_DEP_PKGS  = CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
 BUILD_DEP_PKGS += CSWperl
 BUILD_DEP_PKGS += CSWpython-dev
-BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
 BUILD_DEP_PKGS += CSWgsed # gsed is used in this recipe
 BUILD_DEP_PKGS += CSWlibz-dev
@@ -508,8 +509,8 @@ $(foreach pkg,$(myALTERNATIVES),\
 	$(eval alt_priority = 20) \
 	$(foreach alt,$(NEEDED_ISAS), \
 		$(eval alt_priority=$(shell expr $(alt_priority) + 10)) \
-		$(eval ALTERNATIVE_$(pkg)_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) \
-		$(eval ALTERNATIVE_$(pkg)_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_$(uppercase_$(pkg)))),$(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) \
+		$(eval ALTERNATIVE_$(pkg)_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(n)-$(BASE_VERSION_NODOT) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) \
+		$(eval ALTERNATIVE_$(pkg)_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_$(uppercase_$(pkg)))),$(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(n)-$(BASE_VERSION_NODOT) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) \
 	)\
 )
 
