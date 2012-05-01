@@ -106,7 +106,7 @@ diff -uNr openssl-0.9.8o.orig//crypto/engine/Makefile openssl-0.9.8o//crypto/eng
  
  SRC= $(LIBSRC)
  
-@@ -294,6 +296,61 @@
+@@ -294,6 +296,59 @@
  eng_table.o: ../../include/openssl/symhacks.h ../../include/openssl/x509.h
  eng_table.o: ../../include/openssl/x509_vfy.h ../cryptlib.h eng_int.h
  eng_table.o: eng_table.c
@@ -121,7 +121,6 @@ diff -uNr openssl-0.9.8o.orig//crypto/engine/Makefile openssl-0.9.8o//crypto/eng
 +hw_pk11.o: ../../include/openssl/ui.h ../../include/openssl/err.h
 +hw_pk11.o: ../../include/openssl/lhash.h ../../include/openssl/dso.h
 +hw_pk11.o: ../../include/openssl/pem.h ../../include/openssl/evp.h
-+hw_pk11.o: ../../include/openssl/md2.h ../../include/openssl/md4.h
 +hw_pk11.o: ../../include/openssl/md5.h ../../include/openssl/sha.h
 +hw_pk11.o: ../../include/openssl/ripemd.h ../../include/openssl/des.h
 +hw_pk11.o: ../../include/openssl/des_old.h ../../include/openssl/ui_compat.h
@@ -145,7 +144,6 @@ diff -uNr openssl-0.9.8o.orig//crypto/engine/Makefile openssl-0.9.8o//crypto/eng
 +hw_pk11_pub.o: ../../include/openssl/ui.h ../../include/openssl/err.h
 +hw_pk11_pub.o: ../../include/openssl/lhash.h ../../include/openssl/dso.h
 +hw_pk11_pub.o: ../../include/openssl/pem.h ../../include/openssl/evp.h
-+hw_pk11_pub.o: ../../include/openssl/md2.h ../../include/openssl/md4.h
 +hw_pk11_pub.o: ../../include/openssl/md5.h ../../include/openssl/sha.h
 +hw_pk11_pub.o: ../../include/openssl/ripemd.h ../../include/openssl/des.h
 +hw_pk11_pub.o: ../../include/openssl/des_old.h ../../include/openssl/ui_compat.h
