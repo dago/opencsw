@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.2.10.3
+VERSION = 1.2.10.7
 GARTYPE = v2
 CATEGORIES = server
 
@@ -41,7 +41,9 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldif60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap60
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWnetsnmp
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpmibs25
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmp25
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpagent25
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
@@ -64,7 +66,9 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/c
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/dbgen.pl.1
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
+# is needed for setup scripts!
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpm-mozldap
+# will load via dlopen()
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibfreebl3
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 
