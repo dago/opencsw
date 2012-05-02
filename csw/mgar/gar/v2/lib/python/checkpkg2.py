@@ -32,7 +32,10 @@ simply add these overrides to the Makefile.  It only informs what the overrides
 could look like.  You need to understand what are the reported issues about and
 use your best judgement to decide whether to fix the underlying problems or
 override them. For more information, scroll up and read the detailed
-messages."""
+messages.
+To easily inspect packages you've just built, visit:
+  http://buildfarm.opencsw.org/pkgdb/srv4/
+"""
 
 UNAPPLIED_OVERRIDES = """WARNING: Some overrides did not match any errors.
 They can be removed, as they don't take any effect anyway.  If you're getting
