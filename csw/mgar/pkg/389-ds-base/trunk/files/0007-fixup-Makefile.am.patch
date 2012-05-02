@@ -11,6 +11,15 @@ diff --git a/Makefile.am b/Makefile.am
 index bb761e3..0bd9fb3 100644
 --- a/Makefile.am
 +++ b/Makefile.am
+@@ -31,7 +31,7 @@ PATH_DEFINES = -DLOCALSTATEDIR="\"$(localstatedir)\"" -DSYSCONFDIR="\"$(sysconfd
+ 	-DSBINDIR="\"$(sbindir)\"" -DPLUGINDIR="\"$(serverplugindir)\"" -DTEMPLATEDIR="\"$(sampledatadir)\""
+
+ AM_CPPFLAGS = $(DEBUG_DEFINES) $(DS_DEFINES) $(DS_INCLUDES) $(PATH_DEFINES)
+-PLUGIN_CPPFLAGS = $(AM_CPPFLAGS) @openldap_inc@ @ldapsdk_inc@ @nss_inc@ @nspr_inc@
++PLUGIN_CPPFLAGS = $(AM_CPPFLAGS) @ldapsdk_inc@ @nss_inc@ @nspr_inc@
+ # We need to make sure that libpthread is linked before libc on HP-UX.
+ if HPUX
+ AM_LDFLAGS = -lpthread
 @@ -696,7 +696,7 @@ libslapd_la_SOURCES = ldap/servers/slapd/add.c \
  	$(libavl_a_SOURCES)
  
