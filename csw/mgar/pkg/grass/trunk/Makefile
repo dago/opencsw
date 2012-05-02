@@ -20,8 +20,18 @@ BUILD_DEP_PKGS += CSWgdal-dev
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWproj-dev
+# for nad2bin
+BUILD_DEP_PKGS += CSWproj
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-mysql
+CONFIGURE_ARGS += --with-postgres
+CONFIGURE_ARGS += --with-readline
+CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include/mysql
+CONFIGURE_ARGS += --with-gdal=/opt/csw/bin/gdal-config
+CONFIGURE_ARGS += --with-geos=/opt/csw/bin/geos-config
+CONFIGURE_ARGS += --with-python=/opt/csw/bin/python-config
+CONFIGURE_ARGS += --with-proj-share=/opt/csw/share/proj
 
 include gar/category.mk
 
