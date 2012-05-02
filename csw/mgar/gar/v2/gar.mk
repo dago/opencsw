@@ -480,7 +480,7 @@ extract-p:
 
 # The rule takes all files from EXPANDVARS and replaces all occurrences of @<var>@ in the file
 # with the values of <var> from the Makefile.
-_var_definitions = $(foreach VAR,$(shell perl -ne 'print "$$1 " if( /@([^@]+)@/ )' <$1),$(VAR)="$($(VAR))")
+_var_definitions = $(foreach VAR,$(shell perl -ne 'print "$$1 " while( /@([^@]+)@/g );' <$1),$(VAR)="$($(VAR))")
 
 expandvars-%:
 	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/@([^@]+)@/$$ENV{$$1}/eg' $(WORKDIR)/$*
