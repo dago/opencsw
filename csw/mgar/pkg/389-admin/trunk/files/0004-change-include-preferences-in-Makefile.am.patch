@@ -11,6 +11,24 @@ diff --git a/Makefile.am b/Makefile.am
 index 25ae853..51327db 100644
 --- a/Makefile.am
 +++ b/Makefile.am
+@@ -104,7 +104,7 @@ libadmin_a_SOURCES = lib/libadmin/cluster.c \
+ 	lib/libadmin/error.c lib/libadmin/form_get.c lib/libadmin/httpcon.c lib/libadmin/install.c \
+ 	lib/libadmin/referer.c lib/libadmin/template.c lib/libadmin/util.c
+
+-AM_CPPFLAGS = $(DEBUG_DEFINES) $(PATH_DEFINES) $(OTHER_DEFINES) @adminutil_inc@ @icu_inc@ @openldap_inc@ @ldapsdk_inc@ @nss_inc@ @nspr_inc@ -DUSE_ADMSERV=1 \
++AM_CPPFLAGS = $(DEBUG_DEFINES) $(PATH_DEFINES) $(OTHER_DEFINES) @adminutil_inc@ @ldapsdk_inc@ @nss_inc@ @nspr_inc@ @icu_inc@ -DUSE_ADMSERV=1 \
+ 	-I$(srcdir)/include -I$(srcdir)/include/base
+ if WINNT
+ AM_CPPFLAGS += -DXP_WINNT
+@@ -294,7 +294,7 @@ libdsa_a_SOURCES = lib/libdsa/dsalib_conf.c \
+ 	lib/libdsa/dsalib_db.c \
+ 	lib/libdsa/dsalib_util.c
+
+-libdsa_a_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/include/libdsa @openldap_inc@ @ldapsdk_inc@ @nss_inc@ @nspr_inc@
++libdsa_a_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/include/libdsa @ldapsdk_inc@ @nss_inc@ @nspr_inc@ @openldap_inc@
+
+ # source files for our CGI programs
+ download_SOURCES = admserv/cgi-src40/download.c
 @@ -371,7 +371,7 @@ ds_snmpctrl_LINK = $(MYLINK)
  
  ############## mod_admserv ################

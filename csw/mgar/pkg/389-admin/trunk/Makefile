@@ -25,7 +25,6 @@ LICENSE = LICENSE LICENSE.GPLv2
 
 # GARFLAVOR=DBG
 
-PATCHFILES += 0001-change-includedir-preference-in-Makefile.am.patch
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
 PATCHFILES += 0003-correct-initscript-and-http.conf.in.patch
 PATCHFILES += 0004-change-include-preferences-in-Makefile.am.patch
