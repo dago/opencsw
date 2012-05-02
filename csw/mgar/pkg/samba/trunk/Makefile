@@ -315,6 +315,10 @@ CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDIR)
 CONFIGURE_ARGS-64 +=  --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
+# These are in a too recent libc SUNW_1.22.6 requiring Solaris10u9
+CONFIGURE_ARGS += ac_cv_func_utimensat=no
+CONFIGURE_ARGS += ac_cv_func_futimens=no
+
 BUILD_SCRIPTS = $(WORKSRC)/source3/Makefile
 
 TEST_SCRIPTS = $(WORKSRC)/source3/Makefile
