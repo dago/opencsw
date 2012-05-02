@@ -1,9 +1,10 @@
+# $Id$
+
 NAME = libsoup
 VERSION = 2.29.91
 CATEGORIES = gnome
 GARTYPE = v2
-  
- 
+
 DESCRIPTION = HTTP client/server library for GNOME
 define BLURB
 endef
@@ -12,56 +13,10 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
-PACKAGES = CSWlibsoup CSWlibsoupdevel CSWlibsoupdoc CSWlibsoup2
-CATALOGNAME_CSWlibsoup = libsoup
-CATALOGNAME_CSWlibsoup2 = libsoup2
-CATALOGNAME_CSWlibsoupdevel = libsoup_devel
-CATALOGNAME_CSWlibsoupdoc = libsoup_doc
-
-SPKG_DESC_CSWlibsoup += HTTP client/server library for GNOME
-# For compat with old packages
-SPKG_DESC_CSWlibsoup2 += HTTP client/server library for GNOME - dummy package
-SPKG_DESC_CSWlibsoupdevel += HTTP client/server library for GNOME - developer package
-SPKG_DESC_CSWlibsoupdoc += HTTP client/server library for GNOME - documentation
-
-RUNTIME_DEP_PKGS_CSWlibsoup += CSWgconf2 CSWgcrypt CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS_CSWlibsoup += CSWgnutls CSWgpgerr CSWlibproxy CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibsoup += CSWsqlite3rt
-# Required for old libraries
-RUNTIME_DEP_PKGS_CSWlibsoup += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibsoup += CSWsunmath
-RUNTIME_DEP_PKGS_CSWlibsoup += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWlibsoup
-RUNTIME_DEP_PKGS_CSWlibsoupdevel += CSWlibsoup
-RUNTIME_DEP_PKGS_CSWlibsoupdoc += 
-
 BUILD_DEP_PKGS += CSWlibproxy
-
-PKGFILES_CSWlibsoup2 = non-existing
-PKGFILES_CSWlibsoupdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibsoupdoc = $(sharedstatedir)/gtk-doc/.*
-
-ARCHALL_CSWlibsoupdoc = 1
-ARCHALL_CSWlibsoup2 = 1
-
-# libgnutls.so.11 no longer exists, but in case someone still use libsoup-2.0.so
-# and still have libgnutls.so.11 we override checkpkg
-CHECKPKG_OVERRIDES += orphan-soname|libgnutls.so.11
-CHECKPKG_OVERRIDES += symbol-not-found|libsoup-2.0.so.0.0.0
-# Possible bug in checkpkg
-CHECKPKG_OVERRIDES += symbol-not-found|libsoup-gnome-2.4.so.1.2.0
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-EXTRA_INC = /opt/csw/X11/include
-EXTRA_LIB = /opt/csw/X11/lib 
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib 
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libgcrypt-prefix=$(prefix)
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 STRIP_LIBTOOL = 1
 
@@ -70,23 +25,52 @@ STRIP_LIBTOOL = 1
 
 # One test fails for some unknown reason
 #TEST_TARGET = check
-TEST_TARGET = 
+TEST_TARGET =
+
+PACKAGES += CSWlibsoup2-4-1
+CATALOGNAME_CSWlibsoup2-4-1 = libsoup2_4_1
+PKGFILES_CSWlibsoup2-4-1 += $(call baseisadirs,$(libdir),libsoup-2\.4\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibsoup2-4-1 += $(DESCRIPTION), libsoup-2.4.so.1
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibz1
+
+PACKAGES += CSWlibsoup-gnome2-4-1
+CATALOGNAME_CSWlibsoup-gnome2-4-1 = libsoup_gnome2_4_1
+PKGFILES_CSWlibsoup-gnome2-4-1 += $(call baseisadirs,$(libdir),libsoup-gnome-2\.4\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibsoup-gnome2-4-1 += $(DESCRIPTION), libsoup-gnome-2.4.so.1
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWgconf2
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibproxy
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibsoup2-4-1
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibz1
+
+PACKAGES += CSWlibsoup-doc
+SPKG_DESC_CSWlibsoup-doc += HTTP client/server library for GNOME - documentation
+PKGFILES_CSWlibsoup-doc = $(sharedstatedir)/gtk-doc/.*
+ARCHALL_CSWlibsoup-doc = 1
+OBSOLETED_BY_CSWlibsoup-doc = CSWlibsoupdoc
+CATALOGNAME_CSWlibsoupdoc = libsoup_doc_stub
+
+PACKAGES += CSWlibsoup-dev
+SPKG_DESC_CSWlibsoup-dev += $(DESCRIPTION), development files
+RUNTIME_DEP_PKGS_CSWlibsoup-dev += CSWlibsoup-gnome2-4-1
+RUNTIME_DEP_PKGS_CSWlibsoup-dev += CSWlibsoup2-4-1
+OBSOLETED_BY_CSWlibsoup-dev = CSWlibsoupdevel
+CATALOGNAME_CSWlibsoupdevel = libsoup_devel_stub
+OBSOLETED_BY_CSWlibsoup-dev += CSWlibsoup
+OBSOLETED_BY_CSWlibsoup-dev += CSWlibsoup2
+# Catch-all package
 
 include gar/category.mk
-
-# Include old libraries package for compatibility
-post-install-isa-sparcv8:
-	@(bzip2 -dc $(DOWNLOADDIR)/old_libs_sparc.tar.bz2 | (cd $(INSTALLISADIR)$(libdir);tar xf -))
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.0.so.0 ] ; then ln -s libsoup-2.0.so.0.0.0 $(INSTALLISADIR)$(libdir)/libsoup-2.0.so.0 ; fi )
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.0.so ] ; then ln -s libsoup-2.0.so.0.0.0 $(INSTALLISADIR)$(libdir)/libsoup-2.0.so ; fi )
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.2.so.8 ] ; then ln -s libsoup-2.2.so.8.4.0 $(INSTALLISADIR)$(libdir)/libsoup-2.2.so.8 ; fi )
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.2.so ] ; then ln -s libsoup-2.2.so.8.4.0 $(INSTALLISADIR)$(libdir)/libsoup-2.2.so ; fi )
-	$(MAKECOOKIE)
-
-post-install-isa-i386:
-	@(bzip2 -dc $(DOWNLOADDIR)/old_libs_i386.tar.bz2 | (cd $(INSTALLISADIR)$(libdir);tar xf -))
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.0.so.0 ] ; then ln -s libsoup-2.0.so.0.0.0 $(INSTALLISADIR)$(libdir)/libsoup-2.0.so.0 ; fi )
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.0.so ] ; then ln -s libsoup-2.0.so.0.0.0 $(INSTALLISADIR)$(libdir)/libsoup-2.0.so ; fi )
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.2.so.8 ] ; then ln -s libsoup-2.2.so.8.4.0 $(INSTALLISADIR)$(libdir)/libsoup-2.2.so.8 ; fi )
-	( if [ ! -r $(INSTALLISADIR)$(libdir)/libsoup-2.2.so ] ; then ln -s libsoup-2.2.so.8.4.0 $(INSTALLISADIR)$(libdir)/libsoup-2.2.so ; fi )
-	$(MAKECOOKIE)
