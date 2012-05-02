@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-admin
-VERSION = 1.1.27
+VERSION = 1.1.29
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -19,7 +19,7 @@ DISTFILES += CSW389-admin.preremove
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
-# GARCOMPILER = SOS12U2
+GARCOMPILER = SOS12U3
 
 LICENSE = LICENSE LICENSE.GPLv2
 
