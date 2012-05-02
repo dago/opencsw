@@ -9,6 +9,7 @@ MASTER_SITES = ftp://ftp.freeradius.org:/pub/freeradius/
 DISTFILES += $(NAME)-server-$(VERSION).tar.gz
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += cswfreeradius
+EXPANDVARS += cswfreeradius
 DISTFILES += server.pem
 DISTFILES += ca.pem
 DISTNAME = $(NAME)-server-$(VERSION)
@@ -106,9 +107,10 @@ EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql
 EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql/.*
 ## End mysql exclusion lines
 
-# GARCOMPILER = GCC4
+radius_user = radius
+radius_group = radius
 
-CSWfreeradius_usergroup = radius:radius:FreeRADIUS:/var/opt/csw/freeradius:/bin/false::
+CSWfreeradius_usergroup = $(radius_user):$(radius_group):FreeRADIUS:/var/opt/csw/freeradius:/bin/false::
 
 # Some of the RLM Submodules don't seem to pick up the include paths from CPPFLAGS
 EXTRA_CFLAGS  = $(CPPFLAGS)
@@ -118,8 +120,11 @@ libdir = $(abspath $(libdir_install)/freeradius/$(MM_LIBDIR))
 
 raddbdir = $(sysconfdir)/freeradius
 
-# This should match the variable run_dir in radiusd.conf
-radius_run_dir = $(localstatedir)/run/radius
+radius_rundir = $(localstatedir)/run/radiusd
+radius_rundir_perms = 0755
+
+radius_logdir = $(localstatedir)/log/radius
+radius_logdir_perms = 2770
 
 # Configuration directory
 PRESERVECONF += $(raddbdir)/.*\.conf
@@ -144,10 +149,11 @@ PRESERVECONF += $(raddbdir)/sites-available/default
 PRESERVECONF += $(raddbdir)/sites-available/dhcp
 PRESERVECONF += $(raddbdir)/sites-available/dynamic-clients
 PRESERVECONF += $(raddbdir)/sites-available/example
-PRESERVECONF += $(raddbdir)/sites-available/inter-tunnel
+PRESERVECONF += $(raddbdir)/sites-available/inner-tunnel
 PRESERVECONF += $(raddbdir)/sites-available/originate-coa
 PRESERVECONF += $(raddbdir)/sites-available/proxy-inner-tunnel
 PRESERVECONF += $(raddbdir)/sites-available/robust-proxy-accounting
+PRESERVECONF += $(raddbdir)/sites-available/soh
 PRESERVECONF += $(raddbdir)/sites-available/status
 PRESERVECONF += $(raddbdir)/sites-available/virtual.example.com
 PRESERVECONF += $(raddbdir)/sites-available/vmps
@@ -192,14 +198,29 @@ TEST_SCRIPTS =
 
 INSTALL_ARGS += R=$(DESTDIR)
 
+# We add the radius user and radius group, enable them in the configuration also
+REINPLACEMENTS += radiususer
+REINPLACE_MATCH_radiususer = ^\#(user|group)
+REINPLACE_WITH_radiususer = \$$1
+REINPLACE_FILES_radiususer = $(sysconfdir)/freeradius/radiusd.conf
+REINPLACE_WHEN_radiususer = postinstall
+
 INITSMF = /etc/opt/csw/init.d/cswfreeradius
 
 # Fix permissions on the radiusd rundir (disabled for now)
 PROTOTYPE_MODIFIERS += rundir
-PROTOTYPE_FILES_rundir = $(radius_run_dir)
-PROTOTYPE_USER_rundir = radius
-PROTOTYPE_GROUP_rundir = radius
+PROTOTYPE_FILES_rundir = $(radius_rundir)
+PROTOTYPE_USER_rundir = $(radius_user)
+PROTOTYPE_GROUP_rundir = $(radius_group)
+PROTOTYPE_PERMS_rundir = $(radius_rundir_perms)
 PROTOTYPE_CLASS_rundir = ugfiles
+
+PROTOTYPE_MODIFIERS += logdir
+PROTOTYPE_FILES_logdir = $(radius_logdir)
+PROTOTYPE_USER_logdir = $(radius_user)
+PROTOTYPE_GROUP_logdir = $(radius_user)
+PROTOTYPE_PERMS_logdir = $(radius_logdir_perms)
+PROTOTYPE_CLASS_logdir = ugfiles
 
 # Fix permissions on the configuration directory
 PROTOTYPE_MODIFIERS += raddb
@@ -221,7 +242,9 @@ post-install-modulated:
 	ginstall -m 640 $(FILEDIR)/ca.pem $(DESTDIR)/$(raddbdir)/certs/
 	ginstall -m 640 $(FILEDIR)/server.pem $(DESTDIR)/$(raddbdir)/certs/
 	@echo "Creating PID file directory"
-	ginstall -d $(DESTDIR)$(radius_run_dir)
+	ginstall -d $(DESTDIR)$(radius_rundir)
 	@echo "Relaxing permissions on dictionary file"
 	chmod 644 $(DESTDIR)$(raddbdir)/dictionary
+	@echo "Commenting out experimental modules"
+	perl -npi -e 'print "#" if( !/^\s*(#.*)?$$/ )' $(DESTDIR)$(raddbdir)/experimental.conf
 	@$(MAKECOOKIE)
