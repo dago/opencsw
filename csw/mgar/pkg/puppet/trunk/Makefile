@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.7.13
+VERSION = 2.7.14
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -29,7 +29,7 @@ DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.postinstall
 # pkgutil.rb https://raw.github.com/domcleal/puppet/tickets/master/8011c/lib/puppet/provider/package/pkgutil.rb
 # Should be headed into 2.7 code - supports -t REPO
-# Still not in 2.7.10 as of 19-Feb-12
+# Still not in 2.7.14 as of 03-May-12(FFS!)
 DISTFILES += pkgutil.rb
 DISTFILES += README.CSW
 DISTFILES += puppet.conf.example-CSW
