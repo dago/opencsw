@@ -1,6 +1,7 @@
 openssh (6.0p1,REV=2012.05.04) unstable
 
   * New upstream release
+  * Updated dependancies name: CSWosslrt -> CSWlibssl0-9-8
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 04 May 2012 19:19:24 +0200
 
