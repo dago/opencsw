@@ -1,4 +1,10 @@
-openssh (5.9p1,REV=2011.12.16) unstable
+openssh (6.0p1,REV=2012.05.04) unstable
+
+  * New upstream release
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 May 2012 19:19:24 +0200
+
+openssh (5.9p1,REV=2011.09.19) unstable
 
   * Fixed an error in server key generation (Closes: #4876)
 
