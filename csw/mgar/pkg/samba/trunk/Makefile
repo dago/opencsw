@@ -1,9 +1,10 @@
 # TBD:
 # - smb.conf is searched in /opt/csw/lib/64/smb.conf instead of /etc/opt/csw/samba/smb.conf
 # - secrets.tdb is searched in /opt/csw/private/secrets.tdb instead of /etc/opt/csw/samba/private/secrets.tdb
+# - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.4
+VERSION = 3.6.5
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -302,6 +303,13 @@ CONFIGURE_ARGS += --enable-nss-wrapper
 CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
+CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
+CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_adex
+CONFIGURE_ARGS += --with-readline
+CONFIGURE_ARGS += --with-ads
+CONFIGURE_ARGS += --with-ldap
+CONFIGURE_ARGS += --with-automount
+CONFIGURE_ARGS += --with-dnsupdate=no
 # CONFIGURE_ARGS += --with-krb5=$(prefix)
 CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
 CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
