@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssh
-VERSION = 5.9p1
+VERSION = 6.0p1
 GSSKEX_PATCH_VERSION = 5.9p1
 GSSKEX_PATCH_DATE = 20110920
 CATEGORIES = server
