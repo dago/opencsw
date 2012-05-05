@@ -52,7 +52,7 @@ REINPLACE_WITH_usrlocallib = $(prefix)/lib/pdns
 REINPLACE_FILES_usrlocallib = pdns/pdns.conf-dist
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/pdns
+CONFIGURE_ARGS += --sysconfdir=/etc$(prefix)/pdns
 CONFIGURE_ARGS += --libdir=$(prefix)/lib/pdns
 CONFIGURE_ARGS += --disable-recursor
 CONFIGURE_ARGS += --with-lua=no
@@ -105,7 +105,7 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswpdns $(DESTDIR)/etc/opt/csw/init.d/cswpdns
 	@echo " ==> Moving config file"
-	@mv $(DESTDIR)/etc/opt/csw/pdns/pdns.conf-dist $(DESTDIR)/etc/opt/csw/pdns/pdns.conf
+	@mv $(DESTDIR)/etc$(prefix)/pdns/pdns.conf-dist $(DESTDIR)/etc$(prefix)/pdns/pdns.conf
 	@$(MAKECOOKIE)
 
 include gar/category.mk
