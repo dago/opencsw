@@ -54,7 +54,7 @@ REINPLACE_FILES_usrlocallib = pdns/pdns.conf-dist
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/pdns
 CONFIGURE_ARGS += --libdir=$(prefix)/lib/pdns
-CONFIGURE_ARGS += --enable-recursor
+CONFIGURE_ARGS += --disable-recursor
 CONFIGURE_ARGS += --with-lua=no
 CONFIGURE_ARGS += --with-boost=/opt/csw/gxx
 CONFIGURE_ARGS += --with-mysql=$(prefix)
@@ -88,7 +88,11 @@ RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibsqlite3-0
-BUILD_DEP_PKGS  = CSWmysql-dev CSWboostdevel CSWlibsqlite3-dev CSWopenldap-dev CSWlibz-dev
+BUILD_DEP_PKGS_CSWpdns += CSWmysql-dev
+BUILD_DEP_PGKS_CSWpdns += CSWboostdevel
+BUILD_DEP_PKGS_CSWpdns += CSWlibsqlite3-dev
+BUILD_DEP_PGKS_CSWpdns += CSWopenldap-dev
+BUILD_DEP_PGKS_CSWpdns += CSWlibz-dev
 
 # These are not errors!
 CHECKPKG_OVERRIDES_CSWpdns += catalogname-does-not-match-pkgname|pkgname=CSWpdns|catalogname=powerdns|expected-catalogname=pdns
