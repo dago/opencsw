@@ -1,12 +1,13 @@
 From 7b0ec3913cca1607e6777ef527c39773c908ed4d Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@artsci.utoronto.ca>
 Date: Mon, 9 Apr 2012 03:43:40 +0200
-Subject: [PATCH] Avoid problem with xpg4 grep in Solaris that broke t9400
+Subject: [PATCH] Avoid grep gnuism in t9400
 
 The grep in Solaris' /usr/xpg4/bin as found by the default
 SANE_TOOL_PATH was not properly handling the 'cvs co -c (shows module
-database)' test.  The [\t ] character set selection does not properly
-trigger so the first grep in the test fails.
+database)' test.  The \+ gnuism was breaking the pattern match when
+comparing the output against the expected output causing the test to
+fail.
 
 Instead of working around this issue, switch to using the standard
 test_cmp() shell function to perform the comparison instead.
