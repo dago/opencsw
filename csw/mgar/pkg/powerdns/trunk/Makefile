@@ -100,10 +100,6 @@ CHECKPKG_OVERRIDES_CSWpdns += catalogname-does-not-match-pkgname|pkgname=CSWpdns
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
 
-pre-configure-modulated:
-	(cd $(WORKSRC) && autoreconf -i && ./bootstrap)
-	@$(MAKECOOKIE)
-
 post-install-modulated:
 	@echo " ==> Installing Init Script"
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
