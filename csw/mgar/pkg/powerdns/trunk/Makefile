@@ -32,6 +32,7 @@ SPKG_SOURCEURL = http://www.powerdns.com/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 DISTFILES += cswpdns
+PATCHFILES += files/0003-Use-gar-instead-of-ar-for-ranlib.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
