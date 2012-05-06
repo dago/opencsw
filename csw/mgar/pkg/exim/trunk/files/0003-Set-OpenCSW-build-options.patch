@@ -23,7 +23,7 @@ index b0335a9..d2b2630 100644
 +
 +CC=$(CSW_CC)
 +CFLAGS=-DHAVE_NS_TYPE -I$(CSW_WORKSRC) -I/opt/csw/include $(CSW_OPT)
-+LDFLAGS=-L/opt/csw/mysql5/lib/mysql -L/opt/csw/postgresql/lib -L/opt/csw/lib -R/opt/csw/mysql5/lib/mysql -R/opt/csw/postgresql/lib
++LDFLAGS=-L/opt/csw/lib/mysql -L/opt/csw/postgresql/lib -L/opt/csw/lib -R/opt/csw/lib/mysql -R/opt/csw/postgresql/lib
 +
 +# This build system is a bit odd.  They use LFLAGS where you'd normally
 +# expect to see LDFLAGS.  I don't see where it gets set though...?  Typo?
@@ -139,8 +139,8 @@ index b0335a9..d2b2630 100644
  
 -# LOOKUP_INCLUDE=-I /usr/local/ldap/include -I /usr/local/mysql/include -I /usr/local/pgsql/include
 -# LOOKUP_LIBS=-L/usr/local/lib -lldap -llber -lmysqlclient -lpq -lgds -lsqlite3
-+LOOKUP_INCLUDE=-I /opt/csw/mysql5/include/mysql -I /opt/csw/postgresql/include
-+LOOKUP_LIBS=-L/opt/csw/mysql5/lib/mysql -L/opt/csw/postgresql/lib -lldap -llber -lmysqlclient -lpq
++LOOKUP_INCLUDE=-I /opt/csw/include/mysql -I /opt/csw/postgresql/include
++LOOKUP_LIBS=-L/opt/csw/lib/mysql -L/opt/csw/postgresql/lib -lldap -llber -lmysqlclient -lpq
  
  
  #------------------------------------------------------------------------------
