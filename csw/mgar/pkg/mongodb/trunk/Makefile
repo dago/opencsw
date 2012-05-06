@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = mongodb
-VERSION = 2.0.3
+VERSION = 2.0.4
 
 CATEGORIES = lib
 GARTYPE = v2
