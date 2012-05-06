@@ -92,7 +92,7 @@ RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl
 # 2011-10-24 raos
 # libpq 64-bit is not available on Solaris 10 x86.
 ifneq ($(MODULATION),isa-amd64)
-RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibpq
+RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibpq5
 endif
 RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibmysqlclient15
@@ -128,7 +128,7 @@ CHECKPKG_OVERRIDES_CSWsaslsample += catalogname-does-not-match-pkgname|pkgname=C
 
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWmysql-dev
-BUILD_DEP_PKGS += CSWlibpq
+BUILD_DEP_PKGS += CSWpostgresql-dev
 BUILD_DEP_PKGS += CSWoldapdevel 
 BUILD_DEP_PKGS += CSWlibsqlite3-dev
 BUILD_DEP_PKGS += CSWossldevel
@@ -141,10 +141,8 @@ EXTRA_BUILD_ENV = _REENTRANT=1
 EXTRA_INC  = $(includedir)/gssapi
 EXTRA_INC += $(includedir)/mysql
 EXTRA_INC += $(prefix)/bdb48/include
-EXTRA_INC += /opt/csw/postgresql/include
 
 EXTRA_LIB  = $(prefix)/bdb48/lib
-EXTRA_LIB += $(prefix)/postgresql/lib
 
 # Do not use LD_OPTIONS as it breaks tests by using the installed libraries
 # before the newly built ones.
@@ -186,7 +184,7 @@ CONFIGURE_ARGS += --with-mysql=$(libdir)
 # Although the configure script figures this out, the build
 # breaks complaining that libpq cannot be found for amd64.
 ifneq ($(MODULATION),isa-amd64)
-CONFIGURE_ARGS += --with-pgsql=$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-pgsql=$(abspath $(libdir)/$(MM_LIBDIR))
 endif
 CONFIGURE_ARGS += --with-openssl=$(libdir)
 CONFIGURE_ARGS += --with-dbpath=$(sysconfdir)/sasldb2
