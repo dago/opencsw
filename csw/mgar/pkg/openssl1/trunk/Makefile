@@ -175,7 +175,7 @@ fix-paths:
 	@$(MAKECOOKIE)
 
 install-conf-misc: 
-	if [ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ]; then \
+	if [ -f "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ] && [ ! -h "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ]; then \
 		ginstall -d "$(PKGROOT)$(sysconfdir)/ssl"; \
 		mv "$(PKGROOT)$(prefix)/ssl/openssl.cnf" $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW; \
 		ln -sf ../../..$(sysconfdir)/ssl/openssl.cnf $(PKGROOT)$(prefix)/ssl/openssl.cnf; \
