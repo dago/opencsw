@@ -44,32 +44,19 @@ RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl1-0-0
 SPKG_DESC_CSWopenssl-utils = Openssl 1.0 binaries and related tools
 PKGFILES_CSWopenssl-utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
 PKGFILES_CSWopenssl-utils += $(prefix)/ssl/misc/.* 
-PKGFILES_CSWopenssl-utils += $(prefix)/etc/ssl/openssl\.cnf.*
+PKGFILES_CSWopenssl-utils += $(prefix)/ssl/openssl\.cnf.*
+PKGFILES_CSWopenssl-utils += $(sysconfdir)/ssl/openssl\.cnf.*
 PKGFILES_CSWopenssl-utils += $(docdir)/openssl_utils/.*
 
-PRESERVECONF = $(prefix)/etc/ssl/openssl.cnf
-
-# We use SUN perl, not the opencsw one
-#CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
-
-# We ship the .a files in the devel package
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
-#ifeq ($(GARCH),sparc)
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
-#else
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
-#endif
-#CHECKPKG_OVERRIDES_CSWlibssl-dev += surplus-dependency|CSWlibssl1-0-0
+PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
 
 # We do ship libcrypto in libssl package
-#CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-#CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/pentium_pro/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-#CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+
+# We use SUN perl, not the opencsw one
+CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
 
 # References to default path in documentation files, can be safely ignored
@@ -114,6 +101,11 @@ PATCHFILES += opencsw_paths.patch
 # (patchs taken from Debian Package)
 PATCHFILES += block_bad_certificates.patch
 
+# Add old-style certificates hash generation to maintain compatibilies
+# with gnutls and programs linked with openssl 0.9.8 
+# Patch taken from Debian
+PATCHFILES += c_rehash-compat.patch
+
 LICENSE = LICENSE
 
 ##### Build and installation information #####
@@ -141,7 +133,7 @@ sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) --openssldir=$(prefix)/etc/ssl shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
+CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
@@ -178,20 +170,25 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 fix-paths:
-	gsed -i -e 's,/usr/local/ssl/lib,/opt/csw/etc/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
-	gsed -i -e 's,/usr/local/ssl,/opt/csw/ssl,' $(PKGROOT)$(bindir)/c_rehash
+	gsed -i -e 's,/usr/local/ssl/lib,$(sysconfdir)/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
+	gsed -i -e 's,/usr/local/ssl,$(prefix)/ssl,' $(PKGROOT)$(bindir)/c_rehash
 	@$(MAKECOOKIE)
 
-install-certs: 
-	[ ! -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] || \
-		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
-
+install-conf-misc: 
+	if [ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ]; then \
+		ginstall -d "$(PKGROOT)$(sysconfdir)/ssl"; \
+		mv "$(PKGROOT)$(prefix)/ssl/openssl.cnf" $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW; \
+		ln -sf ../../..$(sysconfdir)/ssl/openssl.cnf $(PKGROOT)$(prefix)/ssl/openssl.cnf; \
+	fi	
+	[ ! -d "$(PKGROOT)$(sysconfdir)/ssl/misc" ] || \
+		mv "$(PKGROOT)$(sysconfdir)/ssl/misc" "$(PKGROOT)/$(prefix)/ssl/"
+		
 merge-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
-		(cd $(DOWNLOADDIR)/ && ginstall README.CSW changelog.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
-		(cd $(WORKSRC_FIRSTMOD)/ && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
+		(cd $(DOWNLOADDIR)/ && ginstall -m 0644 README.CSW changelog.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
+		(cd $(WORKSRC_FIRSTMOD)/ && ginstall -m 0644 $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 	done
 	@$(MAKECOOKIE)
 
-post-merge: merge-doc install-certs fix-paths
+post-merge: merge-doc install-conf-misc fix-paths
