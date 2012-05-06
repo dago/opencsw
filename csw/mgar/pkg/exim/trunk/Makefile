@@ -33,11 +33,13 @@ BUILD_DEP_PKGS = CSWlibspf2-dev
 RUNTIME_DEP_PKGS_CSWexim += CSWgzip
 RUNTIME_DEP_PKGS_CSWexim += CSWgzipextras
 
-# These dependencies intentionally commented out to point out the need of
-# updating.
-# RUNTIME_DEP_PKGS_CSWexim  = CSWiconv CSWoldaprt CSWosslrt CSWsasl
-# RUNTIME_DEP_PKGS_CSWexim += CSWmysql5rt CSWlibpq CSWlibspf2-2
-# RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWexim += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWexim += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWexim += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWexim += CSWlibspf2-2
+RUNTIME_DEP_PKGS_CSWexim += CSWlibpq5
 
 # They supply the GPL in a non-standard file.
 LICENSE = LICENCE
