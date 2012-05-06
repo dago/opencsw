@@ -32,7 +32,8 @@ BUILD_DEP_PKGS = CSWlibspf2-dev
 
 RUNTIME_DEP_PKGS_CSWexim += CSWgzip
 RUNTIME_DEP_PKGS_CSWexim += CSWgzipextras
-
+RUNTIME_DEP_PKGS_CSWexim += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWexim += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWexim += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibssl0-9-8
