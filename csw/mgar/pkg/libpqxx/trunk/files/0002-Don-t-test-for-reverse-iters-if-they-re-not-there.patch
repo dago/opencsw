@@ -1,7 +1,7 @@
-From 550d0970eb6dafc0e153b58bb471a382c9b84731 Mon Sep 17 00:00:00 2001
+From 25b448599878842fb8175a7bcea58b784f5b2937 Mon Sep 17 00:00:00 2001
 From: Maciej Blizinski <maciej@opencsw.org>
-Date: Sun, 6 May 2012 09:38:50 +0200
-Subject: [PATCH 3/3] If reviter is unavailable, don't test for it
+Date: Sun, 6 May 2012 14:10:27 +0200
+Subject: [PATCH] Don't test for reverse iters if they're not there
 
 ---
  test/unit/test_binarystring.cxx |    6 ++++++

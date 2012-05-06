@@ -1,22 +1,22 @@
-From 6952ec8d9a19c0972d8358da98eb48e5fbaa4563 Mon Sep 17 00:00:00 2001
+From 6b12ccb3569a19fd2549c55647c5ea56956ef07f Mon Sep 17 00:00:00 2001
 From: Maciej Blizinski <maciej@opencsw.org>
-Date: Sun, 6 May 2012 09:17:46 +0200
-Subject: [PATCH] Can't instantiate a const_reverse_iterator
+Date: Sun, 6 May 2012 11:03:51 +0200
+Subject: [PATCH] Can't instantiate a const iterator from non-const
 
 ---
  src/connection_base.cxx |    8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/connection_base.cxx b/src/connection_base.cxx
-index e67643d..0573105 100644
+index 4137af8..c02591b 100644
 --- a/src/connection_base.cxx
 +++ b/src/connection_base.cxx
-@@ -476,11 +476,11 @@ bool pqxx::connection_base::is_open() const throw ()
- void pqxx::connection_base::process_notice_raw(const char msg[]) throw ()
+@@ -476,11 +476,11 @@ bool pqxx::connection_base::is_open() const PQXX_NOEXCEPT
+ void pqxx::connection_base::process_notice_raw(const char msg[]) PQXX_NOEXCEPT
  {
    if (!msg || !*msg) return;
 -  const list<errorhandler *>::const_reverse_iterator
-+  list<errorhandler *>::reverse_iterator
++  const list<errorhandler *>::reverse_iterator
  	rbegin = m_errorhandlers.rbegin(),
  	rend = m_errorhandlers.rend();
    for (
@@ -25,7 +25,7 @@ index e67643d..0573105 100644
  	i != rend && (**i)(msg);
  	++i) ;
  }
-@@ -997,10 +997,10 @@ void pqxx::connection_base::close() throw ()
+@@ -999,10 +999,10 @@ void pqxx::connection_base::close() PQXX_NOEXCEPT
      PQsetNoticeProcessor(m_Conn, NULL, NULL);
      list<errorhandler *> old_handlers;
      m_errorhandlers.swap(old_handlers);
