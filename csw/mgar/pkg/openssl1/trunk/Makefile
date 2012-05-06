@@ -177,7 +177,6 @@ pre-configure-modulated:
 fix-paths:
 	gsed -i -e 's,/usr/local/ssl/lib,$(sysconfdir)/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
 	gsed -i -e 's,/usr/local/ssl,$(prefix)/ssl,' $(PKGROOT)$(bindir)/c_rehash
-	@$(MAKECOOKIE)
 
 install-conf-misc: 
 	if [ -f "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ] && [ ! -h "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ]; then \
