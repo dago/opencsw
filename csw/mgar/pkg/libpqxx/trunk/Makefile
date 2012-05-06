@@ -15,6 +15,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 BUILD_DEP_PKGS = CSWpostgresql-dev
 
+PATCHFILES += 0001-Can-t-instantiate-a-const_reverse_iterator.patch
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
