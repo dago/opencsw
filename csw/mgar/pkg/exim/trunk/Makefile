@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = exim
 VERSION = 4.76
 CATEGORIES = server
@@ -28,13 +30,14 @@ PATCHFILES += 0003-Set-OpenCSW-build-options.patch
 
 BUILD_DEP_PKGS = CSWlibspf2-dev
 
-RUNTIME_DEP_PKGS_CSWexim  = CSWiconv CSWoldaprt CSWosslrt CSWsasl
-RUNTIME_DEP_PKGS_CSWexim += CSWmysql5rt CSWlibpq CSWlibspf2-2
-RUNTIME_DEP_PKGS_CSWexim += CSWgzip CSWgzipextras
-RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWexim += CSWgzip
+RUNTIME_DEP_PKGS_CSWexim += CSWgzipextras
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+# These dependencies intentionally commented out to point out the need of
+# updating.
+# RUNTIME_DEP_PKGS_CSWexim  = CSWiconv CSWoldaprt CSWosslrt CSWsasl
+# RUNTIME_DEP_PKGS_CSWexim += CSWmysql5rt CSWlibpq CSWlibspf2-2
+# RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre0
 
 # They supply the GPL in a non-standard file.
 LICENSE = LICENCE
@@ -99,9 +102,9 @@ pre-patch-modulated:
 	(cd $(WORKSRC); \
 	test -r Local/Makefile || cp -p src/EDITME Local/Makefile; \
 	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf; \
-	git add Local/; git ci -m 'Setup Local build default files'; \
+	git add Local/; git commit -m 'Setup Local build default files'; \
 	test -d spf2 || cp -pr /opt/csw/include/spf2 .; \
-	git add spf2; git ci -m 'import spf2 header files' )
+	git add spf2; git commit -m 'import spf2 header files' )
 	@$(MAKECOOKIE)
 
 pre-build-modulated:
