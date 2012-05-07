@@ -14,6 +14,8 @@ define BLURB
   read, pread ,mmap, aio_read, aio_write
 endef
 
+VENDOR_URL   = http://www.iozone.org/
+LICENSE_TEXT = This is freeware
 
 MASTER_SITES = http://www.iozone.org/src/current/
 DISTNAME     = $(NAME)$(DISTVERSION)
@@ -27,19 +29,18 @@ DOCS        += IOzone_msword_98.doc
 DOCS        += Iozone_ps.gz
 DOCS        += Run_rules.doc
 
+# Solaris10cc: Always use LDFLAGS during linkage, Solaris8-64-VXFS: Use correct arch option
 PATCHFILES   = patch_makefile.diff
+# Move from man1 to man8
 PATCHFILES  += patch_manfile.diff
+# Use vx_ioctl.h in BUILDSRC instead of /opt/VRTSvxfs/include/sys/fs/
 PATCHFILES  += patch_vxioctl.diff
 
-# Make sure to always use LDFLAGS on linking
-PATCHFILES += 0001-Always-use-LDFLAGS-during-linkage.patch
+# Dependency for contributed scripts
+RUNTIME_DEP_PKGS = CSWgnuplot
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-VENDOR_URL   = http://www.iozone.org/
-
-LICENSE_TEXT = This is freeware
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -57,8 +58,6 @@ BUILD_TARGET = $(BUILD_ARGS_$(GAROSREL)_$(GARCH)_$(MEMORYMODEL))
 
 BUILD_ARGS += $(BUILD_TARGET)
 
-BUILD_SCRIPTS = $(WORKSRC)/src/current/makefile
-
 BUILD_OVERRIDE_VARS += CFLAGS
 BUILD_OVERRIDE_VAR_CFLAGS = $(CFLAGS)
 
@@ -68,14 +67,16 @@ BUILD_OVERRIDE_VAR_S10CCFLAGS =
 BUILD_OVERRIDE_VARS += LDFLAGS
 BUILD_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
 
-# There is no testsuite
+BUILD_SCRIPTS = $(WORKSRC)/src/current/makefile
+
+# There is no test suite
 TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-# Put the VxFS header file into the build directory
+# Copy the VxFS header file into the build directory
 post-extract-modulated:
 	mkdir -p $(WORKSRC)/src/current
 	cp $(WORKDIR)/vx_ioctl.h $(WORKSRC)/src/current
@@ -83,10 +84,21 @@ post-extract-modulated:
 
 install-custom:
 	@echo " ==> Installing $(NAME)"
+	# Original Iozone files
 	ginstall -D $(WORKSRC)/src/current/iozone $(DESTDIR)$(bindir)/iozone
 	ginstall -D $(DOCSRC)/iozone.1 $(DESTDIR)$(mandir)/man8/iozone.8
 	ginstall -D $(DOCSRC)/IOzone_msword_98.pdf $(DESTDIR)$(docdir)/iozone/IOzone_msword_98.pdf
 	ginstall $(DOCSRC)/IOzone_msword_98.doc $(DESTDIR)$(docdir)/iozone/IOzone_msword_98.doc
 	ginstall $(DOCSRC)/Iozone_ps.gz $(DESTDIR)$(docdir)/iozone/Iozone_ps.gz
 	ginstall $(DOCSRC)/Run_rules.doc $(DESTDIR)$(docdir)/iozone/Run_rules.doc
+	# Contributed files
+	ginstall -D $(WORKSRC)/src/current/Generate_Graphs $(DESTDIR)$(bindir)/iozone-contrib/Generate_Graphs
+	ginstall $(WORKSRC)/src/current/gengnuplot.sh $(DESTDIR)$(bindir)/iozone-contrib/gengnuplot.sh
+	ginstall $(WORKSRC)/src/current/gnu3d.dem $(DESTDIR)$(bindir)/iozone-contrib/gnu3d.dem
+	ginstall $(WORKSRC)/src/current/gnuplot.dem $(DESTDIR)$(bindir)/iozone-contrib/gnuplot.dem
+	ginstall $(WORKSRC)/src/current/gnuplotps.dem $(DESTDIR)$(bindir)/iozone-contrib/gnuplotps.dem
+	ginstall $(WORKSRC)/src/current/iozone_visualizer.pl $(DESTDIR)$(bindir)/iozone-contrib/iozone_visualizer.pl
+	ginstall $(WORKSRC)/src/current/report.pl $(DESTDIR)$(bindir)/iozone-contrib/report.pl
+	ginstall $(WORKSRC)/src/current/Gnuplot.txt $(DESTDIR)$(docdir)/iozone/Gnuplot.txt
+	chmod 444 $(DESTDIR)$(docdir)/iozone/Gnuplot.txt
 	@$(MAKECOOKIE)
