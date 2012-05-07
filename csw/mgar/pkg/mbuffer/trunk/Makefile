@@ -1,5 +1,5 @@
 NAME = mbuffer
-VERSION = 20110724
+VERSION = 20120505
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -16,6 +16,8 @@ endef
 MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
 DISTFILES = $(DISTNAME).tgz
 
+PATCHFILES += 0001-Fallback-for-DBL_EPSILON-only-in-Solaris-10.patch
+
 VENDOR_URL = http://www.maier-komor.de/mbuffer.html
 
 LICENSE = LICENSE
@@ -27,7 +29,8 @@ BUILD_DEP_PKGS += CSWgcc4core
 RUNTIME_DEP_PKGS = CSWlibmhash
 
 # 64-bit build enables buffers >= 2GB (see README).
-BUILD64_LIBS_ONLY = 1
+BUILD64 = 1
+ISAEXEC = 1
 
 # Required for updated libmhash (mbuffer builds against it) which allows for
 # flexible const/non-const definitions.  There should be a more intelligent 
