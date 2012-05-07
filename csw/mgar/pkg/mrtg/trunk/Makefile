@@ -1,5 +1,5 @@
 NAME = mrtg
-VERSION = 2.17.3
+VERSION = 2.17.4
 CATEGORIES = utils
 GARTYPE = v2
 
