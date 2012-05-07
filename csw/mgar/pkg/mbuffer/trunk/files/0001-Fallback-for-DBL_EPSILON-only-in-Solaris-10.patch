@@ -1,0 +1,27 @@
+From 64b05d75cf2cb062990a3efae1b1c982132fe77c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Mon, 7 May 2012 09:42:05 +0200
+Subject: [PATCH] Fallback for DBL_EPSILON only in Solaris 10
+
+---
+ mbuffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/mbuffer.c b/mbuffer.c
+index fd8c2e2..ab36575 100644
+--- a/mbuffer.c
++++ b/mbuffer.c
+@@ -53,6 +53,10 @@ typedef int caddr_t;
+ #include <sys/sysctl.h>
+ #endif
+ 
++#ifndef DBL_EPSILON
++#define    DBL_EPSILON     2.2204460492503130808473E-16
++#endif
++
+ #ifdef HAVE_SENDFILE
+ #ifdef HAVE_SENDFILE_H
+ #include <sys/sendfile.h>
+-- 
+1.7.10
+
