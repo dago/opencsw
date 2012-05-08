@@ -1,6 +1,8 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
+# ! Doesn't build, issue filed:
+#   http://code.google.com/p/leveldb/issues/detail?id=88
 NAME = leveldb
 VERSION = 1.4.0
 GARTYPE = v2
