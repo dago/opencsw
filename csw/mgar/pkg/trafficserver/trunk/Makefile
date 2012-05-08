@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = trafficserver
-VERSION = 3.0.4
+VERSION = 3.0.5
 GARTYPE = v2
 CATEGORIES = server
 
@@ -11,7 +11,7 @@ define BLURB
   Apache Traffic Server is fast, scalable and extensible HTTP/1.1 compliant caching proxy server
 endef
 
-MASTER_SITES = http://people.apache.org/~zwoop/rel-candidates/ 
+MASTER_SITES = http://people.apache.org/~igalic/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGING_PLATFORMS = solaris10-i386
