@@ -25,7 +25,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 PACKAGES = CSWpy-gnuplot
 CATALOGNAME_CSWpy-gnuplot = py_gnuplot
 
-BUILD_DEP_PKGS += CSWnumpy CSWpython-dev
+BUILD_DEP_PKGS += CSWpy-numpy CSWpython-dev
+RUNTIME_DEP_PKGS += CSWgnuplot
 TEST_SCRIPTS =
 
 LICENSE = LICENSE.txt
