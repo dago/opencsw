@@ -8,7 +8,7 @@
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
 
 NAME = ffmpeg
-VERSION = 0.10.2
+VERSION = 0.10.3
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -49,7 +49,7 @@ RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibavcodec53 += CSWlibx264-124
 
 PACKAGES += CSWlibavdevice53
 SPKG_DESC_CSWlibavdevice53 = FFMPEG library libavdevice.so.53
@@ -68,7 +68,7 @@ RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibavdevice53 += CSWlibx264-124
 
 PACKAGES += CSWlibavfilter2
 SPKG_DESC_CSWlibavfilter2 = FFMPEG library libavfilter.so.2
@@ -89,7 +89,7 @@ RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibtheoraenc1
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibx264-124
 
 PACKAGES += CSWlibavformat53
 SPKG_DESC_CSWlibavformat53 = FFMPEG library libavformat.so.53
@@ -107,7 +107,7 @@ RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibavformat53 += CSWlibx264-124
 
 PACKAGES += CSWlibavutil51
 SPKG_DESC_CSWlibavutil51 = FFMPEG library libavutil.so.51
@@ -123,7 +123,7 @@ RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibtheoraenc1
-RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibx264-124
 
 PACKAGES += CSWlibpostproc52
 SPKG_DESC_CSWlibpostproc52 = FFMPEG library libpostproc.so.52
@@ -140,7 +140,7 @@ RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibx264-124
 
 PACKAGES += CSWlibswscale2
 SPKG_DESC_CSWlibswscale2 = FFMPEG library libswscale.so.2
@@ -157,7 +157,7 @@ RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibx264-124
 
 PACKAGES += CSWlibswresample0
 SPKG_DESC_CSWlibswresample0 = FFMPEG library libswresample.so.0
@@ -174,7 +174,7 @@ RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibx264-124
 
 
 PACKAGES += CSWffmpeg-dev
@@ -212,7 +212,7 @@ RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavfilter2
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibpostproc52
-RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibx264-124
 
 # These are all examples
 CHECKPKG_OVERRIDES_CSWffmpeg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ffmpeg.1
