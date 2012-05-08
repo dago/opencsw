@@ -54,25 +54,25 @@ RUNTIME_DEP_PKGS_CSWx264 += CSWlibavcodec53
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibavutil51
 
-PACKAGES += CSWlibx264-122
-CATALOGNAME_CSWlibx264-122 = libx264_122
-PKGFILES_CSWlibx264-122 += $(call baseisadirs,$(libdir),libx264\.so\.122)
-PKGFILES_CSWlibx264-122 += $(call baseisadirs,$(libdir),libx264\.so\.122(\.\d+)*)
-SPKG_DESC_CSWlibx264-122 += $(DESCRIPTION), libx264.so.122
-RUNTIME_DEP_PKGS_CSWlibx264-122 += CSWlibgcc-s1
+PACKAGES += CSWlibx264-124
+CATALOGNAME_CSWlibx264-124 = libx264_124
+PKGFILES_CSWlibx264-124 += $(call baseisadirs,$(libdir),libx264\.so\.124)
+PKGFILES_CSWlibx264-124 += $(call baseisadirs,$(libdir),libx264\.so\.124(\.\d+)*)
+SPKG_DESC_CSWlibx264-124 += $(DESCRIPTION), libx264.so.124
+RUNTIME_DEP_PKGS_CSWlibx264-124 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
 CATALOGNAME_CSWlibx264-dev = libx264_dev
 SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
 PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-122
+RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-124
 
 #Some overrides
 CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
-CHECKPKG_OVERRIDES_CSWlibx264-122 += pkginfo-description-not-starting-with-uppercase
+CHECKPKG_OVERRIDES_CSWlibx264-124 += pkginfo-description-not-starting-with-uppercase
 # seems to be checkpkg bug:
-CHECKPKG_OVERRIDES_CSWlibx264-122 += non-uniform-lib-versions-in-package|sonames=libx264.so.122
+CHECKPKG_OVERRIDES_CSWlibx264-124 += non-uniform-lib-versions-in-package|sonames=libx264.so.124
 
 
 
