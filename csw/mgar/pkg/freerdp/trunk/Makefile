@@ -7,37 +7,23 @@ VERSION = 1.0.1
 CATEGORIES = utils
 GARTYPE = v2
 
-DESCRIPTION = RDP client. Fork of the rdesktop project.
-define BLURB
-  Long description
-endef
+DESCRIPTION = RDP client, a fork of the rdesktop project
 
 MASTER_SITES = http://github.com/downloads/FreeRDP/FreeRDP/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
+DISTFILES += $(NAME)-$(VERSION).tar.gz
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 GARCOMPILER = GCC4
 
 PACKAGES += CSWfreerdp-dev
-CATALOGNAME_CSWfreerdp-dev = FreeRDP_dev
-SPKG_DESC_CSWfreerdp-dev += $(DESCRIPTION), development files
+SPKG_DESC_CSWfreerdp-dev += Development files for FreeRDP
+PKGFILES_CSWfreerdp-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWfreerdp-dev += CSWfreerdp
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-cache.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-channels.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-codec.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-core.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-gdi.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-kbd.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-rail.so
-PKGFILES_CSWfreerdp-dev += /opt/csw/lib/libfreerdp-utils.so
-PKGFILES_CSWfeerdp-dev += $(PKGFILES_DEVEL)
 
 PACKAGES += CSWfreerdp
-SPKG_DESC_CSWfreerdp = $(DESCRIPTION)
+SPKG_DESC_CSWfreerdp = RDP client, a fork of the rdesktop project
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWfreerdp += CSWlibgcc-s1
-
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -52,7 +38,8 @@ CMAKE_ARGS += -DCMAKE_SKIP_RPATH=NO
 
 CONFIGURE_SCRIPTS = custom
 
-SKIPTEST = 1
+# There is no testsuite
+TEST_SCRIPTS =
 
 include gar/category.mk
 
