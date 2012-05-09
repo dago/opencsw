@@ -29,6 +29,8 @@ BUILD_DEP_PKGS += CSWpy-numpy CSWpython-dev
 RUNTIME_DEP_PKGS += CSWgnuplot
 TEST_SCRIPTS =
 
+CHECKPKG_OVERRIDES_CSWpy-gnuplot += surplus-dependency|CSWgnuplot
+
 LICENSE = LICENSE.txt
 ARCHALL = 1
 
