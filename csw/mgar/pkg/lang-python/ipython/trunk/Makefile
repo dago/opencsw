@@ -27,6 +27,8 @@ CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/l
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/utils/tests/test_path.py
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/pexpect/_pexpect.py
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/path/_path.py
+CHECKPKG_OVERRIDES_CSWipython += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWipython += catalogname-does-not-start-with-py_
 
 SKIPTEST = 1
 
