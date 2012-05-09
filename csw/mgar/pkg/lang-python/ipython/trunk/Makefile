@@ -7,7 +7,7 @@
 #   shipping ipythonx?)
 # 
 NAME    = ipython
-VERSION = 0.10.2
+VERSION = 0.12.1
 CATEGORIES = python
 GARTYPE = v2
 
@@ -15,14 +15,18 @@ DESCRIPTION = Enhanced interactive python shell
 define BLURB
 endef
 
-MASTER_SITES = http://ipython.scipy.org/dist/$(VERSION)/
+MASTER_SITES = http://archive.ipython.org/release/$(VERSION)/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 ARCHALL      = 1
 PACKAGES     = CSWipython
 CATALOGNAME  = ipython
 
-CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local
-CHECKPKG_OVERRIDES += file-with-bad-content|/usr/share
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/IPython/core/usage.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/IPython/external/mglob/_mglob.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/core/magic.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/utils/tests/test_path.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/pexpect/_pexpect.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/path/_path.py
 
 SKIPTEST = 1
 
