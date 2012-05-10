@@ -38,10 +38,10 @@ SPKG_DESC_CSWlibotf0		=	$(DESCRIPTION) - runtime
 PKGFILES_CSWlibotf0			+=	$(call pkgfiles_lib,libotf.so.0.0.0)
 OBSOLETED_BY_CSWlibotf0 	+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf0	+=	\
-								CSWlibgcc-s1 \
+								CSWlibbz2-1-0 \
 								CSWlibfreetype6 \
-								CSWlibz1 \
-								CSWlibbz2-1-0
+								CSWlibgcc-s1 \
+								CSWlibz1
 PACKAGES						+=	CSWlibotf-dev
 SPKG_DESC_CSWlibotf-dev			=	$(DESCRIPTION) - development
 PKGFILES_CSWlibotf-dev			=	$(PKGFILES_DEVEL)
@@ -54,9 +54,10 @@ SPKG_DESC_CSWlibotf-utils			=	$(DESCRIPTION) - utilities
 CATALOGNAME_CSWlibotf-utils			=	libotf_utils
 OBSOLETED_BY_CSWlibotf-utils		+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf-utils	+=	\
-										CSWlibotf0 \
-										CSWlibfreetype6 \
-										CSWlibz1 \
-										CSWlibbz2-1-0
+										CSWlibotf0
+
 include gar/category.mk
 
+# this is private and not available publicly yet
+mydependencies:
+	$(HOME)/bin/ocswdeplist --package $(NAME)
