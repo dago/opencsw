@@ -24,9 +24,15 @@ DISTFILES  		=	$(DISTNAME).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 BUILD_DEP_PKGS		=	CSWlibdvdreaddevel
-RUNTIME_DEP_PKGS	=	CSWlibdvdread
+RUNTIME_DEP_PKGS	=	\
+						CSWlibdvdread \
+						CSWlibgcc-s1
 CONFIGURE_ARGS		=	$(DIRPATHS)
 GARCOMPILER			=	GNU
 
 include gar/category.mk
 
+
+# this is private and not available publicly
+mydependencies:
+	$(HOME)/bin/ocswdeplist --package $(NAME)
