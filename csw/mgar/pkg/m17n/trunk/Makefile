@@ -50,16 +50,16 @@ PKGFILES_CSWlibm17n0				+=	$(call pkgfiles_lib,libm17n-core.so.0.4.0) $(call pkg
 OBSOLETED_BY_CSWlibm17n0 			+=	CSWlibm17n
 RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 										CSWfconfig \
-										CSWfribidi \
 										CSWlibbz2-1-0 \
 										CSWlibdatrie1 \
 										CSWlibexpat1 \
 										CSWlibfreetype6 \
+										CSWlibfribidi0 \
 										CSWlibgcc-s1 \
 										CSWlibiconv2 \
 										CSWlibintl8 \
 										CSWlibotf0 \
-										CSWlibthai \
+										CSWlibthai0 \
 										CSWlibxft2 \
 										CSWlibxml2-2 \
 										CSWlibxrender \
@@ -111,3 +111,6 @@ CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWfconfig
 
 include gar/category.mk
 
+# this is private and not available publicly yet
+mydependencies:
+	$(HOME)/bin/ocswdeplist --package $(NAME)
