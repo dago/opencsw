@@ -27,8 +27,20 @@ CONFIGURE_ARGS += --with-pcre=$(prefix)
 CONFIGURE_ARGS += --with-lzma=$(prefix)
 CONFIGURE_ARGS += --with-expat=$(prefix)
 
-export pkgsysuser  = $(shell /opt/csw/gnu/id -nu)
-export pkgsysgroup = $(shell /opt/csw/gnu/id -ng)
+pkgsysuser  = $(shell /opt/csw/gnu/id -nu)
+pkgsysgroup = $(shell /opt/csw/gnu/id -ng)
+
+EXTRA_CONFIGURE_EXPORTS += pkgsysuser
+EXTRA_CONFIGURE_ENV_pkgsysuser += $(pkgsysuser)
+
+EXTRA_CONFIGURE_EXPORTS += pkgsysgroup
+EXTRA_CONFIGURE_ENV_pkgsysgroup = $(pkgsysgroup)
+
+EXTRA_BUILD_EXPORTS += pkgsysuser
+EXTRA_BUILD_ENV_pkgsysuser = $(pkgsysuser)
+
+EXTRA_BUILD_EXPORTS += $(pkgsysgroup)
+EXTRA_BUILD_ENV_pkgsysgroup = $(pkgsysgroup)
 
 PROTOTYPE_MODIFIERS += data
 PROTOTYPE_FILES_data += $(sysconfdir)/?.*
