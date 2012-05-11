@@ -31,13 +31,13 @@ CONFIGURE_ARGS	+=	\
 					--with-libintl-prefix=/opt/csw
 BUILD_DEP_PKGS		=	\
 						CSWfconfig \
-						CSWfribidi \
 						CSWlibbz2-dev \
 						CSWlibdatrie-dev \
 						CSWlibexpat-dev \
 						CSWlibfreetype-dev \
+						CSWlibfribidi-dev
 						CSWlibiconv-dev \
-						CSWlibthaidevel \
+						CSWlibthai-dev \
 						CSWlibotf-dev \
 						CSWlibxft2devel \
 						CSWlibxml2-dev \
@@ -71,11 +71,14 @@ RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibm17n-utils
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibgd2
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibotf-utils
-CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibthai0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibdatrie1
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibthai
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibotf0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibfribidi0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-core.so.0.4.0|soname=libm17n-core.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-core0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-flt.so.0.4.0|soname=libm17n-flt.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-flt0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-gui.so.0.4.0|soname=libm17n-gui.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-gui0
 
 PACKAGES							+=	CSWlibm17n-dev
 SPKG_DESC_CSWlibm17n-dev			+=	$(DESCRIPTION) - development.
