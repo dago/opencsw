@@ -1,0 +1,205 @@
+From 5481e048b776d77479a2645e966c0ea4469ae551 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Fri, 11 May 2012 21:55:03 +0200
+Subject: [PATCH] Engine t4 patch
+
+---
+ Configure               |    4 ++--
+ Configure.orig          |   22 +++++++++++++++++++++-
+ crypto/aes/Makefile     |    8 ++++++++
+ crypto/des/Makefile     |    8 ++++++++
+ crypto/engine/Makefile  |    4 ++++
+ crypto/engine/eng_all.c |    4 ++++
+ crypto/engine/engine.h  |    1 +
+ crypto/md5/Makefile     |    8 ++++++++
+ crypto/sha/Makefile     |   12 ++++++++++++
+ util/libeay.num         |    1 +
+ 10 files changed, 69 insertions(+), 3 deletions(-)
+
+diff --git a/Configure b/Configure
+index 19bc8d9..029beac 100755
+--- a/Configure
++++ b/Configure
+@@ -133,8 +133,8 @@ my $x86_elf_asm="$x86_asm:elf";
+ 
+ my $x86_64_asm="x86_64cpuid.o:x86_64-gcc.o x86_64-mont.o x86_64-mont5.o x86_64-gf2m.o modexp512-x86_64.o::aes-x86_64.o vpaes-x86_64.o bsaes-x86_64.o aesni-x86_64.o aesni-sha1-x86_64.o::md5-x86_64.o:sha1-x86_64.o sha256-x86_64.o sha512-x86_64.o::rc4-x86_64.o rc4-md5-x86_64.o:::wp-x86_64.o:cmll-x86_64.o cmll_misc.o:ghash-x86_64.o:";
+ my $ia64_asm="ia64cpuid.o:bn-ia64.o ia64-mont.o::aes_core.o aes_cbc.o aes-ia64.o::md5-ia64.o:sha1-ia64.o sha256-ia64.o sha512-ia64.o::rc4-ia64.o rc4_skey.o:::::ghash-ia64.o::void";
+-my $sparcv9_asm="sparcv9cap.o sparccpuid.o:bn-sparcv9.o sparcv9-mont.o sparcv9a-mont.o:des_enc-sparc.o fcrypt_b.o:aes_core.o aes_cbc.o aes-sparcv9.o:::sha1-sparcv9.o sha256-sparcv9.o sha512-sparcv9.o:::::::ghash-sparcv9.o::void";
+-my $sparcv8_asm=":sparcv8.o:des_enc-sparc.o fcrypt_b.o:::::::::::::void";
++my $sparcv9_asm="sparcv9cap.o sparccpuid.o:bn-sparcv9.o sparcv9-mont.o sparcv9a-mont.o:des_enc-sparc.o fcrypt_b.o t4_des.o:aes_core.o aes_cbc.o aes-sparcv9.o t4_aes.o::t4_md5.o:sha1-sparcv9.o sha256-sparcv9.o sha512-sparcv9.o t4_sha1.o t4_sha2.o::::::::ghash-sparcv9.o::void";
++my $sparcv8_asm=":sparcv8.o:des_enc-sparc.o fcrypt_b.o t4_des.o:t4_aes.o::t4_md5.o:t4_sha1.o t4_sha2.o:::::::void";
+ my $alpha_asm="alphacpuid.o:bn_asm.o alpha-mont.o:::::sha1-alpha.o:::::::ghash-alpha.o::void";
+ my $mips32_asm=":bn-mips.o::aes_cbc.o aes-mips.o:::sha1-mips.o sha256-mips.o::::::::";
+ my $mips64_asm=":bn-mips.o mips-mont.o::aes_cbc.o aes-mips.o:::sha1-mips.o sha256-mips.o sha512-mips.o::::::::";
+diff --git a/crypto/aes/Makefile b/crypto/aes/Makefile
+index 45ede0a..4f35c2c 100644
+--- a/crypto/aes/Makefile
++++ b/crypto/aes/Makefile
+@@ -17,6 +17,10 @@ CFLAGS= $(INCLUDES) $(CFLAG)
+ ASFLAGS= $(INCLUDES) $(ASFLAG)
+ AFLAGS= $(ASFLAGS)
+ 
++BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
++		then echo 32; else echo 64; fi)
++ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
++
+ GENERAL=Makefile
+ #TEST=aestest.c
+ TEST=
+@@ -69,6 +73,10 @@ aesni-sha1-x86_64.s:	asm/aesni-sha1-x86_64.pl
+ aes-sparcv9.s: asm/aes-sparcv9.pl
+ 	$(PERL) asm/aes-sparcv9.pl $(CFLAGS) > $@
+ 
++t4_aes.o: asm/t4_aes.S
++	as $(ASFLAGSYF) -o $@ asm/t4_aes.S
++	elfedit -e 'cap:hw1 -and -cmp vis vis3' $@
++
+ aes-ppc.s:	asm/aes-ppc.pl
+ 	$(PERL) asm/aes-ppc.pl $(PERLASM_SCHEME) $@
+ 
+diff --git a/crypto/des/Makefile b/crypto/des/Makefile
+index a6e1001..f245ca1 100644
+--- a/crypto/des/Makefile
++++ b/crypto/des/Makefile
+@@ -17,6 +17,10 @@ CFLAGS= $(INCLUDES) $(CFLAG)
+ ASFLAGS= $(INCLUDES) $(ASFLAG)
+ AFLAGS= $(ASFLAGS)
+ 
++BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
++		then echo 32; else echo 64; fi)
++ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
++
+ GENERAL=Makefile
+ TEST=destest.c
+ APPS=
+@@ -61,6 +65,10 @@ des: des.o cbc3_enc.o lib
+ 
+ des_enc-sparc.S:	asm/des_enc.m4
+ 	m4 -B 8192 asm/des_enc.m4 > des_enc-sparc.S
++ 
++t4_des.o: asm/t4_des.S
++	as $(ASFLAGSYF) -o $@ asm/t4_des.S
++	elfedit -e 'cap:hw1 -and -cmp vis vis3' $@
+ 
+ des-586.s:	asm/des-586.pl ../perlasm/x86asm.pl ../perlasm/cbc.pl
+ 	$(PERL) asm/des-586.pl $(PERLASM_SCHEME) $(CFLAGS) > $@
+diff --git a/crypto/engine/Makefile b/crypto/engine/Makefile
+index 9174228..5074e42 100644
+--- a/crypto/engine/Makefile
++++ b/crypto/engine/Makefile
+@@ -23,6 +23,8 @@ LIBSRC= eng_err.c eng_lib.c eng_list.c eng_init.c eng_ctrl.c \
+ 	tb_cipher.c tb_digest.c tb_pkmeth.c tb_asnmth.c \
+ 	eng_openssl.c eng_cnf.c eng_dyn.c eng_cryptodev.c \
+ 	eng_rsax.c eng_rdrand.c \
++	eng_t4.c eng_t4_des.c eng_t4_md5.c \
++	eng_t4_sha1.c eng_t4_sha256.c eng_t4_sha512.c eng_t4_montmul.c \
+ 	hw_pk11.c hw_pk11_pub.c hw_pk11_uri.c
+ LIBOBJ= eng_err.o eng_lib.o eng_list.o eng_init.o eng_ctrl.o \
+ 	eng_table.o eng_pkey.o eng_fat.o eng_all.o \
+@@ -30,6 +32,8 @@ LIBOBJ= eng_err.o eng_lib.o eng_list.o eng_init.o eng_ctrl.o \
+ 	tb_cipher.o tb_digest.o tb_pkmeth.o tb_asnmth.o \
+ 	eng_openssl.o eng_cnf.o eng_dyn.o eng_cryptodev.o \
+ 	eng_rsax.o eng_rdrand.o \
++	eng_t4.o eng_t4_des.o eng_t4_md5.o \
++	eng_t4_sha1.o eng_t4_sha256.o eng_t4_sha512.o eng_t4_montmul.o \
+ 	hw_pk11.o hw_pk11_pub.o hw_pk11_uri.o
+ 
+ SRC= $(LIBSRC)
+diff --git a/crypto/engine/eng_all.c b/crypto/engine/eng_all.c
+index 387b1ff..d019401 100644
+--- a/crypto/engine/eng_all.c
++++ b/crypto/engine/eng_all.c
+@@ -79,6 +79,10 @@ void ENGINE_load_builtin_engines(void)
+ #ifndef OPENSSL_NO_RDRAND
+ 	ENGINE_load_rdrand();
+ #endif
++#if !defined(OPENSSL_NO_HW) && !defined(OPENSSL_NO_HW_T4)
++	ENGINE_load_t4();
++	ENGINE_register_all_complete();
++#endif
+ 	ENGINE_load_dynamic();
+ #ifndef OPENSSL_NO_HW_PKCS11
+ 	ENGINE_load_pk11();
+diff --git a/crypto/engine/engine.h b/crypto/engine/engine.h
+index e1e43bf..5f79240 100644
+--- a/crypto/engine/engine.h
++++ b/crypto/engine/engine.h
+@@ -351,6 +351,7 @@ void ENGINE_load_gost(void);
+ #endif
+ #endif
+ void ENGINE_load_cryptodev(void);
++void ENGINE_load_t4(void);
+ void ENGINE_load_pk11(void);
+ void ENGINE_load_rsax(void);
+ void ENGINE_load_rdrand(void);
+diff --git a/crypto/md5/Makefile b/crypto/md5/Makefile
+index b9e2ce9..0d62ddd 100644
+--- a/crypto/md5/Makefile
++++ b/crypto/md5/Makefile
+@@ -17,6 +17,10 @@ CFLAGS= $(INCLUDES) $(CFLAG)
+ ASFLAGS= $(INCLUDES) $(ASFLAG)
+ AFLAGS= $(ASFLAGS)
+ 
++BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
++		then echo 32; else echo 64; fi)
++ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
++
+ GENERAL=Makefile
+ TEST=md5test.c
+ APPS=
+@@ -52,6 +56,10 @@ md5-ia64.s: asm/md5-ia64.S
+ 	$(CC) $(CFLAGS) -E asm/md5-ia64.S | \
+ 	$(PERL) -ne 's/;\s+/;\n/g; print;' > $@
+ 
++t4_md5.o: asm/t4_md5.S
++	as $(ASFLAGSYF) -o $@ asm/t4_md5.S
++	elfedit -e 'cap:hw1 -and -cmp vis vis3' $@
++
+ files:
+ 	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+ 
+diff --git a/crypto/sha/Makefile b/crypto/sha/Makefile
+index 6d191d3..0834043 100644
+--- a/crypto/sha/Makefile
++++ b/crypto/sha/Makefile
+@@ -17,6 +17,10 @@ CFLAGS= $(INCLUDES) $(CFLAG)
+ ASFLAGS= $(INCLUDES) $(ASFLAG)
+ AFLAGS= $(ASFLAGS)
+ 
++BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
++		then echo 32; else echo 64; fi)
++ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
++
+ GENERAL=Makefile
+ TEST=shatest.c sha1test.c sha256t.c sha512t.c
+ APPS=
+@@ -91,6 +95,14 @@ sha1-armv4-large.o:	sha1-armv4-large.S
+ sha256-armv4.o:		sha256-armv4.S
+ sha512-armv4.o:		sha512-armv4.S
+ 
++t4_sha1.o: asm/t4_sha1.S
++	as $(ASFLAGSYF) -o $@ asm/t4_sha1.S
++	elfedit -e 'cap:hw1 -and -cmp vis vis3' $@
++
++t4_sha2.o: asm/t4_sha2.S
++	as $(ASFLAGSYF) -o $@ asm/t4_sha2.S
++	elfedit -e 'cap:hw1 -and -cmp vis vis3' $@
++
+ files:
+ 	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
+ 
+diff --git a/util/libeay.num b/util/libeay.num
+index 93f80ba..89df4b1 100755
+--- a/util/libeay.num
++++ b/util/libeay.num
+@@ -4178,6 +4178,7 @@ UI_method_get_prompt_constructr         4550	EXIST:VMS:FUNCTION:
+ UI_method_set_prompt_constructor        4551	EXIST:!VMS:FUNCTION:
+ UI_method_set_prompt_constructr         4551	EXIST:VMS:FUNCTION:
+ EVP_read_pw_string_min                  4552	EXIST::FUNCTION:
++ENGINE_load_t4                          4553	EXIST::FUNCTION:ENGINE
+ CRYPTO_cts128_encrypt                   4553	EXIST::FUNCTION:
+ CRYPTO_cts128_decrypt_block             4554	EXIST::FUNCTION:
+ CRYPTO_cfb128_1_encrypt                 4555	EXIST::FUNCTION:
+-- 
+1.7.10
+
