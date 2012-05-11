@@ -125,7 +125,7 @@ endif
 # patch taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
 ifdef T4
 ifneq ($(shell /usr/bin/uname -r),5.9)
-	PATCHFILES += 0007-Engine-t4-patch.patch
+	PATCHFILES += openssl-1.0.1c-t4-engine.sparc-patch.2012-05-11
 endif
 endif
 
