@@ -8400,9 +8400,9 @@ diff -uNr openssl-1.0.1c.orig/crypto/sha/asm/t4_sha1.S openssl-1.0.1c/crypto/sha
 +	SET_SIZE(t4_sha1_multiblock)
 +
 +#endif  /* lint || __lint */
-diff -uNr openssl-1.0.1c.orig/crypto/sha/t4_sha2.S openssl-1.0.1c/crypto/sha/t4_sha2.S
---- openssl-1.0.1c.orig/crypto/sha/t4_sha2.S	1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1c/crypto/sha/t4_sha2.S	2012-05-11 21:34:39.095354000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/sha/asm/t4_sha2.S openssl-1.0.1c/crypto/sha/asm/t4_sha2.S
+--- openssl-1.0.1c.orig/crypto/sha/asm/t4_sha2.S	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/sha/asm/t4_sha2.S	2012-05-11 21:34:39.095354000 +0200
 @@ -0,0 +1,314 @@
 +/*
 + * ====================================================================

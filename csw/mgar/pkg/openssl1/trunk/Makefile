@@ -125,7 +125,9 @@ endif
 # patch taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
 ifdef T4
 ifneq ($(shell /usr/bin/uname -r),5.9)
+ifneq ($(shell /usr/bin/uname -r),5.10)
 	PATCHFILES += openssl-1.0.1c-t4-engine.sparc-patch.2012-05-11
+endif
 endif
 endif
 
@@ -165,6 +167,16 @@ ifneq ($(shell /usr/bin/uname -r),5.9)
         CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
 endif
 endif 
+
+ifdef T4
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386 solaris11-sparc solaris11-i386
+endif
+
+
+ifeq ($(shell /usr/bin/uname -r),5.11)
+GARCOMPILER = SOS12U3
+endif
+
 
 
 # For now we want the sun perl to be used
