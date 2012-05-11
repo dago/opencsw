@@ -27,6 +27,8 @@ BUILD_DEP_PKGS		=	CSWlibdvdreaddevel
 RUNTIME_DEP_PKGS	=	\
 						CSWlibdvdread \
 						CSWlibgcc-s1
+# this is needed because chkpkg incorrectly complains:
+CHECKPKG_OVERRIDES_CSWlsdvd += surplus-dependency|CSWlibgcc-s1
 CONFIGURE_ARGS		=	$(DIRPATHS)
 GARCOMPILER			=	GNU
 
