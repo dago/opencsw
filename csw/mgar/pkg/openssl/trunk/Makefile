@@ -16,7 +16,7 @@ PKCS11 = 1
 ###### Package information #######
 
 NAME = openssl
-VERSION = 0.9.8w
+VERSION = 0.9.8x
 CATEGORIES = lib
 GARTYPE = v2
 
