@@ -11,6 +11,7 @@
 #####################################################################
 
 PKCS11 = 1
+T4 = 1
 
 ###### Package information #######
 
@@ -111,6 +112,23 @@ PATCHFILES += block_bad_certificates.patch
 # Patch taken from Debian
 PATCHFILES += c_rehash-compat.patch
 
+# support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
+ifdef PKCS11
+ifneq ($(shell /usr/bin/uname -r),5.9)
+        PATCHFILES += pkcs11_engine-1.0.1b.patch.2012-04-30
+endif
+endif
+
+# support for sparc t4 crypto engine 
+# see http://bubbva.blogspot.fr/2011/11/exciting-crypto-advances-with-t4.html
+#     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
+# patch taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
+ifdef T4
+ifneq ($(shell /usr/bin/uname -r),5.9)
+	PATCHFILES += 0007-Engine-t4-patch.patch
+endif
+endif
+
 LICENSE = LICENSE
 
 ##### Build and installation information #####
@@ -140,12 +158,10 @@ sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
 CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
-
-# support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
+# PKCS11 is only for Solaris 10 so we must create solaris 10 specific packages
 ifdef PKCS11
-        PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 ifneq ($(shell /usr/bin/uname -r),5.9)
-        PATCHFILES += pkcs11_engine-1.0.1b.patch.2012-04-30
         CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
 endif
 endif 
