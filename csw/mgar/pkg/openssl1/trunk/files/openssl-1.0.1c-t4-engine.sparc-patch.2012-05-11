@@ -5373,6 +5373,7 @@ diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_bignum.h openssl-1.0.1c/crypt
 +
 +#define	BITSINBYTE	8
 +
++/* Bignum "digits" (aka "chunks" or "words") are either 32- or 64-bits */
 +#ifdef BIGNUM_CHUNK_32
 +#define	BIG_CHUNK_SIZE		32
 +#define	BIG_CHUNK_TYPE		uint32_t
@@ -5534,13 +5535,19 @@ diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_bignum.h openssl-1.0.1c/crypt
 +#error HWCAP works only with 32-bit bignum chunks
 +#endif
 +
++#define	BIG_MUL_SET_VEC(r, a, len, digit) \
++	(*big_mul_set_vec_impl)(r, a, len, digit)
++#define	BIG_MUL_ADD_VEC(r, a, len, digit) \
++	(*big_mul_add_vec_impl)(r, a, len, digit)
 +#define	BIG_MUL_VEC(r, a, alen, b, blen) \
 +	(*big_mul_vec_impl)(r, a, alen, b, blen)
 +#define	BIG_SQR_VEC(r, a, len) \
 +	(*big_sqr_vec_impl)(r, a, len)
 +
 +extern BIG_CHUNK_TYPE (*big_mul_set_vec_impl)
++	(BIG_CHUNK_TYPE *r, BIG_CHUNK_TYPE *a, int len, BIG_CHUNK_TYPE digit);
 +extern BIG_CHUNK_TYPE (*big_mul_add_vec_impl)
++	(BIG_CHUNK_TYPE *r, BIG_CHUNK_TYPE *a, int len, BIG_CHUNK_TYPE digit);
 +extern void (*big_mul_vec_impl)
 +	(BIG_CHUNK_TYPE *r, BIG_CHUNK_TYPE *a, int alen, BIG_CHUNK_TYPE *b,
 +	    int blen);
@@ -5549,6 +5556,8 @@ diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_bignum.h openssl-1.0.1c/crypt
 +
 +#else /* ! HWCAP */
 +
++#define	BIG_MUL_SET_VEC(r, a, len, digit) big_mul_set_vec(r, a, len, digit)
++#define	BIG_MUL_ADD_VEC(r, a, len, digit) big_mul_add_vec(r, a, len, digit)
 +#define	BIG_MUL_VEC(r, a, alen, b, blen) big_mul_vec(r, a, alen, b, blen)
 +#define	BIG_SQR_VEC(r, a, len) big_sqr_vec(r, a, len)
 +
@@ -8709,17 +8718,6 @@ diff -uNr openssl-1.0.1c.orig/crypto/sha/t4_sha2.S openssl-1.0.1c/crypto/sha/t4_
 +	SET_SIZE(t4_sha512_multiblock)
 +
 +#endif  /* lint || __lint */
-diff -uNr openssl-1.0.1c.orig/include/openssl/engine.h openssl-1.0.1c/include/openssl/engine.h
---- openssl-1.0.1c.orig/include/openssl/engine.h	2012-05-11 22:28:08.987623273 +0200
-+++ openssl-1.0.1c/include/openssl/engine.h	2012-05-11 22:19:17.493886000 +0200
-@@ -351,6 +351,7 @@
- #endif
- #endif
- void ENGINE_load_cryptodev(void);
-+void ENGINE_load_t4(void);
- void ENGINE_load_pk11(void);
- void ENGINE_load_rsax(void);
- void ENGINE_load_rdrand(void);
 diff -uNr openssl-1.0.1c.orig/util/libeay.num openssl-1.0.1c/util/libeay.num
 --- openssl-1.0.1c.orig/util/libeay.num	2011-12-25 15:48:44.000000000 +0100
 +++ openssl-1.0.1c/util/libeay.num	2012-05-11 22:19:17.508123000 +0200
