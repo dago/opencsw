@@ -78,6 +78,8 @@ CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/li
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.0.9.7|soname=libcrypto.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-7
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.0.9.8|soname=libcrypto.so.0.9.8|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-8
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libssl.so.0.9.7|soname=libssl.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibssl0-9-7
+else
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.0.9.8|soname=libcrypto.so.0.9.8|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-8
 endif
 
 # we will not recompile old 0.9.7 version for now
