@@ -147,9 +147,11 @@ if [ -n "$OPENSSL" ]; then
 elif [ -f "$CACERTS_DIR/hash.db" ]; then
 	cd "$CERTSDIR"
 	for FILE in *.pem; do
-		HASH=`awk -F= " \\\$1 == \"$FILE\" { print \\\$2; exit 0 }" "$CACERTS_DIR/hash.db"`
-		if [ -n "$HASH" ]; then
-			ln -s "$FILE" "$HASH"
+		HASHES="`awk -F= " \\\$1 == \"$FILE\" { print \\\$2 }" "$CACERTS_DIR/hash.db"`"
+		if [ -n "$HASHES" ]; then
+			for HASH in $HASHES; do
+				ln -s "$FILE" "$HASH"
+			done
 		else
 			echo
 			echo "WARNING: a custom certificate was installed, you need to install openssl_utils so" 
