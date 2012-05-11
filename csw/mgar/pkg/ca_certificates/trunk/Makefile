@@ -43,12 +43,17 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+#HASH_TYPES = hash subject_hash_old
+HASH_TYPES = hash
+
 include gar/category.mk
 
 $(WORKDIR)/hash.db: install-certificates
 	rm -f $(WORKDIR)/hash.db
 	find "$(DESTDIR)/$(sharedstatedir)/$(NAME)" -name *.pem | while read FILE; do \
-		echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -hash -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
+		for HASH_TYPE in $(HASH_TYPES); do \
+			echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -$$HASH_TYPE -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
+		done; \
 	done
 
 $(WORKDIR)/LICENSE: $(WORKDIR)/certdata.txt
