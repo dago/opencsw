@@ -147,7 +147,7 @@ if [ -n "$OPENSSL" ]; then
 elif [ -f "$CACERTS_DIR/hash.db" ]; then
 	cd "$CERTSDIR"
 	for FILE in *.pem; do
-		HASHES="`awk -F= " \\\$1 == \"$FILE\" { print \\\$2 }" "$CACERTS_DIR/hash.db"`"
+		HASHES=`awk -F= " \\\$1 == \"$FILE\" { print \\\$2 }" "$CACERTS_DIR/hash.db"`
 		if [ -n "$HASHES" ]; then
 			for HASH in $HASHES; do
 				ln -s "$FILE" "$HASH"
