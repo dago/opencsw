@@ -55,6 +55,10 @@ CATALOGNAME_CSWlibotf-utils			=	libotf_utils
 OBSOLETED_BY_CSWlibotf-utils		+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf-utils	+=	\
 										CSWlibotf0
+# checkpkg cincorrectly complains about this:
+CHECKPKG_OVERRIDES_CSWlibotf-utils += missing-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWlibotf-utils += missing-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWlibotf-utils += missing-dependency|CSWlibfreetype6
 
 include gar/category.mk
 
