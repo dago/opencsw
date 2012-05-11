@@ -1,6 +1,6 @@
-diff -uNr openssl-1.0.1c/Configure /home/yann/opencsw/openssl1/openssl-1.0.1c/Configure
---- openssl-1.0.1c/Configure	2012-05-11 22:28:08.972569770 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/Configure	2012-05-11 22:19:17.459525000 +0200
+diff -uNr openssl-1.0.1c.orig/Configure openssl-1.0.1c/Configure
+--- openssl-1.0.1c.orig/Configure	2012-05-11 22:28:08.972569770 +0200
++++ openssl-1.0.1c/Configure	2012-05-11 22:19:17.459525000 +0200
 @@ -133,8 +133,8 @@
  
  my $x86_64_asm="x86_64cpuid.o:x86_64-gcc.o x86_64-mont.o x86_64-mont5.o x86_64-gf2m.o modexp512-x86_64.o::aes-x86_64.o vpaes-x86_64.o bsaes-x86_64.o aesni-x86_64.o aesni-sha1-x86_64.o::md5-x86_64.o:sha1-x86_64.o sha256-x86_64.o sha512-x86_64.o::rc4-x86_64.o rc4-md5-x86_64.o:::wp-x86_64.o:cmll-x86_64.o cmll_misc.o:ghash-x86_64.o:";
@@ -12,9 +12,9 @@ diff -uNr openssl-1.0.1c/Configure /home/yann/opencsw/openssl1/openssl-1.0.1c/Co
  my $alpha_asm="alphacpuid.o:bn_asm.o alpha-mont.o:::::sha1-alpha.o:::::::ghash-alpha.o::void";
  my $mips32_asm=":bn-mips.o::aes_cbc.o aes-mips.o:::sha1-mips.o sha256-mips.o::::::::";
  my $mips64_asm=":bn-mips.o mips-mont.o::aes_cbc.o aes-mips.o:::sha1-mips.o sha256-mips.o sha512-mips.o::::::::";
-diff -uNr openssl-1.0.1c/crypto/aes/Makefile /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/aes/Makefile
---- openssl-1.0.1c/crypto/aes/Makefile	2011-11-14 21:42:21.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/aes/Makefile	2012-05-11 22:19:17.481179000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/aes/Makefile openssl-1.0.1c/crypto/aes/Makefile
+--- openssl-1.0.1c.orig/crypto/aes/Makefile	2011-11-14 21:42:21.000000000 +0100
++++ openssl-1.0.1c/crypto/aes/Makefile	2012-05-11 22:19:17.481179000 +0200
 @@ -17,6 +17,10 @@
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
@@ -37,9 +37,9 @@ diff -uNr openssl-1.0.1c/crypto/aes/Makefile /home/yann/opencsw/openssl1/openssl
  aes-ppc.s:	asm/aes-ppc.pl
  	$(PERL) asm/aes-ppc.pl $(PERLASM_SCHEME) $@
  
-diff -uNr openssl-1.0.1c/crypto/aes/asm/t4_aes.S /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/aes/asm/t4_aes.S
---- openssl-1.0.1c/crypto/aes/asm/t4_aes.S	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/aes/asm/t4_aes.S	2012-05-11 21:34:40.438327000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/aes/asm/t4_aes.S openssl-1.0.1c/crypto/aes/asm/t4_aes.S
+--- openssl-1.0.1c.orig/crypto/aes/asm/t4_aes.S	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/aes/asm/t4_aes.S	2012-05-11 21:34:40.438327000 +0200
 @@ -0,0 +1,3052 @@
 +/*
 + * ====================================================================
@@ -3093,9 +3093,9 @@ diff -uNr openssl-1.0.1c/crypto/aes/asm/t4_aes.S /home/yann/opencsw/openssl1/ope
 +#endif
 +
 +#endif	/* lint || __lint */
-diff -uNr openssl-1.0.1c/crypto/des/Makefile /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/des/Makefile
---- openssl-1.0.1c/crypto/des/Makefile	2011-08-14 15:46:47.000000000 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/des/Makefile	2012-05-11 22:19:17.483690000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/des/Makefile openssl-1.0.1c/crypto/des/Makefile
+--- openssl-1.0.1c.orig/crypto/des/Makefile	2011-08-14 15:46:47.000000000 +0200
++++ openssl-1.0.1c/crypto/des/Makefile	2012-05-11 22:19:17.483690000 +0200
 @@ -17,6 +17,10 @@
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
@@ -3118,9 +3118,9 @@ diff -uNr openssl-1.0.1c/crypto/des/Makefile /home/yann/opencsw/openssl1/openssl
  des-586.s:	asm/des-586.pl ../perlasm/x86asm.pl ../perlasm/cbc.pl
  	$(PERL) asm/des-586.pl $(PERLASM_SCHEME) $(CFLAGS) > $@
  crypt586.s:	asm/crypt586.pl ../perlasm/x86asm.pl ../perlasm/cbc.pl
-diff -uNr openssl-1.0.1c/crypto/des/asm/t4_des.S /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/des/asm/t4_des.S
---- openssl-1.0.1c/crypto/des/asm/t4_des.S	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/des/asm/t4_des.S	2012-05-11 21:34:39.694955000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/des/asm/t4_des.S openssl-1.0.1c/crypto/des/asm/t4_des.S
+--- openssl-1.0.1c.orig/crypto/des/asm/t4_des.S	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/des/asm/t4_des.S	2012-05-11 21:34:39.694955000 +0200
 @@ -0,0 +1,786 @@
 +/*
 + * ====================================================================
@@ -3908,9 +3908,9 @@ diff -uNr openssl-1.0.1c/crypto/des/asm/t4_des.S /home/yann/opencsw/openssl1/ope
 +
 +
 +#endif  /* lint || __lint */
-diff -uNr openssl-1.0.1c/crypto/engine/Makefile /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/Makefile
---- openssl-1.0.1c/crypto/engine/Makefile	2012-05-11 22:28:08.979830665 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/Makefile	2012-05-11 22:19:17.486992000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/Makefile openssl-1.0.1c/crypto/engine/Makefile
+--- openssl-1.0.1c.orig/crypto/engine/Makefile	2012-05-11 22:28:08.979830665 +0200
++++ openssl-1.0.1c/crypto/engine/Makefile	2012-05-11 22:19:17.486992000 +0200
 @@ -23,6 +23,8 @@
  	tb_cipher.c tb_digest.c tb_pkmeth.c tb_asnmth.c \
  	eng_openssl.c eng_cnf.c eng_dyn.c eng_cryptodev.c \
@@ -3929,9 +3929,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/Makefile /home/yann/opencsw/openssl1/open
  	hw_pk11.o hw_pk11_pub.o hw_pk11_uri.o
  
  SRC= $(LIBSRC)
-diff -uNr openssl-1.0.1c/crypto/engine/eng_all.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_all.c
---- openssl-1.0.1c/crypto/engine/eng_all.c	2012-05-11 22:28:08.983934887 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_all.c	2012-05-11 22:19:17.491465000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_all.c openssl-1.0.1c/crypto/engine/eng_all.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_all.c	2012-05-11 22:28:08.983934887 +0200
++++ openssl-1.0.1c/crypto/engine/eng_all.c	2012-05-11 22:19:17.491465000 +0200
 @@ -79,6 +79,10 @@
  #ifndef OPENSSL_NO_RDRAND
  	ENGINE_load_rdrand();
@@ -3943,9 +3943,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_all.c /home/yann/opencsw/openssl1/ope
  	ENGINE_load_dynamic();
  #ifndef OPENSSL_NO_HW_PKCS11
  	ENGINE_load_pk11();
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4.c
---- openssl-1.0.1c/crypto/engine/eng_t4.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4.c	2012-05-11 21:34:43.158979000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4.c openssl-1.0.1c/crypto/engine/eng_t4.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4.c	2012-05-11 21:34:43.158979000 +0200
 @@ -0,0 +1,1187 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -5134,9 +5134,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4.c /home/yann/opencsw/openssl1/open
 +#endif	/* DYNAMIC_ENGINE */
 +#endif	/* COMPILE_HW_T4 */
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_AES_T4 && !OPENSSL_NO_AES */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h
---- openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h	2012-05-11 21:34:42.739239000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_aes_asm.h openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_aes_asm.h	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h	2012-05-11 21:34:42.739239000 +0200
 @@ -0,0 +1,147 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -5285,9 +5285,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_aes_asm.h /home/yann/opencsw/opens
 +}
 +#endif
 +#endif	/* ENG_T4_AES_ASM_H */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_bignum.h /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_bignum.h
---- openssl-1.0.1c/crypto/engine/eng_t4_bignum.h	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_bignum.h	2012-05-11 21:34:42.560704000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_bignum.h openssl-1.0.1c/crypto/engine/eng_t4_bignum.h
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_bignum.h	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_bignum.h	2012-05-11 21:34:42.560704000 +0200
 @@ -0,0 +1,287 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -5567,9 +5567,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_bignum.h /home/yann/opencsw/openss
 +#endif
 +
 +#endif	/* _BIGNUM_H */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_des.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_des.c
---- openssl-1.0.1c/crypto/engine/eng_t4_des.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_des.c	2012-05-11 21:34:42.358289000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_des.c openssl-1.0.1c/crypto/engine/eng_t4_des.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_des.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_des.c	2012-05-11 21:34:42.358289000 +0200
 @@ -0,0 +1,486 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -6057,9 +6057,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_des.c /home/yann/opencsw/openssl1/
 +
 +#endif	/* COMPILE_HW_T4 */
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_DES_T4 && !OPENSSL_NO_DES */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h
---- openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h	2012-05-11 21:34:42.108476000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_des_asm.h openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_des_asm.h	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h	2012-05-11 21:34:42.108476000 +0200
 @@ -0,0 +1,98 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -6159,9 +6159,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_des_asm.h /home/yann/opencsw/opens
 +}
 +#endif
 +#endif	/* ENG_T4_DES_ASM_H */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_err.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_err.c
---- openssl-1.0.1c/crypto/engine/eng_t4_err.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_err.c	2012-05-11 21:34:41.956986000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_err.c openssl-1.0.1c/crypto/engine/eng_t4_err.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_err.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_err.c	2012-05-11 21:34:41.956986000 +0200
 @@ -0,0 +1,157 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -6320,9 +6320,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_err.c /home/yann/opencsw/openssl1/
 +		t4_error_code = ERR_get_next_error_library();
 +	ERR_PUT_error(t4_error_code, function, reason, file, line);
 +}
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_err.h /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_err.h
---- openssl-1.0.1c/crypto/engine/eng_t4_err.h	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_err.h	2012-05-11 21:34:41.799811000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_err.h openssl-1.0.1c/crypto/engine/eng_t4_err.h
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_err.h	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_err.h	2012-05-11 21:34:41.799811000 +0200
 @@ -0,0 +1,97 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -6421,9 +6421,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_err.h /home/yann/opencsw/openssl1/
 +#endif
 +
 +#endif	/* ENG_T4_ERR_H */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_md5.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_md5.c
---- openssl-1.0.1c/crypto/engine/eng_t4_md5.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_md5.c	2012-05-11 21:34:41.653669000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_md5.c openssl-1.0.1c/crypto/engine/eng_t4_md5.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_md5.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_md5.c	2012-05-11 21:34:41.653669000 +0200
 @@ -0,0 +1,207 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -6632,9 +6632,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_md5.c /home/yann/opencsw/openssl1/
 +#endif	/* COMPILE_HW_T4 */
 +#endif	/* !OPENSSL_NO_MD5 */
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_MD_T4 */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_montmul.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_montmul.c
---- openssl-1.0.1c/crypto/engine/eng_t4_montmul.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_montmul.c	2012-05-11 21:34:41.476308000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_montmul.c openssl-1.0.1c/crypto/engine/eng_t4_montmul.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_montmul.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_montmul.c	2012-05-11 21:34:41.476308000 +0200
 @@ -0,0 +1,459 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -7095,9 +7095,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_montmul.c /home/yann/opencsw/opens
 +#endif	/* COMPILE_HW_T4 */
 +
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_MONTMUL_T4 */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha1.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha1.c
---- openssl-1.0.1c/crypto/engine/eng_t4_sha1.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha1.c	2012-05-11 21:34:41.169880000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_sha1.c openssl-1.0.1c/crypto/engine/eng_t4_sha1.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_sha1.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_sha1.c	2012-05-11 21:34:41.169880000 +0200
 @@ -0,0 +1,197 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -7296,9 +7296,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha1.c /home/yann/opencsw/openssl1
 +#endif	/* COMPILE_HW_T4 */
 +#endif	/* !OPENSSL_NO_SHA && !OPENSSL_NO_SHA1 */
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_MD_T4 */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha256.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha256.c
---- openssl-1.0.1c/crypto/engine/eng_t4_sha256.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha256.c	2012-05-11 21:34:40.992395000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_sha256.c openssl-1.0.1c/crypto/engine/eng_t4_sha256.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_sha256.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_sha256.c	2012-05-11 21:34:40.992395000 +0200
 @@ -0,0 +1,246 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -7546,9 +7546,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha256.c /home/yann/opencsw/openss
 +#endif	/* COMPILE_HW_T4 */
 +#endif	/* !OPENSSL_NO_SHA && !OPENSSL_NO_SHA256 */
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_MD_T4 */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h
---- openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h	2012-05-11 21:34:40.802032000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_sha2_asm.h openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_sha2_asm.h	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h	2012-05-11 21:34:40.802032000 +0200
 @@ -0,0 +1,135 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -7685,9 +7685,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha2_asm.h /home/yann/opencsw/open
 +}
 +#endif
 +#endif	/* ENG_T4_SHA2_ASM_H */
-diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha512.c /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha512.c
---- openssl-1.0.1c/crypto/engine/eng_t4_sha512.c	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/eng_t4_sha512.c	2012-05-11 21:34:40.643995000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/eng_t4_sha512.c openssl-1.0.1c/crypto/engine/eng_t4_sha512.c
+--- openssl-1.0.1c.orig/crypto/engine/eng_t4_sha512.c	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/engine/eng_t4_sha512.c	2012-05-11 21:34:40.643995000 +0200
 @@ -0,0 +1,325 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -8014,9 +8014,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/eng_t4_sha512.c /home/yann/opencsw/openss
 +#endif	/* COMPILE_HW_T4 */
 +#endif	/* !OPENSSL_NO_SHA && !OPENSSL_NO_SHA512 */
 +#endif	/* !OPENSSL_NO_HW && !OPENSSL_NO_HW_MD_T4 */
-diff -uNr openssl-1.0.1c/crypto/engine/engine.h /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/engine.h
---- openssl-1.0.1c/crypto/engine/engine.h	2012-05-11 22:28:08.987623273 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/engine/engine.h	2012-05-11 22:19:17.493886000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/engine/engine.h openssl-1.0.1c/crypto/engine/engine.h
+--- openssl-1.0.1c.orig/crypto/engine/engine.h	2012-05-11 22:28:08.987623273 +0200
++++ openssl-1.0.1c/crypto/engine/engine.h	2012-05-11 22:19:17.493886000 +0200
 @@ -351,6 +351,7 @@
  #endif
  #endif
@@ -8025,9 +8025,9 @@ diff -uNr openssl-1.0.1c/crypto/engine/engine.h /home/yann/opencsw/openssl1/open
  void ENGINE_load_pk11(void);
  void ENGINE_load_rsax(void);
  void ENGINE_load_rdrand(void);
-diff -uNr openssl-1.0.1c/crypto/md5/Makefile /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/md5/Makefile
---- openssl-1.0.1c/crypto/md5/Makefile	2011-08-14 15:47:28.000000000 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/md5/Makefile	2012-05-11 22:19:17.502594000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/md5/Makefile openssl-1.0.1c/crypto/md5/Makefile
+--- openssl-1.0.1c.orig/crypto/md5/Makefile	2011-08-14 15:47:28.000000000 +0200
++++ openssl-1.0.1c/crypto/md5/Makefile	2012-05-11 22:19:17.502594000 +0200
 @@ -17,6 +17,10 @@
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
@@ -8050,9 +8050,9 @@ diff -uNr openssl-1.0.1c/crypto/md5/Makefile /home/yann/opencsw/openssl1/openssl
  files:
  	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
  
-diff -uNr openssl-1.0.1c/crypto/md5/asm/t4_md5.S /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/md5/asm/t4_md5.S
---- openssl-1.0.1c/crypto/md5/asm/t4_md5.S	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/md5/asm/t4_md5.S	2012-05-11 21:34:39.401291000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/md5/asm/t4_md5.S openssl-1.0.1c/crypto/md5/asm/t4_md5.S
+--- openssl-1.0.1c.orig/crypto/md5/asm/t4_md5.S	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/md5/asm/t4_md5.S	2012-05-11 21:34:39.401291000 +0200
 @@ -0,0 +1,151 @@
 +/*
 + * ====================================================================
@@ -8205,9 +8205,9 @@ diff -uNr openssl-1.0.1c/crypto/md5/asm/t4_md5.S /home/yann/opencsw/openssl1/ope
 +	SET_SIZE(t4_md5_multiblock)
 +
 +#endif  /* lint || __lint */
-diff -uNr openssl-1.0.1c/crypto/sha/Makefile /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/sha/Makefile
---- openssl-1.0.1c/crypto/sha/Makefile	2011-11-14 21:42:22.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/sha/Makefile	2012-05-11 22:19:17.504824000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/sha/Makefile openssl-1.0.1c/crypto/sha/Makefile
+--- openssl-1.0.1c.orig/crypto/sha/Makefile	2011-11-14 21:42:22.000000000 +0100
++++ openssl-1.0.1c/crypto/sha/Makefile	2012-05-11 22:19:17.504824000 +0200
 @@ -17,6 +17,10 @@
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
@@ -8234,9 +8234,9 @@ diff -uNr openssl-1.0.1c/crypto/sha/Makefile /home/yann/opencsw/openssl1/openssl
  files:
  	$(PERL) $(TOP)/util/files.pl Makefile >> $(TOP)/MINFO
  
-diff -uNr openssl-1.0.1c/crypto/sha/asm/t4_sha1.S /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/sha/asm/t4_sha1.S
---- openssl-1.0.1c/crypto/sha/asm/t4_sha1.S	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/sha/asm/t4_sha1.S	2012-05-11 21:34:39.248299000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/sha/asm/t4_sha1.S openssl-1.0.1c/crypto/sha/asm/t4_sha1.S
+--- openssl-1.0.1c.orig/crypto/sha/asm/t4_sha1.S	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/sha/asm/t4_sha1.S	2012-05-11 21:34:39.248299000 +0200
 @@ -0,0 +1,153 @@
 +/*
 + * ====================================================================
@@ -8391,9 +8391,9 @@ diff -uNr openssl-1.0.1c/crypto/sha/asm/t4_sha1.S /home/yann/opencsw/openssl1/op
 +	SET_SIZE(t4_sha1_multiblock)
 +
 +#endif  /* lint || __lint */
-diff -uNr openssl-1.0.1c/crypto/sha/t4_sha2.S /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/sha/t4_sha2.S
---- openssl-1.0.1c/crypto/sha/t4_sha2.S	1970-01-01 01:00:00.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/crypto/sha/t4_sha2.S	2012-05-11 21:34:39.095354000 +0200
+diff -uNr openssl-1.0.1c.orig/crypto/sha/t4_sha2.S openssl-1.0.1c/crypto/sha/t4_sha2.S
+--- openssl-1.0.1c.orig/crypto/sha/t4_sha2.S	1970-01-01 01:00:00.000000000 +0100
++++ openssl-1.0.1c/crypto/sha/t4_sha2.S	2012-05-11 21:34:39.095354000 +0200
 @@ -0,0 +1,314 @@
 +/*
 + * ====================================================================
@@ -8709,9 +8709,9 @@ diff -uNr openssl-1.0.1c/crypto/sha/t4_sha2.S /home/yann/opencsw/openssl1/openss
 +	SET_SIZE(t4_sha512_multiblock)
 +
 +#endif  /* lint || __lint */
-diff -uNr openssl-1.0.1c/include/openssl/engine.h /home/yann/opencsw/openssl1/openssl-1.0.1c/include/openssl/engine.h
---- openssl-1.0.1c/include/openssl/engine.h	2012-05-11 22:28:08.987623273 +0200
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/include/openssl/engine.h	2012-05-11 22:19:17.493886000 +0200
+diff -uNr openssl-1.0.1c.orig/include/openssl/engine.h openssl-1.0.1c/include/openssl/engine.h
+--- openssl-1.0.1c.orig/include/openssl/engine.h	2012-05-11 22:28:08.987623273 +0200
++++ openssl-1.0.1c/include/openssl/engine.h	2012-05-11 22:19:17.493886000 +0200
 @@ -351,6 +351,7 @@
  #endif
  #endif
@@ -8720,9 +8720,9 @@ diff -uNr openssl-1.0.1c/include/openssl/engine.h /home/yann/opencsw/openssl1/op
  void ENGINE_load_pk11(void);
  void ENGINE_load_rsax(void);
  void ENGINE_load_rdrand(void);
-diff -uNr openssl-1.0.1c/util/libeay.num /home/yann/opencsw/openssl1/openssl-1.0.1c/util/libeay.num
---- openssl-1.0.1c/util/libeay.num	2011-12-25 15:48:44.000000000 +0100
-+++ /home/yann/opencsw/openssl1/openssl-1.0.1c/util/libeay.num	2012-05-11 22:19:17.508123000 +0200
+diff -uNr openssl-1.0.1c.orig/util/libeay.num openssl-1.0.1c/util/libeay.num
+--- openssl-1.0.1c.orig/util/libeay.num	2011-12-25 15:48:44.000000000 +0100
++++ openssl-1.0.1c/util/libeay.num	2012-05-11 22:19:17.508123000 +0200
 @@ -4178,6 +4178,7 @@
  UI_method_set_prompt_constructor        4551	EXIST:!VMS:FUNCTION:
  UI_method_set_prompt_constructr         4551	EXIST:VMS:FUNCTION:
