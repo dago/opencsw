@@ -15,7 +15,7 @@ PKCS11 = 1
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.1b
+VERSION = 1.0.1c
 CATEGORIES = lib
 GARTYPE = v2
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
