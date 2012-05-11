@@ -35,7 +35,7 @@ BUILD_DEP_PKGS		=	\
 						CSWlibdatrie-dev \
 						CSWlibexpat-dev \
 						CSWlibfreetype-dev \
-						CSWlibfribidi-dev
+						CSWlibfribidi-dev \
 						CSWlibiconv-dev \
 						CSWlibthai-dev \
 						CSWlibotf-dev \
