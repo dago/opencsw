@@ -68,6 +68,17 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
 # this package contains several libraries files and we will not split
 #CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.0.9.7|soname=libcrypto.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.0.9.8|soname=libcrypto.so.0.9.8|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-8
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libssl.so.0.9.7|soname=libssl.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibssl0-9-7
+ifeq ($(shell /usr/bin/uname -p),sparc) 
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7|soname=libcrypto.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8|soname=libcrypto.so.0.9.8|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-8
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7|soname=libssl.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibssl0-9-7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.0.9.7|soname=libcrypto.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.0.9.8|soname=libcrypto.so.0.9.8|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-8
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libssl.so.0.9.7|soname=libssl.so.0.9.7|pkgname=CSWlibssl0-9-8|expected=CSWlibssl0-9-7
+endif
 
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
