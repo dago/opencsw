@@ -37,6 +37,19 @@ RUNTIME_DEP_PKGS_CSWwget += CSWlibidn11
 EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
 
+# Use the same CA as OpenSSL as reported in #4942
+REINPLACEMENTS += capath
+REINPLACE_MATCH_capath = /etc/ssl/certs
+REINPLACE_WITH_capath = /etc/opt/csw/ssl/certs
+REINPLACE_FILES_capath += src/gnutls.c
+
+# Make sure our perl is used as the /usr/bin/perl lacks some needed modules
+REINPLACEMENTS += cswperl
+REINPLACE_MATCH_cswperl = \#!/usr/bin/env perl
+REINPLACE_WITH_cswperl = \#!/opt/csw/bin/perl
+REINPLACE_FILES_cswperl += tests/*.px
+REINPLACE_FILES_cswperl += tests/run-px
+
 EXTRA_CONFIGURE_STATIC-disable += --with-ssl
 # NTLM can only be enabled when used with OpenSSL instead of the defaulting GnuTLS
 #EXTRA_CONFIGURE_STATIC-disable += --enable-ntlm
@@ -61,12 +74,6 @@ MERGE_SCRIPTS_isa-default-static-disable = copy-all
 CHECKPKG_OVERRIDES_CSWwget += file-with-bad-content|/usr/local|root/opt/csw/share/info/wget.info
 
 include gar/category.mk
-
-post-extract-modulated:
-	@# Make sure our perl is used as the /usr/bin/perl lacks some needed modules
-	-perl -pi -e 's,#!/usr/bin/env perl,#!/opt/csw/bin/perl,' \
-		$(WORKSRC)/tests/*.px \
-		$(WORKSRC)/tests/run-px
 
 merge-copy-static-wget-only:
 	ginstall $(INSTALLISADIR)$(bindir)/wget $(PKGROOT)$(bindir)/wget.static
