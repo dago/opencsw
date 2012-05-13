@@ -31,19 +31,19 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 pkgsysuser  = $(shell /opt/csw/gnu/id -nu)
 pkgsysgroup = $(shell /opt/csw/gnu/id -ng)
 
-CONFIGURE_EXPORTS += pkgsysuser
+EXTRA_CONFIGURE_EXPORTS += pkgsysuser
 CONFIGURE_ENV_pkgsysuser += $(pkgsysuser)
-CONFIGURE_EXPORTS += pkgsysgroup
+EXTRA_CONFIGURE_EXPORTS += pkgsysgroup
 CONFIGURE_ENV_pkgsysgroup = $(pkgsysgroup)
 
-BUILD_EXPORTS += pkgsysuser
+EXTRA_BUILD_EXPORTS += pkgsysuser
 BUILD_ENV_pkgsysuser = $(pkgsysuser)
-BUILD_EXPORTS += $(pkgsysgroup)
+EXTRA_BUILD_EXPORTS += $(pkgsysgroup)
 BUILD_ENV_pkgsysgroup = $(pkgsysgroup)
 
-INSTALL_EXPORTS += pkgsysuser
+EXTRA_INSTALL_EXPORTS += pkgsysuser
 INSTALL_ENV_pkgsysuser = $(pkgsysuser)
-INSTALL_EXPORTS += $(pkgsysgroup)
+EXTRA_INSTALL_EXPORTS += $(pkgsysgroup)
 INSTALL_ENV_pkgsysgroup = $(pkgsysgroup)
 
 PROTOTYPE_MODIFIERS += data
