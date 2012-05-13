@@ -52,5 +52,7 @@ PROTOTYPE_FILES_data += $(datadir)/?.*
 PROTOTYPE_USER_data = nobody
 PROTOTYPE_GROUP_data = nobody
 
+STRIP_LIBTOOL = 1
+
 include gar/category.mk
 
