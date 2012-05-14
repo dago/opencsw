@@ -73,7 +73,7 @@ CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibgd2
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibotf-utils
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibdatrie1
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibthai
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibthai0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibotf0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibfribidi0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-core.so.0.4.0|soname=libm17n-core.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-core0
@@ -100,9 +100,9 @@ RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	\
 # added this overrides because checkpkg evaluates them incorrectly,
 # i.e., doesn't use transitivity:
 # Remark: checkpkg doesn't support multi-line macro-commands...
-CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWfribidi
 CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibthai0
 CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibfribidi0
 CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibiconv2
 CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibotf-utils
 CHECKPKG_OVERRIDES_CSWlibm17n-utils	+=	missing-dependency|CSWlibz1
