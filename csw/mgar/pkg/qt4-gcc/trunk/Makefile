@@ -44,6 +44,33 @@ CONFIGURE_ARGS += -I/usr/X11/share/include -I/usr/sfw/include
 INSTALL_ROOT = $(DESTDIR)
 EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
 
+PACKAGES += CSWlibqtcore4-gxx
+PKGFILES_CSWlibqtcore4-gxx += $(call baseisadirs,$(libdir),libQtCore\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibqtcore4-gxx += $(DESCRIPTION), libQtCore.so.4
+RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibgcc-s1
+
+PACKGES += CSWlibqtgui4-gxx
+CATALOGNAME_CSWlibqtgui4-gxx = libqtgui4_gxx
+PKGFILES_CSWlibqtgui4-gxx += $(call baseisadirs,$(libdir),libQtGui\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibqtgui4-gxx += $(DESCRIPTION), libQtGui.so.4
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibqtcore4-gxx
+CHECKPKG_OVERRIDES_CSWlibqtgui4-gxx += file-with-bad-content|/usr/local|root/opt/csw/gxx/lib/libQtGui.so.4.8.0
+CHECKPKG_OVERRIDES_CSWlibqtgui4-gxx += file-with-bad-content|/usr/share|root/opt/csw/gxx/lib/libQtGui.so.4.8.0
+
 PACKAGES += CSWqt4-gxx-dev
 SPKG_DESC_CSWqt4-gxx-dev += $(DESCRIPTION), development files
 PKGFILES_CSWqt4-gxx-dev += $(PKGFILES_DEVEL)
@@ -65,6 +92,7 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtmultimedia4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtsvg4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibphonon4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtsql4-gxx
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWqt4-gxx-doc
 
 PACKAGES += CSWqt4-gxx-doc
 SPKG_DESC_CSWqt4-gxx-doc += $(DESCRIPTION), documentation
@@ -106,24 +134,9 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWgstreamer
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtopengl4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtgui4-gxx
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += discouraged-path-in-pkgmap|/opt/csw/gxx/demos/shared/libdemo_shared.a
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += discouraged-path-in-pkgmap|/opt/csw/gxx/examples/tools/plugandpaint/plugins/libpnp_basictools.a
-
-PACKGES += CSWlibqtgui4-gxx
-PKGFILES_CSWlibqtgui4-gxx += $(call baseisadirs,$(libdir),libQtGui\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibqtgui4-gxx += $(DESCRIPTION), libQtGui.so.4
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibqtcore4-gxx
-CHECKPKG_OVERRIDES_CSWlibqtgui4-gxx += file-with-bad-content|/usr/local|root/opt/csw/gxx/lib/libQtGui.so.4.8.0
-CHECKPKG_OVERRIDES_CSWlibqtgui4-gxx += file-with-bad-content|/usr/share|root/opt/csw/gxx/lib/libQtGui.so.4.8.0
 
 PACKAGES += CSWlibqthelp4-gxx
 PKGFILES_CSWlibqthelp4-gxx += $(call baseisadirs,$(libdir),libQtHelp\.so\.4(\.\d+)*)
@@ -143,6 +156,7 @@ RUNTIME_DEP_PKGS_CSWlibqtmultimedia4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtmultimedia4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtmultimedia4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtmultimedia4-gxx += CSWlibqtcore4-gxx
+RUNTIME_DEP_PKGS_CSWlibqtmultimedia4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtnetwork4-gxx
 PKGFILES_CSWlibqtnetwork4-gxx += $(call baseisadirs,$(libdir),libQtNetwork\.so\.4(\.\d+)*)
@@ -164,6 +178,7 @@ RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtscript4-gxx
 PKGFILES_CSWlibqtscript4-gxx += $(call baseisadirs,$(libdir),libQtScript\.so\.4(\.\d+)*)
@@ -171,6 +186,7 @@ SPKG_DESC_CSWlibqtscript4-gxx += $(DESCRIPTION), libQtScript.so.4
 RUNTIME_DEP_PKGS_CSWlibqtscript4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtscript4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtscript4-gxx += CSWlibqtcore4-gxx
+RUNTIME_DEP_PKGS_CSWlibqtscripttools4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtscripttools4-gxx
 PKGFILES_CSWlibqtscripttools4-gxx += $(call baseisadirs,$(libdir),libQtScriptTools\.so\.4(\.\d+)*)
@@ -195,6 +211,7 @@ RUNTIME_DEP_PKGS_CSWlibqtsvg4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtsvg4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtsvg4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtsvg4-gxx += CSWlibqtcore4-gxx
+RUNTIME_DEP_PKGS_CSWlibqtsvg4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqttest4-gxx
 PKGFILES_CSWlibqttest4-gxx += $(call baseisadirs,$(libdir),libQtTest\.so\.4(\.\d+)*)
@@ -216,6 +233,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibqtxml4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibqtcore4-gxx
+RUNTIME_DEP_PKGS_CSWlibphonon4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtclucene4-gxx
 PKGFILES_CSWlibqtclucene4-gxx += $(call baseisadirs,$(libdir),libQtCLucene\.so\.4\.8\.0)
@@ -223,16 +241,6 @@ SPKG_DESC_CSWlibqtclucene4-gxx += $(DESCRIPTION), libQtCLucene.so.4
 RUNTIME_DEP_PKGS_CSWlibqtclucene4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtclucene4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtclucene4-gxx += CSWlibqtcore4-gxx
-
-PACKAGES += CSWlibqtcore4-gxx
-PKGFILES_CSWlibqtcore4-gxx += $(call baseisadirs,$(libdir),libQtCore\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibqtcore4-gxx += $(DESCRIPTION), libQtCore.so.4
-RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibgcc-s1
 
 PACKAGES += CSWlibqtdbus4-gxx
 PKGFILES_CSWlibqtdbus4-gxx += $(call baseisadirs,$(libdir),libQtDBus\.so\.4(\.\d+)*)
@@ -249,6 +257,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdeclarative4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4-gxx += CSWlibqtsvg4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4-gxx += CSWlibqtsql4-gxx
+RUNTIME_DEP_PKGS_CSWlibqtdeclarative4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtdesigner4-gxx
 PKGFILES_CSWlibqtdesigner4-gxx += $(call baseisadirs,$(libdir),libQtDesigner\.so\.4(\.\d+)*)
@@ -259,6 +268,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdesigner4-gxx += CSWlibqtcore4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdesigner4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtdesigner4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdesigner4-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibqtdesigner4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtdesignercomponents4-gxx
 PKGFILES_CSWlibqtdesignercomponents4-gxx += $(call baseisadirs,$(libdir),libQtDesignerComponents\.so\.4(\.\d+)*)
@@ -270,6 +280,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibqtcore4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWqt4-gxx-doc
 
 PACKAGES += CSWlibqtxml4-gxx
 PKGFILES_CSWlibqtxml4-gxx += $(call baseisadirs,$(libdir),libQtXml\.so\.4(\.\d+)*)
