@@ -271,10 +271,6 @@ RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4-gxx += CSWlibgcc-s1
 
-PACKAGES += CSWlibqtgui4-gxx
-PKGFILES_CSWlibqtgui4-gxx += $(call baseisadirs,$(libdir),libQtGui\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibqtgui4-gxx += $(DESCRIPTION), libQtGui.so.4
-
 PACKAGES += CSWlibqtxml4-gxx
 PKGFILES_CSWlibqtxml4-gxx += $(call baseisadirs,$(libdir),libQtXml\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibqtxml4-gxx += $(DESCRIPTION), libQtXml.so.4
