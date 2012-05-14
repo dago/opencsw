@@ -1,38 +1,24 @@
-NAME = emacs
-VERSION = 21.4
-PATCHLEVEL = a
-GARTYPE = v1
-CATEGORIES = utils
+# $Id: Makefile 13420 2011-02-20 21:04:03Z bdwalton $
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+NAME		=	emacs
+VERSION		=	23.4
+GARTYPE		=	v2
+CATEGORIES	=	apps
 
-DESCRIPTION = Emacs editor
+DESCRIPTION = The GNU Emacs editor
 define BLURB
-  Emacs is the extensible, customizable, self-documenting real-time display
-  editor. Emacs has special code editing modes, a scripting language (elisp),
-  and comes with many packages for doing mail, news and more, all in your
-  editor.
+  Emacs is the extensible, customizable, self-documenting real-time
+  display editor.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION)$(PATCHLEVEL).tar.gz
-#DISTFILES += CSWemacs.gspec
-#DISTFILES += CSWemacsrt.gspec CSWemacs.gspec CSWxemacs.gspec
-#DISTFILES += CSWemacsrt.prototype CSWemacs.prototype CSWxemacs.prototype
+DISTFILES		=	$(DISTNAME).tar.bz2
+MASTER_SITES	=	$(GNU_MIRROR)
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)([a-z]).tar.gz
-
-# Force make to acknowledge DESTDIR
-#PATCHFILES += destdir.diff
-
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-kerberos5
-
-# Test requires controlling terminal
-TEST_SCRIPTS =
+CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-pre-configure:
-	@touch $(WORKSRC)/configure
-	@$(MAKECOOKIE)
-
+# this is private and not available publicly
+mydependencies:
+	$(HOME)/bin/ocswdeplist --package $(NAME)
