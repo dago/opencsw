@@ -1,4 +1,4 @@
-# $Id: Makefile 13420 2011-02-20 21:04:03Z bdwalton $
+# $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME		=	emacs
