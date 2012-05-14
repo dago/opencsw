@@ -56,14 +56,18 @@ RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 										CSWlibfreetype6 \
 										CSWlibfribidi0 \
 										CSWlibgcc-s1 \
+										CSWlibgd2 \
 										CSWlibiconv2 \
 										CSWlibintl8 \
+										CSWlibjpeg7 \
 										CSWlibotf0 \
+										CSWlibpng12-0 \
 										CSWlibthai0 \
 										CSWlibxft2 \
 										CSWlibxml2-2 \
 										CSWlibxrender \
-										CSWlibz1
+										CSWlibz1 \
+										CSWxpm
 # added this overrides because checkpkg evaluates them incorrectly,
 # e.g. libthai0 doesn't exist and how the heck it determines that it
 # depends on libgs2?
