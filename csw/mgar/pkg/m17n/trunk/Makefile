@@ -68,18 +68,19 @@ RUNTIME_DEP_PKGS_CSWlibm17n0		+=	\
 										CSWlibxrender \
 										CSWlibz1 \
 										CSWxpm
-# added this overrides because checkpkg evaluates them incorrectly,
-# e.g. libthai0 doesn't exist and how the heck it determines that it
-# depends on libgs2?
+# added this overrides because checkpkg evaluates them incorrectly
 # Remark: checkpkg doesn't support multi-line macro-commands...
-CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibm17n-utils
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibgd2
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibm17n-utils
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	missing-dependency|CSWlibotf-utils
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibdatrie1
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibthai0
-CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibotf0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibfribidi0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibjpeg7
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibotf0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibpng12-0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWlibthai0
+CHECKPKG_OVERRIDES_CSWlibm17n0		+=	surplus-dependency|CSWxpm
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-core.so.0.4.0|soname=libm17n-core.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-core0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-flt.so.0.4.0|soname=libm17n-flt.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-flt0
 CHECKPKG_OVERRIDES_CSWlibm17n0		+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libm17n-gui.so.0.4.0|soname=libm17n-gui.so.0|pkgname=CSWlibm17n0|expected=CSWlibm17n-gui0
