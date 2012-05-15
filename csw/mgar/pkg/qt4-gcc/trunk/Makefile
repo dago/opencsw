@@ -54,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibqtcore4-gxx += CSWlibgcc-s1
 
-PACKGES += CSWlibqtgui4-gxx
+PACKAGES += CSWlibqtgui4-gxx
 CATALOGNAME_CSWlibqtgui4-gxx = libqtgui4_gxx
 PKGFILES_CSWlibqtgui4-gxx += $(call baseisadirs,$(libdir),libQtGui\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibqtgui4-gxx += $(DESCRIPTION), libQtGui.so.4
