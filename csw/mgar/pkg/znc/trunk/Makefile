@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = znc
-VERSION = 0.204
+VERSION = 0.206
 GARTYPE = v2
 CATEGORIES = apps
 
