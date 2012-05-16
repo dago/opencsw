@@ -339,6 +339,12 @@ TEST_TARGET = test
 
 include gar/category.mk
 
+# they're using git now and ship a .gitignore that excludes aclocal.m4
+# that broke one of our patches so we'll nuke .gitignore before we patch
+pre-patch-modulated:
+	@(cd $(WORKSRC); rm .gitignore)
+	@$(MAKECOOKIE)
+
 # this allows apxs to install the module.  stupid, but i couldn't make
 # the darn thing _not_ do try to add the httpd.conf lines, even with
 # patching...
