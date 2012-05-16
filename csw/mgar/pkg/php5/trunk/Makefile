@@ -342,7 +342,7 @@ include gar/category.mk
 # they're using git now and ship a .gitignore that excludes aclocal.m4
 # that broke one of our patches so we'll nuke .gitignore before we patch
 pre-patch-modulated:
-	@(cd $(WORKSRC); rm .gitignore)
+	@(cd $(WORKSRC); rm .gitignore; git add -A; git ci -m 'adding files that were previously ignored' )
 	@$(MAKECOOKIE)
 
 # this allows apxs to install the module.  stupid, but i couldn't make
