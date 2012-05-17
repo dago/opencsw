@@ -49,11 +49,6 @@ DISTFILES += CSWap2-modphp5.preremove
 DISTFILES += httpd-php5.conf
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
-# technically this is only required in the ap2 modulation where we build the
-# postgres stuff, but protect the cgi modulation too
-PATCHFILES_isa-sparcv8-sapi-cgi += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
-PATCHFILES_isa-sparcv8-sapi-ap2 += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
-
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWlibcurl-dev CSWjpeg
@@ -309,10 +304,10 @@ CONFIGURE_ARGS += --with-pcre-regex
 # we need the 32-bit version, so we have to force this
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
-CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(prefix)/postgresql
+CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(bindir)/
 CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-pear=shared
-CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql
+CONFIGURE_ARGS += --with-pgsql=shared,$(bindir)/
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,/opt/csw
