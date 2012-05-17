@@ -1,3 +1,11 @@
+cadaver (0.23.3,rev=2012.05.17) unstable
+
+  * Rebuilt against libssl 1.0
+  * Updated dependancies names:
+  	CSWzlib -> CSWlibz1
+
+ -- Yann rouillard <yann@opencsw.org>  Thu, 17 May 2012 15:33:02 +0200
+
 cadaver (0.23.3,rev=2011.07.18) unstable
 
   * Renamed package from CSWcadav to CSWcadaver
