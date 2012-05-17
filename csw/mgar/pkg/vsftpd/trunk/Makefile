@@ -32,7 +32,7 @@ UPSTREAM_MASTER_SITES = https://security.appspot.com/vsftpd.html
 PACKAGES = CSWvsftpd
 
 RUNTIME_DEP_PKGS  = CSWlibwrap1
-RUNTIME_DEP_PKGS += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 # Reference to DTD path, can be safely ignored
 CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswvsftpd.xml
