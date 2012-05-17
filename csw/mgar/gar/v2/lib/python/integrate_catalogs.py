@@ -255,7 +255,7 @@ def main():
             if bundle_key in stats["pkginfo"]:
               bundles_by_md5[md5] = stats["pkginfo"][bundle_key]
             else:
-              logging.info(
+              logging.debug(
                   "%r (%r) does not have the bundle set",
                   stats["basic_stats"]["pkg_basename"], md5)
               bundles_missing.add(md5)
