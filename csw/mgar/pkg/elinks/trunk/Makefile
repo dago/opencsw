@@ -27,12 +27,14 @@ endef
 
 PACKAGES = CSWelinks
 
-RUNTIME_DEP_PKGS  = CSWbzip2
+RUNTIME_DEP_PKGS  = CSWlibbz2-1-0
 RUNTIME_DEP_PKGS += CSWlibexpat1
 RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibidn11
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWlibz1
+RUNTIME_DEP_PKGS += CSWlibjs1-7-0
+
 
 # paths used in some default path (mailcap search path and lua doc path), this can be safely ignored
 # lua doc links could be fixed if lua doc is packaged in opencsw
@@ -62,7 +64,7 @@ MERGE_EXCLUDE_FILES += .*/locale.alias
 # use "test -e" unsupported with sun sh
 CONFIG_SHELL = /bin/bash
 
-GARCOMPILER = GNU
+#GARCOMPILER = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-88-colors 
 CONFIGURE_ARGS += --enable-256-colors 
