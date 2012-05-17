@@ -20,6 +20,7 @@ def buildStdlibList():
       '/usr/openwin/lib',
       '/usr/X11/lib',
       '/usr/ucblib',
+      '/usr/sfw/lib',
   )
   for libdir in std_locations:
     os.chdir(libdir)
