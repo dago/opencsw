@@ -43,18 +43,17 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-#HASH_TYPES = hash subject_hash_old
-HASH_TYPES = hash
+HASH_TYPES = hash subject_hash_old
 
 include gar/category.mk
 
 $(WORKDIR)/hash.db: install-certificates
-	#rm -f $(WORKDIR)/hash.db
-	#find "$(DESTDIR)/$(sharedstatedir)/$(NAME)" -name *.pem | while read FILE; do \
-	#	for HASH_TYPE in $(HASH_TYPES); do \
-	#		echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -$$HASH_TYPE -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
-	#	done; \
-	#done
+	rm -f $(WORKDIR)/hash.db
+	find "$(DESTDIR)/$(sharedstatedir)/$(NAME)" -name *.pem | while read FILE; do \
+		for HASH_TYPE in $(HASH_TYPES); do \
+			echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -$$HASH_TYPE -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
+		done; \
+	done
 
 $(WORKDIR)/LICENSE: $(WORKDIR)/certdata.txt
 	sed -ne '/BEGIN LICENSE BLOCK/,/END LICENSE BLOCK/p' "$(WORKDIR)/certdata.txt" | grep -v "LICENSE BLOCK" \
@@ -70,7 +69,7 @@ install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
 	ginstall -d "$(DESTDIR)/$(sharedstatedir)/$(NAME)"
 	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"
-	ginstall -D "$(FILEDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/$(NAME)/hash.db"
+	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/$(NAME)/hash.db"
 	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/$(NAME)/README.CSW"
 	ginstall -D "$(WORKDIR)/LICENSE" "$(DESTDIR)/$(docdir)/$(NAME)/license"
 	
