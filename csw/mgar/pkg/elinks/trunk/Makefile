@@ -29,10 +29,10 @@ PACKAGES = CSWelinks
 
 RUNTIME_DEP_PKGS  = CSWbzip2
 RUNTIME_DEP_PKGS += CSWlibexpat1
-RUNTIME_DEP_PKGS += CSWiconv 
+RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibidn11
-RUNTIME_DEP_PKGS += CSWosslrt 
-RUNTIME_DEP_PKGS += CSWzlib 
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS += CSWlibz1
 
 # paths used in some default path (mailcap search path and lua doc path), this can be safely ignored
 # lua doc links could be fixed if lua doc is packaged in opencsw
