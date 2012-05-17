@@ -28,7 +28,7 @@ endef
 
 PACKAGES = CSWimapproxy
 
-RUNTIME_DEP_PKGS  = CSWtcpwrap 
+RUNTIME_DEP_PKGS  = CSWlibwrap1
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 # Default paths referenced in documentation files, can be safely ignored
