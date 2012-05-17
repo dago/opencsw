@@ -3,6 +3,8 @@ elinks (0.11.7,REV=2012.05.17) unstable
   * Rebuilt against libssl 1.0
   * Updated dependancies name: CSWiconv -> CSWlibiconv1
                                CSWzlib -> CSWlibz1
+                               CSWbzip2 -> CSWlibbz2-1-0		       
+  * Added javascript support
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 10 Oct 2009 21:38:39 +0100
 
