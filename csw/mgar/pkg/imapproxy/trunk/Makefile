@@ -29,7 +29,7 @@ endef
 PACKAGES = CSWimapproxy
 
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
-RUNTIME_DEP_PKGS += CSWosslrt 
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 # Default paths referenced in documentation files, can be safely ignored
 CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README
