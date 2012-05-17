@@ -5,7 +5,7 @@
 
 """
 
-from os import listdir, chdir, getcwd
+import os
 import re
 import cjson
 
@@ -13,32 +13,20 @@ fnLiblst = "stdlibs.json"
 
 def buildStdlibList():
   liblst = ['libjawt.so']
-  cwd = getcwd()
-  chdir('/usr/lib')
-  for lib in listdir('.'):
-  if re.match('lib[a-zA-Z0-9_-]*.so.[0-9]+$',lib):
-    liblst.append(lib)
-  chdir('/usr/dt/lib')
-  for lib in listdir('.'):
-  if re.match('lib[a-zA-Z0-9_-]*.so.[0-9]+$',lib):
-      if not lib in liblst:
-          liblst.append(lib)
-  chdir('/usr/openwin/lib')
-  for lib in listdir('.'):
-  if re.match('lib[a-zA-Z0-9_-]*.so.[0-9]+$',lib):
-      if not lib in liblst:
-          liblst.append(lib)
-  chdir('/usr/X11/lib')
-  for lib in listdir('.'):
-  if re.match('lib[a-zA-Z0-9_-]*.so.[0-9]+$',lib):
-      if not lib in liblst:
-          liblst.append(lib)
-  chdir('/usr/ucblib')
-  for lib in listdir('.'):
-  if re.match('lib[a-zA-Z0-9_-]*.so.[0-9]+$',lib):
-      if not lib in liblst:
-          liblst.append(lib)
-  chdir(cwd)
-  with open(fnLiblst,'w') as fd:
-  fd.write(cjson.encode(liblst))
-  fd.close()
+  cwd_save = os.getcwd()
+  std_locations = (
+      '/usr/lib',
+      '/usr/dt/lib',
+      '/usr/openwin/lib',
+      '/usr/X11/lib',
+      '/usr/ucblib',
+  )
+  for libdir in std_locations:
+    os.chdir(libdir)
+    for lib in os.listdir('.'):
+      if re.match('lib[a-zA-Z0-9_-]*.so.[0-9]+$',lib):
+        liblst.append(lib)
+  os.chdir(cwd_save)
+  with open(fnLiblst, 'w') as fd:
+    fd.write(cjson.encode(liblst))
+    fd.close()
