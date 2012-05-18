@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nodejs
-VERSION = 0.6.12
+VERSION = 0.6.18
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -26,7 +26,7 @@ CONFIGURE_ARGS += --openssl-libpath=$(libdir)
 EXTRA_CONFIGURE_EXPORTS += PWD
 CONFIGURE_ENV_PWD = $(abspath $(WORKSRC))
 
-RUNTIME_DEP_PKGS_CSWnodejs += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWnodejs += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnodejs += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWnodejs += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWnodejs += CSWlibz1
