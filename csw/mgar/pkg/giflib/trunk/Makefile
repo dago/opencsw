@@ -12,6 +12,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+UPSTREAM_MASTER_SITES = http://sourceforge.net/projects/giflib/files/giflib-4.x/
 
 VENDOR_URL = http://giflib.sourceforge.net/
 
