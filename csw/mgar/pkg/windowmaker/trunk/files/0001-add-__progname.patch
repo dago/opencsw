@@ -1,0 +1,25 @@
+From 5fc3bdf311ecb49c8805297e5f2a1a5ef8514598 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 18 May 2012 22:56:45 +0200
+Subject: [PATCH 1/2] add __progname
+
+---
+ src/wconfig.h |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/wconfig.h b/src/wconfig.h
+index 21741b7..f0a014a 100644
+--- a/src/wconfig.h
++++ b/src/wconfig.h
+@@ -432,3 +432,8 @@
+ 
+ #endif /* WMCONFIG_H_ */
+ 
++#ifdef HAVE___PROGNAME
++extern char *__progname;
++#else
++char *__progname;
++#endif
+-- 
+1.7.10
+

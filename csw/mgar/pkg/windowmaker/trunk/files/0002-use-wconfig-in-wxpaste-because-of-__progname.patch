@@ -1,0 +1,25 @@
+From 3e5602da67182ea3e9586e156c9fc53b2c25a770 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 18 May 2012 22:57:05 +0200
+Subject: [PATCH 2/2] use wconfig in wxpaste because of __progname
+
+---
+ util/wxpaste.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/wxpaste.c b/util/wxpaste.c
+index 87fc892..a41a3ba 100644
+--- a/util/wxpaste.c
++++ b/util/wxpaste.c
+@@ -17,7 +17,7 @@
+  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  */
+ 
+-#include "../config.h"
++#include "../src/wconfig.h"
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+-- 
+1.7.10
+
