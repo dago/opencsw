@@ -1,5 +1,5 @@
 NAME = giflib
-VERSION = 4.1.6
+VERSION = 4.2.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -15,6 +15,13 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 UPSTREAM_MASTER_SITES = http://sourceforge.net/projects/giflib/files/giflib-4.x/
 
 VENDOR_URL = http://giflib.sourceforge.net/
+
+# giflib no longer supported on Solaris 9 because of C99 compliance
+# requirement.
+# https://sourceforge.net/tracker/?func=detail&atid=631304&aid=3527787&group_id=102202
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+EXTRA_CFLAGS += -xc99
 
 PACKAGES = CSWgiflib
 SPKG_DESC_CSWgiflib = A library for reading and writing gif images
@@ -54,12 +61,12 @@ CONFIGURE_ARGS += --x-libraries=$(abspath /usr/openwin/lib/$(MM_LIBDIR))
 
 include gar/category.mk
 
-DOCFILES = AUTHORS BUGS COPYING ChangeLog DEVELOPERS INSTALL NEWS ONEWS README TODO
+DOCFILES = AUTHORS BUGS COPYING ChangeLog INSTALL NEWS README TODO
 
 post-install-modulated:
 	mkdir -p $(DESTDIR)$(docdir)/giflib
 	cd $(WORKSRC) && cp $(DOCFILES) $(DESTDIR)$(docdir)/giflib
-	cd $(WORKSRC)/doc && cp *.html *.png *.txt $(DESTDIR)$(docdir)/giflib
+	cd $(WORKSRC)/doc && cp *.html *.txt $(DESTDIR)$(docdir)/giflib
 	@$(MAKECOOKIE)
 
 post-merge:
