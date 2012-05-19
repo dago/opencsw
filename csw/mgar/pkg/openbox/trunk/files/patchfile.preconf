@@ -1,0 +1,118 @@
+--- a/openbox/event.c.orig	Tue Jun 22 00:02:57 2010
++++ a/openbox/event.c	Tue Jun 22 00:12:38 2010
+@@ -1593,10 +1593,12 @@
+                         client->shaped = ((XShapeEvent*)e)->shaped;
+                         kind = ShapeBounding;
+                         break;
++#ifdef ShapeInput
+                     case ShapeInput:
+                         client->shaped_input = ((XShapeEvent*)e)->shaped;
+                         kind = ShapeInput;
+                         break;
++#endif
+                 }
+                 frame_adjust_shape_kind(client->frame, kind);
+             }
+--- a/openbox/openbox.c.orig	Fri May 14 15:59:05 2010
++++ a/openbox/openbox.c	Tue Jun 22 00:34:00 2010
+@@ -202,7 +202,7 @@
+ 
+     /* set the DISPLAY environment variable for any lauched children, to the
+        display we're using, so they open in the right place. */
+-    setenv("DISPLAY", DisplayString(ob_display), TRUE);
++    g_setenv("DISPLAY", DisplayString(ob_display), TRUE);
+ 
+     /* create available cursors */
+     cursors[OB_CURSOR_NONE] = None;
+@@ -585,12 +585,12 @@
+     const gchar *id;
+ 
+     /* unset this so we don't pass it on unknowingly */
+-    unsetenv("DESKTOP_STARTUP_ID");
++    g_unsetenv("DESKTOP_STARTUP_ID");
+ 
+     /* this is how gnome-session passes in a session client id */
+     id = g_getenv("DESKTOP_AUTOSTART_ID");
+     if (id) {
+-        unsetenv("DESKTOP_AUTOSTART_ID");
++        g_unsetenv("DESKTOP_AUTOSTART_ID");
+         if (ob_sm_id) g_free(ob_sm_id);
+         ob_sm_id = g_strdup(id);
+         ob_debug_type(OB_DEBUG_SM,
+--- a/openbox/frame.c.orig	Fri May 14 15:59:05 2010
++++ a/openbox/frame.c	Tue Jun 22 00:13:55 2010
+@@ -274,8 +274,11 @@
+     gint num;
+     XRectangle xrect[2];
+ 
+-    if (!((kind == ShapeBounding && self->client->shaped) ||
+-          (kind == ShapeInput && self->client->shaped_input))) {
++    if (!( (kind == ShapeBounding && self->client->shaped)
++#ifdef ShapeInput
++	   || (kind == ShapeInput && self->client->shaped_input)
++#endif
++	  )) {
+         /* clear the shape on the frame window */
+         XShapeCombineMask(ob_display, self->window, kind,
+                           self->size.left,
+@@ -320,8 +323,10 @@
+ {
+ #ifdef SHAPE
+   frame_adjust_shape_kind(self, ShapeBounding);
++#ifdef ShapeInput
+   frame_adjust_shape_kind(self, ShapeInput);
+ #endif
++#endif
+ }
+ 
+ void frame_adjust_area(ObFrame *self, gboolean moved,
+--- a/openbox/startupnotify.c.orig	Fri May 14 15:59:05 2010
++++ a/openbox/startupnotify.c	Tue Jun 22 00:34:13 2010
+@@ -266,7 +266,7 @@
+                              g_direct_equal,
+                              (GDestroyNotify)sn_launcher_context_unref);
+ 
+-    setenv("DESKTOP_STARTUP_ID", id, TRUE);
++    g_setenv("DESKTOP_STARTUP_ID", id, TRUE);
+ 
+     g_free(desc);
+ }
+--- a/openbox/actions/execute.c.orig	Fri May 14 15:59:05 2010
++++ a/openbox/actions/execute.c	Tue Jun 22 00:34:37 2010
+@@ -196,7 +196,7 @@
+                 sn_spawn_cancel();
+         }
+         if (o->sn)
+-            unsetenv("DESKTOP_STARTUP_ID");
++            g_unsetenv("DESKTOP_STARTUP_ID");
+ 
+         g_free(program);
+         g_strfreev(argv);
+--- a/parser/parse.c.orig	Fri Jul  2 19:59:36 2010
++++ a/parser/parse.c	Fri Jul  2 20:09:11 2010
+@@ -415,6 +415,7 @@
+         xdg_config_dir_paths = slist_path_add(xdg_config_dir_paths,
+                                               g_build_filename
+                                               (G_DIR_SEPARATOR_S,
++					      "opt","csw",
+                                                "etc", "xdg", NULL),
+                                               (GSListFunc) g_slist_append);
+     }
+@@ -429,16 +430,7 @@
+         xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+                                             g_strdup(DATADIR),
+                                             (GSListFunc) g_slist_append);
+-        xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+-                                            g_build_filename
+-                                            (G_DIR_SEPARATOR_S,
+-                                             "usr", "local", "share", NULL),
+-                                            (GSListFunc) g_slist_append);
+-        xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+-                                            g_build_filename
+-                                            (G_DIR_SEPARATOR_S,
+-                                             "usr", "share", NULL),
+-                                            (GSListFunc) g_slist_append);
++	/* opencsw: removed /usr/share hardcodes. badbadbad */
+     }
+     xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+                                         g_strdup(xdg_data_home_path),
