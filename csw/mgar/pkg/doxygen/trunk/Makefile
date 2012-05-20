@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.8.0
+VERSION = 1.8.1
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -16,13 +16,17 @@ DISTFILES  = $(DISTNAME).src.tar.gz
 #   https://bugzilla.gnome.org/show_bug.cgi?id=670853
 PATCHFILES += 0001-Cannot-cast-0-to-QCString.patch
 
+VENDOR_URL = http://www.stack.nl/~dimitri/doxygen/
+
+LICENSE = LICENSE
+
+BUILD_DEP_PKGS = CSWgraphviz
+
 PACKAGES += CSWdoxygen
-CATALOGNAME_CSWdoxygen = doxygen
 SPKG_DESC_CSWdoxygen = A documentation system for programming languages
 # PKGFILES is catchall
 
 PACKAGES += CSWdoxygen-doc
-CATALOGNAME_CSWdoxygen-doc = doxygen_doc
 SPKG_DESC_CSWdoxygen-doc = Documentation for doxygen
 PKGFILES_CSWdoxygen-doc = $(PKGFILES_DOC)
 ARCHALL_CSWdoxygen-doc = 1
@@ -34,12 +38,6 @@ CATALOGNAME_CSWdoxygendoc = doxygen_doc_stub
 # These are pure examples
 CHECKPKG_OVERRIDES_CSWdoxygen-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/doxygen/html/config.html
 CHECKPKG_OVERRIDES_CSWdoxygen-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/doxygen/html/install.html
-
-LICENSE = LICENSE
-
-VENDOR_URL = http://www.stack.nl/~dimitri/doxygen/
-
-BUILD_DEP_PKGS = CSWgraphviz
 
 REINPLACEMENTS += cflags
 REINPLACE_MATCH_cflags = (TMAKE_CFLAGS_RELEASE\s*=\s*).*
