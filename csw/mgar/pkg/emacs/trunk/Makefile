@@ -16,9 +16,7 @@ DISTFILES		=	$(DISTNAME).tar.bz2
 MASTER_SITES	=	$(GNU_MIRROR)
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS		+=	\
-						--x-includes=/opt/csw/X11/include \
-						--x-libraries=/opt/csw/X11/lib
+
 # this is necessary because GNU id options dialect is is used; BTW, I
 # think that adding this systematically at the beginning of the PATH
 # helps in packaging projects issued from the Linux steam.
@@ -26,7 +24,6 @@ INSTALL_ARGS		+=	\
 						PATH="/opt/csw/gnu:$$PATH"
 
 GARCOMPILER			=	GNU
-PKG_CONFIG_PATH		=	/opt/csw/X11/lib/pkgconfig
 
 BUILD_DEP_PKGS		=	\
 						CSWcoreutils \
@@ -43,7 +40,6 @@ BUILD_DEP_PKGS		=	\
 						CSWlibgif-dev \
 						CSWlibglib2-dev \
 						CSWlibgtk2-dev \
-						CSWlibicedevel \
 						CSWlibiconv-dev \
 						CSWlibjbig-dev \
 						CSWlibjpeg-dev \
@@ -53,12 +49,10 @@ BUILD_DEP_PKGS		=	\
 						CSWlibpng-dev \
 						CSWlibpthreadstubs \
 						CSWlibrsvg-dev \
-						CSWlibsmdevel \
 						CSWlibthai-dev \
 						CSWlibtiff-dev \
 						CSWlibx11devel \
 						CSWlibxaudevel \
-						CSWlibxawdevel \
 						CSWlibxcbdevel \
 						CSWlibxdmcpdevel \
 						CSWlibxft2devel \
@@ -67,8 +61,7 @@ BUILD_DEP_PKGS		=	\
 						CSWlibxrenderdevel \
 						CSWlibz-dev \
 						CSWpangodevel \
-						CSWpkgconfig \
-						CSWx11renderproto
+						CSWpkgconfig
 
 include gar/category.mk
 
