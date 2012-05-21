@@ -34,8 +34,8 @@ DISTFILES += README_8k
 
 #PATCHFILES 	 = patch.diff 
 
-PATCHFILES_isa-sparcv8-size-8k 	= 0002-changing-packetbuffer-length-to-8k.patch
-PATCHFILES_isa-i386-size-8k 	= 0002-changing-packetbuffer-length-to-8k.patch
+PATCHFILES_isa-sparcv8plus-size-8k 	= 0002-changing-packetbuffer-length-to-8k.patch
+PATCHFILES_isa-pentium_pro-size-8k 	= 0002-changing-packetbuffer-length-to-8k.patch
 
 PACKAGING_PLATFORMS	= solaris10-sparc solaris10-i386
 
@@ -96,11 +96,11 @@ datadir = $(prefix)/share
 TEST_TARGET = all
 INSTALL_SCRIPTS = custom
 
-MERGE_SCRIPTS_isa-sparcv8-size-1k = copy-all
-MERGE_SCRIPTS_isa-sparcv8-size-8k = copy-nrpe-only
+MERGE_SCRIPTS_isa-sparcv8plus-size-1k = copy-all
+MERGE_SCRIPTS_isa-sparcv8plus-size-8k = copy-nrpe-only
 
-MERGE_SCRIPTS_isa-i386-size-1k = copy-all
-MERGE_SCRIPTS_isa-i386-size-8k = copy-nrpe-only
+MERGE_SCRIPTS_isa-pentium_pro-size-1k = copy-all
+MERGE_SCRIPTS_isa-pentium_pro-size-8k = copy-nrpe-only
 
 #
 #
