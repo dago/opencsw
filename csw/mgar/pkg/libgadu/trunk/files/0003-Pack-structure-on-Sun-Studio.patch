@@ -1,0 +1,38 @@
+From 66d9b908a996c52584353ca00d3caa521dc63d62 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 15 Jul 2011 15:32:26 +0200
+Subject: [PATCH] Pack structure on Sun Studio
+
+---
+ include/libgadu.h.in |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/include/libgadu.h.in b/include/libgadu.h.in
+index 149ffa9..5cec59a 100644
+--- a/include/libgadu.h.in
++++ b/include/libgadu.h.in
+@@ -33,6 +33,10 @@
+ #ifndef __GG_LIBGADU_H
+ #define __GG_LIBGADU_H
+ 
++#ifdef __sun
++#pragma pack(1)
++#endif
++
+ #ifdef __cplusplus
+ #ifdef _WIN32
+ #pragma pack(push, 1)
+@@ -2302,6 +2306,10 @@ struct gg_dcc7_dunno1 {
+ #endif
+ #endif
+ 
++#ifdef __sun
++#pragma pack()
++#endif
++
+ #endif /* __GG_LIBGADU_H */
+ 
+ /*
+-- 
+1.7.6
+

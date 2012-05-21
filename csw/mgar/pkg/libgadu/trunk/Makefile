@@ -27,7 +27,7 @@
 
 NAME = libgadu
 #
-VERSION = 1.11.0
+VERSION = 1.11.1
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -39,11 +39,19 @@ DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-Use-127.0.0.1-for-localhost-or-fail.patch
 PATCHFILES += 0002-Do-not-forcefully-set-CFLAGS-to-gcc-specific-stuff.patch
 
+# Make sure to pack stuff
+PATCHFILES += 0003-Pack-structure-on-Sun-Studio.patch
+EXTRA_CFLAGS += -misalign
+EXTRA_LDFLAGS += -misalign
+
 VENDOR_URL = http://toxygen.net/libgadu
 
 # There are zero-sized structs
 EXTRA_CFLAGS += -features=extensions
 
 BUILD64_LIBS_ONLY = 1
+
+# The testsuite has some issues with pragma
+SKIPTEST ?= 1
 
 include gar/category.mk
