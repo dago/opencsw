@@ -5,7 +5,7 @@ cat << EOF
 From package revision nrpe-2.12,REV=2009.10.11 on the configuration
 file for NRPE is stored in /etc/opt/csw/.
 
-No further action is needed (to have a backup is always a good idea).
+No further action is needed (having a backup is always a good idea).
 
             Installation will proceed in 10 seconds.
              Press CTRL+C if you want to stop now.

@@ -1,10 +1,1 @@
-afe807962bd3d189e78a92f040b10eff  CSWnrpe.preinstall
-5e3db7d856aa07719aef0fcac537ad7f  CSWnrpe.prototype
-5598cf47118a6e8d2e8bdcd4a2c3ee16  CSWnrpeplugin.prototype
-3bb2fbb228a6e2d0a99d981d82610d9a  README_8k
-36b85dd37d47a3813bfef5dee5804b61  common.h.diff
-4b51476c782d2c5764d10f8ed530ada0  configure.diff
-f7b166f02aa2cefb76fc235f6edd1745  cswnrpe
-0a98ba4dd462e50f23239433117bae5e  cswusergroup
-b2d75e2962f1e3151ef58794d60c9e97  nrpe-2.12.tar.gz
-5b02d4385daaea2a8c13903539aa6189  patch.diff
+06a1d3e0ecb8d1ba085a4a61f92be74c  nrpe-2.13.tar.gz
