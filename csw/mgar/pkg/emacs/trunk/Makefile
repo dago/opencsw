@@ -58,10 +58,13 @@ BUILD_DEP_PKGS		=	\
 						CSWlibxft2devel \
 						CSWlibxml2-dev \
 						CSWlibxpmdevel \
-						CSWlibxrenderdevel \
 						CSWlibz-dev \
 						CSWpangodevel \
 						CSWpkgconfig
+
+PACKAGING_PLATFORMS	=	\
+						solaris10-sparc \
+						solaris10-i386
 
 include gar/category.mk
 
