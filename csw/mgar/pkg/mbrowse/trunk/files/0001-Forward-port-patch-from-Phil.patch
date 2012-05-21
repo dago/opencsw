@@ -1,0 +1,57 @@
+From f2d3d52965b584c5067f51e54c1cda6464bae45d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Mon, 21 May 2012 10:26:24 +0200
+Subject: [PATCH] Forward-port patch from Phil
+
+---
+ src/configuration.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
+
+diff --git a/src/configuration.c b/src/configuration.c
+index ec6ec68..4d087b9 100644
+--- a/src/configuration.c
++++ b/src/configuration.c
+@@ -67,6 +67,9 @@ static config_t config;
+ #define STRING 	0
+ #define INTEGER	1
+ 
++#ifdef __SUNPRO_CCXX
++#define integer uint32_t
++#endif
+ config_opt_t config_opts[] = {
+   { "oid",          STRING, {""},       &config.oid },
+   { "readcomm",     STRING, {"public"}, &config.readcomm },
+@@ -74,18 +77,18 @@ config_opt_t config_opts[] = {
+   { "host",         STRING, {""},       &config.host },
+   { "inst",         STRING, {""},       &config.inst },
+   { "value",        STRING, {""},       &config.value },
+-  { "save_sess",    INTEGER,{integer:TRUE},&config.save_sess },
+-  { "snmp_ver",     INTEGER,{integer:SNMP_VERSION_1},&config.snmp_ver },
+-  { "snmp_timeout", INTEGER,{integer:2},&config.snmp_timeout },
+-  { "snmp_reties",  INTEGER,{integer:1},&config.snmp_retries },
+-  { "snmp_port",    INTEGER,{integer:161},&config.snmp_port },
+-  { "tree_line",    INTEGER,{integer:1},&config.tree_line },
+-  { "out_wrap_mode",INTEGER,{integer:GTK_WRAP_NONE},&config.out_wrap_mode },
+-  { "save_window_size", INTEGER, {integer:1}, &config.save_window_size },
+-  { "window_width", INTEGER, {integer:-1}, &config.window_width },
+-  { "window_height", INTEGER, {integer:-1}, &config.window_height },
+-  { "window_maximized", INTEGER, {integer:0}, &config.window_maximized },
+-  { NULL,           INTEGER, {integer:0},NULL },
++  { "save_sess",    INTEGER,TRUE,&config.save_sess },
++  { "snmp_ver",     INTEGER,{ SNMP_VERSION_1},&config.snmp_ver },
++  { "snmp_timeout", INTEGER,{ 2},&config.snmp_timeout },
++  { "snmp_reties",  INTEGER,{ 1},&config.snmp_retries },
++  { "snmp_port",    INTEGER,{ 161},&config.snmp_port },
++  { "tree_line",    INTEGER,{ 1},&config.tree_line },
++  { "out_wrap_mode",INTEGER,{ GTK_WRAP_NONE},&config.out_wrap_mode },
++  { "save_window_size", INTEGER, { 1}, &config.save_window_size },
++  { "window_width", INTEGER, { -1}, &config.window_width },
++  { "window_height", INTEGER, { -1}, &config.window_height },
++  { "window_maximized", INTEGER, { 0}, &config.window_maximized },
++  { NULL,           INTEGER, { 0},NULL },
+ };
+ 
+ config_t *get_config() {
+-- 
+1.7.10
+
