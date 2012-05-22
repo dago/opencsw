@@ -2,7 +2,7 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.8.2
+VERSION = 9.8.3
 #VERSION = 9.9.0
 CATEGORIES = net
 GARTYPE = v2
@@ -43,7 +43,7 @@ RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
 RUNTIME_DEP_PKGS_CSWbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWbind += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWbind += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibldap2-4-2
 
@@ -59,7 +59,7 @@ SPKG_DESC_CSWlibbind = ISC BIND DNS library package
 RUNTIME_DEP_PKGS_CSWlibbind  = CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl1-0-0
 
 PACKAGES += CSWbindutils
 CATALOGNAME_CSWbindutils = bind_utils
@@ -68,7 +68,7 @@ RUNTIME_DEP_PKGS_CSWbindutils  = CSWlibbind
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibz1
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibssl1-0-0
 
 PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
@@ -114,7 +114,13 @@ SPKG_SOURCEURL = http://www.isc.org/software/bind
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
-
+# Will not split out all these libs
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.80.0.5|soname=libbind9.so.80|pkgname=CSWlibbind|expected=CSWlibbind9-80
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.81.6.1|soname=libdns.so.81|pkgname=CSWlibbind|expected=CSWlibdns81
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.83.0.5|soname=libisc.so.83|pkgname=CSWlibbind|expected=CSWlibisc83
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.80.0.1|soname=libisccc.so.80|pkgname=CSWlibbind|expected=CSWlibisccc80
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.82.0.2|soname=libisccfg.so.82|pkgname=CSWlibbind|expected=CSWlibisccfg82
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.80.0.2|soname=liblwres.so.80|pkgname=CSWlibbind|expected=CSWliblwres80
 include gar/category.mk
 
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
