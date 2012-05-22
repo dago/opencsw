@@ -1,0 +1,25 @@
+From f03a4727da805d97851110fb70851783b87c1a15 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Tue, 22 May 2012 14:50:12 +0200
+Subject: [PATCH] Do not use libutil
+
+---
+ src/frontend/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/frontend/Makefile.am b/src/frontend/Makefile.am
+index 3716586..0bf8972 100644
+--- a/src/frontend/Makefile.am
++++ b/src/frontend/Makefile.am
+@@ -9,7 +9,7 @@ else
+   LDADD += $(STDDJB_LDFLAGS)
+ endif
+ 
+-mosh_server_LDADD = $(LDADD) -lutil
++mosh_server_LDADD = $(LDADD)
+ 
+ bin_PROGRAMS =
+ 
+-- 
+1.7.10
+

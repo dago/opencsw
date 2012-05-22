@@ -1,0 +1,419 @@
+From cfc71fb00b2ead54002c2501f4292dca33b6f815 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Tue, 22 May 2012 14:37:47 +0200
+Subject: [PATCH] Hack around so it compiles on Solaris
+
+---
+ configure.ac                      |    4 +-
+ src/crypto/base64.h               |    2 +-
+ src/crypto/byteorder.h            |   34 ++++++++++++++
+ src/crypto/crypto.cc              |    3 +-
+ src/crypto/crypto.h               |    5 ++
+ src/crypto/ocb.cc                 |    9 +++-
+ src/crypto/prng.h                 |    5 ++
+ src/frontend/mosh-client.cc       |    4 +-
+ src/frontend/mosh-server.cc       |   91 +++++++++++++++++++++++++++++++++++++
+ src/frontend/stmclient.cc         |   10 +++-
+ src/network/network.cc            |    4 +-
+ src/network/network.h             |    2 +-
+ src/network/transportsender.cc    |    1 +
+ src/statesync/completeterminal.cc |    2 +
+ src/terminal/parser.cc            |    3 +-
+ src/util/dos_assert.h             |    4 ++
+ src/util/fatal_assert.h           |    4 ++
+ 17 files changed, 175 insertions(+), 12 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 528a7a9..b526d59 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -101,7 +101,7 @@ AS_IF([test x"$with_skalibs" != xno],
+    AC_SUBST([STDDJB_LDFLAGS], ["$SKALIBS_LDFLAGS -lstddjb"])])
+ 
+ # Checks for header files.
+-AC_CHECK_HEADERS([arpa/inet.h curses.h fcntl.h langinfo.h limits.h locale.h netinet/in.h stddef.h stdint.h stdlib.h string.h sys/ioctl.h sys/resource.h sys/socket.h sys/time.h term.h termios.h unistd.h wchar.h wctype.h], [], [AC_MSG_ERROR([Missing required header file.])])
++AC_CHECK_HEADERS([arpa/inet.h curses.h fcntl.h langinfo.h limits.h locale.h netinet/in.h stddef.h stdint.h inttypes.h stdlib.h string.h sys/ioctl.h sys/resource.h sys/socket.h sys/time.h term.h termios.h unistd.h wchar.h wctype.h], [], [])
+ 
+ AC_CHECK_HEADERS([pty.h util.h])
+ 
+@@ -157,7 +157,7 @@ AC_CHECK_DECL([htobe64],
+   [AC_CHECK_DECL([OSSwapHostToBigInt64],
+      [AC_DEFINE([HAVE_OSX_SWAP], [1],
+         [Define if OSSwapHostToBigInt64 and friends exist.])],
+-     [AC_MSG_ERROR([Unable to find byte swapping functions])],
++     [],
+      [[#include <libkern/OSByteOrder.h>]])],
+   [[#include <endian.h>]])
+ 
+diff --git a/src/crypto/base64.h b/src/crypto/base64.h
+index 7593e59..46eab7a 100644
+--- a/src/crypto/base64.h
++++ b/src/crypto/base64.h
+@@ -27,7 +27,7 @@
+ # include <stddef.h>
+ 
+ /* Get bool. */
+-# include <stdbool.h>
++/* # include <stdbool.h> */
+ 
+ /* This uses that the expression (n+(k-1))/k means the smallest
+    integer >= n/k, i.e., the ceiling of n/k.  */
+diff --git a/src/crypto/byteorder.h b/src/crypto/byteorder.h
+index f0c7f06..758c33e 100644
+--- a/src/crypto/byteorder.h
++++ b/src/crypto/byteorder.h
+@@ -31,4 +31,38 @@
+ # define be16toh OSSwapBigToHostInt16
+ #endif
+ 
++/* Taken from http://licq.sourcearchive.com/documentation/1.3.8/licq__byteorder_8h-source.html */ 
++
++// Solaris header for endian and byte swap
++#if defined(__sun) || defined(sun)
++# include <sys/byteorder.h>
++
++// Solaris defines endian by setting _LITTLE_ENDIAN or _BIG_ENDIAN
++# ifdef _BIG_ENDIAN
++#  define IS_BIG_ENDIAN
++# endif
++# ifdef _LITTLE_ENDIAN
++#  define IS_LITTLE_ENDIAN
++# endif
++
++// Solaris 10 defines bswap functions: BSWAP_16, BSWAP_32, BSWAP_64
++// Solaris 10 defines conversion functions: BE_16, BE_32, BE_64, LE_16, LE_32, LE_64
++// BSD defines conversion functions: betoh16, betoh32, betoh64, letoh16, letoh32, letoh64
++# define betoh16(x) BE_16(x)
++# define letoh16(x) LE_16(x)
++# define betoh32(x) BE_32(x)
++# define letoh32(x) LE_32(x)
++# define betoh64(x) BE_64(x)
++# define letoh64(x) LE_64(x)
++
++#define htobe16(x) BE_16(x)
++#define be16toh(x) BE_16(x)
++#define htobe32(x) BE_32(x)
++#define be32toh(x) BE_32(x)
++#define htobe64(x) BE_64(x)
++#define be64toh(x) BE_64(x)
++
++#endif
++
++
+ #endif
+diff --git a/src/crypto/crypto.cc b/src/crypto/crypto.cc
+index e4f928f..497c6ea 100644
+--- a/src/crypto/crypto.cc
++++ b/src/crypto/crypto.cc
+@@ -263,7 +263,8 @@ Message Session::decrypt( string ciphertext )
+     exit( 1 );
+   }
+ 
+-  Nonce __attribute__((__aligned__ (16))) nonce( str, 8 );
++  /* Nonce __attribute__((__aligned__ (16))) nonce( str, 8 ); */
++  Nonce nonce( str, 8 );
+   char *body = (char *)aligned_alloc( body_len );
+   memcpy( body, str + 8, body_len );
+ 
+diff --git a/src/crypto/crypto.h b/src/crypto/crypto.h
+index 1a2d897..b557b51 100644
+--- a/src/crypto/crypto.h
++++ b/src/crypto/crypto.h
+@@ -22,7 +22,12 @@
+ #include "ae.h"
+ #include <string>
+ #include <string.h>
++
++#if defined( HAVE_STDINT_H )
+ #include <stdint.h>
++#elif defined( HAVE_INTTYPES_H )
++  #include <inttypes.h>
++#endif
+ 
+ using std::string;
+ 
+diff --git a/src/crypto/ocb.cc b/src/crypto/ocb.cc
+index 8176896..10eec17 100644
+--- a/src/crypto/ocb.cc
++++ b/src/crypto/ocb.cc
+@@ -74,6 +74,9 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++#include "config.h"
++#include <inttypes.h>
++
+ /* Define standard sized integers                                          */
+ #if defined(_MSC_VER) && (_MSC_VER < 1600)
+ 	typedef unsigned __int8  uint8_t;
+@@ -81,7 +84,11 @@
+ 	typedef unsigned __int64 uint64_t;
+ 	typedef          __int64 int64_t;
+ #else
+-	#include <stdint.h>
++#if HAVE_STDINT_H
++#include <stdint.h>
++#elif HAVE_INTTYPES_H
++  #include <inttypes.h>
++#endif
+ #endif
+ 
+ /* Compiler-specific intrinsics and fixes: bswap64, ntz                    */
+diff --git a/src/crypto/prng.h b/src/crypto/prng.h
+index fdaf48e..121e087 100644
+--- a/src/crypto/prng.h
++++ b/src/crypto/prng.h
+@@ -23,7 +23,12 @@
+ #include <stdio.h>
+ #include <errno.h>
+ #include <string.h>
++
++#if defined( HAVE_STDINT_H )
+ #include <stdint.h>
++#elif defined( HAVE_INTTYPES_H )
++  #include <inttypes.h>
++#endif
+ 
+ #include "crypto.h"
+ 
+diff --git a/src/frontend/mosh-client.cc b/src/frontend/mosh-client.cc
+index 2c1709c..fdc5a76 100644
+--- a/src/frontend/mosh-client.cc
++++ b/src/frontend/mosh-client.cc
+@@ -27,8 +27,8 @@
+ #include "locale_utils.h"
+ 
+ /* these need to be included last because of conflicting defines */
+-#include <curses.h>
+-#include <term.h>
++#include <ncurses/ncurses.h>
++#include <ncurses/term.h>
+ 
+ void usage( const char *argv0 ) {
+   fprintf( stderr, "mosh-client (%s)\n", PACKAGE_STRING );
+diff --git a/src/frontend/mosh-server.cc b/src/frontend/mosh-server.cc
+index 27e8e3a..a79799e 100644
+--- a/src/frontend/mosh-server.cc
++++ b/src/frontend/mosh-server.cc
+@@ -212,6 +212,97 @@ int main( int argc, char *argv[] )
+   }
+ }
+ 
++/* From http://bugs.mysql.com/bug.php?id=22429 */
++
++/* fork_pty() remplacement for Solarisk 
++ * This ignore the last two arguments 
++ * for the moment 
++ */ 
++
++#include <stdlib.h> 
++#include <unistd.h> 
++#include <fcntl.h> 
++#include <sys/ioctl.h> 
++#include <sys/stream.h> 
++#include <sys/stropts.h> 
++#include <sys/syscall.h>
++#include <stdio.h>
++#include <errno.h>
++
++int 
++forkpty (int *amaster, 
++            char *name, 
++            void *unused1, 
++            void *unused2) 
++{ 
++  int master, slave; 
++  char *slave_name; 
++  pid_t pid; 
++   
++  master = open("/dev/ptmx", O_RDWR); 
++  if (master < 0) 
++    return -1; 
++
++  if (grantpt (master) < 0) 
++    { 
++      close (master); 
++      return -1; 
++    } 
++
++  if (unlockpt (master) < 0) 
++    { 
++      close (master); 
++      return -1; 
++    } 
++
++  slave_name = ptsname (master); 
++  if (slave_name == NULL) 
++    { 
++      close (master); 
++      return -1; 
++    } 
++
++  slave = open (slave_name, O_RDWR); 
++  if (slave < 0) 
++    { 
++      close (master); 
++      return -1; 
++    } 
++
++  if (ioctl (slave, I_PUSH, "ptem") < 0 
++      || ioctl (slave, I_PUSH, "ldterm") < 0) 
++    { 
++      close (slave); 
++      close (master); 
++      return -1; 
++    } 
++
++  if (amaster) 
++    *amaster = master; 
++
++  if (name) 
++    strcpy (name, slave_name); 
++   
++  pid = fork (); 
++  switch (pid) 
++    { 
++    case -1: /* Error */ 
++      return -1; 
++    case 0: /* Child */ 
++      close (master); 
++      dup2 (slave, STDIN_FILENO); 
++      dup2 (slave, STDOUT_FILENO); 
++      dup2 (slave, STDERR_FILENO); 
++      return 0; 
++    default: /* Parent */ 
++      close (slave); 
++      return pid; 
++    } 
++
++  return -1; 
++}
++
++
+ int run_server( const char *desired_ip, const char *desired_port,
+ 		char *command[], const int colors ) {
+   /* get initial window size */
+diff --git a/src/frontend/stmclient.cc b/src/frontend/stmclient.cc
+index 5a57783..d8ce05a 100644
+--- a/src/frontend/stmclient.cc
++++ b/src/frontend/stmclient.cc
+@@ -71,7 +71,15 @@ void STMClient::init( void )
+   }
+ #endif /* HAVE_IUTF8 */
+ 
+-  cfmakeraw( &raw_termios );
++    /* From http://www.sunmanagers.org/pipermail/summaries/2005-October/006871.html */ 
++    // cfmakeraw(&raw_termios); // <--- not available on Solaris, so we better do it manually
++    // begin of cfmakeraw replacement
++    raw_termios.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON);
++    raw_termios.c_oflag &= ~OPOST;
++    raw_termios.c_lflag &= ~(ECHO|ECHONL|ICANON|ISIG|IEXTEN);
++    raw_termios.c_cflag &= ~(CSIZE|PARENB);
++    raw_termios.c_cflag |= CS8;
++    // end of cfmakeraw replacement
+ 
+   if ( tcsetattr( STDIN_FILENO, TCSANOW, &raw_termios ) < 0 ) {
+       perror( "tcsetattr" );
+diff --git a/src/network/network.cc b/src/network/network.cc
+index a86b9dc..ea90130 100644
+--- a/src/network/network.cc
++++ b/src/network/network.cc
+@@ -194,11 +194,11 @@ Connection::Connection( const char *desired_ip, const char *desired_port ) /* se
+   throw NetworkException( "Could not bind", errno );
+ }
+ 
+-bool Connection::try_bind( int socket, uint32_t s_addr, int port )
++bool Connection::try_bind( int socket, uint32_t saddr, int port )
+ {
+   struct sockaddr_in local_addr;
+   local_addr.sin_family = AF_INET;
+-  local_addr.sin_addr.s_addr = s_addr;
++  local_addr.sin_addr.s_addr = saddr;
+ 
+   int search_low = PORT_RANGE_LOW, search_high = PORT_RANGE_HIGH;
+ 
+diff --git a/src/network/network.h b/src/network/network.h
+index dd9d79b..e1d4123 100644
+--- a/src/network/network.h
++++ b/src/network/network.h
+@@ -77,7 +77,7 @@ namespace Network {
+     static const int PORT_RANGE_LOW  = 60001;
+     static const int PORT_RANGE_HIGH = 60999;
+ 
+-    static bool try_bind( int socket, uint32_t s_addr, int port );
++    static bool try_bind( int socket, uint32_t saddr, int port );
+ 
+     int sock;
+     bool has_remote_addr;
+diff --git a/src/network/transportsender.cc b/src/network/transportsender.cc
+index 2566bcc..0fbb0ac 100644
+--- a/src/network/transportsender.cc
++++ b/src/network/transportsender.cc
+@@ -23,6 +23,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <time.h>
++#include <limits.h>	/* for INT_MAX */
+ 
+ #include "transportsender.h"
+ #include "transportfragment.h"
+diff --git a/src/statesync/completeterminal.cc b/src/statesync/completeterminal.cc
+index 8f37145..29cf50b 100644
+--- a/src/statesync/completeterminal.cc
++++ b/src/statesync/completeterminal.cc
+@@ -19,6 +19,8 @@
+ #include <boost/typeof/typeof.hpp>
+ #include <boost/lambda/lambda.hpp>
+ 
++#include <limits.h>	/* for INT_MAX */
++
+ #include "completeterminal.h"
+ #include "fatal_assert.h"
+ 
+diff --git a/src/terminal/parser.cc b/src/terminal/parser.cc
+index 227763f..0de6ff4 100644
+--- a/src/terminal/parser.cc
++++ b/src/terminal/parser.cc
+@@ -20,7 +20,8 @@
+ #include <typeinfo>
+ #include <errno.h>
+ #include <wchar.h>
+-#include <stdint.h>
++/* #include <stdint.h> */
++#include <inttypes.h>
+ 
+ #include "parser.h"
+ 
+diff --git a/src/util/dos_assert.h b/src/util/dos_assert.h
+index eb84585..6032e97 100644
+--- a/src/util/dos_assert.h
++++ b/src/util/dos_assert.h
+@@ -32,6 +32,10 @@ static void dos_detected( const char *expression, const char *file, int line, co
+   throw Crypto::CryptoException( buffer );
+ }
+ 
++#ifndef __STRING
++#define __STRING(x) #x
++#endif
++
+ #define dos_assert(expr)						\
+   ((expr)								\
+    ? (void)0								\
+diff --git a/src/util/fatal_assert.h b/src/util/fatal_assert.h
+index e5bf961..b9efbb8 100644
+--- a/src/util/fatal_assert.h
++++ b/src/util/fatal_assert.h
+@@ -29,6 +29,10 @@ static void fatal_error( const char *expression, const char *file, int line, con
+   exit( 2 );
+ }
+ 
++#ifndef __STRING
++#define __STRING(x) #x
++#endif
++
+ #define fatal_assert(expr)						\
+   ((expr)								\
+    ? (void)0								\
+-- 
+1.7.10
+
