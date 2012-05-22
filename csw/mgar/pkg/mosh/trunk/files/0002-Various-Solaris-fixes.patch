@@ -100,7 +100,7 @@ index 1a2d897..20a4a76 100644
 +
 +#if defined( HAVE_STDINT_H )
  #include <stdint.h>
-+#elsif defined( HAVE_INTTYPES_H )
++#elif defined( HAVE_INTTYPES_H )
 +  #include <inttypes.h>
 +#endif
  
@@ -127,7 +127,7 @@ index 8176896..790d96a 100644
 -	#include <stdint.h>
 +#if HAVE_STDINT_H
 +#include <stdint.h>
-+#elsif HAVE_INTTYPES_H
++#elif HAVE_INTTYPES_H
 +  #include <inttypes.h>
 +#endif
  #endif
@@ -144,7 +144,7 @@ index fdaf48e..0d89d79 100644
 +
 +#if defined( HAVE_STDINT_H )
  #include <stdint.h>
-+#elsif defined( HAVE_INTTYPES_H )
++#elif defined( HAVE_INTTYPES_H )
 +  #include <inttypes.h>
 +#endif
  
