@@ -59,8 +59,8 @@ mirrors are listed at::
 
   http://www.opencsw.org/get-it/mirrors/
 
-Please uncomment the line with ``mirror`` so it looks similar to this with the
-URL replaced by the mirror you picked::
+Please uncomment the line with ``mirror`` in ``/etc/opt/csw/pkgutil.conf``
+so it looks similar to this with the URL replaced by the mirror you picked::
 
   mirror=http://mirror.opencsw.org/opencsw/unstable
 
