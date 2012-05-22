@@ -1,6 +1,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 # ! cmake kills RPATH in linker flags somehow needs to be fixed.
+# ! Error: recv: Resource temporarily unavailable
+#     as reported in https://github.com/FreeRDP/FreeRDP/issues/571
 #
 NAME = FreeRDP
 VERSION = 1.0.1
@@ -25,11 +27,18 @@ SPKG_DESC_CSWfreerdp = RDP client, a fork of the rdesktop project
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWfreerdp += CSWlibgcc-s1
 
+# Add flag as recommended in https://github.com/FreeRDP/FreeRDP/issues/571
+#EXTRA_CFLAGS += -mt
+EXTRA_CFLAGS += -threads
+
+#EXTRA_CPPFLAGS = -features=extensions -D__FUNCTION__=__func__
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
-CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CPPFLAGS) $(CFLAGS)"
+# CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS += -DWITH_SSE2=OFF 
