@@ -15,7 +15,7 @@ endef
 DISTFILES		=	$(DISTNAME).tar.bz2
 MASTER_SITES	=	$(GNU_MIRROR)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS	= $(DIRPATHS)
 
 # this is necessary because GNU id options dialect is is used; BTW, I
 # think that adding this systematically at the beginning of the PATH
@@ -36,6 +36,7 @@ BUILD_DEP_PKGS		=	\
 						CSWlibdbus-glib-dev \
 						CSWlibexpat-dev \
 						CSWlibfreetype-dev \
+						CSWlibgconf-dev \
 						CSWlibgdk-pixbuf-dev \
 						CSWlibgif-dev \
 						CSWlibglib2-dev \
@@ -60,11 +61,14 @@ BUILD_DEP_PKGS		=	\
 						CSWlibxpmdevel \
 						CSWlibz-dev \
 						CSWpangodevel \
-						CSWpkgconfig
+						CSWpkgconfig \
+						CSWsunx11devel
 
 PACKAGING_PLATFORMS	=	\
 						solaris10-sparc \
 						solaris10-i386
+
+PATCHFILES			+=	0001-activate-Xft-for-configure.patch
 
 include gar/category.mk
 
