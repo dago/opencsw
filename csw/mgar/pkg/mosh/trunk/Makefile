@@ -30,6 +30,15 @@ RUNTIME_DEP_PKGS_CSWmosh += CSWlibprotobuf7-gxx
 RUNTIME_DEP_PKGS_CSWmosh += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWmosh += CSWlibz1
 
+# Needed by mosh perl script
+RUNTIME_DEP_PKGS_CSWmosh += CSWpm-io-tty
+CHECKPKG_OVERRIDES_CSWmosh += surplus-dependency|CSWpm-io-tty
+
+REINPLACEMENTS += cswperl
+REINPLACE_MATCH_cswperl = /usr/bin/env perl
+REINPLACE_WITH_cswperl = $(bindir)/perl
+REINPLACE_FILES_cswperl += scripts/mosh
+
 # boost gxx is only available on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
