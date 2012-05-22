@@ -92,7 +92,7 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWlibiconv2 CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWliblber2-4-2 CSWlibldap2-4-2 
 # the loadable ldap module dynamically opens files in this apr sub-package
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-ldap
-RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibssl0-9-8 CSWlibz1
+RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibssl1-0-0 CSWlibz1
 RUNTIME_DEP_PKGS_CSWapache2       += CSWbdb48 CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-0 CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c CSWperl CSWapache2-utils
@@ -107,7 +107,7 @@ RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWbdb48
-RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWperl
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2 CSWapache2c
