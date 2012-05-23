@@ -1,0 +1,39 @@
+From 7dfab56fe7e74c8df51c780c676f86174257f9b6 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Wed, 23 May 2012 11:09:05 +0200
+Subject: [PATCH] Use egrep -q instead of grep -q
+
+---
+ configure    |    2 +-
+ configure.ac |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 02fc78c..2c307de 100755
+--- a/configure
++++ b/configure
+@@ -26652,7 +26652,7 @@ $as_echo "$SQUID_MAXFD (user-forced)" >&6; }
+ else
+   case $host in
+   i386-unknown-freebsd*)
+-      if echo "$LDFLAGS" | grep -q pthread; then
++      if echo "$LDFLAGS" | egrep -q pthread; then
+   	LDFLAGS=`echo $LDFLAGS | sed -e "s/-pthread//"`
+       fi
+   esac
+diff --git a/configure.ac b/configure.ac
+index 61cef5d..c8d4f6d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -3492,7 +3492,7 @@ if test -n "$squid_filedescriptors_num" ; then
+ else
+   case $host in
+   i386-unknown-freebsd*)
+-      if echo "$LDFLAGS" | grep -q pthread; then
++      if echo "$LDFLAGS" | egrep -q pthread; then
+   	LDFLAGS=`echo $LDFLAGS | sed -e "s/-pthread//"`
+       fi
+   esac
+-- 
+1.7.10
+
