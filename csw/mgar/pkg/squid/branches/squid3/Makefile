@@ -53,13 +53,14 @@ PATCHFILES += 0006-Use-usr-xpg4-bin-egrep.patch
 PATCHFILES += 0007-Use-OpenCSW-specific-paths-for-various-helper-tests.patch
 PATCHFILES += 0008-Rename-IpAddress-to-SquidIpAddress-to-make-mib2.h-ha.patch
 
-sysconfdir = /etc/opt/csw/$(NAME)
+sysconfdir = /etc/$(prefix)/$(NAME)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=${sysconfdir}
 CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
+CONFIGURE_ARGS += --localstatedir=/var/$(prefix)/$(NAME)
+CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/$(NAME)
 CONFIGURE_ARGS += --enable-arp-acl
 CONFIGURE_ARGS += --enable-auth=basic,ntlm,digest,negotiate
 CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
