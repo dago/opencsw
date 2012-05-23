@@ -79,6 +79,7 @@ PKGFILES_CSWqt4-gxx-dev += $(call baseisadirs,$(bindir),.*)
 PKGFILES_CSWqt4-gxx-dev += $(prefix)/examples/.*
 PKGFILES_CSWqt4-gxx-dev += $(prefix)/plugins/.*
 PKGFILES_CSWqt4-gxx-dev += $(prefix)/demos/.*
+PKGFILES_CSWqt4-gxx-dev += $(prefix)/imports/.*
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtscript4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtdesignercomponents4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtdesigner4-gxx
@@ -111,9 +112,16 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWgstplugins
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibsybdb5
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWsqlite
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibodbc2
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibtiff3
 # These are code examples.
 CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += binary-architecture-does-not-match-placement
-
+# REFINE this later!
+CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += discouraged-path-in-pkgmap
 
 PACKAGES += CSWlibqthelp4-gxx
 PKGFILES_CSWlibqthelp4-gxx += $(call baseisadirs,$(libdir),libQtHelp\.so\.4(\.\d+)*)
@@ -202,10 +210,6 @@ RUNTIME_DEP_PKGS_CSWlibphonon4-gxx += CSWlibqtcore4-gxx
 RUNTIME_DEP_PKGS_CSWlibphonon4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibphonon4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibphonon4-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibqtxml4-gxx
-RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibqtcore4-gxx
 
 PACKAGES += CSWlibqtclucene4-gxx
 PKGFILES_CSWlibqtclucene4-gxx += $(call baseisadirs,$(libdir),libQtCLucene\.so\.4(\.\d+)*)
@@ -217,6 +221,10 @@ RUNTIME_DEP_PKGS_CSWlibqtclucene4-gxx += CSWlibqtcore4-gxx
 PACKAGES += CSWlibqtdbus4-gxx
 PKGFILES_CSWlibqtdbus4-gxx += $(call baseisadirs,$(libdir),libQtDBus\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibqtdbus4-gxx += $(DESCRIPTION), libQtDBus.so.4
+RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibqtxml4-gxx
+RUNTIME_DEP_PKGS_CSWlibqtdbus4-gxx += CSWlibqtcore4-gxx
 
 PACKAGES += CSWlibqtdeclarative4-gxx
 PKGFILES_CSWlibqtdeclarative4-gxx += $(call baseisadirs,$(libdir),libQtDeclarative\.so\.4(\.\d+)*)
@@ -264,17 +272,9 @@ SPKG_DESC_CSWqt4-gxx-doc += $(DESCRIPTION), documentation
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtscript4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdeclarative4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibsybdb5
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibphonon4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtsql4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtnetwork4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibodbc2
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWsqlite
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibpq5
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtxml4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtsvg4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdesigner4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdbus4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtcore4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtopengl4-gxx
