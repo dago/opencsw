@@ -20,11 +20,12 @@ endef
 PACKAGES = CSWsquid
 RUNTIME_DEP_PKGS += CSWliblber2-4-2
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS += CSWlibsasl2-2
 RUNTIME_DEP_PKGS += CSWlibltdl7
 RUNTIME_DEP_PKGS += CSWperl
-RUNTIME_DEP_PKGS += CSWbdb48
+RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibstdc++6
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
@@ -99,8 +100,8 @@ PROTOTYPE_CLASS_varuser  = ugfiles
 PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
-# Needed for CSWlibsmbclient0: ntlm_auth and winbindd
-# CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWlibsmbclient0
+REINPLACE_USRLOCAL = $(mandir)/man8/squid_session.8
+REINPLACE_WHEN_USRLOCAL = postinstall
 
 include gar/category.mk
 
