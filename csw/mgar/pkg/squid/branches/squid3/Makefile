@@ -46,7 +46,7 @@ PATCHFILES += 0002-Link-against-OpenSSL-from-OpenCSW.patch
 PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
 PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt-csw-libexec.patch
 PATCHFILES += 0006-Use-default-cache_dir.patch
-PATCHFILES += 0006-Use-egrep-q-instead-of-grep-q.patch
+PATCHFILES += 0006-Use-usr-xpg4-bin-egrep.patch
 
 sysconfdir = /etc/opt/csw/$(NAME)
 
@@ -80,8 +80,6 @@ CONFIGURE_ARGS += --with-default-user=$(NAME)
 GARCOMPILER = GNU
 
 TEST_TARGET = 
-
-EXTRA_LINKER_FLAGS += -norunpath
 
 SAMPLECONF = squid.conf
 SAMPLECONF += cachemgr.conf

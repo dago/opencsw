@@ -1,15 +1,29 @@
-From 7dfab56fe7e74c8df51c780c676f86174257f9b6 Mon Sep 17 00:00:00 2001
+From 0badaafded0de5167f5dac91253c15ac222ad839 Mon Sep 17 00:00:00 2001
 From: Juraj Lutter <wilbury@opencsw.org>
-Date: Wed, 23 May 2012 11:09:05 +0200
-Subject: [PATCH] Use egrep -q instead of grep -q
+Date: Wed, 23 May 2012 12:29:43 +0200
+Subject: [PATCH] Use /usr/xpg4/bin/egrep
 
 ---
+ bootstrap.sh |    2 +-
  configure    |    2 +-
  configure.ac |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/bootstrap.sh b/bootstrap.sh
+index e079783..4736194 100755
+--- a/bootstrap.sh
++++ b/bootstrap.sh
+@@ -76,7 +76,7 @@ bootstrap_libtoolize() {
+ 
+     # TODO: when we have libtool2, tell libtoolize where to put its files
+     # instead of manualy moving files from ltdl to lib/libLtdl
+-    if egrep -q '^[[:space:]]*AC_LIBLTDL_' configure.ac
++    if /usr/xpg4/bin/egrep -q '^[[:space:]]*AC_LIBLTDL_' configure.ac
+     then
+ 	ltdl="--ltdl"
+     else
 diff --git a/configure b/configure
-index 02fc78c..2c307de 100755
+index 02fc78c..47d339f 100755
 --- a/configure
 +++ b/configure
 @@ -26652,7 +26652,7 @@ $as_echo "$SQUID_MAXFD (user-forced)" >&6; }
@@ -22,7 +36,7 @@ index 02fc78c..2c307de 100755
        fi
    esac
 diff --git a/configure.ac b/configure.ac
-index 61cef5d..c8d4f6d 100644
+index 61cef5d..131ae1a 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -3492,7 +3492,7 @@ if test -n "$squid_filedescriptors_num" ; then
