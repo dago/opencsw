@@ -17,7 +17,7 @@ index 02fc78c..2c307de 100755
    case $host in
    i386-unknown-freebsd*)
 -      if echo "$LDFLAGS" | grep -q pthread; then
-+      if echo "$LDFLAGS" | egrep -q pthread; then
++      if echo "$LDFLAGS" | /usr/xpg4/bin/egrep -q pthread; then
    	LDFLAGS=`echo $LDFLAGS | sed -e "s/-pthread//"`
        fi
    esac
@@ -30,7 +30,7 @@ index 61cef5d..c8d4f6d 100644
    case $host in
    i386-unknown-freebsd*)
 -      if echo "$LDFLAGS" | grep -q pthread; then
-+      if echo "$LDFLAGS" | egrep -q pthread; then
++      if echo "$LDFLAGS" | /usr/xpg4/bin/egrep -q pthread; then
    	LDFLAGS=`echo $LDFLAGS | sed -e "s/-pthread//"`
        fi
    esac
