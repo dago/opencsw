@@ -28,38 +28,37 @@ CONFIGURE_ARGS += --enable-static=no
 PACKAGES += CSWlibobparser21
 PKGFILES_CSWlibobparser21 += $(call baseisadirs,$(libdir),libobparser\.so\.21(\.\d+)*)
 SPKG_DESC_CSWlibobparser21 += $(DESCRIPTION), libobparser.so.21
+RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibxml2-2
 
 PACKAGES += CSWlibobrender21
 PKGFILES_CSWlibobrender21 += $(call baseisadirs,$(libdir),libobrender\.so\.21(\.\d+)*)
 SPKG_DESC_CSWlibobrender21 += $(DESCRIPTION), libobrender.so.21
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibxft2
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibobparser21
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWpango
 RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibobparser21 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibobparser21
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibobrender21 += CSWpango
 
 PACKAGES += CSWopenbox-dev
 SPKG_DESC_CSWopenbox-dev += $(DESCRIPTION), development files
 PKGFILES_CSWopenbox-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWopenbox-dev += CSWlibobparser21
-RUNTIME_DEP_PKGS_CSWopenbox-dev += CSWlibobrender21
 
 # Catch-all package
 PACKAGES += CSWopenbox
 SPKG_DESC_CSWopenbox = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWopenbox += CSWfconfig
+RUNTIME_DEP_PKGS_CSWopenbox += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWopenbox += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWopenbox += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWopenbox += CSWlibgmodule2-0-0
