@@ -180,22 +180,10 @@ PKGFILES_CSWemacsnox		=	\
 
 include gar/category.mk
 
-post-install-isa-default-features-athena:
+post-install-modulated:
 	@echo "executing $@"
-	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-athena
-	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-athena
-	$(MAKECOOKIE)
-
-post-install-isa-default-features-gtk:
-	@echo "executing $@"
-	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-gtk
-	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-gtk
-	$(MAKECOOKIE)
-
-post-install-isa-default-features-nox:
-	@echo "executing $@"
-	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-nox
-	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-nox
+	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-$(FEATURES)
+	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-$(FEATURES)
 	$(MAKECOOKIE)
 
 # this is private and not available publicly
