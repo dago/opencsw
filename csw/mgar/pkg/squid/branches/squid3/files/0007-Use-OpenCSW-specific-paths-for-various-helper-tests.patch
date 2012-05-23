@@ -1,0 +1,127 @@
+From 53850c51d38b55e7fb0180a04d5ffb9cb99108ca Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Wed, 23 May 2012 13:13:09 +0200
+Subject: [PATCH] Use OpenCSW-specific paths for various helper tests.
+
+---
+ helpers/basic_auth/LDAP/config.test           |    6 ++----
+ helpers/basic_auth/SASL/config.test           |    5 +----
+ helpers/digest_auth/eDirectory/config.test    |    5 +----
+ helpers/digest_auth/ldap/config.test          |    5 +----
+ helpers/external_acl/ldap_group/config.test   |    5 +----
+ helpers/external_acl/session/config.test      |    4 ++--
+ helpers/external_acl/wbinfo_group/config.test |    4 ++--
+ 7 files changed, 10 insertions(+), 24 deletions(-)
+
+diff --git a/helpers/basic_auth/LDAP/config.test b/helpers/basic_auth/LDAP/config.test
+index 5c354f8..f22847e 100755
+--- a/helpers/basic_auth/LDAP/config.test
++++ b/helpers/basic_auth/LDAP/config.test
+@@ -1,8 +1,6 @@
+ #!/bin/sh
+-if [ -f /usr/include/ldap.h ]; then
+-	exit 0
+-fi
+-if [ -f /usr/include/winldap.h ]; then
++# Use ldap.h from OpenLDAP
++if [ -f /opt/csw/include/ldap.h ]; then
+ 	exit 0
+ fi
+ exit 1
+diff --git a/helpers/basic_auth/SASL/config.test b/helpers/basic_auth/SASL/config.test
+index 8054c95..64fe038 100755
+--- a/helpers/basic_auth/SASL/config.test
++++ b/helpers/basic_auth/SASL/config.test
+@@ -1,8 +1,5 @@
+ #!/bin/sh
+-if [ -f /usr/include/sasl.h ]; then
+-	exit 0
+-fi
+-if [ -f /usr/include/sasl/sasl.h ]; then
++if [ -f /opt/csw/include/sasl/sasl.h ]; then
+ 	exit 0
+ fi
+ exit 1
+diff --git a/helpers/digest_auth/eDirectory/config.test b/helpers/digest_auth/eDirectory/config.test
+index 5c354f8..b3a8960 100755
+--- a/helpers/digest_auth/eDirectory/config.test
++++ b/helpers/digest_auth/eDirectory/config.test
+@@ -1,8 +1,5 @@
+ #!/bin/sh
+-if [ -f /usr/include/ldap.h ]; then
+-	exit 0
+-fi
+-if [ -f /usr/include/winldap.h ]; then
++if [ -f /opt/csw/include/ldap.h ]; then
+ 	exit 0
+ fi
+ exit 1
+diff --git a/helpers/digest_auth/ldap/config.test b/helpers/digest_auth/ldap/config.test
+index 5c354f8..b3a8960 100755
+--- a/helpers/digest_auth/ldap/config.test
++++ b/helpers/digest_auth/ldap/config.test
+@@ -1,8 +1,5 @@
+ #!/bin/sh
+-if [ -f /usr/include/ldap.h ]; then
+-	exit 0
+-fi
+-if [ -f /usr/include/winldap.h ]; then
++if [ -f /opt/csw/include/ldap.h ]; then
+ 	exit 0
+ fi
+ exit 1
+diff --git a/helpers/external_acl/ldap_group/config.test b/helpers/external_acl/ldap_group/config.test
+index 5c354f8..b3a8960 100755
+--- a/helpers/external_acl/ldap_group/config.test
++++ b/helpers/external_acl/ldap_group/config.test
+@@ -1,8 +1,5 @@
+ #!/bin/sh
+-if [ -f /usr/include/ldap.h ]; then
+-	exit 0
+-fi
+-if [ -f /usr/include/winldap.h ]; then
++if [ -f /opt/csw/include/ldap.h ]; then
+ 	exit 0
+ fi
+ exit 1
+diff --git a/helpers/external_acl/session/config.test b/helpers/external_acl/session/config.test
+index 83b0f99..f41a6d8 100755
+--- a/helpers/external_acl/session/config.test
++++ b/helpers/external_acl/session/config.test
+@@ -1,10 +1,10 @@
+ #!/bin/sh
+ 
+ # Actual intended test
+-if [ -f /usr/include/db_185.h ]; then
++if [ -f /opt/csw/bdb48/include/db_185.h ]; then
+     exit 0
+ fi
+-if [ -f /usr/include/db.h ] && grep dbopen /usr/include/db.h; then
++if [ -f /opt/csw/bdb48/include/db.h ] && grep dbopen /opt/csw/bdb48/include/db.h; then
+     exit 0
+ fi
+ exit 1
+diff --git a/helpers/external_acl/wbinfo_group/config.test b/helpers/external_acl/wbinfo_group/config.test
+index d361121..6f60f8f 100755
+--- a/helpers/external_acl/wbinfo_group/config.test
++++ b/helpers/external_acl/wbinfo_group/config.test
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ samba_found="no"
+-for sambaprefix in /usr/local /opt /opt/samba /usr/local/samba /usr
++for sambaprefix in /opt/csw /usr/local /opt /opt/samba /usr/local/samba /usr
+ do
+     if [ -x $sambaprefix/bin/wbinfo ]; then
+       samba_found="yes"
+@@ -9,7 +9,7 @@ done
+ if test "$samba_found" = "no"; then
+     echo "WARNING: Samba wbinfo not found in default location. wbinfo_group.pl may not work on this machine"
+ fi
+-for perlprefix in /usr /usr/local /opt /opt/perl
++for perlprefix in /opt/csw /usr /usr/local /opt /opt/perl
+ do
+     if [ -x $perlprefix/bin/perl ]; then
+         exit 0
+-- 
+1.7.10
+

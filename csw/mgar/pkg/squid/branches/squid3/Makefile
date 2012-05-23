@@ -22,8 +22,9 @@ RUNTIME_DEP_PKGS += CSWliblber2-4-2
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS += CSWlibsasl2-2
-RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWlibltdl7
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWbdb48
 
 PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
@@ -47,6 +48,7 @@ PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
 PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt-csw-libexec.patch
 PATCHFILES += 0006-Use-default-cache_dir.patch
 PATCHFILES += 0006-Use-usr-xpg4-bin-egrep.patch
+PATCHFILES += 0007-Use-OpenCSW-specific-paths-for-various-helper-tests.patch
 
 sysconfdir = /etc/opt/csw/$(NAME)
 
@@ -78,6 +80,8 @@ CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-default-user=$(NAME)
 
 GARCOMPILER = GNU
+EXTRA_LDFLAGS += $(prefix)/bdb48/lib
+EXTRA_INC += $(prefix)/bdb48/include
 
 TEST_TARGET = 
 
