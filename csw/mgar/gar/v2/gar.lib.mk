@@ -51,7 +51,7 @@ endif
 $(DOWNLOADDIR)/%: _FLIST=$(filter %/$*,$(URLS))
 $(DOWNLOADDIR)/%:  
 	$(if $(_FLIST),,$(error INTERNAL ERROR: The file $* is requested but not in the list of generated URLs))
-	if test -f $(COOKIEDIR)/checksum-$*; then : ; else \
+	@if test -f $(COOKIEDIR)/checksum-$*; then : ; else \
 		echo " ==> Grabbing $@"; \
 		( for i in $(filter %/$*,$(URLS)); do  \
 			echo " 	==> Trying $$i"; \
