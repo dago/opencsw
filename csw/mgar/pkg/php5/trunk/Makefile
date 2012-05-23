@@ -53,11 +53,11 @@ PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWlibcurl-dev CSWjpeg
 BUILD_DEP_PKGS += CSWlibpng-dev CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp10
-BUILD_DEP_PKGS += CSWggettext-dev CSWossldevel CSWlibgd2 CSWbdb42devel
+BUILD_DEP_PKGS += CSWggettext-dev CSWlibssl-dev CSWlibgd2 CSWbdb42devel
 BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWimap-devel
 BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql-dev CSWunixodbc
-BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp
+BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 # NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
@@ -143,12 +143,12 @@ $(eval $(call php5_subpackage,bcmath,CSWlibz1))
 $(eval $(call php5_subpackage,bz2,CSWlibbz2-1-0 CSWlibz1))
 $(eval $(call php5_subpackage,calendar,CSWlibz1))
 $(eval $(call php5_subpackage,ctype,CSWlibz1))
-$(eval $(call php5_subpackage,curl,CSWlibcurl4 CSWlibidn11 CSWlibssl0-9-8 CSWlibz1))
+$(eval $(call php5_subpackage,curl,CSWlibcurl4 CSWlibidn11 CSWlibssl1-0-0 CSWlibz1))
 $(eval $(call php5_subpackage,dba,CSWlibgdbm4 CSWbdb42 CSWlibz1))
 $(eval $(call php5_subpackage,dom,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif,CSWlibz1))
-$(eval $(call php5_subpackage,ftp,CSWlibssl0-9-8 CSWlibz1))
+$(eval $(call php5_subpackage,ftp,CSWlibssl1-0-0 CSWlibz1))
 $(eval $(call php5_subpackage,gd,CSWlibfreetype6 CSWlibgd2 CSWlibjpeg7 CSWlibpng12-0 CSWt1lib CSWxpm CSWlibz1))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8 CSWlibz1))
@@ -157,7 +157,7 @@ $(eval $(call php5_subpackage,hash,CSWlibz1))
 PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 $(eval $(call php5_subpackage,iconv,CSWlibiconv2 CSWlibz1))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
-$(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWlibssl0-9-8 CSWlibz1))
+$(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWlibssl1-0-0 CSWlibz1))
 $(eval $(call php5_subpackage,json,CSWlibz1))
 $(eval $(call php5_subpackage,ldap,CSWliblber2-4-2 CSWlibldap2-4-2 CSWlibsasl2-2 CSWlibz1))
 $(eval $(call php5_subpackage,mbstring,CSWlibz1))
@@ -167,7 +167,7 @@ $(eval $(call php5_subpackage,mssql,CSWlibsybdb5 CSWlibz1))
 $(eval $(call php5_subpackage,mysql,CSWlibmysqlclient15 CSWlibz1))
 $(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient15 CSWlibz1))
 $(eval $(call php5_subpackage,odbc,CSWlibodbc2 CSWlibz1))
-$(eval $(call php5_subpackage,openssl,CSWlibssl0-9-8 CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3 CSWlibz1))
+$(eval $(call php5_subpackage,openssl,CSWlibssl1-0-0 CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3 CSWlibz1))
 $(eval $(call php5_subpackage,pcntl,CSWlibz1))
 $(eval $(call php5_subpackage,pdo,CSWlibz1))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
@@ -198,7 +198,7 @@ $(eval $(call php5_subpackage,readline,CSWlibreadline6 CSWlibncurses5 CSWlibz1))
 $(eval $(call php5_subpackage,session,CSWlibmm CSWlibz1))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop,CSWlibz1))
-$(eval $(call php5_subpackage,snmp,CSWnetsnmp CSWlibz1))
+$(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25 CSWlibz1))
 $(eval $(call php5_subpackage,soap,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 $(eval $(call php5_subpackage,sockets,CSWlibz1))
 $(eval $(call php5_subpackage,sqlite,CSWsqlite CSWlibz1))
