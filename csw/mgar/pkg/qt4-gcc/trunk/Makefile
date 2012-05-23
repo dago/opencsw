@@ -95,6 +95,23 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtmultimedia4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtsvg4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibphonon4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtsql4-gxx
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWgstreamer
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWmesa
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWgstplugins
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibgcc-s1
+# These are code examples.
+CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += binary-architecture-does-not-match-placement
+
 
 PACKAGES += CSWlibqthelp4-gxx
 PKGFILES_CSWlibqthelp4-gxx += $(call baseisadirs,$(libdir),libQtHelp\.so\.4(\.\d+)*)
@@ -244,46 +261,24 @@ SPKG_DESC_CSWqt4-gxx-doc += $(DESCRIPTION), documentation
 # Catch-all
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtscript4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdeclarative4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqttest4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibsybdb5
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtclucene4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdesignercomponents4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibphonon4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtsql4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtnetwork4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqthelp4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtscripttools4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtmultimedia4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWsqlite
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWfconfig
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtxml4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibtiff3
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWgstplugins
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWmesa
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtsvg4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdesigner4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdbus4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtcore4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWgstreamer
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtopengl4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibgcc-s1
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += discouraged-path-in-pkgmap|/opt/csw/gxx/demos/shared/libdemo_shared.a
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += discouraged-path-in-pkgmap|/opt/csw/gxx/examples/tools/plugandpaint/plugins/libpnp_basictools.a
 
-# These are code examples.
-# CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += binary-architecture-does-not-match-placement
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += file-with-bad-content
 
 include gar/category.mk
