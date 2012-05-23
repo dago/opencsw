@@ -59,7 +59,6 @@ CATALOGNAME_CSWlibqtgui4-gxx = libqtgui4_gxx
 PKGFILES_CSWlibqtgui4-gxx += $(call baseisadirs,$(libdir),libQtGui\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibqtgui4-gxx += $(DESCRIPTION), libQtGui.so.4
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibxrender
@@ -269,18 +268,6 @@ RUNTIME_DEP_PKGS_CSWlibqtxml4-gxx += CSWlibqtcore4-gxx
 PACKAGES += CSWqt4-gxx-doc
 SPKG_DESC_CSWqt4-gxx-doc += $(DESCRIPTION), documentation
 # Catch-all
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtscript4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtdeclarative4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibsybdb5
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtsql4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtnetwork4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtsvg4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtcore4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtgui4-gxx
-RUNTIME_DEP_PKGS_CSWqt4-gxx-doc += CSWlibqtopengl4-gxx
-CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += discouraged-path-in-pkgmap|/opt/csw/gxx/demos/shared/libdemo_shared.a
-CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += discouraged-path-in-pkgmap|/opt/csw/gxx/examples/tools/plugandpaint/plugins/libpnp_basictools.a
-
 CHECKPKG_OVERRIDES_CSWqt4-gxx-doc += file-with-bad-content
 
 include gar/category.mk
