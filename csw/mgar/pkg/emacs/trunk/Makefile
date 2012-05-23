@@ -15,8 +15,6 @@ endef
 DISTFILES		=	$(DISTNAME).tar.bz2
 MASTER_SITES	=	$(GNU_MIRROR)
 
-CONFIGURE_ARGS	= $(DIRPATHS)
-
 # this is necessary because GNU id options dialect is is used; BTW, I
 # think that adding this systematically at the beginning of the PATH
 # helps in packaging projects issued from the Linux steam.
@@ -70,6 +68,49 @@ PACKAGING_PLATFORMS	=	\
 
 PATCHFILES			+=	0001-activate-Xft-for-configure.patch
 
+EXTRA_MODULATORS	=	FEATURES
+MODULATIONS_FEATURES=	\
+						athena \
+						gtk \
+						nox
+
+EXTRA_CONFIGURE_ARGS_athena	=	--with-x-toolkit=athena \
+								--without-dbus \
+								--without-gconf
+EXTRA_CONFIGURE_ARGS_gtk	=	--with-x-toolkit=gtk
+EXTRA_CONFIGURE_ARGS_nox	=	\
+								--with-x-toolkit=no \
+								--without-sound \
+								--without-xpm \
+								--without-jpeg \
+								--without-tiff \
+								--without-gif \
+								--without-png \
+								--without-rsvg \
+								--without-xft \
+								--without-libotf \
+								--without-m17n-flt \
+								--without-toolkit-scroll-bars \
+								--without-xim \
+								--without-dbus \
+								--without-x
+CONFIGURE_ARGS	= $(DIRPATHS)
+CONFIGURE_ARGS	+= $(EXTRA_CONFIGURE_ARGS_$(FEATURES))
+
+MERGE_SCRIPTS_isa-default-features-athena	=	copy-all
+MERGE_DIRS_isa-default-features-gtk			=	$(bindir)
+MERGE_SCRIPTS_isa-default-features-gtk		=	copy-only
+MERGE_DIRS_isa-default-features-nox			=	$(bindir)
+MERGE_SCRIPTS_isa-default-features-nox		=	copy-only
+
+ALTERNATIVES_CSWemacs		=	athena
+ALTERNATIVES_CSWemacsgtk	=	gtk
+ALTERNATIVES_CSWemacsnox	=	nox
+
+ALTERNATIVE_athena			=	$(bindir)/emacs emacs $(bindir)/emacs-athena 200
+ALTERNATIVE_gtk				=	$(bindir)/emacs emacs $(bindir)/emacs-gtk 100
+ALTERNATIVE_nox				=	$(bindir)/emacs emacs $(bindir)/emacs-nox 300
+
 PACKAGES					=	CSWemacscommon
 SPKG_DESC_CSWemacscommon	=	$(DESCRIPTION) - architecture neutral common components
 CATALOGNAME_CSWemacscommon	=	emacs_common
@@ -89,7 +130,7 @@ PKGFILES_CSWemacsel			=	\
 ARCHALL_CSWemacsel			=	1
 
 PACKAGES							+=	CSWemacsbincommon
-SPKG_DESC_CSWemacsbincommon			=	$(DESCRIPTION) - based on the Athena toolkit
+SPKG_DESC_CSWemacsbincommon			=	$(DESCRIPTION) - common binaries
 CATALOGNAME_CSWemacsbincommon		=	emacs_bin_common
 RUNTIME_DEP_PKGS_CSWemacsbincommon	=	\
 										CSWemacscommon
@@ -107,6 +148,16 @@ PKGFILES_CSWemacsbincommon			=	\
 										/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/sorted-doc \
 										/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/update-game-score
 
+PACKAGES					+=	CSWemacs
+SPKG_DESC_CSWemacs			=	$(DESCRIPTION) - based on the Athena toolkit
+CATALOGNAME_CSWemacs		=	emacs
+RUNTIME_DEP_PKGS_CSWemacs	=	\
+								CSWemacscommon \
+								CSWemacsbincommon
+PKGFILES_CSWemacs			=	\
+								/opt/csw/bin/emacs-athena \
+								/opt/csw/bin/emacs-$(VERSION)-athena
+
 PACKAGES					+=	CSWemacsgtk
 SPKG_DESC_CSWemacsgtk		=	$(DESCRIPTION) - based on the GTK toolkit
 CATALOGNAME_CSWemacsgtk		=	emacs_gtk
@@ -114,22 +165,38 @@ RUNTIME_DEP_PKGS_CSWemacsgtk=	\
 								CSWemacscommon \
 								CSWemacsbincommon
 PKGFILES_CSWemacsgtk		=	\
-								/opt/csw/bin/emacs \
-								/opt/csw/bin/emacs-$(VERSION)
+								/opt/csw/bin/emacs-gtk \
+								/opt/csw/bin/emacs-$(VERSION)-gtk
 
-# PACKAGES					+=	CSWemacs
-# SPKG_DESC_CSWemacs			=	$(DESCRIPTION) - based on the Athena toolkit
-# CATALOGNAME_CSWemacs		=	emacs
-# RUNTIME_DEP_PKGS_CSWemacs	=	\
-# 								CSWemacscommon
-
-# PACKAGES					+=	CSWemacsnox
-# SPKG_DESC_CSWemacsnox		=	$(DESCRIPTION) - without any XWindows dependencies
-# CATALOGNAME_CSWemacsnox		=	emacs_nox
-# RUNTIME_DEP_PKGS_CSWemacsnox=	\
-# 								CSWemacscommon
+PACKAGES					+=	CSWemacsnox
+SPKG_DESC_CSWemacsnox		=	$(DESCRIPTION) - without any XWindows dependencies
+CATALOGNAME_CSWemacsnox		=	emacs_nox
+RUNTIME_DEP_PKGS_CSWemacsnox=	\
+								CSWemacscommon \
+								CSWemacsbincommon
+PKGFILES_CSWemacsnox		=	\
+								/opt/csw/bin/emacs-nox \
+								/opt/csw/bin/emacs-$(VERSION)-nox
 
 include gar/category.mk
+
+post-install-isa-default-features-athena:
+	@echo "executing $@"
+	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-athena
+	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-athena
+	$(MAKECOOKIE)
+
+post-install-isa-default-features-gtk:
+	@echo "executing $@"
+	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-gtk
+	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-gtk
+	$(MAKECOOKIE)
+
+post-install-isa-default-features-nox:
+	@echo "executing $@"
+	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-nox
+	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-nox
+	$(MAKECOOKIE)
 
 # this is private and not available publicly
 mydependencies:
