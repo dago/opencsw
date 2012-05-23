@@ -83,7 +83,7 @@ CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-default-user=$(NAME)
 
 GARCOMPILER = GNU
-EXTRA_LDFLAGS += -L$(prefix)/bdb48/lib
+EXTRA_LDFLAGS += -L$(prefix)/bdb48/lib -R$(prefix)/bdb48/lib
 EXTRA_INC += $(prefix)/bdb48/include
 
 TEST_TARGET = 
