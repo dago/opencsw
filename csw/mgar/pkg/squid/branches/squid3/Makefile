@@ -49,6 +49,7 @@ PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt-csw-libexec.patch
 PATCHFILES += 0006-Use-default-cache_dir.patch
 PATCHFILES += 0006-Use-usr-xpg4-bin-egrep.patch
 PATCHFILES += 0007-Use-OpenCSW-specific-paths-for-various-helper-tests.patch
+PATCHFILES += 0008-Rename-IpAddress-to-SquidIpAddress-to-make-mib2.h-ha.patch
 
 sysconfdir = /etc/opt/csw/$(NAME)
 
