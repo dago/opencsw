@@ -58,7 +58,7 @@ CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --enable-arp-acl
-CONFIGURE_ARGS += --enable-auth=basic,ntlm
+CONFIGURE_ARGS += --enable-auth=basic,ntlm,digest,negotiate
 CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 CONFIGURE_ARGS += --enable-cache-digests
 CONFIGURE_ARGS += --enable-carp
@@ -72,6 +72,7 @@ CONFIGURE_ARGS += --enable-select
 CONFIGURE_ARGS += --enable-snmp
 CONFIGURE_ARGS += --enable-ssl
 CONFIGURE_ARGS += --enable-useragent-log
+CONFIGURE_ARGS += --enable-ipf-transparent
 CONFIGURE_ARGS += --disable-ident-lookups
 CONFIGURE_ARGS += --disable-icmp
 CONFIGURE_ARGS += --with-dl
@@ -80,7 +81,7 @@ CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-default-user=$(NAME)
 
 GARCOMPILER = GNU
-EXTRA_LDFLAGS += $(prefix)/bdb48/lib
+EXTRA_LDFLAGS += -L$(prefix)/bdb48/lib
 EXTRA_INC += $(prefix)/bdb48/include
 
 TEST_TARGET = 
