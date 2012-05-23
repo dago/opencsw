@@ -14,7 +14,11 @@ DESCRIPTION = RDP client, a fork of the rdesktop project
 MASTER_SITES = http://github.com/downloads/FreeRDP/FreeRDP/
 DISTFILES += $(NAME)-$(VERSION).tar.gz
 
+BUILD_DEP_PKGS += CSWffmpeg-dev
+BUILD_DEP_PKGS += CSWxmlto
+
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 GARCOMPILER = GCC4
 
 PACKAGES += CSWfreerdp-dev
