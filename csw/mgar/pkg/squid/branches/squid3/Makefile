@@ -41,12 +41,12 @@ MIGRATE_FILES += squid.conf
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
 DISTFILES = squid-$(DISTVERSION).tar.bz2
 
-#PATCHFILES =  0000-Use-opt-csw-bin-bash-for-bootstrap.sh.patch
-#PATCHFILES += 0001-Use-opt-csw-bin-ggrep-instead-of-egrep.patch
-#PATCHFILES += 0002-Link-against-OpenSSL-from-OpenCSW.patch
-#PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
-#PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt-csw-libexec.patch
-#PATCHFILES += 0006-Use-default-cache_dir.patch
+PATCHFILES =  0000-Use-opt-csw-bin-bash-for-bootstrap.sh.patch
+PATCHFILES += 0002-Link-against-OpenSSL-from-OpenCSW.patch
+PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
+PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt-csw-libexec.patch
+PATCHFILES += 0006-Use-default-cache_dir.patch
+PATCHFILES += 0006-Use-egrep-q-instead-of-grep-q.patch
 
 sysconfdir = /etc/opt/csw/$(NAME)
 
