@@ -11,7 +11,7 @@
 #####################################################################
 
 PKCS11 = 1
-#T4 = 1
+T4 = 1
 
 ###### Package information #######
 
@@ -124,9 +124,11 @@ endif
 #     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
 # patch taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
 ifdef T4
+ifeq ($(shell /usr/bin/uname -p),sparc) 
 ifneq ($(shell /usr/bin/uname -r),5.9)
 ifneq ($(shell /usr/bin/uname -r),5.10)
 	PATCHFILES += openssl-1.0.1c-t4-engine.sparc-patch.2012-05-11
+endif
 endif
 endif
 endif
@@ -181,6 +183,10 @@ endif
 
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
+
+# Configure uses make and sun make is not happy
+# with the shell command added by the t4 patch
+CONFIGURE_ENV += MAKE="/opt/csw/bin/gmake"
 
 # Some optimization
 EXT_CFLAGS   += -mt -xstrconst
