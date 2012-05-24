@@ -31,8 +31,7 @@ index b120052..67346d3 100644
 +    } solaris {
 +        include(settings_csw.pro)
      } else {
--        include(settings_linux.pro)
-+        include(settings_linx.pro)
+         include(settings_linux.pro)
      }
  }
 -- 
