@@ -87,6 +87,7 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqthelp4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqttest4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtnetwork4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtdbus4-gxx
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWdbus
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtclucene4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtcore4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtscripttools4-gxx
@@ -121,6 +122,8 @@ CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += binary-architecture-does-not-match-placemen
 # REFINE this later!
 CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += discouraged-path-in-pkgmap
+# because libdbus needs /etc/machine-id which can generated with a tool of CSWdbus
+CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += surplus-dependency|CSWdbus
 
 PACKAGES += CSWlibqthelp4-gxx
 PKGFILES_CSWlibqthelp4-gxx += $(call baseisadirs,$(libdir),libQtHelp\.so\.4(\.\d+)*)
