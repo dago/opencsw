@@ -7,11 +7,24 @@ diff -uNr openssl-1.0.1c.orig/Configure openssl-1.0.1c/Configure
  my $ia64_asm="ia64cpuid.o:bn-ia64.o ia64-mont.o::aes_core.o aes_cbc.o aes-ia64.o::md5-ia64.o:sha1-ia64.o sha256-ia64.o sha512-ia64.o::rc4-ia64.o rc4_skey.o:::::ghash-ia64.o::void";
 -my $sparcv9_asm="sparcv9cap.o sparccpuid.o:bn-sparcv9.o sparcv9-mont.o sparcv9a-mont.o:des_enc-sparc.o fcrypt_b.o:aes_core.o aes_cbc.o aes-sparcv9.o:::sha1-sparcv9.o sha256-sparcv9.o sha512-sparcv9.o:::::::ghash-sparcv9.o::void";
 -my $sparcv8_asm=":sparcv8.o:des_enc-sparc.o fcrypt_b.o:::::::::::::void";
-+my $sparcv9_asm="sparcv9cap.o sparccpuid.o:bn-sparcv9.o sparcv9-mont.o sparcv9a-mont.o:des_enc-sparc.o fcrypt_b.o t4_des.o:aes_core.o aes_cbc.o aes-sparcv9.o t4_aes.o::t4_md5.o:sha1-sparcv9.o sha256-sparcv9.o sha512-sparcv9.o t4_sha1.o t4_sha2.o::::::::ghash-sparcv9.o::void";
-+my $sparcv8_asm=":sparcv8.o:des_enc-sparc.o fcrypt_b.o t4_des.o:t4_aes.o::t4_md5.o:t4_sha1.o t4_sha2.o:::::::void";
++my $sparcv9_asm="sparcv9cap.o sparccpuid.o:bn-sparcv9.o sparcv9-mont.o sparcv9a-mont.o:des_enc-sparc.o fcrypt_b.o t4_des.o:aes_core.o aes_cbc.o aes-sparcv9.o t4_aes.o::t4_md5.o:sha1-sparcv9.o sha256-sparcv9.o sha512-sparcv9.o t4_sha1.o t4_sha2.o:::::::ghash-sparcv9.o::void";
++my $sparcv8_asm=":sparcv8.o:des_enc-sparc.o fcrypt_b.o t4_des.o:t4_aes.o::t4_md5.o:t4_sha1.o t4_sha2.o:::::::::void";
  my $alpha_asm="alphacpuid.o:bn_asm.o alpha-mont.o:::::sha1-alpha.o:::::::ghash-alpha.o::void";
  my $mips32_asm=":bn-mips.o::aes_cbc.o aes-mips.o:::sha1-mips.o sha256-mips.o::::::::";
  my $mips64_asm=":bn-mips.o mips-mont.o::aes_cbc.o aes-mips.o:::sha1-mips.o sha256-mips.o sha512-mips.o::::::::";
+@@ -246,9 +246,9 @@
+ # SC5.0 note: Compiler common patch 107357-01 or later is required!
+ "solaris-sparcv7-cc","cc:-xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${no_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ "solaris-sparcv8-cc","cc:-xarch=v8 -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"solaris-sparcv9-cc","cc:-m32 -xtarget=ultra -xarch=sparc -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"solaris-sparcv9+vis-cc","cc:-m32 -xtarget=ultra -xarch=sparcvis -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"solaris64-sparcv9-cc","cc:-m64 -xtarget=ultra -xarch=sparc -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-xarch=v9 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/ccs/bin/ar rs::/64",
++"solaris-sparcv9-cc","cc:-m32 -xtarget=ultra -xarch=sparc -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl -lsoftcrypto:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"solaris-sparcv9+vis-cc","cc:-m32 -xtarget=ultra -xarch=sparcvis -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl -lsoftcrypto:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"solaris64-sparcv9-cc","cc:-m64 -xtarget=ultra -xarch=sparc -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl -lsoftcrypto:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-xarch=v9 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/ccs/bin/ar rs::/64",
+ ####
+ "debug-solaris-sparcv8-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xarch=v8 -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ "debug-solaris-sparcv9-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xtarget=ultra -xarch=v8plus -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)", 
 diff -uNr openssl-1.0.1c.orig/crypto/aes/Makefile openssl-1.0.1c/crypto/aes/Makefile
 --- openssl-1.0.1c.orig/crypto/aes/Makefile	2011-11-14 21:42:21.000000000 +0100
 +++ openssl-1.0.1c/crypto/aes/Makefile	2012-05-11 22:19:17.481179000 +0200
@@ -19,8 +32,8 @@ diff -uNr openssl-1.0.1c.orig/crypto/aes/Makefile openssl-1.0.1c/crypto/aes/Make
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
  
-+BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
-+		then echo 32; else echo 64; fi)
++BITS:=	$(shell if grep '^CFLAG.*=.*-m64' ../../Makefile >/dev/null; \
++		then echo 64; else echo 32; fi)
 +ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
 +
  GENERAL=Makefile
@@ -3100,8 +3113,8 @@ diff -uNr openssl-1.0.1c.orig/crypto/des/Makefile openssl-1.0.1c/crypto/des/Make
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
  
-+BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
-+		then echo 32; else echo 64; fi)
++BITS:=	$(shell if grep '^CFLAG.*=.*-m64' ../../Makefile >/dev/null; \
++		then echo 64; else echo 32; fi)
 +ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
 +
  GENERAL=Makefile
@@ -8041,8 +8054,8 @@ diff -uNr openssl-1.0.1c.orig/crypto/md5/Makefile openssl-1.0.1c/crypto/md5/Make
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
  
-+BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
-+		then echo 32; else echo 64; fi)
++BITS:=	$(shell if grep '^CFLAG.*=.*-m64' ../../Makefile >/dev/null; \
++		then echo 64; else echo 32; fi)
 +ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
 +
  GENERAL=Makefile
@@ -8221,8 +8234,8 @@ diff -uNr openssl-1.0.1c.orig/crypto/sha/Makefile openssl-1.0.1c/crypto/sha/Make
  ASFLAGS= $(INCLUDES) $(ASFLAG)
  AFLAGS= $(ASFLAGS)
  
-+BITS:=	$(shell if grep '^SHARED_LDFLAGS.*=.*-m32' ../../Makefile >/dev/null; \
-+		then echo 32; else echo 64; fi)
++BITS:=	$(shell if grep '^CFLAG.*=.*-m64' ../../Makefile >/dev/null; \
++		then echo 64; else echo 32; fi)
 +ASFLAGSYF= -xregsym=no -K pic -P -xarch=v9v -D_sparcv9 -D_ASM -Dsparc -m$(BITS)
 +
  GENERAL=Makefile
