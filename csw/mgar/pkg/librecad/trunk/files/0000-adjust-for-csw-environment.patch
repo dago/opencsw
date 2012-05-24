@@ -1,0 +1,40 @@
+From 9ae6c98ce011215619dd63c1060a8f836fce5b8b Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 24 May 2012 15:48:53 +0200
+Subject: [PATCH] adjust for csw environment
+
+---
+ librecad/src/src.pro |    1 -
+ settings.pro         |    4 +++-
+ 2 Dateien geändert, 3 Zeilen hinzugefügt(+), 2 Zeilen entfernt(-)
+
+diff --git a/librecad/src/src.pro b/librecad/src/src.pro
+index 4e1a0d3..e6a1ea8 100755
+--- a/librecad/src/src.pro
++++ b/librecad/src/src.pro
+@@ -38,7 +38,6 @@ DESTDIR = $${INSTALLDIR}
+ 
+ # Make translations at the end of the process
+ unix {
+-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${SCMREVISION}")
+ 
+     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
+     macx {
+diff --git a/settings.pro b/settings.pro
+index b120052..67346d3 100644
+--- a/settings.pro
++++ b/settings.pro
+@@ -4,7 +4,9 @@ win32 {
+ unix {
+     macx {
+         include(settings_macx.pro)
++    } solaris {
++        include(settings_csw.pro)
+     } else {
+-        include(settings_linux.pro)
++        include(settings_linx.pro)
+     }
+ }
+-- 
+1.7.10.2
+
