@@ -1,0 +1,34 @@
+From bf251cd7152b26d38ec89719f281d653cc9d438c Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 24 May 2012 16:09:30 +0200
+Subject: [PATCH] add csw settings
+
+---
+ settings_csw.pro |   15 +++++++++++++++
+ 1 Datei geändert, 15 Zeilen hinzugefügt(+)
+ create mode 100644 settings_csw.pro
+
+diff --git a/settings_csw.pro b/settings_csw.pro
+new file mode 100644
+index 0000000..9f6b517
+--- /dev/null
++++ b/settings_csw.pro
+@@ -0,0 +1,15 @@
++
++
++SUBDIRS += ttff2lff
++INSTALLDIR = ../../unix
++
++
++#
++# add csw muparser include dir
++#
++
++exists("/opt/csw/gxx/include") {
++   INCLUDEPATH += "/opt/csw/gxx/include"
++   INCLUDEPATH += "/opt/csw/gxx/include/boost"
++   INCLUDEPATH += "/opt/csw/include/freetype2"
++}
+-- 
+1.7.10.2
+
