@@ -54,6 +54,7 @@ PACKAGES += CSWopenbox-dev
 SPKG_DESC_CSWopenbox-dev += $(DESCRIPTION), development files
 PKGFILES_CSWopenbox-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWopenbox-dev += CSWlibobparser21
+RUNTIME_DEP_PKGS_CSWopenbox-dev += CSWlibobrender21
 
 # Catch-all package
 PACKAGES += CSWopenbox
