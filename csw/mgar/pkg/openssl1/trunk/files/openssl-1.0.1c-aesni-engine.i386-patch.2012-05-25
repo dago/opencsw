@@ -471,17 +471,6 @@ diff -Nur openssl-1.0.1c.orig/crypto/engine/Makefile openssl-1.0.1c/crypto/engin
  	eng_rsax.o eng_rdrand.o \
  	hw_pk11.o hw_pk11_pub.o hw_pk11_uri.o
  
-diff -Nur openssl-1.0.1c.orig/include/openssl/engine.h openssl-1.0.1c/include/openssl/engine.h
---- openssl-1.0.1c.orig/include/openssl/engine.h	2012-05-25 22:16:38.558758000 +0200
-+++ openssl-1.0.1c/include/openssl/engine.h	2012-05-25 22:08:42.187719000 +0200
-@@ -351,6 +351,7 @@
- #endif
- #endif
- void ENGINE_load_cryptodev(void);
-+void ENGINE_load_aesni(void);
- void ENGINE_load_pk11(void);
- void ENGINE_load_rsax(void);
- void ENGINE_load_rdrand(void);
 diff -Nur openssl-1.0.1c.orig/util/libeay.num openssl-1.0.1c/util/libeay.num
 --- openssl-1.0.1c.orig/util/libeay.num	2011-12-25 15:48:44.000000000 +0100
 +++ openssl-1.0.1c/util/libeay.num	2012-05-25 22:08:42.228996000 +0200
