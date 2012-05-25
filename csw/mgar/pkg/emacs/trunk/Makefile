@@ -123,14 +123,15 @@ OBSOLETED_BY_CSWemacs-common		+=	CSWemacscommon
 CATALOGNAME_CSWemacscommon			=	emacscommon_stub
 ARCHALL_CSWemacs-common				=	1
 
-PACKAGES					+=	CSWemacs-el
-SPKG_DESC_CSWemacs-el		=	$(DESCRIPTION) - elisp sources
-CATALOGNAME_CSWemacs-el		=	emacs_el
-OBSOLETED_BY_CSWemacs-el	=	CSWemacsel
-CATALOGNAME_CSWemacsel		=	emacsel_stub
-RUNTIME_DEP_PKGS_CSWemacs-el=	CSWemacs-common
-PKGFILES_CSWemacs-el		=	/opt/csw/share/emacs/$(VERSION)/.*[.]el[.]gz
-ARCHALL_CSWemacs-el			=	1
+PACKAGES						+=	CSWemacs-el
+SPKG_DESC_CSWemacs-el			=	$(DESCRIPTION) - elisp sources
+CATALOGNAME_CSWemacs-el			=	emacs_el
+OBSOLETED_BY_CSWemacs-el		=	CSWemacsel
+CATALOGNAME_CSWemacsel			=	emacsel_stub
+RUNTIME_DEP_PKGS_CSWemacs-el	=	CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-el	+=	surplus-dependency|CSWemacs-common
+PKGFILES_CSWemacs-el			=	/opt/csw/share/emacs/$(VERSION)/.*[.]el[.]gz
+ARCHALL_CSWemacs-el				=	1
 
 PACKAGES								+=	CSWemacs-bin-common
 SPKG_DESC_CSWemacs-bin-common			=	$(DESCRIPTION) - common binaries
