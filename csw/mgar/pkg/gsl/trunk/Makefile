@@ -35,6 +35,7 @@ OBSOLETED_BY_CSWlibgslcblas0		=	CSWgslrt
 PKGFILES_CSWlibgslcblas0			+=	$(call baseisadirs,$(libdir),libgslcblas\.so\.0\.0\.0)
 PKGFILES_CSWlibgslcblas0			+=	$(call baseisadirs,$(libdir),libgslcblas\.so\.0(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibgslcblas0	+=	CSWlibgcc-s1
+ARCHALL_CSWgslrt					=	1
 
 PACKAGES					+=	CSWgsl-dev
 CATALOGNAME_CSWgsl-dev		=	gsl_dev
@@ -47,12 +48,25 @@ PKGFILES_CSWgsl-dev			+=	/opt/csw/bin/gsl-randist
 PKGFILES_CSWgsl-dev			+=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWgsl-dev	=	CSWlibgsl0
 RUNTIME_DEP_PKGS_CSWgsl-dev	+=	CSWlibgslcblas0
+ARCHALL_CSWgsl-dev			=	1
+ARCHALL_CSWgsl				=	1
 
-PACKAGES					+=	CSWgsl-doc
-CATALOGNAME_CSWgsl-doc		=	gsl_doc
-SPKG_DESC_CSWgsl-doc		+=	$(DESCRIPTION), documentation
-OBSOLETED_BU_CSWgsl-doc		=	CSWgsldoc
-CATALOGNAME_CSWgsldoc		=	gsl_doc_stub
+PACKAGES						+=	CSWgsl-doc
+CATALOGNAME_CSWgsl-doc			=	gsl_doc
+SPKG_DESC_CSWgsl-doc			+=	$(DESCRIPTION), documentation
+OBSOLETED_BU_CSWgsl-doc			=	CSWgsldoc
+CATALOGNAME_CSWgsldoc			=	gsl_doc_stub
+# note that CSWgsl-doc is not an architectural neutral
+ARCHALL_CSWgsldoc				=	1
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/gsl-ref.info-3
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/gsl-ref.info-1
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info-6|CSWgsl-doc|CSWgsldoc
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info|CSWgsl-doc|CSWgsldoc
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info-3|CSWgsl-doc|CSWgsldoc
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info-2|CSWgsl-doc|CSWgsldoc
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info-5|CSWgsl-doc|CSWgsldoc
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info-1|CSWgsl-doc|CSWgsldoc
+CHECKPKG_OVERRIDES_CSWgsl-doc	+=	file-collision|/opt/csw/share/info/gsl-ref.info-4|CSWgsl-doc|CSWgsldoc
 
 include gar/category.mk
 
