@@ -1,5 +1,5 @@
 NAME = phpMyAdmin
-VERSION = 3.4.7.1
+VERSION = 3.5.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -23,13 +23,13 @@ RUNTIME_DEP_PKGS  = CSWap2modphp5
 RUNTIME_DEP_PKGS += CSWapache2
 RUNTIME_DEP_PKGS += CSWmysql5
 RUNTIME_DEP_PKGS += CSWphp5
-RUNTIME_DEP_PKGS += CSWphp5ctype
-RUNTIME_DEP_PKGS += CSWphp5gd
-RUNTIME_DEP_PKGS += CSWphp5mbstring
-RUNTIME_DEP_PKGS += CSWphp5mcrypt
-RUNTIME_DEP_PKGS += CSWphp5mysqli
-RUNTIME_DEP_PKGS += CSWphp5session
-RUNTIME_DEP_PKGS += CSWphp5zip
+RUNTIME_DEP_PKGS += CSWphp5-ctype
+RUNTIME_DEP_PKGS += CSWphp5-gd
+RUNTIME_DEP_PKGS += CSWphp5-mbstring
+RUNTIME_DEP_PKGS += CSWphp5-mcrypt
+RUNTIME_DEP_PKGS += CSWphp5-mysqli
+RUNTIME_DEP_PKGS += CSWphp5-session
+RUNTIME_DEP_PKGS += CSWphp5-zip
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
@@ -39,18 +39,17 @@ INSTALL_SCRIPTS   = custom
 ARCHALL = 1
 SPKG_SOURCEURL = http://www.phpmyadmin.net
 
-CHECKPKG_OVERRIDES_CSWphpmyadmin += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5session
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5zip
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5gd
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5mbstring
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5mcrypt
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-session
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-zip
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-gd
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-mbstring
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-mcrypt
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWap2modphp5
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWmysql5
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5ctype
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5mysqli
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-ctype
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-mysqli
 # Only a comment
 CHECKPKG_OVERRIDES_CSWphpmyadmin += file-with-bad-content|/usr/share|root/opt/csw/share/www/phpmyadmin/libraries/vendor_config.php
 # Only a comment
