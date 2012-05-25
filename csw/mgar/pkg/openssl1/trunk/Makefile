@@ -12,6 +12,7 @@
 
 PKCS11 = 1
 T4 = 1
+AESNI = 1
 
 ###### Package information #######
 
@@ -130,6 +131,12 @@ ifneq ($(shell /usr/bin/uname -r),5.10)
 	PATCHFILES += openssl-1.0.1c-t4-engine.sparc-patch.2012-05-11
 endif
 endif
+endif
+endif
+
+ifdef AESNI
+ifeq ($(shell /usr/bin/uname -p),i386) 
+	PATCHFILES += openssl-1.0.1c-aesni-engine.i386-patch.2012-05-25
 endif
 endif
 
