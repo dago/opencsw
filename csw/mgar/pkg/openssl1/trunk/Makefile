@@ -184,6 +184,8 @@ endif
 
 ifeq ($(shell /usr/bin/uname -r),5.11)
 GARCOMPILER = SOS12U3
+else
+GARCOMPILER = SOS12
 endif
 
 
