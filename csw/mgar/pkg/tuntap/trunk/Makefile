@@ -18,9 +18,6 @@ MASTER_SITES = http://www.whiteboard.ne.jp/~admin2/tuntap/source/tuntap/
 DISTNAME = tuntap
 DISTFILES = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # one Makefile for both packages
