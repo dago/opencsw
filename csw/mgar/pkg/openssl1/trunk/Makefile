@@ -12,7 +12,7 @@
 
 PKCS11 = 1
 T4 = 1
-AESNI = 0
+#AESNI = 1
 
 ###### Package information #######
 
