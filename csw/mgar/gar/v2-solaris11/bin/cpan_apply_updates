@@ -1,0 +1,36 @@
+#!/bin/env perl -w
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# cpan_apply_updates - process data created by cpan_check.  Applies
+#                      version updates to module Makefiles, fetches new
+#                      sources, and updates checksums.
+#
+
+use strict;
+
+while (<>) {
+    next if /^#/;
+    chomp;
+    my ($module, $newvers) = split /\|/, $_;
+    next unless $module && $newvers;
+
+    unless (-d $module) {
+        print "Cannot find module directory: $module\n";
+        next;
+    }
+    print "Updating $module to $newvers\n";
+    my $rpat = "s/^(VERSION).*\$/\$1 = $newvers/";
+    system("perl -i.bak -plne '$rpat' $module/Makefile")
+        and die "Failed to upgrade $module\n";
+    system("gmake -C $module update")
+        and die "Failed to execute update target on $module\n";
+}

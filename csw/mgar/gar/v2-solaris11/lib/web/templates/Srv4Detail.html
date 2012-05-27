@@ -1,0 +1,101 @@
+$def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs, pkgstats_raw)
+<html>
+  <head>
+    <title>
+      $pkg.basename
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+
+<h3>Basic information</h3>
+
+    <ul>
+      <li><tt>$pkg.md5_sum</tt></li>
+      <li>$pkg.basename</li>
+      <li>$pkg.pkginst.pkgname</li>
+      <li><a href="../../catalognames/$pkg.catalogname/">$pkg.catalogname</a></li>
+      <li>$pkg.version_string</li>
+      <li>Filename $pkg.filename_arch</li>
+      <li>Pkginfo $pkg.arch</li>
+      <li><a href="../../maintainers/$pkg.maintainer.id/">$pkg.maintainer</a></li>
+
+$if pkg.in_catalogs:
+  <li>The package is in catalogs:
+  <ul>
+  $for fic in pkg.in_catalogs:
+    <li>
+    <a href="../../catalogs/$fic.catrel.name-$fic.arch.name-$fic.osrel.short_name/">
+    $fic
+    </a>
+    </li>
+  </ul>
+  </li>
+$else:
+  <li>The package is not part of any catalogs</li>
+
+
+<li>Size: $pkg.size bytes</li>
+<li>Registered: $pkg.registered</li>
+
+$if pkg.registered:
+  <li><a href="files/">Files of $pkg.basename</a></li>
+
+<li>Use to generate catalogs: $pkg.use_to_generate_catalogs</li>
+
+<li>Metadata data structure version: $pkg.stats_version</li>
+
+</ul>
+
+$if overrides:
+  <h3>Overrides</h3>
+  <ul>
+  $for override in overrides:
+    <li>
+    $override
+    </li>
+  </ul>
+$else:
+  <p>No overrides.</p>
+
+<h3>Error tags</h3>
+
+<p>Error tags associated with catalogs.<p>
+<ul>
+$for osrel, arch, catrel, tags_in_cat in tags_and_catalogs:
+  $if tags_in_cat:
+    <li>
+    $catrel.name
+    $arch.name
+    $osrel.short_name
+    <ul>
+    $for tag in tags_in_cat:
+      <li>
+      $if tag.overridden:
+        <span style="color: gray;">
+      $else:
+        <span style="color: black;">
+      <a href="http://wiki.opencsw.org/checkpkg-error-tags#$tag.tag_name" title="Information about the $tag.tag_name tag.">$tag.tag_name</a> $tag.tag_info
+      $if tag.overridden:
+        [overridden]
+      </span>
+      </li>
+    </ul>
+    </li>
+</ul>
+
+<h3>pkgmap</h3>
+
+<div style="background-color: #DDD; font-family: monospace;">
+<pre>
+$for entry in pkg.GetStatsStruct()["pkgmap"]: $entry["line"]
+</pre>
+</div>
+
+<h3>Raw dump of the Python data structure</h3>
+<pre>
+$pkgstats_raw
+</pre>
+
+</body>
+</html>

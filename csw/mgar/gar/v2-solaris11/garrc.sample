@@ -1,0 +1,21 @@
+# vim: ft=make
+#
+# ~/.garrc - Local settings file for the CSW build system.
+#
+# For the most part, any setting found in gar.conf.mk can be overridden by
+# setting (or unsetting) the variable in this file.  The system gar.conf.mk
+# provides a reasonable set of defaults, but customizations may be required to
+# build packages outside of the CSW build stack.
+#
+
+# Packaging information
+SPKG_PACKAGER   = Joe Developer
+SPKG_EMAIL      = jdev@domain.org
+
+# Where to put finished packages
+SPKG_EXPORT     = /export/home/jdev/staging/build-$(shell date '+%d.%b.%Y')
+
+# Proxy settings
+#http_proxy =
+#ftp_proxy =
+
