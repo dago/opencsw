@@ -64,7 +64,7 @@ RUNTIME_DEP_PKGS_CSWgit += CSWosshclient CSWlibiconv2 CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWgit += CSWbash CSWpmerror CSWpmtermreadkey
 RUNTIME_DEP_PKGS_CSWgit += CSWpmnetsmtpssl CSWless
 RUNTIME_DEP_PKGS_CSWgit += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgit += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWgit += CSWlibssl1-0-0
 
 RUNTIME_DEP_PKGS_CSWgitk = CSWgit CSWtk
 
