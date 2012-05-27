@@ -268,6 +268,8 @@ class Indexer(object):
     streams_and_parsers = zip(streams, (self._ParsePkgmapLine, self._ParsePkgContentsLine))
     for stream_info in streams_and_parsers:
       parseMethod = stream_info[1]
+      if stream_info[0] == None:
+        continue
       for line in stream_info[0]:
         if show_progress:
           if not c.next() % 1000:
@@ -377,9 +379,10 @@ class Indexer(object):
     for line in streams[0]:
       pkgname, pkg_desc = self._ParsePkginfoLine(line)
       packages_by_pkgname.setdefault(pkgname, pkg_desc)
-    for line in streams[1]:
-      pkgname, pkg_desc = self._ParsePkgListLine(line)
-      packages_by_pkgname.setdefault(pkgname, pkg_desc)
+    if streams[1] != None:
+      for line in streams[1]:
+        pkgname, pkg_desc = self._ParsePkgListLine(line)
+        packages_by_pkgname.setdefault(pkgname, pkg_desc)
     logging.debug("<- _ParsePkginfoOutput()")
     return packages_by_pkgname
 
