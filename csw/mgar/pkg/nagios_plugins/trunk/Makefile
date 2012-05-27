@@ -1,5 +1,5 @@
 NAME = nagios-plugins
-VERSION = 1.4.14
+VERSION = 1.4.15
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,25 +11,32 @@ endef
 MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-DISTFILES += CSWnagiosp.prototype
-
 PATCHFILES += check_procs.c.diff
 PATCHFILES += subst.in.diff
 PATCHFILES += pst3.c.diff
+PATCHFILES += 0004-Use-32-bit-pst3-on-Solaris.patch
 
 PACKAGES = CSWnagiosp
 CATALOGNAME_CSWnagiosp = nagios_plugins
 
-RUNTIME_DEP_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWzlib CSWperl
+RUNTIME_DEP_PKGS_CSWnagiosp  = CSWggettextrt CSWlibcharset1 CSWlibiconv2 CSWlibnet1 CSWlibpq5
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibmysqlclient15 CSWoldaprt CSWlibssl1-0-0 CSWsasl
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibz1 CSWperl
+
+BUILD_DEP_PKGS_CSWnagiosp += CSWmysql-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWpostgresql-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWlibz-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWlibnet-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWlibiconv-dev
 
 NOISALIST = 1
 
 CFLAGS += -I /opt/csw/postgresql/include/
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-mysql-dir=/opt/csw/mysql5/bin
+CONFIGURE_ARGS += --with-openssl=/opt/csw
+CONFIGURE_ARGS += --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin
+CONFIGURE_ARGS += --with-mysql-dir=/opt/csw
 CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
 CONFIGURE_ARGS += --disable-largefile
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
@@ -38,7 +45,6 @@ CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 libexecdir ?= $(prefix)/libexec/nagios-plugins
 
 # Extra libs
-EXTRA_LIB += /opt/csw/mysql5/lib/mysql
 EXTRA_LIB += /opt/csw/postgresql/lib
 
 # Extra includes

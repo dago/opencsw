@@ -1,0 +1,33 @@
+From 4f4cfd00be92ec6ccd35ee3dab72d8c411ded55c Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Sun, 27 May 2012 22:33:17 +0200
+Subject: [PATCH] Use 32-bit pst3 on Solaris.
+
+---
+ configure |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/configure b/configure
+index a93e57d..c1696e0 100755
+--- a/configure
++++ b/configure
+@@ -18068,14 +18068,8 @@ elif test "$ac_cv_uname_s" = "SunOS"; then
+         ac_cv_ps_cols=9
+         { echo "$as_me:$LINENO: result: using nagios-plugins internal ps command (pst3) for solaris" >&5
+ echo "${ECHO_T}using nagios-plugins internal ps command (pst3) for solaris" >&6; }
+-	if test `isainfo -b` = 64 ; then
+-		pst3_use_64bit=1
+-		{ echo "$as_me:$LINENO: using 64bit pst3" >&5
+-echo "$as_me: using 64bit pst3" >&6;}
+-	else
+-		{ echo "$as_me:$LINENO: using 32bit pst3" >&5
++pst3_use_64bit=0
+- echo "$as_me: using 32bit pst3" >&6;}
++ echo "$as_me: using 32bit pst3" >&6;
+-	fi
+         EXTRAS_ROOT="$EXTRAS_ROOT pst3"
+ 
+ 	if test "$pst3_use_64bit" = 1; then
+-- 
+1.7.10
+
