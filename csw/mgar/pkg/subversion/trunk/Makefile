@@ -59,7 +59,7 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWsvn += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
@@ -124,7 +124,7 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
@@ -170,7 +170,7 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsasl2-2
 
 
@@ -193,7 +193,7 @@ RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
 
 
@@ -217,7 +217,7 @@ PATCHFILES += 0002-Fix-location-of-bindings.patch
 # installed.
 # SVNLIB     = $(prefix)/lib
 SVNLIB     = $(prefix)/lib/svn
-JAVA_HOME  = /usr/jdk1.6.0_20
+JAVA_HOME  = /usr/latest
 
 #EXTRA_INC += $(prefix)/apache2/include
 
