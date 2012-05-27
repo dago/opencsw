@@ -29,7 +29,9 @@ BUILD_DEP_PKGS_CSWnagiosp += CSWlibz-dev
 BUILD_DEP_PKGS_CSWnagiosp += CSWlibnet-dev
 BUILD_DEP_PKGS_CSWnagiosp += CSWlibiconv-dev
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 NOISALIST = 1
+BUILD64 = 0
 
 CFLAGS += -I /opt/csw/postgresql/include/
 
