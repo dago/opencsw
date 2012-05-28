@@ -20,6 +20,8 @@ SPKG_SOURCEURL = http://cmake.org/
 MASTER_SITES = http://cmake.org/files/v$(RELVER)/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 LICENSE = Copyright.txt
+# temporary for cmake-2.8.8, see http://public.kitware.com/Bug/view.php?id=13199
+PATCHFILES += 0001-bootstrap-Port-back-to-old-shells-13199.patch
 
 PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
@@ -27,12 +29,8 @@ SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWcmake += CSWlibidn11
 
-datadir = /share/$(NAME)-$(VERSION)
-sharedstatedir = /share
-docdir = /share/doc/$(NAME)-$(VERSION)
-
 NOISALIST = 1
-CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
+CONFIGURE_ARGS = --prefix=$(prefix)
 
 TEST_TARGET  = test
 # Some tests are failing.
@@ -49,23 +47,6 @@ FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/man/man1
 
 EXTRA_CFLAGS = -xnorunpath
 EXTRA_CXXFLAGS = -norunpath
-
-pre-configure:
-	@echo $(DIRPATHS)
-	@echo "Docdir: $(docdir)"
-	# Do NOT include the CSW include pathes here
-	(cd $(WORKSRC); /usr/bin/env \
-		CFLAGS="$($(GARCOMPILER)_CC_$(GARFLAVOR)) -I/opt/csw/include" \
-		CXXFLAGS="$($(GARCOMPILER)_CXX_$(GARFLAVOR)) -I/opt/csw/include" \
-		LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib/$$ISALIST -R/opt/csw/lib" \
-		./bootstrap \
-		--prefix=$(prefix)	\
-		--datadir=$(datadir)	\
-		--docdir=$(docdir)	\
-		--mandir=/man		\
-		--system-libs \
-	)
-	@$(MAKECOOKIE)
 
 post-configure-modulated:
 	@(echo "==> Forcing use of system libraries")
