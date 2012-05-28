@@ -37,6 +37,7 @@ CFLAGS += -I /opt/csw/postgresql/include/
 EXTRA_INC = /opt/csw/postgresql/include
 EXTRA_LIB += /opt/csw/postgresql/lib
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibintl8 CSWlibpq5
 RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibmysqlclient15 CSWlibssl1-0-0
