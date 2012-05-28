@@ -27,7 +27,21 @@ PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
 SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWcmake += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWcmake += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWcmake += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWcmake += CSWlibz1
+
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakepolicies.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakecompat.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakemodules.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cpack.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/ccmake.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/ctest.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakeprops.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakecommands.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmake.1
+CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakevars.1
 
 NOISALIST = 1
 CONFIGURE_ARGS = --prefix=$(prefix)
