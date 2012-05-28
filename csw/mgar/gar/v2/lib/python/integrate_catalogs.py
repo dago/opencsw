@@ -225,8 +225,13 @@ def main():
       dest="include_version_changes",
       default=True, action="store_false",
       help="Skip version upgrades (only accept revision upgrades).")
+  parser.add_option("--debug", dest="debug",
+                    default=False, action="store_true")
   options, args = parser.parse_args()
-  logging.basicConfig(level=logging.DEBUG)
+  loglevel = logging.INFO
+  if options.debug:
+    loglevel = logging.DEBUG
+  logging.basicConfig(level=loglevel)
   if not options.output_file:
     raise UsageError("Please specify the output file.  See --help.")
   catrel_from = options.catrel_from
