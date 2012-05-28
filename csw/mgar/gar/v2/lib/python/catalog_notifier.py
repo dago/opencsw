@@ -270,12 +270,12 @@ def main():
       s = smtplib.SMTP('mail.opencsw.org')
       try:
         s.sendmail(from_address, [email], msg.as_string())
+        logging.debug("E-mail sending finished.")
       except smtplib.SMTPRecipientsRefused, e:
         logging.warning(
             "Sending email to %s failed, recipient refused.",
             repr(email))
       s.quit()
-      logging.debug("E-mail sent.")
     else:
       print notifications[email]
       print "* * *"
