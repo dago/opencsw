@@ -3,37 +3,27 @@ VERSION = 1.4.15
 CATEGORIES = apps
 GARTYPE = v2
 
-DESCRIPTION = plugins for nagios
+DESCRIPTION = Plugins for nagios
 define BLURB
-  Long description
+   Plugins for Nagios
 endef
 
 MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+
+PACKAGES += CSWnagiosp
+SPKG_CATALOG_NAME_CSWnagiosp = nagios_plugins
 
 PATCHFILES += check_procs.c.diff
 PATCHFILES += subst.in.diff
 PATCHFILES += pst3.c.diff
 PATCHFILES += 0004-Use-32-bit-pst3-on-Solaris.patch
 
-PACKAGES = CSWnagiosp
-CATALOGNAME_CSWnagiosp = nagios_plugins
-
-RUNTIME_DEP_PKGS_CSWnagiosp  = CSWggettextrt CSWlibcharset1 CSWlibiconv2 CSWlibnet1 CSWlibpq5
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibmysqlclient15 CSWoldaprt CSWlibssl1-0-0 CSWsasl
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibz1 CSWperl
-
-BUILD_DEP_PKGS_CSWnagiosp += CSWmysql-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWpostgresql-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWlibz-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWlibnet-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWlibiconv-dev
-
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
-NOISALIST = 1
-BUILD64 = 0
-
-CFLAGS += -I /opt/csw/postgresql/include/
+REINPLACE_USRLOCAL += contrib/*
+REINPLACE_USRLOCAL += plugins/*
+REINPLACE_USRLOCAL += plugins-scripts/*
+REINPLACE_USRLOCAL += ChangeLog
+REINPLACE_USRLOCAL += README
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw
@@ -42,15 +32,22 @@ CONFIGURE_ARGS += --with-mysql-dir=/opt/csw
 CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
 CONFIGURE_ARGS += --disable-largefile
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
-CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 
-libexecdir ?= $(prefix)/libexec/nagios-plugins
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
-# Extra libs
+CFLAGS += -I /opt/csw/postgresql/include/
+EXTRA_INC = /opt/csw/postgresql/include
 EXTRA_LIB += /opt/csw/postgresql/lib
 
-# Extra includes
-EXTRA_INC = /opt/csw/postgresql/include
+
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibintl8 CSWlibpq5
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibmysqlclient15 CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
+
+BUILD_DEP_PKGS_CSWnagiosp += CSWmysql-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWpostgresql-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWlibz-dev
+BUILD_DEP_PKGS_CSWnagiosp += CSWlibnet-dev
 
 TEST_TARGET = 
 
@@ -70,3 +67,8 @@ post-install-modulated:
 	@ginstall -m 755 -d $(DOCDEST)
 	@ginstall -m 644 $(WORKSRC)/contrib.tar $(DOCDEST)
 	@$(MAKECOOKIE)
+
+post-merge:
+	@rm $(PKGROOT)$(libdir)/charset.alias
+	@$(MAKECOOKIE)
+
