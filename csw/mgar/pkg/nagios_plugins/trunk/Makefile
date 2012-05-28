@@ -33,8 +33,6 @@ CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
 CONFIGURE_ARGS += --disable-largefile
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
-
 CFLAGS += -I /opt/csw/postgresql/include/
 EXTRA_INC = /opt/csw/postgresql/include
 EXTRA_LIB += /opt/csw/postgresql/lib
