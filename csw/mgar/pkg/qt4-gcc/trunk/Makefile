@@ -22,6 +22,8 @@ LICENSE = README
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+PATCHFILES += mkspec-csw.patch
+
 # http://wiki.opencsw.org/porting-faq#toc9
 EXTRA_CFLAGS = -DSUN_OGL_NO_VERTEX_MACROS
 EXTRA_CXXFLAGS = -DSUN_OGL_NO_VERTEX_MACROS

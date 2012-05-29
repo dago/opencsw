@@ -1,0 +1,53 @@
+--- a/mkspecs/solaris-cc-64/qmake.conf
++++ b/mkspecs/solaris-cc-64/qmake.conf
+@@ -57,8 +57,8 @@ QMAKE_CXXFLAGS_YACC   = $$QMAKE_CFLAGS_YACC
+ QMAKE_CXXFLAGS_THREAD	 = $$QMAKE_CFLAGS_THREAD
+ QMAKE_CXXFLAGS_HIDESYMS = $$QMAKE_CFLAGS_HIDESYMS
+
+-QMAKE_INCDIR		= /usr/sfw/include
+-QMAKE_LIBDIR		= /usr/sfw/lib/64
++QMAKE_INCDIR		= /opt/csw/include
++QMAKE_LIBDIR		= /opt/csw/lib/64
+ QMAKE_INCDIR_X11	= /usr/openwin/include
+ QMAKE_LIBDIR_X11	= /usr/openwin/lib/64
+ QMAKE_INCDIR_QT                = $$[QT_INSTALL_HEADERS]
+--- a/mkspecs/solaris-cc/qmake.conf
++++ b/mkspecs/solaris-cc/qmake.conf
+@@ -40,8 +40,8 @@ QMAKE_CXXFLAGS_YACC   = $$QMAKE_CFLAGS_YACC
+ QMAKE_CXXFLAGS_THREAD	 = $$QMAKE_CFLAGS_THREAD
+ QMAKE_CXXFLAGS_HIDESYMS = $$QMAKE_CFLAGS_HIDESYMS
+
+-QMAKE_INCDIR		= /usr/sfw/include
+-QMAKE_LIBDIR		= /usr/sfw/lib
++QMAKE_INCDIR		= /opt/csw/include
++QMAKE_LIBDIR		= /opt/csw/lib
+ QMAKE_INCDIR_X11	= /usr/openwin/include
+ QMAKE_LIBDIR_X11	= /usr/openwin/lib
+ QMAKE_INCDIR_QT		= $$[QT_INSTALL_HEADERS]
+--- a/mkspecs/solaris-g++-64/qmake.conf
++++ b/mkspecs/solaris-g++-64/qmake.conf
+@@ -59,8 +59,8 @@ QMAKE_CXXFLAGS_STATIC_LIB = $$QMAKE_CFLAGS_STATIC_LIB
+ QMAKE_CXXFLAGS_YACC	= $$QMAKE_CFLAGS_YACC
+ QMAKE_CXXFLAGS_THREAD	= $$QMAKE_CFLAGS_THREAD
+
+-QMAKE_INCDIR		= /usr/sfw/include
+-QMAKE_LIBDIR		= /usr/sfw/lib/64
++QMAKE_INCDIR		= /opt/csw/gxx/include
++QMAKE_LIBDIR		= /opt/csw/gxx/lib/64
+ QMAKE_INCDIR_X11	= /usr/openwin/include
+ QMAKE_LIBDIR_X11	= /usr/openwin/lib/64
+ QMAKE_INCDIR_QT		= $$[QT_INSTALL_HEADERS]
+--- a/mkspecs/solaris-g++/qmake.conf
++++ b/mkspecs/solaris-g++/qmake.conf
+@@ -42,8 +42,8 @@ QMAKE_CXXFLAGS_STATIC_LIB = $$QMAKE_CFLAGS_STATIC_LIB
+ QMAKE_CXXFLAGS_YACC	= $$QMAKE_CFLAGS_YACC
+ QMAKE_CXXFLAGS_THREAD	= $$QMAKE_CFLAGS_THREAD
+
+-QMAKE_INCDIR		= /usr/sfw/include
+-QMAKE_LIBDIR		= /usr/sfw/lib
++QMAKE_INCDIR		= /opt/csw/gxx/include
++QMAKE_LIBDIR		= /opt/csw/gxx/lib
+ QMAKE_INCDIR_X11	= /usr/openwin/include
+ QMAKE_LIBDIR_X11	= /usr/openwin/lib
+ QMAKE_INCDIR_QT		= $$[QT_INSTALL_HEADERS]
+
