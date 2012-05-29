@@ -194,7 +194,14 @@ class CatalogDetail(object):
 class MaintainerList(object):
   def GET(self):
     maintainers = models.Maintainer.select().orderBy('email')
-    names = [tuple(x.email.split("@") + [x]) for x in maintainers]
+    names = []
+    for m in maintainers:
+      email = m.email.split("@")
+      # In case the email is not valid.
+      if len(email) >= 2:
+        names.append((email[0], email[1], m))
+      else:
+      	names.append((email[0], "no domain", m))
     return render.MaintainerList(names)
 
 
