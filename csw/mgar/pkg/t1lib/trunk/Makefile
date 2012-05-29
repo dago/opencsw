@@ -51,17 +51,21 @@ PKGFILES_CSWt1lib-dev			+=	/opt/csw/lib/libt1x.so
 PKGFILES_CSWt1lib-dev			+= $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWt1lib-dev	+=	CSWlibt1-5
 RUNTIME_DEP_PKGS_CSWt1lib-dev	+=	CSWlibt1x5
+# why is this? .so are just symbolic links:
+CHECKPKG_OVERRIDES_CSWt1lib-dev	+=	archall-devel-package
 ARCHALL_CSWt1lib-dev			=	1
 
-PACKAGES						+=  CSWt1lib-utils
-CATALOGNAME_CSWt1lib-utils		=	t1lib_utils
-SPKG_DESC_CSWt1lib-utils		+=	$(DESCRIPTION), utilities
-OBSOLETED_BY_CSWt1lib-utils		=	CSWt1lib
-PKGFILES_CSWt1lib-utils			=	/opt/csw/bin/type1afm
-PKGFILES_CSWt1lib-utils			+=	/opt/csw/bin/xglyph
-PKGFILES_CSWt1lib-utils			+=	/opt/csw/share/t1lib/t1lib.config
-RUNTIME_DEP_PKGS_CSWt1lib-utils	+=	CSWlibt1x5
-RUNTIME_DEP_PKGS_CSWt1lib-utils	+=	CSWxpm
+PACKAGES							+=  CSWt1lib-utils
+CATALOGNAME_CSWt1lib-utils			=	t1lib_utils
+SPKG_DESC_CSWt1lib-utils			+=	$(DESCRIPTION), utilities
+OBSOLETED_BY_CSWt1lib-utils			=	CSWt1lib
+PKGFILES_CSWt1lib-utils				=	/opt/csw/bin/type1afm
+PKGFILES_CSWt1lib-utils				+=	/opt/csw/bin/xglyph
+PKGFILES_CSWt1lib-utils				+=	/opt/csw/share/t1lib/t1lib.config
+RUNTIME_DEP_PKGS_CSWt1lib-utils		+=	CSWlibt1x5
+RUNTIME_DEP_PKGS_CSWt1lib-utils		+=	CSWxpm
+# this is to keep the transitivity principle:
+CHECKPKG_OVERRIDES_CSWt1lib-utils	+=	missing-dependency|CSWlibt1-5
 
 PACKAGES						+=	CSWt1lib-doc
 CATALOGNAME_CSWt1lib-doc		=	t1lib_doc
