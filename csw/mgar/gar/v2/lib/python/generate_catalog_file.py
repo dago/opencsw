@@ -24,6 +24,7 @@ DESC_FN = "descriptions"
 import rest
 import os
 import optparse
+import logging
 
 
 class Error(Exception):
@@ -90,6 +91,7 @@ class CatalogFileGenerator(object):
 
 
 def main():
+  logging.basicConfig(level=logging.DEBUG)
   parser = optparse.OptionParser()
   parser.add_option("--out-dir", dest="out_dir")
   parser.add_option("--catalog-release", dest="catrel")
