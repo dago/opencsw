@@ -55,6 +55,14 @@ class CatalogFileGenerator(object):
       i_deps = "|".join(i_deps)
     else:
       i_deps = "none"
+    deps = []
+    for dep, _ in deps_data["deps"]:
+      if "CSW" in dep:
+      	deps.append(dep)
+    if deps:
+    	deps = "|".join(deps)
+    else:
+    	deps = "none"
     items = [
         pkg_data["catalogname"],
         pkg_data["version_string"],
@@ -62,7 +70,7 @@ class CatalogFileGenerator(object):
         pkg_data["basename"],
         pkg_data["md5_sum"],
         unicode(pkg_data["size"]),
-        "|".join(x[0] for x in deps_data["deps"]),
+        deps,
         "none",
         i_deps]
     return " ".join(items)
