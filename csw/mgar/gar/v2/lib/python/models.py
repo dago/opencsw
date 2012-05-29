@@ -49,7 +49,14 @@ class Maintainer(sqlobject.SQLObject):
   # bugs, e.g. "someone@opencsw.or".
 
   def ObfuscatedEmail(self):
-    username, domain = self.email.split("@")
+    if self.email:
+      email = self.email.split("@")
+    else:
+    	email = ["unknown"]
+    if len(email) == 2:
+      username, domain = email
+    else:
+    	username, domain = email[0], "no domain"
     username = username[:-3] + "..."
     return "@".join((username, domain))
 
