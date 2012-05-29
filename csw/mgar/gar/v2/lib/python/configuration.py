@@ -72,6 +72,7 @@ def HomeExists():
 def GetConfig():
   config = ConfigParser.SafeConfigParser()
   file_was_found = False
+  filenames_read = []
   for file_name_tmpl, default_file in CONFIGURATION_FILE_LOCATIONS:
     filename = None
     try:
@@ -79,7 +80,9 @@ def GetConfig():
       if os.path.exists(filename):
         if not default_file:
           file_was_found = True
-        config.read(file_name_tmpl % os.environ)
+        filename_found = file_name_tmpl % os.environ
+        filenames_read.append(filename_found)
+        config.read(filename_found)
     except KeyError, e:
       logging.warn(e)
   if not file_was_found:
@@ -105,9 +108,10 @@ def GetConfig():
       fd.close()
       logging.debug("Configuration has been written.")
   if not config.has_section("database"):
-    logging.fatal("Section 'database' not found in the config file. "
+    logging.fatal(
+        "Section 'database' not found in the config files: %s. "
         "Please refer to the documentation: "
-        "http://wiki.opencsw.org/checkpkg")
+        "http://wiki.opencsw.org/checkpkg" % filenames_read)
     raise SystemExit
   return config
 
