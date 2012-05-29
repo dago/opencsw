@@ -37,7 +37,7 @@ class CatalogFileGenerator(object):
     self.catrel = catrel
     self.arch = arch
     self.osrel = osrel
-    self.pkgcache = pkgcache or rest.CachedPkgstats("pkgstats")
+    self.pkgcache = pkgcache or rest.CachedPkgstats("/home/web/pkgstats")
     self.rest_client = rest_client or rest.RestClient()
     self._catalog = None
 
