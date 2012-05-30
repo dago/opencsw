@@ -98,6 +98,7 @@ CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log/exim
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/spool
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/spool/exim
 CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/local|root/opt/csw/sbin/exim
+CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswexim.xml
 
 PROTOTYPE_MODIFIERS = eximsuid eximowned
 PROTOTYPE_PERMS_eximsuid = 4755
