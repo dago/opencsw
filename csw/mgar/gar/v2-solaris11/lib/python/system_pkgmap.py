@@ -21,6 +21,7 @@ import checkpkg_lib
 import sys
 
 CONTENT_PKG_RE = r"^\*?(CSW|SUNW)[0-9a-zA-Z\-]?[0-9a-z\-]+$"
+ALPHANUMERIC_RE = r"[0-9a-zA-Z]+"
 
 class Error(Exception):
   pass
@@ -111,7 +112,7 @@ class Indexer(object):
 
   def _ParsePkgListLine(self, line):
     fields = re.split(c.WS_RE, line)
-    pkgname = self._IpsNameToPkgname(fields[0])
+    pkgname = self._IpsNameToSrv4Name(fields[0])
     desc_field_start = 1
     # The optional publisher field is always between
     # parenthesis, we skip it if necessary
@@ -144,7 +145,7 @@ class Indexer(object):
     f_owner = None
     f_group = None
     f_pkgname = None
-    pkgnames = [ self._IpsNameToPkgname(parts[2]) ]
+    pkgnames = [ self._IpsNameToSrv4Name(parts[2]) ]
     if f_type == 's' or f_type == 'l':
       f_target = parts[3]
     else:
@@ -386,9 +387,9 @@ class Indexer(object):
     logging.debug("<- _ParsePkginfoOutput()")
     return packages_by_pkgname
   
-  def _IpsNameToPkgname(self, ips_name):
+  def _IpsNameToSrv4Name(self, ips_name):
     """Create a fake Svr4 pkgname from an ips pkgname"""
-    return "SUNW" + ips_name.replace("/", "_")    
+    return "SUNW" + "-".join(re.findall (ALPHANUMERIC_RE, ips_name))
 
 class InstallContentsImporter(object):
   """Responsible for importing a pickled file into the database."""
