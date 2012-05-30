@@ -21,8 +21,7 @@ endef
 
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += CSWexim.postinstall CSWexim.postremove
-DISTFILES += CSWexim.request CSWexim.cswreleasenotes
+DISTFILES += CSWexim.cswreleasenotes
 
 # NOTE TO FUTURE MAINTAINERS: This patch should be thoroughly reviewed
 # for each update so as not to miss any new config options of
