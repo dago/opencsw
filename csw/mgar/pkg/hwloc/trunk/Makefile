@@ -32,7 +32,6 @@ PKGFILES_CSWlibhwloc5      = $(call pkgfiles_lib,libhwloc.so.5)
 PKGFILES_CSWhwloc-dev      = $(PKGFILES_DEVEL)
 PKGFILES_CSWhwloc-doc      = $(PKGFILES_DOC)
 
-RUNTIME_DEP_PKGS_CSWhwloc      = CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibhwloc5
 RUNTIME_DEP_PKGS_CSWlibhwloc5 += CSWlibxml2-2
@@ -42,6 +41,7 @@ RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc5
 #BUILDDEPS = CSWautoconf
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-cairo
 #CONFIGURE_ARGS += --disable-visibility
 
 include gar/category.mk
