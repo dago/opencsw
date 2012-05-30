@@ -36,10 +36,10 @@ CONFIGURE_ARGS += -webkit
 CONFIGURE_ARGS += -v -shared -stl -largefile -sm 
 CONFIGURE_ARGS += -qt-libjpeg -qt-libpng -qt-libmng -qt-zlib 
 CONFIGURE_ARGS += -I/usr/include -I/usr/X11/include 
-CONFIGURE_ARGS += -I/usr/X11/share/include -I/usr/sfw/include
+CONFIGURE_ARGS += -I/usr/X11/share/include
 CONFIGURE_ARGS_sparc += -big-endian -host-big-endian
 # CONFIGURE_ARGS_i386 += -little-endian -host-big-endian
-# CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 
 # TEST_TARGET =
 
