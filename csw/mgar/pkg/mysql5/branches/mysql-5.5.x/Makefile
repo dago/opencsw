@@ -13,7 +13,7 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.5
-PATCHLEVEL = 24
+PATCHLEVEL = 25
 ALTS_PRIO = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
@@ -143,7 +143,8 @@ EXTRA_MERGE_EXCLUDE_FILES += $(datadir)/mysql-test.*
 # Enable 64 bits build
 BUILD64 = 1
 
-MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
+MASTER_SITES  = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
+MASTER_SITES += http://mysql.skynet.be/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME).tpl
 DISTFILES += quick_start-csw
