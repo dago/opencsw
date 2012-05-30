@@ -7,6 +7,12 @@
 # Modified for Blastwave by Markus Mayer <mmayer@blastwave.org>
 # Modified for OpenCSW by Ben Walton <bwalton@opencsw.org>
 
+# We want to deliver a slightly customized manifest instead of letting
+# initsmf build one for us.  The reason for this is that we want to
+# depend on sendmail-client now to avoid fiddling with
+# /usr/lib/sendmail and friends.
+#MANIFEST /var/opt/csw/svc/manifest/network/cswexim.xml
+
 # Exit if exim (or another MTA) runs from /etc/inetd.conf
 if [ -f /etc/inetd.conf ] && grep "^ *\([0-9.]\+:\)\?smtp" /etc/inetd.conf >/dev/null; then
     exit 0

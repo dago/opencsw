@@ -5,6 +5,8 @@ VERSION = 4.76
 CATEGORIES = server
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DESCRIPTION = The Exim Mail Transfer Agent
 define BLURB
   Exim is a message transfer agent (MTA) developed at the University of
@@ -36,7 +38,7 @@ RUNTIME_DEP_PKGS_CSWexim += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWexim += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWexim += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWexim += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWexim += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibspf2-2
@@ -130,6 +132,8 @@ post-install-modulated:
 	mv exim-$(VERSION)-1 exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
+	(cd $(DESTDIR); mkdir -p var/opt/csw/svc/manifest/network; \
+		cp $(abspath $(FILEDIR)/cswexim.xml) var/opt/csw/svc/manifest/network )
 	(cd $(DESTDIR); mkdir -p etc/opt/csw/init.d; \
 		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
