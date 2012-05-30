@@ -190,6 +190,9 @@ CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/
 OBSOLETED_BY_CSWemacs-common		=	CSWemacschooser
 OBSOLETED_BY_CSWemacs-common		+=	CSWemacscommon
 CATALOGNAME_CSWemacscommon			=	emacscommon_stub
+# this is to be done only for this sub-package but I don't know how to
+# specialize the variable:
+EXTRA_TEXINFO						=	$(infodir)/.*
 ARCHALL_CSWemacs-common				=	1
 
 PACKAGES						+=	CSWemacs-el
