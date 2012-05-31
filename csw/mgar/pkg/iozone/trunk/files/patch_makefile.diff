@@ -28,7 +28,7 @@ index eb1fbec..4e79be2 100644
  #
  Solaris8-64-VXFS: iozone_solaris8-64-VXFS.o libasync.o libbif.o
 -	$(CC) $(LDFLAGS) -fast -xtarget=generic64 -v -I/opt/VRTSvxfs/include/ 
-+	$(CC) $(LDFLAGS) -fast -m64 -v -I/opt/VRTSvxfs/include/ 
++	$(CC) $(LDFLAGS) -fast -m64 -v -I/opt/VRTSvxfs/include/
  		iozone_solaris8-64-VXFS.o libasync.o libbif.o \
  		-lthread -lpthread -lposix4 -lnsl -laio \
  		-lsocket -o iozone
