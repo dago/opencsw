@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.5p1
+VERSION = 1.8.5p2
 CATEGORIES = utils
 GARTYPE = v2
 
