@@ -69,6 +69,9 @@ BUILD_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
 
 BUILD_SCRIPTS = $(WORKSRC)/src/current/makefile
 
+CHECKPKG_OVERRIDES_CSWiozone += surplus-dependency|CSWgnuplot
+CHECKPKG_OVERRIDES_CSWiozone += missing-dependency|CSWperl
+
 # There is no test suite
 TEST_SCRIPTS =
 
@@ -92,13 +95,13 @@ install-custom:
 	ginstall $(DOCSRC)/Iozone_ps.gz $(DESTDIR)$(docdir)/iozone/Iozone_ps.gz
 	ginstall $(DOCSRC)/Run_rules.doc $(DESTDIR)$(docdir)/iozone/Run_rules.doc
 	# Contributed files
-	ginstall -D $(WORKSRC)/src/current/Generate_Graphs $(DESTDIR)$(bindir)/iozone-contrib/Generate_Graphs
-	ginstall $(WORKSRC)/src/current/gengnuplot.sh $(DESTDIR)$(bindir)/iozone-contrib/gengnuplot.sh
-	ginstall $(WORKSRC)/src/current/gnu3d.dem $(DESTDIR)$(bindir)/iozone-contrib/gnu3d.dem
-	ginstall $(WORKSRC)/src/current/gnuplot.dem $(DESTDIR)$(bindir)/iozone-contrib/gnuplot.dem
-	ginstall $(WORKSRC)/src/current/gnuplotps.dem $(DESTDIR)$(bindir)/iozone-contrib/gnuplotps.dem
-	ginstall $(WORKSRC)/src/current/iozone_visualizer.pl $(DESTDIR)$(bindir)/iozone-contrib/iozone_visualizer.pl
-	ginstall $(WORKSRC)/src/current/report.pl $(DESTDIR)$(bindir)/iozone-contrib/report.pl
-	ginstall $(WORKSRC)/src/current/Gnuplot.txt $(DESTDIR)$(docdir)/iozone/Gnuplot.txt
-	chmod 444 $(DESTDIR)$(docdir)/iozone/Gnuplot.txt
+	ginstall -D $(WORKSRC)/src/current/Generate_Graphs $(DESTDIR)$(datadir)/iozone/contrib/Generate_Graphs
+	ginstall $(WORKSRC)/src/current/gengnuplot.sh $(DESTDIR)$(datadir)/iozone/contrib/gengnuplot.sh
+	ginstall $(WORKSRC)/src/current/gnu3d.dem $(DESTDIR)$(datadir)/iozone/contrib/gnu3d.dem
+	ginstall $(WORKSRC)/src/current/gnuplot.dem $(DESTDIR)$(datadir)/iozone/contrib/gnuplot.dem
+	ginstall $(WORKSRC)/src/current/gnuplotps.dem $(DESTDIR)$(datadir)/iozone/contrib/gnuplotps.dem
+	ginstall $(WORKSRC)/src/current/iozone_visualizer.pl $(DESTDIR)$(datadir)/iozone/contrib/iozone_visualizer.pl
+	ginstall $(WORKSRC)/src/current/report.pl $(DESTDIR)$(datadir)/iozone/contrib/report.pl
+	ginstall $(WORKSRC)/src/current/Gnuplot.txt $(DESTDIR)$(datadir)/iozone/contrib/Gnuplot.txt
+	chmod 444 $(DESTDIR)$(datadir)/iozone/contrib/Gnuplot.txt
 	@$(MAKECOOKIE)
