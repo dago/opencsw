@@ -1,0 +1,89 @@
+From b92c24bc2546043669e45d818606e36fff61ec83 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 1 Jun 2012 03:11:50 +0200
+Subject: [PATCH] Move the envvars files to sysconfdir
+
+We want to treat the envvars files as configuration so we need to
+ensure they live in etc/.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Makefile.in          |    6 +++---
+ support/Makefile.in  |    7 ++++---
+ support/apachectl.in |    4 ++--
+ support/apxs.in      |    2 +-
+ 4 files changed, 10 insertions(+), 9 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index c2346c3..9d14234 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -82,9 +82,9 @@ install-conf:
+ 	    done ; \
+ 	done ; \
+ 	if test -f "$(builddir)/envvars-std"; then \
+-	    cp -p envvars-std $(DESTDIR)$(sbindir); \
+-	    if test ! -f $(DESTDIR)$(sbindir)/envvars; then \
+-	        cp -p envvars-std $(DESTDIR)$(sbindir)/envvars ; \
++	    cp -p envvars-std $(DESTDIR)$(sysconfdir); \
++	    if test ! -f $(DESTDIR)$(sysconfdir)/envvars; then \
++	        cp -p envvars-std $(DESTDIR)$(sysconfdir)/envvars ; \
+ 	    fi ; \
+ 	fi
+ 
+diff --git a/support/Makefile.in b/support/Makefile.in
+index 85aff34..d2b00f9 100644
+--- a/support/Makefile.in
++++ b/support/Makefile.in
+@@ -15,6 +15,7 @@ install:
+ 	@test -d $(DESTDIR)$(bindir) || $(MKINSTALLDIRS) $(DESTDIR)$(bindir)
+ 	@test -d $(DESTDIR)$(sbindir) || $(MKINSTALLDIRS) $(DESTDIR)$(sbindir)
+ 	@test -d $(DESTDIR)$(libexecdir) || $(MKINSTALLDIRS) $(DESTDIR)$(libexecdir)
++	@test -d $(DESTDIR)$(sysconfdir) || $(MKINSTALLDIRS) $(DESTDIR)$(sysconfdir)
+ 	@cp -p $(top_builddir)/server/httpd.exp $(DESTDIR)$(libexecdir)
+ 	@for i in apxs apachectl dbmmanage; do \
+ 	    if test -f "$(builddir)/$$i"; then \
+@@ -23,9 +24,9 @@ install:
+ 	    fi ; \
+ 	done
+ 	@if test -f "$(builddir)/envvars-std"; then \
+-	    cp -p envvars-std $(DESTDIR)$(sbindir); \
+-	    if test ! -f $(DESTDIR)$(sbindir)/envvars; then \
+-	        cp -p envvars-std $(DESTDIR)$(sbindir)/envvars ; \
++	    cp -p envvars-std $(DESTDIR)$(sysconfdir); \
++	    if test ! -f $(DESTDIR)$(sysconfdir)/envvars; then \
++	        cp -p envvars-std $(DESTDIR)$(sysconfdir)/envvars ; \
+ 	    fi ; \
+ 	fi
+ 
+diff --git a/support/apachectl.in b/support/apachectl.in
+index d4dff38..2589779 100644
+--- a/support/apachectl.in
++++ b/support/apachectl.in
+@@ -44,8 +44,8 @@ ARGV="$@"
+ HTTPD='@exp_sbindir@/@progname@'
+ #
+ # pick up any necessary environment variables
+-if test -f @exp_sbindir@/envvars; then
+-  . @exp_sbindir@/envvars
++if test -f @exp_sysconfdir@/envvars; then
++  . @exp_sysconfdir@/envvars
+ fi
+ #
+ # a command that outputs a formatted text version of the HTML at the
+diff --git a/support/apxs.in b/support/apxs.in
+index 1900a78..5442dc0 100644
+--- a/support/apxs.in
++++ b/support/apxs.in
+@@ -189,7 +189,7 @@ if (@opt_S) {
+ my $httpd = get_vars("sbindir") . "/" . get_vars("progname");
+ $httpd = eval qq("$httpd");
+ $httpd = eval qq("$httpd");
+-my $envvars = get_vars("sbindir") . "/envvars";
++my $envvars = get_vars("sysconfdir") . "/envvars";
+ $envvars = eval qq("$envvars");
+ $envvars = eval qq("$envvars");
+ 
+-- 
+1.7.10
+
