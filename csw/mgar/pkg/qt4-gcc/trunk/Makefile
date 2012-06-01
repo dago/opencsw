@@ -78,6 +78,7 @@ PKGFILES_CSWqt4-gxx-dev += $(prefix)/examples/.*
 PKGFILES_CSWqt4-gxx-dev += $(prefix)/plugins/.*
 PKGFILES_CSWqt4-gxx-dev += $(prefix)/demos/.*
 PKGFILES_CSWqt4-gxx-dev += $(prefix)/imports/.*
+PKGFILES_CSWqt4-gxx-dev += $(prefix)/mkspecs/.*
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtscript4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtdesignercomponents4-gxx
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibqtdesigner4-gxx
