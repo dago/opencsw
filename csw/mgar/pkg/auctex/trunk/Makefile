@@ -18,6 +18,9 @@ DISTFILES		+=	CSWauctex.postinstall
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--with-texmf-dir=/opt/csw/share/texmf-local
+# this is needed to avoid incorrect interaction with CSWemacssitestart
+# installed during the packaging:
+CONFIGURE_ARGS	+=	--with-auctexstartfile=/opt/csw/share/emacs/site-lisp/auctex.el
 
 BUILD_SCRIPTS	=	nominal
 BUILD_SCRIPTS	+=	extradist
