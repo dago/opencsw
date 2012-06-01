@@ -311,6 +311,7 @@ template_list += etc/extra/httpd-vhosts.conf
 template_list += etc/extra/httpd-mpm.conf
 template_list += etc/magic
 template_list += etc/mime.types
+template_list += etc/envvars etc/envvars-std
 
 create-templates:
 	@echo "  => Creating template files"
