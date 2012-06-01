@@ -49,9 +49,9 @@ DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
-#PATCHFILES += 0001-Apply-a-large-hammer-to-buildconf-to-fix-libtool-set.patch
 PATCHFILES += 0002-Adjust-a-few-usr-local-paths-in-the-man-pages.patch
 PATCHFILES += 0003-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
+PATCHFILES += 0004-Move-the-envvars-files-to-sysconfdir.patch
 
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-dev CSWapache2-manual CSWap2suexec
@@ -349,5 +349,8 @@ post-merge:
 	@echo Fixing usr/local reference in the cgi-bin scripts
 	@(cd $(PKGROOT)/$(prefix)/apache2/share/cgi-bin; \
 		perl -pi -e 's@/usr/local/bin@/opt/csw/bin@g' *)
+	@echo Adding link from original envvars location
+	@(cd $(PKGROOT)/$(prefix)/apache2/sbin; \
+		ln -s ../etc/envvars envvars )
 	@$(MAKECOOKIE)
 
