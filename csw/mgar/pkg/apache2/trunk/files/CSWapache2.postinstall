@@ -62,7 +62,9 @@ template_list="\
     etc/extra/httpd-userdir.conf \
     etc/extra/httpd-vhosts.conf \
     etc/magic \
-    etc/mime.types"
+    etc/mime.types \
+    etc/envvars \
+    etc/envvars-std"
 
 echo Copying CSW templates:
 for file in $template_list
