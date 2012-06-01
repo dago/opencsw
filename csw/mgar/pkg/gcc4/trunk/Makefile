@@ -11,8 +11,8 @@ PKG_BASENAME = CSW$(PKG_VERSION_TOKEN)
 
 DESCRIPTION  = The GNU Compiler Collection
 define BLURB
-	The GNU Compiler Collection includes front ends for C, C++, 
-	Objective-C, Fortran, Java, and Ada, as well as libraries 
+	The GNU Compiler Collection includes front ends for C, C++,
+	Objective-C, Fortran, Java, and Ada, as well as libraries
 	for these languages (libstdc++, libgcj,...).
 endef
 
@@ -67,7 +67,7 @@ CONFIGURE_ARGS += --enable-java-awt=xlib
 CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
-CONFIGURE_ARGS += --enable-threads=posix 
+CONFIGURE_ARGS += --enable-threads=posix
 CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,go,java,objc
 CONFIGURE_ARGS += --with-system-zlib=$(BUILD_PREFIX)
 
@@ -117,7 +117,7 @@ SKIPTEST ?= 1
 # Used multiple times in package definitions
 JAVA_LIB_VERSION = 13
 
-ALTERNATIVES_PRIO = 460
+ALTERNATIVES_PRIO = 470
 
 PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
@@ -152,6 +152,7 @@ ALTERNATIVES_$(PKG_BASENAME)core += $(PKG_VERSION_TOKEN)core
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcc gcc_core $(bindir)/gcc$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gccgo gcc_core $(bindir)/gccgo$(PROGRAM_SUFFIX)
 
 # Because I can.
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-with-bad-content
