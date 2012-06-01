@@ -1,0 +1,27 @@
+From e78edada0f6c198ba7418c39cd5832ee0d16b6db Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Fri, 1 Jun 2012 22:12:46 +0200
+Subject: [PATCH] Include alloca.h
+
+---
+ figlet.c |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/figlet.c b/figlet.c
+index 3de795a..87e8d35 100644
+--- a/figlet.c
++++ b/figlet.c
+@@ -71,6 +71,10 @@
+ #include <sys/ioctl.h> /* Needed for get_columns */
+ #endif
+ 
++#ifdef __sun
++#include <alloca.h>
++#endif
++
+ #ifdef TLF_FONTS
+ #include <wchar.h>
+ #include <wctype.h>
+-- 
+1.7.10
+
