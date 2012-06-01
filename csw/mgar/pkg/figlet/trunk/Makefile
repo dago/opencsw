@@ -1,6 +1,5 @@
 NAME = figlet
-VERSION = 2.2.2
-RELEASE = 222
+VERSION = 2.2.5
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -14,19 +13,18 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.figlet.org/pub/figlet/program/unix/
-DISTFILES  = $(NAME)$(RELEASE).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 MASTER_SITES += ftp://ftp.figlet.org/pub/figlet/fonts/
 # ours.tar.gz is already in the figlet distribution
-DISTFILES += contributed.tar.gz international.tar.gz ms-dos.tar.gz
+DISTFILES += contributed.tar.gz
+DISTFILES += international.tar.gz
+DISTFILES += ms-dos.tar.gz
 
-SPKG_SOURCEURL = http://www.figlet.org
+PATCHFILES += 0001-Include-alloca.h.patch
+
+VENDOR_URL = http://www.figlet.org
 
 LICENSE = LICENSE
-
-DISTNAME = $(NAME)$(RELEASE)
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*).tar.gz
 
 # We don't have this modern autoconfig-doodle-crap
 CONFIGURE_SCRIPTS =
@@ -34,10 +32,13 @@ CONFIGURE_SCRIPTS =
 APPDIR = $(sharedstatedir)/$(NAME)
 DEFAULTFONTDIR = $(APPDIR)/fonts
 
+EXTRA_CFLAGS += -D__BEGIN_DECLS=
+EXTRA_CFLAGS += -D__END_DECLS=
+
 BUILD_OVERRIDE_DIRS = CC CFLAGS DEFAULTFONTDIR
 
 # FIGlet doesn't have tests
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 
