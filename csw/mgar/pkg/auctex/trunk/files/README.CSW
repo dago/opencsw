@@ -1,0 +1,30 @@
+$Id$
+
+To use the AucTeX packaged by CSW you need to:
+
+1. Add or modify your ~/.emacs file to contain the following line:
+
+   (require 'tex-site)
+   (load "auctex.el" nil t t)
+   (load "preview-latex.el" nil t t)
+
+2. Restart your Emacs session.
+
+3. The documentation is available in info, DVI, PostScript, PDF and
+   HTML format.
+
+4. If you wish to test the package, move
+   /opt/csw/share/doc/auctex/examples/circ.tex --- it's a German language
+   document --- to a directory where you have write rights --- the
+   file must also have the write rights set --- and ask for
+   a preview. You'll see the beauty of previewing even if you don't
+   read German...
+
+5. Enjoy!
+
+CSW Team
+
+# Local Variables:
+# mode: text
+# mode: font-lock
+# End:
