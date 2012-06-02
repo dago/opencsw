@@ -74,22 +74,6 @@ PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
 # package.  We made the real package have matching names.
 CATALOGNAME_CSWsvn-devel   = subversion_devel
 
-PACKAGES += CSWsvn-contrib
-SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
-CATALOGNAME_CSWsvn-contrib = subversion_contrib
-PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
-ARCHALL_CSWsvn-contrib     = 1
-CHECKPKG_OVERRIDES_CSWsvn-contrib += catalogname-does-not-match-pkgname|pkgname=CSWsvn-contrib|catalogname=subversion_contrib|expected-catalogname=svn_contrib
-
-
-PACKAGES += CSWsvn-tools
-SPKG_DESC_CSWsvn-tools     = Additional subversion tools
-CATALOGNAME_CSWsvn-tools   = subversion_tools
-PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
-ARCHALL_CSWsvn-tools       = 1
-CHECKPKG_OVERRIDES_CSWsvn-tools += catalogname-does-not-match-pkgname|pkgname=CSWsvn-tools|catalogname=subversion_tools|expected-catalogname=svn_tools
-
-
 PACKAGES += CSWap2svn
 SPKG_DESC_CSWap2svn           = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn         = ap2_subversion
@@ -282,8 +266,6 @@ BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-templates
 PI_DEPENDS += create-ra_dav-symlinks
-# TBD: There is no contrib/ in 1.7.0 any more, how to proceed? Other tarball? Or just drop in the future?
-# PI_DEPENDS += install-extras
 PI_DEPENDS += $(BINDING_TARGETS)
 
 post-install-modulated: $(PI_DEPENDS)
@@ -319,7 +301,6 @@ post-configure-modulated:
 	@$(MAKECOOKIE)
 
 PI_DEPENDS  = $(BINDING_TARGETS)
-PI_DEPENDS += contrib
 PI_DEPENDS += rbsvn-prototype
 PI_DEPENDS += copy-templates
 PI_DEPENDS += install-man
@@ -330,21 +311,6 @@ create-ra_dav-symlinks:
 	( cd $(DESTDIR)$(SVNLIB); \
 		ln -s libsvn_ra_neon-1.so.0.0.0 libsvn_ra_dav-1.so.0; \
 		ln -s libsvn_ra_neon-1.so.0.0.0 libsvn_ra_dav-1.so; )
-	@$(MAKECOOKIE)
-
-install-extras:
-	@echo "~~~ patching contributions with csw paths ~~~"
-	gfind $(WORKSRC)/contrib -type f -print0 | gxargs -0 gsed -i -e 's,/usr/bin/svn,/opt/csw/bin/svn,' 
-	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.pl
-	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.cgi
-	gsed -i -e 's,/usr/bin/,/opt/csw/bin/,' $(WORKSRC)/contrib/*/svnmirror.sh
-	@echo "~~~ install tools and contrib ~~~"
-	ginstall -d $(DESTDIR)$(docdir)/subversion/tools
-	ginstall -d $(DESTDIR)$(docdir)/subversion/contrib
-	gcp -R $(WORKSRC)/tools/* $(DESTDIR)$(docdir)/subversion/tools/
-	gcp -R $(WORKSRC)/contrib/* $(DESTDIR)$(docdir)/subversion/contrib/
-	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-tools
-	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-contrib
 	@$(MAKECOOKIE)
 
 svn-python:
@@ -391,11 +357,6 @@ svnbook: $(DESTDIR)$(docdir)
 	( cd $(WORKSRC)/doc/book ; \
 	  ginstall svn-book.html $(DESTDIR)$(docdir) ; \
 	  ginstall svn-book.pdf $(DESTDIR)$(docdir) )
-	@$(MAKECOOKIE)
-
-contrib: $(DESTDIR)$(docdir)
-	@echo " ==> Installing contrib scripts"
-	@gcp -vr $(WORKSRC)/contrib $(DESTDIR)$(docdir)
 	@$(MAKECOOKIE)
 
 copy-templates:
