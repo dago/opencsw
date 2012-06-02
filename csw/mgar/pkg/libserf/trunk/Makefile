@@ -36,7 +36,6 @@ CATALOGNAME_CSWlibserf-dev = libserf_dev
 SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
 PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf1-0
-OBSOLETED_BY_CSWlibserf-dev += CSWlibserf-devel
 
 EXTRA_LIB = $(prefix)/bdb48/lib
 
