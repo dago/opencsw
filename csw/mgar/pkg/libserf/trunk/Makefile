@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibz1
 
 PACKAGES += CSWlibserf-dev
