@@ -66,13 +66,8 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
 
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
-OBSOLETED_BY_CSWsvn-dev    = CSWsvn-devel
 PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
-
-# Note: This is just to prevent a catalog name change for a stub
-# package.  We made the real package have matching names.
-CATALOGNAME_CSWsvn-devel   = subversion_devel
 
 PACKAGES += CSWap2svn
 SPKG_DESC_CSWap2svn           = Subversion Modules for Apache 2.2
