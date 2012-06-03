@@ -77,6 +77,7 @@ CONFIGURE_ARGS += --enable-snmp
 CONFIGURE_ARGS += --enable-ssl
 CONFIGURE_ARGS += --enable-useragent-log
 CONFIGURE_ARGS += --enable-ipf-transparent
+CONFIGURE_ARGS += --enable-icap-client
 CONFIGURE_ARGS += --disable-ident-lookups
 CONFIGURE_ARGS += --disable-icmp
 CONFIGURE_ARGS += --with-dl
