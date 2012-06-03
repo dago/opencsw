@@ -14,10 +14,9 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES += CSWnagiosp
 SPKG_CATALOG_NAME_CSWnagiosp = nagios_plugins
 
-PATCHFILES += check_procs.c.diff
-PATCHFILES += subst.in.diff
-PATCHFILES += pst3.c.diff
-PATCHFILES += 0004-Use-32-bit-pst3-on-Solaris.patch
+#PATCHFILES      += 0001-disable-cflags-detection-for-pst3.patch
+#PATCHFILES      += 0002-changed-paths-in-hardcoded-examples.patch
+PATCHFILES 	+= 0004-Use-32-bit-pst3-on-Solaris.patch
 
 REINPLACE_USRLOCAL += contrib/*
 REINPLACE_USRLOCAL += plugins/*
@@ -31,7 +30,19 @@ CONFIGURE_ARGS += --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin
 CONFIGURE_ARGS += --with-mysql-dir=/opt/csw
 CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
 CONFIGURE_ARGS += --disable-largefile
+CONFIGURE_ARGS  += --libexecdir=$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
+CONFIGURE_ARGS += --with-openssl=/opt/csw
+# http://184.82.236.176/?p=4
+#CONFIGURE_ARGS += --with-ps-command="/usr/bin/ps -eo 's uid pid ppid vsz rss pcpu etime comm args'"
+#CONFIGURE_ARGS += --with-ps-format="%s %d %d %d %d %d %f %s %s %n"
+#CONFIGURE_ARGS += --with-ps-cols=10
+#CONFIGURE_ARGS += --with-ps-varlist="procstat,&procuid,&procpid,&procppid,&procvsz,&procrss,&procpcpu,procetime,procprog,&pos"
+#
+CONFIGURE_ARGS += --with-trusted-path=/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin:$(prefix)/libexec/nagios-plugins
+CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -a inet6 -s %s 56 %d"
+
+libexecdir 	?= $(prefix)/libexec/nagios-plugins
 
 CFLAGS += -I /opt/csw/postgresql/include/
 EXTRA_INC = /opt/csw/postgresql/include
