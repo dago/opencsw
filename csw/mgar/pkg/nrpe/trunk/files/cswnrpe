@@ -1,86 +1,144 @@
 #!/bin/sh
+
+BINDIR="/opt/csw/bin"
+BINFILE="$BINDIR/nrpe"
+
+RUNFLAG=1
+
 #
-# Copyright (c) 1992 - 2001 by Sun Microsystems, Inc.
-# All rights reserved.
+# Solaris Release
 #
-#ident  "@(#)nrpe       1.19    01/12/05 SMI"
-# Modified for CSW by Alex Moore 2005-12-03
-# 2007-08-18 Add pid file support.
-# 2007-08-19 Fix nagios uid used for pgrep.  Thanks to Will McDonald for this.
-# Modified for OpenCSW by Juergen Arndt 2009-03-14 
 
-#RC_KNUM 20         # Number used for kill script symlink, e.g. K20cswfoo
-#RC_SNUM 80         # Number used for start script symlink, e.g. S80cswfoo
-#RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
-#RC_SLEV 3          # Run levels that should have a start script symlink
-#FMRI application       # FMRI path for service
-#AUTOENABLE yes
+SOLREL=`uname -r | awk -F. '{print $2}'`
 
-SMF_EXIT_ERR_CONFIG=1
+#
+# 
+#
 
-if [ -f /lib/svc/share/smf_include.sh ]
+if [ $SOLREL -ge 10 ]
 then
-	. /lib/svc/share/smf_include.sh
+        ZONENAME=`zonename`
+        . /lib/svc/share/smf_include.sh
 fi
+
+#
+#
+#
 
 CONFIG_FILE=/etc/opt/csw/nrpe.cfg
-if [ ! -f $CONFIG_FILE ] ; then
-    CONFIG_FILE=/opt/csw/etc/nrpe.cfg
-fi
 
 if [ ! -f $CONFIG_FILE ]
 then
-	exit $SMF_EXIT_ERR_CONFIG
+	if [ $SOLREL -lt 10 ]
+	then
+		exit 1
+	else
+        	exit $SMF_EXIT_ERR_CONFIG
+	fi
 fi
 
-BIN_FILE="/opt/csw/bin/nrpe"
-pidfile=`awk -F'=' '/^[ \t]*pid_file/ {print $2}' $CONFIG_FILE`
-NRPE_USER=`awk -F'=' '/^[ \t]*nrpe_user/ { print $2 }' $CONFIG_FILE`
+#
+#
+#
 
-start_nrpe ()
+get_pid ()
 {
-        if [ -f $CONFIG_FILE ]; then
-            wait 1
-            $BIN_FILE -c $CONFIG_FILE -d
+        if [ $SOLREL -lt 10 ]
+        then
+                pid=`ps -ef | grep -v "grep" | grep $BINFILE | awk '{print $2}'`
+        else
+                pid=`ps -fz $ZONENAME | grep -v "grep" | grep $BINFILE | awk '{print $2}'`
         fi
 }
 
-stop_nrpe ()
+#
+#
+#
+
+stop ()
 {
-        if [ -f "$pidfile" ]; then
-        	if [ `uname -r` = 5.8 -o `uname -r` = 5.9 ]
-		then
-			[ -n "`pgrep -x -u 0,1,$NRPE_USER -f \"$BIN_FILE -c $CONFIGFILE -d\"`" ] && /usr/bin/kill `head -1 $pidfile`
-		else
-			[ -n "`pgrep -x -u 0,1,$NRPE_USER -z \`zonename\` -f \"$BIN_FILE -c $CONFIG_FILE -d\"`" ] && /usr/bin/kill `head -1 $pidfile`
-		fi
-            	rm "$pidfile"
-	else
-		if [ `uname -r` = 5.8 -o `uname -r` = 5.9 ]
-		then
-			/usr/bin/kill `pgrep -x -u 0,1,$NRPE_USER -f "$BIN_FILE -c $CONFIGFILE -d"`
-		else
-			/usr/bin/kill `pgrep -x -u 0,1,$NRPE_USER -z \`zonename\` -f "$BIN_FILE -c $CONFIG_FILE -d"`
-		fi
-	fi
+        get_pid
+
+        if [ "$pid" ]
+        then
+                kill $pid
+                sleep 1
+                kill -9 $pid 2>/dev/null
+                echo "$BINFILE stopped."
+        else
+                echo "$BINFILE was not running."
+        fi
+}
+
+#
+# 
+#
+
+status ()
+{
+        get_pid
+        
+        if [ "$pid" ]
+        then
+                echo "$BINFILE running with pid $pid."
+                RUNFLAG=0
+        else
+                echo "$BINFILE not running."
+                RUNFLAG=1
+        fi
+}
+
+#
+#
+#
+
+start ()
+{
+        get_pid
+
+        if [ "$pid" ]   # already running?
+        then
+                echo "$BINFILE already running with $pid."
+                return 1
+        fi
+
+        if [ -f $BINFILE ] # does it exist?
+        then
+                $BINFILE -c $CONFIG_FILE -d
+                get_pid
+                echo "$BINFILE running with pid $pid"
+        else
+                if [ $SOLREL -lt 10 ]
+                then
+                        echo "$BINFILE does not exist."
+                        exit 1
+                else
+                        echo "$BINFILE does not exist."
+                        exit $SMF_EXIT_ERR_FATAL
+                fi
+        fi
+}
+
+#
+#
+#
+
+print_usage ()
+{
+        echo "usage: $0 {start|stop|status}"
 }
 
 case "$1" in
-'restart')
-	stop_nrpe
-	start_nrpe
-        ;;
-
-'start')
-	start_nrpe
-	;;
-'stop') 
-	stop_nrpe
-        ;;
-
-*)
-        echo "Usage: $0 { start | stop | restart }"
-        exit 1
-        ;;
+        "status" )      status
+                        exit $RUNFLAG
+                        ;;
+        "start" )       start
+                        exit 0
+                        ;;
+        "stop"  )       stop
+                        exit 0
+                        ;;
+        * )             print_usage
+                        exit 1
+                        ;;
 esac
-exit 0
