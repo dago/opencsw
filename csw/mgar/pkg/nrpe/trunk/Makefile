@@ -4,7 +4,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 SPKG_DESC_CSWnrpe 	= Nagios remote plugin executor
-SPKG_DESC_CSWnrpeplugin =  Nagios plugin that connects to nrpe demon
+SPKG_DESC_CSWnrpe-plugin =  Nagios plugin that connects to nrpe demon
 
 define BLURB
   NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
@@ -21,30 +21,33 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 EXTRA_MODULATORS = SIZE
 MODULATIONS_SIZE = 1k 8k
 
-# Distfiles for CSWnrpe
-
 DISTFILES += CSWnrpe.preinstall 
-#DISTFILES += CSWnrpe.prototype 
 DISTFILES += cswnrpe cswusergroup
 DISTFILES += README_8k
-
-# Distfiles for nrpe_plugin
-
-#DISTFILES += CSWnrpeplugin.prototype
-
-#PATCHFILES 	 = patch.diff 
 
 PATCHFILES_isa-sparcv8plus-size-8k 	= 0002-changing-packetbuffer-length-to-8k.patch
 PATCHFILES_isa-pentium_pro-size-8k 	= 0002-changing-packetbuffer-length-to-8k.patch
 
 PACKAGING_PLATFORMS	= solaris10-sparc solaris10-i386
 
-PACKAGES			= CSWnrpe CSWnrpeplugin
+#
+#
+#
+
+PACKAGES			= CSWnrpe CSWnrpe-plugin
 CATALOGNAME_CSWnrpe		= nrpe
-CATALOGNAME_CSWnrpeplugin	= nrpe_plugin
+CATALOGNAME_CSWnrpe-plugin	= nrpe_plugin
+
+OBSOLETED_BY_CSWnrpe-plugin = CSWnrpeplugin
+SPKG_CATALOG_NAME_CSWnrpeplugin = nrpe_plugin_stub
+
+#
+# files for CSWnrpe
+#
 
 PKGFILES_CSWnrpe 	 = /opt/csw/bin/nrpe_1k
 PKGFILES_CSWnrpe	+= /opt/csw/bin/nrpe_8k
+PKGFILES_CSWnrpe	+= /opt/csw/bin/nrpe
 PKGFILES_CSWnrpe	+= /etc/opt/csw/nrpe.cfg.CSW
 PKGFILES_CSWnrpe	+= /opt/csw/share/doc/nrpe
 PKGFILES_CSWnrpe	+= /opt/csw/share/doc/nrpe/NRPE.pdf
@@ -56,22 +59,39 @@ PKGFILES_CSWnrpe	+= /opt/csw/share/doc/nrpe/README.SSL
 PKGFILES_CSWnrpe	+= /opt/csw/share/doc/nrpe/SECURITY
 PKGFILES_CSWnrpe	+= /opt/csw/nagios
 PKGFILES_CSWnrpe	+= /etc/opt/csw/init.d/cswnrpe
+PKGFILES_CSWnrpe	+= /etc/opt/csw/init.d/cswusergroup
 PKGFILES_CSWnrpe	+= /opt/csw/etc/templates/CSWnrpe$(CFGDIR)
 PKGFILES_CSWnrpe	+= /opt/csw/etc/templates/CSWnrpe$(CFGDIR)/nrpe.cfg
 
-PKGFILES_CSWnrpeplugin	  = /opt/csw/libexec/nagios-plugins
-PKGFILES_CSWnrpeplugin	 += /opt/csw/libexec/nagios-plugins/check_nrpe
-PKGFILES_CSWnrpeplugin	 += /opt/csw/libexec/nagios-plugins/check_nrpe_8k
-PKGFILES_CSWnrpeplugin	 += /opt/csw/share/doc/nrpe
-PKGFILES_CSWnrpeplugin	 += /opt/csw/share/doc/nrpe/README_8k
-PKGFILES_CSWnrpeplugin	 += /opt/csw/share/doc/nrpe_plugin
-PKGFILES_CSWnrpeplugin	 += /opt/csw/share/doc/nrpe_plugin/license
+#
+# files for CSWnrpe-plugin
+#
+
+PKGFILES_CSWnrpe-plugin	  = /opt/csw/libexec/nagios-plugins
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/libexec/nagios-plugins/check_nrpe
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/libexec/nagios-plugins/check_nrpe_1k
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/libexec/nagios-plugins/check_nrpe_8k
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe/README_8k
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe_plugin
+PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe_plugin/license
 
 
-RUNTIME_DEP_PKGS_CSWnrpe       	= CSWosslrt CSWtcpwrap 
-RUNTIME_DEP_PKGS_CSWnrpeplugin	= CSWosslrt 
+#
+# migrate configuration
+#
 
-#SPKG_CLASSES_CSWnrpe = none cswusergroup cswpreserveconf cswinitsmf
+MIGRATE_FILES_CSWnrpe	= nrpe.cfg
+MIGRATE_SOURCE_DIR	= /opt/csw/etc
+MIGRATE_DEST_DIR	= /etc/opt/csw
+
+#
+#
+#
+
+RUNTIME_DEP_PKGS_CSWnrpe-plugin += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnrpe += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWnrpe += CSWlibssl1-0-0
 
 LICENSE = LEGAL
 
@@ -110,6 +130,25 @@ INITSMF          = /etc/opt/csw/init.d/cswnrpe
 USERGROUP        = /etc/opt/csw/pkg/CSWnrpe/cswusergroup
 #POSTMSG          = /opt/csw/share/doc/nrpe/README.CSW
 
+#
+# overrides 
+#
+
+# Bad content only in READMEs and as examples in config files
+
+CHECKPKG_OVERRIDES_CSWnrpe += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nrpe/SECURITY
+CHECKPKG_OVERRIDES_CSWnrpe += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nrpe/README
+CHECKPKG_OVERRIDES_CSWnrpe += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnrpe/etc/opt/csw/nrpe.cfg
+
+# README_8k should be in every package
+
+CHECKPKG_OVERRIDES_CSWnrpe += file-collision|/opt/csw/share/doc/nrpe/README_8k|CSWnrpe|CSWnrpe-plugin
+CHECKPKG_OVERRIDES_CSWnrpe-plugin += file-collision|/opt/csw/share/doc/nrpe/README_8k|CSWnrpe|CSWnrpe-plugin
+
+#
+#
+#
+
 include gar/category.mk
 
 DOCDIR=$(datadir)/doc/nrpe
@@ -123,8 +162,10 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)$(LIBEXECDIR)
 	@ginstall -m 755 -d $(DESTDIR)$(BINDIR)
 	@ginstall -m 755 -d $(DESTDIR)/nagios
-	@ginstall -m 755 $(WORKSRC)/src/check_nrpe $(DESTDIR)$(LIBEXECDIR)
+	@ginstall -m 755 $(WORKSRC)/src/check_nrpe $(DESTDIR)$(LIBEXECDIR)/check_nrpe_1k
+	@ln -s $(LIBEXECDIR)/check_nrpe_1k $(DESTDIR)$(LIBEXECDIR)/check_nrpe
 	@ginstall -m 755 $(WORKSRC)/src/nrpe $(DESTDIR)$(BINDIR)/nrpe_1k
+	@ln -s $(BINDIR)/nrpe_1k $(DESTDIR)$(BINDIR)/nrpe
 	@ginstall -m 644 $(WORKSRC)/docs/NRPE.pdf $(DESTDIR)$(DOCDIR)
 	@ginstall -m 644 $(FILEDIR)/README_8k $(DESTDIR)$(DOCDIR)
 	@ginstall -m 644 $(WORKSRC)/LEGAL $(DESTDIR)$(DOCDIR)
@@ -150,6 +191,6 @@ install-custom:
 
 merge-copy-nrpe-only:
 	cp $(INSTALLISADIR)$(bindir)/nrpe_1k $(PKGROOT)$(bindir)/nrpe_8k
-	cp $(INSTALLISADIR)$(LIBEXECDIR)/check_nrpe $(PKGROOT)$(LIBEXECDIR)/check_nrpe_8k
+	cp $(INSTALLISADIR)$(LIBEXECDIR)/check_nrpe_1k $(PKGROOT)$(LIBEXECDIR)/check_nrpe_8k
 	@$(MAKECOOKIE)
 
