@@ -17,8 +17,6 @@ MASTER_SITES = http://www.irssi.org/files/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
-
 SAMPLECONF = .*/irssi.conf
 
 CONFIGURE_ARGS += $(DIRPATHS)
@@ -28,16 +26,21 @@ CONFIGURE_ARGS += --with-bot
 CONFIGURE_ARGS += --with-proxy
 CONFIGURE_ARGS += --with-perl=yes
 CONFIGURE_ARGS += --with-perl-lib=vendor
+CONFIGURE_ARGS += --with-ncurses=$(prefix)
 
 EXTRA_LIB += $(prefix)/bdb47/lib
 EXTRA_INC += $(prefix)/bdb47/include
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
+RUNTIME_DEP_PKGS += CSWlibintl8
+RUNTIME_DEP_PKGS += CSWlibsocks
 RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWperl
-RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWbdb47
+
+REINPLACE_USRLOCAL += docs/perl.txt
+REINPLACE_USRLOCAL += docs/irssi.1
+REINPLACE_USRLOCAL += docs/help/load
 
 include gar/category.mk
