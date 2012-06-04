@@ -1,0 +1,25 @@
+From 9ad03afab9348046c24a45e0eecda76568f778a9 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 4 Jun 2012 21:14:44 +0200
+Subject: [PATCH] Use gwhoami from CSWcoreutils
+
+---
+ util/fbsetbg |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/fbsetbg b/util/fbsetbg
+index 0bdb804..cf888e7 100644
+--- a/util/fbsetbg
++++ b/util/fbsetbg
+@@ -48,7 +48,7 @@ wpsetters="${wpsetters:=Esetroot wmsetbg feh hsetroot chbg display qiv xv xsri x
+ lastwallpaper="${HOME}/.fluxbox/lastwallpaper"
+ 
+ 
+-WHOAMI=`whoami`
++WHOAMI=`gwhoami`
+ [ "$WHOAMI" = root ] && PATH=/bin:/usr/bin/:/usr/local/bin:/usr/X11R6/bin
+ 
+ command="`basename \"$0\"`"
+-- 
+1.7.10
+
