@@ -125,6 +125,8 @@ CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWlibiconv2
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWjpeg
 
+CHECKPKG_OVERRIDES_CSWnagios += unidentified-dependency|CSWnagios-plugins
+
 include gar/category.mk
 
 DOCS        = Changelog INSTALLING README UPGRADING
