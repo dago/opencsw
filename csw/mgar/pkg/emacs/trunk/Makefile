@@ -21,8 +21,10 @@ MASTER_SITES	=	$(GNU_MIRROR)
 INSTALL_ARGS		+=	PATH="/opt/csw/gnu:$$PATH"
 
 GARCOMPILER			=	GNU
+#GCC4_VERSION		=	4.7
 
 BUILD_DEP_PKGS		=	CSWcoreutils
+BUILD_DEP_PKGS		+=	CSWfconfig-dev
 BUILD_DEP_PKGS		+=	CSWglib2devel
 BUILD_DEP_PKGS		+=	CSWlibatk-dev
 BUILD_DEP_PKGS		+=	CSWlibbz2-dev
