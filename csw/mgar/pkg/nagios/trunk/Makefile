@@ -1,5 +1,5 @@
 NAME = nagios
-VERSION = 3.3.1
+VERSION = 3.4.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -23,11 +23,11 @@ PATCHFILES	+= 0003-changed-syntax-of-define-statement.patch
 PATCHFILES	+= 0005-changed-object-files-to-executables.patch
 PATCHFILES 	+= 0005-Adjusted-CFLAGS-to-solaris-compiler.patch
 PATCHFILES 	+= 0006-path-to-csw-perl.patch
-PATCHFILES 	+= 0007-nagios-bug-244.patch
+#PATCHFILES 	+= 0007-nagios-bug-244.patch
 PATCHFILES 	+= 0008-changed-paths-to-match-csw-standards.patch
 
 RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWjpeg CSWlibtoolrt CSWggettextrt
-RUNTIME_DEP_PKGS_CSWnagios += CSWperl CSWnagiosp CSWap2-modphp5 
+RUNTIME_DEP_PKGS_CSWnagios += CSWperl CSWnagios-plugins CSWap2-modphp5 
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibpng12-0
@@ -117,7 +117,7 @@ CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/et
 
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWgd
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWglib2
-CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWnagiosp
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWnagios-plugins
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWlibtoolrt
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWap2-modphp5
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
