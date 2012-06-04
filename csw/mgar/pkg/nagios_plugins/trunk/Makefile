@@ -3,7 +3,7 @@ VERSION = 1.4.15
 CATEGORIES = apps
 GARTYPE = v2
 
-DESCRIPTION = Plugins for nagios
+SPKG_DESC_CSWnagios-plugins = Plugins for nagios
 define BLURB
    Plugins for Nagios
 endef
@@ -11,8 +11,11 @@ endef
 MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES += CSWnagiosp
-SPKG_CATALOG_NAME_CSWnagiosp = nagios_plugins
+PACKAGES 				= CSWnagios-plugins
+SPKG_CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
+
+OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
+SPKG_CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
 
 #PATCHFILES      += 0001-disable-cflags-detection-for-pst3.patch
 #PATCHFILES      += 0002-changed-paths-in-hardcoded-examples.patch
@@ -50,14 +53,14 @@ EXTRA_LIB += /opt/csw/postgresql/lib
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibintl8 CSWlibpq5
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibmysqlclient15 CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWnagiosp += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibintl8 CSWlibpq5
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient15 CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
 
-BUILD_DEP_PKGS_CSWnagiosp += CSWmysql-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWpostgresql-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWlibz-dev
-BUILD_DEP_PKGS_CSWnagiosp += CSWlibnet-dev
+BUILD_DEP_PKGS_CSWnagios-plugins += CSWmysql-dev
+BUILD_DEP_PKGS_CSWnagios-plugins += CSWpostgresql-dev
+BUILD_DEP_PKGS_CSWnagios-plugins += CSWlibz-dev
+BUILD_DEP_PKGS_CSWnagios-plugins += CSWlibnet-dev
 
 TEST_TARGET = 
 
