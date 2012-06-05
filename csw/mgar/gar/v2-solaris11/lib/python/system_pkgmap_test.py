@@ -31,7 +31,7 @@ PKGMAP_LINE_8 = ("/etc/scn/scn_aa_read p none 0600 root sys SUNWscn-agentfacade-
 
 class IndexerUnitTest(unittest.TestCase):
 
-  def test_ParsePkgmapLineFile(self):
+  def test_ParseSrv4PkgmapLineFile(self):
     spi = system_pkgmap.Indexer()
     expected = {
         'cksum': '28258',
@@ -48,9 +48,9 @@ class IndexerUnitTest(unittest.TestCase):
         'target': None,
         'type': 'f',
         'line': PKGMAP_LINE_1}
-    self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_1))
+    self.assertEqual(expected, spi._ParseSrv4PkgmapLine(PKGMAP_LINE_1))
 
-  def test_ParsePkgmapLineTypeSymlink(self):
+  def test_ParseSrv4PkgmapLineTypeSymlink(self):
     spi = system_pkgmap.Indexer()
     expected = {
         'cksum': None,
@@ -68,9 +68,9 @@ class IndexerUnitTest(unittest.TestCase):
         'type': 's',
         'line': PKGMAP_LINE_3,
     }
-    self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_3))
+    self.assertEqual(expected, spi._ParseSrv4PkgmapLine(PKGMAP_LINE_3))
 
-  def test_ParsePkgmapLineTypeQuestionMark(self):
+  def test_ParseSrv4PkgmapLineTypeQuestionMark(self):
     """A question mark is not a valid type, but we have to cope with it."""
     spi = system_pkgmap.Indexer()
     expected = {
@@ -84,9 +84,9 @@ class IndexerUnitTest(unittest.TestCase):
         'mode': None, 'type': 'd',
         'minor': None,
     }
-    self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_5))
+    self.assertEqual(expected, spi._ParseSrv4PkgmapLine(PKGMAP_LINE_5))
 
-  def test_ParsePkgmapLineTypePipe(self):
+  def test_ParseSrv4PkgmapLineTypePipe(self):
     """A pipe is a valid type and we have to cope with it."""
     spi = system_pkgmap.Indexer()
     expected = {
@@ -105,9 +105,9 @@ class IndexerUnitTest(unittest.TestCase):
         'type': 'p',
         'minor': None,
     }
-    self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_8))
+    self.assertEqual(expected, spi._ParseSrv4PkgmapLine(PKGMAP_LINE_8))
 
-  def test_ParsePkgmapLibc(self):
+  def test_ParseSrv4PkgmapLibc(self):
     """A question mark is not a valid type, but we have to cope with it."""
     spi = system_pkgmap.Indexer()
     expected = {
@@ -126,21 +126,21 @@ class IndexerUnitTest(unittest.TestCase):
         'type': 'f',
         'minor': None,
     }
-    self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_6))
+    self.assertEqual(expected, spi._ParseSrv4PkgmapLine(PKGMAP_LINE_6))
 
-  def test_ParsePkgmapExclamationMark(self):
+  def test_ParseSrv4PkgmapExclamationMark(self):
     spi = system_pkgmap.Indexer()
     self.assertEqual(
         ["!CSWmozilla"],
-        spi._ParsePkgmapLine(PKGMAP_LINE_7)["pkgnames"])
+        spi._ParseSrv4PkgmapLine(PKGMAP_LINE_7)["pkgnames"])
 
-  def test_ParsePkgmapLineTypeWrongSyntax(self):
+  def test_ParseSrv4PkgmapLineTypeWrongSyntax(self):
     spi = system_pkgmap.Indexer()
     self.assertRaises(
         system_pkgmap.ParsingError,
-        spi._ParsePkgmapLine, "/")
+        spi._ParseSrv4PkgmapLine, "/")
 
-  def test_ParsePkgContentsLineLink(self):
+  def test_ParseIpsPkgContentsLineLink(self):
     spi = system_pkgmap.Indexer()
     line = "bin\tlink\tsystem/core-os\t./usr/bin"
     expected = {
@@ -155,9 +155,9 @@ class IndexerUnitTest(unittest.TestCase):
     }
     self.assertEquals(
         expected,
-        spi._ParsePkgContentsLine(line))
+        spi._ParseIpsPkgContentsLine(line))
 
-  def test_ParsePkgContentsLineDir(self):
+  def test_ParseIpsPkgContentsLineDir(self):
     spi = system_pkgmap.Indexer()
     line = "dev\tdir\tsystem/core-os\t\t0755\troot\tsys"
     expected = {
@@ -172,9 +172,9 @@ class IndexerUnitTest(unittest.TestCase):
     }
     self.assertEquals(
         expected,
-        spi._ParsePkgContentsLine(line))
+        spi._ParseIpsPkgContentsLine(line))
 
-  def test_ParsePkgContentsLineHardlink(self):
+  def test_ParseIpsPkgContentsLineHardlink(self):
     spi = system_pkgmap.Indexer()
     line = ("etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml\thardlink\t"
             "system/core-os\t./platform_SUNW,UltraSPARC-IIi-Netract.xml")
@@ -192,9 +192,9 @@ class IndexerUnitTest(unittest.TestCase):
     }
     self.assertEquals(
         expected,
-        spi._ParsePkgContentsLine(line))
+        spi._ParseIpsPkgContentsLine(line))
 
-  def test_ParsePkgContentsLineFile(self):
+  def test_ParseIpsPkgContentsLineFile(self):
     spi = system_pkgmap.Indexer()
     line = ("lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin")
     expected = {
@@ -209,7 +209,7 @@ class IndexerUnitTest(unittest.TestCase):
     }
     self.assertEquals(
         expected,
-        spi._ParsePkgContentsLine(line))
+        spi._ParseIpsPkgContentsLine(line))
 
   def test_IpsNameToSrv4Name(self):
     spi = system_pkgmap.Indexer()
@@ -218,18 +218,15 @@ class IndexerUnitTest(unittest.TestCase):
         spi._IpsNameToSrv4Name("system/core-os"))
 
 
-  def test_ParseInstallContents(self):
+  def test_ParsePkgContents(self):
     spi = system_pkgmap.Indexer()
-    streams = (
-        (
+    stream = (
           PKGMAP_LINE_1,
           PKGMAP_LINE_2,
           PKGMAP_LINE_3,
           PKGMAP_LINE_4
-        ),
-        None
     )
-    self.assertEqual(4, len(spi._ParseInstallContents(streams, False)))
+    self.assertEqual(4, len(spi._ParsePkgContents(stream, spi._ParseSrv4PkgmapLine, False)))
 
 
 class InstallContentsImporterUnitTest(test_base.SqlObjectTestMixin,
