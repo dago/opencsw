@@ -229,7 +229,7 @@ PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/sorted-doc
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/update-game-score
 
-PACKAGES					=	CSWemacs
+PACKAGES					+=	CSWemacs
 SPKG_DESC_CSWemacs			=	$(DESCRIPTION) - metapackage for generic dependencies
 CATALOGNAME_CSWemacs		=	emacs
 PKGFILES_CSWemacs			=	NOFILES
