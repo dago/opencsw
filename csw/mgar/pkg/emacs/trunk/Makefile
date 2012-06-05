@@ -235,6 +235,7 @@ CATALOGNAME_CSWemacs		=	emacs
 PKGFILES_CSWemacs			=	NOFILES
 RUNTIME_DEP_PKGS_CSWemacs	=	CSWemacs-athena
 CHECKPKG_OVERRIDES_CSWemacs	+=	surplus-dependency|CSWemacs-athena
+ARCHALL_CSWemacs			=	1
 
 PACKAGES							+=	CSWemacs-athena
 SPKG_DESC_CSWemacs-athena			=	$(DESCRIPTION) - based on the Athena toolkit
