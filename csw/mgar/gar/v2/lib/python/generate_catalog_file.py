@@ -58,11 +58,11 @@ class CatalogFileGenerator(object):
     deps = []
     for dep, _ in deps_data["deps"]:
       if "CSW" in dep:
-      	deps.append(dep)
+        deps.append(dep)
     if deps:
-    	deps = "|".join(deps)
+      deps = "|".join(deps)
     else:
-    	deps = "none"
+      deps = "none"
     items = [
         pkg_data["catalogname"],
         pkg_data["version_string"],
