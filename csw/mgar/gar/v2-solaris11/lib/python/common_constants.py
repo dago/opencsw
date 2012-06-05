@@ -14,7 +14,15 @@ OS_RELS = (
     OS_REL_511,
 )
 OBSOLETE_OS_RELS = (
-    u"SunOS5.8",
+    OS_REL_58,
+)
+SVR4_OS_RELS = (
+    OS_REL_58,
+    OS_REL_59,
+    OS_REL_510,
+)
+IPS_OS_RELS = (
+    OS_REL_511,
 )
 
 SYSTEM_SYMLINKS = (
