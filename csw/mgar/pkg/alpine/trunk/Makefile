@@ -17,6 +17,8 @@ MASTER_SITES = ftp://ftp.cac.washington.edu/alpine/
 SPKG_SOURCEURL = http://www.washington.edu/alpine/
 DISTFILES  = $(NAME).tar.bz2
 
+BUILD_DEP_PKGS += CSWlibssl-dev
+
 PACKAGES = CSWalpine
 CATALOGNAME_CSWalpine = alpine
 SPKG_DESC_CSWalpine = $(DESCRIPTION)
@@ -79,7 +81,7 @@ RUNTIME_DEP_PKGS_CSWalpine += CSWtcl
 RUNTIME_DEP_PKGS_CSWalpine += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWalpine += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWalpine += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWalpine += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWalpine += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWalpine += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWalpine += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWalpine += CSWlibkrb5-3
