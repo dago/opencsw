@@ -427,6 +427,7 @@ class InstallContentsImporter(object):
     pbar.maxval = len(contents) / progressbar_divisor
     pbar.start()
     cleaned_pkgs = set()
+    logging.debug("Content leghts: %s", len(contents))
     for d in contents:
       i = count.next()
       if not i % update_period and (i / progressbar_divisor) <= pbar.maxval:

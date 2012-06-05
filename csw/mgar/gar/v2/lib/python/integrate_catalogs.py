@@ -258,8 +258,12 @@ def main():
   if options.from_json:
     with open(options.from_json, "rb") as fd:
       logging.info("Loading %s", options.from_json)
-      bundles_by_md5, jsonable_catalogs, diffs_by_catalogname = cjson.decode(fd.read())
-      catalogs = dict((tuple(cjson.decode(x)), jsonable_catalogs[x]) for x in jsonable_catalogs)
+      (bundles_by_md5,
+          jsonable_catalogs,
+          diffs_by_catalogname) = cjson.decode(fd.read())
+      catalogs = dict(
+        (tuple(cjson.decode(x)), jsonable_catalogs[x])
+        for x in jsonable_catalogs)
   else:
     catalogs, diffs_by_catalogname = GetDiffsByCatalogname(
         catrel_from, catrel_to, options.include_downgrades,

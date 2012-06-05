@@ -578,7 +578,8 @@ def main():
   elif command == 'gen-cat':
     catrel = options.catrel or 'dublin'
     if options.catrel and options.catrel != catrel:
-      logging.warn("Generating the %s catalog.", catrel)
+      logging.warn("Generating the %s catalog, not %s.",
+                   catrel, options.catrel)
     if catrel not in CATALOGS_ALLOWED_TO_GENERATE:
       raise UsageError(
           "Catalog %s not allowed to be generated from the database. "
