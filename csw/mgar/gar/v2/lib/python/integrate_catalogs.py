@@ -41,12 +41,24 @@ function new_pkg_$catalogname {
   \${PKGDB} add-to-cat $osrel $arch $catrel_to $new_pkg["md5_sum"]
 #end for
 }
+function undo_new_pkg_$catalogname {
+#for arch, osrel, new_pkg in $diffs_by_catalogname[$catalogname]["new_pkgs"]:
+  # adding $new_pkg["basename"]
+  \${PKGDB} del-from-cat $osrel $arch $catrel_to $new_pkg["md5_sum"]
+#end for
+}
 #end if
 #if "removed_pkgs" in $diffs_by_catalogname[$catalogname]:
 function remove_pkg_$catalogname {
 #for arch, osrel, rem_pkg in $diffs_by_catalogname[$catalogname]["removed_pkgs"]:
   # removing $rem_pkg["basename"]
   \${PKGDB} del-from-cat $osrel $arch $catrel_to $rem_pkg["md5_sum"]
+#end for
+}
+function undo_remove_pkg_$catalogname {
+#for arch, osrel, rem_pkg in $diffs_by_catalogname[$catalogname]["removed_pkgs"]:
+  # removing $rem_pkg["basename"]
+  \${PKGDB} add-to-cat $osrel $arch $catrel_to $rem_pkg["md5_sum"]
 #end for
 }
 #end if
@@ -65,6 +77,13 @@ $catalogname {
   # $catalogname $up_pkg_pair["direction"] from $up_pkg_pair["from"]["version"] to $up_pkg_pair["to"]["version"]
   \${PKGDB} del-from-cat $osrel $arch $catrel_to $up_pkg_pair["from"]["md5_sum"]
   \${PKGDB} add-to-cat $osrel $arch $catrel_to $up_pkg_pair["to"]["md5_sum"]
+#end for
+}
+function undo_upgrade_$catalogname {
+#for arch, osrel, up_pkg_pair in $diffs_by_catalogname[$catalogname]["updated_pkgs"]:
+  # UNDO of $catalogname $up_pkg_pair["direction"] from $up_pkg_pair["from"]["version"] to $up_pkg_pair["to"]["version"]
+  \${PKGDB} del-from-cat $osrel $arch $catrel_to $up_pkg_pair["to"]["md5_sum"]
+  \${PKGDB} add-to-cat $osrel $arch $catrel_to $up_pkg_pair["from"]["md5_sum"]
 #end for
 }
 #end if
