@@ -140,14 +140,96 @@ class IndexerUnitTest(unittest.TestCase):
         system_pkgmap.ParsingError,
         spi._ParsePkgmapLine, "/")
 
+  def test_ParsePkgContentsLineLink(self):
+    spi = system_pkgmap.Indexer()
+    line = "bin\tlink\tsystem/core-os\t./usr/bin"
+    expected = {
+        'pkgnames': ['SUNWsystem-core-os'],
+        'group': None,
+        'target': './usr/bin',
+        'owner': None,
+        'path': '/bin',
+        'line': 'bin\tlink\tsystem/core-os\t./usr/bin',
+        'type': 's',
+        'mode': None,
+    }
+    self.assertEquals(
+        expected,
+        spi._ParsePkgContentsLine(line))
+
+  def test_ParsePkgContentsLineDir(self):
+    spi = system_pkgmap.Indexer()
+    line = "dev\tdir\tsystem/core-os\t\t0755\troot\tsys"
+    expected = {
+        'pkgnames': ['SUNWsystem-core-os'],
+        'group': 'sys',
+        'target': None,
+        'owner': 'root',
+        'path': '/dev',
+        'line': 'dev\tdir\tsystem/core-os\t\t0755\troot\tsys',
+        'type': 'd',
+        'mode': '0755',
+    }
+    self.assertEquals(
+        expected,
+        spi._ParsePkgContentsLine(line))
+
+  def test_ParsePkgContentsLineHardlink(self):
+    spi = system_pkgmap.Indexer()
+    line = ("etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml\thardlink\t"
+            "system/core-os\t./platform_SUNW,UltraSPARC-IIi-Netract.xml")
+    expected = {
+        'pkgnames': ['SUNWsystem-core-os'],
+        'group': None,
+        'target': './platform_SUNW,UltraSPARC-IIi-Netract.xml',
+        'owner': None,
+        'path': '/etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml',
+        'line': ('etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml\t'
+                 'hardlink\tsystem/core-os\t'
+                 './platform_SUNW,UltraSPARC-IIi-Netract.xml'),
+        'type': 'l',
+        'mode': None,
+    }
+    self.assertEquals(
+        expected,
+        spi._ParsePkgContentsLine(line))
+
+  def test_ParsePkgContentsLineFile(self):
+    spi = system_pkgmap.Indexer()
+    line = ("lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin")
+    expected = {
+        'pkgnames': ['SUNWsystem-library'],
+        'group': 'bin',
+        'target': None,
+        'owner': 'root',
+        'path': '/lib/libc.so.1',
+        'line': 'lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin',
+        'type': 'f',
+        'mode': '0755',
+    }
+    self.assertEquals(
+        expected,
+        spi._ParsePkgContentsLine(line))
+
+  def test_IpsNameToSrv4Name(self):
+    spi = system_pkgmap.Indexer()
+    self.assertEquals(
+        'SUNWsystem-core-os',
+        spi._IpsNameToSrv4Name("system/core-os"))
+
+
   def test_ParseInstallContents(self):
     spi = system_pkgmap.Indexer()
-    data = (
-        PKGMAP_LINE_1,
-        PKGMAP_LINE_2,
-        PKGMAP_LINE_3,
-        PKGMAP_LINE_4)
-    self.assertEqual(4, len(spi._ParseInstallContents(data, False)))
+    streams = (
+        (
+          PKGMAP_LINE_1,
+          PKGMAP_LINE_2,
+          PKGMAP_LINE_3,
+          PKGMAP_LINE_4
+        ),
+        None
+    )
+    self.assertEqual(4, len(spi._ParseInstallContents(streams, False)))
 
 
 class InstallContentsImporterUnitTest(test_base.SqlObjectTestMixin,
