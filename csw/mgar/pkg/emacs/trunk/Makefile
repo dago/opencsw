@@ -234,6 +234,7 @@ SPKG_DESC_CSWemacs			=	$(DESCRIPTION) - metapackage for generic dependencies
 CATALOGNAME_CSWemacs		=	emacs
 PKGFILES_CSWemacs			=	NOFILES
 RUNTIME_DEP_PKGS_CSWemacs	=	CSWemacs-athena
+CHECKPKG_OVERRIDES_CSWemacs	+=	surplus-dependency|CSWemacs-athena
 
 PACKAGES							+=	CSWemacs-athena
 SPKG_DESC_CSWemacs-athena			=	$(DESCRIPTION) - based on the Athena toolkit
@@ -297,6 +298,17 @@ CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibxml2-2
 CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibpixman1-0
 CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWfconfig
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	unidentified-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	unidentified-dependency|CSWemacs-bin-common
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibxft2
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibxrender
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWemacs-bin-common
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibm17n-utils
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibotf-utils
 PKGFILES_CSWemacs-athena			=	/opt/csw/bin/emacs-athena
 PKGFILES_CSWemacs-athena			+=	/opt/csw/bin/emacs-$(VERSION)-athena
 
@@ -367,6 +379,8 @@ CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWlibpixman1-0
 CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWfconfig
 CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWorbit2
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	unidentified-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	unidentified-dependency|CSWemacs-bin-common
 PKGFILES_CSWemacs-gtk			=	/opt/csw/bin/emacs-gtk
 PKGFILES_CSWemacs-gtk			+=	/opt/csw/bin/emacs-$(VERSION)-gtk
 
@@ -383,6 +397,8 @@ CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/local|root/opt/csw
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/emacs-nox
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	surplus-dependency|CSWemacs-bin-common
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	surplus-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	unidentified-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	unidentified-dependency|CSWemacs-bin-common
 PKGFILES_CSWemacs-nox			=	/opt/csw/bin/emacs-nox
 PKGFILES_CSWemacs-nox			+=	/opt/csw/bin/emacs-$(VERSION)-nox
 
