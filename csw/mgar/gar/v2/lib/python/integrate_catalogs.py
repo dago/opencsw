@@ -249,21 +249,22 @@ def main():
     bundles_missing = set()
     cp = rest.CachedPkgstats("pkgstats")
     for key in catalogs:
-      for pkg in catalogs[key]:
-        # logging.debug("%r", pkg)
-        md5 = pkg["md5_sum"]
-        if md5 not in bundles_by_md5 and md5 not in bundles_missing:
-          stats = cp.GetPkgstats(md5)
-          bundle_key = "OPENCSW_BUNDLE"
-          # pprint.pprint(stats)
-          if stats:
-            if bundle_key in stats["pkginfo"]:
-              bundles_by_md5[md5] = stats["pkginfo"][bundle_key]
-            else:
-              logging.debug(
-                  "%r (%r) does not have the bundle set",
-                  stats["basic_stats"]["pkg_basename"], md5)
-              bundles_missing.add(md5)
+      if catalogs[key]: # could be None
+        for pkg in catalogs[key]:
+          # logging.debug("%r", pkg)
+          md5 = pkg["md5_sum"]
+          if md5 not in bundles_by_md5 and md5 not in bundles_missing:
+            stats = cp.GetPkgstats(md5)
+            bundle_key = "OPENCSW_BUNDLE"
+            # pprint.pprint(stats)
+            if stats:
+              if bundle_key in stats["pkginfo"]:
+                bundles_by_md5[md5] = stats["pkginfo"][bundle_key]
+              else:
+                logging.debug(
+                    "%r (%r) does not have the bundle set",
+                    stats["basic_stats"]["pkg_basename"], md5)
+                bundles_missing.add(md5)
   # Here's a good place to calculate the mapping between catalognames and
   # bundle names.
   change_types = "new_pkgs", "removed_pkgs", "updated_pkgs"
