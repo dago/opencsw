@@ -40,7 +40,8 @@ RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWperl
 
 REINPLACE_USRLOCAL += docs/perl.txt
-REINPLACE_USRLOCAL += docs/irssi.1
 REINPLACE_USRLOCAL += docs/help/load
+
+REINPLACE_USRSHARE += docs/irssi.1
 
 include gar/category.mk
