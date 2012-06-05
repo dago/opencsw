@@ -315,7 +315,7 @@ class Indexer(object):
         "pkginfo": self._ParsePkgInfos(srv4_pkginfo_stream, self._ParseSrv4PkginfoLine, show_progress),
     }
     if ips_pkginfo_stream and ips_pkgcontent_stream:
-      data["contents"].append(self._ParsePkgContents(ips_pkgcontent_stream, self._ParseIpsPkgContentsLine, show_progress))
+      data["contents"].extend(self._ParsePkgContents(ips_pkgcontent_stream, self._ParseIpsPkgContentsLine, show_progress))
       data["pkginfo"].update(self._ParsePkgInfos(ips_pkgcontent_stream, self._ParseIpsPkgListLine, show_progress))
 
     return data

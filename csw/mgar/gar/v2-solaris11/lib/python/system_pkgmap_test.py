@@ -7,6 +7,14 @@ import models
 import logging
 import common_constants
 
+PKGINFO_LINE_1 = ("system      SUNWwpau                Wireless WPA Supplicant, (Usr)")
+PKGINFO_LINE_2 = ("system      SUNWpcan                Cisco-Aironet 802.11b driver")
+
+PKGLIST_LINE_1 = ("developer/versioning/sccs "
+                  "                              Source Code Control System")
+PKGLIST_LINE_2 = ("developer/solarisstudio-122/c++ (solarisstudio) "
+                  "        C++ Compilers")
+
 PKGMAP_LINE_1 = ("/usr/lib/sparcv9/libpthread.so.1 f none "
                  "0755 root bin 41296 28258 1018129099 SUNWcslx")
 PKGMAP_LINE_2 = ("/usr/lib/libCrun.so.1 f none "
@@ -28,8 +36,24 @@ PKGMAP_LINE_7 = ("/opt/csw/include/mozilla/accessibility/nsAccessNode.h "
                  "f none 0644 root bin 5557 10685 1068611657 !CSWmozilla")
 PKGMAP_LINE_8 = ("/etc/scn/scn_aa_read p none 0600 root sys SUNWscn-agentfacade-r")
 
+PKGCONTENT_LINE_1 = ("bin\tlink\tsystem/core-os\t./usr/bin")
+PKGCONTENT_LINE_2 = ("dev\tdir\tsystem/core-os\t\t0755\troot\tsys")
+PKGCONTENT_LINE_3 = ("etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml\thardlink\t"
+                     "system/core-os\t./platform_SUNW,UltraSPARC-IIi-Netract.xml")
+PKGCONTENT_LINE_4 = ("lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin")
+
 
 class IndexerUnitTest(unittest.TestCase):
+
+  def test_ParseSrv4PkginfoLine(self):
+    spi = system_pkgmap.Indexer()
+    expected = ('SUNWwpau', 'Wireless WPA Supplicant, (Usr)')
+    self.assertEqual(expected, spi._ParseSrv4PkginfoLine(PKGINFO_LINE_1))
+ 
+  def test_ParseIpsPkgListLine(self):
+    spi = system_pkgmap.Indexer()
+    expected = ('SUNWdeveloper-versioning-sccs', 'Source Code Control System')
+    self.assertEqual(expected, spi._ParseIpsPkgListLine(PKGLIST_LINE_1))
 
   def test_ParseSrv4PkgmapLineFile(self):
     spi = system_pkgmap.Indexer()
@@ -142,14 +166,14 @@ class IndexerUnitTest(unittest.TestCase):
 
   def test_ParseIpsPkgContentsLineLink(self):
     spi = system_pkgmap.Indexer()
-    line = "bin\tlink\tsystem/core-os\t./usr/bin"
+    line = PKGCONTENT_LINE_1
     expected = {
         'pkgnames': ['SUNWsystem-core-os'],
         'group': None,
         'target': './usr/bin',
         'owner': None,
         'path': '/bin',
-        'line': 'bin\tlink\tsystem/core-os\t./usr/bin',
+        'line': PKGCONTENT_LINE_1,
         'type': 's',
         'mode': None,
     }
@@ -159,14 +183,14 @@ class IndexerUnitTest(unittest.TestCase):
 
   def test_ParseIpsPkgContentsLineDir(self):
     spi = system_pkgmap.Indexer()
-    line = "dev\tdir\tsystem/core-os\t\t0755\troot\tsys"
+    line = PKGCONTENT_LINE_2
     expected = {
         'pkgnames': ['SUNWsystem-core-os'],
         'group': 'sys',
         'target': None,
         'owner': 'root',
         'path': '/dev',
-        'line': 'dev\tdir\tsystem/core-os\t\t0755\troot\tsys',
+        'line': PKGCONTENT_LINE_2,
         'type': 'd',
         'mode': '0755',
     }
@@ -176,17 +200,14 @@ class IndexerUnitTest(unittest.TestCase):
 
   def test_ParseIpsPkgContentsLineHardlink(self):
     spi = system_pkgmap.Indexer()
-    line = ("etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml\thardlink\t"
-            "system/core-os\t./platform_SUNW,UltraSPARC-IIi-Netract.xml")
+    line = PKGCONTENT_LINE_3
     expected = {
         'pkgnames': ['SUNWsystem-core-os'],
         'group': None,
         'target': './platform_SUNW,UltraSPARC-IIi-Netract.xml',
         'owner': None,
         'path': '/etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml',
-        'line': ('etc/svc/profile/platform_SUNW,UltraSPARC-IIe-NetraCT-40.xml\t'
-                 'hardlink\tsystem/core-os\t'
-                 './platform_SUNW,UltraSPARC-IIi-Netract.xml'),
+        'line': PKGCONTENT_LINE_3,
         'type': 'l',
         'mode': None,
     }
@@ -196,14 +217,14 @@ class IndexerUnitTest(unittest.TestCase):
 
   def test_ParseIpsPkgContentsLineFile(self):
     spi = system_pkgmap.Indexer()
-    line = ("lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin")
+    line = PKGCONTENT_LINE_4
     expected = {
         'pkgnames': ['SUNWsystem-library'],
         'group': 'bin',
         'target': None,
         'owner': 'root',
         'path': '/lib/libc.so.1',
-        'line': 'lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin',
+        'line': PKGCONTENT_LINE_4,
         'type': 'f',
         'mode': '0755',
     }
@@ -220,13 +241,64 @@ class IndexerUnitTest(unittest.TestCase):
 
   def test_ParsePkgContents(self):
     spi = system_pkgmap.Indexer()
-    stream = (
+    srv4_stream = (
           PKGMAP_LINE_1,
           PKGMAP_LINE_2,
           PKGMAP_LINE_3,
           PKGMAP_LINE_4
     )
-    self.assertEqual(4, len(spi._ParsePkgContents(stream, spi._ParseSrv4PkgmapLine, False)))
+    ips_stream = (
+          PKGCONTENT_LINE_1,
+          PKGCONTENT_LINE_2,
+          PKGCONTENT_LINE_3,
+          PKGCONTENT_LINE_4
+    )
+    self.assertEqual(4, len(spi._ParsePkgContents(srv4_stream, spi._ParseSrv4PkgmapLine, False)))
+    self.assertEqual(4, len(spi._ParsePkgContents(ips_stream, spi._ParseIpsPkgContentsLine, False)))
+
+  def test_GetDataStructure(self):
+    spi = system_pkgmap.Indexer()
+    expected = {'arch': 'sparc', 'osrel': 'SunOS5.11',
+                'contents': [
+                 {'cksum': '28258', 'class': 'none', 'group': 'bin', 
+                  'line': '/usr/lib/sparcv9/libpthread.so.1 f none 0755 root bin 41296 28258 1018129099 SUNWcslx',
+                   'major': None, 'minor': None, 'mode': '0755', 'modtime': '1018129099', 'owner': 'root',
+                   'path': '/usr/lib/sparcv9/libpthread.so.1', 'pkgnames': ['SUNWcslx'], 'size': '41296', 
+                   'target': None, 'type': 'f'},
+                 {'cksum': '6287', 'class': 'none', 'group': 'bin',
+                  'line': '/usr/lib/libCrun.so.1 f none 0755 root bin 63588 6287 1256043984 SUNWlibC',
+                  'major': None, 'minor': None, 'mode': '0755', 'modtime': '1256043984', 'owner': 'root',
+                  'path': '/usr/lib/libCrun.so.1', 'pkgnames': ['SUNWlibC'], 'size': '63588',
+                  'target': None, 'type': 'f'},
+                 {'group': None, 'line': 'bin\tlink\tsystem/core-os\t./usr/bin', 'mode': None, 'owner': None,
+                  'path': '/bin', 'pkgnames': ['SUNWsystem-core-os'], 'target': './usr/bin', 'type': 's'},
+                 {'group': 'sys', 'line': 'dev\tdir\tsystem/core-os\t\t0755\troot\tsys', 'mode': '0755', 'owner': 'root',
+                  'path': '/dev', 'pkgnames': ['SUNWsystem-core-os'], 'target': None, 'type': 'd'}],
+                'pkginfo': {'SUNWbin': u'link system/core-os ./usr/bin',
+                            'SUNWdev': u'dir system/core-os 0755 root sys',
+                            'SUNWpcan': u'Cisco-Aironet 802.11b driver',
+                            'SUNWwpau': u'Wireless WPA Supplicant, (Usr)'}
+               }
+    srv4_pkginfos_stream = (
+          PKGINFO_LINE_1,
+          PKGINFO_LINE_2,
+    )
+    ips_pkginfos_stream = (
+          PKGLIST_LINE_1,
+          PKGLIST_LINE_2,
+    )
+    srv4_pkgcontents_stream = (
+          PKGMAP_LINE_1,
+          PKGMAP_LINE_2,
+    )
+    ips_pkgcontents_stream = (
+          PKGCONTENT_LINE_1,
+          PKGCONTENT_LINE_2,
+    )
+    self.assertEqual(expected, spi.GetDataStructure(srv4_pkgcontents_stream, srv4_pkginfos_stream,
+                                                    ips_pkgcontents_stream, ips_pkginfos_stream,
+                                                    'SunOS5.11', 'sparc', False))
+
 
 
 class InstallContentsImporterUnitTest(test_base.SqlObjectTestMixin,
