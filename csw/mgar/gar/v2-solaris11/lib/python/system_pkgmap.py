@@ -104,13 +104,13 @@ class Indexer(object):
                   repr(self.infile_contents), repr(self.outfile), repr(self.osrel),
                   repr(self.arch))
 
-  def _ParsePkginfoLine(self, line):
+  def _ParseSrv4PkginfoLine(self, line):
     fields = re.split(c.WS_RE, line)
     pkgname = fields[1]
     pkg_desc = u" ".join(fields[2:])
     return pkgname, pkg_desc
 
-  def _ParsePkgListLine(self, line):
+  def _ParseIpsPkgListLine(self, line):
     fields = re.split(c.WS_RE, line)
     pkgname = self._IpsNameToSrv4Name(fields[0])
     desc_field_start = 1
@@ -121,7 +121,7 @@ class Indexer(object):
     pkg_desc = u" ".join(fields[desc_field_start:])
     return pkgname, pkg_desc
 
-  def _ParsePkgContentsLine(self, line):
+  def _ParseIpsPkgContentsLine(self, line):
     """Parses one line of "pkg contents" output
 
     Returns: A dictionary of fields, or None.
@@ -163,7 +163,7 @@ class Indexer(object):
     }
     return d
 
-  def _ParsePkgmapLine(self, line):
+  def _ParseSrv4PkgmapLine(self, line):
     """Parses one line of /var/sadm/install/contents.
 
     Returns: A dictionary of fields, or None.
@@ -261,27 +261,23 @@ class Indexer(object):
     }
     return d
 
-  def _ParseInstallContents(self, streams, show_progress):
-    logging.debug("-> _ParseInstallContents()")
+  def _ParsePkgContents(self, stream, parser, show_progress):
+    logging.debug("-> _ParsePkgContents()")
     parsed_lines = []
     c = itertools.count()
     # Progressbar stuff can go here.
-    streams_and_parsers = zip(streams, (self._ParsePkgmapLine, self._ParsePkgContentsLine))
-    for stream_data, ParseMethod in streams_and_parsers:
-      if stream_data is None:
-        continue
-      for line in stream_data:
-        if show_progress:
-          if not c.next() % 1000:
-            sys.stdout.write(".")
-            sys.stdout.flush()
-        d = ParseMethod(line)
-        # d might be None if line was a comment
-        if d:
-          parsed_lines.append(d)
+    for line in stream:
+      if show_progress:
+        if not c.next() % 1000:
+          sys.stdout.write(".")
+          sys.stdout.flush()
+      d = parser(line)
+      # d might be None if line was a comment
+      if d:
+        parsed_lines.append(d)
     if show_progress:
       sys.stdout.write("\n")
-    logging.debug("<- _ParseInstallContents()")
+    logging.debug("<- _ParsePkgContents()")
     return parsed_lines
 
   def _GetUname(self, uname_option=None):
@@ -305,8 +301,9 @@ class Indexer(object):
   def _GetArch(self):
     return self._GetUname("-p")
 
-  def GetDataStructure(self, contents_streams, pkginfo_streams, osrel, arch,
-                       show_progress=False):
+  def GetDataStructure(self, srv4_pkgcontent_stream, srv4_pkginfo_stream, 
+                       ips_pkgcontent_stream, ips_pkginfo_stream,
+                       osrel, arch, show_progress=False):
     """Gets the data structure to be pickled.
 
     Does not interact with the OS.
@@ -314,17 +311,30 @@ class Indexer(object):
     data = {
         "osrel": osrel,
         "arch": arch,
-        "contents": self._ParseInstallContents(contents_streams, show_progress),
-        "pkginfo": self._ParsePkginfoOutput(pkginfo_streams, show_progress),
+        "contents": self._ParsePkgContents(srv4_pkgcontent_stream, self._ParseSrv4PkgmapLine, show_progress),
+        "pkginfo": self._ParsePkgInfos(srv4_pkginfo_stream, self._ParseSrv4PkginfoLine, show_progress),
     }
+    if ips_pkginfo_stream and ips_pkgcontent_stream:
+      data["contents"].append(self._ParsePkgContents(ips_pkgcontent_stream, self._ParseIpsPkgContentsLine, show_progress))
+      data["pkginfo"].update(self._ParsePkgInfos(ips_pkgcontent_stream, self._ParseIpsPkgListLine, show_progress))
+
     return data
 
   def Index(self, show_progress=False):
     # This function interacts with the OS.
-    contents_streams = self._GetPkgcontentsStreams()
-    pkginfo_streams = self._GetPkginfoStreams()
-    data = self.GetDataStructure(
-        contents_streams, pkginfo_streams, self.osrel, self.arch, show_progress)
+    srv4_pkgcontents_stream = self._GetSrv4PkgcontentStream()
+    srv4_pkginfos_stream = self._GetSrv4PkginfosStream()
+
+    if self.osrel in common_constants.IPS_OS_RELS:
+      ips_pkgcontents_stream = self._GetIpsPkgcontentStream()
+      ips_pkginfos_stream = self._GetIpsPkginfosStream()
+    else: 
+      ips_pkgcontents_stream = None
+      ips_pkginfos_stream = None
+      
+    data = self.GetDataStructure(srv4_pkgcontents_stream, srv4_pkginfos_stream, 
+                                 ips_pkgcontents_stream, ips_pkginfos_stream, 
+                                 self.osrel, self.arch, show_progress)
     return data
 
   def IndexAndSave(self):
@@ -335,22 +345,19 @@ class Indexer(object):
     cPickle.dump(data, out_fd, cPickle.HIGHEST_PROTOCOL)
     logging.debug("IndexAndSave(): pickling done.")
 
-  def _GetPkgcontentsStreams(self):
-    contents_stream = open(self.infile_contents, "r")
+  def _GetSrv4PkgcontentStream(self):
+    return (open(self.infile_contents, "r"))
 
-    pkgcontents_stream = None
-    if self.osrel in common_constants.IPS_OS_RELS:
-      args = ["pkg", "contents", "-H", "-o",
-              "path,action.name,pkg.name,target,mode,owner,group",
-              "-t", "dir,file,hardlink,link"]
-      pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-      stdout, stderr = pkg_proc.communicate()
-      ret = pkg_proc.wait()
-      pkgcontents_stream = stdout.splitlines()
+  def _GetIpsPkgcontentStream(self):
+    args = ["pkg", "contents", "-H", "-o",
+            "path,action.name,pkg.name,target,mode,owner,group",
+            "-t", "dir,file,hardlink,link"]
+    pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = pkg_proc.communicate()
+    ret = pkg_proc.wait()
+    return stdout.splitlines()
 
-    return (contents_stream, pkgcontents_stream)
-
-  def _GetPkginfoStreams(self):
+  def _GetSrv4PkginfosStream(self):
     """Calls pkginfo if file is not specified."""
     if self.infile_pkginfo:
       pkginfo_stream = open(self.infile_pkginfo, "r")
@@ -360,41 +367,37 @@ class Indexer(object):
       stdout, stderr = pkginfo_proc.communicate()
       ret = pkginfo_proc.wait()
       pkginfo_stream = stdout.splitlines()
+    
+    return pkginfo_stream
 
-    pkglist_stream = None
-    if self.osrel in common_constants.IPS_OS_RELS:
-      args = ["pkg", "list", "-H", "-s"]
-      pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-      stdout, stderr = pkg_proc.communicate()
-      ret = pkg_proc.wait()
-      pkglist_stream = stdout.splitlines()
+  def _GetIpsPkginfosStream(self):
+    args = ["pkg", "list", "-H", "-s"]
+    pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = pkg_proc.communicate()
+    ret = pkg_proc.wait()
+    pkglist_stream = stdout.splitlines()
+    return pkglist_stream
 
-    return (pkginfo_stream, pkglist_stream)
-
-  def _ParsePkginfoOutput(self, streams, unused_show_progress):
-    """Parses output from pkginfo.
+  def _ParsePkgInfos(self, stream, parser, unused_show_progress):
+    """Parses informations about packages
 
     Args:
-      streams: A list of two streams of strings, the first one from SVR4
-          pkginfo, the second from IPS
+      stream: A stream that contains informations about packages
+      parser: The parse method used to retrieve information from the stream
       unused_show_progress: Used to display a progress bar, which was removed.
     Returns:
       A dictionary from pkgnames to descriptions.
     """
-    logging.debug("-> _ParsePkginfoOutput()")
+    logging.debug("-> _ParsePkgInfos()")
     packages_by_pkgname = {}
-    for line in streams[0]:
-      pkgname, pkg_desc = self._ParsePkginfoLine(line)
+    for line in stream:
+      pkgname, pkg_desc = parser(line)
       packages_by_pkgname.setdefault(pkgname, pkg_desc)
-    if streams[1]:
-      for line in streams[1]:
-        pkgname, pkg_desc = self._ParsePkgListLine(line)
-        packages_by_pkgname.setdefault(pkgname, pkg_desc)
-    logging.debug("<- _ParsePkginfoOutput()")
+    logging.debug("<- _ParsePkgInfos()")
     return packages_by_pkgname
 
   def _IpsNameToSrv4Name(self, ips_name):
-    """Create a fake Svr4 pkgname from an ips pkgname."""
+    """Create a fake Srv4 pkgname from an ips pkgname."""
     return "SUNW" + "-".join(re.findall (ALPHANUMERIC_RE, ips_name))
 
 class InstallContentsImporter(object):
