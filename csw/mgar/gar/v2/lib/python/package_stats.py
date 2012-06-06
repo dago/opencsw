@@ -486,7 +486,7 @@ class StatsCollector(object):
     if not total_packages:
       raise PackageError("The length of package list is zero.")
     counter = itertools.count(1)
-    self.logger.info("Juicing the srv4 package stream files...")
+    self.logger.info("Juicing the svr4 package stream files...")
     pbar = progressbar.ProgressBar()
     pbar.maxval = total_packages
     pbar.start()
