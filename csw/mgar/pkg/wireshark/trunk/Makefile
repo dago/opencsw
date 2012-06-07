@@ -13,11 +13,15 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-PATCHFILES += 0001-Solaris-9-doesn-t-have-stdint.h.patch
+#PATCHFILES += 0001-Solaris-9-doesn-t-have-stdint.h.patch
 
 # Use patch until this is fixed:
 #   https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6615
 #PATCHFILES += 0002-Don-t-return-value-in-void-functions.patch
+
+#new glib2 only on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 
 VENDOR_URL = http://www.wireshark.org/
 
@@ -41,9 +45,7 @@ PACKAGES += CSWwireshark
 SPKG_DESC_CSWwireshark = Wireshark (was Ethereal) is a free network protocol analyzer
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWwireshark += CSWglib2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWwireshark += CSWgtk2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWpango
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibz1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibintl8
@@ -61,6 +63,14 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibglib2-0-0
 
 # No more library splitting unless absolutely necessary
 CHECKPKG_OVERRIDES_CSWwireshark += shared-lib-package-contains-so-symlink
