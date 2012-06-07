@@ -1,14 +1,14 @@
-From 1870ed31733cc218c7a308aea7f96b8f67c0e934 Mon Sep 17 00:00:00 2001
+From 5d6dad6dcd4f57e114f39fe8b467bdf92172f62b Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 2 Jan 2011 20:49:51 +0100
-Subject: [PATCH] expanded pathes to $(DESTDIR)
+Date: Sun, 3 Jun 2012 17:51:49 +0200
+Subject: [PATCH] Expand paths with $(DESTDIR)
 
 ---
- Makefile |  179 ++++++++++++++++++++++++++++++-------------------------------
- 1 files changed, 88 insertions(+), 91 deletions(-)
+ Makefile |  224 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 113 insertions(+), 111 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 88f8952..0cc40f9 100644
+index f610539..bd3d9a6 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -9,6 +9,8 @@
@@ -31,20 +31,24 @@ index 88f8952..0cc40f9 100644
  
  tags:
  	-rm -f TAGS
-@@ -66,52 +68,51 @@ endif
+@@ -66,63 +68,63 @@ endif
  
  install-pre: Makefile Makefile.config
  	@$(CHECKUSER)
 -	mkdir -p $(LOGDIR)
 -	mkdir -p $(STATEDIR)
+-	mkdir -p $(SPOOLDIR)
 -	mkdir -p $(CONFDIR)
--	$(CHOWN) $(USER) $(LOGDIR) $(STATEDIR)
+-	$(CHOWN) $(USER) $(LOGDIR) $(STATEDIR) $(SPOOLDIR)
 +	mkdir -p $(DESTDIR)$(LOGDIR)
 +	mkdir -p $(DESTDIR)$(STATEDIR)
++	mkdir -p $(DESTDIR)$(SPOOLDIR)
 +	mkdir -p $(DESTDIR)$(CONFDIR)
++#	$(CHOWN) $(USER) $(LOGDIR) $(STATEDIR) $(SPOOLDIR)
  
  install-master-prime: $(INFILES_MASTER) install-pre install-master
 -	mkdir -p $(CONFDIR)/templates
+-	mkdir -p $(CONFDIR)/static
 -	mkdir -p $(CONFDIR)/templates/partial
 -	mkdir -p $(CONFDIR)/munin-conf.d
 -	mkdir -p $(LIBDIR)
@@ -53,11 +57,16 @@ index 88f8952..0cc40f9 100644
 -	mkdir -p $(PERLLIB)/Munin/Master
 -	mkdir -p $(HTMLDIR)
 -	mkdir -p $(DBDIR)
+-	mkdir -p $(DBDIR)/cgi-tmp
 -	mkdir -p $(CGIDIR)
 -
--	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR) 
+-	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR)
 -	$(CHMOD) 0755 $(DBDIR)
+-
+-	$(CHOWN) $(CGIUSER) $(DBDIR)/cgi-tmp
+-	$(CHMOD) 0755 $(DBDIR)/cgi-tmp
 +	mkdir -p $(DESTDIR)$(CONFDIR)/templates
++	mkdir -p $(DESTDIR)$(CONFDIR)/static
 +	mkdir -p $(DESTDIR)$(CONFDIR)/templates/partial
 +	mkdir -p $(DESTDIR)$(CONFDIR)/munin-conf.d
 +	mkdir -p $(DESTDIR)$(LIBDIR)
@@ -66,14 +75,23 @@ index 88f8952..0cc40f9 100644
 +	mkdir -p $(DESTDIR)$(PERLLIB)/Munin/Master
 +	mkdir -p $(DESTDIR)$(HTMLDIR)
 +	mkdir -p $(DESTDIR)$(DBDIR)
++	mkdir -p $(DESTDIR)$(DBDIR)/cgi-tmp
 +	mkdir -p $(DESTDIR)$(CGIDIR)
 +
-+	#$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR) 
++#	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR)
 +	$(CHMOD) 0755 $(DESTDIR)$(DBDIR)
++
++#	$(CHOWN) $(CGIUSER) $(DBDIR)/cgi-tmp
++	$(CHMOD) 0755 $(DESTDIR)$(DBDIR)/cgi-tmp
  
- 	for p in master/www/*.tmpl master/www/*.png master/www/*.css resources/favicon.ico; do \
+ 	for p in master/www/*.tmpl ;  do \
 -		$(INSTALL) -m 0644 "$$p" $(CONFDIR)/templates/ ; \
 +		$(INSTALL) -m 0644 "$$p" $(DESTDIR)$(CONFDIR)/templates/ ; \
+ 	done
+ 
+ 	for p in master/static/* ; do \
+-		$(INSTALL) -m 0644 "$$p" $(CONFDIR)/static/ ; \
++		$(INSTALL) -m 0644 "$$p" $(DESTDIR)$(CONFDIR)/static/ ; \
  	done
  
  	for p in master/www/partial/*.tmpl; do \
@@ -81,10 +99,8 @@ index 88f8952..0cc40f9 100644
 +		$(INSTALL) -m 0644 "$$p" $(DESTDIR)$(CONFDIR)/templates/partial/ ; \
  	done
  
--	$(INSTALL) -m 0644 master/www/definitions.html $(CONFDIR)/templates/
 -	$(INSTALL) -m 0755 master/DejaVuSansMono.ttf $(LIBDIR)/
 -	$(INSTALL) -m 0755 master/DejaVuSans.ttf $(LIBDIR)/
-+	$(INSTALL) -m 0644 master/www/definitions.html $(DESTDIR)$(CONFDIR)/templates/
 +	$(INSTALL) -m 0755 master/DejaVuSansMono.ttf $(DESTDIR)$(LIBDIR)/
 +	$(INSTALL) -m 0755 master/DejaVuSans.ttf $(DESTDIR)$(LIBDIR)/
  
@@ -96,27 +112,31 @@ index 88f8952..0cc40f9 100644
 -	$(INSTALL) -m 0755 build/master/_bin/munin-cron $(BINDIR)/
 -	$(INSTALL) -m 0755 build/master/_bin/munin-check $(BINDIR)/
 -	$(INSTALL) -m 0755 build/master/_bin/munin-update $(LIBDIR)/
--	$(INSTALL) -m 0755 build/master/_bin/munin-graph $(LIBDIR)/
 -	$(INSTALL) -m 0755 build/master/_bin/munin-html $(LIBDIR)/
+-	$(INSTALL) -m 0755 build/master/_bin/munin-graph $(LIBDIR)/
 -	$(INSTALL) -m 0755 build/master/_bin/munin-limits $(LIBDIR)/
--	$(INSTALL) -m 0755 build/master/_bin/munin-cgi-graph $(CGIDIR)/
--	$(INSTALL) -m 0755 build/master/_bin/munin-fastcgi-graph $(CGIDIR)/
+-	$(INSTALL) -m 0755 build/master/_bin/munin-datafile2storable $(LIBDIR)/
+-	$(INSTALL) -m 0755 build/master/_bin/munin-storable2datafile $(LIBDIR)/
+-	$(INSTALL) -m 0755 build/master/_bin/munin-cgi-graph $(CGIDIR)/munin-cgi-graph
+-	$(INSTALL) -m 0755 build/master/_bin/munin-cgi-html $(CGIDIR)/munin-cgi-html
 +	$(INSTALL) -m 0755 build/master/_bin/munin-cron $(DESTDIR)$(BINDIR)/
 +	$(INSTALL) -m 0755 build/master/_bin/munin-check $(DESTDIR)$(BINDIR)/
 +	$(INSTALL) -m 0755 build/master/_bin/munin-update $(DESTDIR)$(LIBDIR)/
-+	$(INSTALL) -m 0755 build/master/_bin/munin-graph $(DESTDIR)$(LIBDIR)/
 +	$(INSTALL) -m 0755 build/master/_bin/munin-html $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 build/master/_bin/munin-graph $(DESTDIR)$(LIBDIR)/
 +	$(INSTALL) -m 0755 build/master/_bin/munin-limits $(DESTDIR)$(LIBDIR)/
-+	$(INSTALL) -m 0755 build/master/_bin/munin-cgi-graph $(DESTDIR)$(CGIDIR)/
-+	$(INSTALL) -m 0755 build/master/_bin/munin-fastcgi-graph $(DESTDIR)$(CGIDIR)/
++	$(INSTALL) -m 0755 build/master/_bin/munin-datafile2storable $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 build/master/_bin/munin-storable2datafile $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 build/master/_bin/munin-cgi-graph $(DESTDIR)$(CGIDIR)/munin-cgi-graph
++	$(INSTALL) -m 0755 build/master/_bin/munin-cgi-html $(DESTDIR)$(CGIDIR)/munin-cgi-html
  
- # Not ready to be installed yet	
+ # Not ready to be installed yet
 -# $(INSTALL) -m 0755 build/master/_bin/munin-gather $(LIBDIR)/
 +# $(INSTALL) -m 0755 build/master/_bin/munin-gather $(DESTDIR)$(LIBDIR)/
  
  # ALWAYS DO THE OS SPECIFIC PLUGINS LAST! THAT WAY THEY OVERWRITE THE
  # GENERIC ONES
-@@ -122,28 +123,24 @@ install-node-plugins: install-plugins-prime
+@@ -133,28 +135,28 @@ install-node-plugins: install-plugins-prime
  install-plugins-prime: install-plugins build $(PLUGINS) Makefile Makefile.config
  	@$(CHECKGROUP)
  
@@ -124,14 +144,17 @@ index 88f8952..0cc40f9 100644
 -	mkdir -p $(CONFDIR)/plugin-conf.d
 -	mkdir -p $(LIBDIR)/plugins
 -	mkdir -p $(PLUGSTATE)
--
--	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
--	$(CHMOD) 0775 $(PLUGSTATE)
--	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
 +	mkdir -p $(DESTDIR)$(CONFDIR)/plugins
 +	mkdir -p $(DESTDIR)$(CONFDIR)/plugin-conf.d
 +	mkdir -p $(DESTDIR)$(LIBDIR)/plugins
 +	mkdir -p $(DESTDIR)$(PLUGSTATE)
+ 
+-	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
+-	$(CHMOD) 0775 $(PLUGSTATE)
+-	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
++#	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
++#	$(CHMOD) 0775 $(PLUGSTATE)
++#	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
  
  	for p in build/plugins/node.d/* build/plugins/node.d.$(OSTYPE)/* ; do \
  	    if test -f "$$p" ; then                            \
@@ -155,7 +178,16 @@ index 88f8952..0cc40f9 100644
  
  #TODO:
  # configure plugins.  Or not. Better done under the direction of the installer
-@@ -152,30 +149,30 @@ install-plugins-java: build-plugins-java
+@@ -162,36 +164,36 @@ install-plugins-java: build-plugins-java
+ 
+ install-async-prime:
+-	mkdir -p $(LIBDIR)
+-	$(INSTALL) -m 0755 build/node/_bin/munin-async-client $(LIBDIR)/
+-	$(INSTALL) -m 0755 build/node/_bin/munin-async-server $(LIBDIR)/
++	mkdir -p $(DESTDIR)/$(LIBDIR)
++	$(INSTALL) -m 0755 build/node/_bin/munin-async-client $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 build/node/_bin/munin-async-server $(DESTDIR)$(LIBDIR)/
+ 
  install-node-prime: install-node-pre install-node
  
  install-node-pre: build/node/munin-node.conf install-pre
@@ -170,9 +202,9 @@ index 88f8952..0cc40f9 100644
 -	mkdir -p $(MANDIR)/man1 $(MANDIR)/man5 $(MANDIR)/man8
 -	$(INSTALL) -m 0644 build/doc/munin-node.conf.5 $(MANDIR)/man5/
 -	$(INSTALL) -m 0644 build/doc/munin.conf.5 $(MANDIR)/man5/
--	$(INSTALL) -m 0644 build/doc/munin-graph.8 $(MANDIR)/man8/
 -	$(INSTALL) -m 0644 build/doc/munin-update.8 $(MANDIR)/man8/
 -	$(INSTALL) -m 0644 build/doc/munin-limits.8 $(MANDIR)/man8/
+-	$(INSTALL) -m 0644 build/doc/munin-graph.8 $(MANDIR)/man8/
 -	$(INSTALL) -m 0644 build/doc/munin-html.8 $(MANDIR)/man8/
 -	$(INSTALL) -m 0644 build/doc/munin-cron.8 $(MANDIR)/man8/
 -	$(INSTALL) -m 0644 build/doc/munin-check.8 $(MANDIR)/man8/
@@ -180,9 +212,9 @@ index 88f8952..0cc40f9 100644
 +	mkdir -p $(DESTDIR)$(MANDIR)/man1 $(DESTDIR)$(MANDIR)/man5 $(DESTDIR)$(MANDIR)/man8
 +	$(INSTALL) -m 0644 build/doc/munin-node.conf.5 $(DESTDIR)$(MANDIR)/man5/
 +	$(INSTALL) -m 0644 build/doc/munin.conf.5 $(DESTDIR)$(MANDIR)/man5/
-+	$(INSTALL) -m 0644 build/doc/munin-graph.8 $(DESTDIR)$(MANDIR)/man8/
 +	$(INSTALL) -m 0644 build/doc/munin-update.8 $(DESTDIR)$(MANDIR)/man8/
 +	$(INSTALL) -m 0644 build/doc/munin-limits.8 $(DESTDIR)$(MANDIR)/man8/
++	$(INSTALL) -m 0644 build/doc/munin-graph.8 $(DESTDIR)$(MANDIR)/man8/
 +	$(INSTALL) -m 0644 build/doc/munin-html.8 $(DESTDIR)$(MANDIR)/man8/
 +	$(INSTALL) -m 0644 build/doc/munin-cron.8 $(DESTDIR)$(MANDIR)/man8/
 +	$(INSTALL) -m 0644 build/doc/munin-check.8 $(DESTDIR)$(MANDIR)/man8/
@@ -190,18 +222,17 @@ index 88f8952..0cc40f9 100644
  
  
  install-doc: build-doc
--	mkdir -p $(DOCDIR)/resources
+ 	mkdir -p $(DOCDIR)/resources
 -	$(INSTALL) -m 0644 README $(DOCDIR)/
 -	$(INSTALL) -m 0644 COPYING $(DOCDIR)/
 -	$(INSTALL) -m 0644 build/resources/* $(DOCDIR)/resources
-+	mkdir -p $(DESTDIR)$(DOCDIR)/resources
 +	$(INSTALL) -m 0644 README $(DESTDIR)$(DOCDIR)/
 +	$(INSTALL) -m 0644 COPYING $(DESTDIR)$(DOCDIR)/
 +	$(INSTALL) -m 0644 build/resources/* $(DESTDIR)$(DOCDIR)/resources
  
  ######################################################################
  
-@@ -189,28 +186,28 @@ build/%: %.in
+@@ -208,29 +210,29 @@ build/%: %.in
  	@echo "$< -> $@"
  	@mkdir -p build/`dirname $<`
  	@sed -e 's|@@PREFIX@@|$(PREFIX)|g'                      \
@@ -210,20 +241,23 @@ index 88f8952..0cc40f9 100644
 -             -e 's|@@SBINDIR@@|$(SBINDIR)|g'                    \
 -             -e 's|@@DOCDIR@@|$(DOCDIR)|g'                      \
 -             -e 's|@@LIBDIR@@|$(LIBDIR)|g'                      \
+-             -e 's|@@MANDIR@@|$(MANDIR)|g'                      \
+-             -e 's|@@LOGDIR@@|$(LOGDIR)|g'                      \
+-             -e 's|@@HTMLDIR@@|$(HTMLDIR)|g'                    \
+-             -e 's|@@DBDIR@@|$(DBDIR)|g'                        \
+-             -e 's|@@STATEDIR@@|$(STATEDIR)|g'                  \
+-	     -e 's|@@SPOOLDIR@@|$(SPOOLDIR)|g'                  \
 +             -e 's|@@CONFDIR@@|$(DESTDIR)$(CONFDIR)|g'                    \
 +             -e 's|@@BINDIR@@|$(DESTDIR)$(BINDIR)|g'                      \
 +             -e 's|@@SBINDIR@@|$(DESTDIR)$(SBINDIR)|g'                    \
 +             -e 's|@@DOCDIR@@|$(DESTDIR)$(DOCDIR)|g'                      \
 +             -e 's|@@LIBDIR@@|$(DESTDIR)$(LIBDIR)|g'                      \
-              -e 's|@@MANDIR@@|$(MANDIR)|g'                      \
--             -e 's|@@LOGDIR@@|$(LOGDIR)|g'                      \
--             -e 's|@@HTMLDIR@@|$(HTMLDIR)|g'                    \
--             -e 's|@@DBDIR@@|$(DBDIR)|g'                        \
--             -e 's|@@STATEDIR@@|$(STATEDIR)|g'                  \
++             -e 's|@@MANDIR@@|$(DESTDIR)$(MANDIR)|g'                      \
 +             -e 's|@@LOGDIR@@|$(DESTDIR)$(LOGDIR)|g'                      \
 +             -e 's|@@HTMLDIR@@|$(DESTDIR)$(HTMLDIR)|g'                    \
 +             -e 's|@@DBDIR@@|$(DESTDIR)$(DBDIR)|g'                        \
 +             -e 's|@@STATEDIR@@|$(DESTDIR)$(STATEDIR)|g'                  \
++	     -e 's|@@SPOOLDIR@@|$(DESTDIR)$(SPOOLDIR)|g'                  \
               -e 's|@@PERL@@|$(PERL)|g'                          \
 -             -e 's|@@PERLLIB@@|$(PERLLIB)|g'                    \
 +             -e 's|@@PERLLIB@@|$(DESTDIR)$(PERLLIB)|g'                    \
@@ -243,7 +277,47 @@ index 88f8952..0cc40f9 100644
               -e 's|@@USER@@|$(USER)|g'                          \
               -e 's|@@GROUP@@|$(GROUP)|g'                        \
               -e 's|@@PLUGINUSER@@|$(PLUGINUSER)|g'              \
-@@ -354,20 +351,20 @@ old-test: t/*.t
+@@ -248,17 +250,17 @@ build-common-pre: common/Build
+ common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm build-common-pre
+ 	rm -f common/blib/lib/Munin/Common/Defaults.pm
+ 	$(PERL) -pe 's{(PREFIX     \s+=\s).*}{\1q{$(PREFIX)};}x;   \
+-                  s{(CONFDIR    \s+=\s).*}{\1q{$(CONFDIR)};}x;     \
+-                  s{(BINDIR     \s+=\s).*}{\1q{$(BINDIR)};}x;      \
+-                  s{(SBINDIR    \s+=\s).*}{\1q{$(SBINDIR)};}x;     \
+-                  s{(DOCDIR     \s+=\s).*}{\1q{$(DOCDIR)};}x;      \
+-                  s{(LIBDIR	\s+=\s).*}{\1q{$(LIBDIR)};}x;      \
+-                  s{(MANDIR	\s+=\s).*}{\1q{$(MANDIR)};}x;      \
+-                  s{(LOGDIR	\s+=\s).*}{\1q{$(LOGDIR)};}x;      \
+-                  s{(HTMLDIR	\s+=\s).*}{\1q{$(HTMLDIR)};}x;     \
+-                  s{(DBDIR	\s+=\s).*}{\1q{$(DBDIR)};}x;       \
+-                  s{(STATEDIR	\s+=\s).*}{\1q{$(STATEDIR)};}x;    \
+-		  s{(SPOOLDIR	\s+=\s).*}{\1q{$(SPOOLDIR)};}x;    \
++                  s{(CONFDIR    \s+=\s).*}{\1q{$(DESTDIR)$(CONFDIR)};}x;     \
++                  s{(BINDIR     \s+=\s).*}{\1q{$(DESTDIR)$(BINDIR)};}x;      \
++                  s{(SBINDIR    \s+=\s).*}{\1q{$(DESTDIR)$(SBINDIR)};}x;     \
++                  s{(DOCDIR     \s+=\s).*}{\1q{$(DESTDIR)$(DOCDIR)};}x;      \
++                  s{(LIBDIR	\s+=\s).*}{\1q{$(DESTDIR)$(LIBDIR)};}x;      \
++                  s{(MANDIR	\s+=\s).*}{\1q{$(DESTDIR)$(MANDIR)};}x;      \
++                  s{(LOGDIR	\s+=\s).*}{\1q{$(DESTDIR)$(LOGDIR)};}x;      \
++                  s{(HTMLDIR	\s+=\s).*}{\1q{$(DESTDIR)$(HTMLDIR)};}x;     \
++                  s{(DBDIR	\s+=\s).*}{\1q{$(DESTDIR)$(DBDIR)};}x;       \
++                  s{(STATEDIR	\s+=\s).*}{\1q{$(DESTDIR)$(STATEDIR)};}x;    \
++		  s{(SPOOLDIR	\s+=\s).*}{\1q{$(DESTDIR)$(SPOOLDIR)};}x;    \
+                   s{(PERL	\s+=\s).*}{\1q{$(PERL)};}x;        \
+                   s{(PERLLIB	\s+=\s).*}{\1q{$(PERLLIB)};}x;     \
+                   s{(PYTHON	\s+=\s).*}{\1q{$(PYTHON)};}x;      \
+@@ -267,8 +269,8 @@ common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm bu
+                   s{(HOSTNAME	\s+=\s).*}{\1q{$(HOSTNAME)};}x;    \
+                   s{(MKTEMP	\s+=\s).*}{\1q{$(MKTEMP)};}x;      \
+                   s{(VERSION	\s+=\s).*}{\1q{$(VERSION)};}x;     \
+-                  s{(PLUGSTATE	\s+=\s).*}{\1q{$(PLUGSTATE)};}x;   \
+-                  s{(CGIDIR	\s+=\s).*}{\1q{$(CGIDIR)};}x;      \
++                  s{(PLUGSTATE	\s+=\s).*}{\1q{$(DESTDIR)$(PLUGSTATE)};}x;   \
++                  s{(CGIDIR	\s+=\s).*}{\1q{$(DESTDIR)$(CGIDIR)};}x;      \
+                   s{(USER	\s+=\s).*}{\1q{$(USER)};}x;        \
+                   s{(GROUP	\s+=\s).*}{\1q{$(GROUP)};}x;       \
+                   s{(PLUGINUSER	\s+=\s).*}{\1q{$(PLUGINUSER)};}x;  \
+@@ -373,7 +375,7 @@ old-test: t/*.t
  	$(MAKE) $@ CONFIG=t/Makefile.config
  else
  test_plugins = id_default id_root env
@@ -251,9 +325,8 @@ index 88f8952..0cc40f9 100644
 +old-test: t/*.t t/install $(addprefix $(DESTDIR)$(CONFDIR)/plugins/,$(test_plugins))
  	@for test in t/*.t; do \
  		echo -n "$$test: "; \
--		PERL5LIB=$(PERLLIB) $(PERL) $$test;\
-+		PERL5LIB=$(DESTDIR)$(PERLLIB) $(PERL) $$test;\
- 	done
+ 		PERL5LIB=$(PERLLIB) $(PERL) $$test;\
+@@ -381,10 +383,10 @@ old-test: t/*.t t/install $(addprefix $(CONFDIR)/plugins/,$(test_plugins))
  endif
  
  node-monkeywrench: install-node
@@ -261,18 +334,14 @@ index 88f8952..0cc40f9 100644
 -	rm -rf $(LIBDIR)/plugins
 -	mkdir -p $(LIBDIR)/plugins
 -	mkdir -p $(CONFDIR)/plugins
--	cp monkeywrench/plugin-break*_ $(LIBDIR)/plugins/
--	$(SBINDIR)/munin-node-configure --suggest
 +	rm -rf $(DESTDIR)$(CONFDIR)/plugins
 +	rm -rf $(DESTDIR)$(LIBDIR)/plugins
 +	mkdir -p $(DESTDIR)$(LIBDIR)/plugins
 +	mkdir -p $(DESTDIR)$(CONFDIR)/plugins
-+	cp monkeywrench/plugin-break*_ $(DESTDIR)$(LIBDIR)/plugins/
-+	$(DESTDIR)$(SBINDIR)/munin-node-configure --suggest
+ 	cp monkeywrench/plugin-break*_ $(LIBDIR)/plugins/
+ 	$(SBINDIR)/munin-node-configure --suggest
  	echo 'Done?'
- 
- t/install: 
-@@ -391,12 +388,12 @@ build-common: common/Build
+@@ -410,12 +412,12 @@ build-common: common/Build
  # can't seem to find a way to persuade it to write otherwhere.
  install-%: %/Build
  	cd $* && $(PERL) Build install			\
@@ -290,7 +359,7 @@ index 88f8952..0cc40f9 100644
 +            --install_path libdoc=$(DESTDIR)$(MANDIR)/man3	\
  
  test-%: %/Build
- 	cd $* && $(PERL) Build test || true
+ 	cd $* && $(PERL) Build test --verbose=0 || true
 -- 
-1.7.3.2
+1.7.10.3
 

@@ -1,14 +1,14 @@
-From fd284599a4d41b327f87750c92bbeb22935df8b6 Mon Sep 17 00:00:00 2001
+From 02a69c5ed4cd96c71068e1cb1b2f0a2006321396 Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 11 Jul 2010 15:01:31 +0200
-Subject: [PATCH] use top from OpenCSW
+Date: Sun, 3 Jun 2012 18:11:50 +0200
+Subject: [PATCH] Use CSWtop in memory.in
 
 ---
  plugins/node.d.sunos/memory.in |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/plugins/node.d.sunos/memory.in b/plugins/node.d.sunos/memory.in
-index 7b9300e..eeabbcb 100755
+index 98f4bce..fea0a31 100644
 --- a/plugins/node.d.sunos/memory.in
 +++ b/plugins/node.d.sunos/memory.in
 @@ -17,7 +17,7 @@ top installed.
@@ -30,5 +30,5 @@ index 7b9300e..eeabbcb 100755
  if [ "$1" = "autoconf" ]; then
      if [ -x $TOP ] ; then
 -- 
-1.7.1
+1.7.10.3
 
