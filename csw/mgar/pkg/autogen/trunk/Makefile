@@ -34,18 +34,53 @@ BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 BUILD_DEP_PKGS		+=	CSWlibxml2-dev
 BUILD_DEP_PKGS		+=	CSWlibz-dev
 
-RUNTIME_DEP_PKGS	=	CSWguilelib12
-RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS	+=	CSWlibxml2-2
-RUNTIME_DEP_PKGS	+=	CSWlibz1 
-
 BUILD_SCRIPTS	=	nominal
 BUILD_SCRIPTS	+=	dvi
 BUILD_SCRIPTS	+=	ps
 BUILD_SCRIPTS	+=	pdf
 
 TEST_SCRIPTS = custom
+
+INSTALL_SCRIPTS	=	nominal
+INSTALL_SCRIPTS	+=	dvi
+INSTALL_SCRIPTS	+=	ps
+INSTALL_SCRIPTS	+=	pdf
+
+PACKAGES						=	CSWautogen
+CATALOGNAME_CSWautogen			=	autogen
+SPKG_DESC_CSWautogen			=	$(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWautogen		=	CSWautogen-dev
+RUNTIME_DEP_PKGS_CSWautogen		+=	CSWautogen-doc
+
+PACKAGES						+=	CSWautogen-doc
+CATALOGNAME_CSWautogen-doc		=	autogen_doc
+SPKG_DESC_CSWautogen-doc		+=	$(DESCRIPTION), documentation
+PKGFILES_CSWautogen-doc			+=	/opt/csw/share/info/.*
+PKGFILES_CSWautogen-doc			+=	/opt/csw/share/doc/$(NAME)/$(NAME)[.].*
+OBSOLETED_BY_CSWautogen-doc		=	CSWautogendoc
+CATALOGNAME_CSWautogendoc		=	autogen_doc_stub
+ARCHALL_CSWautogen-doc			=	1
+
+PACKAGES						+=	CSWlibopts25
+CATALOGNAME_CSWlibopts25		=	libopts25
+PKGFILES_CSWlibopts25			+=	$(call baseisadirs,$(libdir),libopts\.so\.25\.10\.0)
+PKGFILES_CSWlibopts25			+=	$(call baseisadirs,$(libdir),libopts\.so\.25(\.\d+)*)
+SPKG_DESC_CSWlibopts25			+=	$(DESCRIPTION), libopts.so.25
+OBSOLETED_BY_CSWlibopts25		=	CSWautogenrt
+RUNTIME_DEP_PKGS_CSWlibopts25	=	CSWguilelib12
+RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibz1 
+
+PACKAGES						+=	CSWautogen-dev
+CATALOGNAME_CSWautogen-dev 		=	autogen_dev
+SPKG_DESC_CSWautogen-dev		+=	$(DESCRIPTION), development files
+PKGFILES_CSWautogen-dev			+=	/opt/csw/lib/libopts.so
+PKGFILES_CSWautogen-dev			+=	$(PKGFILES_DEVEL)
+PKGFILES_CSWautogen-dev			+=	/opt/csw/share/pkgconfig/autoopts.pc
+RUNTIME_DEP_PKGS_CSWautogen-dev	=	CSWlibopts25
+ARCHALL_CSWautogen-dev			=	1
 
 include gar/category.mk
 
@@ -69,6 +104,26 @@ build-pdf:
 # as the remaining ones pass.
 test-custom:
 	-$(MAKE) -k -C $(WORKSRC) check
+	$(MAKECOOKIE)
+
+install-nominal:
+	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) DESTDIR="$(DESTDIR)" install
+	rm -rf "$(DESTDIR)$(datadir)/$(NAME)/"*.tar.gz
+	$(MAKECOOKIE)
+
+install-dvi:
+	ginstall -d "$(DESTDIR)$(docdir)/$(NAME)"
+	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) DESTDIR="$(DESTDIR)" $@
+	$(MAKECOOKIE)
+
+install-ps:
+	ginstall -d "$(DESTDIR)$(docdir)/$(NAME)"
+	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) DESTDIR="$(DESTDIR)" $@
+	$(MAKECOOKIE)
+
+install-pdf:
+	ginstall -d "$(DESTDIR)$(docdir)/$(NAME)"
+	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) DESTDIR="$(DESTDIR)" $@
 	$(MAKECOOKIE)
 
 # this is private and not available publicly
