@@ -14,23 +14,22 @@ define BLURB
   scripts. You can also use it as a netwide front-end for `cron'.
 endef
 
-MASTER_SITES = http://www.cfengine.org/tarballs/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz 
+SPKG_SOURCEURL = http://www.cfengine.org
+MASTER_SITES   = http://www.cfengine.org/tarballs/
+DISTFILES      = $(NAME)-$(VERSION).tar.gz 
 
-PACKAGES = CSWcfengine CSWcfenginedoc
-PKGFILES_CSWcfenginedoc  = .*/share/info/.*
-PKGFILES_CSWcfenginedoc += .*/share/cfengine/.*
+PACKAGES                     = CSWcfengine
+CATALOGNAME_CSWcfengine      = cfengine
+SPKG_DESC_CSWcfengine        = A tool for administering Networks of Diverse Machines
+RUNTIME_DEP_PKGS_CSWcfengine = CSWlibssl1-0-0 CSWbdb3
 
-CATALOGNAME_CSWcfengine = cfengine
-SPKG_DESC_CSWcfengine = A tool for administering Networks of Diverse Machines
-RUNTIME_DEP_PKGS_CSWcfengine = CSWosslrt CSWbdb3
-
-CATALOGNAME_CSWcfenginedoc = cfengine_doc
-SPKG_DESC_CSWcfenginedoc = Cfengine documentation
-ARCHALL_CSWcfenginedoc = 1
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES                    += CSWcfengine-doc
+CATALOGNAME_CSWcfengine-doc  = cfengine_doc
+SPKG_DESC_CSWcfengine-doc    = Cfengine documentation
+ARCHALL_CSWcfengine-doc      = 1
+PKGFILES_CSWcfengine-doc     = .*/share/info/.*
+PKGFILES_CSWcfengine-doc    += .*/share/cfengine/.*
+OBSOLETED_BY_CSWcfengine-doc = CSWcfenginedoc
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-DCE
@@ -39,4 +38,12 @@ CONFIGURE_ARGS += --with-berkeleydb=/opt/csw/bdb33
 
 GARCOMPILER = GCC3
 
+CHECKPKG_OVERRIDES += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES += file-with-bad-content
+
 include gar/category.mk
+
+post-install-modulated:
+	echo post-install $(DESTDIR)
+	rm -rf $(DESTDIR)/opt/csw/share/info
+	@$(MAKECOOKIE)
