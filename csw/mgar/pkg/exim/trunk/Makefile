@@ -53,7 +53,7 @@ INITSMF = /etc/opt/csw/init.d/cswexim
 PRESERVECONF += /etc/opt/csw/exim/exim.conf /etc/opt/csw/exim/exim-env.sh
 PRESERVECONF += /etc/opt/csw/exim/aliases
 
-ALTERNATIVE = /opt/csw/bin/sendmail sendmail /opt/csw/sbin/sendmail.exim 50 /opt/csw/bin/mailq mailq /opt/csw/bin/mailq.exim /opt/csw/bin/newaliases newaliases /opt/csw/bin/newaliases.exim
+ALTERNATIVE = /opt/csw/bin/sendmail sendmail /opt/csw/bin/sendmail.exim 50 /opt/csw/bin/mailq mailq /opt/csw/bin/mailq.exim /opt/csw/bin/newaliases newaliases /opt/csw/bin/newaliases.exim
 
 # scripts/exim_install has been patched to use this variable
 EXIM_VERSION = $(VERSION)
