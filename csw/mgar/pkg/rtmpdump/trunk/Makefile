@@ -21,8 +21,9 @@ VENDOR_URL = http://rtmpdump.mplayerhq.hu/
 PACKAGES += CSWlibrtmp0
 SPKG_DESC_CSWlibrtmp0 = A toolkit for RTMP streams, librtmp.so.0
 PKGFILES_CSWlibrtmp0 += $(call pkgfiles_lib,librtmp.so.0)
-RUNTIME_DEP_PKGS_CSWlibrtmp0 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibrtmp0 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibrtmp0 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibrtmp0 += CSWlibz1
+
 
 PACKAGES += CSWlibrtmp-dev
 SPKG_DESC_CSWlibrtmp-dev = Development files for librtmp.so.0
@@ -33,8 +34,8 @@ PACKAGES += CSWrtmpdump
 SPKG_DESC_CSWrtmpdump = A toolkit for RTMP streams
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWrtmpdump += CSWlibgnugetopt0
-RUNTIME_DEP_PKGS_CSWrtmpdump += CSWosslrt
-RUNTIME_DEP_PKGS_CSWrtmpdump += CSWzlib
+RUNTIME_DEP_PKGS_CSWrtmpdump += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWrtmpdump += CSWlibz1
 
 BUILD64_LIBS_ONLY = 1
 
