@@ -53,6 +53,8 @@ INITSMF = /etc/opt/csw/init.d/cswexim
 PRESERVECONF += /etc/opt/csw/exim/exim.conf /etc/opt/csw/exim/exim-env.sh
 PRESERVECONF += /etc/opt/csw/exim/aliases
 
+ALTERNATIVE = /opt/csw/bin/sendmail sendmail /opt/csw/sbin/sendmail.exim 50 /opt/csw/bin/mailq mailq /opt/csw/bin/mailq.exim /opt/csw/bin/newaliases newaliases /opt/csw/bin/newaliases.exim
+
 # scripts/exim_install has been patched to use this variable
 EXIM_VERSION = $(VERSION)
 export EXIM_VERSION
@@ -145,5 +147,9 @@ post-install-modulated:
 post-merge:
 	( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
 		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup )
-	( cd $(PKGROOT); mkdir -p var/opt/csw/log/exim )
+	( cd $(PKGROOT); mkdir -p opt/csw/bin var/opt/csw/log/exim )
+	@( cd $(PKGROOT)/$(bindir); \
+		ln -s ../sbin/exim sendmail.exim; \
+		ln -s ../sbin/exim mailq.exim; \
+		ginstall -m 0755 $(abspath $(FILEDIR))/newaliases $(PKGROOT)/$(bindir)/newaliases.exim )
 	@$(MAKECOOKIE)

@@ -1,0 +1,4 @@
+#!/bin/ksh
+
+# Note: This script is part of CSWexim
+/opt/csw/bin/exim -bi
