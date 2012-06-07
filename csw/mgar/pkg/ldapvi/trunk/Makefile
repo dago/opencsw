@@ -19,8 +19,8 @@ VENDOR_URL = http://www.lichteblau.com/ldapvi/
 BUILD_DEP_PKGS += CSWlibpopt-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
-BUILD_DEP_PKGS += CSWossldevel
-BUILD_DEP_PKGS += CSWoldapdevel
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibglib2-dev
 
 # Because new glib is only available on Solaris 10
@@ -31,8 +31,9 @@ SPKG_DESC_CSWldapvi = Interactive LDAP client for Unix terminals
 RUNTIME_DEP_PKGS_CSWldapvi += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWldapvi += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWldapvi += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWldapvi += CSWosslrt
-RUNTIME_DEP_PKGS_CSWldapvi += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWldapvi += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWldapvi += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWldapvi += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWldapvi += CSWlibglib2-0-0
 
 TEST_TARGET = test
