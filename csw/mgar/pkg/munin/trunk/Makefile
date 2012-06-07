@@ -3,10 +3,6 @@ VERSION = 2.0.0
 CATEGORIES = apps
 GARTYPE = v2
 
-SPKG_DESC_CSWmunin-master = Master component of the graphical network and system monitoring Munin
-SPKG_DESC_CSWmunin-node = Node component of the graphical network and system monitoring Munin
-SPKG_DESC_CSWmunin-common = Common files for Munin node and master
-
 define BLURB
   Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
 endef
@@ -21,12 +17,8 @@ DISTFILES += README.CSW
 
 PATCHFILES	+= 0001-Expand-paths-with-DESTDIR.patch
 PATCHFILES	+= 0001-paths-in-Makefile.config.patch
-#PATCHFILES	+= 0001-Use-CSWtop-in-memory.in.patch
 PATCHFILES	+= 0001-paths-and-hostname-in-munin-node.conf.in.patch
 PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
-#PATCHFILES	+= 0001-paths-in-munin-htaccess.in.patch
-#PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
-#PATCHFILES	+= 0001-changed-shebang-in-files.patch
 
 #
 # Reinplacements
@@ -34,8 +26,21 @@ PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
 
 # bad file content ...
 
-REINPLACE_USRLOCAL	+= plugins/node.d/*
+REINPLACE_USRLOCAL	+= plugins/node.d*/*
 REINPLACE_USRLOCAL	+= plugins/node.d.sunos/*
+REINPLACE_USRLOCAL	+= master/*lib/lib/Munin/Master/*
+REINPLACE_USRLOCAL	+= master/lib/Munin/Master/*
+
+REINPLACE_USRSHARE	+= plugins/node.d*/*
+REINPLACE_USRSHARE	+= node/*lib/*
+REINPLACE_USRSHARE	+= master/*lib/*
+REINPLACE_USRSHARE	+= master/*lib/lib/Munin/Master/*
+REINPLACE_USRSHARE	+= master/lib/Munin/Master/*
+REINPLACE_USRSHARE	+= plugins/blib/lib/Munin/*
+REINPLACE_USRSHARE	+= plugins/lib/Munin/*
+REINPLACE_USRSHARE	+= node/lib/Munin/Node/Configure/*
+REINPLACE_USRSHARE	+= node/blib/lib/Munin/Node/Configure/*
+
 
 # put the right shebang into perl files
 
@@ -45,25 +50,51 @@ REINPLACE_WITH_perl 	 = \#!/opt/csw/bin/perl
 REINPLACE_FILES_perl 	+= node/bin/*
 REINPLACE_FILES_perl 	+= node/sbin/*
 
+# replace cgi-bin with cgi
+
+REINPLACEMENTS		+= cgi
+REINPLACE_MATCH_cgi	 = cgi-bin
+REINPLACE_WITH_cgi	 = cgi
+REINPLACE_FILES_cgi	+= master/static/dynazoom.html
+
 #
-#
+# Package definitions
 #
 
 PACKAGES = CSWmunin-master CSWmunin-node CSWmunin-common
-CATALOGNAME_CSWmunin-master = munin_master
-CATALOGNAME_CSWmunin-node = munin_node
-CATALOGNAME_CSWmunin-common = munin_common
 
-ARCHALL_CSWmunin-master	= 1
-ARCHALL_CSWmunin-node	= 1
-ARCHALL_CSWmunin-common	= 1
+CATALOGNAME_CSWmunin-master	= munin_master
+CATALOGNAME_CSWmunin-node	= munin_node
+CATALOGNAME_CSWmunin-common	= munin_common
+
+SPKG_DESC_CSWmunin-master	= Master component of the graphical network and system monitoring Munin
+SPKG_DESC_CSWmunin-node		= Node component of the graphical network and system monitoring Munin
+SPKG_DESC_CSWmunin-common	= Common files for Munin node and master
+
+ARCHALL_CSWmunin-master		= 1
+ARCHALL_CSWmunin-node		= 1
+ARCHALL_CSWmunin-common		= 1
+
+OBSOLETED_BY_CSWmunin-master		= CSWmuninmaster
+SPKG_CATALOG_NAME_CSWmuninmaster	= munin_master_stub
+
+OBSOLETED_BY_CSWmunin-node		= CSWmuninnode
+SPKG_CATALOG_NAME_CSWmuninnode		= munin_node_stub
+
+#
+# Dependencies
+#
 
 RUNTIME_DEP_PKGS_CSWmunin-common = CSWperl
 
-RUNTIME_DEP_PKGS_CSWmunin-master = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunin-common
-RUNTIME_DEP_PKGS_CSWmunin-master += CSWpm-rrdtool CSWapache2 
+RUNTIME_DEP_PKGS_CSWmunin-master  = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpm-log-log4perl CSWmunin-common
+RUNTIME_DEP_PKGS_CSWmunin-master += CSWpm-rrdtool CSWapache2 CSWpmfcgi 	CSWpmfilecpyrecurs
+RUNTIME_DEP_PKGS_CSWmunin-master += CSWpmdatemanip
+RUNTIME_DEP_PKGS_CSWmunin-master += CSWpm-io-socket-inet6
+RUNTIME_DEP_PKGS_CSWmunin-master += CSWpmsocket6
+RUNTIME_DEP_PKGS_CSWmunin-master += CSWpm-uri
 
-RUNTIME_DEP_PKGS_CSWmunin-node = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunin-common
+RUNTIME_DEP_PKGS_CSWmunin-node  = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunin-common
 RUNTIME_DEP_PKGS_CSWmunin-node += CSWpmnetssleay
 
 ############### Prototype filters for the different packages ###############
@@ -143,47 +174,6 @@ USERGROUP	+= $(MUNINMASTER_USERGROUP)
 POSTMSG		+= $(MUNINMASTER_POSTMSG)
 CRONTABS	+= $(MUNINMASTER_CRONTABS)
 
-#SPKG_CLASSES_CSWmunin-master = none cswusergroup ugfiles cswcrontab cswcptemplates cswpostmsg
-#SPKG_CLASSES_CSWmunin-node = none cswusergroup ugfiles cswcptemplates cswinitsmf 
-#SPKG_CLASSES_CSWmunin-common = none
-
-OBSOLETED_BY_CSWmunin-master = CSWmuninmaster
-SPKG_CATALOG_NAME_CSWmuninmaster = munin_master_stub
-
-OBSOLETED_BY_CSWmunin-node = CSWmuninnode
-SPKG_CATALOG_NAME_CSWmuninnode = munin_node_stub
-
-
-#
-# checkpkg overrides
-#
-# the following files contain "/usr/local" and "/usr/share" - these strings appear in perldoc or as fallback path values
-# so it's uncritical to leave them unpatched
-#
-
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/hddtemp_smartctl
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/lpstat
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/foldingathome
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/mhttping
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/ejabberd_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/smart_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/squeezebox_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/sybase_space
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/if_err_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/share/perl/site_perl/Munin/Plugin.pm
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/share/man/man3/Munin::Node::Configure::PluginList.3perl
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/share/man/man3/Munin::Plugin.3perl
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/if_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/ps_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/squeezebox_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/smart_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/io_busy_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/io_bytes_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/nvidia_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/io_ops_
-CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/share/perl/site_perl/Munin/Node/Configure/PluginList.pm
-CHECKPKG_OVERRIDES_CSWmunin-master += file-with-bad-content|/usr/local|root/opt/csw/share/perl/site_perl/Munin/Master/HTMLOld.pm
-
 #
 # checkpkg overrides
 #
@@ -193,15 +183,24 @@ CHECKPKG_OVERRIDES_CSWmunin-master += file-with-bad-content|/usr/local|root/opt/
 CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWmunin-common
 CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmhtmltmpl
-CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmlog4perl
 CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpm-rrdtool
 CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmprmsvldt
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmsocket6
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmfilecpyrecurs
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpm-log-log4perl
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpm-io-socket-inet6
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpm-uri
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmdatemanip
+CHECKPKG_OVERRIDES_CSWmunin-master += surplus-dependency|CSWpmfcgi
 
 CHECKPKG_OVERRIDES_CSWmunin-node += surplus-dependency|CSWmunin-common
 CHECKPKG_OVERRIDES_CSWmunin-node += surplus-dependency|CSWpmnetsnmp
 CHECKPKG_OVERRIDES_CSWmunin-node += surplus-dependency|CSWpmnetssleay
 CHECKPKG_OVERRIDES_CSWmunin-node += surplus-dependency|CSWpmnetserver
 
+#
+#
+#
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS =
