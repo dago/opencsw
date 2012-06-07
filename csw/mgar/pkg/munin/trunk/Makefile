@@ -1,11 +1,11 @@
 NAME = munin
-VERSION = 1.4.6
+VERSION = 2.0.0
 CATEGORIES = apps
 GARTYPE = v2
 
-SPKG_DESC_CSWmunin-master = Master component of the graphical network and system monitoring munin
-SPKG_DESC_CSWmunin-node = Node component of the graphical network and system monitoring munin
-SPKG_DESC_CSWmunin-common = Common files for munin node and master
+SPKG_DESC_CSWmunin-master = Master component of the graphical network and system monitoring Munin
+SPKG_DESC_CSWmunin-node = Node component of the graphical network and system monitoring Munin
+SPKG_DESC_CSWmunin-common = Common files for Munin node and master
 
 define BLURB
   Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
@@ -19,23 +19,23 @@ DISTFILES += cswusergroup
 DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
 DISTFILES += README.CSW
 
-PATCHFILES += Makefile.patch
-PATCHFILES += Makefile.config.patch
-PATCHFILES += sunos_memory.in.patch
-PATCHFILES += munin-node.conf.in.patch
-PATCHFILES += munin.conf.in.patch
-PATCHFILES += munin-htaccess.in.patch
-PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
-PATCHFILES += perl.patch # shebang correctly set
+PATCHFILES	+= 0001-Expand-paths-with-DESTDIR.patch
+PATCHFILES	+= 0001-paths-in-Makefile.config.patch
+PATCHFILES	+= 0001-Use-CSWtop-in-memory.in.patch
+PATCHFILES	+= 0001-paths-and-hostname-in-munin-node.conf.in.patch
+PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
+PATCHFILES	+= 0001-paths-in-munin-htaccess.in.patch
+#PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
+PATCHFILES	+= 0001-changed-shebang-in-files.patch
 
 PACKAGES = CSWmunin-master CSWmunin-node CSWmunin-common
 CATALOGNAME_CSWmunin-master = munin_master
 CATALOGNAME_CSWmunin-node = munin_node
 CATALOGNAME_CSWmunin-common = munin_common
 
-ARCHALL_CSWmunin-master = 1
-ARCHALL_CSWmunin-node = 1
-ARCHALL_CSWmunin-common = 1
+ARCHALL_CSWmunin-master	= 1
+ARCHALL_CSWmunin-node	= 1
+ARCHALL_CSWmunin-common	= 1
 
 RUNTIME_DEP_PKGS_CSWmunin-common = CSWperl
 
@@ -53,7 +53,7 @@ RUNTIME_DEP_PKGS_CSWmunin-node += CSWpmnetssleay
 
 PKGFILES_CSWmunin-common += .*/Munin::Common.*
 PKGFILES_CSWmunin-common += .*/Munin\/Common.*
-PKGFILES_CSWmunin-common += .*munin_common.*
+#PKGFILES_CSWmunin-common += .*munin_common.*
 
 #
 # files for CSWmunin-node
@@ -62,7 +62,7 @@ PKGFILES_CSWmunin-common += .*munin_common.*
 MUNINNODE_UGFILES 	= /var/opt/csw/munin /var/opt/csw/munin/log /var/opt/csw/munin/db /var/opt/csw/munin/run
 MUNINNODE_SMF		= /etc/opt/csw/init.d/cswmuninnode
 MUNINNODE_USERGROUP	= /opt/csw/etc/pkg/CSWmunin-node/cswusergroup
-MUNINNODE_EXECS		= .*munin-node .*munin-node-configure.* .*munindoc.* .*munin-run.*
+MUNINNODE_EXECS		= .*munin-node .*munin-node-configure.* .*munindoc.* .*munin-run.* .*munin-sched.*
 MUNINNODE_CONF		= .*munin-node.conf .*munin-node.conf.5 .*munin-node.1 /etc/opt/csw/munin/munin-conf.d /etc/opt/csw/munin/plugin-conf.d
 
 PKGFILES_CSWmunin-node += .*muninnode.* .*CSWmunin-node.*
@@ -89,12 +89,14 @@ PROTOTYPE_PERMS_muninnode_smf = 0755
 # files for CSWmunin-master
 #
 
-MUNINMASTER_UGFILES	= /var/opt/csw/munin.* /etc/opt/csw/munin/apache.* /etc/opt/csw/munin/templates.*
-MUNINMASTER_USERGROUP	= /opt/csw/etc/pkg/CSWmunin-master/cswusergroup
-MUNINMASTER_EXECS	= .*munin-check.* .*munin-cron.* .*munin-graph.* .*munin-html.* .*munin-limits.* .*munin-update.*
-MUNINMASTER_FONTS	= .*ttf.*
-MUNINMASTER_CRONTABS	= /etc/opt/csw/pkg/CSWmunin-master/crontabs/munin
-MUNINMASTER_POSTMSG	= /opt/csw/share/doc/munin_master/README.CSW
+MUNINMASTER_UGFILES	 = /var/opt/csw/munin.* /etc/opt/csw/munin/apache.* /etc/opt/csw/munin/templates.*
+MUNINMASTER_UGFILES	+= /etc/opt/csw/munin/static.*
+MUNINMASTER_USERGROUP	 = /opt/csw/etc/pkg/CSWmunin-master/cswusergroup
+MUNINMASTER_EXECS	 = .*munin-check.* .*munin-cron.* .*munin-graph.* .*munin-html.* .*munin-limits.* .*munin-update.*
+MUNINMASTER_EXECS	+= .*munin-datafile2storable.* .*munin-storable2datafile.* .*munin-cgi-graph.* .*munin-cgi-html.*
+MUNINMASTER_FONTS	 = .*ttf.*
+MUNINMASTER_CRONTABS	 = /etc/opt/csw/pkg/CSWmunin-master/crontabs/munin
+MUNINMASTER_POSTMSG	 = /opt/csw/share/doc/munin_master/README.CSW
 
 PKGFILES_CSWmunin-master += .*muninmaster.*
 PKGFILES_CSWmunin-master += .*Munin::Master.*
@@ -195,6 +197,7 @@ install-custom:
 	@#
 	@cat $(WORKSRC)/Makefile | sed -e "s;DESTDIR =;& $(DESTDIR);g" > $(WORKSRC)/Makefile.tmp
 	@( cd $(WORKSRC); gmake -f Makefile ; cp Makefile.tmp Makefile ; gmake -f Makefile install)
+	@#( cd $(WORKSRC); cp Makefile.tmp Makefile ; gmake -f Makefile)
 	@#
 	@# we are using cswclassutils -> cswcptemplate
 	@#
@@ -240,9 +243,8 @@ install-custom:
 	@#
 	@# handle some other files
 	@#
-	@ginstall -d $(DESTDIR)/opt/csw/share/munin/fonts
-	@ginstall -m 644 $(WORKSRC)/master/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
-	@$(MAKECOOKIE)
+	@#ginstall -d $(DESTDIR)/opt/csw/share/munin/fonts
+	@#ginstall -m 644 $(WORKSRC)/master/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
 	@#
 	@# make some links for munin node
 	@#
@@ -250,3 +252,4 @@ install-custom:
 	@ln -s /opt/csw/libexec/munin/plugins/uptime $(DESTDIR)/etc/opt/csw/munin/plugins/uptime
 	@ln -s /opt/csw/libexec/munin/plugins/cpu $(DESTDIR)/etc/opt/csw/munin/plugins/cpu
 	@ln -s /opt/csw/libexec/munin/plugins/df $(DESTDIR)/etc/opt/csw/munin/plugins/df
+	@$(MAKECOOKIE)

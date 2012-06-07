@@ -1,14 +1,14 @@
-From 0ffc51f49ec0107bb5346871640a14f3f65b50bb Mon Sep 17 00:00:00 2001
+From f103d9b215d96b3672fc38da57df703c57e1fef4 Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Wed, 14 Jul 2010 20:06:33 +0200
-Subject: [PATCH] munin-node.conf.in: set logfiles and log level, change hostname to "yourhostname"
+Date: Sun, 3 Jun 2012 18:21:41 +0200
+Subject: [PATCH] paths and hostname in munin-node.conf.in
 
 ---
  node/munin-node.conf.in |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/node/munin-node.conf.in b/node/munin-node.conf.in
-index 40793b2..d25e14d 100644
+index b2e2ed4..1fc1bed 100644
 --- a/node/munin-node.conf.in
 +++ b/node/munin-node.conf.in
 @@ -2,9 +2,9 @@
@@ -20,19 +20,19 @@ index 40793b2..d25e14d 100644
 -pid_file @@STATEDIR@@/munin-node.pid
 +log_level 1
 +log_file /var/opt/csw/munin/log/munin-node.log
-+pid_file /var/opt/csw/munin/run/munin-node.pid
++pid_file /var/opt/csw/munin/log/munin-node.pid
  
  background 1
  setsid 1
-@@ -26,7 +26,7 @@ ignore_file \.pod$
+@@ -25,7 +25,7 @@ ignore_file \.pod$
  # Set this if the client doesn't report the correct hostname when
  # telnetting to localhost, port 4949
  #
 -#host_name @@HOSTNAME@@
-+#host_name yourhostname
++host_name yourhostname
  
  # A list of addresses that are allowed to connect.  This must be a
  # regular expression, since Net::Server does not understand CIDR-style
 -- 
-1.7.1
+1.7.10.3
 

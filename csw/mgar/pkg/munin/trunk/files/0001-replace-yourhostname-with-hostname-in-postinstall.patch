@@ -1,17 +1,17 @@
-From f94f6692eeb6875abf5e52ecf8a192ac3430c6e3 Mon Sep 17 00:00:00 2001
+From 63028d39bcad7a3b8fae5b04abf868039728d233 Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 11 Jul 2010 15:25:17 +0200
-Subject: [PATCH] changed default hostname to "yourhostname"
+Date: Sun, 3 Jun 2012 18:17:35 +0200
+Subject: [PATCH] replace yourhostname with hostname in postinstall
 
 ---
  master/munin.conf.in |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/master/munin.conf.in b/master/munin.conf.in
-index 3688d88..79d9729 100644
+index f1852f5..4e55ffc 100644
 --- a/master/munin.conf.in
 +++ b/master/munin.conf.in
-@@ -57,7 +57,7 @@ includedir @@CONFDIR@@/munin-conf.d
+@@ -87,7 +87,7 @@ includedir @@CONFDIR@@/munin-conf.d
  #contact.nagios.command /usr/bin/send_nsca nagios.host.comm -c /etc/nsca.conf
  
  # a simple host tree
@@ -21,5 +21,5 @@ index 3688d88..79d9729 100644
      use_node_name yes
  
 -- 
-1.7.1
+1.7.10.3
 
