@@ -21,12 +21,33 @@ DISTFILES += README.CSW
 
 PATCHFILES	+= 0001-Expand-paths-with-DESTDIR.patch
 PATCHFILES	+= 0001-paths-in-Makefile.config.patch
-PATCHFILES	+= 0001-Use-CSWtop-in-memory.in.patch
+#PATCHFILES	+= 0001-Use-CSWtop-in-memory.in.patch
 PATCHFILES	+= 0001-paths-and-hostname-in-munin-node.conf.in.patch
 PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
-PATCHFILES	+= 0001-paths-in-munin-htaccess.in.patch
+#PATCHFILES	+= 0001-paths-in-munin-htaccess.in.patch
 #PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
-PATCHFILES	+= 0001-changed-shebang-in-files.patch
+#PATCHFILES	+= 0001-changed-shebang-in-files.patch
+
+#
+# Reinplacements
+#
+
+# bad file content ...
+
+REINPLACE_USRLOCAL	+= plugins/node.d/*
+REINPLACE_USRLOCAL	+= plugins/node.d.sunos/*
+
+# put the right shebang into perl files
+
+REINPLACEMENTS 		+= perl
+REINPLACE_MATCH_perl 	 = \#!/usr/bin/perl
+REINPLACE_WITH_perl 	 = \#!/opt/csw/bin/perl
+REINPLACE_FILES_perl 	+= node/bin/*
+REINPLACE_FILES_perl 	+= node/sbin/*
+
+#
+#
+#
 
 PACKAGES = CSWmunin-master CSWmunin-node CSWmunin-common
 CATALOGNAME_CSWmunin-master = munin_master
