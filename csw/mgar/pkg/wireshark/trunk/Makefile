@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.6.4
+VERSION = 1.6.8
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -17,7 +17,7 @@ PATCHFILES += 0001-Solaris-9-doesn-t-have-stdint.h.patch
 
 # Use patch until this is fixed:
 #   https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6615
-PATCHFILES += 0002-Don-t-return-value-in-void-functions.patch
+#PATCHFILES += 0002-Don-t-return-value-in-void-functions.patch
 
 VENDOR_URL = http://www.wireshark.org/
 
@@ -53,18 +53,18 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibsmi2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWwireshark += CSWosslrt
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlua
-RUNTIME_DEP_PKGS_CSWwireshark += CSWftype2
-RUNTIME_DEP_PKGS_CSWwireshark += CSWlibatk
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWwireshark += CSWgeoip
-RUNTIME_DEP_PKGS_CSWwireshark += CSWfconfig
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgeoip1
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibssl1-0-0
 
 # No more library splitting unless absolutely necessary
 CHECKPKG_OVERRIDES_CSWwireshark += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWwireshark += non-uniform-lib-versions-in-package
+CHECKPKG_OVERRIDES_CSWwireshark += shared-lib-pkgname-mismatch
 
 # example, \fI/usr/local/share/wireshark/preferences\fR) on UNIX-compatible
 CHECKPKG_OVERRIDES_CSWwireshark += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/rawshark.1
