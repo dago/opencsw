@@ -69,8 +69,9 @@ RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibqtcore4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx += $(RUNTIME_DEP_PKGS_CSWlibqtgui4-gxx_$(GARCH))
 CHECKPKG_OVERRIDES_CSWlibqtgui4-gxx += file-with-bad-content|/usr/local|root/opt/csw/gxx/lib/libQtGui.so.4.8.0
 CHECKPKG_OVERRIDES_CSWlibqtgui4-gxx += file-with-bad-content|/usr/share|root/opt/csw/gxx/lib/libQtGui.so.4.8.0
 
@@ -119,8 +120,9 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWsqlite
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibtiff3
-RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += $(RUNTIME_DEP_PKGS_CSWqt4-gxx-dev_$(GARCH))
 # These are code examples.
 CHECKPKG_OVERRIDES_CSWqt4-gxx-dev += binary-architecture-does-not-match-placement
 # REFINE this later!
@@ -166,8 +168,10 @@ RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWmesa
 RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibqtgui4-gxx
 RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx += $(RUNTIME_DEP_PKGS_CSWlibqtopengl4-gxx_$(GARCH))
+
 
 PACKAGES += CSWlibqtscript4-gxx
 PKGFILES_CSWlibqtscript4-gxx += $(call baseisadirs,$(libdir),libQtScript\.so\.4(\.\d+)*)
