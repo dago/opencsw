@@ -1,0 +1,34 @@
+From d8ce9faee3770b4e3cca9fe6e2af4b29a287c5c2 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 7 Jun 2012 16:43:26 +0200
+Subject: [PATCH] installation desination directories
+
+---
+ Makefile.in |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 7679ad8..a8e00a8 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -21,14 +21,14 @@
+ # where to put executable files
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+-BINDIR=@bindir@
++BINDIR=$(DESTDIR)@bindir@
+ EXE=@EXE@
+ 
+ # where to install the man pages
+-MANDIR = @mandir@
++MANDIR = $(DESTDIR)@mandir@
+ 
+ # where to install the doc
+-DOCDIR = $(prefix)/doc/bibtex2html
++DOCDIR = $(DESTDIR)$(prefix)/doc/bibtex2html
+ 
+ #########################################
+ # End of configuration part
+-- 
+1.7.10.3
+
