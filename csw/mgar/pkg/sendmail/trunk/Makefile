@@ -4,7 +4,7 @@
 # - Build separate 9/10 packages?
 # - One big "mta" switch in alternatives between sendmail/postfix
 
-# + add symlink from /etc/opt/csw/mail/cf to /opt/csw/share/mail/cf/cf
+# + add symlink from /etc/opt/csw/mail/cf to /opt/csw/share/sendmail/cf/cf
 # + add ostype solaris9csw.m4
 # + add sendmail.mc in cf dir
 # + /opt/csw/lib/sendmail 2555 root smmsp (Rafael Ostertag)
@@ -58,7 +58,7 @@ CATALOGNAME_CSWsendmail       = sendmail
 SPKG_DESC_CSWsendmail         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibwrap1
-RUNTIME_DEP_PKGS_CSWsendmail += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWsendmail += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWsendmail += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsendmail += CSWlibldap2-4-2
