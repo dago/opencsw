@@ -21,7 +21,7 @@ LICENSE = LICENSE
 PACKAGES += CSWtcpdump
 SPKG_DESC_CSWtcpdump = Dump network traffic
 RUNTIME_DEP_PKGS_CSWtcpdump += CSWlibpcap1
-RUNTIME_DEP_PKGS_CSWtcpdump += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWtcpdump += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWtcpdump += CSWlibsmi2
 
 BUILD_DEP_PKGS += CSWlibpcap-dev
