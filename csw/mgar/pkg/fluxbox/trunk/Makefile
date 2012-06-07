@@ -20,11 +20,11 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 EXTRA_CPPFLAGS = -features=extensions -D__FUNCTION__=__func__
 EXTRA_LINKER_FLAGS = -norunpath
 
-PATCHFILES += 0001-Use-gwhoami-from-CSWcoreutils.patch
+# PATCHFILES += 0001-Use-gwhoami-from-CSWcoreutils.patch
+PATCHFILES += 0001-Solaris-userland-port-grep-whoami.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-RUNTIME_DEP_PKGS_CSWfluxbox += CSWcoreutils
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWimlib2
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWlibfreetype6
@@ -38,7 +38,6 @@ CHECKPKG_OVERRIDES_CSWfluxbox += file-with-bad-content|/usr/share|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWfluxbox += file-with-bad-content|/usr/share|root/opt/csw/bin/fluxbox-generate_menu
 CHECKPKG_OVERRIDES_CSWfluxbox += file-with-bad-content|/usr/local|root/opt/csw/bin/fluxbox-generate_menu
 CHECKPKG_OVERRIDES_CSWfluxbox += file-with-bad-content|/usr/local|root/opt/csw/bin/fbsetbg
-CHECKPKG_OVERRIDES_CSWfluxbox += surplus-dependency|CSWcoreutils
 
 include gar/category.mk
 
