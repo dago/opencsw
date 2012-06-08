@@ -22,4 +22,7 @@ CATALOGNAME_CSWpmcryptosslrsa = pm_crypt_openssl_rsa_stub
 RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-rsa  = CSWpm-crypt-openssl-random
 RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-rsa += CSWlibssl1-0-0
 
+# Will be released at same time as this package, remove this override next time
+CHECKPKG_OVERRIDES_CSWpm-crypt-openssl-rsa += unidentified-dependency|CSWpm-crypt-openssl-random
+
 include gar/category.mk
