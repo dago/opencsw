@@ -1,8 +1,9 @@
 NAME = gimp
-GARTYPE = v1
+VERSION = 2.6.11
+GARTYPE = v2
 CATEGORIES = gnome
 
-DESCRIPTION = The GNU Image Manipulation Program.
+DESCRIPTION = The GNU Image Manipulation Program
 define BLURB
 	The GIMP is the GNU Image Manipulation Program. It is a freely distributed
 	piece of software suitable for such tasks as photo retouching, image
@@ -11,36 +12,206 @@ define BLURB
 	system, a mass production image renderer, a image format converter, etc.
 endef
 
-# v2.0+ requires Glib/Gtk+ >= 2.2.0
-BUILD_V20 = 1
-
-ifeq ($(BUILD_V20),1)
-VERSION = 2.0.1
-MASTER_SITES = ftp://ftp.gimp.org/pub/gimp/v2.0/
-else
-VERSION = 1.2.5
-MASTER_SITES = ftp://ftp.gimp.org/pub/gimp/v1.2/v$(VERSION)/
-endif
+MASTER_SITES = ftp://ftp.gimp.org/pub/gimp/v$(shell echo $(VERSION) | cut -d . -f 1,2)/
 
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-print
-CONFIGURE_ARGS += --enable-perl=$(PERL)
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-ifeq ($(BUILD_V20),1)
-CONFIGURE_ARGS += --disable-devel-docs
-CONFIGURE_ARGS += --without-aa
-# This requires pygtk
-#CONFIGURE_ARGS += --enable-python
-endif
+VENDOR_URL = http://www.gimp.org/
 
-# Use this instead of EXTRA_LIB/EXTRA_INC
-LIBJPEG = -I/usr/sfw/include -L/usr/sfw/lib -ljpeg
-LIBTIFF = -I/usr/sfw/include -L/usr/sfw/lib -ltiff -ljpeg -lz
-LIBPNG  = -I/usr/sfw/include -L/usr/sfw/lib -lpng12 -lz -lm
-export LIBTIFF LIBJPEG LIBPNG
+PACKAGES += CSWgimp
+SPKG_DESC_CSWgimp = The GNU Image Manipulation Program
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibwmflite0-2-7
+RUNTIME_DEP_PKGS_CSWgimp += CSWgtk2
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpconfig2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpbase2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpmath2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibexif12
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpcolor2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgegl0-1-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibwmf0-2-7
+RUNTIME_DEP_PKGS_CSWgimp += CSWxpm
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWgimp += CSWfconfig
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgimp += CSWpython
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibbabl0-1-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWpango
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpui2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpwidgets2-0-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibrsvg2-2
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWgimp += CSWftype2
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWgimp += CSWaalib
+RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimpthumb2-0-0
+OBSOLETED_BY_CSWgimp += CSWgimpminimal
+OBSOLETED_BY_CSWgimp += CSWgimpi18n
+OBSOLETED_BY_CSWgimp += CSWgimplibsdoc
 
-# Tests don't quite work properly
-TEST_SCRIPTS =
+PACKAGES += CSWlibgimp-dev
+SPKG_DESC_CSWlibgimp-dev = Development files for libgimp*-2.0.so.0 libraries
+PKGFILES_CSWlibgimp-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpcolor2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpbase2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpconfig2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpthumb2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpmath2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpui2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWlibgimpwidgets2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimp-dev += CSWgimp
+
+PACKAGES += CSWlibgimp2-0-0
+SPKG_DESC_CSWlibgimp2-0-0 = GIMP library, libgimp-2.0.so.0
+PKGFILES_CSWlibgimp2-0-0 += $(call pkgfiles_lib,libgimp-2.0.so.0)
+OBSOLETED_BY_CSWlibgimp2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpbase2-0-0
+SPKG_DESC_CSWlibgimpbase2-0-0 = GIMP library, libgimpbase-2.0.so.0
+PKGFILES_CSWlibgimpbase2-0-0 += $(call pkgfiles_lib,libgimpbase-2.0.so.0)
+OBSOLETED_BY_CSWlibgimpbase2-0-0 += CSWgimplibs
+RUNTIME_DEP_PKGS_CSWlibgimpbase2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpbase2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpbase2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpbase2-0-0 += CSWlibglib2-0-0
+
+PACKAGES += CSWlibgimpcolor2-0-0
+SPKG_DESC_CSWlibgimpcolor2-0-0 = GIMP library, libgimpcolor-2.0.so.0
+PKGFILES_CSWlibgimpcolor2-0-0 += $(call pkgfiles_lib,libgimpcolor-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpcolor2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpcolor2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpcolor2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpcolor2-0-0 += CSWlibglib2-0-0
+OBSOLETED_BY_CSWlibgimpcolor2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpconfig2-0-0
+SPKG_DESC_CSWlibgimpconfig2-0-0 = GIMP library, libgimpconfig-2.0.so.0
+PKGFILES_CSWlibgimpconfig2-0-0 += $(call pkgfiles_lib,libgimpconfig-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibgimpbase2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibgimpmath2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibgimpcolor2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpconfig2-0-0 += CSWlibglib2-0-0
+OBSOLETED_BY_CSWlibgimpconfig2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpmath2-0-0
+SPKG_DESC_CSWlibgimpmath2-0-0 = GIMP library, libgimpmath-2.0.so.0
+PKGFILES_CSWlibgimpmath2-0-0 += $(call pkgfiles_lib,libgimpmath-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpmath2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpmath2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpmath2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpmath2-0-0 += CSWlibglib2-0-0
+OBSOLETED_BY_CSWlibgimpmath2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpmodule2-0-0
+SPKG_DESC_CSWlibgimpmodule2-0-0 = GIMP library, libgimpmodule-2.0.so.0
+PKGFILES_CSWlibgimpmodule2-0-0 += $(call pkgfiles_lib,libgimpmodule-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpmodule2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpmodule2-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpmodule2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpmodule2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpmodule2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpmodule2-0-0 += CSWlibgimpbase2-0-0
+OBSOLETED_BY_CSWlibgimpmodule2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpthumb2-0-0
+SPKG_DESC_CSWlibgimpthumb2-0-0 = GIMP library, libgimpthumb-2.0.so.0
+PKGFILES_CSWlibgimpthumb2-0-0 += $(call pkgfiles_lib,libgimpthumb-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpthumb2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpthumb2-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpthumb2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpthumb2-0-0 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibgimpthumb2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpthumb2-0-0 += CSWlibglib2-0-0
+OBSOLETED_BY_CSWlibgimpthumb2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpui2-0-0
+SPKG_DESC_CSWlibgimpui2-0-0 = GIMP library, libgimpui-2.0.so.0
+PKGFILES_CSWlibgimpui2-0-0 += $(call pkgfiles_lib,libgimpui-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgimpcolor2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgimpbase2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgimpmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWgimp
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgimpwidgets2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpui2-0-0 += CSWlibgio2-0-0
+OBSOLETED_BY_CSWlibgimpui2-0-0 += CSWgimplibs
+
+PACKAGES += CSWlibgimpwidgets2-0-0
+SPKG_DESC_CSWlibgimpwidgets2-0-0 = GIMP library, libgimpwidgets-2.0.so.0
+PKGFILES_CSWlibgimpwidgets2-0-0 += $(call pkgfiles_lib,libgimpwidgets-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgimpcolor2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgimpbase2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgimpconfig2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibgimpwidgets2-0-0 += CSWlibatk1-0-0
+OBSOLETED_BY_CSWlibgimpwidgets2-0-0 += CSWgimplibs
+
+BUILD64 = 1
+ISAEXEC = 1
+
+CONFIGURE_ARGS += $(DIRPATHS)
+
+# No 64 bit Python yet
+CONFIGURE_ARGS-64 += --disable-python
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+
+CONFFILES += controllerrc
+CONFFILES += gimprc
+CONFFILES += gtkrc
+CONFFILES += menurc
+CONFFILES += ps-menurc
+CONFFILES += sessionrc
+CONFFILES += templaterc
+CONFFILES += unitrc
+
+PRESERVECONF = $(addprefix $(sysconfdir)/gimp/2.0/,$(CONFFILES))
+
+PYCOMPILE = 1
+# EXTRA_MERGE_EXCLUDE_FILES += .*.pyo .*.pyc
+
 include gar/category.mk
+
+# For /opt/csw/gnu/xgettext
+PATH := /opt/csw/gnu:$(PATH)
