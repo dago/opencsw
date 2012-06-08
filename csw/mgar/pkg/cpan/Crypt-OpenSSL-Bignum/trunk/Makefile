@@ -14,9 +14,14 @@ define BLURB
   Crypt::OpenSSL::RSA.
 endef
 
-PACKAGES = CSWpmcryptosslbignum
-CATALOGNAME = pm_cryptosslbignum
+LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWosslrt
+PACKAGES = CSWpm-crypt-openssl-bignum
+CATALOGNAME = pm_crypt_openssl_bignum
+SPKG_DESC_CSWpm-crypt-openssl-bignum = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-crypt-openssl-bignum = CSWpmcryptosslbignum
+CATALOGNAME_CSWpmcryptosslbignum = pm_cryptosslbignum
+
+RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-bignum += CSWlibssl1-0-0
 
 include gar/category.mk
