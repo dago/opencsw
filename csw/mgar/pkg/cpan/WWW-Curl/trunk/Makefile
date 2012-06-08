@@ -17,16 +17,14 @@ SPKG_DESC_CSWpm-www-curl = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-www-curl = CSWpmwwwcurl
 CATALOGNAME_CSWpmwwwcurl = pm_wwwcurl
 
-RUNTIME_DEP_PKGS += CSWcurlrt
-RUNTIME_DEP_PKGS += CSWlibidn
-RUNTIME_DEP_PKGS += CSWoldaprt
-RUNTIME_DEP_PKGS += CSWosslrt
-RUNTIME_DEP_PKGS += CSWzlib
-RUNTIME_DEP_PKGS += CSWlibcares
+RUNTIME_DEP_PKGS_CSWpm-www-curl += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWpm-www-curl += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpm-www-curl += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWpm-www-curl += CSWlibssl1-0-0
 
 CONFIGURE_ARGS = 
 
 # Note that 08ssl.t fails (probably due to connection issues)
-#TEST_SCRIPTS = 
+TEST_SCRIPTS = 
 
 include gar/category.mk
