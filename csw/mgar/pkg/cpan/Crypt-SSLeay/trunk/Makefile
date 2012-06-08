@@ -1,8 +1,8 @@
 NAME = Crypt-SSLeay
-VERSION = 0.57
+VERSION = 0.58
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = DLAND
+AUTHOR = NANIS
 
 DESCRIPTION = OpenSSL glue that provides LWP https support
 define BLURB
@@ -11,11 +11,19 @@ define BLURB
   perldoc LWP for more information on POST requests.
 endef
 
-PACKAGES = CSWpmcryptssleay
-CATALOGNAME = pm_cryptssleay
+DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS     = CSWosslrt
-BUILD_DEP_PKGS = CSWosslrt CSWpmmimebase64
+PACKAGES = CSWpm-crypt-ssleay
+CATALOGNAME = pm_crypt_ssleay
+SPKG_DESC_CSWpm-crypt-ssleay = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-crypt-ssleay = CSWpmcryptssleay
+CATALOGNAME_CSWpmcryptssleay = pm_cryptssleay_stub
+
+RUNTIME_DEP_PKGS_CSWpm-crypt-ssleay += CSWlibssl1-0-0
+
+# Documentation only
+CHECKPKG_OVERRIDES_CSWpm-crypt-ssleay += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/Crypt/SSLeay.pm
+CHECKPKG_OVERRIDES_CSWpm-crypt-ssleay += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Crypt::SSLeay.3perl
 
 CONFIGURE_ARGS = --lib=$(prefix)
 # unset https_proxy, otherwise 1 test will fail as non root user
