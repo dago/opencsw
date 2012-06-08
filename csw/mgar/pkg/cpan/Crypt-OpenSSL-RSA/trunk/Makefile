@@ -1,8 +1,8 @@
 NAME = Crypt-OpenSSL-RSA
-VERSION = 0.25
+VERSION = 0.28
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = IROBERTS
+AUTHOR = PERLER
 
 DESCRIPTION = RSA encoding and decoding, using the openSSL libraries
 define BLURB
@@ -11,10 +11,15 @@ define BLURB
   decryption, signatures and signature verification.
 endef
 
-PACKAGES = CSWpmcryptosslrsa
-CATALOGNAME = pm_osslrsa
+LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWpmcryptosslrandom
-BUILD_DEP_PKGS = CSWpmcryptosslrandom
+PACKAGES = CSWpm-crypt-openssl-rsa
+CATALOGNAME = pm_crypt_openssl_rsa
+SPKG_DESC_CSWpm-crypt-openssl-rsa = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-crypt-openssl-rsa = CSWpmcryptosslrsa
+CATALOGNAME_CSWpmcryptosslrsa = pm_crypt_openssl_rsa_stub
+
+RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-rsa  = CSWpm-crypt-openssl-random
+RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-rsa += CSWlibssl1-0-0
 
 include gar/category.mk
