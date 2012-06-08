@@ -10,9 +10,14 @@ define BLURB
   library's pseudo-random number generator
 endef
 
-PACKAGES = CSWpmcryptosslrandom
-CATALOGNAME = pm_osslrandom
+LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWosslrt
+PACKAGES = CSWpm-crypt-openssl-random
+CATALOGNAME = pm_crypt_openssl_random
+SPKG_DESC_CSWpm-crypt-openssl-random = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-crypt-openssl-random = CSWpmcryptosslrandom
+CATALOGNAME_CSWpmcryptosslrandom = pm_cryptosslrandom_stub
+
+RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-random += CSWlibssl1-0-0
 
 include gar/category.mk
