@@ -1,0 +1,31 @@
+$Id$
+
+- CD ROM raw device
+
+  Grip needs to access to the raw/character device of the CD ROM to
+  extract the track informations. For this, the device needs to be
+  readable for the current user --- usually this is taken care of by
+  the GUI startup process, however, if you are not using such an
+  environment, you need to take care of it yourself. In the following
+  example, the CD ROM is /dev/rdsk/c0t1d0s2, linked to
+  /devices/pci@1f,0/ide@d/sd@1,0:c,raw. Consequently, you need to
+  apply the following procedure:
+
+		 su - root
+		 chmod u+r /devices/pci@1f,0/ide@d/sd@1,0:c,raw
+		 chown user /devices/pci@1f,0/ide@d/sd@1,0:c,raw
+
+	'user' being your account name.
+
+- Grip Configuration
+
+  There are 2 things to configure in Grip, at least:
+
+  1. Change the raw device in Config/CD/CDRom device --- in the
+	 example above: /dev/rdsk/c0t1d0s2; this will enable the gathering
+	 of the track information.
+
+   2. Change the encoding of the ID3 tags from UTF-8 to ISO_8859_1 in
+	  Config/Id3/ID3v1 Character set encoding.
+
+CSW Team

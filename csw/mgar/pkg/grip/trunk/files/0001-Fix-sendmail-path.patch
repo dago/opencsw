@@ -1,0 +1,25 @@
+From 984c530b86ae2ed6853c7316b2d4dc062855b99f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 8 Jun 2012 10:13:33 +0200
+Subject: [PATCH] Fix sendmail path
+
+---
+ src/grip.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/grip.h b/src/grip.h
+index 9141237..35eb58f 100644
+--- a/src/grip.h
++++ b/src/grip.h
+@@ -53,7 +53,7 @@
+ 
+ #define MAILER "/usr/sbin/sendmail -i -t"
+ 
+-#elif defined(__sparc__)
++#elif defined(__sun__)
+ 
+ #define MAILER "/usr/lib/sendmail -i -t"
+ 
+-- 
+1.7.10.3
+
