@@ -6,7 +6,7 @@ VERSION = 1.97
 GARTYPE = v2
 CATEGORIES = apps
 
-DESCRIPTION = a collection of tools for translating from BibTeX to HTML
+DESCRIPTION = A collection of tools for translating from BibTeX to HTML
 define BLURB
   bibtex2html is a collection of tools for translating from BibTeX to
   HTML. They allow to produce, from a set of bibliography files in
@@ -45,6 +45,12 @@ INSTALL_SCRIPTS	+=	doc
 
 # there is no check:
 SKIPTEST		=	1
+
+REINPLACE_USRSHARE += $(mandir)/man1/aux2bib.1
+REINPLACE_WHEN_USRSHARE = postinstall
+
+CHECKPKG_OVERRIDES_CSWbibtex2html	+=	surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWbibtex2html	+=	surplus-dependency|CSWtetex
 
 include gar/category.mk
 
