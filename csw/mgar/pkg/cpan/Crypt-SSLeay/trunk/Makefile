@@ -17,7 +17,7 @@ PACKAGES = CSWpm-crypt-ssleay
 CATALOGNAME = pm_crypt_ssleay
 SPKG_DESC_CSWpm-crypt-ssleay = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-crypt-ssleay = CSWpmcryptssleay
-CATALOGNAME_CSWpmcryptssleay = pm_cryptssleay_stub
+CATALOGNAME_CSWpmcryptssleay = pm_crypt_ssleay_stub
 
 RUNTIME_DEP_PKGS_CSWpm-crypt-ssleay += CSWlibssl1-0-0
 
