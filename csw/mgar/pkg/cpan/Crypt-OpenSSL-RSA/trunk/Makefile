@@ -17,7 +17,7 @@ PACKAGES = CSWpm-crypt-openssl-rsa
 CATALOGNAME = pm_crypt_openssl_rsa
 SPKG_DESC_CSWpm-crypt-openssl-rsa = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-crypt-openssl-rsa = CSWpmcryptosslrsa
-CATALOGNAME_CSWpmcryptosslrsa = pm_crypt_openssl_rsa_stub
+CATALOGNAME_CSWpmcryptosslrsa = pm_osslrsa_stub
 
 RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-rsa  = CSWpm-crypt-openssl-random
 RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-rsa += CSWlibssl1-0-0
