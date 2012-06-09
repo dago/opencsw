@@ -36,9 +36,6 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(DISTRELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
-
 build-custom:
 	@( cd $(WORKSRC) ; $(BUILD_ENV) DISTVERSION=$(DISTVERSION) make soc )
 	@$(MAKECOOKIE)
