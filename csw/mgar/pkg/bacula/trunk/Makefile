@@ -26,7 +26,7 @@ PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 PATCHFILES += 0003-Make-the-solaris-init-scripts-user-group-aware.patch
 PATCHFILES += 0004-Update-man-page-installation-so-we-don-t-get-gzipped.patch
 
-BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
+BUILD_DEP_PKGS  = CSWmysql-dev CSWiconv CSWtcpwrap CSWlibssl-dev
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev CSWlibcairo-dev
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
@@ -54,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWbacula-console += CSWncurses
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWreadline
-RUNTIME_DEP_PKGS_CSWbacula-console += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4g++rt
 PKGFILES_CSWbacula-console  = .*sbin/bconsole .*man8/bconsole.* .*bconsole.conf.CSW
@@ -89,7 +89,7 @@ RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWtcpwrap
-RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWftype2
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWzlib
@@ -105,10 +105,10 @@ CATALOGNAME_CSWbacula-common = bacula_common
 SPKG_DESC_CSWbacula-common = $(DESCRIPTION) - shared files
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWbacula-common += CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWbacula-common += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWtcpwrap
-RUNTIME_DEP_PKGS_CSWbacula-common += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-common += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWlibpython2-6-1-0
 PKGFILES_CSWbacula-common += .*libbac-$(VERSION).so .*libbac.so
@@ -131,7 +131,7 @@ RUNTIME_DEP_PKGS_CSWbacula-fd += CSWtcpwrap
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWbacula-fd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibssl1-0-0
 PKGFILES_CSWbacula-fd += .*init.d/cswbacula-fd
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8 .*bacula/bacula-fd.conf.CSW
@@ -145,12 +145,12 @@ SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
 RUNTIME_DEP_PKGS_CSWbacula-sd = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWbacula-sd += CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWtcpwrap
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWbacula-sd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWmtx
 PKGFILES_CSWbacula-sd += .*init.d/cswbacula-sd
 PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/.*disk-changer.CSW
@@ -175,12 +175,12 @@ SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
 RUNTIME_DEP_PKGS_CSWbacula-director = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWbacula-director += CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWtcpwrap
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWbacula-director += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWperl
 PKGFILES_CSWbacula-director += .*init.d/cswbacula-dir
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
@@ -217,7 +217,7 @@ CONFIGURE_ARGS += --with-readline=$(prefix)
 CONFIGURE_ARGS += --with-python=$(prefix)
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
-CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
+CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-scriptdir=$(sysconfdir)/scripts
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
 CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
@@ -237,8 +237,8 @@ CONFIGURE_ARGS += --with-sd-user=bacula-sd
 CONFIGURE_ARGS += --with-sd-group=bacula
 
 EXTRA_INC += $(includedir)/ncursesw
-EXTRA_LIB += $(prefix)/lib/ncursesw $(prefix)/mysql5/lib/mysql
-EXTRA_LINKER_FLAGS = -norunpath
+EXTRA_LIB += $(prefix)/lib/ncursesw
+#EXTRA_LINKER_FLAGS = -norunpath
 
 # no tests supplied.
 TEST_SCRIPTS =
