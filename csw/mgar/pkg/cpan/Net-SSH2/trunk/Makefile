@@ -14,7 +14,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-net-ssh2
 SPKG_DESC_CSWpm-net-ssh2 = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-net-ssh2 = CSWpmnetssh2
-CATALOGNAME_CSWpmnetssh2 = pm_net_ssh2_stub
+CATALOGNAME_CSWpmnetssh2 = pm_netssh2_stub
 
 RUNTIME_DEP_PKGS_CSWpm-net-ssh2 += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWpm-net-ssh2 += CSWlibssl1-0-0
