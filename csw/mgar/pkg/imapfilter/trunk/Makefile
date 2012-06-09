@@ -1,5 +1,5 @@
 NAME = imapfilter
-VERSION = 1.2.2
+VERSION = 2.2.2
 GARTYPE = v2
 CATEGORIES = net
 
