@@ -1,0 +1,6 @@
+links (1.03,REV=2012.06.09) unstable
+
+  * New upstream release
+  * Rebuilt against libssl 1.0
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 09 Jun 2012 16:25:36 +0200
