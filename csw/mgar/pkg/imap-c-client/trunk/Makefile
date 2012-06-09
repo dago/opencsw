@@ -17,8 +17,6 @@ SPKG_SOURCEURL = http://www.washington.edu/imap/
 
 MASTER_SITES = ftp://ftp.cac.washington.edu/imap/
 DISTFILES  = $(DISTNAME).tar.Z
-DISTFILES += $(call admfiles,CSWimap-devel,depend prototype)
-DISTFILES += $(call admfiles,CSWimaprt,depend prototype)
 
 PATCHDIR = $(WORKDIR)
 PATCHDIRLEVEL = 0
