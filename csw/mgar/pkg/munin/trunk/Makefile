@@ -12,8 +12,10 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswmuninnode
 DISTFILES += cswusergroup
-DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
-DISTFILES += README.CSW
+DISTFILES += apache-munin-cgi.conf
+DISTFILES += CSWmunin-master.preinstall
+DISTFILES += CSWmunin-master.README.CSW
+DISTFILES += CSWmunin-node.README.CSW
 
 PATCHFILES	+= 0001-Expand-paths-with-DESTDIR.patch
 PATCHFILES	+= 0001-paths-in-Makefile.config.patch
@@ -49,13 +51,6 @@ REINPLACE_MATCH_perl 	 = \#!/usr/bin/perl
 REINPLACE_WITH_perl 	 = \#!/opt/csw/bin/perl
 REINPLACE_FILES_perl 	+= node/bin/*
 REINPLACE_FILES_perl 	+= node/sbin/*
-
-# replace cgi-bin with cgi
-
-REINPLACEMENTS		+= cgi
-REINPLACE_MATCH_cgi	 = cgi-bin
-REINPLACE_WITH_cgi	 = cgi
-REINPLACE_FILES_cgi	+= master/static/dynazoom.html
 
 #
 # Package definitions
@@ -116,6 +111,7 @@ MUNINNODE_SMF		= /etc/opt/csw/init.d/cswmuninnode
 MUNINNODE_USERGROUP	= /opt/csw/etc/pkg/CSWmunin-node/cswusergroup
 MUNINNODE_EXECS		= .*munin-node .*munin-node-configure.* .*munindoc.* .*munin-run.* .*munin-sched.*
 MUNINNODE_CONF		= .*munin-node.conf .*munin-node.conf.5 .*munin-node.1 /etc/opt/csw/munin/munin-conf.d /etc/opt/csw/munin/plugin-conf.d
+MUNINNODE_POSTMSG	 = /opt/csw/share/doc/munin_node/CSWmunin-node.README.CSW
 
 PKGFILES_CSWmunin-node += .*muninnode.* .*CSWmunin-node.*
 PKGFILES_CSWmunin-node += .*plugins.*
@@ -143,12 +139,13 @@ PROTOTYPE_PERMS_muninnode_smf = 0755
 
 MUNINMASTER_UGFILES	 = /var/opt/csw/munin.* /etc/opt/csw/munin/apache.* /etc/opt/csw/munin/templates.*
 MUNINMASTER_UGFILES	+= /etc/opt/csw/munin/static.*
+MUNINMASTER_UGFILES	+= /etc/opt/csw/munin/munin.conf
 MUNINMASTER_USERGROUP	 = /opt/csw/etc/pkg/CSWmunin-master/cswusergroup
 MUNINMASTER_EXECS	 = .*munin-check.* .*munin-cron.* .*munin-graph.* .*munin-html.* .*munin-limits.* .*munin-update.*
 MUNINMASTER_EXECS	+= .*munin-datafile2storable.* .*munin-storable2datafile.* .*munin-cgi-graph.* .*munin-cgi-html.*
 MUNINMASTER_FONTS	 = .*ttf.*
 MUNINMASTER_CRONTABS	 = /etc/opt/csw/pkg/CSWmunin-master/crontabs/munin
-MUNINMASTER_POSTMSG	 = /opt/csw/share/doc/munin_master/README.CSW
+MUNINMASTER_POSTMSG	 = /opt/csw/share/doc/munin_master/CSWmunin-master.README.CSW
 
 PKGFILES_CSWmunin-master += .*muninmaster.*
 PKGFILES_CSWmunin-master += .*Munin::Master.*
@@ -166,12 +163,20 @@ PROTOTYPE_USER_muninmaster_ugfiles = munin
 PROTOTYPE_GROUP_muninmaster_ugfiles = munin
 PROTOTYPE_CLASS_muninmaster_ugfiles = ugfiles
 
+PROTOTYPE_MODIFIERS		+= munin_log_dir
+PROTOTYPE_FILES_munin_log_dir	 = /var/opt/csw/munin/log /var/opt/csw/munin/db/cgi-tmp
+PROTOTYPE_PERMS_munin_log_dir	 = 0775
+PROTOTYPE_USER_munin_log_dir	 = munin
+PROTOTYPE_GROUP_munin_log_dir	 = munin
+PROTOTYPE_CLASS_munin_log_dir	 = ugfiles
+
 ############### End of prototype filters for the different packages ###############
 
 INITSMF 	+= $(MUNINNODE_SMF)
 USERGROUP	+= $(MUNINNODE_USERGROUP)
 USERGROUP	+= $(MUNINMASTER_USERGROUP)
 POSTMSG		+= $(MUNINMASTER_POSTMSG)
+POSTMSG		+= $(MUNINNODE_POSTMSG)
 CRONTABS	+= $(MUNINMASTER_CRONTABS)
 
 #
@@ -227,9 +232,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/var/opt/csw/munin/www
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/opt/csw/etc/templates/CSWmunin-node/etc/opt/csw/munin/
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/etc/opt/csw/munin/
-	@ginstall -m 644 $(FILEDIR)/apache-munin.conf.CSW \
-		$(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/etc/opt/csw/munin/apache/apache-munin.conf
-	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW \
+	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf \
 		$(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/etc/opt/csw/munin/apache/apache-munin-cgi.conf
 	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/var/opt/csw/munin/www/
 	@#
@@ -259,7 +262,9 @@ install-custom:
 	@#
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/munin_master
-	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)/opt/csw/share/doc/munin_master/README.CSW
+	@ginstall -m 644 $(FILEDIR)/CSWmunin-master.README.CSW $(DESTDIR)/opt/csw/share/doc/munin_master/CSWmunin-master.README.CSW
+	@ginstall -d $(DESTDIR)/opt/csw/share/doc/munin_node
+	@ginstall -m 644 $(FILEDIR)/CSWmunin-node.README.CSW $(DESTDIR)/opt/csw/share/doc/munin_node/CSWmunin-node.README.CSW
 	@#
 	@# handle some other files
 	@#

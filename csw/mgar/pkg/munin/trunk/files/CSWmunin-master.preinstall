@@ -1,0 +1,23 @@
+echo "Executing preinstall"
+
+cat << EOF
+
+=======================================================================
+
+If you are about to upgrade Munin from a version 1.4 or earlier to
+the current version 2.x.x be sure to have a backup of your RRD data
+base files. The upgrade shouldn't cause data loss, but you never know.
+
+         The installation will proceed in 15 seconds.
+             Press CTRL+C if you want to stop now.
+
+=======================================================================
+EOF
+
+for i in 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+do
+        printf "$i "
+        sleep 1
+done
+
+echo

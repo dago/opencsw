@@ -1,0 +1,16 @@
+
+=======================================================================
+
+To get the Munin node running, please follow these steps:
+
+(1) Edit the local config file /etc/opt/csw/munin/munin-node.conf
+
+	Point "host_name" to your host name
+	Change "allow" to the IP address of your munin master
+
+(2) Restart the node
+
+    svcadm restart cswmuninnode
+
+=======================================================================
+
