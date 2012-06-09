@@ -1,3 +1,4 @@
+
 NAME     = php5
 VERSION  = 5.3.13
 CATEGORIES  = lang
@@ -149,7 +150,7 @@ $(eval $(call php5_subpackage,dom,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif,CSWlibz1))
 $(eval $(call php5_subpackage,ftp,CSWlibssl1-0-0 CSWlibz1))
-$(eval $(call php5_subpackage,gd,CSWlibfreetype6 CSWlibgd2 CSWlibjpeg7 CSWlibpng12-0 CSWt1lib CSWxpm CSWlibz1))
+$(eval $(call php5_subpackage,gd,CSWlibfreetype6 CSWlibgd2 CSWlibjpeg7 CSWlibpng12-0 CSWlibt1-5 CSWxpm CSWlibz1))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8 CSWlibz1))
 $(eval $(call php5_subpackage,gmp,CSWlibgmp10 CSWlibz1))
