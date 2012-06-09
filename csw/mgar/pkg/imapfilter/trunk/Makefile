@@ -1,6 +1,6 @@
 NAME = imapfilter
 VERSION = 1.2.2
-GARTYPE = v1
+GARTYPE = v2
 CATEGORIES = net
 
 DESCRIPTION = IMAP mail filtering utility
@@ -15,13 +15,9 @@ endef
 
 MASTER_SITES = http://imapfilter.hellug.gr/source/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += CSWimapfilter.gspec CSWimapfilter.depend CSWimapfilter.prototype
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-# Remove anti-social makeflags
-PATCHFILES += make.diff
+# # Remove anti-social makeflags
+# PATCHFILES += make.diff
 
 #LIBDEPS += lib/openssl
 
