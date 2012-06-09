@@ -16,7 +16,7 @@ PACKAGES = CSWpm-crypt-openssl-random
 CATALOGNAME = pm_crypt_openssl_random
 SPKG_DESC_CSWpm-crypt-openssl-random = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-crypt-openssl-random = CSWpmcryptosslrandom
-CATALOGNAME_CSWpmcryptosslrandom = pm_cryptosslrandom_stub
+CATALOGNAME_CSWpmcryptosslrandom = pm_crypt_openssl_random_stub
 
 RUNTIME_DEP_PKGS_CSWpm-crypt-openssl-random += CSWlibssl1-0-0
 
