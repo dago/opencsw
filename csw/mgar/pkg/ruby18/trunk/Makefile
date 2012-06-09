@@ -41,7 +41,7 @@ ARCHALL_CSWruby18-mode-el = 1
 LICENSE = COPYING
 
 RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm4 CSWlibiconv2 CSWlibruby18-1
-RUNTIME_DEP_PKGS_CSWruby18 += CSWlibncurses5 CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWruby18 += CSWlibncurses5 CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby18 += CSWlibreadline6 CSWlibz1
 
 RUNTIME_DEP_PKGS_CSWruby18-gcc4 = CSWruby18 CSWgcc4core
