@@ -1,0 +1,35 @@
+
+=======================================================================
+
+To get Munin running, please follow these steps:
+
+(1) Edit the Apache configuration for Munin: 
+
+       /etc/opt/csw/munin/apache/apache-munin-cgi.conf
+
+(2) Add the following line to your Apache configuration:
+
+       Include /etc/opt/csw/munin/apache/apache-munin-cgi.conf
+
+(3) Add the user your webserver is running under (nobody for Apache) to
+    the group "munin", i.e.:
+
+       munin::100:nobody
+
+(4) Restart your webserver:
+
+    svcadm restart cswapache2
+
+(5) When upgrading from a Munin version 1.4 or earlier to 2.0 or later
+    you need to merge your existing master configuration with the 
+    master configuration delivered with the package:
+
+       /etc/opt/csw/munin/munin.conf
+       /opt/csw/etc/templates/CSWmunin-master/etc/opt/csw/munin/munin.conf
+
+    The new config file includes some new options regarding the graph
+    generation via cgi. It's reasonable preconfigured, so all in all
+    you should need only some copy and paste.
+
+=======================================================================
+

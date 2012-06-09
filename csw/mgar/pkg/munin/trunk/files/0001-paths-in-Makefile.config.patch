@@ -43,7 +43,7 @@ index 7cd0b84..1a971a4 100644
 -HTMLDIR    = $(PREFIX)/www/docs
 -CGIDIR     = $(PREFIX)/www/cgi
 +HTMLDIR    = /var/opt/csw/munin/www
-+CGIDIR     = /var/opt/csw/munin/www/cgi
++CGIDIR     = /var/opt/csw/munin/www/cgi-bin
  
  # Where to put RRD files and other internal data, both master and node
 -DBDIR      = $(DESTDIR)/var/opt/munin
