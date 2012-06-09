@@ -17,6 +17,8 @@ MASTER_SITES = http://www.irssi.org/files/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 SAMPLECONF = .*/irssi.conf
 
 CONFIGURE_ARGS += $(DIRPATHS)
