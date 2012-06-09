@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru imap-2004g.orig/src/c-client/auth_md5.c imap-2004g/src/c-client/auth_md5.c
---- imap-2004g.orig/src/c-client/auth_md5.c	2005-01-04 21:52:53.000000000 -0500
-+++ imap-2004g/src/c-client/auth_md5.c	2006-09-02 18:36:34.051502000 -0400
+diff --speed-large-files --minimal -Nru imap-2007f.orig/src/c-client/auth_md5.c imap-2007f/src/c-client/auth_md5.c
+--- imap-2007f.orig/src/c-client/auth_md5.c	2005-01-04 21:52:53.000000000 -0500
++++ imap-2007f/src/c-client/auth_md5.c	2006-09-02 18:36:34.051502000 -0400
 @@ -34,17 +34,17 @@
  
  /* Prototypes */

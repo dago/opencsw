@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru imap-2004g.orig/src/osdep/unix/Makefile imap-2004g/src/osdep/unix/Makefile
---- imap-2004g.orig/src/osdep/unix/Makefile	2005-04-30 16:51:13.000000000 -0400
-+++ imap-2004g/src/osdep/unix/Makefile	2006-09-01 20:35:47.667329000 -0400
+diff --speed-large-files --minimal -Nru imap-2007f.orig/src/osdep/unix/Makefile imap-2007f/src/osdep/unix/Makefile
+--- imap-2007f.orig/src/osdep/unix/Makefile	2005-04-30 16:51:13.000000000 -0400
++++ imap-2007f/src/osdep/unix/Makefile	2006-09-01 20:35:47.667329000 -0400
 @@ -26,6 +26,11 @@
  SSLTYPE=nopwd
  IP=4
