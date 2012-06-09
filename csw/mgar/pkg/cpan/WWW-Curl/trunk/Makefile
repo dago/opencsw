@@ -15,7 +15,7 @@ PACKAGES = CSWpm-www-curl
 CATALOGNAME = pm_www_curl
 SPKG_DESC_CSWpm-www-curl = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-www-curl = CSWpmwwwcurl
-CATALOGNAME_CSWpmwwwcurl = pm_www_curl_stub
+CATALOGNAME_CSWpmwwwcurl = pm_wwwcurl_stub
 
 RUNTIME_DEP_PKGS_CSWpm-www-curl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWpm-www-curl += CSWlibz1
