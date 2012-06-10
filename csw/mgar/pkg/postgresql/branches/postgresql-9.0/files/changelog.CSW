@@ -1,3 +1,10 @@
+postgresql90 (9.0.8,REV=2012.06.10)
+
+  * New upstream release 9.0.8.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 10 June 2012 13:22:57+0200
+
+
 postgresql90 (9.0.7,REV=2012.05.01)
 
   * New upstream release 9.0.7.
