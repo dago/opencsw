@@ -16,6 +16,8 @@ endef
 MASTER_SITES = http://imapfilter.hellug.gr/source/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+LICENSE = LICENSE
+
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlua
 BUILD_DEP_PKGS += CSWlibpcre-dev
