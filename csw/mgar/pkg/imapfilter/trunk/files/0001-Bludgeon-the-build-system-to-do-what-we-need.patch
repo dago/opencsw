@@ -1,0 +1,42 @@
+From 7ad082705998d94a16c0ecd58e1a3db0e8d4936c Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 10 Jun 2012 01:59:08 +0200
+Subject: [PATCH] Bludgeon the build system to do what we need
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/configure b/configure
+index 6b5b0d5..bc69d56 100755
+--- a/configure
++++ b/configure
+@@ -10,13 +10,13 @@ mandir="$prefix/man"
+ ssltls="yes"
+ crammd5="yes"
+ 
+-incdirs="-I/usr/local/include"
+-libdirs="-L/usr/local/lib"
++incdirs="-I/opt/csw/include"
++libdirs="-L/opt/csw/lib"
+ 
+ mycflags="$CFLAGS -Wall -O"
+ myldflags="$LDFLAGS"
+ 
+-libs="-lm -llua -lpcre"
++libs="-lm -llua -lpcre -lnsl -lsocket"
+ libssl="-lssl"
+ libcrypto="-lcrypto"
+ 
+@@ -140,7 +140,6 @@ if [ ! -f .Makefile ]; then cp -f Makefile .Makefile; fi
+ mv -f Makefile Makefile~
+ 
+ cat > Makefile << EOF
+-DESTDIR =
+ BINDIR = $bindir
+ SHAREDIR = $sharedir
+ MANDIR = $mandir
+-- 
+1.7.10
+

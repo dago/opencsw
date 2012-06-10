@@ -16,10 +16,9 @@ endef
 MASTER_SITES = http://imapfilter.hellug.gr/source/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# # Remove anti-social makeflags
-# PATCHFILES += make.diff
+PATCHFILES += 0001-Bludgeon-the-build-system-to-do-what-we-need.patch
 
-#LIBDEPS += lib/openssl
+GARCOMPILER = GNU
 
 CONFIGURE_ARGS = -d $(prefix) -m $(mandir)
 
@@ -27,3 +26,5 @@ CONFIGURE_ARGS = -d $(prefix) -m $(mandir)
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
