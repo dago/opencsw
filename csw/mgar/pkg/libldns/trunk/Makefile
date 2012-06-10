@@ -1,5 +1,5 @@
 NAME = ldns
-VERSION = 1.6.12
+VERSION = 1.6.13
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,7 +16,7 @@ MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWldns.doxyparse.diff
 
-PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
 PACKAGES = CSWlibldns1 CSWlibldns-devel
 CATALOGNAME_CSWlibldns1 = libldns1
@@ -24,7 +24,6 @@ CATALOGNAME_CSWlibldns-devel = libldns_devel
 
 SPKG_DESC_CSWlibldns1 = $(DESCRIPTION)
 SPKG_DESC_CSWlibldns-devel = $(DESCRIPTION) development package
-#CHECKPKG_OVERRIDES_CSWlibldns-devel += surplus-dependency|CSWlibldns1
 
 SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
 
@@ -42,7 +41,7 @@ EXTRA_BUILD_ISAS_i386   = pentium_pro
 EXTRA_BUILD_ISAS_sparc  = sparcv8plus
 EXTRA_BUILD_ISAS_sparc += sparcv8plus+vis
 
-RUNTIME_DEP_PKGS_CSWlibldns1 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibldns1 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibldns-devel += CSWlibldns1
 
 INCOMPATIBLE_PKGS_CSWlibldns1 = CSWldns
@@ -54,9 +53,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --enable-sha2
 
-# Gost requiers OpenSSL 1.0
-CONFIGURE_ARGS += --disable-gost
-
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-sparcv8plus = $(libdir)
 MERGE_DIRS_isa-amd64 = $(libdir)
@@ -66,8 +62,5 @@ TEST_TARGET =
 
 PKGFILES_CSWlibldns-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibldnsrt = $(PKGFILES_RT)
-
-# CSWlibldnsdevel is replaced by CSWlibldns-devel
-OBSOLETED_BY_CSWlibldns-devel = CSWlibldnsdevel
 
 include gar/category.mk
