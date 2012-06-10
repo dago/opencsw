@@ -77,6 +77,7 @@ CONFIGURE_ARGS += --with-jpeg=$(prefix)
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-mysql=/opt/csw/bin/mysql_config
 CONFIGURE_ARGS += --with-sqlite3=$(prefix)
+CONFIGURE_ARGS += --with-pg=/opt/csw/bin/pg_config
 
 # doesn't have tests?
 TEST_TARGET = 
@@ -87,11 +88,8 @@ EXTRA_LIB += /opt/csw/postgresql/lib
 
 include gar/category.mk
 
-ifeq ($(GARCH),sparc)
-CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/sparcv8/pg_config
-else
-CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/pg_config
-endif
+
+
 
 # to avoid the __sync_fetch_and_add4 issue (must be after including category)
 ARCHFLAGS_GCC4_sparcvv8 = -m32
