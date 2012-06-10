@@ -16,6 +16,14 @@ endef
 MASTER_SITES = http://imapfilter.hellug.gr/source/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlua
+BUILD_DEP_PKGS += CSWlibpcre-dev
+
+RUNTIME_DEP_PKGS_CSWimapfilter += CSWlua
+RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibssl1-0-0
+
 PATCHFILES += 0001-Bludgeon-the-build-system-to-do-what-we-need.patch
 
 GARCOMPILER = GNU
