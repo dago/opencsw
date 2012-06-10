@@ -110,7 +110,7 @@ PATCHFILES			+=	0002-Fix-auto-tools-suggested-by-libtoolize.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
-GCC4_VERSION		=	4.7
+#GCC4_VERSION		=	4.7
 
 STRIP_LIBTOOL		=	1
 
