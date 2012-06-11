@@ -55,7 +55,9 @@ BUILD_DEP_PKGS		+=	CSWorbit2
 BUILD_DEP_PKGS		+=	CSWpangodevel
 BUILD_DEP_PKGS		+=	CSWvte
 
+RUNTIME_DEP_PKGS	+=	CSWcdrtools
 RUNTIME_DEP_PKGS	+=	CSWgnomevfs2
+RUNTIME_DEP_PKGS	+=	CSWlame
 RUNTIME_DEP_PKGS	+=	CSWlibart
 RUNTIME_DEP_PKGS	+=	CSWlibatk1-0-0
 RUNTIME_DEP_PKGS	+=	CSWlibaudiofile0
@@ -111,10 +113,11 @@ PATCHFILES			+=	0003-Adapt-binaries-search-path.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
-#GCC4_VERSION		=	4.7
 
 STRIP_LIBTOOL		=	1
 
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWcdrtools
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlame
 CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibpng12-0
 CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibdbus-glib1-2
 CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibiconv2
