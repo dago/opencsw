@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = zlib
-VERSION = 1.2.6
+VERSION = 1.2.7
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -18,7 +18,7 @@ define BLURB
  in compression
 endef
 
-MASTER_SITES = http://www.zlib.net/
+MASTER_SITES = http://zlib.net/
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += COPYING
 
