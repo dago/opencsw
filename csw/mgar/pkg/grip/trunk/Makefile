@@ -107,12 +107,29 @@ RUNTIME_DEP_PKGS	+=	CSWvte
 
 PATCHFILES			+=	0001-Fix-sendmail-path.patch
 PATCHFILES			+=	0002-Fix-auto-tools-suggested-by-libtoolize.patch
+PATCHFILES			+=	0003-Adapt-binaries-search-path.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
 #GCC4_VERSION		=	4.7
 
 STRIP_LIBTOOL		=	1
+
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibpng12-0
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibdbus-glib1-2
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibgailutil18
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibintl3
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibssl0-9-8
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibxml2-2
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibpixman1-0
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibgnome-keyring0
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibesd0
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibaudiofile0
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWlibdbus1-3
+CHECKPKG_OVERRIDES_CSWgrip	+=	surplus-dependency|CSWsunmath
 
 include gar/category.mk
 

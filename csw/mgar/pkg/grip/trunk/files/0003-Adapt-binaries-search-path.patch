@@ -1,0 +1,25 @@
+From 1dcf405f37714f396d6efa43cab4b5d2dce0525b Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 11 Jun 2012 09:00:29 +0200
+Subject: [PATCH] Adapt binaries search path
+
+---
+ src/gripcfg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gripcfg.c b/src/gripcfg.c
+index 8f8ea75..0781d96 100644
+--- a/src/gripcfg.c
++++ b/src/gripcfg.c
+@@ -898,7 +898,7 @@ void FindExeInPath(char *exename, char *buf, int bsize)
+   if(!PATH) {
+     const char *env = g_getenv("PATH");
+ 
+-    PATH = g_strsplit(env ? env : "/usr/local/bin:/usr/bin:/bin", ":", 0);
++    PATH = g_strsplit(env ? env : "/opt/csw/bin:/usr/bin:/bin", ":", 0);
+   }
+ 
+   path = FindExe(exename, PATH);
+-- 
+1.7.10.3
+
