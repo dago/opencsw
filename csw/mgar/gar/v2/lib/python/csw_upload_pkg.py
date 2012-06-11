@@ -518,9 +518,6 @@ class Srv4Uploader(object):
     checks_failed_for_catalogs = []
     args_by_cat = {}
     for arch, osrel in checkpkg_sets:
-      if "5.11" in osrel:
-        logging.debug("Skipping Solaris 11 checks")
-        continue
       print ("Checking %s package(s) against catalog %s %s %s"
              % (len(checkpkg_sets[(arch, osrel)]), DEFAULT_CATREL, arch, osrel))
       md5_sums = []
