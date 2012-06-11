@@ -90,7 +90,6 @@ RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibx264-125
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavresample0
 RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibpostproc52
 
 PACKAGES += CSWlibavformat54
@@ -177,23 +176,6 @@ RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibx264-125
-
-PACKAGES += CSWlibavresample0
-SPKG_DESC_CSWlibavresample0 = FFMPEG library libavresample.so.0
-PKGFILES_CSWlibavresample0 += $(call pkgfiles_lib,libavresample.so.0)
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibvorbisenc2
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibsdl1-2-0
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibmp3lame0
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibtheoradec1
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibx264-125
-RUNTIME_DEP_PKGS_CSWlibavresample0 += CSWlibtheoraenc1
 
 PACKAGES += CSWffmpeg-dev
 SPKG_DESC_CSWffmpeg-dev = Development files for several FFMPEG shared libraries
