@@ -188,7 +188,6 @@ RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavutil51
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibpostproc52
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibswresample0
-RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavresample0
 
 
 PACKAGES += CSWffmpeg
@@ -206,7 +205,6 @@ RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavcodec54
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavdevice54
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibswresample0
-RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavresample0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibtheoradec1
