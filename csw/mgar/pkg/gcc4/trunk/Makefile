@@ -35,12 +35,14 @@ VENDOR_URL = http://gcc.gnu.org
 ## Copyright File
 LICENSE = COPYING3
 
-BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWbinutils
+BUILD_DEP_PKGS += CSWcloog-dev
+BUILD_DEP_PKGS += CSWgnulinks
 BUILD_DEP_PKGS += CSWlibgmp-dev
 BUILD_DEP_PKGS += CSWlibmpc-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
 BUILD_DEP_PKGS += CSWlibppl-dev
-BUILD_DEP_PKGS += CSWcloog-dev
+BUILD_DEP_PKGS += CSWlibz-dev
 
 # Could be used to break out of the /opt/csw/$(PKG_VERSION_TOKEN) prefix
 PROGRAM_SUFFIX = -$(BASE_VERSION)
