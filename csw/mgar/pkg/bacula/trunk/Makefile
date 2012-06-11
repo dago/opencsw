@@ -102,6 +102,14 @@ RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWpango
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWglib2
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWlibgio2-0-0
 PKGFILES_CSWbacula-tray-monitor = .*tray-monitor.*
 
 CATALOGNAME_CSWbacula-common = bacula_common
