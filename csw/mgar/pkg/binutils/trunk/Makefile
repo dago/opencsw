@@ -1,5 +1,5 @@
 NAME = binutils
-VERSION = 2.21.1
+VERSION = 2.22
 CATEGORIES = utils
 GARTYPE = v2
 
