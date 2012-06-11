@@ -33,6 +33,7 @@ SKIPTEST ?= 1
 
 GARCOMPILER = GNU
 
+RUNTIME_DEP_PKGS_CSWbinutils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibz1
 CHECKPKG_OVERRIDES_CSWbinutils += file-with-bad-content
