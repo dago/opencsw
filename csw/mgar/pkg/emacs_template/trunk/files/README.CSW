@@ -1,0 +1,22 @@
+$Id$
+
+To use the the templates packaged by CSW you need to:
+
+1. Add to your ~/.emacs file the following lines:
+
+(require 'template)
+(template-initialize)
+
+2. Restart your emacs session.
+
+4. Copy the templates from /opt/csw/share/doc/emacs_template/templates
+   to ~/.templates
+
+4. Enjoy!
+
+CSW Team
+
+# Local Variables:
+# mode: text
+# mode: font-lock
+# End:
