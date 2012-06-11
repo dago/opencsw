@@ -27,6 +27,14 @@ OBSOLETED_BY_CSWemacs-template	=	CSWemacstemplate
 CATALOGNAME_CSWemacstemplate	=	emacs_template_stub
 ARCHALL_CSWemacs-template		=	1
 
+# this is by desing overriden because I wish to depend on a common
+# named package in both Solaris 9 and Solaris 10 when 23.1 is the
+# current version for the former and 23.4 is the current version for
+# the later. Note that when packaging 23.4, the CSWemacscommon became
+# CSWemacs-common.
+CHECKPKG_OVERRIDES_CSWemacs-template += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWemacs-template += surplus-dependency|CSWemacs
+
 CONFIGURE_SCRIPTS	=
 BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
