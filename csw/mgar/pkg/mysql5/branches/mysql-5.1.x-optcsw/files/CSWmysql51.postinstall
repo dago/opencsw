@@ -8,13 +8,17 @@
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
-BASEDIR=/opt/csw
-MYSQL_VAR=/var/opt/csw/mysql51
-DEFAULTS_FILE=$BASEDIR/etc/my.cnf
-SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
-MYSQLD_USER=mysql
+prefix="/opt/csw"
+BASEDIR="${prefix}"
+MYSQL_HOME="/var${prefix}/mysql51"
+sysconfdir="/etc${prefix}"
+# https://www.opencsw.org/mantis/view.php?id=4646
+# MYSQL_VAR="${MYSQL_HOME}"
+DEFAULTS_FILE="${sysconfdir}/my.cnf"
+# SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
+MYSQLD_USER="mysql"
 # Provide the default data directory
-MYSQLD_DATADIR=$MYSQL_VAR
+MYSQLD_DATADIR="${MYSQL_HOME}"
 
 # http://bugs.mysql.com/bug.php?id=31164
 # ERROR: 1004  Can't create file '/var/tmp//installRJaiQ3/#sql6fee_1_0.frm' (errno: 13)
@@ -53,7 +57,7 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-$BASEDIR/bin/mysql_install_db \
+"$BASEDIR/bin/mysql_install_db-5.1" \
     --defaults-extra-file="$DEFAULTS_FILE" \
     --user="$MYSQLD_USER" \
     --basedir="$BASEDIR" \

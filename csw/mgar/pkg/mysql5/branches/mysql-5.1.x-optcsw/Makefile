@@ -1,4 +1,4 @@
-# Copyright 2009 OpenCSW
+# Copyright 2009-2012 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -43,7 +43,7 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call bas
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1-$(BASE_VERSION))
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
-PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
+PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
@@ -59,14 +59,14 @@ PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
@@ -99,7 +99,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
@@ -109,7 +109,7 @@ SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
@@ -129,6 +129,14 @@ PATCHFILES += 0008-versioned-datadir-in-mysql_install_db-5.1.patch
 # Enable 64 bits build
 BUILD64 = 1
 
+# EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH))
+# EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_CFLAGS)
+# EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
+# EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH))
+# EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_CFLAGS)
+# EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
+# COMMON_CFLAGS = -mt -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
+# 
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
