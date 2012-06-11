@@ -25,11 +25,11 @@ DISTFILES += README.CSW
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-RUNTIME_DEP_PKGS  = CSWosslrt
+RUNTIME_DEP_PKGS  = CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWlibncurses5
 RUNTIME_DEP_PKGS += CSWlibintl8
 
-BUILD_DEP_PKGS  = CSWossldevel
+BUILD_DEP_PKGS  = CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 
