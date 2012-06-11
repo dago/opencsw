@@ -50,6 +50,7 @@ CHECKPKG_OVERRIDES_CSWhevea	+=	surplus-dependency|CSWtetex
 CHECKPKG_OVERRIDES_CSWhevea	+=	surplus-dependency|CSWnetpbm
 # innocuous:
 CHECKPKG_OVERRIDES_CSWhevea += file-with-bad-content|/usr/local|root/opt/csw/share/doc/hevea/README
+
 include gar/category.mk
 
 pre-install-modulated:
