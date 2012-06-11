@@ -1,8 +1,8 @@
-postgresql84 (8.4.12,REV=2012.06.10)
+postgresql84 (8.4.12,REV=2012.06.11)
 
   * New upstream release 8.4.12.
 
- -- Rafael Ostertag <raos@opencsw.org>  Sun, 10 June 2012 13:22:57+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 11 June 2012 14:48:57+0200
 
 
 postgresql84 (8.4.11,REV=2012.05.01)
