@@ -18,7 +18,9 @@ define BLURB
  in compression
 endef
 
-MASTER_SITES = http://zlib.net/
+MASTER_SITES  = http://zlib.net/
+MASTER_SITES += $(SF_MIRROR)
+SF_PROJ = libpng
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += COPYING
 
