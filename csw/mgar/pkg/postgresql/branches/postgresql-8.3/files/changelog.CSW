@@ -1,3 +1,13 @@
+postgresql83 (8.3.19,REV=2012.06.12)
+
+  * Dropped support for Solaris 9
+
+  * Include changelog.CSW in all packages, thus removing the clustering of 
+    changelog.CSW files in CSWpostgresql
+
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 12 June 2012 16:55:57+0200
+
+
 postgresql83 (8.3.19,REV=2012.06.11)
 
   * New upstream release 8.3.19.
