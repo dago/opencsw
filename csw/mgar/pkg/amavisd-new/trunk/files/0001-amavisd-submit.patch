@@ -1,0 +1,33 @@
+From d28f12c2f49eb5612ddcdff185c3b460e373a25d Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 11:08:44 +0200
+Subject: [PATCH] amavisd-submit
+
+---
+ amavisd-submit |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/amavisd-submit b/amavisd-submit
+index 3d86c68..029464c 100755
+--- a/amavisd-submit
++++ b/amavisd-submit
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-submit, a simple demonstrational program, taking an email
+@@ -66,8 +66,8 @@ use vars qw($VERSION);  $VERSION = 2.000;
+ use vars qw($log_level $socketname $tempbase);
+ 
+   $log_level  = 0;
+-  $tempbase   = '/var/amavis';  # where to create a temp directory with a msg
+-  $socketname = '/var/amavis/amavisd.sock';
++  $tempbase   = '/var/opt/csw/amavisn';  # where to create a temp directory with a msg
++  $socketname = '/var/opt/csw/amavisn/amavisd.sock';
+ # $socketname = '127.0.0.1:9998';
+ 
+ sub sanitize_str {
+-- 
+1.7.10.3
+

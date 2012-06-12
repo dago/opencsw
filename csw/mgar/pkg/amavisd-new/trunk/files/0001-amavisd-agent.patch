@@ -1,0 +1,31 @@
+From e59bca005dc82ea0c5ff07b2736ccda4eaadbc78 Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 11:26:06 +0200
+Subject: [PATCH] amavisd-agent
+
+---
+ amavisd-agent |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/amavisd-agent b/amavisd-agent
+index 0e5565c..1dc1d3b 100755
+--- a/amavisd-agent
++++ b/amavisd-agent
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-agent, a demo program to display
+@@ -50,7 +50,7 @@ use BerkeleyDB;
+ 
+ my($dbfile) = 'snmp.db';
+ my($db_home) =  # DB databases directory
+-  defined $ENV{'AMAVISD_DB_HOME'} ? $ENV{'AMAVISD_DB_HOME'} : '/var/amavis/db';
++  defined $ENV{'AMAVISD_DB_HOME'} ? $ENV{'AMAVISD_DB_HOME'} : '/var/opt/csw/amavisn/db';
+ 
+ my($wakeuptime) = 10;  # -w, sleep time in seconds, may be fractional
+ my($repeatcount);      # -c, repeat count (when defined)
+-- 
+1.7.10.3
+

@@ -1,0 +1,22 @@
+From ee4aacc46e0a89f996c5097a3023b31e05b4b47e Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 11:01:27 +0200
+Subject: [PATCH] amavisd-snmp-subagent
+
+---
+ amavisd-snmp-subagent |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/amavisd-snmp-subagent b/amavisd-snmp-subagent
+index a7bd858..39a294e 100755
+--- a/amavisd-snmp-subagent
++++ b/amavisd-snmp-subagent
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This program implements a SNMP AgentX (RFC 2741) subagent for amavisd-new.
+-- 
+1.7.10.3
+

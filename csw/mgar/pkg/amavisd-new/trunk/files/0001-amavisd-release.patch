@@ -1,0 +1,31 @@
+From 931091cba08b5d93f299a9f6d67e088932779eb3 Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 11:30:41 +0200
+Subject: [PATCH] amavisd-release
+
+---
+ amavisd-release |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/amavisd-release b/amavisd-release
+index 8bb7f7c..87d2ace 100755
+--- a/amavisd-release
++++ b/amavisd-release
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-release, an EXAMPLE quarantine release utility program.
+@@ -79,7 +79,7 @@ use vars qw($log_level $socketname);
+ 
+   $log_level = 1;
+ # $socketname = '127.0.0.1:9998';
+-  $socketname = '/var/amavis/amavisd.sock';
++  $socketname = '/var/opt/csw/amavisn/amavisd.sock';
+ 
+ sub sanitize_str {
+   my($str, $keep_eol) = @_;
+-- 
+1.7.10.3
+
