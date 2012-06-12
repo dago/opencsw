@@ -27,6 +27,19 @@ PATCHFILES += shared.diff
 # Make more md5 functions static to reduce namespace pollution
 PATCHFILES += authmd5.diff
 
+PACKAGES += CSWlibc-client2007f
+SPKG_DESC_CSWlibc-client2007f += $(DESCRIPTION), libc-client.2007f.so
+PKGFILES_CSWlibc-client2007f += $(call baseisadirs,$(libdir),libc-client\.2007f\.so)
+PKGFILES_CSWlibc-client2007f += $(call baseisadirs,$(libdir),libc-client\.2007f\.so(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibc-client2007f += CSWlibssl1-0-0
+OBSOLETED_BY_CSWlibc-client2007f = CSWimaprt
+
+PACKAGES += CSWlibc-client2007f-dev
+SPKG_DESC_CSWlibc-client2007f-dev = Development files for $(NAME) $(DISTVERSION)
+PKGFILES_CSWlibc-client2007f-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibc-client2007f-dev += CSWlibc-client2007f
+OBSOLETED_BY_CSWlibc-client2007f-dev = CSWimap-devel
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
