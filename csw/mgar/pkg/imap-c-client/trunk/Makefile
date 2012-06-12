@@ -40,6 +40,7 @@ SPKG_DESC_CSWlibc-client2007f-dev = Development files for $(NAME) $(DISTVERSION)
 PKGFILES_CSWlibc-client2007f-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
 RUNTIME_DEP_PKGS_CSWlibc-client2007f-dev += CSWlibc-client2007f
 OBSOLETED_BY_CSWlibc-client2007f-dev = CSWimap-devel
+CHECKPKG_OVERRIDES_CSWlibc-client2007f-dev += surplus-dependency|CSWlibc-client2007f
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
