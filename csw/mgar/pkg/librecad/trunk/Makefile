@@ -59,13 +59,16 @@ INSTALL_SCRIPTS = custom
 
 configure-custom: 
 	cd $(WORKSRC) && $(bindir)/qmake $(call tolower,$(NAME)).pro
+	@$(MAKECOOKIE)
 
 install-custom:
-	ginstall -d 755 $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -m 755   $(WORKSRC)/unix/librecad $(DESTDIR)$(bindir)
 	ginstall -m 755   $(WORKSRC)/unix/ttf2lff $(DESTDIR)$(bindir)
-	ginstall -d 755 $(DESTDIR)$(datadir)/resources
+	ginstall -d $(DESTDIR)$(datadir)/resources
 	gcp -rfp  $(WORKSRC)/unix/resources $(DESTDIR)$(datadir)
+	@$(MAKECOOKIE)
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
