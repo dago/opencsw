@@ -13,7 +13,11 @@ endef
 DISTNAME		=	template
 MASTER_SITES	=	http://downloads.sourceforge.net/emacs-template/$(DISTNAME)/$(VERSION)/
 DISTFILES  		=	$(DISTNAME)-$(VERSION).tar.gz
-DISTFILES		+=	README.CSW
+# if this is uncommented the file is found in the package and the
+# obsolecency package in a sub directory of $(docdir)/emacs_template,
+# which is incorrect and unconvenient; consequently, the file is
+# installed in the install-custom target.
+#DISTFILES		+=	README.CSW
 VENDOR_URL		=	http://emacs-template.sourceforge.net/
 
 BUILD_DEP_PKGS		+=	CSWemacs
@@ -61,6 +65,7 @@ install-custom:
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/lisp/template.elc $(DESTDIR)/$(lispdir)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(docdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/lisp/ChangeLog $(DESTDIR)/$(docdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(FILEDIR)/README.CSW $(DESTDIR)/$(docdir)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(tpldir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/templates/DEFAULT.tpl $(DESTDIR)/$(tpldir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/templates/Makefile.tpl $(DESTDIR)/$(tpldir)
