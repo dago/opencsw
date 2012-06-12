@@ -32,6 +32,8 @@ PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
 # PATCHFILES += 0007-fixup-plugin_syntax.c.patch
 
+BUILD_DEP_PKGS += CSWautoconf
+BUILD_DEP_PKGS += CSWautomake
 BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
