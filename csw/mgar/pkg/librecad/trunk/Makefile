@@ -72,4 +72,4 @@ install-custom:
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /opt/csw/gnu:$(PATH):/opt/csw/gxx/bin
