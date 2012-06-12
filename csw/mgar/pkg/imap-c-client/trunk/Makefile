@@ -46,12 +46,13 @@ RUNTIME_DEP_PKGS_CSWlibc-client2007f += CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSWlibc-client2007f += file-with-bad-content|/usr/share|root/opt/csw/lib/libc-client.2007f.so
 CHECKPKG_OVERRIDES_CSWlibc-client2007f += soname-equals-filename|file=/opt/csw/lib/libc-client.2007f.so
 
-PACKAGES += CSWlibc-client2007f-dev
-SPKG_DESC_CSWlibc-client2007f-dev = Development files for $(NAME) $(DISTVERSION)
-PKGFILES_CSWlibc-client2007f-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
-RUNTIME_DEP_PKGS_CSWlibc-client2007f-dev += CSWlibc-client2007f
-OBSOLETED_BY_CSWlibc-client2007f-dev = CSWimap-devel
-CHECKPKG_OVERRIDES_CSWlibc-client2007f-dev += surplus-dependency|CSWlibc-client2007f
+PACKAGES += CSWlibc-client-dev
+SPKG_DESC_CSWlibc-client-dev = Development files for $(NAME) $(DISTVERSION)
+PKGFILES_CSWlibc-client-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
+PKGFILES_CSWlibc-client-dev = $(libdir)/libc-client.so
+RUNTIME_DEP_PKGS_CSWlibc-client-dev += CSWlibc-client2007f
+OBSOLETED_BY_CSWlibc-client-dev = CSWimap-devel
+CHECKPKG_OVERRIDES_CSWlibc-client-dev += surplus-dependency|CSWlibc-client2007f
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
@@ -76,6 +77,7 @@ install-custom:
 	ginstall -p -m644 $(WORKSRC)/c-client/linkage.c $(DESTDIR)$(includedir)/imap
 	ginstall -p -m644 \
 		$(WORKSRC)/src/osdep/tops-20/shortsym.h $(DESTDIR)$(includedir)/imap
+	cd $(DESTDIR)$(libdir); ln -s libc-client.$(DISTVERSION).so libc-client.so
 	@$(MAKECOOKIE)
 
 post-merge:
