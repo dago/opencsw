@@ -34,6 +34,8 @@ SPKG_DESC_CSWlibc-client2007f += $(DESCRIPTION), libc-client.2007f.so
 PKGFILES_CSWlibc-client2007f += $(call pkgfiles_lib,libc-client.2007f.so)
 RUNTIME_DEP_PKGS_CSWlibc-client2007f += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibc-client2007f = CSWimaprt
+CHECKPKG_OVERRIDES_CSWlibc-client2007f += file-with-bad-content|/usr/share|root/opt/csw/lib/libc-client.2007f.so
+CHECKPKG_OVERRIDES_CSWlibc-client2007f += soname-equals-filename|file=/opt/csw/lib/libc-client.2007f.so
 
 PACKAGES += CSWlibc-client2007f-dev
 SPKG_DESC_CSWlibc-client2007f-dev = Development files for $(NAME) $(DISTVERSION)
