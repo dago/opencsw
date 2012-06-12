@@ -37,6 +37,7 @@ BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
 BUILD_DEP_PKGS += CSWmozldap-dev
+BUILD_DEP_PKGS += CSWmozldap-tools
 BUILD_DEP_PKGS += CSWsasl-dev
 BUILD_DEP_PKGS += CSWlibicu-dev
 BUILD_DEP_PKGS += CSWlibsvrcore0-dev
