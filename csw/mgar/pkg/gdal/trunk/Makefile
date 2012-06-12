@@ -57,6 +57,7 @@ RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgif4
 PKGFILES_CSWlibgdal1 += $(call baseisadirs,$(libdir),libgdal\.so\.1\.15\.0)
 PKGFILES_CSWlibgdal1 += $(call baseisadirs,$(libdir),libgdal\.so\.1(\.\d+)*)
 
