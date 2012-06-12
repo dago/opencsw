@@ -29,14 +29,13 @@ PATCHFILES += authmd5.diff
 
 PACKAGES += CSWlibc-client2007f
 SPKG_DESC_CSWlibc-client2007f += $(DESCRIPTION), libc-client.2007f.so
-PKGFILES_CSWlibc-client2007f += $(call baseisadirs,$(libdir),libc-client\.2007f\.so)
-PKGFILES_CSWlibc-client2007f += $(call baseisadirs,$(libdir),libc-client\.2007f\.so(\.\d+)*)
+PKGFILES_CSWlibc-client2007f += $(call pkgfiles_lib,libc-client.2007f.so)
 RUNTIME_DEP_PKGS_CSWlibc-client2007f += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibc-client2007f = CSWimaprt
 
 PACKAGES += CSWlibc-client2007f-dev
 SPKG_DESC_CSWlibc-client2007f-dev = Development files for $(NAME) $(DISTVERSION)
-PKGFILES_CSWlibc-client2007f-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibc-client2007f-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
 RUNTIME_DEP_PKGS_CSWlibc-client2007f-dev += CSWlibc-client2007f
 OBSOLETED_BY_CSWlibc-client2007f-dev = CSWimap-devel
 
