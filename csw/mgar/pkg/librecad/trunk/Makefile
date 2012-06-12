@@ -38,12 +38,34 @@ BUILD_DEP_PKGS += CSWmuparser-dev
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 
+PACKAGES += CSWlibreCAD
+CATALOGNAME_CSWlibreCAD = libreCAD
+PKGFILES_CSWlibreCAD += $(call baseisadirs,$(bindir),.*)
+PKGFILES_CSWlibreCAD += $(prefix)/resources/*
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqthelp4-gxx
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtcore4-gxx
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtgui4-gxx
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsvg4-gxx
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibmuparser2-gxx
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsql4-gxx
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_SCRIPTS = custom
+INSTALL_SCRIPTS = custom
 
 configure-custom: 
 	cd $(WORKSRC) && $(bindir)/qmake $(call tolower,$(NAME)).pro
 
+install-custom:
+	ginstall -d 755 $(DESTDIR)$(bindir)
+	ginstall -m 755   $(WORKSRC)/unix/librecad $(DESTDIR)$(bindir)
+	ginstall -m 755   $(WORKSRC)/unix/ttf2lff $(DESTDIR)$(bindir)
+	ginstall -d 755 $(DESTDIR)$(datadir)/resources
+	gcp -rfp  $(WORKSRC)/unix/resources $(DESTDIR)$(datadir)
 include gar/category.mk
 
+PATH := /opt/csw/gnu:$(PATH)

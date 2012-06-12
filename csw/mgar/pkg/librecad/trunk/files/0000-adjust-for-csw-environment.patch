@@ -21,19 +21,18 @@ index 4e1a0d3..e6a1ea8 100755
      DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
      macx {
 diff --git a/settings.pro b/settings.pro
-index b120052..67346d3 100644
+index b120052..b5354ea 100644
 --- a/settings.pro
 +++ b/settings.pro
-@@ -4,7 +4,9 @@ win32 {
- unix {
+@@ -5,6 +5,6 @@ unix {
      macx {
          include(settings_macx.pro)
-+    } solaris {
-+        include(settings_csw.pro)
      } else {
-         include(settings_linux.pro)
+-        include(settings_linux.pro)
++        include(settings_csw.pro)
      }
  }
+
 -- 
 1.7.10.2
 
