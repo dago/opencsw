@@ -1,0 +1,45 @@
+From c47e866662f728bec223702d78c556a425f2b3b4 Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 11:37:24 +0200
+Subject: [PATCH] amavisd.conf
+
+---
+ amavisd.conf |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/amavisd.conf b/amavisd.conf
+index 7edddde..02ed967 100644
+--- a/amavisd.conf
++++ b/amavisd.conf
+@@ -14,15 +14,15 @@ use strict;
+ # $bypass_decode_parts = 1;         # controls running of decoders&dearchivers
+ 
+ $max_servers = 2;            # num of pre-forked children (2..30 is common), -m
+-$daemon_user  = 'vscan';     # (no default;  customary: vscan or amavis), -u
+-$daemon_group = 'vscan';     # (no default;  customary: vscan or amavis), -g
++$daemon_user  = 'amavisn';     # (no default;  customary: vscan or amavis), -u
++$daemon_group = 'amavisn';     # (no default;  customary: vscan or amavis), -g
+ 
+ $mydomain = 'example.com';   # a convenient default for other settings
+ 
+-# $MYHOME = '/var/amavis';   # a convenient default for other settings, -H
++$MYHOME = '/var/opt/csw/amavisn';   # a convenient default for other settings, -H
+ $TEMPBASE = "$MYHOME/tmp";   # working directory, needs to exist, -T
+ $ENV{TMPDIR} = $TEMPBASE;    # environment variable TMPDIR, used by SA, etc.
+-$QUARANTINEDIR = '/var/virusmails';  # -Q
++$QUARANTINEDIR = '/var/opt/csw/amavisn/virusmails';  # -Q
+ # $quarantine_subdir_levels = 1;  # add level of subdirs to disperse quarantine
+ # $release_format = 'resend';     # 'attach', 'plain', 'resend'
+ # $report_format  = 'arf';        # 'attach', 'plain', 'resend', 'arf'
+@@ -126,7 +126,7 @@ $mailfrom_to_quarantine = ''; # null return path; uses original sender if undef
+ # $recipient_delimiter = '+';  # undef disables address extensions altogether
+ # when enabling addr extensions do also Postfix/main.cf: recipient_delimiter=+
+ 
+-$path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/bin:/bin';
++$path = '/opt/csw/bin:/opt/csw/sbin:/usr/sfw/bin:/usr/sfw/sbin:/sbin:/usr/bin:/bin'
+ # $dspam = 'dspam';
+ 
+ $MAXLEVELS = 14;
+-- 
+1.7.10.3
+

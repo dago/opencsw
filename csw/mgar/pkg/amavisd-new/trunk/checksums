@@ -1,10 +1,1 @@
-b1af7a961c5f3111efeb72d83b21a0fd  CSWamavisdnew.cswusergroup
-b12bd6b3223756e47e95347fc177bd7b  CSWamavisdnew.postinstall
-171767585ab6662c0cbedae26e9baa2c  CSWamavisdnew.preinstall
-b9cafe6715bc2703ac9411f24f248cd3  amavisd-agent.diff
-3e81998c8b933129870e3cab68d40261  amavisd-nanny.diff
-03d31657f14cd64c1cb38786214234b4  amavisd-new-2.6.4.tar.gz
-f218d10e5280940268a3ffaa125a00ae  amavisd-release.diff
-9c3d4118cf3837e559a6026d6b89b377  amavisd.conf.diff
-071af9fb79ee5e9d045905043fea2b96  amavisd.diff
-befafc9594d5e1c1c8710b7d4d129d0b  p0f-analyzer.pl.diff
+87cd516d1c6349a4389947fb949ff1a2  amavisd-new-2.7.1.tar.gz

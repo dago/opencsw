@@ -1,0 +1,33 @@
+From ab042d4819b769df0a412ff9a8c2025bac6e0a82 Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 10:50:53 +0200
+Subject: [PATCH] amavisd-signer
+
+---
+ amavisd-signer |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/amavisd-signer b/amavisd-signer
+index 1867f0a..111f199 100755
+--- a/amavisd-signer
++++ b/amavisd-signer
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-signer, a DKIM signing service daemon for amavisd.
+@@ -83,8 +83,8 @@ $VERSION = 1.000;  # 20100730
+ # Please adjust the following settings as necessary:
+ #
+ 
+-$daemon_user  = 'vscan';
+-$daemon_group = 'vscan';
++$daemon_user  = 'amavisn';
++$daemon_group = 'amavisn';
+ # $daemon_chroot_dir = '/var/amavis';   # chroot directory or undef
+ 
+ # $daemonize = 1;
+-- 
+1.7.10.3
+

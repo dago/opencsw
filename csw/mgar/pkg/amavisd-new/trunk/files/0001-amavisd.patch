@@ -1,18 +1,31 @@
-diff --speed-large-files --minimal -Nru amavisd-new-2.6.1.orig/amavisd amavisd-new-2.6.1/amavisd
---- amavisd-new-2.6.1.orig/amavisd	2008-06-29 02:37:58.000000000 +0200
-+++ amavisd-new-2.6.1/amavisd	2008-11-13 12:53:24.516468200 +0100
+From 845c0a27fce492baf75a10ce6b3b547e3df793aa Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 11 Jun 2012 11:41:07 +0200
+Subject: [PATCH] amavisd
+
+---
+ amavisd |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/amavisd b/amavisd
+index 1939023..095ee8b 100755
+--- a/amavisd
++++ b/amavisd
 @@ -1,4 +1,4 @@
 -#!/usr/bin/perl -T
 +#!/opt/csw/bin/perl -T
  
  #------------------------------------------------------------------------------
  # This is amavisd-new.
-@@ -12554,7 +12554,7 @@
+@@ -15657,7 +15657,7 @@ $Amavis::Conf::map_full_type_to_short_type_re =
    Amavis::Lookup::RE->new(@$Amavis::Conf::map_full_type_to_short_type_re);
  
  # default location of the config file if none specified
 -push(@config_files, '/etc/amavisd.conf')  if !@config_files;
-+push(@config_files, '/opt/csw/etc/amavisd-new.conf')  if !@config_files;
++push(@config_files, '/etc/opt/csw/amavisn/amavisd-new.conf')  if !@config_files;
  # Read and evaluate config files, which may override default settings
  Amavis::Conf::include_config_files(@config_files);
  Amavis::Conf::supply_after_defaults();
+-- 
+1.7.10.3
+
