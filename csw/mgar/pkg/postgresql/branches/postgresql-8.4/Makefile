@@ -94,6 +94,8 @@ PATCHLEVEL = 12
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
@@ -271,17 +273,17 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(sysconfdir)/$(CSWPGSQLCON
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_server.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-server.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_server/README.CSW
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_server/changelog.CSW
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgssapi-krb5-2
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach n,$(SO_NAMES_SERVER), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
+#CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach n,$(SO_NAMES_SERVER), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
 # This one isn't covered by the above.
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += soname-not-part-of-filename|soname=libplpgsql.so.1|filename=plpgsql.so
+#CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += soname-not-part-of-filename|soname=libplpgsql.so.1|filename=plpgsql.so
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach i,$(NEEDED_ISAS), server_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-client
@@ -292,11 +294,11 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(MISC_NAMES_CLIENT)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_client.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-client.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_client/README.CSW
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_client/changelog.CSW
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibgssapi-krb5-2
@@ -311,16 +313,16 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/$(NAME)/$(BASE_VERSION_NO
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_contrib.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-contrib.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_contrib/README.CSW
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_contrib/changelog.CSW
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibreadline6
 # This will produce some 'unused overrides'.
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(SO_NAMES_CONTRIB), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
+#CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(SO_NAMES_CONTRIB), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(NEEDED_ISAS), contrib_$(i))
 
 PACKAGES += CSW$(NAME)-dev
@@ -331,6 +333,7 @@ PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
 PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)\.1$$)
 PKGFILES_CSW$(NAME)-dev += .*/CSW$(NAME)-dev.postmsg
 PKGFILES_CSW$(NAME)-dev += .*$(docdir)/$(NAME)_dev/README.CSW
+PKGFILES_CSW$(NAME)-dev += .*/postgresql_dev/changelog.CSW
 # See `post-merge-modulated:'
 PKGFILES_CSW$(NAME)-dev += .*/libpgport\.a$
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibecpg-compat3
@@ -339,7 +342,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpgtypes3
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibreadline6
@@ -361,6 +363,7 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc += .*/man5/.*
 PACKAGES += CSWlibecpg-compat3
 SPKG_DESC_CSWlibecpg-compat3 = PostgreSQL $(VERSION), libecpg_compat
 PKGFILES_CSWlibecpg-compat3  = $(call pkgfiles_lib,libecpg_compat.so.3)
+PKGFILES_CSWlibecpg-compat3 += .*/libecpg_compat3/changelog.CSW
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3  = CSWlibecpg6
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpgtypes3
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpq5
@@ -368,16 +371,19 @@ RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpq5
 PACKAGES += CSWlibecpg6
 SPKG_DESC_CSWlibecpg6 = PostgreSQL $(VERSION), libecpg
 PKGFILES_CSWlibecpg6  = $(call pkgfiles_lib,libecpg.so.6)
+PKGFILES_CSWlibecpg6 += .*/libecpg6/changelog.CSW
 RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpgtypes3
 RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpq5
 
 PACKAGES += CSWlibpgtypes3
 SPKG_DESC_CSWlibpgtypes3 = PostgreSQL $(VERSION), libpgtypes
 PKGFILES_CSWlibpgtypes3  = $(call pkgfiles_lib,libpgtypes.so.3)
+PKGFILES_CSWlibpgtypes3 += .*/libpgtypes3/changelog.CSW
 
 PACKAGES += CSWlibpq5
 SPKG_DESC_CSWlibpq5 = PostgreSQL $(VERSION), libpq
 PKGFILES_CSWlibpq5  = $(call pkgfiles_lib,libpq.so.5)
+PKGFILES_CSWlibpq5 += .*/libpq5/changelog.CSW
 RUNTIME_DEP_PKGS_CSWlibpq5  = CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWlibgssapi-krb5-2
 
