@@ -32,6 +32,17 @@ PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
 # PATCHFILES += 0007-fixup-plugin_syntax.c.patch
 
+BUILD_DEP_PKGS += CSWbdb48devel
+BUILD_DEP_PKGS += CSWnspr-dev
+BUILD_DEP_PKGS += CSWlibnss-dev
+BUILD_DEP_PKGS += CSWnetsnmp-dev
+BUILD_DEP_PKGS += CSWmozldap-dev
+BUILD_DEP_PKGS += CSWsasl-dev
+BUILD_DEP_PKGS += CSWlibicu-dev
+BUILD_DEP_PKGS += CSWlibsvrcore0-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+
 INITSMF = /etc/opt/csw/init.d/dirsrv
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibprldap60
