@@ -29,11 +29,20 @@ PATCHFILES += shared.diff
 # Make more md5 functions static to reduce namespace pollution
 PATCHFILES += authmd5.diff
 
+PACKAGES += CSWlibc-client2004g
+SPKG_DESC_CSWlibc-client2004g += $(DESCRIPTION), libc-client.2004g.so
+PKGFILES_CSWlibc-client2004g += $(call pkgfiles_lib,libc-client.2004g.so)
+RUNTIME_DEP_PKGS_CSWlibc-client2004g += CSWlibssl0-9-8
+OBSOLETED_BY_CSWlibc-client2004g = CSWimaprt
+CHECKPKG_OVERRIDES_CSWlibc-client2004g += file-with-bad-content|/usr/share|root/opt/csw/lib/libc-client.2004g.so
+CHECKPKG_OVERRIDES_CSWlibc-client2004g += file-with-bad-content|/export/home|root/opt/csw/lib/libc-client.2004g.so
+CHECKPKG_OVERRIDES_CSWlibc-client2004g += file-with-bad-content|/export/medusa|root/opt/csw/lib/libc-client.2004g.so
+CHECKPKG_OVERRIDES_CSWlibc-client2004g += soname-equals-filename|file=/opt/csw/lib/libc-client.2004g.so
+
 PACKAGES += CSWlibc-client2007f
 SPKG_DESC_CSWlibc-client2007f += $(DESCRIPTION), libc-client.2007f.so
 PKGFILES_CSWlibc-client2007f += $(call pkgfiles_lib,libc-client.2007f.so)
 RUNTIME_DEP_PKGS_CSWlibc-client2007f += CSWlibssl1-0-0
-OBSOLETED_BY_CSWlibc-client2007f = CSWimaprt
 CHECKPKG_OVERRIDES_CSWlibc-client2007f += file-with-bad-content|/usr/share|root/opt/csw/lib/libc-client.2007f.so
 CHECKPKG_OVERRIDES_CSWlibc-client2007f += soname-equals-filename|file=/opt/csw/lib/libc-client.2007f.so
 
@@ -69,3 +78,5 @@ install-custom:
 		$(WORKSRC)/src/osdep/tops-20/shortsym.h $(DESTDIR)$(includedir)/imap
 	@$(MAKECOOKIE)
 
+post-merge:
+	ginstall -m755 $(FILEDIR)/libc-client.2004g.so.$(GARCH) $(PKGROOT)$(libdir)/libc-client.2004g.so
