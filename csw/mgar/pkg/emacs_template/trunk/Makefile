@@ -13,6 +13,7 @@ endef
 DISTNAME		=	template
 MASTER_SITES	=	http://downloads.sourceforge.net/emacs-template/$(DISTNAME)/$(VERSION)/
 DISTFILES  		=	$(DISTNAME)-$(VERSION).tar.gz
+DISTFILES		+=	COPYING
 # if this is uncommented the file is found in the package and the
 # obsolecency package in a sub directory of $(docdir)/emacs_template,
 # which is incorrect and unconvenient; consequently, the file is
