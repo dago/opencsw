@@ -32,6 +32,7 @@ PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 PATCHFILES += 0000-adjust-for-csw-environment.patch
 PATCHFILES += 0000-add-csw-settings.patch
+PATCHFILES += 0001-adjust-rs_system-forcsw.patch
 
 BUILD_DEP_PKGS += CSWqt4-gxx-dev
 BUILD_DEP_PKGS += CSWmuparser-dev
@@ -66,7 +67,7 @@ install-custom:
 	ginstall -m 755   $(WORKSRC)/unix/librecad $(DESTDIR)$(bindir)
 	ginstall -m 755   $(WORKSRC)/unix/ttf2lff $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(datadir)/resources
-	gcp -rfp  $(WORKSRC)/unix/resources $(DESTDIR)$(datadir)
+	gcp -rfp  $(WORKSRC)/unix/resources $(DESTDIR)$(datadir)/librecad
 	@$(MAKECOOKIE)
 
 include gar/category.mk
