@@ -6,6 +6,8 @@ DISTNAME = $(NAME)-$(VERSION)$(DISTRELEASE)
 GARTYPE = v2
 CATEGORIES = lib
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DESCRIPTION = UW IMAP C-Client
 define BLURB
   An API (application programming interface) used to build email clients and
