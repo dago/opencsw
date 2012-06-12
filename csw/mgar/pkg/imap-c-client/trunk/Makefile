@@ -1,8 +1,5 @@
 NAME = imap
-VERSION = 2007
-DISTRELEASE = f
-DISTVERSION = $(VERSION)$(DISTRELEASE)
-DISTNAME = $(NAME)-$(VERSION)$(DISTRELEASE)
+VERSION = 2007f
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -49,7 +46,7 @@ CHECKPKG_OVERRIDES_CSWlibc-client2007f += file-with-bad-content|/usr/share|root/
 CHECKPKG_OVERRIDES_CSWlibc-client2007f += soname-equals-filename|file=/opt/csw/lib/libc-client.2007f.so
 
 PACKAGES += CSWlibc-client-dev
-SPKG_DESC_CSWlibc-client-dev = Development files for $(NAME) $(DISTVERSION)
+SPKG_DESC_CSWlibc-client-dev = Development files for $(NAME) $(VERSION)
 PKGFILES_CSWlibc-client-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
 PKGFILES_CSWlibc-client-dev = $(libdir)/libc-client.so
 RUNTIME_DEP_PKGS_CSWlibc-client-dev += CSWlibc-client2007f
@@ -66,20 +63,20 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 build-custom:
-	@( cd $(WORKSRC) ; $(BUILD_ENV) DISTVERSION=$(DISTVERSION) make soc )
+	@( cd $(WORKSRC) ; $(BUILD_ENV) DISTVERSION=$(VERSION) make soc )
 	@$(MAKECOOKIE)
 
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall -p -m644 $(WORKSRC)/c-client/c-client.a $(DESTDIR)$(libdir)
 	ginstall -p -m755 \
-		$(WORKSRC)/c-client/libc-client.$(DISTVERSION).so $(DESTDIR)$(libdir)
+		$(WORKSRC)/c-client/libc-client.$(VERSION).so $(DESTDIR)$(libdir)
 	ginstall -d $(DESTDIR)$(includedir)/imap
 	ginstall -p -m644 $(WORKSRC)/c-client/*.h $(DESTDIR)$(includedir)/imap
 	ginstall -p -m644 $(WORKSRC)/c-client/linkage.c $(DESTDIR)$(includedir)/imap
 	ginstall -p -m644 \
 		$(WORKSRC)/src/osdep/tops-20/shortsym.h $(DESTDIR)$(includedir)/imap
-	cd $(DESTDIR)$(libdir); ln -s libc-client.$(DISTVERSION).so libc-client.so
+	cd $(DESTDIR)$(libdir); ln -s libc-client.$(VERSION).so libc-client.so
 	@$(MAKECOOKIE)
 
 post-merge:
