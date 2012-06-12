@@ -18,6 +18,8 @@ SPKG_SOURCEURL = http://www.washington.edu/imap/
 MASTER_SITES = ftp://ftp.cac.washington.edu/imap/
 DISTFILES  = $(DISTNAME).tar.Z
 
+LICENSE = LICENSE.txt
+
 PATCHDIR = $(WORKDIR)
 PATCHDIRLEVEL = 0
 
