@@ -19,6 +19,8 @@ PATCHFILES += 0001-Ensure-we-have-FIONBIO-defined.patch
 
 GARCOMPILER = GNU
 
+EXTRA_INC += $(includedir)/ncurses
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
