@@ -15,6 +15,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES += 0001-Ensure-we-have-FIONBIO-defined.patch
 
 GARCOMPILER = GNU
 
