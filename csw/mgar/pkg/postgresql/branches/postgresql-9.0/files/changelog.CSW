@@ -1,8 +1,13 @@
-postgresql90 (9.0.8,REV=2012.06.11)
+postgresql90 (9.0.8,REV=2012.06.13)
 
   * New upstream release 9.0.8.
 
- -- Rafael Ostertag <raos@opencsw.org>  Mon, 11 June 2012 15:42:57+0200
+  * Dropped support for Solaris 9
+
+  * Include changelog.CSW in all packages, thus removing the clustering of 
+    changelog.CSW files in CSWpostgresql
+
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 13 June 2012 07:26:57+0200
 
 
 postgresql90 (9.0.7,REV=2012.05.01)
