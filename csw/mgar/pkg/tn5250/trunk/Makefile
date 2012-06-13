@@ -16,6 +16,8 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 
+GARCOMPILER = GNU
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
