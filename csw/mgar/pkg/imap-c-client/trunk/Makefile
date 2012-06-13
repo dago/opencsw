@@ -22,6 +22,8 @@ LICENSE = LICENSE.txt
 PATCHDIR = $(WORKDIR)
 PATCHDIRLEVEL = 0
 
+MERGE_EXCLUDE_STATICLIBS = 
+
 # Build libc-client.so
 PATCHFILES += shared.diff
 
@@ -49,9 +51,11 @@ PACKAGES += CSWlibc-client-dev
 SPKG_DESC_CSWlibc-client-dev = Development files for $(NAME) $(VERSION)
 PKGFILES_CSWlibc-client-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
 PKGFILES_CSWlibc-client-dev += $(libdir)/libc-client.so
+PKGFILES_CSWlibc-client-dev += $(libdir)/c-client.a
 RUNTIME_DEP_PKGS_CSWlibc-client-dev += CSWlibc-client2007f
 OBSOLETED_BY_CSWlibc-client-dev = CSWimap-devel
 CHECKPKG_OVERRIDES_CSWlibc-client-dev += surplus-dependency|CSWlibc-client2007f
+CHECKPKG_OVERRIDES_CSWlibc-client-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/c-client.a
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
