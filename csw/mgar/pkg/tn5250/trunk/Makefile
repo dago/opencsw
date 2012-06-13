@@ -2,26 +2,17 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tn5250
-VERSION = x.y
+VERSION = 0.17.4
 GARTYPE = v2
-CATEGORIES = category
+CATEGORIES = net
 
-DESCRIPTION = Brief description
+DESCRIPTION = A tn5250 emulator
 define BLURB
-  Long description
+tn5250 is a telnet client for the IBM iSeries and AS/400 that emulates 5250 terminals and printers. This function is the same as that provided by the 5250 emulator in IBM iSeries Access.
 endef
 
-MASTER_SITES = 
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
-
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
