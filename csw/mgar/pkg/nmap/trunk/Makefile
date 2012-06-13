@@ -1,7 +1,9 @@
 NAME = nmap
-VERSION = 5.59BETA1
+VERSION = 6.00
 CATEGORIES = net
 GARTYPE = v2
+
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 DESCRIPTION = A network exploration tool and security/port scanner
 define BLURB
