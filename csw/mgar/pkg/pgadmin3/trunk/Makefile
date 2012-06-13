@@ -54,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibpq5
 
-BUILD_DEP_PKGS  = CSWlincursesw5-dev
+BUILD_DEP_PKGS  = CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
