@@ -19,6 +19,10 @@ PATCHFILES += 0001-Ensure-we-have-FIONBIO-defined.patch
 
 GARCOMPILER = GNU
 
+RUNTIME_DEP_PKGS_CSWtn5250 += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWtn5250 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWtn5250 += CSWlibssl1-0-0
+
 EXTRA_INC += $(includedir)/ncurses
 
 CONFIGURE_ARGS = $(DIRPATHS)
