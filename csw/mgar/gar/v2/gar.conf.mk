@@ -539,7 +539,7 @@ SOS12U1_CC_HOME ?= /opt/studio/sunstudio12.1
 SOS12U2_CC_HOME ?= /opt/solstudio12.2
 SOS12U3_CC_HOME ?= /opt/solarisstudio12.3
 
-   GCC4_VERSION ?= 4.6
+   GCC4_VERSION ?= 4.7
 
      GCC3_CC ?= $(GCC3_CC_HOME)/bin/gcc
      GCC4_CC ?= $(GCC4_CC_HOME)/bin/gcc-$(GCC4_VERSION)
