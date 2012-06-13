@@ -26,6 +26,8 @@ RUNTIME_DEP_PKGS_CSWtn5250 += CSWlib5250-0
 RUNTIME_DEP_PKGS_CSWtn5250 += CSWlibssl1-0-0
 # comment string
 CHECKPKG_OVERRIDES_CSWtn5250 += file-with-bad-content|/usr/local|root/opt/csw/bin/5250keys
+CHECKPKG_OVERRIDES_CSWtn5250 += file-with-bad-content|/usr/local|root/opt/csw/share/tn5250/README
+CHECKPKG_OVERRIDES_CSWtn5250 += file-with-bad-content|/usr/share|root/opt/csw/share/tn5250/README
 
 PACKAGES += CSWlib5250-0
 SPKG_DESC_CSWlib5250-0 += $(DESCRIPTION), lib5250.so.0
