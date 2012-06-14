@@ -1,4 +1,4 @@
-# $Id$
+#: $Id$
 
 NAME = zlib
 VERSION = 1.2.7
@@ -24,7 +24,7 @@ SF_PROJ = libpng
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += COPYING
 
-PATCHFILES += Makefile.in.diff
+PATCHFILES += 0003-Add-h-to-the-linker-invocation.patch
 PATCHFILES += configure.diff
 
 PACKAGES += CSWlibz1
