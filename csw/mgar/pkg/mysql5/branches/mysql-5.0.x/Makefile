@@ -146,7 +146,7 @@ CONFIGURE_ARGS += --with-low-memory
 CONFIGURE_ARGS += --with-pthread
 CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-zlib-dir=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-ssl=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-openssl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 CONFIGURE_ARGS += --with-comment="(OpenCSW)"
 CONFIGURE_ARGS += --with-mysqld-user=mysql
