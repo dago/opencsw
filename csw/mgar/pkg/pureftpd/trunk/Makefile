@@ -29,6 +29,9 @@ BUILD_DEP_PKGS += CSWlibssl-dev
 
 # we require openssl for tls
 RUNTIME_DEP_PKGS = CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpureftpd += CSWlibssp0
+
+GARCOMPILER = GNU
 
 # configure args
 CONFIGURE_ARGS  = $(DIRPATHS)
