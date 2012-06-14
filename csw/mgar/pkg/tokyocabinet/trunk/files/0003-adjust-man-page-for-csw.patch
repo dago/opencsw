@@ -1,0 +1,30 @@
+From 4a5ab50424e83a4148a961b48b25587f7325d675 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 12 Jun 2012 23:08:08 +0200
+Subject: [PATCH] adjust man page for csw
+
+---
+ man/tokyocabinet.3 |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/man/tokyocabinet.3 b/man/tokyocabinet.3
+index d050da5..fa67266 100644
+--- a/man/tokyocabinet.3
++++ b/man/tokyocabinet.3
+@@ -101,9 +101,11 @@ In cases that multiple processes access a database at the same time or some proc
+ Tokyo Cabinet provides API of the C language and it is available by programs conforming to the C89 (ANSI C) standard or the C99 standard.  As the header files of Tokyo Cabinet are provided as `\fBtcutil.h\fR', `\fBtchdb.h\fR', and `\fBtcbdb.h\fR', applications should include one or more of them accordingly to use the API.  As the library is provided as `\fBlibtokyocabinet.a\fR' and `\fBlibtokyocabinet.so\fR' and they depends `\fBlibz.so\fR', `\fBlibrt.so\fR', `\fBlibpthread.so\fR', `\fBlibm.so\fR', and `\fBlibc.so\fR', linker options `\fB\-ltokyocabinet\fR', `\fB\-lz\fR', `\fB\-lbz2\fR', `\fB\-lrt\fR', `\fB\-lpthread\fR', `\fB\-lm\fR', and `\fB\-lc\fR' are required for build command.  A typical build command is the following.
+ .PP
+ .RS
+-gcc \-I/usr/local/include tc_example.c \-o tc_example \\
++cc \-I/opt/csw/include tc_example.c \-o tc_example \\
+ .br
+-  \-L/usr/local/lib \-ltokyocabinet \-lz \-lbz2 \-lrt \-lpthread \-lm \-lc
++  \-L/opt/csw/lib \-R/opt/csw/lib \-ltokyocabinet \\
++.br
++  \-lz \-lbz2 \-lrt \-lpthread \-lm \-lc
+ .RE
+ .PP
+ You can also use Tokyo Cabinet in programs written in C++.  Because each header is wrapped in C linkage (`\fBextern "C"\fR' block), you can simply include them into your C++ programs.
+-- 
+1.7.10.3
+
