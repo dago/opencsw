@@ -51,6 +51,7 @@ DISTFILES += client.conf.CSW
 DISTFILES += CSWcupsclient.README
 
 PATCHFILES += 0001-cswcups-for-the-service-name.patch
+PATCHFILES += 0002-use-posix-shell-in-install.sh.patch
 # PATCHFILES  = 0001-cswcups-for-service-name.patch
 # PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 # PATCHFILES += 0003-Reference-counting-for-printers-only.patch
@@ -66,7 +67,7 @@ VENDOR_URL = http://www.cups.org/
 LICENSE = LICENSE.txt
 
 GARCOMPILER ?= SOS12U3 # SOS12U3
-PACKAGING_PLATFORMS = solaris10-i368 solaris10-sparc
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 BUILD_DEP_PKGS  = CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
@@ -231,7 +232,6 @@ RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibz1
-OBSOLETED_BY_CSWlibcups2 += CSWlibcups
 
 PACKAGES += CSWlibcupscgi1
 SPKG_DESC_CSWlibcupscgi1 = CUPS libraries, libcupscgi.so.1
@@ -244,7 +244,6 @@ RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibz1
-OBSOLETED_BY_CSWlibcupscgi1 += CSWlibcups
 
 PACKAGES += CSWlibcupsdriver1
 SPKG_DESC_CSWlibcupsdriver1 = CUPS libraries, libcupsdriver.so.1
@@ -257,7 +256,6 @@ RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibk5crypto3
-OBSOLETED_BY_CSWlibcupsdriver1 += CSWlibcups
 
 PACKAGES += CSWlibcupsimage2
 SPKG_DESC_CSWlibcupsimage2 = CUPS libraries, libcupsimage.so.2
@@ -273,7 +271,6 @@ RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibtiff3
-OBSOLETED_BY_CSWlibcupsimage2 += CSWlibcups
 
 PACKAGES += CSWlibcupsmime1
 SPKG_DESC_CSWlibcupsmime1 = CUPS libraries, libcupsmime.so.1
@@ -286,7 +283,6 @@ RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibz1
-OBSOLETED_BY_CSWlibcupsmime1 += CSWlibcups
 
 PACKAGES += CSWlibcupsppdc1
 SPKG_DESC_CSWlibcupsppdc1 = CUPS libraries, libcupsppdc.so.1
@@ -299,7 +295,6 @@ RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibk5crypto3
-OBSOLETED_BY_CSWlibcupsppdc1 += CSWlibcups
 
 # For some reason -norunpath is not used here, investigate later
 CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
