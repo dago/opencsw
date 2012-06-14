@@ -54,6 +54,8 @@ TEST_SCRIPTS =
 sysconfdir = /etc/opt/csw
 SAMPLECONF = $(sysconfdir)/$(SRCNAME)/*.conf
 
+CHECKPKG_OVERRIDES_CSWpureftpd += file-with-bad-content|/usr/share|root/opt/csw/share/man/man8/pure-ftpd.8
+
 include gar/category.mk
 
 # make sure, the linker uses libcrypt before libssl
