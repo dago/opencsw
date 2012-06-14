@@ -10,6 +10,8 @@ CATEGORIES = net
 GARTYPE = v2
 SRCNAME = pure-ftpd
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 DESCRIPTION = A secure FTP daemon
 define BLURB
   Pure-FTPd is a free (BSD), secure, production-quality and
