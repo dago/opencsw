@@ -15,6 +15,11 @@ DISTNAME		=	gnet-$(VERSION)
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/gnet/2.0/
 DISTFILES  = $(DISTNAME).tar.gz
 
+# until the glib development package is installed on Solaris 9 we
+# limit the scope:
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 BUILD_DEP_PKGS		+=	CSWlibglib2-dev
 BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 
