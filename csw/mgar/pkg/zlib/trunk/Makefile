@@ -30,7 +30,6 @@ PATCHFILES += configure.diff
 PACKAGES += CSWlibz1
 SPKG_DESC_CSWlibz1 = Zlib data compression library, libz.so.1
 PKGFILES_CSWlibz1 = $(call pkgfiles_lib,libz.so.1)
-RUNTIME_DEP_PKGS_CSWlibz1 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibz1 = CSWzlib
 
 PACKAGES += CSWlibz-dev
@@ -42,15 +41,10 @@ BUILD64_LIBS_ONLY = 1
 
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 
-# Temporary switch to GCC, because the previous build resulted in a broken
-# library on amd64 as reported by Rafael.
-GARCOMPILER = GNU
-LD_ALTEXEC = /opt/csw/bin/gld
-EXTRA_EXPORTS = LD_ALTEXEC
-
 # # https://blogs.oracle.com/d/entry/building_shared_libraries_for_sparcv9
-# EXTRA_CFLAGS_sparc = -xcode=pic32
-# EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))
+EXTRA_CFLAGS_sparc = -xcode=pic13
+EXTRA_CFLAGS_i386 = -Kpic
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))
 
 CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --eprefix=$(exec_prefix)
