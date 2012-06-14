@@ -1,0 +1,22 @@
+From c41d2095c743121b31801bfe675a8fe415714022 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 14 Jun 2012 11:46:25 +0200
+Subject: [PATCH] use posix shell in install.sh
+
+---
+ install-sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/install-sh b/install-sh
+index baa6e08..5bf1d50 100755
+--- a/install-sh
++++ b/install-sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ #
+ # "$Id: install-sh 10317 2012-03-01 00:05:55Z mike $"
+ #
+-- 
+1.7.10.3
+
