@@ -30,7 +30,6 @@ PATCHFILES += configure.diff
 PACKAGES += CSWlibz1
 SPKG_DESC_CSWlibz1 = Zlib data compression library, libz.so.1
 PKGFILES_CSWlibz1 = $(call pkgfiles_lib,libz.so.1)
-RUNTIME_DEP_PKGS_CSWlibz1 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibz1 = CSWzlib
 
 PACKAGES += CSWlibz-dev
