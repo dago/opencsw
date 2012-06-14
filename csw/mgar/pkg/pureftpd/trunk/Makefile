@@ -5,7 +5,7 @@
 # - mysql 
 # - pgsql
 NAME = pureftpd
-VERSION = 1.0.27
+VERSION = 1.0.36
 CATEGORIES = net
 GARTYPE = v2
 SRCNAME = pure-ftpd
@@ -23,11 +23,10 @@ MASTER_SITES = http://download.pureftpd.org/pub/pure-ftpd/releases/
 DISTFILES  = $(SRCNAME)-$(VERSION).tar.gz
 WORKSRC = $(WORKDIR)/$(SRCNAME)-$(VERSION)
 
-# we require openssl for tls
-RUNTIME_DEP_PKGS = CSWosslrt
+BUILD_DEP_PKGS += CSWlibssl-dev
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+# we require openssl for tls
+RUNTIME_DEP_PKGS = CSWlibssl1-0-0
 
 # configure args
 CONFIGURE_ARGS  = $(DIRPATHS)
