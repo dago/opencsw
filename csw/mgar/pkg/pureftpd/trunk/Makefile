@@ -72,6 +72,7 @@ post-build-modulated:
 pre-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/$(SRCNAME)
 	ginstall -d $(DESTDIR)$(docdir)/$(SRCNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -d $(DESTDIR)/var/opt/csw/run
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpd.h
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpwho-update.h
@@ -86,4 +87,5 @@ post-install-modulated:
 		ginstall -m 644 $$file $(DESTDIR)$(sysconfdir)/$(SRCNAME) ; \
 		done )
 	ginstall -m 644 $(WORKSRC)/pureftpd.schema $(DESTDIR)$(docdir)/$(SRCNAME)
+	ginstall -m 644 $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/$(NAME)/license
 	@$(MAKECOOKIE)
