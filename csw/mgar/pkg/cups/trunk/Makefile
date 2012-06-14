@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cups
-VERSION = 1.5.2
+VERSION = 1.5.3
 CATEGORIES = net
 GARTYPE = v2
 
@@ -65,7 +65,8 @@ VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
 
-GARCOMPILER ?= SOS12 # SOS12U3
+GARCOMPILER ?= SOS12U3 # SOS12U3
+PACKAGING_PLATFORMS = solaris10-i368 solaris10-sparc
 
 BUILD_DEP_PKGS  = CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
@@ -208,9 +209,6 @@ RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupscgi1
-OBSOLETED_BY_CSWcups-dev += CSWcups-devel
-OBSOLETED_BY_CSWcups-dev += CSWcupsdev
-OBSOLETED_BY_CSWcups-dev += CSWcupsdoc
 
 # The problematic cupslinks package
 # PACKAGES += CSWcupslinks
