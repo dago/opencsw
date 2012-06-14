@@ -5,6 +5,8 @@ VERSION = $(DISTVERSION)
 CATEGORIES = lang
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
@@ -29,10 +31,10 @@ OBSOLETED_BY_CSWruby18-mode-el = CSWrubymodeel
 
 ALTERNATIVES_CSWruby18 = ruby rbconfig18
 ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1
-ALTERNATIVE_rbconfig18 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.sun 5
+ALTERNATIVE_rbconfig18 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/rbconfig.rb.sun 5
 
 ALTERNATIVES_CSWruby18-gcc4 = rbconfig18_gcc
-ALTERNATIVE_rbconfig18_gcc = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.gcc4 10
+ALTERNATIVE_rbconfig18_gcc = $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/rbconfig.rb.gcc4 10
 
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
@@ -85,7 +87,7 @@ SPKG_DESC_CSWruby18-mode-el = Elisp source for ruby mode (Ruby 1.8)
 
 PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/$(NAME)/sample.*
 
-PKGFILES_CSWruby18-gcc4 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/.*gcc4
+PKGFILES_CSWruby18-gcc4 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/.*gcc4
 
 PKGFILES_CSWruby18-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
@@ -158,7 +160,7 @@ include gar/category.mk
 
 SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
-RBCDIR = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9
+RBCDIR = $(libdir)/ruby/1.8/$(GARCH)-solaris2.10
 RBCONFIG = $(RBCDIR)/rbconfig.rb
 
 merge-copy-custom: $(PKGROOT) $(INSTALLISADIR)
@@ -171,7 +173,7 @@ post-install-modulated: RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
 post-install-modulated:
 	@echo "Stripping DESTDIR from rbconfig.rb"
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
+		$(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.10/rbconfig.rb
 	@$(MAKECOOKIE)
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).$(COMPILER)
