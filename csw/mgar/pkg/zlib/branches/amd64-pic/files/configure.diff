@@ -1,0 +1,27 @@
+--- zlib-1.2.4/configure.orig	2010-03-12 16:06:14.000000000 +0100
++++ zlib-1.2.4/configure	2010-03-19 03:56:46.336725066 +0100
+@@ -29,7 +29,7 @@
+ exec_prefix=${exec_prefix-'${prefix}'}
+ libdir=${libdir-'${exec_prefix}/lib'}
+ includedir=${includedir-'${prefix}/include'}
+-mandir=${mandir-'${prefix}/share/man'}
++#mandir=${mandir-'${prefix}/share/man'}
+ shared_ext='.so'
+ shared=0
+ gcc=0
+@@ -154,11 +154,11 @@
+   SunOS\ 5*) LDSHARED=${LDSHARED-"cc -G"}
+          case `(uname -m || echo unknown) 2>/dev/null` in
+          i86*)
+-             SFLAGS=${CFLAGS-"-xpentium -fast -KPIC -R."}
+-             CFLAGS=${CFLAGS-"-xpentium -fast"} ;;
++             SFLAGS="${CFLAGS} -KPIC -L."
++             CFLAGS=${CFLAGS} ;;
+          *)
+-             SFLAGS=${CFLAGS-"-fast -xcg92 -KPIC -R."}
+-             CFLAGS=${CFLAGS-"-fast -xcg92"} ;;
++             SFLAGS="${CFLAGS} -KPIC -L."
++             CFLAGS=${CFLAGS} ;;
+          esac ;;
+   SunOS\ 4*) SFLAGS=${CFLAGS-"-O2 -PIC"}
+              CFLAGS=${CFLAGS-"-O2"}
