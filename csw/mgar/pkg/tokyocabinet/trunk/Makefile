@@ -1,25 +1,36 @@
-# $Id
-: Makefile 13420 2011-02-20 21:04:03Z bdwalton $
+# $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tokyocabinet
 VERSION = 1.4.47
 GARTYPE = v2
-CATEGORIES = utils
+CATEGORIES = lib
+GARCOMPILER = SOS12U1
 
-DESCRIPTION = Tokyo Cabinet is a library of routines for managing a database.
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+DESCRIPTION = Brief description
 define BLURB
-        Tokyo Cabinet is a library of routines for managing a database. The database is a 
-        simple data file containing records, each is a pair of a key and a value. 
-        Every key and value is serial bytes with variable length. Both binary data and 
-        character string can be used as a key and a value. There is neither concept of 
-        data tables nor data types. Records are organized in hash table, B+ tree, 
-        or fixed-length array.
+  Tokyo Cabinet is a library of routines for managing a database. The 
+  database is a simple data file containing records, each is a pair
+  of a key and a value. Every key and value is serial bytes with variable
+  length. Both binary data and character string can be used as a key and
+  a value. There is neither concept of data tables nor data types. Records
+  are organized in hash table, B+ tree, or fixed-length array.
 endef
 
-MASTER_SITES = http://fallabs.com/tokyocabinet/
+MASTER_SITES = http://fallabs.com/tokyocabinet
 DISTFILES  = $(DISTNAME).tar.gz
+
+# Disables installation of CGI component and fixes
+# installation of libraries.
+PATCHFILES += 0001-Adjust-Makefile.in.patch
+
+# Use $(MAKE) in Makefile
+PATCHFILES += 0002-Use-make-variable.patch
+
+# Adjust man page
+PATCHFILES += 0003-adjust-man-page-for-csw.patch
 
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
@@ -30,41 +41,57 @@ DISTFILES  = $(DISTNAME).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-PATCHFILES += 0001-updated-paths-for-csw.patch
-CONFIGURE_ARGS = $(DIRPATHS) 
-GARCOMPILER = GCC4
-BUILD64 = 1
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-SKIP_MODULATIONS = isa-sparcv8
-
-
-EXTRA_CPPFLAGS += -DLOG_PERROR=0x00
-EXTRA_CPPFLAGS += -D__EXTENSIONS__
-
-PACKAGES += CSWlibtokyocabinet9
-PACKAGES += CSWtokyocabinet-dev
-
-CATALOGNAME_CSWlibtokyocabinet9 = libtokyocabinet9
-CATALOGNAME_CSWtokyocabinet-dev = tokyocabinet_dev
-
-RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibgcc-s1
+PACKAGES  = CSWlibtokyocabinet9
+SPKG_DESC_CSWlibtokyocabinet9 = Tokyocabinet - library
+PKGFILES_CSWlibtokyocabinet9 = $(call pkgfiles_lib,libtokyocabinet.so.9)
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWtokyocabinet-dev += CSWlibtokyocabinet9
-RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibtokyocabinet9
+# I have no freaking idea where this is comming from
+CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/libtokyocabinet.so.9.10.0
+CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0
 
-PKGFILES_CSWlibtokyocabinet9 += $(call pkgfiles_lib,libtokyocabinet.so.9)
-PKGFILES_CSWtokyocabinet-dev += $(PKGFILES_DEVEL)
+PACKAGES += CSWlibtokyocabinet-dev
+SPKG_DESC_CSWlibtokyocabinet-dev = Tokyocabinet - development files
+PKGFILES_CSWlibtokyocabinet-dev  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibtokyocabinet-dev += .*/doc/libtokyocabinet_dev/tokyocabinet.idl
+RUNTIME_DEP_PKGS_CSWlibtokyocabinet-dev  = CSWlibtokyocabinet9
 
-SPKG_DESC_CSWlibtokyocabinet9 += $(DESCRIPTION), libtokyocabinet.so.9
-SPKG_DESC_CSWtokyocabinet-dev += $(DESCRIPTION), development files
+PACKAGES += CSWtokyocabinet-bin
+SPKG_DESC_CSWtokyocabinet-bin = Tokyocabinet - utilities
+PKGFILES_CSWtokyocabinet-bin  = .*/bin/.*
+PKGFILES_CSWtokyocabinet-bin += .*/man/man/.*
+RUNTIME_DEP_PKGS_CSWtokyocabinet-bin  = CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWtokyocabinet-bin += CSWlibz1
+RUNTIME_DEP_PKGS_CSWtokyocabinet-bin += CSWlibtokyocabinet9
 
-#######################
-# Tests are disk intensive. uncomment to skip tests if need be.
-#######################
-#TEST_SCRIPTS =
+PACKAGES += CSWtokyocabinet-doc
+ARCHALL_CSWtokyocabinet-doc = 1
+SPKG_DESC_CSWtokyocabinet-doc = Tokyocabinet - documentation
+PKGFILES_CSWtokyocabinet-doc  = .*/doc/tokyocabinet_doc/.*
+# That's ok, it's in the howto build section
+CHECKPKG_OVERRIDES_CSWtokyocabinet-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/tokyocabinet_doc/doc/spex-en.html
+CHECKPKG_OVERRIDES_CSWtokyocabinet-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/tokyocabinet_doc/doc/spex-ja.html
+
+BUILD64 = 1
+
+EXTRA_CFLAGS	= -xc99=all -Kpic
+EXTRA_CPPFLAGS	= -DPIC
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --with-bzip=$(prefix)
+CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --enable-shared
 
 include gar/category.mk
 
-PATH:=/opt/csw/gnu:$(PATH)
+post-merge:
+	install -d $(PKGROOT)$(docdir)/libtokyocabinet_dev
+	install -d $(PKGROOT)$(docdir)/tokyocabinet_doc
+	mv $(PKGROOT)$(sharedstatedir)/tokyocabinet/tokyocabinet.idl $(PKGROOT)$(docdir)/libtokyocabinet_dev/
+	mv $(PKGROOT)$(sharedstatedir)/tokyocabinet/COPYING \
+		$(PKGROOT)$(sharedstatedir)/tokyocabinet/ChangeLog \
+		$(PKGROOT)$(docdir)/libtokyocabinet_dev/
+	mv $(PKGROOT)$(sharedstatedir)/tokyocabinet/doc $(PKGROOT)$(docdir)/tokyocabinet_doc/
+	rm -rf $(PKGROOT)$(sharedstatedir)/tokyocabinet
+	@$(MAKECOOKIE)
