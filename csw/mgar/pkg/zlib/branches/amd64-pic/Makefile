@@ -43,7 +43,7 @@ BUILD64_LIBS_ONLY = 1
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 
 # # https://blogs.oracle.com/d/entry/building_shared_libraries_for_sparcv9
-EXTRA_CFLAGS_sparc = -xcode=pic32
+EXTRA_CFLAGS_sparc = -xcode=pic13
 EXTRA_CFLAGS_i386 = -Kpic
 EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))
 
