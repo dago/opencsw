@@ -1,0 +1,25 @@
+From c071545192850fba9a024d2ed9e37fe9fad76604 Mon Sep 17 00:00:00 2001
+From: builder user <builder@opencsw.org>
+Date: Mon, 19 Sep 2011 16:56:57 +0200
+Subject: [PATCH] Check for ber_pvt_opt_on instead of main in libber.
+
+---
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index e7df9ed..25b2c17 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2875,7 +2875,7 @@ mingw|mingw32)
+ *)
+        LIB_LDAP="-lldap"
+        dnl LDAP helpers need to know if -llber is needed or not
+-       AC_CHECK_LIB(lber, main, [LIB_LBER="-llber"])
++       AC_CHECK_LIB(lber, ber_pvt_opt_on, [LIB_LBER="-llber"])
+        ;;
+ esac
+ AC_SUBST(LIB_LDAP)
+-- 
+1.7.6
+
