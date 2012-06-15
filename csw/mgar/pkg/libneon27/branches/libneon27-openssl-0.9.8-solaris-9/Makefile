@@ -134,5 +134,5 @@ post-merge:
 	@# contents of the symlink
 	rm -f $(PKGROOT)$(libdir)/libneon-feature.so.27
 	ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/libneon-feature.so.27
-	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
-	ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
+	$(if $(BUILD64),rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27)
+	$(if $(BUILD64),ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27)
