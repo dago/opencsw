@@ -58,9 +58,13 @@ BUILD_DEP_PKGS  = CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
+BUILD_DEP_PKGS += CSWpostgresql-dev
 BUILD_DEP_PKGS += CSWwxwidgetsdevel
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-pgsql=$(prefix)
+CONFIGURE_ARGS += --with-libxml2=$(prefix)
+CONFIGURE_ARGS += --with-libxslt=$(prefix)
 
 EXTRA_CXXFLAGS += -norunpath
 include gar/category.mk
