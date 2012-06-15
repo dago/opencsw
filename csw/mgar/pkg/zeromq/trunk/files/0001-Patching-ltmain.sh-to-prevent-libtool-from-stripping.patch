@@ -1,0 +1,25 @@
+From e91eb6ff070cb057fd63eb9444203611bda18378 Mon Sep 17 00:00:00 2001
+From: Romeo Theriault <romeotheriault@opencsw.org>
+Date: Fri, 15 Jun 2012 05:30:02 +0200
+Subject: [PATCH] Patching ltmain.sh to prevent libtool from stripping runpath
+
+---
+ config/ltmain.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config/ltmain.sh b/config/ltmain.sh
+index b4a3231..dfc39b1 100755
+--- a/config/ltmain.sh
++++ b/config/ltmain.sh
+@@ -5840,7 +5840,7 @@ func_mode_link ()
+       # -O*, -flto*, -fwhopr*, -fuse-linker-plugin GCC link-time optimization
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+-      -O*|-flto*|-fwhopr*|-fuse-linker-plugin)
++      -O*|-flto*|-fwhopr*|-fuse-linker-plugin|-xnorunpath|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.10.3
+

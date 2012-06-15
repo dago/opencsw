@@ -18,15 +18,13 @@ endef
 MASTER_SITES = http://download.zeromq.org/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Patching-ltmain.sh-to-prevent-libtool-from-stripping.patch
+
 PACKAGES += CSWlibzmq1
 SPKG_DESC_CSWlibzmq1 = Software library for fast, message-based applications
 PKGFILES_CSWlibzmq1 += $(call pkgfiles_lib,libzmq.so.1.0.1)
 PKGFILES_CSWlibzmq1 += $(call pkgfiles_lib,libzmq.so.1)
 PKGFILES_CSWlibzmq1 += $(docdir)/.* 
-CHECKPKG_OVERRIDES_CSWlibzmq1 += bad-rpath-entry|/lib|opt/csw/lib/libzmq.so.1.0.1
-CHECKPKG_OVERRIDES_CSWlibzmq1 += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/libzmq.so.1.0.1
-CHECKPKG_OVERRIDES_CSWlibzmq1 += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/libzmq.so.1.0.1
-CHECKPKG_OVERRIDES_CSWlibzmq1 += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/libzmq.so.1.0.1
 
 
 PACKAGES += CSWlibzmq1-dev
@@ -36,6 +34,8 @@ PKGFILES_CSWlibzmq1-dev += .*\.7
 RUNTIME_DEP_PKGS_CSWlibzmq1-dev += CSWlibzmq1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+EXTRA_LINKER_FLAGS = -norunpath
 
 include gar/category.mk
 
