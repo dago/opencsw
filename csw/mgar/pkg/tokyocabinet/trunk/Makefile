@@ -74,7 +74,10 @@ CHECKPKG_OVERRIDES_CSWtokyocabinet-doc += file-with-bad-content|/usr/local|root/
 
 BUILD64 = 1
 
-EXTRA_CFLAGS	= -xc99=all -Kpic
+EXTRA_CFLAGS-sparc = -xcode=pic13
+EXTRA_CFLAGS-i386  = -Kpic
+
+EXTRA_CFLAGS	= -xc99=all $(EXTRA_CFLAGS-$(GARCH))
 EXTRA_CPPFLAGS	= -DPIC
 
 CONFIGURE_ARGS  = $(DIRPATHS)
