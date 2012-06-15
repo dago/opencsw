@@ -83,7 +83,14 @@ CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_features-$(FEATURES))
 
-BUILD64 = 1
+# Enabling 64 bit for i386 means amd64 which means building on Solaris 10 and
+# merging on Solaris 9. As Solaris 10 has openssl 1.0.0 this results in mixed
+# bindings and as there is a different libneon27 for Solaris 10 anyway we disable
+# the unused 64 bit for i368 here.
+BUILD64-i386 =
+BUILD64-sparc = 1
+
+BUILD64 = $(BUILD64-$(GARCH))
 
 # Tests fail, investigate later
 SKIPTEST ?= 1
