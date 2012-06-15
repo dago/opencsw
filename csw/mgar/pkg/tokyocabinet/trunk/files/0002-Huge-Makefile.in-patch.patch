@@ -1,0 +1,1019 @@
+From 86ca8332047e917abb94a4a67080d85454656d38 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Fri, 15 Jun 2012 20:27:25 +0200
+Subject: [PATCH] Huge Makefile.in patch
+
+This patch does several things: It
+
+ * makes the Makefile aware of $(MAKE)
+ * fixes LD_RUN_PATH
+ * makes tests to be performed locally in /var/tmp
+---
+ Makefile.in |  895 ++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 448 insertions(+), 447 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 8846c38..9bee6f2 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -54,8 +54,8 @@ CFLAGS = @MYCFLAGS@
+ LDFLAGS = @MYLDFLAGS@
+ CMDLDFLAGS = @MYCMDLDFLAGS@
+ LIBS = @LIBS@
+-LDENV = LD_RUN_PATH=/lib:/usr/lib:$(LIBDIR):$(HOME)/lib:/usr/local/lib:@MYRUNPATH@:.
+-RUNENV = @MYLDLIBPATHENV@=.:/lib:/usr/lib:$(LIBDIR):$(HOME)/lib:/usr/local/lib:@MYRUNPATH@
++LDENV = LD_RUN_PATH=/lib:/usr/lib:$(LIBDIR):@MYRUNPATH@:.
++RUNENV = @MYLDLIBPATHENV@=$(WORKDIR):.:/lib:/usr/lib:$(LIBDIR):@MYRUNPATH@
+ POSTCMD = @MYPOSTCMD@
+ 
+ 
+@@ -112,11 +112,12 @@ install :
+ 	mkdir -p $(DESTDIR)$(INCLUDEDIR)
+ 	cp -Rf $(HEADERFILES) $(DESTDIR)$(INCLUDEDIR)
+ 	mkdir -p $(DESTDIR)$(LIBDIR)
+-	cp -Rf $(LIBRARYFILES) $(DESTDIR)$(LIBDIR)
++	cp -RPf $(LIBRARYFILES) $(DESTDIR)$(LIBDIR)
+ 	mkdir -p $(DESTDIR)$(BINDIR)
+ 	cp -Rf $(COMMANDFILES) $(DESTDIR)$(BINDIR)
+-	mkdir -p $(DESTDIR)$(LIBEXECDIR)
+-	cp -Rf $(CGIFILES) $(DESTDIR)$(LIBEXECDIR)
++# We don't want this
++#	mkdir -p $(DESTDIR)$(LIBEXECDIR)
++#	cp -Rf $(CGIFILES) $(DESTDIR)$(LIBEXECDIR)
+ 	mkdir -p $(DESTDIR)$(DATADIR)
+ 	cp -Rf $(DOCUMENTFILES) $(DESTDIR)$(DATADIR)
+ 	mkdir -p $(DESTDIR)$(MAN1DIR)
+@@ -133,7 +134,7 @@ install :
+ 
+ 
+ install-strip :
+-	make DESTDIR=$(DESTDIR) install
++	$(MAKE) DESTDIR=$(DESTDIR) install
+ 	cd $(DESTDIR)$(BINDIR) && strip $(COMMANDFILES)
+ 
+ 
+@@ -150,27 +151,27 @@ uninstall :
+ 
+ 
+ dist :
+-	make version
+-	make untabify
+-	make distclean
++	$(MAKE) version
++	$(MAKE) untabify
++	$(MAKE) distclean
+ 	cd .. && tar cvf - $(PACKAGEDIR) | gzip -c > $(PACKAGETGZ)
+ 	sync ; sync
+ 
+ 
+ distclean : clean
+-	cd example && make clean
+-	cd bros && make clean
++	cd example && $(MAKE) clean
++	cd bros && $(MAKE) clean
+ 	rm -rf Makefile tokyocabinet.pc config.cache config.log config.status autom4te.cache
+ 
+ 
+ check :
+-	make check-util
+-	make check-hdb
+-	make check-bdb
+-	make check-fdb
+-	make check-tdb
+-	make check-adb
+-	rm -rf casket*
++	$(MAKE) check-util
++	$(MAKE) check-hdb
++	$(MAKE) check-bdb
++	$(MAKE) check-fdb
++	$(MAKE) check-tdb
++	$(MAKE) check-adb
++	cd /var/tmp ; rm -rf casket*
+ 	@printf '\n'
+ 	@printf '#================================================================\n'
+ 	@printf '# Checking completed.\n'
+@@ -178,492 +179,492 @@ check :
+ 
+ 
+ check-util :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tcamgr version
+-	$(RUNENV) $(RUNCMD) ./tcutest xstr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest list -rd 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest map -rd -tr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest map -rd -tr -rnd -dc 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest tree -rd -tr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest tree -rd -tr -rnd -dc 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest mdb -rd -tr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest mdb -rd -tr -rnd -dc 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest mdb -rd -tr -rnd -dpr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest ndb -rd -tr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest ndb -rd -tr -rnd -dc 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest ndb -rd -tr -rnd -dpr 50000
+-	$(RUNENV) $(RUNCMD) ./tcutest misc 500
+-	$(RUNENV) $(RUNCMD) ./tcutest wicked 50000
+-	$(RUNENV) $(RUNCMD) ./tcumttest combo 5 50000 500
+-	$(RUNENV) $(RUNCMD) ./tcumttest combo -rnd 5 50000 500
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical -rr 1000 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical -nc 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tcumttest combo -tr 5 50000 500
+-	$(RUNENV) $(RUNCMD) ./tcumttest combo -tr -rnd 5 50000 500
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical -tr 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical -tr -rr 1000 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical -tr -nc 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tcucodec url Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec url -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec base Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec base -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec quote Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec quote -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec mime Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec mime -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec pack -bwt Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec pack -d -bwt check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec tcbs Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec tcbs -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec zlib Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec zlib -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec xml Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec xml -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec cstr Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec cstr -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec ucs Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec ucs -d check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec date -ds '1978-02-11T18:05:30+09:00' -rf > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec cipher -key "mikio" Makefile > check.in
+-	$(RUNENV) $(RUNCMD) ./tcucodec cipher -key "mikio" check.in > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec tmpl -var name mikio -var nick micky \
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr version
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest xstr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest list -rd 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest map -rd -tr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest map -rd -tr -rnd -dc 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest tree -rd -tr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest tree -rd -tr -rnd -dc 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest mdb -rd -tr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest mdb -rd -tr -rnd -dc 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest mdb -rd -tr -rnd -dpr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest ndb -rd -tr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest ndb -rd -tr -rnd -dc 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest ndb -rd -tr -rnd -dpr 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest misc 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcutest wicked 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest combo 5 50000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest combo -rnd 5 50000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical -rr 1000 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical -nc 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest combo -tr 5 50000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest combo -tr -rnd 5 50000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical -tr 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical -tr -rr 1000 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical -tr -nc 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec url $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec url -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec base $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec base -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec quote $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec quote -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec mime $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec mime -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec pack -bwt $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec pack -d -bwt check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec tcbs $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec tcbs -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec zlib $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec zlib -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec xml $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec xml -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec cstr $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec cstr -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec ucs $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec ucs -d check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec date -ds '1978-02-11T18:05:30+09:00' -rf > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec cipher -key "mikio" $(WORKDIR)/Makefile > check.in
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec cipher -key "mikio" check.in > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec tmpl -var name mikio -var nick micky \
+ 	  '@name=[%name%][%IF nick%] nick=[%nick%][%END%][%IF hoge%][%ELSE%].[%END%]' > check.out
+-	$(RUNENV) $(RUNCMD) ./tcucodec conf > check.out
+-	rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcucodec conf > check.out
++	cd /var/tmp ; rm -rf casket*
+ 
+ 
+ check-hdb :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tchtest write casket 50000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tchtest read casket
+-	$(RUNENV) $(RUNCMD) ./tchtest remove casket
+-	$(RUNENV) $(RUNCMD) ./tchtest write -mt -tl -td -rc 50 -xm 500000 casket 50000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tchtest read -mt -nb -rc 50 -xm 500000 casket
+-	$(RUNENV) $(RUNCMD) ./tchtest remove -mt -rc 50 -xm 500000 casket
+-	$(RUNENV) $(RUNCMD) ./tchtest write -as -tb -rc 50 -xm 500000 casket 50000 50000 5 5
+-	$(RUNENV) $(RUNCMD) ./tchtest read -nl -rc 50 -xm 500000 casket
+-	$(RUNENV) $(RUNCMD) ./tchtest remove -rc 50 -xm 500000 -df 5 casket
+-	$(RUNENV) $(RUNCMD) ./tchtest rcat -pn 500 -xm 50000 -df 5 casket 50000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tchtest rcat -tl -td -pn 5000 casket 50000 500 5 15
+-	$(RUNENV) $(RUNCMD) ./tchtest rcat -nl -pn 500 -rl casket 5000 500 5 5
+-	$(RUNENV) $(RUNCMD) ./tchtest rcat -tb -pn 500 casket 5000 500 5 5
+-	$(RUNENV) $(RUNCMD) ./tchtest rcat -ru -pn 500 casket 5000 500 1 1
+-	$(RUNENV) $(RUNCMD) ./tchtest rcat -tl -td -ru -pn 500 casket 5000 500 1 1
+-	$(RUNENV) $(RUNCMD) ./tchmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr list -pv -fm 1 -px casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tchtest misc casket 5000
+-	$(RUNENV) $(RUNCMD) ./tchtest misc -tl -td casket 5000
+-	$(RUNENV) $(RUNCMD) ./tchtest misc -mt -tb casket 500
+-	$(RUNENV) $(RUNCMD) ./tchtest wicked casket 50000
+-	$(RUNENV) $(RUNCMD) ./tchtest wicked -tl -td casket 50000
+-	$(RUNENV) $(RUNCMD) ./tchtest wicked -mt -tb casket 5000
+-	$(RUNENV) $(RUNCMD) ./tchtest wicked -tt casket 5000
+-	$(RUNENV) $(RUNCMD) ./tchtest wicked -tx casket 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest write -xm 500000 -df 5 -tl casket 5 5000 500 5
+-	$(RUNENV) $(RUNCMD) ./tchmttest read -xm 500000 -df 5 casket 5
+-	$(RUNENV) $(RUNCMD) ./tchmttest read -xm 500000 -rnd casket 5
+-	$(RUNENV) $(RUNCMD) ./tchmttest remove -xm 500000 casket 5
+-	$(RUNENV) $(RUNCMD) ./tchmttest wicked -nc casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest wicked -tl -td casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest wicked -tb casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical -df 5 casket 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical -rr 1000 casket 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical -tl -rc 50000 -nc casket 5 50000 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest race -df 5 casket 5 10000
+-	$(RUNENV) $(RUNCMD) ./tchmgr create casket 3 1 1
+-	$(RUNENV) $(RUNCMD) ./tchmgr inform casket
+-	$(RUNENV) $(RUNCMD) ./tchmgr put casket one first
+-	$(RUNENV) $(RUNCMD) ./tchmgr put casket two second
+-	$(RUNENV) $(RUNCMD) ./tchmgr put -dk casket three third
+-	$(RUNENV) $(RUNCMD) ./tchmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tchmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tchmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tchmgr put casket four fourth
+-	$(RUNENV) $(RUNCMD) ./tchmgr put -dk casket five fifth
+-	$(RUNENV) $(RUNCMD) ./tchmgr out casket one
+-	$(RUNENV) $(RUNCMD) ./tchmgr out casket two
+-	$(RUNENV) $(RUNCMD) ./tchmgr get casket three > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr get casket four > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr get casket five > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr optimize casket
+-	$(RUNENV) $(RUNCMD) ./tchmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tchmgr get casket three > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr get casket four > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr get casket five > check.out
+-	$(RUNENV) $(RUNCMD) ./tchmgr list -pv casket > check.out
+-	rm -rf casket*
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest write casket 50000 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest read casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest remove casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest write -mt -tl -td -rc 50 -xm 500000 casket 50000 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest read -mt -nb -rc 50 -xm 500000 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest remove -mt -rc 50 -xm 500000 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest write -as -tb -rc 50 -xm 500000 casket 50000 50000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest read -nl -rc 50 -xm 500000 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest remove -rc 50 -xm 500000 -df 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest rcat -pn 500 -xm 50000 -df 5 casket 50000 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest rcat -tl -td -pn 5000 casket 50000 500 5 15
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest rcat -nl -pn 500 -rl casket 5000 500 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest rcat -tb -pn 500 casket 5000 500 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest rcat -ru -pn 500 casket 5000 500 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest rcat -tl -td -ru -pn 500 casket 5000 500 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr list -pv -fm 1 -px casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest misc casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest misc -tl -td casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest misc -mt -tb casket 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest wicked casket 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest wicked -tl -td casket 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest wicked -mt -tb casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest wicked -tt casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchtest wicked -tx casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest write -xm 500000 -df 5 -tl casket 5 5000 500 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest read -xm 500000 -df 5 casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest read -xm 500000 -rnd casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest remove -xm 500000 casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest wicked -nc casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest wicked -tl -td casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest wicked -tb casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical -df 5 casket 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical -rr 1000 casket 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical -tl -rc 50000 -nc casket 5 50000 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest race -df 5 casket 5 10000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr create casket 3 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr inform casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put casket one first
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put casket two second
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put -dk casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put casket four fourth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put -dk casket five fifth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr out casket one
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr out casket two
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr get casket three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr get casket four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr get casket five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr optimize casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr get casket three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr get casket four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr get casket five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmgr list -pv casket > check.out
++	cd /var/tmp ; rm -rf casket*
+ 
+ 
+ check-bdb :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tcbtest write casket 50000 5 5 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest read casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest remove casket
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -rb 00001000 00002000 casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -fm 000001 casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbtest write -mt -tl -td -ls 1024 casket 50000 5000 5000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest read -mt -nb casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest remove -mt casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest write -tb -xm 50000 casket 50000 5 5 50000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest read -nl casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest remove -df 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest rcat -lc 5 -nc 5 -df 5 -pn 500 casket 50000 5 5 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest rcat -tl -td -pn 5000 casket 50000 5 5 500 5 15
+-	$(RUNENV) $(RUNCMD) ./tcbtest rcat -nl -pn 5000 -rl casket 15000 5 5 500 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest rcat -ca 1000 -tb -pn 5000 casket 15000 5 5 500 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest rcat -ru -pn 500 casket 5000 5 5 500 1 1
+-	$(RUNENV) $(RUNCMD) ./tcbtest rcat -cd -tl -td -ru -pn 500 casket 5000 5 5 500 1 1
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbtest queue casket 15000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest misc casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcbtest misc -tl -td casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcbtest misc -mt -tb casket 500
+-	$(RUNENV) $(RUNCMD) ./tcbtest wicked casket 50000
+-	$(RUNENV) $(RUNCMD) ./tcbtest wicked -tl -td casket 50000
+-	$(RUNENV) $(RUNCMD) ./tcbtest wicked -mt -tb casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcbtest wicked -tt casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcbtest wicked -tx casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcbtest write -cd -lc 5 -nc 5 casket 5000 5 5 5 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest read -cd -lc 5 -nc 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest remove -cd -lc 5 -nc 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbtest write -ci -td -lc 5 -nc 5 casket 5000 5 5 5 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest read -ci -lc 5 -nc 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest remove -ci -lc 5 -nc 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbtest write -cj -tb -lc 5 -nc 5 casket 5000 5 5 5 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbtest read -cj -lc 5 -nc 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbtest remove -cj -lc 5 -nc 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmttest write -df 5 -tl casket 5 5000 5 5 500 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest read -df 5 casket 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest read -rnd casket 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest remove casket 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest wicked -nc casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcbmttest wicked -tl -td casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tchmttest wicked -tb casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical -df 5 casket 5 50000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical -rr 1000 casket 5 50000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical -tl -nc casket 5 50000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest race -df 5 casket 5 10000
+-	$(RUNENV) $(RUNCMD) ./tcbmgr create casket 4 4 3 1 1
+-	$(RUNENV) $(RUNCMD) ./tcbmgr inform casket
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put casket one first
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put casket two second
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dk casket three third
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dd casket three third
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dd casket three third
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put casket four fourth
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dk casket five fifth
+-	$(RUNENV) $(RUNCMD) ./tcbmgr out casket one
+-	$(RUNENV) $(RUNCMD) ./tcbmgr out casket two
+-	$(RUNENV) $(RUNCMD) ./tcbmgr get casket three > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr get casket four > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr get casket five > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -j three -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr optimize casket
+-	$(RUNENV) $(RUNCMD) ./tcbmgr put -dc casket three third
+-	$(RUNENV) $(RUNCMD) ./tcbmgr get casket three > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr get casket four > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr get casket five > check.out
+-	$(RUNENV) $(RUNCMD) ./tcbmgr list -pv casket > check.out
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest write casket 50000 5 5 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest read casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest remove casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -rb 00001000 00002000 casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -fm 000001 casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest write -mt -tl -td -ls 1024 casket 50000 5000 5000 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest read -mt -nb casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest remove -mt casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest write -tb -xm 50000 casket 50000 5 5 50000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest read -nl casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest remove -df 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest rcat -lc 5 -nc 5 -df 5 -pn 500 casket 50000 5 5 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest rcat -tl -td -pn 5000 casket 50000 5 5 500 5 15
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest rcat -nl -pn 5000 -rl casket 15000 5 5 500 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest rcat -ca 1000 -tb -pn 5000 casket 15000 5 5 500 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest rcat -ru -pn 500 casket 5000 5 5 500 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest rcat -cd -tl -td -ru -pn 500 casket 5000 5 5 500 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest queue casket 15000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest misc casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest misc -tl -td casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest misc -mt -tb casket 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest wicked casket 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest wicked -tl -td casket 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest wicked -mt -tb casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest wicked -tt casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest wicked -tx casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest write -cd -lc 5 -nc 5 casket 5000 5 5 5 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest read -cd -lc 5 -nc 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest remove -cd -lc 5 -nc 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest write -ci -td -lc 5 -nc 5 casket 5000 5 5 5 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest read -ci -lc 5 -nc 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest remove -ci -lc 5 -nc 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest write -cj -tb -lc 5 -nc 5 casket 5000 5 5 5 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest read -cj -lc 5 -nc 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbtest remove -cj -lc 5 -nc 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest write -df 5 -tl casket 5 5000 5 5 500 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest read -df 5 casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest read -rnd casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest remove casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest wicked -nc casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest wicked -tl -td casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest wicked -tb casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical -df 5 casket 5 50000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical -rr 1000 casket 5 50000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical -tl -nc casket 5 50000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest race -df 5 casket 5 10000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr create casket 4 4 3 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr inform casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put casket one first
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put casket two second
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dk casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dd casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dd casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put casket four fourth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dk casket five fifth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr out casket one
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr out casket two
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr get casket three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr get casket four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr get casket five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -j three -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr optimize casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr put -dc casket three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr get casket three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr get casket four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr get casket five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmgr list -pv casket > check.out
+ 
+ 
+ check-fdb :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tcftest write casket 50000 50
+-	$(RUNENV) $(RUNCMD) ./tcftest read casket
+-	$(RUNENV) $(RUNCMD) ./tcftest remove casket
+-	$(RUNENV) $(RUNCMD) ./tcftest write casket 50000 50
+-	$(RUNENV) $(RUNCMD) ./tcftest read -mt -nb casket
+-	$(RUNENV) $(RUNCMD) ./tcftest remove -mt casket
+-	$(RUNENV) $(RUNCMD) ./tcftest rcat -pn 500 casket 50000 50
+-	$(RUNENV) $(RUNCMD) ./tcftest rcat -nl -pn 500 -rl casket 5000 500
+-	$(RUNENV) $(RUNCMD) ./tcftest rcat -pn 500 -ru casket 5000 500
+-	$(RUNENV) $(RUNCMD) ./tcfmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr list -pv -ri "[100,200)" -px casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcftest misc casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcftest misc -mt -nl casket 500
+-	$(RUNENV) $(RUNCMD) ./tcftest wicked casket 50000
+-	$(RUNENV) $(RUNCMD) ./tcftest wicked -mt -nb casket 50000
+-	$(RUNENV) $(RUNCMD) ./tcfmttest write casket 5 5000 50
+-	$(RUNENV) $(RUNCMD) ./tcfmttest read casket 5
+-	$(RUNENV) $(RUNCMD) ./tcfmttest read -rnd casket 5
+-	$(RUNENV) $(RUNCMD) ./tcfmttest remove casket 5
+-	$(RUNENV) $(RUNCMD) ./tcfmttest wicked -nc casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcfmttest wicked casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical casket 5 50000 50
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical -rr 1000 casket 5 50000 50
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical -nc casket 5 50000 50
+-	$(RUNENV) $(RUNCMD) ./tcfmgr create casket 50
+-	$(RUNENV) $(RUNCMD) ./tcfmgr inform casket
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put casket 1 first
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put casket 2 second
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put -dk casket 3 third
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put -dc casket 3 third
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put -dc casket 3 third
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put -dc casket 3 third
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put casket 4 fourth
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put -dk casket 5 fifth
+-	$(RUNENV) $(RUNCMD) ./tcfmgr out casket 1
+-	$(RUNENV) $(RUNCMD) ./tcfmgr out casket 2
+-	$(RUNENV) $(RUNCMD) ./tcfmgr get casket 3 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr get casket 4 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr get casket 5 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr optimize casket 5
+-	$(RUNENV) $(RUNCMD) ./tcfmgr put -dc casket 3 third
+-	$(RUNENV) $(RUNCMD) ./tcfmgr get casket 3 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr get casket 4 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr get casket 5 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcfmgr list -pv casket > check.out
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest write casket 50000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest read casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest remove casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest write casket 50000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest read -mt -nb casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest remove -mt casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest rcat -pn 500 casket 50000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest rcat -nl -pn 500 -rl casket 5000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest rcat -pn 500 -ru casket 5000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr list -pv -ri "[100,200)" -px casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest misc casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest misc -mt -nl casket 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest wicked casket 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcftest wicked -mt -nb casket 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest write casket 5 5000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest read casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest read -rnd casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest remove casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest wicked -nc casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest wicked casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical casket 5 50000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical -rr 1000 casket 5 50000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical -nc casket 5 50000 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr create casket 50
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr inform casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put casket 1 first
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put casket 2 second
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put -dk casket 3 third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put -dc casket 3 third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put -dc casket 3 third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put -dc casket 3 third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put casket 4 fourth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put -dk casket 5 fifth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr out casket 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr out casket 2
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr get casket 3 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr get casket 4 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr get casket 5 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr optimize casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr put -dc casket 3 third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr get casket 3 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr get casket 4 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr get casket 5 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmgr list -pv casket > check.out
+ 
+ 
+ check-tdb :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tcttest write casket 50000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcttest read casket
+-	$(RUNENV) $(RUNCMD) ./tcttest remove casket
+-	$(RUNENV) $(RUNCMD) ./tcttest write -mt -tl -td -rc 50 -lc 5 -nc 5 -xm 500000 \
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest write casket 50000 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest read casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest remove casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest write -mt -tl -td -rc 50 -lc 5 -nc 5 -xm 500000 \
+ 	  -is -in -it -if -ix casket 5000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcttest read -mt -nb -rc 50 -lc 5 -nc 5 -xm 500000 casket
+-	$(RUNENV) $(RUNCMD) ./tcttest remove -mt -rc 50 -lc 5 -nc 5 -xm 500000 -df 5 casket
+-	$(RUNENV) $(RUNCMD) ./tcttest rcat -pn 500 -xm 50000 -df 5 -is casket 5000 5000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcttest rcat -tl -td -pn 5000 -is -in casket 5000 500 5 15
+-	$(RUNENV) $(RUNCMD) ./tcttest rcat -nl -pn 500 -rl -is -in casket 5000 500 5 5
+-	$(RUNENV) $(RUNCMD) ./tcttest rcat -tb -pn 500 -is -in casket 5000 500 5 5
+-	$(RUNENV) $(RUNCMD) ./tcttest rcat -ru -pn 500 -is -in casket 5000 500 1 1
+-	$(RUNENV) $(RUNCMD) ./tcttest rcat -tl -td -ru -pn 500 -is -in casket 5000 500 1 1
+-	$(RUNENV) $(RUNCMD) ./tctmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr list -pv -px casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tcttest misc casket 500
+-	$(RUNENV) $(RUNCMD) ./tcttest misc -tl -td casket 500
+-	$(RUNENV) $(RUNCMD) ./tcttest misc -mt -tb casket 500
+-	$(RUNENV) $(RUNCMD) ./tcttest wicked casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcttest wicked -tl -td casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcttest wicked -mt -tb casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcttest wicked -tt casket 5000
+-	$(RUNENV) $(RUNCMD) ./tcttest wicked -tx casket 5000
+-	$(RUNENV) $(RUNCMD) ./tctmttest write -xm 500000 -df 5 -tl -is -in casket 5 5000 500 5
+-	$(RUNENV) $(RUNCMD) ./tctmttest read -xm 500000 -df 5 casket 5
+-	$(RUNENV) $(RUNCMD) ./tctmttest read -xm 500000 -rnd casket 5
+-	$(RUNENV) $(RUNCMD) ./tctmttest remove -xm 500000 casket 5
+-	$(RUNENV) $(RUNCMD) ./tctmttest wicked casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tctmttest wicked -tl -td casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tctmttest typical -df 5 casket 5 5000 500
+-	$(RUNENV) $(RUNCMD) ./tctmttest typical -rr 1000 casket 5 5000 500
+-	$(RUNENV) $(RUNCMD) ./tctmttest typical -tl -rc 50000 -lc 5 -nc 5 casket 5 5000 500
+-	$(RUNENV) $(RUNCMD) ./tctmgr create casket 3 1 1
+-	$(RUNENV) $(RUNCMD) ./tctmgr setindex casket name
+-	$(RUNENV) $(RUNCMD) ./tctmgr inform casket
+-	$(RUNENV) $(RUNCMD) ./tctmgr put casket "" name mikio birth 19780211 lang ja,en,c
+-	$(RUNENV) $(RUNCMD) ./tctmgr put casket "" name fal birth 19771007 lang ja
+-	$(RUNENV) $(RUNCMD) ./tctmgr put casket "" name banana price 100
+-	$(RUNENV) $(RUNCMD) ./tctmgr put -dc casket 3 color yellow
+-	$(RUNENV) $(RUNCMD) ./tctmgr put -dk casket "" name melon price 1200 color green
+-	$(RUNENV) $(RUNCMD) ./tctmgr put casket "" name void birth 20010101 lang en
+-	$(RUNENV) $(RUNCMD) ./tctmgr out casket 5
+-	$(RUNENV) $(RUNCMD) ./tctmgr get casket 1 > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr get casket 2 > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr get casket 3 > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -m 10 -sk 1 -pv -ph casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -m 10 -ord name STRDESC -pv -ph casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -m 10 -ord name STRDESC -pv -ph casket \
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest read -mt -nb -rc 50 -lc 5 -nc 5 -xm 500000 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest remove -mt -rc 50 -lc 5 -nc 5 -xm 500000 -df 5 casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest rcat -pn 500 -xm 50000 -df 5 -is casket 5000 5000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest rcat -tl -td -pn 5000 -is -in casket 5000 500 5 15
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest rcat -nl -pn 500 -rl -is -in casket 5000 500 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest rcat -tb -pn 500 -is -in casket 5000 500 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest rcat -ru -pn 500 -is -in casket 5000 500 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest rcat -tl -td -ru -pn 500 -is -in casket 5000 500 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr list -pv -px casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest misc casket 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest misc -tl -td casket 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest misc -mt -tb casket 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest wicked casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest wicked -tl -td casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest wicked -mt -tb casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest wicked -tt casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcttest wicked -tx casket 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest write -xm 500000 -df 5 -tl -is -in casket 5 5000 500 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest read -xm 500000 -df 5 casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest read -xm 500000 -rnd casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest remove -xm 500000 casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest wicked casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest wicked -tl -td casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest typical -df 5 casket 5 5000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest typical -rr 1000 casket 5 5000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmttest typical -tl -rc 50000 -lc 5 -nc 5 casket 5 5000 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr create casket 3 1 1
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr setindex casket name
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr inform casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put casket "" name mikio birth 19780211 lang ja,en,c
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put casket "" name fal birth 19771007 lang ja
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put casket "" name banana price 100
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put -dc casket 3 color yellow
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put -dk casket "" name melon price 1200 color green
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put casket "" name void birth 20010101 lang en
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr out casket 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr get casket 1 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr get casket 2 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr get casket 3 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -m 10 -sk 1 -pv -ph casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -m 10 -ord name STRDESC -pv -ph casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -m 10 -ord name STRDESC -pv -ph casket \
+ 	  name STRBW mi birth NUMBT 19700101,19791231 lang STRAND ja,en > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -ord birth NUMDESC -pv -ms UNION casket \
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -ord birth NUMDESC -pv -ms UNION casket \
+ 	  name STREQ mikio name STRINC fal name FTSEX "ba na na"
+-	$(RUNENV) $(RUNCMD) ./tctmgr setindex casket name
+-	$(RUNENV) $(RUNCMD) ./tctmgr setindex -it dec casket birth
+-	$(RUNENV) $(RUNCMD) ./tctmgr setindex casket lang
+-	$(RUNENV) $(RUNCMD) ./tctmgr list -pv casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr optimize casket
+-	$(RUNENV) $(RUNCMD) ./tctmgr put casket "" name tokyo country japan lang ja
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -m 10 -sk 1 -pv -ph casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -m 10 -ord name STRDESC -pv -ph casket > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -m 10 -ord name STRDESC -pv -ph casket \
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr setindex casket name
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr setindex -it dec casket birth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr setindex casket lang
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr optimize casket
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr put casket "" name tokyo country japan lang ja
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -m 10 -sk 1 -pv -ph casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -m 10 -ord name STRDESC -pv -ph casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -m 10 -ord name STRDESC -pv -ph casket \
+ 	  name STRBW mi birth NUMBT 19700101,19791231 lang STRAND ja,en > check.out
+-	$(RUNENV) $(RUNCMD) ./tctmgr search -ord price NUMDESC -ph -rm casket name STRINC a
+-	$(RUNENV) $(RUNCMD) ./tctmgr list -pv casket > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr search -ord price NUMDESC -ph -rm casket name STRINC a
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tctmgr list -pv casket > check.out
+ 
+ 
+ check-adb :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tcatest write 'casket.tch#mode=wct#bnum=5000' 50000
+-	$(RUNENV) $(RUNCMD) ./tcatest read 'casket.tch#mode=r'
+-	$(RUNENV) $(RUNCMD) ./tcatest remove 'casket.tch#mode=w'
+-	$(RUNENV) $(RUNCMD) ./tcatest misc 'casket.tch#mode=wct#bnum=500#opts=ld' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest wicked 'casket.tch#mode=wct' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest write '@casket.tcb#mode=wct#lmemb=5#nmemb=5' 50000
+-	$(RUNENV) $(RUNCMD) ./tcatest read '@casket.tcb#mode=r'
+-	$(RUNENV) $(RUNCMD) ./tcatest remove '@casket.tcb#mode=w'
+-	$(RUNENV) $(RUNCMD) ./tcatest misc '@casket.tcb#mode=wct#lmemb=5#nmemb=5#opts=ld' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest wicked '@casket.tcb#mode=wct' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest write 'casket.tcf#mode=wct#width=10' 50000
+-	$(RUNENV) $(RUNCMD) ./tcatest read 'casket.tcf#mode=r'
+-	$(RUNENV) $(RUNCMD) ./tcatest remove 'casket.tcf#mode=w'
+-	$(RUNENV) $(RUNCMD) ./tcatest write '*#bnum=5000#cap=100' 50000
+-	$(RUNENV) $(RUNCMD) ./tcatest misc '*' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest wicked '*' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest write '%casket-mul.tch#mode=wct#bnum=500' 50000
+-	$(RUNENV) $(RUNCMD) ./tcatest read '%casket-mul.tch#mode=r'
+-	$(RUNENV) $(RUNCMD) ./tcatest remove '%casket-mul.tch#mode=w'
+-	$(RUNENV) $(RUNCMD) ./tcatest misc '%casket-mul.tch#mode=wct#bnum=500#opts=ld' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest wicked '%casket-mul.tch#mode=wct' 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest compare casket 50 500
+-	$(RUNENV) $(RUNCMD) ./tcatest compare casket 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcamttest write 'casket.tch#mode=wct#bnum=5000' 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcamttest read 'casket.tch#mode=r' 5
+-	$(RUNENV) $(RUNCMD) ./tcamttest remove 'casket.tch#mode=w' 5
+-	$(RUNENV) $(RUNCMD) ./tcamttest write '%casket-mul.tcb#mode=wct#bnum=5000' 5 5000
+-	$(RUNENV) $(RUNCMD) ./tcamttest read '%casket-mul.tcb#mode=r' 5
+-	$(RUNENV) $(RUNCMD) ./tcamttest remove '%casket-mul.tcb#mode=w' 5
+-	$(RUNENV) $(RUNCMD) ./tcamgr create 'casket.tch#mode=wct#bnum=3'
+-	$(RUNENV) $(RUNCMD) ./tcamgr inform 'casket.tch'
+-	$(RUNENV) $(RUNCMD) ./tcamgr put casket.tch one first
+-	$(RUNENV) $(RUNCMD) ./tcamgr put casket.tch two second
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dk casket.tch three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc casket.tch three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc casket.tch three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc casket.tch three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put casket.tch four fourth
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dk casket.tch five fifth
+-	$(RUNENV) $(RUNCMD) ./tcamgr out casket.tch one
+-	$(RUNENV) $(RUNCMD) ./tcamgr out casket.tch two
+-	$(RUNENV) $(RUNCMD) ./tcamgr get casket.tch three > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get casket.tch four > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get casket.tch five > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr list -pv -fm f casket.tch > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr optimize casket.tch
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc casket.tch three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr get casket.tch three > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get casket.tch four > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get casket.tch five > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc casket.tch putlist six sixth seven seventh
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc casket.tch outlist six
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc casket.tch getlist three four five six > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr list -pv casket.tch > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr create 'casket.tct#mode=wct#idx=name:lex#idx=age:dec'
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -sep '|' casket.tct 1 "name|mikio|age|30"
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -sep '|' casket.tct 2 "name|fal|age|31"
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -sep '|' casket.tct 3 "name|lupin|age|29"
+-	$(RUNENV) $(RUNCMD) ./tcamgr get -sep '\t' casket.tct 1 > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr list -sep '\t' -pv casket.tct > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc -sep '|' casket.tct search \
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest write 'casket.tch#mode=wct#bnum=5000' 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest read 'casket.tch#mode=r'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest remove 'casket.tch#mode=w'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest misc 'casket.tch#mode=wct#bnum=500#opts=ld' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest wicked 'casket.tch#mode=wct' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest write '@casket.tcb#mode=wct#lmemb=5#nmemb=5' 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest read '@casket.tcb#mode=r'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest remove '@casket.tcb#mode=w'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest misc '@casket.tcb#mode=wct#lmemb=5#nmemb=5#opts=ld' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest wicked '@casket.tcb#mode=wct' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest write 'casket.tcf#mode=wct#width=10' 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest read 'casket.tcf#mode=r'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest remove 'casket.tcf#mode=w'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest write '*#bnum=5000#cap=100' 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest misc '*' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest wicked '*' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest write '%casket-mul.tch#mode=wct#bnum=500' 50000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest read '%casket-mul.tch#mode=r'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest remove '%casket-mul.tch#mode=w'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest misc '%casket-mul.tch#mode=wct#bnum=500#opts=ld' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest wicked '%casket-mul.tch#mode=wct' 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest compare casket 50 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest compare casket 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamttest write 'casket.tch#mode=wct#bnum=5000' 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamttest read 'casket.tch#mode=r' 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamttest remove 'casket.tch#mode=w' 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamttest write '%casket-mul.tcb#mode=wct#bnum=5000' 5 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamttest read '%casket-mul.tcb#mode=r' 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamttest remove '%casket-mul.tcb#mode=w' 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr create 'casket.tch#mode=wct#bnum=3'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr inform 'casket.tch'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put casket.tch one first
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put casket.tch two second
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dk casket.tch three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc casket.tch three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc casket.tch three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc casket.tch three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put casket.tch four fourth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dk casket.tch five fifth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr out casket.tch one
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr out casket.tch two
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get casket.tch three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get casket.tch four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get casket.tch five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr list -pv -fm f casket.tch > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr optimize casket.tch
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc casket.tch three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get casket.tch three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get casket.tch four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get casket.tch five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc casket.tch putlist six sixth seven seventh
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc casket.tch outlist six
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc casket.tch getlist three four five six > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr list -pv casket.tch > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr create 'casket.tct#mode=wct#idx=name:lex#idx=age:dec'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -sep '|' casket.tct 1 "name|mikio|age|30"
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -sep '|' casket.tct 2 "name|fal|age|31"
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -sep '|' casket.tct 3 "name|lupin|age|29"
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get -sep '\t' casket.tct 1 > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr list -sep '\t' -pv casket.tct > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc -sep '|' casket.tct search \
+ 	  "addcond|name|STRINC|i" "setorder|age|NUMASC" "setmax|1" "get" > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc -sep '|' casket.tct search "get" "out" > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr create '%casket-mul.tcb#mode=wct'
+-	$(RUNENV) $(RUNCMD) ./tcamgr put '%casket-mul.tcb' one first
+-	$(RUNENV) $(RUNCMD) ./tcamgr put '%casket-mul.tcb' two second
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dk '%casket-mul.tcb' three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc '%casket-mul.tcb' three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc '%casket-mul.tcb' three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc '%casket-mul.tcb' three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr put '%casket-mul.tcb' four fourth
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dk '%casket-mul.tcb' five fifth
+-	$(RUNENV) $(RUNCMD) ./tcamgr out '%casket-mul.tcb' one
+-	$(RUNENV) $(RUNCMD) ./tcamgr out '%casket-mul.tcb' two
+-	$(RUNENV) $(RUNCMD) ./tcamgr get '%casket-mul.tcb' three > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get '%casket-mul.tcb' four > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get '%casket-mul.tcb' five > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr list -pv -fm f '%casket-mul.tcb' > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr optimize '%casket-mul.tcb'
+-	$(RUNENV) $(RUNCMD) ./tcamgr put -dc '%casket-mul.tcb' three third
+-	$(RUNENV) $(RUNCMD) ./tcamgr get '%casket-mul.tcb' three > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get '%casket-mul.tcb' four > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr get '%casket-mul.tcb' five > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc '%casket-mul.tcb' '%putlist' six sixth seven seventh
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc '%casket-mul.tcb' '@outlist' six
+-	$(RUNENV) $(RUNCMD) ./tcamgr misc '%casket-mul.tcb' '@getlist' \
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc -sep '|' casket.tct search "get" "out" > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr create '%casket-mul.tcb#mode=wct'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put '%casket-mul.tcb' one first
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put '%casket-mul.tcb' two second
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dk '%casket-mul.tcb' three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc '%casket-mul.tcb' three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc '%casket-mul.tcb' three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc '%casket-mul.tcb' three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put '%casket-mul.tcb' four fourth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dk '%casket-mul.tcb' five fifth
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr out '%casket-mul.tcb' one
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr out '%casket-mul.tcb' two
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get '%casket-mul.tcb' three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get '%casket-mul.tcb' four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get '%casket-mul.tcb' five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr list -pv -fm f '%casket-mul.tcb' > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr optimize '%casket-mul.tcb'
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr put -dc '%casket-mul.tcb' three third
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get '%casket-mul.tcb' three > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get '%casket-mul.tcb' four > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr get '%casket-mul.tcb' five > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc '%casket-mul.tcb' '%putlist' six sixth seven seventh
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc '%casket-mul.tcb' '@outlist' six
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr misc '%casket-mul.tcb' '@getlist' \
+ 	  three four five six > check.out
+-	$(RUNENV) $(RUNCMD) ./tcamgr list -pv '%casket-mul.tcb' > check.out
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcamgr list -pv '%casket-mul.tcb' > check.out
+ 
+ 
+ check-valgrind :
+-	make RUNCMD="valgrind --tool=memcheck --log-file=%p.vlog" check
++	$(MAKE) RUNCMD="valgrind --tool=memcheck --log-file=%p.vlog" check
+ 	grep ERROR *.vlog | grep -v ' 0 errors' ; true
+ 	grep 'at exit' *.vlog | grep -v ' 0 bytes' ; true
+ 
+ 
+ check-large :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical casket 3 1000000 5000000 13 8
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical -nc casket 3 1000000 5000000 13 8
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical casket 3 500000 8 8 500000 16 8
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical -nc casket 3 500000 8 8 500000 16 8
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical casket 3 500000 2048 4g
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical -nc casket 3 500000 2048 4g
+-	rm -rf casket*
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical casket 3 1000000 5000000 13 8
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical -nc casket 3 1000000 5000000 13 8
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical casket 3 500000 8 8 500000 16 8
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical -nc casket 3 500000 8 8 500000 16 8
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical casket 3 500000 2048 4g
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical -nc casket 3 500000 2048 4g
++	cd /var/tmp ; rm -rf casket*
+ 
+ 
+ check-compare :
+-	$(RUNENV) $(RUNCMD) ./tcatest compare casket 5 10000
+-	$(RUNENV) $(RUNCMD) ./tcatest compare casket 10 5000
+-	$(RUNENV) $(RUNCMD) ./tcatest compare casket 50 1000
+-	$(RUNENV) $(RUNCMD) ./tcatest compare casket 100 500
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest compare casket 5 10000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest compare casket 10 5000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest compare casket 50 1000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcatest compare casket 100 500
+ 
+ 
+ check-thread :
+-	rm -rf casket*
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical 5 500000 500000
+-	$(RUNENV) $(RUNCMD) ./tcumttest typical -nc -rr 1000 5 500000 500000
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical casket 5 500000 500000
+-	$(RUNENV) $(RUNCMD) ./tchmttest typical -rc 500000 -nc -rr 1000 casket 5 500000 500000
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical casket 5 100000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcbmttest typical -nc -rr 1000 casket 5 100000 5 5
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical casket 5 500000 10
+-	$(RUNENV) $(RUNCMD) ./tcfmttest typical -nc -rr 1000 casket 5 500000 10
+-	rm -rf casket*
++	cd /var/tmp ; rm -rf casket*
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical 5 500000 500000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcumttest typical -nc -rr 1000 5 500000 500000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical casket 5 500000 500000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest typical -rc 500000 -nc -rr 1000 casket 5 500000 500000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical casket 5 100000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest typical -nc -rr 1000 casket 5 100000 5 5
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical casket 5 500000 10
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcfmttest typical -nc -rr 1000 casket 5 500000 10
++	cd /var/tmp ; rm -rf casket*
+ 
+ 
+ check-race :
+-	$(RUNENV) $(RUNCMD) ./tchmttest race casket 5 10000
+-	$(RUNENV) $(RUNCMD) ./tcbmttest race casket 5 10000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tchmttest race casket 5 10000
++	cd /var/tmp ; $(RUNENV) $(RUNCMD) $(WORKDIR)/tcbmttest race casket 5 10000
+ 
+ 
+ check-forever :
+ 	while true ; \
+ 	  do \
+-	    make check || break ; \
+-	    make check || break ; \
+-	    make check-thread || break ; \
+-	    make check-race || break ; \
+-	    make check-race || break ; \
+-	    make check-compare || break ; \
+-	    make check-compare || break ; \
++	    $(MAKE) check || break ; \
++	    $(MAKE) check || break ; \
++	    $(MAKE) check-thread || break ; \
++	    $(MAKE) check-race || break ; \
++	    $(MAKE) check-race || break ; \
++	    $(MAKE) check-compare || break ; \
++	    $(MAKE) check-compare || break ; \
+ 	  done
+ 
+ 
+ words :
+-	rm -f casket-* words.tsv
+-	cat /usr/share/dict/words | \
++	cd /var/tmp ; rm -f casket-* words.tsv
++	cd /var/tmp ; cat /usr/share/dict/words | \
+ 	  tr '\t\r' '  ' | grep -v '^ *$$' | cat -n | sort | \
+ 	  LC_ALL=C sed -e 's/^ *//' -e 's/\(^[0-9]*\)\t\(.*\)/\2\t\1/' > words.tsv
+-	./tchmgr create casket-hash -1 0 ; ./tchmgr importtsv casket-hash words.tsv
+-	./tcbmgr create casket-btree 8192 ; ./tcbmgr importtsv casket-btree words.tsv
+-	./tcbmgr create -td casket-btree-td 8192 ; ./tcbmgr importtsv casket-btree-td words.tsv
+-	./tcbmgr create -tb casket-btree-tb 8192 ; ./tcbmgr importtsv casket-btree-tb words.tsv
+-	./tcbmgr create -tt casket-btree-tt 8192 ; ./tcbmgr importtsv casket-btree-tt words.tsv
+-	./tcbmgr create -tx casket-btree-tx 8192 ; ./tcbmgr importtsv casket-btree-tx words.tsv
+-	wc -c words.tsv casket-hash casket-btree \
++	$(WORKDIR)/tchmgr create casket-hash -1 0 ; $(WORKDIR)/tchmgr importtsv casket-hash words.tsv
++	$(WORKDIR)/tcbmgr create casket-btree 8192 ; $(WORKDIR)/tcbmgr importtsv casket-btree words.tsv
++	$(WORKDIR)/tcbmgr create -td casket-btree-td 8192 ; $(WORKDIR)/tcbmgr importtsv casket-btree-td words.tsv
++	$(WORKDIR)/tcbmgr create -tb casket-btree-tb 8192 ; $(WORKDIR)/tcbmgr importtsv casket-btree-tb words.tsv
++	$(WORKDIR)/tcbmgr create -tt casket-btree-tt 8192 ; $(WORKDIR)/tcbmgr importtsv casket-btree-tt words.tsv
++	$(WORKDIR)/tcbmgr create -tx casket-btree-tx 8192 ; $(WORKDIR)/tcbmgr importtsv casket-btree-tx words.tsv
++	cd /var/tmp ; wc -c words.tsv casket-hash casket-btree \
+ 	  casket-btree-td casket-btree-tb casket-btree-tt casket-btree-tx
+ 
+ 
+ wordtable :
+-	rm -rf casket* words.tsv
+-	cat /usr/share/dict/words | \
++	cd /var/tmp ; rm -rf casket* words.tsv
++	cd /var/tmp ; cat /usr/share/dict/words | \
+ 	  tr '\t\r' '  ' | grep -v '^ *$$' | cat -n | sort | \
+ 	  LC_ALL=C sed -e 's/^ *//' -e 's/\(^[0-9]*\)\t\(.*\)/\1\tword\t\2\tnum\t\1/' \
+ 	    -e 's/$$/\txxx\tabc\tyyy\t123/' > words.tsv
+-	./tctmgr create casket
+-	./tctmgr setindex casket word
+-	./tctmgr setindex -it dec casket num
+-	./tctmgr importtsv casket words.tsv
++	$(WORKDIR)/tctmgr create casket
++	$(WORKDIR)/tctmgr setindex casket word
++	$(WORKDIR)/tctmgr setindex -it dec casket num
++	$(WORKDIR)/tctmgr importtsv casket words.tsv
+ 
+ 
+ .PHONY : all clean install check
+-- 
+1.7.10.3
+

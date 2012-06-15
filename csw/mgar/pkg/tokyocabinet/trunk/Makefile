@@ -22,15 +22,11 @@ endef
 MASTER_SITES = http://fallabs.com/tokyocabinet
 DISTFILES  = $(DISTNAME).tar.gz
 
-# Disables installation of CGI component and fixes
-# installation of libraries.
-PATCHFILES += 0001-Adjust-Makefile.in.patch
-
-# Use $(MAKE) in Makefile
-PATCHFILES += 0002-Use-make-variable.patch
-
 # Adjust man page
 PATCHFILES += 0003-adjust-man-page-for-csw.patch
+
+# This patch also goes hand in hand with TEST_ARGS further below.
+PATCHFILES += 0002-Huge-Makefile.in-patch.patch
 
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
@@ -46,7 +42,6 @@ SPKG_DESC_CSWlibtokyocabinet9 = Tokyocabinet - library
 PKGFILES_CSWlibtokyocabinet9 = $(call pkgfiles_lib,libtokyocabinet.so.9)
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
-# I have no freaking idea where this is comming from
 CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/libtokyocabinet.so.9.10.0
 CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0
 
@@ -59,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWlibtokyocabinet-dev  = CSWlibtokyocabinet9
 PACKAGES += CSWtokyocabinet-bin
 SPKG_DESC_CSWtokyocabinet-bin = Tokyocabinet - utilities
 PKGFILES_CSWtokyocabinet-bin  = .*/bin/.*
-PKGFILES_CSWtokyocabinet-bin += .*/man/man/.*
+PKGFILES_CSWtokyocabinet-bin += .*/man/man1/.*
 RUNTIME_DEP_PKGS_CSWtokyocabinet-bin  = CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWtokyocabinet-bin += CSWlibz1
 RUNTIME_DEP_PKGS_CSWtokyocabinet-bin += CSWlibtokyocabinet9
@@ -85,6 +80,8 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-bzip=$(prefix)
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-shared
+
+TEST_ARGS += WORKDIR=$(abspath $(WORKDIR)/$(NAME)-$(VERSION))
 
 include gar/category.mk
 
