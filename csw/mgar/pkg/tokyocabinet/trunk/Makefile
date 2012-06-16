@@ -57,6 +57,7 @@ RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
 CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/libtokyocabinet.so.9.10.0
 CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0
+CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libtokyocabinet.so.9.10.0
 
 PACKAGES += CSWlibtokyocabinet-dev
 SPKG_DESC_CSWlibtokyocabinet-dev = Tokyocabinet - development files
