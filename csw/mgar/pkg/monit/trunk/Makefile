@@ -21,8 +21,12 @@ PATCHFILES += 0001-Drop-some-build-flags-that-get-hard-coded-by-configu.patch
 GARCOMPILER = GNU
 BUILD64_ONLY = 1
 
+BUILD_DEP_PKGS += CSWlibssl-dev
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl-dir=$(prefix)
+
+RUNTIME_DEP_PKGS_CSWmonit += CSWlibssl1-0-0
 
 include gar/category.mk
 
