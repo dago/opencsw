@@ -1,0 +1,38 @@
+From 48b717d14411826609a81331055818ed2d77784d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 15 Jun 2012 02:40:47 +0200
+Subject: [PATCH] Force use of double data type before checking for isnan
+
+On Solaris 10 the netCDFRasterBand::CheckValidData function was
+triggering errors of the form:
+
+non-floating-point argument in call to function '__builtin_isnan'
+
+This is because math.h includes iso/math_c99.h where isnan is defined
+as __builtin_isnan when GCC v4 or greater is used.  This method
+requires a floating point data type.
+
+Fix this issue by casting all values checked by CPLIsNan in this
+function to double.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ frmts/netcdf/netcdfdataset.cpp |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/frmts/netcdf/netcdfdataset.cpp b/frmts/netcdf/netcdfdataset.cpp
+index 1634360..ebdce25 100644
+--- a/frmts/netcdf/netcdfdataset.cpp
++++ b/frmts/netcdf/netcdfdataset.cpp
+@@ -964,7 +964,7 @@ void  netCDFRasterBand::CheckValidData ( void * pImage, int bCheckIsNan )
+             /* check for nodata and nan */
+             if ( CPLIsEqual( (double) ((T *)pImage)[i], dfNoDataValue ) )
+                 continue;
+-            if( bCheckIsNan && CPLIsNan( ( (T *) pImage)[i] ) ) {
++            if( bCheckIsNan && CPLIsNan( (double)(( (T *) pImage))[i] ) ) {
+                 ( (T *)pImage )[i] = (T)dfNoDataValue;
+                 continue;
+             }
+-- 
+1.7.10.3
+
