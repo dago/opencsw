@@ -1,6 +1,6 @@
 # $Id$
 NAME = gdal
-VERSION = 1.8.0
+VERSION = 1.9.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -13,7 +13,9 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
-PATCHFILES += 0001-Force-the-use-of-CSWbash.patch
+PATCHFILES += 0001-Force-use-of-double-data-type-before-checking-for-is.patch
+PATCHFILES += 0002-apply-patch-from-upstream-to-handle-building-with-a-.patch
+#PATCHFILES += 0001-Force-the-use-of-CSWbash.patch
 
 PACKAGES += CSWgdal 
 CATALOGNAME_CSWgdal = gdal
