@@ -10,8 +10,8 @@
 # cf-serverd.
 
 # Options passed to cf-serverd
-CFSERVERD_OPTS="-D opencsw"
+CFSERVERD_OPTS="-Dopencsw"
 # Options passed to cf-execd
-CFEXECD_OPTS="-D opencsw"
+CFEXECD_OPTS="-Dopencsw"
 # Options passed to cf-monitord
 CFMONITORD_OPTS=""
