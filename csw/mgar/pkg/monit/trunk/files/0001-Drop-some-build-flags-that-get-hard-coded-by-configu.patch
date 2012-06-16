@@ -1,0 +1,82 @@
+From 66286914b5363a48bb4984f02748a7ce2a58c160 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 16 Jun 2012 04:03:55 +0200
+Subject: [PATCH] Drop some build flags that get hard coded by configure
+
+We set sane build flags, so don't rely on the hard coded stuff that
+gets in the way.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure          |   20 ++++++++++----------
+ libmonit/configure |    8 ++++----
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/configure b/configure
+index 976698c..b7566ee 100755
+--- a/configure
++++ b/configure
+@@ -12703,8 +12703,8 @@ architecture=`uname`
+ if test "$architecture" = "SunOS"
+ then
+    ARCH="SOLARIS"
+-   CFLAGS="$CFLAGS -D _REENTRANT -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__ -m64"
+-   LDFLAGS="$LDFLAGS -m64"
++   CFLAGS="$CFLAGS -D _REENTRANT -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__"
++   LDFLAGS="$LDFLAGS"
+    test_kstat="true"
+ 
+ $as_echo "#define HAVE_CPU_WAIT 1" >>confdefs.h
+@@ -12713,20 +12713,20 @@ $as_echo "#define HAVE_CPU_WAIT 1" >>confdefs.h
+    then
+       if test "x$GCC" = "xyes"
+       then
+-            CFLAGS="$CFLAGS -mtune=opteron"
+-            LDFLAGS="$LDFLAGS -mtune=opteron"
++            CFLAGS="$CFLAGS"
++            LDFLAGS="$LDFLAGS"
+       else
+-            CFLAGS="$CFLAGS -xarch=sse2"
+-            LDFLAGS="$LDFLAGS -xarch=sse2"
++            CFLAGS="$CFLAGS"
++            LDFLAGS="$LDFLAGS"
+       fi
+    else
+       if test "x$GCC" = "xyes"
+       then
+-            CFLAGS="$CFLAGS -mtune=v9"
+-            LDFLAGS="$LDFLAGS -mtune=v9"
++            CFLAGS="$CFLAGS"
++            LDFLAGS="$LDFLAGS"
+       else
+-            CFLAGS="$CFLAGS -xarch=sparc"
+-            LDFLAGS="$LDFLAGS -xarch=sparc"
++            CFLAGS="$CFLAGS"
++            LDFLAGS="$LDFLAGS"
+       fi
+    fi
+ elif test "$architecture" = "Linux"
+diff --git a/libmonit/configure b/libmonit/configure
+index 8e69bfd..aba7f8c 100755
+--- a/libmonit/configure
++++ b/libmonit/configure
+@@ -10877,12 +10877,12 @@ $as_echo "#define DARWIN 1" >>confdefs.h
+ elif test "$architecture" = "SunOS"
+ then
+    LIBS="$LIBS -lsocket -lnsl"
+-   CFLAGS="$CFLAGS -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__ -m64"
+-   LDFLAGS="$LDFLAGS -m64"
++   CFLAGS="$CFLAGS -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__"
++   LDFLAGS="$LDFLAGS"
+    if test `uname -m` != "i86pc"
+    then
+-       CFLAGS="$CFLAGS -mtune=v9"
+-       LDFLAGS="$LDFLAGS -mtune=v9"
++       CFLAGS="$CFLAGS"
++       LDFLAGS="$LDFLAGS"
+    fi
+ 
+ $as_echo "#define SOLARIS 1" >>confdefs.h
+-- 
+1.7.10.3
+
