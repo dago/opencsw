@@ -1,6 +1,6 @@
 # $Id$
 
-NAME = libgnet
+NAME = libgnet2
 VERSION = 2.0.8
 GARTYPE = v2
 CATEGORIES = lib
@@ -28,7 +28,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 GARCOMPILER			=	GNU
 
-INSTALL_ARGS	+=	TARGET_DIR=$(docdir)/$(NAME)2_doc/html
+INSTALL_ARGS	+=	TARGET_DIR=$(docdir)/$(NAME)_doc/html
 
 PACKAGES					+=	CSWlibgnet2-doc
 SPKG_DESC_CSWlibgnet2-doc	=	$(DESCRIPTION), documentation
@@ -48,7 +48,7 @@ RUNTIME_DEP_PKGS_CSWlibgnet2-0-0	+=	CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnet2-0-0	+=	CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnet2-0-0	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgnet2-0-0	+=	CSWlibintl8
-
+CHECKPKG_OVERRIDES_CSWlibgnet2-0-0 += surplus-dependency|CSWlibiconv2
 
 PACKAGES							+= CSWlibgnet2-dev
 SPKG_DESC_CSWlibgnet2-dev			=	$(DESCRIPTION), development files
@@ -59,13 +59,14 @@ OBSOLETED_BY_CSWlibgnet2-dev		=	CSWlibgnet2
 CATALOGNAME_CSWlibgnet2				=	libgnet2_stub
 ARCHALL_CSWlibgnet2-dev				=	1
 RUNTIME_DEP_PKGS_CSWlibgnet2-dev	+=	CSWlibgnet2-0-0
+CHECKPKG_OVERRIDES_CSWlibgnet2-dev += archall-devel-package
 
 include gar/category.mk
 
 post-install-modulated:
-	ginstall --directory $(DESTDIR)$(docdir)/$(NAME)2_doc/examples
-	cd $(WORKSRC)/examples && ginstall --preserve-timestamps --mode=u=rw,go=r *.c $(DESTDIR)$(docdir)/$(NAME)2_doc/examples
-	ginstall --preserve-timestamps --mode=u=rw,go=r $(WORKDIR)/GNUMakefile $(DESTDIR)$(docdir)/$(NAME)2_doc/examples
+	ginstall --directory $(DESTDIR)$(docdir)/$(NAME)_doc/examples
+	cd $(WORKSRC)/examples && ginstall --preserve-timestamps --mode=u=rw,go=r *.c $(DESTDIR)$(docdir)/$(NAME)_doc/examples
+	ginstall --preserve-timestamps --mode=u=rw,go=r $(WORKDIR)/GNUMakefile $(DESTDIR)$(docdir)/$(NAME)_doc/examples
 	$(MAKECOOKIE)
 
 # this is private and not available publicly
