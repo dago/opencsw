@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = cfengine3
-VERSION = 3.2.3
+VERSION = 3.3.3
 CATEGORIES = utils
 GARTYPE = v2
 

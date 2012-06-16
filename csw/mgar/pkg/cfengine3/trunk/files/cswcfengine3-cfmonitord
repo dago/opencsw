@@ -27,7 +27,7 @@ smf_msg() {
 }
 
 
-stop() {
+_stop() {
     if [ -r ${PIDFILE} ]
     then
 	PID=`/bin/cat ${PIDFILE}`
@@ -44,7 +44,7 @@ stop() {
     return 0
 }
 
-start() {
+_start() {
     if [ -r ${PIDFILE} ]
     then
 	/bin/kill -0 `/bin/cat ${PIDFILE}` > /dev/null 2>&1
@@ -84,7 +84,7 @@ start() {
     return 0
 }
 
-status() {
+_status() {
     if [ -r ${PIDFILE} ]
     then
 	/bin/kill -0 `/bin/cat ${PIDFILE}` > /dev/null 2>&1
@@ -101,17 +101,17 @@ status() {
 
 case "$1" in
     start)
-	start
+	_start
 	;;
     stop)
-	stop
+	_stop
 	;;
     restart)
-	stop
-	start
+	_stop
+	_start
 	;;
     status)
-	status
+	_status
 	;;
     *)
 	echo "$0 {start|stop|restart|status}"
