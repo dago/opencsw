@@ -19,6 +19,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-Drop-some-build-flags-that-get-hard-coded-by-configu.patch
 
 GARCOMPILER = GNU
+BUILD64_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
