@@ -1,5 +1,18 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
+#
+# Note
+# ----
+#
+# For some reason or another, mgar test fails sometims on unstable10x.
+# Calling mgar test again succeeds. My first gues was that this
+# behavior is related to NFS mounted homes on unstable10x. Thus, I
+# made the tests being executed in a local directory /var/tmp (see
+# patch 0002-Huge-Makefile.in-patch.patch). However, this did not
+# remedy the problem. I did not further investigate the issue, though.
+#
+# mgar test on unstable10s does not exhibit this behavior.
+#
+# --raos
 #
 NAME = tokyocabinet
 VERSION = 1.4.47
