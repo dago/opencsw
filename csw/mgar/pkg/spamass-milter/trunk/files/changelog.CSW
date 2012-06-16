@@ -1,3 +1,11 @@
+spamass-milter (0.3.2,REV=2012.06.16)
+
+  * Fixed comments spamass-milter.m4 in order to avoid recursive
+    inclusion of spamass-milter.m4
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 16 Jun 2012 13:10:19 +0200
+
+
 spamass-milter (0.3.2,REV=2012.02.12)
 
   * Documented spamass-milter.m4
