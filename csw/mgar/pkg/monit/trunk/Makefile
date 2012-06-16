@@ -17,6 +17,7 @@ VENDOR_URL = http://mmonit.com/monit/
 MASTER_SITES = http://mmonit.com/monit/dist/
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-Drop-some-build-flags-that-get-hard-coded-by-configu.patch
+PATCHFILES += 0002-fix-usr-local-references-drop-usr-local-etc-monitrc-.patch
 
 GARCOMPILER = GNU
 BUILD64_ONLY = 1
