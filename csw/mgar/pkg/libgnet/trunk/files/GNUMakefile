@@ -1,0 +1,74 @@
+# $Id$
+# provided by CSW
+# Caveat: uses GNU make extensions
+
+		CC				=	gcc
+export	PKG_CONFIG_PATH	=	/opt/csw/lib/pkgconfig
+		buildFlags		=	$(shell pkg-config gnet-2.0 --cflags --libs)
+
+ifeq ($(strip $(buildFlags)),)
+      $(error "unknown build flags!")
+endif
+
+all:	\
+		dnslookup \
+		echoclient-async \
+		echoclient-gconn \
+		echoclient-udp \
+		echoclient-unix \
+		echoclient \
+		echoserver-async \
+		echoserver-gserver \
+		echoserver-udp \
+		echoserver-unix \
+		echoserver \
+		hash \
+		hfetch \
+		hostinfo \
+		sdr
+	: $@ done
+
+dnslookup:	dnslookup.c
+	$(CC) dnslookup.c $(buildFlags) -o dnslookup
+
+echoclient-async:	echoclient-async.c
+	$(CC) echoclient-async.c $(buildFlags) -o echoclient-async
+
+echoclient-gconn:	echoclient-gconn.c
+	$(CC) echoclient-gconn.c $(buildFlags) -o echoclient-gconn
+
+echoclient-udp:	echoclient-udp.c
+	$(CC) echoclient-udp.c $(buildFlags) -o echoclient-udp
+
+echoclient-unix:	echoclient-unix.c
+	$(CC) echoclient-unix.c $(buildFlags) -o echoclient-unix
+
+echoclient:	echoclient.c
+	$(CC) echoclient.c $(buildFlags) -o echoclient
+
+echoserver-async:	echoserver-async.c
+	$(CC) echoserver-async.c $(buildFlags) -o echoserver-async
+
+echoserver-gserver:	echoserver-gserver.c
+	$(CC) echoserver-gserver.c $(buildFlags) -o echoserver-gserver
+
+echoserver-udp:	echoserver-udp.c
+	$(CC) echoserver-udp.c $(buildFlags) -o echoserver-udp
+
+echoserver-unix:	echoserver-unix.c
+	$(CC) echoserver-unix.c $(buildFlags) -o echoserver-unix
+
+echoserver:	echoserver.c
+	$(CC) echoserver.c $(buildFlags) -o echoserver
+
+hash:	hash.c
+	$(CC) hash.c $(buildFlags) -o hash
+
+hfetch:	hfetch.c
+	$(CC) hfetch.c $(buildFlags) -o hfetch
+
+hostinfo:	hostinfo.c
+	$(CC) hostinfo.c $(buildFlags) -o hostinfo
+
+sdr:	sdr.c
+	$(CC) sdr.c $(buildFlags) -o sdr
