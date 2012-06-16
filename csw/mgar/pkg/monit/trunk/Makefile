@@ -22,6 +22,7 @@ GARCOMPILER = GNU
 BUILD64_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-ssl-dir=$(prefix)
 
 include gar/category.mk
 
