@@ -1,0 +1,37 @@
+From 683f4ab02dcf02453c67411de33cc4dcba1f2eb7 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 17 Jun 2012 04:52:24 +0200
+Subject: [PATCH] Ensure that __FUNCTION__ is mapped to __func__ when using
+ Studio CC
+
+Sun Studio doesn't define __FUNCTION__ like g++ does.  Instead, it
+defines __func__, but only when -features=extensions is passed in
+CXXFLAGS.  Define __FUNCTION__ as __func__ if __STUDIO_CC is defined
+so that the NCDF_ERR macro can function without a complier specific
+version.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ frmts/netcdf/netcdfdataset.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/frmts/netcdf/netcdfdataset.h b/frmts/netcdf/netcdfdataset.h
+index 7c06085..0689786 100644
+--- a/frmts/netcdf/netcdfdataset.h
++++ b/frmts/netcdf/netcdfdataset.h
+@@ -84,6 +84,12 @@
+ #define NCDF_DEFLATE_LEVEL            1  /* best time/size ratio */  
+ #define NCDF_COMPRESS_SZIP            3  /* no support for writting */ 
+ 
++/* gcc defines __FUNCTION__ but sun studio CC defines __func__ (only
++   when -features=extensions is used; add to CXXFLAGS) */
++#if defined(__SUNPRO_CC)
++#define __FUNCTION__ __func__
++#endif
++
+ /* helper for libnetcdf errors */
+ #define NCDF_ERR(status) if ( status != NC_NOERR ){ \
+ CPLError( CE_Failure,CPLE_AppDefined, \
+-- 
+1.7.10.3
+

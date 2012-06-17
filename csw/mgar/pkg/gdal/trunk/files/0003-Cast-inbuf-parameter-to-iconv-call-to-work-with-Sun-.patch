@@ -1,0 +1,40 @@
+From 17b4f095d0f109e7b8c4865395945f643e6b9dd0 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 17 Jun 2012 04:15:19 +0200
+Subject: [PATCH] Cast inbuf parameter to iconv call to work with Sun Studio
+
+Studio 12 was dieing due to passing the inbuf parameter to iconv as
+char** instead of const char**.  Gcc had no issues with this.
+
+Apply the appropriate cast so that the compiler is happy.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ port/cpl_recode_iconv.cpp |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/port/cpl_recode_iconv.cpp b/port/cpl_recode_iconv.cpp
+index ec7118c..40b466d 100644
+--- a/port/cpl_recode_iconv.cpp
++++ b/port/cpl_recode_iconv.cpp
+@@ -89,7 +89,7 @@ char *CPLRecodeIconv( const char *pszSource,
+     while ( nSrcLen > 0 )
+     {
+         size_t  nConverted =
+-            iconv( sConv, &pszSrcBuf, &nSrcLen, &pszDstBuf, &nDstLen );
++	  iconv( sConv, (const char **)&pszSrcBuf, &nSrcLen, &pszDstBuf, &nDstLen );
+ 
+         if ( nConverted == (size_t)-1 )
+         {
+@@ -240,7 +240,7 @@ char *CPLRecodeFromWCharIconv( const wchar_t *pwszSource,
+     while ( nSrcLen > 0 )
+     {
+         size_t  nConverted =
+-            iconv( sConv, &pszSrcBuf, &nSrcLen, &pszDstBuf, &nDstLen );
++	  iconv( sConv, (const char**)&pszSrcBuf, &nSrcLen, &pszDstBuf, &nDstLen );
+ 
+         if ( nConverted == (size_t)-1 )
+         {
+-- 
+1.7.10.3
+
