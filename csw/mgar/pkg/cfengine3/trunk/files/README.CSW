@@ -1,4 +1,4 @@
-CFEngine 3
+BCFEngine 3
 ----------
 
 * The working directory is located at /var/opt/csw/cfengine3.
@@ -25,4 +25,7 @@ CFEngine 3
   scritps). This is due to the locking mechanism used by CFEngine.
 
 * Starting with CFEngine 3.3.0, support for Berkeley DB was dropped by
-  CFEngine, and Tokyocabinet is used instead.
+  CFEngine developers, and Tokyocabinet is used instead. Therefore, if
+  you upgrade from pre 3.3.0 CFEngine, there will be stale *.db files
+  in $(sys.workdir) (/var/opt/csw/cfengine3 by default). Those can be
+  removed.
