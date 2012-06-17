@@ -4,6 +4,9 @@ NAME = cfengine3
 VERSION = 3.3.3
 CATEGORIES = utils
 GARTYPE = v2
+GARCOMPILER = SOS12U1
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DESCRIPTION = Open source configuration management system
 define BLURB
@@ -27,10 +30,6 @@ VENDOR_URL = http://www.cfengine.com/community
 
 UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 
-# Cfengine probes for Solaris 10 specific functionality (i.e. zones),
-# so a we build it for Sol9 and Sol10
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386 solaris9-sparc solaris9-i386
-
 # File name regex to get notifications about upstream software releases
 # NOTE: Use this only if the automatic regex creation
 #       does not work for your package
@@ -39,6 +38,13 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386 solaris9-sparc solaris9-i38
 # If the url used to check for software update is different of MASTER_SITES, then
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES =
+
+PATCHFILES += 0001-Remove-unsupported-compiler-options.patch
+PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
+PATCHFILES += 0000-Avoid-passing-NULL-pointer-to-CfOut-in-FnCallHostInN.patch
+PATCHFILES += 0000-Optimization-debug-flags-adjusted-for-use-with-SunSt.patch
+# See comment in patch
+PATCHFILES += 0000-Do-not-perform-acceptance-test.patch
 
 #
 # CUSTOM VARIABLES
@@ -51,9 +57,9 @@ PACKAGES = CSW$(NAME)utils
 # Catch all
 CATALOGNAME_CSW$(NAME)utils = $(NAME)_utils
 SPKG_DESC_CSW$(NAME)utils = CFEngine 3 utilities and documentation
-RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWbdb48
-RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibtokyocabinet9
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibpcre1
 CHECKPKG_OVERRIDES_CSW$(NAME)utils += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)utils|catalogname=$(NAME)_utils|expected-catalogname=$(NAME)utils
 OBSOLETED_BY_CSW$(NAME)utils = CSWlibpromises1 CSW$(NAME)rt
 CATALOGNAME_CSWlibpromises1 = libpromises1_stub
@@ -62,9 +68,9 @@ CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
 SPKG_DESC_CSW$(NAME)server = CFEngine 3 server binary
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWbdb48
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibtokyocabinet9
+RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSW$(NAME)utils
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-serverd
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-runagent
@@ -77,9 +83,9 @@ CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgnam
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
 SPKG_DESC_CSW$(NAME)client = CFEngine 3 client binaries
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWbdb48
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibtokyocabinet9
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)utils
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-agent
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-execd
@@ -107,30 +113,25 @@ LICENSE = LICENSE
 # the server and client component
 PRESERVECONF = $(sysconfdir)/$(NAME)rc
 
-BUILD64_LIBS_ONLY = 1
-
-BUILD_DEP_PKGS = CSWbdb48devel
+BUILD_DEP_PKGS  = CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
-BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWlibtokyocabinet-dev
 BUILD_DEP_PKGS += CSWflex
 BUILD_DEP_PKGS += CSWbison
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-silent-rules
-CONFIGURE_ARGS += --with-berkeleydb=$(prefix)/bdb48
+CONFIGURE_ARGS += --with-tokyocabinet=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-pcre=$(prefix)
 CONFIGURE_ARGS += --with-workdir=$(cfengine_workdir)
-CONFIGURE_ARGS += --without-sqlite3
 CONFIGURE_ARGS += --without-qdbm
 CONFIGURE_ARGS += --without-postgresql
 CONFIGURE_ARGS += --without-mysql
 
-EXTRA_INC = $(prefix)/bdb48/include
+EXTRA_CPPFLAGS = -xc99=all
+EXTRA_CFLAGS   = -xc99=all
 
-EXTRA_RUNPATH_DIRS = $(prefix)/bdb48/lib
-EXTRA_RUNPATH_ISALIST   = $(EXTRA_RUNPATH_DIRS)
-EXTRA_LDFLAGS = -L$(prefix)/bdb48/lib/$(MM_LIBDIR)
 # We use this because libpromises will be moved to this private
 # directory (see also move-libpromises:)
 EXTRA_LDFLAGS += -R$(libdir)/$(NAME)
@@ -140,16 +141,17 @@ EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
 
 include gar/category.mk
 
-post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc fix-paths-in-files move-libpromises
+post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc fix-paths-in-files move-libpromises move-binaries
 	@$(MAKECOOKIE)
 
 rename-cfengine-dir:
-	if test -d $(DESTDIR)$(datadir)/cfengine ; then \
-		mv $(DESTDIR)$(datadir)/cfengine $(DESTDIR)$(datadir)/$(NAME) ;\
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)_utils
+	if [ -d $(DESTDIR)$(datadir)/CoreBase ] ; then \
+		mv $(DESTDIR)$(datadir)/CoreBase $(DESTDIR)$(docdir)/$(NAME)_utils ; \
 	fi
-	if test -d $(DESTDIR)$(docdir)/cfengine ; then \
-		mv $(DESTDIR)$(docdir)/cfengine $(DESTDIR)$(docdir)/$(NAME) ;\
-	fi
+	for f in example_config README ChangeLog examples ; do \
+		mv $(DESTDIR)$(docdir)/$$f $(DESTDIR)$(docdir)/$(NAME)_utils/ || echo "Unable to move $$f" ; \
+	done
 
 install-smf-manifests:
 	ginstall -d $(DESTDIR)$(initddir)
@@ -177,10 +179,10 @@ install-cfengine3rc:
 	ginstall $(WORKDIR)/$(NAME)rc $(DESTDIR)$(sysconfdir)/$(NAME)rc.CSW
 
 install-cfengine3-csw-doc: rename-cfengine-dir
-	ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)
+	ginstall -m 644 $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)_utils/
 
 fix-paths-in-files: rename-cfengine-dir
-	for d in $(DESTDIR)$(docdir)/$(NAME)/example_config $(DESTDIR)$(docdir)/$(NAME)/examples $(DESTDIR)$(datadir)/$(NAME)/masterfiles ; do \
+	for d in $(DESTDIR)$(docdir)/$(NAME)_utils/example_config $(DESTDIR)$(docdir)/$(NAME)_utils/examples $(DESTDIR)$(docdir)/$(NAME)_utils/CoreBase; do \
 		if test -d $$d ; then \
 			for f in $${d}/*.cf ; do \
 				sed -e 's|/var/cfengine/|/var/opt/csw/$(NAME)/|g' \
@@ -196,9 +198,21 @@ fix-paths-in-files: rename-cfengine-dir
 # available API. Please note, the rpath has to be set appropriately
 move-libpromises:
 	ginstall -d $(DESTDIR)$(libdir)/$(NAME)
-	mv $(DESTDIR)$(libdir)/libpromises.* $(DESTDIR)$(libdir)/$(NAME)/
+	if test -f $(DESTDIR)$(libdir)/libpromises.so.1.0.0 ; then \
+		mv $(DESTDIR)$(libdir)/libpromises.* $(DESTDIR)$(libdir)/$(NAME)/ ; \
+	fi
+
+# The cfengine guys decided to put binaries into $(prefix)/bin starting
+# with 3.3.0. I don't see the point and keep the binaries in $(prefix)/sbin
+move-binaries:
+	ginstall -d $(DESTDIR)$(prefix)/sbin
+	if test -f $(DESTDIR)$(prefix)/bin/cf-agent  ; then \
+		mv $(DESTDIR)$(prefix)/bin/* $(DESTDIR)$(prefix)/sbin/ ; \
+		rmdir $(DESTDIR)$(prefix)/bin ; \
+	fi
 
 post-merge:
 # Get rid of the .so files. Since there are no header files provided,
 # .so files are pretty much useless
 	find $(PKGROOT)$(libdir) -name libpromises.so -exec rm \{\} \;
+
