@@ -15,6 +15,9 @@ MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-Force-use-of-double-data-type-before-checking-for-is.patch
 PATCHFILES += 0002-apply-patch-from-upstream-to-handle-building-with-a-.patch
+PATCHFILES += 0003-Cast-inbuf-parameter-to-iconv-call-to-work-with-Sun-.patch
+PATCHFILES += 0004-Ensure-that-__FUNCTION__-is-mapped-to-__func__-when-.patch
+PATCHFILES += 0005-Pass-proper-types-to-std-make_pair-to-satisfy-Sun-St.patch
 #PATCHFILES += 0001-Force-the-use-of-CSWbash.patch
 
 PACKAGES += CSWgdal 
@@ -38,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWgdal += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibpq5
-RUNTIME_DEP_PKGS_CSWgdal += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWgdal += CSWlibmysqlclient18
 
 PACKAGES += CSWlibgdal1
 CATALOGNAME_CSWlibgdal1 = libgdal1
@@ -56,7 +59,7 @@ RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibnetcdf7
-RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgif4
@@ -69,10 +72,8 @@ SPKG_DESC_CSWgdal-dev += Geospatial Data Abstraction Library, development files
 RUNTIME_DEP_PKGS_CSWgdal-dev += CSWlibgdal1
 PKGFILES_CSWgdal-dev += $(PKGFILES_DEVEL) /opt/csw/bin/gdal-config
 
-GARCOMPILER = GNU
-
-# c++ libraries, so move things around a bit
-libdir = $(abspath /opt/csw/gxx/lib/$(MM_LIBDIR))
+# enable use of __func__ as required by patch 0004
+EXTRA_CXXFLAGS += -features=extensions
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz=$(prefix)

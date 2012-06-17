@@ -1,0 +1,50 @@
+From 3f4d3eafbf74ca803d696f4b1f6a81902222377a Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 17 Jun 2012 17:13:29 +0200
+Subject: [PATCH] Pass proper types to std::make_pair to satisfy Sun Studio CC
+
+Studio CC doesn't automatically convert a const char[] to std::string in
+calls to std::make_pair.  Wrap these values as std::string.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ frmts/netcdf/netcdfdataset.cpp |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/frmts/netcdf/netcdfdataset.cpp b/frmts/netcdf/netcdfdataset.cpp
+index ebdce25..b0be750 100644
+--- a/frmts/netcdf/netcdfdataset.cpp
++++ b/frmts/netcdf/netcdfdataset.cpp
+@@ -5096,7 +5096,7 @@ void NCDFWriteProjAttribs( const OGR_SRSNode *poPROJCS,
+                     double dfLatPole = 0.0;
+                     if ( dfValue > 0.0) dfLatPole = 90.0;
+                     else dfLatPole = -90.0;
+-                        oOutList.push_back( std::make_pair( CF_PP_LAT_PROJ_ORIGIN, 
++		    oOutList.push_back( std::make_pair( std::string(CF_PP_LAT_PROJ_ORIGIN), 
+                                                             dfLatPole ) );
+                 }              
+ 
+@@ -5120,7 +5120,7 @@ void NCDFWriteProjAttribs( const OGR_SRSNode *poPROJCS,
+                         else {                      
+                             oValIter2 = oValMap.find( std::string(SRS_PP_LATITUDE_OF_ORIGIN) );
+                             if (oValIter2 != oValMap.end() ) {
+-                                oOutList.push_back( std::make_pair( CF_PP_STD_PARALLEL_1, 
++			      oOutList.push_back( std::make_pair( std::string(CF_PP_STD_PARALLEL_1), 
+                                                                     oValIter2->second) );
+                             }
+                             else {
+@@ -5153,9 +5153,9 @@ void NCDFWriteProjAttribs( const OGR_SRSNode *poPROJCS,
+             }
+             /* for SRS_PP_SCALE_FACTOR write 2 mappings */
+             else if (  EQUAL(pszGDALAtt->c_str(), SRS_PP_SCALE_FACTOR) ) {
+-                oOutList.push_back( std::make_pair( CF_PP_SCALE_FACTOR_MERIDIAN,
++	      oOutList.push_back( std::make_pair( std::string(CF_PP_SCALE_FACTOR_MERIDIAN),
+                                                     dfValue ) );
+-                oOutList.push_back( std::make_pair( CF_PP_SCALE_FACTOR_ORIGIN,
++	      oOutList.push_back( std::make_pair( std::string(CF_PP_SCALE_FACTOR_ORIGIN),
+                                                     dfValue ) );
+             }
+             /* if not found insert the GDAL name */
+-- 
+1.7.10.3
+
