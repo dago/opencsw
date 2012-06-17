@@ -1,3 +1,15 @@
+cfengine3 (3.3.3,REV=2012.06.17)
+
+  * New upstream release 3.3.3.
+
+  * Starting with CFEngine 3.3.0, Berkeley DB support was
+    dropped. Tokyocabinet is used instead.
+
+  * Dropped support for Solaris 9.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 17 Jun 2012 14:09:15 +0200
+
+
 cfengine3 (3.2.3,REV=2012.01.06)
 
   * Obsoleted CSWlibpromises1.

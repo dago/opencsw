@@ -23,3 +23,6 @@ CFEngine 3
   lead to the service going in maintenance mode when using SMF (or
   just not having the daemon started when using legacy startup
   scritps). This is due to the locking mechanism used by CFEngine.
+
+* Starting with CFEngine 3.3.0, support for Berkeley DB was dropped by
+  CFEngine, and Tokyocabinet is used instead.

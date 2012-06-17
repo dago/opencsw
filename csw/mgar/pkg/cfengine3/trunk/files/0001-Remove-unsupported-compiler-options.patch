@@ -1,0 +1,39 @@
+From 39d1ba5a51f4308a135265690988e91af536ea0a Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 16 Jun 2012 20:20:27 +0200
+Subject: [PATCH] Remove unsupported compiler options
+
+---
+ tests/unit/Makefile.am |    2 +-
+ tests/unit/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/unit/Makefile.am b/tests/unit/Makefile.am
+index 86f52d0..176ccfc 100644
+--- a/tests/unit/Makefile.am
++++ b/tests/unit/Makefile.am
+@@ -68,7 +68,7 @@ xml_writer_test_LDADD = libtest.la
+ #
+ file_writer_test_SOURCES = file_writer_test.c gcov-stub.c \
+         ../../src/writer.c
+-file_writer_test_CFLAGS = $(AM_CFLAGS) -fno-profile-arcs -fno-test-coverage
++file_writer_test_CFLAGS = $(AM_CFLAGS)
+ file_writer_test_LDADD = libtest.la
+ file_writer_test_LDLFAGS =
+ 
+diff --git a/tests/unit/Makefile.in b/tests/unit/Makefile.in
+index 36e04fb..884df9d 100644
+--- a/tests/unit/Makefile.in
++++ b/tests/unit/Makefile.in
+@@ -445,7 +445,7 @@ xml_writer_test_LDADD = libtest.la
+ file_writer_test_SOURCES = file_writer_test.c gcov-stub.c \
+         ../../src/writer.c
+ 
+-file_writer_test_CFLAGS = $(AM_CFLAGS) -fno-profile-arcs -fno-test-coverage
++file_writer_test_CFLAGS = $(AM_CFLAGS)
+ file_writer_test_LDADD = libtest.la
+ file_writer_test_LDLFAGS = 
+ db_test_SOURCES = db_test.c
+-- 
+1.7.10.3
+

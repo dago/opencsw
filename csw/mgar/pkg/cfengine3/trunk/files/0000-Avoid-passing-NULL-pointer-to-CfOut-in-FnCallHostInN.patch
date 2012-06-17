@@ -1,0 +1,34 @@
+From 52fbe289f9e86c525aae84eba5035b581c04c712 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 17 Jun 2012 10:31:12 +0200
+Subject: [PATCH] Avoid passing NULL pointer to CfOut in
+ FnCallHostInNetgroup()
+
+---
+ src/evalfunction.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/evalfunction.c b/src/evalfunction.c
+index f310d7c..92d8bd5 100644
+--- a/src/evalfunction.c
++++ b/src/evalfunction.c
+@@ -2183,14 +2183,14 @@ FnCallResult FnCallHostInNetgroup(FnCall *fp, Rlist *finalargs)
+     {
+         if (host == NULL || strcmp(host, VUQNAME) == 0)
+         {
+-            CfOut(cf_verbose, "", "Matched %s in netgroup %s\n", host, ScalarValue(finalargs));
++            CfOut(cf_verbose, "", "Matched %s in netgroup %s\n", host == NULL ? "(nil)" : host, ScalarValue(finalargs));
+             strcpy(buffer, "any");
+             break;
+         }
+ 
+         if (host == NULL || strcmp(host, VFQNAME) == 0)
+         {
+-            CfOut(cf_verbose, "", "Matched %s in netgroup %s\n", host, ScalarValue(finalargs));
++            CfOut(cf_verbose, "", "Matched %s in netgroup %s\n", host == NULL ? "(nil)" : host, ScalarValue(finalargs));
+             strcpy(buffer, "any");
+             break;
+         }
+-- 
+1.7.10.3
+
