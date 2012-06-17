@@ -17,7 +17,7 @@ SOLREL=`uname -r | awk -F. '{print $2}'`
 
 if [ $SOLREL -ge 10 ]
 then
-        ZONENAME=`zonename`
+        ZONENAME=`/sbin/zonename`
         . /lib/svc/share/smf_include.sh
 fi
 
