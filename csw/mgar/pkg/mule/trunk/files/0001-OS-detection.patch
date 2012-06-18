@@ -1,0 +1,34 @@
+From 7d6bb499bb6b6254b55dc4899ae7918ebdb88bb8 Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 18 Jun 2012 11:01:31 +0200
+Subject: [PATCH] OS-detection
+
+---
+ bin/mule |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/bin/mule b/bin/mule
+index 467b4c6..25a448b 100755
+--- a/bin/mule
++++ b/bin/mule
+@@ -201,7 +201,7 @@ fi
+ PSKEYWORD="args"
+ 
+ # Resolve the os
+-DIST_OS=`uname -s | tr [:upper:] [:lower:] | tr -d [:blank:]`
++DIST_OS=`uname -s | tr '[A-Z]' '[a-z]' | tr -d ' '`
+ case "$DIST_OS" in
+     'sunos')
+         DIST_OS="solaris"
+@@ -231,7 +231,7 @@ if [ "$DIST_OS" = "aix" ]; then
+     UNAME_PROC_OPTION="-p"
+ fi
+ 
+-PROC_ARCH=`uname $UNAME_PROC_OPTION | tr [:upper:] [:lower:] | tr -d [:blank:]`
++PROC_ARCH=`uname $UNAME_PROC_OPTION | tr '[A-Z]' '[a-z]' | tr -d ' '`
+ 
+ # The previous approach was this:
+ # If a 32-bit wrapper binary exists then it will work on 32 or 64 bit
+-- 
+1.7.10.3
+
