@@ -15,7 +15,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
-PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 PACKAGES = CSWunbound CSWlibunbound2 CSWunbound-devel CSWunbound-host
 
 # We define upstream file regex so we can be notifed of new upstream software release
