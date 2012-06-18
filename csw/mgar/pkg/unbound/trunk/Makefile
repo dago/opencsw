@@ -34,9 +34,6 @@ CONFIGURE_ARGS += --with-libexpat=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
-# Gost requiers OpenSSL 1.0
-CONFIGURE_ARGS += --disable-gost
-
 STRIP_LIBTOOL = 0
 
 # make test doesn't work for the moment on Solaris
