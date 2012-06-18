@@ -21,6 +21,7 @@ PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 PATCHFILES += 0001-javapath.patch
 PATCHFILES += 0001-runasusermule.patch
 PATCHFILES += 0001-piddir.patch
+PATCHFILES += 0001-OS-detection.patch
 
 PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 
