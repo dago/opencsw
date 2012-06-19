@@ -4,26 +4,21 @@
 NAME = mailwrapper
 VERSION = 1.0
 GARTYPE = v2
-CATEGORIES = category
+CATEGORIES = apps
 
-DESCRIPTION = Brief description
+DESCRIPTION = Run substitute program
 define BLURB
-  Long description
+  Run substitute program
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://sk.freebsd.org/pub/local/distfiles/
+DISTNAME = $(NAME)-opencsw-$(VERSION)
+DISTFILES  = $(DISTNAME).tar.bz2
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-CONFIGURE_ARGS = $(DIRPATHS)
+# No configure script
+CONFIGURE_SCRIPTS=
+SKIPTEST=1
+ENABLE_CHECK=0
 
 include gar/category.mk
 
