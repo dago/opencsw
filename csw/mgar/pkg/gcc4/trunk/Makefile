@@ -26,6 +26,9 @@ LIBOBJC = 4
 # PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+# http://gcc.gnu.org/ml/gcc-help/2012-06/msg00158.html
+PATCHFILES += Append-PICFLAG_FOR_TARGET.patch
+
 # GIT init takes a long time.
 NOGITPATCH ?= 1
 
@@ -50,59 +53,31 @@ PROGRAM_SUFFIX = -$(BASE_VERSION)
 ## build options
 # http://gcc.gnu.org/install/configure.html
 
-CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --with-gnu-as
-CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
-CONFIGURE_ARGS += --without-gnu-ld
-CONFIGURE_ARGS += --with-ld=/usr/ccs/bin/ld
-CONFIGURE_ARGS += --enable-nls
-CONFIGURE_ARGS += --with-included-gettext
-CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-x
-CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --enable-cloog-backend=isl
 CONFIGURE_ARGS += --enable-java-awt=xlib
+CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,go,java,objc
 CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
+CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix
-CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,go,java,objc
+CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
+CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
+CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-gnu-as
+CONFIGURE_ARGS += --with-included-gettext
+CONFIGURE_ARGS += --with-ld=/usr/ccs/bin/ld
+CONFIGURE_ARGS += --without-gnu-ld
+CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-system-zlib=$(BUILD_PREFIX)
-
-# there could be some abstractions in gar.conf.mk, but at the moment there
-# aren't so let's specify architectures by hand.
-#
-# // This avoids the sparcv8+ binaries.
-# We no longer avoid sparcv8+ binaries.
-ISA_DEFAULT_sparc = sparcv8plus
-CPU_sparc_32 = v9
-CPU_sparc_64 = v9
-CPU_i386_32 = i386
-CPU_i386_64 = x86-64
-
-
-CONFIGURE_ARGS_sparc += --with-cpu=$(CPU_$(GARCH)_32)
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 
 # GCC can't be built in the same directory with the sources.
 # It also can't be built in a subdirectory of the sources.
 OBJDIR          = $(abspath $(WORKDIR)/objdir)
-
-# These flags are passed when gcc is built with gcc.
-# Needed to remove FLAVOR_FLAGS, because they were Sun Studio specific.
-CFLAGS_FOR_TARGET_sparc = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
-CXXFLAGS_FOR_TARGET_sparc = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
-CFLAGS_FOR_TARGET = $(CFLAGS_FOR_TARGET_$(GARCH))
-CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
-EXTRA_EXPORTS += CFLAGS_FOR_TARGET
-EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
-
-EXTRA_CONFIGURE_EXPORTS += CFLAGS_FOR_TARGET
-EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
 
 # bash must be used, otherwise:
 # http://fixunix.com/solaris/490396-gcc-build-fails-cannot-compute-suffix-object-files.html
