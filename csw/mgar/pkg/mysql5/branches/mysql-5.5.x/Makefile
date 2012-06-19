@@ -21,6 +21,8 @@ CATEGORIES = server
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
@@ -36,9 +38,9 @@ endef
 
 # There are problems with the build using Sun Studio.
 # GARCOMPILER = SOS12
-# EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-# EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-GARCOMPILER = GNU
+EXTRA_CFLAGS += -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+EXTRA_CXXFLAGS += -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+# GARCOMPILER = GNU
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -209,6 +211,9 @@ CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
 # CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libcrypto.so
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
+CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
+CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
