@@ -11,6 +11,8 @@ define BLURB
   Run substitute program
 endef
 
+LICENSE_TEXT = BSD license
+
 MASTER_SITES = http://sk.freebsd.org/pub/local/distfiles/
 DISTNAME = $(NAME)-opencsw-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
