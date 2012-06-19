@@ -20,5 +20,8 @@ CONFIGURE_SCRIPTS=
 SKIPTEST=1
 ENABLE_CHECK=0
 
+PRESERVECONF += $(sysconfdir)/mailer.conf
+SAMPLECONF += $(sysconfdir)/mailer.conf
+
 include gar/category.mk
 
