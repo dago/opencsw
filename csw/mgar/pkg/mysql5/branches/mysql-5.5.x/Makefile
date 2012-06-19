@@ -21,8 +21,6 @@ CATEGORIES = server
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
@@ -36,11 +34,8 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# There are problems with the build using Sun Studio.
-# GARCOMPILER = SOS12
-EXTRA_CFLAGS += -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_CXXFLAGS += -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-# GARCOMPILER = GNU
+EXTRA_CFLAGS += -mt -D__EXTENSIONS__
+EXTRA_CXXFLAGS += -mt -D__EXTENSIONS__
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
