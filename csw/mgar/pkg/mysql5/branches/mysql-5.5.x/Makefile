@@ -21,6 +21,9 @@ CATEGORIES = server
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
@@ -71,7 +74,9 @@ PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmy
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -104,13 +109,13 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseis
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)\.1)
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name))
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
 # RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 # RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 # RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROSREL))
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
@@ -118,17 +123,18 @@ CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
 CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
 CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
 # RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 # RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
 # RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
