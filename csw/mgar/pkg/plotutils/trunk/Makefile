@@ -37,6 +37,7 @@ PACKAGES							=	CSWplotutils-doc
 CATALOGNAME_CSWplotutils-doc		=	plotutils_doc
 SPKG_DESC_CSWplotutils-doc			=	$(DESCRIPTION), documentation
 OBSOLETED_BY_CSWplotutils-doc		=	CSWplotutildoc
+ARCHALL_CSWplotutils-doc			=	1
 CHECKPKG_OVERRIDES_CSWplotutils-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/plotutils.info
 CHECKPKG_OVERRIDES_CSWplotutils-doc	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/plotutils.info
 
@@ -84,15 +85,26 @@ RUNTIME_DEP_PKGS_CSWplotutils	+=	CSWlibplot2
 RUNTIME_DEP_PKGS_CSWplotutils	+=	CSWlibplotter2
 RUNTIME_DEP_PKGS_CSWplotutils	+=	CSWlibxmi0
 OBSOLETED_BY_CSWplotutils		=	CSWplotutil
+CHECKPKG_OVERRIDES_CSWplotutils	+=	missing-dependency|CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWplotutils	+=	missing-dependency|CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSWplotutils	+=	missing-dependency|CSWlibpng12-0
+CHECKPKG_OVERRIDES_CSWplotutils	+=	missing-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWplotutils	+=	surplus-dependency|CSWlibxmi0
+CHECKPKG_OVERRIDES_CSWplotutils	+=	surplus-dependency|CSWlibplotter2
 
-PACKAGES						+=	CSWplotutils-dev
-CATALOGNAME_CSWplotutils-dev	=	plotutils_dev
-SPKG_DESC_CSWplotutils-dev		+=	$(DESCRIPTION), development files
-PKGFILES_CSWplotutils-dev		+=	/opt/csw/lib/libplot.so
-PKGFILES_CSWplotutils-dev		+=	/opt/csw/lib/libplotter.so
-PKGFILES_CSWplotutils-dev		+=	/opt/csw/lib/libxmi.so
-PKGFILES_CSWplotutils-dev		+=	$(PKGFILES_DEVEL)
-OBSOLETED_BY_CSWplotutils_dev	=	CSWplotutildevel
+PACKAGES							+=	CSWplotutils-dev
+CATALOGNAME_CSWplotutils-dev		=	plotutils_dev
+SPKG_DESC_CSWplotutils-dev			+=	$(DESCRIPTION), development files
+PKGFILES_CSWplotutils-dev			+=	/opt/csw/lib/libplot.so
+PKGFILES_CSWplotutils-dev			+=	/opt/csw/lib/libplotter.so
+PKGFILES_CSWplotutils-dev			+=	/opt/csw/lib/libxmi.so
+PKGFILES_CSWplotutils-dev			+=	$(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWplotutils-dev		=	CSWplotutildevel
+ARCHALL_CSWplotutils-dev			=	1
+RUNTIME_DEP_PKGS_CSWplotutils-dev	+=	CSWplotutils
+CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	missing-dependency|CSWlibplotter2
+CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	missing-dependency|CSWlibxmi0
+CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	missing-dependency|CSWlibplot2
 
 include gar/category.mk
 
