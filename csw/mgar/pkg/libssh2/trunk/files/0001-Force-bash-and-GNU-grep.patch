@@ -1,0 +1,31 @@
+From a20cd01152e6c707a04ed75a810d705c20f2aa0a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Wed, 20 Jun 2012 13:10:31 +0200
+Subject: [PATCH] Force bash and GNU grep
+
+---
+ tests/mansyntax.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/mansyntax.sh b/tests/mansyntax.sh
+index 3e72c25..0018709 100755
+--- a/tests/mansyntax.sh
++++ b/tests/mansyntax.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ set -e
+ 
+ # Written by Mikhail Gusarov
+@@ -12,7 +12,7 @@ mandir=${srcdir}/../docs
+ #
+ # Only test if suitable man is available
+ #
+-if ! man --help | grep -q warnings; then
++if ! man --help | ggrep -q warnings; then
+   exit 77
+ fi
+ 
+-- 
+1.7.10.3
+
