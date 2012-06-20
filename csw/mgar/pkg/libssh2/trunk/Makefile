@@ -1,5 +1,5 @@
 NAME = libssh2
-VERSION = 1.3.0
+VERSION = 1.4.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -14,15 +14,19 @@ endef
 MASTER_SITES = http://www.libssh2.org/download/
 DISTFILES += $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Force-bash-and-GNU-grep.patch
+
 VENDOR_URL = http://www.libssh2.org
 
-BUILD_DEP_PKGS += CSWossldevel
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibz-dev
 
 PACKAGES += CSWlibssh2-1
 SPKG_DESC_CSWlibssh2-1 = A library for impementing the SSH2 protocol, libssh2.so.1
 PKGFILES_CSWlibssh2-1 += $(call pkgfiles_lib,libssh2.so.1)
-RUNTIME_DEP_PKGS_CSWlibssh2-1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibssh2-1 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibssh2-1 += CSWlibz1
 OBSOLETED_BY_CSWlibssh2-1 += CSWlibssh2
 
