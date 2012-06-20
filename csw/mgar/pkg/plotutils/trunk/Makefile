@@ -102,6 +102,7 @@ PKGFILES_CSWplotutils-dev			+=	$(PKGFILES_DEVEL)
 OBSOLETED_BY_CSWplotutils-dev		=	CSWplotutildevel
 ARCHALL_CSWplotutils-dev			=	1
 RUNTIME_DEP_PKGS_CSWplotutils-dev	+=	CSWplotutils
+CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	archall-devel-package
 CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	missing-dependency|CSWlibplotter2
 CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	missing-dependency|CSWlibxmi0
 CHECKPKG_OVERRIDES_CSWplotutils-dev	+=	missing-dependency|CSWlibplot2
