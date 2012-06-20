@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = openldap
-VERSION = 2.4.28
+VERSION = 2.4.31
 GARTYPE = v2
 CATEGORIES = server
 
@@ -52,8 +52,8 @@ SPKG_DESC_CSWopenldap = OpenLDAP server for Lightweight Directory Access Protoco
 RUNTIME_DEP_PKGS_CSWopenldap += CSWbdb48
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-3
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-3
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
 # We do not want that dependency.
 # RUNTIME_DEP_PKGS_CSWopenldap += CSWlibnet
@@ -61,11 +61,9 @@ RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
-OBSOLETED_BY_CSWopenldap += CSWoldap
-CATALOGNAME_CSWoldap = openldap_stub
 
 # Evaluate later
 CHECKPKG_OVERRIDES_CSWopenldap += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/slapd.8
@@ -74,58 +72,47 @@ PACKAGES += CSWopenldap-client
 SPKG_DESC_CSWopenldap-client = OpenLDAP client executables
 PKGFILES_CSWopenldap-client += $(bindir)/.*
 PKGFILES_CSWopenldap-client += $(mandir)/man1/.*
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-3
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-3
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibssl0-9-8
-OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
-CATALOGNAME_CSWoldapclient = openldap_client_stub
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibssl1-0-0
 
 PACKAGES += CSWopenldap-dev
-SPKG_DESC_CSWopenldap-dev = OpenLDAP development files for libldap-2.4.so.2, libldap_r-2.4.so.2 and liblber-2.4.so.2
+SPKG_DESC_CSWopenldap-dev = OpenLDAP development files for libldap-2.4.so.3, libldap_r-2.4.so.3 and liblber-2.4.so.3
 PKGFILES_CSWopenldap-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWopenldap-dev += $(mandir)/man3/.*
-RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap2-4-2
-OBSOLETED_BY_CSWopenldap-dev += CSWoldapdevel
-CATALOGNAME_CSWoldapdevel = openldap_devel_stub
+RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWliblber2-4-3
+RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap-r2-4-3
+RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap2-4-3
 
-PACKAGES += CSWliblber2-4-2
-SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
-PKGFILES_CSWliblber2-4-2 += $(call pkgfiles_lib,liblber-2.4.so.2)
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibssl0-9-8
-OBSOLETED_BY_CSWliblber2-4-2 += CSWoldaprt
-CATALOGNAME_CSWoldaprt = openldap_rt_stub
+PACKAGES += CSWliblber2-4-3
+SPKG_DESC_CSWliblber2-4-3 = OpenLDAP ASN.1 BER library, liblber-2.4.so.3
+PKGFILES_CSWliblber2-4-3 += $(call pkgfiles_lib,liblber-2.4.so.3)
+RUNTIME_DEP_PKGS_CSWlibldap2-4-3 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibldap2-4-3 += CSWlibssl1-0-0
 
-PACKAGES += CSWlibldap2-4-2
-SPKG_DESC_CSWlibldap2-4-2 = OpenLDAP LDAP library, libldap-2.4.so.2
-PKGFILES_CSWlibldap2-4-2 += $(call pkgfiles_lib,libldap-2.4.so.2)
-PKGFILES_CSWlibldap2-4-2 += $(sysconfdir)/ldap.conf
-PKGFILES_CSWlibldap2-4-2 += $(mandir)/man5/ldap.conf.5
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWliblber2-4-2
-OBSOLETED_BY_CSWlibldap2-4-2 += CSWoldaprt
+PACKAGES += CSWlibldap2-4-3
+SPKG_DESC_CSWlibldap2-4-3 = OpenLDAP LDAP library, libldap-2.4.so.3
+PKGFILES_CSWlibldap2-4-3 += $(call pkgfiles_lib,libldap-2.4.so.3)
+PKGFILES_CSWlibldap2-4-3 += $(sysconfdir)/ldap.conf
+PKGFILES_CSWlibldap2-4-3 += $(mandir)/man5/ldap.conf.5
+RUNTIME_DEP_PKGS_CSWlibldap2-4-3 += CSWliblber2-4-3
 
 # Evaluate later
-CHECKPKG_OVERRIDES_CSWlibldap2-4-2 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/ldap.conf.5
+CHECKPKG_OVERRIDES_CSWlibldap2-4-3 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/ldap.conf.5
 
-PACKAGES += CSWlibldap-r2-4-2
-SPKG_DESC_CSWlibldap-r2-4-2 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.2
-PKGFILES_CSWlibldap-r2-4-2 += $(call pkgfiles_lib,libldap_r-2.4.so.2)
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl0-9-8
-OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
+PACKAGES += CSWlibldap-r2-4-3
+SPKG_DESC_CSWlibldap-r2-4-3 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.3
+PKGFILES_CSWlibldap-r2-4-3 += $(call pkgfiles_lib,libldap_r-2.4.so.3)
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-3 += CSWliblber2-4-3
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-3 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-3 += CSWlibssl1-0-0
 
 FOREIGN_PACKAGES += CSWliblber2-3-0
-OBSOLETED_BY_CSWliblber2-3-0 += CSWoldaprt
 
 FOREIGN_PACKAGES += CSWlibldap2-3-0
-OBSOLETED_BY_CSWlibldap2-3-0 += CSWoldaprt
 
 FOREIGN_PACKAGES += CSWlibldap-r2-3-0
-OBSOLETED_BY_CSWlibldap-r2-3-0 += CSWoldaprt
 
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
