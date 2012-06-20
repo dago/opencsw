@@ -65,10 +65,12 @@ RUNTIME_DEP_PKGS_CSWlibgthumb += CSWgnomevfs2
 RUNTIME_DEP_PKGS_CSWlibgthumb += CSWlibbonobo2
 RUNTIME_DEP_PKGS_CSWlibgthumb += CSWlibglib2-0-0
 # this is reported because lib was not split out in the old package
-CHECKPKG_OVERRIDES_CSWlibgthumb += file-collision|/opt/csw/lib/libgthumb.so|CSWgthumb|CSWlibgthumb
+# CHECKPKG_OVERRIDES_CSWlibgthumb += file-collision|/opt/csw/lib/libgthumb.so|CSWgthumb|CSWlibgthumb
 # there is really only the .so name
 CHECKPKG_OVERRIDES_CSWlibgthumb += soname-equals-filename|file=/opt/csw/lib/libgthumb.so
 
+PACKAGES += CSWgthumb
+SPKG_DESC_CSWgthumb += $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWgthumb += CSWlibgthumb
 RUNTIME_DEP_PKGS_CSWgthumb += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWgthumb += CSWlibgnomeui2-0
@@ -102,6 +104,7 @@ RUNTIME_DEP_PKGS_CSWgthumb += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWgthumb += CSWlibart
 RUNTIME_DEP_PKGS_CSWgthumb += CSWlibbonobo2
 RUNTIME_DEP_PKGS_CSWgthumb += CSWlibatk1-0-0
+EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/var/lib.*
 
 # for xmllint
 EXTRA_TEST_ENV += http_proxy=http://proxy:3128
