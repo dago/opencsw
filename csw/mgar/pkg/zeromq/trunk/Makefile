@@ -35,6 +35,9 @@ RUNTIME_DEP_PKGS_CSWlibzmq1-dev += CSWlibzmq1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+# For tests to succeed on i386 you need to set the ulimit higher than the default of 256.
+# I set 'ulimit -S -n 10000' in my ~/.bash_profile and the tests succeed.
+EXTRA_TEST_ENV += BASH_ENV=~/.bash_profile  
 EXTRA_LINKER_FLAGS = -norunpath
 
 include gar/category.mk
