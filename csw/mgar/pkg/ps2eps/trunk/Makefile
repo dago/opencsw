@@ -16,15 +16,17 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.tm.uka.de/~bless/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTNAME = $(NAME)
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS	=	CSWperl
+# This cannot be tracked with checkpkg
+CHECKPKG_OVERRIDES_CSWps2eps += surplus-dependency|CSWperl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_SCRIPTS	=
 GARCOMPILER			=	GNU
-WORKSRC				=	$(WORKDIR)/$(NAME)
 PATCHDIR			=	$(WORKSRC)
 PATCHFILE			=	0001-Fix-shebang-perl.patch
 BUILD_SCRIPTS		=	custom
@@ -47,17 +49,18 @@ $(WORKSRC)/bbox.o:	\
 	$(CC) -c $(CFLAGS) $< -o $@
 
 
+install-custom: pkgdocdir = $(docdir)/ps2eps
 install-custom:
 	cd $(WORKSRC) && ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(bindir)
 	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rwx,go=rx bbox $(DESTDIR)$(bindir)
 	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rwx,go=rx bin/ps2eps $(DESTDIR)$(bindir)
-	cd $(WORKSRC) && ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(docdir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/pdf/bbox.pdf $(DESTDIR)$(docdir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/pdf/ps2eps.pdf $(DESTDIR)$(docdir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/html/bbox.html $(DESTDIR)$(docdir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/html/ps2eps.html $(DESTDIR)$(docdir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r Changes.txt $(DESTDIR)$(docdir)
-	cd $(WORKSRC) && ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(mandir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/man1/bbox.1 $(DESTDIR)$(mandir)
-	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/man1/ps2eps.1 $(DESTDIR)$(mandir)
+	cd $(WORKSRC) && ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/pdf/bbox.pdf $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/pdf/ps2eps.pdf $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/html/bbox.html $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/html/ps2eps.html $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r Changes.txt $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(mandir)/man1
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/man1/bbox.1 $(DESTDIR)$(mandir)/man1
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/man1/ps2eps.1 $(DESTDIR)$(mandir)/man1
 	$(MAKECOOKIE)
