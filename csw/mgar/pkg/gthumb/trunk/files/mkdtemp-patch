@@ -1,0 +1,18 @@
+--- a/libgthumb/file-utils.c
++++ b/libgthumb/file-utils.c
+@@ -2462,10 +2462,13 @@ get_temp_dir_name (void)
+         template = g_strconcat (best_folder, "/.gth-XXXXXX", NULL);
+         g_free (best_folder);
+         
+-        result = mkdtemp (template);
++	if( !mktemp( template ) || mkdir( template, 0700 ) ) {
++                g_free (template);
++ 		return NULL; 
++	}
++	result = template;
+ 
+         if ((result == NULL) || (*result == '\0')) {
+-                g_free (template);
+                 result = NULL;
+         }
+ 
