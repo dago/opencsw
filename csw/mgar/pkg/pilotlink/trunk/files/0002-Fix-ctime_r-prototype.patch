@@ -1,0 +1,41 @@
+From a1ab73bd475abdb3322102a5a172e1b2a74dba87 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 21 Jun 2012 14:10:17 +0200
+Subject: [PATCH] Fix ctime_r prototype
+
+---
+ tests/vfs-test.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tests/vfs-test.c b/tests/vfs-test.c
+index 0e617c7..949258d 100644
+--- a/tests/vfs-test.c
++++ b/tests/vfs-test.c
+@@ -379,21 +379,21 @@ int main (int argc, char **argv)
+ 				result = dlp_VFSFileGetDate (sd, fileRef, vfsFileDateCreated, &t1);
+ 				CHECK_RESULT(dlp_VFSFileGetDate);
+ 				if (result >= 0) {
+-					ctime_r (&t1, name);
++					ctime_r (&t1, name, sizeof(name));
+ 					LOG((PI_DBG_USER, PI_DBG_LVL_INFO, "* Date created: %s", name));
+ 				}
+ 
+ 				result = dlp_VFSFileGetDate (sd, fileRef, vfsFileDateModified, &t2);
+ 				CHECK_RESULT(dlp_VFSFileGetDate);
+ 				if (result >= 0) {
+-					ctime_r (&t2, name);
++					ctime_r (&t2, name, sizeof(name));
+ 					LOG((PI_DBG_USER, PI_DBG_LVL_INFO, "* Date modified: %s", name));
+ 				}
+ 
+ 				result = dlp_VFSFileGetDate (sd, fileRef, vfsFileDateAccessed, &t2);
+ 				CHECK_RESULT(dlp_VFSFileGetDate);
+ 				if (result >= 0) {
+-					ctime_r (&t2, name);
++					ctime_r (&t2, name, sizeof(name));
+ 					LOG((PI_DBG_USER, PI_DBG_LVL_INFO, "* Date accessed: %s", name));
+ 				}
+ 
+-- 
+1.7.10.3
+

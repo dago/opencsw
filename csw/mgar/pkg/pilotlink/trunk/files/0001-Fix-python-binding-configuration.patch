@@ -1,0 +1,28 @@
+From 1622b681a02e9d98243ffd31b06ac92a7249519c Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 21 Jun 2012 13:04:30 +0200
+Subject: [PATCH] Fix python binding configuration
+
+---
+ m4/python.m4 |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/m4/python.m4 b/m4/python.m4
+index c24ad59..52d0668 100644
+--- a/m4/python.m4
++++ b/m4/python.m4
+@@ -31,9 +31,9 @@ AC_DEFUN([AM_CHECK_PYTHON],
+                 if test "$PYTHON_VERSION" != ""; then 
+                         if test -f $PYTHON_PREFIX/include/python$PYTHON_VERSION/Python.h; then 
+                         AC_MSG_RESULT($PYTHON_PREFIX/include/python$PYTHON_VERSION/Python.h)
+-                                PYTHON_LIB_LOC="-L$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/config"
++                                PYTHON_LIB_LOC="-L$PYTHON_EXEC_PREFIX/lib/python/config"
+                                 PYTHON_CFLAGS="-I$PYTHON_PREFIX/include/python$PYTHON_VERSION"
+-                                PYTHON_MAKEFILE="$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/config/Makefile"
++                                PYTHON_MAKEFILE="$PYTHON_EXEC_PREFIX/lib/python/config/Makefile"
+ 
+                                 PYTHON_LOCALMODLIBS=`sed -n -e 's/^LOCALMODLIBS=\(.*\)/\1/p' $PYTHON_MAKEFILE`
+                                 PYTHON_BASEMODLIBS=`sed -n -e 's/^BASEMODLIBS=\(.*\)/\1/p' $PYTHON_MAKEFILE`
+-- 
+1.7.10.3
+

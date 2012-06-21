@@ -30,30 +30,65 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 
 BUILD_DEP_PKGS		+=	CSWperl
 BUILD_DEP_PKGS		+=	CSWtcl
-BUILD_DEP_PKGS		+=	CSWpython
+BUILD_DEP_PKGS		+=	CSWpython-dev
+BUILD_DEP_PKGS		+=	SUNWlibusb
+#BUILD_DEP_PKGS		+=	SUNWj6dev
+BUILD_DEP_PKGS		+=	CSWdoxygen
 
 RUNTIME_DEP_PKGS	=	CSWperl
 RUNTIME_DEP_PKGS	+=	CSWtcl
 RUNTIME_DEP_PKGS	+=	CSWpython
+RUNTIME_DEP_PKGS	+=	SUNWlibusb
+#RUNTIME_DEP_PKGS	+=	SUNWj6rt
+
 # This cannot be tracked with checkpkg
 # CHECKPKG_OVERRIDES_CSWpilot-link += surplus-dependency|CSWperl
 # CHECKPKG_OVERRIDES_CSWpilot-link += surplus-dependency|CSWtcl
 # CHECKPKG_OVERRIDES_CSWpilot-link += surplus-dependency|CSWpython
 
-PATCHFILE			=	0001-Fix-shebang-in-configure.patch
+PATCHFILES			=	0001-Fix-python-binding-configuration.patch
+PATCHFILES			+=	0002-Fix-ctime_r-prototype.patch
 
 GARCOMPILER			=	GNU
+EXTRA_CFLAGS		=	-I/usr/sfw/include
+EXTRA_LDFLAGS		=	-L/usr/sfw/lib -R/usr/sfw/lib -lusb
+
 CONFIGURE_ARGS		=	$(DIRPATHS)
+CONFIGURE_ARGS		+=	--enable-threads
 CONFIGURE_ARGS		+=	--enable-conduits
 CONFIGURE_ARGS		+=	--enable-libusb
-CONFIGURE_ARGS		+=	--with-perl=perlexec=$(bindir)/perl
-CONFIGURE_ARGS		+=	--with-java
-CONFIGURE_ARGS		+=	--with-tcl=$(libdir)
-CONFIGURE_ARGS		+=	--with-tclinclude
-CONFIGURE_ARGS		+=	--with-python
+# CONFIGURE_ARGS		+=	--with-perl=$(bindir)/perl
+# #CONFIGURE_ARGS		+=	--with-java=/usr/java
+# CONFIGURE_ARGS		+=	--with-tcl=$(libdir)
+# CONFIGURE_ARGS		+=	--with-tclinclude=$(includedir)
+# CONFIGURE_ARGS		+=	--with-python
 
 #LICENCE_CSWpilot-link		=	COPYING
 #LICENCE_CSWpilot-link-lib	=	COPYING.LIB
 
 include gar/category.mk
 
+pre-configure-modulated:
+	@echo "executing $@"
+	cd $(WORKSRC) && libtoolize
+	cd $(WORKSRC) && aclocal -I m4
+	cd $(WORKSRC) && automake -a
+	cd $(WORKSRC) && autoconf
+	$(MAKECOOKIE)
+
+documents	=	\
+				doc/README \
+				doc/README.libusb \
+				doc/README.usb
+
+post-install-modulated: pkgdocdir = $(docdir)/$(NAME)
+post-install-modulated:
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(pkgdocdir)
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r $(documents) $(DESTDIR)$(pkgdocdir)
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man7
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/*.1 $(DESTDIR)$(mandir)/man1
+	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/*.7 $(DESTDIR)$(mandir)/man7
+
+# this is private and not available publicly
+mydependencies:
+	$(HOME)/bin/ocswdeplist --package $(NAME)
