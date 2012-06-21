@@ -36,8 +36,6 @@ RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibiconv2
 
 PACKAGES += CSWlibpoppler-glib5
 CATALOGNAME_CSWlibpoppler-glib5 = libpoppler_glib5
-OBSOLETED_BY_CSWlibpoppler-glib5 = CSWlibpoppler
-
 PKGFILES_CSWlibpoppler-glib5 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.5\.0\.0)
 PKGFILES_CSWlibpoppler-glib5 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibpoppler-glib5 += $(DESCRIPTION), libpoppler-glib.so.5
@@ -51,8 +49,8 @@ RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibfontconfig1
 
 PACKAGES += CSWlibpoppler7
 CATALOGNAME_CSWlibpoppler7 = libpoppler7
@@ -63,37 +61,35 @@ RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWliblcms1
 
 PACKAGES += CSWpoppler-dev
 CATALOGNAME_CSWpoppler-dev = poppler_dev
-OBSOLETED_BY_CSWpoppler-dev = CSWlibpopplerdev 
 SPKG_DESC_CSWpoppler-dev += $(DESCRIPTION), development files
 PKGFILES_CSWpoppler-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler7
 RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-cpp0
 RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-glib5
 
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler-cpp0
+PACKAGES += CSWpoppler
+SPKG_DESC_CSWpoppler += $(DESCRIPTION), utils
+PKGFILES_CSWpoppler += $(call baseisadirs,$(bindir),.*)
+# CSWxpdf provides the same tools, but should use this package instead
+INCOMPATIBLE_PKGS_CSWpoppler = CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftohtml|CSWpdftohtml|CSWpoppler
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftops|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdfimages|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdfinfo|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftotext|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdffonts|CSWpoppler|CSWxpdf
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler7
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWpoppler += CSWpango
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWpoppler += CSWfconfig
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWpoppler += CSWliblcms1
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler-glib5
 
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
 # when relinking libpoppler-glib during install phaze
