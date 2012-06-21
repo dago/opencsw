@@ -73,7 +73,6 @@ PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
