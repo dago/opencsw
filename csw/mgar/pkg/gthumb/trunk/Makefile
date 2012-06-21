@@ -26,6 +26,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 GARCOMPILER = SOS12U3
 PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+STRIP_LIBTOOL = 1
 
 PATCHFILES += mkdtemp-patch
 
