@@ -66,7 +66,7 @@ VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
 
-GARCOMPILER ?= SOS12U3 # SOS12U3
+GARCOMPILER = SOS12U3
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 BUILD_DEP_PKGS  = CSWggettext-dev
@@ -149,6 +149,8 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
+# need /opt/csw/bin/pdftops
+RUNTIME_DEP_PKGS_CSWcupsd += CSWpoppler
 
 # Just docs
 CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-banner.html
@@ -306,13 +308,11 @@ EXTRA_LINKER_FLAGS += -liconv
 EXTRA_LINKER_FLAGS += -norunpath
 
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --enable-pdftops
 CONFIGURE_ARGS += --with-menudir=$(datadir)/applications
 CONFIGURE_ARGS += --localedir=$(datadir)/locale
 CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
 CONFIGURE_ARGS += --with-openslp-includes=/opt/csw/include
-CONFIGURE_ARGS += --with-openslp-lib=/opt/csw/lib
 
 # This breaks non-global sparse zone support.  The class action script is
 # executed in the global zone, but not in the non-global zones, if /opt is
