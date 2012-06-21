@@ -165,14 +165,14 @@ $(eval $(call php5_subpackage,mbstring,CSWlibz1))
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4 CSWlibltdl7 CSWlibz1))
 $(eval $(call php5_subpackage,mssql,CSWlibsybdb5 CSWlibz1))
-$(eval $(call php5_subpackage,mysql,CSWlibmysqlclient15 CSWlibz1))
-$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient15 CSWlibz1))
+$(eval $(call php5_subpackage,mysql,CSWlibmysqlclient18 CSWlibz1 CSWlibssl1-0-0))
+$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient18 CSWlibz1))
 $(eval $(call php5_subpackage,odbc,CSWlibodbc2 CSWlibz1))
 $(eval $(call php5_subpackage,openssl,CSWlibssl1-0-0 CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3 CSWlibz1))
 $(eval $(call php5_subpackage,pcntl,CSWlibz1))
 $(eval $(call php5_subpackage,pdo,CSWlibz1))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
-$(eval $(call php5_subpackage,pdomysql,CSWlibmysqlclient15 CSWlibz1 CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdomysql,CSWlibmysqlclient18 CSWlibz1 CSWphp5-pdo CSWlibssl1-0-0))
 PKGFILES_CSWphp5-pdomysql += .*/lib/php/extensions/.*/pdo_mysql.so
 PKGFILES_CSWphp5-pdomysql += .*extensions/pdo_mysql
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
