@@ -109,8 +109,10 @@ def main():
   parser.add_option("--debug", dest="debug", action="store_true")
   parser.add_option("--execute", dest="execute", action="store_true")
   options, args = parser.parse_args()
+  debug_level = logging.INFO
   if options.debug:
-    logging.basicConfig(level=logging.DEBUG)
+    debug_level = logging.DEBUG
+  logging.basicConfig(level=debug_level)
   pr = PackageRemover()
   pr.RemovePackage(options.catalogname, options.execute)
 
