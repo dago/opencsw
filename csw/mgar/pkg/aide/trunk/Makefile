@@ -16,7 +16,7 @@ DISTFILES += aide.conf
 
 GARCOMPILER = GNU
 
-PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # Disable Sun ACLs for now until bug #2887984 is fixed:
 #   http://sourceforge.net/tracker/?func=detail&aid=2887984&group_id=86976&atid=581579
