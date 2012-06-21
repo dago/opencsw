@@ -15,6 +15,9 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += aide.conf
 
 GARCOMPILER = GNU
+
+PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+
 # Disable Sun ACLs for now until bug #2887984 is fixed:
 #   http://sourceforge.net/tracker/?func=detail&aid=2887984&group_id=86976&atid=581579
 #PATCHFILES = 0001-Fix-ACL-ifdef-logic.patch
@@ -23,6 +26,7 @@ GARCOMPILER = GNU
 #   http://sourceforge.net/tracker/?func=detail&aid=2888035&group_id=86976&atid=581579
 # PATCHFILES += 0002-Add-missing-prototypes-for-db_sql.patch
 # PATCHFILES += 0003-fix-zlib-test_configure.in.patch
+PATCHFILES += 0004-fix-_FILE_OFFSET_BITS_configure.in.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -34,7 +38,7 @@ CHECKPKG_OVERRIDES_CSWaide += file-with-bad-content|/usr/local|root/etc/opt/csw/
 
 RUNTIME_DEP_PKGS_CSWaide += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWaide += CSWlibz1
-RUNTIME_DEP_PKGS_CSWaide += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWaide += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWaide += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWaide += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWaide += CSWlibmhash
