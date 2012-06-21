@@ -68,14 +68,22 @@ class RevDeps(object):
 
 class PackageRemover(object):
 
-  def RemovePackage(self, catalogname, execute=False):
+  def RemovePackage(self, catalogname, execute=False, os_releases=None):
+    if not os_releases:
+      os_releases = common_constants.OS_RELS
     # Get md5 sums
     rest_client = rest.RestClient()
     rd = RevDeps()
     rev_deps = {}
     to_remove = {}
-    for osrel in common_constants.OS_RELS:
+    for osrel in os_releases:
+      if osrel not in common_constants.OS_RELS:
+        logging.warning(
+            "%s not found in common_constants.OS_RELS (%s). Skipping.",
+            osrel, common_constants.OS_RELS)
+        continue
       if osrel in common_constants.OBSOLETE_OS_RELS:
+        logging.info("%s is an obsolete OS release. Skipping.", osrel)
         continue
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
         pkg_simple = rest_client.Srv4ByCatalogAndCatalogname("unstable", arch, osrel, catalogname)
@@ -106,15 +114,23 @@ class PackageRemover(object):
 def main():
   parser = optparse.OptionParser()
   parser.add_option("-c", "--catalogname", dest="catalogname")
+  parser.add_option("--os-releases", dest="os_releases",
+                    help=("Comma separated OS releases, e.g. "
+                          "SunOS5.9,SunOS5.10"))
   parser.add_option("--debug", dest="debug", action="store_true")
-  parser.add_option("--execute", dest="execute", action="store_true")
+  parser.add_option("--execute", dest="execute", action="store_true",
+                    help=("Don't just display, but execute and remove the "
+                          "packages."))
   options, args = parser.parse_args()
   debug_level = logging.INFO
   if options.debug:
     debug_level = logging.DEBUG
   logging.basicConfig(level=debug_level)
+  os_relases = None
+  if options.os_releases:
+    os_releases = options.os_releases.split(",")
   pr = PackageRemover()
-  pr.RemovePackage(options.catalogname, options.execute)
+  pr.RemovePackage(options.catalogname, options.execute, os_releases)
 
 
 if __name__ == '__main__':
