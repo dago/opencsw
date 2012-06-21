@@ -1,0 +1,13 @@
+diff --git a/configure.in b/configure.in
+index cc3e6ff..08e7cf1 100644
+--- a/configure.in
++++ b/configure.in
+@@ -666,7 +666,7 @@ AC_DEFINE_UNQUOTED(DEFAULT_DB,"$default_db",[Default location of signature datab
+ AC_DEFINE_UNQUOTED(DEFAULT_DB_OUT,"$default_db_out",[Default output location for newly-generated signature database])
+ 
+ dnl Do the library tests with the static flag
+-LDFLAGS="$LDFLAGS $LD_STATIC_FLAG"
++EXTRA_LDFLAGS="$EXTRA_LDFLAGS $LD_STATIC_FLAG"
+ if test x$with_zlib = xyes; then
+   AC_CHECK_HEADERS(zlib.h,[],
+  	[AC_MSG_ERROR([You don't have zlib properly installed. Install it or try --without-zlib.])])
