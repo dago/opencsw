@@ -190,18 +190,20 @@ CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
 CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
 CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
-# CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
-# CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
+CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir_install))
+CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir_install))
 # CMAKE_ARGS += -DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
-# CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
-CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/$(MM_LIBDIR)/plugin
+CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir_install))
+CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir_install))/$(NAME)/$(MM_LIBDIR)/plugin
 CMAKE_ARGS += -DWITH_READLINE=1
+CMAKE_ARGS += -DWITH_LIBWRAP=1
 CMAKE_ARGS += -DWITH_SSL=system
 CMAKE_ARGS += -DWITH_ZLIB=system
 CMAKE_ARGS += -DDEFAULT_CHARSET=utf8
 CMAKE_ARGS += -DDEFAULT_COLLATION=utf8_general_ci
 CMAKE_ARGS += -DWITH_COMMENT='OpenCSW'
-CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
+CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
 CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
 # CMAKE_ARGS += -DOPENSSL_INCLUDE_DIR="$(includedir)"
 # CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
