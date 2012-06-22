@@ -48,25 +48,30 @@ RUNTIME_DEP_PKGS	+=	SUNWlibusb
 
 PATCHFILES			=	0001-Fix-python-binding-configuration.patch
 PATCHFILES			+=	0002-Fix-ctime_r-prototype.patch
+PATCHFILES			+=	0003-Avoid-including-redundant-SFW.patch
 
-GARCOMPILER			=	GNU
-EXTRA_CFLAGS		=	-I/usr/sfw/include
+#GARCOMPILER			=	GNU
+EXTRA_INC			=	/usr/sfw/include
 EXTRA_LDFLAGS		=	-L/usr/sfw/lib -R/usr/sfw/lib -lusb
 
 CONFIGURE_ARGS		=	$(DIRPATHS)
 CONFIGURE_ARGS		+=	--enable-threads
 CONFIGURE_ARGS		+=	--enable-conduits
 CONFIGURE_ARGS		+=	--enable-libusb
-# CONFIGURE_ARGS		+=	--with-perl=$(bindir)/perl
+CONFIGURE_ARGS		+=	--with-perl=$(bindir)/perl
 # #CONFIGURE_ARGS		+=	--with-java=/usr/java
-# CONFIGURE_ARGS		+=	--with-tcl=$(libdir)
-# CONFIGURE_ARGS		+=	--with-tclinclude=$(includedir)
-# CONFIGURE_ARGS		+=	--with-python
+CONFIGURE_ARGS		+=	--with-tcl=$(libdir)
+CONFIGURE_ARGS		+=	--with-tclinclude=$(includedir)
+CONFIGURE_ARGS		+=	--with-python
 
 #LICENCE_CSWpilot-link		=	COPYING
 #LICENCE_CSWpilot-link-lib	=	COPYING.LIB
 
 include gar/category.mk
+
+# kludge to ensure that /opt/csw/include come before /usr/sfw/include
+# (needed to have USB capacity):
+CPPFLAGS	:=	$(sort $(CPPFLAGS))
 
 pre-configure-modulated:
 	@echo "executing $@"
