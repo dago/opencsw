@@ -32,14 +32,14 @@ BUILD_DEP_PKGS		+=	CSWperl
 BUILD_DEP_PKGS		+=	CSWtcl
 BUILD_DEP_PKGS		+=	CSWpython-dev
 BUILD_DEP_PKGS		+=	SUNWlibusb
-#BUILD_DEP_PKGS		+=	SUNWj6dev
+BUILD_DEP_PKGS		+=	SUNWj6dev
 BUILD_DEP_PKGS		+=	CSWdoxygen
 
 RUNTIME_DEP_PKGS	=	CSWperl
 RUNTIME_DEP_PKGS	+=	CSWtcl
 RUNTIME_DEP_PKGS	+=	CSWpython
 RUNTIME_DEP_PKGS	+=	SUNWlibusb
-#RUNTIME_DEP_PKGS	+=	SUNWj6rt
+RUNTIME_DEP_PKGS	+=	SUNWj6rt
 
 # This cannot be tracked with checkpkg
 # CHECKPKG_OVERRIDES_CSWpilot-link += surplus-dependency|CSWperl
@@ -49,6 +49,7 @@ RUNTIME_DEP_PKGS	+=	SUNWlibusb
 PATCHFILES			=	0001-Fix-python-binding-configuration.patch
 PATCHFILES			+=	0002-Fix-ctime_r-prototype.patch
 PATCHFILES			+=	0003-Avoid-including-redundant-SFW.patch
+PATCHFILES			+=	0004-Include-Solaris-specifics-Java-binding.patch
 
 #GARCOMPILER			=	GNU
 EXTRA_INC			=	/usr/sfw/include
@@ -59,7 +60,7 @@ CONFIGURE_ARGS		+=	--enable-threads
 CONFIGURE_ARGS		+=	--enable-conduits
 CONFIGURE_ARGS		+=	--enable-libusb
 CONFIGURE_ARGS		+=	--with-perl=$(bindir)/perl
-# #CONFIGURE_ARGS		+=	--with-java=/usr/java
+CONFIGURE_ARGS		+=	--with-java=/usr/java
 CONFIGURE_ARGS		+=	--with-tcl=$(libdir)
 CONFIGURE_ARGS		+=	--with-tclinclude=$(includedir)
 CONFIGURE_ARGS		+=	--with-python
