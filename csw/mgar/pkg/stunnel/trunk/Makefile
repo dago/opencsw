@@ -7,7 +7,7 @@
 #       Test on Solaris 8 / 9 for comparison
 #
 NAME = stunnel
-VERSION = 4.44
+VERSION = 4.53
 CATEGORIES = net
 GARTYPE = v2
 
