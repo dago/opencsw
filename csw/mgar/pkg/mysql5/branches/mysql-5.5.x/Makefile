@@ -190,11 +190,11 @@ CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
 CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
 CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
-CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir_install))
-CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir_install))
+CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
+CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
 # CMAKE_ARGS += -DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
-CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir_install))
-CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir_install))/$(NAME)/$(MM_LIBDIR)/plugin
+CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
+CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
 CMAKE_ARGS += -DWITH_READLINE=1
 CMAKE_ARGS += -DWITH_LIBWRAP=1
 CMAKE_ARGS += -DWITH_SSL=system
@@ -209,8 +209,8 @@ CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
 # CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 # CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
-# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libssl.so
-# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libcrypto.so
+# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/libssl.so
+# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/libcrypto.so
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
