@@ -1,0 +1,24 @@
+From bed9f247bdaa4bed8cd7dedc55a46adeaff22f34 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 22 Jun 2012 10:24:07 +0200
+Subject: [PATCH] Avoid including redundant SFW
+
+---
+ bindings/Makefile.am |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/bindings/Makefile.am b/bindings/Makefile.am
+index 7e0422c..5fd086e 100644
+--- a/bindings/Makefile.am
++++ b/bindings/Makefile.am
+@@ -1,3 +1,7 @@
++# required to avoid mixing with the pi-* include supplied by
++# SunFreeware which is needed to have the USB capacity:
++CPPFLAGS	:=	$(subst -I/usr/sfw/include,,$(CPPFLAGS))
++
+ if WITH_JAVA
+ JAVA_DIR=Java
+ else
+-- 
+1.7.10.3
+
