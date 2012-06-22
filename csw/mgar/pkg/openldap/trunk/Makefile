@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = openldap
-VERSION = 2.4.28
+VERSION = 2.4.30
 GARTYPE = v2
 CATEGORIES = server
 
@@ -26,6 +26,8 @@ EXPANDVARS += CSWoldap.postinstall
 PATCHFILES += patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # Maybe in
 #   /opt/csw/share/man/man5/ldap.conf.5
@@ -61,7 +63,7 @@ RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
 OBSOLETED_BY_CSWopenldap += CSWoldap
@@ -77,7 +79,7 @@ PKGFILES_CSWopenldap-client += $(mandir)/man1/.*
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibssl1-0-0
 OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
 CATALOGNAME_CSWoldapclient = openldap_client_stub
 
@@ -95,7 +97,7 @@ PACKAGES += CSWliblber2-4-2
 SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
 PKGFILES_CSWliblber2-4-2 += $(call pkgfiles_lib,liblber-2.4.so.2)
 RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWlibssl1-0-0
 OBSOLETED_BY_CSWliblber2-4-2 += CSWoldaprt
 CATALOGNAME_CSWoldaprt = openldap_rt_stub
 
@@ -115,7 +117,7 @@ SPKG_DESC_CSWlibldap-r2-4-2 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.
 PKGFILES_CSWlibldap-r2-4-2 += $(call pkgfiles_lib,libldap_r-2.4.so.2)
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
 
 FOREIGN_PACKAGES += CSWliblber2-3-0
@@ -201,9 +203,6 @@ PRESERVECONF += /etc/opt/csw/openldap/slapd.conf
 INITSMF = /etc/opt/csw/init.d/cswopenldap
 
 include gar/category.mk
-
-CFLAGS := $(filter-out -I%,$(CFLAGS))
-DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 post-merge-modulated:
 	ginstall -D $(WORKDIR)/cswopenldap \
