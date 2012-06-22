@@ -29,7 +29,11 @@ DISTFILES   += CSWstunnel.cswstunnel
 MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))
 MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/$(MAJOR_VER).x/
 
-RUNTIME_DEP_PKGS += CSWosslrt
+BUILD_DEP_PKGS += CSWlibssl-dev
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWlibwrap1
 RUNTIME_DEP_PKGS += CSWlibz1
 
