@@ -322,9 +322,9 @@ post-install-modulated:
 	# 	gmv -v "$(DESTDIR)$(bindir)/$${f}" \
 	# 	       "$(DESTDIR)$(bindir)/$${f}"; \
 	# done
-	(cd $(DESTDIR)$(libdir_install); rm libmysqlclient_r.so.18; \
+	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18; \
 		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
-	(cd $(DESTDIR)$(libdir_install); rm libmysqlclient_r.so.18.0.0; \
+	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
 		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
 	# gmv -vf $(DESTDIR)$(mandir)/man1/mysql_config.1
 	@$(MAKECOOKIE)
