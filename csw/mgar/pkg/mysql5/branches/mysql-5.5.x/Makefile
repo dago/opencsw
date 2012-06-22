@@ -141,9 +141,12 @@ EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 EXTRA_MERGE_EXCLUDE_FILES += $(datadir)/mysql-test.*
 
-
-# Enable 64 bits build
-BUILD64 = 1
+# Enable 64 bits, but not for Solaris 9 x86
+BUILD64_5.9_sparc = 1
+BUILD64_5.10_sparc = 1
+BUILD64_5.9_i386 =
+BUILD64_5.10_i386 = 1
+BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))
 
 MASTER_SITES  = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 MASTER_SITES += http://mysql.skynet.be/Downloads/MySQL-$(BASE_VERSION)/
