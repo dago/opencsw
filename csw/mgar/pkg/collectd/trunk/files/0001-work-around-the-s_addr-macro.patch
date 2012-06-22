@@ -1,0 +1,57 @@
+From ccb4cb2d3a9b4ef7c8fbc4275f00acdc01abe02a Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 31 May 2012 16:21:57 +0200
+Subject: [PATCH] work around the s_addr macro
+
+---
+ src/utils_dns.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/utils_dns.c b/src/utils_dns.c
+index cfa4a5c..fcf7b43 100644
+--- a/src/utils_dns.c
++++ b/src/utils_dns.c
+@@ -449,7 +449,7 @@ handle_ipv6 (struct ip6_hdr *ipv6, int len)
+     unsigned int offset;
+     int nexthdr;
+ 
+-    struct in6_addr s_addr;
++    struct in6_addr fluffy_kitten;
+     uint16_t payload_len;
+ 
+     if (0 > len)
+@@ -457,10 +457,10 @@ handle_ipv6 (struct ip6_hdr *ipv6, int len)
+ 
+     offset = sizeof (struct ip6_hdr);
+     nexthdr = ipv6->ip6_nxt;
+-    s_addr = ipv6->ip6_src;
++    fluffy_kitten = ipv6->ip6_src;
+     payload_len = ntohs (ipv6->ip6_plen);
+ 
+-    if (ignore_list_match (&s_addr))
++    if (ignore_list_match (&fluffy_kitten))
+ 	    return (0);
+ 
+     /* Parse extension headers. This only handles the standard headers, as
+@@ -527,15 +527,15 @@ handle_ip(const struct ip *ip, int len)
+ {
+     char buf[PCAP_SNAPLEN];
+     int offset = ip->ip_hl << 2;
+-    struct in6_addr s_addr;
++    struct in6_addr fluffy_kitten;
+     struct in6_addr d_addr;
+ 
+     if (ip->ip_v == 6)
+ 	return (handle_ipv6 ((void *) ip, len));
+ 
+-    in6_addr_from_buffer (&s_addr, &ip->ip_src.s_addr, sizeof (ip->ip_src.s_addr), AF_INET);
++    in6_addr_from_buffer (&fluffy_kitten, &ip->ip_src.s_addr, sizeof (ip->ip_src.s_addr), AF_INET);
+     in6_addr_from_buffer (&d_addr, &ip->ip_dst.s_addr, sizeof (ip->ip_dst.s_addr), AF_INET);
+-    if (ignore_list_match (&s_addr))
++    if (ignore_list_match (&fluffy_kitten))
+ 	    return (0);
+     if (IPPROTO_UDP != ip->ip_p)
+ 	return 0;
+-- 
+1.7.10
+
