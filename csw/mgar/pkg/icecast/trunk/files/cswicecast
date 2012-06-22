@@ -1,0 +1,172 @@
+#!/bin/sh
+#
+# SMF Method file for icecast
+#
+
+ICECAST=/opt/csw/bin/icecast
+CFGFILE=/etc/opt/csw/icecast.xml
+VARRUNX=/var/run
+PIDFILE=${VARRUNX}/icecast.pid
+PIDFILO=${VARRUNX}/icecast.pid.oldbin
+
+[ ! -f ${ICECAST} ] && exit 255
+[ ! -f ${CFGFILE} ] && exit 254
+
+RETVAL=0
+
+start() {
+	$ICECAST -c $CFGFILE -b
+	RETVAL=$?
+	return $RETVAL
+}
+
+stop() {
+	killpidf -TERM $PIDFILO
+	killpidf -TERM
+}
+
+check() {
+	MSG=`$ICECAST -t 2>&1`
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && echo $MSG
+	return $RETVAL
+}
+
+killpidf() {
+	if [ "$2" != "" ]; then
+		PIDF=$2
+	else
+		PIDF=$PIDFILE
+	fi
+	if [ -s "$PIDF" ]; then
+		/bin/kill $1 `/usr/bin/cat $PIDF`
+		RETVAL=$?
+	else
+		RETVAL=1
+	fi
+	return $RETVAL
+}
+
+reload() {
+	killpidf -HUP
+	return $RETVAL
+}
+
+restart() {
+	stop
+	start
+	return $RETVAL
+}
+
+rotate() {
+	killpidf -USR1
+	return $RETVAL
+}
+
+status() {
+	if [ -s "$PIDFILE" ]; then
+		FPID=`/bin/cat $PIDFILE`
+	else
+		echo "not running"
+		RETVAL=1
+		return $RETVAL
+	fi
+	PIDP=`/bin/ps -o pid= -p $FPID`
+	if [ "$PIDP" = "" ]; then
+		echo "not running"
+		RETVAL=1
+		return $RETVAL
+	fi
+	COMM=`/bin/ps -o comm= -p $FPID`
+	if [ "$ICECAST" = "$COMM" ]; then
+		echo "running"
+		RETVAL=0
+		return $RETVAL
+	else
+		echo "running, but it is not a CSW package"
+		RETVAL=1
+		return $RETVAL
+	fi
+}
+
+upgrade()
+{
+	killpidf -USR2
+	[ $RETVAL -ne 0 ] && return $RETVAL
+	OLDBINPID=0
+	for i in 1 2 3 4 5; do
+		if [ -f $PIDFILO ]; then
+			 OLDBINPID=1
+			 break
+		else
+			 sleep 1
+		fi
+	done
+	if [ $OLDBINPID -eq 1 ]; then
+		status >/dev/null
+		if [ $RETVAL -eq 0 ]; then
+			 killpidf -WINCH $PIDFILO
+		fi
+	else
+		RETVAL=1
+	fi
+	return $RETVAL
+}
+
+upgrade_commit()
+{
+	killpidf -QUIT $PIDFILO
+	return $RETVAL
+}
+
+upgrade_rollback()
+{
+	killpidf -HUP $PIDFILO
+	if [ $RETVAL -eq 0 ]; then
+		killpidf -QUIT $PIDFILE
+	fi
+	return $RETVAL
+}
+
+
+case "$1" in
+start)
+	[ ! -d $VARRUNX ] && /bin/mkdir -p $VARRUNX ||:
+	check
+	[ $RETVAL -eq 0 ] && start ||:
+	;;
+stop)
+	stop
+	;;
+refresh|reload)
+	check
+	[ $RETVAL -eq 0 ] && reload ||:
+	;;
+restart)
+	check
+	[ $RETVAL -eq 0 ] && restart ||:
+	;;
+rotate)
+	rotate
+	;;
+status)
+	status
+	;;
+upgrade)
+	check
+	[ $RETVAL -eq 0 ] && upgrade ||:
+	;;
+upgrade-commit)
+	upgrade_commit
+	;;
+upgrade-rollback)
+	upgrade_rollback
+	;;
+*)
+	echo "Usage:" `basename $0` "{start|stop|refresh|reload|restart|rotate|status|upgrade|upgrade-commit|upgrade-rollback}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+
