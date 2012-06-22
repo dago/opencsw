@@ -3,9 +3,11 @@
 #   feedback pending.
 #
 NAME = httping
-VERSION = 1.4.1
+VERSION = 1.5.3
 CATEGORIES = net
 GARTYPE = v2
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DESCRIPTION = Httping is like 'ping' but for http-requests.
 define BLURB
@@ -19,7 +21,8 @@ MASTER_SITES = http://www.vanheusden.com/httping/
 DISTFILES    = $(NAME)-$(VERSION).tgz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
-RUNTIME_DEP_PKGS = CSWosslrt
+BUILD_DEP_PKGS += CSWlibssl-dev
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 # Makefile comes pre-set with gcc defaults and hardcoded tools
 # Already submitted upstream, feedback pending.
