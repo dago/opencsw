@@ -1,0 +1,25 @@
+From 65c4910a8801f031652d2e7985062a20f9938e48 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 22 Jun 2012 11:02:26 +0200
+Subject: [PATCH] Include Solaris specifics Java binding
+
+---
+ bindings/Java/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bindings/Java/Makefile.am b/bindings/Java/Makefile.am
+index cdeb59d..30fc38f 100644
+--- a/bindings/Java/Makefile.am
++++ b/bindings/Java/Makefile.am
+@@ -7,7 +7,7 @@ INCLUDES= 				\
+ 	-I $(top_srcdir)/include 	\
+ 	-I $(top_builddir)/include	\
+ 	-I $(JAVABASE)/include		\
+-	-I $(JAVABASE)/include/linux
++	-I $(JAVABASE)/include/solaris
+ 
+ java_files= \
+ 	$(srcdir)/MidiMgr.java	\
+-- 
+1.7.10.3
+
