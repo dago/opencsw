@@ -341,6 +341,13 @@ pre-patch-modulated:
 	@(cd $(WORKSRC); rm .gitignore; git add -A; git ci -m 'adding files that were previously ignored' )
 	@$(MAKECOOKIE)
 
+pre-configure-modulated:
+	@echo Munging c-client routine in configure.
+	@(cd $(WORKSRC); \
+		perl -pi -e "s|c-client4 c-client|c-client.2007f|g" configure; \
+		git add configure; git ci -m 'modify c-client finding routine')
+	@$(MAKECOOKIE)
+
 # this allows apxs to install the module.  stupid, but i couldn't make
 # the darn thing _not_ do try to add the httpd.conf lines, even with
 # patching...
