@@ -75,7 +75,9 @@ RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-glib5
 PACKAGES += CSWpoppler
 SPKG_DESC_CSWpoppler += $(DESCRIPTION), utils
 PKGFILES_CSWpoppler += $(call baseisadirs,$(bindir),.*)
+PKGFILES_CSWpoppler += $(call baseisadirs,$(datadir)/man,.*)
 # CSWxpdf provides the same tools, but should use this package instead
+# interims solution until rework xpdf
 INCOMPATIBLE_PKGS_CSWpoppler = CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftohtml|CSWpdftohtml|CSWpoppler
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftops|CSWpoppler|CSWxpdf
@@ -83,6 +85,13 @@ CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdfimages|CSWpopple
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdfinfo|CSWpoppler|CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftotext|CSWpoppler|CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdffonts|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/bin/pdftoppm|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdfimages.1|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdfinfo.1|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftoppm.1|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftops.1|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftotext.1|CSWpoppler|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdffonts.1|CSWpoppler|CSWxpdf
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler7
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfreetype6
