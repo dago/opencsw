@@ -1,25 +1,26 @@
-From 4d95ec1e711a77139cb3f9e53463d2b01aa1fcdb Mon Sep 17 00:00:00 2001
-From: Sebastian Kayser <skayser@opencsw.org>
-Date: Fri, 15 Jan 2010 02:39:30 +0100
+From acfa6600510090092bd64b759400fbee81827f3b Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 22 Jun 2012 04:15:19 +0200
 Subject: [PATCH] Makefile: make options and tools configurable
 
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
  Makefile |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index c27bf22..0133741 100644
+index 1351e33..da3695b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -16,26 +16,26 @@ include version
- 
+@@ -17,26 +17,26 @@ include version
  TARGET=httping
  
+ DEBUG=yes
 -WFLAGS=-Wall -W
 -OFLAGS=-O2
 +WFLAGS?=-Wall -W
 +OFLAGS?=-O2
- CFLAGS+=$(WFLAGS) $(OFLAGS) -DVERSION=\"$(VERSION)\"
+ CFLAGS+=$(WFLAGS) $(OFLAGS) -DVERSION=\"$(VERSION)\" -g
  
  PACKAGE=$(TARGET)-$(VERSION)
 -PREFIX=/usr
@@ -47,7 +48,7 @@ index c27bf22..0133741 100644
  
  OBJS=mem.o http.o io.o str.o error.o utils.o main.o tcp.o res.o
  
-@@ -62,7 +62,7 @@ endif
+@@ -63,7 +63,7 @@ endif
  all: $(TARGET)
  
  $(TARGET): $(OBJS)
@@ -57,5 +58,5 @@ index c27bf22..0133741 100644
  	# Oh, blatant plug: http://keetweej.vanheusden.com/wishlist.html
  
 -- 
-1.6.6
+1.7.10.3
 
