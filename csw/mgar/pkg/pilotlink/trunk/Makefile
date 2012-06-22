@@ -51,7 +51,7 @@ PATCHFILES			+=	0002-Fix-ctime_r-prototype.patch
 PATCHFILES			+=	0003-Avoid-including-redundant-SFW.patch
 PATCHFILES			+=	0004-Include-Solaris-specifics-Java-binding.patch
 
-#GARCOMPILER			=	GNU
+GARCOMPILER			=	SOS12U3
 EXTRA_INC			=	/usr/sfw/include
 EXTRA_LDFLAGS		=	-L/usr/sfw/lib -R/usr/sfw/lib -lusb
 
