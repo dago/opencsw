@@ -19,6 +19,8 @@ DISTFILES += $(DISTNAME).tar.gz
 PATCHFILES += pycurl-mondo.patch
 PATCHDIRLEVEL = 0
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://pycurl.sourceforge.net/
 
 PACKAGES += CSWpy-curl
@@ -27,7 +29,7 @@ RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpy-curl += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibssl1-0-0
 
 # These are docs only
 CHECKPKG_OVERRIDES_CSWpy-curl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pycurl/INSTALL
