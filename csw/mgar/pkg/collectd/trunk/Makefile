@@ -17,6 +17,8 @@ VENDOR_URL = http://collectd.org/
 
 PATCHFILES += 0001-work-around-the-s_addr-macro.patch
 
+BUILD64 = 1
+
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 EXTRA_CPPFLAGS = -DSOLARIS2=10 -D__EXTENSIONS__
 
