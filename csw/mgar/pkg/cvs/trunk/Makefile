@@ -26,33 +26,31 @@ DISTFILES += README.CSW
 #   http://lists.gnu.org/archive/html/bug-cvs/2008-01/msg00007.html
 PATCHFILES += cvs-1.12.13-extssh.diff
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # The above is a functionality patch
 VERSION_FLAG_PATCH = 1
 
 PACKAGES += CSWcvs
 CATALOGNAME_CSWcvs = cvs
 SPKG_DESC_CSWcvs = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWcvs += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWcvs += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWcvs += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcvs += CSWzlib
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWcvs += CSWlibk5crypto3
+OBSOLETED_BY_CSWcvs += CSWcvs-feature
 
-PACKAGES += CSWcvs-feature
-CATALONGAME_CSWcvs-feature = cvs_feature
-SPKG_DESC_CSWcvs-feature = Legacy package as CSWcvs now contains the feature CVS
-PKGFILES_CSWcvs-feature = $(prefix)/cvs-feature
-ARCHALL_CSWcvs-feature = 1
-RUNTIME_DEP_PKGS_CSWcvs-feature = CSWcvs
-CHECKPKG_OVERRIDES_CSWcvs-feature += surplus-dependency|CSWcvs
+# This is just the legacy link
+PKGFILES_CSWcvs-feature += $(prefix)/cvs-feature
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-external-zlib=$(prefix)
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
-
 # The testsuite runs for more than one hour!
-# SKIPTEST ?= 1
+SKIPTEST ?= 1
 
 # This is for GNATS. We don't have GNATS at OpenCSW
 CHECKPKG_OVERRIDES_CSWcvs += file-with-bad-content|/usr/local|root/opt/csw/bin/cvsbug
@@ -70,6 +68,6 @@ include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
 
 post-install-modulated:
-	@gln -sf ../share/cvs/contrib/rcs2log $(DESTDIR)$(bindir)/rcslog
-	@gln -s . $(DESTDIR)$(prefix)/cvs-feature
+	gln -sf ../share/cvs/contrib/rcs2log $(DESTDIR)$(bindir)/rcslog
+	gln -s . $(DESTDIR)$(prefix)/cvs-feature
 	@$(MAKECOOKIE)
