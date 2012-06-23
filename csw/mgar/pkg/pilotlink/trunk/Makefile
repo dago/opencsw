@@ -142,23 +142,15 @@ CHECKPKG_OVERRIDES_CSWpilot-link+=	surplus-dependency|CSWlibncurses5
 CHECKPKG_OVERRIDES_CSWpilot-link+=	surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWpilot-link+=	surplus-dependency|CSWlibpisync1
 # these are here because we wish to suport USB which is provided in SFW:
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-addresses
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-clip
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-csd
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-debugsh
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-dedupe
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-dlpsh
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-file
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
-ot-foto
-CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-foto-treo600
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-addresses
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-clip
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-csd
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-debugsh
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-dedupe
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-dlpsh
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-file
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-foto
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/piot-foto-treo600
 CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-foto-treo650
 CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-getram
 CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-getrom
