@@ -58,7 +58,7 @@ CONFIGURE_ARGS		+=	--enable-threads
 CONFIGURE_ARGS		+=	--enable-conduits
 CONFIGURE_ARGS		+=	--enable-libusb
 CONFIGURE_ARGS		+=	--with-perl=$(bindir)/perl
-CONFIGURE_ARGS		+=	--with-java=/usr/java
+#CONFIGURE_ARGS		+=	--with-java=/usr/java
 CONFIGURE_ARGS		+=	--with-tcl=$(libdir)
 CONFIGURE_ARGS		+=	--with-tclinclude=$(includedir)
 CONFIGURE_ARGS		+=	--with-python
