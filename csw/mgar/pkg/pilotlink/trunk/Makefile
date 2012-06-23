@@ -136,6 +136,56 @@ RUNTIME_DEP_PKGS_CSWpilot-link	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWpilot-link	+=	CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWpilot-link	+=	CSWlibreadline6
 LICENCE_CSWpilot-link			=	COPYING
+CHECKPKG_OVERRIDES_CSWpilot-link+=	missing-dependency|CSWlibpopt0
+CHECKPKG_OVERRIDES_CSWpilot-link+=	missing-dependency|CSWtcl
+CHECKPKG_OVERRIDES_CSWpilot-link+=	surplus-dependency|CSWlibncurses5
+CHECKPKG_OVERRIDES_CSWpilot-link+=	surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWpilot-link+=	surplus-dependency|CSWlibpisync1
+# these are here because we wish to suport USB which is provided in SFW:
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-addresses
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-clip
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-csd
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-debugsh
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-dedupe
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-dlpsh
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-file
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pil
+ot-foto
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-foto-treo600
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-foto-treo650
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-getram
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-getrom
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-getromtoken
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-hinotes
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-datebook
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-expenses
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-hinote
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-memo
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-netsync
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-todo
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-todos
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-install-user
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-memos
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-nredir
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-expenses
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-ical
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-notepad
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-palmpix
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-screenshot
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-todos
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-read-veo
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-reminders
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-schlep
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-wav
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pilot-xfer
+CHECKPKG_OVERRIDES_CSWpilot-link+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/pitclsh
 
 PACKAGES						+=	CSWlibpisock9
 CATALOGNAME_CSWlibpisock9		=	libpisock9
@@ -145,6 +195,8 @@ SPKG_DESC_CSWlibpisock9			+=	$(DESCRIPTION), libpisock.so.9
 OBSOLETED_BY_CSWlibpisock9		=	CSWpilotlink
 RUNTIME_DEP_PKGS_CSWlibpisock9	+=	SUNWlibusb
 LICENCE_CSWlibpisock9			=	COPYING.LIB
+# this is here because we wish to suport USB which is provided in SFW:
+CHECKPKG_OVERRIDES_CSWlibpisock9+= bad-rpath-entry|/usr/sfw/lib|opt/csw/lib/libpisock.so.9.0.2
 
 PACKAGES						+=	CSWlibpisync1
 CATALOGNAME_CSWlibpisync1		=	libpisync1
@@ -156,6 +208,9 @@ RUNTIME_DEP_PKGS_CSWlibpisync1	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibpisync1	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibpisync1	+=	CSWlibpisock9
 LICENCE_CSWlibpisync1			=	COPYING.LIB
+CHECKPKG_OVERRIDES_CSWlibpisync1 += surplus-dependency|CSWlibz1
+# this is here because we wish to suport USB which is provided in SFW:
+CHECKPKG_OVERRIDES_CSWlibpisync1 += bad-rpath-entry|/usr/sfw/lib|opt/csw/lib/libpisync.so.1.0.3
 
 PACKAGES						+=	CSWlibpitcl0
 CATALOGNAME_CSWlibpitcl0		=	libpitcl0
@@ -170,6 +225,10 @@ RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibpisock9
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWtcl
 LICENCE_CSWlibpitcl0			=	COPYING.LIB
+CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/lib/libpitcl.so.0.0.0
+CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	surplus-dependency|CSWlibintl8
 
 PACKAGES							+=	CSWpilot-link-perl
 CATALOGNAME_CSWpilot-link-perl		=	pilot_link_perl
@@ -185,7 +244,6 @@ PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/csw/auto/PDA/Pilot/autosplit.
 RUNTIME_DEP_PKGS_CSWpilot-link-perl	+=	CSWlibpisock9
 RUNTIME_DEP_PKGS_CSWpilot-link-perl	+=	CSWperl
 RUNTIME_DEP_PKGS_CSWpilot-link-perl	+=	CSWlibz1
-ARCHALL_CSWpilot-link-perl			=	1
 
 PACKAGES								+=	CSWpilot-link-python
 CATALOGNAME_CSWpilot-link-python		=	pilot_link_python
@@ -200,7 +258,6 @@ PKGFILES_CSWpilot-link-python			+=	/opt/csw/lib/python/site-packages/python_libp
 RUNTIME_DEP_PKGS_CSWpilot-link-python	+=	CSWlibpisock9
 RUNTIME_DEP_PKGS_CSWpilot-link-python	+=	CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpilot-link-python	+=	CSWlibz1
-ARCHALL_CSWpilot-link-python			=	1
 CHECKPKG_OVERRIDES_CSWpilot-link-python	+=	discouraged-path-in-pkgmap|/opt/csw/lib/python/site-packages/pisock.pyc
 CHECKPKG_OVERRIDES_CSWpilot-link-python	+=	discouraged-path-in-pkgmap|/opt/csw/lib/python/site-packages/pisockextras.pyc
 CHECKPKG_OVERRIDES_CSWpilot-link-python	+=	pkgname-does-not-start-with-CSWpy-
