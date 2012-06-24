@@ -1,6 +1,6 @@
-# : Makefile 9089 2010-03-11 08:34:46Z wahwah $
+# $Id$
 NAME = amanda
-VERSION = 3.2.0
+VERSION = 3.3.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,11 +11,12 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-DEP_PKGS = CSWperl CSWreadline CSWlibidn CSWglib2 CSWsasl CSWlibcares CSWggettextrt CSWzlib CSWoldaprt
-DEP_PKGS += CSWcurlrt CSWosslrt CSWlibnet
+BUILD_DEP_PKGS = CSWlibcares-dev
+# libcares?
+# DEP_PKGS = CSWperl CSWreadline CSWlibidn CSWglib2 CSWsasl CSWggettextrt CSWzlib CSWoldaprt
+# DEP_PKGS += CSWcurlrt CSWosslrt CSWlibnet
 
 VENDOR_URL = http://www.amanda.org
 
@@ -62,4 +63,28 @@ CONFIGURE_ARGS += --with-gnutar=/opt/csw/bin/gtar
 CONFIGURE_ARGS += --disable-installperms
 CONFIGURE_ARGS += --with-amperldir=/opt/csw/lib/perl/csw
 
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibz1
+RUNTIME_DEP_PKGS_CSWamanda += CSWperl
+
+# for opt/csw/lib/charset.alias
+RUNTIME_DEP_PKGS_CSWamanda += CSWlibcharset1
+CHECKPKG_OVERRIDES_CSWamanda += surplus-dependency|CSWlibcharset1
+
+# man pages
+CHECKPKG_OVERRIDES_CSWamanda += file-with-bad-content
+
 include gar/category.mk
+
+post-install-modulated:
+	# It belongs to CSWlibcharset1
+	rm $(DESTDIR)/opt/csw/lib/charset.alias
+	@$(MAKECOOKIE)
