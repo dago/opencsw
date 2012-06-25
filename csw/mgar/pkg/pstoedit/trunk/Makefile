@@ -24,6 +24,9 @@ CONFIGURE_ARGS	+=	--without-swf
 
 LICENSE			=	copying
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 include gar/category.mk
 
 # this is private and not available publicly
