@@ -17,6 +17,8 @@ BUILD_DEP_PKGS		+=	CSWimagemagick-dev
 BUILD_DEP_PKGS		+=	CSWlibgd-dev
 BUILD_DEP_PKGS		+=	CSWplotutils-dev
 
+GARCOMPILER			=	SOS12U3
+
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--with-libplot
 CONFIGURE_ARGS	+=	--without-emf
