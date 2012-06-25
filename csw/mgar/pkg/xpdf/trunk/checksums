@@ -1,7 +1,1 @@
-28cd772ed42159f2dbbe3a0e8e9e4dfa  patch-GString.cc
-4c23bc375fbb6096fb8b2266d0ef527d  patch-XPDFCore.cc
-599dc4cc65a07ee868cf92a667a913d2  xpdf-3.02.tar.gz
-877118786dfe27d1b7aa5a6759cc6e45  xpdf-3.02pl1.patch
-3a5cb165ae66781e0b21e6219ae06795  xpdf-3.02pl2.patch
-581963ede0fb5715e1a69f01b5b8ce63  xpdf-3.02pl3.patch
-70b752716798dd341a4bf890df5f6fdc  xpdf-3.02pl4.patch
+af75f772bee0e5ae4a811ff9d03eac5a  xpdf-3.03.tar.gz
