@@ -158,7 +158,7 @@ $(eval $(call php5_subpackage,hash,CSWlibz1))
 PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 $(eval $(call php5_subpackage,iconv,CSWlibiconv2 CSWlibz1))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
-$(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWlibssl1-0-0 CSWlibz1))
+$(eval $(call php5_subpackage,imap,CSWlibc-client2007f CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWlibssl1-0-0 CSWlibz1))
 $(eval $(call php5_subpackage,json,CSWlibz1))
 $(eval $(call php5_subpackage,ldap,CSWliblber2-4-2 CSWlibldap2-4-2 CSWlibsasl2-2 CSWlibz1))
 $(eval $(call php5_subpackage,mbstring,CSWlibz1))
@@ -166,7 +166,7 @@ PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4 CSWlibltdl7 CSWlibz1))
 $(eval $(call php5_subpackage,mssql,CSWlibsybdb5 CSWlibz1))
 $(eval $(call php5_subpackage,mysql,CSWlibmysqlclient18 CSWlibz1 CSWlibssl1-0-0))
-$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient18 CSWlibz1))
+$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient18 CSWlibz1 CSWlibssl1-0-0))
 $(eval $(call php5_subpackage,odbc,CSWlibodbc2 CSWlibz1))
 $(eval $(call php5_subpackage,openssl,CSWlibssl1-0-0 CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3 CSWlibz1))
 $(eval $(call php5_subpackage,pcntl,CSWlibz1))
