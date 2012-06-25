@@ -1,5 +1,5 @@
 NAME = phpldapadmin
-VERSION = 1.2.0.5
+VERSION = 1.2.2
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -18,17 +18,36 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += CSWphpldapadmin.preinstall
 
+# The .git directory is not needed and would need to be skipped on install
+NOGITPATCH = 1
+
+VENDOR_URL = http://phpldapadmin.sourceforge.net/
+
+LICENSE = LICENSE
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = https://sourceforge.net/projects/phpldapadmin/files/
 UFILES_REGEX = (\d+(?:\.\d+)*).tgz
 
-RUNTIME_DEP_PKGS  = CSWapache2
-RUNTIME_DEP_PKGS += CSWap2modphp5
-RUNTIME_DEP_PKGS += CSWphp5session
-RUNTIME_DEP_PKGS += CSWphp5gettext
-RUNTIME_DEP_PKGS += CSWphp5ldap
+PACKAGES += CSWphpldapadmin
+SPKG_DESC_CSWphpldapadmin = Web-based LDAP browser to manage your LDAP server
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWphpldapadmin += CSWapache2
+RUNTIME_DEP_PKGS_CSWphpldapadmin += CSWap2-modphp5
+RUNTIME_DEP_PKGS_CSWphpldapadmin += CSWphp5-session
+RUNTIME_DEP_PKGS_CSWphpldapadmin += CSWphp5-gettext
+RUNTIME_DEP_PKGS_CSWphpldapadmin += CSWphp5-ldap
 
-SPKG_SOURCEURL = http://phpldapadmin.sourceforge.net/
+# These can not be tracked by checkpkg
+CHECKPKG_OVERRIDES_CSWphpldapadmin += surplus-dependency|CSWphp5-session
+CHECKPKG_OVERRIDES_CSWphpldapadmin += surplus-dependency|CSWphp5-ldap
+CHECKPKG_OVERRIDES_CSWphpldapadmin += surplus-dependency|CSWap2-modphp5
+CHECKPKG_OVERRIDES_CSWphpldapadmin += surplus-dependency|CSWphp5-gettext
+
+# This is just an example
+CHECKPKG_OVERRIDES_CSWphpldapadmin += file-with-bad-content|/usr/local|root/opt/csw/share/www/phpldapadmin/config/config.php.CSW
+
+ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -36,9 +55,6 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 PRESERVECONF = $(sharedstatedir)/www/phpldapadmin/config/config.php
-
-LICENSE = LICENSE
-ARCHALL = 1
 
 include gar/category.mk
 
