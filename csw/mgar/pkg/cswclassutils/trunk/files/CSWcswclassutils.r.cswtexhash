@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# r.cswtexhash - Class action script
+#                for registration of TeX packages
+#
+# Written and maintained by Peter Felecan
+#
+# 2012-06-25 Initial release
+
+echo "Removing class <cswtexhash> ..."
+
+while read dest; do
+
+  echo $dest
+  rm -f $dest
+
+done
+
+if [ -x ${PKG_INSTALL_ROOT}/opt/csw/bin/mktexlsr ]; then
+	echo "Unregistering TeX entries. This may take some time..."
+	bash ${PKG_INSTALL_ROOT}/opt/csw/bin/mktexlsr ||
+	echo "Unregistering Tex entries failed! You need to run mktexlsr again"
+fi
+
+exit 0

@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# i.cswtexhash - Class action script
+# 		 for registration of TeX packages
+#
+# Written and maintained by Peter Felecan
+#
+# 2012-06-25 Initial release
+
+echo "Installing class <cswtexhash> ..."
+
+while read src dest; do
+
+  /usr/bin/cp $src $dest || exit 2
+done
+
+if [ -x ${PKG_INSTALL_ROOT}/opt/csw/bin/mktexlsr ]; then
+	echo "Registering TeX entries. This may take some time..."
+	bash ${PKG_INSTALL_ROOT}/opt/csw/bin/mktexlsr ||
+	echo "Registering Tex entries failed! You need to run mktexlsr again"
+else
+    echo "$dest (TeX will be registered when CSWtetex is installed)"
+fi
+
+exit 0

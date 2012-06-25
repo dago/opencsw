@@ -11,8 +11,9 @@ To release an update of a script pair that you tend, do:
 
 1. Update the script(s) appropriately.
 2. Bump the version number in Makefile
-3. Commit changes to svn.
-4. gmake package-CSWcas-$name (eg: package-CSWcas-initsmf)
+3. Update files/CSWcswclassutils.README.CSW to document the new CAS
+4. Commit changes to svn.
+5. gmake package-CSWcas-$name (eg: package-CSWcas-initsmf)
 
 All of the GAR stuff is dynamically generated.  You can override these
 values if desired, but in most cases this won't be required.

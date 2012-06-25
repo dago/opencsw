@@ -66,6 +66,12 @@ Currently it has:
   package removal. If the entries have been changed manually they will
   not be preserved.
 
+- cswtexhash
+
+  This class takes care of keeping the Tex packages index in sync with
+  all TeX packages installed. It adds index entries on package
+  installation and removes them on package removal.
+
 Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.
 
 -- 
