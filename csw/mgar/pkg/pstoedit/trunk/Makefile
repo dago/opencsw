@@ -16,6 +16,7 @@ DISTFILES		=	$(DISTNAME).tar.gz
 BUILD_DEP_PKGS		+=	CSWimagemagick-dev
 BUILD_DEP_PKGS		+=	CSWlibgd-dev
 BUILD_DEP_PKGS		+=	CSWplotutils-dev
+BUILD_DEP_PKGS		+=	CSWbison
 
 GARCOMPILER			=	SOS12U3
 
@@ -25,6 +26,8 @@ CONFIGURE_ARGS	+=	--without-emf
 CONFIGURE_ARGS	+=	--without-swf
 
 LICENSE			=	copying
+
+STRIP_LIBTOOL	=	1
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
