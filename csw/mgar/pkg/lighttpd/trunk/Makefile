@@ -20,8 +20,6 @@ MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
 DISTFILES   += $(NAME)-$(VERSION).tar.gz
 DISTFILES   += cswlighttpd
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
 PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 
 # When mkdir is issued on an automounted directory like /home/<someuser> errno is
@@ -33,7 +31,7 @@ PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 #   http://redmine.lighttpd.net/boards/2/topics/4163
 PATCHFILES += 0003-Ignore-ENOSYS-on-mkdir-which-happens-on-automounted-.patch
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                                                          
+# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                                                          
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PACKAGES += CSWlighttpd
