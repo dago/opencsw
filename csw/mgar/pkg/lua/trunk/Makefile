@@ -6,7 +6,7 @@
 #     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560139
 
 NAME = lua
-VERSION = 5.2.0
+VERSION = 5.2.1
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -21,6 +21,8 @@ MASTER_SITES = http://www.lua.org/ftp/
 DISTFILES += $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-Make-shared-lib.patch
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://www.lua.org
 
@@ -44,6 +46,9 @@ REINPLACE_MATCH_luaroot = (\#define\s+LUA_ROOT\s+).*
 REINPLACE_WITH_luaroot = $$1"$(prefix)"
 REINPLACE_FILES_luaroot += src/luaconf.h
 
+BUILD64 = 1
+ISAEXEC = 1
+
 # No configure
 CONFIGURE_SCRIPTS =
 
@@ -60,5 +65,7 @@ TEST_TARGET = test
 INSTALL_ARGS += INSTALL=ginstall
 INSTALL_ARGS += INSTALL_TOP=$(DESTDIR)$(prefix)
 INSTALL_ARGS += INSTALL_MAN=$(DESTDIR)$(mandir)/man1
+INSTALL_ARGS += INSTALL_BIN=$(DESTDIR)$(bindir)
+INSTALL_ARGS += INSTALL_LIB=$(DESTDIR)$(libdir)
 
 include gar/category.mk

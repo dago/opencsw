@@ -1,6 +1,6 @@
-From 65faf5dfa74ed9349a3b73156e271620ff227d12 Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <dam@opencsw.org>
-Date: Thu, 19 Jan 2012 20:34:38 +0100
+From 4acc4fe1ee5ef0370dfdb4198f65709db9b95046 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Tue, 26 Jun 2012 10:17:46 +0200
 Subject: [PATCH] Make shared lib
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH] Make shared lib
  2 files changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ec53e1a..e553643 100644
+index bd9515f..bb38500 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -42,6 +42,9 @@ PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris
@@ -22,7 +22,7 @@ index ec53e1a..e553643 100644
  TO_MAN= lua.1 luac.1
  
  # Lua version and release.
-@@ -52,7 +55,7 @@ R= $V.0
+@@ -52,7 +55,7 @@ R= $V.1
  all:	$(PLAT)
  
  $(PLATS) clean:
@@ -50,7 +50,7 @@ index ec53e1a..e553643 100644
  	@echo "INSTALL_TOP= $(INSTALL_TOP)"
  	@echo "INSTALL_BIN= $(INSTALL_BIN)"
 diff --git a/src/Makefile b/src/Makefile
-index bba1693..fdd68b1 100644
+index 8c9ee67..2cc26e1 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -29,6 +29,7 @@ MYOBJS=
@@ -79,17 +79,17 @@ index bba1693..fdd68b1 100644
 +so:	$(ALL_SO)
 +
  $(LUA_A): $(BASE_O)
- 	$(AR) $@ $?
+ 	$(AR) $@ $(BASE_O)
  	$(RANLIB) $@
  
 +$(LUA_SO): $(LUA_A)
 +	-rm -f $(LUA_SO)
-+	$(CC) -h $(LUA_SO).$(V) -G -o $(LUA_SO).$(R) $(CORE_O) $(LIB_O)
++	$(CC) $(LDFLAGS) -h $(LUA_SO).$(V) -G -o $(LUA_SO).$(R) $(CORE_O) $(LIB_O)
 +	ln -s $(LUA_SO).$(R) $(LUA_SO)
 +
  $(LUA_T): $(LUA_O) $(LUA_A)
  	$(CC) -o $@ $(LDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)
  
 -- 
-1.7.8.3
+1.7.10.3
 
