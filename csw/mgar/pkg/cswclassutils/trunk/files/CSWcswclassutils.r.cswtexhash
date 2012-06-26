@@ -12,7 +12,11 @@ echo "Removing class <cswtexhash> ..."
 while read dest; do
 
   echo $dest
-  rm -f $dest
+  if [ -d $dest ]; then
+	  rmdir $dest
+  else
+	  rm -f $dest
+  fi
 
 done
 
