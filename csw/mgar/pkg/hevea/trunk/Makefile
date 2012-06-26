@@ -29,7 +29,6 @@ endef
 
 MASTER_SITES	=	http://hevea.inria.fr/distri/
 DISTFILES		= 	$(DISTNAME).tar.gz
-DISTFILES		+=	CSWhevea.postinstall
 
 LICENSE			=	LICENSE
 
