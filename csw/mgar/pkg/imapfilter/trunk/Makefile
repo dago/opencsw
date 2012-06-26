@@ -3,6 +3,8 @@ VERSION = 2.2.2
 GARTYPE = v2
 CATEGORIES = net
 
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 DESCRIPTION = IMAP mail filtering utility
 define BLURB
   IMAPFilter is a mail filtering utility. It connects to remote mail servers
