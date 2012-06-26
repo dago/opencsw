@@ -37,8 +37,6 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns
 LICENSE = LICENSE
 
 BUILD64 = 1
-EXTRA_BUILD_ISAS_i386   = pentium_pro
-EXTRA_BUILD_ISAS_sparc  = sparcv8plus
 EXTRA_BUILD_ISAS_sparc += sparcv8plus+vis
 
 RUNTIME_DEP_PKGS_CSWlibldns1 += CSWlibssl1-0-0
@@ -54,9 +52,7 @@ CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --enable-sha2
 
 MERGE_DIRS_isa-sparcv9 = $(libdir)
-MERGE_DIRS_isa-sparcv8plus = $(libdir)
 MERGE_DIRS_isa-amd64 = $(libdir)
-MERGE_DIRS_isa-pentium_pro = $(libdir)
 
 TEST_TARGET =
 
