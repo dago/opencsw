@@ -14,6 +14,9 @@ endef
 DISTNAME		=	dirtree
 MASTER_SITES	=	http://mirror.ctan.org/macros/generic/
 DISTFILES		=	$(DISTNAME).zip
+# taken from http://www.latex-project.org/lppl.txt
+LICENCE						=	lppl.txt
+DISTFILES		+=	$(LICENCE)
 
 RUNTIME_DEP_PKGS	+=	CSWtetex
 
@@ -23,6 +26,7 @@ CATALOGNAME_CSWtex-dirtree	=	tex_dirtree
 OBSOLETED_BY_CSWtex-dirtree	=	CSWtexdirtree
 CATALOGNAME_CSWtexdirtree	=	tex_dirtree_stub
 ARCHALL_CSWtex-dirtree		=	1
+CHECKPKG_OVERRIDES_CSWtex-dirtree += surplus-dependency|CSWtetex
 
 CONFIGURE_SCRIPTS	=
 BUILD_SCRIPTS		=	custom
@@ -76,4 +80,5 @@ install-custom:
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.dvi $(DESTDIR)/$(pkgdocdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.ps $(DESTDIR)/$(pkgdocdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.pdf $(DESTDIR)/$(pkgdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/$(LICENCE) $(DESTDIR)/$(pkgdocdir)
 	$(MAKECOOKIE)
