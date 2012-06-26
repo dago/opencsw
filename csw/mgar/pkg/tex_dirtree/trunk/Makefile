@@ -17,6 +17,8 @@ DISTFILES		=	$(DISTNAME).zip
 # taken from http://www.latex-project.org/lppl.txt
 DISTFILES		+=	COPYING
 
+BUILD_DEP_PKGS		+=	CSWtetex
+
 RUNTIME_DEP_PKGS	+=	CSWtetex
 
 PACKAGES					=	CSWtex-dirtree
