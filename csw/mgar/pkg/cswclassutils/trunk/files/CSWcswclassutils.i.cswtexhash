@@ -10,7 +10,7 @@
 echo "Installing class <cswtexhash> ..."
 
 while read src dest; do
-
+  echo $dest
   /usr/bin/cp $src $dest || exit 2
 done
 
