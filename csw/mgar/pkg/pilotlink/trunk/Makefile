@@ -213,12 +213,10 @@ OBSOLETED_BY_CSWlibpitcl0		=	CSWpilotlink
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibpopt0
-RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWlibpisock9
 RUNTIME_DEP_PKGS_CSWlibpitcl0	+=	CSWtcl
 LICENCE_CSWlibpitcl0			=	COPYING.LIB
 CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	bad-rpath-entry|/usr/sfw/lib|opt/csw/lib/libpitcl.so.0.0.0
-CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	surplus-dependency|CSWlibiconv2
 CHECKPKG_OVERRIDES_CSWlibpitcl0	+=	surplus-dependency|CSWlibintl8
 
@@ -226,7 +224,6 @@ PACKAGES							+=	CSWpilot-link-perl
 CATALOGNAME_CSWpilot-link-perl		=	pilot_link_perl
 SPKG_DESC_CSWpilot-link-perl		=	$(DESCRIPTION), Perl binding
 OBSOLETED_BY_CSWpilot-link-perl		=	CSWpilotlink
-PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/5.10.1/perllocal.pod
 PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/csw/PDA/Pilot.pm
 PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/csw/PDA/dump.pl
 PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/csw/auto/PDA/Pilot/.packlist
@@ -235,9 +232,6 @@ PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/csw/auto/PDA/Pilot/Pilot.so
 PKGFILES_CSWpilot-link-perl			+=	/opt/csw/lib/perl/csw/auto/PDA/Pilot/autosplit.ix
 RUNTIME_DEP_PKGS_CSWpilot-link-perl	+=	CSWlibpisock9
 RUNTIME_DEP_PKGS_CSWpilot-link-perl	+=	CSWperl
-RUNTIME_DEP_PKGS_CSWpilot-link-perl	+=	CSWlibz1
-CHECKPKG_OVERRIDES_CSWpilot-link-perl+= perllocal-pod-in-pkgmap|/opt/csw/lib/perl/5.10.1/perllocal.pod
-CHECKPKG_OVERRIDES_CSWpilot-link-perl+= surplus-dependency|CSWlibz1
 
 PACKAGES								+=	CSWpilot-link-python
 CATALOGNAME_CSWpilot-link-python		=	pilot_link_python
@@ -303,6 +297,8 @@ post-install-modulated:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man7
 	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/*.1 $(DESTDIR)$(mandir)/man1
 	cd $(WORKSRC) && ginstall --preserve-timestamps --mode=u=rw,go=r doc/man/*.7 $(DESTDIR)$(mandir)/man7
+	rm -rf $(DESTDIR)$(perllib)/5*
+	$(MAKECOOKIE)
 
 # this is private and not available publicly
 mydependencies:
