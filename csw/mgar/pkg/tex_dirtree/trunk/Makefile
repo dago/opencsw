@@ -67,7 +67,7 @@ $(WORKSRC)/dirtree.pdf:	\
 						$(WORKSRC)/dirtree.ps
 	cd $(WORKSRC) && ps2pdf dirtree.ps dirtree.pdf
 
-install-custom: pkgdocdir = $(docdir)$(NAME)
+install-custom: pkgdocdir = $(docdir)/$(NAME)
 install-custom:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(texdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.sty $(DESTDIR)/$(texdir)
