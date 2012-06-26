@@ -232,6 +232,9 @@ ETCSERVICES += $(_ETCSERVICES_FILES)
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
+# These are the default paths for TeX packages to be picked up.
+TEXHASH ?= $(texmfdir)/.* $(texmfconfigdir)/.* $(texmfdistdir)/.* $(texmflocaldir)/.* $(texmfvardir)/.* 
+
 # if AP2_MODS is set, files matching this shell glob (passed to find)
 # will have 'build' set as their class
 AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
@@ -250,6 +253,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(TEXHASH),$$F[1] = "cswtexhash" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
 		$(if $(PHP5_EXT),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/php5/extensions/.*));) \
 		$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^/opt/csw/etc/templates/.+$$) and $$F[0] eq "f" ); \
@@ -281,6 +285,7 @@ _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
 _CSWCLASSES += cswpostmsg
+_CSWCLASSES += cswtexhash
 
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.

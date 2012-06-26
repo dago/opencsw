@@ -145,6 +145,11 @@ sharedperl         ?= $(sharedstatedir)/perl
 perllib            ?= $(libdir)/perl
 perlcswlib         ?= $(perllib)/csw
 perlpackroot       ?= $(perlcswlib)/auto
+texmfdir           ?= $(sharedstatedir)/texmf
+texmfconfigdir     ?= $(texmfdir)-config
+texmfdistdir       ?= $(texmfdir)-dist
+texmflocaldir      ?= $(texmfdir)-local
+texmfvardir        ?= $(texmfdir)-var
 
 # This Variable is only used if you make your package relocatable
 # using ALLOW_RELOCATE, it will allow you to change your default
