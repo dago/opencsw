@@ -14,7 +14,6 @@ endef
 MASTER_SITES	=	http://ftp.gnu.org/pub/gnu/auctex/
 DISTFILES		=	$(DISTNAME).tar.gz
 DISTFILES		+=	README.CSW
-DISTFILES		+=	CSWauctex.postinstall
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--with-texmf-dir=/opt/csw/share/texmf-local
