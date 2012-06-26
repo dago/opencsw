@@ -1,6 +1,6 @@
 # $Id$
 NAME = lighttpd
-VERSION = 1.4.30
+VERSION = 1.4.31
 CATEGORIES = server
 GARTYPE = v2
 
@@ -20,6 +20,8 @@ MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
 DISTFILES   += $(NAME)-$(VERSION).tar.gz
 DISTFILES   += cswlighttpd
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 
 # When mkdir is issued on an automounted directory like /home/<someuser> errno is
@@ -37,11 +39,35 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 PACKAGES += CSWlighttpd
 CATALOGNAME_CSWlighttpd = lighttpd
 SPKG_DESC_CSWlighttpd = HTTP server built for security, speed, compliance, and flexibility
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibz1
 
+PACKAGES += CSWlighttpd-mod-auth
+SPKG_DESC_CSWlighttpd-mod-auth = Lighttpd module for authentication
+PKGFILES_CSWlighttpd-mod-auth += $(call baseisadirs,$(libdir_install),mod_auth.so)
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-auth += CSWlighttpd
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-auth += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-auth += CSWlibldap2-4-2
+
+PACKAGES += CSWlighttpd-mod-webdav
+SPKG_DESC_CSWlighttpd-mod-webdav = Lighttpd module for WebDAV access
+PKGFILES_CSWlighttpd-mod-webdav += $(call baseisadirs,$(libdir_install),mod_webdav.so)
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-webdav += CSWlighttpd
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-webdav += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-webdav += CSWlibxml2-2
+
+PACKAGES += CSWlighttpd-mod-mysql-vhost
+SPKG_DESC_CSWlighttpd-mod-mysql-vhost = Lighttpd module for MySQL-driven VHOSTs
+PKGFILES_CSWlighttpd-mod-mysql-vhost += $(call baseisadirs,$(libdir_install),mod_mysql_vhost.so)
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-mysql-vhost += CSWlighttpd
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-mysql-vhost += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-mysql-vhost += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlighttpd-mod-mysql-vhost += CSWlibz1
+
+# Add library needed for sendfilev64 referenced from .libs/liblightcomp_la-network_solaris_sendfilev.o
 EXTRA_LINKER_FLAGS += -lsendfile
 
 # To fix undefined symbol 'dlopen' on Solaris 9
@@ -54,20 +80,51 @@ libdir_install = $(prefix)/lib/lighttpd
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-CONFIGURE_ARGS += --with-openssl=$(prefix)
-EXTRA_LINKER_FLAGS += -lcrypto
+CONFIGURE_ARGS += --with-openssl=yes
+CONFIGURE_ARGS += --with-openssl-includes=$(includedir)
+CONFIGURE_ARGS += --with-openssl-libs=$(libpath)
+# EXTRA_LINKER_FLAGS += -lcrypto
 
 # Solaris 9 does not have IPV6_V6ONLY.
 # IPv6 support only works on Solaris 10.
 CONFIGURE_ARGS_5.9 = --disable-ipv6
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
 
+# Plugins:
+# disabled: 
+#   mod_cml
+#   mod_magnet
+#   mod_mysql_vhost
+# 
+# Features:
+# disabled: 
+#   auth-ldap
+#   stat-cache-fam
+#   storage-gdbm
+#   storage-memcache
+#   webdav-locks
+#   webdav-properties
+
+CONFIGURE_ARGS += --with-webdav-props
+CONFIGURE_ARGS += --with-webdav-locks
+CONFIGURE_ARGS += --with-memcache
+CONFIGURE_ARGS += --with-ldap
+CONFIGURE_ARGS += --with-mysql
+
+# -- LUA support
+# Disable LUA for now until this is fixed:
+#   http://redmine.lighttpd.net/issues/2421
+# CONFIGURE_ARGS += --with-lua
+#EXTRA_CONFIGURE_EXPORTS += LUA_CFLAGS LUA_LIBS
+CONFIGURE_ENV_LUA_CFLAGS = $(CPPFLAGS)
+CONFIGURE_ENV_LUA_LIBS = -L$(libdir) -llua
+
 INITSMF = $(sysconfdir)/init\.d/cswlighttpd
 PRESERVECONF = $(sysconfdir)/lighttpd\.conf
 USERGROUP = $(sysconfdir)/pkg/$(NAME)/cswusergroup
 
 # Migrating the configuration file from /opt/csw/etc to /etc/opt/csw
-MIGRATE_FILES = lighttpd.conf
+MIGRATE_FILES_CSWlighttpd = lighttpd.conf
 
 # To allow lighttpd to write logs
 PROTOTYPE_MODIFIERS = user
@@ -95,6 +152,6 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/$(NAME)
 	echo "lighttpd:lighttpd:lighttpd web server::::" \
 		> $(DESTDIR)$(sysconfdir)/pkg/$(NAME)/cswusergroup
-	(cd $(DESTDIR)$(libdir_install); ln -s $(ISA_DEFAULT) 32)
+	(cd $(DESTDIR)$(libdir_install); ln -s . 32)
 	(cd $(DESTDIR)$(libdir_install); ln -s $(ISA_DEFAULT64) 64)
 	@$(MAKECOOKIE)
