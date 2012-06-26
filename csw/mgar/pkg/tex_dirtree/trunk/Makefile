@@ -15,8 +15,7 @@ DISTNAME		=	dirtree
 MASTER_SITES	=	http://mirror.ctan.org/macros/generic/
 DISTFILES		=	$(DISTNAME).zip
 # taken from http://www.latex-project.org/lppl.txt
-LICENCE						=	lppl.txt
-DISTFILES		+=	$(LICENCE)
+DISTFILES		+=	COPYING
 
 RUNTIME_DEP_PKGS	+=	CSWtetex
 
@@ -80,5 +79,4 @@ install-custom:
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.dvi $(DESTDIR)/$(pkgdocdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.ps $(DESTDIR)/$(pkgdocdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/dirtree.pdf $(DESTDIR)/$(pkgdocdir)
-	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/$(LICENCE) $(DESTDIR)/$(pkgdocdir)
 	$(MAKECOOKIE)
