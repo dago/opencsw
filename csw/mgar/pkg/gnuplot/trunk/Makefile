@@ -1,5 +1,5 @@
 NAME = gnuplot
-VERSION = 4.4.3
+VERSION = 4.6.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -13,6 +13,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Remove-definition-unclear-why-leaving-it-in-causes-e.patch
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://www.gnuplot.info/
 
 LICENSE = Copyright
@@ -20,43 +22,50 @@ LICENSE = Copyright
 PACKAGES += CSWgnuplot
 CATALOGNAME_CSWgnuplot = gnuplot
 SPKG_DESC_CSWgnuplot = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWpng
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWemacscommon
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWiconv
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWreadline
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWxpm
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWncurses
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlua
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWftype2
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWzlib
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWjpeg
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWliblua5-2
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibjpeg7
 
 PACKAGES += CSWgnuplot-wx
 CATALOGNAME_CSWgnuplot-wx = gnuplot_wx
 SPKG_DESC_CSWgnuplot-wx = $(DESCRIPTION) (with WX-Widgets and Pango)
 RUNTIME_DEP_PKGS_CSWgnuplot-wx = CSWgnuplot
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetscommon
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibatk
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpango
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpng
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWiconv
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetsgtk2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWreadline
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWgtk2
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWxpm
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWncurses
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlua
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWsunmath
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWftype2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWglib2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWzlib
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWjpeg
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgio2-0-0
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnuplot-wx)
 
@@ -73,7 +82,8 @@ CONFIGURE_ARGS_wxwidgets-no += --disable-wxwidgets
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_wxwidgets-$(WXWIDGETS))
 
 # Preset value until this is fixed:
-#   https://sourceforge.net/tracker/?func=detail&aid=3129839&group_id=2055&atid=102055
+#   https://sourceforge.net/tracker/?func=detail&aid=3129839&group_id=2055&atid=102055 (closed)
+#   https://sourceforge.net/tracker/?func=detail&atid=102055&aid=3538084&group_id=2055 (heads up)
 CONFIGURE_ARGS += ac_cv_type__Bool=no
 
 # Make sure we don't run the interactive displays from demo/
@@ -85,10 +95,10 @@ MERGE_SCRIPTS_isa-default-wxwidgets-no = copy-all
 
 # These are exactly the differing files between the install-directories
 ALTERNATIVE_FILES += /opt/csw/bin/gnuplot
-ALTERNATIVE_FILES += /opt/csw/libexec/gnuplot/4.4/gnuplot_x11
+ALTERNATIVE_FILES += /opt/csw/libexec/gnuplot/4.6/gnuplot_x11
 ALTERNATIVE_FILES += /opt/csw/share/emacs/site-lisp/gnuplot-gui.elc
 ALTERNATIVE_FILES += /opt/csw/share/emacs/site-lisp/gnuplot.elc
-ALTERNATIVE_FILES += /opt/csw/share/gnuplot/4.4/gnuplot.gih
+ALTERNATIVE_FILES += /opt/csw/share/gnuplot/4.6/gnuplot.gih
 
 WXSUFFIX-yes = wx
 WXSUFFIX-no = nowx
@@ -109,8 +119,8 @@ CHECKPKG_OVERRIDES_CSWgnuplot += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWgnuplot-wx += surplus-dependency|CSWalternatives
 
 # These are just examples
-CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.4/gnuplot.gih-nowx
-CHECKPKG_OVERRIDES_CSWgnuplot-wx += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.4/gnuplot.gih-wx
+CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.6/gnuplot.gih-nowx
+CHECKPKG_OVERRIDES_CSWgnuplot-wx += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.6/gnuplot.gih-wx
 CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnuplot.info
 
 # Is this GDFONTPATH related? That would be bad... CHECK!!!
