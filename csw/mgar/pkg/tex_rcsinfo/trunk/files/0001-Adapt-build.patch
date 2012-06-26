@@ -1,0 +1,36 @@
+From 404064c0cee11652c52fd41d5b60502c05856c86 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 26 Jun 2012 15:18:39 +0200
+Subject: [PATCH] Adapt build
+
+---
+ Makefile |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bcac06a..e35dba5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -12,9 +12,9 @@
+ 
+ BASE	   = rcsinfo
+ 
+-TEXDIR	   =
+-CONTRIB    = $(TEXDIR)/lib/texmf/tex/latex2e/contrib/$(BASE)
+-DOCDIR     = $(TEXDIR)/doc/latex2e
++TEXDIR	   = $(texmflocaldir)
++CONTRIB    = $(TEXDIR)/tex/latex/$(BASE)
++DOCDIR     = $(TEXDIR)/doc/latex/styles
+ 
+ DVIPS	   = dvips
+ LATEX	   = latex
+@@ -119,4 +119,4 @@ realclean: clean
+ 	rm -fr $(HTML_DIR) *.dvi *.ps $(GEN) *.pdf
+ 
+ distclean: realclean
+-	rm -fr README-*
+\ No newline at end of file
++	rm -fr README-*
+-- 
+1.7.10.3
+
