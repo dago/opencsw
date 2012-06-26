@@ -15,6 +15,7 @@ DISTNAME		=	dirtree
 MASTER_SITES	=	http://mirror.ctan.org/macros/generic/
 DISTFILES		=	$(DISTNAME).zip
 # taken from http://www.latex-project.org/lppl.txt
+DISTFILES		+=	README.CSW
 DISTFILES		+=	COPYING
 
 BUILD_DEP_PKGS		+=	CSWtetex
