@@ -11,6 +11,8 @@ endef
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+GARCOMPILER = GNU
+
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-Force-use-of-double-data-type-before-checking-for-is.patch
@@ -42,6 +44,7 @@ RUNTIME_DEP_PKGS_CSWgdal += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWgdal += CSWlibiconv2
 
 PACKAGES += CSWlibgdal1
 CATALOGNAME_CSWlibgdal1 = libgdal1
@@ -63,6 +66,7 @@ RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgif4
+RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibiconv2
 PKGFILES_CSWlibgdal1 += $(call baseisadirs,$(libdir),libgdal\.so\.1\.15\.0)
 PKGFILES_CSWlibgdal1 += $(call baseisadirs,$(libdir),libgdal\.so\.1(\.\d+)*)
 
@@ -72,8 +76,13 @@ SPKG_DESC_CSWgdal-dev += Geospatial Data Abstraction Library, development files
 RUNTIME_DEP_PKGS_CSWgdal-dev += CSWlibgdal1
 PKGFILES_CSWgdal-dev += $(PKGFILES_DEVEL) /opt/csw/bin/gdal-config
 
+libdir = $(abspath /opt/csw/gxx/lib/$(MM_LIBDIR))
+includedir = /opt/csw/gxx/include
+
 # enable use of __func__ as required by patch 0004
+ifneq ($(GARCOMPILER),GNU)
 EXTRA_CXXFLAGS += -features=extensions
+endif
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz=$(prefix)
