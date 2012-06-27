@@ -1,0 +1,13 @@
+diff --git a/src/error.cpp b/src/error.cpp
+index af588d0..efe2ebf 100644
+--- a/src/error.cpp
++++ b/src/error.cpp
+@@ -26,7 +26,7 @@
+  */
+ // *****************************************************************************
+ #include "rcsid_int.hpp"
+-EXIV2_RCSID("@(#) $Id: error.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
++// EXIV2_RCSID("@(#) $Id: error.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ 
+ // *****************************************************************************
+ // included header files
