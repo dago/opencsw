@@ -1,0 +1,25 @@
+From 24f77d89889796113fd16899559117914040afe2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <daÂm@opencsw.org>
+Date: Wed, 27 Jun 2012 14:10:16 +0200
+Subject: [PATCH] Keep -norunpath
+
+---
+ misc/ltmain.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/misc/ltmain.sh b/misc/ltmain.sh
+index d8efb57..819d4a2 100755
+--- a/misc/ltmain.sh
++++ b/misc/ltmain.sh
+@@ -5091,7 +5091,7 @@ func_mode_link ()
+       # @file                GCC response files
+       # -tp=*                Portland pgcc target processor selection
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.10.3
+
