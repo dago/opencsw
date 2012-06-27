@@ -16,15 +16,26 @@ endef
 #   https://rt.cpan.org/Ticket/Display.html?id=49053
 PATCHFILES = diff-GD.t
 
-PACKAGES = CSWpmgd
-CATALOGNAME = pm_gd
-
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWftype2 CSWgd CSWiconv CSWjpeg CSWpng
-RUNTIME_DEP_PKGS += CSWzlib CSWfconfig CSWxpm
+PACKAGES += CSWpm-gd
+SPKG_DESC_CSWpm-gd = Interface to GD graphics library
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWxpm
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibjpeg7
+OBSOLETED_BY_CSWpm-gd += CSWpmgd
+CATALOGNAME_CSWpmgd = pm_gd_stub
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibxpmdevel
+# These are just docs and examples
+CHECKPKG_OVERRIDES_CSWpm-gd += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/qd.pl
+
+REINPLACE_USRLOCAL += GD.pm
 
 # These don't actually do anything as the pathes are already confgured
 CONFIGURE_ARGS  = lib_gd_path $(libdir)
@@ -35,8 +46,6 @@ CONFIGURE_ARGS += lib_jpeg_path $(libdir)
 # CONFIGURE_ARGS += lib_xpm_path /usr/openwin/lib
 CONFIGURE_ARGS += lib_xpm_path $(libdir)
 CONFIGURE_ARGS += lib_zlib_path $(libdir)
-
-NOISALIST = 1
 
 # BUILD_OVERRIDE_VARS = CCFLAGS LD
 BUILD_OVERRIDE_VARS = CCFLAGS
