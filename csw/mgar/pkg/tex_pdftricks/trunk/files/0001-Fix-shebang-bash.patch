@@ -1,0 +1,22 @@
+From 1471a2d0926a462d06455db65d85f548263a1cf7 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 27 Jun 2012 16:17:14 +0200
+Subject: [PATCH] Fix shebang bash
+
+---
+ pst2pdf |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pst2pdf b/pst2pdf
+index e58bfe7..ec500a5 100755
+--- a/pst2pdf
++++ b/pst2pdf
+@@ -1,4 +1,4 @@
+-#! /bin/bash
++#! /usr/bin/env bash
+ # pst2pdf
+ # PSTricks 2 PDF converter :
+ # Usage: "pst2pdf" produces PDF files for all files of the form *-fig*.tex
+-- 
+1.7.10.3
+
