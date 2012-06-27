@@ -1,0 +1,37 @@
+From 766cd3a3ecccd65fdc445c561c70da190633d507 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 27 Jun 2012 10:03:15 +0200
+Subject: [PATCH] Adapt build
+
+---
+ Makefile |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 822d6e3..016aecc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -11,16 +11,16 @@
+ 
+ BASE	   = svninfo
+ 
+-TEXDIR	   =
+-CONTRIB    = $(TEXDIR)/lib/texmf/tex/latex2e/contrib/$(BASE)
+-DOCDIR     = $(TEXDIR)/doc/latex2e
++TEXDIR	   = $(texmflocaldir)
++CONTRIB    = $(TEXDIR)/tex/latex/$(BASE)
++DOCDIR     = $(TEXDIR)/doc/latex
+ 
+ DVIPS	   = dvips
+ LATEX	   = latex
+ MAKEINDEX  = makeindex
+ PDFLATEX   = pdflatex
+ 
+-TAR	   = tar
++TAR	   = gtar
+ 
+ ########################################################################
+ 
+-- 
+1.7.10.3
+
