@@ -166,6 +166,8 @@ PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4 CSWlibltdl7 CSWlibz1))
 $(eval $(call php5_subpackage,mssql,CSWlibsybdb5 CSWlibz1))
 $(eval $(call php5_subpackage,mysql,CSWlibmysqlclient18 CSWlibz1 CSWlibssl1-0-0))
+# likely a checkpkg glitch (uses sparcv8plus+vis path for the library)
+CHECKPKG_OVERRIDES_CSWphp5-mysql += surplus-dependency|CSWlibssl1-0-0
 $(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient18 CSWlibz1 CSWlibssl1-0-0))
 $(eval $(call php5_subpackage,odbc,CSWlibodbc2 CSWlibz1))
 $(eval $(call php5_subpackage,openssl,CSWlibssl1-0-0 CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3 CSWlibz1))
