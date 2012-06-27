@@ -21,7 +21,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 LICENSE = LICENSE
 
 BUILD_DEP_PKGS += CSWlibssl-dev
-BUILD_DEP_PKGS += CSWlua
+BUILD_DEP_PKGS += CSWlua-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
 
 RUNTIME_DEP_PKGS_CSWimapfilter += CSWlua
