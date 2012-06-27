@@ -53,7 +53,7 @@ PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWlibcurl-dev CSWjpeg
-BUILD_DEP_PKGS += CSWlibpng-dev CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp10
+BUILD_DEP_PKGS += CSWlibpng-dev CSWt1lib CSWlibgdbm-dev CSWlibgmp10
 BUILD_DEP_PKGS += CSWggettext-dev CSWlibssl-dev CSWlibgd2 CSWbdb42devel
 BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWlibc-client-dev
 BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
@@ -61,6 +61,7 @@ BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql-dev CSWunixodbc
 BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql
 BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWlibxpm-dev
 # NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
 # of sqlite...
 BUILD_DEP_PKGS += CSWlibsqlite3-0
@@ -150,7 +151,7 @@ $(eval $(call php5_subpackage,dom,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif,CSWlibz1))
 $(eval $(call php5_subpackage,ftp,CSWlibssl1-0-0 CSWlibz1))
-$(eval $(call php5_subpackage,gd,CSWlibfreetype6 CSWlibgd2 CSWlibjpeg7 CSWlibpng12-0 CSWlibt1-5 CSWxpm CSWlibz1))
+$(eval $(call php5_subpackage,gd,CSWlibfreetype6 CSWlibgd2 CSWlibjpeg7 CSWlibpng12-0 CSWlibt1-5 CSWlibxpm4 CSWlibz1))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8 CSWlibz1))
 $(eval $(call php5_subpackage,gmp,CSWlibgmp10 CSWlibz1))
