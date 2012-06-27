@@ -1,0 +1,13 @@
+diff --git a/src/basicio.cpp b/src/basicio.cpp
+index 0343dff..174e8a7 100644
+--- a/src/basicio.cpp
++++ b/src/basicio.cpp
+@@ -312,7 +312,7 @@ namespace Exiv2 {
+         int rc = 0;
+         if (p_->pMappedArea_ != 0) {
+ #if defined EXV_HAVE_MMAP && defined EXV_HAVE_MUNMAP
+-            if (::munmap(p_->pMappedArea_, p_->mappedLength_) != 0) {
++            if (::munmap((char*)p_->pMappedArea_, p_->mappedLength_) != 0) {
+                 rc = 1;
+             }
+ #elif defined WIN32 && !defined __CYGWIN__
