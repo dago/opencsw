@@ -1,6 +1,6 @@
 # $Id$
 NAME = bzflag
-VERSION = 2.0.16
+VERSION = 2.4.0
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,26 +11,22 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(DISTNAME).tar.bz2
 
-PATCHFILES += 0001-Fix-ambiguity-between-double-and-long-double.patch
-PATCHFILES += 0002-Make-function-location-explicit.patch
-PATCHFILES += 0003-Force-inclusion-of-glew.h-before-gl.h.patch
-PATCHFILES += 0004-Do-not-use-const-as-non-const-is-required-at-some-pl.patch
-PATCHFILES += 0005-Make-arguments-constant-as-required.patch
+PATCHFILES += 0001-Keep-norunpath.patch
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-CONFIGURE_ARGS = $(DIRPATHS)
+libdir_install = $(prefix)/lib/bzflag
 
-RUNTIME_DEP_PKGS_CSWbzflag += CSWglew
-RUNTIME_DEP_PKGS_CSWbzflag += CSWlibsdl
-RUNTIME_DEP_PKGS_CSWbzflag += CSWcurlrt
-RUNTIME_DEP_PKGS_CSWbzflag += CSWlibidn
-RUNTIME_DEP_PKGS_CSWbzflag += CSWzlib
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibz1
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibglew1-7
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibcares2
+RUNTIME_DEP_PKGS_CSWbzflag += CSWlibidn11
+# Old-style deps
 RUNTIME_DEP_PKGS_CSWbzflag += CSWmesa
-RUNTIME_DEP_PKGS_CSWbzflag += CSWlibcares
-RUNTIME_DEP_PKGS_CSWbzflag += CSWnas
-RUNTIME_DEP_PKGS_CSWbzflag += CSWosslrt
-RUNTIME_DEP_PKGS_CSWbzflag += CSWoldaprt
+
+EXTRA_LINKER_FLAGS += -norunpath
 
 include gar/category.mk
