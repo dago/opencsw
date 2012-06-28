@@ -201,7 +201,7 @@ RUNTIME_DEP_PKGS += CSWbdb48
 FEATURES += -DUSE_TLS
 AUXLIBS  += -lssl -lcrypto
 BUILD_DEP_PKGS += CSWlibssl-dev
-RUNTIME_DEP_PKGS += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 # Activate support for Cyrus SASL (dovecot is incl. automatically)
 # http://www.postfix.org/SASL_README.html
@@ -231,12 +231,14 @@ RUNTIME_DEP_PKGS += CSWlibmysqlclient15
 # Activate support for PostgreSQL
 # http://www.postfix.org/PGSQL_README.html
 FEATURES += -DHAS_PGSQL
-INCLUDES += -I/opt/csw/postgresql/include/
-AUXLIBS  += -L/opt/csw/postgresql/lib/ -R/opt/csw/postgresql/lib/
+INCLUDES += -I/opt/csw/include/
+AUXLIBS  += -L/opt/csw/lib/ -R/opt/csw/lib/
 AUXLIBS  += -lpq
-BUILD_DEP_PKGS += CSWlibpq
+BUILD_DEP_PKGS += CSWpostgresql-dev
 RUNTIME_DEP_PKGS += CSWlibpq5
 endif
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # Postgres package outdated, libs aren't located below /opt/csw/lib/
 CHECKPKG_OVERRIDES_CSWpostfix += bad-rpath-entry
