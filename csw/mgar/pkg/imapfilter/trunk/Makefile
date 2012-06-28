@@ -24,9 +24,10 @@ BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlua-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
 
-RUNTIME_DEP_PKGS_CSWimapfilter += CSWlua
+RUNTIME_DEP_PKGS_CSWimapfilter += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibiconv2
 
 PATCHFILES += 0001-Bludgeon-the-build-system-to-do-what-we-need.patch
 
