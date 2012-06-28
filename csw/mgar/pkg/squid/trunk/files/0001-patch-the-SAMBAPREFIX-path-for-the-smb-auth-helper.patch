@@ -1,0 +1,26 @@
+From fc4c66dfc5e67c853b9c1e7ed9664d7837fc686e Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 28 Jun 2012 21:24:52 +0200
+Subject: [PATCH] patch the SAMBAPREFIX path for the smb auth helper
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ helpers/basic_auth/SMB/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/helpers/basic_auth/SMB/Makefile.am b/helpers/basic_auth/SMB/Makefile.am
+index f5f833f..5c5b9f3 100644
+--- a/helpers/basic_auth/SMB/Makefile.am
++++ b/helpers/basic_auth/SMB/Makefile.am
+@@ -14,7 +14,7 @@
+ ## FIXME: autoconf should test for the samba path.
+ 
+ SMB_AUTH_HELPER	= smb_auth.sh
+-SAMBAPREFIX=/usr/local/samba
++SAMBAPREFIX=/opt/csw
+ SMB_AUTH_HELPER_PATH = $(libexecdir)/$(SMB_AUTH_HELPER)
+ 
+ libexec_SCRIPTS	= $(SMB_AUTH_HELPER)
+-- 
+1.7.10.3
+

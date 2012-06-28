@@ -38,6 +38,7 @@ MIGRATE_FILES += squid.conf
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += cswsquid
+PATCHFILES += 0001-patch-the-SAMBAPREFIX-path-for-the-smb-auth-helper.patch
 
 EXTRA_CPPFLAGS += -DDEFAULT_SQUID_ERROR_DIR=\\\"/etc/opt/csw/squid/errors\\\"
 
