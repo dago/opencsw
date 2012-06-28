@@ -19,6 +19,7 @@ VENDOR_URL = http://projects.gnome.org/gnome-vfs/
 
 # Many more missing
 BUILD_DEP_PKGS += CSWlibgamin-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
 
 PACKAGES += CSWgnomevfs2
 SPKG_DESC_CSWgnomevfs2 += $(DESCRIPTION)
@@ -38,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus1-3
 
