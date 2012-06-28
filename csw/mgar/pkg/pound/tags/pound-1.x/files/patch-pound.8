@@ -1,7 +1,7 @@
-*** Pound-2.4.5.orig/pound.8	Mon Jun 29 17:53:58 2009
---- Pound-2.4.5/pound.8	Tue Jun 30 15:47:59 2009
+*** Pound-1.10.orig/pound.8	Wed Feb  1 12:22:03 2006
+--- Pound-1.10/pound.8	Tue Jun 30 14:33:32 2009
 ***************
-*** 155,161 ****
+*** 39,45 ****
   \fB\-f\fR config_file
   Location of the configuration file (see below for a full description of the format).
   Default:
@@ -9,16 +9,16 @@
   .TP
   \fB\-p\fR pid_file
   Location of the pid file.
---- 155,161 ----
+--- 39,45 ----
   \fB\-f\fR config_file
   Location of the configuration file (see below for a full description of the format).
   Default:
-! .I /opt/csw/etc/pound2/pound2.cfg
+! .I /opt/csw/etc/pound/pound.cfg
   .TP
   \fB\-p\fR pid_file
   Location of the pid file.
 ***************
-*** 163,169 ****
+*** 47,53 ****
   will write its own pid into this file. Normally this is used for shell
   scripts that control starting and stopping of the daemon.
   Default:
@@ -26,67 +26,84 @@
   .PP
   In general, any number of back-end servers may be specified. Use the priority to
   affect the load distribution among unequal-performance servers.
---- 163,169 ----
+--- 47,53 ----
   will write its own pid into this file. Normally this is used for shell
   scripts that control starting and stopping of the daemon.
   Default:
-! .I /var/opt/csw/run/pound2.pid
+! .I /var/opt/csw/run/pound.pid
   .PP
   In general, any number of back-end servers may be specified. Use the priority to
   affect the load distribution among unequal-performance servers.
 ***************
-*** 833,839 ****
-  .br
-      Port    443
-  .br
-!     Cert    "/etc/pound/server.pem"
-  .br
-  
-  .br
---- 833,839 ----
-  .br
-      Port    443
-  .br
-!     Cert    "/opt/csw/etc/pound2/server.pem"
+*** 488,494 ****
+  To translate HTTPS requests to a local HTTP server (assuming your network address
+  is 123.123.123.123):
+  .IP
+! ListenHTTPS 1.2.3.4,443 /etc/pound/server.pem
   .br
   
   .br
-***************
-*** 868,874 ****
+--- 488,494 ----
+  To translate HTTPS requests to a local HTTP server (assuming your network address
+  is 123.123.123.123):
+  .IP
+! ListenHTTPS 1.2.3.4,443 /opt/csw/etc/pound/server.pem
   .br
-      Port    443
-  .br
-!     Cert    "/etc/pound/server.pem"
-  .br
-  End
-  .br
---- 868,874 ----
-  .br
-      Port    443
-  .br
-!     Cert    "/opt/csw/etc/pound2/server.pem"
-  .br
-  End
+  
   .br
 ***************
-*** 1013,1019 ****
+*** 503,509 ****
+  .IP
+  ListenHTTP 123.123.123.123,80
   .br
-      Port    443
+! ListenHTTPS 1.2.3.4,443 /etc/pound/server.pem
   .br
-!     Cert    "/etc/pound/pound.pem"
+  
   .br
-      Client  20
+--- 503,509 ----
+  .IP
+  ListenHTTP 123.123.123.123,80
   .br
---- 1013,1019 ----
+! ListenHTTPS 1.2.3.4,443 /opt/csw/etc/pound/server.pem
   .br
-      Port    443
-  .br
-!     Cert    "/opt/csw/etc/pound/pound2.pem"
-  .br
-      Client  20
+  
   .br
 ***************
-*** 1107,1122 ****
+*** 524,530 ****
+  .br
+  ListenHTTP 123.123.123.123,8080
+  .br
+! ListenHTTPS 1.2.3.4,443 /etc/pound/server.pem
+  .br
+  User www
+  .br
+--- 524,530 ----
+  .br
+  ListenHTTP 123.123.123.123,8080
+  .br
+! ListenHTTPS 1.2.3.4,443 /opt/csw/etc/pound/server.pem
+  .br
+  User www
+  .br
+***************
+*** 591,597 ****
+  .br
+  ListenHTTP  1.2.3.4
+  .br
+! ListenHTTPS 1.2.3.4,443 /etc/pound/pound.pem
+  .br
+  User nobody
+  .br
+--- 591,597 ----
+  .br
+  ListenHTTP  1.2.3.4
+  .br
+! ListenHTTPS 1.2.3.4,443 /opt/csw/etc/pound/pound.pem
+  .br
+  User nobody
+  .br
+***************
+*** 647,662 ****
   .br
   .SH FILES
   .TP
@@ -95,7 +112,7 @@
   .B Pound
   will attempt to record its process id.
   .TP
-! \fI/usr/local/etc/pound.cfg\fR
+! \fI/usr/local/etc/pound/pound.cfg\fR
   the default configuration file (the location may be changed when compiling - see the
   F_CONF flag in the Makefile).
   .TP
@@ -103,20 +120,20 @@
   the certificate file(s) for HTTPS. The location must be defined in the configuration
   file - this is only a suggestion. The file must contain a PEM-encoded certificate,
   optionally a certificate chain from a known Certificate Authority to your server certificate
---- 1107,1122 ----
+--- 647,662 ----
   .br
   .SH FILES
   .TP
-! \fI/var/opt/csw/run/pound2.nnn\fR
+! \fI/var/opt/csw/run/pound.nnn\fR
   this is where
   .B Pound
   will attempt to record its process id.
   .TP
-! \fI/opt/csw/etc/pound2/pound2.cfg\fR
+! \fI/opt/csw/etc/pound/pound.cfg\fR
   the default configuration file (the location may be changed when compiling - see the
   F_CONF flag in the Makefile).
   .TP
-! \fI/opt/csw/etc/pound2/cert.pem\fR
+! \fI/opt/csw/etc/pound/cert.pem\fR
   the certificate file(s) for HTTPS. The location must be defined in the configuration
   file - this is only a suggestion. The file must contain a PEM-encoded certificate,
   optionally a certificate chain from a known Certificate Authority to your server certificate
