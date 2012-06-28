@@ -1,5 +1,5 @@
 NAME = imapfilter
-VERSION = 2.2.2
+VERSION = 2.5.2
 GARTYPE = v2
 CATEGORIES = net
 
@@ -15,8 +15,8 @@ define BLURB
   supported.
 endef
 
-MASTER_SITES = http://imapfilter.hellug.gr/source/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = https://github.com/downloads/lefcha/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 LICENSE = LICENSE
 
