@@ -22,6 +22,8 @@ PATCHFILES += 0004-Ensure-that-__FUNCTION__-is-mapped-to-__func__-when-.patch
 PATCHFILES += 0005-Pass-proper-types-to-std-make_pair-to-satisfy-Sun-St.patch
 #PATCHFILES += 0001-Force-the-use-of-CSWbash.patch
 
+BUILD_DEP_PKGS += CSWgeos-dev
+
 PACKAGES += CSWgdal 
 CATALOGNAME_CSWgdal = gdal
 SPKG_DESC_CSWgdal = $(DESCRIPTION)
@@ -68,6 +70,7 @@ RUNTIME_DEP_PKGS_CSWlibgdal1-gxx += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWlibgdal1-gxx += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgdal1-gxx += CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibgdal1-gxx += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibgdal1-gxx += CSWlibgeos-c1
 PKGFILES_CSWlibgdal1-gxx += $(call baseisadirs,$(libdir),libgdal\.so\.1\.15\.0)
 PKGFILES_CSWlibgdal1-gxx += $(call baseisadirs,$(libdir),libgdal\.so\.1(\.\d+)*)
 
@@ -101,6 +104,7 @@ TEST_TARGET =
 LICENSE = LICENSE.TXT
 
 EXTRA_LIB += /opt/csw/postgresql/lib
+EXTRA_LDFLAGS += -L$(libdir) -R$(libdir)
 
 include gar/category.mk
 
