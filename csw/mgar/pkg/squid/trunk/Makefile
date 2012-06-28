@@ -39,6 +39,7 @@ MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += cswsquid
 
+EXTRA_CPPFLAGS += -DDEFAULT_SQUID_ERROR_DIR=\\\"/etc/opt/csw/squid/errors\\\"
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(NAME)
