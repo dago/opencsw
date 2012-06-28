@@ -1,0 +1,25 @@
+From 53423919943745ce4eff6c817ca2fca695accf6d Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 28 Jun 2012 10:18:59 +0200
+Subject: [PATCH] Fix slib script shebang
+
+---
+ Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 2f11a10..8cc5256 100644
+--- a/Makefile
++++ b/Makefile
+@@ -269,7 +269,7 @@ install-lib: $(libfiles) installdirs
+ 	-$(INSTALL_DATA) $(libfiles) $(DESTDIR)$(libslibdir)
+ 
+ install-script: slib.sh installdirs
+-	echo '#! /bin/sh'			     > slib-script
++	echo '#! /usr/bin/env bash' > slib-script
+ 	echo SCHEME_LIBRARY_PATH=$(libslibdir)      >> slib-script
+ 	echo S48_VICINITY=$(S48LIB)		    >> slib-script
+ 	echo VERSION=$(VERSION)			    >> slib-script
+-- 
+1.7.10.3
+
