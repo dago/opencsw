@@ -12,6 +12,11 @@ MASTER_SITES =  $(GNOME_MIRROR)
 DISTNAME = $(GNOME_PROJ)-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
+# The smbc_remove_unused_server function has been deprecated in samba 3.2 
+# but gnomevfs code has not been updated: https://bugzilla.gnome.org/show_bug.cgi?id=592341
+# Let's try to use instead the new function
+PATCHFILES = 0002-dont-use-smbc_remove_unused_server.patch
+
 # New glib only available on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
