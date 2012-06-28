@@ -226,7 +226,7 @@ INCLUDES += -I/opt/csw/include/mysql
 AUXLIBS  += -L/opt/csw/lib -R/opt/csw/mysql5/lib/mysql
 AUXLIBS  += -lmysqlclient
 BUILD_DEP_PKGS += CSWmysql-dev
-RUNTIME_DEP_PKGS += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS += CSWlibmysqlclient18
 
 # Activate support for PostgreSQL
 # http://www.postfix.org/PGSQL_README.html
