@@ -20,6 +20,7 @@ PATCHFILES			+=	0002-Static-search-library.patch
 
 RUNTIME_DEP_PKGS	=	CSWlibxslt
 
+ARCHALL_CSWsvn2cl				=	1
 CHECKPKG_OVERRIDES_CSWsvn2cl	+=	surplus-dependency|CSWlibxslt
 
 CONFIGURE_SCRIPTS	=
