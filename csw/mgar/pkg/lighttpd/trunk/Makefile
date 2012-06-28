@@ -136,17 +136,20 @@ ISAEXEC = 1
 
 include gar/category.mk
 
+post-install-modulated:
+	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(DOWNLOADDIR)/cswlighttpd $(DESTDIR)$(sysconfdir)/init.d
+	# ginstall -m 644 $(WORKSRC)/doc/config/lighttpd.conf $(DESTDIR)$(sysconfdir)
+	# gsed -i -e 's+/usr/local+/opt/csw+g' $(DESTDIR)$(sysconfdir)/lighttpd.conf
+	ginstall -m 644 $(FILEDIR)/lighttpd.conf $(DESTDIR)$(sysconfdir)
+	gsed -i -e 's+/usr/local+/opt/csw+g' $(DESTDIR)$(sysconfdir)/lighttpd.conf
+	ginstall -d -m 755 $(DESTDIR)$(localstatedir)/run
+	ginstall -d -m 755 $(DESTDIR)$(datadir)/lighttpd-root
+	echo 'lighttpd is working!' > $(DESTDIR)$(datadir)/lighttpd-root/index.html
+	ginstall -d -m 755 $(DESTDIR)$(localstatedir)/log/lighttpd
+	@$(MAKECOOKIE)
+
 post-merge:
-	ginstall -d -m 755 $(PKGROOT)$(sysconfdir)/init.d
-	ginstall -m 755 $(DOWNLOADDIR)/cswlighttpd $(PKGROOT)$(sysconfdir)/init.d
-	# ginstall -m 644 $(WORKSRC)/doc/config/lighttpd.conf $(PKGROOT)$(sysconfdir)
-	# gsed -i -e 's+/usr/local+/opt/csw+g' $(PKGROOT)$(sysconfdir)/lighttpd.conf
-	ginstall -m 644 $(FILEDIR)/lighttpd.conf $(PKGROOT)$(sysconfdir)
-	gsed -i -e 's+/usr/local+/opt/csw+g' $(PKGROOT)$(sysconfdir)/lighttpd.conf
-	ginstall -d -m 755 $(PKGROOT)$(localstatedir)/run
-	ginstall -d -m 755 $(PKGROOT)$(datadir)/lighttpd-root
-	echo 'lighttpd is working!' > $(PKGROOT)$(datadir)/lighttpd-root/index.html
-	ginstall -d -m 755 $(PKGROOT)$(localstatedir)/log/lighttpd
 	ginstall -d -m 755 $(PKGROOT)$(sysconfdir)/pkg/$(NAME)
 	echo "lighttpd:lighttpd:lighttpd web server::::" \
 		> $(PKGROOT)$(sysconfdir)/pkg/$(NAME)/cswusergroup
