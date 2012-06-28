@@ -7,6 +7,8 @@ DISTVERSION = $(VERSION).$(RELEASE)
 DISTNAME = $(NAME)-$(DISTVERSION)
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DESCRIPTION = High performance Web proxy cache
 define BLURB
   Squid is a high performance Web proxy cache that can be arranged
@@ -16,8 +18,12 @@ endef
 
 PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
-RUNTIME_DEP_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl
-PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+
+RUNTIME_DEP_PKGS_CSWsquid += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWsquid += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsquid += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsquid += CSWlibldap2-4-2
+
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
 PRESERVECONF = /etc/opt/csw/$(NAME)/squid.conf
