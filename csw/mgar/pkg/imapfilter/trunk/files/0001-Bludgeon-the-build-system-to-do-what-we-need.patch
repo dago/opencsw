@@ -1,42 +1,40 @@
-From 7ad082705998d94a16c0ecd58e1a3db0e8d4936c Mon Sep 17 00:00:00 2001
+From 4ddab6dc87cad733a900256d82e44199fe3e3d46 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Sun, 10 Jun 2012 01:59:08 +0200
+Date: Thu, 28 Jun 2012 02:42:26 +0200
 Subject: [PATCH] Bludgeon the build system to do what we need
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
- configure |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ src/Makefile |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/configure b/configure
-index 6b5b0d5..bc69d56 100755
---- a/configure
-+++ b/configure
-@@ -10,13 +10,13 @@ mandir="$prefix/man"
- ssltls="yes"
- crammd5="yes"
+diff --git a/src/Makefile b/src/Makefile
+index 3938401..3ee04e0 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -1,15 +1,15 @@
+ DESTDIR =
+-PREFIX = /usr/local
++PREFIX = /opt/csw
+ BINDIR = $(PREFIX)/bin
+ SHAREDIR = $(PREFIX)/share/imapfilter
+-MANDIR = $(PREFIX)/man
++MANDIR = $(PREFIX)/share/man
  
--incdirs="-I/usr/local/include"
--libdirs="-L/usr/local/lib"
-+incdirs="-I/opt/csw/include"
-+libdirs="-L/opt/csw/lib"
+-MYCFLAGS =
+-MYLDFLAGS =
+-MYLIBS =
++MYCFLAGS := $(CFLAGS)
++MYLDFLAGS := $(LDFLAGS)
++MYLIBS := $(LIBS)
  
- mycflags="$CFLAGS -Wall -O"
- myldflags="$LDFLAGS"
+-INCDIRS =
+-LIBDIRS =
++INCDIRS = -I$(PREFIX)/include
++LIBDIRS = -L$(PREFIX)/lib
  
--libs="-lm -llua -lpcre"
-+libs="-lm -llua -lpcre -lnsl -lsocket"
- libssl="-lssl"
- libcrypto="-lcrypto"
- 
-@@ -140,7 +140,6 @@ if [ ! -f .Makefile ]; then cp -f Makefile .Makefile; fi
- mv -f Makefile Makefile~
- 
- cat > Makefile << EOF
--DESTDIR =
- BINDIR = $bindir
- SHAREDIR = $sharedir
- MANDIR = $mandir
+ LIBLUA = -llua
+ LIBPCRE = -lpcre
 -- 
-1.7.10
+1.7.10.3
 
