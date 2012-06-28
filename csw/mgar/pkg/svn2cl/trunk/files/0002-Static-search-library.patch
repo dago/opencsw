@@ -1,0 +1,39 @@
+From 7ebafbaf1e54ea00115aa48447a5ea78323bcbf3 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 28 Jun 2012 09:06:34 +0200
+Subject: [PATCH] Static search library
+
+---
+ svn2cl.sh |   12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
+
+diff --git a/svn2cl.sh b/svn2cl.sh
+index 1c549f7..f497271 100755
+--- a/svn2cl.sh
++++ b/svn2cl.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#! /usr/bin/env bash
+ 
+ # svn2cl.sh - front end shell script for svn2cl.xsl, calls xsltproc
+ #             with the correct parameters
+@@ -260,15 +260,7 @@ do
+   esac
+ done
+ 
+-# find the directory that this script resides in
+-prog="$0"
+-while [ -h "$prog" ]
+-do
+-  dir=`dirname "$prog"`
+-  prog=`ls -ld "$prog" | sed "s/^.*-> \(.*\)/\1/;/^[^/]/s,^,$dir/,"`
+-done
+-dir=`dirname "$prog"`
+-dir=`cd "$dir" && pwd`
++dir=/opt/csw/share/svn2cl
+ XSL="$dir/svn2${OUTSTYLE}.xsl"
+ 
+ # check if the authors file is formatted as a legacy
+-- 
+1.7.10.3
+

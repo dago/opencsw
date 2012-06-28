@@ -1,0 +1,29 @@
+From 1a587a87432feefaba9aa3a8c5a614097e8da9a5 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 28 Jun 2012 09:00:57 +0200
+Subject: [PATCH] Author self
+
+---
+ authors.xml |    6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/authors.xml b/authors.xml
+index 65f1225..bcffff2 100644
+--- a/authors.xml
++++ b/authors.xml
+@@ -3,6 +3,12 @@
+  <author uid="arthur">
+   Arthur de Jong &lt;<html:a href="mailto:arthur@arthurdejong.org">arthur@arthurdejong.org</html:a>&gt;
+  </author>
++ <author uid="peter">
++  Peter Felecan &lt;<html:a href="mailto:peter@felecan.org">peter@felecan.org</html:a>&gt;
++ </author>
++ <author uid="pfelecan">
++  Peter Felecan &lt;<html:a href="mailto:peter@felecan.org">peter@felecan.org</html:a>&gt;
++ </author>
+  <author uid="nobody">
+   Who's this &lt;nobody@example.com&gt;
+  </author>
+-- 
+1.7.10.3
+
