@@ -28,11 +28,12 @@ RUNTIME_DEP_PKGS_CSWimapfilter += CSWlua
 RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWimapfilter += CSWlibssl1-0-0
 
-PATCHFILES += 0001-Bludgeon-the-build-system-to-do-what-we-need.patch
+#PATCHFILES += 0001-Bludgeon-the-build-system-to-do-what-we-need.patch
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = -d $(prefix) -m $(mandir)
+CONFIGURE_SCRIPTS =
+BUILD_ARGS = all
 
 # No test suite
 TEST_SCRIPTS =
