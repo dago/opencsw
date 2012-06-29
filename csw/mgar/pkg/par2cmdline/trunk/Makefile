@@ -5,7 +5,7 @@ VERSION = 0.4
 GARTYPE = v2
 CATEGORIES = apps
 
-DESCRIPTION = Program for creating and using PAR2 files to detect damage in data files and repair them if necessary
+DESCRIPTION = Program for creating and using PAR2 files
 define BLURB
   Program for creating and using PAR2 files to detect damage in data
   files and repair them if necessary
