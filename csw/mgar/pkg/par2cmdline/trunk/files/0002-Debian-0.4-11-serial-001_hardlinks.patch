@@ -1,0 +1,29 @@
+From 17ded79c040155c3ce94910245f26f8e7f340bb8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 29 Jun 2012 13:01:25 +0200
+Subject: [PATCH] Debian 0.4-11 serial 001_hardlinks
+
+---
+ Makefile.am |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 5db5804..9d1cc4a 100755
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -55,9 +55,9 @@ EXTRA_DIST = PORTING ROADMAP par2cmdline.sln par2cmdline.vcproj \
+ TESTS = pretest test1 test2 test3 test4 test5 test6 posttest
+ 
+ install-exec-hook :
+-	ln -f $(DESTDIR)$(bindir)/par2$(EXEEXT) $(DESTDIR)$(bindir)/par2create$(EXEEXT)
+-	ln -f $(DESTDIR)$(bindir)/par2$(EXEEXT) $(DESTDIR)$(bindir)/par2verify$(EXEEXT)
+-	ln -f $(DESTDIR)$(bindir)/par2$(EXEEXT) $(DESTDIR)$(bindir)/par2repair$(EXEEXT)
++	ln -sf $(bindir)/par2$(EXEEXT) $(DESTDIR)$(bindir)/par2create$(EXEEXT)
++	ln -sf $(bindir)/par2$(EXEEXT) $(DESTDIR)$(bindir)/par2verify$(EXEEXT)
++	ln -sf $(bindir)/par2$(EXEEXT) $(DESTDIR)$(bindir)/par2repair$(EXEEXT)
+ 
+ uninstall-hook :
+ 	rm -f $(DESTDIR)$(bindir)/par2create$(EXEEXT)
+-- 
+1.7.10.3
+
