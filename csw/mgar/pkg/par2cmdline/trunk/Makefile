@@ -27,6 +27,9 @@ CONFIGURE_ARGS	=	$(DIRPATHS)
 RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS	+=	CSWlibstdc++6
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 include gar/category.mk
 
 post-install-modulated: pkgdocdir = $(docdir)/$(NAME)
