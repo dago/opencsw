@@ -25,7 +25,7 @@ CONFIGURE_ARGS	+=	--disable-doc-build
 TEST_SCRIPTS = custom
 
 PACKAGES							=	CSWopensp-doc
-CATALOGNAME							=	opensp-doc
+CATALOGNAME							=	opensp_doc
 SPKG_DESC_CSWopensp-doc				=	$(DESCRIPTION), documentation
 OBSOLETED_BY_CSWopensp-doc			+=	CSWopenspdoc
 CATALOGNAME_CSWopenspdoc			=	opensp_doc_stub
@@ -39,6 +39,9 @@ PKGFILES_CSWopensp-utils			=	$(bindir)/.*
 RUNTIME_DEP_PKGS_CSWopensp-utils	+=	CSWlibosp5
 OBSOLETED_BY_CSWopensp-utils		+=	CSWopensp
 CATALOGNAME_CSWopensp				=	opensp_stub
+CHECKPKG_OVERRIDES_CSWopensp-utils	+=	missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWopensp-utils	+=	missing-dependency|CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWopensp-utils	+=	missing-dependency|CSWlibstdc++6
 
 PACKAGES					+=	CSWlibosp5
 CATALOGNAME_CSWlibosp5		=	libosp5
@@ -51,6 +54,7 @@ PKGFILES_CSWlibosp5			+=	/opt/csw/share/locale/ja/LC_MESSAGES/sp5.mo
 PKGFILES_CSWlibosp5			+=	/opt/csw/share/locale/sv/LC_MESSAGES/sp5.mo
 PKGFILES_CSWlibosp5			+=	/opt/csw/share/locale/tr/LC_MESSAGES/sp5.mo
 SPKG_DESC_CSWlibosp5		+=	$(DESCRIPTION), libosp.so.5
+RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWperl
 RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWlibstdc++6
