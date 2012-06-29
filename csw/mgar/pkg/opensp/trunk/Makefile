@@ -22,7 +22,14 @@ CONFIGURE_ARGS	+=	--enable-xml-messages
 CONFIGURE_ARGS	+=	--enable-default-search-path=.:/opt/csw/share/sgml:/opt/csw/share/xml:/etc/opt/csw/sgml:/opt/csw/etc/sgml
 CONFIGURE_ARGS	+=	--disable-doc-build
 
+# wish I can define these globally:
+CONFIGURE_ENV_PATH	=	/opt/csw/gnu:$(PATH)
+BUILD_ENV_PATH		=	/opt/csw/gnu:$(PATH)
+TEST_ENV_PATH		=	/opt/csw/gnu:$(PATH)
+
 TEST_SCRIPTS = custom
+
+INSTALL_ENV_PATH	=	/opt/csw/gnu:$(PATH)
 
 PACKAGES							=	CSWopensp-doc
 CATALOGNAME							=	opensp_doc
