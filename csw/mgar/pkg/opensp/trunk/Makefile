@@ -33,14 +33,10 @@ ARCHALL_CSWopensp-doc				=	1
 CHECKPKG_OVERRIDES_CSWopensp-doc	+=	file-with-bad-content|/usr/share|root/opt/csw/share/doc/opensp/ChangeLog
 
 PACKAGES							+=	CSWopensp-utils
-CATALOGNAME_CSWopensp-utils			=	opensp-utils
+CATALOGNAME_CSWopensp-utils			=	opensp_utils
 SPKG_DESC_CSWopensp-utils			=	$(DESCRIPTION), utilities
 PKGFILES_CSWopensp-utils			=	$(bindir)/.*
 RUNTIME_DEP_PKGS_CSWopensp-utils	+=	CSWlibosp5
-RUNTIME_DEP_PKGS_CSWopensp-utils	+=	CSWlibintl8
-RUNTIME_DEP_PKGS_CSWopensp-utils	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWopensp-utils	+=	CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWopensp-utils	+=	CSWperl
 OBSOLETED_BY_CSWopensp-utils		+=	CSWopensp
 CATALOGNAME_CSWopensp				=	opensp_stub
 
@@ -55,19 +51,22 @@ PKGFILES_CSWlibosp5			+=	/opt/csw/share/locale/ja/LC_MESSAGES/sp5.mo
 PKGFILES_CSWlibosp5			+=	/opt/csw/share/locale/sv/LC_MESSAGES/sp5.mo
 PKGFILES_CSWlibosp5			+=	/opt/csw/share/locale/tr/LC_MESSAGES/sp5.mo
 SPKG_DESC_CSWlibosp5		+=	$(DESCRIPTION), libosp.so.5
-RUNTIME_DEP_PKGS_CSWopensp	+=	CSWlibosp5
+RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibosp5	+=	CSWlibstdc++6
 OBSOLETED_BY_CSWlibosp5		+=	CSWopensprt
 CATALOGNAME_CSWopensprt		=	opensp_rt_stub
 
-PACKAGES						+=	CSWopensp-dev
-CATALOGNAME_CSWopensp-dev		=	opensp_dev
-SPKG_DESC_CSWopensp-dev			+=	$(DESCRIPTION), development files
-PKGFILES_CSWopensp-dev			+=	/opt/csw/lib/libosp.so
-PKGFILES_CSWopensp-dev			+=	$(PKGFILES_DEVEL)
-OBSOLETED_BY_CSWopensp-dev		+=	CSWopenspdevel
-CATALOGNAME_CSWopenspdevel		=	opensp_devel_stub
-ARCHALL_CSWopensp-dev			=	1
-RUNTIME_DEP_PKGS_CSWopensp-dev	+=	CSWlibosp5
+PACKAGES							+=	CSWopensp-dev
+CATALOGNAME_CSWopensp-dev			=	opensp_dev
+SPKG_DESC_CSWopensp-dev				+=	$(DESCRIPTION), development files
+PKGFILES_CSWopensp-dev				+=	/opt/csw/lib/libosp.so
+PKGFILES_CSWopensp-dev				+=	$(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWopensp-dev			+=	CSWopenspdevel
+CATALOGNAME_CSWopenspdevel			=	opensp_devel_stub
+ARCHALL_CSWopensp-dev				=	1
+RUNTIME_DEP_PKGS_CSWopensp-dev		+=	CSWlibosp5
+CHECKPKG_OVERRIDES_CSWopensp-dev	+=	archall-devel-package
 
 include gar/category.mk
 
