@@ -1,0 +1,25 @@
+From fe3e78e74fec62782f4f31308a2c5c53300e5bab Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 29 Jun 2012 14:40:45 +0200
+Subject: [PATCH] Fix pretest script
+
+---
+ pretest |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pretest b/pretest
+index 2c50406..b6f6ba5 100755
+--- a/pretest
++++ b/pretest
+@@ -4,7 +4,7 @@ rm -f test*.log
+ rm -rf testdir
+ mkdir testdir && cd testdir || { echo "ERROR: Could not change to test directory" ; exit 1; } >&2
+ 
+-gunzip -c ../$srcdir/testdata.tar.gz | tar xf - || { echo "ERROR: Could not extra test files" ; exit 1; } >&2
++gunzip -c $srcdir/testdata.tar.gz | tar xf - || { echo "ERROR: Could not extra test files" ; exit 1; } >&2
+ 
+ cp test-0.data test-0.data.orig
+ cp test-1.data test-1.data.orig
+-- 
+1.7.10.3
+

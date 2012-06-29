@@ -1,0 +1,28 @@
+From 020c08037f52bb74a9f2d159f3d3eeac19c9baff Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 29 Jun 2012 14:09:08 +0200
+Subject: [PATCH] Fix media size ioctl
+
+Inspired by the Debian serial patch 004_kfreebsd.diff and http://diskscrub.googlecode.com/git-history/04fcaadaef7ff8aae7b1268d788cb896556b1c55/src/getsize.c
+---
+ diskfile.cpp |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/diskfile.cpp b/diskfile.cpp
+index 8eaf710..59c3085 100644
+--- a/diskfile.cpp
++++ b/diskfile.cpp
+@@ -27,6 +27,10 @@ static char THIS_FILE[]=__FILE__;
+ #endif
+ #endif
+ 
++#if defined(__sun__)
++#include <sys/dkio.h>
++#define BLKGETSIZE64 DKIOCGMEDIAINFO
++#endif
+ 
+ #ifdef WIN32
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-- 
+1.7.10.3
+
