@@ -43,7 +43,7 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 #CONFIGURE_ARGS += --with-ps-varlist="procstat,&procuid,&procpid,&procppid,&procvsz,&procrss,&procpcpu,procetime,procprog,&pos"
 #
 CONFIGURE_ARGS += --with-trusted-path=/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin:$(prefix)/libexec/nagios-plugins
-CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -a inet6 -s %s 56 %d"
+CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -A inet6 -s %s 56 %d"
 
 libexecdir 	?= $(prefix)/libexec/nagios-plugins
 
