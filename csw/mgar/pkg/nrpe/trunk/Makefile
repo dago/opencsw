@@ -76,6 +76,13 @@ PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe/README_8k
 PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe_plugin
 PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe_plugin/license
 
+#
+# replace /usr/local
+#
+
+REINPLACE_USRLOCAL	+= .*/nrpe-2.13/SECURITY
+REINPLACE_USRLOCAL	+= .*/nrpe-2.13/README
+REINPLACE_USRLOCAL	+= sample-config/nrpe.cfg.in
 
 #
 # migrate configuration
@@ -133,12 +140,6 @@ USERGROUP        = /etc/opt/csw/pkg/CSWnrpe/cswusergroup
 #
 # overrides 
 #
-
-# Bad content only in READMEs and as examples in config files
-
-CHECKPKG_OVERRIDES_CSWnrpe += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nrpe/SECURITY
-CHECKPKG_OVERRIDES_CSWnrpe += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nrpe/README
-CHECKPKG_OVERRIDES_CSWnrpe += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnrpe/etc/opt/csw/nrpe.cfg
 
 # README_8k should be in every package
 
