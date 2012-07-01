@@ -1,14 +1,14 @@
-From 5d6dad6dcd4f57e114f39fe8b467bdf92172f62b Mon Sep 17 00:00:00 2001
+From 9eda017107a4fc9fa5781a006108f7e1a5540e05 Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 3 Jun 2012 17:51:49 +0200
-Subject: [PATCH] Expand paths with $(DESTDIR)
+Date: Sun, 1 Jul 2012 09:05:12 +0200
+Subject: [PATCH] Expand paths with DESTDIR
 
 ---
- Makefile |  224 +++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 113 insertions(+), 111 deletions(-)
+ Makefile |  228 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 115 insertions(+), 113 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index f610539..bd3d9a6 100644
+index a26d2d1..1b5f81c 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -9,6 +9,8 @@
@@ -106,8 +106,8 @@ index f610539..bd3d9a6 100644
  
 -	test -f $(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(HTMLDIR)/.htaccess
 -	test -f "$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(CONFDIR)/
-+	test -f $(DESTDIR)$(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(DESTDIR)$(HTMLDIR)/.htaccess
-+	test -f "$(DESTDIR)$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(DESTDIR)$(CONFDIR)/
++	test -f $(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(DESTDIR)$(HTMLDIR)/.htaccess
++	test -f "$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(DESTDIR)$(CONFDIR)/
  
 -	$(INSTALL) -m 0755 build/master/_bin/munin-cron $(BINDIR)/
 -	$(INSTALL) -m 0755 build/master/_bin/munin-check $(BINDIR)/
@@ -136,7 +136,7 @@ index f610539..bd3d9a6 100644
  
  # ALWAYS DO THE OS SPECIFIC PLUGINS LAST! THAT WAY THEY OVERWRITE THE
  # GENERIC ONES
-@@ -133,28 +135,28 @@ install-node-plugins: install-plugins-prime
+@@ -133,66 +135,66 @@ install-node-plugins: install-plugins-prime
  install-plugins-prime: install-plugins build $(PLUGINS) Makefile Makefile.config
  	@$(CHECKGROUP)
  
@@ -150,10 +150,11 @@ index f610539..bd3d9a6 100644
 +	mkdir -p $(DESTDIR)$(PLUGSTATE)
  
 -	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
--	$(CHMOD) 0775 $(PLUGSTATE)
--	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
 +#	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
-+#	$(CHMOD) 0775 $(PLUGSTATE)
+ 	# using g+rwxs, so plugins can create and modify their state file without help
+-	$(CHMOD) 02775 $(PLUGSTATE)
+-	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
++#	$(CHMOD) 02775 $(PLUGSTATE)
 +#	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
  
  	for p in build/plugins/node.d/* build/plugins/node.d.$(OSTYPE)/* ; do \
@@ -178,15 +179,15 @@ index f610539..bd3d9a6 100644
  
  #TODO:
  # configure plugins.  Or not. Better done under the direction of the installer
-@@ -162,36 +164,36 @@ install-plugins-java: build-plugins-java
+ # or the packager.
  
  install-async-prime:
 -	mkdir -p $(LIBDIR)
--	$(INSTALL) -m 0755 build/node/_bin/munin-async-client $(LIBDIR)/
--	$(INSTALL) -m 0755 build/node/_bin/munin-async-server $(LIBDIR)/
-+	mkdir -p $(DESTDIR)/$(LIBDIR)
-+	$(INSTALL) -m 0755 build/node/_bin/munin-async-client $(DESTDIR)$(LIBDIR)/
-+	$(INSTALL) -m 0755 build/node/_bin/munin-async-server $(DESTDIR)$(LIBDIR)/
+-	$(INSTALL) -m 0755 build/node/_bin/munin-async $(LIBDIR)/
+-	$(INSTALL) -m 0755 build/node/_bin/munin-asyncd $(LIBDIR)/
++	mkdir -p $(DESTDIR)$(LIBDIR)
++	$(INSTALL) -m 0755 build/node/_bin/munin-async $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 build/node/_bin/munin-asyncd $(DESTDIR)$(LIBDIR)/
  
  install-node-prime: install-node-pre install-node
  
@@ -222,17 +223,18 @@ index f610539..bd3d9a6 100644
  
  
  install-doc: build-doc
- 	mkdir -p $(DOCDIR)/resources
+-	mkdir -p $(DOCDIR)/resources
 -	$(INSTALL) -m 0644 README $(DOCDIR)/
 -	$(INSTALL) -m 0644 COPYING $(DOCDIR)/
 -	$(INSTALL) -m 0644 build/resources/* $(DOCDIR)/resources
++	mkdir -p $(DESTDIR)$(DOCDIR)/resources
 +	$(INSTALL) -m 0644 README $(DESTDIR)$(DOCDIR)/
 +	$(INSTALL) -m 0644 COPYING $(DESTDIR)$(DOCDIR)/
 +	$(INSTALL) -m 0644 build/resources/* $(DESTDIR)$(DOCDIR)/resources
  
  ######################################################################
  
-@@ -208,29 +210,29 @@ build/%: %.in
+@@ -209,29 +211,29 @@ build/%: %.in
  	@echo "$< -> $@"
  	@mkdir -p build/`dirname $<`
  	@sed -e 's|@@PREFIX@@|$(PREFIX)|g'                      \
@@ -277,7 +279,7 @@ index f610539..bd3d9a6 100644
               -e 's|@@USER@@|$(USER)|g'                          \
               -e 's|@@GROUP@@|$(GROUP)|g'                        \
               -e 's|@@PLUGINUSER@@|$(PLUGINUSER)|g'              \
-@@ -248,17 +250,17 @@ build-common-pre: common/Build
+@@ -249,17 +251,17 @@ build-common-pre: common/Build
  common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm build-common-pre
  	rm -f common/blib/lib/Munin/Common/Defaults.pm
  	$(PERL) -pe 's{(PREFIX     \s+=\s).*}{\1q{$(PREFIX)};}x;   \
@@ -306,7 +308,7 @@ index f610539..bd3d9a6 100644
                    s{(PERL	\s+=\s).*}{\1q{$(PERL)};}x;        \
                    s{(PERLLIB	\s+=\s).*}{\1q{$(PERLLIB)};}x;     \
                    s{(PYTHON	\s+=\s).*}{\1q{$(PYTHON)};}x;      \
-@@ -267,8 +269,8 @@ common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm bu
+@@ -268,8 +270,8 @@ common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm bu
                    s{(HOSTNAME	\s+=\s).*}{\1q{$(HOSTNAME)};}x;    \
                    s{(MKTEMP	\s+=\s).*}{\1q{$(MKTEMP)};}x;      \
                    s{(VERSION	\s+=\s).*}{\1q{$(VERSION)};}x;     \
@@ -317,7 +319,7 @@ index f610539..bd3d9a6 100644
                    s{(USER	\s+=\s).*}{\1q{$(USER)};}x;        \
                    s{(GROUP	\s+=\s).*}{\1q{$(GROUP)};}x;       \
                    s{(PLUGINUSER	\s+=\s).*}{\1q{$(PLUGINUSER)};}x;  \
-@@ -373,7 +375,7 @@ old-test: t/*.t
+@@ -371,7 +373,7 @@ old-test: t/*.t
  	$(MAKE) $@ CONFIG=t/Makefile.config
  else
  test_plugins = id_default id_root env
@@ -326,7 +328,7 @@ index f610539..bd3d9a6 100644
  	@for test in t/*.t; do \
  		echo -n "$$test: "; \
  		PERL5LIB=$(PERLLIB) $(PERL) $$test;\
-@@ -381,10 +383,10 @@ old-test: t/*.t t/install $(addprefix $(CONFDIR)/plugins/,$(test_plugins))
+@@ -379,10 +381,10 @@ old-test: t/*.t t/install $(addprefix $(CONFDIR)/plugins/,$(test_plugins))
  endif
  
  node-monkeywrench: install-node
@@ -341,7 +343,7 @@ index f610539..bd3d9a6 100644
  	cp monkeywrench/plugin-break*_ $(LIBDIR)/plugins/
  	$(SBINDIR)/munin-node-configure --suggest
  	echo 'Done?'
-@@ -410,12 +412,12 @@ build-common: common/Build
+@@ -408,12 +410,12 @@ build-common: common/Build
  # can't seem to find a way to persuade it to write otherwhere.
  install-%: %/Build
  	cd $* && $(PERL) Build install			\
