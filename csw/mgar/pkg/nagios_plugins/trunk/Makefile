@@ -54,7 +54,7 @@ EXTRA_LIB += /opt/csw/postgresql/lib
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibintl8 CSWlibpq5
-RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient15 CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient18 CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
 
 BUILD_DEP_PKGS_CSWnagios-plugins += CSWmysql-dev
@@ -75,7 +75,7 @@ post-install-modulated:
 	@ginstall -m 755 -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 755 -d $(PLUGINDEST)
-	@$(foreach PLUGIN,$(ROOT_PLUGINS),ginstall -m 744 $(WORKSRC)/plugins-root/$(PLUGIN) $(PLUGINDEST);)
+	@$(foreach PLUGIN,$(ROOT_PLUGINS),ginstall -m 4755 $(WORKSRC)/plugins-root/$(PLUGIN) $(PLUGINDEST);)
 	@tar cf $(WORKSRC)/contrib.tar $(WORKSRC)/contrib/
 	@ginstall -m 755 -d $(DOCDEST)
 	@ginstall -m 644 $(WORKSRC)/contrib.tar $(DOCDEST)
