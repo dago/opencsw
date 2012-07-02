@@ -3,7 +3,7 @@ VERSION = 1.9.3
 # Change this when the build starts putting files in $(libdir)/ruby/$(newver)
 API_VERSION = 1.9.1
 API_SHORT = $(subst .,,$(API_VERSION))
-PATCHLEVEL = p125
+PATCHLEVEL = p194
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -116,7 +116,7 @@ MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-Skip-a-chmod-fileutils-test-on-solaris.patch
-PATCHFILES += 0002-vm.c-vm_define_method-improve-guard-of-iseq-from-GC..patch
+#PATCHFILES += 0002-vm.c-vm_define_method-improve-guard-of-iseq-from-GC..patch
 PATCHFILES += 0003-Use-echo-port-instead-of-http-for-gem-server-test.patch
 
 # We define upstream file regex so we can be notifed of new upstream
