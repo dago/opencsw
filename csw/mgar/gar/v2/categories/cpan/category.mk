@@ -60,6 +60,8 @@ _CATEGORY_FILTER = | ( cat; if test -f "$(WORKDIR_GLOBAL)/META.yml";then echo "i
 include gar/gar.mk
 
 CONFIGURE_ENV += PERL5LIB=$(PERL5LIB)
+# Tell MakeMaker to be non-interactive
+CONFIGURE_ENV += PERL_MM_USE_DEFAULT=1 
 BUILD_ENV     += PERL5LIB=$(PERL5LIB)
 TEST_ENV      += PERL5LIB=$(PERL5LIB)
 INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
