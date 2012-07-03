@@ -30,7 +30,10 @@ CATALOGNAME_CSWtexmetauml			=	tex_metauml_stub
 RUNTIME_DEP_PKGS					=	CSWtetex
 CHECKPKG_OVERRIDES_CSWtex-metauml	+=	surplus-dependency|CSWtetex
 ARCHALL_CSWtex-metauml				=	1
-LICENSE_CSWtex-metauml				=	License
+#LICENSE				=	thrunk/License
+#LICENSE				=	$(WORKSRC)/thrunk/License
+LICENSE_CSWtex-metauml				=	thrunk/License
+LICENSE_CSWtexmetauml				=	thrunk/License
 
 include gar/category.mk
 
