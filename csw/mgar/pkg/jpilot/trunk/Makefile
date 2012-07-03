@@ -12,8 +12,10 @@ define BLURB
    who run the most popular Operating Systems in the World, Linux and Unix.
 endef
 
-MASTER_SITES = http://jpilot.org/
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES	=	http://jpilot.org/
+DISTFILES		=	$(DISTNAME).tar.gz
+DISTFILES		+=	CSWjpilot.postinstall
+DISTFILES		+=	CSWjpilot.preremove
 
 GARCOMPILER			=	GNU
 
@@ -75,6 +77,14 @@ include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
+post-install-modulated:
+	mv $(DESTDIR)/$(sharedstatedir)/$(NAME)/MañanaDB.pdb $(DESTDIR)/$(sharedstatedir)/$(NAME)/MananaDB.pdb
+	$(MAKECOOKIE)
+
 # this is private and not available publicly
 mydependencies:
 	$(HOME)/bin/ocswdeplist --package $(NAME)
+
+# Local Variables:
+# coding: latin-1
+# End:
