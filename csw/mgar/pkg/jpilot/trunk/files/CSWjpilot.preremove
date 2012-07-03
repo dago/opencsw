@@ -1,0 +1,23 @@
+# $Id$
+
+Error()
+{
+	echo "preremove: anomaly : $1" >&2
+	exit 1
+}
+
+Warning()
+{
+    echo "warning:" "$1" >&2
+}
+
+/usr/sbin/chroot ${PKG_INSTALL_ROOT:-/} /usr/bin/mv /opt/csw/share/jpilot/MañanaDB.pdb /opt/csw/share/jpilot/MananaDB.pdb ||
+Warning "cannot move Manana database!"
+
+exit 0
+
+# Local Variables:
+# mode: shell-script
+# coding: latin-1
+# mode: font-lock
+# End:
