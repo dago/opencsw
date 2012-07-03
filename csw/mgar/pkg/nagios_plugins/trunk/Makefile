@@ -35,7 +35,7 @@ CONFIGURE_ARGS += --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin
 CONFIGURE_ARGS += --with-mysql-dir=/opt/csw
 CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
 CONFIGURE_ARGS += --disable-largefile
-CONFIGURE_ARGS  += --libexecdir=$(prefix)/libexec/nagios-plugins
+CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-openssl=/opt/csw
 # http://184.82.236.176/?p=4
@@ -46,6 +46,8 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 #
 CONFIGURE_ARGS += --with-trusted-path=/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin:$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -A inet6 -s %s 56 %d"
+CONFIGURE_ARGS += --with-snmpget-command=/opt/csw/bin/snmpget
+CONFIGURE_ARGS += --with-snmpgetnext-command=/opt/csw/bin/snmpgetnext
 
 libexecdir 	?= $(prefix)/libexec/nagios-plugins
 
@@ -59,6 +61,9 @@ RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibintl8 CSWlibpq5
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient18 CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWnetsnmp
+
+# Add this override for now
+CHECKPKG_OVERRIDES_CSWnagios-plugins += surplus-dependency|CSWnetsnmp
 
 BUILD_DEP_PKGS_CSWnagios-plugins += CSWmysql-dev
 BUILD_DEP_PKGS_CSWnagios-plugins += CSWpostgresql-dev
