@@ -1,9 +1,11 @@
 NAME = git
-VERSION = 1.7.11
+VERSION = 1.7.11.1
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
 GARTYPE = v2
+
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 VENDOR_URL = http://git-scm.org/
 
@@ -54,7 +56,7 @@ ARCHALL_CSWgit-emacs = 1
 ARCHALL_CSWgit-doc = 1
 ARCHALL_CSWgit-completion = 1
 
-BUILD_DEP_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWlibcurl-dev
+BUILD_DEP_PKGS = CSWasciidoc CSWlibssl-dev CSWxmlto CSWbash CSWlibcurl-dev
 BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 BUILD_DEP_PKGS += CSWpython
