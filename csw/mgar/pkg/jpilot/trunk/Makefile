@@ -40,9 +40,7 @@ BUILD_DEP_PKGS		+=	CSWpilot-link-dev
 BUILD_DEP_PKGS		+=	CSWpmxmlparser
 
 RUNTIME_DEP_PKGS	+=	CSWlibatk1-0-0
-RUNTIME_DEP_PKGS	+=	CSWlibbz2-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibcairo2
-RUNTIME_DEP_PKGS	+=	CSWlibexpat1
 RUNTIME_DEP_PKGS	+=	CSWlibfontconfig1
 RUNTIME_DEP_PKGS	+=	CSWlibfreetype6
 RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
@@ -56,13 +54,8 @@ RUNTIME_DEP_PKGS	+=	CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS	+=	CSWlibgpg-error0
 RUNTIME_DEP_PKGS	+=	CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS	+=	CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS	+=	CSWlibintl8
 RUNTIME_DEP_PKGS	+=	CSWlibpisock9
-RUNTIME_DEP_PKGS	+=	CSWlibpixman1-0
-RUNTIME_DEP_PKGS	+=	CSWlibpng12-0
-RUNTIME_DEP_PKGS	+=	CSWlibxrender
-RUNTIME_DEP_PKGS	+=	CSWlibz1
 RUNTIME_DEP_PKGS	+=	CSWpango
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
@@ -72,6 +65,15 @@ CONFIGURE_ARGS	+=	--with-libiconv-prefix=$(prefix)
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
+
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/share|root/opt/csw/bin/jpilot
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/share|root/opt/csw/bin/jpilot-sync
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/share|root/opt/csw/bin/jpilot-merge
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/share|root/opt/csw/bin/jpilot-dump
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/share|root/opt/csw/share/doc/jpilot/INSTALL
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/jpilot/README
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/jpilot/manual/plugin.html
+CHECKPKG_OVERRIDES_CSWjpilot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/jpilot/manual/manual.html
 
 include gar/category.mk
 
