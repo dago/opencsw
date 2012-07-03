@@ -10,12 +10,10 @@ define BLURB
   MetaUML is a GNU GPL MetaPost library for typesetting UML diagrams, using a human-friendly textual notation.
 endef
 
-DISTNAME		=	metauml_lib_$(VERSION)
-WORKSRC			=	$(WORKDIR)/metauml_lib
-PATCHDIR		=	$(WORKSRC)
+DISTNAME		=	metauml_lib
 MASTER_SITES	=	$(SF_MIRRORS)
 SF_PROJ			=	metauml
-DISTFILES		=	$(DISTNAME).tgz
+DISTFILES		=	metauml_lib_$(VERSION).tgz
 
 CONFIGURE_SCRIPTS	=
 BUILD_SCRIPTS		=
@@ -30,10 +28,7 @@ CATALOGNAME_CSWtexmetauml			=	tex_metauml_stub
 RUNTIME_DEP_PKGS					=	CSWtetex
 CHECKPKG_OVERRIDES_CSWtex-metauml	+=	surplus-dependency|CSWtetex
 ARCHALL_CSWtex-metauml				=	1
-#LICENSE				=	thrunk/License
-#LICENSE				=	$(WORKSRC)/thrunk/License
-LICENSE_CSWtex-metauml				=	thrunk/License
-LICENSE_CSWtexmetauml				=	thrunk/License
+LICENSE				=	thrunk/License
 
 include gar/category.mk
 
