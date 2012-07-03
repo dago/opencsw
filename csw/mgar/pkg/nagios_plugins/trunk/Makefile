@@ -1,3 +1,5 @@
+# $Id$
+#
 NAME = nagios-plugins
 VERSION = 1.4.15
 CATEGORIES = apps
@@ -56,6 +58,7 @@ PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibintl8 CSWlibpq5
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient18 CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWnetsnmp
 
 BUILD_DEP_PKGS_CSWnagios-plugins += CSWmysql-dev
 BUILD_DEP_PKGS_CSWnagios-plugins += CSWpostgresql-dev
