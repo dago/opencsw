@@ -13,7 +13,7 @@ endef
 DISTNAME		=	metauml_lib
 MASTER_SITES	=	$(SF_MIRRORS)
 SF_PROJ			=	metauml
-DISTFILES		=	metauml_lib_$(VERSION).tgz
+DISTFILES		=	$(DISTNAME)_$(VERSION).tgz
 
 CONFIGURE_SCRIPTS	=
 BUILD_SCRIPTS		=
@@ -28,7 +28,7 @@ CATALOGNAME_CSWtexmetauml			=	tex_metauml_stub
 RUNTIME_DEP_PKGS					=	CSWtetex
 CHECKPKG_OVERRIDES_CSWtex-metauml	+=	surplus-dependency|CSWtetex
 ARCHALL_CSWtex-metauml				=	1
-LICENSE				=	thrunk/License
+LICENSE								=	thrunk/License
 
 include gar/category.mk
 
