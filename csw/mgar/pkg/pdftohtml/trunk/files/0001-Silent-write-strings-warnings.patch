@@ -1,0 +1,84 @@
+From ed6cd7d3bb38504f8daff71ea513bde6b4190bd8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 3 Jul 2012 16:15:59 +0200
+Subject: [PATCH] Silent write strings warnings
+
+---
+ fofi/Makefile   |    2 +-
+ goo/Makefile    |    4 ++--
+ splash/Makefile |    2 +-
+ src/Makefile    |    2 +-
+ xpdf/Makefile   |    2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/fofi/Makefile b/fofi/Makefile
+index 286b1e2..04ecf36 100755
+--- a/fofi/Makefile
++++ b/fofi/Makefile
+@@ -14,7 +14,7 @@ srcdir = .
+ GOOSRCDIR = $(srcdir)/../goo
+ GOOLIBDIR = ../goo
+ 
+-CXXFLAGS = -g -O2 -DHAVE_CONFIG_H -I.. -I$(GOOSRCDIR) -I$(srcdir)
++CXXFLAGS = -g -O2 -DHAVE_CONFIG_H -I.. -I$(GOOSRCDIR) -I$(srcdir) -Wno-write-strings
+ 
+ CXX ?= c++
+ AR = ar rc
+diff --git a/goo/Makefile b/goo/Makefile
+index d2df2fa..e2b1b28 100755
+--- a/goo/Makefile
++++ b/goo/Makefile
+@@ -11,9 +11,9 @@ SHELL = /bin/sh
+ 
+ srcdir = .
+ 
+-CFLAGS += $(DEBUG) -O2 -DHAVE_CONFIG_H -I.. -I$(srcdir) 
++CFLAGS += $(DEBUG) -O2 -DHAVE_CONFIG_H -I.. -I$(srcdir) -Wno-write-strings
+ #-g -DDEBUG_MEM
+-CXXFLAGS += $(DEBUG) -O2 -DHAVE_CONFIG_H -I.. -I$(srcdir) 
++CXXFLAGS += $(DEBUG) -O2 -DHAVE_CONFIG_H -I.. -I$(srcdir) -Wno-write-strings
+ #-g -DDEBUG_MEM
+ 
+ CC ?= cc
+diff --git a/splash/Makefile b/splash/Makefile
+index 0eb4b06..7d89742 100755
+--- a/splash/Makefile
++++ b/splash/Makefile
+@@ -16,7 +16,7 @@ GOOLIBDIR = ../goo
+ FOFISRCDIR = $(srcdir)/../fofi
+ FOFILIBDIR = ../fofi
+ 
+-CXXFLAGS = -g -O2 -DHAVE_CONFIG_H -I.. -I$(GOOSRCDIR) -I$(FOFISRCDIR) -I$(srcdir)  
++CXXFLAGS = -g -O2 -DHAVE_CONFIG_H -I.. -I$(GOOSRCDIR) -I$(FOFISRCDIR) -I$(srcdir) -Wno-write-strings
+ 
+ CXX ?= c++
+ AR = ar rc
+diff --git a/src/Makefile b/src/Makefile
+index 5e68f5d..d159411 100755
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -11,7 +11,7 @@ FOFILIBDIR = ../fofi
+ SPLASHSRCDIR = ../splash
+ SPLASHLIBDIR = ../splash
+ 
+-CXXFLAGS = -g -O2 -DHAVE_CONFIG_H -DHAVE_DIRENT_H=1  -I.. -DHAVE_REWINDDIR=1 -DHAVE_POPEN=1 -I.. -I$(GOOSRCDIR) -I$(XPDFSRCDIR) -I$(FOFISRCDIR) -I$(SPLASHSRCDIR) -I$(srcdir)           -I/usr/X11R6/include
++CXXFLAGS = -g -O2 -DHAVE_CONFIG_H -DHAVE_DIRENT_H=1  -I.. -DHAVE_REWINDDIR=1 -DHAVE_POPEN=1 -I.. -I$(GOOSRCDIR) -I$(XPDFSRCDIR) -I$(FOFISRCDIR) -I$(SPLASHSRCDIR) -I$(srcdir)           -I/usr/X11R6/include -Wno-write-strings
+ 
+ LDFLAGS = 
+ 
+diff --git a/xpdf/Makefile b/xpdf/Makefile
+index 039d005..f9502c9 100755
+--- a/xpdf/Makefile
++++ b/xpdf/Makefile
+@@ -18,7 +18,7 @@ FOFILIBDIR = ../fofi
+ SPLASHSRCDIR = $(srcdir)/../splash
+ SPLASHLIBDIR = ../splash
+ 
+-CXXFLAGS +=  -g -O2 -DHAVE_CONFIG_H -I.. -I$(GOOSRCDIR) -I$(FOFISRCDIR) -I$(SPLASHSRCDIR) -I$(srcdir)           -I/usr/X11R6/include
++CXXFLAGS +=  -g -O2 -DHAVE_CONFIG_H -I.. -I$(GOOSRCDIR) -I$(FOFISRCDIR) -I$(SPLASHSRCDIR) -I$(srcdir)           -I/usr/X11R6/include -Wno-write-strings
+ 
+ CC ?= cc
+ CXX ?= c++
+-- 
+1.7.10.3
+
