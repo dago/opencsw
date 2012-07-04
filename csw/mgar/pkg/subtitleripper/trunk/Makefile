@@ -20,9 +20,16 @@ PATCHFILES		+=	0001-From-private-recipe.patch
 GARCOMPILER			=	GNU
 
 BUILD_DEP_PKGS		+=	CSWlibnetpbm-dev
+BUILD_DEP_PKGS		+=	CSWlibpng-dev
+BUILD_DEP_PKGS		+=	CSWlibz-dev
 
-RUNTIME_DEP_PKGS	+=	CSWgocr
-RUNTIME_DEP_PKGS	+=	CSWgsed
+RUNTIME_DEP_PKGS						+=	CSWgocr
+CHECKPKG_OVERRIDES_CSWsubtitleripper	+=	surplus-dependency|CSWgocr
+RUNTIME_DEP_PKGS						+=	CSWgsed
+CHECKPKG_OVERRIDES_CSWsubtitleripper	+=	surplus-dependency|CSWgsed
+RUNTIME_DEP_PKGS						+=	CSWlibnetpbm10
+RUNTIME_DEP_PKGS						+=	CSWlibpng12-0
+RUNTIME_DEP_PKGS						+=	CSWlibz1
 
 CONFIGURE_SCRIPTS	=
 TEST_SCRIPTS		=
@@ -39,3 +46,7 @@ install-custom:
 	ginstall --mode=0644 $(WORKSRC)/gocrfilter*.sed $(DESTDIR)/$(pkgshare)
 	ginstall --directory $(DESTDIR)/$(pkgdoc)
 	ginstall --mode=0644 $(WORKSRC)/ChangeLog $(WORKSRC)/README* $(DESTDIR)/$(pkgdoc)
+
+# this is private and not available publicly
+mydependencies:
+	$(HOME)/bin/ocswdeplist --package $(NAME)
