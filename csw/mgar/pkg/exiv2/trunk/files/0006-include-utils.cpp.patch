@@ -1,0 +1,12 @@
+diff --git a/src/utils.cpp b/src/utils.cpp
+index d316dc5..07629e8 100644
+--- a/src/utils.cpp
++++ b/src/utils.cpp
+@@ -56,6 +56,7 @@ EXIV2_RCSID("@(#) $Id: utils.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <string>
+ #include <iostream>
+ #include <sstream>
++#include <stdio.h>
+ 
+ namespace Util {
+ 

@@ -1,0 +1,10 @@
+--- a/src/pgfimage.cpp
++++ b/src/pgfimage.cpp
+@@ -54,6 +54,7 @@ EXIV2_RCSID("@(#) $Id: pgfimage.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <cstring>
+ #include <iostream>
+ #include <cassert>
++#include <string.h>
+ 
+ // Signature from front of PGF file
+ const unsigned char pgfSignature[3] = { 0x50, 0x47, 0x46 };

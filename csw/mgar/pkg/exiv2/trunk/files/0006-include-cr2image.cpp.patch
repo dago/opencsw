@@ -1,0 +1,11 @@
+--- a/src/cr2image.cpp
++++ b/src/cr2image.cpp
+@@ -52,6 +52,8 @@ EXIV2_RCSID("@(#) $Id: cr2image.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <cassert>
+ #include <cstring>
+ 
++#include <strings.h>
++
+ // *****************************************************************************
+ // class member definitions
+ namespace Exiv2 {

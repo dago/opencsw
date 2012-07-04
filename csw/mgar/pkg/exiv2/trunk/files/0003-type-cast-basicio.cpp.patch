@@ -1,5 +1,3 @@
-diff --git a/src/basicio.cpp b/src/basicio.cpp
-index 0343dff..174e8a7 100644
 --- a/src/basicio.cpp
 +++ b/src/basicio.cpp
 @@ -312,7 +312,7 @@ namespace Exiv2 {

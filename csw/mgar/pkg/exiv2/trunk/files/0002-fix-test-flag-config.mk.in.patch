@@ -1,11 +1,6 @@
 --- a/config/config.mk.in
 +++ b/config/config.mk.in
-@@ -129,11 +129,11 @@ ifdef DEP_TRACKING
-         # dependencies. If you're not using gcc, you may need to change
-         # this to something suitable for your compiler or simply unset
-         # the variable. See the link above for suggestions.
--	MAKEDEPEND = $(CXX) -MM $(CPPFLAGS) -o $*.d $<
-+	MAKEDEPEND = $(CXX) -xM1 $(CPPFLAGS) -o $*.d $<
+@@ -133,7 +133,7 @@ ifdef DEP_TRACKING
  
          # Dependency files post-process commands
          POSTDEPEND = if test ! -d $(DEPDIR); then mkdir $(DEPDIR); fi; \

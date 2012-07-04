@@ -1,0 +1,12 @@
+--- a/xmpsdk/src/XML_Node.cpp
++++ b/xmpsdk/src/XML_Node.cpp
+@@ -13,6 +13,9 @@
+ #include <cstring>
+ #include <cstdio>
+ 
++#include <strings.h>
++#include <stdio.h>
++
+ // ! Can't include XMP..._Impl.hpp - used by both Core and Files.
+ #define XMP_LitNMatch(s,l,n)	(std::strncmp((s),(l),(n)) == 0)
+ 

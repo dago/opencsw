@@ -1,0 +1,11 @@
+--- a/src/preview.cpp
++++ b/src/preview.cpp
+@@ -48,6 +48,8 @@ EXIV2_RCSID("@(#) $Id: preview.cpp 2698 2012-04-11 16:02:44Z ahuggel $")
+ #include "tiffimage.hpp"
+ #include "tiffimage_int.hpp"
+ 
++#include <string.h>
++
+ // *****************************************************************************
+ namespace {
+ 

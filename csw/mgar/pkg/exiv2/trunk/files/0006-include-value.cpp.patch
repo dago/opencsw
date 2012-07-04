@@ -1,0 +1,12 @@
+--- a/src/value.cpp
++++ b/src/value.cpp
+@@ -47,6 +47,9 @@ EXIV2_RCSID("@(#) $Id: value.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <cstdio>
+ #include <cstdlib>
+ #include <ctype.h>
++#include <string.h>
++#include <stdio.h>
++#include <math.h>
+ 
+ // *****************************************************************************
+ // class member definitions

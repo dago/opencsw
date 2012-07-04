@@ -1,0 +1,10 @@
+--- a/src/jp2image.cpp
++++ b/src/jp2image.cpp
+@@ -52,6 +52,7 @@ EXIV2_RCSID("@(#) $Id: jp2image.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <cstring>
+ #include <iostream>
+ #include <cassert>
++#include <string.h>
+ 
+ // JPEG-2000 box types
+ const uint32_t kJp2BoxTypeJp2Header   = 0x6a703268; // 'jp2h'

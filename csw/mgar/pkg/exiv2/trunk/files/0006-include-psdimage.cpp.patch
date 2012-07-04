@@ -1,0 +1,10 @@
+--- a/src/psdimage.cpp
++++ b/src/psdimage.cpp
+@@ -52,6 +52,7 @@ EXIV2_RCSID("@(#) $Id: psdimage.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <iomanip>
+ #include <cassert>
+ #include <memory>
++#include <string.h>
+ 
+ // Todo: Consolidate with existing code in struct Photoshop (jpgimage.hpp):
+ //       Extend this helper to a proper class with all required functionality,

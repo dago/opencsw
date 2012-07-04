@@ -1,0 +1,10 @@
+--- a/src/tgaimage.cpp
++++ b/src/tgaimage.cpp
+@@ -47,6 +47,7 @@ EXIV2_RCSID("@(#) $Id: tgaimage.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <string>
+ #include <cstring>
+ #include <iostream>
++#include <string.h>
+ 
+ // *****************************************************************************
+ // class member definitions
