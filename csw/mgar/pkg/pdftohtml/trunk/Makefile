@@ -5,7 +5,7 @@ VERSION = 0.40a
 GARTYPE = v2
 CATEGORIES = apps
 
-DESCRIPTION = converts files from PDF into HTML
+DESCRIPTION = Converts files from PDF into HTML
 define BLURB
   Pdftohtml is a tool based on the Xpdf package which translates pdf
   documents into html format.
@@ -15,11 +15,18 @@ MASTER_SITES	=	$(SF_MIRRORS)
 DISTFILES		=	$(DISTNAME).tar.gz
 DISTFILES		+=	COPYING
 PATCHFILES		+=	0001-Silent-write-strings-warnings.patch
+PATCHFILES		+=	0002-Fix-paths.patch
 
 BUILD_DEP_PKGS		+=	CSWhelp2man
 
 RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS	+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS	+=	CSWxpdf
+RUNTIME_DEP_PKGS	+=	CSWgsfonts
+
+CHECKPKG_OVERRIDES_CSWpdftohtml	+=	surplus-dependency|CSWxpdf
+CHECKPKG_OVERRIDES_CSWpdftohtml	+=	surplus-dependency|CSWgsfonts
+CHECKPKG_OVERRIDES_CSWpdftohtml	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/pdftohtml
 
 GARCOMPILER			=	GNU
 CONFIGURE_SCRIPTS	=
