@@ -1,0 +1,10 @@
+--- a/src/tiffvisitor.cpp
++++ b/src/tiffvisitor.cpp
+@@ -52,6 +52,7 @@ EXIV2_RCSID("@(#) $Id: tiffvisitor.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <iostream>
+ #include <iomanip>
+ #include <cassert>
++#include <string.h>
+ 
+ // *****************************************************************************
+ namespace {

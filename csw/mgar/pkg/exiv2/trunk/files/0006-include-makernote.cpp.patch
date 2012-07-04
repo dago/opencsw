@@ -1,0 +1,10 @@
+--- a/src/makernote.cpp
++++ b/src/makernote.cpp
+@@ -45,6 +45,7 @@ EXIV2_RCSID("@(#) $Id: makernote.cpp 2698 2012-04-11 16:02:44Z ahuggel $")
+ // + standard includes
+ #include <string>
+ #include <cstring>
++#include <string.h>
+ 
+ // *****************************************************************************
+ namespace {

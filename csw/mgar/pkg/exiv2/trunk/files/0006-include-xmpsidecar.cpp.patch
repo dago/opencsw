@@ -1,0 +1,10 @@
+--- a/src/xmpsidecar.cpp
++++ b/src/xmpsidecar.cpp
+@@ -49,6 +49,7 @@ EXIV2_RCSID("@(#) $Id: xmpsidecar.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <string>
+ #include <iostream>
+ #include <cassert>
++#include <strings.h>
+ 
+ // *****************************************************************************
+ namespace {

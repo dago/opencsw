@@ -1,0 +1,12 @@
+diff --git a/src/exiv2.cpp b/src/exiv2.cpp
+index 2dae4c7..67716c0 100644
+--- a/src/exiv2.cpp
++++ b/src/exiv2.cpp
+@@ -52,6 +52,7 @@ EXIV2_RCSID("@(#) $Id: exiv2.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <cstring>
+ #include <cassert>
+ #include <cctype>
++#include <strings.h>
+ 
+ // *****************************************************************************
+ // local declarations

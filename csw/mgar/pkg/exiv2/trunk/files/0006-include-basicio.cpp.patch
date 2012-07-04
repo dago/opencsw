@@ -1,0 +1,12 @@
+--- a/src/basicio.cpp
++++ b/src/basicio.cpp
+@@ -61,6 +61,9 @@ EXIV2_RCSID("@(#) $Id: basicio.cpp 2689 2012-03-24 13:00:00Z ahuggel $")
+ # include <unistd.h>                    // for getpid, stat
+ #endif
+ 
++#include <stdio.h>
++#include <string.h>
++
+ #if defined WIN32 && !defined __CYGWIN__
+ // Windows doesn't provide mode_t, nlink_t
+ typedef unsigned short mode_t;

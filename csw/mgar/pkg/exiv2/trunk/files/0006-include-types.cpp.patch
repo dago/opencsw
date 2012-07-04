@@ -1,0 +1,10 @@
+--- a/src/types.cpp
++++ b/src/types.cpp
+@@ -49,6 +49,7 @@ EXIV2_RCSID("@(#) $Id: types.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ #include <cstdlib>
+ #include <cassert>
+ #include <cstring>
++#include <string.h>
+ 
+ // *****************************************************************************
+ namespace {

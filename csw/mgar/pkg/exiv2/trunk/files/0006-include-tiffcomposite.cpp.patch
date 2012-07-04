@@ -1,0 +1,10 @@
+--- a/src/tiffcomposite.cpp
++++ b/src/tiffcomposite.cpp
+@@ -49,6 +49,7 @@ EXIV2_RCSID("@(#) $Id: tiffcomposite.cpp 2699 2012-04-11 16:02:52Z ahuggel $")
+ #include <iostream>
+ #include <iomanip>
+ #include <algorithm>
++#include <string.h>
+ 
+ // *****************************************************************************
+ namespace {

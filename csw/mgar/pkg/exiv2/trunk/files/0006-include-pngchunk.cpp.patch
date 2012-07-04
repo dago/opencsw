@@ -1,0 +1,11 @@
+--- a/src/pngchunk.cpp
++++ b/src/pngchunk.cpp
+@@ -60,6 +60,8 @@ extern "C" {
+ #include <iostream>
+ #include <cassert>
+ #include <cstdio>
++#include <string.h>
++#include <stdlib.h>
+ 
+ /*
+ 

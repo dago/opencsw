@@ -1,0 +1,11 @@
+--- a/src/futils.cpp
++++ b/src/futils.cpp
+@@ -42,6 +42,8 @@ EXIV2_RCSID("@(#) $Id: futils.cpp 2681 2012-03-22 15:19:35Z ahuggel $")
+ // + standard includes
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#include <string.h>
++
+ #ifdef _MSC_VER
+ # define S_ISREG(m)      (((m) & S_IFMT) == S_IFREG)
+ #endif

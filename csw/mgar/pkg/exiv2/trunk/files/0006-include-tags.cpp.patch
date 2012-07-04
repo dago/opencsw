@@ -1,0 +1,10 @@
+--- a/src/tags.cpp
++++ b/src/tags.cpp
+@@ -60,6 +60,7 @@ EXIV2_RCSID("@(#) $Id: tags.cpp 2696 2012-04-11 05:50:34Z ahuggel $")
+ #include <cassert>
+ #include <cmath>
+ #include <cstring>
++#include <string.h>
+ 
+ // *****************************************************************************
+ // local declarations

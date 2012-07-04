@@ -1,0 +1,11 @@
+--- a/src/epsimage.cpp
++++ b/src/epsimage.cpp
+@@ -55,6 +55,8 @@ EXIV2_RCSID("@(#) $Id: epsimage.cpp $")
+ #include <sstream>
+ #include <string>
+ 
++#include <string.h>
++
+ // *****************************************************************************
+ namespace {
+ 
