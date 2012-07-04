@@ -1,0 +1,89 @@
+From d0909b8017dc054cedd7843791fa1a7f1c13fd8a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 4 Jul 2012 14:01:39 +0200
+Subject: [PATCH] From private recipe
+
+---
+ Makefile |    2 +-
+ pgm2txt  |   19 ++++++++++++-------
+ 2 files changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2001932..f5f685e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -9,7 +9,7 @@ INCLUDES :=
+ 
+ ### enable ppm support ###
+ DEFINES  += -D_HAVE_LIB_PPM_
+-LIBS     += -lppm
++LIBS     += -lnetpbm
+ 
+ ### enable PNG support ###
+ DEFINES += -D_HAVE_PNG_
+diff --git a/pgm2txt b/pgm2txt
+index f246182..c1f36cd 100755
+--- a/pgm2txt
++++ b/pgm2txt
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#! /usr/bin/env bash
+ # Call gocr to convert pgm images into ASCII text
+ # (this file is part of subtitle2pgm)
+ # Please modify it to your needs
+@@ -16,7 +16,7 @@ DB_PATH=./db/
+ # Adjust this path to where the files
+ # gocrfilter_en.sed  gocrfilter_fr.sed  gocrfilter_none.sed
+ # are located
+-PATH_TO_LANGUAGE_FILTER=~/sourceforge/subtitleripper/src/
++PATH_TO_LANGUAGE_FILTER="/opt/csw/share/subtitleripper/"
+ 
+ # set your options for gocr. Please read the gocr
+ # docs to find out more about this
+@@ -64,6 +64,8 @@ Usage:
+          
+     -d             Use GOCR options for "database only" mode
+ 
++    -F format      Use format for GOCR format: ISO8859_1  TeX
++                   HTML XML UTF8 ASCII
+ 
+     Example:
+       Convert PGM files with english language filter and
+@@ -86,18 +88,21 @@ fi
+ GOCR_OPTIONS=${GOCR_OPTIONS_AUTO}
+ 
+ # process command line options
+-while getopts ":vdf:" Option
++while getopts ":vdf:F:" Option
+ do
+   case $Option in
+-    v) 
++    v)
+ 	DISPLAY_PGM=true
+ 	;;
+-    f) 
++    f)
+ 	LANGUAGE=$OPTARG
+ 	;;
+-    d)  
++    d)
+ 	GOCR_OPTIONS=${GOCR_OPTIONS_DB_ONLY}
+ 	;;
++    F)
++	GOCR_OPTIONS="${GOCR_OPTIONS} -f $OPTARG"
++	;;
+     *) 
+ 	usage
+ 	;; 
+@@ -158,7 +163,7 @@ for i in ${PGM_BASE_NAME}*.pgm ${PGM_BASE_NAME}*.pgm.gz; do
+     if [ "none" = "${LANGUAGE}" ]; then
+ 	gocr ${GOCR_OPTIONS} -p ${DB_PATH}  $i > $i.txt
+     else
+-	gocr ${GOCR_OPTIONS} -p ${DB_PATH}  $i | sed -f ${FILTER_SCRIPT} -  > $i.txt
++	gocr ${GOCR_OPTIONS} -p ${DB_PATH}  $i | gsed -f ${FILTER_SCRIPT} -  > $i.txt
+     fi
+ 
+     # close the viewer
+-- 
+1.7.10.3
+
