@@ -1,0 +1,59 @@
+From d3fa8a62ca71efc752a54c4db96cd79022878222 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 5 Jul 2012 14:38:12 +0200
+Subject: [PATCH] Remove stuff that ignores DESTDIR
+
+---
+ Makefile.PL |   39 ---------------------------------------
+ 1 file changed, 39 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 3a78a4b..bbbca2e 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -13,42 +13,3 @@ WriteMakefile(
+     },    
+ );
+ 
+-sub MY::install {
+-    package MY;
+-    my $script = shift->SUPER::install(@_);
+-
+-    # Only modify existing ParserDetails.ini if user agrees
+-
+-    my $write_ini_ok = 0;
+-
+-    eval { require XML::SAX };
+-    if ($@) {
+-        $write_ini_ok = 1;
+-    }
+-    else {
+-        my $dir = File::Basename::dirname($INC{'XML/SAX.pm'});
+-        if (-e File::Spec->catfile($dir, 'SAX', 'ParserDetails.ini')) {
+-            $write_ini_ok =
+-                ExtUtils::MakeMaker::prompt(
+-                    "Do you want XML::SAX to alter ParserDetails.ini?", "Y"
+-                ) =~ /^y/i;
+-        }
+-        else {
+-            $write_ini_ok = 1;
+-        }
+-    }
+-    
+-    if ($write_ini_ok) {
+-        $script =~ s/install :: (.*)$/install :: $1 install_sax_pureperl/m;
+-        $script .= <<"INSTALL";
+-
+-install_sax_pureperl :
+-\t\@\$(PERL) -MXML::SAX -e "XML::SAX->add_parser(q(XML::SAX::PurePerl))->save_parsers()"
+-
+-INSTALL
+-
+-    }
+-
+-    return $script;
+-}
+-
+-- 
+1.7.10.3
+

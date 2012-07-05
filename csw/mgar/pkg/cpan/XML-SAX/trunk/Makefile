@@ -1,23 +1,24 @@
 NAME = XML-SAX
-VERSION = 0.96
+VERSION = 0.99
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = GRANTM
 
-DESCRIPTION = Simple API for XML
+DESCRIPTION = 
 define BLURB
-  XML::SAX is a SAX parser access API for Perl. It includes classes and APIs
-  required for implementing SAX drivers, along with a factory class for
-  returning any SAX parser installed on the user's system.
 endef
 
-DEP_PKGS = CSWpmxmlnssupp
+PATCHFILES += 0001-Remove-stuff-that-ignores-DESTDIR.patch
 
-PACKAGES = CSWpmxmlsax
-CATALOGNAME = pm_xmlsax
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-xml-sax
+CATALOGNAME_CSWpm-xml-sax = pm_xml_sax
+SPKG_DESC_CSWpm-xml-sax = Simple API for XML
+ARCHALL_CSWpm-xml-sax = 1
+RUNTIME_DEP_PKGS_CSWpm-xml-sax += CSWpm-xml-namespacesupport
+RUNTIME_DEP_PKGS_CSWpm-xml-sax += CSWpm-xml-sax-base
 
 include gar/category.mk
