@@ -26,11 +26,11 @@ LICENSE = doc/GPL_LICENSE.txt
 
 PACKAGES += CSWnetpbm
 SPKG_DESC_CSWnetpbm = A toolkit for manipulation of graphic images
-RUNTIME_DEP_PKGS_CSWnetpbm += CSWjpeg
-RUNTIME_DEP_PKGS_CSWnetpbm += CSWtiff
-RUNTIME_DEP_PKGS_CSWnetpbm += CSWpng
-RUNTIME_DEP_PKGS_CSWnetpbm += CSWiconv
-RUNTIME_DEP_PKGS_CSWnetpbm += CSWzlib
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibz1
 RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibnetpbm10
 
@@ -76,3 +76,7 @@ configure-custom:
 
 pre-install-modulated:
 	mkdir -p $(DESTDIR)/opt
+
+post-install-modulated:
+	rm -f $(DESTDIR)$(libdir)/libnetpbm.so
+	gln -s libnetpbm.so.10 $(DESTDIR)$(libdir)/libnetpbm.so
