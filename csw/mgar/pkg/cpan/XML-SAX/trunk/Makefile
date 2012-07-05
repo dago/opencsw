@@ -20,5 +20,7 @@ SPKG_DESC_CSWpm-xml-sax = Simple API for XML
 ARCHALL_CSWpm-xml-sax = 1
 RUNTIME_DEP_PKGS_CSWpm-xml-sax += CSWpm-xml-namespacesupport
 RUNTIME_DEP_PKGS_CSWpm-xml-sax += CSWpm-xml-sax-base
+OBSOLETED_BY_CSWpm-xml-sax += CSWpmxmlsax
+CATALOGNAME_CSWpmxmlsax = pm_xmlsax_stub
 
 include gar/category.mk
