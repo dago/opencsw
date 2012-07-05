@@ -1,0 +1,11 @@
+$Id: README.CSW 18561 2012-06-27 09:38:38Z pfelecan $
+
+The documentation is installed in the standard TeX tree, i.e.,
+/opt/csw/share/texmf-local.
+
+CSW Team
+
+# Local Variables:
+# mode: text
+# mode: font-lock
+# End:

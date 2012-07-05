@@ -1,0 +1,56 @@
+From e4d36b02bf0499e72b20ca842d3951f1300215c2 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 5 Jul 2012 16:34:09 +0200
+Subject: [PATCH] Adapt build Solaris
+
+---
+ lop |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/lop b/lop
+index f8b1f6e..8ef0346 100755
+--- a/lop
++++ b/lop
+@@ -2,7 +2,7 @@
+ 
+ BASE=.
+ 
+-files=`find $BASE -name "*.mp"`;
++files=$(ls -1 *.mp)
+ 
+ echo $files
+ 
+@@ -21,23 +21,23 @@ echo "\\author{Radu-George Radulescu and Ovidiu Gheorghies}" >> lop.tex
+ echo "\\begin{document} \maketitle" >> lop.tex
+ 
+ for current_file in $files; do
+-    file_base=`echo $current_file | rev | cut -f 1 -d "/" | rev | cut -f 1 -d "."`
+-    echo "Processing... $";
++    file_base=$(basename ${current_file} .mp)
++    echo "Processing... $file_base";
+ 
+     echo "mptopdf..."
+-    #mptopdf $file_base.mp
++    mptopdf $file_base.mp
+ 
+     echo "pdftoppm..."
+-    #pdftoppm $file_base-1.pdf $file_base
++    pdftoppm $file_base-1.pdf $file_base
+ 
+     echo "ppmtojpeg..."
+-    #ppmtojpeg $file_base-000001.ppm > $file_base.jpg
++    ppmtojpeg ${file_base}-000001.ppm > $file_base.jpg
+ 
+-    rm *.mpo *.ppm *.pdf *.log
++    rm -f *.mpo *.ppm *.pdf *.log
+ 
+     echo "<p><a href='$file_base.mp'><img src='$file_base.jpg'></a></p>" >> lop.html;
+ 
+-    echo "\includegraphics[scale=.75]{$file_base.1} \\\\ \\vspace{2cm} \\\\" >> lop.tex;
++    echo "\includegraphics[scale=.75]{${file_base}.1} \\\\ \\vspace{2cm} \\\\" >> lop.tex;
+ 
+     echo "done."
+ done
+-- 
+1.7.10.3
+
