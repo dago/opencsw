@@ -4,22 +4,18 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = PERIGRIN
 
-DESCRIPTION = Simple generic namespace support class
+DESCRIPTION = A simple generic namespace support class
 define BLURB
-  This module offers a simple to process namespaced XML names (unames) from
-  within any application that may need them. It also helps maintain a prefix
-  to namespace URI map, and provides a number of basic checks.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmxmlnssupp
-CATALOGNAME = pm_xmlnssupp
+LICENSE_TEXT = This module is licensed under the perl license, please see for details http://dev.perl.org/licenses/
 
-PERL_CONFIGURE_ARGS = --skip
-
-ARCHALL = 1
-
-CHECKPKG_OVERRIDES_CSWpmxmlnssupp += catalogname-does-not-match-pkgname|pkgname=CSWpmxmlnssupp|catalogname=pm_xmlnssupp|expected-catalogname=pmxmlnssupp
+PACKAGES += CSWpm-xml-namespacesupport
+SPKG_DESC_CSWpm-xml-namespacesupport = A simple generic namespace support class
+ARCHALL_CSWpm-xml-namespacesupport = 1
+OBSOLETED_BY_CSWpm-xml-namespacesupport += CSWpmxmlnssupp
+CATALOGNAME_CSWpmxmlnssupp = pm_xmlnssupp_stub
 
 include gar/category.mk
