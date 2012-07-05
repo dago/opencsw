@@ -6,6 +6,12 @@
 # It generate My-Module/trunk/Makefile and modified it accordingly. If the Makefile is already there it
 # it overwritten and can be inspected with "svn diff".
 
+# TBD:
+# - some packages require a newer version of Module::Build than the one from Perl, but
+#   the one provided from CSWpm-module-build
+# - package name is inferred from the requested module, e.g. System::Log::Syslog whereas the module file
+#   is called System-Log. That one should also be used for the main package.
+
 use strict;
 use warnings;
 use feature ':5.10';
@@ -110,11 +116,19 @@ my $license;
 my $license_resource;
 my $description;
 say STDERR "Processing META.yml";
+my $meta;
 if ( -f "$distdir/META.yml" ) {
-	my $meta = LoadFile("$distdir/META.yml");
+	$meta = LoadFile("$distdir/META.yml");
+} elsif( -f "$distdir/META.json" ) {
+	open my $fh, "$distdir/META.json";
+	local $/;
+	my $contents = <$fh>;
+	$meta = decode_json( $contents );
+}
 
+if( $meta ) {
 	$description      = $meta->{abstract} if ( exists $meta->{abstract} );
-	$license          = $meta->{license};
+	$license          = ref( $meta->{license} ) ? join( ' and ', @{$meta->{license}} ) : $meta->{license};
         $license_resource = $meta->{resources}->{license};
 
 	my $req            = $meta->{requires};
@@ -126,7 +140,6 @@ if ( -f "$distdir/META.yml" ) {
 	# @recommended_pkgs = dep_pkgs($recommends);
 	say STDERR "- runtime dependencies";
 	@runtime_dep_pkgs = dep_pkgs($req);
-
 }
 
 $description //= $mod->description;	# Changed to defined from false or
@@ -398,6 +411,7 @@ sub mod2pkg {
 	$modpath =~ s,::,/,g;
 	$modpath .= '.pm';
 
+	mkdir '/tmp/makemake';
 	my $pm = new Parallel::ForkManager( 15, "/tmp/makemake" );
 
 	$pm -> run_on_finish ( # called BEFORE the first call to start()
