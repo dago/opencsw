@@ -10,17 +10,16 @@ define BLURB
    Plugins for Nagios
 endef
 
-MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
+SF_PROJ = nagiosplug
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES 				= CSWnagios-plugins
-SPKG_CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
+PACKAGES 			= CSWnagios-plugins
+CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
 
 OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
-SPKG_CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
+CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
 
-#PATCHFILES      += 0001-disable-cflags-detection-for-pst3.patch
-#PATCHFILES      += 0002-changed-paths-in-hardcoded-examples.patch
 PATCHFILES 	+= 0004-Use-32-bit-pst3-on-Solaris.patch
 
 REINPLACE_USRLOCAL += contrib/*
@@ -38,12 +37,6 @@ CONFIGURE_ARGS += --disable-largefile
 CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-openssl=/opt/csw
-# http://184.82.236.176/?p=4
-#CONFIGURE_ARGS += --with-ps-command="/usr/bin/ps -eo 's uid pid ppid vsz rss pcpu etime comm args'"
-#CONFIGURE_ARGS += --with-ps-format="%s %d %d %d %d %d %f %s %s %n"
-#CONFIGURE_ARGS += --with-ps-cols=10
-#CONFIGURE_ARGS += --with-ps-varlist="procstat,&procuid,&procpid,&procppid,&procvsz,&procrss,&procpcpu,procetime,procprog,&pos"
-#
 CONFIGURE_ARGS += --with-trusted-path=/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin:$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -A inet6 -s %s 56 %d"
 CONFIGURE_ARGS += --with-snmpget-command=/opt/csw/bin/snmpget
@@ -51,8 +44,7 @@ CONFIGURE_ARGS += --with-snmpgetnext-command=/opt/csw/bin/snmpgetnext
 
 libexecdir 	?= $(prefix)/libexec/nagios-plugins
 
-CFLAGS += -I /opt/csw/postgresql/include/
-EXTRA_INC = /opt/csw/postgresql/include
+EXTRA_INC += /opt/csw/postgresql/include
 EXTRA_LIB += /opt/csw/postgresql/lib
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
@@ -65,10 +57,10 @@ RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWnetsnmp
 # Add this override for now
 CHECKPKG_OVERRIDES_CSWnagios-plugins += surplus-dependency|CSWnetsnmp
 
-BUILD_DEP_PKGS_CSWnagios-plugins += CSWmysql-dev
-BUILD_DEP_PKGS_CSWnagios-plugins += CSWpostgresql-dev
-BUILD_DEP_PKGS_CSWnagios-plugins += CSWlibz-dev
-BUILD_DEP_PKGS_CSWnagios-plugins += CSWlibnet-dev
+BUILD_DEP_PKGS	+= CSWmysql-dev
+BUILD_DEP_PKGS	+= CSWpostgresql-dev
+BUILD_DEP_PKGS	+= CSWlibz-dev
+BUILD_DEP_PKGS	+= CSWlibnet-dev
 
 TEST_TARGET = 
 
@@ -84,9 +76,9 @@ post-install-modulated:
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 755 -d $(PLUGINDEST)
 	@$(foreach PLUGIN,$(ROOT_PLUGINS),ginstall -m 4755 $(WORKSRC)/plugins-root/$(PLUGIN) $(PLUGINDEST);)
-	@tar cf $(WORKSRC)/contrib.tar $(WORKSRC)/contrib/
+	@( cd $(WORKSRC) ; tar cf contrib.tar contrib ; gzip contrib.tar)
 	@ginstall -m 755 -d $(DOCDEST)
-	@ginstall -m 644 $(WORKSRC)/contrib.tar $(DOCDEST)
+	@ginstall -m 644 $(WORKSRC)/contrib.tar.gz $(DOCDEST)
 	@$(MAKECOOKIE)
 
 post-merge:
