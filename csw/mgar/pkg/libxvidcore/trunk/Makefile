@@ -24,6 +24,8 @@ CONFIGURE_ARGS	+=	--disable-assembly
 
 TEST_SCRIPTS	=
 
+RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1 
+
 include gar/category.mk
 
 # this is private and not available publicly
