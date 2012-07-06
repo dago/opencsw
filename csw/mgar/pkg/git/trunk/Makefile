@@ -119,6 +119,7 @@ PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
 PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
 PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
 PATCHFILES += 0009-Makefile-Set-EXTRA_CPPFLAGS-during-the-compilation-o.patch
+PATCHFILES += 0010-t1304-improve-setfacl-prerequisite-setup.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
