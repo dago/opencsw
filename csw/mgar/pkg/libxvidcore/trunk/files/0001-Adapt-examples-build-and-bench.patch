@@ -1,0 +1,39 @@
+From 79ba7e9d6c75b465028bba2d66201a636832cf9f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 6 Jul 2012 14:56:53 +0200
+Subject: [PATCH] Adapt examples build and bench
+
+---
+ examples/Makefile |    2 +-
+ examples/bench.pl |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/examples/Makefile b/examples/Makefile
+index 7a4cfee..c4855c1 100644
+--- a/examples/Makefile
++++ b/examples/Makefile
+@@ -10,7 +10,7 @@ include ../build/generic/platform.inc
+ 
+ HDIR    = -I../src
+ CFLAGS  = -g $(ARCHITECTURE) $(BUS) $(ENDIANNESS) $(FEATURES) $(SPECIFIC_CFLAGS)
+-LDFLAGS = -lc -lm ../build/generic/=build/$(STATIC_LIB) -lpthread
++LDFLAGS = -lc -lm ../build/generic/=build/$(STATIC_LIB) -lpthread -rt
+ 
+ SOURCES= xvid_encraw.c xvid_decraw.c xvid_bench.c
+ OBJECTS=$(SOURCES:.c=.o)
+diff --git a/examples/bench.pl b/examples/bench.pl
+index bbc2318..34e352b 100755
+--- a/examples/bench.pl
++++ b/examples/bench.pl
+@@ -72,7 +72,7 @@ sub check_bin
+ {
+   # force re-build of binary (better safe than sorry)
+   my_system( "rm -f $_[0]" );
+-  my_system( "make $_[0]" ); 
++  my_system( "gmake $_[0]" );
+ }
+ sub check_file
+ {
+-- 
+1.7.10.3
+

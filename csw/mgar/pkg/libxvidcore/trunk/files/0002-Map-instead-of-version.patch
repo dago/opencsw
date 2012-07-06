@@ -1,0 +1,25 @@
+From 24bb086e3599ba202ecb3263f982a7e6ef8fb9cd Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 6 Jul 2012 16:18:50 +0200
+Subject: [PATCH] Map instead of version
+
+---
+ build/generic/configure |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/generic/configure b/build/generic/configure
+index 3b3f66d..55ff197 100755
+--- a/build/generic/configure
++++ b/build/generic/configure
+@@ -4325,7 +4325,7 @@ case "$target_os" in
+ $as_echo "ok" >&6; }
+ 	STATIC_LIB="libxvidcore.\$(STATIC_EXTENSION)"
+ 	SHARED_LIB="libxvidcore.\$(SHARED_EXTENSION).\$(API_MAJOR).\$(API_MINOR)"
+-	SPECIFIC_LDFLAGS="-Wl,-soname,libxvidcore.\$(SHARED_EXTENSION).\$(API_MAJOR) -shared -Wl,--version-script=libxvidcore.ld -lc -lm"
++	SPECIFIC_LDFLAGS="-Wl,-soname,libxvidcore.\$(SHARED_EXTENSION).\$(API_MAJOR) -shared -Wl,-M,libxvidcore.ld -lc -lm"
+ 	SPECIFIC_CFLAGS="-fPIC"
+ 	;;
+      *bsd*|irix*)
+-- 
+1.7.10.3
+
