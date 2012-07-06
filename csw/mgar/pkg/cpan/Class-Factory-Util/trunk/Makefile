@@ -15,4 +15,7 @@ PACKAGES = CSWpmclassfactutil
 CATALOGNAME = pm_classfactutil
 ARCHALL = 1
 
+# Strip unknown options
+CONFIGURE_ARGS =
+
 include gar/category.mk
