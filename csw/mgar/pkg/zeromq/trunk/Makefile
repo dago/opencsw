@@ -16,7 +16,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.zeromq.org/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  += $(DISTNAME).tar.gz
+DISTFILES  += set-ulimit-for-build-test
 
 PATCHFILES += 0001-Patching-ltmain.sh-to-prevent-libtool-from-stripping.patch
 
@@ -25,6 +26,7 @@ SPKG_DESC_CSWlibzmq1 = Software library for fast, message-based applications
 PKGFILES_CSWlibzmq1 += $(call pkgfiles_lib,libzmq.so.1.0.1)
 PKGFILES_CSWlibzmq1 += $(call pkgfiles_lib,libzmq.so.1)
 PKGFILES_CSWlibzmq1 += $(docdir)/.* 
+#CHECKPKG_OVERRIDES_CSWlibzmq1 += pkginfo-opencsw-repository-uncommitted
 
 
 PACKAGES += CSWlibzmq1-dev
@@ -32,12 +34,12 @@ SPKG_DESC_CSWlibzmq1-dev += ZeroMQ development files
 PKGFILES_CSWlibzmq1-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibzmq1-dev += .*\.7
 RUNTIME_DEP_PKGS_CSWlibzmq1-dev += CSWlibzmq1
+#CHECKPKG_OVERRIDES_CSWlibzmq1-dev += pkginfo-opencsw-repository-uncommitted
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # For tests to succeed on i386 you need to set the ulimit higher than the default of 256.
-# I set 'ulimit -S -n 10000' in my ~/.bash_profile and the tests succeed.
-EXTRA_TEST_ENV += BASH_ENV=~/.bash_profile  
+EXTRA_TEST_ENV += BASH_ENV=$(abspath $(WORKDIR)/set-ulimit-for-build-test)
 EXTRA_LINKER_FLAGS = -norunpath
 
 include gar/category.mk
