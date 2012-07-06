@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.30
+VERSION = 8.31
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -14,10 +14,6 @@ endef
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(DISTNAME).tar.bz2
 PATCHFILES = 0001-Allow-norunpath-for-libtool.patch
-
-# Use patch until this is fixed:
-#   http://bugs.exim.org/show_bug.cgi?id=1206
-PATCHFILES += 0002-Remove-bashism.patch
 
 VENDOR_URL = http://www.pcre.org
 
@@ -59,12 +55,12 @@ PKGFILES_CSWlibpcre16-0 = $(call pkgfiles_lib,libpcre16.so.0)
 PACKAGES += CSWlibpcrecpp0
 SPKG_DESC_CSWlibpcrecpp0 += Perl-compatible regular expression tools, libpcrecpp.so.0
 PKGFILES_CSWlibpcrecpp0 += $(call pkgfiles_lib,libpcrecpp.so.0)
-RUNTIME_DEP_PKGS_CSWlibpcrecpp0 += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWlibpcrecpp0 += CSWlibpcre1
 
 PACKAGES += CSWlibpcreposix0
 SPKG_DESC_CSWlibpcreposix0 += Perl-compatible regular expression tools, libpcreposix.so.0
 PKGFILES_CSWlibpcreposix0 += $(call pkgfiles_lib,libpcreposix.so.0)
-RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre1
 
 REINPLACE_USRLOCAL += doc/pcre-config.1
 REINPLACE_USRLOCAL += doc/pcresample.3
@@ -94,6 +90,6 @@ PATH := /usr/ccs/bin:/opt/csw/gnu:$(PATH)
 
 test-custom:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	cd $(WORKSRC) && /usr/bin/ulimit -s 16384 && /usr/bin/env -i $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
+	cd $(WORKSRC) && /usr/bin/ulimit -s 32768 && /usr/bin/env -i $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
