@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nettle
-VERSION = 2.4
+VERSION = 2.5
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -14,6 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lysator.liu.se/~nisse/archive/
+DISTNAME = $(NAME)-$(VERSION)-pre2
 DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.lysator.liu.se/~nisse/nettle/
@@ -47,6 +48,9 @@ BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
+
+# x86 assembly does not work with Sun Studio
+CONFIGURE_ARGS += --disable-assembler
 
 # This is the default install location after configure
 CHECKPKG_OVERRIDES_CSWlibnettle-utils += file-with-bad-content|/usr/local|root/opt/csw/share/info/nettle.info
