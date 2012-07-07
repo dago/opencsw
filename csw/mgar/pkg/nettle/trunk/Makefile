@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lysator.liu.se/~nisse/archive/
-DISTNAME = $(NAME)-$(VERSION)-pre2
+DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.lysator.liu.se/~nisse/nettle/
