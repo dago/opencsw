@@ -780,7 +780,8 @@ def CheckBadContent(pkg_data, error_mgr, logger, messenger):
 
 def CheckPkgchk(pkg_data, error_mgr, logger, messenger):
   if pkg_data["pkgchk"]["return_code"] != 0:
-    error_mgr.ReportError("pkgchk-failed-with-code", pkg_data["pkgchk"]["return_code"])
+    error_mgr.ReportError("pkgchk-failed-with-code",
+                          unicode(pkg_data["pkgchk"]["return_code"]))
     for line in pkg_data["pkgchk"]["stderr_lines"]:
       logger.warn(line)
 
