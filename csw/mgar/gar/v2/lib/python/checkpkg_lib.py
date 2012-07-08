@@ -249,7 +249,7 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
             srv4_file=db_stat_objs_by_pkgname[e.pkgname],
             pkgname=e.pkgname,
             tag_name=e.tag_name,
-            tag_info=e.tag_info,
+            tag_info=unicode(e.tag_info, "utf-8"),
             msg=e.msg,
             os_rel=sqo_os_rel,
             catrel=sqo_catrel,
