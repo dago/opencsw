@@ -40,7 +40,7 @@ for arg in $*; do
 	--import) import=yes;;
 	--force) force=yes;;
 	--help) usage; exit 0;;
-	*) echo "Unknown option '$arg'"; exi t1;
+	*) echo "Unknown option '$arg'"; exit 1;
     esac
 done
 
