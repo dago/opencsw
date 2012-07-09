@@ -29,6 +29,19 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS	=
 INSTALL_SCRIPTS		=	custom
 
+PACKAGES						+=	CSWlibxvidcore4
+CATALOGNAME_CSWlibxvidcore4 	=	libxvidcore4
+PKGFILES_CSWlibxvidcore4		+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4\.3)
+PKGFILES_CSWlibxvidcore4		+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibxvidcore4		+=	$(DESCRIPTION), libxvidcore.so.4
+RUNTIME_DEP_PKGS_CSWlibxvidcore	+=	CSWlibxvidcore4
+
+PACKAGES						+=	CSWlibxvidcore-dev
+CATALOGNAME_CSWlibxvidcore-dev	=	libxvidcore_dev
+SPKG_DESC_CSWlibxvidcore-dev	+=	$(DESCRIPTION), development files
+PKGFILES_CSWlibxvidcore-dev		+=	/opt/csw/lib/libxvidcore.4.so
+PKGFILES_CSWlibxvidcore-dev		+=	$(PKGFILES_DEVEL)
+
 include gar/category.mk
 
 configure-custom:
