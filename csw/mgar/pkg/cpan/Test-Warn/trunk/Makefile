@@ -1,5 +1,5 @@
 NAME = Test-Warn
-VERSION = 0.21
+VERSION = 0.24
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = CHORNY
@@ -9,14 +9,16 @@ define BLURB
     Extension to test methods for warnings
 endef
 
-MODDIST = $(NAME)-$(VERSION).zip
-
 DISTFILES += COPYING
 
-PACKAGES = CSWpmtestwarn
-CATALOGNAME = pm_testwarn
+PACKAGES = CSWpm-test-warn
+CATALOGNAME = pm_test_warn
+SPKG_DESC_CSWpm-test-warn = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-test-warn = CSWpmtestwarn
+CATALOGNAME_CSWpmtestwarn = pm_testwarn_stub
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmtreedagnode CSWpmsubuplevel 
+RUNTIME_DEP_PKGS += CSWpmtreedagnode
+RUNTIME_DEP_PKGS += CSWpm-sub-uplevel
 
 include gar/category.mk
