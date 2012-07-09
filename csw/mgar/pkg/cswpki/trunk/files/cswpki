@@ -1,0 +1,76 @@
+#!/bin/bash
+
+set -e
+set -u
+
+PATH=/opt/csw/bin:$PATH
+
+# Source csw.conf, if it exists
+if [ -f /opt/csw/etc/csw.conf ] ; then
+    . /opt/csw/etc/csw.conf
+fi
+if [ -f /etc/opt/csw/csw.conf ] ; then
+    . /etc/opt/csw/csw.conf
+fi
+
+
+function usage() {
+    cat <<EOF
+cswpki - Manage OpenCSW public keys
+
+Usage: cswpki [--opts]
+
+You must pass at least --import or else you get nothing but the help text.
+
+Options:
+   --import: run the key import
+   --force: no prompt before each key import
+   --help: this text
+EOF
+}
+
+PKIDIR=/etc/opt/csw/pki/
+
+import=
+force=${pki_auto:-no}
+
+# argument processing (cheap and dirty)
+for arg in $*; do
+    case $arg in
+	--import) import=yes;;
+	--force) force=yes;;
+	--help) usage; exit 0;;
+	*) echo "Unknown option '$arg'"; exi t1;
+    esac
+done
+
+if [ -z "$import" ]; then
+    usage
+    exit 1
+else
+    for key in $PKIDIR/*asc; do
+	install=no
+	friendly_name=$(echo $(basename "$key") | sed 's/csw_//; s/\.asc//; s/_/ /g')
+
+	if [ "$force" = "yes" ]; then
+	    install=yes
+	else
+	    echo "Do you want to import the key used for: ${friendly_name}?"
+	    echo -n "Yes/No: "
+	    read install
+	fi
+
+	if [ "${install}" = "yes" ]; then
+	    echo
+	    echo "Importing the key used for: ${friendly_name}"
+	    echo
+	    gpg --homedir="${pki_db:-/var/opt/csw/pki/}" --import "$key"
+	    echo
+	    echo
+	else
+	    echo
+	    echo "Skipping the import of the key used for: ${friendly_name}"
+	    echo
+	fi
+    done
+fi

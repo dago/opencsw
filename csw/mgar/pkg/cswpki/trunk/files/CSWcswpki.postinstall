@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Source csw.conf, if it exists
+if [ -f /opt/csw/etc/csw.conf ] ; then
+    . /opt/csw/etc/csw.conf
+fi
+if [ -f /etc/opt/csw/csw.conf ] ; then
+    . /etc/opt/csw/csw.conf
+fi
+
+if [ "$pki_auto" = "yes" ]; then
+    chroot ${PKG_INSTALL_ROOT:-/} /opt/csw/bin/cswpki --import --force
+else
+    echo
+    echo
+    echo
+    echo "pki_auto was not set to 'yes' in /etc/opt/csw/csw.conf"
+    echo "so the OpenCSW GPG keys are not being automatically managed."
+    echo "eg: echo 'pki_auto=yes' >> /etc/opt/csw/csw.conf"
+    echo
+    echo "If this variable had been set, we would have run:"
+    echo "/opt/csw/bin/cswpki --import --force"
+    echo
+    echo "See /opt/csw/bin/cswpki --help for more information on"
+    echo "handling this manually."
+    echo
+    echo
+    echo
+fi
