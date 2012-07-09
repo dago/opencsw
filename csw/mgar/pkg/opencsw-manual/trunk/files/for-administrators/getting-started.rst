@@ -86,25 +86,25 @@ Setting up cryptographic verification
 The catalog is signed with PGP and it is a good idea to set up your system to
 verify the integrity of the catalog. As the catalog itself contains hashes for
 all packages in the catalog this ensures you actually install the packages
-which were officially released. First you need to install ``gnupg`` (of course
+which were officially released. First you need to install ``cswpki`` (of course
 with pkgutil!)::
 
-  pkgutil -y -i gnupg
+  pkgutil -y -i cswpki
 
 Then you need to import the public key::
 
-  root# wget -O - http://www.opencsw.org/security/  | gpg --import -
+  root# /opt/csw/bin/cswpki --import
 
 The current fingerprint looks like this::
 
-  root# gpg --fingerprint board@opencsw.org
-  pub   1024D/9306CC77 2011-08-31
-        Key fingerprint = 4DCE 3C80 AAB2 CAB1 E60C  9A3C 05F4 2D66 9306 CC77
-  uid                  OpenCSW catalog signing <board@opencsw.org>
-  sub   2048g/971EDE93 2011-08-31
+# gpg --homedir=/var/opt/csw/pki/ --fingerprint board@opencsw.org
+pub   1024D/9306CC77 2011-08-31
+      Key fingerprint = 4DCE 3C80 AAB2 CAB1 E60C  9A3C 05F4 2D66 9306 CC77
+uid                  OpenCSW catalog signing <board@opencsw.org>
+sub   2048g/971EDE93 2011-08-31
 
 You may also trust the key once you verified the fingerprint::
-  root# /opt/csw/bin/gpg --edit-key board@opencsw.org trust
+  root# /opt/csw/bin/gpg --homedir=/var/opt/csw/pki --edit-key board@opencsw.org trust
 
 Now everything is in place for enabling security in ``pkgutil``. Edit the ``/etc/opt/csw/pkgutil.conf``
 and uncomment the two lines with ``use_gpg`` and ``use_md5`` so they look like this::
