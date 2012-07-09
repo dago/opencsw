@@ -35,12 +35,18 @@ PKGFILES_CSWlibxvidcore4		+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4\.3)
 PKGFILES_CSWlibxvidcore4		+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibxvidcore4		+=	$(DESCRIPTION), libxvidcore.so.4
 RUNTIME_DEP_PKGS_CSWlibxvidcore	+=	CSWlibxvidcore4
+OBSOLETED_BY_CSWlibxvidcore4	=	CSWlibxvidcore
+CATALOGNAME_CSWlibxvidcore		=	libxvidcore_stub
 
 PACKAGES						+=	CSWlibxvidcore-dev
 CATALOGNAME_CSWlibxvidcore-dev	=	libxvidcore_dev
 SPKG_DESC_CSWlibxvidcore-dev	+=	$(DESCRIPTION), development files
 PKGFILES_CSWlibxvidcore-dev		+=	/opt/csw/lib/libxvidcore.4.so
 PKGFILES_CSWlibxvidcore-dev		+=	$(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWlibxvidcore-dev	=	CSWlibxvidcoredevel
+CATALOGNAME_CSWlibxvidcore-dev	=	libxvidcore_devel_stub
+ARCHALL_CSWlibxvidcore-dev		=	1
+CHECKPKG_OVERRIDES_CSWlibxvidcore-dev += archall-devel-package
 
 include gar/category.mk
 
