@@ -44,7 +44,7 @@ SPKG_DESC_CSWlibxvidcore-dev	+=	$(DESCRIPTION), development files
 PKGFILES_CSWlibxvidcore-dev		+=	/opt/csw/lib/libxvidcore.4.so
 PKGFILES_CSWlibxvidcore-dev		+=	$(PKGFILES_DEVEL)
 OBSOLETED_BY_CSWlibxvidcore-dev	=	CSWlibxvidcoredevel
-CATALOGNAME_CSWlibxvidcore-dev	=	libxvidcore_devel_stub
+CATALOGNAME_CSWlibxvidcoredevel	=	libxvidcore_devel_stub
 ARCHALL_CSWlibxvidcore-dev		=	1
 CHECKPKG_OVERRIDES_CSWlibxvidcore-dev += archall-devel-package
 
