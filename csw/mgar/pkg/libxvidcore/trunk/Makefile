@@ -17,6 +17,7 @@ MASTER_SITES	=	http://downloads.xvid.org/downloads/
 DISTFILES  		=	$(shortName)-$(VERSION).tar.gz
 PATCHFILES		+=	0001-Adapt-examples-build-and-bench.patch
 PATCHFILES		+=	0002-Map-instead-of-version.patch
+PATCHFILES		+=	0003-Generic-linker-soname-argument.patch
 
 GARCOMPILER		=	GNU
 CONFIGURE_ARGS	=	$(DIRPATHS)
@@ -27,6 +28,11 @@ TEST_SCRIPTS	=
 RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1 
 
 include gar/category.mk
+
+post-install-modulated:
+	cd $(DESTDIR)/$(libdir) && ln -s libxvidcore.4.3.so libxvidcore.4.so
+	cd $(DESTDIR)/$(libdir) && ln -s libxvidcore.4.so libxvidcore.so
+	$(MAKECOOKIE)
 
 # this is private and not available publicly
 mydependencies:

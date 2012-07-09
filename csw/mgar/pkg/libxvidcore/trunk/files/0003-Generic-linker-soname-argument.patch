@@ -1,0 +1,25 @@
+From 633d155af167086577e4dfa39f584f62e3ede8f6 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 9 Jul 2012 08:49:36 +0200
+Subject: [PATCH] Generic linker soname argument
+
+---
+ build/generic/configure |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/generic/configure b/build/generic/configure
+index 55ff197..ce73353 100755
+--- a/build/generic/configure
++++ b/build/generic/configure
+@@ -4325,7 +4325,7 @@ case "$target_os" in
+ $as_echo "ok" >&6; }
+ 	STATIC_LIB="libxvidcore.\$(STATIC_EXTENSION)"
+ 	SHARED_LIB="libxvidcore.\$(SHARED_EXTENSION).\$(API_MAJOR).\$(API_MINOR)"
+-	SPECIFIC_LDFLAGS="-Wl,-soname,libxvidcore.\$(SHARED_EXTENSION).\$(API_MAJOR) -shared -Wl,-M,libxvidcore.ld -lc -lm"
++	SPECIFIC_LDFLAGS="-Wl,-h,libxvidcore.\$(SHARED_EXTENSION).\$(API_MAJOR) -shared -Wl,-M,libxvidcore.ld -lc -lm"
+ 	SPECIFIC_CFLAGS="-fPIC"
+ 	;;
+      *bsd*|irix*)
+-- 
+1.7.10.3
+
