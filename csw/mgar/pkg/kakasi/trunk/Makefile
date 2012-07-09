@@ -19,7 +19,6 @@ CONFIGURE_ARGS	=	$(DIRPATHS)
 PACKAGES							+=	CSWkakasi
 CATALOGNAME_CSWkakasi				=	kakasi
 SPKG_DESC_CSWkakasi					+=	$(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWkakasi			+=	CSWlibkakasi2
 
 PACKAGES							+=	CSWlibkakasi2
 CATALOGNAME_CSWlibkakasi2			=	libkakasi2
@@ -35,7 +34,8 @@ SPKG_DESC_CSWkakasi-dev				+=	$(DESCRIPTION), development files
 PKGFILES_CSWkakasi-dev				+=	/opt/csw/lib/libkakasi.so
 PKGFILES_CSWkakasi-dev				+=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWkakasi-dev		+=	CSWlibkakasi2
-CHECKPKG_OVERRIDES_CSWkakasi-dev	+=	surplus-dependency|CSWtetex
+CHECKPKG_OVERRIDES_CSWkakasi-dev	+=	surplus-dependency|CSWlibkakasi2
+CHECKPKG_OVERRIDES_CSWkakasi-dev	+=	archall-devel-package
 ARCHALL_CSWkakasi-dev				=	1
 
 include gar/category.mk
