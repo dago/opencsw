@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.0.20
+VERSION = 2.0.21
 CATEGORIES = server
 GARTYPE = v2
 
@@ -30,7 +30,7 @@ SPKG_DESC_CSWdovecot-dev = Dovecot secure IMAP server header files
 OBSOLETED_BY_CSWdovecot-dev = CSWdovecotdevel
 CATALOGNAME_CSWdovecotdevel = dovecot_devel_stub
 
-RUNTIME_DEP_PKGS_CSWdovecot += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWdovecot += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibz1
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibbz2-1-0
