@@ -1,6 +1,6 @@
 # $Id$
 NAME = erlang
-VERSION = R14B03
+VERSION = R15B01
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -15,6 +15,9 @@ VENDOR_URL = http://www.erlang.org/
 MASTER_SITES = http://www.erlang.org/download/
 DISTNAME = otp_src_$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
+
+# We want DTrace
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 LICENSE = EPLICENCE
 
@@ -39,11 +42,12 @@ CATALOGNAME_CSWerlangdoc = erlang_doc_stub
 GARCOMPILER = GCC4
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ssl
+CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-smp-support
 CONFIGURE_ARGS += --enable-kernel-poll
 CONFIGURE_ARGS += --enable-hipe
+CONFIGURE_ARGS += --with-dynamic-trace=dtrace
 #  CONFIGURE_ARGS += --without-odbc
 
 # There doesn't seem to be a testsuite
