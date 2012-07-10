@@ -11,17 +11,14 @@ endef
 MASTER_SITES = https://github.com/zeromq/pyzmq/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-CHECKPKG_OVERRIDES_CSWpy-pyzmq += pkginfo-opencsw-repository-uncommitted
+#CHECKPKG_OVERRIDES_CSWpy-pyzmq += pkginfo-opencsw-repository-uncommitted
 
 BUILD_DEP_PKGS += CSWlibzmq1-dev
 RUNTIME_DEP_PKGS_CSWpy-pyzmq += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-pyzmq += CSWlibzmq1
 
 PATCHFILES += 0001-These-flags-are-for-gnu-gcc-and-fail-on-suns-cc-comp.patch
-
-#GARCOMPILER = GCC4
+PATCHFILES += 0002-Include-inttypes-so-builds-on-solaris-9.patch
 
 CONFIGURE_ARGS += $(DIRPATHS)
 
