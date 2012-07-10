@@ -25,7 +25,7 @@ CONFIGURE_ARGS	+=	--enable-tknamazu
 BUILD_DEP_PKGS		+=	CSWkakasi-dev
 BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 BUILD_DEP_PKGS		+=	CSWlynx
-BUILD_DEP_PKGS		+=	CSWpmfilemmagic
+BUILD_DEP_PKGS		+=	CSWpm-file-mmagic
 
 TEST_SCRIPTS		=	custom
 
@@ -33,7 +33,7 @@ RUNTIME_DEP_PKGS	+=	CSWkakasi
 RUNTIME_DEP_PKGS	+=	CSWlibintl8
 RUNTIME_DEP_PKGS	+=	CSWlynx
 RUNTIME_DEP_PKGS	+=	CSWperl
-RUNTIME_DEP_PKGS	+=	CSWpmfilemmagic
+RUNTIME_DEP_PKGS	+=	CSWpm-file-mmagic
 
 include gar/category.mk
 
