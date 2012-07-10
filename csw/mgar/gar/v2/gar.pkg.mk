@@ -666,6 +666,12 @@ $(foreach P,$(SPKG_SPECS),\
 	  $(if $(shell if [ "$(SPKG_DESC_$(P))" = "$(SPKG_DESC_$(Q))" ]; then echo bad; fi),\
 	    $(error The package descriptions for $(P) [$(if $(SPKG_DESC_$(P)),$(SPKG_DESC_$(P)),<not set>)] and $(Q) [$(if $(SPKG_DESC_$(Q)),$(SPKG_DESC_$(Q)),<not set>)] are identical.  Please make sure that all descriptions are unique by setting SPKG_DESC_<pkg> for each package.),))))
 
+# Check that package names are 32 characters or less as reported in
+#   https://sourceforge.net/apps/trac/gar/ticket/69
+$(foreach P,$(SPKG_SPECS),\
+	$(if $(shell perl -e 'print "toolong" if( length("$P")>32)'),$(error The package name $P is too long, maximum is 32 characters))\
+)
+
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
