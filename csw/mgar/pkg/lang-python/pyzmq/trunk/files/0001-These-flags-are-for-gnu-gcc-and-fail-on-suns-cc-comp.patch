@@ -1,0 +1,25 @@
+From e06184b1e803f0482a07fb77234417171fe3c9b6 Mon Sep 17 00:00:00 2001
+From: Romeo Theriault <romeotheriault@opencsw.org>
+Date: Tue, 10 Jul 2012 04:12:12 +0200
+Subject: [PATCH] These flags are for gnu gcc and fail on suns cc compiler.
+
+---
+ setup.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 7c04d83..14e0a3c 100755
+--- a/setup.py
++++ b/setup.py
+@@ -150,7 +150,7 @@ def settings_from_prefix(zmq=None):
+         for warning in ('unused-function', 'strict-aliasing'):
+             extra_flags.append('-Wno-'+warning)
+ 
+-    settings['extra_compile_args'] = extra_flags
++    settings['extra_compile_args'] = ""
+     
+     # include internal directories
+     settings['include_dirs'] += [pjoin('zmq', sub) for sub in ('utils','core','devices')]
+-- 
+1.7.10.3
+
