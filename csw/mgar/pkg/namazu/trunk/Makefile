@@ -80,7 +80,7 @@ PKGFILES_CSWnamazu-dev				+=	/opt/csw/lib/libnmz.so
 PKGFILES_CSWnamazu-dev				+=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWnamazu-dev		+=	CSWlibnmz7
 CHECKPKG_OVERRIDES_CSWnamazu-dev	+=	surplus-dependency|CSWlibmz7
-ARCHALL__CSWnamazu-dev				=	1
+ARCHALL_CSWnamazu-dev				=	1
 CHECKPKG_OVERRIDES_CSWnamazu-dev	+=	archall-devel-package
 
 include gar/category.mk
