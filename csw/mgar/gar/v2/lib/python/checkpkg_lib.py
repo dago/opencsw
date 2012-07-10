@@ -245,11 +245,14 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
         if e.pkgname not in db_stat_objs_by_pkgname:
           logging.warning("Not saving an error for %s.", e.pkgname)
           continue
+        tag_info=e.tag_info
+        if tag_info is not None:
+            tag_info=unicode(tag_info, "utf-8")
         error_tag_in_db = m.CheckpkgErrorTag(
             srv4_file=db_stat_objs_by_pkgname[e.pkgname],
             pkgname=e.pkgname,
             tag_name=e.tag_name,
-            tag_info=unicode(e.tag_info, "utf-8"),
+            tag_info=tag_info,
             msg=e.msg,
             os_rel=sqo_os_rel,
             catrel=sqo_catrel,
