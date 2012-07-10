@@ -1,0 +1,56 @@
+From 5299e0f46150b59b8deb0f1d2b0271df059e9c32 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 10 Jul 2012 11:46:42 +0200
+Subject: [PATCH] Adapt to OpenCSW environment
+
+---
+ tknamazu/tknamazu.tcl.in |    2 +-
+ tknamazu/tknamazurc.in   |    8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/tknamazu/tknamazu.tcl.in b/tknamazu/tknamazu.tcl.in
+index 2656392..9321ee6 100644
+--- a/tknamazu/tknamazu.tcl.in
++++ b/tknamazu/tknamazu.tcl.in
+@@ -41,7 +41,7 @@ proc SetDefaultResources {} {
+ 	set conf(UNCOMPRESS) {@ZCAT@}
+ 	set conf(MANPAGE) {@GROFF@}
+ 	set conf(MANPAGEFILTER) {}
+-	set conf(MANPATH) {/usr/local/man /usr/share/man /usr/bin/man /usr/man /usr/X11R6/man /usr/openwin/man}
++	set conf(MANPATH) {/opt/csw/share/man /usr/share/man /usr/bin/man /usr/man /usr/X11R6/man /usr/openwin/man}
+ 	set conf(GNUINFO) {@INFO@}
+ 	set conf(GNUINFOFILTER) {}
+ 	set conf(GNUINFOTMP) {/tmp/.gnuinfotmp}
+diff --git a/tknamazu/tknamazurc.in b/tknamazu/tknamazurc.in
+index 74d3265..c5eae1f 100644
+--- a/tknamazu/tknamazurc.in
++++ b/tknamazu/tknamazurc.in
+@@ -35,7 +35,7 @@ MANPAGEFILTER
+ 
+ # manual を検索する path をスペースで区切って列挙してください。
+ # ちなみに左側に書いた path から順番に検索されます。
+-MANPATH			/usr/local/man /usr/share/man /usr/bin/man /usr/man /usr/X11R6/man /usr/openwin/man
++MANPATH			/opt/csw/share/man /usr/share/man /usr/bin/man /usr/man /usr/X11R6/man /usr/openwin/man
+ 
+ # info のある所を full path で指定してください。
+ GNUINFO			@INFO@
+@@ -109,13 +109,13 @@ THOUGHTFULFIND
+ # NMZ.* のある場所を Index Selecter に設定します。
+ # 一つ目は title を、その後ろに<SPACE>で区切って NMZ.i の directory を列挙して
+ # 下さい。
+-INDEXES1		main /usr/local/var/namazu/index
+-INDEXES2		hogehoge /usr/local/var/namazu/index/hogehoge
++INDEXES1		main /var/opt/csw/namazu/index
++INDEXES2		hogehoge /var/opt/csw/namazu/index/hogehoge
+ 
+ # 頻繁にアクセスする file や URL を登録することができます。
+ # 一つ目は title を、その後ろに<SPACE>で区切って full path のファイル名や
+ # URL を書いて下さい。
+-BOOKMARKS1		Namazu-manual /usr/local/share/namazu/doc/ja/manual.html
++BOOKMARKS1		Namazu-manual /opt/csw/share/doc/namazu/ja/manual.html
+ BOOKMARKS2		Namazu-Homepage http://www.namazu.org/
+ 
+ 
+-- 
+1.7.10.3
+
