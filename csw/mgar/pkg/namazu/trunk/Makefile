@@ -54,7 +54,6 @@ CHECKPKG_OVERRIDES_CSWnamazu		+=	file-with-bad-content|/usr/share|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWnamazu		+=	file-with-bad-content|/usr/share|root/opt/csw/share/tknamazu/tknamazu.hlp.en
 CHECKPKG_OVERRIDES_CSWnamazu		+=	file-with-bad-content|/usr/share|root/opt/csw/share/doc/namazu/ChangeLog
 RUNTIME_DEP_PKGS_CSWnamazu			+=	CSWkakasi
-RUNTIME_DEP_PKGS_CSWnamazu			+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWnamazu			+=	CSWlynx
 RUNTIME_DEP_PKGS_CSWnamazu			+=	CSWperl
 RUNTIME_DEP_PKGS_CSWnamazu			+=	CSWpm-file-mmagic
@@ -64,12 +63,15 @@ CHECKPKG_OVERRIDES_CSWnamazu		+=	surplus-dependency|CSWlibmz7
 CHECKPKG_OVERRIDES_CSWnamazu		+=	surplus-dependency|CSWkakasi
 CHECKPKG_OVERRIDES_CSWnamazu		+=	surplus-dependency|CSWlynx
 CHECKPKG_OVERRIDES_CSWnamazu		+=	surplus-dependency|CSWpm-file-mmagic
+CHECKPKG_OVERRIDES_CSWnamazu		+=	surplus-dependency|CSWtcl
+CHECKPKG_OVERRIDES_CSWnamazu		+=	missing-dependency|CSWlibintl8
 
 PACKAGES							+=	CSWlibnmz7
 CATALOGNAME_CSWlibnmz7				=	libnmz7
 PKGFILES_CSWlibnmz7					+=	$(call baseisadirs,$(libdir),libnmz\.so\.7\.1\.3)
 PKGFILES_CSWlibnmz7					+=	$(call baseisadirs,$(libdir),libnmz\.so\.7(\.\d+)*)
 SPKG_DESC_CSWlibnmz7				+=	$(DESCRIPTION), libnmz.so.7
+RUNTIME_DEP_PKGS_CSWlibnmz7			+=	CSWlibintl8
 
 PACKAGES							+=	CSWnamazu-dev
 CATALOGNAME_CSWnamazu-dev			=	namazu_dev
