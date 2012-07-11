@@ -1,0 +1,47 @@
+$Id$
+
+To use the the gnusemacs packaged by CSW you need to put the following
+expression into your ~/.gnus:
+
+     (gnus-namazu-insinuate)
+
+In order to make index of articles with Namazu before using this
+module, type M-x gnus-namazu-create-index RET.  Otherwise, you can
+create index by yourself with the following commands:
+
+     % mkdir ~/News/namazu
+     % mknmz -a -h -O ~/News/namazu ~/Mail ~/News/cache
+
+The first command makes the directory for index files, and the
+second command generates index files of mails and persistent
+articles.
+
+In order to update indices for incoming articles, this module
+automatically runs mknmz, the indexer of Namazu, at an interval of
+3 days; this period is set to `gnus-namazu-index-update-interval'.
+
+Indices will be updated when `gnus-namazu-search' is called.  If
+you want to update indices everywhen Gnus is started, you can put
+the following expression to your ~/.gnus.
+
+     (add-hook 'gnus-startup-hook 'gnus-namazu-update-all-indices)
+
+In order to control mknmz closely, disable the automatic updating
+feature and run mknmz by yourself.  In this case, set nil to the
+above option.
+
+     (setq gnus-namazu-index-update-interval nil)
+
+When your index is put into the directory other than the default
+one (~/News/namazu), it is necessary to set its place to
+`gnus-namazu-index-directories' as follows:
+
+     (setq gnus-namazu-index-directories
+           (list (expand-file-name "~/namazu")))
+
+CSW Team
+
+# Local Variables:
+# mode: text
+# mode: font-lock
+# End:
