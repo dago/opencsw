@@ -28,6 +28,15 @@ OBSOLETED_BY_CSWgnus-namazu		=	CSWgnusnamazu
 CATALOGNAME_CSWgnusnamazu		=	gnusnamazu_stub
 RUNTIME_DEP_PKGS_CSWgnus-namazu	+=	CSWemacs
 RUNTIME_DEP_PKGS_CSWgnus-namazu	+=	CSWnamazu
+# this is by desing overriden because I wish to depend on a common
+# named package in both Solaris 9 and Solaris 10 when 23.1 is the
+# current version for the former and 23.4 is the current version for
+# the later. Note that when packaging 23.4, the CSWemacscommon became
+# CSWemacs-common.
+CHECKPKG_OVERRIDES_CSWgnus-namazu	+=	missing-dependency|CSWemacscommon
+# these cannot be detected by checkpkg:
+CHECKPKG_OVERRIDES_CSWgnus-namazu	+=	surplus-dependency|CSWnamazu
+CHECKPKG_OVERRIDES_CSWgnus-namazu	+=	surplus-dependency|CSWemacs
 ARCHALL_CSWgnus-namazu			=	1
 
 include gar/category.mk
