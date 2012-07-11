@@ -21,6 +21,13 @@ RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-jinja2
 #RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-pyzmq
 #RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-msgpack
 
+CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-m2crypto
+CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-yaml
+CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-crypto
+CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-jinja2
+#CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-pyzmq
+#CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-msgpack
+
 CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/share/man/man7/salt.7
 CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/cron.py
 CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/rvm.py
