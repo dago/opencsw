@@ -27,8 +27,6 @@ CONFIGURE_ARGS	+=	--without-swf
 
 LICENSE			=	copying
 
-STRIP_LIBTOOL	=	1
-
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
 
