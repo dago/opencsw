@@ -31,5 +31,9 @@ To get Munin running, please follow these steps:
     generation via cgi. It's reasonable preconfigured, so all in all
     you should need only some copy and paste.
 
+(6) For more detailed information about the package take look at 
+
+    http://wiki.opencsw.org/munin-package
+
 =======================================================================
 
