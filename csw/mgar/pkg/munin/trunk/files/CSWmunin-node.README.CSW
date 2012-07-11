@@ -12,5 +12,9 @@ To get the Munin node running, please follow these steps:
 
     svcadm restart cswmuninnode
 
+(3) For more detailed information about the package take look at
+
+    http://wiki.opencsw.org/munin-package
+
 =======================================================================
 
