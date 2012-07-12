@@ -37,6 +37,40 @@ CONFIGURE_ARGS	=	$(DIRPATHS)
 
 TEST_SCRIPTS = custom
 
+#CSWlibbz2-1-0 CSWlibfreetype6 CSWlibgcc-s1 CSWlibgif4 CSWlibpng12-0 CSWlibz1
+
+PACKAGES							+=	CSWlibming-utils
+CATALOGNAME_CSWlibming-utils		=	libming_utils
+OBSOLETED_BY_CSWlibming-utils		=	CSWlibming
+CATALOGNAME_CSWlibming				=	libming_stub
+RUNTIME_DEP_PKGS_CSWlibming-utils	+=	CSWlibming1
+
+SPKG_DESC_CSWlibming-utils		=	$(DESCRIPTION), utilities
+
+PACKAGES						+=	CSWlibming1
+CATALOGNAME_CSWlibming1			=	libming1
+PKGFILES_CSWlibming1			+=	$(call baseisadirs,$(libdir),libming\.so\.1\.4\.3)
+PKGFILES_CSWlibming1			+=	$(call baseisadirs,$(libdir),libming\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibming1			+=	$(DESCRIPTION), libming.so.1
+OBSOLETED_BY_CSWlibming1		=	CSWlibmingrt
+CATALOGNAME_CSWlibmingrt		=	libming_rt_stub
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgif4
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibz1
+
+PACKAGES						+=	CSWlibming-dev
+CATALOGNAME_CSWlibming-dev		=	libming_dev
+SPKG_DESC_CSWlibming-dev		+=	$(DESCRIPTION), development files
+PKGFILES_CSWlibming-dev			+=	/opt/csw/lib/libming.so
+PKGFILES_CSWlibming-dev			+=	$(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWlibming-dev		=	CSWlibmingdevel
+CATALOGNAME_CSWlibmingdevel		=	libming_devel_stub
+RUNTIME_DEP_PKGS_CSWlibming-dev	+=	CSWlibming1
+ARCHALL_CSWlibming-dev			=	1
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/php5/bin:$(PATH)
@@ -63,4 +97,4 @@ test-custom:
 
 # this is private and not available publicly
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
