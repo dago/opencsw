@@ -31,7 +31,7 @@ SPKG_DESC_CSWgnomevfs2 += $(DESCRIPTION)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWsambalib
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibsmbclient0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibintl8
@@ -79,6 +79,8 @@ BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
+
+TEST_SCRIPTS = 
 
 include gar/category.mk
 
