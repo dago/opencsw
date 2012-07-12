@@ -124,6 +124,15 @@ USERGROUP_CSWnsca	= $(NSCA_USERGROUP)
 USERGROUP_CSWsendnsca	= $(SEND_NSCA_USERGROUP)
 
 #
+# config migration
+#
+
+MIGRATE_FILES_CSWnsca		= nsca.cfg
+MIGRATE_FILES_CSWsendnsca	= send_nsca.cfg
+MIGRATE_SOURCE_DIR      	= /opt/csw/nagios/etc
+MIGRATE_DEST_DIR        	= /etc/opt/csw/nagios
+
+#
 #
 #
 
