@@ -1,0 +1,39 @@
+From 41a87d6dcc353ea79ca76a9923ab04c5786154fd Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 11 Jul 2012 11:51:45 +0200
+Subject: [PATCH] PrintGifError to GifErrorString
+
+---
+ util/gif2dbl.c  |    2 +-
+ util/gif2mask.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/util/gif2dbl.c b/util/gif2dbl.c
+index 7c513d8..9b22817 100644
+--- a/util/gif2dbl.c
++++ b/util/gif2dbl.c
+@@ -20,7 +20,7 @@
+ void error(char *msg)
+ {
+   printf("%s:\n\n", msg);
+-  PrintGifError();
++  printf("%s:\n\n", GifErrorString());
+   exit(-1);
+ }
+ 
+diff --git a/util/gif2mask.c b/util/gif2mask.c
+index 7636bc7..5a039a3 100644
+--- a/util/gif2mask.c
++++ b/util/gif2mask.c
+@@ -14,7 +14,7 @@
+ void error(char *msg)
+ {
+   printf("%s:\n\n", msg);
+-  PrintGifError();
++  printf("%s:\n\n", GifErrorString());
+   exit(-1);
+ }
+ 
+-- 
+1.7.10.3
+
