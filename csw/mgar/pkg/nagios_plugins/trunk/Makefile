@@ -10,9 +10,10 @@ define BLURB
    Plugins for Nagios
 endef
 
-SF_PROJ = nagiosplug
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+SF_PROJ 	 = nagiosplug
+MASTER_SITES 	 = $(SF_MIRRORS)
+DISTFILES  	 = $(NAME)-$(VERSION).tar.gz
+DISTFILES	+= README.CSW
 
 PACKAGES 			= CSWnagios-plugins
 CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
@@ -27,6 +28,8 @@ REINPLACE_USRLOCAL += plugins/*
 REINPLACE_USRLOCAL += plugins-scripts/*
 REINPLACE_USRLOCAL += ChangeLog
 REINPLACE_USRLOCAL += README
+
+POSTMSG		+= /opt/csw/share/doc/nagios-plugins/README.CSW
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw
@@ -66,7 +69,7 @@ TEST_TARGET =
 
 include gar/category.mk
 
-DOCS = BUGS ChangeLog FAQ README REQUIREMENTS SUPPORT COPYING
+DOCS = BUGS ChangeLog FAQ README REQUIREMENTS SUPPORT COPYING 
 DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 ROOT_PLUGINS = check_dhcp check_icmp pst3
 PLUGINDEST = $(DESTDIR)$(libexecdir)
@@ -75,6 +78,7 @@ post-install-modulated:
 	@ginstall -m 755 -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 755 -d $(PLUGINDEST)
+	@ginstall -m 644 $(FILEDIR)/README.CSW $(DOCDEST)
 	@$(foreach PLUGIN,$(ROOT_PLUGINS),ginstall -m 4755 $(WORKSRC)/plugins-root/$(PLUGIN) $(PLUGINDEST);)
 	@( cd $(WORKSRC) ; tar cf contrib.tar contrib ; gzip contrib.tar)
 	@ginstall -m 755 -d $(DOCDEST)
