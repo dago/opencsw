@@ -1,0 +1,25 @@
+From 63746bd44306c533f1d8d83e999589f84d39fdbf Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 12 Jul 2012 15:49:48 +0200
+Subject: [PATCH] makeswf include path
+
+---
+ util/makeswf.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/makeswf.h b/util/makeswf.h
+index cf3500a..a7211a2 100644
+--- a/util/makeswf.h
++++ b/util/makeswf.h
+@@ -19,7 +19,7 @@
+  ***************************************************************************/
+ 
+ /* Set this to the default include path */
+-#define DEFAULT_FLAGS "-I/usr/share/actionscript -I/usr/local/share/actionscript -I."
++#define DEFAULT_FLAGS "-I/opt/csw/share/actionscript -I."
+ 
+ /**
+  * Use a value of 0 to skip the preprocessing phase (unreccommended)
+-- 
+1.7.10.3
+
