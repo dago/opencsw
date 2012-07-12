@@ -18,7 +18,7 @@ BUILD_DEP_PKGS		+=	CSWlibgd-dev
 BUILD_DEP_PKGS		+=	CSWplotutils-dev
 BUILD_DEP_PKGS		+=	CSWbison
 
-GARCOMPILER			=	SOS12U3
+GARCOMPILER			=	GNU
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--with-libplot
@@ -27,10 +27,32 @@ CONFIGURE_ARGS	+=	--without-swf
 
 LICENSE			=	copying
 
-PACKAGING_PLATFORMS	=	solaris10-sparc
-PACKAGING_PLATFORMS	+=	solaris10-i386
-
 include gar/category.mk
+
+PATH := /opt/csw/gnu:/opt/csw/php5/bin:$(PATH)
+
+openmpList	=	\
+				Makefile \
+				config/Makefile \
+				msdev/Makefile \
+				misc/swffonts/Makefile \
+				misc/Makefile \
+				m4/Makefile \
+				othersrc/gsdllinc/Makefile \
+				othersrc/Makefile \
+				contrib/java/java2/Makefile \
+				contrib/java/Makefile \
+				contrib/java/java1/Makefile \
+				contrib/Makefile \
+				contrib/cairo/Makefile \
+				src/Makefile \
+				examples/Makefile \
+				doc/Makefile \
+				os2/Makefile
+
+post-configure-modulated:
+	cd $(WORKSRC) && sed --in-place --expression='s/ -xopenmp//' $(openmpList)
+	$(MAKECOOKIE)
 
 # this is private and not available publicly
 mydependencies:
