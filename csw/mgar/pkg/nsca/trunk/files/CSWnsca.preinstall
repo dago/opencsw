@@ -1,8 +1,3 @@
-# preinstall for nagioscm
-# Add the group nagioscm if told to by request script.
-# 2007-12-02 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
-#            relocatable packages.
-
 cat << EOF
 
 =======================================================================
@@ -12,12 +7,16 @@ OpenCSW package is stored in /etc/opt/csw/nagios/.
 
 No further action is needed (to have a backup is always a good idea).
 
-            Installation will proceed in 10 seconds.
+            Installation will proceed in 15 seconds.
              Press CTRL+C if you want to stop now.
              
 =======================================================================
 EOF
 
-sleep 10
+for i in 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+do
+        printf "$i "
+        sleep 1
+done
 
 exit 0

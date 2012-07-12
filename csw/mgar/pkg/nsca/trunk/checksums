@@ -1,9 +1,1 @@
-e9ed8b90404f0aebfc6f77355d8c9bbe  CSWnsca.cswusergroup
-ec54b953469889200d99a86669653173  CSWnsca.preinstall
-42ca77e782a25c8354df8f53eb769ae6  CSWnsca.prototype
-0a98ba4dd462e50f23239433117bae5e  CSWsendnsca.cswusergroup
-e275462ffbf488fe5f7e29dd3abab0ae  CSWsendnsca.preinstall
-3e2a2fa1f5209b3bbee1b3822164e7f6  CSWsendnsca.prototype
-f7d14e529cdeae1548505c9106d1a6f5  cswnsca
-33a98e7975f633a9489d7a8938ed6131  nsca-2.7.2.tar.gz
-28e7dbb0cd301747ff663df350a74ddb  submit_check_results.diff
+f3fab49beebd9090cb1b2742b75bdf17  nsca-2.9.1.tar.gz
