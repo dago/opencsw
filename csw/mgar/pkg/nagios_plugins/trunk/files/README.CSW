@@ -1,0 +1,14 @@
+
+=======================================================================
+
+The following files will run in root context and have suid permissions:
+
+   /opt/csw/libexec/nagios-plugins/pst3
+   /opt/csw/libexec/nagios-plugins/check_dhcp
+   /opt/csw/libexec/nagios-plugins/check_icmp
+
+If you don't like it, change the permissions / ownerships to your
+needs.
+
+=======================================================================
+
