@@ -19,6 +19,7 @@ SF_PROJ			=	ming
 DISTNAME		=	$(SF_PROJ)-$(VERSION)
 DISTFILES		=	$(DISTNAME).tar.bz2
 PATCHFILES		+=	0001-PrintGifError-to-GifErrorString.patch
+PATCHFILES		+=	0002-makeswf-include-path.patch
 
 GARCOMPILER		=	GNU
 
@@ -44,6 +45,11 @@ CATALOGNAME_CSWlibming-utils		=	libming_utils
 OBSOLETED_BY_CSWlibming-utils		=	CSWlibming
 CATALOGNAME_CSWlibming				=	libming_stub
 RUNTIME_DEP_PKGS_CSWlibming-utils	+=	CSWlibming1
+# transitivity:
+CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibpng12-0
+CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibz1
 
 SPKG_DESC_CSWlibming-utils		=	$(DESCRIPTION), utilities
 
@@ -58,18 +64,20 @@ RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgif4
+CHECKPKG_OVERRIDES_CSWlibming1	+=	surplus-dependency|CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibz1
 
-PACKAGES						+=	CSWlibming-dev
-CATALOGNAME_CSWlibming-dev		=	libming_dev
-SPKG_DESC_CSWlibming-dev		+=	$(DESCRIPTION), development files
-PKGFILES_CSWlibming-dev			+=	/opt/csw/lib/libming.so
-PKGFILES_CSWlibming-dev			+=	$(PKGFILES_DEVEL)
-OBSOLETED_BY_CSWlibming-dev		=	CSWlibmingdevel
-CATALOGNAME_CSWlibmingdevel		=	libming_devel_stub
-RUNTIME_DEP_PKGS_CSWlibming-dev	+=	CSWlibming1
-ARCHALL_CSWlibming-dev			=	1
+PACKAGES							+=	CSWlibming-dev
+CATALOGNAME_CSWlibming-dev			=	libming_dev
+SPKG_DESC_CSWlibming-dev			+=	$(DESCRIPTION), development files
+PKGFILES_CSWlibming-dev				+=	/opt/csw/lib/libming.so
+PKGFILES_CSWlibming-dev				+=	$(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWlibming-dev			=	CSWlibmingdevel
+CATALOGNAME_CSWlibmingdevel			=	libming_devel_stub
+RUNTIME_DEP_PKGS_CSWlibming-dev		+=	CSWlibming1
+ARCHALL_CSWlibming-dev				=	1
+CHECKPKG_OVERRIDES_CSWlibming-dev	+=	archall-devel-package
 
 include gar/category.mk
 
