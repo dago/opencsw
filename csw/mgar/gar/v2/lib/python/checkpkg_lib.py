@@ -247,7 +247,8 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
           continue
         tag_info=e.tag_info
         if tag_info is not None:
-            tag_info=unicode(tag_info, "utf-8")
+	    if not isinstance(tag_info, unicode):
+	        tag_info=unicode(tag_info, "utf-8")
         error_tag_in_db = m.CheckpkgErrorTag(
             srv4_file=db_stat_objs_by_pkgname[e.pkgname],
             pkgname=e.pkgname,
