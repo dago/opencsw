@@ -20,6 +20,9 @@ BUILD_DEP_PKGS		+=	CSWbison
 
 GARCOMPILER			=	GNU
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--with-libplot
 CONFIGURE_ARGS	+=	--without-emf
@@ -33,8 +36,8 @@ SPKG_DESC_CSWpstoedit					=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibpstoedit0
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgd2
-RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagick++4
-RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagickcore4
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagick++5
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagickcore5
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibplotter2
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibstdc++6
 
