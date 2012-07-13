@@ -27,6 +27,39 @@ CONFIGURE_ARGS	+=	--without-swf
 
 LICENSE			=	copying
 
+PACKAGES								+=	CSWpstoedit
+CATALOGNAME_CSWpstoedit					=	pstoedit
+SPKG_DESC_CSWpstoedit					=	$(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibpstoedit0
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgd2
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagick++5
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagickcore5
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibplotter2
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibstdc++6
+
+PACKAGES								+=	CSWlibpstoedit0
+CATALOGNAME_CSWlibpstoedit0				=	libpstoedit0
+PKGFILES_CSWlibpstoedit0				+=	$(call baseisadirs,$(libdir),libpstoedit\.so\.0\.0\.0)
+PKGFILES_CSWlibpstoedit0				+=	$(call baseisadirs,$(libdir),libpstoedit\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibpstoedit0				+=	$(DESCRIPTION), libpstoedit.so.0
+OBSOLETED_BY_CSWlibpstoedit0			=	CSWpstoeditrt
+CATALOGNAME_CSWpstoeditrt				=	pstoedit_rt_stub
+RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	 CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	CSWlibgd2
+RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	CSWlibstdc++6
+
+PACKAGES								+=	CSWpstoedit-dev
+CATALOGNAME_CSWpstoedit-dev				=	pstoedit_dev
+SPKG_DESC_CSWpstoedit-dev				+=	$(DESCRIPTION), development files
+PKGFILES_CSWpstoedit-dev				+=	/opt/csw/lib/libpstoedit.so
+PKGFILES_CSWpstoedit-dev				+=	$(PKGFILES_DEVEL)
+ARCHALL_CSWpstoedit-dev					=	1
+CHECKPKG_OVERRIDES_CSWpstoedit-dev		+=	archall-devel-package
+OBSOLETED_BY_CSWpstoedit-dev			=	CSWpstoeditdevel
+CATALOGNAME_CSWpstoeditdevel			=	pstoedit_devel_stub
+RUNTIME_DEP_PKGS_CSWpstoedit-dev		+=	CSWlibpstoedit0
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/php5/bin:$(PATH)
@@ -56,4 +89,4 @@ post-configure-modulated:
 
 # this is private and not available publicly
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
