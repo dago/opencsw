@@ -1,1 +1,3 @@
-icinga:icinga:Icinga User:/opt/csw/icinga:/bin/false:::
+:icingacm::::::
+:icinga::::::
+icinga:icinga:Icinga User:/etc/opt/csw/icinga::m:r:NP:icingacm

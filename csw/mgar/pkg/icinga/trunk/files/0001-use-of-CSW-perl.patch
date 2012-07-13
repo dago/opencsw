@@ -1,0 +1,116 @@
+From 8d902b52cd3186ae7591209ec58c1a1e0ab0f7a2 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Wed, 11 Jul 2012 20:34:00 +0200
+Subject: [PATCH] use of CSW perl
+
+---
+ configure |   62 ++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
+
+diff --git a/configure b/configure
+index b9d439a..4709b70 100755
+--- a/configure
++++ b/configure
+@@ -6782,15 +6782,15 @@ cat >>confdefs.h <<_ACEOF
+ #define EMBEDDEDPERL /**/
+ _ACEOF
+ 
+-	PERLLIBS="`perl -MExtUtils::Embed -e ldopts`"
+-	PERLDIR="`perl -MConfig -e 'print $Config{installsitearch}'`"
+-	CFLAGS="${CFLAGS} `perl -MExtUtils::Embed -e ccopts`"
++	PERLLIBS="`/opt/csw/bin/perl -MExtUtils::Embed -e ldopts`"
++	PERLDIR="`/opt/csw/bin/perl -MConfig -e 'print $Config{installsitearch}'`"
++	CFLAGS="${CFLAGS} `/opt/csw/bin/perl -MExtUtils::Embed -e ccopts`"
+ 	USEPERL=yes
+ 	INSTALLPERLSTUFF=yes;
+ 	PERLXSI_O=perlxsi.o
+ 	OBJS="${OBJS} ${PERLXSI_O}"
+ 	echo "creating base/perlxsi.c"
+-	perl -MExtUtils::Embed -e xsinit -- -o base/perlxsi.c
++	/opt/csw/bin/perl -MExtUtils::Embed -e xsinit -- -o base/perlxsi.c
+ 
+ 	echo "Embedded Perl interpreter will be compiled in..."
+ 
+@@ -6809,7 +6809,7 @@ $as_echo "#define DO_CLEAN \"1\"" >>confdefs.h
+ fi
+ 
+ if test x$USEPERL = xyes; then
+-	if (perl -e 'use Config;exit -1 unless ($Config{'usethreads'});'); then
++	if (/opt/csw/bin/perl -e 'use Config;exit -1 unless ($Config{'usethreads'});'); then
+ 		echo "Using threaded perl"
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -8430,44 +8430,44 @@ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
+ fi
+ 
+ 
+-perl subst $srcdir/include/locations.h
++/opt/csw/bin/perl subst $srcdir/include/locations.h
+ 
+-perl subst $srcdir/contrib/eventhandlers/submit_check_result
+-perl subst $srcdir/contrib/eventhandlers/disable_active_service_checks
+-perl subst $srcdir/contrib/eventhandlers/disable_notifications
+-perl subst $srcdir/contrib/eventhandlers/enable_active_service_checks
+-perl subst $srcdir/contrib/eventhandlers/enable_notifications
++/opt/csw/bin/perl subst $srcdir/contrib/eventhandlers/submit_check_result
++/opt/csw/bin/perl subst $srcdir/contrib/eventhandlers/disable_active_service_checks
++/opt/csw/bin/perl subst $srcdir/contrib/eventhandlers/disable_notifications
++/opt/csw/bin/perl subst $srcdir/contrib/eventhandlers/enable_active_service_checks
++/opt/csw/bin/perl subst $srcdir/contrib/eventhandlers/enable_notifications
+ 
+-perl subst $srcdir/html/index.html
+-perl subst $srcdir/html/menu.html
++/opt/csw/bin/perl subst $srcdir/html/index.html
++/opt/csw/bin/perl subst $srcdir/html/menu.html
+ 
+ echo ""
+ echo "Creating sample config files in sample-config/ ..."
+ 
+-perl subst $srcdir/sample-config/icinga.cfg
+-perl subst $srcdir/sample-config/cgi.cfg
+-perl subst $srcdir/sample-config/cgiauth.cfg
+-perl subst $srcdir/sample-config/resource.cfg
+-perl subst $srcdir/sample-config/httpd.conf
+-perl subst $srcdir/sample-config/mrtg.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/icinga.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/cgi.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/cgiauth.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/resource.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/httpd.conf
++/opt/csw/bin/perl subst $srcdir/sample-config/mrtg.cfg
+ 
+-perl subst $srcdir/sample-config/template-object/templates.cfg
+-perl subst $srcdir/sample-config/template-object/commands.cfg
+-perl subst $srcdir/sample-config/template-object/timeperiods.cfg
+-perl subst $srcdir/sample-config/template-object/contacts.cfg
+-perl subst $srcdir/sample-config/template-object/notifications.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/templates.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/commands.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/timeperiods.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/contacts.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/notifications.cfg
+ 
+-perl subst $srcdir/sample-config/template-object/localhost.cfg
+-perl subst $srcdir/sample-config/template-object/windows.cfg
+-perl subst $srcdir/sample-config/template-object/printer.cfg
+-perl subst $srcdir/sample-config/template-object/switch.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/localhost.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/windows.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/printer.cfg
++/opt/csw/bin/perl subst $srcdir/sample-config/template-object/switch.cfg
+ 
+ echo ""
+ echo "Creating sample config files in module/idoutils/config/ ..."
+ 
+-perl subst $srcdir/module/idoutils/config/idoutils.cfg-sample
+-perl subst $srcdir/module/idoutils/config/ido2db.cfg-sample
+-perl subst $srcdir/module/idoutils/config/idomod.cfg-sample
++/opt/csw/bin/perl subst $srcdir/module/idoutils/config/idoutils.cfg-sample
++/opt/csw/bin/perl subst $srcdir/module/idoutils/config/ido2db.cfg-sample
++/opt/csw/bin/perl subst $srcdir/module/idoutils/config/idomod.cfg-sample
+ 
+ 
+ 
+-- 
+1.7.10.3
+

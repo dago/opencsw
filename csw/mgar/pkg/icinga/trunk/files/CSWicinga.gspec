@@ -1,3 +1,0 @@
-%var            bitname icinga
-%var            pkgname CSWicinga
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec

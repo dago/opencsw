@@ -1,0 +1,43 @@
+From 93af51054f341c1c44f44407a4645bbacced3480 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Wed, 11 Jul 2012 22:13:35 +0200
+Subject: [PATCH] changed install and command options in configure
+
+---
+ configure |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 4709b70..34d740b 100755
+--- a/configure
++++ b/configure
+@@ -5186,7 +5186,7 @@ cat >>confdefs.h <<_ACEOF
+ #define DEFAULT_NAGIOS_GROUP "$icinga_grp"
+ _ACEOF
+ 
+-INSTALL_OPTS="-o $icinga_user -g $icinga_grp"
++INSTALL_OPTS="-o $install_user -g $install_grp"
+ 
+ 
+ 
+@@ -5207,7 +5207,7 @@ fi
+ 
+ 
+ 
+-COMMAND_OPTS="-o $command_user -g $command_grp"
++COMMAND_OPTS="-o $install_user -g $install_grp"
+ 
+ 
+ 
+@@ -5264,7 +5264,7 @@ fi
+ 
+ 
+ 
+-INSTALL_OPTS_WEB="-o $web_user -g $web_group"
++INSTALL_OPTS_WEB="-o $install_user -g $install_grp"
+ 
+ 
+ 
+-- 
+1.7.10.3
+
