@@ -23,8 +23,11 @@ PATCHFILES		+=	0002-makeswf-include-path.patch
 
 GARCOMPILER		=	GNU
 
-BUILD_DEP_PKGS	+=	CSWphp5
-BUILD_DEP_PKGS	+=	CSWphp5-dev
+BUILD_DEP_PKGS	+=	CSWlibgif-dev
+BUILD_DEP_PKGS	+=	CSWlibbz2-dev
+BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
+BUILD_DEP_PKGS	+=	CSWlibpng-dev
+BUILD_DEP_PKGS	+=	CSWlibz-dev
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 # gcc -kPIC issue because Python was compiled with SOS
