@@ -23,6 +23,9 @@ PATCHFILES		+=	0002-makeswf-include-path.patch
 
 GARCOMPILER		=	GNU
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 BUILD_DEP_PKGS	+=	CSWlibgif-dev
 BUILD_DEP_PKGS	+=	CSWlibbz2-dev
 BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
