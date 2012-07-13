@@ -33,8 +33,8 @@ SPKG_DESC_CSWpstoedit					=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibpstoedit0
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgd2
-RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagick++5
-RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagickcore5
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagick++4
+RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagickcore4
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibplotter2
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibstdc++6
 
@@ -45,7 +45,7 @@ PKGFILES_CSWlibpstoedit0				+=	$(call baseisadirs,$(libdir),libpstoedit\.so\.0(\
 SPKG_DESC_CSWlibpstoedit0				+=	$(DESCRIPTION), libpstoedit.so.0
 OBSOLETED_BY_CSWlibpstoedit0			=	CSWpstoeditrt
 CATALOGNAME_CSWpstoeditrt				=	pstoedit_rt_stub
-RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	 CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	CSWlibgd2
 RUNTIME_DEP_PKGS_CSWlibpstoedit0		+=	CSWlibstdc++6
 
