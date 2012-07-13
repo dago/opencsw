@@ -53,6 +53,7 @@ RUNTIME_DEP_PKGS_CSWlibming-utils	+=	CSWlibming1
 # transitivity:
 CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibbz2-1-0
 CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibgif4
 CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibpng12-0
 CHECKPKG_OVERRIDES_CSWlibming-utils	+=	missing-dependency|CSWlibz1
 
@@ -68,8 +69,7 @@ CATALOGNAME_CSWlibmingrt		=	libming_rt_stub
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgif5
-CHECKPKG_OVERRIDES_CSWlibming1	+=	surplus-dependency|CSWlibgif5
+RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibming1	+=	CSWlibz1
 
