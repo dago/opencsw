@@ -1,0 +1,77 @@
+From d400ffff2a2b280fcd45515c3432aac959821c5d Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Fri, 13 Jul 2012 23:43:26 +0200
+Subject: [PATCH] Add missing stdio.h inclusion
+
+---
+ libgnomeprint/grammar.tab.h                             |   14 ++++++--------
+ libgnomeprint/modules/cups/gnome-print-cups-transport.c |    1 +
+ ltmain.sh                                               |    2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/libgnomeprint/grammar.tab.h b/libgnomeprint/grammar.tab.h
+index defb293..e0aed9c 100644
+--- a/libgnomeprint/grammar.tab.h
++++ b/libgnomeprint/grammar.tab.h
+@@ -1,10 +1,8 @@
++/* A Bison parser, made by GNU Bison 2.5.  */
+ 
+-/* A Bison parser, made by GNU Bison 2.4.1.  */
+-
+-/* Skeleton interface for Bison's Yacc-like parsers in C
++/* Bison interface for Yacc-like parsers in C
+    
+-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+-   Free Software Foundation, Inc.
++      Copyright (C) 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+@@ -50,7 +48,7 @@
+ typedef union YYSTYPE
+ {
+ 
+-/* Line 1676 of yacc.c  */
++/* Line 2068 of yacc.c  */
+ #line 105 "./grammar.y"
+ 
+ 	gchar *s;
+@@ -60,8 +58,8 @@ typedef union YYSTYPE
+ 
+ 
+ 
+-/* Line 1676 of yacc.c  */
+-#line 65 "grammar.tab.h"
++/* Line 2068 of yacc.c  */
++#line 63 "grammar.tab.h"
+ } YYSTYPE;
+ # define YYSTYPE_IS_TRIVIAL 1
+ # define yystype YYSTYPE /* obsolescent; will be withdrawn */
+diff --git a/libgnomeprint/modules/cups/gnome-print-cups-transport.c b/libgnomeprint/modules/cups/gnome-print-cups-transport.c
+index aeb7111..9112b28 100644
+--- a/libgnomeprint/modules/cups/gnome-print-cups-transport.c
++++ b/libgnomeprint/modules/cups/gnome-print-cups-transport.c
+@@ -36,6 +36,7 @@
+ #include <fcntl.h>
+ #include <unistd.h>
+ #include <locale.h>
++#include <stdio.h>
+ 
+ #include <cups/cups.h>
+ #include <libgnomeprint/gnome-print.h>
+diff --git a/ltmain.sh b/ltmain.sh
+index 6939dcc..69394c9 100755
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -5095,7 +5095,7 @@ func_mode_link ()
+ 	    searchdirs="$newlib_search_path $lib_search_path $sys_lib_search_path $shlib_search_path"
+ 	  fi
+ 	  for searchdir in $searchdirs; do
+-	    for search_ext in .la $std_shrext .so .a; do
++	    for search_ext in  $std_shrext .so .a; do
+ 	      # Search the libtool library
+ 	      lib="$searchdir/lib${name}${search_ext}"
+ 	      if test -f "$lib"; then
+-- 
+1.7.10.3
+
