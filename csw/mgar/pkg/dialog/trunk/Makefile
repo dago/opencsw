@@ -2,9 +2,9 @@
 #   gmake package-CSWdialog-minimal
 
 NAME = dialog
-VERSION = 1.1r20111020
+VERSION = 1.1r20120706
 VERSION2 = 1.1
-RELEASE = 20111020
+RELEASE = 20120706
 DISTNAME = $(NAME)-$(VERSION2)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = utils
@@ -44,6 +44,7 @@ ALTERNATIVES_CSWdialog-minimal = minimal
 ALTERNATIVE_ncurses = $(bindir)/dialog dialog $(bindir)/dialog.ncurses 50 $(mandir)/man1/dialog.1 dialog.man $(mandir)/man1/dialog.1.ncurses
 ALTERNATIVE_minimal = $(bindir)/dialog dialog $(bindir)/dialog.minimal 25 $(mandir)/man1/dialog.1 dialog.man $(mandir)/man1/dialog.1.minimal
 
+# There are no tests
 SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
