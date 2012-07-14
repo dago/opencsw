@@ -14,13 +14,45 @@ DISTFILES = $(DISTNAME).tar.bz2
 # New glib only available on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-BUILD64_LIBS_ONLY = 1
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgnome2-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgnomecanvas2-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibpopt0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWorbit2
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibglade2
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWpango
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibart
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibbonobo2
+RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibatk1-0-0
+
+
+CHECKPKG_OVERRIDES_CSWlibbonoboui += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libbonoboui-2.so
+CHECKPKG_OVERRIDES_CSWlibbonoboui += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbonoboui-2.so.0.0.0|soname=libbonoboui-2.so.0|pkgname=CSWlibbonoboui|expected=CSWlibbonoboui2-0
+
+# There is a problem with the 64 bits build and the
+# the previous package didn't have the 64 bits libraries
+# so we disable this for now
+#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS += --enable-static=no
 #CONFIGURE_ARGS += --enable-gtk-doc
 
 EXTRA_TEST_EXPORTS = DISPLAY
+TEST_SCRIPTS = 
 
 include gar/category.mk
 
