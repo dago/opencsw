@@ -1,0 +1,39 @@
+From f685faacd8d45d2c4c6c732014ba7d164e2760c5 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sat, 14 Jul 2012 22:32:47 +0200
+Subject: [PATCH] cups-config bug workaround
+
+---
+ Makefile.in |    2 +-
+ libgnomecups/Makefile.in |    2 +-
+ 2 file changed, 2 insertion(+), 2 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index c9cba11..1108a33 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -65,7 +65,7 @@ CATALOGS = @CATALOGS@
+ CATOBJEXT = @CATOBJEXT@
+ CC = @CC@
+ CUPS_CFLAGS = @CUPS_CFLAGS@
+-CUPS_LIBS = @CUPS_LIBS@
++CUPS_LIBS = -L$(libdir) @CUPS_LIBS@
+ CXX = @CXX@
+ CXXCPP = @CXXCPP@
+ DATADIRNAME = @DATADIRNAME@
+-- 
+1.7.10.3
+
+diff --git a/libgnomecups/Makefile.in b/libgnomecups/Makefile.in
+index 611973c..555bb33 100644
+--- a/libgnomecups/Makefile.in
++++ b/libgnomecups/Makefile.in
+@@ -65,7 +65,7 @@ CATALOGS = @CATALOGS@
+ CATOBJEXT = @CATOBJEXT@
+ CC = @CC@
+ CUPS_CFLAGS = @CUPS_CFLAGS@
+-CUPS_LIBS = @CUPS_LIBS@
++CUPS_LIBS = -L$(libdir) @CUPS_LIBS@
+ CXX = @CXX@
+ CXXCPP = @CXXCPP@
+ DATADIRNAME = @DATADIRNAME@
