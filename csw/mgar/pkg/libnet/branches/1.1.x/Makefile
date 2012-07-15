@@ -1,5 +1,5 @@
 NAME = libnet
-VERSION = 1.1.5
+VERSION = 1.1.6
 CATEGORIES = lib
 
 DESCRIPTION = The libnet packet construction library
@@ -17,33 +17,16 @@ endef
 
 SF_PROJ = libnet-dev
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += libnet.so.1.0.2.i
-DISTFILES += libnet.so.1.0.2.s
-PATCHFILES = 0001-Fix-missing-uint-instead-of-u_int.patch
+DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = doc/COPYING
 
 VENDOR_URL = http://github.com/sam-github/libnet
 
-PACKAGES += CSWlibnet
-SPKG_DESC_CSWlibnet = Libnet package construction library (legacy), libnet.so
-SPKG_VERSION_CSWlibnet = 1.0.2a
-PKGFILES_CSWlibnet += $(libdir)/libnet.so
-PKGFILES_CSWlibnet += $(libdir)/libnet.so.1.0.2
-
-# These overrides are for the legacy library which should just
-# stay the way it is.
-CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
-CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry
-CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-pkgname-mismatch|file=opt/csw/lib/libnet.so.1.0.2|soname=libnet.so.1.0.2|pkgname=CSWlibnet|expected=CSWlibnet1-0-2
-CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
-
 PACKAGES += CSWlibnet1
 SPKG_DESC_CSWlibnet1 = Libnet package construction library, libnet.so.1
 # Explicitly do *not* include libnet.so.1.0.2
-PKGFILES_CSWlibnet1  = $(call baseisadirs,$(libdir),libnet\.so\.1)
-PKGFILES_CSWlibnet1 += $(call baseisadirs,$(libdir),libnet\.so\.1\.6(\.\d+)*)
+PKGFILES_CSWlibnet1  = $(call pkgfiles_lib,libnet.so.1)
 
 PACKAGES += CSWlibnet-dev
 SPKG_DESC_CSWlibnet-dev = Development files for libnet.so.1
@@ -56,26 +39,18 @@ CATALOGNAME_CSWlibnetdevel = libnet_devel_stub
 
 BUILD64 = 1
 
-EXTRA_CONFIGURE_ARGS-32 += LIBNET_CONFIG_LIBS=-L$(libdir)/libnet-new
-EXTRA_CONFIGURE_ARGS-64 += LIBNET_CONFIG_LIBS=-L$(libdir)
-EXTRA_CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS-$(MEMORYMODEL))
-
 include gar/category.mk
 
 post-install-isa-sparcv8:
 	ginstall -d $(DESTDIR)$(libdir)
-	cp $(WORKDIR)/libnet.so.1.0.2.s $(DESTDIR)$(libdir)/libnet.so.1.0.2
-	rm $(DESTDIR)$(libdir)/libnet.so
-	ln -s libnet.so.1.0.2 $(DESTDIR)$(libdir)/libnet.so
 	mkdir $(DESTDIR)$(libdir)/libnet-new
 	ln -s ../libnet.so.1 $(DESTDIR)$(libdir)/libnet-new/libnet.so
+	rm -f $(DESTDIR)$(libdir)/libnet.so
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
 	ginstall -d $(DESTDIR)$(libdir)
-	cp $(WORKDIR)/libnet.so.1.0.2.i $(DESTDIR)$(libdir)/libnet.so.1.0.2
-	rm $(DESTDIR)$(libdir)/libnet.so
-	ln -s libnet.so.1.0.2 $(DESTDIR)$(libdir)/libnet.so
 	mkdir $(DESTDIR)$(libdir)/libnet-new
 	ln -s ../libnet.so.1 $(DESTDIR)$(libdir)/libnet-new/libnet.so
+	rm -f $(DESTDIR)$(libdir)/libnet.so
 	@$(MAKECOOKIE)
