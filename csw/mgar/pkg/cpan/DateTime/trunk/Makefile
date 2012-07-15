@@ -1,23 +1,28 @@
 NAME = DateTime
-VERSION = 0.55
+VERSION = 0.76
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = A date and time object
 define BLURB
-  DateTime is a class for the representation of date/time combinations, and is
-  part of the Perl DateTime project. For details on this project please see
-  http://datetime.perl.org/. The DateTime site has a FAQ which may help answer
-  many "how do I do X?" questions. The FAQ is at http://datetime.perl.org/?FAQ.
 endef
 
-PACKAGES = CSWpmdatetime
-CATALOGNAME = pm_datetime
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-DEP_PKGS  = CSWpmdatetimetz CSWpmdatetimelocale
+BUILD_DEP_PKGS += CSWpm-test-fatal
+
+PACKAGES += CSWpm-datetime
+CATALOGNAME_CSWpm-datetime = pm_datetime
+SPKG_DESC_CSWpm-datetime = A date and time object
+RUNTIME_DEP_PKGS_CSWpm-datetime += CSWpm-params-validate
+RUNTIME_DEP_PKGS_CSWpm-datetime += CSWpm-datetime-locale
+RUNTIME_DEP_PKGS_CSWpm-datetime += CSWpm-math-round
+RUNTIME_DEP_PKGS_CSWpm-datetime += CSWpm-datetime-timezone
+OBSOLETED_BY_CSWpm-datetime += CSWpmdatetime
+CATALOGNAME_CSWpmdatetime = pm_datetime_stub
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
@@ -25,4 +30,3 @@ TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
-
