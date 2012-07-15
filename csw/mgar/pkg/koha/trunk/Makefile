@@ -2,9 +2,6 @@ NAME = koha
 VERSION = 4.10.05
 CATEGORIES = apps
 GARTYPE = v2
-#WORKSRC = liblime-$(NAME)_v$(VERSION)
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
 DISTNAME = liblime-$(NAME)_v$(VERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
@@ -16,12 +13,10 @@ endef
 MASTER_SITES = https://github.com/downloads/liblime/LibLime-Koha/
 DISTFILES  = liblime-$(NAME)_v$(VERSION).tar.gz
 
-# Temporary
+# Temporary?
 ARCHALL = 1
 
-# License not found due to changed workdir
-#LICENSE = LICENSE
-DISTFILES += COPYING
+LICENSE = LICENSE
 
 SPKG_SOURCEURL = http://www.koha.org
 
@@ -31,7 +26,8 @@ RUNTIME_DEP_PKGS += CSWapache2
 RUNTIME_DEP_PKGS += CSWidzebra
 RUNTIME_DEP_PKGS += CSWmysql5
 RUNTIME_DEP_PKGS += CSWperl
-RUNTIME_DEP_PKGS += CSWimagemagick
+RUNTIME_DEP_PKGS += CSWyaz
+#RUNTIME_DEP_PKGS += CSWimagemagick
 RUNTIME_DEP_PKGS += CSWpmalgorithmchkdig
 RUNTIME_DEP_PKGS += CSWpmbiblioendnotest
 RUNTIME_DEP_PKGS += CSWpmcgisession
@@ -44,7 +40,7 @@ RUNTIME_DEP_PKGS += CSWpmdateleapyear
 RUNTIME_DEP_PKGS += CSWpmdatemanip
 RUNTIME_DEP_PKGS += CSWpmdbi
 RUNTIME_DEP_PKGS += CSWpmdbdmysql
-RUNTIME_DEP_PKGS += CSWpmdublincorerecord
+RUNTIME_DEP_PKGS += CSWpmdublincorerecrd
 RUNTIME_DEP_PKGS += CSWpmgdbarcode
 RUNTIME_DEP_PKGS += CSWpmhtmlscrubber
 RUNTIME_DEP_PKGS += CSWpmhtmltemplatepro
@@ -54,8 +50,8 @@ RUNTIME_DEP_PKGS += CSWpmlibwww
 RUNTIME_DEP_PKGS += CSWpmlinguastem
 RUNTIME_DEP_PKGS += CSWpmlistmoreutils
 RUNTIME_DEP_PKGS += CSWpmmailsendmail
-RUNTIME_DEP_PKGS += CSWpmmarccharse
-RUNTIME_DEP_PKGS += CSWpmmarccrosswalkdblc
+RUNTIME_DEP_PKGS += CSWpm-marc-charset
+RUNTIME_DEP_PKGS += CSWpmmarccrswlkdblc
 RUNTIME_DEP_PKGS += CSWpmmarcrecord
 RUNTIME_DEP_PKGS += CSWpmmarcxml
 RUNTIME_DEP_PKGS += CSWpmmimebase64
@@ -68,7 +64,7 @@ RUNTIME_DEP_PKGS += CSWpmpoe
 RUNTIME_DEP_PKGS += CSWpmscheduleat
 RUNTIME_DEP_PKGS += CSWpmsmssend
 RUNTIME_DEP_PKGS += CSWpmtextcsv
-RUNTIME_DEP_PKGS += CSWpmtextcsvxst
+RUNTIME_DEP_PKGS += CSWpmtextcsvxs
 RUNTIME_DEP_PKGS += CSWpmtextwrap
 RUNTIME_DEP_PKGS += CSWpmxmldumper
 RUNTIME_DEP_PKGS += CSWpmxmllibxml
@@ -79,7 +75,7 @@ RUNTIME_DEP_PKGS += CSWpmxmlsimple
 RUNTIME_DEP_PKGS += CSWpmyamlsyck
 
 # Temporary
-CHECKPKG_OVERRIDES_CSWkoha += unidentified-dependency
+#CHECKPKG_OVERRIDES_CSWkoha += unidentified-dependency
 CHECKPKG_OVERRIDES_CSWkoha += surplus-dependency
 
 CONFIGURE_SCRIPTS = custom
