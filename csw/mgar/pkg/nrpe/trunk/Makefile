@@ -59,7 +59,7 @@ PKGFILES_CSWnrpe	+= /opt/csw/share/doc/nrpe/README.SSL
 PKGFILES_CSWnrpe	+= /opt/csw/share/doc/nrpe/SECURITY
 PKGFILES_CSWnrpe	+= /opt/csw/nagios
 PKGFILES_CSWnrpe	+= /etc/opt/csw/init.d/cswnrpe
-PKGFILES_CSWnrpe	+= /etc/opt/csw/init.d/cswusergroup
+PKGFILES_CSWnrpe	+= /etc/opt/csw/pkg/CSWnrpe/cswusergroup
 PKGFILES_CSWnrpe	+= /opt/csw/etc/templates/CSWnrpe$(CFGDIR)
 PKGFILES_CSWnrpe	+= /opt/csw/etc/templates/CSWnrpe$(CFGDIR)/nrpe.cfg
 
