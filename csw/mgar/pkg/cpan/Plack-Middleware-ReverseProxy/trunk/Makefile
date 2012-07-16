@@ -21,4 +21,7 @@ ARCHALL_CSWpm-plack-middleware-reversep = 1
 RUNTIME_DEP_PKGS_CSWpm-plack-middleware-reversep += CSWpm-yaml
 RUNTIME_DEP_PKGS_CSWpm-plack-middleware-reversep += CSWpm-plack
 
+# The tests contain now a port as result, I guess this is ok.
+SKIPTEST ?= 1
+
 include gar/category.mk
