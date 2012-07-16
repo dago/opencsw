@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = nagios-plugins
-VERSION = 1.4.15
+VERSION = 1.4.16
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -21,7 +21,8 @@ CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
 OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
 CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
 
-PATCHFILES 	+= 0004-Use-32-bit-pst3-on-Solaris.patch
+#PATCHFILES 	+= 0004-Use-32-bit-pst3-on-Solaris.patch
+PATCHFILES	+= 0002-Use-32-bit-pst3-on-Solaris.patch
 
 REINPLACE_USRLOCAL += contrib/*
 REINPLACE_USRLOCAL += plugins/*
@@ -34,12 +35,14 @@ POSTMSG		+= /opt/csw/share/doc/nagios-plugins/README.CSW
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin
-CONFIGURE_ARGS += --with-mysql-dir=/opt/csw
-CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
+CONFIGURE_ARGS += --with-mysql=/opt/csw
+CONFIGURE_ARGS += --with-pgsql=/opt/csw/postgresql
 CONFIGURE_ARGS += --disable-largefile
 CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-openssl=/opt/csw
+CONFIGURE_ARGS += --with-gnutls=/opt/csw
+CONFIGURE_ARGS += --with-fping-command=/opt/csw/sbin/fping
 CONFIGURE_ARGS += --with-trusted-path=/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin:$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -A inet6 -s %s 56 %d"
 CONFIGURE_ARGS += --with-snmpget-command=/opt/csw/bin/snmpget
