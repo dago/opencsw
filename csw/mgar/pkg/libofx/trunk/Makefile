@@ -36,6 +36,14 @@ include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
+pre-configure-modulated:
+	@echo "executing $@"
+	cd $(WORKSRC) && libtoolize
+	cd $(WORKSRC) && aclocal
+	cd $(WORKSRC) && automake -a
+	cd $(WORKSRC) && autoconf
+	$(MAKECOOKIE)
+
 # this is private and not available publicly
 mydependencies:
 	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
