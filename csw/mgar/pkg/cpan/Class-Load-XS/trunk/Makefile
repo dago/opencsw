@@ -12,9 +12,6 @@ CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-# This is also in CSWperl, but we need a newer version
-BUILD_DEP_PKGS += CSWpm-module-build
-
 BUILD_DEP_PKGS += CSWpm-module-implementation
 BUILD_DEP_PKGS += CSWpm-test-fatal
 BUILD_DEP_PKGS += CSWpm-class-load
