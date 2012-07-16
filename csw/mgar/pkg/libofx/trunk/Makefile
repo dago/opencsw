@@ -34,6 +34,9 @@ BUILD_DEP_PKGS	+=	CSWlibgnugetopt-dev
 # this is needed, at least, on unstable9s
 EXTRA_LINKER_FLAGS	=	-lgnugetopt
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 PACKAGES							+=	CSWlibofx-doc
 CATALOGNAME_CSWlibofx-doc			=	libofx_doc
 SPKG_DESC_CSWlibofx-doc				=	$(DESCRIPTION), documentation
