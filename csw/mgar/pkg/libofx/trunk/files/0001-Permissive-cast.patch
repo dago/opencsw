@@ -1,0 +1,25 @@
+From 5855a21e84c384205fa65aadbc203f85b399aee4 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 16 Jul 2012 10:17:35 +0200
+Subject: [PATCH] Permissive cast
+
+---
+ lib/ofx_preproc.cpp |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/ofx_preproc.cpp b/lib/ofx_preproc.cpp
+index ece191c..1a3dc89 100644
+--- a/lib/ofx_preproc.cpp
++++ b/lib/ofx_preproc.cpp
+@@ -238,7 +238,7 @@ int ofx_proc_file(LibofxContextPtr ctx, const char * p_filename)
+ #endif
+           char * outchar = iconv_buffer;
+           int iconv_retval = iconv (conversion_descriptor,
+-                                    &inchar, &inbytesleft,
++                                    (const char**)&inchar, &inbytesleft,
+                                     &outchar, &outbytesleft);
+           if (iconv_retval == -1)
+           {
+-- 
+1.7.10.3
+
