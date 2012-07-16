@@ -6,20 +6,18 @@ AUTHOR = INGY
 
 DESCRIPTION = Spiffy Perl Interface Framework For You
 define BLURB
-  "Spiffy" is a framework and methodology for doing object oriented (OO)
-  programming in Perl. Spiffy combines the best parts of Exporter.pm, base.pm,
-  mixin.pm and SUPER.pm into one magic foundation class. It attempts to fix
-  all the nits and warts of traditional Perl OO, in a clean, straightforward
-  and (perhaps someday) standard way.
 endef
 
-PACKAGES = CSWpmspiffy
-CATALOGNAME = pm_spiffy
+CATALOG_RELEASE = unstable
 
-# Add required module due to bug report:
-#   http://www.opencsw.org/mantis/view.php?id=2711
-RUNTIME_DEP_PKGS = CSWpmyaml
+LICENSE_TEXT = This module is licensed under the perl license
 
-ARCHALL = 1
+PACKAGES += CSWpm-spiffy
+CATALOGNAME_CSWpm-spiffy = pm_spiffy
+SPKG_DESC_CSWpm-spiffy = Spiffy Perl Interface Framework For You
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-spiffy = 1
+OBSOLETED_BY_CSWpm-spiffy += CSWpmspiffy
+CATALOGNAME_CSWpmspiffy = pm_spiffy_stub
 
 include gar/category.mk
