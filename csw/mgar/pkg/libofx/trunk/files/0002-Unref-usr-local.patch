@@ -1,0 +1,25 @@
+From c980079c2cb61f4bcd58307b41089993225b7401 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 16 Jul 2012 14:00:43 +0200
+Subject: [PATCH] Unref usr local
+
+---
+ lib/ofx_preproc.cpp |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/ofx_preproc.cpp b/lib/ofx_preproc.cpp
+index 1a3dc89..0498a8a 100644
+--- a/lib/ofx_preproc.cpp
++++ b/lib/ofx_preproc.cpp
+@@ -68,7 +68,7 @@ const char *DTD_SEARCH_PATH[DTD_SEARCH_PATH_NUM] =
+ #ifdef MAKEFILE_DTD_PATH
+   MAKEFILE_DTD_PATH ,
+ #endif
+-  "/usr/local/share/libofx/dtd",
++  "/opt/csw/share/libofx/dtd",
+   "/usr/share/libofx/dtd",
+   "~"
+ };
+-- 
+1.7.10.3
+
