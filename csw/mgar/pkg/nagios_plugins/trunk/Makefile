@@ -1,11 +1,21 @@
 # $Id$
 #
-NAME = nagios-plugins
-VERSION = 1.4.16
-CATEGORIES = apps
-GARTYPE = v2
+NAME 		= nagios-plugins
+VERSION 	= 1.4.16
+CATEGORIES 	= apps
+GARTYPE 	= v2
 
-SPKG_DESC_CSWnagios-plugins = Plugins for nagios
+#
+# package definitions
+#
+
+PACKAGES 			= CSWnagios-plugins
+CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
+
+OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
+CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
+
+SPKG_DESC_CSWnagios-plugins = Plugins for Nagios
 define BLURB
    Plugins for Nagios
 endef
@@ -15,13 +25,6 @@ MASTER_SITES 	 = $(SF_MIRRORS)
 DISTFILES  	 = $(NAME)-$(VERSION).tar.gz
 DISTFILES	+= README.CSW
 
-PACKAGES 			= CSWnagios-plugins
-CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
-
-OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
-CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
-
-#PATCHFILES 	+= 0004-Use-32-bit-pst3-on-Solaris.patch
 PATCHFILES	+= 0002-Use-32-bit-pst3-on-Solaris.patch
 
 REINPLACE_USRLOCAL += contrib/*
