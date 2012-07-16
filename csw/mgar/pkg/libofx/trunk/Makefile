@@ -30,6 +30,8 @@ BUILD_DEP_PKGS	+=	CSWhelp2man
 BUILD_DEP_PKGS	+=	CSWgawk
 BUILD_DEP_PKGS	+=	CSWlibgnugetopt-dev
 
+EXTRA_LINKER_FLAGS	=	-lgnugetopt
+
 RUNTIME_DEP_PKGS	+=	CSWlibosp5
 
 include gar/category.mk
