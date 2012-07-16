@@ -1,22 +1,22 @@
 NAME = YAML
-VERSION = 0.72
+VERSION = 0.84
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = ADAMK
+AUTHOR = MSTROUT
 
-DESCRIPTION = YAML Aint Markup Language
+DESCRIPTION = YAML Ain't Markup Language (tm)
 define BLURB
-  The YAML.pm module implements a YAML Loader and Dumper based on the YAML 1.0
-  specification. YAML is a generic data serialization language that is
-  optimized for human readability. It can be used to express the data
-  structures of most modern programming languages. (Including Perl!!!)
 endef
 
-PACKAGES = CSWpmyaml
-CATALOGNAME = pm_yaml
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-yaml
+CATALOGNAME_CSWpm-yaml = pm_yaml
+SPKG_DESC_CSWpm-yaml = YAML Ain't Markup Language (tm)
+ARCHALL_CSWpm-yaml = 1
+OBSOLETED_BY_CSWpm-yaml += CSWpmyaml
+CATALOGNAME_CSWpmyaml = pm_yaml_stub
 
 include gar/category.mk
