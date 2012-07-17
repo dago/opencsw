@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.23
+VERSION = 1.24
 CATEGORIES = utils
 GARTYPE = v2
 
