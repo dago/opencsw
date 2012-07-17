@@ -1,9 +1,9 @@
 NAME = mod_perl
-DISTVERSION = 2.0.4
+DISTVERSION = 2.0.7
 VERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = GOZER
+AUTHOR = PHRED
 
 DESCRIPTION = Persistent Perl interpreter for Apache 2.x
 define BLURB
@@ -25,12 +25,35 @@ endef
 #          _default_ vhost, causing a lookup of 255.255.255.255.
 #
 
-PACKAGES = CSWap2modperl
-CATALOGNAME = ap2_modperl
+# For OpenSSL
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-RUNTIME_DEP_PKGS += CSWapache2rt CSWexpat CSWiconv
-RUNTIME_DEP_PKGS += CSWbdb47 CSWoldaprt
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+PACKAGES = CSWap2modperl
+# Keep the standard name for now
+CATALOGNAME = ap2_modperl
+CHECKPKG_OVERRIDES_CSWap2modperl += catalogname-does-not-match-pkgname|pkgname=CSWap2modperl|catalogname=ap2_modperl|expected-catalogname=ap2modperl
+SPKG_DESC_CSWap2modperl = Persistent Perl interpreter for Apache 2.x
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWapache2
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWap2modperl += CSWlibldap2-4-2
+
+# These are only examples
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Apache2::Directive.3perl
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Apache2::Status.3perl
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/ModPerl::RegistryLoader.3perl
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Apache::TestMB.3perl
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/Apache/TestMB.pm
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/Apache/TestBuild.pm
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/Apache2/Directive.pm
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/Apache2/Status.pm
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/Apache2/Build.pm
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/ModPerl/RegistryLoader.pm
+CHECKPKG_OVERRIDES_CSWap2modperl += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/ModPerl/CScan.pm
+
 
 CONFIGURE_ARGS  = MP_APXS=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += MP_PROMPT_DEFAULT=1
@@ -48,8 +71,11 @@ LICENSE = LICENSE
 
 include gar/category.mk
 
-LDFLAGS += -L$(prefix)/bdb44/lib
-LD_OPTIONS += -R$(prefix)/bdb44/lib
+#LDFLAGS += -L$(prefix)/bdb48/lib
+#LD_OPTIONS += -R$(prefix)/bdb44/lib
+
+# EXTRA_LIB += $(prefix)/bdb48/lib
+# EXTRA_INC += $(prefix)/bdb48/include
 
 install-custom:
 	( cd $(WORKSRC) ; $(INSTALL_ENV) make install DESTDIR=$(DESTDIR) )

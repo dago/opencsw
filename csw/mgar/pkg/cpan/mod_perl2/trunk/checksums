@@ -1,9 +1,1 @@
-9fe7c7577cb7b74a12de72ec2da7ed25  CSWap2modperl.depend
-852f7237f8e589f3431cda92df6a8d7d  CSWap2modperl.gspec
-bce39a803cbcc9ab82458cef8d57b650  CSWap2modperl.postinstall
-b266995026ff19ad4366b4518e648006  CSWap2modperl.preremove
-7c728dbb1990e4029ce791182f55f9b0  CSWap2modperl.prototype
-0dd379f20ceb32fc77bb3a9bf045097f  CSWap2modperl.space
-74414e7cba18ec2c10d3bf262f3d661b  httpd-perl.conf.CSW
-1a05625ae6843085f985f5da8214502a  mod_perl-2.0.4.tar.gz
-4aa0fc5876b33fa32ff8a18a7c70a82a  startup.pl.CSW
+e8b3d7b6d67505a8e3050cb9042b944b  mod_perl-2.0.7.tar.gz
