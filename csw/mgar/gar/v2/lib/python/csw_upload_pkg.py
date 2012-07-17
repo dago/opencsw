@@ -54,15 +54,6 @@ modifies a number of package catalogs, a cartesian product of:
 
 This amounts to 3x2x4 = 24 package catalogs total.
 
-= Removing packages from the catalog =
-
-The --remove option works the same way as the regular use, except that it
-removes assignments of a given package to catalogs, instead of adding them.
-
-When removing packages from catalogs, files on disk are passed as arguments.
-On the buildfarm, all files are available under the /home/mirror/opencsw
-directory.
-
 For more information, see:
 http://wiki.opencsw.org/automated-release-process#toc0
 """
@@ -180,7 +171,7 @@ class Srv4Uploader(object):
         planned_modifications.append(
             (filename, md5_sum,
              arch, osrel, cat_arch, cat_osrel))
-    # The plan: 
+    # The plan:
     # - Create groups of files to be inserted into each of the catalogs
     # - Invoke checkpkg to check every target catalog
     checkpkg_sets = self._CheckpkgSets(planned_modifications)
@@ -192,66 +183,6 @@ class Srv4Uploader(object):
         for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
           file_metadata = metadata_by_md5[md5_sum]
           self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
-
-  def Remove(self):
-    for filename in self.filenames:
-      self._RemoveFile(filename)
-
-  def _RemoveFile(self, filename):
-    md5_sum = self._GetFileMd5sum(filename)
-    file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
-    if not file_metadata:
-      logging.warning("Could not find metadata for file %s", repr(filename))
-      return
-    osrel = file_metadata['osrel']
-    arch = file_metadata['arch']
-    catalogs = self._MatchSrv4ToCatalogs(
-        filename, DEFAULT_CATREL, arch, osrel, md5_sum)
-    for unused_catrel, cat_arch, cat_osrel in sorted(catalogs):
-      self._RemoveFromCatalog(filename, cat_arch, cat_osrel, file_metadata)
-
-  def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
-    print("Removing %s (%s %s) from catalog %s %s %s"
-          % (file_metadata["catalogname"],
-             file_metadata["arch"],
-             file_metadata["osrel"],
-             DEFAULT_CATREL, arch, osrel))
-    md5_sum = self._GetFileMd5sum(filename)
-    basename = os.path.basename(filename)
-    parsed_basename = opencsw.ParsePackageFileName(basename)
-    # TODO: Move this bit to a separate class (RestClient)
-    url = (
-        "%s%s/catalogs/%s/%s/%s/%s/"
-        % (self.rest_url,
-           RELEASES_APP,
-           DEFAULT_CATREL,
-           arch,
-           osrel,
-           md5_sum))
-    logging.debug("DELETE @ URL: %s %s", type(url), url)
-    c = pycurl.Curl()
-    d = StringIO()
-    h = StringIO()
-    c.setopt(pycurl.URL, str(url))
-    c.setopt(pycurl.CUSTOMREQUEST, "DELETE")
-    c.setopt(pycurl.WRITEFUNCTION, d.write)
-    c.setopt(pycurl.HEADERFUNCTION, h.write)
-    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
-    c = self._SetAuth(c)
-    if self.debug:
-      c.setopt(c.VERBOSE, 1)
-    c.perform()
-    http_code = c.getinfo(pycurl.HTTP_CODE)
-    logging.debug(
-        "DELETE curl getinfo: %s %s %s",
-        type(http_code),
-        http_code,
-        c.getinfo(pycurl.EFFECTIVE_URL))
-    c.close()
-    if not (http_code >= 200 and http_code <= 299):
-      raise RestCommunicationError(
-          "%s - HTTP code: %s, content: %s"
-          % (url, http_code, d.getvalue()))
 
   def _GetFileMd5sum(self, filename):
     if filename not in self.md5_by_filename:
@@ -558,10 +489,6 @@ if __name__ == '__main__':
   parser.add_option("-d", "--debug",
       dest="debug",
       default=False, action="store_true")
-  parser.add_option("--remove",
-      dest="remove",
-      default=False, action="store_true",
-      help="Remove packages from catalogs instead of adding them")
   parser.add_option("--os-release",
       dest="os_release",
       help="If specified, only uploads to the specified OS release.")
@@ -618,7 +545,4 @@ if __name__ == '__main__':
                           debug=options.debug,
                           username=username,
                           password=password)
-  if options.remove:
-    uploader.Remove()
-  else:
-    uploader.Upload()
+  uploader.Upload()
