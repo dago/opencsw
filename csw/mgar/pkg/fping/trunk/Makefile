@@ -1,10 +1,20 @@
-NAME = fping
-VERSION = 2.4
-REV = b2_to
-CATEGORIES = utils
-GARTYPE = v2
+NAME 		= fping
+VERSION 	= 3.2
+CATEGORIES 	= utils
+GARTYPE 	= v2
 
-DESCRIPTION = A ping like program accepting any number of hosts
+#
+# package definitions
+#
+
+PACKAGES		= CSWfping
+SPKG_DESC_CSWfping	= A ping like program accepting any number of hosts
+CATALOGNAME_CSWfping	= fping
+
+#
+# blurb
+#
+
 define BLURB
   fping is a ping(1) like program which uses the Internet Control
   Message Protocol (ICMP) echo request to determine if a host is up.
@@ -18,29 +28,32 @@ define BLURB
   unreachable.
 endef
 
-MASTER_SITES = http://fping.sourceforge.net/download/
-MASTER_SITES += http://oss.oetiker.ch/smokeping/pub/
-DISTFILES  = $(NAME).tar.gz
-#PATCHFILES = fping-2.4b2_to-sequence-fix.patch
-PATCHFILES += fping-ipv6.patch
+#
+# download, distfiles, patchfiles
+#
+
+MASTER_SITES	= http://fping.org/dist/
+DISTFILES	= $(NAME)-$(VERSION).tar.gz
+VENDOR_URL	= http://fping.org/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-#UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-#UPSTREAM_MASTER_SITES = http://fping.sourceforge.net/
+#
+# reinplacements
+#
 
-SPKG_SOURCEURL = http://fping.sourceforge.net/
+REINPLACE_USRLOCAL	+= doc/fping*
 
-WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
+#
+# configure
+#
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+#
+# nothing to be done here for installation and packaging
+#
+
 include gar/category.mk
-
-SPKG_VERSION := $(SPKG_VERSION)_rev=$(REV)
-
-
-
 
