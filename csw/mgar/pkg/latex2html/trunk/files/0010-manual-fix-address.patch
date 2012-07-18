@@ -1,0 +1,26 @@
+From 90d20a630cebe125ed55fbb6fe3ca4e1962e7611 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 15:11:39 +0200
+Subject: [PATCH] manual fix address 10 of Debian series 7
+
+---
+ docs/manual.tex |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/docs/manual.tex b/docs/manual.tex
+index 5207fdc..7850c7c 100644
+--- a/docs/manual.tex
++++ b/docs/manual.tex
+@@ -168,8 +168,7 @@
+ %
+ \Glossary{latex2html}{\LaTeX2HTML}{}
+ \title{The \LaTeX2HTML{} Translator}
+-\author{Nikos Drakos}
+-\address{Computer Based Learning Unit\\University of Leeds.}
++\author{Nikos Drakos\\Computer Based Learning\\Unit University of Leeds}
+ \date{\today}
+ \index{Computer~Based~Learning~Unit!University of Leeds}%
+ \maketitle 
+-- 
+1.7.10.3
+

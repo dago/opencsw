@@ -1,0 +1,31 @@
+From 77735611cdb772c8ed6fcb836e238c5cd091fa7f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 16:03:15 +0200
+Subject: [PATCH] Fix pdfoutput 15 of Debian series 7
+
+This patch fixes pdf output in latex2html.
+Author: Giuseppe Ghibo  <ghibo@mandrakesoft.com>
+---
+ texinputs/html.sty |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/texinputs/html.sty b/texinputs/html.sty
+index 2f4c413..1b791a5 100644
+--- a/texinputs/html.sty
++++ b/texinputs/html.sty
+@@ -36,7 +36,11 @@
+   \ifx\pdfoutput\relax \let\pdfunknown\relax
+    \RequirePackage{hyperref}\let\html@new=\renewcommand
+   \else
+-   \RequirePackage{hyperref}\let\html@new=\newcommand
++  \ifcase\pdfoutput
++   \let\pdfunknown\relax    \let\html@new=\newcommand
++  \else
++    \RequirePackage[pdftex]{hyperref}\let\html@new=\newcommand
++  \fi
+   \fi
+  \fi
+ \else
+-- 
+1.7.10.3
+

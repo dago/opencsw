@@ -1,0 +1,61 @@
+From 2f8c774becbf4ad792f4e3291f139abe762d58ea Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 08:53:35 +0200
+Subject: [PATCH] Documentation private 1 and 3
+
+---
+ Makefile.in   |   13 +++++++++++++
+ docs/Makefile |    6 +++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index ca2ed5f..64a7ce0 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -63,6 +63,19 @@ all: ${SCRIPTS} ${MODULES}
+ devel:
+ 	${MAKE} all BUILDOPT=-devel
+ 
++documentation:	\
++				docPS \
++				docHTML
++
++docPS:
++	cd docs; \
++	TEXINPUTS=$(srcdir)/texinputs: LATEX2HTMLDIR=$(srcdir) $(MAKE) -f Makefile manual.ps
++
++docHTML:
++	cd docs; \
++	TEXINPUTS=$(srcdir)/texinputs: PATH=$(srcdir):${PATH} LATEX2HTMLDIR=$(srcdir) $(MAKE) -f Makefile manual.html
++
++
+ # .SUFFIXES:
+ 
+ pstoimg:  ${cfgfile} ${srcdir}/${buildcmd} pstoimg.pin ${wrappers}
+diff --git a/docs/Makefile b/docs/Makefile
+index 53f9969..1223a89 100644
+--- a/docs/Makefile
++++ b/docs/Makefile
+@@ -140,16 +140,16 @@ manual.aux manual.cb: \
+ 	    manual.tex credits.tex licence.tex overview.tex \
+ 	    support.tex userman.tex hypextra.tex features.tex \
+ 	    problems.tex l2hfiles.dat  manhtml.tex l2hman.sty
+-	$(LATEX) manual.tex
++	$(LATEX) '\nonstopmode\input{manual.tex}'
+ 
+ manual.glo manual.idx: \
+ 	    manual.tex credits.tex licence.tex overview.tex \
+ 	    support.tex userman.tex hypextra.tex features.tex \
+ 	    problems.tex l2hfiles.dat  manhtml.tex l2hman.sty
+-	$(LATEX) manual.tex
++	$(LATEX) '\nonstopmode\input{manual.tex}'
+ 
+ manual.dvi:     manual.aux manual.ind manual.gls
+-	$(LATEX) manual.tex
++	$(LATEX) '\nonstopmode\input{manual.tex}'
+ 
+ manual.ind:     manual.idx
+ 	$(MAKEINDEX) -s l2hidx.ist manual.idx
+-- 
+1.7.10.3
+

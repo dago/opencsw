@@ -1,0 +1,23 @@
+From 7ce182625be24a2fb3339dbe9a8660d4be1fe590 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 15:00:44 +0200
+Subject: [PATCH] Fixes bad perl in l2hconf.pin 7 of Debian series 7
+
+This patch removes the first line "#!/perl" from l2hconf.pin
+Author: Roland Stigge <stigge@antcom.de>
+---
+ l2hconf.pin |    1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/l2hconf.pin b/l2hconf.pin
+index 24c6a4e..66b4286 100644
+--- a/l2hconf.pin
++++ b/l2hconf.pin
+@@ -1,4 +1,3 @@
+-#!/perl
+ # LaTeX2HTML l2hconf.pm
+ # $Id: l2hconf.pin,v 1.17 2002/06/15 22:46:36 RRM Exp $
+ 
+-- 
+1.7.10.3
+

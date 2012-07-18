@@ -1,0 +1,24 @@
+From a4fe8f4a067e1c79c193cafbeafce48a30c34c79 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 09:22:50 +0200
+Subject: [PATCH] TeXExpand private 7
+
+---
+ latex2html.pin |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/latex2html.pin b/latex2html.pin
+index d670c0d..4387813 100644
+--- a/latex2html.pin
++++ b/latex2html.pin
+@@ -828,6 +828,7 @@ sub driver {
+ # does DOS need to check these here ?
+ #	die "File $TEXEXPAND does not exist or is not executable\n"
+ #	    unless (-x $TEXEXPAND);
++	$TEXINPUTS = $ENV{'TEXINPUTS'};
+ 	L2hos->syswait("$TEXEXPAND $dbg -auto_exclude $unseg"
+ 		 . "-save_styles \"$DESTDIR$dd$TMP_${dd}styles\" "
+ 		 . ($TEXINPUTS ? "-texinputs \"$TEXINPUTS\" " : '' )
+-- 
+1.7.10.3
+
