@@ -1,0 +1,27 @@
+From a68c3f881db4c17e4c7649371a9ade9240a3186f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 15:41:50 +0200
+Subject: [PATCH] Fix images types 12 of Debian series 7
+
+By default, IMAGE_TYPES is empty. This patch sets the Debian default
+ to "png gif".
+Author: Roland Stigge <stigge@antcom.de>
+---
+ docs/.latex2html-init |    2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/docs/.latex2html-init b/docs/.latex2html-init
+index d5910d2..f90ccf1 100644
+--- a/docs/.latex2html-init
++++ b/docs/.latex2html-init
+@@ -6,5 +6,7 @@ $CONTENTS_WIDTH  = 250;
+ $HTML_VALIDATE = '';
+ $LOCAL_ICONS = 1;
+ 
++@IMAGE_TYPES = qw(png gif);
++$IMAGE_TYPE  = $IMAGE_TYPES[0];
+ 
+ 1;
+-- 
+1.7.10.3
+

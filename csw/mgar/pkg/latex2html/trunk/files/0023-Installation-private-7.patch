@@ -1,0 +1,38 @@
+From 265b8dba7f7ec8b9199a1b24e552423969eebc5b Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 09:16:25 +0200
+Subject: [PATCH] Installation private 7
+
+---
+ config/install.pl |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/config/install.pl b/config/install.pl
+index 86b91d3..a491cea 100755
+--- a/config/install.pl
++++ b/config/install.pl
+@@ -372,14 +372,19 @@ foreach $item (sort keys %Install_items) {
+ 
+ if($cfg{TEXPATH}) {
+   print "\nNote: trying to install LaTeX2HTML style files in TeX directory tree\n     ($cfg{TEXPATH})\n";
+-  unless(mkpath($cfg{TEXPATH})) {
++
++    my $dest = $cfg{TEXPATH};
++
++	# prepend the value of DESTDIR, for package-managers
++	$dest = $ENV{'DESTDIR'}.$dest if($ENV{'DESTDIR'});
++
++  unless(mkpath($dest)) {
+   #my $testpath = $cfg{TEXPATH}; # to strip (latex2)html
+   #$testpath =~ s/[$dd$dd][^$dd$dd]*$//;
+   #if((-d $cfg{TEXPATH} && !-w _) || (-d $testpath && !-w _)) {
+     print STDERR "\nError: Cannot install LaTeX2HTML style files in $cfg{TEXPATH}\n";
+   } else {
+     my $dir = 'texinputs';
+-    my $dest = $cfg{TEXPATH};
+     unless(opendir(DIR,$dir)) {
+       print STDERR qq{Error: Could not read directory "$dir": $!\n};
+     } else {
+-- 
+1.7.10.3
+

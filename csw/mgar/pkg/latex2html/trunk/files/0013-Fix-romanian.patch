@@ -1,0 +1,65 @@
+From 9e718a74fbe0fb6d0ebc7ffb5d99ea337f0a9bcd Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 15:49:01 +0200
+Subject: [PATCH] Fix romanian 13 of Debian series 7
+
+This patch fixes several issues in the Romanian version of latex2html.
+Author: Roland Stigge <stigge@antcom.de>
+---
+ styles/romanian.perl |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/styles/romanian.perl b/styles/romanian.perl
+index 28ed5bf..e9ed702 100644
+--- a/styles/romanian.perl
++++ b/styles/romanian.perl
+@@ -16,23 +16,23 @@ package main;
+ 
+ if (defined &addto_languages) { &addto_languages('romanian') };
+ 
+-&do_require_extension ('latin2');
++&do_require_extension ('latin10');
+ 
+ sub romanian_titles {
+     $toc_title = "Cuprins";
+-    $lof_title = "List&auml; de figuri";
+-    $lot_title = "List&auml; de tabele";
++    $lof_title = "List&#103; de figuri";
++    $lot_title = "List&#103; de tabele";
+     $idx_title = "Glosar";
+     $ref_title = "Bibliografie";
+     $bib_title = "Bibliografie";
+     $abs_title = "Rezumat";
+     $app_title = "Anexa";
+-    $pre_title = "Prefa&tcedil;&auml;";
++    $pre_title = "Prefa&#21B;&#103;";
+ ##    $foot_title = "";
+ ##    $thm_title = "";
+     $fig_name = "Figura";
+     $tab_name = "Tabela";
+-    $prf_name = "Demonstra&tcedil;ie";
++    $prf_name = "Demonstra&#21B;ie";
+     $page_name = "Pagina";
+   #  Sectioning-level titles
+     $part_name = "Partea";
+@@ -52,7 +52,7 @@ sub romanian_titles {
+ ##    $prev_name = "";
+ ##    $group_name = "";
+   #  mail fields
+-    $encl_name = "Anex&auml;";
++    $encl_name = "Anex&#103;";
+     $headto_name = "Pentru";
+     $cc_name = "Copie";
+ 
+@@ -75,7 +75,7 @@ sub romanian_today {
+ &romanian_titles;
+ $default_language = 'romanian';
+ $TITLES_LANGUAGE = 'romanian';
+-$romanian_encoding = 'iso-8859-2';
++$romanian_encoding = 'is-8859-16';
+ 
+ # $Log: romanian.perl,v $
+ # Revision 1.1  1998/08/25 01:59:07  RRM
+-- 
+1.7.10.3
+

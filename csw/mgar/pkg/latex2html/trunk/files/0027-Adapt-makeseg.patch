@@ -1,0 +1,51 @@
+From aad270b2c706ee272824b1a76606221d9d4e4474 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 14:56:25 +0200
+Subject: [PATCH] Adapt makeseg
+
+Inspired by debian-install.patch
+---
+ makeseg/makeseg |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/makeseg/makeseg b/makeseg/makeseg
+index 76907f4..c1c5116 100755
+--- a/makeseg/makeseg
++++ b/makeseg/makeseg
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl  
++#! /usr/bin/env perl
+ 
+ # Check options and load configuration files
+ &init;
+@@ -17,23 +17,23 @@
+ # config file settings therefore override anything set here
+ 
+ # Location to look for L2H-supported LaTeX styles
+-$LATEX2HTMLSTYLES="/usr/local/lib/texmf/latex2html/styles" 
++$LATEX2HTMLSTYLES="/opt/csw/share/lib/latex2html/styles"
+     unless $LATEX2HTMLSTYLES;
+ 
+ # Location for TeX style files etc.
+ # $TEXINPUTS is read from the environment if not explicitly supplied
+ $TEXINPUTS=$ENV{'TEXINPUTS'} unless $TEXINPUTS;
+-$TEXINPUTS=".:/usr/local/lib/texmf/tex//" unless $TEXINPUTS;
++$TEXINPUTS=".:/opt/csw/share/texmf-local/tex//" unless $TEXINPUTS;
+ 
+ # Location for BibTeX Bibliography databases
+ # $BIBINPUTS is read from the environment if not explicitly supplied
+ $BIBINPUTS=$ENV{'BIBINPUTS'} unless $BIBINPUTS;
+-$BIBINPUTS=".:/usr/local/lib/texmf/bibtex/bib/" unless $BIBINPUTS;
++$BIBINPUTS=".:/opt/csw/share/texmf-local/bibtex/bib/" unless $BIBINPUTS;
+ 
+ # Location for BibTeX Bibliography styles (in addition to $TEXINPUTS)
+ # $BSTINPUTS is read from the environment if not explicitly supplied
+ $BSTINPUTS=$ENV{'BSTINPUTS'} unless $BSTINPUTS;
+-$BSTINPUTS="/usr/local/lib/texmf/bibtex/bst/" unless $BSTINPUTS;
++$BSTINPUTS="/opt/csw/share/texmf-local/bibtex/bst/" unless $BSTINPUTS;
+ 
+ # The lowest sectioning command at which to create segments
+ # corresponds to -l option
+-- 
+1.7.10.3
+

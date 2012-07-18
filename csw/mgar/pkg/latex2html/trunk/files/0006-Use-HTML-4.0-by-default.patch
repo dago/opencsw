@@ -1,0 +1,27 @@
+From 37c9a54b8456795e163786949f01975a9328cadf Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 14:58:16 +0200
+Subject: [PATCH] Use HTML 4.0 by default 6 of Debian series 7
+
+This patch sets HTML 4.0 by default.
+Author: Adrian Bunk <bunk@fs.tum.de>
+---
+ l2hconf.pin |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/l2hconf.pin b/l2hconf.pin
+index 4bfd5eb..24c6a4e 100644
+--- a/l2hconf.pin
++++ b/l2hconf.pin
+@@ -590,7 +590,7 @@ $DEBUG = 0;
+ # -html_version
+ # The default HTML version to be produced
+ #
+-$HTML_VERSION = '3.2';
++$HTML_VERSION = '4.0';
+ 
+ 
+ # -no_math
+-- 
+1.7.10.3
+

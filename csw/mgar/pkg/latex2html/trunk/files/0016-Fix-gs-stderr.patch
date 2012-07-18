@@ -1,0 +1,30 @@
+From aa765f31edac52a6425192a8f2f6c70999e1e403 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 16:10:35 +0200
+Subject: [PATCH] Fix gs stderr
+
+16 of Debian series 7
+
+This patch fixes the gs version detection in the latex2html perl configuration
+ since gs outputs "gs -h" to stderr.
+Author: Giuseppe Ghibo <ghibo@mandrakesoft.com>
+---
+ config/config.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config/config.pl b/config/config.pl
+index a50b56b..1b243d7 100755
+--- a/config/config.pl
++++ b/config/config.pl
+@@ -1043,7 +1043,7 @@ if($opt{'have_pstoimg'}) {
+     my $gs_version;
+ 
+     my $flag = 0;
+-    unless(open(GS,"$gs -h |")) {
++    unless(open(GS,"$gs -h 2>&1|")) {
+       $opt{'have_pstoimg'} = 0;
+       logit("Error: could not execute $gs\n");
+       &warn_no_images();
+-- 
+1.7.10.3
+

@@ -1,0 +1,34 @@
+From 955dd8b06dc0a6d363f5a051916e736dc802786f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 16:22:10 +0200
+Subject: [PATCH] Fix spaces in filenames
+
+This patch adds support for spaces in filenames
+Author: Mazen NEIFER <mazen.neifer@wanadoo.fr>
+---
+ latex2html.pin |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/latex2html.pin b/latex2html.pin
+index f89b5bb..6622723 100644
+--- a/latex2html.pin
++++ b/latex2html.pin
+@@ -829,11 +829,11 @@ sub driver {
+ #	die "File $TEXEXPAND does not exist or is not executable\n"
+ #	    unless (-x $TEXEXPAND);
+ 	L2hos->syswait("$TEXEXPAND $dbg -auto_exclude $unseg"
+-		 . "-save_styles $DESTDIR$dd$TMP_${dd}styles "
+-		 . ($TEXINPUTS ? "-texinputs $TEXINPUTS " : '' )
++		 . "-save_styles \"$DESTDIR$dd$TMP_${dd}styles\" "
++		 . ($TEXINPUTS ? "-texinputs \"$TEXINPUTS\" " : '' )
+ 		 . (($VERBOSITY >2) ? "-verbose " : '' )
+-		 . "-out $DESTDIR$dd$TMP_$dd$FILE "
+-		 . "$texfilepath$dd$FILE.$EXT")
++		 . "-out \"$DESTDIR$dd$TMP_$dd$FILE\" "
++		 . "\"$texfilepath$dd$FILE.$EXT\"")
+ 	    && die " texexpand  failed: $!\n";
+ 	print STDOUT "\n ***  `texexpand' done ***\n" if ($VERBOSITY > 1);
+ 
+-- 
+1.7.10.3
+

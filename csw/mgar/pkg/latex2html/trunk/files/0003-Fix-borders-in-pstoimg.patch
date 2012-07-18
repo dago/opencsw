@@ -1,0 +1,31 @@
+From 80ffac4475d1474c34203ddb165bd1049222fb86 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 14:49:33 +0200
+Subject: [PATCH] Fix borders in pstoimg 3 of Debian series 7
+
+This patch fixes the borders of images in pstoimg.
+The origin of this patch is actually unknown. Feel free to tell me and I'll
+include it.
+---
+ pstoimg.pin |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pstoimg.pin b/pstoimg.pin
+index 876f6cd..c8bc47e 100755
+--- a/pstoimg.pin
++++ b/pstoimg.pin
+@@ -1289,9 +1289,9 @@ sub crop_scale_etc {
+     my $edge = $1;
+     my $croparg = '';
+     if($edge =~ /b/i) {
+-      $croparg = "-bot $PNMCROPOPT ";
++      $croparg = "-bot -sides $PNMCROPOPT ";
+     } elsif($edge =~ /[tlr]/i) {
+-      $croparg = "-$edge $PNMCROPOPT ";
++      $croparg = "-$edge -sides $PNMCROPOPT ";
+     } elsif($edge =~ /s/i) {
+       #RRM: shave at most 1-2 rows of white from the bottom
+ #if @pipes@
+-- 
+1.7.10.3
+

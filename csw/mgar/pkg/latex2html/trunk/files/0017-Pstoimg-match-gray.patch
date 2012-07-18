@@ -1,0 +1,28 @@
+From abf2d2b9f608bd2ac9abccd4d58c349dbb43e1f2 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 16:17:20 +0200
+Subject: [PATCH] Pstoimg match gray
+
+This patch fixes gray background detection on dvips via a regexp adjustment in
+pstoimg.pin
+Author: Diab Jerius <djerius@cfa.harvard.edu>
+---
+ pstoimg.pin |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pstoimg.pin b/pstoimg.pin
+index b9e5014..b199f51 100755
+--- a/pstoimg.pin
++++ b/pstoimg.pin
+@@ -1137,7 +1137,7 @@ sub ps2pnm {
+       }
+     my $had_nonwhite;
+     if($opt{white}) {
+-      $had_nonwhite = ($ps =~ s/(\n\d+ \d+ bop gsave) \d*\.\d+ (TeXcolorgray clippath fill grestore)/$1 1 $2/s);
++		$had_nonwhite = ($ps =~ s/(\d+ \d+ bop gsave) \d*\.\d+ (TeXcolorgray clippath fill grestore)/$1 1 $2/s);
+       }
+     $ps_changed = $had_papersize || $had_nonwhite;
+     if($ps_changed) {
+-- 
+1.7.10.3
+

@@ -1,0 +1,28 @@
+From ebfa4336a339a13b37386dcced37ee3b1c9914a1 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 09:00:21 +0200
+Subject: [PATCH] Run-time style private 2
+
+---
+ l2hconf.pin |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/l2hconf.pin b/l2hconf.pin
+index 66b4286..41fe807 100644
+--- a/l2hconf.pin
++++ b/l2hconf.pin
+@@ -225,7 +225,10 @@ $PSTOIMG = "$PERL @scriptdir@${dd}pstoimg@scriptext@";
+ 
+ # This is used to "autoload" perl code to deal with specific style files
+ #
+-$LATEX2HTMLSTYLES = "$LATEX2HTMLDIR${dd}styles";
++if($ENV{'LATEX2HTMLSTYLES'}) {
++    $LATEX2HTMLSTYLES = $ENV{'LATEX2HTMLSTYLES'};
++}
++$LATEX2HTMLSTYLES = "$LATEX2HTMLSTYLES${envkey}$LATEX2HTMLDIR${dd}styles";
+ 
+ 
+ # This is used to support upcoming versions of html - directory where perl
+-- 
+1.7.10.3
+

@@ -1,0 +1,45 @@
+From e796cb64140aa16bbabc886c29e847234c05632f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 15:25:50 +0200
+Subject: [PATCH] Call environment defined Perl
+
+Inspired by debian-install.patch
+---
+ cweb2html/cweb2html   |    2 +-
+ cweb2html/makemake.pl |    2 +-
+ makemap               |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/cweb2html/cweb2html b/cweb2html/cweb2html
+index 19984c5..85fe655 100755
+--- a/cweb2html/cweb2html
++++ b/cweb2html/cweb2html
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#! /usr/bin/env perl
+ 
+ ################################################################################
+ # Copyright 1998-1999 by Jens Lippmann (lippmann@rbg.informatik.th-darmstadt.de)
+diff --git a/cweb2html/makemake.pl b/cweb2html/makemake.pl
+index f517b6a..2a6c2a6 100644
+--- a/cweb2html/makemake.pl
++++ b/cweb2html/makemake.pl
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#! /usr/bin/env perl
+ 
+ ################################################################################
+ # Copyright 1998-1999 by Jens Lippmann (lippmann@rbg.informatik.tu-darmstadt.de)
+diff --git a/makemap b/makemap
+index 8a097df..0544ff0 100755
+--- a/makemap
++++ b/makemap
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#! /usr/bin/env perl
+ ###!/usr/local/bin/perl
+ 
+ $dd = '/';  # directory-delimiter
+-- 
+1.7.10.3
+

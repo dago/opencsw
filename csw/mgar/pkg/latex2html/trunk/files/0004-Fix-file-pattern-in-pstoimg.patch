@@ -1,0 +1,28 @@
+From d1a3df3dd7a0d3d33a335caa9f96e6f70b639d91 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 14:52:49 +0200
+Subject: [PATCH] Fix file pattern in pstoimg 4 of Debian series 7
+
+This patch fixes the file pattern in pstoimg to collect the files created by
+ghostscript.
+Author: Holger Ruckdeschel <holger@hoicher.de>
+---
+ pstoimg.pin |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pstoimg.pin b/pstoimg.pin
+index c8bc47e..c5de1a4 100755
+--- a/pstoimg.pin
++++ b/pstoimg.pin
+@@ -1006,7 +1006,7 @@ sub pstoimg {
+       print qq{$prompt: Error: Could not open directory "$pnmdir": $!\n};
+       return 0;
+       }
+-    my @list = grep(/^\d+_\w*\./,readdir(DIR));
++    my @list = grep(/^\d+_${pnmbase}\.pnm/,readdir(DIR));
+     closedir(DIR);
+     if(@list) {
+       my $i;
+-- 
+1.7.10.3
+

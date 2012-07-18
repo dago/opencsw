@@ -1,0 +1,40 @@
+From 752b1d387c044dda5de34e705e227a11cfbc6a5a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 14:13:41 +0200
+Subject: [PATCH] Add url 1 of Debian series 7
+
+---
+ FAQ    |    3 +--
+ README |    2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/FAQ b/FAQ
+index 33040f9..9ab2f59 100644
+--- a/FAQ
++++ b/FAQ
+@@ -630,8 +630,7 @@ change_end 98.1
+      * To join the community of LATEX2HTML users:
+        More information on a mailing list, discussion archives, bug
+        reporting forms and more is available at
+-       http://cbl.leeds.ac.uk/nikos/tex2html/doc/latex2html/latex2html.ht
+-       ml
++       http://mirrors.ctan.org/support/latex2html/
+        
+    2.2 Getting Support and More Information
+ 
+diff --git a/README b/README
+index d2259d3..645393e 100644
+--- a/README
++++ b/README
+@@ -170,7 +170,7 @@ Support and More Information
+ 
+ Announcements, discussion archives, bug reporting forms and
+ more are kept at the LaTeX2HTML home at 
+-http://cbl.leeds.ac.uk/nikos/tex2html/doc/latex2html/latex2html.html.
++http://mirrors.ctan.org/support/latex2html/
+ 
+ *** this site has not been updated since November 1996.
+ Many of the links are still valid, leading to useful information. 
+-- 
+1.7.10.3
+

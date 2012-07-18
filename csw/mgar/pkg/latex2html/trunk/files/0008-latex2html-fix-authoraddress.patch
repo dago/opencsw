@@ -1,0 +1,29 @@
+From b2f92bfc270ceafe807f05dfb9a4381097b97786 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 15:04:30 +0200
+Subject: [PATCH] latex2html fix authoraddress 8 of Debian series 7
+
+Remove Nikos Drakos' address from documentation
+In some early Debian revision already, Nikos Drakos' old web address (_not_
+the name) was removed from the documentation in favour of Ross Moore's one.
+Author: Roland Stigge <stigge@antcom.de>
+---
+ latex2html.pin |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/latex2html.pin b/latex2html.pin
+index 58f1b76..2f56d6b 100644
+--- a/latex2html.pin
++++ b/latex2html.pin
+@@ -14071,7 +14071,7 @@ sub default_textohtmlinfopage {
+ 	, "<A HREF=\"$TEX2HTMLADDRESS\"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A>"
+ 	, " translator Version $TEX2HTMLVERSION\n"
+ 	, "<P>Copyright &#169; 1993, 1994, 1995, 1996,\n"
+-	, "<A HREF=\"$AUTHORADDRESS\">Nikos Drakos</A>, \n"
++	, "Nikos Drakos, \n"
+ 	, "Computer Based Learning Unit, University of Leeds.\n"
+ 	, "<BR>Copyright &#169; 1997, 1998, 1999,\n"
+ 	, "<A HREF=\"$AUTHORADDRESS2\">Ross Moore</A>, \n"
+-- 
+1.7.10.3
+

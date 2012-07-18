@@ -1,0 +1,28 @@
+From 68b587149e2fe0d6f75b1ff7882345b833a25bb9 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 17 Jul 2012 15:52:49 +0200
+Subject: [PATCH] Fix mathend mark 14 of Debian series 7
+
+This patch fixes math.pl to default to empty $mathend_mark to prevent
+mathend000# in documents.
+Author: Arwin Vosselman <arwin@xs4all.nl>
+---
+ versions/math.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/versions/math.pl b/versions/math.pl
+index 6010956..37eadec 100644
+--- a/versions/math.pl
++++ b/versions/math.pl
+@@ -39,7 +39,7 @@ if ($HTML_OPTIONS =~ /math/) {
+ 
+ package main;
+ 
+-$mathend_mark = "\n${verbatim_mark}mathend000#";
++$mathend_mark = "";
+ $keepcomments_rx = "\\s*(picture|makeimage|xy|diagram|mathend)[*]?"
+   unless ($keepcomments_rx =~ /mathend/);
+ 
+-- 
+1.7.10.3
+

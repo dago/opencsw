@@ -1,0 +1,31 @@
+From 369efd6d8bee8ec9897698d9b9f59634e2a0ac31 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 18 Jul 2012 09:47:40 +0200
+Subject: [PATCH] Icons installation private 8
+
+---
+ config/install.pl |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/config/install.pl b/config/install.pl
+index a491cea..6b4728c 100755
+--- a/config/install.pl
++++ b/config/install.pl
+@@ -294,12 +294,12 @@ my @icon_types = $cfg{'IMAGE_TYPES'} ?
+ my $iconrx = join('|', @icon_types);
+ 
+ my $dest1 = "$cfg{'SHLIBDIR'}${dd}icons";
+-if((-d $dest1 && !-w _) || (-d $cfg{'SHLIBDIR'} && !-w _)) {
++if((-d $ENV{'DESTDIR'}.$dest1 && !-w _) || (-d $ENV{'DESTDIR'}.$cfg{'SHLIBDIR'} && !-w _)) {
+   print STDERR "Error: Cannot install icons in '$dest1': No write permission.\n";
+   $dest1 = '';
+ }
+ my $dest2 = $cfg{'ICONSTORAGE'} || '';
+-if(-d $dest2 && !-w $dest2) {
++if(-d $ENV{'DESTDIR'}.$dest2 && !-w $ENV{'DESTDIR'}.$dest2) {
+   print STDERR "Error: Cannot install icons in '$dest2': No write permission.\n";
+   $dest2 = '';
+ }
+-- 
+1.7.10.3
+
