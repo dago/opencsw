@@ -14,5 +14,6 @@ LICENSE_TEXT = This module is licensed under the  license
 
 PACKAGES += CSWpm-text-aspell
 SPKG_DESC_CSWpm-text-aspell = Perl interface to the GNU Aspell library
+RUNTIME_DEP_PKGS_CSWpm-text-aspell += CSWaspell
 
 include gar/category.mk
