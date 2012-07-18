@@ -4,19 +4,19 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ABW
 
-DESCRIPTION = Perl5 module for configuration files and command line arguments.
+DESCRIPTION = Modules for reading configuration files and parsing command line arguments
 define BLURB
-  AppConfig is a Perl5 module for managing application configuration
-  information.  It maintains the state of any number of variables and provides
-  methods for parsing configuration files, command line arguments and CGI
-  script parameters.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmappconfig
-CATALOGNAME = pm_appconfig
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-appconfig
+CATALOGNAME_CSWpm-appconfig = pm_appconfig
+SPKG_DESC_CSWpm-appconfig = Modules for reading configuration files and parsing command line arguments
+ARCHALL_CSWpm-appconfig = 1
+OBSOLETED_BY_CSWpm-appconfig += CSWpmappconfig
+CATALOGNAME_CSWpmappconfig = pm_appconfig_stub
 
 include gar/category.mk
