@@ -31,6 +31,7 @@ PATCHFILES += setup-py.patch
 VENDOR_URL = http://www.net-snmp.org/
 
 BUILD_DEP_PKGS = CSWpysetuptools
+PACKAGING_PLATFORMS += Solaris10-sparc Solaris10-i386
 
 PACKAGES += CSWnetsnmp-dev
 CATALOGNAME_CSWnetsnmp-dev = netsnmp_dev
@@ -47,12 +48,15 @@ PACKAGES += CSWlibnetsnmp25
 CATALOGNAME_CSWlibnetsnmp25 = libnetsnmp25
 SPKG_DESC_CSWlibnetsnmp25 += $(DESCRIPTION), libsnmp.so.25
 PKGFILES_CSWlibnetsnmp25 += $(call baseisadirs,$(libdir),libnetsnmp\.so\.25(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibnetsnmp25 += CSWlibssl1-0-0
+
 
 PACKAGES += CSWlibnetsnmpagent25
 CATALOGNAME_CSWlibnetsnmpagent25 = libnetsnmpagent25
 SPKG_DESC_CSWlibnetsnmpagent25 += $(DESCRIPTION), libsnmpagent.so.25
 PKGFILES_CSWlibnetsnmpagent25 += $(call baseisadirs,$(libdir),libnetsnmpagent\.so\.25(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnetsnmpagent25 += CSWlibnetsnmp25
+RUNTIME_DEP_PKGS_CSWlibnetsnmpagent25 += CSWlibssl1-0-0
 
 PACKAGES += CSWlibnetsnmphelpers25
 CATALOGNAME_CSWlibnetsnmphelpers25 = libnetsnmphelpers25
@@ -65,6 +69,7 @@ SPKG_DESC_CSWlibnetsnmpmibs25 += $(DESCRIPTION), libsnmpmibs.so.25
 PKGFILES_CSWlibnetsnmpmibs25 += $(call baseisadirs,$(libdir),libnetsnmpmibs\.so\.25(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnetsnmpmibs25 += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWlibnetsnmpmibs25 += CSWlibnetsnmpagent25
+RUNTIME_DEP_PKGS_CSWlibnetsnmpmibs25 += CSWlibssl1-0-0
 
 PACKAGES += CSWlibnetsnmptrapd25
 CATALOGNAME_CSWlibnetsnmptrapd25 = libnetsnmptrapd25
@@ -73,6 +78,7 @@ PKGFILES_CSWlibnetsnmptrapd25 += $(call baseisadirs,$(libdir),libnetsnmptrapd\.s
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibnetsnmpagent25
+RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd25 += CSWlibssl1-0-0
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
 PACKAGES += CSWpmnetsnmp
@@ -84,6 +90,7 @@ RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmptrapd25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibnetsnmpagent25
 CHECKPKG_OVERRIDES_CSWpmnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/site_perl/NetSNMP/TrapReceiver.pm
+RUNTIME_DEP_PKGS_CSWpmnetsnmp += CSWlibssl1-0-0
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/*.pyc
 PACKAGES += CSWpy-netsnmp
@@ -93,6 +100,7 @@ PKGFILES_CSWpy-netsnmp = $(libdir)/python.*
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibnetsnmp25
+RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibssl1-0-0
 
 PACKAGES += CSWnetsnmp
 SPKG_DESC_CSWnetsnmp += $(DESCRIPTION), Base
@@ -100,6 +108,7 @@ RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibnetsnmptrapd25
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibnetsnmpagent25
+RUNTIME_DEP_PKGS_CSWnetsnmp += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnetsnmp += CSWperl
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/snmpcmd.1
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/snmpconf.1
@@ -139,6 +148,7 @@ CONFIGURE_ARGS += --with-mib-modules="ucd-snmp/diskio agentx mibII/mta_sendmail"
 # Disable for now
 # CONFIGURE_ARGS += --with-libwrap=/opt/csw/lib
 CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
