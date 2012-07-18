@@ -74,6 +74,8 @@ RUNTIME_DEP_PKGS	+=	CSWperl
 RUNTIME_DEP_PKGS	+=	CSWnetpbm
 RUNTIME_DEP_PKGS	+=	CSWtetex
 
+ARCHALL	= 1
+
 include gar/category.mk
 
 build-nominal:
