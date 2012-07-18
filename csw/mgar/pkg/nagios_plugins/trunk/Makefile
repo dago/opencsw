@@ -10,10 +10,10 @@ GARTYPE 	= v2
 #
 
 PACKAGES 			= CSWnagios-plugins
-CATALOG_NAME_CSWnagios-plugins 	= nagios_plugins
+CATALOGNAME_CSWnagios-plugins 	= nagios_plugins
 
 OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
-CATALOG_NAME_CSWnagiosp 	= nagiosp_stub
+CATALOGNAME_CSWnagiosp 	= nagiosp_stub
 
 SPKG_DESC_CSWnagios-plugins = Plugins for Nagios
 define BLURB
