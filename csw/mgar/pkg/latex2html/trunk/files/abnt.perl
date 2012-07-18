@@ -1,6 +1,6 @@
 package main;
 
-require "/usr/share/latex2html/styles/article.perl";
+require "/opt/csw/share/lib/latex2html/styles/article.perl";
 
 sub do_abnt_brazil {
     do_babel_portuges;
