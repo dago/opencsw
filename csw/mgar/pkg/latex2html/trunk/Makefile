@@ -70,9 +70,27 @@ TEST_SCRIPTS	=
 LICENSE			=	LICENSE
 
 RUNTIME_DEP_PKGS	+=	CSWgs
+CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWgs
 RUNTIME_DEP_PKGS	+=	CSWperl
 RUNTIME_DEP_PKGS	+=	CSWnetpbm
+CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWnetpbm
 RUNTIME_DEP_PKGS	+=	CSWtetex
+CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWtetex
+
+# only in comments:
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/lib/l2hconf.pm
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/lib/latex2html/makemap
+# TODO: explore packaging of itrans; ignore for the moment as we can
+# set the environment manually
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/lib/latex2html/IndicTeX-HTML/itrans.perl
+# the following are innocuous:
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/lib/latex2html/foilhtml/foilhtml.dtx
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/lib/latex2html/foilhtml/readme.v12
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/lib/latex2html/cweb2html/Makefile
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/doc/latex2html/manual.ps
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/doc/latex2html/manual/Pnode1.html
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/doc/latex2html/manual/Snode4.html
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/doc/latex2html/manual/Mnode9.html
 
 ARCHALL	= 1
 
