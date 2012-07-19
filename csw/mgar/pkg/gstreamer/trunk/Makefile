@@ -37,14 +37,15 @@ PATCHFILES += 0004-Makefile.in.patch
 PATCHFILES += 0005-Makefile.in.patch
 
 # root/opt/csw/share/gtk-doc/html/gstreamer-0.10/gstreamer-GstBufferList.html
-REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-plugins-0.10/.*html
-REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-libs-0.10/.*html
-REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-0.10/.*html
+# ./docs/plugins/html ./docs/libs/html ./docs/gst/html
+REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-plugins-0.10/.*
+REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-libs-0.10/.*
+REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-0.10/.*
 REINPLACE_WHEN_USRSHARE = postinstall
 
-REINPLACE_USERLOCAL += $(prefix)/share/gtk-doc/html/gstreamer-0.10/gst-running.html
-REINPLACE_USERLOCAL += $(mandir)/man1/gst-feedback-0.10.1
-REINPLACE_USERLOCAL += $(bindir)/gst-feedback-0.10
+REINPLACE_USRLOCAL += $(prefix)/share/gtk-doc/html/gstreamer-0.10/gst-running.html
+REINPLACE_USRLOCAL += $(mandir)/man1/gst-feedback-0.10.1
+REINPLACE_USRLOCAL += $(bindir)/gst-feedback-0.10
 REINPLACE_WHEN_USRLOCAL = postinstall
 
 
@@ -124,6 +125,7 @@ PACKAGES += CSWgstreamer-dev
 CATALOGNAME_CSWgstreamer-dev = gstreamer_dev
 SPKG_DESC_CSWgstreamer-dev += $(DESCRIPTION), development files
 PKGFILES_CSWgstreamer-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWgstreamer-dev += $(prefix)/share/gtk-doc/.*
 RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstbase0-10-0
 RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstnet0-10-0
 RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstreamer0-10-0
