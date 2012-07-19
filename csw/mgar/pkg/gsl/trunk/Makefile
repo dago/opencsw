@@ -48,7 +48,8 @@ PKGFILES_CSWgsl-dev				+=	/opt/csw/bin/gsl-randist
 PKGFILES_CSWgsl-dev				+=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWgsl-dev		=	CSWlibgsl0
 RUNTIME_DEP_PKGS_CSWgsl-dev		+=	CSWlibgslcblas0
-ARCHALL_CSWgsl					=	1
+ARCHALL_CSWgsl-dev				=	1
+CHECKPKG_OVERRIDES_CSWgsl-dev	+=	archall-devel-package
 
 PACKAGES						+=	CSWgsl-doc
 CATALOGNAME_CSWgsl-doc			=	gsl_doc
