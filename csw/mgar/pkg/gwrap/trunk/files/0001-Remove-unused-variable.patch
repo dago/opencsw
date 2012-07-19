@@ -1,0 +1,30 @@
+From c0a06c6f99d617f5490a5436eee1a7a9de5eb8eb Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 19 Jul 2012 09:45:10 +0200
+Subject: [PATCH] Remove unused variable
+
+---
+ g-wrap/g-wrap-wct.c |    3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/g-wrap/g-wrap-wct.c b/g-wrap/g-wrap-wct.c
+index 7af4f45..ce549b7 100644
+--- a/g-wrap/g-wrap-wct.c
++++ b/g-wrap/g-wrap-wct.c
+@@ -204,13 +204,10 @@ wcp_data_equal_p(SCM wcp_a, SCM wcp_b) {
+ SCM
+ gw_wcp_assimilate_ptr(void *ptr, SCM type) {
+   /* create a wrapped C pointer of the given type, wrapping ptr */
+-  wrapped_c_type_data *type_data;
+   wrapped_c_pointer_data *ptr_data; 
+ 
+   if(!GW_WCT_P(type)) return SCM_BOOL_F;
+ 
+-  type_data = (wrapped_c_type_data *) SCM_SMOB_DATA(type);
+-
+   ptr_data = (wrapped_c_pointer_data *)
+     scm_must_malloc(sizeof(wrapped_c_pointer_data), "gw:wcp");
+ 
+-- 
+1.7.10.3
+

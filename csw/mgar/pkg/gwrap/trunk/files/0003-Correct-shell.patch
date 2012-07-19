@@ -1,0 +1,22 @@
+From 20425afd55e6e6d4a1260a5ee5a253c93a0ada72 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 19 Jul 2012 10:19:17 +0200
+Subject: [PATCH] Correct shell
+
+---
+ test/guile-test-env |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/guile-test-env b/test/guile-test-env
+index 64b9555..47b983a 100755
+--- a/test/guile-test-env
++++ b/test/guile-test-env
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#! /usr/bin/env bash
+ 
+ GUILE_VERSION=$(guile -c '(display (version))')
+ 
+-- 
+1.7.10.3
+

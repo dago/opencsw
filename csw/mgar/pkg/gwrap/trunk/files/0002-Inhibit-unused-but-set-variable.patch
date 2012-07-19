@@ -1,0 +1,27 @@
+From edf38ae5b5d69f8267682cf1be1406ab786d1b97 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 19 Jul 2012 10:06:42 +0200
+Subject: [PATCH] Inhibit unused but set variable
+
+use -Wno-error=unused-but-set-variable for compiling generated code as
+we cannot easily change the generator...
+---
+ test/Makefile.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/Makefile.in b/test/Makefile.in
+index b49894c..6a4d006 100644
+--- a/test/Makefile.in
++++ b/test/Makefile.in
+@@ -209,7 +209,7 @@ test_link_wct_LDADD = ../g-wrap/libgw-wct.la
+ 
+ 
+ # ===========================================================================
+-AM_CFLAGS = -O2 -Wall -Wno-uninitialized -Werror -g \
++AM_CFLAGS = -O2 -Wall -Wno-uninitialized -Werror -Wno-error=unused-but-set-variable -g \
+  -I ${top_srcdir}/g-wrap \
+  ${GW_GLIB_CFLAGS_ADD} \
+  ${GW_GUILE_GTK_CFLAGS_ADD}
+-- 
+1.7.10.3
+
