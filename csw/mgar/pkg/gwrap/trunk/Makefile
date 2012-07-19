@@ -44,6 +44,8 @@ RUNTIME_DEP_PKGS_CSWgwrap-dev		+=	CSWlibgwrap-glib1
 CHECKPKG_OVERRIDES_CSWgwrap-dev 	+= surplus-dependency|CSWlibgwrap-glib1
 RUNTIME_DEP_PKGS_CSWgwrap-dev		+=	CSWlibgwrap-wct1
 CHECKPKG_OVERRIDES_CSWgwrap-dev 	+= surplus-dependency|CSWlibgwrap-wct1
+ARCHALL_CSWgwrap-dev				=	1
+CHECKPKG_OVERRIDES_CSWgwrap-dev		+=	archall-devel-package
 
 PACKAGES							+=	CSWlibgw-glib0
 CATALOGNAME_CSWlibgw-glib0			=	libgw_glib0
