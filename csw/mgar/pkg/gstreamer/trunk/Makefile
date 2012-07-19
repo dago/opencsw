@@ -38,10 +38,12 @@ PATCHFILES += 0005-Makefile.in.patch
 
 # root/opt/csw/share/gtk-doc/html/gstreamer-0.10/gstreamer-GstBufferList.html
 # ./docs/plugins/html ./docs/libs/html ./docs/gst/html
-REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-plugins-0.10/.*
-REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-libs-0.10/.*
-REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-0.10/.*
-REINPLACE_WHEN_USRSHARE = postinstall
+REINPLACE_USRSHARE += docs/plugins/html/*.html docs/libs/html/*.html docs/gst/html/*.html
+
+ # REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-plugins-0.10/.*
+# REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-libs-0.10/.*
+# REINPLACE_USRSHARE += $(prefix)/share/gtk-doc/html/gstreamer-0.10/.*
+# REINPLACE_WHEN_USRSHARE = postinstall
 
 REINPLACE_USRLOCAL += $(prefix)/share/gtk-doc/html/gstreamer-0.10/gst-running.html
 REINPLACE_USRLOCAL += $(mandir)/man1/gst-feedback-0.10.1
