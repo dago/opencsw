@@ -17,6 +17,8 @@ DISTFILES += cswnagios
 DISTFILES += cswusergroup
 DISTFILES += README.CSW
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 PATCHFILES	+= 0001-Removed-gcc-macro.patch
 PATCHFILES	+= 0001-changed-install-and-command-options-in-configure.patch
 PATCHFILES	+= 0003-changed-syntax-of-define-statement.patch
@@ -124,8 +126,6 @@ CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
 
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWlibiconv2
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWjpeg
-
-CHECKPKG_OVERRIDES_CSWnagios += unidentified-dependency|CSWnagios-plugins
 
 include gar/category.mk
 
