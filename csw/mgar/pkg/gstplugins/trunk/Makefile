@@ -1,5 +1,5 @@
 NAME = gst-plugins-base
-VERSION = 0.10.26
+VERSION = 0.10.29
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -21,23 +21,32 @@ CATALOGNAME = gstplugins
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DEP_PKGS += CSWgstreamer CSWliboil CSWglib2 CSWgnomevfs2 CSWlibogg
-DEP_PKGS += CSWgconf2 CSWggettextrt CSWlibxml2 CSWtheora CSWvorbis
-DEP_PKGS += CSWlibice CSWlibx11 CSWlibsm CSWlibxext
+PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+GARCOMPILER = SOS12U3
+
+BUILD_DEP_PKGS +=  CSWpkgconfig CSWgstreamer-dev CSWliboildevel CSWlibglib2-dev 
+BUILD_DEP_PKGS += CSWgnomevfs2-dev CSWlibogg-dev CSWlibgtk2-dev CSWlibatk-dev
+BUILD_DEP_PKGS += CSWlibgconf-dev CSWggettextrt CSWlibxml2-dev CSWlibtheora-dev
+BUILD_DEP_PKGS += CSWlibice CSWlibx11 CSWlibxvdevel CSWx11videoproto
+BUILD_DEP_PKGS += CSWlibsm CSWlibxext
+BUILD_DEP_PKGS += CSWlibvorbis-dev CSWpangodevel CSWlibpixman-dev 
+BUILD_DEP_PKGS += CSWfconfig-dev CSWlibpng-dev CSWx11xproto CSWx11renderproto 
+BUILD_DEP_PKGS += CSWlibx11devel CSWlibxcbdevel CSWlibxaudevel CSWlibxdmcpdevel
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --disable-alsa
 CONFIGURE_ARGS += --disable-cdparanoia
-CONFIGURE_ARGS += --disable-xvideo
+# CONFIGURE_ARGS += --disable-xvideo
 CONFIGURE_ARGS += --disable-gst_v4l
 CONFIGURE_ARGS += --disable-libvisual
-CONFIGURE_ARGS += --disable-pango
+# CONFIGURE_ARGS += --disable-pango
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
 
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 STRIP_LIBTOOL = 1
 
@@ -46,10 +55,10 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 # sigh, portable code?
-post-configure-modulated:
-	gsed -i 's/\(LIBS = -lnsl -lsocket\)/\1 -lresolv/' \
-		$(WORKSRC)/gst/tcp/Makefile
-	gsed -i 's/\(giosrc_mounting_LDFLAGS =\)/\1 $$(X_LIBS)/' \
-		$(WORKSRC)/tests/examples/gio/Makefile
-	gsed -i 's/\(volume_LDFLAGS =\)/\1 $$(X_LIBS)/' \
-		$(WORKSRC)/tests/examples/volume/Makefile
+# post-configure-modulated:
+# 	gsed -i 's/\(LIBS = -lnsl -lsocket\)/\1 -lresolv/' \
+# 		$(WORKSRC)/gst/tcp/Makefile
+# 	gsed -i 's/\(giosrc_mounting_LDFLAGS =\)/\1 $$(X_LIBS)/' \
+# 		$(WORKSRC)/tests/examples/gio/Makefile
+# 	gsed -i 's/\(volume_LDFLAGS =\)/\1 $$(X_LIBS)/' \
+#  		$(WORKSRC)/tests/examples/volume/Makefile
