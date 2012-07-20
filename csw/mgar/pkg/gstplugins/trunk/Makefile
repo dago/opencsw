@@ -24,14 +24,18 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
 GARCOMPILER = SOS12U3
 
-BUILD_DEP_PKGS +=  CSWpkgconfig CSWgstreamer-dev CSWliboildevel CSWlibglib2-dev 
+BUILD_DEP_PKGS += CSWpkgconfig CSWgstreamer-dev CSWliboildevel CSWlibglib2-dev 
 BUILD_DEP_PKGS += CSWgnomevfs2-dev CSWlibogg-dev CSWlibgtk2-dev CSWlibatk-dev
-BUILD_DEP_PKGS += CSWlibgconf-dev CSWggettextrt CSWlibxml2-dev CSWlibtheora-dev
+BUILD_DEP_PKGS += CSWlibgconf-dev CSWggettextrt CSWlibxml2-dev CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibtheora-dev
 BUILD_DEP_PKGS += CSWlibice CSWlibx11 CSWlibxvdevel CSWx11videoproto
 BUILD_DEP_PKGS += CSWlibsm CSWlibxext
 BUILD_DEP_PKGS += CSWlibvorbis-dev CSWpangodevel CSWlibpixman-dev 
 BUILD_DEP_PKGS += CSWfconfig-dev CSWlibpng-dev CSWx11xproto CSWx11renderproto 
 BUILD_DEP_PKGS += CSWlibx11devel CSWlibxcbdevel CSWlibxaudevel CSWlibxdmcpdevel
+
+PATCHFILES += 0001-Makefile.in.patch
+REINPLACE_USRSHARE += docs/plugins/html/*.html docs/libs/html/*.html
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug
@@ -53,6 +57,9 @@ STRIP_LIBTOOL = 1
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+# I want see whats going on
+AM_DEFAULT_VERBOSITY:=1
 
 # sigh, portable code?
 # post-configure-modulated:
