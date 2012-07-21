@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = pysvn
-VERSION = 1.7.1
+VERSION = 1.7.6
 CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION = Python SVN Extension and WorkBench GUI
@@ -24,26 +24,35 @@ define BLURB
   * No need to understand the Subversion C API
 
 endef
-SPKG_SOURCEURL = http://pysvn.tigris.org/
+
 MASTER_SITES = http://pysvn.barrys-emacs.org/source_kits/
+DISTFILES += $(DISTNAME).tar.gz
 PATCHFILES  = 0002-pysvn.hpp-string-includes-first.patch
-PATCHFILES += 0005-Use-dash-capital-R-for-runtime-path.patch
-PATCHFILES += 0006-Use-opt-csw-lib.patch
+#PATCHFILES += 0005-Use-dash-capital-R-for-runtime-path.patch
+#ÃPATCHFILES += 0006-Use-opt-csw-lib.patch
 PATCHFILES += 0003-bin-bash-instead-of-bin-sh.patch
-PATCHFILES += 0001-fixes-for-tests.patch
+# PATCHFILES += 0001-fixes-for-tests.patch
 PATCHFILES += 0008-gid-in-two-more-places.patch
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+VENDOR_URL = http://pysvn.tigris.org/
+
 LICENSE = LICENSE.txt
-RUNTIME_DEP_PKGS  = CSWexpat
+
+BUILD_DEP_PKGS += CSWsvn-devel
+BUILD_DEP_PKGS += CSWapache2-dev
+BUILD_DEP_PKGS += CSWlibexpat-dev
+BUILD_DEP_PKGS += CSWbash
+
 RUNTIME_DEP_PKGS += CSWgcc4corert
 RUNTIME_DEP_PKGS += CSWgcc4g++rt
 RUNTIME_DEP_PKGS += CSWneon
 RUNTIME_DEP_PKGS += CSWpython
 RUNTIME_DEP_PKGS += CSWsvn
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWsvn-devel CSWapache2-devel CSWbash
 INCOMPATIBELE_PKGS = CSWpyxml
+
 CONFIGURE_SCRIPTS = pysvn
 BUILD_SCRIPTS = pysvn
 INSTALL_SCRIPTS = pysvn
@@ -52,16 +61,17 @@ TEST_SCRIPTS_5.9 = pysvn
 TEST_SCRIPTS_5.10 = pysvn
 TEST_SCRIPTS = $(TEST_SCRIPTS_$(GAROSREL))
 CONFIGURE_ARGS = $(DIRPATHS)
-GARCOMPILER = GNU
+#GARCOMPILER = GNU
 
 include gar/category.mk
 
 configure-pysvn:
 	(cd $(WORKSRC)/Source \
 		&& $(CONFIGURE_ENV) python setup.py configure \
-			--apr-inc-dir=/opt/csw/apache2/include \
-			--apr-lib-dir=/opt/csw/apache2/lib \
-			--svn-bin-dir=/opt/csw/bin \
+			--apr-inc-dir=$(includedir) \
+			--apr-lib-dir=$(libdir) \
+			--apu-inc-dir=$(includedir) \
+			--svn-bin-dir=$(bindir) \
 			--svn-inc-dir=/opt/csw/include/subversion-1 \
 			--svn-lib-dir=/opt/csw/lib/svn \
 	)
