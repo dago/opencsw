@@ -1,7 +1,1 @@
-e6168840de7c75fcecffc6fc7e1831ba  0001-fixes-for-tests.patch
-20381f5964a9fc08b04eb6fc69a47d04  0002-pysvn.hpp-string-includes-first.patch
-2f3e1b6c0ffed9baecdb1e0719748813  0003-bin-bash-instead-of-bin-sh.patch
-a69e791dd03491aca2cfeba83528389a  0005-Use-dash-capital-R-for-runtime-path.patch
-be7690f1395b76f984bf12de84418b68  0006-Use-opt-csw-lib.patch
-ac24c9b4348fd857353d1444c8448d8d  0008-gid-in-two-more-places.patch
-55688ec2083dcada32aa0a4128f6c309  pysvn-1.7.1.tar.gz
+010a80f0058713209d62e96b20afbde9  pysvn-1.7.6.tar.gz
