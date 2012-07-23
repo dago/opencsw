@@ -1,0 +1,33 @@
+From 0b22de02c702dd00ce3b2ce56651a60cb46cf00c Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 20 Jul 2012 16:04:02 +0200
+Subject: [PATCH] Extend to OpenCSW the OpenSolaris gdb fork child
+
+---
+ gdb/fork-child.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/gdb/fork-child.c b/gdb/fork-child.c
+index 8a45a62..18c0d2c 100644
+--- a/gdb/fork-child.c
++++ b/gdb/fork-child.c
+@@ -196,6 +196,16 @@ fork_inferior (char *exec_file_arg, char *allargs, char **env,
+       ) {
+ 	isaexec_shell = 1;
+       }
++	  /* do the same for Open CSW: */
++      if (
++	stat ("/opt/csw/bin/isaexec", &buf1) == 0 &&
++	stat (shell_file, &buf2) == 0 &&
++	buf1.st_ino == buf2.st_ino &&
++	buf1.st_dev == buf2.st_dev &&
++	buf1.st_nlink == buf2.st_nlink
++      ) {
++	isaexec_shell = 1;
++      }
+     }
+ 
+   if (!shell)
+-- 
+1.7.10.3
+
