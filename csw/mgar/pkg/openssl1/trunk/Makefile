@@ -87,6 +87,7 @@ MASTER_SITES = http://www.openssl.org/source/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWlibssl1-0-0.checkinstall CSWlibssl1-0-0.preinstall CSWlibssl1-0-0.postinstall
 DISTFILES += changelog.CSW README.CSW
+DISTFILES += map.openssl.libcrypto map.openssl.libssl map.openssl.engines
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
@@ -112,6 +113,10 @@ PATCHFILES += block_bad_certificates.patch
 # with gnutls and programs linked with openssl 0.9.8 
 # Patch taken from Debian
 PATCHFILES += c_rehash-compat.patch
+
+# Oh yes, let's do symbol versioning so we don't become
+# crazy during library migration
+PATCHFILES += 0007-enables-symbols-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
 ifdef PKCS11
@@ -215,6 +220,12 @@ include gar/category.mk
 pre-configure-modulated:
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
+	ln -nf $(WORKDIR)/map.openssl.libcrypto $(WORKSRC)/map.openssl.libcrypto 
+	ln -nf $(WORKDIR)/map.openssl.libssl $(WORKSRC)/map.openssl.libssl 
+	for ENGINE in 4758cca aep atalla cswift gmp chil nuron sureware ubsec padlock capi; do \
+		ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/map.openssl.lib$$ENGINE; \
+	done 
+	ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/ccgost/map.openssl.libgost
 	@$(MAKECOOKIE)
 
 fix-paths:
