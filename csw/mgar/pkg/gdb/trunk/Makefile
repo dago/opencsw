@@ -36,6 +36,7 @@ PATCHFILES	+=	0002-OpenSolaris-gdb-fork-child.patch
 PATCHFILES	+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
 
 GARCOMPILER		=	GNU
+BUILD64			=	1
 
 BUILD_DEP_PKGS	+=	CSWgcc4ada
 BUILD_DEP_PKGS	+=	CSWflex-new
