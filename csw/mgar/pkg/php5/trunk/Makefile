@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.14
+VERSION  = 5.3.15
 CATEGORIES  = lang
 GARTYPE = v2
 SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
