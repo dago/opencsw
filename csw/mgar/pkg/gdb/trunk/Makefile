@@ -46,18 +46,21 @@ BUILD_DEP_PKGS	+=	CSWlibiconv-dev
 BUILD_DEP_PKGS	+=	CSWlibncurses-dev
 BUILD_DEP_PKGS	+=	CSWlibz-dev
 
+CONFIGURE_ARGS-32	+=	--with-python
+CONFIGURE_ARGS-64	+=	
+
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--enable-64-bit-bfd
 CONFIGURE_ARGS	+=	--enable-tui
 CONFIGURE_ARGS	+=	--with-curses
 CONFIGURE_ARGS	+=	--with-expat
-CONFIGURE_ARGS	+=	--with-python
 # private TCL headers not being installed
 # (https://www.opencsw.org/mantis/view.php?id=4652)
 #CONFIGURE_ARGS	+=	--enable-gdbtk
 #CONFIGURE_ARGS	+=	--with-tcl=/opt/csw/lib
 #CONFIGURE_ARGS	+=	--with-tk=/opt/csw/lib
 CONFIGURE_ARGS	+=	--with-x
+CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 RUNTIME_DEP_PKGS	+=	CSWlibexpat1
 RUNTIME_DEP_PKGS	+=	CSWlibiconv2
