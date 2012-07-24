@@ -1,0 +1,25 @@
+From 56a10ce25c8625f37ba6e94ee83c0c1e3bae5290 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 24 Jul 2012 15:11:01 +0200
+Subject: [PATCH] Fix extra qualification
+
+---
+ src/backend/album.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/backend/album.h b/src/backend/album.h
+index 445cf50..05e8caf 100644
+--- a/src/backend/album.h
++++ b/src/backend/album.h
+@@ -113,7 +113,7 @@ public:
+   int getCreationDay();
+ 
+   ///Updates the creation date to today's date
+-  void Album::updateCreationDate();
++  void updateCreationDate();
+ 
+   ///Updates the modification date to today's date
+   void updateModificationDate();
+-- 
+1.7.10.3
+
