@@ -17,12 +17,16 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWperl CSWperldoc
-ARCHALL_CSWperldoc = 1
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386 
+
+PACKAGES += CSWperl
 RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
-RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
+
+PACKAGES += CSWperldoc
+RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
+ARCHALL_CSWperldoc = 1
 
 SPKG_DESC_CSWperl = $(DESCRIPTION)
 SPKG_DESC_CSWperldoc = Perl documentation
@@ -90,9 +94,9 @@ CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 
-ifeq ($(shell uname -r), 5.10) 
-  CONFIGURE_ARGS += -Dusedtrace 
-endif 
+#ifeq ($(shell uname -r), 5.10) 
+#  CONFIGURE_ARGS += -Dusedtrace 
+#endif 
 
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
