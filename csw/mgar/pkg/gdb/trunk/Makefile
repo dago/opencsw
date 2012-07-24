@@ -36,7 +36,8 @@ PATCHFILES	+=	0002-OpenSolaris-gdb-fork-child.patch
 PATCHFILES	+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
 
 GARCOMPILER		=	GNU
-BUILD64			=	1
+
+BUILD64 = 1
 
 BUILD_DEP_PKGS	+=	CSWgcc4ada
 BUILD_DEP_PKGS	+=	CSWflex-new
@@ -68,6 +69,47 @@ RUNTIME_DEP_PKGS	+=	CSWlibintl8
 RUNTIME_DEP_PKGS	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibz1
+# this should be declared only for the 32 bit ISAs but I doubt that
+# checkpkg can deal with this subtility
+RUNTIME_DEP_PKGS	+=	CSWpython
+
+CHECKPKG_OVERRIDES_CSWgdb	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/gdb.info
+CHECKPKG_OVERRIDES_CSWgdb	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/gdb.info
+
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/ansidecl.h
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/bfd.h
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/bfdlink.h
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/dis-asm.h
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/symcat.h
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/bfd.info
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/configure.info
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/standards.info
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/da/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/de/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/es/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/es/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/fi/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/fi/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/fr/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/fr/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ga/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/id/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/id/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ja/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/nl/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/pt_BR/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ro/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ro/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ru/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/rw/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/sv/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/sv/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/tr/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/tr/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/vi/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/vi/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/opcodes.mo
 
 include gar/category.mk
 
