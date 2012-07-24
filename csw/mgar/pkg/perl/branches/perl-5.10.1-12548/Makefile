@@ -121,12 +121,14 @@ EXTRA_LDFLAGS = -L$(libdir) -lperl
 EXTRA_MERGE_EXCLUDE_FILES  = .*\/perllocal.pod
 
 # Remove files from CSWpm-module-build
+EXTRA_MERGE_EXCLUDE_FILES += .*\/Module\/Build\.pm
+EXTRA_MERGE_EXCLUDE_FILES += .*\/Module\/Build\/.*
 EXTRA_MERGE_EXCLUDE_FILES += .*\/man\/man.\/Module::Build.*
 EXTRA_MERGE_EXCLUDE_FILES += .*\/opt\/csw\/bin\/config_data
-EXTRA_MERGE_EXCLUDE_FILES += .*\/opt\/csw\/share\/man\/man1\/config_data.1
+EXTRA_MERGE_EXCLUDE_FILES += .*\/opt\/csw\/share\/man\/man1\/config_data\.1
 # Remove files from CSWpm-parse-cpan-meta
-EXTRA_MERGE_EXCLUDE_FILES += .*\/Parse\/CPAN\/Meta.pm
-EXTRA_MERGE_EXCLUDE_FILES += .*\/opt\/csw\/share\/man\/man3\/Parse::CPAN::Meta.3perl
+EXTRA_MERGE_EXCLUDE_FILES += .*\/Parse\/CPAN\/Meta\.pm
+EXTRA_MERGE_EXCLUDE_FILES += .*\/opt\/csw\/share\/man\/man3\/Parse::CPAN::Meta\.3perl
 
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 
