@@ -1,3 +1,6 @@
+# NOTES
+# - Files from Module::Build and Parse::CPAN::Meta have been stripped out to
+#   avoid collisions with the separate packages of those two.
 NAME = perl
 VERSION = 5.10.1
 CATEGORIES = lang
@@ -17,6 +20,7 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386 
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386 
 
 PACKAGES += CSWperl
@@ -39,9 +43,6 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 # Paths with /usr/local in examples and such
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
-# Temporary due to collisions with pm-module-build
-CHECKPKG_OVERRIDES_CSWperl += file-collision|/opt/csw/bin/config_data|CSWperl|CSWpm-module-build
-CHECKPKG_OVERRIDES_CSWperldoc += file-collision
 
 # Core module updates
 # Not used at the moment, leave one as example
@@ -117,7 +118,16 @@ EXTRA_CFLAGS = $(CPPFLAGS)
 
 EXTRA_LDFLAGS = -L$(libdir) -lperl
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
+EXTRA_MERGE_EXCLUDE_FILES  = .*\/perllocal.pod
+
+# Remove files from CSWpm-module-build
+EXTRA_MERGE_EXCLUDE_FILES += .*\/man\/man.\/Module::Build.*
+EXTRA_MERGE_EXCLUDE_FILES += \/opt\/csw\/bin\/config_data
+EXTRA_MERGE_EXCLUDE_FILES += \/opt\/csw\/share\/man\/man1\/config_data.1
+# Remove files from CSWpm-parse-cpan-meta
+EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/perl/csw/Parse/CPAN/Meta.pm
+EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/man/man3/Parse::CPAN::Meta.3perl
+
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 
 # The diagnostics.pm module needs the podfile to output its messages.
