@@ -26,12 +26,32 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-ARCHALL = 1
-BUILD_DEP_PKGS += CSWpy-gobject-dev CSWlibgtk2-dev CSWlibxtstdevel
+BUILD_DEP_PKGS += CSWpy-gobject-dev CSWlibgtk2-dev CSWlibxtstdevel CSWpangodevel
 BUILD_DEP_PKGS += CSWlibxfixesdevel CSWlibxcompositedev CSWlibxdamagedevel CSWlibxrandrdevel
 BUILD_DEP_PKGS += CSWx11recordproto CSWlibxextdevel CSWx11fixesproto CSWx11compositeproto
 BUILD_DEP_PKGS += CSWx11damageproto CSWx11randrproto CSWcython CSWpython-dev
 BUILD_DEP_PKGS += CSWlibx264-dev CSWffmpeg-dev
+
+REINPLACE_USRSHARE += $(libdir)/python/site-packages/xpra/xposix/gui.py
+REINPLACE_USRSHARE += $(libdir)/python/site-packages/xpra/platform/client_extras_base.py
+REINPLACE_WHEN_USRSHARE = postinstall
+REINPLACE_USRLOCAL += $(libdir)/python/site-packages/xpra/xposix/gui.py
+REINPLACE_WHEN_USRLOCAL = postinstall
+
+PACKAGE += CSWxpra
+
+RUNTIME_DEP_PKGS_CSWxpra += CSWpython
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibswscale2 CSWlibavcodec54 
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibx11 CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWpango CSWlibcairo2 CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibxdamage CSWlibxcomposite
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibx264-125
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibxfixes
+
+CHECKPKG_OVERRIDES_CSWxpra += pkginfo-description-not-starting-with-uppercase|screen|for|X
+CHECKPKG_OVERRIDES_CSWxpra += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWxpra += catalogname-does-not-start-with-py_
+
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
