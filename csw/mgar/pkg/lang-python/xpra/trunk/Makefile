@@ -47,11 +47,22 @@ RUNTIME_DEP_PKGS_CSWxpra += CSWpango CSWlibcairo2 CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWxpra += CSWlibxdamage CSWlibxcomposite
 RUNTIME_DEP_PKGS_CSWxpra += CSWlibx264-125
 RUNTIME_DEP_PKGS_CSWxpra += CSWlibxfixes
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibxrandr
+RUNTIME_DEP_PKGS_CSWxpra += CSWlibxtst
 
 CHECKPKG_OVERRIDES_CSWxpra += pkginfo-description-not-starting-with-uppercase|screen|for|X
 CHECKPKG_OVERRIDES_CSWxpra += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWxpra += catalogname-does-not-start-with-py_
-
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
@@ -61,13 +72,14 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 BUILD_ENV += PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
-PYBUILD_CMD = build
+PYBUILD_CMD = build_ext
 BUILD_ARGS += --without-vpx
+BUILD_ARGS += --rpath=$(libdir):$(prefix)/X11/lib
 
 INSTALL_ENV += $(BUILD_ENV)
 INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
-INSTALL_ARGS += $(BUILD_ARGS)
+INSTALL_ARGS += --without-vpx
 
 build-python:
 	(cd $(WORKSRC); \
