@@ -1,0 +1,50 @@
+From a14b8a26d4a3b4b1ac214b3c8215b2e8fca7c7d5 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 24 Jul 2012 14:17:04 +0200
+Subject: [PATCH] Adapt OpenCSW
+
+---
+ AlbumShaper.pro |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/AlbumShaper.pro b/AlbumShaper.pro
+index 305e4e6..54ecd02 100644
+--- a/AlbumShaper.pro
++++ b/AlbumShaper.pro
+@@ -20,13 +20,13 @@
+ #-------------------------------------------------------
+ win32:BIN_DIR = AlbumShaper.win
+ mac:BUNDLE_DIR = build/AlbumShaper.app
+-!mac:unix:BIN_DIR = /usr/bin
++!mac:unix:BIN_DIR = /opt/csw/bin
+ 
+ #Directory translations, button icons, etc will be installed
+ #-------------------------------------------------------
+ win32:DATA_DIR     = AlbumShaper.win
+ mac:DATA_DIR       = $${BUNDLE_DIR}/Contents/Resources
+-!mac:unix:DATA_DIR = /usr/share/albumshaper
++!mac:unix:DATA_DIR = /opt/csw/share/albumshaper
+ 
+ #===========================================================================================
+ #===========================================================================================
+@@ -183,7 +183,7 @@ contains(CONFIG, static):contains( CONFIG, debug):CONFIG -= static
+ #if UPX flag was set then setup running upx compression when releasing the binary
+ !mac:unix:release {
+   contains( CONFIG, useUpxCompression ) {
+-    system(which upx > /dev/null && { exit 0; }):QMAKE_POST_LINK = upx $(TARGET)
++    system(type upx > /dev/null && { exit 0; }):QMAKE_POST_LINK = upx $(TARGET)
+   }
+ }
+ 
+@@ -272,7 +272,7 @@ mac:RC_FILE = resources/macx/AlbumShaper.icns
+ 
+ #--------- Launcher Script (Linux/FreeBSD) ------------
+ !mac:unix:scripts.path = $${BIN_DIR}
+-!mac:unix:scripts.commands = cp -f bin/AlbumShaper $${BIN_DIR}/AlbumShaper;
++!mac:unix:scripts.commands = cp -f bin/AlbumShaper $(INSTALL_ROOT)$${BIN_DIR}/AlbumShaper;
+ 
+ 
+ #===========================================================================================
+-- 
+1.7.10.3
+
