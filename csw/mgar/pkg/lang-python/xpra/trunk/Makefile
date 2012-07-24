@@ -29,14 +29,31 @@ DISTFILES  = $(DISTNAME).tar.bz2
 ARCHALL = 1
 BUILD_DEP_PKGS += CSWpy-gobject-dev CSWlibgtk2-dev CSWlibxtstdevel
 BUILD_DEP_PKGS += CSWlibxfixesdevel CSWlibxcompositedev CSWlibxdamagedevel CSWlibxrandrdevel
+BUILD_DEP_PKGS += CSWx11recordproto CSWlibxextdevel CSWx11fixesproto CSWx11compositeproto
+BUILD_DEP_PKGS += CSWx11damageproto CSWx11randrproto CSWcython CSWpython-dev
+BUILD_DEP_PKGS += CSWlibx264-dev CSWffmpeg-dev
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = $(WORKSRC)/setup.py
+BUILD_SCRIPTS = python
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
+BUILD_ENV += PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+PYBUILD_CMD = build
+BUILD_ARGS += --without-vpx
+
+INSTALL_ENV += $(BUILD_ENV)
 INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
+INSTALL_ARGS += $(BUILD_ARGS)
+
+build-python:
+	(cd $(WORKSRC); \
+	python make_constants_pxi.py wimpiggy/lowlevel/constants.txt wimpiggy/lowlevel/constants.pxi; \
+	$(BUILD_ENV) python setup.py $(PYBUILD_CMD) $(BUILD_ARGS))
+	$(MAKECOOKIE)
 
 include gar/category.mk
 
