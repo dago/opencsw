@@ -38,6 +38,9 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 PACKAGES							+=	CSWalbumshaper-common
 CATALOGNAME_CSWalbumshaper-common	=	albumshaper_common
 SPKG_DESC_CSWalbumshaper-common		+=	$(DESCRIPTION), architecture neutral components
