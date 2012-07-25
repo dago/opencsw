@@ -63,6 +63,7 @@ RUNTIME_DEP_PKGS_CSWalbumshaper		+=	CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWalbumshaper		+=	CSWlibxslt1
 RUNTIME_DEP_PKGS_CSWalbumshaper		+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWalbumshaper		+=	CSWqtgcc
+CHECKPKG_OVERRIDES_CSWalbumshaper-common += file-with-bad-content|/usr/local|root/opt/csw/share/albumshaper/text/history.html
 
 include gar/category.mk
 
