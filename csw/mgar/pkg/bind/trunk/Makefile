@@ -9,7 +9,7 @@ GARTYPE = v2
 
 # Enable these for Px-releases
 #RELEASE = rc2
-RELEASE = P1
+RELEASE = P2
 DISTVERSION = $(VERSION)-$(RELEASE)
 SPKG_VERSION = $(VERSION)$(RELEASE)
 DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
@@ -43,7 +43,7 @@ RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
 RUNTIME_DEP_PKGS_CSWbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWbind += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWbind += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibldap2-4-2
 
@@ -59,7 +59,7 @@ SPKG_DESC_CSWlibbind = ISC BIND DNS library package
 RUNTIME_DEP_PKGS_CSWlibbind  = CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl0-9-8
 
 PACKAGES += CSWbindutils
 CATALOGNAME_CSWbindutils = bind_utils
@@ -68,7 +68,7 @@ RUNTIME_DEP_PKGS_CSWbindutils  = CSWlibbind
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibz1
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibssl0-9-8
 
 PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
@@ -121,6 +121,7 @@ CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/li
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.80.0.1|soname=libisccc.so.80|pkgname=CSWlibbind|expected=CSWlibisccc80
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.82.0.2|soname=libisccfg.so.82|pkgname=CSWlibbind|expected=CSWlibisccfg82
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.80.0.2|soname=liblwres.so.80|pkgname=CSWlibbind|expected=CSWliblwres80
+
 include gar/category.mk
 
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
