@@ -1,7 +1,11 @@
-NAME = libgoffice
-VERSION = 0.7.4
-CATEGORIES = gnome
-GARTYPE = v2
+# $Id$
+
+NAME		=	libgoffice
+SGVERSION	=	0.8
+SGREL		=	17
+VERSION		=	$(SGVERSION).$(SGREL)
+CATEGORIES	=	gnome
+GARTYPE		=	v2
 
 DESCRIPTION = Document centric objects library
 define BLURB
@@ -9,19 +13,47 @@ define BLURB
 	top of GLib and Gtk+.
 endef
 
-MASTER_SITES =  $(GNOME_ROOT)/goffice/$(GNOME_SUBV)/
-DISTFILES  = goffice-$(VERSION).tar.gz
-DISTNAME  = goffice-$(VERSION)
+SGNAME			=	goffice
+MASTER_SITES	=	$(GNOME_ROOT)/$(SGNAME)/$(GNOME_SUBV)/
+DISTFILES		=	$(SGNAME)-$(VERSION).tar.bz2
+DISTNAME		=	$(SGNAME)-$(VERSION)
 
-RUNTIME_DEP_PKGS += CSWgconf2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk
-RUNTIME_DEP_PKGS += CSWlibcairo CSWlibglade2 CSWlibgsf CSWlibxml2 CSWlibxrender
-RUNTIME_DEP_PKGS += CSWpango CSWsunmath CSWzlib
-RUNTIME_DEP_PKGS += CSWbonobo2 CSWgnomekeyring CSWgnomevfs2 CSWlibart
-RUNTIME_DEP_PKGS += CSWlibbonoboui CSWlibgnome CSWlibgnomecanvas CSWlibgnomeui
-RUNTIME_DEP_PKGS += CSWlibpopt CSWorbit2
+GARCOMPILER		=	GNU
+
+BUILD_DEP_PKGS		+=	CSWintltool
+BUILD_DEP_PKGS		+=	CSWlibatk-dev
+BUILD_DEP_PKGS		+=	CSWlibcairo-dev
+BUILD_DEP_PKGS		+=	CSWlibfreetype-dev
+BUILD_DEP_PKGS		+=	CSWlibgconf-dev
+BUILD_DEP_PKGS		+=	CSWlibgdk-pixbuf-dev
+BUILD_DEP_PKGS		+=	CSWlibglib2-dev
+BUILD_DEP_PKGS		+=	CSWlibgsf-dev
+BUILD_DEP_PKGS		+=	CSWlibgsf-dev
+BUILD_DEP_PKGS		+=	CSWlibgtk2-dev
+BUILD_DEP_PKGS		+=	CSWlibxml2-dev
+BUILD_DEP_PKGS		+=	CSWpangodevel
+
+RUNTIME_DEP_PKGS	+=	CSWlibatk1-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibcairo2
+RUNTIME_DEP_PKGS	+=	CSWlibfontconfig1
+RUNTIME_DEP_PKGS	+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS	+=	CSWlibgconf2-4
+RUNTIME_DEP_PKGS	+=	CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibgio2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibgsf1-114
+RUNTIME_DEP_PKGS	+=	CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS	+=	CSWlibintl8
+RUNTIME_DEP_PKGS	+=	CSWlibxml2-2
+RUNTIME_DEP_PKGS	+=	CSWpango
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = goffice-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(SGNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -29,4 +61,13 @@ TEST_TARGET =
 
 include gar/category.mk
 
-PATH :=/opt/csw/bin:/opt/csw/gnu:$(PATH)
+PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+
+post-install-modulated:
+	ginstall --directory $(DESTDIR)/$(docdir)/$(NAME)
+	cd $(DESTDIR)/$(docdir)/$(NAME) && ln -s ../../gtk-doc/html/$(SGNAME)-$(SGVERSION) html
+	$(MAKECOOKIE)
+
+# this is private and not available publicly
+mydependencies:
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
