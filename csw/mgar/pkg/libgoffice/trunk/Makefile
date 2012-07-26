@@ -33,6 +33,9 @@ BUILD_DEP_PKGS		+=	CSWlibgtk2-dev
 BUILD_DEP_PKGS		+=	CSWlibxml2-dev
 BUILD_DEP_PKGS		+=	CSWpangodevel
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 RUNTIME_DEP_PKGS	+=	CSWlibatk1-0-0
 RUNTIME_DEP_PKGS	+=	CSWlibcairo2
 RUNTIME_DEP_PKGS	+=	CSWlibfontconfig1
