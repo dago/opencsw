@@ -33,7 +33,7 @@ BUILD_DEP_PKGS += CSWx11damageproto
 BUILD_DEP_PKGS += CSWx11randrproto
 BUILD_DEP_PKGS += CSWcython
 BUILD_DEP_PKGS += CSWpython-dev
-BUILD_DEP_PKGS += CSWlibx264-dev-dev
+BUILD_DEP_PKGS += CSWlibx264-dev
 BUILD_DEP_PKGS += CSWffmpeg-dev
 
 REINPLACE_USRSHARE += $(libdir)/python/site-packages/xpra/xposix/gui.py
@@ -79,6 +79,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 BUILD_ENV += PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+BUILD_ENV += CC=/opt/solarisstudio12.3/bin/cc
 PYBUILD_CMD = build_ext
 BUILD_ARGS += --without-vpx
 BUILD_ARGS += --rpath=$(libdir):$(prefix)/X11/lib
