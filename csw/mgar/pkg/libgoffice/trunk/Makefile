@@ -39,6 +39,7 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 PACKAGES							+=	CSWlibgoffice-doc
 CATALOGNAME_CSWlibgoffice-doc		=	libgoffice_doc
 SPKG_DESC_CSWlibgoffice-doc			+=	$(DESCRIPTION), documentation
+ARCHALL_CSWlibgoffice-doc			=	1
 REINPLACE_USRSHARE					+=	/opt/csw/share/gtk-doc/html/goffice-0.8/*.html
 REINPLACE_WHEN_USRSHARE				=	postinstall
 
