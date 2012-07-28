@@ -1,5 +1,5 @@
 NAME = munin
-VERSION = 2.0.2
+VERSION = 2.0.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -17,10 +17,10 @@ DISTFILES += CSWmunin-master.preinstall
 DISTFILES += CSWmunin-master.README.CSW
 DISTFILES += CSWmunin-node.README.CSW
 
-PATCHFILES	+= 0004-Expand-paths-with-DESTDIR.patch
-PATCHFILES	+= 0001-paths-in-Makefile.config.patch
 PATCHFILES	+= 0001-paths-and-hostname-in-munin-node.conf.in.patch
 PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
+PATCHFILES	+= 0005-Expand-paths-with-DESTDIR.patch 
+PATCHFILES	+= 0006-paths-in-Makefile.config.patch
 
 #
 # Reinplacements
