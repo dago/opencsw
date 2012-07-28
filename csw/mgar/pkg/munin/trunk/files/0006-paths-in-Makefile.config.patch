@@ -1,14 +1,14 @@
-From da269418eb37e98fbe77b0b37c99c8f7783d09df Mon Sep 17 00:00:00 2001
+From c8297f1d1b8d35e75932c9a43060b8dabb7afc54 Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 3 Jun 2012 18:08:21 +0200
-Subject: [PATCH] paths in Makefile.config
+Date: Sat, 28 Jul 2012 08:25:46 +0200
+Subject: [PATCH 6/6] paths in Makefile.config
 
 ---
  Makefile.config |   38 +++++++++++++++++++-------------------
  1 file changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/Makefile.config b/Makefile.config
-index 7cd0b84..1a971a4 100644
+index 5bb6d18..7abbec8 100644
 --- a/Makefile.config
 +++ b/Makefile.config
 @@ -17,10 +17,10 @@
@@ -73,7 +73,7 @@ index 7cd0b84..1a971a4 100644
  
  # The ruby interpreter to use (used by some plugins)
  RUBY       := /usr/bin/env ruby
-@@ -89,11 +89,11 @@ JAVALIBDIR:= $(LIBDIR)
+@@ -89,11 +89,11 @@ JAVALIBDIR = $(LIBDIR)
  GOODSH     := $(shell PATH=`getconf PATH 2>/dev/null || echo $(PATH)` sh -c 'type sh | sed "s/.* //"')
  
  # Path of bash for bash specific plugins
@@ -86,8 +86,8 @@ index 7cd0b84..1a971a4 100644
 +PERLLIB    = $(shell $(PERL) -V:sitelib | cut -d"'" -f2)
  
  # Client only - Install plugins for this architecture
- OSTYPE     := $(shell uname | tr '[A-Z]' '[a-z]' | cut -f 1 -d _)
-@@ -105,7 +105,7 @@ HOSTNAME   := $(shell hostname)
+ # the LANG=C makes tr work as expected, not regarding any locale it
+@@ -108,7 +108,7 @@ HOSTNAME   := $(shell hostname)
  # What is the safest way to create a tempfile.
  # Default is to figure it out by testing various methods.
  # Replace this with a known platform-specific method
@@ -96,7 +96,7 @@ index 7cd0b84..1a971a4 100644
  
  # Munin version number.
  VERSION    := $(shell ./getversion)
-@@ -123,9 +123,9 @@ CGIUSER := nobody
+@@ -126,9 +126,9 @@ CGIUSER := nobody
  # Which command to use to check if the USER and GROUP to run Munin as, exists.
  # These will work on most modern OSes:
  #
@@ -109,7 +109,7 @@ index 7cd0b84..1a971a4 100644
  
  # For OSX, comment out the previous two lines and comment in these
  #
-@@ -160,4 +160,4 @@ JAR        := jar
+@@ -163,4 +163,4 @@ JAR        := jar
  JCVALID    = $(shell $(JC) -version >/dev/null 2>/dev/null && echo "yes")
  
  # Check whether setruid functionality can be used

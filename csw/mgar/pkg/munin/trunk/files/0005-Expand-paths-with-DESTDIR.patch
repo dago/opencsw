@@ -1,14 +1,14 @@
-From 9eda017107a4fc9fa5781a006108f7e1a5540e05 Mon Sep 17 00:00:00 2001
+From c4dbc877ec6bbc288bc584f8d0d13acd35a2e12b Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 1 Jul 2012 09:05:12 +0200
-Subject: [PATCH] Expand paths with DESTDIR
+Date: Sat, 28 Jul 2012 08:19:03 +0200
+Subject: [PATCH 5/6] Expand paths with DESTDIR
 
 ---
- Makefile |  228 +++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 115 insertions(+), 113 deletions(-)
+ Makefile |  230 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 116 insertions(+), 114 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index a26d2d1..1b5f81c 100644
+index 7ec659f..8388447 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -9,6 +9,8 @@
@@ -20,7 +20,7 @@ index a26d2d1..1b5f81c 100644
  include $(DEFAULTS)
  include $(CONFIG)
  
-@@ -49,8 +51,8 @@ uninstall:
+@@ -55,8 +57,8 @@ uninstall:
  # This removes the installed config so that the next install-pass installs
  # a new config.  Target _only_ suitable for maintainers.
  unconfig:
@@ -31,7 +31,7 @@ index a26d2d1..1b5f81c 100644
  
  tags:
  	-rm -f TAGS
-@@ -66,63 +68,63 @@ endif
+@@ -68,63 +70,63 @@ install: install-master-prime install-common-prime install-node-prime install-pl
  
  install-pre: Makefile Makefile.config
  	@$(CHECKUSER)
@@ -44,7 +44,7 @@ index a26d2d1..1b5f81c 100644
 +	mkdir -p $(DESTDIR)$(STATEDIR)
 +	mkdir -p $(DESTDIR)$(SPOOLDIR)
 +	mkdir -p $(DESTDIR)$(CONFDIR)
-+#	$(CHOWN) $(USER) $(LOGDIR) $(STATEDIR) $(SPOOLDIR)
++	#$(CHOWN) $(USER) $(LOGDIR) $(STATEDIR) $(SPOOLDIR)
  
  install-master-prime: $(INFILES_MASTER) install-pre install-master
 -	mkdir -p $(CONFDIR)/templates
@@ -78,10 +78,10 @@ index a26d2d1..1b5f81c 100644
 +	mkdir -p $(DESTDIR)$(DBDIR)/cgi-tmp
 +	mkdir -p $(DESTDIR)$(CGIDIR)
 +
-+#	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR)
++	#$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR)
 +	$(CHMOD) 0755 $(DESTDIR)$(DBDIR)
 +
-+#	$(CHOWN) $(CGIUSER) $(DBDIR)/cgi-tmp
++	#$(CHOWN) $(CGIUSER) $(DBDIR)/cgi-tmp
 +	$(CHMOD) 0755 $(DESTDIR)$(DBDIR)/cgi-tmp
  
  	for p in master/www/*.tmpl ;  do \
@@ -99,15 +99,15 @@ index a26d2d1..1b5f81c 100644
 +		$(INSTALL) -m 0644 "$$p" $(DESTDIR)$(CONFDIR)/templates/partial/ ; \
  	done
  
--	$(INSTALL) -m 0755 master/DejaVuSansMono.ttf $(LIBDIR)/
--	$(INSTALL) -m 0755 master/DejaVuSans.ttf $(LIBDIR)/
-+	$(INSTALL) -m 0755 master/DejaVuSansMono.ttf $(DESTDIR)$(LIBDIR)/
-+	$(INSTALL) -m 0755 master/DejaVuSans.ttf $(DESTDIR)$(LIBDIR)/
+-	$(INSTALL) -m 0644 master/DejaVuSansMono.ttf $(LIBDIR)/
+-	$(INSTALL) -m 0644 master/DejaVuSans.ttf $(LIBDIR)/
++	$(INSTALL) -m 0644 master/DejaVuSansMono.ttf $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0644 master/DejaVuSans.ttf $(DESTDIR)$(LIBDIR)/
  
 -	test -f $(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(HTMLDIR)/.htaccess
 -	test -f "$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(CONFDIR)/
-+	test -f $(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(DESTDIR)$(HTMLDIR)/.htaccess
-+	test -f "$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(DESTDIR)$(CONFDIR)/
++	test -f $(DESTDIR)$(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(DESTDIR)$(HTMLDIR)/.htaccess
++	test -f "$(DESTDIR)$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(DESTDIR)$(CONFDIR)/
  
 -	$(INSTALL) -m 0755 build/master/_bin/munin-cron $(BINDIR)/
 -	$(INSTALL) -m 0755 build/master/_bin/munin-check $(BINDIR)/
@@ -136,7 +136,7 @@ index a26d2d1..1b5f81c 100644
  
  # ALWAYS DO THE OS SPECIFIC PLUGINS LAST! THAT WAY THEY OVERWRITE THE
  # GENERIC ONES
-@@ -133,66 +135,66 @@ install-node-plugins: install-plugins-prime
+@@ -139,29 +141,29 @@ endif
  install-plugins-prime: install-plugins build $(PLUGINS) Makefile Makefile.config
  	@$(CHECKGROUP)
  
@@ -150,12 +150,12 @@ index a26d2d1..1b5f81c 100644
 +	mkdir -p $(DESTDIR)$(PLUGSTATE)
  
 -	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
-+#	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
++	#$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
  	# using g+rwxs, so plugins can create and modify their state file without help
 -	$(CHMOD) 02775 $(PLUGSTATE)
 -	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
-+#	$(CHMOD) 02775 $(PLUGSTATE)
-+#	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
++	#$(CHMOD) 02775 $(PLUGSTATE)
++	#$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
  
  	for p in build/plugins/node.d/* build/plugins/node.d.$(OSTYPE)/* ; do \
  	    if test -f "$$p" ; then                            \
@@ -164,10 +164,10 @@ index a26d2d1..1b5f81c 100644
 +		$(INSTALL) -m 0755 $$p $(DESTDIR)$(LIBDIR)/plugins/;     \
  	    fi                                                 \
  	done
--	-mv $(LIBDIR)/plugins/*.adv $(LIBDIR)
+-	$(HPUXONLY) mv $(LIBDIR)/plugins/*.adv $(LIBDIR)
 -	$(INSTALL) -m 0644 build/plugins/plugins.history $(LIBDIR)/plugins/
 -	$(INSTALL) -m 0644 build/plugins/plugin.sh $(LIBDIR)/plugins/
-+	-mv $(LIBDIR)/plugins/*.adv $(DESTDIR)$(LIBDIR)
++	$(HPUXONLY) mv $(LIBDIR)/plugins/*.adv $(DESTDIR)$(LIBDIR)
 +	$(INSTALL) -m 0644 build/plugins/plugins.history $(DESTDIR)$(LIBDIR)/plugins/
 +	$(INSTALL) -m 0644 build/plugins/plugin.sh $(DESTDIR)$(LIBDIR)/plugins/
  
@@ -176,9 +176,10 @@ index a26d2d1..1b5f81c 100644
 -	$(INSTALL) -m 0644 build/plugins/javalib/munin-jmx-plugins.jar $(JAVALIBDIR)/
 +	mkdir -p $(DESTDIR)$(JAVALIBDIR)
 +	$(INSTALL) -m 0644 build/plugins/javalib/munin-jmx-plugins.jar $(DESTDIR)$(JAVALIBDIR)/
- 
- #TODO:
- # configure plugins.  Or not. Better done under the direction of the installer
+ 	mkdir -p $(LIBDIR)/plugins
+ 	for p in build/plugins/node.d.java/*; do               \
+ 	    if test -f "$$p" ; then                            \
+@@ -175,37 +177,37 @@ install-plugins-java: build-plugins-java
  # or the packager.
  
  install-async-prime:
@@ -223,18 +224,17 @@ index a26d2d1..1b5f81c 100644
  
  
  install-doc: build-doc
--	mkdir -p $(DOCDIR)/resources
+ 	mkdir -p $(DOCDIR)/resources
 -	$(INSTALL) -m 0644 README $(DOCDIR)/
 -	$(INSTALL) -m 0644 COPYING $(DOCDIR)/
 -	$(INSTALL) -m 0644 build/resources/* $(DOCDIR)/resources
-+	mkdir -p $(DESTDIR)$(DOCDIR)/resources
 +	$(INSTALL) -m 0644 README $(DESTDIR)$(DOCDIR)/
 +	$(INSTALL) -m 0644 COPYING $(DESTDIR)$(DOCDIR)/
 +	$(INSTALL) -m 0644 build/resources/* $(DESTDIR)$(DOCDIR)/resources
  
  ######################################################################
  
-@@ -209,29 +211,29 @@ build/%: %.in
+@@ -218,29 +220,29 @@ build/%: %.in
  	@echo "$< -> $@"
  	@mkdir -p build/`dirname $<`
  	@sed -e 's|@@PREFIX@@|$(PREFIX)|g'                      \
@@ -279,7 +279,7 @@ index a26d2d1..1b5f81c 100644
               -e 's|@@USER@@|$(USER)|g'                          \
               -e 's|@@GROUP@@|$(GROUP)|g'                        \
               -e 's|@@PLUGINUSER@@|$(PLUGINUSER)|g'              \
-@@ -249,17 +251,17 @@ build-common-pre: common/Build
+@@ -258,17 +260,17 @@ build-common-pre: common/Build
  common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm build-common-pre
  	rm -f common/blib/lib/Munin/Common/Defaults.pm
  	$(PERL) -pe 's{(PREFIX     \s+=\s).*}{\1q{$(PREFIX)};}x;   \
@@ -308,7 +308,7 @@ index a26d2d1..1b5f81c 100644
                    s{(PERL	\s+=\s).*}{\1q{$(PERL)};}x;        \
                    s{(PERLLIB	\s+=\s).*}{\1q{$(PERLLIB)};}x;     \
                    s{(PYTHON	\s+=\s).*}{\1q{$(PYTHON)};}x;      \
-@@ -268,8 +270,8 @@ common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm bu
+@@ -277,8 +279,8 @@ common/blib/lib/Munin/Common/Defaults.pm: common/lib/Munin/Common/Defaults.pm bu
                    s{(HOSTNAME	\s+=\s).*}{\1q{$(HOSTNAME)};}x;    \
                    s{(MKTEMP	\s+=\s).*}{\1q{$(MKTEMP)};}x;      \
                    s{(VERSION	\s+=\s).*}{\1q{$(VERSION)};}x;     \
@@ -319,7 +319,7 @@ index a26d2d1..1b5f81c 100644
                    s{(USER	\s+=\s).*}{\1q{$(USER)};}x;        \
                    s{(GROUP	\s+=\s).*}{\1q{$(GROUP)};}x;       \
                    s{(PLUGINUSER	\s+=\s).*}{\1q{$(PLUGINUSER)};}x;  \
-@@ -371,7 +373,7 @@ old-test: t/*.t
+@@ -384,7 +386,7 @@ old-test: t/*.t
  	$(MAKE) $@ CONFIG=t/Makefile.config
  else
  test_plugins = id_default id_root env
@@ -328,7 +328,7 @@ index a26d2d1..1b5f81c 100644
  	@for test in t/*.t; do \
  		echo -n "$$test: "; \
  		PERL5LIB=$(PERLLIB) $(PERL) $$test;\
-@@ -379,10 +381,10 @@ old-test: t/*.t t/install $(addprefix $(CONFDIR)/plugins/,$(test_plugins))
+@@ -392,12 +394,12 @@ old-test: t/*.t t/install $(addprefix $(CONFDIR)/plugins/,$(test_plugins))
  endif
  
  node-monkeywrench: install-node
@@ -336,14 +336,18 @@ index a26d2d1..1b5f81c 100644
 -	rm -rf $(LIBDIR)/plugins
 -	mkdir -p $(LIBDIR)/plugins
 -	mkdir -p $(CONFDIR)/plugins
+-	cp monkeywrench/plugin-break*_ $(LIBDIR)/plugins/
+-	$(SBINDIR)/munin-node-configure --suggest
 +	rm -rf $(DESTDIR)$(CONFDIR)/plugins
 +	rm -rf $(DESTDIR)$(LIBDIR)/plugins
 +	mkdir -p $(DESTDIR)$(LIBDIR)/plugins
 +	mkdir -p $(DESTDIR)$(CONFDIR)/plugins
- 	cp monkeywrench/plugin-break*_ $(LIBDIR)/plugins/
- 	$(SBINDIR)/munin-node-configure --suggest
++	cp monkeywrench/plugin-break*_ $(DESTDIR)$(LIBDIR)/plugins/
++	$(DESTDIR)$(SBINDIR)/munin-node-configure --suggest
  	echo 'Done?'
-@@ -408,12 +410,12 @@ build-common: common/Build
+ 
+ t/install:
+@@ -419,12 +421,12 @@ build-common: common/Build
  # can't seem to find a way to persuade it to write otherwhere.
  install-%: %/Build
  	cd $* && $(PERL) Build install			\
