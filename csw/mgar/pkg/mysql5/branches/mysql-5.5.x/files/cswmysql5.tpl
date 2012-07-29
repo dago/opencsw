@@ -1,206 +1,386 @@
 #!/bin/sh
 # vim:ft=sh:
 #
-# $Id$
-# Start script for MySQL database.
+# Copyright Abandoned 1996 TCX DataKonsult AB & Monty Program KB & Detron HB
+# This file is public domain and comes with NO WARRANTY of any kind
+
+# MySQL daemon start/stop script.
+
+# Usually this is put in /etc/init.d (at least on machines SYSV R4 based
+# systems) and linked to /etc/rc3.d/S99mysql and /etc/rc0.d/K01mysql.
+# When this is done the mysql server will be started when the machine is
+# started and shut down when the systems goes down.
+
+# Comments to support chkconfig on RedHat Linux
+# chkconfig: 2345 64 36
+# description: A very fast and reliable SQL database engine.
+
+# Comments to support LSB init script conventions
+### BEGIN INIT INFO
+# Provides: mysql
+# Required-Start: $local_fs $network $remote_fs
+# Should-Start: ypbind nscd ldap ntpd xntpd
+# Required-Stop: $local_fs $network $remote_fs
+# Default-Start:  2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start and stop MySQL
+# Description: MySQL is a very fast and reliable SQL database engine.
+### END INIT INFO
+
+# If you install MySQL on some other places than /opt/mysql-5.5.19, then you
+# have to do one of the following things for this script to work:
 #
-# NOTE: Make sure DB_DIR is owned BY the mysql user and group and chmod
-# 700.
+# - Run this script from within the MySQL installation directory
+# - Create a /etc/my.cnf file with the following information:
+#   [mysqld]
+#   basedir=<path-to-mysql-installation-directory>
+# - Add the above to any other configuration file (for example ~/.my.ini)
+#   and copy my_print_defaults to /usr/bin
+# - Add the path to the mysql-installation-directory to the basedir variable
+#   below.
 #
-# First time installation can use quick_start-csw in
-#   /opt/csw/mysql5/share/mysql to build the mysql database for the
-#   grant tables.  Or create the initial database yourself.
-#
-# Use my.cnf for startup options.  See MySQL documention
-#   for 'Using Option Files'.
-# Support for mysql5rc still remains in this startup script.
-#
+# If you want to affect other MySQL variables, you should make your changes
+# in the /etc/my.cnf, ~/.my.cnf or other MySQL configuration files.
 
-RETVAL=0
-prefix="@prefix@"
-BASEDIR="${prefix}"
-BINDIR="@bindir@"
-MYSQL_VAR="@localstatedir@"
-sysconfdir="@sysconfdir@"
-BASE_VERSION="@BASE_VERSION@"
-MYSQLD_DATADIR=$MYSQL_VAR
-MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
-CONFFILE=${sysconfdir}/my.cnf
+# If you change base dir, you must also change datadir. These may get
+# overwritten by settings in the MySQL configuration files.
 
-# Source the configuration
-[ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
-[ -r @prefix@/etc/mysql5rc ] && . @prefix@/etc/mysql5rc
-[ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
+basedir=
+datadir=
 
-if [ -r "${sysconfdir}/my.cnf" ]; then
-  MYSQL_HOME="${MYSQL_VAR}"
-elif [ -r "${BASEDIR}/my.cnf" ]; then
-  MYSQL_HOME="${BASEDIR}"
-fi
-export MYSQL_HOME
+# Default value, in seconds, afterwhich the script should timeout waiting
+# for server start.
+# Value here is overriden by value in my.cnf.
+# 0 means don't wait at all
+# Negative numbers mean to wait indefinitely
+service_startup_timeout=900
 
-# To get started quickly, copy a sample configuration file from
-#   $BASEDIR/share/mysql
-# For example,
-#  cp /opt/csw/mysql5/share/mysql/my-medium.cnf /opt/csw/mysql5/var/my.cnf
-#
-# Or, manually follow the database creation steps below, and have
-# mysql just use defaults for everything.
+# Lock directory for RedHat / SuSE.
+lockdir='/var/lock/subsys'
+lock_file_path="$lockdir/mysql"
 
-# 2006-03-11 Changed to only look for the grant tables database
-# 2006-04-16 Changed again.  Look for either the grant tables database
-#            or the options file.
-# 2006-12-28 Fix problem.  Look for either the grant tables database in
-#            the default location or the default options file.
-if [ ! -d "$MYSQLD_DATADIR/mysql" -a ! -f "$CONFFILE" ] ; then
-    exit 0
-fi
+# The following variables are only set for letting mysql.server find things.
 
-# If CONFFILE is the server default file, unset CONFFILE
-if [ "${CONFFILE}" = "${MYSQL_HOME}/my.cnf" \
-      -o \
-     "${CONFFILE}" = "${sysconfdir}/my.cnf" ]; then
-    CONFFILE=
-fi
-
-# If MYSQLD_DATADIR does not contain a mysql directory, unset MYSQLD_DATADIR
-# Also, check that MYSQLD_DATADIR contains a mysql directory
-if [ ! -d "$MYSQL_HOME/mysql" -a ! -d "$MYSQLD_DATADIR/mysql" ] ; then
-    MYSQLD_DATADIR=
-fi
-
-# Make sure required vars are set
-MYSQLD_PID_FILE=${MYSQLD_PID_FILE:=$MYSQL_HOME/mysql.pid}
-
-# If a database already exists, start whether or not there is a conf file.
-# If no conf file, the database will just use internal defaults for everything.
-
-start_it() {
-    if test -r $MYSQLD_PID_FILE ; then
-        if kill -0 `cat $MYSQLD_PID_FILE` > /dev/null 2>&1 ; then
-            echo "${MYSQLD_PROG} (`cat $MYSQLD_PID_FILE`) seems to be running."
-            return 1
-        fi
-    fi
-
-    printf "%-60s" "Starting ${MYSQLD_PROG}: "
-
-    # 2006-03-11
-    # This script no longer creates the default database. You may create the
-    # default database manually or use
-    # /opt/csw/mysql5/share/mysql/quick_start-csw
-    #    if [ ! -d "$BASEDIR/var/mysql" ] ; then
-    #        echo MySQL core database has not been created.
-    #         echo Creating it now...
-    #       $BASEDIR/bin/mysql_install_db
-    #       chown -R mysql:mysql $BASEDIR/var
-    #    fi
-
-    # 2006-04-16  --defaults-file is changed to --defaults-extra-file
-    ${BINDIR}/mysqld_safe \
-        `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
-        --pid-file=$MYSQLD_PID_FILE \
-        `[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \
-        `[ -n "$MYSQLD_ANSI" ] && echo "--ansi"` \
-        `[ -n "$MYSQLD_BASEDIR" ] && echo "--basedir=$MYSQLD_BASEDIR"` \
-        `[ -n "$MYSQLD_BIG_TABLES" ] && echo "--big-tables"` \
-        `[ -n "$MYSQLD_BIND_ADDRESS" ] && echo "--bind-address=$MYSQLD_BIND_ADDRESS"` \
-        `[ -n "$MYSQLD_CHARACTER_SETS" ] && echo "--character-sets-dir=$MYSQLD_CHARACTER_SETS"` \
-        `[ -n "$MYSQLD_CHROOT" ] && echo "--chroot=$MYSQLD_CHROOT"` \
-        `[ -n "$MYSQLD_DATADIR" ] && echo "--datadir=$MYSQLD_DATADIR"` \
-        `[ -n "$MYSQLD_DEFAULT_CHARSET" ] && echo "--default-character-set=$MYSQLD_DEFAULT_CHARSET"` \
-        `[ -n "$MYSQLD_DEFAULT_TABLE_TYPE" ] && echo "--default-table-type=$MYSQLD_DEFAULT_TABLE_TYPE"` \
-        `[ -n "$MYSQLD_DELAY_KEY_WRITE_TABLES" ] && echo "--delay-key-write-for-all-tables"` \
-        `[ -n "$MYSQLD_ENABLE_LOCKING" ] && echo "--enable-locking"` \
-        `[ -n "$MYSQLD_EXIT_INFO" ] && echo "--exit-info"` \
-        `[ -n "$MYSQLD_FLUSH" ] && echo "--flush"` \
-        `[ -n "$MYSQLD_INIT_FILE" ] && echo "--init-file=$MYSQLD_INIT_FILE"` \
-        `[ -n "$MYSQLD_LANGUAGE" ] && echo "--language=$MYSQLD_LANGUAGE"` \
-        `[ -n "$MYSQLD_LOG" ] && echo "--log=$MYSQLD_LOG"` \
-        `[ -n "$MYSQLD_LOG_ISAM" ] && echo "--log-isam=$MYSQLD_LOG_ISAM"` \
-        `[ -n "$MYSQLD_LOG_SLOW_QUERIES" ] && echo "--log-slow-queries=$MYSQLD_LOG_SLOW_QUERIES"` \
-        `[ -n "$MYSQLD_LOG_UPDATE" ] && echo "--log-update=$MYSQLD_LOG_UPDATE"` \
-        `[ -n "$MYSQLD_LOG_LONG_FORMAT" ] && echo "--log-long-format"` \
-        `[ -n "$MYSQLD_LOW_PRIORITY_UPDATES" ] && echo "--low-priority-updates"` \
-        `[ -n "$MYSQLD_MEMLOCK" ] && echo "--memlock"` \
-        `[ -n "$MYSQLD_MYISAM_RECOVER" ] && echo "--myisam-recover=$MYSQLD_MYISAM_RECOVER"` \
-        `[ -n "$MYSQLD_PORT" ] && echo "--port=$MYSQLD_PORT"` \
-        `[ -n "$MYSQLD_OLD_PROTOCOL" ] && echo "--old-protocol"` \
-        `[ -n "$MYSQLD_ONE_THREAD" ] && echo "--one-thread"` \
-        `[ -n "$MYSQLD_SET_VARIABLE" ] && echo "--set-variablevar=$MYSQLD_SET_VARIABLE"` \
-        `[ -n "$MYSQLD_SKIP_GRANT_TABLES" ] && echo "--skip-grant-tables"` \
-        `[ -n "$MYSQLD_SAFE_MODE" ] && echo "--safe-mode"` \
-        `[ -n "$MYSQLD_SECURE" ] && echo "--secure"` \
-        `[ -n "$MYSQLD_SKIP_CONCURRENT_INSERT" ] && echo "--skip-concurrent-insert"` \
-        `[ -n "$MYSQLD_SKIP_DELAY_KEY_WRITE" ] && echo "--skip-delay-key-write"` \
-        `[ -n "$MYSQLD_SKIP_LOCKING" ] && echo "--skip-locking"` \
-        `[ -n "$MYSQLD_SKIP_NAME_RESOLVE" ] && echo "--skip-name-resolve"` \
-        `[ -n "$MYSQLD_SKIP_NETWORKING" ] && echo "--skip-networking"` \
-        `[ -n "$MYSQLD_SKIP_NEW" ] && echo "--skip-new"` \
-        `[ -n "$MYSQLD_SKIP_HOST_CACHE" ] && echo "--skip-host-cache"` \
-        `[ -n "$MYSQLD_SKIP_SHOW_DATABASE" ] && echo "--skip-show-database"` \
-        `[ -n "$MYSQLD_SKIP_THREAD_PRIORITY" ] && echo "--skip-thread-priority"` \
-        `[ -n "$MYSQLD_SOCKET" ] && echo "--socket=$MYSQLD_SOCKET"` \
-        `[ -n "$MYSQLD_TMPDIR" ] && echo "--tmpdir=$MYSQLD_TMPDIR"` \
-        `[ -n "$MYSQLD_USER" ] && echo "--user=$MYSQLD_USER"` \
-        & >/dev/null 2>&1
-    RETVAL=$?
-    if [ $RETVAL = 0 ] ; then
-        echo "[  OK  ]"
-    else
-        echo "[FAILED]"
-        return 1
-    fi
-    return 0
-}
-
-stop_it() {
-
-    printf "%-60s" "Shutting down mysqld: "
-    if test -f "$MYSQLD_PID_FILE" ; then
-        pkill `pgrep_opts` mysqld_safe >/dev/null 2>&1
-        kill `cat $MYSQLD_PID_FILE` >/dev/null 2>&1
-        RETVAL=$?
-    else
-        RETVAL=1
-    fi
-    if [ $RETVAL = 0 ] ; then
-        echo "[  OK  ]"
-    else
-        echo "[FAILED]"
-    fi
-    echo ""
-    return 0
-}
-
-pgrep_opts() {
-  if [ -x /bin/zonename ]
+# Set some defaults
+mysqld_pid_file_path=
+if test -z "$basedir"
+then
+  basedir=@prefix@
+  bindir=@bindir@
+  if test -z "$datadir"
   then
-    echo "-z `/bin/zonename`"
+    datadir=@localstatedir@/mysql5
+  fi
+  sbindir=@prefix@/libexec
+  libexecdir=@prefix@/libexec
+else
+  bindir="$basedir/bin"
+  if test -z "$datadir"
+  then
+    datadir="$basedir/data"
+  fi
+  sbindir="$basedir/libexec"
+  libexecdir="$basedir/libexec"
+fi
+
+# datadir_set is used to determine if datadir was set (and so should be
+# *not* set inside of the --basedir= handler.)
+datadir_set=
+
+#
+# Use LSB init script functions for printing messages, if possible
+#
+lsb_functions="/lib/lsb/init-functions"
+if test -f $lsb_functions ; then
+  . $lsb_functions
+else
+  log_success_msg()
+  {
+    echo " SUCCESS! $@"
+  }
+  log_failure_msg()
+  {
+    echo " ERROR! $@"
+  }
+fi
+
+PATH="/sbin:/usr/sbin:/bin:/usr/bin:$basedir/bin"
+export PATH
+
+mode=$1    # start or stop
+
+[ $# -ge 1 ] && shift
+
+
+other_args="$*"   # uncommon, but needed when called from an RPM upgrade action
+           # Expected: "--skip-networking --skip-grant-tables"
+           # They are not checked here, intentionally, as it is the resposibility
+           # of the "spec" file author to give correct arguments only.
+
+case `echo "testing\c"`,`echo -n testing` in
+    *c*,-n*) echo_n=   echo_c=     ;;
+    *c*,*)   echo_n=-n echo_c=     ;;
+    *)       echo_n=   echo_c='\c' ;;
+esac
+
+parse_server_arguments() {
+  for arg do
+    case "$arg" in
+      --basedir=*)  basedir=`echo "$arg" | sed -e 's/^[^=]*=//'`
+                    bindir="$basedir/bin"
+		    if test -z "$datadir_set"; then
+		      datadir="$basedir/data"
+		    fi
+		    sbindir="$basedir/sbin"
+		    libexecdir="$basedir/libexec"
+        ;;
+      --datadir=*)  datadir=`echo "$arg" | sed -e 's/^[^=]*=//'`
+		    datadir_set=1
+	;;
+      --pid-file=*) mysqld_pid_file_path=`echo "$arg" | sed -e 's/^[^=]*=//'` ;;
+      --service-startup-timeout=*) service_startup_timeout=`echo "$arg" | sed -e 's/^[^=]*=//'` ;;
+    esac
+  done
+}
+
+wait_for_pid () {
+  verb="$1"           # created | removed
+  pid="$2"            # process ID of the program operating on the pid-file
+  pid_file_path="$3" # path to the PID file.
+
+  i=0
+  avoid_race_condition="by checking again"
+
+  while test $i -ne $service_startup_timeout ; do
+
+    case "$verb" in
+      'created')
+        # wait for a PID-file to pop into existence.
+        test -s "$pid_file_path" && i='' && break
+        ;;
+      'removed')
+        # wait for this PID-file to disappear
+        test ! -s "$pid_file_path" && i='' && break
+        ;;
+      *)
+        echo "wait_for_pid () usage: wait_for_pid created|removed pid pid_file_path"
+        exit 1
+        ;;
+    esac
+
+    # if server isn't running, then pid-file will never be updated
+    if test -n "$pid"; then
+      if kill -0 "$pid" 2>/dev/null; then
+        :  # the server still runs
+      else
+        # The server may have exited between the last pid-file check and now.
+        if test -n "$avoid_race_condition"; then
+          avoid_race_condition=""
+          continue  # Check again.
+        fi
+
+        # there's nothing that will affect the file.
+        log_failure_msg "The server quit without updating PID file ($pid_file_path)."
+        return 1  # not waiting any more.
+      fi
+    fi
+
+    echo $echo_n ".$echo_c"
+    i=`expr $i + 1`
+    sleep 1
+
+  done
+
+  if test -z "$i" ; then
+    log_success_msg
+    return 0
+  else
+    log_failure_msg
+    return 1
   fi
 }
 
-case $1 in
-    start)
-    start_it
-    ;;
-
-    stop)
-    stop_it
-    ;;
-
-    restart)
-    stop_it
-    while pgrep `pgrep_opts` ${MYSQLD_PROG} > /dev/null
-      do
-      sleep 1
+# Get arguments from the my.cnf file,
+# the only group, which is read from now on is [mysqld]
+if test -x ./bin/my_print_defaults
+then
+  print_defaults="./bin/my_print_defaults"
+elif test -x $bindir/my_print_defaults
+then
+  print_defaults="$bindir/my_print_defaults"
+elif test -x $bindir/mysql_print_defaults
+then
+  print_defaults="$bindir/mysql_print_defaults"
+else
+  # Try to find basedir in @sysconfdir@/my.cnf
+  conf=@sysconfdir@/my.cnf
+  print_defaults=
+  if test -r $conf
+  then
+    subpat='^[^=]*basedir[^=]*=\(.*\)$'
+    dirs=`sed -e "/$subpat/!d" -e 's//\1/' $conf`
+    for d in $dirs
+    do
+      d=`echo $d | sed -e 's/[ 	]//g'`
+      if test -x "$d/bin/my_print_defaults"
+      then
+        print_defaults="$d/bin/my_print_defaults"
+        break
+      fi
+      if test -x "$d/bin/mysql_print_defaults"
+      then
+        print_defaults="$d/bin/mysql_print_defaults"
+        break
+      fi
     done
-    start_it
+  fi
+
+  # Hope it's in the PATH ... but I doubt it
+  test -z "$print_defaults" && print_defaults="my_print_defaults"
+fi
+
+#
+# Read defaults file from 'basedir'.   If there is no defaults file there
+# check if it's in the old (depricated) place (datadir) and read it from there
+#
+
+extra_args=""
+if test -r "$basedir/my.cnf"
+then
+  extra_args="-e $basedir/my.cnf"
+else
+  if test -r "$datadir/my.cnf"
+  then
+    extra_args="-e $datadir/my.cnf"
+  fi
+fi
+
+parse_server_arguments `$print_defaults $extra_args mysqld server mysql_server mysql.server`
+
+#
+# Set pid file if not given
+#
+if test -z "$mysqld_pid_file_path"
+then
+  mysqld_pid_file_path=$datadir/`hostname`.pid
+else
+  case "$mysqld_pid_file_path" in
+    /* ) ;;
+    * )  mysqld_pid_file_path="$datadir/$mysqld_pid_file_path" ;;
+  esac
+fi
+
+case "$mode" in
+  'start')
+    # Start daemon
+
+    # Safeguard (relative paths, core dumps..)
+    cd $basedir
+
+    echo $echo_n "Starting MySQL"
+    if test -x $bindir/mysqld_safe
+    then
+      # Give extra arguments to mysqld with the my.cnf file. This script
+      # may be overwritten at next upgrade.
+      $bindir/mysqld_safe --datadir="$datadir" --pid-file="$mysqld_pid_file_path" $other_args >/dev/null 2>&1 &
+      wait_for_pid created "$!" "$mysqld_pid_file_path"; return_value=$?
+
+      # Make lock for RedHat / SuSE
+      if test -w "$lockdir"
+      then
+        touch "$lock_file_path"
+      fi
+
+      exit $return_value
+    else
+      log_failure_msg "Couldn't find MySQL server ($bindir/mysqld_safe)"
+    fi
     ;;
 
+  'stop')
+    # Stop daemon. We use a signal here to avoid having to know the
+    # root password.
+
+    if test -s "$mysqld_pid_file_path"
+    then
+      mysqld_pid=`cat "$mysqld_pid_file_path"`
+
+      if (kill -0 $mysqld_pid 2>/dev/null)
+      then
+        echo $echo_n "Shutting down MySQL"
+        kill $mysqld_pid
+        # mysqld should remove the pid file when it exits, so wait for it.
+        wait_for_pid removed "$mysqld_pid" "$mysqld_pid_file_path"; return_value=$?
+      else
+        log_failure_msg "MySQL server process #$mysqld_pid is not running!"
+        rm "$mysqld_pid_file_path"
+      fi
+
+      # Delete lock for RedHat / SuSE
+      if test -f "$lock_file_path"
+      then
+        rm -f "$lock_file_path"
+      fi
+      exit $return_value
+    else
+      log_failure_msg "MySQL server PID file could not be found!"
+    fi
+    ;;
+
+  'restart')
+    # Stop the service and regardless of whether it was
+    # running or not, start it again.
+    if $0 stop  $other_args; then
+      $0 start $other_args
+    else
+      log_failure_msg "Failed to stop running server, so refusing to try to start."
+      exit 1
+    fi
+    ;;
+
+  'reload'|'force-reload')
+    if test -s "$mysqld_pid_file_path" ; then
+      read mysqld_pid <  "$mysqld_pid_file_path"
+      kill -HUP $mysqld_pid && log_success_msg "Reloading service MySQL"
+      touch "$mysqld_pid_file_path"
+    else
+      log_failure_msg "MySQL PID file could not be found!"
+      exit 1
+    fi
+    ;;
+  'status')
+    # First, check to see if pid file exists
+    if test -s "$mysqld_pid_file_path" ; then
+      read mysqld_pid < "$mysqld_pid_file_path"
+      if kill -0 $mysqld_pid 2>/dev/null ; then
+        log_success_msg "MySQL running ($mysqld_pid)"
+        exit 0
+      else
+        log_failure_msg "MySQL is not running, but PID file exists"
+        exit 1
+      fi
+    else
+      # Try to find appropriate mysqld process
+      mysqld_pid=`pgrep $libexecdir/mysqld`
+      if test -z "$mysqld_pid" ; then
+        if test -f "$lock_file_path" ; then
+          log_failure_msg "MySQL is not running, but lock file ($lock_file_path) exists"
+          exit 2
+        fi
+        log_failure_msg "MySQL is not running"
+        exit 3
+      else
+        log_failure_msg "MySQL is running but PID file could not be found"
+        exit 4
+      fi
+    fi
+    ;;
     *)
-    echo "Usage: $0  { start | stop | restart } "
+      # usage
+      basename=`basename "$0"`
+      echo "Usage: $basename  {start|stop|restart|reload|force-reload|status}  [ MySQL server options ]"
+      exit 1
     ;;
 esac
 
-exit $RETVAL
+exit 0
