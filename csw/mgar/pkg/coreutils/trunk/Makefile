@@ -1,5 +1,5 @@
 NAME = coreutils
-VERSION = 8.15
+VERSION = 8.17
 CATEGORIES = utils
 GARTYPE = v2
 
