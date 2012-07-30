@@ -9,6 +9,10 @@ PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 VENDOR_URL = http://git-scm.org/
 
+# the getpassphrase patch is a non-build-related fix; mantis 4943
+# polish for upstream, but local for now
+VERSION_FLAG_PATCH = 1
+
 NO_SVN_TESTS=YesPlease
 GIT_TEST_OPTS=-i -v -d
 EXTRA_TEST_EXPORTS = NO_SVN_TESTS GIT_TEST_OPTS
@@ -120,6 +124,7 @@ PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
 PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
 PATCHFILES += 0009-Makefile-Set-EXTRA_CPPFLAGS-during-the-compilation-o.patch
 PATCHFILES += 0010-t1304-improve-setfacl-prerequisite-setup.patch
+PATCHFILES += 0011-Use-getpassphrase-instead-of-getpass-when-prompting-.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
