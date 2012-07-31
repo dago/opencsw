@@ -1,24 +1,27 @@
 NAME = Error
-VERSION = 0.17016
+VERSION = 0.17018
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = SHLOMIF
 
 DESCRIPTION = Error/exception handling in an OO-ish way
 define BLURB
-  The Error package provides two interfaces. Firstly Error provides a
-  procedural interface to exception handling. Secondly Error is a base class
-  for errors/exceptions that can either be thrown, for subsequent catch, or
-  can simply be recorded.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmerror
-CATALOGNAME = pm_error
+LICENSE_TEXT = This module is licensed under the perl license, please see for details http://dev.perl.org/licenses/
 
-BUILD_DEP_PKGS = CSWpmtestpodcoverage
+PACKAGES += CSWpm-error
+CATALOGNAME_CSWpm-error = pm_error
+SPKG_DESC_CSWpm-error = Error/exception handling in an OO-ish way
+ARCHALL_CSWpm-error = 1
+OBSOLETED_BY_CSWpm-error += CSWpmerror
+CATALOGNAME_CSWpmerror = pm_error_stub
 
-ARCHALL = 1
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
