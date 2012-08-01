@@ -1,7 +1,7 @@
 # TBD:
 
 NAME = lsof
-VERSION = 4.85
+VERSION = 4.86
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -13,19 +13,21 @@ define BLURB
   open by each process.
 endef
 
-MASTER_SITES = ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/
+MASTER_SITES += ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/
+MASTER_SITES += ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/NEW/
 DISTNAME = $(NAME)_$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += lsof-license
 
 # Do not automatically use VxFS
-PATCHFILES += 0002-Disable-VxFS-autodetect.patch
+# PATCHFILES += 0002-Disable-VxFS-autodetect.patch
 
 SRCDIST = $(DISTNAME)_src
 WORKSRC   = $(WORKDIR)/$(DISTNAME)/$(SRCDIST)
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
 VENDOR_URL = http://people.freebsd.org/~abe/
 LICENSE = lsof-license
@@ -34,6 +36,8 @@ LICENSE = lsof-license
 BUILD64-sparc-5.9 = 1
 BUILD64-sparc-5.10 = 1
 BUILD64-i386-5.10 = 1
+BUILD64-sparc-5.11 = 1
+BUILD64-i386-5.11 = 1
 BUILD64 = $(BUILD64-$(GARCH)-$(GAROSREL))
 
 EXTRA_BUILD_ISAS = sparcv8plus
@@ -61,17 +65,22 @@ SOLARIS_CCDIR = $(CC_HOME)/bin
 SOLARIS_INSTR = $(ISA)
 SOLARIS_KERNBITS = $(MEMORYMODEL)
 
-BUILD_DEP_PKGS += VRTSfssdk
+# No VxFS for Solaris 11 yet
+BUILD_DEP_PKGS-5.9 += VRTSfssdk
+BUILD_DEP_PKGS-5.10 += VRTSfssdk
+BUILD_DEP_PKGS += $(BUILD_DEP_PKGS-$(GAROSREL))
 
 # The Veritas Filesystem library libvxfsutil.a is sparcv8+, make sure to build that
 # specific ISA and not link when building sparcv8
 SOLARIS_VXFSINCL-sparcv8plus = /opt/VRTS/include
 SOLARIS_VXFSINCL-sparcv9     = /opt/VRTS/include
 SOLARIS_VXFSINCL-i386        = /opt/VRTS/include
+SOLARIS_VXFSINCL-pentium_pro = /opt/VRTS/include
 SOLARIS_VXFSINCL-amd64       = /opt/VRTS/include
 SOLARIS_VXFSLIB-sparcv8plus = /opt/VRTS/lib
 SOLARIS_VXFSLIB-sparcv9     = /opt/VRTS/lib
 SOLARIS_VXFSLIB-i386        = /opt/VRTS/lib
+SOLARIS_VXFSLIB-pentium_pro = /opt/VRTS/lib
 SOLARIS_VXFSLIB-amd64       = /opt/VRTS/lib
 SOLARIS_VXFSINCL = $(SOLARIS_VXFSINCL-$(ISA))
 SOLARIS_VXFSLIB = $(SOLARIS_VXFSLIB-$(ISA))
@@ -91,13 +100,16 @@ PROTOTYPE_FILES_lsof = $(call baseisadirs,$(bindir),lsof)
 PROTOTYPE_GROUP_lsof = sys
 PROTOTYPE_PERMS_lsof = 2755
 
+# This is because the vxfs sdk contains sparcv8+
+CHECKPKG_OVERRIDES_CSWlsof += binary-architecture-does-not-match-placement|file=opt/csw/bin/sparcv8/lsof|arch_id=18|arch_name=sparcv8+
+
 include gar/category.mk
 
 INSTALLISADIR ?= $(WORKROOTDIR)/install-$(MODULATION)
 
 post-extract-modulated:
 	@echo " ==> Extracting source distribution"
-	@$(if $(filter-out global,$(MODULATION)),( cd $(WORKDIR)/$(DISTNAME) ; tar xf $(SRCDIST).tar ))
+	@$(if $(filter-out global,$(MODULATION)),( cd $(WORKDIR)/$(DISTNAME) ; gtar xf $(SRCDIST).tar ))
 	@$(MAKECOOKIE)
 
 configure-custom:
