@@ -51,6 +51,7 @@ PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 PATCHFILES += CSWclamav.clamav-milter.conf.p
 PATCHFILES += CSWclamav.optparser.c.p
+PATCHFILES += CSWclamav.scanners.c.p
 
 # Must have 64-bit libmilter for this to work
 #BUILD64 = 1
