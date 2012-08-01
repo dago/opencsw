@@ -69,7 +69,7 @@ while read src dest; do
   TMPFILE=/tmp/cswcrontab.${PKGINST}.$$
 
   if [ -f "/var/spool/cron/crontabs/${USERNAME}" ]; then
-      umask 600
+      umask 177
       /usr/bin/crontab -l ${USERNAME} | remove_cron_lines "${PKGINST}" "${TMPFILE}"
 
       debug "Contents of ${TMPFILE} after removing old lines from this package:"
