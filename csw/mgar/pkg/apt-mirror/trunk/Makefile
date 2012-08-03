@@ -24,9 +24,12 @@ BUILD_SCRIPTS		=
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
-RUNTIME_DEP_PKGS	+=	CSWperl
-RUNTIME_DEP_PKGS	+=	CSWgzip
-RUNTIME_DEP_PKGS	+=	CSWwget
+RUNTIME_DEP_PKGS					+=	CSWperl
+CHECKPKG_OVERRIDES_CSWapt-mirror	+=	surplus-dependency|CSWperl
+RUNTIME_DEP_PKGS					+=	CSWgzip
+CHECKPKG_OVERRIDES_CSWapt-mirror	+=	surplus-dependency|CSWgzip
+RUNTIME_DEP_PKGS					+=	CSWwget
+CHECKPKG_OVERRIDES_CSWapt-mirror	+=	surplus-dependency|CSWwget
 
 ARCHALL	=	1
 
