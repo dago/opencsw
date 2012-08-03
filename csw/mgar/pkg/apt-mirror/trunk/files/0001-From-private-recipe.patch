@@ -1,0 +1,63 @@
+From 4e4f67cd7ee806be2caf11d9a1a10d0240c3bfbb Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 2 Aug 2012 15:40:34 +0200
+Subject: [PATCH] From private recipe
+
+---
+ apt-mirror | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/apt-mirror b/apt-mirror
+index d03fe58..f5f54b9 100755
+--- a/apt-mirror
++++ b/apt-mirror
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#! /usr/bin/env perl -w
+ 
+ =pod
+ 
+@@ -90,7 +90,7 @@ use File::Basename;
+ my $config_file;
+ 
+ my %config_variables = (
+-    "defaultarch" => `dpkg --print-installation-architecture 2>/dev/null` || 'i386',
++    "defaultarch" => 'i386',
+     "nthreads"    => 20,
+     "base_path"   => '/var/spool/apt-mirror',
+     "mirror_path" => '$base_path/mirror',
+@@ -235,15 +235,6 @@ sub download_urls {
+ }
+ 
+ ######################################################################################
+-## Create the 3 needed directories if they don't exist yet
+-my @needed_directories = (get_variable("mirror_path"), get_variable("skel_path"), get_variable("var_path"));
+-foreach my $needed_directory (@needed_directories) {
+-    unless (-d $needed_directory) {
+-        mkdir($needed_directory) or die("apt-mirror: can't create $needed_directory directory");
+-    }
+-}
+-
+-######################################################################################
+ ## Parse config
+ 
+ open CONFIG, "<$config_file" or die("apt-mirror: can't open config file ($config_file)");
+@@ -295,6 +286,15 @@ close CONFIG;
+ 
+ die("Please explicitly specify 'defaultarch' in mirror.list") unless get_variable("defaultarch");
+ 
++######################################################################################
++## Create the 3 needed directories if they don't exist yet
++my @needed_directories = (get_variable("mirror_path"), get_variable("skel_path"), get_variable("var_path"));
++foreach my $needed_directory (@needed_directories) {
++    unless (-d $needed_directory) {
++        mkdir($needed_directory) or die("apt-mirror: can't create $needed_directory directory");
++    }
++}
++
+ check_lock();
+ 
+ $SIG{INT} = "unlock_aptmirror";
+-- 
+1.7.11.3
+
