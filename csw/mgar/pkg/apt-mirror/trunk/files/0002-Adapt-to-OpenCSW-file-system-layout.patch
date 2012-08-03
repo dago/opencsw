@@ -1,0 +1,81 @@
+From 4c639c999513024a5f7022da56d7e3beefc642d9 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 2 Aug 2012 15:57:31 +0200
+Subject: [PATCH] Adapt to OpenCSW file system layout
+
+---
+ apt-mirror  | 14 +++++++-------
+ mirror.list |  2 +-
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/apt-mirror b/apt-mirror
+index f5f54b9..8d9e49a 100755
+--- a/apt-mirror
++++ b/apt-mirror
+@@ -27,7 +27,7 @@ Main features:
+ 
+ =head1 COMMENTS
+ 
+-apt-mirror uses F</etc/apt/mirror.list> as a configuration file.
++apt-mirror uses F</etc/opt/csw/apt/mirror.list> as a configuration file.
+ By default it is tuned to official Debian or Ubuntu mirrors. Change
+ it for your needs.
+ 
+@@ -39,19 +39,19 @@ Or uncomment line in F</etc/cron.d/apt-mirror> to enable daily mirror updates.
+ 
+ =head1 FILES
+ 
+-F</etc/apt/mirror.list>
++F</etc/opt/csw/apt/mirror.list>
+         Main configuration file
+ 
+ F</etc/cron.d/apt-mirror>
+         Cron configuration template
+ 
+-F</var/spool/apt-mirror/mirror>
++F</var/opt/csw/apt-mirror/mirror>
+         Mirror places here
+ 
+-F</var/spool/apt-mirror/skel>
++F</var/opt/csw/apt-mirror/skel>
+         Place for temporarily downloaded indexes
+ 
+-F</var/spool/apt-mirror/var>
++F</var/opt/csw/apt-mirror/var>
+         Log files placed here. URLs and MD5 summs also here.
+ 
+ =head1 CONFIGURATION EXAMPLES
+@@ -92,7 +92,7 @@ my $config_file;
+ my %config_variables = (
+     "defaultarch" => 'i386',
+     "nthreads"    => 20,
+-    "base_path"   => '/var/spool/apt-mirror',
++    "base_path"   => '/var/opt/csw/apt-mirror',
+     "mirror_path" => '$base_path/mirror',
+     "skel_path"   => '$base_path/skel',
+     "var_path"    => '$base_path/var',
+@@ -117,7 +117,7 @@ my %clean_directory = ();
+ ######################################################################################
+ ## Setting up $config_file variable
+ 
+-$config_file = "/etc/apt/mirror.list";	# Default value
++$config_file = "/etc/opt/csw/apt/mirror.list";	# Default value
+ if($_ = shift) {
+     die("apt-mirror: invalid config file specified") unless -f $_;
+     $config_file = $_;
+diff --git a/mirror.list b/mirror.list
+index 3b4ee8a..e2230f7 100644
+--- a/mirror.list
++++ b/mirror.list
+@@ -2,7 +2,7 @@
+ #
+ ## default configuration options (uncomment and change to override)
+ #
+-#set base_path    /var/spool/apt-mirror
++#set base_path    /var/opt/csw/apt-mirror
+ #
+ ## if you change the base path you must create the directories below with write privlages
+ #
+-- 
+1.7.11.3
+
