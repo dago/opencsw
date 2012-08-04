@@ -55,6 +55,8 @@ PRESERVECONF += /etc/opt/csw/exim/aliases
 
 ALTERNATIVE = /opt/csw/bin/sendmail sendmail /opt/csw/bin/sendmail.exim 50 /opt/csw/bin/mailq mailq /opt/csw/bin/mailq.exim /opt/csw/bin/newaliases newaliases /opt/csw/bin/newaliases.exim
 
+POSTMSG = /opt/csw/share/doc/$(NAME)/postmsg.CSW
+
 # scripts/exim_install has been patched to use this variable
 EXIM_VERSION = $(VERSION)
 export EXIM_VERSION
@@ -140,6 +142,7 @@ post-install-modulated:
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	mkdir -p $(DESTDIR)/var/$(prefix)/spool/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
+	cp -p files/postmsg.CSW  $(DESTDIR)$(prefix)/share/doc/exim/
 	cp -p files/exim-env.sh $(DESTDIR)/etc/$(prefix)/exim/
 	(cd $(WORKSRC)/doc; \
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
