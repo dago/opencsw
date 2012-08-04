@@ -1,6 +1,6 @@
-From 0ae00974e741f490e9c0613390374b1689b2d21d Mon Sep 17 00:00:00 2001
+From 8b363cf733c5537b13f4ff366e5350e618d5e25d Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Mon, 30 May 2011 03:15:26 +0200
+Date: Sat, 4 Aug 2012 15:05:15 +0200
 Subject: [PATCH] Set OpenCSW build options
 
 Modify the template Local/Makefile to set the options for the csw
@@ -8,15 +8,16 @@ environment.
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
- Local/Makefile |  101 +++++++++++++++++++++++++++++++-------------------------
- 1 files changed, 56 insertions(+), 45 deletions(-)
+ Local/Makefile |  103 ++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 56 insertions(+), 47 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index b0335a9..d2b2630 100644
+index 95857c7..c786ed6 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
-@@ -1,5 +1,16 @@
- # $Cambridge: exim/src/src/EDITME,v 1.27 2010/06/12 15:21:25 jetmore Exp $
+@@ -78,6 +78,17 @@
+ #                    THESE ARE THINGS YOU MUST SPECIFY                        #
+ ###############################################################################
  
 +# -I (CSW_WORKSRC).. is needed for the SPF2 hack (to pick up patched
 +# SPF2 headers locally)
@@ -29,19 +30,19 @@ index b0335a9..d2b2630 100644
 +# expect to see LDFLAGS.  I don't see where it gets set though...?  Typo?
 +LFLAGS += $(LDFLAGS)
 +
- ##################################################
- #          The Exim mail transport agent         #
- ##################################################
-@@ -100,7 +111,7 @@
+ # Exim will not build unless you specify BIN_DIRECTORY, CONFIGURE_FILE, and
+ # EXIM_USER. You also need EXIM_GROUP if EXIM_USER specifies a uid by number.
+ 
+@@ -98,7 +109,7 @@
  # /usr/local/sbin. The installation script will try to create this directory,
  # and any superior directories, if they do not exist.
  
 -BIN_DIRECTORY=/usr/exim/bin
-+BIN_DIRECTORY=/opt/csw/sbin
++BIN_DIRECTORY=/opt/csw/bin
  
  
  #------------------------------------------------------------------------------
-@@ -116,7 +127,7 @@ BIN_DIRECTORY=/usr/exim/bin
+@@ -114,7 +125,7 @@ BIN_DIRECTORY=/usr/exim/bin
  # don't exist. It will also install a default runtime configuration if this
  # file does not exist.
  
@@ -50,16 +51,16 @@ index b0335a9..d2b2630 100644
  
  # It is possible to specify a colon-separated list of files for CONFIGURE_FILE.
  # In this case, Exim will use the first of them that exists when it is run.
-@@ -133,7 +144,7 @@ CONFIGURE_FILE=/usr/exim/configure
- # deliveries. (Local deliveries run as various non-root users, typically as the
- # owner of a local mailbox.) Specifying these values as root is not supported.
+@@ -138,7 +149,7 @@ EXIM_USER=
+ # lookup is deferred until runtime. In this case, it is the name that is built
+ # into the binary. You can do this by a setting of the form:
  
--EXIM_USER=
+-# EXIM_USER=ref:exim
 +EXIM_USER=ref:exim
  
- # If you specify EXIM_USER as a name, this is looked up at build time, and the
- # uid number is built into the binary. However, you can specify that this
-@@ -175,7 +186,7 @@ EXIM_USER=
+ # In other words, put "ref:" in front of the user name. If you set EXIM_USER
+ # like this, any value specified for EXIM_GROUP is also passed "by reference".
+@@ -173,7 +184,7 @@ EXIM_USER=
  
  # Almost all installations choose this:
  
@@ -68,7 +69,7 @@ index b0335a9..d2b2630 100644
  
  
  
-@@ -213,7 +224,7 @@ ROUTER_REDIRECT=yes
+@@ -211,7 +222,7 @@ ROUTER_REDIRECT=yes
  
  # This one is very special-purpose, so is not included by default.
  
@@ -77,7 +78,7 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
-@@ -234,7 +245,7 @@ TRANSPORT_SMTP=yes
+@@ -232,7 +243,7 @@ TRANSPORT_SMTP=yes
  # This one is special-purpose, and commonly not required, so it is not
  # included by default.
  
@@ -86,7 +87,7 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
-@@ -243,9 +254,9 @@ TRANSPORT_SMTP=yes
+@@ -241,9 +252,9 @@ TRANSPORT_SMTP=yes
  # MBX, is included only when requested. If you do not know what this is about,
  # leave these settings commented out.
  
@@ -99,7 +100,7 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
-@@ -286,16 +297,16 @@ LOOKUP_DBM=yes
+@@ -296,16 +307,16 @@ LOOKUP_DBM=yes
  LOOKUP_LSEARCH=yes
  LOOKUP_DNSDB=yes
  
@@ -122,9 +123,9 @@ index b0335a9..d2b2630 100644
 +LOOKUP_PASSWD=yes
 +LOOKUP_PGSQL=yes
  # LOOKUP_SQLITE=yes
+ # LOOKUP_SQLITE_PC=sqlite3
  # LOOKUP_WHOSON=yes
- 
-@@ -316,7 +327,7 @@ LOOKUP_DNSDB=yes
+@@ -327,7 +338,7 @@ LOOKUP_DNSDB=yes
  # with Solaris 7 onwards. Uncomment whichever of these you are using.
  
  # LDAP_LIB_TYPE=OPENLDAP1
@@ -133,9 +134,18 @@ index b0335a9..d2b2630 100644
  # LDAP_LIB_TYPE=NETSCAPE
  # LDAP_LIB_TYPE=SOLARIS
  
-@@ -345,8 +356,8 @@ PCRE_LIBS=-lpcre
- # specified in INCLUDE. The settings below are just examples; -lpq is for
- # PostgreSQL, -lgds is for Interbase, -lsqlite3 is for SQLite.
+@@ -348,7 +359,7 @@ LOOKUP_DNSDB=yes
+ # too if needed.
+ 
+ PCRE_CONFIG=yes
+-# PCRE_LIBS=-lpcre
++PCRE_LIBS=-lpcre
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -361,8 +372,8 @@ PCRE_CONFIG=yes
+ #
+ # You do not need to use this for any lookup information added via pkg-config.
  
 -# LOOKUP_INCLUDE=-I /usr/local/ldap/include -I /usr/local/mysql/include -I /usr/local/pgsql/include
 -# LOOKUP_LIBS=-L/usr/local/lib -lldap -llber -lmysqlclient -lpq -lgds -lsqlite3
@@ -144,7 +154,7 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
-@@ -367,14 +378,14 @@ EXIM_MONITOR=eximon.bin
+@@ -383,14 +394,14 @@ EXIM_MONITOR=eximon.bin
  # and the MIME ACL. Please read the documentation to learn more about these
  # features.
  
@@ -161,7 +171,7 @@ index b0335a9..d2b2630 100644
  
  # If you're using ClamAV and are backporting fixes to an old version, instead
  # of staying current (which is the more usual approach) then you may need to
-@@ -404,9 +415,9 @@ EXIM_MONITOR=eximon.bin
+@@ -425,9 +436,9 @@ EXIM_MONITOR=eximon.bin
  # installed on your system (www.libspf2.org). Depending on where it is installed
  # you may have to edit the CFLAGS and LDFLAGS lines.
  
@@ -173,109 +183,101 @@ index b0335a9..d2b2630 100644
  
  # Uncomment the following lines to add SRS (Sender rewriting scheme) support.
  # You need to have libsrs_alt installed on your system (srs.mirtol.com).
-@@ -493,7 +504,7 @@ FIXED_NEVER_USERS=root
+@@ -519,7 +530,7 @@ FIXED_NEVER_USERS=root
  # configurations to be used. The prefix can be more restrictive than just a
  # directory (the second example).
  
 -# ALT_CONFIG_PREFIX=/some/directory/
-+ALT_CONFIG_PREFIX=/etc/opt/csw/exim/
++ALT_CONFIG_PREFIX=/etc/opt/csw/exim
  # ALT_CONFIG_PREFIX=/some/directory/exim.conf-
  
  
-@@ -552,11 +563,11 @@ FIXED_NEVER_USERS=root
+@@ -578,15 +589,15 @@ FIXED_NEVER_USERS=root
  # included in the Exim binary. You will then need to set up the run time
  # configuration to make use of the mechanism(s) selected.
  
 -# AUTH_CRAM_MD5=yes
 -# AUTH_CYRUS_SASL=yes
 -# AUTH_DOVECOT=yes
--# AUTH_PLAINTEXT=yes
--# AUTH_SPA=yes
 +AUTH_CRAM_MD5=yes
 +AUTH_CYRUS_SASL=yes
 +AUTH_DOVECOT=yes
+ # AUTH_GSASL=yes
+ # AUTH_GSASL_PC=libgsasl
+ # AUTH_HEIMDAL_GSSAPI=yes
+ # AUTH_HEIMDAL_GSSAPI_PC=heimdal-gssapi
+-# AUTH_PLAINTEXT=yes
+-# AUTH_SPA=yes
 +AUTH_PLAINTEXT=yes
 +AUTH_SPA=yes
  
  
  #------------------------------------------------------------------------------
-@@ -564,7 +575,7 @@ FIXED_NEVER_USERS=root
- # Cyrus SASL library installed before trying to build Exim, and you probably
- # want to uncomment the following line:
+@@ -596,7 +607,7 @@ FIXED_NEVER_USERS=root
+ # Similarly for GNU SASL, unless pkg-config is used via AUTH_GSASL_PC.
+ # Ditto for AUTH_HEIMDAL_GSSAPI(_PC).
  
 -# AUTH_LIBS=-lsasl2
 +AUTH_LIBS=-lsasl2
+ # AUTH_LIBS=-lgsasl
+ # AUTH_LIBS=-lgssapi -lheimntlm -lkrb5 -lhx509 -lcom_err -lhcrypto -lasn1 -lwind -lroken -lcrypt
  
- 
- #------------------------------------------------------------------------------
-@@ -593,7 +604,7 @@ HEADERS_CHARSET="ISO-8859-1"
- # the Sieve filter support. For those OS where iconv() is known to be installed
- # as standard, the file in OS/Makefile-xxxx contains
+@@ -634,9 +645,9 @@ HEADERS_CHARSET="ISO-8859-1"
+ # and its header file are not in the default places. You might need to use
+ # something like this:
  #
 -# HAVE_ICONV=yes
 +HAVE_ICONV=yes
- #
- # If you are not using one of those systems, but have installed iconv(), you
- # need to uncomment that line above. In some cases, you may find that iconv()
-@@ -602,7 +613,7 @@ HEADERS_CHARSET="ISO-8859-1"
- #
- # HAVE_ICONV=yes
  # CFLAGS=-O -I/usr/local/include
 -# EXTRALIBS_EXIM=-L/usr/local/lib -liconv
 +EXTRALIBS_EXIM=-L/opt/csw/lib -liconv -lpam -ldl
  #
  # but of course there may need to be other things in CFLAGS and EXTRALIBS_EXIM
  # as well.
-@@ -655,10 +666,10 @@ HEADERS_CHARSET="ISO-8859-1"
+@@ -689,11 +700,11 @@ HEADERS_CHARSET="ISO-8859-1"
  # leave these settings commented out.
  
  # This setting is required for any TLS support (either OpenSSL or GnuTLS)
 -# SUPPORT_TLS=yes
 +SUPPORT_TLS=yes
  
- # Uncomment this setting if you are using OpenSSL
+ # Uncomment one of these settings if you are using OpenSSL; pkg-config vs not
+ # USE_OPENSSL_PC=openssl
 -# TLS_LIBS=-lssl -lcrypto
 +TLS_LIBS=-lssl -lcrypto
  
- # Uncomment these settings if you are using GnuTLS
- # USE_GNUTLS=yes
-@@ -677,7 +688,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # Uncomment the first and either the second or the third of these if you
+ # are using GnuTLS.  If you have pkg-config, then the second, else the third.
+@@ -719,7 +730,7 @@ HEADERS_CHARSET="ISO-8859-1"
  # with all your other libraries. If they are in a special directory, you may
  # need something like
  
 -# TLS_LIBS=-L/usr/local/openssl/lib -lssl -lcrypto
-+TLS_LIBS=-L/opt/csw/lib/ -lssl -lcrypto
++TLS_LIBS=-L/opt/csw/lib -lssl -lcrypto
  # or
  # TLS_LIBS=-L/opt/gnu/lib -lgnutls -ltasn1 -lgcrypt
  
-@@ -685,7 +696,7 @@ HEADERS_CHARSET="ISO-8859-1"
- # auxiliary programs. If the include files are not in a standard place, you can
- # set TLS_INCLUDE to specify where they are, for example:
- 
--# TLS_INCLUDE=-I/usr/local/openssl/include/
-+TLS_INCLUDE=-I/opt/csw/include/openssl
- # or
- # TLS_INCLUDE=-I/opt/gnu/include
- 
-@@ -709,7 +720,7 @@ HEADERS_CHARSET="ISO-8859-1"
+@@ -751,9 +762,7 @@ HEADERS_CHARSET="ISO-8859-1"
  # Once you have done this, "make install" will build the info files and
  # install them in the directory you have defined.
  
 -# INFO_DIRECTORY=/usr/share/info
+-
+-
 +INFO_DIRECTORY=/opt/csw/share/info
- 
- 
  #------------------------------------------------------------------------------
-@@ -722,7 +733,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # Exim log directory and files: Exim creates several log files inside a
+ # single log directory. You can define the directory and the form of the
+@@ -764,7 +773,7 @@ HEADERS_CHARSET="ISO-8859-1"
  # %s. This will be replaced by one of the strings "main", "panic", or "reject"
  # to form the final file names. Some installations may want something like this:
  
 -# LOG_FILE_PATH=/var/log/exim_%slog
-+LOG_FILE_PATH=/var/opt/csw/log/exim/%slog
++LOG_FILE_PATH=/var/opt/csw/log/%slog
  
  # which results in files with names /var/log/exim_mainlog, etc. The directory
  # in which the log files are placed must exist; Exim does not try to create
-@@ -771,7 +782,7 @@ EXICYCLOG_MAX=10
+@@ -813,7 +822,7 @@ EXICYCLOG_MAX=10
  # files. Both the name of the command and the suffix that it adds to files
  # need to be defined here. See also the EXICYCLOG_MAX configuration.
  
@@ -284,7 +286,7 @@ index b0335a9..d2b2630 100644
  COMPRESS_SUFFIX=gz
  
  
-@@ -779,7 +790,7 @@ COMPRESS_SUFFIX=gz
+@@ -821,7 +830,7 @@ COMPRESS_SUFFIX=gz
  # If the exigrep utility is fed compressed log files, it tries to uncompress
  # them using this command.
  
@@ -293,16 +295,7 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
-@@ -798,7 +809,7 @@ ZCAT_COMMAND=/usr/bin/zcat
- # that the local_scan API is made available by the linker. You may also need
- # to add -ldl to EXTRALIBS so that dlopen() is available to Exim.
- 
--# EXPAND_DLFUNC=yes
-+EXPAND_DLFUNC=yes
- 
- 
- #------------------------------------------------------------------------------
-@@ -808,7 +819,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+@@ -850,7 +859,7 @@ ZCAT_COMMAND=/usr/bin/zcat
  # support, which is intended for use in conjunction with the SMTP AUTH
  # facilities, is included only when requested by the following setting:
  
@@ -311,7 +304,7 @@ index b0335a9..d2b2630 100644
  
  # You probably need to add -lpam to EXTRALIBS, and in some releases of
  # GNU/Linux -ldl is also needed.
-@@ -912,7 +923,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+@@ -954,7 +963,7 @@ ZCAT_COMMAND=/usr/bin/zcat
  # (the value doesn't matter), the symbolic link is not created or moved. You
  # will then have to "turn Exim on" by setting up the link manually.
  
@@ -320,7 +313,7 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
-@@ -924,7 +935,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+@@ -966,7 +975,7 @@ ZCAT_COMMAND=/usr/bin/zcat
  # aliases). The following setting can be changed to specify a different
  # location for the system alias file.
  
@@ -329,6 +322,15 @@ index b0335a9..d2b2630 100644
  
  
  #------------------------------------------------------------------------------
+@@ -995,7 +1004,7 @@ SYSTEM_ALIASES_FILE=/etc/aliases
+ #------------------------------------------------------------------------------
+ # Uncomment this setting to include IPv6 support.
+ 
+-# HAVE_IPV6=yes
++HAVE_IPV6=yes
+ 
+ ###############################################################################
+ #              THINGS YOU ALMOST NEVER NEED TO MENTION                        #
 -- 
-1.7.3.2
+1.7.10.3
 

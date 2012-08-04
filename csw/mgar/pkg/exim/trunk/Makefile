@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = exim
-VERSION = 4.76
+VERSION = 4.80
 CATEGORIES = server
 GARTYPE = v2
 
@@ -85,7 +85,7 @@ INSTALL_ARGS = "INSTALL_ARG=-no_symlink -no_chown"
 TEST_TARGET =
 
 # We use this to strip binaries after we're done building
-BINS =  exim exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
+BINS =  exim-$(VERSION)* exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
 BINS += eximon.bin
 
 UGPATH=/etc/opt/csw/pkg/CSWexim
@@ -112,6 +112,8 @@ pre-patch-modulated:
 	(cd $(WORKSRC); \
 	test -r Local/Makefile || cp -p src/EDITME Local/Makefile; \
 	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf; \
+	perl -pi -e 's/Local.*//' .gitignore; \
+	git add .gitignore; \
 	git add Local/; git commit -m 'Setup Local build default files'; \
 	test -d spf2 || cp -pr /opt/csw/include/spf2 .; \
 	git add spf2; git commit -m 'import spf2 header files' )
@@ -122,12 +124,13 @@ pre-build-modulated:
 	@$(MAKECOOKIE)
 
 DOC_LIST = ChangeLog Exim3.upgrade Exim4.upgrade NewStuff OptionLists.txt
-DOC_LIST += README README.SIEVE dbm.discuss.txt filter.txt pcrepattern.txt
-DOC_LIST += pcretest.txt spec.txt
+DOC_LIST += README README.SIEVE dbm.discuss.txt filter.txt spec.txt
 
 post-install-modulated:
-	(cd $(DESTDIR)$(prefix)/sbin; \
-	mv exim-$(VERSION)-1 exim; \
+	(mkdir -p $(DESTDIR)$(prefix)/sbin; \
+	cd $(DESTDIR)$(prefix)/sbin; \
+	ln -s  ../bin/exim-$(VERSION)-2 exim; \
+	cd ../bin; ln -s exim-$(VERSION)-* exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
 	(cd $(DESTDIR); mkdir -p var/opt/csw/svc/manifest/network; \
