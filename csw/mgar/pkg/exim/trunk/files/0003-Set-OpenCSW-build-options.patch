@@ -1,4 +1,4 @@
-From 8b363cf733c5537b13f4ff366e5350e618d5e25d Mon Sep 17 00:00:00 2001
+From 09dcb4b8d3cb14218c1f26b4f017e09695a050e9 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Sat, 4 Aug 2012 15:05:15 +0200
 Subject: [PATCH] Set OpenCSW build options
@@ -8,11 +8,11 @@ environment.
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
- Local/Makefile |  103 ++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 56 insertions(+), 47 deletions(-)
+ Local/Makefile |  105 ++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 57 insertions(+), 48 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index 95857c7..c786ed6 100644
+index 95857c7..6c14aaf 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
 @@ -78,6 +78,17 @@
@@ -331,6 +331,15 @@ index 95857c7..c786ed6 100644
  
  ###############################################################################
  #              THINGS YOU ALMOST NEVER NEED TO MENTION                        #
+@@ -1222,7 +1231,7 @@ TMPDIR="/tmp"
+ # (process id) to a file so that it can easily be identified. The path of the
+ # file can be specified here. Some installations may want something like this:
+ 
+-# PID_FILE_PATH=/var/lock/exim.pid
++PID_FILE_PATH=/var/run/exim.pid
+ 
+ # If PID_FILE_PATH is not defined, Exim writes a file in its spool directory
+ # using the name "exim-daemon.pid".
 -- 
 1.7.10.3
 
