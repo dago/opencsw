@@ -239,3 +239,4 @@ post-merge:
 			-e "s#/usr/local#/opt/csw#g;" \
 				.$(bindir)/ggettextize \
 				.$(infodir)/gettext.info; )
+	@$(MAKECOOKIE)
