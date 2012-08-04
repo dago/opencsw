@@ -35,7 +35,7 @@ RUNTIME_DEP_PKGS_CSWexim += CSWgzip
 RUNTIME_DEP_PKGS_CSWexim += CSWgzipextras
 RUNTIME_DEP_PKGS_CSWexim += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWexim += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre1
@@ -96,7 +96,7 @@ USERGROUP = $(UGPATH)/cswusergroup
 
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
-CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/local|root/opt/csw/sbin/exim
+CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/local|root/opt/csw/bin/exim-4.80-2
 CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswexim.xml
 
 PROTOTYPE_MODIFIERS = eximsuid eximowned
