@@ -3,6 +3,8 @@ VERSION = 0.18.1.1
 CATEGORIES = lib
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 DESCRIPTION = GNU locale utilities
 define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
