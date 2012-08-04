@@ -1,5 +1,18 @@
 IMPORTANT NOTES:
 
+Relying on sendmail-client
+--------------------------
+
+As of release 4.80, the exim package relies on the sendmail-client
+service provided by Solaris 10 to relay mail from /usr/lib/sendmail
+to localhost:25.  We no longer fiddle with the system files such as
+/usr/lib/sendmail, newaliases, etc.  This should be more robust
+against patching and will also allow exim to be installed during a
+jumpstart as we no longer rely on user input during the installation.
+
+It will likely mean that you need to tweak either your submit.cf file
+for sendmail or your exim.conf (to change domain qualifications).
+
 Service Management Facility (SMF)
 ---------------------------------
 
