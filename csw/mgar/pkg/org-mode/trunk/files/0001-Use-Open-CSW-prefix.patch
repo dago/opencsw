@@ -1,0 +1,25 @@
+From 2b51aba657dc6ca5abdb14be60637c4936eedb1a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 6 Aug 2012 11:22:48 +0200
+Subject: [PATCH] Use Open CSW prefix
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 8a7bde1..3783bf0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,7 +14,7 @@
+ EMACS=emacs
+ 
+ # Where local software is found
+-prefix=/usr/local
++prefix=/opt/csw
+ 
+ # Where local lisp files go
+ lispdir   = $(prefix)/share/emacs/site-lisp
+-- 
+1.7.11.3
+
