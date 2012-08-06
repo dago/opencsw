@@ -1,0 +1,5 @@
+To enable contributed extensions to org-mode, simply add
+"/opt/csw/share/org-mode/lisp" to your load-path, for instance in your
+.emacs with:
+
+  (setq load-path (cons "/opt/csw/share/org-mode/lisp" load-path))

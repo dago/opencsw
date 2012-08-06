@@ -1,0 +1,40 @@
+From 6be29d8424b2bedc775139d7b62d9e01b171d4be Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 6 Aug 2012 11:32:29 +0200
+Subject: [PATCH] Fix documentation build target
+
+---
+ Makefile | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 3783bf0..9cdfbfd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -240,7 +240,7 @@ compile: $(ELCFILES0) $(ELCBFILES)
+ 
+ install: install-lisp install-data
+ 
+-doc: doc/org.html doc/org.pdf doc/orgcard.pdf doc/orgcard_letter.pdf doc/orgguide.pdf doc/orgcard.txt
++doc: doc/org.html doc/org.pdf doc/orgcard.pdf doc/orgcard_letter.pdf doc/orgguide.pdf
+ 
+ p:
+ 	${MAKE} pdf && open doc/org.pdf
+@@ -295,14 +295,10 @@ doc/orgguide.pdf: doc/orgguide.texi
+ 
+ doc/org.html: doc/org.texi
+ 	(cd doc && $(TEXI2HTML) --no-split -o org.html org.texi)
+-	UTILITIES/manfull.pl doc/org.html
+ 
+ doc/orgcard.pdf: doc/orgcard.tex
+ 	(cd doc && pdftex orgcard.tex)
+ 
+-doc/orgcard.txt: doc/orgcard.tex
+-	(cd doc && perl ../UTILITIES/orgcard2txt.pl orgcard.tex > orgcard.txt)
+-
+ doc/orgcard_letter.tex: doc/orgcard.tex
+ 	perl -pe 's/\\pdflayout=\(0l\)/\\pdflayout=(1l)/' \
+                    doc/orgcard.tex > doc/orgcard_letter.tex
+-- 
+1.7.11.3
+
