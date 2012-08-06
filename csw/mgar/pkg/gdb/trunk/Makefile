@@ -37,6 +37,9 @@ PATCHFILES	+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
 
 GARCOMPILER		=	GNU
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 BUILD64 =	1
 ISAEXEC	=	1
 
