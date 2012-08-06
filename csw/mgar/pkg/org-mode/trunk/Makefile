@@ -35,6 +35,8 @@ INSTALL_SCRIPTS		+=	info
 ARCHALL							=	1
 RUNTIME_DEP_PKGS				+=	CSWemacs
 CHECKPKG_OVERRIDES_CSWorg-mode	+=	surplus-dependency|CSWemacs
+CHECKPKG_OVERRIDES_CSWorg-mode	+=	missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWorg-mode	+=	file-with-bad-content|/usr/local|root/opt/csw/share/org-mode/lisp/htmlize.el
 
 EXTRA_TEXINFO						=	$(infodir)/.*
 
@@ -71,5 +73,5 @@ post-install-modulated:
 	mv $(DESTDIR)/$(infodir)/org $(DESTDIR)/$(infodir)/org-ocsw
 	gsed --in-place --expression='s/^[*] Org Mode: (org)[.]      Outline-based notes management and organizer$$/* Org Mode (OCSW): (org-ocsw).      Outline-based notes management and organizer as supplied by Open CSW/' $(DESTDIR)/$(infodir)/org-ocsw
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(contrib)
-	gtar --directory=$(WORKSRC)/contrib --create --file=- . | gtar --directory $(DESTDIR)/$(contrib) --extract --file=-
+	gtar --directory=$(WORKSRC)/contrib --create --exclude-vcs --file=- . | gtar --directory $(DESTDIR)/$(contrib) --extract --file=-
 	$(MAKECOOKIE)
