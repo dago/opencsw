@@ -26,7 +26,6 @@ PKGFILES_CSWlibao4 += $(call pkgfiles_lib,libao.so.4)
 PKGFILES_CSWlibao4 += $(call baseisadirs,$(libdir),ao/.*)
 PKGFILES_CSWlibao4 += $(sysconfdir)/.*
 PKGFILES_CSWlibao4 += $(mandir)/.*
-RUNTIME_DEP_PKGS_CSWlibao4 += CSWlibaudiofile0
 RUNTIME_DEP_PKGS_CSWlibao4 += CSWlibesd0
 OBSOLETED_BY_CSWlibao4 = CSWlibao
 
