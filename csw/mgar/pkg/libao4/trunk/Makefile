@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/ao/
-DISTFILES  = $(DISTFILES).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.xiph.org/ao/
 
