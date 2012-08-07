@@ -1,0 +1,25 @@
+From 1bb9bbe8c922c2f48c9c17cbd2b9f9ba295eec7c Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Tue, 7 Aug 2012 21:40:59 +0200
+Subject: [PATCH] fix test locale problem
+
+---
+ Examples/Client/svn_cmd.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Examples/Client/svn_cmd.py b/Examples/Client/svn_cmd.py
+index 9c3dc36..a1c9ff8 100644
+--- a/Examples/Client/svn_cmd.py
++++ b/Examples/Client/svn_cmd.py
+@@ -58,7 +58,7 @@ def main( args ):
+ 
+ def initLocale():
+     # init the locale
+-    if sys.platform in ['win32','cygwin']:
++    if sys.platform in ['win32','cygwin','sunos5']:
+         locale.setlocale( locale.LC_ALL, '' )
+ 
+     else:
+-- 
+1.7.10.3
+
