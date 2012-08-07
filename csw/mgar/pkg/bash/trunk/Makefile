@@ -41,6 +41,8 @@ CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/shar
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bashref.html
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bash.html
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 ###### Upstream and opencsw files information #######
 
 # Patches download location
