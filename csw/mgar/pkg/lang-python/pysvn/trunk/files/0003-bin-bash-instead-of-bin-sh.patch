@@ -50,6 +50,7 @@ index 1c61fdc..a8e2faa 100755
  
  cmd () {
  	echo Info: Command: $*
+1.7.10.3
 diff --git a/Tests/test-05.sh b/Tests/test-05.sh
 index 8e892b9..32976c0 100755
 --- a/Tests/test-05.sh

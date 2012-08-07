@@ -1,0 +1,25 @@
+From 2cd80b544670fd9ba767de3d25057458d191a732 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Tue, 7 Aug 2012 21:11:08 +0200
+Subject: [PATCH] no rpath with SUN ld
+
+---
+ Source/setup_configure.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Source/setup_configure.py b/Source/setup_configure.py
+index 4c3d1ae..84fa6ed 100644
+--- a/Source/setup_configure.py
++++ b/Source/setup_configure.py
+@@ -1286,7 +1286,7 @@ class SunOsCompilerGCC(UnixCompilerGCC):
+     def _getLdLibs( self ):
+         py_ld_libs = [
+                 '-L%(SVN_LIB)s',
+-                '-Wl,--rpath -Wl,%(SVN_LIB)s',
++                '-Wl,-R -Wl,%(SVN_LIB)s',
+                 '-lsvn_client-1',
+                 '-lsvn_diff-1',
+                 '-lsvn_repos-1',
+-- 
+1.7.10.3
+

@@ -20,8 +20,17 @@ index a8e2faa..c360615 100755
 -echo '#!/bin/sh' >${TESTROOT}/repos/hooks/pre-commit
 +echo '#!/opt/csw/bin/bash' >${TESTROOT}/repos/hooks/pre-commit
  echo export PYTHONPATH=$PYTHONPATH >>${TESTROOT}/repos/hooks/pre-commit
- echo echo $PYTHON ${WORKDIR}/Tests/test_04_pre_commit_test_1.py '"$@"' ">${TESTROOT}/test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
- echo $PYTHON ${WORKDIR}/Tests/test_04_pre_commit_test_1.py '"$@"' ">>${TESTROOT}/test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
+ echo export LD_LIBRARY_PATH=$LD_LIBRARY_PATH >>${TESTROOT}/repos/hooks/pre-commit
+ echo export PATH=$PATH >>${TESTROOT}/repos/hooks/pre-commit
+@@ -38,7 +38,7 @@ echo echo $PYTHON ${WORKDIR}/Tests/test_04_commit_hook_test_1.py '"$@"' ">${TEST
+ echo $PYTHON ${WORKDIR}/Tests/test_04_commit_hook_test_1.py '"$@"' ">>${TESTROOT}/pre_test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
+ chmod +x ${TESTROOT}/repos/hooks/pre-commit
+ 
+-echo '#!/bin/sh' >${TESTROOT}/repos/hooks/post-commit
++echo '#!/opt/csw/bin/bash' >${TESTROOT}/repos/hooks/post-commit
+ echo export PYTHONPATH=$PYTHONPATH >>${TESTROOT}/repos/hooks/post-commit
+ echo export LD_LIBRARY_PATH=$LD_LIBRARY_PATH >>${TESTROOT}/repos/hooks/post-commit
+ echo export PATH=$PATH >>${TESTROOT}/repos/hooks/post-commit
 diff --git a/Tests/test-05.sh b/Tests/test-05.sh
 index 32976c0..81f2754 100755
 --- a/Tests/test-05.sh
