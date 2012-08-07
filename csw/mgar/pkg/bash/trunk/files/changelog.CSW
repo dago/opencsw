@@ -1,3 +1,9 @@
+bash (4.2.37,REV=2012.08.07) unstable
+
+  * Added bash patches bash42-025 and bash42-037.
+
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 07 Aug 2012 19:54:51 +0200
+
 bash (4.2.24,REV=2012.04.20) unstable
 
   * Added bash patches bash42-011 and bash42-024.
