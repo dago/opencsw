@@ -31,8 +31,19 @@ PATCHFILES  = 0002-pysvn.hpp-string-includes-first.patch
 #PATCHFILES += 0005-Use-dash-capital-R-for-runtime-path.patch
 #ÃPATCHFILES += 0006-Use-opt-csw-lib.patch
 PATCHFILES += 0003-bin-bash-instead-of-bin-sh.patch
-# PATCHFILES += 0001-fixes-for-tests.patch
+PATCHFILES += 0001-fixes-for-tests.patch
 PATCHFILES += 0008-gid-in-two-more-places.patch
+
+# svn_lib_dir is incorrectly used instead of SVN_LIB
+# in configure
+PATCHFILES += 0004-fixes-SVN_LIB-macro.patch
+
+# rpath option is a gnu ld one but not a SUN ld one
+PATCHFILES += 0005-no-rpath-with-SUN-ld.patch
+
+# pysvn tries to use en_GB.utf8 not available during a test
+# let's rather use the default one
+PATCHFILES += 0006-fix-test-locale-problem.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -45,11 +56,13 @@ BUILD_DEP_PKGS += CSWapache2-dev
 BUILD_DEP_PKGS += CSWlibexpat-dev
 BUILD_DEP_PKGS += CSWbash
 
-RUNTIME_DEP_PKGS += CSWgcc4corert
-RUNTIME_DEP_PKGS += CSWgcc4g++rt
-RUNTIME_DEP_PKGS += CSWneon
+RUNTIME_DEP_PKGS += CSWlibneon27
+RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibstdc++6
 RUNTIME_DEP_PKGS += CSWpython
 RUNTIME_DEP_PKGS += CSWsvn
+RUNTIME_DEP_PKGS += CSWlibexpat1
+
 
 INCOMPATIBELE_PKGS = CSWpyxml
 
@@ -62,6 +75,7 @@ TEST_SCRIPTS_5.10 = pysvn
 TEST_SCRIPTS = $(TEST_SCRIPTS_$(GAROSREL))
 CONFIGURE_ARGS = $(DIRPATHS)
 #GARCOMPILER = GNU
+
 
 include gar/category.mk
 
