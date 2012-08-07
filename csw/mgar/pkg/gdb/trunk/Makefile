@@ -67,6 +67,10 @@ CONFIGURE_ARGS	+=	--with-expat
 CONFIGURE_ARGS	+=	--with-x
 CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-$(MEMORYMODEL))
 
+# we skip the lengthy test until the linker on the build platforms are
+# of the same and latest version...
+SKIPTEST			=	1
+
 RUNTIME_DEP_PKGS	+=	CSWlibexpat1
 RUNTIME_DEP_PKGS	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS	+=	CSWlibintl8
