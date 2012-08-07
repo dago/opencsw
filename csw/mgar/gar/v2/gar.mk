@@ -314,6 +314,9 @@ prerequisite: $(if $(filter global,$(MODULATION)),announce pre-everything $(COOK
 	$(if $(filter-out global,$(MODULATION)),$(MAKE) -s MODULATION=global prerequisite)
 	$(DONADA)
 
+build-dep-pkgs:
+	@echo $(BUILD_DEP_PKGS)
+
 check-prereqs:
 	@$(abspath $(GARBIN)/check_for_deps) $(ALL_PREREQ_PKGS)
 	@$(MAKECOOKIE)
