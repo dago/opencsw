@@ -21,6 +21,11 @@ VENDOR_URL = http://www.hpl.hp.com/personal/Hans_Boehm/gc/
 
 LICENSE = README.QUICK
 
+GARCOMPILER	=	GNU
+
+CONFIGURE_ARGS	=	$(DIRPATHS)
+CONFIGURE_ARGS	+=	--enable-cplusplus
+
 PACKAGES += CSWlibcord1
 SPKG_DESC_CSWlibcord1 = A garbage collector for C and C++, libcord.so.1
 PKGFILES_CSWlibcord1 += $(call pkgfiles_lib,libcord.so.1)
@@ -32,11 +37,16 @@ SPKG_DESC_CSWlibgc1 = A garbage collector for C and C++, libgc.so.1
 PKGFILES_CSWlibgc1 += $(call pkgfiles_lib,libgc.so.1)
 OBSOLETED_BY_CSWlibgc1 += CSWlibgc
 
+PACKAGES += CSWlibgccpp1
+SPKG_DESC_CSWlibgccpp1 = A garbage collector for C and C++, libgccpp.so.1
+PKGFILES_CSWlibgccpp1 += $(call pkgfiles_lib,libgccpp.so.1)
+
 PACKAGES += CSWlibgc-dev
-SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 and libcord.so.1
+SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 libcord.so.1 and libgccpp.so.1
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibcord1
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgc1
+RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgccpp1
 
 # This is just docs, ignore for now
 CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw/share/gc/README.autoconf
@@ -45,6 +55,19 @@ CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw
 #   FAIL: gctest
 # The bugreport has been posted on
 #   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/004904.html
+TEST_SCRIPTS	=	custom
+
 # BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
+
+test-custom:
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) check
+	$(MAKECOOKIE)
+
+post-install-modulated: pkgdoc = $(DESTDIR)/$(docdir)/$(NAME)-dev
+post-install-modulated:
+	ginstall --directory --mode=u=rwx,go=rx $(pkgdoc)
+	cd $(DESTDIR)/$(sharedstatedir)/gc && mv * $(pkgdoc)
+	rmdir $(DESTDIR)/$(sharedstatedir)/gc
+	$(MAKECOOKIE)
