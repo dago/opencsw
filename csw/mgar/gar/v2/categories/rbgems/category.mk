@@ -24,9 +24,6 @@ SPKG_DESC_CSWrb18-$(GEMPKGNAME)-doc ?= $(or $(SPKG_DESC_CSWrb18-$(GEMPKGNAME)),$
 
 # GEM_DEPENDENCY_PKGS ?= $(RUNTIME_DEP_PKGS_CSWgem-$(GEMPKGNAME))
 
-# Tests are enabled by default, unless overridden at the test level
-ENABLE_TEST ?= 1
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX ?= $(GEMNAME)-(\d+(?:\.\d+)*).gem
 USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)

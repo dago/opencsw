@@ -3,19 +3,15 @@
 MASTER_SITES ?= $(CPAN_MIRRORS)
 
 # This is common to most modules - override in module makefile if different
-MODDIST   ?= $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(MODDIST)
+MODDIST   ?= $(DISTNAME).tar.gz
+DISTFILES ?= $(MODDIST)
 CHECKPATH ?= $(firstword $(CPAN_MIRRORS))
 
 # Tests are enabled by default, unless overridden at the test level
-ENABLE_TEST ?= 1
 TEST_TARGET ?= test
 
 # Test target is test by default (in CPAN category)
 TEST_TARGET ?= test
-
-# Every CPAN module depends on Perl
-#DEPENDS += lang/perl
 
 # Build also for 64 bit Perl by default
 BUILD64 ?= $(if $(shell if test -f $(bindir_install)/$(ISA_DEFAULT64)/perl; then echo perl64; fi),1)
