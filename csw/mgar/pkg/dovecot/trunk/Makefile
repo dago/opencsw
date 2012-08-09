@@ -40,6 +40,7 @@ RUNTIME_DEP_PKGS_CSWdovecot += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWdovecot += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWdovecot += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibldap2-4-2
