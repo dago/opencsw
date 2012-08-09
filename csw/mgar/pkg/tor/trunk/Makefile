@@ -18,7 +18,7 @@ VENDOR_URL = http://www.torproject.org
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS_CSWtor += CSWlibevent2-0-5
-RUNTIME_DEP_PKGS_CSWtor += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWtor += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWtor += CSWlibz1
 
 sysconfdir = /etc/opt/csw
@@ -31,5 +31,7 @@ PRESERVECONF += $(sysconfdir)/tor/torrc
 
 MIGRATE_FILES += tor/tor-tsocks.conf
 MIGRATE_FILES += tor/torrc
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include gar/category.mk
