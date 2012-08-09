@@ -1,0 +1,3 @@
+- To create animations in PDF files, you will need animate.sty, which
+  can be found at:
+  http://www.ctan.org/tex-archive/macros/latex/contrib/animate/animate.sty

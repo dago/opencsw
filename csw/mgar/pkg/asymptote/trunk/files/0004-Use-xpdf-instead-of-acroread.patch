@@ -1,0 +1,25 @@
+From 5e0dc4ac22966d0360b606d3062e0e10e7e8e975 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 8 Aug 2012 09:06:50 +0200
+Subject: [PATCH] Use xpdf instead of acroread
+
+---
+ settings.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/settings.cc b/settings.cc
+index a97804a..9ab7375 100644
+--- a/settings.cc
++++ b/settings.cc
+@@ -100,7 +100,7 @@ string defaultPSViewer="gv";
+ #ifdef __APPLE__
+ string defaultPDFViewer="open";
+ #else  
+-string defaultPDFViewer="acroread";
++string defaultPDFViewer="xpdf";
+ #endif  
+ string defaultGhostscript="gs";
+ string defaultDisplay="display";
+-- 
+1.7.11.3
+

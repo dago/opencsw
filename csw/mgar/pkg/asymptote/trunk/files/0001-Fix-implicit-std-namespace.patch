@@ -1,0 +1,39 @@
+From b3d6a238b2d2ce78158c2f77a6228a6fda6d63df Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 7 Aug 2012 09:57:54 +0200
+Subject: [PATCH] Fix implicit std namespace
+
+---
+ algebra3.cc | 2 +-
+ runtime.in  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/algebra3.cc b/algebra3.cc
+index 203b430..4b76942 100644
+--- a/algebra3.cc
++++ b/algebra3.cc
+@@ -75,7 +75,7 @@
+ #include "algebra3.h"
+ #include <cmath>
+ 
+-static const double radians=acos(-1)/180.0;
++static const double radians=std::acos(-1)/180.0;
+ 
+ #ifdef VEC_ERROR_FATAL
+ #ifndef VEC_ERROR
+diff --git a/runtime.in b/runtime.in
+index 49e6de4..56ab4d8 100644
+--- a/runtime.in
++++ b/runtime.in
+@@ -239,7 +239,7 @@ bool :boolFalse()
+ 
+ bool isnan(real x)
+ {
+-  return isnan(x);
++  return std::isnan(x);
+ }
+ 
+ array* :pushNullArray()
+-- 
+1.7.11.3
+

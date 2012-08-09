@@ -1,0 +1,38 @@
+From 07ac5f19a74aea480d15a0f7162ff8ee92e991c0 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 8 Aug 2012 08:53:23 +0200
+Subject: [PATCH] Inhibit histogram example infinite loop
+
+---
+ doc/histogram.asy | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/doc/histogram.asy b/doc/histogram.asy
+index ec00d66..727f757 100644
+--- a/doc/histogram.asy
++++ b/doc/histogram.asy
+@@ -5,14 +5,16 @@ size(400,200,IgnoreAspect);
+ 
+ int n=10000;
+ real[] a=new real[n];
+-for(int i=0; i < n; ++i) a[i]=Gaussrand();
++// this example is inhibited because in the current OpenCSW port it
++// has an infinite loop in ../base/stats.asy Gaussrandpair()
++// for(int i=0; i < n; ++i) a[i]=Gaussrand();
+ 
+-draw(graph(Gaussian,min(a),max(a)),blue);
++// draw(graph(Gaussian,min(a),max(a)),blue);
+ 
+-// Optionally calculate "optimal" number of bins a la Shimazaki and Shinomoto.
+-int N=bins(a);
++// // Optionally calculate "optimal" number of bins a la Shimazaki and Shinomoto.
++// int N=bins(a);
+ 
+-histogram(a,min(a),max(a),N,normalize=true,low=0,lightred,black,bars=false);
++// histogram(a,min(a),max(a),N,normalize=true,low=0,lightred,black,bars=false);
+ 
+ xaxis("$x$",BottomTop,LeftTicks);
+ yaxis("$dP/dx$",LeftRight,RightTicks(trailingzero));
+-- 
+1.7.11.3
+
