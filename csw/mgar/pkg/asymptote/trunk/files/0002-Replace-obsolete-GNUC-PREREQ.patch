@@ -1,0 +1,53 @@
+From 9c1cd260628be20be92643c357a476058a900514 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 7 Aug 2012 13:41:06 +0200
+Subject: [PATCH] Replace obsolete GNUC PREREQ
+
+---
+ memory.h        | 2 +-
+ prc/writePRC.cc | 2 +-
+ runmath.in      | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/memory.h b/memory.h
+index ccf0436..50a27f4 100644
+--- a/memory.h
++++ b/memory.h
+@@ -19,7 +19,7 @@
+ #endif
+ 
+ #ifndef NOHASH
+-#if __GNUC_PREREQ(4,3) || defined(__CYGWIN__)
++#if __GNUC__ > 4 || (__GNUC__ == 4 && (__GNUC_MINOR__ > 3 || (__GNUC_MINOR__ == 3))) || defined(__CYGWIN__)
+ #include <tr1/unordered_map>
+ #define EXT std::tr1
+ #else
+diff --git a/prc/writePRC.cc b/prc/writePRC.cc
+index 9fbbc41..ffaea29 100644
+--- a/prc/writePRC.cc
++++ b/prc/writePRC.cc
+@@ -42,7 +42,7 @@ using namespace std;
+ // Count leading zeros.
+ uint32_t CLZ(uint32_t a) 
+ {
+-#if __GNUC_PREREQ(3,4)
++#if __GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || (__GNUC_MINOR__ == 4)))
+   return __builtin_clz(a);
+ #else
+ // find the log base 2 of a 32-bit integer
+diff --git a/runmath.in b/runmath.in
+index ed4ad9e..6641a5d 100644
+--- a/runmath.in
++++ b/runmath.in
+@@ -304,7 +304,7 @@ Int CLZ(Int a)
+ Int CTZ(Int a) 
+ {
+   if((uint32_t) a > 0xFFFFFFFF) return -1;
+-#if __GNUC_PREREQ(3,4)
++#if __GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 4 || (__GNUC_MINOR__ == 4)))
+   return __builtin_ctz(a);
+ #else
+   // find the number of trailing zeros in a 32-bit number
+-- 
+1.7.11.3
+
