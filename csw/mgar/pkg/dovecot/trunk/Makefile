@@ -85,6 +85,8 @@ CHECKPKG_OVERRIDES_CSWdovecot = file-with-bad-content|/usr/local|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWdovecot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/dovecot/wiki/HowTo.PopBSMTPAndDovecot.txt
 CHECKPKG_OVERRIDES_CSWdovecot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/dovecot/wiki/LDA.Sendmail.txt
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 include gar/category.mk
 
 pre-install-modulated:
