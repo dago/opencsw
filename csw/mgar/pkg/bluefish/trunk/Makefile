@@ -1,7 +1,6 @@
 NAME = bluefish
-VERSION = 2.2.0
+VERSION = 2.2.3
 CATEGORIES = apps
-GARTYPE = v2
 
 DESCRIPTION = Advanced Gtk+ HTML editor
 define BLURB
@@ -19,14 +18,22 @@ CONFIGURE_ARGS += $(DIRPATHS)
 
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbluefish += CSWenchant
-RUNTIME_DEP_PKGS_CSWbluefish += CSWftype2
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWbluefish += CSWgtk2
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWpango
-RUNTIME_DEP_PKGS_CSWbluefish += CSWfconfig
-RUNTIME_DEP_PKGS_CSWbluefish += CSWglib2
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWpython
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgio2-0-0
 
 EXTRA_MERGE_EXCLUDE_FILES = .*treemagic.*
 EXTRA_MERGE_EXCLUDE_FILES += .*globs.*
@@ -41,15 +48,7 @@ EXTRA_MERGE_EXCLUDE_FILES += .*types.*
 EXTRA_MERGE_EXCLUDE_FILES += .*XMLnamespaces.*
 EXTRA_MERGE_EXCLUDE_FILES += .*icons.*
 
-# these packages have not been installed/updated on the buildfarm yet
-# but they are in the unstable catalog.  Temporarily overriding until
-# buildfarm is updated.
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibglib2-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgio2-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgobject2-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgthread2-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgmodule2-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWglib2
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include gar/category.mk
 
