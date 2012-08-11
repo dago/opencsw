@@ -1,52 +1,34 @@
-From 25e25c8970ea31493aa247a4262a4e93319206bb Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <da�m@opencsw.org>
-Date: Sat, 19 May 2012 22:44:59 +0200
+From 628dfba31d353378e2a5ff90aaf10187dfe212a2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 11 Aug 2012 16:32:40 +0200
 Subject: [PATCH] Cannot cast 0 to QCString
 
 ---
- src/index.cpp |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ src/filedef.cpp |    4 ++--
+ 1 Datei geändert, 2 Zeilen hinzugefügt(+), 2 Zeilen entfernt(-)
 
-diff --git a/src/index.cpp b/src/index.cpp
-index a5f4754..8f6a819 100644
---- a/src/index.cpp
-+++ b/src/index.cpp
-@@ -605,18 +605,18 @@ static void writeDirTreeNode(OutputList &ol, DirDef *dd, int level, FTVHelp* ftv
-         if (doc || src)
-         {
-           ol.startIndexListItem();
--          ol.startIndexItem(doc ? fd->getReference() : 0,
--                            doc ? fd->getOutputFileBase() : 0);
-+          ol.startIndexItem(doc ? fd->getReference() : QCString(),
-+                            doc ? fd->getOutputFileBase() : QCString());
-           ol.parseText(fd->displayName());
--          ol.endIndexItem(doc ? fd->getReference() : 0,
--                          doc ? fd->getOutputFileBase() : 0);
-+          ol.endIndexItem(doc ? fd->getReference() : QCString(),
-+                          doc ? fd->getOutputFileBase() : QCString());
-           ol.endIndexListItem();
-           if (ftv)
-           {
-             ftv->addContentsItem(FALSE,
-                 fd->displayName(),
--                doc ? fd->getReference() : 0,
--                doc ? fd->getOutputFileBase() : 0,0,
-+                doc ? fd->getReference() : QCString(),
-+                doc ? fd->getOutputFileBase() : QCString(),0,
-                 FALSE,FALSE,fd); 
-           }
-         }
-@@ -693,8 +693,8 @@ static void writeDirHierarchy(OutputList &ol, FTVHelp* ftv,bool addToIndex)
-         if ((!fullPathNames || fd->getDirDef()==0) && (doc || src))
-         {
-           ftv->addContentsItem(FALSE,fd->displayName(),
--              doc ? fd->getReference() : 0,
--              doc ? fd->getOutputFileBase() : 0, 
-+              doc ? fd->getReference() : QCString(),
-+              doc ? fd->getOutputFileBase() : QCString(), 
-               0,
-               FALSE,FALSE,fd); 
-           if (addToIndex)
+diff --git a/src/filedef.cpp b/src/filedef.cpp
+index dd9f125..36efc27 100644
+--- a/src/filedef.cpp
++++ b/src/filedef.cpp
+@@ -807,7 +807,7 @@ void FileDef::writeSource(OutputList &ol)
+   {
+     startFile(ol,getSourceFileBase(),0,pageTitle,HLI_FileVisible,
+         !generateTreeView,
+-        !isDocFile && genSourceFile ? 0 : getOutputFileBase());
++        !isDocFile && genSourceFile ? QCString() : getOutputFileBase());
+     if (!generateTreeView)
+     {
+       getDirDef()->writeNavigationPath(ol);
+@@ -820,7 +820,7 @@ void FileDef::writeSource(OutputList &ol)
+   else
+   {
+     startFile(ol,getSourceFileBase(),0,pageTitle,HLI_FileVisible,FALSE,
+-        !isDocFile && genSourceFile ? 0 : getOutputFileBase());
++        !isDocFile && genSourceFile ? QCString() : getOutputFileBase());
+     startTitle(ol,getSourceFileBase());
+     ol.parseText(title);
+     endTitle(ol,getSourceFileBase(),0);
 -- 
-1.7.10
+1.7.10.3
 
