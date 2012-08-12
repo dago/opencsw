@@ -26,18 +26,16 @@ endef
 PACKAGES = CSWcadaver
 SPKG_DESC_CSWcadaver = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWcadaver = CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWcadaver += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcadaver = CSWlibintl8
 RUNTIME_DEP_PKGS_CSWcadaver += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWcadaver += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWcadaver += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWcadaver += CSWlibz1
 
 # Stub package that allow us to rename transparently the package
 # from CSWcadav to CSWcadaver
 OBSOLETED_BY_CSWcadaver = CSWcadav
 CATALOGNAME_CSWcadav = cadaver_stub
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 ###### Upstream and opencsw files information #######
 
@@ -45,6 +43,17 @@ MASTER_SITES = http://www.webdav.org/cadaver/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
+
+# cadaver wants to links with curses because of readline
+# but it's not necessary as readline already depends on
+# ncurses
+PATCHFILES = 0001-no-curses-dependency.patch
+
+# Let's not trust neon-config until Bug 4984 is fixed
+# https://www.opencsw.org/mantis/view.php?id=4984
+# This allow us to not depend directly anymore on a bunch
+# of libraries
+PATCHFILES += 0002-Neon-LD-option-fix.patch
 
 ##### Build and installation information #####
 
@@ -56,6 +65,10 @@ CONFIGURE_ARGS += --with-expat
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+pre-configure-modulated:
+	cd $(WORKSRC) && autoconf
+	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
