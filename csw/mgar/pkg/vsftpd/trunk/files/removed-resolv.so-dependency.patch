@@ -1,0 +1,27 @@
+From 51df46ba25bdb5475a9734710fa24f65db8bc5ef Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 12 Aug 2012 20:32:38 +0200
+Subject: [PATCH] removed resolv.so dependency
+
+---
+ vsf_findlibs.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/vsf_findlibs.sh b/vsf_findlibs.sh
+index f5d485d..9269fb7 100755
+--- a/vsf_findlibs.sh
++++ b/vsf_findlibs.sh
+@@ -38,8 +38,8 @@ locate_library /lib/libsocket.so && echo "-lsocket";
+ # Look for libnsl. Solaris needs this.
+ locate_library /lib/libnsl.so && echo "-lnsl";
+ 
+-# Look for libresolv. Solaris needs this.
+-locate_library /lib/libresolv.so && echo "-lresolv";
++# Look for libresolv. Solaris 5.9 needs this.
++[ `uname -r` = "5.9" ] && locate_library /lib/libresolv.so && echo "-lresolv";
+ 
+ # Look for libutil. Older FreeBSD need this for setproctitle().
+ locate_library /usr/lib/libutil.so && echo "-lutil";
+-- 
+1.7.10.3
+
