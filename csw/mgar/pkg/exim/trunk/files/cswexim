@@ -44,6 +44,7 @@ case "$1" in
   stop)
     echo "Stopping MTA: \c"
     kill `cat "$PIDFILE"`
+    rm "$PIDFILE"
     echo "exim."
       ;;
   restart)
