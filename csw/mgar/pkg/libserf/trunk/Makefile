@@ -18,24 +18,24 @@ DISTFILES  = $(DISTNAME).tar.bz2
 LICENSE = LICENSE
 VENDOR_URL = http://code.google.com/p/serf/
 
-PACKAGES += CSWlibserf1-0
-CATALOGNAME_CSWlibserf1-0 = libserf1_0
-SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWbdb48
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibz1
+PACKAGES += CSWlibserf1-1
+CATALOGNAME_CSWlibserf1-1 = libserf1_1
+SPKG_DESC_CSWlibserf1-1 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWbdb48
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibz1
 
 PACKAGES += CSWlibserf-dev
 CATALOGNAME_CSWlibserf-dev = libserf_dev
 SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
 PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf1-0
+RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf1-1
 
 EXTRA_LIB = $(prefix)/bdb48/lib
 
