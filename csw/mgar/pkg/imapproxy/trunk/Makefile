@@ -28,8 +28,7 @@ endef
 
 PACKAGES = CSWimapproxy
 
-RUNTIME_DEP_PKGS  = CSWlibwrap1
-RUNTIME_DEP_PKGS += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS = CSWlibssl1-0-0
 
 # Default paths referenced in documentation files, can be safely ignored
 CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README
@@ -39,6 +38,7 @@ CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw
 # DTD paths referenced in smf manifest file, can be safely ignored
 CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswimapproxy.xml
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 ###### Upstream and opencsw files information #######
 
@@ -76,6 +76,7 @@ PATCHFILES += destdir.patch
 ##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-libwrap=no
 
 TEST_SCRIPTS =
 

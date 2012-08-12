@@ -1,5 +1,12 @@
 imapproxy (1.2.7,REV=2012.05.17) unstable
 
+  * Removed superfluous dependency on CSWlibwrap1 as it 
+    was no really used in fact.
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 13 Aug 2012 00:00:49 +0200
+
+imapproxy (1.2.7,REV=2012.05.17) unstable
+
   * Rebuilt against libssl 1.0
   * Updated depandancy name: CSWtcpwrap -> CSWlibwrap1
   * Fixed default ca certificates bundle path in configuration file
