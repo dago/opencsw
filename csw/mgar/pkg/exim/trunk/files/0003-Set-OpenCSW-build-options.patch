@@ -1,4 +1,4 @@
-From 09dcb4b8d3cb14218c1f26b4f017e09695a050e9 Mon Sep 17 00:00:00 2001
+From 3de7065322e0a5fd8afb1932e5473b77581b8460 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Sat, 4 Aug 2012 15:05:15 +0200
 Subject: [PATCH] Set OpenCSW build options
@@ -12,7 +12,7 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 file changed, 57 insertions(+), 48 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index 95857c7..6c14aaf 100644
+index 95857c7..650b8ae 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
 @@ -78,6 +78,17 @@
@@ -273,7 +273,7 @@ index 95857c7..6c14aaf 100644
  # to form the final file names. Some installations may want something like this:
  
 -# LOG_FILE_PATH=/var/log/exim_%slog
-+LOG_FILE_PATH=/var/opt/csw/log/%slog
++LOG_FILE_PATH=/var/opt/csw/log/exim/%slog
  
  # which results in files with names /var/log/exim_mainlog, etc. The directory
  # in which the log files are placed must exist; Exim does not try to create
