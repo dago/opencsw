@@ -1,0 +1,34 @@
+From a2877acd081224c3c624eafa876dd7fb33e2382d Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 12 Aug 2012 16:20:27 +0200
+Subject: [PATCH] sdfksdfsdf
+
+---
+ m4/neon/neon.m4 |    4 +-
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/m4/neon/neon.m4 b/m4/neon/neon.m4
+index edff529..d06ab70 100644
+--- a/m4/neon/neon.m4
++++ b/m4/neon/neon.m4
+@@ -181,7 +181,7 @@ m4_ifdef([ne_require_major], [
+     ne_save_LIBS="$LIBS"
+     ne_save_CFLAGS="$CFLAGS"
+     CFLAGS="$CFLAGS `$NEON_CONFIG --cflags`"
+-    LIBS="$LIBS `$NEON_CONFIG --libs`"
++    LIBS="$LIBS -lneon"
+     ne_libver=`$NEON_CONFIG --version | sed -e "s/neon //g"`
+     # Check whether it's possible to link against neon
+     AC_CACHE_CHECK([linking against neon], [ne_cv_lib_neon],
+@@ -252,7 +252,7 @@ neon_prefix=`$NEON_CONFIG --prefix`
+ NEON_CHECK_VERSION([
+     # Pick up CFLAGS and LIBS needed
+     CFLAGS="$CFLAGS `$NEON_CONFIG --cflags`"
+-    NEON_LIBS="$NEON_LIBS `$NEON_CONFIG --libs`"
++    NEON_LIBS="$NEON_LIBS -lneon"
+     # Pick up library version
+     set dummy `$NEON_CONFIG --version | sed 's/\./ /g'`
+     NE_VERSION_MAJOR=[$]3; NE_VERSION_MINOR=[$]4; NE_VERSION_PATCH=[$]5
+-- 
+1.7.10.3
+

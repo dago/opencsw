@@ -1,0 +1,25 @@
+From 089acd5c1748266e91a7dec91cfbc49c94bfd58e Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 12 Aug 2012 16:15:34 +0200
+Subject: [PATCH] no curses dependency
+
+---
+ m4/readline.m4 |    2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/m4/readline.m4 b/m4/readline.m4
+index c0ab8af..5606814 100644
+--- a/m4/readline.m4
++++ b/m4/readline.m4
+@@ -10,8 +10,6 @@ AC_ARG_ENABLE(readline,
+ 	[use_readline=yes])  dnl Defaults to ON (if found)
+ 
+ if test "$use_readline" = "yes"; then
+-	AC_CHECK_LIB(curses, tputs, LIBS="$LIBS -lcurses",
+-		AC_CHECK_LIB(ncurses, tputs))
+ 	AC_CHECK_LIB(readline, readline)
+ 
+ 	AC_SEARCH_LIBS(add_history, history,
+-- 
+1.7.10.3
+

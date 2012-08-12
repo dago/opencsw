@@ -1,3 +1,10 @@
+cadaver (0.23.3,rev=2012.08.12) unstable
+
+  * Removed superfluous dependancies: 
+  	CSWlibz1, CSWlibexpat1, CSWlibssl1-0-0
+
+ -- Yann rouillard <yann@opencsw.org>  Sun, 12 Aug 2012 19:51:48 +0200
+
 cadaver (0.23.3,rev=2012.05.17) unstable
 
   * Rebuilt against libssl 1.0
