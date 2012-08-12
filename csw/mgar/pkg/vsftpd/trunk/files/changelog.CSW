@@ -1,3 +1,9 @@
+vsftpd (3.0.0,REV=2012.08.12) unstable
+
+  * Removed superfluous dependency on libresolv.so
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 12 Aug 2012 20:36:24 +0200
+
 vsftpd (3.0.0,REV=2012.05.17) unstable
 
   * Rebuilt against libssl 1.0

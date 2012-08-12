@@ -95,6 +95,10 @@ PATCHFILES += destdir.patch
 # error when compiling under Solaris with -Werror
 PATCHFILES += avoid_pam_conv_warning.patch
 
+# vsftpd need to be linked against resolv.so
+# only in Solaris 5.9 but not for Solaris >= 5.10
+PATCHFILES += removed-resolv.so-dependency.patch
+
 # Documentation files
 DOCFILES  = AUDIT BENCHMARKS BUGS COPYING COPYRIGHT Changelog FAQ INSTALL LICENSE REFS
 DOCFILES += REWARD SIZE SPEED TODO TUNING README README.ssl README.security
@@ -104,6 +108,8 @@ DOCFILES += EXAMPLE/VIRTUAL_HOSTS/README EXAMPLE/VIRTUAL_USERS/logins.txt EXAMPL
 DOCFILES += EXAMPLE/VIRTUAL_USERS/vsftpd.conf EXAMPLE/INTERNET_SITE/vsftpd.xinetd 
 DOCFILES += EXAMPLE/INTERNET_SITE/README EXAMPLE/INTERNET_SITE/vsftpd.conf
 DOCFILES += EXAMPLE/INTERNET_SITE_NOINETD/README EXAMPLE/INTERNET_SITE_NOINETD/vsftpd.conf
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 
 ##### Build and installation information #####
