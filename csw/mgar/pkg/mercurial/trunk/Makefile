@@ -13,7 +13,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWmercurial
 
 SPKG_DESC_CSWmercurial = Mercurial
-RUNTIME_DEP_PKGS_CSWmercurial += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWmercurial += CSWlibpython2-7-1-0
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
