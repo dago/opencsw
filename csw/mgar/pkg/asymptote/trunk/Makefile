@@ -61,7 +61,8 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 
 GARCOMPILER		=	GNU
 
-xBUILD_DEP_PKGS	+=	CSWfreeglut
+BUILD_DEP_PKGS	+=	CSWemacs
+BUILD_DEP_PKGS	+=	CSWfreeglut
 BUILD_DEP_PKGS	+=	CSWgsl-dev
 BUILD_DEP_PKGS	+=	CSWlibfftw-dev
 # this is not needed until we can configure with GC:
@@ -84,9 +85,10 @@ BUILD_SCRIPTS	=	nominal
 
 LICENSE			=	LICENSE
 
+RUNTIME_DEP_PKGS				+=	CSWemacscommon
 RUNTIME_DEP_PKGS				+=	CSWfreeglut
 RUNTIME_DEP_PKGS				+=	CSWgv
-CHECKPKG_OVERRIDES_CSWasymptote += surplus-dependency|CSWgv
+CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWgv
 RUNTIME_DEP_PKGS				+=	CSWlibfftw3-3
 RUNTIME_DEP_PKGS				+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS				+=	CSWlibgsl0
@@ -97,12 +99,16 @@ RUNTIME_DEP_PKGS				+=	CSWlibsigsegv2
 RUNTIME_DEP_PKGS				+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS				+=	CSWlibz1
 RUNTIME_DEP_PKGS				+=	CSWmesa
+RUNTIME_DEP_PKGS				+=	CSWpython
 RUNTIME_DEP_PKGS				+=	CSWpython-tk
+CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWpython-tk
 RUNTIME_DEP_PKGS				+=	CSWpy-pil
+CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWpy-pil
 RUNTIME_DEP_PKGS				+=	CSWtetex
-CHECKPKG_OVERRIDES_CSWasymptote += surplus-dependency|CSWtetex
+CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWtetex
 RUNTIME_DEP_PKGS				+=	CSWxpdf
-CHECKPKG_OVERRIDES_CSWasymptote += surplus-dependency|CSWxpdf
+CHECKPKG_OVERRIDES_CSWasymptote +=	surplus-dependency|CSWxpdf
+CHECKPKG_OVERRIDES_CSWasymptote	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/asymptote/asymptote.info
 
 include gar/category.mk
 
