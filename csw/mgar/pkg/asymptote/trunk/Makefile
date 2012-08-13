@@ -64,7 +64,8 @@ GARCOMPILER		=	GNU
 xBUILD_DEP_PKGS	+=	CSWfreeglut
 BUILD_DEP_PKGS	+=	CSWgsl-dev
 BUILD_DEP_PKGS	+=	CSWlibfftw-dev
-BUILD_DEP_PKGS	+=	CSWlibgc-dev
+# this is not needed until we can configure with GC:
+#BUILD_DEP_PKGS	+=	CSWlibgc-dev
 BUILD_DEP_PKGS	+=	CSWlibncurses-dev
 BUILD_DEP_PKGS	+=	CSWlibreadline-dev
 BUILD_DEP_PKGS	+=	CSWlibsigsegv-dev
