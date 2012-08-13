@@ -36,12 +36,11 @@ PACKAGES = CSWossh CSWosshclient
 
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
-RUNTIME_DEP_PKGS_CSWossh = CSWlibssl1-0-0 CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWosshclient
+RUNTIME_DEP_PKGS_CSWossh = CSWlibssl1-0-0 CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWosshclient
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
-RUNTIME_DEP_PKGS_CSWosshclient = CSWlibssl1-0-0 CSWlibz1 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3
-
+RUNTIME_DEP_PKGS_CSWosshclient = CSWlibssl1-0-0 CSWlibz1 CSWlibgssapi-krb5-2 
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
@@ -165,6 +164,8 @@ CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
+
+EXTRA_LDFLAGS = -z ignore
 
 TEST_SCRIPTS	=
 
