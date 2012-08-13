@@ -1,3 +1,11 @@
+openssh (6.0p1,REV=2012.08.12) unstable
+
+  * Removed superfluous dependencies:
+  	openssh: libk5crypto3
+	openssh-client: libkrb5_3 libk5crypto3 libcom_err3
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 13 Aug 2012 20:43:54 +0200
+
 openssh (6.0p1,REV=2012.05.17) unstable
 
   * Rebuilt againt libssl 1.0
