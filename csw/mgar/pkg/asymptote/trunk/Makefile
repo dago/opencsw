@@ -56,6 +56,9 @@ PATCHFILES		+=	0002-Replace-obsolete-GNUC-PREREQ.patch
 PATCHFILES		+=	0003-Inhibit-histogram-example-infinite-loop.patch
 PATCHFILES		+=	0004-Use-xpdf-instead-of-acroread.patch
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 GARCOMPILER		=	GNU
 
 xBUILD_DEP_PKGS	+=	CSWfreeglut
