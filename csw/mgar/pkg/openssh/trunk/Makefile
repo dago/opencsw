@@ -42,7 +42,7 @@ CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
 RUNTIME_DEP_PKGS_CSWosshclient = CSWlibssl1-0-0 CSWlibz1 CSWlibgssapi-krb5-2 
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PKGFILES_CSWossh = $(sbindir)/.*
 PKGFILES_CSWossh += $(docdir)/openssh/.*
