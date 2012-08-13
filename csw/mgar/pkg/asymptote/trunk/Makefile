@@ -105,7 +105,6 @@ CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWpython-tk
 RUNTIME_DEP_PKGS				+=	CSWpy-pil
 CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWpy-pil
 RUNTIME_DEP_PKGS				+=	CSWtetex
-CHECKPKG_OVERRIDES_CSWasymptote	+=	surplus-dependency|CSWtetex
 RUNTIME_DEP_PKGS				+=	CSWxpdf
 CHECKPKG_OVERRIDES_CSWasymptote +=	surplus-dependency|CSWxpdf
 CHECKPKG_OVERRIDES_CSWasymptote	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/asymptote/asymptote.info
