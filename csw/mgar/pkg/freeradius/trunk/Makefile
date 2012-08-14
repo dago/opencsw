@@ -18,6 +18,8 @@ VENDOR_URL = http://freeradius.org/
 
 LICENSE = LICENSE
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 BUILD_DEP_PKGS += CSWlibgdbm-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
@@ -26,7 +28,7 @@ PACKAGES += CSWfreeradius
 SPKG_DESC_CSWfreeradius = A free RADIUS server implementation
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpcap1
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibreadline6
@@ -45,7 +47,6 @@ CHECKPKG_OVERRIDES_CSWfreeradius += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWfreeradius += file-with-bad-content|/usr/share|root/opt/csw/share/man/man5/dictionary.5
 CHECKPKG_OVERRIDES_CSWfreeradius += file-with-bad-content|/usr/share|root/opt/csw/share/doc/freeradius/mssql
 CHECKPKG_OVERRIDES_CSWfreeradius += file-with-bad-content|/usr/share|root/opt/csw/share/doc/freeradius/ldap_howto.rst
-
 
 PACKAGES += CSWfreeradius-krb5
 SPKG_DESC_CSWfreeradius-krb5 = Kerberos 5 Module rlm_krb5 for FreeRADIUS
@@ -83,29 +84,35 @@ CONFIGURE_ARGS += --without-rlm_perl
 EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/example.pl
 EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/modules/perl
 
-## Disabling Postgresql because it's going to take a bunch of weird
-## Makefile hackery of these non-automake Makefiles to get the RPATH right
-#BUILD_DEP_PKGS += CSWpostgresql
-#rlm_pgsql_lib = $(shell /opt/csw/postgresql/bin/$(ISA)/pg_config --libdir)
-#rlm_pgsql_inc = $(shell /opt/csw/postgresql/bin/$(ISA)/pg_config --includedir)
-#CONFIGURE_ARGS += --with-rlm_sql_postgresql_lib_dir=$(rlm_pgsql_lib)
-#CONFIGURE_ARGS += --with-rlm_sql_postgresql_include_dir=$(rlm_pgsql_inc)
-## Comment out the following lines when building PostgreSQL support
-CONFIGURE_ARGS += --without-rlm_sql_postgresql
-EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/postgresql
-EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/postgresql/.*
-## End pgsql exclusion lines
+BUILD_DEP_PKGS += CSWpostgresql-dev
+rlm_pgsql_lib = $(shell $(bindir)/pg_config --libdir)
+rlm_pgsql_inc = $(shell $(bindir)/pg_config --includedir)
+CONFIGURE_ARGS += --with-rlm_sql_postgresql_lib_dir=$(rlm_pgsql_lib)
+CONFIGURE_ARGS += --with-rlm_sql_postgresql_include_dir=$(rlm_pgsql_inc)
+#CONFIGURE_ARGS += --without-rlm_sql_postgresql
 
-## Disabling MySQL because it's going to take a bunch of weird
-## Makefile hackery of these non-automake Makefiles to get the RPATH right
-#BUILD_DEP_PKGS += CSWmysql5devel
-#CONFIGURE_ARGS += --with-mysql-lib-dir=/opt/csw/mysql5/lib/$(ISA)/mysql
-#CONFIGURE_ARGS += --with-mysql-include-dir=/opt/csw/mysql5/include
-## Comment out the following lines when building mysql support
-CONFIGURE_ARGS += --without-rlm_sql_mysql
-EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql
-EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql/.*
-## End mysql exclusion lines
+PACKAGES += CSWfreeradius-postgresql
+SPKG_DESC_CSWfreeradius-postgresql = PostgreSQL Module rlm_sql_postgresql for FreeRADIUS
+PKGFILES_CSWfreeradius-postgresql += /opt/csw/lib/freeradius/rlm_sql_postgresql\.so
+PKGFILES_CSWfreeradius-postgresql += /opt/csw/lib/freeradius/rlm_sql_postgresql-2\.1\.[0-9]+\.so
+PKGFILES_CSWfreeradius-postgresql += $(raddbdir)/sql/postgresql
+PKGFILES_CSWfreeradius-postgresql += $(raddbdir)/sql/postgresql/.*
+RUNTIME_DEP_PKGS_CSWfreeradius-postgresql += CSWlibpq5
+
+BUILD_DEP_PKGS += CSWmysql-dev
+CONFIGURE_ARGS += --with-mysql-lib-dir=$(libdir)
+CONFIGURE_ARGS += --with-mysql-include-dir=$(includedir)
+#CONFIGURE_ARGS += --without-rlm_sql_mysql
+
+PACKAGES += CSWfreeradius-mysql
+SPKG_DESC_CSWfreeradius-mysql = MySQL Module rlm_sql_mysql for FreeRADIUS
+PKGFILES_CSWfreeradius-mysql += /opt/csw/lib/freeradius/rlm_sql_mysql\.so
+PKGFILES_CSWfreeradius-mysql += /opt/csw/lib/freeradius/rlm_sql_mysql-2\.1\.[0-9]+\.so
+PKGFILES_CSWfreeradius-mysql += $(raddbdir)/sql/mysql
+PKGFILES_CSWfreeradius-mysql += $(raddbdir)/sql/mysql/.*
+RUNTIME_DEP_PKGS_CSWfreeradius-mysql += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWfreeradius-mysql += CSWlibz1
+RUNTIME_DEP_PKGS_CSWfreeradius-mysql += CSWlibmysqlclient18
 
 radius_user = radius
 radius_group = radius
