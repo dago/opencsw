@@ -4,15 +4,22 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ADAMK
 
-DESCRIPTION = Cross-platform basic tests for scripts
+DESCRIPTION = Basic cross-platform tests for scripts
 define BLURB
 endef
 
-RUNTIME_DEP_PKGS = CSWpmipcrun3
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmtestscript
-CATALOGNAME = pm_testscript
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-test-script
+CATALOGNAME_CSWpm-test-script = pm_test_script
+SPKG_DESC_CSWpm-test-script = Basic cross-platform tests for scripts
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-test-script = 1
+RUNTIME_DEP_PKGS_CSWpm-test-script += CSWpm-ipc-run3
+RUNTIME_DEP_PKGS_CSWpm-test-script += CSWpm-probe-perl
+OBSOLETED_BY_CSWpm-test-script += CSWpmtestscript
+CATALOGNAME_CSWpmtestscript = pm_testscript_stub
 
 include gar/category.mk
