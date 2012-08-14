@@ -13,6 +13,8 @@ define BLURB
   a GLPI server with fusioninventory plugin, acting as a control point.
 endef
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 MASTER_SITES = $(CPAN_MIRRORS)
 AUTHOR = FUSINV
 DISTNAME = FusionInventory-Agent-$(VERSION)
