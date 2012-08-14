@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.6.6
+VERSION = 1.6.11
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -41,3 +41,4 @@ include gar/category.mk
 
 install-facter:
 	(cd $(WORKDIR)/$(DISTNAME); ruby install.rb --destdir=$(DESTDIR))
+	gunzip $(DESTDIR)/$(mandir)/man8/facter.8.gz
