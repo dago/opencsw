@@ -1,6 +1,5 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
-#
+
 NAME = autogen
 # Tried to package the last versions but encountered issues for which
 # I didn't found a solution:
@@ -26,7 +25,6 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
-#GCC4_VERSION		=	4.7
 
 BUILD_DEP_PKGS		=	CSWguile
 BUILD_DEP_PKGS		+=	CSWguilelib12
@@ -98,30 +96,32 @@ ARCHALL_CSWautogen-dev				=	1
 
 include gar/category.mk
 
+PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+
 build-nominal:
-	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC)
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR)
 	$(MAKECOOKIE)
 
 build-dvi:
-	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) $(subst build-,,$@)
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) $(subst build-,,$@)
 	$(MAKECOOKIE)
 
 build-ps:
-	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) $(subst build-,,$@)
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) $(subst build-,,$@)
 	$(MAKECOOKIE)
 
 build-pdf:
-	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) $(subst build-,,$@)
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) $(subst build-,,$@)
 	$(MAKECOOKIE)
 
 # there is one test failing (keyword.test) and I choose to ignore it
 # as the remaining ones pass.
 test-custom:
-	-$(MAKE) -k -C $(WORKSRC) check
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) check
 	$(MAKECOOKIE)
 
 install-nominal:
-	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) DESTDIR="$(DESTDIR)" install
+	cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) -C $(OBJDIR) $(INSTALL_ARGS) DESTDIR=$(DESTDIR) install
 	rm -rf "$(DESTDIR)$(datadir)/$(NAME)/"*.tar.gz
 	$(MAKECOOKIE)
 
@@ -142,4 +142,4 @@ install-pdf:
 
 # this is private and not available publicly
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	for package in CSW$(NAME); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
