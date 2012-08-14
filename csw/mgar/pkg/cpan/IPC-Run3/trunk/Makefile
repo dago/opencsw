@@ -1,20 +1,23 @@
 NAME = IPC-Run3
-VERSION = 0.043
+VERSION = 0.045
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RJBS
 
 DESCRIPTION = Run a subprocess with input/ouput redirection
 define BLURB
-  This module allows you to run a subprocess and redirect stdin, stdout,
-  and/or stderr to files and perl data structures. It aims to satisfy 99% of
-  the need for using system()/qx``/open3() with a simple, extremely Perlish
-  API and none of the bloat and rarely used features of IPC::Run.
 endef
 
-PACKAGES = CSWpmipcrun3
-CATALOGNAME = pm_ipcrun3
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE = LICENSE
+
+PACKAGES += CSWpm-ipc-run3
+CATALOGNAME_CSWpm-ipc-run3 = pm_ipc_run3
+SPKG_DESC_CSWpm-ipc-run3 = Run a subprocess with input/ouput redirection
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-ipc-run3 = 1
+OBSOLETED_BY_CSWpm-ipc-run3 += CSWpmipcrun3
+CATALOGNAME_CSWpmipcrun3 = pm_ipcrun3_stub
 
 include gar/category.mk
