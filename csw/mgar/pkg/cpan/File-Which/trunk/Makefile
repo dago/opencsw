@@ -18,8 +18,8 @@ LICENSE_TEXT = This module is licensed under the perl license
 PACKAGES = CSWpm-file-which
 ARCHALL = 1
 
-BUILDIME_DEP_PKGS_CSWpm-file-which += CSWpm-test-script
+BUILDIME_DEP_PKGS += CSWpm-test-script
 
-RUNTIME_DEP_PKGS_CSWpm-file-which += CSWpm-pathtools
+RUNTIME_DEP_PKGS += CSWpm-pathtools
 
 include gar/category.mk
