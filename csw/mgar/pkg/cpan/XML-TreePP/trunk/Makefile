@@ -4,7 +4,7 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = KAWASAKI
 
-DESCRIPTION = 
+DESCRIPTION = Pure Perl implementation for parsing/writing XML documents
 define BLURB
   XML::TreePP module parses an XML document and expands it for a hash tree.
   This generates an XML document from a hash tree as the opposite way around.
