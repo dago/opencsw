@@ -14,13 +14,13 @@ define BLURB
 endef
 
 CATALOG_RELEASE = unstable
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGES += CSWpm-xml-treepp
-CATALOGNAME_CSWpm-xml-treepp = pm_xml_treepp
-SPKG_DESC_CSWpm-xml-treepp = 
-ARCHALL_CSWpm-xml-treepp = 1
+PACKAGES = CSWpm-xml-treepp
+ARCHALL = 1
+
 RUNTIME_DEP_PKGS_CSWpm-xml-treepp += CSWpm-libwww-perl
 
 include gar/category.mk
