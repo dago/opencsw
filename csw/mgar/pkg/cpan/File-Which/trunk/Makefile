@@ -19,13 +19,15 @@ define BLURB
 endef
 
 CATALOG_RELEASE = unstable
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGES += CSWpm-file-which
-CATALOGNAME_CSWpm-file-which = pm_file_which
-SPKG_DESC_CSWpm-file-which = Portable implementation of the "which" utility
-ARCHALL_CSWpm-file-which = 1
+PACKAGES = CSWpm-file-which
+ARCHALL = 1
+
+BUILDIME_DEP_PKGS_CSWpm-file-which += CSWpm-test-script
+
 RUNTIME_DEP_PKGS_CSWpm-file-which += CSWpm-pathtools
 
 include gar/category.mk
