@@ -18,7 +18,7 @@ LICENSE_TEXT = This module is licensed under the perl license
 PACKAGES = CSWpm-file-which
 ARCHALL = 1
 
-BUILDIME_DEP_PKGS += CSWpm-test-script
+BUILD_DEP_PKGS += CSWpm-test-script
 
 RUNTIME_DEP_PKGS += CSWpm-pathtools
 
