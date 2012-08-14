@@ -1,14 +1,8 @@
 # $Id$
 
 NAME = autogen
-# Tried to package the last versions but encountered issues for which
-# I didn't found a solution:
-#
-# 5.16: agen5/ag.c: zNotStr not defined
-# 5.15: our guile is too old
-# 5.14: syntax error in opts.c...
-# 5.13: same issue as 5.14
-VERSION = 5.12
+
+VERSION = 5.16.2
 GARTYPE = v2
 CATEGORIES = devel
 
