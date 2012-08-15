@@ -1,32 +1,23 @@
 NAME = Test-LongString
-VERSION = 0.14
+VERSION = 0.15
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RGARCIA
 
-DESCRIPTION = Tests strings for equality
+DESCRIPTION = 
 define BLURB
-  This module provides some drop-in replacements for the string comparison
-  functions of Test::More, but which are more suitable when you test against
-  long strings. If you've ever had to search for text in a multi-line string
-  like an HTML document, or find specific items in binary data, this is the
-  module for you.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmtestlongstring CSWpmtestlongstr
+LICENSE_TEXT = This module is licensed under the perl license
 
-CATALOGNAME_CSWpmtestlongstring = pm_testlongstring
-CATALOGNAME_CSWpmtestlongstr = pm_testlongstr
-
-SPKG_DESC_CSWpmtestlongstring = $(DESCRIPTION)
-SPKG_DESC_CSWpmtestlongstr = Empty stub as contents has been moved to CSWpmtestlongstring
-
-RUNTIME_DEP_PKGS_ONLY_CSWpmtestlongstr = CSWpmtestlongstring
-
-ARCHALL = 1
-
-PKGFILES_CSWpmtestlongstr = NOFILES
+PACKAGES += CSWpm-test-longstring
+CATALOGNAME_CSWpm-test-longstring = pm_test_longstring
+SPKG_DESC_CSWpm-test-longstring = Tests strings for equality, with more helpful failures
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-test-longstring = 1
+OBSOLETED_BY_CSWpm-test-longstring += CSWpmtestlongstr
+CATALOGNAME_CSWpmtestlongstr = pm_testlongstr_stub
 
 include gar/category.mk
