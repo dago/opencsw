@@ -1,27 +1,25 @@
 NAME = Module-Refresh
-VERSION = 0.13
+VERSION = 0.17
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = JESSE
+AUTHOR = ALEXMV
 
 DESCRIPTION = Refresh %INC files when updated on disk
 define BLURB
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmmodulerefresh CSWpmmodrefresh
+LICENSE_TEXT = This module is licensed under the perl license, please see for details http://dev.perl.org/licenses/
 
-CATALOGNAME_CSWpmmodulerefresh = pm_modulerefresh
-CATALOGNAME_CSWpmmodrefresh = pm_modrefresh
+BUILD_DEP_PKGS += CSWpm-path-class
 
-SPKG_DESC_CSWpmmodulerefresh = $(DESCRIPTION)
-SPKG_DESC_CSWpmmodrefresh = Empty stub as contents has been moved to CSWpmmodulerefresh
-
-RUNTIME_DEP_PKGS_ONLY_CSWpmmodrefresh = CSWpmmodulerefresh
-
-ARCHALL = 1
-
-PKGFILES_CSWpmmodrefresh = NOFILES
+PACKAGES += CSWpm-module-refresh
+CATALOGNAME_CSWpm-module-refresh = pm_module_refresh
+SPKG_DESC_CSWpm-module-refresh = Refresh %INC files when updated on disk
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-module-refresh = 1
+OBSOLETED_BY_CSWpm-module-refresh += CSWpmmodrefresh
+CATALOGNAME_CSWpmmodrefresh = pm_modrefresh_stub
 
 include gar/category.mk
