@@ -1,5 +1,5 @@
 NAME = pkgutil
-VERSION = 2.6.5b1
+VERSION = 2.6.5
 CATEGORIES = utils
 GARTYPE = v2
 
