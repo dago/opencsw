@@ -4,19 +4,21 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = JESSE
 
-DESCRIPTION = Treat a return value as boolean, array or object
+DESCRIPTION = A smart return value object
 define BLURB
-  Class::ReturnValue is a return value object that can allow code calling your
-  routine to expect: a boolean value (did it fail) or a list (what are the
-  return values)
 endef
 
-BUILD_DEP_PKGS = CSWpmtestinline
-RUNTIME_DEP_PKGS = CSWpmdevstacktrace
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmclassretval
-CATALOGNAME = pm_classretval
+LICENSE_TEXT = This module is licensed under the perl license
 
-ARCHALL = 1
+PACKAGES += CSWpm-class-returnvalue
+CATALOGNAME_CSWpm-class-returnvalue = pm_class_returnvalue
+SPKG_DESC_CSWpm-class-returnvalue = A smart return value object
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-class-returnvalue = 1
+RUNTIME_DEP_PKGS_CSWpm-class-returnvalue += CSWpm-devel-stacktrace
+OBSOLETED_BY_CSWpm-class-returnvalue += CSWpmclassretval
+CATALOGNAME_CSWpmclassretval = pm_classretval_stub
 
 include gar/category.mk
