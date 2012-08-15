@@ -1,5 +1,5 @@
 NAME = Number-Compare
-VERSION = 0.01
+VERSION = 0.03
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RCLAMP
@@ -8,20 +8,16 @@ DESCRIPTION = Numeric comparisons
 define BLURB
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmnumbercompare CSWpmnbrcompare
+LICENSE_TEXT = This module is licensed under the unknown license
 
-CATALOGNAME_CSWpmnumbercompare = pm_numbercompare
-CATALOGNAME_CSWpmnbrcompare = pm_nbrcompare
-
-SPKG_DESC_CSWpmnumbercompare = $(DESCRIPTION)
-SPKG_DESC_CSWpmnbrcompare = Empty stub as contents has been moved to CSWpmnumbercompare
-
-RUNTIME_DEP_PKGS_ONLY_CSWpmnbrcompare = CSWpmnumbercompare
-
-ARCHALL = 1
-
-PKGFILES_CSWpmnbrcompare = NOFILES
+PACKAGES += CSWpm-number-compare
+CATALOGNAME_CSWpm-number-compare = pm_number_compare
+SPKG_DESC_CSWpm-number-compare = Numeric comparisons
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-number-compare = 1
+OBSOLETED_BY_CSWpm-number-compare += CSWpmnbrcompare
+CATALOGNAME_CSWpmnbrcompare = pm_nbrcompare_stub
 
 include gar/category.mk
