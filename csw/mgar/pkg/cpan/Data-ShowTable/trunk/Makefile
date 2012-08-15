@@ -4,14 +4,20 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = AKSTE
 
-DESCRIPTION = routines to display tabular data in several formats.
+DESCRIPTION = 
 define BLURB
-  The ShowTable module provides subroutines to display tabular data, typially
-  from a database, in nicely formatted columns, in several formats. Its
-  arguments can either be given in a fixed order, or, as a single, anonymous
-  hash-array.
 endef
 
-DISTFILES += $(call admfiles,CSWpmdatashowtable,prototype)
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the  license
+
+PACKAGES += CSWpm-data-showtable
+CATALOGNAME_CSWpm-data-showtable = pm_data_showtable
+SPKG_DESC_CSWpm-data-showtable = Show data in nicely formatted columns
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-data-showtable = 1
+OBSOLETED_BY_CSWpm-data-showtable += CSWpmdatashowtbl
+CATALOGNAME_CSWpmdatashowtbl = pm_datashowtbl_stub
 
 include gar/category.mk
