@@ -4,20 +4,21 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ILYAZ
 
-DESCRIPTION = Converting Perl structures to strings and back.
+DESCRIPTION = Convert arbitrary objects to/from strings
 define BLURB
-  Converts data to/from stringified form, appropriate for saving-to and
-  reading-from permanent storage.  Deals with objects, circular lists,
-  repeated appearence of the same refence.  Does not deal with overloaded
-  stringify operator yet.
 endef
 
 MASTER_SITES = $(addsuffix modules/,$(CPAN_MIRRORS))
-DISTFILES = COPYING
 
-PACKAGES = CSWpmfreezethaw
-CATALOGNAME = pm_freezethaw
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE_TEXT = This module is licensed under the unknown license
+
+PACKAGES += CSWpm-freezethaw
+CATALOGNAME_CSWpm-freezethaw = pm_freezethaw
+SPKG_DESC_CSWpm-freezethaw = Convert arbitrary objects to/from strings
+ARCHALL_CSWpm-freezethaw = 1
+OBSOLETED_BY_CSWpm-freezethaw += CSWpmfreezethaw
+CATALOGNAME_CSWpmfreezethaw = pm_freezethaw_stub
 
 include gar/category.mk
