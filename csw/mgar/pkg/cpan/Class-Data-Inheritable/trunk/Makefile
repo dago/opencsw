@@ -6,26 +6,18 @@ AUTHOR = TMTM
 
 DESCRIPTION = Inheritable, overridable class data
 define BLURB
-  Class::Data::Inheritable is for creating accessor/mutators to class data.
-  That is, if you want to store something about your class as a whole (instead
-  of about a single object). This data is then inherited by your subclasses
-  and can be overriden.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmclassdatainheritable CSWpmclsdtainherit
+LICENSE_TEXT = This module is licensed under the perl license
 
-CATALOGNAME_CSWpmclassdatainheritable = pm_classdatainheritable
-CATALOGNAME_CSWpmclsdtainherit = pm_clsdtainherit
-
-SPKG_DESC_CSWpmclassdatainheritable = $(DESCRIPTION)
-SPKG_DESC_CSWpmclsdtainherit = Empty stub as contents has been moved to CSWpmclassdatainheritable
-
-RUNTIME_DEP_PKGS_ONLY_CSWpmclsdtainherit = CSWpmclassdatainheritable
-
-ARCHALL = 1
-
-PKGFILES_CSWpmclsdtainherit = NOFILES
+PACKAGES += CSWpm-class-data-inheritable
+CATALOGNAME_CSWpm-class-data-inheritable = pm_class_data_inheritable
+SPKG_DESC_CSWpm-class-data-inheritable = Inheritable, overridable class data
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-class-data-inheritable = 1
+OBSOLETED_BY_CSWpm-class-data-inheritable += CSWpmclsdtainherit
+CATALOGNAME_CSWpmclsdtainherit = pm_clsdtainherit_stub
 
 include gar/category.mk
