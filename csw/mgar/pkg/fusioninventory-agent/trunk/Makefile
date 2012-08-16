@@ -54,6 +54,7 @@ INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
 # checkpkg overrides
 CHECKPKG_OVERRIDES_CSWfusioninventory-agent += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Input/BSD/Archs/i386.pm
 CHECKPKG_OVERRIDES_CSWfusioninventory-agent += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Input/Linux/Archs/i386.pm
+CHECKPKG_OVERRIDES_CSWfusioninventory-agent += file-with-bad-content|/usr/local|root/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory.pm
 
 DOCLIST = LICENSE Changes README THANKS
 
