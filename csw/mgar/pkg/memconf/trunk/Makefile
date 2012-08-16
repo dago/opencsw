@@ -1,5 +1,5 @@
 NAME = memconf
-VERSION = 2.22
+VERSION = 3.00
 CATEGORIES = utils
 GARTYPE = v2
 
