@@ -20,6 +20,8 @@ AUTHOR = FUSINV
 DISTNAME = FusionInventory-Agent-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
+LICENSE = LICENSE
+
 PACKAGES = CSWfusioninventory-agent
 ARCHALL = 1
 
@@ -45,6 +47,10 @@ SKIPTEST ?= 1
 
 # ensure usage of gnu coreutils install
 INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
+
+# checkpkg overrides
+CHECKPKG_OVERRIDES_CSWfusioninventory-agent += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Input/BSD/Archs/i386.pm
+CHECKPKG_OVERRIDES_CSWfusioninventory-agent += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Input/Linux/Archs/i386.pm
 
 DOCLIST = LICENSE Changes README THANKS
 
