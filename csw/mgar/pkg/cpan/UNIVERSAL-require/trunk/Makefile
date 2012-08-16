@@ -1,14 +1,23 @@
 NAME = UNIVERSAL-require
-VERSION = 0.11
+VERSION = 0.13
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MSCHWERN
 
-DESCRIPTION = require modules from a variable
+DESCRIPTION = Require() modules from a variable
 define BLURB
-  get around the bareword caveats on require()
+  If you've ever had to do this...
+    eval "require $module";
+  to get around the bareword caveats on require(), this module is for you. It
+  creates a universal require() class method that will work with every Perl
+  module and its secure.
 endef
 
-DISTFILES += $(call admfiles,CSWpmunivrequire,depend prototype)
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGES = CSWpm-universal-require
+CATALOGNAME = pm_universal_require
+ARCHALL = 1
 
 include gar/category.mk
