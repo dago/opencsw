@@ -26,19 +26,19 @@ PACKAGES = CSWfusioninventory-agent
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS_CSWfusioninventory-agent  = CSWperl
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_compress_zlib
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_digest_md5
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_file_which
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_http_daemon
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_io_socket_ssl
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_libwww_perl
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_proc_daemon
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_proc_pid_file
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_net_cups
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_net_ip
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_text_template
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_universal_require
-RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpm_xml_treepp
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmcompresszlib
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmdigestmd5
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmfilewhich
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmhttpdaemon
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmiosocket_ssl
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmlibwwwperl
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmprocdaemon
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmprocpidfile
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmnetcups
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmnetip
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmtexttemplate
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmuniversalrequire
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmxmltreepp
 
 CONFIGURE_ARGS = PREFIX=/opt/csw SYSCONFDIR=/etc/opt/csw
 
