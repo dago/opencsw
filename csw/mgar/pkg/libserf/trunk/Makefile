@@ -18,6 +18,9 @@ DISTFILES  = $(DISTNAME).tar.bz2
 LICENSE = LICENSE
 VENDOR_URL = http://code.google.com/p/serf/
 
+# openssl-1.0 only available for sol-10
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 PACKAGES += CSWlibserf1-1
 CATALOGNAME_CSWlibserf1-1 = libserf1_1
 SPKG_DESC_CSWlibserf1-1 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
