@@ -10,7 +10,6 @@ define BLURB
   systems under which the `which' program wasn't implemented in the shell.
 endef
 
-CATALOG_RELEASE = unstable
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 LICENSE_TEXT = This module is licensed under the perl license
