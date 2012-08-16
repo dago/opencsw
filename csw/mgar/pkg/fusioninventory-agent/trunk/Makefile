@@ -26,19 +26,19 @@ PACKAGES = CSWfusioninventory-agent
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS  = CSWperl
-RUNTIME_DEP_PKGS += CSWpmcompresszlib
-RUNTIME_DEP_PKGS += CSWpmdigestmd5
-RUNTIME_DEP_PKGS += CSWpmfilewhich
-RUNTIME_DEP_PKGS += CSWpmhttpdaemon
-RUNTIME_DEP_PKGS += CSWpmiosocket_ssl
-RUNTIME_DEP_PKGS += CSWpmlibwwwperl
-RUNTIME_DEP_PKGS += CSWpmprocdaemon
-RUNTIME_DEP_PKGS += CSWpmprocpidfile
-RUNTIME_DEP_PKGS += CSWpmnetcups
-RUNTIME_DEP_PKGS += CSWpmnetip
-RUNTIME_DEP_PKGS += CSWpmtexttemplate
-RUNTIME_DEP_PKGS += CSWpmuniversalrequire
-RUNTIME_DEP_PKGS += CSWpmxmltreepp
+RUNTIME_DEP_PKGS += CSWpm-compress-zlib
+RUNTIME_DEP_PKGS += CSWpm-digest-md5
+RUNTIME_DEP_PKGS += CSWpm-file-which
+RUNTIME_DEP_PKGS += CSWpm-http-daemon
+RUNTIME_DEP_PKGS += CSWpm-io-socket-ssl
+RUNTIME_DEP_PKGS += CSWpm-libwww-perl
+RUNTIME_DEP_PKGS += CSWpm-proc-daemon
+RUNTIME_DEP_PKGS += CSWpm-proc-pid-file
+RUNTIME_DEP_PKGS += CSWpm-net-cups
+RUNTIME_DEP_PKGS += CSWpm-net-ip
+RUNTIME_DEP_PKGS += CSWpm-text-template
+RUNTIME_DEP_PKGS += CSWpm-universal-require
+RUNTIME_DEP_PKGS += CSWpm-xml-treepp
 RUNTIME_DEP_PKGS += CSWmemconf
 
 PATCHFILES += 0001-don-t-install-a-private-memconf-copy.patch
@@ -55,6 +55,7 @@ INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
 CHECKPKG_OVERRIDES += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Input/BSD/Archs/i386.pm
 CHECKPKG_OVERRIDES += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Input/Linux/Archs/i386.pm
 CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local|root/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory.pm
+CHECKPKG_OVERRIDES += surplus-dependency|CSWperl
 
 DOCLIST = LICENSE Changes README THANKS
 
