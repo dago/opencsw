@@ -20,6 +20,4 @@ ARCHALL = 1
 
 BUILD_DEP_PKGS += CSWpm-test-script
 
-RUNTIME_DEP_PKGS += CSWpm-pathtools
-
 include gar/category.mk
