@@ -20,6 +20,4 @@ LICENSE_TEXT = This module is licensed under the perl license
 PACKAGES = CSWpm-xml-treepp
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS_CSWpm-xml-treepp += CSWpm-libwww-perl
-
 include gar/category.mk
