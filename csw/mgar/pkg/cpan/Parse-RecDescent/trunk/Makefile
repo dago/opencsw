@@ -1,26 +1,27 @@
 NAME = Parse-RecDescent
-VERSION = 1.963
+VERSION = 1.967009
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = DCONWAY
+AUTHOR = JTBRAUN
 
-DESCRIPTION = Generate recursive-descent parsers
+DESCRIPTION = Generate Recursive-Descent Parsers
 define BLURB
-  Parse::RecDescent incrementally generates top-down recursive-descent text
-  parsers from simple yacc-like grammar specifications.
 endef
 
-PACKAGES = CSWpmparserecdescent
-CATALOGNAME = pm_parserecdescent
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE_TEXT = This module is licensed under the unknown license
 
-RUNTIME_DEP_PKGS = CSWpmversion
+PACKAGES += CSWpm-parse-recdescent
+CATALOGNAME_CSWpm-parse-recdescent = pm_parse_recdescent
+SPKG_DESC_CSWpm-parse-recdescent = Generate Recursive-Descent Parsers
+ARCHALL_CSWpm-parse-recdescent = 1
+OBSOLETED_BY_CSWpm-parse-recdescent += CSWpmparserecdescent
+CATALOGNAME_CSWpmparserecdescent = pm_parserecdescent_stub
 
-LICENSE = README
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
-
-post-extract:
-	@chmod o+r $(WORKSRC)/README
-	@$(MAKECOOKIE)
