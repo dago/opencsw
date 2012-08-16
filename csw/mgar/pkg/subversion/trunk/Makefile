@@ -20,7 +20,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.7.5
+VERSION = 1.7.6
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -197,7 +197,7 @@ PATCHFILES += 0002-Fix-location-of-bindings.patch
 # installed.
 # SVNLIB     = $(prefix)/lib
 SVNLIB     = $(prefix)/lib/svn
-JAVA_HOME  = /usr/latest
+JAVA_HOME  = /usr/jdk/latest
 
 #EXTRA_INC += $(prefix)/apache2/include
 
