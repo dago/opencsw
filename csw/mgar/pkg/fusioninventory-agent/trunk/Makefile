@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = fusioninventory-agent
-VERSION = 2.2.4
+VERSION = 2.2.5
 GARTYPE = v2
 CATEGORIES = cpan
 
@@ -39,6 +39,9 @@ RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmnetip
 RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmtexttemplate
 RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmuniversalrequire
 RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWpmxmltreepp
+RUNTIME_DEP_PKGS_CSWfusioninventory-agent += CSWmemconf
+
+PATCHFILES += 0001-don-t-install-a-private-memconf-copy.patch
 
 CONFIGURE_ARGS = PREFIX=/opt/csw SYSCONFDIR=/etc/opt/csw
 

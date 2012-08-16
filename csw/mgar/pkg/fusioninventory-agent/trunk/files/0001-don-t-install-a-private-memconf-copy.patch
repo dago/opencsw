@@ -1,0 +1,25 @@
+From a4828f2fc6e8d57e1fc156fb3c3619c7fa2acb74 Mon Sep 17 00:00:00 2001
+From: Guillaume Rousse <guillomovitch@gmail.com>
+Date: Thu, 16 Aug 2012 14:01:53 +0200
+Subject: [PATCH] don't install a private memconf copy
+
+---
+ Makefile.PL | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 93a46dc..b5c87f6 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -55,8 +55,6 @@ test_requires  'LWP::Protocol::https'          => undef;
+ install_script  'fusioninventory-agent';
+ install_script  'fusioninventory-win32-service' if $OSNAME eq 'MSWin32';
+ install_script  'fusioninventory-injector';
+-# memconf is needed by Solaris backend module
+-install_script  'memconf' if $OSNAME eq 'solaris';
+ 
+ makemaker_args(
+     test => {
+-- 
+1.7.11.3
+
