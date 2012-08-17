@@ -102,6 +102,7 @@ PACKAGES += CSWphp5-dev
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWgsed
 OBSOLETED_BY_CSWphp5-dev = CSWphp5devel
 PKGFILES_CSWphp5-dev  = $(prefix)/php5/bin/php-config
 PKGFILES_CSWphp5-dev  = $(prefix)/bin/php-config
