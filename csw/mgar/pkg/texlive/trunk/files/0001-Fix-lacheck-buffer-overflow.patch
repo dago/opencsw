@@ -1,0 +1,58 @@
+From 6338bcdc8945730395760d207de6517161b19ef9 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 16 Aug 2012 11:16:01 +0200
+Subject: [PATCH] Fix lacheck buffer overflow
+
+The check target fails when the directory structure make the test
+source path too long.
+---
+ texk/lacheck/lacheck-1.26/lacheck.l | 3 ++-
+ texk/lacheck/lacheck.c              | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/texk/lacheck/lacheck-1.26/lacheck.l b/texk/lacheck/lacheck-1.26/lacheck.l
+index b6fd1ba..f3cd993 100644
+--- a/texk/lacheck/lacheck-1.26/lacheck.l
++++ b/texk/lacheck/lacheck-1.26/lacheck.l
+@@ -117,6 +117,7 @@
+ 
+ #include <stdio.h>
+ #include <string.h>
++#include <limits.h>
+ 
+ #if defined(WIN32) && !defined(__MINGW32__)
+ #include <win32lib.h>
+@@ -155,7 +156,7 @@ int check_top_level_end(char *end_command, int type);
+ 
+   /* global variables */
+ 
+-char returnval[100];
++char returnval[PATH_MAX + 1];
+ int line_count = 1;
+ int warn_count = 0;
+ char *file_name;
+diff --git a/texk/lacheck/lacheck.c b/texk/lacheck/lacheck.c
+index e08abeb..affed80 100644
+--- a/texk/lacheck/lacheck.c
++++ b/texk/lacheck/lacheck.c
+@@ -20,7 +20,7 @@
+ #include <string.h>
+ #include <errno.h>
+ #include <stdlib.h>
+-
++#include <limits.h>
+ /* end standard C headers. */
+ 
+ /* flex integer type definitions */
+@@ -2131,7 +2131,7 @@ int check_top_level_end(char *end_command, int type);
+ 
+   /* global variables */
+ 
+-char returnval[100];
++char returnval[PATH_MAX + 1];
+ int line_count = 1;
+ int warn_count = 0;
+ char *file_name;
+-- 
+1.7.11.3
+
