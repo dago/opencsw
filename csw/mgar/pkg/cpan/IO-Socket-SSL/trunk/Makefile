@@ -17,12 +17,15 @@ endef
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += COPYING
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 PACKAGES = CSWpm-io-socket-ssl
 CATALOGNAME = pm_io_socket_ssl
 SPKG_DESC_CSWpm-io-socket-ssl = $(DESCRIPTION)
+
+# Name change
 OBSOLETED_BY_CSWpm-io-socket-ssl = CSWpmiosocketssl
-CATALOGNAME_CSWpmiosocketssl = pm_iosocketssl
+CATALOGNAME_CSWpmiosocketssl = pm_iosocketssl_stub
 
 ARCHALL = 1
 
