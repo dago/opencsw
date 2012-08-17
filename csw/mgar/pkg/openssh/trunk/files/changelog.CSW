@@ -1,3 +1,10 @@
+openssh (6.0p1,REV=2012.08.17) unstable
+
+  * Added a mapfile to force linking against interface SUNW_1.22
+    of libc.so.1 so we don't work only on last solaris release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 17 Aug 2012 15:51:32 +0200
+
 openssh (6.0p1,REV=2012.08.12) unstable
 
   * Removed superfluous dependencies:
