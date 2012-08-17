@@ -12,7 +12,7 @@ endef
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-net-ip
-CATALOGNAME = pm_net-ip
+CATALOGNAME = pm_net_ip
 
 # name change handling
 SPKG_DESC_CSWpm-net-ip = $(DESCRIPTION)
