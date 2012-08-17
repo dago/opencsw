@@ -11,7 +11,7 @@ define BLURB
 endef
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-PACKAGES = CSWpm-ne-tip
+PACKAGES = CSWpm-net-ip
 CATALOGNAME = pm_net-ip
 
 # name change handling
