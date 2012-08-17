@@ -21,9 +21,8 @@ DISTNAMEPREFIX	=	$(NAME)-$(VERSION)
 DISTNAME		=	$(DISTNAMEPREFIX)-source
 DISTFILES		=	$(DISTNAME).tar.xz
 DISTFILES		+=	$(DISTNAMEPREFIX)-extra.tar.xz
-NOEXTRACT		+=	$(DISTNAMEPREFIX)-extra.tar.xz
 DISTFILES		+=	$(DISTNAMEPREFIX)-texmf.tar.xz
-NOEXTRACT		+=	$(DISTNAMEPREFIX)-texmf.tar.xz
+PATCHFILES		+=	0001-Fix-lacheck-buffer-overflow.patch
 
 BUILD_DEP_PKGS	+=	CSWpoppler-dev
 BUILD_DEP_PKGS	+=	CSWpoppler-dev
@@ -31,6 +30,8 @@ BUILD_DEP_PKGS	+=	CSWclisp
 
 EXTRA_CFLAGS	+=	-std=gnu99 -D_XPG6
 EXTRA_CXXFLAGS	+=	-D_XPG6
+
+STRIP_LIBTOOL	=	1
 
 GARCOMPILER		=	GNU
 
@@ -69,21 +70,38 @@ CONFIGURE_ARGS	+=	--with-system-zzlib
 CONFIGURE_ARGS	+=	--with-x
 CONFIGURE_ARGS	+=	--with-xdvi-x-toolkit=xaw
 
-TEST_SCRIPTS	=	custom
-
 RUNTIME_DEP_PKGS	+=	CSWps2eps
+
+# EXTRA_MERGE_EXCLUDE_FILES	+=	
 
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
 
+# we build in a directory outside the source tree and gather the
+# licenses from the extra archive into one file:
 pre-configure-modulated:
 	mkdir -p $(OBJDIR)
+	cat $(WORKDIR)/$(DISTNAMEPREFIX)-extra/LICENSE.TL $(WORKDIR)/$(DISTNAMEPREFIX)-extra/LICENSE.CTAN > $(WORKSRC)/COPYING
 	$(MAKECOOKIE)
 
-# this is needed only because the lacheck test fails:
-test-custom:
-	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) check
+# this is necessary to link texk/ptexenc (libtool --mode=install) when
+# the kpathsea from teTeX is installed on the build system; this will
+# probably go away when teTeX is decommissioned.
+pre-install-modulated:
+	cd $(OBJDIR)/texk/ptexenc && gsed --in-place --expression='s;-L/opt/csw/lib;;g' libptexenc.la
+	$(MAKECOOKIE)
+
+post-install-modulated: xdup = --exclude=texmf/doc/xindy/alphabets-doc.pdf
+post-install-modulated: xdup += --exclude=texmf/doc/xindy/tex2xindy.pdf
+post-install-modulated: xdup += --exclude=texmf/doc/xindy/texindy.pdf
+post-install-modulated: xdup += --exclude=texmf/doc/xindy/xindy.pdf
+post-install-modulated: xdup += --exclude=texmf/dvipdfmx/dvipdfmx.cfg
+post-install-modulated: xdup += --exclude=texmf/xindy/modules/tex/inputenc/cp1250.xdy
+post-install-modulated: xdup += --exclude=texmf/xindy/modules/tex/inputenc/cp437.xdy
+post-install-modulated: xdup += --exclude=texmf/xindy/modules/tex/inputenc/cp850.xdy
+post-install-modulated:
+	gtar --directory=$(WORKDIR)/$(DISTNAMEPREFIX)-texmf --create $(xdup) --file=- . | gtar --directory=$(DESTDIR)/$(datadir) --extract --file=-
 	$(MAKECOOKIE)
 
 # this is private and not available publicly
