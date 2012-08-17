@@ -10,8 +10,14 @@ define BLURB
   IPv6 addresses.
 endef
 
-PACKAGES = CSWpmnetip
-CATALOGNAME = pm_netip
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGES = CSWpm-ne-tip
+CATALOGNAME = pm_net-ip
+
+# name change handling
+SPKG_DESC_CSWpm-net-ip = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-net-ip = CSWpmnetip
+CATALOGNAME_CSWpmnetip = pm_netip
 
 ARCHALL = 1
 
