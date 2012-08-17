@@ -1,5 +1,5 @@
 NAME = IO-Socket-SSL
-VERSION = 1.39
+VERSION = 1.76
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = SULLR
@@ -14,8 +14,10 @@ define BLURB
   extra bonus, it works perfectly with mod_perl.
 endef
 
+DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += COPYING
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-io-socket-ssl
 CATALOGNAME = pm_io_socket_ssl
 SPKG_DESC_CSWpm-io-socket-ssl = $(DESCRIPTION)
