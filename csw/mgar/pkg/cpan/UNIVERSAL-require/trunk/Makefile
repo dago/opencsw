@@ -20,4 +20,8 @@ PACKAGES = CSWpm-universal-require
 CATALOGNAME = pm_universal_require
 ARCHALL = 1
 
+# name change handling
+SPKG_DESC_CSWpm-universal-require = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-universal-require = CSWpmunivrequire
+
 include gar/category.mk
