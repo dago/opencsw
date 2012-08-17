@@ -18,6 +18,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += COPYING
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-proc-daemon
 CATALOGNAME = pm_proc_daemon
 ARCHALL = 1
