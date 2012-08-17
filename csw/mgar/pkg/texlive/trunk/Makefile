@@ -24,6 +24,9 @@ DISTFILES		+=	$(DISTNAMEPREFIX)-extra.tar.xz
 DISTFILES		+=	$(DISTNAMEPREFIX)-texmf.tar.xz
 PATCHFILES		+=	0001-Fix-lacheck-buffer-overflow.patch
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 BUILD_DEP_PKGS	+=	CSWpoppler-dev
 BUILD_DEP_PKGS	+=	CSWpoppler-dev
 BUILD_DEP_PKGS	+=	CSWclisp
