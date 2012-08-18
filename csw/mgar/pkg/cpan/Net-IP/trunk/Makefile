@@ -10,15 +10,15 @@ define BLURB
   IPv6 addresses.
 endef
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-net-ip
 CATALOGNAME = pm_net_ip
-
-# name change handling
 SPKG_DESC_CSWpm-net-ip = $(DESCRIPTION)
-OBSOLETED_BY_CSWpm-net-ip = CSWpmnetip
-CATALOGNAME_CSWpmnetip = pm_netip
 
 ARCHALL = 1
+
+# name change handling
+OBSOLETED_BY_CSWpm-net-ip = CSWpmnetip
+CATALOGNAME_CSWpmnetip = pm_netip_stub
 
 include gar/category.mk
