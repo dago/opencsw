@@ -15,7 +15,6 @@ endef
 
 LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-universal-require
 CATALOGNAME = pm_universal_require
 ARCHALL = 1
@@ -23,5 +22,6 @@ ARCHALL = 1
 # name change handling
 SPKG_DESC_CSWpm-universal-require = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-universal-require = CSWpmunivrequire
+CATALOGNAME_CSWpmunivrequire = pm_univrequire_stub
 
 include gar/category.mk
