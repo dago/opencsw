@@ -15,6 +15,7 @@ endef
 
 MASTER_SITES = $(CPAN_MIRRORS)
 AUTHOR = FUSINV
+MODDIST =
 DISTNAME = FusionInventory-Agent-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
