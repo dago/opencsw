@@ -4,7 +4,7 @@ MASTER_SITES ?= $(CPAN_MIRRORS)
 
 # This is common to most modules - override in module makefile if different
 MODDIST   ?= $(DISTNAME).tar.gz
-DISTFILES ?= $(MODDIST)
+DISTFILES += $(MODDIST)
 CHECKPATH ?= $(firstword $(CPAN_MIRRORS))
 
 # Tests are enabled by default, unless overridden at the test level
