@@ -11,7 +11,6 @@ endef
 
 LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-net-cups
 CATALOGNAME = pm_net_cups
 
