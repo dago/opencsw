@@ -13,13 +13,14 @@ define BLURB
   values.
 endef
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-text-template
 CATALOGNAME = pm_text_template
+SPKG_DESC_CSWpm-text-template = $(DESCRIPTION)
+
 ARCHALL = 1
 
 # name change handling
-SPKG_DESC_CSWpm-text-template = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-text-template = CSWpmtexttemplate
 CATALOGNAME_CSWpmtexttemplate = pm_texttemplate_stub
 
