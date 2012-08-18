@@ -1,7 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 
 NAME = fio
-VERSION = 1.44.2
+VERSION = 2.0.8
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -23,34 +23,19 @@ MASTER_SITES = http://brick.kernel.dk/snaps/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# On Solaris 9 getopt_long isn't part of the OS, thus we pull in CSWlibgnugetopt
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
-RUNTIME_DEP_PKGS = $(RUNTIME_DEP_PKGS_$(GAROSREL))
-RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-EXTRA_BUILD_EXPORTS = EXTLIBS
-EXTLIBS = $(EXTLIBS_$(GAROSREL))
-EXTLIBS_5.9 = -lgnugetopt
-# / On Solaris 9 getopt_long isn't part of the OS
-
-PATCHFILES += 0001-Honour-GAR-CFLAGS-and-use-inttypes.h-instead-of-stdi.patch
-PATCHFILES += 0006-Use-CLOCK_HIGHRES-if-CLOCK_MONOTONIC-is-missing.patch
-
-# These ones went upstream, should be integrated in post 1.44.2 releases
-# cf. http://www.spinics.net/lists/fio/msg00580.html
-#     http://www.spinics.net/lists/fio/msg00582.html
-PATCHFILES += 0003-Install-man-pages.patch
-PATCHFILES += 0005-Warn-on-missing-direct-IO-support.patch
+PATCHFILES	+= 0001-shell-commands.patch
 
 # fio compiler/compiler.h #errors out non gcc compilers
-GARCOMPILER  = GCC3
+GARCOMPILER  = GCC4
 # Required for PTHREAD_STACK_MIN
 EXTRA_CFLAGS  = -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = 
-BUILD_ARGS = -f Makefile.solaris
+#BUILD_ARGS = -f Makefile.solaris
 TEST_SCRIPTS =
-INSTALL_ARGS = -f Makefile.solaris
+#INSTALL_ARGS = -f Makefile.solaris
 
 INSTALL_OVERRIDE_VARS = INSTALL prefix mandir
 INSTALL_OVERRIDE_VAR_INSTALL = $(bindir)/ginstall
