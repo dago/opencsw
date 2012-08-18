@@ -31,13 +31,15 @@ RUNTIME_DEP_PKGS += CSWpm-io-socket-ssl
 RUNTIME_DEP_PKGS += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS += CSWpm-proc-daemon
 RUNTIME_DEP_PKGS += CSWpm-proc-pid-file
-RUNTIME_DEP_PKGS += CSWpm-net-cups
+# not available in 5.9
+ifneq ($(shell /usr/bin/uname -r),5.9) 
+    RUNTIME_DEP_PKGS += CSWpm-net-cups
+endif
 RUNTIME_DEP_PKGS += CSWpm-net-ip
 RUNTIME_DEP_PKGS += CSWpm-text-template
 RUNTIME_DEP_PKGS += CSWpm-universal-require
 RUNTIME_DEP_PKGS += CSWpm-xml-treepp
 RUNTIME_DEP_PKGS += CSWmemconf
-
 PATCHFILES += 0001-don-t-install-a-private-memconf-copy.patch
 
 CONFIGURE_ARGS = PREFIX=/opt/csw SYSCONFDIR=/etc/opt/csw
