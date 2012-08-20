@@ -19,6 +19,6 @@ ARCHALL = 1
 
 # Name change
 OBSOLETED_BY_CSWpm-ole-storage-lite = CSWpmolestoragelite
-CATALOGNAME_CSWpmolestoragelite = pm_olestoragelite
+CATALOGNAME_CSWpmolestoragelite = pm_olestoragelite_stub
 
 include gar/category.mk
