@@ -13,7 +13,6 @@ CATALOG_RELEASE = unstable
 
 LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES = CSWpm-http-message
 ARCHALL = 1
 RUNTIME_DEP_PKGS += CSWpm-lwp-mediatypes
