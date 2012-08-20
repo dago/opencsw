@@ -11,8 +11,14 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmolestoragelite
-CATALOGNAME = pm_olestoragelite
+PACKAGES = CSWpm-ole-storage-lite
+CATALOGNAME = pm_ole_storage_lite
+SPKG_DESC_CSWpm-ole-storage-lite = $(DESCRIPTION)
+
 ARCHALL = 1
+
+# Name change
+OBSOLETED_BY_CSWpm-ole-storage-lite = CSWpmolestoragelite
+CATALOGNAME_CSWpmolestoragelite = pm_olestoragelite
 
 include gar/category.mk
