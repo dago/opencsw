@@ -1,18 +1,22 @@
 NAME = File-Slurp
-VERSION = 9999.13
+VERSION = 9999.19
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = DROLSKY
+AUTHOR = URI
 
-DESCRIPTION = Efficient Reading/Writing of Complete Files
+DESCRIPTION = Simple and Efficient Reading/Writing/Modifying of Complete Files
 define BLURB
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmfileslurp
-CATALOGNAME = pm_fileslurp
+LICENSE_TEXT = This module is licensed under the perl license
 
-ARCHALL = 1
+PACKAGES += CSWpm-file-slurp
+CATALOGNAME_CSWpm-file-slurp = pm_file_slurp
+SPKG_DESC_CSWpm-file-slurp = Simple and Efficient Reading/Writing/Modifying of Complete Files
+ARCHALL_CSWpm-file-slurp = 1
+OBSOLETED_BY_CSWpm-file-slurp += CSWpmfileslurp
+CATALOGNAME_CSWpmfileslurp = pm_fileslurp_stub
 
 include gar/category.mk
