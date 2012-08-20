@@ -16,6 +16,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 GARCOMPILER = SOS12U3
 
+PATCHFILES += 0001-inifile.c.patch
 BUILD_DEP_PKGS += CSWlibexpat-dev
 RUNTIME_DEP_PKGS_CSWgpsbabel += CSWlibexpat1
 

@@ -1,0 +1,11 @@
+--- a/inifile.c
++++ b/inifile.c
+@@ -127,7 +127,7 @@ open_gpsbabel_inifile(void)
+       xfree(path);
+     }
+     if (name == NULL) {
+-      name = find_gpsbabel_inifile("/usr/local/etc");
++      name = find_gpsbabel_inifile("/etc/opt/csw");
+     }
+     if (name == NULL) {
+       name = find_gpsbabel_inifile("/etc");
