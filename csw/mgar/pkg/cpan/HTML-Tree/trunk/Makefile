@@ -1,24 +1,33 @@
 NAME = HTML-Tree
-VERSION = 4.1
+VERSION = 5.02
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = PETEK
+AUTHOR = CJM
 
-DESCRIPTION = Modules for making parse trees from HTML source
+DESCRIPTION = Work with HTML in a DOM-like tree structure
 define BLURB
-  HTML-Tree is a suite of Perl modules for making parse trees out of HTML
-  source.  It consists of mainly two modules, whose documentation you should
-  refer to: HTML::TreeBuilder and HTML::Element.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmhtmltree
-CATALOGNAME = pm_htmltree
+LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS_CSWpmhtmltree += CSWpmhtmlparser
-RUNTIME_DEP_PKGS_CSWpmhtmltree += CSWpmhtmltagset
+BUILD_DEP_PKGS += CSWpm-test-fatal
+BUILD_DEP_PKGS += CSWpm-module-build
 
-ARCHALL = 1
+PACKAGES += CSWpm-html-tree
+CATALOGNAME_CSWpm-html-tree = pm_html_tree
+SPKG_DESC_CSWpm-html-tree = Work with HTML in a DOM-like tree structure
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-html-tree = 1
+RUNTIME_DEP_PKGS_CSWpm-html-tree += CSWpm-html-parser
+RUNTIME_DEP_PKGS_CSWpm-html-tree += CSWpm-html-tagset
+OBSOLETED_BY_CSWpm-html-tree += CSWpmhtmltree
+CATALOGNAME_CSWpmhtmltree = pm_htmltree_stub
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
