@@ -1,33 +1,34 @@
 NAME = HTML-Format
-VERSION = 2.04
+VERSION = 2.10
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = SBURKE
+AUTHOR = NIGELM
 
-DESCRIPTION = Format HTML as plaintext
+DESCRIPTION = Base class for HTML formatters
 define BLURB
-  The HTML::FormatText is a formatter that outputs plain latin1 text. All
-  character attributes (bold/italic/underline) are ignored. Formatting of HTML
-  tables and forms is not implemented.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmhtmlformat
-CATALOGNAME_CSWpmhtmlformat = pm_htmlformat
+LICENSE = LICENSE
 
-# Legacy package
-PACKAGES += CSWpmhtmlfmt
-CATALOGNAME_CSWpmhtmlfmt = pm_htmlfmt
+BUILD_DEP_PKGS += CSWpmfileslurp
+BUILD_DEP_PKGS += CSWpm-module-build
 
-SPKG_DESC_CSWpmhtmlformat = $(DESCRIPTION)
-SPKG_DESC_CSWpmhtmlfmt = Deprecated, empty stub to CSWpmhtmlformat
+PACKAGES += CSWpm-html-formatter
+CATALOGNAME_CSWpm-html-formatter = pm_html_formatter
+SPKG_DESC_CSWpm-html-formatter = Base class for HTML formatters
+ARCHALL_CSWpm-html-formatter = 1
+RUNTIME_DEP_PKGS_CSWpm-html-formatter += CSWpm-font-afm
+RUNTIME_DEP_PKGS_CSWpm-html-formatter += CSWpm-html-tree
+OBSOLETED_BY_CSWpm-html-formatter += CSWpmhtmlformat
+CATALOGNAME_CSWpmhtmlformat = pm_htmlformat_stub
+OBSOLETED_BY_CSWpm-html-format += CSWpmhtmlfmt
+CATALOGNAME_CSWpmhtmlfmt = pm_htmlfmt_stub
 
-DEP_PKGS_CSWpmhtmlformat = CSWpmfontafm CSWpmhtmltree
-RUNTIME_DEP_PKGS_CSWpmhtmlfmt = CSWpmhtmlformat
-
-ARCHALL = 1
-
-PKGFILES_CSWpmhtmlfmt = NOFILES
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
