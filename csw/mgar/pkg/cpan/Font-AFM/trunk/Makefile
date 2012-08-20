@@ -13,10 +13,20 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmfontafm
-CATALOGNAME = pm_fontafm
+PACKAGES = CSWpm-font-afm
+CATALOGNAME = pm_font_afm
+SPKG_DESC_CSWpm-font-afm = $(DESCRIPTION)
+
+# Name change
+OBSOLETED_BY_CSWpm-font-afm = CSWpmfontafm
+CATALOGNAME_CSWpmfontafm = pm_fontafm_stub
+
 ARCHALL = 1
 
 PATCHFILES += 0001-add-csw-font-paths.patch
+
+# Harmless
+CHECKPKG_OVERRIDES_CSWpm-font-afm += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Font/AFM.pm
+CHECKPKG_OVERRIDES_CSWpm-font-afm += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Font::AFM.3perl
 
 include gar/category.mk
