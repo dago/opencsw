@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gdb
-VERSION = 7.4.1
+VERSION = 7.5
 GARTYPE = v2
 CATEGORIES = devel
 
@@ -50,11 +50,13 @@ BUILD_DEP_PKGS	+=	CSWdejagnu
 BUILD_DEP_PKGS	+=	CSWlibiconv-dev
 BUILD_DEP_PKGS	+=	CSWlibncurses-dev
 BUILD_DEP_PKGS	+=	CSWlibz-dev
+BUILD_DEP_PKGS	+=	CSWlibreadline-dev
 
 CONFIGURE_ARGS-32	+=	--with-python
 CONFIGURE_ARGS-64	+=	
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
+CONFIGURE_ARGS	+=	--with-system-readline
 CONFIGURE_ARGS	+=	--enable-64-bit-bfd
 CONFIGURE_ARGS	+=	--enable-tui
 CONFIGURE_ARGS	+=	--with-curses
@@ -70,13 +72,16 @@ CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-$(MEMORYMODEL))
 # we skip the lengthy test until the linker on the build platforms are
 # of the same and latest version...
 SKIPTEST			=	1
+# TEST_SCRIPTS		=	parallel
 
 RUNTIME_DEP_PKGS	+=	CSWlibexpat1
 RUNTIME_DEP_PKGS	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS	+=	CSWlibintl8
 RUNTIME_DEP_PKGS	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS	+=	CSWlibreadline6
 RUNTIME_DEP_PKGS	+=	CSWlibz1
+
 # this should be declared only for the 32 bit ISAs but I doubt that
 # checkpkg can deal with this subtility
 RUNTIME_DEP_PKGS	+=	CSWpython
@@ -89,6 +94,7 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/bfd.h
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/bfdlink.h
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/dis-asm.h
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/symcat.h
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/charset.alias
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/bfd.info
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/configure.info
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/standards.info
@@ -130,6 +136,11 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/opcodes.mo
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+
+# this halves at least the test time on a mono-core:
+test-parallel:
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) --jobs check
+	$(MAKECOOKIE)
 
 # this is private and not available publicly
 mydependencies:
