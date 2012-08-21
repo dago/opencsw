@@ -35,14 +35,11 @@ BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWperl
 BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWruby18-dev
-BUILD_DEP_PKGS += CSWlibdbi-devel
+BUILD_DEP_PKGS += CSWlibdbi-dev
 
 PACKAGES += CSWrrdtool
 SPKG_DESC_CSWrrdtool = Time-series data logging and graphing
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWrrdtool += CSWpango
-RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibdbi1
@@ -108,23 +105,6 @@ OBSOLETED_BY_CSWrb-rrdtool = CSWrrd
 # This is crappy and needs fixing, unfortunately inside extconf.rb which is hard.
 CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry
 
-#CHECKPKG_OVERRIDES_CSWpm-rrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/RRDp.3perl
-#CHECKPKG_OVERRIDES_CSWpm-rrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/RRDp.pm
-#CHECKPKG_OVERRIDES_CSWpm-rrdtool += pkginfo-opencsw-repository-uncommitted
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/rrd-beginners.1
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/rrdcgi.1
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/html/rrdcgi.html
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/html/rrd-beginners.html
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/html/RRDp.html
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/txt/rrdcgi.txt
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/txt/rrd-beginners.pod
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/txt/rrd-beginners.txt
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rrdtool/txt/rrdcgi.pod
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/rrdbuild.1
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/share|root/opt/csw/share/doc/rrdtool/html/rrdbuild.html
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/share|root/opt/csw/share/doc/rrdtool/txt/rrdbuild.pod
-#CHECKPKG_OVERRIDES_CSWrrdtool += file-with-bad-content|/usr/share|root/opt/csw/share/doc/rrdtool/txt/rrdbuild.txt
-
 REINPLACE_USRLOCAL += /opt/csw/share/perl/csw/RRDp.pm
 REINPLACE_USRLOCAL += /opt/csw/share/man/man3/RRDp.3perl
 REINPLACE_USRLOCAL += /opt/csw/share/man/man1/rrd-beginners.1
@@ -150,7 +130,7 @@ EXTRA_INC += $(includedir)/libxml2
 EXTRA_INC += $(includedir)/glib-2.0
 EXTRA_INC += $(libdir)/glib-2.0/include
 
-EXTRA_LINKER_FLAGS = -lintl
+EXTRA_LINKER_FLAGS = -lintl -z ignore
 
 BUILD64_LIBS_ONLY = 1
 
