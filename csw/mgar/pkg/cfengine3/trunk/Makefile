@@ -40,7 +40,7 @@ UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES =
 
 PATCHFILES += 0001-Remove-unsupported-compiler-options.patch
-#PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
+PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
 PATCHFILES += 0000-Avoid-passing-NULL-pointer-to-CfOut-in-FnCallHostInN.patch
 PATCHFILES += 0000-Optimization-debug-flags-adjusted-for-use-with-SunSt.patch
 # See comment in patch
