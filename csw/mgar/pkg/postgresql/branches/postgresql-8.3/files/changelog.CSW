@@ -1,3 +1,10 @@
+postgresql83 (8.3.20,REV=2012.08.22)
+
+  * New upstream release 8.3.20.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Wed, 22 Aug 2012 08:27:06+0200
+
+
 postgresql83 (8.3.19,REV=2012.06.12)
 
   * Dropped support for Solaris 9
