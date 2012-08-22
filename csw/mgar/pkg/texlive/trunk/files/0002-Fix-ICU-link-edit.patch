@@ -1,0 +1,29 @@
+From f811de609d006bf6bfcc2c94f931ba994fdec962 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 22 Aug 2012 10:08:24 +0200
+Subject: [PATCH] Fix ICU link edit
+
+When the OpenCSW supplied ICU is installed, which is built with Sun Studio,
+the link editor tries to link with the corresponding libraries and it doesn't
+find the references as the mangling method is different from that used by GCC.
+The same reason applies to inhibiting the usage of the system level ICU.
+---
+ libs/icu/icu-49.1/icudefs.mk.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libs/icu/icu-49.1/icudefs.mk.in b/libs/icu/icu-49.1/icudefs.mk.in
+index d753e29..7bd616d 100644
+--- a/libs/icu/icu-49.1/icudefs.mk.in
++++ b/libs/icu/icu-49.1/icudefs.mk.in
+@@ -151,7 +151,7 @@ ENABLE_RPATH = @ENABLE_RPATH@
+ ifeq ($(ENABLE_RPATH),YES)
+ RPATHLDFLAGS = $(LD_RPATH)$(LD_RPATH_PRE)$(libdir)
+ endif
+-LDFLAGS = @LDFLAGS@ $(RPATHLDFLAGS)
++LDFLAGS = $(subst -L/opt/csw/lib,,@LDFLAGS@) $(RPATHLDFLAGS)
+ 
+ # What kind of libraries are we building and linking against?
+ ENABLE_STATIC = @ENABLE_STATIC@
+-- 
+1.7.11.3
+
