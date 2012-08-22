@@ -4,7 +4,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.6
+VERSION = 3.6.7
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -334,6 +334,8 @@ TEST_TARGET = test
 
 # Tests need root
 SKIPTEST ?= 1
+
+EXTRA_LINKER_FLAGS = -z ignore
 
 INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
