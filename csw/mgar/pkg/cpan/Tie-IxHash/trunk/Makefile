@@ -1,21 +1,27 @@
 NAME = Tie-IxHash
-VERSION = 1.21
+VERSION = 1.22
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = GSAR
+AUTHOR = CHORNY
 
 DESCRIPTION = Ordered associative arrays for Perl
 define BLURB
-  This Perl module implements Perl hashes that preserve the order in which the
-  hash elements were added. The order is not affected when values
-  corresponding to existing keys in the IxHash are changed. The elements can
-  also be set to any arbitrary supplied order. The familiar perl array
-  operations can also be performed on the IxHash.
 endef
 
-PACKAGES = CSWpmtieixhash
-CATALOGNAME = pm_tieixhash
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE_TEXT = This module is licensed under the perl license, please see for details http://dev.perl.org/licenses/
+
+PACKAGES += CSWpm-tie-ixhash
+CATALOGNAME_CSWpm-tie-ixhash = pm_tie_ixhash
+SPKG_DESC_CSWpm-tie-ixhash = Ordered associative arrays for Perl
+ARCHALL_CSWpm-tie-ixhash = 1
+OBSOLETED_BY_CSWpm-tie-ixhash += CSWpmtieixhash
+CATALOGNAME_CSWpmtieixhash = pm_tieixhash_stub
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
