@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.5p2
+VERSION = 1.8.5p3
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -96,6 +96,8 @@ CONFIGURE_ARGS_LDAP-enabled += --with-ldap=$(prefix)
 CONFIGURE_ARGS_LDAP-enabled += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_LDAP-$(LDAP))
+
+EXTRA_LINKER_FLAGS = -z ignore
 
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
