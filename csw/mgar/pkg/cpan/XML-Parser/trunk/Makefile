@@ -1,29 +1,23 @@
 NAME = XML-Parser
-VERSION = 2.36
+VERSION = 2.41
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = MSERGEANT
+AUTHOR = TODDR
 
-DESCRIPTION = A module for parsing XML documents
+DESCRIPTION = A perl module for parsing XML documents
 define BLURB
-  This module provides ways to parse XML documents. It is built on top of
-  XML::Parser::Expat, which is a lower level interface to James Clarks expat
-  library. Each call to one of the parsing methods creates a new instance of
-  XML::Parser::Expat which is then used to parse the document. Expat options
-  may be provided when the XML::Parser object is created. These options are
-  then passed on to the Expat object on each parse call. They can also be
-  given as extra arguments to the parse methods, in which case they override
-  options given at XML::Parser creation time.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmxmlparser
-CATALOGNAME = pm_xmlparser
+LICENSE_TEXT = This module is licensed under the perl license
 
-RUNTIME_DEP_PKGS = CSWexpat
-
-CONFIGURE_ARGS  = EXPATINCPATH=$(includedir)
-CONFIGURE_ARGS += EXPATLIBPATH=$(libdir)
+PACKAGES += CSWpm-xml-parser
+CATALOGNAME_CSWpm-xml-parser = pm_xml_parser
+SPKG_DESC_CSWpm-xml-parser = A perl module for parsing XML documents
+RUNTIME_DEP_PKGS_CSWpm-xml-parser += CSWpm-libwww-perl
+RUNTIME_DEP_PKGS_CSWpm-xml-parser += CSWlibexpat1
+OBSOLETED_BY_CSWpm-xml-parser += CSWpmxmlparser
+CATALOGNAME_CSWpmxmlparser = pm_xmlparser_stub
 
 include gar/category.mk
