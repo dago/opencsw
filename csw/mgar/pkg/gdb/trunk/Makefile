@@ -95,6 +95,9 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/bfdlink.h
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/dis-asm.h
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/include/symcat.h
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/64/charset.alias
+# the following 2 are probably not necessary as the paths are refering
+# to the PKGROOT and I think that the paths must refer to DESTDIR:
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/amd64/charset.alias
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/sparcv9/charset.alias
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/bfd.info
