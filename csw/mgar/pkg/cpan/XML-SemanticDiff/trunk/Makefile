@@ -1,18 +1,29 @@
 NAME = XML-SemanticDiff
-VERSION = 0.95
+VERSION = 1.0000
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = KHAMPTON
+AUTHOR = SHLOMIF
 
-DESCRIPTION = extension for comparing XML documents.
+DESCRIPTION = Perl extension for comparing XML documents
 define BLURB
-  XML::SematicDiff provides a way to compare the contents and structure of two
-  XML documents. By default, it returns a list of hashrefs where each hashref
-  describes a single difference between the two docs.
 endef
 
-DISTFILES += $(call admfiles,CSWpmxmlsemdiff,depend prototype)
+CATALOG_RELEASE = unstable
 
-DEPENDS += cpan/libxml-perl
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-xml-semanticdiff
+CATALOGNAME_CSWpm-xml-semanticdiff = pm_xml_semanticdiff
+SPKG_DESC_CSWpm-xml-semanticdiff = Perl extension for comparing XML documents
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-xml-semanticdiff = 1
+RUNTIME_DEP_PKGS_CSWpm-xml-semanticdiff += CSWpm-xml-parser
+OBSOLETED_BY_CSWpm-xml-semanticdiff += CSWpmxmlsemdiff
+CATALOGNAME_CSWpmxmlsemdiff = pm_xmlsemdiff_stub
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
