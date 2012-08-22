@@ -10,21 +10,28 @@ define BLURB
   to PostgreSQL databases.
 endef
 
+DISTFILES += changelog.CSW
+
 PATCHFILES = 0001-Dont-return-value-in-dequote_bytea.patch
 
-PACKAGES = CSWpmdbdpg
-CATALOGNAME = pm_dbdpg
+PACKAGES = CSWpm-dbd-pg
+SPKG_DESC_CSWpm-dbd-pg = $(DESCRIPTION)
 
-PG_HOME = /opt/csw/postgresql
-RUNTIME_DEP_PKGS = CSWlibpq
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+OBSOLETED_BY_CSWpm-dbd-pg = CSWpmdbdpg 
+CATALOGNAME_CSWpmdbdpg = pm_dbdpg_stub
+
+RUNTIME_DEP_PKGS += CSWlibpq5
+RUNTIME_DEP_PKGS += CSWpm-dbi
+BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS += CSWpostgresql-dev
 
 LICENSE = README
 
-# we need to override pg_config, because the RPATH is missing
-PERL_CONFIGURE_ARGS += LIBS="-L$(PG_HOME)/lib -R$(PG_HOME)/lib -lpq"
+PERL_CONFIGURE_ARGS += cc="$(CC)"
+PERL_CONFIGURE_ARGS += ld="$(CC)"
 
 include gar/category.mk
 
-# set postgres home
-CONFIGURE_ENV += POSTGRES_HOME=$(PG_HOME)
+# set postgres home and lib
+CONFIGURE_ENV += POSTGRES_HOME="$(prefix)"
+CONFIGURE_ENV += POSTGRES_LIB="$(libdir) -lssl"
