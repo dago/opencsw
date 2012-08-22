@@ -4,4 +4,6 @@ DBD-Pg (2.17.2,REV=2012.08.22)
 
   * Renamed package from CSWpmdbdpg CSWpm-dbd-pg.
 
+  * Dropped support for Solaris 9.
+
  -- Rafael Ostertag <rafisol@opencsw.org>  Wed, 22 Aug 2012 11:09:49 +0200
