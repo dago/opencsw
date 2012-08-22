@@ -10,6 +10,8 @@ define BLURB
   to PostgreSQL databases.
 endef
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DISTFILES += changelog.CSW
 
 PATCHFILES = 0001-Dont-return-value-in-dequote_bytea.patch
