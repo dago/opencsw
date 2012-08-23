@@ -1,0 +1,25 @@
+# $Id: Makefile 13420 2011-02-20 21:04:03Z bdwalton $
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+NAME = ${name}
+VERSION = ${version}
+GARTYPE = v2
+CATEGORIES = java
+
+DESCRIPTION = Brief description
+define BLURB
+  Long description
+endef
+
+MASTER_SITES = 
+DISTFILES  = $(DISTNAME).tar.gz
+
+PACKAGES += CSW${name}
+SPKG_DESC_CSW${name} = My package
+PKGFILES_CSW${name} += $(call pkgfiles_lib,libabc.so.1)
+PKGFILES_CSW${name} += $(call baseisadirs,$(bindir),myexec)
+PKGFILES_CSW${name} += $(sysconfdir)/myconf
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+include gar/category.mk
