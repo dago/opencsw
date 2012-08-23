@@ -1,34 +1,62 @@
-diff --speed-large-files --minimal -Nru bash-completion-1.1.orig/bash_completion bash-completion-1.1/bash_completion
---- bash-completion-1.1.orig/bash_completion	2009-10-10 23:29:39.177572555 +0200
-+++ bash-completion-1.1/bash_completion	2009-10-10 23:29:13.520556369 +0200
-@@ -40,8 +40,8 @@
+From 30f91fb677f8da10b97c60e624c5c3a9173eebff Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Thu, 23 Aug 2012 21:50:01 +0200
+Subject: [PATCH] Opencsw path addition
+
+---
+ bash_completion | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/bash_completion b/bash_completion
+index d6ae8ae..4e9a3b5 100644
+--- a/bash_completion
++++ b/bash_completion
+@@ -40,8 +40,8 @@ fi
  
- # Alter the following to reflect the location of this file.
+ # Set the following to the location of the backwards compat completion dir.
  #
--[ -n "$BASH_COMPLETION" ] || BASH_COMPLETION=/etc/bash_completion
--[ -n "$BASH_COMPLETION_DIR" ] || BASH_COMPLETION_DIR=/etc/bash_completion.d
-+[ -n "$BASH_COMPLETION" ] || BASH_COMPLETION=/opt/csw/etc/bash_completion
-+[ -n "$BASH_COMPLETION_DIR" ] || BASH_COMPLETION_DIR=/opt/csw/etc/bash_completion.d
- [ -n "$BASH_COMPLETION_COMPAT_DIR" ] || BASH_COMPLETION_COMPAT_DIR=/etc/bash_completion.d
- readonly BASH_COMPLETION BASH_COMPLETION_DIR BASH_COMPLETION_COMPAT_DIR
+-: ${BASH_COMPLETION_COMPAT_DIR:=/etc/bash_completion.d}
+-readonly BASH_COMPLETION_COMPAT_DIR
++: ${BASH_COMPLETION_COMPAT_DIR_LIST:=/opt/csw/etc/bash_completion.d /etc/opt/csw/bash_completion.d}
++readonly BASH_COMPLETION_COMPAT_DIR_LIST
  
-@@ -1196,6 +1196,8 @@
-         [ -r "$configfile" ] &&
-         config=( "${config[@]}" "$configfile" )
+ # Blacklisted completions, causing problems with our code.
+ #
+@@ -1429,7 +1429,7 @@ _known_hosts_real()
+     if [[ -n $configfile ]]; then
+         [[ -r $configfile ]] && config+=( "$configfile" )
      else
-+        [ -r /opt/csw/etc/ssh/ssh_config ] &&
-+        config=( "${config[@]}" "/opt/csw/etc/ssh/ssh_config" )
-         [ -r /etc/ssh/ssh_config ] &&
-         config=( "${config[@]}" "/etc/ssh/ssh_config" )
-         [ -r "${HOME}/.ssh/config" ] &&
-@@ -1223,6 +1225,10 @@
-     [ -r "$global_kh" ] &&
-     kh=( "${kh[@]}" "${global_kh[@]}" )
-     if [ -z "$configfile" ]; then
-+        [ -r /opt/csw/etc/ssh/ssh_known_hosts ] &&
-+        kh=( "${kh[@]}" /opt/csw/etc/ssh/ssh_known_hosts )
-+        [ -r /opt/csw/etc/ssh/ssh_known_hosts2 ] &&
-+        kh=( "${kh[@]}" /opt/csw/etc/ssh/ssh_known_hosts2 )
-         [ -r /etc/ssh/ssh_known_hosts ] &&
-         kh=( "${kh[@]}" /etc/ssh/ssh_known_hosts )
-         [ -r /etc/ssh/ssh_known_hosts2 ] &&
+-        for i in /etc/ssh/ssh_config ~/.ssh/config ~/.ssh2/config; do
++        for i in /etc/opt/csw/ssh/ssh_config /etc/ssh/ssh_config ~/.ssh/config ~/.ssh2/config; do
+             [[ -r $i ]] && config+=( "$i" )
+         done
+     fi
+@@ -1462,7 +1462,8 @@ _known_hosts_real()
+ 
+     if [[ -z $configfile ]]; then
+         # Global and user known_hosts files
+-        for i in /etc/ssh/ssh_known_hosts /etc/ssh/ssh_known_hosts2 \
++        for i in /etc/opt/csw/ssh/ssh_known_hosts /etc/opt/csw/ssh/ssh_known_hosts2 \
++            /etc/ssh/ssh_known_hosts /etc/ssh/ssh_known_hosts2 \
+             /etc/known_hosts /etc/known_hosts2 ~/.ssh/known_hosts \
+             ~/.ssh/known_hosts2; do
+             [[ -r $i ]] && kh+=( "$i" )
+@@ -1947,6 +1948,7 @@ _xfunc()
+ }
+ 
+ # source compat completion directory definitions
++for BASH_COMPLETION_COMPAT_DIR in $BASH_COMPLETION_COMPAT_DIR_LIST; do
+ if [[ -d $BASH_COMPLETION_COMPAT_DIR && -r $BASH_COMPLETION_COMPAT_DIR && \
+     -x $BASH_COMPLETION_COMPAT_DIR ]]; then
+     for i in $(LC_ALL=C command ls "$BASH_COMPLETION_COMPAT_DIR"); do
+@@ -1955,6 +1957,7 @@ if [[ -d $BASH_COMPLETION_COMPAT_DIR && -r $BASH_COMPLETION_COMPAT_DIR && \
+             && -f $i && -r $i ]] && . "$i"
+     done
+ fi
++done
+ unset i _blacklist_glob
+ 
+ # source user completion file
+-- 
+1.7.11.3
+

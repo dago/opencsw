@@ -1,0 +1,131 @@
+From ee675623afd6ed49d2af21eec4553ce09ac98d41 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Thu, 23 Aug 2012 22:06:00 +0200
+Subject: [PATCH 3/3] More opencsw paths fix
+
+---
+ README               | 4 ++--
+ completions/info     | 2 +-
+ completions/munindoc | 2 +-
+ completions/mysql    | 6 ++++--
+ completions/openssl  | 4 ++--
+ completions/puppet   | 2 +-
+ completions/rdesktop | 2 +-
+ completions/sudo     | 2 +-
+ 8 files changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/README b/README
+index 1558f62..b50983f 100644
+--- a/README
++++ b/README
+@@ -8,8 +8,8 @@ from either /etc/bashrc or ~/.bashrc (or any other file sourcing those). You
+ can do this by simply using:
+ 
+ # Use bash-completion, if available
+-[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+-    . /usr/share/bash-completion/bash_completion
++[[ $PS1 && -f /opt/csw/share/bash-completion/bash_completion ]] && \
++    . /opt/csw/share/bash-completion/bash_completion
+ 
+ (if you happen to have *only* bash >= 4.1 installed, see further if not)
+ 
+diff --git a/completions/info b/completions/info
+index 3655044..1b164a5 100644
+--- a/completions/info
++++ b/completions/info
+@@ -41,7 +41,7 @@ _info()
+         return
+     fi
+ 
+-    local i infopath=/usr/share/info
++    local i infopath=/opt/csw/share/info
+ 
+     if [[ $INFOPATH == *: ]]; then
+         infopath=${INFOPATH}${infopath}
+diff --git a/completions/munindoc b/completions/munindoc
+index c5a03c1..81df7d4 100644
+--- a/completions/munindoc
++++ b/completions/munindoc
+@@ -6,7 +6,7 @@ _munindoc()
+     _init_completion || return
+ 
+     COMPREPLY=( $( compgen -W \
+-        '$( command ls /usr/share/munin/plugins 2>/dev/null )' -- "$cur" ) )
++        '$( command ls /opt/csw/libexec/munin/plugins 2>/dev/null )' -- "$cur" ) )
+ } &&
+ complete -F _munindoc munindoc
+ 
+diff --git a/completions/mysql b/completions/mysql
+index c41c166..710be90 100644
+--- a/completions/mysql
++++ b/completions/mysql
+@@ -20,8 +20,10 @@ _mysql()
+             return 0
+             ;;
+         --default-character-set)
+-            [[ -d /usr/share/mysql/charsets ]] && \
+-                COMPREPLY=( $( compgen -W "$(command ls /usr/share/mysql/charsets|sed -e '/^\(README\|Index\.xml\)$/d' -e 's/.xml$//') utf8" -- "$cur" ) )
++            for _PREFIX in /opt/csw /usr; do 
++                [[ -d $_PREFIX/share/mysql/charsets ]] && \
++                COMPREPLY=( $( compgen -W "$(command ls $_PREFIX/share/mysql/charsets|sed -e '/^\(README\|Index\.xml\)$/d' -e 's/.xml$//') utf8" -- "$cur" ) )
++            done
+             return 0
+             ;;
+ 
+diff --git a/completions/openssl b/completions/openssl
+index b63d215..7319a62 100644
+--- a/completions/openssl
++++ b/completions/openssl
+@@ -14,8 +14,8 @@ _openssl_sections()
+ 
+     # if no config given, check some usual default locations
+     if [[ -z $config ]]; then
+-        for f in /etc/ssl/openssl.cnf /etc/pki/tls/openssl.cnf \
+-            /usr/share/ssl/openssl.cnf; do
++        for f in /etc/opt/csw/ssl/openssl.cnf /etc/ssl/openssl.cnf \
++            /etc/pki/tls/openssl.cnf /usr/share/ssl/openssl.cnf; do
+             [[ -f $f ]] && config=$f && break
+         done
+     fi
+diff --git a/completions/puppet b/completions/puppet
+index 66a81b3..085affb 100644
+--- a/completions/puppet
++++ b/completions/puppet
+@@ -18,7 +18,7 @@ _puppet_digest()
+ _puppet_certs()
+ {
+     local puppetca="puppet cert"
+-    PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin type puppetca  &>/dev/null \
++    PATH=$PATH:/opt/csw/sbin:/sbin:/usr/sbin:/usr/local/sbin type puppetca  &>/dev/null \
+         && puppetca=puppetca
+     
+     if [[ "$1" = '--all' ]]; then
+diff --git a/completions/rdesktop b/completions/rdesktop
+index 48a9175..7d84677 100644
+--- a/completions/rdesktop
++++ b/completions/rdesktop
+@@ -8,7 +8,7 @@ _rdesktop()
+     case $prev in
+         -k)
+             COMPREPLY=( $( command ls \
+-                /usr/share/rdesktop/keymaps 2>/dev/null | \
++                /opt/csw/share/rdesktop/keymaps 2>/dev/null | \
+                 command grep -E -v '(common|modifiers)' ) )
+             COMPREPLY+=( $( command ls $HOME/.rdesktop/keymaps 2>/dev/null ) )
+             COMPREPLY+=( $( command ls ./keymaps 2>/dev/null ) )
+diff --git a/completions/sudo b/completions/sudo
+index b13b731..d507100 100644
+--- a/completions/sudo
++++ b/completions/sudo
+@@ -11,7 +11,7 @@ _sudo()
+     [[ $mode == normal ]] &&
+     for (( i=1; i <= COMP_CWORD; i++ )); do
+         if [[ ${COMP_WORDS[i]} != -* ]]; then
+-            local PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
++            local PATH=$PATH:/opt/csw/sbin:/sbin:/usr/sbin:/usr/local/sbin
+             local root_command=${COMP_WORDS[i]}
+             _command_offset $i
+             return
+-- 
+1.7.11.3
+
