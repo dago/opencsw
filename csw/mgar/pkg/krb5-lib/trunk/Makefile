@@ -29,6 +29,8 @@ PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 # PATCHFILES += krb5-1.9.2-krb5_set_password_using_ccache.patch
 PATCHFILES += 0005-krb5_set_password_using_ccache.patch
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 BUILD_DEP_PKGS = CSWtcl
 
 # Uncomment for a better view of file-package allocations.
@@ -124,6 +126,8 @@ OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
 LICENSE = doc/copyright.texinfo
 
+EXTRA_LD_OPTIONS += -M $(abspath mapfile)
+
 EXTRA_CPPFLAGS += -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
@@ -166,15 +170,6 @@ CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWkrb5lib
 # pkgname=CSWkrb5lib|catalogname=krb5_lib|expected-catalogname=krb5lib
 CHECKPKG_OVERRIDES_CSWkrb5lib += catalogname-does-not-match-pkgname
 CATALOGNAME_CSWkrb5lib = krb5_lib_stub
-
-# A temporary override
-CHECKPKG_OVERRIDES_CSWlibcom-err3 += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibgssapi-krb5-2 += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibk5crypto3 += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibkrb5-3 += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibkrb5-dev += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibkrb5-priv += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibkrb5support0 += binary-architecture-does-not-match-placement
 
 include gar/category.mk
 
