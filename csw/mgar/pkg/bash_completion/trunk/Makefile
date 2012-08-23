@@ -83,7 +83,7 @@ post-merge: merge-opencsw-completion merge-compatibility-link merge-additional-d
 merge-opencsw-completion:
 	@( for FILE in $(WORKDIR)/*.completion; do \
 	      NFILE="`basename $$FILE | sed -e 's/\.completion$$//'`"; \
-	      ginstall -D $$FILE $(PKGROOT)$(sharedstatedir)/bash_completion.d/$$NFILE; \
+	      ginstall -D $$FILE $(PKGROOT)$(sharedstatedir)/bash-completion/completions/$$NFILE; \
 	done )
 	@$(MAKECOOKIE)	
 
