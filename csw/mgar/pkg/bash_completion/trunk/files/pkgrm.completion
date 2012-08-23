@@ -8,7 +8,7 @@
 # software causes damage.
 #
 
-have pkgrm &&
+_have pkgrm &&
 _pkgrm ()
 {
     local cur prev i spool;

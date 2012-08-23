@@ -10,7 +10,7 @@
 # pkgutil.completion - bash completion for pkgutil
 #
 
-have pkgutil && 
+_have pkgutil && 
 _pkgutil()
 {
 	local cur prev file catalog_file url command
