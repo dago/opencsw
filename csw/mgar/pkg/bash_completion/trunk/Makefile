@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash_completion
-VERSION = 1.1
+VERSION = 2.0
 CATEGORIES = xtra
 GARTYPE = v2
 
@@ -26,6 +26,27 @@ ARCHALL=1
 
 PACKAGES = CSWbashcmplt
 CATALOGNAME_CSWbashcmplt = bash_completion
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+# We will not change that today
+CHECKPKG_OVERRIDES_CSWbashcmplt += catalogname-does-not-match-pkgname|pkgname=CSWbashcmplt|catalogname=bash_completion|expected-catalogname=bashcmplt
+# bash will complete if python s
+CHECKPKG_OVERRIDES_CSWbashcmplt += missing-dependency|CSWpython
+
+# No remaining /usr/share, /usr/local references are ok
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bash_completion/CHANGES
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/bash-completion/completions/wtf
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/bash-completion/completions/openssl
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/bash-completion/completions/dict
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/bash-completion/completions/lintian
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/bash-completion/completions/dpkg
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/share|root/opt/csw/share/bash-completion/completions/mplayer
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/local|root/opt/csw/share/bash-completion/bash_completion
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/local|root/opt/csw/share/bash-completion/completions/puppet
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/local|root/opt/csw/share/bash-completion/completions/sudo
+CHECKPKG_OVERRIDES_CSWbashcmplt += file-with-bad-content|/usr/local|root/opt/csw/share/bash-completion/completions/mplayer
+
 
 
 ###### Upstream and OpenCSW files information #######
@@ -45,7 +66,7 @@ DISTFILES += changelog.CSW
 
 # change the paths to use opencsw ones
 PATCHFILES = opencsw_paths.patch
-
+PATCHFILES += more_opencsw_paths.patch
 
 ##### Build and installation information #####
 
@@ -62,13 +83,13 @@ post-merge: merge-opencsw-completion merge-additional-docs merge-changelog
 merge-opencsw-completion:
 	@( for FILE in $(WORKDIR)/*.completion; do \
 	      NFILE="`basename $$FILE | sed -e 's/\.completion$$//'`"; \
-	      ginstall -D $$FILE $(PKGROOT)$(sysconfdir)/bash_completion.d/$$NFILE; \
+	      ginstall -D $$FILE $(PKGROOT)$(sharedstatedir)/bash_completion.d/$$NFILE; \
 	done )
 	@$(MAKECOOKIE)	
 
 
 merge-additional-docs:
-	@( for FILE in AUTHORS README TODO; do \
+	@( for FILE in AUTHORS README CHANGES; do \
 		ginstall -D "$(WORKSRC_FIRSTMOD)/$$FILE" "$(PKGROOT)$(docdir)/$(NAME)/$$FILE"; \
 	done )
 	@$(MAKECOOKIE)	

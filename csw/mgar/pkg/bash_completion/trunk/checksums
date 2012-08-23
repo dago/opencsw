@@ -1,8 +1,1 @@
-593d3edcf287b9e9d735049bd4d3f229  bash-completion-1.1.tar.gz
-075292057aa7dce8fb78dba076ee0832  changelog.CSW
-4c7dc3d0486ba84c5c0bbb57ee5ac420  opencsw_paths.patch
-5bc234f6060561c564a20d2a9cc552c1  pkg-get.completion
-af7a63477c6e81ed5b08f195e153091e  pkgadd.completion
-1389a7771e34fc54fe993d442cce1524  pkgrm.completion
-f922762210a6f208695c328c040ac90d  pkgutil.completion
-52bd6948f5cc1548c3791a969da0e5e2  smf.completion
+48616c0e3704e8ff7b6d9842f6b7a2de  bash-completion-2.0.tar.gz
