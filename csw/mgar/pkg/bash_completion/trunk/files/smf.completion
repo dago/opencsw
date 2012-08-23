@@ -37,7 +37,7 @@ _smf_complete_frmi ()
 	COMPREPLY=( $(compgen -W "$frmi" -- ${cur}) )
 }
 
-have svcadm &&
+_have svcadm &&
 _svcadm ()
 {
         local cur prev command command_list command_option i

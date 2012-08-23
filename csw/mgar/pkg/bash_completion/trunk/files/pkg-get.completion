@@ -10,7 +10,7 @@
 # pkg-get.completion - bash completion for opencsw pkg-get
 #
 
-have pkg-get && 
+_have pkg-get && 
 _pkg-get_get_catalog_file()
 {
 	local url="$1"
