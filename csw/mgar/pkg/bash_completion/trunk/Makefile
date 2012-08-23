@@ -77,7 +77,7 @@ CONFIGURE_ARGS += --prefix $(prefix)
 # no test script in bash_completion
 TEST_SCRIPTS =
 
-post-merge: merge-opencsw-completion merge-additional-docs merge-changelog
+post-merge: merge-opencsw-completion merge-compatibility-link merge-additional-docs merge-changelog
 
 # we add some completion scripts for Solaris 
 merge-opencsw-completion:
@@ -85,6 +85,11 @@ merge-opencsw-completion:
 	      NFILE="`basename $$FILE | sed -e 's/\.completion$$//'`"; \
 	      ginstall -D $$FILE $(PKGROOT)$(sharedstatedir)/bash_completion.d/$$NFILE; \
 	done )
+	@$(MAKECOOKIE)	
+
+# to make sure we don't break completion loading for users of previous versions of this package
+merge-compatibility-link:
+	@(cd $(PKGROOT)$(prefix)/etc/ && ln -s profile.d/bash_completion.sh bash_completion)
 	@$(MAKECOOKIE)	
 
 
