@@ -18,9 +18,12 @@ LICENSE_TEXT = This module is licensed under the perl license
 PACKAGES = CSWpm-libwww-perl
 CATALOGNAME = pm_libwww_perl
 SPKG_DESC_CSWpm-libwww-perl = $(DESCRIPTION)
+
 ARCHALL = 1
+
+# Name change
 OBSOLETED_BY_CSWpm-libwww-perl = CSWpmlibwww
-CATALOGNAME_CSWpmlibwww = pm_libwww
+CATALOGNAME_CSWpmlibwww = pm_libwww_stub
 
 # avoid an error with configure-style default options
 CONFIGURE_ARGS =
@@ -39,5 +42,17 @@ RUNTIME_DEP_PKGS += CSWpm-mime-base64
 RUNTIME_DEP_PKGS += CSWpm-net-http
 RUNTIME_DEP_PKGS += CSWpm-uri
 RUNTIME_DEP_PKGS += CSWpm-www-robotrules
+
+# New packages released together with libwww-perl 6, remove on next build
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-file-listing
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-cookies
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-date
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-daemon
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-message
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-negotiate
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-libnet
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-lwp-mediatypes
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-net-http
+CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-www-robotrules
 
 include gar/category.mk
