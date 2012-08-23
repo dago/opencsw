@@ -25,7 +25,6 @@ PACKAGES = CSWfusioninventory-agent
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS += CSWpm-file-which
-RUNTIME_DEP_PKGS += CSWpm-http-daemon
 RUNTIME_DEP_PKGS += CSWpm-io-socket-ssl
 RUNTIME_DEP_PKGS += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS += CSWpm-proc-daemon
