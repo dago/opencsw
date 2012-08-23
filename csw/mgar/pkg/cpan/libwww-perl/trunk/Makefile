@@ -32,27 +32,17 @@ RUNTIME_DEP_PKGS += CSWpm-encode-locale
 RUNTIME_DEP_PKGS += CSWpm-file-listing
 RUNTIME_DEP_PKGS += CSWpm-html-parser
 RUNTIME_DEP_PKGS += CSWpm-http-cookies
-RUNTIME_DEP_PKGS += CSWpm-http-date
 RUNTIME_DEP_PKGS += CSWpm-http-daemon
-RUNTIME_DEP_PKGS += CSWpm-http-message
+RUNTIME_DEP_PKGS += CSWpm-http-date
+#RUNTIME_DEP_PKGS += CSWpm-http-message
 RUNTIME_DEP_PKGS += CSWpm-http-negotiate
-RUNTIME_DEP_PKGS += CSWpm-libnet
+# http-request?
+# http-response?
+# http-status?
 RUNTIME_DEP_PKGS += CSWpm-lwp-mediatypes
 RUNTIME_DEP_PKGS += CSWpm-mime-base64
 RUNTIME_DEP_PKGS += CSWpm-net-http
 RUNTIME_DEP_PKGS += CSWpm-uri
 RUNTIME_DEP_PKGS += CSWpm-www-robotrules
-
-# New packages released together with libwww-perl 6, remove on next build
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-file-listing
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-cookies
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-date
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-daemon
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-message
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-http-negotiate
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-libnet
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-lwp-mediatypes
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-net-http
-CHECKPKG_OVERRIDES_CSWpm-libwww-perl += unidentified-dependency|CSWpm-www-robotrules
 
 include gar/category.mk
