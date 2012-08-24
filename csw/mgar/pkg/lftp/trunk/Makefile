@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.3.6
+VERSION = 4.3.8
 CATEGORIES = net
 GARTYPE = v2
 
@@ -31,6 +31,8 @@ RUNTIME_DEP_PKGS += CSWlibsocks
 RUNTIME_DEP_PKGS += CSWlibintl8
 RUNTIME_DEP_PKGS += CSWlibreadline6
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 ###### Upstream and opencsw files information #######
 
 MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
@@ -45,7 +47,7 @@ DISTFILES += changelog.CSW
 
 PATCHFILES += dont_use_csw_getopt_h.patch
 
-# Disable the use of IPV6_V6ONLY function
+# Disable the use of IPV6_V6ONLY function if it is not defined
 # It is not mandatory here, lftp uses the option for the torrent listen socket
 # it opens a socket first for ipv4 then for ipv6, so the ipv6 one will never
 # catch the ipv4 connection even if IPV6_V6ONLY can't be set
@@ -72,6 +74,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 # Requested see https://www.opencsw.org/mantis/view.php?id=4481
 CONFIGURE_ARGS += --with-socksdante
+
+EXTRA_LDFLAGS = -z ignore -Bdirect 
 
 # No test suite here
 TEST_SCRIPTS =

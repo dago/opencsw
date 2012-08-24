@@ -1,3 +1,10 @@
+lftp (4.3.8,REV=2012.08.24) unstable
+
+  * New upstream release.
+  * Enabled direct binding during build.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 19:25:02 +0200
+
 lftp (4.3.6,REV=2012.05.17) unstable
 
   * Rebuilt against libssl 1.0
