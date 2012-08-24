@@ -49,18 +49,14 @@ DISTFILES += changelog.CSW
 # ncurses
 PATCHFILES = 0001-no-curses-dependency.patch
 
-# Let's not trust neon-config until Bug 4984 is fixed
-# https://www.opencsw.org/mantis/view.php?id=4984
-# This allow us to not depend directly anymore on a bunch
-# of libraries
-PATCHFILES += 0002-Neon-LD-option-fix.patch
-
 ##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
+
+EXTRA_LDFLAGS = -z ignore -Bdirect 
 
 TEST_SCRIPTS =
 

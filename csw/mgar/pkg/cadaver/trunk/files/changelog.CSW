@@ -1,3 +1,11 @@
+cadaver (0.23.3,rev=2012.08.24) unstable
+
+  * Enabled direct binding during build.
+  * Use ld "-z ignore" option to avoid linking with useless libraries
+    instead of patching the configure system
+
+ -- Yann rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 20:32:21 +0200
+
 cadaver (0.23.3,rev=2012.08.12) unstable
 
   * Removed superfluous dependancies: 
