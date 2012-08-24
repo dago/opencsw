@@ -1,3 +1,9 @@
+rlwrap (0.37,REV=2012.08.24) unstable
+
+  * Enabled symbols direct binding during build.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 20:44:21 +0200
+
 rlwrap (0.37,REV=2011.07.19) unstable
 
   * Updated readline dependancy name (CSWreadline -> CSWlibreadline6).
