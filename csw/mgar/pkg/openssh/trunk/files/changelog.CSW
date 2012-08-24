@@ -1,3 +1,9 @@
+openssh (6.0p1,REV=2012.08.24) unstable
+
+  * Enabled direct binding during build.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 14:49:44 +0200
+
 openssh (6.0p1,REV=2012.08.17) unstable
 
   * Added a mapfile to force linking against interface SUNW_1.22
