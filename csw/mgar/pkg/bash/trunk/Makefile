@@ -84,6 +84,8 @@ ETCSHELLS = /opt/csw/bin/bash
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+EXTRA_LDFLAGS = -z ignore -Bdirect 
+
 include gar/category.mk
 
 # We touch these file to avoid aclocal/autoconf
