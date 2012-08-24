@@ -30,6 +30,9 @@ PROTOTYPE_GROUP_run = root
 PACKAGES = CSWscreen 
 
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+
 # Stub package that allow us to rename transparently the package
 # from CSWscrn to CSWscreen
 # We also include the postinstall code to migrate screen session from
@@ -68,12 +71,18 @@ PATCHFILES += screen-utmp.patch
 # opencsw policy
 PATCHFILES += opencsw_paths.patch
 
+# The wrong setenv prototype is used by default, this patch
+# fixes the problem
+PATCHFILES += 0004-solaris10-has-linux-like-setenv.patch
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
 CONFIGURE_ARGS += --enable-telnet
 CONFIGURE_ARGS += --enable-colors256
 CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
 CONFIGURE_ARGS += --with-socket-dir=/var$(prefix)/run/screen
+
+EXTRA_LDFLAGS = -z ignore -Bdirect
 
 include gar/category.mk
 
