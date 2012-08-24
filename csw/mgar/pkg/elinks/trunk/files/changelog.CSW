@@ -1,3 +1,9 @@
+elinks (0.11.7,REV=2012.08.24) unstable
+
+  * Enabled direct binding.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 19:44:59 +0200
+
 elinks (0.11.7,REV=2012.05.17) unstable
 
   * Rebuilt against libssl 1.0

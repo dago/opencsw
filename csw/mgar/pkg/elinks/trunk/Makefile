@@ -43,6 +43,7 @@ CHECKPKG_OVERRIDES_CSWelinks += file-with-bad-content|/usr/share|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWelinks += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/elinks.conf.5
 CHECKPKG_OVERRIDES_CSWelinks += file-with-bad-content|/usr/local|root/opt/csw/bin/elinks
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 ###### Upstream and opencsw files information #######
 
@@ -71,6 +72,8 @@ CONFIGURE_ARGS += --enable-256-colors
 # ecma support not stable enough
 # CONFIGURE_ARGS += --enable-sm-scripting
 CONFIGURE_ARGS += --disable-sm-scripting
+
+EXTRA_LDFLAGS = -z ignore -Bdirect
 
 TEST_SCRIPTS =
 
