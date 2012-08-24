@@ -1,3 +1,9 @@
+vsftpd (3.0.0,REV=2012.08.24) unstable
+
+  * Enabled direct binding during build (ld -Bdirect option)
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 09:54:44 +0200
+
 vsftpd (3.0.0,REV=2012.08.12) unstable
 
   * Removed superfluous dependency on libresolv.so
