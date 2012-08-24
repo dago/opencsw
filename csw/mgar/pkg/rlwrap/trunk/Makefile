@@ -33,6 +33,7 @@ CHECKPKG_OVERRIDES_CSWrlwrap += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWrlwrap += file-with-bad-content|/usr/share|root/opt/csw/share/rlwrap/filters/paint_prompt
 CHECKPKG_OVERRIDES_CSWrlwrap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rlwrap/NEWS
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 ###### Upstream and opencsw files information #######
 
@@ -50,6 +51,8 @@ DISTFILES += changelog.CSW
 ##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+EXTRA_LDFLAGS = -z ignore -Bdirect 
 
 include gar/category.mk
 
