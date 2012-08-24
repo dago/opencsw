@@ -73,6 +73,10 @@ PATCHFILES += conf_file_location.patch
 # imapproxy makefile
 PATCHFILES += destdir.patch
 
+# LDFLAGS is not present in the Makefile
+# for the pimpstat compilation, this patch fixes this
+PATCHFILES += 0003-Missing-LDFLAGS-in-Makefile-fix.patch
+
 ##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)

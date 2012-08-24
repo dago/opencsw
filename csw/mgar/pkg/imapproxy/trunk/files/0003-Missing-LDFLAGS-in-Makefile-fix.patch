@@ -1,0 +1,25 @@
+From c6deec66f1d2e1ca36786f9e5c3ca9d062764f8e Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Fri, 24 Aug 2012 20:52:22 +0200
+Subject: [PATCH] Missing LDFLAGS in Makefile fix
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 200dc68..9bf9c71 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -72,7 +72,7 @@ $(XYD_BIN): $(XYD_OBJ)
+ 	$(CC) -o $@ $(XYD_OBJ) $(LDFLAGS) $(XYD_LIB)
+ 
+ $(TAT_BIN): $(TAT_OBJ)
+-	$(CC) -o $@ $(TAT_OBJ) $(TAT_LIB)
++	$(CC) -o $@ $(TAT_OBJ) $(LDFLAGS) $(TAT_LIB)
+ 
+ clean:
+ 	rm -f ./src/core  $(XYD_OBJ) $(TAT_OBJ) $(XYD_BIN) $(TAT_BIN)
+-- 
+1.7.11.3
+
