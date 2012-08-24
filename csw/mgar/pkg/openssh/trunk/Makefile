@@ -167,7 +167,7 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
 
-EXTRA_LDFLAGS = -z ignore -M "$(abspath $(WORKDIR)/map.openssh)"
+EXTRA_LDFLAGS = -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.openssh)"
 
 TEST_SCRIPTS	=
 
