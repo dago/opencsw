@@ -1,3 +1,9 @@
+screen (4.0.3,REV=2012.08.24) unstable
+ 
+  * Enabled symbols direct binding.
+ 
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 24 Aug 2012 21:07:26 +0200
+
 screen (4.0.3,REV=2011.07.19) unstable
  
   * Moved socket directory from /tmp/uscreens to /var/opt/csw/run/screen for
