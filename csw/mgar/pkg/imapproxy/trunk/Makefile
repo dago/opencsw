@@ -78,6 +78,8 @@ PATCHFILES += destdir.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libwrap=no
 
+EXTRA_LDFLAGS = -z ignore -Bdirect 
+
 TEST_SCRIPTS =
 
 include gar/category.mk
