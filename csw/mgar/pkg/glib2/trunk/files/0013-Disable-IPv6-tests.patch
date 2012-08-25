@@ -1,0 +1,32 @@
+From 309d26547ab3edf0e101aafefc102c30ff534eb1 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sat, 25 Aug 2012 12:05:42 +0200
+Subject: [PATCH] Disable IPv6 tests.
+
+They are failling if no IPv6 interfaces are up.
+---
+ gio/tests/socket.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/gio/tests/socket.c b/gio/tests/socket.c
+index 0a61c9f..61112a1 100644
+--- a/gio/tests/socket.c
++++ b/gio/tests/socket.c
+@@ -822,10 +822,14 @@ main (int   argc,
+ 
+   g_test_add_func ("/socket/ipv4_sync", test_ipv4_sync);
+   g_test_add_func ("/socket/ipv4_async", test_ipv4_async);
++  /* Those tests fail if no IPv6 interfaces are up
+   g_test_add_func ("/socket/ipv6_sync", test_ipv6_sync);
+   g_test_add_func ("/socket/ipv6_async", test_ipv6_async);
++  */
+ #if defined (IPPROTO_IPV6) && defined (IPV6_V6ONLY)
++  /* This tests fails if no IPv6 interfaces are up
+   g_test_add_func ("/socket/ipv6_v4mapped", test_ipv6_v4mapped);
++  */
+ #endif
+   g_test_add_func ("/socket/close_graceful", test_close_graceful);
+   g_test_add_func ("/socket/timed_wait", test_timed_wait);
+-- 
+1.7.11.3
+

@@ -66,6 +66,8 @@ DISTFILES = $(NAME)-$(VERSION).tar.xz
 # Build patches
 #
 
+PATCHFILES += 0012-Set-_XOPEN_SOURCE-to-600-in-configure-script.patch
+
 # New for 2.32.4
 PATCHFILES += 0001-Remove-pthread-from-LDFLAGS.patch
 PATCHFILES += 0002-Include-sys-filio.h-to-provide-FIONREAD.patch
@@ -84,6 +86,11 @@ PATCHFILES += 0008-Change-shell-to-bash-in-test-shell-scripts.patch
 PATCHFILES += 0010-Fix-locale-for-unicode-collate-test.patch
 # Needs to be reported
 PATCHFILES += 0017-Fix-disable-testglib-tests.patch
+# Needs to be reported
+PATCHFILES += 0014-Disable-gvariant-varargs.patch
+
+# Those tests will fail if no IPv6 interfaces are up
+PATCHFILES += 0013-Disable-IPv6-tests.patch
 
 #
 # Patches to fit glib into Solaris environment
@@ -173,6 +180,7 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWpython
 PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
@@ -191,10 +199,7 @@ BUILD_DEP_PKGS += CSWgsed
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
-EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6  -D__EXTENSIONS__ # -D_XOPEN_SOURCE=600 
-
-#EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
-#EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
+EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 
 
 EXTRA_LDFLAGS = -lsocket
 
