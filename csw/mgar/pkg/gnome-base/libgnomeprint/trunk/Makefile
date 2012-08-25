@@ -28,19 +28,11 @@ RUNTIME_DEP_PKGS_CSWlibgnomeprintdoc += CSWlibgnomeprint
 #BUILD_DEP_PKGS += CSWlibgnomecanvas
 BUILD_DEP_PKGS += CSWlibgtk2-dev
 
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWpango
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibfontconfig1
@@ -48,7 +40,7 @@ RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibart
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgnomecups
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibssl1-0-0
+
 
 CHECKPKG_OVERRIDES_CSWlibgnomeprintdoc += surplus-dependency|CSWlibgnomeprint
 
@@ -90,6 +82,8 @@ CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+EXTRA_LD_OPTIONS = -z ignore -Bdirect
 
 include gar/category.mk
 
