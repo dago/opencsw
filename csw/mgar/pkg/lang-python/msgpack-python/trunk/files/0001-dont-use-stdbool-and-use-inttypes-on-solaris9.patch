@@ -1,0 +1,35 @@
+From e51c67de7f6e4005226ee0586b3f7df733953cdc Mon Sep 17 00:00:00 2001
+From: Romeo Theriault <romeotheriault@opencsw.org>
+Date: Sat, 25 Aug 2012 05:00:20 +0200
+Subject: [PATCH] dont use stdbool and use inttypes on solaris9
+
+---
+ msgpack/sysdep.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/msgpack/sysdep.h b/msgpack/sysdep.h
+index 4fedbd8..73ba45d 100644
+--- a/msgpack/sysdep.h
++++ b/msgpack/sysdep.h
+@@ -32,8 +32,17 @@ typedef unsigned __int64 uint64_t;
+ #elif defined(_MSC_VER)  // && _MSC_VER >= 1600
+ #include <stdint.h>
+ #else
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
+-#include <stdbool.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
++/* #include <stdbool.h> */
++#define bool int
++#define false 0
++#define true 1
+ #endif
+ 
+ #ifdef _WIN32
+-- 
+1.7.11.3
+
