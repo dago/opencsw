@@ -1,0 +1,25 @@
+From 2aaba5aa434faeb1726a22cf6def605fba82eb0d Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sat, 25 Aug 2012 11:56:25 +0200
+Subject: [PATCH] Set _XOPEN_SOURCE to 600 in configure script
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index b7a1280..c7338ff 100755
+--- a/configure
++++ b/configure
+@@ -24097,7 +24097,7 @@ case $host in
+ $as_echo "#define _XOPEN_SOURCE_EXTENDED 1" >>confdefs.h
+ 
+ 
+-$as_echo "#define _XOPEN_SOURCE 2" >>confdefs.h
++$as_echo "#define _XOPEN_SOURCE 600" >>confdefs.h
+ 
+ 
+ $as_echo "#define __EXTENSIONS__ 1" >>confdefs.h
+-- 
+1.7.11.3
+
