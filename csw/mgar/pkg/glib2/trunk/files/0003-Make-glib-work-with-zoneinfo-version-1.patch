@@ -1,6 +1,6 @@
-From c605d3e9ec9c7f85cc80afdc6d44251943771bad Mon Sep 17 00:00:00 2001
+From 03edd1915e60aac86a75d4db05acf554087d17e3 Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Tue, 6 Sep 2011 21:32:16 +0200
+Date: Thu, 23 Aug 2012 15:33:09 +0200
 Subject: [PATCH] Make glib work with zoneinfo version 1
 
 Glib expect zoneinfo version 2, Solaris uses zoneinfo version 1.
@@ -11,14 +11,14 @@ See also
  * tzfile.h in ftp://elsie.nci.nih.gov/pub/tzcode2011i.tar.gz
  * /usr/include/tzfile.h
 ---
- glib/gtimezone.c |   39 ++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 38 insertions(+), 1 deletions(-)
+ glib/gtimezone.c | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/glib/gtimezone.c b/glib/gtimezone.c
-index e882682..6ef278e 100644
+index e513f3b..d960959 100644
 --- a/glib/gtimezone.c
 +++ b/glib/gtimezone.c
-@@ -121,7 +121,11 @@ struct _GTimeZone
+@@ -122,7 +122,11 @@ struct _GTimeZone
  
    const struct tzhead *header;
    const struct ttinfo *infos;
@@ -30,8 +30,8 @@ index e882682..6ef278e 100644
    const guint8        *indices;
    const gchar         *abbrs;
    gint                 timecnt;
-@@ -269,13 +273,23 @@ parse_constant_offset (const gchar *name,
- static GBuffer *
+@@ -272,13 +276,23 @@ parse_constant_offset (const gchar *name,
+ static GBytes *
  zone_for_constant_offset (const gchar *name)
  {
 +#ifndef __sun
@@ -54,36 +54,36 @@ index e882682..6ef278e 100644
      struct ttinfo info;
      gchar abbr[8];
    } *fake;
-@@ -367,7 +381,11 @@ g_time_zone_new (const gchar *identifier)
+@@ -378,7 +392,11 @@ g_time_zone_new (const gchar *identifier)
  
                tzdir = getenv ("TZDIR");
                if (tzdir == NULL)
 +#ifndef __sun
                  tzdir = "/usr/share/zoneinfo";
 +#else
-+	        tzdir = "/usr/share/lib/zoneinfo";
++		tzdir = "/usr/share/lib/zoneinfo";
 +#endif
  
-               filename = g_build_filename (tzdir, identifier, NULL);
-             }
-@@ -383,8 +401,15 @@ g_time_zone_new (const gchar *identifier)
-           const struct tzhead *header = tz->zoneinfo->data;
-           gsize size = tz->zoneinfo->size;
+ 	      if (*identifier == ':')
+ 		identifier ++;
+@@ -408,8 +426,15 @@ g_time_zone_new (const gchar *identifier)
+           gsize size;
+           const struct tzhead *header = g_bytes_get_data (tz->zoneinfo, &size);
  
 -          /* we only bother to support version 2 */
 +          /* we only bother to support version 2
 +	   *
-+	   * Well, I don't -- raos
++	   * Well, I don't --raos
 +	   */
 +#ifndef __sun
            if (size < sizeof (struct tzhead) || memcmp (header, "TZif2", 5))
 +#else
-+          if (size < sizeof (struct tzhead) || memcmp (header, "TZif\0", 5))
++	  if (size < sizeof (struct tzhead) || memcmp (header, "TZif\0", 5))
 +#endif
              {
-               g_buffer_unref (tz->zoneinfo);
+               g_bytes_unref (tz->zoneinfo);
                tz->zoneinfo = NULL;
-@@ -393,6 +418,7 @@ g_time_zone_new (const gchar *identifier)
+@@ -418,6 +443,7 @@ g_time_zone_new (const gchar *identifier)
              {
                gint typecnt;
  
@@ -91,7 +91,7 @@ index e882682..6ef278e 100644
                /* we trust the file completely. */
                tz->header = (const struct tzhead *)
                  (((const gchar *) (header + 1)) +
-@@ -402,6 +428,9 @@ g_time_zone_new (const gchar *identifier)
+@@ -427,6 +453,9 @@ g_time_zone_new (const gchar *identifier)
                    5 * guint32_from_be(header->tzh_timecnt) +
                    6 * guint32_from_be(header->tzh_typecnt) +
                    guint32_from_be(header->tzh_charcnt));
@@ -101,30 +101,24 @@ index e882682..6ef278e 100644
  
                typecnt     = guint32_from_be (tz->header->tzh_typecnt);
                tz->timecnt = guint32_from_be (tz->header->tzh_timecnt);
-@@ -480,7 +509,11 @@ interval_start (GTimeZone *tz,
+@@ -507,7 +536,7 @@ interval_start (GTimeZone *tz,
                  gint       interval)
  {
    if (interval)
-+#ifndef __sun
-     return gint64_from_be (tz->trans[interval - 1]);
-+#else
+-    return gint64_from_be (tz->trans[interval - 1]);
 +    return (gint64)gint32_from_be (tz->trans[interval - 1]);
-+#endif
  
    return G_MININT64;
  }
-@@ -490,7 +523,11 @@ interval_end (GTimeZone *tz,
+@@ -517,7 +546,7 @@ interval_end (GTimeZone *tz,
                gint       interval)
  {
    if (interval < tz->timecnt)
-+#ifndef __sun
-     return gint64_from_be (tz->trans[interval]) - 1;
-+#else
+-    return gint64_from_be (tz->trans[interval]) - 1;
 +    return (gint64)gint32_from_be (tz->trans[interval]) - 1;
-+#endif
  
    return G_MAXINT64;
  }
 -- 
-1.7.6
+1.7.11.3
 

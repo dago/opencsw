@@ -1,0 +1,87 @@
+From 03c7ac1cfe9b452099e323285fa24036871bb320 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Thu, 23 Aug 2012 19:37:18 +0200
+Subject: [PATCH] Adjust hardcoded paths to match Solaris/CSW.
+
+---
+ gio/gdbusprivate.c    | 2 +-
+ gio/gunixmounts.c     | 8 ++++++++
+ gio/xdgmime/xdgmime.c | 2 +-
+ glib/gcharset.c       | 2 +-
+ glib/gutils.c         | 2 +-
+ 5 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/gio/gdbusprivate.c b/gio/gdbusprivate.c
+index 9b09294..90108ea 100644
+--- a/gio/gdbusprivate.c
++++ b/gio/gdbusprivate.c
+@@ -2094,7 +2094,7 @@ _g_dbus_get_machine_id (GError **error)
+   /* TODO: use PACKAGE_LOCALSTATEDIR ? */
+   ret = NULL;
+   first_error = NULL;
+-  if (!g_file_get_contents ("/var/lib/dbus/machine-id",
++  if (!g_file_get_contents ("/var/opt/csw/lib/dbus/machine-id",
+                             &ret,
+                             NULL,
+                             &first_error) &&
+diff --git a/gio/gunixmounts.c b/gio/gunixmounts.c
+index e288e06..4edcbe4 100644
+--- a/gio/gunixmounts.c
++++ b/gio/gunixmounts.c
+@@ -271,6 +271,14 @@ g_unix_is_mount_path_system_internal (const char *mount_path)
+     "/sbin",
+     "/net",
+     "/sys",
++    "/devices",
++    "/system/contract",
++    "/etc/mnttab",
++    "/etc/svc/volatile",
++    "/system/object",
++    "/etc/dfs/sharetab",
++    "/dev/fd",
++    "/lib/libc.so.1",
+     NULL
+   };
+ 
+diff --git a/gio/xdgmime/xdgmime.c b/gio/xdgmime/xdgmime.c
+index 846be39..1aed472 100644
+--- a/gio/xdgmime/xdgmime.c
++++ b/gio/xdgmime/xdgmime.c
+@@ -257,7 +257,7 @@ xdg_run_command_on_dirs (XdgDirectoryFunc  func,
+ 
+   xdg_data_dirs = getenv ("XDG_DATA_DIRS");
+   if (xdg_data_dirs == NULL)
+-    xdg_data_dirs = "/usr/local/share/:/usr/share/";
++    xdg_data_dirs = "/opt/csw/share/:/usr/share/:/usr/local/share/";
+ 
+   ptr = xdg_data_dirs;
+ 
+diff --git a/glib/gcharset.c b/glib/gcharset.c
+index 4f52ab4..fca5f5e 100644
+--- a/glib/gcharset.c
++++ b/glib/gcharset.c
+@@ -295,7 +295,7 @@ unalias_lang (char *lang)
+   int i;
+ 
+   if (!alias_table)
+-    read_aliases ("/usr/share/locale/locale.alias");
++    read_aliases ("/opt/csw/share/locale/locale.alias");
+ 
+   i = 0;
+   while ((p = g_hash_table_lookup (alias_table, lang)) && (strcmp (p, lang) != 0))
+diff --git a/glib/gutils.c b/glib/gutils.c
+index 38b5e44..e119e7b 100644
+--- a/glib/gutils.c
++++ b/glib/gutils.c
+@@ -2009,7 +2009,7 @@ g_get_system_data_dirs (void)
+       gchar *data_dirs = (gchar *) g_getenv ("XDG_DATA_DIRS");
+ 
+       if (!data_dirs || !data_dirs[0])
+-          data_dirs = "/usr/local/share/:/usr/share/";
++          data_dirs = "/opt/csw/share/:/usr/share/:/usr/local/share";
+ 
+       data_dir_vector = g_strsplit (data_dirs, G_SEARCHPATH_SEPARATOR_S, 0);
+ #endif
+-- 
+1.7.11.3
+

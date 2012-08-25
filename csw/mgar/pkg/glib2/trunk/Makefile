@@ -6,7 +6,7 @@
 # should make it pass, though. --raos
 
 NAME = glib
-VERSION = 2.30.2
+VERSION = 2.32.4
 CATEGORIES = lib
 GARTYPE = v2
 GARCOMPILER = SOS12U1
@@ -21,21 +21,18 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 
-DISTFILES = $(NAME)-$(VERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.xz
 
 # Reported: https://bugzilla.gnome.org/show_bug.cgi?id=668973. New in glib-2.30.2
-PATCHFILES += 0001-Disable-inf-nan-mini-test.patch
+# PATCHFILES += 0001-Disable-inf-nan-mini-test.patch
 # The test looks for sh and expects it to be in /bin, but it is found
 # in /opt/csw/bin. So the patch makes it look for svcs. New in glib-2.30.2
-PATCHFILES += 0002-Replace-sh-by-svcs-in-utils-find-program.patch
-# Patch from glib-2.28.8
-PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
+#PATCHFILES += 0002-Replace-sh-by-svcs-in-utils-find-program.patch
 # Disabled. Need to report, but wait on outcome on x86.
-PATCHFILES += 0004-Disable-check-glib-642026-ec.patch
+#PATCHFILES += 0004-Disable-check-glib-642026-ec.patch
 
 # PATCHFILES = 0001-Use-proper-locale-for-collate-tests.patch
 
-# PATCHFILES += 0003-Ad-hoc-macro-for-comparing-double.patch
 # PATCHFILES += 0004-Use-smtp-instead-of-http-in-network-address-test.patch
 # PATCHFILES += 0005-Fix-hard-coded-paths.patch
 # PATCHFILES += 0006-Fix-path-to-dbus-machine-id.patch
@@ -46,7 +43,6 @@ PATCHFILES += 0004-Disable-check-glib-642026-ec.patch
 # PATCHFILES += 0010-Disable-GFileMonitor-tests-in-gio-tests-file.patch
 # PATCHFILES += 0011-Remove-support-for-abstract-sockets-from-g_socket_ad.patch
 # PATCHFILES += 0012-Use-proper-locale-for-collate-tests-2.patch
-# PATCHFILES += 0013-Fix-test-shell-script.patch
 # PATCHFILES += 0019-Fix-gdbus-peer-tests.patch
 # # Disable test on sparc v9
 # #  https://bugzilla.gnome.org/show_bug.cgi?id=660638
@@ -57,7 +53,6 @@ PATCHFILES += 0004-Disable-check-glib-642026-ec.patch
 # PATCHFILES += 0015-Do-not-ellipses-in-switch-cases.patch
 # PATCHFILES += 0016-Format-string-for-Solaris-lt.-10u9.patch
 # PATCHFILES += 0017-Disable-gapplication-gapplication-basic-test.patch
-# PATCHFILES += 0017-Fix-disable-testglib-tests.patch
 # PATCHFILES += 0018-Disable-gdbus-connection-large_message-on-sparc.patch
 # PATCHFILES += 0019-Disable-gdbus-threading-gdbus-method-calls-in-thread.patch
 # PATCHFILES += 0019-Disable-volumemonitor-tests.patch
@@ -66,6 +61,35 @@ PATCHFILES += 0004-Disable-check-glib-642026-ec.patch
 
 # # SPARCv9 Specific Patches
 # PATCHFILES_isa-sparcv9 += 0023-Disable-run-assert-msg-test.sh.patch
+
+#
+# Build patches
+#
+
+# New for 2.32.4
+PATCHFILES += 0001-Remove-pthread-from-LDFLAGS.patch
+PATCHFILES += 0002-Include-sys-filio.h-to-provide-FIONREAD.patch
+
+#
+# Test patches
+#
+PATCHFILES += 0003-Ad-hoc-macro-for-comparing-double.patch
+# Needs to be reported
+PATCHFILES += 0005-Disable-test-gobject-param-implement.patch
+# gdbus/peer-to-peer needs to be reported
+PATCHFILES += 0007-Disable-gdbus-peer-to-peer-and-gdbus-credentials-tes.patch
+# Needs to be reported
+PATCHFILES += 0009-Disable-file-async-create-delete-checks.patch
+PATCHFILES += 0008-Change-shell-to-bash-in-test-shell-scripts.patch
+PATCHFILES += 0010-Fix-locale-for-unicode-collate-test.patch
+# Needs to be reported
+PATCHFILES += 0017-Fix-disable-testglib-tests.patch
+
+#
+# Patches to fit glib into Solaris environment
+#
+PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW.patch
+PATCHFILES += 0003-Make-glib-work-with-zoneinfo-version-1.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -155,8 +179,9 @@ OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
 
 
-BUILD_DEP_PKGS = CSWggettext CSWlibiconv-dev CSWlibffi-dev
-BUILD_DEP_PKGS += CSWlibdbus-dev CSWlibgamin-dev
+BUILD_DEP_PKGS = CSWggettext-dev CSWlibiconv-dev CSWlibffi-dev
+BUILD_DEP_PKGS += CSWlibdbus-dev CSWdbus CSWlibgamin-dev CSWgamin
+BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconfig CSWlibpcre-dev CSWdskutl
 # To make the tests working
 BUILD_DEP_PKGS += CSWpython CSWdbuspython CSWsharedmimeinfo
 # This is used to adjust paths in documentation
@@ -166,7 +191,7 @@ BUILD_DEP_PKGS += CSWgsed
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
-EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 
+EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6  -D__EXTENSIONS__ # -D_XOPEN_SOURCE=600 
 
 #EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
 #EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
@@ -175,20 +200,28 @@ EXTRA_LDFLAGS = -lsocket
 
 BUILD64 = 1
 
+# Glib 2.32.4 won't compile and abort with a message from sys/elf.h:
+#
+#   "/usr/include/libelf.h", line 23: #error: "large files are not supported by libelf"
+#
+# so, I decided to disable-largefile support for 32bit libs, instead of patching up the code.
+CONFIGURE_ARGS-32 = --disable-largefile
+CONFIGURE_ARGS-64 =
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
-CONFIGURE_ARGS += --with-pcre=included
+CONFIGURE_ARGS += --with-pcre=system
 CONFIGURE_ARGS += --enable-included-printf
-CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --with-threads=posix
 CONFIGURE_ARGS += --disable-silent-rules
-# CONFIGURE_ARGS += --enable-static
+CONFIGURE_ARGS += --disable-Bsymbolic
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+
 
 # DTrace compilation fails, disable for now
 CONFIGURE_ARGS += --disable-dtrace
 
-# DEBUGGING
-CONFIGURE_ARGS += --enable-debug=yes
+$(warning "remove when done!")
 EXTRA_CFLAGS += -xO0 -g
 
 # Those are to make the checks work
