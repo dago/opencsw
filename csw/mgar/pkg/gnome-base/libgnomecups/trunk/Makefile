@@ -19,17 +19,11 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 SPKG_SOURCEURL = http://ftp.gnome.org/pub/GNOME/sources/libgnomecups/
 
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibglib2-0-0
+
 
 CHECKPKG_OVERRIDES_CSWlibgnomecups += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libgnomecups-1.0.so
 CHECKPKG_OVERRIDES_CSWlibgnomecups += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgnomecups-1.0.so.1.0.0|soname=libgnomecups-1.0.so.1|pkgname=CSWlibgnomecups|expected=CSWlibgnomecups1-0-1
@@ -46,6 +40,8 @@ PATCHFILES = 0001-cups-config-bug-workaround.patch
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+EXTRA_LD_OPTIONS = -z ignore -Bdirect
 
 include gar/category.mk
 
