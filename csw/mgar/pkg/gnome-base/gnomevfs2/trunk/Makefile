@@ -80,6 +80,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
 
+EXTRA_LD_OPTIONS = -Bdirect -z ignore
+
 TEST_SCRIPTS = 
 
 include gar/category.mk
