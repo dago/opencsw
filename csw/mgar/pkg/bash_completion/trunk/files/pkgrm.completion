@@ -11,21 +11,19 @@
 _have pkgrm &&
 _pkgrm ()
 {
-    local cur prev i spool;
-    COMPREPLY=();
-    cur="${COMP_WORDS[COMP_CWORD]}";
-    prev="${COMP_WORDS[COMP_CWORD-1]}";
+    local cur prev words cword 
+    _init_completion || return
 
     # if a spool directory was given
     # we must complete with the package
     # available in this directory
-    spool=/var/sadm/pkg;
-    i=${#COMP_WORDS[*]};
-    while [[ $i -gt 0 ]]; do
+    local spool=/var/sadm/pkg;
+    local i=$cword
+    while [[ $((i--)) -gt 0 ]]; do
         i=$((i-1));
-        case "${COMP_WORDS[$i]}" in
+        case "${words[$i]}" in
             -s)
-                spool="${COMP_WORDS[$((i+1))]}";
+                spool="${words[$((i+1))]}";
                 break
             ;;
         esac;
