@@ -39,13 +39,10 @@ RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibfam0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgconf2-4
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus-glib1-2
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus1-3
 
 # This is an explicit fallback *after* /opt/csw/share, see xdg-reinplacement below
