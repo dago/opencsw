@@ -51,20 +51,22 @@ VENDOR_URL = http://pysvn.tigris.org/
 
 LICENSE = LICENSE.txt
 
-BUILD_DEP_PKGS += CSWsvn-devel
+BUILD_DEP_PKGS += CSWsvn-dev
 BUILD_DEP_PKGS += CSWapache2-dev
 BUILD_DEP_PKGS += CSWlibexpat-dev
 BUILD_DEP_PKGS += CSWbash
 
-RUNTIME_DEP_PKGS += CSWlibneon27
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibstdc++6
 RUNTIME_DEP_PKGS += CSWpython
 RUNTIME_DEP_PKGS += CSWsvn
-RUNTIME_DEP_PKGS += CSWlibexpat1
 
 
-INCOMPATIBELE_PKGS = CSWpyxml
+INCOMPATIBLE_PKGS = CSWpyxml
+
+CHECKPKG_OVERRIDES_CSWpysvn += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpysvn += pkgname-does-not-start-with-CSWpy-
+
 
 CONFIGURE_SCRIPTS = pysvn
 BUILD_SCRIPTS = pysvn
@@ -76,6 +78,7 @@ TEST_SCRIPTS = $(TEST_SCRIPTS_$(GAROSREL))
 CONFIGURE_ARGS = $(DIRPATHS)
 #GARCOMPILER = GNU
 
+EXTRA_LD_OPTIONS = -Bdirect -z ignore
 
 include gar/category.mk
 
