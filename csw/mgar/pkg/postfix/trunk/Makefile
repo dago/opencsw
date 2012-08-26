@@ -243,6 +243,8 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # Postgres package outdated, libs aren't located below /opt/csw/lib/
 CHECKPKG_OVERRIDES_CSWpostfix += bad-rpath-entry
 
+EXTRA_LD_OPTIONS = -Bdirect -z ignore
+
 include gar/category.mk
 
 # Postfix's build system relies on CCARGS, populate it with the defaults from
