@@ -52,4 +52,7 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 # For GNU gettext
-PATH := /opt/csw/gnu:$(PATH)
+CONFIGURE_ENV += XGETTEXT=/opt/csw/gnu/xgettext
+CONFIGURE_ENV += MSGMERGE=/opt/csw/gnu/msgmerge
+CONFIGURE_ENV += MSGFMT=/opt/csw/gnu/msgfmt
+
