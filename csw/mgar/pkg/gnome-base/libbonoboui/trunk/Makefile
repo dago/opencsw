@@ -14,15 +14,11 @@ DISTFILES = $(DISTNAME).tar.bz2
 # New glib only available on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgnome2-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgnomecanvas2-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWorbit2
@@ -31,9 +27,6 @@ RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgconf2-4
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibglade2
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWpango
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibart
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibbonobo2
 RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibatk1-0-0
@@ -50,6 +43,8 @@ CHECKPKG_OVERRIDES_CSWlibbonoboui += shared-lib-pkgname-mismatch|file=opt/csw/li
 CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS += --enable-static=no
 #CONFIGURE_ARGS += --enable-gtk-doc
+
+EXTRA_LD_OPTIONS = -z ignore -Bdirect
 
 EXTRA_TEST_EXPORTS = DISPLAY
 TEST_SCRIPTS = 
