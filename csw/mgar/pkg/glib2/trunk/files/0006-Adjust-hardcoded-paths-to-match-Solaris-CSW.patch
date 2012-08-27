@@ -52,7 +52,7 @@ index 846be39..1aed472 100644
    xdg_data_dirs = getenv ("XDG_DATA_DIRS");
    if (xdg_data_dirs == NULL)
 -    xdg_data_dirs = "/usr/local/share/:/usr/share/";
-+    xdg_data_dirs = "/opt/csw/share/:/usr/share/:/usr/local/share/";
++    xdg_data_dirs = "/opt/csw/share/:/usr/local/share/:/usr/share/";
  
    ptr = xdg_data_dirs;
  
@@ -78,7 +78,7 @@ index 38b5e44..e119e7b 100644
  
        if (!data_dirs || !data_dirs[0])
 -          data_dirs = "/usr/local/share/:/usr/share/";
-+          data_dirs = "/opt/csw/share/:/usr/share/:/usr/local/share";
++          data_dirs = "/opt/csw/share/:/usr/local/share/:/usr/share/";
  
        data_dir_vector = g_strsplit (data_dirs, G_SEARCHPATH_SEPARATOR_S, 0);
  #endif
