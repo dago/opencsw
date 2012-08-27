@@ -1,17 +1,17 @@
-From 5e52aa40abe0e1089cef06517e49a5f84b1f49e0 Mon Sep 17 00:00:00 2001
-From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Mon, 5 Sep 2011 20:47:36 +0200
-Subject: [PATCH] Use proper locale for collate tests.
+From 53f22e4878dab62282978d1cf631a8f74a22f73b Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 25 Aug 2012 19:00:54 +0200
+Subject: [PATCH] Fix locale for collate test
 
 ---
- glib/tests/collate.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ glib/tests/collate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/glib/tests/collate.c b/glib/tests/collate.c
-index eaae049..09da374 100644
+index 29a62ea..737bfe8 100644
 --- a/glib/tests/collate.c
 +++ b/glib/tests/collate.c
-@@ -184,9 +184,9 @@ main (int argc, char *argv[])
+@@ -187,9 +187,9 @@ main (int argc, char *argv[])
  
    g_test_init (&argc, &argv, NULL);
  
@@ -24,5 +24,5 @@ index eaae049..09da374 100644
        g_test_message ("No suitable locale, skipping test");
        return 0;
 -- 
-1.7.6
+1.7.11.3
 
