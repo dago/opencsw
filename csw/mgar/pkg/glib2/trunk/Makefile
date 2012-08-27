@@ -102,6 +102,8 @@ RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWgio-fam-backend
+RUNTIME_DEP_PKGS_CSWglib2 += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWglib2 += CSWlibffi4
 CHECKPKG_OVERRIDES_CSWglib2 += surplus-dependency|CSWgio-fam-backend
 
 
@@ -117,6 +119,8 @@ RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibffi4
 
 PACKAGES += CSWlibgio2-0-0
 SPKG_DESC_CSWlibgio2-0-0 += $(DESCRIPTION), libgio-2.0.so.0
@@ -129,12 +133,30 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWsharedmimeinfo
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibffi4
+# Those are ok: hardcoded search paths which have added /opt/csw
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgio-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libgio-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libgio-2.0.so.0.3200.4
 
 PACKAGES += CSWlibglib2-0-0
 PKGFILES_CSWlibglib2-0-0 += $(call pkgfiles_lib,libglib-2.0.so.0)
 SPKG_DESC_CSWlibglib2-0-0 += $(DESCRIPTION), libglib-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibpcre1
+# Those are ok: hardcoded search paths which have added /opt/csw
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/libglib-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libglib-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libglib-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libglib-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libglib-2.0.so.0.3200.4
+
 
 PACKAGES += CSWlibgmodule2-0-0
 PKGFILES_CSWlibgmodule2-0-0 += $(call pkgfiles_lib,libgmodule-2.0.so.0)
@@ -142,6 +164,7 @@ SPKG_DESC_CSWlibgmodule2-0-0 += $(DESCRIPTION), libgmodule-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += CSWlibpcre1
 
 PACKAGES += CSWlibgobject2-0-0
 PKGFILES_CSWlibgobject2-0-0 += $(call pkgfiles_lib,libgobject-2.0.so.0)
@@ -150,6 +173,8 @@ RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi4
 
 PACKAGES += CSWlibgthread2-0-0
 SPKG_DESC_CSWlibgthread2-0-0 += $(DESCRIPTION), libgthread-2.0.so.0
@@ -157,6 +182,7 @@ PKGFILES_CSWlibgthread2-0-0 += $(call pkgfiles_lib,libgthread-2.0.so.0)
 RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibpcre1
 
 PACKAGES += CSWlibglib2-dev
 SPKG_DESC_CSWlibglib2-dev = Development files for libglib-2.0.so.0 and assorted libglib, libgmodule, libgobject and libgthread
@@ -170,10 +196,84 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWpython
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibz1
 PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
+PKGFILES_CSWlibglib2-dev += .*/gdbus-2.0.*
+PKGFILES_CSWlibglib2-dev += .*/bash-completion.*
+PKGFILES_CSWlibglib2-dev += .*/bin.*/gdbus.*
+PKGFILES_CSWlibglib2-dev += .*/bin.*/glib.*
+PKGFILES_CSWlibglib2-dev += .*/bin.*/gobject-query
+PKGFILES_CSWlibglib2-dev += .*/bin.*/gresource
+PKGFILES_CSWlibglib2-dev += .*/bin.*/gsettings
+PKGFILES_CSWlibglib2-dev += .*/bin.*/gtester.*
+PKGFILES_CSWlibglib2-dev += .*/man1/gdbus.*
+PKGFILES_CSWlibglib2-dev += .*/man1/glib.*
+PKGFILES_CSWlibglib2-dev += .*/man1/gobject-query.*
+PKGFILES_CSWlibglib2-dev += .*/man1/gresource.*
+PKGFILES_CSWlibglib2-dev += .*/man1/gsettings.*
+PKGFILES_CSWlibglib2-dev += .*/man1/gtester.*
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWglib2
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWiconv
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/__init__.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/__init__.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/codegen.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/codegen.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/codegen_docbook.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/codegen_docbook.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/codegen_main.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/codegen_main.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/config.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/config.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/dbustypes.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/dbustypes.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/parser.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/parser.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/utils.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/gdbus-2.0/codegen/utils.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/__init__.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/__init__.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/codegen.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/codegen.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/codegen_docbook.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/codegen_docbook.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/codegen_main.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/codegen_main.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/config.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/config.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/dbustypes.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/dbustypes.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/parser.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/parser.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/utils.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/gdbus-2.0/codegen/utils.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/__init__.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/__init__.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/codegen.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/codegen.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/codegen_docbook.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/codegen_docbook.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/codegen_main.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/codegen_main.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/config.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/config.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/dbustypes.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/dbustypes.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/parser.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/parser.pyo
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/utils.pyc
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/gdbus-2.0/codegen/utils.pyo
+
+PACKAGES += CSWglib2-doc
+ARCHALL_CSWglib2-doc = 1
+SPKG_DESC_CSWglib2-doc = Gtk-doc Documentation for glib2
+PKGFILES_CSWglib2-doc =  .*/gtk-doc.*
 
 
 BUILD_DEP_PKGS = CSWggettext-dev CSWlibiconv-dev CSWlibffi-dev
@@ -186,11 +286,11 @@ BUILD_DEP_PKGS += CSWgsed
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(subst $$,\$$,$(RUNPATH_LINKER_FLAGS))
+EXTRA_LINKER_FLAGS =
 
 EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 
 
-EXTRA_LDFLAGS = -lsocket
+EXTRA_LDFLAGS = -lsocket $(RUNPATH_LINKER_FLAGS)
 
 BUILD64 = 1
 
@@ -228,27 +328,8 @@ MERGE_EXCLUDE_FILES = .*/charset.alias
 # Do we support gdb?
 MERGE_EXCLUDE_FILES += .*/gdb .*/gdb/.*
 
-# The checks below are excluded since /usr/share/ is included in default value of
-# XDG_DATA_DIRS. However, /opt/csw/share is also included, so no harm.
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libglib-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libglib-2.0.so.0.2800.8
-
 # libgio uses the mime info for determining the type of files
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += surplus-dependency|CSWsharedmimeinfo
-
-# This is ok since -dev has no binaries, hence checkpkg may not find
-# references
-CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWglib2
-CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWiconv
-CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWzlib
 
 include gar/category.mk
 
