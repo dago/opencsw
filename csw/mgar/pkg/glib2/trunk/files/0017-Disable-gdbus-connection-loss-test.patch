@@ -1,0 +1,26 @@
+From f1d40547b48ed5b8ce84b2271b05c6a261284c4d Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 25 Aug 2012 20:35:12 +0200
+Subject: [PATCH] Disable gdbus/connection-loss test
+
+---
+ gio/tests/gdbus-connection-loss.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/gio/tests/gdbus-connection-loss.c b/gio/tests/gdbus-connection-loss.c
+index 3fdd367..23d12c1 100644
+--- a/gio/tests/gdbus-connection-loss.c
++++ b/gio/tests/gdbus-connection-loss.c
+@@ -144,7 +144,9 @@ main (int   argc,
+   g_assert_no_error (error);
+   g_assert (c != NULL);
+ 
++  /*
+   g_test_add_func ("/gdbus/connection-loss", test_connection_loss);
++  */
+ 
+   ret = g_test_run();
+ 
+-- 
+1.7.11.3
+
