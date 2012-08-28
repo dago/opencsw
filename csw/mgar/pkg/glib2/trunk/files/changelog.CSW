@@ -1,0 +1,9 @@
+glib (2.32.4,REV=2012.08.28)
+
+  * New upstream release.
+  
+  * Due to inclusion of libelf.h, 32bit version of glib2 has been
+    compiled with --disable-largefile, since the use of large file
+    support along with libelf.h is not supported on Solaris.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 28 Aug 2012 08:44:51 +0200
