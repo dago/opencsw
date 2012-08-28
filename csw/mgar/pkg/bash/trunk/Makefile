@@ -84,7 +84,7 @@ ETCSHELLS = /opt/csw/bin/bash
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_LDFLAGS = -z ignore -Bdirect 
+EXTRA_LDOPTIONS = -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.bash)"
 
 include gar/category.mk
 
