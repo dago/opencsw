@@ -12,7 +12,6 @@ VERSION = 2.32.4
 CATEGORIES = lib
 GARTYPE = v2
 GARCOMPILER = SOS12U1
-GARFLAVOR=DBG
 
 DESCRIPTION = The GLib library of C routines.
 define BLURB
@@ -24,6 +23,7 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(NAME)-$(VERSION).tar.xz
+DISTFILES += changelog.CSW
 
 #
 # Build patches
@@ -55,9 +55,8 @@ PATCHFILES += 0014-Disable-gvariant-varargs.patch
 PATCHFILES_isa-sparcv9 += 0013-Disable-mainloop-child_sources-test.patch
 PATCHFILES_isa-sparcv8plus += 0013-Disable-mainloop-child_sources-test.patch
 
-# Investigate before reporting
-PATCHFILES_isa-sparcv9 += 0020-Disable-desktop-app-info-fallback-test.patch
-PATCHFILES_isa-sparcv8plus += 0020-Disable-desktop-app-info-fallback-test.patch
+# This test fails sporadically...
+PATCHFILES += 0020-Disable-desktop-app-info-tests.patch
 
 # Needs to be reported
 PATCHFILES += 0017-Disable-gdbus-connection-loss-test.patch
