@@ -1,3 +1,10 @@
+bash (4.2.37,REV=2012.08.28) unstable
+
+  *  * Added a mapfile to force linking against interface SUNW_1.22
+      of libc.so.1 so we don't work only on last solaris release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 28 Aug 2012 22:55:37 +0200
+
 bash (4.2.37,REV=2012.08.24) unstable
 
   * Enabled direct binding.
