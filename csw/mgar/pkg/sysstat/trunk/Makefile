@@ -26,6 +26,10 @@ VENDOR_URL = http://www.maier-komor.de/sysstat.html
 
 LICENSE = LICENSE
 
+#Build for all Platformas since old build seems broken on newer Solaris 10 Versions
+
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386  solaris10-sparc solaris10-i386
+
 PATCHFILES = patch-onlyisaexec-sysstatd.diff
 
 CONFIGURE_SCRIPTS = custom
