@@ -23,4 +23,6 @@ RUNTIME_DEP_PKGS_CSWpm-io-pager += CSWpm-file-which
 OBSOLETED_BY_CSWpm-io-pager += CSWpmiopager
 CATALOGNAME_CSWpmiopager = pm_iopager_stub
 
+REINPLACE_USRLOCAL += lib/IO/Pager.pm
+
 include gar/category.mk
