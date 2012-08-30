@@ -1,17 +1,21 @@
 NAME = YAML-Syck
-VERSION = 1.07
+VERSION = 1.20
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = AUDREYT
+AUTHOR = TODDR
 
 DESCRIPTION = Fast, lightweight YAML loader and dumper
 define BLURB
-  This module provides a Perl interface to the libsyck data serialization
-  library. It exports the Dump and Load functions for converting Perl data
-  structures to YAML strings, and the other way around.
 endef
 
-PACKAGES = CSWpmyamlsyck
-CATALOGNAME = pm_yamlsyck
+CATALOG_RELEASE = unstable
+
+LICENSE = COPYING
+
+PACKAGES += CSWpm-yaml-syck
+CATALOGNAME_CSWpm-yaml-syck = pm_yaml_syck
+SPKG_DESC_CSWpm-yaml-syck = Fast, lightweight YAML loader and dumper
+OBSOLETED_BY_CSWpm-yaml-syck += CSWpmyamlsyck
+CATALOGNAME_CSWpmyamlsyck = pm_yamlsyck_stub
 
 include gar/category.mk
