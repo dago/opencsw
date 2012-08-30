@@ -1,0 +1,31 @@
+From d4337e85b9fdeeff342f86b9d214ed78fb36709e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 30 Aug 2012 15:28:19 +0200
+Subject: [PATCH] Do not change owner and group
+
+---
+ install-sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/install-sh b/install-sh
+index e9de238..cec1fa1 100755
+--- a/install-sh
++++ b/install-sh
+@@ -69,12 +69,12 @@ while [ x"$1" != x ]; do
+ 	    shift
+ 	    continue;;
+ 
+-	-o) chowncmd="$chownprog $2"
++	-o) chowncmd=""
+ 	    shift
+ 	    shift
+ 	    continue;;
+ 
+-	-g) chgrpcmd="$chgrpprog $2"
++	-g) chgrpcmd=""
+ 	    shift
+ 	    shift
+ 	    continue;;
+-- 
+1.7.10.3
+
