@@ -1,27 +1,23 @@
 NAME = Text-CSV_XS
-VERSION = 0.81
+VERSION = 0.91
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = HMBRAND
 
-DESCRIPTION = Comma-separated values manipulation routines
+DESCRIPTION = Comma-Separated Values manipulation routines
 define BLURB
-  Text::CSV_XS provides facilities for the composition and decomposition of
-  comma-separated values. An instance of the Text::CSV_XS class can combine
-  fields into a CSV string and parse a CSV string into fields.
 endef
 
-# This module uses .tgz instead of .tar.gz :-(
-MODDIST = $(NAME)-$(VERSION).tgz
+MODDIST = Text-CSV_XS-0.91.tgz
 
-PACKAGES = CSWpm-text-csv-xs
-CATALOGNAME = pm_text_csv_xs
-SPKG_DESC_CSWpm-text-csv-xs = Comma-separated values manipulation routines
-OBSOLETED_BY_CSWpm-text-csv-xs = CSWpmtextcsvxs
-RUNTIME_DEP_PKGS_CSWpm-text-csv-xs = CSWpm-text-csv
+CATALOG_RELEASE = unstable
 
-# This was the previous name. Note the typo!
-INCOMPATIBLE_PKGS = CSWpmttextcsvxs
+LICENSE_TEXT = This module is licensed under the perl license, please see for details http://dev.perl.org/licenses/
 
+PACKAGES += CSWpm-text-csv-xs
+CATALOGNAME_CSWpm-text-csv-xs = pm_text_csv_xs
+SPKG_DESC_CSWpm-text-csv-xs = Comma-Separated Values manipulation routines
+OBSOLETED_BY_CSWpm-text-csv-xs += CSWpmtextcsvxs
+CATALOGNAME_CSWpmtextcsvxs = pm_textcsvxs_stub
 
 include gar/category.mk
