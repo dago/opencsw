@@ -1,33 +1,23 @@
 NAME = UNIVERSAL-isa
-VERSION = 1.03
+VERSION = 1.20120726
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = CHROMATIC
 
 DESCRIPTION = Attempt to recover from people calling UNIVERSAL::isa as a function
 define BLURB
-  Whenever you use "isa" in UNIVERSAL as a function, a kitten using 
-  Test::MockObject dies. Normally, the kittens would be helpless, but 
-  if they use UNIVERSAL::isa (the module whose docs you are reading), 
-  the kittens can live long and prosper.
-  This module replaces UNIVERSAL::isa with a version that makes sure that, 
-  when called as a function on objects which override isa, isa will 
-  call the appropriate method on those objects
-  In all other cases, the real UNIVERSAL::isa gets called directly.
 endef
 
-PACKAGES = CSWpmuniversalisa
-CATALOGNAME = pm_universalisa
+CATALOG_RELEASE = unstable
 
-BUILD_DEP_PKGS = CSWpmmodulebuild
+LICENSE = LICENSE
 
-CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
-BUILD_SCRIPTS = $(WORKSRC)/Build
-TEST_SCRIPTS = $(WORKSRC)/Build
-INSTALL_SCRIPTS = $(WORKSRC)/Build
-
-ARCHALL = 1
-
-LICENSE = $(FILEDIR)/LICENSE
+PACKAGES += CSWpm-universal-isa
+CATALOGNAME_CSWpm-universal-isa = pm_universal_isa
+SPKG_DESC_CSWpm-universal-isa = Attempt to recover from people calling UNIVERSAL::isa as a function
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-universal-isa = 1
+OBSOLETED_BY_CSWpm-universal-isa += CSWpmuniversalisa
+CATALOGNAME_CSWpmuniversalisa = pm_universalisa_stub
 
 include gar/category.mk
