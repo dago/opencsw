@@ -19,8 +19,12 @@ PATCHFILES += 0002-Omit-static-function-sigalrm.patch
 PATCHFILES += 0003-Add-sys-sockio.h-to-have-SIOCGIFFLAGS.patch
 PATCHFILES += 0004-Skip-the-parts-not-only-in-Linux-but-also-Solaris.patch
 
+# Also look for libcares when specifying ares as resolver
+PATCHFILES += 0001-Add-libcares-in-addition-to-libares-redo-autoreconf.patch
+
 RUNTIME_DEP_PKGS_CSWiftop += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSWiftop += CSWlibpcap1
+RUNTIME_DEP_PKGS_CSWiftop += CSWlibcares2
 
 # Because of use of anonymous unions, which are invalid in C (even C99), but valid in C++ with -features=extensions
 GARCOMPILER = GNU
@@ -28,7 +32,7 @@ GARCOMPILER = GNU
 EXTRA_LDFLAGS  = -lpthread
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-# CONFIGURE_ARGS += --with-resolver=netdb_1thread
+CONFIGURE_ARGS += --with-resolver=ares
 
 # TEST_SCRIPTS = 
 
