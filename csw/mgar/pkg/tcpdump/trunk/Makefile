@@ -1,5 +1,5 @@
 NAME = tcpdump
-VERSION = 4.2.1
+VERSION = 4.3.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -10,9 +10,8 @@ endef
 MASTER_SITES = http://www.tcpdump.org/release/ 
 DISTFILES  = $(DISTNAME).tar.gz
 
-# Use patch until this is fixed:
-#   https://sourceforge.net/tracker/?func=detail&aid=3494835&group_id=53066&atid=469573
-PATCHFILES += 0001-Use-expr-instead-of-bashism.patch
+# For OpenSSL 1.0.0
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://www.tcpdump.org/
 
