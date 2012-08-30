@@ -1,5 +1,5 @@
 NAME = c-ares
-VERSION = 1.7.5
+VERSION = 1.9.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,18 +16,15 @@ VENDOR_URL = http://c-ares.haxx.se/
 LICENSE = README.cares
 
 PACKAGES += CSWlibcares2
-CATALOGNAME_CSWlibcares2 = libcares2
 SPKG_DESC_CSWlibcares2 = C-ares library to perform DNS requests and name resolves asynchronously
 PKGFILES_CSWlibcares2 = $(call pkgfiles_lib,libcares.so.2)
 OBSOLETED_BY_CSWlibcares2 = CSWlibcares
 
 PACKAGES += CSWlibcares-dev
-CATALOGNAME_CSWlibcares-dev = libcares_dev
 SPKG_DESC_CSWlibcares-dev = Development files for libcares.so.2
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibcares-dev += CSWlibcares2
 OBSOLETED_BY_CSWlibcares-dev = CSWlibcaresdevel
-
 RUNTIME_DEP_PKGS_CSWlibcaresdevel = CSWlibcares
 
 BUILD64_LIBS_ONLY = 1
