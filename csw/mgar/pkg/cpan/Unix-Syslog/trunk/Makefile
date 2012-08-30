@@ -1,20 +1,21 @@
 NAME = Unix-Syslog
-VERSION = 1.0
+VERSION = 1.1
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MHARNISCH
 
-DESCRIPTION = Perl interface to the UNIX syslog(3) calls
+DESCRIPTION = Interface to syslog functions in a C-library
 define BLURB
-  This module provides an interface to the system logger syslogd(8) via Perl's
-  XSUBs. The implementation attempts to resemble the native libc-functions of
-  your system, so that anyone being familiar with syslog.h should be able to
-  use this module right away.
 endef
+
+CATALOG_RELEASE = unstable
 
 LICENSE = Artistic
 
-PACKAGES = CSWpmunixsyslog
-CATALOGNAME = pm_unixsyslog
+PACKAGES += CSWpm-unix-syslog
+CATALOGNAME_CSWpm-unix-syslog = pm_unix_syslog
+SPKG_DESC_CSWpm-unix-syslog = Interface to syslog functions in a C-library
+OBSOLETED_BY_CSWpm-unix-syslog += CSWpmunixsyslog
+CATALOGNAME_CSWpmunixsyslog = pm_unixsyslog_stub
 
 include gar/category.mk
