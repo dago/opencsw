@@ -1,0 +1,82 @@
+From b0ea9184681898bf7d3f581753f95375b9584621 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 29 Aug 2012 10:07:31 +0200
+Subject: [PATCH] Adapt texmf configuration
+
+---
+ texk/kpathsea/texmf.cnf | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/texk/kpathsea/texmf.cnf b/texk/kpathsea/texmf.cnf
+index d8569d2..903f681 100644
+--- a/texk/kpathsea/texmf.cnf
++++ b/texk/kpathsea/texmf.cnf
+@@ -51,7 +51,7 @@
+ % Redistributors will probably want $SELFAUTODIR/share, i.e., /usr/share.
+ % Kpathsea sets SELFAUTOLOC (the directory with the binary),
+ % SELFAUTODIR (its parent), and SELFAUTOPARENT (its grandparent).
+-TEXMFROOT = $SELFAUTOPARENT
++TEXMFROOT = $SELFAUTODIR/share
+ 
+ % The tree containing runtime files related to the specific
+ % distribution and version.
+@@ -61,13 +61,13 @@ TEXMFMAIN = $TEXMFROOT/texmf
+ TEXMFDIST = $TEXMFROOT/texmf-dist
+ 
+ % Local additions to the distribution trees.
+-TEXMFLOCAL = $TEXMFROOT/../texmf-local
++TEXMFLOCAL = $TEXMFROOT/texmf-local
+ 
+ % TEXMFSYSVAR, where *-sys store cached runtime data.
+-TEXMFSYSVAR = $TEXMFROOT/texmf-var
++TEXMFSYSVAR = $SELFAUTOPARENT/../var/opt/csw/lib/texmf-var
+ 
+ % TEXMFSYSCONFIG, where *-sys store configuration data.
+-TEXMFSYSCONFIG = $TEXMFROOT/texmf-config
++TEXMFSYSCONFIG = $SELFAUTOPARENT/../etc/opt/csw/texmf
+ 
+ % Per-user texmf tree(s) -- organized per the TDS, as usual.  To define
+ % more than one per-user tree, set this to a list of directories in
+@@ -76,10 +76,10 @@ TEXMFSYSCONFIG = $TEXMFROOT/texmf-config
+ TEXMFHOME = ~/texmf
+ 
+ % TEXMFVAR, where texconfig/updmap/fmtutil store cached runtime data.
+-TEXMFVAR = ~/.texlive2012/texmf-var
++TEXMFVAR = ~/.texmf-var
+ 
+ % TEXMFCONFIG, where texconfig/updmap/fmtutil store configuration data.
+-TEXMFCONFIG = ~/.texlive2012/texmf-config
++TEXMFCONFIG = ~/.texmf-config
+ 
+ % List all the texmf trees.
+ %
+@@ -94,7 +94,7 @@ TEXMFCONFIG = ~/.texlive2012/texmf-config
+ % versions should take precedence over those -- although it is generally
+ % a source of confusion to have different versions of a package
+ % installed, whatever the trees, so try to avoid it.
+-TEXMF = {$TEXMFCONFIG,$TEXMFVAR,$TEXMFHOME,!!$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFMAIN,!!$TEXMFLOCAL,!!$TEXMFDIST}
++TEXMF = {$TEXMFCONFIG,$TEXMFVAR,$TEXMFHOME,$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFMAIN,!!$TEXMFLOCAL,!!$TEXMFDIST}
+ 
+ % Where to look for ls-R files.  There need not be an ls-R in the
+ % directories in this path, but if there is one, Kpathsea will use it.
+@@ -113,7 +113,7 @@ SYSTEXMF = $TEXMFSYSVAR;$TEXMFMAIN;$TEXMFLOCAL;$TEXMFDIST
+ % Where generated fonts may be written.  This tree is used when the sources
+ % were found in a system tree and either that tree wasn't writable, or the
+ % varfonts feature was enabled in MT_FEATURES in mktex.cnf.
+-VARTEXFONTS = $TEXMFVAR/fonts
++VARTEXFONTS = $SELFAUTOPARENT/../var/opt/csw/cache/texmf-fonts
+ 
+ % On some systems, there will be a system tree which contains all the font
+ % files that may be created as well as the formats.  For example
+@@ -326,7 +326,7 @@ TEXPSHEADERS.gsftopk = .;$TEXMF/{dvips,fonts/{enc,type1,type42,type3,truetype}}/
+ % OSFONTDIR is to provide a convenient hook for allowing TeX to find
+ % fonts installed on the system (outside of TeX).  An empty default
+ % value would add "//" to the search paths, so we give it a dummy value.
+-OSFONTDIR = /please/set/osfontdir/in/the/environment
++OSFONTDIR = /usr/share/fonts
+ 
+ % PostScript Type 1 outline fonts.
+ T1FONTS = .;$TEXMF/fonts/type1//;$OSFONTDIR//
+-- 
+1.7.11.3
+

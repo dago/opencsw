@@ -21,9 +21,14 @@ DISTNAMEPREFIX	=	$(NAME)-$(VERSION)
 DISTNAME		=	$(DISTNAMEPREFIX)-source
 DISTFILES		=	$(DISTNAME).tar.xz
 DISTFILES		+=	$(DISTNAMEPREFIX)-extra.tar.xz
-DISTFILES		+=	$(DISTNAMEPREFIX)-texmf.tar.xz
+TEXMFARPREFIX	=	$(DISTNAMEPREFIX)-texmf
+TEXMFAR			=	$(TEXMFARPREFIX).tar.xz
+DISTFILES		+=	$(TEXMFAR)
+NOEXTRACT		+=	$(TEXMFAR)
 PATCHFILES		+=	0001-Fix-lacheck-buffer-overflow.patch
 PATCHFILES		+=	0002-Fix-ICU-link-edit.patch
+PATCHFILES		+=	0003-Adapt-texmf-configuration.patch
+PATCHFILES		+=	0004-Activate-formats.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -101,18 +106,52 @@ pre-install-modulated:
 	cd $(OBJDIR)/texk/ptexenc && gsed --in-place --expression='s;-L/opt/csw/lib;;g' libptexenc.la
 	$(MAKECOOKIE)
 
-# install the texmf and texmf-dist but exclude those components
-# provided by the source archive:
-post-install-modulated: xdup = --exclude=texmf/doc/xindy/alphabets-doc.pdf
-post-install-modulated: xdup += --exclude=texmf/doc/xindy/tex2xindy.pdf
-post-install-modulated: xdup += --exclude=texmf/doc/xindy/texindy.pdf
-post-install-modulated: xdup += --exclude=texmf/doc/xindy/xindy.pdf
-post-install-modulated: xdup += --exclude=texmf/dvipdfmx/dvipdfmx.cfg
-post-install-modulated: xdup += --exclude=texmf/xindy/modules/tex/inputenc/cp1250.xdy
-post-install-modulated: xdup += --exclude=texmf/xindy/modules/tex/inputenc/cp437.xdy
-post-install-modulated: xdup += --exclude=texmf/xindy/modules/tex/inputenc/cp850.xdy
+# install the texmf and texmf-dist
 post-install-modulated:
-	gtar --directory=$(WORKDIR)/$(DISTNAMEPREFIX)-texmf --create $(xdup) --file=- . | gtar --directory=$(DESTDIR)/$(datadir) --extract --file=-
+	: merge source and distributed texmf tree
+	gtar --directory=$(DESTDIR)/$(datadir) --extract --file=$(DOWNLOADDIR)/$(TEXMFAR)
+	gtar --directory=$(DESTDIR)/$(datadir) --create --file=- texmf texmf-dist | gtar --directory=$(DESTDIR)/$(datadir)/$(TEXMFARPREFIX) --extract --file=-
+	rm -rf $(DESTDIR)/$(datadir)/texmf $(DESTDIR)/$(datadir)/texmf-dist
+	mv $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)/texmf $(DESTDIR)/$(datadir)
+	mv $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)/texmf-dist $(DESTDIR)/$(datadir)
+	rm -rf $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)
+	: create additional hierarchy to reflect texmf.cnf
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(datadir)/texmf-local
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/lib/texmf-var
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(sysconfdir)/texmf
+	: create all the available formats:
+	PATH=$(DESTDIR)/$(bindir):${PATH} LD_LIBRARY_PATH=$(DESTDIR)/$(libdir) fmtutil-sys --all
+	: create symbolic links for available formats:
+	cd $(DESTDIR)/$(bindir) && ln -s -f aleph lamed
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex amstex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cslatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfcslatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex csplain
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfcsplain
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex eplain
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex jadetex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfjadetex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex latex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdflatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f luatex dvilualatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f luatex lualatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f luatex dviluatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfmex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex utf8mex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mllatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mltex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex etex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfetex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyramstex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyrtex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyrtexinfo
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex texsis
+	cd $(DESTDIR)/$(bindir) && ln -s -f euptex uplatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f xetex xelatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex xmltex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfxmltex
 	$(MAKECOOKIE)
 
 # this is private and not available publicly

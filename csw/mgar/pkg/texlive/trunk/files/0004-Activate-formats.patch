@@ -1,0 +1,48 @@
+From 61cb8c637555772955bd00db2c5f1fc3cb90bdd9 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 30 Aug 2012 09:09:38 +0200
+Subject: [PATCH] Activate formats
+
+---
+ texk/tetex/fmtutil.cnf | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/texk/tetex/fmtutil.cnf b/texk/tetex/fmtutil.cnf
+index 8e1ab82..fa07176 100644
+--- a/texk/tetex/fmtutil.cnf
++++ b/texk/tetex/fmtutil.cnf
+@@ -45,11 +45,11 @@ amstex pdftex - -translate-file=cp227.tcx *amstex.ini
+ # from context:
+ cont-en pdftex cont-usr.tex -8bit *cont-en.ini
+ cont-en xetex cont-usr.tex -8bit *cont-en.ini
+-#! cont-de pdftex cont-usr.tex -8bit *cont-de.ini
+-#! cont-fr pdftex cont-usr.tex -8bit *cont-fr.ini
+-#! cont-it pdftex cont-usr.tex -8bit *cont-it.ini
+-#! cont-nl pdftex cont-usr.tex -8bit *cont-nl.ini
+-#! cont-ro pdftex cont-usr.tex -8bit *cont-ro.ini
++cont-de pdftex cont-usr.tex -8bit *cont-de.ini
++cont-fr pdftex cont-usr.tex -8bit *cont-fr.ini
++cont-it pdftex cont-usr.tex -8bit *cont-it.ini
++cont-nl pdftex cont-usr.tex -8bit *cont-nl.ini
++cont-ro pdftex cont-usr.tex -8bit *cont-ro.ini
+ #
+ # from cslatex:
+ cslatex pdftex - -etex -translate-file=cp227.tcx cslatex.ini
+@@ -102,9 +102,11 @@ eptex eptex language.def *eptex.ini
+ platex eptex language.dat *platex.ini
+ #
+ # from t2:
+-#! cyramstex pdftex language.dat -translate-file=cp227.tcx *cyramstx.ini
+-#! cyrtex pdftex language.dat -translate-file=cp227.tcx *cyrtex.ini
+-#! cyrtexinfo pdftex language.dat -translate-file=cp227.tcx *cyrtxinf.ini
++cyramstex pdftex language.dat -translate-file=cp227.tcx *cyramstx.ini
++cyrtex pdftex language.dat -translate-file=cp227.tcx *cyrtex.ini
++# Peter OCSW: this doesn't build when merging installed texmf over upstream
++# one (the reverse works)
++# cyrtexinfo pdftex language.dat -translate-file=cp227.tcx *cyrtxinf.ini
+ #
+ # from tex:
+ tex tex - tex.ini
+-- 
+1.7.11.3
+
