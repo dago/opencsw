@@ -6,11 +6,17 @@ AUTHOR = MCEWAN
 
 DESCRIPTION = Structured data from (un)structured text
 define BLURB
-	Text::Scraper provides a fully functional base-class to quickly develop
-	Screen-Scrapers and other text extraction tools. Programmatically generated
-	text such as dynamic webpages are trivially reversed engineered.
 endef
 
-DISTFILES += $(call admfiles,CSWpmtextscraper,depend prototype)
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the  license
+
+PACKAGES += CSWpm-text-scraper
+CATALOGNAME_CSWpm-text-scraper = pm_text_scraper
+SPKG_DESC_CSWpm-text-scraper = Structured data from (un)structured text
+ARCHALL_CSWpm-text-scraper = 1
+OBSOLETED_BY_CSWpm-text-scraper += CSWpmtextscraper
+CATALOGNAME_CSWpmtextscraper = pm_textscraper_stub
 
 include gar/category.mk
