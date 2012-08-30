@@ -1,0 +1,34 @@
+From 641c70d613ebbcbb0b1a915fa3da32f68b5a71ad Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 30 Aug 2012 15:11:03 +0200
+Subject: [PATCH] Fix Makefile for Solaris use
+
+---
+ Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c8dab03..1caa900 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,7 +6,7 @@ CC = gcc
+ ##################################################################
+ # Compilation flags
+ # You should comment the line below for AIX+native cc
+-FLAGS = -Wall
++#FLAGS = -Wall
+ 
+ ##################################################################
+ # Libraries
+@@ -65,7 +65,7 @@ APGD_MAN_DIR = /man/man8
+ # Solaris
+ #
+ # Uncoment line below for Solaris
+-#CS_LIBS = -lnsl -lsocket
++CS_LIBS = -lnsl -lsocket
+ 
+ ####################################################################
+ # QNX RTP 6.1.0
+-- 
+1.7.10.3
+
