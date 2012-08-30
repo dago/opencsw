@@ -1,16 +1,22 @@
 NAME = File-NFSLock
-VERSION = 1.20
+VERSION = 1.21
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = BBB
 
-DESCRIPTION = Perl module to do NFS (or not) locking
+DESCRIPTION = NFS compatible (safe) locking utility
 define BLURB
-  Program based of concept of hard linking of files being atomic across NFS.
-  This concept was mentioned in Mail::Box::Locker (which was originally
-  presented in Mail::Folder::Maildir).
 endef
 
-DISTFILES = $(call admfiles,CSWpmfilenfslock,depend prototype)
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the  license
+
+PACKAGES += CSWpm-file-nfslock
+CATALOGNAME_CSWpm-file-nfslock = pm_file_nfslock
+SPKG_DESC_CSWpm-file-nfslock = NFS compatible (safe) locking utility
+ARCHALL_CSWpm-file-nfslock = 1
+OBSOLETED_BY_CSWpm-file-nfslock += CSWpmfilenfslock
+CATALOGNAME_CSWpmfilenfslock = pm_filenfslock_stub
 
 include gar/category.mk
