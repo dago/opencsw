@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.11.3
+VERSION = 1.7.12
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -121,10 +121,6 @@ PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # to the selection of available utf8 locales.
 PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
 PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
-PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
-PATCHFILES += 0009-Makefile-Set-EXTRA_CPPFLAGS-during-the-compilation-o.patch
-PATCHFILES += 0010-t1304-improve-setfacl-prerequisite-setup.patch
-PATCHFILES += 0011-Use-getpassphrase-instead-of-getpass-when-prompting-.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
@@ -212,6 +208,7 @@ PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
 post-configure-modulated:
 	@echo "Forcing GIT_TEST_CMP tool"
 	@( cd $(WORKSRC); echo 'GIT_TEST_CMP=gdiff' > config.mak )
+	@( cd $(WORKSRC); echo 'EXTLIBS += -lintl' > config.mak )
 	@$(MAKECOOKIE)
 
 # force the elisp extension to be built too.
