@@ -1,0 +1,66 @@
+From a14ad109115b29483b6e37d18159d850e2752c72 Mon Sep 17 00:00:00 2001
+From: Jeff King <peff@peff.net>
+Date: Wed, 6 Jun 2012 09:28:24 -0400
+Subject: [PATCH] t1304: improve setfacl prerequisite setup
+
+t1304 first runs setfacl as an experiment to see whether the
+filesystem supports ACLs, and skips the remaining tests if
+it does not. However, our setfacl run did not exercise the
+ACLs very well, and some filesystems may support our initial
+setfacl, but not the rest of the test.
+
+In particular, some versions of ecryptfs will erroneously
+apply the umask on top of an inherited directory ACL,
+causing our tests to fail. Let's be more careful and make
+sure both that we can read back the user ACL we set, and
+that the inherited ACL is propagated correctly. The latter
+catches the ecryptfs bug, but may also catch other bugs
+(e.g., an implementation which does not handle inherited
+ACLs at all).
+
+Since we're making the setup more complex, let's move it
+into its own test. This will hide the output for us unless
+the user wants to run "-v" to see it (and we don't need to
+bother printing anything about setfacl failing; the
+remaining tests will properly print "skip" due to the
+missing prerequisite).
+
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t1304-default-acl.sh |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
+index 2b962cf..79045ab 100755
+--- a/t/t1304-default-acl.sh
++++ b/t/t1304-default-acl.sh
+@@ -14,16 +14,15 @@ umask 077
+ # We need an arbitrary other user give permission to using ACLs. root
+ # is a good candidate: exists on all unices, and it has permission
+ # anyway, so we don't create a security hole running the testsuite.
+-
+-setfacl_out="$(setfacl -m u:root:rwx . 2>&1)"
+-setfacl_ret=$?
+-
+-if test $setfacl_ret != 0
+-then
+-	say "Unable to use setfacl (output: '$setfacl_out'; return code: '$setfacl_ret')"
+-else
+-	test_set_prereq SETFACL
+-fi
++test_expect_success 'checking for a working acl setup' '
++	if setfacl -m d:m:rwx -m u:root:rwx . &&
++	   getfacl . | grep user:root:rwx &&
++	   touch should-have-readable-acl &&
++	   getfacl should-have-readable-acl | egrep "mask::?rw-"
++	then
++		test_set_prereq SETFACL
++	fi
++'
+ 
+ if test -z "$LOGNAME"
+ then
+-- 
+1.7.9.5
+

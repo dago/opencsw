@@ -1,0 +1,26 @@
+From a62835b110e5111939d599108ee887c1ddf3e40f Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 31 Jan 2012 01:46:04 +0100
+Subject: [PATCH] on solaris, we need to use -lintl to allow the new i18n work
+ to build
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index a782409..3a2662e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -939,6 +939,7 @@ ifeq ($(uname_S),SunOS)
+ 	NO_REGEX = YesPlease
+ 	NO_FNMATCH_CASEFOLD = YesPlease
+ 	NO_MSGFMT_EXTENDED_OPTIONS = YesPlease
++	EXTLIBS += -lintl
+ 	ifeq ($(uname_R),5.6)
+ 		SOCKLEN_T = int
+ 		NO_HSTRERROR = YesPlease
+-- 
+1.7.8.3
+
