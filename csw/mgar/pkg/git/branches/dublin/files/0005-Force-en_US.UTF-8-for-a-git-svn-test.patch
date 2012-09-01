@@ -1,0 +1,32 @@
+From f2a93f88203f1c1331d7e06c46ac4066d0eef2bc Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 3 May 2011 04:50:15 +0200
+Subject: [PATCH] Force en_US.UTF-8 for a git-svn test
+
+This test fails when the UTF8 detection picks fr.UTF-8.  Force it's hand
+in this matter.  This patch should only be applied on current9s for now.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t9129-git-svn-i18n-commitencoding.sh |    5 +----
+ 1 files changed, 1 insertions(+), 4 deletions(-)
+
+diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
+index 8cfdfe7..dd570b6 100755
+--- a/t/t9129-git-svn-i18n-commitencoding.sh
++++ b/t/t9129-git-svn-i18n-commitencoding.sh
+@@ -14,10 +14,7 @@ compare_git_head_with () {
+ 	test_cmp current "$1"
+ }
+ 
+-a_utf8_locale=$(locale -a | sed -n '/\.[uU][tT][fF]-*8$/{
+-	p
+-	q
+-}')
++a_utf8_locale=en_US.UTF-8
+ 
+ if test -n "$a_utf8_locale"
+ then
+-- 
+1.7.3.2
+

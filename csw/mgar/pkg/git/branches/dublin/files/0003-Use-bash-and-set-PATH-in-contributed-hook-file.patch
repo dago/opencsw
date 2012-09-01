@@ -1,0 +1,36 @@
+From 97a0f24b6e27759fc1f22fc513fc7a7133cfd749 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 27 Nov 2010 15:37:56 +0100
+Subject: [PATCH] Use bash and set PATH in contributed hook file
+
+Now that we're shipping this contributed hook, we should give it a chance
+of running in an OpenCSW environment.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ contrib/hooks/post-receive-email |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 0085086..8601a84 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # Copyright (c) 2007 Andy Parkins
+ #
+@@ -68,6 +68,9 @@
+ # give information for debugging.
+ #
+ 
++# Added by OpenCSW to ensure we have a sane place to find our git
++PATH=/opt/csw/bin:$PATH
++
+ # ---------------------------- Functions
+ 
+ #
+-- 
+1.7.3
+

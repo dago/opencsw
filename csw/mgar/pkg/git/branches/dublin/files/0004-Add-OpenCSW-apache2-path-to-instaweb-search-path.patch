@@ -1,0 +1,31 @@
+From ff5bf85995a459ded56e68fb4c4edef05380550d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Wed, 2 Feb 2011 04:26:57 +0100
+Subject: [PATCH] Add OpenCSW apache2 path to instaweb search path
+
+We make sure that git instaweb will prefer our own apache2 if it is
+available, but leave all the other options available to.  This will
+require a checkpkg override on the /usr/local path and a note at
+release time.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ git-instaweb.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 10fcebb..7fc62f7 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -75,7 +75,7 @@ resolve_full_httpd () {
+ 		# these days and those are not in most users $PATHs
+ 		# in addition, we may have generated a server script
+ 		# in $fqgitdir/gitweb.
+-		for i in /usr/local/sbin /usr/sbin "$root" "$fqgitdir/gitweb"
++		for i in /opt/csw/apache2/sbin /usr/local/sbin /usr/sbin "$root" "$fqgitdir/gitweb"
+ 		do
+ 			if test -x "$i/$httpd_only"
+ 			then
+-- 
+1.7.3.2
+
