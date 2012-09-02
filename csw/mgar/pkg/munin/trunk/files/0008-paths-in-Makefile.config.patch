@@ -1,14 +1,14 @@
-From c8297f1d1b8d35e75932c9a43060b8dabb7afc54 Mon Sep 17 00:00:00 2001
+From d9e20050b6a2536ca454bdfbe358651168bfb04f Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sat, 28 Jul 2012 08:25:46 +0200
-Subject: [PATCH 6/6] paths in Makefile.config
+Date: Sat, 1 Sep 2012 14:19:33 +0200
+Subject: [PATCH 8/8] paths in Makefile.config
 
 ---
- Makefile.config |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ Makefile.config | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
 diff --git a/Makefile.config b/Makefile.config
-index 5bb6d18..7abbec8 100644
+index 9a762fa..d36b37e 100644
 --- a/Makefile.config
 +++ b/Makefile.config
 @@ -17,10 +17,10 @@
@@ -24,7 +24,7 @@ index 5bb6d18..7abbec8 100644
  
  # Server only - where to put munin-cron
  BINDIR     = $(PREFIX)/bin
-@@ -29,20 +29,20 @@ BINDIR     = $(PREFIX)/bin
+@@ -29,23 +29,23 @@ BINDIR     = $(PREFIX)/bin
  SBINDIR    = $(PREFIX)/sbin
  
  # Where to put text and html documentation
@@ -45,14 +45,18 @@ index 5bb6d18..7abbec8 100644
 +HTMLDIR    = /var/opt/csw/munin/www
 +CGIDIR     = /var/opt/csw/munin/www/cgi-bin
  
- # Where to put RRD files and other internal data, both master and node
+ # Where to put internal data for master (RRD, internal files, ...)
 -DBDIR      = $(DESTDIR)/var/opt/munin
 +DBDIR      = /var/opt/csw/munin/db
  
+ # Where to put internal data for node (plugin state, ...)
+-DBDIRNODE  = $(DESTDIR)/var/opt/munin-node
++DBDIRNODE  = /var/opt/csw/db/munin-node
+ 
  # Client only - Where the spool files are written. Must be writable by
  # group "munin", and should be preserved between reboots
-@@ -53,17 +53,17 @@ SPOOLDIR   = $(DBDIR)/spool
- PLUGSTATE  = $(DBDIR)/plugin-state
+@@ -56,17 +56,17 @@ SPOOLDIR   = $(DBDIR)/spool
+ PLUGSTATE  = $(DBDIRNODE)/plugin-state
  
  # Where Munin should place its logs.
 -LOGDIR     = $(PREFIX)/log/munin
@@ -73,7 +77,7 @@ index 5bb6d18..7abbec8 100644
  
  # The ruby interpreter to use (used by some plugins)
  RUBY       := /usr/bin/env ruby
-@@ -89,11 +89,11 @@ JAVALIBDIR = $(LIBDIR)
+@@ -92,11 +92,11 @@ JAVALIBDIR = $(LIBDIR)
  GOODSH     := $(shell PATH=`getconf PATH 2>/dev/null || echo $(PATH)` sh -c 'type sh | sed "s/.* //"')
  
  # Path of bash for bash specific plugins
@@ -87,7 +91,7 @@ index 5bb6d18..7abbec8 100644
  
  # Client only - Install plugins for this architecture
  # the LANG=C makes tr work as expected, not regarding any locale it
-@@ -108,7 +108,7 @@ HOSTNAME   := $(shell hostname)
+@@ -111,7 +111,7 @@ HOSTNAME   := $(shell hostname)
  # What is the safest way to create a tempfile.
  # Default is to figure it out by testing various methods.
  # Replace this with a known platform-specific method
@@ -96,7 +100,7 @@ index 5bb6d18..7abbec8 100644
  
  # Munin version number.
  VERSION    := $(shell ./getversion)
-@@ -126,9 +126,9 @@ CGIUSER := nobody
+@@ -129,9 +129,9 @@ CGIUSER := nobody
  # Which command to use to check if the USER and GROUP to run Munin as, exists.
  # These will work on most modern OSes:
  #
@@ -109,12 +113,12 @@ index 5bb6d18..7abbec8 100644
  
  # For OSX, comment out the previous two lines and comment in these
  #
-@@ -163,4 +163,4 @@ JAR        := jar
+@@ -169,4 +169,4 @@ JAR        := jar
  JCVALID    = $(shell $(JC) -version >/dev/null 2>/dev/null && echo "yes")
  
  # Check whether setruid functionality can be used
 -HASSETR    := $(shell perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
 +HASSETR    := $(shell /opt/csw/bin/perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
 -- 
-1.7.10.3
+1.7.11.3
 

@@ -1,7 +1,7 @@
-NAME = munin
-VERSION = 2.0.4
-CATEGORIES = apps
-GARTYPE = v2
+NAME 		= munin
+VERSION 	= 2.0.6
+CATEGORIES 	= apps
+GARTYPE 	= v2
 
 define BLURB
   Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
@@ -19,8 +19,8 @@ DISTFILES += CSWmunin-node.README.CSW
 
 PATCHFILES	+= 0001-paths-and-hostname-in-munin-node.conf.in.patch
 PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
-PATCHFILES	+= 0005-Expand-paths-with-DESTDIR.patch 
-PATCHFILES	+= 0006-paths-in-Makefile.config.patch
+PATCHFILES	+= 0006-Expand-paths-with-DESTDIR.patch 
+PATCHFILES	+= 0008-paths-in-Makefile.config.patch
 
 #
 # Reinplacements
