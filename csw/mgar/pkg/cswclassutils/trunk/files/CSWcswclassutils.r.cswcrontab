@@ -35,6 +35,7 @@ remove_cron_lines() {
   state=1
   rm -f "${cron_file}"
   touch "${cron_file}"
+  chown "${USERNAME}" "${cron_file}"
   while read LINE; do
     if [ ${state} -eq 1 ]; then
       if echo "${LINE}" | grep "^# ${crontab_tag} ${cron_id}\$" >/dev/null; then
@@ -65,7 +66,7 @@ while read dest; do
   USERNAME=`/usr/bin/basename $dest`
   TMPFILE=/tmp/cswcrontab.${PKGINST}.$$
 
-  umask 600
+  umask 177
   /usr/bin/crontab -l ${USERNAME} | remove_cron_lines "${PKGINST}" "${TMPFILE}"
 
 
