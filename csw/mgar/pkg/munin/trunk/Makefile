@@ -19,7 +19,7 @@ DISTFILES += CSWmunin-node.README.CSW
 
 PATCHFILES	+= 0001-paths-and-hostname-in-munin-node.conf.in.patch
 PATCHFILES	+= 0001-replace-yourhostname-with-hostname-in-postinstall.patch
-PATCHFILES	+= 0006-Expand-paths-with-DESTDIR.patch 
+PATCHFILES	+= 0007-Expand-paths-with-DESTDIR.patch 
 PATCHFILES	+= 0008-paths-in-Makefile.config.patch
 
 #
