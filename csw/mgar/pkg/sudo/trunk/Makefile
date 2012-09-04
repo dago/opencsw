@@ -101,7 +101,11 @@ CONFIGURE_ARGS_LDAP-enabled += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_LDAP-$(LDAP))
 
-EXTRA_LINKER_FLAGS = -Bdirect -z ignore -M "$(abspath $(WORKDIR)/map.sudo)"
+EXTRA_LINKER_FLAGS = -Bdirect -z ignore 
+
+# Add Mapfile for Solaris10
+EXTRA_LINKER_FLAGS_5.10 = -M "$(abspath $(WORKDIR)/map.sudo)"
+EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
