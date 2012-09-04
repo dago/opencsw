@@ -40,7 +40,7 @@ RUNTIME_DEP_PKGS += CSWpm-xml-treepp
 RUNTIME_DEP_PKGS += CSWmemconf
 PATCHFILES += 0001-don-t-install-a-private-memconf-copy.patch
 
-CONFIGURE_ARGS = PREFIX=/opt/csw SYSCONFDIR=/etc/opt/csw
+CONFIGURE_ARGS = PREFIX=/opt/csw SYSCONFDIR=/etc/opt/csw/fusioninventory
 
 # skip tests
 SKIPTEST ?= 1
