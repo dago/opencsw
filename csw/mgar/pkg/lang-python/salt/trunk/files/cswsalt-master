@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+#AUTOENABLE no
+#
+
+PATH=/opt/csw/bin:$PATH
+export PATH
+CONF_FILE=/etc/opt/csw/salt/master
+PIDFILE=/var/run/salt-master.pid
+SALTMASTER=/opt/csw/bin/salt-master
+
+[ ! -f ${CONF_FILE} ] &&  exit $CONF_FILE
+
+start_service() {
+        /bin/rm -f ${PIDFILE}
+        $SALTMASTER -d -c ${CONF_FILE} 2>&1
+}
+
+stop_service() {
+        if [ -f "$PIDFILE" ]; then
+                /usr/bin/kill -TERM `/usr/bin/cat $PIDFILE`
+        fi
+}
+
+case "$1" in
+start)
+        start_service
+        ;;
+stop)
+        stop_service
+        ;;
+restart)
+        stop_service
+        sleep 1
+        start_service
+        ;;
+*)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac

@@ -1,5 +1,3 @@
-#TODO:
-# * Create init scripts
 NAME = salt
 VERSION = 0.10.2
 GARTYPE = v2
@@ -11,7 +9,9 @@ define BLURB
 endef
 
 MASTER_SITES = https://github.com/downloads/saltstack/salt/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += cswsalt-minion
+DISTFILES += cswsalt-master
 
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-yaml
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-m2crypto
@@ -20,7 +20,7 @@ RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-pyzmq
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-msgpack-python
 
-#CHECKPKG_OVERRIDES_CSWpy-salt += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSWpy-salt += pkginfo-opencsw-repository-uncommitted
 
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-m2crypto
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-yaml
@@ -47,6 +47,11 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
 
+INITSMF += $(sysconfdir)/init.d/cswsalt-minion
+INITSMF += $(sysconfdir)/init.d/cswsalt-master
+PRESERVECONF += $(sysconfdir)/salt/minion
+PRESERVECONF += $(sysconfdir)/salt/master
+
 include gar/category.mk
 
 post-install-modulated: CONFDEST = $(DESTDIR)$(sysconfdir)/salt
@@ -56,6 +61,15 @@ post-install-modulated:
 	# Copy config files (upstream)
 	ginstall -d $(CONFDEST)
 	cp $(addprefix $(WORKSRC)/conf/,$(CONFS)) $(CONFDEST)
+	gsed -i -e 's+/etc/salt+/etc/opt/csw/salt+g' $(DESTDIR)$(sysconfdir)/salt/master.template
+	gsed -i -e 's+/etc/salt+/etc/opt/csw/salt+g' $(DESTDIR)$(sysconfdir)/salt/minion.template
+	gsed -i -e 's+#pki_dir:+pki_dir:+g' $(DESTDIR)$(sysconfdir)/salt/master.template
+	gsed -i -e 's+#pki_dir:+pki_dir:+g' $(DESTDIR)$(sysconfdir)/salt/minion.template
+	mv $(CONFDEST)/minion.template $(CONFDEST)/minion
+	mv $(CONFDEST)/master.template $(CONFDEST)/master
+	# Copy init script in place
+	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(DOWNLOADDIR)/cswsalt-minion $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(DOWNLOADDIR)/cswsalt-master $(DESTDIR)$(sysconfdir)/init.d
 
 	@$(MAKECOOKIE)
-
