@@ -64,6 +64,7 @@ BUILD_DEP_PKGS = CSWasciidoc CSWlibssl-dev CSWxmlto CSWbash CSWlibcurl-dev
 BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 BUILD_DEP_PKGS += CSWpython
+BUILD_DEP_PKGS += CSWlibiconv-dev
 
 RUNTIME_DEP_PKGS_CSWgit = CSWlibz1 CSWperl CSWrsync CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWgit += CSWosshclient CSWlibiconv2 CSWlibexpat1
