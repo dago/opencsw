@@ -4,8 +4,6 @@ DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
 GARTYPE = v2
 
-WORKDIR = $(WORKROOTDIR)/
-
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 VENDOR_URL = http://git-scm.org/
@@ -61,6 +59,7 @@ BUILD_DEP_PKGS = CSWasciidoc CSWlibssl-dev CSWxmlto CSWbash CSWlibcurl-dev
 BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 BUILD_DEP_PKGS += CSWpython
+BUILD_DEP_PKGS += CSWlibiconv-dev
 
 RUNTIME_DEP_PKGS_CSWgit = CSWlibz1 CSWperl CSWrsync CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWgit += CSWosshclient CSWlibiconv2 CSWlibexpat1
@@ -118,7 +117,6 @@ PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # to the selection of available utf8 locales.
 PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
 PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
-PATCHFILES += 0007-on-solaris-we-need-to-use-lintl-to-allow-the-new-i18.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
