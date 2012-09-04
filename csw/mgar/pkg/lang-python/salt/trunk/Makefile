@@ -29,17 +29,7 @@ CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-pyzmq
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-msgpack-python
 
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/share/man/man7/salt.7
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/cron.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/rvm.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/freebsdservice.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/brew.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/pip.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/salt/modules/tomcat.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/states/pkgng.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/pkgng.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/poudriere.py
-CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/salt/modules/cassandra.py
+CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content
 
 ARCHALL_CSWpy-salt = 1
 
