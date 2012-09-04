@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.5p3
+VERSION = 1.8.6
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -24,6 +24,9 @@ DISTFILES += sudo.conf.CSW
 LICENSE = doc/LICENSE
 
 VENDOR_URL = http://www.sudo.ws
+
+# To have least Priv Support for Solaris 10 build on all Platforms
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386  solaris10-sparc solaris10-i386
 
 PACKAGES += CSWsudo
 SPKG_DESC_CSWsudo = Provides limited super user privileges
@@ -97,7 +100,7 @@ CONFIGURE_ARGS_LDAP-enabled += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_LDAP-$(LDAP))
 
-EXTRA_LINKER_FLAGS = -z ignore
+EXTRA_LINKER_FLAGS = -Bdirect -z ignore
 
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
