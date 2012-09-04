@@ -1,5 +1,5 @@
 NAME      = tomcat7
-VERSION   = 7.0.27
+VERSION   = 7.0.29
 CATEGORIES   = server
 GARTYPE = v2
 
@@ -9,7 +9,7 @@ Apache Tomcat is the servlet container that is used in the official Reference Im
 endef
 
 VENDOR_URL = http://tomcat.apache.org/
-MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-7/v$(VERSION)/bin/
+MASTER_SITES  =  http://apache.mirror.digionline.de/tomcat/tomcat-7/v$(VERSION)/bin/
 UPSTREAM_MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-7/v$(VERSION)/bin/
 DISTFILES     = apache-tomcat-$(VERSION).tar.gz
 PKGDIST       = apache-tomcat-$(VERSION).tar.gz
