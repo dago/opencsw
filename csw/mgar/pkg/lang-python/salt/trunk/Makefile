@@ -20,7 +20,7 @@ RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-pyzmq
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-msgpack-python
 
-CHECKPKG_OVERRIDES_CSWpy-salt += pkginfo-opencsw-repository-uncommitted
+#CHECKPKG_OVERRIDES_CSWpy-salt += pkginfo-opencsw-repository-uncommitted
 
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-m2crypto
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-yaml
