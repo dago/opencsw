@@ -20,6 +20,7 @@ endef
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES += $(DISTNAME).tar.gz 
 DISTFILES += sudo.conf.CSW
+DISTFILES += map.sudo
 
 LICENSE = doc/LICENSE
 
@@ -100,7 +101,7 @@ CONFIGURE_ARGS_LDAP-enabled += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_LDAP-$(LDAP))
 
-EXTRA_LINKER_FLAGS = -Bdirect -z ignore
+EXTRA_LINKER_FLAGS = -Bdirect -z ignore -M "$(abspath $(WORKDIR)/map.sudo)"
 
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
