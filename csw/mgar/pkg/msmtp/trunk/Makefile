@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.27
+VERSION = 1.4.29
 CATEGORIES = net
 GARTYPE = v2
 
