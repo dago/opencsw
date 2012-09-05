@@ -1,5 +1,5 @@
 NAME = less
-VERSION = 444
+VERSION = 451
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -14,20 +14,23 @@ DISTFILES = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS_CSWless += CSWncurses
-RUNTIME_DEP_PKGS_CSWless += CSWlibintl8
+PACKAGES += CSWless
+SPKG_DESC_CSWless = A free open-source file pager
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWless += CSWlibncursesw5
 
 NOISALIST = 1
+
+REINPLACEMENTS += sysless
+REINPLACE_MATCH_sysless = /usr/local/etc/sysless
+REINPLACE_WITH_sysless = $(sysconfdir)/sysless
+REINPLACE_FILES_sysless += less.man
 
 # There is no testsuite
 TEST_TARGET =
 
-# We replaced the problematic occurrence of sysless in post-install, the remaining one is just
+# We reinplaced the problematic occurrence of sysless, the remaining one is just
 # a default.
 CHECKPKG_OVERRIDES_CSWless += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/less.1
 
 include gar/category.mk
-
-post-install-modulated:
-	perl -pi -e 's,/usr/local/etc/sysless,$(sysconfdir)/sysless,g' \
-		$(DESTDIR)$(mandir)/man1/less.1
