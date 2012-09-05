@@ -79,7 +79,7 @@ CONFIGURE_ARGS += --enable-threads
 #      against symbol                  offset      in file
 #  st                                  0x634       tclDTrace.o
 #  ld: fatal: relocations remain against allocatable but non-writable sections
-CONFIGURE_ARGS-5.10 += --enable-dtrace
+# CONFIGURE_ARGS-5.10 += --enable-dtrace
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
 
