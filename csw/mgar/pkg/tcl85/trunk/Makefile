@@ -1,5 +1,5 @@
 NAME = tcl8.5
-VERSION = 8.5.11
+VERSION = 8.5.12
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -45,19 +45,16 @@ RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
 PACKAGES += CSWlibtcl8-5-0
 SPKG_DESC_CSWlibtcl8-5-0 = $(DESCRIPTION), libraries
 PKGFILES_CSWlibtcl8-5-0 += $(call pkgfiles_lib,libtcl8.5.so.0)
+PKGFILES_CSWlibtcl8-5-0 += $(libdir)/tcl8/.*
+PKGFILES_CSWlibtcl8-5-0 += $(libdir)/tcl8.5/.*
 RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-i386 += CSWsunmath
 RUNTIME_DEP_PKGS_CSWlibtcl8-5-0 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
 
 PACKAGES += CSWtcl-dev
 SPKG_DESC_CSWtcl-dev = $(DESCRIPTION), development files
 PKGFILES_CSWtcl-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWtcl-dev += $(call baseisadirs,$(libdir),tclConfig.sh)
 RUNTIME_DEP_PKGS_CSWtcl-dev += CSWlibtcl8-5-0
-
-ALTERNATIVES_PRIO = 850
-
-ALTERNATIVES_CSWtcl8_5 += tcl8_5
-ALTERNATIVE_tcl8_5     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
-ALTERNATIVE_tcl8_5     += $(libdir)/tclConfig.sh $(ALTERNATIVES_PRIO)
 
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
