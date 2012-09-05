@@ -51,6 +51,7 @@ MASTER_SITES = http://elinks.cz/download/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += changelog.CSW
+DISTFILES += map.bash
 
 # Debian security path for CVE-2007-2027
 PATCHFILES += elinks-417789.diff
@@ -73,7 +74,7 @@ CONFIGURE_ARGS += --enable-256-colors
 # CONFIGURE_ARGS += --enable-sm-scripting
 CONFIGURE_ARGS += --disable-sm-scripting
 
-EXTRA_LDFLAGS = -z ignore -Bdirect
+EXTRA_LD_OPTIONS = -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.elinks)"
 
 TEST_SCRIPTS =
 
