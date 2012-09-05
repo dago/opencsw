@@ -27,7 +27,7 @@ REN_LIBTCL  = libtcl8.5.so
 REN_TCLSH   = tclsh8.5
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
-PATCHFILES  = soname.diff
+PATCHFILES  = 0001-Enable-SONAME-in-library.patch
 PATCHFILES += tcl.m4.patch
 # PATCHFILES += tcl-dtrace.patch
 
@@ -95,7 +95,7 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 pre-configure-modulated:
 	@echo " ==> Regenerating build tools..."
-	#(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
+	(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
 	@$(MAKECOOKIE)
 
 pre-test-modulated:
