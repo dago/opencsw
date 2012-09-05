@@ -27,8 +27,9 @@ REN_LIBTCL  = libtcl8.5.so
 REN_TCLSH   = tclsh8.5
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
-PATCHFILES  = 0001-Enable-SONAME-in-library.patch
-PATCHFILES += tcl.m4.patch
+PATCHFILES += 0001-Enable-SONAME-in-library.patch
+PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on-Solaris-9-.patch
+
 # PATCHFILES += tcl-dtrace.patch
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
@@ -110,7 +111,7 @@ post-install-modulated:
 	@# Need to manually create symlink to latest version - it will be handled by alternatives
 	@echo Creating tclsh link
 	ln -s $(REN_TCLSH) $(DESTDIR)$(bindir)/tclsh
-	cd $(DESTDIR)$(libdir) && mv $(REN_LIBTCL) $(REN_LIBTCL).0 && ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL)
+	#cd $(DESTDIR)$(libdir) && mv $(REN_LIBTCL) $(REN_LIBTCL).0 && ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL)
 	perl -pi -e "s|/usr/local|$(prefix)|g" $(DESTDIR)$(libdir)/tclConfig.sh
 	perl -pi -e "s|/usr/local|$(prefix)|g" $(DESTDIR)$(mandir)/man1/tclsh.1
 	@$(MAKECOOKIE)
