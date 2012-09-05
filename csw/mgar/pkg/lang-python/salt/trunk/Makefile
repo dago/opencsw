@@ -10,8 +10,8 @@ endef
 
 MASTER_SITES = https://github.com/downloads/saltstack/salt/
 DISTFILES += $(DISTNAME).tar.gz
-DISTFILES += cswsalt-minion
-DISTFILES += cswsalt-master
+DISTFILES += salt-minion
+DISTFILES += salt-master
 
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-yaml
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-m2crypto
@@ -19,8 +19,6 @@ RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-crypto
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-pyzmq
 RUNTIME_DEP_PKGS_CSWpy-salt += CSWpy-msgpack-python
-
-#CHECKPKG_OVERRIDES_CSWpy-salt += pkginfo-opencsw-repository-uncommitted
 
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-m2crypto
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-yaml
@@ -37,8 +35,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
 
-INITSMF += $(sysconfdir)/init.d/cswsalt-minion
-INITSMF += $(sysconfdir)/init.d/cswsalt-master
+INITSMF += $(sysconfdir)/init.d/salt-minion
+INITSMF += $(sysconfdir)/init.d/salt-master
 PRESERVECONF += $(sysconfdir)/salt/minion
 PRESERVECONF += $(sysconfdir)/salt/master
 
@@ -59,7 +57,7 @@ post-install-modulated:
 	mv $(CONFDEST)/master.template $(CONFDEST)/master
 	# Copy init script in place
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 755 $(DOWNLOADDIR)/cswsalt-minion $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 755 $(DOWNLOADDIR)/cswsalt-master $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(DOWNLOADDIR)/salt-minion $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(DOWNLOADDIR)/salt-master $(DESTDIR)$(sysconfdir)/init.d
 
 	@$(MAKECOOKIE)
