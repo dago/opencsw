@@ -69,7 +69,7 @@ then
   bindir=@bindir@
   if test -z "$datadir"
   then
-    datadir=@localstatedir@/mysql5
+    datadir=@localstatedir@
   fi
   sbindir=@prefix@/libexec
   libexecdir=@prefix@/libexec
