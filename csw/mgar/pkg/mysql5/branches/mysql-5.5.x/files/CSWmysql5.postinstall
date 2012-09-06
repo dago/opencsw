@@ -87,19 +87,6 @@ echo "See /opt/csw/mysql5/share/mysql/doc/README.CSW for packaging changes."
 echo "Please ignore references to starting mysqld_safe in the messages above."
 echo "  These messages are from mysql_install_db.  See the following"
 echo "  for starting CSWmysql5."
-smf=no
-if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
-if [ $smf = yes ]
-then
-	echo "Running \`svcadm enable cswmysql5\` start to start the database."
-  # First, we clear the status, since it's likely to be 'maintenance'.
-  svcadm disable cswmysql5
-  svcadm clear cswmysql5
-  svcadm enable cswmysql5
-else
-  echo "Running \`/etc/opt/csw/init.d/cswmysql\` start to start the database."
-  /etc/opt/csw/init.d/cswmysql start
-fi
 
 exit 0
 

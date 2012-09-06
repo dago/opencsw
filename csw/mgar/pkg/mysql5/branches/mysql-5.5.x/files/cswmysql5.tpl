@@ -11,27 +11,19 @@
 # When this is done the mysql server will be started when the machine is
 # started and shut down when the systems goes down.
 
-# Comments to support chkconfig on RedHat Linux
-# chkconfig: 2345 64 36
-# description: A very fast and reliable SQL database engine.
+# Comments for OpenCSW's CAS scripts
+#RC_KNUM 01
+#RC_SNUM 99
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+#FMRI network
+#AUTOENABLE no
 
-# Comments to support LSB init script conventions
-### BEGIN INIT INFO
-# Provides: mysql
-# Required-Start: $local_fs $network $remote_fs
-# Should-Start: ypbind nscd ldap ntpd xntpd
-# Required-Stop: $local_fs $network $remote_fs
-# Default-Start:  2 3 4 5
-# Default-Stop: 0 1 6
-# Short-Description: start and stop MySQL
-# Description: MySQL is a very fast and reliable SQL database engine.
-### END INIT INFO
-
-# If you install MySQL on some other places than /opt/mysql-5.5.19, then you
+# If you install MySQL on some other places than @prefix@, then you
 # have to do one of the following things for this script to work:
 #
 # - Run this script from within the MySQL installation directory
-# - Create a /etc/my.cnf file with the following information:
+# - Create a @sysconfdir@/my.cnf file with the following information:
 #   [mysqld]
 #   basedir=<path-to-mysql-installation-directory>
 # - Add the above to any other configuration file (for example ~/.my.ini)
@@ -40,7 +32,7 @@
 #   below.
 #
 # If you want to affect other MySQL variables, you should make your changes
-# in the /etc/my.cnf, ~/.my.cnf or other MySQL configuration files.
+# in the @sysconfdir@/my.cnf, ~/.my.cnf or other MySQL configuration files.
 
 # If you change base dir, you must also change datadir. These may get
 # overwritten by settings in the MySQL configuration files.
@@ -200,6 +192,48 @@ wait_for_pid () {
   fi
 }
 
+### START OPENCSW ARCHITECTURE SELECTION
+# Source the configuration
+# This is used to define the binary architeture to run
+
+# Check the old location first
+[ -r @prefix@/etc/csw.conf ] && . @prefix@/etc/csw.conf
+
+# Check the current location, its content overrides the previous one
+[ -r @sysconfdir@/csw.conf ] && . @sysconfdir@/csw.conf
+
+# If the package-specific variable is not set, try the default
+if [ -z "$mysql5_arch" ]; then
+  if [ -n "$default_arch" ]; then
+    mysql5_arch="$default_arch"
+  fi
+else
+  # In that specific case, by default, there is no subdir
+  if [ "$mysql5_arch" = "i386" -o "$mysql5_arch" = "sparc" ]; then
+    mysql5_arch=""
+  fi
+fi
+
+# If a value was found
+if [ -n "$mysql5_arch" ]; then
+  if [ "$mysql5_arch" = "kernel" ]; then
+    # Use the system's default arch
+    mysql5_arch=`isainfo -k`
+  fi
+
+  # Add the architecture suffix to the executables' directories, if it exists
+  # The binaries themselves are tested below, so the script should fail
+  # mostly gracefully if a non-present arch is set up.
+  if [ -d "$bindir/$mysql5_arch" -a \
+  +       -d "$sbindir/$mysql5_arch" -a \
+  +       -d "$libexecdir/$mysql5_arch" ]; then
+    bindir="$bindir/$mysql5_arch"
+    sbindir="$sbindir/$mysql5_arch"
+    libexecdir="$libexecdir/$mysql5_arch"
+  fi
+fi
+### END OPENCSW ARCHITECTURE SELECTION
+
 # Get arguments from the my.cnf file,
 # the only group, which is read from now on is [mysqld]
 if test -x ./bin/my_print_defaults
@@ -275,7 +309,9 @@ case "$mode" in
     # Start daemon
 
     # Safeguard (relative paths, core dumps..)
-    cd $basedir
+    # Changed to /opt for OpenCSW to avoid mysqld_safe picking the 32 bit
+    # binary in libexec/
+    cd /opt
 
     echo $echo_n "Starting MySQL"
     if test -x $bindir/mysqld_safe
