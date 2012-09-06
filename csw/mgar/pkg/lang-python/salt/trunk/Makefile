@@ -27,6 +27,7 @@ CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-pyzmq
 CHECKPKG_OVERRIDES_CSWpy-salt += surplus-dependency|CSWpy-msgpack-python
 
+# This is to over-ride /usr/local path statements in example files and documentation.
 CHECKPKG_OVERRIDES_CSWpy-salt += file-with-bad-content
 
 ARCHALL_CSWpy-salt = 1
