@@ -27,7 +27,7 @@ REN_LIBTCL  = libtcl8.5.so
 REN_TCLSH   = tclsh8.5
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
-PATCHFILES += 0001-Enable-SONAME-in-library.patch
+#PATCHFILES += 0001-Enable-SONAME-in-library.patch
 PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on-Solaris-9-.patch
 
 # PATCHFILES += tcl-dtrace.patch
@@ -39,7 +39,7 @@ PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on-Solaris-9-.patch
 
 PACKAGES  = CSWtcl
 SPKG_DESC_CSWtcl = Tcl programming language 8.5
-RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-5-0
+RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWtcl-i386 = CSWsunmath
 RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
 
@@ -47,23 +47,34 @@ RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
 
-PACKAGES += CSWlibtcl8-5-0
-SPKG_DESC_CSWlibtcl8-5-0 = $(DESCRIPTION), libraries
-PKGFILES_CSWlibtcl8-5-0 += $(call pkgfiles_lib,libtcl8.5.so.0)
-PKGFILES_CSWlibtcl8-5-0 += $(libdir)/tcl8/.*
-PKGFILES_CSWlibtcl8-5-0 += $(libdir)/tcl8.5/.*
-RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-i386 += CSWsunmath
-RUNTIME_DEP_PKGS_CSWlibtcl8-5-0 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
+PACKAGES += CSWlibtcl8-5
+SPKG_DESC_CSWlibtcl8-5 = $(DESCRIPTION), libraries
+PKGFILES_CSWlibtcl8-5 += $(call pkgfiles_lib,libtcl8.5.so)
+PKGFILES_CSWlibtcl8-5 += $(libdir)/tcl8.5/.*
+# This dependency can not be tracked by checkpkg
+RUNTIME_DEP_PKGS_CSWlibtcl8-5 += CSWtcl8-tclmodules
+CHECKPKG_OVERRIDES_CSWlibtcl8-5 += surplus-dependency|CSWtcl8-tclmodules
+RUNTIME_DEP_PKGS_CSWlibtcl8-5-i386 += CSWsunmath
+RUNTIME_DEP_PKGS_CSWlibtcl8-5 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-$(GARCH))
+
+# This is correct, the soname with *.so is really the one to use
+CHECKPKG_OVERRIDES_CSWlibtcl8-5 += soname-equals-filename
+
+PACKAGES += CSWtcl8-tclmodules
+SPKG_DESC_CSWtcl8-tclmodules = Modules common to TCL 8.x
+PKGFILES_CSWtcl8-tclmodules += $(libdir)/tcl8/.*
 
 # This is to find zoneinfo
-CHECKPKG_OVERRIDES_CSWlibtcl8-5-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
-CHECKPKG_OVERRIDES_CSWlibtcl8-5-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
+CHECKPKG_OVERRIDES_CSWlibtcl8-5 += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
+CHECKPKG_OVERRIDES_CSWlibtcl8-5 += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
 
 PACKAGES += CSWtcl-dev
 SPKG_DESC_CSWtcl-dev = $(DESCRIPTION), development files
+# Indeed, the *.so is the real library and belongs to CSWlibtcl8-5
+PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWtcl-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWtcl-dev += $(call baseisadirs,$(libdir),tclConfig.sh)
-RUNTIME_DEP_PKGS_CSWtcl-dev += CSWlibtcl8-5-0
+RUNTIME_DEP_PKGS_CSWtcl-dev += CSWlibtcl8-5
 
 BUILD64 = 1
 
@@ -102,9 +113,9 @@ pre-configure-modulated:
 pre-test-modulated:
 	@# Need to manually create symlink to latest version
 	@echo Creating symlinks for libtcl8.5.so
-	(cd $(WORKSRC) ; \
-		mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
-		ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
+	#(cd $(WORKSRC) ; \
+	#	mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
+	#	ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
 	@$(MAKECOOKIE)
 
 post-install-modulated:
