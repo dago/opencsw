@@ -35,7 +35,6 @@ OBSOLETED_BY_CSWlibgslcblas0		=	CSWgslrt
 PKGFILES_CSWlibgslcblas0			+=	$(call baseisadirs,$(libdir),libgslcblas\.so\.0\.0\.0)
 PKGFILES_CSWlibgslcblas0			+=	$(call baseisadirs,$(libdir),libgslcblas\.so\.0(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibgslcblas0	+=	CSWlibgcc-s1
-ARCHALL_CSWgslrt					=	1
 
 PACKAGES						+=	CSWgsl-dev
 CATALOGNAME_CSWgsl-dev			=	gsl_dev
