@@ -1,0 +1,11 @@
+$Id$
+
+The main documentation is installed in the standard TeX trees, i.e.,
+/opt/csw/share/texmf or /opt/csw/share/texmf-dist.
+
+CSW Team
+
+# Local Variables:
+# mode: text
+# mode: font-lock
+# End:
