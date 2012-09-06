@@ -308,11 +308,11 @@ configure-custom:
 
 post-configure-modulated:
 	gsed \
-		-e 's+@prefix@+$(prefix)+' \
-		-e 's+@localstatedir@+$(localstatedir)+' \
-		-e 's+@sysconfdir@+$(sysconfdir)+' \
-		-e 's+@bindir@+$(bindir)+' \
-		-e 's+@BASE_VERSION@+$(BASE_VERSION)+' \
+		-e 's+@prefix@+$(prefix)+g' \
+		-e 's+@localstatedir@+$(localstatedir)+g' \
+		-e 's+@sysconfdir@+$(sysconfdir)+g' \
+		-e 's+@bindir@+$(bindir)+g' \
+		-e 's+@BASE_VERSION@+$(BASE_VERSION)+g' \
 		< $(WORKDIR)/csw$(NAME).tpl \
 		> $(WORKDIR)/csw$(NAME)
 	@$(MAKECOOKIE)
