@@ -21,7 +21,7 @@ MASTER_SITES = http://cmake.org/files/v$(RELVER)/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 LICENSE = Copyright.txt
 # temporary for cmake-2.8.8, see http://public.kitware.com/Bug/view.php?id=13199
-PATCHFILES += 0001-bootstrap-Port-back-to-old-shells-13199.patch
+#PATCHFILES += 0001-bootstrap-Port-back-to-old-shells-13199.patch
 
 PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
