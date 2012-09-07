@@ -1,1 +1,1 @@
-puppet:puppet:Puppet configuration management:/var/opt/csw/puppet:/bin/false::
+puppet:puppet:Puppet configuration management:/var/lib/puppet:/bin/false:::NP
