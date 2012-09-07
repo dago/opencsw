@@ -30,6 +30,7 @@ PATCHFILES += setup-py.patch
 
 VENDOR_URL = http://www.net-snmp.org/
 
+GARCOMPILER = SOS12U3
 BUILD_DEP_PKGS = CSWpysetuptools
 PACKAGING_PLATFORMS += Solaris10-sparc Solaris10-i386
 
@@ -120,6 +121,7 @@ CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/share|root/opt/csw/bin/net-snmp-cert
 
 # BUILD64 = 1
+BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
 # The -I/opt/csw/include pulls in installed version before built version and breaks testsuite
@@ -134,8 +136,11 @@ CONFIGURE_ARGS_mm-32  += --with-perl-modules=yes
 CONFIGURE_ARGS_mm-32  += --with-python-modules=yes
 # Enable Perl for 64 bit later
 #
-# CONFIGURE_ARGS_mm-64  = --disable-embedded-perl --without-perl-modules
-CONFIGURE_ARGS_mm-64  = --enable-embedded-perl --with-perl-modules
+# we have no perl64 nr python64
+CONFIGURE_ARGS_mm-64  = --disable-embedded-perl 
+# CONFIGURE_ARGS_mm-64  = --enable-embedded-perl 
+# CONFIGURE_ARGS_mm-64  += --with-perl-modules
+CONFIGURE_ARGS_mm-64 += --without-perl-modules
 CONFIGURE_ARGS_mm-64 += --without-python-modules
 
 CONFIGURE_ARGS = $(DIRPATHS)
