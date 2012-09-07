@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.7.18
+VERSION = 2.7.19
 CATEGORIES = apps
 GARTYPE = v2
 
