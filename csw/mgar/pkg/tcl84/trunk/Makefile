@@ -22,35 +22,56 @@ REN_LIBTCL  = libtcl8.4.so
 REN_TCLSH   = tclsh8.4
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
-PATCHFILES  = soname.diff
+# PATCHFILES  = soname.diff
 PATCHFILES += tcl-dtrace.patch
-
-PACKAGES  = CSWtcl
-PACKAGES += CSWtcl8-4
-PACKAGES += CSWlibtcl8-4-0
-PACKAGES += CSWtcl8-4-dev
 
 ALTERNATIVES_PRIO = 840
 
-RUNTIME_DEP_PKGS_CSWtcl         = CSWtcl8-4
-RUNTIME_DEP_PKGS_CSWtcl        += CSWlibtcl8-4-0
-RUNTIME_DEP_PKGS_CSWtcl        += CSWtcl8-4-dev
-RUNTIME_DEP_PKGS_CSWtcl8-4      = CSWlibtcl8-4-0
-RUNTIME_DEP_PKGS_CSWtcl8-4-dev  = CSWlibtcl8-4-0
-
+PACKAGES  = CSWtcl
 SPKG_DESC_CSWtcl          = $(DESCRIPTION), backwards compatibility package
-SPKG_DESC_CSWtcl8-4       = $(DESCRIPTION)
-SPKG_DESC_CSWlibtcl8-4-0  = $(DESCRIPTION), libraries
-SPKG_DESC_CSWtcl8-4-dev   = $(DESCRIPTION), development files
-
 # Make sure CSWtcl remains empty, it's just for backwards compatibility:
 PKGFILES_CSWtcl           = NOFILES
-PKGFILES_CSWlibtcl8-4-0   = $(call pkgfiles_lib,libtcl8.4.so.0)
-PKGFILES_CSWtcl8-4-dev    = $(PKGFILES_DEVEL)
+ARCHALL_CSWtcl = 1
+RUNTIME_DEP_PKGS_CSWtcl         = CSWtcl8-4
+RUNTIME_DEP_PKGS_CSWtcl        += CSWlibtcl8-4
+RUNTIME_DEP_PKGS_CSWtcl        += CSWtcl8-4-dev
+
+# This can not be tracked from checkpkg
+CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWlibtcl8-4
+CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWtcl8-4-dev
+
+# This is ok as libtcl is already properly versioned
+CHECKPKG_OVERRIDES_CSWlibtcl8-4 += soname-equals-filename
+
+PACKAGES += CSWtcl8-4
+SPKG_DESC_CSWtcl8-4 = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWtcl8-4 += CSWlibtcl8-4
 # catchall, so nothing here.
 # PKGFILES_CSWtcl8-4
 
-ARCHALL_CSWtcl = 1
+PACKAGES += CSWtcl8-4-dev
+SPKG_DESC_CSWtcl8-4-dev = $(DESCRIPTION), development files
+RUNTIME_DEP_PKGS_CSWtcl8-4-dev  = CSWlibtcl8-4
+
+# This can not be tracked by checkpkg
+CHECKPKG_OVERRIDES_CSWtcl8-4-dev += surplus-dependency|CSWlibtcl8-4
+
+PACKAGES += CSWlibtcl8-4
+SPKG_DESC_CSWlibtcl8-4 = $(DESCRIPTION), libraries
+PKGFILES_CSWlibtcl8-4 += $(call pkgfiles_lib,libtcl8.4.so)
+PKGFILES_CSWlibtcl8-4 += $(libdir)/tcl8.4/.*
+
+# Indeed, the *.so is the real library and belongs to CSWlibtcl8-5
+PKGFILES_DEVEL_SHAREDLIBLINK =
+PKGFILES_CSWtcl8-4-dev = $(PKGFILES_DEVEL)
+
+# This has not been released yet and is built from TCL 8.5
+FOREIGN_PACKAGES += CSWtcl8-tclmodules
+
+# This dependency can not be tracked by checkpkg
+RUNTIME_DEP_PKGS_CSWlibtcl8-4 += CSWtcl8-tclmodules
+CHECKPKG_OVERRIDES_CSWlibtcl8-4 += surplus-dependency|CSWtcl8-tclmodules
+CHECKPKG_OVERRIDES_CSWlibtcl8-4 += unidentified-dependency|CSWtcl8-tclmodules
 
 ALTERNATIVES_CSWtcl8-4 += tcl8_4
 ALTERNATIVE_tcl8_4     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
@@ -88,10 +109,10 @@ pre-configure-modulated:
 
 pre-test-modulated:
 	@# Need to manually create symlink to latest version
-	@echo Creating symlinks for libtcl8.5.so
-	@(cd $(WORKSRC) ; \
-		mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
-		ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
+	#@echo Creating symlinks for libtcl8.5.so
+	#@(cd $(WORKSRC) ; \
+	#	mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
+	#	ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
 	@$(MAKECOOKIE)
 
 post-install-modulated:
