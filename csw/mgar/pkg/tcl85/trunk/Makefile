@@ -43,6 +43,12 @@ RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWtcl-i386 = CSWsunmath
 RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
 
+# There are legacy packages depending on CSWtcl which require libtcl 8.4
+FOREIGN_PACKAGES += CSWlibtcl8-4
+RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-4
+CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWlibtcl8-4
+CHECKPKG_OVERRIDES_CSWtcl += unidentified-dependency|CSWlibtcl8-4
+
 # This is to find zoneinfo
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
