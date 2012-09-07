@@ -65,14 +65,6 @@ PKGFILES_CSWlibtcl8-4 += $(libdir)/tcl8.4/.*
 PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWtcl8-4-dev = $(PKGFILES_DEVEL)
 
-# This has not been released yet and is built from TCL 8.5
-FOREIGN_PACKAGES += CSWtcl8-tclmodules
-
-# This dependency can not be tracked by checkpkg
-RUNTIME_DEP_PKGS_CSWlibtcl8-4 += CSWtcl8-tclmodules
-CHECKPKG_OVERRIDES_CSWlibtcl8-4 += surplus-dependency|CSWtcl8-tclmodules
-CHECKPKG_OVERRIDES_CSWlibtcl8-4 += unidentified-dependency|CSWtcl8-tclmodules
-
 ALTERNATIVES_CSWtcl8-4 += tcl8_4
 ALTERNATIVE_tcl8_4     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
 ALTERNATIVE_tcl8_4     += $(libdir)/tclConfig.sh $(ALTERNATIVES_PRIO)
