@@ -21,6 +21,9 @@ PATCHDIR = $(WORKDIR)/$(DISTNAME)
 #DEP_PKGS_CSWtk += CSWlibxscrnsaver
 #DEP_PKGS_CSWtk += CSWsunmath
 
+# libsunmath support on Solaris 9 i386 is broken
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
 
@@ -30,6 +33,9 @@ SPKG_DESC_CSWtk = GUI toolkit for tcl
 RUNTIME_DEP_PKGS_CSWtk += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWtk += CSWlibtk8-5
 
+RUNTIME_DEP_PKGS_CSWtk-i386 += CSWsunmath
+RUNTIME_DEP_PKGS_CSWtk += $(RUNTIME_DEP_PKGS_CSWtk-$(GARCH))
+
 # Leave the manpage for now
 CHECKPKG_OVERRIDES_CSWtk += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/wish.1
 
@@ -37,6 +43,9 @@ PACKAGES += CSWlibtk8-5
 SPKG_DESC_CSWlibtk8-5 = GUI toolkit library for tcl, libtk8.5.so
 PKGFILES_CSWlibtk8-5 += $(call pkgfiles_lib,libtk8.5.so)
 PKGFILES_CSWlibtk8-5 += $(call baseisadirs,$(libdir),tk8.5/.*)
+
+RUNTIME_DEP_PKGS_CSWlibtk8-5-i386 += CSWsunmath
+RUNTIME_DEP_PKGS_CSWlibtk8-5 += $(RUNTIME_DEP_PKGS_CSWlibtk8-5-$(GARCH))
 
 # This is correct, the soname with *.so is really the one to use
 CHECKPKG_OVERRIDES_CSWlibtk8-5 += soname-equals-filename
@@ -78,33 +87,23 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
-	@# Install legacy libs
-	@# Building them with version modulations would be hard as that would require a full legacy tcl also
-	#@echo Installing legacy files
-	#@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.i386.tar.xz | tar xf -)
-	@# Need to manually create symlink to latest version
 	@echo Creating link to wish8.5
-	@ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
+	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
 	@$(MAKECOOKIE)
 
 post-install-isa-amd64:
 	@# Need to manually create symlink to latest version
 	@echo Creating link to wish8.5
-	@ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
+	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
 	@$(MAKECOOKIE)
 
 post-install-isa-sparcv8:
-	@# Install legacy libs
-	@# Building them with version modulations would be hard as that would require a full legacy tcl also
-	#@echo Installing legacy files
-	#@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.sparc.tar.xz | tar xf -)
-	@# Need to manually create symlink to latest version
 	@echo Creating link to wish8.5
-	@ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
+	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
 	@$(MAKECOOKIE)
 
 post-install-isa-sparcv9:
 	@# Need to manually create symlink to latest version
 	@echo Creating link to wish8.5
-	@ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
+	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
 	@$(MAKECOOKIE)
