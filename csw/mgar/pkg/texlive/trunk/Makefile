@@ -35,7 +35,9 @@ PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
 
 BUILD_DEP_PKGS	+=	CSWpoppler-dev
-BUILD_DEP_PKGS	+=	CSWpoppler-dev
+BUILD_DEP_PKGS	+=	CSWlibpng-dev
+BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
+BUILD_DEP_PKGS	+=	CSWlibgd-dev
 BUILD_DEP_PKGS	+=	CSWclisp
 # when this is installed, raises undefined symbols when linking
 # tools/genrb; this is the reason form 0002-Fix-ICU-link-edit.patch
