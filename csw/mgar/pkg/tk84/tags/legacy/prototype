@@ -1,0 +1,556 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/tk-man 0755 root bin
+d none /opt/csw/share/tk-man/man1 0755 root bin
+f none /opt/csw/share/tk-man/man1/wish.1 0644 root bin
+d none /opt/csw/share/tk-man/man3 0755 root bin
+f none /opt/csw/share/tk-man/man3/Tk_Alloc3DBorderFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_Get3DBorder.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Get3DBorderFromObj.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Draw3DRectangle.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Fill3DRectangle.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Draw3DPolygon.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Fill3DPolygon.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_3DVerticalBevel.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_3DHorizontalBevel.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_SetBackgroundFromBorder.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOf3DBorder.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_3DBorderColor.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_3DBorderGC.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Free3DBorderFromObj.3=Tk_Alloc3DBorderFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_Free3DBorder.3=Tk_Alloc3DBorderFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_AddOption.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_CreateBindingTable.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteBindingTable.3=Tk_CreateBindingTable.3
+l none /opt/csw/share/tk-man/man3/Tk_CreateBinding.3=Tk_CreateBindingTable.3
+l none /opt/csw/share/tk-man/man3/Tk_DeleteBinding.3=Tk_CreateBindingTable.3
+l none /opt/csw/share/tk-man/man3/Tk_GetBinding.3=Tk_CreateBindingTable.3
+l none /opt/csw/share/tk-man/man3/Tk_GetAllBindings.3=Tk_CreateBindingTable.3
+l none /opt/csw/share/tk-man/man3/Tk_DeleteAllBindings.3=Tk_CreateBindingTable.3
+l none /opt/csw/share/tk-man/man3/Tk_BindEvent.3=Tk_CreateBindingTable.3
+f none /opt/csw/share/tk-man/man3/Tk_CanvasPsY.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_CanvasPsBitmap.3=Tk_CanvasPsY.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasPsColor.3=Tk_CanvasPsY.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasPsFont.3=Tk_CanvasPsY.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasPsPath.3=Tk_CanvasPsY.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasPsStipple.3=Tk_CanvasPsY.3
+f none /opt/csw/share/tk-man/man3/Tk_CanvasTkwin.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_CanvasGetCoord.3=Tk_CanvasTkwin.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasDrawableCoords.3=Tk_CanvasTkwin.3
+f none /opt/csw/share/tk-man/man3/Tk_MoveWindow.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_CanvasSetStippleOrigin.3=Tk_CanvasTkwin.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasWindowCoords.3=Tk_CanvasTkwin.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasEventuallyRedraw.3=Tk_CanvasTkwin.3
+l none /opt/csw/share/tk-man/man3/Tk_CanvasTagsOption.3=Tk_CanvasTkwin.3
+f none /opt/csw/share/tk-man/man3/Tk_CanvasTextInfo.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_ClipboardClear.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_ClipboardAppend.3=Tk_ClipboardClear.3
+f none /opt/csw/share/tk-man/man3/Tk_ClearSelection.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_ConfigureWidget.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_ConfigureInfo.3=Tk_ConfigureWidget.3
+l none /opt/csw/share/tk-man/man3/Tk_ConfigureValue.3=Tk_ConfigureWidget.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeOptions.3=Tk_ConfigureWidget.3
+l none /opt/csw/share/tk-man/man3/Tk_ConfigureWindow.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_ResizeWindow.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_MoveResizeWindow.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_SetWindowBorderWidth.3=Tk_MoveWindow.3
+f none /opt/csw/share/tk-man/man3/Tk_X.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_ChangeWindowAttributes.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_SetWindowBackground.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_SetWindowBackgroundPixmap.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_SetWindowBorder.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_SetWindowBorderPixmap.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_SetWindowColormap.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_DefineCursor.3=Tk_MoveWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_UndefineCursor.3=Tk_MoveWindow.3
+f none /opt/csw/share/tk-man/man3/Tk_CoordsToWindow.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_CreateClientMessageHandler.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteClientMessageHandler.3=Tk_CreateClientMessageHandler.3
+f none /opt/csw/share/tk-man/man3/Tk_InitConsoleChannels.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_CreateErrorHandler.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteErrorHandler.3=Tk_CreateErrorHandler.3
+f none /opt/csw/share/tk-man/man3/Tk_CreateGenericHandler.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteGenericHandler.3=Tk_CreateGenericHandler.3
+f none /opt/csw/share/tk-man/man3/Tk_CreateImageType.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetImageMasterData.3=Tk_CreateImageType.3
+l none /opt/csw/share/tk-man/man3/Tk_InitImageArgs.3=Tk_CreateImageType.3
+f none /opt/csw/share/tk-man/man3/Tk_CreateItemType.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetItemTypes.3=Tk_CreateItemType.3
+f none /opt/csw/share/tk-man/man3/Tk_CreatePhotoImageFormat.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_CreateSelHandler.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteSelHandler.3=Tk_CreateSelHandler.3
+f none /opt/csw/share/tk-man/man3/Tk_CreateWindow.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_CreateWindowFromPath.3=Tk_CreateWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_DestroyWindow.3=Tk_CreateWindow.3
+l none /opt/csw/share/tk-man/man3/Tk_MakeWindowExist.3=Tk_CreateWindow.3
+f none /opt/csw/share/tk-man/man3/Tk_DeleteImage.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_DrawFocusHighlight.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_CreateEventHandler.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteEventHandler.3=Tk_CreateEventHandler.3
+f none /opt/csw/share/tk-man/man3/Tk_FindPhoto.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_PhotoPutBlock.3=Tk_FindPhoto.3
+l none /opt/csw/share/tk-man/man3/Tk_PhotoPutZoomedBlock.3=Tk_FindPhoto.3
+l none /opt/csw/share/tk-man/man3/Tk_PhotoGetImage.3=Tk_FindPhoto.3
+l none /opt/csw/share/tk-man/man3/Tk_PhotoBlank.3=Tk_FindPhoto.3
+l none /opt/csw/share/tk-man/man3/Tk_PhotoExpand.3=Tk_FindPhoto.3
+l none /opt/csw/share/tk-man/man3/Tk_PhotoGetSize.3=Tk_FindPhoto.3
+l none /opt/csw/share/tk-man/man3/Tk_PhotoSetSize.3=Tk_FindPhoto.3
+f none /opt/csw/share/tk-man/man3/Tk_FontId.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetFontMetrics.3=Tk_FontId.3
+l none /opt/csw/share/tk-man/man3/Tk_PostscriptFontName.3=Tk_FontId.3
+f none /opt/csw/share/tk-man/man3/Tk_FreeXId.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GeometryRequest.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_SetMinimumRequestSize.3=Tk_GeometryRequest.3
+l none /opt/csw/share/tk-man/man3/Tk_SetInternalBorder.3=Tk_GeometryRequest.3
+l none /opt/csw/share/tk-man/man3/Tk_SetInternalBorderEx.3=Tk_GeometryRequest.3
+l none /opt/csw/share/tk-man/man3/Tk_Y.3=Tk_X.3
+f none /opt/csw/share/tk-man/man3/Tk_GetAnchorFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetAnchor.3=Tk_GetAnchorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfAnchor.3=Tk_GetAnchorFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_AllocBitmapFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetBitmap.3=Tk_AllocBitmapFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetBitmapFromObj.3=Tk_AllocBitmapFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_DefineBitmap.3=Tk_AllocBitmapFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfBitmap.3=Tk_AllocBitmapFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_SizeOfBitmap.3=Tk_AllocBitmapFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeBitmapFromObj.3=Tk_AllocBitmapFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeBitmap.3=Tk_AllocBitmapFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_GetCapStyle.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_NameOfCapStyle.3=Tk_GetCapStyle.3
+f none /opt/csw/share/tk-man/man3/Tk_GetColormap.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_FreeColormap.3=Tk_GetColormap.3
+f none /opt/csw/share/tk-man/man3/Tk_AllocColorFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetColor.3=Tk_AllocColorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetColorFromObj.3=Tk_AllocColorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetColorByValue.3=Tk_AllocColorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfColor.3=Tk_AllocColorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeColorFromObj.3=Tk_AllocColorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeColor.3=Tk_AllocColorFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_AllocCursorFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetCursor.3=Tk_AllocCursorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetCursorFromObj.3=Tk_AllocCursorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetCursorFromData.3=Tk_AllocCursorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfCursor.3=Tk_AllocCursorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeCursorFromObj.3=Tk_AllocCursorFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeCursor.3=Tk_AllocCursorFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_GetDash.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_AllocFontFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetFont.3=Tk_AllocFontFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetFontFromObj.3=Tk_AllocFontFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfFont.3=Tk_AllocFontFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeFontFromObj.3=Tk_AllocFontFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeFont.3=Tk_AllocFontFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_GetGC.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_FreeGC.3=Tk_GetGC.3
+f none /opt/csw/share/tk-man/man3/Tk_GetHINSTANCE.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GetHWND.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_AttachHWND.3=Tk_GetHWND.3
+f none /opt/csw/share/tk-man/man3/Tk_GetImage.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_RedrawImage.3=Tk_GetImage.3
+l none /opt/csw/share/tk-man/man3/Tk_SizeOfImage.3=Tk_GetImage.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeImage.3=Tk_GetImage.3
+f none /opt/csw/share/tk-man/man3/Tk_GetJoinStyle.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_NameOfJoinStyle.3=Tk_GetJoinStyle.3
+f none /opt/csw/share/tk-man/man3/Tk_GetJustifyFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetJustify.3=Tk_GetJustifyFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfJustify.3=Tk_GetJustifyFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_GetOption.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GetPixelsFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetPixels.3=Tk_GetPixelsFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetMMFromObj.3=Tk_GetPixelsFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_GetScreenMM.3=Tk_GetPixelsFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_GetPixmap.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_FreePixmap.3=Tk_GetPixmap.3
+f none /opt/csw/share/tk-man/man3/Tk_GetReliefFromObj.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetRelief.3=Tk_GetReliefFromObj.3
+l none /opt/csw/share/tk-man/man3/Tk_NameOfRelief.3=Tk_GetReliefFromObj.3
+f none /opt/csw/share/tk-man/man3/Tk_GetRootCoords.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GetScrollInfo.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetScrollInfoObj.3=Tk_GetScrollInfo.3
+f none /opt/csw/share/tk-man/man3/Tk_GetSelection.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GetUid.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_Uid.3=Tk_GetUid.3
+f none /opt/csw/share/tk-man/man3/Tk_GetVRootGeometry.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GetVisual.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_Grab.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_Ungrab.3=Tk_Grab.3
+f none /opt/csw/share/tk-man/man3/Tk_HWNDToWindow.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_HandleEvent.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_IdToWindow.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_ImageChanged.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_Name.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_GetUserInactiveTime.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_ResetUserInactiveTime.3=Tk_GetUserInactiveTime.3
+f none /opt/csw/share/tk-man/man3/Tk_InternAtom.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetAtomName.3=Tk_InternAtom.3
+f none /opt/csw/share/tk-man/man3/Tk_MainLoop.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_MainWindow.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_GetNumMainWindows.3=Tk_MainWindow.3
+f none /opt/csw/share/tk-man/man3/Tk_MaintainGeometry.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_UnmaintainGeometry.3=Tk_MaintainGeometry.3
+f none /opt/csw/share/tk-man/man3/Tk_ManageGeometry.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_MapWindow.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_UnmapWindow.3=Tk_MapWindow.3
+f none /opt/csw/share/tk-man/man3/Tk_MeasureChars.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_TextWidth.3=Tk_MeasureChars.3
+l none /opt/csw/share/tk-man/man3/Tk_DrawChars.3=Tk_MeasureChars.3
+l none /opt/csw/share/tk-man/man3/Tk_UnderlineChars.3=Tk_MeasureChars.3
+f none /opt/csw/share/tk-man/man3/Tk_MoveToplevelWindow.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_PathName.3=Tk_Name.3
+l none /opt/csw/share/tk-man/man3/Tk_NameToWindow.3=Tk_Name.3
+f none /opt/csw/share/tk-man/man3/Tk_NameOfImage.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_OwnSelection.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_ParseArgv.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_CollapseMotionEvents.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_QueueWindowEvent.3=Tk_CollapseMotionEvents.3
+f none /opt/csw/share/tk-man/man3/Tk_RestackWindow.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_RestrictEvents.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_SetAppName.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_SetCaretPos.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_SetClass.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_Class.3=Tk_SetClass.3
+f none /opt/csw/share/tk-man/man3/Tk_SetClassProcs.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_SetGrid.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_UnsetGrid.3=Tk_SetGrid.3
+f none /opt/csw/share/tk-man/man3/Tk_CreateOptionTable.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_DeleteOptionTable.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_InitOptions.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_SetOptions.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeSavedOptions.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_RestoreSavedOptions.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_GetOptionValue.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_GetOptionInfo.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_FreeConfigOptions.3=Tk_CreateOptionTable.3
+l none /opt/csw/share/tk-man/man3/Tk_Offset.3=Tk_CreateOptionTable.3
+f none /opt/csw/share/tk-man/man3/Tk_SetWindowVisual.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_StrictMotif.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_ComputeTextLayout.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_FreeTextLayout.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_DrawTextLayout.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_UnderlineTextLayout.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_PointToChar.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_CharBbox.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_DistanceToTextLayout.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_IntersectTextLayout.3=Tk_ComputeTextLayout.3
+l none /opt/csw/share/tk-man/man3/Tk_TextLayoutToPostscript.3=Tk_ComputeTextLayout.3
+f none /opt/csw/share/tk-man/man3/Tk_InitStubs.3 0644 root bin
+f none /opt/csw/share/tk-man/man3/Tk_Init.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_SafeInit.3=Tk_Init.3
+f none /opt/csw/share/tk-man/man3/Tk_Main.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Tk_WindowId.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Parent.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Display.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_DisplayName.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_ScreenNumber.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Screen.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Width.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Height.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Changes.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Attributes.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_IsContainer.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_IsEmbedded.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_IsMapped.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_IsTopLevel.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_ReqWidth.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_ReqHeight.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_MinReqWidth.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_MinReqHeight.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_InternalBorderLeft.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_InternalBorderRight.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_InternalBorderTop.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_InternalBorderBottom.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Visual.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Depth.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Colormap.3=Tk_X.3
+l none /opt/csw/share/tk-man/man3/Tk_Interp.3=Tk_X.3
+f none /opt/csw/share/tk-man/man3/Ttk_MakeBox.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Ttk_PadBox.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_ExpandBox.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_PackBox.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_StickBox.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_PlaceBox.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_BoxContains.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_MakePadding.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_UniformPadding.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_AddPadding.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_RelievePadding.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_GetPaddingFromObj.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_GetBorderFromObj.3=Ttk_MakeBox.3
+l none /opt/csw/share/tk-man/man3/Ttk_GetStickyFromObj.3=Ttk_MakeBox.3
+f none /opt/csw/share/tk-man/man3/Ttk_CreateTheme.3 0644 root bin
+l none /opt/csw/share/tk-man/man3/Ttk_GetTheme.3=Ttk_CreateTheme.3
+l none /opt/csw/share/tk-man/man3/Ttk_GetDefaultTheme.3=Ttk_CreateTheme.3
+l none /opt/csw/share/tk-man/man3/Ttk_GetCurrentTheme.3=Ttk_CreateTheme.3
+d none /opt/csw/share/tk-man/mann 0755 root bin
+f none /opt/csw/share/tk-man/mann/bell.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/bind.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/bindtags.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/bitmap.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/button.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/canvas.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/checkbutton.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_chooseColor.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_chooseDirectory.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/clipboard.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/colors.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/console.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/cursors.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/destroy.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_dialog.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/entry.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/event.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/focus.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_focusNext.n 0644 root bin
+l none /opt/csw/share/tk-man/mann/tk_focusPrev.n=tk_focusNext.n
+l none /opt/csw/share/tk-man/mann/tk_focusFollowsMouse.n=tk_focusNext.n
+f none /opt/csw/share/tk-man/mann/font.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/frame.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_getOpenFile.n 0644 root bin
+l none /opt/csw/share/tk-man/mann/tk_getSaveFile.n=tk_getOpenFile.n
+f none /opt/csw/share/tk-man/mann/grab.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/grid.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/image.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/keysyms.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/label.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/labelframe.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/listbox.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/loadTk.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/lower.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/menu.n 0644 root bin
+l none /opt/csw/share/tk-man/mann/tk_menuSetFocus.n=menu.n
+f none /opt/csw/share/tk-man/mann/tk_menuBar.n 0644 root bin
+l none /opt/csw/share/tk-man/mann/tk_bindForTraversal.n=tk_menuBar.n
+f none /opt/csw/share/tk-man/mann/menubutton.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/message.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_messageBox.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/option.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_optionMenu.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/options.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/pack-old.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/pack.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_setPalette.n 0644 root bin
+l none /opt/csw/share/tk-man/mann/tk_bisque.n=tk_setPalette.n
+f none /opt/csw/share/tk-man/mann/panedwindow.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/photo.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/place.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tk_popup.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/radiobutton.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/raise.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/scale.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/scrollbar.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/selection.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/send.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/spinbox.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/text.n 0644 root bin
+l none /opt/csw/share/tk-man/mann/tk_textCopy.n=text.n
+l none /opt/csw/share/tk-man/mann/tk_textCut.n=text.n
+l none /opt/csw/share/tk-man/mann/tk_textPaste.n=text.n
+f none /opt/csw/share/tk-man/mann/tk.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tkerror.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tkvars.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/tkwait.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/toplevel.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_button.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_checkbutton.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_combobox.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_entry.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_frame.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_image.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_intro.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_label.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_labelframe.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_menubutton.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_notebook.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_panedwindow.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_progressbar.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_radiobutton.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_scrollbar.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_separator.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_sizegrip.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_style.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_treeview.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/ttk_widget.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/winfo.n 0644 root bin
+f none /opt/csw/share/tk-man/mann/wm.n 0644 root bin
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/tk8.5 0755 root bin
+f none /opt/csw/lib/tk8.5/pkgIndex.tcl 0644 root bin
+d none /opt/csw/lib/tk8.5/images 0755 root bin
+f none /opt/csw/lib/tk8.5/images/README 0644 root bin
+f none /opt/csw/lib/tk8.5/images/logo.eps 0644 root bin
+f none /opt/csw/lib/tk8.5/images/logo100.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/logo64.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/logoLarge.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/logoMed.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/pwrdLogo.eps 0644 root bin
+f none /opt/csw/lib/tk8.5/images/pwrdLogo100.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/pwrdLogo150.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/pwrdLogo175.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/pwrdLogo200.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/pwrdLogo75.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/images/tai-ku.gif 0644 root bin
+d none /opt/csw/lib/tk8.5/msgs 0755 root bin
+f none /opt/csw/lib/tk8.5/msgs/cs.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/da.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/de.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/el.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/en.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/en_gb.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/eo.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/es.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/fr.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/hu.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/it.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/nl.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/pl.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/pt.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/ru.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/msgs/sv.msg 0644 root bin
+d none /opt/csw/lib/tk8.5/ttk 0755 root bin
+f none /opt/csw/lib/tk8.5/ttk/altTheme.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/aquaTheme.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/button.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/clamTheme.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/classicTheme.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/combobox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/cursors.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/defaults.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/entry.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/fonts.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/menubutton.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/notebook.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/panedwindow.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/progress.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/scale.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/scrollbar.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/sizegrip.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/treeview.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/ttk.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/utils.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/winTheme.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/ttk/xpTheme.tcl 0644 root bin
+d none /opt/csw/lib/tk8.5/demos 0755 root bin
+d none /opt/csw/lib/tk8.5/demos/images 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/images/earth.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/earthris.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/face.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/flagdown.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/flagup.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/gray25.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/letters.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/noletter.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/pattern.xbm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/tcllogo.gif 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/images/teapot.ppm 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/README 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/anilabel.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/aniwave.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/arrow.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/bind.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/bitmap.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/browse 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/button.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/check.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/clrpick.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/colors.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/combo.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/cscroll.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ctext.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/dialog1.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/dialog2.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/en.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/entry1.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/entry2.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/entry3.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/filebox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/floor.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/form.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/hello 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/goldberg.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/hscale.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/icon.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/image1.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/image2.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/items.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ixset 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/label.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/labelframe.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/license.terms 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/mclist.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/menu.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/menubu.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/msgbox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/nl.msg 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/paned1.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/paned2.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/pendulum.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/plot.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/puzzle.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/radio.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/rmt 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/rolodex 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/ruler.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/sayings.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/square 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/search.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/spin.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/states.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/style.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/tclIndex 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/tcolor 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/text.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/textpeer.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/timer 0755 root bin
+f none /opt/csw/lib/tk8.5/demos/toolbar.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/tree.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ttkbut.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ttkmenu.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ttknote.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ttkpane.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/ttkprogress.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/twind.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/unicodeout.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/vscale.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/demos/widget 0755 root bin
+f none /opt/csw/lib/tk8.5/bgerror.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/button.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/choosedir.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/clrpick.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/comdlg.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/console.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/dialog.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/entry.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/focus.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/listbox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/menu.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/mkpsenc.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/msgbox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/obsolete.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/optMenu.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/palette.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/panedwindow.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/safetk.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/scale.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/scrlbar.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/spinbox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/tearoff.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/text.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/tk.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/tkfbox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/unsupported.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/xmfbox.tcl 0644 root bin
+f none /opt/csw/lib/tk8.5/prolog.ps 0644 root bin
+f none /opt/csw/lib/tk8.5/tclIndex 0644 root bin
+f none /opt/csw/lib/tk8.5/tkAppInit.c 0644 root bin
+f none /opt/csw/lib/libtk8.5.so 0755 root bin
+f none /opt/csw/lib/tkConfig.sh 0644 root bin
+f none /opt/csw/lib/libtkstub8.5.a 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/wish8.5 0755 root bin
+s none /opt/csw/bin/wish=wish8.5
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/tk.h 0644 root bin
+f none /opt/csw/include/tkDecls.h 0644 root bin
+f none /opt/csw/include/tkPlatDecls.h 0644 root bin
