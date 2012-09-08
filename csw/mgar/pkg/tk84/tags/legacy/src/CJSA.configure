@@ -1,0 +1,15 @@
+# Configure command for the TK package
+# Run from the tk*[0-9]/unix subdirectory
+#
+# NOTE: * Had to add the CFLAGS argument for 8.5.x so that the test routines
+#	  could find the current tk.h file in the generic directory rather
+#	  than the previously installed 8.4.x /opt/csw/include/tcl.h which
+#	  was causing all sorts of compile problems due to undefined objects!
+#
+#	* The CFLAGS line is needed to compile and run the tests.  These
+#	  entries need to later be edited out of the file.
+
+
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/tk-man \
+	    --enable-threads \
+	     CFLAGS="-I. -I.. -I ../.. -I../generic"
