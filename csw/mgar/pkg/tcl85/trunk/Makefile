@@ -83,6 +83,7 @@ PKGFILES_CSWtcl-dev += $(call baseisadirs,$(libdir),tclConfig.sh)
 RUNTIME_DEP_PKGS_CSWtcl-dev += CSWlibtcl8-5
 
 BUILD64 = 1
+ISAEXEC = 1
 
 INCLUDE_FLAGS =
 
