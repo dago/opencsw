@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = openldap
-VERSION = 2.4.30
+VERSION = 2.4.32
 GARTYPE = v2
 CATEGORIES = server
 
@@ -52,8 +52,8 @@ PACKAGES += CSWopenldap
 SPKG_DESC_CSWopenldap = OpenLDAP server for Lightweight Directory Access Protocol
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWopenldap += CSWbdb48
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata49
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc49
 RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
