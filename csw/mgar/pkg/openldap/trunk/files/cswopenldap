@@ -1,6 +1,6 @@
 #!/bin/sh
 # Start script for CSW www.blastwave.org package of Openldap.
-# slapd and slurpd can be started by this script.
+# slapd can be started by this script.
 # For either daemon to start, the minimum requirement is that
 #   /opt/csw/etc/openldap/slapd.conf must exist.  It does not
 #   exist after the initial package installation, since you may
@@ -15,10 +15,7 @@
 #  mkdir -p /etc/opt/csw
 #  cp /opt/csw/share/doc/openldap/openldaprc /etc/opt/csw/
 #
-# If no openldaprc file is available, the daemon starts with defaults 
-#  and slurpd is not started.
-#
-# To start slurpd, set SLURPD_START=true in openldaprc
+# If no openldaprc file is available, the daemon starts with defaults.
 #
 # 2005-08-11  Applied patch from Martin Foster to fix the problem
 #             when multiple uri are on the -h option.
@@ -81,7 +78,6 @@ fi
 ### END OPENCSW ARCHITECTURE SELECTION
 
 SLAPD=$libexecdir/slapd
-SLURPD=$libexecdir/slurpd
 
 # Make sure required vars are set.  Actually these are the compiled defaults
 DEF_SLAPD_CONFIG_FILE=@sysconfdir@/openldap/slapd.conf
@@ -117,6 +113,7 @@ start_it() {
        if [ -n "$SLAPD_SYNTAX_CHECK" ] ; then START="$START -t"; fi
        if [ -n "$SLAPD_USER" ] ; then START="$START -u $SLAPD_USER"; fi
        if [ -n "$SLAPD_EXTRA" ] ; then START="$START $SLAPD_EXTRA"; fi
+       if [ -n "$SLAPD_MAXFDS" ] ; then ulimit -n "$SLAPD_MAXFDS"; fi
 
        # Run it
        sh -c "$START"
@@ -128,31 +125,6 @@ start_it() {
 	echo "[FAILED]"
 	return 1
     fi
-
-    [ -z "$SLURPD_START" ] && return 0
-
-    if kill -0 `pgrep -x slurpd` > /dev/null 2>&1 ; then
-        echo "openldap-slurpd (`pgrep -x slurpd`) seems to be running."
-        return 1
-    fi
-
-    printf "%-60s" "Starting openldap-slurpd: " 
-    	$SLURPD \
-	    `[ -n "$SLURPD_DEBUG_LEVEL" ] && echo "-d $SLURPD_DEBUG_LEVEL"` \
-	    `[ -n "$SLURPD_SYSLOG_LEVEL" ] && echo "-s $SLURPD_SYSLOG_LEVEL"` \
-	    `[ -n "$SLURPD_CONFIG_FILE" ] && echo "-f $SLURPD_CONFIG_FILE"` \
-	    `[ -n "$SLURPD_REPL_LOG_FILE" ] && echo "-r $SLURPD_REPL_LOG_FILE"` \
-	    `[ -n "$SLURPD_TMP_DIR" ] && echo "-t $SLURPD_TMP_DIR"` \
-	    `[ -n "$SLURPD_ONE_SHOT" ] && echo "-o"` \
-	    `[ -n "$SLURPD_SERVICE_NAME" ] && echo "-n $SLURPD_SERVICE_NAME"` \
-	    >/dev/null 2>&1
-	RETVAL=$?
-	if [ $RETVAL = 0 ] ; then
-	    echo "[  OK  ]"
-	else
-	    echo "[FAILED]"
-	    return 1
-	fi
 
     return 0
 }
@@ -174,22 +146,7 @@ stop_it() {
 	echo "[FAILED]"
     fi
 
-    [ -z "$SLURPD_START" ] && return 0
-	printf "%-60s" "Shutting down openldap-slurpd: "
-	if test -n "`pgrep -x slurpd`" ; then
-	    kill `pgrep -x slurpd` >/dev/null 2>&1
-	    RETVAL=$?
-	else
-	    RETVAL=1
-	fi
-	if [ $RETVAL = 0 ] ; then
-	    echo "[  OK  ]"
-	else
-	    echo "[FAILED]"
-	fi
-
-    echo ""
-    return 0
+    return $RETVAL
 }
 
 case $1 in
