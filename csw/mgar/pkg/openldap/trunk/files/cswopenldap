@@ -30,17 +30,62 @@
 #             arbitrary flags to slapd.
 
 RETVAL=0
-SLAPD=@libexecdir@/slapd
-SLURPD=@libexecdir@/slurpd
 
 # Source startup options
 [ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
-[ -r /opt/csw/etc/openldaprc ] && . /opt/csw/etc/openldaprc
-[ -r /etc/opt/csw/openldaprc ] && . /etc/opt/csw/openldaprc
+
+bindir="@bindir@"
+sbindir="@sbindir@"
+libexecdir="@libexecdir@"
+
+### START OPENCSW ARCHITECTURE SELECTION
+# Source the configuration
+# This is used to define the binary architeture to run
+
+# Check the old location first
+[ -r @prefix@/etc/csw.conf ] && . @prefix@/etc/csw.conf
+
+# Check the current location, its content overrides the previous one
+[ -r @sysconfdir@/csw.conf ] && . @sysconfdir@/csw.conf
+
+# If the package-specific variable is not set, try the default
+if [ -z "$openldap_arch" ]; then
+  if [ -n "$default_arch" ]; then
+    openldap_arch="$default_arch"
+  fi
+else
+  # In that specific case, by default, there is no subdir
+  if [ "$openldap_arch" = "i386" -o "$openldap_arch" = "sparc" ]; then
+    openldap_arch=""
+  fi
+fi
+
+# If a value was found
+if [ -n "$openldap_arch" ]; then
+  if [ "$openldap_arch" = "kernel" ]; then
+    # Use the system's default arch
+    openldap_arch=`isainfo -k`
+  fi
+
+  # Add the architecture suffix to the executables' directories, if it exists
+  # The binaries themselves are tested below, so the script should fail
+  # mostly gracefully if a non-present arch is set up.
+  if [ -d "$bindir/$openldap_arch" -a \
+       -d "$sbindir/$openldap_arch" -a \
+       -d "$libexecdir/$openldap_arch" ]; then
+    bindir="$bindir/$openldap_arch"
+    sbindir="$sbindir/$openldap_arch"
+    libexecdir="$libexecdir/$openldap_arch"
+  fi
+fi
+### END OPENCSW ARCHITECTURE SELECTION
+
+SLAPD=$libexecdir/slapd
+SLURPD=$libexecdir/slurpd
 
 # Make sure required vars are set.  Actually these are the compiled defaults
-DEF_SLAPD_CONFIG_FILE=/etc/opt/csw/openldap/slapd.conf
-DEF_SLAPD_CONFIG_DIR=/etc/opt/csw/openldap/slapd.d
+DEF_SLAPD_CONFIG_FILE=@sysconfdir@/openldap/slapd.conf
+DEF_SLAPD_CONFIG_DIR=@sysconfdir@/openldap/slapd.d
 
 # If a conf file has been created, assume we should start up.
 
