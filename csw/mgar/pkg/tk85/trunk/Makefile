@@ -66,6 +66,7 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*)-src.tar.gz
 
 BUILD64 = 1
+ISAEXEC = 1
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
@@ -83,27 +84,10 @@ include gar/category.mk
 
 
 pre-configure-modulated:
-	@(cd $(WORKSRC) ; cp -p ../license.terms .)
+	(cd $(WORKSRC) ; cp -p ../license.terms .)
 	@$(MAKECOOKIE)
 
-post-install-isa-i386:
+post-install-modulated:
 	@echo Creating link to wish8.5
-	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
-	@$(MAKECOOKIE)
-
-post-install-isa-amd64:
-	@# Need to manually create symlink to latest version
-	@echo Creating link to wish8.5
-	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
-	@$(MAKECOOKIE)
-
-post-install-isa-sparcv8:
-	@echo Creating link to wish8.5
-	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
-	@$(MAKECOOKIE)
-
-post-install-isa-sparcv9:
-	@# Need to manually create symlink to latest version
-	@echo Creating link to wish8.5
-	ln -s wish8.5 $(INSTALLISADIR)/$(bindir)/wish
+	ln -s wish8.5 $(DESTDIR)$(bindir)/wish
 	@$(MAKECOOKIE)
