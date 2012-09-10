@@ -17,6 +17,9 @@ DISTFILES += license.terms
 NOEXTRACT += 8.4.i386.tar.xz
 NOEXTRACT += 8.4.sparc.tar.xz
 
+# Tk in general is only rebuilt on Solaris 10, to avoid collisions we must also only do Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
 
