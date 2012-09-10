@@ -51,26 +51,24 @@ BUILD_DEP_PKGS += CSWperl
 PACKAGES += CSWopenldap
 SPKG_DESC_CSWopenldap = OpenLDAP server for Lightweight Directory Access Protocol
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWopenldap += CSWbdb48
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata49
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc49
 RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
 # We do not want that dependency.
 # RUNTIME_DEP_PKGS_CSWopenldap += CSWlibnet
 # RUNTIME_DEP_PKGS_CSWopenldap += CSWlibnet1
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
-RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
 OBSOLETED_BY_CSWopenldap += CSWoldap
 CATALOGNAME_CSWoldap = openldap_stub
 
 # Evaluate later
 CHECKPKG_OVERRIDES_CSWopenldap += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/slapd.8
+
+# This is most certainly a false positive
+CHECKPKG_OVERRIDES_CSWopenldap += missing-dependency|CSWopenldap-back-bdb
 
 PACKAGES += CSWopenldap-client
 SPKG_DESC_CSWopenldap-client = OpenLDAP client executables
@@ -79,7 +77,6 @@ PKGFILES_CSWopenldap-client += $(mandir)/man1/.*
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibssl1-0-0
 OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
 CATALOGNAME_CSWoldapclient = openldap_client_stub
 
@@ -92,6 +89,37 @@ RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap2-4-2
 OBSOLETED_BY_CSWopenldap-dev += CSWoldapdevel
 CATALOGNAME_CSWoldapdevel = openldap_devel_stub
+
+PACKAGES += CSWopenldap-back-perl
+SPKG_DESC_CSWopenldap-back-perl = OpenLDAP Perl backend
+PKGFILES_CSWopenldap-back-perl += $(call baseisadirs,$(libexecdir),openldap/back_perl.*)
+PKGFILES_CSWopenldap-back-perl += $(mandir)/man5/slapd-perl.5
+RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWperl
+RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWlibldap-r2-4-2
+
+PACKAGES += CSWopenldap-back-bdb
+SPKG_DESC_CSWopenldap-back-bdb = OpenLDAP BerkerleyDB bdb backend
+PKGFILES_CSWopenldap-back-bdb += $(call baseisadirs,$(libexecdir),openldap/back_bdb.*)
+PKGFILES_CSWopenldap-back-bdb += $(mandir)/man5/slapd-bdb.5
+RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWbdb48
+RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWlibldap-r2-4-2
+
+PACKAGES += CSWopenldap-back-hdb
+SPKG_DESC_CSWopenldap-back-hdb = OpenLDAP BerkerleyDB hdb backend
+PKGFILES_CSWopenldap-back-hdb += $(call baseisadirs,$(libexecdir),openldap/back_hdb.*)
+RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWbdb48
+RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWlibldap-r2-4-2
+
+PACKAGES += CSWopenldap-back-sql
+SPKG_DESC_CSWopenldap-back-sql = OpenLDAP SQL backend
+PKGFILES_CSWopenldap-back-sql += $(call baseisadirs,$(libexecdir),openldap/back_sql.*)
+PKGFILES_CSWopenldap-back-sql += $(mandir)/man5/slapd-sql.5
+RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWlibodbc2
+RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWlibldap-r2-4-2
 
 PACKAGES += CSWliblber2-4-2
 SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
@@ -146,7 +174,7 @@ MIGRATE_FILES_CSWoldapclient = openldap
 #   https://www.opencsw.org/mantis/view.php?id=4555
 NOISALIST = 1
 LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -z ignore
 
 NODIRPATHS = --docdir
 
