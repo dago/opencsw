@@ -225,8 +225,8 @@ if [ -n "$mysql5_arch" ]; then
   # The binaries themselves are tested below, so the script should fail
   # mostly gracefully if a non-present arch is set up.
   if [ -d "$bindir/$mysql5_arch" -a \
-  +       -d "$sbindir/$mysql5_arch" -a \
-  +       -d "$libexecdir/$mysql5_arch" ]; then
+       -d "$sbindir/$mysql5_arch" -a \
+       -d "$libexecdir/$mysql5_arch" ]; then
     bindir="$bindir/$mysql5_arch"
     sbindir="$sbindir/$mysql5_arch"
     libexecdir="$libexecdir/$mysql5_arch"
