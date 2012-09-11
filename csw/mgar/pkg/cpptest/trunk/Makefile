@@ -12,6 +12,9 @@ MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0001-Keep-norunpath-during-linking.patch
+
+# Use patch until this is fixed
+#   https://sourceforge.net/tracker/?func=detail&aid=3566605&group_id=77564&atid=550611
 PATCHFILES += 0001-Do-not-guess-libdir-in-pkgconfig-file.patch
 
 PACKAGES = CSWlibcpptest0
