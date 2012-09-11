@@ -46,4 +46,7 @@ CHECKPKG_OVERRIDES_CSWtcsh += file-with-bad-content|/usr/local|root/opt/csw/shar
 #   #define DEFAULTLIST ":/usr/man/cat1:/usr/man/cat8:/usr/man/cat6:/usr/local/man/cat1:/usr/local/man/cat8:/usr/local/man/cat6"    /* if no HPATH */
 CHECKPKG_OVERRIDES_CSWtcsh += file-with-bad-content|/usr/local|root/opt/csw/bin/tcsh
 
+# This is for /usr/share/locale
+CHECKPKG_OVERRIDES_CSWtcsh += file-with-bad-content|/usr/share|root/opt/csw/bin/tcsh
+
 include gar/category.mk
