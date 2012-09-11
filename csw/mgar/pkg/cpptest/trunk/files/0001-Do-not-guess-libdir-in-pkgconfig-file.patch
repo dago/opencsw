@@ -1,0 +1,27 @@
+From fba5ed9500918fa75ae069fa426246d9fadebc59 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 11 Sep 2012 11:05:47 +0200
+Subject: [PATCH] Do not guess libdir in pkgconfig file
+
+---
+ libcpptest.pc.in |    6 +++---
+ 1 Datei geändert, 3 Zeilen hinzugefügt(+), 3 Zeilen entfernt(-)
+
+diff --git a/libcpptest.pc.in b/libcpptest.pc.in
+index 9b9ccb4..0ee8a13 100644
+--- a/libcpptest.pc.in
++++ b/libcpptest.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+-exec_prefix=${prefix}
+-libdir=${exec_prefix}/lib
+-includedir=${prefix}/include
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
+ 
+ Name: libcpptest
+ Description: C++ test suite
+-- 
+1.7.10.3
+
