@@ -1,5 +1,5 @@
 NAME = tcsh
-VERSION = 6.17.00
+VERSION = 6.18.01
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,14 +11,20 @@ define BLURB
   spelling correction, a history mechanism, job control and a C-like syntax.
 endef
 
-MASTER_SITES = ftp://ftp.astron.com/pub/tcsh/
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES += ftp://ftp.astron.com/pub/tcsh/
+# Only the most recent version is in the directory above, everything else is in old/
+MASTER_SITES += ftp://ftp.astron.com/pub/tcsh/old/
+
+DISTFILES += $(DISTNAME).tar.gz
+
+VENDOR_URL = http://www.tcsh.org/
 
 LICENSE = Copyright
 
-RUNTIME_DEP_PKGS = CSWiconv
-
-VENDOR_URL = http://www.tcsh.org/
+PACKAGES += CSWtcsh
+SPKG_DESC_CSWtcsh = Enhanced version of the Berkeley C shell (csh)
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWtcsh += CSWlibiconv2
 
 EXTRA_CPPFLAGS += -D_FILE_OFFSET_BITS=64
 # As documented in README, this overrides the setting in pathnames.h
@@ -27,7 +33,7 @@ EXTRA_CPPFLAGS += -D_PATH_LOCAL=\'\"$(bindir)\"\'
 
 # Skip tests until this one is fixed:
 #   http://bugs.gw.com/view.php?id=87
-SKIPTEST = 1
+SKIPTEST ?= 1
 
 INSTALL_ARGS = install.man
 
