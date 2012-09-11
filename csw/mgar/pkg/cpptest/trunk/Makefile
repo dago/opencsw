@@ -12,6 +12,7 @@ MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0001-Keep-norunpath-during-linking.patch
+PATCHFILES += 0001-Do-not-guess-libdir-in-pkgconfig-file.patch
 
 PACKAGES = CSWlibcpptest0
 SPKG_DESC_CSWlibcpptest0 = Unit testing framework for handling automated tests in C++, libcpptest.so.0
