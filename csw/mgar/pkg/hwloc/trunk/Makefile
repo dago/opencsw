@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = hwloc
-VERSION = 1.4.2
+VERSION = 1.5
 GARTYPE = v2
 CATEGORIES = devel
 
@@ -10,7 +10,7 @@ define BLURB
   The Portable Hardware Locality (hwloc) software package provides a portable abstraction (across OS, versions, architectures, ...) of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading. It also gathers various system attributes such as cache and memory information. It primarily aims at helping applications with gathering information about modern computing hardware so as to exploit it accordingly and efficiently.
 endef
 
-MASTER_SITES =  http://www.open-mpi.org/software/hwloc/v1.4/downloads/
+MASTER_SITES =  http://www.open-mpi.org/software/hwloc/v1.5/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
