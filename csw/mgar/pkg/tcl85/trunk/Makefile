@@ -19,18 +19,11 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
 
-## Fix for finding libsunmath on i386 and amd64
-#PATCHFILES  = configure.patch
-#PATCHFILES += tclInt.h.patch
-
-REN_LIBTCL  = libtcl8.5.so
-REN_TCLSH   = tclsh8.5
+REN_TCLSH = tclsh8.5
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 #PATCHFILES += 0001-Enable-SONAME-in-library.patch
-PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on-Solaris-9-.patch
-
-# PATCHFILES += tcl-dtrace.patch
+#PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on-Solaris-9-.patch
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
@@ -66,13 +59,13 @@ RUNTIME_DEP_PKGS_CSWlibtcl8-5 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-$(GARCH))
 # This is correct, the soname with *.so is really the one to use
 CHECKPKG_OVERRIDES_CSWlibtcl8-5 += soname-equals-filename
 
-PACKAGES += CSWtcl8-tclmodules
-SPKG_DESC_CSWtcl8-tclmodules = Modules common to TCL 8.x
-PKGFILES_CSWtcl8-tclmodules += $(libdir)/tcl8/.*
-
 # This is to find zoneinfo
 CHECKPKG_OVERRIDES_CSWlibtcl8-5 += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
 CHECKPKG_OVERRIDES_CSWlibtcl8-5 += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
+
+PACKAGES += CSWtcl8-tclmodules
+SPKG_DESC_CSWtcl8-tclmodules = Modules common to TCL 8.x
+PKGFILES_CSWtcl8-tclmodules += $(libdir)/tcl8/.*
 
 PACKAGES += CSWtcl-dev
 SPKG_DESC_CSWtcl-dev = $(DESCRIPTION), development files
@@ -110,26 +103,9 @@ TEST_TARGET = test
 
 include gar/category.mk
 
-DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
-
-pre-configure-modulated:
-	@echo " ==> Regenerating build tools..."
-	(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
-	@$(MAKECOOKIE)
-
-pre-test-modulated:
-	@# Need to manually create symlink to latest version
-	@echo Creating symlinks for libtcl8.5.so
-	#(cd $(WORKSRC) ; \
-	#	mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
-	#	ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
-	@$(MAKECOOKIE)
-
 post-install-modulated:
-	@# Need to manually create symlink to latest version - it will be handled by alternatives
 	@echo Creating tclsh link
 	ln -s $(REN_TCLSH) $(DESTDIR)$(bindir)/tclsh
-	#cd $(DESTDIR)$(libdir) && mv $(REN_LIBTCL) $(REN_LIBTCL).0 && ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL)
 	perl -pi -e "s|/usr/local|$(prefix)|g" $(DESTDIR)$(libdir)/tclConfig.sh
 	perl -pi -e "s|/usr/local|$(prefix)|g" $(DESTDIR)$(mandir)/man1/tclsh.1
 	@$(MAKECOOKIE)
