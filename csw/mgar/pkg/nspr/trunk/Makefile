@@ -35,11 +35,11 @@ SPKG_DESC_CSWnspr-dev = Netscape Portable Runtime, header files
 # PKGFILES_CSWnspr-dev += .*compile-et\.pl
 RUNTIME_DEP_PKGS_CSWnspr-dev  = CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWnspr-dev += CSWperl
-OBSOLETED_BY_CSWnspr-dev = CSWnspr-devel
-OBSOLETED_BY_CSWnspr-dev += CSWmozilla
-OBSOLETED_BY_CSWnspr-dev += CSWsunbird
-INCOMPATIBLE_PKGS_CSWnspr-dev = CSWmozilla
-INCOMPATIBLE_PKGS_CSWnspr-dev += CSWsunbird
+# OBSOLETED_BY_CSWnspr-dev = CSWnspr-devel
+# OBSOLETED_BY_CSWnspr-dev += CSWmozilla
+# OBSOLETED_BY_CSWnspr-dev += CSWsunbird
+# INCOMPATIBLE_PKGS_CSWnspr-dev = CSWmozilla
+# INCOMPATIBLE_PKGS_CSWnspr-dev += CSWsunbird
 
 # Library splits
 
@@ -140,7 +140,7 @@ install-nspr:
 	ginstall -m 755 $(WORKSRC)/build/config/nspr-config \
 		$(DESTDIR)$(bindir)
 	ginstall -m 755 -d $(DESTDIR)$(libdir)/pkgconfig
-	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \ 
+	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \
 		$(DESTDIR)$(libdir)/pkgconfig
 	if [ $(MEMORYMODEL) = 64 ]; then \
 		gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nspr.pc ; \
