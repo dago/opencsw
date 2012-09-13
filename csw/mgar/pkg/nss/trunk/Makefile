@@ -24,8 +24,8 @@
 
 NAME = nss
 MAJOR_VERSION = 3
-MINOR_VERSION = 12
-PATCHLEVEL    = 11
+MINOR_VERSION = 13
+PATCHLEVEL    = 6
 VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
 GARTYPE = v2
@@ -143,7 +143,7 @@ RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssutil3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssckbi
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibfreebl3
-OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-devel
+# OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-devel
 
 PACKAGES += CSWlibnss3-tools
 CATALOGNAME_CSWlibnss3-tools = libnss3_tools
@@ -245,8 +245,7 @@ CPPFLAGS =
 LD_OPTIONS = 
 # NSS_LD_OPTIONS = -R'$$ORIGIN'
 
-# CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch|sonames=libfreebl_32fpu_3.so,libfreebl_32int64_3.so,libfreebl_32int_3.so,libfreebl_64fpu_3.so,libfreebl_64int_3.so|pkgname=CSWlibfreebl3|expected=CSWlibfreebl|
-CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch
+# CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64fpu_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libfreebl_64int_3.so
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename|file=/opt/csw/lib/libfreebl_32int_3.so
