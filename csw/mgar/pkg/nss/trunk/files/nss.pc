@@ -5,7 +5,7 @@ includedir=${prefix}/include/nss
 
 Name: NSS
 Description: Network Security Services
-Version: 3.12.11
+Version: 3.13.6
 Requires: nspr >= 4.8.9
 Libs: -L${libdir} -lssl3 -lsmime3 -lnss3 -lnssutil3 -R${libdir}
 Cflags: -I${includedir}
