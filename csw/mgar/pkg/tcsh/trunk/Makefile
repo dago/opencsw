@@ -29,7 +29,6 @@ RUNTIME_DEP_PKGS_CSWtcsh += CSWlibiconv2
 EXTRA_CPPFLAGS += -D_FILE_OFFSET_BITS=64
 # As documented in README, this overrides the setting in pathnames.h
 EXTRA_CPPFLAGS += -D_PATH_LOCAL=\'\"$(bindir)\"\'
-# EXTRA_CPPFLAGS += -D_PATH_TCSHELL=\"$(bindir)/tcsh\"
 
 # Skip tests until this one is fixed:
 #   http://bugs.gw.com/view.php?id=87
