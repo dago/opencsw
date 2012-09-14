@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.2.10.7
+VERSION = 1.2.11.14
 GARTYPE = v2
 CATEGORIES = server
 
@@ -28,9 +28,12 @@ PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0005-smf-autoenable-no.patch
 PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
 # until Red Hat Bugzilla Bug 773617 is open do it yourself
-PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
+# PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
 # PATCHFILES += 0007-fixup-plugin_syntax.c.patch
+PATCHFILES += 0008-mntent-daemon.c.patch
+PATCHFILES += 0009-mozldap-pw.c.patch
+PATCHFILES += 0010-mntent-config.ac.patch
 
 BUILD_DEP_PKGS += CSWautoconf
 BUILD_DEP_PKGS += CSWautomake
