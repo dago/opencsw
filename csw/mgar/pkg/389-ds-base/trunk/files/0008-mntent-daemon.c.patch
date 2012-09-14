@@ -1,0 +1,38 @@
+--- a/ldap/servers/slapd/daemon.c
++++ b/ldap/servers/slapd/daemon.c
+@@ -59,7 +59,9 @@
+ #include <sys/time.h>
+ #include <sys/wait.h>
+ #include <pthread.h>
+-#include <mntent.h>
++#if defined(HAVE_MNTENT_H)
++# include <mntent.h>
++# endif
+ #endif
+ #include <time.h>
+ #include <signal.h>
+@@ -80,6 +82,7 @@
+ #endif /* NEED_FILIO */
+ #endif /* !defined( _WIN32 ) */
+ /* for some reason, linux tty stuff defines CTIME */
++#include <stdio.h>
+ #ifdef LINUX
+ #undef CTIME
+ #include <sys/statfs.h>
+@@ -92,7 +95,6 @@
+ #include "snmp_collator.h"
+ #include <private/pprio.h>
+ #include <ssl.h>
+-#include <stdio.h>
+ #include "fe.h"
+ 
+ #if defined(ENABLE_LDAPI)
+@@ -495,7 +497,7 @@ disk_mon_get_mount_point(char *dir)
+ 
+     dev_id = s.st_dev;
+ 
+-    while((mnt = getmntent(fp))){
++    while(0 == getmntent(fp,mnt)){
+         if (stat(mnt->mnt_mountp, &s) != 0) {
+             continue;
+         }
