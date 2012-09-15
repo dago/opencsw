@@ -26,6 +26,7 @@ DISTFILES += csw$(NAME)-cfmonitord
 DISTFILES += csw$(NAME)-cfserverd
 DISTFILES += README.CSW
 DISTFILES += changelog.CSW
+DISTFILES += map.cfengine3
 VENDOR_URL = http://www.cfengine.com/community
 
 UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
@@ -68,9 +69,7 @@ CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
 SPKG_DESC_CSW$(NAME)server = CFEngine 3 server binary
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSW$(NAME)utils
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-serverd
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-runagent
@@ -83,9 +82,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgnam
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
 SPKG_DESC_CSW$(NAME)client = CFEngine 3 client binaries
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)utils
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-agent
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-execd
@@ -134,7 +131,7 @@ EXTRA_CFLAGS   = -xc99=all
 
 # We use this because libpromises will be moved to this private
 # directory (see also move-libpromises:)
-EXTRA_LDFLAGS += -R$(libdir)/$(NAME)
+EXTRA_LDFLAGS += -R$(libdir)/$(NAME) -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.cfengine3)"
 
 # Those libs are used by configure to detect getaddrinfo()
 EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
