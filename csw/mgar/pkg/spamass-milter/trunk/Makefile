@@ -3,10 +3,14 @@ VERSION = 0.3.2
 CATEGORIES = net
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 DESCRIPTION = Plugin for the Sendmail Milter library for SpamAssassin
 define BLURB
   Plugin for the Sendmail Milter library for SpamAssassin
 endef
+
+
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/spamass-milt/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
@@ -18,6 +22,12 @@ DISTFILES += COPYING
 DISTFILES += spamass-milter.m4
 
 PATCHFILES  = 0000-Workaround-for-missing-paths.h.patch
+# This patch has been extracted from
+#
+#  http://download.fedoraproject.org/pub/fedora/linux/releases/17/Everything/source/SRPMS/spamass-milter-0.3.2-6.fc17.src.rpm
+#
+# retrieved on 2012-09-14.
+PATCHFILES += spamass-milter-0.3.1-authuser.patch
 
 INITSMF = $(sysconfdir)/init.d/cswspamass-milter
 PRESERVECONF = $(sysconfdir)/spamass-milter
