@@ -75,4 +75,22 @@ spamass-milter socket.
 
 In any case, the filter will be called `spamass-milter'.
 
+
+Postfix
+-------
+
+This release of spamass-milter has been patched in order to support
+bypassing checks for authenticated users. To enable the bypass, edit
+
+ /etc/opt/csw/spamass-milter
+
+or 
+
+ /opt/csw/etc/spamass-milter
+
+and set 
+
+ POSTFIX_IGNORE_AUTH_USER=yes
+
+
 Direct comments and/or suggestions to raos@opencsw.org.

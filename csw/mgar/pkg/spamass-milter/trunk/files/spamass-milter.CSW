@@ -1,3 +1,4 @@
+# -*- sh -*-*
 # This is a shell script fragment. It will be sourced by
 # /etc/opt/csw/init.d/cswspamass-milter.
 #
@@ -88,6 +89,16 @@
 #
 # Default: no
 #MAILADDR_EXPANSION=no
+
+# This is mainly for postfix users. It instructs spamass-milter to NOT
+# check mails from authenticated users.
+#
+# This is switch is not available in the stock spamass-milter.
+#
+# Values: yes,no (yes: -I)
+#
+# Default: no
+#POSTFIX_IGNORE_AUTH_USER=yes
 
 # Pass flags to spamc.
 #

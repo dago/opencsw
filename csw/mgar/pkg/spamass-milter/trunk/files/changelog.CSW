@@ -1,3 +1,13 @@
+spamass-milter (0.3.2,REV=2012.09.15)
+
+  * Dropped support for Solaris 9
+
+  * Added command line option to bypass checks for authenticated users
+    when using postfix
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 15 Sep 2012 14:58:7 +0200
+
+
 spamass-milter (0.3.2,REV=2012.06.16)
 
   * Fixed comments spamass-milter.m4 in order to avoid recursive

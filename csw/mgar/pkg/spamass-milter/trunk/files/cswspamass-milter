@@ -218,6 +218,20 @@ then
 	    ;;
     esac
 fi
+if [ -n "${POSTFIX_IGNORE_AUTH_USER}" ]
+then
+    case "${POSTFIX_IGNORE_AUTH_USER}" in
+	'yes')
+	    ARGS="${ARGS} -I"
+	    ;;
+	'no')
+	    :
+	    ;;
+	*)
+	    warning "${POSTFIX_IGNORE_AUTH_USER} is not a valid value for POSTFIX_IGNORE_AUTH_USER. Assuming 'no'."
+	    ;;
+    esac
+fi
 if [ -n "${SPAMC_FLAGS}" ]
 then
     ARGS="${ARGS} -- ${SPAMC_FLAGS}"
