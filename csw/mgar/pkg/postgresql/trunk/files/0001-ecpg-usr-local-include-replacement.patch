@@ -1,14 +1,14 @@
-From dec1e5ffd2ec2e58d185f6e4753e38ff5a0af1cd Mon Sep 17 00:00:00 2001
+From 3d38c6e422081129b880bf5bdd7ff8a7c370025a Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Fri, 30 Dec 2011 16:27:27 +0100
-Subject: [PATCH] ecpg /usr/local/include replacement
+Date: Sun, 16 Sep 2012 11:01:47 +0200
+Subject: [PATCH 1/2] ecpg /usr/local/include replacement
 
 ---
- src/interfaces/ecpg/preproc/ecpg.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ src/interfaces/ecpg/preproc/ecpg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/interfaces/ecpg/preproc/ecpg.c b/src/interfaces/ecpg/preproc/ecpg.c
-index db52bf5..05cad72 100644
+index 7e7bae3..2e9b28c 100644
 --- a/src/interfaces/ecpg/preproc/ecpg.c
 +++ b/src/interfaces/ecpg/preproc/ecpg.c
 @@ -253,7 +253,7 @@ main(int argc, char *const argv[])
@@ -21,5 +21,5 @@ index db52bf5..05cad72 100644
  	add_include_path(include_path);
  	add_include_path("/usr/include");
 -- 
-1.7.6.1
+1.7.12
 

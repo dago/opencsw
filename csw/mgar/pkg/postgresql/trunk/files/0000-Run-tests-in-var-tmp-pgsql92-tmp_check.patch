@@ -1,0 +1,44 @@
+From e02c1f65cb7bb300e5ce926b6d96d391f51c8c3b Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sun, 16 Sep 2012 10:56:57 +0200
+Subject: [PATCH 0/2] Run tests in /var/tmp/pgsql92/tmp_check
+
+---
+ src/test/regress/GNUmakefile | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/test/regress/GNUmakefile b/src/test/regress/GNUmakefile
+index 0239b6f..376631c 100644
+--- a/src/test/regress/GNUmakefile
++++ b/src/test/regress/GNUmakefile
+@@ -135,6 +135,7 @@ tablespace-setup:
+ REGRESS_OPTS = --dlpath=. $(EXTRA_REGRESS_OPTS)
+ 
+ check: all tablespace-setup
++	install -d /var/tmp/pgsql92/tmp_check
+ 	$(pg_regress_check) $(REGRESS_OPTS) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF) $(EXTRA_TESTS)
+ 
+ installcheck: all tablespace-setup
+@@ -144,6 +145,7 @@ installcheck-parallel: all tablespace-setup
+ 	$(pg_regress_installcheck) $(REGRESS_OPTS) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(EXTRA_TESTS)
+ 
+ standbycheck: all
++	install -d /var/tmp/pgsql92/tmp_check
+ 	$(pg_regress_installcheck) $(REGRESS_OPTS) --schedule=$(srcdir)/standby_schedule --use-existing
+ 
+ # old interfaces follow...
+@@ -153,9 +155,11 @@ runtest: installcheck
+ runtest-parallel: installcheck-parallel
+ 
+ bigtest: all tablespace-setup
++	install -d /var/tmp/pgsql92/tmp_check
+ 	$(pg_regress_installcheck) $(REGRESS_OPTS) --schedule=$(srcdir)/serial_schedule numeric_big
+ 
+ bigcheck: all tablespace-setup
++	install -d /var/tmp/pgsql92/tmp_check
+ 	$(pg_regress_check) $(REGRESS_OPTS) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
+ 
+ 
+-- 
+1.7.12
+
