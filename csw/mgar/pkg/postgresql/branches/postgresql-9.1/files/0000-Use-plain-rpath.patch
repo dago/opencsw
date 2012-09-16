@@ -1,0 +1,25 @@
+From 3e5748b6bc287f4036c2f619c143b9e467b84c29 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sun, 1 Jan 2012 17:35:00 +0100
+Subject: [PATCH] Use plain rpath
+
+---
+ src/makefiles/Makefile.solaris |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/makefiles/Makefile.solaris b/src/makefiles/Makefile.solaris
+index bb56830..89d83df 100644
+--- a/src/makefiles/Makefile.solaris
++++ b/src/makefiles/Makefile.solaris
+@@ -6,7 +6,7 @@ ifeq ($(with_gnu_ld), yes)
+ export_dynamic = -Wl,-E
+ rpath = -Wl,-rpath,'$(rpathdir)'
+ else
+-rpath = -Wl,-R'$(rpathdir)'
++rpath = -R$(rpathdir)
+ endif
+ 
+ DLSUFFIX = .so
+-- 
+1.7.6.1
+
