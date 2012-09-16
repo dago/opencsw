@@ -1,14 +1,14 @@
-From 3e5748b6bc287f4036c2f619c143b9e467b84c29 Mon Sep 17 00:00:00 2001
+From 127f64d1db4caf7674c739574abf5b3fbf72e784 Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Sun, 1 Jan 2012 17:35:00 +0100
-Subject: [PATCH] Use plain rpath
+Date: Sun, 16 Sep 2012 11:04:08 +0200
+Subject: [PATCH 2/2] Use plain rpath
 
 ---
- src/makefiles/Makefile.solaris |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ src/makefiles/Makefile.solaris | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/makefiles/Makefile.solaris b/src/makefiles/Makefile.solaris
-index bb56830..89d83df 100644
+index e459de3..8729ee8 100644
 --- a/src/makefiles/Makefile.solaris
 +++ b/src/makefiles/Makefile.solaris
 @@ -6,7 +6,7 @@ ifeq ($(with_gnu_ld), yes)
@@ -21,5 +21,5 @@ index bb56830..89d83df 100644
  
  DLSUFFIX = .so
 -- 
-1.7.6.1
+1.7.12
 

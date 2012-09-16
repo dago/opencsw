@@ -1,26 +1,5 @@
-postgresql91 (9.1.5,REV=2012.08.22)
+postgresql92 (9.2.0,REV=2012.09.16)
 
-  * New upstream release 9.1.5.
+  * New upstream release 9.2.0
 
- -- Rafael Ostertag <raos@opencsw.org>  Wed, 22 Aug 2012 08:27:06+0200
-
-
-postgresql91 (9.1.4,REV=2012.06.13)
-
-  * New upstream release 9.1.4.
-
-  * Dropped support for Solaris 9
-
-  * Include changelog.CSW in all packages, thus removing the clustering of 
-    changelog.CSW files in CSWpostgresql
-
- -- Rafael Ostertag <raos@opencsw.org>  Wed, 13 June 2012 15:46:57+0200
-
-
-postgresql91 (9.1.3,REV=2012.05.01)
-
-  * New upstream release 9.1.3.
-
-  * Updated libssl dependencies.
-
- -- Rafael Ostertag <raos@opencsw.org>  Tue, 01 May 2012 08:48:19 +0200
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 16 Sep 2012 14:55:51 +0200
