@@ -1,0 +1,2 @@
+# rsyslogd options
+OPTIONS="-c 5"
