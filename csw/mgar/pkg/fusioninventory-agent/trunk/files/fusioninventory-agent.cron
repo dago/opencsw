@@ -1,0 +1,1 @@
+40 3 * * * . /etc/opt/csw/fusioninventory-agent && /opt/csw/bin/fusioninventory-agent $OPTIONS > /dev/null 2>&1
