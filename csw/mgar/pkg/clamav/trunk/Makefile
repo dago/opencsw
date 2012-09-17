@@ -1,5 +1,5 @@
 NAME       = clamav
-VERSION    = 0.97.5
+VERSION    = 0.97.6
 #VERSION    = 0.97rc
 #DISTNAME   = $(NAME)-devel-latest
 CATEGORIES = apps
@@ -26,10 +26,7 @@ CATALOGNAME_CSWclamav       = clamav
 SPKG_DESC_CSWclamav         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWclamav  = CSWlibclam6
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibz1
-RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWclamav += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWclamav += CSWlibiconv2
 
 PACKAGES                     += CSWlibclam6
 CATALOGNAME_CSWlibclam6       = libclam6
@@ -51,7 +48,8 @@ PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 PATCHFILES += CSWclamav.clamav-milter.conf.p
 PATCHFILES += CSWclamav.optparser.c.p
-PATCHFILES += CSWclamav.scanners.c.p
+# Not needed with 0.97.6
+#PATCHFILES += CSWclamav.scanners.c.p
 
 # Must have 64-bit libmilter for this to work
 #BUILD64 = 1
@@ -121,9 +119,9 @@ CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node15.html
 
 # We don't split to three separate packages
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.14|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.14|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.14|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.15|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.15|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.15|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
 
 include gar/category.mk
 
