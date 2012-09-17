@@ -690,9 +690,10 @@ ifndef NOISALIST
 RUNPATH_ISALIST ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 endif
 
-LINKER_MAP_RELEASE ?= solaris10u8
+LINKER_MAP_RELEASE-5.10 ?= solaris10u8
+LINKER_MAP_RELEASE ?= $(LINKER_MAP_RELEASE-$(GAROSREL))
 
-LINKER_MAPS ?= $(foreach MAP,$(LINKER_MAP_RELEASE) $(EXTRA_LINKER_MAPS),-M $(abspath $(GARDIR)/lib/map.$(LINKER_MAP_RELEASE)))
+LINKER_MAPS ?= $(foreach MAP,$(LINKER_MAP_RELEASE) $(EXTRA_LINKER_MAPS) $(EXTRA_LINKER_MAPS-$(GAROSREL)),-M $(abspath $(GARDIR)/lib/map.$(LINKER_MAP_RELEASE)))
 LINKER_DIRECT ?= -B direct
 LINKER_IGNORE ?= -z ignore
 
