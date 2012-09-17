@@ -1,5 +1,5 @@
 NAME = rsyslog
-VERSION = 5.8.6
+VERSION = 5.8.13
 CATEGORIES = server
 GARTYPE = v2
 
