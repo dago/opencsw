@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.6
+#!/opt/csw/bin/python2.6
 
 """csw_upload_pkg.py - uploads packages to the database.
 
