@@ -690,6 +690,12 @@ ifndef NOISALIST
 RUNPATH_ISALIST ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 endif
 
+LINKER_MAP_RELEASE ?= solaris10u8
+
+LINKER_MAPS ?= $(foreach MAP,$(LINKER_MAP_RELEASE) $(EXTRA_LINKER_MAPS),-M $(abspath $(GARDIR)/lib/map.$(LINKER_MAP_RELEASE)))
+LINKER_DIRECT ?= -B direct
+LINKER_IGNORE ?= -z ignore
+
 # Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
 # with $ISALIST if it exists in RUNPATH_ISALIST, then append remaining dirs from RUNPATH_ISALIST
 RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $(abspath $D/$(MM_LIBDIR)))) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
@@ -720,7 +726,7 @@ SOS12U1_LD_OPTIONS = $(EXTRA_SOS12U1_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12U2_LD_OPTIONS = $(EXTRA_SOS12U2_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12U3_LD_OPTIONS = $(EXTRA_SOS12U3_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 
-LD_OPTIONS ?= $(strip $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS) $(EXTRA_LD_OPTIONS) $(_CATEGORY_LD_OPTIONS))
+LD_OPTIONS ?= $(strip $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS) $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNORE) $(EXTRA_LD_OPTIONS) $(_CATEGORY_LD_OPTIONS))
 
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
