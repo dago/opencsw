@@ -19,7 +19,7 @@ MODDIST =
 DISTNAME = FusionInventory-Agent-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += fusioninventory-agent.cron
-DISTFILES += fusioninventory-agent.csw
+DISTFILES += fusioninventory-agent.default
 
 LICENSE = LICENSE
 
@@ -62,6 +62,6 @@ CRONTABS = /etc/opt/csw/pkg/CSWfusioninventory-agent/crontabs/root
 
 post-install-modulated:
 	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/fusioninventory-agent.cron $(DESTDIR)/etc/opt/csw/pkg/CSWfusioninventory-agent/crontabs/root
-	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/fusioninventory-agent.csw $(DESTDIR)/etc/opt/csw/fusioninventory-agent
+	/opt/csw/gnu/install -D -m 644 $(WORKDIR)/fusioninventory-agent.default $(DESTDIR)/etc/opt/csw/default/fusioninventory-agent
 
 include gar/category.mk
