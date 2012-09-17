@@ -331,7 +331,7 @@ TEST_TARGET = test
 # Tests need root
 SKIPTEST ?= 1
 
-EXTRA_LINKER_FLAGS = -z ignore
+EXTRA_LINKER_FLAGS = -z ignore -M "$(abspath $(WORKDIR)/map.samba)"
 
 INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
