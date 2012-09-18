@@ -151,5 +151,6 @@ post-install-modulated:
 	@ginstall -d $(DOCDEST)/html
 	@ginstall -m 644 $(WORKSRC)/docs/html/* $(DOCDEST)/html
 	@chmod 600 $(DESTDIR)$(sysconfdir)/freshclam.conf
-	rm -f $(DESTDIR)/var/opt/csw/$(NAME)/db/*
+#	rm -f $(DESTDIR)/var/opt/csw/$(NAME)/db/*
+	@ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/db
 	@$(MAKECOOKIE)
