@@ -306,7 +306,8 @@ CONFIGURE_ARGS += --with-ads
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-automount
 CONFIGURE_ARGS += --with-dnsupdate=no
-CONFIGURE_ARGS += --with-krb5=$(prefix)
+# Do not set krb5 this is handeled in gar. Otherwise 64bit will not build
+#CONFIGURE_ARGS += --with-krb5=$(prefix)
 CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
 CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
 CONFIGURE_ARGS += --with-lockdir=$(SMBLOCKDIR)
