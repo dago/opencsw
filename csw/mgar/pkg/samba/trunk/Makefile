@@ -4,7 +4,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.8
+VERSION = 3.6.7
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -306,7 +306,7 @@ CONFIGURE_ARGS += --with-ads
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-automount
 CONFIGURE_ARGS += --with-dnsupdate=no
-# CONFIGURE_ARGS += --with-krb5=$(prefix)
+CONFIGURE_ARGS += --with-krb5=$(prefix)
 CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
 CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
 CONFIGURE_ARGS += --with-lockdir=$(SMBLOCKDIR)
@@ -319,9 +319,12 @@ CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDIR)
 CONFIGURE_ARGS-64 +=  --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
-# These are in a too recent libc SUNW_1.22.6 requiring Solaris10u9
-CONFIGURE_ARGS += ac_cv_func_utimensat=no
-CONFIGURE_ARGS += ac_cv_func_futimens=no
+# Can't use fdatasync atm do to linker problems
+CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
+CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
+CONFIGURE_ARGS += ac_cv_lib_ext_rt_fdatasync=no
+
+
 
 BUILD_SCRIPTS = $(WORKSRC)/source3/Makefile
 
@@ -331,7 +334,6 @@ TEST_TARGET = test
 # Tests need root
 SKIPTEST ?= 1
 
-EXTRA_LINKER_FLAGS = -z ignore -M "$(abspath $(WORKDIR)/map.samba)"
 
 INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
