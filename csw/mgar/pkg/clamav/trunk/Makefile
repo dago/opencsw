@@ -36,6 +36,7 @@ RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibstdc++6
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
 PACKAGES                         += CSWlibclam6-dev
@@ -54,9 +55,9 @@ PATCHFILES += CSWclamav.optparser.c.p
 # Must have 64-bit libmilter for this to work
 #BUILD64 = 1
 
-PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
+#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 GARCOMPILER = GNU
 
@@ -74,7 +75,7 @@ CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(NAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --enable-milter
-CONFIGURE_ARGS += --disable-llvm
+#CONFIGURE_ARGS += --disable-llvm
 #CONFIGURE_ARGS += --enable-check
 CONFIGURE_ARGS += --enable-clamdtop
 
@@ -117,6 +118,7 @@ CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node56.html
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node24.html
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node15.html
+CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.15            
 
 # We don't split to three separate packages
 CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.15|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
