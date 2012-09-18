@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = mod_wsgi
-VERSION = 3.3
+VERSION = 3.4
 CATEGORIES = lib
 GARTYPE = v2
 
