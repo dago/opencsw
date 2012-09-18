@@ -1,0 +1,6 @@
+Post installation you will find GLPI installed into /opt/csw/share/www/glpi
+
+To complete installation you will need to follow the setup instructions 
+in the installation guide located at http://www.glpi-project.org/ starting
+with the section on setting the permissions on the files and config 
+directories
