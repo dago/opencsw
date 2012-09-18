@@ -10,11 +10,13 @@
 #   pentium_pro
 
 NAME = libpng
-VERSION = 1.2.49
+VERSION = 1.2.50
 CATEGORIES = lib
+
 DESCRIPTION = The official library for Portable Network Graphics format (PNG)
 define BLURB
 endef
+
 VENDOR_URL = http://www.libpng.org/pub/png/libpng.html
 MASTER_SITES = $(SF_MIRROR)
 MASTER_SITES += ftp://ftp.simplesystems.org/pub/libpng/png/src/
