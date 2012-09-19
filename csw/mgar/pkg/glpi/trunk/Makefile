@@ -48,12 +48,6 @@ CHECKPKG_OVERRIDES_CSWglpi += surplus-dependency|CSWphp5-json
 
 
 ARCHALL = 1
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
-
-#PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc solaris10-i386 solaris10-sparc solaris11-i386 solaris11-sparc
-
 
 include gar/category.mk
 
