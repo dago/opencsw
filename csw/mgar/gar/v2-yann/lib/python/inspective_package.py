@@ -404,7 +404,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
        |\s*(?:index\s+)?file\s+version\s*$           # Version definition header
        |\s*index\s*value\s+size\s+type\s+bind        # Symbol table header
         \s+oth\s+ver\s+shndx\s+name\s*$
-       |\s*index\s+flags\s+bound to\s+symbol\s*$     # Syminfo header
+       |\s*index\s+flags\s+bound\sto\s+symbol\s*$     # Syminfo header
        |\s*$                                         # There is always a blank
                                                      # line before a new section
        """)
