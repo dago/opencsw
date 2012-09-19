@@ -30,7 +30,7 @@
 # $Id$
 # 
 NAME = postfix
-VERSION = 2.8.9
+VERSION = 2.9.4
 CATEGORIES = server
 GARTYPE = v2
 
