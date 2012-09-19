@@ -160,8 +160,8 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtcl
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk 
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-4
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk
 
 BUILD_DEP_PKGS += CSWlibffi-dev
 
