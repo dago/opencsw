@@ -327,8 +327,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
             version = binary_info['version definition'][version_index]
           else:
             version = binary_info['version needed'][version_index - nb_versions_definition]
-            sym_info['version'] = version['version']
-            sym_info['soname'] = version['soname']
+          sym_info['version'] = version['version']
+          sym_info['soname'] = version['soname']
         else:
           sym_info['version'] = None
 
