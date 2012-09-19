@@ -188,21 +188,21 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
     # For example, libc.so.1 does it for symbol sigaction, free, malloc and realloc
     # So we consider that direct binding is enabled if at least one symbol is directly
     # bound to because that definitely means that -B direct or -z direct was used.
-    directly_binded = set()
+    directly_bound = set()
     for syminfo in pkg_data["binaries_elf_info"][binary_info["path"]]['symbol table']:
       if syminfo['external'] and syminfo['flags'] and 'D' in syminfo['flags'] and 'B' in syminfo['flags']:
-          directly_binded.add(syminfo['soname'])
-    not_directly_binded = directly_binded.symmetric_difference(binary_info["needed sonames"])
+          directly_bound.add(syminfo['soname'])
+    not_directly_bound = directly_bound.symmetric_difference(binary_info["needed sonames"])
 
-    if not_directly_binded:
+    if not_directly_bound:
       messenger.Message(
-        "No symbol of binary %s is directly binded against the following libraries: %s. "
+        "No symbol of binary %s is directly bound against the following libraries: %s. "
         "Please make sure the binaries are compiled using the \"-Bdirect\" linker option."
-        % ("/" + binary_info["path"], ", ".join(not_directly_binded)))
-      for soname in not_directly_binded:
+        % ("/" + binary_info["path"], ", ".join(not_directly_bound)))
+      for soname in not_directly_bound:
         error_mgr.ReportError(
           pkgname, "no-direct-binding",
-          "%s is not directly binded to soname %s" % ("/" + binary_info["path"], soname))
+          "%s is not directly bound to soname %s" % ("/" + binary_info["path"], soname))
 
 
     for version_dep in pkg_data["binaries_elf_info"][binary_info["path"]]['version needed']:
