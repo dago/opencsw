@@ -573,10 +573,10 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
     self.pkg_data["binaries_elf_info"]['opt/csw/bin/sparcv8/rsync'] = {
         'version definition': [],
 	'version needed': [],
-	'symbol table': [{ 'symbol': 'foo', 
-		           'soname': 'libdb-4.7.so', 
+	'symbol table': [{ 'symbol': 'foo',
+		           'soname': 'libdb-4.7.so',
 			   'bind': 'GLOB',
-			   'external': True, 
+			   'external': True,
 			   'flags': 'DBL' }],
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
@@ -616,8 +616,8 @@ class TestLibmLinking(CheckTestHelper, unittest.TestCase):
     binaries_dump_info[0]["needed sonames"] = ["libm.so.2"]
     self.pkg_data["depends"] = ((u"CSWcommon", ""),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
-    self.pkg_data["binaries_elf_info"] = { 
-	'opt/csw/bin/sparcv8/rsync': { 
+    self.pkg_data["binaries_elf_info"] = {
+	'opt/csw/bin/sparcv8/rsync': {
 		'version definition': [],
 		'version needed': [],
 		'symbol table': [
@@ -669,7 +669,7 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
         'depends': (('CSWlibfoo', None),),
         'isalist': (),
 	'ldd_info': { 'opt/csw/bin/bar': [] },
-	'binaries_elf_info': { 'opt/csw/bin/bar': { 
+	'binaries_elf_info': { 'opt/csw/bin/bar': {
 		 		'version definition': [],
 				'version needed': [],
 				'symbol table': [
@@ -732,7 +732,7 @@ class TestSharedLibsOnlyIsalist(CheckTestHelper, unittest.TestCase):
         'depends': ((u"CSWcommon", ""),),
         'isalist': ('foo'),
 	'ldd_info': { 'opt/csw/bin/bar': [], 'opt/csw/lib/libfoo.so.1': []},
-	'binaries_elf_info': { 'opt/csw/bin/bar': { 
+	'binaries_elf_info': { 'opt/csw/bin/bar': {
 		 		'version definition': [],
 				'version needed': [],
 				'symbol table': [
@@ -771,8 +771,8 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
     self.pkg_data["depends"] = ((u"CSWcommon", "This one provides directories"),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["ldd_info"] = { 'opt/csw/lib/python/site-packages/foo.so': [] }
-    self.pkg_data["binaries_elf_info"] = { 
-	'opt/csw/lib/python/site-packages/foo.so': { 
+    self.pkg_data["binaries_elf_info"] = {
+	'opt/csw/lib/python/site-packages/foo.so': {
 		'version definition': [],
 		'version needed': [],
 		'symbol table': [
@@ -807,8 +807,8 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
     self.pkg_data["depends"] = ((u"CSWcommon","This is needed"),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["ldd_info"] = { 'opt/csw/lib/foo.so': [] }
-    self.pkg_data["binaries_elf_info"] = { 
-	'opt/csw/lib/foo.so': { 
+    self.pkg_data["binaries_elf_info"] = {
+	'opt/csw/lib/foo.so': {
 		'version definition': [],
 		'version needed': [],
 		'symbol table': [
@@ -1410,7 +1410,7 @@ class TestSetCheckDoubleDepends(CheckTestHelper, unittest.TestCase):
     for i in range(27):
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(unicode), mox.IsA(str))
-   
+
 class TestCheckUnusedSoname(CheckTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'
   def testUnusedSoname(self):
@@ -1419,7 +1419,7 @@ class TestCheckUnusedSoname(CheckTestHelper, unittest.TestCase):
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libcrypto.so.1.0.0').AndReturn({
-      "/opt/csw/lib": (u"CSWlibssl1-0-0",), 
+      "/opt/csw/lib": (u"CSWlibssl1-0-0",),
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libcurses.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",)})
@@ -1459,10 +1459,10 @@ class TestCheckUnusedSoname(CheckTestHelper, unittest.TestCase):
       "/usr/lib": (u"SUNWcsl",),
       "/usr/lib/sparcv9": (u"SUNWcslx"),})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libssl.so.1.0.0').AndReturn({
-      "/opt/csw/lib": (u"CSWlibssl1-0-0",), 
+      "/opt/csw/lib": (u"CSWlibssl1-0-0",),
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libz.so.1').AndReturn({
-      "/opt/csw/lib": (u"CSWlibz1",), 
+      "/opt/csw/lib": (u"CSWlibz1",),
       "/opt/csw/lib/sparcv9": (u"CSWlibz1",),
       "/usr/lib": (u"SUNWzlib")})
 
@@ -1479,7 +1479,7 @@ class TestCheckUnusedSoname(CheckTestHelper, unittest.TestCase):
     for soname in [ 'libcurses.so.1', 'libz.so.1', 'libssl.so.1.0.0',
 		    'libcrypto.so.1.0.0', 'libexpat.so.1' ]:
       self.error_mgr_mock.ReportError(
-        'CSWcadaver', 'soname-unused', 
+        'CSWcadaver', 'soname-unused',
         soname + ' is needed by /opt/csw/bin/cadaver but never used')
 
 class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
@@ -1490,7 +1490,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libcrypto.so.1.0.0').AndReturn({
-      "/opt/csw/lib": (u"CSWlibssl1-0-0",), 
+      "/opt/csw/lib": (u"CSWlibssl1-0-0",),
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnsl.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",),
@@ -1501,7 +1501,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       "/usr/lib/sparcv9": (u"SUNWcslx"),
     })
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('librt.so.1').AndReturn({
-      '/usr/lib': [u'SUNWcsl'], 
+      '/usr/lib': [u'SUNWcsl'],
       '/usr/lib/sparcv9': [u'SUNWcslx']})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsendfile.so.1').AndReturn({
       '/usr/lib': [u'SUNWcsl'],
@@ -1510,15 +1510,15 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       "/usr/lib": (u"SUNWcsl",),
       "/usr/lib/sparcv9": (u"SUNWcslx"),})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libssl.so.1.0.0').AndReturn({
-      "/opt/csw/lib": (u"CSWlibssl1-0-0",), 
+      "/opt/csw/lib": (u"CSWlibssl1-0-0",),
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
 
     for common_path in ["/opt/csw/share/man", "/var/opt/csw", "/opt/csw/sbin",
 		        "/opt/csw/share/doc", "/etc/opt/csw"]:
       self.error_mgr_mock.GetPkgByPath(common_path).AndReturn([u"CSWcommon"])
 
-    for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1', 
-		    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0', 
+    for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1',
+		    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
 		    'libc.so.1' ]:
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
@@ -1526,7 +1526,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError(
 	'CSWvsftpd',
 	'no-direct-binding',
-	'/opt/csw/sbin/vsftpd is not directly binded to soname ' + soname)
+	'/opt/csw/sbin/vsftpd is not directly bound to soname ' + soname)
 
   def testDirectBindingNoSyminfo(self):
     self.pkg_data = vsftpd_stats
@@ -1537,7 +1537,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libcrypto.so.1.0.0').AndReturn({
-      "/opt/csw/lib": (u"CSWlibssl1-0-0",), 
+      "/opt/csw/lib": (u"CSWlibssl1-0-0",),
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnsl.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",),
@@ -1548,7 +1548,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       "/usr/lib/sparcv9": (u"SUNWcslx"),
     })
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('librt.so.1').AndReturn({
-      '/usr/lib': [u'SUNWcsl'], 
+      '/usr/lib': [u'SUNWcsl'],
       '/usr/lib/sparcv9': [u'SUNWcslx']})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsendfile.so.1').AndReturn({
       '/usr/lib': [u'SUNWcsl'],
@@ -1557,20 +1557,20 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       "/usr/lib": (u"SUNWcsl",),
       "/usr/lib/sparcv9": (u"SUNWcslx"),})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libssl.so.1.0.0').AndReturn({
-      "/opt/csw/lib": (u"CSWlibssl1-0-0",), 
+      "/opt/csw/lib": (u"CSWlibssl1-0-0",),
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
 
     for common_path in ["/opt/csw/share/man", "/var/opt/csw", "/opt/csw/sbin",
 		        "/opt/csw/share/doc", "/etc/opt/csw"]:
       self.error_mgr_mock.GetPkgByPath(common_path).AndReturn([u"CSWcommon"])
 
-    for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1', 
-		    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0', 
+    for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1',
+		    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
 		    'libc.so.1' ]:
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
-    for soname in [ 'libpam.so.1', 'libnsl.so.1', 'libcrypto.so.1.0.0', 
+    for soname in [ 'libpam.so.1', 'libnsl.so.1', 'libcrypto.so.1.0.0',
 		    'librt.so.1', 'libsendfile.so.1', 'libssl.so.1.0.0',
 		    'libsocket.so.1', 'libc.so.1' ]:
       self.error_mgr_mock.ReportError(
