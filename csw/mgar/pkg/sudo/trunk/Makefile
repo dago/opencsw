@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.6p1
+VERSION = 1.8.6p3
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -20,7 +20,6 @@ endef
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES += $(DISTNAME).tar.gz 
 DISTFILES += sudo.conf.CSW
-DISTFILES += map.sudo
 
 LICENSE = doc/LICENSE
 
@@ -100,12 +99,6 @@ CONFIGURE_ARGS_LDAP-enabled += --with-ldap=$(prefix)
 CONFIGURE_ARGS_LDAP-enabled += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_LDAP-$(LDAP))
-
-EXTRA_LINKER_FLAGS = -Bdirect -z ignore 
-
-# Add Mapfile for Solaris10
-EXTRA_LINKER_FLAGS_5.10 = -M "$(abspath $(WORKDIR)/map.sudo)"
-EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
