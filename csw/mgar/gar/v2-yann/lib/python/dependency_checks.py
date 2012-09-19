@@ -39,22 +39,24 @@ DEPENDENCY_FILENAME_REGEXES = (
 
 PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])
 
-BASE_SOLARIS_LIBRARIES = ( 
+BASE_SOLARIS_LIBRARIES = (
      "libsocket.so.1", "libnsl.so.1", "libdl.so.1", "librt.so.1", "libresolv.so.2", "libpthread.so.1",
      # linked by default with C++, see "Default C++ Libraries" in Solaris Studio C++ User'sGuide
-     "libCstd.so.1", "libCrun.so.1", "libm.so.1", "libm.so.2", "libw.so.1", "libcx.so.1", "libc.so.1", "libC.so.3", "libC.so.5"
+     "libCstd.so.1", "libCrun.so.1", "libm.so.1", "libm.so.2", "libw.so.1", "libcx.so.1", "libc.so.1", "libC.so.3", "libC.so.5",
 )
 
-ALLOWED_VERSION_DEPENDENCIES = { "libc.so.1": [ 'SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6', 'SUNW_1.22.5', 
-                                                'SUNW_1.22.4', 'SUNW_1.22.3', 'SUNW_1.22.2', 'SUNW_1.22.1', 
-                                                'SUNW_1.22', 'SUNW_1.21.3', 'SUNW_1.21.2', 'SUNW_1.21.1', 
-                                                'SUNW_1.21', 'SUNW_1.20.4', 'SUNW_1.20.1', 'SUNW_1.20', 
-                                                'SUNW_1.19', 'SUNW_1.18.1', 'SUNW_1.18', 'SUNW_1.17', 
-                                                'SUNW_1.16', 'SUNW_1.15', 'SUNW_1.14', 'SUNW_1.13', 
-                                                'SUNW_1.12', 'SUNW_1.11', 'SUNW_1.10', 'SUNW_1.9', 
-                                                'SUNW_1.8', 'SUNW_1.7', 'SUNW_1.6', 'SUNW_1.5', 
-                                                'SUNW_1.4', 'SUNW_1.3', 'SUNW_1.2', 'SUNW_1.1', 
-                                                'SUNW_0.9', 'SUNW_0.8', 'SUNW_0.7', 'SISCD_2.3' ] }
+ALLOWED_VERSION_DEPENDENCIES = {
+    "libc.so.1": ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6',
+                  'SUNW_1.22.5', 'SUNW_1.22.4', 'SUNW_1.22.3', 'SUNW_1.22.2',
+                  'SUNW_1.22.1', 'SUNW_1.22', 'SUNW_1.21.3', 'SUNW_1.21.2',
+                  'SUNW_1.21.1', 'SUNW_1.21', 'SUNW_1.20.4', 'SUNW_1.20.1',
+                  'SUNW_1.20', 'SUNW_1.19', 'SUNW_1.18.1', 'SUNW_1.18',
+                  'SUNW_1.17', 'SUNW_1.16', 'SUNW_1.15', 'SUNW_1.14',
+                  'SUNW_1.13', 'SUNW_1.12', 'SUNW_1.11', 'SUNW_1.10',
+                  'SUNW_1.9', 'SUNW_1.8', 'SUNW_1.7', 'SUNW_1.6', 'SUNW_1.5',
+                  'SUNW_1.4', 'SUNW_1.3', 'SUNW_1.2', 'SUNW_1.1', 'SUNW_0.9',
+                  'SUNW_0.8', 'SUNW_0.7', 'SISCD_2.3'],
+}
 
 
 def ProcessSoname(
@@ -173,8 +175,8 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
         messenger.Message(
           "Binary %s links to library %s but doesn't seem to use any of its symbols. "
           "It usually happens because superfluous libraries were added to the linker options, "
-	  "either because of the configure script itself or because of the \"pkg-config --libs\""
-	  " output of one the dependency."
+          "either because of the configure script itself or because of the \"pkg-config --libs\""
+          " output of one the dependency."
           % ("/" + binary_info["path"], ldd_response['soname']))
         error_mgr.ReportError(
             pkgname, "soname-unused",
@@ -194,7 +196,7 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
 
     if not_directly_binded:
       messenger.Message(
-	"No symbol of binary %s is directly binded against the following libraries: %s. "
+        "No symbol of binary %s is directly binded against the following libraries: %s. "
         "Please make sure the binaries are compiled using the \"-Bdirect\" linker option."
         % ("/" + binary_info["path"], ", ".join(not_directly_binded)))
       for soname in not_directly_binded:
@@ -204,18 +206,18 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
 
 
     for version_dep in pkg_data["binaries_elf_info"][binary_info["path"]]['version needed']:
-      if (version_dep['soname'] in ALLOWED_VERSION_DEPENDENCIES and 
+      if (version_dep['soname'] in ALLOWED_VERSION_DEPENDENCIES and
         not version_dep['version'] in ALLOWED_VERSION_DEPENDENCIES[version_dep['soname']]):
         messenger.Message(
           "Binary %s requires interface version %s in library %s which is only available "
-	  "in recent Solaris releases."
+          "in recent Solaris releases."
           % ("/" + binary_info["path"], version_dep['version'], version_dep['soname']))
         error_mgr.ReportError(
           pkgname, "forbidden-version-interface-dependencies",
-          "%s requires forbidden interface version %s in library %s" 
-	  % ("/" + binary_info["path"], version_dep['version'], version_dep['soname']))
-           
-  
+          "%s requires forbidden interface version %s in library %s"
+          % ("/" + binary_info["path"], version_dep['version'], version_dep['soname']))
+
+
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     if soname not in ALLOWED_ORPHAN_SONAMES:

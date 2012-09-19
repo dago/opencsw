@@ -229,14 +229,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
     return defined_symbols
 
-
   def GetBinaryElfInfo(self):
     """Returns various informations symbol and version present in elf header
 
-    To do this we parse output lines from elfdump -syv, it's the 
+    To do this we parse output lines from elfdump -syv, it's the
     only command that will give us all informations we need on symbols and versions.
     We will analyse 3 sections:
-     - version section: contains soname needed, version interface required for each soname, 
+     - version section: contains soname needed, version interface required for each soname,
                         and version definition
      - symbol table section: contains list of symbol and soname/version interface providing it
                              (the latter is an index in the version section)
@@ -261,9 +260,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
       elfdump_out = stdout.splitlines()
 
       symbols = {}
-      binary_info = { 'version definition': [], 
-		      'version needed': [],
-		      'symbol table': [] }
+      binary_info = {'version definition': [],
+                     'version needed': [],
+                     'symbol table': []}
       # we will merge syminfo and symbol table information in one list
       # so the syminfo list is the same as the symbol table one
       binary_info['syminfo'] = binary_info['symbol table']
@@ -271,39 +270,39 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # The list of fields we want to retrieve in the elfdump output by section
       # if the field is a tuple, it means we will map the original field name
       # to another name in the final data structure
-      elf_fields = { 'version definition': [ 'version', 'dependency' ],
-                     'version needed': [ ('file', 'soname'), 'version' ],
-		     'symbol table': [ ('name', 'symbol'), ('ver', 'version'), 
-			               'bind', ('shndx', 'external') ],
-		     'syminfo': [ ('library', 'soname'), 'symbol', 'flags' ] }
+      elf_fields = {'version definition': ['version', 'dependency'],
+                    'version needed': [('file', 'soname'), 'version'],
+                    'symbol table': [('name', 'symbol'), ('ver', 'version'),
+                                     'bind', ('shndx', 'external')],
+                    'syminfo': [('library', 'soname'), 'symbol', 'flags']}
 
       cur_section = None
       for line in elfdump_out:
-        
+
         elfdump_data, cur_section = self._ParseElfdumpLine(line, cur_section)
 
-	# header or blank line contains no information
-	if not elfdump_data:
+        # header or blank line contains no information
+        if not elfdump_data:
           continue
 
         elf_info = {}
-	for field in elf_fields[cur_section]:
+        for field in elf_fields[cur_section]:
           if type(field) == tuple:
             elf_info[field[1]] = elfdump_data[field[0]]
           else:
             elf_info[field] = elfdump_data[field]
-            
+
         # we merge symbol table and syminfo informations so we have to check
-	# if the symbol has not already been added
-	if cur_section in ('symbol table', 'syminfo'):
+        # if the symbol has not already been added
+        if cur_section in ('symbol table', 'syminfo'):
           if not elf_info['symbol']:
             continue
-	  if elf_info['symbol'] in symbols:
-	    symbols[elf_info['symbol']].update(elf_info)
-	    continue 
+          if elf_info['symbol'] in symbols:
+            symbols[elf_info['symbol']].update(elf_info)
+            continue
           else:
-	    symbols[elf_info['symbol']] = elf_info
-            
+            symbols[elf_info['symbol']] = elf_info
+
         binary_info[cur_section].append(elf_info)
 
       # elfdump doesn't repeat the name of the soname in the version section
@@ -313,23 +312,23 @@ class InspectivePackage(package.DirectoryFormatPackage):
         if not version['soname']:
           version['soname'] = binary_info['version needed'][i]['soname']
 
-      # if it exists, the first "version definition" entry is the base soname 
+      # if it exists, the first "version definition" entry is the base soname
       # we don't need this information
       if binary_info['version definition']:
-	binary_info['version definition'].pop(0)
+        binary_info['version definition'].pop(0)
 
       # To not rely of the section order output of elfdump, we resolve symbol version
       # informations here after having parsed all elfdump output
       nb_versions_definition = len(binary_info['version definition'])
       for sym_info in binary_info['symbol table']:
         version_index = int(sym_info['version']) - 2
-	if version_index > 1:
-	  if version_index < nb_versions_definition:
-	    version = binary_info['version definition'][version_index]
+        if version_index > 1:
+          if version_index < nb_versions_definition:
+            version = binary_info['version definition'][version_index]
           else:
-	    version = binary_info['version needed'][version_index - nb_versions_definition]
-          sym_info['version'] = version['version']
-	  sym_info['soname'] = version['soname']
+            version = binary_info['version needed'][version_index - nb_versions_definition]
+            sym_info['version'] = version['version']
+            sym_info['soname'] = version['soname']
         else:
           sym_info['version'] = None
 
@@ -345,7 +344,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binaries_elf_info[binary] = binary_info
 
     return binaries_elf_info
-
 
   def GetLddMinusRlines(self):
     """Returns ldd -r output."""
@@ -365,26 +363,27 @@ class InspectivePackage(package.DirectoryFormatPackage):
       retcode = ldd_proc.wait()
       if retcode:
         uname_info = os.uname()
-	if (uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
-	    '/amd64/' in binary_abspath and 'has wrong class or data encoding' in stderr):
+        if (uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
+            '/amd64/' in binary_abspath and 'has wrong class or data encoding' in stderr):
           # we are trying to analyze a 64 bits binary on a Solaris 9 x86
-	  # which exists only in 32 bits, that's not possible 
-	  # we ignore the error and return no information as it is likely
-	  # that the ldd infos will be the same on the 32 bits binaries analyzed
-	  return {}
+          # which exists only in 32 bits, that's not possible
+          # we ignore the error and return no information as it is likely
+          # that the ldd infos will be the same on the 32 bits binaries analyzed
+          return {}
         else:
           logging.error("%s returned an error: %s", args, stderr)
 
       ldd_info = []
       for line in stdout.splitlines():
-	result = self._ParseLddDashRline(line, binary_abspath)  
-	if result:
+        result = self._ParseLddDashRline(line, binary_abspath)
+        if result:
           ldd_info.append(result)
-      ldd_output[binary] = ldd_info
-    return ldd_output
+        ldd_output[binary] = ldd_info
+
+      return ldd_output
 
   def _ParseNmSymLine(self, line):
-    re_defined_symbol =  re.compile('[0-9]+ [ABDFNSTU] \S+')
+    re_defined_symbol = re.compile('[0-9]+ [ABDFNSTU] \S+')
     m = re_defined_symbol.match(line)
     if not m:
       return None
@@ -392,20 +391,19 @@ class InspectivePackage(package.DirectoryFormatPackage):
     sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
     return sym
 
-
-  def _ParseElfdumpLine(self, line, section = None):
+  def _ParseElfdumpLine(self, line, section=None):
 
     headers_re = (r'(?P<section>Version Needed|Version Definition|Symbol Table|Syminfo) Section:\s+(?:\.SUNW_version|\.dynsym|\.SUNW_syminfo|.symtab)\s*$|'
                    '\s*(?:index\s+)?version\s+dependency\s*$|'
                    '\s*(?:index\s+)?file\s+version\s*$|'
                    '\s*index\s*value\s+size\s+type\s+bind\s+oth\s+ver\s+shndx\s+name\s*$|'
                    '\s*index\s+flags\s+bound to\s+symbol\s*$|'
-		   '\s*$')
+                   '\s*$')
 
     re_by_section = { 'version definition': (r'\s*(?:\[(?P<index>\d+)\]\s+)?(?P<version>.*\S)\s+(?P<dependency>\S+)?\s*$'),
-		      'version needed': (r'\s*(?:\[(?P<index>\d+)\]\s+)?(?:(?P<file>\S+)\s+(?!\[ (?:INFO|WEAK) \]))?(?P<version>\S+)(?:\s+\[ (?:INFO|WEAK) \])?\s*$'),
-		      'symbol table': (r'\s*\[\d+\]\s+(?:0x[0-9a-f]+|REG_G\d+)\s+0x[0-9a-f]+\s+\S+\s+(?P<bind>\S+)\s+\S+\s+(?P<ver>\S+)\s+(?P<shndx>\S+)\s+(?P<name>\S+)?\s*$'),
-		      'syminfo': (r'\s*\[\d+\]\s+(?P<flags>[ABCDFILNPS]+)\s+(?:(?:\[\d+\]\s+(?P<library>.*\S)|<self>)\s+)?(?P<symbol>.*\S)\s*') }
+                      'version needed': (r'\s*(?:\[(?P<index>\d+)\]\s+)?(?:(?P<file>\S+)\s+(?!\[ (?:INFO|WEAK) \]))?(?P<version>\S+)(?:\s+\[ (?:INFO|WEAK) \])?\s*$'),
+                      'symbol table': (r'\s*\[\d+\]\s+(?:0x[0-9a-f]+|REG_G\d+)\s+0x[0-9a-f]+\s+\S+\s+(?P<bind>\S+)\s+\S+\s+(?P<ver>\S+)\s+(?P<shndx>\S+)\s+(?P<name>\S+)?\s*$'),
+                      'syminfo': (r'\s*\[\d+\]\s+(?P<flags>[ABCDFILNPS]+)\s+(?:(?:\[\d+\]\s+(?P<library>.*\S)|<self>)\s+)?(?P<symbol>.*\S)\s*') }
 
     elfdump_data = None
     m = re.match(headers_re, line)
@@ -421,7 +419,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
       raise package.StdoutSyntaxError("Could not parse %s" % (repr(line)))
 
     return elfdump_data, section
-
 
   def _ParseLddDashRline(self, line, binary=None):
     found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
@@ -446,7 +443,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     blank_line = (r'^\s*$')
     common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so, stv_protected, sizes_differ, sizes_info,
-		    sizes_one_used, unreferenced_object, unused_object, unused_search_path, blank_line))
+                    sizes_one_used, unreferenced_object, unused_object, unused_search_path, blank_line))
     m = re.match(common_re, line)
     response = None
     if m:
