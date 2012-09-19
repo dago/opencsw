@@ -393,25 +393,67 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
   def _ParseElfdumpLine(self, line, section=None):
 
-    headers_re = (r'(?P<section>Version Needed|Version Definition|Symbol Table|Syminfo) Section:\s+(?:\.SUNW_version|\.dynsym|\.SUNW_syminfo|.symtab)\s*$|'
-                   '\s*(?:index\s+)?version\s+dependency\s*$|'
-                   '\s*(?:index\s+)?file\s+version\s*$|'
-                   '\s*index\s*value\s+size\s+type\s+bind\s+oth\s+ver\s+shndx\s+name\s*$|'
-                   '\s*index\s+flags\s+bound to\s+symbol\s*$|'
-                   '\s*$')
+    headers_re = (
+      r"""
+       (?P<section>Version\sNeeded|Symbol\sTable     # Section header
+                  |Version\sDefinition|Syminfo)
+                   \sSection:
+        \s+(?:\.SUNW_version|\.dynsym
+             |\.SUNW_syminfo|.symtab)\s*$
+       |\s*(?:index\s+)?version\s+dependency\s*$     # Version needed header
+       |\s*(?:index\s+)?file\s+version\s*$           # Version definition header
+       |\s*index\s*value\s+size\s+type\s+bind        # Symbol table header
+        \s+oth\s+ver\s+shndx\s+name\s*$
+       |\s*index\s+flags\s+bound to\s+symbol\s*$     # Syminfo header
+       |\s*$                                         # There is always a blank
+                                                     # line before a new section
+       """)
 
-    re_by_section = { 'version definition': (r'\s*(?:\[(?P<index>\d+)\]\s+)?(?P<version>.*\S)\s+(?P<dependency>\S+)?\s*$'),
-                      'version needed': (r'\s*(?:\[(?P<index>\d+)\]\s+)?(?:(?P<file>\S+)\s+(?!\[ (?:INFO|WEAK) \]))?(?P<version>\S+)(?:\s+\[ (?:INFO|WEAK) \])?\s*$'),
-                      'symbol table': (r'\s*\[\d+\]\s+(?:0x[0-9a-f]+|REG_G\d+)\s+0x[0-9a-f]+\s+\S+\s+(?P<bind>\S+)\s+\S+\s+(?P<ver>\S+)\s+(?P<shndx>\S+)\s+(?P<name>\S+)?\s*$'),
-                      'syminfo': (r'\s*\[\d+\]\s+(?P<flags>[ABCDFILNPS]+)\s+(?:(?:\[\d+\]\s+(?P<library>.*\S)|<self>)\s+)?(?P<symbol>.*\S)\s*') }
+    re_by_section = {
+      'version definition': (r"""
+        \s*(?:\[(?P<index>\d+)\]\s+)? # index might be not present
+                                      # if no version binding is enabled
+        (?P<version>.*\S)
+        \s+(?P<dependency>\S+)?\s*$
+                              """),
+      'version needed': (r"""
+        \s*(?:\[(?P<index>\d+)\]\s+)?     # index might be not present
+                                          # if no version binding is enabled
+        (?:(?P<file>\S+)\s+               # file can be absent if the same as
+         (?!\[\s(?:INFO|WEAK)\s\]))?      # the previous line, we make sure
+                                          # version is not confused with file
+                                          # in that case
+        (?P<version>\S+)
+        (?:\s+\[\s(?:INFO|WEAK)\s\])?\s*$ #
+                          """),
+      'symbol table': (r"""
+         \s*\[\d+\]
+         \s+(?:0x[0-9a-f]+|REG_G\d+)
+         \s+0x[0-9a-f]+
+         \s+\S+
+         \s+(?P<bind>\S+)
+         \s+\S+
+         \s+(?P<ver>\S+)
+         \s+(?P<shndx>\S+)
+         \s+(?P<name>\S+)?\s*$
+                        """),
+      'syminfo': (r"""
+         \s*\[\d+\]
+         \s+(?P<flags>[ABCDFILNPS]+)
+         \s+(?:(?:\[\d+\]                   # some kind of library index
+         \s+(?P<library>.*\S)|<self>)\s+)?  # library is not present
+                                            # for external symbols not
+                                            # directly bound
+         (?P<symbol>.*\S)\s*
+                   """)}
 
     elfdump_data = None
-    m = re.match(headers_re, line)
+    m = re.match(headers_re, line, re.VERBOSE)
     if m:
       if m.lastindex:
         section = m.group('section').lower()
     elif section:
-      m = re.match(re_by_section[section], line)
+      m = re.match(re_by_section[section], line, re.VERBOSE)
       if m:
         elfdump_data = m.groupdict()
 
