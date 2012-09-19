@@ -1,0 +1,22 @@
+$def with (maintainer, pkgs)
+<html>
+  <head>
+    <title>
+      $maintainer
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <h2>$maintainer</h2>
+    <p><a href="checkpkg/">Checkpkg report</a></p>
+    <h2>Packages</h2>
+    <ul>
+$for pkg in pkgs: 
+  <li>
+  <a href="../../srv4/$pkg.md5_sum/">
+  $pkg
+  </a>
+  </li>
+</ul>
+</body>
+</html>

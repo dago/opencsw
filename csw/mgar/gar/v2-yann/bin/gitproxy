@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -n "${http_proxy}" ]; then
+
+    REMHOST=$1
+    REMPORT=$2
+
+    set - $(echo "${http_proxy}" | gsed 's/http//i' | tr -d '/' | tr ':' ' ')
+    PROXYHOST=$1
+    PROXYPORT=$2
+
+    # this bit is copied from http://lkml.org/lkml/2006/2/26/207 and then
+    # modified to use netcat and handle proxy settings from the env.
+    (echo "CONNECT ${REMHOST}:${REMPORT} HTTP/1.0"; echo; cat ) |
+    nc ${PROXYHOST} ${PROXYPORT} | (read a; read a; cat )
+
+else
+    echo Please set http_proxy in your environment. >&2
+    exit 1
+fi
