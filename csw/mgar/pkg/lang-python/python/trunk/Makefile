@@ -36,7 +36,9 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+# There is a segfault happening on Solaris 9 i386. I'm disabling the Solaris
+# 9 until we debug it or the upstream fixes it.
+# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 # Some features are missing on Solaris 9, e.g. functionality required for the
 # multiprocessing support.
 # http://osdir.com/ml/opensolaris-discuss/2009-07/msg00865.html
