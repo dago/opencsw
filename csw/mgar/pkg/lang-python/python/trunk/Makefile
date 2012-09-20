@@ -153,7 +153,7 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpanel5
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
@@ -161,9 +161,9 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-4
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk
 
 BUILD_DEP_PKGS += CSWlibffi-dev
 
