@@ -61,7 +61,7 @@ RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibwrap1
 
 # Specifying different dependencies for 5.9 and 5.10.
