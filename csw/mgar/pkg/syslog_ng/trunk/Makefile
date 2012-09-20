@@ -61,15 +61,16 @@ RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibwrap1
 
 # Specifying different dependencies for 5.9 and 5.10.
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibssl1-0-0
 
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.9 += CSWglib2
+RUNTIME_DEP_PKGS_CSWsyslog-ng_5.9 += CSWlibssl0-9-8
 
 RUNTIME_DEP_PKGS_CSWsyslog-ng += $(RUNTIME_DEP_PKGS_CSWsyslog-ng_$(GAROSREL))
 
