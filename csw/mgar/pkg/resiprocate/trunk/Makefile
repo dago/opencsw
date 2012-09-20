@@ -1,9 +1,12 @@
 NAME = resiprocate
-VERSION = 1.8.0
+VERSION = 1.8.5
 CATEGORIES = utils
 
+MASTER_SITES = https://www.resiprocate.org/files/pub/reSIProcate/releases/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+
 #PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DESCRIPTION = full-featured reference implementation of SIP in C++
 define BLURB
