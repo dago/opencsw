@@ -1,5 +1,5 @@
 NAME = gobject-introspection
-VERSION = 0.10.8
+VERSION = 1.29.17
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -41,6 +41,7 @@ RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibglib2-0-0
 PACKAGES += CSWgobject-introspection-dev
 CATALOGNAME_CSWgobject-introspection-dev = gobject_introspection_dev
 SPKG_DESC_CSWgobject-introspection-dev += $(DESCRIPTION), development files
+PKGFILES_CSWgobject-introspection-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWgobject-introspection-dev += /opt/csw/lib/libgirepository-1.0.so
 RUNTIME_DEP_PKGS_CSWgobject-introspection-dev += CSWlibgirepository1-0-1
 
@@ -129,6 +130,8 @@ EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
 BUILD_OVERRIDE_VARS = V
 BUILD_OVERRIDE_VARS_V = 1
+
+EXTRA_LINKER_FLAGS += -lgmodule-2.0
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-silent-rules
