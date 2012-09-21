@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibsoup2-4-1 += CSWlibgio2-0-0
-OBSOLTED_BY_CSWlibsoup2-4-1 = CSWlibsoup
+OBSOLETED_BY_CSWlibsoup2-4-1 = CSWlibsoup
 
 PACKAGES += CSWlibsoup-gnome2-4-1
 CATALOGNAME_CSWlibsoup-gnome2-4-1 = libsoup_gnome2_4_1
@@ -46,7 +46,12 @@ RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibsoup-gnome2-4-1 += CSWlibglib2-0-0
-OBSOLTED_BY_CSWlibsoup-gnome2-4-1 = CSWlibsoup
+OBSOLETED_BY_CSWlibsoup-gnome2-4-1 = CSWlibsoup
+
+PACKAGES += CSWlibsoupdoc
+SPKG_DESC_CSWlibsoupdoc += $(DESCRIPTION), documentation
+PKGFILES_CSWlibsoupdoc += $(sharedstatedir)/gtk-doc/.*
+ARCHALL_CSWlibsoupdoc = 1
 
 PACKAGES += CSWlibsoup2-dev
 CATALOGNAME_CSWlibsoup2-dev = libsoup2_dev
