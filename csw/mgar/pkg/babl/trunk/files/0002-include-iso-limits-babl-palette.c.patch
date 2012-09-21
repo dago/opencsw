@@ -1,0 +1,10 @@
+--- a/babl/babl-palette.c
++++ b/babl/babl-palette.c
+@@ -21,6 +21,7 @@
+ #include <stdio.h>
+ #include <values.h>
+ #include <assert.h>
++#include <iso/limits_iso.h>
+ #include "config.h"
+ #include "babl-internal.h"
+ #include "babl.h"
