@@ -190,7 +190,8 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
     # bound to because that definitely means that -B direct or -z direct was used.
     directly_bound = set()
     for syminfo in pkg_data["binaries_elf_info"][binary_info["path"]]['symbol table']:
-      if syminfo['external'] and syminfo['flags'] and 'D' in syminfo['flags'] and 'B' in syminfo['flags']:
+      if (syminfo['shndx'] == 'UNDEF' and syminfo['flags']
+          and 'D' in syminfo['flags'] and 'B' in syminfo['flags']):
           directly_bound.add(syminfo['soname'])
     not_directly_bound = directly_bound.symmetric_difference(binary_info["needed sonames"])
 
