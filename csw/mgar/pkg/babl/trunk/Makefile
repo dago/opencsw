@@ -1,5 +1,5 @@
 NAME = babl
-VERSION = 0.1.6
+VERSION = 0.1.10
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -12,9 +12,12 @@ endef
 MASTER_SITES = http://ftp.gtk.org/pub/babl/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES += $(NAME)-$(VERSION).tar.bz2
 
+GARCOMPILER = SOS12U3
+
 # Use patch until this is fixed:
 #   https://bugzilla.gnome.org/show_bug.cgi?id=664800
 PATCHFILES += 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
+PATCHFILES += 0002-include-iso-limits-babl-palette.c.patch
 
 VENDOR_URL = http://gegl.org/babl/
 
@@ -41,5 +44,9 @@ REINPLACE_FILES_pthread = tests/Makefile.in
 # There is currently one test failing, upstream has been notified, disable for now until this is fixed:
 #   https://bugzilla.gnome.org/show_bug.cgi?id=664800
 SKIPTEST ?= 1
+
+# wrong option for SolarisStudio Compiler
+CONFIGURE_ARGS += --enable-mmx=no
+# CONFIGURE_ARGS += --disable-sse 
 
 include gar/category.mk
