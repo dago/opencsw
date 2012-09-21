@@ -12,6 +12,7 @@ endef
 MASTER_SITES = http://ftp.gtk.org/pub/babl/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES += $(NAME)-$(VERSION).tar.bz2
 
+PACKAGING_PLATFORMS += Solaris10-sparc Solaris10-i386
 GARCOMPILER = SOS12U3
 
 # Use patch until this is fixed:
@@ -27,10 +28,10 @@ PKGFILES_CSWlibbabl0-1-0 += $(call pkgfiles_lib,libbabl-0.1.so.0)
 PKGFILES_CSWlibbabl0-1-0 += $(call baseisadirs,$(libdir),babl-0.1/.*)
 OBSOLETED_BY_CSWlibbabl0-1-0 += CSWlibbabl
 
-PACKAGES += CSWlibbabl-dev
-SPKG_DESC_CSWlibbabl-dev = Development files for libbabl-0.1.so.0
+# PACKAGES += CSWlibbabl-dev
+# SPKG_DESC_CSWlibbabl-dev = Development files for libbabl-0.1.so.0
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
+# RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
 
 BUILD64_LIBS_ONLY = 1
 
@@ -46,7 +47,7 @@ REINPLACE_FILES_pthread = tests/Makefile.in
 SKIPTEST ?= 1
 
 # wrong option for SolarisStudio Compiler
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-mmx=no
-# CONFIGURE_ARGS += --disable-sse 
 
 include gar/category.mk
