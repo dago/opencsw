@@ -131,7 +131,8 @@ EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 BUILD_OVERRIDE_VARS = V
 BUILD_OVERRIDE_VARS_V = 1
 
-EXTRA_LINKER_FLAGS += -lgmodule-2.0
+# this has not helped, I have added -lgmodule-2.0 in glib-2.0.pc (dirty hack)
+# EXTRA_LINKER_FLAGS += -lgmodule-2.0
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-silent-rules
