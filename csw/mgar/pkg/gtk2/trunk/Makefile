@@ -1,11 +1,11 @@
 # $Id$
 
 NAME = gtk2
-VERSION = 2.24.8
+VERSION = 2.24.12
 CATEGORIES = lib
 GARTYPE = v2
 
-GARCOMPILER = SOS12U1
+GARCOMPILER = SOS12U3
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DESCRIPTION = GTK+, the multiplatform X11 toolkit for GUI development
@@ -20,7 +20,7 @@ GNOME_PROJ = gtk+
 MASTER_SITES = $(GNOME_MIRROR)
 
 DISTNAME = gtk+-$(VERSION)
-DISTFILES = $(DISTNAME).tar.bz2
+DISTFILES = $(DISTNAME).tar.xz
 DISTFILES += CSWgtk2.postinstall
 DISTFILES += README.CSW
 
