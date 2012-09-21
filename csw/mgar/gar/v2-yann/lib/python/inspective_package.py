@@ -268,12 +268,12 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_info['syminfo'] = binary_info['symbol table']
 
       # The list of fields we want to retrieve in the elfdump output by section
-      # if the field is a tuple, it means we will map the original field name
+      # If the field is a tuple, it means we will map the original field name
       # to another name in the final data structure
       elf_fields = {'version definition': ['version', 'dependency'],
                     'version needed': [('file', 'soname'), 'version'],
                     'symbol table': [('name', 'symbol'), ('ver', 'version'),
-                                     'bind', ('shndx', 'external')],
+                                     'bind', 'shndx'],
                     'syminfo': [('library', 'soname'), 'symbol', 'flags']}
 
       cur_section = None
@@ -295,15 +295,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
         # we merge symbol table and syminfo informations so we have to check
         # if the symbol has not already been added
         if cur_section in ('symbol table', 'syminfo'):
-          if not elf_info['symbol']:
-            continue
-          if elf_info['symbol'] in symbols:
-            symbols[elf_info['symbol']].update(elf_info)
-            continue
-          else:
-            symbols[elf_info['symbol']] = elf_info
-
-        binary_info[cur_section].append(elf_info)
+          symbols.setdefault(elf_info['symbol'], {}).update(elf_info)
+        else:
+          binary_info[cur_section].append(elf_info)
 
       # elfdump doesn't repeat the name of the soname in the version section
       # if it's the same on two contiguous line, so we have to make sure
@@ -319,27 +313,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
       # To not rely of the section order output of elfdump, we resolve symbol version
       # informations here after having parsed all elfdump output
-      nb_versions_definition = len(binary_info['version definition'])
-      for sym_info in binary_info['symbol table']:
-        version_index = int(sym_info['version']) - 2
-        if version_index > 1:
-          if version_index < nb_versions_definition:
-            version = binary_info['version definition'][version_index]
-          else:
-            version = binary_info['version needed'][version_index - nb_versions_definition]
-          sym_info['version'] = version['version']
-          sym_info['soname'] = version['soname']
-        else:
-          sym_info['version'] = None
-
-        if sym_info['external'] == 'UNDEF':
-          sym_info['external'] = True
-        else:
-          sym_info['external'] = False
-
-        # we make sure the field are present even if the syminfo section is not
-        sym_info.setdefault('soname')
-        sym_info.setdefault('flags')
+      binary_info['symbol table'] = self._ResolveSymbolsVersionInfo (symbols.values(), binary_info)
 
       binaries_elf_info[binary] = binary_info
 
@@ -391,6 +365,24 @@ class InspectivePackage(package.DirectoryFormatPackage):
     sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
     return sym
 
+  def _ResolveSymbolsVersionInfo(self, symbols, binary_info):
+
+    version_info = binary_info['version definition'] + binary_info['version needed']
+
+    for sym_info in symbols:
+      version_index = int(sym_info['version']) - 2
+      if version_index > 1:
+        version = version_info[version_index]
+        sym_info['version'] = version['version']
+        sym_info['soname'] = version['soname']
+
+      # we make sure the field are present even if the syminfo section is not
+      sym_info.setdefault('version')
+      sym_info.setdefault('soname')
+      sym_info.setdefault('flags')
+
+    return symbols
+
   def _ParseElfdumpLine(self, line, section=None):
 
     headers_re = (
@@ -419,6 +411,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       'version needed': (r"""
         \s*(?:\[(?P<index>\d+)\]\s+)?     # index might be not present
                                           # if no version binding is enabled
+
         (?:(?P<file>\S+)\s+               # file can be absent if the same as
          (?!\[\s(?:INFO|WEAK)\s\]))?      # the previous line, we make sure
                                           # version is not confused with file
