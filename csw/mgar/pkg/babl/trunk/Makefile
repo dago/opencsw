@@ -28,10 +28,10 @@ PKGFILES_CSWlibbabl0-1-0 += $(call pkgfiles_lib,libbabl-0.1.so.0)
 PKGFILES_CSWlibbabl0-1-0 += $(call baseisadirs,$(libdir),babl-0.1/.*)
 OBSOLETED_BY_CSWlibbabl0-1-0 += CSWlibbabl
 
-# PACKAGES += CSWlibbabl-dev
-# SPKG_DESC_CSWlibbabl-dev = Development files for libbabl-0.1.so.0
+PACKAGES += CSWlibbabl-dev
+SPKG_DESC_CSWlibbabl-dev = Development files for libbabl-0.1.so.0
 # PKGFILES is catchall
-# RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
+RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
 
 BUILD64_LIBS_ONLY = 1
 
