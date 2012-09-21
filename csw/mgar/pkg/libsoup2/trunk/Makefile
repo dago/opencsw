@@ -1,5 +1,5 @@
 NAME = libsoup
-VERSION = 2.26.3
+VERSION = 2.33.92
 CATEGORIES = lib
 GARTYPE = v2
   
@@ -41,7 +41,9 @@ EXTRA_LIB = /opt/csw/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib 
 STRIP_LIBTOOL = 1
 
-CONFIGURE_ARGS = $(DIRPATHS) --disable-static 
+CONFIGURE_ARGS = $(DIRPATHS) 
+CONFIGURE_ARGS += --disable-static 
+CONFIGURE_ARGS += --disable-tls-check
 
 # Test disabled because of missing Apache stuff
 TEST_TARGET = 
