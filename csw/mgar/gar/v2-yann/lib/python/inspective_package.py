@@ -35,7 +35,7 @@ def GetFileMetadata(file_magic, base_dir, file_path):
     return {}
   file_info = {
       "path": StripRe(file_path, ROOT_RE),
-      "mime_type": file_magic.GetFileMimeType(full_path)
+      "mime_type": file_magic.GetFileMimeType(full_path),
   }
   if base_dir:
     file_info["path"] = os.path.join(base_dir, file_info["path"])
@@ -69,16 +69,17 @@ def GetFileMetadata(file_magic, base_dir, file_path):
             "Error in hachoir_parser processing %s: %r", file_path, e)
   return file_info
 
-def ShellCommand(args, env=None):
-      logging.debug("Running: %s", args)
-      proc = subprocess.Popen(args,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE,
-                              env=env)
-      stdout, stderr = proc.communicate()
-      retcode = proc.wait()
 
-      return retcode, stdout, stderr
+def ShellCommand(args, env=None):
+  logging.debug("Running: %s", args)
+  proc = subprocess.Popen(args,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE,
+                          env=env)
+  stdout, stderr = proc.communicate()
+  retcode = proc.wait()
+
+  return retcode, stdout, stderr
 
 
 class InspectivePackage(package.DirectoryFormatPackage):
@@ -164,7 +165,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
     return os.path.exists(os.path.join(self.directory, "reloc"))
 
   def GetFilesDir(self):
-    """Returns the subdirectory in which files, are either "reloc" or "root"."""
+    """Returns the subdirectory in which files are,
+       either "reloc" or "root"."""
     if self.RelocPresent():
       return "reloc"
     else:
@@ -185,9 +187,11 @@ class InspectivePackage(package.DirectoryFormatPackage):
       if basedir:
         binary_in_tmp_dir = binary_in_tmp_dir[len(basedir):]
         binary_in_tmp_dir = binary_in_tmp_dir.lstrip("/")
-      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary_in_tmp_dir)
+      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(),
+                                     binary_in_tmp_dir)
       binary_base_name = os.path.basename(binary_in_tmp_dir)
-      retcode, stdout, stderr = ShellCommand([common_constants.DUMP_BIN, "-Lv", binary_abs_path], env)
+      args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
+      retcode, stdout, stderr = ShellCommand(args, env)
       binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
       if basedir:
@@ -240,12 +244,14 @@ class InspectivePackage(package.DirectoryFormatPackage):
     """Returns various informations symbol and versions present in elf header
 
     To do this we parse output lines from elfdump -syv, it's the
-    only command that will give us all informations we need on symbols and versions.
+    only command that will give us all informations we need on
+    symbols and versions.
+
     We will analyse 3 sections:
-     - version section: contains soname needed, version interface required for each soname,
-                        and version definition
-     - symbol table section: contains list of symbol and soname/version interface providing it
-                             (the latter is an index in the version section)
+     - version section: contains soname needed, version interface required
+                        for each soname, and version definition
+     - symbol table section: contains list of symbol and soname/version
+                             interface providing it
      - syminfo section: contains special linking flags for each symbol
     """
     binaries = self.ListBinaries()
@@ -266,7 +272,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
                      'version needed': []}
 
       # The list of fields we want to retrieve in the elfdump output by section
-      # the key is the original field name and the value the destination field name
+      # the key is the original field name
+      # the value is the destination field name
       elf_fields = {'version definition': {
                       'version': 'version',
                       'dependency': 'dependency',
@@ -323,9 +330,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
       binary_info['symbol table'] = symbols.values()
       binary_info['symbol table'].sort(key=lambda m: m['symbol'])
-      # To not rely of the section order output of elfdump, we resolve symbol version
-      # informations here after having parsed all elfdump output
-      self._ResolveSymbolsVersionInfo (binary_info)
+      # To not rely of the section order output of elfdump, we resolve
+      # symbol version informations here after having parsed all output
+      self._ResolveSymbolsVersionInfo(binary_info)
 
       binaries_elf_info[binary] = binary_info
 
@@ -345,11 +352,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
       if retcode:
         uname_info = os.uname()
         if (uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
-            '/amd64/' in binary_abspath and 'has wrong class or data encoding' in stderr):
+            '/amd64/' in binary_abspath and
+            'has wrong class or data encoding' in stderr):
           # we are trying to analyze a 64 bits binary on a Solaris 9 x86
           # which exists only in 32 bits, that's not possible
           # we ignore the error and return no information as it is likely
-          # that the ldd infos will be the same on the 32 bits binaries analyzed
+          # that the ldd infos will be the same on the 32 bits binaries
+          # analyzed
           ldd_output[binary] = []
           continue
         else:
@@ -370,19 +379,21 @@ class InspectivePackage(package.DirectoryFormatPackage):
     if not m:
       return None
     fields = line.split()
-    sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
+    sym = {'address': fields[0], 'type': fields[1], 'name': fields[2]}
     return sym
 
   def _ResolveSymbolsVersionInfo(self, binary_info):
 
-    version_info = binary_info['version definition'] + binary_info['version needed']
+    version_info = (binary_info['version definition']
+                    + binary_info['version needed'])
 
     for sym_info in binary_info['symbol table']:
-      # sym_info version field is an 1-based index on the version information table
+      # sym_info version field is an 1-based index on the version
+      # information table
       # we don't care about 0 and 1 values:
       #  0 is for external symbol with no version information available
-      #  1 is for a symbol defined by the binary and not binded to a version interface
-      #    but we removed that (useless) entry from the version definition table
+      #  1 is for a symbol defined by the binary and not binded
+      #    to a version interface
       version_index = int(sym_info['version']) - 2
       if version_index >= 0:
         version = version_info[version_index]
@@ -392,27 +403,32 @@ class InspectivePackage(package.DirectoryFormatPackage):
       else:
         sym_info['version'] = None
 
-      # we make sure these fields are present even if the syminfo section is not
+      # we make sure these fields are present
+      # even if the syminfo section is not
       sym_info.setdefault('soname')
       sym_info.setdefault('flags')
-
 
   def _ParseElfdumpLine(self, line, section=None):
 
     headers_re = (
       r"""
-       (?P<section>Version\sNeeded|Symbol\sTable     # Section header
+       (?P<section>Version\sNeeded|Symbol\sTable  # Section header
                   |Version\sDefinition|Syminfo)
                    \sSection:
         \s+(?:\.SUNW_version|\.dynsym
              |\.SUNW_syminfo|.symtab)\s*$
-       |\s*(?:index\s+)?version\s+dependency\s*$     # Version needed header
-       |\s*(?:index\s+)?file\s+version\s*$           # Version definition header
-       |\s*index\s*value\s+size\s+type\s+bind        # Symbol table header
+
+       |\s*(?:index\s+)?version\s+dependency\s*$  # Version needed header
+
+       |\s*(?:index\s+)?file\s+version\s*$        # Version definition header
+
+       |\s*index\s*value\s+size\s+type\s+bind     # Symbol table header
         \s+oth\s+ver\s+shndx\s+name\s*$
-       |\s*index\s+flags\s+bound\sto\s+symbol\s*$     # Syminfo header
-       |\s*$                                         # There is always a blank
-                                                     # line before a new section
+
+       |\s*index\s+flags\s+bound\sto\s+symbol\s*$ # Syminfo header
+
+       |\s*$                                      # There is always a blank
+                                                  # line before a new section
        """)
 
     re_by_section = {
@@ -483,17 +499,22 @@ class InspectivePackage(package.DirectoryFormatPackage):
                      r'with STV_PROTECTED visibility$')
     sizes_differ = (r'^\trelocation \S+ sizes differ: '
                     r'(?P<sizes_differ_symbol>\S+)$')
-    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+) size=(?P<size1>0x\w+); '
+    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+)'
+                   ' size=(?P<size1>0x\w+); '
                   r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
     sizes_one_used = (r'^\t\t(?P<sizediffused_file>\S+) size used; '
                       r'possible insufficient data copied$')
-    unreferenced_object = (r'^\s*unreferenced object=(?P<object>.*); unused dependency of (?P<binary>.*)$')
+    unreferenced_object = (r'^\s*unreferenced object=(?P<object>.*);'
+                            ' unused dependency of (?P<binary>.*)$')
     unused_object = (r'^\s*unused object=.*$')
-    unused_search_path = (r'^\s*unused search path=.*  \(RUNPATH/RPATH from file .*\)$')
+    unused_search_path = (r'^\s*unused search path=.*'
+                           '  \(RUNPATH/RPATH from file .*\)$')
     blank_line = (r'^\s*$')
     common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
-                 % (found_re, symbol_not_found_re, only_so, version_so, stv_protected, sizes_differ, sizes_info,
-                    sizes_one_used, unreferenced_object, unused_object, unused_search_path, blank_line))
+                 % (found_re, symbol_not_found_re, only_so, version_so,
+                    stv_protected, sizes_differ, sizes_info,
+                    sizes_one_used, unreferenced_object, unused_object,
+                    unused_search_path, blank_line))
     m = re.match(common_re, line)
     response = None
     if m:
@@ -526,7 +547,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["path"] = None
         response["symbol"] = None
       elif d["relocation_symbol"]:
-        response["state"] = 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility'
+        response["state"] = ("relocation-bound-to-a-symbol"
+                             "-with-STV_PROTECTED-visibility")
         response["soname"] = None
         response["path"] = d["relocation_path"]
         response["symbol"] = d["relocation_symbol"]
@@ -618,9 +640,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
           pkgname, catalogname = fields[0:2]
           obsoleted_by.append((pkgname, catalogname))
 
-    return { "syntax_ok": obsoleted_syntax_ok,
-             "obsoleted_by": obsoleted_by,
-             "has_obsolete_info": has_obsolete_info }
+    return {"syntax_ok": obsoleted_syntax_ok,
+            "obsoleted_by": obsoleted_by,
+            "has_obsolete_info": has_obsolete_info}
 
 
 class FileMagic(object):
@@ -655,7 +677,7 @@ class FileMagic(object):
     for i in xrange(10):
       mime = self.magic_cookie.file(full_path)
       if mime:
-        break;
+        break
       else:
         # Returned mime is null. Re-initializing the cookie and trying again.
         logging.error("magic_cookie.file(%s) returned None. Retrying.",
@@ -675,6 +697,7 @@ class InspectiveCswSrv4File(package.CswSrv4File):
 
   # The presence of this method makes it explicit that we want an inspective
   # version of the directory format package.
+
   def GetInspectivePkg(self):
     return self.GetDirFormatPkg()
 
