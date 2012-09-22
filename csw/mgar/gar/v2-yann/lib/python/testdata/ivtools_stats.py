@@ -62,7 +62,7 @@ pkgstats = [{'bad_paths': {},
 	  		  'version definition': [],
 			  'version needed' : [],
 			  'symbol table': [
-	                       { 'soname': 'libComUnidraw.so', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' } ,
+	                       { 'soname': 'libComUnidraw.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' } ,
 			       ],
 		           },
 	                'opt/csw/lib/libComUnidraw.so.1.1.3': {
