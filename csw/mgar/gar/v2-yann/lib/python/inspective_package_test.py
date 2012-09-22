@@ -165,9 +165,8 @@ class PackageStatsUnitTest(unittest.TestCase):
   def test_ParseElfdumpLineVersionNeeded(self):
     line = '[13]                              SUNW_0.9             [ INFO ]'
     expected = {
-        'index': '13',
-	'version': 'SUNW_0.9',
-	'file': None
+      'version': 'SUNW_0.9',
+      'soname': None
     }
     self.assertEqual((expected, "version needed"), self.ip._ParseElfdumpLine(line, 'version needed'))
 
@@ -176,8 +175,8 @@ class PackageStatsUnitTest(unittest.TestCase):
     expected = {
       'bind': 'GLOB',
       'shndx': '.text',
-      'name': 'vsf_log_line',
-      'ver': '1',
+      'symbol': 'vsf_log_line',
+      'version': '1',
       'type': 'FUNC',
     }
     self.assertEqual((expected, 'symbol table'), self.ip._ParseElfdumpLine(line, 'symbol table'))
@@ -186,7 +185,7 @@ class PackageStatsUnitTest(unittest.TestCase):
     line = '      [152]  DB           [4] libc.so.1                strlen'
     expected = {
         'flags': 'DB',
-        'library': 'libc.so.1',
+        'soname': 'libc.so.1',
         'symbol': 'strlen',
     }
     self.assertEqual((expected, "syminfo"), self.ip._ParseElfdumpLine(line, "syminfo"))
@@ -195,7 +194,7 @@ class PackageStatsUnitTest(unittest.TestCase):
     line = '      [116]  DB               <self>                   environ'
     expected = {
         'flags': 'DB',
-        'library': None,
+        'soname': None,
         'symbol': 'environ',
     }
     self.assertEqual((expected, "syminfo"), self.ip._ParseElfdumpLine(line, "syminfo"))
