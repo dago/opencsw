@@ -116,8 +116,6 @@ DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
 
 DISTFILES += THIS_LOCATION_IS_DEPRECATED
 
-DISTFILES += map.openssh
-
 LICENSE = LICENCE
 
 # The GSSAPI key exchange patch
@@ -166,8 +164,6 @@ CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
-
-EXTRA_LDFLAGS = -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.openssh)"
 
 TEST_SCRIPTS	=
 
