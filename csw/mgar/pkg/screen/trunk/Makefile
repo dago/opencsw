@@ -82,8 +82,6 @@ CONFIGURE_ARGS += --enable-colors256
 CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
 CONFIGURE_ARGS += --with-socket-dir=/var$(prefix)/run/screen
 
-EXTRA_LDFLAGS = -z ignore -Bdirect
-
 include gar/category.mk
 
 # we must recreate configure as we modified configure.in
