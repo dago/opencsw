@@ -404,42 +404,42 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
     re_by_section = {
       'version definition': (r"""
-        \s*(?:\[\d+\]\s+)?            # index might be not present
-                                      # if no version binding is enabled
-        (?P<version>\S+)
-        (?:\s+(?P<dependency>\S+))?
+        \s*(?:\[\d+\]\s+)?                # index: might be not present if
+                                          #        no version binding is enabled
+        (?P<version>\S+)                  # version
+        (?:\s+(?P<dependency>\S+))?       # dependency
         (?:\s+\[\s(?:BASE)\s\])?\s*$
                               """),
       'version needed': (r"""
-        \s*(?:\[\d+\]\s+)?     # index might be not present
-                                          # if no version binding is enabled
-
-        (?:(?P<soname>\S+)\s+             # file can be absent if the same as
-         (?!\[\s(?:INFO|WEAK)\s\]))?      # the previous line, we make sure
-                                          # version is not confused with file
-                                          # in that case
-        (?P<version>\S+)
-        (?:\s+\[\s(?:INFO|WEAK)\s\])?\s*$
+        \s*(?:\[\d+\]\s+)?                # index: might be not present if
+                                          #        no version binding is enabled
+        (?:(?P<soname>\S+)\s+             # file: can be absent if the same as
+         (?!\[\s(?:INFO|WEAK)\s\]))?      #       the previous line,
+                                          #       we make sure there is no
+                                          #       confusion with version
+        (?P<version>\S+)                  # version
+        (?:\s+\[\s(?:INFO|WEAK)\s\])?\s*$ #
                           """),
       'symbol table': (r"""
-         \s*\[\d+\]
-         \s+(?:0x[0-9a-f]+|REG_G\d+)
-         \s+0x[0-9a-f]+
-         \s+(?P<type>\S+)
-         \s+(?P<bind>\S+)
-         \s+\S+
-         \s+(?P<version>\S+)
-         \s+(?P<shndx>\S+)
-         (?:\s+(?P<symbol>\S+))?\s*$
+         \s*\[\d+\]                       # index
+         \s+(?:0x[0-9a-f]+|REG_G\d+)      # value
+         \s+(?:0x[0-9a-f]+)               # size
+         \s+(?P<type>\S+)                 # type
+         \s+(?P<bind>\S+)                 # bind
+         \s+(?:\S+)                       # oth
+         \s+(?P<version>\S+)              # ver
+         \s+(?P<shndx>\S+)                # shndx
+         (?:\s+(?P<symbol>\S+))?\s*$      # name
                         """),
       'syminfo': (r"""
-         \s*\[\d+\]
-         \s+(?P<flags>[ABCDFILNPS]+)
-         \s+(?:(?:\[\d+\]                   # some kind of library index
-         \s+(?P<soname>\S+)|<self>)\s+)?    # library is not present
-                                            # for external symbols not
-                                            # directly bound
-         (?P<symbol>\S+)\s*
+         \s*(?:\[\d+\])                   # index
+         \s+(?P<flags>[ABCDFILNPS]+)      # flags
+
+         \s+(?:(?:\[\d+\]                 # bound to: contains a library index
+         \s+(?P<soname>\S+)|<self>)\s+)?  #           and the library name
+                                          #           or <self> fon non external
+                                          #           symbols
+         (?P<symbol>\S+)\s*               # symbol
                    """)}
 
     elfdump_data = None
