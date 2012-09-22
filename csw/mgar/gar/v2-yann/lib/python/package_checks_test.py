@@ -504,7 +504,7 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
 	'version definition': [],
 	'version needed': [],
 	'symbol table': [
-		{ 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' }
+		{ 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
 		]
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
@@ -539,7 +539,7 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
 	'version definition': [],
 	'version needed': [],
 	'symbol table': [
-		{ 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' }
+		{ 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
 	]
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
@@ -576,7 +576,7 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
 	'symbol table': [{ 'symbol': 'foo',
 		           'soname': 'libdb-4.7.so',
 			   'bind': 'GLOB',
-			   'external': True,
+			   'shndx': 'UNDEF',
 			   'flags': 'DBL' }],
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
@@ -621,7 +621,7 @@ class TestLibmLinking(CheckTestHelper, unittest.TestCase):
 		'version definition': [],
 		'version needed': [],
 		'symbol table': [
-			{ 'soname': 'libm.so.2', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' }
+			{ 'soname': 'libm.so.2', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
 			]
 		}
 	}
@@ -673,7 +673,7 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
 		 		'version definition': [],
 				'version needed': [],
 				'symbol table': [
-					{ 'soname': 'libfoo.so.1', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' },
+					{ 'soname': 'libfoo.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
 					]
 				}
 			},
@@ -736,7 +736,7 @@ class TestSharedLibsOnlyIsalist(CheckTestHelper, unittest.TestCase):
 		 		'version definition': [],
 				'version needed': [],
 				'symbol table': [
-					{ 'soname': 'libfoo.so.1', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' },
+					{ 'soname': 'libfoo.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
 					]
 				},
 		            'opt/csw/lib/libfoo.so.1': {
@@ -776,7 +776,7 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
 		'version definition': [],
 		'version needed': [],
 		'symbol table': [
-			{ 'soname': 'libbar.so', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' }
+			{ 'soname': 'libbar.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
 			]
 		}
 	}
@@ -812,7 +812,7 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
 		'version definition': [],
 		'version needed': [],
 		'symbol table': [
-			{ 'soname': 'libnotfound.so', 'symbol': 'foo', 'flags': 'DBL', 'external': True, 'bind': 'GLOB' }
+			{ 'soname': 'libnotfound.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
 			]
 		}
 	}
@@ -1576,7 +1576,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       self.error_mgr_mock.ReportError(
         'CSWvsftpd',
         'no-direct-binding',
-        '/opt/csw/sbin/vsftpd is not directly binded to soname ' + soname)
+        '/opt/csw/sbin/vsftpd is not directly bound to soname ' + soname)
 
 
 class TestCheckWrongArchitecture(CheckTestHelper, unittest.TestCase):

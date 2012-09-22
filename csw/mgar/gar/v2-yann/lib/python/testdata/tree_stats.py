@@ -53,7 +53,7 @@ pkgstats = [{'bad_paths': {},
 			 		       'symbol table': [ { 'flags': 'DBL', 
 					 	                   'soname': 'libc.so.1', 
 							  	   'symbol': 'environ',
-								   'external': True,
+								   'shndx': 'UNDEF',
 								   'version': None 
 								  } ] 
 					      }
