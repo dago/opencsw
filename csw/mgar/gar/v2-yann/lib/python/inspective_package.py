@@ -69,6 +69,17 @@ def GetFileMetadata(file_magic, base_dir, file_path):
             "Error in hachoir_parser processing %s: %r", file_path, e)
   return file_info
 
+def ShellCommand(args, env=None):
+      logging.debug("Running: %s", args)
+      proc = subprocess.Popen(args,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE,
+                              env=env)
+      stdout, stderr = proc.communicate()
+      retcode = proc.wait()
+
+      return retcode, stdout, stderr
+
 
 class InspectivePackage(package.DirectoryFormatPackage):
   """Extends DirectoryFormatPackage to allow package inspection."""
@@ -176,11 +187,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         binary_in_tmp_dir = binary_in_tmp_dir.lstrip("/")
       binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary_in_tmp_dir)
       binary_base_name = os.path.basename(binary_in_tmp_dir)
-      args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
-      logging.debug("Running: %s", args)
-      dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
-      stdout, stderr = dump_proc.communicate()
-      ret = dump_proc.wait()
+      retcode, stdout, stderr = ShellCommand([common_constants.DUMP_BIN, "-Lv", binary_abs_path], env)
       binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
       if basedir:
@@ -230,7 +237,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     return defined_symbols
 
   def GetBinaryElfInfo(self):
-    """Returns various informations symbol and version present in elf header
+    """Returns various informations symbol and versions present in elf header
 
     To do this we parse output lines from elfdump -syv, it's the
     only command that will give us all informations we need on symbols and versions.
@@ -247,34 +254,38 @@ class InspectivePackage(package.DirectoryFormatPackage):
     for binary in binaries:
       binary_abspath = os.path.join(self.directory, "root", binary)
       # elfdump is the only tool that give us all informations
-      args = ["/usr/ccs/bin/elfdump", "-svy", binary_abspath]
-      elfdump_proc = subprocess.Popen(
-          args,
-          stdout=subprocess.PIPE,
-          stderr=subprocess.PIPE)
-      stdout, stderr = elfdump_proc.communicate()
-      retcode = elfdump_proc.wait()
+      retcode, stdout, stderr = ShellCommand(["/usr/ccs/bin/elfdump", "-svy", binary_abspath])
       if retcode or stderr:
-        logging.error("%s returned one or more errors: %s", args, stderr.splitlines()[0])
+        logging.error("%s returned one or more errors: %s", args, stderr)
         continue
       elfdump_out = stdout.splitlines()
 
       symbols = {}
       binary_info = {'version definition': [],
-                     'version needed': [],
-                     'symbol table': []}
-      # we will merge syminfo and symbol table information in one list
-      # so the syminfo list is the same as the symbol table one
-      binary_info['syminfo'] = binary_info['symbol table']
+                     'version needed': []}
 
       # The list of fields we want to retrieve in the elfdump output by section
-      # If the field is a tuple, it means we will map the original field name
-      # to another name in the final data structure
-      elf_fields = {'version definition': ['version', 'dependency'],
-                    'version needed': [('file', 'soname'), 'version'],
-                    'symbol table': [('name', 'symbol'), ('ver', 'version'),
-                                     'bind', 'shndx'],
-                    'syminfo': [('library', 'soname'), 'symbol', 'flags']}
+      # the key is the original field name and the value the destination field name
+      elf_fields = {'version definition': {
+                      'version': 'version',
+                      'dependency': 'dependancy',
+                      },
+                    'version needed': {
+                      'file': 'soname',
+                      'version': 'version',
+                      },
+                    'symbol table': {
+                      'name': 'symbol',
+                      'ver': 'version',
+                      'bind': 'bind',
+                      'shndx': 'shndx',
+                      },
+                    'syminfo': {
+                      'library': 'soname',
+                      'symbol': 'symbol',
+                      'flags': 'flags',
+                      }
+                    }
 
       cur_section = None
       for line in elfdump_out:
@@ -286,14 +297,11 @@ class InspectivePackage(package.DirectoryFormatPackage):
           continue
 
         elf_info = {}
-        for field in elf_fields[cur_section]:
-          if type(field) == tuple:
-            elf_info[field[1]] = elfdump_data[field[0]]
-          else:
-            elf_info[field] = elfdump_data[field]
+        for src_field, dest_field in elf_fields[cur_section].items():
+          elf_info[dest_field] = elfdump_data[src_field]
 
-        # we merge symbol table and syminfo informations so we have to check
-        # if the symbol has not already been added
+        # symbol table and syminfo section store various informations
+        # about the same symbols, we merge them in a dict
         if cur_section in ('symbol table', 'syminfo'):
           symbols.setdefault(elf_info['symbol'], {}).update(elf_info)
         else:
@@ -311,9 +319,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
       if binary_info['version definition']:
         binary_info['version definition'].pop(0)
 
+      binary_info['symbol table'] = symbols.values()
       # To not rely of the section order output of elfdump, we resolve symbol version
       # informations here after having parsed all elfdump output
-      binary_info['symbol table'] = self._ResolveSymbolsVersionInfo (symbols.values(), binary_info)
+      self._ResolveSymbolsVersionInfo (binary_info)
 
       binaries_elf_info[binary] = binary_info
 
@@ -328,13 +337,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # this could be potentially moved into the DirectoryFormatPackage class.
       # ldd needs the binary to be executable
       os.chmod(binary_abspath, 0755)
-      args = ["ldd", "-Ur", binary_abspath]
-      ldd_proc = subprocess.Popen(
-          args,
-          stdout=subprocess.PIPE,
-          stderr=subprocess.PIPE)
-      stdout, stderr = ldd_proc.communicate()
-      retcode = ldd_proc.wait()
+      retcode, stdout, stderr = ShellCommand(["ldd", "-Ur", binary_abspath])
       if retcode:
         uname_info = os.uname()
         if (uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
@@ -345,7 +348,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
           # that the ldd infos will be the same on the 32 bits binaries analyzed
           return {}
         else:
-          logging.error("%s returned an error: %s", args, stderr)
+          logging.error("%s returned an error: %s", args, stderr.splitlines()[0].splitlines()[0])
 
       ldd_info = []
       for line in stdout.splitlines():
@@ -365,23 +368,25 @@ class InspectivePackage(package.DirectoryFormatPackage):
     sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
     return sym
 
-  def _ResolveSymbolsVersionInfo(self, symbols, binary_info):
+  def _ResolveSymbolsVersionInfo(self, binary_info):
 
     version_info = binary_info['version definition'] + binary_info['version needed']
 
-    for sym_info in symbols:
+    for sym_info in binary_info['symbol table']:
+      # version index is an 1-based index on the version information table
+      # from which we also removed the first entry which was the
+      # base library/binary itself
       version_index = int(sym_info['version']) - 2
-      if version_index > 1:
+      if version_index >= 0:
         version = version_info[version_index]
         sym_info['version'] = version['version']
         sym_info['soname'] = version['soname']
 
-      # we make sure the field are present even if the syminfo section is not
+      # we make sure these fields are present even if the syminfo section is not
       sym_info.setdefault('version')
       sym_info.setdefault('soname')
       sym_info.setdefault('flags')
 
-    return symbols
 
   def _ParseElfdumpLine(self, line, section=None):
 
