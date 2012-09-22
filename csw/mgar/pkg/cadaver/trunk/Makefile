@@ -56,8 +56,6 @@ CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
 
-EXTRA_LDFLAGS = -z ignore -Bdirect 
-
 TEST_SCRIPTS =
 
 include gar/category.mk
