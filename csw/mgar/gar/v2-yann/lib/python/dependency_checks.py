@@ -29,10 +29,11 @@ DLOPEN_LIB_LOCATIONS = (
 )
 
 DEPENDENCY_FILENAME_REGEXES = (
-    (r".*\.pl$",   (u"CSWperl",)),
-    (r".*\.pm$",   (u"CSWperl",)),
-    (r".*\.py$",   (u"CSWpython",)),
-    (r".*\.rb$",   (u"CSWruby", u"CSWruby18", u"CSWruby191", u"CSWlibruby1-9-1-1")),
+    (r".*\.pl$", (u"CSWperl",)),
+    (r".*\.pm$", (u"CSWperl",)),
+    (r".*\.py$", (u"CSWpython",)),
+    (r".*\.rb$", (u"CSWruby", u"CSWruby18",
+                  u"CSWruby191", u"CSWlibruby1-9-1-1")),
     (r".*\.elc?$", (u"CSWemacscommon",)),
     (r"/opt/csw/apache2/", (u"CSWapache2",)),
 )
@@ -40,9 +41,12 @@ DEPENDENCY_FILENAME_REGEXES = (
 PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])
 
 BASE_SOLARIS_LIBRARIES = (
-     "libsocket.so.1", "libnsl.so.1", "libdl.so.1", "librt.so.1", "libresolv.so.2", "libpthread.so.1",
-     # linked by default with C++, see "Default C++ Libraries" in Solaris Studio C++ User'sGuide
-     "libCstd.so.1", "libCrun.so.1", "libm.so.1", "libm.so.2", "libw.so.1", "libcx.so.1", "libc.so.1", "libC.so.3", "libC.so.5",
+     "libsocket.so.1", "libnsl.so.1", "libdl.so.1", "librt.so.1",
+     "libresolv.so.2", "libpthread.so.1",
+     # linked by default with C++, see "Default C++ Libraries"
+     # in Solaris Studio C++ User's Guide
+     "libCstd.so.1", "libCrun.so.1", "libm.so.1", "libm.so.2",
+     "libw.so.1", "libcx.so.1", "libc.so.1", "libC.so.3", "libC.so.5",
 )
 
 ALLOWED_VERSION_DEPENDENCIES = {
@@ -61,8 +65,8 @@ ALLOWED_VERSION_DEPENDENCIES = {
 
 def ProcessSoname(
     ldd_emulator,
-    soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
-    error_mgr,
+    soname, path_and_pkg_by_basename, binary_info, isalist, binary_path,
+    logger, error_mgr,
     pkgname, messenger):
   """This is not an ideal name for this function.
 
@@ -163,59 +167,69 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
     for soname in binary_info["needed sonames"]:
       orphan_sonames_tmp = ProcessSoname(
           ldd_emulator,
-          soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
-          error_mgr,
+          soname, path_and_pkg_by_basename, binary_info, isalist, binary_path,
+          logger, error_mgr,
           pkgname, messenger)
       orphan_sonames.extend(orphan_sonames_tmp)
 
     ldd_info = pkg_data['ldd_info'][binary_info["path"]]
     for ldd_response in ldd_info:
-      if ldd_response['state'] == 'soname-unused' and ldd_response['soname'] not in BASE_SOLARIS_LIBRARIES:
+      if (ldd_response['state'] == 'soname-unused'
+          and ldd_response['soname'] not in BASE_SOLARIS_LIBRARIES):
         messenger.Message(
-          "Binary %s links to library %s but doesn't seem to use any of its symbols. "
-          "It usually happens because superfluous libraries were added to the linker options, "
-          "either because of the configure script itself or because of the \"pkg-config --libs\""
-          " output of one the dependency."
+          "Binary %s links to library %s but doesn't seem to use any"
+          " of its symbols. It usually happens because superfluous"
+          " libraries were added to the linker options, either because"
+          " of the configure script itself or because of the"
+          " \"pkg-config --libs\" output of one the dependency."
           % ("/" + binary_info["path"], ldd_response['soname']))
         error_mgr.ReportError(
             pkgname, "soname-unused",
-            "%s is needed by %s but never used" % (ldd_response['soname'], "/" + binary_info["path"]))
+            "%s is needed by %s but never used"
+             % (ldd_response['soname'], "/" + binary_info["path"]))
 
     # Even when direct binding is enabled, some symbols might not be
     # directly bound because the library explicitely requested the symbol
     # not to be drectly bound to.
-    # For example, libc.so.1 does it for symbol sigaction, free, malloc and realloc
-    # So we consider that direct binding is enabled if at least one symbol is directly
-    # bound to because that definitely means that -B direct or -z direct was used.
-    directly_bound = set()
-    for syminfo in pkg_data["binaries_elf_info"][binary_info["path"]]['symbol table']:
+    # For example, libc.so.1 does it for symbol sigaction, free, malloc...
+    # So we consider that direct binding is enabled if at least one
+    # symbol is directly bound to because that definitely means that
+    # -B direct or -z direct was used.
+    binary_elf_info = pkg_data["binaries_elf_info"][binary_info["path"]]
+    db_libs = set()
+    for syminfo in binary_elf_info['symbol table']:
       if (syminfo['shndx'] == 'UNDEF' and syminfo['flags']
           and 'D' in syminfo['flags'] and 'B' in syminfo['flags']):
-          directly_bound.add(syminfo['soname'])
-    not_directly_bound = directly_bound.symmetric_difference(binary_info["needed sonames"])
+          db_libs.add(syminfo['soname'])
+    no_db_libs = db_libs.symmetric_difference(binary_info["needed sonames"])
 
-    if not_directly_bound:
+    if no_db_libs:
       messenger.Message(
-        "No symbol of binary %s is directly bound against the following libraries: %s. "
-        "Please make sure the binaries are compiled using the \"-Bdirect\" linker option."
-        % ("/" + binary_info["path"], ", ".join(not_directly_bound)))
-      for soname in not_directly_bound:
+        "No symbol of binary %s is directly bound against the following"
+        " libraries: %s. Please make sure the binaries are compiled using"
+        " the \"-Bdirect\" linker option."
+        % ("/" + binary_info["path"], ", ".join(no_db_libs)))
+      for soname in no_db_libs:
         error_mgr.ReportError(
           pkgname, "no-direct-binding",
-          "%s is not directly bound to soname %s" % ("/" + binary_info["path"], soname))
+          "%s is not directly bound to soname %s"
+           % ("/" + binary_info["path"], soname))
 
 
-    for version_dep in pkg_data["binaries_elf_info"][binary_info["path"]]['version needed']:
+    for version_dep in binary_elf_info['version needed']:
       if (version_dep['soname'] in ALLOWED_VERSION_DEPENDENCIES and
-        not version_dep['version'] in ALLOWED_VERSION_DEPENDENCIES[version_dep['soname']]):
+          not version_dep['version'] in
+          ALLOWED_VERSION_DEPENDENCIES[version_dep['soname']]):
         messenger.Message(
-          "Binary %s requires interface version %s in library %s which is only available "
-          "in recent Solaris releases."
-          % ("/" + binary_info["path"], version_dep['version'], version_dep['soname']))
+          "Binary %s requires interface version %s in library %s which is"
+          " only available in recent Solaris releases."
+          % ("/" + binary_info["path"], version_dep['version'],
+             version_dep['soname']))
         error_mgr.ReportError(
           pkgname, "forbidden-version-interface-dependencies",
           "%s requires forbidden interface version %s in library %s"
-          % ("/" + binary_info["path"], version_dep['version'], version_dep['soname']))
+          % ("/" + binary_info["path"], version_dep['version'],
+             version_dep['soname']))
 
 
   orphan_sonames = set(orphan_sonames)
@@ -262,8 +276,8 @@ def ByDirectory(pkg_data, error_mgr, logger, messenger,
       needed_dirs.add(base_dir)
   for needed_dir in needed_dirs:
     reason_group = []
-    # TODO: The preferred directory providers should not depend on other packages to
-    # provide directories.
+    # TODO: The preferred directory providers should not depend on other
+    # packages to provide directories.
     if pkgname not in PREFERRED_DIRECTORY_PROVIDERS:
       # If the path is provided by CSWcommon or other preferred package, don't
       # mention other packages.
@@ -277,7 +291,8 @@ def ByDirectory(pkg_data, error_mgr, logger, messenger,
         if not pkg_by_path[needed_dir]:
           # There's no sense in reporting '/' and ''.
           if needed_dir and needed_dir != '/':
-            error_mgr.ReportError(pkgname, "base-dir-not-found", repr(needed_dir))
+            error_mgr.ReportError(pkgname, "base-dir-not-found",
+                                  repr(needed_dir))
         elif len(pkg_by_path[needed_dir]) < 5:
           pkgs_to_mention = pkg_by_path[needed_dir]
         else:
@@ -289,7 +304,8 @@ def ByDirectory(pkg_data, error_mgr, logger, messenger,
       if reason_group:
         req_pkgs_reasons.append(reason_group)
     else:
-      error_mgr.ReportError(pkgname, "base-dir-not-provided-by-any-package", needed_dir)
+      error_mgr.ReportError(pkgname, "base-dir-not-provided-by-any-package",
+                            needed_dir)
   return req_pkgs_reasons
 
 
@@ -303,6 +319,7 @@ def GetPathAndPkgByBasename(error_mgr, logger, basenames,
         error_mgr.GetPathsAndPkgnamesByBasename(basename))
   return path_and_pkg_by_basename
 
+
 def GetPkgByFullPath(error_mgr, logger, paths_to_verify, pkg_by_path):
   """Resolves a list of paths to a mapping between paths and packages.
 
@@ -313,10 +330,12 @@ def GetPkgByFullPath(error_mgr, logger, paths_to_verify, pkg_by_path):
   for path in paths_to_verify:
     if path not in pkg_by_path:
       result = error_mgr.GetPkgByPath(path)
-      # logger.warning("error_mgr.GetPkgByPath(%s) => %s", repr(path), repr(result))
+      # logger.warning("error_mgr.GetPkgByPath(%s) => %s", repr(path),
+      #                repr(result))
       pkg_by_path[path] = result
   # logger.warning("New paths: %s" % pprint.pformat(pkg_by_path))
   return pkg_by_path
+
 
 def SuggestLibraryPackage(error_mgr, messenger,
     pkgname, catalogname,
