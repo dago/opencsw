@@ -348,7 +348,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
           # that the ldd infos will be the same on the 32 bits binaries analyzed
           return {}
         else:
-          logging.error("%s returned an error: %s", args, stderr.splitlines()[0].splitlines()[0])
+          logging.error("%s returned an error: %s", args, stderr)
 
       ldd_info = []
       for line in stdout.splitlines():
