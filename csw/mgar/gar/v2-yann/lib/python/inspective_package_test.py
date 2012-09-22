@@ -67,7 +67,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     ip.pkginfo_dict = {
         "BASEDIR": "",
     }
-    self.assertEqual([u'/fake/path/CSWfoo/root/foo-file'], ip.ListBinaries())
+    self.assertEqual([u'foo-file'], ip.ListBinaries())
 
 
 
