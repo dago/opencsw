@@ -254,7 +254,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
     for binary in binaries:
       binary_abspath = os.path.join(self.directory, "root", binary)
       # elfdump is the only tool that give us all informations
-      retcode, stdout, stderr = ShellCommand(["/usr/ccs/bin/elfdump", "-svy", binary_abspath])
+      args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
+      retcode, stdout, stderr = ShellCommand(args)
       if retcode or stderr:
         logging.error("%s returned one or more errors: %s", args, stderr)
         continue
@@ -268,7 +269,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # the key is the original field name and the value the destination field name
       elf_fields = {'version definition': {
                       'version': 'version',
-                      'dependency': 'dependancy',
+                      'dependency': 'dependency',
                       },
                     'version needed': {
                       'file': 'soname',
@@ -277,6 +278,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
                     'symbol table': {
                       'name': 'symbol',
                       'ver': 'version',
+                      'type': 'type',
                       'bind': 'bind',
                       'shndx': 'shndx',
                       },
@@ -320,6 +322,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         binary_info['version definition'].pop(0)
 
       binary_info['symbol table'] = symbols.values()
+      binary_info['symbol table'].sort(key=lambda m: m['symbol'])
       # To not rely of the section order output of elfdump, we resolve symbol version
       # informations here after having parsed all elfdump output
       self._ResolveSymbolsVersionInfo (binary_info)
@@ -337,7 +340,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # this could be potentially moved into the DirectoryFormatPackage class.
       # ldd needs the binary to be executable
       os.chmod(binary_abspath, 0755)
-      retcode, stdout, stderr = ShellCommand(["ldd", "-Ur", binary_abspath])
+      args = ["ldd", "-Ur", binary_abspath]
+      retcode, stdout, stderr = ShellCommand(args)
       if retcode:
         uname_info = os.uname()
         if (uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
@@ -373,17 +377,21 @@ class InspectivePackage(package.DirectoryFormatPackage):
     version_info = binary_info['version definition'] + binary_info['version needed']
 
     for sym_info in binary_info['symbol table']:
-      # version index is an 1-based index on the version information table
-      # from which we also removed the first entry which was the
-      # base library/binary itself
+      # sym_info version field is an 1-based index on the version information table
+      # we don't care about 0 and 1 values:
+      #  0 is for external symbol with no version information available
+      #  1 is for a symbol defined by the binary and not binded to a version interface
+      #    but we removed that (useless) entry from the version definition table
       version_index = int(sym_info['version']) - 2
       if version_index >= 0:
         version = version_info[version_index]
         sym_info['version'] = version['version']
-        sym_info['soname'] = version['soname']
+        if 'soname' in version:
+          sym_info['soname'] = version['soname']
+      else:
+        sym_info['version'] = None
 
       # we make sure these fields are present even if the syminfo section is not
-      sym_info.setdefault('version')
       sym_info.setdefault('soname')
       sym_info.setdefault('flags')
 
@@ -410,8 +418,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
       'version definition': (r"""
         \s*(?:\[(?P<index>\d+)\]\s+)? # index might be not present
                                       # if no version binding is enabled
-        (?P<version>.*\S)
-        \s+(?P<dependency>\S+)?\s*$
+        (?P<version>\S+)
+        (?:\s+(?P<dependency>\S+))?
+        (?:\s+\[\s(?:BASE)\s\])?\s*$ #
                               """),
       'version needed': (r"""
         \s*(?:\[(?P<index>\d+)\]\s+)?     # index might be not present
@@ -428,21 +437,21 @@ class InspectivePackage(package.DirectoryFormatPackage):
          \s*\[\d+\]
          \s+(?:0x[0-9a-f]+|REG_G\d+)
          \s+0x[0-9a-f]+
-         \s+\S+
+         \s+(?P<type>\S+)
          \s+(?P<bind>\S+)
          \s+\S+
          \s+(?P<ver>\S+)
          \s+(?P<shndx>\S+)
-         \s+(?P<name>\S+)?\s*$
+         (?:\s+(?P<name>\S+))?\s*$
                         """),
       'syminfo': (r"""
          \s*\[\d+\]
          \s+(?P<flags>[ABCDFILNPS]+)
          \s+(?:(?:\[\d+\]                   # some kind of library index
-         \s+(?P<library>.*\S)|<self>)\s+)?  # library is not present
+         \s+(?P<library>\S+)|<self>)\s+)?  # library is not present
                                             # for external symbols not
                                             # directly bound
-         (?P<symbol>.*\S)\s*
+         (?P<symbol>\S+)\s*
                    """)}
 
     elfdump_data = None
