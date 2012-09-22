@@ -350,7 +350,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
           # which exists only in 32 bits, that's not possible
           # we ignore the error and return no information as it is likely
           # that the ldd infos will be the same on the 32 bits binaries analyzed
-          return {}
+          ldd_output[binary] = []
+          continue
         else:
           logging.error("%s returned an error: %s", args, stderr)
 
@@ -361,7 +362,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
           ldd_info.append(result)
         ldd_output[binary] = ldd_info
 
-      return ldd_output
+    return ldd_output
 
   def _ParseNmSymLine(self, line):
     re_defined_symbol = re.compile('[0-9]+ [ABDFNSTU] \S+')
