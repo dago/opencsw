@@ -82,8 +82,6 @@ PATCHFILES += 0003-Missing-LDFLAGS-in-Makefile-fix.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libwrap=no
 
-EXTRA_LDFLAGS = -z ignore -Bdirect 
-
 TEST_SCRIPTS =
 
 include gar/category.mk
