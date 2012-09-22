@@ -271,46 +271,17 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_info = {'version definition': [],
                      'version needed': []}
 
-      # The list of fields we want to retrieve in the elfdump output by section
-      # the key is the original field name
-      # the value is the destination field name
-      elf_fields = {'version definition': {
-                      'version': 'version',
-                      'dependency': 'dependency',
-                      },
-                    'version needed': {
-                      'file': 'soname',
-                      'version': 'version',
-                      },
-                    'symbol table': {
-                      'name': 'symbol',
-                      'ver': 'version',
-                      'type': 'type',
-                      'bind': 'bind',
-                      'shndx': 'shndx',
-                      },
-                    'syminfo': {
-                      'library': 'soname',
-                      'symbol': 'symbol',
-                      'flags': 'flags',
-                      }
-                    }
-
       cur_section = None
       for line in elfdump_out:
 
-        elfdump_data, cur_section = self._ParseElfdumpLine(line, cur_section)
+        elf_info, cur_section = self._ParseElfdumpLine(line, cur_section)
 
         # header or blank line contains no information
-        if not elfdump_data:
+        if not elf_info:
           continue
 
-        elf_info = {}
-        for src_field, dest_field in elf_fields[cur_section].items():
-          elf_info[dest_field] = elfdump_data[src_field]
-
         # symbol table and syminfo section store various informations
-        # about the same symbols, we merge them in a dict
+        # about the same symbols, so we merge them in a dict
         if cur_section in ('symbol table', 'syminfo'):
           symbols.setdefault(elf_info['symbol'], {}).update(elf_info)
         else:
@@ -433,22 +404,22 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
     re_by_section = {
       'version definition': (r"""
-        \s*(?:\[(?P<index>\d+)\]\s+)? # index might be not present
+        \s*(?:\[\d+\]\s+)?            # index might be not present
                                       # if no version binding is enabled
         (?P<version>\S+)
         (?:\s+(?P<dependency>\S+))?
-        (?:\s+\[\s(?:BASE)\s\])?\s*$ #
+        (?:\s+\[\s(?:BASE)\s\])?\s*$
                               """),
       'version needed': (r"""
-        \s*(?:\[(?P<index>\d+)\]\s+)?     # index might be not present
+        \s*(?:\[\d+\]\s+)?     # index might be not present
                                           # if no version binding is enabled
 
-        (?:(?P<file>\S+)\s+               # file can be absent if the same as
+        (?:(?P<soname>\S+)\s+             # file can be absent if the same as
          (?!\[\s(?:INFO|WEAK)\s\]))?      # the previous line, we make sure
                                           # version is not confused with file
                                           # in that case
         (?P<version>\S+)
-        (?:\s+\[\s(?:INFO|WEAK)\s\])?\s*$ #
+        (?:\s+\[\s(?:INFO|WEAK)\s\])?\s*$
                           """),
       'symbol table': (r"""
          \s*\[\d+\]
@@ -457,15 +428,15 @@ class InspectivePackage(package.DirectoryFormatPackage):
          \s+(?P<type>\S+)
          \s+(?P<bind>\S+)
          \s+\S+
-         \s+(?P<ver>\S+)
+         \s+(?P<version>\S+)
          \s+(?P<shndx>\S+)
-         (?:\s+(?P<name>\S+))?\s*$
+         (?:\s+(?P<symbol>\S+))?\s*$
                         """),
       'syminfo': (r"""
          \s*\[\d+\]
          \s+(?P<flags>[ABCDFILNPS]+)
          \s+(?:(?:\[\d+\]                   # some kind of library index
-         \s+(?P<library>\S+)|<self>)\s+)?  # library is not present
+         \s+(?P<soname>\S+)|<self>)\s+)?    # library is not present
                                             # for external symbols not
                                             # directly bound
          (?P<symbol>\S+)\s*
