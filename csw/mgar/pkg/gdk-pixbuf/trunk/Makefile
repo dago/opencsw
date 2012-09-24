@@ -18,18 +18,18 @@ EXPANDVARS = CSWgdkpixbuf.postinstall
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+REINPLACE_USRSHARE += docs/reference/gdk-pixbuf/html/*.html
+
 PACKAGES += CSWgdkpixbuf
 # To retain backwards compatibility with gdk pixbuf package 0.22
 CATALOGNAME_CSWgdkpixbuf = gdk_pixbuf
 SPKG_DESC_CSWgdkpixbuf = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWgdkpixbuf  = CSWlibgdk-pixbuf2-0-0
+PKGFILES_CSWlibgdk-pixbuf2-0-0 += $(call pkgfiles_lib,gdk-pixbuf-2.0/.*)
+RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgdk-pixbuf-xlib2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibtiff3
@@ -48,26 +48,24 @@ CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += catalogname-does-not-match-pkgname|pkgnam
 
 PACKAGES += CSWlibgdk-pixbuf2-0-0
 SPKG_DESC_CSWlibgdk-pixbuf2-0-0 = $(DESCRIPTION), libgdk_pixbuf-2.0.so.0
-PKGFILES_CSWlibgdk-pixbuf2-0-0 = $(call pkgfiles_lib,libgdk_pixbuf-2.0.so.0)
+PKGFILES_CSWlibgdk-pixbuf2-0-0 += $(call baseisadirs,$(libdir),libgdk_pixbuf-2\.0\.so\.0(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0  = CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibintl8
 
 PACKAGES += CSWlibgdk-pixbuf-xlib2-0-0
 SPKG_DESC_CSWlibgdk-pixbuf-xlib2-0-0 = $(DESCRIPTION), libgdk_pixbuf_xlib-2.0.so.0
 PKGFILES_CSWlibgdk-pixbuf-xlib2-0-0 = $(call pkgfiles_lib,libgdk_pixbuf_xlib-2.0.so.0)
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0  = CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgio2-0-0
+# RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibpng12-0
+# RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgmodule2-0-0
+# RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgobject2-0-0
+# RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgthread2-0-0
+# RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibintl8
+# RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibpng12-0
 
 PACKAGES += CSWlibgdk-pixbuf-dev
 SPKG_DESC_CSWlibgdk-pixbuf-dev = Developtment files $(DESCRIPTION)
@@ -90,8 +88,9 @@ BUILD_DEP_PKGS += CSWtiff
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-libiconv-prefix
-CONFIGURE_ARGS += --with-libintl-prefix
+CONFIGURE_ARGS += --with-x11
+# CONFIGURE_ARGS += --with-libiconv-prefix
+# CONFIGURE_ARGS += --with-libintl-prefix
 
 include gar/category.mk
 
