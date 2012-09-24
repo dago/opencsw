@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = gdk-pixbuf
-VERSION = 2.24.0
+VERSION = 2.24.1
 GARTYPE = v2
 CATEGORIES = gnome
 
