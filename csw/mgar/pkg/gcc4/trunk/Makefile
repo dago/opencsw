@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.7.1
+VERSION   = 4.7.2
 CATEGORIES   = lang
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
@@ -18,6 +18,7 @@ endef
 
 DISTFILES    = $(DISTNAME).tar.bz2
 MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
+MASTER_SITES += http://ftp.heanet.ie/mirrors/gnu/gcc/$(NAME)-$(VERSION)/
 
 LIBOBJC = 4
 
