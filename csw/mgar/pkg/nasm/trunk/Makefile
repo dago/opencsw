@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = nasm
-VERSION = 2.09.04
+VERSION = 2.10.05
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -19,6 +19,8 @@ LICENSE = LICENSE
 VENDOR_URL = http://www.nasm.us/
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = test
 
 INSTALL_ARGS = INSTALLROOT=$(DESTDIR)
 
