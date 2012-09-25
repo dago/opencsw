@@ -4,19 +4,20 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = GRICHTER
 
-DESCRIPTION = parse C header files and create XS glue code
-define BLURB
-	ExtUtils::XSBuilder is a set modules to parse C header files and create XS
-	glue code and documentation out of it. Idealy this allows to "write" an
-	interface to a C library without coding a line. Since no C-API is ideal,
-	some adjuments are necessary most of the time. So to use this module you
-	must still be familar with C and XS programming, but it removes a lot of
-	stupid work and copy&paste from you. Also when the C API changes, most of
-	the time you only have to rerun XSBuilder to get your new Perl API.
-endef
+DESCRIPTION = Automatic Perl XS glue code generation
 
-DISTFILES = $(call admfiles,CSWpmextutxsbld,depend prototype)
+CATALOG_RELEASE = unstable
 
-DEPENDS += cpan/Parse-RecDescent cpan/Tie-IxHash
+LICENSE_TEXT = This module is licensed under the  license
+
+PACKAGES += CSWpm-extutils-xsbuilder
+CATALOGNAME_CSWpm-extutils-xsbuilder = pm_extutils_xsbuilder
+SPKG_DESC_CSWpm-extutils-xsbuilder = Automatic Perl XS glue code generation
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-extutils-xsbuilder = 1
+RUNTIME_DEP_PKGS_CSWpm-extutils-xsbuilder += CSWpm-tie-ixhash
+RUNTIME_DEP_PKGS_CSWpm-extutils-xsbuilder += CSWpm-parse-recdescent
+OBSOLETED_BY_CSWpm-extutils-xsbuilder += CSWpmextutxsbld
+CATALOGNAME_CSWpmextutxsbld = pm_extutxsbld_stub
 
 include gar/category.mk
