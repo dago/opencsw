@@ -1,25 +1,27 @@
 NAME = Apache-Test
-VERSION = 1.30
+VERSION = 1.38
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = PHRED
 
 DESCRIPTION = Test.pm wrapper with helpers for testing Apache
 define BLURB
-  Apache::Test is a wrapper around the standard Test.pm with helpers for
-  testing an Apache server.
 endef
 
-# depends
-RUNTIME_DEP_PKGS     = CSWap2prefork
-BUILD_DEP_PKGS = CSWap2prefork
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmapachetst
-CATALOGNAME = pm_apachetst
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-apache-test
+CATALOGNAME_CSWpm-apache-test = pm_apache_test
+SPKG_DESC_CSWpm-apache-test = Test.pm wrapper with helpers for testing Apache
+ARCHALL_CSWpm-apache-test = 1
+OBSOLETED_BY_CSWpm-apache-test += CSWap2modperl
+CATALOGNAME_CSWap2modperl = ap2_modperl_stub
 
-APACHE_TEST_HTTPD = $(prefix)/apache2/sbin/httpd
-export APACHE_TEST_HTTPD
+# These are probably ok
+CHECKPKG_OVERRIDES_CSWpm-apache-test += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Apache::TestMB.3perl
+CHECKPKG_OVERRIDES_CSWpm-apache-test += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Apache/TestBuild.pm
+CHECKPKG_OVERRIDES_CSWpm-apache-test += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Apache/TestMB.pm
 
 include gar/category.mk
