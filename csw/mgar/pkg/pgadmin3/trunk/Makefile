@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = pgadmin3
-VERSION = 1.14.3
+VERSION = 1.16.0
 CATEGORIES = apps
 GARTYPE = v2
 GARCOMPILER = SOS12U1
@@ -18,6 +18,7 @@ endef
 SPKG_SOURCEURL = http://www.pgadmin.org/
 MASTER_SITES = http://ftp.postgresql.org/pub/pgadmin3/release/v$(VERSION)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += changelog.CSW
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Ignore them for now
