@@ -1,5 +1,5 @@
 NAME = pango
-VERSION = 1.28.4
+VERSION = 1.29.5
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -20,7 +20,7 @@ DISTFILES += CSWpango.postinstall
 PATCHFILES += 0001-Do-not-use-gcc-specific-flags-unconditionally.patch
 # Use patch unless this is fixed:
 #   https://bugzilla.gnome.org/show_bug.cgi?id=652227
-PATCHFILES += 0002-Use-inttypes.h-when-stdint.h-is-not-available.patch
+# PATCHFILES += 0002-Use-inttypes.h-when-stdint.h-is-not-available.patch
 
 VENDOR_URL = http://www.pango.org/
 
@@ -28,13 +28,14 @@ PACKAGES += CSWpango
 CATALOGNAME_CSWpango = libpango
 CHECKPKG_OVERRIDES_CSWpango += catalogname-does-not-match-pkgname|pkgname=CSWpango|catalogname=libpango|expected-catalogname=pango
 SPKG_DESC_CSWpango = Pango, a framework for the layout and rendering of international text
-RUNTIME_DEP_PKGS_CSWpango += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpango += CSWlibxft2
-RUNTIME_DEP_PKGS_CSWpango += CSWglib2
 RUNTIME_DEP_PKGS_CSWpango += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWpango += CSWftype2
-RUNTIME_DEP_PKGS_CSWpango += CSWfconfig
 RUNTIME_DEP_PKGS_CSWpango += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWpango += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpango += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibfontconfig1
 
 # No split for now as it is unclear how the plugins depend on each one
 CHECKPKG_OVERRIDES_CSWpango += shared-lib-pkgname-mismatch
@@ -90,7 +91,7 @@ BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWgtk-doc
 BUILD_DEP_PKGS += CSWlibxslt
 BUILD_DEP_PKGS += CSWglib2devel
-BUILD_DEP_PKGS += CSWlibxft2devel
+# BUILD_DEP_PKGS += CSWlibxft2devel
 
 BUILD64 = 1
 
