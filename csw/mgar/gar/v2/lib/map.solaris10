@@ -1,0 +1,7 @@
+# Solaris 10 mapfile with libc Version 1.22.2 which is Update?? Kernel Version
+#   http://src.opensolaris.org/source/xref/onnv/onnv-gate/usr/src/lib/libc/port/mapfile-vers#301
+libc.so - SUNW_1.22.5 SUNWprivate_1.1 $ADDVERS=SUNW_1.22.2;
+#  http://src.opensolaris.org/source/xref/onnv/onnv-gate/usr/src/lib/libresolv2/common/mapfile-vers
+libresolv.so - SUNW_2.2 SUNWprivate_2.1 $ADDVERS=SUNW_2.2;
+# http://src.opensolaris.org/source/xref/onnv/onnv-gate/usr/src/lib/libnsl/common/mapfile-vers
+libnsl.so - SUNW_1.9.1 SUNWprivate_1.5 $ADDVERS=SUNW_1.9.1;
