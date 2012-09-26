@@ -29,7 +29,7 @@ PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 # PATCHFILES += krb5-1.9.2-krb5_set_password_using_ccache.patch
 PATCHFILES += 0005-krb5_set_password_using_ccache.patch
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+# PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 BUILD_DEP_PKGS = CSWtcl
 
