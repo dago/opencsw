@@ -27,9 +27,6 @@ LIBOBJC = 4
 # PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-# http://gcc.gnu.org/ml/gcc-help/2012-06/msg00158.html
-PATCHFILES += Append-PICFLAG_FOR_TARGET.patch
-
 # GIT init takes a long time.
 NOGITPATCH ?= 1
 
