@@ -1,0 +1,44 @@
+From 749371b5f5ff26b3cfa3a5a6e13d02f5fe0ebe7d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 27 Sep 2012 10:26:58 +0200
+Subject: [PATCH] Use bash where applicable
+
+---
+ tests/news-okay.sh       |    2 +-
+ tests/param-F-invalid.sh |    2 +-
+ tests/param-i.sh         |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tests/news-okay.sh b/tests/news-okay.sh
+index 5592f07..e2c7a7a 100755
+--- a/tests/news-okay.sh
++++ b/tests/news-okay.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # check if NEWS is updated
+ set -e 
+ 
+diff --git a/tests/param-F-invalid.sh b/tests/param-F-invalid.sh
+index 74c0bff..a0e0773 100755
+--- a/tests/param-F-invalid.sh
++++ b/tests/param-F-invalid.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ # test to check that -F parameter fails properly.
+ ./dsh -recho -M -m 1,2 -F 10 -c
+ case $? in
+diff --git a/tests/param-i.sh b/tests/param-i.sh
+index 89b4085..e0d6543 100755
+--- a/tests/param-i.sh
++++ b/tests/param-i.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ # test whether the -i option works.
+ 
+ set -e 
+-- 
+1.7.10.3
+
