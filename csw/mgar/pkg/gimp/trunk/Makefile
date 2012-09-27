@@ -71,6 +71,11 @@ RUNTIME_DEP_PKGS_CSWgimp += CSWlibgegl0-2-0
 RUNTIME_DEP_PKGS_CSWgimp += CSWlibgimp2-0-0
 RUNTIME_DEP_PKGS_CSWgimp += CSWlibxpm4
 
+# cant find /usr/share in the bins
+CHECKPKG_OVERRIDES_CSWgimp += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/gimp-2.8
+CHECKPKG_OVERRIDES_CSWgimp += file-with-bad-content|/usr/share|root/opt/csw/bin/pentium_pro/gimp-2.8
+CHECKPKG_OVERRIDES_CSWgimp += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/gimp-2.8.1
+
 # OBSOLETED_BY_CSWgimp += CSWgimpminimal
 # OBSOLETED_BY_CSWgimp += CSWgimpi18n
 # OBSOLETED_BY_CSWgimp += CSWgimplibsdoc
