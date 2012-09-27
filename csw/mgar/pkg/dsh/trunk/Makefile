@@ -5,22 +5,35 @@ NAME = dsh
 VERSION = 0.25.9
 GARTYPE = v2
 CATEGORIES = devel
-RUNTIME_DEP_PKGS_CSWdsh = CSWlibdshconfig
-BUILD_DEP_PKGS = CSWlibdshconfig
 
-DESCRIPTION = Distributed shell. Runs command through rsh or ssh on a cluster of machines.
+DESCRIPTION = Distributed shell which command through rsh or ssh on a cluster of machines
 
-MASTER_SITES = http://www.netfort.gr.jp/~dancer/software/downloads/dsh-0.25.9.tar.gz
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://www.netfort.gr.jp/~dancer/software/downloads/
+DISTFILES += $(DISTNAME).tar.gz
+
+PATCHFILES += 0001-Use-bash-where-applicable.patch
+
+VENDOR_URL = http://www.netfort.gr.jp/~dancer/software/dsh.html.en
+
+BUILD_DEP_PKGS += CSWlibdshconfig-dev
+
+PACKAGES += CSWdsh
+SPKG_DESC_CSWdsh = Distributed shell which command through rsh or ssh on a cluster of machines
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWdsh += CSWlibdshconfig1
+RUNTIME_DEP_PKGS_CSWdsh += CSWlibintl8
 
 # for libintl_gettext, libintl_textdomain, libintl_bindtextdomain
 EXTRA_LINKER_FLAGS = -lintl
 
+BUILD64 = 1
+ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS) 
 
-TEST_SCRIPTS = 
+PRESERVECONF += $(sysconfdir)/dsh.conf
 
-TEST_TARGET = 
+# There are still some tests sporadically failing, disable for now
+SKIPTEST ?= 1
 
 include gar/category.mk
 
