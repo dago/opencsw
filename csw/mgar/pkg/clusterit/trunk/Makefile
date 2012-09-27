@@ -28,7 +28,8 @@ EXTRA_PAX_ARGS += -s ',\.1$$,.1clusterit,'
 BINS += barrier
 BINS += barrierd
 BINS += clustersed
-BINS += dsh
+# CSWdsh package (other tool)
+COLLIDING_BINS += dsh
 BINS += dshbak
 BINS += dtop
 BINS += dvt
