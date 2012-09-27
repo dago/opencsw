@@ -1,0 +1,10 @@
+--- a/plug-ins/file-fits/Makefile.am
++++ b/plug-ins/file-fits/Makefile.am
+@@ -18,7 +18,6 @@ file_fits_RC = file-fits.rc.o
+ endif
+ 
+ AM_LDFLAGS = $(mwindows)
+-AM_CFLAGS = -fno-strict-aliasing
+ 
+ libexecdir = $(gimpplugindir)/plug-ins
+ 

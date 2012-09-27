@@ -1,0 +1,11 @@
+--- a/app/sanity.c
++++ b/app/sanity.c
+@@ -118,7 +118,7 @@ sanity_check_gimp (void)
+          "The GIMP binary cannot run with a libgimp version\n"
+          "other than its own. This is GIMP %d.%d.%d, but the\n"
+          "libgimp version is %d.%d.%d.\n\n"
+-         "Maybe you have GIMP versions in both /usr and /usr/local ?",
++         "Maybe you have GIMP versions in both /usr and /opt/csw ?",
+          GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION,
+          gimp_major_version, gimp_minor_version, gimp_micro_version);
+     }
