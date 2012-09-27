@@ -23,41 +23,24 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Ignore them for now
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/zh_TW/hints/instrumentation.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/cs_CZ/connect.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/cs_CZ/extend.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/cs_CZ/pgagent-install.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/cs_CZ/hints/instrumentation.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/zh_CN/hints/instrumentation.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/sl_SI/hints/instrumentation.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/es_ES/hints/instrumentation.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/fi_FI/hints/instrumentation.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/de_DE/hints/instrumentation.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/en_US/pgagent-install.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/en_US/extend.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/en_US/connect.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/en_US/hints/instrumentation.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/fr_FR/extend.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/fr_FR/connect.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/fr_FR/pgagent-install.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/fr_FR/hints/instrumentation.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/share|root/opt/csw/share/pgadmin3/docs/cs_CZ/pgagent-install.html
+CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/en_US/extend.html
+CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/local|root/opt/csw/share/pgadmin3/docs/en_US/pgagent-install.html
 CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/share|root/opt/csw/share/pgadmin3/docs/en_US/pgagent-install.html
-CHECKPKG_OVERRIDES_CSWpgadmin3 += file-with-bad-content|/usr/share|root/opt/csw/share/pgadmin3/docs/fr_FR/pgagent-install.html
 
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWwxwidgetscommon
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWwxwidgetsgtk2
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWsunmath
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibxslt1
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibpq5
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibiconv2
 
-BUILD_DEP_PKGS  = CSWlibncurses-dev
-BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
 BUILD_DEP_PKGS += CSWpostgresql-dev
