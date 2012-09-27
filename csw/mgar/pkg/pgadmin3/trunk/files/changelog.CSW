@@ -1,3 +1,10 @@
+pgadmin3 (1.16.0,REV=2012.09.27)
+
+  * Removed obsolete dependencies since direct binding is in place.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Thu, 27 Sep 2012 14:52:06 +0200
+
+
 pgadmin3 (1.16.0,REV=2012.09.25)
 
   * New upstream release 1.16.0.
