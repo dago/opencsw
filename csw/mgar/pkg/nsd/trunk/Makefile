@@ -1,5 +1,5 @@
 NAME = nsd
-VERSION = 3.2.10
+VERSION = 3.2.13
 CATEGORIES = server
 GARTYPE = v2
 
