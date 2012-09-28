@@ -23,7 +23,7 @@ PACKAGES = CSWnsd
 RUNTIME_DEP_PKGS = CSWlibssl0-9-8
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
-PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 LICENSE = LICENSE
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
