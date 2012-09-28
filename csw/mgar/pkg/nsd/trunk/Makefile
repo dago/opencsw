@@ -20,7 +20,7 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWnsd
-RUNTIME_DEP_PKGS = CSWlibssl0-9-8
+RUNTIME_DEP_PKGS = CSWlibssl1-0-0
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
 PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
