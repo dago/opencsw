@@ -2,7 +2,7 @@
 # - Move this to a pymodules/ subdirectory with the rest of the
 #   python modules (similar to the cpan directory).
 NAME = pylxml
-VERSION = 2.2.4
+VERSION = 2.3.6
 CATEGORIES = python
 GARTYPE = v2
 
@@ -24,18 +24,17 @@ UFILES_REGEX = lxml-(\d+(?:\.\d+)*).tar.gz
 LICENSE = doc/licenses/BSD.txt
 
 PACKAGES = CSWpy-lxml
-CATALOGNAME = py_lxml
-
-RUNTIME_DEP_PKGS = CSWlibxml2 CSWlibxslt CSWzlib
-
-EXTRA_PAX_ARGS = '-s,CHANGES.txt,changelog,p'
+SPKG_DESC_CSWpy-lxml = Easy to use and powerful libxml2/libxslt binding for Python
+RUNTIME_DEP_PKGS_CSWpy-lxml += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWpy-lxml += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-lxml += CSWlibexslt0
+RUNTIME_DEP_PKGS_CSWpy-lxml += CSWlibxml2-2
 
 include gar/category.mk
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
-post-install-modulated: DOCS=CHANGES.txt CREDITS.txt IDEAS.txt
+post-install-modulated: DOCS=CHANGES.txt CREDITS.txt
 post-install-modulated:
 	ginstall -d $(DOCDEST)
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	@$(MAKECOOKIE)
