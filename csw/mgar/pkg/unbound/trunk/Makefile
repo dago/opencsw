@@ -1,5 +1,5 @@
 NAME = unbound
-VERSION = 1.4.17
+VERSION = 1.4.18
 CATEGORIES = server
 GARTYPE = v2
 DESCRIPTION = A validating, recursive, and caching DNS resolver
@@ -25,12 +25,19 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGUTE_ARGS += --with-solaris-threads
-CONFIGURE_ARGS += --with-ldns=/opt/csw
-CONFIGURE_ARGS += --with-ssl=/opt/csw
+#CONFIGURE_ARGS  = $(DIRPATHS)
+#CONFIGUTE_ARGS += --with-solaris-threads
+#CONFIGURE_ARGS += --with-ldns=/opt/csw
+#CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-libevent=/opt/csw
 CONFIGURE_ARGS += --with-libexpat=/opt/csw
+#CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
+#CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGUTE_ARGS += --with-solaris-threads
+CONFIGURE_ARGS += --with-ldns
+CONFIGURE_ARGS += --with-ssl
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
