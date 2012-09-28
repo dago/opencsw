@@ -14,7 +14,7 @@ DISTFILES  = ldns-$(VERSION).tar.gz
 
 PACKAGES = CSWldnsdrill
 
-PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
