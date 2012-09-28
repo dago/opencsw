@@ -20,7 +20,9 @@ GARCOMPILER = GCC4
 
 REINPLACE_USRLOCAL +=  docs/* docs/*/* src/tuxpaint-import.sh src/tuxpaint.conf docs/*/html/*
 REINPLACE_USRSHARE +=  docs/* docs/*/* docs/html/* docs/*/html/* fonts/locale/*/README.txt magic/docs/html/*
+
 PATCHFILES += 0001-prefix-Makefile.patch
+PATCHFILES += 0002-fix-r1.9-puzzle.c.patch
 
 RUNTIME_DEP_PKGS_CSWtuxpaint += CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWtuxpaint += CSWlibpng12-0
