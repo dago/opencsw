@@ -29,6 +29,15 @@ RUNTIME_DEP_PKGS_CSWlibgnomeprintdoc += CSWlibgnomeprint
 BUILD_DEP_PKGS += CSWlibgtk2-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWggettext
+BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWbison
+BUILD_DEP_PKGS += CSWcups-dev
+# It should not be needed I think
+# probably a dependency with an incorrect
+# pkg-config --libs output
+BUILD_DEP_PKGS += CSWlibkrb5-dev
 
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibz1
