@@ -73,6 +73,11 @@ BUILD64_LIBS_ONLY = 1
 
 # STRIP_LIBTOOL = 1
 
+EXTRA_CONFIGURE_EXPORTS += XGETTEXT MSGMERGE MSGFMT
+CONFIGURE_ENV_XGETTEXT = /opt/csw/gnu/xgettext
+CONFIGURE_ENV_MSGMERGE = /opt/csw/gnu/msgmerge
+CONFIGURE_ENV_MSGFMT = /opt/csw/gnu/msgfmt
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
@@ -82,10 +87,5 @@ EXTRA_LD_OPTIONS = -Bdirect -z ignore
 TEST_SCRIPTS = 
 
 include gar/category.mk
-
-# For GNU gettext
-CONFIGURE_ENV += XGETTEXT=/opt/csw/gnu/xgettext
-CONFIGURE_ENV += MSGMERGE=/opt/csw/gnu/msgmerge
-CONFIGURE_ENV += MSGFMT=/opt/csw/gnu/msgfmt
 
 
