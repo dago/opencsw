@@ -16,6 +16,7 @@ VENDOR_URL = http://www.secdev.org/projects/scapy/
 PACKAGES += CSWpy-scapy
 SPKG_DESC_CSWmypkg = A powerful interactive packet manipulation program
 # PKGFILES is catchall
+ARCHALL_CSWpy-scapy = 1
 # We need this for share/wireshark/manuf
 RUNTIME_DEP_PKGS_CSWpy-scapy += CSWwireshark
 CHECKPKG_OVERRIDES_CSWpy-scapy += surplus-dependency|CSWwireshark
