@@ -83,8 +83,6 @@ CONFIGURE_ARGS += --enable-gtk-doc
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-EXTRA_LD_OPTIONS = -z ignore -Bdirect
-
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
