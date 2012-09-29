@@ -41,7 +41,5 @@ STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_LD_OPTIONS = -z ignore -Bdirect
-
 include gar/category.mk
 
