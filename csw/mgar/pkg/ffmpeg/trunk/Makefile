@@ -24,6 +24,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PATCHFILES += 0001-fix-version.sh.patch
 PATCHFILES += 0003-change-linker-flags.patch
 PATCHFILES += 0003-fix_a_few_shells.patch
+PATCHFILES += 0004-remove-GNU-ld-specific-options.patch
 
 LICENSE = COPYING.GPLv3
 
