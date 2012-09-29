@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = twisted
-MAJ_VERSION = 12.0
+MAJ_VERSION = 12.2
 PATCHLEVEL = 0
 VERSION = $(MAJ_VERSION).$(PATCHLEVEL)
 CATEGORIES = python
@@ -15,19 +15,18 @@ define BLURB
   mail servers, and more.
 endef
 
-UPSTREAM_NAME = Twisted
-DISTNAME      = $(UPSTREAM_NAME)-$(VERSION)
-MASTER_SITES  = http://pypi.python.org/packages/source/T/Twisted/
-DISTFILES     = $(DISTNAME).tar.bz2
-TEST_SCRIPTS  = 
-LICENSE       = LICENSE
+PYPI_PROJECT = Twisted
+MASTER_SITES += $(PYPI_MIRROR)
+DISTNAME = $(PYPI_PROJECT)-$(VERSION)
+DISTFILES += $(DISTNAME).tar.bz2
+# TEST_SCRIPTS  = 
 
-PACKAGES       = CSWpy-twisted
+LICENSE = LICENSE
+
+PACKAGES += CSWpy-twisted
+SPKG_DESC_CSWpy-twisted = An event-driven networking engine
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWpy-zope-interface
-SPKG_DESC_CSWpy-twisted = An event-driven networking engine
-CATALOGNAME_CSWpy-twisted = py_twisted
-
 OBSOLETED_BY_CSWpy-twisted = CSWtwisted
 
 ARCHALL_CSWtwisted = 1
@@ -37,7 +36,6 @@ ARCHALL_CSWtwisted = 1
 CHECKPKG_OVERRIDES_CSWtwisted += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWtwisted += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpy-twisted += surplus-dependency|CSWpy-zope-interface
-CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/python/_twisted_zsh_stub
 CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/tap/ftp.py
 CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/conch/unix.py
 CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/conch/openssh_compat/factory.py
