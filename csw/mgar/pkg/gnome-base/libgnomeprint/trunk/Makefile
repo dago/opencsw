@@ -27,6 +27,8 @@ RUNTIME_DEP_PKGS_CSWlibgnomeprintdoc += CSWlibgnomeprint
 #BUILD_DEP_PKGS += CSWlibgnomeprint
 #BUILD_DEP_PKGS += CSWlibgnomecanvas
 BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibgpg-error-dev
+BUILD_DEP_PKGS += CSWggettext
 
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnomeprint += CSWlibz1
@@ -77,10 +79,13 @@ PATCHFILES += 0001-add-missing-stdio.h-inclusion.patch
 
 STRIP_LIBTOOL = 1
 
-EXTRA_CONFIGURE_EXPORTS += XGETTEXT MSGMERGE MSGFMT
-CONFIGURE_ENV_XGETTEXT = /opt/csw/gnu/xgettext
-CONFIGURE_ENV_MSGMERGE = /opt/csw/gnu/msgmerge
-CONFIGURE_ENV_MSGFMT = /opt/csw/gnu/msgfmt
+EXTRA_COMMON_EXPORTS += XGETTEXT MSGMERGE MSGFMT
+CONFIGURE_ENV_XGETTEXT = /opt/csw/bin/gxgettext
+CONFIGURE_ENV_MSGMERGE = /opt/csw/bin/gmsgmerge
+CONFIGURE_ENV_MSGFMT = /opt/csw/bin/gmsgfmt
+BUILD_ENV_XGETTEXT = /opt/csw/bin/gxgettext
+BUILD_ENV_MSGMERGE = /opt/csw/bin/gmsgmerge
+BUILD_ENV_MSGFMT = /opt/csw/bin/gmsgfmt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
