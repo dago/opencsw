@@ -101,5 +101,9 @@ CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+# gnomeprint papi module was not present in the previous package and 
+# it seems papi library is not available under Solaris 11 base installation
+# so let's not fight for it
+CONFIGURE_ARGS += --without-papi
 
 include gar/category.mk
