@@ -77,6 +77,11 @@ PATCHFILES += 0001-add-missing-stdio.h-inclusion.patch
 
 STRIP_LIBTOOL = 1
 
+EXTRA_CONFIGURE_EXPORTS += XGETTEXT MSGMERGE MSGFMT
+CONFIGURE_ENV_XGETTEXT = /opt/csw/gnu/xgettext
+CONFIGURE_ENV_MSGMERGE = /opt/csw/gnu/msgmerge
+CONFIGURE_ENV_MSGFMT = /opt/csw/gnu/msgfmt
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
@@ -84,5 +89,3 @@ CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 include gar/category.mk
-
-PATH := /opt/csw/gnu:$(PATH)
