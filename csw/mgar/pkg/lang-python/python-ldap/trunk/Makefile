@@ -1,6 +1,6 @@
 # $Id$
 NAME = python-ldap
-VERSION = 2.3.12
+VERSION = 2.3.13
 CATEGORIES = python
 GARTYPE = v2
 PACKAGES = CSWpy-ldap
@@ -14,11 +14,13 @@ define BLURB
   for that purpose.
 endef
 
-BUILD_DEP_PKGS = CSWpython-devel CSWoldapdevel CSWossldevel
-RUNTIME_DEP_PKGS_CSWpy-ldap += CSWsasl
-RUNTIME_DEP_PKGS_CSWpy-ldap += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpy-ldap += CSWoldaprt
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+BUILD_DEP_PKGS = CSWpython-dev CSWopenldap-dev 
+RUNTIME_DEP_PKGS_CSWpy-ldap += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibpython2-6-1-0
+
 
 MASTER_SITE_DIR = $(shell echo $(NAME) | cut -c 1)
 MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)/
