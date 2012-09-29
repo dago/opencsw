@@ -1,5 +1,5 @@
 NAME = libgnomecups
-VERSION = 0.1.13
+VERSION = 0.2.3
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -38,6 +38,12 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PATCHFILES = 0001-cups-config-bug-workaround.patch
 
 STRIP_LIBTOOL = 1
+
+# Gnome want GNU gettext
+EXTRA_CONFIGURE_EXPORTS += XGETTEXT MSGMERGE MSGFMT
+CONFIGURE_ENV_XGETTEXT = /opt/csw/gnu/xgettext
+CONFIGURE_ENV_MSGMERGE = /opt/csw/gnu/msgmerge
+CONFIGURE_ENV_MSGFMT = /opt/csw/gnu/msgfmt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

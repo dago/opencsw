@@ -1,39 +1,39 @@
-From f685faacd8d45d2c4c6c732014ba7d164e2760c5 Mon Sep 17 00:00:00 2001
+From 71a55d17ec7133480fe78d129b1edeb740a83a61 Mon Sep 17 00:00:00 2001
 From: Yann Rouillard <yann@pleiades.fr.eu.org>
-Date: Sat, 14 Jul 2012 22:32:47 +0200
+Date: Sat, 29 Sep 2012 13:07:16 +0200
 Subject: [PATCH] cups-config bug workaround
 
 ---
- Makefile.in |    2 +-
- libgnomecups/Makefile.in |    2 +-
- 2 file changed, 2 insertion(+), 2 deletion(-)
+ Makefile.in              | 2 +-
+ libgnomecups/Makefile.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile.in b/Makefile.in
-index c9cba11..1108a33 100644
+index 34bde8e..1d5101c 100644
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -65,7 +65,7 @@ CATALOGS = @CATALOGS@
- CATOBJEXT = @CATOBJEXT@
- CC = @CC@
+@@ -100,7 +100,7 @@ CPP = @CPP@
+ CPPFLAGS = @CPPFLAGS@
  CUPS_CFLAGS = @CUPS_CFLAGS@
+ CUPS_CONFIG = @CUPS_CONFIG@
 -CUPS_LIBS = @CUPS_LIBS@
 +CUPS_LIBS = -L$(libdir) @CUPS_LIBS@
  CXX = @CXX@
  CXXCPP = @CXXCPP@
- DATADIRNAME = @DATADIRNAME@
--- 
-1.7.10.3
-
+ CXXDEPMODE = @CXXDEPMODE@
 diff --git a/libgnomecups/Makefile.in b/libgnomecups/Makefile.in
-index 611973c..555bb33 100644
+index 79c9c70..ec95f80 100644
 --- a/libgnomecups/Makefile.in
 +++ b/libgnomecups/Makefile.in
-@@ -65,7 +65,7 @@ CATALOGS = @CATALOGS@
- CATOBJEXT = @CATOBJEXT@
- CC = @CC@
+@@ -100,7 +100,7 @@ CPP = @CPP@
+ CPPFLAGS = @CPPFLAGS@
  CUPS_CFLAGS = @CUPS_CFLAGS@
+ CUPS_CONFIG = @CUPS_CONFIG@
 -CUPS_LIBS = @CUPS_LIBS@
 +CUPS_LIBS = -L$(libdir) @CUPS_LIBS@
  CXX = @CXX@
  CXXCPP = @CXXCPP@
- DATADIRNAME = @DATADIRNAME@
+ CXXDEPMODE = @CXXDEPMODE@
+-- 
+1.7.12
+
