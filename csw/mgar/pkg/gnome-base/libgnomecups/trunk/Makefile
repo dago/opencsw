@@ -18,6 +18,8 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://ftp.gnome.org/pub/GNOME/sources/libgnomecups/
 
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgnomecups += CSWlibgobject2-0-0
