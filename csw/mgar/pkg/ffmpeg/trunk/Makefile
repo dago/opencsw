@@ -282,6 +282,10 @@ CONFIGURE_ARGS += --enable-libtheora
 CONFIGURE_ARGS += --enable-libvorbis
 CONFIGURE_ARGS += --enable-libx264
 
+# We don't want to use GNU strip as 
+# it corrupts a SUN specific elf section
+CONFIGURE_ARGS += --strip=/usr/ccs/bin/strip
+
 # Tests only work with static build
 #SKIPTEST-SHARED-yes = 1
 #SKIPTEST ?= $(SKIPTEST-SHARED-$(SHARED))
