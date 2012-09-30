@@ -15,6 +15,7 @@ endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/virtualenv
 MASTER_SITES = http://pypi.python.org/packages/source/v/virtualenv/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = PKG-INFO
+# /usr/share references are fine, these are docstrings.
+CHECKPKG_OVERRIDES_CSWpy-virtualenv += file-with-bad-content
 include gar/category.mk
