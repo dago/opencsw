@@ -165,6 +165,10 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
 
+# We don't want to use lazy load because of
+# the chroot usage by sshd
+EXTRA_LD_OPTIONS = -z nolazyload
+
 TEST_SCRIPTS	=
 
 
