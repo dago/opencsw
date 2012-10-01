@@ -8,7 +8,7 @@
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
 
 NAME = ffmpeg
-VERSION = 0.11.2
+VERSION = 1.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -23,7 +23,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 
 PATCHFILES += 0001-fix-version.sh.patch
 PATCHFILES += 0003-change-linker-flags.patch
-PATCHFILES += 0003-fix_a_few_shells.patch
+#PATCHFILES += 0003-fix_a_few_shells.patch
 PATCHFILES += 0004-remove-GNU-ld-specific-options.patch
 
 LICENSE = COPYING.GPLv3
@@ -39,7 +39,7 @@ SPKG_DESC_CSWlibavcodec54 = FFMPEG library libavcodec.so.54
 PKGFILES_CSWlibavcodec54 += $(call pkgfiles_lib,libavcodec.so.54)
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibavfilter2
+RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibavfilter3
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibmp3lame0
@@ -67,16 +67,16 @@ RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibx264-125
 
-PACKAGES += CSWlibavfilter2
-SPKG_DESC_CSWlibavfilter2 = FFMPEG library libavfilter.so.2
-PKGFILES_CSWlibavfilter2 += $(call pkgfiles_lib,libavfilter.so.2)
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavformat54
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibswscale2
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavutil51
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibavcodec54
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibswresample0
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibavfilter2 += CSWlibpostproc52
+PACKAGES += CSWlibavfilter3
+SPKG_DESC_CSWlibavfilter3 = FFMPEG library libavfilter.so.3
+PKGFILES_CSWlibavfilter3 += $(call pkgfiles_lib,libavfilter.so.3)
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibavformat54
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibswscale2
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibavcodec54
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibswresample0
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibpostproc52
 
 PACKAGES += CSWlibavformat54
 SPKG_DESC_CSWlibavformat54 = FFMPEG library libavformat.so.54
@@ -110,7 +110,7 @@ SPKG_DESC_CSWffmpeg-dev = Development files for several FFMPEG shared libraries
 PKGFILES_CSWffmpeg-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavcodec54
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavdevice54
-RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavfilter2
+RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavfilter3
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavformat54
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibavutil51
 RUNTIME_DEP_PKGS_CSWffmpeg-dev += CSWlibpostproc52
@@ -128,7 +128,7 @@ RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavcodec54
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavdevice54
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibswresample0
-RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavfilter2
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibavfilter3
 RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibpostproc52
 
 # These are all examples
