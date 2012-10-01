@@ -1,24 +1,24 @@
-From 38f1e7dee2711117bc6f9cde25ab2a31531cb5e6 Mon Sep 17 00:00:00 2001
-From: Yann Rouillard <yann@pleiades.fr.eu.org>
-Date: Sat, 29 Sep 2012 17:19:27 +0200
-Subject: [PATCH] Remove GNU ld specific options
+From 14fb2a6aa9fc69358b7d0148da0674279fdcdf1c Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Mon, 1 Oct 2012 14:47:53 +0200
+Subject: [PATCH] remove-linkerflags
 
 ---
  configure | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/configure b/configure
-index fa6e845..505508e 100755
+index ac429ef..03992c4 100755
 --- a/configure
 +++ b/configure
-@@ -3372,7 +3372,6 @@ enabled extra_warnings && check_cflags -Winline
+@@ -3813,7 +3813,6 @@ enabled extra_warnings && check_cflags -Winline
  
  # add some linker flags
  check_ldflags -Wl,--warn-common
 -check_ldflags -Wl,-rpath-link=libpostproc:libswresample:libswscale:libavfilter:libavdevice:libavformat:libavcodec:libavutil:libavresample
  test_ldflags -Wl,-Bsymbolic && append SHFLAGS -Wl,-Bsymbolic
  
- enabled xmm_clobber_test &&                             \
+ enabled xmm_clobber_test &&
 -- 
 1.7.12
 
