@@ -5,15 +5,15 @@
 
 PATH=/opt/csw/bin:$PATH
 export PATH
-CONF_FILE=/etc/opt/csw/salt/minion
+CONF_DIR=/etc/opt/csw/salt
 PIDFILE=/var/run/salt-minion.pid
 SALTMINION=/opt/csw/bin/salt-minion
 
-[ ! -f ${CONF_FILE} ] &&  exit $CONF_FILE
+[ ! -d ${CONF_DIR} ] &&  exit $CONF_DIR
 
 start_service() {
         /bin/rm -f ${PIDFILE}
-        $SALTMINION -d -c ${CONF_FILE} 2>&1
+        $SALTMINION -d -c ${CONF_DIR} 2>&1
 }
 
 stop_service() {
