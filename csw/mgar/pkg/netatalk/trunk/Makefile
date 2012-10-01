@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.0
+VERSION = 3.0.1
 GARTYPE = v2
 CATEGORIES = server
 
@@ -13,9 +13,9 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
-PATCHFILES += 0001-fix-Makefile.am.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+GARCOMPILER = GNU
 
 PACKAGES += CSWlibatalk1
 CATALOGNAME_CSWlibatalk1 = libatalk1
@@ -39,10 +39,9 @@ RUNTIME_DEP_PKGS_CSWnetatalk += CSWlibatalk1
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_ARGS = $(DIRPATHS) --disable-static --with-ssl-dir=/opt/csw --with-bdb=/opt/csw/bdb47 --with-libiconv=/opt/csw --disable-tcp-wrappers --disable-bundled-libevent --disable-silent-rules
+CONFIGURE_ARGS = $(DIRPATHS) --disable-static --with-ssl-dir=/opt/csw --with-bdb=/opt/csw/bdb47 --with-libiconv=/opt/csw --disable-tcp-wrappers --disable-silent-rules --with-libevent-header=/opt/csw/include --with-libevent-lib=/opt/csw/lib
 
-EXTRA_LINKER_FLAGS = -z ignore -I/opt/csw/include -levent
-#EXTRA_CPP_FLAGS= -I/opt/csw/include -levent
+#EXTRA_LINKER_FLAGS = -levent
 
 include gar/category.mk
 
