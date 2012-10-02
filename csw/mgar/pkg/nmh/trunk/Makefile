@@ -22,6 +22,8 @@ RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibiconv2
 LICENSE = COPYRIGHT
 PRESERVECONF = /etc/opt/csw/nmh/mts.conf
 
+PATCHFILES += 0001-use-csw-locations.patch
+
 CONFIGURE_ARGS = --enable-pop --enable-masquerade='' --with-mts=sendmail \
   --prefix=$(prefix) --mandir=$(mandir) --datadir=$(datadir)/nmh \
   --libdir=$(libdir)/nmh --sysconfdir=$(sysconfdir)/nmh 
