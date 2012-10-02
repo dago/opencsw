@@ -48,14 +48,15 @@ BUILD_DEP_PKGS += CSWlibaprutil-dev
 INITSMF = /etc/opt/csw/init.d/cswapache2
 
 # Build Configuration
-CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
-CONFIGURE_ARGS += --with-apr-util=$(prefix)/bin/apu-1-config
-CONFIGURE_ARGS += --with-mpm=$(MPM)
-CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --enable-layout=csw
-CONFIGURE_ARGS += --enable-rule=SSL_EXPERIMENTAL
-CONFIGURE_ARGS += --enable-ssl
-CONFIGURE_ARGS += --with-z=$(prefix)
+CONFIGURE_ARGS  = --with-apr=$(prefix)
+CONFIGURE_ARGS += --with-pcre=$(prefix)
+CONFIGURE_ARGS += --with-libxml2=$(prefix)
+CONFIGURE_ARGS += --with-lua=$(prefix)
+CONFIGURE_ARGS += --enable-mpms-shared=all
+CONFIGURE_ARGS += --enable-layout=OpenCSW
+CONFIGURE_ARGS += --enable-mods-shared=all
+CONFIGURE_ARGS += --enable-privileges
+CONFIGURE_ARGS += --enable-vhost-alias
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 # Fixup target variables
@@ -69,11 +70,3 @@ include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 
-FIXCONFIG_DIRS     = $(DESTDIR)
-FIXCONFIG_RMPATHS  = $(DESTDIR)
-
-pre-configure-modulated:
-	(cd $(WORKDIR)/$(NAME)-$(VERSION); ./buildconf)
-	@gsed -e s,INSTALL_PREFIX,$(prefix)/apache2,g \
-		$(WORKDIR)/config.layout > $(WORKDIR)/$(NAME)-$(VERSION)/config.layout
-	@$(MAKECOOKIE)
