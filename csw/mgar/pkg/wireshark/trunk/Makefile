@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.6.8
+VERSION = 1.8.2
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -12,12 +12,6 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-
-#PATCHFILES += 0001-Solaris-9-doesn-t-have-stdint.h.patch
-
-# Use patch until this is fixed:
-#   https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6615
-#PATCHFILES += 0002-Don-t-return-value-in-void-functions.patch
 
 #new glib2 only on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -36,10 +30,14 @@ BUILD_DEP_PKGS += CSWlibcares-dev
 BUILD_DEP_PKGS += CSWlibpcap-dev
 BUILD_DEP_PKGS += CSWlibsmi-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
-BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibgnutls-dev
-BUILD_DEP_PKGS += CSWlua
+# BUILD_DEP_PKGS += CSWlua
 BUILD_DEP_PKGS += CSWgeoip-dev
+
+# Lua support disabled because luaL_register is checked during autoconf which
+# is deprecated as described in http://lua-users.org/wiki/LuaFiveTwo
+#  https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=7409
 
 PACKAGES += CSWwireshark
 SPKG_DESC_CSWwireshark = Wireshark (was Ethereal) is a free network protocol analyzer
@@ -56,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWwireshark += CSWlua
+# RUNTIME_DEP_PKGS_CSWwireshark += CSWlua
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgeoip1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfontconfig1
@@ -93,6 +91,11 @@ REINPLACEMENTS += mibs
 REINPLACE_MATCH_mibs = /usr/share/snmp/mibs
 REINPLACE_WITH_mibs = /opt/csw/share/mibs
 REINPLACE_FILES_mibs += epan/oids.c
+
+# Do not use LD_OPTIONS as it leads to the new version being built against old
+# wireshark private libs
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-usr-local=no
