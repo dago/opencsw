@@ -1,6 +1,6 @@
 # $Id$
 NAME = nmh
-VERSION = 1.4
+VERSION = 1.5
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -18,8 +18,7 @@ DISTFILES  = nmh-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://www.nongnu.org/nmh/
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS += CSWlibiconv2
-PATCHFILES += 0000-skip-chgrp-of-inc.patch
+RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibiconv2
 LICENSE = COPYRIGHT
 PRESERVECONF = /etc/opt/csw/nmh/mts.conf
 
@@ -27,5 +26,12 @@ CONFIGURE_ARGS = --enable-pop --enable-masquerade='' --with-mts=sendmail \
   --prefix=$(prefix) --mandir=$(mandir) --datadir=$(datadir)/nmh \
   --libdir=$(libdir)/nmh --sysconfdir=$(sysconfdir)/nmh 
 TEST_SCRIPTS =
+
+EXTRA_MERGE_EXCLUDE_FILES = $(datadir)/doc/nmh/(contrib.*|INSTALL|COPYRIGHT|README.developers|README.manpages)
+
+CHECKPKG_OVERRIDES_CSWnmh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nmh/FAQ
+CHECKPKG_OVERRIDES_CSWnmh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nmh/MAIL.FILTERING
+CHECKPKG_OVERRIDES_CSWnmh += file-with-bad-content|/export/home|root/opt/csw/share/doc/nmh/README-ATTACHMENTS
+
 
 include gar/category.mk

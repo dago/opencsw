@@ -1,0 +1,25 @@
+From dcd309fb58c93684a68cde8baeb0fa09b03de8f8 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Tue, 2 Oct 2012 17:46:52 +0200
+Subject: [PATCH 3/3] use csw locations
+
+---
+ docs/COMPLETION-ZSH |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/COMPLETION-ZSH b/docs/COMPLETION-ZSH
+index 5c10cc8..d60f789 100644
+--- a/docs/COMPLETION-ZSH
++++ b/docs/COMPLETION-ZSH
+@@ -93,7 +93,7 @@ mhfile () {
+   local mhfpath file
+   # EDIT ME
+   # Array containing all the places nmh will look for templates etc.
+-  mhfpath=(~/Mail /usr/local/nmh/lib)
++  mhfpath=(~/Mail /etc/opt/csw/nmh /opt/csw/etc/nmh)
+ 
+   # Emulate completeinword behaviour as appropriate
+   local wordstr
+-- 
+1.7.10.3
+
