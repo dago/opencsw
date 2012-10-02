@@ -39,6 +39,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # Standard package bits
 DISTFILES += cswapache2
 
+PACKAGES = CSWapache24
+
 PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 
 BUILD_DEP_PKGS += CSWlibaprutil-dev
@@ -48,6 +50,9 @@ BUILD_DEP_PKGS += CSWlibaprutil-dev
 # the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
 # the Makefile.
 INITSMF = /etc/opt/csw/init.d/cswapache2
+
+# We need this to get bdb48/lib into the runpath
+EXTRA_LIB = $(prefix)/bdb48/lib
 
 # Build Configuration
 CONFIGURE_ARGS  = --with-apr=$(prefix)
