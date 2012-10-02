@@ -22,7 +22,8 @@ MASTER_SITES = http://ffmpeg.org/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PATCHFILES += 0001-fix-version.sh.patch
-PATCHFILES += 0003-change-linker-flags.patch
+#not good patch do not use it anymore
+#PATCHFILES += 0003-change-linker-flags.patch
 #PATCHFILES += 0003-fix_a_few_shells.patch
 PATCHFILES += 0004-remove-GNU-ld-specific-options.patch
 
@@ -169,10 +170,8 @@ CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
 #no asm on sparc
 CONFIGURE_ARGS_sparc = --disable-asm
 
-#64bit needs pic code
-EXTRA_CFLAGS_sparcv9 = -xcode=pic13
-EXTRA_CFLAGS_amd64 = -Kpic
-EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(ISA))
+#64bit needs pic code 
+CONFIGURE_ARGS_64 = --enable-pic 
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(ISA))
