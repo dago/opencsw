@@ -16,8 +16,8 @@ index 31762b8..ffe0667 100644
  
  check: all
 -	$(pg_regress_call) --temp-install=./tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
-+	install -d /var/tmp/pgsql/tmp_check
-+	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
++	install -d /var/tmp/pgsql/tmp_check/90
++	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check/90 --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
  
  installcheck: all
  	$(pg_regress_call) --psqldir="$(PSQLDIR)" --schedule=$(srcdir)/serial_schedule
@@ -26,8 +26,8 @@ index 31762b8..ffe0667 100644
  
  bigcheck: all
 -	$(pg_regress_call) --temp-install=./tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
-+	install -d /var/tmp/pgsql/tmp_check
-+	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
++	install -d /var/tmp/pgsql/tmp_check/90
++	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check/90 --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
  
  
  ##
@@ -36,7 +36,7 @@ index 31762b8..ffe0667 100644
  	rm -f $(output_files) $(input_files)
  	rm -rf testtablespace
 -	rm -rf results tmp_check log
-+	rm -rf results /var/tmp/pgsql/tmp_check log
++	rm -rf results /var/tmp/pgsql/tmp_check/90 log
  	rm -f regression.diffs regression.out regress.out run_check.out
 -- 
 1.7.6.1
