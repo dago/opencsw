@@ -1,0 +1,45 @@
+From 6625eb4c5833cbee96ccb143f6d4e3d4f367b4b3 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 2 Oct 2012 11:08:04 +0200
+Subject: [PATCH] Add an OpenCSW option to config.layout
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ config.layout | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/config.layout b/config.layout
+index 35a325a..b21a3d4 100644
+--- a/config.layout
++++ b/config.layout
+@@ -370,3 +370,27 @@
+     logfiledir:      ${localstatedir}/log/httpd
+     proxycachedir:   ${localstatedir}/cache/httpd
+ </Layout>
++
++# CSW Layout
++<Layout OpenCSW>
++    prefix:          /opt/csw
++    exec_prefix:     ${prefix}
++    bindir:          ${prefix}/bin
++    sbindir:         ${prefix}/sbin
++    libdir:          ${prefix}/lib/apache24
++    libexecdir:	     ${libdir}/modules
++    installbuilddir: ${libdir}/build
++    sysconfdir:      /etc/${prefix}/apache24
++    mandir:          ${prefix}/share/man
++    datadir:         /var/${prefix}/apache24
++    errordir:        ${datadir}/error
++    iconsdir:        ${datadir}/icons
++    htdocsdir:       ${datadir}/htdocs
++    manualdir:       ${datadir}/manual
++    cgidir:          ${datadir}/cgi-bin
++    includedir:      ${prefix}/include/apache24
++    localstatedir:   /var/${prefix}
++    runtimedir:      /var/run
++    logfiledir:      ${localstatedir}/log/apache24
++    proxycachedir:   ${localstatedir}/apache24/proxy
++</Layout>
+-- 
+1.7.12
+
