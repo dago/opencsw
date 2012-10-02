@@ -40,7 +40,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswapache2
 
 PACKAGES = CSWapache24
-
+SPKG_DESC_CSWapache24 = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWapache24 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibssl1-0-0
@@ -52,6 +52,12 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
+
+PACKAGES += CSWapache24-manual
+SPKG_DESC_CSWapache24-manual = The Apache 2.4 Manual
+PKGFILES_CSWapache24-manual = /var/opt/csw/apache24/manual.*
+RUNTIME_DEPS_CSWapache24-manual = CSWapache24
+CHECKPKG_OVERRIDES_CSWapache24-manual += file-with-bad-content
 
 PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 
