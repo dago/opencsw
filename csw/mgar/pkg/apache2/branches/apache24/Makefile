@@ -41,6 +41,18 @@ DISTFILES += cswapache2
 
 PACKAGES = CSWapache24
 
+RUNTIME_DEP_PKGS_CSWapache24 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWapache24 += CSWbdb48
+RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
+
 PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 
 BUILD_DEP_PKGS += CSWlibaprutil-dev
