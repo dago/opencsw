@@ -20,7 +20,7 @@ CATALOGNAME_CSWzsh = zsh
 LICENSE = LICENCE
 
 RUNTIME_DEP_PKGS = CSWlibiconv2 CSWlibncursesw5 CSWlibpcre1 CSWlibgdbm4
-BUILD_DEP_PKGS = CSWpcre
+BUILD_DEP_PKGS = CSWlibpcre-dev
 
 SPKG_SOURCEURL = http://www.zsh.org
 UPSTREAM_MASTER_SITES = http://www.zsh.org/pub/
