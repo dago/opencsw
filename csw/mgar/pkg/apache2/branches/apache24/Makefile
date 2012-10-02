@@ -5,6 +5,8 @@ VERSION = 2.4.3
 CATEGORIES = server
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 DESCRIPTION = A high performance HTTP server.
 define BLURB
   Apache is the world\'s most popular HTTP server, being quite possibly the
