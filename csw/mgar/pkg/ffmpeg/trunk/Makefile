@@ -48,6 +48,7 @@ RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibx264-125
+RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavdevice54
 SPKG_DESC_CSWlibavdevice54 = FFMPEG library libavdevice.so.54
@@ -67,6 +68,7 @@ RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibx264-125
+RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavfilter3
 SPKG_DESC_CSWlibavfilter3 = FFMPEG library libavfilter.so.3
@@ -78,6 +80,7 @@ RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibavcodec54
 RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibswresample0
 RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibpostproc52
+RUNTIME_DEP_PKGS_CSWlibavfilter3 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavformat54
 SPKG_DESC_CSWlibavformat54 = FFMPEG library libavformat.so.54
@@ -86,25 +89,30 @@ RUNTIME_DEP_PKGS_CSWlibavformat54 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibavformat54 += CSWlibavutil51
 RUNTIME_DEP_PKGS_CSWlibavformat54 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibavformat54 += CSWlibavcodec54
+RUNTIME_DEP_PKGS_CSWlibavformat54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavutil51
 SPKG_DESC_CSWlibavutil51 = FFMPEG library libavutil.so.51
 PKGFILES_CSWlibavutil51 += $(call pkgfiles_lib,libavutil.so.51)
+RUNTIME_DEP_PKGS_CSWlibavutil51 += CSWlibgcc-s1
 
 PACKAGES += CSWlibpostproc52
 SPKG_DESC_CSWlibpostproc52 = FFMPEG library libpostproc.so.52
 PKGFILES_CSWlibpostproc52 += $(call pkgfiles_lib,libpostproc.so.52)
 RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWlibpostproc52 += CSWlibgcc-s1
 
 PACKAGES += CSWlibswscale2
 SPKG_DESC_CSWlibswscale2 = FFMPEG library libswscale.so.2
 PKGFILES_CSWlibswscale2 += $(call pkgfiles_lib,libswscale.so.2)
 RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWlibswscale2 += CSWlibgcc-s1
 
 PACKAGES += CSWlibswresample0
 SPKG_DESC_CSWlibswresample0 = FFMPEG library libswresample.so.0
 PKGFILES_CSWlibswresample0 += $(call pkgfiles_lib,libswresample.so.0)
 RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWlibswresample0 += CSWlibgcc-s1
 
 PACKAGES += CSWffmpeg-dev
 SPKG_DESC_CSWffmpeg-dev = Development files for several FFMPEG shared libraries
@@ -170,8 +178,9 @@ CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
 #no asm on sparc
 CONFIGURE_ARGS_sparc = --disable-asm
 
-#64bit needs pic code 
-CONFIGURE_ARGS_64 = --enable-pic 
+#64bit and sparc needs pic code 
+CONFIGURE_ARGS_amd64 = --enable-pic 
+CONFIGURE_ARGS_sparc = --enable-pic 
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(ISA))
