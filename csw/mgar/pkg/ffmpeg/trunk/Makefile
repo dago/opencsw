@@ -151,13 +151,6 @@ NODIRPATHS += --libexecdir
 NODIRPATHS += --sysconfdir
 NODIRPATHS += --sharedstatedir
 
-#EXTRA_CFLAGS-64 += -xcode=pic32
-#EXTRA_CFLAGS-64 += -fPIC
-#EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(MEMORYMODEL))
-
-#EXTRA_CXXFLAGS-64 += -fPIC
-#EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(MEMORYMODEL))
-
 CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --bindir=$(bindir)
 CONFIGURE_ARGS += --datadir=$(datadir)
@@ -176,8 +169,10 @@ CONFIGURE_ARGS_i386 += --extra-cxxflags="-mfpmath=sse -msse"
 #no asm on sparc
 CONFIGURE_ARGS_sparc = --disable-asm
 
-#64bit needs --enable-pic
-CONFIGURE_ARGS_64 += --enable-pic
+#64bit needs pic code
+EXTRA_CFLAGS_sparcv9 = -xcode=pic13
+EXTRA_CFLAGS_amd64 = -Kpic
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(ISA))
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(ISA))
