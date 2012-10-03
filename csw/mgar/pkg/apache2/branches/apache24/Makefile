@@ -59,6 +59,10 @@ PKGFILES_CSWapache24-manual = /var/opt/csw/apache24/manual.*
 RUNTIME_DEPS_CSWapache24-manual = CSWapache24
 CHECKPKG_OVERRIDES_CSWapache24-manual += file-with-bad-content
 
+PACKAGES += CSWapache24-dev
+SPKG_DESC_CSWapache24-dev = The Apache 2.4 Development Files
+PKGFILES_CSWapache24-dev = $(PKGFILES_DEVEL)
+
 PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 
 BUILD_DEP_PKGS += CSWlibaprutil-dev
