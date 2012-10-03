@@ -17,11 +17,11 @@ index 3bf658d..69523de 100644
  pg_regress_locale_flags = $(if $(ENCODING),--encoding=$(ENCODING)) $(NOLOCALE)
  
 -pg_regress_check = $(top_builddir)/src/test/regress/pg_regress --inputdir=$(srcdir) --temp-install=./tmp_check --top-builddir=$(top_builddir) $(pg_regress_locale_flags)
-+pg_regress_check = $(top_builddir)/src/test/regress/pg_regress --inputdir=$(srcdir) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) $(pg_regress_locale_flags)
++pg_regress_check = $(top_builddir)/src/test/regress/pg_regress --inputdir=$(srcdir) --temp-install=/var/tmp/pgsql/tmp_check/91 --top-builddir=$(top_builddir) $(pg_regress_locale_flags)
  pg_regress_installcheck = $(top_builddir)/src/test/regress/pg_regress --inputdir=$(srcdir) --psqldir='$(PSQLDIR)' $(pg_regress_locale_flags)
  
 -pg_regress_clean_files = results/ regression.diffs regression.out tmp_check/ log/
-+pg_regress_clean_files = results/ regression.diffs regression.out /var/tmp/pgsql/tmp_check log/
++pg_regress_clean_files = results/ regression.diffs regression.out /var/tmp/pgsql/tmp_check/91 log/
  
  
  ##########################################################################
@@ -33,7 +33,7 @@ index 90aea6c..99c3905 100644
  REGRESS_OPTS = --dlpath=.
  
  check: all tablespace-setup
-+	install -d /var/tmp/pgsql/tmp_check
++	install -d /var/tmp/pgsql/tmp_check/91
  	$(pg_regress_check) $(REGRESS_OPTS) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF) $(EXTRA_TESTS)
  
  installcheck: all tablespace-setup
@@ -41,7 +41,7 @@ index 90aea6c..99c3905 100644
  	$(pg_regress_installcheck) $(REGRESS_OPTS) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(EXTRA_TESTS)
  
  standbycheck: all
-+	install -d /var/tmp/pgsql/tmp_check
++	install -d /var/tmp/pgsql/tmp_check/91
  	$(pg_regress_installcheck) $(REGRESS_OPTS) --schedule=$(srcdir)/standby_schedule --use-existing
  
  # old interfaces follow...
@@ -49,11 +49,11 @@ index 90aea6c..99c3905 100644
  runtest-parallel: installcheck-parallel
  
  bigtest: all tablespace-setup
-+	install -d /var/tmp/pgsql/tmp_check
++	install -d /var/tmp/pgsql/tmp_check/91
  	$(pg_regress_installcheck) $(REGRESS_OPTS) --schedule=$(srcdir)/serial_schedule numeric_big
  
  bigcheck: all tablespace-setup
-+	install -d /var/tmp/pgsql/tmp_check
++	install -d /var/tmp/pgsql/tmp_check/91
  	$(pg_regress_check) $(REGRESS_OPTS) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
  
  
