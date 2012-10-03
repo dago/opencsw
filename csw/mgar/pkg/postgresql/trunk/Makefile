@@ -90,7 +90,7 @@ NAME = postgresql
 BASE_VERSION = 9.2
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 0
+PATCHLEVEL = 1
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 GARTYPE = v2
@@ -131,9 +131,9 @@ PGNAME_VERSIONED	= $(NAME)-$(BASE_VERSION_NODOT)
 # FreeBSD postgresql port.
 # 
 # 8.4 has removed ipcclean
-BIN_NAMES_SERVER	= initdb pg_controldata pg_ctl pg_resetxlog pg_receivexlog pg_basebackup postmaster postgres
+BIN_NAMES_SERVER	= postmaster initdb pg_controldata pg_ctl pg_resetxlog pg_receivexlog pg_basebackup postgres
 BIN_NAMES_DEVEL		= ecpg pg_config
-BIN_NAMES_CLIENT	= clusterdb createdb createlang createuser dropdb droplang dropuser pg_dump pg_dumpall pg_restore psql reindexdb vacuumdb clusterdb
+BIN_NAMES_CLIENT	= psql clusterdb createdb createlang createuser dropdb droplang dropuser pg_dump pg_dumpall pg_restore reindexdb vacuumdb clusterdb
 BIN_NAMES_CONTRIB	= oid2name pgbench pg_standby vacuumlo pg_upgrade pg_archivecleanup pg_test_fsync pg_test_timing
 # These are shared objects used by the server. Please note, contrib installs
 # also shared object in the same place, so make sure you don't mix up things
@@ -329,11 +329,9 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/alternatives/$(NAME)$(BASE
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/CSW$(NAME)$(BASE_VERSION_NODOT)-server.postmsg
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_server/README.CSW
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_server/changelog.CSW
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgssapi-krb5-2
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach i,$(NEEDED_ISAS), server_$(i))
@@ -351,9 +349,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxslt1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibgssapi-krb5-2
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach i,$(NEEDED_ISAS), client_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-contrib
@@ -374,8 +369,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibreadline6
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(NEEDED_ISAS), contrib_$(i))
 
 PACKAGES += CSW$(NAME)-dev
@@ -419,7 +412,6 @@ PKGFILES_CSWlibecpg-compat3  = $(call pkgfiles_lib,libecpg_compat.so.3)
 PKGFILES_CSWlibecpg-compat3 += .*/libecpg_compat3/changelog.CSW
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3  = CSWlibecpg6
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpgtypes3
-RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpq5
 
 PACKAGES += CSWlibecpg6
 SPKG_DESC_CSWlibecpg6 = PostgreSQL $(VERSION), libecpg
