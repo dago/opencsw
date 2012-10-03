@@ -532,8 +532,6 @@ post-install-modulated:
 # We need GNU find as find
 PATH := /opt/csw/gnu:$(PATH)
 
-# This override sets the right RPATH on libstdc++ and other libraries.
-LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST
 CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)"
 BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)"
 INSTALL_ENV := PATH=$(PATH)
