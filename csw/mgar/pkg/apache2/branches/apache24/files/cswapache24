@@ -12,8 +12,8 @@
 #RC_SLEV 3
 #FMRI network
 
-APACHE_HOME=/opt/csw/apache2
-CONF_FILE=$APACHE_HOME/etc/httpd.conf
+APACHE_HOME=/opt/csw/
+CONF_FILE=/etc/opt/csw/apache24/httpd.conf
 APACHECTL=$APACHE_HOME/sbin/apachectl
 
 [ ! -f "$CONF_FILE" ] && exit 0
