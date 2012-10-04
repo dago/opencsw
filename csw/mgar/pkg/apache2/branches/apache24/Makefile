@@ -52,7 +52,6 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
-CHECKPKG_OVERRIDES_CSWapache24 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/htdbm.1
 
 PACKAGES += CSWapache24-manual
 ARCHALL_CSWapache24-manual = 1
@@ -105,5 +104,8 @@ CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 post-merge:
 	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
 		rm -rf original; \
-		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache24|g' httpd.conf )
+		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache24|g' httpd.conf ; \
+	  cd $(PKGROOT)/$(mandir); \
+		perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache24|g' man1/*; \
+		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' man8/* )
 	@$(MAKECOOKIE)
