@@ -70,6 +70,24 @@ BUILD_DEP_PKGS += CSWlibaprutil-dev
 
 INITSMF = /etc/opt/csw/init.d/cswapache24
 
+PRESERVECONF += $(sysconfdir)/apache24/envvars
+PRESERVECONF += $(sysconfdir)/apache24/mime.types
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-manual.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-userdir.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-languages.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-vhosts.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-info.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/proxy-html.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-dav.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-multilang-errordoc.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-autoindex.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-mpm.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-default.conf
+PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-ssl.conf
+PRESERVECONF += $(sysconfdir)/apache24/envvars-std
+PRESERVECONF += $(sysconfdir)/apache24/magic
+PRESERVECONF += $(sysconfdir)/apache24/httpd.conf
+
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
 
@@ -99,7 +117,7 @@ CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 post-merge:
 	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
 		rm -rf original; \
-		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache24|g' httpd.conf ; \
+		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache24|g' httpd.conf.CSW ; \
 	  cd $(PKGROOT)/$(mandir); \
 		perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache24|g' man1/*; \
 		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' man8/* )
