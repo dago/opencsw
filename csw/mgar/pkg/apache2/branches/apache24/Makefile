@@ -52,6 +52,7 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
+CHECKPKG_OVERRIDES_CSWapache24 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/htdbm.1
 
 PACKAGES += CSWapache24-manual
 ARCHALL_CSWapache24-manual = 1
@@ -65,6 +66,7 @@ SPKG_DESC_CSWapache24-dev = The Apache 2.4 Development Files
 PKGFILES_CSWapache24-dev = $(PKGFILES_DEVEL)
 
 PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
+PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
 
 BUILD_DEP_PKGS += CSWlibaprutil-dev
 
@@ -100,3 +102,8 @@ include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 
+post-merge:
+	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
+		rm -rf original; \
+		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache24|g' httpd.conf )
+	@$(MAKECOOKIE)
