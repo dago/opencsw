@@ -68,11 +68,7 @@ PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
 
 BUILD_DEP_PKGS += CSWlibaprutil-dev
 
-# The SMF support: you don't need to specify cswinitsmf any more.  You need to
-# make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
-# the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
-# the Makefile.
-INITSMF = /etc/opt/csw/init.d/cswapache2
+INITSMF = /etc/opt/csw/init.d/cswapache24
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
@@ -107,4 +103,6 @@ post-merge:
 	  cd $(PKGROOT)/$(mandir); \
 		perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache24|g' man1/*; \
 		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' man8/* )
+	@( ginstall -d $(PKGROOT)/etc/opt/csw/init.d; \
+	    ginstall $(WORKSRC_FIRSTMOD)/../cswapache24 $(PKGROOT)/etc/opt/csw/init.d )
 	@$(MAKECOOKIE)
