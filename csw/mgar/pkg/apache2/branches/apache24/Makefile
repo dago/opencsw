@@ -36,8 +36,7 @@ LICENSE = LICENSE
 SPKG_SOURCEURL = http://httpd.apache.org/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-# Standard package bits
-DISTFILES += cswapache2
+DISTFILES += cswapache24
 
 PACKAGES = CSWapache24
 SPKG_DESC_CSWapache24 = $(DESCRIPTION)
