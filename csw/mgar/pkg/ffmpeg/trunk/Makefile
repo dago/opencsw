@@ -47,7 +47,7 @@ RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibx264-125
+RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibx264-128
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavdevice54
@@ -67,7 +67,7 @@ RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibx264-125
+RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibx264-128
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavfilter3
