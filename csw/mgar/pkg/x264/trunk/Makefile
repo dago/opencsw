@@ -15,7 +15,7 @@ VENDOR_URL = http://www.videolan.org/developers/x264.html
 #MASTER_SITES = http://repo.or.cz/w/x264.git/snapshot/  
 #DISTFILES  = c522ad1fed167d0e985e4f9dcdee042473cf74db.tar.gz
 GIT_REPOS = http://git.videolan.org/git/x264.git
-GIT_TREEISH_tig.git = 999b753ff0f4dc872077f4fa90d465e948cbe656
+GIT_TREEISH_tig.git = 198a7ea13ccb727d4ea24b29f5da9b0292387309
 
 # This Patch file needs to be updated on every new version! 
 PATCHFILES += 0001-replace-version.sh.patch
@@ -32,7 +32,9 @@ PATCHFILES += 0001-replace-version.sh.patch
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 GARCOMPILER = GCC4
 SKIPTEST = 1
-BUILD64_LIBS_ONLY = 1
+
+BUILD64 = 1
+ISAEXEC = 1
 
 BUILD_DEP_PKGS += CSWffmpeg-dev
 
@@ -49,30 +51,28 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-isa-$(ISA))
 PACKAGES += CSWx264
 SPKG_DESC_CSWx264 = $(DESCRIPTION)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWx264 += CSWlibavformat54
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibavcodec54
+RUNTIME_DEP_PKGS_CSWx264 += CSWlibavformat54
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibavutil51
 
-PACKAGES += CSWlibx264-125
-CATALOGNAME_CSWlibx264-125 = libx264_125
-PKGFILES_CSWlibx264-125 += $(call baseisadirs,$(libdir),libx264\.so\.125)
-PKGFILES_CSWlibx264-125 += $(call baseisadirs,$(libdir),libx264\.so\.125(\.\d+)*)
-SPKG_DESC_CSWlibx264-125 += $(DESCRIPTION), libx264.so.125
-RUNTIME_DEP_PKGS_CSWlibx264-125 += CSWlibgcc-s1
+PACKAGES += CSWlibx264-128
+CATALOGNAME_CSWlibx264-128 = libx264_128
+PKGFILES_CSWlibx264-128 += $(call baseisadirs,$(libdir),libx264\.so\.128)
+PKGFILES_CSWlibx264-128 += $(call baseisadirs,$(libdir),libx264\.so\.128(\.\d+)*)
+SPKG_DESC_CSWlibx264-128 += $(DESCRIPTION), libx264.so.128
+RUNTIME_DEP_PKGS_CSWlibx264-128 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
 CATALOGNAME_CSWlibx264-dev = libx264_dev
 SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
 PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-125
+RUNTIME_DEP_PKGS_CSWlibx264-dev += CSWlibx264-128
 
 #Some overrides
 CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
-CHECKPKG_OVERRIDES_CSWlibx264-125 += pkginfo-description-not-starting-with-uppercase
-# seems to be checkpkg bug:
-CHECKPKG_OVERRIDES_CSWlibx264-125 += non-uniform-lib-versions-in-package|sonames=libx264.so.125
+CHECKPKG_OVERRIDES_CSWlibx264-128 += pkginfo-description-not-starting-with-uppercase
 
 
 
