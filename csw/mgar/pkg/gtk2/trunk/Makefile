@@ -275,7 +275,7 @@ BUILD_DEP_PKGS += CSWgsed
 BUILD64 = 1
 
 # failed with: Gtk-WARNING **: cannot open display: :101
-SKIPTEST = 1 
+SKIPTEST = 1
 
 # This is because gtk.immodules resides in $(sysconfdir)/gtk-2.0. If
 # we don't take the memory model into account, 32/64 bit libs would
