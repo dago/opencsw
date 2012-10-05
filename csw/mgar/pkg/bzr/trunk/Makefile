@@ -27,8 +27,9 @@ CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-paramiko
 CHECKPKG_OVERRIDES_CSWbzr += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWbzr += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWbzr += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/bzrlib/transport/http/_urllib2_wrappers.py
-CHECKPKG_OVERRIDES_CSWbzr += disallowed-path|opt/csw/man/man1
-CHECKPKG_OVERRIDES_CSWbzr += disallowed-path|opt/csw/man/man1/bzr.1
 
 include gar/category.mk
+
+post-install-modulated:
+	@mv $(DESTDIR)/opt/csw/man $(DESTDIR)/opt/csw/share
 
