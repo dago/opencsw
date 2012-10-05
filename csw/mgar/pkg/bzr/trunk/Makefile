@@ -14,12 +14,21 @@ endef
 
 MASTER_SITES = http://launchpad.net/bzr/2.5/$(VERSION)/\+download/
 DISTFILES    = $(DISTNAME).tar.gz
-LICENSE      = COPYRIGHT
 PACKAGES     = CSWbzr
+LICENSE = COPYING.txt
+TEST_SCRIPTS = 
 
-RUNTIME_DEP_PKGS  = CSWpython
-RUNTIME_DEP_PKGS += CSWpy-crypto
+RUNTIME_DEP_PKGS = CSWpy-crypto
 RUNTIME_DEP_PKGS += CSWpy-paramiko
+RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
+
+CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-crypto
+CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-paramiko
+CHECKPKG_OVERRIDES_CSWbzr += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWbzr += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWbzr += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/bzrlib/transport/http/_urllib2_wrappers.py
+CHECKPKG_OVERRIDES_CSWbzr += disallowed-path|opt/csw/man/man1
+CHECKPKG_OVERRIDES_CSWbzr += disallowed-path|opt/csw/man/man1/bzr.1
 
 include gar/category.mk
 
