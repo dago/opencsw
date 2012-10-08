@@ -1,0 +1,29 @@
+From 3ed782c5e1a154271147391f93766f3e3836a30c Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 8 Oct 2012 09:28:47 +0200
+Subject: [PATCH] t/t5400-send-pack: Use POSIX options to cp for portability
+
+Avoid a GNU-ism in the cp options used by t5400-send-pack for
+portability. Use -pR instead of -a.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t5400-send-pack.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 250c720..65b3b0f 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -159,7 +159,7 @@ test_expect_success 'receive-pack runs auto-gc in remote repo' '
+ 	    git commit -a -m "Second commit" &&
+ 	    git repack
+ 	) &&
+-	cp -a parent child &&
++	cp -pR parent child &&
+ 	(
+ 	    # Set the child to auto-pack if more than one pack exists
+ 	    cd child &&
+-- 
+1.7.12
+
