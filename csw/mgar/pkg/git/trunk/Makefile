@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.12
+VERSION = 1.7.12.2
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -122,6 +122,7 @@ PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # to the selection of available utf8 locales.
 PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
 PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
+PATCHFILES += 0007-t-t5400-send-pack-Use-POSIX-options-to-cp-for-portab.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
