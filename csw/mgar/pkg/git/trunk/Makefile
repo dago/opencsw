@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.12.2
+VERSION = 1.7.12.3
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -8,10 +8,6 @@ GARTYPE = v2
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 VENDOR_URL = http://git-scm.org/
-
-# the getpassphrase patch is a non-build-related fix; mantis 4943
-# polish for upstream, but local for now
-VERSION_FLAG_PATCH = 1
 
 NO_SVN_TESTS=YesPlease
 GIT_TEST_OPTS=-i -v -d
