@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-admin
-VERSION = 1.1.29
+VERSION = 1.1.30
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -11,7 +11,7 @@ define BLURB
 The enterprise-class Open Source LDAP server for Linux. It is hardened by real-world use, is full-featured, supports multi-master replication, and already handles many of the largest LDAP deployments in the world. The 389 Directory Server can be downloaded for free and set up in less than an hour using the graphical console.
 endef
 
-MASTER_SITES = http://port389.org/sources
+MASTER_SITES = http://port389.org/sources/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSW389-admin.preremove
 
