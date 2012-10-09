@@ -1,12 +1,13 @@
-From 39d1ba5a51f4308a135265690988e91af536ea0a Mon Sep 17 00:00:00 2001
+From 008e0369d158cb20703097a4e1e5239048e9d7f8 Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <raos@opencsw.org>
-Date: Sat, 16 Jun 2012 20:20:27 +0200
+Date: Tue, 9 Oct 2012 14:29:23 +0200
 Subject: [PATCH] Remove unsupported compiler options
 
+Remove unsupported compiler options. Also set -z interpose on evalfunction_test, since it overwrites functions.
 ---
- tests/unit/Makefile.am |    2 +-
- tests/unit/Makefile.in |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tests/unit/Makefile.am | 2 +-
+ tests/unit/Makefile.in | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/tests/unit/Makefile.am b/tests/unit/Makefile.am
 index 86f52d0..176ccfc 100644
@@ -22,10 +23,19 @@ index 86f52d0..176ccfc 100644
  file_writer_test_LDLFAGS =
  
 diff --git a/tests/unit/Makefile.in b/tests/unit/Makefile.in
-index 36e04fb..884df9d 100644
+index 71e500e..b972a4d 100644
 --- a/tests/unit/Makefile.in
 +++ b/tests/unit/Makefile.in
-@@ -445,7 +445,7 @@ xml_writer_test_LDADD = libtest.la
+@@ -123,7 +123,7 @@ domainname_test_LDADD = $(LDADD)
+ domainname_test_DEPENDENCIES = ../../src/libpromises.la libtest.la
+ evalfunction_test_SOURCES = evalfunction_test.c
+ evalfunction_test_OBJECTS = evalfunction_test.$(OBJEXT)
+-evalfunction_test_LDADD = $(LDADD)
++evalfunction_test_LDADD = $(LDADD) -z interpose
+ evalfunction_test_DEPENDENCIES = ../../src/libpromises.la libtest.la
+ am_file_writer_test_OBJECTS =  \
+ 	file_writer_test-file_writer_test.$(OBJEXT) \
+@@ -467,7 +467,7 @@ xml_writer_test_LDADD = libtest.la
  file_writer_test_SOURCES = file_writer_test.c gcov-stub.c \
          ../../src/writer.c
  
@@ -35,5 +45,5 @@ index 36e04fb..884df9d 100644
  file_writer_test_LDLFAGS = 
  db_test_SOURCES = db_test.c
 -- 
-1.7.10.3
+1.7.12
 
