@@ -6,17 +6,22 @@ NAME = torque
 VERSION = 3.0.2
 CATEGORIES = utils
 GARTYPE = v2
+
 DESCRIPTION = Batch job scheduling system
-define BLURB
-endef
-SPKG_SOURCEURL = http://www.clusterresources.com/products/torque-resource-manager.php
-MASTER_SITES = http://www.clusterresources.com/downloads/torque/
+
+MASTER_SITES += http://www.adaptivecomputing.com/resources/downloads/torque/
+DISTFILES += $(DISTNAME).tar.gz
 PATCHFILES += 0001-daemonize-function-prototype.patch
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-server-home
 
 GARCOMPILER = GNU
+
+# CSWtk 8.5 is only available on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+VENDOR_URL = http://www.clusterresources.com/products/torque-resource-manager.php
 
 LICENSE = PBS_License_2.5.txt
 
@@ -37,9 +42,8 @@ CATALOGNAME_CSWtorque-dev = torque_dev
 SPKG_DESC_CSWtorque-dev += $(DESCRIPTION), development files
 PKGFILES_CSWtorque-dev += $(PKGFILES_DEVEL)
 
-RUNTIME_DEP_PKGS_CSWtorque += CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWtorque += CSWtk
-RUNTIME_DEP_PKGS_CSWtorque += CSWtcl
+RUNTIME_DEP_PKGS_CSWtorque += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWtorque += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWtorque += CSWlibreadline6
 
 CHECKPKG_OVERRIDES_CSWtorque += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/qsub.1
