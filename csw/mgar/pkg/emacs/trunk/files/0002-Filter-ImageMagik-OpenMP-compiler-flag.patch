@@ -1,0 +1,25 @@
+From bcc80204005ab2cdce7346594ad66c3a0ba6b65a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 8 Oct 2012 10:47:01 +0200
+Subject: [PATCH] Filter ImageMagik OpenMP compiler flag
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index fb229b7..97e73cd 100755
+--- a/configure
++++ b/configure
+@@ -10902,7 +10902,7 @@ $as_echo "yes" >&6; }
+ 
+             { $as_echo "$as_me:${as_lineno-$LINENO}: checking IMAGEMAGICK_CFLAGS" >&5
+ $as_echo_n "checking IMAGEMAGICK_CFLAGS... " >&6; }
+-            IMAGEMAGICK_CFLAGS=`$PKG_CONFIG --cflags "$IMAGEMAGICK_MODULE"|sed -e 's,///*,/,g'`
++            IMAGEMAGICK_CFLAGS=`$PKG_CONFIG --cflags "$IMAGEMAGICK_MODULE"|sed -e 's,///*,/,g' | sed -e 's/-xopenmp//'`
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: $IMAGEMAGICK_CFLAGS" >&5
+ $as_echo "$IMAGEMAGICK_CFLAGS" >&6; }
+ 
+-- 
+1.7.12
+

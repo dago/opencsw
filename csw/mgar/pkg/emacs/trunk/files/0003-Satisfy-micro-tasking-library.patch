@@ -1,0 +1,25 @@
+From 245630d8dac76f63102503ca388c51ff45afba2e Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 9 Oct 2012 11:43:31 +0200
+Subject: [PATCH] Satisfy micro-tasking library
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 9a9be4f..08c1aed 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -314,7 +314,7 @@ epaths-force: FRC
+ # running more than 1 process in the leim directory, especially for
+ # the $TIT files there.
+ leim:   src Makefile FRC
+-	(export PARALLEL; PARALLEL=0; cd $@; $(MAKE) all $(MFLAGS) \
++	(export PARALLEL; PARALLEL=1; cd $@; $(MAKE) all $(MFLAGS) \
+ 	  CC='${CC}' CFLAGS='${CFLAGS}' CPPFLAGS='${CPPFLAGS}' \
+ 	  LDFLAGS='${LDFLAGS}' MAKE='${MAKE}')
+ 
+-- 
+1.7.12
+

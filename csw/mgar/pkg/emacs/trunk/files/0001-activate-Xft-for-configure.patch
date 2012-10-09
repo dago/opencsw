@@ -1,17 +1,17 @@
-From 2bf4fad0be05e3b11a3f233c16f0f681a11641bd Mon Sep 17 00:00:00 2001
+From 904e9283e718e1b14276ee8f7047f9106c48b6bc Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Tue, 22 May 2012 14:04:49 +0200
+Date: Fri, 5 Oct 2012 11:41:59 +0200
 Subject: [PATCH] activate Xft for configure
 
 ---
- configure |    3 +++
+ configure | 3 +++
  1 file changed, 3 insertions(+)
 
 diff --git a/configure b/configure
-index d894fe6..affbb9f 100755
+index 3e3cec2..fb229b7 100755
 --- a/configure
 +++ b/configure
-@@ -589,6 +589,9 @@ ac_includes_default="\
+@@ -597,6 +597,9 @@ ac_includes_default="\
  #endif
  #ifdef HAVE_UNISTD_H
  # include <unistd.h>
@@ -20,7 +20,7 @@ index d894fe6..affbb9f 100755
 +# include <X11/Xlib.h>
  #endif"
  
- ac_config_libobj_dir=src
+ ac_header_list=
 -- 
-1.7.10
+1.7.12
 
