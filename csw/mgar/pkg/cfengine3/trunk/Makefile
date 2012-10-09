@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = cfengine3
-VERSION = 3.3.5
+VERSION = 3.3.7
 CATEGORIES = utils
 GARTYPE = v2
 GARCOMPILER = SOS12U1
@@ -26,7 +26,6 @@ DISTFILES += csw$(NAME)-cfmonitord
 DISTFILES += csw$(NAME)-cfserverd
 DISTFILES += README.CSW
 DISTFILES += changelog.CSW
-DISTFILES += map.cfengine3
 VENDOR_URL = http://www.cfengine.com/community
 
 UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
@@ -40,12 +39,13 @@ UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES =
 
-PATCHFILES += 0001-Remove-unsupported-compiler-options.patch
-PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
-PATCHFILES += 0000-Avoid-passing-NULL-pointer-to-CfOut-in-FnCallHostInN.patch
+PATCHFILES  = 0000-Avoid-passing-NULL-pointer-to-CfOut-in-FnCallHostInN.patch
+#PATCHFILES += 0001-Remove-unsupported-compiler-options.patch
 PATCHFILES += 0000-Optimization-debug-flags-adjusted-for-use-with-SunSt.patch
 # See comment in patch
 PATCHFILES += 0000-Do-not-perform-acceptance-test.patch
+PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
+PATCHFILES += 0005-Remove-unsupported-compiler-options.patch
 
 #
 # CUSTOM VARIABLES
@@ -131,7 +131,7 @@ EXTRA_CFLAGS   = -xc99=all
 
 # We use this because libpromises will be moved to this private
 # directory (see also move-libpromises:)
-EXTRA_LDFLAGS += -R$(libdir)/$(NAME) -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.cfengine3)"
+EXTRA_LDFLAGS += -R$(libdir)/$(NAME)
 
 # Those libs are used by configure to detect getaddrinfo()
 EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
