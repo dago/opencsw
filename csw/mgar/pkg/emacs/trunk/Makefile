@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME		=	emacs
-VERSION		=	23.4
+VERSION		=	24.2
 GARTYPE		=	v2
 CATEGORIES	=	apps
 
@@ -62,10 +62,16 @@ BUILD_DEP_PKGS		+=	CSWpangodevel
 BUILD_DEP_PKGS		+=	CSWpkgconfig
 BUILD_DEP_PKGS		+=	CSWsunx11devel
 
+LINKER_MAPS			=
+LINKER_DIRECT		=
+LINKER_IGNORE		=
+
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
 
 PATCHFILES			+=	0001-activate-Xft-for-configure.patch
+PATCHFILES			+=	0002-Filter-ImageMagik-OpenMP-compiler-flag.patch
+PATCHFILES			+=	0003-Satisfy-micro-tasking-library.patch
 
 EXTRA_MODULATORS			=	FEATURES
 MODULATIONS_FEATURES		=	athena
@@ -117,9 +123,6 @@ PACKAGES							=	CSWemacs-common
 SPKG_DESC_CSWemacs-common			=	$(DESCRIPTION) - architecture neutral common components
 CATALOGNAME_CSWemacs-common			=	emacs_common
 CHECKPKG_OVERRIDES_CSWemacs-common	+=	missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWemacs-common	+=	archall-with-arch-paths|/opt/csw/libexec/emacs/23.4/i386-pc-solaris2.10
-CHECKPKG_OVERRIDES_CSWemacs-common	+=	archall-with-arch-paths|/opt/csw/libexec/emacs/23.4/i386-pc-solaris2.10/rcs2log
-CHECKPKG_OVERRIDES_CSWemacs-common	+=	archall-with-arch-paths|/opt/csw/libexec/emacs/23.4/i386-pc-solaris2.10/vcdiff
 CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/dbus
 CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/elisp-3
 CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/emacs-6
@@ -221,13 +224,7 @@ PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/ctags
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/ebrowse
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/emacsclient
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/etags
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/digest-doc
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/fakemail
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/hexl
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/movemail
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/profile
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/sorted-doc
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/[^/]*solaris[^/]*/update-game-score
+PKGFILES_CSWemacs-bin-common			+=	/opt/csw/libexec/emacs/$(VERSION)/.*
 
 PACKAGES					+=	CSWemacs
 SPKG_DESC_CSWemacs			=	$(DESCRIPTION) - metapackage for generic dependencies
@@ -379,8 +376,8 @@ OBSOLETED_BY_CSWemacs-nox		=	CSWemacsnox
 CATALOGNAME_CSWemacsnox			=	emacs_nox_stub
 RUNTIME_DEP_PKGS_CSWemacs-nox	=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWemacs-nox	+=	CSWemacs-bin-common
-CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/emacs-23.4-nox
-CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/emacs-23.4-nox
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/emacs-$(VERSION)-nox
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/emacs-$(VERSION)-nox
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/emacs-nox
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/emacs-nox
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	surplus-dependency|CSWemacs-bin-common
