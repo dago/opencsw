@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.2.11.14
+VERSION = 1.2.11.15
 GARTYPE = v2
 CATEGORIES = server
 
