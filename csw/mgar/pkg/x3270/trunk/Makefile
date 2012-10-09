@@ -1,7 +1,7 @@
 # $Id$
 NAME = x3270
 BASEREL = 3.3
-VERSION = $(BASEREL).12ga7
+VERSION = $(BASEREL).12ga11
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -16,9 +16,6 @@ DISTFILES  = suite3270-$(VERSION)-src.tgz
 #   https://sourceforge.net/tracker/?func=detail&aid=3151250&group_id=153338&atid=787364
 PATCHFILES += 0002-Propagate-CFLAGS-to-building-of-version.o.patch
 
-# PATCHFILES += x3270-3.3.6_DBCS.patch
-# PATCHFILES += c3270-3.3_ncurses.patch
-
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.gz
 
@@ -28,7 +25,7 @@ VENDOR_URL = http://x3270.sourceforge.net/
 
 LICENSE = c3270-$(BASEREL)/LICENSE
 
-BUILD_DEP_PKGS += CSWtcl
+BUILD_DEP_PKGS += CSWtcl-dev
 BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
@@ -37,7 +34,7 @@ BUILD_DEP_PKGS += CSWlibncurses-dev
 PACKAGES += CSWx3270
 SPKG_DESC_CSWx3270 = An IBM 3270 terminal emulator
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWx3270 += CSWtcl
+RUNTIME_DEP_PKGS_CSWx3270 += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWx3270 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWx3270 += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWx3270 += CSWlibssl1-0-0
