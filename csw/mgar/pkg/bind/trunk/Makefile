@@ -9,7 +9,7 @@ GARTYPE = v2
 
 # Enable these for Px-releases
 #RELEASE = rc1
-RELEASE = P3
+RELEASE = P4
 DISTVERSION = $(VERSION)-$(RELEASE)
 SPKG_VERSION = $(VERSION)$(RELEASE)
 DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
@@ -37,16 +37,14 @@ DISTFILES += CSWbindchroot.postinstall
 
 LICENSE = COPYRIGHT
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 PACKAGES += CSWbind
 CATALOGNAME_CSWbind = bind
 SPKG_DESC_CSWbind = ISC BIND DNS main package
 RUNTIME_DEP_PKGS_CSWbind  = CSWlibbind
 RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
-RUNTIME_DEP_PKGS_CSWbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWbind += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWbind += CSWlibssl0-9-8
-RUNTIME_DEP_PKGS_CSWbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibldap2-4-2
 
 PACKAGES += CSWbind-dev
@@ -61,16 +59,17 @@ SPKG_DESC_CSWlibbind = ISC BIND DNS library package
 RUNTIME_DEP_PKGS_CSWlibbind  = CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
 
 PACKAGES += CSWbindutils
 CATALOGNAME_CSWbindutils = bind_utils
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 RUNTIME_DEP_PKGS_CSWbindutils  = CSWlibbind
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibz1
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibkrb5-3
 
 PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
