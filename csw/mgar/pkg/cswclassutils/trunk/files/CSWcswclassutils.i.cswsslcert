@@ -1,0 +1,99 @@
+#!/bin/sh
+#
+# i.cswsslcert - Generate a self signed key/certificate or a key/csr
+#
+# $Id: CSWcswclassutils.i.cswsslcert 14492 2011-05-02 19:49:44Z bdwalton $
+#
+# Written by Ben Walton
+#
+# 2012-10-10 Initial creation
+#
+# Documentation: http://wiki.opencsw.org/cswclassutils-package
+#
+
+# Safety measure during coding, bail out on access of unset variables
+set -u
+
+# Functions
+
+debug_echo() {
+  [ -n "$DEBUG" ] && echo "DEBUG: $*" >&2
+}
+
+# Set DEBUG to anything via environment to display debugging messages
+DEBUG=${DEBUG:-}
+
+# Avoid unset errors for variables which are usually unset during CLI tests
+PKGINST=${PKGINST:-}
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+CAS_SSL_CONFIG=$PKG_INSTALL_ROOT/etc/opt/csw/cas-ssl.conf
+CAS_SSL_CONFIG=$PKG_INSTALL_ROOT/$PWD/cas-ssl.conf
+
+if [ -f "$CAS_SSL_CONFIG" ]; then
+    debug_echo "Sourcing $CAS_SSL_CONFIG"
+   . "$CAS_SSL_CONFIG"
+fi
+
+# hopefully the cas-ssl.conf file exists and has usable data but cover
+# the case where it doesn't exist or forgets to set some value.
+
+DN=`domainname`
+if [ -z "$DN" ]; then
+    DN=theshire.net
+fi
+
+SSL_COUNTRY=${SSL_COUNTRY:-TS}
+SSL_STATE=${SSL_STATE:-Westfarthing}
+SSL_CITY=${SSL_CITY:-Hobbiton}
+SSL_ORG=${SSL_ORG:-"Thorin and Company"}
+SSL_OU=${SSL_OU:-Burglars}
+if [ -z "${SSL_HOST:-}" ]; then
+    SSL_HOST="`hostname`.$DN"
+fi
+if [ -z "${SSL_EMAIL:-}" ]; then
+    SSL_EMAIL="bilbo@$DN"
+fi
+
+debug_echo "PACKAGE: $PKGINST"
+
+# Copy files
+echo "Installing class <cswsslcert> ..."
+
+while read src dest; do
+  debug_echo "SRC: $src DEST: $dest"
+
+  /usr/bin/cp $src $dest || exit 2
+
+  if [ -n "${cas_ssl_csr:-}" ]; then
+      args="req -out $dest.csr -new -newkey rsa:${cas_ssl_bits:-2048} -nodes -keyout $dest.key"
+  else
+      args="req -new -newkey rsa:${cas_ssl_bits:-2048} -days ${cas_ssl_days:-365} -nodes -x509 -keyout $dest.key -out $dest.crt"
+  fi
+
+
+  cat <<EOF | /usr/sbin/chroot ${PKG_INSTALL_ROOT} /opt/csw/bin/openssl $args >/dev/null 2>&1
+${SSL_COUNTRY}
+${SSL_STATE}
+${SSL_CITY}
+${SSL_ORG}
+${SSL_OU}
+${SSL_HOST}
+${SSL_EMAIL}
+EOF
+
+  # we could bail here on $? != 0 but in the event there are multiple files we
+  # should at least attempt to generate them all.
+  if [ $? -ne 0 ]; then
+      echo "ERROR: There was a problem generating $dest.key/$dest.crt"
+  fi
+done
+
+exit 0

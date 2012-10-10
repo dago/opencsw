@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# r.cswsslcert - The dummy half of i.cswsslcert - no real action taken
+#
+# $Id: CSWcswclassutils.r.cswsslcert 14492 2011-05-02 19:49:44Z bdwalton $
+#
+# Written by Ben Walton
+#
+# 2012-10-10 Initial creation
+#
+# Documentation: http://wiki.opencsw.org/cswclassutils-package
+#
+
+# Safety measure during coding, bail out on access of unset variables
+set -u
+
+# Functions
+
+debug_echo() {
+  [ -n "$DEBUG" ] && echo "DEBUG: $*" >&2
+}
+
+# Set DEBUG to anything via environment to display debugging messages
+DEBUG=${DEBUG:-}
+
+# Avoid unset errors for variables which are usually unset during CLI tests
+PKGINST=${PKGINST:-}
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+
+
+
+# Copy files
+echo "Removing class <cswsslcert> ..."
+
+while read dest; do
+  debug_echo "DEST: $dest"
+
+  /usr/bin/rm $dest || exit 2
+done
+
+exit 0
