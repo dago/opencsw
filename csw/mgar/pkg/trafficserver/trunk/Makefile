@@ -54,6 +54,13 @@ RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWtrafficserver += CSWliblzma5
 
+EXTRA_LINKER_FLAGS += -norunpath
+
+REINPLACE_USRLOCAL += plugins/regex_remap/regex_remap.cc
+CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/traffic_shell
+
+LICENSE = LICENSE
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
