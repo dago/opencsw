@@ -58,6 +58,16 @@ EXTRA_LINKER_FLAGS += -norunpath
 
 REINPLACE_USRLOCAL += plugins/regex_remap/regex_remap.cc
 CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/traffic_shell
+CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/trafficserver
+
+# We don't want to build any more packages, so we override these:
+CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/trafficserver
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsmgmt.so                                                                                                  
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsutil.so
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libtsmgmt.so.3.2.3|soname=libtsmgmt.so.3|pkgname=CSWtrafficserver|expected=CSWlibtsmgmt3                                  
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libtsutil.so.3.2.3|soname=libtsutil.so.3|pkgname=CSWtrafficserver|expected=CSWlibtsutil3
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsmgmt.so                                                                                                  
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsutil.so
 
 LICENSE = LICENSE
 
