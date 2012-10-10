@@ -59,6 +59,5 @@ include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
 
 pre-configure-modulated:
-	cd $(WORKSRC) && sed -i -ne 's|TS_ADDTO(LDFLAGS, [-L/usr/local/lib])||' configure.ac 
-	cd $(WORKSRC) && autoreconf -if
-	  
+	cd $(WORKSRC) && /opt/csw/gnu/sed -i -ne 's|TS_ADDTO(LDFLAGS, [-L/usr/local/lib])||' configure.ac 
+	cd $(WORKSRC) && /opt/csw/bin/autoreconf -if
