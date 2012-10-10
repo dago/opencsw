@@ -59,7 +59,7 @@ endef
 DESCRIPTION = CSW class action utilities
 
 MASTER_SITES =
-DISTFILES = COPYING CSWcas-initsmf.cswreleasenotes
+DISTFILES = COPYING CSWcas-initsmf.cswreleasenotes cas-ssl.conf
 
 ARCHALL = 1
 
@@ -90,6 +90,8 @@ PROTOTYPE_FILES_cas = /usr/sadm/install/scripts/.*
 PROTOTYPE_USER_cas = bin
 PROTOTYPE_GROUP_cas = sys
 
+PRESERVECONF = /etc/opt/csw/cas-ssl.conf
+
 # set a unique description for each CAS
 $(foreach C,$(CSWCLASSES),$(call spkg_desc,$(C)))
 SPKG_DESC_CSWcswclassutils = $(DESCRIPTION)
@@ -119,6 +121,8 @@ PKGFILES_CSWcas-initsmf += /var/opt/csw/svc/.*
 PKGFILES_CSWcas-inetd_SHARED += /var/opt/csw/cswclassutils
 PKGFILES_CSWcas-pycompile_SHARED += /var/opt/csw/cswclassutils
 
+PKGFILES_CSWcas-sslcert += /etc/opt/csw/cas-ssl.conf.CSW
+
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-missing-cswinitsmf-class
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
@@ -142,4 +146,5 @@ install-custom:
 	@ginstall -m 0755 $(FILEDIR)/CSW$(NAME).csw.smf.sample $(DESTDIR)/opt/csw/etc/init.d/csw.smf.sample
 	@ginstall -m 0444 $(FILEDIR)/CSW$(NAME).README.CSW $(DESTDIR)$(docdir)/$(NAME)/README.CSW
 	@$(foreach CAS,$(CASLIST),ginstall -m 0555 $(FILEDIR)/CSW$(NAME).$(CAS) $(DESTDIR)/usr/sadm/install/scripts/$(CAS);)
+	@ginstall -m 0644 $(FILEDIR)/cas-ssl.conf $(DESTDIR)/etc/opt/csw/
 	@$(MAKECOOKIE)
