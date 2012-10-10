@@ -59,6 +59,6 @@ include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
 
 pre-configure-modulated:
-	cd $(WORKSRC) && /opt/csw/gnu/sed -i -ne 's|TS_ADDTO(LDFLAGS, [-L/usr/local/lib])||' configure.ac 
+	cd $(WORKSRC) && /opt/csw/bin/perl -p -i -e 's|/usr/local/lib||' configure.ac
 	cd $(WORKSRC) && /opt/csw/bin/autoreconf -if
 	@$(MAKECOOKIE)
