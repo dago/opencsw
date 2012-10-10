@@ -43,6 +43,22 @@ STRIP_LIBTOOL = 1
 
 GARCOMPILER = SOS12U3
 
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibz1
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWstlport                                                                                                                                                                 
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibhwloc5
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibexpat1                                                                                                                                                                   
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWtrafficserver += CSWliblzma5
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+pre-configure-modulated:
+	( sed -i -ne 's|TS_ADDTO(LDFLAGS, [-L/usr/local/lib])||' configure.ac && \
+		autoreconf -if )
+	  
