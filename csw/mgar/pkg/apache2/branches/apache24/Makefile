@@ -83,7 +83,7 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 # Build Configuration
 CONFIGURE_ARGS  = --with-apr=$(prefix)
 CONFIGURE_ARGS += --with-pcre=$(prefix)
-CONFIGURE_ARGS += --with-libxml2=$(prefix)
+CONFIGURE_ARGS += --with-libxml2=$(includedir)/libxml2
 CONFIGURE_ARGS += --with-lua=$(prefix)
 CONFIGURE_ARGS += --enable-mpms-shared=all
 CONFIGURE_ARGS += --enable-layout=OpenCSW
