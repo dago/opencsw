@@ -75,6 +75,8 @@ PRESERVECONF += $(sysconfdir)/apache24/envvars-std
 PRESERVECONF += $(sysconfdir)/apache24/magic
 PRESERVECONF += $(sysconfdir)/apache24/httpd.conf
 
+SSLCERT = /etc/opt/csw/apache24/server
+
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
 
@@ -115,4 +117,7 @@ post-merge:
 		mv $$f $(PKGROOT)/$(sysconfdir)/apache24/; \
 		ln -s $(sysconfdir)/apache24/$$f $$f; \
 	   done )
+
+	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
+		echo "# create server.(crt|csr)/server.key" > server )
 	@$(MAKECOOKIE)
