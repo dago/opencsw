@@ -51,7 +51,10 @@ RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsvg4-gxx
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibmuparser2-gxx
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsql4-gxx
+# RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsql4-gxx
+CHECKPKG_OVERRIDES_CSWlibreCAD += file-with-bad-content|/usr/share|root/opt/csw/gxx/bin/librecad
+CHECKPKG_OVERRIDES_CSWlibreCAD += catalogname-not-lowercase
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -66,13 +69,13 @@ install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -m 755   $(WORKSRC)/unix/librecad $(DESTDIR)$(bindir)
 	ginstall -m 755   $(WORKSRC)/unix/ttf2lff $(DESTDIR)$(bindir)
-	ginstall -d $(DESTDIR)$(datadir)/$(call tolower, $(NAME))/resources
+	ginstall -d $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
 	gcp -rfp  $(WORKSRC)/unix/resources/* \
-                  $(DESTDIR)$(datadir)/$(call tolower, $(NAME))/resources
+                  $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
 	ginstall -d $(DESTDIR)$(subst gxx/,,$(docdir))/$(CATALOGNAME_CSWlibreCAD)
 	$(foreach L,$(EXTRA_LICENSE),gcp $(WORKSRC)/$L $(DESTDIR)$(subst gxx/,,$(docdir))/$(CATALOGNAME_CSWlibreCAD);)
 	@$(MAKECOOKIE)
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:$(PATH):/opt/csw/gxx/bin
+PATH := /opt/csw/gnu:$(PATH):/opt/csw/gcc4/bin:/opt/csw/gxx/bin
