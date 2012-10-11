@@ -24,6 +24,13 @@ BUILD_DEP_PKGS += CSWlibrsvg-dev
 BUILD_DEP_PKGS += CSWlibsdl-dev
 BUILD_DEP_PKGS += CSWasciidoc
 BUILD_DEP_PKGS += CSWlua
+BUILD_DEP_PKGS += CSWlibbabl-dev
+BUILD_DEP_PKGS += CSWffmpeg-dev
+# openexr do not build :-(
+# BUILD_DEP_PKGS += CSWilmbase-dev
+# BUILD_DEP_PKGS += CSWopenexrdevel
+BUILD_DEP_PKGS += CSWjasper
+BUILD_DEP_PKGS += CSWenscript
 
 PACKAGES += CSWlibgegl0-2-0
 CATALOGNAME_CSWlibgegl0-2-0 = libgegl0_2_0
@@ -45,6 +52,8 @@ RUNTIME_DEP_PKGS_CSWlibgegl0-2-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgegl0-2-0 += CSWpango
 RUNTIME_DEP_PKGS_CSWlibgegl0-2-0 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibgegl0-2-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibgegl0-2-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgegl0-2-0 += CSWjasper
 
 # PACKAGES += CSWlibgegl0-1-0
 # SPKG_DESC_CSWlibgegl0-1-0 = A graph based image processing framework library, libgegl-0.1.so.0
@@ -86,6 +95,7 @@ RUNTIME_DEP_PKGS_CSWgegl += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgegl += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgegl += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgegl += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgegl += CSWlibintl8
 
 # There are zero-sized structs/unions used
 EXTRA_CXXFLAGS += -features=extensions
@@ -106,6 +116,11 @@ PKG_CONFIG_DIRS += /usr/lib
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-mmx=no
+# openexr do not build :-(
+CONFIGURE_ARGS += --without-openexr
+# no pc file for lua found
+EXTRA_CONFIGURE_ENV +=  LUA_CFLAGS=-I/opt/csw/include 
+EXTRA_CONFIGURE_ENV +=  LUA_LIBS=-llua
 
 include gar/category.mk
 
