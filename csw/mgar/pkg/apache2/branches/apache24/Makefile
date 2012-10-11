@@ -38,6 +38,7 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
 
 PACKAGES += CSWapache24-manual
 ARCHALL_CSWapache24-manual = 1
