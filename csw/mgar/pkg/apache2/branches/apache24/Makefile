@@ -55,25 +55,25 @@ BUILD_DEP_PKGS += CSWlibaprutil-dev
 
 INITSMF = /etc/opt/csw/init.d/cswapache24
 
-PRESERVECONF += $(sysconfdir)/apache24/envvars
-PRESERVECONF += $(sysconfdir)/apache24/mime.types
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-manual.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-userdir.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-languages.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-vhosts.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-info.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/proxy-html.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-dav.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-multilang-errordoc.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-autoindex.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-mpm.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-default.conf
-PRESERVECONF += $(sysconfdir)/apache24/extra/httpd-ssl.conf
-PRESERVECONF += $(sysconfdir)/apache24/envvars-std
-PRESERVECONF += $(sysconfdir)/apache24/magic
-PRESERVECONF += $(sysconfdir)/apache24/httpd.conf
+PRESERVECONF += $(sysconfdir)/apache2/envvars
+PRESERVECONF += $(sysconfdir)/apache2/mime.types
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-manual.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-userdir.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-languages.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-vhosts.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-info.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/proxy-html.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-dav.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-multilang-errordoc.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-autoindex.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-mpm.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-default.conf
+PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-ssl.conf
+PRESERVECONF += $(sysconfdir)/apache2/envvars-std
+PRESERVECONF += $(sysconfdir)/apache2/magic
+PRESERVECONF += $(sysconfdir)/apache2/httpd.conf
 
-SSLCERT = /etc/opt/csw/apache24/server
+SSLCERT = /etc/opt/csw/apache2/server
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
@@ -104,20 +104,20 @@ CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 post-install-modulated:
 	@(cd $(DESTDIR)/$(sbindir); \
 	   for f in envvars*; do \
-		mv $$f $(DESTDIR)/$(sysconfdir)/apache24/; \
-		ln -s $(sysconfdir)/apache24/$$f $$f; \
+		mv $$f $(DESTDIR)/$(sysconfdir)/apache2/; \
+		ln -s $(sysconfdir)/apache2/$$f $$f; \
 	   done )
 
 post-merge:
-	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
+	@(cd $(PKGROOT)/$(sysconfdir)/apache2; \
 		rm -rf original; \
-		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache24|g' httpd.conf.CSW ; \
+		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' httpd.conf.CSW ; \
 	  cd $(PKGROOT)/$(mandir); \
-		perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache24|g' man1/*; \
+		perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache2|g' man1/*; \
 		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' man8/* )
 	@( ginstall -d $(PKGROOT)/etc/opt/csw/init.d; \
 	    ginstall $(WORKSRC_FIRSTMOD)/../cswapache24 $(PKGROOT)/etc/opt/csw/init.d )
 
-	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
+	@(cd $(PKGROOT)/$(sysconfdir)/apache2; \
 		echo "# create server.(crt|csr)/server.key" > server )
 	@$(MAKECOOKIE)
