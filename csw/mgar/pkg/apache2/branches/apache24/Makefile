@@ -40,7 +40,7 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
 PACKAGES += CSWapache24-manual
 ARCHALL_CSWapache24-manual = 1
 SPKG_DESC_CSWapache24-manual = The Apache 2.4 Manual
-PKGFILES_CSWapache24-manual = /var/opt/csw/apache24/manual.*
+PKGFILES_CSWapache24-manual = /var/opt/csw/apache2/manual.*
 RUNTIME_DEPS_CSWapache24-manual = CSWapache24
 CHECKPKG_OVERRIDES_CSWapache24-manual += file-with-bad-content
 
