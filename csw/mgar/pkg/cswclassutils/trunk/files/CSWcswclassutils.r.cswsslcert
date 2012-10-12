@@ -35,6 +35,7 @@ echo "Removing class <cswsslcert> ..."
 while read dest; do
   debug_echo "DEST: $dest"
 
+  echo $dest
   /usr/bin/rm $dest || exit 2
 done
 
