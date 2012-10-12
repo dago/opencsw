@@ -101,6 +101,13 @@ include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 
+post-install-modulated:
+	@(cd $(DESTDIR)/$(sbindir); \
+	   for f in envvars*; do \
+		mv $$f $(DESTDIR)/$(sysconfdir)/apache24/; \
+		ln -s $(sysconfdir)/apache24/$$f $$f; \
+	   done )
+
 post-merge:
 	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
 		rm -rf original; \
@@ -110,11 +117,6 @@ post-merge:
 		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' man8/* )
 	@( ginstall -d $(PKGROOT)/etc/opt/csw/init.d; \
 	    ginstall $(WORKSRC_FIRSTMOD)/../cswapache24 $(PKGROOT)/etc/opt/csw/init.d )
-	@(cd $(PKGROOT)/$(sbindir); \
-	   for f in envvars*; do \
-		mv $$f $(PKGROOT)/$(sysconfdir)/apache24/; \
-		ln -s $(sysconfdir)/apache24/$$f $$f; \
-	   done )
 
 	@(cd $(PKGROOT)/$(sysconfdir)/apache24; \
 		echo "# create server.(crt|csr)/server.key" > server )
