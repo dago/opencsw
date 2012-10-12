@@ -36,6 +36,7 @@ RUNTIME_DEP_PKGS_CSWpango += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpango += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWpango += CSWlibintl8
 
 # No split for now as it is unclear how the plugins depend on each one
 CHECKPKG_OVERRIDES_CSWpango += shared-lib-pkgname-mismatch
@@ -92,6 +93,7 @@ BUILD_DEP_PKGS += CSWgtk-doc
 BUILD_DEP_PKGS += CSWlibxslt
 BUILD_DEP_PKGS += CSWglib2devel
 # BUILD_DEP_PKGS += CSWlibxft2devel
+BUILD_DEP_PKGS += CSWvim # for generating docs
 
 BUILD64 = 1
 
