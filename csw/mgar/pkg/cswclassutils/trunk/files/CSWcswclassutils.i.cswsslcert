@@ -81,6 +81,7 @@ while read src dest; do
   if [ -f $dest.key ]; then
       echo "Skipping key and cert/csr generation due to existing files."
   else
+      umask 077
       cat <<EOF | /usr/sbin/chroot ${PKG_INSTALL_ROOT} /opt/csw/bin/openssl $args >/dev/null 2>&1
 ${SSL_COUNTRY}
 ${SSL_STATE}
