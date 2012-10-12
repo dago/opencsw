@@ -69,6 +69,7 @@ echo "Installing class <cswsslcert> ..."
 while read src dest; do
   debug_echo "SRC: $src DEST: $dest"
 
+  echo $dest
   /usr/bin/cp $src $dest || exit 2
 
   if [ -n "${cas_ssl_csr:-}" ]; then
