@@ -122,6 +122,8 @@ PKGFILES_CSWcas-inetd_SHARED += /var/opt/csw/cswclassutils
 PKGFILES_CSWcas-pycompile_SHARED += /var/opt/csw/cswclassutils
 
 PKGFILES_CSWcas-sslcert += /etc/opt/csw/cas-ssl.conf.CSW
+# we need this to run the key/cert/csr commands
+RUNTIME_DEP_PKGS_CSWcas-sslcert += CSWopenssl-utils
 
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-missing-cswinitsmf-class
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location
