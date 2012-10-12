@@ -107,6 +107,7 @@ post-install-modulated:
 		mv $$f $(DESTDIR)/$(sysconfdir)/apache2/; \
 		ln -s $(sysconfdir)/apache2/$$f $$f; \
 	   done )
+	@$(MAKECOOKIE)
 
 post-merge:
 	@(cd $(PKGROOT)/$(sysconfdir)/apache2; \
