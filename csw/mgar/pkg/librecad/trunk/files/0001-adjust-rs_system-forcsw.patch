@@ -12,7 +12,7 @@
          // Add support directory if librecad is run-in-place,
          // not for Apple because it uses resources this is more for unix systems
          dirList.append(appDir + "/resources/" + subDirectory);
-+        dirList.append("/opt/csw/gxx/share/"+ appDirName + "/resources/" + subDirectory);
++        dirList.append("/opt/csw/gxx/lib/"+ appDirName + "/resources/" + subDirectory);
  #endif
  
      // Individual directories:
