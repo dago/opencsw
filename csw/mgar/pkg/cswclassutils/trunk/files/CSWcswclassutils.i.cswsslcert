@@ -35,7 +35,6 @@ if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
 fi
 
 CAS_SSL_CONFIG=$PKG_INSTALL_ROOT/etc/opt/csw/cas-ssl.conf
-CAS_SSL_CONFIG=$PKG_INSTALL_ROOT/$PWD/cas-ssl.conf
 
 if [ -f "$CAS_SSL_CONFIG" ]; then
     debug_echo "Sourcing $CAS_SSL_CONFIG"
@@ -79,7 +78,10 @@ while read src dest; do
   fi
 
 
-  cat <<EOF | /usr/sbin/chroot ${PKG_INSTALL_ROOT} /opt/csw/bin/openssl $args >/dev/null 2>&1
+  if [ -f $dest.key ]; then
+      echo "Skipping key and cert/csr generation due to existing files."
+  else
+      cat <<EOF | /usr/sbin/chroot ${PKG_INSTALL_ROOT} /opt/csw/bin/openssl $args >/dev/null 2>&1
 ${SSL_COUNTRY}
 ${SSL_STATE}
 ${SSL_CITY}
@@ -89,10 +91,11 @@ ${SSL_HOST}
 ${SSL_EMAIL}
 EOF
 
-  # we could bail here on $? != 0 but in the event there are multiple files we
-  # should at least attempt to generate them all.
-  if [ $? -ne 0 ]; then
-      echo "ERROR: There was a problem generating $dest.key/$dest.crt"
+     # we could bail here on $? != 0 but in the event there are
+     # multiple files we should at least attempt to generate them all.
+      if [ $? -ne 0 ]; then
+	  echo "ERROR: There was a problem generating $dest.key/$dest.crt"
+      fi
   fi
 done
 
