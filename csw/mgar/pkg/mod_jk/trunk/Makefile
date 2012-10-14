@@ -1,6 +1,6 @@
 NAME = tomcat-connectors
 VERSION = 1.2.37
-CATEGORIES = server
+CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = AJP connector module for Apache 2
@@ -24,6 +24,16 @@ endef
 MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/
 DISTFILES  = $(NAME)-$(VERSION)-src.tar.gz
 DISTFILES += httpd-jk.conf.CSW
+PACKAGING_PLATFORMS = solaris10-i386
+WORKSRC = $(WORKDIR)/$(DISTNAME)-src/native
+PATCHDIR = $(WORKDIR)/$(DISTNAME)-src
+
+# Apache paths
+AP2_ROOT      = $(prefix)/apache2
+AP2_LIBEXEC   = $(DESTDIR)$(AP2_ROOT)/libexec
+AP2_APXS      = $(AP2_ROOT)/sbin/apxs
+AP2_MODS = 1
+AP2_MODFILES += mod_jk.so
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.gz
@@ -33,13 +43,7 @@ AUXCONFIG += workers.properties.minimal
 AUXCONFIG += uriworkermap.properties
 DISTFILES += $(AUXCONFIG)
 
-WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)-src/native
-
-# Make apxs install to the temp dir
-PATCHFILES += install.diff
-
-# Fix bad embedded paths in mod_jk.c
-PATCHFILES += logging.diff
+PATCHFILES += 0001-Use-correct-paths-for-install-and-logging.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
@@ -54,11 +58,17 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+post-extract-modulated:
+	echo $(WORKDIR)
+	echo $(WORKSRC)
+	@$(MAKECOOKIE)
+
 pre-install:
 	install -d $(DESTDIR)$(prefix)/apache2/libexec
 	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	install -d $(DESTDIR)$(datadir)/ap2modjk
 	install -d $(DESTDIR)$(docdir)/ap2modjk
+	@$(MAKECOOKIE)
 
 post-install:
 	ginstall -m 0644 \
