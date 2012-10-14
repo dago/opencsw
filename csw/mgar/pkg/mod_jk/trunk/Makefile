@@ -1,5 +1,5 @@
 NAME = tomcat-connectors
-VERSION = 1.2.30
+VERSION = 1.2.37
 CATEGORIES = server
 GARTYPE = v2
 
