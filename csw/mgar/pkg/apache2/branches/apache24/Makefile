@@ -84,6 +84,7 @@ CONFIGURE_ARGS += --with-pcre=$(prefix)
 CONFIGURE_ARGS += --with-libxml2=$(includedir)/libxml2
 CONFIGURE_ARGS += --with-lua=$(prefix)
 CONFIGURE_ARGS += --enable-mpms-shared=all
+CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-layout=OpenCSW
 CONFIGURE_ARGS += --enable-mods-shared=all
 CONFIGURE_ARGS += --enable-privileges
