@@ -23,8 +23,7 @@ endef
 
 MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/jk-$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION)-src.tar.gz
-ADMINFILES = depend prototype postinstall preremove space
-DISTFILES += $(call admfiles,CSWap2modjk,$(ADMINFILES))
+DISTFILES += depend prototype postinstall preremove space
 DISTFILES += httpd-jk.conf.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
