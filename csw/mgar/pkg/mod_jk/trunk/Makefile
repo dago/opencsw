@@ -21,10 +21,11 @@ define BLURB
   been ported to JK.
 endef
 
+PACKAGES = CSWap2modjk
+
 MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/
 DISTFILES  = $(NAME)-$(VERSION)-src.tar.gz
 DISTFILES += httpd-jk.conf.CSW
-PACKAGING_PLATFORMS = solaris10-i386
 WORKSRC = $(WORKDIR)/$(DISTNAME)-src/native
 PATCHDIR = $(WORKDIR)/$(DISTNAME)-src
 
@@ -44,30 +45,32 @@ AUXCONFIG += uriworkermap.properties
 DISTFILES += $(AUXCONFIG)
 
 PATCHFILES += 0001-Use-correct-paths-for-install-and-logging.patch
+PATCHFILES += 0002-Do-not-prefix-APXSLDFLAGS-with-Wl-to-make-SUNWspro-h.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
+CONFIGURE_ARGS += --libexecdir=$(AP2_ROOT)/libexec
+CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
 CONFIGURE_ARGS += --enable-jni
 CONFIGURE_ARGS += --enable-prefork
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-java-home=/usr/jdk/latest
 CONFIGURE_ARGS += --with-java-platform=2
 
+BUILD_DEP_PKGS_CSWap2modjk += CSWapache2-dev
+RUNTIME_DEP_PKGS_CSWap2modjk += CSWapache2
+
+LICENSE_TEXT = Apache
+
 # No test suite available
 TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-extract-modulated:
-	echo $(WORKDIR)
-	echo $(WORKSRC)
-	@$(MAKECOOKIE)
-
-pre-install:
-	install -d $(DESTDIR)$(prefix)/apache2/libexec
-	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	install -d $(DESTDIR)$(datadir)/ap2modjk
-	install -d $(DESTDIR)$(docdir)/ap2modjk
+pre-install-modulated:
+	ginstall -d $(AP2_LIBEXEC)
+	ginstall -d $(DESTDIR)$(AP2_ROOT)/etc/extra
+	ginstall -d $(DESTDIR)$(datadir)/ap2modjk
+	ginstall -d $(DESTDIR)$(docdir)/ap2modjk
 	@$(MAKECOOKIE)
 
 post-install:
