@@ -1,13 +1,1 @@
-1815c09dc59d4a769e20c0f2361c4656  CSWap2modjk.depend
-da3c0df06571efa952998e637ca10cde  CSWap2modjk.gspec
-f4781a01cc678a752a800198918e5687  CSWap2modjk.postinstall
-5eb4612d15fdf4fd8498d97c79ed8e4b  CSWap2modjk.preremove
-a0994b400fb225bffa325b5cd53a08a2  CSWap2modjk.prototype
-0dd379f20ceb32fc77bb3a9bf045097f  CSWap2modjk.space
-43136ccdd67533557a2e4953249f755f  httpd-jk.conf.CSW
-25c3855d2af69021dfc63e9d4b1ed78a  install.diff
-7c6ff5425f542ec5eb80954f8a470519  logging.diff
-e6504ce44628ca18deaa503cbc77f545  tomcat-connectors-1.2.30-src.tar.gz
-594aca8f50b11134fd3396e348bd2f12  uriworkermap.properties
-7824a6e972faae3d9ec7b06a47b70105  workers.properties
-b69613899d749ba2a40d1acbbbe13ba9  workers.properties.minimal
+64c3803477b47c5b7ef7f0e4a416e45e  tomcat-connectors-1.2.37-src.tar.gz

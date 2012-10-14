@@ -1,0 +1,55 @@
+From be896c015d432de308f998a80b0eb94863f872ac Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Sun, 14 Oct 2012 15:20:23 +0200
+Subject: [PATCH] Use correct paths for install and logging.
+
+---
+ native/apache-2.0/Makefile.apxs.in | 2 +-
+ native/apache-2.0/Makefile.in      | 2 +-
+ native/apache-2.0/mod_jk.c         | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/native/apache-2.0/Makefile.apxs.in b/native/apache-2.0/Makefile.apxs.in
+index a313654..b9c44df 100644
+--- a/native/apache-2.0/Makefile.apxs.in
++++ b/native/apache-2.0/Makefile.apxs.in
+@@ -32,7 +32,7 @@ mod_jk.la:
+ 	$(APXS)  -c -o $@ -Wc,"${APXSCFLAGS} ${JK_INCL}" ${APXSLDFLAGS} mod_jk.c ${APACHE_OBJECTS}
+ 
+ install: mod_jk.la
+-	$(APXS) -i mod_jk.la
++	$(APXS) -S LIBEXECDIR=$(DESTDIR)$(APACHE_DIR)/libexec -i mod_jk.la
+ 
+ clean:
+ 	rm -f *.o *.lo *.a *.la *.so *.so.* *.slo
+diff --git a/native/apache-2.0/Makefile.in b/native/apache-2.0/Makefile.in
+index 35c778e..0da5997 100644
+--- a/native/apache-2.0/Makefile.in
++++ b/native/apache-2.0/Makefile.in
+@@ -83,7 +83,7 @@ mod_jk.so: mod_jk.la
+ install_dynamic:
+ 	@echo ""
+ 	@echo "Installing files to Apache Modules Directory..."
+-	$(APXS) -i mod_jk.la
++	$(APXS) -S LIBEXECDIR=$(DESTDIR)$(APACHE_DIR)/libexec -i mod_jk.la
+ 	@echo ""
+ 	@echo "Please be sure to arrange ${APACHE_DIR}/conf/httpd.conf..."
+ 	@echo ""
+diff --git a/native/apache-2.0/mod_jk.c b/native/apache-2.0/mod_jk.c
+index 3a31fe2..e8b17d4 100644
+--- a/native/apache-2.0/mod_jk.c
++++ b/native/apache-2.0/mod_jk.c
+@@ -98,8 +98,8 @@
+ #include "jk_shm.h"
+ #include "jk_url.h"
+ 
+-#define JK_LOG_DEF_FILE             ("logs/mod_jk.log")
+-#define JK_SHM_DEF_FILE             ("logs/jk-runtime-status")
++#define JK_LOG_DEF_FILE             ("var/log/mod_jk.log")
++#define JK_SHM_DEF_FILE             ("var/log/jk-runtime-status")
+ #define JK_ENV_REMOTE_ADDR          ("JK_REMOTE_ADDR")
+ #define JK_ENV_REMOTE_PORT          ("JK_REMOTE_PORT")
+ #define JK_ENV_REMOTE_HOST          ("JK_REMOTE_HOST")
+-- 
+1.7.12
+
