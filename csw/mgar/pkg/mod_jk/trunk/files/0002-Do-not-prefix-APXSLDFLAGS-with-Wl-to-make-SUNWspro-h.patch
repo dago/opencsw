@@ -1,0 +1,45 @@
+From 879c3c18b8f8a9e8be828be3d33e8023d6c65848 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Sun, 14 Oct 2012 23:14:54 +0200
+Subject: [PATCH] Do not prefix APXSLDFLAGS with -Wl to make SUNWspro happy.
+
+---
+ native/configure | 22 ----------------------
+ 1 file changed, 22 deletions(-)
+
+diff --git a/native/configure b/native/configure
+index 0dea941..f48faf4 100755
+--- a/native/configure
++++ b/native/configure
+@@ -24042,28 +24042,6 @@ if ${TEST} -n "${LDFLAGS}" ; then
+ fi
+ 
+ 
+-  jk_new_val=""
+-  jk_val_changed=0
+-  for i in $APXSLDFLAGS; do
+-    case $i in
+-      -Wl,*)
+-        jk_new_val="$jk_new_val $i"
+-        ;;
+-      *)
+-        jk_new_val="$jk_new_val -Wl,$i"
+-        jk_val_changed=1
+-        ;;
+-    esac
+-  done
+-  if test $jk_val_changed = "1"; then
+-    { echo "$as_me:$LINENO: tokens in APXSLDFLAGS have been prefixed with '-Wl,'" >&5
+-echo "$as_me: tokens in APXSLDFLAGS have been prefixed with '-Wl,'" >&6;}
+-    APXSLDFLAGS=$jk_new_val
+-  fi
+-
+-
+-
+-
+ if ${TEST} -z "$WEBSERVER" ; then
+     { { echo "$as_me:$LINENO: error: Cannot find the WebServer" >&5
+ echo "$as_me: error: Cannot find the WebServer" >&2;}
+-- 
+1.7.12
+
