@@ -21,7 +21,7 @@ define BLURB
   been ported to JK.
 endef
 
-MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/jk-$(VERSION)/
+MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/
 DISTFILES  = $(NAME)-$(VERSION)-src.tar.gz
 DISTFILES += httpd-jk.conf.CSW
 
