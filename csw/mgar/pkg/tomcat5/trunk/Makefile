@@ -83,6 +83,10 @@ CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/local|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat5/webapps/tomcat-docs/appdev/printer/processes.html
 CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat5/webapps/tomcat-docs/building.html
 CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat5/webapps/tomcat-docs/printer/building.html
+CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat5/bin/tcnative-1.dll
+CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat5/bin/x64/tcnative-1.dll
+CHECKPKG_OVERRIDES_CSWtomcat5 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat5/bin/i64/tcnative-1.dll
+
 
 
 include gar/category.mk
