@@ -40,9 +40,8 @@ VENDOR_URL = http://memcached.org/
 BUILD_DEP_PKGS = CSWlibevent-dev
 RUNTIME_DEP_PKGS = CSWlibevent2-0-5
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-# Make special version for Solaris 10 with enabled DTrace
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+# Solaris 9 does not have atomic_inc_ushort_nv
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 BUILD64 = 1
 ISAEXEC = 1
