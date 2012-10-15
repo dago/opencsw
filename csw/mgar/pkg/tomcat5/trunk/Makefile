@@ -1,5 +1,5 @@
 NAME      = tomcat5
-VERSION   = 5.5.35
+VERSION   = 5.5.36
 CATEGORIES   = server
 GARTYPE = v2
 
