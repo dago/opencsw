@@ -25,6 +25,7 @@ PATCHFILES += ltmain.patch
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # BUILD64_LIBS_ONLY = 1
+BUILD64 = 1
 
 PACKAGES += CSWlibpoppler-cpp0
 CATALOGNAME_CSWlibpoppler-cpp0 = libpoppler_cpp0
