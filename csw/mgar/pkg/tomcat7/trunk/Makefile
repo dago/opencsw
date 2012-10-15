@@ -1,5 +1,5 @@
 NAME      = tomcat7
-VERSION   = 7.0.29
+VERSION   = 7.0.32
 CATEGORIES   = server
 GARTYPE = v2
 
