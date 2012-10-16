@@ -254,6 +254,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(TEXHASH),$$F[1] = "cswtexhash" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(SSLCERT),$$F[1] = "cswsslcert" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
 		$(if $(PHP5_EXT),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/php5/extensions/.*));) \
 		$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^/opt/csw/etc/templates/.+$$) and $$F[0] eq "f" ); \
@@ -275,12 +276,16 @@ _CSWCLASS_FILTER = | perl -ane '\
 # per the above note.  (See bacula for an example of where this is
 # required.)
 
+# NOTE: ensure sslcert must run before initsmf/inetd. certs should be
+# in place before services are started.
+
 _CSWCLASSES  = cswusergroup ugfiles
 _CSWCLASSES += cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
 _CSWCLASSES += cswetcservices
 _CSWCLASSES += cswetcshells
 _CSWCLASSES += cswcrontab
 _CSWCLASSES += cswpycompile
+_CSWCLASSES += cswsslcert
 _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
