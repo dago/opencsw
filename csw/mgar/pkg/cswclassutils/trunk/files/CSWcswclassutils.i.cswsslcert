@@ -34,31 +34,24 @@ if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
   . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
 fi
 
-CAS_SSL_CONFIG=$PKG_INSTALL_ROOT/etc/opt/csw/cas-ssl.conf
-
-if [ -f "$CAS_SSL_CONFIG" ]; then
-    debug_echo "Sourcing $CAS_SSL_CONFIG"
-   . "$CAS_SSL_CONFIG"
-fi
-
-# hopefully the cas-ssl.conf file exists and has usable data but cover
-# the case where it doesn't exist or forgets to set some value.
+# We hope that the admin set these values in csw.conf but provide defaults
+# for everything just in case.
 
 DN=`domainname`
 if [ -z "$DN" ]; then
     DN=theshire.net
 fi
 
-SSL_COUNTRY=${SSL_COUNTRY:-TS}
-SSL_STATE=${SSL_STATE:-Westfarthing}
-SSL_CITY=${SSL_CITY:-Hobbiton}
-SSL_ORG=${SSL_ORG:-"Thorin and Company"}
-SSL_OU=${SSL_OU:-Burglars}
-if [ -z "${SSL_HOST:-}" ]; then
-    SSL_HOST="`hostname`.$DN"
+CAS_SSL_COUNTRY=${CAS_SSL_COUNTRY:-TS}
+CAS_SSL_STATE=${CAS_SSL_STATE:-Westfarthing}
+CAS_SSL_CITY=${CAS_SSL_CITY:-Hobbiton}
+CAS_SSL_ORG=${CAS_SSL_ORG:-"Thorin and Company"}
+CAS_SSL_OU=${CAS_SSL_OU:-Burglars}
+if [ -z "${CAS_SSL_HOST:-}" ]; then
+    CAS_SSL_HOST="`hostname`.$DN"
 fi
-if [ -z "${SSL_EMAIL:-}" ]; then
-    SSL_EMAIL="bilbo@$DN"
+if [ -z "${CAS_SSL_EMAIL:-}" ]; then
+    CAS_SSL_EMAIL="bilbo@$DN"
 fi
 
 debug_echo "PACKAGE: $PKGINST"
@@ -78,19 +71,18 @@ while read src dest; do
       args="req -new -newkey rsa:${cas_ssl_bits:-2048} -days ${cas_ssl_days:-365} -nodes -x509 -keyout $dest.key -out $dest.crt"
   fi
 
-
-  if [ -f $dest.key ]; then
+  if [ -f "$dest.key" ]; then
       echo "Skipping key and cert/csr generation due to existing files."
   else
       umask 077
       cat <<EOF | /usr/sbin/chroot ${PKG_INSTALL_ROOT} /opt/csw/bin/openssl $args >/dev/null 2>&1
-${SSL_COUNTRY}
-${SSL_STATE}
-${SSL_CITY}
-${SSL_ORG}
-${SSL_OU}
-${SSL_HOST}
-${SSL_EMAIL}
+${CAS_SSL_COUNTRY}
+${CAS_SSL_STATE}
+${CAS_SSL_CITY}
+${CAS_SSL_ORG}
+${CAS_SSL_OU}
+${CAS_SSL_HOST}
+${CAS_SSL_EMAIL}
 EOF
 
      # we could bail here on $? != 0 but in the event there are
