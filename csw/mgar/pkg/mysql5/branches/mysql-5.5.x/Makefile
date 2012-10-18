@@ -29,7 +29,12 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
 
 # Solaris 10 needs a special map file since we need libnsl Version 1.9.1 and libc 1.22.5
-LINKER_MAPS = -M "$(abspath $(WORKDIR)/map.mysql)"
+
+ifneq ($(shell /usr/bin/uname -r),5.9)
+	LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
+endif
+
+
 
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
