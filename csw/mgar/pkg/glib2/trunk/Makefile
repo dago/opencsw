@@ -314,7 +314,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 # DTrace compilation fails, disable for now
 CONFIGURE_ARGS += --disable-dtrace
 
-SKIPTEST = 1
+#SKIPTEST = 1
 
 # Those are to make the checks work
 EXTRA_COMMON_EXPORTS = TZ
