@@ -1,6 +1,7 @@
 NAME = bzr
-VERSION = 1.17
-#PATCHREV = .1
+MAJORVERSION = 2.6
+PATCHREV = b2
+VERSION = $(MAJORVERSION)$(PATCHREV)
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -12,13 +13,22 @@ define BLURB
   to work, and you can try it out in five minutes. 
 endef
 
-MASTER_SITES = http://launchpad.net/bzr/$(VERSION)/$(VERSION)$(PATHREV)/+download/
-DISTFILES  = $(NAME)-$(VERSION)$(PATHREV).tar.gz
+MASTER_SITES = https://launchpad.net/bzr/$(MAJORVERSION)/$(VERSION)/+download/
+# MASTER_SITES = https://launchpad.net/bzr/2.6/2.6b2/+download/bzr-2.6b2.tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+LICENSE = COPYING.txt
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)$(PATHREV)-(\d+(?:\.\d+)*).tar.gz
+GARCOMPILER = SOS12U3
 
-RUNTIME_DEP_PKGS += CSWcswclassutils
+REINPLACE_USRLOCAL += bzrlib/transport/http/_urllib2_wrappers.py
+REINPLACE_MATCH = man/man1
+REINPLACE_WITH = share/man/man1
+REINPLACE_FILES += setup.py
+EXTRA_MERGE_EXCLUDE_FILES += .*\.py[oc]
+
+PACKAGES += CSWpy-bzr
+RUNTIME_DEP_PKGS += CSWpython
+RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
