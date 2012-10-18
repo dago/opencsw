@@ -20,6 +20,7 @@ endef
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES += $(DISTNAME).tar.gz 
 DISTFILES += sudo.conf.CSW
+DISTFILES += map.sudo
 
 LICENSE = doc/LICENSE
 
@@ -27,6 +28,13 @@ VENDOR_URL = http://www.sudo.ws
 
 # To have least Priv Support for Solaris 10 build on all Platforms
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386  solaris10-sparc solaris10-i386
+
+#Use custom map for solaris 10
+
+ifneq ($(shell /usr/bin/uname -r),5.9)
+        LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.sudo)"
+endif
+
 
 PACKAGES += CSWsudo
 SPKG_DESC_CSWsudo = Provides limited super user privileges
