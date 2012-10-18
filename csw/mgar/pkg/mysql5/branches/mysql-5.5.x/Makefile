@@ -13,7 +13,7 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.5
-PATCHLEVEL = 27
+PATCHLEVEL = 28
 ALTS_PRIO = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
@@ -27,6 +27,9 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
+
+# Solaris 10 needs a special map file since we need libnsl Version 1.9.1 and libc 1.22.5
+LINKER_MAPS = -M "$(abspath $(WORKDIR)/map.mysql)"
 
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
@@ -158,6 +161,7 @@ DISTFILES += ChangeLog
 DISTFILES += CSW$(NAME).preinstall
 DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
+DISTFILES += map.mysql
 
 # TODO: Do the proper prerequsite pkgs.
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
