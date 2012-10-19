@@ -1,5 +1,5 @@
 NAME = dbus-python
-VERSION = 0.83.0
+VERSION = 1.1.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,28 +16,26 @@ endef
 MASTER_SITES = http://dbus.freedesktop.org/releases/dbus-python/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+GARCOMPILER = SOS12U3
+
 SPKG_SOURCEURL = http://www.freedesktop.org/wiki/Software/DBusBindings
-PACKAGES = CSWdbuspython
-CATALOGNAME_CSWdbuspython = dbus_python
-SPKG_DESC_CSWdbuspython = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWdbuspython  = CSWdbusglib CSWggettextrt CSWglib2 CSWlibdbus
+PACKAGES = CSWpy-dbus
+RUNTIME_DEP_PKGS_CSWpy-dbus += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWpy-dbus += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWpy-dbus += CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWpy-dbus += CSWpython
+OBSOLTED_PKGS_CSWpy-dbus = CSWdbuspython
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-RUNTIME_DEP_PKGS += CSWcswclassutils
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PATCHFILES = no-stdint.diff
 
-CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
-CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
+# CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
+# CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-tests
+# CONFIGURE_ARGS += --disable-tests
+SKIPTEST = 1
 
 
 include gar/category.mk
