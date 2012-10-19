@@ -42,6 +42,7 @@ RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWexim += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibspf2-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWexim += CSWperl
 
 # They supply the GPL in a non-standard file.
 LICENSE = LICENCE
