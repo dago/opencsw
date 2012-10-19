@@ -14,6 +14,7 @@ endef
 
 MASTER_SITES = http://memcached.googlecode.com/files/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES += mman.h
 
 ## Use patches until this is applied:
 ##   https://github.com/memcached/memcached/pull/3
@@ -43,8 +44,11 @@ RUNTIME_DEP_PKGS = CSWlibevent2-0-5
 # Solaris 9 does not have atomic_inc_ushort_nv
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+EXTRA_CFLAGS = -I "$(abspath $(WORKDIR))"
+
 BUILD64 = 1
 ISAEXEC = 1
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS += --enable-sasl
@@ -57,3 +61,7 @@ TEST_TARGET = test
 
 include gar/category.mk
 
+post-extract-modulated:
+	mkdir $(WORKDIR)/sys
+	mv $(WORKDIR)/mman.h $(WORKDIR)/sys
+	@$(MAKECOOKIE)
