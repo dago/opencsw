@@ -1,4 +1,4 @@
-From 3de7065322e0a5fd8afb1932e5473b77581b8460 Mon Sep 17 00:00:00 2001
+From ecd51aef8d36f7e49290d5fc5e463123199785c9 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Sat, 4 Aug 2012 15:05:15 +0200
 Subject: [PATCH] Set OpenCSW build options
@@ -8,11 +8,11 @@ environment.
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
- Local/Makefile |  105 ++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 57 insertions(+), 48 deletions(-)
+ Local/Makefile | 109 +++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 59 insertions(+), 50 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index 95857c7..650b8ae 100644
+index 95857c7..83f4616 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
 @@ -78,6 +78,17 @@
@@ -295,6 +295,15 @@ index 95857c7..650b8ae 100644
  
  
  #------------------------------------------------------------------------------
+@@ -830,7 +839,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+ # (version 5.004 or later) installed, set EXIM_PERL to perl.o. Using embedded
+ # Perl costs quite a lot of resources. Only do this if you really need it.
+ 
+-# EXIM_PERL=perl.o
++EXIM_PERL=perl.o
+ 
+ 
+ #------------------------------------------------------------------------------
 @@ -850,7 +859,7 @@ ZCAT_COMMAND=/usr/bin/zcat
  # support, which is intended for use in conjunction with the SMTP AUTH
  # facilities, is included only when requested by the following setting:
@@ -331,6 +340,15 @@ index 95857c7..650b8ae 100644
  
  ###############################################################################
  #              THINGS YOU ALMOST NEVER NEED TO MENTION                        #
+@@ -1022,7 +1031,7 @@ SYSTEM_ALIASES_FILE=/etc/aliases
+ # MV_COMMAND=/bin/mv
+ # RM_COMMAND=/bin/rm
+ # TOUCH_COMMAND=/usr/bin/touch
+-# PERL_COMMAND=/usr/bin/perl
++PERL_COMMAND=/opt/csw/bin/perl
+ 
+ 
+ #------------------------------------------------------------------------------
 @@ -1222,7 +1231,7 @@ TMPDIR="/tmp"
  # (process id) to a file so that it can easily be identified. The path of the
  # file can be specified here. Some installations may want something like this:
@@ -341,5 +359,5 @@ index 95857c7..650b8ae 100644
  # If PID_FILE_PATH is not defined, Exim writes a file in its spool directory
  # using the name "exim-daemon.pid".
 -- 
-1.7.10.3
+1.7.12
 
