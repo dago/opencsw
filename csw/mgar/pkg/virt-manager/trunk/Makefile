@@ -15,11 +15,14 @@ MASTER_SITES = http://virt-manager.org/download/sources/virt-manager/
 DISTFILES  = $(DISTNAME).tar.gz
 
 GARCOMPILER = SOS12U3
+DEP_PKGS += CSWpython
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.py[oc]
 
 ARCHALL_CSWvirt-manager = 1
-RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpython
+RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-virtinst
+RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-curl
+RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-dbus
 
 # CONFIGURE_SCRIPTS =
 # BUILD_SCRIPTS = $(WORKSRC)/setup.py
