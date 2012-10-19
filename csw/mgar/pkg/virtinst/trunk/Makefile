@@ -33,6 +33,9 @@ BUILD_DEP_PKGS += CSWgettext
 DEP_PKGS += CSWpython
 
 PACKAGES += CSWpy-virtinst
+# no file cpu_map.xml available at the moment
+CHECKPKG_OVERRIDES_CSWpy-virtinst += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/virtinst/CapabilitiesParser.py
+
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
