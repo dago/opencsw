@@ -24,7 +24,7 @@ RUNTIME_DEP_PKGS_CSWpy-dbus += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpy-dbus += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWpy-dbus += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS_CSWpy-dbus += CSWpython
-OBSOLTED_PKGS_CSWpy-dbus = CSWdbuspython
+OBSOLETED_BY_CSWpy-dbus = CSWdbuspython
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
