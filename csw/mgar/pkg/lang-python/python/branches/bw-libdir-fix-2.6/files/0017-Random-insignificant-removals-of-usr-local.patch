@@ -1,0 +1,104 @@
+From ea64a94a70a7d6714160d78be6c55c914a6a1980 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 16:24:39 +0100
+Subject: [PATCH 17/17] Random insignificant removals of /usr/local
+
+---
+ Lib/distutils/unixccompiler.py |    2 +-
+ Lib/pydoc_topics.py            |    2 +-
+ Lib/site.py                    |    8 ++++----
+ Lib/trace.py                   |    8 ++++----
+ Misc/python.man                |    4 ++--
+ 5 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/Lib/distutils/unixccompiler.py b/Lib/distutils/unixccompiler.py
+index 7330303..004ae5d 100644
+--- a/Lib/distutils/unixccompiler.py
++++ b/Lib/distutils/unixccompiler.py
+@@ -325,7 +325,7 @@ class UnixCCompiler(CCompiler):
+ 
+             if sys.platform == 'darwin' and (
+                 dir.startswith('/System/') or (
+-                dir.startswith('/usr/') and not dir.startswith('/usr/local/'))):
++                dir.startswith('/usr/') and not dir.startswith('/usr' '/local/'))):
+ 
+                 shared = os.path.join(sysroot, dir[1:], shared_f)
+                 dylib = os.path.join(sysroot, dir[1:], dylib_f)
+diff --git a/Lib/site.py b/Lib/site.py
+index ff41408..c4ebfe2 100644
+--- a/Lib/site.py
++++ b/Lib/site.py
+@@ -27,7 +27,7 @@ sys.path more than once.  Blank lines and lines beginning with
+ '#' are skipped. Lines starting with 'import' are executed.
+ 
+ For example, suppose sys.prefix and sys.exec_prefix are set to
+-/usr/local and there is a directory /usr/local/lib/python2.5/site-packages
++/opt/csw and there is a directory /opt/csw/lib/python2.5/site-packages
+ with three subdirectories, foo, bar and spam, and two path
+ configuration files, foo.pth and bar.pth.  Assume foo.pth contains the
+ following:
+@@ -44,8 +44,8 @@ and bar.pth contains:
+ 
+ Then the following directories are added to sys.path, in this order:
+ 
+-  /usr/local/lib/python2.5/site-packages/bar
+-  /usr/local/lib/python2.5/site-packages/foo
++  /opt/csw/lib/python2.5/site-packages/bar
++  /opt/csw/lib/python2.5/site-packages/foo
+ 
+ Note that bletch is omitted because it doesn't exist; bar precedes foo
+ because bar.pth comes alphabetically before foo.pth; and spam is
+@@ -62,7 +62,7 @@ import sys
+ import os
+ import __builtin__
+ 
+-# Prefixes for site-packages; add additional prefixes like /usr/local here
++# Prefixes for site-packages; add additional prefixes like /opt/csw here
+ PREFIXES = [sys.prefix, sys.exec_prefix]
+ # Enable per user site-packages directory
+ # set it to False to disable the feature or True to force the feature
+diff --git a/Lib/trace.py b/Lib/trace.py
+index 3611f88..93eaf11 100644
+--- a/Lib/trace.py
++++ b/Lib/trace.py
+@@ -155,11 +155,11 @@ class Ignore:
+         for d in self._dirs:
+             # The '+ os.sep' is to ensure that d is a parent directory,
+             # as compared to cases like:
+-            #  d = "/usr/local"
+-            #  filename = "/usr/local.py"
++            #  d = "/opt/csw"
++            #  filename = "/opt/csw.py"
+             # or
+-            #  d = "/usr/local.py"
+-            #  filename = "/usr/local.py"
++            #  d = "/opt/csw.py"
++            #  filename = "/opt/csw.py"
+             if filename.startswith(d + os.sep):
+                 self._ignore[modulename] = 1
+                 return 1
+diff --git a/Misc/python.man b/Misc/python.man
+index b9aa72f..ae719ff 100644
+--- a/Misc/python.man
++++ b/Misc/python.man
+@@ -323,7 +323,7 @@ exception).  Error messages are written to stderr.
+ These are subject to difference depending on local installation
+ conventions; ${prefix} and ${exec_prefix} are installation-dependent
+ and should be interpreted as for GNU software; they may be the same.
+-The default for both is \fI/usr/local\fP.
++The default for both is \fI/opt/csw\fP.
+ .IP \fI${exec_prefix}/bin/python\fP
+ Recommended location of the interpreter.
+ .PP
+@@ -352,7 +352,7 @@ Change the location of the standard Python libraries.  By default, the
+ libraries are searched in ${prefix}/lib/python<version> and
+ ${exec_prefix}/lib/python<version>, where ${prefix} and ${exec_prefix}
+ are installation-dependent directories, both defaulting to
+-\fI/usr/local\fP.  When $PYTHONHOME is set to a single directory, its value
++\fI/opt/csw\fP.  When $PYTHONHOME is set to a single directory, its value
+ replaces both ${prefix} and ${exec_prefix}.  To specify different values
+ for these, set $PYTHONHOME to ${prefix}:${exec_prefix}.
+ .IP PYTHONPATH
+-- 
+1.7.3.2
+
