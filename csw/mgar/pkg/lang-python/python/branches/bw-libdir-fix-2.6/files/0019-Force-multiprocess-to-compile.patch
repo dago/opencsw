@@ -1,0 +1,27 @@
+From 18b33cfa2e9179cb0d3fc571d808bd0789bb1748 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 13 Apr 2012 17:02:51 +0200
+Subject: [PATCH] Force multiprocess to compile
+
+---
+ setup.py |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index d7b6b07..3d7ce83 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1410,8 +1410,8 @@ class PyBuildExt(build_ext):
+ 
+         elif platform == 'sunos5':
+             macros = dict(                  # Solaris
+-                HAVE_SEM_OPEN=0,        # Not Implemented
+-                HAVE_SEM_TIMEDWAIT=0,   # Not Implemented
++                HAVE_SEM_OPEN=1,        # Not Implemented
++                HAVE_SEM_TIMEDWAIT=1,   # Not Implemented
+                 HAVE_FD_TRANSFER=1,
+                 )
+             libraries = ['rt']
+-- 
+1.7.9
+

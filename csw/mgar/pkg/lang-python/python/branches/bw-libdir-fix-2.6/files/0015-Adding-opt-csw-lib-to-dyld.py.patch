@@ -1,0 +1,27 @@
+From e3772e5060312a6f925b9747713d9d523a804f5f Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 16:22:42 +0100
+Subject: [PATCH 15/15] Adding /opt/csw/lib to dyld.py
+
+---
+ Lib/ctypes/macholib/dyld.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Lib/ctypes/macholib/dyld.py b/Lib/ctypes/macholib/dyld.py
+index 9714ec6..32cac3f 100644
+--- a/Lib/ctypes/macholib/dyld.py
++++ b/Lib/ctypes/macholib/dyld.py
+@@ -26,9 +26,9 @@ DEFAULT_FRAMEWORK_FALLBACK = [
+ 
+ DEFAULT_LIBRARY_FALLBACK = [
+     os.path.expanduser("~/lib"),
+-    "/usr/local/lib",
+     "/lib",
+     "/usr/lib",
++    "/opt/csw/lib",
+ ]
+ 
+ def ensure_utf8(s):
+-- 
+1.7.3.2
+

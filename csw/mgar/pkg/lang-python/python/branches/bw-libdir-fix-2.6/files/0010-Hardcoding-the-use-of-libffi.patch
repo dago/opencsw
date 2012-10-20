@@ -1,0 +1,33 @@
+From 57e87768fd28a35e762ceb0b467f501933faf60d Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 00:19:42 +0100
+Subject: [PATCH] Hardcoding the use of libffi
+
+---
+ setup.py |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index f875e6f..86f112a 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1812,7 +1812,7 @@ class PyBuildExt(build_ext):
+         return True
+ 
+     def configure_ctypes(self, ext):
+-        if not self.use_system_libffi:
++        if not True:
+             if sys.platform == 'darwin':
+                 return self.configure_ctypes_darwin(ext)
+ 
+@@ -1904,6 +1904,7 @@ class PyBuildExt(build_ext):
+         ext_test = Extension('_ctypes_test',
+                              sources=['_ctypes/_ctypes_test.c'])
+         self.extensions.extend([ext, ext_test])
++        ext.libraries.append('ffi')
+ 
+         if not '--with-system-ffi' in sysconfig.get_config_var("CONFIG_ARGS"):
+             return
+-- 
+1.7.3.2
+
