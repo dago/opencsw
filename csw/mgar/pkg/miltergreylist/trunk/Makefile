@@ -34,7 +34,7 @@ PATCHFILES += 0002-change-socket-path.patch
 #PATCHFILES += 0003-upstream-bug-fixes.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS  = --prefix=/opt/csw
+CONFIGURE_ARGS += --prefix=/opt/csw
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 CONFIGURE_ARGS += --with-user=`/usr/xpg4/bin/id -u`
 CONFIGURE_ARGS += --with-conffile=/etc/opt/csw/greylist.conf
@@ -70,7 +70,7 @@ MIGRATE_SOURCE_DIR = /opt/csw/etc/mail
 MIGRATE_DEST_DIR   = /etc/opt/csw
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1   = /var/opt/csw/milter-greylist
+PROTOTYPE_FILES_1   = /var/opt/csw/miltergreylist
 PROTOTYPE_CLASS_1   = ugfiles
 PROTOTYPE_PERMS_1   = 0700
 PROTOTYPE_USER_1    = greylist
