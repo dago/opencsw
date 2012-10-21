@@ -1,0 +1,26 @@
+From 1095f75f9f11f41bf24e391bb755abaaea0afbec Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 20 Oct 2012 20:20:50 +0200
+Subject: [PATCH 1/4] patch a usr/local reference to opt/csw in Tools/faqwiz
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Tools/faqwiz/faqconf.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Tools/faqwiz/faqconf.py b/Tools/faqwiz/faqconf.py
+index d1acd80..05d060a 100644
+--- a/Tools/faqwiz/faqconf.py
++++ b/Tools/faqwiz/faqconf.py
+@@ -21,7 +21,7 @@ OWNERNAME = "FAQ owner"                 # Name for feedback
+ OWNEREMAIL = "nobody@anywhere.org"      # Email for feedback
+ HOMEURL = "http://www.python.org"       # Related home page
+ HOMENAME = "Python home"                # Name of related home page
+-RCSBINDIR = "/usr/local/bin/"           # Directory containing RCS commands
++RCSBINDIR = "/opt/csw/bin/"           # Directory containing RCS commands
+                                         # (must end in a slash)
+ 
+ # Parameters you can normally leave alone
+-- 
+1.7.12
+
