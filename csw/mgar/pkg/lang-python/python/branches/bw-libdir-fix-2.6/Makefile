@@ -36,18 +36,7 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-# Some features are missing on Solaris 9, e.g. functionality required for the
-# multiprocessing support.
-# http://osdir.com/ml/opensolaris-discuss/2009-07/msg00865.html
-# http://bugs.python.org/issue3770
-# However, this bug is about better detection of SEM_VALUE_MAX in Solaris
-# http://bugs.python.org/issue3110
-
-# There are header differences between Solaris 9 and 10. Programs that include
-# pyconfig.h from Solaris 9 installed on Solaris 10 can get wrong settings,
-# e.g. wrt _X_OPEN_SOURCE.
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # Patches
 PATCHFILES += 0001-patch-a-usr-local-reference-to-opt-csw-in-Tools-faqw.patch
