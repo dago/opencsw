@@ -16,7 +16,7 @@ index 9f61507..9bbcb59 100644
  dnl        socket to communicate with milter
  dnl        default value :
 -dnl           local:/var/milter-greylist/milter-greylist.sock
-+dnl           local:/var/opt/csw/miltergreylist/milter-greylist.sock
++dnl           local:/var/opt/csw/milter-greylist/milter-greylist.sock
  dnl
  dnl    confGREYLIST_OPTIONS
  dnl       extra parameters to be used in INPUT_MAIL_FILTER
@@ -25,7 +25,7 @@ index 9f61507..9bbcb59 100644
  define(`confGREYLIST_ARGS',`S=confGREYLIST_SOCKET')dnl
  dnl',`dnl
 -define(`confGREYLIST_ARGS',`S=local:/var/milter-greylist/milter-greylist.sock')dnl
-+define(`confGREYLIST_ARGS',`S=local:/var/opt/csw/miltergreylist/milter-greylist.sock')dnl
++define(`confGREYLIST_ARGS',`S=local:/var/opt/csw/milter-greylist/milter-greylist.sock')dnl
  dnl')dnl
  ifdef(`confGREYLIST_OPTIONS',`dnl
  define(`confGREYLIST_ARGS',confGREYLIST_ARGS`, confGREYLIST_OPTIONS')dnl

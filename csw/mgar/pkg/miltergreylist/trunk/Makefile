@@ -70,7 +70,7 @@ MIGRATE_SOURCE_DIR = /opt/csw/etc/mail
 MIGRATE_DEST_DIR   = /etc/opt/csw
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1   = /var/opt/csw/miltergreylist
+PROTOTYPE_FILES_1   = /var/opt/csw/milter-greylist
 PROTOTYPE_CLASS_1   = ugfiles
 PROTOTYPE_PERMS_1   = 0700
 PROTOTYPE_USER_1    = greylist
