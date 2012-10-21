@@ -128,14 +128,14 @@ PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py
 
 PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
-PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/bsddb/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/ctypes/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/email/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
+PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python$(VER)/test/.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/bsddb/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/ctypes/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/email/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/distutils/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/json/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/lib2to3/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python$(VER)/sqlite3/test.*
 
 ARCHALL_CSWpython$(CVER)-test = 1
 ARCHALL_CSWidle$(CVER)        = 1
