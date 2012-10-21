@@ -1,10 +1,10 @@
 NAME = miltergreylist
-VERSION = 4.4
-RELEASE = a1
-DISTVERSION = $(VERSION)$(RELEASE)
-#DISTVERSION = $(VERSION)
+VERSION = 4.4.1
+#RELEASE = a1
+#DISTVERSION = $(VERSION)$(RELEASE)
+DISTVERSION = $(VERSION)
 DISTNAME = milter-greylist-$(DISTVERSION)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 GARTYPE = v2
 
@@ -18,20 +18,20 @@ DISTFILES    = milter-greylist-$(DISTVERSION).tgz
 DISTFILES   += COPYING
 
 BUILD_DEP_PKGS = CSWlibspf2-dev
+
 GARCOMPILER = GNU
 
-RUNTIME_DEP_PKGS  = CSWgeoip
 RUNTIME_DEP_PKGS += CSWlibcurl4
 RUNTIME_DEP_PKGS += CSWlibspf2-2
+RUNTIME_DEP_PKGS += CSWlibgeoip1
 
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 CHECKPKG_OVERRIDES += file-with-bad-content
 
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
 PATCHFILES += 0002-change-socket-path.patch
-PATCHFILES += 0003-upstream-bug-fixes.patch
+#PATCHFILES += 0003-upstream-bug-fixes.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  = --prefix=/opt/csw
@@ -45,6 +45,15 @@ CONFIGURE_ARGS += --with-libGeoIP=/opt/csw/lib
 CONFIGURE_ARGS += --with-libspf2=/opt/csw/lib
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
+
+# To build with DRAC support, enable this block
+RUNTIME_DEP_PKGS += CSWbdb48
+CONFIGURE_ARGS += --enable-drac
+EXTRA_LIB = /opt/csw/bdb48/lib
+EXTRA_INC = /opt/csw/bdb48/include
+#EXTRA_CFLAGS = -DUSE_DB185_EMULATION -D__EXTENSIONS__
+EXTRA_CFLAGS = -DUSE_DB185_EMULATION
+EXTRA_LDFLAGS = -ldb
 
 # milter-greylist has no tests
 TEST_SCRIPTS = 
