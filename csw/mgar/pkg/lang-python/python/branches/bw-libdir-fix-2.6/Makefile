@@ -164,11 +164,6 @@ RUNTIME_DEP_PKGS_CSWpython-tk += CSWlibtk8-5
 
 BUILD_DEP_PKGS += CSWlibffi-dev
 
-# There are packages depending on libpython2.5, and listing CSWpython as the
-# dependency.
-RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
-CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
-
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
 
