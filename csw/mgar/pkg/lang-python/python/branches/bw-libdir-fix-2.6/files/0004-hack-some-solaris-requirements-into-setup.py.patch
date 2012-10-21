@@ -1,0 +1,45 @@
+From aeb403c7a7b33c3fd6a63dcbfa24b3d314885c29 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 20 Oct 2012 22:01:07 +0200
+Subject: [PATCH 4/4] hack some solaris requirements into setup.py
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ setup.py | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 4fe1f45..d7b6b07 100644
+--- a/setup.py
++++ b/setup.py
+@@ -355,9 +355,9 @@ class PyBuildExt(build_ext):
+         return sys.platform
+ 
+     def detect_modules(self):
+-        # Ensure that /usr/local is always used
+-        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++        # Ensure that /opt/csw is always used
++        add_dir_to_list(self.compiler.library_dirs, '/opt/csw/lib')
++        add_dir_to_list(self.compiler.include_dirs, '/opt/csw/include')
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+         # CPPFLAGS for header and library files.
+@@ -1408,6 +1408,14 @@ class PyBuildExt(build_ext):
+                 )
+             libraries = []
+ 
++        elif platform == 'sunos5':
++            macros = dict(                  # Solaris
++                HAVE_SEM_OPEN=0,        # Not Implemented
++                HAVE_SEM_TIMEDWAIT=0,   # Not Implemented
++                HAVE_FD_TRANSFER=1,
++                )
++            libraries = ['rt']
++
+         else:                                   # Linux and other unices
+             macros = dict(
+                 HAVE_SEM_OPEN=1,
+-- 
+1.7.12
+

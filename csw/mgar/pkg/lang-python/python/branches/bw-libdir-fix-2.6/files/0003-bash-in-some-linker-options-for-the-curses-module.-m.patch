@@ -1,0 +1,31 @@
+From b27a1f6efaf775a01067fbe4a9bf572b90b7fad9 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 20 Oct 2012 20:26:14 +0200
+Subject: [PATCH 3/4] bash in some linker options for the curses module.  (may
+ not be necessary now?)
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Modules/Setup.dist | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Modules/Setup.dist b/Modules/Setup.dist
+index 5e69a60..d95669b 100644
+--- a/Modules/Setup.dist
++++ b/Modules/Setup.dist
+@@ -363,9 +363,10 @@ GLHACK=-Dclear=__GLclear
+ #
+ # First, look at Setup.config; configure may have set this for you.
+ 
+-#_curses _cursesmodule.c -lcurses -ltermcap
++*shared*
++_curses _cursesmodule.c -R/opt/csw/lib -L/opt/csw/lib -lcurses -lncursesw -lxtermcap
+ # Wrapper for the panel library that's part of ncurses and SYSV curses.
+-#_curses_panel _curses_panel.c -lpanel -lncurses 
++_curses_panel _curses_panel.c -R/opt/csw/lib -L/opt/csw/lib -lcurses -lpanel -lncursesw -lxtermcap 
+ 
+ 
+ # Generic (SunOS / SVR4) dynamic loading module.
+-- 
+1.7.12
+

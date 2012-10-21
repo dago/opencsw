@@ -1,0 +1,31 @@
+From 78113a4bbf99d0ca8c9d19721aeeb3a1f187489e Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 20 Oct 2012 20:24:36 +0200
+Subject: [PATCH 2/4] handle special options for bsddb in Modules/makesetup
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Modules/makesetup | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Modules/makesetup b/Modules/makesetup
+index 8862c36..6883bca 100755
+--- a/Modules/makesetup
++++ b/Modules/makesetup
+@@ -217,7 +217,12 @@ sed -e 's/[ 	]*#.*//' -e '/^[ 	]*$/d' |
+ 			*) src='$(srcdir)/'"$srcdir/$src";;
+ 			esac
+ 			case $doconfig in
+-			no)	cc="$cc \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++			no)	case $src in
++                *bsddb.*)
++                    cc="$cc -I\$(DBINC) \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++                *) 
++                    cc="$cc  \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++                esac;;
+ 			*)
+ 				cc="$cc \$(PY_CFLAGS)";;
+ 			esac
+-- 
+1.7.12
+

@@ -50,14 +50,13 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # Patches
-PATCHFILES += faqwiz.diff
-PATCHFILES += makesetup.diff
-PATCHFILES += modules.diff
-PATCHFILES += multiprocess.diff
-PATCHFILES += pyport.diff
-PATCHFILES += site.diff
-PATCHFILES += python-config-in.diff
-PATCHFILES += setup.diff
+PATCHFILES += 0001-patch-a-usr-local-reference-to-opt-csw-in-Tools-faqw.patch
+PATCHFILES += 0002-handle-special-options-for-bsddb-in-Modules-makesetu.patch
+PATCHFILES += 0003-bash-in-some-linker-options-for-the-curses-module.-m.patch
+PATCHFILES += 0004-hack-some-solaris-requirements-into-setup.py.patch
+PATCHFILES += 0005-ensure-the-_socket-module-links-with-the-socket-libr.patch
+PATCHFILES += 0006-ensure-the-_multiprocessing-module-links-with-the-so.patch
+
 PATCHFILES += 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
 # PATCHFILES += 0010-Hardcoding-the-use-of-libffi.patch
 # PATCHFILES += 0011-OpenCSW-specific-libffi-include-dir.patch

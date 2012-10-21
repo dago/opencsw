@@ -1,0 +1,26 @@
+From 16328d74227516e110c459ad3eb54c813176fb37 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 21 Oct 2012 13:24:14 +0200
+Subject: [PATCH] ensure the _multiprocessing module links with the socket
+ library
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ setup.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/setup.py b/setup.py
+index b292a0e..eb4b354 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1444,6 +1444,7 @@ class PyBuildExt(build_ext):
+         if sysconfig.get_config_var('WITH_THREAD'):
+             exts.append ( Extension('_multiprocessing', multiprocessing_srcs,
+                                     define_macros=macros.items(),
++                                    libraries = ['socket'],
+                                     include_dirs=["Modules/_multiprocessing"]))
+         else:
+             missing.append('_multiprocessing')
+-- 
+1.7.12
+
