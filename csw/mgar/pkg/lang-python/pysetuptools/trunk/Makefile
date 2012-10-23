@@ -14,14 +14,15 @@ define BLURB
   Distribution Utilities for Python
 endef
 
-ARCHALL_CSWpysetuptools = 1
+ARCHALL_CSWpy-setuptools = 1
 MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
 UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
-PACKAGES = CSWpysetuptools
-CATALOGNAME_CSWpysetuptools = pysetuptools
-SPKG_DESC_CSWpysetuptools = Distribution Utiltiies for Python
+PACKAGES = CSWpy-setuptools
+CATALOG_NAME_CSWpy-setuptools = py_setuptools
+OBSOLETED_BY_CSWpy-setuptools = CSWpysetuptools
+SPKG_DESC_CSWpy-setuptools = Distribution Utiltiies for Python
 TEST_SCRIPTS = 
 LICENSE = LICENSE
 include gar/category.mk
