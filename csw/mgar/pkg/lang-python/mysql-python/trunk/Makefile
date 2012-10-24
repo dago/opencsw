@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = MySQL-python
-VERSION = 1.2.3
+VERSION = 1.2.4b4
 CATEGORIES = python
 GARTYPE = v2
 
