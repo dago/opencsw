@@ -35,14 +35,14 @@ RUNTIME_DEP_PKGS_CSWexim += CSWgzip
 RUNTIME_DEP_PKGS_CSWexim += CSWgzipextras
 RUNTIME_DEP_PKGS_CSWexim += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWexim += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWexim += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWexim += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWexim += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibspf2-2
 RUNTIME_DEP_PKGS_CSWexim += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWexim += CSWperl
+RUNTIME_DEP_PKGS_CSWexim += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWexim += CSWlibmysqlclient15
 
 # They supply the GPL in a non-standard file.
 LICENSE = LICENCE
