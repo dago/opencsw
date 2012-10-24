@@ -30,11 +30,18 @@ endef
 
 PACKAGES = CSWgitosis
 CATALOGNAME_CSWgitosis = $(NAME)
+SPKG_DESC_CSWgitosis = $(DESCRIPTION)
 ARCHALL_CSWgitosis = 1
-
 BUILD_DEP_PKGS_CSWgitosis = CSWpython CSWpysetuptools
-
 RUNTIME_DEP_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
+
+# this is not for release.
+PACKAGES += CSWgitosis-test
+SPKG_DESC_CSWgitosis-test = The test suite for gitosis
+PKGFILES_CSWgitosis-test = .*/test/.*
+ARCHALL_CSWgitosis-test = 1
+CHECKPKG_OVERRIDES_CSWgitosis-test += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWgitosis-test += catalogname-does-not-start-with-py_
 
 GIT_REPOS = git://github.com/tv42/gitosis.git
 GIT_USE_PROXY = 1
@@ -74,6 +81,8 @@ CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWpysetuptools
 CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWgit
 
 LICENSE = COPYING
+
+PYCOMPILE = 1
 
 include gar/category.mk
 
