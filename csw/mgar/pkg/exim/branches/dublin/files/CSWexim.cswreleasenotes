@@ -1,0 +1,4 @@
+/usr/local reference in exim binary:
+  This is the default path for some drweb malware detection tool.  It's
+  overridable via configuration and I don't have a better default for it
+  since we don't ship it.
