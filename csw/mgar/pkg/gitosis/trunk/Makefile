@@ -73,6 +73,8 @@ CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWbash
 CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWpysetuptools
 CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWgit
 
+LICENSE = COPYING
+
 include gar/category.mk
 
 # override the category exclusion
