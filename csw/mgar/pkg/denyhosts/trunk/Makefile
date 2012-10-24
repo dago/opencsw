@@ -26,6 +26,11 @@ LICENSE = LICENSE.txt
 ARCHALL = 1
 INITSMF = /etc/opt/csw/init.d/cswdenyhosts
 
+PACKAGES = CSWdenyhosts
+
+CHECKPKG_OVERRIDES_CSWdenyhosts += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWdenyhosts += catalogname-does-not-start-with-py_
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -70,7 +75,7 @@ post-install-modulated:
 
 	gsed -i \
 		-e 's,denyhosts.cfg,$(sysconfdir)/denyhosts.cfg,' \
-		$(DESTDIR)/opt/csw/lib/python/site-packages/DenyHosts/constants.py
+		$(DESTDIR)/opt/csw/lib/python2.6/site-packages/DenyHosts/constants.py
 
 	#Adjust daemon-control-dist wrapper script to match our package paths
 	gsed -i \
