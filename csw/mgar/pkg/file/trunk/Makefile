@@ -35,6 +35,8 @@ PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
+# libmagic1 is dlopened
+CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
 
 PACKAGES += CSWlibmagic-data
 SPKG_DESC_CSWlibmagic-data = Database for libmagic
