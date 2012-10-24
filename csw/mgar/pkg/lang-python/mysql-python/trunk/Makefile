@@ -13,6 +13,8 @@ SF_PROJ = $(call TOLOWER,$(NAME))
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
+GARCOMPILER = SOS12U3
+
 PACKAGES = CSWpy-mysql
 CATALOGNAME_CSWpy-mysql = py_mysql
 RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibpython2-6-1-0
