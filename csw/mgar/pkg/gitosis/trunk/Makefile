@@ -36,7 +36,7 @@ BUILD_DEP_PKGS_CSWgitosis = CSWpython CSWpysetuptools
 
 RUNTIME_DEP_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
 
-GIT_REPOS = git://eagain.net/gitosis.git
+GIT_REPOS = git://github.com/tv42/gitosis.git
 GIT_USE_PROXY = 1
 # We don't use a specific release tag as we want to get some fixes to
 # support git 1.6+.  We'll simply package the tip of the public branch
