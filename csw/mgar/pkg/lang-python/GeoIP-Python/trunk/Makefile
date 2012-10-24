@@ -8,6 +8,8 @@ GARTYPE = v2
 MASTER_SITES = http://www.maxmind.com/download/geoip/api/python/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Remove-usr-local-references-from-setup.py-to-fix-emb.patch
+
 VENDOR_URL = http://www.maxmind.com/app/python
 
 LICENSE = LICENSE
