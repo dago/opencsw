@@ -811,7 +811,7 @@ MERGE_EXCLUDE_CATEGORY ?= $(_MERGE_EXCLUDE_CATEGORY)
 
 # Support for cswpycompile, skip pre-compiled python files (.pyc, .pyo)
 # during the merge phase.
-_PYCOMPILE_FILES = /opt/csw/lib/python/site-packages/.*\.py
+_PYCOMPILE_FILES = /opt/csw/lib/python.*/site-packages/.*\.py
 MERGE_EXCLUDE_PYCOMPILE ?= $(if $(PYCOMPILE), $(addsuffix c,$(_PYCOMPILE_FILES)) $(addsuffix o,$(_PYCOMPILE_FILES)))
 
 MERGE_EXCLUDE_INFODIR ?= $(sharedstatedir)/info/dir
