@@ -25,4 +25,12 @@ OBSOLETED_BY_CSWpy-setuptools = CSWpysetuptools
 SPKG_DESC_CSWpy-setuptools = Distribution Utiltiies for Python
 TEST_SCRIPTS = 
 LICENSE = LICENSE
+
+CHECKPKG_OVERRIDES_CSWpysetuptools += surplus-dependency|CSWpython
+
 include gar/category.mk
+
+post-merge:
+	@(cd $(PKGROOT)/$(libdir)/python2.6/site-packages/setuptools/; \
+		rm -rf tests )
+	@$(MAKECOOKIE)
