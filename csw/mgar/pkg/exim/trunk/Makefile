@@ -29,7 +29,7 @@ DISTFILES += CSWexim.cswreleasenotes
 # commits in pre-patch below.
 PATCHFILES += 0003-Set-OpenCSW-build-options.patch
 
-BUILD_DEP_PKGS = CSWlibspf2-dev
+BUILD_DEP_PKGS = CSWlibspf2-dev CSWsasl-dev
 
 RUNTIME_DEP_PKGS_CSWexim += CSWgzip
 RUNTIME_DEP_PKGS_CSWexim += CSWgzipextras
