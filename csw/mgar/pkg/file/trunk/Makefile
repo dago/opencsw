@@ -25,7 +25,6 @@ SPKG_DESC_CSWgfile = A file type guesser
 PKGFILES_CSWgfile += $(call baseisadirs,$(bindir),gfile)
 PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
 PKGFILES_CSWgfile += $(prefix)/gnu/file
-RUNTIME_DEP_PKGS_CSWgfile += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgfile += CSWlibmagic1
 # EXTRA_MERGE_EXCLUDE_FILES = .*\.py[oc]
 
