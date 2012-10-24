@@ -18,8 +18,7 @@ GARCOMPILER = SOS12U3
 PACKAGES = CSWpy-mysql
 CATALOGNAME_CSWpy-mysql = py_mysql
 RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpy-mysql += CSWzlib
-RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibmysqlclient-r15
+RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibmysqlclient18
 
 SPKG_DESC_CSWpy-mysql = MySQL Support for Python
 
@@ -30,6 +29,8 @@ mysql_prefix = $(prefix)/mysql5
 mysql_bindir = $(mysql_prefix)/bin/$(ISA_DEFAULT_$(GARCH))
 
 CHECKPKG_OVERRIDES_CSWpymysql += surplus-dependency|CSWpython
+
+SKIPTEST = 1
 
 include gar/category.mk
 
