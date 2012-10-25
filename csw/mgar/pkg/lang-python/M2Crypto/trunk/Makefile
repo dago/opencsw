@@ -16,6 +16,8 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://chandlerproject.org/Projects/MeTooCrypto
 
+BUILD_DEP_PKGS += CSWswig
+
 PACKAGES = CSWpy-m2crypto
 SPKG_DESC_CSWpy-m2crypto = The most complete Python wrapper for OpenSSL
 RUNTIME_DEP_PKGS_CSWpy-m2crypto += CSWlibssl1-0-0
