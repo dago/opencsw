@@ -1,5 +1,5 @@
 NAME = salt
-VERSION = 0.10.3
+VERSION = 0.10.4
 GARTYPE = v2
 CATEGORIES = python
 
