@@ -20,7 +20,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = PKG-INFO
 ARCHALL_CSWpy-formencode = 1
 
-REINPLACE_USRSHARE = $(libdir)/python2.6/site-packages/formencode/api.py
+REINPLACE_USRSHARE = $(SITE_PACKAGES)/formencode/api.py
 REINPLACE_WHEN_USRSHARE = postinstall
 
 include gar/category.mk
