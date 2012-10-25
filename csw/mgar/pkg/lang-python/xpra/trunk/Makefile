@@ -36,10 +36,10 @@ BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWlibx264-dev
 BUILD_DEP_PKGS += CSWffmpeg-dev
 
-REINPLACE_USRSHARE += $(libdir)/python/site-packages/xpra/xposix/gui.py
-REINPLACE_USRSHARE += $(libdir)/python/site-packages/xpra/platform/client_extras_base.py
+REINPLACE_USRSHARE += $(SITE_PACKAGES)/xpra/xposix/gui.py
+REINPLACE_USRSHARE += $(SITE_PACKAGES)/xpra/platform/client_extras_base.py
 REINPLACE_WHEN_USRSHARE = postinstall
-REINPLACE_USRLOCAL += $(libdir)/python/site-packages/xpra/xposix/gui.py
+REINPLACE_USRLOCAL += $(SITE_PACKAGES)/xpra/xposix/gui.py
 REINPLACE_WHEN_USRLOCAL = postinstall
 
 PACKAGE += CSWxpra
