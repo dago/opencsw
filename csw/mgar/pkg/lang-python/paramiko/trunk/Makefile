@@ -27,5 +27,5 @@ include gar/category.mk
 
 post-merge-modulated:
 	gsed -i 's,/usr/local/etc/moduli,/opt/csw/etc/ssh/moduli,' \
-		$(PKGROOT)$(libdir)/python/site-packages/paramiko/transport.py
+		$(PKGROOT)$(SITE_PACKAGES)/paramiko/transport.py
 	@$(MAKECOOKIE)
