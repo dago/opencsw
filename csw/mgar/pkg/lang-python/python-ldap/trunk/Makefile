@@ -16,7 +16,7 @@ endef
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-BUILD_DEP_PKGS = CSWpython-dev CSWopenldap-dev 
+BUILD_DEP_PKGS = CSWpython-dev CSWopenldap-dev CSWsasl-dev
 RUNTIME_DEP_PKGS_CSWpy-ldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibldap-r2-4-2
 RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibpython2-6-1-0
