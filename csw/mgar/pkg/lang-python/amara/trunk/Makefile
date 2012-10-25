@@ -19,9 +19,5 @@ CATALOGNAME_CSWpy-amara = py_amara
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWpy-amara += CSWlibpython2-6-1-0
-EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/python/site-packages/amara/test.*
+EXTRA_MERGE_EXCLUDE_FILES = $(SITE_PACKAGES)/amara/test.*
 include gar/category.mk
-
-post-merge:
-	@(cd $(PKGROOT)$(libdir)/python2.6/site-packages/amara/; rm -rf test)
-	@$(MAKECOOKIE)
