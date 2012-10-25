@@ -1,6 +1,6 @@
 # $Id$
 NAME = django-auth-ldap
-VERSION = 1.0.6
+VERSION = 1.1.2
 CATEGORIES = python
 GARTYPE = v2
 PACKAGES = CSWpy-django-auth-ldap
