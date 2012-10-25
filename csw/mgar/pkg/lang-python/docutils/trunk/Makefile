@@ -27,7 +27,7 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -m 644 \
 		$(WORKSRC)/extras/roman.py \
-		$(DESTDIR)$(libdir)/python/site-packages
+		$(DESTDIR)$(SITE_PACKAGES)
 	ginstall -d $(DESTDIR)$(docdir)
 	gcp -Rv $(WORKSRC)/docs $(DESTDIR)$(docdir)/pydocutils
 	gcp -Rv $(WORKSRC)/extras $(DESTDIR)$(docdir)/pydocutils
