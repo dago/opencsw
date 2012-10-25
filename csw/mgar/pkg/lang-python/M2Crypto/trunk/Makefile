@@ -18,11 +18,12 @@ VENDOR_URL = http://chandlerproject.org/Projects/MeTooCrypto
 
 PACKAGES = CSWpy-m2crypto
 SPKG_DESC_CSWpy-m2crypto = The most complete Python wrapper for OpenSSL
-RUNTIME_DEP_PKGS_CSWpy-m2crypto += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpy-m2crypto += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpy-m2crypto += CSWlibpython2-6-1-0
 
 PYBUILD_CMD = build build_ext
 BUILD_ARGS += --openssl=$(prefix)
+
 
 # Skip testsuite until this is fixed:
 #   https://bugzilla.osafoundation.org/show_bug.cgi?id=13039
