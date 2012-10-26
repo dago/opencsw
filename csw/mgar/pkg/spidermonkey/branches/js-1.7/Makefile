@@ -56,9 +56,15 @@ RUNTIME_DEP_PKGS_CSWlibjs-dev += CSWlibjs1-7-0
 PACKAGES += CSWlibjs1-7-0
 PKGFILES_CSWlibjs1-7-0 += $(call baseisadirs,$(libdir),libjs\.so\.1\.7\.0)
 SPKG_DESC_CSWlibjs1-7-0 += $(DESCRIPTION), libjs.so.1.7.0
+
+PACKAGES += CSWspidermonkey
+SPKG_DESC_CSWspidermonkey += $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWspidermonkey += CSWlibjs1-7-0
 
 CHECKPKG_OVERRIDES_CSWlibjs1-7-0 += binary-architecture-does-not-match-placement|file=opt/csw/lib/libjs.so.1.7.0|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWspidermonkey += binary-architecture-does-not-match-placement|file=opt/csw/bin/js|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWspidermonkey += binary-architecture-does-not-match-placement|file=opt/csw/bin/jscpucfg|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWspidermonkey += surplus-dependency|CSWlibjs1-7-0
 
 BUILD_OPT = 1
 EXTRA_BUILD_EXPORTS = BUILD_OPT CC CXX
