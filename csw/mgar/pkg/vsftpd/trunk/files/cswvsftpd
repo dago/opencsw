@@ -19,7 +19,7 @@ PROGNAME=vsftpd
 BINPATH=/opt/csw/sbin
 PIDFILE=/var/run/vsftpd.pid
 INIT_FILE=/etc/init.d/vsftpd
-CONF_DIR=/opt/csw/etc/vsftpd
+CONF_DIR=/etc/opt/csw/vsftpd
 CONF_FILE=$CONF_DIR/vsftpd.conf
 OPTIONS=""
 
