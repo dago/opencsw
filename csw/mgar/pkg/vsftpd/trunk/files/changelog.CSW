@@ -1,3 +1,9 @@
+vsftpd (3.0.2,REV=2012.10.28) unstable
+
+  * New upstream release.
+  * Fixed reference to previous configuration file location in
+    init scripts.
+
 vsftpd (3.0.0,REV=2012.08.24) unstable
 
   * Enabled direct binding during build (ld -Bdirect option)
