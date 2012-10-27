@@ -16,7 +16,7 @@
 # software causes damage.
 #####################################################################
 
-CONF_DIR=/opt/csw/etc/vsftpd
+CONF_DIR=/etc/opt/csw/vsftpd
 CONF_FILE=$CONF_DIR/vsftpd.conf
 
 if /usr/bin/egrep -i "^ *background *= *yes" ${CONF_FILE} > /dev/null; then
