@@ -26,6 +26,8 @@ DISTFILES    = $(DISTNAME).tar.gz
 LICENSE      = COPYRIGHT
 PACKAGES     = CSWpy-crypto
 
+BUILD_DEP_PACKAGES += CSWlibgmp-dev
+
 RUNTIME_DEP_PKGS  = CSWlibgmp10
 RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
 
