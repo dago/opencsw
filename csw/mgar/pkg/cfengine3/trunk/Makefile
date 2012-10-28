@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = cfengine3
-VERSION = 3.3.7
+VERSION = 3.3.9
 CATEGORIES = utils
 GARTYPE = v2
 GARCOMPILER = SOS12U1
