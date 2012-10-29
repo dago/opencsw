@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tesseract
-VERSION = 3.02
+VERSION = 3.02.02
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -10,8 +10,8 @@ DESCRIPTION = An OCR engine
 
 GOOGLE_PROJECT = tesseract-ocr
 MASTER_SITES = $(GOOGLE_MIRROR)
-#DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES  = $(DISTNAME)-dam.tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
+#DISTFILES  = $(DISTNAME)-dam.tar.gz
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
