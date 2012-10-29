@@ -36,4 +36,8 @@ export LAPACK = $(libdir)/libsunmath.so
 TEST_SCRIPTS =
 INSTALL_ARGS += --root=$(DESTDIR)
 
+REINPLACE_USRLOCAL += $(SITE_PACKAGES)/numpy/site.cfg.example
+REINPLACE_USRLOCAL += $(SITE_PACKAGES)/numpy/distutils/system_info.py
+REINPLACE_WHEN_USRLOCAL = postinstall
+
 include gar/category.mk
