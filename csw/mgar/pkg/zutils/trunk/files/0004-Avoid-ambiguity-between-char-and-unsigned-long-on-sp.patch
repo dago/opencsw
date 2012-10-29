@@ -1,0 +1,25 @@
+From f28f9f56e929af03f88e89c8620269ac815a0e8c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 29 Oct 2012 13:12:55 +0100
+Subject: [PATCH] Avoid ambiguity between char* and unsigned long on sparcv9
+
+---
+ zcat.cc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/zcat.cc b/zcat.cc
+index 02ab766..0c2b46a 100644
+--- a/zcat.cc
++++ b/zcat.cc
+@@ -45,7 +45,7 @@ public:
+       str[i] = '0';
+       }
+     if( first_digit_pos > 0 ) str[--first_digit_pos] = '1';
+-    else str.insert( 0U, 1, '1' );
++    else str.insert( (char *) NULL, 1, '1' );
+     }
+ 
+   int sprint( uint8_t * const buf )
+-- 
+1.7.10.3
+
