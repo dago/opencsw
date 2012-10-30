@@ -23,9 +23,15 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-numpy
 CATALOGNAME = py_numpy
 
+# the so version (and package names) for libsunperf differ depending
+# on platform
+SUNPERF_SO_sparc = 7
+SUNPERF_SO_i386 = 2
+SUNPERF_SO = $(SUNPERF_SO_$(GARCH))
+
+
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpy-numpy += CSWss12f95rt
-RUNTIME_DEP_PKGS_CSWpy-numpy += CSWsunmath
+RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibsunperf$(SUNPERF_SO)
 
 LICENSE = LICENSE.txt
 
