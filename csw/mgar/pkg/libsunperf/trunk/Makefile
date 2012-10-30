@@ -22,14 +22,17 @@ INSTALL_SCRIPTS = custom
 
 # the .so versions are different on the different architectures
 PACKAGES_sparc = CSWlibsunperf7
-PACKAGES_i386 = CSWlibsunperf2
+PACKAGES_i386 = CSWlibsunperf2 CSWlibsunperf3
 
 PACKAGES = $(PACKAGES_$(GARCH))
 SPKG_DESC_CSWlibsunperf7 = $(DESCRIPTION) - sparc
-SPKG_DESC_CSWlibsunperf2 = $(DESCRIPTION) - i386
+SPKG_DESC_CSWlibsunperf2 = $(DESCRIPTION) v2 - i386
+PKGFILES_CSWlibsunperf2 = $(libdir)/.*2
+SPKG_DESC_CSWlibsunperf3 = $(DESCRIPTION) v3 - i386
+PKGFILES_CSWlibsunperf2 = $(libdir)/.*3
 
 FLIBS-sparc  = libsunperf.so.7
-FLIBS-i386 = libsunperf.so.2
+FLIBS-i386 = libsunperf.so.2 libsunperf.so.3
 
 RUNTIME_DEP_PKGS += CSWsunmath
 RUNTIME_DEP_PKGS += CSWss12f95rt
@@ -39,9 +42,6 @@ CHECKPKG_OVERRIDES += soname-not-found
 CHECKPKG_OVERRIDES += surplus-dependency|CSWss12f95rt
 CHECKPKG_OVERRIDES += surplus-dependency|CSWsunmath
 
-CHECKPKG_OVERRIDES += sparc-SunOS5.10-missing|libsunperf2
-CHECKPKG_OVERRIDES += i386-SunOS5.10-missing|libsunperf7
-
 include gar/category.mk
 
 SRCDIR-sparcv9 = v9
@@ -49,7 +49,7 @@ SRCDIR-amd64   = amd64
 
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
-	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$L $(DESTDIR)$(libdir)/$L; fi)
+	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$L $(DESTDIR)$(libdir)/$L; fi;)
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)
 	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$(SRCDIR-$(ISA_DEFAULT64))/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$(SRCDIR-$(ISA_DEFAULT64))/$L $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)/$L; fi;)
 	@$(MAKECOOKIE)
