@@ -34,6 +34,11 @@ FLIBS-i386 = libsunperf.so.2
 RUNTIME_DEP_PKGS += CSWsunmath
 RUNTIME_DEP_PKGS += CSWss12f95rt
 
+CHECKPKG_OVERRIDES += bad-rpath-entry
+CHECKPKG_OVERRIDES += soname-not-found
+CHECKPKG_OVERRIDES += surplus-dependency|CSWss12f95rt
+CHECKPKG_OVERRIDES += surplus-dependency|CSWsunmath
+
 include gar/category.mk
 
 SRCDIR-sparcv9 = v9
