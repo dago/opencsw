@@ -39,6 +39,9 @@ CHECKPKG_OVERRIDES += soname-not-found
 CHECKPKG_OVERRIDES += surplus-dependency|CSWss12f95rt
 CHECKPKG_OVERRIDES += surplus-dependency|CSWsunmath
 
+CHECKPKG_OVERRIDES += sparc-SunOS5.10-missing|libsunperf2
+CHECKPKG_OVERRIDES += i386-SunOS5.10-missing|libsunperf7
+
 include gar/category.mk
 
 SRCDIR-sparcv9 = v9
