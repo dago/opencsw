@@ -29,11 +29,12 @@ SUNPERF_SO_sparc = 7
 SUNPERF_SO_i386 = 3
 SUNPERF_SO = $(SUNPERF_SO_$(GARCH))
 
-
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibsunperf$(SUNPERF_SO)
 
 LICENSE = LICENSE.txt
+
+EXTRA_CFLAGS = -xnorunpath
 
 export ATLAS = None
 export BLAS = $(CC_HOME)/lib/libsunperf.so
@@ -45,5 +46,10 @@ INSTALL_ARGS += --root=$(DESTDIR)
 REINPLACE_USRLOCAL += $(SITE_PACKAGES)/numpy/site.cfg.example
 REINPLACE_USRLOCAL += $(SITE_PACKAGES)/numpy/distutils/system_info.py
 REINPLACE_WHEN_USRLOCAL = postinstall
+
+# because we need to force the use of libsunperf from (initially) the
+# studio install dir, the RPATH gets munged, regardless of
+# -xnorunpath.  Our library path takes precedence though so we do not relay on things from studio at runtime.
+CHECKPKG_OVERRIDES_CSWpy-numpy += bad-rpath-entry|/opt/SUNWspro/lib
 
 include gar/category.mk
