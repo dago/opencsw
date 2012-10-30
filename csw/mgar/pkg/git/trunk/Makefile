@@ -164,7 +164,7 @@ INSTALL_ARGS = 	INSTALLDIRS=vendor \
 # We want static libs installed for our devel package
 MERGE_EXCLUDE_STATICLIBS =
 
-ETCSERVICES = /opt/csw/etc/pkg/CSWgit/services
+ETCSERVICES = /etc/opt/csw/pkg/CSWgit/services
 
 CHECKPKG_OVERRIDES_CSWgit-completion += surplus-dependency|CSWbash
 CHECKPKG_OVERRIDES_CSWgit-completion += surplus-dependency|CSWbashcmplt
@@ -220,7 +220,7 @@ post-install-modulated: ID=$(DESTDIR)/$(includedir)/git
 post-install-modulated: LD=$(DESTDIR)/$(libdir_install)/git
 post-install-modulated:
 	@echo Installing /etc/services definitions file
-	@( ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/pkg/CSWgit/; \
+	@( ginstall -m 0755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWgit/; \
 	   echo "git 9418/tcp" >> $(DESTDIR)/$(ETCSERVICES); \
 	   echo "git 9418/udp" >> $(DESTDIR)/$(ETCSERVICES); )
 	@echo Cleaning up perl stuff
