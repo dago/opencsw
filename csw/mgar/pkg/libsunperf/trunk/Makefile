@@ -46,7 +46,7 @@ SRCDIR-amd64   = amd64
 
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
-	$(foreach L,$(FLIBS-$(GARCH)),ginstall $(SOS12_CC_HOME)/lib/$L $(DESTDIR)$(libdir)/$L;)
+	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$L $(DESTDIR)$(libdir)/$L; fi)
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)
 	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$(SRCDIR-$(ISA_DEFAULT64))/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$(SRCDIR-$(ISA_DEFAULT64))/$L $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)/$L; fi;)
 	@$(MAKECOOKIE)
