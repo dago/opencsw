@@ -26,7 +26,7 @@ CATALOGNAME = py_numpy
 # the so version (and package names) for libsunperf differ depending
 # on platform
 SUNPERF_SO_sparc = 7
-SUNPERF_SO_i386 = 2
+SUNPERF_SO_i386 = 3
 SUNPERF_SO = $(SUNPERF_SO_$(GARCH))
 
 
