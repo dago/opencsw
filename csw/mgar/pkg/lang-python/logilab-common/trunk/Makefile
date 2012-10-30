@@ -17,4 +17,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 ARCHALL_CSWpy-logilab-common = 1
+
+REINPLACE_USRSHARE += $(SITE_PACKAGES)/logilab/common/optik_ext.py
+REINPLACE_WHEN_USRSHARE = postinstall
+
 include gar/category.mk
