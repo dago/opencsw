@@ -29,7 +29,7 @@ SPKG_DESC_CSWlibsunperf7 = $(DESCRIPTION) - sparc
 SPKG_DESC_CSWlibsunperf2 = $(DESCRIPTION) v2 - i386
 PKGFILES_CSWlibsunperf2 = $(libdir)/.*2
 SPKG_DESC_CSWlibsunperf3 = $(DESCRIPTION) v3 - i386
-PKGFILES_CSWlibsunperf2 = $(libdir)/.*3
+PKGFILES_CSWlibsunperf3 = $(libdir)/.*3
 
 FLIBS-sparc  = libsunperf.so.7
 FLIBS-i386 = libsunperf.so.2 libsunperf.so.3
