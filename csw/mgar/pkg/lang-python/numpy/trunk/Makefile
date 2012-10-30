@@ -50,6 +50,6 @@ REINPLACE_WHEN_USRLOCAL = postinstall
 # because we need to force the use of libsunperf from (initially) the
 # studio install dir, the RPATH gets munged, regardless of
 # -xnorunpath.  Our library path takes precedence though so we do not relay on things from studio at runtime.
-CHECKPKG_OVERRIDES_CSWpy-numpy += bad-rpath-entry|/opt/SUNWspro/lib
+CHECKPKG_OVERRIDES_CSWpy-numpy += bad-rpath-entry
 
 include gar/category.mk
