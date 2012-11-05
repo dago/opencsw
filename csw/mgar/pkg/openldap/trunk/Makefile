@@ -97,6 +97,7 @@ PKGFILES_CSWopenldap-back-perl += $(mandir)/man5/slapd-perl.5
 RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWperl
 RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWopenldap
 
 PACKAGES += CSWopenldap-back-bdb
 SPKG_DESC_CSWopenldap-back-bdb = OpenLDAP BerkerleyDB bdb backend
@@ -105,6 +106,7 @@ PKGFILES_CSWopenldap-back-bdb += $(mandir)/man5/slapd-bdb.5
 RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWbdb48
 RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-bdb += CSWopenldap
 
 PACKAGES += CSWopenldap-back-hdb
 SPKG_DESC_CSWopenldap-back-hdb = OpenLDAP BerkerleyDB hdb backend
@@ -112,6 +114,7 @@ PKGFILES_CSWopenldap-back-hdb += $(call baseisadirs,$(libexecdir),openldap/back_
 RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWbdb48
 RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-hdb += CSWopenldap
 
 PACKAGES += CSWopenldap-back-sql
 SPKG_DESC_CSWopenldap-back-sql = OpenLDAP SQL backend
@@ -120,6 +123,7 @@ PKGFILES_CSWopenldap-back-sql += $(mandir)/man5/slapd-sql.5
 RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-back-sql += CSWopenldap
 
 PACKAGES += CSWliblber2-4-2
 SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
@@ -173,8 +177,9 @@ MIGRATE_FILES_CSWoldapclient = openldap
 # Is this causing this?
 #   https://www.opencsw.org/mantis/view.php?id=4555
 NOISALIST = 1
-LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -z ignore
+#LD_OPTIONS =
+#EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -z ignore
+EXTRA_LINKER_FLAGS = -lrt
 
 NODIRPATHS = --docdir
 
