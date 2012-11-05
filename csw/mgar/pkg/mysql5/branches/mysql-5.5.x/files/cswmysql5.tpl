@@ -118,13 +118,15 @@ esac
 parse_server_arguments() {
   for arg do
     case "$arg" in
+      # $mysql5_arch must have been set (or left empty) for Solaris
+      # by the OpenCSW architecture selection bit
       --basedir=*)  basedir=`echo "$arg" | sed -e 's/^[^=]*=//'`
-                    bindir="$basedir/bin"
+                    bindir="$basedir/bin/$mysql5_arch"
 		    if test -z "$datadir_set"; then
 		      datadir="$basedir/data"
 		    fi
-		    sbindir="$basedir/sbin"
-		    libexecdir="$basedir/libexec"
+		    sbindir="$basedir/sbin/$mysql5_arch"
+		    libexecdir="$basedir/libexec/$mysql5_arch"
         ;;
       --datadir=*)  datadir=`echo "$arg" | sed -e 's/^[^=]*=//'`
 		    datadir_set=1
