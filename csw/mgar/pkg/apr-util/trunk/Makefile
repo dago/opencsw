@@ -14,7 +14,7 @@ MASTER_SITES  = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = LICENSE
 
-PATCHFILES = 0001-Make-sure-to-find-newly-built-libs-earlier.patch
+#PATCHFILES = 0001-Make-sure-to-find-newly-built-libs-earlier.patch
 
 PACKAGES += CSWlibaprutil1-0
 CATALOGNAME_CSWlibaprutil1-0 = libaprutil1_0
