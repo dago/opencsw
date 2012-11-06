@@ -1,5 +1,5 @@
 NAME = apr-util
-VERSION = 1.3.12
+VERSION = 1.5.1
 CATEGORIES = lib
 GARTYPE = v2
 
