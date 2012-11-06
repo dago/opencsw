@@ -1,5 +1,5 @@
 NAME = libserf
-VERSION = 1.1.0
+VERSION = 1.1.1
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 GARTYPE = v2
