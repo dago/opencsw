@@ -1,10 +1,8 @@
 # TBD:
-# - smb.conf is searched in /opt/csw/lib/64/smb.conf instead of /etc/opt/csw/samba/smb.conf
-# - secrets.tdb is searched in /opt/csw/private/secrets.tdb instead of /etc/opt/csw/samba/private/secrets.tdb
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.7
+VERSION = 3.6.9
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -166,6 +164,10 @@ PACKAGES += CSWlibtdb1
 PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
 SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.1
 
+PACKAGES += CSWlibnss-winbind1
+PKGFILES_CSWlibnss-winbind1 += $(call pkgfiles_lib,libnss_winbind.so.1)
+SPKG_DESC_CSWlibnss-winbind1 += Winbind nss libary,libnss_winbind.so.1
+
 PACKAGES += CSWsamba-dev
 SPKG_DESC_CSWsamba-dev = Development files for Samba, libsmbclient.so.0
 PKGFILES_CSWsamba-dev += $(PKGFILES_DEVEL)
@@ -268,11 +270,13 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibnss-winbind1
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawb
 CATALOGNAME_CSWsambawb = samba_wb_stub
 
 # Just docs, override for now
 CHECKPKG_OVERRIDES_CSWsamba-winbind += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/winbindd.8
+CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CSWlibnss-winbind1
 
 EXTRA_CFLAGS = -lintl
 EXTRA_LDFLAGS = -lintl
@@ -287,11 +291,14 @@ SMBCONFIGDIR = $(sysconfdir)/samba
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --enable-socket-wrapper
-CONFIGURE_ARGS += --enable-nss-wrapper
+CONFIGURE_ARGS += --enable-shared=yes
+CONFIGURE_ARGS += --enable-static=no
+#CONFIGURE_ARGS += --enable-socket-wrapper
+#CONFIGURE_ARGS += --enable-nss-wrapper
 CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
+CONFIGURE_ARGS += --with-winbind
 CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
 CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_adex
 CONFIGURE_ARGS += --with-readline
@@ -357,3 +364,4 @@ post-install-modulated:
 	ginstall $(WORKDIR)/cswwinbind $(DESTDIR)/etc/opt/csw/init.d/cswwinbind
 	ginstall -d $(DESTDIR)/etc/opt/csw/samba
 	ginstall $(WORKDIR)/smb.conf $(DESTDIR)/etc/opt/csw/samba/smb.conf
+	ginstall $(WORKSRC)/nsswitch/libnss_winbind.so $(DESTDIR)/$(libdir)/libnss_winbind.so.1
