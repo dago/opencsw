@@ -22,7 +22,7 @@ VENDOR_URL = http://code.google.com/p/serf/
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PACKAGES += CSWlibserf1-0
-CATALOGNAME_CSWlibserf1-0 = libserf1_1
+CATALOGNAME_CSWlibserf1-0 = libserf1_0
 SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
 RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWbdb48
 RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibapr1-0
