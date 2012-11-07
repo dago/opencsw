@@ -1,17 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-# ! Doesn't yet build
-# "../../lib/server/CConfig.h", line 145: Error: "," expected instead of "<".
-# "../../lib/server/CConfig.h", line 145: Error: Use ";" to terminate declarations.
-# "../../lib/server/CConfig.h", line 145: Error: "}" expected instead of "<".
-# "../../lib/server/CConfig.h", line 145: Error: Use ";" to terminate declarations.
-# "../../lib/server/CConfig.h", line 145: Error: A declaration was expected instead of "<".
-# "../../lib/server/CConfig.h", line 145: Warning: declarator required in declaration.
-# "../../lib/server/CConfig.h", line 145: Error: Use ";" to terminate declarations.
-# "../../lib/server/CConfig.h", line 145: Error: A declaration was expected instead of ">"
-#
 NAME = synergy
-VERSION = 1.4.2
+VERSION = 1.4.10
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -29,46 +19,67 @@ DISTFILES += $(DISTNAME).tar.gz
 
 VENDOR_URL = http://synergy-foss.org/
 
-# Was required with synergy 1.3.1, still required?
-# Adjust code so that it compiles with Sun Studio Compiler
-# https://sourceforge.net/tracker/index.php?func=detail&aid=1574331&group_id=59275&atid=490469
-#PATCHFILES = suncc.diff
+GARCOMPILER = GNU
 
-# Was required with synergy 1.3.1, still required?
-# Adjust configure.in to properly use --x-libraries option
-# http://sf.net/tracker/index.php?func=detail&aid=2359359&group_id=59275&atid=490469
-#PATCHFILES += link-xlibs.diff
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-# TEST_SCRIPTS =
+PATCHFILES += 0001-change-endiness-detection.patch
 
-#pre-configure:
-#	cd $(WORKSRC) && autoreconf
-#	@$(MAKECOOKIE)
+RUNTIME_DEP_PKGS_CSWsynergy += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWsynergy += CSWlibstdc++6
+
+
+
+#cmake fun:
+# http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
+
+CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
+CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
+CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
+CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
+CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
+
 
 CONFIGURE_SCRIPTS = custom
-BUILD_SCRIPTS = custom
+INSTALL_SCRIPTS = custom
+
+SKIPTEST ?= 1
 
 include gar/category.mk
 
+
 configure-custom:
-	cd $(WORKSRC) && ./hm.sh configure
+	#		--debug-output \
+	#		--debug-trycompile \
+	(cd $(WORKSRC) && \
+	 	/usr/bin/env -i \
+		  $(CONFIGURE_ENV) \
+			cmake \
+			. \
+			$(CMAKE_ARGS))
+	@$(MAKECOOKIE)
 
-build-custom:
-	cd $(WORKSRC) && ./hm.sh build
 
-post-install:
+install-custom:
+	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(sysconfdir)
-	ginstall -d $(DESTDIR)$(docdir)/$(NAME)/images
+	ginstall -d $(DESTDIR)$(mandir)
+	ginstall -d $(DESTDIR)$(mandir)/man3
 	ginstall -m 644 \
-		$(WORKSRC)/examples/synergy.conf \
+		$(WORKSRC)/doc/synergy.conf.example \
 		$(DESTDIR)$(sysconfdir)/synergy.conf.example
+	ginstall \
+		$(WORKSRC)/bin/synergyc \
+		$(DESTDIR)$(bindir)
+	ginstall \
+		$(WORKSRC)/bin/synergys \
+		$(DESTDIR)$(bindir)
 	ginstall -m 644 \
-		$(WORKSRC)/README \
-		$(WORKSRC)/AUTHORS \
-		$(WORKSRC)/NEWS \
-		$(WORKSRC)/doc/*.html \
-		$(DESTDIR)$(docdir)/$(NAME)
+		$(WORKSRC)/doc/synergyc.man \
+		$(DESTDIR)$(mandir)/man3/synergyc.3
 	ginstall -m 644 \
-		$(WORKSRC)/doc/images/* \
-		$(DESTDIR)$(docdir)/$(NAME)/images
+		$(WORKSRC)/doc/synergys.man \
+		$(DESTDIR)$(mandir)/man3/synergys.3
 	@$(MAKECOOKIE)
