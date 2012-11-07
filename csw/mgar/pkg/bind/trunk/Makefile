@@ -2,19 +2,19 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.8.3
+VERSION = 9.8.4
 #VERSION = 9.9.0
 CATEGORIES = net
 GARTYPE = v2
 
 # Enable these for Px-releases
 #RELEASE = rc1
-RELEASE = P4
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P4
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+##DISTNAME = $(NAME)-$(VERSION)$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
@@ -25,13 +25,13 @@ define BLURB
 endef
 
 # Enable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+##MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -116,12 +116,12 @@ CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
 # Will not split out all these libs
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.80.0.5|soname=libbind9.so.80|pkgname=CSWlibbind|expected=CSWlibbind9-80
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.81.6.1|soname=libdns.so.81|pkgname=CSWlibbind|expected=CSWlibdns81
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.83.0.5|soname=libisc.so.83|pkgname=CSWlibbind|expected=CSWlibisc83
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.80.0.1|soname=libisccc.so.80|pkgname=CSWlibbind|expected=CSWlibisccc80
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.82.0.2|soname=libisccfg.so.82|pkgname=CSWlibbind|expected=CSWlibisccfg82
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.80.0.2|soname=liblwres.so.80|pkgname=CSWlibbind|expected=CSWliblwres80
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.80.0.7|soname=libbind9.so.80|pkgname=CSWlibbind|expected=CSWlibbind9-80
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.88.1.1|soname=libdns.so.88|pkgname=CSWlibbind|expected=CSWlibdns88
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.84.1.0|soname=libisc.so.84|pkgname=CSWlibbind|expected=CSWlibisc84
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.80.0.2|soname=libisccc.so.80|pkgname=CSWlibbind|expected=CSWlibisccc80
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.82.0.3|soname=libisccfg.so.82|pkgname=CSWlibbind|expected=CSWlibisccfg82
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.80.0.3|soname=liblwres.so.80|pkgname=CSWlibbind|expected=CSWliblwres80
 
 include gar/category.mk
 
