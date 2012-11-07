@@ -16,6 +16,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 BUILD_DEP_PKGS += CSWlibgnome-dev
 BUILD_DEP_PKGS += CSWlibpopt-dev
+PACKAGING_PLATFORMS += Solaris10-sparc Solaris10-i386
 
 EXTRA_MERGE_EXCLUDE_FILES +=  .*/.*\.py[co]
 
@@ -28,6 +29,22 @@ RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgnome2-0
 RUNTIME_DEP_PKGS_CSWpy-gnome += CSWgnomevfs2
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWorbit2
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWpango
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgnomecanvas2-0
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibart
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibbonobo2
+RUNTIME_DEP_PKGS_CSWpy-gnome += CSWlibgio2-0-0
 
 EXTRA_LINKER_FLAGS += -lgobject-2.0 # is missing in glib-2.0.pc ?
 
