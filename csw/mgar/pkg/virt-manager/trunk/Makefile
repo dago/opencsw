@@ -29,10 +29,11 @@ RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-virtinst
 RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-curl
 RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-dbus
 RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-urlgrabber
-RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-urlgrabber
 RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-gobject
 RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-gtk
 RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-libxml2
+RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-gnome
+RUNTIME_DEP_PKGS_CSWvirt-manager += CSWpy-gtkvnc
 
 # CONFIGURE_SCRIPTS =
 # BUILD_SCRIPTS = $(WORKSRC)/setup.py
