@@ -67,6 +67,7 @@ PACKAGES += CSWpy-gtkvnc-dev
 PKGFILES_CSWpy-gtkvnc-dev += $(call baseisadirs,$(libdir),libgvnc-1\.0\.so)
 PKGFILES_CSWpy-gtkvnc-dev += $(call baseisadirs,$(libdir),libgtk-vnc-1\.0\.so)
 PKGFILES_CSWpy-gtkvnc-dev += $(includedir)/.*
+PKGFILES_CSWpy-gtkvnc-dev += $(libdir)/pkgconfig/.*\.pc
 SPKG_DESC_CSWpy-gtkvnc-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWpy-gtkvnc-dev += CSWlibgtk-vnc1-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtkvnc-dev += CSWlibgvnc1-0-0
