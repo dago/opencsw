@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = hwloc
-VERSION = 1.5
+VERSION = 1.5.1
 GARTYPE = v2
 CATEGORIES = devel
 
