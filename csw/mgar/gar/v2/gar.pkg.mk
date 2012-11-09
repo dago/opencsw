@@ -1029,13 +1029,17 @@ redirpackage: pkgreset dirpackage
 # this will also make it visible to the build environment. Some software builds
 # use hard-coded non-GNU make which then errs out on -I (unknown option).
 
+_PROPAGATE_ENV += PARALLELMFLAGS
+_PROPAGATE_ENV += PARALLELMODULATIONS
+_PROPAGATE_ENV += PATH
+
 platforms: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=$($V))) $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
