@@ -15,21 +15,26 @@ DISTFILES  = $(NAME)_$(VERSION).tar.gz
 DISTNAME = $(NAME)-$(VERSION)
 #DISTNAME = $(NAME)-$(VERSION)+$(GARSUBREV)
 
-PACKAGES = CSWlibpaper 
-#PACKAGES = CSWlibpaper CSWlibpaperdevel
-CATALOGNAME_CSWlibpaper = libpaper
-#CATALOGNAME_CSWlibpaperdevel = libpaper_devel
-
-SPKG_DESC_CSWlibpaper += $(DESCRIPTION)
-#SPKG_DESC_CSWlibpaperdevel += $(DESCRIPTION) - developer package
-
-RUNTIME_DEP_PKGS_CSWlibpaper = 
-#RUNTIME_DEP_PKGS_CSWlibpaperdevel += CSWlibpaper
-
-#PKGFILES_CSWlibpaperdevel = $(PKGFILES_DEVEL)
-
 UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(MASTER_SITES)
+
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+PACKAGES += CSWlibpaper
+SPKG_DESC_CSWlibpaper += $(DESCRIPTION), docs and tools
+RUNTIME_DEP_PKGS_CSWlibpaper += CSWlibpaper1
+
+PACKAGES += CSWlibpaper1
+CATALOGNAME_CSWlibpaper1 = libpaper1
+PKGFILES_CSWlibpaper1 += $(call baseisadirs,$(libdir),libpaper\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibpaper1 += $(DESCRIPTION), libpaper.so.1
+
+PACKAGES += CSWlibpaper-dev
+CATALOGNAME_CSWlibpaper-dev = libpaper_dev
+SPKG_DESC_CSWlibpaper-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibpaper-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibpaper-dev += CSWlibpaper1
+OBSOLETED_BY_CSWlibpaper-dev += CSWlibpaperdevel
 
 EXTRA_CFLAGS = -Xc
 
