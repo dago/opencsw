@@ -48,7 +48,7 @@ PACKAGES += CSWlibnspr4
 CATALOGNAME_CSWlibnspr4 = libnspr4
 SPKG_DESC_CSWlibnspr4 = Netscape Portable Runtime, libnspr4.so
 PKGFILES_CSWlibnspr4 += $(call baseisadirs,$(libdir),libnspr4.so)
-OBSOLETED_BY_CSWlibnspr4 = CSWnspr
+# OBSOLETED_BY_CSWlibnspr4 = CSWnspr
 CHECKPKG_OVERRIDES_CSWlibnspr4 += soname-equals-filename
 
 PACKAGES += CSWlibplc4
@@ -65,11 +65,13 @@ PKGFILES_CSWlibplds4 += $(call baseisadirs,$(libdir),libplds4.so)
 RUNTIME_DEP_PKGS_CSWlibplds4 += CSWlibnspr4
 CHECKPKG_OVERRIDES_CSWlibplds4 += soname-equals-filename
 
-PACKAGES += CSWlibnspr-flt4
-CATALOGNAME_CSWlibnspr-flt4 = libnspr_flt4
-SPKG_DESC_CSWlibnspr-flt4 = Netscape Portable Runtime, libnspr-flt4.so
-PKGFILES_CSWlibnspr-flt4 += $(libdir).*/libnspr_flt4\.so
-CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-equals-filename
+# this lib is only build on sparc, nobody uses this
+EXTRA_MERGE_EXCLUDE += $(libdir).*/libnspr_flt4\.so
+# PACKAGES += CSWlibnspr-flt4
+# CATALOGNAME_CSWlibnspr-flt4 = libnspr_flt4
+# SPKG_DESC_CSWlibnspr-flt4 = Netscape Portable Runtime, libnspr-flt4.so
+# PKGFILES_CSWlibnspr-flt4 += $(libdir).*/libnspr_flt4\.so
+# CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-equals-filename
 
 PERL = /opt/csw/bin/perl
 
