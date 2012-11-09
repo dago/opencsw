@@ -8,7 +8,7 @@
 
 NAME = nspr
 MAJOR_VERSION = 4
-MIN_VERSION = 9.2
+MIN_VERSION = 9.3
 VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -22,13 +22,14 @@ endef
 MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v$(VERSION)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
-PATCHFILES  = nspr-4.6.1-config.patch
+# PATCHFILES  = nspr-4.6.1-config.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES = CSWnspr-dev
 CATALOGNAME_CSWnspr-dev = nspr_dev
 SPKG_DESC_CSWnspr-dev = Netscape Portable Runtime, header files
+# do catch all
 # PKGFILES_CSWnspr-dev += $(prefix)/include.*
 # PKGFILES_CSWnspr-dev += $(bindir).*nspr-config
 # PKGFILES_CSWnspr-dev += .*/nspr\.pc
@@ -82,8 +83,8 @@ INSTALL_SCRIPTS = nspr
 
 export PERL
 
-localstatedir = /var/opt/csw
-sysconfdir = /etc/opt/csw
+# localstatedir = /var/opt/csw
+# sysconfdir = /etc/opt/csw
 # Move the include files to include/nspr to prevent polluting the main
 # header file namespace.
 includedir = $(prefix)/include/nspr
