@@ -14,12 +14,15 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 
+# OpenSSL is only available on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://www.openslp.org/
 
 PACKAGES += CSWlibslp1
 PKGFILES_CSWlibslp1 += $(call pkgfiles_lib,libslp.so.1)
 SPKG_DESC_CSWlibslp1 += Service location protocol, libslp.so.1
-RUNTIME_DEP_PKGS_CSWlibslp1 += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibslp1 += CSWlibssl1-0-0
 
 PACKAGES += CSWlibslp-dev
 SPKG_DESC_CSWlibslp-dev = Development files for libslp.so.1
@@ -38,9 +41,12 @@ PKGFILES_CSWopenslp += $(sysconfdir)/.*
 PKGFILES_CSWopenslp += $(bindir)/.*
 PKGFILES_CSWopenslp += $(sbindir)/.*
 RUNTIME_DEP_PKGS_CSWopenslp += CSWlibslp1
-RUNTIME_DEP_PKGS_CSWopenslp += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWopenslp += CSWlibssl1-0-0
 
 BUILD64_LIBS_ONLY = 1
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --enable-slpv2-security
 
 PRESERVECONF += $(sysconfdir)/slp.conf
 PRESERVECONF += $(sysconfdir)/slp.reg
