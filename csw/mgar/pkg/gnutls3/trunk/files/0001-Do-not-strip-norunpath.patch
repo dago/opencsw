@@ -1,0 +1,53 @@
+From 6b93f2a520b4a71f23c65272b26af2dbb697cdbb Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 18 Jan 2011 12:30:06 +0100
+Subject: [PATCH] Do not strip -norunpath
+
+---
+ build-aux/ltmain.sh          |    2 +-
+ lib/build-aux/ltmain.sh      |    2 +-
+ libextra/build-aux/ltmain.sh |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/build-aux/ltmain.sh b/build-aux/ltmain.sh
+index 04eaea4..fd4ac68 100755
+--- a/build-aux/ltmain.sh
++++ b/build-aux/ltmain.sh
+@@ -5091,7 +5091,7 @@ func_mode_link ()
+       # @file                GCC response files
+       # -tp=*                Portland pgcc target processor selection
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+diff --git a/lib/build-aux/ltmain.sh b/lib/build-aux/ltmain.sh
+index 04eaea4..fd4ac68 100755
+--- a/lib/build-aux/ltmain.sh
++++ b/lib/build-aux/ltmain.sh
+@@ -5091,7 +5091,7 @@ func_mode_link ()
+       # @file                GCC response files
+       # -tp=*                Portland pgcc target processor selection
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+diff --git a/libextra/build-aux/ltmain.sh b/libextra/build-aux/ltmain.sh
+index 04eaea4..fd4ac68 100755
+--- a/libextra/build-aux/ltmain.sh
++++ b/libextra/build-aux/ltmain.sh
+@@ -5091,7 +5091,7 @@ func_mode_link ()
+       # @file                GCC response files
+       # -tp=*                Portland pgcc target processor selection
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.3.2
+
