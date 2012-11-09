@@ -41,18 +41,17 @@ RUNTIME_DEP_PKGS_CSWlibsvrcore0-dev += CSWlibsvrcore0
 # includedir = $(prefix)/include/nspr
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS_isa-sparcv9 = --enable-64bit
-CONFIGURE_ARGS_isa-amd64 = --enable-64bit
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
+CONFIGURE_ARGS_64 = --enable-64bit
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 CONFIGURE_ARGS_OPT += --enable-optimize="-xO3"
 CONFIGURE_ARGS_OPT += --disable-debug
 CONFIGURE_ARGS_OPT += --enable-strip
 CONFIGURE_ARGS_DBG += --enable-debug
 CONFIGURE_ARGS_DBG += --disable-strip
-CONFIGURE_ARGS_OPT += --with-nss-inc=$(includedir)/nss
-CONFIGURE_ARGS_OPT += --with-nss-lib=$(libdir)
-CONFIGURE_ARGS_OPT += --with-nspr-inc=$(includedir)/nspr
-CONFIGURE_ARGS_OPT += --with-nspr-lib=/$(libdir)
+CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss
+CONFIGURE_ARGS += --with-nss-lib=$(libdir)
+CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr
+CONFIGURE_ARGS += --with-nspr-lib=/$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 BUILD64_LIBS_ONLY = 1
