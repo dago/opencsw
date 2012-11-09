@@ -11,7 +11,7 @@ define BLURB
   Apache Traffic Server is fast, scalable and extensible HTTP/1.1 compliant caching proxy server
 endef
 
-MASTER_SITES = http://people.apache.org/~igalic/releases
+MASTER_SITES = http://people.apache.org/~igalic/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGING_PLATFORMS = solaris10-i386
@@ -55,9 +55,6 @@ EXTRA_LINKER_FLAGS += -norunpath
 
 REINPLACE_USRLOCAL += plugins/regex_remap/regex_remap.cc
 CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/traffic_shell
-CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/trafficserver
-
-# We don't want to build any more packages, so we override these:
 CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/trafficserver
 
 # It's currently not useful to separate these:
