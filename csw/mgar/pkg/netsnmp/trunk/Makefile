@@ -32,7 +32,7 @@ VENDOR_URL = http://www.net-snmp.org/
 
 GARCOMPILER = SOS12U3
 BUILD_DEP_PKGS = CSWpysetuptools
-PACKAGING_PLATFORMS += Solaris10-sparc Solaris10-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PACKAGES += CSWnetsnmp-dev
 CATALOGNAME_CSWnetsnmp-dev = netsnmp_dev
