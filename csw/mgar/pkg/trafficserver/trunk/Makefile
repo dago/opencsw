@@ -18,9 +18,6 @@ PACKAGING_PLATFORMS = solaris10-i386
 BUILD64_ONLY = 1
 ISAEXEC = 1
 
-# this breaks, since its introduction, so disable it (for now)
-LINKER_MAPS = 
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/$(NAME)
 CONFIGURE_ARGS += --libexecdir=$(libexecdir)/$(NAME)
@@ -62,18 +59,17 @@ CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/local|root/opt
 
 # We don't want to build any more packages, so we override these:
 CHECKPKG_OVERRIDES_CSWtrafficserver += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/trafficserver
-CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsmgmt.so                                                                                                  
-CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsutil.so
-CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libtsmgmt.so.3.2.3|soname=libtsmgmt.so.3|pkgname=CSWtrafficserver|expected=CSWlibtsmgmt3                                  
-CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libtsutil.so.3.2.3|soname=libtsutil.so.3|pkgname=CSWtrafficserver|expected=CSWlibtsutil3
-CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsmgmt.so                                                                                                  
-CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libtsutil.so
+
+# It's currently not useful to separate these:
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-package-contains-so-symlink
+CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-pkgname-mismatch
 
 LICENSE = LICENSE
 
-include gar/category.mk
+# Be careful with GNU tools. We only need it for ginstall
+INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
 
-PATH := /opt/csw/gnu:$(PATH)
+include gar/category.mk
 
 pre-configure-modulated:
 	cd $(WORKSRC) && /opt/csw/bin/perl -p -i -e 's|.*/usr/local/lib.*||' configure.ac
