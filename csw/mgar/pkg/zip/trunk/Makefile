@@ -3,7 +3,7 @@
 #
 NAME = zip
 VERSION = 3.0
-zip_version = 30
+ZIPVERSION = $(subst .,,$(VERSION))
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -13,12 +13,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.info-zip.org/pub/infozip/src/
-DISTFILES  = $(NAME)$(zip_version).tgz
+DISTNAME = $(NAME)$(ZIPVERSION)
+DISTFILES  = $(DISTNAME).tgz
 
 RUNTIME_DEP_PKGS = CSWlibbz2-1-0
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
-
-WORKSRC = $(WORKDIR)/$(NAME)$(zip_version)
 
 # zip's configure is... "special". We use a custom version
 CONFIGURE_SCRIPTS = 
