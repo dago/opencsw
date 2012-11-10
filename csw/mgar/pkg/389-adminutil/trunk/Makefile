@@ -10,6 +10,8 @@ define BLURB
 The enterprise-class Open Source LDAP server for Linux|Unix. It is hardened by real-world use, is full-featured, supports multi-master replication, and already handles many of the largest LDAP deployments in the world. The 389 Directory Server can be downloaded for free and set up in less than an hour using the graphical console.
 endef
 
+BUNDLE = 389-ds
+
 LICENSE = LICENSE
 
 MASTER_SITES = http://port389.org/sources
