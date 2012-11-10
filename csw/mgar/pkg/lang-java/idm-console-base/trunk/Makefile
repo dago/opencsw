@@ -16,6 +16,8 @@ endef
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+BUNDLE = 389-ds
+
 PACKAGES = CSWidm-console-base
 # RUNTIME_DEP_PKGS = CSWldapjdk CSWjss4
 DEP_PKGS = CSWldapjdk CSWjss4
