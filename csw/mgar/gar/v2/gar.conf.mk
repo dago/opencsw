@@ -46,6 +46,7 @@ SCRATCHDIR ?= tmp
 CHECKSUM_FILE ?= checksums
 MANIFEST_FILE ?= manifest
 LOGDIR ?= log
+CATEGORIES ?= default
 
 ELISP_DIRS ?= $(datadir)/emacs/site-lisp $(EXTRA_ELISP_DIRS)
 
