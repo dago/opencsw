@@ -4,19 +4,19 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = JMM
 
-DESCRIPTION = Extensions for keeping data partially sorted
+DESCRIPTION = Define Heap interface
 define BLURB
-  The Heap collection of modules provide routines that manage a heap of
-  elements.  A heap is a partially sorted structure that is always able to
-  easily extract the smallest of the elements in the structure (or the largest
-  if a reversed compare routine is provided).
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmheap
-CATALOGNAME = pm_heap
+LICENSE_TEXT = This module is licensed under the  license
 
-ARCHALL = 1
+PACKAGES += CSWpm-heap
+CATALOGNAME_CSWpm-heap = pm_heap
+SPKG_DESC_CSWpm-heap = Define Heap interface
+ARCHALL_CSWpm-heap = 1
+OBSOLETED_BY_CSWpm-heap += CSWpmheap
+CATALOGNAME_CSWpmheap = pm_heap_stub
 
 include gar/category.mk
