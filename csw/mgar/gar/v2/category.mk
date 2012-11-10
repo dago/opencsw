@@ -21,6 +21,8 @@ endif
 # of gar/ symlinks in each build directory.
 GARDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+CATEGORIES ?= default
+
 ifeq (,$(wildcard $(GARDIR)/categories/$(CATEGORIES)/category.mk))
   $(error The category '$(CATEGORIES)' is invalid. Valid categories are: $(patsubst $(GARDIR)/categories/%,%,$(wildcard $(GARDIR)/categories/*)))
 endif
