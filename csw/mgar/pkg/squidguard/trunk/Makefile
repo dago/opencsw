@@ -29,6 +29,7 @@ PACKAGES += CSWsquidguard
 SPKG_DESC_CSWsquidguard = URL redirector used to use blacklists with the proxysoftware Squid
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWsquidguard += CSWbdb48
+RUNTIME_DEP_PKGS_CSWsquidguard += CSWlibldap2-4-2
 
 # Just docs, leave for now
 CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/configure.txt
@@ -55,8 +56,13 @@ SQUIDGUARD_CONF = $(sysconfdir)/squidGuard/squidGuard.conf
 SQUIDGUARD_LOG = $(localstatedir)/squidGuard/log
 SQUIDGUARD_DB = $(localstatedir)/squidGuard/db
 
+BUILD64 = 1
+ISAEXEC = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS +=  --with-db=$(prefix)/bdb48
+CONFIGURE_ARGS += --with-ldap
+# CONFIGURE_ARGS += --with-mysql=$(prefix)
+CONFIGURE_ARGS += --with-db=$(prefix)/bdb48
 CONFIGURE_ARGS += --with-sg-config=$(SQUIDGUARD_CONF)
 CONFIGURE_ARGS += --with-sg-logdir=$(SQUIDGUARD_LOG)
 CONFIGURE_ARGS += --with-sg-dbhome=$(SQUIDGUARD_DB)
