@@ -64,7 +64,7 @@ CHECKPKG_OVERRIDES_CSWtrafficserver += shared-lib-pkgname-mismatch
 LICENSE = LICENSE
 
 # Be careful with GNU tools. We only need it for ginstall
-INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
+INSTALL_ENV_PATH = $(prefix)/gnu:$(PATH)
 
 include gar/category.mk
 
