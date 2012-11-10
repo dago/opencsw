@@ -47,7 +47,7 @@ DISTFILES += changelog.CSW
 # to make sure the "-norunpath" option is passed to the linker
 PATCHFILES = 0001-norunpath-option.patch
 
-DOCFILES = TODO
+DOCFILES = TODO ABOUT-NLS README
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -55,10 +55,9 @@ EXTRA_LINKER_FLAGS = -lm -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-
-
 include gar/category.mk
 
+post-merge: merge-doc 
 
 merge-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
