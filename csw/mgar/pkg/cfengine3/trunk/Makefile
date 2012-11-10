@@ -17,7 +17,7 @@ define BLURB
 endef
 
 DISTNAME = cfengine-$(VERSION)
-MASTER_SITES = http://www.cfengine.com/source-code/download?file=
+MASTER_SITES = http://www.cfengine.com/source-code/download/
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(NAME)rc
 DISTFILES += CSW$(NAME)utils.postinstall
@@ -46,6 +46,7 @@ PATCHFILES += 0000-Optimization-debug-flags-adjusted-for-use-with-SunSt.patch
 PATCHFILES += 0000-Do-not-perform-acceptance-test.patch
 PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
 PATCHFILES += 0005-Remove-unsupported-compiler-options.patch
+PATCHFILES += 0006-Fix-empty-initializer.-Add-mkdtemp.patch
 
 #
 # CUSTOM VARIABLES
