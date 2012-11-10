@@ -29,6 +29,8 @@ REINPLACE_FILES += src/Makefile.in
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+INSTALL_ENV_PATH = $(prefix)/gnu:$(PATH)
+
 BUILD64 = 1
 ISAEXEC = 1
 
