@@ -20,6 +20,8 @@ RUNTIME_DEP_PKGS_CSWaspell += CSWlibintl8
 
 CHECKPKG_OVERRIDES_CSWaspell += file-with-bad-content|/usr/local|root/opt/csw/share/info/aspell.info
 CHECKPKG_OVERRIDES_CSWaspell += file-with-bad-content|/usr/share|root/opt/csw/share/info/aspell.info
+CHECKPKG_OVERRIDES_CSWaspell += file-with-bad-content|/usr/local|root/opt/csw/share/doc/aspell/README
+
 
 PACKAGES += CSWlibaspell15
 SPKG_DESC_CSWlibaspell15 = The GNU spell checker (libraries)
@@ -29,6 +31,8 @@ PKGFILES_CSWlibaspell15 += $(libdir)/aspell-.*/.*
 PKGFILES_CSWlibaspell15 += $(docdir)/libaspell15/.* 
 RUNTIME_DEP_PKGS_CSWlibaspell15 += CSWlibintl8
 
+CHECKPKG_OVERRIDES_CSWlibaspell15 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libaspell15/README
+
 # We want to keep pspell library in aspell package
 CHECKPKG_OVERRIDES_CSWlibaspell15 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpspell.so.15.1.5|soname=libpspell.so.15|pkgname=CSWlibaspell15|expected=CSWlibpspell15
 
@@ -36,8 +40,11 @@ PACKAGES += CSWlibaspell-dev
 
 SPKG_DESC_CSWlibaspell-dev = The GNU spell checker (developpement files)
 PKGFILES_CSWlibaspell-dev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibaspell-dev += $(docdir)/libaspell-dev/.* 
+PKGFILES_CSWlibaspell-dev += $(docdir)/libaspell_dev/.* 
 RUNTIME_DEP_PKGS_CSWlibaspell-dev = CSWlibaspell15
+
+CHECKPKG_OVERRIDES_CSWlibaspell-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libaspell_dev/README
+
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
