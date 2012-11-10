@@ -18,6 +18,8 @@ SPKG_DESC_CSWchrpath = $(DESCRIPTION)
 PATCHFILES = chrpath_0.13-2.diff
 PATCHDIR = $(WORKSRC)
 
+# This is just docs
+CHECKPKG_OVERRIDES_CSWchrpath += file-with-bad-content|/usr/local|root/opt/csw/share/doc/chrpath/INSTALL
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
