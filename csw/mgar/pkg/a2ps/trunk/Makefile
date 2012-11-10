@@ -10,11 +10,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 
 PACKAGES += CSWa2ps
 SPKG_DESC_CSWa2ps = Any to PostScript filter
 RUNTIME_DEP_PKGS_CSWa2ps += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWa2ps += CSWlibpaper1
 
 # These are just docs
 CHECKPKG_OVERRIDES_CSWa2ps += file-with-bad-content|/usr/local|root/opt/csw/share/info/a2ps.info
@@ -28,8 +29,8 @@ CHECKPKG_OVERRIDES_CSWa2ps += missing-dependency|CSWemacscommon
 PRESERVECONF += $(sysconfdir)/a2ps.cfg
 PRESERVECONF += $(sysconfdir)/a2ps-site.cfg
 
-MIGATE_FILES += a2ps.cfg
-MIGATE_FILES += a2ps-site.cfg
+MIGRATE_FILES += a2ps.cfg
+MIGRATE_FILES += a2ps-site.cfg
 
 # There is one test failing:
 SKIPTEST ?= 1
