@@ -152,15 +152,6 @@ RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
 
-FOREIGN_PACKAGES += CSWliblber2-3-0
-OBSOLETED_BY_CSWliblber2-3-0 += CSWoldaprt
-
-FOREIGN_PACKAGES += CSWlibldap2-3-0
-OBSOLETED_BY_CSWlibldap2-3-0 += CSWoldaprt
-
-FOREIGN_PACKAGES += CSWlibldap-r2-3-0
-OBSOLETED_BY_CSWlibldap-r2-3-0 += CSWoldaprt
-
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
 # This is also used during EXPANDVARS
