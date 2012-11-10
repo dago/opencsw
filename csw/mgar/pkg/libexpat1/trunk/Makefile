@@ -1,5 +1,5 @@
 NAME = expat
-VERSION = 2.0.1
+VERSION = 2.1.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -13,6 +13,7 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(DISTNAME).tar.gz
 
+# This is for legacy packages depending on CSWexpat to use libexpat.so.0
 FOREIGN_PACKAGES += CSWlibexpat0
 
 PACKAGES += CSWlibexpat1
