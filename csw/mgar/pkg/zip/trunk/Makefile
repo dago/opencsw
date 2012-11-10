@@ -12,8 +12,11 @@ define BLURB
  Info-Zip Zip compression and file packaging/archive utility 
 endef
 
-MASTER_SITES = ftp://ftp.info-zip.org/pub/infozip/src/
-DISTNAME = $(NAME)$(ZIPVERSION)
+SPKG_SOURCEURL = http://www.info-zip.org/
+
+SF_PROJECT = infozip
+MASTER_SITES = $(SF_MIRRORS)
+DISTNAME = $(NAME)$(UNZIPVERSION)
 DISTFILES  = $(DISTNAME).tgz
 
 RUNTIME_DEP_PKGS = CSWlibbz2-1-0
