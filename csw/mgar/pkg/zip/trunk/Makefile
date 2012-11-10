@@ -25,7 +25,7 @@ CONFIGURE_SCRIPTS =
 # Further, nothing respects our LDFLAGS, so we have to set
 # those specifically:
 BUILD_ARGS = -f unix/Makefile LOCAL_ZIP="$(CFLAGS)" BIND="$(CC) $(LDFLAGS)"  generic
-INSTALL_ARGS = -f unix/Makefile INSTALL=ginstall BINDIR=$(DESTDIR)$(bindir) MANDIR=$(DESTDIR)$(mandir)/man1 install
+INSTALL_ARGS = -f unix/Makefile INSTALL=ginstall BINDIR=$(DESTDIR)$(ISABINDIR) MANDIR=$(DESTDIR)$(mandir)/man1 install
 
 BUILD64 = 1
 ISAEXEC = 1
