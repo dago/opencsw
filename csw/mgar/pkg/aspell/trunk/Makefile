@@ -27,7 +27,7 @@ PACKAGES += CSWlibaspell15
 SPKG_DESC_CSWlibaspell15 = The GNU spell checker (libraries)
 PKGFILES_CSWlibaspell15  = $(call pkgfiles_lib,libaspell.so.15)
 PKGFILES_CSWlibaspell15 += $(call pkgfiles_lib,libpspell.so.15)
-PKGFILES_CSWlibaspell15 += $(libdir)/aspell-.*/.*
+PKGFILES_CSWlibaspell15 += $(libdir)/aspell/.*
 PKGFILES_CSWlibaspell15 += $(docdir)/libaspell15/.* 
 RUNTIME_DEP_PKGS_CSWlibaspell15 += CSWlibintl8
 
@@ -61,6 +61,9 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 EXTRA_LINKER_FLAGS = -lm -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
+# The dictionnaries should be in a version indenpendant path
+CONFIGURE_ARGS += --enable-pkglibdir=$(libdir)/aspell
+CONFIGURE_ARGS += --enable-pkgdatadir=$(libdir)/aspell
 
 include gar/category.mk
 
