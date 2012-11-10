@@ -17,6 +17,8 @@ endef
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+BUNDLE = 389-ds
+
 PATCHFILES += 0001-add-java-version-check-in-389-console.patch
 
 PACKAGING_PLATFORMS = solaris10x
