@@ -17,6 +17,8 @@ endef
 MASTER_SITES = http://port389.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+BUNDLE = 389-ds
+
 PACKAGES = CSW389-admin-console
 BUILD_DEP_PKGS = CSWidm-console-base
 
