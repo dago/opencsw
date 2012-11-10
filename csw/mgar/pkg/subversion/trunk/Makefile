@@ -130,6 +130,14 @@ RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibsqlite3-0
 CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expected-catalogname=pmsvn
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/svn/libsvn_swig_perl-1.so.0.0.0|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Repos/_Repos.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Ra/_Ra.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Fs/_Fs.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Wc/_Wc.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Core/_Core.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Client/_Client.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Delta/_Delta.so|arch_id=18|arch_name=sparcv8+
 
 
 PACKAGES += CSWrbsvn
