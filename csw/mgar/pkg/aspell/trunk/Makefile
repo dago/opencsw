@@ -25,7 +25,7 @@ PACKAGES += CSWlibaspell15
 SPKG_DESC_CSWlibaspell15 = The GNU spell checker (libraries)
 PKGFILES_CSWlibaspell15  = $(call pkgfiles_lib,libaspell.so.15)
 PKGFILES_CSWlibaspell15 += $(call pkgfiles_lib,libpspell.so.15)
-PKGFILES_CSWlibaspell15 += $(libdir)/aspell/.*
+PKGFILES_CSWlibaspell15 += $(libdir)/aspell-.*/.*
 PKGFILES_CSWlibaspell15 += $(docdir)/libaspell15/.* 
 RUNTIME_DEP_PKGS_CSWlibaspell15 += CSWlibintl8
 
