@@ -63,6 +63,7 @@ RUNTIME_DEP_PKGS_CSWsvn   += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibglib2-0-0
+CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibdbus1-3
 
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
