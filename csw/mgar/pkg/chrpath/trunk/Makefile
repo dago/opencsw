@@ -30,10 +30,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 
 ## There are no tests for this
 ## runtest.ksh is broken manual test required
-TEST_SCRIPTS = skip
-
-test-skip:
-	$(DONADA)
+TEST_SCRIPTS =
 
 post-configure-modulated:
 	@(perl -i -plne 's|docdir = .*|docdir = $(prefix)/share/doc/$(NAME)|'\
