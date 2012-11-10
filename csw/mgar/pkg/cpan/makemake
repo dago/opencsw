@@ -27,6 +27,7 @@ use version 0.77;   # get latest bug-fixes and API
 use Data::Dumper;
 use LWP::UserAgent; # For online retreival of catalogname for package
 use Parallel::ForkManager;
+use File::Temp qw/ tempdir /;
 use JSON;
 
 # These three routines are used to capture the output of sub processes and
@@ -411,8 +412,8 @@ sub mod2pkg {
 	$modpath =~ s,::,/,g;
 	$modpath .= '.pm';
 
-	mkdir '/tmp/makemake';
-	my $pm = new Parallel::ForkManager( 15, "/tmp/makemake" );
+	my $tmpdir = tempdir( CLEANUP => 1 );
+	my $pm = new Parallel::ForkManager( 15, $tmpdir );
 
 	$pm -> run_on_finish ( # called BEFORE the first call to start()
 		sub {
