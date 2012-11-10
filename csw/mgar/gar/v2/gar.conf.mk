@@ -18,7 +18,7 @@ THISHOST := $(shell /usr/bin/uname -n)
 
 # On these platforms packages are built.
 # They will include binaries for all ISAs that are specified for the platform.
-PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS ?= solaris10-sparc solaris10-i386
 
 # This is the platform we are currently building. It is either set when
 # invoked from "gmake platforms" or when you build a package on a host
