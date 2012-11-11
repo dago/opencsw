@@ -14,7 +14,7 @@ define BLURB
   Simple Network Management Protocol (SNMP) is a widely used protocol for monitoring
   the health and welfare of network equipment (eg. routers), computer equipment and
   even devices like UPSs. Net-SNMP is a suite of applications used to implement
-  SNMP v1, SNMP v2c and SNMP v3 using both IPv4 and IPv6. The suite includes:
+  SNMP v1, SNMP v2c and SNMP v3 using both IPv4 and IPv6. The suite includECTes:
 endef
 
 SF_PROJ = net-snmp
@@ -209,4 +209,3 @@ CFLAGS := $(filter-out -I/opt/csw/include,$(CFLAGS))
 #	ln -s libnetsnmphelpers.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmphelpers.so.10
 #	ln -s libnetsnmpmibs.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmpmibs.so.10
 #	@ln -s libnetsnmptrapd.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmptrapd.so.10
-#	@$(MAKECOOKIE)

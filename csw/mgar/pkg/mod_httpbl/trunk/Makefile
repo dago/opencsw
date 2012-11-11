@@ -10,7 +10,7 @@ DESCRIPTION = Apache blacklist module
 define BLURB
   The mod_httpbl Apache module is ideal for leveraging the Project Honey pot http:BL services
   within the context of an Apache web server. Built on the Apache APIs, the mod enables web
-  admins to block comment spammers, harvesters, and other malicious IPs.
+  admins to block comment spammers, harvesters, and other maliciousECT IPs.
 endef
 
 SF_PROJ = httpbl
@@ -57,5 +57,4 @@ install-custom:
 	ginstall -d $(AP2_LIBEXEC)
 	ginstall 
 	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	#ginstall $(WORKSRC)/README $(WORKSRC)/INSTALL $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	@$(MAKECOOKIE)
+	#ginstall $(WORKSRC)/README $(WORKSRC)/INSTALL $(DESTDIR)$(docdir)/$(CATALOGNA

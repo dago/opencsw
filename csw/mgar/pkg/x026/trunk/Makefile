@@ -5,7 +5,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = IBM 026 Keypunch Emulator for X11
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = x3270
@@ -30,4 +30,4 @@ INSTALL_OVERRIDE_VARS = BINDIR MANPATH
 INSTALL_OVERRIDE_VAR_BINDIR = $(bindir)
 INSTALL_OVERRIDE_VAR_MANPATH = $(mandir)
 
-include gar/category.mk
+includ

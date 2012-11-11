@@ -6,7 +6,7 @@ GARTYPE = v2
 DESCRIPTION = Freeware Advanced Audio (AAC) Decoder including SBR decoding
 define BLURB
   FAAD2 is an open source MPEG-4 and MPEG-2 AAC decoder, it is licensed
-  under the GPLv2 license.
+  under the GPLv2 licensECTe.
 endef
 
 SF_PROJ = faac
@@ -61,4 +61,4 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 CHECKPKG_OVERRIDES_CSWxmms-faad2 += soname-not-found|libfaad.so.0|is|needed|by|opt/csw/lib/xmms/Input/libmp4.so
 
-include gar/category.mk
+include

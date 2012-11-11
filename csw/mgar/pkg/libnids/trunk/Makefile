@@ -9,7 +9,7 @@ define BLURB
  (Network Intrusion Detection System) components, namely E-component. It means 
  that libnids code watches all local network traffic, cooks received datagrams 
  a bit (quite a bit ;)), and provides convenient information on them to 
- analyzing modules of NIDS.
+ analyzing modules of NIDECTS.
 endef
 
 SF_PROJ = $(NAME)
@@ -36,4 +36,4 @@ CONFIGURE_ARGS += --enable-shared
 
 TEST_TARGET = 
 
-include gar/category.mk
+include

@@ -12,7 +12,7 @@ define BLURB
 	their valuable time to review the engine and the documentation. 
 	For now, little cms has been ported to a big number of platforms and 
 	is currently used in many open source and commercial products, 
-	as well as being distributed in major linux environments. 
+	as well as being distributed in major linux environmentECTs. 
 endef
 
 SF_PROJ = lcms
@@ -50,4 +50,4 @@ ISAEXEC = 1
 # One test with unicode is dumping core on 64 bit, disable for now
 SKIPTEST ?= 1
 
-include gar/category.mk
+includ

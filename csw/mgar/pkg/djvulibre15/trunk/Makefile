@@ -4,7 +4,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = DjVu standalone viewer, browser plug-in, command line tools
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = djvu
@@ -37,5 +37,4 @@ include gar/category.mk
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall $(WORKDIR)/libdjvulibre.so.15.$(GARCH) $(DESTDIR)$(libdir)/libdjvulibre.so.15.5.0
-	gln -s libdjvulibre.so.15.5.0 $(DESTDIR)$(libdir)/libdjvulibre.so.15
-	@$(MAKECOOKIE)
+	gln -s libdjvulibre.so.15.5.0 $(DESTDIR)$(libdir)/libdjvulibre.so.1

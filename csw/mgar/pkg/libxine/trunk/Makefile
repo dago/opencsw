@@ -5,7 +5,7 @@ CATEGORIES = apps
 
 DESCRIPTION = Xine-lib 1.1.8
 define BLURB
-xine-lib is the engine of xine. It contains all basic plugins and is necessary to run anything that relies on xine.
+xine-lib is the engine of xine. It contains all basic plugins and is necessary to run anything that relies on xiECTne.
 endef
 
 SF_PROJ = xine
@@ -37,5 +37,4 @@ include gar/category.mk
 
 #Fixing the directory names, (this code is actually called xine-lib.)
 post-extract:
-	( if test -d $(WORKDIR)/xine-lib-$(VERSION); then mv $(WORKDIR)/xine-lib-$(VERSION) $(WORKDIR)/$(DISTNAME); fi )
-	@$(MAKECOOKIE)
+	( if test -d $(WORKDIR)/xine-lib-$(VERSION); then mv $(WORKDIR)/xine-lib-$(VERSION) $(WORKDIR)/$(DISTNAME); fi 

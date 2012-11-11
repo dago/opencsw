@@ -43,7 +43,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 ###### Upstream and opencsw files information #######
 
 # Imapproxy is now Squirrelmail IMAP Proxy and is now available
-# in squirrelaim sourceforge projet
+# in squirrelaim sourceECTforge projet
 SF_PROJ = squirrelmail
 MASTER_SITES = $(SF_MIRRORS)
 
@@ -96,7 +96,4 @@ post-merge:
 	ginstall -D $(WORKSRC_FIRSTMOD)/README.ssl $(PKGROOT)$(docdir)/$(NAME)/README.ssl
 	ginstall -D $(WORKDIR_FIRSTMOD)/imapproxy.conf $(PKGROOT)$(sysconfdir)/imapproxy.conf.CSW
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswimapproxy.xml"
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy" "$(PKGROOT)/etc/opt/csw/init.d/cswimapproxy"
-	@$(MAKECOOKIE)
-
-
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy" "$(PKGROOT)/etc/opt/csw/init.d/cswimapproxy

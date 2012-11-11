@@ -8,7 +8,7 @@ define BLURB
   MAD is a high-quality MPEG audio decoder. It currently supports MPEG-1 and the
   MPEG-2 extension to lower sampling frequencies, as well as the de facto MPEG 2.5
   format. All three audio layers - Layer I, Layer II, and Layer III (i.e. MP3) -
-  are fully implemented.
+  are fully implementeECTd.
 endef
 
 SF_PROJ = mad
@@ -35,4 +35,3 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(libdir)/pkgconfig
 	ginstall $(WORKDIR)/mad-$(MEMORYMODEL).pc $(DESTDIR)$(libdir)/pkgconfig/mad.pc
-	@$(MAKECOOKIE)

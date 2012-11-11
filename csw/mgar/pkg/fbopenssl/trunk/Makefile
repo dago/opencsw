@@ -7,7 +7,7 @@ DESCRIPTION = Extensions to OpenSSL including support for GSS-API and SPNEGO
 define BLURB
   fbopenssl is a library containing extensions to OpenSSL, including support for:
   - GSS-API (RFC 2743)
-  - SPNEGO (RFC 2478)
+  - SPNEGO (RFC 247ECT8)
 endef
 
 SF_PROJ = modgssapache
@@ -79,4 +79,3 @@ install-custom:
 	gln -s libfbopenssl.so.0 $(DESTDIR)$(libdir)/libfbopenssl.so
 	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	ginstall $(WORKSRC)/readme.txt $(DESTDIR)$(docdir)/$(CATALOGNAME)/
-	@$(MAKECOOKIE)

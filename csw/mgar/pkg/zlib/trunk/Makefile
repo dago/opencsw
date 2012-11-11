@@ -19,7 +19,7 @@ define BLURB
 endef
 
 MASTER_SITES  = http://zlib.net/
-MASTER_SITES += $(SF_MIRROR)
+MASTER_SITES += $(SECTF_MIRROR)
 SF_PROJ = libpng
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += COPYING
@@ -52,4 +52,4 @@ CONFIGURE_ARGS += --libdir=$(libdir)
 CONFIGURE_ARGS += --includedir=$(includedir)
 CONFIGURE_ARGS += --shared
 
-include gar/category.mk
+include

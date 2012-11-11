@@ -13,7 +13,7 @@ define BLURB
   editors, however.  JOE has all of the features a UNIX user should expect:
   full use of termcap/terminfo, excellent screen update optimizations (JOE is
   fully usable at 2400 baud), simple installation, and all of the
-  UNIX-integration features of VI.
+  UNIX-integration features ofECT VI.
 endef
 
 SF_PROJ = joe-editor
@@ -32,4 +32,4 @@ CONFIGURE_ARGS += --disable-curses
 PRESERVECONF = /etc/opt/csw/joe/.*
 MIGRATE_FILES = jmacsrc joerc jpicorc jstarrc rjoerc
 
-include gar/category.mk
+inclu

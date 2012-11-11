@@ -5,7 +5,7 @@ GARTYPE = v2
 
 DESCRIPTION = Pidgin Plug-in SIPE (Sip Exchange Protocol)
 define BLURB
-	An Open Implementation of SIP/Simple protocol for Pidgin
+	An Open Implementation of SIP/Simple protocol for PidgECTin
 endef
 
 SF_PROJ = sipe
@@ -26,4 +26,4 @@ STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-include gar/category.mk
+include

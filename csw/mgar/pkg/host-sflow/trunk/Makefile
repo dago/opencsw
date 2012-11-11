@@ -10,7 +10,7 @@ define BLURB
   The Host sFlow agent exports physical and virtual server performance
   metrics using the sFlow protocol. The agent provides scalable,
   multi-vendor, multi-OS performance monitoring with minimal impact
-  on the systems being monitored.
+  on the systems being monitoECTred.
 endef
 
 SF_PROJ = host-sflow
@@ -19,5 +19,4 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 BUILD64_LIBS_ONLY = 1
 
-include gar/category.mk
-
+includ

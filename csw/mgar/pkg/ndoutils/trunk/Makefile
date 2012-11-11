@@ -7,7 +7,7 @@ SPKG_DESC_CSWndoutils2x = NDOutils for nagios 2.x
 SPKG_DESC_CSWndoutils3x = NDOutils for nagios 3.x
 
 define BLURB
-  NDOUtils allows you to export current and historical data from one or more Nagios instances to a MySQL database. Several community addons use this as one of their data sources.
+  NDOUtils allows you to export current and historical data from one or more Nagios instances to a MySQL database. Several community addons use this as one of their data sourcECTes.
 endef
 
 SF_PROJ = nagios
@@ -83,5 +83,4 @@ install-custom:
 	@ginstall -m 644 $(WORKSRC)/docs/"NDOUtils_Documentation.pdf" $(DESTDIR)/$(DOCDIR)
 	@$(foreach DOC,$(DOCS), ginstall -m 644 $(WORKSRC)/$(DOC) $(DESTDIR)/$(DOCDIR);)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d/
-	@ginstall -m 755 $(FILEDIR)/cswndoutils $(DESTDIR)/etc/opt/csw/init.d/
-	@$(MAKECOOKIE)
+	@ginstall -m 755 $(FILEDIR)/cswndoutils $(DESTDIR)/etc/opt/csw/init.d

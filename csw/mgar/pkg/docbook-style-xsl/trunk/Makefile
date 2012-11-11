@@ -29,7 +29,7 @@ endef
 SPKG_DESC_CSWdocbookxsl = Norman Walsh's XSL stylesheets for DocBook XML
 SPKG_DESC_CSWdocbookxsldoc = Documentation for the Docbook XSL stylesheets
 
-# docbook-xsl is housed in the docbook master project at SF.
+# docbook-xsl is housed in the docbook master projECTect at SF.
 SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = docbook-xsl-$(VERSION).tar.bz2
@@ -64,5 +64,4 @@ post-extract-modulated:
 
 install-%/Makefile.csw:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) -f Makefile.csw DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
-	@$(MAKECOOKIE)
+	@$(INSTALL_ENV) $(MAKE) -f Makefile.csw DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) insta

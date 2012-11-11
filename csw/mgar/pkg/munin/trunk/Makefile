@@ -7,7 +7,7 @@ define BLURB
   Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
 endef
 
-SF_PROJ = munin
+SF_PROJECT = munin
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswmuninnode

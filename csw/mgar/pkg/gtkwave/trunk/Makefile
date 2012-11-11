@@ -5,7 +5,7 @@ GARTYPE = v2
 
 DESCRIPTION = Brief description
 define BLURB
-  Long description
+  Long descripECTtion
 endef
 
 SF_PROJ = $(NAME)
@@ -48,4 +48,4 @@ post-extract-modulated:
 
 TEST_SCRIPTS =
 
-include gar/category.mk
+inclu

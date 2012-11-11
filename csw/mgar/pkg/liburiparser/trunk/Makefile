@@ -5,7 +5,7 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = RFC 3986 Compliant URI Parsing Library
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = uriparser
@@ -33,4 +33,4 @@ BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --docdir=$(docdir)/$(NAME)
 
-include gar/category.mk
+include

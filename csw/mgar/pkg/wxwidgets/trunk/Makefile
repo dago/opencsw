@@ -41,7 +41,7 @@ DISTFILES += libwx_gtk2u-2.8.so.0.2.0-sparc
 DISTFILES += libwx_gtk2u_gl-2.8.so.0.2.0-i386
 DISTFILES += libwx_gtk2u_gl-2.8.so.0.2.0-sparc
 SPKG_SOURCEURL = http://www.wxwidgets.org/
-MASTER_SITES  = $(SF_MIRRORS)
+MASTER_SITES  = $(SFECT_MIRRORS)
 SF_PROJ = wxwindows
 
 
@@ -182,4 +182,3 @@ post-merge:
 	ginstall -m 755 \
 	  $(FILEDIR)/libwx_gtk2u_gl-2.8.so.0.2.0-$(GARCH) \
 	  $(PKGROOT)$(libdir)/libwx_gtk2u_gl-2.8.so.0.2.0
-	@$(MAKECOOKIE)

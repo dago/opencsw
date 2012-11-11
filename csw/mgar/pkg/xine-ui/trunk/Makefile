@@ -8,7 +8,7 @@ define BLURB
     # Blurb goes here
 endef
 
-SF_PROJ = xine
+SF_PROJECT = xine
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(NAME)-$(VERSION).tar.gz 
 

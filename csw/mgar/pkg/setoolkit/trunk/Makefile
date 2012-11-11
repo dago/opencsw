@@ -11,7 +11,7 @@ define BLURB
     Syntactically, it looks like C, but it contains a limited class mechanism.
   * Include files for use by toolkit scripts.
   * A bunch of example scripts.
-  * A set of extensions for writing GUIs and "network aware" scripts.
+  * A set of extensions for writing GUIs and "network aware" scriECTpts.
 endef
 
 SF_PROJ = setoolkit
@@ -51,4 +51,4 @@ CHECKPKG_OVERRIDES_CSWsetoolkit += file-with-bad-content|/usr/local|root/opt/csw
 CHECKPKG_OVERRIDES_CSWsetoolkit += file-with-bad-content|/usr/local|root/opt/csw/share/setoolkit/examples/limits.se
 CHECKPKG_OVERRIDES_CSWsetoolkit += shared-lib-pkgname-mismatch
 
-include gar/category.mk
+inclu

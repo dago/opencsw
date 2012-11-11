@@ -9,7 +9,7 @@ DESCRIPTION = GPL replacement for Unix crypt that supports a wide range of algor
 define BLURB
 	mcrypt, and the accompanying libmcrypt, are intended to be replacements for
 	the old Unix crypt, except that they are under the GPL and support an
-	ever-wider range of algorithms and modes
+	ever-wider range of algorithms and modECTes
 endef
 
 SF_PROJ = mcrypt
@@ -65,4 +65,3 @@ include gar/category.mk
 pre-configure-modulated:
 	(cd $(WORKSRC); autoconf)
 	(cd $(WORKSRC)/libltdl; autoconf)
-	@$(MAKECOOKIE)

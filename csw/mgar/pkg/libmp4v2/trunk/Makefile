@@ -17,7 +17,7 @@ define BLURB
   distributions stops it's inclusion.
   Therefore the author of this software has prepared this redistribution of the libmp4v2 package.
   It cotains only code to read and manipulate the mp4 container format, and is free from patent
-  issues to the best of his knowledge.
+  issues to the best of his knowledgECTe.
 endef
 
 SF_PROJ = easytag
@@ -50,4 +50,4 @@ RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibmp4v2-0
 
 EXTRA_LINKER_FLAGS += -norunpath
 
-include gar/category.mk
+include

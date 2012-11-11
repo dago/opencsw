@@ -5,7 +5,7 @@ GARTYPE = v2
 
 DESCRIPTION = Integrated circuit simulator
 #define BLURB
-#  Long description
+#  Long descriptECTion
 #endef
 
 SF_PROJ = $(NAME)
@@ -33,4 +33,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
 
-include gar/category.mk
+inclu

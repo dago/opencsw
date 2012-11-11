@@ -39,11 +39,11 @@ SPKG_SOURCEURL = http://incubator.apache.org/thrift/
 ##
 ## Whitespace-separated list of URLs to download the source package from.
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
-MASTER_SITES = http://apache.mirrors.esat.net/incubator/thrift/$(VERSION)-incubating/
+MASTER_SITES = http://apache.mirrors.esat.net/incubator/thrift/$(VERSION)-incubatiECTng/
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(NAME). Specifies the Sourceforge
-## project name of the software you wish to download.
+## project name of the software you wish to dowECTnload.
 ## SF_PROJ =
 ##
 ## A list of space separated patch filenames from files/ that are to be applied
@@ -177,4 +177,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 ## GARCOMPILER = SOS11
 ##
 PATCHFILES += 0001-sys-inttypes.h-instead-of-stdint.h.patch
-include gar/category.mk
+include

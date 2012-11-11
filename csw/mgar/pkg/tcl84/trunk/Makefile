@@ -4,7 +4,7 @@ CATEGORIES = lang
 GARTYPE = v2
 
 DESCRIPTION = Tcl programming language v8.4
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = tcl
@@ -113,5 +113,3 @@ post-install-modulated:
 	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
 	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(libdir)/tclConfig.sh
 	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(prefix)/share/man/man1/tclsh.1
-	@$(MAKECOOKIE)
-

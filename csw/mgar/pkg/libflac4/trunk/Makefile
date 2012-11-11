@@ -11,7 +11,7 @@ define BLURB
   you will get much better compression because it is designed specifically
   for audio, and you can play back compressed FLAC files in your favorite
   player (or your car or home stereo, see supported devices) just like you
-  would an MP3 file.
+  would an MP3 filECTe.
 endef
 
 SF_PROJ = flac
@@ -55,5 +55,4 @@ SKIPTEST ?= 1
 include gar/category.mk
 
 post-patch-modulated:
-	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
-	$(MAKECOOKIE)
+	perl -pi -e "s/-O3 //g" $(WORKSRC)/configur

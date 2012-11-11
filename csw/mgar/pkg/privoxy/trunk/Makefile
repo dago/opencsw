@@ -18,7 +18,7 @@ individual needs and tastes. It has application for both stand-alone
 systems and multi-user networks.
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SFECT_MIRRORS)
 SF_PROJ = ijbswa
 DISTFILES  = $(NAME)-$(VERSION)-stable-src.tar.gz
 DISTNAME = $(NAME)-$(VERSION)-stable
@@ -68,4 +68,3 @@ post-install-modulated:
 		@echo --- Installing cswinitsmf file ---
 		@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 		@cp $(FILEDIR)/cswprivoxy $(DESTDIR)/etc/opt/csw/init.d/
-		@$(MAKECOOKIE)

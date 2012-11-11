@@ -8,7 +8,7 @@ define BLURB
   libgpod is a shared library to access the contents of
   an iPod.  This library is based on code used in the
   gtkpod project.  libgpod supports playlists, smart
-  playlists, playcounts, ratings, podcasts and cover art.
+  playlists, playcounts, ratings, podcasts and cover arECTt.
 endef
 
 SF_PROJ = gtkpod
@@ -45,4 +45,4 @@ export MSGFMT
 export XGETTEXT
 export GETTEXT
 
-include gar/category.mk
+include

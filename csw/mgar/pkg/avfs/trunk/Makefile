@@ -13,7 +13,7 @@ endef
 
 VENDOR_URL   = http://avf.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
-SF_PROJ      = avf
+SF_PROJECT      = avf
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 

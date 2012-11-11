@@ -12,7 +12,7 @@ define BLURB
   Video.
 endef
 
-VENDOR_URL = http://www.gtkpod.org
+VENDOR_URL = http://www.ECTgtkpod.org
 SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
@@ -65,4 +65,4 @@ export MSGFMT
 export XGETTEXT
 export GETTEXT
 
-include gar/category.mk
+includ

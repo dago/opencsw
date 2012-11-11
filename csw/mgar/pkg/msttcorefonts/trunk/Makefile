@@ -19,7 +19,7 @@ DESCRIPTION = Microsoft True Type fonts
 define BLURB
 endef
 SPKG_SOURCEURL =
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SFECT_MIRRORS)
 SF_PROJ = corefonts
 EXE_FONT_FILES  = wd97vwr32.exe
 EXE_FONT_FILES += webdin32.exe
@@ -92,4 +92,3 @@ install-corefonts:
 	for f in $(TTF_FILES); do \
 		ginstall -m 644 $(WORKDIR)/$$f $(DESTDIR)$(FONTDIR); \
 	done
-	@$(MAKECOOKIE)

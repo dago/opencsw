@@ -12,7 +12,7 @@ Bar is a simple tool to copy a stream of data and print a display for the user o
 Bar was originally written for the purpose of estimating the amount of time needed to transfer large amounts (many, many gigabytes) of data across a network. (Usually in an SSH/tar pipe.)
 endef
 
-SF_PROJ = clpbar
+SF_PROJECT = clpbar
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES += $(NAME)_$(VERSION).tar.gz
 DISTFILES += clpbarrc

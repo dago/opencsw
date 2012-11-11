@@ -17,7 +17,7 @@ define BLURB
   'animations' by plotting different datasets one after another.
 endef
 
-SF_PROJ = $(subst .,-,$(NAME))
+SF_PROJECT = $(subst .,-,$(NAME))
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(SF_PROJ)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz

@@ -8,7 +8,7 @@ define BLURB
   Protects networked hosts from brute force attacks
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SFECT_MIRRORS)
 SF_PROJ = $(NAME)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
@@ -20,4 +20,4 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-firewall=hosts
 
-include gar/category.mk
+include

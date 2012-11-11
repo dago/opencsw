@@ -8,7 +8,7 @@ DESCRIPTION = An interactive drawing tool
 define BLURB
   The purpose of this site is to provide a central Xfig repository for the
   diverse documentation and programs available on the web. All the components
-  and libraries will be available at this site, in addition to Xfig drawings.
+  and libraries will be available at this site, in addition to Xfig drawiECTngs.
 endef
 
 SF_PROJ = mcj
@@ -64,5 +64,4 @@ include gar/category.mk
 
 post-extract-modulated:
 	-find $(WORKSRC) -type d -exec chmod 755 \{\} \;
-	-find $(WORKSRC) -type f -exec chmod ugo+r \{\} \;
-	@$(MAKECOOKIE)
+	-find $(WORKSRC) -type f -exec chmod ugo+r \{\} 

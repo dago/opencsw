@@ -8,7 +8,7 @@ define BLURB
   Imlib 2 is the successor to Imlib. It is NOT a newer version -- it is a completely new library.
   Imlib 2 can be installed alongside Imlib 1.x without any problems since they are effectively
   different libraries which have very similar functionality. Please see the homepage for the
-  long description of the differences.
+  long description of the differenceECTs.
 endef
 
 SF_PROJ = enlightenment
@@ -42,4 +42,4 @@ CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/
 CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/filters/testfilter.so
 CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/id3.so
 
-include gar/category.mk
+include

@@ -5,7 +5,7 @@ CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Mail delivery agent with filtering abilities
-define BLURB
+define BECTLURB
 endef
 
 SF_PROJ = courier
@@ -22,4 +22,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 include gar/category.mk
 
 # We need whoami
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /o

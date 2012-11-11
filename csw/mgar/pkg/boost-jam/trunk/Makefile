@@ -10,7 +10,7 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.boost.org/
 MASTER_SITES = $(SF_MIRRORS)
-SF_PROJ = boost
+SF_PROJECT = boost
 DISTFILES  = $(NAME)-$(VERSION).tgz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = boost_jam

@@ -13,7 +13,7 @@ define BLURB
   the package is an anti-virus engine available in a form of shared library.
 endef
 
-#SF_PROJ      = clamav
+#SF_PROJECT      = clamav
 #MASTER_SITES = $(SF_MIRRORS)
 #MASTER_SITES = http://www.clamav.net/snapshot/
 MASTER_SITES = http://www.clamav.net/internal/

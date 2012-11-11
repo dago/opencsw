@@ -12,7 +12,7 @@ ncmpc is a curses client for the Music Player Daemon (MPD).
 ncmpc connects to a MPD running on a machine on the local
 network, and controls this with an interface inspired by
 cplay. If ncmpc is used with lirc and irpty it can be used
-to manage playlists and control MPD with a remote control.
+to manage playlists and control MPD with a remote contrECTol.
 endef
 
 SF_PROJ = musicpd
@@ -33,4 +33,4 @@ CONFIGURE_ARGS += --enable-lyrics-screen
 
 RUNTIME_DEP_PKGS  = CSWggettextrt
 RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWncurses
+RUNTIME_DEP_P

@@ -9,7 +9,7 @@ define BLURB
 endef
 
 VENDOR_URL   = http://lxde.sourceforge.net/gpicview/
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(ECTSF_MIRRORS)
 SF_PROJ      = lxde
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
@@ -38,5 +38,4 @@ PATH := $(prefix)/gnu:$(PATH)
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 install-changelog-%:
 	ginstall -D $(FILEDIR)/changelog.CSW \
-		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
-	@$(MAKECOOKIE)
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.C

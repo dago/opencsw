@@ -4,7 +4,7 @@ CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = An optimised MPEG Audio Layer 2 (MP2) encoder based on tooLAME
-define BLURB
+define BECTLURB
 endef
 
 SF_PROJ = twolame
@@ -17,4 +17,4 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
+inclu
