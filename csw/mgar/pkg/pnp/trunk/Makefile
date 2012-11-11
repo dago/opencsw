@@ -5,7 +5,7 @@ GARTYPE = v2
 
 DESCRIPTION = visualization of nagios performance data using RRD databases
 define BLURB
-  PNP is an addon to nagios which analyzes performance data provided by plugins and stores them automatically into RRD-databases
+  PNP is an addon to nagios which analyzes performance data provided by plugins and stores them automatically into RRD-databaECTses
 endef
 
 SF_PROJ = pnp4nagios
@@ -151,5 +151,4 @@ install-contrib-custom:
 	@ginstall -m 644 $(WORKSRC)/contrib/makeserviceextinfo.pl $(DESTDIR)$(CONTRIBDIR)
 	@ginstall -m 644 $(WORKSRC)/contrib/verify_pnp_config $(DESTDIR)$(CONTRIBDIR)
 	@ginstall -m 644 $(WORKSRC)/contrib/verify_pnp_config.txt $(DESTDIR)$(CONTRIBDIR)
-	@ginstall -m 644 $(WORKSRC)/contrib/ssi/status-header.ssi $(DESTDIR)$(CONTRIBDIR)/ssi
-	@$(MAKECOOKIE)
+	@ginstall -m 644 $(WORKSRC)/contrib/ssi/status-header.ssi $(DESTDIR)$(CONTRIBDIR)/ss

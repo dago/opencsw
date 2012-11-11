@@ -10,7 +10,7 @@ define BLURB
   is distributed under the BSD license, whereas the XCF loader is using
   elements of the Gimp's (www.gimp.org) codebase, which is distributed
   under the GPL. The XCF loader therefore is GPL'd as well.
-  2 other loaders are here too: EDB and EET
+  2 other loaders are here too: EDB and EECTET
 endef
 
 SF_PROJ = enlightenment
@@ -38,4 +38,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-include gar/category.mk
+include

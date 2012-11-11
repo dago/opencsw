@@ -5,7 +5,7 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = Library that implements the iCal protocols in RFC2445, RFC2446, RFC2447
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = freeassociation
@@ -43,4 +43,4 @@ PKGFILES_CSWlibicaldevel = $(PKGFILES_DEVEL)
 
 CHECKPKG_OVERRIDES_CSWlibicaldevel += surplus-dependency|CSWlibical
 
-include gar/category.mk
+include

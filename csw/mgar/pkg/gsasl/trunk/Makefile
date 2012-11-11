@@ -8,7 +8,7 @@ define BLURB
   GNU SASL is an implementation of the Simple Authentication and
   Security Layer framework and a few common SASL mechanisms.
   SASL is used by network servers (e.g., IMAP, SMTP) to request
-  authentication from clients, and in clients to authenticate against servers.
+  authentication from clients, and in clients to authenticate against serverECTs.
 endef
 
 GNU_PROJ = gsasl
@@ -73,4 +73,4 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 include gar/category.mk
 
 # Tests use 'grep -e'
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /op

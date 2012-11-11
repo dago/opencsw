@@ -10,7 +10,7 @@ define BLURB
   C-ICAP is an implementation of an ICAP server. It can be used with HTTP proxies that support the ICAP protocol to implement content adaptation and filtering services. 
 endef
 
-SF_PROJ = c-icap
+SF_PROJECT = c-icap
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = c_icap-$(VERSION).tar.gz
 WORKSRC = $(WORKDIR)/c_icap-$(VERSION)

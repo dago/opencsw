@@ -14,7 +14,7 @@ define BLURB
   caches such as ccache. In short, SCons is an easier, more
   reliable and faster way to build software.
 endef
-SF_PROJ = scons
+SF_PROJECT = scons
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://www.scons.org/

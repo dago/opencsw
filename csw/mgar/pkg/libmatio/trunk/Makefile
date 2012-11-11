@@ -4,7 +4,7 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = An ISO C library for reading and writing Matlab MAT files
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = matio
@@ -20,4 +20,4 @@ NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 
-include gar/category.mk
+include

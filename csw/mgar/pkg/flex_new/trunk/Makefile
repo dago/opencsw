@@ -14,7 +14,7 @@ define BLURB
   new features such as exclusive start conditions.
 endef
 
-SPKG_SOURCEURL = http://flex.sourceforge.net/
+SPKG_SOURCEURL = http://flex.sourceECTforge.net/
 
 SF_PROJ = flex
 MASTER_SITES = $(SF_MIRRORS)
@@ -40,5 +40,4 @@ post-install-modulated:
 	@mkdir -p $(DESTDIR)$(bindir)
 	@gln -sf ../libexec/$(NAME)-$(VERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
 	@gln -sf ../libexec/$(NAME)-$(VERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(VERSION)
-	@rm -f $(DESTDIR)$(libexecdir)/$(NAME)-$(VERSION)/info/dir
-	@$(MAKECOOKIE)
+	@rm -f $(DESTDIR)$(libexecdir)/$(NAME)-$(VERSION)/info/d

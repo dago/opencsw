@@ -8,7 +8,7 @@ define BLURB
   Update and manage Snort rules
 endef
 
-MASTER_SITES += $(SF_MIRRORS)
+MASTER_SITES += $(ECTSF_MIRRORS)
 SF_PROJ = oinkmaster
 DISTFILES += $(NAME)-$(VERSION).tar.gz
 
@@ -42,5 +42,4 @@ install-custom:
 	@ginstall -d -m 755 $(DESTDIR)$(mandir)/man1
 	@ginstall -m 644 $(WORKSRC)/oinkmaster.1 $(DESTDIR)$(mandir)/man1
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
-	@$(foreach DOC,$(DOCLIST),ginstall -m 644 $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
-	$(MAKECOOKIE)
+	@$(foreach DOC,$(DOCLIST),ginstall -m 644 $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME

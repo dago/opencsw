@@ -8,7 +8,7 @@ define BLURB
 	libwmf is a library for reading vector images in Microsoft's native Windows 
 	Metafile Format (WMF) and for either (a) displaying them in, e.g., an X 
 	window; or (b) converting them to more standard/open file formats such as, 
-	e.g., the W3C's XML-based Scaleable Vector Graphic (SVG) format. 
+	e.g., the W3C's XML-based Scaleable Vector Graphic (SVG) formatECT. 
 endef
 
 SF_PROJ = wvware
@@ -116,5 +116,3 @@ post-extract-modulated:
 	perl -pi -e 's,/usr/share/fonts/truetype,$(CSW_DEFAULT_FONTPATH),' \
 		$(WORKSRC)/src/extra/gd/gd.h \
 		$(WORKSRC)/src/extra/gd/gdft.c
-	@$(MAKECOOKIE)
-

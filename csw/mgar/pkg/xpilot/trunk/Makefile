@@ -13,7 +13,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = query.c.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = -(\d+(?:\.\d+)*ECT).tar.gz
 
 SF_PROJ = project/xpilotgame/xpilot-4/xpilot-4.5.5
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=14558
@@ -34,5 +34,4 @@ build-custom:
 	$(MAKECOOKIE)
 
 install-custom:
-	-cd $(WORKSRC)/src && make install-solaris
-	$(MAKECOOKIE)
+	-cd $(WORKSRC)/src && make install-solari

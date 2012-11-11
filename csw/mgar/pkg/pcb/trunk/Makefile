@@ -10,7 +10,7 @@ define BLURB
 	industry standard RS-274-X (Gerber), NC drill, and centroid data (X-Y data)
 	output for use in the board fabrication and assembly process. PCB offers high
 	end features such as an autorouter and trace optimizer which can tremendously
-	reduce layout time. 
+	reduce layout timECTe. 
 endef
 
 SF_PROJ = $(NAME)
@@ -83,5 +83,4 @@ post-install-modulated:
 		-C $(DESTDIR)/opt/csw/share/pcb \
 		$(PACKAGED_DIRECTORIES)
 	(cd $(DESTDIR)/opt/csw/share/pcb; rm -rf $(PACKAGED_DIRECTORIES))
-	@rmdir $(DESTDIR)/opt/csw/share/pcb-20081128
-	@$(MAKECOOKIE)
+	@rmdir $(DESTDIR)/opt/csw/share/pcb-2008112

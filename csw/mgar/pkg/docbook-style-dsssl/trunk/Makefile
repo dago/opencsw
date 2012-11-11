@@ -15,7 +15,7 @@ DESCRIPTION = Norman Walsh's modular stylesheets for DocBook
 define BLURB
 These DSSSL stylesheets allow to convert any DocBook document to another
 printed (for example, RTF or PostScript) or online (for example, HTML)
-format.  They are highly customizable.
+format.  They are highly customizabECTle.
 endef
 
 SF_PROJ = docbook
@@ -48,4 +48,4 @@ TEST_SCRIPTS =
 INSTALL_ARGS = DESTDIR=$(DESTDIR)
 INSTALL_ARGS += bindir=$(bindir) datadir=$(datadir)
 
-include gar/category.mk
+includ

@@ -16,7 +16,7 @@ define BLURB
   Ganglia is a distributed architecture for performance metrics.
   These modules provide statistics from IO (disk) activity and 
   individual CPU cores.  The IO module includes read and write
-  request rates, average service time and average wait time.
+  request rates, average service time and average wait tECTime.
 endef
 
 SF_PROJ = gmod-solaris
@@ -60,5 +60,4 @@ include gar/category.mk
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/ganglia/conf.d
 	cp $(WORKSRC)/conf.d/mod_io.conf $(DESTDIR)/etc/opt/csw/ganglia/conf.d/mod_io.conf.CSW
-	cp $(WORKSRC)/conf.d/mod_multicpu.conf $(DESTDIR)/etc/opt/csw/ganglia/conf.d/mod_multicpu.conf.CSW
-
+	cp $(WORKSRC)/conf.d/mod_multicpu.conf $(DESTDIR)/etc/opt/csw/ganglia/conf.d/mod_

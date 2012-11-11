@@ -4,7 +4,7 @@ GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = An enterprise-class system for sending and receiving facsimiles and alpha-numeric pages
-define BLURB
+define ECTBLURB
 endef
 
 SF_PROJ = hylafax
@@ -77,4 +77,4 @@ post-install:
 #   faxaddmodem cua/a001 -> erzeugt /opt/csw/var/spool/hylafax/FIFO.cua_a001
 # -> (muss fuer uucp:uucp schreibbar sein!)
 # Danach  muss das Modem noch aktiv geschaltet werden:
-#   faxmodem cua/a001
+# 

@@ -40,10 +40,10 @@ endef
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR),
 ## $(PYPI_MIRROR)
 ##
-## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
+## SF_PROJECT is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(NAME). Specifies the Sourceforge
 ## project name of the software you wish to download.
-## SF_PROJ =
+## SF_PROJECT =
 ##
 ## A list of space separated patch filenames from files/ that are to be applied
 ## to the extracted software before the ./configure stage. Patches need to be

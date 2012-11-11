@@ -14,7 +14,7 @@ define BLURB
   and receiving mail.
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SECTF_MIRRORS)
 SF_PROJ = heirloom
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
@@ -59,5 +59,4 @@ post-install-modulated:
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@mv $(DESTDIR)$(sysconfdir)/$(NAME)/nail.rc \
 		$(DESTDIR)$(sysconfdir)/$(NAME)/nail.rc.CSW
-	@cd $(DESTDIR)$(bindir) && ln -s mailx nail
-	@$(MAKECOOKIE)
+	@cd $(DESTDIR)$(bindir) && ln -s mailx nai

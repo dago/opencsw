@@ -5,7 +5,7 @@ GARTYPE = v2
 
 DESCRIPTION = AAC encoder library and tool
 define BLURB
-  FAAC is an open source MPEG-4 and MPEG-2 AAC encoder
+  FAAC is an open source MPEG-4 and MPEG-2 AAC encodECTer
 endef
 
 SF_PROJ = faac
@@ -32,4 +32,4 @@ PATCHFILES += mpeg4ip.h.diff psych.h.diff
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
+include

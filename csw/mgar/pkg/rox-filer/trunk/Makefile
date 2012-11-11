@@ -13,7 +13,7 @@ DESCRIPTION = A lightweight X file manager
 define BLURB
 endef
 SPKG_SOURCEURL = http://roscidus.com/desktop/ROX-Filer
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SECTF_MIRRORS)
 SF_PROJ = rox
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -62,5 +62,4 @@ install-rox:
 	ginstall -d -m 755 $(DESTDIR)$(mandir)/man1
 	ginstall -m 644 $(WORKSRC)/rox.1 $(DESTDIR)$(mandir)/man1
 	gfind $(DESTDIR)$(datadir) -type d -exec chmod 0755 {} \;
-	gfind $(DESTDIR)$(datadir) -type f -exec chmod 0644 {} \;
-	@$(MAKECOOKIE)
+	gfind $(DESTDIR)$(datadir) -type f -exec chmod 0644 {} \

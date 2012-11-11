@@ -20,7 +20,7 @@ define BLURB
    Plugins for Nagios
 endef
 
-SF_PROJ 	 = nagiosplug
+SF_PROJECT 	 = nagiosplug
 MASTER_SITES 	 = $(SF_MIRRORS)
 DISTFILES  	 = $(NAME)-$(VERSION).tar.gz
 DISTFILES	+= README.CSW

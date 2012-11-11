@@ -4,7 +4,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Unix system state reporter
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = unixtop
@@ -46,4 +46,4 @@ CONFIGURE_ARGS += --disable-dualarch
 # top doesn't have a testsuite
 TEST_TARGET =
 
-include gar/category.mk
+includ

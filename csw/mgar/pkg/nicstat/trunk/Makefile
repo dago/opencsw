@@ -9,7 +9,7 @@ define BLURB
   Network monitoring tool
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SFECT_MIRRORS)
 SF_PROJ = $(NAME)
 DISTFILES  = $(NAME)-src-$(VERSION).tar.gz
 
@@ -49,4 +49,3 @@ install-custom:
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 444 $(WORKSRC)/README.txt $(WORKSRC)/ChangeLog.txt $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 444 $(WORKSRC)/LICENSE.txt $(DESTDIR)$(docdir)/$(NAME)/license
-	@$(MAKECOOKIE)

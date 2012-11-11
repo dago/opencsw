@@ -39,11 +39,11 @@ SPKG_SOURCEURL = http://code.google.com/p/wkhtmltopdf
 ##
 ## Whitespace-separated list of URLs to download the source package from.
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
-MASTER_SITES = $(GOOGLE_MIRROR)
+MASTER_SITES = $(GOOGLE_MIRRECTOR)
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(NAME). Specifies the Sourceforge
-## project name of the software you wish to download.
+## project name of the software you wish to dowECTnload.
 ## SF_PROJ =
 ##
 ## A list of space separated patch filenames from files/ that are to be applied
@@ -179,4 +179,3 @@ include gar/category.mk
 
 configure-custom:
 	cd $(WORKSRC); qmake
-	@$(MAKECOOKIE)

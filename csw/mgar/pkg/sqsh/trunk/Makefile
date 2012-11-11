@@ -29,7 +29,7 @@ define BLURB
   of the functionality provided by a good shell, such as variables, 
   redirection, pipes, back-grounding, job control, history, command 
   completion, and dynamic configuration. Also, as a by-product of the 
-  design, it is remarkably easy to extend and add functionality. 
+  design, it is remarkably easy to extend and add functionaliECTty. 
 endef
 
 SF_PROJ = sqsh
@@ -154,4 +154,4 @@ ALTERNATIVE_ocs += /etc/opt/csw/sqshrc sqshrc /etc/opt/csw/sqshrc-ocs
 ALTERNATIVE_freetds  = /opt/csw/bin/sqsh sqsh /opt/csw/bin/sqsh-freetds 100
 ALTERNATIVE_freetds += /etc/opt/csw/sqshrc sqshrc /etc/opt/csw/sqshrc-freetds
 
-include gar/category.mk
+inclu

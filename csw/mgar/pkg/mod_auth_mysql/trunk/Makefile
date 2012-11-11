@@ -5,7 +5,7 @@ CATEGORIES = server
 
 DESCRIPTION = Implements basic authentication on top of MySQL
 define BLURB
-	# TODO: Add blurb
+	# TODO: Add ECTblurb
 endef
 
 SF_PROJ = modauthmysql
@@ -62,6 +62,4 @@ DOCDEST   = $(DESTDIR)$(docdir)/$(NAME)
 
 post-install:
 	@mkdir -p $(DOCDEST)
-	@ginstall $(foreach S,$(COPYFILES),$(WORKSRC)/$(S)) $(DOCDEST)
-	$(DONADA)
-
+	@ginstall $(foreach S,$(COPYFILES),$(WORKSRC)/$(S)) $(D

@@ -7,7 +7,7 @@ GARTYPE = v2
 CATEGORIES = lib
 
 DESCRIPTION = Portable UPnP SDK
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = pupnp
@@ -41,5 +41,4 @@ EXTRA_CFLAGS += -D__sun
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
-
+include 

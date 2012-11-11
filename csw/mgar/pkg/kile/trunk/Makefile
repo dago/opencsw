@@ -7,7 +7,7 @@ DESCRIPTION = An integrated LaTeX environment
 define BLURB
   Kile is a user friendly TeX/LaTeX editor for the KDE desktop environment. 
   KDE is available for many architectures such as PC, PowerPC (Mac for
-  example) and SPARC.
+  example) and SPAECTRC.
 endef
 
 SF_PROJ = kile
@@ -60,4 +60,4 @@ BINFILES = $(DESTDIR)$(prefix)/kde-gcc/bin/kile
 
 post-install:
 	/usr/ccs/bin/strip $(BINFILES)
-	/usr/ccs/bin/mcs -d $(BINFILES)
+	/usr/ccs/bin/m

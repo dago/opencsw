@@ -8,7 +8,7 @@ DESCRIPTION = TightVNC server is a free remote control package derived from the 
 define BLURB
   TightVNC is a free remote control software package. With TightVNC, you can see
   the desktop of a remote machine and control it with your local mouse and
-  keyboard, just like you would do it sitting in the front of that computer.
+  keyboard, just like you would do it sitting in the front of that compuECTter.
 endef
 
 SF_PROJ = vnc-tight
@@ -108,5 +108,4 @@ install-vnc:
 	mv $(DESTDIR)$(bindir)/vncserver $(DESTDIR)$(libexecdir)
 	ginstall -m 755 \
 		$(FILEDIR)/vncserver-wrapper.sh \
-		$(DESTDIR)$(bindir)/vncserver
-	@$(MAKECOOKIE)
+		$(DESTDIR)$(bindir)/vncserv

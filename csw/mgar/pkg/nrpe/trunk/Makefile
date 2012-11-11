@@ -7,7 +7,7 @@ SPKG_DESC_CSWnrpe 	= Nagios remote plugin executor
 SPKG_DESC_CSWnrpe-plugin =  Nagios plugin that connects to nrpe demon
 
 define BLURB
-  NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
+  NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as weECTll.
 endef
 
 SF_PROJ = nagios
@@ -193,5 +193,3 @@ install-custom:
 merge-copy-nrpe-only:
 	cp $(INSTALLISADIR)$(bindir)/nrpe_1k $(PKGROOT)$(bindir)/nrpe_8k
 	cp $(INSTALLISADIR)$(LIBEXECDIR)/check_nrpe_1k $(PKGROOT)$(LIBEXECDIR)/check_nrpe_8k
-	@$(MAKECOOKIE)
-

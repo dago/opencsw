@@ -4,7 +4,7 @@ CATEGORIES = lang
 GARTYPE = v2
 
 DESCRIPTION = GUI toolkit for tcl
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = tcl
@@ -89,5 +89,4 @@ pre-configure-modulated:
 
 post-install-modulated:
 	@echo Creating link to wish8.5
-	ln -s wish8.5 $(DESTDIR)$(bindir)/wish
-	@$(MAKECOOKIE)
+	ln -s wish8.5 $(DESTDIR)$(bindir)/wis

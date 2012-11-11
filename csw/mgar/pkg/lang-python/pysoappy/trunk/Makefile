@@ -21,7 +21,7 @@ endef
 
 SPKG_SOURCEURL = http://pywebsvcs.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
-SF_PROJ = pywebsvcs
+SF_PROJECT = pywebsvcs
 DISTNAME = SOAPpy-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 

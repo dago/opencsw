@@ -4,7 +4,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Allows one to view remotely and interact with real X displays
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = libvncserver
@@ -21,4 +21,4 @@ RUNTIME_DEP_PKGS = CSWosslrt CSWzlib CSWjpeg
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
+includ

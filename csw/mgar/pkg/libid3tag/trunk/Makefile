@@ -5,7 +5,7 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = A library for reading and (eventually) writing ID3 tags
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = mad
@@ -32,4 +32,3 @@ SPKG_VERSION := $(SPKG_VERSION)_rev=$(REV)
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(libdir)/pkgconfig
 	@ginstall $(WORKDIR)/id3tag.pc-$(MEMORYMODEL) $(DESTDIR)$(libdir)/pkgconfig/id3tag.pc
-	@$(MAKECOOKIE)

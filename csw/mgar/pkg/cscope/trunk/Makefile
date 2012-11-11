@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-SF_PROJ = cscope
+SF_PROJECT = cscope
 
 DISTFILES = $(DISTNAME).tar.bz2
 

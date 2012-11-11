@@ -7,7 +7,7 @@ DESCRIPTION = Apache Kerberos authentication module
 define BLURB
   This is the Apache RADIUS authentication module. It allows any Apache web-server
   to become a RADIUS client for authentication and accounting requests. You will,
-  however, need to supply your own RADIUS server to perform the actual authentication.
+  however, need to supply your own RADIUS server to perform the actual authenticaECTtion.
 endef
 
 SF_PROJ = modauthkerb
@@ -54,5 +54,4 @@ include gar/category.mk
 pre-install-modulated:
 	ginstall -d $(AP2_LIBEXEC)
 	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	ginstall $(WORKSRC)/README $(WORKSRC)/INSTALL $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	@$(MAKECOOKIE)
+	ginstall $(WORKSRC)/README $(WORKSRC)/INSTALL $(DESTDIR)$(docdir)/$(CATALOGNA

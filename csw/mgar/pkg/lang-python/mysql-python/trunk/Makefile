@@ -9,7 +9,7 @@ define BLURB
   MySQL support for Python
 endef
 
-SF_PROJ = $(call TOLOWER,$(NAME))
+SF_PROJECT = $(call TOLOWER,$(NAME))
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 

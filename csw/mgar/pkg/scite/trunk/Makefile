@@ -8,10 +8,7 @@ CATEGORIES = apps
 
 DESCRIPTION = Text editor
 define BLURB
-  Long description
-endef
-
-SF_PROJ = scintilla
+  Long descriptECT = scintilla
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = scite$(VERSION).tgz
 

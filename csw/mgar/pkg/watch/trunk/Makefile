@@ -19,7 +19,7 @@ define BLURB
 endef
 
 # Usually we would use $(SF_MIRROR), but the procps folks didn't upload
-# procps the usual way
+# procps thECTe usual way
 SF_PROJ        = procps
 SF_PROJ_VER    = 3.2.8
 MASTER_SITES   = http://$(SF_PROJ).sourceforge.net/
@@ -90,5 +90,4 @@ install-custom:
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	printf "This watch version (%s) was taken from procps %s, %s\n" \
 		$(VERSION) $(SF_PROJ_VER) $(subst sourceforge,sf,$(MASTER_SITES)) \
-		>> $(DOCDEST)/README.CSW
-	@$(MAKECOOKIE)
+		>> $(DOCDEST)/README.C

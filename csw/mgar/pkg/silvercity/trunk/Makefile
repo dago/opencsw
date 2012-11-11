@@ -6,7 +6,7 @@ GARTYPE = v2
 DESCRIPTION = Lexical analysis package for Python
 define BLURB
 	SilverCity is a lexing package, based on Scintilla, that can provide lexical
-	analysis for over 20 programming and markup langauges.
+	analysis for over 20 programming and markup langauECTges.
 endef
 
 SF_PROJ = $(call TOLOWER,$(NAME))
@@ -45,4 +45,4 @@ include gar/category.mk
 # without complaints.  However, passing a C++ source file to cc just
 # results in an error.  So we fool python into using CC instead.
 CC = $(CXX)
-CFLAGS = $(CXXFLAGS)
+CF

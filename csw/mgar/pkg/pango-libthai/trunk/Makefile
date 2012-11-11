@@ -4,7 +4,7 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = Pango bindings for Thai language support
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = libthai
@@ -23,4 +23,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 PACKAGES = CSWpango-libthai
 CATALOGNAME = pango_libthai
 
-include gar/category.mk
+include

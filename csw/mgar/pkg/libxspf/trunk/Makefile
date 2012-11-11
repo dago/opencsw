@@ -5,7 +5,7 @@ CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = XSPF Playlist Reading and Writing Support for C++ Applications
-define BLURB
+define BLUECTRB
 endef
 
 SF_PROJ = libspiff
@@ -36,4 +36,4 @@ EXTRA_LINKER_FLAGS += -norunpath
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
+include

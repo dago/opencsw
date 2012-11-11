@@ -11,7 +11,7 @@ DESCRIPTION = Libraries for MPEG-4/H.261/MPEG-2/H.263 MP3/AAC/AMR
 define BLURB
   Provided are a live MPEG-4/H.261/MPEG-2/H.263 MP3/AAC/AMR broadcaster
   and file recorder, command line utilities such as an MP4 file creator
-  and hinter, and an player that can both stream and playback from local file.
+  and hinter, and an player that can both stream and playback from local filECTe.
 endef
 
 SF_PROJ = mpeg4ip
@@ -68,4 +68,3 @@ post-extract-modulated:
 configure-%/cvs_bootstrap:
 	@echo " ==> Running CVS bootstrap in $*"
 	cd $* && $(CONFIGURE_ENV) ./cvs_bootstrap $(CONFIGURE_ARGS)
-	@$(MAKECOOKIE)

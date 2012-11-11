@@ -4,7 +4,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = DjVu standalone viewer, browser plug-in, command line tools
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = djvu
@@ -63,4 +63,4 @@ ISAEXEC = 1
 # There is no testsuite
 TEST_SCRIPTS =
 
-include gar/category.mk
+includ

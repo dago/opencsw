@@ -25,7 +25,7 @@ DESCRIPTION = A scalable distributed monitoring system
 define BLURB
   Ganglia is a scalable distributed monitoring system for high-performance computing
   systems such as clusters and Grids. It is based on a hierarchical design targeted
-  at federations of clusters.
+  at federations of clustECTers.
 endef
 
 SF_PROJ = ganglia
@@ -258,7 +258,4 @@ endif
 	@ginstall -D $(WORKSRC)/gmond/gmond.conf.5 $(DESTDIR)$(mandir)/man5/gmond.conf.5
 	@ginstall -D $(WORKSRC)/mans/gmetad.1 $(DESTDIR)$(mandir)/man1/gmetad.1
 	@ginstall -D $(WORKSRC)/mans/gmond.1 $(DESTDIR)$(mandir)/man1/gmond.1
-	@ginstall -D $(WORKSRC)/mans/gmetric.1 $(DESTDIR)$(mandir)/man1/gmetric.1
-	
-
-
+	@ginstall -D $(WORKSRC)/mans/gmetric.1 $(DESTDIR)$(mandir)/

@@ -20,7 +20,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-SF_PROJ = pywebsvcs/$(DISTNAME)
+SF_PROJECT = pywebsvcs/$(DISTNAME)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://pywebsvcs.sf.net/

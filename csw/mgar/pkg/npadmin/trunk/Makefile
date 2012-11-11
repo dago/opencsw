@@ -4,7 +4,7 @@ CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION =  Command line SNMP based network adminstration tool for printers
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = lpr
@@ -22,4 +22,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 include gar/category.mk
 
 pre-configure-modulated:
-	cd $(WORKSRC) && rm -f config.cache config.status
+	cd $(WORKSRC) && rm -f config.ca

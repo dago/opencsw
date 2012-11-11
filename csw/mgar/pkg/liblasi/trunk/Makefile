@@ -18,7 +18,7 @@ define BLURB
   Although the capability to produce Unicode-based multilingual Postscript
   documents exists in large Open Source application framework libraries such
   as GTK+, QT, and KDE, libLASi was designed for projects which require the
-  ability to produce Postscript independent of any one application framework. 
+  ability to produce Postscript independent of any one application frameworkECT. 
 endef
 
 SF_PROJ = lasi
@@ -93,4 +93,3 @@ install-custom:
 		mv $(DESTDIR)/opt/csw/share/doc/$(DISTNAME) $(DESTDIR)/opt/csw/share/doc/$(NAME) ; \
 		mv $(DESTDIR)/opt/csw/share/lasi$(VERSION)/* $(DESTDIR)/opt/csw/share/doc/$(NAME)/ ; \
 		rmdir $(DESTDIR)/opt/csw/share/lasi$(VERSION) )
-	@$(MAKECOOKIE)

@@ -10,7 +10,7 @@ DESCRIPTION = A tool for signing and email all UIDs on a set of PGP keys.
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.phildev.net/pius/
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SECTF_MIRRORS)
 SF_PROJ = pgpius
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -34,5 +34,4 @@ install-pius:
 	ginstall -m 755 $(WORKSRC)/pius $(DESTDIR)$(bindir)
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/doc/$(NAME)
 	ginstall -m 644 $(WORKSRC)/Changelog $(DESTDIR)$(datadir)/doc/$(NAME)
-	ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(datadir)/doc/$(NAME)
-	@$(MAKECOOKIE)
+	ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(datadir)/doc/$(NAME

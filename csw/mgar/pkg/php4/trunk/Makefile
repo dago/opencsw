@@ -1,7 +1,7 @@
 NAME    = php4
 VERSION = 4.4.9
-CATEGORIES = lang
 GARTYPE = v2
+SF_PROJECTRTYPE = v2
 SF_PROJ = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME = $(SF_PROJ)-$(VERSION)
 
@@ -142,4 +142,4 @@ include files/pkgdef.mk
 include files/pkgfiles.mk
 include files/admfiles.mk
 include files/depend.mk
-include gar/category.mk
+includ

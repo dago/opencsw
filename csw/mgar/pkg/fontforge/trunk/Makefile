@@ -11,7 +11,7 @@ DESCRIPTION = An outline font editor
 define BLURB
 endef
 SPKG_SOURCEURL = http://fontforge.sourceforge.net/
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(SFECT_MIRRORS)
 SF_PROJ = fontforge
 RUNTIME_DEP_PKGS += CSWggettextrt
 RUNTIME_DEP_PKGS += CSWiconv
@@ -25,4 +25,4 @@ UFILES_REGEX = fontforge_full-(\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_LINKER_FLAGS = -liconv -lintl -lrt
 TEST_SCRIPTS =
-include gar/category.mk
+include

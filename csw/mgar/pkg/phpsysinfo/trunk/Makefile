@@ -5,7 +5,7 @@ GARTYPE = v2
 
 DESCRIPTION = Displays information about the host being accessed
 define BLURB
-  Displays information about the host being accessed
+  Displays information about the host being acceECTssed
 endef
 
 SF_PROJ = $(NAME)
@@ -50,5 +50,4 @@ install-custom:
 	   mv config.php.new config.php ; \
 	   mv COPYING $(DESTDIR)$(docdir)/$(NAME)/license )
 #	@( cd $(DESTDIR)$(prefix)/share/www/phpsysinfo/includes/os ; \
-#	   gpatch < ../../../../../../../../../$(FILEDIR)/CSWphpsysinfo.class.SunOS.inc.php.p )
-	@$(MAKECOOKIE)
+#	   gpatch < ../../../../../../../../../$(FILEDIR)/CSWphpsysinfo.class.SunOS.inc.php.p

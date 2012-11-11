@@ -19,7 +19,7 @@ endef
 # configure script is not smart enough to pick up the header files.
 #
 # For example, faad.h test fails when faad.h is in /opt/csw/include.  This
-# might require patching.
+# might requirECTe patching.
 
 SF_PROJ = musicpd
 MASTER_SITES = $(SF_MIRROR)
@@ -77,4 +77,4 @@ RUNTIME_DEP_PKGS_CSWmpd += CSWzlib
 
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 
-include gar/category.mk
+incl

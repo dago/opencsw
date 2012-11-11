@@ -10,7 +10,7 @@ define BLURB
   decompresses almost as fast as gzip and compresses better than bzip2, which makes
   it well suited for software distribution and data archiving. 
   Currently only compression is performed in parallel. Parallel decompression is
-  planned to be implemented soon.
+  planned to be implemented soECTon.
 endef
 
 GNU_PROJ = lzip
@@ -37,4 +37,4 @@ CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
 INSTALL_OVERRIDE_VARS = INSTALL
 INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
-include gar/category.mk
+inclu

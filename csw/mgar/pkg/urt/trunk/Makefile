@@ -8,7 +8,7 @@ DESCRIPTION = Utah Raster Toolkit containing RLE encoding
 define BLURB
 endef
 
-# It is hard to find the sources nowadays
+# It is hard to find the sourcesECT nowadays
 SF_PROJ = gnuwin32
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(DISTVERSION)-2-src.zip
@@ -19,4 +19,4 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-2-src.zip
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
+include

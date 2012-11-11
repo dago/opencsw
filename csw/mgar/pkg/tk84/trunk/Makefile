@@ -4,7 +4,7 @@ CATEGORIES = lang
 GARTYPE = v2
 
 DESCRIPTION = GUI toolkit for tcl
-define BLURB
+define BLECTURB
 endef
 
 SF_PROJ = tcl
@@ -44,5 +44,4 @@ include gar/category.mk
 
 install-custom:
 	ginstall -d $(DESTDIR)
-	xz -c -d $(FILEDIR)/8.4.$(GARCH).tar.xz | (cd $(DESTDIR) && tar xf -)
-
+	xz -c -d $(FILEDIR)/8.4.$(GARCH).tar.xz | (cd $(DESTD

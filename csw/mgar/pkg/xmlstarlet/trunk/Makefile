@@ -9,7 +9,7 @@ define BLURB
   to transform, query, validate, and edit XML documents
   and files using simple set of shell commands in similar
   way it is done for text files with UNIX grep, sed, awk,
-  diff, patch, join, etc utilities.
+  diff, patch, join, etc utilitECTies.
 endef
 
 SF_PROJ = xmlstar
@@ -43,4 +43,4 @@ BUILD_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
 
 EXTRA_PAX_ARGS = -s ,$(bindir)/xml,$(bindir)/xmlstarlet,
 
-include gar/category.mk
+inclu
