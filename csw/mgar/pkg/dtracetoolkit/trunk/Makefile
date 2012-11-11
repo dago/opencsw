@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.brendangregg.com/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-VENDOR_URL = http://www.brendangregg.com/dtrace.html)-$(VERSION).tar.gz
 
 PACKAGES = CSWdtracetoolkit
 LICENSE = License
@@ -25,9 +25,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include gar/category.mk
-
-SPKG_SOURCEURL = http://www.brendangregg.com/dtrace.html
+includg.com/dtrace.html
 
 USEFUL_SCRIPTS = dexplorer dtruss dvmstat errinfo execsnoop hotkernel hotuser \
 	iopattern iosnoop iotop opensnoop procsystime rwsnoop rwtop statsnoop
@@ -43,5 +41,4 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(prefix)/bin
 	@rm -f $(foreach SCRIPT, $(USEFUL_SCRIPTS), $(DESTDIR)$(prefix)/bin/$(SCRIPT))
 	@gln -s $(foreach SCRIPT, $(USEFUL_SCRIPTS), ../share/dtracetoolkit/$(SCRIPT)) \
-		$(DESTDIR)$(prefix)/bin
-	@$(MAKECOOKIE)
+		$(DESTDIR)$(prefix)/b
