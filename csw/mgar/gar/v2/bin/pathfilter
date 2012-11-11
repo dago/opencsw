@@ -114,11 +114,31 @@ foreach my $path (keys %skipped) {
 }
 
 # Process isaexec substitutions
-# Usage: -e /opt/csw/bin/mytool=/opt/csw/bin/sparcv8/mytool
-#   f none /opt/csw/bin/mytool 0755 root bin
+# -e /opt/csw/bin/foo=/opt/csw/bin/sparcv8/foo
+#   f none /opt/csw/bin/foo 0755 root bin
 # ->
-#   l none /opt/csw/bin/mytool=/opt/csw/bin/isaexec
-#   f none /opt/csw/bin/sparcv8/mytool=/opt/csw/bin/mytool
+#   l none /opt/csw/bin/foo=/opt/csw/bin/isaexec
+#   f none /opt/csw/bin/sparcv8/foo=/opt/csw/bin/foo
+#
+# --
+#
+# -e /opt/csw/bin/foo=/opt/csw/bin/sparcv8/foo
+# -e /opt/csw/bin/bar=/opt/csw/bin/sparcv8/bar
+#   f none /opt/csw/bin/foo 0755 root bin			SAME
+#   l none /opt/csw/bin/bar=/opt/csw/bin/foo 0755 root bin
+# ->
+#   l none /opt/csw/bin/foo=/opt/csw/bin/isaexec		SAME
+#   f none /opt/csw/bin/sparcv8/foo=/opt/csw/bin/foo		SAME
+#   l none /opt/csw/bin/bar=/opt/csw/bin/isaexec
+#   l none /opt/csw/bin/sparcv8/bar=/opt/csw/bin/sparcv8/foo
+#
+
+my %isaexec_map;
+foreach my $e (@isaexec) {
+  my ($isaexec_path, $new_path) = split( /=/, $e );
+  $isaexec_map{$isaexec_path} = $new_path;
+}
+
 foreach my $e (@isaexec) {
   my ($isaexec_path, $new_path) = split( /=/, $e );
 
@@ -126,8 +146,18 @@ foreach my $e (@isaexec) {
   next if( !exists $p{$isaexec_path} );
 
   $p{$new_path} = [ @{$p{$isaexec_path}} ];
-  $p{$new_path}->[2] = $new_path . '=' . $isaexec_path;
-  $p{$isaexec_path}->[0] = 'l';
+
+  # If the thing we try to isaexec is a symlink itself we need to replace the target also
+  if( $p{$isaexec_path}->[0] eq 'l' ) {
+    # The file to replaced by isaexec is already a hardlink, remove the target
+    my ($target) = ($p{$isaexec_path}->[2] =~ /=(.*)/);
+    $p{$isaexec_path}->[2] =~ s/=.*//;
+    $p{$new_path}->[2] = $new_path . '=' . (exists $isaexec_map{$target} ? $isaexec_map{$target} : $isaexec_path);
+  } else {
+    # Make it a hardlink
+    $p{$isaexec_path}->[0] = 'l';
+    $p{$new_path}->[2] = $new_path . '=' . $isaexec_path;
+  }
   $p{$isaexec_path}->[2] .= '=/opt/csw/bin/isaexec';
 }
 
