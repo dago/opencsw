@@ -13,9 +13,20 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.brendangregg.com/
-DISTFILES  = $(NAME)-VENDOR_URL = http://www.brendangregg.com/dtrace.html)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-VENDOR_URL = http://www.brendangregg.com/dtrace.html)-LICENSE = License
 
 PACKAGES = CSWdtracetoolkit
+
+# There are lots of references to system components in there
+CHECKPKG_OVERRIDES_CSWdtracetoolkit += file-with-bad-content
+
+# No need to depend on it, these are just for inspection
+CHECKPKG_OVERRIDES_CSWdtracetoolkit += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWdtracetoolkit += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+CHECKPKG_OVERRIDES_CSWdtracetoolkit += missing-dependency|CSWperl
+
+# This distracts us from installing and we don't need it
+NOGITPATCH = 1t
 LICENSE = License
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
