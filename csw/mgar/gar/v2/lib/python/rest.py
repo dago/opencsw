@@ -1,12 +1,15 @@
 #!/usr/bin/env python2.6
 
+import os
+from StringIO import StringIO
 import cjson
 import gdbm
 import logging
 import urllib2
+import pycurl
 
 DEFAULT_URL = "http://buildfarm.opencsw.org"
-
+RELEASES_APP = "/releases"
 
 class Error(Exception):
   """Generic error."""
@@ -16,12 +19,20 @@ class ArgumentError(Error):
   """Wrong arguments passed."""
 
 
+class RestCommunicationError(Error):
+  """An error during REST request processing."""
+
+
 class RestClient(object):
 
   PKGDB_APP = "/pkgdb/rest"
 
-  def __init__(self, rest_url=DEFAULT_URL):
+  def __init__(self, rest_url=DEFAULT_URL, username=None, password=None,
+      debug=False):
     self.rest_url = rest_url
+    self.username = username
+    self.password = password
+    self.debug = debug
 
   def GetPkgByMd5(self, md5_sum):
     url = self.rest_url + self.PKGDB_APP + "/srv4/%s/" % md5_sum
@@ -86,6 +97,59 @@ class RestClient(object):
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
+  def Srv4ByCatalogAndPkgname(self, catrel, arch, osrel, pkgname):
+    """Returns a srv4 data structure or None if not found."""
+    url = self.rest_url + self.PKGDB_APP + (
+        "/catalogs/%s/%s/%s/pkgnames/%s/"
+        % (catrel, arch, osrel, pkgname))
+    logging.debug("Srv4ByCatalogAndPkgname(): GET %s", url)
+    # The server is no longer returning 404 when the package is absent.  If
+    # a HTTP error code is returned, we're letting the application fail.
+    data = urllib2.urlopen(url).read()
+    return cjson.decode(data)
+
+  def _SetAuth(self, c):
+    """Set basic HTTP auth options on given Curl object."""
+    if self.username:
+      logging.debug("Using basic AUTH for user %s", self.username)
+      c.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_ANY)
+      c.setopt(pycurl.USERPWD, "%s:%s" % (self.username, self.password))
+    else:
+      logging.debug("User and password not set, not using HTTP AUTH")
+    return c
+
+  def RemoveSvr4FromCatalog(self, catrel, arch, osrel, md5_sum):
+    url = (
+        "%s%s/catalogs/%s/%s/%s/%s/"
+        % (self.rest_url,
+           RELEASES_APP,
+           catrel, arch, osrel,
+           md5_sum))
+    logging.debug("DELETE @ URL: %s %s", type(url), url)
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    c.setopt(pycurl.URL, str(url))
+    c.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
+    c = self._SetAuth(c)
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    logging.debug(
+        "DELETE curl getinfo: %s %s %s",
+        type(http_code),
+        http_code,
+        c.getinfo(pycurl.EFFECTIVE_URL))
+    c.close()
+    if not (http_code >= 200 and http_code <= 299):
+      raise RestCommunicationError(
+          "%s - HTTP code: %s, content: %s"
+          % (url, http_code, d.getvalue()))
+
 
 class CachedPkgstats(object):
   """Class responsible for holding and caching package stats.
@@ -120,3 +184,15 @@ class CachedPkgstats(object):
               "pkgname": pkgstats["basic_stats"]["pkgname"]}
       self.deps[md5] = cjson.encode(data)
       return data
+
+def GetUsernameAndPassword():
+  username = os.environ["LOGNAME"]
+  password = None
+  authfile = os.path.join('/etc/opt/csw/releases/auth', username)
+  try:
+    with open(authfile, 'r') as af:
+      password = af.read().strip()
+  except IOError, e:
+    logging.warning("Error reading %s: %s", authfile, e)
+    password = getpass.getpass("{0}'s pkg release password> ".format(username))
+  return username, password
