@@ -15,7 +15,11 @@ endef
 MASTER_SITES = http://www.brendangregg.com/
 DISTFILES  = $(NAME)-VENDOR_URL = http://www.brendangregg.com/dtrace.html)-LICENSE = License
 
-PACKAGES = CSWdtracetoolkit
+PACKAGES += CSWdtracetoolkit
+SPKG_DESC_CSWdtracetoolkitE = v2
+
+DESCRIPTION = A collection of dtrace scripts developed by th# PKGFILES is catchall
+ARCHALL_CSWdtracetoolkit = 1
 
 # There are lots of references to system components in there
 CHECKPKG_OVERRIDES_CSWdtracetoolkit += file-with-bad-content
