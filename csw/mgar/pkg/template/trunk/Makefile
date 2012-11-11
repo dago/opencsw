@@ -20,9 +20,8 @@ VERSION = 1.0
 ## adjust the build settings for the respective category.
 ##
 ## Possible settings are:
-## apps, cpan, devel, gnome, java, kde, lang, lib, meta, net, python, server,
-## utils, x11, xfce, xorg, xtra
-CATEGORIES = lib
+## cpan, gnome, java, kde, meta, python, x11, xfce
+## CATEGORIES = default
 GARTYPE = v2
 ##
 ## A one-line description of the package, which will appear in the pkginfo.
