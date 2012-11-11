@@ -97,13 +97,14 @@ Then you need to import the public key::
 
 The current fingerprint looks like this::
 
-# gpg --homedir=/var/opt/csw/pki/ --fingerprint board@opencsw.org
-pub   1024D/9306CC77 2011-08-31
-      Key fingerprint = 4DCE 3C80 AAB2 CAB1 E60C  9A3C 05F4 2D66 9306 CC77
-uid                  OpenCSW catalog signing <board@opencsw.org>
-sub   2048g/971EDE93 2011-08-31
+  # gpg --homedir=/var/opt/csw/pki/ --fingerprint board@opencsw.org
+  pub   1024D/9306CC77 2011-08-31
+        Key fingerprint = 4DCE 3C80 AAB2 CAB1 E60C  9A3C 05F4 2D66 9306 CC77
+  uid                  OpenCSW catalog signing <board@opencsw.org>
+  sub   2048g/971EDE93 2011-08-31
 
 You may also trust the key once you verified the fingerprint::
+
   root# /opt/csw/bin/gpg --homedir=/var/opt/csw/pki --edit-key board@opencsw.org trust
 
 Now everything is in place for enabling security in ``pkgutil``. Edit the ``/etc/opt/csw/pkgutil.conf``
