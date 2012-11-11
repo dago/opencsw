@@ -1,11 +1,8 @@
 NAME     = php5
-VERSION  = 5.3.15
-CATEGORIES  = lang
+VERSION  = 5.3.18
 GARTYPE = v2
-SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
-DISTNAME    = $(SF_PROJ)-$(VERSION)
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
+DISTNAME    = $(SF_PROJECT)-$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -61,8 +58,6 @@ BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWlibxpm-dev
-# NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
-# of sqlite...
 BUILD_DEP_PKGS += CSWlibsqlite3-0
 
 PRESERVECONF = $(sysconfdir)/php.ini $(sysconfdir)/pear.conf
@@ -209,8 +204,6 @@ $(eval $(call php5_subpackage,shmop,CSWlibz1))
 $(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25 CSWlibz1))
 $(eval $(call php5_subpackage,soap,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 $(eval $(call php5_subpackage,sockets,CSWlibz1))
-$(eval $(call php5_subpackage,sqlite,CSWsqlite CSWlibz1))
-PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
 $(eval $(call php5_subpackage,sysvmsg,CSWlibz1))
 $(eval $(call php5_subpackage,sysvsem,CSWlibz1))
 $(eval $(call php5_subpackage,sysvshm,CSWlibz1))
@@ -320,7 +313,6 @@ CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,/opt/csw
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
-CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-t1lib=$(prefix)
 CONFIGURE_ARGS += --with-tidy=shared,$(prefix)
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
