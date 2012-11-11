@@ -1,0 +1,36 @@
+--- a/mozilla/security/nss/lib/softoken/config.mk
++++ b/mozilla/security/nss/lib/softoken/config.mk
+@@ -24,14 +24,14 @@ SQLITE_LIB_DIR ?= $(DIST)/lib
+ 
+ ifdef NS_USE_GCC
+ EXTRA_SHARED_LIBS += \
+-	-L$(SQLITE_LIB_DIR) \
+-	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
+ 	-lnspr4 \
++	-L$(SQLITE_LIB_DIR) \
++	-l$(SQLITE_LIB_NAME) \
+ 	$(NULL)
+ else # ! NS_USE_GCC
+ 
+@@ -49,14 +49,14 @@ else
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
+-	-L$(SQLITE_LIB_DIR) \
+-	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
+ 	-lnspr4 \
++	-L$(SQLITE_LIB_DIR) \
++	-l$(SQLITE_LIB_NAME) \
+ 	$(NULL)
+ endif
+ 

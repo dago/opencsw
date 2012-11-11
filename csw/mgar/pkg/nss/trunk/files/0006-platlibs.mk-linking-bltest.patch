@@ -1,0 +1,19 @@
+--- a/mozilla/security/nss/cmd/platlibs.mk
++++ b/mozilla/security/nss/cmd/platlibs.mk
+@@ -122,14 +122,14 @@ endif
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
+-	-L$(DIST)/lib \
+-	-l$(SQLITE_LIB_NAME) \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
+ 	-lnspr4 \
++	-L$(DIST)/lib \
++	-l$(SQLITE_LIB_NAME) \
+ 	$(NULL)
+ endif
+ 
