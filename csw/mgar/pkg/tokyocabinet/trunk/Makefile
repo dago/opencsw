@@ -3,7 +3,7 @@
 # Note
 # ----
 #
-# For some reason or another, mgar test fails sometims on unstable10x.
+# For some reason or another, mgar test fails sometimes on unstable10x.
 # Calling mgar test again succeeds. My first gues was that this
 # behavior is related to NFS mounted homes on unstable10x. Thus, I
 # made the tests being executed in a local directory /var/tmp (see
@@ -15,7 +15,7 @@
 # --raos
 #
 NAME = tokyocabinet
-VERSION = 1.4.47
+VERSION = 1.4.48
 GARTYPE = v2
 CATEGORIES = lib
 GARCOMPILER = SOS12U1
@@ -32,8 +32,9 @@ define BLURB
   are organized in hash table, B+ tree, or fixed-length array.
 endef
 
-MASTER_SITES = http://fallabs.com/tokyocabinet
+MASTER_SITES = http://fallabs/
 DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += changelog.CSW(DISTNAME).tar.gz
 
 # Adjust man page
 PATCHFILES += 0003-adjust-man-page-for-csw.patch
@@ -55,9 +56,9 @@ SPKG_DESC_CSWlibtokyocabinet9 = Tokyocabinet - library
 PKGFILES_CSWlibtokyocabinet9 = $(call pkgfiles_lib,libtokyocabinet.so.9)
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
-CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/libtokyocabinet.so.9.10.0
-CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0
-CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libtokyocabinet.so.9.10.0
+CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/lib/libto1.0inet9 += CSWlibz1
+CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|sparcv9/libtokyocabinet.so.9.11.0inet9 += CSWlibz1
+CHECKPKG_OVERRIDES_CSWlibtokyocabinet9 += file-with-bad-content|/usr/local|amd64/libtokyocabinet.so.9.11yocabinet.so.9.10.0
 
 PACKAGES += CSWlibtokyocabinet-dev
 SPKG_DESC_CSWlibtokyocabinet-dev = Tokyocabinet - development files
@@ -69,8 +70,6 @@ PACKAGES += CSWtokyocabinet-bin
 SPKG_DESC_CSWtokyocabinet-bin = Tokyocabinet - utilities
 PKGFILES_CSWtokyocabinet-bin  = .*/bin/.*
 PKGFILES_CSWtokyocabinet-bin += .*/man/man1/.*
-RUNTIME_DEP_PKGS_CSWtokyocabinet-bin  = CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWtokyocabinet-bin += CSWlibz1
 RUNTIME_DEP_PKGS_CSWtokyocabinet-bin += CSWlibtokyocabinet9
 
 PACKAGES += CSWtokyocabinet-doc
@@ -108,4 +107,3 @@ post-merge:
 		$(PKGROOT)$(docdir)/libtokyocabinet_dev/
 	mv $(PKGROOT)$(sharedstatedir)/tokyocabinet/doc $(PKGROOT)$(docdir)/tokyocabinet_doc/
 	rm -rf $(PKGROOT)$(sharedstatedir)/tokyocabinet
-	@$(MAKECOOKIE)
