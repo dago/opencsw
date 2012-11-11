@@ -4,7 +4,6 @@
 
 NAME = cups
 VERSION = 1.5.3
-CATEGORIES = net
 GARTYPE = v2
 
 define BLURB

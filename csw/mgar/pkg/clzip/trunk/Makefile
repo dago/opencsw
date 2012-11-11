@@ -1,6 +1,5 @@
 NAME = clzip
 VERSION = 1.0
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = a lossless data compressor based on the LZMA algorithm

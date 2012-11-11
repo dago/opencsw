@@ -1,7 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = conserver
 VERSION = 8.1.7
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Client/Server console server software

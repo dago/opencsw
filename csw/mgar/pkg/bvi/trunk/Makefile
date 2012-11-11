@@ -1,6 +1,5 @@
 NAME = bvi
 VERSION = 1.3.2
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = A vi-like binary file (hex) editor

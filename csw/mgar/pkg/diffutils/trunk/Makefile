@@ -1,6 +1,5 @@
 NAME = diffutils
 VERSION = 3.2
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Diff utilities

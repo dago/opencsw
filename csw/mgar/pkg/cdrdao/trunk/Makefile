@@ -1,7 +1,6 @@
 # $Id$
 NAME = cdrdao
 VERSION = 1.2.3
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = CD recording in DAO mode

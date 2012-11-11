@@ -1,7 +1,6 @@
 # $Id$
 NAME = bzflag
 VERSION = 2.4.0
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = A free multiplayer multiplatform 3D tank battle game

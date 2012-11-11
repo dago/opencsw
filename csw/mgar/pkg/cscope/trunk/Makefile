@@ -1,6 +1,5 @@
 NAME = cscope
 VERSION = 15.7a
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = A text screen-based source browser

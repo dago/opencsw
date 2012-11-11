@@ -1,6 +1,5 @@
 NAME = binutils
 VERSION = 2.22
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = GNU binary utilities: gas, gld, gprof, and others

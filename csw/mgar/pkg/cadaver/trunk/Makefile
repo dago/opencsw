@@ -14,7 +14,6 @@
 
 NAME = cadaver
 VERSION = 0.23.3
-CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = WebDAV commandline tool

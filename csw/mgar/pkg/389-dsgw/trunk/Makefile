@@ -4,7 +4,6 @@
 NAME = 389-dsgw
 VERSION = 1.1.9
 GARTYPE = v2
-CATEGORIES = server
 
 DESCRIPTION = Directory Server Gateway web apps
 define BLURB

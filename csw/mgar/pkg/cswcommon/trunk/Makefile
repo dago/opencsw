@@ -5,7 +5,6 @@
 
 NAME = cswcommon
 VERSION = 1.5
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Installs some useful standard CSW filesystem symlinks and files

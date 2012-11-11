@@ -2,7 +2,6 @@
 
 NAME = clusterssh
 VERSION = 3.28
-CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = ClusterSSH controls a number of xterm windows via a single graphical console window

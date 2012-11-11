@@ -4,7 +4,6 @@
 NAME = asymptote
 VERSION = 2.16
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = The Vector Graphics Language
 define BLURB

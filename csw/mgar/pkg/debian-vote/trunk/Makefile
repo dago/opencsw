@@ -6,7 +6,6 @@ NAME = debian-vote
 VERSION = 0.8
 PACKAGES = CSWdebian-vote
 CATALOGNAME_CSWdebian-vote = debian_vote
-CATEGORIES = apps
 GARTYPE = v2
 DESCRIPTION = Condorcet voting algorithm
 define BLURB

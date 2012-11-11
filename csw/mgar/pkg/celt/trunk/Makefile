@@ -4,7 +4,6 @@
 NAME = celt
 VERSION = 0.11.1
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = The CELT ultra-low delay audio codec
 define BLURB

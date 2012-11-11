@@ -1,6 +1,5 @@
 NAME = achievo
 VERSION = 1.4.3
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = A flexible web-based resource management tool for business environments

@@ -14,7 +14,6 @@
 
 NAME = cyrus_imapd
 VERSION = 2.4.10
-CATEGORIES = server
 GARTYPE = v2
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system

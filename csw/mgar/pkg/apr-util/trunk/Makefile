@@ -1,6 +1,5 @@
 NAME = apr-util
 VERSION = 1.5.1
-CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime Utilities

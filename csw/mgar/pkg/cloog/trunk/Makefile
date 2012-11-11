@@ -4,7 +4,6 @@
 
 NAME = cloog
 VERSION = 0.16.3
-CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION = Code Generator in the Polyhedral Model
 define BLURB

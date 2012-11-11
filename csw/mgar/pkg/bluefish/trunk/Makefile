@@ -1,6 +1,5 @@
 NAME = bluefish
 VERSION = 2.2.3
-CATEGORIES = apps
 
 DESCRIPTION = Advanced Gtk+ HTML editor
 define BLURB

@@ -2,7 +2,6 @@
 
 NAME = cswclassutils
 VERSION = 1.48
-CATEGORIES = utils
 GARTYPE = v2
 
 # a few handy functions for defining 'generic' things dynamically

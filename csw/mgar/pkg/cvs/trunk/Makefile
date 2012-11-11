@@ -1,6 +1,5 @@
 NAME = cvs
 VERSION = 1.12.13
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Concurrent Versioning System

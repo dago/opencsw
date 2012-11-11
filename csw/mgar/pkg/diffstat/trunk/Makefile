@@ -1,6 +1,5 @@
 NAME = diffstat
 VERSION = 1.55
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = A utility which provides statistics based on the output of diff

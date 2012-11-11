@@ -4,7 +4,6 @@
 NAME = crosstool-ng
 VERSION = 1.13.2
 GARTYPE = v2
-CATEGORIES = utils
 
 DESCRIPTION = Toolchain generator
 define BLURB

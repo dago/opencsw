@@ -1,7 +1,6 @@
 # $Id$
 NAME = cherokee
 VERSION = 1.2.2
-CATEGORIES = server
 GARTYPE = v2
 
 DESCRIPTION = Extremely fast and flexible web server

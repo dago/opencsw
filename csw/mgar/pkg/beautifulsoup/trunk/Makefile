@@ -1,6 +1,5 @@
 NAME = beautifulsoup
 VERSION = 3.1.0.1
-CATEGORIES = lib
 GARTYPE = v2
 
 EXT_NAME = BeautifulSoup

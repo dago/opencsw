@@ -2,7 +2,6 @@
 
 NAME = autoconf
 VERSION = 2.69
-CATEGORIES = devel
 GARTYPE = v2
 
 DESCRIPTION = GNU auto-configuration tool

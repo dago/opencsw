@@ -14,7 +14,6 @@
 
 NAME = bash_completion
 VERSION = 2.0
-CATEGORIES = xtra
 GARTYPE = v2
 
 DESCRIPTION = Programmable completion for bash

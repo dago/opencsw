@@ -2,7 +2,6 @@
 
 NAME = cswutils
 VERSION = 1.24
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Utilities for CSW maintainers

@@ -4,7 +4,6 @@
 NAME = autoconf-archive
 VERSION = 2012.09.08
 GARTYPE = v2
-CATEGORIES = devel
 ARCHALL = 1
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386

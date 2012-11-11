@@ -6,7 +6,6 @@
 
 NAME = dbus
 VERSION = 1.5.6
-CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION  = DBus Message Bus System

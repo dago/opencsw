@@ -3,7 +3,6 @@
 NAME = albumshaper
 VERSION = 2.1
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = Photo album creator and photo manipulator
 define BLURB

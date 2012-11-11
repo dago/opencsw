@@ -2,7 +2,6 @@
 
 NAME = bzip2
 VERSION = 1.0.6
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Compression Utility

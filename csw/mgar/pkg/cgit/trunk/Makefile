@@ -1,6 +1,5 @@
 NAME = cgit
 VERSION = 0.8.3_opencsw_1
-CATEGORIES = devel
 GARTYPE = v2
 
 DESCRIPTION = Web front-end for Git

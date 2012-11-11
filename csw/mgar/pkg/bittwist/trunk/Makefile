@@ -3,7 +3,6 @@
 #   http://www.gnu.org/software/gnulib/manual/html_node/ifaddrs_002eh.html
 NAME = bittwist
 VERSION = 1.1
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Libpcap-based ethernet packet generator

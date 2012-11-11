@@ -1,6 +1,5 @@
 NAME = axel
 VERSION = 2.4
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Lightweight command-line download accelerator

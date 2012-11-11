@@ -3,7 +3,6 @@
 NAME = 389-adminutil
 VERSION = 1.1.15
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = The enterprise-class Open Source LDAP server, libadminutil, libadmsslutil
 define BLURB

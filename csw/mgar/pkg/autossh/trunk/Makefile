@@ -9,7 +9,6 @@
 #
 NAME = autossh
 VERSION = 1.4b
-CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = Automatically restart SSH sessions and tunnels

@@ -4,7 +4,6 @@
 #
 NAME = avfs
 VERSION = 0.9.8
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Virtual file system to access archives, disk images, remote locations

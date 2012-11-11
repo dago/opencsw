@@ -2,7 +2,6 @@ NAME = bzr
 MAJORVERSION = 2.6
 PATCHREV = b2
 VERSION = $(MAJORVERSION)$(PATCHREV)
-CATEGORIES = devel
 GARTYPE = v2
 
 DESCRIPTION = Bazaar is a distributed version control system.

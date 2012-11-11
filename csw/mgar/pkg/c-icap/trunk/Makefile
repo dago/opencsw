@@ -4,7 +4,6 @@
 NAME = c-icap
 VERSION = 0.1.7
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = Brief description
 define BLURB

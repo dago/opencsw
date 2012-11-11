@@ -4,7 +4,6 @@
 NAME = apt-mirror
 VERSION = 0.4.8
 GARTYPE = v2
-CATEGORIES = utils
 
 DESCRIPTION = Debian and Ubuntu apt sources mirroring tool
 define BLURB

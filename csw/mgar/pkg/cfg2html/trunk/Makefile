@@ -5,7 +5,6 @@
 NAME = cfg2html
 VERSION = 1.14
 PATCHLEVEL = r1.8
-CATEGORIES = utils
 GARTYPE = v2
 DESCRIPTION = Configuration documentation generator
 define BLURB

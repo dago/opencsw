@@ -1,6 +1,5 @@
 NAME = aide
 VERSION = 0.15.1
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Advanced Intrusion Detection Environment

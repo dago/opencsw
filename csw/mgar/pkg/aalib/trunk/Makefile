@@ -4,7 +4,6 @@
 NAME = aalib
 VERSION = 1.4rc5
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = Ascii art graphics library
 

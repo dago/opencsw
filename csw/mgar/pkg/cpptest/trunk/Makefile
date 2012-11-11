@@ -1,7 +1,6 @@
 # $Id$
 NAME = cpptest
 VERSION = 1.1.1
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Unit testing framework for handling automated tests in C++

@@ -4,7 +4,6 @@
 NAME = aspell
 VERSION = 0.60.6.1
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = Spell checker
 define BLURB

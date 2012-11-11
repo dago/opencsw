@@ -1,6 +1,5 @@
 NAME = amavisd-new
 VERSION = 2.7.1
-CATEGORIES = server
 GARTYPE = v2
 
 DESCRIPTION = Interface between MTA and content checkers

@@ -1,6 +1,5 @@
 NAME = awstats
 VERSION = 7.0
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Featureful tool for web, ftp and mail server statistics

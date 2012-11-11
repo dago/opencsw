@@ -1,6 +1,5 @@
 NAME = dcc
 VERSION = 1.3.140
-CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam

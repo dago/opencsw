@@ -2,7 +2,6 @@
 
 NAME = cmake
 VERSION = 2.8.9
-CATEGORIES = devel
 GARTYPE = v2
 
 DESCRIPTION = Cross-platform make
