@@ -159,7 +159,7 @@ def main():
   parser.add_option("--debug", dest="debug", action="store_true")
   parser.add_option("--dry-run", dest="dry_run",
                     default=False, action="store_true",
-                    help=("Don't remove the packages packages."))
+                    help=("Don't apply changes (no REST calls)."))
   options, args = parser.parse_args()
   debug_level = logging.INFO
   if options.debug:
