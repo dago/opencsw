@@ -12,14 +12,14 @@ general rule of not conflicting with existing Solaris files.
 
 The outermost installation directories are:
 
-* /opt/csw (base of the hierarchy)
-* /etc/opt/csw (configuration files)
-* /var/opt/csw (data files)
+* ``/opt/csw`` (base of the hierarchy)
+* ``/etc/opt/csw`` (configuration files)
+* ``/var/opt/csw`` (data files)
 
-The /opt/csw directory and everything below is considered read-only. It's
-a common practice to set up non-global sparse zones with shared /opt/csw. In
-this setup, non-global zones see /opt/csw as mounted read-only. Any local
-state needs to be kept under /var/opt/csw.
+The ``/opt/csw`` directory and everything below is considered read-only. It's
+a common practice to set up non-global sparse zones with shared ``/opt/csw``.
+In this setup, non-global zones see ``/opt/csw`` as mounted read-only. Any
+local state needs to be kept under ``/var/opt/csw``.
 
 .. [#shared-opt-csw]
    `Shared /opt/csw configuration files`_

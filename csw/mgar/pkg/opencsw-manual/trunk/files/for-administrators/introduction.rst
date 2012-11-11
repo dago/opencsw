@@ -3,8 +3,8 @@ Introduction
 ------------
 
 The world of open source is big. Although Solaris releases do contain the
-software companion disc, there's always more projects out there that can fit
-there.
+software companion disc, there's always more projects out there that can't
+fit there.
 
 OpenCSW fills this gap by providing binary packages, together with their build
 recipes.  The packages can be installed comfortably with automatic dependency
