@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.halifax.rwth-aachen.de/apache//ant/source/
-MASTER_SITES += http://www.junit.org
+MASTER_SITES += http://www.junit.org/
 MASTER_SITES += http://search.maven.org/remotecontent?filepath=org/mod4j/org/junit/3.8.2/
 DISTNAME = apache-$(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
