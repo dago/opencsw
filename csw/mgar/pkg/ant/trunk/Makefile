@@ -17,10 +17,12 @@ MASTER_SITES += http://search.maven.org/remotecontent?filepath=org/mod4j/org/jun
 DISTNAME = apache-$(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 DISTFILES  += junit-3.8.2.jar
+LICENSE = LICENSE
+LICENSE += NOTICE
 
 NOGITPATCH = 1
 
-REINPLACE_USRLOCAL = manual/*.*
+REINPLACE_USRLOCAL = manual/Tasks/*.html
 
 PACKAGING_PLATFORMS += solaris10x
 RUNTIME_DEPENDENCY_CSWant += CSWjunit
@@ -35,12 +37,13 @@ RUNTIME_DEP_PKGS_CSWant += CSWpython
 RUNTIME_DEP_PKGS_CSWant += CSWperl
 # usr share is ok
 CHECKPKG_OVERRIDES_CSWant += file-with-bad-content|/usr/share|root/opt/csw/share/java/ant/bin/ant
-# no, the license is there
-CHECKPKG_OVERRIDES_CSWant += license-missing|/opt/csw/share/doc/ant/license
 
 PACKAGES += CSWantdoc
 SPKG_DESC_CSWantdoc = $(DESCRIPTION), docs
 PKGFILES_CSWantdoc += $(PKGFILES_DOC)
+CHECKPKG_OVERRIDES_CSWantdoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/ant/manual/install.html
+CHECKPKG_OVERRIDES_CSWantdoc += file-with-bad-content|/usr/share|root/opt/csw/share/doc/ant/manual/install.html
+
 
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS = 
@@ -73,7 +76,5 @@ install-ant:
 	gsed -i -e '/^ANT_LIB/s/lib/share\/java/' $(DESTDIR)/$(ant_home)/bin/ant
 	ginstall -m644 $(WORKSRC)/$(DISTNAME)/lib/*.jar $(DESTDIR)/$(datadir)/java
 	gcp -Rp $(WORKSRC)/$(DISTNAME)/manual $(DESTDIR)/$(docdir)/$(NAME)
-	ginstall -m644 $(WORKSRC)/$(DISTNAME)/LICENSE $(DESTDIR)/$(docdir)/$(NAME)
-	ginstall -m644 $(WORKSRC)/$(DISTNAME)/NOTICE $(DESTDIR)/$(docdir)/$(NAME)
 	$(MAKECOOKIE)
 
