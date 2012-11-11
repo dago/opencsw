@@ -20,6 +20,8 @@ SPKG_SOURCEURL = http://www.info-zip.org/
 
 LICENSE = LICENSE
 
+RUNTIME_DEP_PKGS_CSWunzip += CSWlibbz2-1-0
+
 # zip's configure is... "special". We use a custom version
 CONFIGURE_SCRIPTS = 
 
