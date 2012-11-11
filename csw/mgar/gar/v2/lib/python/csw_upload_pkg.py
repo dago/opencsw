@@ -529,16 +529,7 @@ if __name__ == '__main__':
     else:
       print "Continuing anyway."
 
-  username = os.environ["LOGNAME"]
-  authfile = os.path.join('/etc/opt/csw/releases/auth', username)
-
-  try:
-    with open(authfile, 'r') as af:
-      password = af.read().strip()
-  except IOError, e:
-    logging.warning("Error reading %s: %s", authfile, e)
-    password = getpass.getpass("{0}'s pkg release password> ".format(username))
-
+  username, password = rest.GetUsernameAndPassword()
   uploader = Srv4Uploader(args,
                           options.rest_url,
                           os_release=os_release,
