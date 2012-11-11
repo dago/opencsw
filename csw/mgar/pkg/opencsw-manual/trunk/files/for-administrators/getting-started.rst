@@ -4,11 +4,11 @@ Getting started
 
 OpenCSW uses a tool named pkgutil_ on top of the Solaris packaging utilities to
 automatically download, install and update packages. It needs to be installed
-manually once, after that all maintenance is done via pkgutil.
+manually once, after that all maintenance is done via ``pkgutil``.
 
 .. _pkgutil: http://pkgutil.net
 
-On a Solaris 10 system, you can use the capacity of pkgadd to download
+On a Solaris 10 system, you can use the capacity of ``pkgadd`` to download
 and install it via http in one step::
 
   pkgadd -d http://get.opencsw.org/now
@@ -64,7 +64,7 @@ so it looks similar to this with the URL replaced by the mirror you picked::
 
   mirror=http://mirror.opencsw.org/opencsw/unstable
 
-By default, pkgutil is configured to use the ``testing`` catalog. You might
+By default, ``pkgutil`` is configured to use the ``testing`` catalog. You might
 change it to ``unstable`` if you want to use newer versions of packages.
 
 You can verify the setting with ``pkgutil -V``::
@@ -162,8 +162,8 @@ Creating a .pkg file for a host without an Internet connection
 --------------------------------------------------------------
 
 If you need to install a package with multiple dependencies on a host with no
-Internet access, you can use pkgutil to prepare a .pkg file with the whole
-dependency chain. This wasy is much easier than copying dependencies one by
+Internet access, you can use ``pkgutil`` to prepare a ``.pkg`` file with the
+whole dependency chain. This is much easier than copying dependencies one by
 one::
 
   pkgutil \
@@ -174,7 +174,7 @@ one::
     --download \
     imagemagick coreutils vim ggrep gsed
 
-At the end of the run, pkgutil displays the correct order to install the
+At the end of the run, ``pkgutil`` displays the correct order to install the
 packages in.
 
 The resulting package stream will be placed in the ``~/.pkgutil/packages``
@@ -182,7 +182,4 @@ directory.
 
 This topic is also `discussed`_ on the community site.
 
-.. _discussed:
-   http://www.opencsw.org/community/
-   questions/92/
-   installing-without-a-direct-internet-access
+.. _discussed: http://www.opencsw.org/community/questions/92/installing-without-a-direct-internet-access

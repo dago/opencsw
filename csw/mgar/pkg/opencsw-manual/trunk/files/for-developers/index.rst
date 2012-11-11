@@ -12,8 +12,8 @@ To build own software against libraries distributed by OpenCSW, install the
 relevant ``*_dev`` packages. They contain the header files, and ``*.so``
 symlinks necessary during linking.
 
-When building againt OpenCSW software, these flags will typically make it
-work::
+When building againt OpenCSW software, aside from setting the ``PATH``
+correctly, these flags will typically make it work::
 
   CPPFLAGS="-I/opt/csw/include"
   LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib"
