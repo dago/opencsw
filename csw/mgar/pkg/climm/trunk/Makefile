@@ -1,7 +1,6 @@
 NAME = climm
 VERSION = 0.6.1
 GARTYPE = v1
-CATEGORIES = net
 
 DESCRIPTION = terminal-based ICQ client
 define BLURB

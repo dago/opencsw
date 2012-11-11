@@ -4,7 +4,6 @@
 NAME = antiword
 VERSION = 0.37
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = Brief description
 define BLURB

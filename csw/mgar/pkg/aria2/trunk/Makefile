@@ -1,7 +1,6 @@
 # $Id$
 NAME = aria2
 VERSION = 1.12.1
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = The Next Generation Download Utility

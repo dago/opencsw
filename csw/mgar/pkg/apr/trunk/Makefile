@@ -1,6 +1,5 @@
 NAME = apr
 VERSION = 1.4.6
-CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime

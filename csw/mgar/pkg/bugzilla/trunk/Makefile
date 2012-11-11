@@ -1,7 +1,6 @@
 NAME = bugzilla
 VERSION = 2.22
 GARTYPE = v1
-CATEGORIES = apps
 
 DESCRIPTION = Bugzilla defect tracking system.
 define BLURB

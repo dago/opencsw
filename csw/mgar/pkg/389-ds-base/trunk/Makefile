@@ -4,7 +4,6 @@
 NAME = 389-ds-base
 VERSION = 1.2.11.15
 GARTYPE = v2
-CATEGORIES = server
 
 DESCRIPTION = The enterprise-class Open Source LDAP server
 define BLURB

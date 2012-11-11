@@ -3,7 +3,6 @@
 NAME = dash
 VERSION = 0.5.7
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = POSIX-compliant implementation of /bin/sh that aims to be as small as possible
 define BLURB

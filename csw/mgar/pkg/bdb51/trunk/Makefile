@@ -1,6 +1,5 @@
 NAME = db
 VERSION = 5.1.29
-CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = Berkeley DB 5.1

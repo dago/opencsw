@@ -4,7 +4,6 @@
 NAME = 389-admin
 VERSION = 1.1.30
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = The 389 LDAP server Admin Tools
 define BLURB

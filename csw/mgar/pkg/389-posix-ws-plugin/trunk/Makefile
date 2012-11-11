@@ -4,7 +4,6 @@
 NAME = 389-posix-ws-plugin
 VERSION = 8b7d38c957
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = Posix WinsSync Plugin for 389 Directory Server
 define BLURB

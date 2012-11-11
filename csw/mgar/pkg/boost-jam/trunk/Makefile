@@ -4,7 +4,6 @@
 
 NAME = boost-jam
 VERSION = 3.1.18
-CATEGORIES = utils
 GARTYPE = v2
 DESCRIPTION = Build tool from the Boost C++ libraries
 define BLURB

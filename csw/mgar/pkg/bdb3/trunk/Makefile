@@ -1,6 +1,5 @@
 NAME = db
 VERSION = 3.3.11
-CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = embedded database libraries and utilities

@@ -1,7 +1,6 @@
 # $Id$
 NAME = amanda
 VERSION = 3.3.1
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = The Advanced Maryland Automatic Network Disk Archiver

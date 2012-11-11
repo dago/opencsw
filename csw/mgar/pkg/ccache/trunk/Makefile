@@ -1,7 +1,6 @@
 # $Id$
 NAME = ccache
 VERSION = 3.0pre1
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Brief description

@@ -1,6 +1,5 @@
 NAME = di
 VERSION = 4.32
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Disk information utility

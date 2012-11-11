@@ -6,7 +6,6 @@ GARFLAVOR = DBG
 
 NAME = awesome
 VERSION = 3.4.4
-CATEGORIES = apps
 GARTYPE = v2
 DESCRIPTION = A tiling window manager for X
 define BLURB

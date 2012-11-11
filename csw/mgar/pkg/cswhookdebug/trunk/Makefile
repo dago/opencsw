@@ -1,7 +1,6 @@
 # $Id$
 NAME = cswhookdebug
 VERSION = 1.0
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = A set of hooks to ease debugging hook callers

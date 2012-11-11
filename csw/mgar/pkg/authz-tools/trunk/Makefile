@@ -1,7 +1,6 @@
 NAME = authz-tools
 VERSION = 0.6.1
 GARTYPE = v1
-CATEGORIES = utils
 
 DESCRIPTION = tools to manipulate authz files
 define BLURB

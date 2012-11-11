@@ -4,7 +4,6 @@ NAME = autogen
 
 VERSION = 5.16.2
 GARTYPE = v2
-CATEGORIES = devel
 
 DESCRIPTION = The Automated Text and Program Generation Tool
 define BLURB

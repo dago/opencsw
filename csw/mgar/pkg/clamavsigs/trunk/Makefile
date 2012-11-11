@@ -2,7 +2,6 @@ NAME = clamavsigs
 VERSION = 3.7.1
 DISTNAME = clamav-unofficial-sigs-$(VERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = ClamAV Unofficial Signature Databases Update Script

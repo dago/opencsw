@@ -1,6 +1,5 @@
 NAME       = diffuse
 VERSION    = 0.4.5
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Graphical tool for comparing and merging text files

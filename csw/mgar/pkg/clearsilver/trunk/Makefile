@@ -1,6 +1,5 @@
 NAME = clearsilver
 VERSION = 0.10.5
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Language-neutral HTML template system

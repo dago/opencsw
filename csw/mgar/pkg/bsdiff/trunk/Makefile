@@ -4,7 +4,6 @@
 NAME = bsdiff
 VERSION = 4.3
 GARTYPE = v2
-CATEGORIES = utils
 
 DESCRIPTION = Binary diff/patch utility
 define BLURB

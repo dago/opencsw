@@ -2,7 +2,6 @@
 
 NAME = httpd
 VERSION = 2.2.22
-CATEGORIES = server
 GARTYPE = v2
 
 DESCRIPTION = A high performance HTTP server.

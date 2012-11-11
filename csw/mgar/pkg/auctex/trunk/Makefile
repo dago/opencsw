@@ -3,7 +3,6 @@
 NAME = auctex
 VERSION = 11.86
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = A much enhanced TeX/LaTeX mode for Emacs
 define BLURB

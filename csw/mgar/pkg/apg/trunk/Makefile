@@ -1,7 +1,6 @@
 NAME = apg
 VERSION = 2.2.3
 GARTYPE = v2
-CATEGORIES = utils
 
 DESCRIPTION = Automated Password Generator
 define BLURB

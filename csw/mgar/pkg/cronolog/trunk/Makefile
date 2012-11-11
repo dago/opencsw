@@ -1,7 +1,6 @@
 NAME = cronolog
 VERSION = 1.6.2
 GARTYPE = v1
-CATEGORIES = utils
 
 DESCRIPTION = A file rotation program for Apache.
 define BLURB

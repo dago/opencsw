@@ -1,6 +1,5 @@
 NAME = apr-iconv
 VERSION = 1.2.1
-CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime Utilities

@@ -1,6 +1,5 @@
 NAME = cvsproxy
 VERSION = 1.0.1
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Provides a CVS proxy

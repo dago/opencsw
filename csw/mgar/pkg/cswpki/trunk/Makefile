@@ -1,7 +1,6 @@
 # $Id: Makefile 15522 2011-09-04 16:29:44Z bdwalton $
 NAME = cswpki
 VERSION = 1.0
-CATEGORIES = utils
 
 DESCRIPTION = The OpenCSW PKI Collection
 define BLURB

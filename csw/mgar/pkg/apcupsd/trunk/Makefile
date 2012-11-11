@@ -1,6 +1,5 @@
 NAME = apcupsd
 VERSION = 3.14.8
-CATEGORIES = utils
 GARTYPE = v2
 
 GARCOMPILER = GCC3

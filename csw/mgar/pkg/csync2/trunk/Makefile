@@ -8,7 +8,6 @@
 #
 NAME = csync2
 VERSION = 1.34
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Keeps files across multiple (cluster) hosts in sync

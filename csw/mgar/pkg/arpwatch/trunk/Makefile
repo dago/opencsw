@@ -1,7 +1,6 @@
 NAME = arpwatch
 VERSION = 2.1a15
 GARTYPE = v1
-CATEGORIES = server
 
 DESCRIPTION = A network monitoring tool for tracking IP/MAC addresses on a network.
 define BLURB

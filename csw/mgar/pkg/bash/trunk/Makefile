@@ -14,7 +14,6 @@
 
 NAME = bash
 VERSION = 4.2.37
-CATEGORIES = devel
 GARTYPE = v2
 
 DESCRIPTION = A sh-compatible command language interpreter

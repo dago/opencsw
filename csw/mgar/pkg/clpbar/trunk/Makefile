@@ -4,7 +4,6 @@
 
 NAME = bar
 VERSION = 1.11.1
-CATEGORIES = apps
 GARTYPE = v2
 DESCRIPTION = A command line tool to display information about a data transfer stream
 

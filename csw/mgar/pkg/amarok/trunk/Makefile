@@ -1,7 +1,6 @@
 NAME = amarok
 VERSION = 1.4.8
 GARTYPE = v1
-CATEGORIES = apps
 
 DESCRIPTION = Amarok is the music player for Linux and Unix with an intuitive interface
 define BLURB

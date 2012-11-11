@@ -1,6 +1,5 @@
 NAME = balance
 VERSION = 3.54
-CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = A TCP proxy and load balancer

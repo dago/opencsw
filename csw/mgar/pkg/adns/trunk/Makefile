@@ -4,7 +4,6 @@
 NAME = adns
 VERSION = 1.4
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = Advanced, easy to use, asynchronous-capable DNS client library and utilities
 define BLURB

@@ -4,7 +4,6 @@
 NAME = bibtex2html
 VERSION = 1.97
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = A collection of tools for translating from BibTeX to HTML
 define BLURB

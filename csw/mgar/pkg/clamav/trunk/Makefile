@@ -2,7 +2,6 @@ NAME       = clamav
 VERSION    = 0.97.6
 #VERSION    = 0.97rc
 #DISTNAME   = $(NAME)-devel-latest
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Clam AntiVirus

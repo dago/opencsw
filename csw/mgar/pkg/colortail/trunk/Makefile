@@ -1,7 +1,6 @@
 # $Id$
 NAME = colortail
 VERSION = 0.3.0
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = Tail-variant with color support for easier log file reading

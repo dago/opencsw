@@ -7,7 +7,6 @@ VERSION2 = 1.1
 RELEASE = 20120706
 DISTNAME = $(NAME)-$(VERSION2)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = A script-interpreter which provides a set of curses widgets

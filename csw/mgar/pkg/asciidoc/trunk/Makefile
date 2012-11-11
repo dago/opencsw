@@ -1,6 +1,5 @@
 NAME = asciidoc
 VERSION = 8.6.6
-CATEGORIES = utils
 GARTYPE = v2
 
 DESCRIPTION = A Documentation Generator

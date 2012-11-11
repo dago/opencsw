@@ -1,7 +1,6 @@
 # $Id$
 NAME = bacula
 VERSION = 5.0.3
-CATEGORIES = apps
 GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386

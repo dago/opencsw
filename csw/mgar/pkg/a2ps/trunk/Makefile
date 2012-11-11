@@ -1,7 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = a2ps
 VERSION = 4.14
-CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = Any to PostScript filter

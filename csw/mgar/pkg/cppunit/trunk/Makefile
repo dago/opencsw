@@ -4,7 +4,6 @@
 NAME = cppunit
 VERSION = 1.12.1
 GARTYPE = v2
-CATEGORIES = devel
 
 DESCRIPTION = C++ port of JUnit
 

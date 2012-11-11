@@ -3,7 +3,6 @@
 NAME = collectd
 VERSION = 5.1.0
 GARTYPE = v2
-CATEGORIES = server
 
 DESCRIPTION = Collects sistema performance statistics periodically
 define BLURB
