@@ -161,19 +161,20 @@ RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssutil3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSWlibnss-dev += CSWlibnssckbi
 RUNTIME_DEP_PKGS_CSWlibnss-dev 64/libnssckbi.so
-# OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-devel
-
-PACKAGES += CSWlibnss3-tools
-CATALOGNAME_CSWlibnss3-tools = libnss3_tools
-SPKG_DESC_CSWlibnss3-tools = Network Security Services library, command-line utilities
-PKGFILES_CSWlibnss3-tools = $(bindir).*
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnss3
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibplc4
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibplds4
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibsmime3
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibssl3
-RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnssutil3
+# OBSOLETED_BY_CSWlibnss-dev = CSWlibnss3-develnss3-tools
+CATALOGNAME_CSWnss3-tools = libnss3_tools
+SPKG_DESC_CSWnss3-tools = Network Security Services library, command-line utilities
+PKGFILES_CSWnss3-tools = $(bindir).*
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnssutil3
+# plugins accessed via dlopen
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibsoftokn3
+RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnssdbm3 += CSWlibnssutil3
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-dev CSWlibsqlite3-dev
 
