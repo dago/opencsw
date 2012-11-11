@@ -10,10 +10,13 @@ DISTNAME = $(NAME)
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += COPYING
 
+BUILD_DEP_PKGS += CSWlibtiff-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+
 PACKAGES += CSWfax2png
 SPKG_DESC_CSWfax2png = Multipage 1-bit TIFF (fax or scan) to PNG image converter
 RUNTIME_DEP_PKGS_CSWfax2png += CSWlibtiff3
-RUNTIME_DEP_PKGS_CSWfax2png += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWfax2png += CSWlibpng15-15
 
 # This is for the contributed CGI script, probably pull in when needed
 CHECKPKG_OVERRIDES_CSWfax2png += missing-dependency|CSWperl
