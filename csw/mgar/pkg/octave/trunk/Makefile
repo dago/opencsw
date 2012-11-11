@@ -1,6 +1,8 @@
+# TBD:
+#  configure: error: You are required to have BLAS and LAPACK libraries
+
 NAME = octave
-VERSION = 3.2.3
-CATEGORIES = apps
+VERSION = 3.6.2
 GARTYPE = v2
 
 DESCRIPTION = The GNU Octave language for numerical computations
