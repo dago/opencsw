@@ -7,7 +7,7 @@ GARTYPE = v2
 
 DESCRIPTION = Ascii art graphics library
 
-SF_PROJ = aa-project
+SF_PROJECT = aa-project
 MASTER_SITES = $(SF_MIRROR)
 DISTNAME = $(NAME)-1.4.0
 DISTFILES += $(NAME)-$(VERSION).tar.gz
@@ -26,6 +26,15 @@ PACKAGES += CSWaalib-utils
 SPKG_DESC_CSWaalib-utils = Utility programs for the libaa.so.1
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWaalib-utils += CSWlibaa1
+
+# This fixes
+#   https://www.opencsw.org/mantis/view.php?id=4620
+# until it is fixed upstream at
+#   https://sourceforge.net/tracker/?func=detail&aid=3586216&group_id=20003&atid=120003
+REINPLACEMENTS += m4
+REINPLACE_MATCH_m4 = AC_DEFUN\(AM_PATH_AALIB
+REINPLACE_WITH_m4 = AC_DEFUN\([AM_PATH_AALIB]
+REINPLACE_FILES_m4 += aalib.m4
 
 BUILD64_LIBS_ONLY = 1
 
