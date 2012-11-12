@@ -285,52 +285,7 @@ class Srv4Uploader(object):
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
     logging.debug("parsed_basename: %s", parsed_basename)
-    url = (
-        "%s%s/catalogs/%s/%s/%s/%s/"
-        % (self.rest_url,
-           RELEASES_APP,
-           DEFAULT_CATREL,
-           arch,
-           osrel,
-           md5_sum))
-    logging.debug("URL: %s %s", type(url), url)
-    c = pycurl.Curl()
-    d = StringIO()
-    h = StringIO()
-    # Bogus data to upload
-    s = StringIO()
-    c.setopt(pycurl.URL, str(url))
-    c.setopt(pycurl.PUT, 1)
-    c.setopt(pycurl.UPLOAD, 1)
-    c.setopt(pycurl.INFILESIZE_LARGE, s.len)
-    c.setopt(pycurl.READFUNCTION, s.read)
-    c.setopt(pycurl.WRITEFUNCTION, d.write)
-    c.setopt(pycurl.HEADERFUNCTION, h.write)
-    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
-    c = self._SetAuth(c)
-    if self.debug:
-      c.setopt(c.VERBOSE, 1)
-    c.perform()
-    http_code = c.getinfo(pycurl.HTTP_CODE)
-    logging.debug(
-        "curl getinfo: %s %s %s",
-        type(http_code),
-        http_code,
-        c.getinfo(pycurl.EFFECTIVE_URL))
-    c.close()
-    # if self.debug:
-    #   logging.debug("*** Headers")
-    #   logging.debug(h.getvalue())
-    #   logging.debug("*** Data")
-    if http_code >= 400 and http_code <= 599:
-      if not self.debug:
-        # In debug mode, all headers are printed to screen, and we aren't
-        # interested in the response body.
-        logging.fatal("Response: %s %s", http_code, d.getvalue())
-      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
-    else:
-      logging.debug("Response: %s %s", http_code, d.getvalue())
-    return http_code
+    return rest_client.AddSvr4ToCatalog(catrel, arch, osrel, md5_sum)
 
   def _GetSrv4FileMetadata(self, md5_sum):
     logging.debug("_GetSrv4FileMetadata(%s)", repr(md5_sum))
