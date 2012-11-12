@@ -1,30 +1,39 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = Xerces
+NAME = xercesj
 VERSION = 2.11.0
 GARTYPE = v2
 CATEGORIES = lib
 
-DESCRIPTION = Brief description
+DESCRIPTION = Java XML parser
 define BLURB
-  Long description
+  The Apache Xerces2 parser is the reference implementation of XNI but other parser components, configurations, and parsers can be written using the Xerces Native Interface. For complete design and implementation documents, refer to the XNI Manual.
+
+
 endef
+
+NOGITPATCH = 1
 
 # MASTER_SITES = http://apache.lauf-forum.at//xerces/j/source/
 MASTER_SITES = http://mirror.lwnetwork.org.uk/APACHE//xerces/j/binaries/
-DISTNAME = $(NAME)-J-bin.$(VERSION)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  = Xerces-J-bin.$(VERSION).tar.gz
 LICENSE = LICENSE
 EXTRA_LICENSE += LICENSE-SAX.html
 EXTRA_LICENSE += LICENSE.DOM-documentation.html
-EXTRA_LICENSE += LICENSE.DOM-resolver.html
+EXTRA_LICENSE += LICENSE.DOM-software.html
+EXTRA_LICENSE += LICENSE.resolver.txt
 EXTRA_LICENSE += LICENSE.serializer.txt
 EXTRA_LICENSE += NOTICE
 EXTRA_LICENSE += NOTICE.resolver.txt
 EXTRA_LICENSE += NOTICE.serializer.txt
 
-WORKSRC = $(WORKDIR)/$(call tolower,$(NAME))-$(subst .,_,$(VERSION))
+DISTNAME = xerces-$(subst .,_,$(VERSION))
+
+ARCHALL = 1
+PACKAGES += CSWxercesj
+SPKG_DESC_CSWxercesj = $(DESCRIPTION)
+
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 BUILD_SCRIPTS = xerces
@@ -41,13 +50,14 @@ build-xerces:
 # 	&& $(BUILD_ENV) sh build.sh)
 	@$(MAKECOOKIES)
 
-# merge-license-modulated:
-# 	umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
-# 	rm -f $(PKGROOT)$$LICENSEDIR/license && \
-# 	cp $(foreach lic,$(LICENSE),$(WORKSRC)/$(lic)) $(PKGROOT)$$LICENSEDIR
-# 	@$(MAKECOOKIE)
+JAR_FILES += resolver.jar 
+JAR_FILES += serializer.jar
+JAR_FILES += xercesImpl.jar
+JAR_FILES += xercesSamples.jar
 
 install-xerces:
 	ginstall -d -m 755 $(DESTDIR)$(datadir)/java
-	ginstall -m644 $(WORKSRC)/*.jar $(DESTDIR)$(datadir)/java
+	ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
+	ginstall -m644 $(foreach jar,$(JAR_FILES),$(WORKSRC)/$(jar)) $(DESTDIR)$(datadir)/java
+	ginstall -m644 $(foreach lic,$(EXTRA_LICENSE),$(WORKSRC)/$(lic)) $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIES)
