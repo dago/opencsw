@@ -1,0 +1,107 @@
+From 446dee106ed9cd4fc3785e216d14e3907787ef94 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 11 Nov 2012 02:45:46 +0100
+Subject: [PATCH] use ginstall
+
+---
+ Makefile               | 18 +++++++++---------
+ datfiles/Makefile      |  4 ++--
+ datfiles/html/Makefile |  4 ++--
+ datfiles/off/Makefile  |  4 ++--
+ 4 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6017155..dec8c21 100644
+--- a/Makefile
++++ b/Makefile
+@@ -128,14 +128,14 @@ install: install-fortune install-util install-man install-cookie
+ 
+ # Install just the fortune program
+ install-fortune: fortune-bin
+-	install -m 0755 -d $(FORTDIR)
+-	install -m 0755 fortune/fortune $(FORTDIR)
++	ginstall -m 0755 -d $(FORTDIR)
++	ginstall -m 0755 fortune/fortune $(FORTDIR)
+ 
+ # Install just the utilities strfile and unstr
+ install-util: util-bin
+-	install -m 0755 -d $(BINDIR)
+-	install -m $(BINMODE) util/strfile $(BINDIR)
+-	install -m $(BINMODE) util/unstr $(BINDIR)
++	ginstall -m 0755 -d $(BINDIR)
++	ginstall -m $(BINMODE) util/strfile $(BINDIR)
++	ginstall -m $(BINMODE) util/unstr $(BINDIR)
+ 
+ # Install all the man pages
+ install-man: install-fman install-uman
+@@ -155,13 +155,13 @@ fortune/fortune.man: fortune/fortune-man.part1 fortune/fortune-man.part2
+ 
+ # Install the fortune man pages
+ install-fman: fortune/fortune.man
+-	install -m 0755 -d $(FORTMANDIR)
+-	install -m 0644 fortune/fortune.man $(FORTMANDIR)/fortune.$(FORTMANEXT)
++	ginstall -m 0755 -d $(FORTMANDIR)
++	ginstall -m 0644 fortune/fortune.man $(FORTMANDIR)/fortune.$(FORTMANEXT)
+ 
+ # Install the utilities man pages
+ install-uman:
+-	install -m 0755 -d $(BINMANDIR)
+-	install -m 0644 util/strfile.man $(BINMANDIR)/strfile.$(BINMANEXT)
++	ginstall -m 0755 -d $(BINMANDIR)
++	ginstall -m 0644 util/strfile.man $(BINMANDIR)/strfile.$(BINMANEXT)
+ 	rm -f $(BINMANDIR)/unstr.$(BINMANEXT)
+ 	ln -s strfile.$(BINMANEXT) $(BINMANDIR)/unstr.$(BINMANEXT)
+ 
+diff --git a/datfiles/Makefile b/datfiles/Makefile
+index e753cb0..2eac583 100644
+--- a/datfiles/Makefile
++++ b/datfiles/Makefile
+@@ -27,11 +27,11 @@ cookies-stamp:
+ 	touch cookies-stamp
+ 
+ install: cookies-stamp
+-	install -m 0755 -d $(COOKIEDIR)
++	ginstall -m 0755 -d $(COOKIEDIR)
+ 	if [ $(OFFENSIVE) = 1 ] ; then cd off && $(MAKE) install ; fi
+ 	if [ $(WEB) = 1 ] ; then cd html && $(MAKE) install ; fi
+ 	for i in $(COOKIES) ; do \
+-		install -m 0644 $$i $$i.dat $(COOKIEDIR) || exit $? ; done
++		ginstall -m 0644 $$i $$i.dat $(COOKIEDIR) || exit $? ; done
+ 
+ clean:
+ 	rm -f cookies-stamp *.dat
+diff --git a/datfiles/html/Makefile b/datfiles/html/Makefile
+index 04c9408..84ae47b 100644
+--- a/datfiles/html/Makefile
++++ b/datfiles/html/Makefile
+@@ -12,9 +12,9 @@ wcookies-stamp:
+ 	touch cookies-stamp
+ 
+ install: wcookies-stamp
+-	install -m 0755 -d $(WCOOKIEDIR)
++	ginstall -m 0755 -d $(WCOOKIEDIR)
+ 	for i in $(WCOOKIES) ; do \
+-		install -m 0644 $$i $$i.dat $(WCOOKIEDIR) || exit $$? ; done
++		ginstall -m 0644 $$i $$i.dat $(WCOOKIEDIR) || exit $$? ; done
+ 
+ clean:
+ 	rm -f wcookies-stamp *.dat
+diff --git a/datfiles/off/Makefile b/datfiles/off/Makefile
+index d83ee0d..1089770 100644
+--- a/datfiles/off/Makefile
++++ b/datfiles/off/Makefile
+@@ -24,9 +24,9 @@ rotated-stamp:
+ 	touch rotated-stamp
+ 
+ install:
+-	install -m 0755 -d $(OCOOKIEDIR)
++	ginstall -m 0755 -d $(OCOOKIEDIR)
+ 	for i in $(OCOOKIES) ; \
+-	    do install -m 0644 $$i $$i.dat $(OCOOKIEDIR) || exit $$? ; done
++	    do ginstall -m 0644 $$i $$i.dat $(OCOOKIEDIR) || exit $$? ; done
+ 
+ clean:
+ 	rm -f ocookies-stamp rotated-stamp *.dat $(OCOOKIES_UNROTATED)
+-- 
+1.8.0
+
