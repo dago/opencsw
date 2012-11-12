@@ -15,14 +15,14 @@ endef
 MASTER_SITES = http://mirror.lwnetwork.org.uk/APACHE//xerces/j/binaries/
 DISTNAME = $(NAME)-J-bin.$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
-LICENSE += LICENSE
-LICENSE += LICENSE-SAX.html
-LICENSE += LICENSE.DOM-documentation.html
-LICENSE += LICENSE.DOM-resolver.html
-LICENSE += LICENSE.serializer.txt
-LICENSE += NOTICE
-LICENSE += NOTICE.resolver.txt
-LICENSE += NOTICE.serializer.txt
+LICENSE = LICENSE
+EXTRA_LICENSE += LICENSE-SAX.html
+EXTRA_LICENSE += LICENSE.DOM-documentation.html
+EXTRA_LICENSE += LICENSE.DOM-resolver.html
+EXTRA_LICENSE += LICENSE.serializer.txt
+EXTRA_LICENSE += NOTICE
+EXTRA_LICENSE += NOTICE.resolver.txt
+EXTRA_LICENSE += NOTICE.serializer.txt
 
 WORKSRC = $(WORKDIR)/$(call tolower,$(NAME))-$(subst .,_,$(VERSION))
 CONFIGURE_SCRIPTS =
