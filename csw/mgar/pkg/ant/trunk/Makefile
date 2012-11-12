@@ -72,7 +72,7 @@ install-ant:
 	ginstall -d -m755 $(DESTDIR)/$(docdir)/$(NAME)
 	gcp -Rp $(WORKSRC)/$(DISTNAME)/etc $(DESTDIR)/$(ant_home)
 	find $(WORKSRC)/$(DISTNAME)/bin -type f -a ! -name \*.bat -a ! -name \*.cmd -exec ginstall -m755 {} $(DESTDIR)/$(ant_home)/bin \;
-	ln -s $(DESTDIR)/$(ant_home)/bin/ant $(DESTDIR)/$(bindir)
+	(cd $(DESTDIR)/$(bindir) && ln -s ../share/java/$(NAME)/bin/ant )
 	gsed -i -e '/^ANT_LIB/s/lib/share\/java/' $(DESTDIR)/$(ant_home)/bin/ant
 	ginstall -m644 $(WORKSRC)/$(DISTNAME)/lib/*.jar $(DESTDIR)/$(datadir)/java
 	gcp -Rp $(WORKSRC)/$(DISTNAME)/manual $(DESTDIR)/$(docdir)/$(NAME)
