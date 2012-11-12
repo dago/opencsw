@@ -165,12 +165,7 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
 
-BUILD_DEP_PKGS += CSWlibffi-dev
-
-# There are packages depending on libpython2.5, and listing CSWpython as the
-# dependency.
-RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
-CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
+BUILD_DEP_PKGS += Cython2-5-1-0
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
@@ -216,5 +211,4 @@ post-configure-modulated:
 			; do \
 		gsed -i -e 's+/usr/local+/opt/csw+g' $(WORKSRC)/$${f}; \
 		gsed -i -e 's+/usr/share+/opt/csw/share+g' $(WORKSRC)/$${f}; \
-	done
-	@$(MAKECOOKIE)
+	don
