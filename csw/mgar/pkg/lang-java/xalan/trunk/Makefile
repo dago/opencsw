@@ -34,7 +34,10 @@ SKIPTEST = 1
 
 include gar/category.mk
 
+JAR_FILES += xalan.jar
+JAR_FILES += xsltc.jar
+
 install-xalan:
 	ginstall -d -m755 $(DESTDIR)/$(datadir)/java
-	ginstall -m 644 $(WORKSRC)/*.jar $(DESTDIR)/$(datadir)/java
+	ginstall -m644 $(foreach jar,$(JAR_FILES),$(WORKSRC)/$(jar)) $(DESTDIR)$(datadir)/java
 	@$(MAKECOOKIES)
