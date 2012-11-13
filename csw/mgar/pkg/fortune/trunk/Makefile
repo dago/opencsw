@@ -31,16 +31,11 @@ PACKAGES = CSWfortune
 DISTNAME   = fortune-mod-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += changelog.CSW 
-DISTFILES += license
-
-PATCHFILES = 0001-use-ginstall.patch
-#PATCHFILES += 0002-Honor-DESTDIR.patch
+DISTFILES += COPYING
 
 DOCFILES = INSTALL Notes Offensive README TODO
 
-
 ##### Build and installation information #####
-
 
 GARCOMPILER = SUN
 
@@ -59,22 +54,21 @@ INSTALL_OVERRIDE_VAR_BINDIR = $(DESTDIR)/$(bindir)/
 INSTALL_OVERRIDE_VAR_BINMANDIR = $(DESTDIR)/$(mandir)/man1
 INSTALL_OVERRIDE_VAR_COOKIEDIR = $(DESTDIR)/$(sharedstatedir)/fortunes
 
+INSTALL_ENV_PATH = $(prefix)/gnu:$(PATH)
+
 REINPLACE_MATCH = /usr/local/share/games
 REINPLACE_WITH = /opt/csw/share
 REINPLACE_FILES += Notes
 
 include gar/category.mk
 
-mv-fortune:
+post-merge:
 	[ -f "$(PKGROOT)/$(bindir)/fortune" ] || \
 	      mv "$(PKGROOT)/$(sharedstatedir)/fortunes/fortune" "$(PKGROOT)/$(bindir)"/
                 
-merge-doc:
-	ginstall -d $(PKGROOT)/$(docdir)/$(NAME)
-	cd $(DOWNLOADDIR)/ && ginstall -m 0644 license changelog.CSW $(PKGROOT)/$(docdir)/$(NAME)/
-	cd $(WORKSRC_FIRSTMOD)/ && ginstall -m 0644 $(DOCFILES) $(PKGROOT)/$(docdir)/$(NAME)/
-	@$(MAKECOOKIE)
-
-post-merge: mv-fortune merge-doc
+post-install:
+	ginstall -d $(DESTDIR)/$(docdir)/$(NAME)
+	cd $(DOWNLOADDIR)/ && ginstall -m 0644 changelog.CSW $(DESTDIR)/$(docdir)/$(NAME)/
+	cd $(WORKSRC)/ && ginstall -m 0644 $(DOCFILES) $(DESTDIR)/$(docdir)/$(NAME)/
 
 
