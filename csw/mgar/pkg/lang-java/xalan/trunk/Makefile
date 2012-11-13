@@ -27,10 +27,11 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = xalan
 SKIPTEST = 1
 
-# problems with CSWxmlcommonsext, CSWxercesj
-# CHECKPKG_OVERRIDES_CSWxalan-j += file-collision|/opt/csw/share/java/xml-apis.jar|CSWxalan-j|CSWxmlcommonsext
-# CHECKPKG_OVERRIDES_CSWxalan-j += file-collision|/opt/csw/share/java/xercesImpl.jar|CSWxalan-j|CSWxercesj
-
+RUNTIME_DEP_PKGS += CSWxercesj
+RUNTIME_DEP_PKGS += CSWxmlcommonsext
+# there are overlapping contents or common files
+CHECKPKG_OVERRIDES_CSWxalan-j += surplus-dependency|CSWxercesj
+CHECKPKG_OVERRIDES_CSWxalan-j += surplus-dependency|CSWxmlcommonsext
 
 include gar/category.mk
 
