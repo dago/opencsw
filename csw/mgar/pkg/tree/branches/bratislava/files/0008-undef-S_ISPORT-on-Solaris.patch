@@ -1,0 +1,24 @@
+From a608b5097154568795499cb559736c6eb5c720af Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 14 Nov 2012 14:06:48 +0100
+Subject: [PATCH] undef S_ISPORT on Solaris
+
+---
+ tree.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tree.h b/tree.h
+index 20f9072..ae3867e 100644
+--- a/tree.h
++++ b/tree.h
+@@ -61,6 +61,7 @@
+ 
+ #if defined(__sun) || defined(__sun__)
+ # undef S_ISDOOR
++# undef S_ISPORT
+ #endif
+ 
+ /* Should probably use strdup(), but we like our xmalloc() */
+-- 
+1.8.0
+
