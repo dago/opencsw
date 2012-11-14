@@ -155,7 +155,7 @@ class RestClient(object):
         "%s%s/catalogs/%s/%s/%s/%s/"
         % (self.rest_url,
            RELEASES_APP,
-           DEFAULT_CATREL,
+           catrel,
            arch,
            osrel,
            md5_sum))

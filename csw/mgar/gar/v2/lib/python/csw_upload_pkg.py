@@ -82,7 +82,8 @@ class Srv4Uploader(object):
 
   def __init__(self, filenames, rest_url, os_release=None, debug=False,
       output_to_screen=True,
-      username=None, password=None):
+      username=None, password=None,
+      catrel=DEFAULT_CATREL):
     super(Srv4Uploader, self).__init__()
     if filenames:
       filenames = self.SortFilenames(filenames)
@@ -91,10 +92,14 @@ class Srv4Uploader(object):
     self.debug = debug
     self.os_release = os_release
     self.rest_url = rest_url
-    self._rest_client = rest.RestClient(self.rest_url)
+    self._rest_client = rest.RestClient(
+        self.rest_url,
+        username=username,
+        password=password)
     self.output_to_screen = output_to_screen
     self.username = username
     self.password = password
+    self.catrel = catrel
 
   def _SetAuth(self, c):
     """Set basic HTTP auth options on given Curl object."""
@@ -166,7 +171,7 @@ class Srv4Uploader(object):
       arch = file_metadata['arch']
       metadata_by_md5[md5_sum] = file_metadata
       catalogs = self._MatchSrv4ToCatalogs(
-          filename, DEFAULT_CATREL, arch, osrel, md5_sum)
+          filename, self.catrel, arch, osrel, md5_sum)
       for unused_catrel, cat_arch, cat_osrel in catalogs:
         planned_modifications.append(
             (filename, md5_sum,
@@ -280,12 +285,12 @@ class Srv4Uploader(object):
           % (file_metadata["catalogname"],
              file_metadata["arch"],
              file_metadata["osrel"],
-             DEFAULT_CATREL, arch, osrel))
+             self.catrel, arch, osrel))
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
     logging.debug("parsed_basename: %s", parsed_basename)
-    return rest_client.AddSvr4ToCatalog(catrel, arch, osrel, md5_sum)
+    return self._rest_client.AddSvr4ToCatalog(self.catrel, arch, osrel, md5_sum)
 
   def _GetSrv4FileMetadata(self, md5_sum):
     logging.debug("_GetSrv4FileMetadata(%s)", repr(md5_sum))
@@ -405,7 +410,7 @@ class Srv4Uploader(object):
     args_by_cat = {}
     for arch, osrel in checkpkg_sets:
       print ("Checking %s package(s) against catalog %s %s %s"
-             % (len(checkpkg_sets[(arch, osrel)]), DEFAULT_CATREL, arch, osrel))
+             % (len(checkpkg_sets[(arch, osrel)]), self.catrel, arch, osrel))
       md5_sums = []
       basenames = []
       for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
@@ -417,7 +422,7 @@ class Srv4Uploader(object):
       # if it stays that way.
       args_by_cat[(arch, osrel)] = [
           checkpkg_executable,
-          "--catalog-release", DEFAULT_CATREL,
+          "--catalog-release", self.catrel,
           "--os-release", osrel,
           "--architecture", arch,
       ] + md5_sums
@@ -435,7 +440,7 @@ class Srv4Uploader(object):
         print "To see errors, run:"
         print " ", " ".join(args_by_cat[(arch, osrel)])
       print ("Packages have not been submitted to the %s catalog."
-             % DEFAULT_CATREL)
+             % self.catrel)
     return not checks_failed_for_catalogs
 
 
@@ -455,6 +460,12 @@ if __name__ == '__main__':
       dest="filename_check",
       default=True, action="store_false",
       help="Don't check the filename set (e.g. for a missing architecture)")
+  parser.add_option("--catalog-release",
+      dest="catrel",
+      default=DEFAULT_CATREL,
+      help=("Uploads to a specified named catalog. "
+            "Note that the server side only allows to upload to a limited "
+            "set of catalogs."))
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -490,5 +501,6 @@ if __name__ == '__main__':
                           os_release=os_release,
                           debug=options.debug,
                           username=username,
-                          password=password)
+                          password=password,
+                          catrel=options.catrel)
   uploader.Upload()
