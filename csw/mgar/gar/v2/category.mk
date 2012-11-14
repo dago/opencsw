@@ -21,6 +21,10 @@ endif
 # of gar/ symlinks in each build directory.
 GARDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+$(if $(findstring $(CATEGORIES),apps devel lang lib net server utils xorg xtra),\
+  $(warning The categories with no special meaning have been renamed to 'default', please remove the CATEGORIES line as for the default case this is no longer necessary)\
+)
+
 CATEGORIES ?= default
 
 ifeq (,$(wildcard $(GARDIR)/categories/$(CATEGORIES)/category.mk))
