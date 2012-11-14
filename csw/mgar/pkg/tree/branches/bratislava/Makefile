@@ -1,4 +1,4 @@
-# Copyright 2009 OpenCSW
+# Copyright 2009-2012 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -21,10 +21,14 @@ PATCHFILES += 0003-Solaris-settings.patch
 PATCHFILES += 0004-Using-GNU-install.patch
 PATCHFILES += 0005-Allowing-CFLAGS-from-GAR.patch
 PATCHFILES += 0006-Undefine-S_ISDOOR-on-Solaris.patch
-PATCHFILES += 0007-dash-e-is-not-available-in-bin-sh.patch
+PATCHFILES += 0007-dash-e-is-not-availabPATCHFILES += 0008-undef-S_ISPORT-on-Solaris.patch
 DISTFILES  = $(NAME)-$(VERSION).tgz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 CONFIGURE_SCRIPTS =
 SKIPTEST = 1
 LICENSE = LICENSE
+
+# bratislava settings
+COMMON_PKG_DEPENDS =
+INCLUDE_COMMONDIRS = 1
+
 include gar/category.mk
