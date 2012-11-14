@@ -1,0 +1,25 @@
+From 72b018b52df6425771b0d4834e849e9755c1df62 Mon Sep 17 00:00:00 2001
+From: Igor Galic <igalic@opencsw.org>
+Date: Wed, 14 Nov 2012 11:38:28 +0100
+Subject: [PATCH] make this overridable
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index d65a3f3..e00b237 100644
+--- a/Makefile
++++ b/Makefile
+@@ -80,7 +80,7 @@ ifneq ($(STATEFILE),)
+     CFLAGS += -DSTATEFILE=\"$(STATEFILE)\"
+ endif
+ 
+-BINDIR = $(BASEDIR)/sbin
++BINDIR ?= $(BASEDIR)/sbin
+ MANDIR ?= $(BASEDIR)/man
+ 
+ #--------------------------------------------------------------------------
+-- 
+1.8.0
+
