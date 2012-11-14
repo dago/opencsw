@@ -1,0 +1,25 @@
+From 8512e4341c397aa80394d4f87e28bafb39c28174 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 14 Nov 2012 12:49:34 +0100
+Subject: [PATCH] adjust types in a pow() call
+
+---
+ style/primitive.cxx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/style/primitive.cxx b/style/primitive.cxx
+index 30e8334..decb9c4 100644
+--- a/style/primitive.cxx
++++ b/style/primitive.cxx
+@@ -5047,7 +5047,7 @@ DEFPRIMITIVE(XExpt, argc, argv, context, interp, loc)
+     if (!argv[1]->exactIntegerValue(n2))
+       return argError(interp, loc,
+   		      InterpreterMessages::notAnExactInteger, 1, argv[1]);
+-    return new (interp) QuantityObj(pow(d1,n2), dim1*n2);
++    return new (interp) QuantityObj(pow(d1, static_cast <double> (n2)), dim1*n2);
+   }
+   else {
+     if ((q2 == ELObj::noQuantity) || (dim2 != 0))
+-- 
+1.8.0
+

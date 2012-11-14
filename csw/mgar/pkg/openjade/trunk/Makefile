@@ -1,14 +1,12 @@
+# $Id$
+
 NAME = openjade
 VERSION = 1.3.2
 CATEGORIES = apps
 GARTYPE = v2
 
-BUILD_DEP_PKGS = CSWopenspdevel
-RUNTIME_DEP_PKGS = CSWgcc3g++rt
-RUNTIME_DEP_PKGS += CSWggettextrt CSWiconv CSWopensprt CSWsgmlcommon
-RUNTIME_DEP_PKGS += CSWxmlcommon
-
-PACKAGES = CSWopenjade
+BUILD_DE-dev
+AGES = CSWopenjade
 LICENSE = COPYING
 
 DESCRIPTION = A DSSSL implementation.
@@ -25,25 +23,51 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWopenjade.postinstall CSWopenjade.preremove
 
-PATCHFILES = openjade-1.3.1-nsl.patch
+PATCHFILES = openjadPATCHFILES += 0002-adjust-types-in-a-pow-call.patch
 
-# Use gcc3 to build this.  a) it matches opensp b) the c++ used has
-# some issues w/sun c++ and c) gcc4 generates object files that get
-# the sun linker upset.  [we could likely force gld or a strip in the
-# middle somewhere, but this works too.]
-GARCOMPILER = GCC3
+GARCOMPILER = GNUGARCOMPILER = GCC3
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(NAME)
 CONFIGURE_ARGS += --enable-splibdir=$(libdir)
 CONFIGURE_ARGS += --enable-default-catalog=$(sysconfdir)/sgml/catalog
-CONFIGURE_ARGS += --disable-static
-
-TEST_SCRIPTS = 
+CONFIGURE_ARGS += --disable-stat
 
 INSTALL_ARGS = install install-man
 
 sysconfdir = /etc/opt/csw
+
+PACKAGES += CSWlibogrove0
+PKGFILES_CSWlibogrove0 += $(call baseisadirs,$(libdir),libogrove\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibogrove0 += $(DESCRIPTION), libogrove.so.0
+
+PACKAGES += CSWlibospgrove0
+PKGFILES_CSWlibospgrove0 += $(call baseisadirs,$(libdir),libospgrove\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibospgrove0 += $(DESCRIPTION), libospgrove.so.0
+
+PACKAGES += CSWlibostyle0
+PKGFILES_CSWlibostyle0 += $(call baseisadirs,$(libdir),libostyle\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibostyle0 += $(DESCRIPTION), libostyle.so.0
+
+PACKAGES += CSWopenjade-dev
+SPKG_DESC_CSWopenjade-dev += $(DESCRIPTION), development files
+PKGFILES_CSWopenjade-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWopenjade-dev += CSWlibospgrove0
+RUNTIME_DEP_PKGS_CSWopenjade-dev += CSWlibostyle0
+RUNTIME_DEP_PKGS_CSWopenjade-dev += CSWlibogrove0
+
+PACKAGES += CSWopenjade
+SPKG_DESC_CSWopenjade += $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWopenjade += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWopenjade += CSWlibosp5
+RUNTIME_DEP_PKGS_CSWopenjade += CSWlibospgrove0
+RUNTIME_DEP_PKGS_CSWopenjade += CSWlibostyle0
+RUNTIME_DEP_PKGS_CSWopenjade += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWopenjade += CSWsgmlcommon
+RUNTIME_DEP_PKGS_CSWopenjade += CSWxmlcommon
+
+CHECKPKG_OVERRIDES_CSWopenjade += surplus-dependency|CSWxmlcommon
+CHECKPKG_OVERRIDES_CSWopenjade += surplus-dependency|CSWsgmlcommondir = /etc/opt/csw
 
 include gar/category.mk
 
@@ -82,5 +106,4 @@ post-install-modulated:
 		$(INSTALL_DATA) jadedoc/images/* $(sgmldoc)/images/; \
 		$(INSTALL_DATA) dsssl/README.jadetex $(sgmldoc)/; \
 		$(INSTALL_DATA) README COPYING VERSION $(sgmldoc)/; \
-	)
-	@$(MAKECOOKIE)
+	
