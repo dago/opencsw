@@ -3,8 +3,7 @@
 # $Id$
 
 NAME = logrotate
-VERSION = 3.8.1
-CATEGORIES = apps
+VERSION = 3.8.3 apps
 GARTYPE = v2
 
 DESCRIPTION = Rotates, compresses, and mails system logs
@@ -16,32 +15,36 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = https://fedorahosted.org/logrotate/
-MASTER_SITES = https://fedorahosted.org/releases/l/o/logrotate/
-
-PATCHFILES += 003-test.patch
-PATCHFILES += 005-gzippath.patch
-PATCHFILES += 006-mbrtowc_empty.patch
+MASTER_SITES = https://fedorahosted.org/releases/l/o/logrotate/01-default-locations.patch
+PATCHFILES += 0001-make-this-overridable.patch
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += 003-test.patch
-DISTFILES += 005-gzippath.patch
-DISTFILES += 006-mbrtowc_empty.patch
 
-RUNTIME_DEP_PKGS = CSWlibpopt
-BUILD_DEP_PKGS   = $(RUNTIME_DEP_PKGS)
+RUNTIME_DEP_PKGS = CSWlibpopt0
+BUILD_DEP_PKGS   = CSWlibpopt-dev
 
 CONFIGURE_SCRIPTS =
-TEST_TARGET = test
+# TEST_ENV_PATH = $(prefix)/gnu:$(PATH)
+# TEST_TARGET = test
+# Currently tests are failing. The reason being that setfacl doesn't seem to work on ZFS
+# I don't know how to disable specific tests, so I'm disabling them all
+TEST_TARGET = 
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+BUILD64 = 1
+ISAEXEC = 1
 
 include gar/category.mk
 
-export EXTRA_CFLAGS := $(CFLAGS) $(CPPFLAGS)
-export EXTRA_LDFLAGS := $(LDFLAGS)
-export PREFIX = $(DESTDIR)
-export BASEDIR = $(prefix)
-export MANDIR = $(mandir)
+EXTRA_INSTALL_EXPORTS = PREFIX BASEDIR MANDIR BINDIR
+INSTALL_ENV_PREFIX = $(DESTDIR)
+INSTALL_ENV_BASEDIR = $(prefix)
+INSTALL_ENV_MANDIR = $(mandir)
+INSTALL_ENV_BINDIR = $(sbindir)
+
+EXTRA_BUILD_EXPORTS = EXTRA_CFLAGS EXTRA_CPPFLAGS EXTRA_LDFLAGS
+BUILD_ENV_EXTRA_CFLAGS =$(CFLAGS)
+BUILD_ENV_EXTRA_CPPFLAGS = $(CPPFLAGS)
+BUILD_ENV_EXTRA_LDFLAGS = $(LDFLAGS MANDIR = $(mandir)
 
 
 # This is a hack, as I have no idea what's going wrong.
@@ -55,4 +58,4 @@ pre-install-modulated:
 
 pre-build-modulated:
 	@( cd $(WORKSRC) ; \
-		rm -f .depend )
+

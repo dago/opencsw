@@ -1,0 +1,28 @@
+From 177f8b902b1edd57e01adaef5103850343996bee Mon Sep 17 00:00:00 2001
+From: Igor Galic <igalic@opencsw.org>
+Date: Wed, 14 Nov 2012 11:14:37 +0100
+Subject: [PATCH] default locations
+
+---
+ config.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/config.h b/config.h
+index d715c5a..b0469c1 100644
+--- a/config.h
++++ b/config.h
+@@ -13,7 +13,10 @@
+ 
+ #ifdef SunOS
+ #define DEFAULT_MAIL_COMMAND "/usr/bin/mailx"
+-#define STATEFILE "/var/log/logrotate.status"
++#define STATEFILE "/var/opt/csw/log/logrotate.status"
++#define COMPRESS_COMMAND "/opt/csw/bin/gzip"
++#define UNCOMPRESS_COMMAND "/opt/csw/bin/gunzip"
++#define STATEFILE "/var/opt/csw/log/logrotate.status"
+ #endif
+ 
+ #ifdef __NetBSD__
+-- 
+1.8.0
+
