@@ -3,7 +3,6 @@
 NAME = libdvdread
 VERSION = 4.2.0
 GARTYPE = v2
-CATEGORIES = lib
 
 DESCRIPTION = Library for reading DVD-Video images
 define BLURB
