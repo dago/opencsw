@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = glpi
-VERSION = 0.83.4
+VERSION = 0.83.6
 GARTYPE = v2
 CATEGORIES = apps
 
