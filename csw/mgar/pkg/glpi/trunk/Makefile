@@ -18,7 +18,7 @@ endef
 
 VENDOR_URL = http://www.glpi-project.org/
 
-MASTER_SITES = https://forge.indepnet.net/attachments/download/1253/
+MASTER_SITES = https://forge.indepnet.net/atta314ents/download/1253/
 DISTFILES  = $(DISTNAME)-$(VERSION).tar.gz
 DISTFILES += README.CSW
 DISTNAME=glpi
@@ -44,7 +44,9 @@ REINPLACE_USRSHARE += /config/based_config.php
 CHECKPKG_OVERRIDES_CSWglpi += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWglpi += surplus-dependency|CSWap2-modphp5
 CHECKPKG_OVERRIDES_CSWglpi += surplus-dependency|CSWphp5-mysql
-CHECKPKG_OVERRIDES_CSWglpi += surplus-dependency|CSWphp5-json
+CHECKPKG_OVERRIDES_CSWglpi += surplus-dependency|CSWphp5-jPACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386json
 
 
 ARCHALL = 1
@@ -57,5 +59,4 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(prefix)/share/www/glpi
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/share/www
 	@ginstall -d $(DESTDIR)$(docdir)/glpi
-	@cp $(WORKSRC)/COPYING.txt $(DESTDIR)$(docdir)/glpi/license
-	@$(MAKECOOKIE)
+	@cp $(WORKSRC)/COPYING.txt $(DESTDIR)$(docdir)/glpi/licens
