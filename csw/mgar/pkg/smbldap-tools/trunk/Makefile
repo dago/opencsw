@@ -15,6 +15,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #BUILD_DEP_PKGS = CSWpmldap CSWpmdigestsha1 CSWpmunicodemap
 ARCHALL_CSWsmbldap-tools = 1
 RUNTIME_DEP_PKGS_CSWsmbldap-tools += CSWperl
+RUNTIME_DEP_PKGS_CSWsmbldap-tools += CSWpm_ldap
+RUNTIME_DEP_PKGS_CSWsmbldap-tools += CSWpm_cryptsmb
 
 REINPLACE_USRLOCAL += smbldap_tools.pm
 
