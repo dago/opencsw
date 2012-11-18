@@ -488,7 +488,7 @@ endef
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
+	$(_DBG)cswproto $(if $(INCLUDE_COMMONDIRS),,-c $(GARDIR)/etc/commondirs-$(GARCH)) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
 
 # pathfilter lives in bin/pathfilter and takes care of including/excluding paths from
 # a prototype (see "perldoc bin/pathfilter"). We employ it here to:
@@ -708,8 +708,9 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
 
 
-# findlicensefile - Find an existing file for a given license name
-#
+# findlicensefile - Find an existing file for a given relative license file name
+# Arguments:
+#  $(1)  A filename to be used for licenses
 define findlicensefile
 $(strip 
   $(if $(1),$(firstword $(realpath 
@@ -719,33 +720,31 @@ $(strip
 )
 endef
 
-define licensefile
-$(strip 
-  $(or 
-    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)))),
-    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))),
-  ) 
+# licensefile - Find an existing license file for a given package name
+define licensefiles
+$(foreach L,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)),$(LICENSE),$(LICENSE_FULL)),\
+  $(or $(call findlicensefile,$L),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file $L for package $(1))))\
 )
 endef
 
 merge-license-%: $(WORKDIR)
 	$(_DBG)$(if $(and $(LICENSE_$*),$(LICENSE_FULL_$*)),$(error Both LICENSE_$* and LICENSE_FULL_$* have been specified where only one is allowed)) \
 		$(if $(and $(filter $*,$(_PKG_SPECS)),$(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*))), \
-		LICENSEFILE=$(or $(call licensefile,$*),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file for package $*))); \
+		LICENSEFILES="$(call licensefiles,$*)"; \
 		LICENSEDIR=$(call licensedir,$*); \
-		$(if $(LICENSE_TEXT_$*)$(LICENSE_TEXT),\
+		$(if $(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT)),\
 		  umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
 		  echo "$(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT))" > $(PKGROOT)$$LICENSEDIR/license;\
 		  echo "$(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT))" > $(WORKDIR)/$*.copyright;\
 		,\
-		  if [ -n "$$LICENSEFILE" ]; then \
+		  if [ -n "$$LICENSEFILES" ]; then \
 		    $(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
-		      if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
+		      catlicense $LICENSEFILES > $(WORKDIR)/$*.copyright;, \
 		      echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
 		    ) \
 		    umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
 		    rm -f $(PKGROOT)$$LICENSEDIR/license && \
-		    cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
+		    catlicense $$LICENSEFILES > $(PKGROOT)$$LICENSEDIR/license; \
 		  fi \
 		) \
 	)

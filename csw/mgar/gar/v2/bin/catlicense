@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ -f "$1" ]; then
+  cat "$1"
+  shift
+fi
+
+while [ $# -ge 1 ]; do
+  if [ -f "$1" ]; then
+    echo "\n---\n"
+    cat "$1"
+  fi
+  shift
+done
