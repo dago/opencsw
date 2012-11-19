@@ -437,6 +437,8 @@ class InstallContentsImporter(object):
     for sqo_srv4 in res:
       for srv4_in_cat in sqo_srv4.in_catalogs:
         srv4_in_cat.destroySelf()
+      sqo_srv4.RemoveAllCswFiles()
+      sqo_srv4.destroySelf()
 
   def ImportFromFile(self, in_fd, show_progress=False):
     logging.debug("Unpickling data")
