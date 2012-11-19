@@ -1,3 +1,4 @@
+# $Id$
 #
 # Long-term TODO:
 # See branches/sync-pkgname for an attempt to sync the CSW pkg name to
@@ -25,8 +26,7 @@ DISTFILES = $(DISTNAME).tar.gz
 PACKAGES += CSWlibiconv2
 CATALOGNAME_CSWlibiconv2 = libiconv2
 SPKG_DESC_CSWlibiconv2 = GNU iconv library, libiconv.so.2
-PKGFILES_CSWlibiconv2 += $(call pkgfiles_lib,libiconv.so.2)
-OBSOLETED_BY_CSWlibiconv2 += CSWiconv
+PKGFILES_CSWlibiconv2 += $(call pkgfiles_lionv2 += CSWiconv
 
 PACKAGES += CSWlibcharset1
 CATALOGNAME_CSWlibcharset1 = libcharset1
@@ -34,8 +34,7 @@ SPKG_DESC_CSWlibcharset1 = GNU iconv charset library, libcharset.so.1
 PKGFILES_CSWlibcharset1 += $(call pkgfiles_lib,libcharset.so.1)
 # Now *this* time it is ok, iconv is the only package that is allowed to ship this!
 CHECKPKG_OVERRIDES_CSWlibcharset1 += disallowed-path|opt/csw/lib/charset.alias
-PKGFILES_CSWlibcharset1 += $(call baseisadirs,$(libdir),charset\.alias)
-OBSOLETED_BY_CSWlibcharset1 += CSWiconv
+PKGFILES_CSWlibcharset1 += $(call baseisadirs,$(libdir)set1 += CSWiconv
 
 PACKAGES += CSWlibiconv-dev
 CATALOGNAME_CSWlibiconv-dev = libiconv_dev
@@ -52,23 +51,15 @@ SPKG_DESC_CSWlibiconv-utils = GNU iconv utility programs
 PKGFILES_CSWlibiconv-utils += $(bindir)/.*
 PKGFILES_CSWlibiconv-utils += .*iconv\.1.*
 PKGFILES_CSWlibiconv-utils += .*/libiconv\.mo
-PKGFILES_CSWlibiconv-utils += $(call baseisadirs,$(libdir),preloadable_libiconv\.so)
-# The SONAME of preloadable_libiconv.so is set to libiconv.so.0, although it doesn't
-# matter in any way as this library is only used for LD_PRELOAD and is never being
+PKGFILES_CSWlibiconv-utils += $(call baseisadirs,$(libdir),preloadab
+# The SONAME of preloadable_libiconv.so is set to libiconv.so.0, although it
+# doesn't matter in any way as this library is only used for LD_PRELOAD and is
+# never being is never being
 # linked against during compile time.
 CHECKPKG_OVERRIDES_CSWlibiconv-utils += soname-not-part-of-filename|soname=libiconv.so.0|filename=preloadable_libiconv.so
 CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibintl8
-
-# Removing this dependency to break a dependency cycle.
-# See:
-#  - http://lists.opencsw.org/pipermail/devel/2011-August/020098.html
-#
-# "CSWiconv needs CSWlibiconv-utils which needs CSWlibintl8 which needs
-# CSWiconv"
-#
-# OBSOLETED_BY_CSWlibiconv-utils += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibiconv-utilsils += CSWiconv
 
 BUILD64_LIBS_ONLY = 1
 
@@ -88,7 +79,17 @@ BUILD64_LIBS_ONLY = 1
 EXTRA_CPPFLAGS = -D_REENTRANT
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-rpath
+CONFIGURE_ARGS += # bratislava settings
+COMMON_PKG_DEPENDS =
+INCLUDE_COMMONDIRS = 1
+CHECKPKG_OVERRIDES_CSWlibcharset1 += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWlibcharset1 += disallowed-path
+CHECKPKG_OVERRIDES_CSWlibiconv-dev += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWlibiconv-dev += disallowed-path
+CHECKPKG_OVERRIDES_CSWlibiconv-utils += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWlibiconv-utils += disallowed-path
+CHECKPKG_OVERRIDES_CSWlibiconv2 += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWlibiconv2 += disallowed-GS += --disable-rpath
 
 include gar/category.mk
 
@@ -104,4 +105,3 @@ post-merge:
 	@# Make the 64 bit charset-alias the same as the one for 32 bit
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/charset.alias
 	gln -s ../charset.alias $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/charset.alias
-	@$(MAKECOOKIE)
