@@ -11,9 +11,8 @@ define BLURB
 endef
 
 MASTER_SITES =  http://www.open-mpi.org/software/hwloc/v1.5/downloads/
-DISTFILES  = $(DISTNAME).tar.gz
-
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+DISTFILES  = $BUILD64 = 1
+ISAEXECc
 BUILD64_LIBS_ONLY = 1
 
 PACKAGES  = CSWhwloc
@@ -36,13 +35,12 @@ RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibhwloc5
 RUNTIME_DEP_PKGS_CSWlibhwloc5 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWhwloc-dev  = CSWhwloc
-RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc5
-
-#BUILDDEPS = CSWautoconf
+RUNTIME_DEP_PKGS_CSWhwloc-deGARCOMPILER = GNU
+COMMON_PKG_DEPENDS =
+INCLUDE_COMMONDIRS = 1DDEPS = CSWautoconf
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-cairo
 #CONFIGURE_ARGS += --disable-visibility
 
-include gar/category.mk
-
+includ
