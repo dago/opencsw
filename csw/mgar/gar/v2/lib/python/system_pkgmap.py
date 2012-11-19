@@ -506,6 +506,13 @@ class InstallContentsImporter(object):
       self.fake_srv4_cache[key] = sqo_srv4
     return self.fake_srv4_cache[key]
 
+  def _GetPbar(self, show_progress):
+    if show_progress:
+      pbar = progressbar.ProgressBar()
+    else:
+      pbar = mute_progressbar.MuteProgressBar()
+    return pbar
+
   def _ImportFiles(self, data, include_prefixes=None, show_progress=False):
     logging.debug("_ImportFiles()")
     osrel = data["osrel"]
@@ -521,10 +528,7 @@ class InstallContentsImporter(object):
       progressbar_divisor = 1
     update_period = 1L
     count = itertools.count()
-    if show_progress:
-      pbar = progressbar.ProgressBar()
-    else:
-      pbar = mute_progressbar.MuteProgressBar()
+    pbar = self._GetPbar(show_progress)
     pbar.maxval = len(contents) / progressbar_divisor
     pbar.start()
     cleaned_pkgs = set()
@@ -574,12 +578,19 @@ class InstallContentsImporter(object):
             srv4_file=sqo_srv4)
         srv4_files_to_catalog.add(sqo_srv4)
     pbar.finish()
-    logging.debug(
-        "Registering all the fake srv4 files in all catalogs.")
+    logging.info(
+        "Registering the fake svr4 files (of system packages) "
+        "in all catalogs.")
+    count = itertools.count()
+    pbar = self._GetPbar(show_progress)
+    pbar.maxval = len(srv4_files_to_catalog)
+    pbar.start()
     for sqo_srv4 in srv4_files_to_catalog:
       for sqo_catrel in m.CatalogRelease.select():
         catalog.AddSrv4ToCatalog(
             sqo_srv4, osrel, arch, sqo_catrel.name)
+      pbar.update(count.next())
+    pbar.finish()
 
   def ComposeFakeSrv4Md5(self, pkgname, osrel, arch):
     """Returns a fake md5 sum of a fake srv4 package.
