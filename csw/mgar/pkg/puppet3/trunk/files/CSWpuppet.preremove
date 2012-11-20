@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# $Id: CSWpuppet.preremove 6316 2009-09-16 10:56:09Z wahwah $
+#
+
+# Replaced with INITSMF
+
+exit 0
+
+/usr/sbin/svcadm disable svc:network/puppetd 2>/dev/null || /bin/true
+/usr/sbin/svccfg delete svc:network/puppetd || /bin/true

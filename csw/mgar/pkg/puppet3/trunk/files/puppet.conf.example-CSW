@@ -1,0 +1,9 @@
+# puppet.conf
+#
+# points puppet at OpenCSW default paths
+
+[main]
+    confdir = /etc/opt/csw/puppet
+    config = $confdir/puppet.conf
+    vardir = /var/opt/csw/puppet
+    ssldir = $vardir/ssl
