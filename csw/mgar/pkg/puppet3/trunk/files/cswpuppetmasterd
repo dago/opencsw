@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+#   2011-05-06 Mark Phillips
+#     * Check if we're on Solaris 10 before including the smf_include stuff
+#
+#   2011-03-06 Mark Phillips
+#     * Added getprop
+#
+#   2009-11-23 Gary Law
+#     * Original version
+
+# Check if we're on 10; therefore SMF
+if [ -x /usr/sbin/svcadm ]; then
+    . /lib/svc/share/smf_include.sh
+fi
+
+prefix=/opt/csw
+exec_prefix=/opt/csw
+sysconfdir=/etc/opt/csw
+sbindir=/opt/csw/sbin
+
+pidfile=`$prefix/bin/puppet master --genconf | awk '/pidfile/ { print $3 }'`
+
+getprop() {
+    val=`/usr/bin/svcprop -p $1 $SMF_FMRI`
+    [ -n "$val" ] && echo $val
+}
+
+case "$1" in
+start)
+    cd /
+    # Start daemons.
+
+    printf "Starting Puppet server services:"
+    ${sbindir}/puppetmasterd
+
+    printf " puppetmaster"
+    echo ""
+    ;;
+stop)
+    printf "Stopping Puppet server services:"
+    kill `cat $pidfile`
+
+    printf " puppetmasterd"
+    echo ""
+    ;;
+restart)
+    printf "Restarting Puppet server services:"
+    kill -HUP `cat $pidfile`
+
+    printf " puppetmasterd"
+    echo ""
+    ;;
+reload)
+    printf "Reloading Puppet server services:"
+
+    kill -HUP `cat $pidfile`
+
+	printf " puppetmasterd"
+	echo ""
+    ;;
+status)
+    if [ -f $pidfile ]; then
+        pid=`cat $pidfile`
+        curpid=`pgrep puppetmasterd`
+        if [ "$pid" -eq "$curpid" ]; then
+            exit 0
+        else
+            exit 1
+        fi
+    else
+        exit 1
+    fi
+esac
+exit 0
+
