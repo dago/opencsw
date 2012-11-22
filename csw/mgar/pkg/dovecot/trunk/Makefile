@@ -53,8 +53,8 @@ REINPLACE_MATCH_ul = /usr/local
 REINPLACE_WITH_ul = $(prefix)
 REINPLACE_FILES_ul += src/plugins/fts/decode2text.sh
 REINPLACE_FILES_ul += doc/wiki/LDA.Sendmail.txt
-REINPLACE_FILES_ul += doc/dovecot/wiki/CompilingSource.txt
-REINPLACE_FILES_ul += doc/dovecot/wiki/LDA.Sendmail.txtext } \
+REINPLACE_FILES_ul += doc/wiki/CompilingSource.txt
+REINPLACE_FILES_ul += doc/wiki/LDA.Sendmail.txtext } \
 	 { print }'
 
 # No test suite for Dovecot available
