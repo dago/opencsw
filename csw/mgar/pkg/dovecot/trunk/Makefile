@@ -94,8 +94,8 @@ pre-install-modulated:
 		s| /var/run| /var/opt/csw/run|; \
 		s| /etc/ssl| /etc|; \
 		s| /etc/ssl| /opt/csw/ssl|; \
-		s| /usr/libex/dovecot2|; \
-		s| /usr/lib/dovecot| /opt/csw/lib/dovecot2/opt/csw/lib/dovecot|; \
+		s| /usr/libex/dovecot|; \
+		s| /usr/lib/dovecot| /opt/csw/lib/dovecot/opt/csw/lib/dovecot|; \
 		s| /usr/local| /opt/csw|;' \
 		$(WORKSRC)/doc/example-config/dovecot.conf
 	perl -pi etc -e '\
