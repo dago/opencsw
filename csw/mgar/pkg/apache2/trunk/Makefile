@@ -87,12 +87,11 @@ SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
 
-RUNTIME_DEP_PKGS_CSWapache2       += CSWlibiconv2 CSWosslutils
+RUNTIME_DEP_PKGS_CSWapache2       += CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWliblber2-4-2 CSWlibldap2-4-2 
 # the loadable ldap module dynamically opens files in this apr sub-package
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-ldap
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibssl1-0-0 CSWlibz1
-RUNTIME_DEP_PKGS_CSWapache2       += CSWbdb48 CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-0 CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c CSWperl CSWapache2-utils
 # Note: This is required because apxs uses ap{r,u}-1-config
@@ -103,9 +102,6 @@ RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-dev  = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWapache2-utils += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWperl
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
@@ -113,7 +109,7 @@ RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2 CSWapache2c
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWap2prefork
 RUNTIME_DEP_PKGS_CSWap2worker     += CSWlibapr1-0 CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWap2worker	  += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWlibiconv2 CSWapache2c
+RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
@@ -138,9 +134,6 @@ CHECKPKG_OVERRIDES_CSWapache2-dev += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWap2suexec += catalogname-does-not-match-pkgname|pkgname=CSWap2suexec|catalogname=ap2_suexec|expected-catalogname=ap2suexec
 CHECKPKG_OVERRIDES_CSWap2worker += catalogname-does-not-match-pkgname|pkgname=CSWap2worker|catalogname=ap2_worker|expected-catalogname=ap2worker
 CHECKPKG_OVERRIDES_CSWap2prefork += catalogname-does-not-match-pkgname|pkgname=CSWap2prefork|catalogname=ap2_prefork|expected-catalogname=ap2prefork
-
-# We need this to get bdb48/lib into the runpath
-EXTRA_LIB = $(prefix)/bdb48/lib
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
