@@ -5,7 +5,8 @@ cyrus_imapd (2.4.16,REV=2012.11.24)
   * Fixed dependencies problems:
     - missing pm_cyrus dependency for cyrus_imapd_utils
     - netsnmpd dependency mistake.
-  Ã Removed config2header patch as it was applied upstream.
+  * Removed config2header patch as it was applied upstream.
+  * Manually updated autosieve patch.
 
  -- Yann Rouillard <yann@opencsw.org>  Sat, 24 Nov 2012 15:12:49 +0100
 
