@@ -163,7 +163,7 @@ DISTFILES += compile_et et_c.awk et_h.awk
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
 #PATCHFILES = cyrus-imapd-$(VERSION)-autocreate-0.10-0.diff cyrus-imapd-$(VERSION)-autosieve-0.6.0.diff
-PATCHFILES = cyrus-imapd-2.4.4-autocreate-0.10-0.patch cyrus-imapd-2.4.4-autosieve-0.6.0.patch
+PATCHFILES = cyrus-imapd-2.4.4-autocreate-0.10-0.patch cyrus-imapd-2.4.16-autosieve-0.6.0.patch
 
 # This patch makes cyrus more tolerant with mails containing
 # invalid From headers
