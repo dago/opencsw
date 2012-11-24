@@ -182,12 +182,6 @@ PATCHFILES += restore_allowplaintext_default.patch
 #   <http://www.opencsw.org/mantis/view.php?id=3766>
 PATCHFILES += 0001-Force-linkage-to-libperl.so.patch
 
-# Fix config2header so it works with argument like
-# "CC=/path/to/CC arg1 arg2"
-# mandatory to work with assignment like
-# "CC="/opt/SUNWspro/bin/cc -xrunpath"
-PATCHFILES += 0002-fix-config2header.patch
-
 # Changes location of imapd.conf from /etc/imapd.conf to
 # /etc/opt/csw/cyrus/imapd.conf in mkimap (mkdirs)
 PATCHFILES += cyrus-imapd-fix-path-in-mkimap.patch
