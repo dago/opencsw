@@ -44,19 +44,22 @@ PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/cyrus.conf.CSW
 PKGFILES_CSWcyrusimapd += /etc$(prefix)/init.d/cswcyrus
 PKGFILES_CSWcyrusimapd += /var$(prefix)/svc/manifest/network/cswcyrus\.xml
 PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus.*
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibnetsnmpmibs25
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibnetsnmp25
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWbdb48
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcreposix0
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcreposix0
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibwrap1
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibz1
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWnetsnmp
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibnetsnmpagent25
+
 
 # Expected catalogname: cyrusimapd, not cyrus_imapd
 CHECKPKG_OVERRIDES_CSWcyrusimapd += catalogname-does-not-match-pkgname
@@ -72,11 +75,12 @@ RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcreposix0
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibz1
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWpmcyrus
 # Expected catalogname: cyrusimapdutils, not cyrus_imapd_utils
 CHECKPKG_OVERRIDES_CSWcyrusimapdutils += catalogname-does-not-match-pkgname
 
@@ -87,7 +91,7 @@ PKGFILES_CSWpmcyrus += $(mandir)/man3/Cyrus::.*
 PKGFILES_CSWpmcyrus += $(docdir)/pm_cyrus/.*
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWbdb48
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpmcyrus += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWperl
 RUNTIME_DEP_PKGS_CSWpmcyrus += CSWlibsasl2-2
 
@@ -124,6 +128,7 @@ CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWpmcyrus += catalogname-does-not-match-pkgname|pkgname=CSWpmcyrus|catalogname=pm_cyrus|expected-catalogname=pmcyrus
 CHECKPKG_OVERRIDES_CSWcyrusimapdutils += catalogname-does-not-match-pkgname|pkgname=CSWcyrusimapdutils|catalogname=cyrus_imapd_utils|expected-catalogname=cyrusimapdutils
 CHECKPKG_OVERRIDES_CSWcyrusimapd += catalogname-does-not-match-pkgname|pkgname=CSWcyrusimapd|catalogname=cyrus_imapd|expected-catalogname=cyrusimapd
+
 
 
 
@@ -196,6 +201,9 @@ PATCHFILES += cyradmrc.pl-path-modification.patch
 
 ##### Build and installation information #####
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+
 # to support shared /opt/csw setup
 # see http://wiki.opencsw.org/shared-opt-csw-setup
 localstatedir   = /var$(prefix)
@@ -263,6 +271,7 @@ pre-merge:
 	@$(MAKECOOKIE)
 
 post-merge: install-tools cyrus-rename install-docs libexec-in-sbin install-cyrus-directory install-additional-files fix2build move-man8
+	@$(MAKECOOKIE)
 
 
 # Let's install the files
@@ -274,7 +283,6 @@ install-additional-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswcyrus.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswcyrus.xml"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/imapd.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/imapd.conf.CSW"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cyrus.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/cyrus.conf.CSW"
-	@$(MAKECOOKIE)
 
 
 # Some binaries put under libexec/cyrus should be put under sbin
@@ -285,7 +293,6 @@ libexec-in-sbin:
 			echo $(CYRUS_DAEMONS) | grep -w $$E >/dev/null && continue; \
 			[ -L $$E ] || ( mv -f $$E ../../sbin/$$E && ln -sf ../../sbin/$$E ); \
 		done )
-	@$(MAKECOOKIE)
 
 # let's create the directory structure where mails
 # and other cyrus stuffs will be stored
@@ -294,7 +301,6 @@ install-cyrus-directory:
 		config/msg config/ptclient mail mail/stage.; do \
 		mkdir -p "$(PKGROOT)/$(localstatedir)/cyrus/$$D"; \
 	done
-	@$(MAKECOOKIE)
 
 # Some fixes and cleaning to correctly build the package
 fix2build:
@@ -321,7 +327,6 @@ cyrus-rename:
 	( for FILE in mkdirs mknewsgroups dohash undohash rehash; do \
 		mv $(PKGROOT)/$(sbindir)/$$FILE $(PKGROOT)/$(sbindir)/cyrus-$$FILE; \
 	  done )
-	@$(MAKECOOKIE)
 
 
 # we install the documentation
@@ -333,7 +338,6 @@ install-docs:
 	  done )
 	# Fix path
 	gsed -i -e 's,/usr/local/cyrus/bin,$(sbindir),' $(PKGROOT)$(docdir)/cyrus_imapd/internal/replication_examples.html
-	@$(MAKECOOKIE)
 
 
 # we install binary under tools as part of the package
@@ -349,16 +353,16 @@ install-tools:
 	    perl -pi -e 's/^#!\/usr\/(local\/)?bin\/perl/#!\/opt\/csw\/bin\/perl/' $(PKGROOT)$(sbindir)/$$FILE; \
 	    done )
 	gsed -i -e 's,/usr/local/etc/,/etc/opt/csw/,' $(PKGROOT)$(libdir)/perl/csw/Cyrus/IMAP/Shell.pm
-	@$(MAKECOOKIE)
 
 # The manpages in 8 are moved to 1m, since cyrus' imapd(8) clashes
 # with courier's. In the future, this might be solved using
 # alternatives. See also
 # http://lists.opencsw.org/pipermail/maintainers/2012-January/015940.html
 move-man8:
-	[ -d $(PKGROOT)$(mandir)/man8 ] && mv $(PKGROOT)$(mandir)/man8 $(PKGROOT)$(mandir)/man1m
+	[ ! -d $(PKGROOT)$(mandir)/man8 ] || mv $(PKGROOT)$(mandir)/man8 $(PKGROOT)$(mandir)/man1m
 	if [ -d $(PKGROOT)$(mandir)/man1m ] ; then \
 		for f in $(PKGROOT)$(mandir)/man1m/*.8 ; do \
+			[ "$$f" = "$(PKGROOT)$(mandir)/man1m/*.8" ] && break; \
 			f_no_ext="`echo $$f | sed 's/\.8//'`" ; \
 			gsed 's/^\(\.TH.*\)8\(.*\)/\11M\2/' $${f} > $${f_no_ext}.1m ; \
 			rm $${f} ; \
@@ -366,4 +370,3 @@ move-man8:
 	fi
 # fix references in man pages
 	find $(PKGROOT)$(mandir) -type f -exec gsed -i 's/(8)/(1m)/g' \{\} \;
-#	@$(MAKECOOKIE)
