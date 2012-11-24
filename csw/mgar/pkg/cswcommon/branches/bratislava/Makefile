@@ -1,28 +1,23 @@
 # $Id$
 
 NAME = cswcommon
-VERSION = 1.6
+VERSION = 1.7
 GARTYPE = v2
 
-DESCRIPTION = Installs base CSW filesystem directories, symlinks and files
+DESCRIPTION = Obsolete, empty package.
 define BLURB
 endef
 
-#MASTER_SITES = http://mirror.opencsw.org/opencsw/current/$(shell uname -p)/5.8
-# MASTER_SITES = http://mirror.opencsw.org/opencsw/current/sparc/5.8/
-# DISTFILES  = common-1.5,REV=2010.12.11-SunOS5.8-sparc-CSW.pkg
-
 PACKAGES = CSWcommon
 
+VENDOR_URL = http://www.opencsw.org/
+LICENSE_TEXT = This package is distributed in public domain
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
-INSTALL_SCRIPTS = custom
+INSTALL_SCRIPTS =
 TEST_SCRIPTS =
 
-CHECKPKG_OVERRIDES_CSWcommon += disallowed-path
+ARCHALL_CSWcommon =
+COMMON_PKG_DEPENDS =
 
 include gar/category.mk
-
-install-custom:
-	$(FILEDIR)/build_common.sh $(GARCH) $(DESTDIR)
-	@$(MAKECOOKIE)
