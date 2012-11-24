@@ -17,7 +17,7 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS =
 TEST_SCRIPTS =
 
-ARCHALL_CSWcommon =
+ARCHALL_CSWcommon = 1
 COMMON_PKG_DEPENDS =
 
 include gar/category.mk
