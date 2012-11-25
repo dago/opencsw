@@ -622,7 +622,7 @@ def main():
             os.unlink(existing_path)
           else:
             logging.debug("Not unlinking %s", existing_path)
-        logging.debug("Existing files: %s", len(existing_files))
+        logging.debug("Number of existing files: %s", len(existing_files))
         for pkg in pkgs:
           src_path = os.path.join(allpkgs_dir, pkg.basename)
           if not os.path.exists(src_path):
