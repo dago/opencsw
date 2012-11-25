@@ -88,7 +88,7 @@ SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWosslutils
-RUNTIME_DEP_PKGS_CSWapache2       += CSWliblber2-4-2 CSWlibldap2-4-2 
+RUNTIME_DEP_PKGS_CSWapache2       += CSWlibldap2-4-2 
 # the loadable ldap module dynamically opens files in this apr sub-package
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-ldap
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibssl1-0-0 CSWlibz1
@@ -108,7 +108,6 @@ RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2 CSWapache2c
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWap2prefork
 RUNTIME_DEP_PKGS_CSWap2worker     += CSWlibapr1-0 CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWap2worker	  += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
