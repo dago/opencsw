@@ -34,6 +34,7 @@ render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
 
 OPENCSW_ROOT = "/home/mirror/opencsw-official"
 ALLPKGS_DIR = os.path.join(OPENCSW_ROOT, "allpkgs")
+CAN_UPLOAD_TO_CATALOGS = frozenset(["unstable", "kiel", "bratislava"])
 
 def ConnectToDatabase():
   configuration.SetUpSqlobjectConnection()
@@ -146,7 +147,7 @@ class Srv4CatalogAssignment(object):
     stuck and I don't know why.
     """
     configuration.SetUpSqlobjectConnection()
-    if catrel_name != 'unstable':
+    if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
       # We should return an error message instead.
       raise web.notfound()
