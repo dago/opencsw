@@ -38,6 +38,7 @@ urls_html = (
   r'/catalognames/([^/]+)/', 'Catalogname',
 )
 urls_rest = (
+  r'/rest/catalogs/', 'RestCatalogList',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
@@ -438,6 +439,21 @@ class Srv4ByCatAndPkgname(object):
       return cjson.encode(None)
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
+
+class RestCatalogList(object):
+  def GET(self):
+    archs = models.Architecture.select()
+    osrels = models.OsRelease.select()
+    catrels = models.CatalogRelease.select()
+    catalogs = []
+    for catrel in catrels:
+      for arch in archs:
+        if arch.name in ('all'): continue
+        for osrel in osrels:
+          if osrel.full_name == 'unspecified': continue
+          key = [osrel.short_name, arch.name, catrel.name]
+          catalogs.append(key)
+    return cjson.encode(catalogs)
 
 
 web.webapi.internalerror = web.debugerror
