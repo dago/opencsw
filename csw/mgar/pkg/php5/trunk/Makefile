@@ -1,5 +1,6 @@
 NAME     = php5
 VERSION  = 5.3.18
+CATEGORIES  = lang
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
@@ -59,6 +60,7 @@ BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWlibxpm-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-0
+BUILD_DEP_PKGS += CSWlibaspell-dev
 
 PRESERVECONF = $(sysconfdir)/php.ini $(sysconfdir)/pear.conf
 PRESERVECONF += /opt/csw/apache2/etc/extra/httpd-php5.conf
@@ -184,7 +186,7 @@ PKGFILES_CSWphp5-pdoodbc += .*/lib/php/extensions/.*/pdo_odbc.so
 PKGFILES_CSWphp5-pdoodbc += .*extensions/pdo_odbc
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pdopgsql,CSWlibpq CSWphp5-pdo CSWlibz1))
+$(eval $(call php5_subpackage,pdopgsql,CSWlibpq5 CSWphp5-pdo CSWlibz1))
 PKGFILES_CSWphp5-pdopgsql += .*/lib/php/extensions/.*/pdo_pgsql.so
 PKGFILES_CSWphp5-pdopgsql += .*extensions/pdo_pgsql
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
@@ -194,7 +196,7 @@ PKGFILES_CSWphp5-pdosqlite += .*/lib/php/extensions/.*/pdo_sqlite.so
 PKGFILES_CSWphp5-pdosqlite += .*extensions/pdo_sqlite
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pgsql,CSWlibpq CSWlibz1))
+$(eval $(call php5_subpackage,pgsql,CSWlibpq5 CSWlibz1))
 $(eval $(call php5_subpackage,posix,CSWlibz1))
 $(eval $(call php5_subpackage,pspell,CSWaspell CSWlibz1))
 $(eval $(call php5_subpackage,readline,CSWlibreadline6 CSWlibncurses5 CSWlibz1))
@@ -256,14 +258,14 @@ CONFIGURE_ARGS += --enable-json=shared
 CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-pcntl=shared
-CONFIGURE_ARGS += --enable-pdo=shared
+#CONFIGURE_ARGS += --enable-pdo=shared
 CONFIGURE_ARGS += --enable-phar=shared
 CONFIGURE_ARGS += --enable-posix=shared
 CONFIGURE_ARGS += --enable-session=shared
 CONFIGURE_ARGS += --enable-shmop=shared
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
-CONFIGURE_ARGS += --enable-sqlite-utf8
+#CONFIGURE_ARGS += --enable-sqlite-utf8
 CONFIGURE_ARGS += --enable-sysvmsg=shared
 CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
@@ -306,7 +308,7 @@ CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(bindir)/
-CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
+#CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-pear=shared
 CONFIGURE_ARGS += --with-pgsql=shared,$(bindir)/
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
