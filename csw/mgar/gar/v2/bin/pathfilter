@@ -21,18 +21,40 @@ my $help = 0;
 
 my ($hasinclude, $hasexclude);
 my @isaexec;
-my @selection;
+my @selection_args;
 my $result = GetOptions(
 	'h|help' => \$help,
 	'e|isaexec=s' => \@isaexec,
-	'i|include=s' => sub { push @selection, [ 'i', $_[1] ]; $hasinclude = 1 },
-	'I=s' => sub { push @selection, [ 'i', quotemeta( $_[1] ) ]; $hasinclude = 1 },
-	'x|exclude=s' => sub { push @selection, [ 'x', $_[1] ]; $hasexclude = 1 },
-	'X=s' => sub { push @selection, [ 'x', quotemeta( $_[1] ) ]; $hasexclude = 1 },
+	'i|include=s' => sub { push @selection_args, [ 'i', $_[1] ]; $hasinclude = 1 },
+	'I=s' => sub { push @selection_args, [ 'i', quotemeta( $_[1] ) ]; $hasinclude = 1 },
+	'x|exclude=s' => sub { push @selection_args, [ 'x', $_[1] ]; $hasexclude = 1 },
+	'X=s' => sub { push @selection_args, [ 'x', quotemeta( $_[1] ) ]; $hasexclude = 1 },
 ) or pod2usage( 1 );
 
 # Exclude everything by default if there are only include rules
-push @selection, [ 'x', '.*' ] if( $hasinclude && !$hasexclude );
+push @selection_args, [ 'x', '.*' ] if( $hasinclude && !$hasexclude );
+
+# @selection = map { [ $_->[0], qr/^$_->[1]$/ ] } @selection;
+
+# This routine anchors all regexps at start and end and combines seqential includes/excludes into a single regex
+my @selection;
+my @seltemp;
+my $mode;
+foreach my $c (@selection_args) {
+  my ($type, $re) = @$c;
+  if( $mode && $mode ne $type ) {
+    # flush
+    my $mre = '^(' . join( '|', @seltemp ) . ')$';
+    push @selection, [ $mode, qr/$mre/ ];
+    @seltemp = ();
+    $mode = $type;
+  }
+  $mode = $type;
+  push @seltemp, $re;
+}
+
+my $mre = '^(' . join( '|', @seltemp ) . ')$';
+push @selection, [ $mode, qr/$mre/ ];
 
 pod2usage(-verbose => 2) if $help;
 
@@ -67,9 +89,9 @@ while( <STDIN> ) {
   foreach my $selector (@selection) {
     my ($type, $regex) = @$selector;
     if( $type eq 'i' ) {
-      last SELECTION if( $path =~ /^$regex$/ );
+      last SELECTION if( $path =~ /$regex/ );
     } elsif( $type eq 'x' ) {
-      next NEXTLINE if( $path =~ /^$regex$/ );
+      next NEXTLINE if( $path =~ /$regex/ );
     } else {
       croak( "The type '$type' is unknown (either 'x' or 'i' is allowed)." );
     }
