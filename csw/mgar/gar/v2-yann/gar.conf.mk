@@ -18,7 +18,7 @@ THISHOST := $(shell /usr/bin/uname -n)
 
 # On these platforms packages are built.
 # They will include binaries for all ISAs that are specified for the platform.
-PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS ?= solaris10-sparc solaris10-i386
 
 # This is the platform we are currently building. It is either set when
 # invoked from "gmake platforms" or when you build a package on a host
@@ -690,7 +690,7 @@ ifndef NOISALIST
 RUNPATH_ISALIST ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 endif
 
-LINKER_MAP_RELEASE-5.10 ?= solaris10u8
+LINKER_MAP_RELEASE-5.10 ?= solaris10
 LINKER_MAP_RELEASE ?= $(LINKER_MAP_RELEASE-$(GAROSREL))
 
 LINKER_MAPS ?= $(foreach MAP,$(LINKER_MAP_RELEASE) $(EXTRA_LINKER_MAPS) $(EXTRA_LINKER_MAPS-$(GAROSREL)),-M $(abspath $(GARDIR)/lib/map.$(LINKER_MAP_RELEASE)))
@@ -752,8 +752,9 @@ GNOME_SUBV   = $(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')
 GNOME_MIRROR = $(GNOME_ROOT)/$(GNOME_PROJ)/$(GNOME_SUBV)/
 
 # SourceForge
-SF_PROJ     ?= $(NAME)
-SF_MIRRORS  ?= http://downloads.sourceforge.net/$(SF_PROJ)/
+$(if $(SF_PROJ),$(warning SF_PROJ is deprecated, please use SF_PROJECT instead))
+SF_PROJECT  ?= $(or $(SF_PROJ),$(NAME))
+SF_MIRRORS  ?= http://downloads.sourceforge.net/$(SF_PROJECT)/
 # Keep this for compatibility
 SF_MIRROR    = $(firstword $(SF_MIRRORS))
 SF_PROJECT_SHOWFILE ?= http://sourceforge.net/project/showfiles.php?group_id
@@ -771,9 +772,10 @@ BERLIOS_MIRROR ?= http://download.berlios.de/$(BERLIOS_PROJECT)/ http://download
 GNU_SITE     = http://ftp.gnu.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
-GNU_PROJ    ?= $(NAME)
-GNU_MIRROR   = $(GNU_GNUROOT)/$(GNU_PROJ)/
-GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GNU_PROJ)/
+$(if $(GNU_PROJ),$(warning GNU_PROJ is deprecated, please use GNU_PROJECT instead))
+GNU_PROJECT ?= $(or $(GNU_PROJ),$(NAME))
+GNU_MIRROR   = $(GNU_GNUROOT)/$(GNU_PROJECT)/
+GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GNU_PROJECT)/
 
 # CPAN
 CPAN_SITES  += http://search.cpan.org/CPAN

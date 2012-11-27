@@ -406,9 +406,15 @@ class PackageTest(unittest.TestCase):
     self.assertEquals("stuf_with_some_dashes",
                       opencsw.PkgnameToCatName("STUFwith-some-dashes"))
 
-  def testPkgnameToCatName5(self):
+  def testPkgnameToCatNameDifferentiatesByDigit(self):
     self.assertNotEquals(opencsw.PkgnameToCatName("SUNWi4rf"),
                          opencsw.PkgnameToCatName("SUNWi7rf"))
+
+  def testPkgnameToCatNameDigit(self):
+    self.assertEquals("sunw_i8rf", opencsw.PkgnameToCatName("SUNWi8rf"))
+
+  def testPkgnameToCatNameTwoDigits(self):
+    self.assertEquals("sunw_i13rf", opencsw.PkgnameToCatName("SUNWi13rf"))
 
   def test_4(self):
     pkginfo_dict = opencsw.ParsePkginfo(TEST_PKGINFO.splitlines())

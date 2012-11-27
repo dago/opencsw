@@ -209,7 +209,7 @@ class Indexer(object):
       pkgnames.extend(parts[6:])
     elif file_type == '?':
       # Does not follow the specfication.  A specimen:
-      # /opt/csw/gcc3/lib/gcc/sparc-sun-solaris2.8/3.4.6/include 
+      # /opt/csw/gcc3/lib/gcc/sparc-sun-solaris2.8/3.4.6/include
       # ? none CSWgcc3g77 CSWgcc3core
       logging.warning("File type of %s is '?', assuming it's a directory.",
                       parts[0])
@@ -301,7 +301,7 @@ class Indexer(object):
   def _GetArch(self):
     return self._GetUname("-p")
 
-  def GetDataStructure(self, srv4_pkgcontent_stream, srv4_pkginfo_stream, 
+  def GetDataStructure(self, srv4_pkgcontent_stream, srv4_pkginfo_stream,
                        ips_pkgcontent_stream, ips_pkginfo_stream,
                        osrel, arch, show_progress=False):
     """Gets the data structure to be pickled.
@@ -316,7 +316,7 @@ class Indexer(object):
     }
     if ips_pkginfo_stream and ips_pkgcontent_stream:
       data["contents"].extend(self._ParsePkgContents(ips_pkgcontent_stream, self._ParseIpsPkgContentsLine, show_progress))
-      data["pkginfo"].update(self._ParsePkgInfos(ips_pkgcontent_stream, self._ParseIpsPkgListLine, show_progress))
+      data["pkginfo"].update(self._ParsePkgInfos(ips_pkginfo_stream, self._ParseIpsPkgListLine, show_progress))
 
     return data
 
@@ -328,12 +328,12 @@ class Indexer(object):
     if self.osrel in common_constants.IPS_OS_RELS:
       ips_pkgcontents_stream = self._GetIpsPkgcontentStream()
       ips_pkginfos_stream = self._GetIpsPkginfosStream()
-    else: 
+    else:
       ips_pkgcontents_stream = None
       ips_pkginfos_stream = None
-      
-    data = self.GetDataStructure(srv4_pkgcontents_stream, srv4_pkginfos_stream, 
-                                 ips_pkgcontents_stream, ips_pkginfos_stream, 
+
+    data = self.GetDataStructure(srv4_pkgcontents_stream, srv4_pkginfos_stream,
+                                 ips_pkgcontents_stream, ips_pkginfos_stream,
                                  self.osrel, self.arch, show_progress)
     return data
 
@@ -367,7 +367,7 @@ class Indexer(object):
       stdout, stderr = pkginfo_proc.communicate()
       ret = pkginfo_proc.wait()
       pkginfo_stream = stdout.splitlines()
-    
+
     return pkginfo_stream
 
   def _GetIpsPkginfosStream(self):
@@ -437,6 +437,8 @@ class InstallContentsImporter(object):
     for sqo_srv4 in res:
       for srv4_in_cat in sqo_srv4.in_catalogs:
         srv4_in_cat.destroySelf()
+      sqo_srv4.RemoveAllCswFiles()
+      sqo_srv4.destroySelf()
 
   def ImportFromFile(self, in_fd, show_progress=False):
     logging.debug("Unpickling data")
@@ -506,6 +508,13 @@ class InstallContentsImporter(object):
       self.fake_srv4_cache[key] = sqo_srv4
     return self.fake_srv4_cache[key]
 
+  def _GetPbar(self, show_progress):
+    if show_progress:
+      pbar = progressbar.ProgressBar()
+    else:
+      pbar = mute_progressbar.MuteProgressBar()
+    return pbar
+
   def _ImportFiles(self, data, include_prefixes=None, show_progress=False):
     logging.debug("_ImportFiles()")
     osrel = data["osrel"]
@@ -521,10 +530,7 @@ class InstallContentsImporter(object):
       progressbar_divisor = 1
     update_period = 1L
     count = itertools.count()
-    if show_progress:
-      pbar = progressbar.ProgressBar()
-    else:
-      pbar = mute_progressbar.MuteProgressBar()
+    pbar = self._GetPbar(show_progress)
     pbar.maxval = len(contents) / progressbar_divisor
     pbar.start()
     cleaned_pkgs = set()
@@ -574,12 +580,19 @@ class InstallContentsImporter(object):
             srv4_file=sqo_srv4)
         srv4_files_to_catalog.add(sqo_srv4)
     pbar.finish()
-    logging.debug(
-        "Registering all the fake srv4 files in all catalogs.")
+    logging.info(
+        "Registering the fake svr4 files (of system packages) "
+        "in all catalogs.")
+    count = itertools.count()
+    pbar = self._GetPbar(show_progress)
+    pbar.maxval = len(srv4_files_to_catalog)
+    pbar.start()
     for sqo_srv4 in srv4_files_to_catalog:
       for sqo_catrel in m.CatalogRelease.select():
         catalog.AddSrv4ToCatalog(
             sqo_srv4, osrel, arch, sqo_catrel.name)
+      pbar.update(count.next())
+    pbar.finish()
 
   def ComposeFakeSrv4Md5(self, pkgname, osrel, arch):
     """Returns a fake md5 sum of a fake srv4 package.

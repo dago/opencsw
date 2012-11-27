@@ -81,8 +81,9 @@ class CatalogFileGenerator(object):
     if os.path.exists(out_file):
       raise Error("File %s already exists." % out_file)
     lines = []
-    for pkg_data in self.catalog:
-      lines.append(self.ComposeCatalogLine(pkg_data))
+    if self.catalog:  # the catalog might be None
+      for pkg_data in self.catalog:
+        lines.append(self.ComposeCatalogLine(pkg_data))
     with open(out_file, "w") as fd:
       fd.write("\n".join(lines))
 
@@ -91,9 +92,10 @@ class CatalogFileGenerator(object):
     if os.path.exists(out_file):
       raise Error("File %s already exists." % out_file)
     lines = []
-    for pkg_data in self.catalog:
-      pkg_stats = self.pkgcache.GetPkgstats(pkg_data["md5_sum"])
-      lines.append(pkg_stats["pkginfo"]["NAME"])
+    if self.catalog:
+      for pkg_data in self.catalog:
+        pkg_stats = self.pkgcache.GetPkgstats(pkg_data["md5_sum"])
+        lines.append(pkg_stats["pkginfo"]["NAME"])
     with open(out_file, "w") as fd:
       fd.write("\n".join(lines))
 

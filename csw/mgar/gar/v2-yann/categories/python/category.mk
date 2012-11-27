@@ -30,4 +30,9 @@ SPKG_SOURCEURL ?= http://pypi.python.org/pypi/$(NAME)
 MASTER_SITES ?= $(PYPI_MIRROR)
 PACKAGES ?= CSWpy-$(DASHED_NAME)
 
+# for use in any references by specific recipes so it can be replaced easily
+# across the tree.  this could later be parameterized for use by multiple
+# versions of python too.
+SITE_PACKAGES = $(libdir)/python2.6/site-packages
+
 include gar/gar.mk
