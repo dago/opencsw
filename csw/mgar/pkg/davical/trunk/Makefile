@@ -42,6 +42,7 @@ RUNTIME_DEP_PKGS += CSWphp5-pdopgsql
 RUNTIME_DEP_PKGS += CSWphp5-iconv
 RUNTIME_DEP_PKGS += CSWphp5-curl
 RUNTIME_DEP_PKGS += CSWphp5-calendar
+RUNTIME_DEP_PKGS += CSWphpawl
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-calendar
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-dbi
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-pdopgsql
@@ -51,6 +52,7 @@ CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-iconv
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpostgresql84
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-dbd-pg
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-yaml
+CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphpawl
 
 
 CONFIGURE_SCRIPTS =
