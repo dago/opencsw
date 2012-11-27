@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.6
+#!/opt/csw/bin/python2.6
 # coding=utf-8
 #
 # $Id$
@@ -81,9 +81,10 @@ CATALOGS_ALLOWED_TO_GENERATE = frozenset([
   "unstable",
   "dublin",
   "kiel",
+  "bratislava",
 ])
 CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
-  "current",
+  "unstable",
 ])
 
 
@@ -621,7 +622,7 @@ def main():
             os.unlink(existing_path)
           else:
             logging.debug("Not unlinking %s", existing_path)
-        logging.debug("Existing files: %s", len(existing_files))
+        logging.debug("Number of existing files: %s", len(existing_files))
         for pkg in pkgs:
           src_path = os.path.join(allpkgs_dir, pkg.basename)
           if not os.path.exists(src_path):

@@ -254,6 +254,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(TEXHASH),$$F[1] = "cswtexhash" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(SSLCERT),$$F[1] = "cswsslcert" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
 		$(if $(PHP5_EXT),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/php5/extensions/.*));) \
 		$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^/opt/csw/etc/templates/.+$$) and $$F[0] eq "f" ); \
@@ -275,12 +276,16 @@ _CSWCLASS_FILTER = | perl -ane '\
 # per the above note.  (See bacula for an example of where this is
 # required.)
 
+# NOTE: ensure sslcert must run before initsmf/inetd. certs should be
+# in place before services are started.
+
 _CSWCLASSES  = cswusergroup ugfiles
 _CSWCLASSES += cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
 _CSWCLASSES += cswetcservices
 _CSWCLASSES += cswetcshells
 _CSWCLASSES += cswcrontab
 _CSWCLASSES += cswpycompile
+_CSWCLASSES += cswsslcert
 _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
@@ -483,7 +488,7 @@ endef
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
+	$(_DBG)cswproto $(if $(INCLUDE_COMMONDIRS),,-c $(GARDIR)/etc/commondirs-$(GARCH)) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
 
 # pathfilter lives in bin/pathfilter and takes care of including/excluding paths from
 # a prototype (see "perldoc bin/pathfilter"). We employ it here to:
@@ -703,8 +708,9 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
 
 
-# findlicensefile - Find an existing file for a given license name
-#
+# findlicensefile - Find an existing file for a given relative license file name
+# Arguments:
+#  $(1)  A filename to be used for licenses
 define findlicensefile
 $(strip 
   $(if $(1),$(firstword $(realpath 
@@ -714,33 +720,31 @@ $(strip
 )
 endef
 
-define licensefile
-$(strip 
-  $(or 
-    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)))),
-    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))),
-  ) 
+# licensefile - Find an existing license file for a given package name
+define licensefiles
+$(foreach L,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)),$(LICENSE),$(LICENSE_FULL)),\
+  $(or $(call findlicensefile,$L),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file $L for package $(1))))\
 )
 endef
 
 merge-license-%: $(WORKDIR)
 	$(_DBG)$(if $(and $(LICENSE_$*),$(LICENSE_FULL_$*)),$(error Both LICENSE_$* and LICENSE_FULL_$* have been specified where only one is allowed)) \
 		$(if $(and $(filter $*,$(_PKG_SPECS)),$(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*))), \
-		LICENSEFILE=$(or $(call licensefile,$*),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file for package $*))); \
+		LICENSEFILES="$(call licensefiles,$*)"; \
 		LICENSEDIR=$(call licensedir,$*); \
-		$(if $(LICENSE_TEXT_$*)$(LICENSE_TEXT),\
+		$(if $(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT)),\
 		  umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
 		  echo "$(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT))" > $(PKGROOT)$$LICENSEDIR/license;\
 		  echo "$(or $(LICENSE_TEXT_$*),$(LICENSE_TEXT))" > $(WORKDIR)/$*.copyright;\
 		,\
-		  if [ -n "$$LICENSEFILE" ]; then \
+		  if [ -n "$$LICENSEFILES" ]; then \
 		    $(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
-		      if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
+		      catlicense $LICENSEFILES > $(WORKDIR)/$*.copyright;, \
 		      echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
 		    ) \
 		    umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
 		    rm -f $(PKGROOT)$$LICENSEDIR/license && \
-		    cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
+		    catlicense $$LICENSEFILES > $(PKGROOT)$$LICENSEDIR/license; \
 		  fi \
 		) \
 	)
@@ -1024,13 +1028,17 @@ redirpackage: pkgreset dirpackage
 # this will also make it visible to the build environment. Some software builds
 # use hard-coded non-GNU make which then errs out on -I (unknown option).
 
+_PROPAGATE_ENV += PARALLELMFLAGS
+_PROPAGATE_ENV += PARALLELMODULATIONS
+_PROPAGATE_ENV += PATH
+
 platforms: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=$($V))) $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\

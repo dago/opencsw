@@ -287,7 +287,7 @@ class LocalDatabaseManager(CheckpkgDatabaseMixin):
       logging.warning("Could not get file mtime: %s", e)
     d_mtime = time.gmtime(int(d_mtime_epoch))
     logging.debug("IsDatabaseUpToDate: f_mtime %s, d_time: %s", f_mtime, d_mtime)
-    # Rounding up to integer seconds.  There is a race condition: 
+    # Rounding up to integer seconds.  There is a race condition:
     # pkgadd finishes at 100.1
     # checkpkg reads /var/sadm/install/contents at 100.2
     # new pkgadd runs and finishes at 100.3

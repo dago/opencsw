@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.6
+#!/opt/csw/bin/python2.6
 # coding=utf-8
 # vim:set sw=2 ts=2 sts=2 expandtab:
 #

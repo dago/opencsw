@@ -31,6 +31,8 @@ GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
 # add these 'dynamic script' targets to our fetch list
 DYNURLS := $(foreach DYN,$(DYNSCRIPTS),dynscr://$(DYN))
 
+$(foreach M,$(MASTER_SITES),$(if $(filter %/,$M),,$(error MASTER_SITES must contain only URLs ending in a / wheres this did not: $M)))
+
 URLS := $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES))) $(DYNURLS)
 
 define gitsubst
