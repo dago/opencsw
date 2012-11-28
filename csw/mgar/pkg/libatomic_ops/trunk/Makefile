@@ -19,6 +19,14 @@ PACKAGES += CSWlibatomic-ops
 SPKG_DESC_CSWlibatomic-ops = Portable library for atomic operations
 # PKGFILES is catchall
 
+# This is because of the static libs
+CHECKPKG_OVERRIDES_CSWlibatomic-ops += discouraged-path-in-pkgmap
+
 GARCOMPILER = GCC4
+
+BUILD64 = 1
+
+# The static lib is what we want
+MERGE_EXCLUDE_STATICLIBS =
 
 include gar/category.mk
