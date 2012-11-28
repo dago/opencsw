@@ -34,8 +34,21 @@ PKGFILES_CSWhwloc-doc      = $(PKGFILES_DOC)
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibhwloc5
 RUNTIME_DEP_PKGS_CSWlibhwloc5 += CSWlibxml2-2
+Rlibhwloc5 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWhwloc-dev  = CSWhwloc
-RUNTIME_DEP_PKGS_CSWhwloc-deGARCOMPILER = GNU
+RUNTIME_DEP_PKGS_CSWhwloc-dev += CSWlibhwloc5
+
+CHECKPKG_OVERRIDES_CSWhwloc-dev += disallowed-path
+CHECKPKG_OVERRIDES_CSWhwloc-dev += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWlibhwloc5 += disallowed-path
+CHECKPKG_OVERRIDES_CSWlibhwloc5 += disallowed-path
+CHECKPKG_OVERRIDES_CSWlibhwloc5 += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWhwloc += disallowed-path
+CHECKPKG_OVERRIDES_CSWhwloc += bad-location-of-file
+CHECKPKG_OVERRIDES_CSWhwloc-doc += disallowed-path
+CHECKPKG_OVERRIDES_CSWhwloc-doc += bad-location-of-file
+
+deGARCOMPILER = GNU
 COMMON_PKG_DEPENDS =
 INCLUDE_COMMONDIRS = 1DDEPS = CSWautoconf
 
