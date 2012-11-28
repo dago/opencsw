@@ -21,6 +21,4 @@ SPKG_DESC_CSWlibatomic-ops = Portable library for atomic operations
 
 GARCOMPILER = GCC4
 
-# BUILD64 = 1
-RGS = $(DIRPATHS)
-include
+include gar/category.mk
