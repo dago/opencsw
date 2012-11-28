@@ -36,6 +36,14 @@ RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibldap2-4-2
 OBSOLETED_BY_CSWcourier-authlib += CSWcourierauth
 
+MIGRATE_SOURCE_DIR_CSWcourier-authlib = $(prefix)/etc/authlib
+MIGRATE_DEST_DIR_CSWcourier-authlib = $(sysconfdir)/authlib
+MIGRATE_FILES_CSWcourier-authlib += authdaemonrc
+MIGRATE_FILES_CSWcourier-authlib += authldaprc
+MIGRATE_FILES_CSWcourier-authlib += authmysqlrc
+MIGRATE_FILES_CSWcourier-authlib += authpgsqlrc
+MIGRATE_FILES_CSWcourier-authlib += userdb
+
 # Just a harmless override, there is /usr/local in the script somewhere
 CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/local|root/opt/csw/sbin/makeuserdb
 
