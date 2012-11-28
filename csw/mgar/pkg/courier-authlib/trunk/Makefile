@@ -4,26 +4,40 @@
 NAME = courier-authlib
 VERSION = 0.65.0
 GARTYPE = v2
-CATEGORIES = category
 
-DESCRIPTION = Brief description
+DESCRIPTION = Courier authentication library
 define BLURB
-  Long description
+   Courier authentication library for use with rest of Courier suite.
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = $(SF_MIRRORS)
+SF_PROJECT = courier/authlib
+DISTFILES  = $(DISTNAME).tar.bz2
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-mysql-libs=/opt/csw/lib
+CONFIGURE_ARGS += --with-mysql-includes=/opt/csw/include
+CONFIGURE_ARGS += --with-pgsql-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-pgsql-includes=/opt/csw/include/postgresql
+
+PACKAGES = CSWcourier-authlib
+SPKG_DESC_CSWcourier-authlib = Courier auth library
+BUILD_DEP_PKGS_CSWcourier-authlib += CSWmysql-dev
+BUILD_DEP_PKGS_CSWcourier-authlib += CSWpostgresql-dev
+BUILD_DEP_PKGS_CSWcourier-authlib += CSWopenldap-dev
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibgdbm4
+RUNTIME_DEP_PKGS_CSWcourier-authlib += CSWlibldap2-4-2
+OBSOLETED_BY_CSWcourier-authlib += CSWcourierauth
+
+# Just a harmless override, there is /usr/local in the script somewhere
+CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/local|root/opt/csw/sbin/makeuserdb
 
 include gar/category.mk
 
