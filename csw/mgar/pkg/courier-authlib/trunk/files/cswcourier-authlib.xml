@@ -19,18 +19,18 @@
       <dependent name='cswcourierauth_multi-user' restart_on='none' grouping='optional_all'>
         <service_fmri value='svc:/milestone/multi-user'/>
       </dependent>
-      <exec_method name='start' type='method' exec='/var/opt/csw/svc/method/svc-courier-authlib start' timeout_seconds='120'>
+      <exec_method name='start' type='method' exec='/etc/opt/csw/init.d/cswcourier-authlib start' timeout_seconds='120'>
 	 <method_context>
 	    <method_credential user='authlib' group='authlib' />
 	 </method_context>
       </exec_method>
-      <exec_method name='stop' type='method' exec='/var/opt/csw/svc/method/svc-courier-authlib stop %{restarter/contract}' timeout_seconds='60'>
+      <exec_method name='stop' type='method' exec='/etc/opt/csw/init.d/cswcourier-authlib stop %{restarter/contract}' timeout_seconds='60'>
         <method_context/>
       </exec_method>
-      <exec_method name='restart' type='method' exec='/var/opt/csw/svc/method/svc-courier-authlib restart' timeout_seconds='60'>
+      <exec_method name='restart' type='method' exec='/etc/opt/csw/init.d/cswcourier-authlib restart' timeout_seconds='60'>
         <method_context/>
       </exec_method>
-      <exec_method name='reload' type='method' exec='/var/opt/csw/svc/method/svc-courier-authlib reload' timeout_seconds='60'>
+      <exec_method name='reload' type='method' exec='/etc/opt/csw/init.d/cswcourier-authlib reload' timeout_seconds='60'>
         <method_context/>
       </exec_method>
       <property_group name='startd' type='framework'>
