@@ -59,7 +59,7 @@ USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 # Just a harmless override, there is /usr/local in the script somewhere
 CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/local|root/opt/csw/sbin/makeuserdb
-CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswcourier-authlib.xml
+CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/application/cswcourier-authlib.xml
 
 PACKAGES += CSWcourier-authlib-dev
 SPKG_DESC_CSWcourier-authlib-dev = Courier auth library development files
@@ -71,8 +71,8 @@ post-install-modulated:
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
-	@/opt/csw/bin/ginstall -m 755 $(FILEDIR)/cswcourier-authlib $(DESTDIR)/etc/opt/csw/init.d/cswcourier-authlib
-	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-authlib.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/cswcourier-authlib.xml
+	@/opt/csw/bin/ginstall -m 755 $(FILEDIR)/cswcourier-authlib $(DESTDIR)/$(INITSMF)
+	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-authlib.xml $(DESTDIR)/var/opt/csw/svc/manifest/application/cswcourier-authlib.xml
 	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
 	@$(MAKECOOKIE)
 

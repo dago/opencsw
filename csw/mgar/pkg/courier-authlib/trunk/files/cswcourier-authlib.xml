@@ -48,5 +48,7 @@
         </documentation>
       </template>
     </instance>
+    <stability value='Unstable'/>
+  </service>
 </service_bundle>
 
