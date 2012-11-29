@@ -69,7 +69,7 @@ include gar/category.mk
 
 post-install-modulated:
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
-	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest
+	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/application
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
 	@/opt/csw/bin/ginstall -m 755 $(FILEDIR)/cswcourier-authlib $(DESTDIR)/$(INITSMF)
 	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-authlib.xml $(DESTDIR)/var/opt/csw/svc/manifest/application/cswcourier-authlib.xml
