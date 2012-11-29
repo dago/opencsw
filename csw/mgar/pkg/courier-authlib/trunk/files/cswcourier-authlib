@@ -1,0 +1,70 @@
+#!/bin/sh
+# This is the /etc/init.d file for courier-authlib
+# Modified for CSW
+#
+# description: Authlib - Courier authentication library.
+#
+### OpenCSW BEGIN
+#
+#MANIFEST /var/opt/csw/svc/manifest/cswcourier-authlib.xml
+#RC_KNUM 20
+#RC_SNUM 80
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+#FMRI network
+#AUTOENABLE no
+#
+### OpenCSW END
+
+
+if [ -f /lib/svc/share/smf_include.sh ]
+then
+   . /lib/svc/share/smf_include.sh
+fi
+
+prefix=/opt/csw
+exec_prefix=/opt/csw
+sysconfdir=/opt/csw/etc
+sbindir=/opt/csw/sbin
+
+if test ! -f /etc/opt/csw/authlib/authdaemonrc
+then
+        printf "/etc/opt/csw/authlib/authdaemonrc does not exist, unable to continue"
+        exit 1
+fi
+
+case "$1" in
+start)
+        cd /
+        # Start daemons.
+
+        printf "Starting Courier authentication services:"
+
+        $sbindir/authdaemond start
+
+        printf "\n authdaemond"
+        echo ""
+        ;;
+stop)
+        printf "Stopping Courier authentication services:"
+
+        $sbindir/authdaemond stop
+
+        printf "\n authdaemond"
+        echo ""
+        ;;
+restart)
+        $0 stop
+        $0 start
+        ;;
+reload)
+        printf "Starting Courier authentication services:"
+
+        $sbindir/authdaemond restart
+
+        printf "\n authdaemond"
+        echo ""
+        ;;
+esac
+exit 0
+
