@@ -26,6 +26,8 @@ DISTNAME = awl-$(VERSION)
 ARCHALL = 1
 NOGITPATCH=1
 
+PACKAGES += CSWphp5-awl
+
 REINPLACE_USRSHARE = docs/api/awl/* docs/api/awl/*/*
 
 CONFIGURE_SCRIPTS =
