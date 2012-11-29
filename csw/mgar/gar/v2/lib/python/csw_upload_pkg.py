@@ -32,27 +32,28 @@ USAGE = """%prog [ options ] <file1.pkg.gz> [ <file2.pkg.gz> [ ... ] ]
 Uploads a set of packages to the unstable catalog in opencsw-future.
 
 - When an architecture-independent package is uploaded, it gets added to both
-	sparc and i386 catalogs
+  sparc and i386 catalogs
 
 - When a SunOS5.x package is sent, it's added to catalogs SunOS5.x,
   SunOS5.(x+1), up to SunOS5.11, but only if there are no packages specific to
   5.10 (and/or 5.11).
 
 - If a package update is sent, the tool uses both the catalogname and the
-	pkgname to identify the package it's updating. For example, you might upload
-	foo_stub/CSWfoo and mean to replace foo/CSWfoo with it.
+  pkgname to identify the package it's updating. For example, you might upload
+  foo_stub/CSWfoo and mean to replace foo/CSWfoo with it.
 
 The --os-release flag makes %prog only insert the package to catalog with the
 given OS release.
 
+The --catalog-release flag allows to insert a package into a specific catalog,
+instead of the default 'unstable'.
+
 = General considerations =
 
 This tool operates on a database of packages and a package file store. It
-modifies a number of package catalogs, a cartesian product of:
+modifies a number of package catalogs, e.g.:
 
-  {legacy,dublin,unstable}x{sparc,i386}x{5.8,5.9.5.10,5.11}
-
-This amounts to 3x2x4 = 24 package catalogs total.
+  {{dublin,unstable,kiel,bratislava}}x{{sparc,i386}}x{{5.8,5.9.5.10,5.11}}
 
 For more information, see:
 http://wiki.opencsw.org/automated-release-process#toc0
@@ -451,7 +452,8 @@ if __name__ == '__main__':
       default=False, action="store_true")
   parser.add_option("--os-release",
       dest="os_release",
-      help="If specified, only uploads to the specified OS release.")
+      help="If specified, only uploads to the specified OS release. "
+           "Valid values: {0}".format(" ".join(common_constants.OS_RELS)))
   parser.add_option("--rest-url",
       dest="rest_url",
       default=BASE_URL,
