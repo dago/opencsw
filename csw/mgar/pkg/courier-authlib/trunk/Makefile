@@ -47,5 +47,9 @@ MIGRATE_FILES_CSWcourier-authlib += userdb
 # Just a harmless override, there is /usr/local in the script somewhere
 CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/local|root/opt/csw/sbin/makeuserdb
 
+PACKAGES += CSWcourier-authlib-dev
+SPKG_DESC_CSWcourier-authlib-dev = Courier auth library development files
+PKGFILES_CSWcourier-authlib-dev = $(PKGFILES_DEVEL)
+
 include gar/category.mk
 
