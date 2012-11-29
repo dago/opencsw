@@ -14,7 +14,7 @@ MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = courier/authlib
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += cswusergroup
-DISTFILES += svc-cswcourier-authlib
+DISTFILES += cswcourier-authlib
 DISTFILES += cswcourier-authlib.xml
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
