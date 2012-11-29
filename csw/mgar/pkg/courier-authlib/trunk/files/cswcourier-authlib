@@ -4,6 +4,7 @@
 #
 # description: Authlib - Courier authentication library.
 #
+# $Id$
 ### OpenCSW BEGIN
 #
 #MANIFEST /var/opt/csw/svc/manifest/application/cswcourier-authlib.xml
@@ -11,7 +12,7 @@
 #RC_SNUM 80
 #RC_KLEV 0,1,2,S
 #RC_SLEV 3
-#FMRI network
+#FMRI application
 #AUTOENABLE no
 #
 ### OpenCSW END
