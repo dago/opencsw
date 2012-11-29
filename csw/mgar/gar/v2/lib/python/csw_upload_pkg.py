@@ -495,6 +495,11 @@ if __name__ == '__main__':
     else:
       print "Continuing anyway."
 
+  if os_release and os_release not in common_constants.OS_RELS:
+    raise DataError(
+        "OS release %r is not valid. Valid values: %r"
+        % (os_release, common_constants.OS_RELS))
+
   username, password = rest.GetUsernameAndPassword()
   uploader = Srv4Uploader(args,
                           options.rest_url,
