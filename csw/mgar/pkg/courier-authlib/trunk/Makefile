@@ -84,6 +84,7 @@ post-install-modulated:
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/application
 	@/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-authlib $(DESTDIR)/$(INITSMF)
 	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-authlib.xml $(DESTDIR)/var/opt/csw/svc/manifest/application/cswcourier-authlib.xml
 	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
 	@$(MAKECOOKIE)
