@@ -13,6 +13,9 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = courier/authlib
 DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += cswusergroup
+DISTFILES += svc-cswcourier-authlib
+DISTFILES += cswcourier-authlib.xml
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
@@ -44,6 +47,17 @@ MIGRATE_FILES_CSWcourier-authlib += authmysqlrc
 MIGRATE_FILES_CSWcourier-authlib += authpgsqlrc
 MIGRATE_FILES_CSWcourier-authlib += userdb
 
+PRESERVECONF += /etc/opt/csw/authlib/authdaemonrc
+PRESERVECONF += /etc/opt/csw/authlib/authldaprc
+PRESERVECONF += /etc/opt/csw/authlib/authmysqlrc
+PRESERVECONF += /etc/opt/csw/authlib/authpgsqlrc
+PRESERVECONF += /etc/opt/csw/authlib/userdb
+
+INITSMF = /opt/csw/etc/init.d/cswcourier-authlib
+INSTALL_SCRIPTS = authlib
+
+USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
+
 # Just a harmless override, there is /usr/local in the script somewhere
 CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/local|root/opt/csw/sbin/makeuserdb
 
@@ -53,3 +67,8 @@ PKGFILES_CSWcourier-authlib-dev = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
+install-authlib:
+	@/opt/csw/bin/ginstall -m 755 $(FILEDIR)/svc-cswcourier-authlib $(DESTDIR)/opt/csw/etc/init.d/cswcourier-authlib
+	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-authlib.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswcourier-authlib.xml
+	@/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	@$(MAKECOOKIE)
