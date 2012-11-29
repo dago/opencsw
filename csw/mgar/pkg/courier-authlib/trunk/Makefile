@@ -56,12 +56,19 @@ PRESERVECONF += userdb
 INITSMF = /etc/opt/csw/init.d/cswcourier-authlib
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
-PROTOTYPE_MODIFIERS = 1
+PROTOTYPE_MODIFIERS = 1 2
+
 PROTOTYPE_CLASS_1   = ugfiles
 PROTOTYPE_FILES_1   = \/var\/opt\/csw\/spool\/authdaemon
 PROTOTYPE_USER_1    = authlib
 PROTOTYPE_GROUP_1   = authlib
 PROTOTYPE_PERMS_1   = 755
+
+PROTOTYPE_CLASS_2   = ugfiles
+PROTOTYPE_FILES_2   = \/etc\/opt\/csw\/authlib\/auth.*\.dist
+PROTOTYPE_USER_2    = authlib
+PROTOTYPE_GROUP_2   = authlib
+PROTOTYPE_PERMS_2   = 640
 
 # Just a harmless override, there is /usr/local in the script somewhere
 CHECKPKG_OVERRIDES_CSWcourier-authlib += file-with-bad-content|/usr/local|root/opt/csw/sbin/makeuserdb
