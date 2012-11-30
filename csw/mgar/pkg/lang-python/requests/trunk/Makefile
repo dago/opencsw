@@ -21,9 +21,12 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # GIT_TREEISH_requests.git = $(VERSION)
 NOGITPATCH = 1
 
+REINPLACE_USRLOCAL = requests/utils.py
+
 VENDOR_URL = https://github.com/kennethreitz/requests
 
-DEP_PKGS += CSWpy-chardet
+RUNTIME_DEP_PKGS += CSWpy-chardet
+CHECKPKG_OVERRIDES_CSWpy-requests += surplus-dependency|CSWpy-chardet
 
 PACKAGES = CSWpy-requests
 ARCHALL_CSWpy-requests = 1
