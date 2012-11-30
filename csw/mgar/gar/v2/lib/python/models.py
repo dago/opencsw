@@ -52,11 +52,11 @@ class Maintainer(sqlobject.SQLObject):
     if self.email:
       email = self.email.split("@")
     else:
-    	email = ["unknown"]
+      email = ["unknown"]
     if len(email) == 2:
       username, domain = email
     else:
-    	username, domain = email[0], "no domain"
+      username, domain = email[0], "no domain"
     username = username[:-3] + "..."
     return "@".join((username, domain))
 

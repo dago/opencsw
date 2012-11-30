@@ -363,7 +363,7 @@ class PackageStatsMixin(object):
     if stats.registered and not replace:
       logging.debug(
           "@classmethod ImportPkg(): "
-          "Package %s is already registered. Exiting.", stats)
+          "Package %r is already registered. Exiting.", stats)
       return stats
     stats.RemoveAllCswFiles()
     for pkgmap_entry in pkg_stats["pkgmap"]:
