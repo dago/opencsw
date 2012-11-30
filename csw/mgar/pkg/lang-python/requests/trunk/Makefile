@@ -2,7 +2,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = requests
-VERSION = 426734d
+# VERSION = 426734d
+VERSION = 0.14.2
 GARTYPE = v2
 CATEGORIES = python
 
@@ -11,12 +12,13 @@ define BLURB
   Long description
 endef
 
-MASTER_SITES = https://github.com/kennethreitz/requests/tarball/
-# DISTFILES  = master
-# DISTNAME = kennethreitz-requests-426734d
+# MASTER_SITES = https://github.com/kennethreitz/requests/tarball/
+MASTER_SITES = http://pypi.python.org/packages/source/r/requests/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-GIT_REPOS  = git://github.com/kennethreitz/requests.git
-GIT_TREEISH_requests.git = $(VERSION)
+
+# GIT_REPOS  = http://github.com/kennethreitz/requests.git
+# GIT_TREEISH_requests.git = $(VERSION)
 NOGITPATCH = 1
 
 VENDOR_URL = https://github.com/kennethreitz/requests
@@ -25,6 +27,8 @@ DEP_PKGS += CSWpy-chardet
 
 PACKAGES = CSWpy-requests
 ARCHALL_CSWpy-requests = 1
+
+SKIPTEST = 1
 
 include gar/category.mk
 
