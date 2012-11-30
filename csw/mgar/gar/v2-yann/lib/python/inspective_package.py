@@ -215,7 +215,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     defined_symbols = {}
 
     for binary in binaries:
-      binary_abspath = os.path.join(self.directory, "root", binary)
+      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
       # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
       args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
       nm_proc = subprocess.Popen(
@@ -258,7 +258,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     binaries_elf_info = {}
 
     for binary in binaries:
-      binary_abspath = os.path.join(self.directory, "root", binary)
+      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
       # elfdump is the only tool that give us all informations
       args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
       retcode, stdout, stderr = ShellCommand(args)
@@ -314,7 +314,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     binaries = self.ListBinaries()
     ldd_output = {}
     for binary in binaries:
-      binary_abspath = os.path.join(self.directory, "root", binary)
+      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
       # this could be potentially moved into the DirectoryFormatPackage class.
       # ldd needs the binary to be executable
       os.chmod(binary_abspath, 0755)
@@ -480,12 +480,15 @@ class InspectivePackage(package.DirectoryFormatPackage):
     unused_object = (r'^\s*unused object=.*$')
     unused_search_path = (r'^\s*unused search path=.*'
                            '  \(RUNPATH/RPATH from file .*\)$')
+    move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: \(unknown\): '
+                         r'offset=(?P<move_offset>0x[0-9a-f]+) lies outside memory image; '
+                         r'move discarded')
     blank_line = (r'^\s*$')
-    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
+    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so,
                     stv_protected, sizes_differ, sizes_info,
                     sizes_one_used, unreferenced_object, unused_object,
-                    unused_search_path, blank_line))
+                    unused_search_path, blank_line, move_offset_error))
     m = re.match(common_re, line)
     response = None
     if m:
@@ -538,6 +541,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["soname"] = None
         response["path"] = "%s" % (d["sizediffused_file"])
         response["symbol"] = None
+      elif d["move_offset"]:
+        response["state"] = 'move_offset_error'
+        response["soname"] = None
+        response["path"] = None
+        response["symbol"] = None
+        response["move_offset"] = d['move_offset']
+        response["move_index"] = d['move_index']
 
     else:
       raise package.StdoutSyntaxError("Could not parse %s with %s"
