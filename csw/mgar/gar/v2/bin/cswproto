@@ -20,7 +20,7 @@ use Getopt::Long qw/:config no_ignore_case/;
 use POSIX;
 
 use vars qw/
-    @XFORMS @Common $StdOwn $StdGrp $StdDirPerm $common $stamp $root
+    @XFORMS $Common $StdOwn $StdGrp $StdDirPerm $common $stamp $root
     /;
 
 # atime=8,mtime=9,ctime=10
@@ -69,9 +69,7 @@ _USAGE_
 # Check whether a path is a 'common' file, defined in __DATA__
 sub is_common {
     my $path = shift;
-    foreach my $pat (@Common) {
-        return 1 if $path =~ m!^$pat$!;
-    }
+    return 1 if $path =~ /$Common/;
     return 0;
 }
 
@@ -108,7 +106,7 @@ $stamp = $stamp ? (stat($stamp))[TIME_FIELD] : 0;
 
 if( $common ) {
     # Load common path contents
-    my %alldirs;
+    my %alldirs = ('/' => 1);
     open F, $common || die "Couldn't open $common";
     while (<F>) {
         chomp; next if /^\s*$/ or /^#/;
@@ -119,7 +117,8 @@ if( $common ) {
         $alldirs{$_} = 1 foreach (@pc);
     }
     close F;
-    @Common = map { qr#$_$# } ('/', keys %alldirs);
+    my $re = '^(' . join( '|', keys %alldirs ) . ')$';
+    $Common = qr /$re/;
 }
 
 my @prototype;
@@ -160,7 +159,7 @@ SPECLINE:
         next unless $F[2];
 
         # Then process any excludes
-	next SPECLINE if( is_common( $F[2] ) );
+	next SPECLINE if( $F[2] =~ /$Common/ );
         next if exclude($realpath);
 
         # Fix up dir permissions/file ownership.
