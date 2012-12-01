@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.6
 
-import unittest
+import unittest2 as unittest
 import inspective_package
 import mox
 import hachoir_parser
@@ -66,7 +66,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     ip.pkginfo_dict = {
         "BASEDIR": "",
     }
-    self.assertEqual([u'/fake/path/CSWfoo/root/foo-file'], ip.ListBinaries())
+    self.assertEqual([u'foo-file'], ip.ListBinaries())
 
 
 class PackageStatsUnitTest(unittest.TestCase):
