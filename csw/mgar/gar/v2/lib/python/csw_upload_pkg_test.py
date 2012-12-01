@@ -416,7 +416,6 @@ class Srv4UploaderIntegrationUnitTest(mox.MoxTestBase):
     import_metadata_mock = self.mox.StubOutWithMock(su, '_GetFileMd5sum')
     import_metadata_mock = self.mox.StubOutWithMock(su, '_ImportMetadata')
     import_metadata_mock = self.mox.StubOutWithMock(su, '_InsertIntoCatalog')
-    import_metadata_mock = self.mox.StubOutWithMock(su, '_RemoveFromCatalog')
     import_metadata_mock = self.mox.StubOutWithMock(su, '_PostFile')
     import_metadata_mock = self.mox.StubOutWithMock(su, '_GetSrv4FileMetadata')
     import_metadata_mock = self.mox.StubOutWithMock(su, '_MatchSrv4ToCatalogs')
