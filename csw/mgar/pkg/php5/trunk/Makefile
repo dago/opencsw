@@ -1,6 +1,5 @@
 NAME     = php5
 VERSION  = 5.3.18
-CATEGORIES  = lang
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
