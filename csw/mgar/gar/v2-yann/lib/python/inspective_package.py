@@ -287,6 +287,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         else:
           binary_info[cur_section].append(elf_info)
 
+
       # elfdump doesn't repeat the name of the soname in the version section
       # if it's the same on two contiguous line, so we have to make sure
       # the information is present in each entry
@@ -294,10 +295,18 @@ class InspectivePackage(package.DirectoryFormatPackage):
         if not version['soname']:
           version['soname'] = binary_info['version needed'][i]['soname']
 
+      # soname version needed are usually displayed sorted by index ...
+      # but that's not always the case :( so we have to reorder
+      # the list by index
+      binary_info['version needed'].sort(key = lambda m: m['index'])
+      for version in binary_info['version needed']:
+          del version['index']
+
       # if it exists, the first "version definition" entry is the base soname
       # we don't need this information
       if binary_info['version definition']:
         binary_info['version definition'].pop(0)
+
 
       binary_info['symbol table'] = symbols.values()
       binary_info['symbol table'].sort(key=lambda m: m['symbol'])
@@ -386,8 +395,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
        (?P<section>Version\sNeeded|Symbol\sTable  # Section header
                   |Version\sDefinition|Syminfo)
                    \sSection:
-        \s+(?:\.SUNW_version|\.dynsym
-             |\.SUNW_syminfo|.symtab)\s*$
+        \s+(?:\.SUNW_version|\.gnu\.version_[rd]
+            |\.dynsym|\.SUNW_syminfo|.symtab)\s*$
 
        |\s*(?:index\s+)?version\s+dependency\s*$  # Version needed header
 
@@ -411,7 +420,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         (?:\s+\[\s(?:BASE)\s\])?\s*$
                               """),
       'version needed': (r"""
-        \s*(?:\[\d+\]\s+)?                # index: might be not present if
+        \s*(?:\[(?P<index>\d+)\]\s+)?                # index: might be not present if
                                           #        no version binding is enabled
         (?:(?P<soname>\S+)\s+             # file: can be absent if the same as
          (?!\[\s(?:INFO|WEAK)\s\]))?      #       the previous line,
