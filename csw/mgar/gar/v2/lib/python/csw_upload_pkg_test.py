@@ -98,7 +98,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsSame(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(GDB_STRUCT_9)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -121,7 +121,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsDifferent(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(GDB_STRUCT_9)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -144,7 +144,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
     # uploading a 5.10 package.
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.10', 'gdb').AndReturn(GDB_STRUCT_9)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -164,7 +164,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsSameSpecificOsrel(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(GDB_STRUCT_9)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -185,7 +185,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsAbsentFromAll(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(None)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -208,7 +208,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsSameSpecificOsrelAlreadyPresent(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(GDB_STRUCT_9)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -229,7 +229,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsNotPresent(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(GDB_STRUCT_9)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -250,7 +250,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsFirstNotPresent(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(None)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -271,7 +271,7 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
   def test_MatchSrv4ToCatalogsSolaris8(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
         'unstable', 'sparc', u'SunOS5.9', 'gdb').AndReturn(GDB_STRUCT_8)
     rest_client_mock.Srv4ByCatalogAndCatalogname(
@@ -340,7 +340,7 @@ class Srv4UploaderDataDrivenUnitTest(mox.MoxTestBase):
     }
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")
-    rest.RestClient(None).AndReturn(rest_client_mock)
+    rest.RestClient(None, username=None, password=None).AndReturn(rest_client_mock)
     for i, os_n in enumerate(in_catalog, 3 - len(in_catalog)):
       pkg_struct = pkg_struct_map[os_n]
       rest_client_mock.Srv4ByCatalogAndCatalogname(
