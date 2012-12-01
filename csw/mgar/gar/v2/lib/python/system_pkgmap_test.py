@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.6
 
-import unittest
+import unittest2 as unittest
 import system_pkgmap
 import test_base
 import models
@@ -44,6 +44,10 @@ PKGCONTENT_LINE_4 = ("lib/libc.so.1\tfile\tsystem/library\t\t0755\troot\tbin")
 
 
 class IndexerUnitTest(unittest.TestCase):
+
+  def setUp(self):
+    super(IndexerUnitTest, self).setUp()
+    self.maxDiff = None
 
   def test_ParseSrv4PkginfoLine(self):
     spi = system_pkgmap.Indexer()
@@ -274,8 +278,8 @@ class IndexerUnitTest(unittest.TestCase):
                   'path': '/bin', 'pkgnames': ['SUNWsystem-core-os'], 'target': './usr/bin', 'type': 's'},
                  {'group': 'sys', 'line': 'dev\tdir\tsystem/core-os\t\t0755\troot\tsys', 'mode': '0755', 'owner': 'root',
                   'path': '/dev', 'pkgnames': ['SUNWsystem-core-os'], 'target': None, 'type': 'd'}],
-                'pkginfo': {'SUNWbin': u'link system/core-os ./usr/bin',
-                            'SUNWdev': u'dir system/core-os 0755 root sys',
+                'pkginfo': {'SUNWdeveloper-solarisstudio-122-c': u'C++ Compilers',
+                            'SUNWdeveloper-versioning-sccs': u'Source Code Control System',
                             'SUNWpcan': u'Cisco-Aironet 802.11b driver',
                             'SUNWwpau': u'Wireless WPA Supplicant, (Usr)'}
                }
