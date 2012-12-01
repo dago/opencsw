@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.1.11
+VERSION = 2.1.12
 CATEGORIES = server
 GARTYPE = v2
 
