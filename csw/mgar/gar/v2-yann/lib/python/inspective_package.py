@@ -263,8 +263,26 @@ class InspectivePackage(package.DirectoryFormatPackage):
       args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
       retcode, stdout, stderr = ShellCommand(args)
       if retcode or stderr:
-        logging.error("%s returned one or more errors: %s", args, stderr)
-        continue
+        # we ignore for now these elfdump errors which can be catched
+        # later by check functions,
+        ignored_error_re = re.compile(r"""[^:]+:\s\.((SUNW_l)?dynsym|symtab):\s
+            (index\[\d+\]:\s
+             (suspicious\s(local|global)\ssymbol\sentry:\s[^:]+:\s
+              lies\swithin\s(local|global)\ssymbol\srange\s\(index\s[<>=]+\s\d+\)
+
+              |bad\ssymbol\sentry:\s[^:]+:\ssection\[\d+\]\ssize:\s0(x[0-9a-f]+)?:\s
+              symbol\s\(address\s0x[0-9a-f]+,\ssize\s0x[0-9a-f]+\)
+              \slies\soutside\sof\scontaining\ssection
+
+              |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+)
+
+             |invalid\ssh_link:\s0)\n""",
+             re.VERBOSE)
+
+        stderr = re.sub(ignored_error_re, "", stderr)
+        if stderr:
+          logging.error("%s returned one or more errors: %s", args, stderr)
+          continue
       elfdump_out = stdout.splitlines()
 
       symbols = {}
@@ -289,8 +307,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
 
       # elfdump doesn't repeat the name of the soname in the version section
-      # if it's the same on two contiguous line, so we have to make sure
-      # the information is present in each entry
+      # if it's the same on two contiguous line, e.g.:
+      #         libc.so.1            SUNW_1.1
+      #                              SUNWprivate_1.1
+      # so we have to make sure the information is present in each entry
       for i, version in enumerate(binary_info['version needed'][1:]):
         if not version['soname']:
           version['soname'] = binary_info['version needed'][i]['soname']
@@ -417,7 +437,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
                                           #        no version binding is enabled
         (?P<version>\S+)                  # version
         (?:\s+(?P<dependency>\S+))?       # dependency
-        (?:\s+\[\s(?:BASE)\s\])?\s*$
+        (?:\s+\[\s(?:BASE|WEAK)\s\])?\s*$
                               """),
       'version needed': (r"""
         \s*(?:\[(?P<index>\d+)\]\s+)?                # index: might be not present if
@@ -492,12 +512,16 @@ class InspectivePackage(package.DirectoryFormatPackage):
     move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: \(unknown\): '
                          r'offset=(?P<move_offset>0x[0-9a-f]+) lies outside memory image; '
                          r'move discarded')
+    relocation_error = (r'relocation R_386_COPY sizes differ: (?P<reloc_symbol>.*)'
+                        r'|\t\t\(file .* size=0(?:x[0-9a-f]+)?; file .* size=0x(?:[0-9a-f]+)?\)'
+                        r'|\t.* size used; possible data truncation')
     blank_line = (r'^\s*$')
-    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
+    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so,
                     stv_protected, sizes_differ, sizes_info,
                     sizes_one_used, unreferenced_object, unused_object,
-                    unused_search_path, blank_line, move_offset_error))
+                    unused_search_path, blank_line, move_offset_error,
+                    relocation_error))
     m = re.match(common_re, line)
     response = None
     if m:
