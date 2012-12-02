@@ -11,3 +11,4 @@ package repositories, either at OpenCSW or at their own organization.
   filesystem-layout
   building-a-catalog
   shared-libraries
+  package-naming
