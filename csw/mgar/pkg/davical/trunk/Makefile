@@ -52,6 +52,7 @@ CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-iconv
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpostgresql84
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-dbd-pg
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-yaml
+CHECKPKG_OVERRIDES_CSWdavical += unidentified-dependency|CSWphp5-awl
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-awl
 
 
