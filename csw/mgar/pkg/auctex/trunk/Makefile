@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = auctex
-VERSION = 11.86
+VERSION = 11.87
 GARTYPE = v2
 
 DESCRIPTION = A much enhanced TeX/LaTeX mode for Emacs
