@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gdb
-VERSION = 7.5
+VERSION = 7.5.1
 GARTYPE = v2
 CATEGORIES = devel
 
@@ -149,4 +149,4 @@ test-parallel:
 
 # this is private and not available publicly
 mydependencies:
-	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/
