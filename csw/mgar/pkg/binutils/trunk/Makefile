@@ -1,5 +1,5 @@
 NAME = binutils
-VERSION = 2.22
+VERSION = 2.23.1
 GARTYPE = v2
 
 DESCRIPTION = GNU binary utilities: gas, gld, gprof, and others
@@ -28,7 +28,7 @@ CONFIGURE_ARGS += --enable-64-bit-bfd
 
 # Do not run tests until this is fixed:
 #   <http://sourceware.org/bugzilla/show_bug.cgi?id=11128>
-SKIPTEST ?= 1
+#SKIPTEST ?= 1
 
 GARCOMPILER = GNU
 
@@ -36,5 +36,9 @@ RUNTIME_DEP_PKGS_CSWbinutils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibz1
 CHECKPKG_OVERRIDES_CSWbinutils += file-with-bad-content
+#Until removed from GDB:
+CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/uk/LC_MESSAGES/bfd.mo|CSWbinutils|CSWgdb
+CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/it/LC_MESSAGES/opcodes.mo|CSWbinutils|CSWgdb
+
 
 include gar/category.mk
