@@ -1,5 +1,5 @@
 NAME       = nginx
-VERSION    = 1.1.8
+VERSION    = 1.2.5
 CATEGORIES = server
 GARTYPE = v2
 
@@ -18,13 +18,19 @@ DISTFILES   += cswnginx
 LICENSE      = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = -(\d+(?:\.\d+)*).tar+= CSWlibz-dev
 
-BUILD_DEP_PKGS = CSWlibz-dev
-RUNTIME_DEP_PKGS = CSWosslrt CSWlibpcre0 CSWlibz1 CSWperl
-
-PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGES += CSWnginx
+SPKG_DESC_CSWnginx = HTTP server and mail proxy server
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibexslt0
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibgeoip1
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibz1
+RUNTIME_DEP_PKGS_CSWnginx += CSWperlsparc solaris10-i386
 
 # default sparc arch is set to sparcv8plus because nginx contains
 # assembler parts specific to v8plus and v9 arches:
@@ -33,25 +39,20 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 #	.end
 #
 #	.inline ngx_casxa,0
-#	casxa   [%o2] 0x80, %o1, %o0
-#	.end
+#	casxa   [%o2] 0x8# These are the default now
 
-ISAEXEC                = 1
-ISA_DEFAULT_sparc      = sparcv8plus
-EXTRA_BUILD_ISAS_i386  = amd64
-EXTRA_BUILD_ISAS_sparc = sparcv9
+#ISA_DEFAULT_sparc      = sparcv8plus
+#EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
+#EXTRA_BUILD_ISAS_sparc = sparcv9
 
-NGINXCPU_i386          = pentium3
+ISAEXEC = 1
+
+NGINXCPU_i386          = pentium          = pentium3
 NGINXCPU_pentium_pro   = pentium3
 NGINXCPU_sparcv8plus   = sparc32
 NGINXCPU_sparcv9       = sparc64
 NGINXCPU_$(ISA)       ?= $(ISA)
-NGINXCPU               = $(NGINXCPU_$(ISA))
-
-CFLAGS =
-
-sysconfdir=/etc/opt/csw
-localstatedir=/var/opt/csw
+NGINXCPU               = $(NGINXCPUtedir=/var/opt/csw
 
 #CONFIGURE_ARGS += --with-debug
 CONFIGURE_ARGS += --with-cpu-opt=$(NGINXCPU)
@@ -73,15 +74,32 @@ CONFIGURE_ARGS += --with-ipv6
 CONFIGURE_ARGS += --with-http_addition_module
 CONFIGURE_ARGS += --with-http_dav_module
 CONFIGURE_ARGS += --with-http_flv_module
+CONFIGURE_mp4S += --with-http_flv_module
 CONFIGURE_ARGS += --with-http_realip_module
 CONFIGURE_ARGS += --with-http_secure_link_module
 CONFIGURE_ARGS += --with-http_ssl_module
+CONFIGURE_ARGS += --with-httpCONFIGURE_ARGS += --with-http_gzip_static_module
+CONFIGURE_ARGS += --with-http_geoip_module
+CONFIGURE_ARGS += --with-http_xslt_module
+CONFIGURE_ARGS += --with-http_image_filter_module
+CONFIGURE_ARGS += --with-http_sub_module
+CONFIGURE_ARGS += --with-http_random_index= --with-http_realip_module
+CONFIGURE_ARGS += --with-http_secure_link_module
+CONFIGURE_degradation_module
 CONFIGURE_ARGS += --with-http_stub_status_module
+# Enable when we have 64 bit perl
+# CONFIGURE_ARGS += --with-http_perlith-http_stub_status_module
 
 TEST_SCRIPTS =
 
-INITSMF      = $(sysconfdir)/init.d/cswnginx
-PRESERVECONF = $(sysconfdir)/nginx/fastcgi.conf $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf $(sysconfdir)/nginx/scgi_params $(sysconfdir)/nginx/uwsgi_params $(localstatedir)/nginx/html/50x.html $(localstatedir)/nginx/html/index.html
+INITSMF      = $(sysconfdir)/init.d/cs+= $(sysconfdir)/nginx/fastcgi.conf
+PRESERVECONF += $(sysconfdir)/nginx/fastcgi_params
+PRESERVECONF += $(sysconfdir)/nginx/mime.types
+PRESERVECONF += $(sysconfdir)/nginx/nginx.conf
+PRESERVECONF += $(sysconfdir)/nginx/scgi_params
+PRESERVECONF += $(sysconfdir)/nginx/uwsgi_params
+PRESERVECONF += $(localstatedir)/nginx/html/50x.html
+PRESERVECONF +=/nginx/html/50x.html $(localstatedir)/nginx/html/index.html
 
 NGINXDOCS    = CHANGES CHANGES.ru LICENSE README
 
@@ -90,7 +108,7 @@ include gar/category.mk
 
 post-configure-modulated:
 	gsed -i  s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
-	gsed -i 's#  pause#  rep; nop#'      $(WORKSRC)/src/os/unix/ngx_sunpro_amd64.il
+	gsed -i 's#  pause#  rep; nop#'      $(WORKSRC)/src/os/unix/n@gx_sunpro_amd64.il
 	$(MAKECOOKIE)
 
 post-install-modulated:
@@ -109,5 +127,4 @@ post-install-modulated:
 	cd $(WORKSRC); \
 	cp -r contrib/* $(DESTDIR)$(sharedstatedir)/nginx/contrib; \
 	cp $(NGINXDOCS) $(DESTDIR)$(docdir)/nginx
-	rm -rf $(DESTDIR)/var/run/nginx
-	$(MAKECOOKIE)
+	rm -rf $(DEST@$(MAKECOOKIE)
