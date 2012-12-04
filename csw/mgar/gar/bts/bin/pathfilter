@@ -1,0 +1,240 @@
+#!/bin/env perl -w
+
+# This scripts takes a package prototype(4) and includes or excludes selected pathes
+#
+# Please note:
+# - If no options are given the input is not changed
+# - A path must match include and not exclude to pass the filter
+# - The include and exclude directives are matched in order. The path is
+#   short-cut included or excluded when there is match. Only the first match
+#   is considered.
+# - Empty directories are preserved if the incoming prototype doesn't
+#   contained files in them. Directories which contained files which
+#   were excluded and which would be empty after exclusion are
+#   excluded also.
+
+use strict;
+use Carp;
+use Getopt::Long qw(:config no_ignore_case);
+use Pod::Usage;
+
+my $help = 0;
+
+my ($hasinclude, $hasexclude);
+my @isaexec;
+my @selection_args;
+my $result = GetOptions(
+	'h|help' => \$help,
+	'e|isaexec=s' => \@isaexec,
+	'i|include=s' => sub { push @selection_args, [ 'i', $_[1] ]; $hasinclude = 1 },
+	'I=s' => sub { push @selection_args, [ 'i', quotemeta( $_[1] ) ]; $hasinclude = 1 },
+	'x|exclude=s' => sub { push @selection_args, [ 'x', $_[1] ]; $hasexclude = 1 },
+	'X=s' => sub { push @selection_args, [ 'x', quotemeta( $_[1] ) ]; $hasexclude = 1 },
+) or pod2usage( 1 );
+
+# Exclude everything by default if there are only include rules
+push @selection_args, [ 'x', '.*' ] if( $hasinclude && !$hasexclude );
+
+# @selection = map { [ $_->[0], qr/^$_->[1]$/ ] } @selection;
+
+# This routine anchors all regexps at start and end and combines seqential includes/excludes into a single regex
+my @selection;
+my @seltemp;
+my $mode;
+foreach my $c (@selection_args) {
+  my ($type, $re) = @$c;
+  if( $mode && $mode ne $type ) {
+    # flush
+    my $mre = '^(' . join( '|', @seltemp ) . ')$';
+    push @selection, [ $mode, qr/$mre/ ];
+    @seltemp = ();
+    $mode = $type;
+  }
+  $mode = $type;
+  push @seltemp, $re;
+}
+
+# If @selection_args is empty the @selection must also be empty
+if( defined $mode ) {
+  my $mre = '^(' . join( '|', @seltemp ) . ')$';
+  push @selection, [ $mode, qr/$mre/ ];
+}
+
+pod2usage(-verbose => 2) if $help;
+
+my %p;
+my %skipped;		# key=path, Contains directories which may be skipped
+my %wasntempty;		# Same key, =1 iff there is a file in it or a subdirectory
+
+NEXTLINE:
+while( <STDIN> ) {
+  my @line = split /\s+/;
+  my $ftype = $line[0];
+  my $path = $line[2];
+  $path =~ s/=.*//;
+  
+  # First we remove all directories and then put back what is needed
+  if( $ftype eq 'd' ) {
+    $skipped{$path} = \@line;
+    next;
+  }
+
+  {
+    # Remember that all path components have been used by a file
+    my @c = split( m!/!, $path );
+    my @pa = map { join( '/', @c[0..$_] ) } 1..$#c-1;
+
+    foreach (@pa) {
+      $wasntempty{$_} = 1;
+    }
+  }
+
+  SELECTION:
+  foreach my $selector (@selection) {
+    my ($type, $regex) = @$selector;
+    if( $type eq 'i' ) {
+      last SELECTION if( $path =~ /$regex/ );
+    } elsif( $type eq 'x' ) {
+      next NEXTLINE if( $path =~ /$regex/ );
+    } else {
+      croak( "The type '$type' is unknown (either 'x' or 'i' is allowed)." );
+    }
+  }
+
+  $p{$path} = \@line;
+}
+
+# Put back needed directories
+foreach my $path (keys %p) {
+  # This funny construct builds all pathes leading to a directory
+  # e. g. /usr/bin/sparcv8/ -> (/usr, /usr/bin, /usr/bin/sparcv8/)
+  my @c = split( m!/!, $path );
+  my @pa = map { join( '/', @c[0..$_] ) } 1..$#c;
+
+  foreach (@pa) {
+    $p{$_} = delete $skipped{$_} if( exists $skipped{$_} )
+  }
+}
+
+# Re-add directories which where empty
+NEXTPATH:
+foreach my $path (keys %skipped) {
+  next if( exists $wasntempty{$path} );
+
+  SELECTION:
+  foreach my $selector (@selection) {
+    my ($type, $regex) = @$selector;
+    if( $type eq 'i' ) {
+      last SELECTION if( $path =~ /^$regex$/ );
+    } elsif( $type eq 'x' ) {
+      next NEXTPATH if( $path =~ /^$regex$/ );
+    }
+  }
+
+  my @c = split( m!/!, $path );
+  my @pa = map { join( '/', @c[0..$_] ) } 1..$#c;
+
+  foreach (@pa) {
+    $p{$_} = delete $skipped{$_} if( exists $skipped{$_} )
+  }
+}
+
+# Process isaexec substitutions
+# -e /opt/csw/bin/foo=/opt/csw/bin/sparcv8/foo
+#   f none /opt/csw/bin/foo 0755 root bin
+# ->
+#   l none /opt/csw/bin/foo=/opt/csw/bin/isaexec
+#   f none /opt/csw/bin/sparcv8/foo=/opt/csw/bin/foo
+#
+# --
+#
+# -e /opt/csw/bin/foo=/opt/csw/bin/sparcv8/foo
+# -e /opt/csw/bin/bar=/opt/csw/bin/sparcv8/bar
+#   f none /opt/csw/bin/foo 0755 root bin			SAME
+#   l none /opt/csw/bin/bar=/opt/csw/bin/foo 0755 root bin
+# ->
+#   l none /opt/csw/bin/foo=/opt/csw/bin/isaexec		SAME
+#   f none /opt/csw/bin/sparcv8/foo=/opt/csw/bin/foo		SAME
+#   l none /opt/csw/bin/bar=/opt/csw/bin/isaexec
+#   l none /opt/csw/bin/sparcv8/bar=/opt/csw/bin/sparcv8/foo
+#
+
+my %isaexec_map;
+foreach my $e (@isaexec) {
+  my ($isaexec_path, $new_path) = split( /=/, $e );
+  $isaexec_map{$isaexec_path} = $new_path;
+}
+
+foreach my $e (@isaexec) {
+  my ($isaexec_path, $new_path) = split( /=/, $e );
+
+  # Don't do isaexec replacement if the path has not been selected.
+  next if( !exists $p{$isaexec_path} );
+
+  $p{$new_path} = [ @{$p{$isaexec_path}} ];
+
+  # If the thing we try to isaexec is a symlink itself we need to replace the target also
+  if( $p{$isaexec_path}->[0] eq 'l' ) {
+    # The file to replaced by isaexec is already a hardlink, remove the target
+    my ($target) = ($p{$isaexec_path}->[2] =~ /=(.*)/);
+    $p{$isaexec_path}->[2] =~ s/=.*//;
+    $p{$new_path}->[2] = $new_path . '=' . (exists $isaexec_map{$target} ? $isaexec_map{$target} : $isaexec_path);
+  } else {
+    # Make it a hardlink
+    $p{$isaexec_path}->[0] = 'l';
+    $p{$new_path}->[2] = $new_path . '=' . $isaexec_path;
+  }
+  $p{$isaexec_path}->[2] .= '=/opt/csw/bin/isaexec';
+}
+
+print join( ' ', @{$p{$_}} ) . "\n" foreach (sort keys %p);
+
+__END__
+
+=head1 NAME
+
+pathfilter - Filters pathes from prototype(4)
+
+=head1 SYNOPSIS
+
+pathfilter [options] [file ...]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-h | --help>
+
+Print a brief help message and exits.
+
+=item B<-x | --exclude <path>>
+
+Excludes the path from the resulting prototype.
+
+=item B<-X <path>>
+
+Excludes the path from the resulting prototype where all meta characters are quoted.
+
+=item B<-i | --include <path>>
+
+Includes the path in the resulting prototype.
+All pathes are implicitly excluded by default if B<-i> is used.
+
+=item B<-I <path>>
+
+Includes the path in the resulting prototype where all meta characters are quoted.
+All pathes are implicitly excluded by default if B<-i> is used.
+
+=back
+
+=head1 DESCRIPTION
+
+B<pathfilter> will read a prototype(4) file from stdin, filter
+it as specified by the include/exclude options and writes the
+result to stdout.
+If no include/exclude options are given the input is copied verbatim to stdout.
+
+Empty directories are implicitly excluded by default.
+
+=cut
+

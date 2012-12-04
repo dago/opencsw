@@ -1,0 +1,20 @@
+$def with (maintainers)
+<html>
+  <head>
+    <title>
+      OpenCSW Maintainers
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <ul>
+$for username, domain, maintainer in maintainers
+  <li>
+  <a href="$maintainer.id/">$username</a>
+  ($domain.replace(".", "!"))
+  $if maintainer.full_name:
+    $maintainer.full_name
+  </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,40 @@
+#!/opt/csw/bin/perl
+
+# A quick hack of a script to find files that are not added to any
+# package The idea is that we build a list of files from the main
+# prototype file in build-global.  Then, we look for each arch
+# specific prototype and remove files that we see there from the
+# global list.  Any remaining file is not listed in a package
+# prototype and therefore won't be delivered to client systems.
+
+# We expect a path to build-global as an argument.  No error checking
+# is done on this.
+
+chdir $ARGV[0];
+$proc = `uname -p`;
+@ptypes = glob("*prototype-$proc");
+%ptype_whole = ();
+
+open (MAINPTYPE, "prototype") or die "Couldn't open full prototype.\n";
+while (<MAINPTYPE>) {
+    @parts = split(/\s+/, $_);
+    next if $parts[0] eq 'i';
+    # store references to each file.  remove these while traversing
+    # sub-package prototypes
+    $ptype_whole{$parts[2]} = 1;
+}
+close(MAINPTYPE);
+
+foreach $ptype (@ptypes) {
+    open(PTYPE, "$ptype") or die "Couldn't open prototype $ptype.\n";
+    while (<PTYPE>) {
+	@parts = split(/\s+/, $_);
+	next if $parts[0] eq 'i';
+	delete $ptype_whole{$parts[2]};
+    }
+    close(PTYPE);
+}
+
+foreach $k (keys %ptype_whole) {
+    print "$k\n";
+}
