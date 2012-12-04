@@ -66,13 +66,6 @@ _USAGE_
     exit 1;
 }
 
-# Check whether a path is a 'common' file, defined in __DATA__
-sub is_common {
-    my $path = shift;
-    return 1 if $path =~ /$Common/;
-    return 0;
-}
-
 # Returns true if the file should be excluded, false otherwise.
 sub exclude {
     my $path = shift;
@@ -159,7 +152,7 @@ SPECLINE:
         next unless $F[2];
 
         # Then process any excludes
-	next SPECLINE if( $F[2] =~ /$Common/ );
+	next SPECLINE if( $Common && $F[2] =~ /$Common/ );
         next if exclude($realpath);
 
         # Fix up dir permissions/file ownership.
