@@ -28,7 +28,7 @@ CONFIGURE_ARGS += --enable-64-bit-bfd
 
 # Do not run tests until this is fixed:
 #   <http://sourceware.org/bugzilla/show_bug.cgi?id=11128>
-#SKIPTEST ?= 1
+SKIPTEST ?= 1
 
 GARCOMPILER = GNU
 
@@ -42,3 +42,5 @@ CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/it/LC_MES
 
 
 include gar/category.mk
+# We need GNU grep 
+PATH := /opt/csw/gnu:$(PATH)
