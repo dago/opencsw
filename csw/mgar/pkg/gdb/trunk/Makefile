@@ -117,8 +117,9 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ga/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ga/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/id/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/id/LC_MESSAGES/opcodes.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ja/LC_MESSAGES/bfd.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/ja/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opitcsw/share/locale/sv/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opj/csw/share/locale/ga/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opjacsw/share/locale/sv/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/nl/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/nl/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/pt_BR/LC_MESSAGES/bfd.mo
@@ -132,10 +133,11 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/rw/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/sv/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/sv/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/tr/LC_MESSAGES/bfd.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/tr/LC_MESSAGES/opcodes.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/vi/LC_MESSAGES/bfd.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/vi/LC_MESSAGES/opcodes.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opukcsw/share/locale/ga/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/optrcsw/share/locale/sv/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opvicsw/share/locale/ga/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opvicsw/share/locale/sv/LC_MESSAGES/opcodes.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opzh_CNcsw/share/locale/ga/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/opcodes.mo
 
 include gar/category.mk
