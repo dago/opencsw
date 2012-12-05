@@ -4,7 +4,6 @@ NAME		=	texlive
 YEAR		=	2012
 VERSION		=	$(YEAR)0701
 GARTYPE		=	v2
-CATEGORIES	=	apps
 
 DESCRIPTION = TeX Live
 define BLURB
