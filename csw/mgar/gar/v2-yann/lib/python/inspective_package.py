@@ -350,19 +350,26 @@ class InspectivePackage(package.DirectoryFormatPackage):
       args = ["ldd", "-Ur", binary_abspath]
       retcode, stdout, stderr = ShellCommand(args)
       if retcode:
+        # There three cases where we will ignore an ldd error
+        #  - if we are trying to analyze a 64 bits binary on a Solaris 9 x86
+        #    solaris 9 exists only in 32 bits, so we can't do this
+        #    We ignore the error as it is likely that the ldd infos will be
+        #    the same on the 32 bits binaries
+        #  - if we are trying to analyze a binary from another architecture
+        #    we ignore this error as it will be caught by another checkpkg test
+        #  - if we are trying to analyze a statically linked binaries
+        #    we care only about dynamic binary so we ignore the error
+        #
         uname_info = os.uname()
-        if (uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
-            '/amd64/' in binary_abspath and
-            'has wrong class or data encoding' in stderr):
-          # we are trying to analyze a 64 bits binary on a Solaris 9 x86
-          # which exists only in 32 bits, that's not possible
-          # we ignore the error and return no information as it is likely
-          # that the ldd infos will be the same on the 32 bits binaries
-          # analyzed
+        if ((uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
+          '/amd64/' in binary_abspath and
+          'has wrong class or data encoding' in stderr) or
+          re.search(r'ELF machine type: EM_\w+: is incompatible with system', stderr) or
+          'file is not a dynamic executable or shared object' in stderr):
           ldd_output[binary] = []
           continue
-        else:
-          logging.error("%s returned an error: %s", args, stderr)
+
+        logging.error("%s returned an error: %s", args, stderr)
 
       ldd_info = []
       for line in stdout.splitlines():
@@ -575,12 +582,18 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["path"] = "%s" % (d["sizediffused_file"])
         response["symbol"] = None
       elif d["move_offset"]:
-        response["state"] = 'move_offset_error'
+        response["state"] = 'move-offset-error'
         response["soname"] = None
         response["path"] = None
         response["symbol"] = None
         response["move_offset"] = d['move_offset']
         response["move_index"] = d['move_index']
+      elif d["reloc_symbol"]:
+        response["state"] = 'relocation-issue'
+        response["soname"] = None
+        response["path"] = None
+        response["symbol"] = d['reloc_symbol']
+
 
     else:
       raise package.StdoutSyntaxError("Could not parse %s with %s"
