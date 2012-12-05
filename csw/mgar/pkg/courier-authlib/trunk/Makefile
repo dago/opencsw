@@ -24,6 +24,7 @@ CONFIGURE_ARGS += --with-mysql-libs=/opt/csw/lib
 CONFIGURE_ARGS += --with-mysql-includes=/opt/csw/include
 CONFIGURE_ARGS += --with-pgsql-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-pgsql-includes=/opt/csw/include/postgresql
+CONFIGURE_ARGS += --with-db=gdbm
 
 PACKAGES = CSWcourier-authlib
 SPKG_DESC_CSWcourier-authlib = Courier auth library
