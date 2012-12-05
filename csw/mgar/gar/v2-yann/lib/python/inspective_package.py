@@ -265,19 +265,20 @@ class InspectivePackage(package.DirectoryFormatPackage):
       if retcode or stderr:
         # we ignore for now these elfdump errors which can be catched
         # later by check functions,
-        ignored_error_re = re.compile(r"""[^:]+:\s\.((SUNW_l)?dynsym|symtab):\s
-            (index\[\d+\]:\s
-             (suspicious\s(local|global)\ssymbol\sentry:\s[^:]+:\s
-              lies\swithin\s(local|global)\ssymbol\srange\s\(index\s[<>=]+\s\d+\)
+        ignored_error_re = re.compile(
+          r"""[^:]+:\s\.((SUNW_l)?dynsym|symtab):\s
+           (index\[\d+\]:\s
+            (suspicious\s(local|global)\ssymbol\sentry:\s[^:]+:\slies
+             \swithin\s(local|global)\ssymbol\srange\s\(index\s[<>=]+\s\d+\)
 
-              |bad\ssymbol\sentry:\s[^:]+:\ssection\[\d+\]\ssize:\s0(x[0-9a-f]+)?:\s
-              symbol\s\(address\s0x[0-9a-f]+,\ssize\s0x[0-9a-f]+\)
-              \slies\soutside\sof\scontaining\ssection
+            |bad\ssymbol\sentry:\s[^:]+:\ssection\[\d+\]\ssize:\s0(x[0-9a-f]+)?
+             :\ssymbol\s\(address\s0x[0-9a-f]+,\ssize\s0x[0-9a-f]+\)
+             \slies\soutside\sof\scontaining\ssection
 
-              |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+)
+            |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+)
 
-             |invalid\ssh_link:\s0)\n""",
-             re.VERBOSE)
+           |invalid\ssh_link:\s0)\n""",
+          re.VERBOSE)
 
         stderr = re.sub(ignored_error_re, "", stderr)
         if stderr:
@@ -305,7 +306,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
         else:
           binary_info[cur_section].append(elf_info)
 
-
       # elfdump doesn't repeat the name of the soname in the version section
       # if it's the same on two contiguous line, e.g.:
       #         libc.so.1            SUNW_1.1
@@ -318,7 +318,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # soname version needed are usually displayed sorted by index ...
       # but that's not always the case :( so we have to reorder
       # the list by index
-      binary_info['version needed'].sort(key = lambda m: m['index'])
+      binary_info['version needed'].sort(key=lambda m: m['index'])
       for version in binary_info['version needed']:
           del version['index']
 
@@ -326,7 +326,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # we don't need this information
       if binary_info['version definition']:
         binary_info['version definition'].pop(0)
-
 
       binary_info['symbol table'] = symbols.values()
       binary_info['symbol table'].sort(key=lambda m: m['symbol'])
@@ -362,10 +361,11 @@ class InspectivePackage(package.DirectoryFormatPackage):
         #
         uname_info = os.uname()
         if ((uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
-          '/amd64/' in binary_abspath and
-          'has wrong class or data encoding' in stderr) or
-          re.search(r'ELF machine type: EM_\w+: is incompatible with system', stderr) or
-          'file is not a dynamic executable or shared object' in stderr):
+             '/amd64/' in binary_abspath and
+             'has wrong class or data encoding' in stderr) or
+            re.search(r'ELF machine type: EM_\w+: '
+                      r'is incompatible with system', stderr)
+            or 'file is not a dynamic executable or shared object' in stderr):
           ldd_output[binary] = []
           continue
 
@@ -440,15 +440,15 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
     re_by_section = {
       'version definition': (r"""
-        \s*(?:\[\d+\]\s+)?                # index: might be not present if
-                                          #        no version binding is enabled
+        \s*(?:\[\d+\]\s+)?                # index: might be not present if no
+                                          #        version binding is enabled
         (?P<version>\S+)                  # version
         (?:\s+(?P<dependency>\S+))?       # dependency
         (?:\s+\[\s(?:BASE|WEAK)\s\])?\s*$
                               """),
       'version needed': (r"""
-        \s*(?:\[(?P<index>\d+)\]\s+)?                # index: might be not present if
-                                          #        no version binding is enabled
+        \s*(?:\[(?P<index>\d+)\]\s+)?     # index: might be not present if no
+                                          #        version binding is enabled
         (?:(?P<soname>\S+)\s+             # file: can be absent if the same as
          (?!\[\s(?:INFO|WEAK)\s\]))?      #       the previous line,
                                           #       we make sure there is no
@@ -471,10 +471,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
          \s*(?:\[\d+\])                   # index
          \s+(?P<flags>[ABCDFILNPS]+)      # flags
 
-         \s+(?:(?:\[\d+\]                 # bound to: contains a library index
-         \s+(?P<soname>\S+)|<self>)\s+)?  #           and the library name
-                                          #           or <self> fon non external
-                                          #           symbols
+         \s+(?:(?:\[\d+\]                 # bound to: contains either
+         \s+(?P<soname>\S+)|<self>)\s+)?  #  - library index and library name
+                                          #  -  <self> for non external symbols
+
          (?P<symbol>\S+)\s*               # symbol
                    """)}
 
@@ -507,20 +507,22 @@ class InspectivePackage(package.DirectoryFormatPackage):
     sizes_differ = (r'^\trelocation \S+ sizes differ: '
                     r'(?P<sizes_differ_symbol>\S+)$')
     sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+)'
-                   ' size=(?P<size1>0x\w+); '
+                  r' size=(?P<size1>0x\w+); '
                   r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
     sizes_one_used = (r'^\t\t(?P<sizediffused_file>\S+) size used; '
                       r'possible insufficient data copied$')
     unreferenced_object = (r'^\s*unreferenced object=(?P<object>.*);'
-                            ' unused dependency of (?P<binary>.*)$')
+                           r' unused dependency of (?P<binary>.*)$')
     unused_object = (r'^\s*unused object=.*$')
     unused_search_path = (r'^\s*unused search path=.*'
-                           '  \(RUNPATH/RPATH from file .*\)$')
-    move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: \(unknown\): '
-                         r'offset=(?P<move_offset>0x[0-9a-f]+) lies outside memory image; '
-                         r'move discarded')
-    relocation_error = (r'relocation R_386_COPY sizes differ: (?P<reloc_symbol>.*)'
-                        r'|\t\t\(file .* size=0(?:x[0-9a-f]+)?; file .* size=0x(?:[0-9a-f]+)?\)'
+                          r'  \(RUNPATH/RPATH from file .*\)$')
+    move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: '
+                         r'\(unknown\): offset=(?P<move_offset>0x[0-9a-f]+) '
+                         'lies outside memory image; move discarded')
+    relocation_error = (r'relocation R_(386|AMD64|X86_64|SPARC)_\w+ '
+                        r'sizes differ: (?P<reloc_symbol>.*)'
+                        r'|\t\t\(file .* size=0(?:x[0-9a-f]+)?; file .*'
+                        r'size=0x(?:[0-9a-f]+)?\)'
                         r'|\t.* size used; possible data truncation')
     blank_line = (r'^\s*$')
     common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
@@ -593,7 +595,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["soname"] = None
         response["path"] = None
         response["symbol"] = d['reloc_symbol']
-
 
     else:
       raise package.StdoutSyntaxError("Could not parse %s with %s"
