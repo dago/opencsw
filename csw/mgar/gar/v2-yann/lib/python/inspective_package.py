@@ -318,7 +318,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # soname version needed are usually displayed sorted by index ...
       # but that's not always the case :( so we have to reorder
       # the list by index
-      binary_info['version needed'].sort(key=lambda m: m['index'])
+      binary_info['version needed'].sort(key=lambda m: int(m['index']))
       for version in binary_info['version needed']:
           del version['index']
 

@@ -165,6 +165,7 @@ class PackageStatsUnitTest(unittest.TestCase):
   def test_ParseElfdumpLineVersionNeeded(self):
     line = '[13]                              SUNW_0.9             [ INFO ]'
     expected = {
+      'index': '13',
       'version': 'SUNW_0.9',
       'soname': None
     }
