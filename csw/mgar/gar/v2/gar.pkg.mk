@@ -216,7 +216,15 @@ SPKG_TMPDIR    ?= /tmp
 
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
-SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
+# This is the old specification being evaluated during mkpackage. The expansion of the SPKG_REVSTAMP leads to
+# problems later on when need the filename for checkpkg again and too much time has passed. In the new approach
+# the packagename is directly put in the gspec.
+# SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
+
+# The filename for a package
+define _pkgfile
+$(call catalogname,$(1))-$(call pkgvar,SPKG_VERSION,$(1)),$(call pkgvar,SPKG_REVSTAMP,$(1))-$(call pkgvar,SPKG_OSNAME,$(1))-$(if $(or $(ARCHALL),$(ARCHALL_$(1))),all,$(GARCH))-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
+endef
 
 MIGRATECONF ?= $(strip $(foreach S,$(filter-out $(OBSOLETED_PKGS),$(SPKG_SPECS)),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
 
@@ -314,6 +322,7 @@ endif
 # Where we find our mkpackage global templates
 PKGLIB = $(GARDIR)/pkglib
 
+# These variables are for mkpackage and the gspec expansion
 PKG_EXPORTS  = NAME VERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
 PKG_EXPORTS += CURDIR WORKDIR WORKDIR_FIRSTMOD WORKSRC WORKSRC_FIRSTMOD PKGROOT
 PKG_EXPORTS += SPKG_REVSTAMP SPKG_PKGNAME SPKG_DESC SPKG_VERSION SPKG_CATEGORY
@@ -596,6 +605,7 @@ $(WORKDIR)/%.gspec:
 	$(_DBG)$(if $(filter $*.gspec,$(DISTFILES)),,\
 		(echo "%var            bitname $(call catalogname,$*)"; \
 		echo "%var            pkgname $*"; \
+		echo "%var            pkgfile $(call _pkgfile,$*)"; \
 		$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
 		$(if $(_CATEGORY_GSPEC_INCLUDE),echo "%include        url file://%{PKGLIB}/$(_CATEGORY_GSPEC_INCLUDE)")) >$@\
 	)
