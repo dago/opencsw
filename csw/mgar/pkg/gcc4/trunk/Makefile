@@ -60,10 +60,12 @@ CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix
 CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
-CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
+#CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
+CONFIGURE_ARGS += --with-as=/usr/ccs/bin/as
 CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-gnu-as
+#CONFIGURE_ARGS += --with-gnu-as
+CONFIGURE_ARGS += --without-gnu-as
 CONFIGURE_ARGS += --with-included-gettext
 CONFIGURE_ARGS += --with-ld=/usr/ccs/bin/ld
 CONFIGURE_ARGS += --without-gnu-ld
