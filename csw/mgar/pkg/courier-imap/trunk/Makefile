@@ -17,20 +17,30 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-root-check
+CONFIGURE_ARGS += --with-waitfunc=wait3
+CONFIGURE_ARGS += --enable-unicode
+CONFIGURE_ARGS += --with-db=gdbm
+CONFIGURE_ARGS += --with-userdb=/etc/opt/csw/authlib/userdb
+CONFIGURE_ARGS += --with-certsdir=$(sysconfdir)/courier-imap
+CONFIGURE_ARGS += --with-certdb=/etc/opt/csw/ssl/certs/ca-certificates.crt
+
+REINPLACE_USRLOCAL += $(mandir)/man1/maildirmake.1
+REINPLACE_WHEN_USRLOCAL = postinstall
 
 PACKAGES = CSWcourier-imap
 SPKG_DESC_CSWcourier-imap = Courier IMAP
-BUILD_DEP_PKGS_CSWcourier-imap += CSWmysql-dev
-BUILD_DEP_PKGS_CSWcourier-imap += CSWpostgresql-dev
-BUILD_DEP_PKGS_CSWcourier-imap += CSWopenldap-dev
-RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibmysqlclient18
-RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibpq5
-RUNTIME_DEP_PKGS_CSWcourier-imap += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibsqlite3-0
+BUILD_DEP_PKGS_CSWcourier-imap += CSWcourier-authlib-dev
+RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibfam0
 RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibgdbm4
-RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibldap2-4-2
-OBSOLETED_BY_CSWcourier-imap += CSWcourierauth
+RUNTIME_DEP_PKGS_CSWcourier-imap += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWcourier-imap += CSWcourier-authlib
+OBSOLETED_BY_CSWcourier-imap += CSWcourierimap
+EXTRA_LIB = $(prefix)/lib/courier-authlib
+
+TEST_SCRIPTS =
 
 MIGRATE_SOURCE_DIR_CSWcourier-imap = $(prefix)/etc/courier-imap
 MIGRATE_DEST_DIR_CSWcourier-imap = $(sysconfdir)/courier-imap
@@ -41,10 +51,6 @@ PRESERVECONF += imapd-ssl
 PRESERVECONF += pop3d-ssl
 PRESERVECONF += imapd.cnf
 PRESERVECONF += pop3d.cnf
-
-PACKAGES += CSWcourier-imap-dev
-SPKG_DESC_CSWcourier-imap-dev = Courier IMAP development files
-PKGFILES_CSWcourier-imap-dev = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
