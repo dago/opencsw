@@ -208,13 +208,24 @@ SPKG_OSNAME    := $(if $(SPKG_OSNAME),$(SPKG_OSNAME),$(shell /usr/bin/uname -s)$
 
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
-SPKG_EXPORT    ?= $(HOME)/staging/build-$(shell date '+%d.%b.%Y')
+ifdef SPKG_EXPORT
+# The definition may include variable parts like a call to "date". This would lead to different directory names
+# for multiple invocation in longs builds and a failing checkpkg due to lookup in wrong directories, so fixate
+# once what we have.
+SPKG_EXPORT    := $(SPKG_EXPORT)
+else
+SPKG_EXPORT    := $(HOME)/staging/build-$(shell date '+%d.%b.%Y')
+endif
 SPKG_PKGROOT   ?= $(PKGROOT)
 SPKG_PKGBASE   ?= $(PKGROOT)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
 SPKG_TMPDIR    ?= /tmp
 
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
+
+# These variables could change value transiently and need to be passed to subinvocations of GAR
+_PASS_GAR_SUBINVOCATION_EXPORTS += SPKG_EXPORT
+_PASS_GAR_ENV = $(foreach V,$(_PASS_GAR_SUBINVOCATION_EXPORTS),$V=$($V))
 
 # This is the old specification being evaluated during mkpackage. The expansion of the SPKG_REVSTAMP leads to
 # problems later on when need the filename for checkpkg again and too much time has passed. In the new approach
@@ -959,7 +970,7 @@ package: _package
 	@echo
 	@echo "The following packages have been built:"
 	@echo
-	@$(MAKE) -s GAR_PLATFORM=$(GAR_PLATFORM) _pkgshow
+	@$(MAKE) -s $(_PASS_GAR_ENV) GAR_PLATFORM=$(GAR_PLATFORM) _pkgshow
 	@echo
 	@$(DONADA)
 
@@ -968,7 +979,7 @@ dirpackage: ENABLE_CHECK=
 dirpackage: _package
 	@echo "The following packages have been built:"
 	@echo
-	@$(MAKE) -s GAR_PLATFORM=$(GAR_PLATFORM) _dirpkgshow
+	@$(MAKE) -s $(_PASS_GAR_ENV) GAR_PLATFORM=$(GAR_PLATFORM) _dirpkgshow
 	@echo
 	@$(DONADA)
 
@@ -1047,8 +1058,8 @@ platforms:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=$($V))) $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
+				$(MAKE) $(_PASS_GAR_ENV) GAR_PLATFORM=$P _package && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=$($V))) $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -1061,9 +1072,9 @@ platforms:
 		$(if $(ARCHALL),echo " (suitable for all architectures)\c";) \
 		$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 			echo " (built on this host)";\
-			  $(MAKE) -s GAR_PLATFORM=$P _pkgshow;echo;,\
+			  $(MAKE) -s $(_PASS_GAR_ENV) GAR_PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) -s $(_PASS_GAR_ENV) GAR_PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
@@ -1073,8 +1084,8 @@ platforms-%:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) -s GAR_PLATFORM=$P $* && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
+				$(MAKE) -s $(_PASS_GAR_ENV) GAR_PLATFORM=$P $* && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
