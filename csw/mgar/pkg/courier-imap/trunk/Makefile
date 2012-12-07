@@ -14,7 +14,7 @@ MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = courier/imap
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += cswcourier-imap.xml
-DISTFILES += svc-cswcourier-imap
+DISTFILES += cswcourier-imap
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
