@@ -1,0 +1,39 @@
+From 47b12201d03d30098d1813994ad347350e0b9425 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 6 Dec 2012 17:16:02 +0100
+Subject: [PATCH] Solaris fixes
+
+---
+ src/Makefile.in | 2 +-
+ src/npcdmod.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index b4323b4..3b2fc9e 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -91,7 +91,7 @@ npcd: npcd.c $(NPCDOBJS) $(NPCDHEAD)
+ #
+ ###############################
+ npcdmod.o: npcdmod.c
+-	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o npcdmod.o npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS) -fPIC
++	$(CC) $(MOD_CFLAGS) $(CFLAGS) -c -o npcdmod.o npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS) -fPIC
+ 
+ ###############################
+ #
+diff --git a/src/npcdmod.c b/src/npcdmod.c
+index cfd2565..53f36e4 100644
+--- a/src/npcdmod.c
++++ b/src/npcdmod.c
+@@ -38,7 +38,7 @@
+ #include "../include/npcdmod.h"
+ 
+ /* specify event broker API version (required) */
+-NEB_API_VERSION(CURRENT_NEB_API_VERSION);
++NEB_API_VERSION(CURRENT_NEB_API_VERSION)
+ 
+ extern int process_performance_data;
+ 
+-- 
+1.8.0
+
