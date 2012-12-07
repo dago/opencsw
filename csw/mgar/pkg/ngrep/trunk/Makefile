@@ -1,6 +1,5 @@
 NAME = ngrep
 VERSION = 1.45
-GARTYPE = v1
 CATEGORIES = net
 
 DESCRIPTION = Network grep
@@ -15,18 +14,23 @@ define BLURB
   tools, such as tcpdump and snoop.
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWngrep,depend)
+MASTER_SITES = $(SF_MI+= $(NAME)-$(VERSION).tar.bz2
+
+PATCHFILES +pend)
 PATCHFILES = gar-base.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10752
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = LICENSE = LICENSE.txt
 
-CONFIGURE_ARGS = $(DIRPATHS)
+RUNTIME_DEP_PKGS_CSWngrep += CSWlibpcap1
 
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --enable-pcre
+
+# There is no testsuite
 TEST_TARGET =
 
 include gar/category.mk
