@@ -21,6 +21,7 @@ PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 sysconfdir = /etc/opt/csw/courier-imap
 localstatedir = /var/opt/csw/courier-imap
 datadir = /opt/csw/share/courier-imap
+libexecdir = /opt/csw/libexec/courier-imap
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-root-check
