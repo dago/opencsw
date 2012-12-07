@@ -12,7 +12,7 @@
 #RC_SNUM 80
 #RC_KLEV 0,1,2,S
 #RC_SLEV 3
-#FMRI application
+#FMRI network
 #AUTOENABLE no
 #
 ### OpenCSW END
