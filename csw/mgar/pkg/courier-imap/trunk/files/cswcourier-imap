@@ -5,6 +5,18 @@
 #
 # description: Courier-IMAP - IMAP server
 #
+### OpenCSW BEGIN
+#
+#MANIFEST /var/opt/csw/svc/manifest/network/cswcourier-imap.xml
+#RC_KNUM 20
+#RC_SNUM 80
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+#FMRI application
+#AUTOENABLE no
+#
+### OpenCSW END
+
 
 if [ -f /lib/svc/share/smf_include.sh ]
 then
