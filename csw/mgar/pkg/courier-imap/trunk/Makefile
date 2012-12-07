@@ -13,8 +13,11 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = courier/imap
 DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += cswcourier-imap.xml
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
+sysconfdir = /etc/opt/csw/courier-imap
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-root-check
@@ -22,7 +25,7 @@ CONFIGURE_ARGS += --with-waitfunc=wait3
 CONFIGURE_ARGS += --enable-unicode
 CONFIGURE_ARGS += --with-db=gdbm
 CONFIGURE_ARGS += --with-userdb=/etc/opt/csw/authlib/userdb
-CONFIGURE_ARGS += --with-certsdir=$(sysconfdir)/courier-imap
+CONFIGURE_ARGS += --with-certsdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-certdb=/etc/opt/csw/ssl/certs/ca-certificates.crt
 
 REINPLACE_USRLOCAL += $(mandir)/man1/maildirmake.1
