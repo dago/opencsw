@@ -3,7 +3,7 @@
 #
 NAME = libreCAD
 GITNAME = LibreCAD
-VERSION = 2.0.0alpha4
+VERSION = 2.0.0beta1
 # GIT_VERSION = 216dc66b2a
 GARTYPE = v2
 CATEGORIES = gnome
