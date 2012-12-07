@@ -14,10 +14,13 @@ MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = courier/imap
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += cswcourier-imap.xml
+DISTFILES += svc-cswcourier-imap
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 sysconfdir = /etc/opt/csw/courier-imap
+localstatedir = /var/opt/csw/courier-imap
+datadir = /opt/csw/share/courier-imap
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-root-check
@@ -43,10 +46,12 @@ RUNTIME_DEP_PKGS_CSWcourier-imap += CSWcourier-authlib
 OBSOLETED_BY_CSWcourier-imap += CSWcourierimap
 EXTRA_LIB = $(prefix)/lib/courier-authlib
 
+INITSMF = /etc/opt/csw/init.d/cswcourier-imap
+
 TEST_SCRIPTS =
 
 MIGRATE_SOURCE_DIR_CSWcourier-imap = $(prefix)/etc/courier-imap
-MIGRATE_DEST_DIR_CSWcourier-imap = $(sysconfdir)/courier-imap
+MIGRATE_DEST_DIR_CSWcourier-imap = $(sysconfdir)
 
 PRESERVECONF += imapd
 PRESERVECONF += pop3d
@@ -56,4 +61,12 @@ PRESERVECONF += imapd.cnf
 PRESERVECONF += pop3d.cnf
 
 include gar/category.mk
+
+post-install-modulated:
+	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
+	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/network
+	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	 @/opt/csw/bin/ginstall -m 755 $(FILEDIR)/cswcourier-imap $(DESTDIR)/$(INITSMF)
+	 @/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-imap.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/cswcourier-imap.xml
+	 @$(MAKECOOKIE)
 

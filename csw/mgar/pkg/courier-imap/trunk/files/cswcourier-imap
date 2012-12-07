@@ -1,0 +1,127 @@
+#!/bin/sh
+#
+# This is the /etc/init.d file for Courier-IMAP
+# Modified for CSW
+#
+# description: Courier-IMAP - IMAP server
+#
+
+if [ -f /lib/svc/share/smf_include.sh ]
+then
+. /lib/svc/share/smf_include.sh
+fi
+
+prefix=/opt/csw
+exec_prefix=/opt/csw
+bindir=${exec_prefix}/bin
+sbindir=${exec_prefix}/sbin
+
+case "$1" in
+start)
+        cd /
+        . /etc/opt/csw/courier-imap/imapd
+
+        printf "Starting Courier-IMAP server:"
+
+        case x$IMAPDSTART in
+        x[yY]*)
+                # Start daemons.
+                /opt/csw/libexec/courier-imap/imapd.rc start
+                printf "\n imap"
+                ;;
+        esac
+
+        . /etc/opt/csw/courier-imap/imapd-ssl
+        case x$IMAPDSSLSTART in
+        x[yY]*)
+                if test -x $COURIERTLS
+                then
+
+                # First time we start this, generate a dummy SSL certificate.
+
+                        if test ! -f $TLS_CERTFILE
+                        then
+                                printf "\n generating-SSL-certificate..."
+                                /opt/csw/share/courier-imap/mkimapdcert >/dev/null 2>&1
+                        fi
+                        /opt/csw/libexec/courier-imap/imapd-ssl.rc start
+                        printf "\n imap-ssl"
+                fi
+                ;;
+        esac
+
+        POP3DSTART=""
+        POP3DSSLSTART=""
+
+        if test -f /etc/opt/csw/courier-imap/pop3d
+        then
+                . /etc/opt/csw/courier-imap/pop3d
+        fi
+
+        case x$POP3DSTART in
+        x[yY]*)
+                # Start daemons.
+                /opt/csw/libexec/courier-imap/pop3d.rc start
+                printf "\n pop3"
+                ;;
+        esac
+
+        if test -f /etc/opt/csw/courier-imap/pop3d-ssl
+        then
+                . /etc/opt/csw/courier-imap/pop3d-ssl
+        fi
+
+        case x$POP3DSSLSTART in
+        x[yY]*)
+                if test -x $COURIERTLS
+                then
+
+                # First time we start this, generate a dummy SSL certificate.
+
+                        if test ! -f $TLS_CERTFILE
+                        then
+                                printf "\n generating-SSL-certificate..."
+                                /opt/csw/share/courier-imap/mkpop3dcert >/dev/null 2>&1
+                        fi
+                        /opt/csw/libexec/courier-imap/pop3d-ssl.rc start
+                        printf "\n pop3-ssl"
+                fi
+                ;;
+        esac
+
+        echo ""
+        ;;
+stop)
+        printf "Stopping Courier-IMAP server:"
+        . /etc/opt/csw/courier-imap/imapd
+        . /etc/opt/csw/courier-imap/imapd-ssl
+        /opt/csw/libexec/courier-imap/imapd.rc stop
+        printf "\n imap"
+        if test -x $COURIERTLS
+        then
+                /opt/csw/libexec/courier-imap/imapd-ssl.rc stop
+                printf "\n imap-ssl"
+        fi
+
+        if test -f /etc/opt/csw/courier-imap/pop3d
+        then
+                /opt/csw/libexec/courier-imap/pop3d.rc stop
+                printf "\n pop3"
+
+                if test -x $COURIERTLS
+                then
+                        /opt/csw/libexec/courier-imap/pop3d-ssl.rc stop
+                        printf "\n pop3-ssl"
+                fi
+        fi
+
+        echo ""
+        ;;
+restart)
+        $0 stop
+        sleep 3
+        $0 start
+        ;;
+esac
+exit 0
+
