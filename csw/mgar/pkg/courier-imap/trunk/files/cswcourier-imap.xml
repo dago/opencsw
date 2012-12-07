@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
 <service_bundle type='manifest' name='export'>
-  <service name='application/cswcourier-imap' type='service' version='0'>
+  <service name='network/cswcourier-imap' type='service' version='0'>
     <single_instance/>
     <dependency name='fs-local' grouping='require_all' restart_on='none' type='service'>
       <service_fmri value='svc:/system/filesystem/local'/>
@@ -25,13 +25,13 @@
       <dependent name='cswcourierimap_multi-user' restart_on='none' grouping='optional_all'>
         <service_fmri value='svc:/milestone/multi-user'/>
       </dependent>
-      <exec_method name='start' type='method' exec='/opt/csw/lib/svc/method/svc-courier-imap start' timeout_seconds='120'>
+      <exec_method name='start' type='method' exec='/etc/opt/csw/init.d/cswcourier-imap start' timeout_seconds='120'>
         <method_context/>
       </exec_method>
-      <exec_method name='stop' type='method' exec='/opt/csw/lib/svc/method/svc-courier-imap stop %{restarter/contract}' timeout_seconds='60'>
+      <exec_method name='stop' type='method' exec='/etc/opt/csw/init.d/cswcourier-imap stop %{restarter/contract}' timeout_seconds='60'>
         <method_context/>
       </exec_method>
-      <exec_method name='restart' type='method' exec='/opt/csw/lib/svc/method/svc-courier-imap restart' timeout_seconds='60'>
+      <exec_method name='restart' type='method' exec='/etc/opt/csw/init.d/cswcourier-imap restart' timeout_seconds='60'>
         <method_context/>
       </exec_method>
       <property_group name='startd' type='framework'>
