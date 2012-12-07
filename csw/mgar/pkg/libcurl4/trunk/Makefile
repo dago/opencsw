@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.28.0
+VERSION = 7.28.1
 CATEGORIES = net
 GARTYPE = v2
 
@@ -14,8 +14,7 @@ define BLURB
   environments.
 endef
 
-MASTER_SITES = http://curl.haxx.se/download/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VERSION).tar.bz2
 
 # Because of OpenSSL 1.0 update
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -64,7 +63,8 @@ PACKAGES += CSWlibcurl-dev
 CATALOGNAME_CSWlibcurl-dev = libcurl_dev
 SPKG_DESC_CSWlibcurl-dev = Development files for libcurl.so.4
 PKGFILES_CSWlibcurl-dev = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibcurl-dev = CSWlibcurl4
+RUNTIME_DEP_PKG+= CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWlibcurl-dev += CSWlibidn-devdev = CSWlibcurl4
 OBSOLETED_BY_CSWlibcurl-dev = CSWcurldevel
 CATALOGNAME_CSWcurldevel = curl_devel_stub
 
@@ -88,7 +88,7 @@ BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibcares-dev
 BUILD_DEP_PKGS += CSWlibssh2-dev
 BUILD_DEP_PKGS += CSWlibfbopenssl-dev
-BUILD_DEP_PKGS += CSWlibrtmp-dev
+BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibidnKGS += CSWlibrtmp-dev
 
 VENDOR_URL = http://curl.haxx.se
 
@@ -146,11 +146,13 @@ include gar/category.mk
 # These are not really necessary and they confuse the linker as described in #4550
 $(GARCOMPILER)_LD_FLAGS :=
 
-# Rebuild the minimal library with AUX linkage to feature library
-post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
-post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: 
-	rm -f $(WORKSRC)/lib/libcurl.la
-	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC)/lib $(BUILD_ARGS)
+# Rebuild the minimal library with AUX linkage to feature limodulated: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
+post-build-modulated:
+	$(if $(filter minimal,$(FEATURES)),\
+	  rm -f $(WORKSRC)/lib/libcurl.la; \
+	  /lib/libcurl.la
+	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC)/; \
+	/lib $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 post-merge:
@@ -166,4 +168,3 @@ post-merge:
 		$(WORKROOTDIR)/install-isa-$(ISA_DEFAULT)-features-minimal$(includedir)/curl/curlbuild.h \
 		| sed -e 's/ifndef 64bit/if defined __amd64 || defined __x86_64 || defined __sparcv9/' \
 		> $(PKGROOT)$(includedir)/curl/curlbuild.h
-	@$(MAKECOOKIE)
