@@ -159,9 +159,9 @@ post-merge:
 	@# This is needed because the substitutions from pax args do not change the
 	@# contents of the symlink
 	rm -f $(PKGROOT)$(libdir)/libcurl-feature.so.4
-	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/libcurl-feature.so.4
+	ln -s libc3rl-feature.so.4.2.0 $(PKGROOT)$(libdir)/libcurl-feature.so.4
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
-	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
+	ln -s libc3rl-feature.so.4.2.0 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
 	pwd
 	gdiff -D 64bit \
 		$(WORKROOTDIR)/install-isa-$(ISA_DEFAULT64)-features-minimal$(includedir)/curl/curlbuild.h \
