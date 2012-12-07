@@ -1,9 +1,10 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = LibreCAD
-VERSION = 1.0.2
-GIT_VERSION = 216dc66b2a
+NAME = libreCAD
+GITNAME = LibreCAD
+VERSION = 2.0.0alpha4
+# GIT_VERSION = 216dc66b2a
 GARTYPE = v2
 CATEGORIES = gnome
 
@@ -22,7 +23,7 @@ EXTRA_LICENSE += LICENSE_GPLv3.txt
 # https://github.com/LibreCAD/LibreCAD/tarball/master
 MASTER_SITES = 
 # DISTFILES  = $(DISTNAME).tar.gz
-GIT_REPOS = http://github.com/$(NAME)/$(NAME).git
+GIT_REPOS = http://github.com/$(GITNAME)/$(GITNAME).git
 GIT_USE_PROXY = 1
 # GIT_TREEISH_LibreCAD.git = $(GIT_VERSION)
 
@@ -39,8 +40,9 @@ BUILD_DEP_PKGS += CSWmuparser-dev
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 
-PACKAGES += CSWlibreCAD
-CATALOGNAME_CSWlibreCAD = libreCAD
+PACKAGES = CSWlibreCAD
+CATALOGNAME_CSWlibreCAD = librecad
+SPKG_DESC_CSWlibreCAD = $(DESCRIPTION)
 PKGFILES_CSWlibreCAD += $(call baseisadirs,$(bindir),.*)
 PKGFILES_CSWlibreCAD += $(datadir)/$(call tolower,$(NAME))/.*
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqthelp4-gxx
@@ -52,9 +54,9 @@ RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibmuparser2-gxx
 # RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsql4-gxx
-CHECKPKG_OVERRIDES_CSWlibreCAD += file-with-bad-content|/usr/share|root/opt/csw/gxx/bin/librecad
-CHECKPKG_OVERRIDES_CSWlibreCAD += catalogname-not-lowercase
-
+# it had never exists: remove that as soon checkpkg could forget this
+OBSOLETED_BY_CSWlibreCAD = CSWLibreCAD
+CHECKPKG_OVERRIDES_CSWLibreCAD += catalogname-not-lowercase
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
