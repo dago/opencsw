@@ -1,6 +1,6 @@
 NAME = perl
-VERSION = 5.16.1
-CATEGORIES = lang
+VERSION = 5.16.2
+#CATEGORIES = lang
 CATEGORIES = lang
 GARTYPE = v2
 
