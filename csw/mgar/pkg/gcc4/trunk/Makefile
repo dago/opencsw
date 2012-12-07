@@ -534,8 +534,17 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 # We need GNU find as find
-PATH := /opt/csw/gnu:$(PATH)
+#PATH := /opt/csw/gnu:$(PATH)
+#We need some more exports:
+AR=/usr/ccs/bin/ar
+AS=/usr/ccs/bin/as
+NM=/usr/ccs/bin/nm
+RANLIB=/usr/ccs/bin/ranlib
+STRIP=/usr/css/bin/strip
+OBJCOPY=/opt/csw/bin/gobjcopy
+OBJDUMP=/opt/csw/bin/gobjdump
+READELF=/opt/csw/bin/greadelf
 
-CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)"
-BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)"
-INSTALL_ENV := PATH=$(PATH)
+CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)" AR=$(AR) AS=$(AS) NM=$(NM) RANLIB=$(RANLIB) STRIP=$(STRIP) OBJCOPY=$(OBJCOPY) OBJDUMP=$(OBJDUMP) READELF=$(READELF)
+BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)" AR=$(AR) AS=$(AS) NM=$(NM) RANLIB=$(RANLIB) STRIP=$(STRIP) OBJCOPY=$(OBJCOPY) OBJDUMP=$(OBJDUMP) READELF=$(READELF)
+INSTALL_ENV := PATH=$(PATH) AR=$(AR) AS=$(AS) NM=$(NM) RANLIB=$(RANLIB) STRIP=$(STRIP) OBJCOPY=$(OBJCOPY) OBJDUMP=$(OBJDUMP) READELF=$(READELF)
