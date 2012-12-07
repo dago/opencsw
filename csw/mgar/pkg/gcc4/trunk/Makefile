@@ -518,7 +518,7 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 # CHECKPKG_OVERRIDES_CSWlibstdc++6 += binary-architecture-does-not-match-placement
 
 # Otherwise it won't run on older Solaris 10 releases.
-LINKER_MAP_RELEASE=solaris10u8
+LINKER_MAP_RELEASE = solaris10u8
 
 include files/scripts.mk
 include gar/category.mk
@@ -533,17 +533,15 @@ post-install-modulated:
 	bash $(FILEDIR)/customize_specs.sh $(DESTDIR) $(PROGRAM_SUFFIX) $(VERSION)
 	@$(MAKECOOKIE)
 
-# We need GNU find as find
-#PATH := /opt/csw/gnu:$(PATH)
-#We need some more exports:
-AR=/usr/ccs/bin/ar
-AS=/usr/ccs/bin/as
-NM=/usr/ccs/bin/nm
-RANLIB=/usr/ccs/bin/ranlib
-STRIP=/usr/css/bin/strip
-OBJCOPY=/opt/csw/bin/gobjcopy
-OBJDUMP=/opt/csw/bin/gobjdump
-READELF=/opt/csw/bin/greadelf
+# Use CSW or Solaris tools explicitly:
+AR = /usr/ccs/bin/ar
+AS = /usr/ccs/bin/as
+NM = /usr/ccs/bin/nm
+RANLIB = /usr/ccs/bin/ranlib
+STRIP = /usr/css/bin/strip
+OBJCOPY = /opt/csw/bin/gobjcopy
+OBJDUMP = /opt/csw/bin/gobjdump
+READELF = /opt/csw/bin/greadelf
 
 CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)" AR=$(AR) AS=$(AS) NM=$(NM) RANLIB=$(RANLIB) STRIP=$(STRIP) OBJCOPY=$(OBJCOPY) OBJDUMP=$(OBJDUMP) READELF=$(READELF)
 BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)" AR=$(AR) AS=$(AS) NM=$(NM) RANLIB=$(RANLIB) STRIP=$(STRIP) OBJCOPY=$(OBJCOPY) OBJDUMP=$(OBJDUMP) READELF=$(READELF)
