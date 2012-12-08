@@ -36,7 +36,7 @@ fi
 
 case "$1" in
 start)
-        cd /
+        cd /var/opt/csw/authlib
         # Start daemons.
 
         printf "Starting Courier authentication services:"
