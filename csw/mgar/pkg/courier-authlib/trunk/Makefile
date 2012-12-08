@@ -66,7 +66,7 @@ PROTOTYPE_GROUP_1   = authlib
 PROTOTYPE_PERMS_1   = 755
 
 PROTOTYPE_CLASS_2   = ugfiles
-PROTOTYPE_FILES_2   = \/etc\/opt\/csw\/authlib\/auth.*\.dist
+PROTOTYPE_FILES_2   = \/etc\/opt\/csw\/authlib\/auth.*
 PROTOTYPE_USER_2    = authlib
 PROTOTYPE_GROUP_2   = authlib
 PROTOTYPE_PERMS_2   = 640
