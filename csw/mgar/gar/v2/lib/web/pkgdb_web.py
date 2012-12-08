@@ -434,6 +434,7 @@ class Srv4ByCatAndPkgname(object):
       srv4 = res.getOne()
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
+      web.header('Access-Control-Allow-Origin', '*')
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
       return cjson.encode(None)
