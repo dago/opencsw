@@ -1,1 +1,1 @@
-authlib:authlib:Courier authentication daemon::::
+authlib:authlib:Courier authentication daemon:/var/opt/csw/authlib::m:r:N
