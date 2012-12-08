@@ -12,7 +12,7 @@
     <dependency name='system-log' grouping='optional_all' restart_on='none' type='service'>
       <service_fmri value='svc:/system/system-log'/>
     </dependency>
-    <instance name='imap' enabled='true'>
+    <instance name='default' enabled='true'>
       <dependency name='config-files' grouping='require_any' restart_on='refresh' type='path'>
         <service_fmri value='file://localhost/etc/opt/csw/courier-imap/pop3d-ssl'/>
         <service_fmri value='file://localhost/etc/opt/csw/courier-imap/pop3d'/>

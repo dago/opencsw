@@ -30,7 +30,7 @@ CONFIGURE_ARGS += --enable-unicode
 CONFIGURE_ARGS += --with-db=gdbm
 CONFIGURE_ARGS += --with-userdb=/etc/opt/csw/authlib/userdb
 CONFIGURE_ARGS += --with-certsdir=$(sysconfdir)
-CONFIGURE_ARGS += --with-certdb=/etc/opt/csw/ssl/certs/ca-certificates.crt
+CONFIGURE_ARGS += --with-certdb=/etc/opt/csw/ssl/certs
 
 REINPLACE_USRLOCAL += $(mandir)/man1/maildirmake.1
 REINPLACE_WHEN_USRLOCAL = postinstall
@@ -49,10 +49,12 @@ EXTRA_LIB = $(prefix)/lib/courier-authlib
 
 INITSMF = /etc/opt/csw/init.d/cswcourier-imap
 
-TEST_SCRIPTS =
-
 MIGRATE_SOURCE_DIR_CSWcourier-imap = $(prefix)/etc/courier-imap
 MIGRATE_DEST_DIR_CSWcourier-imap = $(sysconfdir)
+MIGRATE_FILES_CSWcourier-imap += imapd
+MIGRATE_FILES_CSWcourier-imap += pop3d
+MIGRATE_FILES_CSWcourier-imap += imapd-ssl
+MIGRATE_FILES_CSWcourier-imap += pop3d-ssl
 
 PRESERVECONF += imapd
 PRESERVECONF += pop3d
@@ -65,6 +67,8 @@ PRESERVECONF += pop3d.pem
 
 # SMF override
 CHECKPKG_OVERRIDES_CSWcourier-imap += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswcourier-imap.xml
+
+TEST_SCRIPTS =
 
 include gar/category.mk
 
