@@ -60,6 +60,8 @@ PRESERVECONF += imapd-ssl
 PRESERVECONF += pop3d-ssl
 PRESERVECONF += imapd.cnf
 PRESERVECONF += pop3d.cnf
+PRESERVECONF += imapd.pem
+PRESERVECONF += pop3d.pem
 
 # SMF override
 CHECKPKG_OVERRIDES_CSWcourier-imap += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswcourier-imap.xml
