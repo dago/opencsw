@@ -1,9 +1,9 @@
 # $Id$
 #
 NAME = cfengine3
-VERSION = 3.3.9
+VERSION = 3.4.1
 GARTYPE = v2
-GARCOMPILER = SOS12U1
+GARCOMPILER = SOS12U2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -38,14 +38,12 @@ UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES =
 
-PATCHFILES  = 0000-Avoid-passing-NULL-pointer-to-CfOut-in-FnCallHostInN.patch
-#PATCHFILES += 0001-Remove-unsupported-compiler-options.patch
-PATCHFILES += 0000-Optimization-debug-flags-adjusted-for-use-with-SunSt.patch
 # See comment in patch
 PATCHFILES += 0000-Do-not-perform-acceptance-test.patch
-PATCHFILES += 0002-Add-include-alloca.h-in-gcov-stub.c.patch
-PATCHFILES += 0005-Remove-unsupported-compiler-options.patch
-PATCHFILES += 0006-Fix-empty-initializer.-Add-mkdtemp.patch
+# Make build and tests work
+PATCHFILES += 0001-Fix-preprocessor-macro-FUNC_DEPRECATED-to-avoid-synt.patch
+PATCHFILES += 0003-Fix-empty-initializer.-Add-mkdtemp.patch
+PATCHFILES += 0003-Remove-unsupported-compiler-flags.-Add-z-interpose-w.patch
 
 #
 # CUSTOM VARIABLES
@@ -62,6 +60,8 @@ RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibpcre1
 CHECKPKG_OVERRIDES_CSW$(NAME)utils += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)utils|catalogname=$(NAME)_utils|expected-catalogname=$(NAME)utils
+CHECKPKG_OVERRIDES_CSW$(NAME)utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/$(NAME)_utils/CoreBase/failsafe/failsafe.cf
+CHECKPKG_OVERRIDES_CSW$(NAME)utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/$(NAME)_utils/ChangeLog
 OBSOLETED_BY_CSW$(NAME)utils = CSWlibpromises1 CSW$(NAME)rt
 CATALOGNAME_CSWlibpromises1 = libpromises1_stub
 CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
@@ -84,6 +84,8 @@ CATALOGNAME_CSW$(NAME)client = $(NAME)_client
 SPKG_DESC_CSW$(NAME)client = CFEngine 3 client binaries
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)utils
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibxml2-2
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-agent
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-execd
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-monitord
@@ -112,6 +114,7 @@ PRESERVECONF = $(sysconfdir)/$(NAME)rc
 
 BUILD_DEP_PKGS  = CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibtokyocabinet-dev
 BUILD_DEP_PKGS += CSWflex
 BUILD_DEP_PKGS += CSWbison
@@ -127,7 +130,8 @@ CONFIGURE_ARGS += --without-postgresql
 CONFIGURE_ARGS += --without-mysql
 
 EXTRA_CPPFLAGS = -xc99=all
-EXTRA_CFLAGS   = -xc99=all
+# -features=extensions is needed since some void functions return values...
+EXTRA_CFLAGS   = -xc99=all -features=extensions
 
 # We use this because libpromises will be moved to this private
 # directory (see also move-libpromises:)

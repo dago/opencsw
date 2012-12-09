@@ -1,0 +1,330 @@
+From 8e25bfc31a6342071ba7a483ca333211491160c0 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 9 Dec 2012 13:49:49 +0100
+Subject: [PATCH] Fix empty initializer. Add mkdtemp().
+
+---
+ tests/load/db_load.c                    | 20 ++++++++++++++++++--
+ tests/load/lastseen_load.c              | 22 +++++++++++++++++++---
+ tests/unit/db_test.c                    | 20 ++++++++++++++++++--
+ tests/unit/dbm_migration_bundles_test.c | 20 ++++++++++++++++++--
+ tests/unit/files_interfaces_test.c      | 16 ++++++++++++++++
+ tests/unit/files_lib_test.c             | 16 ++++++++++++++++
+ tests/unit/lastseen_migration_test.c    | 22 +++++++++++++++++++---
+ tests/unit/lastseen_test.c              | 22 +++++++++++++++++++---
+ tests/unit/persistent_lock_test.c       | 16 ++++++++++++++++
+ 9 files changed, 159 insertions(+), 15 deletions(-)
+
+diff --git a/tests/load/db_load.c b/tests/load/db_load.c
+index 1860ae6..8998bff 100644
+--- a/tests/load/db_load.c
++++ b/tests/load/db_load.c
+@@ -2,6 +2,22 @@
+ #include "dbm_api.h"
+ #include <assert.h>
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ #define MAX_THREADS 10000
+ #define DB_ID dbid_classes
+ 
+@@ -347,5 +363,5 @@ int ThreadUnlock(pthread_mutex_t *t)
+ pthread_mutex_t *cft_dbhandle;
+ #endif
+ 
+-const char *DAY_TEXT[] = {};
+-const char *MONTH_TEXT[] = {};
++const char *DAY_TEXT[] = {NULL};
++const char *MONTH_TEXT[] = {NULL};
+diff --git a/tests/load/lastseen_load.c b/tests/load/lastseen_load.c
+index 22d4cf3..07c718d 100644
+--- a/tests/load/lastseen_load.c
++++ b/tests/load/lastseen_load.c
+@@ -2,6 +2,22 @@
+ #include "dbm_api.h"
+ #include "lastseen.h"
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ char CFWORKDIR[CF_BUFSIZE] = "/tmp";
+ 
+ 
+@@ -59,9 +75,9 @@ void CfOut(enum cfreport level, const char *errstr, const char *fmt, ...)
+ }
+ 
+ enum cfhashes CF_DEFAULT_DIGEST;
+-const char *DAY_TEXT[] = {};
+-const char *MONTH_TEXT[] = {};
+-const char *SHIFT_TEXT[] = {};
++const char *DAY_TEXT[] = {NULL};
++const char *MONTH_TEXT[] = {NULL};
++const char *SHIFT_TEXT[] = {NULL};
+ pthread_mutex_t *cft_output;
+ char VIPADDRESS[18];
+ RSA *PUBKEY;
+diff --git a/tests/unit/db_test.c b/tests/unit/db_test.c
+index 40c8957..c94a3a7 100644
+--- a/tests/unit/db_test.c
++++ b/tests/unit/db_test.c
+@@ -3,6 +3,22 @@
+ #include "cf3.defs.h"
+ #include "dbm_api.h"
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ char CFWORKDIR[CF_BUFSIZE];
+ 
+ void tests_setup(void)
+@@ -148,6 +164,6 @@ void CfOut(enum cfreport level, const char *errstr, const char *fmt, ...)
+     fprintf(stderr, "\n");
+ }
+ 
+-const char *DAY_TEXT[] = {};
+-const char *MONTH_TEXT[] = {};
++const char *DAY_TEXT[] = {NULL};
++const char *MONTH_TEXT[] = {NULL};
+ 
+diff --git a/tests/unit/dbm_migration_bundles_test.c b/tests/unit/dbm_migration_bundles_test.c
+index 279ce45..c7afc92 100644
+--- a/tests/unit/dbm_migration_bundles_test.c
++++ b/tests/unit/dbm_migration_bundles_test.c
+@@ -6,6 +6,22 @@
+ #include <setjmp.h>
+ #include <cmockery.h>
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ char CFWORKDIR[CF_BUFSIZE];
+ 
+ static void tests_setup(void)
+@@ -166,8 +182,8 @@ int main()
+ }
+ 
+ /* STUBS */
+-const char *DAY_TEXT[] = {};
+-const char *MONTH_TEXT[] = {};
++const char *DAY_TEXT[] = {NULL};
++const char *MONTH_TEXT[] = {NULL};
+ 
+ void FatalError(char *s, ...)
+ {
+diff --git a/tests/unit/files_interfaces_test.c b/tests/unit/files_interfaces_test.c
+index c2f5266..605f42a 100644
+--- a/tests/unit/files_interfaces_test.c
++++ b/tests/unit/files_interfaces_test.c
+@@ -1,6 +1,22 @@
+ #include "test.h"
+ #include "files_interfaces.h"
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ #define FILE_SIZE (sizeof(FILE_CONTENTS) - 1)
+ #define FILE_LINE "some garbage!"
+ #define FILE_CORRUPTED_LINE "some \0 , gar\0bage!"
+diff --git a/tests/unit/files_lib_test.c b/tests/unit/files_lib_test.c
+index 642d073..0f24d71 100644
+--- a/tests/unit/files_lib_test.c
++++ b/tests/unit/files_lib_test.c
+@@ -6,6 +6,22 @@
+ #include <cmockery.h>
+ #include <stdarg.h>
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ #define FILE_CONTENTS "8aysd9a8ydhsdkjnaldn12lk\njndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1lkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1lkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1lkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1lkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljew\nnbfdhwjebfkjhbnkjdn1lkdjn1lkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1l\rkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1\r\nlkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1lkjn38aysd9a8ydhsdkjnaldn12lkjndl1jndljewnbfdhwjebfkjhbnkjdn1lkdjn1lkjn3"
+ #define FILE_SIZE (sizeof(FILE_CONTENTS) - 1)
+ 
+diff --git a/tests/unit/lastseen_migration_test.c b/tests/unit/lastseen_migration_test.c
+index f0f285f..79c0f42 100644
+--- a/tests/unit/lastseen_migration_test.c
++++ b/tests/unit/lastseen_migration_test.c
+@@ -6,6 +6,22 @@
+ #include <setjmp.h>
+ #include <cmockery.h>
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ typedef struct
+ {
+     char address[128];
+@@ -258,9 +274,9 @@ void CfOut(enum cfreport level, const char *errstr, const char *fmt, ...)
+ }
+ 
+ enum cfhashes CF_DEFAULT_DIGEST;
+-const char *DAY_TEXT[] = {};
+-const char *MONTH_TEXT[] = {};
+-const char *SHIFT_TEXT[] = {};
++const char *DAY_TEXT[] = {NULL};
++const char *MONTH_TEXT[] = {NULL};
++const char *SHIFT_TEXT[] = {NULL};
+ pthread_mutex_t *cft_output;
+ char VIPADDRESS[18];
+ RSA *PUBKEY;
+diff --git a/tests/unit/lastseen_test.c b/tests/unit/lastseen_test.c
+index 27f7b96..e91d675 100644
+--- a/tests/unit/lastseen_test.c
++++ b/tests/unit/lastseen_test.c
+@@ -6,6 +6,22 @@
+ #include <setjmp.h>
+ #include <cmockery.h>
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ char CFWORKDIR[CF_BUFSIZE];
+ 
+ void UpdateLastSawHost(const char *hostkey, const char *address,
+@@ -200,9 +216,9 @@ void CfOut(enum cfreport level, const char *errstr, const char *fmt, ...)
+ }
+ 
+ enum cfhashes CF_DEFAULT_DIGEST;
+-const char *DAY_TEXT[] = {};
+-const char *MONTH_TEXT[] = {};
+-const char *SHIFT_TEXT[] = {};
++const char *DAY_TEXT[] = {NULL};
++const char *MONTH_TEXT[] = {NULL};
++const char *SHIFT_TEXT[] = {NULL};
+ pthread_mutex_t *cft_output;
+ char VIPADDRESS[18];
+ RSA *PUBKEY;
+diff --git a/tests/unit/persistent_lock_test.c b/tests/unit/persistent_lock_test.c
+index 71219e8..b556555 100644
+--- a/tests/unit/persistent_lock_test.c
++++ b/tests/unit/persistent_lock_test.c
+@@ -5,6 +5,22 @@
+ #include <setjmp.h>
+ #include <cmockery.h>
+ 
++#include <sys/stat.h>
++#include <stdlib.h>
++
++static char* mkdtemp(char *template) {
++        char *tmp;
++        int retval;
++
++        tmp = mktemp(template);
++        if (tmp == NULL) return NULL;
++
++        if ( !(retval = mkdir(tmp, S_IRWXU)) )
++                return NULL;
++
++        return tmp;
++}
++
+ static void tests_setup(void)
+ {
+     snprintf(CFWORKDIR, CF_BUFSIZE, "/tmp/persistent_lock_test.XXXXXX");
+-- 
+1.8.0
+
