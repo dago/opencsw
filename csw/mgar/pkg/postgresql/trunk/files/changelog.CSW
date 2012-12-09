@@ -1,3 +1,13 @@
+postgresql92 (9.2.2,REV=2012.12.09)
+
+  * New upstream release 9.2.2.
+
+  * pg_config: do not emit compiler optimization flags (see
+	       https://www.opencsw.org/mantis/view.php?id=5025)
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 09 Dec 2012 10:02:08 +0100
+
+
 postgresql92 (9.2.1,REV=2012.10.03)
 
   * New upstream release 9.2.1

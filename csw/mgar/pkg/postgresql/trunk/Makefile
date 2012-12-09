@@ -90,7 +90,7 @@ NAME = postgresql
 BASE_VERSION = 9.2
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 1
+PATCHLEVEL = 2
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 GARTYPE = v2
@@ -280,7 +280,8 @@ PATCHFILES += 0001-ecpg-usr-local-include-replacement.patch
 PATCHFILES += 0000-Run-tests-in-var-tmp-pgsql92-tmp_check.patch
 # By default, src/makefiles/Makefile.solaris uses -Wl,-R'$(rpathdir)'
 # which isn't properly digested by Sun's ld
-PATCHFILES += 0002-Use-plain-rpath.patch
+PATCHFILES += 0002-Use-# Please see comment in the patch.
+PATCHFILES += 0004-Filter-out-compiler-optimization-for-pg_config02-Use-plain-rpath.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
@@ -703,6 +704,4 @@ test-installation:
 			: ; \
 		else \
 			echo "Extension `basename $$n` not defined" ; \
-			exit 1 ; \
-		fi ; \
-	done
+			exit 1 ;
