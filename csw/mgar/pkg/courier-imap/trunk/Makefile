@@ -31,6 +31,7 @@ CONFIGURE_ARGS += --with-db=gdbm
 CONFIGURE_ARGS += --with-userdb=/etc/opt/csw/authlib/userdb
 CONFIGURE_ARGS += --with-certsdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-certdb=/etc/opt/csw/ssl/certs
+CONFIGURE_ARGS += --with-piddir=/var/opt/csw/run/courier-imap
 
 REINPLACE_USRLOCAL += $(mandir)/man1/maildirmake.1
 REINPLACE_WHEN_USRLOCAL = postinstall
@@ -73,9 +74,10 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 post-install-modulated:
+	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
 	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/network
-	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	 @/opt/csw/bin/ginstall -d -m 755 $(DESTDIR)/var/opt/csw/run/courier-imap
 	 @/opt/csw/bin/ginstall -m 755 $(FILEDIR)/cswcourier-imap $(DESTDIR)/$(INITSMF)
 	 @/opt/csw/bin/ginstall -m 644 $(FILEDIR)/cswcourier-imap.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/cswcourier-imap.xml
 	 @$(MAKECOOKIE)
