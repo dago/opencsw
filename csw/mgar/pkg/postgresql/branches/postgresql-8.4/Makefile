@@ -90,7 +90,7 @@ NAME = postgresql
 BASE_VERSION = 8.4
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 14
+PATCHLEVEL = 15
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
@@ -227,6 +227,8 @@ PATCHFILES += 0002-Run-tests-in-var-tmp-pgsql-tmp_check.patch
 # By default, src/makefiles/Makefile.solaris uses -Wl,-R'$(rpathdir)'
 # which isn't properly digested by Sun's ld
 PATCHFILES += 0000-Use-plain-rpath.patch
+# Please see comment in the patch.
+PATCHFILES += 0004-Filter-out-compiler-optimization-for-pg_config.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)

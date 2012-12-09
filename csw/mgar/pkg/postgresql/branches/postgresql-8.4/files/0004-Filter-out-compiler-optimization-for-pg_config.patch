@@ -1,0 +1,52 @@
+From c361ec294277bfb36aac652bf6f5b6cdd415ba88 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 9 Dec 2012 12:03:33 +0100
+Subject: [PATCH] Filter out compiler optimization for pg_config
+
+For more information, see comments in this patch and
+https://www.opencsw.org/mantis/view.php?id=5025
+---
+ src/bin/pg_config/Makefile | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/src/bin/pg_config/Makefile b/src/bin/pg_config/Makefile
+index befb8d8..7b73239 100644
+--- a/src/bin/pg_config/Makefile
++++ b/src/bin/pg_config/Makefile
+@@ -8,6 +8,21 @@
+ #
+ #-------------------------------------------------------------------------
+ 
++
++# pg_config has CFLAGS and LDFLAGS hardcoded, including compiler optimization.
++# This doesn't pan out if PostgreSQL is compiled with compiler A, but
++# pg_config is called to compile software with compiler B. So, we filter out
++# known compiler optimization flags (SunStudio and GCC, so far).
++#
++# This var holds all the compiler optimizations that will be filtered out.
++# Please be aware, that this filtering has only been tested with GMAKE.
++#
++# See also
++#  https://www.opencsw.org/mantis/view.php?id=5025
++#
++# --raos
++__compiler_opts = -march=% -mtune=% -xchip=% -xarch=% -xO%
++
+ PGFILEDESC = "pg_config - report configuration information"
+ subdir = src/bin/pg_config
+ top_builddir = ../../..
+@@ -22,9 +37,9 @@ STD_LDFLAGS := $(filter-out -L$(top_builddir)/src/port,$(LDFLAGS))
+ override CPPFLAGS += -DVAL_CONFIGURE="\"$(configure_args)\""
+ override CPPFLAGS += -DVAL_CC="\"$(CC)\""
+ override CPPFLAGS += -DVAL_CPPFLAGS="\"$(STD_CPPFLAGS)\""
+-override CPPFLAGS += -DVAL_CFLAGS="\"$(CFLAGS)\""
++override CPPFLAGS += -DVAL_CFLAGS="\"$(filter-out $(__compiler_opts),$(CFLAGS))\""
+ override CPPFLAGS += -DVAL_CFLAGS_SL="\"$(CFLAGS_SL)\""
+-override CPPFLAGS += -DVAL_LDFLAGS="\"$(STD_LDFLAGS)\""
++override CPPFLAGS += -DVAL_LDFLAGS="\"$(filter-out $(__compiler_opts),$(STD_LDFLAGS))\""
+ override CPPFLAGS += -DVAL_LDFLAGS_SL="\"$(LDFLAGS_SL)\""
+ override CPPFLAGS += -DVAL_LIBS="\"$(LIBS)\""
+ 
+-- 
+1.8.0
+
