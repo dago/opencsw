@@ -8,7 +8,7 @@
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
 
 NAME = ffmpeg
-VERSION = 1.0
+VERSION = 1.0.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -47,7 +47,7 @@ RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibx264-128
+RUNTIME_DEP_PKGS_CSWlibavcodec549+= CSWlibx264-128
 RUNTIME_DEP_PKGS_CSWlibavcodec54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavdevice54
@@ -67,7 +67,7 @@ RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibtheoraenc1
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibx264-128
+RUNTIME_DEP_PKGS_CSWlibavdevice549+= CSWlibx264-128
 RUNTIME_DEP_PKGS_CSWlibavdevice54 += CSWlibgcc-s1
 
 PACKAGES += CSWlibavfilter3
@@ -216,4 +216,4 @@ SKIPTEST ?= 1
 include gar/category.mk
 
 # For 'grep -q'
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /opt
