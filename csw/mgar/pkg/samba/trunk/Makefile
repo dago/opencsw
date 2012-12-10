@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.9
+VERSION = 3.6.10
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -364,4 +364,4 @@ post-install-modulated:
 	ginstall $(WORKDIR)/cswwinbind $(DESTDIR)/etc/opt/csw/init.d/cswwinbind
 	ginstall -d $(DESTDIR)/etc/opt/csw/samba
 	ginstall $(WORKDIR)/smb.conf $(DESTDIR)/etc/opt/csw/samba/smb.conf
-	ginstall $(WORKSRC)/nsswitch/libnss_winbind.so $(DESTDIR)/$(libdir)/libnss_winbind.so.1
+	ginstall $(WORKSRC)/nsswitch/libnss_winbind.so $(DESTDIR)/$(libdir)/li
