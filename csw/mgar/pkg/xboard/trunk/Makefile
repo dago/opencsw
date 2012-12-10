@@ -1,6 +1,5 @@
 NAME = xboard
-VERSION = 4.4.1
-CATEGORIES = apps
+VERSION = 4.6.= apps
 GARTYPE = v2
 
 DESCRIPTION = X graphical chessboard
@@ -12,18 +11,12 @@ define BLURB
   the mouse, and loads and saves games in Portable Game Notation (PGN).
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = $(GNU_+= $(NAME)-$(VERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VERNDOR_URL = http://www.gnu.org/software/xboard/
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+# EXTRA_LINKER_FLAGS = -lm
 
-EXTRA_LDFLAGS = -lm /usr/openwin/lib/libXext.so
-
-CONFIGURE_ARGS = $(DIRPATHS)
+# CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
