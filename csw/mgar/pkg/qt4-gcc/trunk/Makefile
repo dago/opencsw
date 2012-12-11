@@ -48,9 +48,7 @@ CONFIGURE_ARGS += -webkit
 CONFIGURE_ARGS += -v -shared -stl -largefile -sm 
 CONFIGURE_ARGS += -qt-libjpeg -qt-libpng -qt-libmng -qt-zlib 
 CONFIGURE_ARGS += -I/usr/include -I/usr/X11/include 
-CONFIGURE_ARGS += -I/usr/X11/share/include
-# Solaris10 XShape is too old, has no ShapeInput
-CONFIGURE_ARGS += -no-xshape
+CONFIGURE_ARGS += -I/usr/XGS += -no-xshape
 CONFIGURE_ARGS_sparc += -big-endian -host-big-endian
 # CONFIGURE_ARGS_i386 += -little-endian -host-big-endian
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
