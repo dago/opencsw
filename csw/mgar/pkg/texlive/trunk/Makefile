@@ -29,6 +29,7 @@ PATCHFILES		+=	0001-Fix-lacheck-buffer-overflow.patch
 PATCHFILES		+=	0002-Fix-ICU-link-edit.patch
 PATCHFILES		+=	0003-Adapt-texmf-configuration.patch
 PATCHFILES		+=	0004-Activate-formats.patch
+PATCHFILES		+=	0005-Fix-dvi2tty-buffer-overflow.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -4856,6 +4857,11 @@ post-install-modulated:
 	cd $(DESTDIR)/$(bindir) && ln -s -f xetex xelatex
 	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex xmltex
 	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfxmltex
+	: replace references to interpreters
+	:    Perl
+	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/perl[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/perl[[:space:]]*;#!/usr/bin/env perl ;' {}
+	:    Bourne Shell
+	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/sh[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/sh[[:space:]]*;#!/usr/bin/env bash ;' {}
 	$(MAKECOOKIE)
 
 # the texlive-common package is bigger than a trivially sized /tmp

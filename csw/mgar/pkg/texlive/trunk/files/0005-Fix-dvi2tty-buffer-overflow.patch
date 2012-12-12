@@ -1,0 +1,34 @@
+From 753507ba4ec5ab64b8e39a2636ae6db5664ad472 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 12 Dec 2012 11:50:43 +0100
+Subject: [PATCH] Fix dvi2tty buffer overflow
+
+---
+ texk/dvi2tty/dvi2tty-5.3.4/dvi2tty.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/texk/dvi2tty/dvi2tty-5.3.4/dvi2tty.c b/texk/dvi2tty/dvi2tty-5.3.4/dvi2tty.c
+index a77000c..fd714d1 100644
+--- a/texk/dvi2tty/dvi2tty-5.3.4/dvi2tty.c
++++ b/texk/dvi2tty/dvi2tty-5.3.4/dvi2tty.c
+@@ -31,7 +31,7 @@
+ # include "macintosh.h"
+ #endif
+ 
+-
++#include <limits.h>
+ 
+ /* 
+  * Constant definitons
+@@ -109,7 +109,7 @@ const char  *   path;           /* name of the pager to run                  */
+ char  *         progname;       /* our name                                  */
+ int             Argc;
+ char **         Argv;
+-char            DVIfilename[MAXLEN];
++char            DVIfilename[PATH_MAX + 1];
+ const char *    OUTfilename;
+ char            optch;          /* for option handling                       */
+ 
+-- 
+1.7.12
+
