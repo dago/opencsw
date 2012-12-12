@@ -493,8 +493,8 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 # CHECKPKG_OVERRIDES_CSWlibssp0 += binary-architecture-does-not-match-placement
 # CHECKPKG_OVERRIDES_CSWlibstdc++6 += binary-architecture-does-not-match-placement
 
-# Otherwise it won't run on older Solaris 10 releases.
-LINKER_MAP_RELEASE = solaris10u8
+# We're building with the default GAR maps, currently U5.
+# LINKER_MAP_RELEASE = solaris10u8
 
 include files/scripts.mk
 include gar/category.mk
