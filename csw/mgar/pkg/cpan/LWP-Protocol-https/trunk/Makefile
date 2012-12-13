@@ -15,7 +15,7 @@ endef
 LICENSE_TEXT = This module is licensed under the perl license
 
 PACKAGES = CSWpm-lwp-protocol-https
-CATALOGNAME = pm_lwp_protocol_https
+ARCHALL = 1
 RUNTIME_DEP_PKGS += CSWpm-io-socket-ssl
 RUNTIME_DEP_PKGS += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS += CSWpm-net-http
