@@ -46,7 +46,8 @@ CONFIGURE_ARGS += -no-qt3support
 COno-xshape+= -no-qt3support
 CONFIGURE_ARGS += -webkit
 CONFIGURE_ARGS += -v -shared -stl -largefile -sm 
-CONFIGURE_ARGS += -qt-libjpeg -qt-libpng -qt-libmng -qt-zlib 
+CONFIGURE_ARGS += -qt-libjpeg -qt-libpng -qt-# compile error: error: 'QGtkStyle' has not been declared ??? since 10.12.2012
+CONFIGURE_ARGS += -no-gtkstyle-libmng -qt-zlib 
 CONFIGURE_ARGS += -I/usr/include -I/usr/X11/include 
 CONFIGURE_ARGS += -I/usr/XGS += -no-xshape
 CONFIGURE_ARGS_sparc += -big-endian -host-big-endian
@@ -125,10 +126,10 @@ RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibglib2-0-0
 # RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWgstplugins
-RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWqt4-gxx-dev= CSWlibgcc-s1
 # RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibsybdb5
-RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWsqlite
-# RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWqt4-gxx-RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibpq5
+v += CSWlibpq5
 # RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWqt4-gxx-dev += CSWlibtiff3
 RUNTIME_DEP_PK += CSWlibmysqlclient18ev += CSWlibtiff3
