@@ -87,8 +87,6 @@ CONFIGURE_ARGS	+=	--with-system-zzlib
 CONFIGURE_ARGS	+=	--with-x
 CONFIGURE_ARGS	+=	--with-xdvi-x-toolkit=xaw
 
-RUNTIME_DEP_PKGS	+=	CSWps2eps
-
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf/doc/info/dir
 # these are provided by CSWasymptote
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf/asymptote/*
@@ -143,6 +141,11 @@ CATALOGNAME_CSWtexlive-common		=	texlive_common
 SPKG_DESC_CSWtexlive-common			+=	$(DESCRIPTION), common
 OBSOLETED_BY_CSWtexlive-common		=	CSWtetex
 ARCHALL_CSWtexlive-common	=	1
+RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWpython
+RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWruby
+RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWtexlive-binaries
+RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWperl
 
 PACKAGES							+=	CSWtexlive-dev
 CATALOGNAME_CSWtexlive-dev			+=	texlive_dev
@@ -269,6 +272,7 @@ ARCHALL_CSWtexlive-base	=	1
 RUNTIME_DEP_PKGS_CSWtexlive-base	+=	CSWpython
 RUNTIME_DEP_PKGS_CSWtexlive-base	+=	CSWtexlive-common
 RUNTIME_DEP_PKGS_CSWtexlive-base	+=	CSWperl
+RUNTIME_DEP_PKGS_CSWtexlive-base	+=	CSWtexlive-luatex
 
 PACKAGES		 							+=	CSWtexlive-bibtex-extra
 CATALOGNAME_CSWtexlive-bibtex-extra			=	texlive_bibtex_extra
@@ -370,6 +374,7 @@ PKGFILES_CSWtexlive-bibtex-extra			+=	/opt/csw/share/texmf-dist/tex/latex/rsc/.*
 PKGFILES_CSWtexlive-bibtex-extra			+=	/opt/csw/share/texmf-dist/tex/latex/splitbib/.*
 PKGFILES_CSWtexlive-bibtex-extra			+=	/opt/csw/share/texmf-dist/tex/plain/harvmac/.*
 ARCHALL_CSWtexlive-bibtex-extra	=	1
+RUNTIME_DEP_PKGS_CSWtexlive-bibtex-extra	+=	CSWtexlive-common
 
 PACKAGES 								+=	CSWtexlive-binaries
 CATALOGNAME_CSWtexlive-binaries			=	texlive_binaries
@@ -555,7 +560,9 @@ PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xdvipdfmx
 PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xetex
 PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xmltex
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWgs
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWtexlive-common
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgd2
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibptexenc1
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibt1-5
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibz1
@@ -901,7 +908,9 @@ PKGFILES_CSWtexlive-extra-utils			+=	/opt/csw/share/texmf/scripts/tetex/e2pall.p
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWpython
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWemacscommon
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWperl
-ARCHALL_CSWtexlive-extra-utils			=	1
+RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWtexlive-common
+RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWlibstdc++6
 
 PACKAGES 							+=	CSWtexlive-font-utils
 CATALOGNAME_CSWtexlive-font-utils	=	texlive_font_utils
@@ -945,6 +954,8 @@ PKGFILES_CSWtexlive-font-utils		+=	/opt/csw/share/texmf/fonts/lig/afm2pl/.*
 PKGFILES_CSWtexlive-font-utils		+=	/opt/csw/share/texmf/tex/fontinst/afm2pl/.*
 PKGFILES_CSWtexlive-font-utils		+=	/opt/csw/share/texmf/ttf2pk/.*
 ARCHALL_CSWtexlive-font-utils		=	1
+RUNTIME_DEP_PKGS_CSWtexlive-font-utils	+=	CSWtexlive-common
+RUNTIME_DEP_PKGS_CSWtexlive-font-utils	+=	CSWperl
 
 PACKAGES 							+=	CSWtexlive-fonts-extra
 CATALOGNAME_CSWtexlive-fonts-extra	=	texlive_fonts_extra
@@ -2066,6 +2077,8 @@ PKGFILES_CSWtexlive-lang-cyrillic		+=	/opt/csw/share/texmf-dist/tex/latex/t2/.*
 PKGFILES_CSWtexlive-lang-cyrillic		+=	/opt/csw/share/texmf-dist/tex/plain/cyrplain/.*
 PKGFILES_CSWtexlive-lang-cyrillic		+=	/opt/csw/share/texmf-dist/tex/plain/lh/.*
 ARCHALL_CSWtexlive-lang-cyrillic		=	1
+RUNTIME_DEP_PKGS_CSWtexlive-lang-cyrillic	+=	CSWtexlive-binaries
+RUNTIME_DEP_PKGS_CSWtexlive-lang-cyrillic	+=	CSWperl
 
 PACKAGES 									+=	CSWtexlive-lang-czechslovak
 CATALOGNAME_CSWtexlive-lang-czechslovak		=	texlive_lang_czechslovak
@@ -2235,6 +2248,7 @@ PKGFILES_CSWtexlive-lang-greek		+=	/opt/csw/share/texmf/tex/generic/hyphen/grahy
 PKGFILES_CSWtexlive-lang-greek		+=	/opt/csw/share/texmf/tex/generic/hyphen/grmhyph5.tex
 PKGFILES_CSWtexlive-lang-greek		+=	/opt/csw/share/texmf/tex/generic/hyphen/grphyph5.tex
 PKGFILES_CSWtexlive-lang-greek		+=	/opt/csw/share/texmf/tex/generic/hyphen/ibyhyph.tex
+RUNTIME_DEP_PKGS_CSWtexlive-lang-greek	+=	CSWperl
 ARCHALL_CSWtexlive-lang-greek		=	1
 
 PACKAGES 							+=	CSWtexlive-lang-hebrew
@@ -2327,6 +2341,7 @@ PKGFILES_CSWtexlive-lang-mongolian		+=	/opt/csw/share/texmf-dist/fonts/tfm/publi
 PKGFILES_CSWtexlive-lang-mongolian		+=	/opt/csw/share/texmf-dist/fonts/type1/public/montex/.*
 PKGFILES_CSWtexlive-lang-mongolian		+=	/opt/csw/share/texmf-dist/tex/latex/mongolian-babel/.*
 PKGFILES_CSWtexlive-lang-mongolian		+=	/opt/csw/share/texmf-dist/tex/latex/montex/.*
+RUNTIME_DEP_PKGS_CSWtexlive-lang-mongolian	+=	CSWperl
 ARCHALL_CSWtexlive-lang-mongolian		=	1
 
 PACKAGES 							+=	CSWtexlive-lang-polish
@@ -2520,6 +2535,7 @@ ARCHALL_CSWtexlive-latex-base		=	1
 RUNTIME_DEP_PKGS_CSWtexlive-latex-base	+=	CSWtexlive-common
 RUNTIME_DEP_PKGS_CSWtexlive-latex-base	+=	CSWtexlive-binaries
 RUNTIME_DEP_PKGS_CSWtexlive-latex-base	+=	CSWperl
+RUNTIME_DEP_PKGS_CSWtexlive-latex-base	+=	CSWtexlive-luatex
 
 PACKAGES 								+=	CSWtexlive-latex-base-doc
 CATALOGNAME_CSWtexlive-latex-base-doc	=	texlive_latex_base_doc
@@ -3791,11 +3807,11 @@ PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/latex/zwge
 PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/latex/zwpagelayout/.*
 PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/metapost/makecirc/.*
 PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/otherformats/xmltex/xmlplay/.*
-ARCHALL_CSWtexlive-latex-extra-doc		=	1
 RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWemacscommon
-RUNTIME_DEP_PKGS_CSWtexlive-fonts-extra-doc	+=	CSWpython
-RUNTIME_DEP_PKGS_CSWtexlive-fonts-extra-doc	+=	CSWperl
+RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWpython
+RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWperl
 RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWruby
+ARCHALL_CSWtexlive-latex-extra-doc		=	1
 
 PACKAGES 									+=	CSWtexlive-latex-recommended
 CATALOGNAME_CSWtexlive-latex-recommended	=	texlive_latex_recommended
@@ -3851,9 +3867,6 @@ PKGFILES_CSWtexlive-latex-recommended		+=	/opt/csw/share/texmf-dist/tex/latex/xk
 PKGFILES_CSWtexlive-latex-recommended		+=	/opt/csw/share/texmf-dist/tex/plain/fp/.*
 ARCHALL_CSWtexlive-latex-recommended		=	1
 RUNTIME_DEP_PKGS_CSWtexlive-latex-recommended	+=	CSWperl
-RUNTIME_DEP_PKGS_CSWtexlive-xetex			+=	CSWpython
-RUNTIME_DEP_PKGS_CSWtexlive-xetex			+=	CSWtexlive-binaries
-RUNTIME_DEP_PKGS_CSWtexlive-xetex			+=	CSWperl
 
 PACKAGES 										+=	CSWtexlive-latex-recommended-doc
 CATALOGNAME_CSWtexlive-latex-recommended-doc	=	texlive_latex_recommended_doc
@@ -3919,7 +3932,12 @@ PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/doc/luatex/luaotfload/.
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/lualatex/luainputenc/.*
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/luatex/luamplib/.*
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/luatex/luaotfload/.*
-ARCHALL_CSWtexlive-luatex		=	1
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWtexlive-common
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibz1
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibkpathsea6
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibgcc-s1
 
 PACKAGES 							+=	CSWtexlive-math-extra
 CATALOGNAME_CSWtexlive-math-extra	=	texlive_math_extra
@@ -4025,6 +4043,7 @@ PKGFILES_CSWtexlive-metapost		+=	/opt/csw/share/texmf-dist/tex/latex/mfpic4ode/.
 PKGFILES_CSWtexlive-metapost		+=	/opt/csw/share/texmf-dist/tex/latex/textpath/.*
 ARCHALL_CSWtexlive-metapost			=	1
 RUNTIME_DEP_PKGS_CSWtexlive-metapost	+=	CSWtexlive-binaries
+RUNTIME_DEP_PKGS_CSWtexlive-metapost	+=	CSWtexlive-common
 
 PACKAGES 								+=	CSWtexlive-metapost-doc
 CATALOGNAME_CSWtexlive-metapost-doc		=	texlive_metapost_doc
@@ -4065,6 +4084,7 @@ PKGFILES_CSWtexlive-music		+=	/opt/csw/share/texmf-dist/tex/latex/guitar/.*
 PKGFILES_CSWtexlive-music		+=	/opt/csw/share/texmf-dist/tex/latex/harmony/.*
 PKGFILES_CSWtexlive-music		+=	/opt/csw/share/texmf-dist/tex/latex/songbook/.*
 ARCHALL_CSWtexlive-music		=	1
+RUNTIME_DEP_PKGS_CSWtexlive-music += CSWtexlive-common
 
 PACKAGES 						+=	CSWtexlive-omega
 CATALOGNAME_CSWtexlive-omega	=	texlive_omega
@@ -4155,7 +4175,8 @@ PKGFILES_CSWtexlive-pictures		+=	/opt/csw/share/texmf-dist/tex/latex/tkz-tab/.*
 PKGFILES_CSWtexlive-pictures		+=	/opt/csw/share/texmf-dist/tex/latex/tufte-latex/.*
 PKGFILES_CSWtexlive-pictures		+=	/opt/csw/share/texmf-dist/tex/plain/pgfplots/.*
 ARCHALL_CSWtexlive-pictures			=	1
-  RUNTIME_DEP_PKGS_CSWtexlive-pictures	+=	CSWruby
+RUNTIME_DEP_PKGS_CSWtexlive-pictures	+=	CSWruby
+RUNTIME_DEP_PKGS_CSWtexlive-pictures	+=	CSWpython
 
 PACKAGES 								+=	CSWtexlive-pictures-doc
 CATALOGNAME_CSWtexlive-pictures-doc		=	texlive_pictures_doc
@@ -4772,6 +4793,9 @@ PKGFILES_CSWtexlive-xetex		+=	/opt/csw/share/texmf-dist/tex/generic/xetexconfig/
 PKGFILES_CSWtexlive-xetex		+=	/opt/csw/share/texmf-dist/tex/xelatex/.*
 PKGFILES_CSWtexlive-xetex		+=	/opt/csw/share/texmf-dist/tex/xetex/.*
 ARCHALL_CSWtexlive-xetex		=	1
+RUNTIME_DEP_PKGS_CSWtexlive-xetex			+=	CSWpython
+RUNTIME_DEP_PKGS_CSWtexlive-xetex			+=	CSWtexlive-binaries
+RUNTIME_DEP_PKGS_CSWtexlive-xetex			+=	CSWperl
 
 PACKAGES 							+=	CSWtexlive-xindy
 CATALOGNAME_CSWtexlive-xindy		=	texlive_xindy
@@ -4792,6 +4816,7 @@ PKGFILES_CSWtexlive-xindy			+=	/opt/csw/share/texmf/doc/xindy/.*
 PKGFILES_CSWtexlive-xindy			+=	/opt/csw/share/texmf/xindy/.*
 RUNTIME_DEP_PKGS_CSWtexlive-xindy	+=	CSWperl
 RUNTIME_DEP_PKGS_CSWtexlive-xindy	+=	CSWclisp
+RUNTIME_DEP_PKGS_CSWtexlive-xindy	+=	CSWtexlive-common
 ARCHALL_CSWtexlive-xindy			=	1
 
 include gar/category.mk
