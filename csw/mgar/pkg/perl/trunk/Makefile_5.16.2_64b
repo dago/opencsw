@@ -167,7 +167,7 @@ TEST_SCRIPTS = perl
 
 # This is for the communication with checkpkg. These pathes are searched for modules
 # when resolving dependencies.
-PROTOTYPE_FILTER_CSWperl = ( cat; echo "i cswperlincpath=CSWperl.cswperlincpath")
+#PROTOTYPE_FILTER_CSWperl = ( cat; echo "i cswperlincpath=CSWperl.cswperlincpath")
 
 # Splitting of a separate libperl.so requires more work and careful planning.
 # Override for now.
