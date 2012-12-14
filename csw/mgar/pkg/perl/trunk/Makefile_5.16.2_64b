@@ -26,7 +26,7 @@ BUILD64_ONLY 		  = 1
 PACKAGES                 += CSWperl
 SPKG_DESC_CSWperl         = $(DESCRIPTION)
 #RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm4
-INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
+#INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
 #PACKAGES                   += CSWperldoc
 #SPKG_DESC_CSWperldoc        = Perl documentation
@@ -211,18 +211,21 @@ test-perl:
 	@$(MAKECOOKIE)
 
 # Make links to libperl
-#POST_TARGETS += libperl
-#LIB_MINOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
+POST_TARGETS += libperl
+VERSION_MINOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
 #LIB_PATH  = $(libdir)/perl/$(VERSION)/CORE
-#libperl:
-#	@( cd $(DESTDIR)$(libdir) ; \
+libperl:
+	@( cd $(DESTDIR)$(libdir) ; 
+#\
 #		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(VERSION) \
 #		$(DESTDIR)$(libdir) ; \
 #		chmod 755 $(DESTDIR)$(libdir)/libperl.so.$(VERSION) ; \
 #		ln -s libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) 
 #		#; \
 #		#ln -s libperl.so.$(VERSION) libperl.so )
-#	@$(MAKECOOKIE)
+	ln -s libperl.so libperl.so.$(VERSION)) \;
+	ln -s libperl.so libperl.so.$(VERSION_MINOR))
+	@$(MAKECOOKIE)
 
 # Remove build paths from Config
 #POST_TARGETS += perlconf
