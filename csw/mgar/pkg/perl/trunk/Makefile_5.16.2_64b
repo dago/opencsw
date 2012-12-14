@@ -73,9 +73,11 @@ CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 #CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
 CONFIGURE_ARGS += -Dcf_email=$(SPKG_EMAIL)
-#CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
+CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
 #CONFIGURE_ARGS += -Dld=$(CC)
 #CONFIGURE_ARGS += -Dldflags="$(LDFLAGS)"
+# Workaround below. Do not version libperl.so here otherwise the other 5.10
+# lib will be picked up by mgar
 #CONFIGURE_ARGS += -Dlibperl=libperl.so.$(VERSION)
 #CONFIGURE_ARGS += -Dlocincpth=$(includedir)
 #CONFIGURE_ARGS += -Dloclibpth=$(libdir)
@@ -89,13 +91,13 @@ CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
 #CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION)
-#CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
-#CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
-#CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
-#CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
-#CONFIGURE_ARGS += -Dsiteprefix=/usr
+CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
+CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
+CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
+CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
+CONFIGURE_ARGS += -Dsiteprefix=/usr
 CONFIGURE_ARGS += -Duseshrplib
-#CONFIGURE_ARGS += -Dusesitecustomize
+CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 CONFIGURE_ARGS += -Dusedtrace
 CONFIGURE_ARGS += -Duse64bitall
