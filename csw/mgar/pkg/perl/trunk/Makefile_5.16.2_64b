@@ -14,17 +14,19 @@ define BLURB
 endef
 
 #MASTER_SITES   = http://www.cpan.org/src/
-#SPKG_SOURCEURL = http://www.cpan.org/src
+#SPKG_SOURCEURL = http://cpan.metacpan.org/authors/id/R/RJ/RJBS/perl-5.16.2.tar.bz2
 MASTER_SITES = manual://
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 
 # Make extra Solaris 10 package with DTrace support
 #PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
-#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS 	 += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS 	 += solaris10-sparc
 BUILD64_ONLY 		  = 1
 PACKAGES                 += CSWperl
-SPKG_DESC_CSWperl         = $(DESCRIPTION)
+PKG_DESC_CSWperl         = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
 #RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm4
 #INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
@@ -35,7 +37,7 @@ SPKG_DESC_CSWperl         = $(DESCRIPTION)
 
 LICENSE = Copying
 
-#CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
@@ -65,7 +67,7 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.1
 #PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL)) 
 #PERL_LIBS = -lsocket -lgdbm -ldl -lm -lpthread -lc -lcrypt
 
-#BUILD64 = 1
+BUILD64 = 1
 
 # Configuration flags
 #CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
