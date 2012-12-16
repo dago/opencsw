@@ -1,0 +1,48 @@
+From ffd8856f4e7c9a864f8a2d665278124426bb15f4 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 16 Dec 2012 01:21:59 +0100
+Subject: [PATCH 3/3] Added references to Makefile.am and configure.ac
+
+---
+ Makefile.am  | 5 +++--
+ configure.ac | 2 ++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 121e301..3e45902 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -25,14 +25,15 @@
+ #
+ #  Author(s): Nick Hilliard <nick@foobar.org>
+ 
+-SUBDIRS = src
++SUBDIRS = src lib
+ 
+ ACLOCAL_AMFLAGS = -I m4
+ 
+ EXTRA_DIST = RELEASE-NOTES \
+ 	src/rpsl/object_log.l src/rpsl/rpsl.l src/rpsl/rpsl.y \
+ 	src/rtconfig/command.l src/rtconfig/command.y \
+-	contrib tests
++	contrib tests \
++	m4/gnulib-cache.m4
+ 
+ dist-hook:
+ 	rm -rf `find $(distdir)/contrib -name .svn`
+diff --git a/configure.ac b/configure.ac
+index 38a8ba5..b03df9d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -36,6 +36,8 @@ AM_INIT_AUTOMAKE
+ # Checks for programs.
+ AC_PROG_CXX
+ AC_PROG_CC
++gl_EARLY
++gl_INIT
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
+ AM_PROG_LEX
+-- 
+1.8.0
+
