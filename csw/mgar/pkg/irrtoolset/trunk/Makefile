@@ -17,5 +17,12 @@ GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+PATCHFILES += 0001-Add-missing-this-in-src-normalform-Stack.hh.patch
+PATCHFILES += 0002-Added-gnulib-strcasestr-module.patch
+PATCHFILES += 0003-Added-references-to-Makefile.am-and-configure.ac.patch
+
 include gar/category.mk
 
+pre-configure-modulated:
+	cd $(WORKSRC); autoreconf -fi
+	@$(MAKECOOKIE)

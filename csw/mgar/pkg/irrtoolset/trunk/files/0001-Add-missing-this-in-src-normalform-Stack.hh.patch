@@ -1,0 +1,25 @@
+From 9de5a6294e19078f06cd02b477905aa9184b2ba8 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 16 Dec 2012 01:18:39 +0100
+Subject: [PATCH 1/3] Add missing "this" in src/normalform/Stack.hh
+
+---
+ src/normalform/Stack.hh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/normalform/Stack.hh b/src/normalform/Stack.hh
+index 90c6a98..832101b 100644
+--- a/src/normalform/Stack.hh
++++ b/src/normalform/Stack.hh
+@@ -93,7 +93,7 @@ template <class TYPE>
+ class BoundedStack : BoundedQueue<TYPE> {
+ public:
+    BoundedStack(int size) : BoundedQueue<TYPE>(size) {}
+-   void push(TYPE elt) { enq(elt); }
++   void push(TYPE elt) { this->enq(elt); }
+    TYPE pop() { return this->q[--(this->last)]; }
+    int getPosition() { return this->last; }
+    void setPosition(int pos) { this->last = pos; }
+-- 
+1.8.0
+
