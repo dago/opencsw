@@ -18,7 +18,7 @@ CATALOGNAME_CSWpmnetdns = pm_netdns
 
 DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS  = CSWpmdigesthmac
+RUNTIME_DEP_PKGS  = CSWpm-digest-hmac
 RUNTIME_DEP_PKGS += CSWpm-net-ip
 
 CONFIGURE_ARGS  = --no-online-tests
