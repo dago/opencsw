@@ -44,6 +44,8 @@ CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWperl    += binary-architecture-does-not-match-placement
+OBSOLETED_BY_CSWperl += CSWpm-module-build 
+OBSOLETED_BY_CSWperl += CSWpm-json-pp 
 
 # Core module updates
 # Not used at the moment, leave one as example
@@ -199,39 +201,32 @@ include gar/category.mk
 
 # How to configure Perl
 #configure-perl: CONFIGURE_EXPORTS = PATH LD_OPTIONS
-#configure-perl: ARGS-64 = -dusedtrace -Duse64bitall
 configure-perl:
 	(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -ders)
-	#cd $(WORKSRC) && ./Configure -ders -Dusethreads -Duselongdouble -Dinc_version_list=none $(ARGS-$(GAROSREL)) -Dprefix=$(prefix) -Dsed=/usr/bin/sed -Duseshrplib -Dcf_by='Claudio_Ramirez' -Dcf_email=claudio.ramirez@smals.be
-	@# 64 bit: -Duse64bitall 
 	@$(MAKECOOKIE)
 
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-	@#cd $* && $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	cd $(WORKSRC) && $(BUILD_ENV) dmake
 	@$(MAKECOOKIE)
 
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@#cd $* && $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
-	#cd $(WORKSRC) && if [ -d .git ] ; then mv .git .mgar-git ; fi && LD_LIBRARY_PATH_64=`pwd`:$(prefix)/bdb48/lib/$(MEMORYMODEL) gmake test && mv .mgar-git .git
-	#cd $(WORKSRC) && if [ -d .git ] ; then mv .git .mgar-git ; fi && gmake test && mv .mgar-git .git
-	gmake test
+	cd $(WORKSRC) && gmake test
 	@$(MAKECOOKIE)
 
-# Make links to libperl
+# Make links to libperl and minor-major lib dirs
 POST_TARGETS += syslinks
-#LIB_PATH  = $(libdir)/perl/$(VERSION)/CORE
 syslinks:
-	@( cd $(DESTDIR)$(libdir) ; \
-	ln -s libperl.so libperl.so.$(VERSION) ; \
-	ln -s libperl.so libperl.so.$(VERSION_MAJOR)) 
-	@( cd $(DESTDIR)$(libdir)/perl ; \
-	ln -s $(VERSION_MAJOR) $(VERSION))
-	@( cd $(DESTDIR)$(datadir)/perl ; \
-	ln -s $(VERSION_MAJOR) $(VERSION))
+	@echo "Creating links to libperl and minor-major lib dirs"
+	cd $(DESTDIR)$(libdir) && \
+	ln -s libperl.so libperl.so.$(VERSION) && \ 
+	ln -s libperl.so libperl.so.$(VERSION_MAJOR) && \
+	cd $(DESTDIR)$(libdir)/perl && \
+	ln -s $(VERSION_MAJOR) $(VERSION)) && \
+	cd $(DESTDIR)$(datadir)/perl && \
+	ln -s $(VERSION_MAJOR) $(VERSION)
 	@$(MAKECOOKIE)
 
 # Remove build paths from Config
@@ -262,5 +257,5 @@ syslinks:
 #	LD_LIBRARY_PATH=$(WORKSRC) $(WORKSRC)/perl -I./lib -e 'print "$$_\n" foreach(@INC)' >$(WORKDIR_GLOBAL)/CSWperl.cswperlincpath
 
 # Invoke post-install targets
-#post-install-modulated: $(POST_TARGETS)
-#	@$(MAKECOOKIE)
+post-install-modulated: $(POST_TARGETS)
+	@$(MAKECOOKIE)
