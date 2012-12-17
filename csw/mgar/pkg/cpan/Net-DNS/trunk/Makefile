@@ -1,8 +1,8 @@
 NAME = Net-DNS
-VERSION = 0.68
+VERSION = 0.71
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = OLAF
+AUTHOR = NLNETLABS
 
 DESCRIPTION = Interface to the DNS resolver
 define BLURB
@@ -18,7 +18,8 @@ CATALOGNAME_CSWpmnetdns = pm_netdns
 
 DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS = CSWpmdigesthmac CSWpmnetip
+RUNTIME_DEP_PKGS  = CSWpmdigesthmac
+RUNTIME_DEP_PKGS += CSWpm-net-ip
 
 CONFIGURE_ARGS  = --no-online-tests
 CONFIGURE_ARGS += --no-IPv6-tests
