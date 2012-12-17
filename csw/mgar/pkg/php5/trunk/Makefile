@@ -92,11 +92,12 @@ CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5
 # verify these...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/etc/opt/csw/php5/php.ini.CSW
 
+CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/php5/include/php/ext/sqlite3/libsqlite/sqlite3.h|CSWphp5|CSWphp5-sqlite
+
 PACKAGES += CSWphp5-dev
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
-RUNTIME_DEP_PKGS_CSWphp5-dev      += CSWgsed
 OBSOLETED_BY_CSWphp5-dev = CSWphp5devel
 PKGFILES_CSWphp5-dev  = $(prefix)/php5/bin/php-config
 PKGFILES_CSWphp5-dev  = $(prefix)/bin/php-config
