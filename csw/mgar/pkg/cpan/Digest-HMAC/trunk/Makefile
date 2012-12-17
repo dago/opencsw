@@ -1,23 +1,22 @@
 NAME = Digest-HMAC
-VERSION = 1.02
+VERSION = 1.03
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = GAAS
 
-DESCRIPTION = Keyed-hashing for message authentication
+DESCRIPTION = Keyed-Hashing for Message Authentication
 define BLURB
-  HMAC is used for message integrity checks between two parties that share a
-  secret key, and works in combination with some other Digest algorithm,
-  usually MD5 or SHA-1. The HMAC mechanism is described in RFC 2104.
 endef
 
-DEP_PKGS = CSWpmdigestsha1
+CATALOG_RELEASE = unstable
 
-DISTFILES = COPYING
+LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGES = CSWpmdigesthmac
-CATALOGNAME = pm_digesthmac
-
-ARCHALL = 1
+PACKAGES += CSWpm-digest-hmac
+CATALOGNAME_CSWpm-digest-hmac = pm_digest_hmac
+SPKG_DESC_CSWpm-digest-hmac = Keyed-Hashing for Message Authentication
+ARCHALL_CSWpm-digest-hmac = 1
+OBSOLETED_BY_CSWpm-digest-hmac += CSWpmdigesthmac
+CATALOGNAME_CSWpmdigesthmac = pm_digesthmac_stub
 
 include gar/category.mk
