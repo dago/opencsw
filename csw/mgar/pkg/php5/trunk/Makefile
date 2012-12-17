@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.18
+VERSION  = 5.3.19
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
@@ -334,14 +334,14 @@ include gar/category.mk
 # they're using git now and ship a .gitignore that excludes aclocal.m4
 # that broke one of our patches so we'll nuke .gitignore before we patch
 pre-patch-modulated:
-	@(cd $(WORKSRC); rm .gitignore; git add -A; git ci -m 'adding files that were previously ignored' )
+	@(cd $(WORKSRC); rm .gitignore; git add -A; git commit -m 'adding files that were previously ignored' )
 	@$(MAKECOOKIE)
 
 pre-configure-modulated:
 	@echo Munging c-client routine in configure.
 	@(cd $(WORKSRC); \
 		perl -pi -e "s|c-client4 c-client|c-client.2007f|g" configure; \
-		git add configure; git ci -m 'modify c-client finding routine')
+		git add configure; git commit -m 'modify c-client finding routine')
 	@$(MAKECOOKIE)
 
 # this allows apxs to install the module.  stupid, but i couldn't make
