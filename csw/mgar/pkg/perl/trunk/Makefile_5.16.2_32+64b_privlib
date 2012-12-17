@@ -1,5 +1,6 @@
 NAME = perl
 VERSION = 5.16.2
+VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
 #CATEGORIES = lang
 GARTYPE = v2
 
@@ -55,6 +56,8 @@ CHECKPKG_OVERRIDES_CSWperl    += binary-architecture-does-not-match-placement
 # GCC build (Sunstudio is problematic) # claudio
 GARCOMPILER = GCC4
 
+# a .git directory will cause failing upstream author tests (the source will be considered blead)
+NOGITPATCH = 1
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
@@ -73,7 +76,7 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.1
 BUILD64 = 1
 
 # Configuration flags
-#CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
+CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 #CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
@@ -95,7 +98,7 @@ CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
-#CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION)
+CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
 CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
@@ -214,24 +217,21 @@ test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
 	@#cd $* && $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
 	#cd $(WORKSRC) && if [ -d .git ] ; then mv .git .mgar-git ; fi && LD_LIBRARY_PATH_64=`pwd`:$(prefix)/bdb48/lib/$(MEMORYMODEL) gmake test && mv .mgar-git .git
-	cd $(WORKSRC) && if [ -d .git ] ; then mv .git .mgar-git ; fi && gmake test && mv .mgar-git .git
+	#cd $(WORKSRC) && if [ -d .git ] ; then mv .git .mgar-git ; fi && gmake test && mv .mgar-git .git
+	gmake test
 	@$(MAKECOOKIE)
 
 # Make links to libperl
-POST_TARGETS += libperl
-VERSION_MINOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
+POST_TARGETS += syslinks
 #LIB_PATH  = $(libdir)/perl/$(VERSION)/CORE
-libperl:
-	@( cd $(DESTDIR)$(libdir) ; 
-#\
-#		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(VERSION) \
-#		$(DESTDIR)$(libdir) ; \
-#		chmod 755 $(DESTDIR)$(libdir)/libperl.so.$(VERSION) ; \
-#		ln -s libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) 
-#		#; \
-#		#ln -s libperl.so.$(VERSION) libperl.so )
-	ln -s libperl.so libperl.so.$(VERSION)) \;
-	ln -s libperl.so libperl.so.$(VERSION_MINOR))
+syslinks:
+	@( cd $(DESTDIR)$(libdir) ; \
+	ln -s libperl.so libperl.so.$(VERSION) ; \
+	ln -s libperl.so libperl.so.$(VERSION_MAJOR)) 
+	@( cd $(DESTDIR)$(libdir)/perl ; \
+	ln -s $(VERSION_MAJOR) $(VERSION))
+	@( cd $(DESTDIR)$(datadir)/perl ; \
+	ln -s $(VERSION_MAJOR) $(VERSION))
 	@$(MAKECOOKIE)
 
 # Remove build paths from Config
