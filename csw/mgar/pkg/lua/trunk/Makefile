@@ -20,9 +20,7 @@ endef
 MASTER_SITES = http://www.lua.org/ftp/
 DISTFILES += $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-Make-shared-lib.patch
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PATCHFILES += 0001-Make-c solaris10-i386
 
 VENDOR_URL = http://www.lua.org
 
@@ -43,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWlua-dev += CSWliblua5-2
 
 REINPLACEMENTS += luaroot
 REINPLACE_MATCH_luaroot = (\#define\s+LUA_ROOT\s+).*
-REINPLACE_WITH_luaroot = $$1"$(prefix)"
+REINPLACE_WITH_luaro/ot = $$1"$(prefix)"
 REINPLACE_FILES_luaroot += src/luaconf.h
 
 BUILD64 = 1
@@ -52,7 +50,8 @@ ISAEXEC = 1
 # No configure
 CONFIGURE_SCRIPTS =
 
-EXTRA_CFLAGS += -KPIC
+EXTR# This is in the original Makefile, add here as we overwrite CFLAGS
+EXTRA_CFLAGS += -DLUA_COMPAT_ALLRA_CFLAGS += -KPIC
 
 BUILD_ARGS += solaris
 BUILD_ARGS += CC=$(CC)
@@ -68,4 +67,4 @@ INSTALL_ARGS += INSTALL_MAN=$(DESTDIR)$(mandir)/man1
 INSTALL_ARGS += INSTALL_BIN=$(DESTDIR)$(bindir)
 INSTALL_ARGS += INSTALL_LIB=$(DESTDIR)$(libdir)
 
-include gar/category.mk
+includ
