@@ -78,7 +78,7 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.1
 BUILD64 = 1
 
 # Configuration flags
-CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION_MAJOR)
+CONFIGURE_ARGS += -Darchlib=$(libdir)/$(MEMORYMODEL)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 #CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
@@ -101,9 +101,9 @@ CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
 # CSW provided modules should install in the privlib directory (/opt/csw/share/perl/5.14)
-CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION_MAJOR)
-CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
-CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
+CONFIGURE_ARGS += -Dprivlib=$(datadir)/$(MEMORYMODEL)/perl/$(VERSION_MAJOR)
+CONFIGURE_ARGS += -Dsitearch=$(libdir)/$(MEMORYMODEL)/perl/site_perl
+CONFIGURE_ARGS += -Dsitelib=$(datadir)/$(MEMORYMODEL)/perl/site_perl
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
 CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
 CONFIGURE_ARGS += -Dsiteprefix=/usr
