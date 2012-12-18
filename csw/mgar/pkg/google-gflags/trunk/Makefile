@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = gflags
-VERSION = 1.3
+VERSION = 2.0
 CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION = a library that implements commandline flags processing
@@ -14,12 +14,17 @@ define BLURB
 	ability to define flags in the source file in which they're used.
 endef
 SPKG_SOURCEURL = http://code.google.com/p/google-gflags/
-MASTER_SITES = $(GOOGLE_MIRROR)
-GOOGLE_PROJECT = google-gflags
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = DISTFILES  = $(NAME)-$(VERSION).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
+
+BUILD64 = 1
+
+GARCOMPILER = GNU
+PATCHFILES += 0000-Disable-a-test-that-doesn-t-work-on-Solaris.patch
+PATCHFILES += 0001-Disable-the-same-test-again-inf-this-time.patch
+PATCHFILES += 0002-One-more-test.patch
+ATHS)
 BUILD64 = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
-MERGE_DIRS_isa-amd64   = $(libdir)
-include gar/category.mk
+MERGE_DIRS_isa-amdd64   = $(libdir)
+include

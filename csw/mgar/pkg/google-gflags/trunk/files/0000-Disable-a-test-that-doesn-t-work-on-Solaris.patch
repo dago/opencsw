@@ -1,0 +1,24 @@
+From e786aa2d94cda7f9a544af52a5ac3e7afe10eda1 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej@opencsw.org>
+Date: Mon, 17 Dec 2012 23:36:09 +0000
+Subject: [PATCH] Disable a test that doesn't work on Solaris
+
+---
+ src/gflags_unittest.cc      |   2 +-
+
+diff --git a/src/gflags_unittest.cc b/src/gflags_unittest.cc
+index 08abc1b..7487f51 100644
+--- a/src/gflags_unittest.cc
++++ b/src/gflags_unittest.cc
+@@ -549,7 +549,7 @@ TEST(SetFlagValueTest, OrdinaryValues) {
+ //    http://www.mail-archive.com/bug-gnulib@gnu.org/msg09573.html
+ // This url says FreeBSD also has a problem, but I didn't see that.
+ TEST(SetFlagValueTest, ExceptionalValues) {
+-#if defined(isinf) && !defined(__MINGW32__)
++#if defined(isinf) && !defined(__MINGW32__) && !defined(__sun__)
+   EXPECT_EQ("test_double set to inf\n",
+             SetCommandLineOption("test_double", "inf"));
+   EXPECT_INF(FLAGS_test_double);
+-- 
+1.8.0
+
