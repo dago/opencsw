@@ -7,7 +7,7 @@
 
 NAME = lua
 VERSION = 5.2.1
-CATEGORIES = lang
+MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}') lang
 GARTYPE = v2
 
 DESCRIPTION = Light-weight language designed for extending applications
@@ -18,7 +18,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lua.org/ftp/
-DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += $DISTFILES += lua.pc
+EXPANDVARS += lua.pc$(DISTNAME).tar.gz
 
 PATCHFILES += 0001-Make-c solaris10-i386
 
@@ -68,3 +69,9 @@ INSTALL_ARGS += INSTALL_BIN=$(DESTDIR)$(bindir)
 INSTALL_ARGS += INSTALL_LIB=$(DESTDIR)$(libdir)
 
 includ
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(libdir)/pkgconfig
+	ginstall $(WORKDIR)/lua.pc $(DESTDIR)$(libdir)/pkgconfig/lua-$(MAJOR).pc
+	gln -s lua-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig/lua$(MAJOR).pc
+	gln -s lua-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig/lua.pc
+	@$(MAKECOOKIE)
