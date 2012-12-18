@@ -1,0 +1,32 @@
+# lua.pc -- pkg-config data for Lua
+
+# We construct the .pc here because upstream is reducing the number of files in the tarball
+# and .pc is "so useless" :-(
+#   http://lua-users.org/lists/lua-l/2010-03/msg00718.html
+
+prefix=@prefix@
+V=@MAJOR@
+R=@VERSION@
+
+prefix=@prefix@
+INSTALL_BIN=@bindir@
+INSTALL_INC=@includedir@
+INSTALL_LIB=@libdir@
+INSTALL_MAN=@mandir@/man1
+INSTALL_LMOD=@sharedstatedir@/lua/${V}
+INSTALL_CMOD=@libdir@/lua/${V}
+
+# canonical vars
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: Lua
+Description: An Extensible Extension Language
+Version: ${R}
+Requires:
+Libs: -L${libdir} -llua -lm
+Cflags: -I${includedir}
+
+# (end of lua.pc)
+
