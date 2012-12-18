@@ -1,0 +1,39 @@
+From 89f07763dba7152645632b5d0b7c9036d96b81ea Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej@opencsw.org>
+Date: Mon, 17 Dec 2012 23:58:03 +0000
+Subject: [PATCH] One more test.
+
+---
+ src/gflags_unittest-main.cc | 2 +-
+ src/gflags_unittest.cc      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/gflags_unittest-main.cc b/src/gflags_unittest-main.cc
+index 7487f51..d58b6e9 100644
+--- a/src/gflags_unittest-main.cc
++++ b/src/gflags_unittest-main.cc
+@@ -566,7 +566,7 @@ TEST(SetFlagValueTest, ExceptionalValues) {
+             SetCommandLineOption("test_double", " "));
+   EXPECT_EQ("",
+             SetCommandLineOption("test_double", ""));
+-#if defined(isinf) && !defined(__MINGW32__)
++#if defined(isinf) && !defined(__MINGW32__) && !defined(__sun__)
+   EXPECT_EQ("test_double set to -inf\n",
+             SetCommandLineOption("test_double", "-inf"));
+   EXPECT_INF(FLAGS_test_double);
+diff --git a/src/gflags_unittest.cc b/src/gflags_unittest.cc
+index d58b6e9..daf435b 100644
+--- a/src/gflags_unittest.cc
++++ b/src/gflags_unittest.cc
+@@ -573,7 +573,7 @@ TEST(SetFlagValueTest, ExceptionalValues) {
+   EXPECT_GT(0, FLAGS_test_double);
+ #endif
+ 
+-#if defined(isnan) && !defined(__MINGW32__)
++#if defined(isinf) && !defined(__MINGW32__) && !defined(__sun__)
+   EXPECT_EQ("test_double set to nan\n",
+             SetCommandLineOption("test_double", "NaN"));
+   EXPECT_NAN(FLAGS_test_double);
+-- 
+1.8.0
+
