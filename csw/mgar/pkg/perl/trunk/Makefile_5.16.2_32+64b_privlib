@@ -100,7 +100,7 @@ CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
-# CSW provided modules should install in the privlib directory (/opt/csw/share/perl/5.14)
+# CSW provided modules should install in the privlib directory (/opt/csw/share/$MEMORYMODEL/perl/5.14)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/$(MEMORYMODEL)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dsitearch=$(libdir)/$(MEMORYMODEL)/perl/site_perl
 CONFIGURE_ARGS += -Dsitelib=$(datadir)/$(MEMORYMODEL)/perl/site_perl
