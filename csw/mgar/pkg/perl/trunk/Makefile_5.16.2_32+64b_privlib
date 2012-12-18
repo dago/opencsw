@@ -78,7 +78,7 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.1
 BUILD64 = 1
 
 # Configuration flags
-CONFIGURE_ARGS += -Darchlib=$(libdir)/$(MEMORYMODEL)/perl/$(VERSION_MAJOR)
+CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 #CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
@@ -100,13 +100,13 @@ CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
-# CSW provided modules should install in the privlib directory (/opt/csw/share/$MEMORYMODEL/perl/5.14)
-CONFIGURE_ARGS += -Dprivlib=$(datadir)/$(MEMORYMODEL)/perl/$(VERSION_MAJOR)
-CONFIGURE_ARGS += -Dsitearch=$(libdir)/$(MEMORYMODEL)/perl/site_perl
-CONFIGURE_ARGS += -Dsitelib=$(datadir)/$(MEMORYMODEL)/perl/site_perl
-CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
-CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
-CONFIGURE_ARGS += -Dsiteprefix=/usr
+# CSW provided modules should install in the privlib directory (/opt/csw/share/perl/5.14)
+CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION_MAJOR)
+CONFIGURE_ARGS += -Dsitearch=/usr/local/lib/perl/$(VERSION_MAJOR)
+CONFIGURE_ARGS += -Dsitelib=/usr/local/share/perl/$(VERSION)
+CONFIGURE_ARGS += -Dsiteman1dir=/usr/local/share/man/man1
+CONFIGURE_ARGS += -Dsiteman3dir==/usr/local/share/man/man3
+CONFIGURE_ARGS += -Dsiteprefix=/usr/local
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
@@ -120,15 +120,16 @@ CONFIGURE_ARGS += -Dinc_version_list=none
 #CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
 
 # Largefiles is on by default for 64 bit
-#CONFIGURE_ARGS-32 += -Duselargefiles 
-#CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
-#CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
-#CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
-#CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
+CONFIGURE_ARGS += -Duselargefiles 
+CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl5
+CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl5
+CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 #CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
 CONFIGURE_ARGS += -Dlibsdirs=" $(abspath /usr/lib/$(MEMORYMODEL)) $(libdir)"
 #CONFIGURE_ARGS += -Dlibsdirs=/usr/lib/64
 CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
+CONFIGURE_ARGS-64 += -Duse64bitint
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
@@ -221,9 +222,9 @@ test-perl:
 POST_TARGETS += syslinks
 syslinks:
 	@echo "Creating links to libperl and minor-major lib dirs"
-	cd $(DESTDIR)$(libdir)/$(MEMORYMODEL)/perl && ln -s $(VERSION_MAJOR) $(VERSION) &&\
+	cd $(DESTDIR)$(libdir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) &&\
 	cd $(VERSION_MAJOR) && ln -s libperl.so libperl.so.$(VERSION) && ln -s libperl.so libperl.so.$(VERSION_MAJOR) &&\
-	cd $(DESTDIR)$(datadir)/$(MEMORYMODEL)/perl && ln -s $(VERSION_MAJOR) $(VERSION) 
+	cd $(DESTDIR)$(datadir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) 
 	@$(MAKECOOKIE)
 
 # Remove build paths from Config
