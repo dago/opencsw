@@ -221,9 +221,9 @@ test-perl:
 POST_TARGETS += syslinks
 syslinks:
 	@echo "Creating links to libperl and minor-major lib dirs"
-	cd $(DESTDIR)$(libdir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) &&\
+	cd $(DESTDIR)$(libdir)/$(MEMORYMODEL)/perl && ln -s $(VERSION_MAJOR) $(VERSION) &&\
 	cd $(VERSION_MAJOR) && ln -s libperl.so libperl.so.$(VERSION) && ln -s libperl.so libperl.so.$(VERSION_MAJOR) &&\
-	cd $(DESTDIR)$(datadir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) 
+	cd $(DESTDIR)$(datadir)/$(MEMORYMODEL)/perl && ln -s $(VERSION_MAJOR) $(VERSION) 
 	@$(MAKECOOKIE)
 
 # Remove build paths from Config
