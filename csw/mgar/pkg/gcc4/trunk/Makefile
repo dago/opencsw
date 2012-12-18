@@ -60,12 +60,8 @@ CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix
 CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
-#CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
-CONFIGURE_ARGS += --with-as=/usr/ccs/bin/as
 CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
-#CONFIGURE_ARGS += --with-gnu-as
-CONFIGURE_ARGS += --without-gnu-as
 CONFIGURE_ARGS += --with-included-gettext
 CONFIGURE_ARGS += --with-ld=/usr/ccs/bin/ld
 CONFIGURE_ARGS += --without-gnu-ld
@@ -73,6 +69,16 @@ CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-system-zlib=$(BUILD_PREFIX)
+
+# Using ccs/bin/bas on x86 results in this problem:
+# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=35531
+ifeq ($(GARCH),sparc)
+CONFIGURE_ARGS += --with-as=/usr/ccs/bin/as
+CONFIGURE_ARGS += --without-gnu-as
+else
+CONFIGURE_ARGS += --with-gnu-as
+CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
+endif
 
 # GCC can't be built in the same directory with the sources.
 # It also can't be built in a subdirectory of the sources.
