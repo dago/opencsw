@@ -72,13 +72,11 @@ CONFIGURE_ARGS += --with-system-zlib=$(BUILD_PREFIX)
 
 # Using ccs/bin/bas on x86 results in this problem:
 # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=35531
-ifeq ($(GARCH),sparc)
-CONFIGURE_ARGS += --with-as=/usr/ccs/bin/as
-CONFIGURE_ARGS += --without-gnu-as
-else
-CONFIGURE_ARGS += --with-gnu-as
-CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
-endif
+CONFIGURE_ARGS_sparc += --with-as=/usr/ccs/bin/as
+CONFIGURE_ARGS_sparc += --without-gnu-as
+CONFIGURE_ARGS_i386 += --with-gnu-as
+CONFIGURE_ARGS_i386 += --with-as=/opt/csw/bin/gas
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 
 # GCC can't be built in the same directory with the sources.
 # It also can't be built in a subdirectory of the sources.
