@@ -24,7 +24,6 @@ DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 # Make extra Solaris 10 package with DTrace support
 #PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-#PACKAGING_PLATFORMS 	 += solaris10-sparc
 #BUILD64_ONLY 		  = 1
 PACKAGES                 += CSWperl
 PKG_DESC_CSWperl         = $(DESCRIPTION)
@@ -46,6 +45,13 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 #CHECKPKG_OVERRIDES_CSWperl    += binary-architecture-does-not-match-placement
 OBSOLETED_BY_CSWperl += CSWpm-module-build 
 OBSOLETED_BY_CSWperl += CSWpm-json-pp 
+OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
+OBSOLETED_BY_CSWperldoc += CSWpm-parse-cpan-meta
+OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-yaml
+OBSOLETED_BY_CSWperldoc += CSWpm-module-metadata
+OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-requirements
+OBSOLETED_BY_CSWperldoc += CSWpm-perl-ostype
+
 
 # Core module updates
 # Not used at the moment, leave one as example
@@ -104,11 +110,11 @@ CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
 # CSW provided modules should install in the privlib directory (/opt/csw/share/perl/5.14)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION_MAJOR)
-CONFIGURE_ARGS += -Dsitearch=/usr/local/lib/perl/$(VERSION_MAJOR)
-CONFIGURE_ARGS += -Dsitelib=/usr/local/share/perl/$(VERSION)
-CONFIGURE_ARGS += -Dsiteman1dir=/usr/local/share/man/man1
-CONFIGURE_ARGS += -Dsiteman3dir==/usr/local/share/man/man3
-CONFIGURE_ARGS += -Dsiteprefix=/usr/local
+CONFIGURE_ARGS += -Dsitearch=/opt/csw/local/lib/perl/$(VERSION_MAJOR)
+CONFIGURE_ARGS += -Dsitelib=/opt/csw/local/share/perl/$(VERSION)
+CONFIGURE_ARGS += -Dsiteman1dir=/opt/csw//local/share/man/man1
+CONFIGURE_ARGS += -Dsiteman3dir==/opt/csw/local/share/man/man3
+CONFIGURE_ARGS += -Dsiteprefix=/opt/csw/local
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
