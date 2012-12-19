@@ -76,6 +76,8 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.1
 #PERL_LIBS = -lsocket -lgdbm -ldl -lm -lpthread -lc -lcrypt
 
 BUILD64 = 1
+ISAEXEC = 1
+
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION_MAJOR)
