@@ -111,8 +111,8 @@ CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 CONFIGURE_ARGS += -Dusedtrace
-CONFIGURE_ARGS += -Duse64bitall
 CONFIGURE_ARGS += -Duse64bitint
+CONFIGURE_ARGS-64 += -Duse64bitall
 CONFIGURE_ARGS += -Dinc_version_list=none
 
 # When built on Solaris 10, enable DTrace support
@@ -128,7 +128,6 @@ CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibsdirs=" $(abspath /usr/lib/$(MEMORYMODEL)) $(libdir)"
 #CONFIGURE_ARGS += -Dlibsdirs=/usr/lib/64
 CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
-CONFIGURE_ARGS-64 += -Duse64bitint
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
