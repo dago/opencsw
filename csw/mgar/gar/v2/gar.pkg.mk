@@ -31,7 +31,7 @@ PKGINFO ?= /usr/bin/pkginfo
 # SRCPACKAGE is the name of the package containing the sources
 
 ifeq ($(origin PACKAGES), undefined)
-PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(NAME))
+PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(subst _,-,$(NAME)))
 CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(subst -,_,$(NAME)))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
@@ -1052,6 +1052,7 @@ redirpackage: pkgreset dirpackage
 _PROPAGATE_ENV += PARALLELMFLAGS
 _PROPAGATE_ENV += PARALLELMODULATIONS
 _PROPAGATE_ENV += PATH
+_PROPAGATE_ENV += SKIPTEST
 
 platforms: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms:
