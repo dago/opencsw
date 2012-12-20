@@ -28,9 +28,9 @@ UPSTREAM_MASTER_SITES = http://www.zsh.org/pub/
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-maildir-support
 CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(NAME)/functions
-CONFIGURE_ARGS += --enable-pcre
-
-CHECKPKG_OVERRIDES_CSWzsh += file-witlocal|root/opt/csw/share/zsh/functions/_urxvtfunctions/_loadkeys
+CONFIGURE_ARGCONFIGURE_ARGS += --enable-etcdir=$(sysconfdir)
+/man/man1/zshmisc.1
+CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|zsh/functions/_urxvt/bin/zsh-$(VERSION)
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/shunit/functions/_loadkeys
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/shhgfunctions/_loadkeys
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/_loadkeys
