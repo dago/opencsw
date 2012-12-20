@@ -1,5 +1,5 @@
 NAME = zsh
-VERSION = 5.0.0
+VERSION = 5.0.1
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -65,5 +65,4 @@ include gar/category.mk
 CPPFLAGS := -I$(includedir)/ncursesw $(CPPFLAGS)
 
 post-install-modulated:
-	cp -p $(WORKDIR)/_pkgutil $(WORKDIR)/_mgar $(DESTDIR)$(sharedstatedir)/$(NAME)/functions
-	@$(MAKECOOKIE)
+	cp -p $(WORKDIR)/_pkgutil $(WORKDIR)/_mgar $(DESTDIR)$(sharedstatedir)/$(NAME)/functio
