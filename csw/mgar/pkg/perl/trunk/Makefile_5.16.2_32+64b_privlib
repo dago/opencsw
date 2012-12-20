@@ -41,16 +41,16 @@ LICENSE = Copying
 
 CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
+#CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 #CHECKPKG_OVERRIDES_CSWperl    += binary-architecture-does-not-match-placement
-OBSOLETED_BY_CSWperl += CSWpm-module-build 
-OBSOLETED_BY_CSWperl += CSWpm-json-pp 
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
-OBSOLETED_BY_CSWperldoc += CSWpm-parse-cpan-meta
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-yaml
-OBSOLETED_BY_CSWperldoc += CSWpm-module-metadata
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-requirements
-OBSOLETED_BY_CSWperldoc += CSWpm-perl-ostype
+#OBSOLETED_BY_CSWperl += CSWpm-module-build 
+#OBSOLETED_BY_CSWperl += CSWpm-json-pp 
+#OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
+#OBSOLETED_BY_CSWperldoc += CSWpm-parse-cpan-meta
+#OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-yaml
+#OBSOLETED_BY_CSWperldoc += CSWpm-module-metadata
+#OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-requirements
+#OBSOLETED_BY_CSWperldoc += CSWpm-perl-ostype
 
 
 # Core module updates
