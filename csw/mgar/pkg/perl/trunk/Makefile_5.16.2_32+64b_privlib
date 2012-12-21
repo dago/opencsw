@@ -21,8 +21,7 @@ VENDOR_URL = http://www.perl.org
 #DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 
-PACKAGING_PLATFORMS  = solaris10101010101010101010-i386
-#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 #BUILD64_ONLY 		  = 1
 PACKAGES                 += CSWperl
 PKG_DESC_CSWperl         = $(DESCRIPTION)
@@ -121,14 +120,8 @@ CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 CONFIGURE_ARGS += -Dusedtrace
-CONFIGURE_ARGS-64 += -Duse64bitint
-CONFIGURE_ARGS-64 += -Duse64bitall
 CONFIGURE_ARGS += -Dinc_version_list=none
-
-# When built on Solaris 10, enable DTrace support
-#CONFIGURE_ARGS-5.10 = -Dusedtrace
 #CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
-
 # Largefiles is on by default for 64 bit
 CONFIGURE_ARGS += -Duselargefiles 
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl5
@@ -138,8 +131,12 @@ CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibsdirs=" $(abspath /usr/lib/$(MEMORYMODEL)) $(libdir)"
 #CONFIGURE_ARGS += -Dlibsdirs=/usr/lib/64
 CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
+CONFIGURE_ARGS-64 += -Duse64bitint
+CONFIGURE_ARGS-64 += -Duse64bitall
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
-#CONFIGURE_ARGS_amd64 
+CONFIGURE_ARGS_isa-amd64 += -Dlddlflags=-shared
+CONFIGURE_ARGS_isa-amd64 += -Dcccdlflags=-fPIC
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MODULATION))
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
@@ -162,7 +159,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) -R /usr/lib -R/opt/csw/bdb48/lib -R/opt/csw/lib
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) -R /usr/lib/64 -R/opt/csw/bdb48/lib/64 -R/opt/csw/lib/64
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL))
-EXTRA_LDFLAGS = -fPIC -lperl
+EXTRA_LDFLAGS = -lperl
 
 # We want 64 bit binaries
 #MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
