@@ -64,6 +64,9 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
 # GCC build (Sunstudio is problematic) # claudio
 GARCOMPILER = GCC4
+PARALLELMFLAGS_unstable10s = "-l -j $(SPARC_PARALLEL)"
+PARALLELMFLAGS_unstable10x = "-l -j $(INTEL_PARALLEL)"
+PARALLELMFLAGS = $(PARALLELMFLAGS_$(shell hostname))
 
 # a .git directory will cause failing upstream author tests (the source will be considered blead)
 NOGITPATCH = 1
