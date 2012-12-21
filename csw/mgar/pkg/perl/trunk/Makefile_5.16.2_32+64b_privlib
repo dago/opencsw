@@ -140,6 +140,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MODULATION))
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
+EXTRA_INC += /usr/include
 #LD_LIBRARY_PATH for testing
 #LD_LIBRARY_PATH += $(prefix)/bdb48/lib/$(MEMORYMODEL)
 
