@@ -64,9 +64,9 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
 # GCC build (Sunstudio is problematic) # claudio
 GARCOMPILER = GCC4
-PARALLELMFLAGS_unstable10s = "-l -j $(SPARC_PARALLEL)"
-PARALLELMFLAGS_unstable10x = "-l -j $(INTEL_PARALLEL)"
-PARALLELMFLAGS = $(PARALLELMFLAGS_$(shell hostname))
+MAKE_OPT_unstable10s = "-l -j $(SPARC_PARALLEL)"
+MAKE_OPT_unstable10x = "-l -j $(INTEL_PARALLEL)"
+MAKE_OPT = $(MAKE_OPT_$(shell hostname))
 
 # a .git directory will cause failing upstream author tests (the source will be considered blead)
 NOGITPATCH = 1
@@ -221,7 +221,7 @@ configure-perl:
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-	cd $(WORKSRC) && $(BUILD_ENV) gmake $(PARALLELMFLAGS)
+	cd $(WORKSRC) && $(BUILD_ENV) gmake $(MAKE_OPT)
 	@$(MAKECOOKIE)
 
 test-perl:
