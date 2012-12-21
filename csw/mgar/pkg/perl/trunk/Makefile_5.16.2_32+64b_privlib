@@ -21,7 +21,6 @@ VENDOR_URL = http://www.perl.org
 #DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 
-# Make extra Solaris 10 package with DTrace support
 #PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 #BUILD64_ONLY 		  = 1
@@ -140,6 +139,7 @@ CONFIGURE_ARGS += -Dlibsdirs=" $(abspath /usr/lib/$(MEMORYMODEL)) $(libdir)"
 #CONFIGURE_ARGS += -Dlibsdirs=/usr/lib/64
 CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
+CONFIGURE_ARGS_amd64 
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
@@ -162,7 +162,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) -R /usr/lib -R/opt/csw/bdb48/lib -R/opt/csw/lib
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) -R /usr/lib/64 -R/opt/csw/bdb48/lib/64 -R/opt/csw/lib/64
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL))
-EXTRA_LDFLAGS = -lperl
+EXTRA_LDFLAGS = -fPIC -lperl
 
 # We want 64 bit binaries
 #MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
