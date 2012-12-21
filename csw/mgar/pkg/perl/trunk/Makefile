@@ -218,7 +218,7 @@ configure-perl:
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-	cd $(WORKSRC) && $(BUILD_ENV) dmake
+	cd $(WORKSRC) && $(BUILD_ENV) gmake $(PARALLELMFLAGS)
 	@$(MAKECOOKIE)
 
 test-perl:
