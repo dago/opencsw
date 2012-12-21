@@ -1,6 +1,6 @@
 # $Id$
 NAME = pytz
-VERSION = 2012f
+VERSION = 2012h
 CATEGORIES = python
 GARTYPE = v2
 
