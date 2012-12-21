@@ -139,7 +139,7 @@ CONFIGURE_ARGS += -Dlibsdirs=" $(abspath /usr/lib/$(MEMORYMODEL)) $(libdir)"
 #CONFIGURE_ARGS += -Dlibsdirs=/usr/lib/64
 CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
-CONFIGURE_ARGS_amd64 
+#CONFIGURE_ARGS_amd64 
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
