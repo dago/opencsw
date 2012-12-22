@@ -64,8 +64,8 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
 # GCC build (Sunstudio is problematic) # claudio
 GARCOMPILER = GCC4
-MAKE_OPT_unstable10s = "-j $(SPARC_PARALLEL)"
-MAKE_OPT_unstable10x = "-j $(INTEL_PARALLEL)"
+MAKE_OPT_unstable10s = "-j 24"
+MAKE_OPT_unstable10x = "-j 4"
 MAKE_OPT = $(MAKE_OPT_$(shell hostname))
 
 # a .git directory will cause failing upstream author tests (the source will be considered blead)
