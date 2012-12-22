@@ -13,10 +13,9 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.5
-PATCHLEVEL = 28
+PATCHLEVEL = 29
 ALTS_PRIO = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
-CATEGORIES = server
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
