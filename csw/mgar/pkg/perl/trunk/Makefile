@@ -137,9 +137,11 @@ CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
 CONFIGURE_ARGS-64 += -Duse64bitint
 CONFIGURE_ARGS-64 += -Duse64bitall
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
-CONFIGURE_ARGS_isa-amd64 += -Dlddlflags=-shared
-CONFIGURE_ARGS_isa-amd64 += -Dcccdlflags=-fPIC
-CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MODULATION))
+#CONFIGURE_ARGS_isa-amd64 += -Dlddlflags=-shared
+#CONFIGURE_ARGS_isa-amd64 += -Dcccdlflags=-fPIC
+CONFIGURE_ARGS += -Dlddlflags=-shared
+CONFIGURE_ARGS += -Dcccdlflags=-fPIC
+#CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MODULATION))
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
