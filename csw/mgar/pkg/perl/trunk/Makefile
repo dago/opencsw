@@ -19,6 +19,7 @@ endef
 MASTER_SITES = manual://
 VENDOR_URL = http://www.perl.org
 #DISTFILES  = $(NAME)-$(VERSION).tar.gz
+# The source has been patched to fix a failing patch (Solaris only). The patch was discussed with upstream (p5p) and committed to BLEAD. The patch is in the files directory.
 DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
@@ -41,7 +42,6 @@ LICENSE = Copying
 CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWperl    += binary-architecture-does-not-match-placement
 OBSOLETED_BY_CSWperl += CSWpm-module-build 
 OBSOLETED_BY_CSWperl += CSWpm-json-pp 
 OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
@@ -60,7 +60,6 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
 #CORE_UPDATES  += PathTools-3.30
 #CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
-
 #DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # GCC build (Sunstudio is problematic) # claudio
@@ -68,6 +67,8 @@ GARCOMPILER = GCC4
 MAKE_OPT_unstable10s = -j 24
 MAKE_OPT_unstable10x = -j 4
 MAKE_OPT = $(MAKE_OPT_$(shell hostname))
+BUILD64 = 1
+ISAEXEC = 1
 
 # a .git directory will cause failing upstream author tests (the source will be considered blead)
 NOGITPATCH = 1
@@ -75,9 +76,12 @@ NOGITPATCH = 1
 # Custom configure
 CONFIGURE_SCRIPTS = perl
 
+# Disabled, this is the first 5.16 release
+# If I read the doc correctly, the arguments should be directories and not releases. I the the debian build does not have this option set.
 # Compatable with all prior patch revs
-INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.14.0 5.14.1 5.14.2
+# INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.14.0 5.14.1 5.14.2
 
+# We added some libs and options through CONFIGURE_ARGS values. The libs were picked up thorugh the hints mechanism. The db-4.8 must be investigated (needed/wished?)
 # Force use of db-4.8
 # TBD: Reinsert libperl.so, see below.
 #PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc
@@ -86,11 +90,8 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1 5.1
 #PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL)) 
 #PERL_LIBS = -lsocket -lgdbm -ldl -lm -lpthread -lc -lcrypt
 
-BUILD64 = 1
-ISAEXEC = 1
-
-
 # Configuration flags
+# Commented options were not needed, or broke the build. Alternatives were supplied.
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
@@ -117,16 +118,15 @@ CONFIGURE_ARGS += -Dscriptdir=$(bindir)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dsitearch=/opt/csw/local/lib/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dsitelib=/opt/csw/local/share/perl/$(VERSION)
-CONFIGURE_ARGS += -Dsiteman1dir=/opt/csw//local/share/man/man1
+CONFIGURE_ARGS += -Dsiteman1dir=/opt/csw/local/share/man/man1
 CONFIGURE_ARGS += -Dsiteman3dir==/opt/csw/local/share/man/man3
 CONFIGURE_ARGS += -Dsiteprefix=/opt/csw/local
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 CONFIGURE_ARGS += -Dusedtrace
-CONFIGURE_ARGS += -Dinc_version_list=none
+#CONFIGURE_ARGS += -Dinc_version_list=none
 #CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
-# Largefiles is on by default for 64 bit
 CONFIGURE_ARGS += -Duselargefiles 
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl5
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl5
@@ -138,11 +138,8 @@ CONFIGURE_ARGS += -Dsed=/opt/csw/bin/gsed
 CONFIGURE_ARGS-64 += -Duse64bitint
 CONFIGURE_ARGS-64 += -Duse64bitall
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
-#CONFIGURE_ARGS_isa-amd64 += -Dlddlflags=-shared
-#CONFIGURE_ARGS_isa-amd64 += -Dcccdlflags=-fPIC
 CONFIGURE_ARGS += -Dlddlflags=-shared
 CONFIGURE_ARGS += -Dcccdlflags=-fPIC
-#CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MODULATION))
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
@@ -156,7 +153,6 @@ EXTRA_INC += /usr/include
 # as reported here:
 #   https://www.opencsw.org/mantis/view.php?id=4544
 #EXTRA_CFLAGS = $(CPPFLAGS)
-
 # Adding -lperl requires that libperl.so is available during compilation, which is not 
 # the case on bootstrapping. However, we require explicit libperl linkage or programs 
 # embedding perl will have problems with duplicated static variables. 
