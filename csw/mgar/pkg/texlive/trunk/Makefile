@@ -4126,7 +4126,7 @@ RUNTIME_DEP_PKGS_CSWtexlive-music += CSWtexlive-music-binaries
 
 PACKAGES 						+=	CSWtexlive-music-binaries
 CATALOGNAME_CSWtexlive-music-binaries	=	texlive_music_binaries
-SPKG_DESC_CSWtexlive-music-binaries		+=	$(DESCRIPTION), music
+SPKG_DESC_CSWtexlive-music-binaries		+=	$(DESCRIPTION), music, binaries
 OBSOLETED_BY_CSWtexlive-music-binaries	=	CSWtetex
 PKGFILES_CSWtexlive-music-binaries		+=	$(docdir)/$(CATALOGNAME_CSWtexlive-music-binaries)/.*
 PKGFILES_CSWtexlive-music-binaries		+=	/opt/csw/bin/prepmx
