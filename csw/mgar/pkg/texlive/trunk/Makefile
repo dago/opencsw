@@ -3280,7 +3280,7 @@ ARCHALL_CSWtexlive-latex-extra		=	1
 
 PACKAGES 										+=	CSWtexlive-latex-extra-binaries
 CATALOGNAME_CSWtexlive-latex-extra-binaries		=	texlive_latex_extra_binaries
-SPKG_DESC_CSWtexlive-latex-extra-binaries		+=	$(DESCRIPTION), latex extra
+SPKG_DESC_CSWtexlive-latex-extra-binaries		+=	$(DESCRIPTION), latex extra, binaries
 OBSOLETED_BY_CSWtexlive-latex-extra-binaries	=	CSWtetex
 PKGFILES_CSWtexlive-latex-extra-binaries		+=	$(docdir)/$(CATALOGNAME_CSWtexlive-latex-extra-binaries)/.*
 PKGFILES_CSWtexlive-latex-extra-binaries		+=	/opt/csw/bin/bg5conv
