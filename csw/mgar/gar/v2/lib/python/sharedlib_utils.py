@@ -47,6 +47,10 @@ class ArchitectureError(Error):
   pass
 
 
+class DataInconsistencyError(Error):
+  """Inconsistency in the data."""
+
+
 def ParseLibPath(directory):
   arch_subdirs = (SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS
                   + INTEL_386_PATHS + AMD64_PATHS)
@@ -227,6 +231,14 @@ def IsBinary(file_info):
     if mimetype in file_info["mime_type"]:
       is_a_binary = True
       break
+  if is_a_binary and not "machine_id" in file_info:
+    raise DataInconsistencyError(
+        "'machine_id' not found in file_info: %r. checkpkg can't continue, "
+        "but it's not a problem with checkpkg; it's a problem with the underlying "
+        "libraries. In this case it's the hachoir library, which failed to "
+        "detect the processor type for this binary. A workaround for it "
+        "could be building the binary again, e.g. 'mgar clean package'."
+        % file_info)
   return is_a_binary
 
 
