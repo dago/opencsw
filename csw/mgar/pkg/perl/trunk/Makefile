@@ -26,6 +26,7 @@ PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 PACKAGES                 += CSWperl
 PKG_DESC_CSWperl         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 #RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm4
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
@@ -95,7 +96,7 @@ CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 #CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
 CONFIGURE_ARGS += -Dcf_email=$(SPKG_EMAIL)
-CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
+#CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
 #CONFIGURE_ARGS += -Dld=$(CC)
 #CONFIGURE_ARGS += -Dldflags="$(LDFLAGS)"
 # Workaround below. Do not version libperl.so here otherwise the other 5.10
