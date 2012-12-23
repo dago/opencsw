@@ -2559,7 +2559,7 @@ RUNTIME_DEP_PKGS_CSWtexlive-latex-base	+=	CSWtexlive-luatex
 CHECKPKG_OVERRIDES_CSWtexlive-latex-base	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/tex/context/base/colo-x11.mkii
 CHECKPKG_OVERRIDES_CSWtexlive-latex-base	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/tex/context/base/colo-imp-x11.mkiv
 
-PACKAGES 									+=	CSWtexlive-latex-base-binaries-binaries
+PACKAGES 									+=	CSWtexlive-latex-base-binaries
 CATALOGNAME_CSWtexlive-latex-base-binaries	=	texlive_latex_base_binaries
 SPKG_DESC_CSWtexlive-latex-base-binaries	+=	$(DESCRIPTION), latex base, architecture dependent
 OBSOLETED_BY_CSWtexlive-latex-base-binaries	=	CSWtetex
