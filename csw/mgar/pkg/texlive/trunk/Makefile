@@ -4871,7 +4871,7 @@ CHECKPKG_OVERRIDES_CSWtexlive-xindy	+=	file-with-bad-content|/usr/local|root/opt
 
 PACKAGES 									+=	CSWtexlive-xindy-binaries
 CATALOGNAME_CSWtexlive-xindy-binaries		=	texlive_xindy_binaries
-SPKG_DESC_CSWtexlive-xindy-binaries			+=	$(DESCRIPTION), index generator for structured documents like LaTeX or SGML
+SPKG_DESC_CSWtexlive-xindy-binaries			+=	$(DESCRIPTION), index generator for structured documents like LaTeX or SGML, binaries
 PKGFILES_CSWtexlive-xindy-binaries			+=	$(docdir)/$(CATALOGNAME_CSWtexlive-xindy-binaries)/.*
 PKGFILES_CSWtexlive-xindy-binaries			+=	/opt/csw//bin/tex2xindy
 RUNTIME_DEP_PKGS_CSWtexlive-xindy-binaries	+=	CSWclisp
