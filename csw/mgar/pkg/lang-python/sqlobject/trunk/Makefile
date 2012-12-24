@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = SQLObject
-VERSION = 1.2.2
+VERSION = 1.3.2
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Object Relational Manager for Python
