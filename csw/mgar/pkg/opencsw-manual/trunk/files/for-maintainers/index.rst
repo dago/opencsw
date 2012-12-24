@@ -12,3 +12,4 @@ package repositories, either at OpenCSW or at their own organization.
   building-a-catalog
   shared-libraries
   package-naming
+  buildfarm-setup
