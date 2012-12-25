@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = sed
-VERSION = 4.2.1
+VERSION = 4.2.2
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -24,17 +26,17 @@ VERSION_FLAG_PATCH = 1
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Use GNU because of issue with syntax containing ellipsis in lib/regcomp.c. 
+# Use GNU because of issue with syntax containing ellipsi in lib/regcomp.c. 
 # See http://markmail.org/message/7ki46iiok3ddu3sa
 GARCOMPILER = GNU
 
 RUNTIME_DEP_PKGS += CSWlibintl8
 
-# No special platform optimization 
+# No special pl
 NOISALIST = 1
 
-CONFIGURE_ARGS = $(DIRPATHS) 
-CONFIGURE_ARGS += --program-prefix=g  
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --program-prefix=g-program-prefix=g  
 CONFIGURE_ARGS += --with-included-gettext
 
 SHELL = /bin/bash
@@ -54,6 +56,4 @@ post-merge:
 			echo Linking $$f; \
 			base=$$(basename $$f); \
 			gln -s $$f ./$${base/g/}; \
-		done )
-	@$(MAKECOOKIE)
-
+		done 
