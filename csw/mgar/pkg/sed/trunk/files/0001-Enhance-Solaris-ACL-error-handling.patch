@@ -14,45 +14,22 @@ supported on transport endpoint
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
- lib/copy-acl.c     |    4 ++--
- lib/set-mode-acl.c |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ lib/copy-acl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/copy-acl.c b/lib/copy-acl.c
-index af85a08..55999ec 100644
+index 5cc75e1..cebc8e8 100644
 --- a/lib/copy-acl.c
 +++ b/lib/copy-acl.c
-@@ -253,7 +253,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+@@ -212,7 +212,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
  
        if (ace_count < 0)
- 	{
--	  if (errno == ENOSYS || errno == EINVAL)
-+	  if (errno == ENOSYS || errno == EINVAL || errno == EOPNOTSUPP)
- 	    {
- 	      ace_count = 0;
- 	      ace_entries = NULL;
-@@ -358,7 +358,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
-       if (ret < 0 && saved_errno == 0)
- 	{
- 	  saved_errno = errno;
--	  if (errno == ENOSYS && !acl_nontrivial (count, entries))
-+	  if ((errno == ENOSYS || errno == EOPNOTSUPP) && !acl_nontrivial (count, entries))
- 	    saved_errno = 0;
- 	}
-       else
-diff --git a/lib/set-mode-acl.c b/lib/set-mode-acl.c
-index a24b9f3..28c6d4e 100644
---- a/lib/set-mode-acl.c
-+++ b/lib/set-mode-acl.c
-@@ -387,7 +387,7 @@ qset_acl (char const *name, int desc, mode_t mode)
-       ret = acl (name, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
-     if (ret < 0)
-       {
--	if (errno == ENOSYS)
-+	if (errno == ENOSYS || errno == EOPNOTSUPP)
- 	  return chmod_or_fchmod (name, desc, mode);
- 	return -1;
-       }
+         {
+-          if (errno == ENOSYS || errno == EINVAL)
++          if (errno == ENOSYS || errno == EINVAL  || errno == EOPNOTSUPP)
+             {
+               ace_count = 0;
+               ace_entries = NULL;
 -- 
-1.7.3.2
+1.8.0
 
