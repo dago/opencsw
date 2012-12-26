@@ -54,7 +54,7 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         "will probably finish successfully when do you that."
         % full_path)
     raise package.PackageError(msg)
-  if sharedlib_utils.IsBinary(file_info):
+  if sharedlib_utils.IsBinary(file_info, check_consistency=False):
     parser = hachoir_parser.createParser(full_path)
     if not parser:
       logging.warning("Can't parse file %s", file_path)
