@@ -20,7 +20,7 @@ class UsageError(Error):
 
 class CatalogGarbageCollector(object):
 
-  ADDITIONAL_CATALOGS = ("current", "stable")
+  ADDITIONAL_CATALOGS = ("legacy")
 
   def __init__(self, d):
     logging.debug("CatalogGarbageCollector(%s)", repr(d))
