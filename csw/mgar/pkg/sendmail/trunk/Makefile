@@ -1,9 +1,9 @@
 # $Id$
 
 # TODO
-# - Build separate 9/10 packages?
 # - One big "mta" switch in alternatives between sendmail/postfix
 
+# + Build separate 9/10 packages? -> build only 5.10
 # + add symlink from /etc/opt/csw/mail/cf to /opt/csw/share/sendmail/cf/cf
 # + add ostype solaris9csw.m4
 # + add sendmail.mc in cf dir
@@ -31,7 +31,7 @@
 # + #4150 Sendmail 8.14.4 released -> this is 8.14.5
 
 NAME = sendmail
-VERSION = 8.14.5
+VERSION = 8.14.6
 CATEGORIES = server
 GARTYPE = v2
 
@@ -50,6 +50,8 @@ DISTFILES += README.CSW sendmail.schema site.config.m4
 DISTFILES += oracle-sendmail-deactivate.sh oracle-sendmail-reactivate.sh
 DISTFILES += cswsendmail cswusergroup
 DISTFILES += sendmail.mc solaris9csw.m4
+
+LICENING_PLATFORMS = solaris10-sparc solaris10-i3864
 
 LICENSE = LICENSE
 
@@ -343,6 +345,4 @@ install-custom:
 	ginstall -m 755 $(DOWNLOADDIR)/oracle-sendmail-reactivate.sh $(DESTDIR)$(docdir)/sendmail
 
 	@# Makefile for databases
-	ginstall -m 644 $(FILEDIR)/CSWsendmail.Makefile $(DESTDIR)$(sysconfdir)/mail/Makefile
-
-	@$(MAKECOOKIE)
+	ginstall -m 644 $(FILEDIR)/CSWsendmail.Makefile $(DESTDIR)$(sysconfdir)/mail/Makefi
