@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+mgar platforms < /dev/null > ~/logs/texlive 2>&1
+exit $?
