@@ -1,0 +1,31 @@
+From f2b820ad643577177bac7a89f093cc57d8f21ded Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 28 Dec 2012 18:56:13 +0100
+Subject: [PATCH] Fix internal poppler library paths -  second instance
+
+to use Open CSW provide GhostScript fonts; remove all the other
+alternatives (maybe not the best option...)
+---
+ libs/poppler/poppler-0.20.0/poppler/GlobalParams.cc | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/libs/poppler/poppler-0.20.0/poppler/GlobalParams.cc b/libs/poppler/poppler-0.20.0/poppler/GlobalParams.cc
+index 64d6133..5054c96 100644
+--- a/libs/poppler/poppler-0.20.0/poppler/GlobalParams.cc
++++ b/libs/poppler/poppler-0.20.0/poppler/GlobalParams.cc
+@@ -1370,11 +1370,7 @@ static struct {
+ };
+ 
+ static const char *displayFontDirs[] = {
+-  "/usr/share/ghostscript/fonts",
+-  "/usr/local/share/ghostscript/fonts",
+-  "/usr/share/fonts/default/Type1",
+-  "/usr/share/fonts/default/ghostscript",
+-  "/usr/share/fonts/type1/gsfonts",
++  "/opt/csw/share/ghostscript/fonts",
+   NULL
+ };
+ 
+-- 
+1.7.12
+

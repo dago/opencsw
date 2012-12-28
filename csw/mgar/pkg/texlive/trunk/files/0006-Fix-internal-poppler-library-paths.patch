@@ -1,0 +1,31 @@
+From d0ee28d1e61f2177f0eaacb65e898eee7524dacd Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 28 Dec 2012 16:06:46 +0100
+Subject: [PATCH] Fix internal poppler library paths
+
+to use Open CSW provide GhostScript fonts; remove all the other
+alternatives (maybe not the best option...)
+---
+ libs/xpdf/xpdf-3.03/xpdf/GlobalParams.cc | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/libs/xpdf/xpdf-3.03/xpdf/GlobalParams.cc b/libs/xpdf/xpdf-3.03/xpdf/GlobalParams.cc
+index 0189784..9117ec1 100644
+--- a/libs/xpdf/xpdf-3.03/xpdf/GlobalParams.cc
++++ b/libs/xpdf/xpdf-3.03/xpdf/GlobalParams.cc
+@@ -119,11 +119,7 @@ static const char *displayFontDirs[] = {
+ };
+ #else
+ static const char *displayFontDirs[] = {
+-  "/usr/share/ghostscript/fonts",
+-  "/usr/local/share/ghostscript/fonts",
+-  "/usr/share/fonts/default/Type1",
+-  "/usr/share/fonts/default/ghostscript",
+-  "/usr/share/fonts/type1/gsfonts",
++  "/opt/csw/share/ghostscript/fonts",
+   NULL
+ };
+ #endif
+-- 
+1.7.12
+
