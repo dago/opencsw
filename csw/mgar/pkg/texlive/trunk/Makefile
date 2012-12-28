@@ -30,6 +30,8 @@ PATCHFILES		+=	0002-Fix-ICU-link-edit.patch
 PATCHFILES		+=	0003-Adapt-texmf-configuration.patch
 PATCHFILES		+=	0004-Activate-formats.patch
 PATCHFILES		+=	0005-Fix-dvi2tty-buffer-overflow.patch
+PATCHFILES		+=	0006-Fix-internal-poppler-library-paths.patch
+PATCHFILES		+=	0007-Fix-internal-poppler-library-paths-second-instance.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -887,6 +889,8 @@ PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xetex
 PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xmltex
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWgs
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWgsfonts
+CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	surplus-dependency|CSWgsfonts
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWtexlive-common
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgd2
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibptexenc1
