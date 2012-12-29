@@ -20,8 +20,9 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.7.7
-CATEGORIES = utils
+VERSION = 1.7.8
+GARTYPE = v2
+CATEGORIES = apps utils
 GARTYPE = v2
 
 DESCRIPTION = Version control rethought
@@ -381,5 +382,4 @@ install-man:
 
 
 post-merge:
-	@(cd $(PKGROOT)/opt/csw/lib/svn/python; find . -name '*pyc' -exec rm {} \;)
-	@$(MAKECOOKIE)
+	@(cd $(PKGROOT)/opt/csw/lib/svn/python; find . -name '*pyc' -exec rm {} \
