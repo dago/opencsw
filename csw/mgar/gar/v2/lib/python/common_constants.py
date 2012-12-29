@@ -73,6 +73,7 @@ DEFAULT_CATALOG_RELEASES = frozenset([
     'dublin',
     'unstable',
     'legacy',
+    'kiel',
     ])
 
 # At some point, it was used to prevent people from linking against
