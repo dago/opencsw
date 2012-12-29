@@ -22,7 +22,7 @@
 NAME = subversion
 VERSION = 1.7.8
 GARTYPE = v2
-CATEGORIES = apps utils
+utils
 GARTYPE = v2
 
 DESCRIPTION = Version control rethought
