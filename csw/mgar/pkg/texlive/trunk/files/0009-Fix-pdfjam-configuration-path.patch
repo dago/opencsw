@@ -1,0 +1,38 @@
+From f3e6cf72b9ad545952a9a7977cb9c72d3b06e034 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sun, 30 Dec 2012 16:14:53 +0100
+Subject: [PATCH] Fix pdfjam configuration path
+
+---
+ texk/texlive/linked_scripts/pdfjam/pdfjam | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/texk/texlive/linked_scripts/pdfjam/pdfjam b/texk/texlive/linked_scripts/pdfjam/pdfjam
+index e12b466..a351e78 100755
+--- a/texk/texlive/linked_scripts/pdfjam/pdfjam
++++ b/texk/texlive/linked_scripts/pdfjam/pdfjam
+@@ -20,7 +20,7 @@ version=2.08
+ ##  The path searched for site-wide configuration files can be set     ##
+ ##  by editing the following variable:                                 ##
+ ##                                                                     ##
+-    configpath='/etc:/usr/share/etc:/usr/local/share:/usr/local/etc'   ##
++    configpath='/etc/opt/csw:/opt/csw/etc'   ##
+ ##                                                                     ##
+ ##  Nothing else in this file should need to be changed.               ##
+ ##                                                                     ##
+@@ -140,10 +140,8 @@ prattle "This is pdfjam version ${version}."
+ ##
+ ##  THESE SETTINGS WILL BE OVER-RIDDEN by any found in configuration
+ ##  files.  By default such files are found at any or all of
+-##     /etc/pdfjam.conf
+-##     /usr/share/etc/pdfjam.conf
+-##     /usr/local/share/pdfjam.conf
+-##     /usr/local/etc/pdfjam.conf
++##     /etc/opt/csw/pdfjam.conf
++##     /opt/csw/etc/pdfjam.conf
+ ##     $HOME/.pdfjam.conf
+ ##  (And they are read in that order; if a setting is made more than
+ ##  once, the last instance prevails.)
+-- 
+1.7.12
+

@@ -32,6 +32,8 @@ PATCHFILES		+=	0004-Activate-formats.patch
 PATCHFILES		+=	0005-Fix-dvi2tty-buffer-overflow.patch
 PATCHFILES		+=	0006-Fix-internal-poppler-library-paths.patch
 PATCHFILES		+=	0007-Fix-internal-poppler-library-paths-second-instance.patch
+PATCHFILES		+=	0008-Add-CSW-prefix-to-groff-fonts-configuration.patch
+PATCHFILES		+=	0009-Fix-pdfjam-configuration-path.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -441,6 +443,8 @@ CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/op
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/latex/turnthepage/Makefile
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/scripts/bundledoc/arlatex
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/scripts/fragmaster/fragmaster.pl
+# I don't know what to do with this:
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/scripts/latexmk/latexmk.pl
 
 PACKAGES							+=	CSWtexlive-dev
 CATALOGNAME_CSWtexlive-dev			+=	texlive_dev
@@ -454,6 +458,7 @@ CHECKPKG_OVERRIDES_CSWtexlive-dev	+=	archall-devel-package
 RUNTIME_DEP_PKGS_CSWtexlive-dev		+=	CSWlibkpathsea6
 RUNTIME_DEP_PKGS_CSWtexlive-dev		+=	CSWlibptexenc1
 CHECKPKG_OVERRIDES_CSWtexlive-dev	+=	file-with-bad-content|/usr/local|root/opt/csw/include/kpathsea/types.h
+CHECKPKG_OVERRIDES_CSWtexlive-dev	+=	file-with-bad-content|/usr/share|root/opt/csw/include/kpathsea/paths.h
 
 PACKAGES 							+=	CSWlibkpathsea6
 CATALOGNAME_CSWlibkpathsea6			=	libkpathsea6
@@ -2762,6 +2767,8 @@ PKGFILES_CSWtexlive-lang-mongolian		+=	/opt/csw/share/texmf-dist/tex/latex/mongo
 PKGFILES_CSWtexlive-lang-mongolian		+=	/opt/csw/share/texmf-dist/tex/latex/montex/.*
 RUNTIME_DEP_PKGS_CSWtexlive-lang-mongolian	+=	CSWperl
 ARCHALL_CSWtexlive-lang-mongolian		=	1
+CHECKPKG_OVERRIDES_CSWtexlive-lang-mongolian	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/montex/mfinput/bithe/testfont.sh
+CHECKPKG_OVERRIDES_CSWtexlive-lang-mongolian	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/montex/testfont.sh
 
 PACKAGES 							+=	CSWtexlive-lang-polish
 CATALOGNAME_CSWtexlive-lang-polish	=	texlive_lang_polish
@@ -4491,6 +4498,7 @@ ARCHALL_CSWtexlive-math-extra		=	1
 RUNTIME_DEP_PKGS_CSWtexlive-math-extra	+=	CSWtexlive-binaries
 CHECKPKG_OVERRIDES_CSWtexlive-math-extra	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/amstex/base/amstinst.tex
 CHECKPKG_OVERRIDES_CSWtexlive-math-extra	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/fonts/concrete/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-math-extra	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/tex/latex/susy/susy.sty
 
 PACKAGES 							+=	CSWtexlive-metapost
 CATALOGNAME_CSWtexlive-metapost		=	texlive_metapost
@@ -5330,6 +5338,39 @@ PKGFILES_CSWtexlive-xindy-binaries			+=	$(docdir)/$(CATALOGNAME_CSWtexlive-xindy
 PKGFILES_CSWtexlive-xindy-binaries			+=	/opt/csw/bin/tex2xindy
 PKGFILES_CSWtexlive-xindy-binaries			+=	/opt/csw/share/man/man1/tex2xindy.1
 
+# TODO verify and validate if needed; this is a merged, package wise,
+# list of overrides:
+CHECKPKG_OVERRIDES_CSWtexlive-lang-cyrillic	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/latex/disser/templates/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-lang-cyrillic	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/latex/disser/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-metapost-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/emp/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-doc-en	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/generic/tds/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-latex-extra-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/cweb-latex/examples/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/source/latex/subfig/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/source/latex/sf298/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/otherformats/jadetex/base/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/footnpag/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/feynmf/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/esk/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/frankenstein/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/plweb/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/crossword/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/plari/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/rcs/src/test/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/rcs/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/subfigure/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/captcont/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/circ/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/latex/mcite/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/fonts/berenisadf/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/source/fonts/blacklettert1/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/support/pedigree-perl/Pedigree/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/plain/js-misc/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/bibtex/urlbst/Makefile.in
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/latexdiff/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/fonts/tipa/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-generic-recommended	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/fonts/fontname/Makefile
+CHECKPKG_OVERRIDES_CSWtexlive-generic-recommended	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/generic/epsf/Makefile
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
@@ -5398,6 +5439,10 @@ post-install-modulated:
 	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/perl[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/perl[[:space:]]*;#!/usr/bin/env perl ;' {}
 	:    Bourne Shell
 	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/sh[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/sh[[:space:]]*;#!/usr/bin/env bash ;' {}
+	: patch postinstallation files being too expansive to patch in the classic way
+	gsed --in-place 's;^cmbase=cmbase.mf$;/opt/csw/share/texmf-dist/fonts/source/public/cm/cmbase.mf;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mktipapk.sh $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mkxipapk.sh
+	gsed --in-place 's;^LATEXPATH="/usr/texbin/" # TeXLive$;LATEXPATH="/opt/csw/bin/" # TeXLive;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/latex/confproc/example/buildpapers.sh
+	gsed --in-place 's;/usr/local/teTeX/share/texmf.local/scripts/xetex/perl/lib/PDF/Reuse.pm;/opt/csw/share/texmf-dist/scripts/xetex/perl/lib/PDF/Reuse.pm;' $(DESTDIR)/opt/csw/share/texmf-dist/scripts/xetex/perl/xdv2pdf_mergemarks
 	$(MAKECOOKIE)
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
@@ -5531,6 +5576,11 @@ REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/scripts/pax/pdfannotextractor.p
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/scripts/purifyeps/purifyeps
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/scripts/context/ruby/texmfstart.rb
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/dvipdfmx/dvipdfmx.cfg
+REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/scripts/simpdftex/simpdftex
+REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/doc/latex/mathspic/mathspic.sh
+# until finding a better way:
+REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/doc/fonts/gnu-freefont/tools/test/MES-Conformance/mes-list-expand.pl
+REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/doc/latex/confproc/example/buildpapers.sh
 
 REINPLACE_WHEN_USRshare	=	postinstall
 REINPLACE_USRSHARE		+=	/opt/csw/share/texmf-dist/tex/latex/susy/susy.sty
