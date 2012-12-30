@@ -1,0 +1,26 @@
+From dbeab55e6e2605f9307e624fa9781855b98fa2e2 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sun, 30 Dec 2012 15:56:21 +0100
+Subject: [PATCH] Add CSW prefix to groff fonts configuration
+
+affect also kpathsea/paths.h
+---
+ texk/kpathsea/texmf.cnf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/texk/kpathsea/texmf.cnf b/texk/kpathsea/texmf.cnf
+index 903f681..052c964 100644
+--- a/texk/kpathsea/texmf.cnf
++++ b/texk/kpathsea/texmf.cnf
+@@ -371,7 +371,7 @@ FONTCIDMAPS=.;$TEXMF/fonts/cid//
+ PDFTEXCONFIG = .;$TEXMF/pdftex/{$progname,}//
+ 
+ % Used by DMP (ditroff-to-mpx), called by makempx -troff.
+-TRFONTS = /usr{/local,}/share/groff/{current/font,site-font}/devps
++TRFONTS = /{opt/csw,}usr{/local,}/share/groff/{current/font,site-font}/devps
+ MPSUPPORT = .;$TEXMF/metapost/support
+ 
+ % For xdvi to find mime.types and .mailcap, if they do not exist in
+-- 
+1.7.12
+
