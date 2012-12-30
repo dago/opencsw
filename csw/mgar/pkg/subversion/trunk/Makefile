@@ -56,11 +56,9 @@ RUNTIME_DEP_PKGS_CSWsvn   += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibz1
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibglib2-0-0
@@ -78,13 +76,7 @@ PKGFILES_CSWap2svn          = $(prefix)/apache2.*
 PKGFILES_CSWap2svn         += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWap2svn  = CSWsvn
 RUNTIME_DEP_PKGS_CSWap2svn += CSWapache2
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWap2svn += CSWbdb48
+RUNTIME_DEP_PKGS_expat1Wap2svn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibaprutil1-0
 CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-catalogname=ap2svn
@@ -95,18 +87,8 @@ SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
 PKGFILES_CSWjavasvn            = $(SVNLIB)/.*java.*
 PKGFILES_CSWjavasvn           += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW 
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWbdb48
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibz1
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_libapr1-0
+RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibintl8   += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWsvn
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
@@ -122,23 +104,8 @@ PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
 PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expected-catalogname=pmsvn
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/svn/libsvn_swig_perl-1.so.0.0.0|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Repos/_Repos.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Ra/_Ra.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Fs/_Fs.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Wc/_Wc.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Core/_Core.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Client/_Client.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWpmsvn += binary-architecture-does-not-match-placement|file=opt/csw/lib/perl/site_perl/auto/SVN/_Delta/_Delta.so|arch_id=18|arch_name=sparcv8+
+RUNTIME_DEP_PKGSapr1vn += CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expectedarch_name=sparcv8+
 
 
 PACKAGES += CSWrbsvn
@@ -149,19 +116,9 @@ PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibiconv2
+RUNTIME_DEP_Plibapr1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1vn += CSWlibsasl2-2
 
 
 PACKAGES += CSWpythonsvn
@@ -171,19 +128,8 @@ PKGFILES_CSWpythonsvn          = $(libdir)/python.*
 PKGFILES_CSWpythonsvn         += $(SVNLIB)/python.*
 PKGFILES_CSWpythonsvn         += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn         += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvn
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWbdb48
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWapr1-0
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvnn += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
 
 
