@@ -147,7 +147,7 @@ endif
 
 LICENSE = LICENSE
 
-##### Build and installation information #####
+##### Build and installation inBUILD64 =1information #####
 
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
