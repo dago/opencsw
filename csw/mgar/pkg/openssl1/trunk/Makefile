@@ -147,7 +147,8 @@ endif
 
 LICENSE = LICENSE
 
-##### Build and installation inBUILD64 =1information #####
+##### Build and installation inBUILD64 = 1
+ISAEXEC = 1information #####
 
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
