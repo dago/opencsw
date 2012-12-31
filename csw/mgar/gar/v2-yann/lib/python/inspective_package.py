@@ -266,7 +266,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         # we ignore for now these elfdump errors which can be catched
         # later by check functions,
         ignored_error_re = re.compile(
-          r"""[^:]+:\s\.((SUNW_l)?dynsym|symtab):\s
+          r"""[^:]+:(\s\.((SUNW_l)?dynsym|symtab):\s
            (index\[\d+\]:\s
             (suspicious\s(local|global)\ssymbol\sentry:\s[^:]+:\slies
              \swithin\s(local|global)\ssymbol\srange\s\(index\s[<>=]+\s\d+\)
@@ -277,7 +277,12 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
             |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+)
 
-           |invalid\ssh_link:\s0)\n""",
+           |invalid\ssh_link:\s0)
+
+           |\smemory\soverlap\sbetween\ssection\[\d+\]:\s[^:]+:\s
+            [0-9a-f]+:[0-9a-f]+\sand\ssection\[\d+\]:\s[^:]+:
+            \s[0-9a-f]+:[0-9a-f]+)
+           \n""",
           re.VERBOSE)
 
         stderr = re.sub(ignored_error_re, "", stderr)
@@ -317,9 +322,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
       # soname version needed are usually displayed sorted by index ...
       # but that's not always the case :( so we have to reorder
-      # the list by index
-      binary_info['version needed'].sort(key=lambda m: int(m['index']))
-      for version in binary_info['version needed']:
+      # the list by index if they are present
+      if any ( v['index'] for v in binary_info['version needed'] ):
+        binary_info['version needed'].sort(key=lambda m: int(m['index']))
+        for version in binary_info['version needed']:
           del version['index']
 
       # if it exists, the first "version definition" entry is the base soname
