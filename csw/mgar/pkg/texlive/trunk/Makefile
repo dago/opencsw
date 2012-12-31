@@ -5439,10 +5439,10 @@ post-install-modulated:
 	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/perl[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/perl[[:space:]]*;#!/usr/bin/env perl ;' {}
 	:    Bourne Shell
 	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/sh[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/sh[[:space:]]*;#!/usr/bin/env bash ;' {}
-	: patch postinstallation files being too expansive to patch in the classic way
-	gsed --in-place 's;^cmbase=cmbase.mf$;/opt/csw/share/texmf-dist/fonts/source/public/cm/cmbase.mf;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mktipapk.sh $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mkxipapk.sh
-	gsed --in-place 's;^LATEXPATH="/usr/texbin/" # TeXLive$;LATEXPATH="/opt/csw/bin/" # TeXLive;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/latex/confproc/example/buildpapers.sh
-	gsed --in-place 's;/usr/local/teTeX/share/texmf.local/scripts/xetex/perl/lib/PDF/Reuse.pm;/opt/csw/share/texmf-dist/scripts/xetex/perl/lib/PDF/Reuse.pm;' $(DESTDIR)/opt/csw/share/texmf-dist/scripts/xetex/perl/xdv2pdf_mergemarks
+	: patch postinstallation for those files being too expansive to patch in the classic way
+	gsed --in-place --expression 's;^cmbase=.*cmbase.mf$$;cmbase=/opt/csw/share/texmf-dist/fonts/source/public/cm/cmbase.mf;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mktipapk.sh $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mkxipapk.sh
+	gsed --in-place --expression 's;^LATEXPATH="/usr/texbin/" # TeXLive$$;LATEXPATH="/opt/csw/bin/" # TeXLive;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/latex/confproc/example/buildpapers.sh
+	gsed --in-place --expression 's;/usr/local/teTeX/share/texmf.local/scripts/xetex/perl/lib/PDF/Reuse.pm;/opt/csw/share/texmf-dist/scripts/xetex/perl/lib/PDF/Reuse.pm;' $(DESTDIR)/opt/csw/share/texmf-dist/scripts/xetex/perl/xdv2pdf_mergemarks
 	$(MAKECOOKIE)
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
