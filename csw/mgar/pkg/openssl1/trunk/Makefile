@@ -63,7 +63,7 @@ endif
 
 
 # We use SUN perl, not the opencsw one
-CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-depndency|CSWperl
 
 
 # References to default path in documentation files, can be safely ignored
@@ -249,4 +249,4 @@ merge-doc:
 	done
 	@$(MAKECOOKIE)
 
-post-merge: merge-doc install-conf-misc fix-paths
+post-merge: merge-doc install-con
