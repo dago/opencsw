@@ -47,6 +47,10 @@ class ArchitectureError(Error):
   pass
 
 
+class DataInconsistencyError(Error):
+  """Inconsistency in the data."""
+
+
 def ParseLibPath(directory):
   arch_subdirs = (SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS
                   + INTEL_386_PATHS + AMD64_PATHS)
@@ -213,8 +217,16 @@ def LongestCommonSubstring(S, T):
   return LCS
 
 
-def IsBinary(file_info):
-  """Returns True or False depending on file metadata."""
+def IsBinary(file_info, check_consistency=True):
+  """Returns True or False depending on file metadata.
+
+  Args:
+      file_info: A dictionary containing file information
+      check_consistency: Whether to check for consistency between the mimetype
+      information and other information, such as machine_id. During the
+      initial data gathering, the check must be disabled, because IsBinary()
+      is used to determine whether we should collect machine_id or not.
+  """
   is_a_binary = False
   if "mime_type" not in file_info:
     # This would be a problem in the data.
@@ -227,6 +239,13 @@ def IsBinary(file_info):
     if mimetype in file_info["mime_type"]:
       is_a_binary = True
       break
+  if check_consistency and is_a_binary and not "machine_id" in file_info:
+    raise DataInconsistencyError(
+        "'machine_id' not found in file_info: %r. checkpkg can't continue, "
+        "but it's not a problem with checkpkg; it's a problem with the underlying "
+        "libraries. In this case it's the hachoir library, which failed to "
+        "detect the processor type for this binary."
+        % file_info)
   return is_a_binary
 
 

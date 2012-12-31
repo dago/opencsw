@@ -25,8 +25,8 @@ TABLES = TABLES_THAT_NEED_UPDATES + (
             m.Pkginst,
             m.Srv4DependsOn,
             m.Srv4FileInCatalog,
-            m.Srv4FileStats,
-            m.Srv4FileStatsBlob)
+            m.Srv4FileStatsBlob,
+            m.Srv4FileStats)
 # Shouldn't this be in common_constants?
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 CONFIG_MTIME = "mtime"
@@ -153,7 +153,13 @@ class CheckpkgDatabaseMixin(object):
 
   def CreateTables(self):
     for table in TABLES:
-      table.createTable(ifNotExists=True)
+      try:
+        logging.debug("Creating table %r", table)
+        table.createTable(ifNotExists=True)
+      except sqlobject.dberrors.OperationalError, e:
+        logging.error("Could not create table %r: %s", table, e)
+        raise
+        
 
   def InitialDataImport(self):
     """Imports initial data into the db.
@@ -182,10 +188,6 @@ class CheckpkgDatabaseMixin(object):
       except sqlobject.dberrors.DuplicateEntryError:
         pass
     self.SetDatabaseSchemaVersion()
-
-  def CreateTables(self):
-    for table in TABLES:
-      table.createTable(ifNotExists=True)
 
   def ClearTablesForUpdates(self):
     for table in TABLES_THAT_NEED_UPDATES:

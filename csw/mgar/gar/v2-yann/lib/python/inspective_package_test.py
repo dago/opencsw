@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.6
 
-import unittest
+import unittest2 as unittest
 import inspective_package
 import mox
 import hachoir_parser
