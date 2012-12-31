@@ -54,14 +54,21 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         "will probably finish successfully when do you that."
         % full_path)
     raise package.PackageError(msg)
-  if sharedlib_utils.IsBinary(file_info):
+  if sharedlib_utils.IsBinary(file_info, check_consistency=False):
     parser = hachoir_parser.createParser(full_path)
     if not parser:
       logging.warning("Can't parse file %s", file_path)
     else:
       try:
-        file_info["mime_type_by_hachoir"] = parser.mime_type
         machine_id = parser["/header/machine"].value
+      except hachoir_core.field.field.MissingField, e:
+        logging.fatal(
+            "hachoir_parser failed to retrieve machine_id for %r. "
+            "checkpkg cannot continue.",
+            file_info)
+        raise
+      try:
+        file_info["mime_type_by_hachoir"] = parser.mime_type
         file_info["machine_id"] = machine_id
         file_info["endian"] = parser["/header/endian"].display
       except hachoir_core.field.field.MissingField, e:

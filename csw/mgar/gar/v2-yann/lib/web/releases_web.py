@@ -218,7 +218,7 @@ class Srv4CatalogAssignment(object):
         self.ReturnError(
             "%s is not one of %s (OS releases)"
             % (osrel_name, common_constants.OS_RELS))
-      if osrel_name in common_constants.OBSOLETE_OS_RELS:
+      if osrel_name in common_constants.OBSOLETE_OS_RELS and catrel_name == 'unstable':
         self.ReturnError(
             "package deletions from an obsolete OS release such as %s "
             "are not allowed" % osrel_name)

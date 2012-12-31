@@ -378,8 +378,11 @@ class Srv4ByCatAndCatalogname(object):
   def GET(self, catrel_name, arch_name, osrel_name, catalogname):
     """Get a srv4 reference by catalog ane catalogname."""
     configuration.SetUpSqlobjectConnection()
-    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     join = [
         sqlbuilder.INNERJOINOn(None,
           models.Srv4FileInCatalog,
@@ -401,7 +404,7 @@ class Srv4ByCatAndCatalogname(object):
       web.header('Access-Control-Allow-Origin', '*')
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
-      return cjson.encode(None)
+      raise web.notfound()
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
 
@@ -434,6 +437,7 @@ class Srv4ByCatAndPkgname(object):
       srv4 = res.getOne()
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
+      web.header('Access-Control-Allow-Origin', '*')
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
       return cjson.encode(None)

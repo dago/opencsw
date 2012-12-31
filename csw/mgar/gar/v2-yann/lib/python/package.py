@@ -192,10 +192,9 @@ class CswSrv4File(shell.ShellMixin, object):
   def GetMd5sum(self):
     if not self.md5sum:
       logging.debug("GetMd5sum() reading file %s", repr(self.pkg_path))
-      fp = open(self.pkg_path)
       hash = hashlib.md5()
-      hash.update(fp.read())
-      fp.close()
+      with open(self.pkg_path) as fp:
+        hash.update(fp.read())
       self.md5sum = hash.hexdigest()
     return self.md5sum
 
