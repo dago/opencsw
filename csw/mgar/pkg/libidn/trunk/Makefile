@@ -1,5 +1,5 @@
 NAME = libidn
-VERSION = 1.24
+VERSION = 1.26
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -60,4 +60,4 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 # What's this? Windows DLLs? How do they end up in the Solaris build?
 EXTRA_MERGE_EXCLUDE_FILES = .*\.dll
 
-include gar/category.mk
+include
