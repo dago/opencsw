@@ -55,7 +55,6 @@ PKGFILES_CSWfreeradius-krb5 += $(docdir)/rlm_krb5
 PKGFILES_CSWfreeradius-krb5 += /opt/csw/lib/freeradius/rlm_krb5\.so
 PKGFILES_CSWfreeradius-krb5 += /opt/csw/lib/fre2radius/rlm_krb5-2\.1\.[0-9]+\.so
 RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWfreeradius
 
@@ -110,8 +109,6 @@ PKGFILES_CSWfreeradius-mysql += /opt/csw/lib/freeradius/rlm_sql_mysql\.so
 PKGFILES_CSWfreeradius-mysql += /opt/csw/lib/freeradi2s/rlm_sql_mysql-2\.1\.[0-9]+\.so
 PKGFILES_CSWfreeradius-mysql += $(raddbdir)/sql/mysql
 PKGFILES_CSWfreeradius-mysql += $(raddbdir)/sql/mysql/.*
-RUNTIME_DEP_PKGS_CSWfreeradius-mysql += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWfreeradius-mysql += CSWlibz1
 RUNTIME_DEP_PKGS_CSWfreeradius-mysql += CSWlibmysqlclient18
 
 radius_user = radius
