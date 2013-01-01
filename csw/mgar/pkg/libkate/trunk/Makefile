@@ -1,6 +1,6 @@
 # $Id$
 NAME = libkate
-VERSION = 0.3.8
+VERSION = 0.4.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -12,11 +12,11 @@ MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
 # Skip NUL test until this is fixed:
-#   http://code.google.com/p/libkate/issues/detail?id=21
+#   http://code.google.com/p/libkate/iss#ues/detail?id=21
 PATCHFILES += 0001-Reformat-null-test-string.patch
 
 # Use inttypes.h if stdint.h is not available until this is fixed:
-#   http://code.google.com/p/libkate/issues/detail?id=19
+#   http://code.google.com/p/libkate/iss#ues/detail?id=19
 PATCHFILES += 0002-Use-inttypes-when-stdint-is-not-available.patch
 
 VENDOR_URL = http://code.google.com/p/libkate/
@@ -46,7 +46,7 @@ SPKG_DESC_CSWlibkate-utils = Utility programs for libkate
 PKGFILES_CSWlibkate-utils += $(bindir)/.*
 PKGFILES_CSWlibkate-utils += $(mandir)/man1/.*
 RUNTIME_DEP_PKGS_CSWlibkate-utils += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibkate-utils += CSWpng
+RUNTIME_DEP_PKGS_CSWliblibpng15-15e-utils += CSWpng
 RUNTIME_DEP_PKGS_CSWlibkate-utils += CSWlibkate1
 RUNTIME_DEP_PKGS_CSWlibkate-utils += CSWliboggkate1
 
@@ -55,7 +55,7 @@ CATALOGNAME_CSWpy-libkate = py_libkate
 SPKG_DESC_CSWpy-libkate = Python binding for libkate.so.1
 # PKGFILES is catchall
 ARCHALL_CSWpy-libkate = 1
-RUNTIME_DEP_PKGS_CSWpy-libkate += CSWpython
+RUNTIME_DEP_PKGS_CSWpy-libkate += CSWpythoREINPLACE_USRLOCAL += tools/KateDJ/kdj/tools.pyhon
 PYCOMPILE = 1
 
 BUILD64_LIBS_ONLY = 1
@@ -65,14 +65,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #   http://code.google.com/p/libkate/issues/detail?id=20
 SKIPTEST ?= 1
 
-include gar/category.mk
-
-post-configure-modulated:
-	@# Replace gcc-specific flags until this is fixed:
-	@#   http://code.google.com/p/libkate/issues/detail?id=18
-	perl -pi -e 's,-Wall -W,,g' \
-		$(WORKSRC)/Makefile \
-		$(WORKSRC)/tools/Makefile
-	perl -pi -e 's,/usr/local,$(prefix),g' \
-		$(WORKSRC)/tools/KateDJ/kdj/tools.py
-	@$(MAKECOOKIE)
+include 
