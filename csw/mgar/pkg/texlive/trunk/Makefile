@@ -8,10 +8,9 @@ GARTYPE		=	v2
 DESCRIPTION = TeX Live
 define BLURB
   TeX Live is an easy way to get up and running with the TeX document
-  production system. It provides a comprehensive TeX system with binaries
-  for most flavors of Unix, including GNU/Linux, and also Windows. It includes
-  all the major TeX-related programs, macro packages, and fonts that are free
-  software, including support for many languages around the world. 
+  production system. It includes all the major TeX-related programs,
+  macro packages, and fonts that are free software, including support
+  for many languages around the world.
 endef
 
 VENDOR_URL		=	http://www.tug.org/texlive/
