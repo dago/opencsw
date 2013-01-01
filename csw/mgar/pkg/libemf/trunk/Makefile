@@ -39,6 +39,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:EXTRA_LINKER_FLAGS += -norunpath
 
 # 64 bit on Sparc is problematic as documented in include/libEMF/wine/winnt.h:
 #    * This structure is valid only for 32-bit SPARC architectures, not for 64-bit SPARC.
+SKIPTEST ?= 1
 BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
