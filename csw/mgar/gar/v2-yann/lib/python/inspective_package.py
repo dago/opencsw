@@ -294,8 +294,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
         stderr = re.sub(ignored_error_re, "", stderr)
         if stderr:
-          logging.error("%s returned one or more errors: %s", args, stderr)
-          continue
+          msg = "%s returned one or more errors: %s" % (args, stderr)
+          raise package.Error(msg)
       elfdump_out = stdout.splitlines()
 
       symbols = {}
@@ -382,7 +382,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
           ldd_output[binary] = []
           continue
 
-        logging.error("%s returned an error: %s", args, stderr)
+        raise package.Error("%s returned an error: %s" % (args, stderr))
 
       ldd_info = []
       for line in stdout.splitlines():
