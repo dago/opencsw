@@ -1,5 +1,5 @@
 NAME = libthai
-VERSION = 0.1.17
+VERSION = 0.1.18
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -40,4 +40,4 @@ CATALOGNAME_CSWlibthaidevel = libthai_devel_stub
 
 BUILD64_LIBS_ONLY = 1
 
-include gar/category.mk
+include
