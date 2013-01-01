@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.8.0
+VERSION = 1.8.1
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -248,5 +248,4 @@ post-install-modulated:
 	@( cd $(WORKSRC)/contrib/hooks; \
 		perl -pi -e 's!/usr/share/doc/git-core!/opt/csw/share/doc/git!' post-receive-email; \
 		ginstall -c -d -m 0755 $(CONTHOOKS); \
-		ginstall -c -m 0644 post-receive-email $(CONTHOOKS) )
-	@$(MAKECOOKIE)
+		ginstall -c -m 0644 post-receive-email $(CONTHOOKS)
