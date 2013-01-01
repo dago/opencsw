@@ -1,0 +1,25 @@
+From 46df47d212e10685fc2a9dc610ae3b9f74c18d44 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 1 Jan 2013 21:47:41 +0100
+Subject: [PATCH] Include ltdl.h for various defintions
+
+---
+ src/main/modules.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/main/modules.c b/src/main/modules.c
+index 378a0eb..2a907ef 100644
+--- a/src/main/modules.c
++++ b/src/main/modules.c
+@@ -25,6 +25,8 @@
+ #include <freeradius-devel/ident.h>
+ RCSID("$Id$")
+ 
++#include <ltdl.h>
++
+ #include <freeradius-devel/radiusd.h>
+ #include <freeradius-devel/modpriv.h>
+ #include <freeradius-devel/modcall.h>
+-- 
+1.8.0
+
