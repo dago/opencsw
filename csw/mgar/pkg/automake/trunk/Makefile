@@ -1,9 +1,9 @@
 NAME = automake
-VERSION = 1.12
+VERSION = 1.13.1
 GARTYPE = v2
 
 EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.5 1.12
+MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.6 1.12.6 1.13.1
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
@@ -19,12 +19,21 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES += ftp://alpha.gnu.org/gnu/automake/
 SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tar.gz)
+#SOURCEFILES += $(NAME)-$(VERSION).tar.xz
 DISTFILES = $(SOURCEFILES)
 POSTMSG = $(docdir)/automake/CSWautomake.postmsg
 DISTFILES += $(notdir $(POSTMSG))
 NOCHECKSUM = $(notdir $(POSTMSG))
 NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz, $(SOURCEFILES))
+
+# The testsuite explicitly calls gcc, as we compile with sun studio the linker flags
+# may be wrong and hence break tests. Do not pass compiler specific link flags for now.
+SOS12_LD_FLAGS =
+SOS12U1_LD_FLAGS =
+SOS12U2_LD_FLAGS =
+SOS12U3_LD_FLAGS =
 
 VENDOR_URL = http://www.gnu.org/software/automake/
 
@@ -34,11 +43,13 @@ RUNTIME_DEP_PKGS = CSWperl
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.10
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.11
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.12
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.13
 # These are just docs, override for now
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.9/py-compile
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.10/py-compile
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.11/py-compile
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.12/py-compile
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.13/py-compile
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.6/INSTALL
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.7/INSTALL
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.8/INSTALL
@@ -46,12 +57,14 @@ CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.10/INSTALL
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.11/INSTALL
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.12/INSTALL
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.13/INSTALL
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/info/automake.info-1
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/info/automake.info-1
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/info/automake.info-2
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.10/texinfo.tex
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.11/texinfo.tex
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.12/texinfo.tex
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.13/texinfo.tex
 
 # Lots of test fail on Solaris, but they are safe to ignore for now:
 #   <http://lists.gnu.org/archive/html/bug-automake/2009-07/msg00001.html>
@@ -73,11 +86,11 @@ SKIPTEST-1.9.6 ?= 1
 # There are 5 of 542 tests failed in 1.10.3
 SKIPTEST-1.10.3 ?= 1
 
-# There are 7 of 804 tests failed in 1.11.5
-SKIPTEST-1.11.5 ?= 1
+# There are 7 of 804 tests failed in 1.11.6
+SKIPTEST-1.11.6 ?= 1
 
 # There are 172 of 2968 tests failed in 1.12
-SKIPTEST-1.12 ?= 1
+# SKIPTEST-1.12 ?= 1
 
 SKIPTEST = $(SKIPTEST-$(VERSION))
 
@@ -91,13 +104,13 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.7.9 = $(bindir)/automake $(bindi
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.8.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.9.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.10.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.11.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.12 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.11.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.12.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 
 #     alternatives [options] --install link name path priority  [-
 #     -slave link name path]...  [--initscript service]
 
-ALTERNATIVES = 1.6 1.7 1.8 1.9 1.10 1.11 1.12
+ALTERNATIVES = 1.6 1.7 1.8 1.9 1.10 1.11 1.12 1.13
 ALTERNATIVE_1.6 = $(bindir)/automake automake $(bindir)/automake-1.6 60
 ALTERNATIVE_1.6 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.6
 ALTERNATIVE_1.7 = $(bindir)/automake automake $(bindir)/automake-1.7 70
@@ -112,6 +125,8 @@ ALTERNATIVE_1.11 = $(bindir)/automake automake $(bindir)/automake-1.11 110
 ALTERNATIVE_1.11 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.11
 ALTERNATIVE_1.12 = $(bindir)/automake automake $(bindir)/automake-1.12 120
 ALTERNATIVE_1.12 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.12
+ALTERNATIVE_1.13 = $(bindir)/automake automake $(bindir)/automake-1.13 130
+ALTERNATIVE_1.13 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.13
 
 include gar/category.mk
 
