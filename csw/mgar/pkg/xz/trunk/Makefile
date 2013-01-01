@@ -1,5 +1,5 @@
 NAME = xz
-VERSION = 5.0.3
+VERSION = 5.0.4
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -29,7 +29,8 @@ SPKG_DESC_CSWliblzma-dev = Development Files for liblzma.so.5
 PKGFILES_CSWliblzma-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWliblzma-dev += $(docdir)/xz/examples/.*
 PKGFILES_CSWliblzma-dev += $(docdir)/xz/.*-file-format.txt
-RUNTIME_DEP_PKGS_CSWliblzma-dev += CSWliblzma5
+RUNTIME_DEP_PKGS_CSWliblzma-dev += C = 1
+ISAEXEC
 
 BUILD64_LIBS_ONLY = 1
 
@@ -38,4 +39,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # but nonetheless SOS12 works fine
 CONFIGURE_ARGS += ac_cv_prog_cc_c99=
 
-include gar/category.mk
+inclu
