@@ -1,5 +1,5 @@
 NAME = fftw
-VERSION = 3.3
+VERSION = 3.3.3
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -90,4 +90,4 @@ MERGE_SCRIPTS_isa-default-longdouble-yes = copy-all
 MERGE_SCRIPTS_isa-extra-longdouble-yes = copy-relocate
 MERGE_DIRS_isa-extra-longdouble-yes = $(bindir) $(libdir)
 
-include gar/category.mk
+include
