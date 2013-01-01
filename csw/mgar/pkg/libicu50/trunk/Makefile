@@ -16,71 +16,65 @@ VENDOR_URL = http://icu-project.org/
 
 LICENSE = license.html
 
-PACKAGES += CSWlibicudata49
-SPKG_DESC_CSWlibicudata49 = International Components for Unicode, libicudata.so.49
-PKGFILES_CSWlibicudata49 += $(call pkgfiles_lib,libicudata.so.49)
+PACKAGES50
+SPKG_DESC_CSWlibicudata50 = International Components for Unicode, libicudata.so.50
+PKGFILES_CSWlibicudata50 += $(call pkgfiles_lib,libicudata.so.50)
 
-PACKAGES += CSWlibicui18n49
-SPKG_DESC_CSWlibicui18n49 = International Components for Unicode, libicui18n.so.49
-PKGFILES_CSWlibicui18n49 += $(call pkgfiles_lib,libicui18n.so.49)
-RUNTIME_DEP_PKGS_CSWlibicui18n49 += CSWlibicuuc49
-RUNTIME_DEP_PKGS_CSWlibicui18n49 += CSWlibicudata49
+PACKAGES += CSWlibicui18n50
+SPKG_DESC_CSWlibicui18n50 = International Components for Unicode, libicui18n.so.50
+PKGFILES_CSWlibicui18n50 += $(call pkgfiles_lib,libicui18n.so.50)
+RUNTIME_DEP_PKGS_CSWlibicui18n50 += CSWlibicuuc50
 
-PACKAGES += CSWlibicuio49
-SPKG_DESC_CSWlibicuio49 = International Components for Unicode, libicuio.so.49
-PKGFILES_CSWlibicuio49 += $(call pkgfiles_lib,libicuio.so.49)
-RUNTIME_DEP_PKGS_CSWlibicuio49 += CSWlibicudata49
-RUNTIME_DEP_PKGS_CSWlibicuio49 += CSWlibicui18n49
-RUNTIME_DEP_PKGS_CSWlibicuio49 += CSWlibicuuc49
+PACKAGES += CSWlibicuio50
+SPKG_DESC_CSWlibicuio50 = International Components for Unicode, libicuio.so.50
+PKGFILES_CSWlibicuio50 += $(call pkgfiles_lib,libicuio.so.50)
+RUNTIME_DEP_PKGS_CSWlibicuio50 += CSWlibicui18n50
+RUNTIME_DEP_PKGS_CSWlibicuio50 += CSWlibicuuc50
 
-PACKAGES += CSWlibicule49
-SPKG_DESC_CSWlibicule49 = International Components for Unicode, libicule.so.49
-PKGFILES_CSWlibicule49 += $(call pkgfiles_lib,libicule.so.49)
-RUNTIME_DEP_PKGS_CSWlibicule49 += CSWlibicuuc49
-RUNTIME_DEP_PKGS_CSWlibicule49 += CSWlibicudata49
+PACKAGES += CSWlibicule50
+SPKG_DESC_CSWlibicule50 = International Components for Unicode, libicule.so.50
+PKGFILES_CSWlibicule50 += $(call pkgfiles_lib,libicule.so.50)
+RUNTIME_DEP_PKGS_CSWlibicule50 += CSWlibicuuc50
 
-PACKAGES += CSWlibiculx49
-SPKG_DESC_CSWlibiculx49 = International Components for Unicode, libiculx.so.49
-PKGFILES_CSWlibiculx49 += $(call pkgfiles_lib,libiculx.so.49)
-RUNTIME_DEP_PKGS_CSWlibiculx49 += CSWlibicuuc49
-RUNTIME_DEP_PKGS_CSWlibiculx49 += CSWlibicudata49
-RUNTIME_DEP_PKGS_CSWlibiculx49 += CSWlibicule49
+PACKAGES += CSWlibiculx50
+SPKG_DESC_CSWlibiculx50 = International Components for Unicode, libiculx.so.50
+PKGFILES_CSWlibiculx50 += $(call pkgfiles_lib,libiculx.so.50)
+RUNTIME_DEP_PKGS_CSWlibiculx50 += CSWlibicuuc50
+RUNTIME_DEP_PKGS_CSWlibiculx50 += CSWlibicule50
 
-PACKAGES += CSWlibicutest49
-SPKG_DESC_CSWlibicutest49 = International Components for Unicode, libicutest.so.49
-PKGFILES_CSWlibicutest49 += $(call pkgfiles_lib,libicutest.so.49)
-RUNTIME_DEP_PKGS_CSWlibicutest49 += CSWlibicudata49
-RUNTIME_DEP_PKGS_CSWlibicutest49 += CSWlibicui18n49
-RUNTIME_DEP_PKGS_CSWlibicutest49 += CSWlibicutu49
-RUNTIME_DEP_PKGS_CSWlibicutest49 += CSWlibicuuc49
+PACKAGES += CSWlibicutest50
+SPKG_DESC_CSWlibicutest50 = International Components for Unicode, libicutest.so.50
+PKGFILES_CSWlibicutest50 += $(call pkgfiles_lib,libicutest.so.50)
+RUNTIME_DEP_PKGS_CSWlibicutest50 += CSWlibicutu50
+RUNTIME_DEP_PKGS_CSWlibicutest50 += CSWlibicuuc50
 
-PACKAGES += CSWlibicutu49
-SPKG_DESC_CSWlibicutu49 = International Components for Unicode, libicutu.so.49
-PKGFILES_CSWlibicutu49 += $(call pkgfiles_lib,libicutu.so.49)
-RUNTIME_DEP_PKGS_CSWlibicutu49 += CSWlibicuuc49
-RUNTIME_DEP_PKGS_CSWlibicutu49 += CSWlibicudata49
-RUNTIME_DEP_PKGS_CSWlibicutu49 += CSWlibicui18n49
+PACKAGES += CSWlibicutu50
+SPKG_DESC_CSWlibicutu50 = International Components for Unicode, libicutu.so.50
+PKGFILES_CSWlibicutu50 += $(call pkgfiles_lib,libicutu.so.50)
+RUNTIME_DEP_PKGS_CSWlibicutu50 += CSWlibicuuc50
+RUNTIME_DEP_PKGS_CSWlibicutu50 += CSWlibicui18n50
 
-PACKAGES += CSWlibicuuc49
-SPKG_DESC_CSWlibicuuc49 = International Components for Unicode, libicuuc.so.49
-PKGFILES_CSWlibicuuc49 += $(call pkgfiles_lib,libicuuc.so.49)
-RUNTIME_DEP_PKGS_CSWlibicuuc49 += CSWlibicudata49
+PACKAGES += CSWlibicuuc50
+SPKG_DESC_CSWlibicuuc50 = International Components for Unicode, libicuuc.so.50
+PKGFILES_CSWlibicuuc50 += $(call pkgfiles_lib,libicuuc.so.50)
+RUNTIME_DEP_PKGS_CSWlibicuuc50 += CSWlibicudata50= CSWlibicudata49
 
 PACKAGES += CSWlibicu-dev
-SPKG_DESC_CSWlibicu-dev = Development files for libicu.so.49
+SPKG_DESC_CSWlibicu-dev = Development fil50
 # This package is PKGFILES catchall
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicudata49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicui18n49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicuio49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicule49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibiculx49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicutest49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicutu49
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicuuc49
-OBSOLETED_BY_CSWlibicu-dev += CSWlibicu-devel
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicudata50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicui18n50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicuio50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicule50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibiculx50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicutest50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicutu50
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicuuc50
 
 DISTNAME = icu
 WORKSRC = $(WORKDIR)/$(DISTNAME)/source
+
+REINPLACE_USRLOCAL += config/icu-config-bottom(DISTNAME)/source
 
 # Using -I/opt/csw/include here puts it before the include of the newly built
 # software which breaks definitions, so make sure it is empty.
@@ -94,8 +88,4 @@ LINKER_FLAGS = -lCrun -lCstd -norunpath
 BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
-include gar/category.mk
-
-post-extract-modulated:
-	-perl -pi -e 's,/usr/local,$(prefix),' \
-		$(WORKSRC)/config/i
+include
