@@ -10,6 +10,7 @@ import common_constants
 import subprocess
 import ldd_emul
 import configuration as c
+import time
 
 """This file isolates code dependent on hachoir parser.
 
@@ -76,13 +77,30 @@ def GetFileMetadata(file_magic, base_dir, file_path):
             "Error in hachoir_parser processing %s: %r", file_path, e)
   return file_info
 
+class TimeoutExpired(Exception):
+    pass
 
-def ShellCommand(args, env=None):
+def ShellCommand(args, env=None, timeout=None):
   logging.debug("Running: %s", args)
   proc = subprocess.Popen(args,
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
                           env=env)
+  # Python 3.3 have the timeout option
+  # we have to roughly emulate it with python 2.x
+  if timeout:
+    max_time = time.time() + timeout
+    while True:
+      proc.poll()
+      if proc.returncode is None:
+        time.sleep(0.1)
+        if time.time() >= max_time:
+          proc.kill()
+          msg = "Process %s killed after timeout expiration" % args
+          raise TimeoutExpired(msg)
+      else:
+        break
+
   stdout, stderr = proc.communicate()
   retcode = proc.wait()
 
@@ -360,7 +378,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
       # ldd needs the binary to be executable
       os.chmod(binary_abspath, 0755)
       args = ["ldd", "-Ur", binary_abspath]
-      retcode, stdout, stderr = ShellCommand(args)
+      # ldd can be stuck while ran on a some binaries, so we define
+      # a timeout (problem encountered with uconv)
+      retcode, stdout, stderr = ShellCommand(args, timeout=10)
       if retcode:
         # There three cases where we will ignore an ldd error
         #  - if we are trying to analyze a 64 bits binary on a Solaris 9 x86
