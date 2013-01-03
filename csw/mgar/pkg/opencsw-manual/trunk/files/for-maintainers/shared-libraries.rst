@@ -146,9 +146,9 @@ Some packages (e.g. Kerberos libraries) put private shared libraries into
 binaries link to them.  Private shared libraries can be bundled with the main
 package, without splitting them off.
 
-================================================================================ ============
-file                                                                              linkable?
-================================================================================ ============
+================================================================================== ============
+file                                                                               linkable?
+================================================================================== ============
 ``/opt/csw/lib/libfoo.so.0.2``                                                     Yes
 ``/opt/csw/lib/sparcv9/libfoo.so.0.2``                                             Yes
 ``/opt/csw/lib/sparcv8plus+vis/libfoo.so.0.2``                                     Yes
@@ -160,7 +160,7 @@ file                                                                            
 ``/opt/csw/share/Adobe/Reader8/Reader/sparcsolaris/lib/libcrypto.so.0.9.6``        No
 ``/opt/csw/customprefix/lib/libfoo.so.0.2``                                        Yes
 ``/opt/csw/boost-gcc/lib/libboost_wserialization.so.1.44.0``                       Yes
-================================================================================ ============
+================================================================================== ============
 
 Example implementation and its unit tests can be found in checkpkg
 sources [#is-library-linkable-implementation]_ and corresponding unit
@@ -256,7 +256,7 @@ of a library:
   - ``CSWlibfoo`` (empty) → ``CSWlibfoo2`` (``libfoo.so.2``)
 
 Potential problems
-==================
+------------------
 
 Potential collisions in package naming would include ``libfoo.so.1`` and
 ``libfoo-1.so`` both resolving to ``CSWlibfoo1``.  If this case ever occurs,
@@ -269,7 +269,7 @@ libraries, roughly about 98% SONAMEs generate package names within
 limits.
 
 Footnotes
-=========
+---------
 
 .. [#discussion] `An idea for a shared libraries policy`_ -
    mailing list discussion
