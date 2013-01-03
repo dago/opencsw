@@ -5573,7 +5573,7 @@ REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/scripts/simpdftex/simpdftex
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/web2c/texmf.cnf
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/doc/generic/epsf/Makefile
 
-REINPLACE_WHEN_USRshare	=	postinstall
+REINPLACE_WHEN_USRSHARE	=	postinstall
 REINPLACE_USRSHARE		+=	/opt/csw/bin/luatex
 REINPLACE_USRSHARE		+=	/opt/csw/bin/pdftex
 REINPLACE_USRSHARE		+=	/opt/csw/bin/pdftosrc
