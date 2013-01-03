@@ -582,6 +582,7 @@ CHECKPKG_OVERRIDES_CSWtexlive-base	+=	file-with-bad-content|/usr/share|root/opt/
 CHECKPKG_OVERRIDES_CSWtexlive-base	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/metafont/misc/modes.mf
 CHECKPKG_OVERRIDES_CSWtexlive-base	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf/web2c/texmf.cnf
 CHECKPKG_OVERRIDES_CSWtexlive-base	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/web2c/texmf.cnf
+CHECKPKG_OVERRIDES_CSWtexlive-latex-base	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/tex/latex/base/texsys.cfg
 
 PACKAGES		 							+=	CSWtexlive-bibtex-extra
 CATALOGNAME_CSWtexlive-bibtex-extra			=	texlive_bibtex_extra
@@ -911,6 +912,11 @@ RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibxpm4
 CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/dvips
+# mime.types and mailcap file search path; as far as I searched, we
+# don't supply that kind of files in /opt/csw/etc:
+CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/local|root/opt/csw/bin/xdvi-xaw
+# only documentation section which can be easily deduced:
+CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/local|root/opt/csw/bin/mktexlsr
 
 PACKAGES 								+=	CSWtexlive-doc-base
 CATALOGNAME_CSWtexlive-doc-base			=	texlive_doc_base
@@ -4414,6 +4420,9 @@ RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibkpathsea6
 RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibgcc-s1
+# TODO hopefully this is innocuous; otherwise it needs a thoughtfully
+# exploration:
+CHECKPKG_OVERRIDES_CSWtexlive-luatex	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/luatex
 
 PACKAGES 							+=	CSWtexlive-math-extra
 CATALOGNAME_CSWtexlive-math-extra	=	texlive_math_extra
@@ -5454,14 +5463,6 @@ post-install-modulated:
 	$(MAKECOOKIE)
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
-# until finding a better way:
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/dvips
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/luatex
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/mktexlsr
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/pdftex
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/pdftosrc
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/xdvi-xaw
-REINPLACE_USRLOCAL		+=	/opt/csw/bin/xetex
 REINPLACE_USRLOCAL		+=	/opt/csw/include/kpathsea/types.h
 REINPLACE_USRLOCAL		+=	/opt/csw/share/info/kpathsea.info
 REINPLACE_USRLOCAL		+=	/opt/csw/share/info/web2c.info
@@ -5570,7 +5571,7 @@ REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/dvipdfm/config/config-win32
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/dvipdfmx/dvipdfmx.cfg
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/scripts/simpdftex/simpdftex
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/web2c/texmf.cnf
-REINPLACE_USRSHARE		+=	/opt/csw/share/texmf-dist/doc/generic/epsf/Makefile
+REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/doc/generic/epsf/Makefile
 
 REINPLACE_WHEN_USRshare	=	postinstall
 REINPLACE_USRSHARE		+=	/opt/csw/bin/luatex
