@@ -11,6 +11,7 @@ import subprocess
 import ldd_emul
 import configuration as c
 import time
+import signal
 
 """This file isolates code dependent on hachoir parser.
 
@@ -85,7 +86,8 @@ def ShellCommand(args, env=None, timeout=None):
   proc = subprocess.Popen(args,
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
-                          env=env)
+                          env=env,
+                          preexec_fn=os.setsid)
   # Python 3.3 have the timeout option
   # we have to roughly emulate it with python 2.x
   if timeout:
@@ -95,7 +97,9 @@ def ShellCommand(args, env=None, timeout=None):
       if proc.returncode is None:
         time.sleep(0.1)
         if time.time() >= max_time:
-          proc.kill()
+          # we will all processes from the same process group
+          # in case the process spawned some children
+          os.kill(-proc.pid, signal.SIGKILL)
           msg = "Process %s killed after timeout expiration" % args
           raise TimeoutExpired(msg)
       else:
