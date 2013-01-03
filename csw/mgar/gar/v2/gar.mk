@@ -427,7 +427,7 @@ $(foreach REINPLACEMENT,$(_ALL_REINPLACEMENTS),\
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
-extract: checksum $(COOKIEDIR) pre-extract $(if $(NOGITPATCH),,pre-extract-git-check) extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
+extract: checksum $(COOKIEDIR) $(if $(NOGITPATCH),,pre-extract-git-check) extract-modulated $(addprefix extract-,$(MODULATIONS))
 	@$(DONADA)
 
 extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
@@ -437,7 +437,7 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated \
+		$(if $(filter-out global,$(MODULATION)),pre-extract) pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated $(if $(filter-out global,$(MODULATION)),post-extract) \
 		$(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-extract-gitsnap)) \
 		$(foreach FILE,$(EXPANDVARS),expandvars-$(FILE)) \
 		$(foreach REINPLACEMENT,$(POSTEXTRACT_REINPLACEMENTS),\
@@ -509,10 +509,10 @@ checkpatch: extract
 # patch			- Apply any provided patches to the source.
 PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATION)))
 
-patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
+patch: $(addprefix patch-,$(MODULATIONS))
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-patch-gitsnap)) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-patch-gitsnap)) post-patch-$(MODULATION) post-patch-modulated post-patch
 	@$(DONADA)
 
 # returns true if patch has completed successfully, false
@@ -604,12 +604,12 @@ CONFIGURE_IMGDEPS = $(addprefix imgdep-,$(filter-out $(DESTIMG),$(IMGDEPS)))
 #CONFIGURE_BUILDDEPS = $(addprefix $(GARDIR)/,$(addsuffix /$(COOKIEROOTDIR)/build.d/install,$(BUILDDEPS)))
 endif
 
-configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
+configure: $(addprefix configure-,$(MODULATIONS))
 	@$(DONADA)
 
 configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
-		pre-configure-modulated pre-configure-$(MODULATION) $(CONFIGURE_TARGETS) post-configure-$(MODULATION) post-configure-modulated $(if $(STRIP_LIBTOOL),strip-libtool)
+		pre-configure pre-configure-modulated pre-configure-$(MODULATION) $(CONFIGURE_TARGETS) post-configure-$(MODULATION) post-configure-modulated post-configure $(if $(STRIP_LIBTOOL),strip-libtool)
 	@$(DONADA)
 
 strip-libtool:
@@ -625,7 +625,7 @@ reset-configure: $(addprefix reset-configure-,$(MODULATIONS))
 	@rm -f $(COOKIEDIR)/configure
 
 reset-configure-modulated:
-	@rm -f $(foreach C,pre-configure-modulated configure-modulated post-configure-modulated,$(COOKIEDIR)/$C)
+	@rm -f $(foreach C,pre-configure pre-configure-modulated configure-modulated post-configure-modulated post-configure,$(COOKIEDIR)/$C)
 	@rm -f $(COOKIEDIR)/pre-configure-$(MODULATION) $(COOKIEDIR)/post-configure-$(MODULATION)
 	@rm -f $(addprefix $(COOKIEDIR)/,$(CONFIGURE_TARGETS))
 
@@ -637,7 +637,7 @@ configure-p:
 # build			- Actually compile the sources.
 BUILD_TARGETS = $(addprefix build-,$(BUILD_CHECK_SCRIPTS)) $(addprefix build-,$(BUILD_SCRIPTS))
 
-build: pre-build $(addprefix build-,$(MODULATIONS)) post-build
+build: $(addprefix build-,$(MODULATIONS))
 	$(DONADA)
 
 # Build for a specific architecture
@@ -646,7 +646,7 @@ build-modulated-check:
 		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
 	)
 
-build-modulated: verify-isa configure-modulated pre-build-modulated pre-build-$(MODULATION) $(BUILD_TARGETS) post-build-$(MODULATION) post-build-modulated
+build-modulated: verify-isa configure-modulated pre-build pre-build-modulated pre-build-$(MODULATION) $(BUILD_TARGETS) post-build-$(MODULATION) post-build-modulated post-build
 	@$(MAKECOOKIE)
 
 .PHONY: reset-build reset-build-modulated
@@ -655,9 +655,8 @@ rebuild: reset-build build
 reset-build: $(addprefix reset-build-,$(MODULATIONS))
 	rm -f $(COOKIEDIR)/build
 
-# XXX: pre-*, post-*
 reset-build-modulated: $(patsubst build-%,clean-%,$(BUILD_TARGETS))
-	rm -f $(addprefix $(COOKIEDIR)/,pre-build-modulated $(BUILD_TAGRETS) post-build-modulated))
+	rm -f $(addprefix $(COOKIEDIR)/,pre-build pre-build-modulated $(BUILD_TAGRETS) post-build-modulated post-build))
 
 # returns true if build has completed successfully, false
 # otherwise
@@ -666,10 +665,10 @@ build-p:
 
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
 
-test: pre-test $(addprefix test-,$(MODULATIONS)) post-test
+test: $(addprefix test-,$(MODULATIONS))
 	$(DONADA)
 
-test-modulated: build-modulated pre-test-modulated pre-test-$(MODULATION) $(TEST_TARGETS) post-test-$(MODULATION) post-test-modulated
+test-modulated: build-modulated pre-test pre-test-modulated pre-test-$(MODULATION) $(TEST_TARGETS) post-test-$(MODULATION) post-test-modulated post-test
 	$(DONADA)
 
 # XXX: retest
@@ -703,13 +702,13 @@ fixconfig:
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS))
 
-install: pre-install $(addprefix install-,$(MODULATIONS)) post-install
+install: $(addprefix install-,$(MODULATIONS))
 	$(DONADA)
 
 install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) \
-		pre-install-modulated pre-install-$(MODULATION) \
+		pre-install pre-install-modulated pre-install-$(MODULATION) \
 		$(INSTALL_TARGETS) \
-		post-install-$(MODULATION) post-install-modulated \
+		post-install-$(MODULATION) post-install-modulated post-install \
 		$(POST_INSTALL_TARGETS) \
 		$(foreach REINPLACEMENT,$(POSTINSTALL_REINPLACEMENTS),\
 		  post-install-reinplace-$(REINPLACEMENT) \
@@ -740,7 +739,7 @@ reset-install: reset-merge $(addprefix reset-install-,$(MODULATIONS))
 reset-install-modulated:
 	@$(call _pmod,Reset install state)
 	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/install-work
-	@rm -f $(foreach C,pre-install-modulated install-modulated post-install-modulated,$(COOKIEDIR)/$C)
+	@rm -f $(foreach C,pre-install pre-install-modulated install-modulated post-install-modulated post-install,$(COOKIEDIR)/$C)
 	@rm -f $(COOKIEDIR)/pre-install-$(MODULATION) $(COOKIEDIR)/post-install-$(MODULATION)
 	@rm -f $(COOKIEDIR)/strip
 	@rm -f $(foreach S,$(INSTALL_TARGETS),$(COOKIEDIR)/$S)
@@ -877,7 +876,7 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) merge-distfile-README.CSW merge-distfile-changelog.CSW merge-obsolete $(if $(AP2_MODS),post-merge-ap2mod) $(if $(PHP5_EXT),post-merge-php5ext) post-merge
+merge: checksum merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) merge-distfile-README.CSW merge-distfile-changelog.CSW merge-obsolete $(if $(AP2_MODS),post-merge-ap2mod) $(if $(PHP5_EXT),post-merge-php5ext)
 	@banner merge
 	@$(MAKECOOKIE)
 
@@ -919,7 +918,7 @@ post-merge-php5ext:
 	@$(MAKECOOKIE)
 
 # This merges the 
-merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
+merge-modulated: install-modulated pre-merge pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated post-merge
 	@$(MAKECOOKIE)
 
 # Copy the whole tree verbatim
@@ -967,13 +966,12 @@ merge-copy-config-only:
 remerge: reset-merge merge
 
 reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-distfile-README.CSW reset-merge-distfile-changelog.CSW reset-merge-obsolete reset-merge-ap2mod reset-merge-php5ext reset-merge-src
-	rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
+	rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
 	rm -rf $(PKGROOT)
 
 reset-merge-modulated:
 	@$(call _pmod,Reset merge state)
-	echo rm -f $(COOKIEDIR)/merge-*
-	rm -f $(COOKIEDIR)/merge-*
+	rm -f $(COOKIEDIR)/pre-merge-* $(COOKIEDIR)/merge-* $(COOKIEDIR)/post-merge-*
 
 # The clean rule.  It must be run if you want to re-download a
 # file after a successful checksum (or just remove the checksum
