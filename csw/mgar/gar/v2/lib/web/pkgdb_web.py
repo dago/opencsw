@@ -310,7 +310,10 @@ class PkgnameByFilename(object):
 class PkgnamesAndPathsByBasename(object):
   def GET(self, catrel, arch, osrel):
     user_data = web.input()
-    basename = user_data.basename
+    try:
+      basename = user_data.basename
+    except AttributeError, e:
+      raise web.badrequest()
     send_filename = (
         '%s-%s-%s-%s-packages.txt'
         % (catrel, arch, osrel, basename.replace('/', '-')))
