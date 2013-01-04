@@ -1,0 +1,25 @@
+From a5db4719510bb6181bfb1d95b19eb024c8957657 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 16 Nov 2011 11:08:52 +0100
+Subject: [PATCH] Use PY_CPPFLAGS in Modules/makesetup
+
+---
+ Modules/makesetup |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Modules/makesetup b/Modules/makesetup
+index 126ea12..735069e 100755
+--- a/Modules/makesetup
++++ b/Modules/makesetup
+@@ -221,7 +221,7 @@ sed -e 's/[ 	]*#.*//' -e '/^[ 	]*$/d' |
+                 *bsddb.*)
+                     cc="$cc -I\$(DBINC) \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
+                 *) 
+-                    cc="$cc  \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++                    cc="$cc  \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS) \$(PY_CPPFLAGS)";;
+                 esac;;
+ 			*)
+ 				cc="$cc \$(PY_CORE_CFLAGS)";;
+-- 
+1.7.6.1
+
