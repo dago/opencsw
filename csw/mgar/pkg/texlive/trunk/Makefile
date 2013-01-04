@@ -444,6 +444,18 @@ CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/op
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/latex/turnthepage/Makefile
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/scripts/bundledoc/arlatex
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/scripts/fragmaster/fragmaster.pl
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/chkweb.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/chktex.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/man/man1/chkweb.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/man/man1/chktex.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/man/man1/purifyeps.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/man/man1/pdfjam.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/man/man1/arlatex.1
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/info/eplain.info
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf/doc/info/dvips.info
+# this is needed even though is mentioned in the corresponding reinplace rule:
+CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/scripts/purifyeps/purifyeps
+
 # I don't know what to do with this:
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/scripts/latexmk/latexmk.pl
 
@@ -909,8 +921,6 @@ RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWtexlive-base
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibpng15-15
-RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibxpm4
 CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/dvips
 # mime.types and mailcap file search path; as far as I searched, we
 # don't supply that kind of files in /opt/csw/etc:
@@ -4415,11 +4425,6 @@ PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/lualatex/luainputen
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/luatex/luamplib/.*
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/luatex/luaotfload/.*
 RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWtexlive-common
-RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibpng15-15
-RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibz1
-RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibkpathsea6
-RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibgcc-s1
 # TODO hopefully this is innocuous; otherwise it needs a thoughtfully
 # exploration:
 CHECKPKG_OVERRIDES_CSWtexlive-luatex	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/luatex
