@@ -10,7 +10,7 @@ import time
 import system_pkgmap
 
 CONFIG_DB_SCHEMA = "db_schema_version"
-DB_SCHEMA_VERSION = 7L
+DB_SCHEMA_VERSION = 8L
 TABLES_THAT_NEED_UPDATES = (m.CswFile,)
 TABLES = TABLES_THAT_NEED_UPDATES + (
             m.Architecture,
@@ -159,7 +159,7 @@ class CheckpkgDatabaseMixin(object):
       except sqlobject.dberrors.OperationalError, e:
         logging.error("Could not create table %r: %s", table, e)
         raise
-        
+
 
   def InitialDataImport(self):
     """Imports initial data into the db.

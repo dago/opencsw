@@ -81,6 +81,9 @@ def GetFileMetadata(file_magic, base_dir, file_path):
 class TimeoutExpired(Exception):
     pass
 
+def TimeoutHandler(signum, frame):
+  raise TimeoutExpired
+
 def ShellCommand(args, env=None, timeout=None):
   logging.debug("Running: %s", args)
   proc = subprocess.Popen(args,
@@ -91,23 +94,18 @@ def ShellCommand(args, env=None, timeout=None):
   # Python 3.3 have the timeout option
   # we have to roughly emulate it with python 2.x
   if timeout:
-    max_time = time.time() + timeout
-    while True:
-      proc.poll()
-      if proc.returncode is None:
-        time.sleep(0.1)
-        if time.time() >= max_time:
-          # we will all processes from the same process group
-          # in case the process spawned some children
-          os.kill(-proc.pid, signal.SIGKILL)
-          msg = "Process %s killed after timeout expiration" % args
-          raise TimeoutExpired(msg)
-      else:
-        break
+    signal.signal(signal.SIGALRM, TimeoutHandler)
+    signal.alarm(timeout)
 
-  stdout, stderr = proc.communicate()
+  try:
+    stdout, stderr = proc.communicate()
+    signal.alarm(0)
+  except TimeoutExpired:
+    os.kill(-proc.pid, signal.SIGKILL)
+    msg = "Process %s killed after timeout expiration" % args
+    raise TimeoutExpired(msg)
+
   retcode = proc.wait()
-
   return retcode, stdout, stderr
 
 
