@@ -26,9 +26,8 @@ SKIP_MODULATIONS-5.9 += isa-amd64-longdouble-no isa-amd64-longdouble-yes
 # Solaris 9 does not have long double support at all
 SKIP_MODULATIONS-5.9 += isa-sparcv8-longdouble-yes isa-sparcv9-longdouble-yes
 SKIP_MODULATIONS-5.9 += isa-i386-longdouble-yes isa-amd64-longdouble-no isa-amd64-longdouble-yes
-SKIP_MODULATIONS = $(SKIP_MODULATIONS-$(GAROSREL))
-
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+SKIP_MODULATIONS = $(SKIP_MODULATIO#PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+#rc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PACKAGES += CSWlibfftw3-3
