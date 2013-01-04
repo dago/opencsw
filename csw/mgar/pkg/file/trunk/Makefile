@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.11
+VERSION = 5.12
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -25,17 +25,14 @@ SPKG_DESC_CSWgfile = A file type guesser
 PKGFILES_CSWgfile += $(call baseisadirs,$(bindir),gfile)
 PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
 PKGFILES_CSWgfile += $(prefix)/gnu/file
-RUNTIME_DEP_PKGS_CSWgfile += CSWlibmagic1
-# EXTRA_MERGE_EXCLUDE_FILES = .*\.py[oc]
+RUNTIME_DEP_PKGS_CSWgfiFILES = .*\.py[oc]
 
 PACKAGES += CSWpy-libmagic
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
-RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
-# libmagic1 is dlopened
-CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWpy-libmagdency|CSWlibmagic1
 
 PACKAGES += CSWlibmagic-data
 SPKG_DESC_CSWlibmagic-data = Database for libmagic
@@ -75,15 +72,11 @@ BUILD64_LIBS_ONLY = 1
 
 PYCOMPILE = 1
 
-include gar/category.mk
-
-post-build-modulated:
+include gar/cateost-build-modulated:
 	# This fails for a mysterious reason.  Can't find libmagic (-lmagic).
 	(cd $(WORKSRC)/python && python setup.py build --compiler=unix)
 	###(cd $(WORKSRC)/python && python setup.py build)
-	@$(MAKECOOKIE)
-
-post-install-modulated:
+	@$(MAKECOt-install-modulated:
 	(cd $(WORKSRC)/python && \
 		$(BUILD_ENV) python setup.py install --root=$(DESTDIR) --prefix=$(prefix))
 	(cd $(DESTDIR) && \
@@ -100,5 +93,4 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge:
-	$(FILEDIR)/check_pkgroot.sh "$(PKGROOT)"
-	@$(MAKECOOKIE)
+	$(FILEDIR)/check_pkgroot.sh "$(PKGROOT
