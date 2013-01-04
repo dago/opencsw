@@ -42,6 +42,8 @@ class Error(Exception):
 class PackageError(Error):
   pass
 
+class StdoutSyntaxError(Error):
+  pass
 
 class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
@@ -277,7 +279,7 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
       basedir = pkginfo[basedir_id]
     else:
       basedir = ""
-    # The convention in checkpkg is to not include the leading slash in paths. 
+    # The convention in checkpkg is to not include the leading slash in paths.
     basedir = basedir.lstrip("/")
     return basedir
 

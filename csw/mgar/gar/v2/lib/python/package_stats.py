@@ -208,6 +208,8 @@ class PackageStatsMixin(object):
         "basic_stats": basic_stats,
         "files_metadata": dir_pkg.GetFilesMetadata(),
         "mtime": self.GetMtime(),
+	"ldd_info": dir_pkg.GetLddMinusRlines(),
+	"binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
     self.SaveStats(pkg_stats)
     logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
@@ -379,7 +381,12 @@ class PackageStatsMixin(object):
         line_u = pkgmap_entry["line"].decode("latin1")
         f_path, basename = os.path.split(
             pkgmap_entry["path"].decode('latin1'))
+      except UnicodeEncodeError, e:
+        # the line was already in unicode
+        line_u = pkgmap_entry['line']
+        f_path, basename = os.path.split(pkgmap_entry["path"])
         # If this fails too, code change will be needed.
+
       f = m.CswFile(
           basename=basename,
           path=f_path,
