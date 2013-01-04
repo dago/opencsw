@@ -84,7 +84,7 @@ CATALOGS_ALLOWED_TO_GENERATE = frozenset([
   "bratislava",
 ])
 CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
-  "unstable",
+  "current",
 ])
 
 
