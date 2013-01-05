@@ -87,7 +87,7 @@ class DatabaseManager(object):
             "the application expects: %s. "
             % (ldm.GetDatabaseSchemaVersion(), DB_SCHEMA_VERSION))
         if DB_SCHEMA_VERSION < ldm.GetDatabaseSchemaVersion():
-          msg += "Make sure your application sources are up to date."
+          msg += "When did you last run 'mgar up --all'?."
         elif DB_SCHEMA_VERSION > ldm.GetDatabaseSchemaVersion():
           msg += ("Make sure your database is up to date.  "
                   "Re-create it if necessary.")
