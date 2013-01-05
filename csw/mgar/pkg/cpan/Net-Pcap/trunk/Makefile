@@ -1,23 +1,27 @@
 NAME = Net-Pcap
-VERSION = 0.16
+VERSION = 0.17
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = SAPER
 
 DESCRIPTION = Interface to pcap(3) LBL packet capture library
 define BLURB
-  Net::Pcap is a Perl binding to the LBL pcap(3) library. 
-  The README for libpcap describes itself as:
+Net::Pcap is a Perl binding to the LBL pcap(3) library and its Win32
+counterpart, the WinPcap library. Pcap (packet capture) is a portable API to
+capture network packet: it allows applications to capture packets at
+link-layer, bypassing the normal protocol stack. It also provides
+features like kernel-level packet filtering and access to internal
+statistics.
 endef
 
-PACKAGES = CSWpmnetpcap
-CATALOGNAME = pm_netpcap
+LICENSE_TEXT = This module is licensed under the perl license
 
-# add a proper license
- LICENSE = $(FILEDIR)/LICENSE
+PACKAGES += CSWpm-net-pcap
+CATALOGNAME_CSWpm-net-pcap = pm_net_pcap
+SPKG_DESC_CSWpm-net-pcap = Interface to pcap(3) LBL packet capture library
+OBSOLETED_BY_CSWpm-net-pcap += CSWpmnetpcap
+CATALOGNAME_CSWpmnetpcap = pm_netpcap_stub
 
-# depends
-RUNTIME_DEP_PKGS     = CSWlibpcap
-BUILD_DEP_PKGS       = $(RUNTIME_DEP_PKGS) CSWlibpcapdevel
+RUNTIME_DEP_PKGS_CSWpm-net-pcap += CSWlibpcap1
 
 include gar/category.mk
