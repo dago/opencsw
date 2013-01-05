@@ -21,6 +21,8 @@ DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += fusioninventory-agent.cron
 DISTFILES += fusioninventory-agent.default
 
+UPSTREAM_MASTER_SITES = http://forge.fusioninventory.org/projects/fusioninventory-agent/files
+
 LICENSE = LICENSE
 
 PACKAGES = CSWfusioninventory-agent
