@@ -4,14 +4,17 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = UMEMOTO
 
-DESCRIPTION = IPv6 related part of the C socket.h defines and structure manipulators
+DESCRIPTION = Getaddrinfo/getnameinfo support module
 define BLURB
-  This module provides glue routines to the various IPv6 functions.
-  If you use the Socket6 module, be sure to specify "use Socket" as well  
-  as "use Socket6".
+This module provides glue routines to the various IPv6 functions.
 endef
 
-PACKAGES = CSWpmsocket6
-CATALOGNAME = pm_socket6
+LICENSE_TEXT = The license for this package is unknown
+
+PACKAGES += CSWpm-socket6
+CATALOGNAME_CSWpm-socket6 = pm_socket6
+SPKG_DESC_CSWpm-socket6 = Getaddrinfo/getnameinfo support module
+OBSOLETED_BY_CSWpm-socket6 += CSWpmsocket6
+CATALOGNAME_CSWpmsocket6 = pm_socket6_stub
 
 include gar/category.mk
