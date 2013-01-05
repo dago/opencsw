@@ -42,6 +42,8 @@ class Error(Exception):
 class PackageError(Error):
   pass
 
+class StdoutSyntaxError(Error):
+  pass
 
 class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
