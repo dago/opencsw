@@ -47,17 +47,6 @@ pkgstats = [{'bad_paths': {},
                         'sparcv9',
                         'sparcv9+vis',
                         'sparcv9+vis2']),
-  'ldd_info': {'opt/csw/bin/tree': [] },
-  'binaries_elf_info': { 'opt/csw/bin/tree': { 'version definition': [], 
-	                                       'version needed': [], 
-			 		       'symbol table': [ { 'flags': 'DBL', 
-					 	                   'soname': 'libc.so.1', 
-							  	   'symbol': 'environ',
-								   'shndx': 'UNDEF',
-								   'version': None 
-								  } ] 
-					      }
-			      },
   'mtime': datetime.datetime(2010, 7, 5, 23, 48, 10),
   'overrides': [],
   'pkgchk': {'return_code': 0,

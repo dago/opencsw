@@ -56,21 +56,6 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
-  'ldd_info': {'opt/csw/bin/comdraw': [],
-	       'opt/csw/lib/libComUnidraw.so.1.1.3': []},
-  'binaries_elf_info': {'opt/csw/bin/comdraw': { 
-	  		  'version definition': [],
-			  'version needed' : [],
-			  'symbol table': [
-	                       { 'soname': 'libComUnidraw.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' } ,
-			       ],
-		           },
-	                'opt/csw/lib/libComUnidraw.so.1.1.3': {
-	  		  'version definition': [],
-			  'version needed' : [],
-			  'symbol table': []
-			  }
-			},
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',

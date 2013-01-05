@@ -10,8 +10,6 @@ import common_constants
 import subprocess
 import ldd_emul
 import configuration as c
-import time
-import signal
 
 """This file isolates code dependent on hachoir parser.
 
@@ -37,7 +35,7 @@ def GetFileMetadata(file_magic, base_dir, file_path):
     return {}
   file_info = {
       "path": StripRe(file_path, ROOT_RE),
-      "mime_type": file_magic.GetFileMimeType(full_path),
+      "mime_type": file_magic.GetFileMimeType(full_path)
   }
   if base_dir:
     file_info["path"] = os.path.join(base_dir, file_info["path"])
@@ -77,36 +75,6 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         logging.warning(
             "Error in hachoir_parser processing %s: %r", file_path, e)
   return file_info
-
-class TimeoutExpired(Exception):
-    pass
-
-def TimeoutHandler(signum, frame):
-  raise TimeoutExpired
-
-def ShellCommand(args, env=None, timeout=None):
-  logging.debug("Running: %s", args)
-  proc = subprocess.Popen(args,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
-                          env=env,
-                          preexec_fn=os.setsid)
-  # Python 3.3 have the timeout option
-  # we have to roughly emulate it with python 2.x
-  if timeout:
-    signal.signal(signal.SIGALRM, TimeoutHandler)
-    signal.alarm(timeout)
-
-  try:
-    stdout, stderr = proc.communicate()
-    signal.alarm(0)
-  except TimeoutExpired:
-    os.kill(-proc.pid, signal.SIGKILL)
-    msg = "Process %s killed after timeout expiration" % args
-    raise TimeoutExpired(msg)
-
-  retcode = proc.wait()
-  return retcode, stdout, stderr
 
 
 class InspectivePackage(package.DirectoryFormatPackage):
@@ -192,8 +160,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     return os.path.exists(os.path.join(self.directory, "reloc"))
 
   def GetFilesDir(self):
-    """Returns the subdirectory in which files are,
-       either "reloc" or "root"."""
+    """Returns the subdirectory in which files, are either "reloc" or "root"."""
     if self.RelocPresent():
       return "reloc"
     else:
@@ -214,11 +181,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
       if basedir:
         binary_in_tmp_dir = binary_in_tmp_dir[len(basedir):]
         binary_in_tmp_dir = binary_in_tmp_dir.lstrip("/")
-      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(),
-                                     binary_in_tmp_dir)
+      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary_in_tmp_dir)
       binary_base_name = os.path.basename(binary_in_tmp_dir)
       args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
-      retcode, stdout, stderr = ShellCommand(args, env)
+      logging.debug("Running: %s", args)
+      dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
+      stdout, stderr = dump_proc.communicate()
+      ret = dump_proc.wait()
       binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
       if basedir:
@@ -242,7 +211,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
     defined_symbols = {}
 
     for binary in binaries:
-      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
+      binary_abspath = os.path.join(self.directory, "root", binary)
       # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
       args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
       nm_proc = subprocess.Popen(
@@ -267,268 +236,41 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
     return defined_symbols
 
-  def GetBinaryElfInfo(self):
-    """Returns various informations symbol and versions present in elf header
-
-    To do this we parse output lines from elfdump -syv, it's the
-    only command that will give us all informations we need on
-    symbols and versions.
-
-    We will analyse 3 sections:
-     - version section: contains soname needed, version interface required
-                        for each soname, and version definition
-     - symbol table section: contains list of symbol and soname/version
-                             interface providing it
-     - syminfo section: contains special linking flags for each symbol
-    """
-    binaries = self.ListBinaries()
-    binaries_elf_info = {}
-
-    for binary in binaries:
-      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
-      # elfdump is the only tool that give us all informations
-      args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
-      retcode, stdout, stderr = ShellCommand(args)
-      if retcode or stderr:
-        # we ignore for now these elfdump errors which can be catched
-        # later by check functions,
-        ignored_error_re = re.compile(
-          r"""[^:]+:(\s\.((SUNW_l)?dynsym|symtab):\s
-           (index\[\d+\]:\s
-            (suspicious\s(local|global)\ssymbol\sentry:\s[^:]+:\slies
-             \swithin\s(local|global)\ssymbol\srange\s\(index\s[<>=]+\s\d+\)
-
-            |bad\ssymbol\sentry:\s[^:]+:\ssection\[\d+\]\ssize:\s0(x[0-9a-f]+)?
-             :\ssymbol\s\(address\s0x[0-9a-f]+,\ssize\s0x[0-9a-f]+\)
-             \slies\soutside\sof\scontaining\ssection
-
-            |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+)
-
-           |invalid\ssh_link:\s0)
-
-           |\smemory\soverlap\sbetween\ssection\[\d+\]:\s[^:]+:\s
-            [0-9a-f]+:[0-9a-f]+\sand\ssection\[\d+\]:\s[^:]+:
-            \s[0-9a-f]+:[0-9a-f]+)
-           \n""",
-          re.VERBOSE)
-
-        stderr = re.sub(ignored_error_re, "", stderr)
-        if stderr:
-          msg = "%s returned one or more errors: %s" % (args, stderr)
-          raise package.Error(msg)
-      elfdump_out = stdout.splitlines()
-
-      symbols = {}
-      binary_info = {'version definition': [],
-                     'version needed': []}
-
-      cur_section = None
-      for line in elfdump_out:
-
-        elf_info, cur_section = self._ParseElfdumpLine(line, cur_section)
-
-        # header or blank line contains no information
-        if not elf_info:
-          continue
-
-        # symbol table and syminfo section store various informations
-        # about the same symbols, so we merge them in a dict
-        if cur_section in ('symbol table', 'syminfo'):
-          symbols.setdefault(elf_info['symbol'], {}).update(elf_info)
-        else:
-          binary_info[cur_section].append(elf_info)
-
-      # elfdump doesn't repeat the name of the soname in the version section
-      # if it's the same on two contiguous line, e.g.:
-      #         libc.so.1            SUNW_1.1
-      #                              SUNWprivate_1.1
-      # so we have to make sure the information is present in each entry
-      for i, version in enumerate(binary_info['version needed'][1:]):
-        if not version['soname']:
-          version['soname'] = binary_info['version needed'][i]['soname']
-
-      # soname version needed are usually displayed sorted by index ...
-      # but that's not always the case :( so we have to reorder
-      # the list by index if they are present
-      if any ( v['index'] for v in binary_info['version needed'] ):
-        binary_info['version needed'].sort(key=lambda m: int(m['index']))
-        for version in binary_info['version needed']:
-          del version['index']
-
-      # if it exists, the first "version definition" entry is the base soname
-      # we don't need this information
-      if binary_info['version definition']:
-        binary_info['version definition'].pop(0)
-
-      binary_info['symbol table'] = symbols.values()
-      binary_info['symbol table'].sort(key=lambda m: m['symbol'])
-      # To not rely of the section order output of elfdump, we resolve
-      # symbol version informations here after having parsed all output
-      self._ResolveSymbolsVersionInfo(binary_info)
-
-      binaries_elf_info[binary] = binary_info
-
-    return binaries_elf_info
-
   def GetLddMinusRlines(self):
     """Returns ldd -r output."""
-    binaries = self.ListBinaries()
+    dir_pkg = self.GetInspectivePkg()
+    binaries = dir_pkg.ListBinaries()
     ldd_output = {}
     for binary in binaries:
-      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
+      binary_abspath = os.path.join(dir_pkg.directory, "root", binary)
       # this could be potentially moved into the DirectoryFormatPackage class.
       # ldd needs the binary to be executable
       os.chmod(binary_abspath, 0755)
-      args = ["ldd", "-Ur", binary_abspath]
-      # ldd can be stuck while ran on a some binaries, so we define
-      # a timeout (problem encountered with uconv)
-      retcode, stdout, stderr = ShellCommand(args, timeout=10)
+      args = ["ldd", "-r", binary_abspath]
+      ldd_proc = subprocess.Popen(
+          args,
+          stdout=subprocess.PIPE,
+          stderr=subprocess.PIPE)
+      stdout, stderr = ldd_proc.communicate()
+      retcode = ldd_proc.wait()
       if retcode:
-        # There three cases where we will ignore an ldd error
-        #  - if we are trying to analyze a 64 bits binary on a Solaris 9 x86
-        #    solaris 9 exists only in 32 bits, so we can't do this
-        #    We ignore the error as it is likely that the ldd infos will be
-        #    the same on the 32 bits binaries
-        #  - if we are trying to analyze a binary from another architecture
-        #    we ignore this error as it will be caught by another checkpkg test
-        #  - if we are trying to analyze a statically linked binaries
-        #    we care only about dynamic binary so we ignore the error
-        #
-        uname_info = os.uname()
-        if ((uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
-             '/amd64/' in binary_abspath and
-             'has wrong class or data encoding' in stderr) or
-            re.search(r'ELF machine type: EM_\w+: '
-                      r'is incompatible with system', stderr)
-            or 'file is not a dynamic executable or shared object' in stderr):
-          ldd_output[binary] = []
-          continue
-
-        raise package.Error("%s returned an error: %s" % (args, stderr))
-
+        logging.error("%s returned an error: %s", args, stderr)
       ldd_info = []
       for line in stdout.splitlines():
-        result = self._ParseLddDashRline(line, binary_abspath)
-        if result:
-          ldd_info.append(result)
-        ldd_output[binary] = ldd_info
-
+        ldd_info.append(self._ParseLddDashRline(line))
+      ldd_output[binary] = ldd_info
     return ldd_output
 
   def _ParseNmSymLine(self, line):
-    re_defined_symbol = re.compile('[0-9]+ [ABDFNSTU] \S+')
+    re_defined_symbol =  re.compile('[0-9]+ [ABDFNSTU] \S+')
     m = re_defined_symbol.match(line)
     if not m:
       return None
     fields = line.split()
-    sym = {'address': fields[0], 'type': fields[1], 'name': fields[2]}
+    sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
     return sym
 
-  def _ResolveSymbolsVersionInfo(self, binary_info):
-
-    version_info = (binary_info['version definition']
-                    + binary_info['version needed'])
-
-    for sym_info in binary_info['symbol table']:
-      # sym_info version field is an 1-based index on the version
-      # information table
-      # we don't care about 0 and 1 values:
-      #  0 is for external symbol with no version information available
-      #  1 is for a symbol defined by the binary and not binded
-      #    to a version interface
-      version_index = int(sym_info['version']) - 2
-      if version_index >= 0:
-        version = version_info[version_index]
-        sym_info['version'] = version['version']
-        if 'soname' in version:
-          sym_info['soname'] = version['soname']
-      else:
-        sym_info['version'] = None
-
-      # we make sure these fields are present
-      # even if the syminfo section is not
-      sym_info.setdefault('soname')
-      sym_info.setdefault('flags')
-
-  def _ParseElfdumpLine(self, line, section=None):
-
-    headers_re = (
-      r"""
-       (?P<section>Version\sNeeded|Symbol\sTable  # Section header
-                  |Version\sDefinition|Syminfo)
-                   \sSection:
-        \s+(?:\.SUNW_version|\.gnu\.version_[rd]
-            |\.dynsym|\.SUNW_syminfo|.symtab)\s*$
-
-       |\s*(?:index\s+)?version\s+dependency\s*$  # Version needed header
-
-       |\s*(?:index\s+)?file\s+version\s*$        # Version definition header
-
-       |\s*index\s*value\s+size\s+type\s+bind     # Symbol table header
-        \s+oth\s+ver\s+shndx\s+name\s*$
-
-       |\s*index\s+flags\s+bound\sto\s+symbol\s*$ # Syminfo header
-
-       |\s*$                                      # There is always a blank
-                                                  # line before a new section
-       """)
-
-    re_by_section = {
-      'version definition': (r"""
-        \s*(?:\[\d+\]\s+)?                # index: might be not present if no
-                                          #        version binding is enabled
-        (?P<version>\S+)                  # version
-        (?:\s+(?P<dependency>\S+))?       # dependency
-        (?:\s+\[\s(?:BASE|WEAK)\s\])?\s*$
-                              """),
-      'version needed': (r"""
-        \s*(?:\[(?P<index>\d+)\]\s+)?     # index: might be not present if no
-                                          #        version binding is enabled
-        (?:(?P<soname>\S+)\s+             # file: can be absent if the same as
-         (?!\[\s(?:INFO|WEAK)\s\]))?      #       the previous line,
-                                          #       we make sure there is no
-                                          #       confusion with version
-        (?P<version>\S+)                  # version
-        (?:\s+\[\s(?:INFO|WEAK)\s\])?\s*$ #
-                          """),
-      'symbol table': (r"""
-         \s*\[\d+\]                       # index
-         \s+(?:0x[0-9a-f]+|REG_G\d+)      # value
-         \s+(?:0x[0-9a-f]+)               # size
-         \s+(?P<type>\S+)                 # type
-         \s+(?P<bind>\S+)                 # bind
-         \s+(?:\S+)                       # oth
-         \s+(?P<version>\S+)              # ver
-         \s+(?P<shndx>\S+)                # shndx
-         (?:\s+(?P<symbol>\S+))?\s*$      # name
-                        """),
-      'syminfo': (r"""
-         \s*(?:\[\d+\])                   # index
-         \s+(?P<flags>[ABCDFILNPS]+)      # flags
-
-         \s+(?:(?:\[\d+\]                 # bound to: contains either
-         \s+(?P<soname>\S+)|<self>)\s+)?  #  - library index and library name
-                                          #  -  <self> for non external symbols
-
-         (?P<symbol>\S+)\s*               # symbol
-                   """)}
-
-    elfdump_data = None
-    m = re.match(headers_re, line, re.VERBOSE)
-    if m:
-      if m.lastindex:
-        section = m.group('section').lower()
-    elif section:
-      m = re.match(re_by_section[section], line, re.VERBOSE)
-      if m:
-        elfdump_data = m.groupdict()
-
-    if not m:
-      raise package.StdoutSyntaxError("Could not parse %s" % (repr(line)))
-
-    return elfdump_data, section
-
-  def _ParseLddDashRline(self, line, binary=None):
+  def _ParseLddDashRline(self, line):
     found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
     symbol_not_found_re = (r"^\tsymbol not found:\s(?P<symbol>\S+)\s+"
                            r"\((?P<path_not_found>\S+)\)")
@@ -541,35 +283,16 @@ class InspectivePackage(package.DirectoryFormatPackage):
                      r'with STV_PROTECTED visibility$')
     sizes_differ = (r'^\trelocation \S+ sizes differ: '
                     r'(?P<sizes_differ_symbol>\S+)$')
-    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+)'
-                  r' size=(?P<size1>0x\w+); '
+    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+) size=(?P<size1>0x\w+); '
                   r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
     sizes_one_used = (r'^\t\t(?P<sizediffused_file>\S+) size used; '
                       r'possible insufficient data copied$')
-    unreferenced_object = (r'^\s*unreferenced object=(?P<object>.*);'
-                           r' unused dependency of (?P<binary>.*)$')
-    unused_object = (r'^\s*unused object=.*$')
-    unused_search_path = (r'^\s*unused search path=.*'
-                          r'  \(RUNPATH/RPATH from file .*\)$')
-    move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: '
-                         r'\(unknown\): offset=(?P<move_offset>0x[0-9a-f]+) '
-                         'lies outside memory image; move discarded')
-    relocation_error = (r'relocation R_(386|AMD64|X86_64|SPARC)_\w+ '
-                        r'sizes differ: (?P<reloc_symbol>.*)'
-                        r'|\t\t\(file .* size=0(?:x[0-9a-f]+)?; file .*'
-                        r'size=0x(?:[0-9a-f]+)?\)'
-                        r'|\t.* size used; possible data truncation')
-    blank_line = (r'^\s*$')
-    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
+    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so,
-                    stv_protected, sizes_differ, sizes_info,
-                    sizes_one_used, unreferenced_object, unused_object,
-                    unused_search_path, blank_line, move_offset_error,
-                    relocation_error))
+                    stv_protected, sizes_differ, sizes_info, sizes_one_used))
     m = re.match(common_re, line)
-    response = None
+    response = {}
     if m:
-      response = {}
       d = m.groupdict()
       if "soname" in d and d["soname"]:
         # it was found
@@ -582,11 +305,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["soname"] = None
         response["path"] = d["path_not_found"]
         response["symbol"] = d["symbol"]
-      elif "binary" in d and d["binary"] and binary == d["binary"]:
-        response["state"] = "soname-unused"
-        response["soname"] = os.path.basename(d["object"])
-        response["path"] = None
-        response["symbol"] = None
       elif d["path_only"]:
         response["state"] = "OK"
         response["soname"] = None
@@ -598,8 +316,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["path"] = None
         response["symbol"] = None
       elif d["relocation_symbol"]:
-        response["state"] = ("relocation-bound-to-a-symbol"
-                             "-with-STV_PROTECTED-visibility")
+        response["state"] = 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility'
         response["soname"] = None
         response["path"] = d["relocation_path"]
         response["symbol"] = d["relocation_symbol"]
@@ -618,23 +335,12 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["soname"] = None
         response["path"] = "%s" % (d["sizediffused_file"])
         response["symbol"] = None
-      elif d["move_offset"]:
-        response["state"] = 'move-offset-error'
-        response["soname"] = None
-        response["path"] = None
-        response["symbol"] = None
-        response["move_offset"] = d['move_offset']
-        response["move_index"] = d['move_index']
-      elif d["reloc_symbol"]:
-        response["state"] = 'relocation-issue'
-        response["soname"] = None
-        response["path"] = None
-        response["symbol"] = d['reloc_symbol']
-
+      else:
+        raise StdoutSyntaxError("Could not parse %s with %s"
+                                % (repr(line), common_re))
     else:
-      raise package.StdoutSyntaxError("Could not parse %s with %s"
-                                      % (repr(line), common_re))
-
+      raise StdoutSyntaxError("Could not parse %s with %s"
+                              % (repr(line), common_re))
     return response
 
   def GetDependencies(self):
@@ -703,9 +409,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
           pkgname, catalogname = fields[0:2]
           obsoleted_by.append((pkgname, catalogname))
 
-    return {"syntax_ok": obsoleted_syntax_ok,
-            "obsoleted_by": obsoleted_by,
-            "has_obsolete_info": has_obsolete_info}
+    return { "syntax_ok": obsoleted_syntax_ok,
+             "obsoleted_by": obsoleted_by,
+             "has_obsolete_info": has_obsolete_info }
 
 
 class FileMagic(object):
@@ -740,7 +446,7 @@ class FileMagic(object):
     for i in xrange(10):
       mime = self.magic_cookie.file(full_path)
       if mime:
-        break
+        break;
       else:
         # Returned mime is null. Re-initializing the cookie and trying again.
         logging.error("magic_cookie.file(%s) returned None. Retrying.",
@@ -760,7 +466,6 @@ class InspectiveCswSrv4File(package.CswSrv4File):
 
   # The presence of this method makes it explicit that we want an inspective
   # version of the directory format package.
-
   def GetInspectivePkg(self):
     return self.GetDirFormatPkg()
 

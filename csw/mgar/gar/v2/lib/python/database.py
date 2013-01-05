@@ -10,7 +10,7 @@ import time
 import system_pkgmap
 
 CONFIG_DB_SCHEMA = "db_schema_version"
-DB_SCHEMA_VERSION = 8L
+DB_SCHEMA_VERSION = 7L
 TABLES_THAT_NEED_UPDATES = (m.CswFile,)
 TABLES = TABLES_THAT_NEED_UPDATES + (
             m.Architecture,
@@ -159,7 +159,7 @@ class CheckpkgDatabaseMixin(object):
       except sqlobject.dberrors.OperationalError, e:
         logging.error("Could not create table %r: %s", table, e)
         raise
-
+        
 
   def InitialDataImport(self):
     """Imports initial data into the db.
@@ -289,7 +289,7 @@ class LocalDatabaseManager(CheckpkgDatabaseMixin):
       logging.warning("Could not get file mtime: %s", e)
     d_mtime = time.gmtime(int(d_mtime_epoch))
     logging.debug("IsDatabaseUpToDate: f_mtime %s, d_time: %s", f_mtime, d_mtime)
-    # Rounding up to integer seconds.  There is a race condition:
+    # Rounding up to integer seconds.  There is a race condition: 
     # pkgadd finishes at 100.1
     # checkpkg reads /var/sadm/install/contents at 100.2
     # new pkgadd runs and finishes at 100.3
