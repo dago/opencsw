@@ -39,14 +39,14 @@ DEPENDENCY_FILENAME_REGEXES = (
 
 PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])
 
-BASE_SOLARIS_LIBRARIES = (
+BASE_SOLARIS_LIBRARIES = set([
      "libsocket.so.1", "libnsl.so.1", "libdl.so.1", "librt.so.1",
      "libresolv.so.2", "libpthread.so.1",
      # linked by default with C++, see "Default C++ Libraries"
      # in Solaris Studio C++ User's Guide
      "libCstd.so.1", "libCrun.so.1", "libm.so.1", "libm.so.2",
      "libw.so.1", "libcx.so.1", "libc.so.1", "libC.so.3", "libC.so.5",
-)
+])
 
 ALLOWED_VERSION_DEPENDENCIES = {
     "libc.so.1": ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6',
@@ -195,12 +195,21 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
     # symbol is directly bound to because that definitely means that
     # -B direct or -z direct was used.
     binary_elf_info = pkg_data["binaries_elf_info"][binary_info["path"]]
+    libs = set(binary_info["needed sonames"])
+
+    # we skip the standard Solaris libraries: a lot of plugins only
+    # link to non directly bindable symbols of libc.so.1, librt.so.1
+    # which trigger false positives.
+    # Direct binding really matters for opencsw libraries so it's
+    # easier and riskless to just skip theses libraries
+    libs.difference_update(BASE_SOLARIS_LIBRARIES)
+
     db_libs = set()
     for syminfo in binary_elf_info['symbol table']:
       if (syminfo['shndx'] == 'UNDEF' and syminfo['flags']
           and 'D' in syminfo['flags'] and 'B' in syminfo['flags']):
           db_libs.add(syminfo['soname'])
-    no_db_libs = db_libs.symmetric_difference(binary_info["needed sonames"])
+    no_db_libs = libs.difference(db_libs)
 
     if no_db_libs:
       messenger.Message(
