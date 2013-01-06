@@ -1523,10 +1523,11 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
-    self.error_mgr_mock.ReportError(
-	'CSWvsftpd',
-	'no-direct-binding',
-	'/opt/csw/sbin/vsftpd is not directly bound to soname ' + soname)
+    for soname in ['libssl.so.1.0.0']:
+      self.error_mgr_mock.ReportError(
+        'CSWvsftpd',
+        'no-direct-binding',
+        '/opt/csw/sbin/vsftpd is not directly bound to soname ' + soname)
 
   def testDirectBindingNoSyminfo(self):
     self.pkg_data = vsftpd_stats
@@ -1570,9 +1571,8 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
-    for soname in [ 'libpam.so.1', 'libnsl.so.1', 'libcrypto.so.1.0.0',
-		    'librt.so.1', 'libsendfile.so.1', 'libssl.so.1.0.0',
-		    'libsocket.so.1', 'libc.so.1' ]:
+    for soname in ['libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
+        'libpam.so.1']:
       self.error_mgr_mock.ReportError(
         'CSWvsftpd',
         'no-direct-binding',
