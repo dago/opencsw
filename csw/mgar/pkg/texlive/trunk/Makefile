@@ -632,6 +632,9 @@ CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	file-with-bad-content|/usr/local|root/
 # mime.types and mailcap file search path; as far as I searched, we
 # don't supply that kind of files in /opt/csw/etc:
 CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/local|root/opt/csw/bin/xdvi-xaw
+CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/share|root/opt/csw/bin/pdftex
+CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/share|root/opt/csw/bin/xetex
+CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/share|root/opt/csw/bin/pdftosrc
 # only documentation section which can be easily deduced:
 CHECKPKG_OVERRIDES_CSWtexlive-binaries += file-with-bad-content|/usr/local|root/opt/csw/bin/mktexlsr
 
@@ -4135,6 +4138,7 @@ RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWtexlive-common
 # TODO hopefully this is innocuous; otherwise it needs a thoughtfully
 # exploration:
 CHECKPKG_OVERRIDES_CSWtexlive-luatex	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/luatex
+CHECKPKG_OVERRIDES_CSWtexlive-luatex	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/luatex
 
 PACKAGES 							+=	CSWtexlive-math-extra
 CATALOGNAME_CSWtexlive-math-extra	=	texlive_math_extra
@@ -5286,10 +5290,6 @@ REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf/web2c/texmf.cnf
 REINPLACE_USRLOCAL		+=	/opt/csw/share/texmf-dist/doc/generic/epsf/Makefile
 
 REINPLACE_WHEN_USRSHARE	=	postinstall
-REINPLACE_USRSHARE		+=	/opt/csw/bin/luatex
-REINPLACE_USRSHARE		+=	/opt/csw/bin/pdftex
-REINPLACE_USRSHARE		+=	/opt/csw/bin/pdftosrc
-REINPLACE_USRSHARE		+=	/opt/csw/bin/xetex
 REINPLACE_USRSHARE		+=	/opt/csw/include/kpathsea/paths.h
 REINPLACE_USRSHARE		+=	/opt/csw/share/info/dvips.info
 REINPLACE_USRSHARE		+=	/opt/csw/share/man/man1/chktex.1
