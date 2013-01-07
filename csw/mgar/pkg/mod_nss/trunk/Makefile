@@ -14,7 +14,7 @@ LICENSE = LICENSE
 
 PACKAGES = CSWap2modnss
 
-MASTER_SITES = http://port389.org/sources
+MASTER_SITES = http://po/rt389.org/sources
 # MASTER_SITES = http://directory.fedoraproject.org/sources
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modnss.postinstall
@@ -47,9 +47,7 @@ STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibnss3
-RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibplds4
-RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibplc4
-RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWap2mc4s += CSWlibsmime3
 RUNTIME_DEP_PKGS_CSWap2modnss += CSWlibssl3
 
 
@@ -71,4 +69,4 @@ install-custom:
 	@ginstall -c -m 755 $(WORKSRC)/gencert $(AP2_SBIN)
 	$(MAKECOOKIE)
 
-COPYFILES = CONFIGURE CHANGES README
+COPYFILES = CONFIGUR
