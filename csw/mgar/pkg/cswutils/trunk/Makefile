@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.24
+VERSION = 1.25
 GARTYPE = v2
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -66,6 +66,8 @@ CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/lib/python/csw/testdata/rpaths.py
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/package_checks_test.py
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/testdata/rpaths.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/lib/python/csw/testdata/vsftpd_stats.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/share|root/opt/csw/lib/python/csw/testdata/vsftpd_stats.py
 
 ALTERNATIVES_CSWcswutils = legacy python
 ALTERNATIVE_legacy = /opt/csw/bin/checkpkg checkpkg /opt/csw/bin/checkpkg.legacy 5
