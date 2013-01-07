@@ -22,7 +22,7 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 GARCOMPILER = SOS12U3
 
-LICENSE = LICENSE LICENSE.GPLv2
+LICENSE = LICENSE
 
 # GARFLAVOR=DBG
 
@@ -36,7 +36,6 @@ PKGFILES_CSWlibds-admin-serv0 += $(call baseisadirs,$(libdir),libds-admin-serv\.
 SPKG_DESC_CSWlibds-admin-serv0 += $(DESCRIPTION), libds-admin-serv.so.0
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibadmsslutil0
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibadminutil0
-RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibiconv2
@@ -53,24 +52,15 @@ SPKG_DESC_CSW389-admin += $(DESCRIPTION)
 INITSMF = /etc/opt/csw/init.d/dirsrv-admin
 RUNTIME_DEP_PKGS_CSW389-admin += CSWap2worker
 RUNTIME_DEP_PKGS_CSW389-admin += CSWap2modnss
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibldif60
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibicudata49
 RUNTIME_DEP_PKGS_CSW389-admin += CSWperl
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibadmsslutil0
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibplc4
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibicuuc49
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibicui18n49
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibds-admin-serv0
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibadminutil0
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibldap60
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibsoftokn3
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibsmime3
-RUNTIME_DEP_PKGS_CSW389-admin += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-admin += CSW389-admin-console
