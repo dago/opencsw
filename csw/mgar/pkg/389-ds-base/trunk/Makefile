@@ -16,6 +16,7 @@ MASTER_SITES = http://port389.org/sources/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSW389-ds-base.postinstall
 DISTFILES += CSW389-ds-base.postremove
+
 # BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
@@ -59,19 +60,19 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldif60
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap60
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpmibs25
+# RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpagent25
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicudata49
+# RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicudata49
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWbdb48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc49
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n49
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
+# RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-mozldap
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
@@ -97,23 +98,23 @@ CPPFLAGS =
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS_OPT += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
-CONFIGURE_ARGS_OPT += --with-ldapsdk-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-ldapsdk-bin=/opt/csw/dirsrv/bin 
-CONFIGURE_ARGS_OPT += --with-db-inc=/opt/csw/bdb48/include 
-CONFIGURE_ARGS_OPT += --with-db-lib=/opt/csw/bdb48/lib
-CONFIGURE_ARGS_OPT += --with-icu-inc=/opt/csw/include 
-CONFIGURE_ARGS_OPT += --with-icu-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-icu-bin=/opt/csw/bin 
-CONFIGURE_ARGS_OPT += --with-netsnmp-inc=/opt/csw/include 
-CONFIGURE_ARGS_OPT += --with-netsnmp-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-sasl-inc=/opt/csw/include/sasl 
-CONFIGURE_ARGS_OPT += --with-sasl-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nss-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nss-inc=/opt/csw/include/nss 
-CONFIGURE_ARGS_OPT += --with-nspr-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nspr-inc=/opt/csw/include/nspr
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+CONFIGURE_ARGS += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
+CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
+## CONFIGURE_ARGS += --with-ldapsdk-bin=$(abspath $(prefix)/dirsrv/bin/$(MM_BINDIR))
+CONFIGURE_ARGS += --with-ldapsdk-bin=$(bindir)
+CONFIGURE_ARGS += --with-db-inc=/opt/csw/bdb48/include 
+CONFIGURE_ARGS += --with-db-lib=$(abspath $(prefix)/bdb48/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-icu-inc=/opt/csw/include 
+CONFIGURE_ARGS += --with-icu-lib=$(libdir)
+CONFIGURE_ARGS += --with-icu-bin=/opt/csw/bin 
+CONFIGURE_ARGS += --with-netsnmp-inc=/opt/csw/include 
+CONFIGURE_ARGS += --with-netsnmp-lib=$(libdir)
+CONFIGURE_ARGS += --with-sasl-inc=/opt/csw/include/sasl 
+CONFIGURE_ARGS += --with-sasl-lib=$(libdir)
+CONFIGURE_ARGS += --with-nss-lib=$(libdir)
+CONFIGURE_ARGS += --with-nss-inc=/opt/csw/include/nss 
+CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
+CONFIGURE_ARGS += --with-nspr-inc=/opt/csw/include/nspr
 
 include gar/category.mk
 
