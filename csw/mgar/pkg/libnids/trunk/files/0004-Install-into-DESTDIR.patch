@@ -1,0 +1,40 @@
+From 80ddd0039f6240bcc557d186be146872bf5269d9 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Jan 2013 23:51:34 +0100
+Subject: [PATCH] Install into DESTDIR
+
+---
+ src/Makefile.in | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 236e9ba..33af85f 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -68,15 +68,15 @@ $(LIBSHARED): $(OBJS_SHARED)
+ 	$(LD) -G -h               $(LIBSHARED) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
+ 
+ _install install: $(LIBSTATIC)
+-	../mkinstalldirs $(install_prefix)$(libdir)
+-	../mkinstalldirs $(install_prefix)$(includedir)
+-	../mkinstalldirs $(install_prefix)$(mandir)/man3
+-	$(INSTALL) -c -m 644 libnids.a $(install_prefix)$(libdir)
+-	$(INSTALL) -c -m 644 nids.h $(install_prefix)$(includedir)
+-	$(INSTALL) -c -m 644 libnids.3 $(install_prefix)$(mandir)/man3
++	../mkinstalldirs $(DESTDIR)$(install_prefix)$(libdir)
++	../mkinstalldirs $(DESTDIR)$(install_prefix)$(includedir)
++	../mkinstalldirs $(DESTDIR)$(install_prefix)$(mandir)/man3
++	$(INSTALL) -c -m 644 libnids.a $(DESTDIR)$(install_prefix)$(libdir)
++	$(INSTALL) -c -m 644 nids.h $(DESTDIR)$(install_prefix)$(includedir)
++	$(INSTALL) -c -m 644 libnids.3 $(DESTDIR)$(install_prefix)$(mandir)/man3
+ _installshared installshared: install $(LIBSHARED)
+-	$(INSTALL) -c -m 755 $(LIBSHARED) $(install_prefix)$(libdir)
+-	ln -s -f $(LIBSHARED) $(install_prefix)$(libdir)/libnids.so
++	$(INSTALL) -c -m 755 $(LIBSHARED) $(DESTDIR)$(install_prefix)$(libdir)
++	ln -s -f $(LIBSHARED) $(DESTDIR)$(install_prefix)$(libdir)/libnids.so
+  
+ clean:
+ 	rm -f *.o *~ $(LIBSTATIC) $(LIBSHARED)
+-- 
+1.8.0
+
