@@ -12,7 +12,7 @@ endef
 
 BUNDLE = 389-ds
 
-MASTER_SITES = http://port389.org/sources
+MASTER_SITES = http://port389.org/sources/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
@@ -26,23 +26,15 @@ EXTRA_LIB = /opt/csw/bdb48/lib
 CPPFLAGS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibldif60
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibadmsslutil0
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibplc4
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibldap60
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibnss3
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibsoftokn3
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibsmime3
-RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibssl3
+RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibicuuc49
+RUNTIME_DEP_PKGS_CSW389-dsgw += CSWlibicui18n49
 CHECKPKG_OVERRIDES_CSW389-dsgw += file-with-bad-content|/usr/local|root/opt/csw/share/dirsrv/manual/en/dsgw/attribut.htm
 
 PATCHFILES += 0001-change-include-path-preferences-in-Makefile.am.patch
@@ -58,7 +50,6 @@ CONFIGURE_ARGS += --with-sasl-inc=/opt/csw/include/sasl
 CONFIGURE_ARGS += --with-sasl-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-nspr-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-nspr-inc=/opt/csw/include/nspr
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 include gar/category.mk
 
