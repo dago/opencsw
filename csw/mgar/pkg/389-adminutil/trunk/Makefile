@@ -27,36 +27,23 @@ SPKG_DESC_CSWlibadminutil0 += $(DESCRIPTION), libadminutil
 PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(libdir),libadminutil\.so(\.\d+)+)
 PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(sharedstatedir),.*\.res)
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibprldap60
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldif60
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicui18n48
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldap60
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibssl3
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc49
 
 
 PACKAGES += CSWlibadmsslutil0
 CATALOGNAME_CSWlibadmsslutil0 = libadmsslutil0
 SPKG_DESC_CSWlibadmsslutil0 += $(DESCRIPTION), libadmsslutil
 PKGFILES_CSWlibadmsslutil0 +=  $(call baseisadirs,$(libdir),libadmsslutil\.so(\.\d+)+)
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibprldap60
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibldif60
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicui18n48
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibssl3
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibsasl2-2
 
 PACKAGES += CSW389-adminutil-dev
 CATALOGNAME_CSW389-adminutil-dev = 389_adminutil_dev
