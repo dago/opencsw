@@ -13,7 +13,7 @@ BUNDLE = 389-ds
 
 LICENSE = LICENSE
 
-MASTER_SITES = http://port389.org/sources
+MASTER_SITES = http://port389.org/sources/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # BUILD64 = 1
