@@ -1,0 +1,25 @@
+From 3e244c710342d7c2309b6b9205e8273afa6f43fc Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Jan 2013 23:47:57 +0100
+Subject: [PATCH] Solaris linking in Makefile.in
+
+---
+ src/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 2204c79..236e9ba 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -65,7 +65,7 @@ $(LIBSTATIC): $(OBJS)
+ 	ar -cr $@ $(OBJS)
+ 	$(RANLIB) $@
+ $(LIBSHARED): $(OBJS_SHARED)
+-	$(CC) -shared -Wl,-soname,$(LIBSHARED) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
++	$(LD) -G -h               $(LIBSHARED) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
+ 
+ _install install: $(LIBSTATIC)
+ 	../mkinstalldirs $(install_prefix)$(libdir)
+-- 
+1.8.0
+

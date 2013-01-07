@@ -1,0 +1,25 @@
+From 0dd8dda4007bc36260c2e294ba58fc4c576984e2 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 7 Jan 2013 01:10:54 +0100
+Subject: [PATCH] Use LDFLAGS when linking
+
+---
+ src/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 33af85f..d95a5c2 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -65,7 +65,7 @@ $(LIBSTATIC): $(OBJS)
+ 	ar -cr $@ $(OBJS)
+ 	$(RANLIB) $@
+ $(LIBSHARED): $(OBJS_SHARED)
+-	$(LD) -G -h               $(LIBSHARED) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
++	$(LD) -G -h    $(LIBSHARED) -L/opt/csw/lib/libnet-new -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
+ 
+ _install install: $(LIBSTATIC)
+ 	../mkinstalldirs $(DESTDIR)$(install_prefix)$(libdir)
+-- 
+1.8.0
+
