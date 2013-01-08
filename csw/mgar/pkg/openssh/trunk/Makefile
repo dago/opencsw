@@ -28,41 +28,43 @@ define BLURB
   eavesdropping, connection hijacking, and other attacks. Additionally, OpenSSH 
   provides secure tunneling capabilities and several authentication methods, 
   and supports all SSH protocol versions.
-endef
+endpenssh CSWopensshclient
 
+CATALOGNAME_CSWopenssh = openssh
+SPKG_DESC_CSWopenssh = OpenSSH Secure Shell server 
+RUNTIME_DEP_PKGS_CSWopenssh = CSWlibssl1-0-0 CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWopensshclient
 
-PACKAGES = CSWossh CSWosshclient
+OBSOLETED_BY_CSWopenssh = CSWossh
 
-CATALOGNAME_CSWossh = openssh
-SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
-RUNTIME_DEP_PKGS_CSWossh = CSWlibssl1-0-0 CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWosshclient
+CATALOGNAME_CSWopensshclient = openssh_client
+SPKG_DESC_CSWopensshclient = OpenSSH Secure Shell client 
+RUNTIME_DEP_PKGS_CSWopensshclient = CSWlibssl1-0-0 CSWlibz1 CSWlibgssapi-krb5-2 
 
-CATALOGNAME_CSWosshclient = openssh_client
-SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
-RUNTIME_DEP_PKGS_CSWosshclient = CSWlibssl1-0-0 CSWlibz1 CSWlibgssapi-krb5-2 
+OBSOLETED_BY_CSWopensshclient = CSWosshclient
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-PKGFILES_CSWossh = $(sbindir)/.*
-PKGFILES_CSWossh += $(docdir)/openssh/.*
-PKGFILES_CSWossh += $(mandir)/man5/sshd_config.5
-PKGFILES_CSWossh += $(mandir)/man8/sftp-server.8
-PKGFILES_CSWossh += $(mandir)/man8/sshd.8
-PKGFILES_CSWossh += $(libexecdir)/sftp-server
-PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
-PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
-PKGFILES_CSWossh += $(localstatedir)/empty
-PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
-PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
-PKGFILES_CSWossh += $(prefix)/etc/pkg/CSWossh/cswusergroup
+PKGFILES_CSWopenssh = $(sbindir)/.*
+PKGFILES_CSWopenssh += $(docdir)/openssh/.*
+PKGFILES_CSWopenssh += $(mandir)/man5/sshd_config.5
+PKGFILES_CSWopenssh += $(mandir)/man8/sftp-server.8
+PKGFILES_CSWopenssh += $(mandir)/man8/sshd.8
+PKGFILES_CSWopenssh += $(libexecdir)/sftp-server
+PKGFILES_CSWopenssh += $(sysconfdir)/ssh/sshd_config.CSW
+PKGFILES_CSWopenssh += $(sysconfdir)/ssh/moduli.CSW
+PKGFILES_CSWopenssh += $(localstatedir)/empty
+PKGFILES_CSWopenssh += $(sysconfdir)/init.d/cswopenssh
+PKGFILES_CSWopenssh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
+PKGFILES_CSWopenssh += $(prefix)/etc/pkg/CSWopenssh/cswusergroup
 
-PKGFILES_CSWosshclient = $(bindir)/.*
-PKGFILES_CSWosshclient += $(docdir)/openssh_client/.*
-PKGFILES_CSWosshclient += $(mandir)/man1/.*
-PKGFILES_CSWosshclient += $(mandir)/man5/ssh_config.5
-PKGFILES_CSWosshclient += $(mandir)/man8/ssh-keysign.8
-PKGFILES_CSWosshclient += $(libexecdir)/ssh-keysign
-PKGFILES_CSWosshclient += $(sysconfdir)/ssh/ssh_config.CSW
+PKGFILES_CSWopensshclient = $(bindir)/.*
+PKGFILES_CSWopensshclient += $(docdir)/openssh_client/.*
+PKGFILES_CSWopensshclient += $(mandir)/man1/.*
+PKGFILES_CSWopensshclient += $(mandir)/man5/ssh_config.5
+PKGFILES_CSWopensshclient += $(mandir)/man8/ssh-keysign.8
+PKGFILES_CSWopensshclient += $(libexecdir)/ssh-keysign
+PKGFILES_CSWopensshclient += $(sysconfdir)/ssh/ssh_config.CSW
+PKGFILES_CSWopenig.CSW
 PKGFILES_CSWosshclient += $(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED
 
 PROTOTYPE_MODIFIERS = setuid
@@ -73,27 +75,24 @@ PRESERVECONF = $(sysconfdir)/ssh/sshd_config
 PRESERVECONF += $(sysconfdir)/ssh/ssh_config
 PRESERVECONF += $(sysconfdir)/ssh/moduli
 INITSMF = $(sysconfdir)/init.d/cswopenssh
-USERGROUP = $(prefix)/etc/pkg/CSWossh/cswusergroup
+USERGROUP = $(penssh/cswusergroup
 
-MIGRATE_FILES_CSWossh = moduli sshd_config
-MIGRATE_FILES_CSWossh += ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub ssh_host_key ssh_host_key.pub
-MIGRATE_FILES_CSWossh += shosts.equiv
-MIGRATE_FILES_CSWossh += sshrc
-MIGRATE_FILES_CSWosshclient = ssh_config
-MIGRATE_FILES_CSWosshclient += ssh_known_hosts ssh_known_hosts2
+MIGRATE_FILES_CSWopenssh = moduli sshd_config
+MIGRATE_FILES_CSWopeng
+MIGRATE_FILES_CSWossh += ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub ssh_host_key ssh_host_key.pupenssh += shosts.equiv
+MIGRATE_FILES_CSWopenssh += sshrc
+MIGRATE_FILES_CSWopensshclient = ssh_config
+MIGRATE_FILES_CSWopensshclient += ssh_known_hosts ssh_known_hosts2
+MIGRATE_FILES_CSWopen2
 MIGRATE_FILES_CSWosshclient += ssh_prng_cmds
 MIGRATE_SOURCE_DIR = $(prefix)/etc/ssh
 MIGRATE_DEST_DIR = $(sysconfdir)/ssh
 
-CHECKPKG_OVERRIDES_CSWosshclient += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh_client/INSTALL
-CHECKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh/INSTALL
-CHECKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswopenssh.xml
+CHEpenCKPKG_OVERRIDES_CSWosshclient += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh_client/INSTALL
+CHEpenssh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh/INSTALL
+CHECKPKG_OVERRIDES_CSWopenCKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswopenssh.xml
 
-CHECKPKG_OVERRIDES_CSWossh += surplus-dependency|CSWosshclient
-
-#  We will not fix this today
-CHECKPKG_OVERRIDES_CSWossh += catalogname-does-not-match-pkgname|pkgname=CSWossh|catalogname=openssh|expected-catalogname=ossh
-CHECKPKG_OVERRIDES_CSWosshclient += catalogname-does-not-match-pkgname|pkgname=CSWosshclient|catalogname=openssh_client|expected-catalogname=osshclient
+CHEpenssh += surplus-dependency|CSWopenpected-catalogname=osshclient
 
 
 
@@ -105,8 +104,8 @@ UPSTREAM_MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWossh.checkinstall
+DISTFILES  = $(NAME)-$(VERSION).tar.penssh.checkinstall
+DISTFILES += CSWopenll
 DISTFILES += CSWosshlpk.checkinstall
 DISTFILES += changelog.CSW
 DISTFILES += cswusergroup
@@ -171,17 +170,17 @@ TEST_SCRIPTS	=
 # we always register the lpk related files so checksum 
 # is the same with LPK enabled or not
 DISTFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
-ifdef LPK
-	PACKAGES = CSWosshlpk
-	CATALOGNAME_CSWosshlpk = openssh_lpk
-	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
-	RUNTIME_DEP_PKGS_CSWosshlpk = $(RUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
+ifdef pensshlpk
+	CATALOGNAME_CSWopensshlpk = openssh_lpk
+	SPKG_DESC_CSWopensshlpk = $(SPKG_DESC_CSWopenssh) with ldap public key support
+	RUNTIME_DEP_PKGS_CSWopensshlpk = $(RUNTIME_DEP_PKGS_CSWopenUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
 	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
 	
-	# we must reset the CSWosshclient description to avoid a bug in the automatic dependancy generation
+	# wepensshclient description to avoid a bug in the automatic dependancy generation
+	SPKG_DESC_CSWopention
 	SPKG_DESC_CSWosshclient = 
 endif
 
@@ -225,10 +224,10 @@ merge-config-files:
 	# we change some default value in the server config file
 	perl -pi -e 's,/etc/ssh/,$(sysconfdir)/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
 	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswusergroup" "$(PKGROOT)$(prefix)/etc/pkg/CSWossh/cswusergroup"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswusergroup" "$(PKGROOT)$(penprefix)/etc/pkg/CSWossh/cswusergroup"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(prefix)/etc/ssh/THIS_LOCAED"
 	@$(MAKECOOKIE)
 
 merge-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty
-	ginstall -d $(PKGROOT)$(sysc
+	ginstall -d $(PKGROOT)$(penssh
