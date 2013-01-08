@@ -1,3 +1,9 @@
+openssh (6.1p1,REV=2013.01.08) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 08 Jan 2013 22:35:07 +0100
+
 openssh (6.0p1,REV=2012.09.30) unstable
 
   * Explicitly disabled lazyloading as it causes
