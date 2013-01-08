@@ -1,8 +1,7 @@
 #####################################################################
 # OpenCSW build recipe for openssh
 #
-# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
-# All rights reserved.  Use is subject to license terms.
+# Author: Yann Rouillard <yann@pleiades.fr.eu.org>
 #
 # Redistribution and/or use, with or without modification, is
 # permitted.  This software is without warranty of any kind.  The
@@ -148,13 +147,7 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 
 
 
-##### Build and installation information #####
-
-
-# to support shared /opt/csw setup
-# see http://wiki.opencsw.org/shared-opt-csw-setup
-localstatedir 	= /var$(prefix)
-sysconfdir 	= /etc$(prefix)
+##### Build and installation 	= /etc$(prefix)
 
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -239,4 +232,4 @@ merge-config-files:
 
 merge-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty
-	ginstall -d $(PKGROOT)$(sysconfdir)/pkg/CSWossh
+	ginstall -d $(PKGROOT)$(sysc
