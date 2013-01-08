@@ -628,6 +628,8 @@ RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWtexlive-base
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibxpm4
 CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/dvips
 # mime.types and mailcap file search path; as far as I searched, we
 # don't supply that kind of files in /opt/csw/etc:
@@ -4135,6 +4137,11 @@ PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/lualatex/luainputen
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/luatex/luamplib/.*
 PKGFILES_CSWtexlive-luatex		+=	/opt/csw/share/texmf-dist/tex/luatex/luaotfload/.*
 RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWtexlive-common
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibkpathsea6
+RUNTIME_DEP_PKGS_CSWtexlive-luatex	+=	CSWlibz1
 # TODO hopefully this is innocuous; otherwise it needs a thoughtfully
 # exploration:
 CHECKPKG_OVERRIDES_CSWtexlive-luatex	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/luatex
