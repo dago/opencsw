@@ -25,10 +25,11 @@
 NAME = nss
 MAJOR_VERSION = 3
 MINOR_VERSION = 14
-##  PATCHLEVEL    = 6
-##  VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
-VERSION = $(MAJOR_VERSION).$(MINOR_VERSION)
-CATEGORIES = lib
+PATCHLEVEL    = 1
+VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
+# #VERSION = $(MAJOR_VERSION).$(MINOR_VERSION)
+GARTYPE = v2
+ lib
 GARTYPE = v2
 DESCRIPTION = Network Security Services library
 define BLURB
@@ -39,14 +40,13 @@ define BLURB
   other security standards.
 endef
 SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
-# TODO: Generate RTM_N##  RTM_NAME = NSS_$(MAJOR_VERSION)_$(MINOR_VERSION)_$(PATCHLEVEL)_RTM
-RTM_NAME = NSS_$(MAJOR_VERSION)_$(MINOR_VERSIONION)_$(PATCHLEVEL)_RTM
+# TODO: Generate RTM_NRTM_NAME = NSS_$(MAJOR_VERSION)_$(MINOR_VERSION)_$(PATCHLEVEL)_RTM
+## RTM_NAME = NSS_$(MAJOR_VERSION)_$(MINOR_VERSIONION)_$(PATCHLEVEL)_RTM
 MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += mpl-tri-license-txt
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
+DISTFILES += mpl
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+GARCOMPILER = SOS12U3rc solaris10-i386
 
 PACKAGES += CSWlibnss3
 CATALOGNAME_CSWlibnss3 = libnss3
