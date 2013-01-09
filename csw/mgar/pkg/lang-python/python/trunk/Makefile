@@ -71,9 +71,12 @@ PATCHFILES += 0017-Random-insignificant-removals-of-usr-local.patch
 PATCHFILES += 0018-Removing-usr-local-from-mailcap.patch
 
 PATCHFILES_5.10 += 0019-Force-multiprocess-to-compile.patch
-PATCHFILES += $(PATCHFILES_$(GAROSREL))
+PATCHFILES += $(PATCHFILEShe test for sunaudiodev fails.  Not that it's a good practice to skip
+# tests.
+SKIPTEST = 1
 
-# Test for sunaudiodev fails.
+# TODO: Enable the 64-bit build at some point.
+# BUILD64ev fails.
 SKIPTEST = 1
 
 EXTRA_INC += $(prefix)/bdb47/include
@@ -91,7 +94,7 @@ BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
 
 NOISALIST = 1
-CONFIGURE_ARGS  = $(DIRPATHS) 
+CONFIGURE_AGS  = $(DIRPATHS) 
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-unicode=ucs4
@@ -103,13 +106,12 @@ CONFIGURE_ARGS += --with-system-ffi
 # This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
 # PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
-# use prototype filters to set the class 
+# use prototype filter to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
 PACKAGES  = CSWidle$(CVER)
 PACKAGES += CSWpython$(CVER)
 PACKAGES += CSWpython$(CVER)-dev
-PACKAGES += CSWpython$(CVER)-test
 PACKAGES += CSWpython$(CVER)-tk
 PACKAGES += CSWlibpython$(DVER)-1-0
 CATALOGNAME_CSWlibpython$(DVER)-1-0 = libpython$(UVER)_1_0
@@ -130,17 +132,7 @@ PKGFILES_CSWpython$(CVER)-dev += $(libdir)/libpython$(VER).so
 PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py
 
 PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
-PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
-PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/bsddb/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/ctypes/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/email/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
-
-ARCHALL_CSWpython$(CVER)-test = 1
+PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynlon$(CVER)-test = 1
 ARCHALL_CSWidle$(CVER)        = 1
 
 RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)
@@ -159,47 +151,53 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtk8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += # Don't merge test files.
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/test
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/test/.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/bsddb/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/ctypes/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/email/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/distutils/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/json/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/lib2to3/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/sqlite3/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/unittest/test.*
+= CSWpython$(CVER)
 
 BUILD_DEP_PKGS += Cython2-5-1-0
 
 # This could be handled by automatic dependency detection
-CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
-
-# This package is not meant to be released
-CHECKPKG_OVERRIDES_CSWpython-test += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWwith-bad-content
 
 CATALOGNAME_CSWidle$(CVER)         = idle
 CATALOGNAME_CSWpython$(CVER)       = python
 CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_dev
-CATALOGNAME_CSWpython$(CVER)-tk    = python$(CVER)_tk
-CATALOGNAME_CSWpython$(CVER)-test  = python$(CVER)_test
+CATALOGNAME_CSWpython$(CVER)-tk    =ython$(CVER)_test
 
 SPKG_DESC_CSWidle$(CVER)         = Python IDE
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
 SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
-SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
-SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
+SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Inthon Test modules
 
 LICENSE = LICENSE
 
 # This is an exception, since these are original Python packages.
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDESdevS_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDE-devython$(CVER)-test  += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDEStk   S_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDE-tk  python$(CVER)-test  += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
 
-include gar/category.mk
+includEXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-32.h,p"
+EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-64.h,p"
+EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
+de gar/category.mk
 
 post-configure-modulated:
 	for f in Modules/Setup \
@@ -212,3 +210,8 @@ post-configure-modulated:
 		gsed -i -e 's+/usr/local+/opt/csw+g' $(WORKSRC)/$${f}; \
 		gsed -i -e 's+/usr/share+/opt/csw/share+g' $(WORKSRC)/$${f}; \
 	don
+post-merge-modulated:
+	echo "This is post-merge-modulated, which should not work. But it does."
+	ginstall -m 755 -d $(PKGROOT)$(includedir)/python$(VER)
+	ginstall -m 644 $(FILEDIR)/pyport.h $(PKGROOT)$(includedir)/python$(VER)/pyport.h
+	@$(MAKECOOKIE)
