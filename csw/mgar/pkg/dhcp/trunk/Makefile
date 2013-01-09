@@ -1,12 +1,12 @@
 NAME = dhcp
-VERSION = 4.2.4
+VERSION = 4.2.5
 
 # Enable these for Px-releases
-RELEASE = P2
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P2
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 GARTYPE = v2
 
@@ -19,10 +19,10 @@ define BLURB
 endef
 
 # Toggle between these for normal/Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
-MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(DISTVERSION)/
+MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
+#MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(DISTVERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES  = $(DISTNAME).tar.gz
+#DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
 
