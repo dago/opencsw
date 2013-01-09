@@ -156,7 +156,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/auth-krb5.c openssh-5.8p1.
  #ifndef HEIMDAL
  krb5_error_code
  ssh_krb5_cc_gen(krb5_context ctx, krb5_ccache *ccache) {
--	int tmpfd, ret;
+-	int tmpfd, ret, oerrno;
 +	int ret;
  	char ccname[40];
  	mode_t old_umask;
@@ -164,7 +164,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/auth-krb5.c openssh-5.8p1.
 +	char cctemplate[] = "API:krb5cc_%d";
 +#else
 +	char cctemplate[] = "FILE:/tmp/krb5cc_%d_XXXXXXXXXX";
-+	int tmpfd;
++	int tmpfd, oerrno;
 +#endif
  
  	ret = snprintf(ccname, sizeof(ccname),
@@ -176,9 +176,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/auth-krb5.c openssh-5.8p1.
 +#ifndef USE_CCAPI
  	old_umask = umask(0177);
  	tmpfd = mkstemp(ccname + strlen("FILE:"));
- 	umask(old_umask);
+ 	oerrno = errno;
 @@ -249,6 +261,7 @@
- 		return errno;
+ 		return oerrno;
  	}
  	close(tmpfd);
 +#endif
