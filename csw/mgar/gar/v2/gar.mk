@@ -971,7 +971,7 @@ reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-
 
 reset-merge-modulated:
 	@$(call _pmod,Reset merge state)
-	rm -f $(COOKIEDIR)/pre-merge-* $(COOKIEDIR)/merge-* $(COOKIEDIR)/post-merge-*
+	rm -f $(COOKIEDIR)/pre-merge $(COOKIEDIR)/pre-merge-* $(COOKIEDIR)/merge-* $(COOKIEDIR)/post-merge $(COOKIEDIR)/post-merge-*
 
 # The clean rule.  It must be run if you want to re-download a
 # file after a successful checksum (or just remove the checksum
