@@ -43,6 +43,9 @@ PATCHFILES += 0004-Use-PY_CPPFLAGS-in-Modules-makesetup.patch
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
 SKIPTEST = 1
+TEST_TARGET = test
+
+BUILD64_ONLY = 1
 
 # There is a file name conflict over libffi.so symlink between libffi package
 # and a gcc-java package.  While it will ultimately belong to libffi_dev, the
@@ -70,7 +73,8 @@ CONFIGURE_ARGS += --with-system-ffi
 # PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 # use prototype filters to set the class
-PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+# Do not use 2.6 pycompile for 3.3.
+# PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
 
 PACKAGES  = CSWidle$(CVER)
@@ -94,7 +98,7 @@ PACKAGES += CSWpython$(CVER)
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi4
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWliblzma5
@@ -112,15 +116,16 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += file-with-bad-content
 
 # Don't merge test files.
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/test/.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/bsddb/test.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/ctypes/test.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/email/test.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/distutils/tests.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/json/tests.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/lib2to3/tests.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/sqlite3/test.*
-MERGE_EXCLUDE_FILES += $(libdir)/$(PVER)/unittest/test.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/test
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/test/.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/bsddb/test.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/ctypes/test.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/email/test.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/distutils/tests.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/json/tests.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/lib2to3/tests.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/sqlite3/test.*
+MERGE_EXCLUDE_FILES += /opt/csw/lib/$(PVER)/unittest/test.*
 
 PACKAGES += CSWpython$(CVER)-tk
 SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
@@ -151,6 +156,8 @@ PACKAGES += CSWlibpython3
 PKGFILES_CSWlibpython3 += $(call baseisadirs,$(libdir),libpython3\.so)
 SPKG_DESC_CSWlibpython3 += $(DESCRIPTION), libpython3.so
 CHECKPKG_OVERRIDES_CSWlibpython3 += soname-equals-filename|file=/opt/csw/lib/libpython3.so
+CHECKPKG_OVERRIDES_CSWlibpython3 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libpython3.so
+CHECKPKG_OVERRIDES_CSWlibpython3 += soname-equals-filename|file=/opt/csw/lib/amd64/libpython3.so
 RUNTIME_DEP_PKGS_CSWlibpython3 += CSWlibgcc-s1
 
 # Devel package
@@ -160,7 +167,7 @@ SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python 3.x
 PKGFILES_CSWpython$(CVER)-dev += $(includedir)/$(PVER)/(?!pyconfig\.h).*
 PKGFILES_CSWpython$(CVER)-dev += $(bindir)/.*config.*
 PKGFILES_CSWpython$(CVER)-dev += $(libdir)/pkgconfig.*
-PKGFILES_CSWpython$(CVER)-dev += $(libdir)/libpython$(VER)m.so
+PKGFILES_CSWpython$(CVER)-dev += $(call baseisadirs,$(libdir),libpython$(VER)m.so)
 # No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
 PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py-$(VER)
@@ -174,6 +181,10 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
 
 BUILD_DEP_PKGS += CSWlibffi-dev
 BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWlibgcrypt-dev
+# Because of /opt/csw/lib/libxtermcap.a
+BUILD_DEP_PKGS += CSWschilybase
 
 LICENSE = LICENSE
 
@@ -187,6 +198,7 @@ EXTRA_PAX_ARGS += -s ',^\.$(bindir)/smtpd.py,$(bindir)/smtpd.py-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/pydoc,$(bindir)/pydoc-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/2to3,$(bindir)/2to3-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER),'
+
 EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
 
 GARCOMPILER = GNU
