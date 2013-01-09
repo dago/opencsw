@@ -1,0 +1,55 @@
+#!/bin/ksh
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# replacer - replace or remove references to the specified directory.
+#
+
+function usage {
+    print "Usage: $0 <root_path> <replace_path>.."
+    exit 1
+}
+
+ROOTDIR=${1:-'.'}
+[ $# -ge 1 ] && shift
+
+[ -z "$@" ] && usage
+
+for subdir in $@
+do
+    for file in `gfind $ROOTDIR -type f | gxargs -r ggrep -l $subdir`
+    do
+        ok=true
+
+        # Skip backups and static libraries
+        if [[ "$file" == *.bak ]]; then ok=false ; fi
+        if [[ "$file" == *~    ]]; then ok=false ; fi
+        if [[ "$file" == *.a   ]]; then ok=false ; fi
+
+        # Skip ELF binaries and archives
+        ftype="`file $file 2>&1`"
+        if [[ "$ftype" == *ELF*       ]]; then ok=false ; fi
+        if [[ "$ftype" == *:*archive* ]]; then ok=false ; fi
+
+        if $ok ; then
+            echo $file
+            perl -i~ -plne "
+                s#-[ILR]\s*$subdir\S+\s+##g;
+                s#$subdir/#/#g;
+                s#$subdir\b##g;
+            " $file
+        fi
+
+    done
+done
+
+exit 0
+

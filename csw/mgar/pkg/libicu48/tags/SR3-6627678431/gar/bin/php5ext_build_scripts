@@ -1,0 +1,69 @@
+#!/bin/bash
+
+MERGEDIR=$1; shift
+PHP5MODS=opt/csw/php5/extensions
+PHP5EXTDIR=opt/csw/php5/lib/php/extensions/no-debug-non-zts-20090626
+
+cd $MERGEDIR/
+
+[ -d $PHP5MODS ] || mkdir -p $PHP5MODS
+
+for a in $*; do
+    for f in $(find $PHP5EXTDIR -name "*$a*"); do
+	modfile=$(basename $f)
+	modname=$(echo $modfile | sed 's/\.so$//')
+	php5modfile=$PHP5MODS/$modname
+	cat <<EOF > $php5modfile
+
+PIR=\${PKG_INSTALL_ROOT:-'/'}
+PHP5_PREFIX=/opt/csw/php5
+PHP5_BINDIR=\$PHP5_PREFIX/bin
+PHP5_CONFIG=/etc/opt/csw/php5/php.ini
+PHPEXT=\$PHP5_BINDIR/phpext
+
+if [ "\$1" = install ]; then
+
+echo "File created by \$PKGINST during install.  Please do not remove." > \$PIR/$php5modfile
+
+# Source csw.conf, if it exists
+if [ -f \$PIR/opt/csw/etc/csw.conf ] ; then
+  . \$PIR/opt/csw/etc/csw.conf
+fi
+if [ -f \$PIR/etc/opt/csw/csw.conf ] ; then
+  . \$PIR/etc/opt/csw/csw.conf
+fi
+
+# Modules will be enabled by default, but a global kill switch
+# is checked, followed by a module specific value.  Thus,
+# either php5_enable_modules or php5_enable_mysql (for example)
+# could disable activation of the suexec module.  The 
+#
+# This value is passed to phpext (-e: enable; -d: disable)
+enmod=-e
+
+if [ "\$php5_enable_modules" = "no" ]; then
+    enmod=-d
+fi
+
+if [ "\$php5_enable_$modname" = "no" ]; then
+    enmod=-d
+elif [ "\$php5_enable_$modname" = "yes" ]; then
+    enmod=-e
+fi
+
+if [ -f "\$PIR/\$PHP5_CONFIG" -a -x "\$PIR/\$PHPEXT" ]; then
+    # Add the module module, optionally enabling it by default
+    chroot \$PIR \$PHPEXT \$enmod $modname
+fi
+
+else
+
+rm \$PIR/$php5modfile
+
+if [ -f "\$PIR/\$PHP5_CONFIG" -a -x "\$PIR/\$PHPEXT" ]; then
+  chroot \$PIR \$PHPEXT -d $modname
+fi
+fi
+EOF
+    done
+done

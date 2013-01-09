@@ -1,0 +1,18 @@
+$def with (catalognames)
+<html>
+  <head>
+    <title>
+      Catalognames
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <ul class="catalogname-list">
+$for catalogname in catalognames:
+  <li>
+  <a href="$catalogname[0]/">$catalogname[0]</a>
+  </li>
+</ul>
+</body>
+</html>
+

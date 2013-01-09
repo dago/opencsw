@@ -1,0 +1,17 @@
+$def with (tags)
+<html>
+  <head>
+    <title>
+      Checkpkg error tags
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <ul>
+$for tag in tags:
+  <li>
+  <a href="$tag[0]/">$tag[0]</a>
+  </li>
+</ul>
+</body>
+</html>
