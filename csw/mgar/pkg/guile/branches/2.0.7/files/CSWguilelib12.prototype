@@ -1,0 +1,34 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libguile-ltdl.a 0644 root bin
+f none /opt/csw/lib/libguile-ltdl.la 0755 root bin
+f none /opt/csw/lib/libguile-ltdl.so.1.0.1 0755 root bin
+s none /opt/csw/lib/libguile-ltdl.so.1=libguile-ltdl.so.1.0.1 root bin
+s none /opt/csw/lib/libguile-ltdl.so=libguile-ltdl.so.1.0.1 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-13-14-v-1.a 0644 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-13-14-v-1.la 0755 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-13-14-v-1.so.1.0.1 0755 root bin
+s none /opt/csw/lib/libguile-srfi-srfi-13-14-v-1.so.1=libguile-srfi-srfi-13-14-v-1.so.1.0.1 root bin
+s none /opt/csw/lib/libguile-srfi-srfi-13-14-v-1.so=libguile-srfi-srfi-13-14-v-1.so.1.0.1 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-4-v-1.a 0644 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-4-v-1.la 0755 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-4-v-1.so.1.0.1 0755 root bin
+s none /opt/csw/lib/libguile-srfi-srfi-4-v-1.so.1=libguile-srfi-srfi-4-v-1.so.1.0.1 root bin
+s none /opt/csw/lib/libguile-srfi-srfi-4-v-1.so=libguile-srfi-srfi-4-v-1.so.1.0.1 root bin
+f none /opt/csw/lib/libguile.a 0644 root bin
+f none /opt/csw/lib/libguile.la 0755 root bin
+f none /opt/csw/lib/libguile.so.12.3.1 0755 root bin
+s none /opt/csw/lib/libguile.so.12=libguile.so.12.3.1 root bin
+s none /opt/csw/lib/libguile.so=libguile.so.12.3.1 root bin
+f none /opt/csw/lib/libguilereadline-v-12.a 0644 root bin
+f none /opt/csw/lib/libguilereadline-v-12.la 0755 root bin
+f none /opt/csw/lib/libguilereadline-v-12.so.12.3.1 0755 root bin
+s none /opt/csw/lib/libguilereadline-v-12.so.12=libguilereadline-v-12.so.12.3.1 root bin
+s none /opt/csw/lib/libguilereadline-v-12.so=libguilereadline-v-12.so.12.3.1 root bin
+f none /opt/csw/lib/libguile-ltdl.so.1.0.0 0755 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-13-14-v-1.so.1.0.0 0755 root bin
+f none /opt/csw/lib/libguile-srfi-srfi-4-v-1.so.1.0.0 0755 root bin
+f none /opt/csw/lib/libguile.so.12.3.0 0755 root bin
+f none /opt/csw/lib/libguilereadline-v-12.so.12.3.0 0755 root bin
+i copyright=CSWguilelib12.copyright
+i depend=CSWguilelib12.depend
+i pkginfo=CSWguilelib12.pkginfo
