@@ -32,7 +32,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
-UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
+UPSTREAM_MASTER_SITES = http://pythoUFILES_REGEX = $(VER)\.\d+on.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
