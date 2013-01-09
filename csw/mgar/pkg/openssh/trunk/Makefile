@@ -89,9 +89,7 @@ MIGRATE_DEST_DIR = $(sysconfdir)/ssh
 
 CHEpenCKP-KG_OVERRIDES_CSWosshclient += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh_client/INSTALL
 CHEpenssh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh/INSTALL
-CHECKPKG_OVERRIDES_CSWopenCKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswopenssh.xml
-
-CHEpenssh += surplus-dependency|CSWopenpec-ted-catalogname=osshclient
+CHECKPKG_OVERRIDES_CSWopenCKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/netwlogname=osshclient
 
 
 
