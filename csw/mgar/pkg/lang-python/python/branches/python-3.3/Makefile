@@ -99,7 +99,10 @@ PACKAGES += CSWpython$(CVER)
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibbz2-1-0
+# This seems to be an issue with the 64-bit build. The 32-bit binaries link
+# against libffi5, the 64-bit binaries link against libffi4.
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWliblzma5
