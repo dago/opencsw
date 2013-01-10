@@ -197,10 +197,19 @@ EXTRA_PAX_ARGS += -s ',^\.$(bindir)/pydoc,$(bindir)/pydoc-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/2to3,$(bindir)/2to3-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER),'
 EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
- 
+
 EXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-32.h,p"
 EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-64.h,p"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
+
+CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
+CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
+CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_hashlib.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0
+CHECKPKG_OVERRIDES_CSWpython27-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_tkinter.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython27-tk += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
 
 include gar/category.mk
 
