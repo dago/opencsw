@@ -1,8 +1,7 @@
 # $Id$
 
 NAME = Python
-VERSION = 2.6.8
-CATEGORIES = lang
+VERSION = 2.6.8 lang
 GARTYPE = v2
 VER = 2.6
 DVER = 2-6
@@ -34,22 +33,7 @@ endef
 MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://pythoUFILES_REGEX = $(VER)\.\d+on.org/ftp/python/
 
-DISTFILES  = $(DISTNAME).tar.bz2
-
-# There is a segfault happening on Solaris 9 i386. I'm disabling the Solaris
-# 9 until we debug it or the upstream fixes it.
-# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-# Some features are missing on Solaris 9, e.g. functionality required for the
-# multiprocessing support.
-# http://osdir.com/ml/opensolaris-discuss/2009-07/msg00865.html
-# http://bugs.python.org/issue3770
-# However, this bug is about better detection of SEM_VALUE_MAX in Solaris
-# http://bugs.python.org/issue3110
-
-# There are header differences between Solaris 9 and 10. Programs that include
-# pyconfig.h from Solaris 9 installed on Solaris 10 can get wrong settings,
-# e.g. wrt _X_OPEN_SOURCE.
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+DISTFILES  = $(DISTFILES += pyport.harc solaris10-i386
 
 # Patches
 PATCHFILES += faqwiz.diff
@@ -91,7 +75,16 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 EXTRA_LIB += $(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
-EXTRA_COMMON_EXPORTS = BASECFLAGS
+EXTRA_COMMON_EXPO# To fix https://www.opencsw.org/mantis/view.php?id=5040
+LINKER_IGNORE =
+CHECKPKG_OVERRIDES_CSWpython-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python/lib-dynload/_tkinter.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython-tk += no-direct-binding|/opt/csw/lib/python/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWpython += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/python/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/python/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
+CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
+CHECKPKG_OVERRIDES_CSWpython += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python/lib-dynload/_hashlib.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0PORTS = BASECFLAGS
 
 NOISALIST = 1
 CONFIGURE_AGS  = $(DIRPATHS) 
@@ -211,7 +204,11 @@ post-configure-modulated:
 		gsed -i -e 's+/usr/share+/opt/csw/share+g' $(WORKSRC)/$${f}; \
 	don
 post-merge-modulated:
-	echo "This is post-merge-modulated, which should not work. But it does."
+	# Some checks
+	# Prevent things like https://www.opencsw.org/mantis/view.php?id=5040
+	test ! -f $(PKGROOT)/opt/csw/lib/python/lib-dynload/_socket_failed.so
+	test -f $(PKGROOT)/opt/csw/lib/python/lib-dynload/_socket.so
+	# This is post-merge-modulated, which should not work. But it does.
 	ginstall -m 755 -d $(PKGROOT)$(includedir)/python$(VER)
-	ginstall -m 644 $(FILEDIR)/pyport.h $(PKGROOT)$(includedir)/python$(VER)/pyport.h
+	ginstall -m 644 $(WORKDIR)/pyport.h $(PKGROOT)$(includedir)/python$(VER)/pyport.h
 	@$(MAKECOOKIE)
