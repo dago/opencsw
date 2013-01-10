@@ -63,7 +63,7 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 # pkgchk -L CSWlibffi-dev
 # (...)
 # /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
-EXTRA_LINKER_FLAGS += $(libdir)/ffi
+EXTRA_LINKER_FLAGS += -L$(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
