@@ -1,6 +1,5 @@
 NAME 		= nsca
 VERSION 	= 2.9.1
-CATEGORIES 	= apps
 GARTYPE 	= v2
 
 #
@@ -54,11 +53,9 @@ REINPLACE_USRLOCAL	+= sample-config/nsca.cfg.in
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 RUNTIME_DEP_PKGS_CSWnsca += CSWlibmcrypt4
-RUNTIME_DEP_PKGS_CSWnsca += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWnsca += CSWlibwrap1
 
 RUNTIME_DEP_PKGS_CSWsendnsca += CSWlibmcrypt4
-RUNTIME_DEP_PKGS_CSWsendnsca += CSWlibltdl7
 
 #
 # files for CSWnsca
@@ -114,14 +111,18 @@ PROTOTYPE_FILES_ugdirs	+= $(NSCA_CONF_DIR) $(SEND_NSCA_CONF_DIR)
 PROTOTYPE_USER_ugdirs	+= nagios
 PROTOTYPE_GROUP_ugdirs	+= nagios
 PROTOTYPE_PERMS_ugdirs	+= 0755
+PROTOTYPE_CLASS_ugdirs	+= ugfiles
+
+PROTOTYPE_MODIFIERS	+= usergroup
+
+PROTOTYPE_FILES_usergroup	+= $(NSCA_USERGROUP) $(SEND_NSCA_USERGROUP)
+PROTOTYPE_CLASS_usergroup	+= cswusergroup
 
 #
 #
 #
 
 INITSMF		= $(NSCA_SMF)
-USERGROUP_CSWnsca	= $(NSCA_USERGROUP)
-USERGROUP_CSWsendnsca	= $(SEND_NSCA_USERGROUP)
 
 #
 # config migration
