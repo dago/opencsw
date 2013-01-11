@@ -31,6 +31,7 @@ endef
 
 MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
+UFILES_REGEX = $(VER)\.\d+
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
@@ -54,7 +55,7 @@ ISAEXEC = 1
 # pkgchk -L CSWlibffi-dev
 # (...)
 # /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
-EXTRA_LIB += $(libdir)/ffi
+# EXTRA_LINKER_FLAGS += $(libdir)/ffi
 
 # BASECFLAGS = $(CFLAGS)
 BASECFLAGS = -g -O2
@@ -99,9 +100,6 @@ PACKAGES += CSWpython$(CVER)
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibbz2-1-0
-# This seems to be an issue with the 64-bit build. The 32-bit binaries link
-# against libffi5, the 64-bit binaries link against libffi4.
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi4
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm4
@@ -208,3 +206,5 @@ EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
 GARCOMPILER = GNU
 
 include gar/category.mk
+
+LINKER_FLAGS := -L$(libdir)/ffi $(LINKER_FLAGS)
