@@ -178,7 +178,7 @@ CHECKPKG_OVERRIDES_CSWnss3-tools += surplus-dependency|CSWlibsoftokn3
 OBSOLETED_BY_CSWnss3-tools = CSWlibnss3-tools+= CSWlibnssutil3+= CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev
 
-# BUILD64 = 1CSWlibsqlite3-dev
+BUILD64 = 1CSWlibsqlite3-dev
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = nss
