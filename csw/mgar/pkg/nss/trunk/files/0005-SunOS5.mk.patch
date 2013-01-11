@@ -1,0 +1,19 @@
+--- a/mozilla/security/coreconf/SunOS5.mk
++++ b/mozilla/security/coreconf/SunOS5.mk
+@@ -125,15 +125,6 @@ endif
+ 
+ NOSUCHFILE   = /solaris-rm-f-sucks
+ 
+-ifeq ($(BUILD_SUN_PKG), 1)
+ # The -R '$ORIGIN' linker option instructs this library to search for its
+ # dependencies in the same directory where it resides.
+-ifeq ($(USE_64), 1)
+-RPATH = -R '$$ORIGIN:/usr/lib/mps/secv1/64:/usr/lib/mps/64'
+-else
+-RPATH = -R '$$ORIGIN:/usr/lib/mps/secv1:/usr/lib/mps'
+-endif
+-else
+-RPATH = -R '$$ORIGIN'
++RPATH = $(LD_OPTIONS)
+-endif
+-

@@ -5,10 +5,10 @@
  ifeq ($(OS_ARCH), SunOS) 
  ifeq ($(USE_64), 1)
 -EXTRA_SHARED_LIBS += -R '$$ORIGIN/../lib:/usr/lib/mps/secv1/64:/usr/lib/mps/64'
-+EXTRA_SHARED_LIBS += -R '/opt/csw/lib/64/$$ISALIST'
++EXTRA_SHARED_LIBS += -Bdirect -R '/opt/csw/lib/64/$$ISALIST'
  else
 -EXTRA_SHARED_LIBS += -R '$$ORIGIN/../lib:/usr/lib/mps/secv1:/usr/lib/mps'
-+EXTRA_SHARED_LIBS += -R '/opt/csw/lib/$$ISALIST'
++EXTRA_SHARED_LIBS += $(LD_OPTIONS)
  endif
  endif
  

@@ -5,6 +5,6 @@
  endif
  else
 -RPATH = -R '$$ORIGIN'
-+RPATH = $(LDFLAGS)  $(LD_OPTIONS)
++RPATH = $(LD_OPTIONS)
  endif
  
