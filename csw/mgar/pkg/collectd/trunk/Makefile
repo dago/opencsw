@@ -69,7 +69,7 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)/opt/csw/share/man/man3
 	cd $(DESTDIR); gmv -v opt/csw/man/man3/* opt/csw/share/man/man3
-	grm $(DESTDIR)/opt/csw/lib/perl5/sun4-solaris-thread-multi/perllocal.pod
+	grm -f $(DESTDIR)/opt/csw/lib/perl5/sun4-solaris-thread-multi/perllocal.pod
 	rmdir $(DESTDIR)/opt/csw/man/man3
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(WORKDIR)/collectd-init-csw $(DESTDIR)$(sysconfdir)/init.d/collectd
