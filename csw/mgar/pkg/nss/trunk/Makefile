@@ -169,21 +169,20 @@ RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibsmime3
-RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibssl3
 RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnssutil3
 # plugins accessed via dlopen
 RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibsoftokn3
 RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibnssdbm3 +RUNTIME_DEP_PKGS_CSWnss3-tools += CSWlibfreebl3+CHECKPKG_OVERRIDES_CSWnss3-tools += surplus-dependency|CSWlibfreebl3
 CHECKPKG_OVERRIDES_CSWnss3-tools += surplus-dependency|CSWlibnssdbm3
 CHECKPKG_OVERRIDES_CSWnss3-tools += surplus-dependency|CSWlibsoftokn3
-OBSOLETED_BY_CSWnss3-tools = CSWlibnss3-tools+= CSWlibnssutil3
+OBSOLETED_BY_CSWnss3-tools = CSWlibnss3-tools+= CSWlibnssutil3+= CSWnspr-dev
+BUILD_DEP_PKGS += CSWlibsqlite3-dev
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-dev CSWlibsqlite3-dev
+# BUILD64 = 1CSWlibsqlite3-dev
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = nss
-INSTALL_SCRIPTS = nss
-TEST_SCRIPTS =
+INSTALL_SCRIPTS = nsTS =
 BUILD64 = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-amd64   = $(libdir)
@@ -195,7 +194,8 @@ includedir = $(prefix)/include/nss
 
 ifneq (DBG,$(GARFLAVOR))
 	BUILD_OPT = 1
-	export BUILD_OPT
+	# no configure target
+#export BUILD_OPT
 	CONFIGURE_ARGS += --disable-debug --enable-optimize
 endif
 
@@ -224,14 +224,16 @@ else
 	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
 endif
 endif
-export NSPR_LIB_DIR
-
+expoLD_OPTIONS = -z ignore -Bdirect
 ifeq ($(USE_64),1) 
-SQLITE_LIB_DIR = /opt/csw/lib/64
+  SQLITE_LIB_DIR = /opt/csw/lib/64
+  LD_OPTIONS += -R/opt/csw/lib/64/$$$$ISALIST
 else
-SQLITE_LIB_DIR = /opt/csw/lib
+  SQLITE_LIB_DIR = /opt/csw/lib
+  LD_OPTIONS += -R/opt/csw/lib/$$$$ISALIST
 endif
 export SQLITE_LIB_DIR
+rt SQLITE_LIB_DIR
 SQLITE_INCLUDE_DIR = /opt/csw/include
 export SQLITE_INCLUDE_DIR
 
@@ -253,19 +255,16 @@ LICENSE = mpl-tri-license-txt
 # PATCHFILES  = whoami.patch
 
 # Required patches.
-PATCHFILES += include.patch
+PATCHFILES # += include.patch
 PATCHFILES += ld-options.patch
 PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
 6-platlibs.mk-linking-bltest.patch
 PATCHFILES += 0006-config.mk-linkingmk-linking-bltest.patch
+PASunOS5.mkmk-linking-bltest.patch
 PATCHFILES += 0005-change-rpath-for-bins-in-platlibs.mk.patch
 
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-February/000167.html
-# NOISAEXEC = 1
-
-CPPFLAGS =
-LD_OPTIONS = 
-# NSS_LD_OPTIONS = -R'$$ORIGIN'
+ -R'$$ORIGIN'
 
 
 
@@ -292,8 +291,7 @@ build-dbm:
 # needs to be used instead of $$.
 build-nss-compile:
 	(cd $(WORKSRC)/mozilla/security/nss \
-		&& \
-	gmake -j1 RPATH=-R\'/opt/csw/li BUILD_SUN_PKG=1b/\$$\$$ISALIST\')
+	LD_OPTIONS='$(LD_OPTIONS)i BUILD_SUN_PKG=1b/\$$\$$ISALIST\')
 	@$(MAKECOOKIE)
 
 install-nss:
