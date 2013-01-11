@@ -409,7 +409,8 @@ class InspectivePackage(package.DirectoryFormatPackage):
         result = self._ParseLddDashRline(line, binary_abspath)
         if result:
           ldd_info.append(result)
-        ldd_output[binary] = ldd_info
+
+      ldd_output[binary] = ldd_info
 
     return ldd_output
 
