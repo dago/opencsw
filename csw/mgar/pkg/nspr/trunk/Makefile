@@ -8,7 +8,7 @@
 
 NAME = nspr
 MAJOR_VERSION = 4
-MIN_VERSION = 9.3
+MIN_VERSION = 9.4
 VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -150,4 +150,3 @@ install-nspr:
 	fi
 	rm -f $(DESTDIR)$(bindir)/prerr.properties
 	rm -f $(DESTDIR)$(bindir)/nspr.pc
-	@$(MAKECOOKIE)
