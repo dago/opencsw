@@ -63,7 +63,8 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 # pkgchk -L CSWlibffi-dev
 # (...)
 # /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
-EXTRA_LINKER_FLAGS += -L$(libdir)/ffi
+# EXTRA_LINKER_FLAGS += -L$(libdir)/ffi
+# The above doesn't work; we need to put the flag in front of LINKER_FLAGS.
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -223,6 +224,8 @@ CHECKPKG_OVERRIDES_CSWpython27-tk += soname-unused|libX11.so.4|is|needed|by|/opt
 CHECKPKG_OVERRIDES_CSWpython27-tk += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
 
 include gar/category.mk
+
+LINKER_FLAGS := -L$(libdir)/ffi $(LINKER_FLAGS)
 
 post-configure-modulated:
 	for f in Modules/Setup \
