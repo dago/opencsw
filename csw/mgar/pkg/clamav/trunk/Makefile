@@ -48,28 +48,18 @@ PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 PATCHFILES += CSWclamav.clamav-milter.conf.p
 PATCHFILES += CSWclamav.optparser.c.p
-# Not needed with 0.97.6
-#PATCHFILES += CSWclamav.scanners.c.p
 
 # Must have 64-bit libmilter for this to work
 #BUILD64 = 1
 
-#PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
-#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 GARCOMPILER = GNU
-
-# Seems to be a compiler bug forcing us to use -xO2 instead of -xO3
-# http://bugs.sun.com/view_bug.do?bug_id=6683773
-# New bug filed since the above one isn't really solved, no bug id yet
-#OPT_FLAGS_SOS = -xO2
 
 sysconfdir = /etc/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
-# unrecognized by 0.95rc1? CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
 CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(NAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
