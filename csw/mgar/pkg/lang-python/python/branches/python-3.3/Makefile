@@ -46,8 +46,9 @@ PATCHFILES += 0004-Use-PY_CPPFLAGS-in-Modules-makesetup.patch
 SKIPTEST = 1
 TEST_TARGET = test
 
-BUILD64 = 1
-ISAEXEC = 1
+BUILD64_ONLY = 1
+bindir = $(prefix)/bin
+# ISAEXEC = 1
 
 # There is a file name conflict over libffi.so symlink between libffi package
 # and a gcc-java package.  While it will ultimately belong to libffi_dev, the
