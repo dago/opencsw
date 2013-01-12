@@ -12,21 +12,26 @@ import system_pkgmap
 CONFIG_DB_SCHEMA = "db_schema_version"
 DB_SCHEMA_VERSION = 9L
 TABLES_THAT_NEED_UPDATES = (m.CswFile,)
+
+# This list of tables is sensitive to the order in which tables are created.
+# After you change the order here, you need to make sure that the tables can
+# still be created.
 TABLES = TABLES_THAT_NEED_UPDATES + (
             m.Architecture,
             m.CatalogRelease,
             m.CatalogReleaseType,
             m.CheckpkgErrorTag,
-            m.CheckpkgOverride,
             m.CswConfig,
             m.Host,
             m.Maintainer,
             m.OsRelease,
             m.Pkginst,
+            m.Srv4FileStatsBlob,
+            m.Srv4FileStats,
+            m.CheckpkgOverride, # needs Srv4FileStats
             m.Srv4DependsOn,
             m.Srv4FileInCatalog,
-            m.Srv4FileStatsBlob,
-            m.Srv4FileStats)
+)
 # Shouldn't this be in common_constants?
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 CONFIG_MTIME = "mtime"
