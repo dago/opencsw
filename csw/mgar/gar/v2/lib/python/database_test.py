@@ -8,6 +8,18 @@ import models
 
 class DatabaseManagerUnitTest(mox.MoxTestBase):
 
+  def testCanCreateTables(self):
+    # This test succeeds when run with sqlite, but fails with MySQL.
+    # We don't want to add a dependency on a running MySQL database to run tests, so
+    # we'll leave it unsolved for now.
+    dbc = database.CatalogDatabase(uri="sqlite:/:memory:")
+    dbc.CreateTables()
+
+  def testCanCreateTablesAndImportData(self):
+    dbc = database.CatalogDatabase(uri="sqlite:/:memory:")
+    dbc.CreateTables()
+    dbc.InitialDataImport()
+
   def testNoSystemFiles(self):
     # This test shows that stubbing out sqlite classes is quite laborious.
     saved_s = database.m.Srv4FileStats
