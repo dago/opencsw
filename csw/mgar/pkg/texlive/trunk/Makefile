@@ -5186,7 +5186,6 @@ post-install-modulated:
 	$(MAKECOOKIE)
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
-REINPLACE_USRLOCAL		+=	/opt/csw/include/kpathsea/types.h
 REINPLACE_USRLOCAL		+=	/opt/csw/share/info/kpathsea.info
 REINPLACE_USRLOCAL		+=	/opt/csw/share/info/web2c.info
 REINPLACE_USRLOCAL		+=	/opt/csw/share/man/man1/texmfstart.1
