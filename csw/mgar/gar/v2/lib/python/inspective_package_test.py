@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.6
+#!/opt/csw/bin/python2.6
 
 import unittest2 as unittest
 import inspective_package
@@ -146,6 +146,22 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.ReplayAll()
 
     self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
+
+  def testGetLddMinusRlines(self):
+    ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(os, 'chmod')
+    self.mox.StubOutWithMock(os, 'uname')
+    os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
+    os.uname().AndReturn('i86pc')
+    ip.ListBinaries().AndReturn(['bin/foo'])
+    self.mox.StubOutWithMock(inspective_package, 'ShellCommand')
+    inspective_package.ShellCommand(
+        ['ldd', '-Ur', '/tmp/CSWfake/root/bin/foo'],
+        timeout=10).AndReturn((0, "", ""))
+    self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
+    self.mox.ReplayAll()
+    self.assertEqual({'bin/foo': []}, ip.GetLddMinusRlines())
 
 
 class PackageStatsUnitTest(unittest.TestCase):

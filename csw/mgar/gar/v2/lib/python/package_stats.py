@@ -337,15 +337,6 @@ class PackageStatsMixin(object):
     for override_dict in pkg_stats["overrides"]:
       o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
-    # The ldd -r reporting breaks on bigger packages during yaml saving.
-    # It might work when yaml is disabled
-    # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
-    # This check is currently disabled, let's save time by not collecting
-    # these data.
-    # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
-    # This one should be last, so that if the collection is interrupted
-    # in one of the previous runs, the basic_stats.pickle file is not there
-    # or not updated, and the collection is started again.
     return db_pkg_stats
 
   @classmethod
