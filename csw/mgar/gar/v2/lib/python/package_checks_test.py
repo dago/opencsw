@@ -8,7 +8,6 @@ import unittest
 import package_checks as pc
 import checkpkg
 import checkpkg_lib
-import yaml
 import os.path
 import mox
 import logging
