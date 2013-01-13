@@ -1,0 +1,31 @@
+From 14a318b3e2fb0ccb3792e65ef4f0b361384ddaea Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 13 Jan 2013 21:24:23 +0100
+Subject: [PATCH 7/7] Settings for Solaris
+
+---
+ setup.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/setup.py b/setup.py
+index e7e262b..62f72cd 100644
+--- a/setup.py
++++ b/setup.py
+@@ -1478,6 +1478,14 @@ class PyBuildExt(build_ext):
+             macros = dict()
+             libraries = []
+ 
++        elif platform == 'sunos5':      # Solaris
++            macros = dict(
++                HAVE_SEM_OPEN=0,        # Not Implemented
++                HAVE_SEM_TIMEDWAIT=0,   # Not Implemented
++                HAVE_FD_TRANSFER=1,
++                )
++            libraries = ['rt']
++
+         else:                                   # Linux and other unices
+             macros = dict()
+             libraries = ['rt']
+-- 
+1.8.0
+
