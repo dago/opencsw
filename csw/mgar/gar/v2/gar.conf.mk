@@ -702,7 +702,7 @@ LINKER_IGNORE ?= -z ignore
 RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $(abspath $D/$(MM_LIBDIR)))) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
 endif
 
-LINKER_FLAGS ?= $(foreach ELIB,$(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
+LINKER_FLAGS ?= $(PREPEND_LINKER_FLAGS) $(foreach ELIB,$(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
