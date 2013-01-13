@@ -6,6 +6,11 @@ import re
 import os.path
 import common_constants
 
+class Error(Exception):
+  """Generic error."""
+
+class DataError(Error):
+  """There's a problem with data."""
 
 # TODO: Merge with common_constants
 SPARCV8_PATHS = (
@@ -234,7 +239,7 @@ def IsBinary(file_info, check_consistency=True):
   if not file_info["mime_type"]:
     # This should never happen, but it seems to have happened at least once.
     # TODO: Find the affected data and figure out why.
-    raise PackageError("file_info is missing mime_type:" % file_info)
+    raise DataError("file_info is missing mime_type:" % file_info)
   for mimetype in BIN_MIMETYPES:
     if mimetype in file_info["mime_type"]:
       is_a_binary = True
