@@ -3,6 +3,7 @@
 import unittest2 as unittest
 import inspective_package
 import package
+import shell
 import mox
 import hachoir_parser
 import magic
@@ -139,11 +140,11 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(ip, 'ListBinaries')
     ip.ListBinaries().AndReturn([fake_binary])
 
-    self.mox.StubOutWithMock(inspective_package, 'ShellCommand')
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "root", fake_binary)]
-    inspective_package.ShellCommand(args).AndReturn((0, fake_elfdump_output, ""))
+    shell.ShellCommand(args).AndReturn((0, fake_elfdump_output, ""))
     self.mox.ReplayAll()
 
     self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
@@ -155,8 +156,8 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(os, 'uname')
     os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
     ip.ListBinaries().AndReturn(['bin/foo'])
-    self.mox.StubOutWithMock(inspective_package, 'ShellCommand')
-    inspective_package.ShellCommand(
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    shell.ShellCommand(
         ['ldd', '-Ur', '/tmp/CSWfake/root/bin/foo'],
         timeout=10).AndReturn((0, "", ""))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
@@ -171,8 +172,8 @@ Syminfo Section:  .SUNW_syminfo
     os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
     os.uname().AndReturn('i86pc')
     ip.ListBinaries().AndReturn(['bin/foo'])
-    self.mox.StubOutWithMock(inspective_package, 'ShellCommand')
-    inspective_package.ShellCommand(
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    shell.ShellCommand(
         ['ldd', '-Ur', '/tmp/CSWfake/root/bin/foo'],
         timeout=10).AndReturn((1, "", "boo"))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
