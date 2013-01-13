@@ -1,6 +1,7 @@
 import package
 import os
 import re
+import sys
 import logging
 import hachoir_parser
 import sharedlib_utils
@@ -312,7 +313,11 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
         stderr = re.sub(ignored_error_re, "", stderr)
         if stderr:
-          msg = "%s returned one or more errors: %s" % (args, stderr)
+          msg = ("%s returned one or more errors: %s" % (args, stderr) +
+                 "\n\n" +
+                 "ERROR: ldd invocation failed. Please copy this message " +
+                 "and the above messages into your report and send " +
+                 "as path of the error report.")
           raise package.Error(msg)
       elfdump_out = stdout.splitlines()
 
@@ -323,7 +328,12 @@ class InspectivePackage(package.DirectoryFormatPackage):
       cur_section = None
       for line in elfdump_out:
 
-        elf_info, cur_section = self._ParseElfdumpLine(line, cur_section)
+        try:
+          elf_info, cur_section = self._ParseElfdumpLine(line, cur_section)
+        except package.StdoutSyntaxError as e:
+          sys.stderr.write("elfdump out:\n")
+          sys.stderr.write(stdout)
+          raise
 
         # header or blank line contains no information
         if not elf_info:
