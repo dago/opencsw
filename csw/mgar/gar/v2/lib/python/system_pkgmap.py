@@ -3,7 +3,6 @@
 
 import re
 import configuration as c
-import subprocess
 import logging
 import common_constants
 import marshal
@@ -285,10 +284,7 @@ class Indexer(object):
     if uname_option:
       args.append(uname_option)
     # TODO: Don't fork during unit tests
-    uname_proc = subprocess.Popen(args,
-                                  stdout=subprocess.PIPE)
-    stdout, stderr = uname_proc.communicate()
-    ret = uname_proc.wait()
+    ret, stdout, unused_stderr = shell.ShellCommand(args)
     if ret:
       raise SubprocessError("Running uname has failed.")
     return stdout.strip()
@@ -352,9 +348,7 @@ class Indexer(object):
     args = ["pkg", "contents", "-H", "-o",
             "path,action.name,pkg.name,target,mode,owner,group",
             "-t", "dir,file,hardlink,link"]
-    pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-    stdout, stderr = pkg_proc.communicate()
-    ret = pkg_proc.wait()
+    ret, stdout, unused_stderr = shell.ShellCommand(args)
     return stdout.splitlines()
 
   def _GetSrv4PkginfosStream(self):
@@ -363,18 +357,14 @@ class Indexer(object):
       pkginfo_stream = open(self.infile_pkginfo, "r")
     else:
       args = ["pkginfo"]
-      pkginfo_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-      stdout, stderr = pkginfo_proc.communicate()
-      ret = pkginfo_proc.wait()
+      ret, stdout, stderr = shell.ShellCommand(args)
       pkginfo_stream = stdout.splitlines()
 
     return pkginfo_stream
 
   def _GetIpsPkginfosStream(self):
     args = ["pkg", "list", "-H", "-s"]
-    pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-    stdout, stderr = pkg_proc.communicate()
-    ret = pkg_proc.wait()
+    ret, stdout, stderr = shell.ShellCommand(args)
     pkglist_stream = stdout.splitlines()
     return pkglist_stream
 

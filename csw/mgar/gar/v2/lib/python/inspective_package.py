@@ -8,11 +8,10 @@ import sharedlib_utils
 import magic
 import copy
 import common_constants
-import subprocess
 import ldd_emul
 import configuration as c
 import time
-import signal
+import shell
 
 """This file isolates code dependent on hachoir parser.
 
@@ -82,37 +81,6 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         logging.warning(
             "Error in hachoir_parser processing %s: %r", file_path, e)
   return file_info
-
-class TimeoutExpired(Exception):
-    pass
-
-def TimeoutHandler(signum, frame):
-  raise TimeoutExpired
-
-def ShellCommand(args, env=None, timeout=None):
-  logging.debug("Running: %s", args)
-  proc = subprocess.Popen(args,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
-                          env=env,
-                          preexec_fn=os.setsid)
-  # Python 3.3 have the timeout option
-  # we have to roughly emulate it with python 2.x
-  if timeout:
-    signal.signal(signal.SIGALRM, TimeoutHandler)
-    signal.alarm(timeout)
-
-  try:
-    stdout, stderr = proc.communicate()
-    signal.alarm(0)
-  except TimeoutExpired:
-    os.kill(-proc.pid, signal.SIGKILL)
-    msg = "Process %s killed after timeout expiration" % args
-    raise TimeoutExpired(msg)
-
-  retcode = proc.wait()
-  return retcode, stdout, stderr
-
 
 class InspectivePackage(package.DirectoryFormatPackage):
   """Extends DirectoryFormatPackage to allow package inspection."""
@@ -221,7 +189,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary_in_tmp_dir)
       binary_base_name = os.path.basename(binary_in_tmp_dir)
       args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
-      retcode, stdout, stderr = ShellCommand(args, env)
+      retcode, stdout, stderr = shell.ShellCommand(args, env)
       binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
       if basedir:
@@ -248,14 +216,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
       # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
       args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
-      nm_proc = subprocess.Popen(
-          args,
-          stdout=subprocess.PIPE,
-          stderr=subprocess.PIPE)
-      stdout, stderr = nm_proc.communicate()
-      retcode = nm_proc.wait()
+      retcode, stdout, stderr = shell.ShellCommand(args)
       if retcode:
         logging.error("%s returned an error: %s", args, stderr)
+      	# Should it just skip over an error?
         continue
       nm_out = stdout.splitlines()
 
@@ -291,7 +255,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
       # elfdump is the only tool that give us all informations
       args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
-      retcode, stdout, stderr = ShellCommand(args)
+      retcode, stdout, stderr = shell.ShellCommand(args)
       if retcode or stderr:
         # we ignore for now these elfdump errors which can be catched
         # later by check functions,
@@ -394,7 +358,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       args = ["ldd", "-Ur", binary_abspath]
       # ldd can be stuck while ran on a some binaries, so we define
       # a timeout (problem encountered with uconv)
-      retcode, stdout, stderr = ShellCommand(args, timeout=10)
+      retcode, stdout, stderr = shell.ShellCommand(args, timeout=10)
       if retcode:
         # There three cases where we will ignore an ldd error
         #  - if we are trying to analyze a 64 bits binary on a Solaris 9 x86
