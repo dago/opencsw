@@ -15,7 +15,7 @@ index e7e262b..62f72cd 100644
              macros = dict()
              libraries = []
  
-+        elif platform == 'sunos5':      # Solaris
++        elif host_platform == 'sunos5': # Solaris
 +            macros = dict(
 +                HAVE_SEM_OPEN=0,        # Not Implemented
 +                HAVE_SEM_TIMEDWAIT=0,   # Not Implemented
