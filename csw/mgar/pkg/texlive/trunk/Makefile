@@ -5111,80 +5111,6 @@ CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/op
 CHECKPKG_OVERRIDES_CSWtexlive-generic-recommended	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/fonts/fontname/Makefile
 CHECKPKG_OVERRIDES_CSWtexlive-generic-recommended	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/generic/epsf/Makefile
 
-include gar/category.mk
-
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
-
-# we build in a directory outside the source tree and gather the
-# licenses from the extra archive into one file:
-pre-configure-modulated:
-	mkdir -p $(OBJDIR)
-	cat $(WORKDIR)/$(DISTNAMEPREFIX)-extra/LICENSE.TL $(WORKDIR)/$(DISTNAMEPREFIX)-extra/LICENSE.CTAN > $(WORKSRC)/COPYING
-	$(MAKECOOKIE)
-
-# this is necessary to link texk/ptexenc (libtool --mode=install) when
-# the kpathsea from teTeX is installed on the build system; this will
-# probably go away when teTeX is decommissioned.
-pre-install-modulated:
-	cd $(OBJDIR)/texk/ptexenc && gsed --in-place --expression='s;-L/opt/csw/lib;;g' libptexenc.la
-	$(MAKECOOKIE)
-
-# install the texmf and texmf-dist
-post-install-modulated:
-	: merge source and distributed texmf tree
-	gtar --directory=$(DESTDIR)/$(datadir) --extract --file=$(DOWNLOADDIR)/$(TEXMFAR)
-	gtar --directory=$(DESTDIR)/$(datadir) --create --file=- texmf texmf-dist | gtar --directory=$(DESTDIR)/$(datadir)/$(TEXMFARPREFIX) --extract --file=-
-	rm -rf $(DESTDIR)/$(datadir)/texmf $(DESTDIR)/$(datadir)/texmf-dist
-	mv $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)/texmf $(DESTDIR)/$(datadir)
-	mv $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)/texmf-dist $(DESTDIR)/$(datadir)
-	rm -rf $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)
-	: create additional hierarchy to reflect texmf.cnf
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(datadir)/texmf-local
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/lib/texmf-var
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(sysconfdir)/texmf
-	: create all the available formats:
-	PATH=$(DESTDIR)/$(bindir):${PATH} LD_LIBRARY_PATH=$(DESTDIR)/$(libdir) fmtutil-sys --all
-	: create symbolic links for available formats:
-	cd $(DESTDIR)/$(bindir) && ln -s -f aleph lamed
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex amstex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cslatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfcslatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex csplain
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfcsplain
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex eplain
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex jadetex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfjadetex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex latex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdflatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f luatex dvilualatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f luatex lualatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f luatex dviluatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfmex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex utf8mex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mllatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mltex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex etex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfetex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyramstex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyrtex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex texsis
-	cd $(DESTDIR)/$(bindir) && ln -s -f euptex uplatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f xetex xelatex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex xmltex
-	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfxmltex
-	: replace references to interpreters
-	:    Perl
-	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/perl[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/perl[[:space:]]*;#!/usr/bin/env perl ;' {}
-	:    Bourne Shell
-	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/sh[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/sh[[:space:]]*;#!/usr/bin/env bash ;' {}
-	: patch postinstallation for those files being too expansive to patch in the classic way
-	gsed --in-place --expression 's;^cmbase=.*cmbase.mf$$;cmbase=/opt/csw/share/texmf-dist/fonts/source/public/cm/cmbase.mf;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mktipapk.sh $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mkxipapk.sh
-	gsed --in-place --expression 's;^LATEXPATH="/usr/texbin/" # TeXLive$$;LATEXPATH="/opt/csw/bin/" # TeXLive;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/latex/confproc/example/buildpapers.sh
-	gsed --in-place --expression 's;/usr/local/teTeX/share/texmf.local/scripts/xetex/perl/lib/PDF/Reuse.pm;/opt/csw/share/texmf-dist/scripts/xetex/perl/lib/PDF/Reuse.pm;' $(DESTDIR)/opt/csw/share/texmf-dist/scripts/xetex/perl/xdv2pdf_mergemarks
-	$(MAKECOOKIE)
-
 REINPLACE_WHEN_USRLOCAL	=	postinstall
 REINPLACE_USRLOCAL		+=	/opt/csw/share/info/kpathsea.info
 REINPLACE_USRLOCAL		+=	/opt/csw/share/info/web2c.info
@@ -5328,6 +5254,80 @@ REINPLACE_USRSHARE		+=	/opt/csw/share/texmf/doc/man/man1/pdfjam.1
 REINPLACE_USRSHARE		+=	/opt/csw/share/texmf/doc/man/man1/purifyeps.1
 REINPLACE_USRSHARE		+=	/opt/csw/share/texmf/texconfig/v/vt100
 REINPLACE_USRSHARE		+=	/opt/csw/share/texmf/web2c/texmf.cnf
+
+include gar/category.mk
+
+PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+
+# we build in a directory outside the source tree and gather the
+# licenses from the extra archive into one file:
+pre-configure-modulated:
+	mkdir -p $(OBJDIR)
+	cat $(WORKDIR)/$(DISTNAMEPREFIX)-extra/LICENSE.TL $(WORKDIR)/$(DISTNAMEPREFIX)-extra/LICENSE.CTAN > $(WORKSRC)/COPYING
+	$(MAKECOOKIE)
+
+# this is necessary to link texk/ptexenc (libtool --mode=install) when
+# the kpathsea from teTeX is installed on the build system; this will
+# probably go away when teTeX is decommissioned.
+pre-install-modulated:
+	cd $(OBJDIR)/texk/ptexenc && gsed --in-place --expression='s;-L/opt/csw/lib;;g' libptexenc.la
+	$(MAKECOOKIE)
+
+# install the texmf and texmf-dist
+post-install-modulated:
+	: merge source and distributed texmf tree
+	gtar --directory=$(DESTDIR)/$(datadir) --extract --file=$(DOWNLOADDIR)/$(TEXMFAR)
+	gtar --directory=$(DESTDIR)/$(datadir) --create --file=- texmf texmf-dist | gtar --directory=$(DESTDIR)/$(datadir)/$(TEXMFARPREFIX) --extract --file=-
+	rm -rf $(DESTDIR)/$(datadir)/texmf $(DESTDIR)/$(datadir)/texmf-dist
+	mv $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)/texmf $(DESTDIR)/$(datadir)
+	mv $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)/texmf-dist $(DESTDIR)/$(datadir)
+	rm -rf $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)
+	: create additional hierarchy to reflect texmf.cnf
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(datadir)/texmf-local
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/lib/texmf-var
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(sysconfdir)/texmf
+	: create all the available formats:
+	PATH=$(DESTDIR)/$(bindir):${PATH} LD_LIBRARY_PATH=$(DESTDIR)/$(libdir) fmtutil-sys --all
+	: create symbolic links for available formats:
+	cd $(DESTDIR)/$(bindir) && ln -s -f aleph lamed
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex amstex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cslatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfcslatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex csplain
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfcsplain
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex eplain
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex jadetex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfjadetex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex latex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdflatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f luatex dvilualatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f luatex lualatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f luatex dviluatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfmex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex utf8mex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mllatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex mltex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex etex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfetex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyramstex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex cyrtex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex texsis
+	cd $(DESTDIR)/$(bindir) && ln -s -f euptex uplatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f xetex xelatex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex xmltex
+	cd $(DESTDIR)/$(bindir) && ln -s -f pdftex pdfxmltex
+	: replace references to interpreters
+	:    Perl
+	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/perl[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/perl[[:space:]]*;#!/usr/bin/env perl ;' {}
+	:    Bourne Shell
+	cd $(DESTDIR)/$(prefix) && gfind . -type f | xargs ggrep -n '^#![[:space:]]*.*/sh[[:space:]]*' /dev/null | ggrep -v '/env ' | ggrep ':1:' | cut -d : -f 1 | xargs -l -i gsed --in-place --regexp-extended --expression 's;^#![[:space:]]*.*/sh[[:space:]]*;#!/usr/bin/env bash ;' {}
+	: patch postinstallation for those files being too expansive to patch in the classic way
+	gsed --in-place --expression 's;^cmbase=.*cmbase.mf$$;cmbase=/opt/csw/share/texmf-dist/fonts/source/public/cm/cmbase.mf;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mktipapk.sh $(DESTDIR)/opt/csw/share/texmf-dist/doc/fonts/tipa/mkxipapk.sh
+	gsed --in-place --expression 's;^LATEXPATH="/usr/texbin/" # TeXLive$$;LATEXPATH="/opt/csw/bin/" # TeXLive;' $(DESTDIR)/opt/csw/share/texmf-dist/doc/latex/confproc/example/buildpapers.sh
+	gsed --in-place --expression 's;/usr/local/teTeX/share/texmf.local/scripts/xetex/perl/lib/PDF/Reuse.pm;/opt/csw/share/texmf-dist/scripts/xetex/perl/lib/PDF/Reuse.pm;' $(DESTDIR)/opt/csw/share/texmf-dist/scripts/xetex/perl/xdv2pdf_mergemarks
+	$(MAKECOOKIE)
 
 # the texlive-common package is bigger than a trivially sized /tmp
 pre-package:
