@@ -20,6 +20,7 @@ import os.path
 import package_checks
 import package_stats
 import re
+import shell
 import socket
 import sqlobject
 import struct_util
@@ -326,6 +327,8 @@ class CatalogImporter(object):
           "The catalog release %s is not one of the default releases.",
           repr(catrel))
     sqo_catrel = m.CatalogRelease.selectBy(name=catrel).getOne()
+    _, uname_stdout, _ = shell.ShellCommand(["uname", "-p"])
+    current_host_arch = uname_stdout.strip()
     for osrel in common_constants.OS_RELS:
       logging.info("  OS release: %s", repr(osrel))
       sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
