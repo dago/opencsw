@@ -185,7 +185,7 @@ class PackageStatsMixin(object):
 
     """
     dir_pkg = self.GetInspectivePkg()
-    logging.debug("Collecting %s package statistics.", repr(dir_pkg.pkgname))
+    logging.debug("Collecting %r (%r) package statistics.", dir_pkg, dir_pkg.pkgname)
     override_dicts = self.GetOverrides()
     basic_stats = self.GetBasicStats()
     # This would be better inferred from pkginfo, and not from the filename, but
@@ -248,7 +248,8 @@ class PackageStatsMixin(object):
     except sqlobject.main.SQLObjectNotFound, e:
       filename_arch = m.Architecture(
           name=pkg_stats["basic_stats"]["parsed_basename"]["arch"])
-    parsed_basename = pkg_stats["basic_stats"]["parsed_basename"]
+    basename = pkg_stats["basic_stats"]["parsed_basename"]
+    parsed_basename = basename
     os_rel_name = parsed_basename["osrel"]
     try:
       os_rel = m.OsRelease.select(
@@ -286,7 +287,8 @@ class PackageStatsMixin(object):
       logging.debug("Cleaning %s before saving it again", db_pkg_stats)
       db_pkg_stats.DeleteAllDependentObjects()
     except sqlobject.main.SQLObjectNotFound, e:
-      logging.debug("Package %s not present in the db, proceeding with insert.")
+      logging.debug("Package %s not present in the db, proceeding with insert.",
+                    basename)
       pass
     # Creating the object in the database.
     data_obj = m.Srv4FileStatsBlob(
