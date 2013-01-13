@@ -412,7 +412,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
           ldd_output[binary] = []
           continue
 
-        raise package.Error("%s returned an error: %s" % (args, stderr))
+        raise package.SystemUtilityError("%s returned an error: %s" % (args, stderr))
 
       ldd_info = []
       for line in stdout.splitlines():
