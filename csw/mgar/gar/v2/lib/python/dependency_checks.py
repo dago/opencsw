@@ -171,10 +171,12 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
           pkgname, messenger)
       orphan_sonames.extend(orphan_sonames_tmp)
 
+    sonames_unused = set()
     ldd_info = pkg_data['ldd_info'][binary_info["path"]]
     for ldd_response in ldd_info:
       if (ldd_response['state'] == 'soname-unused'
           and ldd_response['soname'] not in BASE_SOLARIS_LIBRARIES):
+        sonames_unused.add(ldd_response['soname'])
         messenger.Message(
           "Binary %s links to library %s but doesn't seem to use any"
           " of its symbols. It usually happens because superfluous"
@@ -210,6 +212,11 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
           and 'D' in syminfo['flags'] and 'B' in syminfo['flags']):
           db_libs.add(syminfo['soname'])
     no_db_libs = libs.difference(db_libs)
+
+    # no symbol used means no way to detect if direct binding was
+    # enabled so we must ignore the libraries which were linked
+    # without being used
+    no_db_libs.difference_update(sonames_unused)
 
     if no_db_libs:
       messenger.Message(
