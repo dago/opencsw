@@ -333,6 +333,12 @@ class CatalogImporter(object):
       logging.info("  OS release: %s", repr(osrel))
       sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
+        if current_host_arch != arch:
+        	logging.warning(
+        	    "Cannot process packages for achitecture %r "
+        	    "because we're currently running on architecture %r.",
+        	    arch, current_host_arch)
+        	continue
         logging.info("    Architecture: %s", repr(arch))
         sqo_arch = m.Architecture.selectBy(name=arch).getOne()
         catalog_file = self.ComposeCatalogFilePath(base_dir, osrel, arch)
