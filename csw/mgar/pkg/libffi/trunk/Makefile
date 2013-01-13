@@ -7,13 +7,13 @@ GARTYPE = v2
 
 DESCRIPTION = A portable foreign function interface library
 define BLURB
-	FFI stands for Foreign Function Interface. A foreign function 
-	interface is the popular name for the interface that allows code 
-	written in one language to call code written in another language. 
-	The libffi library really only provides the lowest, machine 
-	dependent layer of a fully featured foreign function interface. 
-	A layer must exist above libffi that handles type conversions for 
-	values passed between the two languages. 
+	FFI stands for Foreign Function Interface. A
+	interface is the popular name for the interface that allows codethat allows code 
+	written in one language to call code written in 
+	The libffi library really only provides the lowest, machine
+	dependent layer of a fully featured foreign function interface.
+	A layer must exist above libffi that handles type conversions for
+	values passed between the two languages.e two languages. 
 endef
 
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
@@ -35,18 +35,13 @@ OBSOLETED_BY_CSWlibffi5 = CSWlibffi
 OBSOLETED_BY_CSWlibffi5-dev = CSWlibffi
 INCOMPATIBLE_PKGS_CSWlibffi5 = CSWlibffi
 
-PACKAGES += CSWlibffi-dev
-CATALOGNAME_CSWlibffi-dev = libffi_dev
-SPKG_DESC_CSWlibffi-dev = $(DESCRIPTION) - developer package
-RUNTIME_DEP_PKGS_CSWlibffi-dev += CSWlibffi5
-PKGFILES_CSWlibffi-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibffi-dev += $(libdir)/(.*/)?ffi/libffi\.so
-PKGFILES_CSWlibffi-dev += $(libdir)/.*/include/.*
-PKGFILES_CSWlibffi-dev += $(datadir)/.*
+PACK5
+PKGFILES_CSWlibffi5 += $(call baseisadirs,$(libdir),libffi\.so\.5(\.\d+)*)
+SPKG_DESC_CSWlibffi5 += $(DESCRIPTION), libffi.so.5
 
-PACKAGES += CSWlibffi5
-SPKG_DESC_CSWlibffi5 = $(DESCRIPTION) - libffi.so.5
-PKGFILES_CSWlibffi5 += .*/libffi\.so\.5.*
+PACKAGES += CSWlibffi-dev
+SPKG_DESC_CSWlibffi-dev = $(DESCRIPTION) - developer package
+RUNTIME_DEP_PKGS_CSWlibffi-dev += CSWlibffi5*/libffi\.so\.5.*
 
 LICENSE = LICENSE
 
@@ -54,9 +49,10 @@ BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-# Tests fail since they are written for gcc only 
+# Tests fail since they are wri
 # But they also fails on 64-bit even when using gcc
 #TEST_TARGET = check
+TEST_TARGET =ck
 TEST_TARGET = 
 
 include gar/category.mk
@@ -86,4 +82,3 @@ post-install-modulated:
 	gmv -v $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)/include/* $(DESTDIR)$(includedir)
 	rmdir $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)/include
 	rmdir $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)
-	@$(MAKECOOKIE)
