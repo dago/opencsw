@@ -2,6 +2,7 @@
 
 import unittest2 as unittest
 import inspective_package
+import package
 import mox
 import hachoir_parser
 import magic
@@ -161,6 +162,23 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
     self.assertEqual({'bin/foo': []}, ip.GetLddMinusRlines())
+
+  def testGetLddMinusRlinesThrows(self):
+    ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(os, 'chmod')
+    self.mox.StubOutWithMock(os, 'uname')
+    os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
+    os.uname().AndReturn('i86pc')
+    ip.ListBinaries().AndReturn(['bin/foo'])
+    self.mox.StubOutWithMock(inspective_package, 'ShellCommand')
+    inspective_package.ShellCommand(
+        ['ldd', '-Ur', '/tmp/CSWfake/root/bin/foo'],
+        timeout=10).AndReturn((1, "", "boo"))
+    self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
+    self.mox.ReplayAll()
+    self.assertRaises(package.SystemUtilityError,
+                      ip.GetLddMinusRlines)
 
 
 class PackageStatsUnitTest(unittest.TestCase):

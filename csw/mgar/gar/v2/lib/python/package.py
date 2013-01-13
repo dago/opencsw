@@ -39,6 +39,9 @@ class Error(Exception):
   pass
 
 
+class SystemUtilityError(Error):
+  """A problem occurred while running system utility, e.g. ldd."""
+
 class PackageError(Error):
   pass
 
