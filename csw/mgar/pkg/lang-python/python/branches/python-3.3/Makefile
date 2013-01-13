@@ -40,6 +40,8 @@ PATCHFILES += makesetup.diff
 PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
 PATCHFILES += 0004-Use-PY_CPPFLAGS-in-Modules-makesetup.patch
+PATCHFILES += 0005-Use-opt-csw-lib-for-module-search.patch
+PATCHFILES += 0007-Settings-for-Solaris.patch
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
