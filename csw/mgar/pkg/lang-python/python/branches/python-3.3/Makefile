@@ -58,8 +58,9 @@ bindir = $(prefix)/bin
 # /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
 # EXTRA_LINKER_FLAGS += $(libdir)/ffi
 
-# BASECFLAGS = $(CFLAGS)
-BASECFLAGS = -g -O2
+# LDFLAGS += -L$(libdir)/ffi
+
+BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
 EXTRA_LINKER_FLAGS = -lsocket -lresolv -lrt
 
