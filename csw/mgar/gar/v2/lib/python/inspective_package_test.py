@@ -153,7 +153,6 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
     os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
-    os.uname().AndReturn('i86pc')
     ip.ListBinaries().AndReturn(['bin/foo'])
     self.mox.StubOutWithMock(inspective_package, 'ShellCommand')
     inspective_package.ShellCommand(
