@@ -56,7 +56,11 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         "You have to restart your process - it "
         "will probably finish successfully when do you that."
         % full_path)
-    raise package.PackageError(msg)
+    if "/opt/csw/share" in full_path:
+    	file_info["mime_type"] = "application/octet-stream; fallback"
+    	logging.error(msg)
+    else:
+      raise package.PackageError(msg)
   if sharedlib_utils.IsBinary(file_info, check_consistency=False):
     parser = hachoir_parser.createParser(full_path)
     if not parser:
