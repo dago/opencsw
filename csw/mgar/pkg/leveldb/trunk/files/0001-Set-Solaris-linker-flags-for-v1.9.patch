@@ -1,0 +1,24 @@
+From c5be0bc93d025c2d08e1c728afc5bae41b977fd9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej@opencsw.org>
+Date: Sun, 13 Jan 2013 17:14:25 +0000
+Subject: [PATCH] Set Solaris linker flags for v1.9
+
+---
+ build_detect_platform | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/build_detect_platform b/build_detect_platform
+index 5801d20..77ec9f7 100755
+--- a/build_detect_platform
++++ b/build_detect_platform
+@@ -86,6 +86,7 @@ case "$TARGET_OS" in
+         PLATFORM=OS_SOLARIS
+         COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_SOLARIS"
+         PLATFORM_LIBS="-lpthread -lrt"
++        PLATFORM_SHARED_LDFLAGS="-shared -Wl,-h -Wl,"
+         PORT_FILE=port/port_posix.cc
+         ;;
+     FreeBSD)
+-- 
+1.8.0
+

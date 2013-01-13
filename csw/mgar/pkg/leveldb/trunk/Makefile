@@ -4,23 +4,17 @@
 # ! Doesn't build, issue filed:
 #   http://code.google.com/p/leveldb/issues/detail?id=88
 NAME = leveldb
-VERSION = 1.4.0
+VERSION = 1.9.0
 GARTYPE = v2
-CATEGORIES = apps
 
-DESCRIPTION = Brief description
-define BLURB
-  Long description
+DESCRIPTION = A fast and lightweight key/value database library by Google
+define BLURB  Long description
 endef
 
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
-UPSTREAM_MASTER_SITES = http://code.google.com/p/leveldb/downloads/list
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-PATCHFILES += 0001-Set-Solaris-linker-flags.patch
+UPSTREAM_MASTER_SITES = http://code.google.com/p/leveldb/TCHFILES += 0001-Set-Solaris-linker-flags-for-v1.9laris-linker-flags.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -44,4 +38,4 @@ install-custom:
 	rsync -rv $(WORKSRC)/include/ $(DESTDIR)$(includedir)
 	@$(MAKECOOKIE)
 
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /op
