@@ -17,6 +17,7 @@ import datetime
 import os.path
 import mute_progressbar
 import checkpkg_lib
+import shell
 import sys
 
 CONTENT_PKG_RE = r"^\*?(CSW|SUNW)[0-9a-zA-Z\-]?[0-9a-z\-]+$"
