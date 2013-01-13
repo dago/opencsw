@@ -70,7 +70,7 @@ class CswSrv4File(shell.ShellMixin, object):
 
   def GetWorkDir(self):
     if not self.workdir:
-      self.workdir = tempfile.mkdtemp(prefix="pkg_")
+      self.workdir = tempfile.mkdtemp(prefix="pkg_", dir="/var/tmp")
       fd = open(os.path.join(self.workdir, "admin"), "w")
       fd.write(ADMIN_FILE_CONTENT)
       fd.close()
