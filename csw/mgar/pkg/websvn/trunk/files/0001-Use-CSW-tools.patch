@@ -1,0 +1,52 @@
+From fb48c17024edd5db6ed5181e772724121703815e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 14 Jan 2013 14:04:54 +0100
+Subject: [PATCH] Use CSW tools
+
+---
+ include/distconfig.php | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/include/distconfig.php b/include/distconfig.php
+index bf4e95a..bf34be0 100644
+--- a/include/distconfig.php
++++ b/include/distconfig.php
+@@ -33,20 +33,27 @@
+ // Configure these lines if your commands aren't on your path.
+ //
+ // $config->setSVNCommandPath('Path/to/svn/command/'); //  e.g. c:\\program files\\subversion\\bin
++$config->setSVNCommandPath('/opt/csw/bin'); //  e.g. c:\\program files\\subversion\\bin
+ // $config->setDiffPath('Path/to/diff/command/');
++$config->setDiffPath('/opt/csw/gnu');
+ 
+ // For syntax colouring, if option enabled...
+ // $config->setEnscriptPath('Path/to/enscript/command/');
++$config->setEnscriptPath('/opt/csw/bin');
+ // $config->setSedPath('Path/to/sed/command/');
++$config->setSedPath('/opt/csw/gnu');
+ 
+ // For delivered tarballs, if option enabled...
+ // $config->setTarPath('Path/to/tar/command/');
++$config->setTarPath('/opt/csw/gnu');
+ 
+ // For delivered GZIP'd files and tarballs, if option enabled...
+ // $config->setGZipPath('Path/to/gzip/command/');
++$config->setGZipPath('/opt/csw/bin');
+ 
+ // download folder/file zipped ...
+ // $config->setZipPath('Path/to/zip/command/');
++$config->setZipPath('/opt/csw/bin');
+ 
+ // Uncomment this line to trust server certificates
+ // This may useful if you use self-signed certificates and have no chance to accept the certificate once via cli
+@@ -363,6 +370,7 @@ $config->setMinDownloadLevel(2);
+ // If you have version 1.6.3 or newer use the following line.
+ //
+ // $config->useEnscript();
++$config->useEnscript();
+ //
+ // If you have version 1.6.2 or older use the following line.
+ //
+-- 
+1.8.0
+
