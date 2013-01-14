@@ -1,0 +1,175 @@
+From 9c43d26edd1bf30da5ba0f145077155d64f1cdb1 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 14 Jan 2013 00:00:13 +0100
+Subject: [PATCH] work around missing strftime format specifiers
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ git-cvsimport.perl  |  5 ++++-
+ perl/Git.pm         | 41 +++++++++++++++++++++++++++++++++++++++++
+ perl/Git/SVN.pm     | 12 ++----------
+ perl/Git/SVN/Log.pm |  8 ++++++--
+ 4 files changed, 53 insertions(+), 13 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 0a31ebd..d8aa7e2 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -26,6 +26,7 @@ use IO::Socket;
+ use IO::Pipe;
+ use POSIX qw(strftime tzset dup2 ENOENT);
+ use IPC::Open2;
++use Git qw(get_tz_offset);
+ 
+ $SIG{'PIPE'}="IGNORE";
+ set_timezone('UTC');
+@@ -864,7 +865,9 @@ sub commit {
+ 	}
+ 
+ 	set_timezone($author_tz);
+-	my $commit_date = strftime("%s %z", localtime($date));
++	# $date is in the seconds since epoch format
++	my $tz_offset = Git::get_tz_offset($date);
++	my $commit_date = "$date $tz_offset";
+ 	set_timezone('UTC');
+ 	$ENV{GIT_AUTHOR_NAME} = $author_name;
+ 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 497f420..c47ea95 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -59,6 +59,7 @@ require Exporter;
+                 command_bidi_pipe command_close_bidi_pipe
+                 version exec_path html_path hash_object git_cmd_try
+                 remote_refs
++		get_tz_offset
+                 temp_acquire temp_release temp_reset temp_path);
+ 
+ 
+@@ -102,6 +103,7 @@ use Error qw(:try);
+ use Cwd qw(abs_path cwd);
+ use IPC::Open2 qw(open2);
+ use Fcntl qw(SEEK_SET SEEK_CUR);
++use Time::Local qw(timelocal);
+ }
+ 
+ 
+@@ -511,6 +513,45 @@ C<git --html-path>). Useful mostly only internally.
+ 
+ sub html_path { command_oneline('--html-path') }
+ 
++=item get_tz_offset ( TIME )
++
++Return the time zone offset from GMT in the form +/-HHMM where HH is
++the number of hours from GMT and MM is the number of minutes.  This is
++the equivalent of what strftime("%z", ...) would provide on a GNU
++platform.
++
++If TIME is not supplied, the current local time is used.
++
++=cut
++
++sub get_tz_offset {
++	# some systmes don't handle or mishandle %z, so be creative.
++	my $t = shift || time;
++	# timelocal() has a problem when it comes to DST ambiguity so
++	# times that are on a DST boundary cannot be properly converted
++	# using it.  we will possibly adjust its result depending on whehter
++	# pre and post conversions agree on DST
++	my $gm = timelocal(gmtime($t));
++
++	# we need to know whether we were originally in DST or not
++	my $orig_dst = (localtime($t))[8];
++	# and also whether timelocal thinks we're in DST
++	my $conv_dst = (localtime($gm))[8];
++
++	# re-adjust $gm based on the DST value for the two times we're
++	# handling.
++	if ($orig_dst != $conv_dst) {
++		if ($orig_dst == 1) {
++			$gm -= 3600;
++		} else {
++			$gm += 3600;
++		}
++	}
++
++	my $sign = qw( + + - )[ $t <=> $gm ];
++	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
++}
++
+ 
+ =item repo_path ()
+ 
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 59215fa..17d10b8 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -11,7 +11,6 @@ use Carp qw/croak/;
+ use File::Path qw/mkpath/;
+ use File::Copy qw/copy/;
+ use IPC::Open3;
+-use Time::Local;
+ use Memoize;  # core since 5.8.0, Jul 2002
+ use Memoize::Storable;
+ use POSIX qw(:signal_h);
+@@ -22,6 +21,7 @@ use Git qw(
+     command_noisy
+     command_output_pipe
+     command_close_pipe
++    get_tz_offset
+ );
+ use Git::SVN::Utils qw(
+ 	fatal
+@@ -1311,14 +1311,6 @@ sub get_untracked {
+ 	\@out;
+ }
+ 
+-sub get_tz {
+-	# some systmes don't handle or mishandle %z, so be creative.
+-	my $t = shift || time;
+-	my $gm = timelocal(gmtime($t));
+-	my $sign = qw( + + - )[ $t <=> $gm ];
+-	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
+-}
+-
+ # parse_svn_date(DATE)
+ # --------------------
+ # Given a date (in UTC) from Subversion, return a string in the format
+@@ -1351,7 +1343,7 @@ sub parse_svn_date {
+ 			delete $ENV{TZ};
+ 		}
+ 
+-		my $our_TZ = get_tz();
++		my $our_TZ = Git::get_tz_offset();
+ 
+ 		# This converts $epoch_in_UTC into our local timezone.
+ 		my ($sec, $min, $hour, $mday, $mon, $year,
+diff --git a/perl/Git/SVN/Log.pm b/perl/Git/SVN/Log.pm
+index 3cc1c6f..f06d344 100644
+--- a/perl/Git/SVN/Log.pm
++++ b/perl/Git/SVN/Log.pm
+@@ -2,7 +2,11 @@ package Git::SVN::Log;
+ use strict;
+ use warnings;
+ use Git::SVN::Utils qw(fatal);
+-use Git qw(command command_oneline command_output_pipe command_close_pipe);
++use Git qw(command
++           command_oneline
++           command_output_pipe
++           command_close_pipe
++           get_tz_offset);
+ use POSIX qw/strftime/;
+ use constant commit_log_separator => ('-' x 72) . "\n";
+ use vars qw/$TZ $limit $color $pager $non_recursive $verbose $oneline
+@@ -119,7 +123,7 @@ sub run_pager {
+ sub format_svn_date {
+ 	my $t = shift || time;
+ 	require Git::SVN;
+-	my $gmoff = Git::SVN::get_tz($t);
++	my $gmoff = Git::SVN::get_tz_offset($t);
+ 	return strftime("%Y-%m-%d %H:%M:%S $gmoff (%a, %d %b %Y)", localtime($t));
+ }
+ 
+-- 
+1.8.0
+
