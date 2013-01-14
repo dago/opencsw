@@ -144,6 +144,13 @@ RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/sparcv9/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/amd64/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+
+# An example:
+# s9_preload.so.1|is|needed|by|/opt/csw/bin/innochecksum|but|never|used
+CHECKPKG_OVERRIDES_CSW$(NAME) += soname-unused
 
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
