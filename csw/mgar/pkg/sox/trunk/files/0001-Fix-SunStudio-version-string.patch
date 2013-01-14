@@ -1,0 +1,25 @@
+From 88191a5b58b89721fcc9d047320f87945ef9554b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 1 Jan 2013 21:34:22 +0100
+Subject: [PATCH] Fix SunStudio version string
+
+---
+ src/libsox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/libsox.c b/src/libsox.c
+index 75354e4..75fcd76 100644
+--- a/src/libsox.c
++++ b/src/libsox.c
+@@ -79,7 +79,7 @@ sox_version_info_t const * sox_version_info(void)
+ #elif defined _MSC_VER
+         "msvc " STRINGIZE(_MSC_FULL_VER),
+ #elif defined __SUNPRO_C
+-    fprintf(file, "sun c " STRINGIZE(__SUNPRO_C),
++	"sun c " STRINGIZE(__SUNPRO_C),
+ #else
+         NULL,
+ #endif
+-- 
+1.8.0
+
