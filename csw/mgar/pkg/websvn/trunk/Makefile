@@ -1,5 +1,5 @@
 NAME = websvn
-VERSION = 2.2.1
+VERSION = 2.3.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,17 +11,31 @@ define BLURB
   added or deleted in any given revision. You can also view the differences
   between 2 versions of a file so as to see exactly what was changed in
   a particular revision.
-endef
+en+= http://websvn.tigris.org/files/documents/1380/49056/
+DISTFILES += $(DISTNAME).tar.gz
+PATCHFILES += 0001-Use-CSW-tools.patch
 
-MASTER_SITES  = http://websvn.tigris.org/files/documents/1380/45918/
-DISTFILES = $(DISTNAME).tar.gz
-PATCHFILES = websvn-csw-config.patch
-
-SPKG_SOURCEURL = http://websvn.tigris.org/
+VENDOR_URL = http://websvn.tigris.org/
 
 LICENSE = license.txt
 
-RUNTIME_DEP_PKGS = CSWapache2 CSWdiffutils CSWsvn CSWenscript CSWgsed CSWgtar CSWgzip
+RUNTIME_DEP_PKGS += CSWapache2
+RUNTIME_DEP_PKGS += CSWdiffutils
+RUNTIME_DEP_PKGS += CSWsvn
+RUNTIME_DEP_PKGS += CSWenscript
+RUNTIME_DEP_PKGS += CSWgsed
+RUNTIME_DEP_PKGS += CSWgtar
+RUNTIME_DEP_PKGS += CSWgzip
+RUNTIME_DEP_PKGS += CSWzip
+
+# Checkpkg can not check any of these
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWdiffutils
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWsvn
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWenscript
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWgsed
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWgtar
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWgzip
+CHECKPKG_OVERRIDES_CSWwebsvn += surplus-dependency|CSWWgsed CSWgtar CSWgzip
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -41,7 +55,7 @@ install-custom:
 	@rm -rf $(DESTDIR)$(sharedstatedir)/www/websvn
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/websvn
 	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/websvn/htdocs
-	@find $(DESTDIR)$(prefix) -name .svn -exec rm -rf \{\} \;
+	@find $(DESTDIR)$(prefix) -name .svn -execfind $(DESTDIR)$(prefix) -name .gitprefix) -name .svn -exec rm -rf \{\} \;
 	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/websvn
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	@ln -s $(sharedstatedir)/www/websvn/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/websvn
+	@ln -s $(sharedstatedir)/www/websvn/htdocs $(DESTDIR)$(prefix)/apache2/sh
