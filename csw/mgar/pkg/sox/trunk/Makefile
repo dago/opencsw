@@ -18,7 +18,18 @@ DISTFILES bz2$(DISTNAME).tar.gz
 # But as we only need the library in 64 bit anyway this shouldn't hurt.
 PATCHFILES = 0001-Disable-stdio-hack-to-rePATCHFILES += 0001-Fix-SunStudio-version-string.patch(?:\.\d+)*).tar.gz
 
-VENDOR_URL = http://sox.sourceforge.net/
+VENDOR_URL = http://sox.BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWlibogg-dev
+BUILD_DEP_PKGS += CSWlibmad-dev
+BUILD_DEP_PKGS += CSWlibflac-dev
+BUILD_DEP_PKGS += CSWlibao-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibwavpack-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibmagic-dev
+BUILD_DEP_PKGS += CSWlibmp3lame-dev
+BUILD_DEP_PKGS += CSWlibsndfile
+BUILD_DEP_PKGS += CSWlibid3tagx.sourceforge.net/
 
 PACKAGES += CSWsox
 CATALOGNAME_CSWsox = sox
@@ -54,9 +65,7 @@ RUNTIME_DEP_PKGS_CSWlibsox-dev = CSWlibsox2x-dev = CSWlibsox1
 OBSOLETED_BY_CSWlibsox-dev = CSWlibsoxdevel
 CATALOGNAME_CSWlibsoxde_stub
 
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWsox)
-BUILD_DEP_PKGS += CSWlibmagic-dev
-BUILD_DEP_PKGS += CSWlibmp3lame-devS += CSWlame-devel
++= CSWlame-devel
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS +=  --withou = 1
