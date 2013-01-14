@@ -48,8 +48,8 @@ PATCHFILES += 0007-Settings-for-Solaris.patch
 SKIPTEST = 1
 TEST_TARGET = test
 
-BUILD64_ONLY = 1
-bindir = $(prefix)/bin
+# There are problems with platform-dependent data in $(prefix)/lib/python3.3
+# BUILD64 = 1
 # ISAEXEC = 1
 
 # There is a file name conflict over libffi.so symlink between libffi package
