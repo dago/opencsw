@@ -149,32 +149,59 @@ Syminfo Section:  .SUNW_syminfo
 
     self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
 
-  def testGetLddMinusRlines(self):
+  def testGetLddMinusRlinesRoot(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
     self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
-    os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
-    ip.ListBinaries().AndReturn(['bin/foo'])
+    ip.GetBasedir().AndReturn('/')
+    os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
+    ip.ListBinaries().AndReturn(['opt/csw/bin/foo'])
+    ip.GetFilesDir().AndReturn('root')
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
-        ['ldd', '-Ur', '/tmp/CSWfake/root/bin/foo'],
+        ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
         timeout=10).AndReturn((0, "", ""))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
-    self.assertEqual({'bin/foo': []}, ip.GetLddMinusRlines())
+    self.assertEqual({'/opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
+
+  def testGetLddMinusRlinesReloc(self):
+    ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
+    self.mox.StubOutWithMock(os, 'chmod')
+    self.mox.StubOutWithMock(os, 'uname')
+    ip.GetBasedir().AndReturn('/opt/csw')
+    os.chmod('/tmp/CSWfake/reloc/bin/foo', 0755)
+    ip.ListBinaries().AndReturn(['bin/foo'])
+    ip.GetFilesDir().AndReturn('reloc')
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    shell.ShellCommand(
+        ['ldd', '-Ur', '/tmp/CSWfake/reloc/bin/foo'],
+        timeout=10).AndReturn((0, "", ""))
+    self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
+    self.mox.ReplayAll()
+    self.assertEqual({'/opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
 
   def testGetLddMinusRlinesThrows(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
     self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
-    os.chmod('/tmp/CSWfake/root/bin/foo', 0755)
+    ip.GetBasedir().AndReturn('/')
+    os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
     os.uname().AndReturn('i86pc')
-    ip.ListBinaries().AndReturn(['bin/foo'])
+    ip.GetFilesDir().AndReturn('root')
+    ip.ListBinaries().AndReturn(['opt/csw/bin/foo'])
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
-        ['ldd', '-Ur', '/tmp/CSWfake/root/bin/foo'],
+        ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
         timeout=10).AndReturn((1, "", "boo"))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()

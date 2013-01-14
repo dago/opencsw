@@ -349,9 +349,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
   def GetLddMinusRlines(self):
     """Returns ldd -r output."""
     binaries = self.ListBinaries()
+    base_dir = self.GetBasedir()
     ldd_output = {}
     for binary in binaries:
       binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
+      if base_dir:
+        binary = os.path.join(base_dir, binary)
+
       # this could be potentially moved into the DirectoryFormatPackage class.
       # ldd needs the binary to be executable
       os.chmod(binary_abspath, 0755)
