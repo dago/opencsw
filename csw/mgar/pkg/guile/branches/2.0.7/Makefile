@@ -46,34 +46,51 @@ CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/local|root/opt/csw/sha
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-4
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-1
 
-PACKAGES							+=	CSWlibguile2-0-22
-CATALOGNAME_CSWlibguile2-0-22		=	libguile2_0_22
-OBSOLETED_BY_CSWlibguile2-0-22		=	CSWguilelib12
-CATALOGNAME_CSWguilelib12			=	guilelib12_stub
-PKGFILES_CSWlibguile2-0-22			+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22\.6\.0)
-PKGFILES_CSWlibguile2-0-22			+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22(\.\d+)*)
-SPKG_DESC_CSWlibguile2-0-22			+=	$(DESCRIPTION), libguile-2.0.so.22
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibgc1
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibunistring0
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibffi4
+PACKAGES								+=	CSWlibguile2-0-22
+CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
+OBSOLETED_BY_CSWlibguile2-0-22			=	CSWguilelib12
+PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22\.6\.0)
+PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22(\.\d+)*)
+# old libraries:
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile.so.12.3.0
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile.so.12
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile-ltdl.so.1.0.0
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile-ltdl.so.1
+SPKG_DESC_CSWlibguile2-0-22				+=	$(DESCRIPTION), libguile-2.0.so.22
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgc1
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibunistring0
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibffi4
+# overrides for the old libraries:
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libguile.so.12.3.0|soname=libguile.so.12|pkgname=CSWlibguile2-0-22|expected=CSWlibguile12
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libguile-ltdl.so.1.0.0|soname=libguile-ltdl.so.1|pkgname=CSWlibguile2-0-22|expected=CSWlibguile-ltdl1
 
-PACKAGES									+=	CSWlibguilereadline-v18-18
-CATALOGNAME_CSWlibguilereadline-v18-18		=	libguilereadline_v18_18
-OBSOLETED_BY_CSWlibguilereadline-v18-18		=	CSWguilelib12
-PKGFILES_CSWlibguilereadline-v18-18			+=	$(call baseisadirs,$(libdir),libguilereadline-v-18\.so\.18\.0\.0)
-PKGFILES_CSWlibguilereadline-v18-18			+=	$(call baseisadirs,$(libdir),libguilereadline-v-18\.so\.18(\.\d+)*)
-SPKG_DESC_CSWlibguilereadline-v18-18		+=	$(DESCRIPTION), libguilereadline-v-18.so.18
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18	+=	CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18	+=	CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18	+=	CSWlibguile2-0-22
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18	+=	CSWlibunistring0
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18	+=	CSWlibgcc-s1
+PACKAGES										+=	CSWlibguilereadline-v18-18
+CATALOGNAME_CSWlibguilereadline-v18-18			=	libguilereadline_v18_18
+OBSOLETED_BY_CSWlibguilereadline-v18-18			=	CSWguilelib12
+PKGFILES_CSWlibguilereadline-v18-18				+=	$(call baseisadirs,$(libdir),libguilereadline-v-18\.so\.18\.0\.0)
+PKGFILES_CSWlibguilereadline-v18-18				+=	$(call baseisadirs,$(libdir),libguilereadline-v-18\.so\.18(\.\d+)*)
+# old libraries:
+PKGFILES_CSWlibguilereadline-v18-18				+=	/opt/csw/lib/libguilereadline-v-12.so.12.3.0
+SPKG_DESC_CSWlibguilereadline-v18-18			+=	$(DESCRIPTION), libguilereadline-v-18.so.18
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibguile2-0-22
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibunistring0
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgcc-s1
+# overrides for old libraries:
+CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	soname-unused|libncurses.so.5|is|needed|by|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|but|never|used
+CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	no-direct-binding|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|is|not|directly|bound|to|soname|libncurses.so.5
+CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	no-direct-binding|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|is|not|directly|bound|to|soname|libguile.so.12
+CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	no-direct-binding|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|is|not|directly|bound|to|soname|libreadline.so.5
+CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libguilereadline-v-12.so.12.3.0|soname=libguilereadline-v-12.so.12|pkgname=CSWlibguilereadline-v18-18|expected=CSWlibguilereadline-v12-12
 
 PACKAGES						+=	CSWguile-dev
 CATALOGNAME_CSWguile-dev		=	guile_dev
@@ -83,6 +100,8 @@ PKGFILES_CSWguile-dev			+=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWguile
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguilereadline-v18-18
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguile2-0-22
+ARCHALL_CSWguile-dev			=	1
+CHECKPKG_OVERRIDES_CSWguile-dev	+=	archall-devel-package
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
 REINPLACE_USRLOCAL		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
@@ -90,6 +109,7 @@ REINPLACE_USRLOCAL		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
 REINPLACE_WHEN_USRSHARE	=	postinstall
 REINPLACE_USRSHARE		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
 
+# this is part of libcharset1 which is built from iconv:
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/charset.alias
 
 include gar/category.mk
@@ -106,6 +126,9 @@ test-custom:
 	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) check
 	$(MAKECOOKIE)
 
-# post-install-modulated:
-# 	ginstall $(WORKDIR)/libguile*.so* $(DESTDIR)$(libdir)
-# 	$(MAKECOOKIE)
+post-install-modulated:
+	ginstall $(WORKDIR)/libguile.so.12.3.0 $(DESTDIR)$(libdir)
+	cd $(DESTDIR)$(libdir) && ln -s libguile.so.12.3.0 libguile.so.12
+	ginstall $(WORKDIR)/libguile-ltdl.so.1.0.0 $(DESTDIR)$(libdir)
+	cd $(DESTDIR)$(libdir) && ln -s libguile-ltdl.so.1.0.0 libguile-ltdl.so.1
+	$(MAKECOOKIE)
