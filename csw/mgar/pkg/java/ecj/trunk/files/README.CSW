@@ -1,0 +1,4 @@
+This package depends on CSWgcc4java, however it is also a dependency on CSWgcc4java making it circular.
+As CSWecj makes little sense on its own the dependency is only done form CSWgcc4java to CSWecj.
+
+  -- Dagobert Michelsen, 15.1.2013
