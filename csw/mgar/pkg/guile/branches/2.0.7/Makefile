@@ -23,7 +23,7 @@ PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
-#CONFIGURE_ARGS	+=	--disable-silent-rules
+CONFIGURE_ARGS	+=	--disable-silent-rules
 #GARFLAVOR	=	DBG
 
 # runtime dependencies as explicited in the project's README file:
