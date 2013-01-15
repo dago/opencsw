@@ -141,15 +141,8 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
 # need /opt/csw/bin/pdftops
 
 # Just docs
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-banner.html
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/api-cups.html
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/api-httpipp.html
 CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/ref-cupsd-conf.html
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-ppd.html
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/translation.html
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/options.html
 CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/ref-cupsd-conf.html
-CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cups/help/network.html
 
 PACKAGES += CSWcupsclient
 SPKG_DESC_CSWcupsclient = CUPS client binaries
