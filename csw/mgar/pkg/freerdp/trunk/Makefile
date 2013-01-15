@@ -31,10 +31,16 @@ RUNTIME_DEP_PKGS_CSWfreerdp-dev += CSWfreerdp
 PACKAGES += CSWfreerdp
 SPKG_DESC_CSWfreerdp = RDP client, a fork of the rdesktop project
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWfreerdp += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWfreerRUNTIME_DEP_PKGS_CSWfreerdp += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWfreerdp += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWfreerdp += CSWperl
+RUNTIME_DEP_PKGS_CSWfreerdp += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWfreerdp += CSWlibavcodec54
+#
 
 # Add flag as recommended in https://github.com/FreeRDP/FreeRDP/issues/571
 #EXTRA_CFLAGS += -mt
+#XTRA_CFLAGS += -mt
 EXTRA_CFLAGS += -threads
 
 #EXTRA_CPPFLAGS = -features=extensions -D__FUNCTION__=__func__
