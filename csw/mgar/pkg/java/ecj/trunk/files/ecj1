@@ -1,0 +1,6 @@
+#!/bin/sh
+
+/opt/csw/bin/gij -cp /opt/csw/share/java/ecj.jar \
+    org.eclipse.jdt.internal.compiler.batch.GCCMain \
+    ${1+"$@"}
+
