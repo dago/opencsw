@@ -61,6 +61,9 @@ PATCHFILES += 0002-use-posix-shell-in-install.sh.patch
 # PATCHFILES += 0009-Add-workaround-for-krb5-config-outputting-CFLAGS.patch
 # PATCHFILES += 0009-giving-precedence-to-statvfs-in-printers.c.patch
 
+REINPLACE_USRLOCAL += doc/help/*.html
+REINPLACE_USRSHARE += doc/help/*.html
+
 VENDOR_URL = http://www.cups.org/
 
 LICENSE = LICENSE.txt
@@ -89,19 +92,11 @@ ARCHALL_CSWcups = 1
 RUNTIME_DEP_PKGS_CSWcups += CSWcupsd
 RUNTIME_DEP_PKGS_CSWcups += CSWcupsclient
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
-CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 
 PACKAGES += CSWphp5-cups
 SPKG_DESC_CSWphp5-cups = PHP5 bindings for CUPS
 PKGFILES_CSWphp5-cups += $(prefix)/php5/.*
 RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibz1
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibk5crypto3
 
 # The daemon
 PACKAGES += CSWcupsd
@@ -131,7 +126,6 @@ PKGFILES_CSWcupsd += $(sysconfdir)/cups/ppd.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/snmp.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/ssl.*
 PKGFILES_CSWcupsd += $(sysconfdir)/init\.d/.*
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupscgi1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsdriver1
@@ -139,17 +133,12 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsppdc1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
 # need /opt/csw/bin/pdftops
-RUNTIME_DEP_PKGS_CSWcupsd += CSWpoppler
 
 # Just docs
 CHECKPKG_OVERRIDES_CSWcupsd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cups/help/spec-banner.html
@@ -188,14 +177,7 @@ PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
 PKGFILES_CSWcupsclient += $(datadir)/doc/cupsclient.*
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibk5crypto3
 
 PACKAGES += CSWcups-dev
 SPKG_DESC_CSWcups-dev = CUPS header files
@@ -226,76 +208,38 @@ CUPSLINKS_TARGET = cupslinks
 PACKAGES += CSWlibcups2
 SPKG_DESC_CSWlibcups2 = CUPS libraries, libcups.so.2
 PKGFILES_CSWlibcups2 += $(call pkgfiles_lib,libcups.so.2)
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibz1
 
 PACKAGES += CSWlibcupscgi1
 SPKG_DESC_CSWlibcupscgi1 = CUPS libraries, libcupscgi.so.1
 PKGFILES_CSWlibcupscgi1 += $(call pkgfiles_lib,libcupscgi.so.1)
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibz1
 
 PACKAGES += CSWlibcupsdriver1
 SPKG_DESC_CSWlibcupsdriver1 = CUPS libraries, libcupsdriver.so.1
 PKGFILES_CSWlibcupsdriver1 += $(call pkgfiles_lib,libcupsdriver.so.1)
 RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibk5crypto3
 
 PACKAGES += CSWlibcupsimage2
 SPKG_DESC_CSWlibcupsimage2 = CUPS libraries, libcupsimage.so.2
 PKGFILES_CSWlibcupsimage2 += $(call pkgfiles_lib,libcupsimage.so.2)
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibpng15-15
 
 PACKAGES += CSWlibcupsmime1
 SPKG_DESC_CSWlibcupsmime1 = CUPS libraries, libcupsmime.so.1
 PKGFILES_CSWlibcupsmime1 += $(call pkgfiles_lib,libcupsmime.so.1)
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibz1
 
 PACKAGES += CSWlibcupsppdc1
 SPKG_DESC_CSWlibcupsppdc1 = CUPS libraries, libcupsppdc.so.1
 PKGFILES_CSWlibcupsppdc1 += $(call pkgfiles_lib,libcupsppdc.so.1)
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibk5crypto3
 
 # For some reason -norunpath is not used here, investigate later
 CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
@@ -361,6 +305,9 @@ PROTOTYPE_GROUP_lp_group_var = lp
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 PRESERVECONF += $(sysconfdir)/cups/client\.conf
 PRESERVECONF += $(sysconfdir)/cups/cupsd\.conf
+# https://www.opencsw.org/mantis/view.php?id=5037
+PRESERVECONF += $(datadir)/cups/mime/mime.convs
+PRESERVECONF += $(datadir)/cups/mime/mime.types
 INITSMF = $(sysconfdir)/init\.d/cswcups
 
 include gar/category.mk
