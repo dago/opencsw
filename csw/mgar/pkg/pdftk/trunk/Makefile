@@ -4,7 +4,7 @@
 #   with its platform dependent Makefiles
 #
 NAME = pdftk
-VERSION = 1.44
+VERSION = 1.45
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -20,4 +20,4 @@ DISTNAME     = $(NAME)-$(VERSION)-dist
 
 CONFIGURE_SCRIPTS =
 
-include gar/category.mk
+includ
