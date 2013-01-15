@@ -4,6 +4,8 @@
 # ! Error: recv: Resource temporarily unavailable
 #     as reported in https://github.com/FreeRDP/FreeRDP/issues/571
 #
+# $Id$
+#
 NAME = FreeRDP
 VERSION = 1.0.1
 CATEGORIES = utils
@@ -66,5 +68,4 @@ configure-custom:
 		  $(CONFIGURE_ENV) \
 			cmake \
 			. \
-			$(CMAKE_ARGS))
-	@$(MAKECOOKIE)
+			$(CMAKE_ARGS
