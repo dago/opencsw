@@ -24,6 +24,13 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--disable-silent-rules
+# this is necessary because libgc is not correctly built: at least the
+# following symbols are not defined:
+#    GC_unregister_my_thread
+#    GC_register_my_thread
+#    GC_pthread_create
+#    GC_pthread_detach
+CONFIGURE_ARGS	+=	--without-threads
 #GARFLAVOR	=	DBG
 
 # runtime dependencies as explicited in the project's README file:
