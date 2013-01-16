@@ -135,18 +135,43 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     }
     self.assertEqual([u'foo-file'], ip.ListBinaries())
 
-  def testGetBinaryElfInfo(self):
+  def testGetBinaryElfInfoRoot(self):
     fake_binary = 'opt/csw/lib/libssl.so.1.0.0'
     fake_package_path = '/fake/path/CSWfoo'
 
     ip = inspective_package.InspectivePackage(fake_package_path)
     self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
     ip.ListBinaries().AndReturn([fake_binary])
+    ip.GetBasedir().AndReturn('')
+    ip.GetFilesDir().AndReturn('root')
 
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "root", fake_binary)]
+    shell.ShellCommand(args).AndReturn((0, ELFDUMP_OUTPUT, ""))
+    self.mox.ReplayAll()
+
+    self.assertEqual(BINARY_ELFINFO, ip.GetBinaryElfInfo())
+
+  def testGetBinaryElfInfoReloc(self):
+    fake_binary = 'lib/libssl.so.1.0.0'
+    fake_package_path = '/fake/path/CSWfoo'
+
+    ip = inspective_package.InspectivePackage(fake_package_path)
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
+    ip.ListBinaries().AndReturn([fake_binary])
+    ip.GetBasedir().AndReturn('opt/csw')
+    ip.GetFilesDir().AndReturn('reloc')
+
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    args = [common_constants.ELFDUMP_BIN,
+            '-svy',
+            os.path.join(fake_package_path, "reloc", fake_binary)]
     shell.ShellCommand(args).AndReturn((0, ELFDUMP_OUTPUT, ""))
     self.mox.ReplayAll()
 
