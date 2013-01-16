@@ -156,7 +156,7 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
-    ip.GetBasedir().AndReturn('/')
+    ip.GetBasedir().AndReturn('')
     os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
     ip.ListBinaries().AndReturn(['opt/csw/bin/foo'])
     ip.GetFilesDir().AndReturn('root')
@@ -166,7 +166,7 @@ Syminfo Section:  .SUNW_syminfo
         timeout=10).AndReturn((0, "", ""))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
-    self.assertEqual({'/opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
+    self.assertEqual({'opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
 
   def testGetLddMinusRlinesReloc(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
@@ -175,7 +175,7 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
-    ip.GetBasedir().AndReturn('/opt/csw')
+    ip.GetBasedir().AndReturn('opt/csw')
     os.chmod('/tmp/CSWfake/reloc/bin/foo', 0755)
     ip.ListBinaries().AndReturn(['bin/foo'])
     ip.GetFilesDir().AndReturn('reloc')
@@ -185,7 +185,7 @@ Syminfo Section:  .SUNW_syminfo
         timeout=10).AndReturn((0, "", ""))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
-    self.assertEqual({'/opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
+    self.assertEqual({'opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
 
   def testGetLddMinusRlinesThrows(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
