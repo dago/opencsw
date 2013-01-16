@@ -250,9 +250,12 @@ class InspectivePackage(package.DirectoryFormatPackage):
     """
     binaries = self.ListBinaries()
     binaries_elf_info = {}
+    base_dir = self.GetBasedir()
 
     for binary in binaries:
       binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
+      if base_dir:
+        binary = os.path.join(base_dir, binary)
       # elfdump is the only tool that give us all informations
       args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
       retcode, stdout, stderr = shell.ShellCommand(args)
