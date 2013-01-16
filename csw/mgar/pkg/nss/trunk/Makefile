@@ -224,13 +224,13 @@ else
 	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
 endif
 endif
-expoLD_OPTIONS = -z ignore -Bdirect
+expo# LD_OPTIONS = -z ignore -Bdirect
 ifeq ($(USE_64),1) 
   SQLITE_LIB_DIR = /opt/csw/lib/64
-  LD_OPTIONS += -R/opt/csw/lib/64/$$$$ISALIST
+#   LD_OPTIONS += -R/opt/csw/lib/64/\$$ISALIST
 else
   SQLITE_LIB_DIR = /opt/csw/lib
-  LD_OPTIONS += -R/opt/csw/lib/$$$$ISALIST
+#   LD_OPTIONS += -R/opt/csw/lib/\$$ISALIST
 endif
 export SQLITE_LIB_DIR
 rt SQLITE_LIB_DIR
@@ -289,9 +289,10 @@ build-dbm:
 
 # There's an extra interpolation somehwere inside nss' build system, so $$$$
 # needs to be used instead of $$.
-build-nss-compile:
+bui@echo $(LD_OPTIONS)
 	(cd $(WORKSRC)/mozilla/security/nss \
-	LD_OPTIONS='$(LD_OPTIONS)i BUILD_SUN_PKG=1b/\$$\$$ISALIST\')
+		&& env \
+	gmake -j1 BUILD_SUN_PKG=1b/\$$\$$ISALIST\')
 	@$(MAKECOOKIE)
 
 install-nss:
