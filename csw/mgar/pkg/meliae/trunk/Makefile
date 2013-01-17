@@ -17,5 +17,7 @@ LICENSE = COPYING.txt
 BUILD_DEP_PKGS = CSWcython
 TEST_SCRIPTS =
 RUNTIME_DEP_PKGS_CSWpy-meliae += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-meliae += CSWcython
+CHECKPKG_OVERRIDES_CSWpy-meliae += surplus-dependency|CSWcython
 
 include gar/category.mk
