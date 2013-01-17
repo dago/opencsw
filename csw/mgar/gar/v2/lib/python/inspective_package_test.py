@@ -22,6 +22,53 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 \t\t(file /tmp/pkg_GqCk0P/CSWkdeartworkgcc/root/opt/csw/kde-gcc/bin/kslideshow.kss size=0x28; file /opt/csw/kde-gcc/lib/libqt-mt.so.3 size=0x20)
 """
 
+DUMP_OUTPUT = '''
+  **** DYNAMIC SECTION INFORMATION ****
+.dynamic:
+[INDEX] Tag         Value
+[1]     NEEDED          libXext.so.0
+[2]     NEEDED          libX11.so.4
+[3]     NEEDED          libsocket.so.1
+[4]     NEEDED          libnsl.so.1
+[5]     NEEDED          libc.so.1
+[6]     INIT            0x80531e4
+[7]     FINI            0x8053200
+[8]     HASH            0x80500e8
+[9]     STRTAB          0x8050cb0
+[10]    STRSZ           0x511
+[11]    SYMTAB          0x80504e0
+[12]    SYMENT          0x10
+[13]    CHECKSUM        0x9e8
+[14]    VERNEED         0x80511c4
+[15]    VERNEEDNUM      0x2
+[16]    PLTSZ           0x1a0
+[17]    PLTREL          0x11
+[18]    JMPREL          0x8051224
+[19]    REL             0x8051214
+[20]    RELSZ           0x1b0
+[21]    RELENT          0x8
+[22]    DEBUG           0
+[23]    FEATURE_1       PARINIT
+[24]    FLAGS           0
+[25]    FLAGS_1         0
+[26]    PLTGOT          0x806359c
+'''
+
+BINARY_DUMP_INFO = {
+  'base_name': 'foo',
+  'RUNPATH RPATH the same': True,
+  'runpath': (),
+  'RPATH set': False,
+  'needed sonames': (
+    'libXext.so.0',
+    'libX11.so.4',
+    'libsocket.so.1',
+    'libnsl.so.1',
+    'libc.so.1'),
+  'path': 'opt/csw/bin/foo',
+  'RUNPATH set': False,
+  }
+
 ELFDUMP_OUTPUT = '''
 Version Definition Section:  .SUNW_version
      index  version                     dependency
@@ -86,6 +133,7 @@ BINARY_ELFINFO = {'opt/csw/lib/libssl.so.1.0.0': {
   }
 
 
+
 class InspectivePackageUnitTest(mox.MoxTestBase):
 
   def testListBinaries(self):
@@ -134,6 +182,49 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
         "BASEDIR": "",
     }
     self.assertEqual([u'foo-file'], ip.ListBinaries())
+
+  def testGetBinaryDumpInfoRoot(self):
+    fake_binary = 'opt/csw/bin/foo'
+    fake_package_path = '/fake/path/CSWfoo'
+
+    ip = inspective_package.InspectivePackage(fake_package_path)
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
+    ip.ListBinaries().AndReturn([fake_binary])
+    ip.GetBasedir().AndReturn('')
+    ip.GetFilesDir().AndReturn('root')
+
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    args = [common_constants.DUMP_BIN,
+            '-Lv',
+            os.path.join(fake_package_path, "root", fake_binary)]
+    shell.ShellCommand(args, mox.IgnoreArg()).AndReturn((0, DUMP_OUTPUT, ""))
+    self.mox.ReplayAll()
+
+    self.assertEqual([BINARY_DUMP_INFO], ip.GetBinaryDumpInfo())
+
+  def testGetBinaryDumpInfoReloc(self):
+    fake_binary = 'bin/foo'
+    fake_package_path = '/fake/path/CSWfoo'
+
+    ip = inspective_package.InspectivePackage(fake_package_path)
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
+    ip.ListBinaries().AndReturn([fake_binary])
+    ip.GetBasedir().AndReturn('opt/csw')
+    ip.GetFilesDir().AndReturn('reloc')
+
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    args = [common_constants.DUMP_BIN,
+            '-Lv',
+            os.path.join(fake_package_path, "reloc", fake_binary)]
+    shell.ShellCommand(args, mox.IgnoreArg()).AndReturn((0, DUMP_OUTPUT, ""))
+    self.mox.ReplayAll()
+
+    self.assertEqual([BINARY_DUMP_INFO], ip.GetBinaryDumpInfo())
+
 
   def testGetBinaryElfInfoRoot(self):
     fake_binary = 'opt/csw/lib/libssl.so.1.0.0'
