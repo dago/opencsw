@@ -2,8 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = Cython
-VERSION = 0.16
-GARTYPE = v2
+VERSION = 0.17.4
 CATEGORIES = lang
 
 DESCRIPTION = Cython Compiler
@@ -18,7 +17,7 @@ endef
 MASTER_SITES = http://pypi.python.org/packages/source/C/Cython/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PACKAGING_PLATFORMS += Solaris10-sparc Solaris10-i386
+PACKAsolaris10-sparc s Solaris10-sparc Solaris10-i386
 GARCOMPILER = SOS12U3
 
 LICENSE = LICENSE.txt
@@ -36,11 +35,10 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-CONFIGURE_SCRIPTS = 
+CONFIGURE_SCRIPTS= 
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
-include gar/category.mk
-
+include
