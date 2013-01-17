@@ -24,23 +24,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 # PATCHFILES  = nspr-4.6.1-config.patch
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-PACKAGES = CSWnspr-dev
-CATALOGNAME_CSWnspr-dev = nspr_dev
-SPKG_DESC_CSWnspr-dev = Netscape Portable Runtime, header files
-# do catch all
-# PKGFILES_CSWnspr-dev += $(prefix)/include.*
-# PKGFILES_CSWnspr-dev += $(bindir).*nspr-config
-# PKGFILES_CSWnspr-dev += .*/nspr\.pc
-# PKGFILES_CSWnspr-dev += .*compile-et\.pl
-RUNTIME_DEP_PKGS_CSWnspr-dev  = CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWnspr-dev += CSWperl
-# OBSOLETED_BY_CSWnspr-dev = CSWnspr-devel
-# OBSOLETED_BY_CSWnspr-dev += CSWmozilla
-# OBSOLETED_BY_CSWnspr-dev += CSWsunbird
-# INCOMPATIBLE_PKGS_CSWnspr-dev = CSWmozilla
-# INCOMPATIBLE_PKGS_CSWnspr-dev += CSWsunbird
+PACKAGING_PLATFORMS = solaris10-sparcv += CSWsunbird
 
 # Library splits
 
@@ -66,12 +50,20 @@ RUNTIME_DEP_PKGS_CSWlibplds4 += CSWlibnspr4
 CHECKPKG_OVERRIDES_CSWlibplds4 += soname-equals-filename
 
 # this lib is only build on sparc, nobody uses this
-EXTRA_MERGE_EXCLUDE += $(libdir).*/libnspr_flt4\.so
+EX_FILES += .*/libnspr_flt4\.so
+# /opt/csw/lib/cpu/sparcv8plus/libnspr_flt4).*/libnspr_flt4\.so
 # PACKAGES += CSWlibnspr-flt4
 # CATALOGNAME_CSWlibnspr-flt4 = libnspr_flt4
 # SPKG_DESC_CSWlibnspr-flt4 = Netscape Portable Runtime, libnspr-flt4.so
 # PKGFILES_CSWlibnspr-flt4 += $(libdir).*/libnspr_flt4\.so
-# CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-esolaris10-i386
+
+PACKAGES = CSWnspr-dev
+CATALOGNAME_CSWnspr-dev = nspr_dev
+SPKG_DESC_CSWnspr-dev = Netscape Portable Runti.*compile-et\.pl
+RUNTIME_DEP_PKGS_CSWnspr-dev  = CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWnspr-dev += CSWperl
+# OBSOLETED_BY_libnspr-flt4 e-equals-filename
 
 PERL = /opt/csw/bin/perl
 
