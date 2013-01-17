@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = trafficserver
-VERSION = 3.2.3
+VERSION = 3.2.4
 GARTYPE = v2
 CATEGORIES = server
 
@@ -66,9 +66,4 @@ LICENSE = LICENSE
 # Be careful with GNU tools. We only need it for ginstall
 INSTALL_ENV_PATH = $(prefix)/gnu:$(PATH)
 
-include gar/category.mk
-
-pre-configure-modulated:
-	cd $(WORKSRC) && /opt/csw/bin/perl -p -i -e 's|.*/usr/local/lib.*||' configure.ac
-	cd $(WORKSRC) && /opt/csw/bin/autoreconf -if
-	@$(MAKECOOKIE)
+inclu
