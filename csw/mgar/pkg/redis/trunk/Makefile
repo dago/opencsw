@@ -2,24 +2,22 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = redis
-VERSION = 2.4.8
+VERSION = 2.6.9
 GARTYPE = v2
-CATEGORIES = server
 
-DESCRIPTION = An advanced key-value store
+DESCRIPTION = An advanced key-value storee
 define BLURB
 endef
 
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-backtrace-is-only-available-on-Solaris-11.patch
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PATCHFILES += 0001-backtrace-is-only-available-on-Solalaris10-i386
 
 PACKAGES += CSWredis
 SPKG_DESC_CSWredis = An advanced key-value store
-# PKGFILES is catchall
+# PKBUILD64 = 1
+ISAEXEC = 1PKGFILES is catchall
 
 GARCOMPILER = GCC4
 
@@ -31,13 +29,11 @@ CONFIGURE_SCRIPTS =
 
 BUILD_ARGS += V=1
 
-TEST_TARGET = test
-
-# We need TCL 8.5 for this which we don't have yet
-SKIPTEST ?= 1
-
 INSTALL_OVERRIDE_VARS += PREFIX
 INSTALL_OVERRIDE_VAR_PREFIX = $(DESTDIR)$(prefix)
+
+# This is for tail taking -n namely gtail for us
+TEST_ENV_PATH = $(prefix)/gnu:$(PATH)
 
 include gar/category.mk
 
