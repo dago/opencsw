@@ -179,21 +179,15 @@ class InspectivePackage(package.DirectoryFormatPackage):
     binaries_dump_info = []
     basedir = self.GetBasedir()
     for binary in self.ListBinaries():
-      # Relocatable packages complicate things. Binaries returns paths with
-      # the basedir, but files in reloc are in paths without the basedir, so
-      # we need to strip that bit.
-      binary_in_tmp_dir = binary
+      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary)
       if basedir:
-        binary_in_tmp_dir = binary_in_tmp_dir[len(basedir):]
-        binary_in_tmp_dir = binary_in_tmp_dir.lstrip("/")
-      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary_in_tmp_dir)
-      binary_base_name = os.path.basename(binary_in_tmp_dir)
+        binary = os.path.join(basedir, binary)
+      binary_base_name = os.path.basename(binary)
+
       args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
       retcode, stdout, stderr = shell.ShellCommand(args, env)
       binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
-      if basedir:
-        binary_data["path"] = os.path.join(basedir, binary_data["path"])
       binary_data["base_name"] = binary_base_name
       binaries_dump_info.append(binary_data)
     return binaries_dump_info
