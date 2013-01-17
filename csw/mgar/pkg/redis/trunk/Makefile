@@ -3,7 +3,6 @@
 #
 NAME = redis
 VERSION = 2.6.9
-GARTYPE = v2
 
 DESCRIPTION = An advanced key-value storee
 define BLURB
@@ -15,9 +14,11 @@ DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-backtrace-is-only-available-on-Solalaris10-i386
 
 PACKAGES += CSWredis
-SPKG_DESC_CSWredis = An advanced key-value store
-# PKBUILD64 = 1
-ISAEXEC = 1PKGFILES is catchall
+SPKG_DESC_CSWredis = An advan
+BUILD64 = 1
+ISAEXEC = 1
+
+GARCOMPILER = GNU
 
 GARCOMPILER = GCC4
 
