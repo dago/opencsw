@@ -56,7 +56,7 @@ EX_FILES += .*/libnspr_flt4\.so
 # CATALOGNAME_CSWlibnspr-flt4 = libnspr_flt4
 # SPKG_DESC_CSWlibnspr-flt4 = Netscape Portable Runtime, libnspr-flt4.so
 # PKGFILES_CSWlibnspr-flt4 += $(libdir).*/libnspr_flt4\.so
-# CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-esolaris10-i386
+# CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-esolaris1+0-i386
 
 PACKAGES = CSWnspr-dev
 CATALOGNAME_CSWnspr-dev = nspr_dev
