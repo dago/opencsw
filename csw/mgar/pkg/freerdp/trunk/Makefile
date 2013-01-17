@@ -14,7 +14,7 @@ GARTYPE = v2
 DESCRIPTION = RDP client, a fork of the rdesktop project
 
 MASTER_SITES = http://github.com/downloads/FreeRDP/FreeRDP/
-DISTFILES += $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(NAME)-PATCHFILES += 0001-Use-pthreads-to-avoid-connect-errors.patch)-$(VERSION).tar.gz
 
 BUILD_DEP_PKGS += CSWffmpeg-dev
 BUILD_DEP_PKGS += CSWxmlto

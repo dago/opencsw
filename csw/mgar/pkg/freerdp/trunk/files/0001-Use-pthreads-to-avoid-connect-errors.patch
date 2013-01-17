@@ -1,0 +1,24 @@
+From 01234b6733a961d22f8d6894d618b31d8bcd4e3d Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Thu, 17 Jan 2013 11:16:19 +0100
+Subject: [PATCH] Use -pthreads to avoid connect errors.
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5399db7..df47354 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -56,6 +56,7 @@ endif()
+ # Compiler-specific flags
+ if(CMAKE_COMPILER_IS_GNUCC)
+ 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
++	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+ 	CHECK_C_COMPILER_FLAG (-Wno-unused-result Wno-unused-result)
+ 	if(Wno-unused-result)
+ 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-result")
+-- 
+1.8.0
+
