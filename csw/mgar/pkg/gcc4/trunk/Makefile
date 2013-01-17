@@ -346,10 +346,12 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWecj
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += surplus-dependency|CSWecj
 
 PKGFILES_$(PKG_BASENAME)java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
 PKGFILES_$(PKG_BASENAME)java += $(foreach F,$(JAVA_BINARIES),$(prefix)/$(PKG_VERSION_TOKEN)/bin/$(F))
@@ -499,6 +501,14 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 # We're building with the default GAR maps, currently U5.
 # LINKER_MAP_RELEASE = solaris10u8
+
+# No direct binding errors. These will be hard to fix (if they're real)
+# because of GCC's build system complexity.
+CHECKPKG_OVERRIDES_CSWgcc4java += no-direct-binding
+CHECKPKG_OVERRIDES_CSWgcc4core += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgij13 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += soname-unused
+CHECKPKG_OVERRIDES_CSWlibgcj-tools13 += no-direct-binding
 
 include files/scripts.mk
 include gar/category.mk
