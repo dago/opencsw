@@ -508,6 +508,7 @@ CHECKPKG_OVERRIDES_CSWgcc4java += no-direct-binding
 CHECKPKG_OVERRIDES_CSWgcc4core += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgij13 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += soname-unused
+CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj-tools13 += no-direct-binding
 
 include files/scripts.mk
