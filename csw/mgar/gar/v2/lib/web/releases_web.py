@@ -34,7 +34,7 @@ render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
 
 OPENCSW_ROOT = "/home/mirror/opencsw-official"
 ALLPKGS_DIR = os.path.join(OPENCSW_ROOT, "allpkgs")
-CAN_UPLOAD_TO_CATALOGS = frozenset(["unstable", "kiel", "bratislava"])
+CAN_UPLOAD_TO_CATALOGS = frozenset(["unstable", "kiel", "bratislava", "beanie"])
 
 def ConnectToDatabase():
   configuration.SetUpSqlobjectConnection()
