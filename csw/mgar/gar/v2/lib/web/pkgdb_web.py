@@ -113,7 +113,12 @@ class Srv4Detail(object):
     osrels = models.OsRelease.select()
     catrels = models.CatalogRelease.select()
     all_tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
-    pkgstats_raw = pprint.pformat(pkg.GetStatsStruct())
+    pkgstats_raw = (
+      "As of January 2013, the stats stored are so big that "
+      "processing them can take several minutes before they "
+      "can be served. Disabling until a proper solution "
+      "is in place.")
+    # pkgstats_raw = pprint.pformat(pkg.GetStatsStruct())
     if pkg.arch.name == 'all':
       archs = models.Architecture.select(models.Architecture.q.name!='all')
     else:
