@@ -160,7 +160,10 @@ class CatalognameList(object):
 
 class Srv4DetailFiles(object):
   def GET(self, md5_sum):
-    srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    try:
+      srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound as e:
+      raise web.notfound()
     files = models.CswFile.selectBy(srv4_file=srv4)
     return render.Srv4DetailFiles(srv4, files)
 
