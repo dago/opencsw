@@ -150,7 +150,7 @@ class Srv4CatalogAssignment(object):
     if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
       # We should return an error message instead.
-      raise web.notfound()
+      raise web.forbidden()
     try:
       if arch_name == 'all':
         raise checkpkg_lib.CatalogDatabaseError(
