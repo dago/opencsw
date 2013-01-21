@@ -1,5 +1,5 @@
---- gwhois.orig Mon Jan 21 13:11:10 2013
-+++ gwhois      Mon Jan 21 13:09:22 2013
+--- a/gwhois.orig Mon Jan 21 13:11:10 2013
++++ b/gwhois      Mon Jan 21 13:09:22 2013
 @@ -85,15 +85,15 @@
  $version = '20100728';
  
