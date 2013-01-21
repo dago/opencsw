@@ -1,5 +1,5 @@
 NAME = di
-VERSION = 4.33
+VERSION = 4.34
 GARTYPE = v2
 
 DESCRIPTION = Disk information utility
