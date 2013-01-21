@@ -258,15 +258,17 @@ class InspectivePackage(package.DirectoryFormatPackage):
         # later by check functions,
         ignored_error_re = re.compile(
           r"""[^:]+:(\s\.((SUNW_l)?dynsym|symtab):\s
-           (index\[\d+\]:\s
+           ((index\[\d+\]:\s)?
             (suspicious\s(local|global)\ssymbol\sentry:\s[^:]+:\slies
              \swithin\s(local|global)\ssymbol\srange\s\(index\s[<>=]+\s\d+\)
 
             |bad\ssymbol\sentry:\s[^:]+:\ssection\[\d+\]\ssize:\s0(x[0-9a-f]+)?
-             :\ssymbol\s\(address\s0x[0-9a-f]+,\ssize\s0x[0-9a-f]+\)
-             \slies\soutside\sof\scontaining\ssection
+             :\s(symbol\s\(address\s0x[0-9a-f]+,\ssize\s0x[0-9a-f]+\)
+                 \slies\soutside\sof\scontaining\ssection
+                 |is\ssmaller\sthan\ssymbol\ssize:\s\d+)
 
-            |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+)
+            |bad\ssymbol\sentry:\s:\sinvalid\sshndx:\s\d+
+            |)
 
            |invalid\ssh_link:\s0)
 
@@ -436,7 +438,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
                   |Version\sDefinition|Syminfo)
                    \sSection:
         \s+(?:\.SUNW_version|\.gnu\.version_[rd]
-            |\.dynsym|\.SUNW_syminfo|.symtab)\s*$
+            |\.(SUNW_l)?dynsym|\.SUNW_syminfo|.symtab)\s*$
 
        |\s*(?:index\s+)?version\s+dependency\s*$  # Version needed header
 
@@ -537,13 +539,16 @@ class InspectivePackage(package.DirectoryFormatPackage):
                         r'|\t\t\(file .* size=0(?:x[0-9a-f]+)?; file .*'
                         r'size=0x(?:[0-9a-f]+)?\)'
                         r'|\t.* size used; possible data truncation')
+    copy_relocation_error = (r'\tsymbol (?P<copy_reloc_symbol>\S+):'
+                             r' file \S+: copy relocation symbol'
+                             r' may have been displacement relocated')
     blank_line = (r'^\s*$')
-    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
+    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so,
                     stv_protected, sizes_differ, sizes_info,
                     sizes_one_used, unreferenced_object, unused_object,
                     unused_search_path, blank_line, move_offset_error,
-                    relocation_error))
+                    relocation_error, copy_relocation_error))
     m = re.match(common_re, line)
     response = None
     if m:
@@ -607,6 +612,11 @@ class InspectivePackage(package.DirectoryFormatPackage):
         response["soname"] = None
         response["path"] = None
         response["symbol"] = d['reloc_symbol']
+      elif d["copy_reloc_symbol"]:
+        response["state"] = 'relocation-issue'
+        response["soname"] = None
+        response["path"] = None
+        response["symbol"] = d['copy_reloc_symbol']
 
     else:
       raise package.StdoutSyntaxError("Could not parse %s with %s"
