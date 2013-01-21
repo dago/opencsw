@@ -445,7 +445,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
        |\s*index\s*value\s+size\s+type\s+bind     # Symbol table header
         \s+oth\s+ver\s+shndx\s+name\s*$
 
-       |\s*index\s+flags\s+bound\sto\s+symbol\s*$ # Syminfo header
+       |\s*index\s+fla?gs\s+bound\sto\s+symbol\s*$ # Syminfo header
 
        |\s*$                                      # There is always a blank
                                                   # line before a new section
