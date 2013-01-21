@@ -23,7 +23,8 @@ PKGFILES_CSWopendkim-dev += /opt/csw/lib/libopendkim.so
 PKGFILES_CSWopendkim-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWopendkim-dev += CSWlibopendkim8
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-milter=/opt/csw
 
 # Only in docs
 CHECKPKG_OVERRIDES_CSWopendkim += file-with-bad-content
