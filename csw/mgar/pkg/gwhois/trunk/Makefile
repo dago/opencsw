@@ -26,8 +26,17 @@ SKIPTEST = 1
 
 INSTALL_SCRIPTS = gwhois
 
+RUNTIME_DEP_PKGS += CSWcurl
+RUNTIME_DEP_PKGS += CSWlynx
 RUNTIME_DEP_PKGS += CSWpm-net-idn-encode
 RUNTIME_DEP_PKGS += CSWpm-libwww-perl
+CHECKPKG_OVERRIDES_CSWgwhois += surplus-dependency|CSWlynx
+CHECKPKG_OVERRIDES_CSWgwhois += surplus-dependency|CSWpm-libwww-perl
+CHECKPKG_OVERRIDES_CSWgwhois += surplus-dependency|CSWcurl
+CHECKPKG_OVERRIDES_CSWgwhois += surplus-dependency|CSWpm-net-idn-encode
+
+REINPLACE_USRSHARE += $(docdir)/$(NAME)/INSTALL
+REINPLACE_WHEN_USRSHARE = postinstall
 
 include gar/category.mk
 
