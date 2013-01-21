@@ -268,6 +268,58 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
 
     self.assertEqual(BINARY_ELFINFO, ip.GetBinaryElfInfo())
 
+  def testGetBinaryElfInfoWithIgnoredErrors(self):
+    fake_binary = 'opt/csw/bin/foo'
+    fake_package_path = '/fake/path/CSWfoo'
+    fake_elfdump_output = '''
+Version Needed Section:  .SUNW_version
+     index  file                        version
+       [2]  libc.so.1                 SUNW_1.1
+
+Symbol Table Section:  .dynsym
+     index    value      size      type bind oth ver shndx          name
+       [1]  0x00000000 0x00000000  FUNC GLOB  D    2 UNDEF          fopen64
+
+Syminfo Section:  .SUNW_syminfo
+     index  flags            bound to                 symbol
+       [1]  DBL          [1] libc.so.1                fopen64
+'''
+    fake_elfdump_errors = '''
+/opt/csw/bin/foo: .dynsym: index[26]: bad symbol entry: : invalid shndx: 26
+/opt/csw/bin/foo: .dynsym: bad symbol entry: : invalid shndx: 23
+/opt/csw/bin/foo: .dynsym: index[108]: suspicious local symbol entry: _END_: lies within global symbol range (index >= 27)
+/opt/csw/bin/foo: .dynsym: index[4]: bad symbol entry: toto: section[24] size: 0: symbol (address 0x36b7fc, size 0x4) lies outside of containing section
+/opt/csw/bin/foo: .dynsym: bad symbol entry: Xt_app_con: section[28] size: 0: is smaller than symbol size: 4
+'''
+    fake_binary_elfinfo = {'opt/csw/bin/foo': {
+      'symbol table': [
+        {'shndx': 'UNDEF', 'soname': 'libc.so.1', 'bind': 'GLOB',
+          'symbol': 'fopen64', 'version': 'SUNW_1.1',
+          'flags': 'DBL', 'type': 'FUNC'},
+        ],
+      'version needed': [
+        {'version': 'SUNW_1.1', 'soname': 'libc.so.1'},
+        ],
+      'version definition': [],
+      }
+    }
+    ip = inspective_package.InspectivePackage(fake_package_path)
+    self.mox.StubOutWithMock(ip, 'ListBinaries')
+    self.mox.StubOutWithMock(ip, 'GetBasedir')
+    self.mox.StubOutWithMock(ip, 'GetFilesDir')
+    ip.ListBinaries().AndReturn([fake_binary])
+    ip.GetBasedir().AndReturn('')
+    ip.GetFilesDir().AndReturn('root')
+
+    self.mox.StubOutWithMock(shell, 'ShellCommand')
+    args = [common_constants.ELFDUMP_BIN,
+            '-svy',
+            os.path.join(fake_package_path, "root", fake_binary)]
+    shell.ShellCommand(args).AndReturn((0, fake_elfdump_output, fake_elfdump_errors))
+    self.mox.ReplayAll()
+
+    self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
+
   def testGetLddMinusRlinesRoot(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
     self.mox.StubOutWithMock(ip, 'GetBasedir')
