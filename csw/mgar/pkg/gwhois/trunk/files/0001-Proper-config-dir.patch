@@ -1,0 +1,22 @@
+--- gwhois.orig Mon Jan 21 13:11:10 2013
++++ gwhois      Mon Jan 21 13:09:22 2013
+@@ -85,15 +85,15 @@
+ $version = '20100728';
+ 
+ $| = 1;
+-$confdir = '/etc/gwhois';
++$confdir = '/etc/opt/csw/gwhois';
+ $patternfilename = 'pattern';
+ $patternfilere = qr/^pattern/;
+ $useLWP = 1;
+ 
+ $sendmail = 1;
+-if ( -f "/etc/default/gwhois" )
++if ( -f "/etc/opt/csw/default/gwhois" )
+ {
+-  require "/etc/default/gwhois";
++  require "/etc/opt/csw/default/gwhois";
+ }
+ 
+ $step = 1;
+
