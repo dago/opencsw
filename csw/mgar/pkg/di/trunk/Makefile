@@ -17,9 +17,9 @@ RUNTIME_DEP_PKGS_CSWdi += CSWlibintl8
 
 LICENSE = LICENSE
 
-PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
+#PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 # Make extra packages for Solaris 10 as di is zone-aware
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 CONFIGURE_SCRIPTS = 
 
