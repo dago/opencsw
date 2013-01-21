@@ -13,6 +13,8 @@ endef
 MASTER_SITES = http://gwhois.de/gwhois/
 DISTNAME = $(NAME)_$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES += 0001-Proper-config-dir.patch
+
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 ARCHALL_CSWgwhois = 1
 
