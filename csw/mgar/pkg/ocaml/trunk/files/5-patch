@@ -1,0 +1,11 @@
+--- a/man/Makefile
++++ b/man/Makefile
+@@ -14,7 +14,7 @@
+ 
+ include ../config/Makefile
+ 
+-DIR=$(MANDIR)/man$(MANEXT)
++DIR=$(DESTDIR)$(MANDIR)/man$(MANEXT)
+ 
+ install:
+ 	for i in *.m; do cp $$i $(DIR)/`basename $$i .m`.$(MANEXT); done

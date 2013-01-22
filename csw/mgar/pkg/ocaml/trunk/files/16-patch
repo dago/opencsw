@@ -1,0 +1,11 @@
+--- a/otherlibs/labltk/support/Makefile
++++ b/otherlibs/labltk/support/Makefile
+@@ -30,7 +30,7 @@ install:
+ 	cd $(INSTALLDIR); $(RANLIB) lib$(LIBNAME).$(A)
+ 	cd $(INSTALLDIR); chmod 644 $(PUB) lib$(LIBNAME).$(A)
+ 	if test -f dll$(LIBNAME)$(EXT_DLL); then \
+-	   cp dll$(LIBNAME)$(EXT_DLL) $(STUBLIBDIR)/; fi
++	   cp dll$(LIBNAME)$(EXT_DLL) $(DESTDIR)$(STUBLIBDIR)/; fi
+ 
+ installopt:
+ 	@if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi

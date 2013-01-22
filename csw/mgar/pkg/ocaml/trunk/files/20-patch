@@ -1,0 +1,11 @@
+--- a/debugger/Makefile.shared
++++ b/debugger/Makefile.shared
+@@ -83,7 +83,7 @@ ocamldebug$(EXE): $(OBJS) $(OTHEROBJS)
+ 	$(CAMLC) $(LINKFLAGS) -o ocamldebug$(EXE) -linkall $(OTHEROBJS) $(OBJS)
+ 
+ install:
+-	cp ocamldebug$(EXE) $(BINDIR)/ocamldebug$(EXE)
++	cp ocamldebug$(EXE) $(DESTDIR)$(BINDIR)/ocamldebug$(EXE)
+ 
+ clean::
+ 	rm -f ocamldebug$(EXE)

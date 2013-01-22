@@ -1,0 +1,31 @@
+--- a/stdlib/Makefile
++++ b/stdlib/Makefile
+@@ -25,19 +25,19 @@ allopt-prof: stdlib.p.cmxa std_exit.p.cmx
+ installopt: installopt-default installopt-$(PROFILING)
+ 
+ installopt-default:
+-	cp stdlib.cmxa stdlib.a std_exit.o *.cmx $(LIBDIR)
+-	cd $(LIBDIR); $(RANLIB) stdlib.a
++	cp stdlib.cmxa stdlib.a std_exit.o *.cmx $(DESTDIR)$(LIBDIR)
++	cd $(DESTDIR)$(LIBDIR); $(RANLIB) stdlib.a
+ 
+ installopt-noprof:
+-	rm -f $(LIBDIR)/stdlib.p.cmxa; ln -s stdlib.cmxa $(LIBDIR)/stdlib.p.cmxa
+-	rm -f $(LIBDIR)/stdlib.p.a; ln -s stdlib.a $(LIBDIR)/stdlib.p.a
+-	rm -f $(LIBDIR)/std_exit.p.cmx; \
+-          ln -s std_exit.cmx $(LIBDIR)/std_exit.p.cmx
+-	rm -f $(LIBDIR)/std_exit.p.o; ln -s std_exit.o $(LIBDIR)/std_exit.p.o
++	rm -f $(DESTDIR)$(LIBDIR)/stdlib.p.cmxa; ln -s stdlib.cmxa $(DESTDIR)$(LIBDIR)/stdlib.p.cmxa
++	rm -f $(DESTDIR)$(LIBDIR)/stdlib.p.a; ln -s stdlib.a $(DESTDIR)$(LIBDIR)/stdlib.p.a
++	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.cmx; \
++          ln -s std_exit.cmx $(DESTDIR)$(LIBDIR)/std_exit.p.cmx
++	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.o; ln -s std_exit.o $(LIBDIR)/std_exit.p.o
+ 
+ installopt-prof:
+-	cp stdlib.p.cmxa stdlib.p.a std_exit.p.cmx std_exit.p.o $(LIBDIR)
+-	cd $(LIBDIR); $(RANLIB) stdlib.p.a
++	cp stdlib.p.cmxa stdlib.p.a std_exit.p.cmx std_exit.p.o $(DESTDIR)$(LIBDIR)
++	cd $(DESTDIR)$(LIBDIR); $(RANLIB) stdlib.p.a
+ 
+ stdlib.p.cmxa: $(OBJS:.cmo=.p.cmx)
+ 	$(CAMLOPT) -a -o stdlib.p.cmxa $(OBJS:.cmo=.p.cmx)

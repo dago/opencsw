@@ -1,0 +1,11 @@
+--- a/byterun/Makefile
++++ b/byterun/Makefile
+@@ -48,7 +48,7 @@ libcamlrun_shared.so: $(PICOBJS)
+ 
+ install::
+ 	if test -f libcamlrun_shared.so; then \
+-	  cp libcamlrun_shared.so $(LIBDIR)/libcamlrun_shared.so; fi
++	  cp libcamlrun_shared.so $(DESTDIR)$(LIBDIR)/libcamlrun_shared.so; fi
+ 
+ clean::
+ 	rm -f libcamlrun_shared.so

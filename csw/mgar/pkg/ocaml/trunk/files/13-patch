@@ -1,0 +1,11 @@
+--- a/otherlibs/labltk/tkanim/Makefile
++++ b/otherlibs/labltk/tkanim/Makefile
+@@ -59,7 +59,7 @@ clean:
+ install:
+ 	cp tkanim.cma *.cmi *.mli libtkanim.$(A) $(INSTALLDIR)
+ 	if [ -f dlltkanim$(EXT_DLL) ]; then \
+-		cp dlltkanim$(EXT_DLL) $(STUBLIBDIR)/; \
++		cp dlltkanim$(EXT_DLL) $(DESTDIR)$(STUBLIBDIR)/; \
+ 	fi
+ 
+ installopt:
