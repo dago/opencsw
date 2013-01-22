@@ -1,0 +1,23 @@
+--- a/asmrun/Makefile
++++ b/asmrun/Makefile
+@@ -58,15 +58,15 @@ libasmrunp.a: $(POBJS)
+ install: install-default install-$(PROFILING)
+ 
+ install-default:
+-	cp libasmrun.a $(LIBDIR)/libasmrun.a
+-	cd $(LIBDIR); $(RANLIB) libasmrun.a
++	cp libasmrun.a $(DESTDIR)$(LIBDIR)/libasmrun.a
++	cd $(DESTDIR)$(LIBDIR); $(RANLIB) libasmrun.a
+ 
+ install-noprof:
+-	rm -f $(LIBDIR)/libasmrunp.a; ln -s libasmrun.a $(LIBDIR)/libasmrunp.a
++	rm -f $(DESTDIR)$(LIBDIR)/libasmrunp.a; ln -s libasmrun.a $(DESTDIR)$(LIBDIR)/libasmrunp.a
+ 
+ install-prof:
+-	cp libasmrunp.a $(LIBDIR)/libasmrunp.a
+-	cd $(LIBDIR); $(RANLIB) libasmrunp.a
++	cp libasmrunp.a $(DESTDIR)$(LIBDIR)/libasmrunp.a
++	cd $(DESTDIR)$(LIBDIR); $(RANLIB) libasmrunp.a
+ 
+ power.o: power-$(SYSTEM).o
+ 	cp power-$(SYSTEM).o power.o

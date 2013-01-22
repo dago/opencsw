@@ -1,0 +1,23 @@
+--- a/byterun/Makefile.common
++++ b/byterun/Makefile.common
+@@ -45,14 +45,14 @@ ld.conf: ../config/Makefile
+ 	echo "$(LIBDIR)" >> ld.conf
+ 
+ install::
+-	cp ocamlrun$(EXE) $(BINDIR)/ocamlrun$(EXE)
+-	cp libcamlrun.$(A) $(LIBDIR)/libcamlrun.$(A)
+-	cd $(LIBDIR); $(RANLIB) libcamlrun.$(A)
+-	if test -d $(LIBDIR)/caml; then : ; else mkdir $(LIBDIR)/caml; fi
++	cp ocamlrun$(EXE) $(DESTDIR)$(BINDIR)/ocamlrun$(EXE)
++	cp libcamlrun.$(A) $(DESTDIR)$(LIBDIR)/libcamlrun.$(A)
++	cd $(DESTDIR)$(LIBDIR); $(RANLIB) libcamlrun.$(A)
++	if test -d $(DESTDIR)$(LIBDIR)/caml; then : ; else mkdir $(DESTDIR)$(LIBDIR)/caml; fi
+ 	for i in $(PUBLIC_INCLUDES); do \
+-	  sed -f ../tools/cleanup-header $$i > $(LIBDIR)/caml/$$i; \
++	  sed -f ../tools/cleanup-header $$i > $(DESTDIR)$(LIBDIR)/caml/$$i; \
+ 	done
+-	cp ld.conf $(LIBDIR)/ld.conf
++	cp ld.conf $(DESTDIR)$(LIBDIR)/ld.conf
+ .PHONY: install
+ 
+ 

@@ -1,0 +1,15 @@
+--- a/otherlibs/labltk/lib/Makefile
++++ b/otherlibs/labltk/lib/Makefile
+@@ -62,9 +62,9 @@ install:
+ 	cp $(LIBNAME).cma $(LIBNAME)top$(EXE) $(INSTALLDIR)
+ 	chmod 644 $(INSTALLDIR)/$(LIBNAME).cma
+ 	chmod 755 $(INSTALLDIR)/$(LIBNAME)top$(EXE)
+-	@if test -d $(BINDIR); then : ; else mkdir $(BINDIR); fi
+-	cp $(LIBNAME) $(BINDIR)
+-	chmod 755 $(BINDIR)/$(LIBNAME)
++	@if test -d $(DESTDIR)$(BINDIR); then : ; else mkdir $(DESTDIR)$(BINDIR); fi
++	cp $(LIBNAME) $(DESTDIR)$(BINDIR)
++	chmod 755 $(DESTDIR)$(BINDIR)/$(LIBNAME)
+ 
+ installopt:
+ 	@if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi

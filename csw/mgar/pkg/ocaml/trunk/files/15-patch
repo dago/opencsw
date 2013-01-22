@@ -1,0 +1,11 @@
+--- a/otherlibs/labltk/support/Makefile.common
++++ b/otherlibs/labltk/support/Makefile.common
+@@ -8,7 +8,7 @@ LIBNAME=labltk
+ 
+ include $(TOPDIR)/config/Makefile
+ 
+-INSTALLDIR=$(LIBDIR)/$(LIBNAME)
++INSTALLDIR=$(DESTDIR)$(LIBDIR)/$(LIBNAME)
+ 
+ ## Tools from the Objective Caml distribution
+ 

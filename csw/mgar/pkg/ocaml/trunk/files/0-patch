@@ -1,0 +1,20 @@
+--- a/camlp4/man/Makefile
++++ b/camlp4/man/Makefile
+@@ -8,12 +8,12 @@ ALIASES=camlp4o.1 camlp4r.1 mkcamlp4.1 ocpp.1 camlp4o.opt.1 camlp4r.opt.1
+ include ../config/Makefile.base
+ 
+ install-local:
+-	if test -n '$(MANDIR)'; then \
+-	  $(MKDIR) $(MANDIR)/man1 ; \
+-	  cp $(TARGET) $(MANDIR)/man1/. ; \
++	if test -n '$(DESTDIR)$(MANDIR)'; then \
++	  $(MKDIR) $(DESTDIR)$(MANDIR)/man1 ; \
++	  cp $(TARGET) $(DESTDIR)$(MANDIR)/man1/. ; \
+ 	  for i in $(ALIASES); do \
+-            rm -f $(MANDIR)/man1/$$i; \
+-            echo '.so man1/$(TARGET)' > $(MANDIR)/man1/$$i; \
++            rm -f $(DESTDIR)$(MANDIR)/man1/$$i; \
++            echo '.so man1/$(TARGET)' > $(DESTDIR)$(MANDIR)/man1/$$i; \
+           done; \
+ 	fi
+ 

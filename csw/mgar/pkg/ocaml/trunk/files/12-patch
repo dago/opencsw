@@ -1,0 +1,11 @@
+--- a/otherlibs/labltk/browser/Makefile.shared
++++ b/otherlibs/labltk/browser/Makefile.shared
+@@ -49,7 +49,7 @@ help.ml:
+ 
+ install:
+ 	if test -f ocamlbrowser$(EXE); then : ; \
+-	  cp ocamlbrowser$(EXE) $(BINDIR); fi
++	  cp ocamlbrowser$(EXE) $(DESTDIR)$(BINDIR); fi
+ 
+ clean:
+ 	rm -f *.cm? ocamlbrowser$(EXE) dummy.mli *~ *.orig *.$(O)
