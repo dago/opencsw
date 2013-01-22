@@ -13,8 +13,8 @@ define BLURB
   used, among others, in the GNU Virtual Private Ethernet and rxvt-unicode
   packages, and in the Deliantra MORPG Server and Client.
 endef
-SPKG_SOURCEURL = http://software.schmorp.de/pkg/libev.html
-MASTER_SITES = http://dist.schmorp.de/libev/
+SPKG_SOURCEURL = http://software.schmorp.de/pkg/libev.h+= http://dist.schmorp.de/libev/
+MASTER_SITES += http://dist.schmorp.de/libev/Attic.schmorp.de/libev/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -25,4 +25,3 @@ include gar/category.mk
 
 post-install-modulated:
 	mv $(DESTDIR)$(includedir)/event.h $(DESTDIR)$(includedir)/ev-event.h
-	@$(MAKECOOKIE)
