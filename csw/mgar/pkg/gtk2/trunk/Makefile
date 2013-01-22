@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gtk2
-VERSION = 2.24.12
+VERSION = 2.24.14
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -49,145 +49,87 @@ RUNTIME_DEP_PKGS_CSWgtk2  = CSWlibgdk-x11-2-0-0
 # I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders will
 # called as well
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgdkpixbuf
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-file
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgailutil18
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibxrender
+RUNTIME_DEP_PKGS_CSk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibintl8 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWgtk2-printbackends-file
 CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWgdkpixbuf
 
 PACKAGES += CSWgtk2-printbackends-papi
 SPKG_DESC_CSWgtk2-printbackends-papi = $(DESCRIPTION), Print Backend
-PKGFILES_CSWgtk2-printbackends-papi = .*/printbackends/libprintbackend-papi.*
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi  = CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibatk1-0-0
+PKGFILES_CSWgtk2-pr = .*/printbackends/libprintbackend-papi.*
+PKGFILES_CSWgtk2-printbackends-papi += $(docdir)/gtk2_printbackends_papi.*+= CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackendlib += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-papi += CSWpango
+RUNTIME_DEP_PKGS_CSWgtk2-printbackendsk-x11-2-0-0-papi += CSWpango
 
 PACKAGES += CSWgtk2-printbackends-file
 SPKG_DESC_CSWgtk2-printbackends-file = $(DESCRIPTION), File Print Backend
-PKGFILES_CSWgtk2-printbackends-file = .*/printbackends/libprintbackend-file.*
+PKGFILES_CSWgtk2-pr = .*/printbackends/libprintbackend-file.*
+PKGFILES_CSWgtk2-printbackends-file += $(docdir)/gtk2_printbackends_/libprintbackend-file.*
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file  = CSWgtk2-printbackends-papi
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackencairo2ibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWpango
+RUNTIME_DEP_PKGS_CSWgtk2-printbackendobject2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgtk-x11-2-0-0-file += CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWgtk2-printbackends-papi
 
 PACKAGES += CSWgtk2-printbackends-cups
 SPKG_DESC_CSWgtk2-printbackends-cups = $(DESCRIPTION), CUPS Print Backend
-PKGFILES_CSWgtk2-printbackends-cups = .*/printbackends/libprintbackend-cups.*
+PKGFILES_CSWgtk2-pr = .*/printbackends/libprintbackend-cups.*
+PKGFILES_CSWgtk2-printbackends-cups += $(docdir)/gtk2_printbackends_/libprintbackend-cups.*
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups  = CSWgtk2-printbackends-papi
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWgtk2-printbackencairo2+= CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cx11-cups += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWpango
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWgtk2-printbackendobject2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgtk-x11-2-0-0+= CSWlibgnutls26
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWgtk2-printbackends-papi
 
 PACKAGES += CSWgtk2-printbackends-lpr
 SPKG_DESC_CSWgtk2-printbackends-lpr = $(DESCRIPTION), LPR Print Backend
-PKGFILES_CSWgtk2-printbackends-lpr = .*/printbackends/libprintbackend-lpr.*
+PKGFILES_CSWgtk2-p = .*/printbackends/libprintbackend-lpr.*
+PKGFILES_CSWgtk2-printbackends-lpr += $(docdir)/gtk2_printbackends_/libprintbackend-lpr.*
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr = CSWgtk2-printbackends-papi
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackecairo2+= CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWpango
+RUNTIME_DEP_PKGS_CSWgtk2-printbackenobject2-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgtk-x11-2-0-0s-lpr += CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWgtk2-printbackends-papi
 
 PACKAGES += CSWlibgailutil18
 SPKG_DESC_CSWlibgailutil18 = $(DESCRIPTION), libgailutil
-PKGFILES_CSWlibgailutil18 = $(call pkgfiles_lib,libgailutil.so.18)
-RUNTIME_DEP_PKGS_CSWlibgailutil18  = CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgdk-pixbuf2-0-0
+PKGFILES_ = $(call pkgfiles_lib,libgailutil.so.18)
+PKGFILES_CSWlibgailutil18 += $(docdir)/libgailutil18.*
+RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibatk1CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgaillib += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibgailuk-x11-2-0-0 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWpango
 
 PACKAGES += CSWlibgdk-x11-2-0-0
 SPKG_DESC_CSWlibgdk-x11-2-0-0 = $(DESCRIPTION), libgdk-x11-2.0
-PKGFILES_CSWlibgdk-x11-2-0-0 = $(call pkgfiles_lib,libgdk-x11-2.0.so.0)
+PKGFILES_CSW = $(call pkgfiles_lib,libgdk-x11-2.0.so.0)
+PKGFILES_CSWlibgdk-x11-2-0-0 += $(docdir)/libgdk_x11_2_0_0.*gdk-x11-2.0.so.0)
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0  = CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgdk-x11object += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWpango
@@ -195,10 +137,10 @@ RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWpango
 
 PACKAGES += CSWlibgtk-x11-2-0-0
 SPKG_DESC_CSWlibgtk-x11-2-0-0 = $(DESCRIPTION), libgtk-x11-2.0
-PKGFILES_CSWlibgtk-x11-2-0-0 = $(call pkgfiles_lib,libgtk-x11-2.0.so.0)
+PKGFILES_CSW = $(call pkgfiles_lib,libgtk-x11-2.0.so.0)
+PKGFILES_CSWlibgtk-x11-2-0-0 += $(docdir)/libgtk_x11_2_0_0.*gtk-x11-2.0.so.0)
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0  = CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgdk-pixbuf2-0-0
@@ -206,9 +148,7 @@ RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibgtk-x1intl8 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWpango
 
 
@@ -219,37 +159,45 @@ PKGFILES_CSWlibgtk2-dev += .*/share/gtk-2.0/demo/.*
 # Use this to pick up files in lib/gtk-2.0/include
 PKGFILES_CSWlibgtk2-dev += .*/include/.*\.h
 PKGFILES_CSWlibgtk2-dev += .*/gtk-demo
-PKGFILES_CSWlibgtk2-dev += .*/gtk-builder-convert
+PKGFILES_CSWlibgtk2-dev += .*/gtkPKGFILES_CSWlibgtk2-dev += $(docdir)/libgtk2_dev.*k-builder-convert
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev  = CSWlibgailutil18
 # I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders
 # will be called as well
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgdk-pixbuf-dev
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWpango
+RUNTIME_DEP_PKGS_CSWlibggdk-pixbuf-dev
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWpangodevel
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibglib2-dev
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibatk-dev
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibcairo-dev2-dev += CSWpango
 OBSOLETED_BY_CSWlibgtk2-dev = CSWgtk2devel
 CATALOGNAME_CSWgtk2devel = gtk2_devel_stub
-CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlCHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibcairo-dev
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibatk-dev
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibglib2-dev
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWpangodevel
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWgtk2
+# That's supposed to come with CSWgtk2
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibgtk-x11-2-0-0
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibgdk-pixbuf2-0-0
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibgdk-x11-2-0-0
+# That's supposed to come with CSWpangodevel
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWpango
+# That's supposed to come with CSWlibcairo-dev
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibcairo2
+# That's supposed to come with CSWlibglib2-dev
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibgobject2-0-0
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibglib2-0-0
+
+libgdk-pixbuf-dev
 
 
 PACKAGES += CSWgtk2doc
 SPKG_DESC_CSWgtk2doc = $(DESCRIPTION), Documentation
 ARCHALL_CSWgtk2doc = 1
-PKGFILES_CSWgtk2doc = .*/share/gtk-doc/.*
-CHECKPKG_OVERRIDES_CSWgtk2doc += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/gtk/gtk-Resource-Files.html
-CHECKPKG_OVERRIDES_CSWgtk2doc += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/gtk/gtk-running.html
+PKG = .*/share/gtk-doc/.*
+PKGFILES_CSWgtk2doc += $(docdir)/gtk2doc.*/share/gtk-doc/.*
+CHECKPKG_OVERRIDES_CSWgtk2doc += file-with-bad-content|/usr/local|root/opt/csw/share2/gtk2-Resource-Files.html/share/gtk-doc/.*
+CHECKPKG_OVERRIDES_CSWgtk2doc += file-with-bad-content|/usr/local|root/opt/csw/share2/gtk-doc/html/gtk/gtk-running.html
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
@@ -266,15 +214,12 @@ BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWggettext
 BUILD_DEP_PKGS += CSWlibpixman-dev
-BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWlibfreetypePKGS += CSWlibpng-dev
 # Needed to make a test work
 BUILD_DEP_PKGS += CSWgamin
 # Used to adjust documentation
 BUILD_DEP_PKGS += CSWgsed
-
-BUILD64 = 1
-
-# failed with: Gtk-WARNING **: cannot open display: :101
 SKIPTEST = 1
 
 # This is because gtk.immodules resides in $(sysconfdir)/gtk-2.0. If
@@ -288,7 +233,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shm
 CONFIGURE_ARGS += --enable-xkb
 CONFIGURE_ARGS += --enable-xinerama
-CONFIGURE_ARGS += --enable-cups
+CONFIGURE_ARGS += --enable-cu += --enable-introspection=no += --enable-cups
 CONFIGURE_ARGS-64 += --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
@@ -300,4 +245,3 @@ post-merge:
 	gsed -i -e 's|/usr/share/|$(sharedstatedir)/|g' \
 		-e 's|/usr/lib|$(libdir)|g' \
 		-e 's|/usr/include|$(includedir)|g' `find $(PKGROOT)$(sharedstatedir)/gtk-doc -type f`
-	@$(MAKECOOKIE)
