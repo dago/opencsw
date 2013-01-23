@@ -35,6 +35,12 @@ PATCHFILES += 6-patch
 PATCHFILES += 7-patch
 PATCHFILES += 8-patch
 PATCHFILES += 9-patch
+#
+# this is only a error ignor patch taken from here:
+# http://caml.inria.fr/mantis/view.php?id=4663
+# the real reason for the problem is described probably here:
+# http://irccrew.org/~cras/nfs-coding-howto.html
+PATCHFILES += 01-nfs-close-bug.patch
 
 RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWocaml += CSWlibgcc-s1
@@ -53,7 +59,7 @@ CONFIGURE_ARGS += -libdir $(libdir)
 CONFIGURE_ARGS += -mandir $(mandir)
 CONFIGURE_ARGS += -prefix $(prefix)
 Cverbose
-# CONFIGURE_ARGS += -cc "$(CC) $(CFLAGS)"
+CONFIGURE_ARGS += -cc "$(notdir $(CC)) $(CFLAGS)"
 # CONFIGURE_ARGS += -x11include $(prefix)/X11/include
 # CONFIGURE_ARGS += -x11lib $(prefix)/X11/lib
 INSTALL_ARGS += PWD=${PWD}/$(WORKSRC)
