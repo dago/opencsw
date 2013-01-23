@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.6p3
+VERSION = 1.8.6p4
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -150,6 +150,4 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(IOLOGPATH)
 	ginstall -d $(DESTDIR)$(TIMEPATH)
 	ginstall -d $(DESTDIR)$(sysconfdir)
-	ginstall $(WORKDIR)/sudo.conf.CSW $(DESTDIR)$(sysconfdir)
-	@$(MAKECOOKIE)
-
+	ginstall $(WORKDIR)/sudo.conf.CSW $(DESTDIR)$(sysconfdir
