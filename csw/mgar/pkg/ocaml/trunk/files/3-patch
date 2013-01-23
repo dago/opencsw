@@ -19,7 +19,7 @@
 +	rm -f $(DESTDIR)$(LIBDIR)/stdlib.p.a; ln -s stdlib.a $(DESTDIR)$(LIBDIR)/stdlib.p.a
 +	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.cmx; \
 +          ln -s std_exit.cmx $(DESTDIR)$(LIBDIR)/std_exit.p.cmx
-+	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.o; ln -s std_exit.o $(LIBDIR)/std_exit.p.o
++	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.o; ln -s std_exit.o $(DESTDIR)$(LIBDIR)/std_exit.p.o
  
  installopt-prof:
 -	cp stdlib.p.cmxa stdlib.p.a std_exit.p.cmx std_exit.p.o $(LIBDIR)
