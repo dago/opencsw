@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 4.0.0
+VERSION = 3.6.11
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -287,7 +287,9 @@ ISAEXEC = 1
 SMBLOCKDIR = $(localstatedir)/samba/locks
 SMBLOGDIR = $(localstatedir)/samba/log
 SMBPRIVATEDIR = $(sysconfdir)/samba/private
-SMBCONFIGDIR = $(s#CONFIGURE_SCRIPTS = $(WORKSRC)/source4$(WORKSRC)/source3/configure
+SMBCONFIGDIR = $(sysconfdir)/samba
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes
 CONFIGURE_ARGS += --enable-static=no
@@ -321,16 +323,20 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 # Can't use fdatasync atm do to linker problems
 CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
 CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
-CONFIGURE_ARGS += ac_cv_lib_ext_r#BUILD_SCRIPTS = $(WORKSRC)/source4/Makefile
+CONFIGURE_ARGS += ac_cv_lib_ext_rt_fdatasync=no
 
-#TEST_SCRIPTS = $(WORKSRC)/source4/Makefile
+
+
+BUILD_SCRIPTS = $(WORKSRC)/source3/Makefile
+
+TEST_SCRIPTS = $(WORKSRC)/source3/Makefile
 TEST_TARGET = test
 
 # Tests need root
 SKIPTEST ?= 1
 
 
-#INSTALL_SCRIPTS = $(WORKSRC)/source4$(WORKSRC)/source3/Makefile
+INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
 INITSMF += /etc/opt/csw/init.d/cswsamba
 INITSMF += /etc/opt/csw/init.d/cswwinbind
