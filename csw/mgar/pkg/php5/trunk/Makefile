@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.19
+VERSION  = 5.3.21
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
