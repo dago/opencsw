@@ -144,6 +144,10 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf-dist/doc/latex/pstool/example.
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf-dist/doc/latex/nicetext/readprov.log
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf/dvipdfm/config/config-win32
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf-dist/doc/latex/latexdiff/contrib/latexdiff.spec
+# TeXLive provides upstream binaries which are installed if their
+# algorithm matches the "current platform"; of course, that's not
+# realy true...
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/bin/biber
 
 DEBUG_PACKAGING = 1
 SPKG_TMPDIR		=	$(HOME)/ocswtmp
