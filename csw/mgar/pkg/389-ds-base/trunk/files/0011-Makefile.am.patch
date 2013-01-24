@@ -1,0 +1,12 @@
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1034,8 +1034,7 @@ libposix_winsync_plugin_la_SOURCES = ldap/servers/plugins/posix-winsync/posix-wi
+ 	ldap/servers/plugins/posix-winsync/posix-group-task.c \
+ 	ldap/servers/plugins/posix-winsync/posix-winsync-config.c
+ 
+-libposix_winsync_plugin_la_CPPFLAGS = $(PLUGIN_CPPFLAGS) -DWINSYNC_TEST_POSIX \
+-	-I$(srcdir)/ldap/servers/plugins/replication
++libposix_winsync_plugin_la_CPPFLAGS = -I$(srcdir)/ldap/servers/plugins/replication $(PLUGIN_CPPFLAGS) -DWINSYNC_TEST_POSIX
+ libposix_winsync_plugin_la_LIBADD = libslapd.la $(LDAPSDK_LINK) $(NSPR_LINK)
+ libposix_winsync_plugin_la_LDFLAGS = -avoid-version
+ 
