@@ -36,6 +36,9 @@ PATCHFILES += 0007-fixup-Makefile.am.patch
 PATCHFILES += 0008-mntent-daemon.c.patch
 PATCHFILES += 0009-mozldap-pw.c.patch
 PATCHFILES += 0010-mntent-config.ac.patch
+PATCHFILES += 0011-Makefile.am.patch
+PATCHFILES += 0009-fix-for-550-memberuid-not-created.patch
+
 
 BUILD_DEP_PKGS += CSWautoconf
 BUILD_DEP_PKGS += CSWautomake
