@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.2.11.15
+VERSION = 1.3.0
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server
@@ -12,8 +12,9 @@ endef
 
 BUNDLE = 389-ds
 
-MASTER_SITES = http://port389.org/sources/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+# MASTER_SITES = http://port389.org/sources/
+GIT_REPOS = git://git.fedorahosted.org/389/ds.git
+# DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSW389-ds-base.postinstall
 DISTFILES += CSW389-ds-base.postremove
 
@@ -24,6 +25,7 @@ PACKAGING_PLATFORMS += solaris10-i386
 LICENSE = LICENSE
 
 GARCOMPILER = SOS12U3
+USE_OPENLDAP = 1
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
@@ -33,9 +35,11 @@ PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
 # PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
 # PATCHFILES += 0007-fixup-plugin_syntax.c.patch
-PATCHFILES += 0008-mntent-daemon.c.patch
+# PATCHFILES += 0008-mntent-daemon.c.patch
 PATCHFILES += 0009-mozldap-pw.c.patch
 PATCHFILES += 0010-mntent-config.ac.patch
+PATCHFILES += 0010-daemon.c.patch
+PATCHFILES += 0011-Makefile.am.patch
 
 BUILD_DEP_PKGS += CSWautoconf
 BUILD_DEP_PKGS += CSWautomake
@@ -43,8 +47,12 @@ BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
-BUILD_DEP_PKGS += CSWmozldap-dev
-BUILD_DEP_PKGS += CSWmozldap-tools
+ifeq ($(USE_OPENLDAP),1)
+ BUILD_DEP_PKGS += CSWopenldap-dev
+else
+ BUILD_DEP_PKGS += CSWmozldap-dev
+ BUILD_DEP_PKGS += CSWmozldap-tools
+endif
 BUILD_DEP_PKGS += CSWsasl-dev
 BUILD_DEP_PKGS += CSWlibicu-dev
 BUILD_DEP_PKGS += CSWlibsvrcore0-dev
@@ -94,14 +102,20 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 
 EXTRA_LIB = /opt/csw/bdb48/lib
 # remove -I/opt/csw/include
-CPPFLAGS = 
+# CPPFLAGS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
+
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
-CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
-## CONFIGURE_ARGS += --with-ldapsdk-bin=$(abspath $(prefix)/dirsrv/bin/$(MM_BINDIR))
-CONFIGURE_ARGS += --with-ldapsdk-bin=$(bindir)
+ifeq ($(USE_OPENLDAP),1)
+  CONFIGURE_ARGS += --with-openldap-inc=/opt/csw/include
+  CONFIGURE_ARGS += --with-openldap-lib=$(libdir)
+  CONFIGURE_ARGS += --with-openldap-bin=$(bindir)
+else
+  CONFIGURE_ARGS += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
+  CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
+  CONFIGURE_ARGS += --with-ldapsdk-bin=$(bindir)
+endif
 CONFIGURE_ARGS += --with-db-inc=/opt/csw/bdb48/include 
 CONFIGURE_ARGS += --with-db-lib=$(abspath $(prefix)/bdb48/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --with-icu-inc=/opt/csw/include 
