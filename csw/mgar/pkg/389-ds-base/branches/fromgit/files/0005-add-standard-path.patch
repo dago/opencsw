@@ -1,0 +1,25 @@
+From 9e7786a9b7d088a656f17c00ab6b293450a8fdb4 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 10 Jan 2012 14:25:16 +0100
+Subject: [PATCH 5/7] add standard path
+
+---
+ wrappers/dsktune.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/wrappers/dsktune.in b/wrappers/dsktune.in
+index 7c4777c..c269582 100755
+--- a/wrappers/dsktune.in
++++ b/wrappers/dsktune.in
+@@ -30,7 +30,7 @@ export LD_LIBRARY_PATH
+ ##             path on this platform.                                        ##
+ ###############################################################################
+ 
+-PATH=${BIN_DIR}
++PATH=${BIN_DIR}:$PATH
+ export PATH
+ 
+ 
+-- 
+1.7.6.1
+
