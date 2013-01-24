@@ -724,6 +724,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_BUNDLE=$(BUNDLE)"; \
 	echo "OPENCSW_OS_RELEASE=$(SPKG_OSNAME)"; \
 	echo "OPENCSW_OS_ARCH=$(GARCH)"; \
+	$(if $(OBSOLETED_BY_$*),echo "OPENCSW_OBSOLETES=$(OBSOLETED_BY_$*)";) \
 	$(_CATEGORY_PKGINFO) \
 	) >$@
 	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
