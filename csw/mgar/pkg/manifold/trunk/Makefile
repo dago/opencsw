@@ -1,7 +1,7 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = manifold
+NAME = Manifold
 VERSION = 0.2.0
 GARTYPE = v2
 CATEGORIES = python
@@ -10,8 +10,7 @@ DESCRIPTION = An SMF service manifest creation tool
 define BLURB
 endef
 
-MASTER_SITES = http://pypi.python.org/packages/source/M/Manifold/
-DISTNAME = Manifold-$(VERSION)
+MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://code.google.com/p/manifold/
