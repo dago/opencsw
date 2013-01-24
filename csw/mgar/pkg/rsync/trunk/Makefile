@@ -22,18 +22,28 @@ DISTFILES += cswrsyncd
 VENDOR_URL = http://rsync.samba.org/
 
 PACKAGES += CSWrsync
-SPKG_DESC_CSWrsync = Utility which provides fast incremental file transfer
+SPKG_DESC_CSWrsync = Utility which provides fast increme# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibiconv2
 
-# The location of rsyncd.conf to OpenCSW standard has been done in 3.0.8
+INITSMF += /etc/opt/csw/init.d/cswrsyncd
+
+PACKAGES += CSWrsyncd
+SPKG_DESC_CSWrsyncd = Daemon for rsyncd server
+PKGFILES_CSWrsyncd += $(sysconfdir)/rsyncd.conf
+PKGFILES_CSWrsyncd += $(mandir)/man5/rsyncd.conf.5
+PKGFILES_CSWrsyncd += $(INITSMF)
+
+# rsyncd is in fact rsync --daemon
+RUNTIME_DEP_PKGS_CSWrsyncd += CSWrsync
+CHECKPKG_OVERRIDES_CSWrsyncd += surplus-dependency|CSWrsyncync += CSWlibiconv2
+
+# The location of rsyncd.conf to OpenCSW standard has been done in _CSWrsyncd3.0.8
 MIGRATE_FILES = rsyncd.conf
 MIGRATE_SOURCE_DIR = /etc
 
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --with-rsyncd-conf=$(sysconfdir)/rsyncd.conf
-
-INITSMF += /etc/opt/csw/init.d/cswrsyncd
+CONFIGURE_ARGS += --with-rsyncd-conf=$(syscon/init.d/cswrsyncd
 
 REINPLACE_USRLOCAL = $(mandir)/man1/rsync.1
 REINPLACE_WHEN_USRLOCAL = postinstall
@@ -49,4 +59,4 @@ include gar/category.mk
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/csw/init.d/cswrsyncd
+	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/cs
