@@ -1,19 +1,16 @@
 NAME = ocaml
 VERSION = 3.11.2
-CATEGORIES = lang
 GARTYPE = v2
 
-DESCRIPTION = Brief description
+DESCRIPTION = Objective Caml programming language
 define BLURB
-  Long description
+  OCaml's toolset includes an interactive top level interpreter, a bytecode compiler, and an optimizing native code compiler. It has a large standard library that makes it useful for many of the same applications as Python or Perl, as well as robust modular and object-oriented programming constructs that make it applicable for large-scale software engineering. OCaml is the successor to Caml Light. The acronym CAML originally stood for Categorical Abstract Machine Language, although OCaml abandons this abstract machine.  Long description
 endef
 
 MASTER_SITES = http://caml.inria.fr/pub/distrib/ocaml-3.11/
 DISTFILES  = $(NAME)-GARCOMPILER = GCC4
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# UPSTREAM_MASTER_SITES = 
+LICENSE = LICENSE
 
 PATCHFILES += 0-patch
 PATCHFILES += 10-patch
@@ -42,10 +39,25 @@ PATCHFILES += 9-patch
 # http://irccrew.org/~cras/nfs-coding-howto.html
 PATCHFILES += 01-nfs-close-bug.patch
 
-RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
+PACKAGES +=  CSWocaml
+SPKG_DESC_CSWocaml = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWocaml += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWocaml += CSWlibtk8-5
-Wocaml = CSWlibx11
+#RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
+#RUNTIME_DEP_PKGS_CSWocaml += CSWlibtk8-5
+# include static libs
+MERGE_EXCLUDE_STATICLIBS =
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libasmrun.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libasmrunp.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libbigarray.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libcamlrun.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libgraphics.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libmldbm.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libnums.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libstr.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libthreads.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libthreadsnat.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libunix.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/vmthreads/libvmthreads.a
 LICENSE = LICENSE
 
 EXTRA_INC = $(prefix)/X11/include
