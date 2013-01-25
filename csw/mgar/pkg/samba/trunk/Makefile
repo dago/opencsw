@@ -1,8 +1,6 @@
-# TBD:
-# - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 4.0.0
+VERSION = 4.0.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -23,10 +21,7 @@ EXPANDVARS += smb.conf
 DISTFILES += smb.conf
 
 # This is taken from the old Samba package
-DISTFILES += cswkrb5.conf
-
-#What needs to be fixed:
-# Split libs and packages
+DISTFILESibs and packages
 
 BUILD_DEP_PKGS += CSWlibtalloc-dev
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -58,13 +53,7 @@ CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/sha
 CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/tdbbackup.8
 CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/idmap_tdb2.8
 CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/net.8
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/swat.8
-
-# Make one unified package for now
-OBSOLETED_BY_CSWsamba += CSWsambacommon
-CATALOGNAME_CSWsambacommon = samba_common_stub
-OBSOLETED_BY_CSWsamba += CSWsambadoc
-CATALOGNAME_CSWsambadoc = samba_doc_stub
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share= samba_doc_stub
 
 PACKAGES += CSWsamba-client
 SPKG_DESC_CSWsamba-client = Client binaries for samba
@@ -277,35 +266,38 @@ CATALOGNAME_CSWsambawb = samba_wb_stub
 # Just docs, override for now
 CHECKPKG_OVERRIDES_CSWsamba-winbind += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/winbindd.8
 CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CSWlibnss-winbind1
-
-EXTRA_CFLAGS = -lintl
-EXTRA_LDFLAGS = -lintl
+rt -lintl
+EXTRA_LDFLAGS = -lrt -lintl
 
 BUILD64 = 1
+ISAEXEC = 1
+
+GARCOMPILER = GNU64 = 1
 ISAEXEC = 1
 
 SMBLOCKDIR = $(localstatedir)/samba/locks
 SMBLOGDIR = $(localstatedir)/samba/log
 SMBPRIVATEDIR = $(sysconfdir)/samba/private
-SMBCONFIGDIR = $(s#CONFIGURE_SCRIPTS = $(WORKSRC)/source4$(WORKSRC)/source3/configure
-CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --enable-shared=yes
+SMBCONFIGDIR = $(sCONFIGURE_ARGS += $(DIRPATHS)
+#Remove exec_prefix from DIRPATHS:
+NODIRPATHS += --exec_prefix=/opt/csw 
+
+#CONFIGURE_ARGS += --enable-shared=yes
+#enable-shared=yes
 CONFIGURE_ARGS += --enable-static=no
 #CONFIGURE_ARGS += --enable-socket-wrapper
 #CONFIGURE_ARGS += --enable-nss-wrapper
 CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
-CONFIGURE_ARGS += --with-winbind
-CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
+CONFIGURE_ARGS #CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
+#es=vfs_solarisacl
 CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_adex
+CONFIGUshared-modules=odules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idma#p_hash,idmap_adex
 CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-ads
 CONFIGURE_ARGS += --with-ldap
-CONFIGURE_ARGS += --with-automount
-CONFIGURE_ARGS += --with-dnsupdate=no
-# Do not set krb5 this is handeled in gar. Otherwise 64bit will not build
-#CONFIGURE_ARGS += --with-krb5=$(prefix)
+CONFIGURE_ARGS +=#CONFIGURE_ARGS += --with-dnsupdate=noith-krb5=$(prefix)
 CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
 CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
 CONFIGURE_ARGS += --with-lockdir=$(SMBLOCKDIR)
@@ -318,39 +310,26 @@ CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDIR)
 CONFIGURE_ARGS-64 +=  --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
-# Can't use fdatasync atm do to linker problems
-CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
-CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
-CONFIGURE_ARGS += ac_cv_lib_ext_r#BUILD_SCRIPTS = $(WORKSRC)/source4/Makefile
+# Can't use fdatasync atm do t#CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
+#CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
+#CONFIGURE_ARGS += ac_cv_lib_ext_rt_fdatasync=no
 
-#TEST_SCRIPTS = $(WORKSRC)/source4/Makefile
+
+
+
 TEST_TARGET = test
 
 # Tests need root
 SKIPTEST ?= 1
 
 
-#INSTALL_SCRIPTS = $(WORKSRC)/source4$(WORKSRC)/source3/Makefile
 
 INITSMF += /etc/opt/csw/init.d/cswsamba
 INITSMF += /etc/opt/csw/init.d/cswwinbind
 
-MIGRATE_FILES_CSWsamba += samba
 PRESERVECONF += $(sysconfdir)/samba/smb.conf
 
-include gar/category.mk
-
-# Use this hack until this bug has been fixed:
-#   https://bugzilla.samba.org/show_bug.cgi?id=8571
-post-extract-modulated:
-	# Make sure to EXCLUDE the include path from 'krb5-config --cflags' as it is prepended to CFLAGS
-	# leading to the inclusion of /opt/csw/include header files before the newly build ones.
-	# The line looks like this:
-	#   KRB5_CFLAGS="`$KRB5CONFIG --cflags | sed s/@INCLUDE_des@//`"
-	# and after the transformation it looks like this:
-	#   KRB5_CFLAGS="`$KRB5CONFIG --cflags | sed s,-I/opt/csw/include,,`"
-	-perl -pi -e 's!/\@INCLUDE_des\@//!,-I$(includedir),,!' \
-		$(WORKSRC)/source3/configure
+include gar/category.mk/source3/configure
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
