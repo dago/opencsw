@@ -10,20 +10,36 @@ define BLURB
 endef
 
 MASTER_SITES =  http://downloads.xiph.org/releases/libfishsound/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(VENDOR_URL = http://www.xiph.org/fishsound/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+BUILD_DEP_PKGS += CSWlibogg-dev
+BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWlibflac-dev
+BUILD_DEP_PKGS += CSWlibspeex-dev
 
-SPKG_SOURCEURL = http://www.xiph.org/fishsound/
+PACKAGES += CSWlibfishsound0
+SPKG_DESC_CSWlibfishsound0 = Decoding and encoding audio data using the Xiph.org codecs, libfishsound.so.0
+PKGFILES_CSWlibfishsound0 += $(call pkgfiles_lib,libfishsound.so.0)
+RUNTIME_DEP_PKGS_CSWlibfishsound0 += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWlibfishsound0 += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibfishsound0 += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWlibfishsound0 += CSWlibflac8
+OBSOLETED_BY_CSWlibfishsound0 += CSWlibfishsound
 
-RUNTIME_DEP_PKGS = CSWflac CSWlibogg CSWspeex CSWvorbis
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+PACKAGES += CSWlibfishsound-dev
+SPKG_DESC_CSWlibfishsound-dev = Development files for libfishsound.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibfishsound-dev += CSWlibfishsound0
+
+# These are just docs
+CHECKPKG_OVERRIDES_CSWlibfishsound-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libfishsound/html/group__install.html
+CHECKPKG_OVERRIDES_CSWlibfishsound-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libfishsound/latex/group__install.tex
+# This is an example
+CHECKPKG_OVERRIDES_CSWlibfishsound-dev += file-with-bad-content|/usr/local|root/opt/csw/include/fishsound/fishsound.h
 
 OPT_FLAGS_SOS =
 
-BUILD64_LIBS_ONLY = 1
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1RGS = $(DIRPATHS)
 
 BUILD_ARGS = AM_CFLAGS= SHLIB_VERSION_ARG= libfishsound_la_LDFLAGS=
 
@@ -34,7 +50,5 @@ SKIPTEST ?= 1
 
 include gar/category.mk
 
-# UINTPTR_MAX is defined empty in Solaris, which breaks a constraint check
-post-configure-modulated:
+# UINTPTR_MAX is defined empty in Solaris, which breaks a constraint chenfigure-modulated:
 	perl -pi -e 's,(.*HAVE_UINTPTR_T.*),/* \1 */,' $(WORKSRC)/config.h
-	@$(MAKECOOKIE)
