@@ -12,16 +12,17 @@ CATALOG_RELEASE = unstable
 
 LICENSE = README
 
-PACKAGES += CSWpm-date-parse
-CATALOGNAME_CSWpm-date-parse = pm_date_parse
-SPKG_DESC_CSWpm-date-parse = ASCII Date parser using regexps
-ARCHALL_CSWpm-date-parse = 1
-OBSOLETED_BY_CSWpm-date-parse += CSWpmtimedate
+PACKAGES += CSWpm-timedate
+SPKG_DESC_CSWpm-timedate = ASCII Date parser using regexps
+ARCHALL_CSWpm-timedate = 1
+OBSOLETED_BY_CSWpm-timedate += CSWpmtimedate
 CATALOGNAME_CSWpmtimedate = pm_timedate_stub
+# This name was wrongly guessed by makemake and released
+OBSOLETED_BY_CSWpm-timedate += CSWpm-date-parse
 
 # This is for a config file location we don't have at all, maybe we need
 # to provide one later:
 #   /usr/share/lib/locale/LC_TIME/default
-CHECKPKG_OVERRIDES_CSWpm-date-parse += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/Date/Format.pm
+CHECKPKG_OVERRIDES_CSWpm-timedate += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/Date/Format.pm
 
 include gar/category.mk
