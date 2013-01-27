@@ -134,7 +134,7 @@ def main():
   tags_for_all_osrels = []
   try:
     sqo_catrel = models.CatalogRelease.selectBy(name=options.catrel).getOne()
-  except sqlobject.main.SQLObjectNotFound, e:
+  except sqlobject.main.SQLObjectNotFound as e:
     logging.fatal("Fetching from the db has failed: catrel=%s",
                   repr(str(options.catrel)))
     logging.fatal("Available catalog releases:")
@@ -173,7 +173,7 @@ def main():
     tags_for_all_osrels.extend(tags_after_overrides)
     if not options.quiet:
       if tags_after_overrides:
-        print textwrap.fill(BEFORE_OVERRIDES, 80)
+        print(textwrap.fill(BEFORE_OVERRIDES, 80))
         for checkpkg_tag in tags_after_overrides:
           print checkpkg_tag.ToGarSyntax()
         print textwrap.fill(AFTER_OVERRIDES, 80)
