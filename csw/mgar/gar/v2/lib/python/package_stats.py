@@ -6,6 +6,7 @@ import itertools
 import logging
 import os
 import progressbar
+import mute_progressbar
 import re
 import sqlobject
 
@@ -487,9 +488,12 @@ class StatsCollector(object):
       raise PackageError("The length of package list is zero.")
     counter = itertools.count(1)
     self.logger.info("Juicing the svr4 package stream files...")
-    pbar = progressbar.ProgressBar()
-    pbar.maxval = total_packages
-    pbar.start()
+    if not self.debug:
+      pbar = progressbar.ProgressBar()
+      pbar.maxval = total_packages
+      pbar.start()
+    else:
+      pbar = mute_progressbar.MuteProgressBar()
     while stats_list:
       # This way objects will get garbage collected as soon as they are removed
       # from the list by pop().  The destructor (__del__()) of the srv4 class
