@@ -71,9 +71,8 @@ class CswSrv4File(shell.ShellMixin, object):
   def GetWorkDir(self):
     if not self.workdir:
       self.workdir = tempfile.mkdtemp(prefix="pkg_", dir="/var/tmp")
-      fd = open(os.path.join(self.workdir, "admin"), "w")
-      fd.write(ADMIN_FILE_CONTENT)
-      fd.close()
+      with open(os.path.join(self.workdir, "admin"), "w") as fd:
+        fd.write(ADMIN_FILE_CONTENT)
     return self.workdir
 
   def GetAdminFilePath(self):
@@ -137,6 +136,10 @@ class CswSrv4File(shell.ShellMixin, object):
     return self.stat
 
   def GetMtime(self):
+    """The mtime of the svr4 file.
+
+    Returns: a datetime.datetime object (not encodable with json!).
+    """
     if not self.mtime:
       s = self._Stat()
       t = time.gmtime(s.st_mtime)
@@ -144,8 +147,7 @@ class CswSrv4File(shell.ShellMixin, object):
     return self.mtime
 
   def GetSize(self):
-    s = self._Stat()
-    return s.st_size
+    return self._Stat().st_size
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -465,7 +467,6 @@ class PackageSurgeon(shell.ShellMixin):
     if not self.dir_pkg:
       self.dir_pkg = self.srv4.GetDirFormatPkg()
       logging.debug(repr(self.dir_pkg))
-      # subprocess.call(["tree", self.dir_pkg.directory])
 
   def Export(self, dest_dir):
     self.Transform()

@@ -36,19 +36,19 @@ BAD_CONTENT_REGEXES = (
 
 
 class Error(Exception):
-  pass
+  """Generic error."""
 
 
 class PackageError(Error):
-  pass
+  """Problem with the package file examined."""
 
 
 class DatabaseError(Error):
-  pass
+  """Problem with the database contents or schema."""
 
 
 class StdoutSyntaxError(Error):
-  pass
+  """A utility's output is bad, e.g. impossible to parse."""
 
 
 class PackageStatsMixin(object):
@@ -122,6 +122,10 @@ class PackageStatsMixin(object):
     return self.dir_format_pkg
 
   def GetMtime(self):
+    """Get svr4 file mtime value.
+
+    Returns: a datetime.datetime object.
+    """
     return self.srv4_pkg.GetMtime()
 
   def GetSize(self):
@@ -213,7 +217,8 @@ class PackageStatsMixin(object):
         "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
     self.SaveStats(pkg_stats)
-    logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
+    logging.debug("Statistics of %s have been collected and saved in the db.",
+                  repr(dir_pkg.pkgname))
     return pkg_stats
 
   @classmethod
@@ -231,6 +236,7 @@ class PackageStatsMixin(object):
 
     Does not require an instance.
     """
+    logging.debug("SaveStats()")
     pkgname = pkg_stats["basic_stats"]["pkgname"]
     # Getting sqlobject representations.
     pkginst = cls.GetOrSetPkginst(pkgname)
@@ -371,11 +377,11 @@ class PackageStatsMixin(object):
         line_u = pkgmap_entry["line"].decode("utf-8")
         f_path, basename = os.path.split(
             pkgmap_entry["path"].decode('utf-8'))
-      except UnicodeDecodeError, e:
+      except UnicodeDecodeError as e:
         line_u = pkgmap_entry["line"].decode("latin1")
         f_path, basename = os.path.split(
             pkgmap_entry["path"].decode('latin1'))
-      except UnicodeEncodeError, e:
+      except UnicodeEncodeError as e:
         # the line was already in unicode
         line_u = pkgmap_entry['line']
         f_path, basename = os.path.split(pkgmap_entry["path"])
@@ -447,9 +453,11 @@ class PackageStatsMixin(object):
 
 
 def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
-  packages = [inspective_package.InspectiveCswSrv4File(x, debug) for x in file_name_list]
+  packages = [inspective_package.InspectiveCswSrv4File(x, debug)
+              for x in file_name_list]
   if catalog_file_name:
-    catalog_obj = catalog.OpencswCatalog(open(catalog_file_name, "rb"))
+    with open(catalog_file_name, "rb") as fd:
+      catalog_obj = catalog.OpencswCatalog(fd)
     md5s_by_basename = catalog_obj.GetDataByBasename()
     for pkg in packages:
       basename = os.path.basename(pkg.pkg_path)
@@ -472,6 +480,7 @@ class StatsCollector(object):
     self.debug = debug
 
   def CollectStatsFromFiles(self, file_list, catalog_file, force_unpack=False):
+    """Returns: A list of md5 sums of collected statistics."""
     args_display = file_list
     if len(args_display) > 5:
       args_display = args_display[:5] + ["...more..."]

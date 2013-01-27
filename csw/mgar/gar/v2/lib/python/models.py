@@ -229,7 +229,13 @@ class Srv4FileStats(sqlobject.SQLObject):
         % (self.catalogname, self.version_string, self.arch.name))
 
   def GetUnicodeOrNone(self, s):
-    """Tries to decode UTF-8"""
+    """Tries to decode UTF-8.
+
+    If the object does not decode as UTF-8, it's forced to do so, while
+    ignoring any potential errors.
+
+    Returns: a unicode object or a None type.
+    """
     if s is None:
       return None
     if type(s) != unicode:

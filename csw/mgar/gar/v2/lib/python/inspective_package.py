@@ -724,10 +724,11 @@ class FileMagic(object):
     """Trying to run magic.file() a few times, not accepting None."""
     self._LazyInit()
     mime = None
+    logging.debug("GetFileMimeType(%r)", full_path)
     for i in xrange(10):
       mime = self.magic_cookie.file(full_path)
       if mime:
-        break;
+        break
       else:
         # Returned mime is null. Re-initializing the cookie and trying again.
         logging.error("magic_cookie.file(%s) returned None. Retrying.",

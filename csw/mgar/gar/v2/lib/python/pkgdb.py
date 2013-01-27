@@ -215,7 +215,6 @@ class CatalogImporter(object):
       cat_entry_by_md5[catalog_entry["md5sum"]] = catalog_entry
       cat_entry_by_basename[catalog_entry["file_basename"]] = catalog_entry
     # - import all srv4 files that were not in the database so far
-    sqo_objects = set()
     entries_to_import = []
     logging.debug("Checking which srv4 files are already in the db.")
     for md5 in cat_entry_by_md5:
@@ -335,11 +334,11 @@ class CatalogImporter(object):
       sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
         if current_host_arch != arch:
-        	logging.warning(
-        	    "Cannot process packages for achitecture %r "
-        	    "because we're currently running on architecture %r.",
-        	    arch, current_host_arch)
-        	continue
+          logging.warning(
+              "Cannot process packages for achitecture %r "
+              "because we're currently running on architecture %r.",
+              arch, current_host_arch)
+          continue
         logging.info("    Architecture: %s", repr(arch))
         sqo_arch = m.Architecture.selectBy(name=arch).getOne()
         catalog_file = self.ComposeCatalogFilePath(base_dir, osrel, arch)
