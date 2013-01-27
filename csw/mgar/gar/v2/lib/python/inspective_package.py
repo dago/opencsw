@@ -280,11 +280,16 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
         stderr = re.sub(ignored_error_re, "", stderr)
         if stderr:
+          with open("/tmp/elfdump_stdout.log", "w") as fd:
+            fd.write(stdout)
+          with open("/tmp/elfdump_stderr.log", "w") as fd:
+            fd.write(stderr)
           msg = ("%s returned one or more errors: %s" % (args, stderr) +
                  "\n\n" +
-                 "ERROR: ldd invocation failed. Please copy this message " +
+                 "ERROR: elfdump invocation failed. Please copy this message " +
                  "and the above messages into your report and send " +
-                 "as path of the error report.")
+                 "as path of the error report. Logs are saved in " +
+                 "/tmp/elfdump_std(out|err).log for your inspection.")
           raise package.Error(msg)
       elfdump_out = stdout.splitlines()
 
