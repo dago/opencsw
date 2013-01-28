@@ -9,14 +9,7 @@ CATEGORIES = utils
 DESCRIPTION = Mobile shell
 
 MASTER_SITES = https://github.com/downloads/keithw/mosh/
-DISTFILES  = $(DISTNAME).tar.gz
-
-#PATCHFILES += 0001-Test-on-inttypes.h-in-addition-to-stdint.h-and-don-t.patch
-#PATCHFILES += 0002-Various-So#PATCHFILES += 0001-Hack-around-so-it-compiles-on-Solaris.patch
-#s-on-Solaris.patch
-PATCHFILES += 0001-Do-not-use-libutil.patch
-
-# Functions betoh64 from http://licq.sourcearchive.com/documentation/1.3.8/licq__byteordPATCHFILES += 0001-Add-missing-include.patchrder_8h-source.html
+DISTFILES  = $PATCHFILES += 0001-Add-missing-include.patchrder_8h-source.html
 
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWprotobuf-gxx-dev
@@ -42,22 +35,11 @@ REINPLACE_FILES_cswperl += scripts/mosh
 # boost gxx is only available on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-GARCOMPILER = GCC4
-
-# See https://forums.oracle.com/forums/thread.jsp#a?threadID=2019232
-EXTRA_CPPFLAGS += -D__aligned__=aligned
+Galigned__=aligned
 
 EXTRA_CONFIGURE_EXPORTS += PROTOC
 CONFIGURE_ENV_PROTOC = $(prefix)/gxx/bin/protoc
 
 EXTRA_INC += $(prefix)/gxx/include
-EXTRA_LIB += #EXTRA_LINKER_FLAGS += -lsocket -lnsl
+EXTRA_LIB += include gar/category.mk
 
-include gar/category.mk
-
-xxxe gar/category.mk
-
-post-patch-modulated:
-	-cd $(WORKSRC) && /opt/csw/bin/autoreconf -fi
-	@# These are generated protobuf files, regenerate later
-	-cd $(WORKSRC)/src/protobufs && rm -f *.cc *
