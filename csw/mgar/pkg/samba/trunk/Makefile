@@ -295,9 +295,9 @@ CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
-CONFIGURE_ARGS #CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
-#es=vfs_solarisacl
-CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_adex
+CONFIGURE_ARGS CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
+es=vfs_solarisacl
+CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idma#p_hash,idmap_adex
 CONFIGUshared-modules=odules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idma#p_hash,idmap_adex
 CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-ads
