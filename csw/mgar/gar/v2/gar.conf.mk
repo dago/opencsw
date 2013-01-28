@@ -187,17 +187,20 @@ COMMON_PKG_DEPENDS ?= CSWcommon
 
 # These are the core packages which must be installed for GAR to function correctly
 
-DEF_BASE_PKGS += CSWxz
 DEF_BASE_PKGS += CSWbzip2
+DEF_BASE_PKGS += CSWcoreutils
 DEF_BASE_PKGS += CSWdiffutils
 DEF_BASE_PKGS += CSWfindutils
 DEF_BASE_PKGS += CSWgawk
 DEF_BASE_PKGS += CSWgfile
 DEF_BASE_PKGS += CSWggrep
+DEF_BASE_PKGS += CSWgit
 DEF_BASE_PKGS += CSWgmake
 DEF_BASE_PKGS += CSWgsed
 DEF_BASE_PKGS += CSWgtar
 DEF_BASE_PKGS += CSWpy-cheetah
+DEF_BASE_PKGS += CSWpy-cjson
+DEF_BASE_PKGS += CSWpy-dateutil
 DEF_BASE_PKGS += CSWpy-hachoir-core
 DEF_BASE_PKGS += CSWpy-hachoir-parser
 DEF_BASE_PKGS += CSWpy-libmagic
@@ -205,9 +208,8 @@ DEF_BASE_PKGS += CSWpy-progressbar
 DEF_BASE_PKGS += CSWpy-sqlobject
 DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
-DEF_BASE_PKGS += CSWcoreutils
 DEF_BASE_PKGS += CSWwget
-DEF_BASE_PKGS += CSWgit
+DEF_BASE_PKGS += CSWxz
 
 ifdef GIT_REPOS
 # netcat and bash are for the gitproxy script.
