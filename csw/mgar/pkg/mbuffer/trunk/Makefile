@@ -1,5 +1,5 @@
 NAME = mbuffer
-VERSION = 20120505
+VERSION = 20121111
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -14,9 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
-DISTFILES = $(DISTNAME).tgz
-
-PATCHFILES += 0001-Fallback-for-DBL_EPSILON-only-in-Solaris-10.patch
+DISTFILES -Solaris-10.patch
 
 VENDOR_URL = http://www.maier-komor.de/mbuffer.html
 
@@ -24,9 +22,7 @@ LICENSE = LICENSE
 
 # Required during packaging (for the "test" target)
 BUILD_DEP_PKGS  = CSWmktemp
-BUILD_DEP_PKGS += CSWgcc4core
-
-RUNTIME_DEP_PKGS = CSWlibmhash
+BUILD_DEP_PKKGS = CSWlibmhash
 
 # 64-bit build enables buffers >= 2GB (see README).
 BUILD64 = 1
@@ -47,5 +43,4 @@ post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+	cp $(FILEDIR)/changelog.CSW $(DOCDES
