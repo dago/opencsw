@@ -1,0 +1,24 @@
+From 6cd8c0b45a4ae3ebad473ca00156b74cbff8b1a8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 28 Jan 2013 09:21:19 +0100
+Subject: [PATCH] Add missing include
+
+---
+ src/frontend/mosh-client.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/frontend/mosh-client.cc b/src/frontend/mosh-client.cc
+index a9644e3..cc9d6a0 100644
+--- a/src/frontend/mosh-client.cc
++++ b/src/frontend/mosh-client.cc
+@@ -41,6 +41,7 @@
+ #include "locale_utils.h"
+ 
+ /* these need to be included last because of conflicting defines */
++#include <sys/termio.h>
+ #include <curses.h>
+ #include <term.h>
+ 
+-- 
+1.8.1
+
