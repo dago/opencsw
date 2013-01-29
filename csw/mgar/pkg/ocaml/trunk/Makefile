@@ -45,8 +45,9 @@ PATCHFILES += 01-nfs-close-bug.patch
 PACKAGES +=  CSWocaml
 SPKG_DESC_CSWocaml = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWocaml += CSWlibgcc-s1
-#RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
-#RUNTIME_DEP_PKGS_CSWocaml += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWocaml += CSWlibtk8-5
+
 # include static libs
 MERGE_EXCLUDE_STATICLIBS =
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libasmrun.a
