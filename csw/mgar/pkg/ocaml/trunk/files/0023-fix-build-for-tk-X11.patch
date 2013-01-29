@@ -1,0 +1,90 @@
+From 3b0c53c72a5c0097fcd8fc06dd13d635da0a26e8 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 25 Jan 2013 14:54:32 +0100
+Subject: [PATCH 23/23] fix build for tk X11
+
+---
+ configure | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/configure b/configure
+index b0390c2..ab96a84 100755
+--- a/configure
++++ b/configure
+@@ -88,7 +88,7 @@ while : ; do
+     -x11include*|--x11include*)
+         x11_include_dir=$2; shift;;
+     -x11lib*|--x11lib*)
+-        x11_lib_dir=$2; shift;;
++        x11_lib_dir=$2; echo "use X11 path: $x11_lib_dir"; shift;;
+     -with-pthread*|--with-pthread*)
+         ;; # Ignored for backward compatibility
+     -no-pthread*|--no-pthread*)
+@@ -1309,18 +1309,19 @@ do
+      test -f $dir/libX11.dylib || \
+      test -f $dir/libX11.sa; then
+     if test $dir = /usr/lib; then
+-      x11_link="-lX11"
++      x11_link="-lX11 -lXext"
+     else
+       x11_libs="-L$dir"
+       case "$host" in
+         *-*-*bsd*) x11_link="-R$dir -L$dir -lX11";;
+-        *) x11_link="-L$dir -lX11";;
++        *) x11_link="-L$dir -lX11 -lXext";;
+       esac
+     fi
+     break
+   fi
+ done
+ 
++echo "set X11 Link $x11_link"
+ 
+ if test "$x11_include" = "not found" || test "$x11_link" = "not found"
+ then
+@@ -1463,16 +1464,16 @@ if test $has_tk = true; then
+   elif sh ./hasgot $tk_libs -ltcl$tclmaj$tclmin $tkauxlibs Tcl_DoOneEvent
+   then
+     tk_libs="$tk_libs -ltk$tkmaj$tkmin -ltcl$tclmaj$tclmin $dllib"
+-  elif sh ./hasgot -L/sw/lib $tk_libs -ltcl$tclmaj.$tclmin $tkauxlibs \
++  elif sh ./hasgot $tk_libs -ltcl$tclmaj.$tclmin $tkauxlibs \
+                    Tcl_DoOneEvent
+-  then tk_libs="-L/sw/lib -ltk$tkmaj.$tkmin -ltcl$tclmaj.$tclmin $dllib"
+-  elif sh ./hasgot -L/usr/pkg/lib $tk_libs $tk_x11_libs \
++  then tk_libs="-ltk$tkmaj.$tkmin -ltcl$tclmaj.$tclmin $dllib"
++  elif sh ./hasgot $tk_libs $tk_x11_libs \
+         -ltk$tkmaj$tkmin -ltcl$tclmaj$tclmin -lpthread $tkauxlibs \
+                    Tcl_DoOneEvent
+   then
+     case "$host" in
+       *-*-*bsd*) tk_libs="-R/usr/pkg/lib -L/usr/pkg/lib $tk_libs $tk_x11_libs -ltk$tkmaj$tkmin -ltcl$tclmaj$tclmin -lpthread $tkauxlibs";;
+-      *) tk_libs="-L/usr/pkg/lib $tk_libs $tk_x11_libs -ltk$tkmaj$tkmin -ltcl$tclmaj$tclmin -lpthread $tkauxlibs";;
++      *) tk_libs="$tk_libs $tk_x11_libs -ltk$tkmaj$tkmin -ltcl$tclmaj$tclmin -lpthread $tkauxlibs";;
+     esac
+   else
+     echo "Tcl library not found."
+@@ -1483,17 +1484,17 @@ fi
+ if test $has_tk = true; then
+   if sh ./hasgot $tk_libs $tk_x11_libs $tkauxlibs Tk_SetGrid; then
+     echo "Tcl/Tk libraries found."
+-  elif sh ./hasgot -L/sw/lib $tk_libs $tk_x11_libs $tkauxlibs Tk_SetGrid; then
++  elif sh ./hasgot $tk_libs $tk_x11_libs $tkauxlibs Tk_SetGrid; then
+     case "$host" in
+       *-*-*bsd*) tk_libs="-R/sw/lib -L/sw/lib $tk_libs";;
+-      *) tk_libs="-L/sw/lib $tk_libs";;
++      *) tk_libs="$tk_libs";;
+     esac
+     echo "Tcl/Tk libraries found."
+-  elif sh ./hasgot -L/usr/pkg/lib $tk_libs $tk_x11_libs $tkauxlibs \
++  elif sh ./hasgot $tk_libs $tk_x11_libs $tkauxlibs \
+                    Tk_SetGrid; then
+     case "$host" in
+       *-*-*bsd*) tk_libs="-R/usr/pkg/lib -L/usr/pkg/lib $tk_libs";;
+-      *) tk_libs="-L/usr/pkg/lib $tk_libs";;
++      *) tk_libs="$tk_libs";;
+     esac
+     echo "Tcl/Tk libraries found."
+   else
+-- 
+1.8.1
+
