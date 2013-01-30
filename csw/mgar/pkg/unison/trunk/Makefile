@@ -13,18 +13,22 @@ endef
 MASTER_SITES = http://www.seas.upenn.edu/~bcpierce/unison//download/releases/stable/
 DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+BUILD_DEP += CSWocaml
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# only example
+CHECKPKG_OVERRIDES_CSWunison += file-with-bad-content|/usr/local|root/opt/csw/bin/unison
 
 # CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS =
+TEST_SCRIPTS =
+INSTALL_SCRIPTS = custom
+
 BUILD_ARGS += UISTYLE=text
+CFLAGS = 
 
 include gar/category.mk
 
+install-custom:
+	ginstall -m 755 -d $(DESTDIR)$(bindir)
+	ginstall -m 755  $(WORKSRC)/unison $(DESTDIR)$(bindir)
+	@$(MAKECOOKIE)
