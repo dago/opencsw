@@ -27,14 +27,14 @@ index 134e82c..8a73573 100644
 +
 +USER=`/usr/xpg4/bin/id -u -n`
 +export USER
-+[ ! -d @localstatedir@/opt/csw/run/dirsrv ] && mkdir -p @localstatedir@/opt/csw/run/dirsrv
++[ ! -d @localstatedir@/run/dirsrv ] && mkdir -p @localstatedir@/run/dirsrv
 +if [ -f @instconfigdir@/admin-serv/adm.conf ]; then
 +  slapduser=`grep SuiteSpotUserID @instconfigdir@/admin-serv/adm.conf | cut -d: -f2 | tr -d ' '`
 +  slapdgroup=`grep SuiteSpotGroup @instconfigdir@/admin-serv/adm.conf | cut -d: -f2 | tr -d ' '`
-+  chown $slapduser:$slapdgroup @localstatedir@/opt/csw/run/dirsrv
++  chown $slapduser:$slapdgroup @localstatedir@/run/dirsrv
 +fi
-+chmod g+w @localstatedir@/opt/csw/run/dirsrv
-+chmod +rx @localstatedir@/opt/csw/run
++chmod g+w @localstatedir@/run/dirsrv
++chmod +rx @localstatedir@/run
 -- 
 1.7.9
 
