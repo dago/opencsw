@@ -82,6 +82,7 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-netaddr-ip
 
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
