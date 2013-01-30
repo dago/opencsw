@@ -1,0 +1,48 @@
+From 50ac9f880f039aabca94ff1172c1c1a17570ba4c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 30 Jan 2013 17:03:38 +0100
+Subject: [PATCH] Use relative path
+
+---
+ configure | 2 +-
+ defs.in   | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 47075a9..091b835 100755
+--- a/configure
++++ b/configure
+@@ -1613,7 +1613,7 @@ if [ "$REGEX" = "auto" ]; then
+ 	else
+ 		REGEX=yes
+ 		LIBREGEX='-L${DEPTH}/regex -lregex'
+-		REGEXINC='-I${DEPTH}/${TOPSRCDIR}/regex'
++		REGEXINC='-I${TOPSRCDIR}/regex'
+ 		Note "... not found. Using built-in regular expression support."
+ 	fi
+ fi
+diff --git a/defs.in b/defs.in
+index fa22d2e..1bff766 100644
+--- a/defs.in
++++ b/defs.in
+@@ -216,7 +216,7 @@ CINCS		= ${VCINCS} ${LCINCS} ${GCINCS}
+ GCOPTS		= @GCOPTS@ ${OPTIMIZER} @PROTOTYPES@
+ GCDEFS		= @ANSICPP@
+ GCINCS		= -I. -I${DEPTH} -I${SRCDIR} \
+-		    -I${DEPTH}/${TOPSRCDIR}/util ${REGEXINC} ${TIFFINC}
++		    -I${TOPSRCDIR}/util ${REGEXINC} ${TIFFINC}
+ #
+ # C++ flags are decomposed using the same hierarchy as C flags.
+ #
+@@ -232,7 +232,7 @@ C++INCS		= ${VC++INCS} ${LC++INCS} ${GC++INCS}
+ 
+ GC++OPTS	= @GCXXOPTS@ ${OPTIMIZER}
+ GC++INCS	= -I. -I${DEPTH} -I${SRCDIR} \
+-		    -I${DEPTH}/${TOPSRCDIR}/util ${REGEXINC} ${TIFFINC}
++		    -I${TOPSRCDIR}/util ${REGEXINC} ${TIFFINC}
+ GC++DEFS	= @ANSICXXPP@
+ 
+ #
+-- 
+1.8.1
+
