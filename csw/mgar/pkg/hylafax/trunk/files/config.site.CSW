@@ -158,9 +158,9 @@ PATH_GSRIP="/opt/csw/bin/gs"		# pathname of Ghostscript-based RIP
 # to link against.  If libtiff is installed in a
 # non-standard location then setup LIBTIFF accordingly.
 #
-LIBTIFF="-L/opt/csw/lib -ltiff"	# linkage convention for libtiff
-TIFFINC="/opt/csw/include"		# place to find tiffio.h
-TIFFBIN="/opt/csw/bin"		# where TIFF tools live
+LIBTIFF="-L/opt/csw/lib -ltiff"		# linkage convention for libtiff
+TIFFINC="-I/opt/csw/include"		# place to find tiffio.h
+TIFFBIN="/opt/csw/bin"			# where TIFF tools live
 
 #
 # The source for the ZLIB library is not required
