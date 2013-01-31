@@ -1,0 +1,173 @@
+From 6127ea7812164e0641131e93065d08720d244774 Mon Sep 17 00:00:00 2001
+From: Toomas Pelberg <toomas.pelberg@playtech.com>
+Date: Fri, 23 Nov 2012 23:18:42 +0000
+Subject: [PATCH] Solaris compile fixes
+
+---
+ build/files.c       |   34 +++++++++++++++++++++++++++++++++-
+ rpmio/rpmfileutil.c |   34 +++++++++++++++++++++++++++++++++-
+ rpmrc.in            |    9 +++++++++
+ 3 files changed, 75 insertions(+), 2 deletions(-)
+
+diff --git a/build/files.c b/build/files.c
+index a5776e0..e18e857 100644
+--- a/build/files.c
++++ b/build/files.c
+@@ -1629,6 +1629,38 @@ exit:
+     return rc;
+ }
+ 
++ 
++static int
++__glob_pattern_p (const char *pattern, int quote)
++{
++  register const char *p;
++  int open = 0;
++
++  for (p = pattern; *p != '\0'; ++p)
++    switch (*p)
++      {
++      case '?':
++      case '*':
++        return 1;
++
++      case '\\':
++        if (quote && p[1] != '\0')
++          ++p;
++        break;
++
++      case '[':
++        open = 1;
++        break;
++
++      case ']':
++        if (open)
++          return 1;
++        break;
++      }
++
++  return 0;
++}
++
+ /**
+  * Add a file to a binary package.
+  * @param pkg
+@@ -1649,7 +1681,7 @@ static rpmRC processBinaryFile(Package pkg, FileList fl, const char * fileName)
+     if (trailing_slash && !fl->isDir)
+ 	fl->isDir = -1;
+     
+-    doGlob = glob_pattern_p(fileName, quote);
++    doGlob = __glob_pattern_p(fileName, quote);
+ 
+     /* Check that file starts with leading "/" */
+     if (*fileName != '/') {
+diff --git a/rpmio/rpmfileutil.c b/rpmio/rpmfileutil.c
+index ad10c84..c4283e4 100644
+--- a/rpmio/rpmfileutil.c
++++ b/rpmio/rpmfileutil.c
+@@ -530,6 +530,38 @@ char * rpmGetPath(const char *path, ...)
+     return rpmCleanPath(res);
+ }
+ 
++static int
++__glob_pattern_p (const char *pattern, int quote)
++{
++  register const char *p;
++  int open = 0;
++
++  for (p = pattern; *p != '\0'; ++p)
++    switch (*p)
++      {
++      case '?':
++      case '*':
++        return 1;
++
++      case '\\':
++        if (quote && p[1] != '\0')
++          ++p;
++        break;
++
++      case '[':
++        open = 1;
++        break;
++
++      case ']':
++        if (open)
++          return 1;
++        break;
++      }
++
++  return 0;
++}
++
++
+ int rpmGlob(const char * patterns, int * argcPtr, ARGV_t * argvPtr)
+ {
+     int ac = 0;
+@@ -578,7 +610,7 @@ int rpmGlob(const char * patterns, int * argcPtr, ARGV_t * argvPtr)
+ 	int dir_only = (plen > 0 && path[plen-1] == '/');
+ 	glob_t gl;
+ 
+-	if (!local || (!glob_pattern_p(av[j], 0) && strchr(path, '~') == NULL)) {
++	if (!local || (!__glob_pattern_p(av[j], 0) && strchr(path, '~') == NULL)) {
+ 	    argvAdd(&argv, av[j]);
+ 	    continue;
+ 	}
+diff --git a/rpmrc.in b/rpmrc.in
+index 389d305..de062cf 100644
+--- a/rpmrc.in
++++ b/rpmrc.in
+@@ -115,6 +115,7 @@ arch_canon: 	sun4:	sparc	3
+ arch_canon: 	sun4m:	sparc	3
+ arch_canon: 	sun4c:	sparc	3
+ arch_canon:	sun4d:  sparc   3
++arch_canon:	sun4v:	sparc	3
+ arch_canon:   sparcv8: sparcv8	3
+ arch_canon:   sparcv9: sparcv9	3
+ arch_canon:	sparcv9v: sparcv9v	3
+@@ -174,6 +175,7 @@ os_canon:	Linux:	Linux	1
+ os_canon:	IRIX:	Irix	2
+ # This is wrong
+ os_canon:	SunOS5:	solaris	3
++os_canon:	SunOS:	solaris 3
+ os_canon:	SunOS4:	SunOS	4
+ 
+ os_canon:      AmigaOS: AmigaOS 5
+@@ -230,6 +232,7 @@ buildarchtranslate: sparcv8: sparc
+ buildarchtranslate: sparcv9: sparc
+ buildarchtranslate: sparcv9v: sparc
+ buildarchtranslate: sun4u: sparc64
++buildarchtranslate: sun4v: sparc
+ buildarchtranslate: sparc64v: sparc64
+ 
+ buildarchtranslate: osfmach3_ppc: ppc
+@@ -317,6 +320,7 @@ arch_compat: sun4c: sparc
+ arch_compat: sun4d: sparc
+ arch_compat: sun4m: sparc
+ arch_compat: sun4u: sparc64
++arch_compat: sun4v: sparc
+ arch_compat: sparc64v: sparc64
+ arch_compat: sparc64: sparcv9
+ arch_compat: sparcv9v: sparcv9
+@@ -365,6 +369,10 @@ arch_compat: sh4: noarch
+ arch_compat: sh4a: sh4
+ 
+ os_compat:   IRIX64: IRIX
++os_compat: solaris2.11: solaris2.10 solaris
++os_compat: solaris2.10: solaris2.9 solaris2.8 solaris
++os_compat: solaris2.9: solaris2.8 solaris
++os_compat: solaris2.8: solaris
+ os_compat: solaris2.7: solaris2.3 solaris2.4 solaris2.5 solaris2.6
+ os_compat: solaris2.6: solaris2.3 solaris2.4 solaris2.5
+ os_compat: solaris2.5: solaris2.3 solaris2.4
+@@ -408,6 +416,7 @@ buildarch_compat: sun4c: noarch
+ buildarch_compat: sun4d: noarch
+ buildarch_compat: sun4m: noarch
+ buildarch_compat: sun4u: noarch
++buildarch_compat: sun4v: noarch
+ buildarch_compat: sparc64v: sparc64
+ buildarch_compat: sparc64: sparcv9v
+ buildarch_compat: sparcv9v: sparcv9
+-- 
+1.7.10.2
+
