@@ -1,0 +1,85 @@
+From 6177946c1222bdd84fd3467d2b9a27b890b3acda Mon Sep 17 00:00:00 2001
+From: Toomas Pelberg <toomasp@opencsw.org>
+Date: Sun, 2 Dec 2012 21:11:27 +0100
+Subject: [PATCH] rpm default shell should be bash instead of sh
+
+---
+ build/parseScript.c | 2 +-
+ cliutils.c          | 2 +-
+ lib/rpmscript.c     | 4 ++--
+ macros.in           | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/build/parseScript.c b/build/parseScript.c
+index 1a149e1..9ed90be 100644
+--- a/build/parseScript.c
++++ b/build/parseScript.c
+@@ -88,7 +88,7 @@ int parseScript(rpmSpec spec, int parsePart)
+     const char **argv = NULL;
+     poptContext optCon = NULL;
+     const char *name = NULL;
+-    const char *prog = "/bin/sh";
++    const char *prog = "/bin/bash";
+     const char *file = NULL;
+     struct poptOption optionsTable[] = {
+ 	{ NULL, 'p', POPT_ARG_STRING, &prog, 'p',	NULL, NULL},
+diff --git a/cliutils.c b/cliutils.c
+index 5edecc5..5a7ace1 100644
+--- a/cliutils.c
++++ b/cliutils.c
+@@ -59,7 +59,7 @@ int initPipe(void)
+ 	(void) close(p[1]);
+ 	(void) dup2(p[0], STDIN_FILENO);
+ 	(void) close(p[0]);
+-	(void) execl("/bin/sh", "/bin/sh", "-c", rpmcliPipeOutput, NULL);
++	(void) execl("/bin/bash", "/bin/bash", "-c", rpmcliPipeOutput, NULL);
+ 	fprintf(stderr, _("exec failed\n"));
+ 	exit(EXIT_FAILURE);
+     }
+diff --git a/lib/rpmscript.c b/lib/rpmscript.c
+index 57c24c6..6752ce6 100644
+--- a/lib/rpmscript.c
++++ b/lib/rpmscript.c
+@@ -89,7 +89,7 @@ static rpmRC runLuaScript(int selinux, ARGV_const_t prefixes,
+     return rc;
+ }
+ 
+-static const char * const SCRIPT_PATH = "PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11R6/bin";
++static const char * const SCRIPT_PATH = "PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11R6/bin:/opt/csw/bin:/opt/csw/sbin:/usr/sfw/bin";
+ 
+ static void doScriptExec(int selinux, ARGV_const_t argv, ARGV_const_t prefixes,
+ 			FD_t scriptFd, FD_t out)
+@@ -309,7 +309,7 @@ rpmRC rpmScriptRun(rpmScript script, int arg1, int arg2, FD_t scriptFd,
+     if (script->args) {
+ 	argvAppend(&args, script->args);
+     } else {
+-	argvAdd(&args, "/bin/sh");
++	argvAdd(&args, "/bin/bash");
+     }
+ 
+     if (rstreq(args[0], "<lua>")) {
+diff --git a/macros.in b/macros.in
+index 7c4a0d3..43f293a 100644
+--- a/macros.in
++++ b/macros.in
+@@ -155,7 +155,7 @@
+ %_builddir		%{_topdir}/BUILD
+ 
+ #	The interpreter used for build scriptlets.
+-%_buildshell		/bin/sh
++%_buildshell		/bin/bash
+ 
+ #	The path to the bzip2 executable (legacy, use %{__bzip2} instead).
+ %_bzip2bin		%{__bzip2}
+@@ -617,7 +617,7 @@ package or when debugging this package.\
+ #	Global defaults used for building scriptlet templates.
+ #
+ 
+-%___build_shell		%{?_buildshell:%{_buildshell}}%{!?_buildshell:/bin/sh}
++%___build_shell		%{?_buildshell:%{_buildshell}}%{!?_buildshell:/bin/bash}
+ %___build_args		-e
+ %___build_cmd		%{?_sudo:%{_sudo} }%{?_remsh:%{_remsh} %{_remhost} }%{?_remsudo:%{_remsudo} }%{?_remchroot:%{_remchroot} %{_remroot} }%{___build_shell} %{___build_args}
+ %___build_pre	\
+-- 
+1.8.0
+
