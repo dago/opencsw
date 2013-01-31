@@ -91,6 +91,7 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/c
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
 # is needed for setup scripts!
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpm-mozldap
+CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpm-netaddr-ip
 # will load via dlopen()
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibfreebl3
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
