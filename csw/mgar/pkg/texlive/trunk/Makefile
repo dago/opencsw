@@ -163,7 +163,6 @@ ARCHALL_CSWtexlive-common			=	1
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWpython
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWemacscommon
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWruby
-RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWtexlive-binaries
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWperl
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content
 
