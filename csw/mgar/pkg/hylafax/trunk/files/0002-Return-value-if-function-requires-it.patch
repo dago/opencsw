@@ -1,0 +1,25 @@
+From 75d55fc4634622a7827db482a8d8474a534e108a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 30 Jan 2013 16:48:04 -0600
+Subject: [PATCH] Return value if function requires it
+
+---
+ faxd/itufaxicc.c++ | 2 ++
+ 1 Datei geändert, 2 Zeilen hinzugefügt(+)
+
+diff --git a/faxd/itufaxicc.c++ b/faxd/itufaxicc.c++
+index 9c33744..c0ba0bf 100644
+--- a/faxd/itufaxicc.c++
++++ b/faxd/itufaxicc.c++
+@@ -63,6 +63,8 @@ int lcms_error_exit(int ErrorCode, const char *ErrorText)
+ {
+ 	strncpy(ErrorMessage, ErrorText, JMSG_LENGTH_MAX-1);
+ 	longjmp(State, 1);
++	// This line will never be reached but without return the compile is unhappy
++	return 0;
+ }
+ 
+ 
+-- 
+1.7.11.3
+

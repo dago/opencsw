@@ -11,7 +11,8 @@ SF_PROJ = hylafax
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME# )-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWhylafax,prototype depend postinstall preremove postremove)
-DISTFILES += config.site.CSW
+DIST
+EXPANDVARS += config.siteS += config.site.CSW
 #DISTFILES += cswhylafax.init cswhylafax.xml svc-cswhylafax
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -20,8 +21,22 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PATCHFILES = # PATCHFILES += 0001-Use-relative-path.patch
+PATCHFILES += 0002-Return-value-if-function-requires-it.patch
 
-BUILD_DEP_PKGS += CSWopenldap-devPKGS = CSWoldapdevel
+BUILD_DEP_PKGS += CSWlibjbig-dev
+BUILD_DEP_PKGS += CSWliblcms2-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
+
+PACKAGES += CSWhylafax-plus
+SPKG_DESC_CSWhylafax-plus server
+
+DESCRIPTION = An enterprise-class system for sending and receiving facsimiles and # PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWlibjbig2
+RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWlibz1
+
+INITSMF += /etc/opt/csw/init.d/hylafaxPKGS = CSWoldapdevel
 
 #export CC=/opt/SUNWspro/bin/cc
 #export CXX=/opt/SUNWspro/bin/CC
@@ -33,7 +48,16 @@ BUILD_DEP_PKGS += CSWopenldap-devPKGS = CSWoldapdevel
 #export LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib"
 #export PATH=$PATH:/opt/hylafax/sbin:/opt/hylafax/bin
 #export LD_LIBRARY_PATH=/opt/csw/lib:/opt/hylafax/lib
-#export MANPATH=/usr/share/ma#CONFIGURE_ENV = PATH_GSRIP=$(bindir)/gs PS=gs DIR_MAN=$(mandir)
+#export MANPATH=/usr/share/maEXTRA_CXXFLAGS += -norunpath
+# Why does LD_OPTIONS does not work???
+# EXTRA_CXXFLAGS += $(LINKER_IGNORE)
+
+# EXTRA_CFLAGS += $(LINKER_IGNORE)
+
+EXTRA_LDFLAGS += $(LD_OPTIONS)
+
+#EXTRA_CXXFLAGS += $(LINKER_DIRECT)
+#EXTRA_CXXFLAGS += $(LINKER_IGNORE)ma#CONFIGURE_ENV = PATH_GSRIP=$(bindir)/gs PS=gs DIR_MAN=$(mandir)
 #BUILD_ENV = PATH_GSRIP=$(bindir)/gs PS=gs DIR_MAN=$(mandir)
 
 #EXTRA_CONFIGURE_EXPORTS += PATH_GSRIP
@@ -50,32 +74,31 @@ BUILD_ENV_PS = gs
 #EXTRA_BUILD_EXPORTS += DIR_MAN
 BUILD_ENV_DIR_MAN = $(mandir)
 
-#EXTRA_LINKER_FLAGS += -lsocket -lnsl
-
 CONFIGURE_ARGS += --nointeractive
-#CONFIGURE_ARGS += --with-INSTALLROOT=$(DESTDIR)
+CONFIGURE_ARGS += --with-INSTALLROOT=$(DESTDIR)
 
 # Hylafax doesn't have a testsuite
 TEST_SCRIPTS =
+
+EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/rc.*
+# EXTRA_PAX_ARGS += -s '(/etc/init.d)(/etc/opt/csw/init.d)'
 
 include gar/category.mk
 
 #CFLAGS := $(CFLAGS) -L$(libdir) -R$(libdir) -lsocket -lnsl
 #dir) -lsocket -lnsl
-CXXFLAGS := $(CXXFLAGS) -L$(libdir) -R$(libdir) -lsocket -l#cp $(WORKDIR)/config.site.CSW $(WORKSRC)/config.site
-	cd $(WORKSRC) && perl -npi -e 's{\$$\{DEPTH\}/\$$\{TOPSRCDIR\}}{\$${TOPSRCDIR}}' `find . -type f`
-	banner ex
+CXXFLAGS := $(CXXFLAGS) -L$(libdir) -R$(libdir) -lsocket -lcd $(WORKSRC) && perl -npi -e 's{\$$\{DEPTH\}/\$$\{TOPSRCDIR\}}{\$${TOPSRCDIR}}' `find . -type f`
+	@$(MAKECOOKIE)
+
+pre-configure:
+	cp $(WORKDIR)/config.site $(WORKSRC)/config.site
 	@$(MAKECOOKIE)
 
 post-install:
 	@echo " ==> Fixing permissions"
 	#ixing permissions"
 	chown -R uucp:uucp $(addprefix $(DESTDIR)$(localstatedir)/spool/hylafax/,info log recvq status sendq doneq docq tmp p#ollq archive FIFO)
-	@echo " ==> Adding RC-Scripts"
-	#-ginstall $(WORKSRC)/etc/hylafax $(DESTDIR)/etc/init.d/cswhylafax
-	#-gln -s ../init.d/cswhylafax $(DESTDIR)/etc/rc2.d/S80cswhylafax
-	#-$(foreach D,rc0.d rc1.d rcS.d,gln -s ../init.d/hylafax $(DESTDIR)/etc/$D/K20cswhylafax;)
-	#ginstall $(WORKSRC)/etc/hylafax $(DESTDIR)/opt/csw/etc/init.d/cswhylafax
+	@echo " ==> Adinit.d/cswhylafax
 	-mkdir -p $(DESTDIR)$(sharedstatedir)/hylafax
 	#@$(MAKECOOKIE)
 
