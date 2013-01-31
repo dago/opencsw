@@ -69,14 +69,14 @@ pkglist:
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
 	@svn cp template/Makefile $*/Makefile
-	@python -c 'from mako.template import Template; \
+	@/opt/csw/bin/python -c 'from mako.template import Template; \
 		v = { "name": "$*", "version": "x.y" }; \
 		t = Template(filename="newpkg-Makefile"); \
 		print t.render(**v)' > $*/trunk/Makefile
 	@touch $*/trunk/checksums
 	@svn add $*/trunk/Makefile $*/trunk/checksums
 	@svn ps svn:keywords Id $*/trunk/Makefile
-	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
+	@echo "work\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
 	@echo
 	@echo "Your package is set up for editing at $*/trunk"
 
