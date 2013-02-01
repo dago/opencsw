@@ -1,0 +1,25 @@
+From b38a7aae12b4b5102bb5c1ceeb6ab4be10fc2fe7 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Feb 2013 13:31:22 +0100
+Subject: [PATCH] Use gcc in Makefile
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index cf1b2b9..4aab1c4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -35,7 +35,7 @@ CHPAT = $(HOME)/bin/chpat
+ RSYNC = rsync -av
+ Uploadee = csail
+ 
+-#CC = gcc
++CC = gcc
+ #CFLAGS = -g
+ #LIBS =
+ #LD = $(CC) -g
+-- 
+1.8.1
+

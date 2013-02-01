@@ -1,0 +1,25 @@
+From 5bf304ad1d428c4c5a578c00e3376a092697a58c Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Feb 2013 13:00:38 +0100
+Subject: [PATCH] Fix configure prefix
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 3c82251..4f2ff99 100755
+--- a/configure
++++ b/configure
+@@ -35,7 +35,7 @@ PACKAGE_STRING="$PACKAGE_TARNAME $PACKAGE_VERSION"
+ PACKAGE_BUGREPORT="$PACKAGE_TARNAME-discuss@gnu.org"
+ 
+ CONFIG_STATUS="config.status"
+-ac_default_prefix=/usr/local/
++ac_default_prefix=/opt/csw/
+ ac_init_version=false
+ srcdir=`pwd`
+ silent=
+-- 
+1.8.1
+

@@ -1,0 +1,22 @@
+From 650e0dba13aac8330f1041e24e675fa7f8a2ae6c Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Feb 2013 12:57:46 +0100
+Subject: [PATCH] Fix build shebang
+
+---
+ build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build b/build
+index 11f7552..7289319 100755
+--- a/build
++++ b/build
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ :;exec ./scmlit -no-init-file -f $0 -e"(bi)" build "$@"
+ ;;;; "build" Script for compiling SCM.
+ ;; Copyright (C) 1994-2006 Free Software Foundation, Inc.
+-- 
+1.8.1
+
