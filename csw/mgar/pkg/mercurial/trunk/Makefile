@@ -18,9 +18,9 @@ RUNTIME_DEP_PKGS_CSWmercurial += CSWlibpython2-6-1-0
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 # Some tests fail, but manual inspection of the failures show no significant failures.
-# how to include the test scripts correctly with mgar? both of the following does not work ..
+# how to include the test scripts correctly with mgar? a test target does not exist
 #TEST_SCRIPTS      = $(WORKSRC)/tests/run_tests.py
-#TEST_TARGET       = test
+TEST_TARGET       = 
 
 CHECKPKG_OVERRIDES_CSWmercurial += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWmercurial += catalogname-does-not-start-with-py_
