@@ -19,8 +19,9 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 # Some tests fail, but manual inspection of the failures show no significant failures.
 # how to include the test scripts correctly with mgar? a test target does not exist
+TEST_SCRIPTS      = 
 #TEST_SCRIPTS      = $(WORKSRC)/tests/run_tests.py
-TEST_TARGET       = 
+#TEST_TARGET       = 
 
 CHECKPKG_OVERRIDES_CSWmercurial += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWmercurial += catalogname-does-not-start-with-py_
