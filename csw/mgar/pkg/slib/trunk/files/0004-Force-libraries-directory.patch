@@ -1,0 +1,57 @@
+From 0ec1101ec54fa4989485c2b9867e51e0f9694373 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 4 Feb 2013 15:56:43 +0100
+Subject: [PATCH] Force libraries directory
+
+---
+ Makefile | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 143eafb..ebb1ad0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -17,9 +17,11 @@ TEXI2PDF = texi2pdf
+ RSYNC = rsync -av
+ Uploadee = csail
+ 
++slibdir	 = /opt/csw/share/guile/
++
+ RUNNABLE = scheme48
+ S48INIT = scheme48.init
+-S48LIB = $(libdir)$(RUNNABLE)/
++S48LIB = $(slibdir)$(RUNNABLE)/
+ S48SLIB = $(S48LIB)slib/
+ IMAGE48 = slib.image
+ 
+@@ -40,7 +42,7 @@ Makefile: config.status
+ include config.status
+ 
+ prevdocsdir = prevdocs/
+-libslibdir = $(libdir)slib/
++libslibdir = $(slibdir)slib/
+ windistdir = /c/Voluntocracy/dist/
+ rpm_prefix = $(HOME)/rpmbuild/
+ 
+@@ -172,9 +174,6 @@ slib.info: slib-$(VERSION).info
+ 	  else cp $< $@;fi
+ $(DESTDIR)$(infodir)slib.info:	slib.info installdirs
+ 	$(INSTALL_DATA) $< $@
+-	-rm $(DESTDIR)$(infodir)slib.info.gz
+-	$(POST_INSTALL)    # Post-install commands follow.
+-	-$(INSTALL_INFO) $@ $(DESTDIR)$(infodir)dir
+ install-info:	$(DESTDIR)$(infodir)slib.info
+ info:	install-info
+ $(DESTDIR)$(infodir)slib.info.gz: $(DESTDIR)$(infodir)slib.info
+@@ -282,8 +281,6 @@ install: install-script install-lib install-infoz install-man
+ 
+ uninstall: uninstall48
+ 	$(PRE_UNINSTALL)     # Pre-uninstall commands follow.
+-	-$(INSTALL_INFO) --delete $(DESTDIR)$(infodir)slib.info \
+-	  $(DESTDIR)$(infodir)dir
+ 	$(NORMAL_UNINSTALL)  # Normal commands follow.
+ 	-rm $(DESTDIR)$(infodir)slib.info*
+ 	-rm $(DESTDIR)$(mandir)man1/slib.1
+-- 
+1.8.1
+
