@@ -35,7 +35,9 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
-scmdir=$(libdir)/guile/site/scm
+# same directory as slib which must be installed in the output of the
+# command: guile-config info pkgdatadir
+scmdir=$(sharedstatedir)/guile/scm
 
 EXTRA_MERGE_EXCLUDE_FILES	+=	$(scmdir)/bench.scm
 EXTRA_MERGE_EXCLUDE_FILES	+=	$(scmdir)/build.scm
