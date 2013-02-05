@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = openldap
-VERSION = 2.4.32
+VERSION = 2.4.33
 GARTYPE = v2
 CATEGORIES = server
 
@@ -233,5 +233,4 @@ post-merge-modulated:
 		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
 	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(NAME)/$F;)
 	@# Enable BDB backend so OpenLDAP can start
-	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir)/openldap/slapd.conf
-	@$(MAKECOOKIE)
+	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir)/openldap/slapd.c
