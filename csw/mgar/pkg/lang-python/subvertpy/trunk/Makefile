@@ -1,15 +1,15 @@
 # $Id$
 #
 NAME = subvertpy
-VERSION = 0.8.10
+VERSION = 0.9.0
 GARTYPE = v2
 CATEGORIES = python
 
 DESCRIPTION = Alternative python bindings for subversion
 
-MASTER_SITES = http://launchpad.net/subvertpy/trunk/$(VERSION)/+download/
+MASTER_SITES = http://samba.org/~jelmer/subvertpy/
 DISTFILES  = $(DISTNAME).tar.gz
-UPSTREAM_MASTER_SITES = http://launchpad.net/subvertpy/trunk
+UPSTREAM_MASTER_SITES = http://pypi.python.org/pypi/subvertpy
 LICENSE = COPYING
 
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibapr1-0
