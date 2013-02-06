@@ -14,7 +14,7 @@ LICENSE = LICENSE
 
 PACKAGES += CSWpm-datetime-format-flexible
 CATALOGNAME_CSWpm-datetime-format-flexible = pm_datetime_format_flexible
-SPKG_DESC_CSWpm-datetime-format-flexible = DateTime::Format::Flexible - Flexibly parse strings and turn them into DateTime objects
+SPKG_DESC_CSWpm-datetime-format-flexible = Flexibly parse strings and turn them into DateTime objects
 # There was no information if this is pure Perl or not. Please remove if necessary.
 ARCHALL_CSWpm-datetime-format-flexible = 1
 RUNTIME_DEP_PKGS_CSWpm-datetime-format-flexible += CSWpm-datetime
