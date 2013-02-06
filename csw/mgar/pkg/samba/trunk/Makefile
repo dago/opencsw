@@ -1,6 +1,6 @@
 
 NAME = samba
-VERSION = 4.0.1
+VERSION = 4.0.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -23,7 +23,7 @@ DISTFILES += smb.conf
 # This is taken from the old Samba package
 DISTFILES# Use patch until this is fixed:
 #   https://bugzilla.samba.org/show_bug.cgi?id=9604
-PATCHFILES += 0001-Use-correct-struct-fields-in-vfs_commit.c.patchES# Use patch until this is fixed:
+#PATCHFILES += 0001-Use-correct-struct-fields-in-vfs_commit.c.patchES# Use patch until this is fixed:
 #   https://bugzilla.samba.org/show_bug.cgi?id=9606
 PATCHFILES += 0002-Use-OpenCSW-xml-catalog-and-work-around-bashism.patchESibs and packages
 
@@ -270,8 +270,8 @@ CATALOGNAME_CSWsambawb = samba_wb_stub
 # Just docs, override for now
 CHECKPKG_OVERRIDES_CSWsamba-winbind += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/winbindd.8
 CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CSWlibnss-winbind1
-rt -lintl
-EXTRA_LDFLAGS = -lrt -lintl
+rt -lintl -lsec
+EXTRA_LDFLAGS = -lrt -lintl -lsec
 
 # At the moment there are errors about python headers missing on 64 bit
 #BUILD64 = 1
