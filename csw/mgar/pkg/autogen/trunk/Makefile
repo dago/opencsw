@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.16.2
+VERSION = 5.17.1
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
@@ -16,14 +16,17 @@ endef
 MASTER_SITES = $(GNU_MIRROR)/rel$(VERSION)/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
+
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
 
-BUILD_DEP_PKGS		=	CSWguile
-BUILD_DEP_PKGS		+=	CSWguilelib12
+BUILD_DEP_PKGS		=	CSWguile-dev
 BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 BUILD_DEP_PKGS		+=	CSWlibxml2-dev
 BUILD_DEP_PKGS		+=	CSWlibz-dev
+BUILD_DEP_PKGS		+=	CSWtetex
 
 BUILD_SCRIPTS	=	nominal
 BUILD_SCRIPTS	+=	dvi
