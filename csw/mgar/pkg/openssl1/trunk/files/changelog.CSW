@@ -1,3 +1,9 @@
+openssl (1.0.1d,rev=2013.02.07) unstable
+
+  * New upstream release.
+
+   -- Yann Rouillard <yann@opencsw.org>  Thu, 07 Feb 2013 21:27:05 +0100
+
 openssl (1.0.1c,rev=2012.12.31) unstable
 
   * Start a new changelog for openssl 1.0
