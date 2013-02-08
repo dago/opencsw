@@ -4,14 +4,19 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ANDK
 
-DESCRIPTION = Dump symbol names or the symbol table
+DESCRIPTION = Perl symbol table access and dumping
 define BLURB
-  This little package serves to access the symbol table of perl.
 endef
 
-PACKAGES = CSWpmdevelsymdump
-CATALOGNAME = pm_develsymdump
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-devel-symdump
+CATALOGNAME_CSWpm-devel-symdump = pm_devel_symdump
+SPKG_DESC_CSWpm-devel-symdump = Perl symbol table access and dumping
+ARCHALL_CSWpm-devel-symdump = 1
+OBSOLETED_BY_CSWpm-devel-symdump += CSWpmdevelsymdump
+CATALOGNAME_CSWpmdevelsymdump = pm_develsymdump_stub
 
 include gar/category.mk
