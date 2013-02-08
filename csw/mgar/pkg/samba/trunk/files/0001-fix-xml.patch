@@ -1,0 +1,25 @@
+From a38fbe7bb3660add428675ec662c46583cdee354 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Thu, 7 Feb 2013 10:12:04 +0100
+Subject: [PATCH] fix-xml
+
+---
+ buildtools/wafsamba/wafsamba.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/buildtools/wafsamba/wafsamba.py b/buildtools/wafsamba/wafsamba.py
+index dcbb047..bb4b3b2 100644
+--- a/buildtools/wafsamba/wafsamba.py
++++ b/buildtools/wafsamba/wafsamba.py
+@@ -790,7 +790,7 @@ def SAMBAMANPAGES(bld, manpages):
+     '''build and install manual pages'''
+     bld.env.SAMBA_EXPAND_XSL = bld.srcnode.abspath() + '/docs-xml/xslt/expand-sambadoc.xsl'
+     bld.env.SAMBA_MAN_XSL = bld.srcnode.abspath() + '/docs-xml/xslt/man.xsl'
+-    bld.env.SAMBA_CATALOGS = 'file:///etc/xml/catalog file:///usr/local/share/xml/catalog file://' + bld.srcnode.abspath() + '/bin/default/docs-xml/build/catalog.xml'
++    bld.env.SAMBA_CATALOGS = 'file:///etc/opt/csw/xml/catalog file:///usr/local/share/xml/catalog file://' + bld.srcnode.abspath() + '/bin/default/docs-xml/build/catalog.xml'
+ 
+     for m in manpages.split():
+         source = m + '.xml'
+-- 
+1.8.1
+
