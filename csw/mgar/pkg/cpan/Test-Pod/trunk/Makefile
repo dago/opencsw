@@ -1,5 +1,5 @@
 NAME = Test-Pod
-VERSION = 1.44
+VERSION = 1.45
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DWHEELER
@@ -12,10 +12,13 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmtestpod
-CATALOGNAME = pm_testpod
+PACKAGES = CSWpm-test-pod
+CATALOGNAME = pm_test_pod
+SPKG_DESC_CSWpm-test-pod = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-test-pod = CSWpmtestpod
+CATALOGNAME_CSWpmtestpod = pm_testpod
 
-RUNTIME_DEP_PKGS += CSWpmpodsimple
+RUNTIME_DEP_PKGS += CSWpm-pod-simple
 
 ARCHALL = 1
 
