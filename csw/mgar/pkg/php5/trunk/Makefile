@@ -58,7 +58,6 @@ BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWlibxpm-dev
-BUILD_DEP_PKGS += CSWlibsqlite3-0
 BUILD_DEP_PKGS += CSWlibaspell-dev
 
 PRESERVECONF = $(sysconfdir)/php.ini $(sysconfdir)/pear.conf
@@ -91,8 +90,6 @@ CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
 # verify these...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/etc/opt/csw/php5/php.ini.CSW
-
-CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/php5/include/php/ext/sqlite3/libsqlite/sqlite3.h|CSWphp5|CSWphp5-sqlite
 
 PACKAGES += CSWphp5-dev
 CATALOGNAME_CSWphp5-dev   = php5_dev
@@ -254,14 +251,14 @@ CONFIGURE_ARGS += --enable-json=shared
 CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-pcntl=shared
-#CONFIGURE_ARGS += --enable-pdo=shared
+CONFIGURE_ARGS += --enable-pdo=shared
 CONFIGURE_ARGS += --enable-phar=shared
 CONFIGURE_ARGS += --enable-posix=shared
 CONFIGURE_ARGS += --enable-session=shared
 CONFIGURE_ARGS += --enable-shmop=shared
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
-#CONFIGURE_ARGS += --enable-sqlite-utf8
+CONFIGURE_ARGS += --enable-sqlite-utf8
 CONFIGURE_ARGS += --enable-sysvmsg=shared
 CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
@@ -304,13 +301,14 @@ CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(bindir)/
-#CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
+CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-pear=shared
 CONFIGURE_ARGS += --with-pgsql=shared,$(bindir)/
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,/opt/csw
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
+CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-t1lib=$(prefix)
 CONFIGURE_ARGS += --with-tidy=shared,$(prefix)
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
