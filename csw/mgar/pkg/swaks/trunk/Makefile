@@ -1,5 +1,5 @@
 NAME = swaks
-VERSION = 20120320.0
+VERSION = 20130209.0
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -34,5 +34,4 @@ install-custom:
 	@ginstall -d -m 755 $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/$(NAME) $(DESTDIR)$(bindir)
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
-	@cp $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(NAME)
-	@$(MAKECOOKIE)
+	@cp $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(NAM
