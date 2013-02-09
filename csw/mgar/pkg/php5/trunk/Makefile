@@ -372,8 +372,6 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge:
-	@echo " ==> Killing phar"
-	@(rm $(PKGROOT)/opt/csw/php5/extensions/phar)
 	@echo " ==> Fixing php.ini: adding loadable session.so support"
 	@( cd $(PKGROOT)/$(sysconfdir)/; \
 		perl -pi -e 's/extension=bz2.so/extension=session.so\n;extension=bz2.so/' php.ini.CSW; )
