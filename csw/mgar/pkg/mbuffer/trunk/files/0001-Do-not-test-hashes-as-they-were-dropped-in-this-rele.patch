@@ -1,0 +1,44 @@
+From 775b85deb331b67b922d5162facbce8a06aabb82 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 9 Feb 2013 19:53:13 +0100
+Subject: [PATCH] Do not test hashes as they were dropped in this release due
+ to data corruption
+
+---
+ Makefile.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index abe3520..671d370 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -66,7 +66,7 @@ test0: test.md5
+ 	touch test0
+ 
+ test1: test.md5
+-	./mbuffer -i test.tar -f -o $@.tar -o /dev/null -H
++	./mbuffer -i test.tar -f -o $@.tar -o /dev/null
+ 	openssl md5 < $@.tar > $@.md5
+ 	rm -f $@.tar
+ 	sync
+@@ -77,7 +77,7 @@ test2: test.md5
+ 	./mbuffer -q -I :8000 -o $@.tar -o - | openssl md5 > $@.md5 & \
+ 		sleep 1; \
+ 		rm -f $@.tar; \
+-		./mbuffer -i test.tar -o /dev/null -O localhost:8000 -H; \
++		./mbuffer -i test.tar -o /dev/null -O localhost:8000; \
+ 		wait
+ 	sync
+ 	diff $@.md5 test.md5
+@@ -92,7 +92,7 @@ test3: test.md5
+ 	./mbuffer -q -6 -I :8000 | openssl md5 > $@.md5 & \
+ 		sleep 1; \
+ 		rm -f $@.tar; \
+-		./mbuffer -i test.tar -o /dev/null -6 -O localhost:8000 -o $@.tar -H; \
++		./mbuffer -i test.tar -o /dev/null -6 -O localhost:8000 -o $@.tar; \
+ 		wait
+ 	sync
+ 	diff $@.md5 test.md5
+-- 
+1.8.1
+

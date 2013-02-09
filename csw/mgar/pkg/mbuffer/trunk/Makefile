@@ -1,5 +1,5 @@
 NAME = mbuffer
-VERSION = 20121111
+VERSION = 20130209
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
-DISTFILES -Solaris-10.patch
+DISTFILES PATCHFILES += 0001-Do-not-test-hashes-as-they-were-dropped-in-this-rele.patchS -Solaris-10.patch
 
 VENDOR_URL = http://www.maier-komor.de/mbuffer.html
 
