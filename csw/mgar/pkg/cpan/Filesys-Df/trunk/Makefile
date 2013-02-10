@@ -12,11 +12,10 @@ endef
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
-PACKAGES = CSWpmfilesysdf
-CATALOGNAME = pm_filesysdf
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+PACKAGES = CSWpm-filesys-df
+CATALOGNAME = pm_filesys_df
+SPKG_DESC_CSWpm-filesys-df = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-filesys-df = CSWpmfilesysdf
+CATALOGNAME_CSWpmfilesysdf = pm_filesysdf
 
 include gar/category.mk
