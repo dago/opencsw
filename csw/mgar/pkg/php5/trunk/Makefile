@@ -80,8 +80,9 @@ PACKAGES = CSWphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWlibexpat1 CSWlibz1
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n49
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc49
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n50
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc50
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibsqlite3-0
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
@@ -128,8 +129,8 @@ CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibexpat1 CSWlibz1
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n49
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc49
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n50
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc50
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
@@ -184,7 +185,7 @@ PKGFILES_CSWphp5-pdopgsql += .*/lib/php/extensions/.*/pdo_pgsql.so
 PKGFILES_CSWphp5-pdopgsql += .*extensions/pdo_pgsql
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
-$(eval $(call php5_subpackage,pdosqlite,CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdosqlite,CSWphp5-pdo CSWlibsqlite3-0))
 PKGFILES_CSWphp5-pdosqlite += .*/lib/php/extensions/.*/pdo_sqlite.so
 PKGFILES_CSWphp5-pdosqlite += .*extensions/pdo_sqlite
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
@@ -199,6 +200,7 @@ $(eval $(call php5_subpackage,shmop,))
 $(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25))
 $(eval $(call php5_subpackage,soap,CSWlibxml2-2))
 $(eval $(call php5_subpackage,sockets,))
+$(eval $(call php5_subpackage,sqlite,CSWsqlite CSWlibsqlite3-0))
 $(eval $(call php5_subpackage,sysvmsg,))
 $(eval $(call php5_subpackage,sysvsem,))
 $(eval $(call php5_subpackage,sysvshm,))
