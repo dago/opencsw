@@ -1,23 +1,23 @@
 NAME = Convert-TNEF
-VERSION = 0.17
+VERSION = 0.18
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DOUGW
 
 DESCRIPTION = Perl module to read TNEF files
 define BLURB
-  TNEF stands for Transport Neutral Encapsulation Format, and if you've ever
-  been unfortunate enough to receive one of these files as an email
-  attachment, you may want to use this module.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmconverttnef
-CATALOGNAME = pm_converttnef
+PACKAGES = CSWpm-convert-tnef
+CATALOGNAME = pm_convert_tnef
+SPKG_DESC_CSWpm-convert-tnef = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-convert-tnef = CSWpmconverttnef
+CATALOGNAME_CSWpmconverttnef = pm_converttnef
 
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmmimetools
+RUNTIME_DEP_PKGS += CSWpm-mime-tools
 
 include gar/category.mk
