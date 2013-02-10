@@ -6,17 +6,16 @@ AUTHOR = SCOTT
 
 DESCRIPTION = Try every conceivable way to get full hostname
 define BLURB
-  This is the SECOND release of this code. It has an improved set of tests and
-  improved interfaces - but it is still often failing to get a full host name.
-  This of course is the reason I wrote the module, it is difficult to get full
-  host names accurately on each system. On some systems (eg: Linux) it is
-  dependent on the order of the entries in /etc/hosts.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmsyshostnamelong
-CATALOGNAME = pm_syshostnamelong
+PACKAGES = CSWpm-sys-hostname-long
+CATALOGNAME = pm_sys_hostname_long
+SPKG_DESC_CSWpm-sys-hostname-long = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-sys-hostname-long = CSWpmsyshostnamelong
+CATALOGNAME_CSWpmsyshostnamelong = pm_syshostnamelong
+
 ARCHALL = 1
 
 include gar/category.mk
