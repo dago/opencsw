@@ -22,7 +22,12 @@ LICENSE = LICENSE
 
 # Required during packaging (for the "test" target)
 BUILD_DEP_PKGS  = CSWmktemp
-BUILD_DEP_PKKGS = CSWlibmhash
+BUILD_DEP_PBUILD_DEP_PKGS += CSWlibmhash-dev
+
+PACKAGES += CSWmbuffer
+SPKG_DESC_CSWmbuffer = A tool for buffering data streams
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWmbuffer += CSWlibmhash2PKKGS = CSWlibmhash
 
 # 64-bit build enables buffers >= 2GB (see README).
 BUILD64 = 1
