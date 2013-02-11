@@ -82,7 +82,6 @@ SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWlibexpat1 CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n50
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc50
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibsqlite3-0
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
@@ -200,7 +199,7 @@ $(eval $(call php5_subpackage,shmop,))
 $(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25))
 $(eval $(call php5_subpackage,soap,CSWlibxml2-2))
 $(eval $(call php5_subpackage,sockets,))
-$(eval $(call php5_subpackage,sqlite,CSWsqlite CSWlibsqlite3-0))
+$(eval $(call php5_subpackage,sqlite,CSWsqlite))
 $(eval $(call php5_subpackage,sysvmsg,))
 $(eval $(call php5_subpackage,sysvsem,))
 $(eval $(call php5_subpackage,sysvshm,))
@@ -261,6 +260,7 @@ CONFIGURE_ARGS += --enable-shmop=shared
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
 CONFIGURE_ARGS += --enable-sqlite-utf8
+CONFIGURE_ARGS += --enable-sqlite3=shared,$(prefix)
 CONFIGURE_ARGS += --enable-sysvmsg=shared
 CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
