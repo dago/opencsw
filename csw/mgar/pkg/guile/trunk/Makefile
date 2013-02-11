@@ -138,4 +138,11 @@ post-install-modulated:
 	cd $(DESTDIR)$(libdir) && ln -s libguile.so.12.3.0 libguile.so.12
 	ginstall $(WORKDIR)/libguile-ltdl.so.1.0.0 $(DESTDIR)$(libdir)
 	cd $(DESTDIR)$(libdir) && ln -s libguile-ltdl.so.1.0.0 libguile-ltdl.so.1
+	# the compiled and cached files must be newer than the sources,
+	# avoiding messages such as ";;; note: source file
+	# /opt/csw/share/guile/2.0/ice-9/eval.scm ;;; newer than compiled
+	# /opt/csw/lib/guile/2.0/ccache/ice-9/eval.go" interfering with
+	# configure usage of guile-config output, e.g., in autogen
+	sleep 1
+	find $(DESTDIR)$(libdir) -type f -name '*.go' -exec touch {} \;
 	$(MAKECOOKIE)
