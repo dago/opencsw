@@ -1,5 +1,5 @@
 NAME = unbound
-VERSION = 1.4.18
+VERSION = 1.4.19
 CATEGORIES = server
 GARTYPE = v2
 DESCRIPTION = A validating, recursive, and caching DNS resolver
@@ -56,29 +56,31 @@ MERGE_DIRS_isa-sparcv8plus += $(sbindir)
 MERGE_DIRS_isa-pentium_pro  = $(libdir)
 MERGE_DIRS_isa-pentium_pro += $(sbindir)
 
-ISAXEC_DIRS                  = $(sbindir)
-EXTRA_ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
-EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
-EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
-EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
-EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
+ISAXEC_DIRS           #EXTRA_ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
+#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
+#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
+#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
+#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
 
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro  = $(prefix)/sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-checkconf
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control-setup
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-host
+#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro  = $(prefix)/sbin/unbound-anchor
+#sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbi#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control
+#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control-setup
+#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-host
 
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus  = $(prefix)/sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-checkconf
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control-setup
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-host
+#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus  = $(prefix)/sbin/unbound-anchor
+#sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbi#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control
+#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control-setup
+#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-host
 
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis  = $(prefix)/sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-checkconf
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-control
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-control-setup
+#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis  = $(prefix)/sbin/unbound-anchor
+#sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbi#sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prontrol
+#sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prontrol-setup
+#sbin/unbound-anchor
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-host
 
 SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
@@ -92,15 +94,13 @@ SPKG_DESC_CSWunbound         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibunbound2
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWunbound += CSWlibssl0-9-8
-RUNTIME_DEP_PKGS_CSWunbound += CSWlibevent2-0-5
+RUNTIME_DEP_PKGS_CSW1-0-0 += CSWlibevent2-0-5
 
 CATALOGNAME_CSWlibunbound2       = libunbound2
 SPKG_DESC_CSWlibunbound2         = Library implementing DNS resolution and validation
 PKGFILES_CSWlibunbound2         += $(PKGFILES_RT)
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibssl0-9-8
-RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibevent2-0-5
+RUNTIME_DEP_PKGS_CSWlibu1-0-0 += CSWlibevent2-0-5
 
 CATALOGNAME_CSWunbound-devel       = unbound_devel
 SPKG_DESC_CSWunbound-devel         = $(DESCRIPTION) development package
@@ -112,7 +112,7 @@ SPKG_DESC_CSWunbound-host         = Unbound DNS lookup utility
 PKGFILES_CSWunbound-host         += $(sbindir)/unbound-host
 PKGFILES_CSWunbound-host         += $(mandir)/man1/unbound-host.1
 RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWunbou1-0-0st += CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibunbound2
 RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibevent2-0-5
 
@@ -122,6 +122,4 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswunbound $(DESTDIR)/etc/opt/csw/init.d/cswunbound
 	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWunbound
-	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWunbound/cswusergroup
-	@$(MAKECOOKIE)
-
+	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWunbound/cswusergro
