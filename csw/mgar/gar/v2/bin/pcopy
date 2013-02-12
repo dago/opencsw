@@ -159,6 +159,7 @@ print "symlink\n";
     } else {
       copy( $whole, $todir . '/' . $target ) or print "Copy failed\n";
       chmod( $mode, $todir . '/' . $target );
+      utime $atime, $mtime, $todir . '/' . $target;
       $hardlinks{$ino} = $todir . '/' . $target;
     }
   }
