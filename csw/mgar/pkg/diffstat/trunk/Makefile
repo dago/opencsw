@@ -1,5 +1,5 @@
 NAME = diffstat
-VERSION = 1.55
+VERSION = 1.56
 GARTYPE = v2
 
 DESCRIPTION = A utility which provides statistics based on the output of diff
@@ -16,6 +16,6 @@ CONFIGURE_ARGS += --with-install-prefix=$(DESTDIR)
 
 include gar/category.mk
 
-post-extract-modulated:
-	-test -f $(WORKSRC)/diffstat.1 && perl -n -e 'next if( !/^\.\\"/ ); s/\.\\"//; print "*$$_"' $(WORKSRC)/diffstat.1 >$(WORKSRC)/COPYING
+post-extract:
+	perl -n -e 'next if( !/^\.\\"/ ); s/\.\\"//; print "*$$_"' $(WORKSRC)/diffstat.1 >$(WORKSRC)/COPYING
 	@$(MAKECOOKIE)
