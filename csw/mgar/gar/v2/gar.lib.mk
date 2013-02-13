@@ -187,6 +187,9 @@ checksum-%: $(CHECKSUM_FILE)
 		fi \
 	else \
 		echo '(!!!) $* not in $(CHECKSUM_FILE) file!' 1>&2; \
+		echo '(!!!) Maybe you need to run mgar makesum?' 1>&2; \
+		echo '(!!!) WARNING: This could also mean that you have downloaded broken or compromised archive' 1>&2; \
+		echo '(!!!) [Not likely but possible.]' 1>&2; \
 		false; \
 	fi
 
