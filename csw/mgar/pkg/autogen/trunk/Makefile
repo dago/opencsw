@@ -43,15 +43,7 @@ INSTALL_SCRIPTS	+=	pdf
 PACKAGES						=	CSWautogen
 CATALOGNAME_CSWautogen			=	autogen
 SPKG_DESC_CSWautogen			=	$(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWautogen		=	CSWautogen-dev
-RUNTIME_DEP_PKGS_CSWautogen		+=	CSWautogen-doc
-CHECKPKG_OVERRIDES_CSWautogen	+=	missing-dependency|CSWlibopts25
-CHECKPKG_OVERRIDES_CSWautogen	+=	missing-dependency|CSWguilelib12
-CHECKPKG_OVERRIDES_CSWautogen	+=	missing-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWautogen	+=	missing-dependency|CSWlibxml2-2
-CHECKPKG_OVERRIDES_CSWautogen	+=	missing-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWautogen	+=	surplus-dependency|CSWautogen-doc
-CHECKPKG_OVERRIDES_CSWautogen	+=	surplus-dependency|CSWautogen-dev
+RUNTIME_DEP_PKGS_CSWautogen		=	CSWlibopts25
 
 PACKAGES							+=	CSWautogen-doc
 CATALOGNAME_CSWautogen-doc			=	autogen_doc
@@ -60,9 +52,6 @@ PKGFILES_CSWautogen-doc				+=	/opt/csw/share/info/.*
 PKGFILES_CSWautogen-doc				+=	/opt/csw/share/doc/$(NAME)/$(NAME)[.].*
 OBSOLETED_BY_CSWautogen-doc			=	CSWautogendoc
 CATALOGNAME_CSWautogendoc			=	autogen_doc_stub
-CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/doc/autogen/autogen.ps
-CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/doc/autogen/autogen.dvi
-CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/autogen.info-1
 ARCHALL_CSWautogen-doc				=	1
 
 PACKAGES						+=	CSWlibopts25
@@ -71,14 +60,6 @@ PKGFILES_CSWlibopts25			+=	$(call baseisadirs,$(libdir),libopts\.so\.25\.10\.0)
 PKGFILES_CSWlibopts25			+=	$(call baseisadirs,$(libdir),libopts\.so\.25(\.\d+)*)
 SPKG_DESC_CSWlibopts25			+=	$(DESCRIPTION), libopts.so.25
 OBSOLETED_BY_CSWlibopts25		=	CSWautogenrt
-RUNTIME_DEP_PKGS_CSWlibopts25	=	CSWguilelib12
-RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibz1 
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	surplus-dependency|CSWlibxml2-2
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	surplus-dependency|CSWlibiconv2
 
 PACKAGES							+=	CSWautogen-dev
 CATALOGNAME_CSWautogen-dev 			=	autogen_dev
@@ -86,7 +67,7 @@ SPKG_DESC_CSWautogen-dev			+=	$(DESCRIPTION), development files
 PKGFILES_CSWautogen-dev				+=	/opt/csw/lib/libopts.so
 PKGFILES_CSWautogen-dev				+=	$(PKGFILES_DEVEL)
 PKGFILES_CSWautogen-dev				+=	/opt/csw/share/pkgconfig/autoopts.pc
-RUNTIME_DEP_PKGS_CSWautogen-dev		=	CSWlibopts25
+RUNTIME_DEP_PKGS_CSWautogen-dev		=	CSWautogen
 CHECKPKG_OVERRIDES_CSWautogen-dev	+=	archall-devel-package
 ARCHALL_CSWautogen-dev				=	1
 
@@ -135,7 +116,3 @@ install-pdf:
 	ginstall -d "$(DESTDIR)$(docdir)/$(NAME)"
 	PATH="/opt/csw/gnu:$$PATH" $(MAKE) -C $(WORKSRC) DESTDIR="$(DESTDIR)" $@
 	$(MAKECOOKIE)
-
-# this is private and not available publicly
-mydependencies:
-	for package in CSW$(NAME); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
