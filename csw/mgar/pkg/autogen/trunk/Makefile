@@ -66,6 +66,15 @@ CHECKPKG_OVERRIDES_CSWautogen	+=	soname-unused|libiconv.so.2|is|needed|by|/opt/c
 CHECKPKG_OVERRIDES_CSWautogen	+=	soname-unused|libgen.so.1|is|needed|by|/opt/csw/bin/xml2ag|but|never|used
 CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/xml2ag|is|not|directly|bound|to|soname|libxml2.so.2
 CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/xml2ag|is|not|directly|bound|to|soname|libopts.so.25
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/autogen|is|not|directly|bound|to|soname|libgc.so.1
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/autogen|is|not|directly|bound|to|soname|libgen.so.1
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/columns|is|not|directly|bound|to|soname|libgc.so.1
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/columns|is|not|directly|bound|to|soname|libguile-2.0.so.22
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/columns|is|not|directly|bound|to|soname|libgen.so.1
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/getdefs|is|not|directly|bound|to|soname|libgen.so.1
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/xml2ag|is|not|directly|bound|to|soname|libiconv.so.2
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/xml2ag|is|not|directly|bound|to|soname|libz.so.1
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/xml2ag|is|not|directly|bound|to|soname|libgen.so.1
 
 PACKAGES							+=	CSWautogen-doc
 CATALOGNAME_CSWautogen-doc			=	autogen_doc
