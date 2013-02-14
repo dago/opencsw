@@ -1,0 +1,39 @@
+From c77d2e85052f07e2554ca0a1ce759780702a9462 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 14 Feb 2013 13:22:45 +0100
+Subject: [PATCH] Fix prefix
+
+---
+ Makefile   | 2 +-
+ findexec.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4aab1c4..510cab0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -27,7 +27,7 @@ SCMLIT = ./scmlit
+ SCMEXE = ./scm
+ BUILD = ./build -hsystem
+ 
+-TEXI2HTML = /usr/local/bin/texi2html -split -verbose
++TEXI2HTML = /opt/csw/bin/texi2html -split -verbose
+ TEXI2PDF = texi2pdf
+ VIEWPDF = evince
+ MAKEDEV = $(MAKE) -f $(HOME)/makefile.dev
+diff --git a/findexec.c b/findexec.c
+index a562077..4bd77ce 100644
+--- a/findexec.c
++++ b/findexec.c
+@@ -127,7 +127,7 @@ Wed Feb 21 23:06:35 1996  Aubrey Jaffer
+ # endif
+ 
+ # ifndef DEFAULT_PATH
+-#  define DEFAULT_PATH ".:~/bin::/usr/local/bin:/usr/new:/usr/ucb:/usr/bin:/bin:/usr/hosts"
++#  define DEFAULT_PATH ".:~/bin::/opt/csw/bin:/usr/new:/usr/ucb:/usr/bin:/bin:/usr/hosts"
+ # endif
+ 
+ static char *copy_of(s)
+-- 
+1.8.1
+
