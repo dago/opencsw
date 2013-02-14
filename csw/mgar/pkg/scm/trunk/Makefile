@@ -62,6 +62,8 @@ PKGFILES_CSWscm						=	/opt/csw/bin/scm
 
 include gar/category.mk
 
+PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+
 pre-build-modulated:
 	cd $(WORKDIR) && ln -s slib-$(SLIB_VERSION) slib
 	$(MAKECOOKIE)
