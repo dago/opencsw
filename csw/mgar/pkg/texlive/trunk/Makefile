@@ -170,7 +170,7 @@ CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/scripts/latexmk/latexmk.pl
 
 # this is an entry point meta-package:
-PACKAGES							+=	texlive
+PACKAGES							+=	CSWtexlive
 CATALOGNAME_CSWtexlive				=	texlive
 SPKG_DESC_CSWtexlive				+=	$(DESCRIPTION), A decent selection of the TeX Live packages
 OBSOLETED_BY_CSWtexlive				=	CSWtetex
