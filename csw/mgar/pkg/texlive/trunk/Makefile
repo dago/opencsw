@@ -169,6 +169,16 @@ CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content
 # I don't know what to do with this:
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/scripts/latexmk/latexmk.pl
 
+# this is an entry point meta-package:
+PACKAGES							+=	texlive
+CATALOGNAME_CSWtexlive				=	texlive
+SPKG_DESC_CSWtexlive				+=	$(DESCRIPTION), A decent selection of the TeX Live packages
+OBSOLETED_BY_CSWtexlive				=	CSWtetex
+ARCHALL_CSWtexlive					=	1
+RUNTIME_DEP_PKGS_CSWtexlive			+=	CSWtexlive-latex-base
+RUNTIME_DEP_PKGS_CSWtexlive			+=	CSWtexlive-texlive-fonts-recommended
+RUNTIME_DEP_PKGS_CSWtexlive			+=	CSWtexlive-latex-recommended
+
 PACKAGES							+=	CSWtexlive-dev
 CATALOGNAME_CSWtexlive-dev			+=	texlive_dev
 SPKG_DESC_CSWtexlive-dev			=	$(DESCRIPTION), development files
