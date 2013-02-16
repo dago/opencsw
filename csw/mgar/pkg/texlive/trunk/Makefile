@@ -174,10 +174,14 @@ PACKAGES							+=	CSWtexlive
 CATALOGNAME_CSWtexlive				=	texlive
 SPKG_DESC_CSWtexlive				+=	$(DESCRIPTION), A decent selection of the TeX Live packages
 OBSOLETED_BY_CSWtexlive				=	CSWtetex
+PKGFILES_CSWtexlive					+=	NOFILES
 ARCHALL_CSWtexlive					=	1
 RUNTIME_DEP_PKGS_CSWtexlive			+=	CSWtexlive-latex-base
 RUNTIME_DEP_PKGS_CSWtexlive			+=	CSWtexlive-texlive-fonts-recommended
 RUNTIME_DEP_PKGS_CSWtexlive			+=	CSWtexlive-latex-recommended
+CHECKPKG_OVERRIDES_CSWtexlive		+=	surplus-dependency|CSWtexlive-latex-base
+CHECKPKG_OVERRIDES_CSWtexlive		+=	surplus-dependency|CSWtexlive-texlive-fonts-recommended
+CHECKPKG_OVERRIDES_CSWtexlive		+=	surplus-dependency|CSWtexlive-latex-recommended
 
 PACKAGES							+=	CSWtexlive-dev
 CATALOGNAME_CSWtexlive-dev			+=	texlive_dev
