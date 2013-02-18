@@ -1,14 +1,11 @@
 NAME = perl-ldap
-VERSION = 0.44
+VERSION = 0.53
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MARSCHAP
 
 DESCRIPTION = Lightweight Directory Access Protocol
 define BLURB
-  Net::LDAP is a collection of modules that implements a LDAP services API for
-  Perl programs. The module may be used to search directories or perform
-  maintenance functions such as adding, deleting or modifying entries.
 endef
 
 DISTFILES += COPYING
