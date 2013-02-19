@@ -19,7 +19,7 @@ if [ -x ${PKG_INSTALL_ROOT}/opt/csw/bin/mktexlsr ]; then
 	/usr/sbin/chroot ${PKG_INSTALL_ROOT:-/} /usr/bin/bash /opt/csw/bin/mktexlsr ||
 	echo "Registering Tex entries failed! You need to run mktexlsr again"
 else
-    echo "$dest (TeX will be registered when CSWtetex is installed)"
+    echo "$dest (TeX will be registered when CSWtexlive-binaries is installed)"
 fi
 
 exit 0
