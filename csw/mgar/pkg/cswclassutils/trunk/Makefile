@@ -1,7 +1,7 @@
 # $HeadURL$
 
 NAME = cswclassutils
-VERSION = 1.48
+VERSION = 1.49
 GARTYPE = v2
 
 # a few handy functions for defining 'generic' things dynamically
