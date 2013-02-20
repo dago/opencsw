@@ -1,0 +1,66 @@
+From 7cf6e383b64420d0b7281302973d7f1eb308eb82 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 19 Feb 2013 16:23:33 +0100
+Subject: [PATCH] Use environment's bash in test scripts
+
+---
+ test/base_tests      | 2 +-
+ test/long_tests      | 2 +-
+ test/run_test.sh     | 2 +-
+ test/run_test_all.sh | 2 +-
+ test/tests.sh        | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/test/base_tests b/test/base_tests
+index ef204d7..e19efbb 100755
+--- a/test/base_tests
++++ b/test/base_tests
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ 
+ if [ z"$srcdir" = 'z' ]; then
+   srcdir=.
+diff --git a/test/long_tests b/test/long_tests
+index 9b9764f..911d7cb 100755
+--- a/test/long_tests
++++ b/test/long_tests
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ 
+ if [ z"$srcdir" = 'z' ]; then
+   srcdir=.
+diff --git a/test/run_test.sh b/test/run_test.sh
+index 4553393..d352b3f 100755
+--- a/test/run_test.sh
++++ b/test/run_test.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ 
+ #set -x
+ 
+diff --git a/test/run_test_all.sh b/test/run_test_all.sh
+index f0d0f93..886c69f 100755
+--- a/test/run_test_all.sh
++++ b/test/run_test_all.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ 
+ #set -x
+ 
+diff --git a/test/tests.sh b/test/tests.sh
+index 99f87ca..8475894 100755
+--- a/test/tests.sh
++++ b/test/tests.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ 
+ if [ z"$srcdir" = 'z' ]; then
+   srcdir=.
+-- 
+1.8.1
+
