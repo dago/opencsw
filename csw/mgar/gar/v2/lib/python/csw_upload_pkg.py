@@ -428,7 +428,7 @@ class Srv4Uploader(object):
           checkpkg_executable,
           "--catalog-release", self.catrel,
           "--os-release", osrel,
-          "--architecture", arch,
+          "--catalog-architecture", arch,
       ] + md5_sums
       ret = subprocess.call(args_by_cat[(arch, osrel)] + ["--quiet"])
       if ret:

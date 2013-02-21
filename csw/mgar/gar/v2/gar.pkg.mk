@@ -1014,7 +1014,7 @@ package-p:
 #
 pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
 	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg \
-		--architecture "$(GARCH)" \
+		--catalog-architecture "$(GARCH)" \
 		--os-releases "$(SPKG_OSNAME)" \
 		--catalog-release "$(CATALOG_RELEASE)" \
 		$(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
