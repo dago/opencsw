@@ -45,11 +45,11 @@ readonly CURL="curl --netrc"
 readonly REST_URL=http://buildfarm.opencsw.org/releases/
 
 function _add_to_cat {
-  \${CURL} -X PUT \${REST_URL}catalogs/$1/$2/$3/$4/
+  \${CURL} -X PUT \${REST_URL}catalogs/$1/$2/$3/$4/ ; echo
 }
 
 function _del_from_cat {
-  \${CURL} -X DELETE \${REST_URL}catalogs/$1/$2/$3/$4/
+  \${CURL} -X DELETE \${REST_URL}catalogs/$1/$2/$3/$4/ ; echo
 }
 
 #for catalogname in $sorted($diffs_by_catalogname):
