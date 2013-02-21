@@ -19,7 +19,7 @@ PATCHFILES	+=	0001-Use-environment-s-bash-in-test-scripts.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD_DEP_PKGS		+=	CSWlatex2html
-BUILD_DEP_PKGS		+=	CSWCSWtex4ht
+BUILD_DEP_PKGS		+=	CSWtex4ht
 
 TEST_SCRIPTS = custom
 
