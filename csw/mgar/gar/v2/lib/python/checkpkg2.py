@@ -71,7 +71,7 @@ def main():
       dest="osrel_commas",
       help=("Comma separated list of ['SunOS5.9', 'SunOS5.10'], "
             "e.g. 'SunOS5.9,SunOS5.10'."))
-  parser.add_option("-a", "--architecture",
+  parser.add_option("-a", "--catalog-architecture",
       dest="arch",
       help="Architecture: i386, sparc.")
   parser.add_option("--profile", dest="profile",
@@ -97,10 +97,10 @@ def main():
   if not options.osrel_commas:
     err_msg_list.append("Please specify --os-releases.")
   if not options.arch:
-    err_msg_list.append("Please specify --architecture.")
+    err_msg_list.append("Please specify --catalog-architecture.")
   if options.arch not in cc.PHYSICAL_ARCHITECTURES:
     err_msg_list.append(
-        "Valid --architecture values are: %s, you passed: %r"
+        "Valid --catalog-architecture values are: %s, you passed: %r"
         % (cc.PHYSICAL_ARCHITECTURES, options.arch))
   if err_msg_list:
     raise UsageError(" ".join(err_msg_list))
