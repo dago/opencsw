@@ -28,7 +28,7 @@ ARCHALL_CSWtexi2html = 1
 RUNTIME_DEP_PKGS_CSWtexi2html	+=	CSWperl
 RUNTIME_DEP_PKGS_CSWtexi2html	+=	CSWlatex2html
 CHECKPKG_OVERRIDES_CSWtexi2html	+=	surplus-dependency|latex2html
-RUNTIME_DEP_PKGS_CSWtexi2html	+=	CSWCSWtex4ht
+RUNTIME_DEP_PKGS_CSWtexi2html	+=	CSWtex4ht
 CHECKPKG_OVERRIDES_CSWtexi2html	+=	surplus-dependency|tex4ht
 # only in the comments / documentation:
 CHECKPKG_OVERRIDES_CSWtexi2html	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texi2html/lib/libintl-perl/lib/Locale/Messages.pm
