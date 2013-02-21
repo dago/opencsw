@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.25
+VERSION = 1.26
 GARTYPE = v2
 
 DESCRIPTION = Utilities for CSW maintainers
