@@ -1,0 +1,25 @@
+From be733b4581fa3a3203781f6aa61a6854d35b6575 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 21 Feb 2013 10:13:15 +0100
+Subject: [PATCH] Check for both S_ISPORT and S_ISDOOR
+
+---
+ tree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tree.c b/tree.c
+index 19cf368..86d1c82 100644
+--- a/tree.c
++++ b/tree.c
+@@ -45,7 +45,7 @@ int mb_cur_max;
+ #ifdef __EMX__
+ const u_short ifmt[]={ FILE_ARCHIVED, FILE_DIRECTORY, FILE_SYSTEM, FILE_HIDDEN, FILE_READONLY, 0};
+ #else
+-  #ifdef S_ISPORT
++  #if defined(S_ISPORT) && defined(S_ISDOOR)
+   const u_int ifmt[] = {S_IFREG, S_IFDIR, S_IFLNK, S_IFCHR, S_IFBLK, S_IFSOCK, S_IFIFO, S_ISDOOR, S_ISPORT, 0};
+   const char fmt[] = "-dlcbspDP?";
+   const char *ftype[] = {"file", "directory", "link", "char", "block", "socket", "fifo", "door", "port", "unknown", NULL};
+-- 
+1.8.1
+
