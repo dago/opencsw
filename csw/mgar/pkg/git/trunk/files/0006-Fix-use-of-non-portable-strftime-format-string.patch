@@ -1,0 +1,29 @@
+From 4e13b01e8678d73f4bc68189ea278eef6b38fd4d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 22 Feb 2013 00:22:15 +0100
+Subject: [PATCH] Fix use of non-portable strftime format string.
+
+This is merged in a more proper manner upstream, but until that lands
+in a release, this quick hack should work for us.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ git-cvsimport.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 0a31ebd..dda0966 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -864,7 +864,7 @@ sub commit {
+ 	}
+ 
+ 	set_timezone($author_tz);
+-	my $commit_date = strftime("%s %z", localtime($date));
++	my $commit_date = strftime("$date %z", localtime($date));
+ 	set_timezone('UTC');
+ 	$ENV{GIT_AUTHOR_NAME} = $author_name;
+ 	$ENV{GIT_AUTHOR_EMAIL} = $author_email;
+-- 
+1.8.1
+
