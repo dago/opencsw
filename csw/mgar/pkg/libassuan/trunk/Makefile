@@ -1,5 +1,5 @@
 NAME = libassuan
-VERSION = 2.0.2
+VERSION = 2.1.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -12,7 +12,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 
 VENDOR_URL = http://www.gnupg.org/download/#libassuan
 
-BUILD_DEP_PKGS += CSWlibgpgerr-dev
+BUILD_DEP_-erroGS += CSWlibgpgerr-dev
 
 PACKAGES += CSWlibassuan0
 SPKG_DESC_CSWlibassuan0 = IPC library used by some GnuPG related software, libassuan.so.0
@@ -31,4 +31,4 @@ BUILD64_LIBS_ONLY = 1
 #   https://bugs.g10code.com/gnupg/msg4081
 SKIPTEST ?= 1
 
-include gar/category.mk
+include
