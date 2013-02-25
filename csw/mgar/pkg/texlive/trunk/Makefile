@@ -134,6 +134,8 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/bin/httex
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/bin/httexi
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/bin/htxelatex
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/bin/htxetex
+# provide by tex_metauml package
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf-dist/metapost/metauml/*
 # foreign binaries
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf-dist/source/latex/splitindex/splitindex-Linux-i386
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/texmf-dist/source/latex/splitindex/splitindex-OpenBSD-i386
