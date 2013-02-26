@@ -88,7 +88,7 @@ class PackageStatsMixin(object):
       res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
       try:
         self.db_pkg_stats = res.getOne()
-      except sqlobject.SQLObjectNotFound, e:
+      except sqlobject.SQLObjectNotFound as e:
         logging.debug(u"GetDbObject(): %s not found", md5_sum)
         return None
       logging.debug(u"GetDbObject(): %s succeeded", md5_sum)
@@ -138,7 +138,7 @@ class PackageStatsMixin(object):
     """
     try:
       os.makedirs(dir_path)
-    except OSError, e:
+    except OSError as e:
       if e.errno == errno.EEXIST:
         pass
       else:
@@ -225,7 +225,7 @@ class PackageStatsMixin(object):
   def GetOrSetPkginst(cls, pkgname):
     try:
       pkginst = m.Pkginst.select(m.Pkginst.q.pkgname==pkgname).getOne()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       logging.debug(e)
       pkginst = m.Pkginst(pkgname=pkgname)
     return pkginst
@@ -234,7 +234,7 @@ class PackageStatsMixin(object):
   def SaveStats(cls, pkg_stats, register=False):
     """Saves a data structure to the database.
 
-    Does not require an instance.
+    Does not require an instance of the class.
     """
     logging.debug("SaveStats()")
     pkgname = pkg_stats["basic_stats"]["pkgname"]
@@ -244,7 +244,7 @@ class PackageStatsMixin(object):
       res = m.Architecture.select(
           m.Architecture.q.name==pkg_stats["pkginfo"]["ARCH"])
       arch = res.getOne()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       logging.debug(e)
       arch = m.Architecture(name=pkg_stats["pkginfo"]["ARCH"])
     try:
@@ -252,7 +252,7 @@ class PackageStatsMixin(object):
           m.Architecture.q.name
             ==
           pkg_stats["basic_stats"]["parsed_basename"]["arch"]).getOne()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       filename_arch = m.Architecture(
           name=pkg_stats["basic_stats"]["parsed_basename"]["arch"])
     basename = pkg_stats["basic_stats"]["parsed_basename"]
@@ -261,14 +261,14 @@ class PackageStatsMixin(object):
     try:
       os_rel = m.OsRelease.select(
           m.OsRelease.q.short_name==os_rel_name).getOne()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       logging.debug(e)
       os_rel = m.OsRelease(short_name=os_rel_name, full_name=os_rel_name)
     try:
       maint_email = pkg_stats["pkginfo"]["EMAIL"]
       maintainer = m.Maintainer.select(
           m.Maintainer.q.email==maint_email).getOne()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       logging.debug(e)
       maintainer = m.Maintainer(email=maint_email)
 
@@ -293,7 +293,7 @@ class PackageStatsMixin(object):
       db_pkg_stats = m.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       logging.debug("Cleaning %s before saving it again", db_pkg_stats)
       db_pkg_stats.DeleteAllDependentObjects()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       logging.debug("Package %s not present in the db, proceeding with insert.",
                     basename)
       pass
@@ -344,7 +344,7 @@ class PackageStatsMixin(object):
           version_string=parsed_basename["full_version_string"])
     # Inserting overrides as rows into the database
     for override_dict in pkg_stats["overrides"]:
-      o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
+      m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
     return db_pkg_stats
 
@@ -360,7 +360,7 @@ class PackageStatsMixin(object):
     try:
       stats = m.Srv4FileStats.select(
          m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
-    except sqlobject.SQLObjectNotFound, e:
+    except sqlobject.SQLObjectNotFound as e:
       stats = cls.SaveStats(pkg_stats, register=False)
     if stats.registered and not replace:
       logging.debug(
