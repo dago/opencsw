@@ -393,7 +393,7 @@ def main():
   else:
     logging.basicConfig(level=logging.INFO)
   if not args:
-    raise UsageError("Please specify a command.  Se --help.")
+    raise UsageError("Please specify a command.  See --help.")
   # SetUpSqlobjectConnection needs to be called after
   # logging.basicConfig
   configuration.SetUpSqlobjectConnection()
