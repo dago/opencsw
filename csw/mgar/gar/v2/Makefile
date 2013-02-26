@@ -27,13 +27,6 @@ report-%:
 	@echo "$@ completed at $$(date)" >> $(BUILDLOG)
 
 pkgdesc = `/bin/perl -ne '/DESCRIPTION\s+=\s+(.+)$$/ && print $$1' $(1)/Makefile`
-
-# Rebuild the package database
-rebuildpkgdb:
-	@echo " ==> Rebuilding package database"
-	-@rm -f pkg.db
-	@bin/build_pkgdb > pkg.db
-
 cvsdesc:
 	@for package in $(shell gfind . -type d -mindepth 2 -maxdepth 2 -not -name 'CVS' -a -not -name '00CPAN_Module_Template' | gsed -e 's/^\.\///') ; do \
 		printf "%-36s%s\n" sunx/$$package "$(call pkgdesc,$$package)" ; \
