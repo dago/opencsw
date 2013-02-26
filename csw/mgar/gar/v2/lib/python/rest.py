@@ -3,7 +3,7 @@
 import os
 from StringIO import StringIO
 import cjson
-import gdbm
+import anydbm
 import logging
 import urllib2
 import pycurl
@@ -211,9 +211,12 @@ class CachedPkgstats(object):
 
   def __init__(self, filename):
     self.filename = filename
-    self.d = gdbm.open("%s.db" % self.filename, "c")
+    self.d = anydbm.open("%s.db" % self.filename, "c")
     self.rest_client = RestClient()
-    self.deps = gdbm.open("%s-deps.db" % self.filename, "c")
+    self.deps = anydbm.open("%s-deps.db" % self.filename, "c")
+
+  def __del__(self):
+    self.d.close()
 
   def GetPkgstats(self, md5):
     if str(md5) in self.d:
