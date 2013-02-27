@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.17.1
+VERSION = 5.17.2
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
@@ -27,12 +27,13 @@ BUILD_DEP_PKGS		=	CSWguile-dev
 BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 BUILD_DEP_PKGS		+=	CSWlibxml2-dev
 BUILD_DEP_PKGS		+=	CSWlibz-dev
-BUILD_DEP_PKGS		+=	CSWtetex
 
 BUILD_SCRIPTS	=	nominal
 BUILD_SCRIPTS	+=	dvi
 BUILD_SCRIPTS	+=	ps
 BUILD_SCRIPTS	+=	pdf
+
+EXTRA_LINKER_FLAGS	+=	-lintl
 
 TEST_SCRIPTS = custom
 
