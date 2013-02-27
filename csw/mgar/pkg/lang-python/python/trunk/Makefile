@@ -71,7 +71,7 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 # symlink is currently under a subdirectory.
 # pkgchk -L CSWlibffi-dev
 # (...)
-# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlNKER_FLAGS += -L-dev
+# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s nPREPENDSWlNKER_FLAGS += -L-dev
 EXTRA_LIB += $(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
