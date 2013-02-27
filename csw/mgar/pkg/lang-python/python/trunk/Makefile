@@ -71,7 +71,7 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 # symlink is currently under a subdirectory.
 # pkgchk -L CSWlibffi-dev
 # (...)
-# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
+# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlNKER_FLAGS += -L-dev
 EXTRA_LIB += $(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
@@ -185,7 +185,7 @@ CHECKPKG_OVERRIDE-devython$(CVER)-test  += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDEStk   S_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDE-tk  python$(CVER)-test  += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-noGARCOMPILER = SOS12U3not-start-with-py_
 
 includEXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-32.h,p"
 EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-64.h,p"
