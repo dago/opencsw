@@ -1,0 +1,57 @@
+From cecc498f6a25b58bfa84f1cb2c63f07220d3825a Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Thu, 28 Feb 2013 13:52:11 +0100
+Subject: [PATCH] do_not_use_libstlport
+
+---
+ cmake/build_configurations/compiler_options.cmake | 4 ++--
+ configure.cmake                                   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/cmake/build_configurations/compiler_options.cmake b/cmake/build_configurations/compiler_options.cmake
+index 521666e..93634f2 100644
+--- a/cmake/build_configurations/compiler_options.cmake
++++ b/cmake/build_configurations/compiler_options.cmake
+@@ -95,7 +95,7 @@ IF(UNIX)
+     IF(CMAKE_C_COMPILER_ID MATCHES "SunPro")
+       IF(CMAKE_SYSTEM_PROCESSOR MATCHES "i386")
+         SET(COMMON_C_FLAGS                   "-g -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic")
+-        SET(COMMON_CXX_FLAGS                 "-g0 -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic -library=stlport4")
++        SET(COMMON_CXX_FLAGS                 "-g0 -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic")
+         # We have to specify "-xO1" for DEBUG flags here,
+         # see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6879978
+         SET(CMAKE_C_FLAGS_DEBUG              "-xO1 ${COMMON_C_FLAGS}")
+@@ -110,7 +110,7 @@ IF(UNIX)
+       ELSE() 
+         # Assume !x86 is SPARC
+         SET(COMMON_C_FLAGS                 "-g -Xa -xstrconst -mt")
+-        SET(COMMON_CXX_FLAGS               "-g0 -mt -library=stlport4")
++        SET(COMMON_CXX_FLAGS               "-g0 -mt")
+         IF(32BIT)
+           SET(COMMON_C_FLAGS               "${COMMON_C_FLAGS} -xarch=sparc")
+           SET(COMMON_CXX_FLAGS             "${COMMON_CXX_FLAGS} -xarch=sparc")
+diff --git a/configure.cmake b/configure.cmake
+index a9cdc0c..10fdcb3 100644
+--- a/configure.cmake
++++ b/configure.cmake
+@@ -73,7 +73,7 @@ ENDIF()
+ # http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html
+ # Use stlport rather than Rogue Wave.
+ IF(CMAKE_SYSTEM_NAME MATCHES "SunOS")
+-  IF(CMAKE_CXX_COMPILER_ID MATCHES "SunPro")
++  IF(CMAKE_CXX_COMPILER_ID MATCHES "SunProNO")
+     SET(CMAKE_CXX_FLAGS
+       "${CMAKE_CXX_FLAGS} -library=stlport4")
+   ENDIF()
+@@ -83,7 +83,7 @@ MACRO(DIRNAME IN OUT)
+   GET_FILENAME_COMPONENT(${OUT} ${IN} PATH)
+ ENDMACRO()
+ 
+-IF(CMAKE_SYSTEM_NAME MATCHES "SunOS" AND CMAKE_C_COMPILER_ID MATCHES "SunPro")
++IF(CMAKE_SYSTEM_NAME MATCHES "SunOS" AND CMAKE_C_COMPILER_ID MATCHES "SunProNO")
+   DIRNAME(${CMAKE_CXX_COMPILER} CXX_PATH)
+   SET(STLPORT_SUFFIX "lib/stlport4")
+   IF(CMAKE_SIZEOF_VOID_P EQUAL 8 AND CMAKE_SYSTEM_PROCESSOR MATCHES "sparc")
+-- 
+1.8.1.4
+

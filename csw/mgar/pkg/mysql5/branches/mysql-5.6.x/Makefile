@@ -13,17 +13,13 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.6
-PATCHLEVEL = 4-m7
+PATCHLEVEL = 10
 ALTS_PRIO = 56
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
-CATEGORIES = server
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-# There is some assembler code, which doesn't work on sparcv8, and I don't see
-# an easy way to switch it off.
-ISA_DEFAULT_sparc-5.9 = sparcv8plus
 
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
@@ -39,6 +35,11 @@ endef
 # EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 # EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 GARCOMPILER = GNU
+
+NOGITPATCH ?= 1
+
+#Mapfile:
+LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -66,9 +67,10 @@ PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
-PATCHFILES += 0003-I-HATE-CMAKE.patch
+#PATCHFILES += 0003-I-HATE-CMAKE.patch
 # PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0005-Do-not-strip-RPATH-from-binaries.patch
+#PATCHFILES += 0002-do_not_use_libstlport.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -153,6 +155,7 @@ DISTFILES += ChangeLog
 DISTFILES += CSW$(NAME).preinstall
 DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
+DISTFILES += map.mysql
 
 # TODO: Do the proper prerequsite pkgs.
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
@@ -188,28 +191,35 @@ CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
 CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
 CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
-# CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
-# CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
+CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
+CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
 # CMAKE_ARGS += -DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
-# CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
-CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/$(MM_LIBDIR)/plugin
+CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
+CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
 CMAKE_ARGS += -DWITH_READLINE=1
+CMAKE_ARGS += -DWITH_LIBWRAP=1
 CMAKE_ARGS += -DWITH_SSL=system
 CMAKE_ARGS += -DWITH_ZLIB=system
 CMAKE_ARGS += -DDEFAULT_CHARSET=utf8
 CMAKE_ARGS += -DDEFAULT_COLLATION=utf8_general_ci
 CMAKE_ARGS += -DWITH_COMMENT='OpenCSW'
-CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+#Hardcode Sunstudio compiler:
+#CMAKE_ARGS += -DCMAKE_C_COMPILER="/opt/solarisstudio12.3/bin/cc"
+#CMAKE_ARGS += -DCMAKE_CXX_COMPILER="/opt/solarisstudio12.3/bin/CC"
+CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
+CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
 CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
 # CMAKE_ARGS += -DOPENSSL_INCLUDE_DIR="$(includedir)"
 # CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 # CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
-# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libssl.so
-# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libcrypto.so
+# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/libssl.so
+# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/libcrypto.so
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
-
+CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
+CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
 TEST_SCRIPTS = custom
