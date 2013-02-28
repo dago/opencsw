@@ -1,0 +1,13 @@
+Index: trunk/sql/mysqld.cc
+===================================================================
+--- trunk.orig/sql/mysqld.cc	2013-01-09 11:59:43.902887077 +0100
++++ trunk/sql/mysqld.cc	2013-01-09 12:00:31.518888125 +0100
+@@ -6262,7 +6262,7 @@
+             The connection was refused by TCP wrappers.
+             There are no details (by client IP) available to update the host_cache.
+           */
+-          statistic_increment(connection_tcpwrap_errors, &LOCK_status);
++          statistic_increment(connection_errors_tcpwrap, &LOCK_status);
+           continue;
+         }
+       }

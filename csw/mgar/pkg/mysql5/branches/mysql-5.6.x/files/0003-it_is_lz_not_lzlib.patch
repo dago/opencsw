@@ -1,0 +1,25 @@
+From b2ba0a64ac891eccac82713647c80dde977b5b53 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Thu, 28 Feb 2013 16:47:31 +0100
+Subject: [PATCH] it_is_lz_not_lzlib
+
+---
+ storage/perfschema/unittest/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/storage/perfschema/unittest/CMakeLists.txt b/storage/perfschema/unittest/CMakeLists.txt
+index 47539ff..55960e9 100644
+--- a/storage/perfschema/unittest/CMakeLists.txt
++++ b/storage/perfschema/unittest/CMakeLists.txt
+@@ -63,7 +63,7 @@ TARGET_LINK_LIBRARIES(pfs_connect_attr-t ${MYSQLD_STATIC_PLUGIN_LIBS})
+ TARGET_LINK_LIBRARIES(pfs_connect_attr-t sql binlog rpl master slave sql)
+ TARGET_LINK_LIBRARIES(pfs_connect_attr-t mysys mysys_ssl)
+ TARGET_LINK_LIBRARIES(pfs_connect_attr-t vio ${SSL_LIBRARIES})
+-TARGET_LINK_LIBRARIES(pfs_connect_attr-t strings dbug regex mysys zlib)
++TARGET_LINK_LIBRARIES(pfs_connect_attr-t strings dbug regex mysys z)
+ ADD_TEST(pfs_connect_attr pfs_connect_attr-t)
+ 
+ # On windows, pfs_connect_attr-t may depend on openssl dlls.
+-- 
+1.8.1.4
+

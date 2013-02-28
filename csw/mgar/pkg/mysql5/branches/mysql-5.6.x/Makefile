@@ -71,6 +71,8 @@ CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir
 # PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0005-Do-not-strip-RPATH-from-binaries.patch
 #PATCHFILES += 0002-do_not_use_libstlport.patch
+PATCHFILES += mysql-bug.67018.patch
+PATCHFILES += 0003-it_is_lz_not_lzlib.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
