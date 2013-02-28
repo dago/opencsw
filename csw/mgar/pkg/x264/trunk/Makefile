@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = x264
-VERSION = 1cffe9f
+VERSION = b3065e6
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -15,7 +15,7 @@ VENDOR_URL = http://www.videolan.org/developers/x264.html
 #MASTER_SITES = http://repo.or.cz/w/x264.git/snapshot/  
 #DISTFILES  = c522ad1fed167d0e985e4f9dcdee042473cf74db.tar.gz
 GIT_REPOS = http://git.videolan.org/git/x264.git
-GIT_Tcffe9f406cc54f4759fc9eeb85598fb8cae66c729f5da9b0292387309
+GIT_b3065e660df391168067f13216d99825260939d429f5da9b0292387309
 
 # This Patch file needs to be updated on every new version! 
 PATCHFILES += 0001-replace-version.sh.patch
