@@ -60,6 +60,37 @@ CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
 CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
 
+PACKAGES = CSWmariadb
+SPKG_DESC_CSWmariadb = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibmysqld18
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWmariadb += CSWlibz1
+
+PACKAGES += CSWlibmysqlclient18
+PKGFILES_CSWlibmysqlclient18 += $(call baseisadirs,$(libdir),libmysqlclient\.so\.18(\.\d+)*)
+SPKG_DESC_CSWlibmysqlclient18 += $(DESCRIPTION), libmysqlclient.so.18
+RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibz1
+
+PACKAGES += CSWlibmysqld18
+PKGFILES_CSWlibmysqld18 += $(call baseisadirs,$(libdir),libmysqld\.so\.18(\.\d+)*)
+SPKG_DESC_CSWlibmysqld18 += $(DESCRIPTION), libmysqld.so.18
+RUNTIME_DEP_PKGS_CSWlibmysqld18 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmysqld18 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibmysqld18 += CSWlibz1
+
+PACKAGES += CSWmariadb-dev
+CATALOGNAME_CSWmariadb-dev = mariadb_dev
+SPKG_DESC_CSWmariadb-dev += $(DESCRIPTION), development files
+PKGFILES_CSWmariadb-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWmariadb-dev += CSWlibmysqld18
+RUNTIME_DEP_PKGS_CSWmariadb-dev += CSWlibmysqlclient18
+
 include gar/category.mk
 
 configure-custom:
