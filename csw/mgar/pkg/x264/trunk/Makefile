@@ -52,25 +52,25 @@ SPKG_DESC_CSWx264 = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibavcodec54
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibavformat54
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibswscale2
-RUNTIME_DEP_PKGS_CSWx264 += CSWlibavutil51
+RUNTIME_DEP_PKGS_CSWx262
 
-PACKAGE9
-CATALOGNAME_CSWlibx264-129 = libx264_129
-PKGFILES_CSWlibx264-129 += $(call baseisadirs,$(libdir),libx264\.so\.129)
-PKGFILES_CSWlibx264-129 += $(call baseisadirs,$(libdir),libx264\.so\.129(\.\d+)*)
-SPKG_DESC_CSWlibx264-129 += $(DESCRIPTION), libx264.so.129
-RUNTIME_DEP_PKGS_CSWlibx264-129KGS_CSWlibx264-128 += CSWlibgcc-s1
+PACKAGES += CSWlibx264-130
+CATALOGNAME_CSWlibx264-130 = libx264_130
+PKGFILES_CSWlibx264-130 += $(call baseisadirs,$(libdir),libx264\.so\.130)
+PKGFILES_CSWlibx264-130 += $(call baseisadirs,$(libdir),libx264\.so\.130(\.\d+)*)
+SPKG_DESC_CSWlibx264-130 += $(DESCRIPTION), libx264.so.130
+RUNTIME_DEP_PKGS_CSWlibx264-130KGS_CSWlibx264-128 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
 CATALOGNAME_CSWlibx264-dev = libx264_dev
 SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
 PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibx264-de9 += CSWlibx264-128
+RUNTIME_DEP_PKGS_CSWlibx264-d30 += CSWlibx264-128
 
 #Some overrides
 CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
-CHECKPKG_OVERR9DES_CSWlibx264-128 += pkginfo-description-not-starting-with-uppercase
+CHECKPKG_OVER30DES_CSWlibx264-128 += pkginfo-description-not-starting-with-uppercase
 
 
 
