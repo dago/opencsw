@@ -81,6 +81,10 @@ CHECKPKG_OVERRIDES_CSWautogen	+=	soname-unused|libintl.so.8|is|needed|by|/opt/cs
 CHECKPKG_OVERRIDES_CSWautogen	+=	soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/columns|but|never|used
 CHECKPKG_OVERRIDES_CSWautogen	+=	soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/getdefs|but|never|used
 CHECKPKG_OVERRIDES_CSWautogen	+=	soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/xml2ag|but|never|used
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/xml2ag|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/columns|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/getdefs|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/autogen|is|not|directly|bound|to|soname|libintl.so.8
 
 PACKAGES							+=	CSWautogen-doc
 CATALOGNAME_CSWautogen-doc			=	autogen_doc
