@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.11
+VERSION = 3.6.12
 CATEGORIES = apps
 GARTYPE = v2
 
