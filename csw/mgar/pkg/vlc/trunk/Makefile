@@ -2,29 +2,15 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = vlc
-VERSION = 2.1-git
+VERSION = 2.0.5
 GARTYPE = v2
 CATEGORIES = apps
 
 DESCRIPTION = VideoLAN Client, the cross-platform media player and streaming server
-define BLURB
-endef
+deMASTER_SITES = http://download.videolan.org/pub/videolan/vlc/$(VERSION)/
+DISTFILES  = $(DISTNAME).tar.xz
 
-# MASTER_SITES = http://download.videolan.org/pub/videolan/vlc/$(VERSION)/
-# DISTFILES  = $(DISTNAME).tar.bz2
-
-# Building from the git master which has patches submitted by Maciej
-MASTER_SITES = http://repo.or.cz/w/vlc/solaris.git/snapshot/
-DISTFILES = d843a2fc47bf6b9f4277310736b25caee8309ee7.tar.gz
-
-NOTGITPATCH = 1
-
-DISTNAME = solaris
-
-PATCHFILES += 0006-Define-Encoding-in-vlc.desktop.patch
-
-# We need e.g. stdbool.h
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PATCHFILES += 0006-Define-Encoding-in-vlc.desktop.patcharc solaris10-i386
 
 VENDOR_URL = http://www.videolan.org/vlc/
 
@@ -32,20 +18,14 @@ BUILD_DEP_PKGS += CSWliba52
 BUILD_DEP_PKGS += CSWlibxcbdevel
 BUILD_DEP_PKGS += CSWlibxaudevel
 BUILD_DEP_PKGS += CSWlibxdmcpdevel
-BUILD_DEP_PKGS += CSWlibx11devel
-
-# This is for libxcb
-# EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
-# EXTRA_LIB = /opt/csw/X11/lib
-# EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+BUILD_DEP_PKGS BUILD_DEP_PKGS += CSWautoconf
+BUILD_DEP_PKGS += CSWautomake
+BUILD_DEP_PKGS += CSWlibtool $(prefix)/X11/lib
 
 # Sun Studio implements packed attributes differently and compilations bails out:
 #   "include/vlc_codecs.h", line 36: #error: FIXME
 # GARCOMPILER = SOS12U2
-GARCOMPILER = GNU
-
-# Taken from http://wiki.videolan.org/Solaris
-# EXTRA_CFLAGS = -D _XPG4_2 -D __SunOS -D __STDC_ISO_10646__ -D __EXTENSIONS__ -features=extensions -fast
+GARtensions -fast
 
 # Solaris has MAXNAMELEN instead of NAME_MAX
 EXTRA_CFLAGS += -DNAME_MAX=MAXNAMLEN
@@ -174,11 +154,7 @@ PKGFILES_CSWlibvlccore5 += $(call baseisadirs,$(libdir),libvlccore\.so\.5(\.\d+)
 SPKG_DESC_CSWlibvlccore5 += $(DESCRIPTION), libvlccore.so.5
 RUNTIME_DEP_PKGS_CSWlibvlccore5 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibvlccore5 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibvlccore5 += CSWlibiconv2
-
-# Doesn't work...?
-# CONFIG_SHELL = /opt/csw/bin/bash
-# EXTRA_EXPORTS += CONFIG_SHELL
+RUNTIME_DEP_PKGS_CSWlibvlccore5 += CONFIG_SHELL
 
 include gar/category.mk
 
@@ -190,4 +166,4 @@ pre-configure-modulated:
 		./bootstrap)
 	@$(MAKECOOKIE)
 
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /op
