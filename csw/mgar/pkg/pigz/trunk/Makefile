@@ -1,5 +1,5 @@
 NAME = pigz
-VERSION = 2.2.4
+VERSION = 2.3
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -27,21 +27,27 @@ RUNTIME_DEP_PKGS_CSWpigz += CSWlibz1
 CHECKPKG_OVERRIDES_CSWpigz += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pigz/license
 
 # Optimization show effects < 5%
-#REQUESTED_ISAS = $(ISALIST_$(GARCOMPILER))
+#REQUESTED_ISAS = $(ISALISREINPLACEMENTS += which
+REINPLACE_MATCH_which = whereis
+REINPLACE_WITH_which = which
+REINPLACE_FILES_which += Makefile
 
 EXTRA_CFLAGS = -mt
 
+BUILD64 = 1
+ISAEXEC = 1
+
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = custom
+
+BUILD_OVERRIDE_VARS += CC CFLAGS
+BUILD_OVERRIDE_VAR_CC += $(CC) $(LDFLAGS) -lm -lpthread
+BUILD_OVERRIDE_VAR_CFLAGS += $(CFLAGS)
+
+TEST_TARGET = test
+
 INSTALL_SCRIPTS = custom
-TEST_SCRIPTS =
 
-include gar/category.mk
-
-build-custom:
-	cd $(WORKSRC) && $(CC) $(CPPFLAGS) $(CFLAGS) -c yarn.c
-	cd $(WORKSRC) && $(CC) $(CPPFLAGS) $(CFLAGS) -c pigz.c
-	cd $(WORKSRC) && LD_OPTIONS="$(LD_OPTIONS)" $(CC) $(LDFLAGS) -o pigz yarn.o pigz.o -lpthread -lz
+include gar/category.mk-lz
 	@$(MAKECOOKIE)
 
 install-custom:
@@ -54,5 +60,4 @@ install-custom:
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	ginstall $(WORKSRC)/pigz.1 $(DESTDIR)$(mandir)/man1
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
-	ginstall $(WORKSRC)/pigz.pdf $(DESTDIR)$(docdir)/$(NAME)
-	@$(MAKECOOKIE)
+	ginstall $(WORKSRC)/pigz.pdf $(DESTDIR)$(docdir)/$(NAM
