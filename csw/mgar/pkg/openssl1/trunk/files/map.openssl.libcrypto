@@ -3734,3 +3734,8 @@ OPENSSL_1.0.1 {
 		OPENSSL_showfatal = DIRECT;
 } OPENSSL_1.0.0;
 
+OPENSSL_1.0.1d {
+	global:
+		CRYPTO_memcmp = DIRECT;
+} OPENSSL_1.0.1;               
+
