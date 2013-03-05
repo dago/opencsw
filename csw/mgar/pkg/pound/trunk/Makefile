@@ -37,7 +37,8 @@ RUNTIME_DEP_PKGS_CSWpound += CSWlibssl1-0-0
 OBSOLETED_BY_CSWpound = CSWpound2
 
 # This is just for example scripts
-CHECKPKG_OVERRIDES_CSWpound2 += missing-dependency|CSWpython
+CHECKPKG_O += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpound += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pound/READMEendency|CSWpython
 
 EXTRA_DOCS += README
 EXTRA_DOCS += FAQ
@@ -74,4 +75,3 @@ install-custom:
 install-extra-docs:
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 644 $(addprefix $(WORKSRC)/,$(EXTRA_DOCS)) $(DESTDIR)$(docdir)/$(NAME)
-	@$(MAKECOOKIE)
