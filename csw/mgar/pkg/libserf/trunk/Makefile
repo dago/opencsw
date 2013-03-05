@@ -1,5 +1,5 @@
 NAME = libserf
-VERSION = 1.1.1
+VERSION = 1.2.0
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -46,4 +46,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 
-include gar/category.mk
+include
