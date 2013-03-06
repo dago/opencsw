@@ -1,7 +1,6 @@
 openssl (0.9.8y,REV=2013.03.06) unstable
 
   * New upstream release.
-  * Enabled symbol versioning and direct binding.
   
    -- Yann Rouillard <yann@opencsw.org>  Wed, 06 Mar 2013 07:14:14 +0100
 
