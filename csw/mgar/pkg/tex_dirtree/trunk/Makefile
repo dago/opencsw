@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = tex_dirtree
-VERSION = 0.2
+VERSION = 0.32
 GARTYPE = v2
 CATEGORIES = xtra
 
