@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = hevea
-VERSION = 1.10
+VERSION = 2.03
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -33,9 +33,9 @@ DISTFILES		= 	$(DISTNAME).tar.gz
 LICENSE			=	LICENSE
 
 BUILD_DEP_PKGS		=	CSWocaml
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_xlive
 
-RUNTIME_DEP_PKGS	=	CSWtetex
+RUNTIME_DEP_PKGS	=	CSWtexliveEP_PKGS	=	CSWtetex
 RUNTIME_DEP_PKGS	+=	CSWnetpbm
 
 PATCHFILES			=	0001-Fix-installation-paths.patch
@@ -45,7 +45,7 @@ CONFIGURE_SCRIPTS	=
 SKIPTEST			=	1
 
 # these are overrides for binaries called internally:
-CHECKPKG_OVERRIDES_CSWhevea	+=	surplus-dependency|CSWtetex
+CHECKPKG_OVERRIDES_CSWhevea	+=	surpluxliveependency|CSWtetex
 CHECKPKG_OVERRIDES_CSWhevea	+=	surplus-dependency|CSWnetpbm
 # innocuous:
 CHECKPKG_OVERRIDES_CSWhevea += file-with-bad-content|/usr/local|root/opt/csw/share/doc/hevea/README
@@ -58,5 +58,4 @@ pre-install-modulated:
 
 post-install-modulated:
 	cd $(WORKSRC) && ginstall -d $(DESTDIR)$(docdir)/$(NAME)
-	cd $(WORKSRC) && ginstall README $(DESTDIR)$(docdir)/$(NAME)
-	$(MAKECOOKIE)
+	cd $(WORKSRC) && ginstall README $(DESTDIR)$(docdir)/$(NAM
