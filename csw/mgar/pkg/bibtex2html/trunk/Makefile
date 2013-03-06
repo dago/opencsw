@@ -26,10 +26,11 @@ MASTER_SITES = http://www.lri.fr/~filliatr/ftp/bibtex2html/
 DISTFILES  = $(DISTNAME).tar.gz
 
 BUILD_DEP_PKGS		=	CSWocaml
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_DEP_PKGS		+=	CSWtexlive
 BUILD_DEP_PKGS		+=	CSWhevea
+BUILD_DEP_PKGS		+=	CSWtexlive-latex-extra
 
-RUNTIME_DEP_PKGS	=	CSWtetex
+RUNTIME_DEP_PKGS	=	CSWtexlive
 RUNTIME_DEP_PKGS	+=	CSWperl
 
 PATCHFILES			+=	0001-installation-desination-directories.patch
@@ -49,7 +50,7 @@ REINPLACE_USRSHARE += $(mandir)/man1/aux2bib.1
 REINPLACE_WHEN_USRSHARE = postinstall
 
 CHECKPKG_OVERRIDES_CSWbibtex2html	+=	surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWbibtex2html	+=	surplus-dependency|CSWtetex
+CHECKPKG_OVERRIDES_CSWbibtex2html	+=	surplus-dependency|CSWtexlive
 
 include gar/category.mk
 
