@@ -1,9 +1,6 @@
 #####################################################################
 # OpenCSW build recipe for OpenSSL
 #
-# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
-# All rights reserved.  Use is subject to license terms.
-#
 # Redistribution and/or use, with or without modification, is
 # permitted.  This software is without warranty of any kind.  The
 # author(s) shall not be liable in the event that use of the
@@ -16,7 +13,7 @@ PKCS11 = 1
 ###### Package information #######
 
 NAME = openssl
-VERSION = 0.9.8x
+VERSION = 0.9.8y
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -82,7 +79,8 @@ else
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.0.9.8|soname=libcrypto.so.0.9.8|pkgname=CSWlibssl0-9-8|expected=CSWlibcrypto0-9-8
 endif
 
-# we will not recompile old 0.9.7 version for now
+# we will not recompile old 0.9.7CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += no-direct-binding|/opt/csw/lib/libssl.so.0.9.7|is|not|directly|bound|to|soname|libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += no-direct-binding|/opt/csw/lib/pentium_pro/libssl.so.0.9.7|is|not|directly|bound|to|soname|libcrypto.so.0.9.77 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
 #CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis
 #CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis
@@ -139,7 +137,7 @@ DISTFILES += CSWopenssl.prototype
 DISTFILES += CSWlibssl0-9-8.checkinstall CSWlibssl0-9-8.preinstall CSWlibssl0-9-8.postinstall CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
 DISTFILES += CSWlibssl-dev.prototype-i386 CSWlibssl-dev.prototype-sparc
 DISTFILES += CSWopenssl-utils.prototype 
-DISTFILES += changelog.CSW README.CSW
+DISTFILES += changeloDISTFILES += map.openssl.libcrypto map.openssl.libssl map.openssl.enginesog.CSW README.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
@@ -152,7 +150,8 @@ PATCHFILES += opencsw_paths.patch
 
 # Let's always block some compromised CA, whatever the CA configured
 # (patchs taken from Debian Package)
-PATCHFILES += block_bad_certificates.patch
+PATCHFILES += block_bad_cerPATCHFILES += 0007-enables-symbols-versioning.patch
+ertificates.patch
 
 LICENSE=LICENSE
 
@@ -231,7 +230,11 @@ include gar/category.mk
 
 pre-configure-modulated: 
 	echo " ==> Creating configure script"
-	cd $(WORKSRC) && ln -nf Configure configure
+	cd $(WORKSRC) && ln -nf Confln -nf $(WORKDIR)/map.openssl.libcrypto $(WORKSRC)/map.openssl.libcrypto 
+	ln -nf $(WORKDIR)/map.openssl.libssl $(WORKSRC)/map.openssl.libssl 
+	for ENGINE in 4758cca aep atalla cswift gmp chil nuron sureware ubsec padlock capi; do \
+		ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/map.openssl.lib$$ENGINE; \
+	done nfigure configure
 	@$(MAKECOOKIE)
 
 # we remove every debug information except symbol table
@@ -270,4 +273,4 @@ install-oldlibs-%:
 	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -
 	@$(MAKECOOKIE)
 
-pre-package: install-certs install-oldlibs install-changelog install-doc fix-paths
+pre-package: install-certs install-oldlibs install-changelog insta
