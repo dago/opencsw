@@ -150,8 +150,7 @@ PATCHFILES += opencsw_paths.patch
 
 # Let's always block some compromised CA, whatever the CA configured
 # (patchs taken from Debian Package)
-PATCHFILES += block_bad_cerPATCHFILES += 0007-enables-symbols-versioning.patch
-ertificates.patch
+PATCHFILES += block_bad_cerrtificates.patch
 
 LICENSE=LICENSE
 
