@@ -60,7 +60,9 @@ SPKG_DESC_CSWtex4ht						+=	$(DESCRIPTION)
 PKGFILES_CSWtex4ht						+=	/opt/csw/bin/tex4ht
 PKGFILES_CSWtex4ht						+=	/opt/csw/bin/t4ht
 RUNTIME_DEP_PKGS						+=	CSWtex4ht-common
-CHECKPKG_OVERRIDES_CSWtex4ht			+=	surplus-dependency|CSWtex4ht-common
+CHECKPKG_OVERRIDES_CSWtex4ht			+=	surplus-dependencyRUNTIME_DEP_PKGS_CSWtex4ht				+=	CSWlibkpathsea6
+CHECKPKG_OVERRIDES_CSWtex4ht			+=	no-direct-binding|/opt/csw/bin/t4ht|is|not|directly|bound|to|soname|libkpathsea.so.6
+CHECKPKG_OVERRIDES_CSWtex4ht			+=	no-direct-binding|/opt/csw/bin/tex4ht|is|not|directly|bound|to|soname|libkpathsea.so.6y|CSWtex4ht-common
 
 include gar/category.mk
 
