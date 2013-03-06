@@ -32,11 +32,11 @@ SKIPTEST		=	1
 ARCHALL			=	1
 
 BUILD_DEP_PKGS		=	CSWemacs
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_DEP_PKGS		+=	CSWtexlive
 BUILD_DEP_PKGS		+=	CSWtexinfo
 
 RUNTIME_DEP_PKGS	=	CSWemacs
-RUNTIME_DEP_PKGS	+=	CSWtetex
+RUNTIME_DEP_PKGS	+=	CSWtexlive
 RUNTIME_DEP_PKGS	+=	CSWgs
 
 # all the "bad content"s are innocuous:
