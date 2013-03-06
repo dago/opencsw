@@ -51,12 +51,13 @@ CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/emacs/site-lisp/auctex/tex-jp.elc
 CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/doc/auctex/preview-latex.ps
 CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/doc/auctex/preview-latex.dvi
-# depends on CSWemacs wich depends on CSWemacscommon:
+# depends on CSWemacs wich depends on CSWemacs-common:
 CHECKPKG_OVERRIDES_CSWauctex += missing-dependency|CSWemacscommon
 # preview-latex depends on the existence at run-time:
 CHECKPKG_OVERRIDES_CSWauctex += surplus-dependency|CSWgs
 # the preview-latex can be used only with a graphical Emacs:
 CHECKPKG_OVERRIDES_CSWauctex += surplus-dependency|CSWemacs
+CHECKPKG_OVERRIDES_CSWauctex	+=	surplus-dependency|CSWtexlive
 
 include gar/category.mk
 
