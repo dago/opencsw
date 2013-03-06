@@ -1,0 +1,34 @@
+From 01a8e2d2112b81204bc13771008884296917ba44 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Fri, 20 Jul 2012 23:25:25 +0200
+Subject: [PATCH] enables symbols versioning
+
+---
+ Makefile.shared |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.shared b/Makefile.shared
+index e753f44..a52ac8c 100644
+--- a/Makefile.shared
++++ b/Makefile.shared
+@@ -372,7 +372,7 @@ link_o.solaris:
+ 		SHLIB_SUFFIX=; \
+ 		ALLSYMSFLAGS="$${MINUSZ}allextract"; \
+ 		NOALLSYMSFLAGS="$${MINUSZ}defaultextract"; \
+-		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
++		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -M map.openssl.lib$(LIBNAME) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
+ 	fi; \
+ 	$(LINK_SO_O)
+ link_a.solaris:
+@@ -386,7 +386,7 @@ link_a.solaris:
+ 		SHLIB_SUFFIX=;\
+ 		ALLSYMSFLAGS="$${MINUSZ}allextract"; \
+ 		NOALLSYMSFLAGS="$${MINUSZ}defaultextract"; \
+-		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
++		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -M map.openssl.lib$(LIBNAME) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
+ 	fi; \
+ 	$(LINK_SO_A)
+ link_app.solaris:
+-- 
+1.7.10.2
+
