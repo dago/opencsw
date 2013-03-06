@@ -27,7 +27,8 @@ DISTFILES			+=	tex4ht.1
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
 
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_xlive
+BUILD_DEP_PKGS		+=	CSWtexlive-dev_PKGS		+=	CSWtetex
 
 GARCOMPILER			=	GNU
 
@@ -50,8 +51,8 @@ RUNTIME_DEP_PKGS_CSWtex4ht-common		+=	CSWperl
 CHECKPKG_OVERRIDES_CSWtex4ht-common		+=	surplus-dependency|CSWperl
 RUNTIME_DEP_PKGS_CSWtex4ht-common		+=	CSWpstoedit
 CHECKPKG_OVERRIDES_CSWtex4ht-common		+=	surplus-dependency|CSWpstoedit
-RUNTIME_DEP_PKGS_CSWtex4ht-common		+=	CSWtetex
-CHECKPKG_OVERRIDES_CSWtex4ht-common		+=	surplus-dependency|CSWtetex
+RUNTIME_DEP_PKGS_CSWtex4hxlive
+CHECKPKG_OVERRIDES_CSWtex4ht-common		+=	surplus-dependency|CSWtexliveependency|CSWtetex
 
 PACKAGES								+=	CSWtex4ht
 CATALOGNAME_CSWtex4ht					=	tex4ht
@@ -145,4 +146,4 @@ install-custom:
 
 # this is private and not available publicly
 mydependencies:
-	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/w
