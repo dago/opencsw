@@ -137,7 +137,7 @@ DISTFILES += CSWopenssl.prototype
 DISTFILES += CSWlibssl0-9-8.checkinstall CSWlibssl0-9-8.preinstall CSWlibssl0-9-8.postinstall CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
 DISTFILES += CSWlibssl-dev.prototype-i386 CSWlibssl-dev.prototype-sparc
 DISTFILES += CSWopenssl-utils.prototype 
-DISTFILES += changeloDISTFILES += map.openssl.libcrypto map.openssl.libssl map.openssl.enginesog.CSW README.CSW
+DISTFILES += changelog.CSW README.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
