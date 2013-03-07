@@ -966,7 +966,7 @@ merge-copy-config-only:
 remerge: reset-merge merge
 
 reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-distfile-README.CSW reset-merge-distfile-changelog.CSW reset-merge-obsolete reset-merge-ap2mod reset-merge-php5ext reset-merge-src
-	rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
+	rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge-all
 	rm -rf $(PKGROOT)
 
 reset-merge-modulated:
