@@ -41,6 +41,8 @@ UPSTREAM_USE_SF = 1
 # function. The linkages must therefore match."
 PATCHFILES = gar-base.diff
 
+EXTRA_LINKER_FLAGS += -norunpath
+
 TEST_SCRIPTS = 
 
 CONFIGURE_ARG# S = $(DIRPATHS)
