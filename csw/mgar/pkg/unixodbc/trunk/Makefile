@@ -23,7 +23,6 @@ FOREIGN_PACKAGES += CSWlibodbcinst1
 PACKAGES += CSWunixodbc
 SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst2
@@ -71,4 +70,11 @@ MIGRATE_FILES_CSWunixodbc += odbc.ini
 MIGRATE_FILES_CSWunixodbc += odbcinst.ini
 MIGRATE_FILES_CSWunixodbc += ODBCDataSources
 
-include gar/category.mk
+include
+post-merge-all:
+	gdiff -D 64bit \
+		$(WORKROOTDIR)/install-isa-$(ISA_DEFAULT64)$(includedir)/unixodbc_conf.h \
+		$(WORKROOTDIR)/install-isa-$(ISA_DEFAULT)$(includedir)/unixodbc_conf.h \
+	| sed -e 's/ifndef 64bit/if defined __amd64 || defined __x86_64 || defined __sparcv9/' \
+	> $(PKGROOT)$(includedir)/unixodbc_conf.h
+	@$(MAKECOOKIE)
