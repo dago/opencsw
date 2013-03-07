@@ -25,7 +25,10 @@ RUNTIME_DEP_PKGS_CSWsphinx-search += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWsphinx-search += CSWlibgcc-s1  
 
 # These are just examples
-CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/opt/csw/bin/searchd
+CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/searchd
+CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/searchd
+CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/searchd
+CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/searchd
 CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/indexer.1
 CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/local|root/etc/opt/csw/sphinx.conf.CSW
 CHECKPKG_OVERRIDES_CSWsphinx-search += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/indextool.1
@@ -38,16 +41,18 @@ GARCOMPILER = GCC4
 
 EXTRA_LINKER_FLAGS += -liconv
 
-#BUILD64 = 1
-#ISAEXEC = 1
+BUILD64 = 1
+ISAEXEC = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-id64
 CONFIGURE_ARGS += --with-libstemmer
 
-CONFIGURE_ARHS += --with-pgsql
+# Lets do MySQL first
+#CONFIGURE_ARHS += --with-pgsql
 #  --with-pgsql-includes   path to PostgreSQL header files
 #  --with-pgsql-libs       path to PostgreSQL libraries
+
 CONFIGURE_ARGS += --with-libexpat
 CONFIGURE_ARGS += --with-iconv
 CONFIGURE_ARGS += --with-syslog
