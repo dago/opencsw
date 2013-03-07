@@ -7,7 +7,7 @@
 # * #ifndef INT*_{MIN,MAX} in include/iperf-int.h to avoid redefined warnings
 #
 NAME = iperf
-VERSION = 2.0.4
+VERSION = 2.0.5
 CATEGORIES = net
 GARTYPE = v2
 
@@ -43,7 +43,7 @@ PATCHFILES = gar-base.diff
 
 TEST_SCRIPTS = 
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARG# S = $(DIRPATHS)
 
 EXTRA_PAX_ARGS = '-s,ChangeLog,changelog,p'
 
@@ -74,4 +74,3 @@ post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 install-changelog-%:
 	ginstall -D $(FILEDIR)/changelog.CSW \
 		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
-	@$(MAKECOOKIE)
