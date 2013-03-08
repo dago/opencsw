@@ -19,9 +19,9 @@ DISTFILES		+=	README.CSW
 DISTFILES		+=	COPYING
 PATCHFILES		+=	0001-Adapt-build.patch
 
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_xlive
 
-RUNTIME_DEP_PKGS	+=	CSWtetex
+RUNTIME_DEP_PKGS	+=	CSWtexliveP_PKGS	+=	CSWtetex
 
 PACKAGES					=	CSWtex-svninfo
 SPKG_DESC_CSWtex-svninfo	=	$(DESCRIPTION)
@@ -29,7 +29,7 @@ CATALOGNAME_CSWtex-svninfo	=	tex_svninfo
 OBSOLETED_BY_CSWtex-svninfo	=	CSWtexsvninfo
 CATALOGNAME_CSWtexsvninfo	=	tex_svninfo_stub
 ARCHALL_CSWtex-svninfo		=	1
-CHECKPKG_OVERRIDES_CSWtex-svninfo += surplus-dependency|CSWtetex
+CHECKPKG_OVERRIDES_CSWtex-svninfo += surpluxliveependency|CSWtetex
 
 CONFIGURE_SCRIPTS	=
 TEST_SCRIPTS		=
@@ -46,5 +46,4 @@ install-custom:
 	$(GNUinstall) --directory $(DESTDIR)/$(CONTRIB)
 	$(GNUinstall) $(WORKSRC)/svninfo.cfg $(WORKSRC)/svninfo.sty $(DESTDIR)/$(CONTRIB)
 	$(GNUinstall) --directory $(DESTDIR)/$(DOCDIR)
-	$(GNUinstall) $(WORKSRC)/svninfo.dvi $(WORKSRC)/svninfo.ps $(WORKSRC)/svninfo.pdf $(DESTDIR)/$(DOCDIR)
-	$(MAKECOOKIE)
+	$(GNUinstall) $(WORKSRC)/svninfo.dvi $(WORKSRC)/svninfo.ps $(WORKSRC)/svninfo.pdf $(DESTDIR)/$(DOCDI
