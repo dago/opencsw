@@ -57,7 +57,7 @@ CONFIGURE_ARGS	+=	--with-texpath=$(texmflocaldir)/tex/latex/html
 BUILD_DEP_PKGS		+=	CSWgs
 BUILD_DEP_PKGS		+=	CSWnetpbm
 BUILD_DEP_PKGS		+=	CSWperl
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_xlive_PKGS		+=	CSWtetex
 
 BUILD_SCRIPTS	=	nominal
 # as strange as it seems the check and test are build actions...
@@ -74,11 +74,11 @@ CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWgs
 RUNTIME_DEP_PKGS	+=	CSWperl
 RUNTIME_DEP_PKGS	+=	CSWnetpbm
 CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWnetpbm
-RUNTIME_DEP_PKGS	+=	CSWtetex
-CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWtetex
+RUNTIMExlive
+CHECKPKG_OVERRIDES_CSWlatex2html += surplus-dependency|CSWtexlive
 
-# only in comments:
-CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/lib/l2hconf.pm
+# only in comments:lhtml/foilhtml.dtx
+CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/llib/l2hconf.pmlhtml/foilhtml.dtx
 CHECKPKG_OVERRIDES_CSWlatex2html += file-with-bad-content|/usr/local|root/opt/csw/share/lib/latex2html/makemap
 # TODO: explore packaging of itrans; ignore for the moment as we can
 # set the environment manually
@@ -157,5 +157,4 @@ post-install-modulated:
 	ginstall --directory $(DESTDIR)/$(docdir)
 	mv $(DESTDIR)/$(sharedstatedir)/lib/$(NAME)/docs $(DESTDIR)/$(docdir)/$(NAME)
 	mv $(DESTDIR)/$(sharedstatedir)/lib/$(NAME)/example $(DESTDIR)/$(docdir)/$(NAME)
-	cd $(DESTDIR)/$(docdir)/$(NAME) && rm -rf $(noPack)
-	$(MAKECOOKIE)
+	cd $(DESTDIR)/$(docdir)/$(NAME) && rm -rf $(noPac
