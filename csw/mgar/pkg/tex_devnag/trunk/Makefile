@@ -31,9 +31,9 @@ CATALOGNAME_CSWtex-devnag-common		=	tex_devnag_common
 OBSOLETED_BY_CSWtex-devnag-common		=	CSWtexvdevnagcommon
 CATALOGNAME_CSWtexvdevnagcommon			=	tex_vdevnag_common_stub
 ARCHALL_CSWtex-devnag-common			=	1
-RUNTIME_DEP_PKGS_CSWtex-devnag-common	+=	CSWtetex
+RUNTIME_DEP_PKGS_CSWtex-devnxlive
 
-CHECKPKG_OVERRIDES_CSWtex-devnag_common	+=	surplus-dependency|CSWtetex
+CHECKPKG_OVERRIDES_CSWtex-devnag_common	+=	surplus-dependency|CSWtexliveependency|CSWtetex
 
 PACKAGES							+=	CSWtex-devnag
 SPKG_DESC_CSWtex-devnag				=	$(DESCRIPTION)
@@ -69,5 +69,4 @@ install-custom:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(bindir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=rx $(binsrc)/devnag $(DESTDIR)/$(bindir)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(texmflocaldir)
-	gtar --directory=$(WORKSRC) --create --file=- doc fonts tex | gtar --directory=$(DESTDIR)/$(texmflocaldir) --extract --file=-
-	$(MAKECOOKIE)
+	gtar --directory=$(WORKSRC) --create --file=- doc fonts tex | gtar --directory=$(DESTDIR)/$(texmflocaldir) --extract --file
