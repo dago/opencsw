@@ -20,18 +20,16 @@ DISTFILES		+=	README.CSW
 DISTFILES		+=	COPYING
 PATCHFILES		+=	0001-Adapt-build.patch
 
-BUILD_DEP_PKGS		+=	CSWtetex
-BUILD_DEP_PKGS		+=	CSWlatex2html
-
-RUNTIME_DEP_PKGS	+=	CSWtetex
+BUILD_xlive
+BUILD_DEP_PKGS		+=	CSWlatex2htmlP_PKGS	+=	CSWtetex
 
 PACKAGES					=	CSWtex-rcsinfo
 SPKG_DESC_CSWtex-rcsinfo	=	$(DESCRIPTION)
 CATALOGNAME_CSWtex-rcsinfo	=	tex_rcsinfo
 OBSOLETED_BY_CSWtex-rcsinfo	=	CSWtexrcsinfo
-CATALOGNAME_CSWtexrcsinfo	=	tex_rcsinfo_stub
-ARCHALL_CSWtex-rcsinfo		=	1
-CHECKPKG_OVERRIDES_CSWtex-rcsinfo += surplus-dependency|CSWtetex
+CATALOGNAME_CSWtexrcsinfo	=RUNTIME_DEP_PKGS	+=	CSWtexlive
+CHECKPKG_OVERRIDES_CSWtex-rcsinfo += surplus-dependency|CSWtexlive
+ARCHALL_CSWtex-rcsinfo		=	1ependency|CSWtetex
 
 CONFIGURE_SCRIPTS	=
 TEST_SCRIPTS		=
@@ -55,5 +53,4 @@ install-custom:
 	$(GNUinstall) $(WORKSRC)/rcsinfo.dvi $(WORKSRC)/rcsinfo.ps $(WORKSRC)/rcsinfo.pdf $(DESTDIR)/$(DOCDIR)
 	$(GNUinstall) $(WORKSRC)/rcsinfo2html.dvi $(WORKSRC)/rcsinfo2html.ps $(WORKSRC)/rcsinfo2html.pdf $(DESTDIR)/$(DOCDIR)
 	$(GNUinstall) --directory $(DESTDIR)/$(DOCDIR)/html
-	$(GNUinstall) $(WORKSRC)/html/*.html $(WORKSRC)/html/*.css $(DESTDIR)/$(DOCDIR)/html
-	$(MAKECOOKIE)
+	$(GNUinstall) $(WORKSRC)/html/*.html $(WORKSRC)/html/*.css $(DESTDIR)/$(DOCDIR)/ht
