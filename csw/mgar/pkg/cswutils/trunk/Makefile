@@ -1,8 +1,9 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.27
+VERSION = 1.$(GARHEAD)
 GARTYPE = v2
+GARHEAD = $(shell cd $(GARDIR); svn info | grep 'Last Changed Rev' | sed 's/[^0-9]*//')
 
 DESCRIPTION = Utilities for CSW maintainers
 define BLURB
