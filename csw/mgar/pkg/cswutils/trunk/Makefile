@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.26
+VERSION = 1.27
 GARTYPE = v2
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -88,6 +88,7 @@ install-custom:
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
 	@ginstall -d $(DESTDIR)$(datadir)/opencsw/gar
+	@(cd $(GARDIR); svn info > $(DESTDIR)$(datadir)/opencsw/gar/cswutils.svn_version.txt)
 	@ginstall -m 0644 $(GARDIR)/etc/commondirs* $(DESTDIR)/$(datadir)/opencsw/gar/
 	@rsync -av --exclude=.svn/ --exclude='*.pyc' $(GARDIR)/lib/python/ \
 		$(DESTDIR)/$(libdir)/python/csw/
