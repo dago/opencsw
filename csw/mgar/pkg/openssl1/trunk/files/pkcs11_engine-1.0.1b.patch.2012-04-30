@@ -88,21 +88,19 @@ diff -uNr openssl-0.9.8o.orig//Makefile.org openssl-0.9.8o//Makefile.org
 diff -uNr openssl-0.9.8o.orig//crypto/engine/Makefile openssl-0.9.8o//crypto/engine/Makefile
 --- openssl-0.9.8o.orig//crypto/engine/Makefile	2009-09-27 16:04:32.000000000 +0200
 +++ openssl-0.9.8o//crypto/engine/Makefile	2010-09-04 00:22:06.443813644 +0200
-@@ -22,13 +22,15 @@
+@@ -22,13 +22,13 @@
  	tb_rsa.c tb_dsa.c tb_ecdsa.c tb_dh.c tb_ecdh.c tb_rand.c tb_store.c \
  	tb_cipher.c tb_digest.c tb_pkmeth.c tb_asnmth.c \
  	eng_openssl.c eng_cnf.c eng_dyn.c eng_cryptodev.c \
 -	eng_rsax.c eng_rdrand.c
-+	eng_rsax.c eng_rdrand.c \
-+	hw_pk11.c hw_pk11_pub.c hw_pk11_uri.c
++	eng_rsax.c eng_rdrand.c hw_pk11.c hw_pk11_pub.c hw_pk11_uri.c
  LIBOBJ= eng_err.o eng_lib.o eng_list.o eng_init.o eng_ctrl.o \
  	eng_table.o eng_pkey.o eng_fat.o eng_all.o \
  	tb_rsa.o tb_dsa.o tb_ecdsa.o tb_dh.o tb_ecdh.o tb_rand.o tb_store.o \
  	tb_cipher.o tb_digest.o tb_pkmeth.o tb_asnmth.o \
  	eng_openssl.o eng_cnf.o eng_dyn.o eng_cryptodev.o \
 -	eng_rsax.o eng_rdrand.o
-+	eng_rsax.o eng_rdrand.o \
-+	hw_pk11.o hw_pk11_pub.o hw_pk11_uri.o
++	eng_rsax.o eng_rdrand.o hw_pk11.o hw_pk11_pub.o hw_pk11_uri.o
  
  SRC= $(LIBSRC)
  
