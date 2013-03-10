@@ -88,10 +88,15 @@ DISTFILES += CSWlibssl1-0-0.checkinstall CSWlibssl1-0-0.preinstall CSWlibssl1-0-
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += map.openssl.libcrypto map.openssl.libssl map.openssl.engines
 
-DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
+DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGIis taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
+# original file: components/openssl/openssl-1.0.1/patches/18-compiler_opts.patch
+# I think they are smarter than me to figure what are the best compiler options
+PATCHFILES = optimized_configure_targets.patch
 
 # This patch add optimised build targets for some solaris isa, ie:
-# solaris-pentium_pro-cc and solaris-sparcv9+vis-cc
+# solaris-sparcv8-cc-sunw, solaris-pentium_pro-cc-sunw and solaris-sparcv9+vis-cc-sunw
+# (wonder if they are really worth it)
+PATCHFILES +is-cc
 PATCHFILES = more_configure_targets.patch
 
 #PATCHFILES += fix-test-failure.patch
@@ -131,7 +136,7 @@ endif
 ifdef T4
 ifeq ($(shell /usr/bin/uname -p),sparc) 
 ifneq ($(shell /usr/bin/uname -r),5.9)
-ifneq ($(shell /usr/bin/uname -r),5.10)
+ifneq ($(shell /usr/bin/#uname -r),5.10)
 	PATCHFILES += openssl-1.0.1c-t4-engine.sparc-patch.2012-05-11
 endif
 en-25
@@ -156,15 +161,14 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
-i386_OS_COMPILER 	= solaris-x86-cc
-pentium_OS_COMPILER	= solaris-pentium-cc
-pentium_pro_OS_COMPILER	= solaris-pentium_pro-cc
-amd64_OS_COMPILER 	= solaris64-x86_64-cc
+i386_OS_COMPILER -sunw
+pentium_pro_OS_COMPILER	= solaris-x86-pentium_pro-cc-sunw
+amd64_OS_COMPILER 	= solaris64-x86_64-cc-sunw
 
-sparcv8_OS_COMPILER 		= solaris-sparcv8-cc
-sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
-sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
-sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
+sparcv8_OS_COMPILER 		= solaris-sparcv8-cc-sunw
+sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc-sunw
+sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc-sunw
+sparcv9_OS_COMPILER		= solaris64-sparcv9-cc-sunwaris64-sparcv9-cc
 
 CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
@@ -198,7 +202,10 @@ CONFIGURE_ENV += MAKE="/opt/csw/bin/gmake"
 
 # Some optimization
 EXT_CFLAGS   += -mt -xstrconst
-EXT_CXXFLAGS += -noex -mt
+EXT_CXXFLAGSThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
+# added "-z defs" to the linker options. That causes object compilation to fail because
+# they are not linked against libc. This is workaround until I find a better fix.
+EXTRA_LD_OPTIONS = "-lc"LAGS += -noex -mt
 
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
