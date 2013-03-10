@@ -1,14 +1,11 @@
 NAME = Net-DNS
-VERSION = 0.71
+VERSION = 0.72
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = NLNETLABS
 
 DESCRIPTION = Interface to the DNS resolver
 define BLURB
-  Net::DNS is a collection of Perl modules that act as a Domain Name System
-  (DNS) resolver. It allows the programmer to perform DNS queries that are
-  beyond the capabilities of gethostbyname and gethostbyaddr.
 endef
 
 PACKAGES = CSWpm-net-dns
