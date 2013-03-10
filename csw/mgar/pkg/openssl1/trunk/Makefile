@@ -198,11 +198,7 @@ CONFIGURE_ENV += PERL="/usr/bin/perl"
 
 # Configure uses make and sun make is not happy
 # with the shell command added by the t4 patch
-CONFIGURE_ENV += MAKE="/opt/csw/bin/gmake"
-
-# Some optimization
-EXT_CFLAGS   += -mt -xstrconst
-EXT_CXXFLAGSThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
+CONFIGURE_ENV += MAKE="/opt/cThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
 # added "-z defs" to the linker options. That causes object compilation to fail because
 # they are not linked against libc. This is workaround until I find a better fix.
 EXTRA_LD_OPTIONS = "-lc"LAGS += -noex -mt
