@@ -1,38 +1,20 @@
-From 71b64c5da0b3279ffbe23a76641c40d4ee8972ee Mon Sep 17 00:00:00 2001
-From: Yann Rouillard <yann@pleiades.fr.eu.org>
-Date: Thu, 7 Feb 2013 21:56:04 +0100
-Subject: [PATCH] Tune and add configure targets
-
----
- Configure | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/Configure b/Configure
-index 5c92282..2e0344f 100755
---- a/Configure
-+++ b/Configure
-@@ -224,8 +224,9 @@ my %table=(
- "solaris64-x86_64-gcc","gcc:-m64 -O3 -Wall -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:solaris-shared:-fPIC:-m64 -shared -static-libgcc:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
-  
- #### Solaris x86 with Sun C setups
--"solaris-x86-cc","cc:-fast -O -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR:${no_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
--"solaris64-x86_64-cc","cc:-fast -xarch=amd64 -xstrconst -Xa -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:solaris-shared:-KPIC:-xarch=amd64 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
-+"solaris-x86-cc","cc:-m32 -xO3 -xspace -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR:${x86_elf_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"solaris-pentium_pro-cc","cc:-m32 -xarch=pentium_pro -xO3 -xspace -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR:${x86_elf_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"solaris64-x86_64-cc","cc:-m64 -xarch=sse2 -xO3 -xstrconst -Xa -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:solaris-shared:-KPIC:-xarch=amd64 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
- 
- #### SPARC Solaris with GNU C setups
- "solaris-sparcv7-gcc","gcc:-O3 -fomit-frame-pointer -Wall -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${no_asm}:dlfcn:solaris-shared:-fPIC:-shared:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-@@ -243,7 +244,8 @@ my %table=(
- # SC5.0 note: Compiler common patch 107357-01 or later is required!
- "solaris-sparcv7-cc","cc:-xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${no_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
- "solaris-sparcv8-cc","cc:-xarch=v8 -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
--"solaris-sparcv9-cc","cc:-xtarget=ultra -xarch=v8plus -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"solaris-sparcv9-cc","cc:-m32 -xtarget=ultra -xarch=sparc -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"solaris-sparcv9+vis-cc","cc:-m32 -xtarget=ultra -xarch=sparcvis -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
- "solaris64-sparcv9-cc","cc:-xtarget=ultra -xarch=v9 -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-xarch=v9 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
- ####
- "debug-solaris-sparcv8-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xarch=v8 -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
--- 
-1.8.1
-
+diff -ur openssl-1.0.1e.orig/Configure openssl-1.0.1e/Configure
+--- openssl-1.0.1e.orig/Configure	2013-03-10 07:52:44.423621000 +0100
++++ openssl-1.0.1e/Configure	2013-03-10 08:15:34.966266918 +0100
+@@ -257,10 +257,16 @@
+ #### Solaris configs, used for OpenSSL as delivered by S11.
+ "solaris-x86-cc-sunw","cc:-m32 -xO3 -xspace -Xa::-D_REENTRANT::-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK DES_PTR DES_UNROLL BF_PTR:${x86_elf_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign -M/usr/lib/ld/map.noexdata:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ #
++"solaris-x86-pentium_pro-cc-sunw","cc:-m32 -xarch=pentium_pro -xO3 -xspace -Xa::-D_REENTRANT::-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK DES_PTR DES_UNROLL BF_PTR:${x86_elf_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign -M/usr/lib/ld/map.noexdata:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++#
+ "solaris64-x86_64-cc-sunw","cc:-xO3 -m64 -xstrconst -Xa -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -lc:SIXTY_FOUR_BIT_LONG RC4_CHUNK BF_PTR DES_PTR DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign -M/usr/lib/ld/map.noexdata:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ #
++"solaris-sparcv8-cc-sunw","cc:-xtarget=v8 -m32 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++#
+ "solaris-sparcv9-cc-sunw","cc:-xtarget=ultra -m32 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ #
++"solaris-sparcv9+vis-cc-sunw","cc:-xtarget=ultra -m32 -xarch=sparcvis -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++#
+ "solaris64-sparcv9-cc-sunw","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/bin/ar rs::/64",
+ # Option -xF=%all instructs the compiler to place functions and data
+ # variables into separate section fragments. This enables the link editor
