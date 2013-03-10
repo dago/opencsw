@@ -85,16 +85,20 @@ DISTFILES += CSWlibssl1-0-0.checkinstall CSWlibssl1-0-0.preinstall CSWlibssl1-0-
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += map.openssl.libcrypto map.openssl.libssl map.openssl.engines
 
-DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGIis taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
+DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS configure targets patchs needs to be different for Solaris 9 as some map files
+# are not available 
+ifeq ($(shell /usr/bin/uname -r),5.9)
+	PATCH_SUFFIX = .SunOS5.9
+endifEWS README.ENGIis taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
 # original file: components/openssl/openssl-1.0.1/patches/18-compiler_opts.patch
 # I think they are smarter than me to figure what are the best compiler options
-PATCHFILES = optimized_configure_targets.patch
+PATCHFILES = optimized_configure_targets.patch$(PATCH_SUFFIX)
 
 # This patch add optimised build targets for some solaris isa, ie:
 # solaris-sparcv8-cc-sunw, solaris-pentium_pro-cc-sunw and solaris-sparcv9+vis-cc-sunw
 # (wonder if they are really worth it)
 PATCHFILES +is-cc
-PATCHFILES = more_configure_targets.patch
+PATCHFILES = more_config$(PATCH_SUFFIX)ure_targets.patch
 
 #PATCHFILES += fix-test-failure.patch
 
