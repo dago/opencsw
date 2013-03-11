@@ -105,13 +105,13 @@ install-puppet:
 		--full
 	ginstall -m 755 $(FILEDIR)/pkgutil.rb $(DESTDIR)$(rubysitelibdir)/puppet/provider/package
 	cd $(DESTDIR)$(mandir)/man8 && gunzip *
-	(cd $(WORKSRC)/examples/etc/puppet && \
-	for f in *; do \
-	    if [ -f $$f ] ; then \
-	        cp $$f $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
-	        chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
-	    fi; \
-	done)
+	# (cd $(WORKSRC)/examples/etc/puppet && \
+	# for f in *; do \
+	#     if [ -f $$f ] ; then \
+	#         cp $$f $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
+	#         chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
+	#     fi; \
+	# done)
 	mv $(DESTDIR)$(sysconfdir)/puppet/auth.conf $(DESTDIR)$(sysconfdir)/puppet/auth.conf.example
 	ginstall -m 644 $(FILEDIR)/puppet.conf.example-CSW $(DESTDIR)$(sysconfdir)/puppet/puppet.conf.example
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
