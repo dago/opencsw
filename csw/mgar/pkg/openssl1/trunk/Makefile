@@ -184,8 +184,8 @@ CONFIGURE_ENV += PERL="/usr/bin/perl"
 # with the shell command added by the t4 patch
 CONFIGURE_ENV += MAKE="/opt/cThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
 # added "-z defs" to the linker options. That causes object compilation to fail because
-# they are not linked against libc. This is workaround until I find a better fix.
-EXTRA_LD_OPTIONS = "-lc"LAGS += -noex -mt
+# they are not linked against libc and libdl (for Sol9). This is workaround until I find a better fix.
+EXTRA_LD_OPTIONS = "-lc -ldl"LAGS += -noex -mt
 
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
