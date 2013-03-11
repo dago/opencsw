@@ -71,10 +71,7 @@ CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/CHANGES
 CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
 CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
-CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
-
-# We have a lot of collision until libssl1.0.0 will replace libssl0.9.8
-#include checkpkg.overrides
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/opensslkpkg.overrides
 
 ###### Upstream and opencsw files information #######
 
@@ -135,10 +132,8 @@ endif
 #     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
 # patch taken from https://hg.openindiana.org/upstream/oracl# To update the patch, do:
 #   cd files && ./update-t4-patch.sh OPENSSL_VERSION
-#le/eq ($(shell /usr/bin/uname -p),sparc) 
-ifeq ($(shell /usr/bin/uname -r),5.11)
-	PATCHFILES += openssl-1.0.1e-t4-engine.sparc-patch05-11
-endif
+#le/eq ($(shell /usr/bin/uname -rp),5.11 sparc) 
+	PATCHFILES += openssl-1.0.1e-t4-engine.sparc-patchendif
 en-25
 endif
 endif
