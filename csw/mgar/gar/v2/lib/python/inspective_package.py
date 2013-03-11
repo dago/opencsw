@@ -61,7 +61,8 @@ def GetFileMetadata(file_magic, base_dir, file_path):
     else:
       raise package.PackageError(msg)
   if sharedlib_utils.IsBinary(file_info, check_consistency=False):
-    parser = hachoir_parser.createParser(full_path)
+    parser_tag = ('class', hachoir_parser.program.elf.ElfFile)
+    parser = hachoir_parser.createParser(full_path, tags=[parser_tag])
     if not parser:
       logging.warning("Can't parse file %s", file_path)
     else:

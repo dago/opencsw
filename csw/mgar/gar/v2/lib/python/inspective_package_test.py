@@ -140,8 +140,10 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     self.mox.StubOutWithMock(hachoir_parser, 'createParser',
         use_mock_anything=True)
     hachoir_parser_mock = self.mox.CreateMockAnything()
+    parser_tag = ('class', hachoir_parser.program.elf.ElfFile)
     hachoir_parser.createParser(
-        u'/fake/path/CSWfoo/root/foo-file').AndReturn(hachoir_parser_mock)
+        u'/fake/path/CSWfoo/root/foo-file',
+        tags = [parser_tag]).AndReturn(hachoir_parser_mock)
     self.mox.StubOutWithMock(os, 'access')
     os.access(u'/fake/path/CSWfoo/root/foo-file', os.R_OK).AndReturn(True)
     machine_mock = self.mox.CreateMockAnything()
