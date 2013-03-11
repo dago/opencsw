@@ -175,7 +175,8 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
     ldd_info = pkg_data['ldd_info'][binary_info["path"]]
     for ldd_response in ldd_info:
       if (ldd_response['state'] == 'soname-unused'
-          and ldd_response['soname'] not in BASE_SOLARIS_LIBRARIES):
+          and ldd_response['soname'] not in BASE_SOLARIS_LIBRARIES
+          and ldd_response['soname'] in binary_info['needed sonames']):
         sonames_unused.add(ldd_response['soname'])
         messenger.Message(
           "Binary %s links to library %s but doesn't seem to use any"
