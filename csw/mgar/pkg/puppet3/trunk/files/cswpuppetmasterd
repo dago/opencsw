@@ -20,7 +20,7 @@ sysconfdir=/etc/opt/csw
 bindir=/opt/csw/bin
 sbindir=/opt/csw/sbin
 
-pidfile=`$prefix/bin/puppet master --genconf | awk '/pidfile/ { print $3 }'`
+pidfile=`$prefix/bin/puppet master --configprint pidfile`
 
 getprop() {
     val=`/usr/bin/svcprop -p $1 $SMF_FMRI`
