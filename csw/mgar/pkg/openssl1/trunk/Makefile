@@ -133,7 +133,9 @@ endif
 # support for sparc t4 crypto engine 
 # see http://bubbva.blogspot.fr/2011/11/exciting-crypto-advances-with-t4.html
 #     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
-# patch taken from https://hg.openindiana.org/upstream/oracle/eq ($(shell /usr/bin/uname -p),sparc) 
+# patch taken from https://hg.openindiana.org/upstream/oracl# To update the patch, do:
+#   cd files && ./update-t4-patch.sh OPENSSL_VERSION
+#le/eq ($(shell /usr/bin/uname -p),sparc) 
 ifeq ($(shell /usr/bin/uname -r),5.11)
 	PATCHFILES += openssl-1.0.1e-t4-engine.sparc-patch05-11
 endif
@@ -228,25 +230,3 @@ merge-doc:
 
 post-merge: merge-doc i
 
-
-T4_ENGINE_FILES =  eng_t4_aes_asm.h eng_t4_bignum.h eng_t4_des_asm.h eng_t4_err.h eng_t4_sha2_asm.h 
-T4_ENGINE_FILES += eng_t4.c eng_t4_des.c eng_t4_err.c eng_t4_md5.c eng_t4_montmul.c eng_t4_sha1.c eng_t4_sha256.c eng_t4_sha512.c
-T4_ENGINE_FILES += t4_aes.S t4_des.S t4_md5.S t4_sha1.S t4_sha2.S
-MERCURIAL_URL = https://hg.openindiana.org/upstream/oracle/userland-gate/raw-file/tip/components/openssl/openssl-1.0.1/
-PATCH_DATE = $(shell date +"%Y-%m-%d %H:%M:%S.%N %z")
-TMP_PATCH_FILE = "/tmp/t4_engine_tmp.patch"
-update-t4-patch:
-	@echo "Updating t4 engine patch from $(MERCURIAL_URL)..."
-	@( wget --quiet --output-document=- $(MERCURIAL_URL)/patches/openssl-$(VERSION)-t4-engine.sparc-patch; \
-	   for FILE in $(T4_ENGINE_FILES); do \
-		DIR="engine"; \
-		if echo $$FILE | grep "\.S$$" >/dev/null; then DIR="`basename $$FILE .S | cut -d_ -f2 | cut -b1-3`/asm"; fi; \
-		wget --quiet --output-document=$(TMP_PATCH_FILE) $(MERCURIAL_URL)/engines/t4/$$FILE | sed -e 's/^/+/'; \
-		echo "Index: crypto/$$DIR/$$FILE"; \
-		echo "==================================================================="; \
-		echo "diff -uNr openssl-$(VERSION)/$$DIR/$$FILE openssl-$(VERSION)/$$DIR/$$FILE"; \
-		echo "--- openssl-$(VERSION)/crypto/$$DIR/$$FILE 1970-01-01 01:00:00.000000000 +0100"; \
-		echo "+++ openssl-$(VERSION)/crypto/$$DIR/$$FILE $(PATCH_DATE)"; \
-		echo "@@ -0,0 +1,`wc -l $(TMP_PATCH_FILE) | awk '{ print $$1 }'` @@"; \
-		sed -e 's/^/+/' "$(TMP_PATCH_FILE)"; \
-	   done; ) > "$(FILEDIR)/openssl-$(VERSION)-t4-engine.sparc-patch"
