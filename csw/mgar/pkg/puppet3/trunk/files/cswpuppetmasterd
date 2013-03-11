@@ -17,6 +17,7 @@ fi
 prefix=/opt/csw
 exec_prefix=/opt/csw
 sysconfdir=/etc/opt/csw
+bindir=/opt/csw/bin
 sbindir=/opt/csw/sbin
 
 pidfile=`$prefix/bin/puppet master --genconf | awk '/pidfile/ { print $3 }'`
@@ -32,7 +33,7 @@ start)
     # Start daemons.
 
     printf "Starting Puppet server services:"
-    ${sbindir}/puppetmasterd
+    ${sbindir}/puppet master
 
     printf " puppetmaster"
     echo ""

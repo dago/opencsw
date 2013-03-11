@@ -28,6 +28,7 @@ fi
 prefix="/opt/csw"
 exec_prefix="/opt/csw"
 sysconfdir="/etc/opt/csw"
+bindir="/opt/csw/bin"
 sbindir="/opt/csw/sbin"
 localstatedir="/var/opt/csw"
 
@@ -43,8 +44,7 @@ start_puppetd() {
     #ssldir=`getprop puppet/ssldir`
     
     # Start daemons.
-    #${sbindir}/puppetd --confdir=$confdir --vardir=$vardir --ssldir=$ssldir
-    ${sbindir}/puppetd
+    ${bindir}/puppet agent
 }
 
 reload_puppetd() {
