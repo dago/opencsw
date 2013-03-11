@@ -27,9 +27,9 @@ diff -ru openssl-1.0.0d/Configure openssl-1.0.0d/Configure
 +"solaris-sparcv9-cc-sunw","cc:-xtarget=ultra -m32 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
 +"solaris-sparcv9-cc-sunw-fips","cc:-xtarget=ultra -m32 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_fips_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
  #
--"solaris64-sparcv9-cc-sunw","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/bin/ar rs::/64",
-+"solaris64-sparcv9-cc-sunw","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/bin/ar rs::/64",
-+"solaris64-sparcv9-cc-sunw-fips","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_fips_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/bin/ar rs::/64",
+-"solaris64-sparcv9-cc-sunw","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/ccs/bin/ar rs::/64",
++"solaris64-sparcv9-cc-sunw","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/ccs/bin/ar rs::/64",
++"solaris64-sparcv9-cc-sunw-fips","cc:-xtarget=ultra -m64 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -xspace -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_fips_asm}:dlfcn:solaris-shared:-KPIC:-m64 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/ccs/bin/ar rs::/64",
  # Option -xF=%all instructs the compiler to place functions and data
  # variables into separate section fragments. This enables the link editor
  # to discard unused sections and files when linking wanboot-openssl.o
@@ -213,7 +213,7 @@ Index: crypto/engine/eng_t4_aes_asm.h
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_aes_asm.h openssl-1.0.1e/engine/eng_t4_aes_asm.h
 --- openssl-1.0.1e/crypto/engine/eng_t4_aes_asm.h 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_aes_asm.h 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_aes_asm.h 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,147 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -366,7 +366,7 @@ Index: crypto/engine/eng_t4_bignum.h
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_bignum.h openssl-1.0.1e/engine/eng_t4_bignum.h
 --- openssl-1.0.1e/crypto/engine/eng_t4_bignum.h 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_bignum.h 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_bignum.h 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,287 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -659,7 +659,7 @@ Index: crypto/engine/eng_t4_des_asm.h
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_des_asm.h openssl-1.0.1e/engine/eng_t4_des_asm.h
 --- openssl-1.0.1e/crypto/engine/eng_t4_des_asm.h 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_des_asm.h 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_des_asm.h 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,98 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -763,7 +763,7 @@ Index: crypto/engine/eng_t4_err.h
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_err.h openssl-1.0.1e/engine/eng_t4_err.h
 --- openssl-1.0.1e/crypto/engine/eng_t4_err.h 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_err.h 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_err.h 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,97 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -866,7 +866,7 @@ Index: crypto/engine/eng_t4_sha2_asm.h
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_sha2_asm.h openssl-1.0.1e/engine/eng_t4_sha2_asm.h
 --- openssl-1.0.1e/crypto/engine/eng_t4_sha2_asm.h 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_sha2_asm.h 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_sha2_asm.h 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,135 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -1007,7 +1007,7 @@ Index: crypto/engine/eng_t4.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4.c openssl-1.0.1e/engine/eng_t4.c
 --- openssl-1.0.1e/crypto/engine/eng_t4.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,1010 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -2023,7 +2023,7 @@ Index: crypto/engine/eng_t4_des.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_des.c openssl-1.0.1e/engine/eng_t4_des.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_des.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_des.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_des.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,486 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -2515,7 +2515,7 @@ Index: crypto/engine/eng_t4_err.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_err.c openssl-1.0.1e/engine/eng_t4_err.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_err.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_err.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_err.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,157 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -2678,7 +2678,7 @@ Index: crypto/engine/eng_t4_md5.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_md5.c openssl-1.0.1e/engine/eng_t4_md5.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_md5.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_md5.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_md5.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,200 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -2884,7 +2884,7 @@ Index: crypto/engine/eng_t4_montmul.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_montmul.c openssl-1.0.1e/engine/eng_t4_montmul.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_montmul.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_montmul.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_montmul.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,459 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -3349,7 +3349,7 @@ Index: crypto/engine/eng_t4_sha1.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_sha1.c openssl-1.0.1e/engine/eng_t4_sha1.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_sha1.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_sha1.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_sha1.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,197 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -3552,7 +3552,7 @@ Index: crypto/engine/eng_t4_sha256.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_sha256.c openssl-1.0.1e/engine/eng_t4_sha256.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_sha256.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_sha256.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_sha256.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,246 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -3804,7 +3804,7 @@ Index: crypto/engine/eng_t4_sha512.c
 ===================================================================
 diff -uNr openssl-1.0.1e/engine/eng_t4_sha512.c openssl-1.0.1e/engine/eng_t4_sha512.c
 --- openssl-1.0.1e/crypto/engine/eng_t4_sha512.c 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/engine/eng_t4_sha512.c 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/engine/eng_t4_sha512.c 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,325 @@
 +/*
 + * This product includes cryptographic software developed by the OpenSSL
@@ -4135,7 +4135,7 @@ Index: crypto/aes/asm/t4_aes.S
 ===================================================================
 diff -uNr openssl-1.0.1e/aes/asm/t4_aes.S openssl-1.0.1e/aes/asm/t4_aes.S
 --- openssl-1.0.1e/crypto/aes/asm/t4_aes.S 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/aes/asm/t4_aes.S 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/aes/asm/t4_aes.S 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,3052 @@
 +/*
 + * ====================================================================
@@ -7193,7 +7193,7 @@ Index: crypto/des/asm/t4_des.S
 ===================================================================
 diff -uNr openssl-1.0.1e/des/asm/t4_des.S openssl-1.0.1e/des/asm/t4_des.S
 --- openssl-1.0.1e/crypto/des/asm/t4_des.S 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/des/asm/t4_des.S 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/des/asm/t4_des.S 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,786 @@
 +/*
 + * ====================================================================
@@ -7985,7 +7985,7 @@ Index: crypto/md5/asm/t4_md5.S
 ===================================================================
 diff -uNr openssl-1.0.1e/md5/asm/t4_md5.S openssl-1.0.1e/md5/asm/t4_md5.S
 --- openssl-1.0.1e/crypto/md5/asm/t4_md5.S 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/md5/asm/t4_md5.S 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/md5/asm/t4_md5.S 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,151 @@
 +/*
 + * ====================================================================
@@ -8142,7 +8142,7 @@ Index: crypto/sha/asm/t4_sha1.S
 ===================================================================
 diff -uNr openssl-1.0.1e/sha/asm/t4_sha1.S openssl-1.0.1e/sha/asm/t4_sha1.S
 --- openssl-1.0.1e/crypto/sha/asm/t4_sha1.S 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/sha/asm/t4_sha1.S 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/sha/asm/t4_sha1.S 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,153 @@
 +/*
 + * ====================================================================
@@ -8301,7 +8301,7 @@ Index: crypto/sha/asm/t4_sha2.S
 ===================================================================
 diff -uNr openssl-1.0.1e/sha/asm/t4_sha2.S openssl-1.0.1e/sha/asm/t4_sha2.S
 --- openssl-1.0.1e/crypto/sha/asm/t4_sha2.S 1970-01-01 01:00:00.000000000 +0100
-+++ openssl-1.0.1e/crypto/sha/asm/t4_sha2.S 2013-03-10 22:45:19.089618665 +0100
++++ openssl-1.0.1e/crypto/sha/asm/t4_sha2.S 2013-03-11 18:15:54.571043544 +0100
 @@ -0,0 +1,314 @@
 +/*
 + * ====================================================================
