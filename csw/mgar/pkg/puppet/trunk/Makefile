@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.7.19
+VERSION = 2.7.20
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -118,5 +118,4 @@ install-puppet:
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
 	mkdir -p $(DESTDIR)$(localstatedir)/lib
-	gunzip $(DESTDIR)$(mandir)/man5/puppet.conf.5.gz
-	@$(MAKECOOKIE)
+	gunzip $(DESTDIR)$(mandir)/man5/puppet.conf.5.g
