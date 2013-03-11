@@ -26,7 +26,7 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWlibssl1-0-0 CSWlibssl-dev CPACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386 solaris11-soarc solaris11-i386 CSWopenssl-utils
+PACKAGES = CSWlibssl1-0-0 CSWlibssl-dev CPACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386 solaris11-sparc solaris11-i386 CSWopenssl-utils
 
 SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
 PKGFILES_CSWlibssl1-0-0 = $(PKGFILES_RT)
