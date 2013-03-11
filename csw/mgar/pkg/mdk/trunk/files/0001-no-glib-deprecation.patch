@@ -1,0 +1,26 @@
+From 8e72611e21d7f93a2636a436f7b3ba4565f22076 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Mar 2013 14:53:38 +0100
+Subject: [PATCH] no glib deprecation slightly adapted from Debian
+ 01-gtk-deprecated.patch
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 5b8d40c..99ac6cb 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -105,7 +105,7 @@ dnl Check for glib
+ PKG_CHECK_MODULES(GLIB,glib-2.0 >= 2.0)
+ 
+ LIBS="$LIBS $GLIB_LIBS"
+-AM_CFLAGS="$AM_CFLAGS $GLIB_CFLAGS -DG_DISABLE_DEPRECATED"
++AM_CFLAGS="$AM_CFLAGS $GLIB_CFLAGS"
+ 
+ dnl Check if the gtk gui is required
+ AC_ARG_ENABLE(gui,
+-- 
+1.8.1.4
+
