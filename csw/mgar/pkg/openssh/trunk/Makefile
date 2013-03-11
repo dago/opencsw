@@ -101,9 +101,7 @@ UPSTREAM_MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTFILES  = $(NAME)-$(VERSION).tar.penssh.checkinstall
-DISTFILES += CSWopenll
-DISTFILES += CSWosshlpk.checkinstall
+DISTFILES  = $(NAME)-$(VERSION).nstall
 DISTFILES += changelog.CSW
 DISTFILES += cswusergroup
 
