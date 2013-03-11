@@ -1,0 +1,26 @@
+From cb6ec31ffe5629195c33b32f2f5185f6258a7d44 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 11 Mar 2013 16:18:07 +0100
+Subject: [PATCH] remove gld flag
+
+In my opinion this is not needed even with gld as we link an
+executable and not a library.
+---
+ mixgtk/Makefile.am | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/mixgtk/Makefile.am b/mixgtk/Makefile.am
+index 37e16ad..5a32192 100644
+--- a/mixgtk/Makefile.am
++++ b/mixgtk/Makefile.am
+@@ -39,7 +39,6 @@ INCLUDES = -I$(includedir) -I$(top_srcdir) \
+ LDADD = $(top_builddir)/mixlib/libmix.a $(top_builddir)/lib/libreplace.a\
+         $(top_builddir)/mixguile/libmixguile.a $(INTLLIBS)
+ 
+-AM_LDFLAGS = -Wl,--export-dynamic
+ bin_PROGRAMS = gmixvm
+ gmixvm_SOURCES = gmixvm.c mixgtk.h mixgtk.c \
+                  mixgtk_config.h mixgtk_config.c \
+-- 
+1.8.1.4
+
