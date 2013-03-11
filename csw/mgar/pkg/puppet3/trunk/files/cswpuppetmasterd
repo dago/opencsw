@@ -27,6 +27,16 @@ getprop() {
     [ -n "$val" ] && echo $val
 }
 
+get_current_pid() {
+    if [ -x /usr/bin/zonename ]; then
+        zone=`/usr/bin/zonename`
+        zoneopts="-z $zone"
+    else
+        zoneopts=""
+    fi
+    pgrep -f $zoneopts 'puppet master'
+}
+
 case "$1" in
 start)
     cd /
@@ -63,7 +73,7 @@ reload)
 status)
     if [ -f $pidfile ]; then
         pid=`cat $pidfile`
-        curpid=`pgrep puppetmasterd`
+        curpid=`get_current_pid`
         if [ "$pid" -eq "$curpid" ]; then
             exit 0
         else

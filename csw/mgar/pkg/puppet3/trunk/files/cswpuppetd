@@ -67,7 +67,7 @@ get_current_pid() {
     else
         zoneopts=""
     fi
-    pgrep $zoneopts puppetd
+    pgrep -f $zoneopts 'puppet agent'
 }
 
 # Returns a line with certain string from a config file.
