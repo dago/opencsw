@@ -134,7 +134,7 @@ PATCHFILES += 0005-rename-pidfile.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
-DOCFILES += README.platform README.privsep README.tun TODO WARNING.RNG    
+DOCFILES += README.platform README.privTODO WARNING.RNG    
 
 # we're using conf handling class from the cswclassutils package
 RUNTIME_DEP_PKGS += CSWcswclassutils
