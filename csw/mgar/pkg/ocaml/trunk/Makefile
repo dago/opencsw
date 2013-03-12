@@ -57,13 +57,15 @@ CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/lib
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libgraphics.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libmldbm.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libnums.a
-CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libstr.a
+# CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libstr.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libthreads.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libthreadsnat.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libunix.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/vmthreads/libvmthreads.a
 CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/labltk/liblabltk.a
-CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/labltk/libtkanim.a
+# CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/labltk/libtkanim.a
+CHECKPKG_OVERRIDES_CSWocaml += discouraged-path-in-pkgmap|/opt/csw/lib/ocaml/libcamlstr.a
+
 
 LICENSE = LICENSE
 
