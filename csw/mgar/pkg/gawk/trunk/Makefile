@@ -16,11 +16,14 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(DISTNAME).tar.xz
+DISTFILES = $PACKAGES += CSWgawk
+SPKG_DESC_CSWgawk = GNU awk
+# PKGFILES is catchall$(DISTNAME).tar.xz
 
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibsigsegv2
-RUNTIME_DEP_PKGS_CSWgawk +BUILD64 = 1
+RUNTIME_DEP_PKGS_CSWgawk +# This is just an example (YMMV in the docs)
+CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/gawk.1 +BUILD64 = 1
 ISAEXEC = 1 += CSWlibreadline6
 
 # Otherwise libsigsegv is not detected properly on Solaris 9 i386 as reported in
