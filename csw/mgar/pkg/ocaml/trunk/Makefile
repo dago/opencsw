@@ -1,5 +1,5 @@
 NAME = ocaml
-VERSION = 3.11.2
+VERSION = 3.12.1
 GARTYPE = v2
 
 DESCRIPTION = Objective Caml programming language
@@ -17,7 +17,7 @@ REINPLACE_USRLOCAL += configure
 PATCHFILES += 0-patch
 PATCHFILES += 10-patch
 PATCHFILES += 12-patch
-PATCHFILES += 13-patch
+# PATCHFILES += 13-patch
 PATCHFILES += 14-patch
 PATCHFILES += 15-patch
 PATCHFILES += 16-patch

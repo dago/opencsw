@@ -1,7 +1,7 @@
 --- a/otherlibs/systhreads/Makefile
 +++ b/otherlibs/systhreads/Makefile
-@@ -76,19 +76,19 @@ clean: partialclean
- 	rm -f $(GENFILES)
+@@ -70,20 +70,20 @@ clean: partialclean
+ 	rm -f *.o *.a *.so
  
  install:
 -	if test -f dllthreads.so; then cp dllthreads.so $(STUBLIBDIR)/dllthreads.so; fi
@@ -11,6 +11,7 @@
 -	cp $(THREAD_OBJS:.cmo=.cmi) threads.cma $(LIBDIR)/threads
 -	rm -f $(LIBDIR)/threads/stdlib.cma
 -	cp thread.mli mutex.mli condition.mli event.mli threadUnix.mli $(LIBDIR)
+-	cp threads.h $(LIBDIR)/caml/threads.h
 +	if test -f dllthreads.so; then cp dllthreads.so $(DESTDIR)$(STUBLIBDIR)/dllthreads.so; fi
 +	cp libthreads.a $(DESTDIR)$(LIBDIR)/libthreads.a
 +	cd $(DESTDIR)$(LIBDIR); $(RANLIB) libthreads.a
@@ -18,6 +19,7 @@
 +	cp $(THREAD_OBJS:.cmo=.cmi) threads.cma $(DESTDIR)$(LIBDIR)/threads
 +	rm -f $(DESTDIR)$(LIBDIR)/threads/stdlib.cma
 +	cp thread.mli mutex.mli condition.mli event.mli threadUnix.mli $(DESTDIR)$(LIBDIR)
++	cp threads.h $(DESTDIR)$(LIBDIR)/caml/threads.h
  
  installopt:
 -	cp libthreadsnat.a $(LIBDIR)/libthreadsnat.a

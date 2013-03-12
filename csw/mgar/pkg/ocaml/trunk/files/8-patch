@@ -1,6 +1,6 @@
 --- a/byterun/Makefile.common
 +++ b/byterun/Makefile.common
-@@ -45,14 +45,14 @@ ld.conf: ../config/Makefile
+@@ -45,14 +45,16 @@ ld.conf: ../config/Makefile
  	echo "$(LIBDIR)" >> ld.conf
  
  install::
@@ -8,6 +8,8 @@
 -	cp libcamlrun.$(A) $(LIBDIR)/libcamlrun.$(A)
 -	cd $(LIBDIR); $(RANLIB) libcamlrun.$(A)
 -	if test -d $(LIBDIR)/caml; then : ; else mkdir $(LIBDIR)/caml; fi
++       ginstall -m 755 -d $(DESTDIR)$(BINDIR)
++       ginstall -m 755 -d $(DESTDIR)$(LIBDIR)
 +	cp ocamlrun$(EXE) $(DESTDIR)$(BINDIR)/ocamlrun$(EXE)
 +	cp libcamlrun.$(A) $(DESTDIR)$(LIBDIR)/libcamlrun.$(A)
 +	cd $(DESTDIR)$(LIBDIR); $(RANLIB) libcamlrun.$(A)

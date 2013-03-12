@@ -1,6 +1,6 @@
 --- a/Makefile
 +++ b/Makefile
-@@ -268,53 +268,54 @@ opt.opt: checkstack runtime core ocaml opt-core ocamlc.opt otherlibraries \
+@@ -273,26 +273,26 @@ base.opt: checkstack runtime core ocaml opt-core ocamlc.opt otherlibraries \
  
  # Installation
  install:
@@ -10,18 +10,17 @@
 -	if test -d $(MANDIR)/man$(MANEXT); then : ; \
 -	  else $(MKDIR) $(MANDIR)/man$(MANEXT); fi
 -	cd $(LIBDIR); rm -f dllbigarray.so dlllabltk.so dllnums.so \
-+	if test -d $(DESTDIR)$(BINDIR); then : ; else $(MKDIR) $(DESTDIR)$(BINDIR); fi
-+	if test -d $(DESTDIR)$(LIBDIR); then : ; else $(MKDIR) $(DESTDIR)$(LIBDIR); fi
++	if test -d $(DESTDIR)$(BINDIR); then : ; else $(MKDIR) $(DESDIR)$(BINDIR); fi
++	if test -d $(DESTDIR)$(LIBDIR); then : ; else $(MKDIR) $(DESDIR)$(LIBDIR); fi
 +	if test -d $(DESTDIR)$(STUBLIBDIR); then : ; else $(MKDIR) $(DESTDIR)$(STUBLIBDIR); fi
 +	if test -d $(DESTDIR)$(MANDIR)/man$(MANEXT); then : ; \
 +	  else $(MKDIR) $(DESTDIR)$(MANDIR)/man$(MANEXT); fi
 +	cd $(DESTDIR)$(LIBDIR); rm -f dllbigarray.so dlllabltk.so dllnums.so \
-           dllthreads.so dllunix.so dllgraphics.so dllmldbm.so dllstr.so \
-           dlltkanim.so
--	cd byterun; $(MAKE) install
+ 	  dllthreads.so dllunix.so dllgraphics.so dllmldbm.so dllstr.so \
+ 	  dlltkanim.so
+ 	cd byterun; $(MAKE) install
 -	cp ocamlc $(BINDIR)/ocamlc$(EXE)
 -	cp ocaml $(BINDIR)/ocaml$(EXE)
-+	cd byterun; $(MAKE) install DESTDIR=$(DESTDIR)
 +	cp ocamlc $(DESTDIR)$(BINDIR)/ocamlc$(EXE)
 +	cp ocaml $(DESTDIR)$(BINDIR)/ocaml$(EXE)
  	cd stdlib; $(MAKE) install
@@ -41,21 +40,16 @@
 -	   $(LIBDIR)
 +	   $(DESTDIR)$(LIBDIR)
  	cd tools; $(MAKE) install
- 	-$(MAKE) -C man install
+ 	-cd man; $(MAKE) install
  	for i in $(OTHERLIBRARIES); do \
-           (cd otherlibs/$$i; $(MAKE) install) || exit $$?; \
-         done
- 	cd ocamldoc; $(MAKE) install
--	if test -f ocamlopt; then $(MAKE) installopt; else :; fi
--	if test -f debugger/ocamldebug; then (cd debugger; $(MAKE) install); \
-+	if test -f ocamlopt; then $(MAKE) installopt ; else :; fi
-+	if test -f debugger/ocamldebug; then (cd debugger; $(MAKE) install ); \
+@@ -302,24 +302,24 @@ install:
+ 	if test -f ocamlopt; then $(MAKE) installopt; else :; fi
+ 	if test -f debugger/ocamldebug; then (cd debugger; $(MAKE) install); \
  	   else :; fi
 -	cp config/Makefile $(LIBDIR)/Makefile.config
 -	BINDIR=$(BINDIR) LIBDIR=$(LIBDIR) PREFIX=$(PREFIX) \
 +	cp config/Makefile $(DESTDIR)$(LIBDIR)/Makefile.config
-+
-+	BINDIR=$(DESTDIR)$(BINDIR) LIBDIR=$(DESTDIR)$(LIBDIR) PREFIX=$(DESTDIR)$(PREFIX) MANDIR=$(DESTDIR)$(MANDIR) DESTDIR=$(DESTDIR)\
++	BINDIR=$(DESTDIR)$(BINDIR) LIBDIR=$(DESTDIR)$(LIBDIR) MANDIR=$(DESTDIR)$(MANDIR) \
  	  ./build/partial-install.sh
  
  # Installation of the native-code compiler
@@ -66,8 +60,7 @@
  	cd stdlib; $(MAKE) installopt
  	cd ocamldoc; $(MAKE) installopt
  	for i in $(OTHERLIBRARIES); \
--	  do (cd otherlibs/$$i; $(MAKE) installopt) || exit $$?; done
-+	  do (cd otherlibs/$$i; $(MAKE) installopt ) || exit $$?; done
+ 	  do (cd otherlibs/$$i; $(MAKE) installopt) || exit $$?; done
  	if test -f ocamlc.opt; \
 -	  then cp ocamlc.opt $(BINDIR)/ocamlc.opt$(EXE); else :; fi
 +	  then cp ocamlc.opt $(DESTDIR)$(BINDIR)/ocamlc.opt$(EXE); else :; fi
