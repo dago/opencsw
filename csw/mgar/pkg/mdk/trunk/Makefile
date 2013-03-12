@@ -30,6 +30,7 @@ MASTER_SITES	=	$(GNU_MIRROR)/v$(VERSION)/
 DISTFILES		=	$(DISTNAME).tar.gz
 PATCHFILES		+=	0001-no-glib-deprecation.patch
 PATCHFILES		+=	0002-remove-gld-flag.patch
+PATCHFILES		+=	0003-add-samples-installation.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -43,7 +44,7 @@ BUILD_DEP_PKGS		=	CSWlibatk-dev
 BUILD_DEP_PKGS		=	CSWguile-dev
 BUILD_DEP_PKGS		=	CSWlibglade2
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS	=	$(DIRPATHS)
 GARCOMPILER			=	GNU
 EXTRA_INC			+=	$(includedir)/glib-2.0
 EXTRA_INC			+=	$(libdir)/glib-2.0/include
@@ -69,6 +70,8 @@ CHECKPKG_OVERRIDES_CSWmdk	+=	surplus-dependency|CSWemacs
 CHECKPKG_OVERRIDES_CSWmdk	+=	missing-dependency|CSWemacscommon
 RUNTIME_DEP_PKGS_CSWmdk		+=	CSWscm
 CHECKPKG_OVERRIDES_CSWmdk	+=	surplus-dependency|CSWscm
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWgamin
+CHECKPKG_OVERRIDES_CSWmdk	+=	surplus-dependency|CSWgamin
 CHECKPKG_OVERRIDES_CSWmdk	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/mdk.info
 
 include gar/category.mk
