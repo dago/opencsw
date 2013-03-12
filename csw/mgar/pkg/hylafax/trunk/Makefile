@@ -27,14 +27,16 @@ BUILD_DEP_PKGS += CSWlibjbig-dev
 BUILD_DEP_PKGS += CSWliblcms2-dev
 BUILD_DEP_PKGS += CSWopenldap-dev
 
-PACKAGES += CSWhylafax-plus
-SPKG_DESC_CSWhylafax-plus server
+PACKAGES += CSWhylafax
+SPKG_DESC_CSWhylafax server
 
 DESCRIPTION = An enterprise-class system for sending and receiving facsimiles and # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWlibjbig2
-RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWhylafax-plus += CSWlibz1
+RUNTIME_DEP_PKGS_CSWhylafax += CSWlibjbig2
+RUNTIME_DEP_PKGS_CSWhylafax += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWhylafax += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWhylafax += CSWlibz1
+RUNTIME_DEP_PKGS_CSWhylafax += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWhylafax += CSWlibtiff3
 
 INITSMF += /etc/opt/csw/init.d/hylafaxPKGS = CSWoldapdevel
 
@@ -60,7 +62,7 @@ EXTRA_LDFLAGS += $(LD_OPTIONS)
 #EXTRA_CXXFLAGS += $(LINKER_IGNORE)ma#CONFIGURE_ENV = PATH_GSRIP=$(bindir)/gs PS=gs DIR_MAN=$(mandir)
 #BUILD_ENV = PATH_GSRIP=$(bindir)/gs PS=gs DIR_MAN=$(mandir)
 
-#EXTRA_CONFIGURE_EXPORTS += PATH_GSRIP
+EXTRA_CONFIGURE_EXPORTS += PATH_GSRIP
 CONFIGURE_ENV_PATH_GSRIP = $(bindir)/gs
 #EXTRA_CONFIGURE_EXPORTS += PS
 CONFIGURE_ENV_PS = gs
@@ -71,6 +73,7 @@ CONFIGURE_ENV_DIR_MAN = $(mandir)
 BUILD_ENV_PATH_GSRIP = $(bindir)/gs
 #EXTRA_BUILD_EXPORTS += PS
 BUILD_ENV_PS = gs
+
 #EXTRA_BUILD_EXPORTS += DIR_MAN
 BUILD_ENV_DIR_MAN = $(mandir)
 
