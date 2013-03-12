@@ -1,3 +1,10 @@
+openssl (1.0.1e,rev=2013.03.12) unstable
+
+  * New upstream release.
+  * Updated t4 engine patch for Solaris 11
+
+   -- Yann Rouillard <yann@opencsw.org>  Tue, 12 Mar 2013 12:30:26 +0100
+
 openssl (1.0.1d,rev=2013.02.07) unstable
 
   * New upstream release.
