@@ -67,6 +67,9 @@ RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWmdk		+=	CSWemacs
 CHECKPKG_OVERRIDES_CSWmdk	+=	surplus-dependency|CSWemacs
 CHECKPKG_OVERRIDES_CSWmdk	+=	missing-dependency|CSWemacscommon
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWscm
+CHECKPKG_OVERRIDES_CSWmdk	+=	surplus-dependency|CSWscm
+CHECKPKG_OVERRIDES_CSWmdk	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/mdk.info
 
 include gar/category.mk
 
