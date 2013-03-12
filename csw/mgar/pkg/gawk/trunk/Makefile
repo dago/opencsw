@@ -1,5 +1,5 @@
 NAME = gawk
-VERSION = 4.0.0
+VERSION = 4.0.2
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -20,7 +20,8 @@ DISTFILES = $(DISTNAME).tar.xz
 
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibsigsegv2
-RUNTIME_DEP_PKGS_CSWgawk += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWgawk +BUILD64 = 1
+ISAEXEC = 1 += CSWlibreadline6
 
 # Otherwise libsigsegv is not detected properly on Solaris 9 i386 as reported in
 #   http://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00008.html
@@ -37,9 +38,6 @@ CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/shar
 # This is an example path (YMMV in the docs)
 CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/pgawk.1
 
-include gar/category.mk
-
-post-install-modulated:
+include gar/categot-install-modulated:
 	ginstall -d $(DESTDIR)$(prefix)/gnu
-	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/g*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
-	@$(MAKECOOKIE)
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/g*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G)
