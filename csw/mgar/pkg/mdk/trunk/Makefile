@@ -55,6 +55,19 @@ EXTRA_INC			+=	$(includedir)/gdk-pixbuf-2.0
 EXTRA_INC			+=	$(includedir)/atk-1.0
 EXTRA_INC			+=	$(includedir)/libglade-2.0
 
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibguile2-0-22
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibhistory6
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibintl8
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibglade2
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWpango
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWmdk		+=	CSWemacs
+CHECKPKG_OVERRIDES_CSWmdk	+=	surplus-dependency|CSWemacs
+CHECKPKG_OVERRIDES_CSWmdk	+=	missing-dependency|CSWemacscommon
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
