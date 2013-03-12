@@ -133,7 +133,7 @@ endif
 # patch taken from https://hg.openindiana.org/upstream/oracl# To update the patch, do:
 #   cd files && ./update-t4-patch.sh OPENSSL_VERSION
 #le/eq ($(shell /usr/bin/uname -rp),5.11 sparc) 
-	PATCHFILES += openssl-1.0.1e-t4-engine.sparc-patchendif
+	PATCHFILES += openssl-1.0.1e-t4-engine.sparc-patche	PATCHFILES += openssl-1.0.1e-t4-engine.sparc-patch.sparcv9+visendif
 en-25
 endif
 endif

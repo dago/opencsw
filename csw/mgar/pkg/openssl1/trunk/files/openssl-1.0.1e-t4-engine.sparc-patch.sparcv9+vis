@@ -1,0 +1,25 @@
+From 3b63574c8a3ba589f9a69bece6931a22a73675d2 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Mon, 11 Mar 2013 23:41:45 +0100
+Subject: [PATCH] t4 engine complement patch for sparcv9+vis target
+
+---
+ Configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Configure b/Configure
+index 3f32e5a..e3bf481 100755
+--- a/Configure
++++ b/Configure
+@@ -278,7 +278,7 @@ my %table=(
+ #
+ "solaris-sparcv8-cc-sunw","cc:-xtarget=v8 -m32 -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ #
+-"solaris-sparcv9+vis-cc-sunw","cc:-xtarget=ultra -m32 -xarch=sparcvis -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"solaris-sparcv9+vis-cc-sunw","cc:-xtarget=ultra -m32 -xarch=sparcvis -Qoption cg -xregs=no%appl -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -lc -lsoftcrypto:BN_LLONG RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-m32 -G -dy -z text -zdefs -Bdirect -zignore -M/usr/lib/ld/map.pagealign:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ 
+ 
+ #### IRIX 5.x configs
+-- 
+1.8.1.4
+
