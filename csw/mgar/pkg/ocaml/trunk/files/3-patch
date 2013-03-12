@@ -28,3 +28,14 @@
  
  stdlib.p.cmxa: $(OBJS:.cmo=.p.cmx)
  	$(CAMLOPT) -a -o stdlib.p.cmxa $(OBJS:.cmo=.p.cmx)
+--- a/stdlib/Makefile
++++ b/stdlib/Makefile
+@@ -32,7 +32,7 @@ installopt-noprof:
+ 	rm -f $(DESTDIR)$(LIBDIR)/stdlib.p.cmxa; ln -s stdlib.cmxa $(DESTDIR)$(LIBDIR)/stdlib.p.cmxa
+ 	rm -f $(DESTDIR)$(LIBDIR)/stdlib.p.a; ln -s stdlib.a $(DESTDIR)$(LIBDIR)/stdlib.p.a
+ 	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.cmx; \
+-	  ln -s std_exit.cmx $(LIBDIR)/std_exit.p.cmx
++	  ln -s std_exit.cmx $(DESTDIR)$(LIBDIR)/std_exit.p.cmx
+ 	rm -f $(DESTDIR)$(LIBDIR)/std_exit.p.o; ln -s std_exit.o $(DESTDIR)$(LIBDIR)/std_exit.p.o
+ 
+ installopt-prof:
