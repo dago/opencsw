@@ -1,0 +1,24 @@
+From 802e9ea78f865a4c0f9c3c041fa14da2d3839bc1 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 12 Mar 2013 15:30:21 +0100
+Subject: [PATCH] add samples installation
+
+---
+ samples/Makefile.am | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/samples/Makefile.am b/samples/Makefile.am
+index 357b5f3..d30c933 100644
+--- a/samples/Makefile.am
++++ b/samples/Makefile.am
+@@ -15,3 +15,7 @@ SUBDIRS = tests
+ EXTRA_DIST = primes.result hello.mixal primes.mixal echo.mixal \
+              permutations.mixal permutations.cardrd isains.mixal \
+              elevator.mixal mystery.mixal
++
++samplesdir	=	$(docdir)/samples
++samples_DATA	=	\
++				$(EXTRA_DIST)
+-- 
+1.8.1.4
+
