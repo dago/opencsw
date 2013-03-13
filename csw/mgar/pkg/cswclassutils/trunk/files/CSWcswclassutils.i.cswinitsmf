@@ -29,6 +29,10 @@ DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
 
 SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG"
+if [ ! -d "$SMF_STATE_DIR" ] && \
+  [ -d "$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$OPENCSW_OBSOLETES" ]; then
+    SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$OPENCSW_OBSOLETES"
+fi
 SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
 
 # retrieve the previous state of a service identified by the given FRMI
