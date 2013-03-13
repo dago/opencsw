@@ -1,8 +1,7 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
-#
+
 NAME = hevea
-VERSION = 2.03
+VERSION = 1.10
 GARTYPE = v2
 CATEGORIES = apps
 
