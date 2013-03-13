@@ -29,7 +29,9 @@ RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWlibsocks
 RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWlibreadline6
+RUNTIME_DEP_PKGS +=# necessary when compiled with gcc
+RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibstdc+++= CSWlibreadline6
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -61,11 +63,12 @@ MIGRATE_FILES_CSWlftp = lftp.conf
 
 EXTRA_MERGE_EXCLUDE_FILES  = .*/charset.alias
 
-##### Build and installation information #####
+##### Build and installation inGARCOMPILER = GNUinformation #####
 
 # We don't want Sun Studio RPATH entries
-# see http://wiki.opencsw.org/checkpkg-error-tags#bad-rpath-entry
-EXTRA_LINKER_FLAGS = -norunpath
+# see http://wiki.opencsw.org/checkpkg-error-tagsifeq ($(GARCOMPILER),SUN)
+	EXTRA_LINKER_FLAGS = -norunpath
+endifLAGS = -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

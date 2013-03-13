@@ -1,6 +1,9 @@
 lftp (4.4.4,REV=2013.03.13) unstable
 
   * New upstream release.
+  * Switched to gcc as compiler
+  * Added CSWlibgcc-s1 and CSWlibstdc++6 dependencies
+    because of gcc
 
  -- Yann Rouillard <yann@opencsw.org>  Wed, 13 Mar 2013 08:08:40 +0100
 
