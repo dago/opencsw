@@ -101,6 +101,10 @@ esac
 
 
 	preservedir=$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG
+	if [ ! -d "$preservedir" ] && \
+		[ -d "$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$OPENCSW_OBSOLETES" ]; then
+		preservedir="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$OPENCSW_OBSOLETES"
+	fi
 	confbasename=`basename $confdest`
 	preservedconf=$preservedir/$confbasename
 
