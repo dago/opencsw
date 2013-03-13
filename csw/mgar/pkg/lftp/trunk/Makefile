@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.3.8
+VERSION = 4.4.4
 CATEGORIES = net
 GARTYPE = v2
 
@@ -88,5 +88,3 @@ pre-configure-modulated:
 
 post-merge:
 	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
-	@$(MAKECOOKIE)
-
