@@ -1,17 +1,17 @@
-From 8795f71f0d7a9b6ab49f7b921c869920cf5277c3 Mon Sep 17 00:00:00 2001
+From f9882d5b5ac794019eba7d1f95098f19e7497c1e Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Thu, 21 Feb 2013 15:13:08 +0100
+Date: Wed, 13 Mar 2013 18:55:56 +0100
 Subject: [PATCH] Fix installation paths
 
 ---
- Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e52e0f6..aa93904 100644
+index dd90bcb..5816684 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2,13 +2,14 @@
+@@ -2,7 +2,7 @@
  # Compile using ocamlopt, to use ocamlc set TARGET=byte
  TARGET=opt
  # Install prefix
@@ -20,14 +20,15 @@ index e52e0f6..aa93904 100644
  # Library directory of hevea
  LIBDIR=$(PREFIX)/lib/hevea
  # Where to install programms
- BINDIR=$(PREFIX)/bin
+@@ -10,7 +10,7 @@ BINDIR=$(PREFIX)/bin
+ # Install prefix prefix
+ DESTDIR=
  #Where to install hevea.sty
 -LATEXLIBDIR=$(PREFIX)/lib/hevea
 +LATEXLIBDIR=$(PREFIX)/share/texmf-local/tex/latex/hevea
-+
  ##### Advanced configuration parameters
  SUF=
  DIR=
 -- 
-1.8.1
+1.8.1.4
 
