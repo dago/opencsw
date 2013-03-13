@@ -90,9 +90,13 @@ CONFIGURE_ARGS += --disable-install-distdir
 CONFIGURE_ARGS += --enable-cgi
 CONFIGURE_ARGS += --enable-usb
 CONFIGURE_ARGS += --with-cgi-bin=$(sharedstatedir)/www/apcupsd/cgi
+# This is obviously not present yet, relocate during merge until this is integrated
+#CONFIGURE_ARGS += --with-css-dir=$(sharedstatedir)/www/apcupsd/html
 CONFIGURE_ARGS += --enable-gapcmon
 
 TEST_SCRIPTS =
+
+EXTRA_PAX_ARGS += -s ',.*/apcupsd\.css$$,.$(sharedstatedir)/www/apcupsd/html/apcupsd.css,'
 
 INITSMF += $(sysconfdir)/init.d/cswapcupsd
 PRESERVECONF += $(sysconfdir)/apcupsd.conf
