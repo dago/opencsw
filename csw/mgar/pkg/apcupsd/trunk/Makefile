@@ -1,8 +1,6 @@
 NAME = apcupsd
-VERSION = 3.14.8
+VERSION = 3.14.10
 GARTYPE = v2
-
-GARCOMPILER = GCC3
 
 DESCRIPTION = A daemon for controlling APC UPS
 define BLURB
@@ -21,10 +19,66 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWtcpwrap
+BUILD_DEP_PKGS += CSWlibwrap-dev
 
-sysconfdir      = /etc/opt/csw
-localstatedir   = /var/opt/csw
+PACKAGES += CSWapcupsd
+SPKG_DESC_CSWapcupsd = A daemon for controlling APC UPS
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWapcupsd += CSWlibwrap1
+
+# We need this for libusb and I definitely want this from Sun
+CHECKPKG_OVERRIDES_CSWapcupsd += bad-rpath-entry|/usr/sfw/lib|opt/csw/sbin/apcupsd
+CHECKPKG_OVERRIDES_CSWapcupsd += bad-rpath-entry|/usr/sfw/lib|opt/csw/sbin/smtp
+CHECKPKG_OVERRIDES_CSWapcupsd += bad-rpath-entry|/usr/sfw/lib|opt/csw/sbin/apctest
+CHECKPKG_OVERRIDES_CSWapcupsd += bad-rpath-entry|/usr/sfw/lib|opt/csw/sbin/apcaccess
+
+PACKAGES += CSWapcups-gui
+SPKG_DESC_CSWapcups-gui = GUI for the apcupsd
+PKGFILES_CSWapcups-gui += $(bindir)/gapcmon
+PKGFILES_CSWapcups-gui += $(sharedstatedir)/applications/.*
+PKGFILES_CSWapcups-gui += $(sharedstatedir)/pixmaps/.*
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWpango
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgtk-x11-2-0-0
+
+# We need this for libusb and I definitely want this from Sun
+CHECKPKG_OVERRIDES_CSWapcups-gui += bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/gapcmon
+
+PACKAGES += CSWapcups-cgi
+SPKG_DESC_CSWapcups-cgi = CGI scripts for apcupsd
+PKGFILES_CSWapcups-cgi += $(sharedstatedir)/www/.*
+RUNTIME_DEP_PKGS_CSWapcups-cgi += CSWlibgd2
+
+# We need this for libusb and I definitely want this from Sun
+CHECKPKG_OVERRIDES_CSWapcups-cgi += bad-rpath-entry|/usr/sfw/lib|opt/csw/share/www/apcupsd/cgi/upsstats.cgi
+CHECKPKG_OVERRIDES_CSWapcups-cgi += bad-rpath-entry|/usr/sfw/lib|opt/csw/share/www/apcupsd/cgi/upsimage.cgi
+CHECKPKG_OVERRIDES_CSWapcups-cgi += bad-rpath-entry|/usr/sfw/lib|opt/csw/share/www/apcupsd/cgi/upsfstats.cgi
+CHECKPKG_OVERRIDES_CSWapcups-cgi += bad-rpath-entry|/usr/sfw/lib|opt/csw/share/www/apcupsd/cgi/multimon.cgi
+
+# Yes, this is correct placement
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/upsimage.cgi|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/upsstats.cgi|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/multimon.cgi|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/upsfstats.cgi|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/upsimage.cgi|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/upsstats.cgi|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/upsfstats.cgi|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWapcups-cgi += binary-architecture-does-not-match-placement|file=opt/csw/share/www/apcupsd/cgi/multimon.cgi|arch_id=18|arch_name=sparcv8+
+
+REINPLACEMENTS += conf
+REINPLACE_MATCH_conf = /usr/local/etc/apcupsd
+REINPLACE_WITH_conf = $(sysconfdir)/apcupsd
+REINPLACE_FILES_conf += doc/apcupsd.conf.5
+
+GARCOMPILER = GCC4
+
+# This is for libusb.so.1
+EXTRA_RUNPATH_LINKER_FLAGS += -R/usr/sfw/lib
 
 NODIRPATHS      = --sysconfdir
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -33,11 +87,17 @@ CONFIGURE_ARGS += --with-log-dir=$(localstatedir)/apcupsd
 CONFIGURE_ARGS += --with-libwrap=$(prefix)
 CONFIGURE_ARGS += --with-nisip=127.0.0.1
 CONFIGURE_ARGS += --disable-install-distdir
+CONFIGURE_ARGS += --enable-cgi
+CONFIGURE_ARGS += --enable-usb
+CONFIGURE_ARGS += --with-cgi-bin=$(sharedstatedir)/www/apcupsd/cgi
+CONFIGURE_ARGS += --enable-gapcmon
 
-TEST_SCRIPTS=
+TEST_SCRIPTS =
 
-INITSMF      = $(sysconfdir)/init.d/cswapcupsd
-PRESERVECONF = $(sysconfdir)/apcupsd.conf
+INITSMF += $(sysconfdir)/init.d/cswapcupsd
+PRESERVECONF += $(sysconfdir)/apcupsd.conf
+PRESERVECONF += $(sysconfdir)/multimon.conf
+PRESERVECONF += $(sysconfdir)/hosts.conf
 
 #DISTRETC     = init.d rc0.d rc1.d rc2.d
 APCUPSDDOC   = COPYING ChangeLog DISCLAIMER Developers ReleaseNotes VERIFYING
@@ -48,7 +108,7 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -d $(DESTDIR)$(docdir)/apcupsd
 	ginstall -d $(DESTDIR)$(localstatedir)/apcupsd
-	cd $(DESTDIR)/etc ; rm -rf $(DISTRETC)
+	#cd $(DESTDIR)/etc ; rm -rf $(DISTRETC)
 	cp $(WORKDIR)/cswapcupsd $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); cp -r $(APCUPSDDOC) $(DESTDIR)$(docdir)/apcupsd
 	$(MAKECOOKIE)
