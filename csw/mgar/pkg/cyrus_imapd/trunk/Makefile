@@ -50,14 +50,10 @@ RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibz1
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWbdb48
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibpcreposix0
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWcyrusimapd += CSWlibnetsnmpagent25
 
 
@@ -70,13 +66,6 @@ PKGFILES_CSWcyrusimapdutils = $(bindir)/.*
 PKGFILES_CSWcyrusimapdutils += $(mandir)/man1/.*
 PKGFILES_CSWcyrusimapdutils += $(docdir)/cyrus_imapd_utils/.*
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWbdb48
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibpcreposix0
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWcyrusimapdutils += CSWlibsasl2-2
@@ -222,7 +211,7 @@ CONFIGURE_ARGS += --disable-nntp
 
 # To link against BerkeleyDB 4.8 explicitly
 EXTRA_LINKER_FLAGS = -R$(prefix)/bdb48/lib/\$$ISALIST
-LD_OPTIONS += -R$(prefix)/bdb48/lib/\$$ISALIST
+EXTRA_LD_OPTIONS += -R$(prefix)/bdb48/lib/\$$ISALIST
 
 # we add the args so perl libraries are installed
 # in the correct path
