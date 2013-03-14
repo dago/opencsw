@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = cyrus_imapd
-VERSION = 2.4.16
+VERSION = 2.4.17
 GARTYPE = v2
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
@@ -235,7 +235,7 @@ CYRUS_DAEMONS = fud idled imapd lmtpd lmtpproxyd mupdate notifyd pop3d pop3proxy
 include gar/category.mk
 
 # compile_et is missing so we want our to be used
-CONFIGURE_ENV += COMPILE_ET="$(CURDIR)/files/compile_et -d $(CURDIR)/files/"
+CONFIGURE_ENV += COMPILE_ET="$(abspath $(CURDIR))/files/compile_et"
 
 pre-configure-modulated:
 	# master is a too common name, so we rename it cyrus-master
