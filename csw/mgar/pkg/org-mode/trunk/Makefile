@@ -2,9 +2,8 @@
 
 NAME_PREFIX	=	org
 NAME		=	$(NAME_PREFIX)-mode
-VERSION		=	7.8.11
+VERSION		=	7.9.4
 GARTYPE		=	v2
-CATEGORIES	=	apps
 
 DESCRIPTION = An Emacs Mode for Notes, Planning, and Authoring
 define BLURB
@@ -18,16 +17,14 @@ PATCHDIR		=	$(WORKSRC)
 DISTFILES		=	$(NAME_PREFIX)-$(VERSION).tar.gz
 DISTFILES		+=	README.CSW
 DISTFILES		+=	COPYING
-PATCHFILES		+=	0001-Use-Open-CSW-prefix.patch
-PATCHFILES		+=	0002-Fix-documentation-build-target.patch
+DISTFILES		+=	local.mk
 
 BUILD_DEP_PKGS		+=	CSWemacs
 BUILD_DEP_PKGS		+=	CSWgsed
-BUILD_DEP_PKGS		+=	CSWtetex
+BUILD_DEP_PKGS		+=	CSWtexlive
+BUILD_DEP_PKGS		+=	CSWtexinfo
 
 CONFIGURE_SCRIPTS	=
-BUILD_SCRIPTS		=	nominal
-BUILD_SCRIPTS		+=	doc
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	nominal
 INSTALL_SCRIPTS		+=	info
@@ -38,20 +35,14 @@ CHECKPKG_OVERRIDES_CSWorg-mode	+=	surplus-dependency|CSWemacs
 CHECKPKG_OVERRIDES_CSWorg-mode	+=	missing-dependency|CSWemacscommon
 CHECKPKG_OVERRIDES_CSWorg-mode	+=	file-with-bad-content|/usr/local|root/opt/csw/share/org-mode/lisp/htmlize.el
 
-EXTRA_TEXINFO						=	$(infodir)/.*
+# EXTRA_TEXINFO						=	$(infodir)/.*
 
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
 
-build-nominal:
-	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR)
-	$(MAKECOOKIE)
-
-build-doc:
-	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) doc
-	$(MAKECOOKIE)
-
+pre-build-modulated:
+	cp $(WORKDIR)/local.mk $(WORKSRC)
 install-nominal:
 	cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) -C $(OBJDIR) $(INSTALL_ARGS) DESTDIR=$(DESTDIR) install
 	$(MAKECOOKIE)
@@ -72,6 +63,4 @@ post-install-modulated:
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(source)/orgguide.pdf $(DESTDIR)/$(pkgdoc)
 	mv $(DESTDIR)/$(infodir)/org $(DESTDIR)/$(infodir)/org-ocsw
 	gsed --in-place --expression='s/^[*] Org Mode: (org)[.]      Outline-based notes management and organizer$$/* Org Mode (OCSW): (org-ocsw).      Outline-based notes management and organizer as supplied by Open CSW/' $(DESTDIR)/$(infodir)/org-ocsw
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(contrib)
-	gtar --directory=$(WORKSRC)/contrib --create --exclude-vcs --file=- . | gtar --directory $(DESTDIR)/$(contrib) --extract --file=-
 	$(MAKECOOKIE)
