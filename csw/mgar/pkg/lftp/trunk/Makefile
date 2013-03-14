@@ -37,7 +37,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 ###### Upstream and opencsw files information #######
 
-MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
+MASTElftp.cybermirror.orgt/pub/source/lftp/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
