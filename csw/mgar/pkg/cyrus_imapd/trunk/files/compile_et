@@ -2,7 +2,7 @@
 #
 #
 AWK=gawk
-DIR=/opt/csw/share/et
+DIR="`dirname $0`"
 
 usage="usage: $0 [ -d scriptDir ] inputfile.et"
 
