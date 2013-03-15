@@ -15,7 +15,6 @@ MASTER_SITES	=	http://orgmode.org/
 WORKSRC			=	$(WORKDIR)/$(NAME_PREFIX)-$(VERSION)
 PATCHDIR		=	$(WORKSRC)
 DISTFILES		=	$(NAME_PREFIX)-$(VERSION).tar.gz
-DISTFILES		+=	README.CSW
 DISTFILES		+=	COPYING
 DISTFILES		+=	local.mk
 
@@ -25,9 +24,9 @@ BUILD_DEP_PKGS		+=	CSWtexlive
 BUILD_DEP_PKGS		+=	CSWtexinfo
 
 CONFIGURE_SCRIPTS	=
+# skiping the tests because the scripts are supplied only in
+# repository snapshots but not in the distributed sources
 TEST_SCRIPTS		=
-INSTALL_SCRIPTS		=	nominal
-INSTALL_SCRIPTS		+=	info
 
 ARCHALL							=	1
 RUNTIME_DEP_PKGS				+=	CSWemacs
@@ -35,7 +34,7 @@ CHECKPKG_OVERRIDES_CSWorg-mode	+=	surplus-dependency|CSWemacs
 CHECKPKG_OVERRIDES_CSWorg-mode	+=	missing-dependency|CSWemacscommon
 CHECKPKG_OVERRIDES_CSWorg-mode	+=	file-with-bad-content|/usr/local|root/opt/csw/share/org-mode/lisp/htmlize.el
 
-# EXTRA_TEXINFO						=	$(infodir)/.*
+EXTRA_TEXINFO						=	$(infodir)/.*
 
 include gar/category.mk
 
@@ -43,13 +42,6 @@ PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
 
 pre-build-modulated:
 	cp $(WORKDIR)/local.mk $(WORKSRC)
-install-nominal:
-	cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) -C $(OBJDIR) $(INSTALL_ARGS) DESTDIR=$(DESTDIR) install
-	$(MAKECOOKIE)
-
-install-info:
-	cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) -C $(OBJDIR) $(INSTALL_ARGS) DESTDIR=$(DESTDIR) install-info
-	$(MAKECOOKIE)
 
 post-install-modulated: pkgdoc = $(docdir)/$(NAME)
 post-install-modulated: source = $(WORKSRC)/doc
