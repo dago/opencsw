@@ -1,0 +1,10 @@
+--- a/prnt/hpijs/context2.cpp
++++ b/prnt/hpijs/context2.cpp
+@@ -37,6 +37,7 @@
+ #include "halftoner.h"
+ #include "colormatch.h"
+ //#include "bug.h"
++#include <cstdlib>
+ 
+ APDK_BEGIN_NAMESPACE
+ extern ColorMatcher* Create_ColorMatcher
