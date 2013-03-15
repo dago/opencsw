@@ -1,5 +1,5 @@
 NAME       = clamav
-VERSION    = 0.97.6
+VERSION    = 0.97.7
 #VERSION    = 0.97rc
 #DISTNAME   = $(NAME)-devel-latest
 GARTYPE = v2
@@ -13,10 +13,10 @@ define BLURB
   the package is an anti-virus engine available in a form of shared library.
 endef
 
-#SF_PROJECT      = clamav
-#MASTER_SITES = $(SF_MIRRORS)
+SF_PROJECT      = clamav
+MASTER_SITES = $(SF_MIRRORS)
 #MASTER_SITES = http://www.clamav.net/snapshot/
-MASTER_SITES = http://www.clamav.net/internal/
+#MASTER_SITES = http://www.clamav.net/internal/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 #DISTFILES    = $(NAME)-devel-latest.tar.gz
 
@@ -107,12 +107,15 @@ CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node56.html
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node24.html
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node15.html
-CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.15            
+CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.16
 
 # We don't split to three separate packages
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.15|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.15|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.15|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.16|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.16|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.16|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
+
+# Weirdly needed for sparc
+CHECKPKG_OVERRIDES_CSWlibclam6 += surplus-dependency|CSWlibstdc++6
 
 include gar/category.mk
 
