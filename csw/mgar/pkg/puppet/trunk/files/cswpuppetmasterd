@@ -17,22 +17,32 @@ fi
 prefix=/opt/csw
 exec_prefix=/opt/csw
 sysconfdir=/etc/opt/csw
+bindir=/opt/csw/bin
 sbindir=/opt/csw/sbin
 
-pidfile=`$prefix/bin/puppet master --genconf | awk '/pidfile/ { print $3 }'`
+pidfile=`$prefix/bin/puppet master --configprint pidfile`
 
 getprop() {
     val=`/usr/bin/svcprop -p $1 $SMF_FMRI`
     [ -n "$val" ] && echo $val
 }
 
+get_current_pid() {
+    if [ -x /usr/bin/zonename ]; then
+        zone=`/usr/bin/zonename`
+        zoneopts="-z $zone"
+    else
+        zoneopts=""
+    fi
+    pgrep -f $zoneopts 'puppet master'
+}
+
 case "$1" in
 start)
-    cd /
-    # Start daemons.
+    # Start daemon.
 
     printf "Starting Puppet server services:"
-    ${sbindir}/puppetmasterd
+    ${bindir}/puppet master
 
     printf " puppetmaster"
     echo ""
@@ -62,7 +72,7 @@ reload)
 status)
     if [ -f $pidfile ]; then
         pid=`cat $pidfile`
-        curpid=`pgrep puppetmasterd`
+        curpid=`get_current_pid`
         if [ "$pid" -eq "$curpid" ]; then
             exit 0
         else

@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.7.20
+VERSION = 2.7.21
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -44,7 +44,8 @@ USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
 # service isn't started upon the installation of CSWpuppet.
 PACKAGES += CSWpuppetmaster
-PACKAGES += CSWpuppet
+PACKAINCOMPATIBLE_PKGS += CSWpuppet3
+INCOMPATIBLE_PKGS += CSWpuppetmaster3KAGES += CSWpuppet
 
 SPKG_DESC_CSWpuppet       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
@@ -83,7 +84,8 @@ CHECKPKG_OVERRIDES_CSWpuppet 	   += file-with-bad-content
 # behaviour. The README explains
 CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet
 CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet/README.CSW
-CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
+CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet/puppetCHECKPKG_OVERRIDES_CSWpuppet  		+= file-collision
+CHECKPKG_OVERRIDES_CSWpuppetmaster 	+= file-collisiont.conf.example-CSW
 
 include gar/category.mk
 
