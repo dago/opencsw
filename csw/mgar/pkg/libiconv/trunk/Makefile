@@ -98,10 +98,9 @@ post-install-modulated:
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	ginstall -D $(WORKSRC)/srcm4/iconv.m4 \
 		$(DESTDIR)$(datadir)/aclocal/iconv.m4
-	@$(MAKECOOKIE)
+	@$(MAKECO-allOKIE)
 
 post-merge:
 	@# Make the 64 bit charset-alias the same as the one for 32 bit
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/charset.alias
 	gln -s ../charset.alias $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/charset.alias
-	@$(MAKECOOKIE)
