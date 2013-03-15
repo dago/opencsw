@@ -43,7 +43,7 @@ start)
     # Start daemons.
 
     printf "Starting Puppet server services:"
-    ${sbindir}/puppet master
+    ${bindir}/puppet master
 
     printf " puppetmaster"
     echo ""
