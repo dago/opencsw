@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = hevea
-VERSION = 1.10
+VERSION = 2.04
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -39,7 +39,7 @@ RUNTIME_DEP_PKGS	+=	CSWnetpbm
 
 PATCHFILES			=	0001-Fix-installation-paths.patch
 
-CONFIGURE_SCRIPTS	=
+CON
 
 SKIPTEST			=	1
 
