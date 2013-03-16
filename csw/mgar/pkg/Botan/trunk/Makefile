@@ -9,7 +9,10 @@ endef
 MASTER_SITES = http://botan.randombit.net/files/
 DISTFILES  = $(DISTNAME).tgz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_SCRIPTS = custom
 
 include gar/category.mk
 
+configure-custom:
+	(cd $(WORKSRC); \
+	./configure.py)
