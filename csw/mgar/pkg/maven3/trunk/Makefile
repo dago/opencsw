@@ -39,6 +39,8 @@ INSTALL_SCRIPTS = custom
 
 ARCHALL = 1
 
+CHECKPKG_OVERRIDES_CSWmaven3 += file-with-bad-content|/usr/local|root/opt/csw/share/maven3/home/README.txt
+
 include gar/category.mk
 
 install-custom: MAVENHOME=$(DESTDIR)$(sharedstatedir)/maven3/home
