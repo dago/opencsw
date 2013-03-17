@@ -1,0 +1,25 @@
+From 746a61d1fabb7d3568c68e90887e961770777778 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sun, 17 Mar 2013 08:57:37 +0100
+Subject: [PATCH] shell commmands in configure script
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index caaf30e..8125fc3 100755
+--- a/configure
++++ b/configure
+@@ -349,7 +349,7 @@ int main(void)
+ }
+ EOF
+ if compile_prog "" "" "wordsize"; then
+-  wordsize=$($TMPE)
++  wordsize=`$TMPE`
+ fi
+ echo "Wordsize                      $wordsize"
+ 
+-- 
+1.8.1.4
+
