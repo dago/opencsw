@@ -1,5 +1,5 @@
 NAME = maven3
-VERSION = 3.0
+VERSION = 3.0.5
 CATEGORIES = java
 GARTYPE = v2
 
@@ -22,7 +22,8 @@ attempts to deal with:
    * Allowing transparent migration to new features
 endef
 
-MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries/
+MASTER_SITES = http://www.eu.apache.org/dist/maven/maven-3/${VERSION}/binaries/
+
 DISTNAME = apache-maven-$(VERSION)
 DISTFILES  = $(DISTNAME)-bin.tar.gz
 
