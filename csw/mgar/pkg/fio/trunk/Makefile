@@ -1,7 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 
 NAME = fio
-VERSION = 2.0.8
+VERSION = 2.0.14
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -24,6 +24,7 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+0-shell-commmands-in-configure-script.patchrc solaris10-i386
 
 PATCHFILES	+= 0001-shell-commands.patch
 
@@ -56,5 +57,4 @@ post-install-modulated:
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 install-changelog-%:
 	ginstall -D $(FILEDIR)/changelog.CSW \
-		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
-	@$(MAKECOOKIE)
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CS
