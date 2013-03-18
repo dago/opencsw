@@ -1,6 +1,6 @@
-From bcc80204005ab2cdce7346594ad66c3a0ba6b65a Mon Sep 17 00:00:00 2001
+From 20ef63d6434bab3158919265d81b7f3c928607ee Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Mon, 8 Oct 2012 10:47:01 +0200
+Date: Fri, 15 Mar 2013 15:26:01 +0100
 Subject: [PATCH] Filter ImageMagik OpenMP compiler flag
 
 ---
@@ -8,18 +8,18 @@ Subject: [PATCH] Filter ImageMagik OpenMP compiler flag
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index fb229b7..97e73cd 100755
+index ab5f17f..f467955 100755
 --- a/configure
 +++ b/configure
-@@ -10902,7 +10902,7 @@ $as_echo "yes" >&6; }
- 
-             { $as_echo "$as_me:${as_lineno-$LINENO}: checking IMAGEMAGICK_CFLAGS" >&5
- $as_echo_n "checking IMAGEMAGICK_CFLAGS... " >&6; }
--            IMAGEMAGICK_CFLAGS=`$PKG_CONFIG --cflags "$IMAGEMAGICK_MODULE"|sed -e 's,///*,/,g'`
-+            IMAGEMAGICK_CFLAGS=`$PKG_CONFIG --cflags "$IMAGEMAGICK_MODULE"|sed -e 's,///*,/,g' | sed -e 's/-xopenmp//'`
-             { $as_echo "$as_me:${as_lineno-$LINENO}: result: $IMAGEMAGICK_CFLAGS" >&5
- $as_echo "$IMAGEMAGICK_CFLAGS" >&6; }
- 
+@@ -10601,7 +10601,7 @@ $as_echo_n "checking for $IMAGEMAGICK_MODULE... " >&6; }
+ 	      s/ -I/ $isystem/g
+ 	      s/^ //
+ 	    "
+-	    IMAGEMAGICK_CFLAGS=`$as_echo "$IMAGEMAGICK_CFLAGS" | sed -e "$edit_cflags"`
++	    IMAGEMAGICK_CFLAGS=`$as_echo "$IMAGEMAGICK_CFLAGS" | sed -e "$edit_cflags" | sed -e 's/-xopenmp//'`
+ 	    IMAGEMAGICK_LIBS=`$as_echo "$IMAGEMAGICK_LIBS" | sed -e 's,///*,/,g'`
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes CFLAGS='$IMAGEMAGICK_CFLAGS' LIBS='$IMAGEMAGICK_LIBS'" >&5
+ $as_echo "yes CFLAGS='$IMAGEMAGICK_CFLAGS' LIBS='$IMAGEMAGICK_LIBS'" >&6; }
 -- 
-1.7.12
+1.8.1.4
 
