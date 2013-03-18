@@ -1,10 +1,8 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
-#
+
 NAME		=	emacs
-VERSION		=	24.2
+VERSION		=	24.3
 GARTYPE		=	v2
-CATEGORIES	=	apps
 
 DESCRIPTION = The GNU Emacs editor
 define BLURB
@@ -12,7 +10,7 @@ define BLURB
   display editor.
 endef
 
-DISTFILES		=	$(DISTNAME).tar.bz2
+DISTFILES		=	$(DISTNAME).tar.xz
 MASTER_SITES	=	$(GNU_MIRROR)
 
 # this is necessary because GNU id options dialect is is used; BTW, I
@@ -48,6 +46,7 @@ BUILD_DEP_PKGS		+=	CSWlibm17n-dev
 BUILD_DEP_PKGS		+=	CSWlibncurses-dev
 BUILD_DEP_PKGS		+=	CSWlibotf-dev
 BUILD_DEP_PKGS		+=	CSWlibpixman-dev
+BUILD_DEP_PKGS		+=	CSWlibpcre-dev
 BUILD_DEP_PKGS		+=	CSWlibpng-dev
 BUILD_DEP_PKGS		+=	CSWlibpthreadstubs
 BUILD_DEP_PKGS		+=	CSWlibrsvg-dev
@@ -75,7 +74,6 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 
 PATCHFILES			+=	0001-activate-Xft-for-configure.patch
 PATCHFILES			+=	0002-Filter-ImageMagik-OpenMP-compiler-flag.patch
-PATCHFILES			+=	0003-Satisfy-micro-tasking-library.patch
 
 EXTRA_MODULATORS			=	FEATURES
 MODULATIONS_FEATURES		=	athena
@@ -86,7 +84,7 @@ EXTRA_CONFIGURE_ARGS_athena	=	--with-x-toolkit=athena
 EXTRA_CONFIGURE_ARGS_athena	+=	--without-dbus
 EXTRA_CONFIGURE_ARGS_athena	+=	--without-gconf
 
-EXTRA_CONFIGURE_ARGS_gtk	=	--with-x-toolkit=gtk
+EXTRA_CONFIGURE_ARGS_gtk	=	--with-x-toolkit=gtk2
 
 EXTRA_CONFIGURE_ARGS_nox	=	--with-x-toolkit=no
 EXTRA_CONFIGURE_ARGS_nox	+=	--without-sound
