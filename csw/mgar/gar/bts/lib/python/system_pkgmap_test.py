@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.6
 
 import unittest2 as unittest
+import shell
 import system_pkgmap
 import test_base
 import models

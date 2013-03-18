@@ -9,13 +9,18 @@ $def with (cat_name, pkgs)
   <body>
     <h3>$cat_name</h3>
     <p>$pkgs.count() packages</p>
-    <ul>
+<table>
+  <tr>
+    <th>filename</th>
+    <th>catalogname</th>
+    <th>version</th>
+  </tr>
 $for pkg in pkgs:
-  <li>
-  <a href="../../srv4/$pkg.md5_sum/">
-  $pkg
-  </a>
-  </li>
-</ul>
+  <tr>
+  <td><a href="../../srv4/$pkg.md5_sum/">$pkg.basename</a>
+  <td><a href="../../catalognames/$pkg.catalogname/" title="All packages named '$pkg.catalogname'.">$pkg.catalogname</a></td>
+  <td>$pkg.version_string</td>
+  </tr>
+</table>
 </body>
 </html>

@@ -105,29 +105,34 @@ class Srv4Detail(object):
   def GET(self, md5_sum):
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-      overrides = pkg.GetOverridesResult()
-      tags_by_cat = {}
-      tags_and_catalogs = []
-      osrels = models.OsRelease.select()
-      catrels = models.CatalogRelease.select()
-      all_tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
-      pkgstats_raw = pprint.pformat(pkg.GetStatsStruct())
-      if pkg.arch.name == 'all':
-        archs = models.Architecture.select(models.Architecture.q.name!='all')
-      else:
-        archs = [pkg.arch]
-      for catrel in catrels:
-        for arch in archs:
-          for osrel in osrels:
-            tags = pkg.GetErrorTagsResult(osrel, arch, catrel)
-            key = (osrel, arch, catrel)
-            tags = list(tags)
-            tags_by_cat[key] = tags
-            tags_and_catalogs.append((osrel, arch, catrel, tags))
-      return render.Srv4Detail(pkg, overrides, tags_by_cat, all_tags,
-          tags_and_catalogs, pkgstats_raw)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
+    overrides = pkg.GetOverridesResult()
+    tags_by_cat = {}
+    tags_and_catalogs = []
+    osrels = models.OsRelease.select()
+    catrels = models.CatalogRelease.select()
+    all_tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
+    pkgstats_raw = (
+      "As of January 2013, the stats stored are so big that "
+      "processing them can take several minutes before they "
+      "can be served. Disabling until a proper solution "
+      "is in place.")
+    # pkgstats_raw = pprint.pformat(pkg.GetStatsStruct())
+    if pkg.arch.name == 'all':
+      archs = models.Architecture.select(models.Architecture.q.name!='all')
+    else:
+      archs = [pkg.arch]
+    for catrel in catrels:
+      for arch in archs:
+        for osrel in osrels:
+          tags = pkg.GetErrorTagsResult(osrel, arch, catrel)
+          key = (osrel, arch, catrel)
+          tags = list(tags)
+          tags_by_cat[key] = tags
+          tags_and_catalogs.append((osrel, arch, catrel, tags))
+    return render.Srv4Detail(pkg, overrides, tags_by_cat, all_tags,
+        tags_and_catalogs, pkgstats_raw)
 
 
 class Catalogname(object):
@@ -160,7 +165,10 @@ class CatalognameList(object):
 
 class Srv4DetailFiles(object):
   def GET(self, md5_sum):
-    srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    try:
+      srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound as e:
+      raise web.notfound()
     files = models.CswFile.selectBy(srv4_file=srv4)
     return render.Srv4DetailFiles(srv4, files)
 
@@ -298,19 +306,22 @@ class PkgnameByFilename(object):
     db_catalog = checkpkg_lib.Catalog()
     try:
       pkgs = db_catalog.GetPkgByPath(filename, osrel, arch, catrel)
-      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkgname-list')
-      web.header('X-Rest-Info', 'I could tell you about the format, but I won\'t')
-      web.header('Content-Disposition',
-                 'attachment; filename=%s' % send_filename)
-      return cjson.encode(sorted(pkgs))
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
+    web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkgname-list')
+    web.header('X-Rest-Info', 'I could tell you about the format, but I won\'t')
+    web.header('Content-Disposition',
+               'attachment; filename=%s' % send_filename)
+    return cjson.encode(sorted(pkgs))
 
 
 class PkgnamesAndPathsByBasename(object):
   def GET(self, catrel, arch, osrel):
     user_data = web.input()
-    basename = user_data.basename
+    try:
+      basename = user_data.basename
+    except AttributeError, e:
+      raise web.badrequest()
     send_filename = (
         '%s-%s-%s-%s-packages.txt'
         % (catrel, arch, osrel, basename.replace('/', '-')))
@@ -318,14 +329,14 @@ class PkgnamesAndPathsByBasename(object):
     try:
       data = db_catalog.GetPathsAndPkgnamesByBasename(
           basename, osrel, arch, catrel)
-      web.header(
-          'Content-type',
-          'application/x-vnd.opencsw.pkg;type=pkgname-list')
-      web.header('Content-Disposition',
-                 'attachment; filename=%s' % send_filename)
-      return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
+    web.header(
+        'Content-type',
+        'application/x-vnd.opencsw.pkg;type=pkgname-list')
+    web.header('Content-Disposition',
+               'attachment; filename=%s' % send_filename)
+    return cjson.encode(data)
 
 
 class RestSrv4Detail(object):
@@ -333,12 +344,12 @@ class RestSrv4Detail(object):
   def GET(self, md5_sum):
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-      mimetype, data_structure = pkg.GetRestRepr()
-      web.header('Content-type', mimetype)
-      web.header('Access-Control-Allow-Origin', '*')
-      return cjson.encode(data_structure)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
+    mimetype, data_structure = pkg.GetRestRepr()
+    web.header('Content-type', mimetype)
+    web.header('Access-Control-Allow-Origin', '*')
+    return cjson.encode(data_structure)
 
 
 class RestSrv4DetailFiles(object):
@@ -346,19 +357,19 @@ class RestSrv4DetailFiles(object):
   def GET(self, md5_sum):
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-      files = models.CswFile.selectBy(srv4_file=pkg)
-      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=file-list')
-      web.header('Access-Control-Allow-Origin', '*')
-      def FileDict(file_obj):
-        return {
-            "basename": file_obj.basename,
-            "path": file_obj.path,
-            "line": file_obj.line,
-        }
-      serializable_files = [FileDict(x) for x in files]
-      return cjson.encode(serializable_files)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
+    files = models.CswFile.selectBy(srv4_file=pkg)
+    web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=file-list')
+    web.header('Access-Control-Allow-Origin', '*')
+    def FileDict(file_obj):
+      return {
+          "basename": file_obj.basename,
+          "path": file_obj.path,
+          "line": file_obj.line,
+      }
+    serializable_files = [FileDict(x) for x in files]
+    return cjson.encode(serializable_files)
 
 
 class RestSrv4FullStats(object):
@@ -366,11 +377,11 @@ class RestSrv4FullStats(object):
   def GET(self, md5_sum):
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-      data_structure = pkg.GetStatsStruct()
-      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
-      return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
+    data_structure = pkg.GetStatsStruct()
+    web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
+    return json.dumps(data_structure, cls=PkgStatsEncoder)
 
 
 class Srv4ByCatAndCatalogname(object):
@@ -378,8 +389,11 @@ class Srv4ByCatAndCatalogname(object):
   def GET(self, catrel_name, arch_name, osrel_name, catalogname):
     """Get a srv4 reference by catalog ane catalogname."""
     configuration.SetUpSqlobjectConnection()
-    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     join = [
         sqlbuilder.INNERJOINOn(None,
           models.Srv4FileInCatalog,
@@ -401,7 +415,7 @@ class Srv4ByCatAndCatalogname(object):
       web.header('Access-Control-Allow-Origin', '*')
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
-      return cjson.encode(None)
+      raise web.notfound()
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
 
@@ -434,6 +448,7 @@ class Srv4ByCatAndPkgname(object):
       srv4 = res.getOne()
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
+      web.header('Access-Control-Allow-Origin', '*')
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
       return cjson.encode(None)

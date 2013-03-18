@@ -20,6 +20,7 @@ import os.path
 import package_checks
 import package_stats
 import re
+import shell
 import socket
 import sqlobject
 import struct_util
@@ -82,9 +83,10 @@ CATALOGS_ALLOWED_TO_GENERATE = frozenset([
   "dublin",
   "kiel",
   "bratislava",
+  "beanie",
 ])
 CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
-  "current",
+  "unstable",
 ])
 
 
@@ -213,7 +215,6 @@ class CatalogImporter(object):
       cat_entry_by_md5[catalog_entry["md5sum"]] = catalog_entry
       cat_entry_by_basename[catalog_entry["file_basename"]] = catalog_entry
     # - import all srv4 files that were not in the database so far
-    sqo_objects = set()
     entries_to_import = []
     logging.debug("Checking which srv4 files are already in the db.")
     for md5 in cat_entry_by_md5:
@@ -326,10 +327,18 @@ class CatalogImporter(object):
           "The catalog release %s is not one of the default releases.",
           repr(catrel))
     sqo_catrel = m.CatalogRelease.selectBy(name=catrel).getOne()
+    _, uname_stdout, _ = shell.ShellCommand(["uname", "-p"])
+    current_host_arch = uname_stdout.strip()
     for osrel in common_constants.OS_RELS:
       logging.info("  OS release: %s", repr(osrel))
       sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
+        if current_host_arch != arch:
+          logging.warning(
+              "Cannot process packages for achitecture %r "
+              "because we're currently running on architecture %r.",
+              arch, current_host_arch)
+          continue
         logging.info("    Architecture: %s", repr(arch))
         sqo_arch = m.Architecture.selectBy(name=arch).getOne()
         catalog_file = self.ComposeCatalogFilePath(base_dir, osrel, arch)

@@ -74,10 +74,18 @@ class RestClient(object):
         "maintainer_email": pkg["maintainer_email"],
     }
 
+  def GetCatalogList(self):
+    url = self.rest_url + self.PKGDB_APP + "/catalogs/"
+    data = urllib2.urlopen(url).read()
+    return cjson.decode(data)
+
   def GetCatalog(self, catrel, arch, osrel):
     if not catrel:
       raise ArgumentError("Missing catalog release.")
-    url = self.rest_url + self.PKGDB_APP + "/catalogs/%s/%s/%s/?quick=true" % (catrel, arch, osrel)
+    url = (
+        self.rest_url
+        + self.PKGDB_APP
+        + "/catalogs/%s/%s/%s/?quick=true" % (catrel, arch, osrel))
     logging.debug("GetCatalog(): GET %s", url)
     try:
       data = urllib2.urlopen(url).read()
@@ -184,10 +192,6 @@ class RestClient(object):
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
-    # if self.debug:
-    #   logging.debug("*** Headers")
-    #   logging.debug(h.getvalue())
-    #   logging.debug("*** Data")
     if http_code >= 400 and http_code <= 599:
       if not self.debug:
         # In debug mode, all headers are printed to screen, and we aren't
@@ -209,18 +213,14 @@ class CachedPkgstats(object):
     self.filename = filename
     self.d = gdbm.open("%s.db" % self.filename, "c")
     self.rest_client = RestClient()
-    self.local_cache = {}
     self.deps = gdbm.open("%s-deps.db" % self.filename, "c")
 
   def GetPkgstats(self, md5):
-    if md5 in self.local_cache:
-      return self.local_cache[md5]
-    elif str(md5) in self.d:
+    if str(md5) in self.d:
       return cjson.decode(self.d[md5])
     else:
       pkgstats = self.rest_client.GetPkgstatsByMd5(md5)
       self.d[md5] = cjson.encode(pkgstats)
-      self.local_cache[md5] = pkgstats
       return pkgstats
 
   def GetDeps(self, md5):

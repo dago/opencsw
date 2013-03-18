@@ -74,6 +74,36 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
+  'ldd_info': {
+      'opt/csw/bin/sparcv8/rsync': [],
+      'opt/csw/bin/sparcv9/rsync': [],
+    },
+  'binaries_elf_info': {
+      'opt/csw/bin/sparcv8/rsync': {
+        'version definition': [],
+        'version needed': [],
+        'symbol table': [
+          { 'soname': 'libpopt.so.0', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libsec.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libiconv.so.2', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libsocket.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libnsl.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libc.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+        ]
+      },
+      'opt/csw/bin/sparcv9/rsync': {
+        'version definition': [],
+        'version needed': [],
+        'symbol table': [
+          { 'soname': 'libpopt.so.0', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libsec.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libiconv.so.2', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libsocket.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libnsl.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libc.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+        ]
+      }
+  },
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',

@@ -39,9 +39,14 @@ class Error(Exception):
   pass
 
 
+class SystemUtilityError(Error):
+  """A problem occurred while running system utility, e.g. ldd."""
+
 class PackageError(Error):
   pass
 
+class StdoutSyntaxError(Error):
+  pass
 
 class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
@@ -65,10 +70,9 @@ class CswSrv4File(shell.ShellMixin, object):
 
   def GetWorkDir(self):
     if not self.workdir:
-      self.workdir = tempfile.mkdtemp(prefix="pkg_")
-      fd = open(os.path.join(self.workdir, "admin"), "w")
-      fd.write(ADMIN_FILE_CONTENT)
-      fd.close()
+      self.workdir = tempfile.mkdtemp(prefix="pkg_", dir="/var/tmp")
+      with open(os.path.join(self.workdir, "admin"), "w") as fd:
+        fd.write(ADMIN_FILE_CONTENT)
     return self.workdir
 
   def GetAdminFilePath(self):
@@ -108,11 +112,7 @@ class CswSrv4File(shell.ShellMixin, object):
             src_file,
             destdir,
             pkgname ]
-    pkgtrans_proc = subprocess.Popen(args,
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE)
-    stdout, stderr = pkgtrans_proc.communicate()
-    ret = pkgtrans_proc.wait()
+    ret, stdout, stderr = shell.ShellCommand(args)
     if ret:
       logging.error(stdout)
       logging.error(stderr)
@@ -125,9 +125,7 @@ class CswSrv4File(shell.ShellMixin, object):
     if not self.pkgname:
       gunzipped_path = self.GetGunzippedPath()
       args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
-      nawk_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-      stdout, stderr = nawk_proc.communicate()
-      ret_code = nawk_proc.wait()
+      ret_code, stdout, stderr = shell.ShellCommand(args)
       self.pkgname = stdout.strip()
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
@@ -138,6 +136,10 @@ class CswSrv4File(shell.ShellMixin, object):
     return self.stat
 
   def GetMtime(self):
+    """The mtime of the svr4 file.
+
+    Returns: a datetime.datetime object (not encodable with json!).
+    """
     if not self.mtime:
       s = self._Stat()
       t = time.gmtime(s.st_mtime)
@@ -145,8 +147,7 @@ class CswSrv4File(shell.ShellMixin, object):
     return self.mtime
 
   def GetSize(self):
-    s = self._Stat()
-    return s.st_size
+    return self._Stat().st_size
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -190,21 +191,16 @@ class CswSrv4File(shell.ShellMixin, object):
   def GetMd5sum(self):
     if not self.md5sum:
       logging.debug("GetMd5sum() reading file %s", repr(self.pkg_path))
-      fp = open(self.pkg_path)
       hash = hashlib.md5()
-      hash.update(fp.read())
-      fp.close()
+      with open(self.pkg_path) as fp:
+        hash.update(fp.read())
       self.md5sum = hash.hexdigest()
     return self.md5sum
 
   def GetPkgchkOutput(self):
     """Returns: (exit code, stdout, stderr)."""
     args = ["/usr/sbin/pkgchk", "-d", self.GetGunzippedPath(), "all"]
-    pkgchk_proc = subprocess.Popen(
-        args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = pkgchk_proc.communicate()
-    ret = pkgchk_proc.wait()
-    return ret, stdout, stderr
+    return shell.ShellCommand(args)
 
   def __del__(self):
     if self.workdir:
@@ -304,13 +300,10 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
         # 4: sum
         pkginfo_path = os.path.join(self.directory, "pkginfo")
         args = ["cksum", pkginfo_path]
-        cksum_process = subprocess.Popen(args, stdout=subprocess.PIPE)
-        stdout, stderr = cksum_process.communicate()
-        cksum_process.wait()
+        _, stdout, stderr = shell.ShellCommand(args)
         size = ws_re.split(stdout)[1]
         args = ["sum", pkginfo_path]
-        sum_process = subprocess.Popen(args, stdout=subprocess.PIPE)
-        stdout, stderr = sum_process.communicate()
+        _, stdout, stderr = shell.ShellCommand(args)
         sum_process.wait()
         sum_value = ws_re.split(stdout)[0]
         fields[3] = size
@@ -474,7 +467,6 @@ class PackageSurgeon(shell.ShellMixin):
     if not self.dir_pkg:
       self.dir_pkg = self.srv4.GetDirFormatPkg()
       logging.debug(repr(self.dir_pkg))
-      # subprocess.call(["tree", self.dir_pkg.directory])
 
   def Export(self, dest_dir):
     self.Transform()

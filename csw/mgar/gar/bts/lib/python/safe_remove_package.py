@@ -19,6 +19,7 @@ import logging
 import sys
 import os
 import cjson
+import urllib2
 
 USAGE = """%prog --os-releases=SunOS5.10,SunOS5.11 -c <catalogname>
 
@@ -114,7 +115,12 @@ class PackageRemover(object):
         logging.info("%s is an obsolete OS release. Skipping.", osrel)
         continue
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
-        pkg_simple = rest_client.Srv4ByCatalogAndCatalogname(UNSTABLE, arch, osrel, catalogname)
+        try:
+          pkg_simple = rest_client.Srv4ByCatalogAndCatalogname(UNSTABLE, arch, osrel, catalogname)
+        except urllib2.HTTPError, e:
+          logging.warning("could not fetch %r from %s/%s: %s",
+                          catalogname, arch, osrel, e)
+          pkg_simple = None
         if not pkg_simple:
           # Maybe we were given a pkgname instead of a catalogname? We can try
           # that before failing.
