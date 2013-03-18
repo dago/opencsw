@@ -71,6 +71,27 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
+  'ldd_info': {
+      'opt/csw/libexec/sudo_noexec.so': [],
+      'opt/csw/sbin/visudo': [],
+  },
+  'binaries_elf_info': {'opt/csw/libexec/sudo_noexec.so': {
+    'version needed': [],
+    'version definition': [],
+    'symbol table': [
+      { 'soname': 'libc.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' } ],
+    },
+    'opt/csw/sbin/visudo': {
+      'version definition': [],
+      'version needed': [],
+      'symbol table': [
+        { 'soname': 'libintl.so.8', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+        { 'soname': 'libsocket.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+        { 'soname': 'libnsl.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+        { 'soname': 'libc.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+      ],
+    }
+  },
   'mtime': datetime.datetime(2010, 3, 2, 22, 34, 40),
   'overrides': [],
   'pkgchk': {'return_code': 0,
@@ -292,6 +313,21 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
+  'ldd_info': {'opt/csw/bin/sudo.minimal': []},
+  'binaries_elf_info': {
+      'opt/csw/bin/sudo.minimal': {
+        'version definition': [],
+        'version needed': [],
+        'symbol table': [
+          { 'soname': 'libpam.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libdl.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libintl.so.8', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libsocket.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libnsl.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+          { 'soname': 'libc.so.1',  'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
+        ]
+      }
+  },
   'mtime': datetime.datetime(2010, 3, 2, 22, 34, 39),
   'overrides': [],
   'pkgchk': {'return_code': 0,

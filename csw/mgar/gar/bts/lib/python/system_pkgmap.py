@@ -3,10 +3,9 @@
 
 import re
 import configuration as c
-import subprocess
 import logging
 import common_constants
-import cPickle
+import marshal
 import itertools
 import progressbar
 import models as m
@@ -18,6 +17,7 @@ import datetime
 import os.path
 import mute_progressbar
 import checkpkg_lib
+import shell
 import sys
 
 CONTENT_PKG_RE = r"^\*?(CSW|SUNW)[0-9a-zA-Z\-]?[0-9a-z\-]+$"
@@ -98,7 +98,7 @@ class Indexer(object):
     if not self.arch:
       self.arch = self._GetArch()
     if not self.outfile:
-      self.outfile = ("install-contents-%s-%s.pickle"
+      self.outfile = ("install-contents-%s-%s.marshal"
                       % (self.osrel, self.arch))
     logging.debug("Indexer(): infile_contents=%s, outfile=%s, osrel=%s, arch=%s",
                   repr(self.infile_contents), repr(self.outfile), repr(self.osrel),
@@ -285,10 +285,7 @@ class Indexer(object):
     if uname_option:
       args.append(uname_option)
     # TODO: Don't fork during unit tests
-    uname_proc = subprocess.Popen(args,
-                                  stdout=subprocess.PIPE)
-    stdout, stderr = uname_proc.communicate()
-    ret = uname_proc.wait()
+    ret, stdout, unused_stderr = shell.ShellCommand(args)
     if ret:
       raise SubprocessError("Running uname has failed.")
     return stdout.strip()
@@ -304,7 +301,7 @@ class Indexer(object):
   def GetDataStructure(self, srv4_pkgcontent_stream, srv4_pkginfo_stream,
                        ips_pkgcontent_stream, ips_pkginfo_stream,
                        osrel, arch, show_progress=False):
-    """Gets the data structure to be pickled.
+    """Gets the data structure to be serialized.
 
     Does not interact with the OS.
     """
@@ -342,7 +339,7 @@ class Indexer(object):
     data = self.Index()
     out_fd = open(self.outfile, "w")
     logging.debug("IndexAndSave(): pickling the data.")
-    cPickle.dump(data, out_fd, cPickle.HIGHEST_PROTOCOL)
+    marshal.dump(data, out_fd)
     logging.debug("IndexAndSave(): pickling done.")
 
   def _GetSrv4PkgcontentStream(self):
@@ -352,9 +349,7 @@ class Indexer(object):
     args = ["pkg", "contents", "-H", "-o",
             "path,action.name,pkg.name,target,mode,owner,group",
             "-t", "dir,file,hardlink,link"]
-    pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-    stdout, stderr = pkg_proc.communicate()
-    ret = pkg_proc.wait()
+    ret, stdout, unused_stderr = shell.ShellCommand(args)
     return stdout.splitlines()
 
   def _GetSrv4PkginfosStream(self):
@@ -363,18 +358,14 @@ class Indexer(object):
       pkginfo_stream = open(self.infile_pkginfo, "r")
     else:
       args = ["pkginfo"]
-      pkginfo_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-      stdout, stderr = pkginfo_proc.communicate()
-      ret = pkginfo_proc.wait()
+      ret, stdout, stderr = shell.ShellCommand(args)
       pkginfo_stream = stdout.splitlines()
 
     return pkginfo_stream
 
   def _GetIpsPkginfosStream(self):
     args = ["pkg", "list", "-H", "-s"]
-    pkg_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-    stdout, stderr = pkg_proc.communicate()
-    ret = pkg_proc.wait()
+    ret, stdout, stderr = shell.ShellCommand(args)
     pkglist_stream = stdout.splitlines()
     return pkglist_stream
 
@@ -401,7 +392,7 @@ class Indexer(object):
     return "SUNW" + "-".join(re.findall (ALPHANUMERIC_RE, ips_name))
 
 class InstallContentsImporter(object):
-  """Responsible for importing a pickled file into the database."""
+  """Responsible for importing a serialized file into the database."""
 
   def __init__(self):
     self.pkginst_cache = {}
@@ -442,7 +433,7 @@ class InstallContentsImporter(object):
 
   def ImportFromFile(self, in_fd, show_progress=False):
     logging.debug("Unpickling data")
-    data = cPickle.load(in_fd)
+    data = marshal.load(in_fd)
     self.ImportData(data, show_progress)
 
   def ImportData(self, data, show_progress=False, include_prefixes=None):

@@ -22,7 +22,7 @@ import subprocess
 import file_set_checker
 import sys
 import getpass
-
+import urllib2
 
 BASE_URL = "http://buildfarm.opencsw.org"
 RELEASES_APP = "/releases"
@@ -240,8 +240,11 @@ class Srv4Uploader(object):
       for osrel in osrels:
         logging.debug("%s %s %s", catrel, arch, osrel)
         cat_key = (catrel, arch, osrel)
-        srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
-            catrel, arch, osrel, catalogname)
+        try:
+          srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
+              catrel, arch, osrel, catalogname)
+        except urllib2.HTTPError, e:
+          srv4_in_catalog = None
         if srv4_in_catalog:
           logging.debug("Catalog %s %s contains version %s of the %s package",
                         arch, osrel, srv4_in_catalog["osrel"], catalogname)

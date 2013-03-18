@@ -503,7 +503,10 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
   pkgmap_paths = [x["path"] for x in pkgmap]
   for pkgmap_path in pkgmap_paths:
     try:
-      path_str = str(pkgmap_path)
+      if type(pkgmap_path) is unicode:
+        path_str = pkgmap_path.encode("utf-8")
+      else:
+        path_str = str(pkgmap_path)
       if re.search(ARCH_RE, path_str):
         reasons_to_be_arch_specific.append((
             "archall-with-arch-paths",

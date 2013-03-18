@@ -10,23 +10,28 @@ import time
 import system_pkgmap
 
 CONFIG_DB_SCHEMA = "db_schema_version"
-DB_SCHEMA_VERSION = 7L
+DB_SCHEMA_VERSION = 9L
 TABLES_THAT_NEED_UPDATES = (m.CswFile,)
-TABLES = TABLES_THAT_NEED_UPDATES + (
-            m.Architecture,
-            m.CatalogRelease,
-            m.CatalogReleaseType,
-            m.CheckpkgErrorTag,
-            m.CheckpkgOverride,
-            m.CswConfig,
-            m.Host,
-            m.Maintainer,
-            m.OsRelease,
-            m.Pkginst,
-            m.Srv4DependsOn,
-            m.Srv4FileInCatalog,
-            m.Srv4FileStats,
-            m.Srv4FileStatsBlob)
+
+# This list of tables is sensitive to the order in which tables are created.
+# After you change the order here, you need to make sure that the tables can
+# still be created.
+TABLES = (m.Architecture,
+          m.CatalogReleaseType,
+          m.CatalogRelease,
+          m.CswConfig,
+          m.Host,
+          m.Maintainer,
+          m.OsRelease,
+          m.Pkginst,
+          m.Srv4FileStatsBlob,
+          m.Srv4FileStats,
+          m.CheckpkgErrorTag,
+) + TABLES_THAT_NEED_UPDATES + (
+          m.CheckpkgOverride, # needs Srv4FileStats
+          m.Srv4DependsOn,
+          m.Srv4FileInCatalog,
+)
 # Shouldn't this be in common_constants?
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 CONFIG_MTIME = "mtime"
@@ -87,7 +92,7 @@ class DatabaseManager(object):
             "the application expects: %s. "
             % (ldm.GetDatabaseSchemaVersion(), DB_SCHEMA_VERSION))
         if DB_SCHEMA_VERSION < ldm.GetDatabaseSchemaVersion():
-          msg += "Make sure your application sources are up to date."
+          msg += "When did you last run 'mgar up --all'?."
         elif DB_SCHEMA_VERSION > ldm.GetDatabaseSchemaVersion():
           msg += ("Make sure your database is up to date.  "
                   "Re-create it if necessary.")
@@ -153,7 +158,13 @@ class CheckpkgDatabaseMixin(object):
 
   def CreateTables(self):
     for table in TABLES:
-      table.createTable(ifNotExists=True)
+      try:
+        logging.debug("Creating table %r", table)
+        table.createTable(ifNotExists=True)
+      except sqlobject.dberrors.OperationalError, e:
+        logging.error("Could not create table %r: %s", table, e)
+        raise
+
 
   def InitialDataImport(self):
     """Imports initial data into the db.
@@ -182,10 +193,6 @@ class CheckpkgDatabaseMixin(object):
       except sqlobject.dberrors.DuplicateEntryError:
         pass
     self.SetDatabaseSchemaVersion()
-
-  def CreateTables(self):
-    for table in TABLES:
-      table.createTable(ifNotExists=True)
 
   def ClearTablesForUpdates(self):
     for table in TABLES_THAT_NEED_UPDATES:
@@ -287,7 +294,7 @@ class LocalDatabaseManager(CheckpkgDatabaseMixin):
       logging.warning("Could not get file mtime: %s", e)
     d_mtime = time.gmtime(int(d_mtime_epoch))
     logging.debug("IsDatabaseUpToDate: f_mtime %s, d_time: %s", f_mtime, d_mtime)
-    # Rounding up to integer seconds.  There is a race condition: 
+    # Rounding up to integer seconds.  There is a race condition:
     # pkgadd finishes at 100.1
     # checkpkg reads /var/sadm/install/contents at 100.2
     # new pkgadd runs and finishes at 100.3

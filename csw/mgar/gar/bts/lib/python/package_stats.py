@@ -6,6 +6,7 @@ import itertools
 import logging
 import os
 import progressbar
+import mute_progressbar
 import re
 import sqlobject
 
@@ -35,19 +36,19 @@ BAD_CONTENT_REGEXES = (
 
 
 class Error(Exception):
-  pass
+  """Generic error."""
 
 
 class PackageError(Error):
-  pass
+  """Problem with the package file examined."""
 
 
 class DatabaseError(Error):
-  pass
+  """Problem with the database contents or schema."""
 
 
 class StdoutSyntaxError(Error):
-  pass
+  """A utility's output is bad, e.g. impossible to parse."""
 
 
 class PackageStatsMixin(object):
@@ -121,6 +122,10 @@ class PackageStatsMixin(object):
     return self.dir_format_pkg
 
   def GetMtime(self):
+    """Get svr4 file mtime value.
+
+    Returns: a datetime.datetime object.
+    """
     return self.srv4_pkg.GetMtime()
 
   def GetSize(self):
@@ -185,7 +190,7 @@ class PackageStatsMixin(object):
 
     """
     dir_pkg = self.GetInspectivePkg()
-    logging.debug("Collecting %s package statistics.", repr(dir_pkg.pkgname))
+    logging.debug("Collecting %r (%r) package statistics.", dir_pkg, dir_pkg.pkgname)
     override_dicts = self.GetOverrides()
     basic_stats = self.GetBasicStats()
     # This would be better inferred from pkginfo, and not from the filename, but
@@ -208,9 +213,12 @@ class PackageStatsMixin(object):
         "basic_stats": basic_stats,
         "files_metadata": dir_pkg.GetFilesMetadata(),
         "mtime": self.GetMtime(),
+        "ldd_info": dir_pkg.GetLddMinusRlines(),
+        "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
     self.SaveStats(pkg_stats)
-    logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
+    logging.debug("Statistics of %s have been collected and saved in the db.",
+                  repr(dir_pkg.pkgname))
     return pkg_stats
 
   @classmethod
@@ -228,6 +236,7 @@ class PackageStatsMixin(object):
 
     Does not require an instance.
     """
+    logging.debug("SaveStats()")
     pkgname = pkg_stats["basic_stats"]["pkgname"]
     # Getting sqlobject representations.
     pkginst = cls.GetOrSetPkginst(pkgname)
@@ -246,7 +255,8 @@ class PackageStatsMixin(object):
     except sqlobject.main.SQLObjectNotFound, e:
       filename_arch = m.Architecture(
           name=pkg_stats["basic_stats"]["parsed_basename"]["arch"])
-    parsed_basename = pkg_stats["basic_stats"]["parsed_basename"]
+    basename = pkg_stats["basic_stats"]["parsed_basename"]
+    parsed_basename = basename
     os_rel_name = parsed_basename["osrel"]
     try:
       os_rel = m.OsRelease.select(
@@ -284,7 +294,8 @@ class PackageStatsMixin(object):
       logging.debug("Cleaning %s before saving it again", db_pkg_stats)
       db_pkg_stats.DeleteAllDependentObjects()
     except sqlobject.main.SQLObjectNotFound, e:
-      logging.debug("Package %s not present in the db, proceeding with insert.")
+      logging.debug("Package %s not present in the db, proceeding with insert.",
+                    basename)
       pass
     # Creating the object in the database.
     data_obj = m.Srv4FileStatsBlob(
@@ -335,15 +346,6 @@ class PackageStatsMixin(object):
     for override_dict in pkg_stats["overrides"]:
       o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
-    # The ldd -r reporting breaks on bigger packages during yaml saving.
-    # It might work when yaml is disabled
-    # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
-    # This check is currently disabled, let's save time by not collecting
-    # these data.
-    # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
-    # This one should be last, so that if the collection is interrupted
-    # in one of the previous runs, the basic_stats.pickle file is not there
-    # or not updated, and the collection is started again.
     return db_pkg_stats
 
   @classmethod
@@ -375,11 +377,16 @@ class PackageStatsMixin(object):
         line_u = pkgmap_entry["line"].decode("utf-8")
         f_path, basename = os.path.split(
             pkgmap_entry["path"].decode('utf-8'))
-      except UnicodeDecodeError, e:
+      except UnicodeDecodeError as e:
         line_u = pkgmap_entry["line"].decode("latin1")
         f_path, basename = os.path.split(
             pkgmap_entry["path"].decode('latin1'))
+      except UnicodeEncodeError as e:
+        # the line was already in unicode
+        line_u = pkgmap_entry['line']
+        f_path, basename = os.path.split(pkgmap_entry["path"])
         # If this fails too, code change will be needed.
+
       f = m.CswFile(
           basename=basename,
           path=f_path,
@@ -446,9 +453,11 @@ class PackageStatsMixin(object):
 
 
 def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
-  packages = [inspective_package.InspectiveCswSrv4File(x, debug) for x in file_name_list]
+  packages = [inspective_package.InspectiveCswSrv4File(x, debug)
+              for x in file_name_list]
   if catalog_file_name:
-    catalog_obj = catalog.OpencswCatalog(open(catalog_file_name, "rb"))
+    with open(catalog_file_name, "rb") as fd:
+      catalog_obj = catalog.OpencswCatalog(fd)
     md5s_by_basename = catalog_obj.GetDataByBasename()
     for pkg in packages:
       basename = os.path.basename(pkg.pkg_path)
@@ -471,6 +480,7 @@ class StatsCollector(object):
     self.debug = debug
 
   def CollectStatsFromFiles(self, file_list, catalog_file, force_unpack=False):
+    """Returns: A list of md5 sums of collected statistics."""
     args_display = file_list
     if len(args_display) > 5:
       args_display = args_display[:5] + ["...more..."]
@@ -487,9 +497,12 @@ class StatsCollector(object):
       raise PackageError("The length of package list is zero.")
     counter = itertools.count(1)
     self.logger.info("Juicing the svr4 package stream files...")
-    pbar = progressbar.ProgressBar()
-    pbar.maxval = total_packages
-    pbar.start()
+    if not self.debug:
+      pbar = progressbar.ProgressBar()
+      pbar.maxval = total_packages
+      pbar.start()
+    else:
+      pbar = mute_progressbar.MuteProgressBar()
     while stats_list:
       # This way objects will get garbage collected as soon as they are removed
       # from the list by pop().  The destructor (__del__()) of the srv4 class
