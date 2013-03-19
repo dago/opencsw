@@ -10,8 +10,9 @@ define BLURB
   display editor.
 endef
 
-DISTFILES		=	$(DISTNAME).tar.xz
 MASTER_SITES	=	$(GNU_MIRROR)
+DISTFILES		=	$(DISTNAME).tar.xz
+DISTFILES		+=	CSWemacs-common.preinstall
 
 # this is necessary because GNU id options dialect is is used; BTW, I
 # think that adding this systematically at the beginning of the PATH
@@ -105,6 +106,9 @@ EXTRA_CONFIGURE_ARGS_nox	+=	--without-x
 CONFIGURE_ARGS	= $(DIRPATHS)
 CONFIGURE_ARGS	+= --without-compress-info
 CONFIGURE_ARGS	+= $(EXTRA_CONFIGURE_ARGS_$(FEATURES))
+
+# this is part of texinfo package:
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/info/info.info
 
 MERGE_SCRIPTS_isa-default-features-athena	=	copy-all
 
@@ -407,8 +411,9 @@ include gar/category.mk
 
 post-install-modulated:
 	@echo "executing $@"
-	mv -f $(DESTDIR)$(bindir)/emacs $(DESTDIR)$(bindir)/emacs-$(FEATURES)
+	rm -f $(DESTDIR)$(bindir)/emacs
 	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-$(FEATURES)
+	cd $(DESTDIR)$(bindir) && ln -s emacs-$(VERSION)-$(FEATURES) emacs-$(FEATURES)
 	$(MAKECOOKIE)
 
 # this is private and not available publicly
