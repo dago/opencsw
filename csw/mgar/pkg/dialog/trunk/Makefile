@@ -22,13 +22,12 @@ CATALOGNAME_CSWdialog = dialog
 SPKG_DESC_CSWdialog = A script-interpreter which provides a set of curses widgets
 RUNTIME_DEP_PKGS_CSWdialog += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWdialog += CSWlibdialog11
-RUNTIME_DEP_PKGS_CSWdialog += CSWpython
 
 PACKAGES += CSWlibdialog11
 CATALOGNAME_CSWlibdialog11 = libdialog11
+SPKG_DESC_CSWlibdialog11 += $(DESCRIPTION), libdialog.so.11
 PKGFILES_CSWlibdialog11 += $(call baseisadirs,$(libdir),libdialog\.so\.11\.0\.0)
 PKGFILES_CSWlibdialog11 += $(call baseisadirs,$(libdir),libdialog\.so\.11(\.\d+)*)
-SPKG_DESC_CSWlibdialog11 += $(DESCRIPTION), libdialog.so.11
 RUNTIME_DEP_PKGS_CSWlibdialog11 += CSWlibncurses5
 
 PACKAGES += CSWdialog-dev
@@ -39,6 +38,7 @@ PKGFILES_CSWdialog-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWdialog-dev += CSWlibdialog11
 
 CHECKPKG_OVERRIDES_CSWdialog += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
 
 # There are no tests
 SKIPTEST = 1
