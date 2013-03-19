@@ -1,64 +1,53 @@
-# Reminder: to build dialog_minimal, use
-#   gmake package-CSWdialog-minimal
+# Source file not versioned, remember to remove /home/src/dialog.tar.gz
+# when updating
 
 NAME = dialog
-VERSION = 1.1r20120706
-VERSION2 = 1.1
-RELEASE = 20120706
+VERSION = 1.2r20121230
+VERSION2 = 1.2
+RELEASE = 20121230
 DISTNAME = $(NAME)-$(VERSION2)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 GARTYPE = v2
 
 DESCRIPTION = A script-interpreter which provides a set of curses widgets
 define BLURB
-  A script-interpreter which provides a set of curses widgets
 endef
 
 MASTER_SITES = http://invisible-island.net/datafiles/release/
 DISTFILES = $(NAME).tar.gz
 VENDOR_URL = http://invisible-island.net/dialog
 
-EXTRA_MODULATORS = CURSES
-MODULATIONS_CURSES = ncurses minimal
-MERGE_SCRIPTS_isa-default-curses-ncurses = copy-all
-MERGE_SCRIPTS_isa-default-curses-minimal = copy-all
-
-PACKAGES = CSWdialog CSWdialog-minimal
-SPKG_DESC_CSWdialog = A script-interpreter which provides a set of curses widgets
-SPKG_DESC_CSWdialog-minimal = A script-interpreter which provides a set of curses widgets (traditional curses version)
+PACKAGES = CSWdialog
 CATALOGNAME_CSWdialog = dialog
-CATALOGNAME_CSWdialog-minimal = dialog_minimal
-
+SPKG_DESC_CSWdialog = A script-interpreter which provides a set of curses widgets
 RUNTIME_DEP_PKGS_CSWdialog += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWdialog += CSWlibdialog11
+RUNTIME_DEP_PKGS_CSWdialog += CSWpython
+
+PACKAGES += CSWlibdialog11
+CATALOGNAME_CSWlibdialog11 = libdialog11
+PKGFILES_CSWlibdialog11 += $(call baseisadirs,$(libdir),libdialog\.so\.11\.0\.0)
+PKGFILES_CSWlibdialog11 += $(call baseisadirs,$(libdir),libdialog\.so\.11(\.\d+)*)
+SPKG_DESC_CSWlibdialog11 += $(DESCRIPTION), libdialog.so.11
+RUNTIME_DEP_PKGS_CSWlibdialog11 += CSWlibncurses5
+
+PACKAGES += CSWdialog-dev
+CATALOGNAME_CSWdialog-dev = dialog_dev
+SPKG_DESC_CSWdialog-dev += $(DESCRIPTION), development files
+PKGFILES_CSWdialog-dev += /opt/csw/lib/libdialog.so
+PKGFILES_CSWdialog-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWdialog-dev += CSWlibdialog11
 
 CHECKPKG_OVERRIDES_CSWdialog += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWdialog += surplus-dependency|CSWalternatives
-CHECKPKG_OVERRIDES_CSWdialog-minimal += surplus-dependency|CSWalternatives
-
-PKGFILES_CSWdialog-minimal = $(bindir).*minimal $(mandir).*minimal
-
-ALTERNATIVES_CSWdialog = ncurses
-ALTERNATIVES_CSWdialog-minimal = minimal
-ALTERNATIVE_ncurses = $(bindir)/dialog dialog $(bindir)/dialog.ncurses 50 $(mandir)/man1/dialog.1 dialog.man $(mandir)/man1/dialog.1.ncurses
-ALTERNATIVE_minimal = $(bindir)/dialog dialog $(bindir)/dialog.minimal 25 $(mandir)/man1/dialog.1 dialog.man $(mandir)/man1/dialog.1.minimal
 
 # There are no tests
 SKIPTEST = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
-ifeq ($(CURSES),ncurses)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-libtool
 CONFIGURE_ARGS += --with-ncurses
-endif
 
 include gar/category.mk
-
-post-install-modulated:
-	@echo " ==> Post-install for $(NAME) (custom)"
-
-	@mv $(DESTDIR)$(bindir)/dialog $(DESTDIR)$(bindir)/dialog.$(CURSES)
-	@mv $(DESTDIR)$(mandir)/man1/dialog.1 $(DESTDIR)$(mandir)/man1/dialog.1.$(CURSES)
-	@$(MAKECOOKIE)
 
 post-merge:
 	@echo " ==> Post-merge for $(NAME) (custom)"
