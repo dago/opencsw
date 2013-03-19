@@ -38,8 +38,8 @@ DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
 LICENSE = LICENSE
 
-# solaris9 does not have the newest glib2 any more
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+# solaris9 does not have the ne so no gnome-keychain on Solaris9
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 KAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 BUILD_DEP_PKGS += CSWlibexpat-dev
 BUILD_DEP_PKGS += CSWlibserf-dev
@@ -59,15 +59,21 @@ RUNTIME_DEP_PKGS_CSWsvn   += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibneon27
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibgnome-keyring0
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibglib2-0-0
+RUNT_5.10   += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibglib2-0-0
 CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibdbus1-3
+
+RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn_$(GAROSREL))
+dency|CSWlibdbus1-3
 
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
 PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
-PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
+PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-#Needed for Solaris9 again:
+OBSOLETED_BY_CSWsvn-dev_5.9    = CSWsvn-devel
+OBSOLETED_BY_CSWsvn-dev += $(OBSOLETED_BY_CSWsvn-dev_$(GAROSREL))
+-dev)/changelog.CSW
 
 PACKAGES += CSWap2svn
 SPKG_DESC_CSWap2svn         = Subversion Modules for Apache 2.2
@@ -183,18 +189,18 @@ STRIP_LIBTOOL = 1
 
 NODIRPATHS      = --libdir --libexecdir
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --disable-mod-activation
-CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se
+CONFIGURE_ARGS += --disable-mod-activa_5.9 += --with-jdk=/usr/jdk1.6.0_20/j2sdk1.4.2_02/j2se
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
-CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
-CONFIGURE_ARGS += --with-gnome-keyring=$(prefix)
+CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/_5.10fix)
 CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-serf=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --witNo Keyring on Solaris9
+CONFIGURE_ARGS_5.10 += --with-gnome-keyring=$(prefix)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL)-with-zlib=$(prefix)
 
 # Once you have verified that a new upstream release passes the tests, you can use
 # "SKIPTEST=1 gmake <target>" to skip the tests for simple repackaging tasks.
