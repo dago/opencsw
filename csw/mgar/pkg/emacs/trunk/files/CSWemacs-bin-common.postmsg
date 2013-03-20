@@ -1,0 +1,14 @@
+The tags generator is offered in many flavors.
+
+This package provides its specific implementation: ctags.
+
+You can easily select between the versions with the alternatives(8)
+system by executing:
+
+  /opt/csw/sbin/alternatives --config ctags
+
+To see which are the other installed flavors, try:
+
+  /opt/csw/sbin/alternatives --display ctags
+
+See http://wiki.opencsw.org/alternatives-package for further details.
