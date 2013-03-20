@@ -1,0 +1,39 @@
+From 5e71974c9e2c7e8cb7c3e49520fbe9b82059f636 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 20 Mar 2013 10:39:54 +0100
+Subject: [PATCH] Do not add -Wall
+
+---
+ src/Makefile.am | 2 +-
+ src/Makefile.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index ebd54b0..146b5f5 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -2,7 +2,7 @@
+ MAINTAINERCLEANFILES = Makefile.in				
+ 
+ LDFLAGS           = -L/usr/X11R6/lib
+-INCLUDES          = -g -O3 -Wall -I/usr/X11R6/include \
++INCLUDES          = -I/usr/X11R6/include \
+ $(X_CFLAGS) -I$(prefix)/include -I$(includedir) -I. \
+ -DPREFIX=\""$(prefix)"\" @GIBLIB_CFLAGS@
+ LIBOBJS = @LIBOBJS@
+diff --git a/src/Makefile.in b/src/Makefile.in
+index d424a63..2671ce5 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -74,7 +74,7 @@ VERSION = @VERSION@
+ MAINTAINERCLEANFILES = Makefile.in				
+ 
+ LDFLAGS = -L/usr/X11R6/lib
+-INCLUDES = -g -O3 -Wall -I/usr/X11R6/include $(X_CFLAGS) -I$(prefix)/include -I$(includedir) -I. -DPREFIX=\""$(prefix)"\" @GIBLIB_CFLAGS@
++INCLUDES = -I/usr/X11R6/include $(X_CFLAGS) -I$(prefix)/include -I$(includedir) -I. -DPREFIX=\""$(prefix)"\" @GIBLIB_CFLAGS@
+ 
+ LIBOBJS = @LIBOBJS@
+ 
+-- 
+1.8.1.4
+
