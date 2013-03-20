@@ -118,13 +118,25 @@ MERGE_SCRIPTS_isa-default-features-gtk		=	copy-only
 MERGE_DIRS_isa-default-features-nox			=	$(bindir)
 MERGE_SCRIPTS_isa-default-features-nox		=	copy-only
 
-ALTERNATIVES_CSWemacs-athena=	athena
-ALTERNATIVES_CSWemacs-gtk	=	gtk
-ALTERNATIVES_CSWemacs-nox	=	nox
+ALTERNATIVES_CSWemacs-athena		=	athena
+ALTERNATIVES_CSWemacs-gtk			=	gtk
+ALTERNATIVES_CSWemacs-nox			=	nox
+ALTERNATIVES_CSWemacs-bin-common	=	ctags
 
 ALTERNATIVE_athena			=	$(bindir)/emacs emacs $(bindir)/emacs-athena 200
 ALTERNATIVE_gtk				=	$(bindir)/emacs emacs $(bindir)/emacs-gtk 100
 ALTERNATIVE_nox				=	$(bindir)/emacs emacs $(bindir)/emacs-nox 300
+ALTERNATIVE_ctags			=	$(bindir)/ctags ctags $(bindir)/ctags.emacs 100
+
+POSTMSG_EMACS			=	emacsalt.postmsg
+POSTMSG_EMACS_ATHENA	=	$(docdir)/$(CATALOGNAME_CSWemacs-athena)/CSWemacs-athena.postmsg
+DISTFILES				+=	$(notdir $(POSTMSG_EMACS_ATHENA))
+POSTMSG_EMACS_GTK		=	$(docdir)/$(CATALOGNAME_CSWemacs-gtk)/CSWemacs-gtk.postmsg
+DISTFILES				+=	$(notdir $(POSTMSG_EMACS_GTK))
+POSTMSG_EMACS_NOX		=	$(docdir)/$(CATALOGNAME_CSWemacs-nox)/CSWemacs-nox.postmsg
+DISTFILES				+=	$(notdir $(POSTMSG_EMACS_NOX))
+POSTMSG_CTAGS			=	$(docdir)/$(CATALOGNAME_CSWemacs-bin-common)/CSWemacs-bin-common.postmsg
+DISTFILES				+=	$(notdir $(POSTMSG_CTAGS))
 
 PACKAGES							=	CSWemacs-common
 SPKG_DESC_CSWemacs-common			=	$(DESCRIPTION) - architecture neutral common components
@@ -210,6 +222,29 @@ CATALOGNAME_CSWemacscommon			=	emacscommon_stub
 # specialize the variable:
 EXTRA_TEXINFO						=	$(infodir)/.*
 ARCHALL_CSWemacs-common				=	1
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/gnus.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/tramp.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/eintr.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/reftex.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/emacs.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/efaq.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/eshell.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/elisp.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/woman.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/mh-e.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/idlwave.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/emacs/24.3/lisp/info.elc
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/emacs/24.3/lisp/gnus/nnspool.elc
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/emacs/24.3/etc/NEWS
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/eintr.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/dbus.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/emacs.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/efaq.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/elisp.info
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/emacs/24.3/lisp/ldefs-boot.el
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/emacs/24.3/lisp/loaddefs.el
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/emacs/24.3/lisp/org/org-version.el
+CHECKPKG_OVERRIDES_CSWemacs-common	+=	file-with-bad-content|/usr/share|root/opt/csw/share/emacs/24.3/lisp/org/org-odt.elc
 
 PACKAGES						+=	CSWemacs-el
 SPKG_DESC_CSWemacs-el			=	$(DESCRIPTION) - elisp sources
@@ -228,10 +263,10 @@ OBSOLETED_BY_CSWemacs-bin-common		=	CSWemacsbincommon
 CATALOGNAME_CSWemacsbincommon			=	emacsbincommon_stub
 RUNTIME_DEP_PKGS_CSWemacs-bin-common	=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWemacs-common		+=	CSWperl
-RUNTIME_DEP_PKGS_CSWemacs-common		+=	CSWpython
 CHECKPKG_OVERRIDES_CSWemacs-bin-common	+=	surplus-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-bin-common	+=	no-direct-binding|/opt/csw/libexec/emacs/24.3/sparc-sun-solaris2.10/movemail|is|not|directly|bound|to|soname|libmail.so.1
 PKGFILES_CSWemacs-bin-common			=	/opt/csw/bin/b2m
-PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/ctags
+PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/ctags.emacs
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/ebrowse
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/emacsclient
 PKGFILES_CSWemacs-bin-common			+=	/opt/csw/bin/etags
@@ -263,10 +298,8 @@ RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgif4
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibjbig2
@@ -279,7 +312,7 @@ RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibotf-utils
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibotf0
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibthai0
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibtiff3
@@ -311,6 +344,42 @@ CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibxml2-2
 CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWlibpixman1-0
 CHECKPKG_OVERRIDES_CSWemacs-athena	+=	surplus-dependency|CSWfconfig
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	soname-unused|libz.so.1|is|needed|by|/opt/csw/bin/emacs-24.3-athena|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	soname-unused|libXext.so.0|is|needed|by|/opt/csw/bin/emacs-24.3-athena|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	soname-unused|libcairo.so.2|is|needed|by|/opt/csw/bin/emacs-24.3-athena|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/emacs-24.3-athena|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	soname-unused|libbz2.so.1.0|is|needed|by|/opt/csw/bin/emacs-24.3-athena|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libXft.so.2
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libXt.so.4
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libm17n-flt.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libgnutls.so.26
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libglib-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libjpeg.so.7
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libotf.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libXpm.so.4
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libMagickCore.so.5
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|librsvg-2.so.2
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libgio-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libxml2.so.2
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libXaw.so.5
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libSM.so.6
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libgobject-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libXmu.so.4
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libgdk_pixbuf-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libncurses.so.5
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libXrender.so.1
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libpng15.so.15
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libICE.so.6
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libMagickWand.so.5
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libm17n-core.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libMagickWand
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libMagickWand.so.5
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libm17n-core.so.0
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libgif.so.4
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libfreetype.so.6
+CHECKPKG_OVERRIDES_CSWemacs-athena	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-athena|is|not|directly|bound|to|soname|libtiff.so.3
 PKGFILES_CSWemacs-athena			=	/opt/csw/bin/emacs-athena
 PKGFILES_CSWemacs-athena			+=	/opt/csw/bin/emacs-$(VERSION)-athena
 
@@ -341,7 +410,6 @@ RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibintl8
@@ -355,7 +423,7 @@ RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibotf-utils
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibotf0
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibthai0
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibtiff3
@@ -385,6 +453,45 @@ CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWlibpixman1-0
 CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWfconfig
 CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	surplus-dependency|CSWorbit2
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libz.so.1|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libatk-1.0.so.0|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libpangoft2-1.0.so.0|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libpangocairo-1.0.so.0|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libcairo.so.2|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libpango-1.0.so.0|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libgmodule-2.0.so.0|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	soname-unused|libbz2.so.1.0|is|needed|by|/opt/csw/bin/emacs-24.3-gtk|but|never|used
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgio-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libm17n-flt.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgnutls.so.26
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libglib-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libjpeg.so.7
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgtk-x11-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libXpm.so.4
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libMagickCore.so.5
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|librsvg-2.so.2
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libXft.so.2
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgdk-x11-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libxml2.so.2
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgconf-2.so.4
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libotf.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libSM.so.6
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libthread.so.1
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgobject-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libdbus-1.so.3
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgdk_pixbuf-2.0.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libncurses.so.5
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libXrender.so.1
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libpng15.so.15
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libICE.so.6
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libMagickWand.so.5
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libm17n-core.so.0
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libgif.so.4
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libfreetype.so.6
+CHECKPKG_OVERRIDES_CSWemacs-gtk	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-gtk|is|not|directly|bound|to|soname|libtiff.so.3
 PKGFILES_CSWemacs-gtk			=	/opt/csw/bin/emacs-gtk
 PKGFILES_CSWemacs-gtk			+=	/opt/csw/bin/emacs-$(VERSION)-gtk
 
@@ -404,16 +511,39 @@ CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/local|root/opt/csw
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	file-with-bad-content|/usr/share|root/opt/csw/bin/emacs-nox
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	surplus-dependency|CSWemacs-bin-common
 CHECKPKG_OVERRIDES_CSWemacs-nox	+=	surplus-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-nox|is|not|directly|bound|to|soname|libncurses.so.5
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-nox|is|not|directly|bound|to|soname|libxml2.so.2
+CHECKPKG_OVERRIDES_CSWemacs-nox	+=	no-direct-binding|/opt/csw/bin/emacs-24.3-nox|is|not|directly|bound|to|soname|libgnutls.so.26
 PKGFILES_CSWemacs-nox			=	/opt/csw/bin/emacs-nox
 PKGFILES_CSWemacs-nox			+=	/opt/csw/bin/emacs-$(VERSION)-nox
 
 include gar/category.mk
+
+pre-fetch:
+	@echo "executing $@"
+	cp $(FILEDIR)/$(POSTMSG_EMACS) $(FILEDIR)/$(notdir $(POSTMSG_EMACS_ATHENA))
+	cp $(FILEDIR)/$(POSTMSG_EMACS) $(FILEDIR)/$(notdir $(POSTMSG_EMACS_GTK))
+	cp $(FILEDIR)/$(POSTMSG_EMACS) $(FILEDIR)/$(notdir $(POSTMSG_EMACS_NOX))
+	$(MAKECOOKIE)
+
+post-merge:
+	@echo "executing $@"
+	ginstall -d $(PKGROOT)$(dir $(POSTMSG_EMACS_ATHENA))
+	ginstall $(WORKDIR)/$(notdir $(POSTMSG_EMACS_ATHENA)) $(PKGROOT)$(POSTMSG_EMACS_ATHENA)
+	ginstall -d $(PKGROOT)$(dir $(POSTMSG_EMACS_GTK))
+	ginstall $(WORKDIR)/$(notdir $(POSTMSG_EMACS_GTK)) $(PKGROOT)$(POSTMSG_EMACS_GTK)
+	ginstall -d $(PKGROOT)$(dir $(POSTMSG_EMACS_NOX))
+	ginstall $(WORKDIR)/$(notdir $(POSTMSG_EMACS_NOX)) $(PKGROOT)$(POSTMSG_EMACS_NOX)
+	ginstall -d $(PKGROOT)$(dir $(POSTMSG_CTAGS))
+	ginstall $(WORKDIR)/$(notdir $(POSTMSG_CTAGS)) $(PKGROOT)$(POSTMSG_CTAGS)
+	$(MAKECOOKIE)
 
 post-install-modulated:
 	@echo "executing $@"
 	rm -f $(DESTDIR)$(bindir)/emacs
 	mv -f $(DESTDIR)$(bindir)/emacs-$(VERSION) $(DESTDIR)$(bindir)/emacs-$(VERSION)-$(FEATURES)
 	cd $(DESTDIR)$(bindir) && ln -s emacs-$(VERSION)-$(FEATURES) emacs-$(FEATURES)
+	mv -f $(DESTDIR)$(bindir)/ctags $(DESTDIR)$(bindir)/ctags.emacs
 	$(MAKECOOKIE)
 
 # this is private and not available publicly

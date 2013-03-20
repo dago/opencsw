@@ -1,0 +1,12 @@
+The GNU Emacs editor is offered in 3 flavors:
+
+  * athena : based on the Athena toolkit
+  * gtk    : based on the GTK toolkit
+  * nox    : without any XWindows dependencies
+
+You can easily select between the versions with the alternatives(8)
+system by executing:
+
+  /opt/csw/sbin/alternatives --config emacs
+
+See http://wiki.opencsw.org/alternatives-package for further details.
