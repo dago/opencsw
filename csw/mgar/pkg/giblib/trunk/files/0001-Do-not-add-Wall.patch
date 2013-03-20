@@ -1,0 +1,50 @@
+From ae5a7d27a1bceb4b5ded203d8445227a7d28b5ed Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 20 Mar 2013 10:17:18 +0100
+Subject: [PATCH] Do not add -Wall
+
+---
+ configure    | 1 -
+ configure.ac | 1 -
+ configure.in | 1 -
+ 3 files changed, 3 deletions(-)
+
+diff --git a/configure b/configure
+index 94937fa..aacdc7d 100755
+--- a/configure
++++ b/configure
+@@ -19872,7 +19872,6 @@ IMLIB_CFLAGS=`imlib2-config --cflags`
+ 
+ 
+ LIBS="$LIBS -lm"
+-CFLAGS="$CFLAGS -Wall"
+ 
+ 
+                                         ac_config_files="$ac_config_files Makefile giblib-config giblib.pc giblib/Makefile"
+diff --git a/configure.ac b/configure.ac
+index 6807d86..d0a994e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -29,7 +29,6 @@ AC_SUBST(IMLIB_LIBS)
+ AC_SUBST(IMLIB_CFLAGS)
+ 
+ LIBS="$LIBS -lm"
+-CFLAGS="$CFLAGS -Wall"
+ 
+ 
+ AC_CONFIG_FILES([
+diff --git a/configure.in b/configure.in
+index 432cb16..1e2506a 100644
+--- a/configure.in
++++ b/configure.in
+@@ -28,7 +28,6 @@ AC_SUBST(IMLIB_LIBS)
+ AC_SUBST(IMLIB_CFLAGS)
+ 
+ LIBS="$LIBS -lm"
+-CFLAGS="$CFLAGS -Wall"
+ 
+ 
+ AC_OUTPUT([
+-- 
+1.8.1.4
+
