@@ -1,5 +1,5 @@
 NAME = imlib2
-VERSION = 1.4.4
+VERSION = 1.4.5
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -12,34 +12,55 @@ define BLURB
 endef
 
 SF_PROJ = enlightenment
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = $(SF_MI+= $(NAME)-$(VERSION).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PATCHFILES += 0001-Make-sure-we-have-XK_q.patch
 
-RUNTIME_DEP_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
-RUNTIME_DEP_PKGS += CSWpng CSWtiff CSWzlib
+BUILD_DEP_PKGS += CSWlibbz2-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibid3-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWlibtiff-dev
+BUILD_DEP_PKGS += CSWlibjpeg-dev
+BUILD_DEP_PKGS += CSWlibgif-dev
 
-BUILD64_LIBS_ONLY = 1
+PACKAGES += CSWlibimlib2-1
+SPKG_DESC_CSWlibimlib2-1 = A powerful graphics library, libImlib2.so.1
+PKGFILES_CSWlibimlib2-1 += $(call pkgfiles_lib,libImlib2.so.1)
+PKGFILES_CSWlibimlib2-1 += $(call baseisadirs,$(libdir),imlib2/.*)
+PKGFILES_CSWlibimlib2-1 += $(sharedstatedir)/imlib2/.*
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibid3tag
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibimlib2-1 += CSWlibgif4
+
+# This path is in addition to the correct /usr/openwin/lib/X11/rgb.txt
+CHECKPKG_OVERRIDES_CSWlibimlib2-1 += file-with-bad-content|/usr/share|root/opt/csw/lib/imlib2/loaders/xpm.so
+CHECKPKG_OVERRIDES_CSWlibimlib2-1 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/imlib2/loaders/xpm.so
+CHECKPKG_OVERRIDES_CSWlibimlib2-1 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/imlib2/loaders/xpm.so
+
+PACKAGES += CSWlibimlib2-dev
+SPKG_DESC_CSWlibimlib2-dev = Development files for libImlib2.so.1
+PKGFILES_CSWlibimlib2-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibimlib2-dev += CSWlibimlib2-1
+
+PACKAGES += CSWimlib2
+SPKG_DESC_CSWimlib2 = Imlib2 tools
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWimlib2 += CSWlibimlib2-1
+
+BUILD64 = 1
+ISAEXEC = 1
+
+# giflib needs this for stdbool.h
+#EXTRA_CFLAGS += -xc99
+EXTRA_CPPFLAGS += -xc99
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/bmp.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/tiff.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/bz2.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/jpeg.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/pnm.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/zlib.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/lbm.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/xpm.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/gif.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libImlib2.so.1.4.4
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/tga.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/png.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/argb.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/filters/colormod.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/filters/bumpmap.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/filters/testfilter.so
-CHECKPKG_OVERRIDES_CSWimlib2 += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/imlib2/loaders/id3.so
-
-include
+include gar/category.mk
