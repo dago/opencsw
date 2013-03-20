@@ -1,0 +1,25 @@
+From cc3650373623cda65498902e964aa985e128eaad Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 20 Mar 2013 10:51:03 +0100
+Subject: [PATCH] Make sure we have XK_q
+
+---
+ src/bin/imlib2_view.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/bin/imlib2_view.c b/src/bin/imlib2_view.c
+index 7a84211..ded57f8 100644
+--- a/src/bin/imlib2_view.c
++++ b/src/bin/imlib2_view.c
+@@ -5,6 +5,8 @@
+ #include <X11/extensions/shape.h>
+ #include <X11/Xatom.h>
+ #include <X11/Xos.h>
++#define XK_LATIN1 1
++#include <X11/keysymdef.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
+-- 
+1.8.1.4
+
