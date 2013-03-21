@@ -167,9 +167,12 @@ amd64_OS_COMPILER 	= solaris64-x86_64-cc-sunw
 sparcv8_OS_COMPILER 		= solaris-sparcv8-cc-sunw
 sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc-sunw
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc-sunw
-sparcv9_OS_COMPILER		= solaris64-sparcv9-cc-sunwaris64-sparcv9-cc
+sparcv9_OS_COMPILER		= solaris64-sparcv9-cc-sunwar# --libdir must only be given if the directory is actually different from lib or the creation will fail
+# as the directory is already there
+LIBDIR_64 = --libdir=lib/64
+LIBDIR = $(LIBDIR_$(MEMORYMODEL))aris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
+CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_ $(LIBall_prefix=$(DESTDIR)
 
 # PKCS11 is only for Solaris 10 so we must create solaris 10 spesolaris10-i386
 ifneq ($(shell /usr/bin/uname -r),5.9)
@@ -178,18 +181,18 @@ endif
 
 
 
-# For now we want the sun perl to be used
+# For now we want the sunEXTRA_ perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
 
 # Configure uses make and sun make is not happy
-# with the shell command added by the t4 patch
+# with the shell command addedEXTRA_ by the t4 patch
 CONFIGURE_ENV += MAKE="/opt/cThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
 # added "-z defs" to the linker options. That causes object compilation to fail because
 # they are not linked against libc and libdl (for Sol9). This is workaround until I find a better fix.
 EXTRA_LD_OPTIONS = -lc -ldlLAGS += -noex -mt
 
 # By default, the install target put man pages under
-# /opt/csw/ssl/man, but we want them under /opt/csw/share/man
+# /opt/csw/ssl/man, but we want them under /oEXTRA_pt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
 
 # library files are not automatically stripped
@@ -225,7 +228,5 @@ merge-doc:
 		(cd $(DOWNLOADDIR)/ && ginstall -m 0644 README.CSW changelog.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 		(cd $(WORKSRC_FIRSTMOD)/ && ginstall -m 0644 $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 	done
-	@$(MAKECOOKIE)
-
-post-merge: merge-doc i
+	@$(MAKECO-all: merge-doc install-conf-misc 
 
