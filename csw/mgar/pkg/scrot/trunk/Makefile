@@ -14,13 +14,13 @@ PATCHFILES += 0001-Do-not-add-Wall.patch
 VENDOR_URL = http://freecode.com/projects/scrot
 
 BUILD_DEP_PKGS += CSWlibgiblib-dev
-BUILD_DEP_PKGS += CSWimlib2
+BUILD_DEP_PKGS += CSWlibimlib2-dev
 
 PACKAGES += CSWscrot
 SPKG_DESC_CSWscrot = Screen capture utility
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWscrot += CSWlibgiblib1
-RUNTIME_DEP_PKGS_CSWscrot += CSWimlib2
+RUNTIME_DEP_PKGS_CSWscrot += CSWlibimlib2-1
 
 include gar/category.mk
 
