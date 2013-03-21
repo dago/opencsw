@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.6.14
+VERSION = 1.6.18
 CATEGORIES = apps
 GARTYPE = v2
 
