@@ -13,12 +13,12 @@ PATCHFILES += 0001-Do-not-add-Wall.patch
 
 VENDOR_URL = http://freecode.com/projects/giblib
 
-BUILD_DEP_PKGS += CSWimlib2
+BUILD_DEP_PKGS += CSWlibimlib2-dev
 
 PACKAGES += CSWlibgiblib1
 SPKG_DESC_CSWlibgiblib1 = A library wrapper to imlib2, libgiblib.so.1
 PKGFILES_CSWlibgiblib1 += $(call pkgfiles_lib,libgiblib.so.1)
-RUNTIME_DEP_PKGS_CSWlibgiblib1 += CSWimlib2
+RUNTIME_DEP_PKGS_CSWlibgiblib1 += CSWlibimlib2-1
 
 PACKAGES += CSWlibgiblib-dev
 SPKG_DESC_CSWlibgiblib-dev = Development files for libgiblib.so.1
