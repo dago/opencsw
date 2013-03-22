@@ -1,3 +1,9 @@
+openssl (1.0.1e,rev=2013.03.22) unstable
+
+  * Fixed missing 64 bits libraries bug
+
+   -- Yann Rouillard <yann@opencsw.org>  Fri, 22 Mar 2013 23:07:58 +0100
+
 openssl (1.0.1e,rev=2013.03.12) unstable
 
   * New upstream release.
