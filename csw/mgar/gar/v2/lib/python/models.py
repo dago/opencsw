@@ -163,7 +163,6 @@ class Srv4FileStats(sqlobject.SQLObject):
 
   def __init__(self, *args, **kwargs):
     super(Srv4FileStats, self).__init__(*args, **kwargs)
-    self._cached_pkgstats = None
 
   def DeleteAllDependentObjects(self):
     data_obj = self.data_obj
@@ -247,22 +246,21 @@ class Srv4FileStats(sqlobject.SQLObject):
     return s
 
   def GetStatsStruct(self):
-    if not self._cached_pkgstats:
-      self._cached_pkgstats = cPickle.loads(str(self.data_obj.pickle))
-      # There was a problem with bad utf-8 in the VENDOR field.
-      # This is a workaround.
-      if "VENDOR" in self._cached_pkgstats["pkginfo"]:
-        self._cached_pkgstats["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
-            self._cached_pkgstats["pkginfo"]["VENDOR"])
-      # The end of the hack.
-      #
-      # One more workaround
-      for d in self._cached_pkgstats["pkgmap"]:
-        if "path" in d:
-          d["path"] = self.GetUnicodeOrNone(d["path"])
-          d["line"] = self.GetUnicodeOrNone(d["line"])
-      # End of the workaround
-    return self._cached_pkgstats
+    pkgstats = cPickle.loads(str(self.data_obj.pickle))
+    # There was a problem with bad utf-8 in the VENDOR field.
+    # This is a workaround.
+    if "VENDOR" in pkgstats["pkginfo"]:
+      pkgstats["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
+          pkgstats["pkginfo"]["VENDOR"])
+    # The end of the hack.
+    #
+    # One more workaround
+    for d in pkgstats["pkgmap"]:
+      if "path" in d:
+        d["path"] = self.GetUnicodeOrNone(d["path"])
+        d["line"] = self.GetUnicodeOrNone(d["line"])
+    # End of the workaround
+    return pkgstats
 
   def _GetBuildSource(self):
     data = self.GetStatsStruct()
