@@ -20,7 +20,7 @@ VENDOR_URL = http://invisible-island.net/dialog
 PACKAGES = CSWdialog
 CATALOGNAME_CSWdialog = dialog
 SPKG_DESC_CSWdialog = A script-interpreter which provides a set of curses widgets
-RUNTIME_DEP_PKGS_CSWdialog += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWdialog += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSWdialog += CSWlibdialog11
 
 PACKAGES += CSWlibdialog11
@@ -28,7 +28,7 @@ CATALOGNAME_CSWlibdialog11 = libdialog11
 SPKG_DESC_CSWlibdialog11 += $(DESCRIPTION), libdialog.so.11
 PKGFILES_CSWlibdialog11 += $(call baseisadirs,$(libdir),libdialog\.so\.11\.0\.0)
 PKGFILES_CSWlibdialog11 += $(call baseisadirs,$(libdir),libdialog\.so\.11(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibdialog11 += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlibdialog11 += CSWlibncursesw5
 
 PACKAGES += CSWdialog-dev
 CATALOGNAME_CSWdialog-dev = dialog_dev
@@ -45,7 +45,7 @@ SKIPTEST = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libtool
-CONFIGURE_ARGS += --with-ncurses
+CONFIGURE_ARGS += --with-ncursesw
 
 include gar/category.mk
 
