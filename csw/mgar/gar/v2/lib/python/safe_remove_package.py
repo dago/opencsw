@@ -30,7 +30,7 @@ listed packages:
 
 for p in $(cat pkg-list.txt)
 do
-	if ! ggrep "^$p\$" packages_dropped_cache.txt > /dev/null
+  if ! ggrep "^$p\$" packages_dropped_cache.txt > /dev/null
   then
     ./safe_remove_package.py \\
         --os-releases=SunOS5.10,SunOS5.11 \\
