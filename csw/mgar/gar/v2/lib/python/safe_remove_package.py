@@ -41,6 +41,7 @@ done
 
 
 UNSTABLE = "unstable"
+EVERY_N_DOTS = 100
 
 class Error(Exception):
   """A generic error."""
@@ -55,7 +56,7 @@ class RevDeps(object):
     self.rest_client = rest.RestClient()
     self.cp = rest.CachedPkgstats("pkgstats")
 
-  def MakeRevIndex(self, catrel, arch, osrel):
+  def MakeRevIndex(self, catrel, arch, osrel, quiet=False):
     key = (catrel, arch, osrel)
     if key in self.cached_catalogs:
       return
@@ -64,8 +65,12 @@ class RevDeps(object):
       with open(fn, "r") as fd:
         self.cached_catalogs[key] = cjson.decode(fd.read())
       return
+    logging.info(
+        "Building a database of reverse dependencies. "
+        "This can take up to multiple hours.")
     catalog = self.rest_client.GetCatalog(*key)
     rev_deps = {}
+    counter = 0
     for pkg_simple in catalog:
       md5 = pkg_simple["md5_sum"]
       # pkg = self.cp.GetPkgstats(md5)
@@ -74,6 +79,11 @@ class RevDeps(object):
       for dep_pkgname, _ in short_data["deps"]:
         rev_dep_set = rev_deps.setdefault(dep_pkgname, list())
         rev_dep_set.append((md5, pkgname))
+      if not quiet and not counter % EVERY_N_DOTS:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+      counter += 1
+    sys.stdout.write("\n")
     self.cached_catalogs[key] = rev_deps
     with open(fn, "w") as fd:
       fd.write(cjson.encode(self.cached_catalogs[key]))
