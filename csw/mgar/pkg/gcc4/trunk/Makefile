@@ -26,6 +26,9 @@ LIBOBJC = 4
 # PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+# there is  a problem with direct linking on amd64 libs
+LINKER_DIRECT =
+
 # GIT init takes a long time.
 NOGITPATCH ?= 1
 
@@ -502,15 +505,29 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 # We're building with the default GAR maps, currently U5.
 # LINKER_MAP_RELEASE = solaris10u8
 
-# No direct binding errors. These will be hard to fix (if they're real)
-# because of GCC's build system complexity.
+#Direct binding is disabled to to problem with amd64 libs
 CHECKPKG_OVERRIDES_CSWgcc4java += no-direct-binding
 CHECKPKG_OVERRIDES_CSWgcc4core += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgij13 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWgcc4g++ += no-direct-binding
+CHECKPKG_OVERRIDES_CSWgcc4ada += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgcj13 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgo0 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWgcc4gfortran += no-direct-binding
+CHECKPKG_OVERRIDES_CSWgcc4objc += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += soname-unused
 CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj-tools13 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibobjc4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibstdc++6 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibffi4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibquadmath0 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibssp0 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
+
 
 include files/scripts.mk
 include gar/category.mk
