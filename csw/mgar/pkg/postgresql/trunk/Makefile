@@ -659,7 +659,7 @@ test-installation:
 	done
 	@echo " ===> Checking for extra libraries in SO_NAMES_*"
 	@for n in $(SO_NAMES_SERVER) $(SO_NAMES_CONTRIB) ; do \
-		if [ -f $(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT)/$$n ] ; then\
+		ifsubst 64,$(ISA),$(libdir)$(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT)/$$n ] ; then\
 			: ; \
 		else \
 			echo "Extra library defined $$n" ; \
@@ -688,7 +688,7 @@ test-installation:
 		fi ; \
 	done
 	@echo " ===> Checking for missing binaries in SO_NAMES_*"
-	@for n in `gfind $(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT) -maxdepth 1 -type f` ; do \
+	@for n in `subst 64,$(ISA),$(libdir)$(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT) -maxdepth 1 -type f` ; do \
 		echo "$(SO_NAMES_SERVER) $(SO_NAMES_CONTRIB)" | grep `basename $$n` >/dev/null 2>&1 ; \
 		if [ $$? -eq 0 ] ; then \
 			: ; \
