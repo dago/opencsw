@@ -1,6 +1,6 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.2.37
+VERSION = 0.2.3.25
 CATEGORIES = net
 GARTYPE = v2
 
@@ -34,4 +34,4 @@ MIGRATE_FILES += tor/torrc
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-include gar/category.mk
+include
