@@ -1,5 +1,5 @@
 NAME = freeciv
-VERSION = 2.3.1
+VERSION = 2.3.4
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -19,21 +19,17 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibz1
+RUNTIME_DEP_PKGS_CSz1
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWftype2
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWgtk2
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibsdl1-2-0
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWpango
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWfconfig
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibreadline6eciv += CSWfconfig
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWsdlmixer
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgdk-x11-eeciv += CSWlibgio2-0-0
 
 GARCOMPILER = GNU
 
@@ -51,4 +47,4 @@ include gar/category.mk
 post-install-modulated:
 
 	perl -pi -e 's|/usr/local|/opt/csw|' \
-		$(DESTDIR)/opt/csw/share/man/man6/freeciv-*.6
+		$(DESTDIR)/opt/csw/share/man
