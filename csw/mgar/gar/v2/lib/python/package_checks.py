@@ -1337,3 +1337,32 @@ def CheckSharedLibrarySoExtension(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "shared-library-missing-dot-so",
           "file=%s" % shared_lib)
+
+
+def Check64bitsBinariesPresence(pkg_data, error_mgr, logger, messenger):
+  pkginfo = pkg_data['pkginfo']
+  if not ('OPENCSW_MODE64' in pkginfo and '64' in pkginfo['OPENCSW_MODE64']):
+    return
+
+  if 'isaexec' in pkginfo['OPENCSW_MODE64']:
+    binaries = pkg_data['binaries_dump_info']
+    binaries_path = 'bin|sbin|lib|libexec'
+  else:
+    binaries = [ x for x in pkg_data['binaries_dump_info'] if 'soname' in x ]
+    binaries_path = 'lib|libexec'
+
+  if binaries:
+    paths_64 = { 'i386': su.AMD64_PATHS, 'sparc': su.SPARCV9_PATHS }
+    paths_64_re = re.compile(r"opt/csw/(%s)/(%s)" %
+                             (binaries_path,
+                              '|'.join(paths_64[pkginfo['ARCH']])))
+    for binary_info in binaries:
+      if paths_64_re.search(binary_info['path']):
+          return
+
+    error_mgr.ReportError('64bits-binaries-missing')
+    messenger.Message(
+      "The package is supposed to contains 64 bits binaries "
+      "but it doesn't contain any in the usual 64 bits "
+      "binaries locations.")
+
