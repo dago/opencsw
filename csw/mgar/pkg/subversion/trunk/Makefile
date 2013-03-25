@@ -73,6 +73,8 @@ PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-#Needed for Solaris9 again:
 OBSOLETED_BY_CSWsvn-dev_5.9    = CSWsvn-devel
 OBSOLETED_BY_CSWsvn-dev += $(OBSOLETED_BY_CSWsvn-dev_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWSWsvn-devel_5.9 += CSWsvn-dev
+RUNTIME_DEP_PKGS_CSWSWsvn-devel += $(RUNTIME_DEP_PKGS_CSWSWsvn-devel_$(GAROSREL))
 -dev)/changelog.CSW
 
 PACKAGES += CSWap2svn
