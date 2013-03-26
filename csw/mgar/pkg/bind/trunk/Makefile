@@ -2,13 +2,12 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-#VERSION = 9.8.4
 VERSION = 9.9.2
 GARTYPE = v2
 
 # Enable these for Px-releases
 #RELEASE = rc1
-RELEASE = P1
+RELEASE = P2
 DISTVERSION = $(VERSION)-$(RELEASE)
 SPKG_VERSION = $(VERSION)$(RELEASE)
 DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
@@ -119,6 +118,7 @@ SPKG_SOURCEURL = http://www.isc.org/software/bind
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
+
 # Will not split out all these libs
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.90.0.1|soname=liblwres.so.90|pkgname=CSWlibbind|expected=CSWliblwres90
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.0.2|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
@@ -126,6 +126,10 @@ CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/li
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.92.1.0|soname=libisc.so.92|pkgname=CSWlibbind|expected=CSWlibisc92
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.95.1.1|soname=libdns.so.95|pkgname=CSWlibbind|expected=CSWlibdns95
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.5|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
+
+# Some new checks, have no idea about their relevance
+CHECKPKG_OVERRIDES_CSWlibbind += soname-unused
+CHECKPKG_OVERRIDES_CSWlibbind += no-direct-binding
 
 include gar/category.mk
 
