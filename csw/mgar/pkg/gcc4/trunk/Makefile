@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.7.2
+VERSION   = 4.8.0
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
 PKG_VERSION_TOKEN = gcc4
@@ -16,8 +16,9 @@ define BLURB
 endef
 
 DISTFILES    = $(DISTNAME).tar.bz2
-MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
-MASTER_SITES += http://ftp.heanet.ie/mirrors/gnu/gcc/$(NAME)-$(VERSION)/
+# MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
+# MASTER_SITES += http://ftp.heanet.ie/mirrors/gnu/gcc/$(NAME)-$(VERSION)/
+MASTER_SITES += ftp://ftp.gnu.org/gnu/gcc/gcc-$(VERSION)/
 
 LIBOBJC = 4
 
@@ -98,26 +99,25 @@ GARCOMPILER = GNU
 SKIPTEST ?= 1
 
 # Used multiple times in package definitions
-JAVA_LIB_VERSION = 13
+JAVA_LIB_VERSION = 14
 
 ALTERNATIVES_PRIO = 470
 
 PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibcloog-isl2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibatomic1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibffi4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo0
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgomp1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibitm1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibssp0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibz1
 
@@ -157,6 +157,7 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(mandir)/man3/ffi_call.3|$(PKG_BASENAME)core|CSWlibffi-dev
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(mandir)/man3/ffi.3|$(PKG_BASENAME)core|CSWlibffi-dev
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(mandir)/man3/ffi_prep_cif.3|$(PKG_BASENAME)core|CSWlibffi-dev
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|/opt/csw/share/info/libffi.info|$(PKG_BASENAME)core|CSWlibffi-dev
 
 # The .a files are necessary
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap
@@ -191,7 +192,6 @@ CATALOGNAME_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) = lib_gnu_awt_xlib$(JAVA_LIB_
 PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
-RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += CSWlibffi4
@@ -259,12 +259,12 @@ PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 
-PACKAGES += CSWlibgo0
-PKGFILES_CSWlibgo0 += $(call baseisadirs,$(libdir),libgo\.so\.0(\.\d+)*)
-SPKG_DESC_CSWlibgo0 += $(DESCRIPTION), libgo.so.0
-RUNTIME_DEP_PKGS_CSWlibgo0 += CSWlibgcc-s1
+PACKAGES += CSWlibgo3
+PKGFILES_CSWlibgo3 += $(call baseisadirs,$(libdir),libgo\.so\.3(\.\d+)*)
+SPKG_DESC_CSWlibgo3 += $(DESCRIPTION), libgo.so.3
+RUNTIME_DEP_PKGS_CSWlibgo3 += CSWlibgcc-s1
 # Hasn't been investigated. I feel lucky.
-CHECKPKG_OVERRIDES_CSWlibgo0 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgo3 += file-with-bad-content
 
 PACKAGES += CSWlibitm1
 PKGFILES_CSWlibitm1 += $(call baseisadirs,$(libdir),libitm\.so\.1(\.\d+)*)
@@ -292,6 +292,11 @@ RUNTIME_DEP_PKGS_CSWlibgfortran3_i386 += CSWlibquadmath0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_$(GARCH))
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 
+PACKAGES += CSWlibatomic1
+PKGFILES_CSWlibatomic1 += $(call baseisadirs,$(libdir),libatomic\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibatomic1 += $(DESCRIPTION), libatomic.so.1
+RUNTIME_DEP_PKGS_CSWlibatomic1 += CSWlibgcc-s1
+
 PACKAGES += $(PKG_BASENAME)g++
 SPKG_DESC_$(PKG_BASENAME)g++ = GNU C++ Compiler
 PKGFILES_$(PKG_BASENAME)g++  = $(foreach F,$(CXX_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
@@ -304,11 +309,9 @@ PKGFILES_$(PKG_BASENAME)g++ += $(mandir)/.*g\+\+.1
 # I do not understand this regular expression.
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/ostream.*
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibz1
 
@@ -330,12 +333,10 @@ PKGFILES_$(PKG_BASENAME)gfortran += $(libexecdir)/.*f951
 PKGFILES_$(PKG_BASENAME)gfortran += $(mandir)/.*gfortran.1
 PKGFILES_$(PKG_BASENAME)gfortran += $(infodir)/gfortran.*
 PKGFILES_$(PKG_BASENAME)gfortran += $(call baseisadirs,$(libdir),libgfortran\.so)
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
 
 ALTERNATIVES_$(PKG_BASENAME)gfortran += gfortran
@@ -343,7 +344,6 @@ ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROG
 
 PACKAGES += $(PKG_BASENAME)java
 SPKG_DESC_$(PKG_BASENAME)java       = GNU Java Compiler
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
@@ -352,7 +352,6 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWecj
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += surplus-dependency|CSWecj
 
@@ -427,13 +426,11 @@ PKGFILES_$(PKG_BASENAME)objc += $(includedir)/.*objc/.*
 PKGFILES_$(PKG_BASENAME)objc += $(libdir)/.*/include/objc/.*
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc.so)
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc$(LIBOBJC)
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibz1
 
 # libiconv deps cropped up relatively late in the porting process. Perhaps
@@ -460,13 +457,11 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += surplus-dependency|$(PKG_BASENAME)core
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += file-with-bad-content
 
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
 
 # This is an obsolete package. Nothing depends on it, so we can remove it.
@@ -506,28 +501,31 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 # LINKER_MAP_RELEASE = solaris10u8
 
 #Direct binding is disabled to to problem with amd64 libs
-CHECKPKG_OVERRIDES_CSWgcc4java += no-direct-binding
-CHECKPKG_OVERRIDES_CSWgcc4core += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgij13 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWgcc4g++ += no-direct-binding
-CHECKPKG_OVERRIDES_CSWgcc4ada += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgcj13 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgo0 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWgcc4gfortran += no-direct-binding
-CHECKPKG_OVERRIDES_CSWgcc4objc += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += soname-unused
-CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib13 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgcj-tools13 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibobjc4 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibstdc++6 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += soname-unused
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += soname-unused
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += no-direct-binding
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += soname-unused
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += soname-unused
+CHECKPKG_OVERRIDES_CSWlibatomic1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibffi4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgo3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibobjc4 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibquadmath0 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibssp0 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
-
+CHECKPKG_OVERRIDES_CSWlibstdc++6 += no-direct-binding
 
 include files/scripts.mk
 include gar/category.mk
