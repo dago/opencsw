@@ -4,8 +4,7 @@
 #     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
 
 NAME = wget
-VERSION = 1.13.4
-CATEGORIES = net
+VERSION = 1.14 net
 GARTYPE = v2
 
 DESCRIPTION = A network utility to retrieve files from the Web
@@ -19,7 +18,7 @@ define BLURB
   whole file has been retrieved.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITESMASTER_SITES += ftp://alpha.gnu.org/gnu/wget/S = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.xz
 
 VENDOR_URL = http://www.gnu.org/software/wget/
@@ -28,11 +27,10 @@ PACKAGES += CSWwget
 SPKG_DESC_CSWwget = A network utility to retrieve files from the web
 RUNTIME_DEP_PKGS_CSWwget += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWwget += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWwget += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWwget += CSWlibz1
-RUNTIME_DEP_PKGS_CSWwget += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWwget += CSWlibgnutls26
+RUNTIME_DEP_PKGS_z1
+RUNTIME_DEP_PKGS_CSWwget += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWwget += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWwget += CSWlibpcreget += CSWlibidn11
 
 EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
@@ -59,7 +57,9 @@ EXTRA_CONFIGURE_STATIC-enable += --disable-nls
 EXTRA_CONFIGURE_STATIC-enable += --disable-iri
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += $(EXTRA_CONFIGURE_STATIC-$(STATIC))
+CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ST# Switch back to OpenSSL as reported in
+#   https://www.opencsw.org/mantis/view.php?id=4969
+CONFIGURE_ARGS += --with-ssl=opensslSTATIC-$(STATIC))
 
 PRESERVECONF = $(sysconfdir)/wgetrc
 MIGRATE_FILES = wgetrc
@@ -83,4 +83,4 @@ post-install-modulated:
 	perl -pi -e 's,/usr/local/etc,$(sysconfdir),g' \
 		$(DESTDIR)$(infodir)/wget.info \
 		$(DESTDIR)$(mandir)/man1/wget.1 \
-		$(DESTDIR)$(sysconfdir)/wgetrc
+		$(DESTDIR)$(sy
