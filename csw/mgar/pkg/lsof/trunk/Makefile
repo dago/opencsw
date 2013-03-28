@@ -1,7 +1,7 @@
 # TBD:
 
 NAME = lsof
-VERSION = 4.86
+VERSION = 4.87
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -129,5 +129,4 @@ install-custom:
 		ginstall -d $(DESTDIR)$(bindir) ; \
 		ginstall -m 755 lsof $(DESTDIR)$(bindir) ; \
 		ginstall -d $(DESTDIR)$(mandir)/man8 ; \
-		ginstall -m 444 lsof.8 $(DESTDIR)$(mandir)/man8 )
-	@$(MAKECOOKIE)
+		ginstall -m 444 lsof.8 $(DESTDIR)$(mandir)/man8
