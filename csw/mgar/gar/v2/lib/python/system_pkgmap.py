@@ -485,7 +485,6 @@ class InstallContentsImporter(object):
             data_obj=None,
             use_to_generate_catalogs=False,
             filename_arch=sqo_arch,
-            latest=True,
             maintainer=maintainer,
             md5_sum=fake_srv4_md5,
             mtime=datetime.datetime.now(),

@@ -278,16 +278,6 @@ class PackageStatsMixin(object):
       logging.debug(e)
       maintainer = m.Maintainer(email=maint_email)
 
-    # If there are any previous records of the same pkginst, arch and os_rel,
-    # we're marking them as not-latest.
-    # This assumes that the packages are examined in a chronological order.
-    res = m.Srv4FileStats.select(sqlobject.AND(
-        m.Srv4FileStats.q.pkginst==pkginst,
-        m.Srv4FileStats.q.arch==arch,
-        m.Srv4FileStats.q.os_rel==os_rel))
-    for obj in res:
-      obj.latest = False
-
     rev=None
     if "revision_info" in parsed_basename:
       if "REV" in parsed_basename["revision_info"]:
@@ -323,7 +313,6 @@ class PackageStatsMixin(object):
       db_pkg_stats.data_obj_mimetype = data_obj_mimetype
       db_pkg_stats.use_to_generate_catalogs = True
       db_pkg_stats.filename_arch = filename_arch
-      db_pkg_stats.latest = True
       db_pkg_stats.maintainer = maintainer
       db_pkg_stats.md5_sum = pkg_stats["basic_stats"]["md5_sum"]
       db_pkg_stats.size = pkg_stats["basic_stats"]["size"]
@@ -343,7 +332,6 @@ class PackageStatsMixin(object):
           data_obj_mimetype=data_obj_mimetype,
           use_to_generate_catalogs=True,
           filename_arch=filename_arch,
-          latest=True,
           maintainer=maintainer,
           md5_sum=pkg_stats["basic_stats"]["md5_sum"],
           size=pkg_stats["basic_stats"]["size"],

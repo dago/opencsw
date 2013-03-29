@@ -71,7 +71,6 @@ md5_sum:        $md5_sum
 arch:           $arch.name
 os_rel:         $os_rel.short_name
 maintainer:     $maintainer.email
-latest:         $latest
 version_string: $version_string
 rev:            $rev
 stats_version:  $stats_version

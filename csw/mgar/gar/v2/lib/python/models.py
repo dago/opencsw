@@ -153,7 +153,6 @@ class Srv4FileStats(sqlobject.SQLObject):
   data_obj = sqlobject.ForeignKey('Srv4FileStatsBlob', notNone=False)
   data_obj_mimetype = sqlobject.UnicodeCol(notNone=True, length=250)
   filename_arch = sqlobject.ForeignKey('Architecture', notNone=True)
-  latest = sqlobject.BoolCol(notNone=True)
   maintainer = sqlobject.ForeignKey('Maintainer', notNone=False)
   md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True, length=32)
   size = sqlobject.IntCol()
