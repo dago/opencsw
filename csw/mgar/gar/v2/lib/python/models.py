@@ -82,13 +82,13 @@ class CswConfig(sqlobject.SQLObject):
   option_key = sqlobject.UnicodeCol(length=255, unique=True)
   float_value = sqlobject.FloatCol(default=None)
   int_value = sqlobject.IntCol(default=None)
-  str_value = sqlobject.UnicodeCol(default=None)
+  str_value = sqlobject.UnicodeCol(default=None, length=250)
 
 
 class Pkginst(sqlobject.SQLObject):
-  pkgname = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
-  catalogname = sqlobject.UnicodeCol(default=None)
-  pkg_desc = sqlobject.UnicodeCol(default=None)
+  pkgname = sqlobject.UnicodeCol(length=50, unique=True, notNone=True)
+  catalogname = sqlobject.UnicodeCol(default=None, length=50)
+  pkg_desc = sqlobject.UnicodeCol(default=None, length=250)
   srv4_files = sqlobject.MultipleJoin('Srv4FileStats')
 
 
@@ -137,8 +137,8 @@ class Srv4FileStats(sqlobject.SQLObject):
   It focuses on the stats, but it can as well represent just a srv4 file.
   """
   arch = sqlobject.ForeignKey('Architecture', notNone=True)
-  basename = sqlobject.UnicodeCol(notNone=True)
-  catalogname = sqlobject.UnicodeCol(notNone=True)
+  basename = sqlobject.UnicodeCol(notNone=True, length=250)
+  catalogname = sqlobject.UnicodeCol(notNone=True, length=250)
   # The data structure can be missing - necessary for fake SUNW
   # packages.
   data_obj = sqlobject.ForeignKey('Srv4FileStatsBlob', notNone=False)
@@ -152,9 +152,9 @@ class Srv4FileStats(sqlobject.SQLObject):
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
   registered = sqlobject.BoolCol(notNone=True)
   use_to_generate_catalogs = sqlobject.BoolCol(notNone=True)
-  rev = sqlobject.UnicodeCol(notNone=False)
+  rev = sqlobject.UnicodeCol(notNone=False, length=250)
   stats_version = sqlobject.IntCol(notNone=True)
-  version_string = sqlobject.UnicodeCol(notNone=True)
+  version_string = sqlobject.UnicodeCol(notNone=True, length=250)
   in_catalogs = sqlobject.MultipleJoin(
           'Srv4FileInCatalog',
           joinColumn='srv4file_id')
@@ -354,10 +354,10 @@ class CheckpkgErrorTagMixin(object):
 
 class CheckpkgErrorTag(CheckpkgErrorTagMixin, sqlobject.SQLObject):
   srv4_file = sqlobject.ForeignKey('Srv4FileStats', notNone=True)
-  pkgname = sqlobject.UnicodeCol(default=None)
-  tag_name = sqlobject.UnicodeCol(notNone=True)
-  tag_info = sqlobject.UnicodeCol(default=None)
-  msg = sqlobject.UnicodeCol(default=None)
+  pkgname = sqlobject.UnicodeCol(default=None, length=250)
+  tag_name = sqlobject.UnicodeCol(notNone=True, length=250)
+  tag_info = sqlobject.UnicodeCol(default=None, length=250)
+  msg = sqlobject.UnicodeCol(default=None, length=250)
   # To cache results from checkpkg
   overridden = sqlobject.BoolCol(default=False)
   # The same package might have different sets of errors for different
@@ -374,9 +374,9 @@ class CheckpkgErrorTag(CheckpkgErrorTagMixin, sqlobject.SQLObject):
 class CheckpkgOverride(sqlobject.SQLObject):
   # Overrides don't need to contain catalog parameters.
   srv4_file = sqlobject.ForeignKey('Srv4FileStats', notNone=True)
-  pkgname = sqlobject.UnicodeCol(default=None)
-  tag_name = sqlobject.UnicodeCol(notNone=True)
-  tag_info = sqlobject.UnicodeCol(default=None)
+  pkgname = sqlobject.UnicodeCol(default=None, length=250)
+  tag_name = sqlobject.UnicodeCol(notNone=True, length=250)
+  tag_info = sqlobject.UnicodeCol(default=None, length=250)
 
   def __unicode__(self):
     return (u"Override: %s: %s %s" %
