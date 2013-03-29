@@ -12,6 +12,7 @@ import common_constants
 import configuration
 import database
 import datetime
+import getpass
 import logging
 import models as m
 import optparse
@@ -283,6 +284,7 @@ class CatalogImporter(object):
         logging.info(
             " + %s",
             cat_entry_by_md5[md5]["file_basename"])
+    user = getpass.getuser()
     # Remove
     # We could use checkpkg_lib.Catalog.RemoveSrv4(), but it would redo
     # many of the database queries and would be much slower.
@@ -309,7 +311,8 @@ class CatalogImporter(object):
           package_stats.PackageStats.ImportPkg(stats, True)
         try:
           db_catalog.AddSrv4ToCatalog(
-              sqo_srv4, osrel, arch, catrel)
+              sqo_srv4, osrel, arch, catrel,
+              who=user)
         except checkpkg_lib.CatalogDatabaseError, e:
           logging.warning(
               "Could not insert %s (%s) into the database. %s",
@@ -489,6 +492,7 @@ def main():
   elif command == 'add-to-cat':
     if len(args) <= 3:
       raise UsageError("Not enough arguments, see usage.")
+    user = getpass.getuser()
     osrel, arch, catrel= args[:3]
     c = checkpkg_lib.Catalog()
     md5_sums = args[3:]
@@ -497,7 +501,7 @@ def main():
       try:
         sqo_srv4 = m.Srv4FileStats.select(
             m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
-        c.AddSrv4ToCatalog(sqo_srv4, osrel, arch, catrel)
+        c.AddSrv4ToCatalog(sqo_srv4, osrel, arch, catrel, who=user)
       except sqlobject.main.SQLObjectNotFound, e:
         logging.warning("Srv4 file %s was not found in the database.",
                         md5_sum)

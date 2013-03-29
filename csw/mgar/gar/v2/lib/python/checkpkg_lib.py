@@ -6,6 +6,7 @@
 import copy
 from Cheetah import Template
 import logging
+import getpass
 import package_stats
 import package_checks
 import sqlobject
@@ -1014,10 +1015,12 @@ class Catalog(SqlobjectHelperMixin):
                   m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
     return res
 
-  def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel):
+  def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel, who=None):
     """Registers a srv4 file in a catalog."""
-    logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s)",
-        sqo_srv4, osrel, arch, catrel)
+    logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s, %s)",
+        sqo_srv4, osrel, arch, catrel, who)
+    if not who:
+    	who = 'unknown'
     # There are only i386 and sparc catalogs.
     if arch != 'i386' and arch != 'sparc':
       raise CatalogDatabaseError("Wrong architecture: %s" % arch)
@@ -1069,7 +1072,8 @@ class Catalog(SqlobjectHelperMixin):
         arch=sqo_arch,
         osrel=sqo_osrel,
         catrel=sqo_catrel,
-        srv4file=sqo_srv4)
+        srv4file=sqo_srv4,
+        created_by=getpass.getuser())
 
   def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(

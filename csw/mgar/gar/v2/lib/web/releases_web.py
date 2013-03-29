@@ -6,6 +6,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
 
+import base64
 import web
 import sqlobject
 import json
@@ -189,7 +190,16 @@ class Srv4CatalogAssignment(object):
         for pkg_in_catalog in res:
           srv4_to_remove = pkg_in_catalog.srv4file
           c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
-      c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name)
+
+      # Retrieving authentication data from the HTTP environment.
+      # If the auth data isn't there, this code will fail.
+      auth = web.ctx.env.get('HTTP_AUTHORIZATION')
+      if not auth:
+        raise web.forbidden()
+      auth = re.sub('^Basic ','',auth)
+      username, password = base64.decodestring(auth).split(':')
+
+      c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, who=username)
       web.header(
           'Content-type',
           'application/x-vnd.opencsw.pkg;type=catalog-update')

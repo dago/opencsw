@@ -423,6 +423,10 @@ class Srv4FileInCatalog(sqlobject.SQLObject):
   osrel = sqlobject.ForeignKey('OsRelease', notNone=True)
   catrel = sqlobject.ForeignKey('CatalogRelease', notNone=True)
   srv4file = sqlobject.ForeignKey('Srv4FileStats', notNone=True)
+  created_on = sqlobject.DateTimeCol(
+      notNone=True,
+      default=sqlobject.DateTimeCol.now)
+  created_by = sqlobject.UnicodeCol(length=50, notNone=True)
   uniqueness_idx = sqlobject.DatabaseIndex(
           'arch', 'osrel', 'catrel', 'srv4file',
           unique=True)
