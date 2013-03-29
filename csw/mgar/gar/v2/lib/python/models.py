@@ -11,6 +11,14 @@ import cjson
 import cPickle
 import datetime
 
+
+def SanitizeDatetime(d):
+  if isinstance(d, datetime.datetime):
+    return d.isoformat()
+  else:
+    return d
+
+
 class Error(Exception):
   """Generic error."""
 
@@ -259,7 +267,7 @@ class Srv4FileStats(sqlobject.SQLObject):
     if self.data_obj_mimetype == 'application/json':
       pkgstats = cjson.decode(str(self.data_obj.pickle))
     elif self.data_obj_mimetype == 'application/python-pickle':
-    	pkgstats = cPickle.loads(str(self.data_obj.pickle))
+      pkgstats = cPickle.loads(str(self.data_obj.pickle))
     else:
       raise DataError("Unrecognized mime type: %s" % self.data_obj_mimetype)
     # There was a problem with bad utf-8 in the VENDOR field.
@@ -275,6 +283,9 @@ class Srv4FileStats(sqlobject.SQLObject):
         d["path"] = self.GetUnicodeOrNone(d["path"])
         d["line"] = self.GetUnicodeOrNone(d["line"])
     # End of the workaround
+    pkgstats['mtime'] = SanitizeDatetime(pkgstats['mtime'])
+    if isinstance(pkgstats['isalist'], frozenset):
+      pkgstats['isalist'] = list(pkgstats['isalist'])
     return pkgstats
 
   def _GetBuildSource(self):
@@ -317,11 +328,6 @@ class Srv4FileStats(sqlobject.SQLObject):
     #  - self.maintainer_id
     #  - GetVendorUrl unpickles the object (very slow)
     #  - GetSvnUrl unpickles the object (very slow)
-    def SanitizeDatetime(d):
-      if isinstance(d, datetime.datetime):
-       return d.isoformat()
-      else:
-       return d
     data = {
         'basename': self.basename,
         # For compatibility with the catalog parser from catalog.py
