@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.6
 #
 # A utility to patch an existing package.
-# 
+#
 # Usage:
 # patchpkg --srv4-file /tmp/foo-1.0-sparc-CSW.pkg.gz --export /work/dir
 # cd /work/dir/CSWfoo

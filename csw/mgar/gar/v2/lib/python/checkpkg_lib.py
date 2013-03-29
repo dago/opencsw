@@ -835,7 +835,7 @@ def SliceList(l, size):
   return sliced
 
 
-class CatalogMixin(SqlobjectHelperMixin):
+class Catalog(SqlobjectHelperMixin):
   """Responsible for functionality related to catalog operations.
 
   These include:
@@ -1086,7 +1086,3 @@ class CatalogMixin(SqlobjectHelperMixin):
       sqo_srv4_in_cat.destroySelf()
     except sqlobject.main.SQLObjectNotFound, e:
       logging.warning(e)
-
-
-class Catalog(CatalogMixin):
-  pass

@@ -156,7 +156,7 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
   def testImportPkg(self):
     """Registers the package in the database."""
     package_stats.PackageStats.ImportPkg(neon_stats[0])
-    # basename=u'libneon.so.26.0.4' path=u'/opt/csw/lib' 
+    # basename=u'libneon.so.26.0.4' path=u'/opt/csw/lib'
     res = m.CswFile.select(
         sqlobject.AND(
         m.CswFile.q.basename==u'libneon.so.26.0.4',

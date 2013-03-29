@@ -79,6 +79,7 @@ def main():
       help="Enable profiling (a developer option).")
   options, args = parser.parse_args()
   assert len(args), "The list of files or md5 sums must be not empty."
+
   logging_level = logging.INFO
   if options.quiet:
     logging_level = logging.WARNING
@@ -91,7 +92,6 @@ def main():
   configuration.SetUpSqlobjectConnection()
   dm = database.DatabaseManager()
   dm.AutoManage()
-
 
   err_msg_list = []
   if not options.osrel_commas:

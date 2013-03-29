@@ -63,7 +63,7 @@ class FindBins(object):
       if not pkg:
         logging.warning("MakeRevIndex: No package for %r", md5)
         continue
-      try:   
+      try:
         pkg_name = pkg["basic_stats"]["pkgname"]
         for p in pkg['binaries_dump_info']:
           for b in p['needed sonames']:
@@ -77,7 +77,7 @@ class FindBins(object):
         for pm in pkg['pkgmap']:
             if pm['type'] == 's': # symbolic link
               cl.append(pm['line'].split(' ')[3].split('=')[0]) # take the linkname
-                
+
       except KeyError:
         logging.warning("MakeRevIndex: no pkg structure: ")
         # logging.warning(pkg)
@@ -155,7 +155,7 @@ class PackageScanner(object):
                   break
               if found: break
             if not found:
-                # second search is there a link with this name            
+                # second search is there a link with this name
                 for lpkg in links:
                   for l in links[lpkg]:
                     # if lib in the package
@@ -170,13 +170,13 @@ class PackageScanner(object):
                     found = True
                     # logging.debug ("\nfound %s" % nb)
             # at last search the lib in earlier os releases
-            if not found: 
+            if not found:
               fl.write("%s:%s:%s:%s\n" % (nb,pkg,arch,osrel) )
               print "\nNOT FOUND: %s, needed in pkg %s %s %s" % (nb,pkg,arch,osrel)
             sys.stdout.write("\rscanPackage %4d %s" % (i,pkg))
             sys.stdout.flush()
     fl.close()
- 
+
 def main():
   parser = optparse.OptionParser()
   parser.add_option("--debug", dest="debug", action="store_true")

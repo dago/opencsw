@@ -364,7 +364,7 @@ class Srv4Uploader(object):
 
   def _CheckpkgSets(self, planned_modifications):
     """Groups packages according to catalogs.
-    
+
     Used to determine groups of packages to check together, against
     a specific catalog.
 

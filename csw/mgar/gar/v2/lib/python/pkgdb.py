@@ -150,7 +150,7 @@ class HtmlGenerator(object):
     t = Template(tmpl_str, searchList=[{
       "pkgstats": pkgstats,
       "hachoir_machines": package_checks.HACHOIR_MACHINES,
-      }])
+    }])
     return unicode(t)
 
 
