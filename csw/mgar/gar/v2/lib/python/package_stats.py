@@ -316,7 +316,7 @@ class PackageStatsMixin(object):
       db_pkg_stats.maintainer = maintainer
       db_pkg_stats.md5_sum = pkg_stats["basic_stats"]["md5_sum"]
       db_pkg_stats.size = pkg_stats["basic_stats"]["size"]
-      db_pkg_stats.mtime = dateutil.parser.parser(pkg_stats["mtime"])
+      db_pkg_stats.mtime = dateutil.parser.parse(pkg_stats["mtime"])
       db_pkg_stats.os_rel = os_rel
       db_pkg_stats.pkginst = pkginst
       db_pkg_stats.registered = register
