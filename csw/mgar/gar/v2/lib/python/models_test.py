@@ -52,7 +52,6 @@ class Srv4FileStatsUnitTest(test_base.SqlObjectTestMixin, mox.MoxTestBase):
         catalogname="foo",
         data_obj=None,
         filename_arch=self.sqo_arch,
-        latest=True,
         maintainer=self.maintainer,
         md5_sum="not a real one",
         size=1L,
