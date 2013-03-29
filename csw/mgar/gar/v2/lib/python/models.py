@@ -9,6 +9,7 @@ import os.path
 from sqlobject import sqlbuilder
 import cjson
 import cPickle
+import datetime
 
 class Error(Exception):
   """Generic error."""
@@ -316,13 +317,18 @@ class Srv4FileStats(sqlobject.SQLObject):
     #  - self.maintainer_id
     #  - GetVendorUrl unpickles the object (very slow)
     #  - GetSvnUrl unpickles the object (very slow)
+    def SanitizeDatetime(d):
+      if isinstance(d, datetime.datetime):
+       return d.isoformat()
+      else:
+       return d
     data = {
         'basename': self.basename,
         # For compatibility with the catalog parser from catalog.py
         'file_basename': self.basename,
         'catalogname': self.catalogname,
         'md5_sum': self.md5_sum,
-        'mtime': self.mtime,
+        'mtime': SanitizeDatetime(self.mtime),
         'rev': self.rev,
         'size': self.size,
         'version_string': self.version_string,
