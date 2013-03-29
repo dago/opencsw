@@ -12,6 +12,7 @@ import logging
 import pprint
 import sqlobject
 import web
+import time
 
 from lib.python import models
 from lib.python import configuration
@@ -198,8 +199,12 @@ class CatalogDetail(object):
     cat_name = " ".join((catrel_name, arch_name, osrel_name))
     sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
+    t2 = time.time()
     pkgs = models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
-    return render.CatalogDetail(cat_name, pkgs)
+    pkgs = list(pkgs)
+    t3 = time.time()
+    timeinfo = "Query evaluation: %.2fs" % (t3-t2)
+    return render.CatalogDetail(cat_name, pkgs, timeinfo, len(pkgs))
 
 
 class MaintainerList(object):
