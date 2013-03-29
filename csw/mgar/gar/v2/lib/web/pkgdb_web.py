@@ -386,9 +386,13 @@ class RestSrv4FullStats(object):
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
-    data_structure = pkg.GetStatsStruct()
     web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
-    return json.dumps(data_structure, cls=PkgStatsEncoder)
+    if pkg.data_obj_mimetype == 'application/json':
+      # If data are in JSON already, we can send them without decoding.
+      return pkg.data_obj.pickle
+    else:
+      data_structure = pkg.GetStatsStruct()
+      return json.dumps(data_structure, cls=PkgStatsEncoder)
 
 
 class Srv4ByCatAndCatalogname(object):
