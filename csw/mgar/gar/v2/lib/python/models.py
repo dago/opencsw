@@ -7,7 +7,16 @@ import re
 import sqlobject
 import os.path
 from sqlobject import sqlbuilder
+import cjson
 import cPickle
+
+class Error(Exception):
+  """Generic error."""
+
+
+class DataError(Error):
+  """A problem with data in the database."""
+
 
 class CatalogReleaseType(sqlobject.SQLObject):
   "Unstable, testing, stable."
@@ -142,6 +151,7 @@ class Srv4FileStats(sqlobject.SQLObject):
   # The data structure can be missing - necessary for fake SUNW
   # packages.
   data_obj = sqlobject.ForeignKey('Srv4FileStatsBlob', notNone=False)
+  data_obj_mimetype = sqlobject.UnicodeCol(notNone=True, length=250)
   filename_arch = sqlobject.ForeignKey('Architecture', notNone=True)
   latest = sqlobject.BoolCol(notNone=True)
   maintainer = sqlobject.ForeignKey('Maintainer', notNone=False)
@@ -246,7 +256,12 @@ class Srv4FileStats(sqlobject.SQLObject):
     return s
 
   def GetStatsStruct(self):
-    pkgstats = cPickle.loads(str(self.data_obj.pickle))
+    if self.data_obj_mimetype == 'application/json':
+      pkgstats = cjson.decode(str(self.data_obj.pickle))
+    elif self.data_obj_mimetype == 'application/python-pickle':
+    	pkgstats = cPickle.loads(str(self.data_obj.pickle))
+    else:
+      raise DataError("Unrecognized mime type: %s" % self.data_obj_mimetype)
     # There was a problem with bad utf-8 in the VENDOR field.
     # This is a workaround.
     if "VENDOR" in pkgstats["pkginfo"]:
@@ -308,7 +323,7 @@ class Srv4FileStats(sqlobject.SQLObject):
         'file_basename': self.basename,
         'catalogname': self.catalogname,
         'md5_sum': self.md5_sum,
-        'mtime': unicode(self.mtime),
+        'mtime': self.mtime,
         'rev': self.rev,
         'size': self.size,
         'version_string': self.version_string,

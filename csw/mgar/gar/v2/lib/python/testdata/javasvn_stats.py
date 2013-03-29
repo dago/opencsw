@@ -1,4 +1,3 @@
-import datetime
 pkgstats = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'javasvn',
                   'md5_sum': 'd759d2536a8ecb46530a9ca218efe210',
@@ -121,7 +120,7 @@ pkgstats = [{'bad_paths': {},
         ]
       }
   },
-  'mtime': datetime.datetime(2010, 7, 12, 19, 6, 15),
+  'mtime': '2010-07-12T19:06:15',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',

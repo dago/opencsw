@@ -1,4 +1,3 @@
-import datetime
 pkgstats = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'apr_util',
                   'md5_sum': 'e19f2b377884db51cc20a88ff06c8eb7',
@@ -241,7 +240,7 @@ pkgstats = [{'bad_paths': {},
                           'path': 'opt/csw/lib/apr-util-1/apr_dbd_odbc-1.so',
                           'runpath': ('/opt/csw/bdb47/lib', '/opt/csw/lib'),
                           'soname': 'apr_dbd_odbc-1.so'},
-  'mtime': datetime.datetime(2010, 8, 27, 11, 0, 10),
+  'mtime': '2010-08-27T11:00:10',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',

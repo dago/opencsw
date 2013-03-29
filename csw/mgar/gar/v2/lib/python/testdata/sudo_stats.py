@@ -1,4 +1,3 @@
-import datetime
 pkgstats = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'sudo_common',
                   'md5_sum': '2b3bb1d2a9190b5d1813562fb2d1472a',
@@ -92,7 +91,7 @@ pkgstats = [{'bad_paths': {},
       ],
     }
   },
-  'mtime': datetime.datetime(2010, 3, 2, 22, 34, 40),
+  'mtime': '2010-03-02T22:34:40',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',
@@ -328,7 +327,7 @@ pkgstats = [{'bad_paths': {},
         ]
       }
   },
-  'mtime': datetime.datetime(2010, 3, 2, 22, 34, 39),
+  'mtime': '2010-03-02T22:34:39',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',

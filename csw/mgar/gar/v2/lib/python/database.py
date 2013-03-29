@@ -10,7 +10,7 @@ import time
 import system_pkgmap
 
 CONFIG_DB_SCHEMA = "db_schema_version"
-DB_SCHEMA_VERSION = 9L
+DB_SCHEMA_VERSION = 10L
 TABLES_THAT_NEED_UPDATES = (m.CswFile,)
 
 # This list of tables is sensitive to the order in which tables are created.
