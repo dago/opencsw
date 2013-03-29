@@ -79,7 +79,7 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
   class TestPackageStats(package_stats.PackageStatsMixin):
     pass
 
-  class TestCatalog(checkpkg_lib.CatalogMixin):
+  class TestCatalog(checkpkg_lib.Catalog):
     pass
 
   def testWithoutInitialDataImport(self):

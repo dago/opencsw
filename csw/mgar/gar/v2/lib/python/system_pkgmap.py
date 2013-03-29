@@ -483,6 +483,7 @@ class InstallContentsImporter(object):
             basename=("%s-fake_version" % catalogname),
             catalogname=catalogname,
             data_obj=None,
+            data_obj_mimetype='text/plain',
             use_to_generate_catalogs=False,
             filename_arch=sqo_arch,
             maintainer=maintainer,

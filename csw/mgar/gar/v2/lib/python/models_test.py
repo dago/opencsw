@@ -51,6 +51,7 @@ class Srv4FileStatsUnitTest(test_base.SqlObjectTestMixin, mox.MoxTestBase):
         basename="foo.pkg",
         catalogname="foo",
         data_obj=None,
+        data_obj_mimetype='text/plain',
         filename_arch=self.sqo_arch,
         maintainer=self.maintainer,
         md5_sum="not a real one",

@@ -846,7 +846,7 @@ class Catalog(SqlobjectHelperMixin):
   """
 
   def __init__(self):
-    super(CatalogMixin, self).__init__()
+    super(Catalog, self).__init__()
     self.pkgs_by_path_cache = {}
 
   def GetInstalledPackages(self, osrel, arch, catrel):
