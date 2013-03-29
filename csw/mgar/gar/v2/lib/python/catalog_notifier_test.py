@@ -11,7 +11,7 @@ import rest
 
 
 class NotificationFormatterTest(mox.MoxTestBase):
-  
+
   def disabled_testOne(self):
     """This tested too much."""
     f = catalog_notifier.NotificationFormatter()

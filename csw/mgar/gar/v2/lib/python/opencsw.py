@@ -285,7 +285,7 @@ class CatalogBasedOpencswPackage(object):
       if line.startswith("#"): continue
       if "BEGIN PGP SIGNED MESSAGE" in line: continue
       if line.startswith("Hash:"): continue
-      if len(line.strip()) <= 0: continue 
+      if len(line.strip()) <= 0: continue
       if "BEGIN PGP SIGNATURE" in line: break
       fields = re.split(r"\s+", line)
       try:

@@ -1,6 +1,6 @@
 #!/bin/env python
 
-"""Builds a list of standard libs and stores this in stdlib.json 
+"""Builds a list of standard libs and stores this in stdlib.json
    this list/file is needed by find_missing_bins.py
 
 """
