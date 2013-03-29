@@ -1,4 +1,4 @@
-$def with (cat_name, pkgs)
+$def with (cat_name, pkgs, timeinfo, n_of_pkgs)
 <html>
   <head>
     <title>
@@ -8,7 +8,7 @@ $def with (cat_name, pkgs)
   </head>
   <body>
     <h3>$cat_name</h3>
-    <p>$pkgs.count() packages</p>
+    <p>$n_of_pkgs packages</p>
 <table>
   <tr>
     <th>filename</th>
@@ -22,5 +22,6 @@ $for pkg in pkgs:
   <td>$pkg.version_string</td>
   </tr>
 </table>
+<p><code>$timeinfo</code></p>
 </body>
 </html>
