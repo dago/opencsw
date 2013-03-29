@@ -1,4 +1,3 @@
-import datetime
 pkgstat_objs = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'berkeleydb48',
                   'md5_sum': '884e86c865b6cf30d21da6436318c289',
@@ -807,7 +806,7 @@ pkgstat_objs = [{'bad_paths': {},
 	       'opt/csw/bdb48/lib/sparcv9/libdb-4.8.so': {},
 	       'opt/csw/bdb48/lib/sparcv9/libdb_cxx-4.8.so': {},
 	       'opt/csw/bdb48/lib/sparcv9/libdb_java-4.8.so': {}},
-  'mtime': datetime.datetime(2010, 3, 2, 18, 9, 30),
+  'mtime': '2010-03-02T18:09:30',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',

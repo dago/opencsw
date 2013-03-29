@@ -69,7 +69,7 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
     self.assertEqual(
         "1234.12.11",
         data_structure["basic_stats"]["parsed_basename"]["revision_info"]["REV"])
-    self.assertEqual(datetime.datetime(2010, 12, 8, 7, 52, 54),
+    self.assertEqual('2010-12-08T07:52:54',
                      data_structure["mtime"])
 
 

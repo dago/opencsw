@@ -1,13 +1,15 @@
 #!/usr/bin/env python2.6
 
-import cPickle
+import cjson
 import copy
+import dateutil.parser
 import itertools
 import logging
 import os
 import progressbar
 import mute_progressbar
 import re
+import pprint
 import sqlobject
 
 import catalog
@@ -204,7 +206,8 @@ class PackageStatsMixin(object):
         "depends": depends,
         "i_depends": i_depends,
         "obsoleteness_info": dir_pkg.GetObsoletedBy(),
-        "isalist": sharedlib_utils.GetIsalist(arch),
+        # GetIsaList returns a frozenset, but we need a list.
+        "isalist": list(sharedlib_utils.GetIsalist(arch)),
         "overrides": override_dicts,
         "pkgchk": self.GetPkgchkData(),
         "pkginfo": dir_pkg.GetParsedPkginfo(),
@@ -212,7 +215,10 @@ class PackageStatsMixin(object):
         "bad_paths": dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES),
         "basic_stats": basic_stats,
         "files_metadata": dir_pkg.GetFilesMetadata(),
-        "mtime": self.GetMtime(),
+        # Data in json must be stored using simple structures such as numbers
+        # or strings. We cannot store a datetime.datetime object, we must
+        # convert it into a string.
+        "mtime": self.GetMtime().isoformat(),
         "ldd_info": dir_pkg.GetLddMinusRlines(),
         "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
@@ -298,8 +304,12 @@ class PackageStatsMixin(object):
                     basename)
       pass
     # Creating the object in the database.
-    data_obj = m.Srv4FileStatsBlob(
-        pickle=cPickle.dumps(pkg_stats))
+    try:
+      data_obj = m.Srv4FileStatsBlob(pickle=cjson.encode(pkg_stats))
+      data_obj_mimetype = 'application/json'
+    except cjson.EncodeError as e:
+      logging.fatal(pprint.pformat(pkg_stats))
+      raise
     if db_pkg_stats:
       # If the database row exists already, update it.
       #
@@ -310,13 +320,14 @@ class PackageStatsMixin(object):
       db_pkg_stats.basename = pkg_stats["basic_stats"]["pkg_basename"]
       db_pkg_stats.catalogname = pkg_stats["basic_stats"]["catalogname"]
       db_pkg_stats.data_obj = data_obj
+      db_pkg_stats.data_obj_mimetype = data_obj_mimetype
       db_pkg_stats.use_to_generate_catalogs = True
       db_pkg_stats.filename_arch = filename_arch
       db_pkg_stats.latest = True
       db_pkg_stats.maintainer = maintainer
       db_pkg_stats.md5_sum = pkg_stats["basic_stats"]["md5_sum"]
       db_pkg_stats.size = pkg_stats["basic_stats"]["size"]
-      db_pkg_stats.mtime = pkg_stats["mtime"]
+      db_pkg_stats.mtime = dateutil.parser.parser(pkg_stats["mtime"])
       db_pkg_stats.os_rel = os_rel
       db_pkg_stats.pkginst = pkginst
       db_pkg_stats.registered = register
@@ -329,13 +340,14 @@ class PackageStatsMixin(object):
           basename=pkg_stats["basic_stats"]["pkg_basename"],
           catalogname=pkg_stats["basic_stats"]["catalogname"],
           data_obj=data_obj,
+          data_obj_mimetype=data_obj_mimetype,
           use_to_generate_catalogs=True,
           filename_arch=filename_arch,
           latest=True,
           maintainer=maintainer,
           md5_sum=pkg_stats["basic_stats"]["md5_sum"],
           size=pkg_stats["basic_stats"]["size"],
-          mtime=pkg_stats["mtime"],
+          mtime=dateutil.parser.parse(pkg_stats["mtime"]),
           os_rel=os_rel,
           pkginst=pkginst,
           registered=register,

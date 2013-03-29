@@ -1,4 +1,3 @@
-import datetime
 pkgstats = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'tree',
                   'md5_sum': '1e43fa1c7e637b25d9356ad516ae0403',
@@ -37,7 +36,7 @@ pkgstats = [{'bad_paths': {},
                       'mime_type': 'application/x-executable; charset=binary',
                       'mime_type_by_hachoir': u'application/x-executable',
                       'path': 'opt/csw/bin/tree'}],
-  'isalist': frozenset(['sparc',
+  'isalist': (['sparc',
                         'sparcv7',
                         'sparcv8',
                         'sparcv8-fsmuld',
@@ -58,7 +57,7 @@ pkgstats = [{'bad_paths': {},
 								  } ] 
 					      }
 			      },
-  'mtime': datetime.datetime(2010, 7, 5, 23, 48, 10),
+  'mtime': '2010-07-05T23:48:10',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': [],

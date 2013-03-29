@@ -1,4 +1,3 @@
-import datetime
 pkgstat_objs = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'libnet',
                   'md5_sum': '903c6ab7e055fd7a732f69544f84e05a',
@@ -33,7 +32,7 @@ pkgstat_objs = [{'bad_paths': {},
               'sparc'),
   'ldd_info': {},
   'binaries_elf_info': {},
-  'mtime': datetime.datetime(2008, 8, 20, 10, 26, 15),
+  'mtime': '2008-08-20T10:26:15',
   'overrides': [],
   'pkgchk': {'return_code': 0,
              'stderr_lines': ['rm: Cannot remove any directory in the path of the current working directory',
