@@ -123,6 +123,8 @@ class Srv4Detail(object):
       archs = models.Architecture.select(models.Architecture.q.name!='all')
     else:
       archs = [pkg.arch]
+    # pkgmap is disabled for now.
+    pkgmap = []
     for catrel in catrels:
       for arch in archs:
         for osrel in osrels:
@@ -132,7 +134,7 @@ class Srv4Detail(object):
           tags_by_cat[key] = tags
           tags_and_catalogs.append((osrel, arch, catrel, tags))
     return render.Srv4Detail(pkg, overrides, tags_by_cat, all_tags,
-        tags_and_catalogs, pkgstats_raw)
+        tags_and_catalogs, pkgstats_raw, pkgmap)
 
 
 class Catalogname(object):
