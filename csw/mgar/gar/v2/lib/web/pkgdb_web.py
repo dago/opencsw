@@ -178,20 +178,37 @@ class Srv4DetailFiles(object):
 
 class CatalogList(object):
   def GET(self):
+    """Return a list of catalogs.
+
+    Make it table:
+
+               5.8        5.9        5.10       5.11
+    beanie     i386 sparc i386 sparc i386 sparc i386 sparc
+    dublin     i386 sparc i386 sparc i386 sparc i386 sparc
+    kiel       i386 sparc i386 sparc i386 sparc i386 sparc
+    legacy     i386 sparc i386 sparc i386 sparc i386 sparc
+    """
     archs = models.Architecture.select()
     osrels = models.OsRelease.select()
     catrels = models.CatalogRelease.select()
-    catalogs = []
+    table = []
     for catrel in catrels:
-      for arch in archs:
-        if arch.name in ('all'): continue
-        for osrel in osrels:
-          if osrel.full_name == 'unspecified': continue
+      row = [catrel.name]
+      for osrel in osrels:
+        cell = []
+        if osrel.full_name == 'unspecified': continue
+        for arch in archs:
+          if arch.name in ('all'): continue
           # tags = pkg.GetErrorTagsResult(osrel, arch, catrel)
-          key = (osrel, arch, catrel)
+          cell.append({
+            'osrel': osrel,
+            'arch': arch,
+            'catrel': catrel
+          })
           # tags_by_cat[key] = list(tags)
-          catalogs.append(key)
-    return render.CatalogList(catalogs)
+        row.append(cell)
+      table.append(row)
+    return render.CatalogList(table, osrels)
 
 
 class CatalogDetail(object):

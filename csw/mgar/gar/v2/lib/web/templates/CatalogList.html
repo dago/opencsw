@@ -1,4 +1,4 @@
-$def with (keys)
+$def with (table, osrels)
 <html>
   <head>
     <title>
@@ -7,13 +7,23 @@ $def with (keys)
     <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
   </head>
   <body>
-    <ul>
-$for osrel, arch, catrel in keys:
-  <li>
-  <a href="$catrel.name-$arch.name-$osrel.short_name/">
-  $catrel.name-$arch.name-$osrel.short_name
-  </a>
-  </li>
-</ul>
+    <table class="catalog-matrix">
+      <tbody>
+  <tr class="top-row">
+    <th>&nbsp;<!-- this cell intentionally left blank --></th>
+$for osrel in osrels
+  <th class="catalog-release">$osrel.short_name</th>
+</tr>
+$for row in table:
+  <tr>
+  <th>$row[0]</th>
+  $for cell in row[1:]:
+    <td class="catalog">
+    $for i in cell:
+      <a href="$i['catrel'].name-$i['arch'].name-$i['osrel'].short_name/">$i['arch'].name</a>
+    </td>
+  </tr>
+</tbody>
+</table>
 </body>
 </html>
