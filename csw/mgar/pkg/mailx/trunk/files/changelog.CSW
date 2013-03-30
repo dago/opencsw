@@ -1,3 +1,10 @@
+mailx (12.4,REV=2013.03.30)
+
+  * Non maintainer upload.
+  * Rebuilt again libssl 1.0.0.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 30 Mar 2013 17:10:56 +0100
+
 mailx (12.4,REV=2009.05.21)
 
   * Package name change, was formerly known as nail.
