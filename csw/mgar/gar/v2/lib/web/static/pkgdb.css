@@ -20,3 +20,37 @@ ul.catalogname-list > li {
 td.wordbag {
   width: 30em;
 }
+
+/* Catalog matrix related settings */
+
+table.catalog-matrix {
+  margin-top: 1em;
+  border-collapse: separate;
+  border-spacing: 0px 0px;
+}
+table.catalog-matrix tr.top-row th {
+  border-bottom: 2px solid black;
+  border-left: 0px;
+  border-right: 0px;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+table.catalog-matrix td {
+  margin: 0.0em;
+  padding: 0.2em 0.7em 0.2em 0.7em;
+}
+table.catalog-matrix td.catalog {
+  border-left: 1px solid #DDD;
+}
+table.catalog-matrix th {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+table.catalog-matrix td.catalog a {
+  margin: 0.1em;
+}
+table.catalog-matrix th.catalog-release {
+  color: gray;
+  font-size: 120%;
+}
