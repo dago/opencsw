@@ -26,7 +26,10 @@ RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
 # Makefile comes pre-set with gcc defaults and hardcoded tools
 # Already submitted upstream, feedback pending.
-PATCHFILES = 0001-Makefile-make-options-and-tools-configurable.patch
+PATCHFILES = 0001-Makefile-make-options-and-tools-con# strndup is not defined anymore in httping source (file str.c)
+# but it still doesn't exist under Solaris 9 so we have to define
+# the function
+PATCHFILES += 0002-Define-strndup-functionools-configurable.patch
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
@@ -37,7 +40,7 @@ EXTRA_BUILD_EXPORTS = WFLAGS OFLAGS
 WFLAGS =
 OFLAGS =
 
-# Install options (see $(WORKSRC)/Makefile)
+# Install options (see $(WOEXTRA_RKSRC)/Makefile)
 INSTALL_EXPORTS = PREFIX INSTALL STRIP
 PREFIX  = $(prefix)
 INSTALL = ginstall
@@ -50,4 +53,3 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(NAME)
-	@$(MAKECOOKIE)
