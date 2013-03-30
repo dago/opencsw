@@ -1,0 +1,30 @@
+From 852d6ca70fda0d1b21c3743801b43857061f9467 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sat, 30 Mar 2013 18:25:40 +0100
+Subject: [PATCH] Define strndup function
+
+---
+ str.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/str.c b/str.c
+index aa6206a..7f7e0ee 100644
+--- a/str.c
++++ b/str.c
+@@ -20,6 +20,7 @@
+ 
+ /*
+ Most unixes have this function already.
++But not Solaris 9 */
+ 
+ #ifndef _GNU_SOURCE
+ char *strndup(char *in, int size)
+@@ -32,4 +33,4 @@ char *strndup(char *in, int size)
+ 	return out;
+ }
+ #endif
+-*/
++/**/
+-- 
+1.8.1.4
+
