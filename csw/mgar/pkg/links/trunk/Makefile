@@ -23,8 +23,7 @@ endef
 
 PACKAGES = CSWlinks
 
-RUNTIME_DEP_PKGS_CSWlinks += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlinks += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlinks +inks += CSWlibz1
 
 ###### Upstream and opencsw files information #######
 
@@ -39,5 +38,4 @@ DISTFILES += changelog.CSW
 CONFIGURE_ARGS = $(DIRPATHS)
 
 
-include gar/category.mk
-
+include 
