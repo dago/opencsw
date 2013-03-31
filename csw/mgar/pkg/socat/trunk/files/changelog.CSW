@@ -1,3 +1,9 @@
+socat (1.7.1.1,REV=2013.04.01)
+
+  * Rebuilt against libssl1.0.0
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 01 Apr 2013 00:31:55 +0200
+
 socat (1.7.1.1,REV=2009.05.10)
 
   * Updated to 1.7.1.1 (Closes: #3594).
