@@ -1,4 +1,4 @@
-$def with (catalognames)
+$def with (catalognames_by_letter, letters)
 <html>
   <head>
     <title>
@@ -7,12 +7,16 @@ $def with (catalognames)
     <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
   </head>
   <body>
-    <ul class="catalogname-list">
-$for catalogname in catalognames:
-  <li>
-  <a href="$catalogname[0]/">$catalogname[0]</a>
-  </li>
+    <ul class="toc">
+$for letter in letters:
+  <li><a href="#letter-$letter">$letter</a></li>
 </ul>
+$for letter in letters:
+  <h2 class="initial clear-float"><a name="letter-$letter"></a>$letter</h2>
+  <ul class="catalogname-list">
+  $for catalogname in catalognames_by_letter[letter]:
+    <li><a href="$catalogname[0]/">$catalogname[0]</a></li>
+  </ul>
 </body>
 </html>
 
