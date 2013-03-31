@@ -16,7 +16,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://w3m.sourceforge.net/
 
-RUNTIME_DEP_PKGS += CSWggettextrt CSWlibgc CSWosslrt CSWzlib
+RUNTIlibgc1 CSWlibssl1-0-0 CSWlibz1 CSWlibintl8 CSWperl CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=39518
@@ -25,15 +25,16 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# UPSTREAMCHECKPKG_OVERRIDES_CSWw3m += file-with-bad-content|/usr/local|root/opt/csw/libexec/w3m/cgi-bin/multipart.cgi
+CHECKPKG_OVERRIDES_CSWw3m += file-with-bad-content|/usr/local|root/opt/csw/libexec/w3m/cgi-bin/w3mman2html.cgiAM_MASTER_SITES = 
 
 #LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib -R/usr/openwin/lib
 #export LD_OPTIONS
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gc=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --enable-image=no_
+CONFIGURE_ARGS += ---enable-image=no_
 
 TEST_TARGET = 
 
-include gar/category.mk
+includ
