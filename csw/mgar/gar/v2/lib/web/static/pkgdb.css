@@ -16,6 +16,22 @@ ul.catalogname-list {
 ul.catalogname-list > li {
   margin: 0.2em;
   padding: 0;
+  display: inline-block;
+  min-width: 10em;
+}
+ul.toc {
+  background-color: #DDD;
+  padding: 5px;
+  list-style: none;
+}
+ul.toc li {
+  display: inline-block;
+  min-width: 1.5em;
+}
+ul.toc li a {
+  padding: 5px;
+  font-size: 15px;
+  text-decoration: none;
 }
 td.wordbag {
   width: 30em;

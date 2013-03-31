@@ -161,7 +161,12 @@ class CatalognameList(object):
             models.Srv4FileStats.q.use_to_generate_catalogs==True,
             models.Srv4FileStats.q.registered==True),
           orderBy=models.Srv4FileStats.q.catalogname)))
-      return render.CatalognameList(rows)
+      rows_by_letter = {}
+      for row in rows:
+        initial = row[0][0]
+        rows_by_letter.setdefault(initial, [])
+        rows_by_letter[initial].append(row)
+      return render.CatalognameList(rows_by_letter, sorted(rows_by_letter))
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
