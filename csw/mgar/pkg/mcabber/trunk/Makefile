@@ -23,7 +23,11 @@ BUILD_DEP_PKGS += CSWlibgpg-error-dev CSWgpgme CSWlibiconv-dev
 
 RUNTIME_DEP_PKGS = CSWlibncursesw5 CSWlibssl1-0-0 CSWotr
 RUNTIME_DEP_PKGS += CSWlibaspell15 CSWlibglib2-0-0 
-RUNTIME_DEP_PKGS += CSWlibintl8 CSWlibpanelw5 CSWgpgme
+RUNTIME_DEP_PKGS += CSWlibintl8 CSWlibpanelw5 CSWgpgme 
+# Don't know yet why but this dependency is only picked under sparc
+RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH))
+RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
+
 r CSWgpgme CSWiconv
 
 TEST_SCRIPTS = 
