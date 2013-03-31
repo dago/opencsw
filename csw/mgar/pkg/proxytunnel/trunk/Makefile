@@ -17,8 +17,8 @@ PATCHFILES = patch-Makefile.diff
 
 SPKG_SOURCEURL = http://proxytunnel.sourceforge.net/
 
-BUILD_DEP_PKGS = CSWossldevel
-RUNTIME_DEP_PKGS = CSWosslrt
+Blibssl-dev
+RUNTIME_DEP_PKGS = CSWlibssl1-0-0EP_PKGS = CSWosslrt
 
 # UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 # UPSTREAM_MASTER_SITES = 
@@ -26,12 +26,12 @@ RUNTIME_DEP_PKGS = CSWosslrt
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS = 
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_AEXTRA_CFLAGS = -I/opt/csw/include
+EXTRA_LDFLAGS = -lnsl -lsocket_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDES
