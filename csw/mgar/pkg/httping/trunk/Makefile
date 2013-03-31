@@ -3,7 +3,7 @@
 #   feedback pending.
 #
 NAME = httping
-VERSION = 1.5.3
+VERSION = 1.4.1
 CATEGORIES = net
 GARTYPE = v2
 
@@ -27,9 +27,9 @@ RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 # Makefile comes pre-set with gcc defaults and hardcoded tools
 # Already submitted upstream, feedback pending.
 PATCHFILES = 0001-Makefile-make-options-and-tools-con# strndup is not defined anymore in httping source (file str.c)
-# but it still doesn't exist under Solaris 9 so we have to define
-# the function
-PATCHFILES += 0002-Define-strndup-functionools-configurable.patch
+# starting from at least 1.5.3 but it still doesn't exist under
+# Solaris 9 so we have to define the function
+#PATCHFILES += 0002-Define-strndup-functionools-configurable.patch
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
