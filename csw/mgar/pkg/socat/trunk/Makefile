@@ -41,7 +41,7 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWreadline CSWtcpwrap
+RUNTIlibssl1-0-0 CSWlibreadline6 CSWlibwrap1adline CSWtcpwrap
 
 # test.sh uses unescaped nested double quotes (doesn't work with /bin/bash)
 PATCHFILES += 0001-Escape-nested-double-quotes.patch
@@ -120,7 +120,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #   ./test.sh <TESTNAME>
 #
 # where TESTNAME is one of the uppercase testnames from above 
-# (for example PTMXWAITSLAVE).
+# (for example TEST_SCRIPTS =e PTMXWAITSLAVE).
 
 include gar/category.mk
 
@@ -128,4 +128,3 @@ post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: 
 	ginstall -d $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(FILEDIR)/README.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
