@@ -12,9 +12,7 @@ define BLURB
 endef
 
 prefix = $(BUILD_PREFIX)/gxx
-GARCOMPILER = GNU
-
-MASTER_SITES = http://get.qt.nokia.com/qt/source/
+GARCOMPILER = GNUftp://ftp.qt-project.org/get.qt.nokia.com/qt/source/
 DISTNAME = qt-everywhere-opensource-src-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
