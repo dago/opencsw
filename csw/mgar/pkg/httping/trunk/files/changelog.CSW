@@ -1,7 +1,7 @@
-httping (1.5.3,REV=2013.03.30)
+httping (1.4.1,REV=2013.03.30)
 
   * Non maintainer upload.
-  * New upstream release.
+  * Rebuilt against libssl1.0.0
   
  -- Yann Rouillard <yann@opencsw.org>  Sat, 30 Mar 2013 18:28:09 +0100
 
