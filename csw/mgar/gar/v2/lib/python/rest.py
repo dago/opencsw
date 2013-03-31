@@ -120,7 +120,7 @@ class RestClient(object):
     """Set basic HTTP auth options on given Curl object."""
     if self.username:
       logging.debug("Using basic AUTH for user %s", self.username)
-      c.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_ANY)
+      c.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_BASIC)
       c.setopt(pycurl.USERPWD, "%s:%s" % (self.username, self.password))
     else:
       logging.debug("User and password not set, not using HTTP AUTH")
