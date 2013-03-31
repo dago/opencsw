@@ -239,7 +239,7 @@ class MaintainerList(object):
       if len(email) >= 2:
         names.append((email[0], email[1], m))
       else:
-      	names.append((email[0], "no domain", m))
+        names.append((email[0], "no domain", m))
     return render.MaintainerList(names)
 
 
