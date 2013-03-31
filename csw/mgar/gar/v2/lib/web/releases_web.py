@@ -151,7 +151,7 @@ class Srv4CatalogAssignment(object):
     if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
       # We should return an error message instead.
-      raise web.forbidden()
+      raise web.forbidden('Not allowed to upload to %s' % catrel_name)
     try:
       if arch_name == 'all':
         raise checkpkg_lib.CatalogDatabaseError(
@@ -191,13 +191,8 @@ class Srv4CatalogAssignment(object):
           srv4_to_remove = pkg_in_catalog.srv4file
           c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
 
-      # Retrieving authentication data from the HTTP environment.
-      # If the auth data isn't there, this code will fail.
-      auth = web.ctx.env.get('HTTP_AUTHORIZATION')
-      if not auth:
-        raise web.forbidden()
-      auth = re.sub('^Basic ','',auth)
-      username, password = base64.decodestring(auth).split(':')
+      # Retrieving logged in user name from the HTTP environment.
+      username = web.ctx.env.get('REMOTE_USER')
 
       c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, who=username)
       web.header(
