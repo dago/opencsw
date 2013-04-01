@@ -1,7 +1,8 @@
 NAME = htmldoc
 VERSION = 1.8.27
-CATEGORIES = apps
 GARTYPE = v2
+
+DESCRIPTION = C2
 
 DESCRIPTION = converts HTML files and web pages into indexed HTML PostScript and PDF
 define BLURB
@@ -17,12 +18,15 @@ SPKG_DESC_CSWhtmldoc = $(DESCRIPTION)
 SPKG_DESC_CSWhtmldoc-common = This package contains the htmldoc files common to all architectures.
 ARCHALL_CSWhtmldoc-common = 1
 
-RUNTIME_DEP_PKGS_CSWhtmldoc  = CSWfltk CSWjpeg CSWosslrt CSWpng CSWzlib
+RUNTIME_DEP_PKGS_CSWhtmllibjpeg7 CSWlibssl1-0-0 CSWlibpng15-15 CSWlibz1
 RUNTIME_DEP_PKGS_CSWhtmldoc += CSWhtmldoc-common
 #RUNTIME_DEP_PKGS_CSWhtmldoc-common = 
 
+CHECKPKG_OVERRIDES_CSWhtmldoc += surplus-dependency|CSWhtmldoc-common
+CHECKPKG_OVERRIDES_CSWhtmldoc-common += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/htmldoc.1Whtmldoc-common = 
+
 PKGFILES_CSWhtmldoc = $(bindir)/.*
-PKGFILES_CSWhtmldoc-common = $(datadir)/.*
+PKGFILES_CSWhtmldoc-commonn = $(datadir)/.*
 
 MASTER_SITES = http://ftp.easysw.com/pub/htmldoc/$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
@@ -40,6 +44,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-source.tar.bz2
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+PATCHFPATCHFILES += 0002-libpng15-compatibility-fix.
 PATCHFILES = mainpatch
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -48,4 +53,6 @@ TEST_SCRIPTS =
 
 # Disable check until package is released
 #ENABLE_CHECK = 0
-include gar/category.mk
+includ
+post-configure:
+	gsed -i -e 's/-xnorunpath//' $(WORKSRC)/Makedefs
