@@ -1,5 +1,5 @@
 NAME = salt
-VERSION = 0.10.4
+VERSION = 0.14.0
 GARTYPE = v2
 CATEGORIES = python
 
@@ -8,7 +8,7 @@ define BLURB
   Salt is a distributed remote execution system used to execute commands and query data. 
 endef
 
-MASTER_SITES = https://github.com/downloads/saltstack/salt/
+MASTER_SITES = http://pypi.python.org/packages/source/s/salt/
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += salt-minion
 DISTFILES += salt-master
@@ -44,18 +44,16 @@ PRESERVECONF += $(sysconfdir)/salt/master
 include gar/category.mk
 
 post-install-modulated: CONFDEST = $(DESTDIR)$(sysconfdir)/salt
-post-install-modulated: CONFS = minion.template master.template 
+post-install-modulated: CONFS = minion master
 post-install-modulated:
 
 	# Copy config files (upstream)
 	ginstall -d $(CONFDEST)
 	cp $(addprefix $(WORKSRC)/conf/,$(CONFS)) $(CONFDEST)
-	gsed -i -e 's+/etc/salt+/etc/opt/csw/salt+g' $(DESTDIR)$(sysconfdir)/salt/master.template
-	gsed -i -e 's+/etc/salt+/etc/opt/csw/salt+g' $(DESTDIR)$(sysconfdir)/salt/minion.template
-	gsed -i -e 's+#pki_dir:+pki_dir:+g' $(DESTDIR)$(sysconfdir)/salt/master.template
-	gsed -i -e 's+#pki_dir:+pki_dir:+g' $(DESTDIR)$(sysconfdir)/salt/minion.template
-	mv $(CONFDEST)/minion.template $(CONFDEST)/minion
-	mv $(CONFDEST)/master.template $(CONFDEST)/master
+	gsed -i -e 's+/etc/salt+/etc/opt/csw/salt+g' $(DESTDIR)$(sysconfdir)/salt/master
+	gsed -i -e 's+/etc/salt+/etc/opt/csw/salt+g' $(DESTDIR)$(sysconfdir)/salt/minion
+	gsed -i -e 's+#pki_dir:+pki_dir:+g' $(DESTDIR)$(sysconfdir)/salt/master
+	gsed -i -e 's+#pki_dir:+pki_dir:+g' $(DESTDIR)$(sysconfdir)/salt/minion
 	# Copy init script in place
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(DOWNLOADDIR)/salt-minion $(DESTDIR)$(sysconfdir)/init.d
