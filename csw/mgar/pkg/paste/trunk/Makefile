@@ -18,6 +18,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 SKIPTEST = 1
 
 PACKAGES = CSWpy-paste
+ARCHALL_CSWpy-paste = 1
 
 include gar/category.mk
-
