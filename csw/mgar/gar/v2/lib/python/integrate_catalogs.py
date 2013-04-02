@@ -243,11 +243,11 @@ def ComposeDiffsByCatalogname(catalogs, catrel_from, catrel_to,
 
 def main():
   parser = optparse.OptionParser()
-  parser.add_option("--catrel-from",
+  parser.add_option("--from-catalog",
       dest="catrel_from",
       default="unstable",
       help="Catalog release to integrate from, e.g. 'unstable'.")
-  parser.add_option("--catrel-to",
+  parser.add_option("--to-catalog",
       dest="catrel_to",
       default="testing",
       help="Catalog release to integrate to, e.g. 'testing'.")
