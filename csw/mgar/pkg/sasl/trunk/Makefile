@@ -45,21 +45,17 @@ VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
 PACKAGES += CSWsasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
-RUNTIME_DEP_PKGS_CSWsasl += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSW1-0-0+= CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsasl += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
 
 PACKAGES += CSWsaslauthd
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWsasl
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWsasla1-0-0+= CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWsakrb5-3SWlibkrb5support0
 CHECKPKG_OVERRIDES_CSWsaslauthd += surplus-dependency|CSWsasl
 PKGFILES_CSWsaslauthd = $(sysconfdir)/init.d/cswsaslauthd
 PKGFILES_CSWsaslauthd += $(sysconfdir)/saslauthd.init.CSW
@@ -76,11 +72,8 @@ PKGFILES_CSWsaslauthd += /var/opt/csw/saslauthd
 PACKAGES += CSWsaslgssapi
 CATALOGNAME_CSWsaslgssapi = sasl_gssapi
 SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
-RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWsasl
+RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibgssapi-krb5-2SWlibkrb5support0
 CHECKPKG_OVERRIDES_CSWsaslgssapi += catalogname-does-not-match-pkgname|pkgname=CSWsaslgssapi|catalogname=sasl_gssapi|expected-catalogname=saslgssapi
 PKGFILES_CSWsaslgssapi = $(call pkgfiles_lib,sasl2/libgs2.so)
 PKGFILES_CSWsaslgssapi += $(call pkgfiles_lib,sasl2/libgssapiv2.so)
@@ -95,7 +88,7 @@ ifneq ($(MODULATION),isa-amd64)
 RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibpq5
 endif
 RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWsaslsql += C8Wlibmysqlclient15
 CHECKPKG_OVERRIDES_CSWsaslsql += catalogname-does-not-match-pkgname|pkgname=CSWsaslsql|catalogname=sasl_sql|expected-catalogname=saslsql
 PKGFILES_CSWsaslsql = $(call pkgfiles_lib,sasl2/libsql.so)
 
@@ -113,11 +106,7 @@ CATALOGNAME_CSWsaslsample = sasl_sample
 SPKG_DESC_CSWsaslsample = Cyrus Simple Authentication and Security Layer sample client/server
 RUNTIME_DEP_PKGS_CSWsaslsample = CSWsasl
 RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWsasgssapi-krb5-2SWlibkrb5support0
 PKGFILES_CSWsaslsample = $(bindir)/sasl-sample-server
 PKGFILES_CSWsaslsample += $(bindir)/sasl-sample-client
 # The plugins of CSWsasl are needed, else the functionality
@@ -129,9 +118,9 @@ CHECKPKG_OVERRIDES_CSWsaslsample += catalogname-does-not-match-pkgname|pkgname=C
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWmysql-dev
 BUILD_DEP_PKGS += CSWpostgresql-dev
-BUILD_DEP_PKGS += CSWoldapdevel 
+BUILDpenldap-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev
-BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWlibssl-devS += CSWossldevel
 BUILD_DEP_PKGS += CSWbdb48devel
 
 EXTRA_CFLAGS = -D__EXTENSIONS__
@@ -290,5 +279,4 @@ install-doc:
 fix-path-manpages:
 	for f in $(DESTDIR)$(mandir)/*/*.? ; do \
 		$(SED_USR_LOCAL) $$f > $$f.tmp ; \
-		mv $$f.tmp $$f ; \
-	done
+		mv $$f.t
