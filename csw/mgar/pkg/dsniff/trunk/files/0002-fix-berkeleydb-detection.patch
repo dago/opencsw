@@ -1,0 +1,25 @@
+From 4eee78cb46273bf8d18f28b99d8d5aadae63d21b Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 31 Mar 2013 10:39:28 +0200
+Subject: [PATCH] fix berkeleydb detection
+
+---
+ configure.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.in b/configure.in
+index 912ab6c..e97bf37 100644
+--- a/configure.in
++++ b/configure.in
+@@ -110,7 +110,7 @@ AC_ARG_WITH(db,
+ 	DBINC="-I$withval/dist"
+ 	DBLIB="-L$withval/dist -ldb"
+      elif test -f $withval/include/db_185.h -a \
+-	       -f $withval/lib/libdb.a; then
++	       -f $withval/lib/libdb.so; then
+ 	owd=`pwd`
+ 	if cd $withval; then withval=`pwd`; cd $owd; fi
+ 	AC_DEFINE(HAVE_DB_185_H)
+-- 
+1.8.1.4
+
