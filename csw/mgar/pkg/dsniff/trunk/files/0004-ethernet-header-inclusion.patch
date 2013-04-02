@@ -1,0 +1,30 @@
+From 2b602f7476ebb1ad5ea603f03fbfe294f1b8da88 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Mon, 1 Apr 2013 23:28:47 +0200
+Subject: [PATCH] ethernet header inclusion
+
+---
+ arpspoof.c |    3 +-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/arpspoof.c b/arpspoof.c
+index 6b22f91..6efd364 100644
+--- a/arpspoof.c
++++ b/arpspoof.c
+@@ -13,6 +13,7 @@
+ 
+ #include <sys/types.h>
+ #include <sys/param.h>
++#include <sys/ethernet.h>
+ #include <netinet/in.h>
+ 
+ #include <stdio.h>
+@@ -25,7 +26,7 @@
+ #include "arp.h"
+ #include "version.h"
+ 
+-extern char *ether_ntoa(struct ether_addr *);
++extern char *ether_ntoa(const struct ether_addr *);
+ 
+ static libnet_t *l;
+ static struct ether_addr spoof_mac, target_mac;
