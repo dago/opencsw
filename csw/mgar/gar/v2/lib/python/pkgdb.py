@@ -371,8 +371,8 @@ def main():
   parser.add_option("-t", "--pkg-review-template", dest="pkg_review_template",
                     help="A Cheetah template used for package review reports.")
   parser.add_option("-r", "--os-release", dest="osrel",
-                    default="SunOS5.9",
-                    help="E.g. SunOS5.9")
+                    default="SunOS5.10",
+                    help="E.g. SunOS5.10")
   parser.add_option("-a", "--arch", dest="arch",
                     default="sparc",
                     help="'i386' or 'sparc'")
