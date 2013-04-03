@@ -5,7 +5,7 @@
 # ! cleanup of /usr/share, /usr/local occurrences
 
 NAME = dbus
-VERSION = 1.5.6
+VERSION = 1.7.0
 GARTYPE = v2
 
 DESCRIPTION  = DBus Message Bus System
@@ -30,21 +30,9 @@ DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswdbus
 
-# Use this patch until this issue is fixed:
-#   http://bugs.freedesktop.org/show_bug.cgi?id=40235
-#PATCHFILES += dbus-sysdeps-unix.c.diff
-
-#PATCHFILES += dbus-sysdeps.h.diff
-
 # Use patch until this is fixed:
-#   http://bugs.freedesktop.org/show_bug.cgi?id=40313
-PATCHFILES += 0002-Add-missing-inclusion-of-inttypes.h.patch
-
-# Use this custom-patch unless this is fixed:
-#   http://bugs.freedesktop.org/show_bug.cgi?id=39987
-PATCHFILES += 0001-Use-LOG_PERROR-only-when-available.patch
-
-PATCHFILES += attachment-50480.patch
+#   https://bugs.freedesktop.org/show_bug.cgi?id=63071
+PATCHFILES += 0001-If-alloca.h-is-available-it-is-required-e.g.-on-Sola.patch
 
 PACKAGES += CSWdbus
 CATALOGNAME_CSWdbus = dbus
@@ -58,6 +46,7 @@ CHECKPKG_OVERRIDES_CSWdbus += file-with-bad-content|/usr/local|root/opt/csw/libe
 CHECKPKG_OVERRIDES_CSWdbus += file-with-bad-content|/usr/share|root/opt/csw/libexec/dbus-daemon-launch-helper
 CHECKPKG_OVERRIDES_CSWdbus += file-with-bad-content|/usr/local|root/opt/csw/bin/dbus-daemon
 CHECKPKG_OVERRIDES_CSWdbus += file-with-bad-content|/usr/share|root/opt/csw/bin/dbus-daemon
+
 # This is an example
 CHECKPKG_OVERRIDES_CSWdbus += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/dbus-daemon.1
 
@@ -67,12 +56,12 @@ PKGFILES_CSWlibdbus1-3 += $(call pkgfiles_lib,libdbus-1.so.3)
 OBSOLETED_BY_CSWlibdbus1-3 += CSWlibdbus
 # These are search pathes:
 #   /opt/csw/share:/usr/local/share:/usr/share:
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/libdbus-1.so.3.6.3
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/libdbus-1.so.3.6.3
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libdbus-1.so.3.6.3
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libdbus-1.so.3.6.3
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libdbus-1.so.3.6.3
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libdbus-1.so.3.6.3
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/libdbus-1.so.3.8.0
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/libdbus-1.so.3.8.0
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libdbus-1.so.3.8.0
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libdbus-1.so.3.8.0
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libdbus-1.so.3.8.0
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libdbus-1.so.3.8.0
 
 PACKAGES += CSWlibdbus-dev
 SPKG_DESC_CSWlibdbus-dev = Development files for libdbus
@@ -87,6 +76,9 @@ CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/dbus/api/dbus-sysdeps-unix_8c_source.html
 CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/dbus/api/group__DBusSysdeps.html
 CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/dbus/system-activation.txt
+CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/dbus/dbus-daemon.1.html
+CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/dbus/dbus-specification.html
+CHECKPKG_OVERRIDES_CSWlibdbus-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/dbus/dbus-specification.html
 
 INITSMF += /etc/opt/csw/init.d/cswdbus
 PRESERVECONF += /etc/opt/csw/dbus-1/system.conf
@@ -108,9 +100,14 @@ BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
 
-post-merge:
+post-patch:
+	cd $(WORKSRC) && PATH=$(prefix)/gnu:$(PATH) ./autogen.sh
+	@$(MAKECOOKIE)
+
+post-merge-all:
 	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
 	ginstall $(WORKDIR)/cswdbus $(PKGROOT)/etc/opt/csw/init.d/cswdbus
 	ginstall -d $(PKGROOT)/etc/opt/csw/pkg/CSWdbus
 	ginstall $(WORKDIR)/cswusergroup $(PKGROOT)/etc/opt/csw/pkg/CSWdbus/cswusergroup
+	@$(MAKECOOKIE)
 
