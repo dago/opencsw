@@ -68,7 +68,6 @@ RUNTIME_DEP_PKGS_CSWlibqtcore4 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibqtcore4 += CSWlibgcc-s1
 
 PACKAGES += CSWlibqtgui4
-CATALOGNAME_CSWlibqtgui4 = libqtgui4_gxx
 PKGFILES_CSWlibqtgui4 += $(call baseisadirs,$(libdir),libQtGui\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibqtgui4 += $(DESCRIPTION), libQtGui.so.4
 # RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibgthread2-0-0
@@ -79,10 +78,10 @@ RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibqtcore4
 RUNTIME_DEP_PKGS_CSWlibqtgui4_sparc += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibqtgui4_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += $(RUNTIME_DEP_PKGS_CSWlibqtgui4_$(GARCH))
-CHECKPKG_OVERRIDES_CSWlibqtgui4 += file-with-bad-content|/usr/share|root/opt/csw/gxx/lib/libQtGui.so.4.8.1
+CHECKPKG_OVERRIDES_CSWlibqtgui4 += file-with-bad-content|/usr/share|root/opt/csw/lib/libQtGui.so.4.8.1
 
 PACKAGES += CSWqt4-dev
 SPKG_DESC_CSWqt4-dev += $(DESCRIPTION), development files
@@ -167,7 +166,7 @@ SPKG_DESC_CSWlibqtnetwork4libqtnetwork4-gxx += $(DESCRIPTION), libQtNetwork.so.4
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtnetwork4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtnetwork4 += CSWlibqtcore4
-CHECKPKG_OVERRIDES_CSWlibqtnetwork4libqtnetwork4-gxx += file-with-bad-content|/usr/share|root/opt/csw/gxx/lib/libQtNetwork.so.4.8.1
+CHECKPKG_OVERRIDES_CSWlibqtnetwork4libqtnetwork4-gxx += file-with-bad-content|/usr/shroot/opt/csw/gxx/lib/libQtNetwork.so.4.8.1
 
 PACKAGES +
 PKGFILES_CSWlibqtopengl4Wlibqtopengl4-gxx += $(call baseisadirs,$(libdir),libQtOpenGL\.so\.4(\.\d+)*)
@@ -179,7 +178,7 @@ RUNTIME_DEP_PKGS_CSWlibqtopengl4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtopengl4 += CSWlibqtgui4
 RUNTIME_DEP_PKGS_CSWlibqtopengl4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtopengl4_sparc += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibqtopengl4_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibqtopengl4 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibqtopengl4 += $(RUNTIME_DEP_PKGS_CSWlibqtopengl4_$(GARCH))
 
 
@@ -224,7 +223,7 @@ RUNTIME_DEP_PKGS_CSWlibqttest4 += CSWlibqtcore4
 PACKAGES += CSWlibphonon4
 PKGFILES_CSWlibphonon4 += $(call baseisadirs,$(libdir),libphonon\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibphonon4 += $(DESCRIPTION), libphonon.so.4
-RUNTIME_DEP_PKGS_CSWlibphonon4 += CSWlibqtxml4
+# RUNTIME_DEP_PKGS_CSWlibphonon4 += CSWlibqtxml4
 RUNTIME_DEP_PKGS_CSWlibphonon4 += CSWlibqtdbus4
 RUNTIME_DEP_PKGS_CSWlibphonon4 += CSWlibqtcore4
 RUNTIME_DEP_PKGS_CSWlibphonon4 += CSWlibstdc++6
@@ -237,7 +236,7 @@ SPKG_DESC_CSWlibqtclucene4 += $(DESCRIPTION), libQtCLucene.so.4
 RUNTIME_DEP_PKGS_CSWlibqtclucene4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtclucene4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtclucene4 += CSWlibqtcore4
-RUNTIME_DEP_PKGS_CSWlibqtclucene4 += CSWlibqtdbus4
+# RUNTIME_DEP_PKGS_CSWlibqtclucene4 += CSWlibqtdbus4
 
 PACKAGES += CSWlibqtdbus4
 PKGFILES_CSWlibqtdbus4CSWlibqtdbus4-gxx += $(call baseisadirs,$(libdir),libQtDBus\.so\.4(\.\d+)*)
@@ -255,7 +254,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibqtnetwork4
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibqtcore4
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibqtgui4
-RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibqtsvg4
+# RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibqtsvg4
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtdeclarative4 += CSWlibqtsql4
 
@@ -271,7 +270,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdesigner4 += CSWlibgcc-s1
 
 PACKAGES += CSWlibqtdesignercomponents4
 PKGFILES_CSWlibqtdesignercomponents4ercomponents4-gxx += $(call baseisadirs,$(libdir),libQtDesignerComponents\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibqtdeercomponents4-gxx += $(DESCRIPTION), libQtDesignerComponents.so.4
+SPKG_DESC_CSWlibqtdeercomponents4-gxx += $(DESCRIPTION), libQtDesigne# rComponents.so.4
 RUNTIME_DEP_PKGS_CSWlibqtde += CSWlibqtscript4
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4 += CSWlibqtdesigner4
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4 += CSWlibqtxml4
