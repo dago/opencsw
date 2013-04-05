@@ -446,8 +446,11 @@ $(foreach pkg,$(myALTERNATIVES),\
 	$(eval alt_priority = 20) \
 	$(foreach alt,$(NEEDED_ISAS), \
 		$(eval alt_priority=$(shell expr $(alt_priority) + 10)) \
-		$(eval ALTERNATIVE_$(pkg)_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) \
-		$(eval ALTERNATIVE_$(pkg)_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_$(uppercase_$(pkg)))),$(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) \
+		$(eval firstbin=$(firstword $(BIN_NAMES_$(uppercase_$(pkg))))) \
+		$(eval mybindir=$(prefix)/bin) \
+		$(eval mylibexecdir=$(prefix)/libexec/$(alt)) \
+		$(eval ALTERNATIVE_$(pkg)_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(mybindir)/$(firstbin)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(mylibexecdir)/$(NAME)/$(BASE_VERSION_NODOT)/$(firstbin)) $(alt_priority)) \
+		$(eval ALTERNATIVE_$(pkg)_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_$(uppercase_$(pkg)))),$(BIN_NAMES_$(uppercase_$(pkg)))),$(mybindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(mylibexecdir)/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) \
 	)\
 )
 
