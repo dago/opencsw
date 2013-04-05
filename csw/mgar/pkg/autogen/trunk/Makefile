@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.17.2
+VERSION = 5.17.3
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
@@ -146,7 +146,7 @@ build-pdf:
 # there is one test failing (keyword.test) and I choose to ignore it
 # as the remaining ones pass.
 test-custom:
-	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) check
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) VERBOSE=true && $(MAKE) -i -k -C $(OBJDIR) check
 	$(MAKECOOKIE)
 
 install-nominal:
