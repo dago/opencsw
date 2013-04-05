@@ -7,7 +7,7 @@
 #       Test on Solaris 8 / 9 for comparison
 #
 NAME = stunnel
-VERSION = 4.53
+VERSION = 4.56
 CATEGORIES = net
 GARTYPE = v2
 
@@ -105,4 +105,3 @@ post-install-modulated:
 	rm -rf $(DOCDEST)/*
 	$(foreach D,$(DOCS),cp $(WORKSRC)/$(D) $(DOCDEST);)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
