@@ -1,5 +1,5 @@
 NAME = easytag
-VERSION = 2.1.6
+VERSION = 2.1.7
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -10,9 +10,7 @@ define BLURB
   interface makes tagging easier under GNU/Linux or Windows.
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-PATCHFILES += patch_easytag_216_cddb_manual_search_fix.diff
+MASTER_SITES = $(SF_M+= $(NAME)-$(VERSION).tar.bz2al_search_fix.diff
 
 BUILD_DEP_PKGS += CSWlibogg-dev
 BUILD_DEP_PKGS += CSWlibvorbis-dev
@@ -20,26 +18,27 @@ BUILD_DEP_PKGS += CSWlibflac-dev
 BUILD_DEP_PKGS += CSWlibspeex-dev
 BUILD_DEP_PKGS += CSWlibwavpack-dev
 
+RUNTIME_DEP_PKGS_CSgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibid3-3-8-3
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgtk-x11-2-0-0CSWlibwavpack-dev
+
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibogg0
+RUNTIME_DEP_PKGS_CSid3tag
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibflac8
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibspeex1
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibwavpack1
-RUNTIME_DEP_PKGS_CSWeasytag += CSWfconfig
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibflac8ytag += CSWfconfig
 RUNTIME_DEP_PKGS_CSWeasytag += CSWpango
-RUNTIME_DEP_PKGS_CSWeasytag += CSWftype2
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibid3tag
-RUNTIME_DEP_PKGS_CSWeasytag += CSWzlib
-RUNTIME_DEP_PKGS_CSWeasytag += CSWgtk2
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibatk
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibcairo2
+RUNTIME_DEP_PKGSlibspeex1
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibvorbisfile3
-RUNTIME_DEP_PKGS_CSWeasytag += CSWglib2
-
-RUNTIME_DEP_PKGS_CSWeasytag += CSWgcc3g++rt
 
 # Needed for gethostbyname
-EXTRA_LINKER_FLAGS =  -lnsl
+EXTRA_LINKER_FLAGS = -lnsl
+
+EXTRA_CONFIGURE_EXPORTS += LIBS
+CONFIGURE_ENV_LIBS = -lCrun
 
 include gar/category.mk
