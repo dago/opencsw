@@ -502,7 +502,7 @@ test-custom:
 uppercase_server = SERVER
 uppercase_client = CLIENT
 uppercase_contrib = CONTRIB
-(foreach pkg,$(myALTERNATIVES),\
+$(foreach pkg,$(myALTERNATIVES),\
 	$(eval alt_priority = 20) \
 	$(foreach alt,$(NEEDED_ISAS), \
 		$(eval alt_priority=$(shell expr $(alt_priority) + 10)) \
