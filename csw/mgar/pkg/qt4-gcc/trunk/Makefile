@@ -77,7 +77,7 @@ RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibqtcore4
-RUNTIME_DEP_PKGS_CSWlibqtgui4_sparc += CSWlibgobject2-0-0
+# RUNTIME_DEP_PKGS_CSWlibqtgui4_sparc += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += $(RUNTIME_DEP_PKGS_CSWlibqtgui4_$(GARCH))
@@ -129,9 +129,9 @@ RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibmysqlclient18
-RUNTIME_DEP_PKGS_CSWqt4-dev_sparc += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWqt4-dev_sparc += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWqt4-dev += $(RUNTIME_DEP_PKGS_CSWqt4-dev_$(GARCH))
+# RUNTIME_DEP_PKGS_CSWqt4-dev_sparc += CSWlibfontconfig1
+# RUNTIME_DEP_PKGS_CSWqt4-dev_sparc += CSWlibfreetype6
+# RUNTIME_DEP_PKGS_CSWqt4-dev += $(RUNTIME_DEP_PKGS_CSWqt4-dev_$(GARCH))
 # These are code examples.
 CHECKPKG_OVERRIDES_CSWqt4-dev += binary-architecture-does-not-match-placement
 
