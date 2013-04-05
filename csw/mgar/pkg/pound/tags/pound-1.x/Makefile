@@ -1,9 +1,8 @@
 NAME = pound
 VERSION = 1.10
-GARTYPE = v1
-CATEGORIES = net
+GARTYPE = v2
 
-DESCRIPTION = reverse proxy load balancer
+DESCRIPTION = Reverse proxy load balancer
 define BLURB
   The Pound program is a reverse proxy, load balancer and HTTPS front-end for
   Web server(s). Pound was developed to enable distributing the load among
@@ -21,7 +20,14 @@ DISTNAME   = Pound-$(VERSION)
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 # we require
-RUNTIME_DEP_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWlibssl1-0-0
+
+# This reference to /usr/local is harmless
+CHECKPKG_OVERRIDES_CSWpound += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pound/README
+# There is just an optional helper script for zope written in python
+# No need to depend on python for that
+CHECKPKG_OVERRIDES_CSWpound += missing-dependency|CSWpython
+
 
 # patch conf/pid directory to fit our needs
 PATCHFILES  = patch-pound.h
