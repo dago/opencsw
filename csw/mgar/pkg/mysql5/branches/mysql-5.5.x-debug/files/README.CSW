@@ -1,0 +1,12 @@
+[[needs review]]
+
+MySQL 5.5 OpenCSW package
+=======================
+
+* Read only /opt/csw support
+  - data in /var/opt/csw
+  - configuration in /etc/opt/csw
+* The prefix is /opt/csw, and all the binaries are now in
+  /opt/csw, so that the standard PATH setting allows to use them
+* The startup script is now in /etc/opt/csw/init.d
+* SMF support is handled by cswclassutils

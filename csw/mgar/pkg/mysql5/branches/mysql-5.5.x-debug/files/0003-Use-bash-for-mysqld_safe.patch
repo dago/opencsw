@@ -1,0 +1,23 @@
+From 58df96577920a495ee5d84680bf8d806c494a46c Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jan 2013 17:03:06 +0100
+Subject: [PATCH] Use bash for mysqld_safe
+
+/bin/sh on solaris has own 'test' syntax, and fails with what's in the script.
+---
+ scripts/mysqld_safe.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/mysqld_safe.sh b/scripts/mysqld_safe.sh
+index b5262bf..019be32 100644
+--- a/scripts/mysqld_safe.sh
++++ b/scripts/mysqld_safe.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # Copyright Abandoned 1996 TCX DataKonsult AB & Monty Program KB & Detron HB
+ # This file is public domain and comes with NO WARRANTY of any kind
+ #
+-- 
+1.8.0
+
