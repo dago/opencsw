@@ -1,7 +1,8 @@
 NAME = openvpn
 VERSION = 2.0.9
-GARTYPE = v1
-CATEGORIES = server
+GARTYPE = v2
+
+DESCRIPTION = Sver
 
 DESCRIPTION = secure IP tunnel daemon
 define BLURB
@@ -13,7 +14,17 @@ MASTER_SITES = http://openvpn.net/release/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # we require
-RUNTIME_DEP_PKGS = CSWosslrt CSWlzo
+RUlibssl1-0-0 CSWliblzo2-2
+
+# The references are located in document or sample files and are harmless
+CHECKPKG_OVERRIDES_CSWopenvpn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/openvpn/easy-rsa/vars
+CHECKPKG_OVERRIDES_CSWopenvpn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/openvpn/easy-rsa/2.0/vars
+CHECKPKG_OVERRIDES_CSWopenvpn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/openvpn/easy-rsa/2.0/Makefile
+CHECKPKG_OVERRIDES_CSWopenvpn += file-with-bad-content|/usr/share|root/opt/csw/share/man/man8/openvpn.8
+CHECKPKG_OVERRIDES_CSWopenvpn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openvpn/sample-scripts/openvpn.init
+
+# The perl script use SUNW perl and not CSW perl
+CHECKPKG_OVERRIDES_CSWopenvpn += missing-dependency|CSWperlS = CSWosslrt CSWlzo
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -43,5 +54,4 @@ post-install-modulated:
 	@echo "Installing start/stop script"
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswopenvpn  \
-		$(DESTDIR)/etc/opt/csw/init.d/cswopenvpn
-	@$(MAKECOOKIE)
+		$(DESTDIR)/etc/opt/csw/init.d/cswopen
