@@ -39,14 +39,13 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 RUNTIME_DEP_PKGS_CSWntop += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWntop += CSWlibpcap
-RUNTIME_DEP_PKGS_CSWntop += CSWosslrt
-RUNTIME_DEP_PKGS_CSWntop += CSWrrd
-RUNTIME_DEP_PKGS_CSWntop += CSWgeoip
+RUNTIME_DEP_PKGS_CSWn1
+RUNTIME_DEP_PKGS_CSWntop += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWntop += CSWlibrrd-th4
+RUNTIME_DEP_PKGS_CSWntop += CSWlibgeoip1Wntop += CSWgeoip
 RUNTIME_DEP_PKGS_CSWntop += CSWpython
-RUNTIME_DEP_PKGS_CSWntop += CSWlibgdbm3
-RUNTIME_DEP_PKGS_CSWntop += CSWzlib
-RUNTIME_DEP_PKGS_CSWntop += CSWiconv
+RUNTIME_DEP_PKGS_CSWn4
+RUNTIME_DEP_PKGS_CSWntop += CSWlibz1Wntop += CSWiconv
 
 ## Following package enables optional functionality
 #RUNTIME_DEP_PKGS_CSWntop += CSWgraphviz
@@ -54,8 +53,18 @@ RUNTIME_DEP_PKGS_CSWntop += CSWiconv
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWntop)
 BUILD_DEP_PKGS += CSWlibtool CSWautoconf CSWautomake
-BUILD_DEP_PKGS += CSWlibpcapdevel CSWossldevel
-BUILD_DEP_PKGS += CSWlibgdbm-dev
+BUILD_DEP_P-dev CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibgdbm-dev CSWgeoip-dev
+
+# These are ntop plugins so these check alerts are not important
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libcpacketPlugin-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=t|/usr/local|root/opt/csw/lib/libicmpPlugin-4.0.3.so
+CHECKPKG_OVERsoname-equals-filename|file=/opt/csw/lib/libnetflowPlugin-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libntop-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libntopreport-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=t|/usr/local|root/opt/csw/lib/librrdPlugin-4.0.3.so
+CHECKPKG_OVERsoname-equals-filename|file=/opt/csw/lib/libsflowPlugin-4.0.3.so
++= CSWlibgdbm-dev
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/autogen.sh
 
@@ -124,4 +133,3 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall $(WORKDIR)/cswntop $(DESTDIR)/etc/opt/csw/init.d/cswntop
 	ginstall $(WORKDIR)/ntop.conf.CSW $(DESTDIR)$(sysconfdir)/ntop/ntop.conf.CSW
-	@$(MAKECOOKIE)
