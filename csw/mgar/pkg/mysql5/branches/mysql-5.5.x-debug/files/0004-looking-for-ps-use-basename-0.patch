@@ -1,0 +1,48 @@
+From 111c7574ea02e17df8b2aff8e1b94d6118024f7b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 28 Sep 2011 23:26:47 +0200
+Subject: [PATCH] looking for ps, use `basename $0`
+
+Upstream bug filed:
+http://bugs.mysql.com/bug.php?id=62567
+
+---
+ configure.in |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index cfae77d..8e6dd43 100644
+--- a/configure.in
++++ b/configure.in
+@@ -518,23 +518,23 @@ AC_PATH_PROG(PS, ps, ps)
+ AC_MSG_CHECKING("how to check if pid exists")
+ PS=$ac_cv_path_PS
+ # Linux style
+-if $PS wwwp $$ 2> /dev/null | grep -- "$0" > /dev/null
++if $PS wwwp $$ 2> /dev/null | grep -- "`basename $0`" > /dev/null
+ then
+   FIND_PROC="$PS wwwp \$\$PID | grep -v \" grep\" | grep -v mysqld_safe | grep -- \"\$\$MYSQLD\" > /dev/null"
+ # Solaris
+-elif $PS -fp $$ 2> /dev/null | grep -- $0 > /dev/null
++elif $PS -fp $$ 2> /dev/null | grep -- `basename $0` > /dev/null
+ then
+   FIND_PROC="$PS -p \$\$PID | grep -v \" grep\" | grep -v mysqld_safe | grep -- \"\$\$MYSQLD\" > /dev/null"
+ # BSD style
+-elif $PS -uaxww 2> /dev/null | grep -- $0 > /dev/null
++elif $PS -uaxww 2> /dev/null | grep -- `basename $0` > /dev/null
+ then
+   FIND_PROC="$PS -uaxww | grep -v \" grep\" | grep -v mysqld_safe | grep -- \"\$\$MYSQLD\" | grep \" \$\$PID \" > /dev/null"
+ # SysV style
+-elif $PS -ef 2> /dev/null | grep -- $0 > /dev/null
++elif $PS -ef 2> /dev/null | grep -- `basename $0` > /dev/null
+ then
+   FIND_PROC="$PS -ef | grep -v \" grep\" | grep -v mysqld_safe | grep -- \"\$\$MYSQLD\" | grep \" \$\$PID \" > /dev/null"
+ # Do anybody use this?
+-elif $PS $$ 2> /dev/null | grep -- $0 > /dev/null
++elif $PS $$ 2> /dev/null | grep -- `basename $0` > /dev/null
+ then
+   FIND_PROC="$PS \$\$PID | grep -v \" grep\" | grep -v mysqld_safe | grep -- \"\$\$MYSQLD\" > /dev/null"
+ else
+-- 
+1.7.6.1
+

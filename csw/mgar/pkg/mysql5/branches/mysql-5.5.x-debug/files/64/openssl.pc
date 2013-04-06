@@ -1,0 +1,11 @@
+prefix=/opt/csw
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib/64
+includedir=${prefix}/include
+
+Name: OpenSSL
+Description: Secure Sockets Layer and cryptography libraries and tools
+Version: 0.9.8r
+Requires: 
+Libs: -L${libdir} -lssl -lcrypto -lsocket -lnsl -ldl
+Cflags: -I${includedir} 

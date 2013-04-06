@@ -1,0 +1,22 @@
+From bd9a3ff419f5a614d584aa6156a512e69f470e0f Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Wed, 16 Sep 2009 01:36:09 +0100
+Subject: [PATCH 3/4] OpenCSW perl for tests
+
+---
+ mysql-test/mysql-test-run.pl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/mysql-test/mysql-test-run.pl b/mysql-test/mysql-test-run.pl
+index f60701b..cd9f843 100755
+--- a/mysql-test/mysql-test-run.pl
++++ b/mysql-test/mysql-test-run.pl
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ # -*- cperl -*-
+ 
+ #
+-- 
+1.6.3.2
+
