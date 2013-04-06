@@ -19,22 +19,20 @@ CATALOGNAME_CSWxchat-pl  = xchat_pl
 CATALOGNAME_CSWxchat-py  = xchat_py
 CATALOGNAME_CSWxchat-tcl = xchat_tcl
 SPKG_DESC_CSWxchat     = GTK+ based IRC client, similar to AmIRC (Amiga).
-SPKG_DESC_CSWxchat-pl  = xChat Perl Plugin
-SPKG_DESC_CSWxchat-py  = xChat Python Plugin
-SPKG_DESC_CSWxchat-tcl = xChat TCL Plugin
-RUNTIME_DEP_PKGS_CSWxchat  = CSWdbusglib CSWexpat CSWfconfig CSWftype2 CSWlibntlm
-RUNTIME_DEP_PKGS_CSWxchat += CSWggettextrt CSWglib2 CSWgtk2 CSWiconv CSWlibatk 
-RUNTIME_DEP_PKGS_CSWxchat += CSWlibcairo CSWlibdbus CSWlibxft2 CSWlibxrender 
-RUNTIME_DEP_PKGS_CSWxchat += CSWosslrt CSWpango CSWpng CSWsunmath CSWzlib
-RUNTIME_DEP_PKGS_CSWxchat-pl   = CSWxchat CSWperl CSWosslrt CSWglib2
-RUNTIME_DEP_PKGS_CSWxchat-pl  += CSWggettextrt CSWlibntlm
-RUNTIME_DEP_PKGS_CSWxchat-py   = CSWxchat CSWpython CSWosslrt CSWglib2
-RUNTIME_DEP_PKGS_CSWxchat-py  += CSWggettextrt CSWlibntlm
-RUNTIME_DEP_PKGS_CSWxchat-tcl  = CSWxchat CSWtcl CSWosslrt CSWglib2
-RUNTIME_DEP_PKGS_CSWxchat-tcl += CSWggettextrt CSWlibntlm
+SPKG_DESC_CSWxchat-pl  = X-Chat Perl Plugin
+SPKG_DESC_CSWxchat-py  = X-Chat Python Plugin
+SPKG_DESC_CSWxchat-tcl = X-Chat TCL Plugin
+RUNTIME_DEP_PKGS_CSWxchat  = CSWlibgtk-x11-2-0-0 CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWxchat += CSWlibglib2-0-0 CSWlibdbus-glib1-2 CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWxchat += CSWlibintl8 CSWlibgdk-pixbuf2-0-0 CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWxchat += CSWpango CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWxchat-pl   = CSWperl
+RUNTIME_DEP_PKGS_CSWxchat-py   = CSWlibpython2-6-1-0 CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWxchat-tcl  = CSWlibtcl8-5
 PKGFILES_CSWxchat-pl  = $(libdir)/.*/perl.so
 PKGFILES_CSWxchat-py  = $(libdir)/.*/python.so
 PKGFILES_CSWxchat-tcl = $(libdir)/.*/tcl.so
+
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
@@ -57,7 +55,6 @@ CONFIGURE_ARGS += --enable-shm
 CONFIGURE_ARGS += --enable-ipv6
 
 ## run checkpkg manually
-ENABLE_CHECK = 0
 EXTRA_INC = $(prefix)/bdb44/include
 EXTRA_LIB = $(prefix)/bdb44/lib
 
@@ -66,5 +63,9 @@ post-configure-modulated:
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
 	$(DONADA)
+
+post-merge:
+	rm -f $(PKGROOT)/$(libdir)/charset.alias
+	rm -f $(PKGROOT)/$(sharedstatedir)/locale/locale.alias
 
 include gar/category.mk
