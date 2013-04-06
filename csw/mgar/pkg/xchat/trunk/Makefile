@@ -1,5 +1,5 @@
 NAME = xchat
-VERSION = 2.8.6
+VERSION = 2.8.8
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -40,9 +40,12 @@ PKGFILES_CSWxchat-tcl = $(libdir)/.*/tcl.so
 # upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-# Official XChat patches
-PATCHFILES  = xc286-smallfixes.diff
-PATCHFILES += xchat26-compiletime.diff
+# Fix some compilation problem under Solaris
+PATCHFILES = xchat26-compiletime.diff
+
+# Patch taken http://trac.macports.org/ticket/33959 and updated
+# to be able to compile against a more recent version of glib
+PATCHFILES += patch-glib-2.32.diff
 
 LDFLAGS =
 NOISALIST = 1
