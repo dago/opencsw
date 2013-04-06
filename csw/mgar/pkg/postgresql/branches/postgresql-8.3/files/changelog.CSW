@@ -1,8 +1,9 @@
-postgresql83 (8.3.23,REV=2013.04.05)
+postgresql83 (8.3.23,REV=2013.04.06)
 
   * New upstream release 8.3.22.
 
  -- Rafael Ostertag <raos@opencsw.org>  Fri, 05 Apr 2013 09:24:10 +0200
+
 
 postgresql83 (8.3.22,REV=2012.12.09)
 
