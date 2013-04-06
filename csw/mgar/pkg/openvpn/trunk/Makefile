@@ -11,7 +11,7 @@ endef
 
 # master files
 MASTER_SITES = http://openvpn.net/release/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tBUILD_DEP_PKGS = CSWtuntar.gz
 
 # we require
 RUlibssl1-0-0 CSWliblzo2-2
