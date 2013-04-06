@@ -32,7 +32,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
 PATCHFILES = patch.openvpn-2.0.9.tun.c
 
-# use classes for install/removal
+# use classes #for install/removal
 PRESERVECONF = $(sysconfdir)/ME)/$(NAME).conf.CSW
 INITSMF = /etc/opt/csw/init.d/cswopenvpn
 
@@ -50,7 +50,7 @@ post-install-modulated:
 	@echo "Installing $(NAME).conf.CSW"
 	@ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/$(NAME)
 	@cp -pr $(WORKSRC)/sample-config-files/server.conf \
-		$(DESTDIR)$(sysconfdir)/ME)/$(NAME).conf.CSW
+		$(DESTDIR)$(sysconfdir)/.CSWME)/$(NAME).conf.CSW
 	@echo "Installing start/stop script"
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswopenvpn  \
