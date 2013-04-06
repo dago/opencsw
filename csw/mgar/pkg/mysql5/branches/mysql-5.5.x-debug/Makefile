@@ -18,7 +18,7 @@ ALTS_PRIO = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 
 # Useful when making a series of builds on the same day
-# GARFLAVOR ?= DBG
+GARFLAVOR ?= DBG
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
@@ -235,6 +235,7 @@ CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
 CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
+CMAKE_ARGS += -DWITH_DEBUG=1
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
