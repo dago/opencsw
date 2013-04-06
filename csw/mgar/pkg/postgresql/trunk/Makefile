@@ -572,16 +572,12 @@ post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 		test -d $(PKGROOT)$(datadir)/man/man$$i || continue ; \
 		for f in $(PKGROOT)$(datadir)/man/man$$i/* ; do \
 			suffix="`echo $$f | awk 'BEGIN { FS="." } { print $$NF }'`" ; \
-			f_no_suffix="`echo $$f | sed -e "s/\.$${suffix}$$//"`" ; \
-			dont_move=0 ; \
-			for d in $(BIN_NAMES_DEVEL) ; do \
-				bname="`basename $${f_no_suffix}`" ; \
-				if test "$${bname}" = "$$d" ; then \
-					dont_move=1 ; \
-					break ; \
-				fi ; \
-			done ; \
-			test $${dont_move} -eq 0 && mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).$${suffix} ; \
+			f_no_suffix="`echo $$f | sed -e "s/\.$${suffbname="`basename $${f_no_suffix}`" ; \
+			if echo $${bname} | ggrep -- '-$(BASE_VERSION_NODOT)$$' >/dev/null 2>&1 ; then \
+				: ; \
+			else \
+				mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).$${suffix} ; \
+			fi_NODOT).$${suffix} ; \
 		done ;\
 	done
 # Change path names in documentation
