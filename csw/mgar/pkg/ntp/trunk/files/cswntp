@@ -10,9 +10,9 @@ ZONE= # used for initialization, do not change
 
 case "$1" in
   start)
-    if [ -f /opt/csw/bin/ntp -a -f /etc/opt/csw/ntp.conf ]; then
+    if [ -f /opt/csw/bin/ntpd -a -f /etc/opt/csw/ntp.conf ]; then
       echo "Starting ntp."
-      /opt/csw/bin/ntp $OPTIONS
+      /opt/csw/bin/ntpd $OPTIONS
     fi
     ;;
   stop)
@@ -22,7 +22,7 @@ case "$1" in
         ZONE="-z global"
       fi
     fi
-    pkill $ZONE -x ntp
+    pkill $ZONE -x ntpd
     ;;
   reload|refresh)
     echo "Reloading ntp."
@@ -31,7 +31,7 @@ case "$1" in
         ZONE="-z global"
       fi
     fi
-    pkill -HUP $ZONE -x ntp
+    pkill -HUP $ZONE -x ntpd
     ;;
   *)
     echo "Usage: $0 { start | stop | reload | refresh }"

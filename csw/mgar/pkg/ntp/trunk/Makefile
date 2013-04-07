@@ -42,5 +42,6 @@ post-install-modulated:
 	ginstall -m 755 $(FILEDIR)/cswntp $(DESTDIR)/etc/opt/csw/init.d/
 	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
 	ginstall -m 755 $(FILEDIR)/ntp $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)/
+	ginstall -m 755 $(FILEDIR)/ntp.conf $(DESTDIR)/etc/opt/csw/
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)
 	touch $(DESTDIR)/var/opt/csw/$(NAME)/ntp.drift
