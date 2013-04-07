@@ -11,7 +11,6 @@ import checkpkg_collect_stats as ccs
 path_list = [os.path.dirname(__file__),
              "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
-import checkpkg
 import opencsw
 
 

@@ -20,6 +20,7 @@ import re
 import operator
 import os
 import checkpkg
+import checkpkg_lib
 import opencsw
 import pprint
 import textwrap
@@ -275,7 +276,7 @@ def CheckMultipleDepends(pkg_data, error_mgr, logger, messenger):
 
 def CheckDescription(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
-  desc = checkpkg.ExtractDescription(pkginfo)
+  desc = checkpkg_lib.ExtractDescription(pkginfo)
   if not desc:
     error_mgr.ReportError("pkginfo-description-missing")
   else:
@@ -603,7 +604,7 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   if not "VERSION" in pkginfo or not pkginfo["VERSION"]:
     error_mgr.ReportError("pkginfo-version-field-missing")
   # maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
-  maintname = checkpkg.ExtractMaintainerName(pkginfo)
+  maintname = checkpkg_lib.ExtractMaintainerName(pkginfo)
   if not maintname:
     error_mgr.ReportError("pkginfo-maintainer-name-not-set")
   # email
@@ -689,7 +690,7 @@ def DisabledCheckMissingSymbols(pkgs_data, error_mgr, logger, messenger):
 
 def CheckBuildingUser(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  username = checkpkg.ExtractBuildUsername(pkg_data["pkginfo"])
+  username = checkpkg_lib.ExtractBuildUsername(pkg_data["pkginfo"])
   for entry in pkg_data["pkgmap"]:
     if entry["user"] and entry["user"] == username:
       error_mgr.ReportError("file-owned-by-building-user"
@@ -814,44 +815,6 @@ def CheckRpath(pkg_data, error_mgr, logger, messenger):
           "%s %s" % (bad, binary_info["path"]))
 
 
-def DisabledCheckForMissingSymbols(pkgs_data, debug):
-  """Analyzes missing symbols reported by ldd -r.
-
-  1. Collect triplets: pkgname, binary, missing symbol
-  2. If there are any missing symbols, collect all the symbols that are provided
-     by the set of packages.
-  3. From the list of missing symbols, remove all symbols that are provided
-     by the set of packages.
-  4. Report any remaining symbols as errors.
-
-  What indexes do we need?
-
-  symbol -> (pkgname, binary)
-  set(allsymbols)
-  """
-  errors = []
-  missing_symbols = []
-  all_symbols = set()
-  for pkg_data in pkgs_data:
-    pkgname = pkg_data["basic_stats"]["pkgname"]
-    binaries = pkg_data["binaries"]
-    for binary in binaries:
-      for ldd_elem in pkg_data["ldd_dash_r"][binary]:
-        if ldd_elem["state"] == "symbol-not-found":
-          missing_symbols.append((pkgname,
-                                  binary,
-                                  ldd_elem["symbol"]))
-      for symbol in pkg_data["defined_symbols"][binary]:
-        all_symbols.add(symbol)
-  # Remove symbols defined elsewhere.
-  while missing_symbols:
-    ms_pkgname, ms_binary, ms_symbol = missing_symbols.pop()
-    if ms_symbol not in all_symbols:
-      errors.append(checkpkg.CheckpkgTag(
-        ms_pkgname, "symbol-not-found", "%s %s" % (ms_binary, ms_symbol)))
-  return errors
-
-
 def DisabledCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
   """Analyzes missing symbols reported by ldd -r.
 
@@ -973,7 +936,7 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
     # only available from the file name.
     os_release = pkg_data["basic_stats"]["parsed_basename"]["osrel"]
     if os_release not in machine_data["allowed"]:
-      raise checkpkg.InternalDataError(
+      raise checkpkg_lib.InternalDataError(
           "%s not found in machine_data" % os_release)
     allowed_paths = set(machine_data["allowed"][os_release])
     disallowed_paths = set(machine_data["disallowed"])
