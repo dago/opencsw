@@ -5,4 +5,4 @@
 # Peter Bonivart, OpenCSW
 
 # Options
-#OPTIONS="-c /etc/opt/csw/ntp.conf"
+OPTIONS="-c /etc/opt/csw/ntp.conf"
