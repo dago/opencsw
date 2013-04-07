@@ -1,11 +1,11 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = Paste
-VERSION = 1.7.5.1
+NAME = poster
+VERSION = 0.8.1
 GARTYPE = v2
 
-DESCRIPTION = Tools for using a Web Server Gateway Interface stack
+DESCRIPTION = Streaming HTTP uploads and multipart/form-data encoding
 define BLURB
 endef
 
@@ -17,7 +17,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 SKIPTEST = 1
 
-PACKAGES = CSWpy-paste
-ARCHALL_CSWpy-paste = 1
+ARCHALL_CSWpy-poster = 1
+
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/site-packages/tests/__init__.py
 
 include gar/category.mk
