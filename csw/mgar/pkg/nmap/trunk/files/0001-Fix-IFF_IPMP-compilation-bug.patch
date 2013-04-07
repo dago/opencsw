@@ -1,0 +1,28 @@
+From 2c44837792045bd96917bbd6f8a664afc655c270 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sat, 6 Apr 2013 22:09:45 +0200
+Subject: [PATCH] Fix IFF_IPMP compilation bug
+
+---
+ libdnet-stripped/src/intf.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/libdnet-stripped/src/intf.c b/libdnet-stripped/src/intf.c
+index 25ae999..865e500 100644
+--- a/libdnet-stripped/src/intf.c
++++ b/libdnet-stripped/src/intf.c
+@@ -954,9 +954,11 @@ intf_loop(intf_t *intf, intf_handler callback, void *arg)
+ 			;
+ 		else
+ 			return (-1);
++#ifdef IFF_IPMP
+ 		if (lifr->lifr_flags & IFF_IPMP) {
+ 			continue;
+ 		}
++#endif
+ 		
+ 		if (_intf_get_noalias(intf, entry) < 0)
+ 			return (-1);
+-- 
+1.8.1.4
+
