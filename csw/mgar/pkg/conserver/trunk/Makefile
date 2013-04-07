@@ -35,6 +35,11 @@ RUNTIME_DEP_PKGS = CSWlibssl1-0-0
 CHECKPKG_OVERRIDES  = file-with-bad-content|/usr/local|root/opt/csw/share/examples/conserver/conserver.rc
 CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local|root/opt/csw/share/examples/conserver/conserver.cf
 
+# Temporary override and conf path for the next package release which is just rebuilt against libssl 1.0
+CHECKPKG_OVERRIDES += discouraged-path-in-pkgmap|/opt/csw/var/log
+sysconfdir = $(prefix)/etc
+localstatedir = $(prefix)/var
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-uds
 CONFIGURE_ARGS += --with-libwrap
@@ -44,7 +49,7 @@ CONFIGURE_ARGS += --with-pam
 LICENSE = LICENSE
 
 DISTFILES += cswconserver
-INITSMF = $(sysconfdir)/init.d/cswconserver
+INITSMF = /etc$(prefix)/init.d/cswconserver
 
 TEST_SCRIPTS = 
 
@@ -52,8 +57,8 @@ include gar/category.mk
 
 post-merge: merge-init-script
 
-#
 merge-init-script:
-	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d/
-	ginstall -m 755 $(FILEDIR)/cswconserver $(PKGROOT)$(sysconfdir)/init.d/cswconserver
+	ginstall -m 755 -d $(PKGROOT)/etc/$(prefix)/init.d/
+	ginstall -m 755 -d $(PKGROOT)/$(localstatedir)/log
+	ginstall -m 755 $(FILEDIR)/cswconserver $(PKGROOT)/etc/$(prefix)/init.d/cswconserver
 
