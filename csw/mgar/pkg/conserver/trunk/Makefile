@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = conserver
-VERSION = 8.1.7
+VERSION = 8.1.11
 GARTYPE = v2
 
 DESCRIPTION = Client/Server console server software
@@ -30,6 +30,11 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+RUNTIME_DEP_PKGS = CSWlibssl1-0-0
+
+CHECKPKG_OVERRIDES  = file-with-bad-content|/usr/local|root/opt/csw/share/examples/conserver/conserver.rc
+CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local|root/opt/csw/share/examples/conserver/conserver.cf
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-uds
 CONFIGURE_ARGS += --with-libwrap
@@ -39,17 +44,16 @@ CONFIGURE_ARGS += --with-pam
 LICENSE = LICENSE
 
 DISTFILES += cswconserver
-INITSMF = /opt/csw/etc/init.d/cswconserver
+INITSMF = $(sysconfdir)/init.d/cswconserver
+
+TEST_SCRIPTS = 
 
 include gar/category.mk
-
-RUNTIME_DEP_PKGS_CSWconserver += CSWtcpwrap
-RUNTIME_DEP_PKGS_CSWconserver += CSWosslrt
 
 post-merge: merge-init-script
 
 #
 merge-init-script:
-	ginstall -m 755 -d $(PKGROOT)/opt/csw/etc/init.d
-	ginstall -m 755 $(FILEDIR)/cswconserver $(PKGROOT)/opt/csw/etc/init.d/cswconserver
+	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d/
+	ginstall -m 755 $(FILEDIR)/cswconserver $(PKGROOT)$(sysconfdir)/init.d/cswconserver
 
