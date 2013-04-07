@@ -1,7 +1,8 @@
 NAME = slrn
-VERSION = 0.9.8.1
-GARTYPE = v1
-CATEGORIES = net
+VERSION = 1.0.1
+GARTYPE = v2
+
+DESCRIPTION = C
 
 DESCRIPTION = command-line news reader
 define BLURB
@@ -16,22 +17,32 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWslrn,prototype depend)
+DISTFILES  = $(NAMEgzprototype depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7768
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)(p\d+)?)
+UFILES_REGEX = $(NAME)-((\d+(?:\
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/slrn/FAQ
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/slrn/README.multiuser
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/slrn/score.txt
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/slrn/changes.txt
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/slrn/manual.txt
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/slrn/README.SSL
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/slrn.1
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/local|root/opt/csw/share/slrn/slang/mailcap.sl
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/slrn/FAQ
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/slrn/changes.txt
+CHECKPKG_OVERRIDES_CSWslrn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/slrn/manual.txt
 
-LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
+RUNTIME_DEP_PKGS = CSWlibintl8 CSWlibslang2 CSWlibiconv2 CSWlibssl1-0-0ST -R/opt/csw/lib
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-slang-library=/opt/csw/lib --with-slrnpull
 CONFIGURE_ARGS += --enable-setgid-code --enable-spool
 CONFIGURE_ARGS += --with-mta=/usr/lib/sendmail --enable-hardcode-libs
 
-INSTALL_ARGS = install install-contrib
+INSTALl install-contrib
 
 # slrn doesn't have a test target
 TEST_TARGET =
@@ -42,4 +53,4 @@ SPKG_SOURCEURL = http://www.slrn.org/
 include gar/category.mk
 
 #post-install:
-#	(cd $(WORKSRC); make install-contrib)
+#	(cd $(WORKSRC); make 
