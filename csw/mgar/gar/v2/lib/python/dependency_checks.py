@@ -1,6 +1,6 @@
 # $Id$
 
-import checkpkg
+import checkpkg_lib
 import os.path
 import re
 import ldd_emul
@@ -79,7 +79,7 @@ def ProcessSoname(
   path_list = path_and_pkg_by_basename[soname].keys()
   runpath_tuple = (
       tuple(binary_info["runpath"])
-      + tuple(checkpkg.SYS_DEFAULT_RUNPATH))
+      + tuple(checkpkg_lib.SYS_DEFAULT_RUNPATH))
   runpath_history = []
   first_lib = None
   already_resolved_paths = set()

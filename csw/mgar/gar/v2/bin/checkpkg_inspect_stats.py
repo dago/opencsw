@@ -16,7 +16,6 @@ import progressbar
 path_list = [os.path.dirname(__file__),
              "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
-import checkpkg
 import opencsw
 import configuration
 
@@ -35,7 +34,7 @@ def main():
     logging.basicConfig(level=logging.INFO)
   logging.debug("Collecting statistics about given package files.")
   configuration.SetUpSqlobjectConnection()
-  pkgstat_objs = checkpkg.GetPackageStatsByFilenamesOrMd5s(
+  pkgstat_objs = checkpkg_lib.GetPackageStatsByFilenamesOrMd5s(
       args,
       options.debug)
   bar = progressbar.ProgressBar()

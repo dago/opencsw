@@ -6,7 +6,6 @@ import copy
 import datetime
 import unittest
 import package_checks as pc
-import checkpkg
 import checkpkg_lib
 import os.path
 import mox
