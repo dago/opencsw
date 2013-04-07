@@ -1,57 +1,6 @@
 Web-serving components of the checkpkg infrastructure.
 
-Configuring 'pkgdb' and 'releases' scripts with mod_wsgi on Apache:
+Example Apache and lighttpd configurations are available:
 
-  DocumentRoot "/opt/csw/apache2/share/htdocs/buildfarm"
-  ServerName buildfarm.example.com
-
-  # General WSGI settings
-  <IfModule wsgi_module>
-    WSGIDaemonProcess buildfarm.example.com display-name=pkgdb threads=15 maximum-requests=1000
-    WSGIProcessGroup buildfarm.example.com
-  </IfModule>
-
-  # Static files such as CSS stylesheets.
-  Alias /pkgdb-static /path/to/gar/v2/lib/web/static
-  <Directory /path/to/gar/v2/lib/web/static>
-    Order allow,deny
-    Allow from all
-    Options +Indexes
-  </Directory>
-
-  # http://buildfarm.example.com/pkgdb/
-  <IfModule wsgi_module>
-    WSGIScriptAlias /pkgdb /path/to/gar/v2/lib/web/pkgdb_web.py/
-  </IfModule>
-  <Location /pkgdb>
-    Order allow,deny
-    Allow from all
-  </Location>
-
-  <Directory /opt/csw/apache2/share/htdocs/buildfarm/pkgdb>
-    Order allow,deny
-    Allow from all
-  </Directory>
-
-  # I don't know why the Deny/Allow rules need to be duplicated, but I haven't
-  # been able to run the thing with just one set of permissions.
-  <Directory /opt/csw/apache2/share/htdocs/buildfarm/releases>
-    Order deny,allow
-    Deny from all
-    Allow from 1.2.3.4
-  </Directory>
-
-  # http://buildfarm.example.com/releases/
-  <IfModule wsgi_module>
-    WSGIScriptAlias /releases /path/to/gar/v2/lib/web/releases_web.py/
-  </IfModule>
-  <Location /releases>
-    Order deny,allow
-    Deny from all
-    Allow from 1.2.3.4
-
-    AuthName "Package releases REST interface"
-    AuthType Basic
-    AuthUserFile /path/to/buildfarm-users.htpasswd
-    Require valid-user
-  </Location>
+  - example-apache.conf
+  - example-lighttpd.conf
