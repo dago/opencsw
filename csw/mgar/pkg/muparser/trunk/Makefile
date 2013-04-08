@@ -19,21 +19,18 @@ LICENSE = License.txt
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
-GARCOMPILER = GNU
-prefix = $(BUILD_PREFIX)/gxx
+G# prefix = $(BUILD_PREFIX)/gxx
 
-PACKAGES += CSWlibmuparser2-gxx
-CATALOGNAME_CSWlibmuparser2-gxx = libmuparser2_gxx
-PKGFILES_CSWlibmuparser2-gxx += $(call baseisadirs,$(libdir),libmuparser\.so\.2(\.\d+)*)
-SPKG_DESC_CSWlibmuparser2-gxx += $(DESCRIPTION), libmuparser.so.2
-RUNTIME_DEP_PKGS_CSWlibmuparser2-gxx += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmuparser2-gxx += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWmuparser-dev += CSWlibmuparser2-gxx
+PACKAGES += CSWlibmuparser2
+PKGFILES_CSWlibmuparser2Wlibmuparser2-gxx += $(call baseisadirs,$(libdir),libmuparser\.so\.2(\.\d+)*)
+SPKG_DES += $(DESCRIPTION), libmuparser.so.2
+RUNTIME_DEP_PKGS_CSWlibmuparser2 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmuparser2 += CSWlibstdc++6Wlibmuparser2-gxx
 
 PACKAGES += CSWmuparser-dev
 CATALOGNAME_CSWmuparser-dev = muparser_dev
 SPKG_DESC_CSWmuparser-dev += $(DESCRIPTION), development files
-PKGFILES_CSWmuparser-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWmuparser-dev += $RUNTIME_DEP_PKGS_CSWmuparser-dev += CSWlibmuparser2
 
 # no target
 SKIPTEST = 1
