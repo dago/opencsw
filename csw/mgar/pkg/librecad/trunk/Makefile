@@ -1,9 +1,8 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = libreCAD
-GITNAME = LibreCAD
-VERSION = 2.0.0beta1
+NAME = LibreCAD
+VERSION = 2.0.0beta2
 # GIT_VERSION = 216dc66b2a
 GARTYPE = v2
 CATEGORIES = gnome
@@ -23,39 +22,40 @@ EXTRA_LICENSE += LICENSE_GPLv3.txt
 # https://github.com/LibreCAD/LibreCAD/tarball/master
 MASTER_SITES = 
 # DISTFILES  = $(DISTNAME).tar.gz
-GIT_REPOS = http://github.com/$(GITNAME)/$(GITNAME).git
+GIT_REPOS = http://github.com/$(NAME)/$(NAME).git
 GIT_USE_PROXY = 1
 # GIT_TREEISH_LibreCAD.git = $(GIT_VERSION)
 
 GARCOMPILER = GNU
-prefix = $(BUILD_PREFIX)/gxx
+# prefix = $(BUILD_PREFIX)/gxx
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 PATCHFILES += 0000-adjust-for-csw-environment.patch
 PATCHFILES += 0000-add-csw-settings.patch
 PATCHFILES += 0001-adjust-rs_system-forcsw.patch
+PATCHFILES += 0002-set-version-from-git.patch
 
-BUILD_DEP_PKGS += CSWqt4-gxx-dev
+BUILD_DEP_PKGS += CSWqt4-dev
 BUILD_DEP_PKGS += CSWmuparser-dev
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 
-PACKAGES = CSWlibrecad
-CATALOGNAME_CSWlibrecad = librecad
-SPKG_DESC_CSWlibrecad = $(DESCRIPTION)
-# PKGFILES_CSWlibrecad += $(call baseisadirs,$(bindir),.*)
-# PKGFILES_CSWlibrecad += $(datadir)/$(call tolower,$(NAME))/.*
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqthelp4-gxx
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtcore4-gxx
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtgui4-gxx
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtsvg4-gxx
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibmuparser2-gxx
-# RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtsql4-gxx
-# it had never exists: remove that as soon checkpkg could forget this
-OBSOLETED_BY_CSWlibrecad = CSWLibreCAD
+PACKAGES += CSWlibreCAD
+CATALOGNAME_CSWlibreCAD = libreCAD
+PKGFILES_CSWlibreCAD += $(call baseisadirs,$(bindir),.*)
+PKGFILES_CSWlibreCAD += $(datadir)/$(call tolower,$(NAME))/.*
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqthelp4
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtcore4
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtgui4
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsvg4
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibmuparser2
+# RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsql4
+CHECKPKG_OVERRIDES_CSWlibreCAD += file-with-bad-content|/usr/share|root/opt/csw/bin/librecad
+CHECKPKG_OVERRIDES_CSWlibreCAD += catalogname-not-lowercase
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -73,10 +73,10 @@ install-custom:
 	ginstall -d $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
 	gcp -rfp  $(WORKSRC)/unix/resources/* \
                   $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
-	ginstall -d $(DESTDIR)$(subst gxx/,,$(docdir))/$(CATALOGNAME_CSWlibrecad)
-	$(foreach L,$(EXTRA_LICENSE),gcp $(WORKSRC)/$L $(DESTDIR)$(subst gxx/,,$(docdir))/$(CATALOGNAME_CSWlibrecad);)
+	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibreCAD)
+	$(foreach L,$(EXTRA_LICENSE),gcp $(WORKSRC)/$L $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibreCAD);)
 	@$(MAKECOOKIE)
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:$(PATH):/opt/csw/gcc4/bin:/opt/csw/gxx/bin
+PATH := /opt/csw/gnu:$(PATH):/opt/csw/gcc4/bin

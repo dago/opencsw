@@ -1,0 +1,11 @@
+--- a/librecad/src/src.pro
++++ b/librecad/src/src.pro
+@@ -37,7 +37,7 @@ DESTDIR = $${INSTALLDIR}
+ 
+ # Make translations at the end of the process
+ unix {
+-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${SCMREVISION}")
++    SCMREVISION=$$system(echo "$(git describe --tags)" || echo "$${SCMREVISION}")
+ 
+     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
+     macx {
