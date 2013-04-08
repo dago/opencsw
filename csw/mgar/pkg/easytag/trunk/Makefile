@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = easytag
 VERSION = 2.1.8
 CATEGORIES = apps
@@ -20,40 +22,35 @@ BUILD_DEP_PKGS += CSWlibflac-dev
 BUILD_DEP_PKGS += CSWlibspeex-dev
 BUILD_DEP_PKGS += C# Add more dependencies as suggested by Laurent Blume in
 #   http://lists.opencsw.org/pipermail/users/2013-April/009549.html
-BUILD_DEP_PKGS += CSWintltool
-BUILD_DEP_PKGS += CSWpkgconfig
-BUILD_DEP_PKGS += CSWlibgtk2-dev
-BUILD_DEP_PKGS += CSWlibpcre-dev
 BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWintltool
 BUILD_DEP_PKGS += CSWlibfreetype-dev
-BUILD_DEP_PKGS += CSWlibpng-dev
-BUILD_DEP_PKGS += CSWx11xproto
-BUILD_DEP_PKGS += CSWx11renderproto
-BUILD_DEP_PKGS += CSWlibx11devel
-BUILD_DEP_PKGS += CSWlibxcbdevel
-BUILD_DEP_PKGS += CSWlibxaudevel
-BUILD_DEP_PKGS += CSWlibxdmcpdevel
-BUILD_DEP_PKGS += CSWlibid3-dev
+BUILD_DEP_PKGS += CSWlibgtk2-dev
 BUILD_DEP_PKGS += CSWlibiconv-dev
-BUILD_DEP_PKGS += CSWggettextS += CSWlibwavpack-dev
+BUILD_DEP_PKGS += CSWlibid3-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWpkgconfig
+BUILD_DEP_PKGS += CSWsunx11devel
 
-RUNTIME_DEP_PKGS_CSgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibflac8
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibid3-3-8-3
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgtk-x11-2-0-0CSWlibwavpack-dev
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibid3-3-8-3
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibid3tagCSWlibwavpack-dev
 
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibogg0
-RUNTIME_DEP_PKGS_CSid3tag
+RUNTIME_DEP_PKGS_CSspeex1
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibwavpack1
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibflac8ytag += CSWfconfig
-RUNTIME_DEP_PKGS_CSWeasytag += CSWpango
-RUNTIME_DEP_PKGSlibspeex1
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibvorbisfile3
-RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWeasytag += CSWlibwavpack1
+RUNTIME_DEP_PKGS_CSWeasytag += CSWpango
 
 # This macro is being phased out of Pango, so this seems like an acceptable fix for now:
 #   https://bugzilla.gnome.org/show_bug.cgi?id=652202
