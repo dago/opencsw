@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = Python
-VERSION = 3.3.0
+VERSION = 3.3.1
 VER = 3.3
 DVER = 3-3
 UVER = 3_3
