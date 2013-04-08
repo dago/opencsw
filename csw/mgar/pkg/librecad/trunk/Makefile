@@ -44,6 +44,7 @@ PACKAGES += CSWlibreCAD
 CATALOGNAME_CSWlibreCAD = libreCAD
 PKGFILES_CSWlibreCAD += $(call baseisadirs,$(bindir),.*)
 PKGFILES_CSWlibreCAD += $(datadir)/$(call tolower,$(NAME))/.*
+PKGFILES_CSWlibreCAD += $(libdir)/$(call tolower,$(NAME))/.*
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqthelp4
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtcore4
 RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibstdc++6
