@@ -18,7 +18,24 @@ BUILD_DEP_PKGS += CSWlibogg-dev
 BUILD_DEP_PKGS += CSWlibvorbis-dev
 BUILD_DEP_PKGS += CSWlibflac-dev
 BUILD_DEP_PKGS += CSWlibspeex-dev
-BUILD_DEP_PKGS += CSWlibwavpack-dev
+BUILD_DEP_PKGS += C# Add more dependencies as suggested by Laurent Blume in
+#   http://lists.opencsw.org/pipermail/users/2013-April/009549.html
+BUILD_DEP_PKGS += CSWintltool
+BUILD_DEP_PKGS += CSWpkgconfig
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWx11xproto
+BUILD_DEP_PKGS += CSWx11renderproto
+BUILD_DEP_PKGS += CSWlibx11devel
+BUILD_DEP_PKGS += CSWlibxcbdevel
+BUILD_DEP_PKGS += CSWlibxaudevel
+BUILD_DEP_PKGS += CSWlibxdmcpdevel
+BUILD_DEP_PKGS += CSWlibid3-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWggettextS += CSWlibwavpack-dev
 
 RUNTIME_DEP_PKGS_CSgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWeasytag += CSWlibgdk-pixbuf2-0-0
