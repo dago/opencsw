@@ -127,6 +127,7 @@ RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibodbc2
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibicui18n50
 # These are code examples.
 CHECKPKG_OVERRIDES_CSWqt4-dev += binary-architecture-does-not-match-placement
 
