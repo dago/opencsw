@@ -1,0 +1,36 @@
+From e177039097217e9f6f26a7325d5c7a5ad2ccfd80 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 22 Sep 2011 23:58:52 +0200
+Subject: [PATCH 2/5] comment out Linux defaults
+
+---
+ Makefile |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index a7916dd..2942176 100644
+--- a/Makefile
++++ b/Makefile
+@@ -18,7 +18,7 @@
+ 
+ prefix = /opt/csw
+ 
+-CC=gcc
++# CC=gcc
+ 
+ VERSION=1.6.0
+ TREE_DEST=tree
+@@ -31,8 +31,8 @@ OBJS=tree.o unix.o html.o xml.o hash.o color.o
+ 
+ # Linux defaults:
+ #CFLAGS=-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+-CFLAGS=-O4 -Wall  -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+-LDFLAGS=-s
++# CFLAGS=-O4 -Wall  -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
++# LDFLAGS=-s
+ 
+ # Uncomment for FreeBSD:
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer
+-- 
+1.7.6.1
+

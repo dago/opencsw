@@ -1,0 +1,27 @@
+From 24b1cab40c7ffc94bec6e2ff81b5af06cb4a38fa Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 23 Sep 2011 00:16:12 +0200
+Subject: [PATCH] Undefine S_ISDOOR on Solaris
+
+---
+ tree.h |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/tree.h b/tree.h
+index 21e01ad..20f9072 100644
+--- a/tree.h
++++ b/tree.h
+@@ -59,6 +59,10 @@
+ #define mbstowcs(w,m,x) mbsrtowcs(w,(const char**)(& #m),x,NULL)
+ #endif
+ 
++#if defined(__sun) || defined(__sun__)
++# undef S_ISDOOR
++#endif
++
+ /* Should probably use strdup(), but we like our xmalloc() */
+ #define scopy(x)	strcpy(xmalloc(strlen(x)+1),(x))
+ #define MINIT		30	/* number of dir entries to initially allocate */
+-- 
+1.7.6.1
+
