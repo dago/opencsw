@@ -1,0 +1,25 @@
+From 4ba720789cbb6218c5517f97d80192525bc25ce4 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 22 Sep 2011 23:58:11 +0200
+Subject: [PATCH 1/5] /opt/csw prefix
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7501eee..a7916dd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -16,7 +16,7 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ 
+-prefix = /usr
++prefix = /opt/csw
+ 
+ CC=gcc
+ 
+-- 
+1.7.6.1
+
