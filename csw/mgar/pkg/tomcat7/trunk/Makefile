@@ -15,6 +15,7 @@ PKGDIST       = apache-tomcat-$(VERSION).tar.gz
 DISTFILES    += cswusergroup
 DISTFILES    += cswtomcat7
 DISTFILES    += LICENSE
+NOGITPATCH    = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = v(\d+(?:\.\d+)*)
