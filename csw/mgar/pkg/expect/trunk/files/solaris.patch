@@ -21,18 +21,6 @@ diff -Nru expect-5.43.orig/exp_clib.c expect-5.43/exp_clib.c
  #ifdef NO_STDLIB_H
  
  /*
-diff -Nru expect-5.43.orig/exp_main_tk.c expect-5.43/exp_main_tk.c
---- expect-5.43.orig/exp_main_tk.c	2003-07-31 20:27:20.000000000 +0200
-+++ expect-5.43/exp_main_tk.c	2010-03-20 06:11:38.913371288 +0100
-@@ -33,6 +33,8 @@
- #endif /* not lint */
- 
- #include <ctype.h>
-+/* For strrchr, strcpy */
-+#include <string.h>
- 
- #include "tk.h"
- 
 diff -Nru expect-5.43.orig/exp_pty.c expect-5.43/exp_pty.c
 --- expect-5.43.orig/exp_pty.c	2002-04-08 01:09:00.000000000 +0200
 +++ expect-5.43/exp_pty.c	2010-03-20 06:07:09.035909728 +0100
