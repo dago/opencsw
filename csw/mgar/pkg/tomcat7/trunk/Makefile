@@ -1,6 +1,5 @@
 NAME      = tomcat7
-VERSION   = 7.0.32
-CATEGORIES   = server
+VERSION   = 7.0.39
 GARTYPE = v2
 
 DESCRIPTION  =  Apache Jakarta Tomcat 7 Servlet/JSP Container
