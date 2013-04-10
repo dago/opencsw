@@ -1,5 +1,5 @@
 NAME = Net-SSLeay
-VERSION = 1.48
+VERSION = 1.54
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MIKEM
@@ -10,7 +10,7 @@ endef
 
 CATALOG_RELEASE = unstable
 
-LICENSE_TEXT = This module is licensed under the unknown license
+LICENSE_TEXT = This module is licensed under the SSLeay license
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
