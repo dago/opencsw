@@ -16,6 +16,7 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://chandlerproject.org/Projects/MeTooCrypto
 
+BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWswig
 
 PACKAGES = CSWpy-m2crypto
