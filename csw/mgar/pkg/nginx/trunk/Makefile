@@ -36,6 +36,8 @@ RUNTIME_DEP_PKGS_CSWnginx += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibz1
+parThere is just one script on contrib/, do not pull in Perl for that
+CHECKPKG_OVERRIDES_CSWnginx += missing-dependency|CSWperl
 parc solaris10-i386
 
 # default sparc arch is set to sparcv8plus because nginx contains
