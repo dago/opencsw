@@ -64,7 +64,7 @@ build-none:
 	@$(MAKECOOKIE)
 
 post-extract:
-	( mv $(WORKDIR)/tomcat-$(VERSION) $(WORKDIR)/$(DISTNAME) )
+	( mv $(WORKDIR)/apache-tomcat-$(VERSION) $(WORKDIR)/$(DISTNAME) )
 	( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
 	@$(MAKECOOKIE)
 
@@ -75,7 +75,7 @@ install-tomcat:
 	( mkdir -p $(DESTDIR)/opt/csw/etc/$(NAME) )
 	( mkdir -p $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mkdir -p $(DESTDIR)/opt/csw/share )
-	( cp -fr $(WORKDIR)/tomcat-$(VERSION) $(DESTDIR)/opt/csw/share/$(NAME) )
+	( cp -fr $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/share/$(NAME) )
 	( cp -fr $(FILEDIR)/csw$(NAME) $(DESTDIR)/etc/opt/csw/init.d )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/conf $(DESTDIR)/etc/opt/csw/$(NAME)/conf )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/logs $(DESTDIR)/var/opt/csw/$(NAME) )
