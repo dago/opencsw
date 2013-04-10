@@ -1,17 +1,21 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = libarchive
-VERSION = 2.8.4
-CATEGORIES = lib
+VERSION = 3.1.2
 GARTYPE = v2
 
 DESCRIPTION = C library for reading and writing various archive formats
-define BLURB
-endef
 
-MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://www.libarchive.org/downloads/
+DISTFILES += $(DISTNAME).tar.gz
+PATCHFILES += 0001-Consider-name-to-be-NULL-in-ACL-test.patch
 
-VENDOR_URL = http://code.google.com/p/libarchive/
+VENDOR_URL = http://www.libarchive.org
+S_CSWlibarchive2)
+BUILD_DEP_PKGS += CSWliblzma-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibbz2-dev
+BUILD_DEP_P-dev
+BUILD_DEP_PKGS += CSWlibssl-devcom/p/libarchive/
 
 PACKAGES += CSWlibarchive2
 SPKG_DESC_CSWlibarchive2 = C library for reading and writing various archive formats, libarchive.so.2
@@ -37,21 +41,18 @@ RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWliblzma5
 RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWosslrt
-
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWlibarchive2)
-BUILD_DEP_PKGS += CSWliblzma-dev
-BUILD_DEP_PKGS += CSWlibz-dev
-BUILD_DEP_PKGS += CSWlibbz2-dev
-BUILD_DEP_PKGS += CSWlibxml2devel
-BUILD_DEP_PKGS += CSWossldevel 
-
-EXTRA_INC = $(includedir)/cryptopp
+RUNTIME_DEP_PKGS_CSWlibarchive-utiEXTRA_INC = $(includedir)/cryptopp
 
 BUILD64_LIBS_ONLY = 1
 
+BUILD_OVERRIDE_VARS += COMMON_CFLAGS
+BUILD_OVERRIDE_VAR_COMMON_CFLAGS =
+
+TEST_OVERRIDE_VARS += COMMON_CFLAGS
+TEST_OVERRIDE_VAR_COMMON_CFLAGS =D64_LIBS_ONLY = 1
+
 # There is currently one test failing. Skip until this is fixed:
-#   http://code.google.com/p/libarchive/issues/detail?id=171
+#   http://code.google.com/p/libarchive/issu# es/detail?id=171
 SKIPTEST ?= 1
 
-include gar/category.mk
+include

@@ -1,0 +1,33 @@
+From 33be69e8909e541a7852fa41784d012f63fa0090 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 10 Apr 2013 13:56:06 +0200
+Subject: [PATCH] Consider name to be NULL in ACL test
+
+---
+ libarchive/test/test_acl_nfs4.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libarchive/test/test_acl_nfs4.c b/libarchive/test/test_acl_nfs4.c
+index c8f5937..76ac023 100644
+--- a/libarchive/test/test_acl_nfs4.c
++++ b/libarchive/test/test_acl_nfs4.c
+@@ -233,14 +233,14 @@ compare_acls(struct archive_entry *ae, struct acl_t *acls, int n)
+ 		}
+ 		failure("Could not find match for ACL "
+ 		    "(type=%d,permset=%d,tag=%d,qual=%d,name=``%s'')",
+-		    type, permset, tag, qual, name);
++		    type, permset, tag, qual, name == NULL ? "<NULL>" : name);
+ 		assertEqualInt(1, matched);
+ 	}
+ 	assertEqualInt(ARCHIVE_EOF, r);
+ 	failure("Could not find match for ACL "
+ 	    "(type=%d,permset=%d,tag=%d,qual=%d,name=``%s'')",
+ 	    acls[marker[0]].type, acls[marker[0]].permset,
+-	    acls[marker[0]].tag, acls[marker[0]].qual, acls[marker[0]].name);
++	    acls[marker[0]].tag, acls[marker[0]].qual, acls[marker[0]].name == NULL ? "<NULL>" : acls[marker[0]].name);
+ 	assertEqualInt(0, n); /* Number of ACLs not matched should == 0 */
+ 	free(marker);
+ }
+-- 
+1.8.1.4
+
