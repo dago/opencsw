@@ -1,0 +1,17 @@
+#log file = /var/opt/csw/log/rsyncd.log
+
+#[repo1]
+#        path = /path/to/repo1
+#        read only = true
+#        use chroot = yes
+#        exclude = README
+#        comment = This is Repo 1
+
+#[repo2]
+#        path = /path/to/repo2
+#        read only = true
+#        use chroot = yes
+#        exclude = TODO
+#        comment = This is Repo 2
+
+

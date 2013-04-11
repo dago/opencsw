@@ -15,9 +15,9 @@ define BLURB
   currently being maintained by Wayne Davison.
 endef
 
-MASTER_SITES = http://samba.anu.edu.au/ftp/rsync/
-DISTFILES = $(DISTNAME).tar.gz
+MASTER_SITES = http://samba.anu.edu.au/ft+= $(DISTNAME).tar.gz
 DISTFILES += cswrsyncd
+DISTFILES += rsyncd.conf.CSWTFILES += cswrsyncd
 
 VENDOR_URL = http://rsync.samba.org/
 
@@ -30,7 +30,7 @@ INITSMF += /etc/opt/csw/init.d/cswrsyncd
 
 PACKAGES += CSWrsyncd
 SPKG_DESC_CSWrsyncd = Daemon for rsyncd server
-PKGFILES_CSWrsyncd += $(sysconfdir)/rsyncd.conf
+PKGFILES_CSWrsyncd += $(sysconfdir)/rsyncd.conf.CSW
 PKGFILES_CSWrsyncd += $(mandir)/man5/rsyncd.conf.5
 PKGFILES_CSWrsyncd += $(INITSMF)
 
@@ -40,7 +40,7 @@ CHECKPKG_OVERRIDES_CSWrsyncd += surplus-dependency|CSWrsyncync += CSWlibiconv2
 
 # The location of rsyncd.conf to OpenCSW standard has been done in _CSWrsyncd3.0.8
 MIGRATE_FILES = rsyncd.conf
-MIGRATE_SOURCE_DIR = /etc
+MIGRATE_PRESERVECONF += $(sysconfdir)/rsyncd.confE_SOURCE_DIR = /etc
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-rsyncd-conf=$(syscon/init.d/cswrsyncd
@@ -55,8 +55,7 @@ REINPLACE_FILES_conf += $(mandir)/man1/rsync.1
 REINPLACE_FILES_conf += $(mandir)/man5/rsyncd.conf.5
 REINPLACE_WHEN_conf = postinstall
 
-include gar/category.mk
-
-post-install-modulated:
+include gar/categot-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/cs
+	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/cs	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall -m 0644 $(WORKDIR)/rsyncd.conf.CSW $(DESTDIR)$(sysconfdir)
