@@ -23,6 +23,11 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+#Use newest Sun Stuido on Solaris10 to solve problems on Solaris10 x86 64bit build:
+ifneq ($(shell /usr/bin/uname -r),5.9)
+       GARCOMPILER = SOS12U3
+endif
+
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
