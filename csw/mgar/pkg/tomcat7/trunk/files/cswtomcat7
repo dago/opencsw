@@ -73,8 +73,8 @@
 # Use the configuration file to supered their value
 #
 
-SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat7
-GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat7/conf/tomcat7
+SPECIFIC_CONFIG_FILE=/etc/opt/csw/cswtomcat7
+GLOBAL_CONFIG_FILE=/opt/csw/etc/cswtomcat7
 
 JAVA_HOME=/usr/java
 TOMCAT_USER=tomcat
