@@ -1,23 +1,24 @@
 NAME = ExtUtils-F77
-VERSION = 1.16
+VERSION = 1.17
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = KGB
 
-DESCRIPTION = Simple interface to F77 libs
+DESCRIPTION = Facilitate use of FORTRAN from Perl/XS code
 define BLURB
-  This module tries to figure out how to link C programs with Fortran
-  subroutines on your system. Basically one must add a list of Fortran runtime
-  libraries. The problem is their location and name varies with each
-  OS/compiler combination!
 endef
 
-PACKAGES = CSWpmextutilsf77
-CATALOGNAME = pm_extutilsf77
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE = COPYING
 
-# Exclude crap the author has accidently left there from his Mac OS system
-EXTRA_MERGE_EXCLUDE_FILES = .*/\..*
+REINPLACE_USRLOCAL += F77.pm
+
+PACKAGES += CSWpm-extutils-f77
+CATALOGNAME_CSWpm-extutils-f77 = pm_extutils_f77
+SPKG_DESC_CSWpm-extutils-f77 = Facilitate use of FORTRAN from Perl/XS code
+ARCHALL_CSWpm-extutils-f77 = 1
+OBSOLETED_BY_CSWpm-extutils-f77 += CSWpmextutilsf77
+CATALOGNAME_CSWpmextutilsf77 = pm_extutilsf77_stub
 
 include gar/category.mk
