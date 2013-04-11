@@ -28,6 +28,9 @@ ifneq ($(shell /usr/bin/uname -r),5.9)
        GARCOMPILER = SOS12U3
 endif
 
+#Since Solaris9 does not have sos12u3 use lower opt 
+OPT_FLAGS_SOS12_i386 = -xO2
+
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
