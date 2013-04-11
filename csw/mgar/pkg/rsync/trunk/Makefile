@@ -53,7 +53,8 @@ REINPLACE_MATCH_conf = /etc/rsyncd\.conf
 REINPLACE_WITH_conf = $(sysconfdir)/rsyncd.conf
 REINPLACE_FILES_conf += $(mandir)/man1/rsync.1
 REINPLACE_FILES_conf += $(mandir)/man5/rsyncd.conf.5
-REINPLACE_WHEN_conf = postinstall
+REINPLACE_WHEN_c# There is one ACL-test on NFSv4 failling
+SKIPTEST ?= 1_conf = postinstall
 
 include gar/categot-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
