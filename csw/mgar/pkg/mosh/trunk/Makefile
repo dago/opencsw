@@ -2,21 +2,24 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mosh
-VERSION = 1.2.3
+VERSION = 1.2.4
 GARTYPE = v2
-CATEGORIES = utils
 
 DESCRIPTION = Mobile shell
 
-MASTER_SITES = https://github.com/downloads/keithw/mosh/
-DISTFILES  = $PATCHFILES += 0001-Add-missing-include.patchrder_8h-source.html
+MASTER_SITES += http://mosh.mit.edu/
+DISTFILES += $(DISTNAME).tar.gz
+
+#PATCHFILES += 0001-Add-missing-include.patch
+
+VENDOR_URL = http://mosh.mit.edurder_8h-source.html
 
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWprotobuf-gxx-dev
 
 PACKAGES += CSWmosh
 SPKG_DESC_CSWmypkg = Mobile shell
-RUNTIME_DEP_PKGS_CSWmosh += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWmowsh += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWmosh += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWmosh += CSWlibprotobuf7-gxx
 RUNTIME_DEP_PKGS_CSWmosh += CSWlibgcc-s1
