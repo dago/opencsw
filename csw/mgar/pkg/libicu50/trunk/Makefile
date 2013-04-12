@@ -1,6 +1,6 @@
 # $Id$
 NAME = libicu
-VERSION = 50.1.1
+VERSION = 50.1.2
 CATEGORIES = lib
 GARTYPE = v2
 
