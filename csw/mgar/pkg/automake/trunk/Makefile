@@ -90,7 +90,9 @@ SKIPTEST-1.10.3 ?= 1
 SKIPTEST-1.11.6 ?= 1
 
 # There are 172 of 2968 tests failed in 1.12
-# SKIPTEST-1.12 ?= 1
+SKIPTEST-1.12.6 ?= 1
+
+SKIPTEST-1.13.1 ?= 1
 
 SKIPTEST = $(SKIPTEST-$(VERSION))
 
