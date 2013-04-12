@@ -1,0 +1,58 @@
+From f64ec2a672aa68d43bd7e275cc42af4a9b86b0e0 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 3 Apr 2013 12:05:18 +0200
+Subject: [PATCH] Use POSIX to determine the file type
+
+---
+ linux/system.cpp | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/linux/system.cpp b/linux/system.cpp
+index bde6901..b3cf12a 100644
+--- a/linux/system.cpp
++++ b/linux/system.cpp
+@@ -7,7 +7,9 @@
+ #include <gtk/gtk.h>
+ #include <X11/keysym.h>
+ #include <sys/time.h>
++#include <fcntl.h>
+ #include <sys/types.h>
++#include <sys/stat.h>
+ #include <dirent.h>
+ #include "opengl.h"
+ #include "gtkmisc.h"
+@@ -124,7 +126,8 @@ void Sys_GetFileList(const char* Path, ObjArray<String>& FileList)
+ {
+ 	struct dirent* Entry;
+ 	char DirPath[LC_MAXPATH], FilePath[LC_MAXPATH];
+-
++	struct stat statBuff;
++	
+ 	strcpy(DirPath, Path);
+ 	int Length = strlen(DirPath);
+ 	if (DirPath[Length - 1] != '/')
+@@ -141,10 +144,19 @@ void Sys_GetFileList(const char* Path, ObjArray<String>& FileList)
+ 
+ 	while ((Entry = readdir(Dir)))
+ 	{
+-		if (Entry->d_type != DT_REG)
++		if(lstat(Entry->d_name, &statBuff) == -1)
++		{
+ 			continue;
++		}
++		else
++		{
++			if(!S_ISREG(statBuff.st_mode))
++			{
++				continue;
++			}
++		}
+ 
+-		sprintf(FilePath, "%s%s", DirPath, Entry->d_name);
++		snprintf(FilePath, LC_MAXPATH, "%s%s", DirPath, Entry->d_name);
+ 		FileList.Add(FilePath);
+ 	}
+ 
+-- 
+1.8.1.4
+
