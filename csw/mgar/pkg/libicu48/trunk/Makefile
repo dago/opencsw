@@ -1,6 +1,6 @@
 # $Id$
 NAME = libicu
-VERSION = 4.8.1
+VERSION = 4.8.1.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -23,34 +23,28 @@ PKGFILES_CSWlibicudata48 += $(call pkgfiles_lib,libicudata.so.48)
 PACKAGES += CSWlibicui18n48
 SPKG_DESC_CSWlibicui18n48 = International Components for Unicode, libicui18n.so.48
 PKGFILES_CSWlibicui18n48 += $(call pkgfiles_lib,libicui18n.so.48)
-RUNTIME_DEP_PKGS_CSWlibicui18n48 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibicui18n48 += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSWlibicui18n48  CSWlibicudata48
 
 PACKAGES += CSWlibicuio48
 SPKG_DESC_CSWlibicuio48 = International Components for Unicode, libicuio.so.48
 PKGFILES_CSWlibicuio48 += $(call pkgfiles_lib,libicuio.so.48)
-RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicuuc48
 
 PACKAGES += CSWlibicule48
 SPKG_DESC_CSWlibicule48 = International Components for Unicode, libicule.so.48
 PKGFILES_CSWlibicule48 += $(call pkgfiles_lib,libicule.so.48)
-RUNTIME_DEP_PKGS_CSWlibicule48 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibicule48 += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSWlibicule48  CSWlibicudata48
 
 PACKAGES += CSWlibiculx48
 SPKG_DESC_CSWlibiculx48 = International Components for Unicode, libiculx.so.48
 PKGFILES_CSWlibiculx48 += $(call pkgfiles_lib,libiculx.so.48)
 RUNTIME_DEP_PKGS_CSWlibiculx48 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibiculx48 += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWlibiculx48 += CSWlibicule48
 
 PACKAGES += CSWlibicutest48
 SPKG_DESC_CSWlibicutest48 = International Components for Unicode, libicutest.so.48
 PKGFILES_CSWlibicutest48 += $(call pkgfiles_lib,libicutest.so.48)
-RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicutu48
 RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicuuc48
 
@@ -58,7 +52,6 @@ PACKAGES += CSWlibicutu48
 SPKG_DESC_CSWlibicutu48 = International Components for Unicode, libicutu.so.48
 PKGFILES_CSWlibicutu48 += $(call pkgfiles_lib,libicutu.so.48)
 RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicui18n48
 
 PACKAGES += CSWlibicuuc48
@@ -98,4 +91,4 @@ include gar/category.mk
 
 post-extract-modulated:
 	-perl -pi -e 's,/usr/local,$(prefix),' \
-		$(WORKSRC)/config/icu-config-bottom
+		$(WORKSRC)/config/i
