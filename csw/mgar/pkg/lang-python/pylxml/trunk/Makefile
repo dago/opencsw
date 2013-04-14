@@ -1,8 +1,9 @@
+# $Id$
 # TODO
 # - Move this to a pymodules/ subdirectory with the rest of the
 #   python modules (similar to the cpan directory).
-NAME = pylxml
-VERSION = 2.3.6
+NAME = lxml
+VERSION = 3.1.2
 CATEGORIES = python
 GARTYPE = v2
 
@@ -15,10 +16,8 @@ define BLURB
 endef
 
 VENDOR_URL   = http://codespeak.net/lxml/
-MASTER_SITES = http://pypi.python.org/packages/source/l/lxml/
 DISTNAME     = lxml-$(VERSION)
 DISTFILES    = $(DISTNAME).tar.gz
-UFILES_REGEX = lxml-(\d+(?:\.\d+)*).tar.gz
 
 # See http://codespeak.net/lxml/index.html#license
 LICENSE = doc/licenses/BSD.txt
