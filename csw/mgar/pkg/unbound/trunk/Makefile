@@ -1,5 +1,5 @@
 NAME = unbound
-VERSION = 1.4.19
+VERSION = 1.4.20
 CATEGORIES = server
 GARTYPE = v2
 DESCRIPTION = A validating, recursive, and caching DNS resolver
@@ -25,19 +25,11 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-#CONFIGURE_ARGS  = $(DIRPATHS)
-#CONFIGUTE_ARGS += --with-solaris-threads
-#CONFIGURE_ARGS += --with-ldns=/opt/csw
-#CONFIGURE_ARGS += --with-ssl=/opt/csw
-CONFIGURE_ARGS += --with-libevent=/opt/csw
+#CONFIGURE_CONFIGURE_ARGS += --with-libevent=/opt/csw
 CONFIGURE_ARGS += --with-libexpat=/opt/csw
-#CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
-#CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
-
-CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGUTE_ARGS += --with-solaris-threads
-CONFIGURE_ARGS += --with-ldns
-CONFIGURE_ARGS += --with-ssl
+CONFIGURE_ARGS += --with-ldns=/opt/csw
+CONFIGURE_ARGS += --with-ssl=/opt/cswE_ARGS += --with-ssl
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
@@ -56,31 +48,32 @@ MERGE_DIRS_isa-sparcv8plus += $(sbindir)
 MERGE_DIRS_isa-pentium_pro  = $(libdir)
 MERGE_DIRS_isa-pentium_pro += $(sbindir)
 
-ISAXEC_DIRS           #EXTRA_ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
-#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
-#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
-#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
-#EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
+ISAXEC_DIRS           EXTRA_ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
 
-#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro  = $(prefix)/sbin/unbound-anchor
-#sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbi#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control
-#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control-setup
-#EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-host
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro  = $(prefix)/sbin/unbound-anchor
+sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbisbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prontrol
+sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prontrol-setup
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-host
 
-#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus  = $(prefix)/sbin/unbound-anchor
-#sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbi#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control
-#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control-setup
-#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-host
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus  = $(prefix)/sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-checkconf
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control-setup
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-host
 
-#EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis  = $(prefix)/sbin/unbound-anchor
-#sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbi#sbin/unbound-anchor
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prontrol
-#sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis  = $(prefix)/sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-checkconf
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-control
+sbin/unbound-anchor
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prontrol-setup
-#sbin/unbound-anchor
+sbin/unbound-anchor
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-host
 
 SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
