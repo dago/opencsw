@@ -12,7 +12,7 @@ endef
 CATEGORIES = python
 TEST_SCRIPTS =
 DISTFILES  = $(DISTNAME).tar.gz
-ARCHALL_CSWpy-ordereddict = 1
+ARCHALL_CSWpy-$(NAME) = 1
 
 include gar/category.mk
 
