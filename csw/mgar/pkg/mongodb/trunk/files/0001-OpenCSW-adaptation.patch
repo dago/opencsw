@@ -1,0 +1,42 @@
+From 187c0d72ca598fae56c7dbd63558df1c8fc6f155 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 14 Apr 2013 12:33:16 +0200
+Subject: [PATCH] OpenCSW adaptation
+
+- librt needs to be used
+- /opt/csw/gxx needs to be searched for libraries
+- the -mt versions of boost libraries must be checked first
+---
+ SConstruct | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index 219f270..428c24c 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -535,7 +535,10 @@ elif "sunos5" == os.sys.platform:
+      nix = True
+      solaris = True
+      env.Append( CPPDEFINES=[ "__sunos__" ] )
+-     env.Append( LIBS=["socket","resolv"] )
++     env.Append( LIBS=["socket","resolv","rt"] )
++     env.Append( CPPPATH=[ "/opt/csw/gxx/include", "/opt/csw/include" ] )
++     env.Append( LIBPATH=[ "/opt/csw/gxx/lib", "/opt/csw/lib" ] )
++     env.Append( LINKFLAGS=[ "-R/opt/csw/gxx/lib", "-R/opt/csw/lib" ] )
+ 
+ elif os.sys.platform.startswith( "freebsd" ):
+     nix = True
+@@ -812,8 +815,8 @@ def doConfigure(myenv):
+ 
+         for b in boostLibs:
+             l = "boost_" + b
+-            if not conf.CheckLib([ l + boostCompiler + "-mt" + boostVersion,
+-                                   l + boostCompiler + boostVersion ], language='C++' ):
++            if not conf.CheckLib([ l + boostCompiler + boostVersion,
++                                   l + boostCompiler + "-mt" + boostVersion ], language='C++' ):
+                 Exit(1)
+ 
+     if conf.CheckHeader('unistd.h'):
+-- 
+1.8.1.4
+
