@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = Cython
-VERSION = 0.17.4
+VERSION = 0.18
 CATEGORIES = lang
 
 DESCRIPTION = Cython Comp
@@ -37,14 +37,14 @@ RUNTIME_DEP_PKGS_CSWcython += CSWlibpython2-6-1-0
 
 PYCOMPILE = 1
 STRIP_LIBTOOL = 1
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-
-CONFIGURE_ARGS = $(DIRPATHS)
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .PATHS)
 
 CNFIGURE_SCRIPTS= 
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR)
-INSTALL_ARGS += --prefix=$(prefix)
+INSTALL_ARGS += --CHECKPKG_OVERRIDES_CSWcython += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWcython += catalogname-does-not-start-with-py_
 
-include
+include gar/category.mk
+
