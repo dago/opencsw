@@ -26,10 +26,8 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 DISTNAME = ldns-$(VERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)/drill
 
-LICENSE = LICENSE
-
-RUNTIME_DEP_PKGS = CSWlibldns1
-RUNTIME_DEP_PKGS += CSWosslrt
+LICENSE = LICENS_CSWldnsdrill += CSWlibldns1
+RUNTIME_DEP_PKGS_CSWldnsdrill += CSWlibssl1-0-0P_PKGS += CSWosslrt
 
 INCOMPATIBLE_PKGS_CSWldnsdrill = CSWdrill
 
@@ -39,4 +37,4 @@ CONFIGURE_ARGS += --with-ldns=/opt/csw
 
 TEST_TARGET =
 
-include gar/category.mk
+inclu
