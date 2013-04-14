@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = mongodb
-VERSION = 2.0.4
+VERSION = 2.4.1
 
 CATEGORIES = lib
 GARTYPE = v2
@@ -22,11 +22,7 @@ BUILD_SCRIPTS = mongo
 INSTALL_SCRIPTS = mongo
 TEST_SCRIPTS =
 
-GARCOMPILER = GNU
-
-PATCHFILES += 0002-library-checking-by-locating-.so-files.patch
-PATCHFILES += 0003-Hardcode-OpenCSW-specifics-in-the-Solaris-section.patch
-PATCHFILES += 0004-Try-Boost-libs-without-the-mt-suffix-first.patch
+GARCOMPILER == 0001-OpenCSW-adaptatione-mt-suffix-first.patch
 
 # Depends on V8 which is available on Solaris 10 x86 only.
 # Can only run on little-endian machines.
@@ -109,4 +105,3 @@ install-mongo:
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 644 $(FILEDIR)/mongodb-smf-cas-trigger \
 		$(DESTDIR)$(sysconfdir)/init.d/mongodb
-	@$(MAKECOOKIE)
