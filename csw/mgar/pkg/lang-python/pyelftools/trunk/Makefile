@@ -10,10 +10,10 @@ define BLURB
 endef
 
 CATEGORIES = python
-MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PATCHFILES += 0001-Updated-list-of-e_machine-values.patch
+
 TEST_SCRIPTS =
 
 ARCHALL_CSWpy-pyelftools = 1
