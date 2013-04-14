@@ -3,15 +3,14 @@
 # $Id$
 
 NAME = mock
-VERSION = 0.7.0
+VERSION = 1.0.1
 CATEGORIES = python
 GARTYPE = v2
+
 DESCRIPTION = A Python Mocking and Patching Library for Testing
-define BLURB
-endef
+
+DISTFILES = $(DISTNAME).tar.gz
+VENDOR_URL = https://pypi.python.org/pypi/mock/1.0.1
 ARCHALL = 1
-
-MASTER_SITES = http://pypi.python.org/packages/source/m/mock/
-DISTFILES += $(NAME)-$(VERSION).tar.gz
-
+TEST_SCRIPTS =
 include gar/category.mk
