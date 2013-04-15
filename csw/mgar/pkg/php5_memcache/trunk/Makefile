@@ -38,8 +38,6 @@ SPKG_DESC_CSWphp5-memcache = APC Extention for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-memcache = CSWphp5
 BUILD_DEPS_CSWphp5-memcache = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibmemcache8
-RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibz1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
