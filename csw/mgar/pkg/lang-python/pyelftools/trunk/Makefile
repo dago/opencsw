@@ -12,6 +12,11 @@ endef
 CATEGORIES = python
 DISTFILES  = $(DISTNAME).tar.gz
 
+# Since elftools are used for checkpkg, they need to be built for all
+# platforms on which we're building.
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 PATCHFILES += 0001-Updated-list-of-e_machine-values.patch
 
 TEST_SCRIPTS =
