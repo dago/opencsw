@@ -4,19 +4,20 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = STBEY
 
-DESCRIPTION = Gregorian calendar date calculations.
+DESCRIPTION = Gregorian calendar date calculations
 define BLURB
-  This package consists of a C library and a Perl module (which uses the C
-  library, internally) for all kinds of date calculations based on the
-  Gregorian calendar (the one used in all western countries today), thereby
-  complying with all relevant norms and standards: ISO/R 2015-1971, DIN 1355
-  and, to some extent, ISO 8601 (where applicable).
 endef
 
-PACKAGES = CSWpmdatecalc
-CATALOGNAME = pm_datecalc
+CATALOG_RELEASE = unstable
 
-BUILD_DEP_PKGS = CSWpmbitvec CSWpmcarpclan
-REQUIRES = CSWpmbitvec CSWpmcarpclan
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-date-calc
+CATALOGNAME_CSWpm-date-calc = pm_date_calc
+SPKG_DESC_CSWpm-date-calc = Gregorian calendar date calculations
+RUNTIME_DEP_PKGS_CSWpm-date-calc += CSWpm-bit-vector
+RUNTIME_DEP_PKGS_CSWpm-date-calc += CSWpm-carp-clan
+OBSOLETED_BY_CSWpm-date-calc += CSWpmdatecalc
+CATALOGNAME_CSWpmdatecalc = pm_datecalc_stub
 
 include gar/category.mk
