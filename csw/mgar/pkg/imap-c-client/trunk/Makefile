@@ -28,7 +28,8 @@ MERGE_EXCLUDE_STATICLIBS =
 PATCHFILES += shared.diff
 
 # Make more md5 functions static to reduce namespace pollution
-PATCHFILES += authmd5.diff
+PATCHFILES # Change the path of the active file to be opencsw compliant
+PATCHFILES += 0003-Make-news-active-file-path-opencsw-compliant.patchS += authmd5.diff
 
 PACKAGES += CSWlibc-client2007f
 SPKG_DESC_CSWlibc-client2007f += $(DESCRIPTION), libc-client.2007f.so
@@ -45,11 +46,30 @@ PKGFILES_CSWlibc-client-dev += $(libdir)/c-client.a
 RUNTIME_DEP_PKGS_CSWlibc-client-dev += CSWlibc-client2007f
 OBSOLETED_BY_CSWlibc-client-dev = CSWimap-devel
 CHECKPKG_OVERRIDES_CSWlibc-client-dev += surplus-dependency|CSWlibc-client2007f
-CHECKPKG_OVERRIDES_CSWlibc-client-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/c-client.a
+CHECKPKG_OVERRIDES_CSWlibc-client-dev += file-with-bad-content|/usr/share|root/opt/cswPACKAGES += CSWimap
+SPKG_DESC_CSWimap = Mail server daemon (UW)
+RUNTIME_DEP_PKGS_CSWimap = CSWlibssl1-0-0
+
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/tmail.1
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imap/SSLBUILD
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imap/bugs.txt
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imap/IPv6.txt
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imap/BUILD
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imap/FAQ.html
+CHECKPKG_OVERRIDES_CSWimap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imap/FAQ.txt
+
+
+INETDCONF  = $(sysconfdir)/pkg/CSWimap/imap.inetd.conf
+INETDCONF += $(sysconfdir)/pkg/CSWimap/imaps.inetd.conf
+INETDCONF += $(sysconfdir)/pkg/CSWimap/pop.inetd.conf
+INETDCONF += $(sysconfdir)/pkg/CSWimap/pop3.inetd.conf
+INETDCONF += $(sysconfdir)/pkg/CSWimap/pop3s.inetd.conf
+
+ETCSERVICES = $(sysconfdir)/pkg/CSWimap/services
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
-INSTALL_SCRIPTS = custom
+INSTALL_SCRIPTS = libc-client uwimap_SCRIPTS = custom
 
 # No test suite
 TEST_SCRIPTS =
@@ -58,7 +78,36 @@ include gar/category.mk
 
 build-custom:
 	@( cd $(WORKSRC) ; $(BUILD_ENV) DISTVERSION=$(VERSION) make soc )
+	@$(MAKEuwimap:
+	ginstall -d "$(DESTDIR)$(sbindir)"
+	for DAEMON in imapd/imapd ipopd/ipop2d ipopd/ipop3d; do \
+		ginstall -p -m755 "$(WORKSRC)/$$DAEMON" "$(DESTDIR)$(sbindir)"; \
+	done
+	 
+	ginstall -d "$(DESTDIR)$(bindir)"
+	ginstall -d "$(DESTDIR)$(mandir)/man1"
+	for BINARY in mailutil tmail dmail mlock; do \
+		ginstall -p -m755 "$(WORKSRC)/$$BINARY/$$BINARY" "$(DESTDIR)$(bindir)"; \
+		[ ! -f "$(WORKSRC)/src/$$BINARY/$$BINARY.1" ] || \
+			ginstall -p -m644 "$(WORKSRC)/src/$$BINARY/$$BINARY.1" "$(DESTDIR)$(mandir)/man1"; \
+	done	
+	 
+	ginstall -d "$(DESTDIR)$(docdir)/imap"
+	for FILE in "$(WORKSRC)/docs"/*; do \
+		[ ! -f "$$FILE" ] || ginstall -p -m 644 "$$FILE" "$(DESTDIR)$(docdir)/imap/"; \
+	done
+	ginstall -p -m644 "$(FILEDIR)/README.CSW" "$(DESTDIR)$(docdir)/imap/"
+	
+	ginstall -d "$(DESTDIR)$(sysconfdir)/pkg/CSWimap"
+	for INETCONF in pop2 pop3 pop3s imap imaps; do \
+		ginstall -p -m644 "$(FILEDIR)/CSWimap.$$INETCONF.inetd.conf" \
+			"$(DESTDIR)$(sysconfdir)/pkg/CSWimap/$$INETCONF.inetd.conf"; \
+	done
+	ginstall -p -m644 "$(FILEDIR)/CSWimap.services" "$(DESTDIR)$(sysconfdir)/pkg/CSWimap/services"
+	
 	@$(MAKECOOKIE)
+
+install-libc-client)
 
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
@@ -70,4 +119,4 @@ install-custom:
 	ginstall -p -m644 $(WORKSRC)/c-client/linkage.c $(DESTDIR)$(includedir)/imap
 	ginstall -p -m644 \
 		$(WORKSRC)/src/osdep/tops-20/shortsym.h $(DESTDIR)$(includedir)/imap
-	cd $(DESTDIR)$(libdir); ln -s libc-client.$(VERSION).so libc-client.so
+	cd $(DESTDIRf)$(libdir); ln -s libc-client.$(VERSION).so libc-client.so

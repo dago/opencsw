@@ -1,0 +1,25 @@
+From cc1c1834c7e3737316bd0ffba9e0cc726a1052b4 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 14 Apr 2013 21:43:34 +0200
+Subject: [PATCH] Make news active file path opencsw compliant
+
+---
+ imap-2007f/src/osdep/unix/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/imap-2007f/src/osdep/unix/Makefile b/imap-2007f/src/osdep/unix/Makefile
+index fd89c18..77ea0d8 100644
+--- a/imap-2007f/src/osdep/unix/Makefile
++++ b/imap-2007f/src/osdep/unix/Makefile
+@@ -728,7 +728,7 @@ soc:	os_sol.h	# Solaris with cc
+ 	$(BUILD) `$(CAT) SPECIALS` OS=sol \
+ 	 SIGTYPE=psx CHECKPW=psx CRXTYPE=nfs \
+ 	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
+-	 ACTIVEFILE=/usr/share/news/active \
++	 ACTIVEFILE=/var/opt/csw/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+ 	 BASECFLAGS="$(CFLAGS)" \
+ 	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+-- 
+1.8.1.4
+

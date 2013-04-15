@@ -1,0 +1,33 @@
+#     # #     #
+#     # #  #  #     #    #    #    ##    #####
+#     # #  #  #     #    ##  ##   #  #   #    #
+#     # #  #  #     #    # ## #  #    #  #    #
+#     # #  #  #     #    #    #  ######  #####
+#     # #  #  #     #    #    #  #    #  #
+ #####   ## ##      #    #    #  #    #  #
+
+How to install the imap client is to add the following lines to your 
+/etc/services and /etc/inetd.conf and restarting inetd. 
+
+Lines to add or check for existance in /etc/services:
+imap            143/tcp         imap2           # Internet Mail Access Protocol
+imaps           993/tcp                         # SSL'd version of imap
+pop3s           995/tcp                         # SSL'd version of pop3
+
+--- that is if you want both the pop and the imap server capability
+
+Lines to add or check for existance in /etc/inetd.conf(or added by postinstall):
+
+# Imap config for imap clients
+imap    stream  tcp     nowait  root    /opt/csw/sbin/imapd     imapd
+imaps   stream  tcp     nowait  root    /opt/csw/sbin/imapd     imapd
+
+# Pop3 config for pop3 clients
+pop     stream  tcp     nowait  root    /opt/csw/sbin/ipop2d    ipop2d
+pop3    stream  tcp     nowait  root    /opt/csw/sbin/ipop3d    ipop3d
+pop3s   stream  tcp     nowait  root    /opt/csw/sbin/ipop3d    ipop3d
+
+
+Now find your inetd service running and restart it:
+example: pgrep inetd; (take id that returns and kill -HUP $ID)
+or proper way as required for statement find inetd process in /etc/rc*.d scriptsor /etc/init.d/ scripts and restart it that way. 
