@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nettle
-VERSION = 2.5
+VERSION = 2.6
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -41,8 +41,9 @@ PACKAGES += CSWlibnettle-utils
 SPKG_DESC_CSWlibnettle-utils = Utility programs for libnettle
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibhogweed2
-RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibnettle4
-RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibnettle-util
+# This is just the default locationion after configure
+CHECKPKG_OVERRIDES_CSWlibnettle-utils += file-with-bad-content|/usr/local|root/opt/csw/sharels += CSWlibgmp10
 
 BUILD64_LIBS_ONLY = 1
 
@@ -52,8 +53,7 @@ CONFIGURE_ARGS += --enable-shared
 # x86 assembly does not work with Sun Studio
 CONFIGURE_ARGS += --disable-assembler
 
-# This is the default install location after configure
+# This is the default install locati6n after configure
 CHECKPKG_OVERRIDES_CSWlibnettle-utils += file-with-bad-content|/usr/local|root/opt/csw/share/info/nettle.info
 
-include gar/category.mk
-
+includ
