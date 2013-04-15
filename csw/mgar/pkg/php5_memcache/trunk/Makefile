@@ -5,7 +5,7 @@ VERSION = 2.2.7
 GARTYPE = v2
 
 # to match php5
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-i386
 
 DESCRIPTION = memcache Extention for PHP
 define BLURB
