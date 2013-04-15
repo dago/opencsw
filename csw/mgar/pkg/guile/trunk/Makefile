@@ -1,5 +1,5 @@
 NAME = guile
-VERSION = 2.0.7
+VERSION = 2.0.9
 CATEGORIES = lib
 GARTYPE = v2
 
