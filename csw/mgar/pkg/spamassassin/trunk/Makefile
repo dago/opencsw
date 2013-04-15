@@ -4,11 +4,7 @@ VERSION = 3.3.2
 CATEGORIES = net
 GARTYPE = v2
 
-DESCRIPTION = Mail filter with a wide range of tests
-define BLURB
-  SpamAssassin is a mail filter which attempts to identify spam using
-  a variety of mechanisms including text analysis, Bayesian filtering,
-  DNS blocklists, and collaborative filtering databases.
+DESCRIPTION = Mail filter with a wide range of teering databases.
 endef
 
 MASTER_SITES = http://apache.dataphone.se/spamassassin/source/
@@ -52,8 +48,33 @@ CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS     = custom
 TEST_SCRIPINSTALL_SCRIPTS   = custom
 
-# Doc samples
-CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content
+REINPLACE_WHEN_USRSHARE = postinstall
+REINPLACE_USRSHARE += $(mandir)/man1/spamassassin.1
+REINPLACE_USRSHARE += $(mandir)/man1/sa-learn.1
+REINPLACE_USRSHARE += $(mandir)/man1/sa-compile.1
+REINPLACE_USRSHARE += $(mandir)/man1/spamd.1
+REINPLACE_USRSHARE += $(mandir)/man1/spamassassin-run.1
+REINPLACE_USRSHARE += $(mandir)/man3/spamassassin-run.3perl
+REINPLACE_USRSHARE += $(mandir)/man3/Mail::SpamAssassin::Conf.3perl
+REINPLACE_USRSHARE += $(bindir)/sa-compile
+REINPLACE_USRSHARE += $(bindir)/sa-learn
+REINPLACE_USRSHARE += $(bindir)/spamd
+REINPLACE_USRSHARE += $(bindir)/spamassassin
+REINPLACE_USRSHARE += $(docdir)/spamassassin/USAGE
+REINPLACE_USRSHARE += $(docdir)/spamassassin/README
+REINPLACE_USRSHARE += $(destdir)/opt/csw/share/perl/csw/spamassassin-run.pod
+REINPLACE_USRSHARE += $(destdir)/opt/csw/share/perl/csw/Mail/SpamAssassin.pm
+REINPLACE_USRSHARE += $(destdir)/opt/csw/share/perl/csw/Mail/SpamAssassin/Conf.pm
+REINPLACE_USRSHARE += $(destdir)/opt/csw/share/perl/csw/Mail/SpamAssassin/Locales.pm
+REINPLACE_USRSHARE += $(destdir)/opt/csw/share/perl/csw/Mail/SpamAssassin/Util/DependencyInfo.pm
+
+REINPLACE_WHEN_USRLOCAL = postinstall
+REINPLACE_USRLOCAL += $(destdir)/opt/csw/share/perl/csw/Mail/SpamAssassin.pm
+REINPLACE_USRLOCAL += $(docdir)/spamassassin/README
+REINPLACE_USRLOCAL += $(docdir)/spamassassin/sql/README
+REINPLACE_USRLOCAL += $(mandir)/man1/spamassassin.1
+REINPLACE_USRLOCAL += $(bindir)/spamassassin
+
 # Checkpkg can't determine perl depscy|CSWpmipcountry
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmaildkim
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-html-parser
@@ -71,8 +92,6 @@ CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiozlib
 CHECKPKG_OVERRIDES_CSWspamassassin += surplpmipcountry
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm--dependency|CSWpmuri
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-net-dns
-# Couldn't make this work...
-CHECKPKG_OVERRIDES_CSWspamassassin += no-direct-binding|/opt/csw/bin/spamc|is|not|directly|bound|to|soname|libz.so.1
 
 include gar/category.mkEDCFLAGS = 
 endif
@@ -81,17 +100,10 @@ configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/etc/opt/csw/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
-#pre-build-modulated:
-#	@echo " ==> Pre-build $(NAME) (custom)"
-#	@( cd $(WORKSRC)/spamc ; \
-#	   sed 's/LDFLAGS = /LDFLAGS = -Bdirect -z ignore /' Makefile.in > Makefile.tmp ; \
-#	   cp Makefile.tmp Makefile.in )
-#mp Makefile.in )
-	@$(MAKECOOKIE)
-
 build-custom:
 	@echo " ==> Building $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
+	   $(BUILD_ENV)(WORKSRC) ; \
 	   gmake )
 	@$(MAKECOOKIE)
 
@@ -103,9 +115,7 @@ test-custom:
 
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
-	@rm -rf $(DESTDIR)
-#	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
-#	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/opt/csw/etc/init.d/cswspamd
+	@r/init.d/cswspamd
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/etc/opt/csw/init.d/cswspamd
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin
