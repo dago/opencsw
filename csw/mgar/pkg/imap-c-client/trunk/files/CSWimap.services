@@ -1,0 +1,4 @@
+pop2            109/tcp         pop-2           # Post Office Protocol - V2
+pop3            110/tcp                         # Post Office Protocol - Version 3
+imaps           993/tcp                         # SSL'd version of imap
+pop3s           995/tcp                         # SSL'd version of pop3
