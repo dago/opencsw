@@ -40,13 +40,12 @@ BUILD_DEPS_CSWphp5-memcache = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibmemcache8
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibz1
-LICENSE_TEXT = "PHP license"
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
 CONFIGURE_ARGS += --enable-memcache=shared,/opt/csw
 
-LICENSE = LICENSE
+LICENSE = CREDITS
 
 # Build flags
 EXTRA_CFLAGS += "-I$(predix)/include/libmemcache"
