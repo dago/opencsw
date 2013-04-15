@@ -32,6 +32,21 @@ BUILD_DEP_PKGS		+=	CSWmesa
 
 TEST_SCRIPTS		=
 
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibz1
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWpango
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWleocad	+=	CSWlibjpeg7
+
+REINPLACE_WHEN_USRSHARE	=	postinstall
+REINPLACE_USRSHARE		+=	/opt/csw/share/man/man1/leocad.1
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
