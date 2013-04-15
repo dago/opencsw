@@ -1,0 +1,25 @@
+From 958bc636ff85ff12071ef24d5db5e6f21019ad4f Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Mon, 15 Apr 2013 15:46:44 +0200
+Subject: [PATCH] Use proper libmemcached headers dir.
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 6cd4bb9..3015af7 100755
+--- a/configure
++++ b/configure
+@@ -5154,7 +5154,7 @@ $as_echo "$memcached_enable_sasl" >&6; }
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libmemcached location" >&5
+ $as_echo_n "checking for libmemcached location... " >&6; }
+   if test "$PHP_LIBMEMCACHED_DIR" != "no" && test "$PHP_LIBMEMCACHED_DIR" != "yes"; then
+-    if ! test -r "$PHP_LIBMEMCACHED_DIR/include/libmemcached-1.0/memcached.h"; then
++    if ! test -r "$PHP_LIBMEMCACHED_DIR/include/libmemcached/memcached.h"; then
+       as_fn_error $? "Can't find libmemcached 1.0.x headers under \"$PHP_LIBMEMCACHED_DIR\"" "$LINENO" 5
+     fi
+   else
+-- 
+1.8.1.4
+
