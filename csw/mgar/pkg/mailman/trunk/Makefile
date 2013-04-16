@@ -33,6 +33,7 @@ PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES = .*\.py[co]
 
 CHECKPKG_OVERRIDES_CSWmailman += binary-architecture-does-not-match-placement|file=opt/csw/mailman/mail/mailman|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWmailman += binary-architecture-does-not-match-placement|file=opt/csw/mailman/mail/mailman|arch_id=3|arch_name=i386
 CHECKPKG_OVERRIDES_CSWmailman += file-with-bad-content|/usr/share|root/opt/csw/mailman/Mailman/Defaults.py
 CHECKPKG_OVERRIDES_CSWmailman += file-with-bad-content|/usr/local|root/opt/csw/mailman/messages/hu/README.hu
 
