@@ -20,6 +20,8 @@ CONFIGURE_ARGS += --enable-static=no
 SKIPTEST = 1
 
 PACKAGES = CSWgtkengines
+CATALOGNAME_CSWgtkengines = gtk_engines
+CHECKPKG_OVERRIDES_CSWgtkengines += catalogname-does-not-match-pkgname|pkgname=CSWgtkengines|catalogname=gtk_engines|expected-catalogname=gtkengines
 
 RDEP_PKGS_CSWgtkengines_5.9 += CSWglib2
 RDEP_PKGS_CSWgtkengines_5.9 += CSWgtk2
