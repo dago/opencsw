@@ -92,12 +92,20 @@ RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibunistring0
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgcc-s1
-# overrides for old libraries:
-CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	soname-unused|libncurses.so.5|is|needed|by|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|but|never|used
-CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	no-direct-binding|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|is|not|directly|bound|to|soname|libncurses.so.5
-CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	no-direct-binding|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|is|not|directly|bound|to|soname|libguile.so.12
-CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18	+=	no-direct-binding|/opt/csw/lib/libguilereadline-v-12.so.12.3.0|is|not|directly|bound|to|soname|libreadline.so.5
-CHECKPKG_OVERRIDES_CSWlibguilereadline-v18-18 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libguilereadline-v-12.so.12.3.0|soname=libguilereadline-v-12.so.12|pkgname=CSWlibguilereadline-v18-18|expected=CSWlibguilereadline-v12-12
+
+PACKAGES							+=	CSWlibguile-ltdl1
+CATALOGNAME_CSWlibguile-ltdl1 		= libguile_ltdl1
+PKGFILES_CSWlibguile-ltdl1			+=	$(call baseisadirs,$(libdir),libguile-ltdl\.so\.1\.0\.0)
+PKGFILES_CSWlibguile-ltdl1			+=	$(call baseisadirs,$(libdir),libguile-ltdl\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibguile-ltdl1			+=	$(DESCRIPTION), libguile-ltdl.so.1
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibguile-ltdl1
+
+PACKAGES							+=	CSWlibguile12
+CATALOGNAME_CSWlibguile12 			= libguile12
+PKGFILES_CSWlibguile12				+=	$(call baseisadirs,$(libdir),libguile\.so\.12\.3\.0)
+PKGFILES_CSWlibguile12				+=	$(call baseisadirs,$(libdir),libguile\.so\.12(\.\d+)*)
+SPKG_DESC_CSWlibguile12				+=	$(DESCRIPTION), libguile.so.12
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibguile12
 
 PACKAGES						+=	CSWguile-dev
 CATALOGNAME_CSWguile-dev		=	guile_dev
@@ -115,6 +123,7 @@ REINPLACE_USRLOCAL		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
 
 REINPLACE_WHEN_USRSHARE	=	postinstall
 REINPLACE_USRSHARE		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
+REINPLACE_USRSHARE		+=	/opt/csw/share/guile/2.0/ice-9/slib.scm
 
 # this is part of libcharset1 which is built from iconv:
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/charset.alias
