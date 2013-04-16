@@ -19,7 +19,13 @@ MASTER_SITES ?= http://ftp.acc.umu.se/pub/GNOME/sources/gtk-engines/2.20
 ARCH := $(shell /bin/uname -p)
 
 # for intltool only
-PATH := /opt/csw/gnu:$(PATH)
+# stagepkg is necessary in PATH
+PATH := /opt/csw/gnu:$(shell mgar show-pkgtree)/cswutils/trunk/files:$(PATH)
+export PATH
+CC=/opt/SUNWspro/bin/cc
+export CC
+CXX=/opt/SUNWspro/bin/CC
+export CXX
 
 LDFLAGS_COMMON :=
 
