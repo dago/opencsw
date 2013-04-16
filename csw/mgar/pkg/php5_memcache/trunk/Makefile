@@ -60,8 +60,6 @@ EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
 
 TEST_TARGET = test
 
-CHECKPKG_OVERRIDES_CSWphp5-memcache += surplus-dependency|CSWphp5
-
 include gar/category.mk
 
 post-extract-isa-$(ISA_DEFAULT_$(GARCH)):
