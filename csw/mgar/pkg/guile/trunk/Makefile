@@ -59,11 +59,6 @@ OBSOLETED_BY_CSWlibguile2-0-22			=	CSWguilelib12
 PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22\.6\.0)
 PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22(\.\d+)*)
 # old libraries:
-PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile.so.12.3.0
-PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile.so.12
-CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
-PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile-ltdl.so.1.0.0
-PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/libguile-ltdl.so.1
 SPKG_DESC_CSWlibguile2-0-22				+=	$(DESCRIPTION), libguile-2.0.so.22
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibiconv2
@@ -74,9 +69,6 @@ RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibffi4
 # overrides for the old libraries:
-CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
-CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libguile.so.12.3.0|soname=libguile.so.12|pkgname=CSWlibguile2-0-22|expected=CSWlibguile12
-CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libguile-ltdl.so.1.0.0|soname=libguile-ltdl.so.1|pkgname=CSWlibguile2-0-22|expected=CSWlibguile-ltdl1
 
 PACKAGES										+=	CSWlibguilereadline-v18-18
 CATALOGNAME_CSWlibguilereadline-v18-18			=	libguilereadline_v18_18
