@@ -66,7 +66,8 @@ EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
 
 TEST_TARGET = test
 
-CHECKPKG_OVERRIDES_CSWphp5-memcahcewd += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-memcached += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5memcached += unidentified-dependency|CSWphp5-memcached
 
 include gar/category.mk
 
