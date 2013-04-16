@@ -416,7 +416,8 @@ def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):
     pkgname = pkg_data["basic_stats"]["pkgname"]
     for depname, dep_desc in pkg_data["depends"]:
       if depname not in known_pkgs:
-        error_mgr.ReportError(pkgname, "unidentified-dependency", depname)
+        error_mgr.ReportError(
+            pkgname, "dependency-on-nonexistent-package", depname)
 
 
 def CheckDependsOnSelf(pkg_data, error_mgr, logger, messenger):
