@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = znc
-VERSION = 0.206
+VERSION = 1.0
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -44,8 +44,7 @@ RUNTIME_DEP_PKGS_CSWznc-dev += CSWlibcares-dev
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-GARCOMPILER = GCC4
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i3NUGARCOMPILER = GCC4
 CONFIGURE_ARGS = $(DIRPATHS) 
 
 # --enable-perl and --enable-python do not work. perl autotools check is broke; python module does not compile
@@ -53,5 +52,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 SKIPTEST = 1
 
-include gar/category.mk
-
+include
