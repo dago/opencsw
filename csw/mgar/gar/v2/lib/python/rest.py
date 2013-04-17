@@ -219,12 +219,18 @@ class CachedPkgstats(object):
     self.d.close()
 
   def GetPkgstats(self, md5):
+    pkgstats = None
     if str(md5) in self.d:
-      return cjson.decode(self.d[md5])
-    else:
+      serialized_data = self.d[md5]
+      try:
+        return cjson.decode(serialized_data)
+      except (TypeError, cjson.DecodeError) as e:
+        logging.fatal('A problem with %r: %r', md5, e)
+        del self.d[md5]
+    if not pkgstats:
       pkgstats = self.rest_client.GetPkgstatsByMd5(md5)
       self.d[md5] = cjson.encode(pkgstats)
-      return pkgstats
+    return pkgstats
 
   def GetDeps(self, md5):
     if str(md5) in self.deps:
