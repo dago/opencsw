@@ -1,0 +1,25 @@
+From ea9f488d3dfb3397880937cfac66b1168a852ed2 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Wed, 17 Apr 2013 23:10:44 +0200
+Subject: [PATCH] fix preprocessing bug
+
+---
+ util/storage/lookup3.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/util/storage/lookup3.c b/util/storage/lookup3.c
+index 845cc38..a96ca05 100644
+--- a/util/storage/lookup3.c
++++ b/util/storage/lookup3.c
+@@ -75,8 +75,6 @@ hash_set_raninit(uint32_t v)
+  */
+ #if (defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && \
+      __BYTE_ORDER == __LITTLE_ENDIAN) || \
+-    (defined(_BYTE_ORDER) && defined(_LITTLE_ENDIAN) && \
+-     _BYTE_ORDER == _LITTLE_ENDIAN) || \
+     (defined(i386) || defined(__i386__) || defined(__i486__) || \
+      defined(__i586__) || defined(__i686__) || defined(vax) || defined(MIPSEL))
+ # define HASH_LITTLE_ENDIAN 1
+-- 
+1.8.1.4
+
