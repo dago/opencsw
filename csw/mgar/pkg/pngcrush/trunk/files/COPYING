@@ -1,0 +1,32 @@
+/*
+ * pngcrush.c - recompresses png files
+ * Copyright (C) 1998-2002, 2006-2013 Glenn Randers-Pehrson
+ *                                   (glennrp at users.sf.net)
+ * Portions copyright (C) 2005       Greg Roelofs
+ *
+ * This software is released under a license derived from the libpng
+ * license (see LICENSE, below).
+ *
+ * The most recent version of pngcrush can be found at SourceForge in
+ * http://pmt.sf.net/pngcrush/
+ *
+ * This program reads in a PNG image, and writes it out again, with the
+ * optimum filter_method and zlib_level.  It uses brute force (trying
+ * filter_method none, and libpng adaptive filtering, with compression
+ * levels 3 and 9).
+ *
+ * Optionally, it can remove unwanted chunks or add gAMA, sRGB, bKGD,
+ * tEXt/zTXt, and tRNS chunks.  It will remove some chunks such as gAMA,
+ * cHRM, pHYs, and oFFs when their data fields contain all zero, which is a
+ * mistake.
+ *
+ * Uses libpng and zlib.  This program was based upon libpng's pngtest.c.
+ *
+ * Thanks to Greg Roelofs for various bug fixes, suggestions, and
+ * occasionally creating Linux executables.
+ *
+ * Thanks to Stephan Levavej for some helpful suggestions about gcc compiler
+ * options and for a suggestion to increase the Z_MEM_LEVEL from default.
+ *
+ */
+
