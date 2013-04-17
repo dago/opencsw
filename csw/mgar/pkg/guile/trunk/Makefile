@@ -52,6 +52,8 @@ CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/local|root/opt/csw/sha
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/guile.info-1
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-4
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-1
+# even though I replace it in the sources ...
+CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/guile/2.0/ccache/ice-9/slib.go
 
 PACKAGES								+=	CSWlibguile2-0-22
 CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
@@ -85,19 +87,22 @@ RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibunistring0
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgcc-s1
 
+# old library provided for those dependencies which didn't change to 2.x
 PACKAGES							+=	CSWlibguile-ltdl1
 CATALOGNAME_CSWlibguile-ltdl1 		= libguile_ltdl1
 PKGFILES_CSWlibguile-ltdl1			+=	$(call baseisadirs,$(libdir),libguile-ltdl\.so\.1\.0\.0)
 PKGFILES_CSWlibguile-ltdl1			+=	$(call baseisadirs,$(libdir),libguile-ltdl\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibguile-ltdl1			+=	$(DESCRIPTION), libguile-ltdl.so.1
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibguile-ltdl1
 
+# old library provided for those dependencies which didn't change to 2.x
 PACKAGES							+=	CSWlibguile12
 CATALOGNAME_CSWlibguile12 			= libguile12
 PKGFILES_CSWlibguile12				+=	$(call baseisadirs,$(libdir),libguile\.so\.12\.3\.0)
 PKGFILES_CSWlibguile12				+=	$(call baseisadirs,$(libdir),libguile\.so\.12(\.\d+)*)
 SPKG_DESC_CSWlibguile12				+=	$(DESCRIPTION), libguile.so.12
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22	+=	CSWlibguile12
+RUNTIME_DEP_PKGS_CSWlibguile12		+=	CSWlibguile-ltdl1
+CHECKPKG_OVERRIDES_CSWlibguile12 += file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
+CHECKPKG_OVERRIDES_CSWlibguile12 += no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 
 PACKAGES						+=	CSWguile-dev
 CATALOGNAME_CSWguile-dev		=	guile_dev
