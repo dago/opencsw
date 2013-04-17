@@ -1,0 +1,34 @@
+From 7d91804d25372860a60f5dafe57ca6fc2a311edf Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 17 Apr 2013 11:24:45 +0200
+Subject: [PATCH] Fix tclsh finding
+
+---
+ runtest | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/runtest b/runtest
+index d8451df..0fd0f56 100755
+--- a/runtest
++++ b/runtest
+@@ -3,10 +3,15 @@ TCL_VERSIONS="8.5 8.6"
+ TCLSH=""
+ 
+ for VERSION in $TCL_VERSIONS; do
+-	TCL=`which tclsh$VERSION 2>/dev/null` && TCLSH=$TCL
++	TCL=`which tclsh$VERSION 2>/dev/null`
++  if [ -x "${TCL}" ]; then
++    # On Solaris, the 'which' command returns nonsense when the command is not
++    # found.
++    TCLSH=$TCL
++  fi
+ done
+ 
+-if [ -z $TCLSH ]
++if [ -z "$TCLSH" ]
+ then
+     echo "You need tcl 8.5 or newer in order to run the Redis test"
+     exit 1
+-- 
+1.8.1.4
+
