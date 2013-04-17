@@ -36,7 +36,7 @@ GARCOMPILER = GNU
 PACKAGES = CSWphp5-memcache
 OBSOLETED_BY_CSWphp5-memcache = CSWphp5memcache
 CATALOG_NAME_CSWphp5memcache = php5_memcache_stub
-SPKG_DESC_CSWphp5-memcache = memcache Extention for PHP5
+SPKG_DESC_CSWphp5-memcache =  Extention memcache for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-memcache = CSWphp5
 BUILD_DEPS_CSWphp5-memcache = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibgcc-s1
@@ -46,9 +46,6 @@ CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
 CONFIGURE_ARGS += --enable-memcache=shared,/opt/csw
 
 LICENSE = CREDITS
-
-# Build flags
-EXTRA_CFLAGS += "-I$(prefix)/include/libmemcache"
 
 # These should stop the test suite from asking to send results by
 # mail.
