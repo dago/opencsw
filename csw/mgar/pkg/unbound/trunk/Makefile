@@ -19,11 +19,11 @@ PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 PACKAGES = CSWunbound CSWlibunbound2 CSWunbound-devel CSWunbound-host
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+PATCHFILES += 0001-fix-preprocessing-bug.patchd+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# UPSTREM_MASTER_SITES = 
 
 #CONFIGURE_CONFIGURE_ARGS += --with-libevent=/opt/csw
 CONFIGURE_ARGS += --with-libexpat=/opt/csw
