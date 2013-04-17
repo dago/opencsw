@@ -2,16 +2,14 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = redis
-VERSION = 2.6.9
+VERSION = 2.6.12
 
 DESCRIPTION = An advanced key-value storee
 define BLURB
 endef
 
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
-
-PATCHFILES += 0001-backtrace-is-only-available-on-Solalaris10-i386
+DISTFILES  = $(Solalaris10-i386
 
 PACKAGES += CSWredis
 SPKG_DESC_CSWredis = An advan
@@ -19,6 +17,8 @@ BUILD64 = 1
 ISAEXEC = 1
 
 GARCOMPILER = GNU
+
+PATCHFILES += 0001-Fix-tclsh-finding.patch
 
 GARCOMPILER = GCC4
 
