@@ -58,15 +58,13 @@ SPKG_DESC_CSWsyslog-ng = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibdbi1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibevtlog0
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibwrap1
 
 # Specifying different dependencies for 5.9 and 5.10.
-RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWsyslgthread.10 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibssl1-0-0
 
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.9 += CSWglib2
@@ -106,7 +104,7 @@ CHECKPKG_OVERRIDES_CSWsyslog-ng += shared-lib-package-contains-so-symlink
 CHECKPKG_OVERRIDES_CSWsyslog-ng += shared-lib-pkgname-mismatch
 
 # Missing TLS symbols
-EXTRA_LINKER_FLAGS = -lgnutls
+EXTRA_LINKEinclude gar/category.mkKER_FLAGS = -lgnutls
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw
@@ -115,7 +113,4 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswsyslog_ng \
 		$(DESTDIR)/etc/opt/csw/init.d/cswsyslog_ng
-	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/run
-	@$(MAKECOOKIE)
-
-include gar/category.mk
+	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/
