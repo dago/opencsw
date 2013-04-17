@@ -70,7 +70,7 @@ OBSOLETE_DEPS = {
     },
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
-EMAIL_RE = re.compile(r"^.*@opencsw.org$")
+EMAIL_RE = re.compile(r"^.*@opencsw\.org$")
 MAX_CATALOGNAME_LENGTH = 29
 MAX_PKGNAME_LENGTH = 32
 ARCH_LIST = common_constants.ARCHITECTURES
