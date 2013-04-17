@@ -9,9 +9,11 @@ PACKAGING_PLATFORMS = solaris10-i386
 
 DESCRIPTION = memcache Extention for PHP
 define BLURB
-	The Alternative PHP Cache (APC) is a free and open opcode cache for PHP.
-	It was conceived of to provide a free, open, and robust framework 
-	for caching and optimizing PHP intermediate code. 
+   Memcached is a caching daemon designed especially for
+   dynamic web applications to decrease database load by
+   storing objects in memory.
+   This extension allows you to work with memcached through
+   handy OO and procedural interfaces.
 endef
 
 PHP_PREFIX = $(prefix)/php5
@@ -34,7 +36,7 @@ GARCOMPILER = GNU
 PACKAGES = CSWphp5-memcache
 OBSOLETED_BY_CSWphp5-memcache = CSWphp5memcache
 CATALOG_NAME_CSWphp5memcache = php5_memcache_stub
-SPKG_DESC_CSWphp5-memcache = APC Extention for PHP5
+SPKG_DESC_CSWphp5-memcache = memcache Extention for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-memcache = CSWphp5
 BUILD_DEPS_CSWphp5-memcache = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibgcc-s1
@@ -46,7 +48,7 @@ CONFIGURE_ARGS += --enable-memcache=shared,/opt/csw
 LICENSE = CREDITS
 
 # Build flags
-EXTRA_CFLAGS += "-I$(predix)/include/libmemcache"
+EXTRA_CFLAGS += "-I$(prefix)/include/libmemcache"
 
 # These should stop the test suite from asking to send results by
 # mail.
