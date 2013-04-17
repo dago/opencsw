@@ -34,7 +34,7 @@ GARCOMPILER = GNU
 PACKAGES = CSWphp5-memcached
 OBSOLETED_BY_CSWphp5-memcached = CSWphp5memcached
 CATALOG_NAME_CSWphp5memcached = php5_memcached_stub
-SPKG_DESC_CSWphp5-memcached = memcached Extention for PHP5
+SPKG_DESC_CSWphp5-memcached =  Extention memcached for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-memcached = CSWphp5
 BUILD_DEPS_CSWphp5-memcached = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibgcc-s1
@@ -48,9 +48,6 @@ CONFIGURE_ARGS += --with-libmemcached-dir=shared,$(prefix)
 CONFIGURE_ARGS += --enable-memcached-json
 
 LICENSE = LICENSE
-
-# Build flags
-EXTRA_CFLAGS += "-I$(prefix)/include/libmemcached"
 
 # These should stop the test suite from asking to send results by
 # mail.
