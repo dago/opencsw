@@ -774,6 +774,9 @@ def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
 def CheckBadContent(pkg_data, error_mgr, logger, messenger):
   for regex in pkg_data["bad_paths"]:
     for file_name in pkg_data["bad_paths"][regex]:
+      if "opt/csw/share" in file_name:
+        # We don't want to throw this error on documentation.
+        continue
       messenger.Message(
           "File %s contains bad content: %s. "
           "If it's a legacy file you can't modify, "
