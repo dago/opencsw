@@ -366,13 +366,6 @@ class CatalogImporter(object):
     return os.path.join(base_dir, arch, short_osrel, "catalog")
 
 
-def GetSqoTriad(osrel, arch, catrel):
-  sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
-  sqo_arch = m.Architecture.selectBy(name=arch).getOne()
-  sqo_catrel = m.CatalogRelease.selectBy(name=catrel).getOne()
-  return sqo_osrel, sqo_arch, sqo_catrel
-
-
 def main():
   parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug", dest="debug",
@@ -595,7 +588,7 @@ def main():
     catrel, base_dir = args
     ci.SyncFromCatalogTree(catrel, base_dir, options.force_unpack)
   elif (command, subcommand) == ('show', 'cat'):
-    sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
+    sqo_osrel, sqo_arch, sqo_catrel = m.GetSqoTriad(
         options.osrel, options.arch, options.catrel)
     res = m.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     for obj in res:
@@ -630,7 +623,7 @@ def main():
     # TODO: Move this definition to a better place
     for osrel in ("SunOS5.%s" % x for x in (8, 9, 10, 11)):
       for arch in archs:
-        sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
+        sqo_osrel, sqo_arch, sqo_catrel = m.GetSqoTriad(
             osrel, arch, catrel)
         pkgs = list(m.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
         logging.debug("The catalog contains %s packages" % len(pkgs))
