@@ -103,9 +103,8 @@ def GetConfig():
       config.set("database", "user", "")
       config.set("database", "password", "")
       config.set("database", "auto_manage", "yes")
-      fd = open(config_file, "w")
-      config.write(fd)
-      fd.close()
+      with open(config_file, "w") as fd:
+        config.write(fd)
       logging.debug("Configuration has been written.")
   if not config.has_section("database"):
     logging.fatal(
