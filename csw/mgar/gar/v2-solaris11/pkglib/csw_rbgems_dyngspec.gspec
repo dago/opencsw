@@ -1,5 +1,0 @@
-%include        url file://%{PKGLIB}/csw_vars.gspec
-%pkginfo        url file://%{PKGLIB}/csw/pkginfo
-%prototype      exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}
-%depend:merge   url file://%{PKGLIB}/csw/depend.ruby
-%depend         exec gawk '$1 ~ /f/{print $3}' %{prototype} | depmaker --root %{DESTDIR} --nodep %{pkgname} %{DEPMAKER_EXTRA_ARGS}
