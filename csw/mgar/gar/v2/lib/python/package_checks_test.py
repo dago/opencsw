@@ -2004,6 +2004,24 @@ class TestRemovePackagesUnderInstallation(unittest.TestCase):
                                            packages_to_be_installed))
 
 
+class TestCheckBadContent(CheckTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckBadContent'
+
+  def testGoodFiles(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data['bad_paths'] = {
+        'bad-regex': ['root/opt/csw/share/doc/foo'],
+    }
+
+  def testBadFiles(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data['bad_paths'] = {
+        'bad-regex': ['root/opt/csw/bin/foo'],
+    }
+    self.error_mgr_mock.ReportError(
+        'file-with-bad-content',
+        'bad-regex root/opt/csw/bin/foo')
+
 
 if __name__ == '__main__':
   unittest.main()
