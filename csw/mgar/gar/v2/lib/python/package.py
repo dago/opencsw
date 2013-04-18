@@ -35,18 +35,22 @@ keystore=/var/sadm/security
 proxy=
 """
 
+
 class Error(Exception):
-  pass
+  """A generic error."""
 
 
 class SystemUtilityError(Error):
   """A problem occurred while running system utility, e.g. ldd."""
 
+
 class PackageError(Error):
-  pass
+  """A problem with the package itself that causes problems with examining it."""
+
 
 class StdoutSyntaxError(Error):
-  pass
+  """Problem with data returned by a process."""
+
 
 class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""

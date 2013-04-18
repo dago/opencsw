@@ -552,20 +552,13 @@ class InstallContentsImporter(object):
         try:
           sqo_srv4 = self._GetFakeSrv4(pkgname, osrel, arch)
         except sqlobject.main.SQLObjectNotFound, e:
-          print d
+          logging.fatal(d)
           raise
         if sqo_srv4 not in cleaned_pkgs:
           sqo_srv4.RemoveAllCswFiles()
           cleaned_pkgs.add(sqo_srv4)
         sqo_pkginst = self._GetPkginst(pkgname)
         f_path, f_basename = os.path.split(d["path"])
-        # This is really slow (one run ~1h), but works.
-        # To speed it up, raw SQL + cursor.executemany() could be used, but
-        # there's a incompatibility between MySQL and sqlite drivers:
-        # MySQL:  INSERT ... VALUES (%s, %s, %s);
-        # sqlite: INSERT ... VALUES (?, ?, ?);
-        # For now, using the sqlobject ORM which is slow, but at least
-        # handles compatibility issues.
         csw_file = m.CswFile(pkginst=sqo_pkginst,
             line=d["line"], path=f_path, basename=f_basename,
             srv4_file=sqo_srv4)

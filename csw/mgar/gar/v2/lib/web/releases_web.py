@@ -21,6 +21,7 @@ import datetime
 import hashlib
 import logging
 
+
 urls = (
   r'/', 'Index',
   r'/srv4/', 'Srv4List',
@@ -35,7 +36,12 @@ render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
 
 OPENCSW_ROOT = "/home/mirror/opencsw-official"
 ALLPKGS_DIR = os.path.join(OPENCSW_ROOT, "allpkgs")
-CAN_UPLOAD_TO_CATALOGS = frozenset(["unstable", "kiel", "bratislava", "beanie"])
+CAN_UPLOAD_TO_CATALOGS = frozenset([
+    "unstable",
+    "kiel",
+    "bratislava",
+    "beanie",
+])
 
 def ConnectToDatabase():
   configuration.SetUpSqlobjectConnection()
@@ -50,14 +56,10 @@ class Srv4List(object):
     messages = []
     configuration.SetUpSqlobjectConnection()
     x = web.input(srv4_file={})
-    # x['srv4_file'].filename
-    # x['srv4_file'].value
-    # x['srv4_file'].file.read()
     web.header(
         'Content-type',
         'application/x-vnd.opencsw.pkg;type=upload-results')
     hash = hashlib.md5()
-    # hash.update(x['srv4_file'].file.read())
     hash.update(x['srv4_file'].value)
     data_md5_sum = hash.hexdigest()
     declared_md5_sum = x['md5_sum']
