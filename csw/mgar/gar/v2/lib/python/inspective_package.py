@@ -1,9 +1,10 @@
+"""This file isolates code dependent on elftools."""
+
 import package
 import os
 import re
 import sys
 import logging
-import hachoir_parser
 import sharedlib_utils
 import magic
 import copy
@@ -13,16 +14,8 @@ import configuration as c
 import time
 import shell
 
-"""This file isolates code dependent on hachoir parser.
-
-hachoir parser takes quite a while to import.
-"""
-
-# Suppress unhelpful warnings
-# http://bitbucket.org/haypo/hachoir/issue/23
-import hachoir_core.config
-hachoir_core.config.quiet = True
-
+from elftools.elf.elffile import ELFFile
+from elftools.elf.enums import ENUM_E_MACHINE
 
 ROOT_RE = re.compile(r"^(reloc|root)/")
 
@@ -61,26 +54,9 @@ def GetFileMetadata(file_magic, base_dir, file_path):
     else:
       raise package.PackageError(msg)
   if sharedlib_utils.IsBinary(file_info, check_consistency=False):
-    parser_tag = ('class', hachoir_parser.program.elf.ElfFile)
-    parser = hachoir_parser.createParser(full_path, tags=[parser_tag])
-    if not parser:
-      logging.warning("Can't parse file %s", file_path)
-    else:
-      try:
-        machine_id = parser["/header/machine"].value
-      except hachoir_core.field.field.MissingField, e:
-        logging.fatal(
-            "hachoir_parser failed to retrieve machine_id for %r. "
-            "checkpkg cannot continue.",
-            file_info)
-        raise
-      try:
-        file_info["mime_type_by_hachoir"] = parser.mime_type
-        file_info["machine_id"] = machine_id
-        file_info["endian"] = parser["/header/endian"].display
-      except hachoir_core.field.field.MissingField, e:
-        logging.warning(
-            "Error in hachoir_parser processing %s: %r", file_path, e)
+    with open(full_path, 'rb') as elf_fd:
+      elffile = ELFFile(elf_fd)
+      file_info["machine_id"] = ENUM_E_MACHINE[elffile.header['e_machine']]
   return file_info
 
 class InspectivePackage(package.DirectoryFormatPackage):
