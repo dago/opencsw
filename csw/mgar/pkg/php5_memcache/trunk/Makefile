@@ -4,16 +4,13 @@ NAME = memcache
 VERSION = 2.2.7
 GARTYPE = v2
 
-# to match php5
 PACKAGING_PLATFORMS = solaris10-i386
 
-DESCRIPTION = memcache Extention for PHP
+# to match php5
+
+DESCRIPTION = Extention memcache for PHP5
 define BLURB
-   Memcached is a caching daemon designed especially for
-   dynamic web applications to decrease database load by
-   storing objects in memory.
-   This extension allows you to work with memcached through
-   handy OO and procedural interfaces.
+   This extension allows you to work with memcached through handy OO and procedural interfaces.
 endef
 
 PHP_PREFIX = $(prefix)/php5
@@ -40,6 +37,7 @@ SPKG_DESC_CSWphp5-memcache =  Extention memcache for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-memcache = CSWphp5
 BUILD_DEPS_CSWphp5-memcache = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcache += CSWlibgcc-s1
+ARCH_CSWphp5-memcache = all
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
@@ -64,3 +62,4 @@ include gar/category.mk
 post-extract-isa-$(ISA_DEFAULT_$(GARCH)):
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	@$(MAKECOOKIE)
+
