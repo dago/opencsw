@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = libotf
-VERSION = 0.9.12
+VERSION = 0.9.13
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -19,7 +19,7 @@ The combination of libotf and the FreeType library (Ver.2) realizes
 CTL (complex text layout) by OpenType fonts.
 endef
 
-MASTER_SITES = http://www.m17n.org/libotf/
+MASTEdownload.savannah.gnu.org/releases/m17nw.m17n.org/libotf/
 DISTFILES  = $(DISTNAME).tar.gz
 
 # centralize the build dependencies (it seems that the run-time
