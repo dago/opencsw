@@ -3,6 +3,7 @@
 from StringIO import StringIO
 import anydbm
 import cjson
+import getpass
 import logging
 import os
 import pycurl
