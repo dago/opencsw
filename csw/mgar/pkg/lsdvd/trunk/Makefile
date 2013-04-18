@@ -4,7 +4,6 @@
 NAME 		= lsdvd
 VERSION 	= 0.16
 GARTYPE 	= v2
-CATEGORIES 	= apps
 
 DESCRIPTION = Print information about the contents and structure of a DVD
 define BLURB
@@ -24,11 +23,7 @@ DISTFILES  		=	$(DISTNAME).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 BUILD_DEP_PKGS		=	CSWlibdvdreaddevel
-RUNTIME_DEP_PKGS	=	\
-						CSWlibdvdread \
-						CSWlibgcc-s1
-# this is needed because chkpkg incorrectly complains:
-CHECKPKG_OVERRIDES_CSWlsdvd += surplus-dependency|CSWlibgcc-s1
+RUNTIME_DEP_PKGS	=	CSWlibdvdread
 CONFIGURE_ARGS		=	$(DIRPATHS)
 GARCOMPILER			=	GNU
 
