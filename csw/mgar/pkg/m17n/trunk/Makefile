@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = m17n
-VERSION = 1.6.3
+VERSION = 1.6.4
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -18,7 +18,7 @@ define BLURB
 	and edit the text.
 endef
 
-MASTER_SITES = http://www.m17n.org/m17n-lib-download/
+MASTEdownload.savannah.gnu.org/releases/m17nm17n-lib-download/
 
 DISTNAME	=	$(NAME)-lib-$(VERSION)
 DISTFILES	=	$(DISTNAME).tar.gz
@@ -121,4 +121,4 @@ include gar/category.mk
 
 # this is private and not available publicly yet
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	$(HOME)/bin/ocswdeplist -
