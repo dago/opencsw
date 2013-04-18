@@ -9,7 +9,6 @@ import pycurl
 import urllib2
 
 DEFAULT_URL = "http://buildfarm.opencsw.org"
-RELEASES_APP = "/releases"
 
 class Error(Exception):
   """Generic error."""
@@ -26,6 +25,7 @@ class RestCommunicationError(Error):
 class RestClient(object):
 
   PKGDB_APP = "/pkgdb/rest"
+  RELEASES_APP = "/releases"
 
   def __init__(self, rest_url=DEFAULT_URL, username=None, password=None,
       debug=False):
@@ -130,7 +130,7 @@ class RestClient(object):
     url = (
         "%s%s/catalogs/%s/%s/%s/%s/"
         % (self.rest_url,
-           RELEASES_APP,
+           self.RELEASES_APP,
            catrel, arch, osrel,
            md5_sum))
     logging.debug("DELETE @ URL: %s %s", type(url), url)
