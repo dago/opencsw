@@ -43,13 +43,51 @@ BUILD_DEP_PKGS		+=	CSWlibxrenderdevel
 BUILD_DEP_PKGS		+=	CSWlibz-dev
 
 PACKAGES							+=	CSWlibm17n-utils
-SPKG_DESC_CSWlibm17n-utils			+=	$(DESCRIPTION) - utilities.d=CSWlibm17n-gui0
+SPKG_DESC_CSWlibm17n-utils			+=	$(DESCRIPTION) - utilities.dRUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibm17n-core0
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibm17n-flt0
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibm17n-gui0
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibm17n0
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibthai0
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibxft2
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibgd2
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibotf-utils
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibm17n-utils	+=	CSWlibfribidi0
+
+PACKAGES						+=	CSWlibm17n-core0
+CATALOGNAME_CSWlibm17n-core0	=	libm17n_core0
+PKGFILES_CSWlibm17n-core0		+=	$(call baseisadirs,$(libdir),libm17n-core\.so\.0\.4\.0)
+PKGFILES_CSWlibm17n-core0		+=	$(call baseisadirs,$(libdir),libm17n-core\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibm17n-core0		+=	$(DESCRIPTION), libm17n-core.so.0
+
+PACKAGES					+=	CSWlibm17n-flt0
+CATALOGNAME_CSWlibm17n-flt0	=	libm17n_flt0
+PKGFILES_CSWlibm17n-flt0	+=	$(call baseisadirs,$(libdir),libm17n-flt\.so\.0\.4\.0)
+PKGFILES_CSWlibm17n-flt0	+=	$(call baseisadirs,$(libdir),libm17n-flt\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibm17n-flt0	+=	$(DESCRIPTION), libm17n-flt.so.0
+
+PACKAGES					+=	CSWlibm17n-gui0
+CATALOGNAME_CSWlibm17n-gui0	=	libm17n_gui0
+PKGFILES_CSWlibm17n-gui0	+=	$(call baseisadirs,$(libdir),libm17n-gui\.so\.0\.4\.0)
+PKGFILES_CSWlibm17n-gui0	+=	$(call baseisadirs,$(libdir),libm17n-gui\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibm17n-gui0	+=	$(DESCRIPTION), libm17n-gui.so.0
+
+PACKAGES				+=	CSWlibm17n0
+CATALOGNAME_CSWlibm17n0	=	libm17n0
+PKGFILES_CSWlibm17n0	+=	$(call baseisadirs,$(libdir),libm17n\.so\.0\.4\.0)
+PKGFILES_CSWlibm17n0	+=	$(call baseisadirs,$(libdir),libm17n\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibm17n0	+=	$(DESCRIPTION), libm17n.so.0d=CSWlibm17n-gui0
 
 PACKAGES							+=	CSWlibm17n-dev
 SPKG_DESC_CSWlibm17n-dev			+=	$(DESCRIPTION) - development.
 PKGFILES_CSWlibm17n-dev				=	$itecture neutral
 CHECKPKG_OVERRIDES_CSWlibm17n-dev 	+= 	archall-devel-package
-ARCHALL_CSWlibency|CSWfconfig
+ARCHALL_CSWliRUNTIME_DEP_PKGS_CSWlibm17n-dev		+=	CSWlibm17n0
+CHECKPKG_OVERRIDES_CSWlibm17n-dev	+=	file-with-bad-content|/usr/local|root/opt/csw/bin/m17n-configibency|CSWfconfig
 
 include gar/category.mk
 
