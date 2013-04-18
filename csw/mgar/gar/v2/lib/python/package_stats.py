@@ -53,14 +53,14 @@ class StdoutSyntaxError(Error):
   """A utility's output is bad, e.g. impossible to parse."""
 
 
-class PackageStatsMixin(object):
+class PackageStats(object):
   """Collects stats about a package and saves them.
 
   Takes care of processing data from a SVR4 package and returing them as data structures.
   """
 
   def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None, debug=False):
-    super(PackageStatsMixin, self).__init__()
+    super(PackageStats, self).__init__()
     self.srv4_pkg = srv4_pkg
     self.md5sum = md5sum
     self.dir_format_pkg = None
@@ -516,8 +516,3 @@ class StatsCollector(object):
       pbar.update(counter.next())
     pbar.finish()
     return data_list
-
-
-class PackageStats(PackageStatsMixin):
-  """Without the implicit database initialiation."""
-  pass
