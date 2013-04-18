@@ -36,10 +36,8 @@ PACKAGES					+=	CSWlibotf0
 SPKG_DESC_CSWlibotf0		=	$(DESCRIPTION) - runtime
 PKGFILES_CSWlibotf0			+=	$(call pkgfiles_lib,libotf.so.0.0.0)
 OBSOLETED_BY_CSWlibotf0 	+=	CSWlibotf
-RUNTIME_DEP_PKGS_CSWlibotf0	+=	\
-								CSWlibbz2-1-0 \
-								CSWlibfreetype6 \
-								CSWlibgcc-s1 \
+RUNTIME_DEP_PKGS_CSWlibotf0	+=freetype6 \
+								CSWlibgcc-s\
 								CSWlibz1
 PACKAGES						+=	CSWlibotf-dev
 SPKG_DESC_CSWlibotf-dev			=	$(DESCRIPTION) - development
@@ -54,9 +52,7 @@ CATALOGNAME_CSWlibotf-utils			=	libotf_utils
 OBSOLETED_BY_CSWlibotf-utils		+=	CSWlibotf
 RUNTIME_DEP_PKGS_CSWlibotf-utils	+=	\
 			 \
-										CSWlibbz2-1-0 \
-										CSWlibfreetype6 \
-										CSWlibz1y|CSWlibfreetype6
+										CSWlibfreetype6y|CSWlibfreetype6
 
 include gar/category.mk
 
