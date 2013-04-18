@@ -9,6 +9,8 @@ import pycurl
 import re
 import urllib2
 
+import retry_decorator
+
 DEFAULT_URL = "http://buildfarm.opencsw.org"
 
 class Error(Exception):
@@ -166,6 +168,7 @@ class RestClient(object):
           "%s - HTTP code: %s, content: %s"
           % (url, http_code, d.getvalue()))
 
+  @retry_decorator.Retry(tries=4, exceptions=RestCommunicationError)
   def _CurlPut(self, url, data):
     """Makes a PUT request, potentially uploading data.
 
