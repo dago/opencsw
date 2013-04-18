@@ -4,7 +4,7 @@ NAME = memcache
 VERSION = 2.2.7
 GARTYPE = v2
 
-PACKAGING_PLATFORMS = solaris10-i386
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 # to match php5
 
