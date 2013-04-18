@@ -56,8 +56,8 @@ def GetFileMetadata(file_magic, base_dir, file_path):
         "will probably finish successfully when do you that."
         % full_path)
     if "/opt/csw/share" in full_path:
-    	file_info["mime_type"] = "application/octet-stream; fallback"
-    	logging.error(msg)
+      file_info["mime_type"] = "application/octet-stream; fallback"
+      logging.error(msg)
     else:
       raise package.PackageError(msg)
   if sharedlib_utils.IsBinary(file_info, check_consistency=False):
@@ -214,7 +214,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       retcode, stdout, stderr = shell.ShellCommand(args)
       if retcode:
         logging.error("%s returned an error: %s", args, stderr)
-      	# Should it just skip over an error?
+        # Should it just skip over an error?
         continue
       nm_out = stdout.splitlines()
 
@@ -300,7 +300,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
       cur_section = None
       for line in elfdump_out:
-
         try:
           elf_info, cur_section = self._ParseElfdumpLine(line, cur_section)
         except package.StdoutSyntaxError as e:
@@ -510,7 +509,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         elfdump_data = m.groupdict()
 
     if not m:
-      raise package.StdoutSyntaxError("Could not parse %s" % (repr(line)))
+      raise package.StdoutSyntaxError("Could not parse %r" % line)
 
     return elfdump_data, section
 

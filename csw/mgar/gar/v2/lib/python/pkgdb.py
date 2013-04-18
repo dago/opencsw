@@ -202,6 +202,7 @@ class CatalogImporter(object):
     if catrel not in CATALOGS_ALLOWED_TO_BE_IMPORTED:
       raise UsageError("Catalogs that can be imported: %s"
                        % CATALOGS_ALLOWED_TO_BE_IMPORTED)
+
     catalog_dir = os.path.dirname(catalog_file)
     # The plan:
     # - read in the catalog file, and build a md5-filename correspondence
@@ -214,16 +215,20 @@ class CatalogImporter(object):
     for catalog_entry in catalog_data:
       cat_entry_by_md5[catalog_entry["md5sum"]] = catalog_entry
       cat_entry_by_basename[catalog_entry["file_basename"]] = catalog_entry
+
     # - import all srv4 files that were not in the database so far
     entries_to_import = []
+
     logging.debug("Checking which srv4 files are already in the db.")
     for md5 in cat_entry_by_md5:
       try:
         sqo_list = m.Srv4FileStats.selectBy(md5_sum=md5).getOne()
       except sqlobject.main.SQLObjectNotFound, e:
         entries_to_import.append(cat_entry_by_md5[md5])
+
     basenames = [x["file_basename"] for x in entries_to_import]
     file_list = []
+
     if entries_to_import:
       logging.info("Srv4 files to import:")
       for basename in sorted(basenames):
@@ -242,6 +247,7 @@ class CatalogImporter(object):
       for statdict in new_statdicts:
         new_statdicts_by_md5[statdict["basic_stats"]["md5_sum"]] = statdict
         package_stats.PackageStats.ImportPkg(statdict)
+
     # - sync the specific catalog
     #   - find the md5 sum list of the current catalog
     logging.debug("Retrieving current catalog assigments from the db.")
@@ -264,6 +270,7 @@ class CatalogImporter(object):
         # Since the srv4_in_cat object has lost its reference, there's no use
         # keeping it around.
         srv4_in_cat.destroySelf()
+
     disk_md5s = set(cat_entry_by_md5)
     db_md5s = set(db_srv4s_in_cat_by_md5)
     #   - match the md5 sum lists between db and disk
@@ -278,12 +285,14 @@ class CatalogImporter(object):
         logging.info(
             " - %s",
             db_srv4s_in_cat_by_md5[md5].srv4file.basename)
+
     if md5_sums_to_add:
       logging.info("To add to from %s %s %s:", osrel, arch, catrel)
       for md5 in md5_sums_to_add:
         logging.info(
             " + %s",
             cat_entry_by_md5[md5]["file_basename"])
+
     user = getpass.getuser()
     # Remove
     # We could use checkpkg_lib.Catalog.RemoveSrv4(), but it would redo
@@ -292,6 +301,7 @@ class CatalogImporter(object):
       logging.info("Removing assignments from the catalog.")
       for md5 in md5_sums_to_remove:
         db_srv4s_in_cat_by_md5[md5].destroySelf()
+
     # Add
     if md5_sums_to_add:
       logging.info("Adding srv4 files to the %s %s %s catalog.",
@@ -497,14 +507,16 @@ def main():
     c = checkpkg_lib.Catalog()
     md5_sums = args[3:]
     for md5_sum in md5_sums:
-      logging.debug("Adding %s to the catalog", md5_sum)
       try:
         sqo_srv4 = m.Srv4FileStats.select(
             m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
+        logging.debug('Adding %s to the catalog', md5_sum)
         c.AddSrv4ToCatalog(sqo_srv4, osrel, arch, catrel, who=user)
-      except sqlobject.main.SQLObjectNotFound, e:
-        logging.warning("Srv4 file %s was not found in the database.",
-                        md5_sum)
+      except sqlobject.main.SQLObjectNotFound as e:
+        logging.warning('Srv4 file %r, osrel %r, arch %r or catrel %r '
+                        'was not found in the database, '
+                        'and the package was not added: %s',
+                        md5_sum, osrel, arch, catrel, e)
   elif command == 'del-from-cat':
     if len(args) < 4:
       raise UsageError("Not enough arguments, see usage.")

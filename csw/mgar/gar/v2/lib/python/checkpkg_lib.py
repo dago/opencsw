@@ -1092,7 +1092,7 @@ class Catalog(SqlobjectHelperMixin):
     logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s, %s)",
         sqo_srv4, osrel, arch, catrel, who)
     if not who:
-    	who = 'unknown'
+      who = 'unknown'
     # There are only i386 and sparc catalogs.
     if arch != 'i386' and arch != 'sparc':
       raise CatalogDatabaseError("Wrong architecture: %s" % arch)

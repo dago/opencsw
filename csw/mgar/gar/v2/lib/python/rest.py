@@ -1,12 +1,12 @@
 #!/usr/bin/env python2.6
 
-import os
 from StringIO import StringIO
-import cjson
 import anydbm
+import cjson
 import logging
-import urllib2
+import os
 import pycurl
+import urllib2
 
 DEFAULT_URL = "http://buildfarm.opencsw.org"
 RELEASES_APP = "/releases"

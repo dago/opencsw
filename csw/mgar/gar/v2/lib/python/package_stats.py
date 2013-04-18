@@ -55,6 +55,8 @@ class StdoutSyntaxError(Error):
 
 class PackageStatsMixin(object):
   """Collects stats about a package and saves them.
+
+  Takes care of processing data from a SVR4 package and returing them as data structures.
   """
 
   def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None, debug=False):
@@ -223,7 +225,7 @@ class PackageStatsMixin(object):
         "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
     self.SaveStats(pkg_stats)
-    logging.debug("Statistics of %s have been collected and saved in the db.",
+    logging.debug("_CollectStats(): Stats of %s have been collected and saved in the db.",
                   repr(dir_pkg.pkgname))
     return pkg_stats
 
