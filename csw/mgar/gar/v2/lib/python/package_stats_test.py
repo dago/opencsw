@@ -76,7 +76,7 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
 class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
                               unittest.TestCase):
 
-  class TestPackageStats(package_stats.PackageStatsMixin):
+  class TestPackageStats(package_stats.PackageStats):
     pass
 
   class TestCatalog(checkpkg_lib.Catalog):
