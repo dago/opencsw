@@ -30,8 +30,6 @@ OBSOLETED_BY_CSWm17n-db			=	CSWm17ndb
 CATALOGNAME_CSWm17ndb			=	m17ndb_stub
 ARCHALL_CSWm17ndb				=	1
 ARCHALL_CSWm17n-db				=	1
-RUNTIME_DEP_PKGS_CSWm17n-db		+=	CSWm17n
-CHECKPKG_OVERRIDES_CSWm17n-db	+=	surplus-dependency|CSWm17n
 
 include gar/category.mk
 
