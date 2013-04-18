@@ -125,7 +125,7 @@ class Srv4CatalogAssignment(object):
   def GET(self, catrel_name, arch_name, osrel_name):
     """See if that package is in that catalog."""
     configuration.SetUpSqlobjectConnection()
-    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
     logging.debug("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
@@ -172,7 +172,7 @@ class Srv4CatalogAssignment(object):
         package_stats.PackageStats.ImportPkg(stats, True)
         srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       c = checkpkg_lib.Catalog()
-      sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
       # See if there already is a package with that catalogname.
       res = c.GetConflictingSrv4ByCatalognameResult(

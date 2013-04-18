@@ -476,3 +476,9 @@ def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
       join=join,
   ).orderBy('catalogname')
   return res
+
+def GetSqoTriad(osrel, arch, catrel):
+  sqo_osrel = OsRelease.selectBy(short_name=osrel).getOne()
+  sqo_arch = Architecture.selectBy(name=arch).getOne()
+  sqo_catrel = CatalogRelease.selectBy(name=catrel).getOne()
+  return sqo_osrel, sqo_arch, sqo_catrel
