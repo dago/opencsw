@@ -35,28 +35,25 @@ BUILD_DEP_PKGS		=	CSWemacs
 BUILD_DEP_PKGS		+=	CSWtexlive
 BUILD_DEP_PKGS		+=	CSWtexinfo
 
-RUNTIME_DEP_PKGS	=	CSWemacs
+RUNTIME_DEP_PKGS	=	CSWemacs-common
 RUNTIME_DEP_PKGS	+=	CSWtexlive
 RUNTIME_DEP_PKGS	+=	CSWgs
 
 # all the "bad content"s are innocuous:
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/local|root/opt/csw/share/info/auctex.info-1
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/local|root/opt/csw/share/doc/auctex/auctex.dvi
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/local|root/opt/csw/share/doc/auctex/auctex.ps
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/local|root/opt/csw/share/doc/auctex/html/auctex_4.html
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/info/preview-latex.info
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/emacs/site-lisp/auctex/tex.el
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/emacs/site-lisp/auctex/tex-jp.el
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/emacs/site-lisp/auctex/tex.elc
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/emacs/site-lisp/auctex/tex-jp.elc
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/doc/auctex/preview-latex.ps
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content|/usr/share|root/opt/csw/share/doc/auctex/preview-latex.dvi
-# depends on CSWemacs wich depends on CSWemacs-common:
-CHECKPKG_OVERRIDES_CSWauctex += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
 # preview-latex depends on the existence at run-time:
 CHECKPKG_OVERRIDES_CSWauctex += surplus-dependency|CSWgs
 # the preview-latex can be used only with a graphical Emacs:
-CHECKPKG_OVERRIDES_CSWauctex += surplus-dependency|CSWemacs
 CHECKPKG_OVERRIDES_CSWauctex	+=	surplus-dependency|CSWtexlive
 
 include gar/category.mk
