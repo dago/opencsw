@@ -14,7 +14,6 @@ sys.path.append(os.path.join(*module_path))
 from catalog_notifier_test   import *
 from catalog_test            import *
 from checkpkg_lib_test       import *
-from checkpkg_test           import *
 from csw_upload_pkg_test     import *
 from database_test           import *
 from dependency_checks_test  import *
