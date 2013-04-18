@@ -1,5 +1,5 @@
 NAME = libgcrypt
-VERSION = 1.5.0
+VERSION = 1.5.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -37,4 +37,4 @@ BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-asm
 
-include gar/category.mk
+include
