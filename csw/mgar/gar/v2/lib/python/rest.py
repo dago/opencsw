@@ -6,6 +6,7 @@ import cjson
 import logging
 import os
 import pycurl
+import re
 import urllib2
 
 DEFAULT_URL = "http://buildfarm.opencsw.org"
@@ -34,7 +35,12 @@ class RestClient(object):
     self.password = password
     self.debug = debug
 
+  def ValidateMd5(self, md5_sum):
+    if not re.match(r'^[0-9a-f]{32}$', md5_sum):
+      raise ArgumentError('Passed argument is not a valid md5 sum: %r' % md5_sum)
+
   def GetPkgByMd5(self, md5_sum):
+    self.ValidateMd5(md5_sum)
     url = self.rest_url + self.PKGDB_APP + "/srv4/%s/" % md5_sum
     logging.debug("GetPkgByMd5(): GET %s", url)
     try:
@@ -51,6 +57,7 @@ class RestClient(object):
         raise
 
   def GetPkgstatsByMd5(self, md5_sum):
+    self.ValidateMd5(md5_sum)
     url = self.rest_url + self.PKGDB_APP + "/srv4/%s/pkg-stats/" % md5_sum
     logging.debug("GetPkgstatsByMd5(): GET %s", url)
     try:
@@ -67,6 +74,7 @@ class RestClient(object):
         raise
 
   def GetMaintainerByMd5(self, md5_sum):
+    self.ValidateMd5(md5_sum)
     pkg = self.GetPkgByMd5(md5_sum)
     if not pkg:
       pkg = {"maintainer_email": "Unknown"}
