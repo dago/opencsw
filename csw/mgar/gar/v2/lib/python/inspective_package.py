@@ -684,43 +684,31 @@ class FileMagic(object):
 
   def __init__(self):
     self.cookie_count = 0
-    self.magic_cookie = None
+    self._magic_cookie = None
 
-  def _GetCookie(self):
-    magic_cookie = magic.open(self.cookie_count)
-    self.cookie_count += 1
-    magic_cookie.load()
-    if "MAGIC_MIME" in dir(magic):
-      flag = magic.MAGIC_MIME
-    elif "MIME" in dir(magic):
-      flag = magic.MIME
-    magic_cookie.setflags(flag)
-    return magic_cookie
+  def __del__(self):
+    if self.magic_cookie:
+      self.magic_cookie.close()
 
-  def _LazyInit(self):
-    if not self.magic_cookie:
-      self.magic_cookie = self._GetCookie()
+  @property
+  def magic_cookie(self):
+    if not self._magic_cookie:
+      self._magic_cookie = magic.open(self.cookie_count)
+      self.cookie_count += 1
+      self._magic_cookie.load()
+      if "MAGIC_MIME" in dir(magic):
+        flag = magic.MAGIC_MIME
+      elif "MIME" in dir(magic):
+        flag = magic.MIME
+      self._magic_cookie.setflags(flag)
+    return self._magic_cookie
 
   def GetFileMimeType(self, full_path):
-    """Trying to run magic.file() a few times, not accepting None."""
-    self._LazyInit()
-    mime = None
     logging.debug("GetFileMimeType(%r)", full_path)
-    for i in xrange(10):
-      mime = self.magic_cookie.file(full_path)
-      if mime:
-        break
-      else:
-        # Returned mime is null. Re-initializing the cookie and trying again.
-        logging.error("magic_cookie.file(%s) returned None. Retrying.",
-                      full_path)
-        self.magic_cookie = self._GetCookie()
-        # In practice, this retrying doesn't help.  There seems to be
-        # something process-related which prevents libmagic from
-        # functioning.  The only known workaround is to shutdown the
-        # process and run it again.
-        #
-        # The issues have been observed with file-5.04.
+    mime = self.magic_cookie.file(full_path)
+    if not mime:
+      raise package.SystemUtilityError(
+          "libmagic has failed to return the mime type of %r." % (full_path))
     return mime
 
 
