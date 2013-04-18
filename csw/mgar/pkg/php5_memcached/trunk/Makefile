@@ -5,7 +5,7 @@ VERSION = 2.1.0
 GARTYPE = v2
 
 # to match php5
-PACKAGING_PLATFORMS = solaris10-i386
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 DESCRIPTION = memcached Extention for PHP
 define BLURB
@@ -40,6 +40,7 @@ BUILD_DEPS_CSWphp5-memcached = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibmemcached8
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibz1
+ARCH_CSWphp5-memcached = all
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
