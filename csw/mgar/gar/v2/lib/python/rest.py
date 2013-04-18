@@ -166,29 +166,31 @@ class RestClient(object):
           "%s - HTTP code: %s, content: %s"
           % (url, http_code, d.getvalue()))
 
-  def AddSvr4ToCatalog(self, catrel, arch, osrel, md5_sum):
-    url = (
-        "%s%s/catalogs/%s/%s/%s/%s/"
-        % (self.rest_url,
-           RELEASES_APP,
-           catrel,
-           arch,
-           osrel,
-           md5_sum))
-    logging.debug("URL: %s %s", type(url), url)
+  def _CurlPut(self, url, data):
+    """Makes a PUT request, potentially uploading data.
+
+    Some pieces of information left from a few debugging sessions:
+
+    The UPLOAD option must not be set or upload will not work.
+    c.setopt(pycurl.UPLOAD, 1)
+
+    This would disable the chunked encoding, but the problem only appears
+    when the UPLOAD option is set.
+    c.setopt(pycurl.HTTPHEADER, ["Transfer-encoding:"])
+    """
+    for key, value in data:
+      assert isinstance(value, basestring), (value, type(value))
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
-    # Bogus data to upload
-    s = StringIO()
     c.setopt(pycurl.URL, str(url))
-    c.setopt(pycurl.PUT, 1)
-    c.setopt(pycurl.UPLOAD, 1)
-    c.setopt(pycurl.INFILESIZE_LARGE, s.len)
-    c.setopt(pycurl.READFUNCTION, s.read)
+    c.setopt(pycurl.HTTPPOST, data)
+    c.setopt(pycurl.CUSTOMREQUEST, "PUT")
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
-    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
+    # The empty Expect: header fixes the HTTP 417 error on the buildfarm,
+    # related to the use of squid as a proxy (squid only supports HTML/1.0).
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"])
     c = self._SetAuth(c)
     if self.debug:
       c.setopt(c.VERBOSE, 1)
@@ -209,6 +211,25 @@ class RestClient(object):
     else:
       logging.debug("Response: %s %s", http_code, d.getvalue())
     return http_code
+
+  def AddSvr4ToCatalog(self, catrel, arch, osrel, md5_sum):
+    self.ValidateMd5(md5_sum)
+    url = (
+        "%s%s/catalogs/%s/%s/%s/%s/"
+        % (self.rest_url,
+           self.RELEASES_APP,
+           catrel,
+           arch,
+           osrel,
+           md5_sum))
+    logging.debug("URL: %s %s", type(url), url)
+    return self._CurlPut(url, [])
+
+  def SavePkgstats(self, pkgstats):
+    md5_sum = pkgstats['basic_stats']['md5_sum']
+    url = self.rest_url + self.RELEASES_APP + "/srv4/%s/pkg-stats/" % md5_sum
+    logging.debug("SavePkgstats(): url=%r", url)
+    return self._CurlPut(url, [('pkgstats', cjson.encode(pkgstats))])
 
 
 class CachedPkgstats(object):
