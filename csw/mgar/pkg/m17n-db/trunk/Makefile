@@ -23,6 +23,10 @@ GARCOMPILER			=	GNU
 CONFIGURE_ARGS		=	$(DIRPATHS)
 CONFIGURE_ARGS		+=	--with-charmaps=$(glibcDirectory)/localedata/charmaps
 
+ARCHALL	=	1
+
+OBSOLETED_BY_CSWCSWm17n-db	=	CSWm17ndb
+
 include gar/category.mk
 
 pre-configure:	$(DOWNLOADDIR)/$(glibcArchive)
