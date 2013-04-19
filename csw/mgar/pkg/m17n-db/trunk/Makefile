@@ -33,7 +33,7 @@ ARCHALL_CSWm17n-db				=	1
 
 include gar/category.mk
 
-post-extract-modulated:	$(DOWNLOADDIR)/$(glibcArchive)
+pre-configure-modulated:	$(DOWNLOADDIR)/$(glibcArchive)
 	@echo "executing $@"
-	gtar --directory=$(WORKSRC) --extract --file=$(PWD)/$(DOWNLOADDIR)/$(glibcArchive) $(glibcDirectory)/localedata/charmaps
+	/usr/bin/env -i $(BUILD_ENV) && gtar --directory=$(PWD)/$(WORKSRC) --extract --file=$(PWD)/$(DOWNLOADDIR)/$(glibcArchive) $(glibcDirectory)/localedata/charmaps
 	$(MAKECOOKIE)
