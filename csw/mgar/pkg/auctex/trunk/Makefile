@@ -41,16 +41,6 @@ RUNTIME_DEP_PKGS	+=	CSWgs
 
 # all the "bad content"s are innocuous:
 CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWauctex += file-with-bad-content
 # preview-latex depends on the existence at run-time:
 CHECKPKG_OVERRIDES_CSWauctex += surplus-dependency|CSWgs
 # the preview-latex can be used only with a graphical Emacs:
