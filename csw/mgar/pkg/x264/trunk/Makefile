@@ -1,6 +1,7 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
+# So it does not get lost. With gcc4.8 you now need -fno-aggressive-loop-optimizations: http://comments.gmane.org/gmane.comp.video.ffmpeg.devel/161226
 NAME = x264
 VERSION = b3065e6
 GARTYPE = v2
