@@ -1,6 +1,6 @@
 diff -ruN znc-1.0/man/Makefile.in znc-1.0-otis/man/Makefile.in
---- znc-1.0/man/Makefile.in     2012-11-06 17:02:20.000000000 +0100
-+++ znc-1.0-otis/man/Makefile.in        2013-04-19 16:04:35.323913734 +0200
+--- znc-1.0/man/Makefile.in	2012-11-06 17:02:20.000000000 +0100
++++ znc-1.0-otis/man/Makefile.in	2013-04-19 16:11:51.768271878 +0200
 @@ -11,7 +11,7 @@
  INSTALL      := @INSTALL@
  INSTALL_DATA := @INSTALL_DATA@
@@ -14,10 +14,9 @@ diff -ruN znc-1.0/man/Makefile.in znc-1.0-otis/man/Makefile.in
  all: $(MAN1)
  
  %.1.gz: %.1 Makefile
--       $(E) Packing man page $@...
--       $(Q)gzip -9 <$< >$@
-+       $(E) Processing man page $@...
+-	$(E) Packing man page $@...
+-	$(Q)gzip -9 <$< >$@
++	$(E) Processing man page $@...
  
  clean:
-        -rm -f $(MAN1)
-
+ 	-rm -f $(MAN1)
