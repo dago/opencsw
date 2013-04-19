@@ -16,7 +16,6 @@ import time
 
 from lib.python import models
 from lib.python import configuration
-from lib.python import pkgdb
 from lib.python import checkpkg_lib
 import datetime
 from sqlobject import sqlbuilder
@@ -219,7 +218,7 @@ class CatalogList(object):
 class CatalogDetail(object):
   def GET(self, catrel_name, arch_name, osrel_name):
     cat_name = " ".join((catrel_name, arch_name, osrel_name))
-    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     t2 = time.time()
     pkgs = models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
@@ -313,7 +312,7 @@ class ErrorTagList(object):
 
 class Catalogs(object):
   def GET(self, catrel_name, arch_name, osrel_name):
-    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
     user_data = web.input(quick='')
@@ -423,7 +422,7 @@ class Srv4ByCatAndCatalogname(object):
     """Get a srv4 reference by catalog ane catalogname."""
     configuration.SetUpSqlobjectConnection()
     try:
-      sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
     except sqlobject.main.SQLObjectNotFound:
       raise web.notfound()
@@ -458,7 +457,7 @@ class Srv4ByCatAndPkgname(object):
   def GET(self, catrel_name, arch_name, osrel_name, pkgname):
     """Get a srv4 reference by catalog ane pkgname."""
     configuration.SetUpSqlobjectConnection()
-    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     join = [
         sqlbuilder.INNERJOINOn(None,
