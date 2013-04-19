@@ -19,7 +19,6 @@ import copy
 import re
 import operator
 import os
-import checkpkg
 import checkpkg_lib
 import opencsw
 import pprint
