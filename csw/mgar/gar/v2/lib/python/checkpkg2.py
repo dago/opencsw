@@ -16,7 +16,6 @@ import database
 import common_constants
 import package_stats
 import struct_util
-import checkpkg
 import checkpkg_lib
 import overrides
 import models

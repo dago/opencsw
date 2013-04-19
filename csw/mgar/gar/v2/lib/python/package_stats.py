@@ -13,7 +13,6 @@ import pprint
 import sqlobject
 
 import catalog
-import checkpkg
 import ldd_emul
 import database
 import inspective_package
