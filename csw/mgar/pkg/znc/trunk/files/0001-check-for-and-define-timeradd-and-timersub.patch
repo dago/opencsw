@@ -1,0 +1,51 @@
+From c552454bcb8ffac11a862b1f2d3980282033394b Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Tue, 16 Apr 2013 15:16:33 +0200
+Subject: [PATCH] check for and define timeradd and timersub
+
+---
+ src/Csocket.cpp | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/src/Csocket.cpp b/src/Csocket.cpp
+index 6ba945b..bdcae5d 100644
+--- a/src/Csocket.cpp
++++ b/src/Csocket.cpp
+@@ -57,6 +57,34 @@
+ 
+ using namespace std;
+ 
++#if !defined(timeradd)
++#define timeradd(tvp, uvp, vvp)                                 \
++        do                                                              \
++        {                                                               \
++                (vvp)->tv_sec = (tvp)->tv_sec + (uvp)->tv_sec;          \
++                (vvp)->tv_usec = (tvp)->tv_usec + (uvp)->tv_usec;       \
++                if ((vvp)->tv_usec >= 1000000)                          \
++                {                                                       \
++                        (vvp)->tv_sec++;                                \
++                        (vvp)->tv_usec -= 1000000;                      \
++                }                                                       \
++        } while (0)
++#endif /* !defined(timeradd) */
++
++#if !defined(timersub)
++#define timersub(tvp, uvp, vvp)                                 \
++        do                                                              \
++        {                                                               \
++                (vvp)->tv_sec = (tvp)->tv_sec - (uvp)->tv_sec;          \
++                (vvp)->tv_usec = (tvp)->tv_usec - (uvp)->tv_usec;       \
++                if ((vvp)->tv_usec < 0)                                 \
++                {                                                       \
++                        (vvp)->tv_sec--;                                \
++                        (vvp)->tv_usec += 1000000;                      \
++                }                                                       \
++        } while (0)
++#endif /* !defined(timersub) */
++
+ #define CREATE_ARES_VER( a, b, c ) ((a<<16)|(b<<8)|c)
+ 
+ #ifndef _NO_CSOCKET_NS // some people may not want to use a namespace
+-- 
+1.8.1.4
+
