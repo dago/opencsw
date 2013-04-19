@@ -1,0 +1,31 @@
+diff -ruN znc-1.0/configure znc-1.0-otis/configure
+--- znc-1.0/configure   2012-11-06 17:02:24.000000000 +0100
++++ znc-1.0-otis/configure      2013-04-18 15:08:43.933912666 +0200
+@@ -3670,7 +3670,7 @@
+ # which indicates that we try without any flags at all, and "pthread-config"
+ # which is a program returning the flags for the Pth emulation library.
+ 
+-ax_pthread_flags="pthreads none -Kthread -kthread lthread -pthread -pthreads -mthreads pthread --thread-safe -mt pthread-config"
++ax_pthread_flags="pthreads none -Kthread -kthread lthread -pthread -pthreads -mthreads pthread --thread-safe pthread-config"
+ 
+ # The ordering *is* (sometimes) important.  Some notes on the
+ # individual items follow:
+@@ -3703,7 +3703,7 @@
+         # who knows whether they'll stub that too in a future libc.)  So,
+         # we'll just look for -pthreads and -lpthread first:
+ 
+-        ax_pthread_flags="-pthreads pthread -mt -pthread $ax_pthread_flags"
++        ax_pthread_flags="-pthreads pthread -pthread $ax_pthread_flags"
+         ;;
+ 
+         *-darwin*)
+@@ -3879,7 +3879,7 @@
+             if test "$GCC" = "yes"; then
+                 flag="-D_REENTRANT"
+             else
+-                flag="-mt -D_REENTRANT"
++                flag="-D_REENTRANT"
+             fi
+             ;;
+         esac
+
