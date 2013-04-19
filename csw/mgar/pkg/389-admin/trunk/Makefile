@@ -65,12 +65,14 @@ RUNTIME_DEP_PKGS_CSW389-admin += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-admin += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-admin += CSW389-admin-console
 RUNTIME_DEP_PKGS_CSW389-admin += CSW389-ds-console
+RUNTIME_DEP_PKGS_CSW389-admin += CSWpm-netaddr-ip
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWap2modnss
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSWap2worker
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSW389-admin-console
 CHECKPKG_OVERRIDES_CSW389-admin += surplus-dependency|CSW389-ds-console
-CHECKPKG_OVERRIDES_CSW389-admin += unidentified-dependency|CSW389-admin-console
-CHECKPKG_OVERRIDES_CSW389-admin += unidentified-dependency|CSW389-ds-console
+# hint from Maciej: let checkpkg fail the check at the package build stage. If this was the only error shown, you know that it will go away when you upload the right set of packages, so you can upload safely.
+# CHECKPKG_OVERRIDES_CSW389-admin += unidentified-dependency|CSW389-admin-console
+# CHECKPKG_OVERRIDES_CSW389-admin += unidentified-dependency|CSW389-ds-console
 
 # remove -I/opt/csw/include
 CPPFLAGS = 
@@ -85,6 +87,8 @@ CONFIGURE_ARGS += --with-icu-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-icu-bin=/opt/csw/bin 
 CONFIGURE_ARGS += --with-sasl-inc=/opt/csw/include/sasl 
 CONFIGURE_ARGS += --with-sasl-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nspr-lib=/opt/csw/lib
+CONFIGURE_ARGS += --with-nspr-inc=/opt/csw/include/nspr 
 CONFIGURE_ARGS += --with-nss-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-nss-inc=/opt/csw/include/nss 
 CONFIGURE_ARGS += --with-apxs=/opt/csw/apache2/sbin/apxs
