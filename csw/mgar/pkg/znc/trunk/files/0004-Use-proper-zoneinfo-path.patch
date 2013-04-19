@@ -1,12 +1,12 @@
---- znc-1.0/src/Utils.cpp       2012-11-06 17:02:20.000000000 +0100
-+++ znc-1.0-otis/src/Utils.cpp  2013-04-19 15:29:29.582526029 +0200
+diff -ruN znc-1.0/src/Utils.cpp znc-1.0-otis/src/Utils.cpp
+--- znc-1.0/src/Utils.cpp	2012-11-06 17:02:20.000000000 +0100
++++ znc-1.0-otis/src/Utils.cpp	2013-04-19 16:14:56.984816504 +0200
 @@ -426,7 +426,7 @@
  
  SCString CUtils::GetTimezones() {
-        SCString result;
--       FillTimezones("/usr/share/zoneinfo", result, "");
-+       FillTimezones("/usr/share/lib/zoneinfo", result, "");
-        return result;
+ 	SCString result;
+-	FillTimezones("/usr/share/zoneinfo", result, "");
++	FillTimezones("/usr/lib/share/zoneinfo", result, "");
+ 	return result;
  }
  
-
