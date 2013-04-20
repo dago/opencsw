@@ -235,7 +235,7 @@ def IsBinary(file_info, check_consistency=True):
   is_a_binary = False
   if "mime_type" not in file_info:
     # This would be a problem in the data.
-    return False
+    raise DataInconsistencyError("%r is missing a file type" % file_info)
   if not file_info["mime_type"]:
     # This should never happen, but it seems to have happened at least once.
     # TODO: Find the affected data and figure out why.
