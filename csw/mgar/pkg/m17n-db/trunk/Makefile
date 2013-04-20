@@ -31,9 +31,9 @@ CATALOGNAME_CSWm17ndb			=	m17ndb_stub
 ARCHALL_CSWm17ndb				=	1
 ARCHALL_CSWm17n-db				=	1
 
-include gar/category.mk
-
-pre-configure-modulated:	$(DOWNLOADDIR)/$(glibcArchive)
+pre-configure-modulated:
 	@echo "executing $@"
 	/usr/bin/env -i $(BUILD_ENV) && gtar --directory=$(PWD)/$(WORKSRC) --extract --file=$(PWD)/$(DOWNLOADDIR)/$(glibcArchive) $(glibcDirectory)/localedata/charmaps
 	$(MAKECOOKIE)
+
+include gar/category.mk
