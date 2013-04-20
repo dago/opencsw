@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
 import base64
 import web
 import sqlobject
-import json
+import cjson
 from lib.python import models
 from lib.python import configuration
 from lib.python import pkgdb
@@ -80,7 +80,7 @@ class Srv4List(object):
         "declared_md5": declared_md5_sum,
         "save_attempt": save_attempt,
     })
-    return json.dumps(messages)
+    return cjson.encode(messages)
 
 
 class Srv4Detail(object):
@@ -118,7 +118,7 @@ class Srv4Detail(object):
         "arch": srv4.arch.name,
         "osrel": srv4.os_rel.short_name,
     }
-    return json.dumps(response_data)
+    return cjson.encode(response_data)
 
 
 class Srv4CatalogAssignment(object):
@@ -140,7 +140,7 @@ class Srv4CatalogAssignment(object):
     response_data = {
         'srv': unicode(srv4),
     }
-    return json.dumps(response_data)
+    return cjson.encode(response_data)
 
   def PUT(self, catrel_name, arch_name, osrel_name, md5_sum):
     """Adds package to a catalog.
@@ -200,7 +200,7 @@ class Srv4CatalogAssignment(object):
       web.header(
           'Content-type',
           'application/x-vnd.opencsw.pkg;type=catalog-update')
-      response = json.dumps([
+      response = cjson.encode([
         u"Added to catalog %s %s %s" % (catrel_name, arch_name, osrel_name),
         u"%s" % srv4.basename,
       ])
@@ -212,7 +212,7 @@ class Srv4CatalogAssignment(object):
       web.header(
           'Content-type',
           'application/x-vnd.opencsw.pkg;type=error-message')
-      response = json.dumps({
+      response = cjson.encode({
         "error_message": unicode(e),
       })
       web.header('Content-Length', len(response))
@@ -241,7 +241,7 @@ class Srv4CatalogAssignment(object):
     web.header(
         'Content-type',
         'application/x-vnd.opencsw.pkg;type=error-message')
-    response = json.dumps({
+    response = cjson.encode({
       "error_message": unicode(message),
     })
     web.header('Content-Length', len(response))
