@@ -12,7 +12,6 @@ import sqlobject
 import cjson
 from lib.python import models
 from lib.python import configuration
-from lib.python import pkgdb
 from lib.python import checkpkg_lib
 from lib.python import package_stats
 from lib.python import opencsw
