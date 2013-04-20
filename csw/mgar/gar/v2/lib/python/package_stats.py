@@ -7,6 +7,7 @@ import itertools
 import logging
 import os
 import progressbar
+import progressbar.widgets
 import mute_progressbar
 import re
 import pprint
@@ -499,7 +500,13 @@ class StatsCollector(object):
     counter = itertools.count(1)
     self.logger.info("Juicing the svr4 package stream files...")
     if not self.debug:
-      pbar = progressbar.ProgressBar()
+      pbar = progressbar.ProgressBar(widgets=[
+        progressbar.widgets.Percentage(),
+        ' ',
+        progressbar.widgets.ETA(),
+        ' ',
+        progressbar.widgets.Bar()
+      ])
       pbar.maxval = total_packages
       pbar.start()
     else:
