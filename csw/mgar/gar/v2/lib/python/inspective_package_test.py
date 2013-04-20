@@ -137,21 +137,8 @@ BINARY_ELFINFO = {'opt/csw/lib/libssl.so.1.0.0': {
 class InspectivePackageUnitTest(mox.MoxTestBase):
 
   def testListBinaries(self):
-    self.mox.StubOutWithMock(hachoir_parser, 'createParser',
-        use_mock_anything=True)
-    hachoir_parser_mock = self.mox.CreateMockAnything()
-    parser_tag = ('class', hachoir_parser.program.elf.ElfFile)
-    hachoir_parser.createParser(
-        u'/fake/path/CSWfoo/root/foo-file',
-        tags = [parser_tag]).AndReturn(hachoir_parser_mock)
     self.mox.StubOutWithMock(os, 'access')
     os.access(u'/fake/path/CSWfoo/root/foo-file', os.R_OK).AndReturn(True)
-    machine_mock = self.mox.CreateMockAnything()
-    machine_mock.value = 2
-    hachoir_parser_mock.__getitem__('/header/machine').AndReturn(machine_mock)
-    endian_mock = self.mox.CreateMockAnything()
-    endian_mock.display = 'fake-endian'
-    hachoir_parser_mock.__getitem__('/header/endian').AndReturn(endian_mock)
     magic_cookie_mock = self.mox.CreateMockAnything()
     self.mox.StubOutWithMock(magic, 'open')
     magic.open(0).AndReturn(magic_cookie_mock)
@@ -164,6 +151,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     magic_cookie_mock.file(
         u'/fake/path/CSWfoo/root/foo-file').AndReturn(
             "application/x-executable")
+    magic_cookie_mock.close()
     self.mox.StubOutWithMock(os.path, 'isdir')
     self.mox.StubOutWithMock(os.path, 'exists')
     self.mox.StubOutWithMock(os, 'walk')
@@ -178,6 +166,8 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
           ("/fake/path/CSWfoo/root", [], ["foo-file"]),
         ]
     )
+    self.mox.StubOutWithMock(inspective_package, 'GetMachineIdOfBinary')
+    inspective_package.GetMachineIdOfBinary(u'/fake/path/CSWfoo/root/foo-file').AndReturn(42)
     self.mox.ReplayAll()
     ip = inspective_package.InspectivePackage("/fake/path/CSWfoo")
     ip.pkginfo_dict = {

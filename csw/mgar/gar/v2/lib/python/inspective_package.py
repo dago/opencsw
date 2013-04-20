@@ -24,6 +24,12 @@ def StripRe(x, strip_re):
   return re.sub(strip_re, "", x)
 
 
+def GetMachineIdOfBinary(full_path):
+  with open(full_path, 'rb') as elf_fd:
+    elffile = ELFFile(elf_fd)
+    return ENUM_E_MACHINE[elffile.header['e_machine']]
+
+
 def GetFileMetadata(file_magic, base_dir, file_path):
   full_path = unicode(os.path.join(base_dir, file_path))
   if not os.access(full_path, os.R_OK):
@@ -54,9 +60,7 @@ def GetFileMetadata(file_magic, base_dir, file_path):
     else:
       raise package.PackageError(msg)
   if sharedlib_utils.IsBinary(file_info, check_consistency=False):
-    with open(full_path, 'rb') as elf_fd:
-      elffile = ELFFile(elf_fd)
-      file_info["machine_id"] = ENUM_E_MACHINE[elffile.header['e_machine']]
+    file_info["machine_id"] = GetMachineIdOfBinary(full_path)
   return file_info
 
 class InspectivePackage(package.DirectoryFormatPackage):
@@ -85,6 +89,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         # To prevent files from containing the full temporary path.
         file_info["path"] = StripRe(file_path, ROOT_RE)
         self.files_metadata.append(file_info)
+      file_magic.close()
     return self.files_metadata
 
   def ListBinaries(self):
@@ -686,9 +691,9 @@ class FileMagic(object):
     self.cookie_count = 0
     self._magic_cookie = None
 
-  def __del__(self):
-    if self.magic_cookie:
-      self.magic_cookie.close()
+  def close(self):
+    self._magic_cookie.close()
+    self._magic_cookie = None
 
   @property
   def magic_cookie(self):
