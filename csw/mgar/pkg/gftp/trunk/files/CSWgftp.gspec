@@ -1,4 +1,0 @@
-%var            bitname gftp
-%var            pkgname CSWgftp
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
