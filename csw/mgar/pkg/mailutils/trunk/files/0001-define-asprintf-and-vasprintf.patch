@@ -1,0 +1,59 @@
+From 9f79b76a93555dda97ca5a9089fb4d23ef3bf96f Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sat, 20 Apr 2013 15:30:34 +0200
+Subject: [PATCH] define asprintf and vasprintf
+
+---
+ mailbox/mailer.c               |  36 +++
+ 1 files changed, 36 insertions(+)
+
+diff --git a/mailbox/mailer.c b/mailbox/mailer.c
+index cbb3938..ae10f45 100644
+--- a/mailbox/mailer.c
++++ b/mailbox/mailer.c
+@@ -51,6 +51,42 @@
+ 
+ static char *mailer_url_default;
+ 
++#if (defined (__SVR4) && defined (__sun))
++int vasprintf(char **ret, const char *format, va_list args)
++{
++        va_list copy;
++        va_copy(copy, args);
++
++        /* Make sure it is determinate, despite manuals indicating otherwise */
++        *ret = 0;
++
++        int count = vsnprintf(NULL, 0, format, args);
++        if (count >= 0) {
++                char* buffer = malloc(count + 1);
++                if (buffer != NULL) {
++                        count = vsnprintf(buffer, count + 1, format, copy);
++                        if (count < 0)
++                                free(buffer);
++                        else
++                                *ret = buffer;
++                }
++        }
++        va_end(args);  // Each va_start() or va_copy() needs a va_end()
++
++        return count;
++}
++
++int asprintf(char **strp, const char *fmt, ...)
++{
++        int size;
++        va_list args;
++        va_start(args, fmt);
++        size = vasprintf(strp, fmt, args);
++        va_end(args);
++        return size;
++}
++#endif
++
+ /* FIXME: I'd like to check that the URL is valid, but that requires that the
+    mailers already be registered! */
+ int
+-- 
+1.8.1.4
+
