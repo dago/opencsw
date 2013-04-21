@@ -1,0 +1,14 @@
+Mailutils notes:
+The package is built with the default options plus the following-
+	--prefix=/opt/csw --mandir=/opt/csw/share/man --disable-nls
+	--disable-rpath --enable-mh-utils --with-included-gettext
+	--with-gnutls --with-gssapi --with-mysql
+#
+The system configuration directory is /opt/csw/etc.  A small sample
+  configuation file is provided - /opt/csw/etc/mailutils.rc.CSW.
+  Copy this file to /opt/csw/etc/mailutils.rc and make your changes.
+#
+Help text is accessed by info, select Mailutils.
+#
+The options available for the package is listed from the following command.
+/opt/csw/bin/mailutils-config --info

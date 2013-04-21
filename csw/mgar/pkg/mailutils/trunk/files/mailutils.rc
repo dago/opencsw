@@ -1,0 +1,10 @@
+#The following configuration file specifies that all Mailutils programs
+#should use `/var/mail' as a local mailspool directory. Programs
+#performing authentication will use pam service `mailutils'. All
+#programs, except `imap4d' will issue log messages via `mail' facility,
+#`imap4d' will use facility `local1'.
+
+     :mailbox --mail-spool /var/mail
+     :auth --authentication pam --pam-service mailutils
+     :logging --log-facility mail
+     imap4d --daemon=20 --timeout=1800 --log-facility local1

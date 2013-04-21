@@ -1,0 +1,24 @@
+From 8ebbeb7686c5fba4bf52441ac69a80d110d13631 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 21 Apr 2013 10:39:11 +0200
+Subject: [PATCH] remove /usr/local/etc/mailcap path
+
+---
+ lib/mailcap.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/lib/mailcap.c b/lib/mailcap.c
+index 5a43329..65abc13 100644
+--- a/lib/mailcap.c
++++ b/lib/mailcap.c
+@@ -36,7 +36,6 @@
+ 
+ /* Default mailcap path, the $HOME/.mailcap: entry is prepended to it */
+ #define DEFAULT_MAILCAP \
+- "/usr/local/etc/mailcap:"\
+  "/usr/etc/mailcap:"\
+  "/etc/mailcap:"\
+  "/etc/mail/mailcap:"\
+-- 
+1.8.1.4
+
