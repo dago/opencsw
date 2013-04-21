@@ -1,0 +1,38 @@
+From 29b1e1311ef537f2e5709015e77be0d7b8fe7b70 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 21 Apr 2013 19:51:18 +0200
+Subject: [PATCH] Workaround guile compilation bug with solaris studio
+
+---
+ configure                 | 1 +
+ include/mailutils/guile.h | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/configure b/configure
+index 2c4dcba..e11b3ab 100755
+--- a/configure
++++ b/configure
+@@ -54548,6 +54548,7 @@ _ACEOF
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
++extern void scm_remember_upto_here_1();
+ #include <libguile.h>
+ int
+ main ()
+diff --git a/include/mailutils/guile.h b/include/mailutils/guile.h
+index 1db5b8a..9a5be0e 100644
+--- a/include/mailutils/guile.h
++++ b/include/mailutils/guile.h
+@@ -20,6 +20,8 @@
+ #ifndef _MU_SCM_H
+ #define _MU_SCM_H
+ 
++extern void scm_remember_upto_here_1();
++
+ #include <libguile.h>
+ 
+ #define MU_SCM_SYMBOL_VALUE(p) SCM_VARIABLE_REF(scm_c_lookup(p))
+-- 
+1.8.1.4
+
