@@ -32,10 +32,9 @@ RUNTIME_DEP_PKGS_CSWmailutils += CSWlibldap2-4-2
 CHECKPKG_OVERRIDES_CSWmailutils += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWmailutils += shared-lib-package-contains-so-symlink
 
+# Emacs dependency is optional
 CHECKPKG_OVERRIDES_CSWmailutils += missing-dependency|CSWemacs-common
 
-CHECKPKG_OVERRIDES_CSWmailutils += file-with-bad-content|/usr/local|root/opt/csw/bin/mimeview
-CHECKPKG_OVERRIDES_CSWmailutils += file-with-bad-content|/usr/local|root/opt/csw/bin/mail
 
 # Workaround a bug with krb5-config 
 # see https://www.opencsw.org/mantis/view.php?id=5007
@@ -102,11 +101,14 @@ pre-build:
 	cd $(WORKSRC)/include/mailutils && $(MAKE) types.h
 
 post-install:
-	@$(MAKECOOKIE)
 	for FILE in $(DOCFILES); do \
                 ginstall -D "$(WORKSRC)/$$FILE" "$(PKGROOT)$(docdir)/$(NAME)/$$FILE"; \
         done
 	ginstall -D "$(FILEDIR)/README.CSW" "$(PKGROOT)$(docdir)/$(NAME)/README.CSW"
 	ginstall -D "$(FILEDIR)/mailutils.rc" "$(PKGROOT)$(sysconfdir)/mailutils.rc.CSW"
+	@$(MAKECOOKIE)
+
+post-merge:
 	rm -f "$(PKGROOT)$(libdir)/charset.alias"
+	@$(MAKECOOKIE)
 
