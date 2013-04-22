@@ -1,0 +1,11 @@
+--- src/testdir/Makefile.orig	Sat Apr 20 01:19:56 2013
++++ src/testdir/Makefile	Sat Apr 20 11:36:29 2013
+@@ -70,7 +70,7 @@
+ 	-rm -rf $*.failed test.ok $(RM_ON_RUN)
+ 	cp $*.ok test.ok
+ 	# Sleep a moment to avoid that the xterm title is messed up
+-	@-sleep .2
++	@-sleep 1
+ 	-$(RUN_VIM) $*.in
+ 
+ 	# For flaky tests retry one time.
