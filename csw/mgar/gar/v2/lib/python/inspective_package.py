@@ -333,7 +333,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
   def GetLddMinusRlines(self):
     """Returns ldd -r output."""
-    binaries = self.ListBinaries()
+    pkginfo_arch = self.GetParsedPkginfo()['ARCH']
+    binaries = [ f['path'] for f in self.GetFilesMetadata()
+                 if sharedlib_utils.IsBinary(f) and
+                    common_constants.MACHINE_ID_METADATA[f['machine_id']]['type'] == pkginfo_arch ]
     base_dir = self.GetBasedir()
     ldd_output = {}
     for binary in binaries:
@@ -354,17 +357,13 @@ class InspectivePackage(package.DirectoryFormatPackage):
         #    solaris 9 exists only in 32 bits, so we can't do this
         #    We ignore the error as it is likely that the ldd infos will be
         #    the same on the 32 bits binaries
-        #  - if we are trying to analyze a binary from another architecture
-        #    we ignore this error as it will be caught by another checkpkg test
         #  - if we are trying to analyze a statically linked binaries
         #    we care only about dynamic binary so we ignore the error
         #
         uname_info = os.uname()
         if ((uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
              '/amd64/' in binary_abspath and
-             'has wrong class or data encoding' in stderr) or
-            re.search(r'ELF machine type: EM_\w+: '
-                      r'is incompatible with system', stderr)
+             'has wrong class or data encoding' in stderr)
             or 'file is not a dynamic executable or shared object' in stderr):
           ldd_output[binary] = []
           continue

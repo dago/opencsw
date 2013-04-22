@@ -314,14 +314,21 @@ Syminfo Section:  .SUNW_syminfo
 
   def testGetLddMinusRlinesRoot(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'GetParsedPkginfo')
+    self.mox.StubOutWithMock(ip, 'GetFilesMetadata')
     self.mox.StubOutWithMock(ip, 'GetBasedir')
     self.mox.StubOutWithMock(ip, 'ListBinaries')
     self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
+    ip.GetParsedPkginfo().AndReturn({'ARCH': 'i386'})
+    ip.GetFilesMetadata().AndReturn([{
+      'path': 'opt/csw/bin/foo',
+      'machine_id': 3,
+      'mime_type': 'application/x-executable; charset=binary'
+      }])
     ip.GetBasedir().AndReturn('')
     os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
-    ip.ListBinaries().AndReturn(['opt/csw/bin/foo'])
     ip.GetFilesDir().AndReturn('root')
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
@@ -333,14 +340,20 @@ Syminfo Section:  .SUNW_syminfo
 
   def testGetLddMinusRlinesReloc(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'GetParsedPkginfo')
+    self.mox.StubOutWithMock(ip, 'GetFilesMetadata')
     self.mox.StubOutWithMock(ip, 'GetBasedir')
-    self.mox.StubOutWithMock(ip, 'ListBinaries')
     self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
+    ip.GetParsedPkginfo().AndReturn({'ARCH': 'i386'})
+    ip.GetFilesMetadata().AndReturn([{
+      'path': 'bin/foo',
+      'machine_id': 3,
+      'mime_type': 'application/x-executable; charset=binary'
+      }])
     ip.GetBasedir().AndReturn('opt/csw')
     os.chmod('/tmp/CSWfake/reloc/bin/foo', 0755)
-    ip.ListBinaries().AndReturn(['bin/foo'])
     ip.GetFilesDir().AndReturn('reloc')
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
@@ -352,16 +365,22 @@ Syminfo Section:  .SUNW_syminfo
 
   def testGetLddMinusRlinesThrows(self):
     ip = inspective_package.InspectivePackage("/tmp/CSWfake")
+    self.mox.StubOutWithMock(ip, 'GetParsedPkginfo')
+    self.mox.StubOutWithMock(ip, 'GetFilesMetadata')
     self.mox.StubOutWithMock(ip, 'GetBasedir')
-    self.mox.StubOutWithMock(ip, 'ListBinaries')
     self.mox.StubOutWithMock(ip, 'GetFilesDir')
     self.mox.StubOutWithMock(os, 'chmod')
     self.mox.StubOutWithMock(os, 'uname')
+    ip.GetParsedPkginfo().AndReturn({'ARCH': 'i386'})
+    ip.GetFilesMetadata().AndReturn([{
+      'path': 'opt/csw/bin/foo',
+      'machine_id': 3,
+      'mime_type': 'application/x-executable; charset=binary'
+      }])
     ip.GetBasedir().AndReturn('/')
     os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
     os.uname().AndReturn('i86pc')
     ip.GetFilesDir().AndReturn('root')
-    ip.ListBinaries().AndReturn(['opt/csw/bin/foo'])
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
         ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
