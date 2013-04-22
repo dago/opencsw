@@ -149,7 +149,7 @@ class HtmlGenerator(object):
     tmpl_str = open(tmpl_filename, "r").read()
     t = Template(tmpl_str, searchList=[{
       "pkgstats": pkgstats,
-      "hachoir_machines": package_checks.HACHOIR_MACHINES,
+      "hachoir_machines": common_constants.MACHINE_ID_METADATA,
     }])
     return unicode(t)
 

@@ -12,30 +12,6 @@ class Error(Exception):
 class DataError(Error):
   """There's a problem with data."""
 
-# TODO: Merge with common_constants
-SPARCV8_PATHS = (
-    'sparcv8',
-    'sparcv8-fsmuld',
-    'sparcv7',
-    'sparc')
-SPARCV8PLUS_PATHS = (
-    'sparcv8plus+vis2',
-    'sparcv8plus+vis',
-    'sparcv8plus')
-SPARCV9_PATHS = (
-    'sparcv9+vis2',
-    'sparcv9+vis',
-    'sparcv9')
-INTEL_386_PATHS = (
-    'i486',
-    'i386',
-    'i86')
-INTEL_PENTIUM_PATHS = (
-    'pentium_pro+mmx',
-    'pentium_pro',
-    'pentium+mmx',
-    'pentium')
-AMD64_PATHS = ('amd64',)
 LEGIT_CHAR_RE = re.compile(r"[a-zA-Z0-9\+]+")
 SONAME_VERSION_RE = re.compile("^(?P<name>.*)\.so\.(?P<version>[\d\.]+)$")
 BIN_MIMETYPES = (
@@ -57,8 +33,12 @@ class DataInconsistencyError(Error):
 
 
 def ParseLibPath(directory):
-  arch_subdirs = (SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS
-                  + INTEL_386_PATHS + AMD64_PATHS)
+  arch_subdirs = (
+      common_constants.SPARCV8_PATHS
+      + common_constants.SPARCV8PLUS_PATHS
+      + common_constants.SPARCV9_PATHS
+      + common_constants.INTEL_386_PATHS
+      + common_constants.AMD64_PATHS)
   # Need to escape the plus signs because of the regex usage below.
   arch_subdirs = [x.replace(r"+", r"\+") for x in arch_subdirs]
   linkable_re = re.compile(r"^/?opt/csw"

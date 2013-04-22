@@ -91,3 +91,109 @@ PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
 
 # The directory with shared, architecture independent data files.
 OPENCSW_SHARE = "/opt/csw/share/opencsw"
+
+SPARCV8_PATHS = (
+    'sparcv8',
+    'sparcv8-fsmuld',
+    'sparcv7',
+    'sparc')
+SPARCV8PLUS_PATHS = (
+    'sparcv8plus+vis2',
+    'sparcv8plus+vis',
+    'sparcv8plus')
+SPARCV9_PATHS = (
+    'sparcv9+vis2',
+    'sparcv9+vis',
+    'sparcv9')
+INTEL_386_PATHS = (
+    'i486',
+    'i386',
+    'i86')
+INTEL_PENTIUM_PATHS = (
+    'pentium_pro+mmx',
+    'pentium_pro',
+    'pentium+mmx',
+    'pentium')
+AMD64_PATHS = ('amd64',)
+
+# Settings for binary placements: which architectures can live in which
+# directories.
+BASE_BINARY_PATHS = ('bin', 'sbin', 'lib', 'libexec', 'cgi-bin')
+
+MACHINE_ID_METADATA = {
+    # id: (name, allowed_paths, disallowed_paths)
+    -1: {"name": "Unknown",
+         "allowed": {
+           OS_REL_58: (),
+           OS_REL_59: (),
+           OS_REL_510: (),
+           OS_REL_511: (),
+         }, "disallowed": (),
+         "type": "unknown"},
+     2: {"name": "sparcv8",
+         "type": ARCH_SPARC,
+         "allowed": {
+           OS_REL_58: BASE_BINARY_PATHS + SPARCV8_PATHS,
+           OS_REL_59: BASE_BINARY_PATHS + SPARCV8_PATHS,
+           OS_REL_510: BASE_BINARY_PATHS + SPARCV8_PATHS,
+           OS_REL_511: BASE_BINARY_PATHS + SPARCV8_PATHS,
+         },
+         "disallowed": SPARCV9_PATHS + INTEL_386_PATHS + AMD64_PATHS,
+        },
+     # pentium_pro binaries are also identified as 3.
+     3: {"name": "i386",
+         "type": ARCH_i386,
+         "allowed": {
+           OS_REL_58: BASE_BINARY_PATHS + INTEL_386_PATHS,
+           OS_REL_59: BASE_BINARY_PATHS + INTEL_386_PATHS,
+           OS_REL_510: BASE_BINARY_PATHS + INTEL_386_PATHS,
+           OS_REL_511: BASE_BINARY_PATHS + INTEL_386_PATHS,
+         },
+         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS +
+                       SPARCV9_PATHS + AMD64_PATHS,
+        },
+     6: {"name": "i486",
+         "type": ARCH_i386,
+         "allowed": {
+           OS_REL_58: INTEL_386_PATHS,
+           OS_REL_59: INTEL_386_PATHS,
+           OS_REL_510: INTEL_386_PATHS,
+           OS_REL_511: INTEL_386_PATHS,
+         },
+         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS +
+                       SPARCV9_PATHS + AMD64_PATHS,
+         },
+    18: {"name": "sparcv8+",
+         "type": ARCH_SPARC,
+         "allowed": {
+           OS_REL_58: SPARCV8PLUS_PATHS,
+           OS_REL_59: SPARCV8PLUS_PATHS,
+           # We allow sparcv8+ as the base architecture on Solaris 10+.
+           OS_REL_510: BASE_BINARY_PATHS + SPARCV8PLUS_PATHS,
+           OS_REL_511: BASE_BINARY_PATHS + SPARCV8PLUS_PATHS,
+         },
+         "disallowed": SPARCV8_PATHS + SPARCV9_PATHS +
+                       AMD64_PATHS + INTEL_386_PATHS,
+        },
+    43: {"name": "sparcv9",
+         "type": ARCH_SPARC,
+         "allowed": {
+           OS_REL_58: SPARCV9_PATHS,
+           OS_REL_59: SPARCV9_PATHS,
+           OS_REL_510: SPARCV9_PATHS,
+           OS_REL_511: SPARCV9_PATHS,
+         },
+         "disallowed": INTEL_386_PATHS + AMD64_PATHS,
+        },
+    62: {"name": "amd64",
+         "type": ARCH_i386,
+         "allowed": {
+           OS_REL_58: AMD64_PATHS,
+           OS_REL_59: AMD64_PATHS,
+           OS_REL_510: AMD64_PATHS,
+           OS_REL_511: AMD64_PATHS,
+         },
+         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS +
+                       SPARCV9_PATHS,
+        },
+}
