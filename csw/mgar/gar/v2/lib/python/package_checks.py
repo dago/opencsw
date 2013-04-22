@@ -119,86 +119,7 @@ SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 # Valid URLs in the VENDOR field in pkginfo
 VENDORURL_RE = r"^(http|ftp)s?\://.+\..+$"
 
-# Settings for binary placements: which architectures can live in which
-# directories.
-BASE_BINARY_PATHS = ('bin', 'sbin', 'lib', 'libexec', 'cgi-bin')
-HACHOIR_MACHINES = {
-    # id: (name, allowed_paths, disallowed_paths)
-    -1: {"name": "Unknown",
-         "allowed": {
-           common_constants.OS_REL_58: (),
-           common_constants.OS_REL_59: (),
-           common_constants.OS_REL_510: (),
-           common_constants.OS_REL_511: (),
-         }, "disallowed": (),
-         "type": "unknown"},
-     2: {"name": "sparcv8",
-         "type": common_constants.ARCH_SPARC,
-         "allowed": {
-           common_constants.OS_REL_58: BASE_BINARY_PATHS + su.SPARCV8_PATHS,
-           common_constants.OS_REL_59: BASE_BINARY_PATHS + su.SPARCV8_PATHS,
-           common_constants.OS_REL_510: BASE_BINARY_PATHS + su.SPARCV8_PATHS,
-           common_constants.OS_REL_511: BASE_BINARY_PATHS + su.SPARCV8_PATHS,
-         },
-         "disallowed": su.SPARCV9_PATHS + su.INTEL_386_PATHS + su.AMD64_PATHS,
-        },
-     # pentium_pro binaries are also identified as 3.
-     3: {"name": "i386",
-         "type": common_constants.ARCH_i386,
-         "allowed": {
-           common_constants.OS_REL_58: BASE_BINARY_PATHS + su.INTEL_386_PATHS,
-           common_constants.OS_REL_59: BASE_BINARY_PATHS + su.INTEL_386_PATHS,
-           common_constants.OS_REL_510: BASE_BINARY_PATHS + su.INTEL_386_PATHS,
-           common_constants.OS_REL_511: BASE_BINARY_PATHS + su.INTEL_386_PATHS,
-         },
-         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS +
-                       su.SPARCV9_PATHS + su.AMD64_PATHS,
-        },
-     6: {"name": "i486",
-         "type": common_constants.ARCH_i386,
-         "allowed": {
-           common_constants.OS_REL_58: su.INTEL_386_PATHS,
-           common_constants.OS_REL_59: su.INTEL_386_PATHS,
-           common_constants.OS_REL_510: su.INTEL_386_PATHS,
-           common_constants.OS_REL_511: su.INTEL_386_PATHS,
-         },
-         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS +
-                       su.SPARCV9_PATHS + su.AMD64_PATHS,
-         },
-    18: {"name": "sparcv8+",
-         "type": common_constants.ARCH_SPARC,
-         "allowed": {
-           common_constants.OS_REL_58: su.SPARCV8PLUS_PATHS,
-           common_constants.OS_REL_59: su.SPARCV8PLUS_PATHS,
-           # We allow sparcv8+ as the base architecture on Solaris 10+.
-           common_constants.OS_REL_510: BASE_BINARY_PATHS + su.SPARCV8PLUS_PATHS,
-           common_constants.OS_REL_511: BASE_BINARY_PATHS + su.SPARCV8PLUS_PATHS,
-         },
-         "disallowed": su.SPARCV8_PATHS + su.SPARCV9_PATHS +
-                       su.AMD64_PATHS + su.INTEL_386_PATHS,
-        },
-    43: {"name": "sparcv9",
-         "type": common_constants.ARCH_SPARC,
-         "allowed": {
-           common_constants.OS_REL_58: su.SPARCV9_PATHS,
-           common_constants.OS_REL_59: su.SPARCV9_PATHS,
-           common_constants.OS_REL_510: su.SPARCV9_PATHS,
-           common_constants.OS_REL_511: su.SPARCV9_PATHS,
-         },
-         "disallowed": su.INTEL_386_PATHS + su.AMD64_PATHS,
-        },
-    62: {"name": "amd64",
-         "type": common_constants.ARCH_i386,
-         "allowed": {
-           common_constants.OS_REL_58: su.AMD64_PATHS,
-           common_constants.OS_REL_59: su.AMD64_PATHS,
-           common_constants.OS_REL_510: su.AMD64_PATHS,
-           common_constants.OS_REL_511: su.AMD64_PATHS,
-         },
-         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS +
-                       su.SPARCV9_PATHS,
-        },
-}
+MACHINE_ID_METADATA = common_constants.MACHINE_ID_METADATA
 
 
 ALLOWED_STARTING_PATHS = frozenset([
@@ -537,7 +458,7 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
 
 
 # TODO: Verify that architecture type of binaries matches the actual binaries.
-# Correlate architecture type from files_metadata and HACHOIR_MACHINES with
+# Correlate architecture type from files_metadata and MACHINE_ID_METADATA with
 # pkginfo.
 
 
@@ -926,14 +847,14 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
       continue
     logger.debug("CheckArchitecture(): %s", metadata)
     machine_id = metadata["machine_id"]
-    if machine_id not in HACHOIR_MACHINES:
+    if machine_id not in MACHINE_ID_METADATA:
       error_mgr.ReportError(
           "binary-architecture-unknown",
           "file=%s arch_id=%s" % (
             metadata["path"],
             metadata["machine_id"]))
       continue
-    machine_data = HACHOIR_MACHINES[machine_id]
+    machine_data = MACHINE_ID_METADATA[machine_id]
     cpu_type = machine_data["name"]
     # allowed_paths needs to depend on the OS release. The OS release is
     # only available from the file name.
@@ -990,7 +911,7 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
   files_metadata = pkg_data["files_metadata"]
   for file_metadata in files_metadata:
     if su.IsBinary(file_metadata):
-      machine = HACHOIR_MACHINES[file_metadata["machine_id"]]
+      machine = MACHINE_ID_METADATA[file_metadata["machine_id"]]
       if machine["type"] != pkginfo_arch:
         error_mgr.ReportError(
             "binary-wrong-architecture",
@@ -1318,7 +1239,10 @@ def Check64bitsBinariesPresence(pkg_data, error_mgr, logger, messenger):
     binaries_path = 'lib|libexec'
 
   if binaries:
-    paths_64 = { 'i386': su.AMD64_PATHS, 'sparc': su.SPARCV9_PATHS }
+    paths_64 = {
+    	  'i386': common_constants.AMD64_PATHS,
+        'sparc': common_constants.SPARCV9_PATHS,
+    }
     paths_64_re = re.compile(r"opt/csw/(%s)/(%s)" %
                              (binaries_path,
                               '|'.join(paths_64[pkginfo['ARCH']])))
