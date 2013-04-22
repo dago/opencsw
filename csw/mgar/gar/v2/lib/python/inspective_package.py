@@ -515,7 +515,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
                            r' unused dependency of (?P<binary>.*)$')
     unused_object = (r'^\s*unused object=.*$')
     unused_search_path = (r'^\s*unused search path=.*'
-                          r'  \(RUNPATH/RPATH from file .*\)$')
+                          r'  \((?:LD_LIBRARY_PATH|RUNPATH/RPATH from file .*)\)$')
     move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: '
                          r'\(unknown\): offset=(?P<move_offset>0x[0-9a-f]+) '
                          'lies outside memory image; move discarded')
