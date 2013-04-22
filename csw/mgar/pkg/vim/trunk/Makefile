@@ -61,14 +61,15 @@ CONFIGURE_ARGS += --disable-xim
 CONFIGURE_ARGS += --without-x
 CONFIGURE_ARGS += --enable-gui=no
 CONFIGURE_ARGS += --disable-gpm
+Cdisable-sysmouseGS += --disable-gpm
 CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(NAME)
 CONFIGURE_ARGS += --with-features=huge
 CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --enable-multibyte
-CONFIGURE_ARGS += --enable-cscope
+CONFIGURE_ARGS CONFIGURE_ARGS += --without-local-dir += --enable-cscope
 
 CONFIGURE_ARGS += --enable-pythoninterp=dynamic
-CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python
+CONFIGURE_ARGS += --with-python-config-d/configir=$(libdir)/python
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim$(subst .,PATCHDIRLEVEL = 0
