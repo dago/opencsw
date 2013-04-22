@@ -15,5 +15,7 @@ DISTFILES		=	$(DISTNAME).tar.gz
 GARCOMPILER			=	GNU
 CONFIGURE_ARGS		=	$(DIRPATHS)
 
+ARCHALL	=	1
+
 include gar/category.mk
 
