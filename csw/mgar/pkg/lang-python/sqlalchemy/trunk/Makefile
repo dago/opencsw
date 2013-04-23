@@ -5,20 +5,19 @@
 # There are failing unit tests; the issue is submitted upstream:
 # http://www.sqlalchemy.org/trac/ticket/1837
 
-NAME = sqlalchemy
-VERSION = 0.6.1
+NAME = SQLAlchemy
+VERSION = 0.8.0
 CATEGORIES = python
-GARTYPE = v2
+
 PACKAGES = CSWpy-sqlalchemy
-CATALOGNAME_CSWpy-sqlalchemy = py_sqlalchemy
 DESCRIPTION = Python SQL toolkit and Object Relational Mapper
-define BLURB
-endef
-SPKG_SOURCEURL = http://www.sqlalchemy.org/
-MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = SQLAlchemy-$(VERSION)
+
+VENDOR_URL = http://www.sqlalchemy.org/
+MASTER_SITES = $(PYPI_MIRROR)
+DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-ARCHALL_CSWpy-sqlalchemy = 1
 LICENSE = LICENSE
+
+RUNTIME_DEP_PKGS_CSWpy-sqlalchemy += CSWlibpython2-6-1-0
+
 include gar/category.mk
