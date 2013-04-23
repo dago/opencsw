@@ -18,13 +18,13 @@ CONFIGURE_ARGS += LDFLAGS=-lrt
 CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
 
 RUNTIME_DEP_PKGS_CSWgftp += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgftp += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgftp += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWgftp += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgftp += CSWlibintl8
-RUNTIME_DEP_PKGStk-x11-2-0-0
+RUNTIME_DEP_PKGreadline6
 RUNTIME_DEP_PKGS_CSWgftp += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgftp += CSWlibglib2Wgftp += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWgftp += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgftp += CSWlibgtk-x11-2Wgftp += CSWlibatk1-0-0
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
