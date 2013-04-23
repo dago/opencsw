@@ -1,0 +1,41 @@
+From 92f27570fb9f0465a1176d21ff75ae6e89501ae3 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 23 Apr 2013 13:53:55 +0200
+Subject: [PATCH] Do not install parser
+
+---
+ Makefile.PL | 18 ------------------
+ 1 file changed, 18 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 0f23847..240f4f4 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -100,24 +100,6 @@ WriteMakefile(
+ );
+ 
+ 
+-sub MY::install {
+-    package MY;
+-    my $script = shift->SUPER::install(@_);
+-    if (ExtUtils::MakeMaker::prompt("Do you want to alter ParserDetails.ini?", "Y") =~ /^y/i) {
+-        $script =~ s/install :: (.*)$/install :: $1 install_expat_xs/m;
+-        $script .= <<"INSTALL";
+-
+-install_expat_xs :
+-\t\@\$(PERL) -MXML::SAX -e "XML::SAX->add_parser(q(XML::SAX::ExpatXS))->save_parsers()"
+-
+-INSTALL
+-
+-    }
+-
+-    return $script;
+-}
+-
+-
+ sub build_xml_sax_expatxs_preload {
+     
+     print "Writing XML::SAX::ExpatXS::Preload\n";
+-- 
+1.8.1.4
+
