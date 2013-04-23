@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CHROOTDIR=${BASEDIR:-/}
+
+echo
+echo Registering XML parser XML::LibXML::SAX::Parser and XML::LibXML::SAX
+echo 
+
+${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/perl -MXML::SAX -e "XML::SAX->add_parser(q(XML::LibXML::SAX::Parser))->save_parsers()"
+${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/perl -MXML::SAX -e "XML::SAX->add_parser(q(XML::LibXML::SAX))->save_parsers()"
+
+exit 0
