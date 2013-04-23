@@ -12,6 +12,8 @@ CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
+REINPLACE_USRLOCAL += lib/XML/Simple.pm
+
 PACKAGES += CSWpm-xml-simple
 CATALOGNAME_CSWpm-xml-simple = pm_xml_simple
 SPKG_DESC_CSWpm-xml-simple = Easily read/write XML (esp config files)
