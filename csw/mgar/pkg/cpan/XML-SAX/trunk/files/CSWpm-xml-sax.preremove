@@ -1,0 +1,11 @@
+#!/bin/sh
+
+CHROOTDIR=${BASEDIR:-/}
+
+echo
+echo Unregistering XML parser XML::SAX::PurePerl
+echo 
+
+${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/perl -MXML::SAX -e "XML::SAX->remove_parser(q(XML::SAX::PurePerl))->save_parsers()"
+
+exit 0

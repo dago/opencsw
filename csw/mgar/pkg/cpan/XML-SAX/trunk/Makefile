@@ -8,6 +8,9 @@ DESCRIPTION =
 define BLURB
 endef
 
+DISTFILES += CSWpm-xml-sax.postinstall
+DISTFILES += CSWpm-xml-sax.preremove
+
 PATCHFILES += 0001-Remove-stuff-that-ignores-DESTDIR.patch
 
 CATALOG_RELEASE = unstable
