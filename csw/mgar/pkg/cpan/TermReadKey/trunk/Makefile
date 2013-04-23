@@ -4,19 +4,18 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = JSTOWE
 
-DESCRIPTION = module for simple terminal control
+DESCRIPTION = Read keystrokes and change terminal modes
 define BLURB
-  Term::ReadKey is a compiled perl module dedicated to providing simple
-  control over terminal driver modes (cbreak, raw, cooked, etc.,) support for
-  non-blocking reads, if the architecture allows, and some generalized handy
-  functions for working with terminals. One of the main goals is to have the
-  functions as portable as possible, so you can just plug in "use
-  Term::ReadKey" on any architecture and have a good likelyhood of it working.
 endef
 
-PACKAGES = CSWpmtermreadkey
-CATALOGNAME = pm_termreadkey
+CATALOG_RELEASE = unstable
 
-RUNTIME_DEP_PKGS = CSWncurses
+LICENSE_TEXT = This module is licensed under the  license
+
+PACKAGES += CSWpm-term-readkey
+CATALOGNAME_CSWpm-term-readkey = pm_term_readkey
+SPKG_DESC_CSWpm-term-readkey = Read keystrokes and change terminal modes
+OBSOLETED_BY_CSWpm-term-readkey += CSWpmtermreadkey
+CATALOGNAME_CSWpmtermreadkey = pm_termreadkey_stub
 
 include gar/category.mk
