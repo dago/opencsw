@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.30
+VERSION = 1.4.31
 CATEGORIES = net
 GARTYPE = v2
 
@@ -69,4 +69,3 @@ post-install-modulated:
 		-e 's,/usr/local/bin,$(bindir),;' \
 		$(DESTDIR)$(infodir)/msmtp.info \
 		$(DESTDIR)$(DOCDIR)/Mutt+msmtp.txt
-	@$(MAKECOOKIE)
