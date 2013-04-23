@@ -1,21 +1,25 @@
 NAME = XML-Simple
-VERSION = 2.18
+VERSION = 2.20
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = GRANTM
 
-DESCRIPTION = easy API for maintaining XML
+DESCRIPTION = Easily read/write XML (esp config files)
 define BLURB
-  The XML::Simple module provides a simple API layer on top of an underlying
-  XML parsing module (either XML::Parser or one of the SAX2 parser modules).
-  Two functions are exported: XMLin() and XMLout().
 endef
 
-PACKAGES = CSWpmxmlsimple
-CATALOGNAME = pm_xmlsimple
+CATALOG_RELEASE = unstable
 
-RUNTIME_DEP_PKGS = CSWpmxmlparser CSWpmxmlsax
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-xml-simple
+CATALOGNAME_CSWpm-xml-simple = pm_xml_simple
+SPKG_DESC_CSWpm-xml-simple = Easily read/write XML (esp config files)
+ARCHALL_CSWpm-xml-simple = 1
+RUNTIME_DEP_PKGS_CSWpm-xml-simple += CSWpm-xml-sax
+RUNTIME_DEP_PKGS_CSWpm-xml-simple += CSWpm-xml-sax-expat
+RUNTIME_DEP_PKGS_CSWpm-xml-simple += CSWpm-xml-namespacesupport
+OBSOLETED_BY_CSWpm-xml-simple += CSWpmxmlsimple
+CATALOGNAME_CSWpmxmlsimple = pm_xmlsimple_stub
 
 include gar/category.mk
