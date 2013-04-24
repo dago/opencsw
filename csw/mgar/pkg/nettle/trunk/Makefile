@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nettle
-VERSION = 2.6
+VERSION = 2.7
 GARTYPE = v2
 CATEGORIES = utils
 
