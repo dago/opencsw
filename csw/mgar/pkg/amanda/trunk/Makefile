@@ -1,6 +1,6 @@
 # $Id$
 NAME = amanda
-VERSION = 3.3.1
+VERSION = 3.3.3
 GARTYPE = v2
 
 DESCRIPTION = The Advanced Maryland Automatic Network Disk Archiver
@@ -64,14 +64,11 @@ CONFIGURE_ARGS += --with-amperldir=/opt/csw/lib/perl/csw
 
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWamanda += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWamanda += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWamanda += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWamanda += CSWlibz1
 RUNTIME_DEP_PKGS_CSWamanda += CSWperl
 
 # for opt/csw/lib/charset.alias
