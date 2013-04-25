@@ -72,7 +72,7 @@ install-custom:
 	ginstall -m 755   $(WORKSRC)/unix/librecad $(DESTDIR)$(bindir)
 	ginstall -m 755   $(WORKSRC)/unix/ttf2lff $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
-	gcp -rfp  $(WORKSRC)/unix/resources/* \
+	gcp -rf  $(WORKSRC)/unix/resources/* \
                   $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
 	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibreCAD)
 	$(foreach L,$(EXTRA_LICENSE),gcp $(WORKSRC)/$L $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibreCAD);)
