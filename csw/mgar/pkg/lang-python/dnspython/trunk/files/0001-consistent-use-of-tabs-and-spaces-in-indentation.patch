@@ -1,0 +1,39 @@
+From 32c94706db51f6b4791115ce5fd735a7913ce145 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 26 Apr 2013 14:01:16 +0200
+Subject: [PATCH] consistent use of tabs and spaces in indentation
+
+---
+ dns/edns.py    | 2 +-
+ dns/entropy.py | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dns/edns.py b/dns/edns.py
+index 4d4eaa8..db184dd 100644
+--- a/dns/edns.py
++++ b/dns/edns.py
+@@ -114,7 +114,7 @@ class GenericOption(Option):
+     from_wire = classmethod(from_wire)
+ 
+     def _cmp(self, other):
+-	return cmp(self.data, other.data)
++        return cmp(self.data, other.data)
+ 
+ _type_to_class = {
+ }
+diff --git a/dns/entropy.py b/dns/entropy.py
+index d380cf8..1ffbc7b 100644
+--- a/dns/entropy.py
++++ b/dns/entropy.py
+@@ -112,7 +112,7 @@ class EntropyPool(object):
+         else:
+             rand = self.random_8
+             max = 255
+-	return (first + size * rand() // (max + 1))
++        return (first + size * rand() // (max + 1))
+ 
+ pool = EntropyPool()
+ 
+-- 
+1.8.1.4
+

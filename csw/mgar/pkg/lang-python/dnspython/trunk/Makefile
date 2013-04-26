@@ -5,7 +5,7 @@ VERSION		=	1.10.0
 CATEGORIES	=	python
 GARTYPE		=	v2
 
-DESCRIPTION = Brief description
+DESCRIPTION = A DNS toolkit for Python
 define BLURB
   dnspython is a DNS toolkit for Python. It supports almost all record
   types. It can be used for queries, zone transfers, and dynamic
@@ -19,6 +19,7 @@ endef
 
 MASTER_SITES	=	http://www.dnspython.org/kits/$(VERSION)/
 DISTFILES 		=	$(DISTNAME).tar.gz
+PATCHFILES		+=	0001-consistent-use-of-tabs-and-spaces-in-indentation.patch
 SPKG_SOURCEURL	=	$(MASTER_SITES)
 BUILD_DEP_PKGS	=	CSWpysetuptools
 PACKAGES		=	CSWpy-dnspython
