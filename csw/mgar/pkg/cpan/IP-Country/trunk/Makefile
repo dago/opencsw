@@ -6,19 +6,18 @@ AUTHOR = NWETTERS
 
 DESCRIPTION = Fast lookup of country codes from IP addresses
 define BLURB
-  Finding the home country of a client using only the IP address can be
-  difficult. Looking up the domain name associated with that address can
-  provide some help, but many IP address are not reverse mapped to any useful
-  domain, and the most common domain (.com) offers no help when looking for
-  country.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmipcountry
-CATALOGNAME = pm_ipcountry
-ARCHALL = 1
+PACKAGES = CSWpm-ip-country
+CATALOGNAME = pm_ip_country
+SPKG_DESC_CSWpm-ip-country = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-ip-country = CSWpmipcountry
+CATALOGNAME_CSWpmipcountry = pm_ipcountry
 
 RUNTIME_DEP_PKGS += CSWpmgeocountries
+
+ARCHALL = 1
 
 include gar/category.mk
