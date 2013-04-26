@@ -79,6 +79,10 @@ class WorkflowError(Error):
   """Unexpected state of workflow, e.g. expected element not found."""
 
 
+class OurInfrastructureSucksError(Error):
+  """Something that would work in a perfect world, but here it doesn't."""
+
+
 class Srv4Uploader(object):
 
   def __init__(self, filenames, rest_url, os_release=None, debug=False,
@@ -118,26 +122,15 @@ class Srv4Uploader(object):
     if metadata:
       # Metadata are already in the database.
       return
-    logging.warning("%s (%s) is not known to the database.", filename, md5_sum)
-    bin_dir = os.path.dirname(__file__)
-    pkgdb_executable = os.path.join(bin_dir, "pkgdb")
-    assert os.path.exists(pkgdb_executable), (
-        "Could not find %s. Make sure that the pkgdb executable is "
-        "available \n"
-        "from the same directory as csw-upload-pkg." % pkgdb_executable)
-    args = [pkgdb_executable, "importpkg"]
-    if self.debug:
-      args.append("--debug")
-    args.append(filename)
-    ret = subprocess.call(args)
-    if ret:
-      raise OSError("An error occurred when running %s." % args)
-    # Verify that the import succeeded
-    metadata = self._rest_client.GetPkgByMd5(md5_sum)
-    if not metadata:
-      raise WorkflowError(
-          "Metadata of %s could not be imported into the database."
-          % filename)
+    logging.fatal("%s (%s) is not known to the database.", filename, md5_sum)
+    raise OurInfrastructureSucksError(
+        "The package database doesn't know about your package. "
+        "Normally, packages are checked by GAR automatically right after "
+        "being built. Did you build your package outside the buildfarm? "
+        "Or was your package built a long time ago and not released (so it "
+        "might have been garbage-collected)? If so, the easiest fix is "
+        "to reroll your package on the buildfarm using 'mgar repackage' "
+        "(on both sparc and intel) and submit the newly created package.")
 
 
   def Upload(self):
