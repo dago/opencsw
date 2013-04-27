@@ -13,14 +13,14 @@ your own build farm, or at least a build host.
 
 Buildfarm setup consists of:
 
-* OpenCSW installation
-* `GAR setup`_ and subversion checkout
-* `Local catalog mirror`_
-* `checkpkg database`_
+* `basic OpenCSW installation`_
+* `GAR setup`_ and subversion checkout of build recipes
+* `local catalog mirror`_
+* `checkpkg database`_ setup
 * pkgdb-web (with Apache)
 * system garrc
 * `wiki instructions`_ (Java setup, Solaris Studio setup, ssh agent setup)
-* signing daemon
+* catalog signing daemon
 
 .. _GAR setup:
   http://sourceforge.net/apps/trac/gar/wiki/GarSetup
@@ -31,5 +31,8 @@ Buildfarm setup consists of:
 .. _wiki instructions:
   http://wiki.opencsw.org/buildfarm
 
-.. _Local catalog mirror:
+.. _local catalog mirror:
   ../for-administrators/mirror-setup.html
+
+.. _basic OpenCSW installation:
+  ../for-administrators/getting-started.html
