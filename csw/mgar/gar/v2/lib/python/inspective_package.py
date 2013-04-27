@@ -691,8 +691,9 @@ class FileMagic(object):
     self._magic_cookie = None
 
   def close(self):
-    self._magic_cookie.close()
-    self._magic_cookie = None
+    if self._magic_cookie is not None:
+      self._magic_cookie.close()
+      self._magic_cookie = None
 
   @property
   def magic_cookie(self):
