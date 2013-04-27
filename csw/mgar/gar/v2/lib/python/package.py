@@ -47,6 +47,8 @@ class SystemUtilityError(Error):
 class PackageError(Error):
   """A problem with the package itself that causes problems with examining it."""
 
+class StdoutSyntaxError(Error):
+  pass
 
 class StdoutSyntaxError(Error):
   """Problem with data returned by a process."""
