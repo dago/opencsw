@@ -21,9 +21,8 @@ PHP5ROOT    = $(DESTDIR)/$(PHP_PREFIX)
 STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS += $(PHP5ROOT)/bin
 
-SPKG_SOURCEURL = http://us.php.net/memcached/
+VENDOR_URL = http://us.php.net/memcached/
 MASTER_SITES = http://pecl.php.net/get/
-UFILES_REGEX = (\d+(?:\.\d+)*).tgz
 
 DISTFILES = $(DISTNAME).tgz
 PATCHFILES += 0001-Use-proper-libmemcached-headers-dir.patch
@@ -32,15 +31,16 @@ PATCHFILES += 0002-Include-proper-memcached.h.patch
 GARCOMPILER = GNU
 
 PACKAGES = CSWphp5-memcached
-OBSOLETED_BY_CSWphp5-memcached = CSWphp5memcached
 CATALOG_NAME_CSWphp5memcached = php5_memcached_stub
-SPKG_DESC_CSWphp5-memcached =  Extention memcached for PHP5
+SPKG_DESC_CSWphp5-memcached =  Extension memcached for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-memcached = CSWphp5
 BUILD_DEPS_CSWphp5-memcached = CSWapache2 CSWphp5-dev
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibmemcached8
 RUNTIME_DEP_PKGS_CSWphp5-memcached += CSWlibz1
-ARCH_CSWphp5-memcached = all
+
+OBSOLETED_BY_CSWphp5-memcached = CSWphp5memcached
+ARCHALL_CSWphp5memcached =
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
