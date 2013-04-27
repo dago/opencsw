@@ -1,0 +1,42 @@
+From 7208317da489838e604ca975bf9eb2fad1a2c49f Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 27 Apr 2013 16:13:13 +0200
+Subject: [PATCH 1/3] Update macros used in Makefile.am for modern convention
+
+INCLUDES is a deprecated name in Makefile.am.  Use AM_CPPFLAGS instead.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Makefile.am         | 2 +-
+ plugins/Makefile.am | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 5a6f022..646b8bd 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -33,7 +33,7 @@ PROGRAM  = $(PKGNAME)-$(VERSION)
+ DEFS      = @DEFS@
+ INCS      = @INCS@
+ 
+-INCLUDES  = -I. $(INCS) ${RRD_INC}
++AM_CPPFLAGS  = -I. $(INCS) ${RRD_INC}
+ LIBS      = 
+ BASE_LIBS = @LIBS@ @CORELIBS@  ${RRD_LIB}
+ AS        = @AS@
+diff --git a/plugins/Makefile.am b/plugins/Makefile.am
+index 88e193c..3c412e7 100644
+--- a/plugins/Makefile.am
++++ b/plugins/Makefile.am
+@@ -37,7 +37,7 @@ SUFFIXES    = .so
+ # 
+ plugindir = $(libdir)/ntop/plugins
+ 
+-INCLUDES = -I.. @INCS@ ${RRD_INC}
++AM_CPPFLAGS = -I.. @INCS@ ${RRD_INC}
+ 
+ #
+ # The meat for ntop
+-- 
+1.8.1.4
+

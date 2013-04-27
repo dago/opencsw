@@ -1,0 +1,31 @@
+From 4bd66226376c98171e01c9cd00c3a35b32c6e0ac Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 27 Apr 2013 16:16:34 +0200
+Subject: [PATCH 3/3] Add an extra automake option for per-target compiler
+ options
+
+This squashes an automake warning and allows the compiler to be
+reliably called with both -c and -o.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure.in | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/configure.in b/configure.in
+index 5d23209..5f1420c 100644
+--- a/configure.in
++++ b/configure.in
+@@ -385,6 +385,9 @@ if test ".${ac_cv_prog_cc_stdc}" = ".no"; then
+     HAS_WARNING="yes"
+ fi
+ 
++dnl> For per-target flags; must be called after AC_PROG_CC
++AM_PROG_CC_C_O
++
+ dnl> NTOPCONFIGDEBUG_SETTINGS([After cc stdc test])
+ 
+ dnl> Any common settings required to support a specific OS, distribution or release
+-- 
+1.8.1.4
+
