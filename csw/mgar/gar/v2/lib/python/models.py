@@ -104,8 +104,8 @@ class CswConfig(sqlobject.SQLObject):
 
 
 class Pkginst(sqlobject.SQLObject):
-  pkgname = sqlobject.UnicodeCol(length=50, unique=True, notNone=True)
-  catalogname = sqlobject.UnicodeCol(default=None, length=50)
+  pkgname = sqlobject.UnicodeCol(length=80, unique=True, notNone=True)
+  catalogname = sqlobject.UnicodeCol(default=None, length=80)
   pkg_desc = sqlobject.UnicodeCol(default=None, length=250)
   srv4_files = sqlobject.MultipleJoin('Srv4FileStats')
 

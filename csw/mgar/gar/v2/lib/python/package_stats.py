@@ -223,6 +223,8 @@ class PackageStats(object):
         "mtime": self.GetMtime().isoformat(),
         "ldd_info": dir_pkg.GetLddMinusRlines(),
         "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
+	"ldd_info": dir_pkg.GetLddMinusRlines(),
+	"binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
     self.SaveStats(pkg_stats)
     logging.debug("_CollectStats(): Stats of %s have been collected and saved in the db.",
