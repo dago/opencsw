@@ -10,21 +10,30 @@ Introduction
 There are 5 places for documentation at OpenCSW:
 
 * `OpenCSW wiki`_
+
   * Optimized for frequent changes.
   * Used for ongoing issues, such as projects in progress.
   * Powered by Wikidot, has own user name space, separate sign-up and login.
+ 
 * `OpenCSW manual`_ (this document is part of it)
+ 
   * Less frequently changing, but more reviewed and polished documentation.
   * Part of the source code repository.
+ 
 * `GAR documentation`_
+ 
   * Used for GAR / build system specific documentation.
   * Lives in the GAR project SourceForge area.
   * Uses SourceForge credentials.
+ 
 * `Main OpenCSW website`_
+ 
   * Used for general project information
   * Lives in the project Wordpress site
   * Own user name space, separate sign-up and login
+ 
 * `Community Q&A`_
+ 
   * Used for questions from users.
   * Own user name space, separate sign-up and login, but accepts
     Google accounts, Facebook and Twitter.
@@ -35,9 +44,9 @@ Editing documentation
 ---------------------
 
 Many documentation locations have own user name spaces, and require separate
-application and approval. If you're a maintainer and you don't have permissions
-to edit the wiki, set up an account on wikidot.com and write to maintainers@ or
-ask on the IRC channel to get it added to the project.
+account applications and approvals. If you're a maintainer and you don't have
+permissions to edit the wiki, set up an account on wikidot.com and write to
+maintainers@ or ask on the IRC channel to get your user added to the project.
 
 If you're a maintainer and you notice something wrong or missing in any of the
 above places, don't leave it broken!  If you're not sure what's supposed to be
@@ -49,7 +58,7 @@ No documentation is better than wrong documentation
 ---------------------------------------------------
 
 If you notice a piece of documentation that you know is incorrect or obsolete,
-DELETE IT.  Yes, really! Even if you don't know what's supposed to be there, so
+DELETE IT.  Yes, really! Even if you don't know what's supposed to be there, and
 deleting is the only thing you can do.
 
 Don't be concerned about losing content ‒ wikis and wordpress are versioned,
