@@ -11,7 +11,8 @@ define BLURB
   features have been added including multi-level undo, syntax highlighting,
   commandline history, online help, filename completion, and block operations.
   It is descended from the vi clone "stevie" and runs on many systems, including
-  Unix, MS Windows, OS/2, Macintosh, VMS, and Amig          = CSWvim
+  Unix, MS Windows, OS/2, Macintosh, VMS,# Let's build a CLI vim for those stuck with S9
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386S, and Amig          = CSWvim
 CATALOGNAME_CSWvim = vim
 SPKG_DESC_CSWvim   = Vi IMproved without GUI
 
@@ -51,6 +52,7 @@ DISTFILES += gvimrc
 DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))3-solaris-sleep-does-not-do-decimals.patch
+PATCHFILES += 0004-solaris9-msgfmt-hates-empty-files.patch
 
 PATCHDIRLEVEL = 0of-whitespace.patch
 
@@ -75,7 +77,7 @@ BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim$(subst .,PATCHDIRLEVEL = 0
 
 # Note: Tests require controlling terminal
-TEST_TARGET = test
+TST_TARGET = test
 
 
 include gar/category.mk
