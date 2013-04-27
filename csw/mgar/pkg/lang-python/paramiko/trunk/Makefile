@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = paramiko
-VERSION = 1.7.7.1
+VERSION = 1.10.1
 GARTYPE = v2
 CATEGORIES = python
 
@@ -14,7 +14,7 @@ define BLURB
   platform-dependent code.
 endef
 
-MASTER_SITES = http://www.lag.net/paramiko/download/
+MASTER_SITES = http://pypi.python.org/packages/source/p/paramiko/
 DISTFILES    = $(DISTNAME).tar.gz
 ARCHALL      = 1
 
