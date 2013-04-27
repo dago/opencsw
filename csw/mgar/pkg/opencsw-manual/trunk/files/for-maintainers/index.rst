@@ -8,6 +8,7 @@ package repositories, either at OpenCSW or at their own organization.
 .. toctree::
   :maxdepth: 2
 
+  about-documentation
   contributing-to-recipes
   filesystem-layout
   building-a-catalog
