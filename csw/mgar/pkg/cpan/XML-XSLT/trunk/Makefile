@@ -6,13 +6,16 @@ AUTHOR = JSTOWE
 
 DESCRIPTION = A perl module for processing XSLT
 define BLURB
-  A perl module for processing XSLT
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmxmlxslt
-CATALOGNAME = pm_xmlxslt
+PACKAGES = CSWpm-xml-xslt                                                     
+CATALOGNAME = pm_xml_xslt                                                     
+SPKG_DESC_CSWpm-xml-xslt = $(DESCRIPTION)                                     
+OBSOLETED_BY_CSWpm-xml-xslt = CSWpmxmlxslt                                  
+CATALOGNAME_CSWpmxmlxslt = pm_xmlxslt            
+
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS += CSWpmxmldom
