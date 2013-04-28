@@ -242,9 +242,7 @@ class Srv4FileStats(sqlobject.SQLObject):
           CheckpkgOverride.q.srv4_file==self)))
 
   def __unicode__(self):
-    return (
-        u"Package: %s-%s, %s"
-        % (self.catalogname, self.version_string, self.arch.name))
+    return (u"%s" % (self.basename))
 
   def GetUnicodeOrNone(self, s):
     """Tries to decode UTF-8.
