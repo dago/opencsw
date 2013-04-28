@@ -10,11 +10,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpm-xml-xslt                                                     
-CATALOGNAME = pm_xml_xslt                                                     
-SPKG_DESC_CSWpm-xml-xslt = $(DESCRIPTION)                                     
-OBSOLETED_BY_CSWpm-xml-xslt = CSWpmxmlxslt                                  
-CATALOGNAME_CSWpmxmlxslt = pm_xmlxslt            
+PACKAGES = CSWpm-xml-xslt
+CATALOGNAME = pm_xml_xslt
+SPKG_DESC_CSWpm-xml-xslt = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-xml-xslt = CSWpmxmlxslt
+CATALOGNAME_CSWpmxmlxslt = pm_xmlxslt
 
 ARCHALL = 1
 
