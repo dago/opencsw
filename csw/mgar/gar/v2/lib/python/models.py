@@ -73,10 +73,11 @@ class Maintainer(sqlobject.SQLObject):
       email = ["unknown"]
     if len(email) == 2:
       username, domain = email
+      if len(domain) > 4:
+        domain = domain[:4] + u'\u2026'
     else:
       username, domain = email[0], "no domain"
-    username = username[:-3] + "..."
-    return "@".join((username, domain))
+    return u'\u24b6'.join((username, domain))
 
   def __unicode__(self):
     return u"%s <%s>" % (
