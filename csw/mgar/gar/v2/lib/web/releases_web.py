@@ -193,6 +193,7 @@ class Srv4CatalogAssignment(object):
           c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
 
       # Retrieving logged in user name from the HTTP environment.
+      # This does not work on the buildfarm. :-(
       username = web.ctx.env.get('REMOTE_USER')
 
       c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, who=username)
@@ -202,6 +203,7 @@ class Srv4CatalogAssignment(object):
       response = cjson.encode([
         u"Added to catalog %s %s %s" % (catrel_name, arch_name, osrel_name),
         u"%s" % srv4.basename,
+        u"%s" % srv4.md5_sum,
       ])
       web.header('Content-Length', len(response))
       return response
