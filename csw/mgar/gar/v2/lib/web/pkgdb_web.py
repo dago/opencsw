@@ -51,6 +51,7 @@ urls_rest = (
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
   r'/rest/srv4/([0-9a-f]{32})/pkg-stats/', 'RestSrv4FullStats',
+  r'/rest/srv4/([0-9a-f]{32})/catalog-data/', 'RestSvr4CatalogData',
 )
 urls = urls_html + urls_rest
 
@@ -501,6 +502,22 @@ class RestCatalogList(object):
           key = [osrel.short_name, arch.name, catrel.name]
           catalogs.append(key)
     return cjson.encode(catalogs)
+
+
+class RestSvr4CatalogData(object):
+
+  def GET(self, md5_sum):
+    try:
+      cat_gen_data = models.CatalogGenData.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound("RestSvr4CatalogData for %r not found" % md5_sum)
+    simple_data = {
+        'deps': cjson.decode(cat_gen_data.deps),
+        'i_deps': cjson.decode(cat_gen_data.i_deps),
+        'pkginfo_name': cat_gen_data.pkginfo_name,
+        'pkgname': cat_gen_data.pkgname,
+    }
+    return cjson.encode(simple_data)
 
 
 web.webapi.internalerror = web.debugerror

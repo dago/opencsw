@@ -76,6 +76,16 @@ class RestClient(object):
         # Other HTTP errors are should be thrown.
         raise
 
+  def GetCatalogData(self, md5_sum):
+    self.ValidateMd5(md5_sum)
+    url = self.rest_url + self.PKGDB_APP + "/srv4/%s/catalog-data/" % md5_sum
+    try:
+      data = urllib2.urlopen(url).read()
+      return cjson.decode(data)
+    except urllib2.HTTPError as e:
+      logging.warning("Could not fetch catalog data for %r: %r", url, e)
+      raise
+
   def GetMaintainerByMd5(self, md5_sum):
     self.ValidateMd5(md5_sum)
     pkg = self.GetPkgByMd5(md5_sum)
@@ -269,11 +279,10 @@ class CachedPkgstats(object):
     if str(md5) in self.deps:
       return cjson.decode(self.deps[md5])
     else:
-      pkgstats = self.GetPkgstats(md5)
-      data = {"deps": pkgstats["depends"],
-              "pkgname": pkgstats["basic_stats"]["pkgname"]}
+      data = self.rest_client.GetCatalogData(md5)
       self.deps[md5] = cjson.encode(data)
       return data
+
 
 def GetUsernameAndPassword():
   username = os.environ["LOGNAME"]
