@@ -25,6 +25,7 @@ import rest
 import os
 import optparse
 import logging
+import sys
 
 
 class Error(Exception):
@@ -37,7 +38,8 @@ class CatalogFileGenerator(object):
     self.catrel = catrel
     self.arch = arch
     self.osrel = osrel
-    self.pkgcache = pkgcache or rest.CachedPkgstats("/home/web/pkgstats")
+    home_dir = os.environ['HOME']
+    self.pkgcache = pkgcache or rest.CachedPkgstats(os.path.join(home_dir, "pkgstats"))
     self.rest_client = rest_client or rest.RestClient()
     self._catalog = None
 
