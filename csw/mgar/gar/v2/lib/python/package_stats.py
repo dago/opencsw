@@ -348,6 +348,13 @@ class PackageStats(object):
     for override_dict in pkg_stats["overrides"]:
       m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
+    # Adding the catalog generation info.
+    catalog_gen_data = m.CatalogGenData(
+        md5_sum=pkg_stats["basic_stats"]["md5_sum"],
+        deps=cjson.encode(pkg_stats["depends"]),
+        pkgname=pkg_stats["basic_stats"]["pkgname"],
+        i_deps=cjson.encode(pkg_stats["i_depends"]),
+        pkginfo_name=pkg_stats["pkginfo"]["NAME"])
     return db_pkg_stats
 
   @classmethod

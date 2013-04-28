@@ -41,6 +41,7 @@ TABLES_REL_MGR=(
 )
 TABLES_REGULAR=(
   pkginst
+  catalog_gen_data
   checkpkg_error_tag
   checkpkg_override
   srv4_depends_on

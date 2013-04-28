@@ -50,15 +50,14 @@ class CatalogFileGenerator(object):
     return self._catalog
 
   def ComposeCatalogLine(self, pkg_data):
-    deps_data = self.pkgcache.GetDeps(pkg_data["md5_sum"])
-    pkg_stats = self.pkgcache.GetPkgstats(pkg_data["md5_sum"])
-    i_deps = pkg_stats["i_depends"]
+    catalog_data = self.rest_client.GetCatalogData(pkg_data["md5_sum"])
+    i_deps = catalog_data["i_deps"]
     if i_deps:
       i_deps = "|".join(i_deps)
     else:
       i_deps = "none"
     deps = []
-    for dep, _ in deps_data["deps"]:
+    for dep, _ in catalog_data["deps"]:
       if "CSW" in dep:
         deps.append(dep)
     if deps:
@@ -68,7 +67,7 @@ class CatalogFileGenerator(object):
     items = [
         pkg_data["catalogname"],
         pkg_data["version_string"],
-        deps_data["pkgname"],
+        catalog_data["pkgname"],
         pkg_data["basename"],
         pkg_data["md5_sum"],
         unicode(pkg_data["size"]),
@@ -76,7 +75,6 @@ class CatalogFileGenerator(object):
         "none",
         i_deps]
     return " ".join(items)
-
 
   def GenerateCatalog(self, out_dir):
     out_file = os.path.join(out_dir, CATALOG_FN)
@@ -96,8 +94,8 @@ class CatalogFileGenerator(object):
     lines = []
     if self.catalog:
       for pkg_data in self.catalog:
-        pkg_stats = self.pkgcache.GetPkgstats(pkg_data["md5_sum"])
-        lines.append(pkg_stats["pkginfo"]["NAME"])
+        catalog_data = self.pkgcache.GetDeps(pkg_data["md5_sum"])
+        lines.append(catalog_data['pkginfo_name'])
     with open(out_file, "w") as fd:
       fd.write("\n".join(lines))
 

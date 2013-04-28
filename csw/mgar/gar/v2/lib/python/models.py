@@ -150,6 +150,19 @@ class Srv4FileStatsBlob(sqlobject.SQLObject):
   srv4_file = sqlobject.SingleJoin('Srv4FileStats')
 
 
+class CatalogGenData(sqlobject.SQLObject):
+  """Fields required to generate the catalog.
+
+  Having this smaller table lets us avoid fetching the main big data
+  structure.
+  """
+  deps = sqlobject.UnicodeCol(notNone=True, length=(2 ** 14 - 1))
+  i_deps = sqlobject.UnicodeCol(notNone=True, length=(2 ** 14 - 1))
+  pkginfo_name = sqlobject.UnicodeCol(notNone=True, length=(2 ** 14 - 1))
+  pkgname = sqlobject.UnicodeCol(default=None, length=250)
+  md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True, length=32)
+
+
 class Srv4FileStats(sqlobject.SQLObject):
   """Represents a srv4 file.
 
