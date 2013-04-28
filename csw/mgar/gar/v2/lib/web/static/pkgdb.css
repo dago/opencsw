@@ -5,6 +5,9 @@ body, p, th, td {
 .annotation {
   font-size: 80%;
 }
+.greytext {
+  color: #DDD;
+}
 .overridden, .overridden a, tr.overridden > td {
   color: #DDD;
 }

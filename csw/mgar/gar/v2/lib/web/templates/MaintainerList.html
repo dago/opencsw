@@ -7,14 +7,29 @@ $def with (maintainers)
     <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
   </head>
   <body>
-    <ul>
+    <table>
+      <tr>
+        <th>user name</th>
+        <th>domain</th>
+        <th>full name</th>
+      </tr>
 $for username, domain, maintainer in maintainers
-  <li>
-  <a href="$maintainer.id/">$username</a>
-  ($domain.replace(".", "!"))
+  <tr>
+  <td>
+  <a href="$maintainer.id/">
+    $username
+  </a>
+  </td>
+  <td>
+  $domain
+  </td>
+  <td>
   $if maintainer.full_name:
     $maintainer.full_name
-  </li>
+  $else:
+    <span class="greytext">(not set)</span>
+  </td>
+  </tr>
 </ul>
 </body>
 </html>
