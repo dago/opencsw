@@ -1,5 +1,5 @@
 NAME = sqlite3
-VERSION = 3070900
+VERSION = 3071602
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 # Download informations
-MASTER_SITES = http://sqlite.org/
+MASTER_SITES = h2013http://sqlite.org/
 DISTNAME = sqlite-autoconf-$(VERSION)
 DISTFILES += $(DISTNAME).tar.gz
-DISTFILES += copyright-release.html
+DISTFILES += copyrigVENDOR_URL = http://sqlite.orgight-release.html
 
 LICENSE = copyright-release.html
 
@@ -45,5 +45,4 @@ EXTRA_CPPFLAGS += -DSQLITE_ENABLE_UNLOCK_NOTIFY=1
 BUILD64 = 1
 ISAEXEC = 1
 
-include gar/category.mk
-
+include 
