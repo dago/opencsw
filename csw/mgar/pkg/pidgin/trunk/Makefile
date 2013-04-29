@@ -1,7 +1,7 @@
 # $Id$
 
-NAME = pidgin
-VERSION = 2.6.6
+NAME    = pidgin
+VERSION = 2.10.7
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -15,59 +15,107 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += '--with-dbus-services=/opt/csw/etc/dbus-1'
-CONFIGURE_ARGS += '--with-tclconfig=/opt/csw/lib'
-CONFIGURE_ARGS += '--with-tkconfig=/opt/csw/lib'
-CONFIGURE_ARGS += '--enable-gnutls=yes'
-CONFIGURE_ARGS += '--disable-nss'
-CONFIGURE_ARGS += '--disable-avahi'
-CONFIGURE_ARGS += '--disable-screensaver'
-CONFIGURE_ARGS += '--disable-nm'
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
+--with-dbus-services=/etc/opt/csw/dbus-1
+CONFIGURE_ARGS += --with-tclconfig=/opt/csw/lib
+CONFIGURE_ARGS += --with-tkconfig=/opt/csw/lib
+CONFIGURE_ARGS += --enable-gnutls=yes
+CONFIGURE_ARGS += --enable-nss=yes
+CONFIGURE_ARGS += --disable-avahi
+CONFIGURE_ARGS += --disable-nm
+CONFIGURE_ARGS += --with-x
 CONFIGURE_ARGS += --disable-vv
+CONFIGURE_ARGS += --enable-trayicon-compat 
 
 
-PATH = $(SOS11_CC_HOME)/bin:$(PATH)
-EXTRA_EXPORTS = PATH
+# For msgfmt, msgmerge, xgettext and gettext to be used from GNU
+CONFIGURE_ENV_PATH = $(prefix)/gnu:$(PATH)
 
-DOT=/opt/csw/graphviz2/bin/dot
-XGETTEXT=/opt/csw/bin/gxgettext
-MSGFMT=/opt/csw/bin/gmsgfmt
-MSGMERGE=/opt/csw/bin/gmsgmerge
-SED=/opt/csw/bin/gsed
-X11_CFLAGS=-D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -DXTHREADS -DXUSE_MTSAFE_API
-X11_LIBS=-lX11
-LIBS=-lm
-EXTRA_CONFIGURE_EXPORTS  = DOT XGETTEXT MSGFMT MSGMERGE SED PKG_CONFIG_PATH
-EXTRA_CONFIGURE_EXPORTS += X11_CFLAGS X11_LIBS LIBS
-EXTRA_INC = /opt/csw/include/ncurses
+CFLAGS = -xc99 -D_XPG6 -D__EXTENSIONS__
+NCURSES_HEADERS = /opt/csw/include/ncursesw
+EXTRA_CONFIGURE_EXPORTS += CFLAGS NCURSES_HEADERSsw/include/ncurses
 TEST_SCRIPTS =
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = (\d+(MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_LDFLAGS = -R $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+RUNTIME_DEP_PKGS_CSWpidgin += CSWaspell
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWgstreamer
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWgtkspell
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibmeanwhile1
+RUNTIME_DEP_PKGS_CSWpidgin += CSWpango
+RUNTIME_DEP_PKGS_CSWpidgin += CSWperl
+RUNTIME_DEP_PKGS_CSWpidgin += CSWpython
+RUNTIME_DEP_PKGS_CSWpidgin += CSWsilctoolkit
+RUNTIME_DEP_PKGS_CSWpidgin += CSWtcl
+RUNTIME_DEP_PKGS_CSWpidgin += CSWtk
+RUNTIME_DEP_PKGS_CSWpidgin += CSWdbus
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWpidgin += CSWgstplugins
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsmime3
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpanelw5
 
-EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
-
-RUNTIME_DEP_PKGS  = CSWaspell CSWdbusglib CSWgcrypt CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
-RUNTIME_DEP_PKGS += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
-RUNTIME_DEP_PKGS += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
-RUNTIME_DEP_PKGS += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
-RUNTIME_DEP_PKGS += CSWfconfig CSWftype2 CSWlibx11 CSWbdb47 CSWlibidn
-RUNTIME_DEP_PKGS += CSWlibice CSWlibxext CSWlibsm CSWgstplugins
-
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibdbusdev CSWdbusglibdev CSWgnutlsdevel
+BUILD_DEP_PKGS += CSWpkgconfig
+BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWsunx11devel
+BUILD_DEP_PKGS += CSWdoxygen
+BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWlibdbus-dev
+BUILD_DEP_PKGS += CSWlibdbus-glib-dev
+BUILD_DEP_PKGS += CSWlibidn-dev
+BUILD_DEP_PKGS += CSWtcl-dev
+BUILD_DEP_PKGS += CSWtk-dev
+BUILD_DEP_PKGS += CSWlibgnutls-dev
+BUILD_DEP_PKGS += CSWlibnss-dev
+BUILD_DEP_PKGS += CSWnspr-dev
+BUILD_DEP_PKGS += CSWmeanwhile-devdev CSWgnutlsdevel
 
 PATCHFILES += patch-pidgin-Makefile.in
 PATCHFILES += patch-pidgin-plugin.c
 PATCHFILES += patch-pidgin-plugins-perl-common-Makefile.PL.in
-PATCHFILES += patch-libpurple-plugins-perl-common-Makefile.PL.in
+PATCHFILES += patch-libpurple-plugins-perl-commoCHECKPKG_OVERRIDES_CSWpidgin += file-with-bad-content|/usr/local|root/opt/csw/lib/pidgin/musicmessaging.so 
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libgnt.so
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libpurple-client.so
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libpurple.so
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/purple-2/libjabber.so
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/purple-2/liboscar.so
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/purple-2/libymsg.so
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgnt.so.0.8.9|soname=libgnt.so.0|pkgname=CSWpidgin|expected=CSWlibgnt0
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpurple-client.so.0.10.7|soname=libpurple-client.so.0|pkgname=CSWpidgin|expected=CSWlibpurple-client0
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpurple.so.0.10.7|soname=libpurple.so.0|pkgname=CSWpidgin|expected=CSWlibpurple0
 
-include gar/category.mk
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWaspell
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWtcl
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWtk
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWdbus
+mon-Makefile.PL.in
+
+includ
