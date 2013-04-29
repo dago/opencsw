@@ -539,69 +539,9 @@ class InspectivePackage(package.DirectoryFormatPackage):
     if m:
       response = {}
       d = m.groupdict()
-      if "soname" in d and d["soname"]:
-        # it was found
-        response["state"] = "OK"
-        response["soname"] = d["soname"]
-        response["path"] = d["path_found"]
-        response["symbol"] = None
-      elif "symbol" in d and d["symbol"]:
-        response["state"] = "symbol-not-found"
-        response["soname"] = None
-        response["path"] = d["path_not_found"]
-        response["symbol"] = d["symbol"]
-      elif "binary" in d and d["binary"] and binary == d["binary"]:
+      if "binary" in d and d["binary"] and binary == d["binary"]:
         response["state"] = "soname-unused"
         response["soname"] = os.path.basename(d["object"])
-        response["path"] = None
-        response["symbol"] = None
-      elif d["path_only"]:
-        response["state"] = "OK"
-        response["soname"] = None
-        response["path"] = d["path_only"]
-        response["symbol"] = None
-      elif d["soname_version_not_found"]:
-        response["state"] = "version-not-found"
-        response["soname"] = d["soname_version_not_found"]
-        response["path"] = None
-        response["symbol"] = None
-      elif d["relocation_symbol"]:
-        response["state"] = 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility'
-        response["soname"] = None
-        response["path"] = d["relocation_path"]
-        response["symbol"] = d["relocation_symbol"]
-      elif d["sizes_differ_symbol"]:
-        response["state"] = 'sizes-differ'
-        response["soname"] = None
-        response["path"] = None
-        response["symbol"] = d["sizes_differ_symbol"]
-      elif d["sizediff_file1"]:
-        response["state"] = 'sizes-diff-info'
-        response["soname"] = None
-        response["path"] = "%s %s" % (d["sizediff_file1"], d["sizediff_file2"])
-        response["symbol"] = None
-      elif d["sizediffused_file"]:
-        response["state"] = 'sizes-diff-one-used'
-        response["soname"] = None
-        response["path"] = "%s" % (d["sizediffused_file"])
-        response["symbol"] = None
-      elif d["move_offset"]:
-        response["state"] = 'move-offset-error'
-        response["soname"] = None
-        response["path"] = None
-        response["symbol"] = None
-        response["move_offset"] = d['move_offset']
-        response["move_index"] = d['move_index']
-      elif d["reloc_symbol"]:
-        response["state"] = 'relocation-issue'
-        response["soname"] = None
-        response["path"] = None
-        response["symbol"] = d['reloc_symbol']
-      elif d["copy_reloc_symbol"]:
-        response["state"] = 'relocation-issue'
-        response["soname"] = None
-        response["path"] = None
-        response["symbol"] = d['copy_reloc_symbol']
 
     else:
       raise package.StdoutSyntaxError("Could not parse %s with %s"
