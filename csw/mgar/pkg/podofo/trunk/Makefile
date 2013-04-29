@@ -64,6 +64,25 @@ CMAKE_ARGS	+=	-DPODOFO_BUILD_STATIC:BOOL=FALSE
 
 TEST_SCRIPTS	=	custom
 
+PACKAGES							+=	CSWlibpodofo-utils
+CATALOGNAME_CSWlibpodofo-utils		=	libpodofo_utils
+SPKG_DESC_CSWlibpodofo-utils		+=	$(DESCRIPTION), utilities
+RUNTIME_DEP_PKGS_CSWlibpodofo-utils	+=	CSWlibpodofo0-9-1
+
+PACKAGES						+=	CSWlibpodofo0-9-1
+CATALOGNAME_CSWlibpodofo0-9-1	=	libpodofo0_9_1
+PKGFILES_CSWlibpodofo0-9-1		+=	$(call baseisadirs,$(libdir),libpodofo\.so\.0\.9\.1)
+PKGFILES_CSWlibpodofo0-9-1		+=	$(call baseisadirs,$(libdir),libpodofo\.so\.0\.9\.1(\.\d+)*)
+SPKG_DESC_CSWlibpodofo0-9-1		+=	$(DESCRIPTION), libpodofo.so.0.9.1
+
+PACKAGES							+=	CSWlibpodofo-dev
+CATALOGNAME_CSWlibpodofo-dev		=	libpodofo_dev
+SPKG_DESC_CSWlibpodofo-dev			+=	$(DESCRIPTION), development files
+PKGFILES_CSWlibpodofo-dev			+=	/opt/csw/lib/libpodofo.so
+PKGFILES_CSWlibpodofo-dev			+=	$(PKGFILES_DEVEL)
+ARCHALL_CSWlibpodofo-dev			=	1
+RUNTIME_DEP_PKGS_CSWlibpodofo-dev	+=	CSWlibpodofo0-9-1
+
 include gar/category.mk
 
 configure-custom:
