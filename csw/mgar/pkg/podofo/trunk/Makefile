@@ -18,8 +18,10 @@ endef
 
 MASTER_SITES	=	$(SF_MIRRORS)
 DISTFILES		=	$(DISTNAME).tar.gz
+PATCHFILES		+=	0001-replace-deprecated-LUA-API-calls.patch
 
 BUILD_DEP_PKGS	+=	CSWcmake
+BUILD_DEP_PKGS	+=	CSWlua-dev
 
 GARCOMPILER			=	GNU
 CONFIGURE_ARGS		=	$(DIRPATHS)
