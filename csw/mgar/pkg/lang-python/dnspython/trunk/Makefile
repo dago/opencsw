@@ -22,13 +22,6 @@ DISTFILES 		=	$(DISTNAME).tar.gz
 PATCHFILES		+=	0001-consistent-use-of-tabs-and-spaces-in-indentation.patch
 SPKG_SOURCEURL	=	$(MASTER_SITES)
 BUILD_DEP_PKGS	=	CSWpysetuptools
-PACKAGES		=	CSWpy-dnspython
-CATALOGNAME		=	py_dnspython
-ARCHALL			=	1
-
-CONFIGURE_ARGS	=	$(DIRPATHS)
-
-EXTRA_MERGE_EXCLUDE_FILES	+=	.*\.pyo .*\.pyc
 
 TEST_SCRIPTS	=	nominal
 
