@@ -1,0 +1,48 @@
+From ba75ec3627b4459e71a52156f89a872928186a34 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 29 Apr 2013 14:00:29 +0200
+Subject: [PATCH] replace deprecated LUA API calls
+
+---
+ tools/podofocolor/luaconverter.cpp    | 4 ++--
+ tools/podofoimpose/planreader_lua.cpp | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tools/podofocolor/luaconverter.cpp b/tools/podofocolor/luaconverter.cpp
+index cda5727..9b63f31 100644
+--- a/tools/podofocolor/luaconverter.cpp
++++ b/tools/podofocolor/luaconverter.cpp
+@@ -44,7 +44,7 @@ using namespace PoDoFo;
+ LuaMachina::LuaMachina()
+ {
+ 	/* Init the Lua interpreter */
+-	L = lua_open();
++	L = luaL_newstate();
+ 	if (!L)
+ 	{
+ 		throw std::runtime_error("Whoops! Failed to open lua!");
+@@ -117,7 +117,7 @@ PdfColor LuaConverter::GetColorFromReturnValue(const char* pszFunctionName)
+     size_t len;
+ 
+     luaL_checktype(m_machina.State(), 1, LUA_TTABLE);
+-    len = luaL_getn( m_machina.State(), -1 );
++    len = luaL_len( m_machina.State(), -1 );
+     // Lua 5.1 only
+     //len = lua_objlen( m_machina.State(), -1 );
+ 
+diff --git a/tools/podofoimpose/planreader_lua.cpp b/tools/podofoimpose/planreader_lua.cpp
+index 6c4664e..7ca7684 100644
+--- a/tools/podofoimpose/planreader_lua.cpp
++++ b/tools/podofoimpose/planreader_lua.cpp
+@@ -23,7 +23,7 @@
+ LuaMachina::LuaMachina()
+ {
+ 	/* Init the Lua interpreter */
+-	L = lua_open();
++	L = luaL_newstate();
+ 	if (!L)
+ 	{
+ 		throw std::runtime_error("Whoops! Failed to open lua!");
+-- 
+1.8.1.4
+
