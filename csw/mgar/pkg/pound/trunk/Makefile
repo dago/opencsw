@@ -16,10 +16,8 @@ MASTER_SITES = http://www.apsNAME = Pound-$(VERSION)
 DISTFILES += $(DISTNAME).tgz
 
 # adjust log/run files
-PATCHFILES  = patch-pound.h
-PATCHFILES += patch-pound.8
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PATCHFILES  = patch-pound.h
+#PATCHFILES += patch-pound.8
 
 VENDOR_URL = http://www.apsis.ch/pound/
 
@@ -43,19 +41,41 @@ EXTRA_DOCS += README
 EXTRA_DOCS += FAQ
 EXTRA_DOCS += CHANGELOG
 EXTRA_DOCS += z2_2_5_1.py
-EXTRA_DOCS += z2_2_6_1.pyCS += z2_2_6_1.py
+EXTRA_DOCS += z2_2_6_1.pyCSPOUNDCFG = $(sysconfdir)/pound.cfg
+
+REINPLACEMENTS += poundcfg
+REINPLACE_MATCH_poundcfg = /usr/local/etc/pound.cfg
+REINPLACE_WITH_poundcfg = $/POUNDCFG)
+REINPLACE_FILES_poundcfg += pound.8
+
+REINPLACEMENTS += certpath
+REINPLACE_MATCH_certpath = /usr/local/etc/pound/cert.pem
+REINPLACE_WITH_certpath = $(sysconfdir)/cert.pem
+REINPLACE_FILES_certpath += pound.8
+
+REINPLACEMENTS += config
+REINPLACE_MATCH_config = /etc/pound/
+REINPLACE_WITH_config = $(sysconfdir)/pound/
+REINPLACE_FILES_config += pound.8
+
+BUILD64 = 1
+ISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-super
-CONFIGURE_ARGS += --enable-msdav
 CONFIGURE_ARGS += --with-maxbuf=8192
-CONFIGURE_ARGS += --with-No test suite available
+CONFIGURE_ARGS += --with-ssl=$(prefix)
+
+BUILD_OVERRIDE_VARS += F_CONF
+BUILD_OVERRIDE_ENV_F_CONF = $(POUNDCFG)
+BUILD_OVERRIDE_VARS += F_PID
+BUILD_OVERRIDE_ENV_F_PID = $(localstatedir)/run/pound.pidith-No test suite available
 TEST_SCRIPTS =
 
 # use a custom install
-INSTALL_SCRIPTS = custom extra-docs
+INSTALL_SCRIPTS = custom
 
-PRESERVECONF = $(sysconfdir)/pound.cfgonfdir)/pound.cfg
+PRESERVECONF = $(POUNDCFG)onfdir)/pound.cfg
 
 include gar/category.mk
 
@@ -68,8 +88,6 @@ install-custom:
 	ginstall -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/poundandir)/man8/poundctl.8
 	ginstall -d $(DESTDIR)$(sysconfdir)/$(NAME)
 	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDpound.cfg
-
-install-extra-docs:
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 644 $(addprefix $(WORKSRC)/,$(EXTRA_DOCS)) $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)
