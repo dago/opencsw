@@ -91,12 +91,11 @@ class CswSrv4File(shell.ShellMixin, object):
         # result, but the result will be cached as a object member.
         self.GetMtime()
         self.GetMd5sum()
-        base_name_gz = os.path.split(self.pkg_path)[1]
-        shutil.copy(self.pkg_path, self.GetWorkDir())
-        self.pkg_path = os.path.join(self.GetWorkDir(), base_name_gz)
-        args = ["gunzip", "-f", self.pkg_path]
-        unused_retcode = self.ShellCommand(args)
-        self.gunzipped_path = self.pkg_path[:(-len(gzip_suffix))]
+        base_name = os.path.split(self.pkg_path)[1][:(-len(gzip_suffix))]
+        self.gunzipped_path = os.path.join(self.GetWorkDir(), base_name)
+        with open(self.gunzipped_path, 'w') as gunzipped_file:
+          args = ["gunzip", "-f", "-c", self.pkg_path]
+          unused_retcode = shell.ShellCommand(args, stdout=gunzipped_file)
       elif self.pkg_path.endswith(pkg_suffix):
         self.gunzipped_path = self.pkg_path
       else:
