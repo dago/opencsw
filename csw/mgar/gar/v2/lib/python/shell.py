@@ -34,11 +34,13 @@ class ShellMixin(object):
       raise Error("Running %s has failed." % repr(args))
     return retcode
 
-def ShellCommand(args, env=None, timeout=None):
+def ShellCommand(args, env=None, timeout=None,
+                 stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE):
   logging.debug("Running: %s", args)
   proc = subprocess.Popen(args,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
+                          stdout=stdout,
+                          stderr=stderr,
                           env=env,
                           preexec_fn=os.setsid,
                           close_fds=True)
