@@ -20,26 +20,28 @@ CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--enable-doxygen
 
 PACKAGES							+=	CSWlibmtp-utils
-CATALOGNAME_CSWlibmtp-utils			=	libmtp-utils
+CATALOGNAME_CSWlibmtp-utils			=	libmtp_utils
 SPKG_DESC_CSWlibmtp-utils			=	$(DESCRIPTION), utilities
 RUNTIME_DEP_PKGS_CSWlibmtp-utils	+=	CSWlibmtp9
-RUNTIME_DEP_PKGS_CSWlibmtp-utils	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmtp-utils	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibmtp-utils	+=	CSWlibgcrypt11
+CHECKPKG_OVERRIDES_CSWlibmtp-utils	+=	bad-rpath-entry|/usr/sfw/lib
 
-PACKAGES				+=	CSWlibmtp9
-CATALOGNAME_CSWlibmtp9	=	libmtp9
-PKGFILES_CSWlibmtp9		+=	$(call baseisadirs,$(libdir),libmtp\.so\.9\.1\.0)
-PKGFILES_CSWlibmtp9		+=	$(call baseisadirs,$(libdir),libmtp\.so\.9(\.\d+)*)
-SPKG_DESC_CSWlibmtp9	+=	$(DESCRIPTION), libmtp.so.9
+PACKAGES					+=	CSWlibmtp9
+CATALOGNAME_CSWlibmtp9		=	libmtp9
+PKGFILES_CSWlibmtp9			+=	$(call baseisadirs,$(libdir),libmtp\.so\.9\.1\.0)
+PKGFILES_CSWlibmtp9			+=	$(call baseisadirs,$(libdir),libmtp\.so\.9(\.\d+)*)
+SPKG_DESC_CSWlibmtp9		+=	$(DESCRIPTION), libmtp.so.9
+RUNTIME_DEP_PKGS_CSWlibmtp9	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmtp9	+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibmtp9	+=	CSWlibgcrypt11
 
-PACKAGES						+=	CSWlibmtp-dev
-CATALOGNAME_CSWlibmtp-dev		=	libmtp_dev
-SPKG_DESC_CSWlibmtp-dev			+=	$(DESCRIPTION), development files
-PKGFILES_CSWlibmtp-dev			+=	/opt/csw/lib/libmtp.so
-PKGFILES_CSWlibmtp-dev			+=	$(PKGFILES_DEVEL)
-ARCHALL_CSWlibmtp-dev			=	1
-RUNTIME_DEP_PKGS_CSWlibmtp-dev	+=	CSWlibmtp9
+PACKAGES							+=	CSWlibmtp-dev
+CATALOGNAME_CSWlibmtp-dev			=	libmtp_dev
+SPKG_DESC_CSWlibmtp-dev				+=	$(DESCRIPTION), development files
+PKGFILES_CSWlibmtp-dev				+=	/opt/csw/lib/libmtp.so
+PKGFILES_CSWlibmtp-dev				+=	$(PKGFILES_DEVEL)
+ARCHALL_CSWlibmtp-dev				=	1
+RUNTIME_DEP_PKGS_CSWlibmtp-dev		+=	CSWlibmtp9
+CHECKPKG_OVERRIDES_CSWlibmtp-dev	+=	archall-devel-package
 
 PACKAGES						+=	CSWlibmtp-doc
 CATALOGNAME_CSWlibmtp-doc		=	libmtp_doc
