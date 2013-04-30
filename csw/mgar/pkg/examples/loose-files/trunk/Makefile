@@ -2,17 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-NAME = loose-files
+NAME = loose-files-example
 VERSION = 1.0
 CATEGORIES = utils
 GARTYPE = v2
-DESCRIPTION = An example of a package created from loose files.
-define BLURB
-endef
-SPKG_SOURCEURL =
-
-PACKAGES = CSWloosefilesexa
-CATALOGNAME = loose_files_example
+DESCRIPTION = An example of a package created
+VENDOR_URL = http://www.opencsw.org/manual/loose_files_example
 
 # The directory where all the sources are kept. The slash at the end is
 # necessary.
@@ -36,8 +31,4 @@ install-custom:
 	$(foreach F,$(FILES),ginstall \
 		-d $(DESTDIR)$(prefix)/$(dir $F) \
 		&& ginstall $(WORKDIR)/$(notdir $F) \
-		$(DESTDIR)$(prefix)/$(dir $F);)
-	ginstall -m 755 -d $(DESTDIR)$(datadir)/checkpkg/overrides
-	echo "CSWloosefilesexa: license-missing" \
-	  > $(DESTDIR)$(datadir)/checkpkg/overrides/loose_files_example
-	@$(MAKECOOKIE)
+		$(DESTDIR)$(pr@$(MAKECOOKIE)
