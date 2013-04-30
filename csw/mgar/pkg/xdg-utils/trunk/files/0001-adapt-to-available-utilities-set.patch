@@ -1,0 +1,34 @@
+From d6f2e6a0d51b29aaa9548528c5e068c7a591e270 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 30 Apr 2013 16:52:51 +0200
+Subject: [PATCH] adapt to available utilities set
+
+---
+ tests/testrun | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/testrun b/tests/testrun
+index 822fc69..c51340a 100755
+--- a/tests/testrun
++++ b/tests/testrun
+@@ -42,7 +42,7 @@ exit 1
+ }
+ MYARGS="$@"
+ 
+-if [ `whoami` == root ] ; then
++if [ `id -u -n` = root ] ; then
+ 	XDG_TEST_DONT_SU="set"
+ 	DEFAULT_TEST_GROUPS="$ROOT_TEST_GROUPS"
+ 	RUNNING_AS="root"
+@@ -75,7 +75,7 @@ if [ -z "$XDG_TEST_DIR" ] ; then
+ 	export XDG_TEST_DIR="$PWD"
+ 	echo "WARNING: guessed XDG_TEST_DIR to be $XDG_TEST_DIR"
+ fi
+-if [ -z `which xdg-mime 2>/dev/null` ] && [ -d "$XDG_TEST_DIR/../scripts" ] ; then
++if [ -z "$(type xdg-mime 2>/dev/null)" ] && [ -d "$XDG_TEST_DIR/../scripts" ] ; then
+ 	export PATH="$PATH:$XDG_TEST_DIR/../scripts"
+ 	echo "WARNING: modified PATH to add '$XDG_TEST_DIR/../scripts'"
+ fi
+-- 
+1.8.1.4
+
