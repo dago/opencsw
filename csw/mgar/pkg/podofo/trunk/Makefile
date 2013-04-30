@@ -65,9 +65,6 @@ RUNTIME_DEP_PKGS_CSWlibpodofo0-9-1	+=	CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibpodofo0-9-1	+=	CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibpodofo0-9-1	+=	CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibpodofo0-9-1	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibpodofo-utils	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibpodofo-utils	+=	CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibpodofo-utils	+=	CSWliblua5-2
 
 PACKAGES							+=	CSWlibpodofo-dev
 CATALOGNAME_CSWlibpodofo-dev		=	libpodofo_dev
