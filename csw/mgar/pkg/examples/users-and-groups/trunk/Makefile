@@ -38,7 +38,7 @@ PROTOTYPE_FILES_example = $(datadir)/$(NAME)
 PROTOTYPE_USER_example = cswuser
 PROTOTYPE_GROUP_example = cswgroup
 PROTOTYPE_PERMS_example = 0700
-PROTOTYPE_CLASS_example = ugfiles
+PROTOTYPE_CLASS_ex# ample = ugfiles
 
 SPKG_CLASSES = none ugfiles
 
@@ -49,4 +49,4 @@ install-example:
 	ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(MAIN_PKGNAME)
 
 post-merge:
-	ginstall -m 755 -d $(PKGROOT)$(datadir)/$(NAME)
+	ginstall -m 755 -d $(PKGROOT)$(
