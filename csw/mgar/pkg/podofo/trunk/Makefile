@@ -19,6 +19,7 @@ endef
 MASTER_SITES	=	$(SF_MIRRORS)
 DISTFILES		=	$(DISTNAME).tar.gz
 PATCHFILES		+=	0001-replace-deprecated-LUA-API-calls.patch
+PATCHFILES		+=	0002-Build-with-install-RPATH.patch
 
 BUILD_DEP_PKGS	+=	CSWcmake
 BUILD_DEP_PKGS	+=	CSWlua-dev
@@ -29,45 +30,23 @@ CONFIGURE_SCRIPTS	=	custom
 
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 CMAKE_ARGS	+=	-DCMAKE_INSTALL_PREFIX=$(prefix)
-CMAKE_ARGS	+=	-DINSTALL_LAYOUT=RPM
-CMAKE_ARGS	+=	-DMYSQL_DATADIR=$(localstatedir)
-CMAKE_ARGS	+=	-DSYSCONFDIR=$(sysconfdir)
-CMAKE_ARGS	+=	-DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
-CMAKE_ARGS	+=	-DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
-# CMAKE_ARGS	+=	-DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
-CMAKE_ARGS	+=	-DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
-CMAKE_ARGS	+=	-DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
-CMAKE_ARGS	+=	-DWITH_READLINE=1
-CMAKE_ARGS	+=	-DWITH_LIBWRAP=1
-CMAKE_ARGS	+=	-DWITH_SSL=system
-CMAKE_ARGS	+=	-DWITH_ZLIB=system
-CMAKE_ARGS	+=	-DDEFAULT_CHARSET=utf8
-CMAKE_ARGS	+=	-DDEFAULT_COLLATION=utf8_general_ci
-CMAKE_ARGS	+=	-DWITH_COMMENT='OpenCSW'
 CMAKE_ARGS	+=	-DCMAKE_C_FLAGS="$(CFLAGS)"
 CMAKE_ARGS	+=	-DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
-CMAKE_ARGS	+=	-DBUILD_CONFIG=mysql_release
-# CMAKE_ARGS	+=	-DOPENSSL_INCLUDE_DIR="$(includedir)"
-# CMAKE_ARGS	+=	-DCMAKE_LIBRARY_PATH="$(libdir)"
-# CMAKE_ARGS	+=	-DCMAKE_PREFIX_PATH="$(prefix)"
-CMAKE_ARGS	+=	-DOPENSSL_ROOT_DIR=$(prefix)
-# CMAKE_ARGS	+=	-DOPENSSL_SSL_LIBRARIES=$(libdir)/libssl.so
-# CMAKE_ARGS	+=	-DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/libcrypto.so
 CMAKE_ARGS	+=	-DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS	+=	-DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS	+=	"-DCMAKE_C_FLAGS=$(CFLAGS)"
 CMAKE_ARGS	+=	"-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
 CMAKE_ARGS	+=	-DCMAKE_VERBOSE_MAKEFILE=ON
-CMAKE_ARGS	+=	-DWITH_DEBUG=1
 CMAKE_ARGS	+=	-DPODOFO_BUILD_SHARED:BOOL=TRUE
 CMAKE_ARGS	+=	-DPODOFO_BUILD_STATIC:BOOL=FALSE
 
 TEST_SCRIPTS	=	custom
 
-PACKAGES							+=	CSWlibpodofo-utils
-CATALOGNAME_CSWlibpodofo-utils		=	libpodofo_utils
-SPKG_DESC_CSWlibpodofo-utils		+=	$(DESCRIPTION), utilities
-RUNTIME_DEP_PKGS_CSWlibpodofo-utils	+=	CSWlibpodofo0-9-1
+PACKAGES								+=	CSWlibpodofo-utils
+CATALOGNAME_CSWlibpodofo-utils			=	libpodofo_utils
+SPKG_DESC_CSWlibpodofo-utils			+=	$(DESCRIPTION), utilities
+RUNTIME_DEP_PKGS_CSWlibpodofo-utils		+=	CSWlibpodofo0-9-1
+CHECKPKG_OVERRIDES_CSWlibpodofo-utils	+=	surplus-dependency|CSWlibpodofo0-9-1
 
 PACKAGES						+=	CSWlibpodofo0-9-1
 CATALOGNAME_CSWlibpodofo0-9-1	=	libpodofo0_9_1
@@ -82,6 +61,7 @@ PKGFILES_CSWlibpodofo-dev			+=	/opt/csw/lib/libpodofo.so
 PKGFILES_CSWlibpodofo-dev			+=	$(PKGFILES_DEVEL)
 ARCHALL_CSWlibpodofo-dev			=	1
 RUNTIME_DEP_PKGS_CSWlibpodofo-dev	+=	CSWlibpodofo0-9-1
+CHECKPKG_OVERRIDES_CSWlibpodofo-dev	+=	archall-devel-package
 
 include gar/category.mk
 
