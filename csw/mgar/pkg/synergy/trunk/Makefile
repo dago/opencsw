@@ -1,7 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = synergy
-VERSION = 1.4.10
+VERSION = 1.4.11
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -19,11 +19,10 @@ DISTFILES += $(DISTNAME).tar.gz
 
 VENDOR_URL = http://synergy-foss.org/
 
-GARCOMPILER = GNU
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-PATCHFILES += 0001-change-endiness-detection.patch
+GARTCHFILES += 0001-change-endiness-detection.patch
+PATCHFILES_sparc += 0001-remove-march.patch
+PATCHFILES_sparc += 0003-mess-with-cpp.patch
+PATCHFILES += $(PATCHFILES_$(GARCH))ss-detection.patch
 
 RUNTIME_DEP_PKGS_CSWsynergy += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsynergy += CSWlibstdc++6
@@ -34,8 +33,8 @@ RUNTIME_DEP_PKGS_CSWsynergy += CSWlibstdc++6
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 
 CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
-CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
-CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_ -lresolv -lsocket -lnsl -lrt"
+CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS) -lresolv -lsocket -lnsl -lrtFLAGS="$(CXXFLAGS)"
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
 CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
@@ -47,7 +46,9 @@ INSTALL_SCRIPTS = custom
 
 SKIPTEST ?= 1
 
-include gar/category.mk
+includepre-configure-modulated:
+	(cd $(WORKSRC) && mkdir tools/cryptopp562 && cd tools/cryptopp562 && unzip -q ../cryptopp562.zip)
+	@$(MAKECOOKIE)de gar/category.mk
 
 
 configure-custom:
@@ -55,7 +56,7 @@ configure-custom:
 	#		--debug-trycompile \
 	(cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
-		  $(CONFIGURE_ENV) \
+		  $(CONFIGUR-G "Unix Makefiles" -DCMAKE_BUILD_TYPE=ReleasURE_ENV) \
 			cmake \
 			. \
 			$(CMAKE_ARGS))
@@ -75,11 +76,12 @@ install-custom:
 		$(DESTDIR)$(bindir)
 	ginstall \
 		$(WORKSRC)/bin/synergys \
+		$(DESTDIR)$(\
+		$(WORKSRC)/bin/synergydKSRC)/bin/synergys \
 		$(DESTDIR)$(bindir)
 	ginstall -m 644 \
 		$(WORKSRC)/doc/synergyc.man \
 		$(DESTDIR)$(mandir)/man3/synergyc.3
 	ginstall -m 644 \
 		$(WORKSRC)/doc/synergys.man \
-		$(DESTDIR)$(mandir)/man3/synergys.3
-	@$(MAKECOOKIE)
+		$(DESTDIR)$(mandir)/man3/synergys.
