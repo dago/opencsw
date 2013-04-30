@@ -1,0 +1,53 @@
+From 0485633a6b75808856f9ee497564486e8631d525 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Tue, 30 Apr 2013 10:48:05 +0200
+Subject: [PATCH] mess-with-cpp
+
+---
+ src/lib/ipc/CIpcClientProxy.cpp    | 2 +-
+ src/lib/ipc/CIpcServerProxy.cpp    | 2 +-
+ src/lib/server/CClientProxy1_4.cpp | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/lib/ipc/CIpcClientProxy.cpp b/src/lib/ipc/CIpcClientProxy.cpp
+index 5fd6782..f715114 100644
+--- a/src/lib/ipc/CIpcClientProxy.cpp
++++ b/src/lib/ipc/CIpcClientProxy.cpp
+@@ -144,7 +144,7 @@ CIpcClientProxy::send(const CIpcMessage& message)
+ 	case kIpcLogLine: {
+ 		const CIpcLogLineMessage& llm = static_cast<const CIpcLogLineMessage&>(message);
+ 		CString logLine = llm.logLine();
+-		CProtocolUtil::writef(&m_stream, kIpcMsgLogLine, &logLine);
++		CProtocolUtil::writef(static_cast<synergy::IStream*>(&m_stream), static_cast<const char*>(kIpcMsgLogLine), &logLine, "");
+ 		break;
+ 	}
+ 			
+diff --git a/src/lib/ipc/CIpcServerProxy.cpp b/src/lib/ipc/CIpcServerProxy.cpp
+index 047c488..0d2a122 100644
+--- a/src/lib/ipc/CIpcServerProxy.cpp
++++ b/src/lib/ipc/CIpcServerProxy.cpp
+@@ -91,7 +91,7 @@ CIpcServerProxy::send(const CIpcMessage& message)
+ 	case kIpcCommand: {
+ 		const CIpcCommandMessage& cm = static_cast<const CIpcCommandMessage&>(message);
+ 		CString command = cm.command();
+-		CProtocolUtil::writef(&m_stream, kIpcMsgCommand, &command);
++		CProtocolUtil::writef(static_cast<synergy::IStream*>(&m_stream), static_cast<const char*>(kIpcMsgCommand), &command, "");
+ 		break;
+ 	}
+ 
+diff --git a/src/lib/server/CClientProxy1_4.cpp b/src/lib/server/CClientProxy1_4.cpp
+index 7347335..4fcb5a4 100644
+--- a/src/lib/server/CClientProxy1_4.cpp
++++ b/src/lib/server/CClientProxy1_4.cpp
+@@ -102,7 +102,7 @@ CClientProxy1_4::cryptoIv()
+ 	CString data(reinterpret_cast<const char*>(iv), CRYPTO_IV_SIZE);
+ 
+ 	LOG((CLOG_DEBUG2 "send crypto iv change to \"%s\"", getName().c_str()));
+-	CProtocolUtil::writef(getStream(), kMsgDCryptoIv, &data);
++	CProtocolUtil::writef(getStream(), static_cast<const char*>(kMsgDCryptoIv), &data, "");
+ 	
+ 	// change IV only after we've sent the current IV, otherwise
+ 	// the client won't be able to decrypt the new IV.
+-- 
+1.8.1.4
+

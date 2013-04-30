@@ -1,0 +1,25 @@
+From 93f0ba93784daf7ef05afd7eea4e2630ac637a38 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Tue, 30 Apr 2013 09:59:19 +0200
+Subject: [PATCH] remove-march
+
+---
+ tools/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index 668f99e..484f843 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -57,7 +57,7 @@ if (UNIX)
+ 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-tautological-compare")
+ 		endif()
+ 	else()
+-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
++		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+ 	endif()
+ endif()
+ 
+-- 
+1.8.1.4
+
