@@ -2,33 +2,38 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-NAME = loose-files-example
+NAME = from-svn-repo
 VERSION = 1.0
 CATEGORIES = utils
 GARTYPE = v2
-DESCRIPTION = An example of a package created
-VENDOR_URL = http://www.opencsw.org/manual/loose_files_example
+DESCRIPTION = An example of a paa Subversion repository
 
-# The directory where all the sources are kept. The slash at the end is
-# necessary.
-LOCAL_SRC = /usr/xpg4/
+VENDOR_URL = http://www.opencsw.org/manual/
 
-# The list of files to include, relative to LOCAL_SRC
-FILES  = bin/grep
-FILES += include/curses.h
-
-MASTER_SITES = $(sort $(addprefix file://$(LOCAL_SRC),$(dir $(FILES))))
-DISTFILES  = $(notdir $(FILES))
+SVN_REPO = http://usable-solaris.googlecode.com/svn/trunk/docs/
+SVN_REV = HEAD $(notdir $(FILES))
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
-INSTALL_SCRIPTS = custom
-TEST_SCRIPTS =
+INSTALL_SCRIPTS = cust# Otherwise there's a .git directory in $(WORKSRC)
+NOGITPATCH = 1
+
+# There are no architecture-specific files in this package.
+ARCHALL_CSWfrom-svn-repo = 1
 
 include gar/category.mk
 
+# In this case, we're checking out into the $(prefix)/share directory, because
+# this repository only contains documentation. You'll have to plan where you
+# want to put the files.
+post-extract-modulated:
+	mkdir -p $(WORKSRC)$(prefix)/share
+	svn export -r $(SVN_REV) $(SVN_REPO) $(WORKSRC)$(prefix)/share/usable-solaris
+	@$(MAKECOOKIE)
+
+# We're not doing any processing, or copying files into specific locations.
+# Our installation is simply copying files from $(WORKSRC). Note the trailing
+# slash -- it's necessary.
 install-custom:
-	$(foreach F,$(FILES),ginstall \
-		-d $(DESTDIR)$(prefix)/$(dir $F) \
-		&& ginstall $(WORKDIR)/$(notdir $F) \
-		$(DESTDIR)$(pr@$(MAKECOOKIE)
+	rsync -a "$(WORKSRC)/" "$(DESTDIR)"
+	@$(MAKECOOKIE)
