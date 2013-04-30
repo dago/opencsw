@@ -1,0 +1,26 @@
+From fda67cd864474853d20278c46c36fa1d8b7ef217 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 30 Apr 2013 14:41:55 +0200
+Subject: [PATCH] Build with install RPATH
+
+---
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b55b28d..cdd58e9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -245,6 +245,9 @@ ELSE(UNIX)
+         "True if PoDoFo should be built with fontconfig support")
+ ENDIF(UNIX)
+ 
++# Don't strip runpath as it breaks the binaries that need libraries in
++# /opt/csw/lib.
++set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+ 
+ IF(CMAKE_COMPILER_IS_GNUCXX)
+     MESSAGE("Using gcc specific compiler options")
+-- 
+1.8.1.4
+
