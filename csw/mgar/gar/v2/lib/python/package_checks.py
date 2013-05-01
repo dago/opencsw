@@ -1240,19 +1240,20 @@ def Check64bitsBinariesPresence(pkg_data, error_mgr, logger, messenger):
 
   if binaries:
     paths_64 = {
-    	  'i386': common_constants.AMD64_PATHS,
+        'i386': common_constants.AMD64_PATHS,
         'sparc': common_constants.SPARCV9_PATHS,
     }
-    paths_64_re = re.compile(r"opt/csw/(%s)/(%s)" %
-                             (binaries_path,
-                              '|'.join(paths_64[pkginfo['ARCH']])))
+    paths_64_str = (
+        r"opt/csw/(%s)/(%s)"
+        % (binaries_path, '|'.join(paths_64[pkginfo['ARCH']])))
+    paths_64_re = re.compile(paths_64_str)
     for binary_info in binaries:
       if paths_64_re.search(binary_info['path']):
-          return
+        return
 
     error_mgr.ReportError('64bits-binaries-missing')
     messenger.Message(
       "The package is supposed to contains 64 bits binaries "
       "but it doesn't contain any in the usual 64 bits "
-      "binaries locations.")
+      "binaries locations. Locations checked: %s." % paths_64_str)
 
