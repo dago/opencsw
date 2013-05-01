@@ -54,6 +54,7 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
     mock_dirpkg.GetParsedPkginfo().AndReturn({
       "ARCH": "sparc",
       "EMAIL": "maintainer@example.com",
+      "NAME": "foo - Package of foo",
       })
     mock_dirpkg.GetPkgmap().AndReturn(mock_pkgmap)
     mock_pkgmap.entries = []

@@ -47,16 +47,19 @@ pkgstats = [{'bad_paths': {},
                         'sparcv9+vis',
                         'sparcv9+vis2']),
   'ldd_info': {'opt/csw/bin/tree': [] },
-  'binaries_elf_info': { 'opt/csw/bin/tree': { 'version definition': [], 
-	                                       'version needed': [], 
-			 		       'symbol table': [ { 'flags': 'DBL', 
-					 	                   'soname': 'libc.so.1', 
-							  	   'symbol': 'environ',
-								   'shndx': 'UNDEF',
-								   'version': None 
-								  } ] 
-					      }
-			      },
+  'binaries_elf_info': {
+    'opt/csw/bin/tree': {
+      'version definition': [], 'version needed': [],
+      'symbol table': [
+        { 'flags': 'DBL',
+          'soname': 'libc.so.1',
+          'symbol': 'environ',
+          'shndx': 'UNDEF',
+          'version': None,
+        }
+      ]
+    }
+  },
   'mtime': '2010-07-05T23:48:10',
   'overrides': [],
   'pkgchk': {'return_code': 0,
@@ -79,6 +82,7 @@ pkgstats = [{'bad_paths': {},
               'VENDOR': 'http://mama.indstate.edu/users/ice/tree/ packaged for CSW by Maciej Blizinski',
               'VERSION': '1.5.3,REV=2010.07.05',
               'WORKDIR_FIRSTMOD': '../build-isa-sparcv8'},
+  'i_depends': [],
   'pkgmap': [{'class': None,
               'group': None,
               'line': ': 1 0',
