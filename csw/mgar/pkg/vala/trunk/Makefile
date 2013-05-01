@@ -15,6 +15,7 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.xz
+GARCOMPILER = GNU
 
 BUILD_DEP_PKGS += CSWglib2devel
 BUILD_DEP_PKGS += CSWlibiconv-dev
