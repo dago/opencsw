@@ -24,6 +24,15 @@ TEST_SCRIPTS	=	custom
 
 ARCHALL	=	1
 
+REINPLACE_WHEN_USRLOCAL	=	postinstall
+REINPLACE_USRLOCAL		+=	/opt/csw/bin/xdg-mime
+REINPLACE_USRLOCAL		+=	/opt/csw/bin/xdg-desktop-menu
+REINPLACE_USRLOCAL		+=	/opt/csw/bin/xdg-icon-resource
+REINPLACE_WHEN_USRSHARE	=	postinstall
+REINPLACE_USRSHARE		+=	/opt/csw/bin/xdg-mime
+REINPLACE_USRSHARE		+=	/opt/csw/bin/xdg-desktop-menu
+REINPLACE_USRSHARE		+=	/opt/csw/bin/xdg-icon-resource
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
