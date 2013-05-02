@@ -2,46 +2,49 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.0.1
+VERSION = 3.0.3
 GARTYPE = v2
-CATEGORIES = server
 
-DESCRIPTION = Brief description
+DESCRIPTION = Open Source AFP fileserver
 define BLURB
+  Netatalk is a freely-available Open Source AFP fileserver. A *NIX/*BSD system
+  running Netatalk is capable of serving many Macintosh clients simultaneously
+  as an AppleShare file server (AFP).B
   Long description
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  =DISTFILES += CSWnetatalk.postinstall CSWnetatalk.preremove
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-GARCOMPILER = GNU
 
-PACKAGES += CSWlibatalk1
-CATALOGNAME_CSWlibatalk1 = libatalk1
-PKGFILES_CSWlibatalk1 += $(call baseisadirs,$(libdir),libatalk\.so\.1\.0\.0)
-PKGFILES_CSWlibatalk1 += $(call baseisadirs,$(libdir),libatalk\.so\.1(\.\d+)*)
-SPKG_DESC_CSWlibatalk1 += $(DESCRIPTION), libatalk.so.1
-RUNTIME_DEP_PKGS_CSWlibatalk1 += CSWlibiconv2
+BUILD_DEP_PKGS += CSWlibgcrypt-dev
+BUILD_DEP_PKGS += CSWbdb48devel
+BUILD_DEP_PKGS += CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+BUILD_DEP_PKGS += CSWlibdbus-dev
+BUILD_DEP_PKGS += CSWlibdbus-glib-dev
 
-PACKAGES += CSWetatalk
-SPKG_DESC_CSWetatalk = $(DESCRIPTION)
-# PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWnetatalk += CSWlibatalk1
+RUNTIME_DEP_PKGS += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS += CSWlibgcrypt11
+RUNTIME_DEP_PKGS += CSWbdb48
+RUNTIME_DEP_PKGS += CSWlibiconv2
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS += CSWkrb5lib
+RUNTIME_DEP_PKGS += CSWlibdbus
+RUNTIME_DEP_PKGS += CSWdbusglib
 
+# Both patched are in upstream and will be in 3.0.4
+PATCHFILES += 0001-Fix-use-of-unnamed-union-inside-struct.patch
+PATCHFILES += 0003-Fix-misspelled-compiler-variable.patch
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --disable-tcp-wrappers
+CONFIGURE_ARGS += --with-bdb=/opt/csw/bdb48
+CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
+CONFIGURE_ARGS += --with-init-style=solaris
+CONFIGURE_ARGS += --with-init-dir=/var/opt/csw/svc/manifest/network/NKER_FLAGS = -levent
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-CONFIGURE_ARGS = $(DIRPATHS) --disable-static --with-ssl-dir=/opt/csw --with-bdb=/opt/csw/bdb47 --with-libiconv=/opt/csw --disable-tcp-wrappers --disable-silent-rules --with-libevent-header=/opt/csw/include --with-libevent-lib=/opt/csw/lib
-
-#EXTRA_LINKER_FLAGS = -levent
-
-include gar/category.mk
-
+inclu

@@ -1,0 +1,2 @@
+#!/bin/sh
+svccfg import /var/opt/csw/svc/manifest/network/netatalk.xml
