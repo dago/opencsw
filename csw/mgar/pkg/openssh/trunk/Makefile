@@ -155,29 +155,7 @@ CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
 
 # We don't want to use lazy load because of
 # the chroot usage by sshd
-EXTRA_LD_OPTIONS = -z nolazyload
-
-TEST_SCRIPTS	=
-
-
-## Optional addition to add Ldap Public Key support 
-## see http://code.google.com/p/openssh-lpk/
-
-# we always register the lpk related files so checksum 
-# is the same with LPK enabled or not
-DISTFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
-ifdef pensshlpk
-	CATALOGNAME_CSWopensshlpk = openssh_lpk
-	SPKG_DESC_CSWopensshlpk = $(SPKG_DESC_CSWopenssh) with ldap public key support
-	RUNTIME_DEP_PKGS_CSWopensshlpk = $(RUNTIME_DEP_PKGS_CSWopenUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
-	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
-	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
-	CONFIGURE_ARGS += --with-ldap
-	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
-	
-	# wepenssh-client description to avoid a bug in the automatic dependancy generation
-	SPKG_DESC_CSWopenssh-n
-	SPKG_DESC_CSWosshclient = 
+EXTRA_LD_OPTIONS = -z nolazyloshclient = 
 endif
 
 
