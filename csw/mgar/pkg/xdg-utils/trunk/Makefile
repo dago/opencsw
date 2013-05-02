@@ -22,6 +22,8 @@ CONFIGURE_ARGS	=	$(DIRPATHS)
 
 TEST_SCRIPTS	=	custom
 
+ARCHALL	=	1
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
