@@ -1,0 +1,27 @@
+From 4e73d080ec9bb36465a37e91ff7f9a67aa497f03 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 9 Jan 2013 15:38:32 +0100
+Subject: [PATCH 5/6] _XOPEN_SOURCE hides non-standard stuff, __EXTENSIONS__
+ brings them back
+
+---
+ src/tracker-extract/tracker-main.c |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/tracker-extract/tracker-main.c b/src/tracker-extract/tracker-main.c
+index 7773ebe..3cecd32 100644
+--- a/src/tracker-extract/tracker-main.c
++++ b/src/tracker-extract/tracker-main.c
+@@ -21,6 +21,9 @@
+ #include "config.h"
+ 
+ #define _XOPEN_SOURCE
++#ifndef __EXTENSIONS__
++#define __EXTENSIONS__
++#endif
+ #include <time.h>
+ #include <stdlib.h>
+ #include <locale.h>
+-- 
+1.7.9.2
+
