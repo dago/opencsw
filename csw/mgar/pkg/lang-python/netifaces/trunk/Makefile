@@ -20,6 +20,7 @@ BUILD_DEP_PKGS	=	CSWpysetuptools
 CONFIGURE_ARGS	=	$(DIRPATHS)
 
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
+CHECKPKG_OVERRIDES_CSWpy-netifaces += surplus-dependency|CSWpython
 
 include gar/category.mk
 
