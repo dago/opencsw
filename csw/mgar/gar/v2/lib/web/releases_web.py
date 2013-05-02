@@ -19,6 +19,7 @@ from lib.python import common_constants
 import datetime
 import hashlib
 import logging
+import tempfile
 
 
 urls = (
@@ -74,7 +75,18 @@ class Srv4List(object):
       try:
         srv4 = models.Srv4FileStats.selectBy(md5_sum=data_md5_sum).getOne()
         if srv4.use_to_generate_catalogs:
-          SaveToAllpkgs(basename, x['srv4_file'].value)
+          # FieldStorage by default unlinks the temporary local file as soon as
+          # it's been opened. Therefore, we have to take care of writing data
+          # to the target location in an atomic way.
+          fd, tmp_filename = tempfile.mkstemp(dir=ALLPKGS_DIR)
+          x['srv4_file'].file.seek(0)
+          data = x['srv4_file'].file.read(chunk_size)
+          while data:
+            os.write(fd, data)
+            data = x['srv4_file'].file.read(chunk_size)
+          os.close(fd)
+          target_path = os.path.join(ALLPKGS_DIR, basename)
+          os.rename(tmp_filename, target_path)
       except sqlobject.main.SQLObjectNotFound, e:
         messages.append("File %s not found in the db." % data_md5_sum)
     else:
@@ -252,23 +264,6 @@ class Srv4CatalogAssignment(object):
     })
     web.header('Content-Length', len(response))
     raise web.notacceptable(data=response)
-
-
-def SaveToAllpkgs(basename, data):
-  """Saves a file to allpkgs."""
-  target_path = os.path.join(ALLPKGS_DIR, basename)
-  fd = None
-  try:
-    try:
-      os.unlink(target_path)
-    except OSError, e:
-      # It's okay if we can't unlink the file
-      pass
-    fd = os.open(target_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0644)
-    os.write(fd, data)
-  except IOError, e:
-    if fd:
-      os.close(fd)
 
 
 web.webapi.internalerror = web.debugerror
