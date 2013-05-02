@@ -1,0 +1,36 @@
+From 6c8d1ff8a1e0e938aa3433661de558eadb5e75f5 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 9 Jan 2013 15:37:43 +0100
+Subject: [PATCH 4/6] Replace uuid_unparse_lower() with uuid_unparse()
+
+---
+ src/libtracker-sparql/tracker-utils.vala |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/libtracker-sparql/tracker-utils.vala b/src/libtracker-sparql/tracker-utils.vala
+index 9b62dce..e23a59c 100644
+--- a/src/libtracker-sparql/tracker-utils.vala
++++ b/src/libtracker-sparql/tracker-utils.vala
+@@ -89,8 +89,8 @@ namespace Tracker.Sparql {
+ 	[CCode (cname = "uuid_generate")]
+ 	private extern static void uuid_generate ([CCode (array_length = false)] uchar[] uuid);
+ 
+-	[CCode (cname = "uuid_unparse_lower")]
+-	private extern static void uuid_unparse_lower ([CCode (array_length = false)] uchar[] uuid, char* out);
++	[CCode (cname = "uuid_unparse")]
++	private extern static void uuid_unparse ([CCode (array_length = false)] uchar[] uuid, char* out);
+ 
+ 	/**
+ 	 * tracker_sparql_get_uuid_urn:
+@@ -110,7 +110,7 @@ namespace Tracker.Sparql {
+ 		string lower = (string) new char[37];
+ 
+ 		uuid_generate (base_uuid);
+-		uuid_unparse_lower (base_uuid, (char *) lower);
++		uuid_unparse (base_uuid, (char *) lower);
+ 
+ 		// generate uuid
+ 		return "urn:uuid:%s".printf (lower);
+-- 
+1.7.9.2
+
