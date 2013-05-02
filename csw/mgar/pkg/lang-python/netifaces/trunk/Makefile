@@ -19,5 +19,7 @@ BUILD_DEP_PKGS	=	CSWpysetuptools
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 
+RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
+
 include gar/category.mk
 
