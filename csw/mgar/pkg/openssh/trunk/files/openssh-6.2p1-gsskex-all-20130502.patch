@@ -123,8 +123,8 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/Makefile.in openssh-5.8p1.
  	monitor_fdpass.o rijndael.o ssh-dss.o ssh-ecdsa.o ssh-rsa.o dh.o \
  	kexdh.o kexgex.o kexdhc.o kexgexc.o bufec.o kexecdh.o kexecdhc.o \
 +	kexgssc.o \
- 	msg.o progressmeter.o dns.o entropy.o gss-genr.o umac.o jpake.o \
- 	schnorr.o ssh-pkcs11.o
+ 	msg.o progressmeter.o dns.o entropy.o gss-genr.o umac.o umac128.o \
+ 	jpake.o schnorr.o ssh-pkcs11.o kr1.o
  
 @@ -91,7 +92,7 @@
  	auth2-none.o auth2-passwd.o auth2-pubkey.o auth2-jpake.o \
@@ -2076,15 +2076,17 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.ne
 diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.h openssh-5.8p1.new/monitor.h
 --- openssh-5.8p1/monitor.h	2008-11-05 06:20:46.000000000 +0100
 +++ openssh-5.8p1.new/monitor.h	2011-02-12 18:07:11.311728071 +0100
-@@ -53,6 +53,8 @@
- 	MONITOR_REQ_GSSSTEP, MONITOR_ANS_GSSSTEP,
- 	MONITOR_REQ_GSSUSEROK, MONITOR_ANS_GSSUSEROK,
- 	MONITOR_REQ_GSSCHECKMIC, MONITOR_ANS_GSSCHECKMIC,
-+	MONITOR_REQ_GSSSIGN, MONITOR_ANS_GSSSIGN,
-+	MONITOR_REQ_GSSUPCREDS, MONITOR_ANS_GSSUPCREDS,
- 	MONITOR_REQ_PAM_START,
- 	MONITOR_REQ_PAM_ACCOUNT, MONITOR_ANS_PAM_ACCOUNT,
- 	MONITOR_REQ_PAM_INIT_CTX, MONITOR_ANS_PAM_INIT_CTX,
+@@ -53,6 +53,9 @@
+	MONITOR_REQ_JPAKE_STEP2 = 56, MONITOR_ANS_JPAKE_STEP2 = 57,
+	MONITOR_REQ_JPAKE_KEY_CONFIRM = 58, MONITOR_ANS_JPAKE_KEY_CONFIRM = 59,
+	MONITOR_REQ_JPAKE_CHECK_CONFIRM = 60, MONITOR_ANS_JPAKE_CHECK_CONFIRM = 61,
++
++	MONITOR_REQ_GSSSIGN = 62, MONITOR_ANS_GSSSIGN = 63,
++	MONITOR_REQ_GSSUPCREDS = 64, MONITOR_ANS_GSSUPCREDS = 65,
+
+	MONITOR_REQ_PAM_START = 100,
+	MONITOR_REQ_PAM_ACCOUNT = 102, MONITOR_ANS_PAM_ACCOUNT = 103,
+	MONITOR_REQ_PAM_INIT_CTX = 104, MONITOR_ANS_PAM_INIT_CTX = 105,
 diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor_wrap.c openssh-5.8p1.new/monitor_wrap.c
 --- openssh-5.8p1/monitor_wrap.c	2010-08-31 14:41:14.000000000 +0200
 +++ openssh-5.8p1.new/monitor_wrap.c	2011-02-12 18:07:11.359631731 +0100
