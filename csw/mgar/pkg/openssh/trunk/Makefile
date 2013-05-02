@@ -32,6 +32,7 @@ endpenssh CSWopenssh-client
 
 CATALOGNAME_CSWopenssh = openssh
 SPKG_DESC_CSWopenssh = OpenSSH Secure Shell server 
+BUILD_DEP_PKGS = CSWautoconf CSWlibssl-dev CSWlibz-dev
 RUNTIME_DEP_PKGS_CSWopenssh = CSWlibssl1-0-0 CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWopenssh-client
 
 OBSOLETED_BY_CSWopenssh = CSWossh
