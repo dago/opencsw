@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = python-cjson
-VERSION = 1.0.5
+VERSION = 1.0.3x7
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Very fast JSON encoder/decoder
@@ -14,8 +14,8 @@ define BLURB
 	google-gflags, or for a Python app that, via swig or some other means, is
 	linked with a C++ app that uses google-gflags.
 endef
-SPKG_SOURCEURL = http://code.google.com/p/python-gflags/
-DISTNAME = $(NAME)-$(VERSION)
+VENDOR_URL = http://python.cx.hu/python-cjson/
+MASTER_SITES = http://python.cx.hu/python-cjson/
 DISTFILES  = $(DISTNAME).tar.gz
 TEST_SCRIPTS =
 
