@@ -1,0 +1,36 @@
+From a03430e9e6b9f9a83902e652cad6d06d3931ce3e Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Thu, 2 May 2013 10:28:11 +0200
+Subject: [PATCH 3/3] Fix misspelled compiler variable
+
+---
+ configure | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index f34f304..3bbb206 100755
+--- a/configure
++++ b/configure
+@@ -17413,7 +17413,7 @@ fi
+ 
+ 
+ CFLAGS="$save_CFLAGS"
+-LDLFLAGS="$save_LDLFLAGS"
++LDFLAGS="$save_LDFLAGS"
+ LIBS="$save_LIBS"
+ 
+ 
+@@ -21818,8 +21818,8 @@ $as_echo "        CFLAGS = $ZEROCONF_CFLAGS" >&6; }
+ 	if test x"$netatalk_cv_ldap" = x"yes"; then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result:     LDAP:" >&5
+ $as_echo "    LDAP:" >&6; }
+-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result:         LIBS   = $LDAP_LDLFLAGS $LDAP_LIBS" >&5
+-$as_echo "        LIBS   = $LDAP_LDLFLAGS $LDAP_LIBS" >&6; }
++		{ $as_echo "$as_me:${as_lineno-$LINENO}: result:         LIBS   = $LDAP_LDFLAGS $LDAP_LIBS" >&5
++$as_echo "        LIBS   = $LDAP_LDFLAGS $LDAP_LIBS" >&6; }
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result:         CFLAGS = $LDAP_CFLAGS" >&5
+ $as_echo "        CFLAGS = $LDAP_CFLAGS" >&6; }
+ 	fi
+-- 
+1.8.1.4
+

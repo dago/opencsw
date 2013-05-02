@@ -1,0 +1,181 @@
+From fa8a635cd0894ee40d05d41482608707b5b2419c Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Thu, 2 May 2013 10:23:02 +0200
+Subject: [PATCH] Fix use of unnamed union inside struct
+
+---
+ include/atalk/dsi.h         | 2 +-
+ libatalk/dsi/dsi_close.c    | 2 +-
+ libatalk/dsi/dsi_cmdreply.c | 2 +-
+ libatalk/dsi/dsi_getsess.c  | 6 +++---
+ libatalk/dsi/dsi_getstat.c  | 2 +-
+ libatalk/dsi/dsi_opensess.c | 2 +-
+ libatalk/dsi/dsi_read.c     | 2 +-
+ libatalk/dsi/dsi_stream.c   | 6 +++---
+ libatalk/dsi/dsi_tcp.c      | 2 +-
+ libatalk/dsi/dsi_write.c    | 2 +-
+ 10 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/include/atalk/dsi.h b/include/atalk/dsi.h
+index fc1af46..c31b522 100644
+--- a/include/atalk/dsi.h
++++ b/include/atalk/dsi.h
+@@ -48,7 +48,7 @@ struct dsi_block {
+     union {
+         uint32_t dsi_code;   /* error code */
+         uint32_t dsi_doff;   /* data offset */
+-    };
++    } dsi_data;
+     uint32_t dsi_len;        /* total data length */
+     uint32_t dsi_reserved;   /* reserved field */
+ };
+diff --git a/libatalk/dsi/dsi_close.c b/libatalk/dsi/dsi_close.c
+index 892b982..199954f 100644
+--- a/libatalk/dsi/dsi_close.c
++++ b/libatalk/dsi/dsi_close.c
+@@ -21,7 +21,7 @@ void dsi_close(DSI *dsi)
+       dsi->header.dsi_flags = DSIFL_REQUEST;
+       dsi->header.dsi_command = DSIFUNC_CLOSE;
+       dsi->header.dsi_requestID = htons(dsi_serverID(dsi));
+-      dsi->header.dsi_code = dsi->header.dsi_reserved = htonl(0);
++      dsi->header.dsi_data.dsi_code = dsi->header.dsi_reserved = htonl(0);
+       dsi->cmdlen = 0; 
+       dsi_send(dsi);
+       dsi->proto_close(dsi);
+diff --git a/libatalk/dsi/dsi_cmdreply.c b/libatalk/dsi/dsi_cmdreply.c
+index 5b0d627..04d1708 100644
+--- a/libatalk/dsi/dsi_cmdreply.c
++++ b/libatalk/dsi/dsi_cmdreply.c
+@@ -25,7 +25,7 @@ int dsi_cmdreply(DSI *dsi, const int err)
+ 
+     dsi->header.dsi_flags = DSIFL_REPLY;
+     dsi->header.dsi_len = htonl(dsi->datalen);
+-    dsi->header.dsi_code = htonl(err);
++    dsi->header.dsi_data.dsi_code = htonl(err);
+ 
+     ret = dsi_stream_send(dsi, dsi->data, dsi->datalen);
+ 
+diff --git a/libatalk/dsi/dsi_getsess.c b/libatalk/dsi/dsi_getsess.c
+index 38477be..a928d34 100644
+--- a/libatalk/dsi/dsi_getsess.c
++++ b/libatalk/dsi/dsi_getsess.c
+@@ -65,9 +65,9 @@ int dsi_getsession(DSI *dsi, server_child_t *serv_children, int tickleval, afp_c
+       LOG(log_error, logtype_dsi, "dsi_getsess: %s", strerror(errno));
+       close(ipc_fds[0]);
+       dsi->header.dsi_flags = DSIFL_REPLY;
+-      dsi->header.dsi_code = DSIERR_SERVBUSY;
++      dsi->header.dsi_data.dsi_code = DSIERR_SERVBUSY;
+       dsi_send(dsi);
+-      dsi->header.dsi_code = DSIERR_OK;
++      dsi->header.dsi_data.dsi_code = DSIERR_OK;
+       kill(pid, SIGKILL);
+     }
+     dsi->proto_close(dsi);
+@@ -81,7 +81,7 @@ int dsi_getsession(DSI *dsi, server_child_t *serv_children, int tickleval, afp_c
+       (dsi->header.dsi_command == DSIFUNC_OPEN)) {
+     LOG(log_info, logtype_dsi, "dsi_getsess: too many connections");
+     dsi->header.dsi_flags = DSIFL_REPLY;
+-    dsi->header.dsi_code = DSIERR_TOOMANY;
++    dsi->header.dsi_data.dsi_code = DSIERR_TOOMANY;
+     dsi_send(dsi);
+     exit(EXITERR_CLNT);
+   }
+diff --git a/libatalk/dsi/dsi_getstat.c b/libatalk/dsi/dsi_getstat.c
+index dac4f76..4be9b80 100644
+--- a/libatalk/dsi/dsi_getstat.c
++++ b/libatalk/dsi/dsi_getstat.c
+@@ -20,7 +20,7 @@ void dsi_getstatus(DSI *dsi)
+ {
+   dsi->header.dsi_flags = DSIFL_REPLY;
+   /*dsi->header.dsi_command = DSIFUNC_STAT;*/
+-  dsi->header.dsi_code = dsi->header.dsi_reserved = 0;
++  dsi->header.dsi_data.dsi_code = dsi->header.dsi_reserved = 0;
+   
+   memcpy(dsi->commands, dsi->status, dsi->statuslen);
+   dsi->cmdlen = dsi->statuslen; 
+diff --git a/libatalk/dsi/dsi_opensess.c b/libatalk/dsi/dsi_opensess.c
+index a2dcb4c..2945f9b 100644
+--- a/libatalk/dsi/dsi_opensess.c
++++ b/libatalk/dsi/dsi_opensess.c
+@@ -44,7 +44,7 @@ void dsi_opensession(DSI *dsi)
+   /* let the client know the server quantum. we don't use the
+    * max server quantum due to a bug in appleshare client 3.8.6. */
+   dsi->header.dsi_flags = DSIFL_REPLY;
+-  dsi->header.dsi_code = 0;
++  dsi->header.dsi_data.dsi_code = 0;
+   /* dsi->header.dsi_command = DSIFUNC_OPEN;*/
+ 
+   dsi->cmdlen = 2 * (2 + sizeof(i)); /* length of data. dsi_send uses it. */
+diff --git a/libatalk/dsi/dsi_read.c b/libatalk/dsi/dsi_read.c
+index a0cbd87..31ee3bd 100644
+--- a/libatalk/dsi/dsi_read.c
++++ b/libatalk/dsi/dsi_read.c
+@@ -31,7 +31,7 @@ ssize_t dsi_readinit(DSI *dsi, void *buf, const size_t buflen, const size_t size
+     dsi->flags |= DSI_NOREPLY; /* we will handle our own replies */
+     dsi->header.dsi_flags = DSIFL_REPLY;
+     dsi->header.dsi_len = htonl(size);
+-    dsi->header.dsi_code = htonl(err);
++    dsi->header.dsi_data.dsi_code = htonl(err);
+ 
+     dsi->in_write++;
+     if (dsi_stream_send(dsi, buf, buflen)) {
+diff --git a/libatalk/dsi/dsi_stream.c b/libatalk/dsi/dsi_stream.c
+index 05c36fc..afce54e 100644
+--- a/libatalk/dsi/dsi_stream.c
++++ b/libatalk/dsi/dsi_stream.c
+@@ -45,7 +45,7 @@ static void dsi_header_pack_reply(const DSI *dsi, char *buf)
+     buf[0] = dsi->header.dsi_flags;
+     buf[1] = dsi->header.dsi_command;
+     memcpy(buf + 2, &dsi->header.dsi_requestID, sizeof(dsi->header.dsi_requestID));           
+-    memcpy(buf + 4, &dsi->header.dsi_code, sizeof(dsi->header.dsi_code));
++    memcpy(buf + 4, &dsi->header.dsi_data.dsi_code, sizeof(dsi->header.dsi_data.dsi_code));
+     memcpy(buf + 8, &dsi->header.dsi_len, sizeof(dsi->header.dsi_len));
+     memcpy(buf + 12, &dsi->header.dsi_reserved, sizeof(dsi->header.dsi_reserved));
+ }
+@@ -366,7 +366,7 @@ ssize_t dsi_stream_read_file(DSI *dsi, const int fromfd, off_t offset, const siz
+     dsi->flags |= DSI_NOREPLY;
+     dsi->header.dsi_flags = DSIFL_REPLY;
+     dsi->header.dsi_len = htonl(length);
+-    dsi->header.dsi_code = htonl(err);
++    dsi->header.dsi_data.dsi_code = htonl(err);
+     dsi_header_pack_reply(dsi, block);
+ 
+ #ifdef HAVE_SENDFILEV
+@@ -615,7 +615,7 @@ int dsi_stream_receive(DSI *dsi)
+       return 0;
+ 
+   memcpy(&dsi->header.dsi_requestID, block + 2, sizeof(dsi->header.dsi_requestID));
+-  memcpy(&dsi->header.dsi_code, block + 4, sizeof(dsi->header.dsi_code));
++  memcpy(&dsi->header.dsi_data.dsi_code, block + 4, sizeof(dsi->header.dsi_data.dsi_code));
+   memcpy(&dsi->header.dsi_len, block + 8, sizeof(dsi->header.dsi_len));
+   memcpy(&dsi->header.dsi_reserved, block + 12, sizeof(dsi->header.dsi_reserved));
+   dsi->clientID = ntohs(dsi->header.dsi_requestID);
+diff --git a/libatalk/dsi/dsi_tcp.c b/libatalk/dsi/dsi_tcp.c
+index f73147a..731252e 100644
+--- a/libatalk/dsi/dsi_tcp.c
++++ b/libatalk/dsi/dsi_tcp.c
+@@ -209,7 +209,7 @@ static pid_t dsi_tcp_open(DSI *dsi)
+         dsi->header.dsi_command = block[1];
+         memcpy(&dsi->header.dsi_requestID, block + 2,
+                sizeof(dsi->header.dsi_requestID));
+-        memcpy(&dsi->header.dsi_code, block + 4, sizeof(dsi->header.dsi_code));
++        memcpy(&dsi->header.dsi_data.dsi_code, block + 4, sizeof(dsi->header.dsi_data.dsi_code));
+         memcpy(&dsi->header.dsi_len, block + 8, sizeof(dsi->header.dsi_len));
+         memcpy(&dsi->header.dsi_reserved, block + 12,
+                sizeof(dsi->header.dsi_reserved));
+diff --git a/libatalk/dsi/dsi_write.c b/libatalk/dsi/dsi_write.c
+index 65a479e..dc35caf 100644
+--- a/libatalk/dsi/dsi_write.c
++++ b/libatalk/dsi/dsi_write.c
+@@ -32,7 +32,7 @@ size_t dsi_writeinit(DSI *dsi, void *buf, const size_t buflen _U_)
+ 
+   /* figure out how much data we have. do a couple checks for 0 
+    * data */
+-  header = ntohl(dsi->header.dsi_doff);
++  header = ntohl(dsi->header.dsi_data.dsi_doff);
+   dsi->datasize = header ? ntohl(dsi->header.dsi_len) - header : 0;
+ 
+   if (dsi->datasize > 0) {
+-- 
+1.8.1.4
+
