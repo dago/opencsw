@@ -58,9 +58,14 @@ class Srv4List(object):
     web.header(
         'Content-type',
         'application/x-vnd.opencsw.pkg;type=upload-results')
-    hash = hashlib.md5()
-    hash.update(x['srv4_file'].value)
-    data_md5_sum = hash.hexdigest()
+    file_hash = hashlib.md5()
+    # Don't read the whole file into memory at once, do it in small chunks.
+    chunk_size = 2 * 1024 * 1024
+    data = x['srv4_file'].file.read(chunk_size)
+    while data:
+      file_hash.update(data)
+      data = x['srv4_file'].file.read(chunk_size)
+    data_md5_sum = file_hash.hexdigest()
     declared_md5_sum = x['md5_sum']
     basename = x['basename']
     save_attempt = False
