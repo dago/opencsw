@@ -1,2 +1,2 @@
 #!/bin/sh
-svccfg import /var/opt/csw/svc/manifest/network/netatalk.xml
+chroot ${PKG_INSTALL_ROOT:-/} /usr/sbin/svccfg import /var/opt/csw/svc/manifest/network/netatalk.xml > /dev/null 2>&1

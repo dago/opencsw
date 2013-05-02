@@ -1,2 +1,2 @@
 #!/bin/sh
-svccfg delete netatalk
+chroot ${PKG_INSTALL_ROOT:-/} /usr/sbin/svccfg delete -f netatalk
