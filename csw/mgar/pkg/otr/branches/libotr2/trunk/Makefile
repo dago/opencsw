@@ -14,20 +14,21 @@ PATCHFILES += heartbeat.patch
 
 PACKAGES += CSWlibotr2
 CATALOGNAME_CSWlibotr2 = libotr2
+SPKG_DESC_CSWlibotr2  += $(DESCRIPTION), libotr.so.2
 PKGFILES_CSWlibotr2 += $(call baseisadirs,$(libdir),libotr\.so\.2\.2\.1)
 PKGFILES_CSWlibotr2 += $(call baseisadirs,$(libdir),libotr\.so\.2(\.\d+)*)
-PKGFILES_CSWlibotr2 += $(bindir)/.*
-PKGFILES_CSWlibotr2 += $(mandir)/man.*
-SPKG_DESC_CSWlibotr2 += $(DESCRIPTION), libotr.so.2
-
-OBSOLETED_BY_CSWlibotr2 += CSWotr
 
 PACKAGES += CSWotr-dev
 CATALOGNAME_CSWotr-dev = otr_dev
-SPKG_DESC_CSWotr-dev += $(DESCRIPTION), development files
-# PKGFILES is catchall
+SPKG_DESC_CSWotr-dev  += $(DESCRIPTION), development files
+PKGFILES_CSWotr-dev += $(PKGFILES_DEVEL)
 
 OBSOLETED_BY_CSWotr-dev += CSWotrdevel
+
+PACKAGES += CSWotr
+CATALOGNAME_CSWotr = otr
+SPKG_DESC_CSWotr  += $(DESCRIPTION), utilities
+# PKGFILES is catchall
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
@@ -38,6 +39,10 @@ RUNTIME_DEP_PKGS_CSWlibotr2 += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWlibotr2 += CSWlibgpg-error0
 
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr2
+
+RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWotr += CSWlibotr2
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
