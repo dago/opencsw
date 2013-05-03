@@ -41,20 +41,29 @@ RUNTIME_DEP_PKGS_CSWqdbm-bin = CSWlibqdbm14
 PACKAGES += CSWlibqdbm14
 SPKG_DESC_CSWlibqdbm14 = QDBM - library
 PKGFILES_CSWlibqdbm14  = $(call baseisadirs,$(libdir),libqdbm\.so\.14(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibqdbm14  = CSWliblzo2-2
+RUNTIME_DEP_PKGS_CSWlibqdbm14 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibqdbm14 += CSWlibz1
 OBSOLETED_BY_CSWlibqdbm14 = CSWqdbm
 CHECKPKG_OVERRIDES_CSWlibqdbm14 += file-with-bad-content|/usr/local|root/opt/csw/lib/libqdbm.so.14.14.0
 CHECKPKG_OVERRIDES_CSWlibqdbm14 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libqdbm.so.14.14.0
+CHECKPKG_OVERRIDES_CSWlibqdbm14 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libqdbm.so.14.14.0
 
 PACKAGES += CSWlibqdbm-dev
 SPKG_DESC_CSWlibqdbm-dev = QDBM - development files
 RUNTIME_DEP_PKGS_CSWlibqdbm-dev = CSWlibqdbm14
 
+BUILD_DEP_PKGS  = CSWlibbz2-dev
+BUILD_DEP_PKGS += CSWliblzo-dev 
+BUILD_DEP_PKGS += CSWlibz-dev
+
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread 
-
-
+CONFIGURE_ARGS += --enable-zlib
+CONFIGURE_ARGS += --enable-lzo
+CONFIGURE_ARGS += --enable-bzip
 
 include gar/category.mk
 
