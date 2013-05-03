@@ -47,4 +47,8 @@ RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 
+# Strange issue with checkpkg makes it require those...
+CHECKPKG_OVERRIDES_CSWotr += surplus-dependency|CSWlibgpg-error0
+CHECKPKG_OVERRIDES_CSWlibotr2 += surplus-dependency|CSWlibgpg-error0
+
 include gar/category.mk
