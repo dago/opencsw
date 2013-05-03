@@ -30,6 +30,8 @@ TEST_SCRIPTS	=
 
 INSTALL_SCRIPTS	=	custom
 
+RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
