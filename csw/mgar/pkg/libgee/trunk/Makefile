@@ -12,10 +12,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.xz
+DISTFILES  = $(DISTNAME).tar.xz
 GARCOMPILER = GNU
 
-BUILD_DEP_PKGS += CSWvala CSWpkgconfig CSWglib2devel
+BUILD_DEP_PKGS += CSWvala
+BUILD_DEP_PKGS += CSWpkgconfig
+BUILD_DEP_PKGS += CSWglib2devel
+
 RUNTIME_DEP_PKGS += CSWglib2
 
 PACKAGES += CSWlibgee2
@@ -25,11 +28,10 @@ PKGFILES_CSWlibgee2 += $(call pkgfiles_lib,libgee.so)
 PACKAGES += CSWlibgee-dev
 SPKG_DESC_CSWlibgee-dev = $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibgee-dev += CSWlibgee2
-PKGFILES_CSWlibgee-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibgee-dev += $(call baseisadirs,$(datadir),vala/vapi/gee-1\.0\.vapi)
+# PKGFILES is catchall
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_SCRIPTS =
+# Testsuite runs 10 mins, please SKIPTEST as needed
 
 include gar/category.mk
-
