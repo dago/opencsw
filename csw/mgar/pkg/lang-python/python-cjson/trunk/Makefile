@@ -19,6 +19,11 @@ MASTER_SITES = http://python.cx.hu/python-cjson/
 DISTFILES  = $(DISTNAME).tar.gz
 TEST_SCRIPTS =
 
+# This package is used for package building, therefore must be packaged for
+# all platforms where we build packages.
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
+
 RUNTIME_DEP_PKGS_CSWpy-cjson += CSWlibpython2-6-1-0
 CHECKPKG_OVERRIDES_CSWpy-cjson += surplus-dependency|CSWpython
 
