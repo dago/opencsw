@@ -1,0 +1,39 @@
+From f53fa00b45802e0cb073a96e870d83605ceb001a Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 2 May 2013 13:07:20 +0200
+Subject: [PATCH] Adjusting compiler flags for C/C++ libs.
+
+---
+ Makefile.in      |    2 +-
+ plus/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 384146b..5232058 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -56,7 +56,7 @@ CPPFLAGS = @CPPFLAGS@ -I$(srcdir) -I$(MYHEADDIR) \
+   -D_XOPEN_SOURCE_EXTENDED=1 -D_GNU_SOURCE=1 -D__EXTENSIONS__=1 -D_HPUX_SOURCE=1 \
+   -D_POSIX_MAPPED_FILES=1 -D_POSIX_SYNCHRONIZED_IO=1 \
+   -DPIC=1 -D_THREAD_SAFE=1 -D_REENTRANT=1 -DNDEBUG
+-CFLAGS = -Wall -pedantic -fPIC -fsigned-char -O3 -fomit-frame-pointer -fforce-addr @MYOPTS@
++CFLAGS = -KPIC -O3 @CFLAGS@
+ LD = @LD@
+ LIBS = -lqdbm @LIBS@
+ LIBLDFLAGS = @LDFLAGS@ -L. -L$(MYLIBDIR) -L$(HOME)/lib -L/usr/local/lib @LIBS@
+diff --git a/plus/Makefile.in b/plus/Makefile.in
+index a5fb9a2..edc2764 100644
+--- a/plus/Makefile.in
++++ b/plus/Makefile.in
+@@ -44,7 +44,7 @@ CPPFLAGS = @CPPFLAGS@ -I$(srcdir) -I$(srcdir)/.. -I$(MYHEADDIR) \
+   -D_XOPEN_SOURCE_EXTENDED=1 -D_GNU_SOURCE=1 -D__EXTENSIONS__=1 -D_HPUX_SOURCE=1 \
+   -D_POSIX_MAPPED_FILES=1 -D_POSIX_SYNCHRONIZED_IO=1 \
+   -DPIC=1 -D_THREAD_SAFE=1 -D_REENTRANT=1 -DNDEBUG
+-CXXFLAGS = -Wall -ansi -pedantic -fsigned-char -fPIC -O2 -fno-strict-aliasing @MYOPTS@
++CXXFLAGS = -KPIC @MYOPTS@
+ LD = @LD@
+ LIBS = -lqdbm @LIBS@
+ LIBLDFLAGS = @LDFLAGS@ -L. -L$(srcdir)/.. -L$(MYLIBDIR) \
+-- 
+1.7.10.3
+
