@@ -18,14 +18,17 @@ PKGFILES_CSWlibotr5 += $(bindir)/.*
 PKGFILES_CSWlibotr5 += $(mandir)/man.*
 SPKG_DESC_CSWlibotr5 += $(DESCRIPTION), libotr.so.5
 
-OBSOLETED_BY_CSWlibotr5 += CSWotr
-
 PACKAGES += CSWotr-dev
 CATALOGNAME_CSWotr-dev = otr_dev
 SPKG_DESC_CSWotr-dev += $(DESCRIPTION), development files
 # PKGFILES is catchall
 
 OBSOLETED_BY_CSWotr-dev += CSWotrdevel
+
+PACKAGES += CSWotr
+CATALOGNAME_CSWotr = otr
+SPKG_DESC_CSWotr  += $(DESCRIPTION), utilities
+# PKGFILES is catchall
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
@@ -40,7 +43,14 @@ CHECKPKG_OVERRIDES_CSWlibotr5 += surplus-dependency|CSWlibotr2
 
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr5
 
+RUNTIME_DEP_PKGS_CSWotr += CSWlibotr5
+RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
+
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
+
+# Remove after pushing to catalog
+CHECKPKG_OVERRIDES_CSWlibotr5 += dependency-on-nonexistent-package|CSWlibotr2
 
 include gar/category.mk
