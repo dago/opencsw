@@ -24,15 +24,21 @@ BUILD_DEP_PKGS += CSWlibffi-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 
-RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWlibiconv2
+RUNTIME_DEP_PKGS += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS += CSWpcre
-RUNTIME_DEP_PKGS += CSWlibffi
-RUNTIME_DEP_PKGS += CSWintltool
 RUNTIME_DEP_PKGS += CSWlibxslt
+RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS += CSWlibgobject2-0-0
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# Will fail with "error: Package `GLib-2.0' not found in specified Vala API directories or GObject-Introspection GIR directories"
 TEST_SCRIPTS =
+
+CHECKPKG_OVERRIDES_CSWvala += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libvala-0.20.so
+CHECKPKG_OVERRIDES_CSWvala += shared-lib-pkgname-mismatch|file=opt/csw/lib/libvala-0.20.so.0.0.0|soname=libvala-0.20.so.0|pkgname=CSWvala|expected=CSWlibvala0-20-0
 
 include gar/category.mk
 
