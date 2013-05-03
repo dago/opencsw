@@ -18,5 +18,12 @@ BUILD_DEP_PKGS	=	CSWpysetuptools
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 
+TEST_SCRIPTS	=	non-stop
+
+ARCHALL	=	1
+
 include gar/category.mk
 
+test-non-stop:
+	-( cd $(WORKSRC) && $(TEST_ENV) python ./setup.py test $(TEST_ARGS) )
+	$(MAKECOOKIE)
