@@ -1,0 +1,22 @@
+From c4615bdabe5d9f1cf8457130cdcdd50cf49e814e Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Fri, 3 May 2013 14:37:07 +0200
+Subject: [PATCH] scan.pl-path
+
+---
+ scan.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scan.pl b/scan.pl
+index 3fce7a8..085be2e 100644
+--- a/scan.pl
++++ b/scan.pl
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#!/opt/csw/bin/perl
+ 
+ my $ignore_re = '^(' . join("|", 
+ 	qw(
+-- 
+1.8.1.4
+
