@@ -17,8 +17,8 @@ CATALOGNAME_CSWlibotr2 = libotr2
 PKGFILES_CSWlibotr2 += $(call baseisadirs,$(libdir),libotr\.so\.2\.2\.1)
 PKGFILES_CSWlibotr2 += $(call baseisadirs,$(libdir),libotr\.so\.2(\.\d+)*)
 PKGFILES_CSWlibotr2 += $(bindir)/.*
-PKGFILES_CSWlibotr2 += $(sharedir)/man/.*
-SPKG_DESC_CSWlibotr2 += $(DESCRIPTION), libotr.so.5
+PKGFILES_CSWlibotr2 += $(mandir)/man.*
+SPKG_DESC_CSWlibotr2 += $(DESCRIPTION), libotr.so.2
 
 OBSOLETED_BY_CSWlibotr2 += CSWotr
 
