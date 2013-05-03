@@ -22,6 +22,8 @@ TEST_SCRIPTS	=	non-stop
 
 ARCHALL	=	1
 
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/python/site-packages/tests.*
+
 include gar/category.mk
 
 test-non-stop:
