@@ -87,6 +87,8 @@ class Srv4List(object):
           os.close(fd)
           target_path = os.path.join(ALLPKGS_DIR, basename)
           os.rename(tmp_filename, target_path)
+          # Since mkstemp creates files with mode 0600 by default:
+          os.chmod(target_path, 0644)
       except sqlobject.main.SQLObjectNotFound, e:
         messages.append("File %s not found in the db." % data_md5_sum)
     else:
