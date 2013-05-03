@@ -40,9 +40,9 @@ RUNTIME_DEP_PKGS_CSWlibotr2 += CSWlibgpg-error0
 
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr2
 
+RUNTIME_DEP_PKGS_CSWotr += CSWlibotr2
 RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWotr += CSWlibotr2
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
