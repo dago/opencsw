@@ -12,16 +12,14 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES += CSWlibotr5
 CATALOGNAME_CSWlibotr5 = libotr5
+SPKG_DESC_CSWlibotr5  += $(DESCRIPTION), libotr.so.5
 PKGFILES_CSWlibotr5 += $(call baseisadirs,$(libdir),libotr\.so\.5\.0\.0)
 PKGFILES_CSWlibotr5 += $(call baseisadirs,$(libdir),libotr\.so\.5(\.\d+)*)
-PKGFILES_CSWlibotr5 += $(bindir)/.*
-PKGFILES_CSWlibotr5 += $(mandir)/man.*
-SPKG_DESC_CSWlibotr5 += $(DESCRIPTION), libotr.so.5
 
 PACKAGES += CSWotr-dev
 CATALOGNAME_CSWotr-dev = otr_dev
 SPKG_DESC_CSWotr-dev += $(DESCRIPTION), development files
-# PKGFILES is catchall
+PKGFILES_CSWotr-dev += $(PKGFILES_DEVEL)
 
 OBSOLETED_BY_CSWotr-dev += CSWotrdevel
 
@@ -44,8 +42,6 @@ CHECKPKG_OVERRIDES_CSWlibotr5 += surplus-dependency|CSWlibotr2
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr5
 
 RUNTIME_DEP_PKGS_CSWotr += CSWlibotr5
-RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
