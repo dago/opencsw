@@ -285,7 +285,7 @@ class Indexer(object):
     if uname_option:
       args.append(uname_option)
     # TODO: Don't fork during unit tests
-    ret, stdout, unused_stderr = shell.ShellCommand(args)
+    ret, stdout, unused_stderr = shell.ShellCommand(args, allow_error=True)
     if ret:
       raise SubprocessError("Running uname has failed.")
     return stdout.strip()

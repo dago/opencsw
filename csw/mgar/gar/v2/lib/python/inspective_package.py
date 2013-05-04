@@ -192,7 +192,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
       # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
       args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
-      retcode, stdout, stderr = shell.ShellCommand(args)
+      retcode, stdout, stderr = shell.ShellCommand(args, allow_error=True)
       if retcode:
         logging.error("%s returned an error: %s", args, stderr)
         # Should it just skip over an error?
@@ -234,7 +234,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         binary = os.path.join(base_dir, binary)
       # elfdump is the only tool that give us all informations
       args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
-      retcode, stdout, stderr = shell.ShellCommand(args)
+      retcode, stdout, stderr = shell.ShellCommand(args, allow_error=True)
       if retcode or stderr:
         # we ignore for now these elfdump errors which can be catched
         # later by check functions,
@@ -350,7 +350,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
       args = ["ldd", "-Ur", binary_abspath]
       # ldd can be stuck while ran on a some binaries, so we define
       # a timeout (problem encountered with uconv)
-      retcode, stdout, stderr = shell.ShellCommand(args, timeout=10)
+      retcode, stdout, stderr = shell.ShellCommand(args, timeout=10, allow_error=True)
       if retcode:
         # There three cases where we will ignore an ldd error
         #  - if we are trying to analyze a 64 bits binary on a Solaris 9 x86
