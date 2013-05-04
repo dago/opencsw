@@ -125,8 +125,8 @@ class CswSrv4File(object):
     if not self.pkgname:
       gunzipped_path = self.GetGunzippedPath()
       args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
-      shell.ShellCommand(args)
-      retcode, stdout, stderr = self.pkgname = stdout.strip()
+      retcode, stdout, stderr = shell.ShellCommand(args)
+      self.pkgname = stdout.strip()
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
 
