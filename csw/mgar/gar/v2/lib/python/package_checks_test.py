@@ -499,11 +499,11 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
     self.pkg_data["depends"] = (("CSWfoo", None),(u"CSWcommon", ""))
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["binaries_elf_info"]['opt/csw/bin/sparcv8/rsync'] = {
-	'version definition': [],
-	'version needed': [],
-	'symbol table': [
-		{ 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
-		]
+      'version definition': [],
+      'version needed': [],
+      'symbol table': [
+        { 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
+      ]
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
        u'/opt/csw/lib': [u'CSWfoo'],
@@ -534,11 +534,11 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
     self.pkg_data["depends"] = (("CSWbad", None),(u"CSWcommon", ""))
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["binaries_elf_info"]['opt/csw/bin/sparcv8/rsync'] = {
-	'version definition': [],
-	'version needed': [],
-	'symbol table': [
-		{ 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
-	]
+      'version definition': [],
+      'version needed': [],
+      'symbol table': [
+        { 'soname': 'libdb-4.7.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
+      ]
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
        u'/opt/csw/bdb47/lib':         [u'CSWbad'],
@@ -569,13 +569,13 @@ class TestCheckLibraries(CheckTestHelper, unittest.TestCase):
     self.pkg_data["depends"] = (("CSWbad", None),(u"CSWcommon", ""))
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["binaries_elf_info"]['opt/csw/bin/sparcv8/rsync'] = {
-        'version definition': [],
-	'version needed': [],
-	'symbol table': [{ 'symbol': 'foo',
-		           'soname': 'libdb-4.7.so',
-			   'bind': 'GLOB',
-			   'shndx': 'UNDEF',
-			   'flags': 'DBL' }],
+      'version definition': [],
+      'version needed': [],
+      'symbol table': [{ 'symbol': 'foo',
+                         'soname': 'libdb-4.7.so',
+                         'bind': 'GLOB',
+                         'shndx': 'UNDEF',
+                         'flags': 'DBL' }],
     }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
        u'/opt/csw/bdb47/lib':         [u'CSWbad'],
@@ -615,16 +615,15 @@ class TestLibmLinking(CheckTestHelper, unittest.TestCase):
     self.pkg_data["depends"] = ((u"CSWcommon", ""),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["binaries_elf_info"] = {
-	'opt/csw/bin/sparcv8/rsync': {
-		'version definition': [],
-		'version needed': [],
-		'symbol table': [
-			{ 'soname': 'libm.so.2', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
-			]
-		}
-	}
-    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libm.so.2').AndReturn({
-    })
+      'opt/csw/bin/sparcv8/rsync': {
+        'version definition': [],
+        'version needed': [],
+        'symbol table': [
+          { 'soname': 'libm.so.2', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
+        ]
+      }
+    }
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libm.so.2').AndReturn({})
     self.error_mgr_mock.GetPkgByPath(
         '/opt/csw/share/man').AndReturn(["CSWcommon"])
     self.error_mgr_mock.GetPkgByPath(
@@ -666,15 +665,18 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
                                 }],
         'depends': (('CSWlibfoo', None),),
         'isalist': (),
-	'ldd_info': { 'opt/csw/bin/bar': [] },
-	'binaries_elf_info': { 'opt/csw/bin/bar': {
-		 		'version definition': [],
-				'version needed': [],
-				'symbol table': [
-					{ 'soname': 'libfoo.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
-					]
-				}
-			},
+        'ldd_info': { 'opt/csw/bin/bar': [] },
+        'binaries_elf_info': { 'opt/csw/bin/bar': {
+                                 'version definition': [],
+                                 'version needed': [],
+                                 'symbol table': [
+                                   { 'soname': 'libfoo.so.1',
+                                     'symbol': 'foo',
+                                     'flags': 'DBL',
+                                     'shndx': 'UNDEF',
+                                     'bind': 'GLOB' }]
+                                 }
+                             },
         'pkgmap': [],
         'files_metadata': [
                     {'endian': 'Little endian',
@@ -691,7 +693,7 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
         'binaries_dump_info': [],
         'depends': [],
         'isalist': (),
-	       'ldd_info': {},
+        'ldd_info': {},
         'pkgmap': [],
       }
 
@@ -729,20 +731,24 @@ class TestSharedLibsOnlyIsalist(CheckTestHelper, unittest.TestCase):
         # 'depends': (),
         'depends': ((u"CSWcommon", ""),),
         'isalist': ('foo'),
-	'ldd_info': { 'opt/csw/bin/bar': [], 'opt/csw/lib/libfoo.so.1': []},
-	'binaries_elf_info': { 'opt/csw/bin/bar': {
-		 		'version definition': [],
-				'version needed': [],
-				'symbol table': [
-					{ 'soname': 'libfoo.so.1', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' },
-					]
-				},
-		            'opt/csw/lib/libfoo.so.1': {
-			     		'version definition': [],
-					'version needed': [],
-					'symbol table': [],
-					}
-			    },
+        'ldd_info': { 'opt/csw/bin/bar': [], 'opt/csw/lib/libfoo.so.1': []},
+        'binaries_elf_info': { 
+          'opt/csw/bin/bar': {
+            'version definition': [],
+            'version needed': [],
+            'symbol table': [
+              { 'soname': 'libfoo.so.1',
+                'symbol': 'foo',
+                'flags': 'DBL',
+                'shndx': 'UNDEF',
+                'bind': 'GLOB' },
+             ]},
+          'opt/csw/lib/libfoo.so.1': {
+            'version definition': [],
+            'version needed': [],
+            'symbol table': [],
+          }
+        },
         'pkgmap': [
           { 'path': '/opt/csw/lib/libfoo.so.1', },
           { 'path': '/opt/csw/bin/bar', },
@@ -770,14 +776,18 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["ldd_info"] = { 'opt/csw/lib/python/site-packages/foo.so': [] }
     self.pkg_data["binaries_elf_info"] = {
-	'opt/csw/lib/python/site-packages/foo.so': {
-		'version definition': [],
-		'version needed': [],
-		'symbol table': [
-			{ 'soname': 'libbar.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
-			]
-		}
-	}
+      'opt/csw/lib/python/site-packages/foo.so': {
+        'version definition': [],
+        'version needed': [],
+        'symbol table': [
+          { 'soname': 'libbar.so',
+              'symbol': 'foo',
+              'flags': 'DBL',
+              'shndx': 'UNDEF',
+              'bind': 'GLOB' }
+          ]
+        }
+    }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libbar.so').AndReturn({
        u'/opt/csw/lib': [u'CSWlibbar'],
        u'/opt/csw/lib/sparcv9': [u'CSWlibbar'],
@@ -806,14 +816,18 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.pkg_data["ldd_info"] = { 'opt/csw/lib/foo.so': [] }
     self.pkg_data["binaries_elf_info"] = {
-	'opt/csw/lib/foo.so': {
-		'version definition': [],
-		'version needed': [],
-		'symbol table': [
-			{ 'soname': 'libnotfound.so', 'symbol': 'foo', 'flags': 'DBL', 'shndx': 'UNDEF', 'bind': 'GLOB' }
-			]
-		}
-	}
+      'opt/csw/lib/foo.so': {
+        'version definition': [],
+        'version needed': [],
+        'symbol table': [
+            { 'soname': 'libnotfound.so',
+              'symbol': 'foo',
+              'flags': 'DBL',
+              'shndx': 'UNDEF',
+              'bind': 'GLOB' }
+          ]
+       }
+    }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename(
         'libnotfound.so').AndReturn({})
     self.error_mgr_mock.GetPkgByPath(
@@ -1466,8 +1480,8 @@ class TestCheckUnusedSoname(CheckTestHelper, unittest.TestCase):
 
 
     for common_path in ["/opt/csw/share/locale/it/LC_MESSAGES", "/opt/csw/bin",
-		        "/opt/csw/share/locale/en@quot/LC_MESSAGES", "/opt/csw/share/man",
-			"/opt/csw/share/doc", "/opt/csw/share/locale/es/LC_MESSAGES"]:
+                        "/opt/csw/share/locale/en@quot/LC_MESSAGES", "/opt/csw/share/man",
+                        "/opt/csw/share/doc", "/opt/csw/share/locale/es/LC_MESSAGES"]:
       self.error_mgr_mock.GetPkgByPath(common_path).AndReturn([u"CSWcommon"])
 
     for i in range(21):
@@ -1511,7 +1525,7 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
 
     for common_path in ["/opt/csw/share/man", "/var/opt/csw", "/opt/csw/sbin",
-		        "/opt/csw/share/doc", "/etc/opt/csw"]:
+        "/opt/csw/share/doc", "/etc/opt/csw"]:
       self.error_mgr_mock.GetPkgByPath(common_path).AndReturn([u"CSWcommon"])
 
     for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1',
@@ -1529,9 +1543,9 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
   def testDirectBindingNoSyminfo(self):
     self.pkg_data = vsftpd_stats
     self.pkg_data[0]['binaries_elf_info']['opt/csw/sbin/vsftpd'] = {
-     		'version definition': [],
-		'version needed': [],
-		'symbol table': [] }
+      'version definition': [],
+      'version needed': [],
+      'symbol table': [] }
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",)})
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libcrypto.so.1.0.0').AndReturn({
@@ -1559,12 +1573,12 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       "/opt/csw/lib/sparcv9": (u"CSWlibssl1-0-0",)})
 
     for common_path in ["/opt/csw/share/man", "/var/opt/csw", "/opt/csw/sbin",
-		        "/opt/csw/share/doc", "/etc/opt/csw"]:
+                        "/opt/csw/share/doc", "/etc/opt/csw"]:
       self.error_mgr_mock.GetPkgByPath(common_path).AndReturn([u"CSWcommon"])
 
     for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1',
-		    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
-		    'libc.so.1' ]:
+                    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
+                    'libc.so.1' ]:
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
