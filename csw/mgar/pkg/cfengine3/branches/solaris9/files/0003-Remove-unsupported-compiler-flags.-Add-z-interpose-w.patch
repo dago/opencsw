@@ -1,0 +1,58 @@
+From d90241098cefd342803b862c301757e222883404 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 9 Dec 2012 14:49:02 +0100
+Subject: [PATCH] Remove unsupported compiler flags. Add -z interpose where
+ necessary
+
+---
+ tests/unit/Makefile.am | 2 +-
+ tests/unit/Makefile.in | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/tests/unit/Makefile.am b/tests/unit/Makefile.am
+index a136082..a29890d 100644
+--- a/tests/unit/Makefile.am
++++ b/tests/unit/Makefile.am
+@@ -88,7 +88,7 @@ xml_writer_test_LDADD = libtest.la libstr.la
+ # instrumentation code uses fclose(3).
+ #
+ file_writer_test_SOURCES = file_writer_test.c gcov-stub.c
+-file_writer_test_CFLAGS = $(AM_CFLAGS) -fno-profile-arcs -fno-test-coverage
++file_writer_test_CFLAGS = $(AM_CFLAGS) 
+ file_writer_test_LDADD = libstr.la
+ file_writer_test_LDLFAGS =
+ 
+diff --git a/tests/unit/Makefile.in b/tests/unit/Makefile.in
+index 59b91dd..926d960 100644
+--- a/tests/unit/Makefile.in
++++ b/tests/unit/Makefile.in
+@@ -151,7 +151,7 @@ domainname_test_LDADD = $(LDADD)
+ domainname_test_DEPENDENCIES = ../../src/libpromises.la libtest.la
+ evalfunction_test_SOURCES = evalfunction_test.c
+ evalfunction_test_OBJECTS = evalfunction_test.$(OBJEXT)
+-evalfunction_test_LDADD = $(LDADD)
++evalfunction_test_LDADD = $(LDADD) -z interpose
+ evalfunction_test_DEPENDENCIES = ../../src/libpromises.la libtest.la
+ file_name_test_SOURCES = file_name_test.c
+ file_name_test_OBJECTS = file_name_test.$(OBJEXT)
+@@ -199,7 +199,7 @@ lastseen_test_OBJECTS = $(am_lastseen_test_OBJECTS)
+ lastseen_test_DEPENDENCIES = libdb.la
+ logging_test_SOURCES = logging_test.c
+ logging_test_OBJECTS = logging_test.$(OBJEXT)
+-logging_test_LDADD = $(LDADD)
++logging_test_LDADD = $(LDADD) -z interpose
+ logging_test_DEPENDENCIES = ../../src/libpromises.la libtest.la
+ map_test_SOURCES = map_test.c
+ map_test_OBJECTS = map_test.$(OBJEXT)
+@@ -601,7 +601,7 @@ xml_writer_test_LDADD = libtest.la libstr.la
+ # instrumentation code uses fclose(3).
+ #
+ file_writer_test_SOURCES = file_writer_test.c gcov-stub.c
+-file_writer_test_CFLAGS = $(AM_CFLAGS) -fno-profile-arcs -fno-test-coverage
++file_writer_test_CFLAGS = $(AM_CFLAGS) 
+ file_writer_test_LDADD = libstr.la
+ file_writer_test_LDLFAGS = 
+ db_test_SOURCES = db_test.c
+-- 
+1.8.0
+

@@ -1,0 +1,31 @@
+BCFEngine 3
+----------
+
+* The working directory is located at /var/opt/csw/cfengine3.
+
+* Upon first installation, a private/public key will be
+  auto-generated and stored in $(sys.workdir)/ppkeys.
+
+* Symlinks to /opt/csw/sbin/cf-agent, /opt/csw/sbin/cf-promises are
+  auto-created in $(sys.workdir)/bin.
+
+* Options to the daemons can be passed by using
+  /etc/opt/csw/cfengine3rc or /opt/csw/etc/cfengine3rc. The former
+  takes precedence over the latter.
+
+* By default, /etc/opt/csw/cfengine3rc defines a class `opencsw' for
+  cf-execd and cf-serverd.
+
+* CFengine has been compiled without support for PostgreSQL, MySQL,
+  and SQLite.
+
+* Restarting the daemons (especially cf-execd) in fast sequence may
+  lead to the service going in maintenance mode when using SMF (or
+  just not having the daemon started when using legacy startup
+  scritps). This is due to the locking mechanism used by CFEngine.
+
+* Starting with CFEngine 3.3.0, support for Berkeley DB was dropped by
+  CFEngine developers, and Tokyocabinet is used instead. Therefore, if
+  you upgrade from pre 3.3.0 CFEngine, there will be stale *.db files
+  in $(sys.workdir) (/var/opt/csw/cfengine3 by default). Those can be
+  removed.

@@ -1,0 +1,67 @@
+cfengine3 (3.4.4,REV=2013.05.04)
+
+  * This is a respin for Solaris 9. It was compiled with GCC instead
+    of Sun Studio and links to QDBM instead of tokyocabinet.
+
+  * This package is purely intended for Solaris 9.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 04 May 2013 16:42:34 +0200
+
+
+cfengine3 (3.4.4,REV=2013.03.26)
+
+  * New upstream release 3.4.4.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 26 Mar 2013 11:24:16 +0100
+
+
+cfengine3 (3.4.1,REV=2012.12.09)
+
+  * New upstream release 3.4.1.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 09 Dec 2012 10:12:11 +0100
+
+
+cfengine3 (3.3.9,REV=2012.11.10)
+
+  * New upstream release 3.3.9.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 10 Nov 2012 14:52:46 +0100
+
+
+cfengine3 (3.3.7,REV=2012.10.09)
+
+  * New upstream release 3.3.7.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 09 Oct 2012 14:48:49 +0200
+
+
+cfengine3 (3.3.5,REV=2012.08.21)
+
+  * New upstream release 3.3.5.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 21 Aug 2012 19:22:27 +0200
+
+
+cfengine3 (3.3.3,REV=2012.06.17)
+
+  * New upstream release 3.3.3.
+
+  * Starting with CFEngine 3.3.0, Berkeley DB support was
+    dropped. Tokyocabinet is used instead.
+
+  * Dropped support for Solaris 9.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 17 Jun 2012 14:09:15 +0200
+
+
+cfengine3 (3.2.3,REV=2012.01.06)
+
+  * Obsoleted CSWlibpromises1.
+
+  * Built now explicitely with LIBS="-lsocket -lnsl" in order to make
+    configure detect getaddrinfo()
+
+  * Packages are now also built for Solaris 10.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Fri, 06 Jan 2012 16:24:39 +0100

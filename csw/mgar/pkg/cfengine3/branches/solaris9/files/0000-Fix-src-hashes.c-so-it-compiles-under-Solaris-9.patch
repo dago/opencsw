@@ -1,0 +1,250 @@
+From ec426c55ca7f005ba2de5acf311b3c2de9b314a8 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 4 May 2013 15:46:35 +0200
+Subject: [PATCH] Fix src/hashes.c, so it compiles under Solaris 9
+
+---
+ src/hashes.c |   78 +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 39 insertions(+), 39 deletions(-)
+
+diff --git a/src/hashes.c b/src/hashes.c
+index 1a2366a..836e217 100644
+--- a/src/hashes.c
++++ b/src/hashes.c
+@@ -50,7 +50,7 @@ struct AssocHashTable_
+     {
+         AssocArray array;
+         CfAssoc **buckets;
+-    };
++    } __sol9union;
+     bool huge;
+ };
+ 
+@@ -88,11 +88,11 @@ static void HashConvertToHuge(AssocHashTable *hashtable)
+     CfAssoc **buckets = xcalloc(1, sizeof(CfAssoc *) * CF_HASHTABLESIZE);
+     int i;
+ 
+-    for (i = 0; i < hashtable->array.size; ++i)
++    for (i = 0; i < hashtable->__sol9union.array.size; ++i)
+     {
+         /* This is a stripped down HugeHashInsertElement: it will fail on duplicate
+          * elements or nearly-full hash table, or table with HASH_ENTRY_DELETED */
+-        CfAssoc *assoc = hashtable->array.values[i];
++        CfAssoc *assoc = hashtable->__sol9union.array.values[i];
+         int bucket = GetHash(assoc->lval);
+ 
+         for (;;)
+@@ -107,7 +107,7 @@ static void HashConvertToHuge(AssocHashTable *hashtable)
+     }
+ 
+     hashtable->huge = true;
+-    hashtable->buckets = buckets;
++    hashtable->__sol9union.buckets = buckets;
+ }
+ 
+ /*******************************************************************/
+@@ -120,14 +120,14 @@ static bool HugeHashInsertElement(AssocHashTable *hashtable, const char *element
+     do
+     {
+         /* Free bucket is found */
+-        if (hashtable->buckets[i] == NULL || hashtable->buckets[i] == HASH_ENTRY_DELETED)
++        if (hashtable->__sol9union.buckets[i] == NULL || hashtable->__sol9union.buckets[i] == HASH_ENTRY_DELETED)
+         {
+-            hashtable->buckets[i] = NewAssoc(element, rval, dtype);
++            hashtable->__sol9union.buckets[i] = NewAssoc(element, rval, dtype);
+             return true;
+         }
+ 
+         /* Collision -- this element already exists */
+-        if (strcmp(element, hashtable->buckets[i]->lval) == 0)
++        if (strcmp(element, hashtable->__sol9union.buckets[i]->lval) == 0)
+         {
+             return false;
+         }
+@@ -146,15 +146,15 @@ static bool TinyHashInsertElement(AssocHashTable *hashtable, const char *element
+ {
+     int i;
+ 
+-    if (hashtable->array.size == TINY_LIMIT)
++    if (hashtable->__sol9union.array.size == TINY_LIMIT)
+     {
+         HashConvertToHuge(hashtable);
+         return HugeHashInsertElement(hashtable, element, rval, dtype);
+     }
+ 
+-    for (i = 0; i < hashtable->array.size; ++i)
++    for (i = 0; i < hashtable->__sol9union.array.size; ++i)
+     {
+-        if (strcmp(hashtable->array.values[i]->lval, element) == 0)
++        if (strcmp(hashtable->__sol9union.array.values[i]->lval, element) == 0)
+         {
+             return false;
+         }
+@@ -170,7 +170,7 @@ static bool TinyHashInsertElement(AssocHashTable *hashtable, const char *element
+ 
+     CfAssoc *a = NewAssoc(element, rval, dtype);
+ 
+-    hashtable->array.values[hashtable->array.size++] = a;
++    hashtable->__sol9union.array.values[hashtable->__sol9union.array.size++] = a;
+     return true;
+ }
+ 
+@@ -198,23 +198,23 @@ static bool HugeHashDeleteElement(AssocHashTable *hashtable, const char *element
+     do
+     {
+         /* End of allocated chunk */
+-        if (hashtable->buckets[i] == NULL)
++        if (hashtable->__sol9union.buckets[i] == NULL)
+         {
+             break;
+         }
+ 
+         /* Keep looking */
+-        if (hashtable->buckets[i] == HASH_ENTRY_DELETED)
++        if (hashtable->__sol9union.buckets[i] == HASH_ENTRY_DELETED)
+         {
+             i = (i + 1) % CF_HASHTABLESIZE;
+             continue;
+         }
+ 
+         /* Element is found */
+-        if (strcmp(element, hashtable->buckets[i]->lval) == 0)
++        if (strcmp(element, hashtable->__sol9union.buckets[i]->lval) == 0)
+         {
+-            DeleteAssoc(hashtable->buckets[i]);
+-            hashtable->buckets[i] = NULL;
++            DeleteAssoc(hashtable->__sol9union.buckets[i]);
++            hashtable->__sol9union.buckets[i] = NULL;
+             return true;
+         }
+ 
+@@ -232,18 +232,18 @@ static bool TinyHashDeleteElement(AssocHashTable *hashtable, const char *element
+ {
+     int i;
+ 
+-    for (i = 0; i < hashtable->array.size; ++i)
++    for (i = 0; i < hashtable->__sol9union.array.size; ++i)
+     {
+-        if (strcmp(hashtable->array.values[i]->lval, element) == 0)
++        if (strcmp(hashtable->__sol9union.array.values[i]->lval, element) == 0)
+         {
+             int j;
+ 
+-            DeleteAssoc(hashtable->array.values[i]);
+-            for (j = i; j < hashtable->array.size - 1; ++j)
++            DeleteAssoc(hashtable->__sol9union.array.values[i]);
++            for (j = i; j < hashtable->__sol9union.array.size - 1; ++j)
+             {
+-                hashtable->array.values[j] = hashtable->array.values[j + 1];
++                hashtable->__sol9union.array.values[j] = hashtable->__sol9union.array.values[j + 1];
+             }
+-            hashtable->array.size--;
++            hashtable->__sol9union.array.size--;
+             return true;
+         }
+     }
+@@ -274,14 +274,14 @@ static CfAssoc *HugeHashLookupElement(AssocHashTable *hashtable, const char *ele
+     do
+     {
+         /* End of allocated chunk */
+-        if (hashtable->buckets[i] == NULL)
++        if (hashtable->__sol9union.buckets[i] == NULL)
+         {
+             return NULL;
+         }
+ 
+-        if (hashtable->buckets[i] != HASH_ENTRY_DELETED && strcmp(element, hashtable->buckets[i]->lval) == 0)
++        if (hashtable->__sol9union.buckets[i] != HASH_ENTRY_DELETED && strcmp(element, hashtable->__sol9union.buckets[i]->lval) == 0)
+         {
+-            return hashtable->buckets[i];
++            return hashtable->__sol9union.buckets[i];
+         }
+ 
+         i = (i + 1) % CF_HASHTABLESIZE;
+@@ -298,11 +298,11 @@ static CfAssoc *TinyHashLookupElement(AssocHashTable *hashtable, const char *ele
+ {
+     int i;
+ 
+-    for (i = 0; i < hashtable->array.size; ++i)
++    for (i = 0; i < hashtable->__sol9union.array.size; ++i)
+     {
+-        if (strcmp(hashtable->array.values[i]->lval, element) == 0)
++        if (strcmp(hashtable->__sol9union.array.values[i]->lval, element) == 0)
+         {
+-            return hashtable->array.values[i];
++            return hashtable->__sol9union.array.values[i];
+         }
+     }
+     return NULL;
+@@ -328,11 +328,11 @@ static void TinyHashClear(AssocHashTable *hashtable)
+ {
+     int i;
+ 
+-    for (i = 0; i < hashtable->array.size; ++i)
++    for (i = 0; i < hashtable->__sol9union.array.size; ++i)
+     {
+-        DeleteAssoc(hashtable->array.values[i]);
++        DeleteAssoc(hashtable->__sol9union.array.values[i]);
+     }
+-    hashtable->array.size = 0;
++    hashtable->__sol9union.array.size = 0;
+ }
+ 
+ /*******************************************************************/
+@@ -343,15 +343,15 @@ static void HugeHashClear(AssocHashTable *hashtable)
+ 
+     for (i = 0; i < CF_HASHTABLESIZE; i++)
+     {
+-        if (hashtable->buckets[i] != NULL)
++        if (hashtable->__sol9union.buckets[i] != NULL)
+         {
+-            if (hashtable->buckets[i] != HASH_ENTRY_DELETED)
++            if (hashtable->__sol9union.buckets[i] != HASH_ENTRY_DELETED)
+             {
+-                DeleteAssoc(hashtable->buckets[i]);
++                DeleteAssoc(hashtable->__sol9union.buckets[i]);
+             }
+         }
+     }
+-    memset(hashtable->buckets, 0, sizeof(CfAssoc *) * CF_HASHTABLESIZE);
++    memset(hashtable->__sol9union.buckets, 0, sizeof(CfAssoc *) * CF_HASHTABLESIZE);
+ }
+ 
+ /*******************************************************************/
+@@ -361,7 +361,7 @@ void HashClear(AssocHashTable *hashtable)
+     if (hashtable->huge)
+     {
+         HugeHashClear(hashtable);
+-        free(hashtable->buckets);
++        free(hashtable->__sol9union.buckets);
+     }
+     else
+     {
+@@ -388,7 +388,7 @@ HashIterator HashIteratorInit(AssocHashTable *hashtable)
+ 
+ static CfAssoc *HugeHashIteratorNext(HashIterator *i)
+ {
+-    CfAssoc **buckets = i->hashtable->buckets;
++    CfAssoc **buckets = i->hashtable->__sol9union.buckets;
+ 
+     for (; i->pos < CF_HASHTABLESIZE; i->pos++)
+     {
+@@ -412,13 +412,13 @@ static CfAssoc *HugeHashIteratorNext(HashIterator *i)
+ 
+ static CfAssoc *TinyHashIteratorNext(HashIterator *i)
+ {
+-    if (i->pos >= i->hashtable->array.size)
++    if (i->pos >= i->hashtable->__sol9union.array.size)
+     {
+         return NULL;
+     }
+     else
+     {
+-        return i->hashtable->array.values[i->pos++];
++        return i->hashtable->__sol9union.array.values[i->pos++];
+     }
+ }
+ 
+-- 
+1.7.10.3
+
