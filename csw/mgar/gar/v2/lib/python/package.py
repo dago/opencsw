@@ -53,7 +53,7 @@ class StdoutSyntaxError(Error):
   """Problem with data returned by a process."""
 
 
-class CswSrv4File(shell.ShellMixin, object):
+class CswSrv4File(object):
   """Represents a package in the srv4 format (pkg)."""
 
   def __init__(self, pkg_path, debug=False):
@@ -96,7 +96,7 @@ class CswSrv4File(shell.ShellMixin, object):
         self.gunzipped_path = os.path.join(self.GetWorkDir(), base_name)
         with open(self.gunzipped_path, 'w') as gunzipped_file:
           args = ["gunzip", "-f", "-c", self.pkg_path]
-          unused_retcode = shell.ShellCommand(args, stdout=gunzipped_file)
+          shell.ShellCommand(args, stdout=gunzipped_file)
       elif self.pkg_path.endswith(pkg_suffix):
         self.gunzipped_path = self.pkg_path
       else:
@@ -116,11 +116,7 @@ class CswSrv4File(shell.ShellMixin, object):
             src_file,
             destdir,
             pkgname ]
-    ret, stdout, stderr = shell.ShellCommand(args)
-    if ret:
-      logging.error(stdout)
-      logging.error(stderr)
-      logging.error("% has failed" % args)
+    shell.ShellCommand(args)
 
   def GetPkgname(self):
     """It's necessary to figure out the pkgname from the .pkg file.
@@ -129,7 +125,7 @@ class CswSrv4File(shell.ShellMixin, object):
     if not self.pkgname:
       gunzipped_path = self.GetGunzippedPath()
       args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
-      ret_code, stdout, stderr = shell.ShellCommand(args)
+      shell.ShellCommand(args)
       self.pkgname = stdout.strip()
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
@@ -167,7 +163,7 @@ class CswSrv4File(shell.ShellMixin, object):
                            "..", "..", "bin", "custom-pkgtrans"),
               gunzipped_path, self.GetWorkDir(), pkgname]
       logging.debug("transforming: %s", args)
-      unused_retcode = self.ShellCommand(args, quiet=(not self.debug))
+      shell.ShellCommand(args, quiet=(not self.debug))
       dirs = self.GetDirs()
       if len(dirs) != 1:
         raise Error("Need exactly one package in the package stream: "
@@ -217,7 +213,7 @@ class CswSrv4File(shell.ShellMixin, object):
     return DirectoryFormatPackage
 
 
-class DirectoryFormatPackage(shell.ShellMixin, object):
+class DirectoryFormatPackage(object):
   """Represents a package in the directory format.
 
   Allows some read-write operations.
@@ -266,9 +262,9 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     if not os.path.isdir(target_dir):
       os.makedirs(target_dir)
     args = ["pkgtrans", "-s", pkg_container_dir, target_path, pkg_dir]
-    self.ShellCommand(args, quiet=True)
+    shell.ShellCommand(args, quiet=True)
     args = ["gzip", "-f", target_path]
-    self.ShellCommand(args, quiet=True)
+    shell.ShellCommand(args, quiet=True)
     return target_path
 
   def GetBasedir(self):
@@ -333,7 +329,7 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     # Some packages extract read-only. To be sure, change them to be
     # user-writable.
     args = ["chmod", "-R", "u+w", self.directory]
-    self.ShellCommand(args)
+    shell.ShellCommand(args)
     pkginfo_filename = self.GetPkginfoFilename()
     os.chmod(pkginfo_filename, 0644)
     pkginfo_fd = open(pkginfo_filename, "w")

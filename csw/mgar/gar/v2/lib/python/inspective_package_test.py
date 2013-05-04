@@ -235,7 +235,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "root", fake_binary)]
-    shell.ShellCommand(args).AndReturn((0, ELFDUMP_OUTPUT, ""))
+    shell.ShellCommand(args, allow_error=True).AndReturn((0, ELFDUMP_OUTPUT, ""))
     self.mox.ReplayAll()
 
     self.assertEqual(BINARY_ELFINFO, ip.GetBinaryElfInfo())
@@ -256,7 +256,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "reloc", fake_binary)]
-    shell.ShellCommand(args).AndReturn((0, ELFDUMP_OUTPUT, ""))
+    shell.ShellCommand(args, allow_error=True).AndReturn((0, ELFDUMP_OUTPUT, ""))
     self.mox.ReplayAll()
 
     self.assertEqual(BINARY_ELFINFO, ip.GetBinaryElfInfo())
@@ -308,7 +308,7 @@ Syminfo Section:  .SUNW_syminfo
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "root", fake_binary)]
-    shell.ShellCommand(args).AndReturn((0, fake_elfdump_output, fake_elfdump_errors))
+    shell.ShellCommand(args, allow_error=True).AndReturn((0, fake_elfdump_output, fake_elfdump_errors))
     self.mox.ReplayAll()
 
     self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
@@ -334,7 +334,7 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
         ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
-        timeout=10).AndReturn((0, "", ""))
+        allow_error=True, timeout=10).AndReturn((0, "", ""))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
     self.assertEqual({'opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
@@ -359,7 +359,7 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
         ['ldd', '-Ur', '/tmp/CSWfake/reloc/bin/foo'],
-        timeout=10).AndReturn((0, "", ""))
+        allow_error=True, timeout=10).AndReturn((0, "", ""))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
     self.assertEqual({'opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
@@ -385,7 +385,7 @@ Syminfo Section:  .SUNW_syminfo
     self.mox.StubOutWithMock(shell, 'ShellCommand')
     shell.ShellCommand(
         ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
-        timeout=10).AndReturn((1, "", "boo"))
+        allow_error=True, timeout=10).AndReturn((1, "", "boo"))
     self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
     self.mox.ReplayAll()
     self.assertRaises(package.SystemUtilityError,
