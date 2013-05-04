@@ -1,0 +1,37 @@
+From b90694842d4649a191c43dd004e4052786389fda Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 17 Jun 2012 11:30:48 +0200
+Subject: [PATCH] Do not perform acceptance test
+
+Why? Accpetance tests are using CFEngine's $(WORKDIR) which is set to /var/opt/csw/cfengine3 and regular users, i.e. the guy who is building CFEngine does not have rw access to it, nor can it be created by non-root users. Thus, all tests fail.
+
+Having CFEngine running on several Sol10 machines, I guess this counts as test.
+---
+ tests/Makefile.am |    2 +-
+ tests/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/Makefile.am b/tests/Makefile.am
+index 7e9bf2c..ed152e7 100644
+--- a/tests/Makefile.am
++++ b/tests/Makefile.am
+@@ -1 +1 @@
+-SUBDIRS = unit load acceptance
+\ No newline at end of file
++SUBDIRS = unit load
+diff --git a/tests/Makefile.in b/tests/Makefile.in
+index 8f67654..76974c4 100644
+--- a/tests/Makefile.in
++++ b/tests/Makefile.in
+@@ -276,7 +276,7 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ workdir = @workdir@
+-SUBDIRS = unit load acceptance
++SUBDIRS = unit load
+ all: all-recursive
+ 
+ .SUFFIXES:
+-- 
+1.7.10.3
+

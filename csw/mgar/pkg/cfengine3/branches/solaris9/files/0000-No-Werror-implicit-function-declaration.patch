@@ -1,0 +1,24 @@
+From f9d0d0870b4f4d1ce2ab8ebeaee225fc8cb80229 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 4 May 2013 16:02:51 +0200
+Subject: [PATCH] No -Werror=implicit-function-declaration
+
+---
+ configure |    1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/configure b/configure
+index 8b73a6d..5eb38f8 100755
+--- a/configure
++++ b/configure
+@@ -19129,7 +19129,6 @@ _ACEOF
+ if ac_fn_c_try_compile "$LINENO"; then :
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+-           GCC_CFLAG="$GCC_CFLAG -Werror=implicit-function-declaration"
+ else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+ $as_echo "no" >&6; }
+-- 
+1.7.10.3
+
