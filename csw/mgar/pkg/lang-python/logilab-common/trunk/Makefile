@@ -3,22 +3,17 @@
 # $Id$
 
 NAME = logilab-common
-VERSION = 0.52.0
+VERSION = 0.59.1
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Python Abstract Syntax Tree New Generation
 PACKAGES = CSWpy-logilab-common
-CATALOGNAME_CSWpy-logilab-common = py_logilab_common
-define BLURB
-endef
-SPKG_SOURCEURL = http://www.logilab.org/project/logilab-common
+VENDOR_URL = http://www.logilab.org/project/logilab-common
 MASTER_SITES = http://ftp.logilab.org/pub/common/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
+DISTFILES  = $(DISTNAME).tar.gz
 ARCHALL_CSWpy-logilab-common = 1
 
-REINPLACE_USRSHARE += $(SITE_PACKAGES)/logilab/common/optik_ext.py
+REINPLACE_USRSHARE += opt/csw/lib/python/site-packages/logilab/common/optik_ext.py
 REINPLACE_WHEN_USRSHARE = postinstall
 
 include gar/category.mk
