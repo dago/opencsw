@@ -13,6 +13,8 @@ import ldd_emul
 import configuration as c
 import time
 import shell
+import mmap
+import tempfile
 
 from elftools.elf.elffile import ELFFile
 from elftools.elf.enums import ENUM_E_MACHINE
@@ -233,8 +235,10 @@ class InspectivePackage(package.DirectoryFormatPackage):
       if base_dir:
         binary = os.path.join(base_dir, binary)
       # elfdump is the only tool that give us all informations
+      elfdump_output_file = tempfile.TemporaryFile()
       args = [common_constants.ELFDUMP_BIN, "-svy", binary_abspath]
-      retcode, stdout, stderr = shell.ShellCommand(args, allow_error=True)
+      retcode, stdout, stderr = shell.ShellCommand(args, allow_error=True,
+                                                   stdout=elfdump_output_file)
       if retcode or stderr:
         # we ignore for now these elfdump errors which can be catched
         # later by check functions,
@@ -273,14 +277,20 @@ class InspectivePackage(package.DirectoryFormatPackage):
                  "as path of the error report. Logs are saved in " +
                  "/tmp/elfdump_std(out|err).log for your inspection.")
           raise package.Error(msg)
-      elfdump_out = stdout.splitlines()
 
       symbols = {}
       binary_info = {'version definition': [],
                      'version needed': []}
 
+      if not os.fstat(elfdump_output_file.fileno()).st_size:
+        binary_info['symbol table'] = []
+        binaries_elf_info[binary] = binary_info
+        continue
+
+      elfdump_output = mmap.mmap(elfdump_output_file.fileno(), 0, prot=mmap.PROT_READ)
+
       cur_section = None
-      for line in elfdump_out:
+      for line in iter(elfdump_output.readline, ""):
         try:
           elf_info, cur_section = self._ParseElfdumpLine(line, cur_section)
         except package.StdoutSyntaxError as e:
