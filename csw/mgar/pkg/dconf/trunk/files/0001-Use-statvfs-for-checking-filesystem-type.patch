@@ -1,0 +1,44 @@
+From fb34695aa0196076e19343701430b3ffa838c075 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sat, 4 May 2013 13:43:57 +0200
+Subject: [PATCH] Use statvfs for checking filesystem type
+
+---
+ common/dconf-shmdir.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/common/dconf-shmdir.c b/common/dconf-shmdir.c
+index e1e8fdf..f8c163f 100644
+--- a/common/dconf-shmdir.c
++++ b/common/dconf-shmdir.c
+@@ -32,11 +32,11 @@
+ static gboolean
+ is_local (const gchar *filename)
+ {
+-  struct statfs buf;
++  struct statvfs buf;
+   gint s;
+ 
+   do
+-    s = statfs (filename, &buf);
++    s = statvfs (filename, &buf);
+   while (s < 0 && errno == EINTR);
+ 
+   if (s < 0 && errno == ENOENT)
+@@ -44,11 +44,11 @@ is_local (const gchar *filename)
+       g_mkdir_with_parents (filename, 0700);
+ 
+       do
+-        s = statfs (filename, &buf);
++        s = statvfs (filename, &buf);
+       while (s < 0 && errno == EINTR);
+     }
+ 
+-  return s == 0 && buf.f_type != NFS_SUPER_MAGIC;
++  return s == 0 && (strcmp(buf.f_basetype, "nfs") != 0);
+ }
+ 
+ gchar *
+-- 
+1.8.1.4
+
