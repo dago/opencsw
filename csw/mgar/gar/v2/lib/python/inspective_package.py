@@ -422,7 +422,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
        (?P<section>Version\sNeeded|Symbol\sTable  # Section header
                   |Version\sDefinition|Syminfo)
                    \sSection:
-        \s+(?:\.SUNW_version|\.gnu\.version_[rd]
+        \s+(?P<name>\.SUNW_version|\.gnu\.version_[rd]
             |\.(SUNW_l)?dynsym|\.SUNW_syminfo|.symtab)\s*$
 
        |\s*(?:index\s+)?version\s+dependency\s*$  # Version needed header
@@ -476,16 +476,22 @@ class InspectivePackage(package.DirectoryFormatPackage):
                                           #  -  <self> for non external symbols
 
          (?P<symbol>\S+)\s*               # symbol
+                   """),
+      'symtab': (r"""
+         .*                               # We don't care about this section
                    """)}
 
     elfdump_data = None
     m = re.match(headers_re, line, re.VERBOSE)
     if m:
       if m.lastindex:
-        section = m.group('section').lower()
+        if m.group('name') == ".symtab":
+          section = 'symtab'
+        else:
+          section = m.group('section').lower()
     elif section:
       m = re.match(re_by_section[section], line, re.VERBOSE)
-      if m:
+      if m and m.lastindex:
         elfdump_data = m.groupdict()
 
     if not m:
