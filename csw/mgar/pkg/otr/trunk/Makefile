@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cypherpunks.ca/otr/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 
 PACKAGES += CSWlibotr5
 CATALOGNAME_CSWlibotr5 = libotr5
@@ -34,19 +34,25 @@ CONFIGURE_ARGS += --disable-static
 BUILD64_LIBS_ONLY = 1
 
 RUNTIME_DEP_PKGS_CSWlibotr5 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibotr5 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibotr5 += CSWlibotr2
-
-CHECKPKG_OVERRIDES_CSWlibotr5 += surplus-dependency|CSWlibotr2
 
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr5
 
+RUNTIME_DEP_PKGS_CSWotr += CSWlibotr2
 RUNTIME_DEP_PKGS_CSWotr += CSWlibotr5
+RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
+
+# On sparc, the dependencies end up different
+ifeq ($(shell uname -p), sparc)
+  RUNTIME_DEP_PKGS_CSWlibotr5 += CSWlibgpg-error0
+  RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
+endif
+
+CHECKPKG_OVERRIDES_CSWotr += surplus-dependency|CSWlibotr2
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 
 # Remove after pushing to catalog
-CHECKPKG_OVERRIDES_CSWlibotr5 += dependency-on-nonexistent-package|CSWlibotr2
+CHECKPKG_OVERRIDES_CSWotr += dependency-on-nonexistent-package|CSWlibotr2
 
 include gar/category.mk
