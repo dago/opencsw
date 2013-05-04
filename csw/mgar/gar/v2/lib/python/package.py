@@ -126,7 +126,7 @@ class CswSrv4File(object):
       gunzipped_path = self.GetGunzippedPath()
       args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
       shell.ShellCommand(args)
-      self.pkgname = stdout.strip()
+      retcode, stdout, stderr = self.pkgname = stdout.strip()
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
 
@@ -409,7 +409,7 @@ class DirectoryFormatPackage(object):
     full_paths = self.GetAllFilePaths()
     files_by_pattern = {}
     for full_path in full_paths:
-      abs_path = self.MakeAbsolutePath(full_path)   
+      abs_path = self.MakeAbsolutePath(full_path)
       if not os.path.getsize(abs_path):
         continue
       with open(abs_path, "rb") as f:
