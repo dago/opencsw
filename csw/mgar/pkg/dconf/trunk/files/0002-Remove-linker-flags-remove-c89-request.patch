@@ -1,0 +1,29 @@
+From d13c3a880c1dda31398e8a46e7072bdaf285ac31 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sat, 4 May 2013 14:06:19 +0200
+Subject: [PATCH] Remove linker flags, remove c89 request
+
+---
+ gsettings/Makefile.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gsettings/Makefile.in b/gsettings/Makefile.in
+index 8439295..57525b1 100644
+--- a/gsettings/Makefile.in
++++ b/gsettings/Makefile.in
+@@ -191,10 +191,10 @@ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -fPIC -DPIC
++AM_CFLAGS = -Wall -Wmissing-prototypes -Wwrite-strings -fPIC -DPIC
+ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
+ libdconfsettings_so_LDADD = $(gio_LIBS)
+-libdconfsettings_so_LDFLAGS = -module -avoid-version -shared
++libdconfsettings_so_LDFLAGS = -shared
+ libdconfsettings_so_SOURCES = \
+ 	../engine/dconf-engine.c	\
+ 	../common/dconf-shmdir.c	\
+-- 
+1.8.1.4
+

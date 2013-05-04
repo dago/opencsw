@@ -1,0 +1,25 @@
+From d0cbd2b17933abb82a89ad2b7779f2ecf791cb04 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sat, 4 May 2013 15:22:59 +0200
+Subject: [PATCH] Add gio includes
+
+---
+ editor/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/editor/Makefile.in b/editor/Makefile.in
+index f89f0cd..1e31ceb 100644
+--- a/editor/Makefile.in
++++ b/editor/Makefile.in
+@@ -192,7 +192,7 @@ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CFLAGS = $(gtk_CFLAGS) $(libxml_CFLAGS) -I$(top_srcdir)/common -I$(top_srcdir)/client
++AM_CFLAGS = $(gio_CFLAGS) $(gtk_CFLAGS) $(libxml_CFLAGS) -I$(top_srcdir)/common -I$(top_srcdir)/client
+ AM_VALAFLAGS = --vapidir ../client --pkg gtk+-2.0 --pkg libxml-2.0 --pkg dconf
+ dconf_editor_LDADD = ../client/libdconf.so.0 $(gtk_LIBS) $(gee_LIBS) $(libxml_LIBS)
+ dconf_editor_SOURCES = dconf-editor.vala dconf-model.vala dconf-schema.vala dconf-view.vala
+-- 
+1.8.1.4
+
