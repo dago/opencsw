@@ -1474,8 +1474,7 @@ class TestCheckUnusedSoname(CheckTestHelper, unittest.TestCase):
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
-    for soname in [ 'libcurses.so.1', 'libz.so.1', 'libssl.so.1.0.0',
-		    'libcrypto.so.1.0.0', 'libexpat.so.1' ]:
+    for soname in [ 'libintl.so.8' ]:
       self.error_mgr_mock.ReportError(
         'CSWcadaver', 'soname-unused',
         soname + ' is needed by /opt/csw/bin/cadaver but never used')
@@ -1516,8 +1515,8 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       self.error_mgr_mock.GetPkgByPath(common_path).AndReturn([u"CSWcommon"])
 
     for soname in [ 'libnsl.so.1', 'libpam.so.1', 'libsocket.so.1', 'librt.so.1',
-		    'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
-		    'libc.so.1' ]:
+        'libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
+        'libc.so.1' ]:
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
@@ -1569,8 +1568,8 @@ class TestCheckDirectBinding(CheckTestHelper, unittest.TestCase):
       self.error_mgr_mock.NeedFile(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
-    for soname in ['libsendfile.so.1', 'libssl.so.1.0.0', 'libcrypto.so.1.0.0',
-        'libpam.so.1']:
+    for soname in ['libcrypto.so.1.0.0', 'libpam.so.1', 'libsendfile.so.1',
+        'libssl.so.1.0.0']:
       self.error_mgr_mock.ReportError(
         'CSWvsftpd',
         'no-direct-binding',

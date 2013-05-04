@@ -171,55 +171,41 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
           pkgname, messenger)
       orphan_sonames.extend(orphan_sonames_tmp)
 
-    sonames_unused = set()
-    ldd_info = pkg_data['ldd_info'][binary_info["path"]]
-    for ldd_response in ldd_info:
-      if (ldd_response['state'] == 'soname-unused'
-          and ldd_response['soname'] not in BASE_SOLARIS_LIBRARIES
-          and ldd_response['soname'] in binary_info['needed sonames']):
-        sonames_unused.add(ldd_response['soname'])
-        messenger.Message(
-          "Binary %s links to library %s but doesn't seem to use any"
-          " of its symbols. It usually happens because superfluous"
-          " libraries were added to the linker options, either because"
-          " of the configure script itself or because of the"
-          " \"pkg-config --libs\" output of one the dependency."
-          % ("/" + binary_info["path"], ldd_response['soname']))
-        error_mgr.ReportError(
-            pkgname, "soname-unused",
-            "%s is needed by %s but never used"
-             % (ldd_response['soname'], "/" + binary_info["path"]))
-
-    # Even when direct binding is enabled, some symbols might not be
-    # directly bound because the library explicitely requested the symbol
-    # not to be drectly bound to.
-    # For example, libc.so.1 does it for symbol sigaction, free, malloc...
-    # So we consider that direct binding is enabled if at least one
-    # symbol is directly bound to because that definitely means that
-    # -B direct or -z direct was used.
+    # Some common information gathering for
+    # "direct bind" and "soname unused" checks
     binary_elf_info = pkg_data["binaries_elf_info"][binary_info["path"]]
-    libs = set(binary_info["needed sonames"])
 
-    # we skip the standard Solaris libraries: a lot of plugins only
-    # link to non directly bindable symbols of libc.so.1, librt.so.1
-    # which trigger false positives.
-    # Direct binding really matters for opencsw libraries so it's
-    # easier and riskless to just skip theses libraries
-    libs.difference_update(BASE_SOLARIS_LIBRARIES)
-
+    needed_libs = set(binary_info["needed sonames"])
     db_libs = set()
+    really_needed_libs = set()
     for syminfo in binary_elf_info['symbol table']:
-      if (syminfo['shndx'] == 'UNDEF' and syminfo['flags']
-          and 'D' in syminfo['flags'] and 'B' in syminfo['flags']):
+      if (syminfo['soname'] is not None and
+          syminfo['flags'] is not None):
+        really_needed_libs.add(syminfo['soname'])
+        # Even when direct binding is enabled, some symbols might not be
+        # directly bound because the library explicitely requested the symbol
+        # not to be directly bound to.
+        # So we consider that direct binding is enabled if at least one
+        # symbol is directly bound to the library
+        if (syminfo['shndx'] == 'UNDEF' and 'B' in syminfo['flags']):
           db_libs.add(syminfo['soname'])
-    no_db_libs = libs.difference(db_libs)
 
-    # no symbol used means no way to detect if direct binding was
-    # enabled so we must ignore the libraries which were linked
-    # without being used
-    no_db_libs.difference_update(sonames_unused)
+
+    # Direct bind check
+
+    if really_needed_libs:
+      no_db_libs = really_needed_libs.difference(db_libs)
+    else:
+      no_db_libs = needed_libs
+    # we skip the standard Solaris libraries for "direct binding"
+    # as a lot of plugins only link to non directly bindable symbols
+    # of libc.so.1, librt.so.1 which trigger false positives.
+    # This check really matters for opencsw libraries so it's
+    # easier and riskless to just skip theses libraries
+    no_db_libs.difference_update(BASE_SOLARIS_LIBRARIES)
 
     if no_db_libs:
+      no_db_libs = sorted(no_db_libs)
       messenger.Message(
         "No symbol of binary %s is directly bound against the following"
         " libraries: %s. Please make sure the binaries are compiled using"
@@ -231,6 +217,41 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
           "%s is not directly bound to soname %s"
            % ("/" + binary_info["path"], soname))
 
+    # Unused soname check
+
+    if really_needed_libs:
+      unused_libs = needed_libs.difference(really_needed_libs)
+      # we skip the standard Solaris libraries for "unused soname"
+      # as base solaris libraries are often linked by default by
+      # build system and such dependency is harmless
+      unused_libs.difference_update(BASE_SOLARIS_LIBRARIES)
+
+      if unused_libs:
+        unused_libs = sorted(unused_libs)
+        messenger.Message(
+          "Although it is linked against, binary %s doesn't use any symbols"
+          " of the following libraries: %s. It usually happens because"
+          " superfluous libraries were added to the linker options, either"
+          " because of the configure script itself or because of the"
+          " \"pkg-config --libs\" output of one the dependency."
+          % ("/" + binary_info["path"], ", ".join(unused_libs)))
+        for soname in unused_libs:
+          error_mgr.ReportError(
+            pkgname, "soname-unused",
+            "%s is needed by %s but never used"
+            % (soname, "/" + binary_info["path"]))
+
+    else:
+      # No "really needed libs" means either:
+      #  - 1. the binary was entirely static.
+      #  - 2. symbol information table was not present,
+      #
+      # Case 1 implies that we do not have any linking error possible
+      # Case 2 implies that we will not able to know against which
+      # library a symbol is linked, so we will not able to check
+      # if no symbol of a library is not used.
+      # We should then emulate ldd but that will not be for today...
+      pass
 
     for version_dep in binary_elf_info['version needed']:
       if (version_dep['soname'] in ALLOWED_VERSION_DEPENDENCIES and
