@@ -20,6 +20,11 @@ def ShellCommand(args, env=None, timeout=None,
                  stdout=subprocess.PIPE,
                  stderr=subprocess.PIPE):
   logging.debug("Running: %s", args)
+
+  if not quiet:
+    stdout = subprocess.STDOUT
+    stderr = subprocess.STDOUT
+
   # Python 3.3 have the timeout option
   # we have to roughly emulate it with python 2.x
   if timeout:
@@ -27,21 +32,17 @@ def ShellCommand(args, env=None, timeout=None,
     signal.alarm(timeout)
 
   try:
-    if not quiet:
-      retcode = subprocess.call(args)
-
-    else:
-      proc = subprocess.Popen(args,
-                              stdout=stdout,
-                              stderr=stderr,
-                              env=env,
-                              preexec_fn=os.setsid,
-                              close_fds=True)
-      stdout, stderr = proc.communicate()
-      retcode = proc.wait()
+    proc = subprocess.Popen(args,
+                            stdout=stdout,
+                            stderr=stderr,
+                            env=env,
+                            preexec_fn=os.setsid,
+                            close_fds=True)
+    stdout, stderr = proc.communicate()
+    retcode = proc.wait()
 
     signal.alarm(0)
-      
+
   except TimeoutExpired:
     os.kill(-proc.pid, signal.SIGKILL)
     msg = "Process %s killed after timeout expiration" % args
@@ -52,8 +53,4 @@ def ShellCommand(args, env=None, timeout=None,
     logging.critical(stderr)
     raise Error("Running %s has failed." % repr(args))
 
-  if quiet:
-    return retcode, stdout, stderr
-  else:
-    return retcode
-
+  return retcode, stdout, stderr
