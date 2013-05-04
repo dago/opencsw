@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import tempfile
 import time
+import mmap
 
 import configuration as c
 import opencsw
@@ -412,12 +413,16 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     full_paths = self.GetAllFilePaths()
     files_by_pattern = {}
     for full_path in full_paths:
-      content = open(self.MakeAbsolutePath(full_path), "rb").read()
-      for regex in regex_list:
-        if re.search(regex, content):
-          if regex not in files_by_pattern:
-            files_by_pattern[regex] = []
-          files_by_pattern[regex].append(full_path)
+      abs_path = self.MakeAbsolutePath(full_path)   
+      if not os.path.getsize(abs_path):
+        continue
+      with open(abs_path, "rb") as f:
+        content = mmap.mmap(f.fileno(), 0, prot=mmap.PROT_READ)
+        for regex in regex_list:
+          if re.search(regex, content):
+            if regex not in files_by_pattern:
+              files_by_pattern[regex] = []
+            files_by_pattern[regex].append(full_path)
     return files_by_pattern
 
   def MakeAbsolutePath(self, p):
