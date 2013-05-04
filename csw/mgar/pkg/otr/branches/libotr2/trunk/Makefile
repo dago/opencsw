@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cypherpunks.ca/otr/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 
 PATCHFILES += heartbeat.patch
 
