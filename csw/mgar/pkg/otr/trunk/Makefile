@@ -18,7 +18,7 @@ PKGFILES_CSWlibotr5 += $(call baseisadirs,$(libdir),libotr\.so\.5(\.\d+)*)
 
 PACKAGES += CSWotr-dev
 CATALOGNAME_CSWotr-dev = otr_dev
-SPKG_DESC_CSWotr-dev += $(DESCRIPTION), development files
+SPKG_DESC_CSWotr-dev  += $(DESCRIPTION), development files
 PKGFILES_CSWotr-dev += $(PKGFILES_DEVEL)
 
 OBSOLETED_BY_CSWotr-dev += CSWotrdevel
@@ -51,8 +51,5 @@ CHECKPKG_OVERRIDES_CSWotr += surplus-dependency|CSWlibotr2
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
-
-# Remove after pushing to catalog
-CHECKPKG_OVERRIDES_CSWotr += dependency-on-nonexistent-package|CSWlibotr2
 
 include gar/category.mk
