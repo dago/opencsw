@@ -36,19 +36,19 @@ CONFIGURE_ARGS += --disable-static
 BUILD64_LIBS_ONLY = 1
 
 RUNTIME_DEP_PKGS_CSWlibotr2 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWlibotr2 += CSWlibgpg-error0
 
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr2
 
 RUNTIME_DEP_PKGS_CSWotr += CSWlibotr2
-RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
+
+# On sparc, the dependencies end up different
+ifeq ($(shell uname -p), sparc)
+  RUNTIME_DEP_PKGS_CSWlibotr2 += CSWlibgpg-error0
+  RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
+endif
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
-
-# Strange issue with checkpkg makes it require those...
-CHECKPKG_OVERRIDES_CSWotr += surplus-dependency|CSWlibgpg-error0
-CHECKPKG_OVERRIDES_CSWlibotr2 += surplus-dependency|CSWlibgpg-error0
 
 include gar/category.mk
