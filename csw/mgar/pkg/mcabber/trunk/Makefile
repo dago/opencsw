@@ -1,4 +1,4 @@
-NAME = mcabber
+NAME    = mcabber
 VERSION = 0.9.9
 CATEGORIES = utils
 GARTYPE = v2
@@ -13,15 +13,14 @@ endef
 
 MASTER_SITES = http://www.lilotux.net/~mikael/mcabber/files/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-SPKG_SOURCEURL = http://www.lilotux.net/~mikael/mcabber/
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-Blibncurses-dev CSWlibssl-dev CSWotrdevel
+SPKG_SOURCEURL = http://www.lilotux.net# Please note: CSWotr-dev at this point refers to a more recent version
+# than mcabber 0.9 supports.
+# It will be needed to upgrade it to 0.10
+BUILD_DEP_PKGS = CSWlibncurses-dev CSWlibssl-dev CSWotr-dev
 BUILD_DEP_PKGS += CSWaspell CSWggettext CSWlibglib2-dev CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibgpg-error-dev CSWgpgme CSWlibiconv-dev
 
-RUNTIME_DEP_PKGS = CSWlibncursesw5 CSWlibssl1-0-0 CSWotr
+RUNTIME_DEP_PKGS = CSWlibncursesw5 CSWlibssl1-0-0 CSWlibotr2
 RUNTIME_DEP_PKGS += CSWlibaspell15 CSWlibglib2-0-0 
 RUNTIME_DEP_PKGS += CSWlibintl8 CSWlibpanelw5 CSWgpgme 
 # Don't know yet why but this dependency is only picked under sparc
