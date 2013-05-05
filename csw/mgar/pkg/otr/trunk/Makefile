@@ -37,17 +37,14 @@ RUNTIME_DEP_PKGS_CSWlibotr5 += CSWlibgcrypt11
 
 RUNTIME_DEP_PKGS_CSWotr-dev += CSWlibotr5
 
-RUNTIME_DEP_PKGS_CSWotr += CSWlibotr2
 RUNTIME_DEP_PKGS_CSWotr += CSWlibotr5
 RUNTIME_DEP_PKGS_CSWotr += CSWlibgcrypt11
 
-# On sparc, the dependencies end up different
-ifeq ($(shell uname -p), sparc)
-  RUNTIME_DEP_PKGS_CSWlibotr5 += CSWlibgpg-error0
-  RUNTIME_DEP_PKGS_CSWotr += CSWlibgpg-error0
-endif
-
-CHECKPKG_OVERRIDES_CSWotr += surplus-dependency|CSWlibotr2
+# Don't know yet why but this dependency is only picked under sparc
+RUNTIME_DEP_PKGS_CSWlibotr5_sparc = CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibotr5 += $(RUNTIME_DEP_PKGS_CSWlibotr5_$(GARCH))
+RUNTIME_DEP_PKGS_CSWotr_sparc = CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWotr += $(RUNTIME_DEP_PKGS_CSWotr_$(GARCH))
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
