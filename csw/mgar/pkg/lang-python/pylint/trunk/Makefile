@@ -3,18 +3,17 @@
 # $Id$
 
 NAME = pylint
-VERSION = 0.21.3
+VERSION = 0.28.0
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Python code static checker
 define BLURB
 endef
-SPKG_SOURCEURL = http://pypi.python.org/pypi/pylint
-MASTER_SITES = http://pypi.python.org/packages/source/p/pylint/
+VENDOR_URL = http://pypi.python.org/pypi/pylint
+MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES = CSWpylint
 ARCHALL_CSWpylint = 1
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 # The software name is 'pylint'.
 CHECKPKG_OVERRIDES_CSWpylint += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpylint += catalogname-does-not-start-with-py_
