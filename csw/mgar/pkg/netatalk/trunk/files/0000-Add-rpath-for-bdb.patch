@@ -1,0 +1,34 @@
+From 702ab8079a32e9049670cdcdc1bd6f169d3e41a9 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sun, 5 May 2013 18:21:26 +0200
+Subject: [PATCH] Add rpath for bdb
+
+---
+ configure | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 3bbb206..5e54b19 100755
+--- a/configure
++++ b/configure
+@@ -16649,7 +16649,7 @@ fi
+ 
+                         if test x"${atalk_cv_bdb_version}" = x"yes"; then
+                             BDB_CFLAGS="-I${bdbdir}/include${subdir}"
+-                            BDB_LIBS="-L${bdblibdir} ${atalk_cv_lib_db}"
++                            BDB_LIBS="-L${bdblibdir} -R${bdblibdir} ${atalk_cv_lib_db}"
+                             BDB_BIN="$bdbbindir"
+                             BDB_PATH="$bdbdir"
+                             bdbfound=yes
+@@ -16742,7 +16742,7 @@ fi
+ 
+                            if test x"${atalk_cv_bdb_version}" = x"yes"; then
+                               BDB_CFLAGS="-I${bdbdir}/include${subdir}"
+-                              BDB_LIBS="-L${bdblibdir} ${atalk_cv_lib_db}"
++                              BDB_LIBS="-L${bdblibdir} -R${bdblibdir} ${atalk_cv_lib_db}"
+                               BDB_BIN="$bdbbindir"
+                               BDB_PATH="$bdbdir"
+                               bdbfound=yes
+-- 
+1.8.1.4
+
