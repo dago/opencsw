@@ -1,0 +1,11 @@
+--- glib-2.17.6/gobject/gtype.c.origi	2008-08-05 01:21:30.000000000 +0800
++++ glib-2.17.6/gobject/gtype.c	2008-09-12 16:20:23.731146000 +0800
+@@ -589,7 +589,7 @@
+     {
+       TypeNode *node = lookup_type_node_I (type);
+       
+-      return node ? NODE_NAME (node) : "<unknown>";
++      return node ? (NODE_NAME (node) == NULL ? "<unknown>" : NODE_NAME (node)) : "<unknown>";
+     }
+   else
+     return "<invalid>";
