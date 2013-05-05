@@ -1,5 +1,5 @@
 NAME = mercurial
-VERSION = 2.5.4
+VERSION = 2.6
 CATEGORIES = python
 GARTYPE = v2
 
