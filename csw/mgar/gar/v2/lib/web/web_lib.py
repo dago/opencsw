@@ -1,5 +1,7 @@
 # A common library for web apps.
 
+from lib.python import configuration
+
 connected_to_db = False
 
 def ConnectToDatabase():
