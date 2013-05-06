@@ -466,12 +466,9 @@ def main():
             "csw-upload-pkg?")
         sys.exit(1)
       else:
-        raise e
-    for stats in stats_list:
-      logging.debug(
-          "Importing %s, %s",
-          stats["basic_stats"]["md5_sum"],
-          stats["basic_stats"]["pkg_basename"])
+        raise
+    for md5_sum in md5_list:
+      logging.debug("Importing %s", md5_sum)
       try:
         package_stats.PackageStats.ImportPkg(stats, options.replace)
       except sqlobject.dberrors.OperationalError, e:
