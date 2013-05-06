@@ -13,6 +13,7 @@ import configuration
 import database
 import datetime
 import getpass
+import itertools
 import logging
 import models as m
 import optparse
@@ -20,6 +21,7 @@ import os
 import os.path
 import package_checks
 import package_stats
+import progressbar
 import re
 import shell
 import socket
@@ -307,6 +309,10 @@ class CatalogImporter(object):
       logging.info("Adding srv4 files to the %s %s %s catalog.",
                    osrel, arch, catrel)
       db_catalog = checkpkg_lib.Catalog()
+      pbar = progressbar.ProgressBar()
+      pbar.maxval = len(md5_sums_to_add)
+      pbar.start()
+      counter = itertools.count(1)
       for md5 in md5_sums_to_add:
         logging.debug("Adding %s", cat_entry_by_md5[md5]["file_basename"])
         sqo_srv4 = m.Srv4FileStats.selectBy(md5_sum=md5).getOne()
@@ -327,6 +333,7 @@ class CatalogImporter(object):
           logging.warning(
               "Could not insert %s (%s) into the database. %s",
               sqo_srv4.basename, sqo_srv4.md5_sum, e)
+        pbar.update(counter.next())
 
 
   def SyncFromCatalogTree(self, catrel, base_dir, force_unpack=False):
