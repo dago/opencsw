@@ -26,19 +26,20 @@ CHECKPKG_MODULE_NAME = "The main checking module."
 BEFORE_OVERRIDES = """If any of the reported errors were false positives, you
 can override them pasting the lines below to the GAR recipe."""
 
-AFTER_OVERRIDES = """Please note that checkpkg isn't suggesting you should
-simply add these overrides to the Makefile.  It only informs what the overrides
-could look like.  You need to understand what are the reported issues about and
-use your best judgement to decide whether to fix the underlying problems or
-override them. For more information, scroll up and read the detailed
-messages.
-To easily inspect packages you've just built, visit:
-  http://buildfarm.opencsw.org/pkgdb/srv4/
-"""
+AFTER_OVERRIDES = (
+  "Do not copy/paste these overrides without thinking!",
 
-UNAPPLIED_OVERRIDES = """WARNING: Some overrides did not match any errors.
-They can be removed, as they don't take any effect anyway.  If you're getting
-errors at the same time, maybe you didn't specify the overrides correctly."""
+  "If you're not sure, scroll up and read the details. If you're still not "
+  "sure, go to the wiki and read about the error tags you see, or ask "
+  "on the maintainers@ mailing list.",
+
+  "http://wiki.opencsw.org/checkpkg-error-tags",
+)
+
+UNAPPLIED_OVERRIDES = (
+"""WARNING: Some overrides did not match any errors.  They can probably be
+removed, as they don't take any effect anyway.  If you're getting errors at the
+same time, maybe you didn't specify your overrides correctly.""")
 
 cc = common_constants
 
@@ -175,7 +176,21 @@ def main():
         print(textwrap.fill(BEFORE_OVERRIDES, 80))
         for checkpkg_tag in tags_after_overrides:
           print checkpkg_tag.ToGarSyntax()
-        print textwrap.fill(AFTER_OVERRIDES, 80)
+        print
+        for paragraph in AFTER_OVERRIDES:
+          print(textwrap.fill(paragraph, 80))
+          print
+      elif error_tags:
+        msg = (
+            'Fair enough, there were %d error tags, '
+            'but they were all overridden. '
+            "Just make sure you didn't override anything silly, like "
+            'sparc binaries in a i386 package.'
+            % len(error_tags))
+        print
+      else:
+        print('Jolly good! All checks passed, no error tags reported.')
+
       if unapplied_overrides:
         print textwrap.fill(UNAPPLIED_OVERRIDES, 80)
         for override in unapplied_overrides:
