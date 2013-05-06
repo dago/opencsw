@@ -23,7 +23,7 @@ VENDOR_URL = http://projects.gnome.org/gconf/
 # Many more missing
 BUILD_DEP_PKGS += CSBUILD_DEP_PKGS += CSWlibxslt
 BUILD_DEP_PKGS += CSWgtk-doc
-BUILD_DEP_PKGS += CSWintltoolSWlibdbus-glib-dev
+BUILD_DEP_PKGS += CSWintltoolSBUILD_DEP_PKGS += CSWgobject-introspection-devSWlibdbus-glib-dev
 
 PACKAGES += CSWlibgconf2-4
 SPKG_DESC_CSWlibgconf2-4 = GNOME configuration database system, libgconf-2.so.4
