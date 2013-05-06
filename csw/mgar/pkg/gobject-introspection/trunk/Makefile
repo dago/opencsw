@@ -41,6 +41,7 @@ SPKG_DESC_CSWgobject-introspection-dev += $(DESCRIPTION), development files
 PKGFILES_CSWgobject-introspection-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWgobject-introspection-dev += /opt/csw/lib/libgirepository-1.0.so
 RUNTIME_DEP_PKGS_CSWgobject-introspection-dev += CSWlibgirepository1-0-1
+RUNTIME_DEP_PKGS_CSWgobject-introspection-dev += CSWgobject-introspection
 
 PACKAGES += CSWgobject-introspection
 SPKG_DESC_CSWgobject-introspection += $(DESCRIPTION), bins
