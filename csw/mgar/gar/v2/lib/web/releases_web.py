@@ -11,7 +11,6 @@ import web
 import sqlobject
 import cjson
 from lib.python import models
-from lib.python import configuration
 from lib.python import checkpkg_lib
 from lib.python import package_stats
 from lib.python import opencsw
@@ -43,10 +42,6 @@ CAN_UPLOAD_TO_CATALOGS = frozenset([
     "beanie",
 ])
 
-def ConnectToDatabase():
-  configuration.SetUpSqlobjectConnection()
-
-
 class Index(object):
   def GET(self):
     return "It works!\n"
@@ -54,7 +49,6 @@ class Index(object):
 class Srv4List(object):
   def POST(self):
     messages = []
-    configuration.SetUpSqlobjectConnection()
     x = web.input(srv4_file={})
     web.header(
         'Content-type',
@@ -104,7 +98,6 @@ class Srv4List(object):
 class Srv4Detail(object):
   def GET(self, md5_sum):
     """Allows to verify whether a given srv4 file exists."""
-    configuration.SetUpSqlobjectConnection()
     srv4 = None
     try:
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
@@ -142,7 +135,6 @@ class Srv4Detail(object):
 class Srv4CatalogAssignment(object):
   def GET(self, catrel_name, arch_name, osrel_name):
     """See if that package is in that catalog."""
-    configuration.SetUpSqlobjectConnection()
     sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
@@ -167,7 +159,6 @@ class Srv4CatalogAssignment(object):
     is to add the 'Content-Length' header.  However, it sometimes still gets
     stuck and I don't know why.
     """
-    configuration.SetUpSqlobjectConnection()
     if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
       # We should return an error message instead.
@@ -239,7 +230,6 @@ class Srv4CatalogAssignment(object):
       raise web.notacceptable(data=response)
 
   def DELETE(self, catrel_name, arch_name, osrel_name, md5_sum):
-    configuration.SetUpSqlobjectConnection()
     try:
       if osrel_name not in common_constants.OS_RELS:
         self.ReturnError(
@@ -270,9 +260,14 @@ class Srv4CatalogAssignment(object):
 
 web.webapi.internalerror = web.debugerror
 
-app = web.application(urls, globals())
-# main = app.wsgifunc()
-application = app.wsgifunc()
+def app_wrapper():
+  web_lib.ConnectToDatabase()
+  app = web.application(urls, globals())
+  logging.basicConfig(level=logging.DEBUG)
+  return app.wsgifunc()
+
+application = app_wrapper()
+
 from paste.exceptions.errormiddleware import ErrorMiddleware
 application = ErrorMiddleware(application, debug=True)
 

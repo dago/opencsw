@@ -20,8 +20,6 @@ from lib.python import checkpkg_lib
 import datetime
 from sqlobject import sqlbuilder
 
-connected_to_db = False
-
 urls_html = (
   r'/', 'index',
   r'/srv4/', 'Srv4List',
@@ -70,18 +68,6 @@ class PkgStatsEncoder(json.JSONEncoder):
     if isinstance(obj, datetime.datetime):
       return obj.isoformat()
     return json.JSONEncoder.default(self, obj)
-
-
-def ConnectToDatabase():
-  """Connect to the database only if necessary.
-
-  One problem with this approach might be that if the connection is lost, the
-  script will never try to reconnect (unless it's done by the ORM).
-  """
-  global connected_to_db
-  if not connected_to_db:
-    configuration.SetUpSqlobjectConnection()
-    connected_to_db = True
 
 
 class index(object):
@@ -421,7 +407,6 @@ class Srv4ByCatAndCatalogname(object):
 
   def GET(self, catrel_name, arch_name, osrel_name, catalogname):
     """Get a srv4 reference by catalog ane catalogname."""
-    configuration.SetUpSqlobjectConnection()
     try:
       sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
@@ -524,7 +509,7 @@ web.webapi.internalerror = web.debugerror
 
 
 def app_wrapper():
-  ConnectToDatabase()
+  web_lib.ConnectToDatabase()
   app = web.application(urls, globals())
   logging.basicConfig(level=logging.DEBUG)
   return app.wsgifunc()
