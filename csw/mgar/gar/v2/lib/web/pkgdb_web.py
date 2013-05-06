@@ -17,6 +17,7 @@ import time
 from lib.python import models
 from lib.python import configuration
 from lib.python import checkpkg_lib
+from lib.web import web_lib
 import datetime
 from sqlobject import sqlbuilder
 

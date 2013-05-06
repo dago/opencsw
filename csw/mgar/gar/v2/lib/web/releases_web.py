@@ -20,6 +20,7 @@ import hashlib
 import logging
 import tempfile
 
+from lib.web import web_lib
 
 urls = (
   r'/', 'Index',
