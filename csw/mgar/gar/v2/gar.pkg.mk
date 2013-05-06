@@ -1061,7 +1061,7 @@ platforms:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) $(_PASS_GAR_ENV) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=$($V))) $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=\"$($V)\")) $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
