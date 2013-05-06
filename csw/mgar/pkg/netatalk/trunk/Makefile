@@ -36,7 +36,10 @@ RUNTIME_DEP_PKGS += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWbdb48
-RUNTIME_DEP_PKGS += CSWlibgpg-error0
+
+# Don't know yet why but this dependency is only picked under sparc
+RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
+RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH))
 
 # Patches are in upstream and will be in 3.0.4
 PATCHFILES += 0000-Add-rpath-for-bdb.patch
