@@ -1,0 +1,44 @@
+From 3413c56c49ab39d78a0aada0b1e603f0f74b4335 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 May 2013 14:54:43 +0200
+Subject: [PATCH] Use MAP_FILE only when available
+
+---
+ configure.ac | 3 ++-
+ src/hash.cpp | 6 +++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index c51bd75..f05cbba 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -138,7 +138,8 @@ AC_CHECK_HEADERS([libgen.h fcntl.h limits.h inttypes.h malloc.h stdint.h stdlib.
+ 			   CommonCrypto/CommonDigest.h
+ 			   ])
+ 
+-
++# Definition of MAP_FILE is missing e.g. on Solaris
++AC_CHECK_DECLS([MAP_FILE])
+ 
+ # These functions not available everywhere
+ AC_CHECK_FUNCS([_gmtime64_s _gmtime64 gmtime_r mmap usleep mkstemp vasprintf getrusage getprogname isxdigit])
+diff --git a/src/hash.cpp b/src/hash.cpp
+index c4518cf..4249e24 100644
+--- a/src/hash.cpp
++++ b/src/hash.cpp
+@@ -274,7 +274,11 @@ void file_data_hasher_t::hash()
+ 		return;
+ 	    }
+ #ifdef HAVE_MMAP
+-	    fdht->base = (uint8_t *)mmap(0,fdht->stat_bytes,PROT_READ,MAP_FILE|MAP_SHARED,fd,0);
++	    fdht->base = (uint8_t *)mmap(0,fdht->stat_bytes,PROT_READ,
++#if HAVE_DECL_MAP_FILE
++		MAP_FILE|
++#endif
++		MAP_SHARED,fd,0);
+ 	    if(fdht->base>0){		
+ 		/* mmap is successful, so set the bounds.
+ 		 * if it is not successful, we default to reading the fd
+-- 
+1.8.1.4
+
