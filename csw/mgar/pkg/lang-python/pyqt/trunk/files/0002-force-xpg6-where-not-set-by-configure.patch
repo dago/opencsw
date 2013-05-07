@@ -1,0 +1,25 @@
+From 89d3fcd82222171a37d23ce3eaaf73b2e6f7ff54 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 7 May 2013 10:33:29 +0200
+Subject: [PATCH] force xpg6 where not set by configure
+
+---
+ designer/pluginloader.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/designer/pluginloader.h b/designer/pluginloader.h
+index a3b4fab..4d1babc 100644
+--- a/designer/pluginloader.h
++++ b/designer/pluginloader.h
+@@ -28,6 +28,8 @@
+ #ifndef _PLUGINLOADER_H
+ #define _PLUGINLOADER_H
+ 
++#define _XPG6
++
+ #include <Python.h>
+ 
+ #include <QDesignerCustomWidgetCollectionInterface>
+-- 
+1.8.1.4
+
