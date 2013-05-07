@@ -291,6 +291,7 @@ RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4 += CSWlibqtgui4
 RUNTIME_DEP_PKGS_CSWlibqtdesignercomponents4 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibqtdesignercomponents4 = CSWlibqtdesignercomponents4-gxx
+CHECKPKG_OVERRIDES_CSWlibqtdesignercomponents4-gxx += catalogname-too-long
 
 PACKAGES += CSWlibqtxml4
 PKGFILES_CSWlibqtxml4_CSWlibqtxml4-gxx += $(call baseisadirs,$(libdir),libQtXml\.so\.4(\.\d+)*)
