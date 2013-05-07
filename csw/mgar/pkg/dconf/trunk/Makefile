@@ -15,9 +15,8 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(DISTNAME).tar.bz2
 GARCOMPILER = GNU
-# g-ir-scanner chokes on linking an uninstalled library if LINKER_DIRECT and
-# LINKER_IGNORE aren't reset
-LINKER_DIRECT =
+# g-ir-scanner chokes on linking an uninstalled library if LINKER_IGNORE isn't reset,
+# it invokes gcc directly for linking
 LINKER_IGNORE =
 REINPLACE_USRSHARE += editor/dconf-model.c
 
@@ -34,9 +33,9 @@ EXTRA_INC += $(prefix)/include/atk-1.0/
 
 BUILD_DEP_PKGS += CSWlibdbus-dev
 BUILD_DEP_PKGS += CSWpkgconfig
-BUILD_DEP_PKGS += CSWglib2devel
-BUILD_DEP_PKGS += CSWgtk2devel
-BUILD_DEP_PKGS_CSWdconf-editor += CSWlibfreetype6-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS_CSWdconf-editor += CSWlibfreetype-dev
 
 # as suggested by checkpkg
 RUNTIME_DEP_PKGS_CSWdconf-editor += CSWlibxml2-2
@@ -96,44 +95,22 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # all interfaces that go beyong C99, cf man standards.5
 CONFIGURE_ARGS += CFLAGS="-std=c99 -D__EXTENSIONS__"
 
-# see above comment for LINKER_DIRECT and LINKER_IGNORE
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libthread.so.1
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libpangoft2-1.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libpangocairo-1.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libpango-1.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libintl.so.8
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libgtk-x11-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libgobject-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libgmodule-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libglib-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libgio-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libgdk-x11-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libgdk_pixbuf-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libfreetype.so.6
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libfontconfig.so.1
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libdconf.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libcairo.so.2
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libatk-1.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf-editor += no-direct-binding|/opt/csw/bin/dconf-editor|is|not|directly|bound|to|soname|libxml2.so.2
-CHECKPKG_OVERRIDES_CSWlibdconf0 += no-direct-binding|/opt/csw/lib/libdconf.so.0.0.0|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWlibdconf0 += no-direct-binding|/opt/csw/lib/libdconf.so.0.0.0|is|not|directly|bound|to|soname|libgio-2.0.so.0
-CHECKPKG_OVERRIDES_CSWlibdconf0 += no-direct-binding|/opt/csw/lib/libdconf.so.0.0.0|is|not|directly|bound|to|soname|libglib-2.0.so.0
-CHECKPKG_OVERRIDES_CSWlibdconf0 += no-direct-binding|/opt/csw/lib/libdconf.so.0.0.0|is|not|directly|bound|to|soname|libgobject-2.0.so.0
-CHECKPKG_OVERRIDES_CSWlibdconf0 += no-direct-binding|/opt/csw/lib/libdconf.so.0.0.0|is|not|directly|bound|to|soname|libintl.so.8
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/bin/dconf|is|not|directly|bound|to|soname|libdconf.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/bin/dconf|is|not|directly|bound|to|soname|libgio-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/bin/dconf|is|not|directly|bound|to|soname|libglib-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/bin/dconf|is|not|directly|bound|to|soname|libgobject-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/bin/dconf|is|not|directly|bound|to|soname|libintl.so.8
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/lib/gio/modules/libdconfsettings.so|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/lib/gio/modules/libdconfsettings.so|is|not|directly|bound|to|soname|libgio-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/lib/gio/modules/libdconfsettings.so|is|not|directly|bound|to|soname|libglib-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/lib/gio/modules/libdconfsettings.so|is|not|directly|bound|to|soname|libgobject-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/lib/gio/modules/libdconfsettings.so|is|not|directly|bound|to|soname|libintl.so.8
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/libexec/dconf-service|is|not|directly|bound|to|soname|libgio-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/libexec/dconf-service|is|not|directly|bound|to|soname|libglib-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/libexec/dconf-service|is|not|directly|bound|to|soname|libgobject-2.0.so.0
-CHECKPKG_OVERRIDES_CSWdconf += no-direct-binding|/opt/csw/libexec/dconf-service|is|not|directly|bound|to|soname|libintl.so.8
+# see above comment for LINKER_IGNORE
+CHECKPKG_OVERRIDES_CSWdconf += soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/dconf|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf += soname-unused|libintl.so.8|is|needed|by|/opt/csw/lib/gio/modules/libdconfsettings.so|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf += soname-unused|libintl.so.8|is|needed|by|/opt/csw/libexec/dconf-service|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libatk-1.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libcairo.so.2|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libfontconfig.so.1|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libfreetype.so.6|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libgdk-x11-2.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libgdk_pixbuf-2.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libgmodule-2.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libpangocairo-1.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libpangoft2-1.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libthread.so.1|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
+CHECKPKG_OVERRIDES_CSWlibdconf0 += soname-unused|libintl.so.8|is|needed|by|/opt/csw/lib/libdconf.so.0.0.0|but|never|used
 
 include gar/category.mk
 
