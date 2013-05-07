@@ -31,11 +31,19 @@ EXTRA_INC += $(prefix)/lib/gtk-2.0/include/
 EXTRA_INC += $(prefix)/include/gdk-pixbuf-2.0/
 EXTRA_INC += $(prefix)/include/atk-1.0/
 
+BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibdbus-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibgtk2-dev
+
+# Add more dependencies as suggested by Laurent Blume
 BUILD_DEP_PKGS_CSWdconf-editor += CSWlibfreetype-dev
+BUILD_DEP_PKGS_CSWdconf-editor += CSWfconfig-dev
+BUILD_DEP_PKGS_CSWdconf-editor += CSWlibgtk2-dev
+BUILD_DEP_PKGS_CSWdconf-editor += CSWsunx11devel
+BUILD_DEP_PKGS_CSWdconf-editor += CSWlibpcre-dev
+BUILD_DEP_PKGS_CSWdconf-editor += CSWlibpng-dev
 
 # as suggested by checkpkg
 RUNTIME_DEP_PKGS_CSWdconf-editor += CSWlibxml2-2
