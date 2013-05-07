@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = md5deep
-VERSION = 4.0.0
+VERSION = 4.3
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -11,12 +11,24 @@ define BLURB
   A set of programs to compute MD5, SHA-1, SHA-256, Tiger, or Whirlpool message digests on an arbitrary number of files
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(DISTNAME).tar.gz
+MASTER_SITES = $(SF_+= $(DISTNAME).tar.gz
+DISTFILES += bootstrap.sh
+
+# Use patch until pull request has been merged:
+#   https://github.com/jessek/hashdeep/pull/291
+PATCHFILES += 0001-Use-MAP_FILE-only-when-available.patch
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
+ISAEXEC = 1
+
+# We need vasprintf from a newer release than the frozen one
+LINKER_MAPS =
 
 include gar/category.mk
 
+pre-configure:
+	cp $(WORKDIR)/bootstrap.sh $(WORKSRC)
+	cd $(WORKSRC) && sh bootstrap.sh
+	@$(MAKECOOKIE)
