@@ -1,0 +1,25 @@
+From a4a0bfa35e99fccb8466ffea72b2eb5d978f3feb Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Mon, 6 May 2013 13:34:12 +0200
+Subject: [PATCH] Replace posix_fallocate() with ftruncate
+
+---
+ engine/dconf-engine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/engine/dconf-engine.c b/engine/dconf-engine.c
+index cf57431..a3f487a 100644
+--- a/engine/dconf-engine.c
++++ b/engine/dconf-engine.c
+@@ -144,7 +144,7 @@ dconf_engine_setup_user (DConfEngine *engine)
+ 
+           if (fd >= 0)
+             {
+-              if (posix_fallocate (fd, 0, 1) == 0)
++              if (ftruncate(fd, 1) == 0)
+                 {
+                   engine->shm = mmap (NULL, 1, PROT_READ, MAP_SHARED, fd, 0);
+ 
+-- 
+1.8.1.4
+
