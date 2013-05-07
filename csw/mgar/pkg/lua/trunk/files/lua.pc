@@ -4,7 +4,6 @@
 # and .pc is "so useless" :-(
 #   http://lua-users.org/lists/lua-l/2010-03/msg00718.html
 
-prefix=@prefix@
 V=@MAJOR@
 R=@VERSION@
 

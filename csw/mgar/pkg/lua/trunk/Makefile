@@ -1,7 +1,6 @@
 # $Id$
 
 # Open issues:
-# - no .pc file
 # - provide different C/C++ libs for liblua as discussed here:
 #     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560139
 
