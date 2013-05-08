@@ -303,12 +303,11 @@ class Catalogs(object):
     sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
-    user_data = web.input(quick='')
-    quick = (user_data.quick == "true")
     if not len(pkgs):
       raise web.notfound()
     web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=srv4-list')
-    pkgs_data = [p.GetRestRepr(quick)[1] for p in pkgs]
+    # We never want to return complete data for every object (too slow).
+    pkgs_data = [p.GetRestRepr(quick=True)[1] for p in pkgs]
     return cjson.encode(pkgs_data)
 
 
