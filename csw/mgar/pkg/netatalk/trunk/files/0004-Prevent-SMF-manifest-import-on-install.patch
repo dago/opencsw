@@ -1,0 +1,25 @@
+From 4f487a28be731ecd36e30ea2ca3b4039ba69132a Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 8 May 2013 13:59:21 +0200
+Subject: [PATCH] Prevent SMF manifest import on install
+
+---
+ distrib/initscripts/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/distrib/initscripts/Makefile.in b/distrib/initscripts/Makefile.in
+index 3ceeba3..e030cc6 100644
+--- a/distrib/initscripts/Makefile.in
++++ b/distrib/initscripts/Makefile.in
+@@ -719,7 +719,7 @@ uninstall: uninstall-startup
+ @USE_NETBSD_TRUE@uninstall-startup: uninstall-am
+ 
+ @USE_SOLARIS_TRUE@install-data-hook:
+-@USE_SOLARIS_TRUE@	svccfg import netatalk.xml
++# @USE_SOLARIS_TRUE@	svccfg import netatalk.xml
+ 
+ @USE_SOLARIS_TRUE@uninstall-startup:
+ @USE_SOLARIS_TRUE@	svccfg delete network/netatalk
+-- 
+1.8.1.4
+
