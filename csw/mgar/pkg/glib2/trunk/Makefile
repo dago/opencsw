@@ -285,7 +285,8 @@ BUILD_DEP_PKGS += CSWgsed
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
-EXTRA_LINKER_FLAGS =
+EXTRA# -xO4 is necessary on sparc so that function inlining happens as expected
+EXTRA_CFLAGS = -xO4=
 
 EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 
 
@@ -360,5 +361,4 @@ post-merge:
 	for f in $(PKGROOT)$(mandir)/man[123456789]/* ; do \
 		echo "Adjusting path in $$f" ; \
 		/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $$f > $$f.tmp ; \
-		mv $$f.tmp $$f ; \
-	done ; \
+		mv $$f.tmp $
