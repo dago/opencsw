@@ -40,13 +40,35 @@ CATALOGNAME_CSWpy-pyqt-common	=	py_pyqt_common
 SPKG_DESC_CSWpy-pyqt-common		=	$(DESCRIPTION), common files
 ARCHALL_CSWpy-pyqt-common		=	1
 
-PACKAGES				+=	CSWpy-pyqt
-CATALOGNAME_CSWpy-pyqt	=	py_pyqt
-SPKG_DESC_CSWpy-pyqt	=	$(DESCRIPTION)
-PKGFILES_CSWpy-pyqt		+=	/opt/csw/bin/pylupdate4
-PKGFILES_CSWpy-pyqt		+=	/opt/csw/bin/pyrcc4
-PKGFILES_CSWpy-pyqt		+=	/opt/csw/lib/python/site-packages/PyQt4/.*[.]so
-PKGFILES_CSWpy-pyqt		+=	/opt/csw/plugins/designer/libpythonplugin.so
+PACKAGES						+=	CSWpy-pyqt
+CATALOGNAME_CSWpy-pyqt			=	py_pyqt
+SPKG_DESC_CSWpy-pyqt			=	$(DESCRIPTION)
+PKGFILES_CSWpy-pyqt				+=	/opt/csw/bin/pylupdate4
+PKGFILES_CSWpy-pyqt				+=	/opt/csw/bin/pyrcc4
+PKGFILES_CSWpy-pyqt				+=	/opt/csw/lib/python/site-packages/PyQt4/.*[.]so
+PKGFILES_CSWpy-pyqt				+=	/opt/csw/plugins/designer/libpythonplugin.so
+PKGFILES_CSWpy-pyqt				+=	/opt/csw/lib/python/site-packages/dbus/mainloop/qt.so
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibphonon4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtcore4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdbus4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdeclarative4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdesigner4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtgui4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqthelp4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtmultimedia4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtnetwork4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtopengl4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtscript4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtscripttools4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtsql4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtsvg4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqttest4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtxml4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWpython
 
 include gar/category.mk
 
