@@ -45,6 +45,20 @@ RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH))
 PATCHFILES += 0000-Add-rpath-for-bdb.patch
 PATCHFILES += 0001-Fix-use-of-unnamed-union-inside-struct.patch
 PATCHFILES += 0003-Fix-misspelled-compiler-variable.patch
+PATCHFILES += 0004-Prevent-SMF-manifest-import-on-install.patch
+
+REINPLACEMENTS += manifest1
+REINPLACE_MATCH_manifest1 = network/netatalk
+REINPLACE_WITH_manifest1 = network/cswnetatalk
+REINPLACE_FILES_manifest1 += netatalk.xml.in
+
+REINPLACEMENTS += manifest2
+REINPLACE_MATCH_manifest2 = name="netatalk"
+REINPLACE_WITH_manifest2 =  name="cswnetatalk"
+REINPLACE_FILES_manifest2 += netatalk.xml.in
+
+PRESERVECONF += $(sysconfdir)/afp.conf
+PRESERVECONF += $(sysconfdir)/extmap.conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --libdir=$(prefix)/lib/netatalk
@@ -55,8 +69,10 @@ CONFIGURE_ARGS += --with-bdb=/opt/csw/bdb48
 CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
 CONFIGURE_ARGS += --with-init-style=solaris
 CONFIGURE_ARGS += --with-init-dir=/var/opt/csw/svc/manifest/network/NK# Path to XML dtd
-CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/netatalk.xml
-
+CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
 
 include gar/category.mk
 
+post-install-modulated:
+	mv $(DESTDIR)/var/opt/csw/svc/manifest/network/netatalk.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/cswnetatalk.xml
+	@$(MAKECOOKIE)
