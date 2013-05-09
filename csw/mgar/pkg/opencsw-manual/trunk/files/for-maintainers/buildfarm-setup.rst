@@ -4,9 +4,6 @@ Buildfarm setup
 
 .. highlight:: text
 
-Introduction
-------------
-
 Packages released by OpenCSW must be built on the OpenCSW buildfarm, but if
 you want to experiment, or build in-house packages, you might want to set up
 your own build farm, or at least a build host.

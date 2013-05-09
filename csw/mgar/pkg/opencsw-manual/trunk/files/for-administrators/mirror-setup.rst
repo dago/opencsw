@@ -12,12 +12,17 @@ To set up the mirror you should use ``rsync`` as it can update your local copy
 quickly and with low bandwidth use and also preserves hardlinks. Not all
 mirrors provide access via the ``rsync`` protocol, please consult
 `our list of mirrors`_.
-To make a full copy of the OpenCSW repository::
 
-  MIRROR_DIR=/export/mirror/opencsw
+To make a full copy of the OpenCSW repository, first make sure you have rsync
+on your system::
+
   sudo pkgutil -y -i rsync
-  sudo mkdir -p "${MIRROR_DIR}"
-  sudo rsync -aH --delete rsync://rsync.opencsw.org/opencsw/ "${MIRROR_DIR}"
+
+Then copy the files::
+
+  sudo mkdir -p /export/mirror/opencsw
+  sudo chown $LOGNAME /export/mirror/opencsw
+  rsync -aH --delete rsync://rsync.opencsw.org/opencsw/ /export/mirror/opencsw
 
 The directory ``opencsw-mirror`` can either be shared via HTTP or via NFS to the
 ``pkgutil`` clients.  Use ``http://myserver/opencsw-mirror/`` for HTTP and
