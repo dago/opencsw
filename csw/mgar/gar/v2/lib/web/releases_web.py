@@ -243,6 +243,12 @@ class Srv4CatalogAssignment(object):
       srv4_to_remove = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       c = checkpkg_lib.Catalog()
       c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
+      msg = ('Package %s / %s removed successfully'
+             % (srv4_to_remove.basename, md5_sum))
+      response = cjson.encode({'message': msg})
+      web.header('Content-Length', len(response))
+      return response
+
     except (
         sqlobject.main.SQLObjectNotFound,
         sqlobject.dberrors.OperationalError), e:
