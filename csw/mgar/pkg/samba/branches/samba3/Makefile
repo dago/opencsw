@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME = samba
-VERSION = 3.6.13
+VERSION = 3.6.14
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -28,7 +28,9 @@ DISTFILES += cswkrb5.conf
 #What needs to be fixed:
 # Split libs and packages
 
-BUILD_DEP_PKGS += CSWlibtalloc-dev
+BUILD_DEP_PKGS +=BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+= CSWlibtalloc-dev
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES += CSWsamba
@@ -48,17 +50,7 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWsamba += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWsamba += CSWlibwbclient0
-
-# Just docs override for now
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/lmhosts.5
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/smb.conf.5
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/nmbd.8
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smbd.8
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/tdbbackup.8
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/idmap_tdb2.8
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/net.8
-CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/swat.8
+RUNTIME_DEP_PKGS_CSWsamba += Can/man8/swat.8
 
 # Make one unified package for now
 OBSOLETED_BY_CSWsamba += CSWsambacommon
@@ -86,10 +78,7 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtdb1
 OBSOLETED_BY_CSWsamba-client += CSWsambaclient
-CATALOGNAME_CSWsambaclient = samba_client_stub
-
-# Just docs, override for now
-CHECKPKG_OVERRIDES_CSWsamba-client += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/smbclient.1
+CATALOGNAME_CSWsambaclient = saan1/smbclient.1
 
 #PACKAGES += CSWsambacommon
 SPKG_DESC_CSWsambacommon = Shared support files for samba
@@ -272,10 +261,7 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibnss-winbind1
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawb
-CATALOGNAME_CSWsambawb = samba_wb_stub
-
-# Just docs, override for now
-CHECKPKG_OVERRIDES_CSWsamba-winbind += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/winbindd.8
+CATALOGNAME_CSWsambawbn/man8/winbindd.8
 CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CSWlibnss-winbind1
 
 EXTRA_CFLAGS = -lintl
