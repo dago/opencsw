@@ -18,6 +18,14 @@ DISTFILES += bootstrap.sh
 #   https://github.com/jessek/hashdeep/pull/291
 PATCHFILES += 0001-Use-MAP_FILE-only-when-available.patch
 
+PACKAGES += CSWmd5deep
+SPKG_DESC_CSWmd5deep = Compute MD5, SHA-1, SHA-256, Tiger, or Whirlpool message digests
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWmd5deep += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWmd5deep += CSWlibstdc++6
+# Yes, we need vasprintf from 1.22.7
+CHECKPKG_OVERRIDES_CSWmd5deep += forbidden-version-interface-dependencies
+
 GARCOMPILER = GNU
 
 BUILD64 = 1
@@ -25,6 +33,9 @@ ISAEXEC = 1
 
 # We need vasprintf from a newer release than the frozen one
 LINKER_MAPS =
+
+# The testsuite seems broken, skip for now
+SKIPTEST ?= 1
 
 include gar/category.mk
 
