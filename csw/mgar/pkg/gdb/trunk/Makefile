@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gdb
-VERSION = 7.5.1
+VERSION = 7.6
 GARTYPE = v2
 CATEGORIES = devel
 
@@ -134,8 +134,9 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/sv/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/sv/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/tr/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opukcsw/share/locale/ga/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opukcsw/share/locale/sv/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/optrcsw/share/locale/sv/LC_MESSAGES/opcodes.mo
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opvicsw/share/locale/ga/LC_MESSAGES/bfd.mo
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opvicsw/share/locale/ro/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opvicsw/share/locale/sv/LC_MESSAGES/opcodes.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opzh_CNcsw/share/locale/ga/LC_MESSAGES/bfd.mo
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/opcodes.mo
