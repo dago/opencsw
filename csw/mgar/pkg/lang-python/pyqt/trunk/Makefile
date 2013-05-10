@@ -70,6 +70,7 @@ RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtxml4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibstdc++6
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/plugins/designer/libpythonplugin.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/plugins/designer/libpythonplugin.so|arch_id=3|arch_name=i386
 
 include gar/category.mk
 
