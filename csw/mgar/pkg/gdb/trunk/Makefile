@@ -80,7 +80,7 @@ RUNTIME_DEP_PKGS	+=	CSWlibintl8
 RUNTIME_DEP_PKGS	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibreadline6
-RUNTIME_DEP_PKGS	+=	CSWlibz1
+RUNTIME_DERUNTIME_DEP_PKGS	+=	CSWliblzma5EP_PKGS	+=	CSWlibz1
 
 # this should be declared only for the 32 bit ISAs but I doubt that
 # checkpkg can deal with this subtility
