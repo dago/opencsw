@@ -1,0 +1,25 @@
+From 729ae391eba80bedae241d76541fcc2c93563a29 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 10 Nov 2012 16:57:30 +0100
+Subject: [PATCH] Use AF_UNIX instead of AF_LOCAL on Solaris
+
+---
+ tests/srp/mini-srp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/srp/mini-srp.c b/tests/srp/mini-srp.c
+index a1db3f5..0d2c8a6 100644
+--- a/tests/srp/mini-srp.c
++++ b/tests/srp/mini-srp.c
+@@ -282,7 +282,7 @@ static void start (const char* prio)
+   int fd[2];
+   int ret;
+   
+-  ret = socketpair(AF_LOCAL, SOCK_STREAM, 0, fd);
++  ret = socketpair(AF_UNIX, SOCK_STREAM, 0, fd);
+   if (ret < 0)
+     {
+       perror("socketpair");
+-- 
+1.8.0
+

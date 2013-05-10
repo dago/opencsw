@@ -1,19 +1,21 @@
 NAME = gnutls
-VERSION = 3.1.3
+VERSION = 3.1.10
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
 define BLURB
   GnuTLS is a project that aims to develop a library which provides a
   secure layer, over a reliable transport layer. Currently the GnuTLS
-  library implements the proposed standards by the IETF's TLS working group.
-endef
-
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(DISTNAME).tar.xz
+  library implements the proposed standards by the IETF's TLS workiSUBV = $(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')
+MASTER_SITES = ftp://ftp.gnutls.org/gcrypt/gnutls/v$(SUBV)/
+DISTFILES += $(DISTNAME).tar.xz
 # PATCHFILES += 0001-Do-not-strip-norunpath.patch
+#PATCHFILES += 0002-Use-AF_UNIX-instead-of-AF_LOCAL-on-Solaris.patch
 
-VENDOR_URL = http://www.gnu.org/software/gnutls/
+# Sun Studio 12 bails out on .deinit_func
+GARCOMPILER = GCC4
+
+VENDOR_URL = http://gnutls.org/software/gnutls/
 
 BUILD_DEP_PKGS += CSWlibnettle-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
@@ -55,7 +57,7 @@ RUNTIME_DEP_PKGS_CSWlibgnutls-dev += CSWlibgnutls26
 OBSOLETED_BY_CSWlibgnutls-dev = CSWgnutlsdevel
 CATALOGNAME_CSWgnutlsdevel = gnutls_devel_stub
 
-# We don't need it and if defined the test breaks
+# We don't need it and if defined# the test breaks
 LD_OPTIONS =
 
 # EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
@@ -68,5 +70,4 @@ CONFIGURE_ARGS += --with-lzo
 # We put all libs in one package as they are .so.26 and are all bumped together
 CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
 
-include gar/category.mk
-
+include 
