@@ -19,6 +19,6 @@ CATALOGNAME_CSWpmclsaccessorchnd = pm_clsaccessorchnd
 
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmclsaccessor
+RUNTIME_DEP_PKGS += CSWpm-class-accessor
 
 include gar/category.mk
