@@ -3,13 +3,13 @@
 # $Id$
 
 NAME = Markdown
-VERSION = 2.1.1
+VERSION = 2.3.1
 CATEGORIES = python
 GARTYPE = v2
 
 DESCRIPTION = Python implementation of Markdown
-define BLURB
-endef
+
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES = $(DISTNAME).tar.gz
