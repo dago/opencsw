@@ -6,17 +6,18 @@ AUTHOR = KWITKNR
 
 DESCRIPTION = Create barcode images with GD
 define BLURB
-  GD::Barcode is a subclass of GD and allows you to create barcode image with
-  GD. This module based on "Generate Barcode Ver 1.02 By Shisei Hanai
-  97/08/22".
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmgdbarcode
-CATALOGNAME = pm_gdbarcode
+PACKAGES = CSWpm-gd-barcode
+CATALOGNAME = pm_gd_barcode
+SPKG_DESC_CSWpm-gd-barcode = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-gd-barcode = CSWpmgdbarcode
+CATALOGNAME_CSWpmgdbarcode = pm_gdbarcode
+
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmgd
+RUNTIME_DEP_PKGS += CSWpm-gd
 
 include gar/category.mk
