@@ -1,21 +1,23 @@
 NAME = ExtUtils-Manifest
-VERSION = 1.58
+VERSION = 1.61
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = RKOBES
+AUTHOR = FLORA
 
 DESCRIPTION = Utilities to write and check a MANIFEST file
 define BLURB
-  Utilities to write and check a MANIFEST file.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmextutilsmft
-CATALOGNAME = pm_extutilsmft
+PACKAGES = CSWpm-extutils-manifest
+CATALOGNAME = pm_extutils_manifest
+SPKG_DESC_CSWpm-extutils-manifest = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-extutils-manifest = CSWpmextutilsmft
+CATALOGNAME_CSWpmextutilsmft = pm_extutilsmft
 
 ARCHALL = 1
 
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*\/man\/man3.* .*\/man\/man1.*
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.*
 
 include gar/category.mk
