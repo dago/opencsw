@@ -14,10 +14,17 @@ define BLURB
   environments.
 endef
 
-MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VERSION).tar.bz2
+MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VVENDOR_URL = http://curl.haxx.se
 
 # Because of OpenSSL 1.0 update
-PACKAGING_PLATFORMS = solaris10-sparcl3 += CSWcurlrt
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386+ency|CSWlibcurl3
+
+BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibcares-dev
+BUILD_DEP_PKGS += CSWlibssh2-dev
+BUILD_DEP_PKGS += CSWlibfbopenssl-dev
+BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibidnKGS +=l3 += CSWcurlrt
 
 PACKAGES += CSWlibcurl4
 CATALOGNAME_CSWlibcurl4 = libcurl4
@@ -58,7 +65,7 @@ SPKG_DESC_CSWlibcurl-dev = Development files for libcurl.so.4
 PKGFILES_CSWlibcurl-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKG+= CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWlibcurl-dev += CSWlibidn-devdev = CSWlibcurl4
-OBSOLETED_BY_CSWlibcurl-dev = CSWcurldevel
+OBSOLETED_B+Y_CSWlibcurl-dev = CSWcurldevel
 CATALOGNAME_CSWcurldevel = curl_devel_stub
 
 PACKAGES += CSWcurl
@@ -68,16 +75,7 @@ SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfer
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibz1
 #RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl4
-#RUNTIME_DEP_PKGS_CSWcurl +ency|CSWlibcurl3
-
-BUILD_DEP_PKGS += CSWopenldap-dev
-BUILD_DEP_PKGS += CSWlibssl-dev
-BUILD_DEP_PKGS += CSWlibcares-dev
-BUILD_DEP_PKGS += CSWlibssh2-dev
-BUILD_DEP_PKGS += CSWlibfbopenssl-dev
-BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibidnKGS += CSWlibrtmp-dev
-
-VENDOR_URL = http://curl.haxx.se
+#RUNTIME_DEP_PKGS_CSWcurl +e://curl.haxx.se
 
 EXTRA_MODULATORS = FEATURES
 MODULATIONS_FEATURES = minimal full
@@ -133,14 +131,14 @@ include gar/category.mk
 # These are not really necessary and they confuse the linker as described in #4550
 $(GARCOMPILER)_LD_FLAGS :=
 
-# Rebuild the minimal library with AUX linkage to feature limodulated: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
-post-build-modulated:
+# Rebuild the minimal library with AUX linkage to feature l: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
+post-build:
 	$(if $(filter minimal,$(FEATURES)),\
 	  rm -f $(WORKSRC)/lib/libcurl.la; \
 	  /lib/libcurl.la
 	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC)/; \
 	/lib $(BUILD_ARGS)
-	@$(MAKECOOKIE)
+	@$(MAKECO-globalOKIE)
 
 post-merge:
 	@# This is needed because the substitutions from pax args do not change the
