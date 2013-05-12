@@ -6,13 +6,16 @@ AUTHOR = CHORNY
 
 DESCRIPTION = Lexically scoped subroutine wrappers
 define BLURB
-  Lexically scoped subroutine wrappers
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmhooklexwrap
-CATALOGNAME = pm_hooklexwrap
+PACKAGES = CSWpm-hook-lexwrap
+CATALOGNAME = pm_hook_lexwrap
+SPKG_DESC_CSWpm-hook-lexwrap = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-hook-lexwrap = CSWpmhooklexwrap
+CATALOGNAME_CSWpmhooklexwrap = pm_hooklexwrap
+
 ARCHALL = 1
 
 include gar/category.mk
