@@ -13,7 +13,7 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.5
-PATCHLEVEL = 30
+PATCHLEVEL = 31
 ALTS_PRIO = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 
@@ -79,8 +79,6 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/s
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
-CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
-CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
 PATCHFILES += 0003-I-HATE-CMAKE.patch
 PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
@@ -135,9 +133,12 @@ CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
 # must build for sparcv8+ on Solaris 9.
-CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
+ifeq ($(shell /usr/bin/uname -pr),5.9 sparc)
+  CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
+  CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
+  CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
+endif
+
 CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
@@ -158,7 +159,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/amd64/mysqld
 
 # An example:
 # s9_preload.so.1|is|needed|by|/opt/csw/bin/innochecksum|but|never|used
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-unused
+#CHECKPKG_OVERRIDES_CSW$(NAME) += soname-unused
 
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
@@ -264,7 +265,6 @@ CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
 CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 
-CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root$(prefix)/share/man/man1/mysqlaccess.1
 # This could be reviewed.
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
