@@ -6,13 +6,16 @@ AUTHOR = LUISMUNOZ
 
 DESCRIPTION = Provides interoperable MD5-based crypt() functions
 define BLURB
-  Provides interoperable MD5-based crypt() functions
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmcryptpasswdmd5
-CATALOGNAME = pm_cryptpasswdmd5
+PACKAGES = CSWpm-crypt-passwdmd5
+CATALOGNAME = pm_crypt_passwdmd5
+SPKG_DESC_CSWpm-crypt-passwdmd5 = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-crypt-passwdmd5 = CSWpmcryptpasswdmd5
+CATALOGNAME_CSWpmcryptpasswdmd5 = pm_cryptpasswdmd5
+
 ARCHALL = 1
 
 include gar/category.mk
