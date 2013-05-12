@@ -357,9 +357,9 @@ pre-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc
 pre-install-modulated: $(PI_SCRIPTS)
 	@(mkdir -p $(DESTDIR)$(AP2SYSCONF); \
 		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF) )
-	@echo "LoadModule foo_module libexec/mod_foo.so" > $(DESTDIR)$(AP2SYSCONF)/httpd.conf
-	@echo "LoadModule foo1_module libexec/mod_foo1.so" > $(DESTDIR)$(AP2SYSCONF)/httpd.conf
-	@echo "LoadModule foo2_module libexec/mod_foo2.so" > $(DESTDIR)$(AP2SYSCONF)/httpd.conf
+	@echo "LoadModule foo_module libexec/mod_foo.so" >> $(DESTDIR)$(AP2SYSCONF)/httpd.conf
+	@echo "LoadModule foo1_module libexec/mod_foo1.so" >> $(DESTDIR)$(AP2SYSCONF)/httpd.conf
+	@echo "LoadModule foo2_module libexec/mod_foo2.so" >> $(DESTDIR)$(AP2SYSCONF)/httpd.conf
 	@$(MAKECOOKIE)
 
 post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
