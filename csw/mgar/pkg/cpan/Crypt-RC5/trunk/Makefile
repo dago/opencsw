@@ -6,13 +6,16 @@ AUTHOR = SIFUKURT
 
 DESCRIPTION = Perl implementation of the RC5 encryption algorithm
 define BLURB
-  Perl implementation of the RC5 encryption algorithm
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmcryptrc5
-CATALOGNAME = pm_cryptrc5
+PACKAGES = CSWpm-crypt-rc5
+CATALOGNAME = pm_crypt_rc5
+SPKG_DESC_CSWpm-crypt-rc5 = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-crypt-rc5 = CSWpmcryptrc5
+CATALOGNAME_CSWpmcryptrc5 = pm_cryptrc5
+
 ARCHALL = 1
 
 include gar/category.mk
