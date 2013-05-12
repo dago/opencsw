@@ -47,6 +47,7 @@ DISTFILES += CSWap2-modphp5.preremove
 DISTFILES += httpd-php5.conf
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
+PATCHFILES += 0003-Do-not-activate-php5-module-during-package-build.patch
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWlibcurl-dev CSWjpeg
@@ -356,6 +357,9 @@ pre-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc
 pre-install-modulated: $(PI_SCRIPTS)
 	@(mkdir -p $(DESTDIR)$(AP2SYSCONF); \
 		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF) )
+	@echo "LoadModule foo_module libexec/mod_foo.so" > $(DESTDIR)$(AP2SYSCONF)/httpd.conf
+	@echo "LoadModule foo1_module libexec/mod_foo1.so" > $(DESTDIR)$(AP2SYSCONF)/httpd.conf
+	@echo "LoadModule foo2_module libexec/mod_foo2.so" > $(DESTDIR)$(AP2SYSCONF)/httpd.conf
 	@$(MAKECOOKIE)
 
 post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
