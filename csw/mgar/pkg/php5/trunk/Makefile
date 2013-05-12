@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.21
+VERSION  = 5.3.25
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
@@ -19,9 +19,10 @@ available.
 endef
 
 EXTRA_MODULATORS = SAPI
-MODULATIONS_SAPI = cgi ap2
+MODULATIONS_SAPI = cgi ap2 fpm
 MERGE_SCRIPTS_isa-default-sapi-cgi = copy-all
 MERGE_SCRIPTS_isa-default-sapi-ap2 = copy-all
+MERGE_SCRIPTS_isa-default-sapi-fpm = copy-all
 
 # turn on the build scripts to enable/disable modules
 PHP5_EXT = 1
@@ -323,6 +324,9 @@ CONFIGURE_ARGS += --enable-cli
 
 ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
+endif
+ifeq ($(SAPI),fpm)
+CONFIGURE_ARGS += --enable-fpm
 endif
 
 # Disable Tests (report submitted to PHP QA)
