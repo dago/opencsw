@@ -1,23 +1,24 @@
 NAME = Exception-Class
-VERSION = 1.32
+VERSION = 1.37
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DROLSKY
 
 DESCRIPTION = Declare real exception classes in Perl
 define BLURB
-  Exception::Class allows you to declare exception hierarchies in your modules
-  in a "Java-esque" manner.  It features a simple interface allowing
-  programmers to 'declare' exception classes at compile time. It also has a
-  base exception class, Exception::Class::Base, that can be easily extended.
 endef
 
-PACKAGES = CSWpmexceptcls
-CATALOGNAME = pm_exceptcls
+PACKAGES = CSWpm-exception-class
+CATALOGNAME = pm_exception_class
+SPKG_DESC_CSWpm-exception-class = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-exception-class = CSWpmexceptcls
+CATALOGNAME_CSWpmexceptcls = pm_exceptcls
+
 ARCHALL = 1
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS += CSWpmclsdtainherit CSWpmdevstacktrace
+RUNTIME_DEP_PKGS += CSWpm-class-data-inheritable
+RUNTIME_DEP_PKGS += CSWpm-devel-stacktrace
 
 include gar/category.mk
