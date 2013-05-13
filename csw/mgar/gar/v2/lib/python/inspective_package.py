@@ -15,6 +15,7 @@ import time
 import shell
 import mmap
 import tempfile
+import io
 
 from elftools.elf.elffile import ELFFile
 from elftools.elf.enums import ENUM_E_MACHINE
@@ -282,12 +283,20 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binary_info = {'version definition': [],
                      'version needed': []}
 
-      if not os.fstat(elfdump_output_file.fileno()).st_size:
+      try:
+        file_size = os.fstat(elfdump_output_file.fileno()).st_size
+      except io.UnsupportedOperation:
+        file_size = len(elfdump_output_file.getvalue())
+      if not file_size:
         binary_info['symbol table'] = []
         binaries_elf_info[binary] = binary_info
         continue
 
-      elfdump_output = mmap.mmap(elfdump_output_file.fileno(), 0, prot=mmap.PROT_READ)
+      try:
+        fileno = elfdump_output_file.fileno()
+        elfdump_output = mmap.mmap(fileno, 0, prot=mmap.PROT_READ)
+      except io.UnsupportedOperation:
+        elfdump_output = elfdump_output_file
 
       cur_section = None
       for line in iter(elfdump_output.readline, ""):

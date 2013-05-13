@@ -9,6 +9,8 @@ import hachoir_parser
 import magic
 import os
 import common_constants
+import tempfile
+import io
 
 LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 \tsymbol not found: check_encoding_conversion_args    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
@@ -135,7 +137,7 @@ BINARY_ELFINFO = {'opt/csw/lib/libssl.so.1.0.0': {
 
 
 
-class InspectivePackageUnitTest(mox.MoxTestBase):
+class InspectivePackageUnitTest(mox.MoxTestBase, unittest.TestCase):
 
   def testListBinaries(self):
     self.mox.StubOutWithMock(os, 'access')
@@ -220,6 +222,11 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
 
 
   def testGetBinaryElfInfoRoot(self):
+    self.mox.StubOutWithMock(tempfile, 'TemporaryFile')
+    fake_file = io.BytesIO()
+    fake_file.write(ELFDUMP_OUTPUT)
+    fake_file.seek(0)
+    tempfile.TemporaryFile().AndReturn(fake_file)
     fake_binary = 'opt/csw/lib/libssl.so.1.0.0'
     fake_package_path = '/fake/path/CSWfoo'
 
@@ -235,12 +242,20 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "root", fake_binary)]
-    shell.ShellCommand(args, allow_error=True).AndReturn((0, ELFDUMP_OUTPUT, ""))
+    shell.ShellCommand(
+        args,
+        allow_error=True,
+        stdout=mox.IgnoreArg()).AndReturn((0, "", ""))
     self.mox.ReplayAll()
 
     self.assertEqual(BINARY_ELFINFO, ip.GetBinaryElfInfo())
 
   def testGetBinaryElfInfoReloc(self):
+    self.mox.StubOutWithMock(tempfile, 'TemporaryFile')
+    fake_file = io.BytesIO()
+    fake_file.write(ELFDUMP_OUTPUT)
+    fake_file.seek(0)
+    tempfile.TemporaryFile().AndReturn(fake_file)
     fake_binary = 'lib/libssl.so.1.0.0'
     fake_package_path = '/fake/path/CSWfoo'
 
@@ -256,7 +271,7 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "reloc", fake_binary)]
-    shell.ShellCommand(args, allow_error=True).AndReturn((0, ELFDUMP_OUTPUT, ""))
+    shell.ShellCommand(args, allow_error=True, stdout=fake_file).AndReturn((0, "", ""))
     self.mox.ReplayAll()
 
     self.assertEqual(BINARY_ELFINFO, ip.GetBinaryElfInfo())
@@ -296,6 +311,12 @@ Syminfo Section:  .SUNW_syminfo
       'version definition': [],
       }
     }
+    self.maxDiff = None
+    self.mox.StubOutWithMock(tempfile, 'TemporaryFile')
+    fake_file = io.BytesIO()
+    fake_file.write(fake_elfdump_output)
+    fake_file.seek(0)
+    tempfile.TemporaryFile().AndReturn(fake_file)
     ip = inspective_package.InspectivePackage(fake_package_path)
     self.mox.StubOutWithMock(ip, 'ListBinaries')
     self.mox.StubOutWithMock(ip, 'GetBasedir')
@@ -308,7 +329,10 @@ Syminfo Section:  .SUNW_syminfo
     args = [common_constants.ELFDUMP_BIN,
             '-svy',
             os.path.join(fake_package_path, "root", fake_binary)]
-    shell.ShellCommand(args, allow_error=True).AndReturn((0, fake_elfdump_output, fake_elfdump_errors))
+    shell.ShellCommand(
+        args,
+        allow_error=True,
+        stdout=fake_file).AndReturn((0, fake_elfdump_output, fake_elfdump_errors))
     self.mox.ReplayAll()
 
     self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
