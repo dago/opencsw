@@ -29,20 +29,19 @@ class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
     #   bind 9.4.2,REV=2008.07.09_rev=p1 CSWbind
     #   bind-9.4.2,REV=2008.07.09_rev=p1-SunOS5.8-sparc-CSW.pkg.gz
     #   f68df57fcf54bfd37304b79d6f7eeacc 2954112 CSWcommon|CSWosslrt net none
-    cfg = generate_catalog_file.CatalogFileGenerator("dublin", "sparc", "SunOS5.10", mock_pkgcache, mock_rest)
-    mock_pkgcache.GetDeps('fdb7912713da36afcbbe52266c15cb3f').AndReturn(
-        {
-          "pkgname": "CSW389-admin-mock",
-          "deps": [
-            ["CSWfoo", ""],
-            ["CSWbar", ""],
-          ]
-        }
-    )
-    mock_pkgcache.GetPkgstats('fdb7912713da36afcbbe52266c15cb3f').AndReturn(
-        # {"i_depends": ["CSWincompatible", "CSWzorg"]}
-        {"i_depends": []}
-    )
+    cfg = generate_catalog_file.CatalogFileGenerator("dublin",
+                                                     "sparc",
+                                                     "SunOS5.10",
+                                                     mock_pkgcache, mock_rest)
+    mock_rest.GetCatalogData('fdb7912713da36afcbbe52266c15cb3f').AndReturn({
+      "deps": [
+        ["CSWfoo", ""],
+        ["CSWbar", ""],
+      ],
+      "i_deps": [],
+      "pkginfo_name": "389_admin - The 389 LDAP server Admin Tools",
+      "pkgname": "CSW389-admin-mock",
+      })
     self.mox.ReplayAll()
     self.assertEquals(
         "389_admin "
