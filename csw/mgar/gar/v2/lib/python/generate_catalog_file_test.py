@@ -17,6 +17,21 @@ PKG_DATA_1 = {
         "version_string": "1.1.29,REV=2012.05.02"
 }
 
+FAKE_CATALOG_DATA = {
+    "deps": [
+      ["CSWfoo", ""],
+      ["CSWbar", ""],
+    ],
+    "i_deps": [],
+    "pkginfo_name": "389_admin - The 389 LDAP server Admin Tools",
+    "pkgname": "CSW389-admin-mock",
+}
+
+EXPECTED_LINE = ("389_admin 1.1.29,REV=2012.05.02 CSW389-admin-mock "
+                 "389_admin-1.1.29,REV=2012.05.02-SunOS5.10-sparc-CSW.pkg.gz "
+                 "fdb7912713da36afcbbe52266c15cb3f 395802 CSWfoo|CSWbar "
+                 "none none")
+
 class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
 
   def testComposeCatalogLineBasic(self):
@@ -33,26 +48,26 @@ class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
                                                      "sparc",
                                                      "SunOS5.10",
                                                      mock_pkgcache, mock_rest)
-    mock_rest.GetCatalogData('fdb7912713da36afcbbe52266c15cb3f').AndReturn({
-      "deps": [
-        ["CSWfoo", ""],
-        ["CSWbar", ""],
-      ],
-      "i_deps": [],
-      "pkginfo_name": "389_admin - The 389 LDAP server Admin Tools",
-      "pkgname": "CSW389-admin-mock",
-      })
+    md5_sum = 'fdb7912713da36afcbbe52266c15cb3f'
+    mock_rest.GetCatalogData(md5_sum).AndReturn(FAKE_CATALOG_DATA)
     self.mox.ReplayAll()
-    self.assertEquals(
-        "389_admin "
-        "1.1.29,REV=2012.05.02 "
-        "CSW389-admin-mock "
-        "389_admin-1.1.29,REV=2012.05.02-SunOS5.10-sparc-CSW.pkg.gz "
-        "fdb7912713da36afcbbe52266c15cb3f "
-        "395802 "
-        "CSWfoo|CSWbar "
-        "none none",
-        cfg.ComposeCatalogLine(PKG_DATA_1))
+    self.assertEquals(EXPECTED_LINE, cfg.ComposeCatalogLine(PKG_DATA_1))
+
+  def testGenerateCatalogAsLines(self):
+    mock_pkgcache = self.mox.CreateMock(rest.CachedPkgstats)
+    mock_rest = self.mox.CreateMock(rest.RestClient)
+    cfg = generate_catalog_file.CatalogFileGenerator("dublin",
+                                                     "sparc",
+                                                     "SunOS5.10",
+                                                     mock_pkgcache, mock_rest)
+    md5_sum = 'fdb7912713da36afcbbe52266c15cb3f'
+    mock_rest.GetCatalog('dublin', 'sparc', 'SunOS5.10').AndReturn([PKG_DATA_1])
+    mock_rest.GetCatalogData(md5_sum).AndReturn(FAKE_CATALOG_DATA)
+    self.mox.ReplayAll()
+    self.assertEquals([
+      # Potential additional lines go here.
+      EXPECTED_LINE,
+    ], cfg._GenerateCatalogAsLines())
 
 
 if __name__ == '__main__':
