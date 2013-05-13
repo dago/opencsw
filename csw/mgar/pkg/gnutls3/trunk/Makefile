@@ -10,7 +10,7 @@ define BLURB
 MASTER_SITES = ftp://ftp.gnutls.org/gcrypt/gnutls/v$(SUBV)/
 DISTFILES += $(DISTNAME).tar.xz
 # PATCHFILES += 0001-Do-not-strip-norunpath.patch
-#PATCHFILES += 0002-Use-AF_UNIX-instead-of-AF_LOCAL-on-Solaris.patch
+PATCHFILES += 0002-Use-AF_UNIX-instead-of-AF_LOCAL-on-Solaris.patch
 
 # Sun Studio 12 bails out on .deinit_func
 GARCOMPILER = GCC4
@@ -55,7 +55,7 @@ SPKG_DESC_CSWlibgnutls-dev = Development Files for GNU TLS
 PKGFILES_CSWlibgnutls-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibgnutls-dev += CSWlibgnutls26
 OBSOLETED_BY_CSWlibgnutls-dev = CSWgnutlsdevel
-CATALOGNAME_CSWgnutlsdevel = gnutls_devel_stub
+CATALOGNAME_CSWgnutlsdevel = gnPATCHFILES += 0001-no-gets-warning.patchgnutls_devel_stub
 
 # We don't need it and if defined# the test breaks
 LD_OPTIONS =
@@ -70,4 +70,7 @@ CONFIGURE_ARGS += --with-lzo
 # We put all libs in one package as they are .so.26 and are all bumped together
 CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
 
-include 
+include pre-configure:
+	cd $(WORKSRC) && autoconf
+	@${MAKECOOKIE}
+
