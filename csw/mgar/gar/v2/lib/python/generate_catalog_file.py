@@ -80,12 +80,19 @@ class CatalogFileGenerator(object):
     out_file = os.path.join(out_dir, CATALOG_FN)
     if os.path.exists(out_file):
       raise Error("File %s already exists." % out_file)
+    lines = self._GenerateCatalogLines()
+    with open(out_file, "w") as fd:
+      fd.write("\n".join(lines))
+
+  def _GenerateCatalogAsLines(self):
+    """Return the complete catalog as a list of lines."""
     lines = []
+    # Potential additional lines might go here.
+    # liens.append("...")
     if self.catalog:  # the catalog might be None
       for pkg_data in self.catalog:
         lines.append(self.ComposeCatalogLine(pkg_data))
-    with open(out_file, "w") as fd:
-      fd.write("\n".join(lines))
+    return lines
 
   def GenerateDescriptions(self, out_dir):
     out_file = os.path.join(out_dir, DESC_FN)
