@@ -18,6 +18,7 @@ from csw_upload_pkg_test     import *
 from database_test           import *
 from dependency_checks_test  import *
 from inspective_package_test import *
+from generate_catalog_file   import *
 from ldd_emul_test           import *
 from models_test             import *
 from opencsw_test            import *
