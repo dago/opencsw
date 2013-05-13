@@ -80,9 +80,9 @@ class CatalogFileGenerator(object):
     out_file = os.path.join(out_dir, CATALOG_FN)
     if os.path.exists(out_file):
       raise Error("File %s already exists." % out_file)
-    lines = self._GenerateCatalogLines()
+    lines = self._GenerateCatalogAsLines()
     with open(out_file, "w") as fd:
-      fd.write("\n".join(lines))
+      fd.write("\n".join(lines).encode('utf-8'))
 
   def _GenerateCatalogAsLines(self):
     """Return the complete catalog as a list of lines."""
@@ -104,7 +104,7 @@ class CatalogFileGenerator(object):
         catalog_data = self.pkgcache.GetDeps(pkg_data["md5_sum"])
         lines.append(catalog_data['pkginfo_name'])
     with open(out_file, "w") as fd:
-      fd.write("\n".join(lines))
+      fd.write("\n".join(lines).encode('utf-8'))
 
 
 def main():
