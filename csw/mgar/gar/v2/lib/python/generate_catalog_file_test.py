@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import datetime
 import unittest
 import mox
 import generate_catalog_file
@@ -29,6 +30,7 @@ FAKE_CATALOG_DATA = {
     "pkgname": "CSW389-admin-mock",
 }
 
+#EXPECTED_LINE = (["# CREATIONDATE 2013-04-01T11:11:11Z",
 EXPECTED_LINE = ("389_admin 1.1.29,REV=2012.05.02 CSW389-admin-mock "
                  "389_admin-1.1.29,REV=2012.05.02-SunOS5.10-sparc-CSW.pkg.gz "
                  "fdb7912713da36afcbbe52266c15cb3f 395802 CSWfoo|CSWbar "
@@ -58,6 +60,9 @@ class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
   def testGenerateCatalogAsLines(self):
     mock_pkgcache = self.mox.CreateMock(rest.CachedPkgstats)
     mock_rest = self.mox.CreateMock(rest.RestClient)
+    self.mox.StubOutWithMock(datetime, 'datetime')
+    datetime.datetime.utcnow().AndReturn(datetime.datetime(year=2013, month=4, day=1, hour=11, minute=11, second=11));
+    self.mox.ReplayAll()
     cfg = generate_catalog_file.CatalogFileGenerator("dublin",
                                                      "sparc",
                                                      "SunOS5.10",
