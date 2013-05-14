@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-import datetime
-import unittest
-import mox
-import generate_catalog_file
-import rest
 import __builtin__
+import datetime
 import io
+import mox
+import rest
+import unittest2 as unittest
+
+from lib.python import generate_catalog_file
 
 PKG_DATA_1 = {
         "basename": "389_admin-1.1.29,REV=2012.05.02-SunOS5.10-sparc-CSW.pkg.gz",
@@ -35,7 +36,7 @@ EXPECTED_LINE = ("389_admin 1.1.29,REV=2012.05.02 CSW389-admin-mock "
                  "fdb7912713da36afcbbe52266c15cb3f 395802 CSWfoo|CSWbar "
                  "none none")
 
-class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
+class CatalogFileGeneratorUnitTest(mox.MoxTestBase, unittest.TestCase):
 
   def testComposeCatalogLineBasic(self):
     mock_pkgcache = self.mox.CreateMock(rest.CachedPkgstats)
@@ -87,7 +88,7 @@ class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
     mock_rest.GetCatalog('dublin', 'sparc', 'SunOS5.10').AndReturn([PKG_DATA_1])
     md5_sum = 'fdb7912713da36afcbbe52266c15cb3f'
     mock_rest.GetCatalogData(md5_sum).AndReturn(FAKE_CATALOG_DATA)
-    fake_file = io.BytesIO();
+    fake_file = io.BytesIO()
     open('fake-dir/catalog', 'w').AndReturn(fake_file)
     self.mox.ReplayAll()
     cfg.GenerateCatalog('fake-dir')
@@ -103,7 +104,7 @@ class CatalogFileGeneratorUnitTest(mox.MoxTestBase):
     md5_sum = 'fdb7912713da36afcbbe52266c15cb3f'
     mock_pkgcache.GetDeps(md5_sum).AndReturn(FAKE_CATALOG_DATA)
     mock_rest.GetCatalog('dublin', 'sparc', 'SunOS5.10').AndReturn([PKG_DATA_1])
-    fake_file = io.BytesIO();
+    fake_file = io.BytesIO()
     open('fake-dir/descriptions', 'w').AndReturn(fake_file)
     self.mox.ReplayAll()
     cfg.GenerateDescriptions('fake-dir')
