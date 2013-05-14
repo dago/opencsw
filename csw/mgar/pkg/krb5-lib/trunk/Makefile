@@ -53,7 +53,6 @@ SPKG_DESC_CSWkrb5adminserver = Unused package 4
 
 PACKAGES += CSWlibkrb5-dev
 SPKG_DESC_CSWlibkrb5-dev      = MIT Kerberos 5 developer libraries
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev = CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibgssapi-krb5-2
@@ -159,10 +158,7 @@ TEST_SCRIPTS = $(WORKSRC)/src/Makefile
 #     "verbose $expect_out(buffer) 1"
 SKIPTEST ?= 1
 
-INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
-
-# This name is so old that there it is not recognized as devel-package
-CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWkrb5lib
+INSTALL_SCRIPTS = $(WORKSdency|CSWkrb5lib
 
 # pkgname=CSWkrb5lib|catalogname=krb5_lib|expected-catalogname=krb5lib
 CHECKPKG_OVERRIDES_CSWkrb5lib += catalogname-does-not-match-pkgname
