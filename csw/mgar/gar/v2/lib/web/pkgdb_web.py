@@ -17,6 +17,7 @@ import time
 from lib.python import models
 from lib.python import configuration
 from lib.python import checkpkg_lib
+from lib.python import representations
 from lib.web import web_lib
 import datetime
 from sqlobject import sqlbuilder
@@ -43,6 +44,8 @@ urls_rest = (
       'PkgnameByFilename',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames-and-paths-by-basename',
       'PkgnamesAndPathsByBasename',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/',
+      'CatalogForGeneration',
   # Query by catalog release, arch, OS release and catalogname
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
@@ -503,6 +506,36 @@ class RestSvr4CatalogData(object):
         'pkgname': cat_gen_data.pkgname,
     }
     return cjson.encode(simple_data)
+
+
+class CatalogForGeneration(object):
+
+  def GET(self, catrel_name, arch_name, osrel_name):
+    """A list of tuples, aligning with the catalog format.
+
+    catalogname version_string pkgname
+    basename md5_sum size deps category i_deps
+    """
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+        osrel_name, arch_name, catrel_name)
+    rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
+    def GenCatalogEntry(row):
+      entry = representations.CatalogEntry(
+          catalogname=row[0],
+          version=row[1],
+          pkgname=row[2],
+          basename=row[3],
+          md5_sum=row[4],
+          size=row[5],
+          deps="|".join([x[0] for x in cjson.decode(row[6])]),
+          category="none",
+          i_deps="|".join(cjson.decode(row[7])),
+      )
+      return entry
+    entries_list = [GenCatalogEntry(row) for row in rows]
+    response = cjson.encode([tuple(x) for x in entries_list])
+    web.header('Content-Length', str(len(response)))
+    return response
 
 
 web.webapi.internalerror = web.debugerror
