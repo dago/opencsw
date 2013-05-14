@@ -489,6 +489,39 @@ def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
   ).orderBy('catalogname')
   return res
 
+
+def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
+  """Get rows with catalog results.
+
+  CatalogEntry
+  catalogname version pkgname basename md5_sum size deps category i_deps
+  """
+  join = [
+      sqlbuilder.INNERJOINOn(None,
+        Srv4FileInCatalog,
+        Srv4FileInCatalog.q.srv4file==Srv4FileStats.q.id),
+      sqlbuilder.INNERJOINOn(None,
+        CatalogGenData,
+        Srv4FileStats.q.md5_sum==CatalogGenData.q.md5_sum),
+  ]
+  where = sqlbuilder.AND(
+      Srv4FileInCatalog.q.osrel==sqo_osrel,
+        Srv4FileInCatalog.q.arch==sqo_arch,
+        Srv4FileInCatalog.q.catrel==sqo_catrel,
+        Srv4FileStats.q.use_to_generate_catalogs==True,
+  )
+  select = sqlbuilder.Select(
+      ['catalogname', 'version_string', 'pkgname', 'basename',
+       'srv4_file_stats.md5_sum',
+       'size', 'deps', 'i_deps'],
+      where=where,
+      orderBy='catalogname',
+      join=join)
+  query = sqlobject.sqlhub.processConnection.sqlrepr(select)
+  rows = sqlobject.sqlhub.processConnection.queryAll(query)
+  return rows
+
+
 def GetSqoTriad(osrel, arch, catrel):
   sqo_osrel = OsRelease.selectBy(short_name=osrel).getOne()
   sqo_arch = Architecture.selectBy(name=arch).getOne()
