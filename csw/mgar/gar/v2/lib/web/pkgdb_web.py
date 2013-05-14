@@ -39,7 +39,7 @@ urls_html = (
 )
 urls_rest = (
   r'/rest/catalogs/', 'RestCatalogList',
-  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'Catalogs',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'RestCatalogDetail',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames-and-paths-by-basename',
@@ -47,8 +47,10 @@ urls_rest = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/',
       'CatalogForGeneration',
   # Query by catalog release, arch, OS release and catalogname
-  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
-  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/',
+      'Srv4ByCatAndCatalogname',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/',
+      'Srv4ByCatAndPkgname',
   r'/rest/maintainers/([0-9]+)/', 'RestMaintainerDetail',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
@@ -301,7 +303,7 @@ class ErrorTagList(object):
     return render.ErrorTagList(rows)
 
 
-class Catalogs(object):
+class RestCatalogDetail(object):
   def GET(self, catrel_name, arch_name, osrel_name):
     sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
@@ -475,6 +477,7 @@ class Srv4ByCatAndPkgname(object):
       return cjson.encode(None)
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
+
 
 class RestCatalogList(object):
   def GET(self):

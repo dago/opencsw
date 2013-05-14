@@ -113,7 +113,7 @@ class RestClient(object):
     try:
       data = urllib2.urlopen(url).read()
       return cjson.decode(data)
-    except urllib2.HTTPError, e:
+    except urllib2.HTTPError as e:
       logging.warning("%s -- %s", url, e)
       return None
 
