@@ -12,17 +12,13 @@ necessary to bring one catalog to the state of another catalog.
 
 from Cheetah import Template
 import cjson
-import gdbm
-import json
 import catalog
 import common_constants
 import logging
 import opencsw
 import optparse
-import pprint
 import rest
 import sys
-import urllib2
 import re
 
 
@@ -39,7 +35,7 @@ then
     "machine buildfarm.opencsw.org login \${LOGNAME} password \$(cat /etc/opt/csw/releases/auth/\${LOGNAME})"
 fi
 
-set -x
+set -e
 
 readonly CURL="curl --netrc"
 readonly REST_URL=http://buildfarm.opencsw.org/releases/
@@ -112,6 +108,7 @@ function undo_upgrade_$catalogname {
 #if "new_pkgs" in $diffs_by_catalogname[$catalogname]:
 new_pkg_$catalogname#
 #end if
+
 #if "removed_pkgs" in $diffs_by_catalogname[$catalogname]:
 remove_pkg_$catalogname#
 #end if
@@ -135,8 +132,10 @@ $bundle #
 #end for
 """
 
+
 class Error(Exception):
   """Generic error."""
+
 
 class UsageError(Error):
   """Wrong usage."""
@@ -146,7 +145,7 @@ def IndexDictByField(d, field):
   return dict((x[field], x) for x in d)
 
 
-def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
+def GetCatalogs(catrel_from, catrel_to, include_downgrades,
                           include_version_changes):
   rest_client = rest.RestClient()
   def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
@@ -163,10 +162,8 @@ def GetDiffsByCatalogname(catrel_from, catrel_to, include_downgrades,
         catalogs_to_fetch_args.append((rest_client, catrel, arch, osrel))
   # Convert this to pool.map when multiprocessing if fixed.
   catalogs = dict(map(lambda x: GetCatalog(*x), catalogs_to_fetch_args))
-  diffs_by_catalogname = ComposeDiffsByCatalogname(
-      catalogs, catrel_from, catrel_to, include_version_changes,
-      include_downgrades)
-  return catalogs, diffs_by_catalogname
+  return catalogs
+
 
 def ComposeDiffsByCatalogname(catalogs, catrel_from, catrel_to,
                               include_version_changes, include_downgrades):
@@ -286,9 +283,12 @@ def main():
         (tuple(cjson.decode(x)), jsonable_catalogs[x])
         for x in jsonable_catalogs)
   else:
-    catalogs, diffs_by_catalogname = GetDiffsByCatalogname(
+    catalogs = GetCatalogs(
         catrel_from, catrel_to, options.include_downgrades,
         options.include_version_changes)
+    diffs_by_catalogname = ComposeDiffsByCatalogname(
+        catalogs, catrel_from, catrel_to, include_version_changes,
+        include_downgrades)
     bundles_by_md5 = {}
     bundles_missing = set()
     cp = rest.CachedPkgstats("pkgstats")
@@ -300,7 +300,6 @@ def main():
           if md5 not in bundles_by_md5 and md5 not in bundles_missing:
             stats = cp.GetPkgstats(md5)
             bundle_key = "OPENCSW_BUNDLE"
-            # pprint.pprint(stats)
             if stats:
               if bundle_key in stats["pkginfo"]:
                 bundles_by_md5[md5] = stats["pkginfo"][bundle_key]
