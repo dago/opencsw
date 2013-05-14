@@ -1,23 +1,29 @@
 NAME = HTML-Mason
-VERSION = 1.45
+VERSION = 1.51
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = DROLSKY
+AUTHOR = JSWARTZ
 
 DESCRIPTION = High-performance, dynamic web site authoring system
 define BLURB
-  Mason is a tool for building, serving and managing large web sites. Its
-  features make it an ideal backend for high load sites serving dynamic
-  content, such as online newspapers or database driven e-commerce sites.
 endef
 
 LICENSE = LICENSE
 
-PACKAGES = CSWpmhtmlmason
-CATALOGNAME = pm_htmlmason
+PACKAGES = CSWpm-html-mason
+CATALOGNAME = pm_html_mason
+SPKG_DESC_CSWpm-html-mason = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-html-mason = CSWpmhtmlmason
+CATALOGNAME_CSWpmhtmlmason = pm_htmlmason
 
-BUILD_DEP_PKGS = CSWpmlogany CSWpmtestdeep
-RUNTIME_DEP_PKGS = CSWpmexceptcls CSWpmclscontainer CSWpmparamsvalidate CSWpmcachecache
+BUILD_DEP_PKGS += CSWpm-test-deep
+
+RUNTIME_DEP_PKGS += CSWpmcachecache
+RUNTIME_DEP_PKGS += CSWpmclscontainer
+RUNTIME_DEP_PKGS += CSWpm-exception-class
+RUNTIME_DEP_PKGS += CSWpm-html-parser
+RUNTIME_DEP_PKGS += CSWpm-log-any
+RUNTIME_DEP_PKGS += CSWpm-params-validate
 
 ARCHALL = 1
 
