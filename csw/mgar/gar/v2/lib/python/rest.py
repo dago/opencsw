@@ -9,6 +9,7 @@ import os
 import pycurl
 import re
 import urllib2
+import httplib
 
 import retry_decorator
 
@@ -76,6 +77,7 @@ class RestClient(object):
         # Other HTTP errors are should be thrown.
         raise
 
+  @retry_decorator.Retry(tries=4, exceptions=(RestCommunicationError, httplib.BadStatusLine))
   def GetCatalogData(self, md5_sum):
     self.ValidateMd5(md5_sum)
     url = self.rest_url + self.PKGDB_APP + "/srv4/%s/catalog-data/" % md5_sum
