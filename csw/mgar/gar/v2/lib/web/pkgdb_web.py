@@ -313,7 +313,9 @@ class RestCatalogDetail(object):
     web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=srv4-list')
     # We never want to return complete data for every object (too slow).
     pkgs_data = [p.GetRestRepr(quick=True)[1] for p in pkgs]
-    return cjson.encode(pkgs_data)
+    response = cjson.encode(pkgs_data)
+    web.header('Content-Length', str(len(response)))
+    return response
 
 
 class PkgnameByFilename(object):
@@ -508,7 +510,9 @@ class RestSvr4CatalogData(object):
         'pkginfo_name': cat_gen_data.pkginfo_name,
         'pkgname': cat_gen_data.pkgname,
     }
-    return cjson.encode(simple_data)
+    response = cjson.encode(simple_data)
+    web.header('Content-Length', str(len(response)))
+    return response
 
 
 class CatalogForGeneration(object):
