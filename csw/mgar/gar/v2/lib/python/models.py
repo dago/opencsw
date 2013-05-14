@@ -511,9 +511,15 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
         Srv4FileStats.q.use_to_generate_catalogs==True,
   )
   select = sqlbuilder.Select(
-      ['catalogname', 'version_string', 'pkgname', 'basename',
+      ['catalogname',
+       'version_string',
+       'pkgname',
+       'basename',
        'srv4_file_stats.md5_sum',
-       'size', 'deps', 'i_deps'],
+       'size',
+       'deps',
+       'i_deps',
+       'pkginfo_name'],
       where=where,
       orderBy='catalogname',
       join=join)
