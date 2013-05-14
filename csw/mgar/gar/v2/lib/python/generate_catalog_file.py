@@ -26,6 +26,7 @@ import os
 import optparse
 import logging
 import sys
+from datetime import datetime
 
 
 class Error(Exception):
@@ -87,8 +88,10 @@ class CatalogFileGenerator(object):
   def _GenerateCatalogAsLines(self):
     """Return the complete catalog as a list of lines."""
     lines = []
+    lines.append("# CREATIONDATE " + datetime.now().isoformat() + "Z")
+
     # Potential additional lines might go here.
-    # liens.append("...")
+    # lines.append("...")
     if self.catalog:  # the catalog might be None
       for pkg_data in self.catalog:
         lines.append(self.ComposeCatalogLine(pkg_data))
