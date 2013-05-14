@@ -527,16 +527,28 @@ class CatalogForGeneration(object):
         osrel_name, arch_name, catrel_name)
     rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
     def GenCatalogEntry(row):
+      i_deps = cjson.decode(row[7])
+      if i_deps:
+        i_deps_str = "|".join(i_deps)
+      else:
+        i_deps_str = "none"
+      deps_with_desc = cjson.decode(row[6])
+      deps = [x[0] for x in deps_with_desc if x[0].startswith('CSW')]
+      if deps:
+        deps_str = '|'.join(deps)
+      else:
+        deps_str = "none"
       entry = representations.CatalogEntry(
-          catalogname=row[0],
-          version=row[1],
-          pkgname=row[2],
-          basename=row[3],
-          md5_sum=row[4],
-          size=row[5],
-          deps="|".join([x[0] for x in cjson.decode(row[6])]),
-          category="none",
-          i_deps="|".join(cjson.decode(row[7])),
+          catalogname=row[0],  # 0
+          version=row[1],      # 1
+          pkgname=row[2],      # 2
+          basename=row[3],     # 3
+          md5_sum=row[4],      # 4
+          size=str(row[5]),    # 5
+          deps=deps_str,       # 6
+          category="none",     # 7
+          i_deps=i_deps_str,   # 8
+          desc=row[8], # 9
       )
       return entry
     entries_list = [GenCatalogEntry(row) for row in rows]

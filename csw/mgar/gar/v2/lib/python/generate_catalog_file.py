@@ -27,6 +27,7 @@ import optparse
 import logging
 import sys
 import datetime
+import representations
 
 
 class Error(Exception):
@@ -35,79 +36,59 @@ class Error(Exception):
 class CatalogFileGenerator(object):
 
   def __init__(self, catrel, arch, osrel,
-               pkgcache=None, rest_client=None):
+               rest_client=None):
     self.catrel = catrel
     self.arch = arch
     self.osrel = osrel
     home_dir = os.environ['HOME']
-    self.pkgcache = pkgcache or rest.CachedPkgstats(os.path.join(home_dir, "pkgstats"))
     self.rest_client = rest_client or rest.RestClient()
     self._catalog = None
 
   @property
   def catalog(self):
     if not self._catalog:
-      self._catalog = self.rest_client.GetCatalog(self.catrel, self.arch, self.osrel)
+      self._catalog = self.rest_client.GetCatalogForGeneration(self.catrel,
+                                                               self.arch,
+                                                               self.osrel)
+      try:
+        self._catalog = [representations.CatalogEntry._make(x)
+                         for x in self._catalog]
+      except TypeError:
+        print self._catalog
+        raise
     return self._catalog
 
-  def ComposeCatalogLine(self, pkg_data):
-    catalog_data = self.rest_client.GetCatalogData(pkg_data["md5_sum"])
-    i_deps = catalog_data["i_deps"]
-    if i_deps:
-      i_deps = "|".join(i_deps)
-    else:
-      i_deps = "none"
-    deps = []
-    for dep, _ in catalog_data["deps"]:
-      if "CSW" in dep:
-        deps.append(dep)
-    if deps:
-      deps = "|".join(deps)
-    else:
-      deps = "none"
-    items = [
-        pkg_data["catalogname"],
-        pkg_data["version_string"],
-        catalog_data["pkgname"],
-        pkg_data["basename"],
-        pkg_data["md5_sum"],
-        unicode(pkg_data["size"]),
-        deps,
-        "none",
-        i_deps]
+  def ComposeCatalogLine(self, catalog_entry):
+    items = tuple(catalog_entry)[:9]
     return " ".join(items)
 
   def GenerateCatalog(self, out_dir):
-    out_file = os.path.join(out_dir, CATALOG_FN)
-    if os.path.exists(out_file):
-      raise Error("File %s already exists." % out_file)
-    lines = self._GenerateCatalogAsLines()
-    with open(out_file, "w") as fd:
+    out_catalog = os.path.join(out_dir, CATALOG_FN)
+    out_desc = os.path.join(out_dir, DESC_FN)
+    if os.path.exists(out_catalog):
+      raise Error("File %s already exists." % out_catalog)
+    if os.path.exists(out_desc):
+      raise Error("File %s already exists." % out_desc)
+    lines, descriptions = self._GenerateCatalogAsLines()
+    with open(out_catalog, "w") as fd:
       fd.write("\n".join(lines).encode('utf-8'))
+    with open(out_desc, "w") as fd:
+      fd.write("\n".join(descriptions).encode('utf-8'))
 
   def _GenerateCatalogAsLines(self):
     """Return the complete catalog as a list of lines."""
     lines = []
-    lines.append("# CREATIONDATE " + datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z")
+    descriptions = []
+    date_iso = datetime.datetime.utcnow().replace(microsecond=0).isoformat()
+    lines.append("# CREATIONDATE %sZ" % date_iso)
 
     # Potential additional lines might go here.
     # lines.append("...")
     if self.catalog:  # the catalog might be None
-      for pkg_data in self.catalog:
-        lines.append(self.ComposeCatalogLine(pkg_data))
-    return lines
-
-  def GenerateDescriptions(self, out_dir):
-    out_file = os.path.join(out_dir, DESC_FN)
-    if os.path.exists(out_file):
-      raise Error("File %s already exists." % out_file)
-    lines = []
-    if self.catalog:
-      for pkg_data in self.catalog:
-        catalog_data = self.pkgcache.GetDeps(pkg_data["md5_sum"])
-        lines.append(catalog_data['pkginfo_name'])
-    with open(out_file, "w") as fd:
-      fd.write("\n".join(lines).encode('utf-8'))
+      for catalog_entry in self.catalog:
+        lines.append(self.ComposeCatalogLine(catalog_entry))
+        descriptions.append(catalog_entry.desc)
+    return lines, descriptions
 
 
 def main():
@@ -120,7 +101,6 @@ def main():
   options, args = parser.parse_args()
   cfg = CatalogFileGenerator(options.catrel, options.arch, options.osrel)
   cfg.GenerateCatalog(options.out_dir)
-  cfg.GenerateDescriptions(options.out_dir)
 
 
 if __name__ == '__main__':
