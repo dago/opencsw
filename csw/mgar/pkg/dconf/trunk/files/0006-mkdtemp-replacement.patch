@@ -1,0 +1,43 @@
+From d31ada964044649ebcfce90b46e9fa46cb98e16d Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 15 May 2013 11:21:40 +0200
+Subject: [PATCH] mkdtemp() replacement
+
+---
+ service/dconf-state.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/service/dconf-state.c b/service/dconf-state.c
+index 0ed156e..31244b0 100644
+--- a/service/dconf-state.c
++++ b/service/dconf-state.c
+@@ -7,6 +7,17 @@
+ #include <stdio.h>
+ #include <errno.h>
+ 
++#include <sys/types.h>
++#include <sys/stat.h>
++
++static char *
++my_mkdtemp(char *template)
++{
++  if (!mktemp(template) || mkdir(template, 0700))
++    return NULL;
++  return template;
++}
++
+ static void
+ dconf_state_init_session (DConfState *state)
+ {
+@@ -59,7 +70,7 @@ dconf_state_init_session (DConfState *state)
+ 
+       shmdir = g_build_filename (tmpdir, "dconf.XXXXXX", NULL);
+ 
+-      if ((state->shm_dir = mkdtemp (shmdir)) == NULL)
++      if ((state->shm_dir = my_mkdtemp (shmdir)) == NULL)
+         g_error ("Can not create reasonable shm directory");
+     }
+ }
+-- 
+1.8.1.4
+
