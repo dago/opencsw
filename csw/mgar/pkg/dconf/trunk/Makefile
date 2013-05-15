@@ -92,11 +92,11 @@ SPKG_DESC_CSWdconf = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWdconf += CSWlibdconf0
 # PKGFILES is catchall
 
-PATCHFILES += 0000-Add-mkdtemp-replacement-function.patch
 PATCHFILES += 0001-Use-statvfs-for-checking-filesystem-type.patch
 PATCHFILES += 0002-Remove-linker-flags-remove-c89-request.patch
 PATCHFILES += 0003-Add-gio-includes.patch
 PATCHFILES += 0000-Replace-posix_fallocate-with-ftruncate.patch
+PATCHFILES += 0006-mkdtemp-replacement.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # package must be compiled in C99 mode; add __EXTENSIONS__ so the headers expose
