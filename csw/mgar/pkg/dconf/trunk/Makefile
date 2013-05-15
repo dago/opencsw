@@ -31,7 +31,6 @@ EXTRA_INC += $(prefix)/lib/gtk-2.0/include/
 EXTRA_INC += $(prefix)/include/gdk-pixbuf-2.0/
 EXTRA_INC += $(prefix)/include/atk-1.0/
 
-BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibdbus-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibglib2-dev
@@ -101,24 +100,12 @@ PATCHFILES += 0006-mkdtemp-replacement.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 # package must be compiled in C99 mode; add __EXTENSIONS__ so the headers expose
 # all interfaces that go beyong C99, cf man standards.5
-CONFIGURE_ARGS += CFLAGS="-std=c99 -D__EXTENSIONS__"
+EXTRA_CFLAGS += -std=c99 -D__EXTENSIONS__
 
 # see above comment for LINKER_IGNORE
-CHECKPKG_OVERRIDES_CSWdconf += soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/dconf|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf += soname-unused|libintl.so.8|is|needed|by|/opt/csw/lib/gio/modules/libdconfsettings.so|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf += soname-unused|libintl.so.8|is|needed|by|/opt/csw/libexec/dconf-service|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libatk-1.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libcairo.so.2|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libfontconfig.so.1|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libfreetype.so.6|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libgdk-x11-2.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libgdk_pixbuf-2.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libgmodule-2.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libintl.so.8|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libpangocairo-1.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libpangoft2-1.0.so.0|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused|libthread.so.1|is|needed|by|/opt/csw/bin/dconf-editor|but|never|used
-CHECKPKG_OVERRIDES_CSWlibdconf0 += soname-unused|libintl.so.8|is|needed|by|/opt/csw/lib/libdconf.so.0.0.0|but|never|used
+CHECKPKG_OVERRIDES_CSWdconf += soname-unused
+CHECKPKG_OVERRIDES_CSWdconf-editor += soname-unused
+CHECKPKG_OVERRIDES_CSWlibdconf0 += soname-unused
 
 include gar/category.mk
 
