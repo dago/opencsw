@@ -6,13 +6,16 @@ AUTHOR = ZENSPIDER
 
 DESCRIPTION = Recursive diff for perl structures
 define BLURB
-  Recursive diff for perl structures
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmstructcompare
-CATALOGNAME = pm_structcompare
+PACKAGES = CSWpm-struct-compare
+CATALOGNAME = pm_struct_compare
+SPKG_DESC_CSWpm-struct-compare = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-struct-compare = CSWpmstructcompare
+CATALOGNAME_CSWpmstructcompare = pm_structcompare
+
 ARCHALL = 1
 
 include gar/category.mk
