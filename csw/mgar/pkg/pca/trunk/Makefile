@@ -1,5 +1,5 @@
 NAME = pca
-VERSION = 20120829-01
+VERSION = 20130502-01
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -63,5 +63,4 @@ install-custom:
 	ginstall -d $(DESTDIR)/etc/opt/csw
 	ginstall $(WORKSRC)/pca.conf $(DESTDIR)/etc/opt/csw
 	ginstall -d $(DESTDIR)$(mandir)/man8
-	pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca.8
-	@$(MAKECOOKIE)
+	pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca
