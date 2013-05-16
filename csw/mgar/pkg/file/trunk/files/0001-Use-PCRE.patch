@@ -1,0 +1,25 @@
+From d54a5b9bf5d91b42e4c3fd01229a5123e22a6019 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 16 May 2013 14:58:54 +0200
+Subject: [PATCH] Use PCRE
+
+---
+ src/file.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/file.h b/src/file.h
+index 2b64399..364a067 100644
+--- a/src/file.h
++++ b/src/file.h
+@@ -61,7 +61,7 @@
+ #ifdef HAVE_INTTYPES_H
+ #include <inttypes.h>
+ #endif
+-#include <regex.h>
++#include <pcreposix.h>
+ #include <time.h>
+ #include <sys/types.h>
+ #include <sys/param.h>
+-- 
+1.8.1.4
+
