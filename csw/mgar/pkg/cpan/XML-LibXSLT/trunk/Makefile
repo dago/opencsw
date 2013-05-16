@@ -1,30 +1,28 @@
 NAME = XML-LibXSLT
-VERSION = 1.70
+VERSION = 1.80
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = PAJAS
+AUTHOR = SHLOMIF
 
 DESCRIPTION = interface to the gnome libxslt library
 define BLURB
-  This module is an interface to the gnome project's libxslt. This is an
-  extremely good XSLT engine, highly compliant and also very fast. I have
-  tests showing this to be more than twice as fast as Sablotron.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmxmllibxslt
-CATALOGNAME = pm_xmllibxslt
+PACKAGES = CSWpm-xml-libxslt
+CATALOGNAME = pm_xml_libxslt
+SPKG_DESC_CSWpm-xml-libxslt = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-xml-libxslt = CSWpmxmllibxslt
+CATALOGNAME_CSWpmxmllibxslt = pm_xmllibxslt
 
-RUNTIME_DEP_PKGS += CSWpmxmllibxml
-RUNTIME_DEP_PKGS += CSWgcrypt
-RUNTIME_DEP_PKGS += CSWgdbm
-RUNTIME_DEP_PKGS += CSWlibxslt
-RUNTIME_DEP_PKGS += CSWgpgerr
-RUNTIME_DEP_PKGS += CSWiconv
-RUNTIME_DEP_PKGS += CSWlibxml2
-RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS_CSWpm-xml-libxslt += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWpm-xml-libxslt += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWpm-xml-libxslt += CSWlibexslt0
+RUNTIME_DEP_PKGS += CSWpm-xml-libxml
 
 SKIPTEST = 1
+
+CHECKPKG_OVERRIDES_CSWpm-xml-libxslt += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/auto/XML/LibXSLT/LibXSLT.so
 
 include gar/category.mk
