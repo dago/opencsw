@@ -311,6 +311,8 @@ EXECUTABLES += resolveip
 
 CONFIGURE_SCRIPTS = custom
 
+TEST_TARGET = test
+
 include gar/category.mk
 
 test-custom:
