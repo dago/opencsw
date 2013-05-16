@@ -6,18 +6,25 @@ AUTHOR = CLKAO
 
 DESCRIPTION = Mirror remote repository to local Subversion repository
 define BLURB
-  SVN::Mirror allows you to mirror remote repository to your local subversion
-  repository.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmsvnmirror
-CATALOGNAME = pm_svnmirror
+PACKAGES = CSWpm-svn-mirror
+CATALOGNAME = pm_svn_mirror
+SPKG_DESC_CSWpm-svn-mirror = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-svn-mirror = CSWpmsvnmirror
+CATALOGNAME_CSWpmsvnmirror = pm_svnmirror
+
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmdatauuid CSWpmsvn CSWsvn
-RUNTIME_DEP_PKGS += CSWpmsvnsimple CSWpmtermreadkey CSWpmuri
+RUNTIME_DEP_PKGS += CSWpm-class-accessor
+RUNTIME_DEP_PKGS += CSWpm-timedate
+RUNTIME_DEP_PKGS += CSWpmfilechdir
+RUNTIME_DEP_PKGS += CSWpmsvn
+RUNTIME_DEP_PKGS += CSWpm-svn-simple-edit
+RUNTIME_DEP_PKGS += CSWpm-term-readkey
+RUNTIME_DEP_PKGS += CSWpm-uri
 
 # VCP Support (disabled for now)
 PATCHFILES += novcp.diff
