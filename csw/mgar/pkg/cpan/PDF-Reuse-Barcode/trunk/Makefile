@@ -6,15 +6,24 @@ AUTHOR = LARSLUND
 
 DESCRIPTION = Reuse and mass produce PDF documents
 define BLURB
-  Reuse and mass produce PDF documents
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmpdfreusebarcode
-CATALOGNAME = pm_pdfreusebarcode
+PACKAGES = CSWpm-pdf-reuse-barcode
+CATALOGNAME = pm_pdf_reuse_barcode
+SPKG_DESC_CSWpm-pdf-reuse-barcode = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-pdf-reuse-barcode = CSWpmpdfreusebarcode
+CATALOGNAME_CSWpmpdfreusebarcode = pm_pdfreusebarcode
+
 ARCHALL = 1
 
-BUILD_DEP_PKGS = CSWpmgdbarcode CSWpmpdfreuse CSWpmbarcodecode128
+BUILD_DEP_PKGS += CSWpm-gd-barcode
+BUILD_DEP_PKGS += CSWpm-pdf-reuse
+BUILD_DEP_PKGS += CSWpm-barcode-code128
+
+RUNTIME_DEP_PKGS += CSWpm-gd-barcode
+RUNTIME_DEP_PKGS += CSWpm-pdf-reuse
+RUNTIME_DEP_PKGS += CSWpm-barcode-code128
 
 include gar/category.mk
