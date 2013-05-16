@@ -28,9 +28,6 @@ ifneq ($(shell /usr/bin/uname -r),5.9)
        GARCOMPILER = SOS12U3
 endif
 
-#Since Solaris9 does not have sos12u3 use lower opt 
-OPT_FLAGS_SOS12_i386 = -xO2
-
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
@@ -52,8 +49,20 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-EXTRA_CFLAGS += -mt -D__EXTENSIONS__
-EXTRA_CXXFLAGS += -mt -D__EXTENSIONS__
+# Those options follow those of the official builds
+EXTRA_CFLAGS-sparc = -Xa -xstrconst
+EXTRA_CFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt
+EXTRA_CXXFLAGS-sparc = -noex 
+EXTRA_CXXFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -features=no%except -xlibmil -xlibmopt
+EXTRA_CFLAGS   += $(EXTRA_CFLAGS-$(GARCH)) -g -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm
+EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(GARCH)) -g0 -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm
+
+# The official build used -xO2 on 32 bit x86, -xO3 for 64 bit
+# Use that for all builds
+OPT_FLAGS_SOS-32 = -xO2
+OPT_FLAGS_SOS-64 = -xO3
+OPT_FLAGS_SOS = $(OPT_FLAGS_SOS-$(MEMORYMODEL))
+
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -82,6 +91,9 @@ PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 PATCHFILES += 0003-I-HATE-CMAKE.patch
 PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
+
+# Cf http://bugs.mysql.com/bug.php?id=62572
+PATCHFILES += 0005_my_vsnprintf-t_fails_bug_62572.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -189,30 +201,6 @@ BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
 BUILD_DEP_PKGS += CSWcmake
 BUILD_DEP_PKGS += CSWbison
 
-# Set ./configure options
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-assembler
-# Why not have a docs package?
-# CONFIGURE_ARGS += --without-docs
-CONFIGURE_ARGS += --enable-local-infile
-CONFIGURE_ARGS += --with-charset=utf8
-CONFIGURE_ARGS += --with-extra-charsets=all
-CONFIGURE_ARGS += --with-low-memory
-CONFIGURE_ARGS += --with-pthread
-CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --with-zlib-dir=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-ssl=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-plugins=max-no-ndb
-CONFIGURE_ARGS += --with-comment="(OpenCSW)"
-CONFIGURE_ARGS += --with-mysqld-user=mysql
-CONFIGURE_ARGS += --with-fast-mutexes
-CONFIGURE_ARGS += --with-libwrap
-CONFIGURE_ARGS += --with-mysqld-libs=-lmtmalloc
-CONFIGURE_ARGS += --with-big-tables
-CONFIGURE_ARGS += --enable-thread-safe-client
-CONFIGURE_ARGS_DBG = --with-debug
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
-
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
 CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
@@ -220,35 +208,45 @@ CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
 CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
 CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
-# CMAKE_ARGS += -DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
 CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
 CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
-CMAKE_ARGS += -DWITH_READLINE=1
 CMAKE_ARGS += -DWITH_LIBWRAP=1
 CMAKE_ARGS += -DWITH_SSL=system
 CMAKE_ARGS += -DWITH_ZLIB=system
 CMAKE_ARGS += -DDEFAULT_CHARSET=utf8
 CMAKE_ARGS += -DDEFAULT_COLLATION=utf8_general_ci
 CMAKE_ARGS += -DWITH_COMMENT='OpenCSW'
+CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
+CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
 CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
 CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
-CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
-# CMAKE_ARGS += -DOPENSSL_INCLUDE_DIR="$(includedir)"
-# CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
-# CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
-CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
-# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/libssl.so
-# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/libcrypto.so
-CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
-CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
-CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
+CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
+CMAKE_ARGS += -DBISON_EXECUTABLE=/opt/csw/bin/bison
 
-# TODO: Make the tests pass. They don't at the moment.
-SKIPTEST ?= 1
-TEST_SCRIPTS = custom
-TEST_TARGETS = check
+# The line below come from the official MySQL build configuration
+CMAKE_ARGS += "-DENABLED_PROFILING:BOOL=ON"
+CMAKE_ARGS += "-DENABLE_DEBUG_SYNC:BOOL=ON"
+CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
+CMAKE_ARGS += "-DENABLE_GCOV:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_ARCHIVE_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_BLACKHOLE_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_DEBUG:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_EMBEDDED_SERVER:BOOL=ON"
+CMAKE_ARGS += "-DWITH_EXAMPLE_STORAGE_ENGINE:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_EXTRA_CHARSETS:STRING=all"
+CMAKE_ARGS += "-DWITH_FEDERATED_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_INNOBASE_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_LIBEDIT:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_PARTITION_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_PERFSCHEMA_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_PIC:BOOL=ON"
+CMAKE_ARGS += "-DWITH_READLINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_UNIT_TESTS:BOOL=ON"
+CMAKE_ARGS += "-DWITH_VALGRIND:BOOL=OFF"
+
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
