@@ -1,18 +1,16 @@
 NAME = File-chdir
-VERSION = 0.06
+VERSION = 0.1008
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = MSCHWERN
+AUTHOR = DAGOLDEN
 
-DESCRIPTION = a more sensible way to change directories
+DESCRIPTION = A more sensible way to change directories
 define BLURB
-  Perl's chdir() has the unfortunate problem of being very, very, very global.
-  If any part of your program calls chdir() or if any library you use calls
-  chdir(), it changes the current working directory for the whole program.
-  This sucks.  File::chdir gives you an alternative, $$CWD and @CWD. These two
-  variables combine all the power of chdir(), File::Spec and Cwd.
 endef
 
-DISTFILES = $(call admfiles,CSWpmfilechdir,depend prototype)
+PACKAGES = CSWpm-file-chdir
+SPKG_DESC_CSWpm-file-chdir = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-file-chdir = CSWpmfilechdir
+CATALOGNAME_CSWpmfilechdir = pm_filechdir
 
 include gar/category.mk
