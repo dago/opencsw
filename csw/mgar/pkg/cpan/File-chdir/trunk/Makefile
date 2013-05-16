@@ -13,4 +13,6 @@ SPKG_DESC_CSWpm-file-chdir = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-file-chdir = CSWpmfilechdir
 CATALOGNAME_CSWpmfilechdir = pm_filechdir
 
+ARCHALL = 1
+
 include gar/category.mk
