@@ -3,6 +3,7 @@
 NAME = qt
 VERSION = 4.8.1
 GARTYPE = v2
+MAJOR = $(basename $(basename $(VERSION)))
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework
@@ -38,6 +39,14 @@ CONFIGURE_ARGS += -platform solaris-g++
 CONFIGURE_ARGS += -opensource
 COconfirm-licensRGS += -opensource
 CONFIGURE_ARGS += -prefix $(prefix)
+COplugindir $(libdir)/$(NAME)$(MAJOR)/plugins
+CONFIGURE_ARGS += -docdir $(docdir)/$(NAME)$(MAJOR)
+CONFIGURE_ARGS += -translationdir $(sharedstatedir)/$(NAME)$(MAJOR)/translations
+CONFIGURE_ARGS += -importdir $(libdir)/$(NAME)$(MAJOR)/imports
+CONFIGURE_ARGS += -demosdir $(sharedstatedir)/$(NAME)$(MAJOR)/demos
+CONFIGURE_ARGS += -examplesdir $(sharedstatedir)/$(NAME)$(MAJOR)/examples
+CONFIGURE_ARGS += -datadir $(sharedstatedir)/$(NAME)$(MAJOR)
+CONFIGURE_ARGS += -sysconfdir $(syconfdir)/$(NAME)$(MAJOR -prefix $(prefix)
 CONFIGURE_ARGS += -no-qt3support
 COno-xshape+= -no-qt3support
 CONFIGURE_ARGS += -webkit
