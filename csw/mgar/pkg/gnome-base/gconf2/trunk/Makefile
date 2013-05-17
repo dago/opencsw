@@ -23,7 +23,7 @@ VENDOR_URL = http://projects.gnome.org/gconf/
 # Many more missing
 BUILD_DEP_PKGS += CSBUILD_DEP_PKGS += CSWlibxslt
 BUILD_DEP_PKGS += CSWgtk-doc
-BUILD_DEP_PKGS += CSWintltoolSBUILD_DEP_PKGS += CSWgobject-introspection-devSWlibdbus-glib-dev
+BUILD_DEP_PKGS += CSWintltoolSWlibdbus-glib-dev
 
 PACKAGES += CSWlibgconf2-4
 SPKG_DESC_CSWlibgconf2-4 = GNOME configuration database system, libgconf-2.so.4
@@ -73,15 +73,12 @@ STRIP_LIBTOOL = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS +=CONFIGURE_ARGS += --with-gtk=2.0
-CONFIGURE_ARGS += --enable-introspection=yes
-
-# Needed for introspection
-EXTRA_BUILD_EXPORTS += PKG_CONFIG_PATH= --enable-gtk-doc
-
-# CONFIGURE_ARGS += --disable-defaults-service
-#The "defaults service" requires polkit. and dbus.
-#We're better off without em.
+# This one causes grief duiring build time
+CONFIGURE_ARGS += --enable-introspection=no
+# gsettings dumps core and does not appear to have any use here,
+# as it lacks any schema.xml file to wortk with.
+CONFIGURE_ARGS += --enable-gsettings-backend=no
 
 include gar/category.mk
 
-PATH := /op
+PATH := /opt/csw/gnu:$(PATH)
