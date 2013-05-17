@@ -1,24 +1,23 @@
 NAME = Tree-DAG_Node
-VERSION = 1.06
+VERSION = 1.11
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = COGENT
+AUTHOR = RSAVAGE
 
 DESCRIPTION = Class for representing nodes in a tree
 define BLURB
-  This class encapsulates/makes/manipulates objects that represent nodes in a
-  tree structure. The tree structure is not an object itself, but is emergent
-  from the linkages you create between nodes. This class provides the methods
-  for making linkages that can be used to build up a tree, while preventing
-  you from ever making any kinds of linkages which are not allowed in a tree
-  (such as having a node be its own mother or ancestor, or having a node have
-  two mothers).
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmtreedagnode
-CATALOGNAME = pm_treedagnode
+MODDIST ?= $(DISTNAME).tgz
+
+PACKAGES = CSWpm-tree-dag-node
+CATALOGNAME = pm_tree_dag_node
+SPKG_DESC_CSWpm-tree-dag-node = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-tree-dag-node = CSWpmtreedagnode
+CATALOGNAME_CSWpmtreedagnode = pm_treedagnode
+
 ARCHALL = 1
 
 include gar/category.mk
