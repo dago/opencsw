@@ -1,5 +1,5 @@
 NAME = gnutls
-VERSION = 2.10.4
+VERSION = 2.12.23
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -10,10 +10,15 @@ define BLURB
   library implements the proposed standards by the IETF's TLS working group.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
-MASTER_SITES += http://alpha.gnu.org/gnu/gnutls/
+MASTER_SITES = $(GNU_MIRROR)ftp://ftp.gnutls.org/gcrypt/gnutls/v2.12/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-PATCHFILES += 0001-Do-not-strip-norunpath.patch
+#PATCHFILES += 0001-Do-not-strip-norunpath.patch
+PATCHFILES += 0002-Use-AF_UNIX-instead-of-AF_LOCAL-on-Solaris.patch
+# certtool uses fprintf to print the keyid but when 
+# the key id is null it segfaults under Solaris
+# (where it prints (null) under Linux)
+# This patchs fixes this (and is taken from gnutls3)
+PATCHFILES += 0003-correctly-handle-the-null-key-caset-strip-norunpath.patch
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -38,12 +43,12 @@ CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls13
 PACKAGES += CSWlibgnutls26
 CATALOGNAME_CSWlibgnutls = libgnutls26
 SPKG_DESC_CSWlibgnutls26 = GNU Transport Layer Security libraries and tools providing libgnutls*.so.26
-PKGFILES_CSWlibgnutls26 = $(call baseisadirs,$(libdir),libgnutls.*\.so\.26(\.\d+)*)
+PKGFILES_CSPKGFILES_RT*\.so\.26(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWgcrypt
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWgpgerr
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibtasn1-3
-RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWzlib
+RUNTIME_DEP_PKGS_CSWllibz1utls26 += CSWzlib
 
 PACKAGES += CSWlibgnutls-dev
 CATALOGNAME_CSWlibgnutls-dev = libgnutls_dev
@@ -62,7 +67,10 @@ CHECKPKG_OVERRIDES_CSWgnutlsdevel += archall-devel-package
 
 BUILD_DEP_PKGS += CSWreadline
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls26)
-BUILD_DEP_PKGS += CSWlibtasn1devel 
+BUILD_DEP_PK-dev
+
+GARCOMPILER = GNU
+GARFLAVOR = DBGCSWlibtasn1devel 
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
@@ -73,4 +81,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # We put all libs in one package as they are .so.26 and are all bumped together
 CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
 
-include gar/category.mk
+include

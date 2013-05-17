@@ -1,0 +1,31 @@
+From 43971c3e07d4303fa74191facb7c8d07600076f3 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Wed, 15 May 2013 22:56:42 +0200
+Subject: [PATCH] Use AF_UNIX instead of AF_LOCAL on Solaris
+
+---
+ lib/nettle/egd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/nettle/egd.c b/lib/nettle/egd.c
+index b1886d4..690df8c 100644
+--- a/lib/nettle/egd.c
++++ b/lib/nettle/egd.c
+@@ -141,12 +141,12 @@ _rndegd_connect_socket (void)
+     }
+ 
+   memset (&addr, 0, sizeof addr);
+-  addr.sun_family = AF_LOCAL;
++  addr.sun_family = AF_UNIX;
+   strcpy (addr.sun_path, name);
+   addr_len = (offsetof (struct sockaddr_un, sun_path)
+               + strlen (addr.sun_path));
+ 
+-  fd = socket (AF_LOCAL, SOCK_STREAM, 0);
++  fd = socket (AF_UNIX, SOCK_STREAM, 0);
+   if (fd == -1)
+     {
+       _gnutls_debug_log ("can't create unix domain socket: %s\n",
+-- 
+1.8.1.4
+
