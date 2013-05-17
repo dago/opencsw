@@ -23,7 +23,7 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(NAME)-$(VERSION).tar.xz
-DISTFILES += changelog.CSW
+DISTFILES DISTFILES += set-ulimit-for-build-test += changelog.CSW
 
 #
 # Build patches
@@ -286,9 +286,10 @@ BUILD_DEP_PKGS += CSWgsed
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
 EXTRA# -xO4 is necessary on sparc so that function inlining happens as expected
-EXTRA_CFLAGS = -xO4=
+EXTRA_CFLAGS_sparc = -xO4=
 
-EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 
+EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XEXTRA_CFLAGS_i386 = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))XOPEN_SOURCE=600 
 
 EXTRA_LDFLAGS = -lsocket $(RUNPATH_LINKER_FLAGS)
 
@@ -314,6 +315,9 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 # DTrace compilation fails, disable for now
 CONFIGURE_ARGS += --disable-dtrace
+
+For tests to succeed, set the ulimit higher than the default of 256.
+EXTRA_TEST_ENV += BASH_ENV=$(abspath $(WORKDIR)/set-ulimit-for-build-test)ce
 
 #SKIPTEST = 1
 
