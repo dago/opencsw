@@ -23,6 +23,7 @@ import package_checks
 import package_stats
 import progressbar
 import re
+import rest
 import shell
 import socket
 import sqlobject
@@ -497,35 +498,24 @@ def main():
         srv4.DeleteAllDependentObjects()
         srv4.destroySelf()
   elif command == 'add-to-cat':
-    if len(args) <= 3:
+    if len(args) < 4:
       raise UsageError("Not enough arguments, see usage.")
     user = getpass.getuser()
-    osrel, arch, catrel= args[:3]
-    c = checkpkg_lib.Catalog()
+    osrel, arch, catrel = args[:3]
+    username, password = rest.GetUsernameAndPassword()
+    rest_client = rest.RestClient(username=username, password=password)
     md5_sums = args[3:]
     for md5_sum in md5_sums:
-      try:
-        sqo_srv4 = m.Srv4FileStats.select(
-            m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
-        logging.debug('Adding %s to the catalog', md5_sum)
-        c.AddSrv4ToCatalog(sqo_srv4, osrel, arch, catrel, who=user)
-      except sqlobject.main.SQLObjectNotFound as e:
-        logging.warning('Srv4 file %r, osrel %r, arch %r or catrel %r '
-                        'was not found in the database, '
-                        'and the package was not added: %s',
-                        md5_sum, osrel, arch, catrel, e)
+      rest_client.AddSvr4ToCatalog(catrel, arch, osrel, md5_sum)
   elif command == 'del-from-cat':
     if len(args) < 4:
       raise UsageError("Not enough arguments, see usage.")
     osrel, arch, catrel= args[:3]
     md5_sums = args[3:]
-    c = checkpkg_lib.Catalog()
+    username, password = rest.GetUsernameAndPassword()
+    rest_client = rest.RestClient(username=username, password=password)
     for md5_sum in md5_sums:
-      sqo_srv4 = m.Srv4FileStats.select(
-          m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
-      logging.debug("Removing %s from %s %s %s",
-                    sqo_srv4, osrel, arch, catrel)
-      c.RemoveSrv4(sqo_srv4, osrel, arch, catrel)
+      rest_client.RemoveSvr4FromCatalog(catrel, arch, osrel, md5_sum)
   elif command == 'system-files-to-file':
     logging.debug("Args: %s", args)
     outfile = None
