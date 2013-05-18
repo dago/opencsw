@@ -3,15 +3,12 @@
 # $Id$
 
 NAME = SQLObject
-VERSION = 1.3.2
+VERSION = 1.4.0
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Object Relational Manager for Python
-define BLURB
-endef
-SPKG_SOURCEURL = http://www.sqlobject.org/
-MASTER_SITES = http://pypi.python.org/packages/source/S/$(NAME)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+VENDOR_URL = http://www.sqlobject.org/
+DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = docs/SQLObject.txt
 PACKAGES = CSWpy-sqlobject
 RUNTIME_DEP_PKGS_CSWpy-sqlobject = CSWpy-formencode
