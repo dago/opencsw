@@ -1,0 +1,23 @@
+From b464eac98a65b9d3c0dbd39765d23f87b29a5902 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 19 May 2013 15:48:01 +0200
+Subject: [PATCH] fluxbox-generate_menu: Use CSWbash
+
+The script is not compatible with /bin/sh on Solaris.
+---
+ util/fluxbox-generate_menu.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/fluxbox-generate_menu.in b/util/fluxbox-generate_menu.in
+index 1b8e976..2c62650 100755
+--- a/util/fluxbox-generate_menu.in
++++ b/util/fluxbox-generate_menu.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # generate_menu for Fluxbox
+ #
+-- 
+1.8.1.4
+

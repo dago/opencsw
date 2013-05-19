@@ -1,0 +1,25 @@
+From 1c583e3d7125f89e53138417263e9bd3f4149017 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 19 May 2013 13:57:49 +0200
+Subject: [PATCH] The italian NLS part is broken
+
+---
+ nls/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/nls/Makefile.in b/nls/Makefile.in
+index 27eee7a..2071bbe 100644
+--- a/nls/Makefile.in
++++ b/nls/Makefile.in
+@@ -225,7 +225,7 @@ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ NLSTEST = @NLS@
+ SUBDIRS = C cs_CZ da_DK es_AR es_ES et_EE fr_FR pt_BR ru_RU \
+-		  sv_SE tr_TR it_IT pt_PT bg_BG ja_JP ko_KR \
++		  sv_SE tr_TR pt_PT bg_BG ja_JP ko_KR \
+ 		  lv_LV de_DE nl_NL no_NO sl_SI pl_PL vi_VN be_BY \
+ 		  uk_UA el_GR nb_NO zh_CN fi_FI en_US en_GB de_CH \
+ 		  de_AT fr_CH sk_SK zh_TW mk_MK he_IL
+-- 
+1.8.1.4
+

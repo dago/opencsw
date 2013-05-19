@@ -1,0 +1,34 @@
+From 30d052b3ce0aed292756a08b8377a36e4d7c9819 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 19 May 2013 13:54:46 +0200
+Subject: [PATCH] Workaround the double EXEEXT substitution
+
+---
+ util/Makefile.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/util/Makefile.in b/util/Makefile.in
+index 4b809b6..f315b94 100644
+--- a/util/Makefile.in
++++ b/util/Makefile.in
+@@ -780,7 +780,7 @@ startfluxbox: 	startfluxbox.in
+ 		            -e "s,@pkgbindir@,$(bindir),g" \
+ 		            -e "s,@pkgprefix@,$(PROGRAM_PREFIX:NONE=),g" \
+ 		            -e "s,@pkgsuffix@,$(PROGRAM_SUFFIX:NONE=),g" \
+-		            -e "s,@EXEEXT@,$(EXEEXT),g" \
++		            -e "s,@EXE\{2\}XT@,$(EXEEXT),g" \
+ 				$(srcdir)/startfluxbox.in > startfluxbox
+ 		-chmod 755 startfluxbox
+ 
+@@ -788,7 +788,7 @@ fluxbox-generate_menu: fluxbox-generate_menu.in
+ 		@regex_cmd@ -e "s,@PREFIX@,$(prefix),g" \
+ 		            -e "s,@pkgprefix@,$(PROGRAM_PREFIX:NONE=),g" \
+ 		            -e "s,@pkgsuffix@,$(PROGRAM_SUFFIX:NONE=),g" \
+-		            -e "s,@EXEEXT@,$(EXEEXT),g" \
++		            -e "s,@EXE\{2\}XT@,$(EXEEXT),g" \
+ 				$(srcdir)/fluxbox-generate_menu.in \
+ 				> fluxbox-generate_menu
+ 		-chmod 755 fluxbox-generate_menu
+-- 
+1.8.1.4
+

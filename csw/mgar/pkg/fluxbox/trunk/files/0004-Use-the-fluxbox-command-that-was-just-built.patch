@@ -1,0 +1,40 @@
+From 69f34ff8f71dc588e1b0bc0f2901aa05d8b6f54b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 19 May 2013 14:54:17 +0200
+Subject: [PATCH] Use the 'fluxbox' command that was just built
+
+Not the one from somewhere in PATH.
+---
+ data/Makefile.am | 2 +-
+ data/Makefile.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/Makefile.am b/data/Makefile.am
+index c71f820..912cb6a 100644
+--- a/data/Makefile.am
++++ b/data/Makefile.am
+@@ -55,7 +55,7 @@ menu: 			../util/fluxbox-generate_menu
+ 		PREFIX="${prefix}" \
+ 		MENUTITLE="Fluxbox-${VERSION}" \
+ 		INSTALL=Yes \
+-		PATH="${PATH}:../util:../util/fbrun" \
++		PATH="../src:${PATH}:../util:../util/fbrun" \
+ 		../util/fluxbox-generate_menu
+ 
+ ../util/fluxbox-generate_menu:
+diff --git a/data/Makefile.in b/data/Makefile.in
+index 58070b8..80f2021 100644
+--- a/data/Makefile.in
++++ b/data/Makefile.in
+@@ -653,7 +653,7 @@ menu: 			../util/fluxbox-generate_menu
+ 		PREFIX="${prefix}" \
+ 		MENUTITLE="Fluxbox-${VERSION}" \
+ 		INSTALL=Yes \
+-		PATH="${PATH}:../util:../util/fbrun" \
++		PATH="../src:${PATH}:../util:../util/fbrun" \
+ 		../util/fluxbox-generate_menu
+ 
+ ../util/fluxbox-generate_menu:
+-- 
+1.8.1.4
+
