@@ -1,22 +1,27 @@
-From f9e400a3cf8517ab4417dbe117a588b2e0669d4c Mon Sep 17 00:00:00 2001
+From 31c823ba3a38a920e46a7c32718e61dcec6467b8 Mon Sep 17 00:00:00 2001
 From: Maciej Blizinski <maciej@opencsw.org>
-Date: Thu, 7 Jun 2012 10:23:16 +0200
-Subject: [PATCH] Solaris userland port: grep, whoami
+Date: Sun, 19 May 2013 13:01:14 +0200
+Subject: [PATCH] Solaris userland, OpenCSW bash
 
 ---
- util/fbsetbg                  |    4 ++--
- util/fluxbox-generate_menu.in |    7 ++++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ util/fbsetbg                  | 5 +++--
+ util/fluxbox-generate_menu.in | 7 ++++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/util/fbsetbg b/util/fbsetbg
-index 0bdb804..bb96f7f 100644
+index e277317..f3ad444 100644
 --- a/util/fbsetbg
 +++ b/util/fbsetbg
-@@ -47,8 +47,8 @@
- wpsetters="${wpsetters:=Esetroot wmsetbg feh hsetroot chbg display qiv xv xsri xli xsetbg}" # broken icewmbg'
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # Set wallpaper for fluxbox.
+ #
+@@ -48,7 +48,8 @@ wpsetters="${wpsetters:=Esetroot wmsetbg feh hsetroot chbg display qiv xv xsri x
  lastwallpaper="${HOME}/.fluxbox/lastwallpaper"
  
--
+ 
 -WHOAMI=`whoami`
 +PATH=/usr/xpg4/bin:$PATH  # just for xpg4 'id'. Sol11 is fine with /bin/id
 +WHOAMI=`id -u -n`
@@ -24,7 +29,7 @@ index 0bdb804..bb96f7f 100644
  
  command="`basename \"$0\"`"
 diff --git a/util/fluxbox-generate_menu.in b/util/fluxbox-generate_menu.in
-index cecc3fe..54fd959 100755
+index bc01062..897da0b 100755
 --- a/util/fluxbox-generate_menu.in
 +++ b/util/fluxbox-generate_menu.in
 @@ -330,7 +330,7 @@ searchForIcon(){
@@ -33,7 +38,7 @@ index cecc3fe..54fd959 100755
      # if icon exists and entry does not already exists, add it
 -        if ! grep -q -m 1 "^.${entry_exec}.[[:space:]]*<.*/${icon_base}\....>" $ICONMAPPING 2> /dev/null; then
 +        if ! grep -m 1 "^.${entry_exec}.[[:space:]]*<.*/${icon_base}\....>" $ICONMAPPING 2> /dev/null; then
-             echo -e "\"${entry_exec}\" \t <${entry_icon}>" >> $ICONMAPPING
+             printf "\"${entry_exec}\" \t <${entry_icon}>\n" >> $ICONMAPPING
          else 
              : echo "#    mapping already exists for ${entry_exec}" >> $ICONMAPPING
 @@ -557,11 +557,12 @@ rm -f ${MENUFILENAME}.tmp
@@ -46,11 +51,11 @@ index cecc3fe..54fd959 100755
  [ "$WHOAMI" = root ] && PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
  
  # Check for Imlib2-support
--if @pkgprefix@fluxbox@pkgsuffix@ -info 2> /dev/null | grep -q "^IMLIB"; then
-+if @pkgprefix@fluxbox@pkgsuffix@ -info 2> /dev/null | grep "^IMLIB"; then
+-if @pkgprefix@fluxbox@pkgsuffix@@EXEEXT@ -info 2> /dev/null | grep -q "^IMLIB"; then
++if @pkgprefix@fluxbox@pkgsuffix@@EXEEXT@ -info 2> /dev/null | grep "^IMLIB"; then
      PNG_ICONS="yes"
  else
      # better assume to assume "no"
 -- 
-1.7.10
+1.8.1.4
 
