@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.8.3.1
+VERSION = 1.8.4
 CATEGORIES = utils
 GARTYPE = v2
 
