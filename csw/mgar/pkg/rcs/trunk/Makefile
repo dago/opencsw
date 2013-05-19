@@ -1,5 +1,5 @@
 NAME = rcs
-VERSION = 5.7
+VERSION = 5.8
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -8,10 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cs.purdue.edu/homes/trinkle/RCS/
-DISTFILES  = $(NAME)-$(VERSION).tar.Z
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAMd+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWdiffutils
 
@@ -19,7 +16,12 @@ man1dir = $(mandir)/man1
 man5dir = $(mandir)/man5
 
 DIFF = $(bindir)/gdiff
-DIFF3 = $(bindir)/gdiff3
+DIFF3 = BUILD64 = 1
+ISAEXEC = 1
+
+# Every kind of -xO* leads to this strange error in Sun Studio 12 or even 12.3:
+#   cg error (as) : location counter not on word boundary
+OPT_FLAGS_SOS == $(bindir)/gdiff3
 
 NORUNPATH = 1
 CONFIGURE_ARGS = --prefix=$(prefix)
@@ -30,4 +32,4 @@ TEST_TARGET =
 INSTALL_OVERRIDE_DIRS = prefix man1dir man5dir
 BUILD_OVERRIDE_DIRS = DIFF DIFF3
 
-include gar/category.mk
+includ
