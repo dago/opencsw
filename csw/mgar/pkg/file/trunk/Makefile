@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.astron.com/pub/file/
-DISTFILES  = $# PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
+DISTFILES  = $PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 
 PATCHFILES += 0001-Use-PCRE_library-at-runtime.patch
 
