@@ -1,5 +1,5 @@
 NAME = nsd
-VERSION = 3.2.13
+VERSION = 3.2.15
 CATEGORIES = server
 GARTYPE = v2
 
@@ -51,4 +51,4 @@ post-install-modulated:
 	@mv $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.sample $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.CSW
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWnsd/cswusergroup
 
-include gar/category.mk
+incl
