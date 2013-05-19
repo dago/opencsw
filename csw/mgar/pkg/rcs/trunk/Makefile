@@ -16,10 +16,7 @@ man1dir = $(mandir)/man1
 man5dir = $(mandir)/man5
 
 DIFF = $(bindir)/gdiff
-DIFF3 = BUILD64 = 1
-ISAEXEC = 1
-
-# Every kind of -xO* leads to this strange error in Sun Studio 12 or even 12.3:
+DIFF3 = # Every kind of -xO* leads to this strange error in Sun Studio 12 or even 12.3:
 #   cg error (as) : location counter not on word boundary
 OPT_FLAGS_SOS == $(bindir)/gdiff3
 
