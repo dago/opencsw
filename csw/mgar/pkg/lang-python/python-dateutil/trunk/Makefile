@@ -13,21 +13,19 @@ define BLURB
 endef
 
 MASTER_SITES = http://labix.org/download/$(NAME)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 SPKG_SOURCEURL = http://labix.org/$(NAME)/
 BUILD_DEP_PKGS = CSWpysetuptools
 PACKAGES = CSWpy-dateutil
-CATALOGNAME = py_dateutil
-
-EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
 UPSTREAM_MASTER_SITES = http://labix.org/python-dateutil/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS = dateutil
 
 LICENSE = LICENSE
 ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWpy-dateutil += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/dateutil/tz.py
 
 include gar/category.mk
 
