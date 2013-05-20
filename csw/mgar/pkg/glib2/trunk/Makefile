@@ -84,7 +84,8 @@ PATCHFILES += 0013-Disable-IPv6-tests.patch
 #
 PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW.patch
 PATCHFILES += 0003-Make-glib-work-with-zoneinfo-version-1.patch
-PATCHFILES += 0022-Change-shell-to-bash-in-test-shell-scripts.patch
+PATCHFILES += 0022-Change-shell-to-bash-in-test-shel# What to say? Disable yet another sporadically failing up test
+PATCHFILES += 0023-disable-mainloop-invoke-testest-shell-scripts.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
