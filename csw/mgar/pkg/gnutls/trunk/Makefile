@@ -18,65 +18,49 @@ PATCHFILES += 0002-Use-AF_UNIX-instead-of-AF_LOCAL-on-Solaris.patch
 # the key id is null it segfaults under Solaris
 # (where it prints (null) under Linux)
 # This patchs fixes this (and is taken from gnutls3)
-PATCHFILES += 0003-correctly-handle-the-null-key-caset-strip-norunpath.patch
+PATCHFILES += 0003-correctly-handle-the-null-key-caset-strip# Some certificates used in the test suite are expired,
+# so the chainverify test fails.
+# The is supposed to be workarounded in the gnutls test
+# suite by redefining the time function, but this doesn't work
+# here because libgnutls has been compiled with direct binding 
+# hence it only links the time function with the original library.
+# We workaround the problem by changing the test so it expects
+# the certificates to be expired (another solution is to use LD_PRELOAD).
+PATCHFILES += 0004-workaround-certificate-expiration-issue-in-the-test-.patch
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-VENDOR_URL = http://www.gnu.org/software/gnutls/
-
-PACKAGES += CSWgnutls
-CATALOGNAME_gnutls = gnutls
-SPKG_DESC_CSWgnutls = GNU Transport Layer Security Utility Programs
-RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls26
-RUNTIME_DEP_PKGS_CSWgnutls += CSWgpgerr
-RUNTIME_DEP_PKGS_CSWgnutls += CSWreadline
-RUNTIME_DEP_PKGS_CSWgnutls += CSWzlib
-RUNTIME_DEP_PKGS_CSWgnutls += CSWlibtasn1-3
-RUNTIME_DEP_PKGS_CSWgnutls += CSWgcrypt
-RUNTIME_DEP_PKGS_CSWgnutls += CSWggettextrt
-# This is a dependency for legacy packages expecting to find libgnutls*.so.13 in CSWgnutls.
-# CSWlibgnutls13 is built from a branch
-RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls13
-CHECKPKG_OVERRIDES_CSWgnutls += unidentified-dependency|CSWlibgnutls13
-CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls13
+VENDOR_URL = http://www.gnu.org/software/gnutls/cy|CSWlibgnutls13
 
 PACKAGES += CSWlibgnutls26
 CATALOGNAME_CSWlibgnutls = libgnutls26
 SPKG_DESC_CSWlibgnutls26 = GNU Transport Layer Security libraries and tools providing libgnutls*.so.26
 PKGFILES_CSPKGFILES_RT*\.so\.26(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWgcrypt
-RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWgpgerr
-RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibtasn1-3
-RUNTIME_DEP_PKGS_CSWllibz1utls26 += CSWzlib
-
-PACKAGES += CSWlibgnutls-dev
-CATALOGNAME_CSWlibgnutls-dev = libgnutls_dev
-SPKG_DESC_CSWlibgnutls-dev = Development Files for GNU TLS
-PKGFILES_CSWlibgnutls-dev = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibgnutls-dev += CSWlibgnutls26
-
-PACKAGES += CSWgnutlsdevel
-CATALOGNAME_CSWgnutlsdevel = gnutls_devel
-SPKG_DESC_CSWgnutlsdevel = Legacy development package for GNU TLS now provided by CSWlibgnutls-dev
-PKGFILES_CSWgnutlsdevel = NOFILES
-ARCHALL_CSWgnutlsdevel = 1
-RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWlibgnutls-dev
-# This is empty, shut up!
-CHECKPKG_OVERRIDES_CSWgnutlsdevel += archall-devel-package
+RUNTIME_DEP_PKGS_CSWllibz1
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibnettle4
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibgc1
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibhogweed2
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibtasn1-6
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibp11kit0
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibgmp10
+all-devel-package
 
 BUILD_DEP_PKGS += CSWreadline
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls26)
 BUILD_DEP_PK-dev
 
 GARCOMPILER = GNU
-GARFLAVOR = DBGCSWlibtasn1devel 
-
-# We don't need it and if defined the test breaks
-LD_OPTIONS =
 
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-guile
+
+# If defined with the default value, the test breaks
+# so we only keep the required items
+LD_OPTIONS = $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNOREARGS = $(DIRPATHS)
 
 # We put all libs in one package as they are .so.26 and are all bumped together
 CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
