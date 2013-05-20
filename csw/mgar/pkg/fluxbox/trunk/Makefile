@@ -20,11 +20,13 @@ PATCHFILES += 0001-Solaris-userland-OpenCSW-bash.patch
 PATCHFILES += 0002-Workaround-the-double-EXEEXT-substitution.patch
 PATCHFILES += 0003-The-italian-NLS-part-is-broken.patch
 PATCHFILES += 0004-Use-the-fluxbox-command-that-was-just-built.patch
-PATCHFILES += 0006-fluxbox-generate_menu-Use-CSWbash.patch
+PATCHFILES += 0005-fluxbox-generate_menu-Use-CSWbash.patch
+PATCHFILES += 0006-use-ggrep-in-generate_menu.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWbash
+RUNTIME_DEP_PKGS_CSWfluxbox += CSWggrep
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWlibxpm4
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWfluxbox += CSWlibxrender
@@ -34,6 +36,7 @@ CHECKPKG_OVERRIDES_CSWfluxbox += file-with-bad-content
 
 # checkpkg doesn't detect this dependency
 CHECKPKG_OVERRIDES_CSWfluxbox += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWfluxbox += surplus-dependency|CSWggrep
 
 include gar/category.mk
 
