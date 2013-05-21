@@ -59,8 +59,11 @@ PATCHFILES += $(PATCHFILEShe test for sunaudiodev fails.  Not that it's a good p
 # tests.
 SKIPTEST = 1
 
-# TODO: Enable the 64-bit build at some point.
-# BUILD64ev fails.
+# For now, do not set ISAEXEC, until _sysconfigdata.py returns right values
+# depending on runtime.
+# A thread on python-list:
+# http://mail.python.org/pipermail/python-list/2013-May/647197.html
+BUILD64ev fails.
 SKIPTEST = 1
 
 EXTRA_INC += $(prefix)/bdb47/include
