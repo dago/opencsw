@@ -59,11 +59,10 @@ PATCHFILES += $(PATCHFILEShe test for sunaudiodev fails.  Not that it's a good p
 # tests.
 SKIPTEST = 1
 
-# For now, do not set ISAEXEC, until _sysconfigdata.py returns right values
-# depending on runtime.
+# The 64-bit build is probably not going to happen for Python 2.6.
 # A thread on python-list:
 # http://mail.python.org/pipermail/python-list/2013-May/647197.html
-BUILD64ev fails.
+# BUILD64ev fails.
 SKIPTEST = 1
 
 EXTRA_INC += $(prefix)/bdb47/include
