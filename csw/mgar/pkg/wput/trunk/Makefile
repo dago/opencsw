@@ -1,7 +1,8 @@
 NAME = wput
 VERSION = 0.6.2
-CATEGORIES = utils
 GARTYPE = v2
+
+DESCRIPTION = Tv2
 
 DESCRIPTION = the opposite of wget: a command line ftp client
 define BLURB
@@ -16,9 +17,7 @@ SPKG_SOURCEURL = http://wput.sourceforge.net
 
 LICENSE = COPYING
 
-BUILD_DEP_PKGS = CSWgnutlsdevel
-
-RUNTIME_DEP_PKGS = CSWggettextrt CSWgnutls CSWgcrypt
+BUILD_DEP_PKGRUNTIME_DEP_PKGS = CSWlibintl8 CSWlibgnutls28 CSWgnutls CSWgcrypt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=141519
@@ -33,4 +32,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = 
 
-include gar/category.mk
+inclu
