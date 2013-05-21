@@ -84,7 +84,7 @@ PATCHFILES += 0013-Disable-IPv6-tests.patch
 #
 PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW.patch
 PATCHFILES += 0003-Make-glib-work-with-zoneinfo-version-1.patch
-PATCHFILES += 0022-Change-shell-to-bash-in-test-shel# What to say? Disable yet another sporadically failing up test
+PATCHFILES += 0022-Change-shell-to-bash-in-test-shePATCHFILES += 0021-Disable-libelf-doesn-t-work-with-large-file-supportest-shel# What to say? Disable yet another sporadically failing up test
 PATCHFILES_isa-amd64 += 0023-disable-mainloop-invoke-testest-shell-scripts.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -257,17 +257,7 @@ BUILD_DEP_PK-xO4 is necessary on sparc so that function inlining happens as expe
 EXTRA_CFLAGS_sparc = -xO4=
 
 EXTRA_CFLAGS = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XEXTRA_CFLAGS_i386 = -features=extensions -xc99 -D_XPG6 #  -D__EXTENSIONS__ -D_XOPEN_SOURCE=600
-EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))XOPEN_SOURCE=600+= -lsocketATH_LINKER_FLAGS)
-
-BUILD64 = 1
-
-# Glib 2.32.4 won't compile and abort with a message from sys/elf.h:
-#
-#   "/usr/include/libelf.h", line 23: #error: "large files are not supported by libelf"
-#
-# so, I decided to disable-largefile support for 32bit libs, instead of patching up the code.
-CONFIGURE_ARGS-32 = --disable-largefile
-CONFIGURE_ARGS-64 =
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCH))XOPEN_SOURCE=600+= -lsocketATH_LINKER_FLAGIGURE_ARGS-64 =
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
