@@ -90,7 +90,7 @@ diff --speed-large-files --minimal -Nru imap-2007f.orig/src/osdep/unix/Makefile 
  	OSCFLAGS
 +
 +osdep.o: $(OSDEPS)
-+	$(CC) $(CFLAGS) `$(CAT) OSCFLAGS` -c osdep.c
++	$(CC) `$(CAT) CFLAGS` `$(CAT) OSCFLAGS` -c osdep.c
 +	@echo ==============================================================
  	@echo Building OS-dependent module
  	@echo If you get No such file error messages for files x509.h, ssl.h,
@@ -101,7 +101,7 @@ diff --speed-large-files --minimal -Nru imap-2007f.orig/src/osdep/unix/Makefile 
 +	@echo ==============================================================
 +
 +osdep.so: $(OSDEPS)
-+	$(CC) -KPIC -DPIC -D_REENTRANT -c $(CFLAGS) `$(CAT) OSCFLAGS` osdep.c -o $@
++	$(CC) -KPIC -DPIC -D_REENTRANT -c `$(CAT) CFLAGS` `$(CAT) OSCFLAGS` osdep.c -o $@
  
  osdep.c: osdepbas.c osdepckp.c osdeplog.c osdepssl.c
  	$(CAT) osdepbas.c osdepckp.c osdeplog.c osdepssl.c > osdep.c
