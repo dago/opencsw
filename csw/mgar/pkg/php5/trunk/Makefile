@@ -22,7 +22,6 @@ EXTRA_MODULATORS = SAPI
 MODULATIONS_SAPI = cgi ap2
 MERGE_SCRIPTS_isa-default-sapi-cgi = copy-all
 MERGE_SCRIPTS_isa-default-sapi-ap2 = copy-all
-#MERGE_SCRIPTS_isa-default-sapi-fpm = copy-all
 
 # turn on the build scripts to enable/disable modules
 PHP5_EXT = 1
@@ -326,9 +325,6 @@ CONFIGURE_ARGS += --enable-cli
 ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 endif
-#ifeq ($(SAPI),fpm)
-#CONFIGURE_ARGS += --enable-fpm
-#endif
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
