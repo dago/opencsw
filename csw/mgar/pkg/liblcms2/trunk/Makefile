@@ -1,6 +1,10 @@
 NAME = lcms2
 VERSION = 2.4
-CATEGORIES = apps
+GARTYPE = v2
+
+# Retry compiling ghostscript 9.07 on version bump as some new API was introduced not in 2.4 yet:
+#   https://bugzilla.redhat.com/show_bug.cgi?id=912307
+#   http://list-archives.org/2013/02/14/gs-devel-ghostscript-com/ghostscript-9-07-and-ghostpdl-9-07/f/6061272699 apps
 GARTYPE = v2
 
 DESCRIPTION = The little color management system and tools
