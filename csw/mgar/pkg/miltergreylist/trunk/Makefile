@@ -1,5 +1,5 @@
 NAME = miltergreylist
-VERSION = 4.4.1
+VERSION = 4.5.1
 #RELEASE = a1
 #DISTVERSION = $(VERSION)$(RELEASE)
 DISTVERSION = $(VERSION)
@@ -8,9 +8,7 @@ DISTNAME = milter-greylist-$(DISTVERSION)
 CATEGORIES = net
 GARTYPE = v2
 
-DESCRIPTION = Greylist mail filtering method
-define BLURB
-   Greylist mail filtering method
+DESCRIPTION = Greylist mail filtering metfiltering method
 endef
 
 MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
@@ -27,7 +25,7 @@ RUNTIME_DEP_PKGS += CSWlibgeoip1
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-CHECKPKG_OVERRIDES += file-with-bad-content
+C_CSWmiltergreylist += file-with-bad-content|/usr/local|root/opt/csw/bin/milter-greylise-with-bad-content
 
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
 PATCHFILES += 0002-change-socket-path.patch
@@ -94,4 +92,3 @@ install-custom:
 	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
 	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
 	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)
-	@$(MAKECOOKIE)
