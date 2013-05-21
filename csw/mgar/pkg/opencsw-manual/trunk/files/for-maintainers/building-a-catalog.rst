@@ -35,8 +35,8 @@ packages just like the ones OpenCSW publishes.
 
 There's a simple perl script to parse your packages in a directory and
 build a catalog for them. The one argument is the directory to parse for
-``*.pkg.gz`` files and the `catalog` file is put in the same directory
-together with the `descriptions` of all packages::
+``*.pkg.gz`` files and the ``catalog`` file is put in the same directory
+together with the ``descriptions`` of all packages::
 
   $ bldcat .
   Inspecting ./xv-3.10a,REV=2008.10.17-SunOS5.8-sparc-CSW.pkg.gz

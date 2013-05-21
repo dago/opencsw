@@ -5,7 +5,7 @@ OpenCSW for Administrators
 A user's manual for people who manage Solaris systems with OpenCSW packages.
 
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 1
 
   introduction
   getting-started
