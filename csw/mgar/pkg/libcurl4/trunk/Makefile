@@ -138,7 +138,7 @@ post-build:
 	  /lib/libcurl.la
 	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC)/; \
 	/lib $(BUILD_ARGS)
-	@$(MAKECO-globalOKIE)
+	@$(MAKECO-allOKIE)
 
 post-merge:
 	@# This is needed because the substitutions from pax args do not change the
