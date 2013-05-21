@@ -35,17 +35,19 @@ packages just like the ones OpenCSW publishes.
 
 There's a simple perl script to parse your packages in a directory and
 build a catalog for them. The one argument is the directory to parse for
-``*.pkg.gz`` files and stdout is used so use normal redirection for the
-catalog::
+``*.pkg.gz`` files and the `catalog` file is put in the same directory
+together with the `descriptions` of all packages::
 
   $ bldcat .
-  xv 3.10a,REV=2008.10.15 CSWxv xv-3.10a,REV=2008.10.15-SunOS5.8-sparc-CSW.pkg.gz d887c7aed0e849471467e4944d14c2eb 1877768 CSWcommon|CSWtiff|CSWpng|CSWjpeg|CSWzlib none
-  $ bldcat . > catalog
+  Inspecting ./xv-3.10a,REV=2008.10.17-SunOS5.8-sparc-CSW.pkg.gz
   $ ls -l
-  -rw-r--r--   1 bonivart csw          167 Oct 22 17:19 catalog
-  -rw-r--r--   1 bonivart csw      1877768 Oct 22 17:19 xv-3.10a,REV=2008.10.15-SunOS5.8-sparc-CSW.pkg.gz
+  -rw-r--r--   1 dam      csw          172 May 21 14:22 catalog
+  -rw-r--r--   1 dam      csw           53 May 21 14:22 descriptions
+  -rw-r--r--   1 dam      csw      1878846 May 21 14:17 xv-3.10a,REV=2008.10.17-SunOS5.8-sparc-CSW.pkg.gz
   $ more catalog
-  xv 3.10a,REV=2008.10.15 CSWxv xv-3.10a,REV=2008.10.15-SunOS5.8-sparc-CSW.pkg.gz d887c7aed0e849471467e4944d14c2eb 1877768 CSWcommon|CSWtiff|CSWpng|CSWjpeg|CSWzlib none
+  xv 3.10a,REV=2008.10.17 CSWxv xv-3.10a,REV=2008.10.17-SunOS5.8-sparc-CSW.pkg.gz 83f5619d7daa6678812cc870810042f2 1878846 CSWcommon|CSWtiff|CSWpng|CSWjpeg|CSWzlib none none
+  $ more descriptions
+  xv - Interactive image display and manipulation tool
 
 The script is a part of the pkgutilplus (CSWpkgutilplus) package.
 
@@ -55,7 +57,7 @@ Checking the catalog
 There's also a simple check that the catalog is correct. It checks that
 every line is eight fields and that the dependency and category fields
 begin and end with chars. It also warns if packages are not compressed
-(normal for gzip and pkg-get). It also checks for duplicates.
+(normal for gzip and pkgutil). It also checks for duplicates.
 
 Test run on a manipulated catalog::
 
