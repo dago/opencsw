@@ -85,9 +85,9 @@ PATCHFILES += 0013-Disable-IPv6-tests.patch
 PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW.patch
 PATCHFILES += 0003-Make-glib-work-with-zoneinfo-version-1.patch
 PATCHFILES += 0022-Change-shell-to-bash-in-test-shePATCHFILES += 0021-Disable-libelf-doesn-t-work-with-large-file-supportest-shel# What to say? Disable yet another sporadically failing up test
-PATCHFILES_isa-amd64 += 0023-disable-mainloop-invoke-testest-shell-scripts.patch
-
+PATCHFILES_isa-amd64 += 0023-disable-mainloop-invoke-testest-shel# Solaris 11 specific package for FEN support
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris110-sparc solaris10-i386
 
 
 PACKAGES += CSWglib2
