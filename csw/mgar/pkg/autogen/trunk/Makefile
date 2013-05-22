@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.17.3
+VERSION = 5.17.4
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
@@ -23,7 +23,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
 # why the heck LD_OPTIONS is not used?
 
+BUILD_DEP_PKGS		+=	CSWggettext-dev
 BUILD_DEP_PKGS		=	CSWguile-dev
+BUILD_DEP_PKGS		+=	CSWlibgc-dev
+BUILD_DEP_PKGS		+=	CSWlibgmp-dev
 BUILD_DEP_PKGS		+=	CSWlibiconv-dev
 BUILD_DEP_PKGS		+=	CSWlibxml2-dev
 BUILD_DEP_PKGS		+=	CSWlibz-dev
@@ -145,6 +148,7 @@ build-pdf:
 
 # there is one test failing (keyword.test) and I choose to ignore it
 # as the remaining ones pass.
+# TODO: solve the issue of missing symbol references from ggettext
 test-custom:
 	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) VERBOSE=true && $(MAKE) -i -k -C $(OBJDIR) check
 	$(MAKECOOKIE)
