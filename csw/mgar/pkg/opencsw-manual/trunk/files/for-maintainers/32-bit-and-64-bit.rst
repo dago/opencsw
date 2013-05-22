@@ -16,7 +16,8 @@ when:
   structures. One example is the ``lsof`` utility.
 
 There's also the 2G file size restriction, but it can be worked around
-by adding the ``-D_LARGEFILE64_SOURCE=1`` flag to the C preprocessor.
+by adding the ``-D_LARGEFILE64_SOURCE=1`` flag to the C preprocessor
+as documented in `lf64(5)`.
 
 32-bit or 64-bit ‒ Executables
 ------------------------------
