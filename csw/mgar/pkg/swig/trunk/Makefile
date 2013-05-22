@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = swig
-VERSION = 2.0.4
+VERSION = 2.0.9
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -30,11 +30,10 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1645
 UPSTREAM_USE_SF = 1
 
-LICENSE_CSWswig = LICENSE
+LICENSE_# REINPLACE_USRLOCAL += Doc/*
 
-RUNTIME_DEP_PKGS = CSWzlib
-RUNTIME_DEP_PKGS_CSWswig += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWswig += CSWzlib
+RUNTIME_DEP_PKGS_CSWswig += CSWlibz1
+RUNTIME_DEP_PKGS_CSWswig += CSWlibpcre1_CSWswig += CSWzlib
 
 #SWIG doesn't DEPEND on the languages it supports being installed
 # but, for the record, languages we *do* have:
@@ -42,15 +41,15 @@ RUNTIME_DEP_PKGS_CSWswig += CSWzlib
 #DEPEND += lang/ruby lang/php4 lang/ocaml
 #DEPEND += lang/lua
 # and languages we don't have, yet:
-#DEPEND += lang/pike lang/chicken lang/mono lang/mzscheme 
+#DEPEND += lang/pike lang/chicken lang/moEXTRA_LINKER_FLAGS = -norunpathmono lang/mzscheme 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-tcl=$(prefix)
 
 # Configure finds most things, but point to a more current Java
-CONFIGURE_ARGS += --with-java=/usr/j2se/bin/java
-CONFIGURE_ARGS += --with-javac=/usr/j2se/bin/javac
-CONFIGURE_ARGS += --with-javaincl=/usr/j2se/include
+CONFIGURE_ARGS +=dk/instances/jdk1.6.0/bin/java
+CONFIGURE_ARGS += --with-javac=/usr/jdk/instances/jdk1.6.0/bin/javac
+CONFIGURE_ARGS += --with-javaincl=/usr/jdk/instances/jdk1.6.0-javaincl=/usr/j2se/include
 
 MAKE_ARGS += docs
 
@@ -59,36 +58,8 @@ TEST_SCRIPTS =
 
 #SWIG doesn't DEPEND on the languages it supports being installed
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWruby|or|CSWruby18
-CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWpython
-
-# lots of '/usr/local' in documentation and examples
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/Makefile
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/Makefile.in
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/pike/enum/README
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/tcl/index.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/python/index.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/python/libffi/Makefile
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/ruby/index.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/test-suite/ocaml/makedebugtop
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Introduction.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Pike.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Ruby.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Scripting.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/SWIGDocumentation.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/CCache.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Perl5.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Library.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Tcl.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Java.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Python.html
-CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ccache-swig.1
-
-# not sure about these
-CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/lib|opt/csw/bin/swig
-CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/swig
-CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/swig
-CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/swig
+CHECKPKG_OVERRIDES_CSWswig += mislibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWpythonv8|opt/csw/bin/swig
 
 # pkgmk can't handle spaces in filenames
 EXTRA_MERGE_EXCLUDE_FILES = .*test-suite/preproc_include_(d|e|f).*
@@ -101,4 +72,4 @@ post-install-modulated: install-swig-doc
 install-swig-doc:
 	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
 	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(NAME)
-	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(NAME)
+	@cp -R $(WORKSRC)/Examples $(DESTDIR
