@@ -18,7 +18,7 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_AEXTRA_LINKER_FLAGS += -norunpath
 
 include gar/category.mk
 
