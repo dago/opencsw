@@ -10,50 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bzhostscript
-SPKG_DESC_CSWgs = PostScript and PDF interpreterd PDF interpreter
-
-
-RUNTIME_DEP_PKGS_CSWgs += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWgs += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgs += CSWlibssl0-9-8
-RUNTIME_DEP_PKGS_CSWgs += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWgs += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWgs += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWgs += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWgs += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWgs += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWgs += CSWlibk5crypto3
-
-RUNTIME_DEP_PKGS_CSWgs += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgs += CSWgnutls
-RUNTIME_DEP_PKGS_CSWgs += CSWgtk2
-RUNTIME_DEP_PKGS_CSWgs += CSWjpeg
-RUNTIME_DEP_PKGS_CSWgs += CSWpango
-RUNTIME_DEP_PKGS_CSWgs += CSWperl
-RUNTIME_DEP_PKGS_CSWgs += CSWgsfonts
-RUNTIME_DEP_PKGS_CSWgs += CSWjbig2dec
-
-# I'm dubious about this one. Maybe unnecessary?
-# RUNTIME_DEP_PKGS_CSWgs += CSWlibcairo
-
-CHECKPKG_OVERRIDES_CSWgs += surplus-dependency|CSWperl
-# Fonts are definitely necessary.
-CHECKPKG_OVERRIDES_CSWgs += surplus-dependency|CSWgsfonts
-
-# Only docs and man pages.
-CHECKPKG_OVERRIDES_CSWgs += file-with-bad-content
-# Historical reasons.
-CHECKPKG_OVERRIDES_CSWgs += catalogname-does-not-match-pkgname|pkgname=CSWgs|catalogname=ghostscript|expected-catalogname=gs
-
-# Pending release of libpaper
-#RUNTIME_DEP_PKGS_CSWgs += CSWlibpaper
-
-# CHECKPKG_OVERRIDES_CSWgs += symbol-not-found|gsc
-# CHECKPKG_OVERRIDES_CSWgs += symbOSOLETED_BY_CSWghostscript += CSWgs
-CATALOGNAME_CSWgs = ghostscript_stub
-
-VENDOR_d|gsx
+DISTFILES  = $(NAME)-$(VENDOR_d|gsx
 
 SPKG_SOURCEURL = http://www.ghostscript.com
 
@@ -68,29 +25,101 @@ UPST# PATCHFILES += 0001-Support-libjpeg7.patch
 ## PATCHFILES += 0006-Fix-dynamic-link-flag.patch
 #PATCHFILES += 0007-libidn-needs-L-opt-csw-lib.patch
 #opt-csw-lib.patch
-PATCHFILES += 0008-Wrong-place-in-configure.patch
+PATCHFILES += 0008-Wrong-place-inPACKAGES += CSWghostscript
+SPKG_DESC_CSWghostscript = PostScript and PDF interpreter
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgs9
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibz1
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWghostscript += CSWjbig2dec
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibidn11 
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibpaper1
+RUNTIME_DEP_PKGS_CSWghostscript += CSWemacs-common
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgtk-x11-2-0-0
+
+# These are probably ok
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/lprsetup.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/unix-lpr.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/lprsetup.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/unix-lpr.sh
+
+CHECKPKG_OVERRIDES_CSWghostscript += missing-dependency|CSWemacs-common
+
+# This was the old package
+OBSOLETED_BY_CSWghostscript += CSWgs
+CATALOGNAME_CSWgs = ghostscript_stub
+
+PACKAGES += CSWlibgs9
+SPKG_DESC_CSWlibgs9 = Ghostscript library, libgs.so.9
+PKGFILES_CSWlibgs9 += $(call pkgfiles_lib,libgs.so.9)
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWjbig2dec
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpaper1
+
+PACKAGES += CSWghostscript-dev
+SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
+PKGFILES_CSWghostscript-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibgs9
+
+# Otherwise we link to the installed libgs.so in /opt/csw/lib which may have an old SONAME
+#LD_OPTIONS =
+#EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)in-configure.patch
 
 # Not until libcupsimage.so libcups.so libkrb5.so libk5crypto.so
 # libcom_err.so libkrb5support.so arBUILD_ISAS = sparcv8plus+vis pentium_pro+mmx
 
-EXTRA_CFLAGS += $(LINKER_FLAGS)is pentium_pro+mmx
+BUILD64 = 1
+ISAEXEC = 1
+
+EXTRA_CFLAGS += $(LINKER_FLAGS)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
-CONFIGURE_ARGS += --enable-cups
-CONFIGURE_ARGS += --with-fontpath=$(datadir)/$(prefix)/X11/lib
+CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
 
-# This fails due to ghostscript using PLATFORM for internal use which gets set
-# by Geck
+# There is no 64 bit cups ATM, see
+#   https://www.opencsw.org/mantis/view.php?id=5079
+CONFIGURE_ARGS-32 += --enable-cups
+CONFIGURE_ARGS-64 += --disable-cups
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+
+# We want the shared library
+BUILD_ARGS += so
+
+INSTALL_ARGS += soinstalleck
 TEST_TARGET = 
 
 include gar/category.mk
 
 # BUILD_ARGS = std so
-# INSTALL_ARGS = install install-so
-
-# Use CSW build packages instead#pre-configure:
-#	@(echo "~~~ Removing bundled binaries ~~~")
-#	rm -rf $(WORKSRC)/jpeg
-#	rm -rf $(WORKSRC)/jbig2dec
-#	rm -rf $(WORKSRC)/jasper
+# INSTALL_ARGS = inpost-extract:
+	@# Ghostscript 9.07 depends on API not released in the current lcms2 2.4
+	@#   https://bugzilla.redhat.com/show_bug.cgi?id=912307
+	@#   http://list-archives.org/2013/02/14/gs-devel-ghostscript-com/ghostscript-9-07-and-ghostpdl-9-07/f/6061272699
+	#rm -rf $(WORKSRC)/lcms2
+	rm -rf $(WORKSRC)/zlib
+	rm -rf $(WORKSRC)/jpeg
+	rm -rf $(WORKSRC)/tiff
+	rm -rf $(WORKSRC)/jbig2dec
+	rm -rf $(WORKSRC)/libpng
+	rm -rf $(WORKSRC)/freetype
+	@$(MAKECOOKIE)
+	
