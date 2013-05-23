@@ -1,6 +1,6 @@
 # $Id$
 NAME = erlang
-VERSION = R15B02
+VERSION = R16B
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -14,9 +14,12 @@ endef
 VENDOR_URL = http://www.erlang.org/
 MASTER_SITES = http://www.erlang.org/download/
 DISTNAME = otp_src_$(VERSION)
-DISTFILES  = $(DITBD:
+DISTFILES  = $(PATCHFILES += 0001-Fix-main-signature.patch
+
+# TBD:
 # - Solaris 10 x86 needs a libdlpi.so symlink:
-#     ln -s /lib/libdlpi.so.1 /lib/libdlpi.so$(DISTNAME).tar.gz
+#     ln -s /lib/libdlpi.so.1 /lib/libdlpi.so
+# Solaris patches needed 145923-03 (sparc) or 145924-03 (i386)$(DISTNAME).tar.gz
 
 # We want DTrace
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -25,8 +28,8 @@ LICENSE = EPLICENCE
 
 PACKAGES += CSWerlang
 SPKG_DESC_CSWerlang = A functional programming language from Ericsson
-RUNTIME_DEP_PKGS_CSWerlang += CSWemacscommon
-RUNTIME_DEP_PKGS_CSWerlang += CSWlibncurses5
+RUNTIME_DEP_PKGlibncurses5
+RUNTIME_DEP_PKGS_CSWerlang += CSWlibssl1-0-0 += CSWlibncurses5
 
 PACKAGES += CSWerlang-dev
 SPKG_DESC_CSWerlang-dev = Ericson Erlang OTP library sources and headers

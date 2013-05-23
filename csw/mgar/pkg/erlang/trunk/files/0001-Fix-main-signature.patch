@@ -1,0 +1,48 @@
+From 22d2c18e2b5df4a56267748c972993e26c715595 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 23 May 2013 16:25:11 +0200
+Subject: [PATCH] Fix main signature
+
+---
+ lib/os_mon/c_src/ferrule.c    | 2 +-
+ lib/os_mon/c_src/mod_syslog.c | 4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/lib/os_mon/c_src/ferrule.c b/lib/os_mon/c_src/ferrule.c
+index 744f302..f22f750 100644
+--- a/lib/os_mon/c_src/ferrule.c
++++ b/lib/os_mon/c_src/ferrule.c
+@@ -50,7 +50,7 @@
+ #define		FDS_STDIN	0
+ #define		FDS_PIPE	1
+ 
+-main(int argc, char *argv[])
++int main(int argc, char *argv[])
+ /*	usage: ferrule ownpath */
+ {
+     int		i, pipe_fd;
+diff --git a/lib/os_mon/c_src/mod_syslog.c b/lib/os_mon/c_src/mod_syslog.c
+index 87fbfba..6f8b566 100644
+--- a/lib/os_mon/c_src/mod_syslog.c
++++ b/lib/os_mon/c_src/mod_syslog.c
+@@ -47,7 +47,7 @@
+ #define		TRUE		1
+ #define		WAIT		1
+ 
+-main(int argc, char *argv[])
++int main(int argc, char *argv[])
+ /*	usage: mod_syslog mode ownpath syslogconf */
+ {
+     int	syslogd_pid, n_lines_copied=0;
+@@ -128,6 +128,8 @@ main(int argc, char *argv[])
+        make_exit(PIPE_NOT_FOUND);
+        else */
+     make_exit(OK);
++
++    return 0;
+ }
+ 
+ void	make_exit(int exit_code)
+-- 
+1.8.1.4
+
