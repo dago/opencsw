@@ -79,17 +79,8 @@ SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
 PKGFILES_CSWghostscript-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibgs9
 
-# Otherwise we link to the installed libgs.so in /opt/csw/lib which may have an old SONAME
-#LD_OPTIONS =
-#EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)in-configure.patch
-
-# Not until libcupsimage.so libcups.so libkrb5.so libk5crypto.so
-# libcom_err.so libkrb5support.so arBUILD_ISAS = sparcv8plus+vis pentium_pro+mmx
-
 BUILD64 = 1
 ISAEXEC = 1
-
-EXTRA_CFLAGS += $(LINKER_FLAGS)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
@@ -104,13 +95,14 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 # We want the shared library
 BUILD_ARGS += so
 
-INSTALL_ARGS += soinstalleck
-TEST_TARGET = 
+# This is needed because libidn.so and libpaper.so are not linked with LDFLAGS set
+BUILD_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
 
-include gar/category.mk
+TEST_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
 
-# BUILD_ARGS = std so
-# INSTALL_ARGS = inpost-extract:
+INSTALL_ARGS += soinstall
+
+include gar/category.mkinpost-extract:
 	@# Ghostscript 9.07 depends on API not released in the current lcms2 2.4
 	@#   https://bugzilla.redhat.com/show_bug.cgi?id=912307
 	@#   http://list-archives.org/2013/02/14/gs-devel-ghostscript-com/ghostscript-9-07-and-ghostpdl-9-07/f/6061272699
