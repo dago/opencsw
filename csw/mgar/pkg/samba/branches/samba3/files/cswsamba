@@ -13,6 +13,9 @@ SMBCONF=@sysconfdir@/samba/smb.conf
 
 case "$1" in
 	start)
+		# Increase the max number of open files to what Samba likes
+		ulimit -S -n 16384
+
 		if [ -f $SMBCONF ]; then
 			echo "Starting samba..."
 			@sbindir@/nmbd -D
