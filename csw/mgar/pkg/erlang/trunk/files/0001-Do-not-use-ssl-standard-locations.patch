@@ -1,0 +1,25 @@
+From 91bfc9c834ca9222ddde8f4c48dca6d8384cbf4c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 24 May 2013 11:49:59 +0200
+Subject: [PATCH] Do not use ssl standard locations
+
+---
+ erts/configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/erts/configure b/erts/configure
+index b6ec8ae..29223a4 100755
+--- a/erts/configure
++++ b/erts/configure
+@@ -36959,7 +36959,7 @@ fi
+ 
+ 
+ 
+-std_ssl_locations="/usr/local /usr/sfw /usr /opt/local /usr/pkg /usr/local/openssl /usr/lib/openssl /usr/openssl /usr/local/ssl /usr/lib/ssl /usr/ssl"
++#std_ssl_locations="/usr/local /usr/sfw /usr /opt/local /usr/pkg /usr/local/openssl /usr/lib/openssl /usr/openssl /usr/local/ssl /usr/lib/ssl /usr/ssl"
+ 
+ 
+ # Check whether --with-ssl-zlib or --without-ssl-zlib was given.
+-- 
+1.8.1.4
+
