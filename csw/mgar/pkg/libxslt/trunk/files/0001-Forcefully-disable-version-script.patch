@@ -1,0 +1,26 @@
+From c82c1c5147f1d989b7967a4e9798b5457d7f1f28 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 24 May 2013 15:13:49 +0200
+Subject: [PATCH] Forcefully disable version script
+
+---
+ libxslt/Makefile.in | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/libxslt/Makefile.in b/libxslt/Makefile.in
+index e0a998b..f070844 100644
+--- a/libxslt/Makefile.in
++++ b/libxslt/Makefile.in
+@@ -375,8 +375,7 @@ libxslt_la_SOURCES = \
+ 	xsltwin32config.h.in		\
+ 	libxslt.h
+ 
+-@USE_VERSION_SCRIPT_FALSE@LIBXSLT_VERSION_SCRIPT = 
+-@USE_VERSION_SCRIPT_TRUE@LIBXSLT_VERSION_SCRIPT = $(VERSION_SCRIPT_FLAGS)$(srcdir)/libxslt.syms
++LIBXSLT_VERSION_SCRIPT =
+ libxslt_la_LIBADD = $(LIBXML_LIBS) $(EXTRA_LIBS)
+ libxslt_la_LDFLAGS = \
+ 		$(WIN32_EXTRA_LDFLAGS)			\
+-- 
+1.8.1.4
+
