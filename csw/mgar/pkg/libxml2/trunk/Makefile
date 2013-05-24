@@ -1,5 +1,5 @@
 NAME = libxml2
-VERSION = 2.7.8
+VERSION = 2.9.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxml2/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(NAME)-$# (VERSION).tar.gz
 PATCHFILES = 0001-Forcefully-disable-the-symbol-versioning.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -71,5 +71,4 @@ CHECKPKG_OVERRIDES_CSWlibxml2-dev += file-with-bad-content|/usr/share|root/opt/c
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-include gar/category.mk
-
+include 
