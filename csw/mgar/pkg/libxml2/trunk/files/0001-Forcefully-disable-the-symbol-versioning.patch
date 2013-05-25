@@ -1,17 +1,17 @@
-From 8a1c3cdecc3befbe22961b78e4e2c107fce8a198 Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <dam@opencsw.org>
-Date: Fri, 24 May 2013 15:18:01 +0200
-Subject: [PATCH] Forcefully disable the symbol versioning
+From 43f2a579cd9808557fa2d8ce4d5f5b6f94d627b0 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 25 May 2013 09:07:33 +0200
+Subject: [PATCH] Forcefully disable the symbol versioning 2
 
 ---
- configure | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ configure | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/configure b/configure
-index 80dd0fc..6203fd0 100755
+index 80dd0fc..f314402 100755
 --- a/configure
 +++ b/configure
-@@ -11876,17 +11876,12 @@ if test "$lt_cv_prog_gnu_ld" = yes; then
+@@ -11876,18 +11876,10 @@ if test "$lt_cv_prog_gnu_ld" = yes; then
    VERSION_SCRIPT_FLAGS=-Wl,--version-script=
  else
    case $host in
@@ -27,11 +27,10 @@ index 80dd0fc..6203fd0 100755
 -  USE_VERSION_SCRIPT_TRUE='#'
 -  USE_VERSION_SCRIPT_FALSE=
 -fi
-+USE_VERSION_SCRIPT_TRUE='#'
-+USE_VERSION_SCRIPT_FALSE=
+-
  
  
- 
+ _cppflags="${CPPFLAGS}"
 -- 
 1.8.1.4
 

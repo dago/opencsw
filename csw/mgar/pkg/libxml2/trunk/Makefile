@@ -1,3 +1,7 @@
+# $Id$
+#
+# ! There are test failures, unfortunately.
+
 NAME = libxml2
 VERSION = 2.9.1
 CATEGORIES = lib
@@ -10,10 +14,7 @@ endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxml2/
 DISTFILES = $(NAME)-$# (VERSION).tar.gz
-PATCHFILES = 0001-Forcefully-disable-the-symbol-versioning.patch
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES = 0001-Forcefully-disable-the-symbol-v\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxml2-2 CSWlibxml2-dev CSWpy-libxml2
 
