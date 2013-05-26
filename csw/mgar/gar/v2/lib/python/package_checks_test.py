@@ -1977,24 +1977,24 @@ class TestCheckSharedLibrarySoExtension(CheckTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError(
         'shared-library-missing-dot-so', 'file=foo.1')
 
-class TestCheck64bitsBinariesPresence(CheckTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'Check64bitsBinariesPresence'
+class TestCheck64bitBinariesPresence(CheckTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'Check64bitBinariesPresence'
   def testFull32bitsPackage(self):
     self.pkg_data = copy.deepcopy(vsftpd_stats[0])
 
-  def testMissingIntel64bitsLibraries(self):
+  def testMissingIntel64bitLibraries(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
-    self.error_mgr_mock.ReportError('64bits-binaries-missing')
+    self.error_mgr_mock.ReportError('64-bit-binaries-missing')
 
-  def testMissingSparc64bitsLibraries(self):
+  def testMissingSparc64bitLibraries(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkginfo"]["OPENCSW_MODE64"] = '32/64'
-    self.error_mgr_mock.ReportError('64bits-binaries-missing')
+    self.error_mgr_mock.ReportError('64-bit-binaries-missing')
 
-  def testMissing64bitsExecutable(self):
+  def testMissing64bitExecutable(self):
     self.pkg_data = bdb48_stats[0]
     self.pkg_data["pkginfo"]["OPENCSW_MODE64"] = '32/64/isaexec'
-    self.error_mgr_mock.ReportError('64bits-binaries-missing')
+    self.error_mgr_mock.ReportError('64-bit-binaries-missing')
 
 class TestRemovePackagesUnderInstallation(unittest.TestCase):
 

@@ -1226,14 +1226,15 @@ def CheckSharedLibrarySoExtension(pkg_data, error_mgr, logger, messenger):
           "file=%s" % shared_lib)
 
 
-def Check64bitsBinariesPresence(pkg_data, error_mgr, logger, messenger):
+def Check64bitBinariesPresence(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data['pkginfo']
+  arch = pkginfo['ARCH']
   if not ('OPENCSW_MODE64' in pkginfo and '64' in pkginfo['OPENCSW_MODE64']):
     return
 
   if 'isaexec' in pkginfo['OPENCSW_MODE64']:
     binaries = pkg_data['binaries_dump_info']
-    binaries_path = 'bin|sbin|lib|libexec'
+    binaries_path = '|'.join(common_constants.BASE_BINARY_PATHS)
   else:
     binaries = [ x for x in pkg_data['binaries_dump_info'] if 'soname' in x ]
     binaries_path = 'lib|libexec'
@@ -1245,15 +1246,16 @@ def Check64bitsBinariesPresence(pkg_data, error_mgr, logger, messenger):
     }
     paths_64_str = (
         r"opt/csw/(%s)/(%s)"
-        % (binaries_path, '|'.join(paths_64[pkginfo['ARCH']])))
+        % (binaries_path, '|'.join(paths_64[arch])))
     paths_64_re = re.compile(paths_64_str)
     for binary_info in binaries:
       if paths_64_re.search(binary_info['path']):
         return
 
-    error_mgr.ReportError('64bits-binaries-missing')
+    error_mgr.ReportError('64-bit-binaries-missing')
     messenger.Message(
-      "The package is supposed to contains 64 bits binaries "
-      "but it doesn't contain any in the usual 64 bits "
-      "binaries locations. Locations checked: %s." % paths_64_str)
-
+      "The package contains 32-bit binaries, e.g. %s, "
+      "but it doesn't seem to contain any 64-bit binaries "
+      "in the usual locations. "
+      "Locations checked for 64-bit binaries: %s."
+      % (binaries[0], paths_64_str))
