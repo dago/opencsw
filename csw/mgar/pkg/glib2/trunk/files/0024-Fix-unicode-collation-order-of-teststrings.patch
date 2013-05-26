@@ -1,0 +1,29 @@
+From 85ef559b661fce2587d12e76a064b7c145c57100 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 24 May 2013 07:44:18 +0200
+Subject: [PATCH] Fix unicode collation order of teststrings
+
+---
+ tests/collate/collate-2.unicode | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tests/collate/collate-2.unicode b/tests/collate/collate-2.unicode
+index 3546853..78a9ac2 100644
+--- a/tests/collate/collate-2.unicode
++++ b/tests/collate/collate-2.unicode
+@@ -5,9 +5,9 @@ bla10
+ bla100
+ bla4
+ event.c
+-eventgenerator.c
+ event.h
+-file2.bla
+-file3.xx
++eventgenerator.c
+ file.c
+ file.txt
++file2.bla
++file3.xx
+-- 
+1.8.1.4
+

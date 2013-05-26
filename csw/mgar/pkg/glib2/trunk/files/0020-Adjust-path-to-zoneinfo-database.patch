@@ -1,0 +1,25 @@
+From aa125efb380dcbc6a95a9ae32bca3fb3f5e4436f Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Thu, 23 May 2013 08:54:22 +0200
+Subject: [PATCH] Adjust path to zoneinfo database
+
+---
+ glib/gtimezone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/glib/gtimezone.c b/glib/gtimezone.c
+index e513f3b..8799c7f 100644
+--- a/glib/gtimezone.c
++++ b/glib/gtimezone.c
+@@ -378,7 +378,7 @@ g_time_zone_new (const gchar *identifier)
+ 
+               tzdir = getenv ("TZDIR");
+               if (tzdir == NULL)
+-                tzdir = "/usr/share/zoneinfo";
++                tzdir = "/usr/share/lib/zoneinfo";
+ 
+ 	      if (*identifier == ':')
+ 		identifier ++;
+-- 
+1.8.1.4
+
