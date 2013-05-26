@@ -56,7 +56,7 @@ RUNTIME_DEP_PKGS_CSWpy-libxml2 += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libxml2 += CSWlibxml2-2
 PKGFILES_CSWpy-libxml2  = $(libdir)/python/.*
 PKGFILES_CSWpy-libxml2 += $(docdir)/pylibxml2/.*u# There is no 64-bit Python.
-CHECKPKG_OVERRIDES_CSWpy-libxml2 += 64bits-binaries-missingult64 = $(libdir)
+CHECKPKG_OVERRIDES_CSWpy-libxml2 += 64-bit-binaries-missingult64 = $(libdir)
 
 EXTRA_PAX_ARGS  = -s ",^\.$(docdir)/libxml2-$(VERSION),.$(docdir)/libxml2,p"
 EXTRA_PAX_ARGS += -s ",^\.$(docdir)/libxml2-python-$(VERSION),.$(docdir)/pylibxml2,p"
