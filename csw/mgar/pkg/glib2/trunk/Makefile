@@ -279,8 +279,12 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 # DTrace compilation fails, disable for now
 CONFIGURE_ARGS += --
+we must set the config shell to bash so configure sticks that
+# as SHELL variable in the generated Makefiles. That's what make
+# uses for executing commands. There's no other way to alter the
+# shell make uses.
+EXTRA_CONFIGURE_ENV += CONFIG_SHELL=/opt/csw/bin/bash--
 For tests to succeed, set the ulimit higher than the default of 256.
-EXTRA_TEST_ENV += SHELL=/opt/csw/bin/bash
 EXTRA_TEST_ENV += BASH_ENV=$(abspath $(WORKDIR)/set-ulimit-for-build-test)ce
 
 #SKIPTEST = 1
