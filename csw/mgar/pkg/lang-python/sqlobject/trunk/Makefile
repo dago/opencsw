@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = SQLObject
-VERSION = 1.4.0
+VERSION = 1.4.1
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Object Relational Manager for Python
@@ -15,4 +15,5 @@ RUNTIME_DEP_PKGS_CSWpy-sqlobject = CSWpy-formencode
 ARCHALL_CSWpy-sqlobject = 1
 CATALOGNAME_CSWpy-sqlobject = py_sqlobject
 CHECKPKG_OVERRIDES_CSWpy-sqlobject += surplus-dependency|CSWpy-formencode
+PACKAGING_PLATFORMS = solaris9-i386
 include gar/category.mk
