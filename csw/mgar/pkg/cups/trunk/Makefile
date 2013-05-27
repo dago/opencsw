@@ -91,6 +91,7 @@ SPKG_DESC_CSWcups = Common Unix Printing System
 ARCHALL_CSWcups = 1
 RUNTIME_DEP_PKGS_CSWcups += CSWcupsd
 RUNTIME_DEP_PKGS_CSWcups += CSWcupsclient
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgnutls28
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
 
 PACKAGES += CSWphp5-cups
@@ -133,7 +134,6 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsppdc1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
@@ -201,7 +201,7 @@ CUPSLINKS_TARGET = cupslinks
 PACKAGES += CSWlibcups2
 SPKG_DESC_CSWlibcups2 = CUPS libraries, libcups.so.2
 PKGFILES_CSWlibcups2 += $(call pkgfiles_lib,libcups.so.2)
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgnutls28
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibz1
 
@@ -238,7 +238,7 @@ RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgpg-error0
 CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
 
 # commented out because libtasn1.so.3 needed by libgnutls is not availible for 64bit (at the moment)
-# BUILD64_LIBS_ONLY = 1
+BUILD64_LIBS_ONLY = 1
 
 EXTRA_LINKER_FLAGS += -liconv
 EXTRA_LINKER_FLAGS += -norunpath
