@@ -3,12 +3,12 @@
 #
 # So it does not get lost. With gcc4.8 you now need -fno-aggressive-loop-optimizations: http://comments.gmane.org/gmane.comp.video.ffmpeg.devel/161226
 NAME = x264
-VERSION = b3065e6
+VERSION = a3ac64b
 GARTYPE = v2
-CATEGORIES = apps
 
-DESCRIPTION = x264 is encoding video streams into the H.264/MPEG-4 AVC format
+DESCRIPTION =The x264 project is encoding video streams into the H.264/MPEG-4 AVC format
 define BLURB
+ The x264 projectdefine BLURB
  x264 is a free software library and application for encoding video streams into the H.264/MPEG-4 AVC format, and is released under the terms of the GNU GPL. 
 endef
 
@@ -16,7 +16,7 @@ VENDOR_URL = http://www.videolan.org/developers/x264.html
 #MASTER_SITES = http://repo.or.cz/w/x264.git/snapshot/  
 #DISTFILES  = c522ad1fed167d0e985e4f9dcdee042473cf74db.tar.gz
 GIT_REPOS = http://git.videolan.org/git/x264.git
-GIT_b3065e660df391168067f13216d99825260939d429f5da9b0292387309
+GIT_a3ac64b8b467eea1264c0053022893bc84b2e9a229f5da9b0292387309
 
 # This Patch file needs to be updated on every new version! 
 PATCHFILES += 0001-replace-version.sh.patch
@@ -55,28 +55,22 @@ RUNTIME_DEP_PKGS_CSWx264 += CSWlibavformat54
 RUNTIME_DEP_PKGS_CSWx264 += CSWlibswscale2
 RUNTIME_DEP_PKGS_CSWx262
 
-PACKAGES += CSWlibx264-130
-CATALOGNAME_CSWlibx264-130 = libx264_130
-PKGFILES_CSWlibx264-130 += $(call baseisadirs,$(libdir),libx264\.so\.130)
-PKGFILES_CSWlibx264-130 += $(call baseisadirs,$(libdir),libx264\.so\.130(\.\d+)*)
-SPKG_DESC_CSWlibx264-130 += $(DESCRIPTION), libx264.so.130
-RUNTIME_DEP_PKGS_CSWlibx264-130KGS_CSWlibx264-128 += CSWlibgcc-s1
+PACKAGES += CSWlibx264-133
+CATALOGNAME_CSWlibx264-133 = libx264_133
+PKGFILES_CSWlibx264-133 += $(call baseisadirs,$(libdir),libx264\.so\.133)
+PKGFILES_CSWlibx264-133 += $(call baseisadirs,$(libdir),libx264\.so\.133(\.\d+)*)
+SPKG_DESC_CSWlibx264-133 += $(DESCRIPTION), libx264.so.133
+RUNTIME_DEP_PKGS_CSWlibx264-133KGS_CSWlibx264-128 += CSWlibgcc-s1
 
 PACKAGES += CSWlibx264-dev
 CATALOGNAME_CSWlibx264-dev = libx264_dev
 SPKG_DESC_CSWlibx264-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibx264-dev += /opt/csw/lib/libx264.so
 PKGFILES_CSWlibx264-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibx264-d30 += CSWlibx264-128
-
-#Some overrides
-CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
-CHECKPKG_OVER30DES_CSWlibx264-128 += pkginfo-description-not-starting-with-uppercase
-
-
+RUNTIME_DEP_PKGS_CSWlibx264-d33
 
 
 include gar/category.mk
 
 # For 'grep -q'
-PATH := /op
+PATH := /opt/csw/gnu:$(PATH)

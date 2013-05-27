@@ -37,10 +37,10 @@ index 5466ef2..a1d43eb 100755
 -API=`grep '#define X264_BUILD' < x264.h | sed -e 's/.* \([1-9][0-9]*\).*/\1/'`
 -echo "#define X264_POINTVER \"0.$API.$VER\""
 +
-+echo "#define X264_REV 2273"
++echo "#define X264_REV 2334"
 +echo "#define X264_REV_DIFF 0"
-+echo '#define X264_VERSION " r2273 b3065e6"'
-+echo '#define X264_POINTVER "0.130.2273 b3065e6"'
++echo '#define X264_VERSION " r2334 a3ac64b"'
++echo '#define X264_POINTVER "0.133.2334 a3ac64b"'
 +exit 0
 -- 
 1.7.9
