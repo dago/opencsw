@@ -136,7 +136,7 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsppdc1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus1-3
-# RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
@@ -168,7 +168,7 @@ PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
 PKGFILES_CSWcupsclient += $(datadir)/doc/cupsclient.*
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
-# RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgpg-error0
 
 PACKAGES += CSWcups-dev
 SPKG_DESC_CSWcups-dev = CUPS header files
@@ -200,7 +200,7 @@ PACKAGES += CSWlibcups2
 SPKG_DESC_CSWlibcups2 = CUPS libraries, libcups.so.2
 PKGFILES_CSWlibcups2 += $(call pkgfiles_lib,libcups.so.2)
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgnutls28
-# RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibz1
 
 PACKAGES += CSWlibcupscgi1
@@ -230,7 +230,7 @@ PACKAGES += CSWlibcupsppdc1
 SPKG_DESC_CSWlibcupsppdc1 = CUPS libraries, libcupsppdc.so.1
 PKGFILES_CSWlibcupsppdc1 += $(call pkgfiles_lib,libcupsppdc.so.1)
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
-# RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgpg-error0
 
 # For some reason -norunpath is not used here, investigate later
 CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
