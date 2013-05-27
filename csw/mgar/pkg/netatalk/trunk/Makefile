@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.0.3
+VERSION = 3.0.4
 GARTYPE = v2
 
 DESCRIPTION = Open Source AFP fileserver
@@ -41,11 +41,9 @@ RUNTIME_DEP_PKGS += CSWbdb48
 RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
 RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH))
 
-# Patches are in upstream and will be in 3.0.4
+# Patches are in upstream and will be in 3.0.5
 PATCHFILES += 0000-Add-rpath-for-bdb.patch
 PATCHFILES += 0001-Fix-use-of-unnamed-union-inside-struct.patch
-PATCHFILES += 0003-Fix-misspelled-compiler-variable.patch
-PATCHFILES += 0004-Prevent-SMF-manifest-import-on-install.patch
 
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
@@ -67,12 +65,13 @@ CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --disable-tcp-wrappers
 CONFIGURE_ARGS += --with-bdb=/opt/csw/bdb48
 CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
-CONFIGURE_ARGS += --with-init-style=solaris
-CONFIGURE_ARGS += --with-init-dir=/var/opt/csw/svc/manifest/network/NK# Path to XML dtd
+K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
 
 include gar/category.mk
 
 post-install-modulated:
+	ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/network
+	ginstall -m 444 $(WORKSRC)/distrib/initscripts/netatalk.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/
 	mv $(DESTDIR)/var/opt/csw/svc/manifest/network/netatalk.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/cswnetatalk.xml
 	@$(MAKECOOKIE)
