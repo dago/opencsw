@@ -233,7 +233,7 @@ RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgpg-error0
 
 # For some reason -norunpath is not used here, investigate later
-CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
+# CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
 
 ### commented out if libtasn1.so.3 needed by libgnutls is not availible for 64bit (at the moment)
 BUILD64_LIBS_ONLY = 1
@@ -264,7 +264,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 # to find any of the image libraries.
 # Fortunately, configure honors values already in $DSOFLAGS, so we can use
 # that to make sure -L/opt/csw/lib is the first argument passed to ld.
-CONFIGURE_ARGS += DSOFLAGS=-L$(libdir)
+CONFIGURE_ARGS += "DSOFLAGS=-L$(libdir) -z ignore -norunpath"
 
 # PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
 
