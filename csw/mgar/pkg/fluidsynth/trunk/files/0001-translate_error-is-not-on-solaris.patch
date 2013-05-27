@@ -1,0 +1,29 @@
+--- a/src/bindings/fluid_rtkit.c.original	Thu Aug 16 06:01:13 2012
++++ b/src/bindings/fluid_rtkit.c	Mon May 27 17:45:27 2013
+@@ -34,7 +34,7 @@
+ #include "fluid_rtkit.h"
+ 
+ 
+-#if defined(__linux__) || defined(__APPLE__)
++#if defined(__linux__) || defined(__APPLE__) 
+ 
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE
+@@ -47,7 +47,6 @@
+ #include <sys/syscall.h>
+ #include <sys/resource.h>
+ 
+-
+ static pid_t _gettid(void) {
+         return (pid_t) syscall(SYS_gettid);
+ }
+@@ -342,7 +341,9 @@
+ 	dbus_error_init(&error);
+ 	conn = dbus_bus_get_private(DBUS_BUS_SYSTEM, &error);
+ 	if (conn == NULL) {
++#if defined(__linux__) || defined(__APPLE__) 
+ 		res = translate_error(error.name);
++#endif
+         	dbus_error_free(&error);
+ 		return res;
+ 	}
