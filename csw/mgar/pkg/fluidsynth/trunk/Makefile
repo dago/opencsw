@@ -12,7 +12,9 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-translate_error-is-not-on-solaris.patch
+# Official patches to fix the Solaris build - included upstream
+PATCHFILES += 0002-fix-solaris-build.patch
+PATCHFILES += 0003-fix-previous.patch
 
 BUILD64_LIBS_ONLY = 1
 
