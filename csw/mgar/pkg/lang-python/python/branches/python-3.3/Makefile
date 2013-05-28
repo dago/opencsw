@@ -11,6 +11,7 @@ CVER = 33
 # Known issues:
 #
 # - No 64-bit build
+#   http://bugs.python.org/issue18083
 # - ctypes module doesn't compile
 #   - http://forums.sun.com/thread.jspa?threadID=5148204
 #   - http://bugs.python.org/issue4902
@@ -49,21 +50,12 @@ SKIPTEST = 1
 TEST_TARGET = test
 
 # There are problems with platform-dependent data in $(prefix)/lib/python3.3
-# BUILD64 = 1
-# ISAEXEC = 1
-
-# Maybe including just the libraries will work fine?
-BUILD64_LIBS_ONLY = 1
-
-# There is a file name conflict over libffi.so symlink between libffi package
-# and a gcc-java package.  While it will ultimately belong to libffi_dev, the
-# symlink is currently under a subdirectory.
-# pkgchk -L CSWlibffi-dev
-# (...)
-# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
-# EXTRA_LINKER_FLAGS += $(libdir)/ffi
-
-# LDFLAGS += -L$(libdir)/ffi
+# Installation paths are defined in:
+# http://hg.python.org/cpython/file/26588b6a39d9/Makefile.pre.in#l114
+# http://wiki.debian.org/Python/MultiArch
+GARFLAVOR = DBG
+BUILD64 = 1
+ISAEXEC = 1
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -213,5 +205,14 @@ EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
 GARCOMPILER = GNU
 
 include gar/category.mk
+
+# There is a file name conflict over libffi.so symlink between libffi package
+# and a gcc-java package.  While it will ultimately belong to libffi_dev, the
+# symlink is currently under a subdirectory.
+# pkgchk -L CSWlibffi-dev
+# (...)
+# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
+# EXTRA_LINKER_FLAGS += $(libdir)/ffi
+# LDFLAGS += -L$(libdir)/ffi
 
 LINKER_FLAGS := -L$(libdir)/ffi $(LINKER_FLAGS)
