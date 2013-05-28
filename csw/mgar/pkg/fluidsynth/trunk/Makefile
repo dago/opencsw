@@ -14,8 +14,6 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-translate_error-is-not-on-solaris.patch
 
-GARCOMPILER=GCC4
-
 BUILD64_LIBS_ONLY = 1
 
 PACKAGES += CSWfluidsynth
@@ -37,14 +35,11 @@ SPKG_DESC_CSWfluidsynth-dev += $(DESCRIPTION), development files
 # PKGFILES is catchall
 
 RUNTIME_DEP_PKGS_CSWlibfluidsynth1 += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWlibfluidsynth1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibfluidsynth1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibfluidsynth1 += CSWlibsndfile
 RUNTIME_DEP_PKGS_CSWlibfluidsynth1 += CSWlibreadline6
 
 RUNTIME_DEP_PKGS_CSWfluidsynth-dev += CSWlibfluidsynth1
-
-EXTRA_CFLAGS = -Dsun
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
