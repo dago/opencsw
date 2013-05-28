@@ -33,7 +33,7 @@ RUNTIME_DEP_PKGS_CSWghostscript += CSWlibz1
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWghostscript += CSWjbig2dec
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibjbig2dec0 
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibidn11 
@@ -52,6 +52,10 @@ CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/unix-lpr.sh
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/lprsetup.sh
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/unix-lpr.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/unix-lpr.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/lprsetup.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/lprsetup.sh
+CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/unix-lpr.sh
 
 CHECKPKG_OVERRIDES_CSWghostscript += missing-dependency|CSWemacs-common
 
@@ -67,7 +71,7 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWjbig2dec
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibjbig2dec0
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibidn11
@@ -91,6 +95,10 @@ CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
 CONFIGURE_ARGS-32 += --enable-cups
 CONFIGURE_ARGS-64 += --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+
+# pentium_pro does not have SSE2 and the detection does not work
+CONFIGURE_ARGS-32-i386 += --disable-sse2
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)-$(GARCH))
 
 # We want the shared library
 BUILD_ARGS += so
