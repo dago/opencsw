@@ -1,0 +1,34 @@
+From 98117d1651483893071cc3a87c9e52a41847110c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 May 2013 11:41:12 +0200
+Subject: [PATCH] Use accessor function
+
+---
+ jbig2_image_png.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/jbig2_image_png.c b/jbig2_image_png.c
+index 342c0c3..13c0b67 100644
+--- a/jbig2_image_png.c
++++ b/jbig2_image_png.c
+@@ -33,7 +33,7 @@ jbig2_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
+ {
+     png_size_t check;
+ 
+-    check = fwrite(data, 1, length, (png_FILE_p)png_ptr->io_ptr);
++    check = fwrite(data, 1, length, png_get_io_ptr(png_ptr));
+     if (check != length) {
+       png_error(png_ptr, "Write Error");
+     }
+@@ -43,7 +43,7 @@ static void
+ jbig2_png_flush(png_structp png_ptr)
+ {
+     png_FILE_p io_ptr;
+-    io_ptr = (png_FILE_p)CVT_PTR((png_ptr->io_ptr));
++    io_ptr = (png_FILE_p)png_get_io_ptr(png_ptr);
+     if (io_ptr != NULL)
+         fflush(io_ptr);
+ }
+-- 
+1.8.1.4
+
