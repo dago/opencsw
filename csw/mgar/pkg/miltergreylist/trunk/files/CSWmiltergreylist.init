@@ -1,12 +1,12 @@
 #!/sbin/sh
 
-# 2009-10-13 Peter Bonivart
+# 2013-05-29 Peter Bonivart
 
 if [ -f /lib/svc/share/smf_include.sh ]; then
   . /lib/svc/share/smf_include.sh
 fi
 
-MILDIR=/var/opt/csw/miltergreylist
+MILDIR=/var/opt/csw/milter-greylist
 BINDIR=/opt/csw/bin
 USER=greylist
 
