@@ -2,34 +2,27 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.9.2
+VERSION = 9.9.3
 GARTYPE = v2
 
 # Enable these for Px-releases
-#RELEASE = rc1
-RELEASE = P2
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P2
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
-  BIND is open-source software that implements the Domain Name System (DNS)
-  protocols for the Internet. It is a reference implementation of those
-  protocols, but it is also production-grade software, suitable for use in
-  high-volume and high-reliability applications.
 endef
 
 # Enable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -62,7 +55,6 @@ RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgcc-s1
 
 PACKAGES += CSWbindutils
@@ -99,6 +91,7 @@ PKGFILES_CSWlibbind    = .*\.so\..*
 PKGFILES_CSWbindutils  = $(bindir)/.*
 PKGFILES_CSWbindchroot = .*chroot.*
 
+TEST_SCRIPTS    = custom
 INSTALL_SCRIPTS = custom
 
 PROTOTYPE_MODIFIERS = 1
@@ -120,20 +113,25 @@ CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CS
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
 
 # Will not split out all these libs
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.90.0.1|soname=liblwres.so.90|pkgname=CSWlibbind|expected=CSWliblwres90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.0.2|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.90.0.2|soname=libisccc.so.90|pkgname=CSWlibbind|expected=CSWlibisccc90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.92.1.0|soname=libisc.so.92|pkgname=CSWlibbind|expected=CSWlibisc92
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.95.1.1|soname=libdns.so.95|pkgname=CSWlibbind|expected=CSWlibdns95
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.5|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.7|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.99.0.1|soname=libdns.so.99|pkgname=CSWlibbind|expected=CSWlibdns99
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.95.0.1|soname=libisc.so.95|pkgname=CSWlibbind|expected=CSWlibisc95
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.90.0.3|soname=libisccc.so.90|pkgname=CSWlibbind|expected=CSWlibisccc90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.0.6|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.90.0.4|soname=liblwres.so.90|pkgname=CSWlibbind|expected=CSWliblwres90
 
 # Some new checks, have no idea about their relevance
-CHECKPKG_OVERRIDES_CSWlibbind += soname-unused
 CHECKPKG_OVERRIDES_CSWlibbind += no-direct-binding
 
 include gar/category.mk
 
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
+
+test-custom:
+	@echo " ==> Testing $(NAME) (custom)"
+	( cd $(WORKSRC) ; \
+	  gmake force-test )
+	@$(MAKECOOKIE)
 
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
