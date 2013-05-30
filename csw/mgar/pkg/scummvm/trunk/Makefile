@@ -1,5 +1,5 @@
-NAME = scummvm
-VERSION = 1.4.0
+NAME    = scummvm
+VERSION = 1.6.0
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -20,7 +20,15 @@ RUNTIME_DEP_PKGS_CSWscummvm += CSWlibflac8
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibtheoradec1
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibmad0
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWscummvm += CSWlibvorbisfile3
+RUNTIME_DEP_PKGS_CSWscummvm += RUNTIME_DEP_PKGS_CSWscummvm += CSWlibfluidsynth1
+
+BUILD64=1
+
+BUILD_DEP_PKGS_CSWscummvm += CSWlibsdl-dev
+BUILD_DEP_PKGS_CSWscummvm += CSWfluidsynth-dev
+
+PATCHFILES += 0001-redefining-FILE.patch
+PATCHFILES += 0002-configure-really-is-a-bash-script.patchCSWlibvorbisfile3
 
 # Don't know about these, investigate later
 CHECKPKG_OVERRIDES_CSWscummvm += file-with-bad-content|/usr/local|root/opt/csw/bin/scummvm
@@ -34,7 +42,10 @@ CONFIGURE_ARGS += --bindir=$(bindir)
 CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --datadir=$(datadir)
 CONFIGURE_ARGS += --libdir=$(libdir)
-CONFIGURE_ARGS += --enable-all-engines
+CONFIGURErelease
+CONFIGURE_ARGS += --enable-plugins
+CONFIGURE_ARGS += --default-dynamic
+CONFIGURE_ARGS += --enable-updat--enable-all-engines
 
 TEST_TARGET = test
 
@@ -44,4 +55,4 @@ SKIPTEST ?= 1
 include gar/category.mk
 
 # For "install" with GNU syntax
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /op

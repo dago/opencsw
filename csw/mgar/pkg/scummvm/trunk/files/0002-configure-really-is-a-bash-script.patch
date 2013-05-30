@@ -1,0 +1,8 @@
+--- ./configure.original	Mon May 27 21:52:21 2013
++++ ./configure	Mon May 27 21:51:17 2013
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # configure -- custom configure script for ScummVM.
+ #
