@@ -1,0 +1,18 @@
+--- ./backends/platform/sdl/sdl-sys.h	Sun May 26 22:21:47 2013
++++ ./backends/platform/sdl/sdl-sys.h	Wed May 29 18:04:58 2013
+@@ -34,10 +34,15 @@
+ // Remove FILE override from common/forbidden.h, and replace
+ // it with an alternate slightly less unfriendly override.
+ #if !defined(FORBIDDEN_SYMBOL_ALLOW_ALL) && !defined(FORBIDDEN_SYMBOL_EXCEPTION_FILE)
++#if defined(__sun)
+ #undef FILE
++typedef __FILE FILE;
++#else
++#undef FILE
+ typedef struct { int FAKE; } FAKE_FILE;
+ #define FILE FAKE_FILE
+ #endif
++#endif
+ 
+ #if !defined(FORBIDDEN_SYMBOL_ALLOW_ALL) && !defined(FORBIDDEN_SYMBOL_EXCEPTION_strcasecmp)
+ #undef strcasecmp
