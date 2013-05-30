@@ -10,29 +10,31 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-RUNTIME_DEP_PKGS_CSWscummvm += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibz1
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibflac8
-RUNTIME_DEP_PKGS_CSWscummvm += CSWlibtheoradec1
-RUNTIME_DEP_PKGS_CSWscummvm += CSWlibmad0
 RUNTIME_DEP_PKGS_CSWscummvm += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWscummvm += RUNTIME_DEP_PKGS_CSWscummvm += CSWlibfluidsynth1
+RUNTIME_DEP_PKGS_CSWscummvm += CSWmesa
+RUNTIME_DEP_PKGS_CSWscummvm += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWscummvm += CSWlibmad0
+RUNTIME_DEP_PKGS_CSWscummvm += CSWlibfaad2
+RUNTIME_DEP_PKGS_CSWscummvm += CSWlibtheoradec1
 
-BUILD64=1
+BUILD64 = 1
+ISAEXEC = 1
 
 BUILD_DEP_PKGS_CSWscummvm += CSWlibsdl-dev
 BUILD_DEP_PKGS_CSWscummvm += CSWfluidsynth-dev
+BUILD_DEP_PKGS_CSWscummvm += CSWlibmad-dev
+BUILD_DEP_PKGS_CSWscummvm += CSWlibfaad-dev
+BUILD_DEP_PKGS_CSWscummvm += CSWlibtheora-dev
 
 PATCHFILES += 0001-redefining-FILE.patch
-PATCHFILES += 0002-configure-really-is-a-bash-script.patchCSWlibvorbisfile3
-
-# Don't know about these, investigate later
-CHECKPKG_OVERRIDES_CSWscummvm += file-with-bad-content|/usr/local|root/opt/csw/bin/scummvm
-CHECKPKG_OVERRIDES_CSWscummvm += file-with-bad-content|/usr/local|root/opt/csw/share/man/man6/scummvm.6
+PATCHFILES += 0002-configure-really-is-a-bash-script.patchCan/man6/scummvm.6
 
 GARCOMPILER = GCC4
 
@@ -45,7 +47,7 @@ CONFIGURE_ARGS += --libdir=$(libdir)
 CONFIGURErelease
 CONFIGURE_ARGS += --enable-plugins
 CONFIGURE_ARGS += --default-dynamic
-CONFIGURE_ARGS += --enable-updat--enable-all-engines
+CONFIGURE_ARGS += --enable-updat--eCONFIGURE_ARGS += --disable-nasmenable-all-engines
 
 TEST_TARGET = test
 
