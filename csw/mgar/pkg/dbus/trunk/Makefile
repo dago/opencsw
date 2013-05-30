@@ -5,7 +5,7 @@
 # ! cleanup of /usr/share, /usr/local occurrences
 
 NAME = dbus
-VERSION = 1.7.0
+VERSION = 1.7.2
 GARTYPE = v2
 
 DESCRIPTION  = DBus Message Bus System
@@ -30,10 +30,6 @@ DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswdbus
 
-# Use patch until this is fixed:
-#   https://bugs.freedesktop.org/show_bug.cgi?id=63071
-PATCHFILES += 0001-If-alloca.h-is-available-it-is-required-e.g.-on-Sola.patch
-
 PACKAGES += CSWdbus
 CATALOGNAME_CSWdbus = dbus
 SPKG_DESC_CSWdbus = $(DESCRIPTION)
@@ -56,12 +52,12 @@ PKGFILES_CSWlibdbus1-3 += $(call pkgfiles_lib,libdbus-1.so.3)
 OBSOLETED_BY_CSWlibdbus1-3 += CSWlibdbus
 # These are search pathes:
 #   /opt/csw/share:/usr/local/share:/usr/share:
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/libdbus-1.so.3.8.0
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/libdbus-1.so.3.8.0
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libdbus-1.so.3.8.0
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libdbus-1.so.3.8.0
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libdbus-1.so.3.8.0
-CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libdbus-1.so.3.8.0
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/libdbus-1.so.3.8.1
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/libdbus-1.so.3.8.1
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libdbus-1.so.3.8.1
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libdbus-1.so.3.8.1
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libdbus-1.so.3.8.1
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libdbus-1.so.3.8.1
 
 PACKAGES += CSWlibdbus-dev
 SPKG_DESC_CSWlibdbus-dev = Development files for libdbus
@@ -99,10 +95,6 @@ EXTRA_CFLAGS += -D__EXTENSIONS__
 BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
-
-post-patch:
-	cd $(WORKSRC) && PATH=$(prefix)/gnu:$(PATH) ./autogen.sh
-	@$(MAKECOOKIE)
 
 post-merge-all:
 	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
