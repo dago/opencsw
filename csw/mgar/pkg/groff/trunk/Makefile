@@ -1,27 +1,37 @@
 NAME = groff
-VERSION = 1.19
-GARTYPE = v1
-CATEGORIES = utils
+VERSION = 1.22.2
 
-DESCRIPTION = front end for the groff document formatting system
-define BLURB
-    groff is the front end to a ducument formatting system.  Included with GNUs
-    version of groff are the utilities: troff, pic, eqn, tbl, grn, refer, -man,
-    -mdoc, and -ms; drivers for the PostScript, TeX dvi format, HP LaserJet 4
-    printers, Canon CAPSL printers, HTML format (still alpha), and typewriter-
-    like devices.  Also included is a modified version fo the Berkeley -me 
-    macros, an enhanced version of the X11 xditview previewer, and an 
-    implimentation of the -mm macros contributed by Joergen Haegg (jg@axis.se).
+DESCRIPTION = Front end for the groff document formatting system(jg@axis.se).
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(VENDOR_URL = http://www.gnu.org/software/groff/groff.html
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES += CSWgroff
+SPKG_DESC_CSWgroff = GNU roff/troff/nroff
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWgroff += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgroff += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWgroff += CSWperl
 
-INSTALL_OVERRIDE_DIRS = bindir datadir
+# I am not sure if we really need this
+RUNTIME_DEP_PKGS_CSWgroff += CSWpsutils
+CHECKPKG_OVERRIDES_CSWgroff += surplus-dependency|CSWpsutils
+
+# Mostly harmless
+CHECKPKG_OVERRIDES_CSWgroff += file-with-bad-content
+
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset\.alias
+
+GARCOMPILER = GNU
+
+BUILD64 = 1
+ISAEXEC = 1
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --with-appresdir=$(libdir)/X11/app-defaults
 
 include gar/category.mk
