@@ -31,7 +31,9 @@ RUNTIME_DEP_PKGS_CSWlibjasper1 += CSWlibjpeg7
 PACKAGES += CSWlibjasper-dev
 SPKG_DESC_CSWlibjasper-dev = Development files for libjasper.so.1
 PKGFILES_CSWlibjasper-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibjasper-dev += $(docdir)/libjasper_dev/.*
 RUNTIME_DEP_PKGS_CSWlibjasper-dev += CSWlibjasper1
+OBSOLETED_BY_CSWlibjasper-dev += CSWjasperdocs
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -42,3 +44,7 @@ CONFIGURE_ARGS += --enable-shared
 
 include gar/category.mk
 
+post-install:
+	ginstall -d $(DESTDIR)$(docdir)/libjasper_dev
+	ginstall -m 0644 $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/libjasper_dev
+	@$(MAKECOOKIE)
