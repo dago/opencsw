@@ -1,6 +1,6 @@
 
 NAME = samba
-VERSION = 4.0.3
+VERSION = 4.0.6
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -306,10 +306,7 @@ CONFIGURE_ARGS += --with-statedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-cachedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-piddir=$(SMBLOCKDIR)
 
-CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDIR)
-
-CONFIGURE_ARGS-64 +=  --disable-cups
-CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDI += --enable-cupsGS-$(MEMORYMODEL))
 
 # Can't use fdatasync atm do t#CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
 #CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
