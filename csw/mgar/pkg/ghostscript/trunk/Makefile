@@ -17,15 +17,17 @@ SPKG_SOURCEURL = http://www.ghostscript.com
 LICENSE = LICENSE
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=
-UPST# PATCHFILES += 0001-Support-libjpeg7.patch
-#PATCHFILES += 0002-Rearrange-compiler-flags.patch
-#PATCHFILES += 0003-Change-gcc-flags-to-sun.patch
-## PATCHFILES += 0004-PLATFORM-is-used-by-GAR.patch
-#PATCHFILES += 0005-Fix-pathes-according-to-old-package.patch
-## PATCHFILES += 0006-Fix-dynamic-link-flag.patch
-#PATCHFILES += 0007-libidn-needs-L-opt-csw-lib.patch
-#opt-csw-lib.patch
-PATCHFILES += 0008-Wrong-place-inPACKAGES += CSWghostscript
+UPST Many more missing
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibtiff-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWcups-dev
+BUILD_DEP_PKGS += CSWlibjbig2dec-dev
+BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWlibjpeg-dev
+BUILD_DEP_PKGS += CSWlibpaper-dev
+BUILD_DEP_PKGS += CSWlibcairo2inPACKAGES += CSWghostscript
 SPKG_DESC_CSWghostscript = PostScript and PDF interpreter
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgs9
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibpng15-15
@@ -89,12 +91,7 @@ ISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
 CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
-
-# There is no 64 bit cups ATM, see
-#   https://www.opencsw.org/mantis/view.php?id=5079
-CONFIGURE_ARGS-32 += --enable-cups
-CONFIGURE_ARGS-64 += --disable-cups
-CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+CONFIGURE_ARGS += --enable-cups
 
 # pentium_pro does not have SSE2 and the detection does not work
 CONFIGURE_ARGS-32-i386 += --disable-sse2
