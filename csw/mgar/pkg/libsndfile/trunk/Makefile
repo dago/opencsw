@@ -37,7 +37,7 @@ PATCHFILES = 0001-Add-lrintf-workaround-to-regtest.patch
 PATCHFILES += 0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
 PATCHFILES += 0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
 PATCHFILES += 0004-Add-branch-for-inttypes.h.patch
-# PATCHFILES += 0005-Test-for-unsigned-or-test-will-fail.patch
+# PATCHFILES += 0005-Test-for-unsigned-or-testwill-fail.patch
 
 VENDOR_URL = http://www.mega-nerd.com/libsndfile/
 
@@ -49,12 +49,8 @@ BUILD_DEP_PKGS += CSWlibvorbis-dev
 PACKAGES += CSWlibsndfile-utils
 CATALOGNAME_CSWlibsndfile-utils = libsndfile_utils
 SPKG_DESC_CSWlibsndfile-utils = Tools for reading and writing files containing sampled sound
-RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibflac8
-RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibsndfile1
-RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWlibsndfilsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibsndfile1 CSWlibvorbisenc2
 OBSOLETED_BY_CSWlibsndfile-utils = CSWlibsndfile
 
 PACKAGES += CSWlibsndfile1
@@ -76,11 +72,11 @@ RUNTIME_DEP_PKGS_CSWlibsndfile-dev += CSWlibsndfile1
 BUILD64_LIBS_ONLY = 1
 
 # Relocate docs to standard location
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(prefix)/share/doc/$(NAME),'
-
-# These are all examples
-CHECKPKG_OVERRIDES_CSWlibsndfile-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libsndfile/html/FAQ.html
-CHECKPKG_OVERRIDES_CSWlibsndfile-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libsndfile/html/octave.html
-CHECKPKG_OVERRIDES_CSWlibsndfile-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libsndfile/html/pkgconfig.html
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(prefix)/share/One of the tests is buggy and segfaults
+SKIPTEST = 1
 
 include gar/category.mk
+
+# Solaris sed will make test fail
+PATH := /opt/csw/gnu:$(PATH)
+
