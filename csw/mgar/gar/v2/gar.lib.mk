@@ -31,9 +31,9 @@ GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
 # add these 'dynamic script' targets to our fetch list
 DYNURLS := $(foreach DYN,$(DYNSCRIPTS),dynscr://$(DYN))
 
-$(foreach M,$(MASTER_SITES),$(if $(filter %/,$M),,$(error MASTER_SITES must contain only URLs ending in a / wheres this did not: $M)))
+$(foreach M,$(MASTER_SITES),$(if $(findstring $(GITHUB_HOST),$(M)),,$(if $(filter %/,$M),,$(error MASTER_SITES must contain only URLs ending in a / wheres this did not: $M))))
 
-URLS := $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES))) $(DYNURLS)
+URLS := $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(if $(findstring $(GITHUB_HOST),$(SITE)),$(SITE),$(addprefix $(SITE),$(DISTFILES)))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(if $(findstring $(GITHUB_HOST),$(SITE)),$(SITE),$(addprefix $(SITE),$(ALLFILES_PATCHFILES)))) $(DYNURLS)
 
 define gitsubst
 $(subst git-git,git,$(if $(findstring $(1)://,$(2)),$(patsubst $(1)%,git-$(1)%,$(call URLSTRIP,$(2)))))
@@ -50,14 +50,18 @@ endif
 # 1) we have to strip the colon from the URLs
 # 2) the download is very costly with bigger Makefiles as they will be
 #    re-evaluated for every URL (nested gmake invocation, room for improvement)
-$(DOWNLOADDIR)/%: _FLIST=$(filter %/$*,$(URLS))
+$(DOWNLOADDIR)/%: _FLIST=$(filter %/$*,$(URLS)) $(foreach URL,$(URLS),$(if $(findstring $(GITHUB_HOST),$(URL)),$(URL),))
 $(DOWNLOADDIR)/%:  
 	$(if $(_FLIST),,$(error INTERNAL ERROR: The file $* is requested but not in the list of generated URLs))
 	@if test -f $(COOKIEDIR)/checksum-$*; then : ; else \
 		echo " ==> Grabbing $@"; \
-		( for i in $(filter %/$*,$(URLS)); do  \
+		( for i in $(filter %/$*,$(URLS)) $(foreach URL,$(URLS),$(if $(findstring $(GITHUB_HOST),$(URL)),$(URL),)); do  \
 			echo " 	==> Trying $$i"; \
 			$(MAKE) -s `echo $$i | tr -d :` || continue; \
+			case $$i in \
+				*$(GITHUB_HOST)*) \
+				mv $(PARTIALDIR)/$(GITHUB_BRANCH) $(PARTIALDIR)/$(DISTNAME)$(GITHUB_BALL_EXT) ;; \
+			esac; \
 			mv $(PARTIALDIR)/$* $@; \
 			break; \
 		done; ) 2>&1 | grep -v '^$(MAKE)'; \

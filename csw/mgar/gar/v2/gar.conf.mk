@@ -760,6 +760,21 @@ SF_MIRROR    = $(firstword $(SF_MIRRORS))
 SF_PROJECT_SHOWFILE ?= http://sourceforge.net/project/showfiles.php?group_id
 UPSTREAM_USE_SF	?= 0
 
+# Git Hub (only if GIHUB_USER variable is defined)
+# see http://developer.github.com/v3/repos/contents/#get-archive-link
+# and https://help.github.com/articles/downloading-files-from-the-command-line
+GITHUB_HOST		=	api.github.com
+ifdef GITHUB_USER
+GITHUB_PROJECT	?=	$(NAME)
+GITHUB_BALL		?=	tar
+GITHUB_BRANCH	?=	master
+GITHUB_MIRROR	?=	https://$(GITHUB_HOST)/repos/$(GITHUB_USER)/$(GITHUB_PROJECT)/$(GITHUB_BALL)ball/$(GITHUB_BRANCH)
+GITHUB_BALL_EXT	:=	.$(GITHUB_BALL)
+ifeq ($(GITHUB_BALL),tar)
+GITHUB_BALL_EXT	:=	$(GITHUB_BALL_EXT).gz
+endif
+endif
+
 # Google Code
 GOOGLE_PROJECT ?= $(NAME)
 GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
