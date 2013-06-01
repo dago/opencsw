@@ -23,13 +23,16 @@ EXPANDVARS += smb.conf
 DISTFILES += smb.conf
 
 # This is taken from the old Samba package
-DISTFILES += cswkrb5.conf
+DISTFILESGARCOMPILER=SOS12U3ES += cswkrb5.conf
 
 #What needs to be fixed:
 # Split libs and packages
 
 BUILD_DEP_PKGS +=BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
+BUILD_DEP_PKGS += CSWcups-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibreadline-dev
 = CSWlibtalloc-dev
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -44,13 +47,14 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibfam0
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWsamba += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWsamba += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWsamba += Can/man8/swat.8
+RUNTIME_DEP_PKGS_readline6
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibwbclient0
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1+= Can/man8/swat.8
 
 # Make one unified package for now
 OBSOLETED_BY_CSWsamba += CSWsambacommon
@@ -71,24 +75,14 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWsambreadline6+= CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtdb1
 OBSOLETED_BY_CSWsamba-client += CSWsambaclient
 CATALOGNAME_CSWsambaclient = saan1/smbclient.1
-
-#PACKAGES += CSWsambacommon
-SPKG_DESC_CSWsambacommon = Shared support files for samba
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWsasl
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWreadline
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWlibpopt
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWlibnet
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWiconv
-RUNTIME_DEP_PKGS_CSWsambacommon += CSWggettext
 
 #PACKAGES += CSWsambadoc
 SPKG_DESC_CSWsambadoc = Samba documentation
@@ -112,19 +106,6 @@ RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibtdb1
 OBSOLETED_BY_CSWlibsmbclient0 += CSWsambalib
 CATALOGNAME_CSWsambalib = samba_lib_stub
 
-PACKAGES += CSWlibnetapi0
-PKGFILES_CSWlibnetapi0 += $(call pkgfiles_lib,libnetapi.so.0)
-SPKG_DESC_CSWlibnetapi0 += Samba client library, libnetapi.so.0
-
-PACKAGES += CSWlibsmbsharemodes0
-PKGFILES_CSWlibsmbsharemodes0 += $(call pkgfiles_lib,libsmbsharemodes.so.0)
-SPKG_DESC_CSWlibsmbsharemodes0 += Samba client library, libsmbsharemodes.so.0
-
-PACKAGES += CSWlibtdb1
-PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
-SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.1
-RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1
-
 PACKAGES += CSWlibwbclient0
 PKGFILES_CSWlibwbclient0 += $(call pkgfiles_lib,libwbclient.so.0)
 SPKG_DESC_CSWlibwbclient0 += Samba client library, libwbclient.so.0
@@ -134,15 +115,14 @@ PKGFILES_CSWlibnetapi0 += $(call pkgfiles_lib,libnetapi.so.0)
 SPKG_DESC_CSWlibnetapi0 += Samba client library, libnetapi.so.0
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtdb1
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWlibnetapi0 +RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibwbclient0
+RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtdb1ry, libnetapi.so.0
 
 PACKAGES += CSWlibsmbsharemodes0
 PKGFILES_CSWlibsmbsharemodes0 += $(call pkgfiles_lib,libsmbsharemodes.so.0)
@@ -250,22 +230,19 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibz1
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb1
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibnss-winbind1
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CSWlibnss-winbind1
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawb
 CATALOGNAME_CSWsambawbn/man8/winbindd.8
-CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CSWlibnss-winbind1
-
-EXTRA_CFLAGS = -lintl
-EXTRA_LDFLAGS = -lintl
+CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CS# Needed as the configure script doesn't add it
+EXTRA_LINKER_FLAGS += -lintl -z ignore -z lazyloadA_LDFLAGS = -lintl
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -278,9 +255,7 @@ SMBCONFIGDIR = $(sysconfdir)/samba
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes
-CONFIGURE_ARGS += --enable-static=no
-#CONFIGURE_ARGS += --enable-socket-wrapper
-#CONFIGURE_ARGS += --enable-nss-wrapper
+CONFIGURE_ARGS += -nable-nss-wrapper
 CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
@@ -292,7 +267,7 @@ CONFIGURE_ARGS += --with-ads
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-automount
 CONFIGURE_ARGS += --with-dnsupdate=no
-# Do not set krb5 this is handeled in gar. Otherwise 64bit will not build
+# Do not setkrb5 this is handeled in gar. Otherwise 64bit will not build
 #CONFIGURE_ARGS += --with-krb5=$(prefix)
 CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
 CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
@@ -301,15 +276,11 @@ CONFIGURE_ARGS += --with-statedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-cachedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-piddir=$(SMBLOCKDIR)
 
-CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDIR)
-
-CONFIGURE_ARGS-64 +=  --disable-cups
-CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
-
-# Can't use fdatasync atm do to linker problems
+CONFIGURE_ARGS += --with-logfileb# Can't use fdatasync atm do to linker problems
+# Symbols are not in the right libcto linker problems
 CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
 CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
-CONFIGURE_ARGS += ac_cv_lib_ext_rt_fdatasync=no
+CONFIGURE_ARGS += ac_cv_lib_extt_fdatasync=no
 
 
 
