@@ -80,10 +80,13 @@ CHECKPKG_OVERRIDES_CSWpuppet3 	    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWpuppet3 	    += bad-location-of-file|file=/etc/puppet
 CHECKPKG_OVERRIDES_CSWpuppet3 	    += bad-location-of-file|file=/etc/puppet/README.CSW
 CHECKPKG_OVERRIDES_CSWpuppet3 	    += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
+CHECKPKG_OVERRIDES_CSWpuppet3 		+= bad-location-of-file|file=/var/lib
+CHECKPKG_OVERRIDES_CSWpuppet3 		+= bad-location-of-file|file=/var/lib/puppet
 # yes, yes, we know it conflicts with puppet{,.asmter} - that's the point of
 # INCOMPATIBLE_PKGS
 CHECKPKG_OVERRIDES_CSWpuppet3 		+= file-collision
 CHECKPKG_OVERRIDES_CSWpuppetmaster3	+= file-collision
+
 
 include gar/category.mk
 
