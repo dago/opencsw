@@ -25,24 +25,27 @@ PATCHFILES += 0001-Use-opt-csw-bin-bash-for-tests.patch
 
 BUILD_DEP_PKGS = CSWbash
 
-PACKAGES += CSWlibcloog-isl2
-PKGFILES_CSWlibcloog-isl2 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.2(\.\d+)*)
-SPKG_DESC_CSWlibcloog-isl2 += $(DESCRIPTION), libcloog-isl.so.2
-RUNTIME_DEP_PKGS_CSWlibcloog-isl2 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibcloog-isl2 += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibcloog-isl2 += CSWlibisl7
-PACKAGES += CSWlibisl7
-PKGFILES_CSWlibisl7 += $(call baseisadirs,$(libdir),libisl\.so\.7(\.\d+)*)
-SPKG_DESC_CSWlibisl7 += $(DESCRIPTION), libisl.so.7
-RUNTIME_DEP_PKGS_CSWlibisl7 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibisl7 += CSWlibgmp10
+PACKAGES += CSWlibcloog-isl4
+PKGFILES_CSWlibcloog-isl4 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibcloog-isl4 += $(DESCRIPTION), libcloog-isl.so.4
+RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibisl7
+
+PACKAGES += CSWlibisl10
+PKGFILES_CSWlibisl10 += $(call baseisadirs,$(libdir),libisl\.so\.10(\.\d+)*)
+SPKG_DESC_CSWlibisl10 += $(DESCRIPTION), libisl.so.10
+RUNTIME_DEP_PKGS_CSWlibisl10 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibisl10 += CSWlibgmp10
 
 PACKAGES += CSWcloog-dev
 SPKG_DESC_CSWcloog-dev += $(DESCRIPTION), development files
-RUNTIME_DEP_PKGS_CSWcloog-dev += CSWlibcloog-isl2
+RUNTIME_DEP_PKGS_CSWcloog-dev += CSWlibcloog-isl4
 RUNTIME_DEP_PKGS_CSWcloog-dev += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcloog-dev += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWcloog-dev += CSWlibisl7
+RUNTIME_DEP_PKGS_CSWcloog-dev += CSWlibisl10
+
+CHECKPKG_OVERRIDES_CSWcloog-dev += missing-dependency|CSWpython
 
 # The failed test was:
 # - min(n + c0 - (n + c0 + 2) / 3, c0); c1 += 2)
