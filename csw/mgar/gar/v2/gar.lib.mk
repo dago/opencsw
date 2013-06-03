@@ -60,9 +60,10 @@ $(DOWNLOADDIR)/%:
 			$(MAKE) -s `echo $$i | tr -d :` || continue; \
 			case $$i in \
 				*$(GITHUB_HOST)*) \
-				mv $(PARTIALDIR)/$(GITHUB_BRANCH) $(PARTIALDIR)/$(DISTNAME)$(GITHUB_BALL_EXT) ;; \
+					mv $(PARTIALDIR)/$(GITHUB_REFERENCE) $@ ;; \
+				*) \
+					mv $(PARTIALDIR)/$* $@ ;; \
 			esac; \
-			mv $(PARTIALDIR)/$* $@; \
 			break; \
 		done; ) 2>&1 | grep -v '^$(MAKE)'; \
 		if test -r $@ ; then : ; else \
