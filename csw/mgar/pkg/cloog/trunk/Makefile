@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cloog
-VERSION = 0.16.3
+VERSION = 0.18.0
 GARTYPE = v2
 DESCRIPTION = Code Generator in the Polyhedral Model
 define BLURB
@@ -17,7 +17,9 @@ GARCOMPILER = GNU
 
 LICENSE = $(FILEDIR)/COPYING
 
-BUILD_DEP_PKGS = CSWlibppl-dev
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+
+# BUILD_DEP_PKGS = CSWlibppl-dev
 
 PACKAGES += CSWlibcloog-isl2
 PKGFILES_CSWlibcloog-isl2 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.2(\.\d+)*)
@@ -25,7 +27,6 @@ SPKG_DESC_CSWlibcloog-isl2 += $(DESCRIPTION), libcloog-isl.so.2
 RUNTIME_DEP_PKGS_CSWlibcloog-isl2 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibcloog-isl2 += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWlibcloog-isl2 += CSWlibisl7
-
 PACKAGES += CSWlibisl7
 PKGFILES_CSWlibisl7 += $(call baseisadirs,$(libdir),libisl\.so\.7(\.\d+)*)
 SPKG_DESC_CSWlibisl7 += $(DESCRIPTION), libisl.so.7
