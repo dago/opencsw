@@ -23,9 +23,9 @@ LICENSE = docs/LICENSE.TXT
 VENDOR_URL = http://www.freetype.oNIMOSSlibfreetype6
 SPKG_DESC_NIMOSSlibfreetype6 = A free and portable TrueType font rendering engine, libfreetype.so.6
 PKGFILES_NIMOSSlibfreetype6 += $(call pkgfiles_lib,libfreetype.so.6)
-RUNTIME_DEP_PKGS_NIMOSSlibfreetype6 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_NIMOSSlibfreetype6 += CSWlibz1
-OBSOLETED_BY_NIMOSSlibfreetype6 += CSWftype2
+RUNTIME_DEP_PKGS_NIMOSSlibfreetype6 += NIMOSSlibbz2-1-0
+RUNTIME_DEP_PKGS_NIMOSSlibfreetype6 += NIMOSSlibz1
+OBSOLETED_BY_NIMOSSlibfreetype6 += NIMOSSftype2
 CATALOGNAME_NIMOSSftype2 = freetype2_stub
 
 # This is inside a comment
@@ -34,7 +34,7 @@ CHECKPKG_OVERRIDES_NIMOSSlibfreetype-dev += file-with-bad-content|/usr/local|roo
 PACKAGES += NIMOSSlibfreetype-dev
 SPKG_DESC_NIMOSSlibfreetype-dev = Development files for libfreetype.so.6
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_NIMOSSTIME_DEP_PKGS_CSWlibfreetype-dev += CSWlibfreetype6
+RUNTIME_DEP_PKGS_NIMOSSTIME_DEP_PKGS_CSWliNIMOSSeetype-dev += CSWlibfreetype6
 
 GNUMAKE = gmake
 EXTRA_CONFIGURE_EXPORTS = GNUMAKE
