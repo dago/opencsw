@@ -1,0 +1,22 @@
+From 1a5ed77074df4050f72c282d1544ca5a9367bbea Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 3 Jun 2013 18:51:21 +0200
+Subject: [PATCH] Use /opt/csw/bin/bash for tests
+
+---
+ isl/codegen_test.sh.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/isl/codegen_test.sh.in b/isl/codegen_test.sh.in
+index 4a4852d..637b728 100644
+--- a/isl/codegen_test.sh.in
++++ b/isl/codegen_test.sh.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ 
+ EXEEXT=@EXEEXT@
+ srcdir=@srcdir@
+-- 
+1.7.10.3
+
