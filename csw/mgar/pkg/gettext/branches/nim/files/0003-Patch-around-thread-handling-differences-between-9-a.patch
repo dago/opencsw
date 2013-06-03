@@ -1,0 +1,209 @@
+From 7b7e1cd6f404e2f397192a32c305039be558ee42 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 31 Jan 2011 04:37:26 +0100
+Subject: [PATCH] Patch around thread handling differences between 9 and 10
+
+Apply Peter Felecan's patches that avoid some issues with thread
+handling.  Solaris 10 handles things properly where 9 didn't.  If
+built on 9 but run on 10, change behaviours to work correctly.
+
+Issue detailed here:
+http://lists.opencsw.org/pipermail/maintainers/2011-January/013668.html
+
+Upstream bug filed here:
+http://savannah.gnu.org/bugs/?32087
+
+(This is two original patches merged to one.)
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ gettext-runtime/intl/threadlib.c                |   36 +++++++++++++++++++++++
+ gettext-runtime/m4/threadlib.m4                 |    4 +-
+ gettext-tools/gnulib-lib/glthread/threadlib.c   |   36 +++++++++++++++++++++++
+ gettext-tools/libgettextpo/glthread/threadlib.c |   36 +++++++++++++++++++++++
+ 4 files changed, 110 insertions(+), 2 deletions(-)
+
+diff --git a/gettext-runtime/intl/threadlib.c b/gettext-runtime/intl/threadlib.c
+index cb4fe4f..04017e1 100644
+--- a/gettext-runtime/intl/threadlib.c
++++ b/gettext-runtime/intl/threadlib.c
+@@ -30,6 +30,9 @@
+ # include <stdlib.h>
+ 
+ # if PTHREAD_IN_USE_DETECTION_HARD
++#include <strings.h>
++#include <errno.h>
++#include <sys/utsname.h>
+ 
+ /* The function to be executed by a dummy thread.  */
+ static void *
+@@ -44,6 +47,39 @@ glthread_in_use (void)
+   static int tested;
+   static int result; /* 1: linked with -lpthread, 0: only with libc */
+ 
++  /* dynamic detection for running on Solaris 5.10 or higher; starting
++   * with Solaris 10 the libc resolves correctly the POSIX threads
++   * symbols. */
++  if (!tested)
++  {
++	  struct utsname un;
++	  if(uname(&un) != -1)
++	  {
++		  if(strcmp(un.sysname, "SunOS") == 0)
++		  {
++			  char* dot = strchr(un.release, '.');
++			  errno = 0;
++			  if(dot != (char*)0)
++			  {
++				  int minor = atoi(dot + 1);
++				  *dot = '\0';
++				  if(!errno)
++				  {
++					  int major = atoi(un.release);
++					  if(!errno)
++					  {
++						  if(major >= 5 && minor >= 10)
++						  {
++							  tested = 1;
++							  result = 1;
++						  }
++					  }
++				  }
++			  }
++		  }
++	  }
++  }
++  
+   if (!tested)
+     {
+       pthread_t thread;
+diff --git a/gettext-runtime/m4/threadlib.m4 b/gettext-runtime/m4/threadlib.m4
+index 05cc4ff..b2b801b 100644
+--- a/gettext-runtime/m4/threadlib.m4
++++ b/gettext-runtime/m4/threadlib.m4
+@@ -159,12 +159,12 @@ int main ()
+           # need to link with libpthread in order to create multiple threads.
+           AC_CHECK_LIB([pthread], [pthread_kill],
+             [LIBMULTITHREAD=-lpthread LTLIBMULTITHREAD=-lpthread
+-             # On Solaris and HP-UX, most pthread functions exist also in libc.
++             # On Solaris < 2.10 and HP-UX, most pthread functions exist also in libc.
+              # Therefore pthread_in_use() needs to actually try to create a
+              # thread: pthread_create from libc will fail, whereas
+              # pthread_create will actually create a thread.
+              case "$host_os" in
+-               solaris* | hpux*)
++               solaris2.[1-9] | solaris2.[1-9].* | hpux*)
+                  AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], [1],
+                    [Define if the pthread_in_use() detection is hard.])
+              esac
+diff --git a/gettext-tools/gnulib-lib/glthread/threadlib.c b/gettext-tools/gnulib-lib/glthread/threadlib.c
+index 292e6a5..2abc79d 100644
+--- a/gettext-tools/gnulib-lib/glthread/threadlib.c
++++ b/gettext-tools/gnulib-lib/glthread/threadlib.c
+@@ -29,6 +29,9 @@
+ # include <stdlib.h>
+ 
+ # if PTHREAD_IN_USE_DETECTION_HARD
++#include <strings.h>
++#include <errno.h>
++#include <sys/utsname.h>
+ 
+ /* The function to be executed by a dummy thread.  */
+ static void *
+@@ -43,6 +46,39 @@ glthread_in_use (void)
+   static int tested;
+   static int result; /* 1: linked with -lpthread, 0: only with libc */
+ 
++  /* dynamic detection for running on Solaris 5.10 or higher; starting
++   * with Solaris 10 the libc resolves correctly the POSIX threads
++   * symbols. */
++  if (!tested)
++  {
++	  struct utsname un;
++	  if(uname(&un) != -1)
++	  {
++		  if(strcmp(un.sysname, "SunOS") == 0)
++		  {
++			  char* dot = strchr(un.release, '.');
++			  errno = 0;
++			  if(dot != (char*)0)
++			  {
++				  int minor = atoi(dot + 1);
++				  *dot = '\0';
++				  if(!errno)
++				  {
++					  int major = atoi(un.release);
++					  if(!errno)
++					  {
++						  if(major >= 5 && minor >= 10)
++						  {
++							  tested = 1;
++							  result = 1;
++						  }
++					  }
++				  }
++			  }
++		  }
++	  }
++  }
++  
+   if (!tested)
+     {
+       pthread_t thread;
+diff --git a/gettext-tools/libgettextpo/glthread/threadlib.c b/gettext-tools/libgettextpo/glthread/threadlib.c
+index 292e6a5..2abc79d 100644
+--- a/gettext-tools/libgettextpo/glthread/threadlib.c
++++ b/gettext-tools/libgettextpo/glthread/threadlib.c
+@@ -29,6 +29,9 @@
+ # include <stdlib.h>
+ 
+ # if PTHREAD_IN_USE_DETECTION_HARD
++#include <strings.h>
++#include <errno.h>
++#include <sys/utsname.h>
+ 
+ /* The function to be executed by a dummy thread.  */
+ static void *
+@@ -43,6 +46,39 @@ glthread_in_use (void)
+   static int tested;
+   static int result; /* 1: linked with -lpthread, 0: only with libc */
+ 
++  /* dynamic detection for running on Solaris 5.10 or higher; starting
++   * with Solaris 10 the libc resolves correctly the POSIX threads
++   * symbols. */
++  if (!tested)
++  {
++	  struct utsname un;
++	  if(uname(&un) != -1)
++	  {
++		  if(strcmp(un.sysname, "SunOS") == 0)
++		  {
++			  char* dot = strchr(un.release, '.');
++			  errno = 0;
++			  if(dot != (char*)0)
++			  {
++				  int minor = atoi(dot + 1);
++				  *dot = '\0';
++				  if(!errno)
++				  {
++					  int major = atoi(un.release);
++					  if(!errno)
++					  {
++						  if(major >= 5 && minor >= 10)
++						  {
++							  tested = 1;
++							  result = 1;
++						  }
++					  }
++				  }
++			  }
++		  }
++	  }
++  }
++  
+   if (!tested)
+     {
+       pthread_t thread;
+-- 
+1.7.3.2
+

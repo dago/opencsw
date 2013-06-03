@@ -1,0 +1,32 @@
+From f07d0231074a94edc074f4732d4fd979faad3829 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 30 Aug 2010 02:48:17 +0200
+Subject: [PATCH] Update ltmain.sh to prevent libtool stripping runpath options
+
+Libtool was stripping some or all of the -xnorunpath and -norunpath
+options at various points during the compilation of libasprintf.
+This prevents that from happening so we don't get things like:
+/opt/SUNWspro/lib/rw7:/opt/SUNWspro/lib/v8:/opt/SUNWspro/lib in the
+R{,UN}PATH variables of the library header.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ build-aux/ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/build-aux/ltmain.sh b/build-aux/ltmain.sh
+index 0dd6f3a..5cab855 100644
+--- a/build-aux/ltmain.sh
++++ b/build-aux/ltmain.sh
+@@ -4901,7 +4901,7 @@ func_mode_link ()
+       # -p, -pg, --coverage, -fprofile-* pass through profiling flag for GCC
+       # @file GCC response files
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-xnorunpath|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.1
+
