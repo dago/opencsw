@@ -19,7 +19,11 @@ LICENSE = $(FILEDIR)/COPYING
 
 PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 
+PATCHFILES += 0001-Use-opt-csw-bin-bash-for-tests.patch
+
 # BUILD_DEP_PKGS = CSWlibppl-dev
+
+BUILD_DEP_PKGS = CSWbash
 
 PACKAGES += CSWlibcloog-isl2
 PKGFILES_CSWlibcloog-isl2 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.2(\.\d+)*)
