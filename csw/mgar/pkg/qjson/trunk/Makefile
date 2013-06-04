@@ -72,5 +72,5 @@ test-custom:
 	(cd $(WORKSRC)/tests && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
-			$(MAKE) ARGS="--verbose --interactive-debug-mode 1" test)
+			$(MAKE) test)
 	@$(MAKECOOKIE)
