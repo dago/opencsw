@@ -55,6 +55,7 @@ PKGFILES_CSWqjson-dev			+=	$(PKGFILES_DEVEL)
 PKGFILES_CSWqjson-dev			+=	/opt/csw/lib/cmake/qjson/.*
 RUNTIME_DEP_PKGS_CSWqjson-dev	+=	CSWlibqjson1
 ARCHALL_CSWqjson-dev			=	1
+CHECKPKG_OVERRIDES_CSWqjson-dev	+=	archall-devel-package
 
 include gar/category.mk
 
