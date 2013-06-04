@@ -1,0 +1,26 @@
+From 0a3bc2e68033abf70d9d46f205d66b707b0c1cb1 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 4 Jun 2013 17:31:06 +0200
+Subject: [PATCH] Inhibit GUI for tests
+
+---
+ CMakeLists.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index afdb581..3625cdb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,5 +1,9 @@
+ PROJECT(qjson)
+ 
++# this is necessary to run the tests without an X server available;
++# anyway, the library is not GUI oriented
++SET( QT_DONT_USE_QTGUI TRUE )
++
+ set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII" )
+ 
+ # Force cmake 2.8.8 in order to have a decent support of Qt5
+-- 
+1.8.1.4
+
