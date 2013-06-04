@@ -39,6 +39,23 @@ CMAKE_ARGS	+=	-DQJSON_BUILD_TESTS=yes
 
 TEST_SCRIPTS	=	custom
 
+PACKAGES						+=	CSWlibqjson1
+CATALOGNAME_CSWlibqjson1		=	libqjson1
+PKGFILES_CSWlibqjson1			+=	$(call baseisadirs,$(libdir),libqjson\.so\.1\.0\.0)
+PKGFILES_CSWlibqjson1			+=	$(call baseisadirs,$(libdir),libqjson\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibqjson1			+=	$(DESCRIPTION), libqjson.so.1
+RUNTIME_DEP_PKGS_CSWlibqjson1	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibqjson1	+=	CSWlibqtcore4
+
+PACKAGES						+=	CSWqjson-dev
+CATALOGNAME_CSWqjson-dev		=	qjson_dev
+SPKG_DESC_CSWqjson-dev			+=	$(DESCRIPTION), development files
+PKGFILES_CSWqjson-dev			+=	/opt/csw/lib/libqjson.so
+PKGFILES_CSWqjson-dev			+=	$(PKGFILES_DEVEL)
+PKGFILES_CSWqjson-dev			+=	/opt/csw/lib/cmake/qjson/.*
+RUNTIME_DEP_PKGS_CSWqjson-dev	+=	CSWlibqjson1
+ARCHALL_CSWqjson-dev			=	1
+
 include gar/category.mk
 
 configure-custom:
