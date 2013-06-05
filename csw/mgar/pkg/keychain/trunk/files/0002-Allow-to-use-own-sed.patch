@@ -1,8 +1,18 @@
---- a/Makefile	2010-01-05 22:40:37.832643496 +0100
-+++ b/Makefile	2010-01-05 23:01:25.428084486 +0100
-@@ -1,19 +1,22 @@
- V:=$(shell /bin/sh keychain.sh --version 2>&1 | \
- 	awk -F'[ ;]' '/^K/{print $$2; exit}')
+From 28bbb7e4d2f64efd28f186c3a7ca7b52b54380f9 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 5 Jun 2013 21:20:37 +0200
+Subject: [PATCH] Allow to use own sed
+
+---
+ Makefile |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 805ae63..00725b9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,8 @@
+ V:=$(shell cat VERSION)
  D:=$(shell date +'%d %b %Y')
 +ifndef SED
 +SED = sed
@@ -10,7 +20,8 @@
  TARBALL_CONTENTS=keychain README.rst ChangeLog COPYING keychain.pod keychain.1 \
  				 keychain.spec
  
- all: keychain.1.gz keychain keychain.spec
+@@ -14,13 +17,13 @@ clean: tmpclean
+ 	rm -rf keychain.1 keychain keychain.spec 
  
  keychain.spec: keychain.spec.in keychain.sh
 -	sed 's/KEYCHAIN_VERSION/$V/' keychain.spec.in > keychain.spec
@@ -18,10 +29,13 @@
  
  keychain.1: keychain.pod keychain.sh
  	pod2man --name=keychain --release=$V \
- 		--center='http://gentoo.org/proj/en/keychain.xml' \
+ 		--center='http://www.funtoo.org' \
  		keychain.pod keychain.1
 -	sed -i.orig -e "s/^'br/.br/" keychain.1
 +	$(SED) -i.orig -e "s/^'br/.br/" keychain.1
  
  keychain.1.gz: keychain.1
  	gzip -9 keychain.1
+-- 
+1.7.10.3
+
