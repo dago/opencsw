@@ -1,0 +1,65 @@
+From 514a5a199b799f240acf9275d54fe8210e0be284 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 5 Jun 2013 12:07:33 +0200
+Subject: [PATCH] strnlen replacement function
+
+---
+ config.h.in                              |  3 +++
+ configure                                | 10 ++++++++++
+ src/libtracker-data/tracker-db-journal.c |  8 ++++++++
+ 3 files changed, 21 insertions(+)
+
+diff --git a/config.h.in b/config.h.in
+index dfdee13..4ee3de5 100644
+--- a/config.h.in
++++ b/config.h.in
+@@ -269,3 +269,6 @@
+ 
+ /* Defined for compilers not supporting __FUNCTION__ */
+ #undef __FUNCTION__
++
++/* Define if we have strnlen */
++#undef HAVE_STRNLEN
+diff --git a/configure b/configure
+index d124120..c3ca95f 100755
+--- a/configure
++++ b/configure
+@@ -17385,6 +17385,16 @@ _ACEOF
+ fi
+ done
+ 
++for ac_func in strnlen
++do :
++  ac_fn_c_check_func "$LINENO" "strnlen" "ac_cv_func_strnlen"
++if test "x$ac_cv_func_strnlen" = xyes; then :
++  cat >>confdefs.h <<_ACEOF
++#define HAVE_STRNLEN 1
++_ACEOF
++
++fi
++done
+ 
+ CFLAGS="$CFLAGS"
+ 
+diff --git a/src/libtracker-data/tracker-db-journal.c b/src/libtracker-data/tracker-db-journal.c
+index a664675..834933a 100644
+--- a/src/libtracker-data/tracker-db-journal.c
++++ b/src/libtracker-data/tracker-db-journal.c
+@@ -120,6 +120,14 @@ static JournalWriter ontology_writer = {0};
+ 
+ static TransactionFormat current_transaction_format;
+ 
++#ifndef HAVE_STRNLEN
++size_t strnlen (const char *str, size_t max)
++{
++    const char *end = memchr (str, 0, max);
++    return end ? (size_t)(end - str) : max;
++}
++#endif
++
+ #if GLIB_CHECK_VERSION (2, 24, 2)
+ static gboolean tracker_db_journal_rotate (GError **error);
+ #endif /* GLib check */
+-- 
+1.8.1.4
+
