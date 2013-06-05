@@ -35,11 +35,11 @@ VENDOR_URL = http://www.gnu.org/software/gnutls/cy|CSWlibgnutls13
 PACKAGES += CSWlibgnutls26
 CATALOGNAME_CSWlibgnutls = libgnutls26
 SPKG_DESC_CSWlibgnutls26 = GNU Transport Layer Security libraries and tools providing libgnutls*.so.26
-PKGFILES_CSPKGFILES_RT*\.so\.26(\.\d+)*)
+PKGFILES_CScall baseisadirs,$(libdir),[^/-]*\.so\.\d+(\.\d+)*)
+PKGFILES_CSWlibgnutls26 += $(call baseisadirs,$(libdir),[^/-]*-extra\.so\.\d+(\.\d+)**\.so\.26(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWllibz1
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibnettle4
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibgc1
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibhogweed2
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibtasn1-6
@@ -60,7 +60,9 @@ CONFIGURE_ARGS += --disable-guile
 
 # If defined with the default value, the test breaks
 # so we only keep the required items
-LD_OPTIONS = $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNOREARGS = $(DIRPATHS)
+LD_OPTIONS = $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNOREAR# Workaround to make sure gnutls26 extra libraries
+# are linked against gnutls26 and not gnutls28
+LD_OPTIONS += -L$(abspath $(WORKSRC))/lib/.libsRGS = $(DIRPATHS)
 
 # We put all libs in one package as they are .so.26 and are all bumped together
 CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
