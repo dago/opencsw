@@ -1,0 +1,28 @@
+GCC-4 fix:
+
+mng.c: In function 'copyline':
+mng.c:233: error: invalid lvalue in increment
+mng.c:270: error: invalid lvalue in increment
+
+--- libmng-1.0.10/contrib/gcc/fbmngplay/mng.c.orig	2003-12-07 10:45:15.000000000 +0100
++++ libmng-1.0.10/contrib/gcc/fbmngplay/mng.c	2007-07-16 19:47:18.272161096 +0200
+@@ -230,7 +230,8 @@
+ 		a = a * mymng->alpha / 100;
+ 		switch (mymng->fbbpp) {
+ 		case 16:
+-			input = *((unsigned short *) background)++;
++			input = *(unsigned short *)background;
++			background += 2;
+ 			br = (input >> 8) & 0xf8;
+ 			bg = (input >> 3) & 0xfc;
+ 			bb = input << 3 & 0xff;
+@@ -267,7 +268,8 @@
+ 			b >>= 3;
+ 
+ 			output = (r << 11) | (g << 5) | b;
+-			*((unsigned short *) dest)++ = output;
++			*(unsigned short *)dest = output;
++			dest += 2;
+ 			break;
+ 		case 24:
+ 			*dest++ = b;
