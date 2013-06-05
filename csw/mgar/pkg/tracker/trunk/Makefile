@@ -6,7 +6,7 @@ NAME = tracker
 VERSION = 0.15.2
 GARTYPE = v2
 
-DESCRIPTION = semantic data storage for desktop and mobile devices
+DESCRIPTION = Gnome Tracker, semantic data storage
 define BLURB
   Tracker is a semantic data storage for desktop and mobile devices.
   Tracker uses W3C standards for RDF ontologies using Nepomuk with
@@ -38,54 +38,86 @@ BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWlibuuid-dev
 
-RUNTIME_DEP_PKGS += CSWlibuuid1
-RUNTIME_DEP_PKGS += CSWlibgsf
-RUNTIME_DEP_PKGS += CSWzlib
-RUNTIME_DEP_PKGS += CSWggettext
-RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWgio-fam-backend
-RUNTIME_DEP_PKGS += CSWlibiconv2
-RUNTIME_DEP_PKGS += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS += CSWlibxml2
-RUNTIME_DEP_PKGS += CSWlibz1
-RUNTIME_DEP_PKGS += CSWlibpoppler
-RUNTIME_DEP_PKGS += CSWlibgif4
-RUNTIME_DEP_PKGS += CSWlibjpeg7
-RUNTIME_DEP_PKGS += CSWlibtiff3
-RUNTIME_DEP_PKGS += CSWlibicu46
-RUNTIME_DEP_PKGS += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgsf1-114
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibicui18n51
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibgif4
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-sparql0-16-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-miner0-16-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWtracker
+RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWtracker
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibexif12
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-sparql0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWtracker
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibtracker-sparql0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-miner0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWtracker
+RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-extract0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-sparql0-16-0
 
 PATCHFILES += 0001-Force-linking-with-CC-not-CXX.patch
+PATCHFILES += 0002-strnlen-replacement-function.patch
 PATCHFILES += 0003-Replace-uuid_unparse_lower-with-uuid_unparse.patch
 PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 
 # Packages
-PACKAGES += CSWlibtracker0-16
-PACKAGES += CSWlibtracker-dev
 PACKAGES += CSWtracker
+SPKG_DESC_CSWtracker = $(DESCRIPTION)
 
-# Catalog names
-CATALOGNAME_CSWlibtracker0-16 = libtracker0_16
-CATALOGNAME_CSWlibtracker-dev = libtracker_dev
+PACKAGES += CSWlibtracker-extract0-16-0
+SPKG_DESC_CSWlibtracker-extract0-16-0 += $(DESCRIPTION), libtracker-extract-0.16.so.0
+PKGFILES_CSWlibtracker-extract0-16-0 += $(call baseisadirs,$(libdir),libtracker-extract-0\.16\.so\.0\.1502\.0)
+PKGFILES_CSWlibtracker-extract0-16-0 += $(call baseisadirs,$(libdir),libtracker-extract-0\.16\.so\.0(\.\d+)*)
 
-# Package descriptions
-SPKG_DESC_CSWlibtracker0-16 = Gnome Tracker, libraries
-SPKG_DESC_CSWlibtracker-dev = Gnome Tracker, development files
-SPKG_DESC_CSWtracker        = Gnome Tracker
+PACKAGES += CSWlibtracker-miner0-16-0
+SPKG_DESC_CSWlibtracker-miner0-16-0 += $(DESCRIPTION), libtracker-miner-0.16.so.0
+PKGFILES_CSWlibtracker-miner0-16-0 += $(call baseisadirs,$(libdir),libtracker-miner-0\.16\.so\.0\.1502\.0)
+PKGFILES_CSWlibtracker-miner0-16-0 += $(call baseisadirs,$(libdir),libtracker-miner-0\.16\.so\.0(\.\d+)*)
 
-# Package payload
-PKGFILES_CSWlibtracker0-16 += $(call pkgfiles_lib,libtracker-extract-0.16.so)
-PKGFILES_CSWlibtracker0-16 += $(call pkgfiles_lib,libtracker-miner-0.16.so)
-PKGFILES_CSWlibtracker0-16 += $(call pkgfiles_lib,libtracker-sparql-0.16.so)
-PKGFILES_CSWlibtracker0-16 += $(call baseisadirs,$(libdir),tracker-0\.16/extract-modules/libextract-.*\.so)
-PKGFILES_CSWlibtracker0-16 += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-common\.so.*)
-PKGFILES_CSWlibtracker0-16 += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-data\.so.*)
+PACKAGES += CSWlibtracker-sparql0-16-0
+SPKG_DESC_CSWlibtracker-sparql0-16-0 += $(DESCRIPTION), libtracker-sparql-0.16.so.0
+PKGFILES_CSWlibtracker-sparql0-16-0 += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so\.0\.1502\.0)
+PKGFILES_CSWlibtracker-sparql0-16-0 += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so\.0(\.\d+)*)
 
-PKGFILES_CSWlibtracker-dev += $(PKGFILES_DEVEL)
+PACKAGES += CSWlibtracker0-16-dev
+SPKG_DESC_CSWlibtracker0-16-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibtracker0-16-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibtracker0-16-dev += /opt/csw/lib/libtracker-extract-0.16.so
+PKGFILES_CSWlibtracker0-16-dev += /opt/csw/lib/libtracker-miner-0.16.so
+PKGFILES_CSWlibtracker0-16-dev += /opt/csw/lib/libtracker-sparql-0.16.so
+PKGFILES_CSWlibtracker0-16-dev += /opt/csw/lib/tracker-0.16/libtracker-common.so
+PKGFILES_CSWlibtracker0-16-dev += /opt/csw/lib/tracker-0.16/libtracker-data.so
 
-# Inter-package deps
-RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker0-16
-RUNTIME_DEP_PKGS_CSWtracker        += CSWlibtracker0-16
+
 
 # For gettext
 CONFIGURE_ENV_PATH = /opt/csw/gnu:$(PATH)
