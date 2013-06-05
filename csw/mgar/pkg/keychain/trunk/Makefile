@@ -3,7 +3,7 @@
 # $Header$
 
 NAME = keychain
-VERSION = 2.7.0
+VERSION = 2.7.1
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -19,12 +19,12 @@ define BLURB
   . ~/.keychain/$$HOSTNAME-sh
 endef
 
-MASTER_SITES = http://www.funtoo.org/archive/keychain/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-PATCHFILES += bash.patch
-PATCHFILES += gsed.patch
+MASTER_SITES = http://www.funtoo.org/archive/keychaDISTNAME).tar.bz2
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+
+PATCHFILES += bash.patch
+PATCHFILES += 0002-Allow-to-use-own-sed.patch(?:\.\d+)*).tar.bz2
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
@@ -33,7 +33,7 @@ INSTALL_SCRIPTS = keychain
 TEST_SCRIPTS =
 
 RUNTIME_DEP_PKGS = CSWbash
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWperl
+BUILD_DEP_PKGS = $(RUNTIME_CHECKPKG_OVERRIDES_CSWkeychain += surplus-dependency|CSWbashE_DEP_PKGS) CSWperl
 
 include gar/category.mk
 
@@ -50,5 +50,4 @@ install-keychain:
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall $(WORKSRC)/README.rst $(DESTDIR)$(docdir)/$(NAME)
 	ginstall $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(NAME)
-	ginstall $(WORKSRC)/keychain.pod $(DESTDIR)$(docdir)/$(NAME)
-	@$(MAKECOOKIE)
+	ginstall $(WORKSRC)/keychain.pod $(DESTDIR)$(docdir)/$(NAM
