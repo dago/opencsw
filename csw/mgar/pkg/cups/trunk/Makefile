@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cups
-VERSION = 1.5.3
+VERSION = 1.5.4
 GARTYPE = v2
 
 define BLURB
@@ -30,9 +30,9 @@ endef
 # GARFLAVOR = DBG
 
 # These are the source mirrors published on the CUPS home-page.
-CUPS_MIRRORS  = http://ftp.easysw.com/pub
-CUPS_MIRRORS += ftp://ftp2.easysw.com/pub
-CUPS_MIRRORS += ftp://ftp3.easysw.com/pub
+# CUPS_MIRRORS  = http://ftp.easysw.com/pub
+# CUPS_MIRRORS += ftp://ftp2.easysw.com/pub
+# CUPS_MIRRORS += ftp://ftp3.easysw.com/pub
 CUPS_MIRRORS += http://www.nu6.org/_/mirror/ftp.easysw.com/pub
 CUPS_MIRRORS += http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
 CUPS_MIRRORS += ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
@@ -50,7 +50,7 @@ DISTFILES += client.conf.CSW
 DISTFILES += CSWcupsclient.README
 
 PATCHFILES += 0001-cswcups-for-the-service-name.patch
-PATCHFILES += 0002-use-posix-shell-in-install.sh.patch
+# PATCHFILES += 0002-use-posix-shell-in-install.sh.patch
 # PATCHFILES  = 0001-cswcups-for-service-name.patch
 # PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 # PATCHFILES += 0003-Reference-counting-for-printers-only.patch
