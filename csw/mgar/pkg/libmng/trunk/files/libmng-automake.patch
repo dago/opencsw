@@ -1,0 +1,38 @@
+--- libmng-1.0.10/makefiles/Makefile.am.orig	2004-09-18 09:39:43.000000000 +0200
++++ libmng-1.0.10/makefiles/Makefile.am	2007-07-16 19:43:07.285858201 +0200
+@@ -2,8 +2,10 @@
+ 
+ AUTOMAKE_OPTIONS = 1.3 foreign no-dependencies
+ 
++SUBDIRS = doc
++
+ # include the app subdirectories in the distribution
+-EXTRA_DIST = makefiles doc contrib
++EXTRA_DIST = makefiles contrib
+ 
+ 
+ # libmng release @VERSION@
+--- libmng-1.0.10/makefiles/configure.in.orig	2005-01-30 11:28:00.000000000 +0100
++++ libmng-1.0.10/makefiles/configure.in	2007-07-16 19:43:24.774854842 +0200
+@@ -189,5 +189,5 @@
+ 
+   test $_restore -eq 1 && CPPFLAGS=$_cppflags LDFLAGS=$_ldflags
+ 
+-AC_CONFIG_FILES([Makefile])
++  AC_CONFIG_FILES([Makefile doc/Makefile doc/man/Makefile])
+ AC_OUTPUT
+diff -Nru libmng-1.0.5.orig/doc/makefiles/Makefile.am libmng-1.0.5/doc/makefiles/Makefile.am
+--- libmng-1.0.5.orig/doc/makefiles/Makefile.am	Thu Jan  1 01:00:00 1970
++++ libmng-1.0.5/doc/makefiles/Makefile.am	Tue Mar  4 09:25:11 2003
+@@ -0,0 +1,4 @@
++## Process this file with automake to produce Makefile.in
++
++SUBDIRS = man
++
+diff -Nru libmng-1.0.5.orig/doc/man/makefiles/Makefile.am libmng-1.0.5/doc/man/makefiles/Makefile.am
+--- libmng-1.0.5.orig/doc/man/makefiles/Makefile.am	Thu Jan  1 01:00:00 1970
++++ libmng-1.0.5/doc/man/makefiles/Makefile.am	Tue Mar  4 09:25:11 2003
+@@ -0,0 +1,3 @@
++## Process this file with automake to produce Makefile.in
++
++man_MANS = libmng.3 jng.5 mng.5

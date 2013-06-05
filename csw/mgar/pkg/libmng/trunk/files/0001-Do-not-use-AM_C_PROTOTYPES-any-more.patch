@@ -1,0 +1,24 @@
+From 3c71ed89f828e91881b75182ab90c4d9f8eaf8a6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 5 Jun 2013 11:16:31 +0200
+Subject: [PATCH] Do not use AM_C_PROTOTYPES any more
+
+---
+ makefiles/configure.in | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/makefiles/configure.in b/makefiles/configure.in
+index e7cb75c..2407191 100644
+--- a/makefiles/configure.in
++++ b/makefiles/configure.in
+@@ -15,7 +15,6 @@ AC_SUBST(VERSION)
+ dnl Checks for programs.
+ AC_PROG_CC
+ AC_ISC_POSIX
+-AM_C_PROTOTYPES
+ if test "x$U" != "x"; then
+   AC_MSG_ERROR(Compiler not ANSI compliant)
+ fi
+-- 
+1.8.1.4
+
