@@ -6,23 +6,23 @@ VERSION = 9.9.3
 GARTYPE = v2
 
 # Enable these for Px-releases
-#RELEASE = P2
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
 endef
 
 # Enable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-#DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
