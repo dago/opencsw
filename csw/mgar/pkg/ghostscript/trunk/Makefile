@@ -27,7 +27,7 @@ BUILD_DEP_PKGS += CSWlibjbig2dec-dev
 BUILD_DEP_PKGS += CSWfconfig-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
 BUILD_DEP_PKGS += CSWlibpaper-dev
-BUILD_DEP_PKGS += CSWlibcairo2inPACKAGES += CSWghostscript
+BUILD_DEP_PKGS += CSWlibcairo2inFOREIGN_PACKAGES += CSWlibgs8inPACKAGES += CSWghostscript
 SPKG_DESC_CSWghostscript = PostScript and PDF interpreter
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgs9
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibpng15-15
@@ -64,6 +64,9 @@ CHECKPKG_OVERRIDES_CSWghostscript += missing-dependency|CSWemacs-common
 # This was the old package
 OBSOLETED_BY_CSWghostscript += CSWgs
 CATALOGNAME_CSWgs = ghostscript_stub
+# We need this as legacy packages still depend on CSWgs to include libgs.so.8
+RUNTIME_DEP_PKGS_CSWgs += CSWlibgs8
+CHECKPKG_OVERRIDES_CSWgs += surplus-dependency|CSWlibgs8
 
 PACKAGES += CSWlibgs9
 SPKG_DESC_CSWlibgs9 = Ghostscript library, libgs.so.9
