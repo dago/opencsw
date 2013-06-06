@@ -51,6 +51,9 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-common
 RUNTIME_DEP_PKGS_CSWtracker += CSWdbus
+RUNTIME_DEP_PKGS_CSWtracker += CSWdconf
+# for gsettings binary
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-dev
 
 RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibuuid1
 RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibgobject2-0-0
@@ -106,6 +109,8 @@ PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PACKAGES += CSWtracker
 SPKG_DESC_CSWtracker = $(DESCRIPTION)
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdbus
+CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
+CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWlibglib2-dev
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
