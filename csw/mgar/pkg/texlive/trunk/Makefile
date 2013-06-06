@@ -42,6 +42,7 @@ BUILD_DEP_PKGS	+=	CSWlibpng-dev
 BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
 BUILD_DEP_PKGS	+=	CSWlibgd-dev
 BUILD_DEP_PKGS	+=	CSWclisp
+BUILD_DEP_PKGS	+=	CSWghostscript-dev
 # when this is installed, raises undefined symbols when linking
 # tools/genrb; this is the reason form 0002-Fix-ICU-link-edit.patch
 # BUILD_DEP_PKGS += CSWlibicu-dev
@@ -633,7 +634,7 @@ PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xdvipdfmx
 PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xetex
 PKGFILES_CSWtexlive-binaries			+=	/opt/csw/bin/xmltex
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWgs
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgs9
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWgsfonts
 CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	surplus-dependency|CSWgsfonts
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWtexlive-common
