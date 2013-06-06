@@ -36,7 +36,9 @@ CHECKPKG_OVERRIDES_CSWerlang += file-with-bad-content
 
 # This is just for the emacs style
 CHECKPKG_OVERRIDES_CSWerlang += missing-dependency|CSWemacs-common
- += CSWlibncurses5
+ # Don't care for now
+CHECKPKG_OVERRIDES_CSWerlang += no-direct-binding|/opt/csw/lib/amd64/erlang/lib/runtime_tools-1.8.10/priv/lib/trace_ip_drv.so|is|not|directly|bound|to|soname|libdlpi.so.1
+CHECKPKG_OVERRIDES_CSWerlang += no-direct-binding|/opt/csw/lib/amd64/erlang/lib/runtime_tools-1.8.10/priv/lib/trace_ip_drv.so|is|not|directly|bound|to|soname|libsendfile.so.1 += CSWlibncurses5
 
 PACKAGES += CSWerlang-dev
 SPKG_DESC_CSWerlang-dev = Ericson Erlang OTP library sources and headers
@@ -102,4 +104,5 @@ TEST_SCRIPTS =
 includ
 # The -m32 -march=pentium_pro disturbs ld which just takes -32
 ARCHFLAGS_GCC4_pentium_pro :=
+ARCHFLAGS_GCC4_amd64 :=
 
