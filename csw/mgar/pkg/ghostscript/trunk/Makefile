@@ -10,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VENDOR_d|gsx
+DISTFILES  = $(NAME)-$(# See for details https://www.opencsw.org/mantis/view.php?id=4913
+PATCHFILES += 0001-Use-ksh-and-GNU-sed-as-reported-in-4913.patch$(VENDOR_d|gsx
 
 SPKG_SOURCEURL = http://www.ghostscript.com
 
@@ -68,6 +69,26 @@ CATALOGNAME_CSWgs = ghostscript_stub
 RUNTIME_DEP_PKGS_CSWgs += CSWlibgs8
 CHECKPKG_OVERRIDES_CSWgs += surplus-dependency|CSWlibgs8
 
+# CUPS filter
+PACKAGES += CSWghostscript-filters
+SPKG_DESC_CSWghostscript-filters = CUPS filter for Ghostscript
+PKGFILES_CSWghostscript-filters += $(libdir)/cups/.*
+PKGFILES_CSWghostscript-filters += $(sysconfdir)/cups/.*
+RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibdbus1-3
+CHECKPKG_OVERRIDES_CSWghostscript-filters += file-with-bad-content|/usr/share|root/opt/csw/lib/cups/filter/gstoraster
+CHECKPKG_OVERRIDES_CSWghostscript-filters += file-with-bad-content|/usr/share|root/opt/csw/lib/cups/filter/gstopxl
+
+# Yes, the filter is 32 bit only
+CHECKPKG_OVERRIDES_CSWghostscript-filters += 64-bit-binaries-missing
+
+# The filter gstopxl calls /opt/csw/bin/gs
+RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWghostscript
+CHECKPKG_OVERRIDES_CSWghostscript-filters += surplus-dependency|CSWghostscript
+
+PRESERVECONF += $(sysconfdir)/cups/gstoraster.convs
+
 PACKAGES += CSWlibgs9
 SPKG_DESC_CSWlibgs9 = Ghostscript library, libgs.so.9
 PKGFILES_CSWlibgs9 += $(call pkgfiles_lib,libgs.so.9)
@@ -88,6 +109,14 @@ SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
 PKGFILES_CSWghostscript-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibgs9
 
+REINPLACEMENTS += fontpath
+REINPLACE_MATCH_fontpath = /usr/share/cups/fonts
+REINPLACE_WITH_fontpath = $(sharedstatedir)/cups/fonts
+REINPLACE_FILES_fontpath += cups/gstopxl.in
+
+# This is for cups/gstoraster.c which doesn't seem to honour --with-fontpath
+EXTRA_CPPFLAGS += -DCUPS_FONTPATH=\\\"$(datadir)/ghostscript/fonts\\\"
+
 BUILD64 = 1
 ISAEXEC = 1
 
@@ -95,6 +124,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
 CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
 CONFIGURE_ARGS += --enable-cups
+CONFIGURE_ARGS += --with-install-cups
 
 # pentium_pro does not have SSE2 and the detection does not work
 CONFIGURE_ARGS-32-i386 += --disable-sse2
