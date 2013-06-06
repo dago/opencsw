@@ -1,6 +1,9 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
+# - Add fontmap as reported in https://www.opencsw.org/mantis/view.php?id=1029
+#   /opt/csw/bin/libwmf-fontmap   --map=$(DESTDIR)/fontmap $(DESTDIR)/opt/csw/share/ghostscript/fonts
+
 NAME = gsfonts
 VERSION = 8.11
 GARTYPE = v2
