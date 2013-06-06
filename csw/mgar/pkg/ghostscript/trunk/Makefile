@@ -73,6 +73,7 @@ CHECKPKG_OVERRIDES_CSWgs += surplus-dependency|CSWlibgs8
 PACKAGES += CSWghostscript-filters
 SPKG_DESC_CSWghostscript-filters = CUPS filter for Ghostscript
 PKGFILES_CSWghostscript-filters += $(libdir)/cups/.*
+PKGFILES_CSWghostscript-filters += $(sharedstatedir)/cups/.*
 PKGFILES_CSWghostscript-filters += $(sysconfdir)/cups/.*
 RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcups2
