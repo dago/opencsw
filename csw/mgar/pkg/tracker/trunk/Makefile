@@ -54,8 +54,6 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-common
 RUNTIME_DEP_PKGS_CSWtracker += CSWdbus
 RUNTIME_DEP_PKGS_CSWtracker += CSWdconf
-# for gsettings binary
-RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-dev
 
 RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibuuid1
 RUNTIME_DEP_PKGS_CSWlibtracker-sparql0-16-0 += CSWlibgobject2-0-0
