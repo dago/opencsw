@@ -41,7 +41,6 @@ SPKG_DESC_CSWlibgnutls28 = GNU Transport Layer Security libraries and tools prov
 PKGFILES_CSWlibgnutls28  = $(PKGFILES_RT)
 PKGFILES_CSWlibgnutls28 += $(docdir)/libgnutls28/.*
 RUNTIME_DEP_PKGS_CSWlibgnutls28 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibgnutls28 += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWlibgnutls28 += CSWlibhogweed2
 RUNTIME_DEP_PKGS_CSWlibgnutls28 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgnutls28 += CSWlibp11kit0
