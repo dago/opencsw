@@ -68,7 +68,8 @@ LD_OPTIONS =
 BUILD64 = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARCONFIGURE_ARGS += --disable-guileRCONFIGURE_ARGS +=  --with-default-trust-store-file=$(sysconfdir)/ssl/certs/ca-certificates.crtR# Workaround a host detection bug in configure for amd64
+CONFIGURE_ARCONFIGURE_ARGS += --disable-guileRCONFIGURE_ARGS += --with-default-trust-store-file=$(sysconfdir)/ssl/certs/ca-certificates.crt
+CONFIGURE_ARGS += --with-unbound-root-key-file=$(sysconfdir)/unbound/root.keyR# Workaround a host detection bug in configure for amd64
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(ISA))
 CONFIGURE_ARGS_amd64 += --build=x86_64-pc-solaris2$(shell uname -r |sed -e 's/[^.]*//')
 
