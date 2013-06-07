@@ -33,7 +33,8 @@ endif
 # an easy way to switch it off.
 ISA_DEFAULT_sparc-5.9 = sparcv8plus
 
-# Solaris 10 needs a special map file since we need libnsl Version 1.9.1 and libc 1.22.5
+# Solaris 10 needs a special map file since we need libnsl Version 1.9.1
+# and libc 1.22.5
 
 ifneq ($(shell /usr/bin/uname -r),5.9)
 	LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
@@ -230,7 +231,6 @@ CMAKE_ARGS += -DBISON_EXECUTABLE=/opt/csw/bin/bison
 # The line below come from the official MySQL build configuration
 CMAKE_ARGS += "-DENABLED_PROFILING:BOOL=ON"
 CMAKE_ARGS += "-DENABLE_DEBUG_SYNC:BOOL=ON"
-CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
 CMAKE_ARGS += "-DENABLE_GCOV:BOOL=OFF"
 CMAKE_ARGS += "-DWITH_ARCHIVE_STORAGE_ENGINE:BOOL=ON"
 CMAKE_ARGS += "-DWITH_BLACKHOLE_STORAGE_ENGINE:BOOL=ON"
@@ -246,6 +246,9 @@ CMAKE_ARGS += "-DWITH_PIC:BOOL=ON"
 CMAKE_ARGS += "-DWITH_READLINE:BOOL=ON"
 CMAKE_ARGS += "-DWITH_UNIT_TESTS:BOOL=ON"
 CMAKE_ARGS += "-DWITH_VALGRIND:BOOL=OFF"
+ifneq ($(shell /usr/bin/uname -r),5.9)
+CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
+endif
 
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
@@ -320,8 +323,6 @@ test-custom:
 		--skip-test=archive-big --skip-test=/gis/
 
 configure-custom:
-	#		--debug-output \
-	#		--debug-trycompile \
 	(cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
@@ -344,16 +345,10 @@ post-configure-modulated:
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(DESTDIR)$(sysconfdir)/init.d
-	# # Add versions to binary names
-	# for f in $(EXECUTABLES); do \
-	# 	gmv -v "$(DESTDIR)$(bindir)/$${f}" \
-	# 	       "$(DESTDIR)$(bindir)/$${f}"; \
-	# done
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18; \
 		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
 		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
-	# gmv -vf $(DESTDIR)$(mandir)/man1/mysql_config.1
 	@$(MAKECOOKIE)
 
 post-merge:
@@ -366,7 +361,6 @@ post-merge:
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README-$(BASE_VERSION).CSW
 	# The quick_start-csw file is almost the same as postinstall.
 	# [ -d $(PKGROOT)$(datadir)/mysql ]
-	# ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
