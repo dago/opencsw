@@ -111,7 +111,6 @@ SPKG_DESC_CSWtracker = $(DESCRIPTION)
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdbus
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWlibglib2-dev
-PKGFILES_CSWtracker += $(datadir)/glib-2\.0/schemas/org\.freedesktop\.Tracker.*
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
