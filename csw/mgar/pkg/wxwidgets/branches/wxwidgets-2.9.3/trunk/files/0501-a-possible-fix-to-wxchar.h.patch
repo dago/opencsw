@@ -1,0 +1,31 @@
+From 650249f3f79548408dea5c768bf3d317b762885a Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 14 Oct 2009 12:46:00 +0200
+Subject: [PATCH 501/501] a possible fix to wxchar.h
+
+---
+ include/wx/wxchar.h |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/include/wx/wxchar.h b/include/wx/wxchar.h
+index 0250daa..04fbd8d 100644
+--- a/include/wx/wxchar.h
++++ b/include/wx/wxchar.h
+@@ -251,6 +251,14 @@
+ /* another name for wxT() which should be used to avoid confusion between wxT() */
+ /* and _() in wxWidgets sources */
+ // #define wxT(x)       wxT(x)
++#ifndef wxT
++#if !wxUSE_UNICODE
++        #define wxT(x) x
++#else /* Unicode */
++        /* use wxCONCAT_HELPER so that x could be expanded if it's a macro */
++        #define wxT(x) wxCONCAT_HELPER(L, x)
++        #endif /* ASCII/Unicode */
++#endif /* !defined(wxT) */
+ 
+ /* a helper macro allowing to make another macro Unicode-friendly, see below */
+ #define wxAPPLY_T(x) wxT(x)
+-- 
+1.6.3.2
+
