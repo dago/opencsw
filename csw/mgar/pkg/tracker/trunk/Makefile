@@ -19,6 +19,7 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.xz
+DISTFILES += CSWtracker.postinstall
 GARCOMPILER = GNU
 
 BUILD_DEP_PKGS += CSWlibgsf-dev
@@ -46,6 +47,7 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-dev
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract0-16-0
