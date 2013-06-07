@@ -17,7 +17,7 @@ DESCRIPTION = The GLib library of C routines.
 define BLURB
   GLib is a library containing many useful C routines for things such as trees,
   hashes, and lists. GLib was previously distributed with the GTK toolkit, but
-  has been split off as of the developers' version 1.1.0.
+  has been split off as f the developers' version 1.1.0.
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
@@ -181,7 +181,7 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWgio-fam-backend
 CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWgio-fam-backend--dev += CSWlibz1
-PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibglib2-dev += $# FIXME: at least glib-compile-schemas and gsettings should be moved to CSWglib2$(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 PKGFILES_CSWlibglib2-dev += .*/gdbus-2.0.*
 PKGFILES_CSWlibglib2-dev += .*/bash-completion.*
@@ -309,7 +309,13 @@ include gar/category.mk
 
 # We need /opt/csw/gnu/gettext, /usr/bin/g# IT seems that the correct Python is not picked up during make check on x86
 # without putting /opt/csw/bin first in PATH
-PATH := /opt/csw/gnu:/opt/csw/binH := /opt/csw/gnu:$(PATH)
+PATH := /opt/csw/gnu:/opt/csw/binH := /opt/# fix a gsettings crash in case this file doesn't exist yet
+# it is normally created by glib-compile-schemas, packages like Tracker add such xml schema
+# files, but as long as no schema file exists, glib-compile-schemas doesn't create the file
+post-install-modulated:
+	@touch $(DESTDIR)/opt/csw/share/glib-2.0/schemas/gschemas.compiled
+	@chmod 0644 $(DESTDIR)/opt/csw/share/glib-2.0/schemas/gschemas.compiled
+	@$(MAKECOOKIEpt/csw/gnu:$(PATH)
 
 post-merge:
 	@echo "=== Cleanup stray bash_completion.d ==="
