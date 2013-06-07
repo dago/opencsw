@@ -111,6 +111,7 @@ SPKG_DESC_CSWtracker = $(DESCRIPTION)
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdbus
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWlibglib2-dev
+PKGFILES_CSWtracker += $(datadir)/glib-2\.0/schemas/org\.freedesktop\.Tracker.*
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
@@ -143,7 +144,6 @@ PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),libtracker-miner-
 PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so)
 PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-common\.so)
 PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-data\.so)
-PKGFILES_CSWlibtracker0-16-dev += $(datadir)/glib-2\.0/schemas/org\.freedesktop\.Tracker.*
 PKGFILES_CSWlibtracker0-16-dev += $(datadir)/vala/vapi/tracker-.*
 
 # For gettext
