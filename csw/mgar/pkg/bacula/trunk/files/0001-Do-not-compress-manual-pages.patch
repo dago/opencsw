@@ -1,0 +1,44 @@
+From 591de1c22236564111941b5244d109ca0f6bc860 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Fri, 7 Jun 2013 14:44:24 +0200
+Subject: [PATCH] Do not compress manual pages.
+
+---
+ manpages/Makefile.in | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/manpages/Makefile.in b/manpages/Makefile.in
+index bbbc6ae..5b1beda 100644
+--- a/manpages/Makefile.in
++++ b/manpages/Makefile.in
+@@ -21,23 +21,19 @@ depend:
+ install:
+ 	$(MKDIR) $(DESTDIR)/$(mandir)/man8
+ 	for I in ${MAN8}; \
+-	  do ($(RMF) $$I.gz; gzip -c $$I >$$I.gz; \
+-	     $(INSTALL_DATA) $$I.gz $(DESTDIR)$(mandir)/man8/$$I.gz; \
+-	     rm -f $$I.gz); \
++	  do ($(INSTALL_DATA) $$I $(DESTDIR)$(mandir)/man8/$$I;); \
+ 	done
+ 	$(MKDIR) $(DESTDIR)/$(mandir)/man1
+ 	for I in ${MAN1}; \
+-	  do ($(RMF) $$I.gz; gzip -c $$I >$$I.gz; \
+-	     $(INSTALL_DATA) $$I.gz $(DESTDIR)$(mandir)/man1/$$I.gz; \
+-	     rm -f $$I.gz); \
++	  do ($(INSTALL_DATA) $$I $(DESTDIR)$(mandir)/man1/$$I;); \
+ 	done
+ 
+ uninstall:
+ 	for I in ${MAN8}; \
+-	  do (rm -f $(DESTDIR)$(mandir)/man8/$$I.gz); \
++	  do (rm -f $(DESTDIR)$(mandir)/man8/$$I); \
+ 	done
+ 	for I in ${MAN1}; \
+-	  do (rm -f $(DESTDIR)$(mandir)/man1/$$I.gz); \
++	  do (rm -f $(DESTDIR)$(mandir)/man1/$$I); \
+ 	done
+ 
+ clean:
+-- 
+1.8.1.4
+
