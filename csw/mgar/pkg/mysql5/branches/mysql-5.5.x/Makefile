@@ -10,11 +10,11 @@
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 
 
-PROJ_NAME = mysql
-NAME = $(PROJ_NAME)5
+PROJ_NAME    = mysql
+NAME         = $(PROJ_NAME)5
 BASE_VERSION = 5.5
-PATCHLEVEL = 31
-ALTS_PRIO = 55
+PATCHLEVEL   = 32
+ALTS_PRIO    = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 
 # Useful when making a series of builds on the same day
@@ -23,7 +23,8 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-#Use newest Sun Stuido on Solaris10 to solve problems on Solaris10 x86 64bit build:
+# Use newest Sun Studio on Solaris10 to solve problems on Solaris10 x86
+# 64bit build:
 ifneq ($(shell /usr/bin/uname -r),5.9)
        GARCOMPILER = SOS12U3
 endif
@@ -229,6 +230,7 @@ CMAKE_ARGS += -DBISON_EXECUTABLE=/opt/csw/bin/bison
 # The line below come from the official MySQL build configuration
 CMAKE_ARGS += "-DENABLED_PROFILING:BOOL=ON"
 CMAKE_ARGS += "-DENABLE_DEBUG_SYNC:BOOL=ON"
+CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
 CMAKE_ARGS += "-DENABLE_GCOV:BOOL=OFF"
 CMAKE_ARGS += "-DWITH_ARCHIVE_STORAGE_ENGINE:BOOL=ON"
 CMAKE_ARGS += "-DWITH_BLACKHOLE_STORAGE_ENGINE:BOOL=ON"
@@ -245,9 +247,6 @@ CMAKE_ARGS += "-DWITH_PIC:BOOL=ON"
 CMAKE_ARGS += "-DWITH_READLINE:BOOL=ON"
 CMAKE_ARGS += "-DWITH_UNIT_TESTS:BOOL=ON"
 CMAKE_ARGS += "-DWITH_VALGRIND:BOOL=OFF"
-ifneq ($(shell /usr/bin/uname -r),5.9)
-CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
-endif
 
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
