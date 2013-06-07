@@ -1,0 +1,3382 @@
+From e2e9f4c5e270479d0c8e19e4763c314f5525b3c9 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 14 Oct 2009 11:57:39 +0200
+Subject: [PATCH 500/501] wxT macro first iteration
+
+---
+ Makefile.in                   |   78 ++++----
+ build/bakefiles/common.bkl    |    2 +
+ include/wx/afterstd.h         |   11 +
+ include/wx/arrstr.h           |    4 +-
+ include/wx/artprov.h          |    6 +-
+ include/wx/beforestd.h        |   10 +
+ include/wx/buffer.h           |    2 +-
+ include/wx/cocoa/dirdlg.h     |    2 +-
+ include/wx/confbase.h         |    4 +-
+ include/wx/cppunit.h          |    2 +-
+ include/wx/cshelp.h           |    2 +-
+ include/wx/datectrl.h         |    2 +-
+ include/wx/datetime.h         |   42 ++--
+ include/wx/dbgrid.h           |    6 +-
+ include/wx/dbtable.h          |    2 +-
+ include/wx/dcbuffer.h         |    6 +-
+ include/wx/dcmirror.h         |    6 +-
+ include/wx/debug.h            |    6 +-
+ include/wx/debugrpt.h         |    2 +-
+ include/wx/defs.h             |   18 +-
+ include/wx/dynlib.h           |    2 +-
+ include/wx/dynload.h          |    2 +-
+ include/wx/event.h            |    4 +-
+ include/wx/ffile.h            |    4 +-
+ include/wx/filefn.h           |    2 +-
+ include/wx/filename.h         |    4 +-
+ include/wx/generic/calctrl.h  |    6 +-
+ include/wx/generic/combo.h    |    4 +-
+ include/wx/generic/grid.h     |   14 +-
+ include/wx/generic/gridctrl.h |    4 +-
+ include/wx/generic/spinctlg.h |    8 +-
+ include/wx/generic/splitter.h |    2 +-
+ include/wx/glcanvas.h         |    2 +-
+ include/wx/gtk/checklst.h     |    6 +-
+ include/wx/gtk/spinctrl.h     |    4 +-
+ include/wx/gtk1/checklst.h    |    6 +-
+ include/wx/gtk1/spinctrl.h    |    4 +-
+ include/wx/imagbmp.h          |   26 ++--
+ include/wx/image.h            |   12 +-
+ include/wx/imagtiff.h         |    8 +-
+ include/wx/intl.h             |   16 +-
+ include/wx/list.h             |    2 +-
+ include/wx/longlong.h         |    8 +-
+ include/wx/mimetype.h         |    6 +-
+ include/wx/module.h           |    2 +-
+ include/wx/msgdlg.h           |    4 +-
+ include/wx/object.h           |    2 +-
+ include/wx/palette.h          |    2 +-
+ include/wx/private/fileback.h |    2 +-
+ include/wx/protocol/ftp.h     |    2 +-
+ include/wx/recguard.h         |    2 +-
+ include/wx/selstore.h         |    2 +-
+ include/wx/sound.h            |    2 +-
+ include/wx/spinbutt.h         |    2 +-
+ include/wx/stopwatch.h        |    2 +-
+ include/wx/string.h           |   30 ++--
+ include/wx/tbarbase.h         |    4 +-
+ include/wx/thrimpl.cpp        |   22 +-
+ include/wx/tokenzr.h          |    2 +-
+ include/wx/univ/button.h      |    8 +-
+ include/wx/univ/checkbox.h    |    6 +-
+ include/wx/univ/checklst.h    |    2 +-
+ include/wx/univ/combobox.h    |    6 +-
+ include/wx/univ/control.h     |    4 +-
+ include/wx/univ/inpcons.h     |    2 +-
+ include/wx/univ/inphand.h     |   30 ++--
+ include/wx/univ/listbox.h     |   36 ++--
+ include/wx/univ/menuitem.h    |    4 +-
+ include/wx/univ/notebook.h    |    6 +-
+ include/wx/univ/scrolbar.h    |   18 +-
+ include/wx/univ/slider.h      |   20 +-
+ include/wx/univ/spinbutt.h    |    4 +-
+ include/wx/univ/textctrl.h    |   52 +++---
+ include/wx/univ/toolbar.h     |    4 +-
+ include/wx/univ/toplevel.h    |   12 +-
+ include/wx/valtext.h          |    4 +-
+ include/wx/vector.h           |    2 +-
+ include/wx/version.h          |    4 +-
+ include/wx/vlbox.h            |    4 +-
+ include/wx/wfstream.h         |    4 +-
+ include/wx/wxchar.h           |   27 ++--
+ include/wx/x11/textctrl.h     |   50 +++---
+ include/wx/xrc/xmlres.h       |    2 +-
+ utils/wxrc/wxrc.cpp           |  406 ++++++++++++++++++++--------------------
+ 84 files changed, 597 insertions(+), 571 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 92b60e1..ef0c052 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -72,7 +72,7 @@ WX_RELEASE = 2.8
+ WX_RELEASE_NODOT = 28
+ WX_VERSION = $(WX_RELEASE).5
+ LIBDIRNAME = $(wx_top_builddir)/lib
+-WXREGEX_CFLAGS = -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) $(____SHARED) \
++WXREGEX_CFLAGS = -D__WX$(TOOLKIT)__ -DWXBUILDING $(__WXUNIV_DEFINE_p) $(____SHARED) \
+ 	$(CPPFLAGS) $(CFLAGS)
+ WXREGEX_OBJECTS =  \
+ 	wxregex_regcomp.o \
+@@ -674,11 +674,13 @@ MONODLL_CFLAGS = $(__monodll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+ 	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_BASE=1 \
++	-DWXBUILDING \
+ 	-DWXMAKINGDLL $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
+ MONODLL_CXXFLAGS = $(__monodll_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+ 	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
++	-DWXBUILDING \
+ 	-DwxUSE_BASE=1 -DWXMAKINGDLL $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ MONODLL_OBJECTS =  \
+ 	$(__monodll___win32rc) \
+@@ -871,12 +873,12 @@ MONOLIB_OBJECTS =  \
+ MONOLIB_ODEP =  $(___pch_wxprec_monolib_wx_wxprec_h_gch___depname)
+ BASEDLL_CFLAGS = $(__basedll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_GUI=0 \
+ 	-DWXMAKINGDLL_BASE -DwxUSE_BASE=1 $(PIC_FLAG) $(CPPFLAGS) $(CFLAGS)
+ BASEDLL_CXXFLAGS = $(__basedll_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DwxUSE_GUI=0 -DWXMAKINGDLL_BASE -DwxUSE_BASE=1 $(PIC_FLAG) $(CPPFLAGS) \
+ 	$(CXXFLAGS)
+@@ -957,12 +959,12 @@ BASEDLL_OBJECTS =  \
+ BASEDLL_ODEP =  $(___pch_wxprec_basedll_wx_wxprec_h_gch___depname)
+ BASELIB_CFLAGS = $(__baselib_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_GUI=0 \
+ 	-DwxUSE_BASE=1 $(CPPFLAGS) $(CFLAGS)
+ BASELIB_CXXFLAGS = $(__baselib_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DwxUSE_GUI=0 -DwxUSE_BASE=1 $(CPPFLAGS) $(CXXFLAGS)
+ BASELIB_OBJECTS =  \
+@@ -1041,7 +1043,7 @@ BASELIB_OBJECTS =  \
+ BASELIB_ODEP =  $(___pch_wxprec_baselib_wx_wxprec_h_gch___depname)
+ NETDLL_CXXFLAGS = $(__netdll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_GUI=0 -DWXUSINGDLL \
+ 	-DWXMAKINGDLL_NET $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ NETDLL_OBJECTS =  \
+@@ -1060,7 +1062,7 @@ NETDLL_OBJECTS =  \
+ NETDLL_ODEP =  $(___pch_wxprec_netdll_wx_wxprec_h_gch___depname)
+ NETLIB_CXXFLAGS = $(__netlib_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_GUI=0 $(CPPFLAGS) \
+ 	$(CXXFLAGS)
+ NETLIB_OBJECTS =  \
+@@ -1164,7 +1166,7 @@ MEDIALIB_OBJECTS =  \
+ MEDIALIB_ODEP =  $(___pch_wxprec_medialib_wx_wxprec_h_gch___depname)
+ ODBCDLL_CXXFLAGS = $(__odbcdll_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DwxUSE_GUI=0 -DWXUSINGDLL -DWXMAKINGDLL_ODBC $(PIC_FLAG) $(CPPFLAGS) \
+ 	$(CXXFLAGS)
+@@ -1175,7 +1177,7 @@ ODBCDLL_OBJECTS =  \
+ ODBCDLL_ODEP =  $(___pch_wxprec_odbcdll_wx_wxprec_h_gch___depname)
+ ODBCLIB_CXXFLAGS = $(__odbclib_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DwxUSE_GUI=0 $(CPPFLAGS) $(CXXFLAGS)
+ ODBCLIB_OBJECTS =  \
+@@ -1184,7 +1186,7 @@ ODBCLIB_OBJECTS =  \
+ ODBCLIB_ODEP =  $(___pch_wxprec_odbclib_wx_wxprec_h_gch___depname)
+ DBGRIDDLL_CXXFLAGS = $(__dbgriddll_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DWXUSINGDLL -DWXMAKINGDLL_DBGRID $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ DBGRIDDLL_OBJECTS =  \
+@@ -1193,7 +1195,7 @@ DBGRIDDLL_OBJECTS =  \
+ DBGRIDDLL_ODEP =  $(___pch_wxprec_dbgriddll_wx_wxprec_h_gch___depname)
+ DBGRIDLIB_CXXFLAGS = $(__dbgridlib_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	$(CPPFLAGS) $(CXXFLAGS)
+ DBGRIDLIB_OBJECTS =  \
+@@ -1201,7 +1203,7 @@ DBGRIDLIB_OBJECTS =  \
+ DBGRIDLIB_ODEP =  $(___pch_wxprec_dbgridlib_wx_wxprec_h_gch___depname)
+ HTMLDLL_CXXFLAGS = $(__htmldll_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DWXUSINGDLL -DWXMAKINGDLL_HTML $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ HTMLDLL_OBJECTS =  \
+@@ -1233,7 +1235,7 @@ HTMLDLL_OBJECTS =  \
+ HTMLDLL_ODEP =  $(___pch_wxprec_htmldll_wx_wxprec_h_gch___depname)
+ HTMLLIB_CXXFLAGS = $(__htmllib_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	$(CPPFLAGS) $(CXXFLAGS)
+ HTMLLIB_OBJECTS =  \
+@@ -1264,7 +1266,7 @@ HTMLLIB_OBJECTS =  \
+ HTMLLIB_ODEP =  $(___pch_wxprec_htmllib_wx_wxprec_h_gch___depname)
+ QADLL_CXXFLAGS = $(__qadll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DWXUSINGDLL \
+ 	-DWXMAKINGDLL_QA $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ QADLL_OBJECTS =  \
+@@ -1274,7 +1276,7 @@ QADLL_OBJECTS =  \
+ QADLL_ODEP =  $(___pch_wxprec_qadll_wx_wxprec_h_gch___depname)
+ QALIB_CXXFLAGS = $(__qalib_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) $(CPPFLAGS) $(CXXFLAGS)
+ QALIB_OBJECTS =  \
+ 	qalib_debugrpt.o \
+@@ -1282,7 +1284,7 @@ QALIB_OBJECTS =  \
+ QALIB_ODEP =  $(___pch_wxprec_qalib_wx_wxprec_h_gch___depname)
+ XMLDLL_CXXFLAGS = $(__xmldll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_GUI=0 -DWXUSINGDLL \
+ 	-DWXMAKINGDLL_XML $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ XMLDLL_OBJECTS =  \
+@@ -1292,7 +1294,7 @@ XMLDLL_OBJECTS =  \
+ XMLDLL_ODEP =  $(___pch_wxprec_xmldll_wx_wxprec_h_gch___depname)
+ XMLLIB_CXXFLAGS = $(__xmllib_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DwxUSE_GUI=0 $(CPPFLAGS) \
+ 	$(CXXFLAGS)
+ XMLLIB_OBJECTS =  \
+@@ -1301,7 +1303,7 @@ XMLLIB_OBJECTS =  \
+ XMLLIB_ODEP =  $(___pch_wxprec_xmllib_wx_wxprec_h_gch___depname)
+ XRCDLL_CXXFLAGS = $(__xrcdll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DWXUSINGDLL \
+ 	-DWXMAKINGDLL_XRC $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ XRCDLL_OBJECTS =  \
+@@ -1365,7 +1367,7 @@ XRCDLL_OBJECTS =  \
+ XRCDLL_ODEP =  $(___pch_wxprec_xrcdll_wx_wxprec_h_gch___depname)
+ XRCLIB_CXXFLAGS = $(__xrclib_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) $(CPPFLAGS) $(CXXFLAGS)
+ XRCLIB_OBJECTS =  \
+ 	xrclib_xh_animatctrl.o \
+@@ -1427,7 +1429,7 @@ XRCLIB_OBJECTS =  \
+ XRCLIB_ODEP =  $(___pch_wxprec_xrclib_wx_wxprec_h_gch___depname)
+ AUIDLL_CXXFLAGS = $(__auidll_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) -DWXUSINGDLL \
+ 	-DWXMAKINGDLL_AUI $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ AUIDLL_OBJECTS =  \
+@@ -1440,7 +1442,7 @@ AUIDLL_OBJECTS =  \
+ AUIDLL_ODEP =  $(___pch_wxprec_auidll_wx_wxprec_h_gch___depname)
+ AUILIB_CXXFLAGS = $(__auilib_PCH_INC) -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+-	$(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
++	-DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) $(__INC_ZLIB_p) \
+ 	$(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) $(CPPFLAGS) $(CXXFLAGS)
+ AUILIB_OBJECTS =  \
+ 	auilib_framemanager.o \
+@@ -1451,7 +1453,7 @@ AUILIB_OBJECTS =  \
+ AUILIB_ODEP =  $(___pch_wxprec_auilib_wx_wxprec_h_gch___depname)
+ RICHTEXTDLL_CXXFLAGS = $(__richtextdll_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	-DWXUSINGDLL -DWXMAKINGDLL_RICHTEXT $(PIC_FLAG) $(CPPFLAGS) $(CXXFLAGS)
+ RICHTEXTDLL_OBJECTS =  \
+@@ -1468,7 +1470,7 @@ RICHTEXTDLL_OBJECTS =  \
+ RICHTEXTDLL_ODEP =  $(___pch_wxprec_richtextdll_wx_wxprec_h_gch___depname)
+ RICHTEXTLIB_CXXFLAGS = $(__richtextlib_PCH_INC) -D__WX$(TOOLKIT)__ \
+ 	$(__WXUNIV_DEFINE_p) $(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) \
+-	$(__THREAD_DEFINE_p) $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
++	$(__THREAD_DEFINE_p) -DWXBUILDING $(__INC_TIFF_p) $(__INC_JPEG_p) $(__INC_PNG_p) \
+ 	$(__INC_ZLIB_p) $(__INC_ODBC_p) $(__INC_REGEX_p) $(__INC_EXPAT_p) \
+ 	$(CPPFLAGS) $(CXXFLAGS)
+ RICHTEXTLIB_OBJECTS =  \
+@@ -12550,7 +12552,7 @@ wxexpat_xmltok.o: $(srcdir)/src/expat/lib/xmltok.c
+ 	$(CCC) -c -o $@ $(WXEXPAT_CFLAGS) $(srcdir)/src/expat/lib/xmltok.c
+ 
+ monodll_version_rc.o: $(srcdir)/src/msw/version.rc $(MONODLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_BASE=1 --define WXMAKINGDLL
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_BASE=1 --define WXMAKINGDLL
+ 
+ monodll_appbase.o: $(srcdir)/src/common/appbase.cpp $(MONODLL_ODEP)
+ 	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/common/appbase.cpp
+@@ -20809,7 +20811,7 @@ monolib_sound_sdl.o: $(srcdir)/src/unix/sound_sdl.cpp $(MONOLIB_ODEP)
+ @COND_PLATFORM_MACOSX_1_USE_GUI_1@	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/html/chm.cpp
+ 
+ basedll_version_rc.o: $(srcdir)/src/msw/version.rc $(BASEDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXMAKINGDLL_BASE --define wxUSE_BASE=1
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXMAKINGDLL_BASE --define wxUSE_BASE=1
+ 
+ basedll_appbase.o: $(srcdir)/src/common/appbase.cpp $(BASEDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(BASEDLL_CXXFLAGS) $(srcdir)/src/common/appbase.cpp
+@@ -21988,7 +21990,7 @@ baselib_uma.o: $(srcdir)/src/mac/carbon/uma.cpp $(BASELIB_ODEP)
+ @COND_PLATFORM_MACOSX_1@	$(CXXC) -c -o $@ $(BASELIB_CXXFLAGS) $(srcdir)/src/unix/utilsunx.cpp
+ 
+ netdll_version_rc.o: $(srcdir)/src/msw/version.rc $(NETDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_net$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXUSINGDLL --define WXMAKINGDLL_NET
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_net$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXUSINGDLL --define WXMAKINGDLL_NET
+ 
+ netdll_fs_inet.o: $(srcdir)/src/common/fs_inet.cpp $(NETDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(NETDLL_CXXFLAGS) $(srcdir)/src/common/fs_inet.cpp
+@@ -22093,7 +22095,7 @@ netlib_net.o: $(srcdir)/src/msw/wince/net.cpp $(NETLIB_ODEP)
+ @COND_PLATFORM_MACOS_1@	$(CXXC) -c -o $@ $(NETLIB_CXXFLAGS) $(srcdir)/src/mac/carbon/gsocket.cpp
+ 
+ coredll_version_rc.o: $(srcdir)/src/msw/version.rc $(COREDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_core$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_CORE --define wxUSE_BASE=0
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_core$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_CORE --define wxUSE_BASE=0
+ 
+ coredll_event.o: $(srcdir)/src/common/event.cpp $(COREDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(COREDLL_CXXFLAGS) $(srcdir)/src/common/event.cpp
+@@ -28018,7 +28020,7 @@ corelib_win32.o: $(srcdir)/src/univ/themes/win32.cpp $(CORELIB_ODEP)
+ @COND_USE_GUI_1@	$(CXXC) -c -o $@ $(CORELIB_CXXFLAGS) $(srcdir)/src/generic/vscroll.cpp
+ 
+ advdll_version_rc.o: $(srcdir)/src/msw/version.rc $(ADVDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_adv$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_ADV
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_adv$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_ADV
+ 
+ advdll_sound_sdl.o: $(srcdir)/src/unix/sound_sdl.cpp $(ADVDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/unix/sound_sdl.cpp
+@@ -28441,7 +28443,7 @@ advlib_wizard.o: $(srcdir)/src/generic/wizard.cpp $(ADVLIB_ODEP)
+ @COND_TOOLKIT_WINCE_WXUNIV_0@	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/msw/datectrl.cpp
+ 
+ mediadll_version_rc.o: $(srcdir)/src/msw/version.rc $(MEDIADLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_media$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_MEDIA
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_media$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_MEDIA
+ 
+ mediadll_mediactrlcmn.o: $(srcdir)/src/common/mediactrlcmn.cpp $(MEDIADLL_ODEP)
+ 	$(CXXC) -c -o $@ $(MEDIADLL_CXXFLAGS) $(srcdir)/src/common/mediactrlcmn.cpp
+@@ -28528,7 +28530,7 @@ medialib_mediactrlcmn.o: $(srcdir)/src/common/mediactrlcmn.cpp $(MEDIALIB_ODEP)
+ @COND_TOOLKIT_X11@	$(CXXC) -c -o $@ $(MEDIALIB_CXXFLAGS) $(srcdir)/src/unix/mediactrl.cpp
+ 
+ odbcdll_version_rc.o: $(srcdir)/src/msw/version.rc $(ODBCDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_odbc$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXUSINGDLL --define WXMAKINGDLL_ODBC
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_odbc$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXUSINGDLL --define WXMAKINGDLL_ODBC
+ 
+ odbcdll_db.o: $(srcdir)/src/common/db.cpp $(ODBCDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(ODBCDLL_CXXFLAGS) $(srcdir)/src/common/db.cpp
+@@ -28543,7 +28545,7 @@ odbclib_dbtable.o: $(srcdir)/src/common/dbtable.cpp $(ODBCLIB_ODEP)
+ 	$(CXXC) -c -o $@ $(ODBCLIB_CXXFLAGS) $(srcdir)/src/common/dbtable.cpp
+ 
+ dbgriddll_version_rc.o: $(srcdir)/src/msw/version.rc $(DBGRIDDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_dbgrid$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_DBGRID
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_dbgrid$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_DBGRID
+ 
+ dbgriddll_dbgrid.o: $(srcdir)/src/common/dbgrid.cpp $(DBGRIDDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(DBGRIDDLL_CXXFLAGS) $(srcdir)/src/common/dbgrid.cpp
+@@ -28552,7 +28554,7 @@ dbgridlib_dbgrid.o: $(srcdir)/src/common/dbgrid.cpp $(DBGRIDLIB_ODEP)
+ 	$(CXXC) -c -o $@ $(DBGRIDLIB_CXXFLAGS) $(srcdir)/src/common/dbgrid.cpp
+ 
+ htmldll_version_rc.o: $(srcdir)/src/msw/version.rc $(HTMLDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_html$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_HTML
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_html$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_HTML
+ 
+ htmldll_helpbest.o: $(srcdir)/src/msw/helpbest.cpp $(HTMLDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(HTMLDLL_CXXFLAGS) $(srcdir)/src/msw/helpbest.cpp
+@@ -28711,7 +28713,7 @@ htmllib_htmllbox.o: $(srcdir)/src/generic/htmllbox.cpp $(HTMLLIB_ODEP)
+ @COND_PLATFORM_MACOSX_1@	$(CXXC) -c -o $@ $(HTMLLIB_CXXFLAGS) $(srcdir)/src/html/chm.cpp
+ 
+ qadll_version_rc.o: $(srcdir)/src/msw/version.rc $(QADLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_qa$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_QA
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_qa$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_QA
+ 
+ qadll_debugrpt.o: $(srcdir)/src/common/debugrpt.cpp $(QADLL_ODEP)
+ 	$(CXXC) -c -o $@ $(QADLL_CXXFLAGS) $(srcdir)/src/common/debugrpt.cpp
+@@ -28726,7 +28728,7 @@ qalib_dbgrptg.o: $(srcdir)/src/generic/dbgrptg.cpp $(QALIB_ODEP)
+ 	$(CXXC) -c -o $@ $(QALIB_CXXFLAGS) $(srcdir)/src/generic/dbgrptg.cpp
+ 
+ xmldll_version_rc.o: $(srcdir)/src/msw/version.rc $(XMLDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_xml$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXUSINGDLL --define WXMAKINGDLL_XML
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIX)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_xml$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define wxUSE_GUI=0 --define WXUSINGDLL --define WXMAKINGDLL_XML
+ 
+ xmldll_xml.o: $(srcdir)/src/xml/xml.cpp $(XMLDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(XMLDLL_CXXFLAGS) $(srcdir)/src/xml/xml.cpp
+@@ -28741,7 +28743,7 @@ xmllib_xtixml.o: $(srcdir)/src/common/xtixml.cpp $(XMLLIB_ODEP)
+ 	$(CXXC) -c -o $@ $(XMLLIB_CXXFLAGS) $(srcdir)/src/common/xtixml.cpp
+ 
+ xrcdll_version_rc.o: $(srcdir)/src/msw/version.rc $(XRCDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_xrc$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_XRC
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_xrc$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_XRC
+ 
+ xrcdll_xh_animatctrl.o: $(srcdir)/src/xrc/xh_animatctrl.cpp $(XRCDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(XRCDLL_CXXFLAGS) $(srcdir)/src/xrc/xh_animatctrl.cpp
+@@ -29080,7 +29082,7 @@ xrclib_xmlrsall.o: $(srcdir)/src/xrc/xmlrsall.cpp $(XRCLIB_ODEP)
+ 	$(CXXC) -c -o $@ $(XRCLIB_CXXFLAGS) $(srcdir)/src/xrc/xmlrsall.cpp
+ 
+ auidll_version_rc.o: $(srcdir)/src/msw/version.rc $(AUIDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_aui$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_AUI
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_aui$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_AUI
+ 
+ auidll_framemanager.o: $(srcdir)/src/aui/framemanager.cpp $(AUIDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(AUIDLL_CXXFLAGS) $(srcdir)/src/aui/framemanager.cpp
+@@ -29113,7 +29115,7 @@ auilib_tabmdi.o: $(srcdir)/src/aui/tabmdi.cpp $(AUILIB_ODEP)
+ 	$(CXXC) -c -o $@ $(AUILIB_CXXFLAGS) $(srcdir)/src/aui/tabmdi.cpp
+ 
+ richtextdll_version_rc.o: $(srcdir)/src/msw/version.rc $(RICHTEXTDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_richtext$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_RICHTEXT
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_richtext$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_RICHTEXT
+ 
+ richtextdll_richtextctrl.o: $(srcdir)/src/richtext/richtextctrl.cpp $(RICHTEXTDLL_ODEP)
+ 	$(CXXC) -c -o $@ $(RICHTEXTDLL_CXXFLAGS) $(srcdir)/src/richtext/richtextctrl.cpp
+@@ -29170,7 +29172,7 @@ richtextlib_richtextprint.o: $(srcdir)/src/richtext/richtextprint.cpp $(RICHTEXT
+ 	$(CXXC) -c -o $@ $(RICHTEXTLIB_CXXFLAGS) $(srcdir)/src/richtext/richtextprint.cpp
+ 
+ gldll_version_rc.o: $(srcdir)/src/msw/version.rc $(GLDLL_ODEP)
+-	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_gl$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_GL
++	$(WINDRES) -i$< -o$@    --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_58)  $(__EXCEPTIONS_DEFINE_p_57) $(__RTTI_DEFINE_p_57) $(__THREAD_DEFINE_p_57)   --define WXBUILDING --define WXDLLNAME=$(WXDLLNAMEPREFIXGUI)$(WXUNICODEFLAG)$(WXDEBUGFLAG)$(WX_LIB_FLAVOUR)_gl$(WXCOMPILER)$(VENDORTAG)$(WXDLLVERSIONTAG) $(__RCDEFDIR_p) --include-dir $(top_srcdir)/include $(__INC_TIFF_p_57) $(__INC_JPEG_p_58) $(__INC_PNG_p_57) $(__INC_ZLIB_p_59) $(__INC_ODBC_p_57) $(__INC_REGEX_p_57) $(__INC_EXPAT_p_57) --define WXUSINGDLL --define WXMAKINGDLL_GL
+ 
+ @COND_TOOLKIT_MAC@gldll_glcanvas.o: $(srcdir)/src/mac/carbon/glcanvas.cpp $(GLDLL_ODEP)
+ @COND_TOOLKIT_MAC@	$(CXXC) -c -o $@ $(GLDLL_CXXFLAGS) $(srcdir)/src/mac/carbon/glcanvas.cpp
+diff --git a/build/bakefiles/common.bkl b/build/bakefiles/common.bkl
+index 15ac39b..5a31808 100644
+--- a/build/bakefiles/common.bkl
++++ b/build/bakefiles/common.bkl
+@@ -592,6 +592,8 @@ $(TAB)$(VC_COMPILER) /EP /nologo "$(DOLLAR)(InputPath)" > "$(SETUPHDIR)\wx\msw\r
+         <set var="WXLIBNAME">$(wxwin.mkLibName(wxid))</set>
+         <libname>$(WXLIBNAME)</libname>
+ 
++	<define>WXBUILDING</define>
++
+         <if cond="WX_DISABLE_PRECOMP_HEADERS=='0'">
+             <if cond="FORMAT!='autoconf' and TOOLKIT in ['MSW','MGL','PM','WINCE']">
+                 <sources>$(WXTOPDIR)src/common/dummy.cpp</sources>
+diff --git a/include/wx/afterstd.h b/include/wx/afterstd.h
+index 4c1d4a5..a1ad8d1 100644
+--- a/include/wx/afterstd.h
++++ b/include/wx/afterstd.h
+@@ -46,3 +46,14 @@
+     #endif
+ #endif
+ 
++#if defined(__SUNPRO_CC) || defined(__SUNPRO_C)
++#ifndef _T
++#if !wxUSE_UNICODE
++#define _T(x) x
++#else /* Unicode */
++/* use wxCONCAT_HELPER so that x could be expanded if it's a macro */
++#define _T(x) wxCONCAT_HELPER(L, x)
++#endif /* ASCII/Unicode */
++#endif /* !defined(_T) */
++
++#endif /* defined(__SUNPRO_CC) || defined(__SUNPRO_C) */
+diff --git a/include/wx/arrstr.h b/include/wx/arrstr.h
+index 0229f18..fbf04cb 100644
+--- a/include/wx/arrstr.h
++++ b/include/wx/arrstr.h
+@@ -152,7 +152,7 @@ public:
+   wxString& Item(size_t nIndex) const
+     {
+         wxASSERT_MSG( nIndex < m_nCount,
+-                      _T("wxArrayString: index out of bounds") );
++                      wxT("wxArrayString: index out of bounds") );
+ 
+         return *(wxString *)&(m_pItems[nIndex]);
+     }
+@@ -163,7 +163,7 @@ public:
+   wxString& Last() const
+   {
+       wxASSERT_MSG( !IsEmpty(),
+-                    _T("wxArrayString: index out of bounds") );
++                    wxT("wxArrayString: index out of bounds") );
+       return Item(Count() - 1);
+   }
+ 
+diff --git a/include/wx/artprov.h b/include/wx/artprov.h
+index 03df39e..2e83493 100644
+--- a/include/wx/artprov.h
++++ b/include/wx/artprov.h
+@@ -27,10 +27,10 @@ class wxArtProviderModule;
+ typedef wxString wxArtClient;
+ typedef wxString wxArtID;
+ 
+-#define wxART_MAKE_CLIENT_ID_FROM_STR(id)  (id + _T("_C"))
+-#define wxART_MAKE_CLIENT_ID(id)           _T(#id) _T("_C")
++#define wxART_MAKE_CLIENT_ID_FROM_STR(id)  (id + wxT("_C"))
++#define wxART_MAKE_CLIENT_ID(id)           wxT(#id) wxT("_C")
+ #define wxART_MAKE_ART_ID_FROM_STR(id)     (id)
+-#define wxART_MAKE_ART_ID(id)              _T(#id)
++#define wxART_MAKE_ART_ID(id)              wxT(#id)
+ 
+ // ----------------------------------------------------------------------------
+ // Art clients
+diff --git a/include/wx/beforestd.h b/include/wx/beforestd.h
+index aacfc7c..609073c 100644
+--- a/include/wx/beforestd.h
++++ b/include/wx/beforestd.h
+@@ -63,3 +63,13 @@
+     #pragma warning(disable:4786)
+ #endif // VC++ < 7
+ 
++#if defined(__SUNPRO_CC) || defined(__SUNPRO_C)
++#undef _T
++#endif // SUNCC
++
++#if defined (WXBUILDING)
++#if defined(__SUNPRO_CC) || defined(__SUNPRO_C)
++#undef _T
++#endif /* SUNCC */
++#endif /* WXBUILDING */
++
+diff --git a/include/wx/buffer.h b/include/wx/buffer.h
+index 605f4f1..f169f22 100644
+--- a/include/wx/buffer.h
++++ b/include/wx/buffer.h
+@@ -286,7 +286,7 @@ public:
+     // Other ways to append to the buffer
+     void  AppendByte(char data)
+     {
+-        wxCHECK_RET( m_bufdata->m_data, _T("invalid wxMemoryBuffer") );
++        wxCHECK_RET( m_bufdata->m_data, wxT("invalid wxMemoryBuffer") );
+ 
+         m_bufdata->ResizeIfNeeded(m_bufdata->m_len + 1);
+         *(((char*)m_bufdata->m_data) + m_bufdata->m_len) = data;
+diff --git a/include/wx/cocoa/dirdlg.h b/include/wx/cocoa/dirdlg.h
+index 3c5b8dc..084d561 100644
+--- a/include/wx/cocoa/dirdlg.h
++++ b/include/wx/cocoa/dirdlg.h
+@@ -26,7 +26,7 @@ class WXDLLEXPORT wxDirDialog: public wxDirDialogBase
+ public:
+     wxDirDialog(wxWindow *parent,
+                 const wxString& message = wxDirSelectorPromptStr,
+-                const wxString& defaultPath = _T(""),
++                const wxString& defaultPath = wxT(""),
+                 long style = wxDD_DEFAULT_STYLE,
+                 const wxPoint& pos = wxDefaultPosition,
+                 const wxSize& size = wxDefaultSize,
+diff --git a/include/wx/confbase.h b/include/wx/confbase.h
+index 62b9507..852f7d6 100644
+--- a/include/wx/confbase.h
++++ b/include/wx/confbase.h
+@@ -30,13 +30,13 @@ class WXDLLIMPEXP_BASE wxArrayString;
+ 
+ /// separates group and entry names (probably shouldn't be changed)
+ #ifndef wxCONFIG_PATH_SEPARATOR
+-  #define   wxCONFIG_PATH_SEPARATOR     _T('/')
++  #define   wxCONFIG_PATH_SEPARATOR     wxT('/')
+ #endif
+ 
+ /// introduces immutable entries
+ // (i.e. the ones which can't be changed from the local config file)
+ #ifndef wxCONFIG_IMMUTABLE_PREFIX
+-  #define   wxCONFIG_IMMUTABLE_PREFIX   _T('!')
++  #define   wxCONFIG_IMMUTABLE_PREFIX   wxT('!')
+ #endif
+ 
+ #if wxUSE_CONFIG
+diff --git a/include/wx/cppunit.h b/include/wx/cppunit.h
+index 707ac72..ad20cc4 100644
+--- a/include/wx/cppunit.h
++++ b/include/wx/cppunit.h
+@@ -65,7 +65,7 @@
+     if (Condition) \
+         { anyTest; } \
+     else \
+-        wxLogInfo(wxString::Format(_T("skipping: %s.%s\n  reason: %s equals false\n"), \
++        wxLogInfo(wxString::Format(wxT("skipping: %s.%s\n  reason: %s equals false\n"), \
+                                     wxString(suiteName, wxConvUTF8).c_str(), \
+                                     wxString(#testMethod, wxConvUTF8).c_str(), \
+                                     wxString(#Condition, wxConvUTF8).c_str()))
+diff --git a/include/wx/cshelp.h b/include/wx/cshelp.h
+index f77ac4f..4cee508 100644
+--- a/include/wx/cshelp.h
++++ b/include/wx/cshelp.h
+@@ -134,7 +134,7 @@ public:
+                                  const wxPoint& pt,
+                                  wxHelpEvent::Origin origin)
+     {
+-        wxCHECK_MSG( window, false, _T("window must not be NULL") );
++        wxCHECK_MSG( window, false, wxT("window must not be NULL") );
+ 
+         m_helptextAtPoint = pt;
+         m_helptextOrigin = origin;
+diff --git a/include/wx/datectrl.h b/include/wx/datectrl.h
+index 0da1277..085a8d1 100644
+--- a/include/wx/datectrl.h
++++ b/include/wx/datectrl.h
+@@ -19,7 +19,7 @@
+ #include "wx/control.h"         // the base class
+ #include "wx/datetime.h"
+ 
+-#define wxDatePickerCtrlNameStr _T("datectrl")
++#define wxDatePickerCtrlNameStr wxT("datectrl")
+ 
+ // wxDatePickerCtrl styles
+ enum
+diff --git a/include/wx/datetime.h b/include/wx/datetime.h
+index 772f656..1b16520 100644
+--- a/include/wx/datetime.h
++++ b/include/wx/datetime.h
+@@ -938,37 +938,37 @@ public:
+ 
+     inline bool operator<(const wxDateTime& dt) const
+     {
+-        wxASSERT_MSG( IsValid() && dt.IsValid(), _T("invalid wxDateTime") );
++        wxASSERT_MSG( IsValid() && dt.IsValid(), wxT("invalid wxDateTime") );
+         return GetValue() < dt.GetValue();
+     }
+ 
+     inline bool operator<=(const wxDateTime& dt) const
+     {
+-        wxASSERT_MSG( IsValid() && dt.IsValid(), _T("invalid wxDateTime") );
++        wxASSERT_MSG( IsValid() && dt.IsValid(), wxT("invalid wxDateTime") );
+         return GetValue() <= dt.GetValue();
+     }
+ 
+     inline bool operator>(const wxDateTime& dt) const
+     {
+-        wxASSERT_MSG( IsValid() && dt.IsValid(), _T("invalid wxDateTime") );
++        wxASSERT_MSG( IsValid() && dt.IsValid(), wxT("invalid wxDateTime") );
+         return GetValue() > dt.GetValue();
+     }
+ 
+     inline bool operator>=(const wxDateTime& dt) const
+     {
+-        wxASSERT_MSG( IsValid() && dt.IsValid(), _T("invalid wxDateTime") );
++        wxASSERT_MSG( IsValid() && dt.IsValid(), wxT("invalid wxDateTime") );
+         return GetValue() >= dt.GetValue();
+     }
+ 
+     inline bool operator==(const wxDateTime& dt) const
+     {
+-        wxASSERT_MSG( IsValid() && dt.IsValid(), _T("invalid wxDateTime") );
++        wxASSERT_MSG( IsValid() && dt.IsValid(), wxT("invalid wxDateTime") );
+         return GetValue() == dt.GetValue();
+     }
+ 
+     inline bool operator!=(const wxDateTime& dt) const
+     {
+-        wxASSERT_MSG( IsValid() && dt.IsValid(), _T("invalid wxDateTime") );
++        wxASSERT_MSG( IsValid() && dt.IsValid(), wxT("invalid wxDateTime") );
+         return GetValue() != dt.GetValue();
+     }
+ 
+@@ -1062,15 +1062,15 @@ public:
+     wxString Format(const wxChar *format = wxDefaultDateTimeFormat,
+                     const TimeZone& tz = Local) const;
+         // preferred date representation for the current locale
+-    wxString FormatDate() const { return Format(_T("%x")); }
++    wxString FormatDate() const { return Format(wxT("%x")); }
+         // preferred time representation for the current locale
+-    wxString FormatTime() const { return Format(_T("%X")); }
++    wxString FormatTime() const { return Format(wxT("%X")); }
+         // returns the string representing the date in ISO 8601 format
+         // (YYYY-MM-DD)
+-    wxString FormatISODate() const { return Format(_T("%Y-%m-%d")); }
++    wxString FormatISODate() const { return Format(wxT("%Y-%m-%d")); }
+         // returns the string representing the time in ISO 8601 format
+         // (HH:MM:SS)
+-    wxString FormatISOTime() const { return Format(_T("%H:%M:%S")); }
++    wxString FormatISOTime() const { return Format(wxT("%H:%M:%S")); }
+ 
+     // implementation
+     // ------------------------------------------------------------------------
+@@ -1639,7 +1639,7 @@ inline wxDateTime::wxDateTime(double jdn)
+ 
+ inline wxDateTime& wxDateTime::Set(const Tm& tm)
+ {
+-    wxASSERT_MSG( tm.IsValid(), _T("invalid broken down date/time") );
++    wxASSERT_MSG( tm.IsValid(), wxT("invalid broken down date/time") );
+ 
+     return Set(tm.mday, (Month)tm.mon, tm.year,
+                tm.hour, tm.min, tm.sec, tm.msec);
+@@ -1670,14 +1670,14 @@ inline wxDateTime::wxDateTime(wxDateTime_t day,
+ 
+ inline wxLongLong wxDateTime::GetValue() const
+ {
+-    wxASSERT_MSG( IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid(), wxT("invalid wxDateTime"));
+ 
+     return m_time;
+ }
+ 
+ inline time_t wxDateTime::GetTicks() const
+ {
+-    wxASSERT_MSG( IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid(), wxT("invalid wxDateTime"));
+     if ( !IsInStdRange() )
+     {
+         return (time_t)-1;
+@@ -1745,21 +1745,21 @@ inline wxDateTime wxDateTime::GetYearDay(wxDateTime_t yday) const
+ 
+ inline bool wxDateTime::IsEqualTo(const wxDateTime& datetime) const
+ {
+-    wxASSERT_MSG( IsValid() && datetime.IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid() && datetime.IsValid(), wxT("invalid wxDateTime"));
+ 
+     return m_time == datetime.m_time;
+ }
+ 
+ inline bool wxDateTime::IsEarlierThan(const wxDateTime& datetime) const
+ {
+-    wxASSERT_MSG( IsValid() && datetime.IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid() && datetime.IsValid(), wxT("invalid wxDateTime"));
+ 
+     return m_time < datetime.m_time;
+ }
+ 
+ inline bool wxDateTime::IsLaterThan(const wxDateTime& datetime) const
+ {
+-    wxASSERT_MSG( IsValid() && datetime.IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid() && datetime.IsValid(), wxT("invalid wxDateTime"));
+ 
+     return m_time > datetime.m_time;
+ }
+@@ -1816,14 +1816,14 @@ inline bool wxDateTime::IsEqualUpTo(const wxDateTime& dt,
+ 
+ inline wxDateTime wxDateTime::Add(const wxTimeSpan& diff) const
+ {
+-    wxASSERT_MSG( IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid(), wxT("invalid wxDateTime"));
+ 
+     return wxDateTime(m_time + diff.GetValue());
+ }
+ 
+ inline wxDateTime& wxDateTime::Add(const wxTimeSpan& diff)
+ {
+-    wxASSERT_MSG( IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid(), wxT("invalid wxDateTime"));
+ 
+     m_time += diff.GetValue();
+ 
+@@ -1837,14 +1837,14 @@ inline wxDateTime& wxDateTime::operator+=(const wxTimeSpan& diff)
+ 
+ inline wxDateTime wxDateTime::Subtract(const wxTimeSpan& diff) const
+ {
+-    wxASSERT_MSG( IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid(), wxT("invalid wxDateTime"));
+ 
+     return wxDateTime(m_time - diff.GetValue());
+ }
+ 
+ inline wxDateTime& wxDateTime::Subtract(const wxTimeSpan& diff)
+ {
+-    wxASSERT_MSG( IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid(), wxT("invalid wxDateTime"));
+ 
+     m_time -= diff.GetValue();
+ 
+@@ -1858,7 +1858,7 @@ inline wxDateTime& wxDateTime::operator-=(const wxTimeSpan& diff)
+ 
+ inline wxTimeSpan wxDateTime::Subtract(const wxDateTime& datetime) const
+ {
+-    wxASSERT_MSG( IsValid() && datetime.IsValid(), _T("invalid wxDateTime"));
++    wxASSERT_MSG( IsValid() && datetime.IsValid(), wxT("invalid wxDateTime"));
+ 
+     return wxTimeSpan(GetValue() - datetime.GetValue());
+ }
+diff --git a/include/wx/dbgrid.h b/include/wx/dbgrid.h
+index 4e8655c..7e3b513 100644
+--- a/include/wx/dbgrid.h
++++ b/include/wx/dbgrid.h
+@@ -23,7 +23,7 @@
+ #include "wx/grid.h"
+ #include "wx/dbkeyg.h"
+ 
+-#define wxGRID_VALUE_DBAUTO     _T("dbauto")
++#define wxGRID_VALUE_DBAUTO     wxT("dbauto")
+ 
+ WX_DECLARE_USER_EXPORTED_OBJARRAY(GenericKey,keyarray,WXDLLIMPEXP_DBGRID);
+ 
+@@ -119,12 +119,12 @@ public:
+ 
+     virtual int GetNumberRows()
+     {
+-        wxLogDebug(_T(" GetNumberRows() = %i"),m_rowtotal);
++        wxLogDebug(wxT(" GetNumberRows() = %i"),m_rowtotal);
+         return m_rowtotal;
+     }
+     virtual int GetNumberCols()
+     {
+-        wxLogDebug(_T(" GetNumberCols() = %i"),m_nocols);
++        wxLogDebug(wxT(" GetNumberCols() = %i"),m_nocols);
+         return m_nocols;
+     }
+     virtual bool     IsEmptyCell(int row, int col) ;
+diff --git a/include/wx/dbtable.h b/include/wx/dbtable.h
+index 1bbef54..9fb6260 100644
+--- a/include/wx/dbtable.h
++++ b/include/wx/dbtable.h
+@@ -305,7 +305,7 @@ public:
+     HSTMT          *NewCursor(bool setCursor = false, bool bindColumns = true) {  return GetNewCursor(setCursor,bindColumns); }
+ #endif
+ 
+-    ULONG           Count(const wxString &args=_T("*"));
++    ULONG           Count(const wxString &args=wxT("*"));
+     int             DB_STATUS(void) { return(pDb->DB_STATUS); }
+ 
+     bool            IsColNull(UWORD colNumber) const;
+diff --git a/include/wx/dcbuffer.h b/include/wx/dcbuffer.h
+index 46c28ba..7249235 100644
+--- a/include/wx/dcbuffer.h
++++ b/include/wx/dcbuffer.h
+@@ -100,8 +100,8 @@ public:
+     // blitting to) is destroyed.
+     void UnMask()
+     {
+-        wxCHECK_RET( m_dc, _T("no underlying wxDC?") );
+-        wxASSERT_MSG( m_buffer && m_buffer->IsOk(), _T("invalid backing store") );
++        wxCHECK_RET( m_dc, wxT("no underlying wxDC?") );
++        wxASSERT_MSG( m_buffer && m_buffer->IsOk(), wxT("invalid backing store") );
+ 
+         wxCoord x = 0,
+                 y = 0;
+@@ -122,7 +122,7 @@ private:
+     // common part of Init()s
+     void InitCommon(wxDC *dc, int style)
+     {
+-        wxASSERT_MSG( !m_dc, _T("wxBufferedDC already initialised") );
++        wxASSERT_MSG( !m_dc, wxT("wxBufferedDC already initialised") );
+ 
+         m_dc = dc;
+         m_style = style;
+diff --git a/include/wx/dcmirror.h b/include/wx/dcmirror.h
+index bc15a39..3b9dcb9 100644
+--- a/include/wx/dcmirror.h
++++ b/include/wx/dcmirror.h
+@@ -135,7 +135,7 @@ protected:
+                            wxCoord x2, wxCoord y2,
+                            wxCoord xc, wxCoord yc)
+     {
+-        wxFAIL_MSG( _T("this is probably wrong") );
++        wxFAIL_MSG( wxT("this is probably wrong") );
+ 
+         m_dc.DoDrawArc(GetX(x1, y1), GetY(x1, y1),
+                        GetX(x2, y2), GetY(x2, y2),
+@@ -152,7 +152,7 @@ protected:
+     virtual void DoDrawEllipticArc(wxCoord x, wxCoord y, wxCoord w, wxCoord h,
+                                    double sa, double ea)
+     {
+-        wxFAIL_MSG( _T("this is probably wrong") );
++        wxFAIL_MSG( wxT("this is probably wrong") );
+ 
+         m_dc.DoDrawEllipticArc(GetX(x, y), GetY(x, y),
+                                GetX(w, h), GetY(w, h),
+@@ -256,7 +256,7 @@ protected:
+ 
+     virtual void DoSetClippingRegionAsRegion(const wxRegion& WXUNUSED(region))
+     {
+-        wxFAIL_MSG( _T("not implemented") );
++        wxFAIL_MSG( wxT("not implemented") );
+     }
+ 
+     virtual void DoSetClippingRegion(wxCoord x, wxCoord y,
+diff --git a/include/wx/debug.h b/include/wx/debug.h
+index b08a71e..3cdd990 100644
+--- a/include/wx/debug.h
++++ b/include/wx/debug.h
+@@ -123,13 +123,13 @@
+       if ( cond )                                                             \
+       {}                                                                      \
+       else                                                                    \
+-          wxOnAssert(__TFILE__, __LINE__, __WXFUNCTION__, _T(#cond), msg)
++          wxOnAssert(__TFILE__, __LINE__, __WXFUNCTION__, wxT(#cond), msg)
+   #else
+     #define wxASSERT_MSG(cond, msg)                                           \
+       if ( cond )                                                             \
+           ;                                                                   \
+       else                                                                    \
+-          wxOnAssert(__TFILE__, __LINE__, __WXFUNCTION__, _T(#cond), msg)
++          wxOnAssert(__TFILE__, __LINE__, __WXFUNCTION__, wxT(#cond), msg)
+   #endif
+ 
+   /*  special form of assert: always triggers it (in debug mode) */
+@@ -140,7 +140,7 @@
+ 
+   /*  FAIL with some message and a condition */
+   #define wxFAIL_COND_MSG(cond, msg)                                          \
+-      wxOnAssert(__TFILE__, __LINE__,  __WXFUNCTION__, _T(cond), msg)
++      wxOnAssert(__TFILE__, __LINE__,  __WXFUNCTION__, wxT(cond), msg)
+ 
+   /*  An assert helper used to avoid warning when testing constant expressions, */
+   /*  i.e. wxASSERT( sizeof(int) == 4 ) can generate a compiler warning about */
+diff --git a/include/wx/debugrpt.h b/include/wx/debugrpt.h
+index d1778f1..f05036b 100644
+--- a/include/wx/debugrpt.h
++++ b/include/wx/debugrpt.h
+@@ -161,7 +161,7 @@ public:
+     wxDebugReportUpload(const wxString& url,
+                         const wxString& input,
+                         const wxString& action,
+-                        const wxString& curl = _T("curl"));
++                        const wxString& curl = wxT("curl"));
+ 
+ protected:
+     virtual bool DoProcess();
+diff --git a/include/wx/defs.h b/include/wx/defs.h
+index f533aa7..b3ab0e2 100644
+--- a/include/wx/defs.h
++++ b/include/wx/defs.h
+@@ -915,28 +915,28 @@ inline void *wxUIntToPtr(wxUIntPtr p)
+ #if (defined(__VISUALC__) && defined(__WIN32__))
+     #define wxLongLong_t __int64
+     #define wxLongLongSuffix i64
+-    #define wxLongLongFmtSpec _T("I64")
++    #define wxLongLongFmtSpec wxT("I64")
+ #elif defined(__BORLANDC__) && defined(__WIN32__) && (__BORLANDC__ >= 0x520)
+     #define wxLongLong_t __int64
+     #define wxLongLongSuffix i64
+-    #define wxLongLongFmtSpec _T("L")
++    #define wxLongLongFmtSpec wxT("L")
+ #elif (defined(__WATCOMC__) && (defined(__WIN32__) || defined(__DOS__) || defined(__OS2__)))
+       #define wxLongLong_t __int64
+       #define wxLongLongSuffix i64
+-      #define wxLongLongFmtSpec _T("L")
++      #define wxLongLongFmtSpec wxT("L")
+ #elif defined(__DIGITALMARS__)
+       #define wxLongLong_t __int64
+       #define wxLongLongSuffix LL
+-      #define wxLongLongFmtSpec _T("ll")
++      #define wxLongLongFmtSpec wxT("ll")
+ #elif defined(__MINGW32__)
+     #define wxLongLong_t long long
+     #define wxLongLongSuffix ll
+-    #define wxLongLongFmtSpec _T("I64")
++    #define wxLongLongFmtSpec wxT("I64")
+ #elif defined(__MWERKS__)
+     #if __option(longlong)
+         #define wxLongLong_t long long
+         #define wxLongLongSuffix ll
+-        #define wxLongLongFmtSpec _T("ll")
++        #define wxLongLongFmtSpec wxT("ll")
+     #else
+         #error "The 64 bit integer support in CodeWarrior has been disabled."
+         #error "See the documentation on the 'longlong' pragma."
+@@ -944,7 +944,7 @@ inline void *wxUIntToPtr(wxUIntPtr p)
+ #elif defined(__WXPALMOS__)
+     #define wxLongLong_t int64_t
+     #define wxLongLongSuffix ll
+-    #define wxLongLongFmtSpec _T("ll")
++    #define wxLongLongFmtSpec wxT("ll")
+ #elif defined(__VISAGECPP__) && __IBMCPP__ >= 400
+     #define wxLongLong_t long long
+ #elif (defined(SIZEOF_LONG_LONG) && SIZEOF_LONG_LONG >= 8)  || \
+@@ -954,11 +954,11 @@ inline void *wxUIntToPtr(wxUIntPtr p)
+         (defined(__DJGPP__) && __DJGPP__ >= 2)
+     #define wxLongLong_t long long
+     #define wxLongLongSuffix ll
+-    #define wxLongLongFmtSpec _T("ll")
++    #define wxLongLongFmtSpec wxT("ll")
+ #elif defined(SIZEOF_LONG) && (SIZEOF_LONG == 8)
+     #define wxLongLong_t long
+     #define wxLongLongSuffix l
+-    #define wxLongLongFmtSpec _T("l")
++    #define wxLongLongFmtSpec wxT("l")
+     #define wxLongLongIsLong
+ #endif
+ 
+diff --git a/include/wx/dynlib.h b/include/wx/dynlib.h
+index fd4fe60..27eac06 100644
+--- a/include/wx/dynlib.h
++++ b/include/wx/dynlib.h
+@@ -103,7 +103,7 @@ enum wxPluginCategory
+ // type only once, as the first parameter, and creating a variable of this type
+ // called "pfn<name>" initialized with the "name" from the "dynlib"
+ #define wxDYNLIB_FUNCTION(type, name, dynlib) \
+-    type pfn ## name = (type)(dynlib).GetSymbol(_T(#name))
++    type pfn ## name = (type)(dynlib).GetSymbol(wxT(#name))
+ 
+ // ----------------------------------------------------------------------------
+ // wxDynamicLibraryDetails: contains details about a loaded wxDynamicLibrary
+diff --git a/include/wx/dynload.h b/include/wx/dynload.h
+index b90a645..b53662d 100644
+--- a/include/wx/dynload.h
++++ b/include/wx/dynload.h
+@@ -71,7 +71,7 @@ public:
+     void  RefObj() { ++m_objcount; }
+     void  UnrefObj()
+     {
+-        wxASSERT_MSG( m_objcount > 0, _T("Too many objects deleted??") );
++        wxASSERT_MSG( m_objcount > 0, wxT("Too many objects deleted??") );
+         --m_objcount;
+     }
+ 
+diff --git a/include/wx/event.h b/include/wx/event.h
+index 9022c0b..22aa281 100644
+--- a/include/wx/event.h
++++ b/include/wx/event.h
+@@ -451,7 +451,7 @@ public:
+     wxPropagateOnce(wxEvent& event) : m_event(event)
+     {
+         wxASSERT_MSG( m_event.m_propagationLevel > 0,
+-                        _T("shouldn't be used unless ShouldPropagate()!") );
++                        wxT("shouldn't be used unless ShouldPropagate()!") );
+ 
+         m_event.m_propagationLevel--;
+     }
+@@ -1398,7 +1398,7 @@ public:
+         // m_loggingOff flag is only used by wxEVT_[QUERY_]END_SESSION, it
+         // doesn't make sense for wxEVT_CLOSE_WINDOW
+         wxASSERT_MSG( m_eventType != wxEVT_CLOSE_WINDOW,
+-                      _T("this flag is for end session events only") );
++                      wxT("this flag is for end session events only") );
+ 
+         return m_loggingOff;
+     }
+diff --git a/include/wx/ffile.h b/include/wx/ffile.h
+index c3dda75..5577484 100644
+--- a/include/wx/ffile.h
++++ b/include/wx/ffile.h
+@@ -37,13 +37,13 @@ public:
+     // def ctor
+   wxFFile() { m_fp = NULL; }
+     // open specified file (may fail, use IsOpened())
+-  wxFFile(const wxChar *filename, const wxChar *mode = _T("r"));
++  wxFFile(const wxChar *filename, const wxChar *mode = wxT("r"));
+     // attach to (already opened) file
+   wxFFile(FILE *lfp) { m_fp = lfp; }
+ 
+   // open/close
+     // open a file (existing or not - the mode controls what happens)
+-  bool Open(const wxChar *filename, const wxChar *mode = _T("r"));
++  bool Open(const wxChar *filename, const wxChar *mode = wxT("r"));
+     // closes the opened file (this is a NOP if not opened)
+   bool Close();
+ 
+diff --git a/include/wx/filefn.h b/include/wx/filefn.h
+index 7e3af21..c424649 100644
+--- a/include/wx/filefn.h
++++ b/include/wx/filefn.h
+@@ -387,7 +387,7 @@ enum wxFileKind
+             #define wxHAS_LARGE_FFILES
+         #endif
+     #else
+-        #define wxFileOffsetFmtSpec _T("")
++        #define wxFileOffsetFmtSpec wxT("")
+     #endif
+     // functions
+     #define   wxClose      close
+diff --git a/include/wx/filename.h b/include/wx/filename.h
+index 314819b..c7bec56 100644
+--- a/include/wx/filename.h
++++ b/include/wx/filename.h
+@@ -488,10 +488,10 @@ public:
+     static wxULongLong GetSize(const wxString &file);
+ 
+         // returns the size in a human readable form
+-    wxString GetHumanReadableSize(const wxString &nullsize = wxGetTranslation(_T("Not available")),
++    wxString GetHumanReadableSize(const wxString &nullsize = wxGetTranslation(wxT("Not available")),
+                                   int precision = 1) const;
+     static wxString GetHumanReadableSize(const wxULongLong &sz,
+-                                         const wxString &nullsize = wxGetTranslation(_T("Not available")),
++                                         const wxString &nullsize = wxGetTranslation(wxT("Not available")),
+                                          int precision = 1);
+ 
+ 
+diff --git a/include/wx/generic/calctrl.h b/include/wx/generic/calctrl.h
+index c135bef..bbcfc13 100644
+--- a/include/wx/generic/calctrl.h
++++ b/include/wx/generic/calctrl.h
+@@ -19,7 +19,7 @@ class WXDLLEXPORT wxComboBox;
+ class WXDLLEXPORT wxStaticText;
+ class WXDLLEXPORT wxSpinCtrl;
+ 
+-#define wxCalendarNameStr _T("CalendarCtrl")
++#define wxCalendarNameStr wxT("CalendarCtrl")
+ 
+ // ----------------------------------------------------------------------------
+ // wxCalendarCtrl: a control allowing the user to pick a date interactively
+@@ -124,14 +124,14 @@ public:
+ 
+     wxCalendarDateAttr *GetAttr(size_t day) const
+     {
+-        wxCHECK_MSG( day > 0 && day < 32, NULL, _T("invalid day") );
++        wxCHECK_MSG( day > 0 && day < 32, NULL, wxT("invalid day") );
+ 
+         return m_attrs[day - 1];
+     }
+ 
+     void SetAttr(size_t day, wxCalendarDateAttr *attr)
+     {
+-        wxCHECK_RET( day > 0 && day < 32, _T("invalid day") );
++        wxCHECK_RET( day > 0 && day < 32, wxT("invalid day") );
+ 
+         delete m_attrs[day - 1];
+         m_attrs[day - 1] = attr;
+diff --git a/include/wx/generic/combo.h b/include/wx/generic/combo.h
+index 1b25185..06814aa 100644
+--- a/include/wx/generic/combo.h
++++ b/include/wx/generic/combo.h
+@@ -26,8 +26,8 @@
+ // all actions of single line text controls are supported
+ 
+ // popup/dismiss the choice window
+-#define wxACTION_COMBOBOX_POPUP     _T("popup")
+-#define wxACTION_COMBOBOX_DISMISS   _T("dismiss")
++#define wxACTION_COMBOBOX_POPUP     wxT("popup")
++#define wxACTION_COMBOBOX_DISMISS   wxT("dismiss")
+ 
+ #endif
+ 
+diff --git a/include/wx/generic/grid.h b/include/wx/generic/grid.h
+index c768756..ddc18d1 100644
+--- a/include/wx/generic/grid.h
++++ b/include/wx/generic/grid.h
+@@ -42,11 +42,11 @@ extern WXDLLIMPEXP_DATA_ADV(const wxChar) wxGridNameStr[];
+ #define WXGRID_DEFAULT_SCROLLBAR_WIDTH        16
+ 
+ // type names for grid table values
+-#define wxGRID_VALUE_STRING     _T("string")
+-#define wxGRID_VALUE_BOOL       _T("bool")
+-#define wxGRID_VALUE_NUMBER     _T("long")
+-#define wxGRID_VALUE_FLOAT      _T("double")
+-#define wxGRID_VALUE_CHOICE     _T("choice")
++#define wxGRID_VALUE_STRING     wxT("string")
++#define wxGRID_VALUE_BOOL       wxT("bool")
++#define wxGRID_VALUE_NUMBER     wxT("long")
++#define wxGRID_VALUE_FLOAT      wxT("double")
++#define wxGRID_VALUE_CHOICE     wxT("choice")
+ 
+ #define wxGRID_VALUE_TEXT wxGRID_VALUE_STRING
+ #define wxGRID_VALUE_LONG wxGRID_VALUE_NUMBER
+@@ -466,7 +466,7 @@ protected:
+ 
+     // string representation of m_valueOld
+     wxString GetString() const
+-        { return wxString::Format(_T("%ld"), m_valueOld); }
++        { return wxString::Format(wxT("%ld"), m_valueOld); }
+ 
+ private:
+     int m_min,
+@@ -546,7 +546,7 @@ public:
+ 
+     // set the string values returned by GetValue() for the true and false
+     // states, respectively
+-    static void UseStringValues(const wxString& valueTrue = _T("1"),
++    static void UseStringValues(const wxString& valueTrue = wxT("1"),
+                                 const wxString& valueFalse = wxEmptyString);
+ 
+     // return true if the given string is equal to the string representation of
+diff --git a/include/wx/generic/gridctrl.h b/include/wx/generic/gridctrl.h
+index 2581fd2..477e0f1 100644
+--- a/include/wx/generic/gridctrl.h
++++ b/include/wx/generic/gridctrl.h
+@@ -16,8 +16,8 @@
+ 
+ #if wxUSE_GRID
+ 
+-#define wxGRID_VALUE_CHOICEINT    _T("choiceint")
+-#define wxGRID_VALUE_DATETIME     _T("datetime")
++#define wxGRID_VALUE_CHOICEINT    wxT("choiceint")
++#define wxGRID_VALUE_DATETIME     wxT("datetime")
+ 
+ #if wxUSE_DATETIME
+ 
+diff --git a/include/wx/generic/spinctlg.h b/include/wx/generic/spinctlg.h
+index 940d214..b47a7a8 100644
+--- a/include/wx/generic/spinctlg.h
++++ b/include/wx/generic/spinctlg.h
+@@ -41,7 +41,7 @@ public:
+                const wxSize& size = wxDefaultSize,
+                long style = wxSP_ARROW_KEYS,
+                int min = 0, int max = 100, int initial = 0,
+-               const wxString& name = _T("wxSpinCtrl"))
++               const wxString& name = wxT("wxSpinCtrl"))
+     {
+         Init();
+         Create(parent, id, value, pos, size, style, min, max, initial, name);
+@@ -54,7 +54,7 @@ public:
+                 const wxSize& size = wxDefaultSize,
+                 long style = wxSP_ARROW_KEYS,
+                 int min = 0, int max = 100, int initial = 0,
+-                const wxString& name = _T("wxSpinCtrl"));
++                const wxString& name = wxT("wxSpinCtrl"));
+ 
+     virtual ~wxSpinCtrl();
+ 
+@@ -124,7 +124,7 @@ public:
+                const wxSize& size = wxDefaultSize,
+                long style = wxSP_ARROW_KEYS,
+                int min = 0, int max = 100, int initial = 0,
+-               const wxString& name = _T("wxSpinCtrl"))
++               const wxString& name = wxT("wxSpinCtrl"))
+     {
+         Create(parent, id, value, pos, size, style, min, max, initial, name);
+     }
+@@ -136,7 +136,7 @@ public:
+                 const wxSize& size = wxDefaultSize,
+                 long style = wxSP_ARROW_KEYS,
+                 int min = 0, int max = 100, int initial = 0,
+-                const wxString& name = _T("wxSpinCtrl"))
++                const wxString& name = wxT("wxSpinCtrl"))
+     {
+         SetRange(min, max);
+ 
+diff --git a/include/wx/generic/splitter.h b/include/wx/generic/splitter.h
+index 8601083..d2014d5 100644
+--- a/include/wx/generic/splitter.h
++++ b/include/wx/generic/splitter.h
+@@ -91,7 +91,7 @@ public:
+     void SetSplitMode(int mode)
+     {
+         wxASSERT_MSG( mode == wxSPLIT_VERTICAL || mode == wxSPLIT_HORIZONTAL,
+-                      _T("invalid split mode") );
++                      wxT("invalid split mode") );
+ 
+         m_splitMode = (wxSplitMode)mode;
+     }
+diff --git a/include/wx/glcanvas.h b/include/wx/glcanvas.h
+index 25e2eac..c6ed1c8 100644
+--- a/include/wx/glcanvas.h
++++ b/include/wx/glcanvas.h
+@@ -44,7 +44,7 @@ enum
+     WX_GL_MIN_ACCUM_ALPHA  /* use alpha buffer with most bits (> MIN_ACCUM_ALPHA bits) */
+ };
+ 
+-#define wxGLCanvasName _T("GLCanvas")
++#define wxGLCanvasName wxT("GLCanvas")
+ 
+ #if defined(__WXMSW__)
+ #include "wx/msw/glcanvas.h"
+diff --git a/include/wx/gtk/checklst.h b/include/wx/gtk/checklst.h
+index fa89477..2c1ff65 100644
+--- a/include/wx/gtk/checklst.h
++++ b/include/wx/gtk/checklst.h
+@@ -18,10 +18,10 @@
+ // there is no "right" choice of the checkbox indicators, so allow the user to
+ // define them himself if he wants
+ #ifndef wxCHECKLBOX_CHECKED
+-    #define wxCHECKLBOX_CHECKED   _T('x')
+-    #define wxCHECKLBOX_UNCHECKED _T(' ')
++    #define wxCHECKLBOX_CHECKED   wxT('x')
++    #define wxCHECKLBOX_UNCHECKED wxT(' ')
+ 
+-    #define wxCHECKLBOX_STRING    _T("[ ] ")
++    #define wxCHECKLBOX_STRING    wxT("[ ] ")
+ #endif
+ 
+ //-----------------------------------------------------------------------------
+diff --git a/include/wx/gtk/spinctrl.h b/include/wx/gtk/spinctrl.h
+index 2929f7f..8fc1dc9 100644
+--- a/include/wx/gtk/spinctrl.h
++++ b/include/wx/gtk/spinctrl.h
+@@ -26,7 +26,7 @@ public:
+                const wxSize& size = wxDefaultSize,
+                long style = wxSP_ARROW_KEYS,
+                int min = 0, int max = 100, int initial = 0,
+-               const wxString& name = _T("wxSpinCtrl"))
++               const wxString& name = wxT("wxSpinCtrl"))
+     {
+         Create(parent, id, value, pos, size, style, min, max, initial, name);
+     }
+@@ -38,7 +38,7 @@ public:
+                 const wxSize& size = wxDefaultSize,
+                 long style = wxSP_ARROW_KEYS,
+                 int min = 0, int max = 100, int initial = 0,
+-                const wxString& name = _T("wxSpinCtrl"));
++                const wxString& name = wxT("wxSpinCtrl"));
+ 
+     void SetValue(const wxString& text);
+     void SetSelection(long from, long to);
+diff --git a/include/wx/gtk1/checklst.h b/include/wx/gtk1/checklst.h
+index 5a9b8cb..de75b1f 100644
+--- a/include/wx/gtk1/checklst.h
++++ b/include/wx/gtk1/checklst.h
+@@ -18,10 +18,10 @@
+ // there is no "right" choice of the checkbox indicators, so allow the user to
+ // define them himself if he wants
+ #ifndef wxCHECKLBOX_CHECKED
+-    #define wxCHECKLBOX_CHECKED   _T('x')
+-    #define wxCHECKLBOX_UNCHECKED _T(' ')
++    #define wxCHECKLBOX_CHECKED   wxT('x')
++    #define wxCHECKLBOX_UNCHECKED wxT(' ')
+ 
+-    #define wxCHECKLBOX_STRING    _T("[ ] ")
++    #define wxCHECKLBOX_STRING    wxT("[ ] ")
+ #endif
+ 
+ //-----------------------------------------------------------------------------
+diff --git a/include/wx/gtk1/spinctrl.h b/include/wx/gtk1/spinctrl.h
+index 7c94538..2c60b77 100644
+--- a/include/wx/gtk1/spinctrl.h
++++ b/include/wx/gtk1/spinctrl.h
+@@ -32,7 +32,7 @@ public:
+                const wxSize& size = wxDefaultSize,
+                long style = wxSP_ARROW_KEYS,
+                int min = 0, int max = 100, int initial = 0,
+-               const wxString& name = _T("wxSpinCtrl"))
++               const wxString& name = wxT("wxSpinCtrl"))
+     {
+         Create(parent, id, value, pos, size, style, min, max, initial, name);
+     }
+@@ -44,7 +44,7 @@ public:
+                 const wxSize& size = wxDefaultSize,
+                 long style = wxSP_ARROW_KEYS,
+                 int min = 0, int max = 100, int initial = 0,
+-                const wxString& name = _T("wxSpinCtrl"));
++                const wxString& name = wxT("wxSpinCtrl"));
+ 
+     void SetValue(const wxString& text);
+     void SetSelection(long from, long to);
+diff --git a/include/wx/imagbmp.h b/include/wx/imagbmp.h
+index b7a5222..780736b 100644
+--- a/include/wx/imagbmp.h
++++ b/include/wx/imagbmp.h
+@@ -14,7 +14,7 @@
+ 
+ // defines for saving the BMP file in different formats, Bits Per Pixel
+ // USE: wximage.SetOption( wxIMAGE_OPTION_BMP_FORMAT, wxBMP_xBPP );
+-#define wxIMAGE_OPTION_BMP_FORMAT wxString(_T("wxBMP_FORMAT"))
++#define wxIMAGE_OPTION_BMP_FORMAT wxString(wxT("wxBMP_FORMAT"))
+ 
+ // These two options are filled in upon reading CUR file and can (should) be
+ // specified when saving a CUR file - they define the hotspot of the cursor:
+@@ -52,10 +52,10 @@ class WXDLLEXPORT wxBMPHandler : public wxImageHandler
+ public:
+     wxBMPHandler()
+     {
+-        m_name = _T("Windows bitmap file");
+-        m_extension = _T("bmp");
++        m_name = wxT("Windows bitmap file");
++        m_extension = wxT("bmp");
+         m_type = wxBITMAP_TYPE_BMP;
+-        m_mime = _T("image/x-bmp");
++        m_mime = wxT("image/x-bmp");
+     }
+ 
+ #if wxUSE_STREAMS
+@@ -86,10 +86,10 @@ class WXDLLEXPORT wxICOHandler : public wxBMPHandler
+ public:
+     wxICOHandler()
+     {
+-        m_name = _T("Windows icon file");
+-        m_extension = _T("ico");
++        m_name = wxT("Windows icon file");
++        m_extension = wxT("ico");
+         m_type = wxBITMAP_TYPE_ICO;
+-        m_mime = _T("image/x-ico");
++        m_mime = wxT("image/x-ico");
+     }
+ 
+ #if wxUSE_STREAMS
+@@ -115,10 +115,10 @@ class WXDLLEXPORT wxCURHandler : public wxICOHandler
+ public:
+     wxCURHandler()
+     {
+-        m_name = _T("Windows cursor file");
+-        m_extension = _T("cur");
++        m_name = wxT("Windows cursor file");
++        m_extension = wxT("cur");
+         m_type = wxBITMAP_TYPE_CUR;
+-        m_mime = _T("image/x-cur");
++        m_mime = wxT("image/x-cur");
+     }
+ 
+     // VS: This handler's meat is implemented inside wxICOHandler (the two
+@@ -142,10 +142,10 @@ class WXDLLEXPORT wxANIHandler : public wxCURHandler
+ public:
+     wxANIHandler()
+     {
+-        m_name = _T("Windows animated cursor file");
+-        m_extension = _T("ani");
++        m_name = wxT("Windows animated cursor file");
++        m_extension = wxT("ani");
+         m_type = wxBITMAP_TYPE_ANI;
+-        m_mime = _T("image/x-ani");
++        m_mime = wxT("image/x-ani");
+     }
+ 
+ 
+diff --git a/include/wx/image.h b/include/wx/image.h
+index 18d89c6..c9dfe1a 100644
+--- a/include/wx/image.h
++++ b/include/wx/image.h
+@@ -27,14 +27,14 @@
+ // which breaks the compilation below
+ #undef index
+ 
+-#define wxIMAGE_OPTION_QUALITY  wxString(_T("quality"))
+-#define wxIMAGE_OPTION_FILENAME wxString(_T("FileName"))
++#define wxIMAGE_OPTION_QUALITY  wxString(wxT("quality"))
++#define wxIMAGE_OPTION_FILENAME wxString(wxT("FileName"))
+ 
+-#define wxIMAGE_OPTION_RESOLUTION            wxString(_T("Resolution"))
+-#define wxIMAGE_OPTION_RESOLUTIONX           wxString(_T("ResolutionX"))
+-#define wxIMAGE_OPTION_RESOLUTIONY           wxString(_T("ResolutionY"))
++#define wxIMAGE_OPTION_RESOLUTION            wxString(wxT("Resolution"))
++#define wxIMAGE_OPTION_RESOLUTIONX           wxString(wxT("ResolutionX"))
++#define wxIMAGE_OPTION_RESOLUTIONY           wxString(wxT("ResolutionY"))
+ 
+-#define wxIMAGE_OPTION_RESOLUTIONUNIT        wxString(_T("ResolutionUnit"))
++#define wxIMAGE_OPTION_RESOLUTIONUNIT        wxString(wxT("ResolutionUnit"))
+ 
+ // constants used with wxIMAGE_OPTION_RESOLUTIONUNIT
+ enum
+diff --git a/include/wx/imagtiff.h b/include/wx/imagtiff.h
+index d236b75..d807ae7 100644
+--- a/include/wx/imagtiff.h
++++ b/include/wx/imagtiff.h
+@@ -21,10 +21,10 @@
+ #include "wx/image.h"
+ 
+ // defines for wxImage::SetOption
+-#define wxIMAGE_OPTION_BITSPERSAMPLE               wxString(_T("BitsPerSample"))
+-#define wxIMAGE_OPTION_SAMPLESPERPIXEL             wxString(_T("SamplesPerPixel"))
+-#define wxIMAGE_OPTION_COMPRESSION                 wxString(_T("Compression"))
+-#define wxIMAGE_OPTION_IMAGEDESCRIPTOR             wxString(_T("ImageDescriptor"))
++#define wxIMAGE_OPTION_BITSPERSAMPLE               wxString(wxT("BitsPerSample"))
++#define wxIMAGE_OPTION_SAMPLESPERPIXEL             wxString(wxT("SamplesPerPixel"))
++#define wxIMAGE_OPTION_COMPRESSION                 wxString(wxT("Compression"))
++#define wxIMAGE_OPTION_IMAGEDESCRIPTOR             wxString(wxT("ImageDescriptor"))
+ 
+ class WXDLLEXPORT wxTIFFHandler: public wxImageHandler
+ {
+diff --git a/include/wx/intl.h b/include/wx/intl.h
+index 0322f41..b3c934e 100644
+--- a/include/wx/intl.h
++++ b/include/wx/intl.h
+@@ -42,13 +42,13 @@ enum wxLayoutDirection
+ // --keyword="_" --keyword="wxPLURAL:1,2" options
+ // to extract the strings from the sources)
+ #ifndef WXINTL_NO_GETTEXT_MACRO
+-    #define _(s)                     wxGetTranslation(_T(s))
+-    #define wxPLURAL(sing, plur, n)  wxGetTranslation(_T(sing), _T(plur), n)
++    #define _(s)                     wxGetTranslation(wxT(s))
++    #define wxPLURAL(sing, plur, n)  wxGetTranslation(wxT(sing), wxT(plur), n)
+ #endif
+ 
+ // another one which just marks the strings for extraction, but doesn't
+ // perform the translation (use -kwxTRANSLATE with xgettext!)
+-#define wxTRANSLATE(str) _T(str)
++#define wxTRANSLATE(str) wxT(str)
+ 
+ // ----------------------------------------------------------------------------
+ // forward decls
+@@ -590,12 +590,12 @@ wxGetTranslation(const wxChar *sz1, const wxChar *sz2,
+ 
+ #if !defined(WXINTL_NO_GETTEXT_MACRO)
+     #if !defined(_)
+-        #define _(s)                 (_T(s))
++        #define _(s)                 (wxT(s))
+     #endif
+-    #define wxPLURAL(sing, plur, n)  ((n) == 1 ? _T(sing) : _T(plur))
++    #define wxPLURAL(sing, plur, n)  ((n) == 1 ? wxT(sing) : wxT(plur))
+ #endif
+ 
+-#define wxTRANSLATE(str) _T(str)
++#define wxTRANSLATE(str) wxT(str)
+ 
+ inline const wxChar *
+ wxGetTranslation(const wxChar *sz, const wxChar * WXUNUSED(domain) = NULL)
+@@ -609,10 +609,10 @@ wxGetTranslation(const wxChar *sz, const wxChar * WXUNUSED(domain) = NULL)
+ // wxTRANSLATE) too
+ #if !defined(WXINTL_NO_GETTEXT_MACRO)
+     #if !defined(gettext_noop)
+-        #define gettext_noop(str) _T(str)
++        #define gettext_noop(str) wxT(str)
+     #endif
+     #if !defined(N_)
+-        #define N_(s)             _T(s)
++        #define N_(s)             wxT(s)
+     #endif
+ #endif
+ 
+diff --git a/include/wx/list.h b/include/wx/list.h
+index 821a0f1..f6d94d2 100644
+--- a/include/wx/list.h
++++ b/include/wx/list.h
+@@ -207,7 +207,7 @@ private:
+             bool operator==(const compatibility_iterator& i) const            \
+             {                                                                 \
+                 wxASSERT_MSG( m_list && i.m_list,                             \
+-                              _T("comparing invalid iterators is illegal") ); \
++                              wxT("comparing invalid iterators is illegal") ); \
+                 return (m_list == i.m_list) && (m_iter == i.m_iter);          \
+             }                                                                 \
+             bool operator!=(const compatibility_iterator& i) const            \
+diff --git a/include/wx/longlong.h b/include/wx/longlong.h
+index 628efaa..50be474 100644
+--- a/include/wx/longlong.h
++++ b/include/wx/longlong.h
+@@ -177,7 +177,7 @@ public:
+     long ToLong() const
+     {
+         wxASSERT_MSG( (m_ll >= LONG_MIN) && (m_ll <= LONG_MAX),
+-                      _T("wxLongLong to long conversion loss of precision") );
++                      wxT("wxLongLong to long conversion loss of precision") );
+ 
+         return wx_truncate_cast(long, m_ll);
+     }
+@@ -405,7 +405,7 @@ public:
+     unsigned long ToULong() const
+     {
+         wxASSERT_MSG( m_ll <= LONG_MAX,
+-                      _T("wxULongLong to long conversion loss of precision") );
++                      wxT("wxULongLong to long conversion loss of precision") );
+ 
+         return wx_truncate_cast(unsigned long, m_ll);
+     }
+@@ -683,7 +683,7 @@ public:
+     long ToLong() const
+     {
+         wxASSERT_MSG( (m_hi == 0l) || (m_hi == -1l),
+-                      _T("wxLongLong to long conversion loss of precision") );
++                      wxT("wxLongLong to long conversion loss of precision") );
+ 
+         return (long)m_lo;
+     }
+@@ -908,7 +908,7 @@ public:
+     unsigned long ToULong() const
+     {
+         wxASSERT_MSG( m_hi == 0ul,
+-                      _T("wxULongLong to long conversion loss of precision") );
++                      wxT("wxULongLong to long conversion loss of precision") );
+ 
+         return (unsigned long)m_lo;
+     }
+diff --git a/include/wx/mimetype.h b/include/wx/mimetype.h
+index 9717235..8602050 100644
+--- a/include/wx/mimetype.h
++++ b/include/wx/mimetype.h
+@@ -51,12 +51,12 @@ class WXDLLIMPEXP_BASE wxMimeType : public wxString
+ public:
+     // all string ctors here
+ 
+-    wxString GetType() const { return BeforeFirst(_T('/')); }
+-    wxString GetSubType() const { return AfterFirst(_T('/')); }
++    wxString GetType() const { return BeforeFirst(wxT('/')); }
++    wxString GetSubType() const { return AfterFirst(wxT('/')); }
+ 
+     void SetSubType(const wxString& subtype)
+     {
+-        *this = GetType() + _T('/') + subtype;
++        *this = GetType() + wxT('/') + subtype;
+     }
+ 
+     bool Matches(const wxMimeType& wildcard)
+diff --git a/include/wx/module.h b/include/wx/module.h
+index 18b235b..ffeff9f 100644
+--- a/include/wx/module.h
++++ b/include/wx/module.h
+@@ -68,7 +68,7 @@ protected:
+     // after that
+     void AddDependency(wxClassInfo *dep)
+     {
+-        wxCHECK_RET( dep, _T("NULL module dependency") );
++        wxCHECK_RET( dep, wxT("NULL module dependency") );
+ 
+         m_dependencies.Add(dep);
+     }
+diff --git a/include/wx/msgdlg.h b/include/wx/msgdlg.h
+index d1e212a..f67a38f 100644
+--- a/include/wx/msgdlg.h
++++ b/include/wx/msgdlg.h
+@@ -23,10 +23,10 @@ protected:
+     void SetMessageDialogStyle(long style)
+     {
+         wxASSERT_MSG( ((style & wxYES_NO) == wxYES_NO) || ((style & wxYES_NO) == 0),
+-                      _T("wxYES and wxNO may only be used together in wxMessageDialog") );
++                      wxT("wxYES and wxNO may only be used together in wxMessageDialog") );
+ 
+         wxASSERT_MSG( (style & wxID_OK) != wxID_OK,
+-                      _T("wxMessageBox: Did you mean wxOK (and not wxID_OK)?") );
++                      wxT("wxMessageBox: Did you mean wxOK (and not wxID_OK)?") );
+ 
+         m_dialogStyle = style;
+     }
+diff --git a/include/wx/object.h b/include/wx/object.h
+index 2ff6a51..e2b60e3 100644
+--- a/include/wx/object.h
++++ b/include/wx/object.h
+@@ -311,7 +311,7 @@ name##PluginSentinel  m_pluginsentinel;
+ #ifdef __WXDEBUG__
+ inline void* wxCheckCast(void *ptr)
+ {
+-    wxASSERT_MSG( ptr, _T("wxStaticCast() used incorrectly") );
++    wxASSERT_MSG( ptr, wxT("wxStaticCast() used incorrectly") );
+     return ptr;
+ }
+ #define wxStaticCast(obj, className) \
+diff --git a/include/wx/palette.h b/include/wx/palette.h
+index 9a09456..43757ab 100644
+--- a/include/wx/palette.h
++++ b/include/wx/palette.h
+@@ -27,7 +27,7 @@ public:
+ 
+     virtual bool Ok() const { return IsOk(); }
+     virtual bool IsOk() const = 0;
+-    virtual int GetColoursCount() const { wxFAIL_MSG( _T("not implemented") ); return 0; }
++    virtual int GetColoursCount() const { wxFAIL_MSG( wxT("not implemented") ); return 0; }
+ };
+ 
+ #if defined(__WXPALMOS__)
+diff --git a/include/wx/private/fileback.h b/include/wx/private/fileback.h
+index 534a0f3..7f5e722 100644
+--- a/include/wx/private/fileback.h
++++ b/include/wx/private/fileback.h
+@@ -33,7 +33,7 @@ public:
+     // backing file is never created and the backing is done with memory.
+     wxBackingFile(wxInputStream *stream,
+                   size_t bufsize = DefaultBufSize,
+-                  const wxString& prefix = _T("wxbf"));
++                  const wxString& prefix = wxT("wxbf"));
+ 
+     wxBackingFile() : m_impl(NULL) { }
+     ~wxBackingFile();
+diff --git a/include/wx/protocol/ftp.h b/include/wx/protocol/ftp.h
+index b074e15..0c5cfbc 100644
+--- a/include/wx/protocol/ftp.h
++++ b/include/wx/protocol/ftp.h
+@@ -175,7 +175,7 @@ protected:
+ 
+ // the trace mask used by assorted wxLogTrace() in ftp code, do
+ // wxLog::AddTraceMask(FTP_TRACE_MASK) to see them in output
+-#define FTP_TRACE_MASK _T("ftp")
++#define FTP_TRACE_MASK wxT("ftp")
+ 
+ #endif // wxUSE_PROTOCOL_FTP
+ 
+diff --git a/include/wx/recguard.h b/include/wx/recguard.h
+index f2c6ffe..8133a12 100644
+--- a/include/wx/recguard.h
++++ b/include/wx/recguard.h
+@@ -35,7 +35,7 @@ public:
+ 
+     ~wxRecursionGuard()
+     {
+-        wxASSERT_MSG( m_flag > 0, _T("unbalanced wxRecursionGuards!?") );
++        wxASSERT_MSG( m_flag > 0, wxT("unbalanced wxRecursionGuards!?") );
+ 
+         m_flag--;
+     }
+diff --git a/include/wx/selstore.h b/include/wx/selstore.h
+index 7df7e79..fca6043 100644
+--- a/include/wx/selstore.h
++++ b/include/wx/selstore.h
+@@ -51,7 +51,7 @@ public:
+     void Clear() { m_itemsSel.Clear(); m_count = 0; m_defaultState = false; }
+ 
+     // must be called when a new item is inserted/added
+-    void OnItemAdd(size_t WXUNUSED(item)) { wxFAIL_MSG( _T("TODO") ); }
++    void OnItemAdd(size_t WXUNUSED(item)) { wxFAIL_MSG( wxT("TODO") ); }
+ 
+     // must be called when an item is deleted
+     void OnItemDelete(size_t item);
+diff --git a/include/wx/sound.h b/include/wx/sound.h
+index 765f818..4596cd4 100644
+--- a/include/wx/sound.h
++++ b/include/wx/sound.h
+@@ -43,7 +43,7 @@ public:
+     {
+         wxASSERT_MSG( (flags & wxSOUND_LOOP) == 0 ||
+                       (flags & wxSOUND_ASYNC) != 0,
+-                     _T("sound can only be looped asynchronously") );
++                     wxT("sound can only be looped asynchronously") );
+         return DoPlay(flags);
+     }
+ #if WXWIN_COMPATIBILITY_2_4
+diff --git a/include/wx/spinbutt.h b/include/wx/spinbutt.h
+index 72e250b..52677a6 100644
+--- a/include/wx/spinbutt.h
++++ b/include/wx/spinbutt.h
+@@ -23,7 +23,7 @@
+ #include "wx/control.h"
+ #include "wx/event.h"
+ 
+-#define wxSPIN_BUTTON_NAME _T("wxSpinButton")
++#define wxSPIN_BUTTON_NAME wxT("wxSpinButton")
+ 
+ // ----------------------------------------------------------------------------
+ //  The wxSpinButton is like a small scrollbar than is often placed next
+diff --git a/include/wx/stopwatch.h b/include/wx/stopwatch.h
+index 9f1d188..29a9307 100644
+--- a/include/wx/stopwatch.h
++++ b/include/wx/stopwatch.h
+@@ -40,7 +40,7 @@ public:
+     void Resume()
+     {
+         wxASSERT_MSG( m_pauseCount > 0,
+-                      _T("Resuming stop watch which is not paused") );
++                      wxT("Resuming stop watch which is not paused") );
+ 
+         if ( --m_pauseCount == 0 )
+             Start(m_pause);
+diff --git a/include/wx/string.h b/include/wx/string.h
+index e133bc6..aa062e8 100644
+--- a/include/wx/string.h
++++ b/include/wx/string.h
+@@ -70,7 +70,7 @@ class WXDLLIMPEXP_BASE wxString;
+ 
+ // implementation only
+ #define   wxASSERT_VALID_INDEX(i) \
+-    wxASSERT_MSG( (size_t)(i) <= length(), _T("invalid index in wxString") )
++    wxASSERT_MSG( (size_t)(i) <= length(), wxT("invalid index in wxString") )
+ 
+ // ----------------------------------------------------------------------------
+ // constants
+@@ -349,7 +349,7 @@ public:
+   wxStringBase(const wxStringBase& stringSrc)
+   {
+     wxASSERT_MSG( stringSrc.GetStringData()->IsValid(),
+-                  _T("did you forget to call UngetWriteBuf()?") );
++                  wxT("did you forget to call UngetWriteBuf()?") );
+ 
+     if ( stringSrc.empty() ) {
+       // nothing to do for an empty string
+@@ -376,7 +376,7 @@ public:
+   wxStringBase(const wxStringBase& str, size_t nPos, size_t nLen)
+   {
+     wxASSERT_MSG( str.GetStringData()->IsValid(),
+-                  _T("did you forget to call UngetWriteBuf()?") );
++                  wxT("did you forget to call UngetWriteBuf()?") );
+     Init();
+     size_t strLen = str.length() - nPos; nLen = strLen < nLen ? strLen : nLen;
+     InitWith(str.c_str(), nPos, nLen);
+@@ -754,7 +754,7 @@ public:
+   {
+     Truncate(0);
+ 
+-    wxASSERT_MSG( empty(), _T("string not empty after call to Empty()?") );
++    wxASSERT_MSG( empty(), wxT("string not empty after call to Empty()?") );
+   }
+     // empty the string and free memory
+   void Clear()
+@@ -785,7 +785,7 @@ public:
+     // get last character
+     wxChar  Last() const
+       {
+-          wxASSERT_MSG( !empty(), _T("wxString: index out of bounds") );
++          wxASSERT_MSG( !empty(), wxT("wxString: index out of bounds") );
+ 
+           return at(length() - 1);
+       }
+@@ -793,7 +793,7 @@ public:
+     // get writable last character
+     wxChar& Last()
+       {
+-          wxASSERT_MSG( !empty(), _T("wxString: index out of bounds") );
++          wxASSERT_MSG( !empty(), wxT("wxString: index out of bounds") );
+           return at(length() - 1);
+       }
+ 
+@@ -993,7 +993,7 @@ public:
+   {
+ #if !wxUSE_STL
+     wxASSERT_MSG( s.GetStringData()->IsValid(),
+-                  _T("did you forget to call UngetWriteBuf()?") );
++                  wxT("did you forget to call UngetWriteBuf()?") );
+ #endif
+ 
+     append(s);
+@@ -1058,36 +1058,36 @@ public:
+   // stream-like functions
+       // insert an int into string
+   wxString& operator<<(int i)
+-    { return (*this) << Format(_T("%d"), i); }
++    { return (*this) << Format(wxT("%d"), i); }
+       // insert an unsigned int into string
+   wxString& operator<<(unsigned int ui)
+-    { return (*this) << Format(_T("%u"), ui); }
++    { return (*this) << Format(wxT("%u"), ui); }
+       // insert a long into string
+   wxString& operator<<(long l)
+-    { return (*this) << Format(_T("%ld"), l); }
++    { return (*this) << Format(wxT("%ld"), l); }
+       // insert an unsigned long into string
+   wxString& operator<<(unsigned long ul)
+-    { return (*this) << Format(_T("%lu"), ul); }
++    { return (*this) << Format(wxT("%lu"), ul); }
+ #if defined wxLongLong_t && !defined wxLongLongIsLong
+       // insert a long long if they exist and aren't longs
+   wxString& operator<<(wxLongLong_t ll)
+     {
+-      const wxChar *fmt = _T("%") wxLongLongFmtSpec _T("d");
++      const wxChar *fmt = wxT("%") wxLongLongFmtSpec wxT("d");
+       return (*this) << Format(fmt, ll);
+     }
+       // insert an unsigned long long
+   wxString& operator<<(wxULongLong_t ull)
+     {
+-      const wxChar *fmt = _T("%") wxLongLongFmtSpec _T("u");
++      const wxChar *fmt = wxT("%") wxLongLongFmtSpec wxT("u");
+       return (*this) << Format(fmt , ull);
+     }
+ #endif
+       // insert a float into string
+   wxString& operator<<(float f)
+-    { return (*this) << Format(_T("%f"), f); }
++    { return (*this) << Format(wxT("%f"), f); }
+       // insert a double into string
+   wxString& operator<<(double d)
+-    { return (*this) << Format(_T("%g"), d); }
++    { return (*this) << Format(wxT("%g"), d); }
+ 
+   // string comparison
+     // case-sensitive comparison (returns a value < 0, = 0 or > 0)
+diff --git a/include/wx/tbarbase.h b/include/wx/tbarbase.h
+index 8dae3d1..ca34ba7 100644
+--- a/include/wx/tbarbase.h
++++ b/include/wx/tbarbase.h
+@@ -115,7 +115,7 @@ public:
+ 
+     wxControl *GetControl() const
+     {
+-        wxASSERT_MSG( IsControl(), _T("this toolbar tool is not a control") );
++        wxASSERT_MSG( IsControl(), wxT("this toolbar tool is not a control") );
+ 
+         return m_control;
+     }
+@@ -129,7 +129,7 @@ public:
+     int GetStyle() const { return m_toolStyle; }
+     wxItemKind GetKind() const
+     {
+-        wxASSERT_MSG( IsButton(), _T("only makes sense for buttons") );
++        wxASSERT_MSG( IsButton(), wxT("only makes sense for buttons") );
+ 
+         return m_kind;
+     }
+diff --git a/include/wx/thrimpl.cpp b/include/wx/thrimpl.cpp
+index d8226ec..e0fb247 100644
+--- a/include/wx/thrimpl.cpp
++++ b/include/wx/thrimpl.cpp
+@@ -39,7 +39,7 @@ bool wxMutex::IsOk() const
+ wxMutexError wxMutex::Lock()
+ {
+     wxCHECK_MSG( m_internal, wxMUTEX_INVALID,
+-                 _T("wxMutex::Lock(): not initialized") );
++                 wxT("wxMutex::Lock(): not initialized") );
+ 
+     return m_internal->Lock();
+ }
+@@ -47,7 +47,7 @@ wxMutexError wxMutex::Lock()
+ wxMutexError wxMutex::TryLock()
+ {
+     wxCHECK_MSG( m_internal, wxMUTEX_INVALID,
+-                 _T("wxMutex::TryLock(): not initialized") );
++                 wxT("wxMutex::TryLock(): not initialized") );
+ 
+     return m_internal->TryLock();
+ }
+@@ -55,7 +55,7 @@ wxMutexError wxMutex::TryLock()
+ wxMutexError wxMutex::Unlock()
+ {
+     wxCHECK_MSG( m_internal, wxMUTEX_INVALID,
+-                 _T("wxMutex::Unlock(): not initialized") );
++                 wxT("wxMutex::Unlock(): not initialized") );
+ 
+     return m_internal->Unlock();
+ }
+@@ -243,7 +243,7 @@ bool wxCondition::IsOk() const
+ wxCondError wxCondition::Wait()
+ {
+     wxCHECK_MSG( m_internal, wxCOND_INVALID,
+-                 _T("wxCondition::Wait(): not initialized") );
++                 wxT("wxCondition::Wait(): not initialized") );
+ 
+     return m_internal->Wait();
+ }
+@@ -251,7 +251,7 @@ wxCondError wxCondition::Wait()
+ wxCondError wxCondition::WaitTimeout(unsigned long milliseconds)
+ {
+     wxCHECK_MSG( m_internal, wxCOND_INVALID,
+-                 _T("wxCondition::Wait(): not initialized") );
++                 wxT("wxCondition::Wait(): not initialized") );
+ 
+     return m_internal->WaitTimeout(milliseconds);
+ }
+@@ -259,7 +259,7 @@ wxCondError wxCondition::WaitTimeout(unsigned long milliseconds)
+ wxCondError wxCondition::Signal()
+ {
+     wxCHECK_MSG( m_internal, wxCOND_INVALID,
+-                 _T("wxCondition::Signal(): not initialized") );
++                 wxT("wxCondition::Signal(): not initialized") );
+ 
+     return m_internal->Signal();
+ }
+@@ -267,7 +267,7 @@ wxCondError wxCondition::Signal()
+ wxCondError wxCondition::Broadcast()
+ {
+     wxCHECK_MSG( m_internal, wxCOND_INVALID,
+-                 _T("wxCondition::Broadcast(): not initialized") );
++                 wxT("wxCondition::Broadcast(): not initialized") );
+ 
+     return m_internal->Broadcast();
+ }
+@@ -299,7 +299,7 @@ bool wxSemaphore::IsOk() const
+ wxSemaError wxSemaphore::Wait()
+ {
+     wxCHECK_MSG( m_internal, wxSEMA_INVALID,
+-                 _T("wxSemaphore::Wait(): not initialized") );
++                 wxT("wxSemaphore::Wait(): not initialized") );
+ 
+     return m_internal->Wait();
+ }
+@@ -307,7 +307,7 @@ wxSemaError wxSemaphore::Wait()
+ wxSemaError wxSemaphore::TryWait()
+ {
+     wxCHECK_MSG( m_internal, wxSEMA_INVALID,
+-                 _T("wxSemaphore::TryWait(): not initialized") );
++                 wxT("wxSemaphore::TryWait(): not initialized") );
+ 
+     return m_internal->TryWait();
+ }
+@@ -315,7 +315,7 @@ wxSemaError wxSemaphore::TryWait()
+ wxSemaError wxSemaphore::WaitTimeout(unsigned long milliseconds)
+ {
+     wxCHECK_MSG( m_internal, wxSEMA_INVALID,
+-                 _T("wxSemaphore::WaitTimeout(): not initialized") );
++                 wxT("wxSemaphore::WaitTimeout(): not initialized") );
+ 
+     return m_internal->WaitTimeout(milliseconds);
+ }
+@@ -323,7 +323,7 @@ wxSemaError wxSemaphore::WaitTimeout(unsigned long milliseconds)
+ wxSemaError wxSemaphore::Post()
+ {
+     wxCHECK_MSG( m_internal, wxSEMA_INVALID,
+-                 _T("wxSemaphore::Post(): not initialized") );
++                 wxT("wxSemaphore::Post(): not initialized") );
+ 
+     return m_internal->Post();
+ }
+diff --git a/include/wx/tokenzr.h b/include/wx/tokenzr.h
+index 8e643fd..f9aa4ca 100644
+--- a/include/wx/tokenzr.h
++++ b/include/wx/tokenzr.h
+@@ -21,7 +21,7 @@
+ // ----------------------------------------------------------------------------
+ 
+ // default: delimiters are usual white space characters
+-#define wxDEFAULT_DELIMITERS (_T(" \t\r\n"))
++#define wxDEFAULT_DELIMITERS (wxT(" \t\r\n"))
+ 
+ // wxStringTokenizer mode flags which determine its behaviour
+ enum wxStringTokenizerMode
+diff --git a/include/wx/univ/button.h b/include/wx/univ/button.h
+index 48d0c9e..7070ef6 100644
+--- a/include/wx/univ/button.h
++++ b/include/wx/univ/button.h
+@@ -20,10 +20,10 @@ class WXDLLEXPORT wxInputHandler;
+ // the actions supported by this control
+ // ----------------------------------------------------------------------------
+ 
+-#define wxACTION_BUTTON_TOGGLE  _T("toggle")    // press/release the button
+-#define wxACTION_BUTTON_PRESS   _T("press")     // press the button
+-#define wxACTION_BUTTON_RELEASE _T("release")   // release the button
+-#define wxACTION_BUTTON_CLICK   _T("click")     // generate button click event
++#define wxACTION_BUTTON_TOGGLE  wxT("toggle")    // press/release the button
++#define wxACTION_BUTTON_PRESS   wxT("press")     // press the button
++#define wxACTION_BUTTON_RELEASE wxT("release")   // release the button
++#define wxACTION_BUTTON_CLICK   wxT("click")     // generate button click event
+ 
+ // ----------------------------------------------------------------------------
+ // wxButton: a push button
+diff --git a/include/wx/univ/checkbox.h b/include/wx/univ/checkbox.h
+index cd5a529..a7f2934 100644
+--- a/include/wx/univ/checkbox.h
++++ b/include/wx/univ/checkbox.h
+@@ -18,9 +18,9 @@
+ // the actions supported by wxCheckBox
+ // ----------------------------------------------------------------------------
+ 
+-#define wxACTION_CHECKBOX_CHECK   _T("check")   // SetValue(true)
+-#define wxACTION_CHECKBOX_CLEAR   _T("clear")   // SetValue(false)
+-#define wxACTION_CHECKBOX_TOGGLE  _T("toggle")  // toggle the check state
++#define wxACTION_CHECKBOX_CHECK   wxT("check")   // SetValue(true)
++#define wxACTION_CHECKBOX_CLEAR   wxT("clear")   // SetValue(false)
++#define wxACTION_CHECKBOX_TOGGLE  wxT("toggle")  // toggle the check state
+ 
+ // additionally it accepts wxACTION_BUTTON_PRESS and RELEASE
+ 
+diff --git a/include/wx/univ/checklst.h b/include/wx/univ/checklst.h
+index d81bdd8..b71b116 100644
+--- a/include/wx/univ/checklst.h
++++ b/include/wx/univ/checklst.h
+@@ -16,7 +16,7 @@
+ // actions
+ // ----------------------------------------------------------------------------
+ 
+-#define wxACTION_CHECKLISTBOX_TOGGLE _T("toggle")
++#define wxACTION_CHECKLISTBOX_TOGGLE wxT("toggle")
+ 
+ // ----------------------------------------------------------------------------
+ // wxCheckListBox
+diff --git a/include/wx/univ/combobox.h b/include/wx/univ/combobox.h
+index 9c3a77a..c1867ab 100644
+--- a/include/wx/univ/combobox.h
++++ b/include/wx/univ/combobox.h
+@@ -22,9 +22,9 @@ class WXDLLEXPORT wxListBox;
+ // ----------------------------------------------------------------------------
+ 
+ // choose the next/prev/specified (by numArg) item
+-#define wxACTION_COMBOBOX_SELECT_NEXT _T("next")
+-#define wxACTION_COMBOBOX_SELECT_PREV _T("prev")
+-#define wxACTION_COMBOBOX_SELECT      _T("select")
++#define wxACTION_COMBOBOX_SELECT_NEXT wxT("next")
++#define wxACTION_COMBOBOX_SELECT_PREV wxT("prev")
++#define wxACTION_COMBOBOX_SELECT      wxT("select")
+ 
+ 
+ // ----------------------------------------------------------------------------
+diff --git a/include/wx/univ/control.h b/include/wx/univ/control.h
+index 80ce526..fcbb43b 100644
+--- a/include/wx/univ/control.h
++++ b/include/wx/univ/control.h
+@@ -32,7 +32,7 @@ typedef wxString wxControlAction;
+ // the list of actions which apply to all controls (other actions are defined
+ // in the controls headers)
+ 
+-#define wxACTION_NONE    _T("")           // no action to perform
++#define wxACTION_NONE    wxT("")           // no action to perform
+ 
+ // ----------------------------------------------------------------------------
+ // wxControl: the base class for all GUI controls
+@@ -80,7 +80,7 @@ public:
+     // return the accel char itself or 0 if none
+     wxChar GetAccelChar() const
+     {
+-        return m_indexAccel == -1 ? _T('\0') : m_label[m_indexAccel];
++        return m_indexAccel == -1 ? wxT('\0') : m_label[m_indexAccel];
+     }
+ 
+     virtual wxWindow *GetInputWindow() const { return (wxWindow*)this; }
+diff --git a/include/wx/univ/inpcons.h b/include/wx/univ/inpcons.h
+index 10df5ff..2d163ca 100644
+--- a/include/wx/univ/inpcons.h
++++ b/include/wx/univ/inpcons.h
+@@ -28,7 +28,7 @@ typedef wxString wxControlAction;
+ // the list of actions which apply to all controls (other actions are defined
+ // in the controls headers)
+ 
+-#define wxACTION_NONE    _T("")           // no action to perform
++#define wxACTION_NONE    wxT("")           // no action to perform
+ 
+ // ----------------------------------------------------------------------------
+ // wxInputConsumer: mix-in class for handling wxControlActions (used by
+diff --git a/include/wx/univ/inphand.h b/include/wx/univ/inphand.h
+index 2eb0368..b65e4d7 100644
+--- a/include/wx/univ/inphand.h
++++ b/include/wx/univ/inphand.h
+@@ -20,21 +20,21 @@
+ // wxTheme::GetInputHandler()
+ // ----------------------------------------------------------------------------
+ 
+-#define wxINP_HANDLER_DEFAULT           _T("")
+-#define wxINP_HANDLER_BUTTON            _T("button")
+-#define wxINP_HANDLER_CHECKBOX          _T("checkbox")
+-#define wxINP_HANDLER_CHECKLISTBOX      _T("checklistbox")
+-#define wxINP_HANDLER_COMBOBOX          _T("combobox")
+-#define wxINP_HANDLER_LISTBOX           _T("listbox")
+-#define wxINP_HANDLER_NOTEBOOK          _T("notebook")
+-#define wxINP_HANDLER_RADIOBTN          _T("radiobtn")
+-#define wxINP_HANDLER_SCROLLBAR         _T("scrollbar")
+-#define wxINP_HANDLER_SLIDER            _T("slider")
+-#define wxINP_HANDLER_SPINBTN           _T("spinbtn")
+-#define wxINP_HANDLER_STATUSBAR         _T("statusbar")
+-#define wxINP_HANDLER_TEXTCTRL          _T("textctrl")
+-#define wxINP_HANDLER_TOOLBAR           _T("toolbar")
+-#define wxINP_HANDLER_TOPLEVEL          _T("toplevel")
++#define wxINP_HANDLER_DEFAULT           wxT("")
++#define wxINP_HANDLER_BUTTON            wxT("button")
++#define wxINP_HANDLER_CHECKBOX          wxT("checkbox")
++#define wxINP_HANDLER_CHECKLISTBOX      wxT("checklistbox")
++#define wxINP_HANDLER_COMBOBOX          wxT("combobox")
++#define wxINP_HANDLER_LISTBOX           wxT("listbox")
++#define wxINP_HANDLER_NOTEBOOK          wxT("notebook")
++#define wxINP_HANDLER_RADIOBTN          wxT("radiobtn")
++#define wxINP_HANDLER_SCROLLBAR         wxT("scrollbar")
++#define wxINP_HANDLER_SLIDER            wxT("slider")
++#define wxINP_HANDLER_SPINBTN           wxT("spinbtn")
++#define wxINP_HANDLER_STATUSBAR         wxT("statusbar")
++#define wxINP_HANDLER_TEXTCTRL          wxT("textctrl")
++#define wxINP_HANDLER_TOOLBAR           wxT("toolbar")
++#define wxINP_HANDLER_TOPLEVEL          wxT("toplevel")
+ 
+ // ----------------------------------------------------------------------------
+ // wxInputHandler: maps the events to the actions
+diff --git a/include/wx/univ/listbox.h b/include/wx/univ/listbox.h
+index 5800332..57778b4 100644
+--- a/include/wx/univ/listbox.h
++++ b/include/wx/univ/listbox.h
+@@ -21,28 +21,28 @@
+ // ----------------------------------------------------------------------------
+ 
+ // change the current item
+-#define wxACTION_LISTBOX_SETFOCUS   _T("setfocus")  // select the item
+-#define wxACTION_LISTBOX_MOVEDOWN   _T("down")      // select item below
+-#define wxACTION_LISTBOX_MOVEUP     _T("up")        // select item above
+-#define wxACTION_LISTBOX_PAGEDOWN   _T("pagedown")  // go page down
+-#define wxACTION_LISTBOX_PAGEUP     _T("pageup")    // go page up
+-#define wxACTION_LISTBOX_START      _T("start")     // go to first item
+-#define wxACTION_LISTBOX_END        _T("end")       // go to last item
+-#define wxACTION_LISTBOX_FIND       _T("find")      // find item by 1st letter
++#define wxACTION_LISTBOX_SETFOCUS   wxT("setfocus")  // select the item
++#define wxACTION_LISTBOX_MOVEDOWN   wxT("down")      // select item below
++#define wxACTION_LISTBOX_MOVEUP     wxT("up")        // select item above
++#define wxACTION_LISTBOX_PAGEDOWN   wxT("pagedown")  // go page down
++#define wxACTION_LISTBOX_PAGEUP     wxT("pageup")    // go page up
++#define wxACTION_LISTBOX_START      wxT("start")     // go to first item
++#define wxACTION_LISTBOX_END        wxT("end")       // go to last item
++#define wxACTION_LISTBOX_FIND       wxT("find")      // find item by 1st letter
+ 
+ // do something with the current item
+-#define wxACTION_LISTBOX_ACTIVATE   _T("activate")  // activate (choose)
+-#define wxACTION_LISTBOX_TOGGLE     _T("toggle")    // togglee selected state
+-#define wxACTION_LISTBOX_SELECT     _T("select")    // sel this, unsel others
+-#define wxACTION_LISTBOX_SELECTADD  _T("selectadd") // add to selection
+-#define wxACTION_LISTBOX_UNSELECT   _T("unselect")  // unselect
+-#define wxACTION_LISTBOX_ANCHOR     _T("selanchor") // anchor selection
++#define wxACTION_LISTBOX_ACTIVATE   wxT("activate")  // activate (choose)
++#define wxACTION_LISTBOX_TOGGLE     wxT("toggle")    // togglee selected state
++#define wxACTION_LISTBOX_SELECT     wxT("select")    // sel this, unsel others
++#define wxACTION_LISTBOX_SELECTADD  wxT("selectadd") // add to selection
++#define wxACTION_LISTBOX_UNSELECT   wxT("unselect")  // unselect
++#define wxACTION_LISTBOX_ANCHOR     wxT("selanchor") // anchor selection
+ 
+ // do something with the selection globally (not for single selection ones)
+-#define wxACTION_LISTBOX_SELECTALL   _T("selectall")   // select all items
+-#define wxACTION_LISTBOX_UNSELECTALL _T("unselectall") // unselect all items
+-#define wxACTION_LISTBOX_SELTOGGLE   _T("togglesel")   // invert the selection
+-#define wxACTION_LISTBOX_EXTENDSEL   _T("extend")      // extend to item
++#define wxACTION_LISTBOX_SELECTALL   wxT("selectall")   // select all items
++#define wxACTION_LISTBOX_UNSELECTALL wxT("unselectall") // unselect all items
++#define wxACTION_LISTBOX_SELTOGGLE   wxT("togglesel")   // invert the selection
++#define wxACTION_LISTBOX_EXTENDSEL   wxT("extend")      // extend to item
+ 
+ // ----------------------------------------------------------------------------
+ // wxListBox: a list of selectable items
+diff --git a/include/wx/univ/menuitem.h b/include/wx/univ/menuitem.h
+index c9020ec..039cd58 100644
+--- a/include/wx/univ/menuitem.h
++++ b/include/wx/univ/menuitem.h
+@@ -72,14 +72,14 @@ public:
+ 
+     wxCoord GetPosition() const
+     {
+-        wxASSERT_MSG( m_posY != wxDefaultCoord, _T("must call SetHeight first!") );
++        wxASSERT_MSG( m_posY != wxDefaultCoord, wxT("must call SetHeight first!") );
+ 
+         return m_posY;
+     }
+ 
+     wxCoord GetHeight() const
+     {
+-        wxASSERT_MSG( m_height != wxDefaultCoord, _T("must call SetHeight first!") );
++        wxASSERT_MSG( m_height != wxDefaultCoord, wxT("must call SetHeight first!") );
+ 
+         return m_height;
+     }
+diff --git a/include/wx/univ/notebook.h b/include/wx/univ/notebook.h
+index f195c6c..2d35eff 100644
+--- a/include/wx/univ/notebook.h
++++ b/include/wx/univ/notebook.h
+@@ -21,9 +21,9 @@ class WXDLLEXPORT wxSpinButton;
+ // ----------------------------------------------------------------------------
+ 
+ // change the page: to the next/previous/given one
+-#define wxACTION_NOTEBOOK_NEXT      _T("nexttab")
+-#define wxACTION_NOTEBOOK_PREV      _T("prevtab")
+-#define wxACTION_NOTEBOOK_GOTO      _T("gototab")
++#define wxACTION_NOTEBOOK_NEXT      wxT("nexttab")
++#define wxACTION_NOTEBOOK_PREV      wxT("prevtab")
++#define wxACTION_NOTEBOOK_GOTO      wxT("gototab")
+ 
+ // ----------------------------------------------------------------------------
+ // wxNotebook
+diff --git a/include/wx/univ/scrolbar.h b/include/wx/univ/scrolbar.h
+index ab3fd34..8b211d8 100644
+--- a/include/wx/univ/scrolbar.h
++++ b/include/wx/univ/scrolbar.h
+@@ -22,17 +22,17 @@ class WXDLLEXPORT wxScrollTimer;
+ // ----------------------------------------------------------------------------
+ 
+ // scroll the bar
+-#define wxACTION_SCROLL_START       _T("start")     // to the beginning
+-#define wxACTION_SCROLL_END         _T("end")       // to the end
+-#define wxACTION_SCROLL_LINE_UP     _T("lineup")    // one line up/left
+-#define wxACTION_SCROLL_PAGE_UP     _T("pageup")    // one page up/left
+-#define wxACTION_SCROLL_LINE_DOWN   _T("linedown")  // one line down/right
+-#define wxACTION_SCROLL_PAGE_DOWN   _T("pagedown")  // one page down/right
++#define wxACTION_SCROLL_START       wxT("start")     // to the beginning
++#define wxACTION_SCROLL_END         wxT("end")       // to the end
++#define wxACTION_SCROLL_LINE_UP     wxT("lineup")    // one line up/left
++#define wxACTION_SCROLL_PAGE_UP     wxT("pageup")    // one page up/left
++#define wxACTION_SCROLL_LINE_DOWN   wxT("linedown")  // one line down/right
++#define wxACTION_SCROLL_PAGE_DOWN   wxT("pagedown")  // one page down/right
+ 
+ // the scrollbar thumb may be dragged
+-#define wxACTION_SCROLL_THUMB_DRAG      _T("thumbdrag")
+-#define wxACTION_SCROLL_THUMB_MOVE      _T("thumbmove")
+-#define wxACTION_SCROLL_THUMB_RELEASE   _T("thumbrelease")
++#define wxACTION_SCROLL_THUMB_DRAG      wxT("thumbdrag")
++#define wxACTION_SCROLL_THUMB_MOVE      wxT("thumbmove")
++#define wxACTION_SCROLL_THUMB_RELEASE   wxT("thumbrelease")
+ 
+ // ----------------------------------------------------------------------------
+ // wxScrollBar
+diff --git a/include/wx/univ/slider.h b/include/wx/univ/slider.h
+index d5d5e4f..20baae3 100644
+--- a/include/wx/univ/slider.h
++++ b/include/wx/univ/slider.h
+@@ -20,17 +20,17 @@
+ 
+ // our actions are the same as scrollbars
+ 
+-#define wxACTION_SLIDER_START       _T("start")     // to the beginning
+-#define wxACTION_SLIDER_END         _T("end")       // to the end
+-#define wxACTION_SLIDER_LINE_UP     _T("lineup")    // one line up/left
+-#define wxACTION_SLIDER_PAGE_UP     _T("pageup")    // one page up/left
+-#define wxACTION_SLIDER_LINE_DOWN   _T("linedown")  // one line down/right
+-#define wxACTION_SLIDER_PAGE_DOWN   _T("pagedown")  // one page down/right
+-#define wxACTION_SLIDER_PAGE_CHANGE _T("pagechange")// change page by numArg
+-
+-#define wxACTION_SLIDER_THUMB_DRAG      _T("thumbdrag")
+-#define wxACTION_SLIDER_THUMB_MOVE      _T("thumbmove")
+-#define wxACTION_SLIDER_THUMB_RELEASE   _T("thumbrelease")
++#define wxACTION_SLIDER_START       wxT("start")     // to the beginning
++#define wxACTION_SLIDER_END         wxT("end")       // to the end
++#define wxACTION_SLIDER_LINE_UP     wxT("lineup")    // one line up/left
++#define wxACTION_SLIDER_PAGE_UP     wxT("pageup")    // one page up/left
++#define wxACTION_SLIDER_LINE_DOWN   wxT("linedown")  // one line down/right
++#define wxACTION_SLIDER_PAGE_DOWN   wxT("pagedown")  // one page down/right
++#define wxACTION_SLIDER_PAGE_CHANGE wxT("pagechange")// change page by numArg
++
++#define wxACTION_SLIDER_THUMB_DRAG      wxT("thumbdrag")
++#define wxACTION_SLIDER_THUMB_MOVE      wxT("thumbmove")
++#define wxACTION_SLIDER_THUMB_RELEASE   wxT("thumbrelease")
+ 
+ // ----------------------------------------------------------------------------
+ // wxSlider
+diff --git a/include/wx/univ/spinbutt.h b/include/wx/univ/spinbutt.h
+index 4b483d8..baef0e9 100644
+--- a/include/wx/univ/spinbutt.h
++++ b/include/wx/univ/spinbutt.h
+@@ -19,8 +19,8 @@
+ // ----------------------------------------------------------------------------
+ 
+ // actions supported by this control
+-#define wxACTION_SPIN_INC    _T("inc")
+-#define wxACTION_SPIN_DEC    _T("dec")
++#define wxACTION_SPIN_INC    wxT("inc")
++#define wxACTION_SPIN_DEC    wxT("dec")
+ 
+ class WXDLLEXPORT wxSpinButton : public wxSpinButtonBase,
+                                  public wxControlWithArrows
+diff --git a/include/wx/univ/textctrl.h b/include/wx/univ/textctrl.h
+index 5c309d8..7dc02bf 100644
+--- a/include/wx/univ/textctrl.h
++++ b/include/wx/univ/textctrl.h
+@@ -24,43 +24,43 @@ class WXDLLEXPORT wxTextCtrlCommandProcessor;
+ // ----------------------------------------------------------------------------
+ 
+ // cursor movement and also selection and delete operations
+-#define wxACTION_TEXT_GOTO          _T("goto")  // to pos in numArg
+-#define wxACTION_TEXT_FIRST         _T("first") // go to pos 0
+-#define wxACTION_TEXT_LAST          _T("last")  // go to last pos
+-#define wxACTION_TEXT_HOME          _T("home")
+-#define wxACTION_TEXT_END           _T("end")
+-#define wxACTION_TEXT_LEFT          _T("left")
+-#define wxACTION_TEXT_RIGHT         _T("right")
+-#define wxACTION_TEXT_UP            _T("up")
+-#define wxACTION_TEXT_DOWN          _T("down")
+-#define wxACTION_TEXT_WORD_LEFT     _T("wordleft")
+-#define wxACTION_TEXT_WORD_RIGHT    _T("wordright")
+-#define wxACTION_TEXT_PAGE_UP       _T("pageup")
+-#define wxACTION_TEXT_PAGE_DOWN     _T("pagedown")
++#define wxACTION_TEXT_GOTO          wxT("goto")  // to pos in numArg
++#define wxACTION_TEXT_FIRST         wxT("first") // go to pos 0
++#define wxACTION_TEXT_LAST          wxT("last")  // go to last pos
++#define wxACTION_TEXT_HOME          wxT("home")
++#define wxACTION_TEXT_END           wxT("end")
++#define wxACTION_TEXT_LEFT          wxT("left")
++#define wxACTION_TEXT_RIGHT         wxT("right")
++#define wxACTION_TEXT_UP            wxT("up")
++#define wxACTION_TEXT_DOWN          wxT("down")
++#define wxACTION_TEXT_WORD_LEFT     wxT("wordleft")
++#define wxACTION_TEXT_WORD_RIGHT    wxT("wordright")
++#define wxACTION_TEXT_PAGE_UP       wxT("pageup")
++#define wxACTION_TEXT_PAGE_DOWN     wxT("pagedown")
+ 
+ // clipboard operations
+-#define wxACTION_TEXT_COPY          _T("copy")
+-#define wxACTION_TEXT_CUT           _T("cut")
+-#define wxACTION_TEXT_PASTE         _T("paste")
++#define wxACTION_TEXT_COPY          wxT("copy")
++#define wxACTION_TEXT_CUT           wxT("cut")
++#define wxACTION_TEXT_PASTE         wxT("paste")
+ 
+ // insert text at the cursor position: the text is in strArg of PerformAction
+-#define wxACTION_TEXT_INSERT        _T("insert")
++#define wxACTION_TEXT_INSERT        wxT("insert")
+ 
+ // if the action starts with either of these prefixes and the rest of the
+ // string is one of the movement commands, it means to select/delete text from
+ // the current cursor position to the new one
+-#define wxACTION_TEXT_PREFIX_SEL    _T("sel")
+-#define wxACTION_TEXT_PREFIX_DEL    _T("del")
++#define wxACTION_TEXT_PREFIX_SEL    wxT("sel")
++#define wxACTION_TEXT_PREFIX_DEL    wxT("del")
+ 
+ // mouse selection
+-#define wxACTION_TEXT_ANCHOR_SEL    _T("anchorsel")
+-#define wxACTION_TEXT_EXTEND_SEL    _T("extendsel")
+-#define wxACTION_TEXT_SEL_WORD      _T("wordsel")
+-#define wxACTION_TEXT_SEL_LINE      _T("linesel")
++#define wxACTION_TEXT_ANCHOR_SEL    wxT("anchorsel")
++#define wxACTION_TEXT_EXTEND_SEL    wxT("extendsel")
++#define wxACTION_TEXT_SEL_WORD      wxT("wordsel")
++#define wxACTION_TEXT_SEL_LINE      wxT("linesel")
+ 
+ // undo or redo
+-#define wxACTION_TEXT_UNDO          _T("undo")
+-#define wxACTION_TEXT_REDO          _T("redo")
++#define wxACTION_TEXT_UNDO          wxT("undo")
++#define wxACTION_TEXT_REDO          wxT("redo")
+ 
+ // ----------------------------------------------------------------------------
+ // wxTextCtrl
+@@ -409,7 +409,7 @@ protected:
+     wxCoord GetLineHeight() const
+     {
+         // this one should be already precalculated
+-        wxASSERT_MSG( m_heightLine != -1, _T("should have line height") );
++        wxASSERT_MSG( m_heightLine != -1, wxT("should have line height") );
+ 
+         return m_heightLine;
+     }
+diff --git a/include/wx/univ/toolbar.h b/include/wx/univ/toolbar.h
+index 7c3f99d..b11e192 100644
+--- a/include/wx/univ/toolbar.h
++++ b/include/wx/univ/toolbar.h
+@@ -24,8 +24,8 @@ class WXDLLEXPORT wxToolBarTool;
+ #define wxACTION_TOOLBAR_PRESS   wxACTION_BUTTON_PRESS
+ #define wxACTION_TOOLBAR_RELEASE wxACTION_BUTTON_RELEASE
+ #define wxACTION_TOOLBAR_CLICK   wxACTION_BUTTON_CLICK
+-#define wxACTION_TOOLBAR_ENTER   _T("enter")     // highlight the tool
+-#define wxACTION_TOOLBAR_LEAVE   _T("leave")     // unhighlight the tool
++#define wxACTION_TOOLBAR_ENTER   wxT("enter")     // highlight the tool
++#define wxACTION_TOOLBAR_LEAVE   wxT("leave")     // unhighlight the tool
+ 
+ // ----------------------------------------------------------------------------
+ // wxToolBar
+diff --git a/include/wx/univ/toplevel.h b/include/wx/univ/toplevel.h
+index 79e9ae0..caa1a1d 100644
+--- a/include/wx/univ/toplevel.h
++++ b/include/wx/univ/toplevel.h
+@@ -77,12 +77,12 @@ enum
+ // the actions supported by this control
+ // ----------------------------------------------------------------------------
+ 
+-#define wxACTION_TOPLEVEL_ACTIVATE       _T("activate")   // (de)activate the frame
+-#define wxACTION_TOPLEVEL_BUTTON_PRESS   _T("pressbtn")   // press titlebar btn
+-#define wxACTION_TOPLEVEL_BUTTON_RELEASE _T("releasebtn") // press titlebar btn
+-#define wxACTION_TOPLEVEL_BUTTON_CLICK   _T("clickbtn")   // press titlebar btn
+-#define wxACTION_TOPLEVEL_MOVE           _T("move")       // move the frame
+-#define wxACTION_TOPLEVEL_RESIZE         _T("resize")     // resize the frame
++#define wxACTION_TOPLEVEL_ACTIVATE       wxT("activate")   // (de)activate the frame
++#define wxACTION_TOPLEVEL_BUTTON_PRESS   wxT("pressbtn")   // press titlebar btn
++#define wxACTION_TOPLEVEL_BUTTON_RELEASE wxT("releasebtn") // press titlebar btn
++#define wxACTION_TOPLEVEL_BUTTON_CLICK   wxT("clickbtn")   // press titlebar btn
++#define wxACTION_TOPLEVEL_MOVE           wxT("move")       // move the frame
++#define wxACTION_TOPLEVEL_RESIZE         wxT("resize")     // resize the frame
+ 
+ //-----------------------------------------------------------------------------
+ // wxTopLevelWindow
+diff --git a/include/wx/valtext.h b/include/wx/valtext.h
+index cccec0f..309bc94 100644
+--- a/include/wx/valtext.h
++++ b/include/wx/valtext.h
+@@ -99,9 +99,9 @@ protected:
+     bool CheckValidator() const
+     {
+         wxCHECK_MSG( m_validatorWindow, false,
+-                     _T("No window associated with validator") );
++                     wxT("No window associated with validator") );
+         wxCHECK_MSG( m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)), false,
+-                     _T("wxTextValidator is only for wxTextCtrl's") );
++                     wxT("wxTextValidator is only for wxTextCtrl's") );
+ 
+         return true;
+     }
+diff --git a/include/wx/vector.h b/include/wx/vector.h
+index f8aa562..c724186 100644
+--- a/include/wx/vector.h
++++ b/include/wx/vector.h
+@@ -105,7 +105,7 @@ public:
+     {
+         if ( !Alloc(n) )
+         {
+-            wxFAIL_MSG( _T("out of memory in wxVector::reserve()") );
++            wxFAIL_MSG( wxT("out of memory in wxVector::reserve()") );
+         }
+     }
+ 
+diff --git a/include/wx/version.h b/include/wx/version.h
+index 88c104e..8a276ef 100644
+--- a/include/wx/version.h
++++ b/include/wx/version.h
+@@ -30,7 +30,7 @@
+ #define wxMINOR_VERSION      8
+ #define wxRELEASE_NUMBER     5
+ #define wxSUBRELEASE_NUMBER  0
+-#define wxVERSION_STRING   _T("wxWidgets 2.8.5")
++#define wxVERSION_STRING   wxT("wxWidgets 2.8.5")
+ 
+ /*  nothing to update below this line when updating the version */
+ /*  ---------------------------------------------------------------------------- */
+@@ -54,7 +54,7 @@
+ #define wxMAKE_VERSION_STRING_T(x, y, z) \
+     wxSTRINGIZE_T(x) wxSTRINGIZE_T(y) wxSTRINGIZE_T(z)
+ #define wxMAKE_VERSION_DOT_STRING_T(x, y, z) \
+-    wxSTRINGIZE_T(x) _T(".") wxSTRINGIZE_T(y) _T(".") wxSTRINGIZE_T(z)
++    wxSTRINGIZE_T(x) wxT(".") wxSTRINGIZE_T(y) wxT(".") wxSTRINGIZE_T(z)
+ 
+ /*  these are used by src/msw/version.rc and should always be ASCII, not Unicode */
+ #define wxVERSION_NUM_STRING \
+diff --git a/include/wx/vlbox.h b/include/wx/vlbox.h
+index f2d3fc6..fd3d2ed 100644
+--- a/include/wx/vlbox.h
++++ b/include/wx/vlbox.h
+@@ -17,7 +17,7 @@
+ 
+ class WXDLLEXPORT wxSelectionStore;
+ 
+-#define wxVListBoxNameStr _T("wxVListBox")
++#define wxVListBoxNameStr wxT("wxVListBox")
+ 
+ // ----------------------------------------------------------------------------
+ // wxVListBox
+@@ -86,7 +86,7 @@ public:
+     int GetSelection() const
+     {
+         wxASSERT_MSG( !HasMultipleSelection(),
+-                        _T("GetSelection() can't be used with wxLB_MULTIPLE") );
++                        wxT("GetSelection() can't be used with wxLB_MULTIPLE") );
+ 
+         return m_current;
+     }
+diff --git a/include/wx/wfstream.h b/include/wx/wfstream.h
+index 9d4a441..6db00e2 100644
+--- a/include/wx/wfstream.h
++++ b/include/wx/wfstream.h
+@@ -132,7 +132,7 @@ private:
+ class WXDLLIMPEXP_BASE wxFFileInputStream : public wxInputStream
+ {
+ public:
+-    wxFFileInputStream(const wxString& fileName, const wxChar *mode = _T("rb"));
++    wxFFileInputStream(const wxString& fileName, const wxChar *mode = wxT("rb"));
+     wxFFileInputStream(wxFFile& file);
+     wxFFileInputStream(FILE *file);
+     virtual ~wxFFileInputStream();
+@@ -160,7 +160,7 @@ protected:
+ class WXDLLIMPEXP_BASE wxFFileOutputStream : public wxOutputStream
+ {
+ public:
+-    wxFFileOutputStream(const wxString& fileName, const wxChar *mode = _T("w+b"));
++    wxFFileOutputStream(const wxString& fileName, const wxChar *mode = wxT("w+b"));
+     wxFFileOutputStream(wxFFile& file);
+     wxFFileOutputStream(FILE *file);
+     virtual ~wxFFileOutputStream();
+diff --git a/include/wx/wxchar.h b/include/wx/wxchar.h
+index 6fa17cd..0250daa 100644
+--- a/include/wx/wxchar.h
++++ b/include/wx/wxchar.h
+@@ -233,26 +233,27 @@
+ /* BSD systems define _T() to be something different in ctype.h, override it */
+ #if defined(__FreeBSD__) || defined(__DARWIN__)
+     #include <ctype.h>
+-    #undef _T
++    #undef wxT
+ #endif
+ 
+ /* could already be defined by tchar.h (it's quasi standard) */
+ #ifndef _T
+-    #if !wxUSE_UNICODE
+-        #define _T(x) x
+-    #else /* Unicode */
+-        /* use wxCONCAT_HELPER so that x could be expanded if it's a macro */
+-        #define _T(x) wxCONCAT_HELPER(L, x)
+-    #endif /* ASCII/Unicode */
+-#endif /* !defined(_T) */
+-
++#if !defined (__SUNPRO_C) && !defined(__SUNPRO_CC)
++#define _T(x)	     wxT(x)
++#else
++#if defined (WXBUILDING)
++#define _T(x)	     wxT(x)
++#endif /* WXBUILDING */
++#endif /* SUNCC */
++#endif /* _T */
++ 
+ /* although global macros with such names are normally bad, we want to have */
+-/* another name for _T() which should be used to avoid confusion between _T() */
++/* another name for wxT() which should be used to avoid confusion between wxT() */
+ /* and _() in wxWidgets sources */
+-#define wxT(x)       _T(x)
++// #define wxT(x)       wxT(x)
+ 
+ /* a helper macro allowing to make another macro Unicode-friendly, see below */
+-#define wxAPPLY_T(x) _T(x)
++#define wxAPPLY_T(x) wxT(x)
+ 
+ /* Unicode-friendly __FILE__, __DATE__ and __TIME__ analogs */
+ #ifndef __TFILE__
+@@ -1102,7 +1103,7 @@ WXDLLIMPEXP_BASE bool wxOKlibc(); /* for internal use */
+ 
+ #ifdef _WIN32_WCE
+     #if _WIN32_WCE <= 211
+-        #define isspace(c) ((c) == _T(' ') || (c) == _T('\t'))
++        #define isspace(c) ((c) == wxT(' ') || (c) == wxT('\t'))
+     #endif
+ #endif /* _WIN32_WCE */
+ 
+diff --git a/include/wx/x11/textctrl.h b/include/wx/x11/textctrl.h
+index 4662a18..88cb3b8 100644
+--- a/include/wx/x11/textctrl.h
++++ b/include/wx/x11/textctrl.h
+@@ -321,43 +321,43 @@ private:
+ //-----------------------------------------------------------------------------
+ 
+ // cursor movement and also selection and delete operations
+-#define wxACTION_TEXT_GOTO          _T("goto")  // to pos in numArg
+-#define wxACTION_TEXT_FIRST         _T("first") // go to pos 0
+-#define wxACTION_TEXT_LAST          _T("last")  // go to last pos
+-#define wxACTION_TEXT_HOME          _T("home")
+-#define wxACTION_TEXT_END           _T("end")
+-#define wxACTION_TEXT_LEFT          _T("left")
+-#define wxACTION_TEXT_RIGHT         _T("right")
+-#define wxACTION_TEXT_UP            _T("up")
+-#define wxACTION_TEXT_DOWN          _T("down")
+-#define wxACTION_TEXT_WORD_LEFT     _T("wordleft")
+-#define wxACTION_TEXT_WORD_RIGHT    _T("wordright")
+-#define wxACTION_TEXT_PAGE_UP       _T("pageup")
+-#define wxACTION_TEXT_PAGE_DOWN     _T("pagedown")
++#define wxACTION_TEXT_GOTO          wxT("goto")  // to pos in numArg
++#define wxACTION_TEXT_FIRST         wxT("first") // go to pos 0
++#define wxACTION_TEXT_LAST          wxT("last")  // go to last pos
++#define wxACTION_TEXT_HOME          wxT("home")
++#define wxACTION_TEXT_END           wxT("end")
++#define wxACTION_TEXT_LEFT          wxT("left")
++#define wxACTION_TEXT_RIGHT         wxT("right")
++#define wxACTION_TEXT_UP            wxT("up")
++#define wxACTION_TEXT_DOWN          wxT("down")
++#define wxACTION_TEXT_WORD_LEFT     wxT("wordleft")
++#define wxACTION_TEXT_WORD_RIGHT    wxT("wordright")
++#define wxACTION_TEXT_PAGE_UP       wxT("pageup")
++#define wxACTION_TEXT_PAGE_DOWN     wxT("pagedown")
+ 
+ // clipboard operations
+-#define wxACTION_TEXT_COPY          _T("copy")
+-#define wxACTION_TEXT_CUT           _T("cut")
+-#define wxACTION_TEXT_PASTE         _T("paste")
++#define wxACTION_TEXT_COPY          wxT("copy")
++#define wxACTION_TEXT_CUT           wxT("cut")
++#define wxACTION_TEXT_PASTE         wxT("paste")
+ 
+ // insert text at the cursor position: the text is in strArg of PerformAction
+-#define wxACTION_TEXT_INSERT        _T("insert")
++#define wxACTION_TEXT_INSERT        wxT("insert")
+ 
+ // if the action starts with either of these prefixes and the rest of the
+ // string is one of the movement commands, it means to select/delete text from
+ // the current cursor position to the new one
+-#define wxACTION_TEXT_PREFIX_SEL    _T("sel")
+-#define wxACTION_TEXT_PREFIX_DEL    _T("del")
++#define wxACTION_TEXT_PREFIX_SEL    wxT("sel")
++#define wxACTION_TEXT_PREFIX_DEL    wxT("del")
+ 
+ // mouse selection
+-#define wxACTION_TEXT_ANCHOR_SEL    _T("anchorsel")
+-#define wxACTION_TEXT_EXTEND_SEL    _T("extendsel")
+-#define wxACTION_TEXT_SEL_WORD      _T("wordsel")
+-#define wxACTION_TEXT_SEL_LINE      _T("linesel")
++#define wxACTION_TEXT_ANCHOR_SEL    wxT("anchorsel")
++#define wxACTION_TEXT_EXTEND_SEL    wxT("extendsel")
++#define wxACTION_TEXT_SEL_WORD      wxT("wordsel")
++#define wxACTION_TEXT_SEL_LINE      wxT("linesel")
+ 
+ // undo or redo
+-#define wxACTION_TEXT_UNDO          _T("undo")
+-#define wxACTION_TEXT_REDO          _T("redo")
++#define wxACTION_TEXT_UNDO          wxT("undo")
++#define wxACTION_TEXT_REDO          wxT("redo")
+ 
+ // ----------------------------------------------------------------------------
+ // wxTextCtrl types
+diff --git a/include/wx/xrc/xmlres.h b/include/wx/xrc/xmlres.h
+index 07fd329..1e09714 100644
+--- a/include/wx/xrc/xmlres.h
++++ b/include/wx/xrc/xmlres.h
+@@ -59,7 +59,7 @@ class wxXmlResourceModule;
+ #define WX_XMLRES_CURRENT_VERSION_MINOR            5
+ #define WX_XMLRES_CURRENT_VERSION_RELEASE          3
+ #define WX_XMLRES_CURRENT_VERSION_REVISION         0
+-#define WX_XMLRES_CURRENT_VERSION_STRING       _T("2.5.3.0")
++#define WX_XMLRES_CURRENT_VERSION_STRING       wxT("2.5.3.0")
+ 
+ #define WX_XMLRES_CURRENT_VERSION \
+                 (WX_XMLRES_CURRENT_VERSION_MAJOR * 256*256*256 + \
+diff --git a/utils/wxrc/wxrc.cpp b/utils/wxrc/wxrc.cpp
+index e3d2309..1bbacfd 100644
+--- a/utils/wxrc/wxrc.cpp
++++ b/utils/wxrc/wxrc.cpp
+@@ -63,9 +63,9 @@ private:
+         wxXmlNode* children;
+         while (node)
+         {
+-            if (node->GetName() == _T("object")
+-                && node->GetPropVal(_T("class"),&classValue)
+-                && node->GetPropVal(_T("name"),&nameValue))
++            if (node->GetName() == wxT("object")
++                && node->GetPropVal(wxT("class"),&classValue)
++                && node->GetPropVal(wxT("name"),&nameValue))
+             {
+                 m_wdata.Add(XRCWidgetData(nameValue,classValue));
+             }
+@@ -82,24 +82,24 @@ public:
+                     const wxXmlNode* node) :
+         m_className(className) , m_parentClassName(parentClassName)
+     {
+-        if ( className == _T("wxMenu") )
++        if ( className == wxT("wxMenu") )
+         {
+-            m_ancestorClassNames.insert(_T("wxMenu"));
+-            m_ancestorClassNames.insert(_T("wxMenuBar"));
++            m_ancestorClassNames.insert(wxT("wxMenu"));
++            m_ancestorClassNames.insert(wxT("wxMenuBar"));
+         }
+-        else if ( className == _T("wxMDIChildFrame") )
++        else if ( className == wxT("wxMDIChildFrame") )
+         {
+-            m_ancestorClassNames.insert(_T("wxMDIParentFrame"));
++            m_ancestorClassNames.insert(wxT("wxMDIParentFrame"));
+         }
+-        else if( className == _T("wxMenuBar") ||
+-                    className == _T("wxStatusBar") ||
+-                        className == _T("wxToolBar") )
++        else if( className == wxT("wxMenuBar") ||
++                    className == wxT("wxStatusBar") ||
++                        className == wxT("wxToolBar") )
+         {
+-            m_ancestorClassNames.insert(_T("wxFrame"));
++            m_ancestorClassNames.insert(wxT("wxFrame"));
+         }
+         else
+         {
+-            m_ancestorClassNames.insert(_T("wxWindow"));
++            m_ancestorClassNames.insert(wxT("wxWindow"));
+         }
+ 
+         BrowseXmlNode(node->GetChildren());
+@@ -112,12 +112,12 @@ public:
+ 
+     bool IsRealClass(const wxString& name)
+     {
+-        if (name == _T("tool") ||
+-            name == _T("unknown") ||
+-            name == _T("notebookpage") ||
+-            name == _T("separator") ||
+-            name == _T("sizeritem") ||
+-            name == _T("wxMenuItem"))
++        if (name == wxT("tool") ||
++            name == wxT("unknown") ||
++            name == wxT("notebookpage") ||
++            name == wxT("separator") ||
++            name == wxT("sizeritem") ||
++            name == wxT("wxMenuItem"))
+         {
+             return false;
+         }
+@@ -127,8 +127,8 @@ public:
+     void GenerateHeaderCode(wxFFile& file)
+     {
+ 
+-        file.Write(_T("class ") + m_className + _T(" : public ") + m_parentClassName
+-                   + _T(" {\nprotected:\n"));
++        file.Write(wxT("class ") + m_className + wxT(" : public ") + m_parentClassName
++                   + wxT(" {\nprotected:\n"));
+         size_t i;
+         for(i=0;i<m_wdata.Count();++i)
+         {
+@@ -136,60 +136,60 @@ public:
+             if( !IsRealClass(w.GetClass()) ) continue;
+             if( w.GetName().Length() == 0 ) continue;
+             file.Write(
+-                _T(" ") + w.GetClass() + _T("* ") + w.GetName()
+-                + _T(";\n"));
++                wxT(" ") + w.GetClass() + wxT("* ") + w.GetName()
++                + wxT(";\n"));
+         }
+-        file.Write(_T("\nprivate:\n void InitWidgetsFromXRC(wxWindow *parent){\n")
+-                   _T("  wxXmlResource::Get()->LoadObject(this,parent,_T(\"")
++        file.Write(wxT("\nprivate:\n void InitWidgetsFromXRC(wxWindow *parent){\n")
++                   wxT("  wxXmlResource::Get()->LoadObject(this,parent,wxT(\"")
+                    +  m_className
+-                   +  _T("\"), _T(\"")
++                   +  wxT("\"), wxT(\"")
+                    +  m_parentClassName
+-                   +  _T("\"));\n"));
++                   +  wxT("\"));\n"));
+         for(i=0;i<m_wdata.Count();++i)
+         {
+             const XRCWidgetData& w = m_wdata.Item(i);
+             if( !IsRealClass(w.GetClass()) ) continue;
+             if( w.GetName().Length() == 0 ) continue;
+-            file.Write( _T("  ")
++            file.Write( wxT("  ")
+                         + w.GetName()
+-                        + _T(" = XRCCTRL(*this,\"")
++                        + wxT(" = XRCCTRL(*this,\"")
+                         + w.GetName()
+-                        + _T("\",")
++                        + wxT("\",")
+                         + w.GetClass()
+-                        + _T(");\n"));
++                        + wxT(");\n"));
+         }
+-        file.Write(_T(" }\n"));
++        file.Write(wxT(" }\n"));
+ 
+-        file.Write( _T("public:\n"));
++        file.Write( wxT("public:\n"));
+ 
+         if ( m_ancestorClassNames.size() == 1 )
+         {
+             file.Write
+                  (
+                     m_className +
+-                    _T("(") +
++                    wxT("(") +
+                         *m_ancestorClassNames.begin() +
+-                        _T(" *parent=NULL){\n") +
+-                    _T("  InitWidgetsFromXRC((wxWindow *)parent);\n")
+-                    _T(" }\n")
+-                    _T("};\n")
++                        wxT(" *parent=NULL){\n") +
++                    wxT("  InitWidgetsFromXRC((wxWindow *)parent);\n")
++                    wxT(" }\n")
++                    wxT("};\n")
+                  );
+         }
+         else
+         {
+-            file.Write(m_className + _T("(){\n") +
+-                       _T("  InitWidgetsFromXRC(NULL);\n")
+-                       _T(" }\n")
+-                       _T("};\n"));
++            file.Write(m_className + wxT("(){\n") +
++                       wxT("  InitWidgetsFromXRC(NULL);\n")
++                       wxT(" }\n")
++                       wxT("};\n"));
+ 
+             for ( StringSet::const_iterator it = m_ancestorClassNames.begin();
+                   it != m_ancestorClassNames.end();
+                   ++it )
+             {
+-                file.Write(m_className + _T("(") + *it + _T(" *parent){\n") +
+-                            _T("  InitWidgetsFromXRC((wxWindow *)parent);\n")
+-                            _T(" }\n")
+-                            _T("};\n"));
++                file.Write(m_className + wxT("(") + *it + wxT(" *parent){\n") +
++                            wxT("  InitWidgetsFromXRC((wxWindow *)parent);\n")
++                            wxT(" }\n")
++                            wxT("};\n"));
+             }
+         }
+     }
+@@ -237,19 +237,19 @@ int XmlResApp::OnRun()
+ {
+     static const wxCmdLineEntryDesc cmdLineDesc[] =
+     {
+-        { wxCMD_LINE_SWITCH, _T("h"), _T("help"),  _T("show help message"),
++        { wxCMD_LINE_SWITCH, wxT("h"), wxT("help"),  wxT("show help message"),
+               wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
+-        { wxCMD_LINE_SWITCH, _T("v"), _T("verbose"), _T("be verbose"), (wxCmdLineParamType)0, 0 },
+-        { wxCMD_LINE_SWITCH, _T("e"), _T("extra-cpp-code"),  _T("output C++ header file with XRC derived classes"), (wxCmdLineParamType)0, 0 },
+-        { wxCMD_LINE_SWITCH, _T("c"), _T("cpp-code"),  _T("output C++ source rather than .rsc file"), (wxCmdLineParamType)0, 0 },
+-        { wxCMD_LINE_SWITCH, _T("p"), _T("python-code"),  _T("output wxPython source rather than .rsc file"), (wxCmdLineParamType)0, 0 },
+-        { wxCMD_LINE_SWITCH, _T("g"), _T("gettext"),  _T("output list of translatable strings (to stdout or file if -o used)"), (wxCmdLineParamType)0, 0 },
+-        { wxCMD_LINE_OPTION, _T("n"), _T("function"),  _T("C++/Python function name (with -c or -p) [InitXmlResource]"), (wxCmdLineParamType)0, 0 },
+-        { wxCMD_LINE_OPTION, _T("o"), _T("output"),  _T("output file [resource.xrs/cpp]"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_SWITCH, wxT("v"), wxT("verbose"), wxT("be verbose"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_SWITCH, wxT("e"), wxT("extra-cpp-code"),  wxT("output C++ header file with XRC derived classes"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_SWITCH, wxT("c"), wxT("cpp-code"),  wxT("output C++ source rather than .rsc file"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_SWITCH, wxT("p"), wxT("python-code"),  wxT("output wxPython source rather than .rsc file"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_SWITCH, wxT("g"), wxT("gettext"),  wxT("output list of translatable strings (to stdout or file if -o used)"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_OPTION, wxT("n"), wxT("function"),  wxT("C++/Python function name (with -c or -p) [InitXmlResource]"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_OPTION, wxT("o"), wxT("output"),  wxT("output file [resource.xrs/cpp]"), (wxCmdLineParamType)0, 0 },
+ #if 0 // not yet implemented
+-        { wxCMD_LINE_OPTION, _T("l"), _T("list-of-handlers"),  _T("output list of necessary handlers to this file"), (wxCmdLineParamType)0, 0 },
++        { wxCMD_LINE_OPTION, wxT("l"), wxT("list-of-handlers"),  wxT("output list of necessary handlers to this file"), (wxCmdLineParamType)0, 0 },
+ #endif
+-        { wxCMD_LINE_PARAM,  NULL, NULL, _T("input file(s)"),
++        { wxCMD_LINE_PARAM,  NULL, NULL, wxT("input file(s)"),
+               wxCMD_LINE_VAL_STRING,
+               wxCMD_LINE_PARAM_MULTIPLE | wxCMD_LINE_OPTION_MANDATORY },
+ 
+@@ -280,25 +280,25 @@ int XmlResApp::OnRun()
+ 
+ void XmlResApp::ParseParams(const wxCmdLineParser& cmdline)
+ {
+-    flagGettext = cmdline.Found(_T("g"));
+-    flagVerbose = cmdline.Found(_T("v"));
+-    flagCPP = cmdline.Found(_T("c"));
+-    flagPython = cmdline.Found(_T("p"));
+-    flagH = flagCPP && cmdline.Found(_T("e"));
++    flagGettext = cmdline.Found(wxT("g"));
++    flagVerbose = cmdline.Found(wxT("v"));
++    flagCPP = cmdline.Found(wxT("c"));
++    flagPython = cmdline.Found(wxT("p"));
++    flagH = flagCPP && cmdline.Found(wxT("e"));
+ 
+ 
+-    if (!cmdline.Found(_T("o"), &parOutput))
++    if (!cmdline.Found(wxT("o"), &parOutput))
+     {
+         if (flagGettext)
+             parOutput = wxEmptyString;
+         else
+         {
+             if (flagCPP)
+-                parOutput = _T("resource.cpp");
++                parOutput = wxT("resource.cpp");
+             else if (flagPython)
+-                parOutput = _T("resource.py");
++                parOutput = wxT("resource.py");
+             else
+-                parOutput = _T("resource.xrs");
++                parOutput = wxT("resource.xrs");
+         }
+     }
+     if (!parOutput.empty())
+@@ -308,10 +308,10 @@ void XmlResApp::ParseParams(const wxCmdLineParser& cmdline)
+         parOutput = fn.GetFullPath();
+         parOutputPath = wxPathOnly(parOutput);
+     }
+-    if (!parOutputPath) parOutputPath = _T(".");
++    if (!parOutputPath) parOutputPath = wxT(".");
+ 
+-    if (!cmdline.Found(_T("n"), &parFuncname))
+-        parFuncname = _T("InitXmlResource");
++    if (!cmdline.Found(wxT("n"), &parFuncname))
++        parFuncname = wxT("InitXmlResource");
+ 
+     for (size_t i = 0; i < cmdline.GetParamCount(); i++)
+     {
+@@ -357,19 +357,19 @@ void XmlResApp::CompileRes()
+ wxString XmlResApp::GetInternalFileName(const wxString& name, const wxArrayString& flist)
+ {
+     wxString name2 = name;
+-    name2.Replace(_T(":"), _T("_"));
+-    name2.Replace(_T("/"), _T("_"));
+-    name2.Replace(_T("\\"), _T("_"));
+-    name2.Replace(_T("*"), _T("_"));
+-    name2.Replace(_T("?"), _T("_"));
++    name2.Replace(wxT(":"), wxT("_"));
++    name2.Replace(wxT("/"), wxT("_"));
++    name2.Replace(wxT("\\"), wxT("_"));
++    name2.Replace(wxT("*"), wxT("_"));
++    name2.Replace(wxT("?"), wxT("_"));
+ 
+-    wxString s = wxFileNameFromPath(parOutput) + _T("$") + name2;
++    wxString s = wxFileNameFromPath(parOutput) + wxT("$") + name2;
+ 
+     if (wxFileExists(s) && flist.Index(s) == wxNOT_FOUND)
+     {
+         for (int i = 0;; i++)
+         {
+-            s.Printf(wxFileNameFromPath(parOutput) + _T("$%03i-") + name2, i);
++            s.Printf(wxFileNameFromPath(parOutput) + wxT("$%03i-") + name2, i);
+             if (!wxFileExists(s) || flist.Index(s) != wxNOT_FOUND)
+                 break;
+         }
+@@ -384,13 +384,13 @@ wxArrayString XmlResApp::PrepareTempFiles()
+     for (size_t i = 0; i < parFiles.Count(); i++)
+     {
+         if (flagVerbose)
+-            wxPrintf(_T("processing ") + parFiles[i] +  _T("...\n"));
++            wxPrintf(wxT("processing ") + parFiles[i] +  wxT("...\n"));
+ 
+         wxXmlDocument doc;
+ 
+         if (!doc.Load(parFiles[i]))
+         {
+-            wxLogError(_T("Error parsing file ") + parFiles[i]);
++            wxLogError(wxT("Error parsing file ") + parFiles[i]);
+             retCode = 1;
+             continue;
+         }
+@@ -404,9 +404,9 @@ wxArrayString XmlResApp::PrepareTempFiles()
+             wxXmlNode* node = (doc.GetRoot())->GetChildren();
+                 wxString classValue,nameValue;
+                 while(node){
+-                    if(node->GetName() == _T("object")
+-                     && node->GetPropVal(_T("class"),&classValue)
+-                     && node->GetPropVal(_T("name"),&nameValue)){
++                    if(node->GetName() == wxT("object")
++                     && node->GetPropVal(wxT("class"),&classValue)
++                     && node->GetPropVal(wxT("name"),&nameValue)){
+ 
+                       aXRCWndClassData.Add(
+                         XRCWndClassData(nameValue,classValue,node)
+@@ -431,34 +431,34 @@ static bool NodeContainsFilename(wxXmlNode *node)
+    const wxString name = node->GetName();
+ 
+    // Any bitmaps (bitmap2 is used for disabled toolbar buttons):
+-   if ( name == _T("bitmap") || name == _T("bitmap2") )
++   if ( name == wxT("bitmap") || name == wxT("bitmap2") )
+        return true;
+ 
+-   if ( name == _T("icon") )
++   if ( name == wxT("icon") )
+        return true;
+ 
+    // wxBitmapButton:
+    wxXmlNode *parent = node->GetParent();
+    if (parent != NULL &&
+-       parent->GetPropVal(_T("class"), _T("")) == _T("wxBitmapButton") &&
+-       (name == _T("focus") ||
+-        name == _T("disabled") ||
+-        name == _T("hover") ||
+-        name == _T("selected")))
++       parent->GetPropVal(wxT("class"), wxT("")) == wxT("wxBitmapButton") &&
++       (name == wxT("focus") ||
++        name == wxT("disabled") ||
++        name == wxT("hover") ||
++        name == wxT("selected")))
+        return true;
+ 
+    // wxBitmap or wxIcon toplevel resources:
+-   if ( name == _T("object") )
++   if ( name == wxT("object") )
+    {
+-       wxString klass = node->GetPropVal(_T("class"), wxEmptyString);
+-       if (klass == _T("wxBitmap") || klass == _T("wxIcon"))
++       wxString klass = node->GetPropVal(wxT("class"), wxEmptyString);
++       if (klass == wxT("wxBitmap") || klass == wxT("wxIcon"))
+            return true;
+    }
+ 
+    // URLs in wxHtmlWindow:
+-   if ( name == _T("url") &&
++   if ( name == wxT("url") &&
+         parent != NULL &&
+-        parent->GetPropVal(_T("class"), _T("")) == _T("wxHtmlWindow") )
++        parent->GetPropVal(wxT("class"), wxT("")) == wxT("wxHtmlWindow") )
+    {
+        // FIXME: this is wrong for e.g. http:// URLs
+        return true;
+@@ -490,7 +490,7 @@ void XmlResApp::FindFilesInXML(wxXmlNode *node, wxArrayString& flist, const wxSt
+                 fullname = inputPath + wxFILE_SEP_PATH + n->GetContent();
+ 
+             if (flagVerbose)
+-                wxPrintf(_T("adding     ") + fullname +  _T("...\n"));
++                wxPrintf(wxT("adding     ") + fullname +  wxT("...\n"));
+ 
+             wxString filename = GetInternalFileName(n->GetContent(), flist);
+             n->SetContent(filename);
+@@ -526,22 +526,22 @@ void XmlResApp::MakePackageZIP(const wxArrayString& flist)
+     wxString files;
+ 
+     for (size_t i = 0; i < flist.Count(); i++)
+-        files += flist[i] + _T(" ");
++        files += flist[i] + wxT(" ");
+     files.RemoveLast();
+ 
+     if (flagVerbose)
+-        wxPrintf(_T("compressing ") + parOutput +  _T("...\n"));
++        wxPrintf(wxT("compressing ") + parOutput +  wxT("...\n"));
+ 
+     wxString cwd = wxGetCwd();
+     wxSetWorkingDirectory(parOutputPath);
+-    int execres = wxExecute(_T("zip -9 -j ") +
+-                            wxString(flagVerbose ? _T("\"") : _T("-q \"")) +
+-                            parOutput + _T("\" ") + files, true);
++    int execres = wxExecute(wxT("zip -9 -j ") +
++                            wxString(flagVerbose ? wxT("\"") : wxT("-q \"")) +
++                            parOutput + wxT("\" ") + files, true);
+     wxSetWorkingDirectory(cwd);
+     if (execres == -1)
+     {
+-        wxLogError(_T("Unable to execute zip program. Make sure it is in the path."));
+-        wxLogError(_T("You can download it at http://www.cdrom.com/pub/infozip/"));
++        wxLogError(wxT("Unable to execute zip program. Make sure it is in the path."));
++        wxLogError(wxT("You can download it at http://www.cdrom.com/pub/infozip/"));
+         retCode = 1;
+         return;
+     }
+@@ -561,9 +561,9 @@ static wxString FileToCppArray(wxString filename, int num)
+     const size_t lng = wx_truncate_cast(size_t, offset);
+     wxASSERT_MSG( lng == offset, wxT("Huge file not supported") );
+ 
+-    snum.Printf(_T("%i"), num);
+-    output.Printf(_T("static size_t xml_res_size_") + snum + _T(" = %i;\n"), lng);
+-    output += _T("static unsigned char xml_res_file_") + snum + _T("[] = {\n");
++    snum.Printf(wxT("%i"), num);
++    output.Printf(wxT("static size_t xml_res_size_") + snum + wxT(" = %i;\n"), lng);
++    output += wxT("static unsigned char xml_res_file_") + snum + wxT("[] = {\n");
+     // we cannot use string literals because MSVC is dumb wannabe compiler
+     // with arbitrary limitation to 2048 strings :(
+ 
+@@ -572,12 +572,12 @@ static wxString FileToCppArray(wxString filename, int num)
+ 
+     for (size_t i = 0, linelng = 0; i < lng; i++)
+     {
+-        tmp.Printf(_T("%i"), buffer[i]);
+-        if (i != 0) output << _T(',');
++        tmp.Printf(wxT("%i"), buffer[i]);
++        if (i != 0) output << wxT(',');
+         if (linelng > 70)
+         {
+             linelng = 0;
+-            output << _T("\n");
++            output << wxT("\n");
+         }
+         output << tmp;
+         linelng += tmp.Length()+1;
+@@ -585,7 +585,7 @@ static wxString FileToCppArray(wxString filename, int num)
+ 
+     delete[] buffer;
+ 
+-    output += _T("};\n\n");
++    output += wxT("};\n\n");
+ 
+     return output;
+ }
+@@ -597,51 +597,51 @@ void XmlResApp::MakePackageCPP(const wxArrayString& flist)
+     size_t i;
+ 
+     if (flagVerbose)
+-        wxPrintf(_T("creating C++ source file ") + parOutput +  _T("...\n"));
+-
+-    file.Write(_T("")
+-_T("//\n")
+-_T("// This file was automatically generated by wxrc, do not edit by hand.\n")
+-_T("//\n\n")
+-_T("#include <wx/wxprec.h>\n")
+-_T("\n")
+-_T("#ifdef __BORLANDC__\n")
+-_T("    #pragma hdrstop\n")
+-_T("#endif\n")
+-_T("\n")
+-_T("")
+-_T("#include <wx/filesys.h>\n")
+-_T("#include <wx/fs_mem.h>\n")
+-_T("#include <wx/xrc/xmlres.h>\n")
+-_T("#include <wx/xrc/xh_all.h>\n")
+-_T("\n")
+-_T("#if wxCHECK_VERSION(2,8,5) && wxABI_VERSION >= 20805\n")
+-_T("    #define XRC_ADD_FILE(name, data, size, mime) \\\n")
+-_T("        wxMemoryFSHandler::AddFileWithMimeType(name, data, size, mime)\n")
+-_T("#else\n")
+-_T("    #define XRC_ADD_FILE(name, data, size, mime) \\\n")
+-_T("        wxMemoryFSHandler::AddFile(name, data, size)\n")
+-_T("#endif\n")
+-_T("\n"));
++        wxPrintf(wxT("creating C++ source file ") + parOutput +  wxT("...\n"));
++
++    file.Write(wxT("")
++wxT("//\n")
++wxT("// This file was automatically generated by wxrc, do not edit by hand.\n")
++wxT("//\n\n")
++wxT("#include <wx/wxprec.h>\n")
++wxT("\n")
++wxT("#ifdef __BORLANDC__\n")
++wxT("    #pragma hdrstop\n")
++wxT("#endif\n")
++wxT("\n")
++wxT("")
++wxT("#include <wx/filesys.h>\n")
++wxT("#include <wx/fs_mem.h>\n")
++wxT("#include <wx/xrc/xmlres.h>\n")
++wxT("#include <wx/xrc/xh_all.h>\n")
++wxT("\n")
++wxT("#if wxCHECK_VERSION(2,8,5) && wxABI_VERSION >= 20805\n")
++wxT("    #define XRC_ADD_FILE(name, data, size, mime) \\\n")
++wxT("        wxMemoryFSHandler::AddFileWithMimeType(name, data, size, mime)\n")
++wxT("#else\n")
++wxT("    #define XRC_ADD_FILE(name, data, size, mime) \\\n")
++wxT("        wxMemoryFSHandler::AddFile(name, data, size)\n")
++wxT("#endif\n")
++wxT("\n"));
+ 
+     for (i = 0; i < flist.Count(); i++)
+         file.Write(
+               FileToCppArray(parOutputPath + wxFILE_SEP_PATH + flist[i], i));
+ 
+-    file.Write(_T("")
+-_T("void ") + parFuncname + wxT("()\n")
+-_T("{\n")
+-_T("\n")
+-_T("    // Check for memory FS. If not present, load the handler:\n")
+-_T("    {\n")
+-_T("        wxMemoryFSHandler::AddFile(wxT(\"XRC_resource/dummy_file\"), wxT(\"dummy one\"));\n")
+-_T("        wxFileSystem fsys;\n")
+-_T("        wxFSFile *f = fsys.OpenFile(wxT(\"memory:XRC_resource/dummy_file\"));\n")
+-_T("        wxMemoryFSHandler::RemoveFile(wxT(\"XRC_resource/dummy_file\"));\n")
+-_T("        if (f) delete f;\n")
+-_T("        else wxFileSystem::AddHandler(new wxMemoryFSHandler);\n")
+-_T("    }\n")
+-_T("\n"));
++    file.Write(wxT("")
++wxT("void ") + parFuncname + wxT("()\n")
++wxT("{\n")
++wxT("\n")
++wxT("    // Check for memory FS. If not present, load the handler:\n")
++wxT("    {\n")
++wxT("        wxMemoryFSHandler::AddFile(wxT(\"XRC_resource/dummy_file\"), wxT(\"dummy one\"));\n")
++wxT("        wxFileSystem fsys;\n")
++wxT("        wxFSFile *f = fsys.OpenFile(wxT(\"memory:XRC_resource/dummy_file\"));\n")
++wxT("        wxMemoryFSHandler::RemoveFile(wxT(\"XRC_resource/dummy_file\"));\n")
++wxT("        if (f) delete f;\n")
++wxT("        else wxFileSystem::AddHandler(new wxMemoryFSHandler);\n")
++wxT("    }\n")
++wxT("\n"));
+ 
+     for (i = 0; i < flist.Count(); i++)
+     {
+@@ -649,8 +649,8 @@ _T("\n"));
+ 
+         wxString mime;
+         wxString ext = wxFileName(flist[i]).GetExt();
+-        if ( ext.Lower() == _T("xrc") )
+-            mime = _T("text/xml");
++        if ( ext.Lower() == wxT("xrc") )
++            mime = wxT("text/xml");
+         else
+         {
+             wxFileType *ft = wxTheMimeTypesManager->GetFileTypeFromExtension(ext);
+@@ -658,19 +658,19 @@ _T("\n"));
+                 ft->GetMimeType(&mime);
+         }
+ 
+-        s.Printf(_T("    XRC_ADD_FILE(wxT(\"XRC_resource/") + flist[i] +
+-                 _T("\"), xml_res_file_%i, xml_res_size_%i, _T(\"%s\"));\n"),
++        s.Printf(wxT("    XRC_ADD_FILE(wxT(\"XRC_resource/") + flist[i] +
++                 wxT("\"), xml_res_file_%i, xml_res_size_%i, wxT(\"%s\"));\n"),
+                  i, i, mime.c_str());
+         file.Write(s);
+     }
+ 
+     for (i = 0; i < parFiles.Count(); i++)
+     {
+-        file.Write(_T("    wxXmlResource::Get()->Load(wxT(\"memory:XRC_resource/") +
+-                   GetInternalFileName(parFiles[i], flist) + _T("\"));\n"));
++        file.Write(wxT("    wxXmlResource::Get()->Load(wxT(\"memory:XRC_resource/") +
++                   GetInternalFileName(parFiles[i], flist) + wxT("\"));\n"));
+     }
+ 
+-    file.Write(_T("}\n"));
++    file.Write(wxT("}\n"));
+ 
+ 
+ }
+@@ -678,23 +678,23 @@ _T("\n"));
+ void XmlResApp::GenCPPHeader()
+ {
+     wxString fileSpec = ((parOutput.BeforeLast('.')).AfterLast('/')).AfterLast('\\');
+-    wxString heaFileName = fileSpec + _T(".h");
++    wxString heaFileName = fileSpec + wxT(".h");
+ 
+     wxFFile file(heaFileName, wxT("wt"));
+     file.Write(
+-_T("//\n")
+-_T("// This file was automatically generated by wxrc, do not edit by hand.\n")
+-_T("//\n\n")
+-_T("#ifndef __")  + fileSpec + _T("_h__\n")
+-_T("#define __")  + fileSpec + _T("_h__\n")
++wxT("//\n")
++wxT("// This file was automatically generated by wxrc, do not edit by hand.\n")
++wxT("//\n\n")
++wxT("#ifndef __")  + fileSpec + wxT("_h__\n")
++wxT("#define __")  + fileSpec + wxT("_h__\n")
+ );
+     for(size_t i=0;i<aXRCWndClassData.Count();++i){
+                 aXRCWndClassData.Item(i).GenerateHeaderCode(file);
+     }
+     file.Write(
+-                _T("\nvoid \n")
++                wxT("\nvoid \n")
+                 + parFuncname
+-                + _T("();\n#endif\n"));
++                + wxT("();\n#endif\n"));
+ }
+ 
+ static wxString FileToPythonArray(wxString filename, int num)
+@@ -709,8 +709,8 @@ static wxString FileToPythonArray(wxString filename, int num)
+     const size_t lng = wx_truncate_cast(size_t, offset);
+     wxASSERT_MSG( offset == lng, wxT("Huge file not supported") );
+ 
+-    snum.Printf(_T("%i"), num);
+-    output = _T("    xml_res_file_") + snum + _T(" = '''\\\n");
++    snum.Printf(wxT("%i"), num);
++    output = wxT("    xml_res_file_") + snum + wxT(" = '''\\\n");
+ 
+     unsigned char *buffer = new unsigned char[lng];
+     file.Read(buffer, lng);
+@@ -724,15 +724,15 @@ static wxString FileToPythonArray(wxString filename, int num)
+             linelng = 0;
+         }
+         else if (c < 32 || c > 127 || c == '\'')
+-            tmp.Printf(_T("\\x%02x"), c);
++            tmp.Printf(wxT("\\x%02x"), c);
+         else if (c == '\\')
+-            tmp = _T("\\\\");
++            tmp = wxT("\\\\");
+         else
+             tmp = (wxChar)c;
+         if (linelng > 70)
+         {
+             linelng = 0;
+-            output << _T("\\\n");
++            output << wxT("\\\n");
+         }
+         output << tmp;
+         linelng += tmp.Length();
+@@ -740,7 +740,7 @@ static wxString FileToPythonArray(wxString filename, int num)
+ 
+     delete[] buffer;
+ 
+-    output += _T("'''\n\n");
++    output += wxT("'''\n\n");
+ 
+     return output;
+ }
+@@ -752,52 +752,52 @@ void XmlResApp::MakePackagePython(const wxArrayString& flist)
+     size_t i;
+ 
+     if (flagVerbose)
+-        wxPrintf(_T("creating Python source file ") + parOutput +  _T("...\n"));
++        wxPrintf(wxT("creating Python source file ") + parOutput +  wxT("...\n"));
+ 
+     file.Write(
+-       _T("#\n")
+-       _T("# This file was automatically generated by wxrc, do not edit by hand.\n")
+-       _T("#\n\n")
+-       _T("import wx\n")
+-       _T("import wx.xrc\n\n")
++       wxT("#\n")
++       wxT("# This file was automatically generated by wxrc, do not edit by hand.\n")
++       wxT("#\n\n")
++       wxT("import wx\n")
++       wxT("import wx.xrc\n\n")
+     );
+ 
+ 
+-    file.Write(_T("def ") + parFuncname + _T("():\n"));
++    file.Write(wxT("def ") + parFuncname + wxT("():\n"));
+ 
+     for (i = 0; i < flist.Count(); i++)
+         file.Write(
+           FileToPythonArray(parOutputPath + wxFILE_SEP_PATH + flist[i], i));
+ 
+     file.Write(
+-        _T("    # check if the memory filesystem handler has been loaded yet, and load it if not\n")
+-        _T("    wx.MemoryFSHandler.AddFile('XRC_resource/dummy_file', 'dummy value')\n")
+-        _T("    fsys = wx.FileSystem()\n")
+-        _T("    f = fsys.OpenFile('memory:XRC_resource/dummy_file')\n")
+-        _T("    wx.MemoryFSHandler.RemoveFile('XRC_resource/dummy_file')\n")
+-        _T("    if f is not None:\n")
+-        _T("        f.Destroy()\n")
+-        _T("    else:\n")
+-        _T("        wx.FileSystem.AddHandler(wx.MemoryFSHandler())\n")
+-        _T("\n")
+-        _T("    # load all the strings as memory files and load into XmlRes\n")
++        wxT("    # check if the memory filesystem handler has been loaded yet, and load it if not\n")
++        wxT("    wx.MemoryFSHandler.AddFile('XRC_resource/dummy_file', 'dummy value')\n")
++        wxT("    fsys = wx.FileSystem()\n")
++        wxT("    f = fsys.OpenFile('memory:XRC_resource/dummy_file')\n")
++        wxT("    wx.MemoryFSHandler.RemoveFile('XRC_resource/dummy_file')\n")
++        wxT("    if f is not None:\n")
++        wxT("        f.Destroy()\n")
++        wxT("    else:\n")
++        wxT("        wx.FileSystem.AddHandler(wx.MemoryFSHandler())\n")
++        wxT("\n")
++        wxT("    # load all the strings as memory files and load into XmlRes\n")
+         );
+ 
+ 
+     for (i = 0; i < flist.Count(); i++)
+     {
+         wxString s;
+-        s.Printf(_T("    wx.MemoryFSHandler.AddFile('XRC_resource/") + flist[i] +
+-                 _T("', xml_res_file_%i)\n"), i);
++        s.Printf(wxT("    wx.MemoryFSHandler.AddFile('XRC_resource/") + flist[i] +
++                 wxT("', xml_res_file_%i)\n"), i);
+         file.Write(s);
+     }
+     for (i = 0; i < parFiles.Count(); i++)
+     {
+-        file.Write(_T("    wx.xrc.XmlResource.Get().Load('memory:XRC_resource/") +
+-                   GetInternalFileName(parFiles[i], flist) + _T("')\n"));
++        file.Write(wxT("    wx.xrc.XmlResource.Get().Load('memory:XRC_resource/") +
++                   GetInternalFileName(parFiles[i], flist) + wxT("')\n"));
+     }
+ 
+-    file.Write(_T("\n"));
++    file.Write(wxT("\n"));
+ }
+ 
+ 
+@@ -813,7 +813,7 @@ void XmlResApp::OutputGettext()
+         fout.Open(parOutput, wxT("wt"));
+ 
+     for (size_t i = 0; i < str.GetCount(); i++)
+-        fout.Write(_T("_(\"") + str[i] + _T("\");\n"));
++        fout.Write(wxT("_(\"") + str[i] + wxT("\");\n"));
+ 
+     if (!parOutput) fout.Detach();
+ }
+@@ -827,12 +827,12 @@ wxArrayString XmlResApp::FindStrings()
+     for (size_t i = 0; i < parFiles.Count(); i++)
+     {
+         if (flagVerbose)
+-            wxPrintf(_T("processing ") + parFiles[i] +  _T("...\n"));
++            wxPrintf(wxT("processing ") + parFiles[i] +  wxT("...\n"));
+ 
+         wxXmlDocument doc;
+         if (!doc.Load(parFiles[i]))
+         {
+-            wxLogError(_T("Error parsing file ") + parFiles[i]);
++            wxLogError(wxT("Error parsing file ") + parFiles[i]);
+             retCode = 1;
+             continue;
+         }
+@@ -899,20 +899,20 @@ wxArrayString XmlResApp::FindStrings(wxXmlNode *node)
+             n->GetType() == wxXML_CDATA_SECTION_NODE) &&
+             // ...it is textnode...
+             (
+-                node/*not n!*/->GetName() == _T("label") ||
+-                (node/*not n!*/->GetName() == _T("value") &&
++                node/*not n!*/->GetName() == wxT("label") ||
++                (node/*not n!*/->GetName() == wxT("value") &&
+                                !n->GetContent().IsNumber()) ||
+-                node/*not n!*/->GetName() == _T("help") ||
+-                node/*not n!*/->GetName() == _T("longhelp") ||
+-                node/*not n!*/->GetName() == _T("tooltip") ||
+-                node/*not n!*/->GetName() == _T("htmlcode") ||
+-                node/*not n!*/->GetName() == _T("title") ||
+-                node/*not n!*/->GetName() == _T("item")
++                node/*not n!*/->GetName() == wxT("help") ||
++                node/*not n!*/->GetName() == wxT("longhelp") ||
++                node/*not n!*/->GetName() == wxT("tooltip") ||
++                node/*not n!*/->GetName() == wxT("htmlcode") ||
++                node/*not n!*/->GetName() == wxT("title") ||
++                node/*not n!*/->GetName() == wxT("item")
+             ))
+             // ...and known to contain translatable string
+         {
+             if (!flagGettext ||
+-                node->GetPropVal(_T("translate"), _T("1")) != _T("0"))
++                node->GetPropVal(wxT("translate"), wxT("1")) != wxT("0"))
+             {
+                 arr.Add(ConvertText(n->GetContent()));
+             }
+-- 
+1.6.3.2
+

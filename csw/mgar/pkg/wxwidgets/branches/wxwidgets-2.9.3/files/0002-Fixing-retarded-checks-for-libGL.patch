@@ -1,0 +1,35 @@
+From f3edfabf2a69ea49dc954b4f9a98b96b6ea288fa Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@build8x.(none)>
+Date: Fri, 21 Aug 2009 10:24:42 +0200
+Subject: [PATCH 2/2] Fixing retarded checks for libGL
+
+---
+ configure |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index dad32e2..a48ae69 100755
+--- a/configure
++++ b/configure
+@@ -24969,7 +24969,8 @@ SEARCH_INCLUDE="\
+     /usr/X11R4/include        \
+     /usr/include/X11R4        \
+                               \
+-    /usr/openwin/share/include"
++    /usr/openwin/share/include \
++    /opt/csw/include"
+ 
+ echo "$as_me:$LINENO: checking for libraries directory" >&5
+ echo $ECHO_N "checking for libraries directory... $ECHO_C" >&6
+@@ -33420,7 +33421,7 @@ if test $ac_cv_header_GL_glu_h = yes; then
+ echo $ECHO_N "checking for -lGL... $ECHO_C" >&6
+ 
+   ac_find_libraries=
+-  for ac_dir in $SEARCH_LIB /opt/graphics/OpenGL/lib;
++  for ac_dir in $SEARCH_LIB /opt/graphics/OpenGL/lib /opt/csw/lib;
+   do
+     for ac_extension in a so sl dylib dll.a; do
+       if test -f "$ac_dir/libGL.$ac_extension"; then
+-- 
+1.6.3.2
+

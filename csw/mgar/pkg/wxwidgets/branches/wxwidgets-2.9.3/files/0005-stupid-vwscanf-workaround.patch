@@ -1,0 +1,28 @@
+From 739b2e9cbecf828c1f74f0e349a6ad8b3a2a0060 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 15 Nov 2009 16:07:25 +0100
+Subject: [PATCH] stupid vwscanf workaround
+
+---
+ include/wx/wxchar.h |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/wx/wxchar.h b/include/wx/wxchar.h
+index 04fbd8d..e88484a 100644
+--- a/include/wx/wxchar.h
++++ b/include/wx/wxchar.h
+@@ -1011,9 +1011,9 @@ WXDLLIMPEXP_BASE bool wxOKlibc(); /* for internal use */
+    so on but not all systems have them so use our own implementations in this
+    case.
+  */
+-#if wxUSE_UNICODE && !defined(wxHAVE_TCHAR_SUPPORT) && !defined(HAVE_WPRINTF)
++/* #if wxUSE_UNICODE && !defined(wxHAVE_TCHAR_SUPPORT) && !defined(HAVE_WPRINTF) */
+     #define wxNEED_WPRINTF
+-#endif
++/* #endif */
+ 
+ /*
+    More Unicode complications: although both ANSI C and C++ define a number of
+-- 
+1.6.2.1
+
