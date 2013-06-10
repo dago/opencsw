@@ -48,12 +48,12 @@ PATCHFILES += 0001-Fix-use-of-unnamed-union-inside-struct.patch
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
 REINPLACE_WITH_manifest1 = network/cswnetatalk
-REINPLACE_FILES_manifest1 += netatalk.xml.in
+REINPLACE_FILES_manifest1 += distrib/initscripts/netatalk.xml.tmpl
 
 REINPLACEMENTS += manifest2
 REINPLACE_MATCH_manifest2 = name="netatalk"
 REINPLACE_WITH_manifest2 =  name="cswnetatalk"
-REINPLACE_FILES_manifest2 += netatalk.xml.in
+REINPLACE_FILES_manifest2 += distrib/initscripts/netatalk.xml.tmpl
 
 PRESERVECONF += $(sysconfdir)/afp.conf
 PRESERVECONF += $(sysconfdir)/extmap.conf
