@@ -78,9 +78,10 @@ PKGFILES_CSWwxwidgetsgtk2 = $(libdir).*libwx_gtk2.*\.so\..*
 
 PKGFILES_CSWwxwidgets-dev = $(PKGFILES_DEVEL)
 
-CATALOGNAME_CSWwxwidgets     = wxwidgets
-CATALOGNAME_CSWwxwidgets-dev = wxwidgets_dev
-CATALOGNAME_CSWwxwidgetsgtk2 = wxwidgetsgtk2
+CATALOGNAME_CSWwxwidgets      = wxwidgets
+CATALOGNAME_CSWwxwidgets-dev  = wxwidgets_dev
+CATALOGNAME_CSWwxwidgetsgtk2  = wxwidgetsgtk2
+CATALOGNAME_CSWwxwidgetsdevel = wxwidgets_devel_stub 
 
 OBSOLETED_BY_CSWwxwidgets     = CSWwxwidgetscommon
 OBSOLETED_BY_CSWwxwidgets-dev = CSWwxwidgetsdevel
@@ -106,44 +107,8 @@ EXTRA_LD_OPTIONS += -z nolazyload -B direct
 
 # wxWidget contains a bunch of .so, let's keep them together as one big
 # happy family
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_aui-2.8.so.0|soname=libwx_gtk2u_aui-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-aui2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_richtext-2.8.so.0|soname=libwx_gtk2u_richtext-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-richtext2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_adv-2.8.so.0|soname=libwx_gtk2u_adv-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-adv2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_core-2.8.so.0|soname=libwx_gtk2u_core-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-core2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_gl-2.8.so.0|soname=libwx_gtk2u_gl-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-gl2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_html-2.8.so.0|soname=libwx_gtk2u_html-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-html2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_qa-2.8.so.0|soname=libwx_gtk2u_qa-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-qa2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_gtk2u_xrc-2.8.so.0|soname=libwx_gtk2u_xrc-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-xrc2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_baseu-2.8.so.0|soname=libwx_baseu-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_baseu_net-2.8.so.0|soname=libwx_baseu_net-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu-net2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets += shared-lib-pkgname-mismatch|file=opt/csw/lib/libwx_baseu_xml-2.8.so.0|soname=libwx_baseu_xml-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu-xml2-8-0
-
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_aui-2.8.so.0|soname=libwx_gtk2u_aui-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-aui2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_richtext-2.8.so.0|soname=libwx_gtk2u_richtext-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-richtext2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_adv-2.8.so.0|soname=libwx_gtk2u_adv-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-adv2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_core-2.8.so.0|soname=libwx_gtk2u_core-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-core2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_gl-2.8.so.0|soname=libwx_gtk2u_gl-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-gl2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_html-2.8.so.0|soname=libwx_gtk2u_html-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-html2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_qa-2.8.so.0|soname=libwx_gtk2u_qa-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-qa2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_gtk2u_xrc-2.8.so.0|soname=libwx_gtk2u_xrc-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-xrc2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_baseu-2.8.so.0|soname=libwx_baseu-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_baseu_net-2.8.so.0|soname=libwx_baseu_net-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu-net2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets_i386 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libwx_baseu_xml-2.8.so.0|soname=libwx_baseu_xml-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu-xml2-8-0
-
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_aui-2.8.so.0|soname=libwx_gtk2u_aui-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-aui2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_richtext-2.8.so.0|soname=libwx_gtk2u_richtext-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-richtext2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_adv-2.8.so.0|soname=libwx_gtk2u_adv-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-adv2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_core-2.8.so.0|soname=libwx_gtk2u_core-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-core2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_gl-2.8.so.0|soname=libwx_gtk2u_gl-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-gl2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_html-2.8.so.0|soname=libwx_gtk2u_html-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-html2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_qa-2.8.so.0|soname=libwx_gtk2u_qa-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-qa2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_gtk2u_xrc-2.8.so.0|soname=libwx_gtk2u_xrc-2.8.so.0|pkgname=CSWwxwidgetsgtk2|expected=CSWlibwx-gtk2u-xrc2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_baseu-2.8.so.0|soname=libwx_baseu-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_baseu_net-2.8.so.0|soname=libwx_baseu_net-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu-net2-8-0
-CHECKPKG_OVERRIDES_CSWwxwidgets_sparc += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libwx_baseu_xml-2.8.so.0|soname=libwx_baseu_xml-2.8.so.0|pkgname=CSWwxwidgets|expected=CSWlibwx-baseu-xml2-8-0
-
-CHECKPKG_OVERRIDES_CSWwxwidgets += $(CHECKPKG_OVERRIDES_CSWwxwidgets_$(GARCH))
-CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += $(CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2_$(GARCH))
+CHECKPKG_OVERRIDES_CSWwxwidgets     = shared-lib-pkgname-mismatch
+CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 = shared-lib-pkgname-mismatch
 
 # Only samples inside code comments, can be safely ignored at this point
 CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/share|root/opt/csw/include/wx-2.8/wx/utils.h
@@ -153,4 +118,3 @@ CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/local|root/opt
 LICENSE = docs/licence.txt
 
 include gar/category.mk
-
