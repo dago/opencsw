@@ -38,6 +38,13 @@ BUILD_DEP_PKGS += CSWlibicu-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWlibuuid-dev
+BUILD_DEP_PKGS += CSWlibiptcdata
+BUILD_DEP_PKGS += CSWpoppler-dev
+BUILD_DEP_PKGS += CSWexempidevel
+BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWlibflac-dev
+BUILD_DEP_PKGS += CSWgstreamer
+BUILD_DEP_PKGS += CSWlibexif-dev
 
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgsf1-114
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgmodule2-0-0
@@ -74,6 +81,12 @@ RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgif4
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibiptcdata
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWpoppler
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWexempi
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibflac
+RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWgstreamer
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-common
 
@@ -152,6 +165,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-tracker-fts
 CONFIGURE_ARGS += --disable-unit-tests
 CONFIGURE_ARGS += --disable-hal
+# FIXME: re-enable introspection? afair requires vala
 CONFIGURE_ARGS += --disable-introspection
 CONFIGURE_ARGS += --disable-playlist
 CONFIGURE_ARGS += --disable-nautilus-extension
