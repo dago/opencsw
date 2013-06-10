@@ -12,9 +12,9 @@ define BLURB
   as C++, Python, Perl, and C#/.NET. Unlike other cross-platform toolkits,
   wxWidgets applications look and feel native. This is because wxWidgets uses
   the platform's own native controls rather than emulatDISTFILES  = $(NAME)-$(VERSION).tar.bz2
-.8.so.VENDOR_URL = http://www.wxwidgets.org/
-MASTER_SITES    = $(SF_MIRRORS)
-SF_PROJECT      = wxwindows
+.VENDOR_URL   = http://www.wxwidgets.org/
+MASTER_SITES = $(SF_MIRRORS)
+SF_PROJECT   = wxwindows
 
 PACKAGES  = CSWwxwidgets
 PACKAGES += CSWwxwidgets-dev
