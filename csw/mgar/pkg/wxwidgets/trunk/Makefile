@@ -118,3 +118,17 @@ CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/local|root/opt
 LICENSE = docs/licence.txt
 
 include gar/category.mk
+
+
+# Remove Studio-specific arch references
+post-install-modulated:
+	gsed -i \
+		-e '/^[^#]/s/-xO3[^ ]* //' \
+		-e '/^[^#]/s/-xarch=[^ ]* //' \
+		-e '/^[^#]/s/-xchip=[^ ]* //' \
+		-e '/^[^#]/s/-norunpath[^ ]* //' \
+		-e '/^[^#]/s/-lCrun[^ ]* //' \
+		-e '/^[^#]/s/-lCstd[^ ]* //' \
+		-e '/^[^#]/s/-mt[^ ]* //' \
+		$(DESTDIR)$(bindir)/icu-config
+
