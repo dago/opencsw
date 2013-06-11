@@ -16,15 +16,13 @@ DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
 GARCOMPILER = SOS12U3
-PACKAGING_PLATFORMS = solaris10-sparc#  solaris10-i386
-
-PATCHFILES += missing-includes.patch
+PACKAGING_PLATFORMS = solaris10-sparcg-includes.patch
 PATCHFILES += ltmain.patch
 
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# BUILD# BUILD64 = 1
+# BUILDBUILD64 = 1
 
 PACKAGES += CSWlibpoppler-pp0 = libpoppler_cpp0
 PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpop2\.0)= libpoppler_cpp0
