@@ -130,5 +130,5 @@ post-install-modulated:
 		-e '/^[^#]/s/-lCrun[^ ]* //' \
 		-e '/^[^#]/s/-lCstd[^ ]* //' \
 		-e '/^[^#]/s/-mt[^ ]* //' \
-		$(DESTDIR)$(bindir)/wx-config
+		$(DESTDIR)$(libdir)/wx/config/gtk2-unicode-release-2.8
 
