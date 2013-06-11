@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = poppler
-VERSION = 0.14.4
+VERSION = 0.22.4
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,7 +16,7 @@ DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
 GARCOMPILER = SOS12U3
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc#  solaris10-i386
 
 PATCHFILES += missing-includes.patch
 PATCHFILES += ltmain.patch
@@ -24,54 +24,43 @@ PATCHFILES += ltmain.patch
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# BUILD64_LIBS_ONLY = 1
-BUILD64 = 1
+# BUILD# BUILD64 = 1
 
-PACKAGES += CSWlibpoppler-cpp0
-CATALOGNAME_CSWlibpoppler-cpp0 = libpoppler_cpp0
-PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpoppler-cpp\.so\.0\.1\.0)
+PACKAGES += CSWlibpoppler-pp0 = libpoppler_cpp0
+PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpop2\.0)= libpoppler_cpp0
 PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpoppler-cpp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibpoppler-cpp0 += $(DESCRIPTION), libpoppler-cpp.so.0
-RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp037
 RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibiconv2
 
-PACKAGES += CSWlibpoppler-glib5
-CATALOGNAME_CSWlibpoppler-glib5 = libpoppler_glib5
-PKGFILES_CSWlibpoppler-glib5 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.5\.0\.0)
-PKGFILES_CSWlibpoppler-glib5 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.5(\.\d+)*)
-SPKG_DESC_CSWlibpoppler-glib5 += $(DESCRIPTION), libpoppler-glib.so.5
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibpoppler7
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib5 += CSWlibfontconfig1
+PACKAGES += CSWlibpoppler-glib8
+PKGFILES_CSWlibpoppler-glib8 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.8\.6\.0)
+PKGFILES_CSWlibpoppler-glib8 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.8(\.\d+)*)
+SPKG_DESC_CSWlibpoppler-glib8 += $(DESCRIPTION), libpoppler-glib.so.8
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibpoppler37
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgio2-0-0
 
-PACKAGES += CSWlibpoppler7
-CATALOGNAME_CSWlibpoppler7 = libpoppler7
-PKGFILES_CSWlibpoppler7 += $(call baseisadirs,$(libdir),libpoppler\.so\.7\.0\.0)
-PKGFILES_CSWlibpoppler7 += $(call baseisadirs,$(libdir),libpoppler\.so\.7(\.\d+)*)
-SPKG_DESC_CSWlibpoppler7 += $(DESCRIPTION), libpoppler.so.7
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibpoppler7 += CSWliblcms1
+PACKAGES += CSWlibpoppler37
+PKGFILES_CSWlibpoppler37 += $(call baseisadirs,$(libdir),libpoppler\.so\.37\.0\.0)
+PKGFILES_CSWlibpoppler37 += $(call baseisadirs,$(libdir),libpoppler\.so\.37(\.\d+)*)
+SPKG_DESC_CSWlibpoppler37 += $(DESCRIPTION), libpoppler.so.37
+RUNTIME_DEP_PKGS_CSWlibpoppler37 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpoppler37 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibpoppler37 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibpoppler37 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibpoppler37 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibpoppler37 += CSWlibtiff3
 
-PACKAGES += CSWpoppler-dev
-CATALOGNAME_CSWpoppler-dev = poppler_dev
+PACKAGES += CSWpoppler-er-dev = poppler_dev
 SPKG_DESC_CSWpoppler-dev += $(DESCRIPTION), development files
 PKGFILES_CSWpoppler-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWpoppler-dev3 += CSWlibpoppler7
 RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-cpp0
-RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-glib5
+RUNTIME_DEP_PKGS_CSWpoppler-dev += C8Wlibpoppler-glib5
 
 PACKAGES += CSWpoppler
 SPKG_DESC_CSWpoppler += $(DESCRIPTION), utils
@@ -95,13 +84,10 @@ CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftops.
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftotext.1|CSWpoppler|CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdffonts.1|CSWpoppler|CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftohtml.1|CSWpdftohtml|CSWpoppler
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler7
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWpoppler37
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWpoppler += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWpoppler += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2er += CSWliblcms1
 
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
 # when relinking libpoppler-glib during install phaze
@@ -111,7 +97,9 @@ EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 ### Install unsupported xpdf headers.
-CONFIGURE_ARGS += --enable-xpdf-headers 
+CONFIGURE_ARGS += --enabCONFIGURE_ARGS += --disable-poppler-qt4
+# FIXME: introspection doesn't build on amd64, couldn't figure out why
+CONFIGURE_ARGS += --enable-introspection=noble-xpdf-headers 
 
 include gar/category.mk
 
@@ -120,5 +108,4 @@ post-install-isa-sparcv8:
 	$(MAKECOOKIE)
 
 post-install-isa-i386:
-	(cd $(INSTALLISADIR)$(libdir);bzip2 -dc $(CURDIR)/$(DOWNLOADDIR)/old_libs_i386.tar.bz2|tar xf -)
-	$(MAKECOOKIE)
+	(cd $(INSTALLISADIR)$(libdir);bzip2 -dc $(CURDIR)/$(DOWNLOADDIR)/old_libs_i386.tar.bz2|tar xf -
