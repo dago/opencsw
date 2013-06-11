@@ -1,5 +1,5 @@
 NAME = gstreamer
-VERSION = 0.10.29
+VERSION = 0.10.32
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -25,16 +25,16 @@ PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
 
 RUNTIME_DEP_PKGS += CSWglib2 CSWggettextrt CSWlibxml2
 BUILD_DEP_PKGS   += CSWbison CSWflex-new CSWglib2devel CSWpkgconfig
-BUILD_DEP_PKGS   += CSWlibxml2devel
-BUILD_DEP_PKGS   += $(RUNTIME_DEP_PKGS)
+# BUILD_DEP_PKGS   += CSWlibxml2devel
+BUILD_DEP_PKGS   += CSWgobject-introspection
 
 STRIP_LIBTOOL = 1
 
-PATCHFILES += 0001-gtk-doc.mak.patch
-PATCHFILES += 0002-gtk-doc-plugins.mak.patch
-PATCHFILES += 0003-Makefile.in.patch
-PATCHFILES += 0004-Makefile.in.patch
-PATCHFILES += 0005-Makefile.in.patch
+# PATCHFILES += 0001-gtk-doc.mak.patch
+# PATCHFILES += 0002-gtk-doc-plugins.mak.patch
+# PATCHFILES += 0003-Makefile.in.patch
+# PATCHFILES += 0004-Makefile.in.patch
+# PATCHFILES += 0005-Makefile.in.patch
 
 # root/opt/csw/share/gtk-doc/html/gstreamer-0.10/gstreamer-GstBufferList.html
 # ./docs/plugins/html ./docs/libs/html ./docs/gst/html
@@ -56,8 +56,6 @@ CATALOGNAME_CSWlibgstbase0-10-0 = libgstbase0_10_0
 PKGFILES_CSWlibgstbase0-10-0 += $(call baseisadirs,$(libdir),libgstbase-0\.10\.so\.0\.25\.0)
 PKGFILES_CSWlibgstbase0-10-0 += $(call baseisadirs,$(libdir),libgstbase-0\.10\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgstbase0-10-0 += $(DESCRIPTION), libgstbase-0.10.so.0
-RUNTIME_DEP_PKGS_CSWlibgstbase0-10-0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstbase0-10-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstbase0-10-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgstbase0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstbase0-10-0 += CSWlibgobject2-0-0
@@ -68,9 +66,6 @@ CATALOGNAME_CSWlibgstcheck0-10-0 = libgstcheck0_10_0
 PKGFILES_CSWlibgstcheck0-10-0 += $(call baseisadirs,$(libdir),libgstcheck-0\.10\.so\.0\.25\.0)
 PKGFILES_CSWlibgstcheck0-10-0 += $(call baseisadirs,$(libdir),libgstcheck-0\.10\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgstcheck0-10-0 += $(DESCRIPTION), libgstcheck-0.10.so.0
-RUNTIME_DEP_PKGS_CSWlibgstcheck0-10-0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstcheck0-10-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstcheck0-10-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgstcheck0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstcheck0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstcheck0-10-0 += CSWlibglib2-0-0
@@ -80,21 +75,15 @@ CATALOGNAME_CSWlibgstcontroller0-10-0 = libgstcontroller0_10_0
 PKGFILES_CSWlibgstcontroller0-10-0 += $(call baseisadirs,$(libdir),libgstcontroller-0\.10\.so\.0\.25\.0)
 PKGFILES_CSWlibgstcontroller0-10-0 += $(call baseisadirs,$(libdir),libgstcontroller-0\.10\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgstcontroller0-10-0 += $(DESCRIPTION), libgstcontroller-0.10.so.0
-RUNTIME_DEP_PKGS_CSWlibgstcontroller0-10-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstcontroller0-10-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgstcontroller0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstcontroller0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstcontroller0-10-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstcontroller0-10-0 += CSWlibgthread2-0-0
 
 PACKAGES += CSWlibgstdataprotocol0-10-0
 CATALOGNAME_CSWlibgstdataprotocol0-10-0 = libgstdataprotocol0_10_0
 PKGFILES_CSWlibgstdataprotocol0-10-0 += $(call baseisadirs,$(libdir),libgstdataprotocol-0\.10\.so\.0\.25\.0)
 PKGFILES_CSWlibgstdataprotocol0-10-0 += $(call baseisadirs,$(libdir),libgstdataprotocol-0\.10\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgstdataprotocol0-10-0 += $(DESCRIPTION), libgstdataprotocol-0.10.so.0
-RUNTIME_DEP_PKGS_CSWlibgstdataprotocol0-10-0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstdataprotocol0-10-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstdataprotocol0-10-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgstdataprotocol0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstdataprotocol0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstdataprotocol0-10-0 += CSWlibglib2-0-0
@@ -104,9 +93,6 @@ CATALOGNAME_CSWlibgstnet0-10-0 = libgstnet0_10_0
 PKGFILES_CSWlibgstnet0-10-0 += $(call baseisadirs,$(libdir),libgstnet-0\.10\.so\.0\.25\.0)
 PKGFILES_CSWlibgstnet0-10-0 += $(call baseisadirs,$(libdir),libgstnet-0\.10\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgstnet0-10-0 += $(DESCRIPTION), libgstnet-0.10.so.0
-RUNTIME_DEP_PKGS_CSWlibgstnet0-10-0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstnet0-10-0 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstnet0-10-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgstnet0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstnet0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstnet0-10-0 += CSWlibglib2-0-0
@@ -138,7 +124,6 @@ RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstcheck0-10-0
 PACKAGES += CSWgstreamer
 SPKG_DESC_CSWgstreamer += $(DESCRIPTION), base
 RUNTIME_DEP_PKGS_CSWgstreamer += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgstreamer += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgstreamer += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgstreamer += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgstreamer += CSWlibglib2-0-0
