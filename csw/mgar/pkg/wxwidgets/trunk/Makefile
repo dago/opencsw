@@ -74,7 +74,8 @@ PKGFILES_CSWwxwidgets    += $(sharedir)/locale.*
 
 PKGFILES_CSWwxwidgetsgtk2 = $(libdir).*libwx_gtk2.*\.so\..*
 
-PKGFILES_CSWwxwidgets-dev = $(PKGFILES_DEVEL)
+# PKGFILES is catchall
+# PKGFILES_CSWwxwidgets-dev
 
 CATALOGNAME_CSWwxwidgets       = wxwidgets
 CATALOGNAME_CSWwxwidgets-dev   = wxwidgets_dev
