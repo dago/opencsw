@@ -2,19 +2,38 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-NAME = libyaml
-VERSION = 0.1.3
-CATEGORIES = lib
+NAME    = libyaml
+VERSION = 0.1.4
 GARTYPE = v2
-DESCRIPTION = a YAML 1.1 parser and emitter written in C
+
+DESCRIPTION = A YAML 1.1 parser and emitter written in C
 define BLURB
 endef
+
+VENDOR_URL  ef
 SPKG_SOURCEURL = http://pyyaml.org/wiki/LibYAML?version=20
-MASTER_SITES = http://pyyaml.org/download/libyaml/
-DISTFILES  = yaml-$(VERSION).tar.gz
+MASTER_SITES = http://pyyaml.org/download/lib  = yaml-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+TEST_SCRIPTS =
+
+PACKAGES += CSWlibyaml0-2
+CATALOGNAME_CSWlibyaml0-2 = libyaml0_2
+PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2\.0\.2)
+PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2(\.\d+)*)
+SPKG_DESC_CSWlibyaml0-2 += $(DESCRIPTION), libyaml-0.so.2
+OBSOLETED_BY_CSWlibyaml0-2  = CSWlibyaml
+
+
+PACKAGES += CSWlibyaml-dev
+CATALOGNAME_CSWlibyaml-dev = libyaml_dev
+SPKG_DESC_CSWlibyaml-dev += $(DESCRIPTION), development files
+RUNTIME_DEP_PKGS_CSWlibyaml-dev += CSWlibyaml0-2
+# PKGFILES is catchall
+
+CATALOGNAME_CSWlibyaml = libyaml_stub
+gz
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64_LIBS_ONLY = 1
-WORKSRC = $(WORKDIR)/yaml-$(VERSION)
+WORKSRC = $(WORKDIR)
 include gar/category.mk
