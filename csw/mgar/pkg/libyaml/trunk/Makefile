@@ -29,6 +29,11 @@ SPKG_DESC_CSWlibyaml-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibyaml-dev += CSWlibyaml0-2
 # PKGFILES is catchall
 
+# CSWlibyaml used to contain the dev bits.
+# It is an old packages that was replaced by CSWlibyaml0_1  
+CHECKPKG_OVERRIDES_CSWlibyaml-dev += file-collision|/opt/csw/lib/libyaml.so|CSWlibyaml|CSWlibyaml-dev
+CHECKPKG_OVERRIDES_CSWlibyaml-dev += file-collision|/opt/csw/include/yaml.h|CSWlibyaml|CSWlibyaml-dev
+
 C
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
