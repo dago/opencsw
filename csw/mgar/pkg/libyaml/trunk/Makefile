@@ -21,7 +21,6 @@ CATALOGNAME_CSWlibyaml0-2 = libyaml0_2
 PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2\.0\.2)
 PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibyaml0-2 += $(DESCRIPTION), libyaml-0.so.2
-OBSOLETED_BY_CSWlibyaml0-2  = CSWlibyaml
 
 
 PACKAGES += CSWlibyaml-dev
@@ -30,8 +29,7 @@ SPKG_DESC_CSWlibyaml-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibyaml-dev += CSWlibyaml0-2
 # PKGFILES is catchall
 
-CATALOGNAME_CSWlibyaml = libyaml_stub
-gz
+C
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64_LIBS_ONLY = 1
