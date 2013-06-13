@@ -1,0 +1,11 @@
+--- a/Makefile.common Jun 13 17:35:56 2013
++++ b/Makefile.common	Thu Jun 13 17:37:20 2013
+@@ -313,6 +313,8 @@
+ all: $(TARGETS)
+ 
+ install: $(TARGETS)
++	$(INSTALL) -p -m 0755 -d $(DESTDIR)$(BINDIR)
++	$(INSTALL) -p -m 0755 -d $(DESTDIR)$(DATADIR)/scummvm-tools
+ 	for i in $^ ; do $(INSTALL) -p -m 0755 $$i $(DESTDIR)$(BINDIR) ; done
+ 	$(INSTALL) -m 0755 -d $(DESTDIR)$(DATADIR)/scummvm-tools
+ 	$(INSTALL) -p -m 0644 $(srcdir)/gui/media/*.* $(DESTDIR)$(DATADIR)/scummvm-tools
