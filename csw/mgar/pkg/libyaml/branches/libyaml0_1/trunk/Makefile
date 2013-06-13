@@ -10,7 +10,8 @@ DESCRIPTION = A YAML 1.1 parser and emitter written in C
 
 VENDOR_URL   = http://pyyaml.org/wiki/LibYAML?version=20
 MASTER_SITES = http://pyyaml.org/download/libyaml/
-DISTFILES    = yaml-$(VERSION).tar.gz
+DISTNAME     = yaml-$(VERSION)
+DISTFILES    = $(DISTNAME).tar.gz
 TEST_SCRIPTS =
 
 PACKAGES += CSWlibyaml0-1
