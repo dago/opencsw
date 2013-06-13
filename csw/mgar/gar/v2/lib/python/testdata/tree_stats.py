@@ -46,7 +46,6 @@ pkgstats = [{'bad_paths': {},
                         'sparcv9',
                         'sparcv9+vis',
                         'sparcv9+vis2']),
-  'ldd_info': {'opt/csw/bin/tree': [] },
   'binaries_elf_info': {
     'opt/csw/bin/tree': {
       'version definition': [], 'version needed': [],

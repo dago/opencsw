@@ -665,7 +665,6 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
                                 }],
         'depends': (('CSWlibfoo', None),),
         'isalist': (),
-        'ldd_info': { 'opt/csw/bin/bar': [] },
         'binaries_elf_info': { 'opt/csw/bin/bar': {
                                  'version definition': [],
                                  'version needed': [],
@@ -693,7 +692,6 @@ class TestSharedLibsInAnInstalledPackageToo(CheckTestHelper,
         'binaries_dump_info': [],
         'depends': [],
         'isalist': (),
-        'ldd_info': {},
         'pkgmap': [],
       }
 
@@ -731,8 +729,7 @@ class TestSharedLibsOnlyIsalist(CheckTestHelper, unittest.TestCase):
         # 'depends': (),
         'depends': ((u"CSWcommon", ""),),
         'isalist': ('foo'),
-        'ldd_info': { 'opt/csw/bin/bar': [], 'opt/csw/lib/libfoo.so.1': []},
-        'binaries_elf_info': { 
+        'binaries_elf_info': {
           'opt/csw/bin/bar': {
             'version definition': [],
             'version needed': [],
@@ -774,7 +771,6 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
     binaries_dump_info[0]["path"] = 'opt/csw/lib/python/site-packages/foo.so'
     self.pkg_data["depends"] = ((u"CSWcommon", "This one provides directories"),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
-    self.pkg_data["ldd_info"] = { 'opt/csw/lib/python/site-packages/foo.so': [] }
     self.pkg_data["binaries_elf_info"] = {
       'opt/csw/lib/python/site-packages/foo.so': {
         'version definition': [],
@@ -814,7 +810,6 @@ class TestCheckLibrariesDlopenLibs_1(CheckTestHelper, unittest.TestCase):
     binaries_dump_info[0]["path"] = 'opt/csw/lib/foo.so'
     self.pkg_data["depends"] = ((u"CSWcommon","This is needed"),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
-    self.pkg_data["ldd_info"] = { 'opt/csw/lib/foo.so': [] }
     self.pkg_data["binaries_elf_info"] = {
       'opt/csw/lib/foo.so': {
         'version definition': [],

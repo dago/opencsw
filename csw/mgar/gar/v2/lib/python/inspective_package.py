@@ -350,55 +350,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
 
     return binaries_elf_info
 
-  def GetLddMinusRlines(self):
-    """Returns ldd -r output."""
-    pkginfo_arch = self.GetParsedPkginfo()['ARCH']
-    binaries = [ f['path'] for f in self.GetFilesMetadata()
-                 if sharedlib_utils.IsBinary(f) and
-                    common_constants.MACHINE_ID_METADATA[f['machine_id']]['type'] == pkginfo_arch ]
-    base_dir = self.GetBasedir()
-    ldd_output = {}
-    for binary in binaries:
-      binary_abspath = os.path.join(self.directory, self.GetFilesDir(), binary)
-      if base_dir:
-        binary = os.path.join(base_dir, binary)
-
-      # this could be potentially moved into the DirectoryFormatPackage class.
-      # ldd needs the binary to be executable
-      os.chmod(binary_abspath, 0755)
-      args = ["ldd", "-Ur", binary_abspath]
-      # ldd can be stuck while ran on a some binaries, so we define
-      # a timeout (problem encountered with uconv)
-      retcode, stdout, stderr = shell.ShellCommand(args, timeout=10, allow_error=True)
-      if retcode:
-        # There three cases where we will ignore an ldd error
-        #  - if we are trying to analyze a 64 bits binary on a Solaris 9 x86
-        #    solaris 9 exists only in 32 bits, so we can't do this
-        #    We ignore the error as it is likely that the ldd infos will be
-        #    the same on the 32 bits binaries
-        #  - if we are trying to analyze a statically linked binaries
-        #    we care only about dynamic binary so we ignore the error
-        #
-        uname_info = os.uname()
-        if ((uname_info[2] == '5.9' and uname_info[4] == 'i86pc' and
-             '/amd64/' in binary_abspath and
-             'has wrong class or data encoding' in stderr)
-            or 'file is not a dynamic executable or shared object' in stderr):
-          ldd_output[binary] = []
-          continue
-
-        raise package.SystemUtilityError("%s returned an error: %s" % (args, stderr))
-
-      ldd_info = []
-      for line in stdout.splitlines():
-        result = self._ParseLddDashRline(line, binary_abspath)
-        if result:
-          ldd_info.append(result)
-
-      ldd_output[binary] = ldd_info
-
-    return ldd_output
-
   def _ParseNmSymLine(self, line):
     re_defined_symbol =  re.compile('[0-9]+ [ABDFNSTU] \S+')
     m = re_defined_symbol.match(line)
@@ -517,62 +468,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
       raise package.StdoutSyntaxError("Could not parse %r" % line)
 
     return elfdump_data, section
-
-  def _ParseLddDashRline(self, line, binary=None):
-    found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
-    symbol_not_found_re = (r"^\tsymbol not found:\s(?P<symbol>\S+)\s+"
-                           r"\((?P<path_not_found>\S+)\)")
-    only_so = r"^\t(?P<path_only>\S+)$"
-    version_so = (r'^\t(?P<soname_version_not_found>\S+) '
-                  r'\((?P<lib_name>\S+)\) =>\t \(version not found\)')
-    stv_protected = (r'^\trelocation \S+ symbol: (?P<relocation_symbol>\S+): '
-                     r'file (?P<relocation_path>\S+): '
-                     r'relocation bound to a symbol '
-                     r'with STV_PROTECTED visibility$')
-    sizes_differ = (r'^\trelocation \S+ sizes differ: '
-                    r'(?P<sizes_differ_symbol>\S+)$')
-    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+)'
-                  r' size=(?P<size1>0x\w+); '
-                  r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
-    sizes_one_used = (r'^\t\t(?P<sizediffused_file>\S+) size used; '
-                      r'possible insufficient data copied$')
-    unreferenced_object = (r'^\s*unreferenced object=(?P<object>.*);'
-                           r' unused dependency of (?P<binary>.*)$')
-    unused_object = (r'^\s*unused object=.*$')
-    unused_search_path = (r'^\s*unused search path=.*'
-                          r'  \((?:LD_LIBRARY_PATH|RUNPATH/RPATH from file .*)\)$')
-    move_offset_error = (r'^\tmove (?P<move_index>\d+) offset invalid: '
-                         r'\(unknown\): offset=(?P<move_offset>0x[0-9a-f]+) '
-                         'lies outside memory image; move discarded')
-    relocation_error = (r'relocation R_(386|AMD64|X86_64|SPARC)_\w+ '
-                        r'sizes differ: (?P<reloc_symbol>.*)'
-                        r'|\t\t\(file .* size=0(?:x[0-9a-f]+)?; file .*'
-                        r'size=0x(?:[0-9a-f]+)?\)'
-                        r'|\t.* size used; possible data truncation')
-    copy_relocation_error = (r'\tsymbol (?P<copy_reloc_symbol>\S+):'
-                             r' file \S+: copy relocation symbol'
-                             r' may have been displacement relocated')
-    blank_line = (r'^\s*$')
-    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s)"
-                 % (found_re, symbol_not_found_re, only_so, version_so,
-                    stv_protected, sizes_differ, sizes_info,
-                    sizes_one_used, unreferenced_object, unused_object,
-                    unused_search_path, blank_line, move_offset_error,
-                    relocation_error, copy_relocation_error))
-    m = re.match(common_re, line)
-    response = None
-    if m:
-      response = {}
-      d = m.groupdict()
-      if "binary" in d and d["binary"] and binary == d["binary"]:
-        response["state"] = "soname-unused"
-        response["soname"] = os.path.basename(d["object"])
-
-    else:
-      raise package.StdoutSyntaxError("Could not parse %s with %s"
-                                      % (repr(line), common_re))
-
-    return response
 
   def GetDependencies(self):
     """Gets dependencies information.

@@ -85,7 +85,6 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
-  'ldd_info': {'opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0': []},
   'binaries_elf_info': {
       'opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0': {
         'version definition': [],

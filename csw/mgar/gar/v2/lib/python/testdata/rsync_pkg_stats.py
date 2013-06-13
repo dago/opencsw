@@ -74,10 +74,6 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
-  'ldd_info': {
-      'opt/csw/bin/sparcv8/rsync': [],
-      'opt/csw/bin/sparcv9/rsync': [],
-    },
   'binaries_elf_info': {
       'opt/csw/bin/sparcv8/rsync': {
         'version definition': [],

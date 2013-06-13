@@ -221,7 +221,6 @@ class PackageStats(object):
         # or strings. We cannot store a datetime.datetime object, we must
         # convert it into a string.
         "mtime": self.GetMtime().isoformat(),
-        "ldd_info": dir_pkg.GetLddMinusRlines(),
         "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
     }
     self.SaveStats(pkg_stats)
