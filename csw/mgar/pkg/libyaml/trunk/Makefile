@@ -7,21 +7,17 @@ VERSION = 0.1.4
 GARTYPE = v2
 
 DESCRIPTION = A YAML 1.1 parser and emitter written in C
-define BLURB
-endef
 
 VENDOR_URL  ef
 SPKG_SOURCEURL = http://pyyaml.org/wiki/LibYAML?version=20
-MASTER_SITES = http://pyyaml.org/download/lib  = yaml-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://pyyaml.org/downlNAME     = yaml-$(VERSION)
+DISTFILES    = $(DISTNAME).tar.gz
 TEST_SCRIPTS =
 
 PACKAGES += CSWlibyaml0-2
 CATALOGNAME_CSWlibyaml0-2 = libyaml0_2
-PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2\.0\.2)
 PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibyaml0-2 += $(DESCRIPTION), libyaml-0.so.2
-
 
 PACKAGES += CSWlibyaml-dev
 CATALOGNAME_CSWlibyaml-dev = libyaml_dev
@@ -37,6 +33,5 @@ CHECKPKG_OVERRIDES_CSWlibyaml-dev += file-collision|/opt/csw/include/yaml.h|CSWl
 C
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD64_LIBS_ONLY = 1
-WORKSRC = $(WORKDIR)
+BUILD
 include gar/category.mk
