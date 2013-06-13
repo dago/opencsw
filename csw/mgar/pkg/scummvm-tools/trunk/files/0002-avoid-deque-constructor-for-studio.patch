@@ -1,0 +1,16 @@
+--- a/scummvm-tools-cli.cpp	Sun May 26 23:14:49 2013
++++ b/scummvm-tools-cli.cpp	Thu Jun 13 14:43:56 2013
+@@ -40,8 +40,13 @@
+ 		return 2;
+ 	}
+ 
++// If using Solaris Studio
++#if defined(__sun) && !defined(__GNUC__)
++        std::deque<std::string> arguments; for (int i = 1; i < argc; i++);
++#else
+ 	std::deque<std::string> arguments(argv, argv + argc);
+ 	arguments.pop_front(); // Pop our own name
++#endif
+ 
+ 	ToolType type = TOOLTYPE_ALL;
+ 

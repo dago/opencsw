@@ -1,0 +1,53 @@
+--- a/configure	Sun May 26 23:14:49 2013
++++ b/configure	Tue Jun 11 22:19:24 2013
+@@ -752,7 +752,7 @@
+ 	if test -n "$_host"; then
+ 		compilers="$_host_alias-g++ $_host_alias-c++ $_host-g++ $_host-c++"
+ 	else
+-		compilers="g++ c++"
++		compilers="g++ c++ CC"
+ 	fi
+ 
+ 	# Iterate over all candidates, pick the first working one
+@@ -812,11 +812,9 @@
+ 			cxx_version="not found"
+ 			cxx_verc_fail=yes
+ 		fi
+-		echo non-gcc compiler version ${cxx_version}
+ 	else
+ 		cxx_version="not found"
+ 		cxx_verc_fail=yes
+-		echo found non-gcc compiler version ${cxx_version}
+ 	fi
+ 
+ 	case $_host_os in
+@@ -836,6 +834,20 @@
+ 					;;
+ 			esac
+ 			;;
++		solaris*)
++			cxx_version=`( $CXX -V ) 2>&1`
++			cxx_version="`echo "${cxx_version}" | sed 's/.*\([0-9][0-9]*\.[0-9][0-9]*\).*/\1/'`"
++			
++			case $cxx_version in
++				5.1[0-2])
++					cxx_verc_fail=no
++					;;
++				*)
++					cxx_version="$cxx_version, bad"
++					cxx_verc_fail=yes
++					;;
++			esac
++			;;
+ 		*)
+ 			cxx_version="$cxx_version, bad"
+ 			cxx_verc_fail=yes
+@@ -850,6 +862,8 @@
+ 	echo "The version of your compiler is not supported at this time"
+ 	echo "Please ensure you are using GCC >= 2.95"
+ 	exit 1
++else
++	echo found non-gcc compiler version ${cxx_version}
+ fi
+ 
+ #
