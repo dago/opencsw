@@ -70,10 +70,6 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
-  'ldd_info': {
-      'opt/csw/libexec/sudo_noexec.so': [],
-      'opt/csw/sbin/visudo': [],
-  },
   'binaries_elf_info': {'opt/csw/libexec/sudo_noexec.so': {
     'version needed': [],
     'version definition': [],
@@ -312,7 +308,6 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
-  'ldd_info': {'opt/csw/bin/sudo.minimal': []},
   'binaries_elf_info': {
       'opt/csw/bin/sudo.minimal': {
         'version definition': [],

@@ -12,19 +12,6 @@ import common_constants
 import tempfile
 import io
 
-LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
-\tsymbol not found: check_encoding_conversion_args    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
-\tsymbol not found: LocalToUtf    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
-\tsymbol not found: UtfToLocal    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
-\tunreferenced object=/lib/libsocket.so.1; unused dependency of /opt/csw/lib/libfoo.so.1
-\tlibm.so.2 =>   /lib/libm.so.2
-\t/usr/lib/secure/s8_preload.so.1
-\tlibXext.so.0 (SUNW_1.1) =>\t (version not found)
-\trelocation R_SPARC_COPY symbol: ASN1_OCTET_STRING_it: file /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8: relocation bound to a symbol with STV_PROTECTED visibility
-\trelocation R_SPARC_COPY sizes differ: _ZTI7QWidget
-\t\t(file /tmp/pkg_GqCk0P/CSWkdeartworkgcc/root/opt/csw/kde-gcc/bin/kslideshow.kss size=0x28; file /opt/csw/kde-gcc/lib/libqt-mt.so.3 size=0x20)
-"""
-
 DUMP_OUTPUT = '''
   **** DYNAMIC SECTION INFORMATION ****
 .dynamic:
@@ -337,85 +324,6 @@ Syminfo Section:  .SUNW_syminfo
 
     self.assertEqual(fake_binary_elfinfo, ip.GetBinaryElfInfo())
 
-  def testGetLddMinusRlinesRoot(self):
-    ip = inspective_package.InspectivePackage("/tmp/CSWfake")
-    self.mox.StubOutWithMock(ip, 'GetParsedPkginfo')
-    self.mox.StubOutWithMock(ip, 'GetFilesMetadata')
-    self.mox.StubOutWithMock(ip, 'GetBasedir')
-    self.mox.StubOutWithMock(ip, 'ListBinaries')
-    self.mox.StubOutWithMock(ip, 'GetFilesDir')
-    self.mox.StubOutWithMock(os, 'chmod')
-    self.mox.StubOutWithMock(os, 'uname')
-    ip.GetParsedPkginfo().AndReturn({'ARCH': 'i386'})
-    ip.GetFilesMetadata().AndReturn([{
-      'path': 'opt/csw/bin/foo',
-      'machine_id': 3,
-      'mime_type': 'application/x-executable; charset=binary'
-      }])
-    ip.GetBasedir().AndReturn('')
-    os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
-    ip.GetFilesDir().AndReturn('root')
-    self.mox.StubOutWithMock(shell, 'ShellCommand')
-    shell.ShellCommand(
-        ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
-        allow_error=True, timeout=10).AndReturn((0, "", ""))
-    self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
-    self.mox.ReplayAll()
-    self.assertEqual({'opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
-
-  def testGetLddMinusRlinesReloc(self):
-    ip = inspective_package.InspectivePackage("/tmp/CSWfake")
-    self.mox.StubOutWithMock(ip, 'GetParsedPkginfo')
-    self.mox.StubOutWithMock(ip, 'GetFilesMetadata')
-    self.mox.StubOutWithMock(ip, 'GetBasedir')
-    self.mox.StubOutWithMock(ip, 'GetFilesDir')
-    self.mox.StubOutWithMock(os, 'chmod')
-    self.mox.StubOutWithMock(os, 'uname')
-    ip.GetParsedPkginfo().AndReturn({'ARCH': 'i386'})
-    ip.GetFilesMetadata().AndReturn([{
-      'path': 'bin/foo',
-      'machine_id': 3,
-      'mime_type': 'application/x-executable; charset=binary'
-      }])
-    ip.GetBasedir().AndReturn('opt/csw')
-    os.chmod('/tmp/CSWfake/reloc/bin/foo', 0755)
-    ip.GetFilesDir().AndReturn('reloc')
-    self.mox.StubOutWithMock(shell, 'ShellCommand')
-    shell.ShellCommand(
-        ['ldd', '-Ur', '/tmp/CSWfake/reloc/bin/foo'],
-        allow_error=True, timeout=10).AndReturn((0, "", ""))
-    self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
-    self.mox.ReplayAll()
-    self.assertEqual({'opt/csw/bin/foo': []}, ip.GetLddMinusRlines())
-
-  def testGetLddMinusRlinesThrows(self):
-    ip = inspective_package.InspectivePackage("/tmp/CSWfake")
-    self.mox.StubOutWithMock(ip, 'GetParsedPkginfo')
-    self.mox.StubOutWithMock(ip, 'GetFilesMetadata')
-    self.mox.StubOutWithMock(ip, 'GetBasedir')
-    self.mox.StubOutWithMock(ip, 'GetFilesDir')
-    self.mox.StubOutWithMock(os, 'chmod')
-    self.mox.StubOutWithMock(os, 'uname')
-    ip.GetParsedPkginfo().AndReturn({'ARCH': 'i386'})
-    ip.GetFilesMetadata().AndReturn([{
-      'path': 'opt/csw/bin/foo',
-      'machine_id': 3,
-      'mime_type': 'application/x-executable; charset=binary'
-      }])
-    ip.GetBasedir().AndReturn('/')
-    os.chmod('/tmp/CSWfake/root/opt/csw/bin/foo', 0755)
-    os.uname().AndReturn('i86pc')
-    ip.GetFilesDir().AndReturn('root')
-    self.mox.StubOutWithMock(shell, 'ShellCommand')
-    shell.ShellCommand(
-        ['ldd', '-Ur', '/tmp/CSWfake/root/opt/csw/bin/foo'],
-        allow_error=True, timeout=10).AndReturn((1, "", "boo"))
-    self.mox.StubOutWithMock(ip, '_ParseLddDashRline')
-    self.mox.ReplayAll()
-    self.assertRaises(package.SystemUtilityError,
-                      ip.GetLddMinusRlines)
-
-
 class PackageStatsUnitTest(unittest.TestCase):
 
   def setUp(self):
@@ -475,65 +383,6 @@ class PackageStatsUnitTest(unittest.TestCase):
   def test_ParseNmSymLineBadLine(self):
     line = 'foo'
     self.assertEqual(None, self.ip._ParseNmSymLine(line))
-
-  def test_ParseLddSonameUnusued(self):
-    line = '\tunreferenced object=/lib/libsocket.so.1; unused dependency of /opt/csw/lib/libfoo.so.1'
-    expected = {
-        'soname': 'libsocket.so.1',
-        'state': 'soname-unused'
-    }
-    result = self.ip._ParseLddDashRline(line, '/opt/csw/lib/libfoo.so.1')
-    self.assertEqual(expected, result)
-
-  def test_ParseLddDashRlineFound(self):
-    line = '\tlibc.so.1 =>  /lib/libc.so.1'
-    expected = {}
-    self.assertEqual(expected,self.ip._ParseLddDashRline(line))
-
-  def test_ParseLddDashRlineSymbolMissing(self):
-    line = ('\tsymbol not found: check_encoding_conversion_args    '
-            '(/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)')
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLddDashRlineFound(self):
-    line = '\t/usr/lib/secure/s8_preload.so.1'
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLdd_VersionNotFound(self):
-    line = '\tlibXext.so.0 (SUNW_1.1) =>\t (version not found)'
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLdd_StvProtectedVisibility(self):
-    line = ('\trelocation R_SPARC_COPY symbol: ASN1_OCTET_STRING_it: '
-            'file /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8: '
-            'relocation bound to a symbol with STV_PROTECTED visibility')
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLdd_SizesDiffer(self):
-    line = '\trelocation R_SPARC_COPY sizes differ: _ZTI7QWidget'
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLdd_SizesDifferInfo(self):
-    line = ('\t\t(file /tmp/pkg_GqCk0P/CSWkdeartworkgcc/root/opt/csw/kde-gcc/bin/'
-            'kslideshow.kss size=0x28; '
-            'file /opt/csw/kde-gcc/lib/libqt-mt.so.3 size=0x20)')
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLdd_SizesDifferOneUsed(self):
-    line = ('\t\t/opt/csw/kde-gcc/lib/libqt-mt.so.3 size used; '
-            'possible insufficient data copied')
-    expected = {}
-    self.assertEqual(expected, self.ip._ParseLddDashRline(line))
-
-  def test_ParseLddDashRlineManyLines(self):
-    for line in LDD_R_OUTPUT_1.splitlines():
-      parsed = self.ip._ParseLddDashRline(line)
 
 
 if __name__ == '__main__':

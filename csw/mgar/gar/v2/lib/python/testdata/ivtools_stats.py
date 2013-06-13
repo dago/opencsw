@@ -56,9 +56,7 @@ pkgstats = [{'bad_paths': {},
               'sparcv8-fsmuld',
               'sparcv7',
               'sparc'),
-  'ldd_info': {'opt/csw/bin/comdraw': [],
-	       'opt/csw/lib/libComUnidraw.so.1.1.3': []},
-  'binaries_elf_info': {'opt/csw/bin/comdraw': { 
+  'binaries_elf_info': {'opt/csw/bin/comdraw': {
 	  		  'version definition': [],
 			  'version needed' : [],
 			  'symbol table': [

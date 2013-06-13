@@ -702,13 +702,6 @@ pkgstat_objs = [{'bad_paths': {},
                         'sparcv9',
                         'sparcv9+vis',
                         'sparcv9+vis2']),
-  'ldd_info': {
-      'opt/csw/lib/python/site-packages/mercurial/base85.so': [],
-      'opt/csw/lib/python/site-packages/mercurial/bdiff.so': [],
-      'opt/csw/lib/python/site-packages/mercurial/diffhelpers.so': [],
-      'opt/csw/lib/python/site-packages/mercurial/mpatch.so': [],
-      'opt/csw/lib/python/site-packages/mercurial/osutil.so': [],
-      'opt/csw/lib/python/site-packages/mercurial/parsers.so': [],},
   'binaries_elf_info': { 'opt/csw/lib/python/site-packages/mercurial/base85.so': {
     'version definition': [],
     'version needed': [],

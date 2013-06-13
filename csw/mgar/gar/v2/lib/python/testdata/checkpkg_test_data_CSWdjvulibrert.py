@@ -111,9 +111,6 @@ pkg_data = {
              'sparcv8-fsmuld',
              'sparcv7',
              'sparc'),
- 'ldd_info': {'opt/csw/lib/libdjvulibre.so.15': [],
-              'opt/csw/lib/sparcv9/libdjvulibre.so.21.1.0': [],
-              'opt/csw/lib/libdjvulibre.so.21.1.0': [] },
  'binaries_elf_info': {
      'opt/csw/lib/libdjvulibre.so.15': {
        'version definition': [],
