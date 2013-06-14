@@ -21,7 +21,10 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = custom
 
-BUILD_DEP_PKGS += CSWscummvm
+RUNTIME_DEP_PKGS_CSWbass-cd   += CSWscummvm
+CHECKPKG_OVERRIDES_CSWbass-cd += surplus-dependency|CSWscummvm
+
+LICENSE = bass-cd-1.2/readme.txt
 
 include gar/category.mk
 
@@ -29,6 +32,6 @@ install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
 	@echo worksrc: $(WORKSRC)
 	@ginstall -m 755 -d $(DESTDIR)$(datadir)/scummvm/$(DISTNAME)
-	@ginstall  -m 644 -p $(WORKSRC)/* $(DESTDIR)$(datadir)/scummvm/$(DISTNAME)
+	@ginstall -m 644 -p $(WORKSRC)/* $(DESTDIR)$(datadir)/scummvm/$(DISTNAME)
 	@$(MAKECOOKIE)
 
