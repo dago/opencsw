@@ -1,5 +1,5 @@
 NAME = gst-plugins-base
-VERSION = 0.10.29
+VERSION = 0.10.32
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -21,17 +21,40 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
 GARCOMPILER = SOS12U3
 
-BUILD_DEP_PKGS += CSWpkgconfig CSWgstreamer-dev CSWliboildevel CSWlibglib2-dev 
-BUILD_DEP_PKGS += CSWgnomevfs2-dev CSWlibogg-dev CSWlibgtk2-dev CSWlibatk-dev
-BUILD_DEP_PKGS += CSWlibgconf-dev CSWggettextrt CSWlibxml2-dev CSWlibz-dev
+BUILD_DEP_PKGS += CSWpkgconfig 
+BUILD_DEP_PKGS += CSWgstreamer-dev
+BUILD_DEP_PKGS += CSWliboildevel CSWlibglib2-dev 
+BUILD_DEP_PKGS += CSWlibglib2-dev 
+BUILD_DEP_PKGS += CSWgnomevfs2-dev
+BUILD_DEP_PKGS += CSWlibogg-dev
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibatk-dev
+BUILD_DEP_PKGS += CSWlibgconf-dev
+BUILD_DEP_PKGS += CSWggettextrt
+BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibogg-dev
 BUILD_DEP_PKGS += CSWlibtheora-dev
-BUILD_DEP_PKGS += CSWlibice CSWlibx11 CSWlibxvdevel CSWx11videoproto
-BUILD_DEP_PKGS += CSWlibsm CSWlibxext
-BUILD_DEP_PKGS += CSWlibvorbis-dev CSWpangodevel CSWlibpixman-dev 
-BUILD_DEP_PKGS += CSWfconfig-dev CSWlibpng-dev CSWx11xproto CSWx11renderproto 
-BUILD_DEP_PKGS += CSWlibx11devel CSWlibxcbdevel CSWlibxaudevel CSWlibxdmcpdevel
+BUILD_DEP_PKGS += CSWlibice
+BUILD_DEP_PKGS += CSWlibx11
+# BUILD_DEP_PKGS += CSWlibxvdevel
+# BUILD_DEP_PKGS += CSWx11videoproto
+BUILD_DEP_PKGS += CSWlibsm
+# BUILD_DEP_PKGS += CSWlibxext
+BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibpixman-dev 
+BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWx11xproto
+# BUILD_DEP_PKGS += CSWx11renderproto 
+# BUILD_DEP_PKGS += CSWlibx11devel
+# BUILD_DEP_PKGS += CSWlibxcbdevel
+# BUILD_DEP_PKGS += CSWlibxaudevel
+# BUILD_DEP_PKGS += CSWlibxdmcpdevel
 
-PATCHFILES += 0001-Makefile.in.patch
+# PATCHFILES += 0001-Makefile.in.patch
+PATCHFILES += 0002-add-gtk-options.patch
 REINPLACE_USRSHARE += docs/plugins/html/*.html docs/libs/html/*.html
 
 PACKAGES = CSWgstplugins
@@ -259,6 +282,7 @@ RUNTIME_DEP_PKGS_CSWgstplugins-dev += CSWlibgstapp0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-dev += CSWlibgstaudio0-10-0
 
 CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --disable-silent-rules
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --disable-alsa
 CONFIGURE_ARGS += --disable-cdparanoia
@@ -281,6 +305,11 @@ include gar/category.mk
 
 # I want see whats going on
 AM_DEFAULT_VERBOSITY:=1
+
+# force rebuild of configure, patch 0002-add-gtk-options changes configure.ac
+pre-configure:
+	 cd $(WORKSRC) && autoconf --force
+	$(MAKECOOKIE)
 
 # sigh, portable code?
 # post-configure-modulated:
