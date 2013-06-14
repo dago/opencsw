@@ -1,0 +1,41 @@
+From ab7c5cd78d360d3b3a2fed8ae50b4a9aed623339 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 14 Jun 2013 12:16:33 +0200
+Subject: [PATCH] add gtk options
+
+---
+ configure.ac          |  2 ++
+ 1 files changed, 2 insertions(+)
+
+diff --git a/configure.ac b/configure.ac
+index 3325abc..35b7a0e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -297,7 +297,9 @@ if test "x$BUILD_EXAMPLES" = "xyes"; then
+   PKG_CHECK_MODULES(GTK, gtk+-$with_gtk >= $GTK_REQ, HAVE_GTK=yes, HAVE_GTK=no)
+   dnl some examples need gtk+-x11
+   PKG_CHECK_MODULES(GTK_X11, gtk+-x11-$with_gtk >= $GTK_REQ, HAVE_GTK_X11=yes, HAVE_GTK_X11=no)
++  GTK_LIBS="`$PKG_CONFIG --libs  gtk+-$with_gtk`"
+   AC_SUBST(GTK_LIBS)
++  GTK_CFLAGS="`$PKG_CONFIG --cflags  gtk+-$with_gtk`"
+   AC_SUBST(GTK_CFLAGS)
+ fi
+ AM_CONDITIONAL(HAVE_GTK, test "x$HAVE_GTK" = "xyes")
+--- a/configure.ac
++++ b/configure.ac
+@@ -782,6 +782,11 @@ dnl *** theora ***
+ translit(dnm, m, l) AM_CONDITIONAL(USE_THEORA, true)
+ AG_GST_CHECK_FEATURE(THEORA, [Xiph Theora video codec], theora, [
+   AG_GST_PKG_CHECK_MODULES(THEORA, theoradec >= 1.1 theoraenc >= 1.1)
++  if test $HAVE_THEORA = yes
++  then
++    THEORA_LIBS="`$PKG_CONFIG --libs  theora`"
++    AC_SUBST(THEORA_LIBS)
++  fi
+ ])
+
+ dnl *** vorbis ***
+
+-- 
+1.7.12
+
