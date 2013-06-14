@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.4.4
+VERSION = 4.4.8
 CATEGORIES = net
 GARTYPE = v2
 
