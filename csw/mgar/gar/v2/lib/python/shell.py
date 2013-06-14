@@ -15,7 +15,7 @@ class TimeoutExpired(Error):
 def TimeoutHandler(signum, frame):
   raise TimeoutExpired
 
-def ShellCommand(args, env=None, timeout=None,
+def ShellCommand(args, env={}, timeout=None,
                  quiet=True, allow_error=False,
                  stdout=subprocess.PIPE,
                  stderr=subprocess.PIPE):
@@ -24,6 +24,8 @@ def ShellCommand(args, env=None, timeout=None,
   if not quiet:
     stdout = subprocess.STDOUT
     stderr = subprocess.STDOUT
+
+  env['LC_ALL'] = 'C'
 
   # Python 3.3 have the timeout option
   # we have to roughly emulate it with python 2.x
