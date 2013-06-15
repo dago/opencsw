@@ -1,0 +1,39 @@
+From 4e0185d4697173873aa407ae318fa484e2f206ac Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 16 Jun 2013 00:53:50 +0200
+Subject: [PATCH] t0008-ignores: Work around broken solaris tr
+
+The tr provided by solaris (both /usr/bin/ and /usr/xpg4/bin) fails
+to handle the \0 as the substitution. Replace tr with an
+equivalent perl invocation.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t0008-ignores.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 9c1bde1..bd6817b 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -522,7 +522,7 @@ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
+ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
+ 	tr "\n" "\0" >expected-default0
+ sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' expected-verbose | \
+-	tr ":\t\n" "\0" >expected-verbose0
++	perl -pne 's/[:\t\n]/\0/g' >expected-verbose0
+ 
+ test_expect_success '--stdin' '
+ 	expect_from_stdin <expected-default &&
+@@ -611,7 +611,7 @@ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
+ sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
+ 	tr "\n" "\0" >expected-default0
+ sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' expected-verbose | \
+-	tr ":\t\n" "\0" >expected-verbose0
++	perl -pne 's/[:\t\n]/\0/g' >expected-verbose0
+ 
+ test_expect_success '--stdin from subdirectory' '
+ 	expect_from_stdin <expected-default &&
+-- 
+1.8.1.4
+
