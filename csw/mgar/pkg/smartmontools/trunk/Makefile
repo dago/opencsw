@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = smartmontools
-VERSION = 5.42
+VERSION = 6.1
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -52,4 +52,4 @@ post-install-modulated:
 	done)
 
 # The 5.42 version needs GNU sed going by 'sed'.
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /o
