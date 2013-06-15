@@ -41,8 +41,6 @@ BUILD_DEP_PKGS += CSWlibuuid-dev
 BUILD_DEP_PKGS += CSWlibiptcdata
 BUILD_DEP_PKGS += CSWpoppler-dev
 BUILD_DEP_PKGS += CSWexempidevel
-BUILD_DEP_PKGS += CSWlibvorbis-dev
-BUILD_DEP_PKGS += CSWlibflac-dev
 BUILD_DEP_PKGS += CSWgstreamer
 BUILD_DEP_PKGS += CSWlibexif-dev
 
@@ -54,7 +52,7 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-dev
+RUNTIME_DEP_PKGS_CSWtracker += CSWexempi
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract0-16-0
@@ -84,8 +82,6 @@ RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibiptcdata
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibpoppler-glib8
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWexempi
-RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibflac
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWgstreamer
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-common
@@ -117,13 +113,13 @@ PATCHFILES += 0001-Force-linking-with-CC-not-CXX.patch
 PATCHFILES += 0002-strnlen-replacement-function.patch
 PATCHFILES += 0003-Replace-uuid_unparse_lower-with-uuid_unparse.patch
 PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
+PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
 
 # Packages
 PACKAGES += CSWtracker
 SPKG_DESC_CSWtracker = $(DESCRIPTION)
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdbus
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
-CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWlibglib2-dev
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common

@@ -1,0 +1,37 @@
+From 71b1e4f90d396a963eabb2209daa2621ba5524b6 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sat, 15 Jun 2013 15:59:04 +0200
+Subject: [PATCH] exempi xmp.h is missing a stdbool.h include
+
+---
+ src/libtracker-extract/tracker-xmp.c          | 1 +
+ src/tracker-writeback/tracker-writeback-xmp.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/libtracker-extract/tracker-xmp.c b/src/libtracker-extract/tracker-xmp.c
+index 8729af0..1c57b2d 100644
+--- a/src/libtracker-extract/tracker-xmp.c
++++ b/src/libtracker-extract/tracker-xmp.c
+@@ -20,6 +20,7 @@
+ #include "config.h"
+ 
+ #include <locale.h>
++#include <stdbool.h>
+ 
+ #include <libtracker-common/tracker-utils.h>
+ 
+diff --git a/src/tracker-writeback/tracker-writeback-xmp.c b/src/tracker-writeback/tracker-writeback-xmp.c
+index 73b0df0..b8ddad7 100644
+--- a/src/tracker-writeback/tracker-writeback-xmp.c
++++ b/src/tracker-writeback/tracker-writeback-xmp.c
+@@ -24,6 +24,7 @@
+ #include <locale.h>
+ #include <string.h>
+ #include <math.h>
++#include <stdbool.h>
+ 
+ #include <exempi/xmp.h>
+ #include <exempi/xmpconsts.h>
+-- 
+1.8.1.4
+
