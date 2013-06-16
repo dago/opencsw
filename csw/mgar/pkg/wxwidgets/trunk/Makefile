@@ -103,7 +103,7 @@ CONFIGURE_ARGS += --with-gnomeprint=no
 EXTRA_CFLAGS     += -xnorunpath
 EXTRA_CXXFLAGS   += -norunpath
 EXTRA_LDFLAGS    += -norunpath
-EXTRA_LD_OPTIONS += -z nolazyload -B direct
+EXTRA_LD_OPTIONS += -z nolazyload -B direct -lCrun -lCstd
 
 # wxWidget contains a bunch of .so, let's keep them together as one big
 # happy family
@@ -129,6 +129,5 @@ post-install-modulated:
 		-e '/^[^#]/s/-norunpath[^ ]* //' \
 		-e '/^[^#]/s/-lCrun[^ ]* //' \
 		-e '/^[^#]/s/-lCstd[^ ]* //' \
-		-e '/^[^#]/s/-mt[^ ]* //' \
 		$(DESTDIR)$(libdir)/wx/config/gtk2-unicode-release-2.8
 
