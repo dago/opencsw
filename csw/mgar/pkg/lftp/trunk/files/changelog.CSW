@@ -1,3 +1,10 @@
+lftp (4.4.8,REV=2013.06.16) unstable
+
+  * New upstream release.
+  * Added CSWlibz1 dependency as lftp now support http gzip encoding.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 16 Jun 2013 21:28:43 +0200
+
 lftp (4.4.4,REV=2013.03.13) unstable
 
   * New upstream release.
