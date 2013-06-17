@@ -16,6 +16,8 @@ define BLURB
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT   = wxwindows
 
+PATCHFILES += 0006-configure-gnome-print-headers.patch
+
 PACKAGES  = CSWwxwidgets
 PACKAGES += CSWwxwidgets-dev
 PACKAGES += CSWwxwidgetsgtk2
@@ -40,6 +42,7 @@ RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWmesa
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWpango
+RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibgnomeprintui
 
 RUNTIME_DEP_PKGS_CSWwxwidgets-dev += CSWwxwidgets
 RUNTIME_DEP_PKGS_CSWwxwidgets-dev += CSWwxwidgetsgtk2
@@ -67,6 +70,7 @@ BUILD_DEP_PKGS += CSWsunx11devel
 BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibexpat-dev
+BUILD_DEP_PKGS += CSWlibgnomeprintdevel
 
 # Easier than defining each individual .so.xxx
 PKGFILES_CSWwxwidgets     = $(libdir).*libwx_base.*\.so\..*
@@ -95,8 +99,8 @@ CONFIGURE_ARGS += --with-gtk=2
 CONFIGURE_ARGS += --with-gtk-prefix=/opt/csw
 CONFIGURE_ARGS += --with-regex
 CONFIGURE_ARGS += --with-opengl
-CONFIGURE_ARGS += CONFIGURE_ARGS += --enable-printarch=no
-CONFIGURE_ARGS += --with-gnomeprint=no
+CONFIGURE_ARGS += CONFIGURE_ARGS += --enable-printarch=yes
+CONFIGURE_ARGS += --with-gnomeprint=yes
 
 # -norunpath is needed for LDFLAGS as CC is used as linker. Not cc, so no
 # problem with it being a C++compiler parameter

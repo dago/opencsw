@@ -1,0 +1,11 @@
+--- a/configure.original	Tue Mar 22 12:59:37 2011
++++ b/configure	Mon Jun 17 12:04:00 2013
+@@ -43415,7 +43415,7 @@
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); }; then
+-  pkg_cv_LIBGNOMEPRINTUI_CFLAGS=`$PKG_CONFIG --cflags "libgnomeprintui-2.2 >= 2.8" 2>/dev/null`
++  pkg_cv_LIBGNOMEPRINTUI_CFLAGS="`$PKG_CONFIG --cflags "libgnomeprintui-2.2 >= 2.8" 2>/dev/null` `$PKG_CONFIG --cflags "libgnomeprint-2.2 >= 2.8" 2>/dev/null`"
+ else
+   pkg_failed=yes
+ fi
