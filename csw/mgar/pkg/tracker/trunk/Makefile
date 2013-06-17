@@ -123,26 +123,21 @@ CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
-PKGFILES_CSWlibtracker-common += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-data\.so\.0\.1502\.0)
-PKGFILES_CSWlibtracker-common += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-data\.so\.0(\.\d+)*)
-PKGFILES_CSWlibtracker-common += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-common\.so\.0\.1502\.0)
-PKGFILES_CSWlibtracker-common += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-common\.so\.0(\.\d+)*)
+PKGFILES_CSWlibtracker-common += $(call pkgfiles_lib,tracker-0.16/libtracker-common.so.0)
+PKGFILES_CSWlibtracker-common += $(call pkgfiles_lib,tracker-0.16/libtracker-data.so.0)
 
 PACKAGES += CSWlibtracker-extract0-16-0
 SPKG_DESC_CSWlibtracker-extract0-16-0 += $(DESCRIPTION), libtracker-extract-0.16.so.0
-PKGFILES_CSWlibtracker-extract0-16-0 += $(call baseisadirs,$(libdir),libtracker-extract-0\.16\.so\.0\.1502\.0)
-PKGFILES_CSWlibtracker-extract0-16-0 += $(call baseisadirs,$(libdir),libtracker-extract-0\.16\.so\.0(\.\d+)*)
+PKGFILES_CSWlibtracker-extract0-16-0 += $(call pkgfiles_lib,libtracker-extract-0.16.so.0)
 PKGFILES_CSWlibtracker-extract0-16-0 += $(call baseisadirs,$(libdir),tracker-0\.16/extract-modules/libextract-.*\.so)
 
 PACKAGES += CSWlibtracker-miner0-16-0
 SPKG_DESC_CSWlibtracker-miner0-16-0 += $(DESCRIPTION), libtracker-miner-0.16.so.0
-PKGFILES_CSWlibtracker-miner0-16-0 += $(call baseisadirs,$(libdir),libtracker-miner-0\.16\.so\.0\.1502\.0)
-PKGFILES_CSWlibtracker-miner0-16-0 += $(call baseisadirs,$(libdir),libtracker-miner-0\.16\.so\.0(\.\d+)*)
+PKGFILES_CSWlibtracker-miner0-16-0 += $(call pkgfiles_lib,libtracker-miner-0.16.so.0)
 
 PACKAGES += CSWlibtracker-sparql0-16-0
 SPKG_DESC_CSWlibtracker-sparql0-16-0 += $(DESCRIPTION), libtracker-sparql-0.16.so.0
-PKGFILES_CSWlibtracker-sparql0-16-0 += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so\.0\.1502\.0)
-PKGFILES_CSWlibtracker-sparql0-16-0 += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so\.0(\.\d+)*)
+PKGFILES_CSWlibtracker-sparql0-16-0 += $(call pkgfiles_lib,libtracker-sparql-0.16.so.0)
 
 PACKAGES += CSWlibtracker-dev
 SPKG_DESC_CSWlibtracker-dev += $(DESCRIPTION), development files
