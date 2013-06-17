@@ -23,7 +23,7 @@ RUNTIME_DEP_PKGS_Clua5-2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibpdf6
 
 # There is just an emacs style in it, do not depend on it
-CHECKPKG_OVERRIDES_CSWgnuplot += missing-dependency|CSWemacscommonplot += CSWlibjpeg7
+CHECKPKG_OVERRIDES_CSWgnuplot += missing-dependency|CSWemacs-commonplot += CSWlibjpeg7
 
 PACKAGES += CSWgnuplot-wx
 CATALOGNAME_CSWgnuplot-wx = gnuplot_wx
