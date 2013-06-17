@@ -94,10 +94,10 @@ RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWlibtracker-miner0-16-0 += CSWlibtracker-common
 
-RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-miner0-16-0
-RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-extract0-16-0
-RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-sparql0-16-0
-RUNTIME_DEP_PKGS_CSWlibtracker0-16-dev += CSWlibtracker-common
+RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-miner0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-extract0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-sparql0-16-0
+RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-common
 
 RUNTIME_DEP_PKGS_CSWlibtracker-common += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWlibtracker-common += CSWlibicui18n51
@@ -144,15 +144,15 @@ SPKG_DESC_CSWlibtracker-sparql0-16-0 += $(DESCRIPTION), libtracker-sparql-0.16.s
 PKGFILES_CSWlibtracker-sparql0-16-0 += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so\.0\.1502\.0)
 PKGFILES_CSWlibtracker-sparql0-16-0 += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so\.0(\.\d+)*)
 
-PACKAGES += CSWlibtracker0-16-dev
-SPKG_DESC_CSWlibtracker0-16-dev += $(DESCRIPTION), development files
-PKGFILES_CSWlibtracker0-16-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),libtracker-extract-0\.16\.so)
-PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),libtracker-miner-0\.16\.so)
-PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so)
-PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-common\.so)
-PKGFILES_CSWlibtracker0-16-dev += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-data\.so)
-PKGFILES_CSWlibtracker0-16-dev += $(datadir)/vala/vapi/tracker-.*
+PACKAGES += CSWlibtracker-dev
+SPKG_DESC_CSWlibtracker-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibtracker-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibtracker-dev += $(call baseisadirs,$(libdir),libtracker-extract-0\.16\.so)
+PKGFILES_CSWlibtracker-dev += $(call baseisadirs,$(libdir),libtracker-miner-0\.16\.so)
+PKGFILES_CSWlibtracker-dev += $(call baseisadirs,$(libdir),libtracker-sparql-0\.16\.so)
+PKGFILES_CSWlibtracker-dev += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-common\.so)
+PKGFILES_CSWlibtracker-dev += $(call baseisadirs,$(libdir),tracker-0\.16/libtracker-data\.so)
+PKGFILES_CSWlibtracker-dev += $(datadir)/vala/vapi/tracker-.*
 
 # For gettext
 CONFIGURE_ENV_PATH = /opt/csw/gnu:$(PATH)
