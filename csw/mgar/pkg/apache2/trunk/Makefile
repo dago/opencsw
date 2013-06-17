@@ -342,6 +342,6 @@ post-merge:
 		perl -pi -e 's@/usr/local/bin@/opt/csw/bin@g' *)
 	@echo Adding link from original envvars location
 	@(cd $(PKGROOT)/$(prefix)/apache2/sbin; \
-		ln -s ../etc/envvars envvars )
+	 	[ -L envvars ] || ln -s ../etc/envvars envvars )
 	@$(MAKECOOKIE)
 
