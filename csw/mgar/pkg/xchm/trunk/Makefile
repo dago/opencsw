@@ -1,5 +1,5 @@
 NAME = xchm
-VERSION = 1.18
+VERSION = 1.20
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -13,21 +13,18 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Fix-extra-comma-at-end-of-enum.patch
-PATCHFILES += 0002-Remove-W-Wall-for-Sun-Studio.patch
+PATCHFILES += 0002-Remove-W-Wall-fo#r-Sun-Studio.patch
 PATCHFILES += 0003-Use-inttypes-instead-of-stdint.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(BUILD_DEP_PKGS += CSWwxwidgets-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWxchm  = CSWchmlib
 RUNTIME_DEP_PKGS_CSWxchm += CSWwxwidgetscommon
 RUNTIME_DEP_PKGS_CSWxchm += CSWwxwidgetsgtk2
 RUNTIME_DEP_PKGS_CSWxchm += CSWsunmath
-RUNTIME_DEP_PKGS_CSWxchm += CSWncurses
-
-BUILD_DEP_PKGS = $(REQUIRED_PGKS) CSWwxwidgetsdevel
-
-CONFIGURE_ARGS = $(DIRPATHS)
+RUNTIME_DEP_PKGS_CSWxCONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
 
