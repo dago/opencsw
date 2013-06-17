@@ -114,6 +114,9 @@ EXTRA_LD_OPTIONS += -z nolazyload -B direct -lCrun -lCstd
 CHECKPKG_OVERRIDES_CSWwxwidgets     = shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 = shared-lib-pkgname-mismatch
 
+# It is built to use GNOME print, so it must be depending on this somehow
+CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += surplus-dependency|CSWlibgnomeprintui
+
 # Only samples inside code comments, can be safely ignored at this point
 CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/share|root/opt/csw/include/wx-2.8/wx/utils.h
 CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/local|root/opt/csw/include/wx-2.8/wx/unix/stdpaths.h
