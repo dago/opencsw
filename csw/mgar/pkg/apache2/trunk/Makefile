@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = httpd
-VERSION = 2.2.23
+VERSION = 2.2.24
 GARTYPE = v2
 
 DESCRIPTION = A high performance HTTP server.
