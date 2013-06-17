@@ -1,0 +1,25 @@
+From f1b39457612f77450c34ebb3f8ff3b1e22cfea6d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 17 Jun 2013 12:53:52 +0200
+Subject: [PATCH] Do not strip -norunpath on libtool
+
+---
+ ltmain.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index c2852d8..24983b6 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -5853,7 +5853,7 @@ func_mode_link ()
+       # -O*, -flto*, -fwhopr*, -fuse-linker-plugin GCC link-time optimization
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+-      -O*|-flto*|-fwhopr*|-fuse-linker-plugin)
++      -O*|-flto*|-fwhopr*|-fuse-linker-plugin|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.8.1.4
+
