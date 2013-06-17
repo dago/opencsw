@@ -12,17 +12,25 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.jedrea.com/chmlib/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-
-PATCHFILES =  0001-gnulib-import-getopt-posix.patch
-PATCHFILES += 0002-integrate-gnulib-into-the-auto-tool-files.patch
-PATCHFILES += 0003-add-dummy-config.h-file.patch
-PATCHFILES += 0004-add-autoconf-checks-for-lnsl-and-lsocket.patch
+DISTFILES += $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-BUILD64_LIBS_ONLY = 1
+PACKAGES += CSWlibchm0
+SPKG_DESC_CSWlibchm0 = Library designed for accessing MS ITSS files (chm), libchm.so.0
+PKGFILES_CSWlibchm0 += $(call pkgfiles_lib,libchm.so.0)
+OBSOLETED_BY_CSWlibchm0 += CSWchmlib
+
+PACKAGES += CSWlibchm-dev
+SPKG_DESC_CSWlibchm-dev = Development files for libchm.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibchm-dev += CSWlibchm0
+
+EXTRA_LINKER_FLAGS += -lnsl -lsocket
+
+BUILD64 = 1
+ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-examples
 
@@ -31,11 +39,7 @@ DOCS += ChmLib-ds6.zip ChmLib-ce.zip
 
 include gar/category.mk
 
-pre-configure-modulated:
-	@(cd $(WORKSRC); aclocal -I gnulib/m4; autoconf -I gnulib/m4; automake)
-	@$(MAKECOOKIE)
-
-post-install-modulated:
+post-install:
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	$(foreach D,$(DOCS),ginstall $(WORKSRC)/$D $(DESTDIR)$(docdir)/$(NAME)/$D;)
 	@$(MAKECOOKIE)
