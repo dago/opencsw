@@ -1,5 +1,5 @@
 NAME = gnuplot
-VERSION = 4.6.1
+VERSION = 4.6.3
 
 DESCRIPTION = The Gnuplot Plotting Utilityting Utility.
 endef
@@ -16,18 +16,11 @@ LICENSE = Copyright
 PACKAGES += CSWgnuplot
 CATALOGNAME_CSWgnuplot = gnuplot
 SPKG_DESC_CSWgnuplot = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibgd2
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibxpm4
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWliblua5-2
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgnupRUNTIME_DEP_PKGS_CSWgnuplot += CSWlibpdf6
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibpng15-15
+RUNTIME_DEP_PKGS_Clua5-2
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibpdf6
 
 # There is just an emacs style in it, do not depend on it
 CHECKPKG_OVERRIDES_CSWgnuplot += missing-dependency|CSWemacscommonplot += CSWlibjpeg7
@@ -36,33 +29,18 @@ PACKAGES += CSWgnuplot-wx
 CATALOGNAME_CSWgnuplot-wx = gnuplot_wx
 SPKG_DESC_CSWgnuplot-wx = $(DESCRIPTION) (with WX-Widgets and Pango)
 RUNTIME_DEP_PKGS_CSWgnuplot-wx = CSWgnuplot
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetscommon
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpango
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_Cpango= CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetsgtk2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibreadline6
+RUNTIME_DEP_PKGS_Clibreadline6
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgd2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibxpm4
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWliblua5-2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWsunmath
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWliblua5-2t-wx += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWgnuplot-wxRUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibpdf6
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWgpdf6
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgets
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetsgtk2
 
 # This is pulled in from Wx, take out if that has been redone
 CHECKPKG_OVERRIDES_CSWgnuplot-wx += bad-rpath-entry|/opt/csw/lib/|opt/csw/libexec/gnuplot/4.6/gnuplot_x11-wx
@@ -73,7 +51,7 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnuplot-wx)
 
 REINPLACE_USRLOCAL += share/gnuplotrc
 
-+= -norunpath
++= -norunpath -z ignore
 
 # Gnuplot automatically pulls in libCstd which is needed by libwx_gtk2u_core-2.8.so.0.6.0 because
 # the library is wrong self-contained (ldd -r on that throws unresolved symbol errors).
@@ -129,12 +107,7 @@ PKGFILES_CSWgnuplot-wx = $(addsuffix -$(WXSUFFIX-yes),$(ALTERNATIVE_FILES))
 
 # "Alternatives" are not properly checked yet
 CHECKPKG_OVERRIDES_CSWgnuplot += surplus-dependency|CSWalternatives
-CHECKPKG_OVERRIDES_CSWgnuplot-wx += surplus-dependency|CSWalternatives
-
-# These are just examples
-CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.6/gnuplot.gih-nowx
-CHECKPKG_OVERRIDES_CSWgnuplot-wx += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.6/gnuplot.gih-wx
-CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnuplot.info
+CHECKPKG_OVERRIDES_CSWgnuplot-wx += surplus-dependency|fo/gnuplot.info
 
 # Is this GDFONTPATH related? That would be bad... CHECK!!!
 #CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/bin/gnuplot-nowx
