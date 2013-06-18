@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.8.6
+VERSION = 1.10.0
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -50,7 +50,7 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibpcap1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibsmi2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWwireshark reshark += CSWlua
+RUNTIME_DEP_PKGS_CSWwireshar8 reshark += CSWlua
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgeoip1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgmodule2-0-0
@@ -58,7 +58,7 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWwilib2-0-0
-RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-hark += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-hark +RUNTIME_DEP_PKGS_CSWwireshark += CSWliblua5-2+= CSWlibglib2-0-0
 
 # No more library splitting unless absolutely necessary
 CHECKPKG_OVERRIDES_CSWwireshark += shared-lib-package-contains-so-symlink
@@ -80,14 +80,12 @@ CHECKPKG_OVERRIDES_CSWwireshark += file-with-bad-content|/usr/local|root/opt/csw
 REINPLACEMENTS += mibs
 REINPLACE_MATCH_mibs = /usr/share/snmp/mibs
 REINPLACE_WITH_mibs = /opt/csw/share/mibs
-REINPLACE_FILES_mibs += epan/oids.c
+REINPLACE_FILES_mibs This is now deprecated in Pango, use workaround until Pango is updated
+EXTRA_CFLAGS += -DG_CONST_RETURN=const
 
-# Do not use LD_OPTIONS as it leads to the new version being built against old
-# wires#LD_OPTIONS =
-#EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
-
-# This is now deprecated in Pango, use workaround until Pango is updated
-EXTRA_CFLAGS += -DG_CONST_RETURN=constPATH_LINKER_FLAGS)
+# Hardcode ipv6 until this is fixed (taken from acinclude.m4):
+#   https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=8813
+#EXTRA_CFLAGS += -DINET6 -DSOLARIS8_INET6PATH_LINKER_FLAGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-usr-local=no
