@@ -126,6 +126,16 @@ LICENSE = docs/licence.txt
 
 include gar/category.mk
 
+INSTALL_SCRIPTS = wxwidgets
+
+include gar/category.mk
+
+# It is necessary to use this as the contrib subdirectory is not installed
+# by default
+install-wxwidgets:
+	(cd $(WORKSRC) && $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
+	(cd $(WORKSRC)/contrib && $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
+	@$(MAKECOOKIE)
 
 # Remove Studio-specific arch references
 post-install-modulated:
