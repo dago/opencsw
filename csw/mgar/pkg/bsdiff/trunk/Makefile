@@ -19,6 +19,9 @@ PACKAGES += CSWbsdiff
 SPKG_DESC_CSWmypkg = Binary diff/patch utility
 # PKGFILES is catchall
 
+BUILD64 = 1
+ISAEXEC = 1
+
 EXTRA_CFLAGS += -I.
 
 CONFIGURE_SCRIPTS =
@@ -29,8 +32,8 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 build-custom:
-	cd $(WORKSRC) && $(CC) $(CFLAGS) -lbz2 -o bsdiff bsdiff.c err.c
-	cd $(WORKSRC) && $(CC) $(CFLAGS) -lbz2 -o bspatch bspatch.c err.c
+	cd $(WORKSRC) && LD_OPTIONS="$(LD_OPTIONS)" $(CC) $(CFLAGS) -lbz2 -o bsdiff bsdiff.c err.c
+	cd $(WORKSRC) && LD_OPTIONS="$(LD_OPTIONS)" $(CC) $(CFLAGS) -lbz2 -o bspatch bspatch.c err.c
 	@$(MAKECOOKIE)
 
 install-custom:
