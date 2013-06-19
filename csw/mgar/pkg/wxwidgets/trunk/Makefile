@@ -117,10 +117,6 @@ CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 = shared-lib-pkgname-mismatch
 # It is built to use GNOME print, so it must be depending on this somehow
 CHECKPKG_OVERRIDES_CSWwxwidgetsgtk2 += surplus-dependency|CSWlibgnomeprintui
 
-# Okay, I don't quite understand why checkpkg wants these now...
-CHECKPKG_OVERRIDES_CSWwxwidgetscommon += dependency-listed-more-than-once|CSWwxwidgets
-CHECKPKG_OVERRIDES_CSWwxwidgetsdevel += dependency-listed-more-than-once|CSWwxwidgets-dev
-
 # Only samples inside code comments, can be safely ignored at this point
 CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/share|root/opt/csw/include/wx-2.8/wx/utils.h
 CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/local|root/opt/csw/include/wx-2.8/wx/unix/stdpaths.h
