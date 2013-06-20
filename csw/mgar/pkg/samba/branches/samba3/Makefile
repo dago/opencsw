@@ -2,11 +2,12 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME    = samba
-VERSION = 3.6.15
-CATEGORIES = apps
+VERSION = 3.6.16
 GARTYPE = v2
 
-DESCRIPTION = Tools to access a servers filespace and printers via SMB (server)
+DESCRIPTION =er)
+define BLURB
+  Tools to access a servers filespace and printers via SMB (server)
 define BLURB
   Tools to access a servers filespace and printers via SMB (server)
 endef
@@ -36,6 +37,8 @@ BUILD_DEP_PKGS += CSWlibreadline-dev
 = CSWlibtalloc-dev
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+PACCATALOGNAME_CSWsamba= 6
+
 PACKAGES += CSWsamba
 SPKG_DESC_CSWsamba = $(DESCRIPTION)
 # PKGFILES is catchall
@@ -54,7 +57,7 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_readline6
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1+= Can/man8/swat.8
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtevent0+= Can/man8/swat.8
 
 # Make one unified package for now
 OBSOLETED_BY_CSWsamba += CSWsambacommon
@@ -62,7 +65,7 @@ CATALOGNAME_CSWsambacommon = samba_common_stub
 OBSOLETED_BY_CSWsamba += CSWsambadoc
 CATALOGNAME_CSWsambadoc = samba_doc_stub
 
-PACKAGES += CSWsamba-client
+PACKAGES +CATALOGNAME_CSWsambaclient = samba_client_stub+= CSWsamba-client
 SPKG_DESC_CSWsamba-client = Client binaries for samba
 SMB_CLIENT_TOOLS = rpcclient smbcacls smbclient smbcquotas smbget smbspool smbtar smbtree
 PKGFILES_CSWsamba-client += $(foreach T,$(SMB_CLIENT_TOOLS),$(call baseisadirs,$(bindir),$T) $(mandir)/man1/$T\.1)
@@ -80,13 +83,14 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsambreadline6+= CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtdb1
-OBSOLETED_BY_CSWsamba-client += CSWsambaclient
-CATALOGNAME_CSWsambaclient = saan1/smbclient.1
+RUNTIME_DEP_PKGS_CSWsamba-cliRUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtevent0
+OBSOLETED_BY_CSWsamba-client += CSWsambaclient saan1/smbclient.1
 
 #PACKAGES += CSWsambadoc
 SPKG_DESC_CSWsambadoc = Samba documentation
 ARCHALL_CSWsambadoc = 1
+
+PACKAGES +=CATALOGNAME_CSWlibsmbclient0 = 1
 
 PACKAGES += CSWlibsmbclient0
 SPKG_DESC_CSWlibsmbclient0 = Samba client library, libsmbclient.so.0
@@ -102,13 +106,17 @@ RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibtdb1
+RUNTIME_DEP_PKGS_CSWlibsmbclieRUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibtevent0ent0 += CSWlibtdb1
 OBSOLETED_BY_CSWlibsmbclient0 += CSWsambalib
 CATALOGNAME_CSWsambalib = samba_lib_stub
+
+PACKAGES +CATALOGNAME_CSWlibwbclient0 = b
 
 PACKAGES += CSWlibwbclient0
 PKGFILES_CSWlibwbclient0 += $(call pkgfiles_lib,libwbclient.so.0)
 SPKG_DESC_CSWlibwbclient0 += Samba client library, libwbclient.so.0
+
+PACKAGESCATALOGNAME_CSWlibnetapi0 = 0
 
 PACKAGES += CSWlibnetapi0
 PKGFILES_CSWlibnetapi0 += $(call pkgfiles_lib,libnetapi.so.0)
@@ -122,22 +130,32 @@ RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibnetapi0 +RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtdb1ry, libnetapi.so.0
+RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtdb1rRUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtevent0
+
+PACKAGES += CSWlibsmbsharemodes0
+CATALOGNAME_CSWlibsmbsharemodes0 = 0
 
 PACKAGES += CSWlibsmbsharemodes0
 PKGFILES_CSWlibsmbsharemodes0 += $(call pkgfiles_lib,libsmbsharemodes.so.0)
 SPKG_DESC_CSWlibsmbsharemodes0 += Samba client library, libsmbsharemodes.so.0
 RUNTIME_DEP_PKGS_CSWlibsmbsharemodes0 += CSWlibtdb1
 
+PACKACATALOGNAME_CSWlibtdb1 = 1
+
 PACKAGES += CSWlibtdb1
 PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
 SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.1
 
-PACKAGES += CSWlibnss-winbind1
+PACKAGES += CCATALOGNAME_CSWlibnss-winbind1 = libnss_AGES += CSWlibnss-winbind1
 PKGFILES_CSWlibnss-winbind1 += $(call pkgfiles_lib,libnss_winbind.so.1)
-SPKG_DESC_CSWlibnss-winbind1 += Winbind nss libary,libnss_winbind.so.1
+SPKG_DESC_CSWlibnss-winbind1 += Winbind nss libary,libnss_winbind.so.libtevent0
+CATALOGNAME_CSWlibtevent0 = libtevent0
+PKGFILES_CSWlibtevent0 += $(call baseisadirs,$(libdir),libtevent\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibtevent0 += $(DESCRIPTION), libtevent.so.0
+RUNTIME_DEP_PKGS_CSWlibtevent0 += CSWlibtalloc2
 
 PACKAGES += CSWsamba-dev
+CATALOGNAME_CSWsambalibdev = samba_libdev_stubES += CSWsamba-dev
 SPKG_DESC_CSWsamba-dev = Development files for Samba, libsmbclient.so.0
 PKGFILES_CSWsamba-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibsmbclient0
@@ -145,15 +163,14 @@ RUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibnetapi0
 RUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibtdb1
 RUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibsmbsharemodes0
-RUNTIME_DEP_PKGS_CSWsamba-dev += CSWsamba
+RUNTIME_DEP_PKGS_CSWsambRUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibtevent0
 OBSOLETED_BY_CSWsamba-dev += CSWsambalibdev
-CATALOGNAME_CSWsambalibdev = samba_libdev_stub
 
 PACKAGES += CSWsamba-swat
+CATALOGNAME_CSWsambaswat = samba_swat_stubS += CSWsamba-swat
 SPKG_DESC_CSWsamba-swat = Web-based samba administration tools
 PKGFILES_CSWsamba-swat += $(call baseisadirs,$(sbindir),swat)
-PKGFILES_CSWsamba-swat += $(mandir)/.*/swat\.*
-#PKGFILES_CSWsamba-swat += $(sharedstatedir)/samba/swat/.*
+PKGFILES_CSWsamba-swat += $(mir)/samba/swat/.*
 PKGFILES_CSWsamba-swat += $(prefix)/swat/.*
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibiconv2
@@ -167,9 +184,8 @@ RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibtdb1
-OBSOLETED_BY_CSWsamba-swat = CSWsambaswat
-CATALOGNAME_CSWsambaswat = samba_swat_stub
+RUNTIME_DEP_PKGS_CSWsamba-sRUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibtevent0
+OBSOLETED_BY_CSWsamba-swat = CSWsambaswat = samba_swat_stub
 
 # Just docs, override for now
 CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-ByExample/ix01.html
@@ -216,7 +232,7 @@ CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/cs
 CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/FastStart.html
 CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/ch-ldap-tls.html
 
-PACKAGES += CSWsamba-winbind
+PACKAGES +=CATALOGNAME_CSWsambawb = samba_wb_stub= CSWsamba-winbind
 SPKG_DESC_CSWsamba-winbind = Tools to authenticate users from active directory using winbind
 PKGFILES_CSWsamba-winbind += $(call baseisadirs,$(libdir),security/pam_winbind\.so)
 PKGFILES_CSWsamba-winbind += $(sharedstatedir)/locale/.*/pam_winbind\.mo
@@ -238,11 +254,11 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CSWlibnss-winbind1
-OBSOLETED_BY_CSWsamba-winbind += CSWsambawb
-CATALOGNAME_CSWsambawbn/man8/winbindd.8
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtevent0
+OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
 CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CS# Needed as the configure script doesn't add it
-EXTRA_LINKER_FLAGS += -lintl -z ignore -z lazyloadA_LDFLAGS = -lintl
+EXTRA_LINKER_FLAGS += -lintl 
+EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_LDFLAGS = -lintl
 
 BUILD64 = 1
 ISAEXEC = 1
