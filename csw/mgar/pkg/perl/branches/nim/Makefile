@@ -2,7 +2,7 @@ NAME = perl
 VERSION = 5.16.2
 VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
 #CATEGORIES = lang
-GARTYPE = v2
+GARTYPE = bts
 
 DESCRIPTION = A high-level, general-purpose programming language
 define BLURB
@@ -24,34 +24,34 @@ DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 #BUILD64_ONLY 		  = 1
-PACKAGES                 += CSWperl
-PKG_DESC_CSWperl         = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
-RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
-#RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm4
-INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
+PACKAGES                 += NIMOSSperl
+PKG_DESC_NIMOSSperl         = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_NIMOSSperl += NIMOSSlibssp0
+RUNTIME_DEP_PKGS_NIMOSSperl += NIMOSSlibgcc-s1
+#RUNTIME_DEP_PKGS_NIMOSSperl  = NIMOSSbdb48 NIMOSSlibgdbm4
+INCOMPATIBLE_PKGS_NIMOSSperl = NIMOSSperlmods NIMOSSpmdigest NIMOSSpmi18nlangtags
 
-PACKAGES                   += CSWperldoc
-SPKG_DESC_CSWperldoc        = Perl documentation
-SPKG_DESC_CSWperl       	= Core Perl distribution
-RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
-ARCHALL_CSWperldoc          = 1
+PACKAGES                   += NIMOSSperldoc
+SPKG_DESC_NIMOSSperldoc        = Perl documentation
+SPKG_DESC_NIMOSSperl       	= Core Perl distribution
+RUNTIME_DEP_PKGS_NIMOSSperldoc = NIMOSSperl
+ARCHALL_NIMOSSperldoc          = 1
 
 LICENSE = Copying
 
-CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
-#CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-OBSOLETED_BY_CSWperl += CSWpm-module-build 
-OBSOLETED_BY_CSWperl += CSWpm-json-pp 
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
-OBSOLETED_BY_CSWperldoc += CSWpm-parse-cpan-meta
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-yaml
-OBSOLETED_BY_CSWperldoc += CSWpm-module-metadata
-CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-requirements
-OBSOLETED_BY_CSWperldoc += CSWpm-perl-ostype
-CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_NIMOSSperl    += file-with-bad-content
+CHECKPKG_OVERRIDES_NIMOSSperldoc += file-with-bad-content
+#CHECKPKG_OVERRIDES_NIMOSSperldoc += surplus-dependency|NIMOSSperl
+OBSOLETED_BY_NIMOSSperl += NIMOSSpm-module-build 
+OBSOLETED_BY_NIMOSSperl += NIMOSSpm-json-pp 
+OBSOLETED_BY_NIMOSSperldoc += NIMOSSpm-cpan-meta
+OBSOLETED_BY_NIMOSSperldoc += NIMOSSpm-parse-cpan-meta
+OBSOLETED_BY_NIMOSSperldoc += NIMOSSpm-cpan-meta-yaml
+OBSOLETED_BY_NIMOSSperldoc += NIMOSSpm-module-metadata
+CATALOGNAME_NIMOSSpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
+OBSOLETED_BY_NIMOSSperldoc += NIMOSSpm-cpan-meta-requirements
+OBSOLETED_BY_NIMOSSperldoc += NIMOSSpm-perl-ostype
+CHECKPKG_OVERRIDES_NIMOSSperldoc += surplus-dependency|NIMOSSperl
 
 
 
@@ -114,7 +114,7 @@ CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dbin=$(bindir)
 CONFIGURE_ARGS += -Dscriptdir=$(bindir)
-# CSW provided modules should install in the privlib directory (/opt/csw/share/perl/5.14)
+# NIMOSS provided modules should install in the privlib directory (/opt/csw/share/perl/5.14)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dsitearch=/opt/csw/nimoss/local/lib/perl/$(VERSION_MAJOR)
 CONFIGURE_ARGS += -Dsitelib=/opt/csw/nimoss/local/share/perl/$(VERSION)
@@ -168,12 +168,12 @@ EXTRA_LDFLAGS = -lperl
 #MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
-PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
+PKGFILES_NIMOSSperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 
 # The diagnostics.pm module needs the podfile to output its messages.
 # That means it must be included in the main package, not the docs.
-EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
-EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
+EXTRA_PKGFILES_EXCLUDED_NIMOSSperldoc = .*\/perldiag.pod
+EXTRA_PKGFILES_INCLUDED_NIMOSSperl = .*\/perldiag.pod
 
 # Tests take a long time, run once for every release
 BUILD_SCRIPTS = perl
@@ -189,12 +189,12 @@ TEST_SCRIPTS = perl
 
 # This is for the communication with checkpkg. These pathes are searched for modules
 # when resolving dependencies.
-#PROTOTYPE_FILTER_CSWperl = ( cat; echo "i cswperlincpath=CSWperl.cswperlincpath")
+#PROTOTYPE_FILTER_NIMOSSperl = ( cat; echo "i cswperlincpath=NIMOSSperl.cswperlincpath")
 
 # Splitting of a separate libperl.so requires more work and careful planning.
 # Override for now.
-#CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
-#CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.16.1|soname=libperl.so.5.16.1|pkgname=CSWperl|expected=CSWlibperl5-16-1
+#CHECKPKG_OVERRIDES_NIMOSSperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+#CHECKPKG_OVERRIDES_NIMOSSperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.16.1|soname=libperl.so.5.16.1|pkgname=NIMOSSperl|expected=NIMOSSlibperl5-16-1
 
 include gar/category.mk
 
@@ -260,9 +260,9 @@ syslinks:
 #        " Config.pm Config_heavy.pl )
 #	@$(MAKECOOKIE)
 
-#POST_TARGETS += CSWperl.cswperlincpath
-#CSWperl.cswperlincpath:
-#	LD_LIBRARY_PATH=$(WORKSRC) $(WORKSRC)/perl -I./lib -e 'print "$$_\n" foreach(@INC)' >$(WORKDIR_GLOBAL)/CSWperl.cswperlincpath
+#POST_TARGETS += NIMOSSperl.cswperlincpath
+#NIMOSSperl.cswperlincpath:
+#	LD_LIBRARY_PATH=$(WORKSRC) $(WORKSRC)/perl -I./lib -e 'print "$$_\n" foreach(@INC)' >$(WORKDIR_GLOBAL)/NIMOSSperl.cswperlincpath
 
 # Invoke post-install targets
 post-install-modulated: $(POST_TARGETS)
