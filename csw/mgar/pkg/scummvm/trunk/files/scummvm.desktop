@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ScummVM
+Exec=scummvm
+Icon=scummvm.xpm
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Application;Game;AdventureGame;
+Comment=Allows playing many classic graphical adventure games on modern computers
+Comment[da]=Giver lov til at spille mange klassiske eventyr grafikspil paa moderne computer
+Comment[de]=Zum spielen viele alter graphischer Adventures auf modernen Rechnern
+Comment[es]=Permite jugar una gran variedad de videojuegos clásicos de aventura en computadoras modernas
+Comment[fr]=Permet de jouer à des jeux d'aventure graphiques traditionnels sur des ordinateurs modernes
+Comment[it]=Permette di giocare una gran varietà di giochi classici di avventura sui computer moderni
+Comment[pl]=Pozwala grać w wiele klasycznych gier przygodowych na nowoczesnych komputerach 
