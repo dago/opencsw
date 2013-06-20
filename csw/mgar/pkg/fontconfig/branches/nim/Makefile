@@ -2,7 +2,7 @@
 
 NAME = fontconfig
 VERSION = 2.10.2
-GARTYPE = bts
+GARTYPE = v2
 
 DESCRIPTION = A library for configuring and customizing font accesszing font access.
 define BLURB
@@ -34,7 +34,7 @@ SPKG_DESC_NIMOSSfontconfig = A library for configuring and customizing font acce
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_NIMOSSfontconfig += NIMOSSlibfontconfig1
 # This is for /usr/share/fonts which is ok
-CHECKPKG_OVERRIDES_NIMOSSfontconfig += file-with-bad-content|/usr/share|root/etc/opt/csw/fontconfig/fonts.conf
+CHECKPKG_OVERRIDES_NIMOSSfontconfig += file-with-bad-content|/usr/share|root/etc/opt/csw/nimoss/fontconfig/fonts.conf
 
 OBSOLETED_BY_NIMOSSfontconfig += NIMOSSfconfig
 CATALOGNAME_NIMOSSfconfig = fontconfig_stub
@@ -47,8 +47,8 @@ MIGRATE_FILES = fontconfig
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-fonts=/usr/openwin/lib/X11/fonts
-CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts,/opt/csw/share/fonts
-CONFIGURE_ARGS += --with-cache-dir=/var/opt/csw/cache/fontconfig
-CONFIGURbaseconfigdir=/etc/opt/csw/fontconfig
+CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/sharnimoss/share/fonts
+CONFIGURE_ARGS += --with-cache-dir=/var/opt/csw/nimoss/cache/fontconfig
+CONFIGURE_ARGS += --with-baseconfigdir=/etc/opt/csw/nimoss//fontconfig
 
 include gar/category.mk
