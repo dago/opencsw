@@ -123,9 +123,6 @@ CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/local|root/opt
 CHECKPKG_OVERRIDES_CSWwxwidgets-dev += file-with-bad-content|/usr/local|root/opt/csw/include/wx-2.8/wx/generic/helpext.h
 
 LICENSE = docs/licence.txt
-
-include gar/category.mk
-
 INSTALL_SCRIPTS = wxwidgets
 
 include gar/category.mk
