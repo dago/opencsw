@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.fontconfig.org/re+= $(DISTNAME).tar.gz
-DISTFILES += NIMOSSfontconfig.postinstall
+DISTFILES += CSWfontconfig.postinstall
 
 VENDOR_URL = http://www.fontconfig.org
 
