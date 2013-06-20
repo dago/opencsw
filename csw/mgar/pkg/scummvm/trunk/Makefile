@@ -60,10 +60,10 @@ include gar/category.mk
 # For "install" with GNU syntax
 PATH := /op
 post-install-modulated:
-	ginstall -m 0644 $(FILEDIR)/README.solaris \
+	ginstall -m 0644 $(WORKDIR)/README.solaris \
 		$(DESTDIR)$(datadir)/doc/scummvm/
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/applications
-	ginstall -m 0644 $(FILEDIR)/scummvm.desktop \
+	ginstall -m 0644 $(WORKDIR)/scummvm.desktop \
 		$(DESTDIR)$(datadir)/applications/
 	@$(MAKECOOKIE)
 
