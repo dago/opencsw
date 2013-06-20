@@ -1,0 +1,80 @@
+
+  ScummVM Solaris & OpenIndiana
+  =============================
+
+  Introduction
+  ------------
+
+  This package contains 32 & 64 bit binaries built for Solaris 10 and later.
+  The version adapted to the currently loaded kernel will be automatically
+  started when running ScummVM.
+  It was also tested and should work on OpenSolaris-related distros such as
+  OpenIndiana, Solaris 11.
+
+  Installation
+  ------------
+
+  Installation is done as root with the pkgadd command:
+  # pkgadd -d scummvm-x.y.z-solaris-arch.pkg all
+
+  Or using sudo:
+
+  $ sudo pkgadd -d scummvm-x.y.z-solaris-arch.pkg all
+
+  It will be immediately usable as:
+  $  /opt/csw/bin/scummvm
+
+  To make it appear in the GNOME menus, please run the following commands,
+  then log out and back in:
+
+  $ sudo ln -s /opt/csw/share/pixmaps/scummvm.xpm /usr/share/pixmaps/
+  $ sudo ln -s PRFXDIR/scummvm/share/scummvm/scummvm.desktop \
+      /usr/share/applications/ 
+
+  Notes
+  -----
+
+  This package is built as part of the OpenCSW project that packages useful
+  programes for Solaris. Visit them at http://www/opencsw.org/
+  All the needed libraries are included as a convenience, as I believe a
+  games should be as easy to install and run as possible.
+
+  Have fun 
+  -- Laurent À opencsw.org
+
+
+  Remerciements/Thanks
+  --------------------
+
+  à Alexandre et William pour leur aide avec isaexec(3C)
+  à Elsa, Katrina, Mariusz, Olga pour les traductions de la description
+
+  Links
+  -----
+  
+  ScummVM
+  http://www.scummvm.org/
+  
+  SDL - Simple DirectMedia Layer
+  http://www.libsdl.org/
+  
+  Ogg Vorbis
+  http://www.vorbis.com/
+  
+  FLAC - Free Lossless Audio Codec
+  http://flac.sourceforge.net/
+  
+  MAD - MPEG Audio Decoder
+  http://www.underbit.com/products/mad/
+  
+  GCC
+  http://gcc.gnu.org/
+  
+  Oracle Solaris
+  http://www.oracle.com/us/products/servers-storage/solaris/index.html
+
+  OpenIndiana
+  http://openindiana.org/
+
+  Oracle Solaris Studio
+  http://www.oracle.com/us/products/tools/050872.html
