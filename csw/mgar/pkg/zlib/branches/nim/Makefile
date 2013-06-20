@@ -2,6 +2,7 @@
 
 NAME = zlib
 VERSION = 1.2.7
+CATEGORIES = lib
 GARTYPE = bts lib
 GARTYPE = v2
 
@@ -19,7 +20,7 @@ define BLURB
 endef
 
 MASTER_SITES  = http://zlib.net/
-MASTER_SITES += $(SECTF_MIRROR)
+MASTER_SITES += $(SF_MIRROR)
 SF_PROJ = libpng
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += COPYING
