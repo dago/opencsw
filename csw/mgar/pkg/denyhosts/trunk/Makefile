@@ -18,39 +18,43 @@ define BLURB
   DenyHosts attempts to address the above.
 endef
 
-SPKG_SOURCEURL = http://denyhosts.sf.net/
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = DenyHosts-$(VERSION)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+
+# Selected patches from ftp://ftp.debian.org/debian/pool/main/d/denyhosts/denyhosts_2.6-7.debian.tar.gz
+# as reported in https://www.opencsw.org/mantis/view.php?id=4491
+PATCHFILES += 07_regex.patch
+PATCHFILES += 09_plugin_deny.patch
+PATCHFILES += 10_create_timestamp.patch
+
 LICENSE = LICENSE.txt
-ARCHALL = 1
-INITSMF = /etc/opt/csw/init.d/cswdenyhosts
+
+VENDOR_URL = http://denyhosts.sf.net/
 
 PACKAGES = CSWdenyhosts
-
+SPKG_DECS_CSWdenyhosts = A tool to limit SSH brute force attacks
+ARCHALL_CSWdenyhosts = 1
 CHECKPKG_OVERRIDES_CSWdenyhosts += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWdenyhosts += catalogname-does-not-start-with-py_
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+INITSMF = /etc/opt/csw/init.d/cswdenyhosts
 
 # No test target
 TEST_SCRIPTS = 
 EXTRA_INSTALL_ARGS += --no-compile
 
-sysconfdir = /etc/opt/csw/
-localstatedir = /var/opt/csw/
-SAMPLECONF = $(sysconfdir)/denyhosts.cfg
+PRESERVECONF = $(sysconfdir)/denyhosts.cfg
 
 include gar/category.mk
 
 # setup.py puts everything in /usr/share by default, adjust this to $(datadir)
-pre-install-modulated:
+pre-install:
 	gsed -ie 's,/usr/share/denyhosts,$(datadir)/$(NAME),' $(WORKSRC)/setup.py
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
-post-install-modulated:
+post-install: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
+post-install:
 	ginstall -d $(DOCDEST)
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
@@ -67,15 +71,19 @@ post-install-modulated:
 
 	#Adjust config to match Solaris paths + our package paths
 	gsed -i \
-		-e 's,/var/log/secure,path to ssh log,' \
+		-e 's,/var/log/secure,/var/log/authlog,' \
 		-e 's,/usr/share/denyhosts/data,$(localstatedir)/$(NAME),' \
 		-e 's,/var/lock/subsys/denyhosts,/var/opt/csw/run/denyhosts.pid,' \
 		-e 's,/var/log/denyhosts,$(localstatedir)/$(NAME)/$(NAME).log,' \
 		$(DESTDIR)$(sysconfdir)/denyhosts.cfg
 
+	# From http://denyhosts.sourceforge.net/solaris.txt
+	echo 'SSHD_FORMAT_REGEX=.* (sshd\[.*\]: \[ID \d* auth.info\]) (?P<message>.*)' \
+		>>$(DESTDIR)$(sysconfdir)/denyhosts.cfg
+
 	gsed -i \
 		-e 's,denyhosts.cfg,$(sysconfdir)/denyhosts.cfg,' \
-		$(DESTDIR)/opt/csw/lib/python2.6/site-packages/DenyHosts/constants.py
+		$(DESTDIR)/opt/csw/lib/python/site-packages/DenyHosts/constants.py
 
 	#Adjust daemon-control-dist wrapper script to match our package paths
 	gsed -i \
