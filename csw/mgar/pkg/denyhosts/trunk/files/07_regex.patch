@@ -1,0 +1,13 @@
+Author: Nico Golde <nion@debian.org> and Marco Bertorello <marco@bertorello.ns0.it>
+Description: Fix a vulnerability (CVE-2007-4323) and other problem with regexp
+--- a/DenyHosts/regex.py
++++ b/DenyHosts/regex.py
+@@ -17,7 +17,7 @@
+ 
+ FAILED_ENTRY_REGEX4 = re.compile(r"""Authentication failure for (?P<user>.*) .*from (?P<host>.*)""")
+ 
+-FAILED_ENTRY_REGEX5 = re.compile(r"""User (?P<user>.*) .*from (?P<host>.*) not allowed because none of user's groups are listed in AllowGroups""")
++FAILED_ENTRY_REGEX5 = re.compile(r"""User (?P<user>.*) .*from (?P<host>.*) not allowed because none of user's groups are listed in AllowGroups$""")
+ 
+ FAILED_ENTRY_REGEX6 = re.compile(r"""Did not receive identification string .*from (::ffff:)?(?P<host>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})""")
+ 

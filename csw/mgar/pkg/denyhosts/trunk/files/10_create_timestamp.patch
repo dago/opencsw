@@ -1,0 +1,13 @@
+Author: Marco Bertorello <marco@bertorello.ns0.it>
+Description: create a timestamp file if doesn't exist
+--- a/DenyHosts/sync.py
++++ b/DenyHosts/sync.py
+@@ -53,7 +53,7 @@
+     def set_sync_timestamp(self, timestamp):
+         try:
+             fp = open(os.path.join(self.__work_dir,
+-                                   SYNC_TIMESTAMP), "w")
++                                   SYNC_TIMESTAMP), "a")
+             fp.write(timestamp)
+         except e:
+             error(e)

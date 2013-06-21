@@ -1,0 +1,13 @@
+Author: Marco Bertorello <marco@bertorello.ns0.it>
+Description: Correct the upstream bug http://sourceforge.net/tracker/index.php?func=detail&aid=1734736&group_id=131204&atid=720419
+--- a/DenyHosts/deny_hosts.py
++++ b/DenyHosts/deny_hosts.py
+@@ -443,7 +443,7 @@
+             self.__report.add_section(msg, new_denied_hosts)
+             if self.__sync_server: self.sync_add_hosts(new_denied_hosts)
+             plugin_deny = self.__prefs.get('PLUGIN_DENY')
+-            if plugin_deny: plugin.execute(plugin_deny, deny_hosts)
++            if plugin_deny: plugin.execute(plugin_deny, new_denied_hosts)
+         
+         new_suspicious_logins = login_attempt.get_new_suspicious_logins()
+         if new_suspicious_logins:
