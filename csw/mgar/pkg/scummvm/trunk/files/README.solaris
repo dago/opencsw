@@ -5,16 +5,15 @@
   Introduction
   ------------
 
-  This package contains 32 & 64 bit binaries built for Solaris 10 and later.
+  This package contains 32 & 64 bit binaries built for Solaris 10.
   The version adapted to the currently loaded kernel will be automatically
   started when running ScummVM.
-  It was also tested and should work on OpenSolaris-related distros such as
-  OpenIndiana, Solaris 11.
+  It was also tested on OpenIndiana b157 and Solaris 11.
 
   Installation
   ------------
 
-  Installation is done as root with the pkgadd command:
+  Installation is done as root with the pkgadd command as root:
   # pkgadd -d scummvm-x.y.z-solaris-arch.pkg all
 
   Or using sudo:
@@ -22,7 +21,7 @@
   $ sudo pkgadd -d scummvm-x.y.z-solaris-arch.pkg all
 
   It will be immediately usable as:
-  $  /opt/csw/bin/scummvm
+  $ /opt/csw/bin/scummvm
 
   To make it appear in the GNOME menus, please run the following commands,
   then log out and back in:
@@ -35,11 +34,15 @@
   -----
 
   This package is built as part of the OpenCSW project that packages useful
-  programes for Solaris. Visit them at http://www/opencsw.org/
+  software for Solaris. Visit them at http://www/opencsw.org/
   All the needed libraries are included as a convenience, as I believe a
   games should be as easy to install and run as possible.
 
-  Have fun 
+  To upgrade to later versions, it is recommended to install pkgutil:
+  http://www.opencsw.org/manual/for-administrators/getting-started.html
+
+
+  Have fun!
   -- Laurent À opencsw.org
 
 
@@ -54,6 +57,9 @@
   
   ScummVM
   http://www.scummvm.org/
+
+  OpenCSW
+  http://www.opencsw.org/
   
   SDL - Simple DirectMedia Layer
   http://www.libsdl.org/
