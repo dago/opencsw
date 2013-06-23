@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=ScummVM
-Exec=scummvm
-Icon=scummvm.xpm
+Exec=/opt/csw/bin/scummvm
+Icon=/opt/csw/share/pixmaps/scummvm.xpm
 Terminal=false
 Type=Application
 StartupNotify=false
