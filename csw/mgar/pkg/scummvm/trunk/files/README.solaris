@@ -23,18 +23,23 @@
   It will be immediately usable as:
   $ /opt/csw/bin/scummvm
 
-  To make it appear in the GNOME menus, please run the following commands,
-  then log out and back in:
+  To make it appear in the GNOME menus, run the following commands, then 
+  log out and back in:
 
-  $ sudo ln -s /opt/csw/share/pixmaps/scummvm.xpm /usr/share/pixmaps/
-  $ sudo ln -s PRFXDIR/scummvm/share/scummvm/scummvm.desktop \
+  As root:
+  # ln -s /opt/csw/share/applications/scummvm.desktop /usr/share/applications/
+
+  Or with sudo:
+
+  $ sudo ln -s /opt/csw/share/applications/scummvm.desktop \
       /usr/share/applications/ 
 
   Notes
   -----
 
-  This package is built as part of the OpenCSW project that packages useful
-  software for Solaris. Visit them at http://www/opencsw.org/
+  This package is built as part of OpenCSW, an easy to use open source
+  software distribution for Solaris-based systems.
+  t httpse visit at http://www/opencsw.org/
   All the needed libraries are included as a convenience, as I believe a
   games should be as easy to install and run as possible.
 
@@ -43,7 +48,8 @@
 
 
   Have fun!
-  -- Laurent À opencsw.org
+
+  -- laurent À opencsw.org
 
 
   Remerciements/Thanks
