@@ -10,15 +10,36 @@
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 
 
-PROJ_NAME = mysql
-NAME = $(PROJ_NAME)5
+PROJ_NAME    = mysql
+NAME         = $(PROJ_NAME)5
 BASE_VERSION = 5.6
-PATCHLEVEL = 10
-ALTS_PRIO = 56
+PATCHLEVEL   = 12
+ALTS_PRIO    = 56
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
+
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+# Use newest Sun Studio on Solaris10 to solve problems on Solaris10 x86
+# 64bit build:
+ifneq ($(shell /usr/bin/uname -r),5.9)
+       GARCOMPILER = SOS12U3
+endif
+
+# There is some assembler code, which doesn't work on sparcv8, and I don't see
+# an easy way to switch it off.
+ISA_DEFAULT_sparc-5.9 = sparcv8plus
+
+# Solaris 10 needs a special map file since we need libnsl Version 1.9.1
+# and libc 1.22.5
+
+ifneq ($(shell /usr/bin/uname -r),5.9)
+	LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
+endif
+
 
 
 DISTNAME = mysql-$(VERSION)
@@ -30,16 +51,20 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# There are problems with the build using Sun Studio.
-# GARCOMPILER = SOS12
-# EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-# EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-GARCOMPILER = GNU
+# Those options follow those of the official builds
+EXTRA_CFLAGS-sparc = -Xa -xstrconst 
+EXTRA_CFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt
+EXTRA_CXXFLAGS-sparc = -noex 
+EXTRA_CXXFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -features=no%except -xlibmil -xlibmopt
+EXTRA_CFLAGS   += $(EXTRA_CFLAGS-$(GARCH)) -g -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm -xnorunpath
+EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(GARCH)) -g0 -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm -norunpath
 
-NOGITPATCH ?= 1
+# The official build used -xO2 on 32 bit x86, -xO3 for 64 bit
+# Use that for all builds
+OPT_FLAGS_SOS-32 = -xO2
+OPT_FLAGS_SOS-64 = -xO3
+OPT_FLAGS_SOS = $(OPT_FLAGS_SOS-$(MEMORYMODEL))
 
-#Mapfile:
-LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -65,21 +90,14 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/s
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
-CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
-CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
-#PATCHFILES += 0003-I-HATE-CMAKE.patch
-# PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
-PATCHFILES += 0005-Do-not-strip-RPATH-from-binaries.patch
-#PATCHFILES += 0002-do_not_use_libstlport.patch
-PATCHFILES += mysql-bug.67018.patch
-PATCHFILES += 0003-it_is_lz_not_lzlib.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl0-9-8
-RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -112,43 +130,53 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseis
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)\.1)
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name))
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
-# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
-# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROSREL))
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
 # must build for sparcv8+ on Solaris 9.
-CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
+ifeq ($(shell /usr/bin/uname -pr),5.9 sparc)
+  CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
+  CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
+  CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
+endif
+
+CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
-# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
-# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstlport1
+RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/sparcv9/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/amd64/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+
+# An example:
+# s9_preload.so.1|is|needed|by|/opt/csw/bin/innochecksum|but|never|used
+#CHECKPKG_OVERRIDES_CSW$(NAME) += soname-unused
 
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 EXTRA_MERGE_EXCLUDE_FILES += $(datadir)/mysql-test.*
 
+# Enable 64 bits, but not for Solaris 9 x86
+BUILD64_5.9_sparc = 1
+BUILD64_5.10_sparc = 1
+BUILD64_5.9_i386 =
+BUILD64_5.10_i386 = 1
+BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))
 
-# Enable 64 bits build
-BUILD64 = 1
-
-MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
+MASTER_SITES  = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
+MASTER_SITES += http://mysql.skynet.be/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME).tpl
 DISTFILES += quick_start-csw
@@ -164,68 +192,67 @@ BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
 BUILD_DEP_PKGS += CSWcmake
 BUILD_DEP_PKGS += CSWbison
 
-# Set ./configure options
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-assembler
-# Why not have a docs package?
-# CONFIGURE_ARGS += --without-docs
-CONFIGURE_ARGS += --enable-local-infile
-CONFIGURE_ARGS += --with-charset=utf8
-CONFIGURE_ARGS += --with-extra-charsets=all
-CONFIGURE_ARGS += --with-low-memory
-CONFIGURE_ARGS += --with-pthread
-CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --with-zlib-dir=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-ssl=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-plugins=max-no-ndb
-CONFIGURE_ARGS += --with-comment="(OpenCSW)"
-CONFIGURE_ARGS += --with-mysqld-user=mysql
-CONFIGURE_ARGS += --with-fast-mutexes
-CONFIGURE_ARGS += --with-libwrap
-CONFIGURE_ARGS += --with-mysqld-libs=-lmtmalloc
-CONFIGURE_ARGS += --with-big-tables
-CONFIGURE_ARGS += --enable-thread-safe-client
-CONFIGURE_ARGS_DBG = --with-debug
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
-
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
+CMAKE_ARGS += "-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON"
 CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
 CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
 CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
 CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
-# CMAKE_ARGS += -DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
 CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
 CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
-CMAKE_ARGS += -DWITH_READLINE=1
 CMAKE_ARGS += -DWITH_LIBWRAP=1
 CMAKE_ARGS += -DWITH_SSL=system
 CMAKE_ARGS += -DWITH_ZLIB=system
 CMAKE_ARGS += -DDEFAULT_CHARSET=utf8
 CMAKE_ARGS += -DDEFAULT_COLLATION=utf8_general_ci
-CMAKE_ARGS += -DWITH_COMMENT='OpenCSW'
-#Hardcode Sunstudio compiler:
-#CMAKE_ARGS += -DCMAKE_C_COMPILER="/opt/solarisstudio12.3/bin/cc"
-#CMAKE_ARGS += -DCMAKE_CXX_COMPILER="/opt/solarisstudio12.3/bin/CC"
-CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
-CMAKE_ARGS += -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DCOMPILATION_COMMENT='OpenCSW'
 CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
-# CMAKE_ARGS += -DOPENSSL_INCLUDE_DIR="$(includedir)"
-# CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
-# CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
-# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/libssl.so
-# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/libcrypto.so
-CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
+CMAKE_ARGS += -DC_FLAGS="$(CFLAGS)"
+CMAKE_ARGS += -DCXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_CXX_LINK_FLAGS"$(LDFLAGS)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
-CMAKE_ARGS += "-DCMAKE_C_FLAGS=$(CFLAGS)"
-CMAKE_ARGS += "-DCMAKE_CXX_FLAGS=$(CXXFLAGS)"
+CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
+CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
-# TODO: Make the tests pass. They don't at the moment.
-SKIPTEST ?= 1
-TEST_SCRIPTS = custom
-TEST_TARGETS = check
+CMAKE_ARGS += -DBISON_EXECUTABLE=/opt/csw/bin/bison
+
+# The line below come from the official MySQL build configuration
+CMAKE_ARGS += "-DENABLED_PROFILING:BOOL=ON"
+CMAKE_ARGS += "-DENABLE_DEBUG_SYNC:BOOL=ON"
+CMAKE_ARGS += "-DENABLE_DOWNLOADS:BOOL=OFF"
+CMAKE_ARGS += "-DENABLE_GCOV:BOOL=OFF"
+CMAKE_ARGS += "-DENABLE_GPROF:BOOL=OFF"
+CMAKE_ARGS += "-DENABLE_MEMCACHED_SASL:BOOL=OFF"
+CMAKE_ARGS += "-DENABLE_MEMCACHED_SASL_PWDB:BOOL=OFF"
+CMAKE_ARGS += "-DFEATURE_SET:STRING=community"
+CMAKE_ARGS += "-DMYSQL_MAINTAINER_MODE:BOOL=OFF"
+CMAKE_ARGS += "-DOPTIMIZER_TRACE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_ARCHIVE_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_BLACKHOLE_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_DEBUG:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_DEFAULT_COMPILER_OPTIONS:BOOL=ON"
+CMAKE_ARGS += "-DWITH_DEFAULT_FEATURE_SET:BOOL=ON"
+CMAKE_ARGS += "-DWITH_EDITLINE:STRING=bundled"
+CMAKE_ARGS += "-DWITH_EMBEDDED_SERVER:BOOL=ON"
+CMAKE_ARGS += "-DWITH_EXAMPLE_STORAGE_ENGINE:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_EXTRA_CHARSETS:STRING=all"
+CMAKE_ARGS += "-DWITH_FEDERATED_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_INNOBASE_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_INNODB_MEMCACHED:BOOL=1"
+CMAKE_ARGS += "-DWITH_LIBEVENT:STRING=bundled"
+CMAKE_ARGS += "-DWITH_LIBWRAP:BOOL=OFF"
+CMAKE_ARGS += "-DWITH_PARTITION_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_PERFSCHEMA_STORAGE_ENGINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_PIC:BOOL=ON"
+CMAKE_ARGS += "-DWITH_READLINE:BOOL=ON"
+CMAKE_ARGS += "-DWITH_UNIT_TESTS:BOOL=ON"
+CMAKE_ARGS += "-DWITH_VALGRIND:BOOL=OFF"
+ifneq ($(shell /usr/bin/uname -r),5.9)
+CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
+endif
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
@@ -242,7 +269,6 @@ CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
 CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 
-CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root$(prefix)/share/man/man1/mysqlaccess.1
 # This could be reviewed.
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
@@ -289,17 +315,11 @@ EXECUTABLES += resolveip
 
 CONFIGURE_SCRIPTS = custom
 
+TEST_TARGET = test
+
 include gar/category.mk
 
-test-custom:
-	alias sh=/usr/bin/bash;                           \
-		cd $(WORKSRC)/mysql-test;                       \
-		perl mysql-test-run.pl --mem --big-test --force \
-		--skip-test=archive-big --skip-test=/gis/
-
 configure-custom:
-	#		--debug-output \
-	#		--debug-trycompile \
 	(cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
@@ -310,11 +330,11 @@ configure-custom:
 
 post-configure-modulated:
 	gsed \
-		-e 's+@prefix@+$(prefix)+' \
-		-e 's+@localstatedir@+$(localstatedir)+' \
-		-e 's+@sysconfdir@+$(sysconfdir)+' \
-		-e 's+@bindir@+$(bindir)+' \
-		-e 's+@BASE_VERSION@+$(BASE_VERSION)+' \
+		-e 's+@prefix@+$(prefix)+g' \
+		-e 's+@localstatedir@+$(localstatedir)+g' \
+		-e 's+@sysconfdir@+$(sysconfdir)+g' \
+		-e 's+@bindir@+$(bindir)+g' \
+		-e 's+@BASE_VERSION@+$(BASE_VERSION)+g' \
 		< $(WORKDIR)/csw$(NAME).tpl \
 		> $(WORKDIR)/csw$(NAME)
 	@$(MAKECOOKIE)
@@ -322,16 +342,12 @@ post-configure-modulated:
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(DESTDIR)$(sysconfdir)/init.d
-	# # Add versions to binary names
-	# for f in $(EXECUTABLES); do \
-	# 	gmv -v "$(DESTDIR)$(bindir)/$${f}" \
-	# 	       "$(DESTDIR)$(bindir)/$${f}"; \
-	# done
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18; \
 		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
 		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
-	# gmv -vf $(DESTDIR)$(mandir)/man1/mysql_config.1
+	# Do not distribute libstlport with MySQL, use a separate one
+	(cd $(DESTDIR)$(libdir); rm libstlport.*)
 	@$(MAKECOOKIE)
 
 post-merge:
@@ -344,7 +360,6 @@ post-merge:
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README-$(BASE_VERSION).CSW
 	# The quick_start-csw file is almost the same as postinstall.
 	# [ -d $(PKGROOT)$(datadir)/mysql ]
-	# ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
