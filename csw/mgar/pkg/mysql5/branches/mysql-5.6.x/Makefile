@@ -8,6 +8,12 @@
 #
 # About building MySQL with cmake:
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
+#
+# !!WARNING!!
+# From 5.6.4, stlport is used by default.
+# It appears to not be used by libmysql*, so there should not be any binary
+# incompatibility there. However, care must be taken that it does not creep
+# in, either in the lib*.so or in the mysql_config script.
 
 
 PROJ_NAME    = mysql
