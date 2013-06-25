@@ -26,27 +26,13 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-# Use newest Sun Studio on Solaris10 to solve problems on Solaris10 x86
-# 64bit build:
-ifneq ($(shell /usr/bin/uname -r),5.9)
-       GARCOMPILER = SOS12U3
-endif
-
-# There is some assembler code, which doesn't work on sparcv8, and I don't see
-# an easy way to switch it off.
-ISA_DEFAULT_sparc-5.9 = sparcv8plus
+GARCOMPILER = SOS12U3
 
 # Solaris 10 needs a special map file since we need libnsl Version 1.9.1
 # and libc 1.22.5
-
-ifneq ($(shell /usr/bin/uname -r),5.9)
-	LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
-endif
-
-
+LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
 
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
@@ -101,9 +87,7 @@ PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl1-0-0
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -137,18 +121,8 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
-
-# It's intentional. There's a sparcv8-incompatible assembler code there, so we
-# must build for sparcv8+ on Solaris 9.
-ifeq ($(shell /usr/bin/uname -pr),5.9 sparc)
-  CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
-  CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
-  CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
-endif
 
 CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
 
@@ -157,9 +131,7 @@ SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstlport1
-RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
@@ -174,12 +146,7 @@ EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 EXTRA_MERGE_EXCLUDE_FILES += $(datadir)/mysql-test.*
 
-# Enable 64 bits, but not for Solaris 9 x86
-BUILD64_5.9_sparc = 1
-BUILD64_5.10_sparc = 1
-BUILD64_5.9_i386 =
-BUILD64_5.10_i386 = 1
-BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))
+BUILD64 = 1
 
 MASTER_SITES  = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 MASTER_SITES += http://mysql.skynet.be/Downloads/MySQL-$(BASE_VERSION)/
@@ -256,9 +223,7 @@ CMAKE_ARGS += "-DWITH_PIC:BOOL=ON"
 CMAKE_ARGS += "-DWITH_READLINE:BOOL=ON"
 CMAKE_ARGS += "-DWITH_UNIT_TESTS:BOOL=ON"
 CMAKE_ARGS += "-DWITH_VALGRIND:BOOL=OFF"
-ifneq ($(shell /usr/bin/uname -r),5.9)
 CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
-endif
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
