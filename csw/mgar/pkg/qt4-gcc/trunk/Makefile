@@ -168,7 +168,15 @@ RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibgstvideo0-10-0
 RUNTIME_DEP_PKGS_CSWqt4-dev += CSWlibgstaudio0-10-0
 CHECKPKG_OVERRIDES_CSWqt4-dev += surplus-dependency|CSWlibicui18n50
-CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/twitter/twitter_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/flickr/flickr_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/samegame/samegame_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/rssnews/rssnews_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/photoviewer/photoviewer_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/calculator/calculator_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/declarative/snake/snake_harmattan.desktop
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/demos/helper/qmlapplicationviewer/qmlapplicationviewer.pri
+CHECKPKG_OVERRIDES_CSWqt4-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/qt4/examples/helper/qmlapplicationviewer/qmlapplicationviewer.pri
 ed-path-in-pkgmap
 # because libdbus needs /etc/machine-id which can generated with a tool of CSWdbus
 CHECKPKG_dev += surplus-dependency|CSWdbus
