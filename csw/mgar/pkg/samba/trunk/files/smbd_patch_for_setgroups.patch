@@ -1,0 +1,78 @@
+From 3f6a1340d574cfa16515e0b9ba5b701e566ed07c Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Tue, 25 Jun 2013 16:26:07 +0200
+Subject: [PATCH 2/2] Solaris sort groups patch
+
+---
+ source3/lib/system.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/source3/lib/system.c b/source3/lib/system.c
+index 8dbf7dc..33d2926 100644
+--- a/source3/lib/system.c
++++ b/source3/lib/system.c
+@@ -879,14 +879,14 @@ int groups_max(void)
+  returning an array of gid_t, but actuall return an array of int.
+ ****************************************************************************/
+ 
+-#if defined(HAVE_BROKEN_GETGROUPS)
+-
+ #ifdef HAVE_BROKEN_GETGROUPS
+ #define GID_T int
+ #else
+ #define GID_T gid_t
+ #endif
+ 
++#if defined(HAVE_BROKEN_GETGROUPS)
++
+ static int sys_broken_getgroups(int setlen, gid_t *gidset)
+ {
+ 	GID_T gid;
+@@ -929,6 +929,13 @@ static int sys_broken_getgroups(int setlen, gid_t *gidset)
+ 	return ngroups;
+ }
+ 
++#endif /* HAVE_BROKEN_GETGROUPS */
++
++static int gid_compare(void *gid_1, void *gid_2)
++{
++	return (*(GID_T *)gid_1 - *(GID_T *)gid_2);
++}
++
+ static int sys_broken_setgroups(int setlen, gid_t *gidset)
+ {
+ 	GID_T *group_list;
+@@ -955,6 +962,8 @@ static int sys_broken_setgroups(int setlen, gid_t *gidset)
+ 	for(i = 0; i < setlen; i++) 
+ 		group_list[i] = (GID_T) gidset[i]; 
+ 
++	TYPESAFE_QSORT(group_list, setlen, gid_compare);
++
+ 	if(samba_setgroups(setlen, group_list) != 0) {
+ 		int saved_errno = errno;
+ 		SAFE_FREE(group_list);
+@@ -966,8 +975,6 @@ static int sys_broken_setgroups(int setlen, gid_t *gidset)
+ 	return 0 ;
+ }
+ 
+-#endif /* HAVE_BROKEN_GETGROUPS */
+-
+ /* This is a list of systems that require the first GID passed to setgroups(2)
+  * to be the effective GID. If your system is one of these, add it here.
+  */
+@@ -1058,11 +1065,8 @@ int sys_setgroups(gid_t UNUSED(primary_gid), int setlen, gid_t *gidset)
+ 
+ #if defined(USE_BSD_SETGROUPS)
+ 	return sys_bsd_setgroups(primary_gid, setlen, gidset);
+-#elif defined(HAVE_BROKEN_GETGROUPS)
+-	return sys_broken_setgroups(setlen, gidset);
+-#else
+-	return samba_setgroups(setlen, gidset);
+ #endif
++	return sys_broken_setgroups(setlen, gidset);
+ }
+ 
+ /**************************************************************************
+-- 
+1.7.9.2
+
