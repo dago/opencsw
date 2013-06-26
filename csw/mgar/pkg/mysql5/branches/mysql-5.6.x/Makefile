@@ -50,6 +50,7 @@ EXTRA_CXXFLAGS-sparc = -noex
 EXTRA_CXXFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -features=no%except -xlibmil -xlibmopt
 EXTRA_CFLAGS   += $(EXTRA_CFLAGS-$(GARCH)) -g -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm -xnorunpath
 EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(GARCH)) -g0 -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm -norunpath
+EXTRA_LDFLAGS += -Bdirect
 
 # The official build used -xO2 on 32 bit x86, -xO3 for 64 bit
 # Use that for all builds
@@ -185,7 +186,8 @@ CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
 CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
 CMAKE_ARGS += -DC_FLAGS="$(CFLAGS)"
 CMAKE_ARGS += -DCXX_FLAGS="$(CXXFLAGS)"
-CMAKE_ARGS += -DCMAKE_CXX_LINK_FLAGS"$(LDFLAGS)"
+CMAKE_ARGS += -DCMAKE_C_LINK_FLAGS="$(LDFLAGS)"
+CMAKE_ARGS += -DCMAKE_CXX_LINK_FLAGS="$(LDFLAGS)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
