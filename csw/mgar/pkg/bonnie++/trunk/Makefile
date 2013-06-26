@@ -18,7 +18,7 @@ DISTFILES  = $(NAME)-$(FILEVERSION).tgz
 
 PACKAGES = CSWbonnie++
 CATALOGNAME_CSWbonnie++ = bonnie++
-SPKG_DESC_CSWbonnie++ = A benchmark suite aimed at performing a number of simple tests of hard drive and file system performance
+SPKG_DESC_CSWbonnie++ = A benchmark suite testing hard drive and file system performance
 RUNTIME_DEP_PKGS_CSWbonnie++ += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWbonnie++ += CSWlibstdc++6
 
