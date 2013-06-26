@@ -1,0 +1,46 @@
+From 4f70bcf1aef5074f6689a6462e803961bdee7dbf Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Tue, 25 Jun 2013 15:35:33 +0200
+Subject: [PATCH 1/2] Fix nss winbind for more then 16 groups on Solaris
+
+---
+ nsswitch/winbind_nss_linux.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/nsswitch/winbind_nss_linux.c b/nsswitch/winbind_nss_linux.c
+index 8d66a74..aaabc96 100644
+--- a/nsswitch/winbind_nss_linux.c
++++ b/nsswitch/winbind_nss_linux.c
+@@ -25,6 +25,8 @@
+ #include <pthread.h>
+ #endif
+ 
++#include "lib/util/tsort.h"
++
+ #if HAVE_PTHREAD
+ static pthread_mutex_t winbind_nss_mutex = PTHREAD_MUTEX_INITIALIZER;
+ #endif
+@@ -1044,6 +1046,11 @@ _nss_winbind_getgrgid_r(gid_t gid,
+ 
+ /* Initialise supplementary groups */
+ 
++static int gid_compare(void *gid_1, void *gid_2)
++{
++	return (*(gid_t *)gid_1 - *(gid_t *)gid_2);
++}
++
+ NSS_STATUS
+ _nss_winbind_initgroups_dyn(char *user, gid_t group, long int *start,
+ 			    long int *size, gid_t **groups, long int limit,
+@@ -1075,6 +1082,8 @@ _nss_winbind_initgroups_dyn(char *user, gid_t group, long int *start,
+ 		int num_gids = response.data.num_entries;
+ 		gid_t *gid_list = (gid_t *)response.extra_data.data;
+ 
++		TYPESAFE_QSORT(gid_list, num_gids, gid_compare);
++
+ #ifdef DEBUG_NSS
+ 		fprintf(stderr, "[%5d]: initgroups %s: got NSS_STATUS_SUCCESS "
+ 				"and %d gids\n", getpid(),
+-- 
+1.7.9.2
+
