@@ -19,7 +19,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
-GARCOMPILER = SOS12U3
+GARCOMPILER = GCC4 # SOS12U3
 
 BUILD_DEP_PKGS += CSWpkgconfig 
 BUILD_DEP_PKGS += CSWgstreamer-dev
@@ -296,6 +296,9 @@ CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
+EXTRA_CONFIGURE_ENV    = PATH=$(PATH):/opt/csw/gcc4/bin
+EXTRA_BUILD_ENV    = PATH=$(PATH):/opt/csw/gcc4/bin
+EXTRA_INSTALL_ENV    = PATH=$(PATH):/opt/csw/gcc4/bin
 
 STRIP_LIBTOOL = 1
 
