@@ -40,7 +40,7 @@ BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWlibuuid-dev
 BUILD_DEP_PKGS += CSWlibiptcdata
 BUILD_DEP_PKGS += CSWpoppler-dev
-BUILD_DEP_PKGS += CSWexempidevel
+# BUILD_DEP_PKGS += CSWexempidevel
 BUILD_DEP_PKGS += CSWgstreamer
 BUILD_DEP_PKGS += CSWlibexif-dev
 
@@ -52,7 +52,7 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWtracker += CSWexempi
+# RUNTIME_DEP_PKGS_CSWtracker += CSWexempi
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract0-16-0
@@ -81,7 +81,7 @@ RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibiptcdata
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibpoppler-glib8
-RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWexempi
+# RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWexempi
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWgstreamer
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-common
@@ -157,6 +157,9 @@ CONFIGURE_ARGS += --disable-hal
 CONFIGURE_ARGS += --disable-introspection
 CONFIGURE_ARGS += --disable-playlist
 CONFIGURE_ARGS += --disable-nautilus-extension
+# exempi links with stlport while glib links with libCstd, both at once are incomp.
+# and both would be linked at once in libtracker-extract, so we have to disable it
+CONFIGURE_ARGS += --disable-exempi
 
 include gar/category.mk
 
