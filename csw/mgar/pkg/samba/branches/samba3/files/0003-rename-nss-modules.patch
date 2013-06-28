@@ -1,0 +1,22 @@
+--- a/source3/configure	Thu Jun 27 14:04:05 2013
++++ b/source3/configure	Fri Jun 28 23:36:35 2013
+@@ -36081,6 +36081,8 @@
+ 		NSSSONAMEVERSIONSUFFIX=".1"
+ 		WINBIND_NSS_EXTRA_OBJS="../nsswitch/winbind_nss_solaris.o \
+ 		    ../nsswitch/winbind_nss_linux.o"
++		WINBIND_NSS="../nsswitch/nss_winbind.$SHLIBEXT"
++		WINBIND_WINS_NSS="../nsswitch/nss_wins.$SHLIBEXT"
+ 		;;
+ 	*hpux11*)
+ 		WINBIND_NSS_EXTRA_OBJS="../nsswitch/winbind_nss_solaris.o"
+--- a/source3/configure.in	Wed Jun 19 09:35:24 2013
++++ b/source3/configure.in	Fri Jun 28 23:35:21 2013
+@@ -6403,6 +6403,8 @@
+ 		NSSSONAMEVERSIONSUFFIX=".1"
+ 		WINBIND_NSS_EXTRA_OBJS="../nsswitch/winbind_nss_solaris.o \
+ 		    ../nsswitch/winbind_nss_linux.o"
++		WINBIND_NSS="../nsswitch/nss_winbind.$SHLIBEXT"
++		WINBIND_WINS_NSS="../nsswitch/nss_wins.$SHLIBEXT"
+ 		;;
+ 	*hpux11*)
+ 		WINBIND_NSS_EXTRA_OBJS="../nsswitch/winbind_nss_solaris.o"
