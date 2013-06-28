@@ -24,6 +24,9 @@ SPKG_DESC_CSWbonnie++ = A benchmark suite testing hard drive and file system per
 RUNTIME_DEP_PKGS_CSWbonnie++ += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWbonnie++ += CSWlibstdc++6
 
+# Can't seem to find a way around those errors with g++ as a linker
+CHECKPKG_OVERRIDES_CSWbonnie++ += no-direct-binding
+
 LICENSE = copyright.txt
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -31,7 +34,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 ISAEXEC = 1
 
-EXTRA_CXXFLAGS += -Wl,-z,lazyload
+EXTRA_CXXFLAGS += -std=gnu++11
 
 TEST_TARGET =
 BUILD_SCRIPTS   = custom
