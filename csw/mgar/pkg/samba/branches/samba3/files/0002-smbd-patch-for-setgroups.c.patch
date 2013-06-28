@@ -1,0 +1,65 @@
+--- a/source3/lib/system.c	Wed Jun 19 09:35:24 2013
++++ b/source3/lib/system.c	Sun Jun 23 13:16:17 2013
+@@ -1172,8 +1172,6 @@
+  returning an array of gid_t, but actuall return an array of int.
+ ****************************************************************************/
+ 
+-#if defined(HAVE_BROKEN_GETGROUPS)
+-
+ #ifdef HAVE_BROKEN_GETGROUPS
+ #define GID_T int
+ #else
+@@ -1180,6 +1178,8 @@
+ #define GID_T gid_t
+ #endif
+ 
++#if defined(HAVE_BROKEN_GETGROUPS)
++
+ static int sys_broken_getgroups(int setlen, gid_t *gidset)
+ {
+ 	GID_T gid;
+@@ -1222,6 +1222,13 @@
+ 	return ngroups;
+ }
+ 
++#endif /* HAVE_BROKEN_GETGROUPS */
++
++static int gid_compare(void *gid_1, void *gid_2)
++{
++	return (*(GID_T *)gid_1 - *(GID_T *)gid_2);
++}
++
+ static int sys_broken_setgroups(int setlen, gid_t *gidset)
+ {
+ 	GID_T *group_list;
+@@ -1248,6 +1255,8 @@
+ 	for(i = 0; i < setlen; i++) 
+ 		group_list[i] = (GID_T) gidset[i]; 
+ 
++	TYPESAFE_QSORT(group_list, setlen, gid_compare);
++
+ 	if(setgroups(setlen, group_list) != 0) {
+ 		int saved_errno = errno;
+ 		SAFE_FREE(group_list);
+@@ -1259,8 +1268,6 @@
+ 	return 0 ;
+ }
+ 
+-#endif /* HAVE_BROKEN_GETGROUPS */
+-
+ /* This is a list of systems that require the first GID passed to setgroups(2)
+  * to be the effective GID. If your system is one of these, add it here.
+  */
+@@ -1351,11 +1358,8 @@
+ 
+ #if defined(USE_BSD_SETGROUPS)
+ 	return sys_bsd_setgroups(primary_gid, setlen, gidset);
+-#elif defined(HAVE_BROKEN_GETGROUPS)
+-	return sys_broken_setgroups(setlen, gidset);
+-#else
+-	return setgroups(setlen, gidset);
+ #endif
++	return sys_broken_setgroups(setlen, gidset);
+ }
+ 
+ /**************************************************************************

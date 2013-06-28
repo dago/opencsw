@@ -1,0 +1,32 @@
+--- a/nsswitch/winbind_nss_linux.c	Wed Jun 19 09:35:24 2013
++++ b/nsswitch/winbind_nss_linux.c	Sun Jun 23 13:14:43 2013
+@@ -25,6 +25,8 @@
+ #include <pthread.h>
+ #endif
+ 
++#include "lib/util/tsort.h"
++
+ #if HAVE_PTHREAD
+ static pthread_mutex_t winbind_nss_mutex = PTHREAD_MUTEX_INITIALIZER;
+ #endif
+@@ -1044,6 +1046,11 @@
+ 
+ /* Initialise supplementary groups */
+ 
++static int gid_compare(void *gid_1, void *gid_2)
++{
++	return (*(gid_t *)gid_1 - *(gid_t *)gid_2);
++}
++
+ NSS_STATUS
+ _nss_winbind_initgroups_dyn(char *user, gid_t group, long int *start,
+ 			    long int *size, gid_t **groups, long int limit,
+@@ -1075,6 +1082,8 @@
+ 		int num_gids = response.data.num_entries;
+ 		gid_t *gid_list = (gid_t *)response.extra_data.data;
+ 
++		TYPESAFE_QSORT(gid_list, num_gids, gid_compare);
++
+ #ifdef DEBUG_NSS
+ 		fprintf(stderr, "[%5d]: initgroups %s: got NSS_STATUS_SUCCESS "
+ 				"and %d gids\n", getpid(),

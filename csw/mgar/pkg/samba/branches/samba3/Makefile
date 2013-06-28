@@ -24,7 +24,9 @@ EXPANDVARS += smb.conf
 DISTFILES += smb.conf
 
 # This is taken from the old Samba package
-DISTFILESGARCOMPILER=SOS12U3ES += cswkrb5.conf
+DISTFILESPATCHFILE += 0001-nss_winbind.patch
+PATCHFILE += 0002-smbd-patch-for-setgroups.c.patch
+PATCHFILE += 0003-rename-nss-modules.patchESGARCOMPILER=SOS12U3ES += cswkrb5.conf
 
 #What needs to be fixed:
 # Split libs and packages
