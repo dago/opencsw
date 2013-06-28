@@ -1,0 +1,25 @@
+From c73861996d5b4bb9202c42aa2d6700f11b3026b3 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 28 Jun 2013 12:33:28 +0200
+Subject: [PATCH] allow to use publiv vasprintf symbol
+
+---
+ printbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/printbuf.c b/printbuf.c
+index b951c7b..50fe208 100644
+--- a/printbuf.c
++++ b/printbuf.c
+@@ -116,7 +116,7 @@ int printbuf_memset(struct printbuf *pb, int offset, int charvalue, int len)
+ 
+ #if !HAVE_VASPRINTF
+ /* CAW: compliant version of vasprintf */
+-static int vasprintf(char **buf, const char *fmt, va_list ap)
++int vasprintf(char **buf, const char *fmt, va_list ap)
+ {
+ #ifndef WIN32
+ 	static char _T_emptybuffer = '\0';
+-- 
+1.8.3.1
+
