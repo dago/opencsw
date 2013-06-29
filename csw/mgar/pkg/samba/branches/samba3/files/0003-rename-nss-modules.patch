@@ -20,3 +20,14 @@
  		;;
  	*hpux11*)
  		WINBIND_NSS_EXTRA_OBJS="../nsswitch/winbind_nss_solaris.o"
+--- a/source3/Makefile.in	Wed Jun 19 09:35:24 2013
++++ b/source3/Makefile.in	Sat Jun 29 13:30:23 2013
+@@ -3578,7 +3578,7 @@
+ test:: all torture timelimit
+ 	@LIB_PATH_VAR=$(LIB_PATH_VAR) $(S3_LD_LIBPATH_OVERRIDE) \
+ 		SAMBA4SHAREDDIR="$(builddir)/bin/shared" SMBTORTURE4=$(smbtorture4_path) \
+-		NSS_WRAPPER_WINBIND_SO_PATH="$(srcdir)/../nsswitch/libnss_winbind.so" \
++		NSS_WRAPPER_WINBIND_SO_PATH="$(srcdir)/../nsswitch/nss_winbind.so" \
+ 		SELFTESTDIR="$(selftestdir)" SELFTESTPREFIX="$(selftest_prefix)" \
+ 		SOURCEDIR="$(srcdir)" \
+ 		VFSLIBDIR="$(builddir)/bin" \
