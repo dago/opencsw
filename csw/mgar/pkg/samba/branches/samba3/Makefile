@@ -24,9 +24,9 @@ EXPANDVARS += smb.conf
 DISTFILES += smb.conf
 
 # This is taken from the old Samba package
-DISTFILESPATCHFILE += 0001-nss_winbind.patch
-PATCHFILE += 0002-smbd-patch-for-setgroups.c.patch
-PATCHFILE += 0003-rename-nss-modules.patchESGARCOMPILER=SOS12U3ES += cswkrb5.conf
+DISTFILESPATCHFILES += 0001-nss_winbind.patch
+PATCHFILES += 0002-smbd-patch-for-setgroups.c.patch
+PATCHFILES += 0003-rename-nss-modules.patchESGARCOMPILER=SOS12U3ES += cswkrb5.conf
 
 #What needs to be fixed:
 # Split libs and packages
@@ -146,11 +146,11 @@ PACKACATALOGNAME_CSWlibtdb1 = 1
 
 PACKAGES += CSWlibtdb1
 PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
-SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.1
-
-PACKAGES += CCATALOGNAME_CSWlibnss-winbind1 = libnss_AGES += CSWlibnss-winbind1
-PKGFILES_CSWlibnss-winbind1 += $(call pkgfiles_lib,libnss_winbind.so.1)
-SPKG_DESC_CSWlibnss-winbind1 += Winbind nss libary,libnss_winbind.so.libtevent0
+SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.nss-winbind1
+CATALOGNAME_CSWnss-winbind1 = nss_winbind1
+PKGFILES_CSWnss-winbind1 += $(call pkgfiles_lib,nss_winbind.so.1)
+SPKG_DESC_CSWnss-winbind1 += Winbind nss libary,nss_winbind.so.1
+OBSOLETED_BY_CSWnss-winbind1 += CSWlibnss-winbindlibnss_winbind.so.libtevent0
 CATALOGNAME_CSWlibtevent0 = libtevent0
 PKGFILES_CSWlibtevent0 += $(call baseisadirs,$(libdir),libtevent\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibtevent0 += $(DESCRIPTION), libtevent.so.0
@@ -255,10 +255,10 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWsamba-winbind += CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
+RUNTIME_DEP_PKGS_CSWsa-winbind += CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtevent0
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
-CHECKPKG_OVERRIDES_CSWsamba-winbind += surplus-dependency|CS# Needed as the configure script doesn't add it
+CHECKPKG_OVERRIDES_CSWsamba-winbind += surp-dependency|CS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
 EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_LDFLAGS = -lintl
 
@@ -339,4 +339,4 @@ post-install-modulated:
 	ginstall $(WORKDIR)/cswwinbind $(DESTDIR)/etc/opt/csw/init.d/cswwinbind
 	ginstall -d $(DESTDIR)/etc/opt/csw/samba
 	ginstall $(WORKDIR)/smb.conf $(DESTDIR)/etc/opt/csw/samba/smb.conf
-	ginstall $(WORKSRC)/nsswitch/libnss_winbind.so $(DESTDIR)/$(libdir)/li
+	ginstall $(nss_winbind.so $(DESTDIR)/$(libdir)/nss_winbind.so.1
