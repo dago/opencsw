@@ -148,17 +148,27 @@ PACKAGES += CSWlibtdb1
 PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
 SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.samba-nss
 CATALOGNAME_CSWsamba-nss = samba_nss
-PKGFILES_CSWsamba-nss += $(call pkgfiles_lib,nss_winbind.so.1)
-PKGFILES_CSWsamba-nss += $(call pkgfiles_lib,nss_wins.so.1)
+PKGFILES_CSWsamba-nss += $(call baseisadirs,$(libdir),nss_winbind\.so\.1)
+PKGFILES_CSWsamba-nss += $(call baseisadirs,$(libdir),nss_wins\.so\.1)
 SPKG_DESC_CSWsamba-nss += Samba nss modules,nss_winbind.so.1,nss_wins.so.1
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibtevent0
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibtdb1
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibldap2-4-2
 OBSOLETED_BY_CSWsamba-nss += CSWlibnss-winbind1
+CHECKPKG_OVERRIDES_CSWsamba-nss += shared-lib-pkgname-mismatch
 
 PACKAGES += CSWsamba-nss-system-links
 CATALOGNAME_CSWsamba-nss-system-links = samba_nss_system_links
-PKGFILES_CSWsamba-nss-system-links += $(call baseisadirs,/usr/lib/$(MEMORYMODEL),nss_winbind_csw\.so\.1)
-PKGFILES_CSWsamba-nss-system-links += $(call baseisadirs,/usr/lib/$(MEMORYMODEL),nss_wins_csw\.so\.1)
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/nss_winbind_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/nss_wins_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/64/nss_winbind_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/64/nss_wins_csw.so.1
 SPKG_DESC_CSWsamba-nss-system-links += Samba nss modules links for the system
-RUNTIME_DEP_PKGS_CSWsamba-nss-system-links += CSWsamba-nssibnss_winbind.so.libtevent0
+RUNTIME_DEP_PKGS_CSWsamba-nss-system-links += CSWsamba-nssiCHECKPKG_OVERRIDES_CSWsamba-nss-system-links += surplus-dependency|CSWsamba-nss
+CHECKPKG_OVERRIDES_CSWsamba-nss-system-links += bad-location-of-fileibnss_winbind.so.libtevent0
 CATALOGNAME_CSWlibtevent0 = libtevent0
 PKGFILES_CSWlibtevent0 += $(call baseisadirs,$(libdir),libtevent\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibtevent0 += $(DESCRIPTION), libtevent.so.0
@@ -353,7 +363,7 @@ post-install-modulated:
 	# system's nsswitch.conf
 	if [ "$(MEMORYMODEL)" = "32" ]; then \
 		ginstall -d $(DESTDIR)/usr/lib; \
-		ln -s ../../opt/csw/lib/$(MEMORYMODEL)/nss_winbind.so.1 \
+		ln -s ../../opt/csw/lib/nss_winbind.so.1 \
 			$(DESTDIR)/usr/lib/nss_winbind_csw.so.1; \
 		ln -s ../../opt/csw/lib/nss_wins.so.1 \
 			$(DESTDIR)/usr/lib/nss_wins_csw.so.1; \
