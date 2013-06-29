@@ -146,11 +146,19 @@ PACKACATALOGNAME_CSWlibtdb1 = 1
 
 PACKAGES += CSWlibtdb1
 PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
-SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.nss-winbind1
-CATALOGNAME_CSWnss-winbind1 = nss_winbind1
-PKGFILES_CSWnss-winbind1 += $(call pkgfiles_lib,nss_winbind.so.1)
-SPKG_DESC_CSWnss-winbind1 += Winbind nss libary,nss_winbind.so.1
-OBSOLETED_BY_CSWnss-winbind1 += CSWlibnss-winbindlibnss_winbind.so.libtevent0
+SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.samba-nss
+CATALOGNAME_CSWsamba-nss = samba_nss
+PKGFILES_CSWsamba-nss += $(call pkgfiles_lib,nss_winbind.so.1)
+PKGFILES_CSWsamba-nss += $(call pkgfiles_lib,nss_wins.so.1)
+SPKG_DESC_CSWsamba-nss += Samba nss modules,nss_winbind.so.1,nss_wins.so.1
+OBSOLETED_BY_CSWsamba-nss += CSWlibnss-winbind1
+
+PACKAGES += CSWsamba-nss-system-links
+CATALOGNAME_CSWsamba-nss-system-links = samba_nss_system_links
+PKGFILES_CSWsamba-nss-system-links += $(call baseisadirs,/usr/lib/$(MEMORYMODEL),nss_winbind_csw\.so\.1)
+PKGFILES_CSWsamba-nss-system-links += $(call baseisadirs,/usr/lib/$(MEMORYMODEL),nss_wins_csw\.so\.1)
+SPKG_DESC_CSWsamba-nss-system-links += Samba nss modules links for the system
+RUNTIME_DEP_PKGS_CSWsamba-nss-system-links += CSWsamba-nssibnss_winbind.so.libtevent0
 CATALOGNAME_CSWlibtevent0 = libtevent0
 PKGFILES_CSWlibtevent0 += $(call baseisadirs,$(libdir),libtevent\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibtevent0 += $(DESCRIPTION), libtevent.so.0
@@ -255,10 +263,10 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWsa-winbind += CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
+RUNTIME_DEP_PKGS_CSWsasamba-nssCRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtevent0
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
-CHECKPKG_OVERRIDES_CSWsamba-winbind += surp-dependency|CS# Needed as the configure script doesn't add it
+CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
 EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_LDFLAGS = -lintl
 
@@ -340,3 +348,20 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/samba
 	ginstall $(WORKDIR)/smb.conf $(DESTDIR)/etc/opt/csw/samba/smb.conf
 	ginstall $(nss_winbind.so $(DESTDIR)/$(libdir)/nss_winbind.so.1
+	ginstall $(WORKSRC)/nsswitch/nss_wins.so $(DESTDIR)/$(libdir)/nss_wins.so.1
+	# This bit is to install the symlinks to use the NSS modules with the
+	# system's nsswitch.conf
+	if [ "$(MEMORYMODEL)" = "32" ]; then \
+		ginstall -d $(DESTDIR)/usr/lib; \
+		ln -s ../../opt/csw/lib/$(MEMORYMODEL)/nss_winbind.so.1 \
+			$(DESTDIR)/usr/lib/nss_winbind_csw.so.1; \
+		ln -s ../../opt/csw/lib/nss_wins.so.1 \
+			$(DESTDIR)/usr/lib/nss_wins_csw.so.1; \
+	fi
+	if [ "$(MEMORYMODEL)" = "64" ]; then \
+		ginstall -d $(DESTDIR)/usr/lib/$(MEMORYMODEL); \
+		ln -s ../../../opt/csw/lib/$(MEMORYMODEL)/nss_winbind.so.1 \
+			$(DESTDIR)/usr/lib/$(MEMORYMODEL)/nss_winbind_csw.so.1; \
+		ln -s ../../../opt/csw/lib/$(MEMORYMODEL)/nss_wins.so.1 \
+			$(DESTDIR)/usr/lib/$(MEMORYMODEL)/nss_wins_csw.so.1; \
+	fi
