@@ -10,7 +10,7 @@ DESCRIPTION = TrollTech C++ application framework
 define BLURB
   It contains a C++ class library as well as tools for cross-platform GUI
   development and internationaUILD_PREFIX)/gxx
-GARCOMPILER = GNUftp://ftp.qt-project.org/get.qt.nokia.com/qt/source/
+GARCOMPILER = GNUhttp://download.qt-project.org/official_releases/qt/$(basename $(VERSION))/$(VERSION)kia.com/qt/source/
 DISTNAME = qt-everywhere-opensource-src-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
