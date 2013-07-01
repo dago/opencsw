@@ -1,0 +1,59 @@
+From 245185574891f902a86c086bc20d8a327d43b455 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Tue, 6 Sep 2011 22:21:20 +0200
+Subject: [PATCH] Ad hoc macro for comparing double
+
+g_assert_cmpfloat uses long double, but values checked are double.
+---
+ gobject/tests/binding.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/gobject/tests/binding.c b/gobject/tests/binding.c
+index 31993f3..0dff9e5 100644
+--- a/gobject/tests/binding.c
++++ b/gobject/tests/binding.c
+@@ -2,6 +2,15 @@
+ #include <gstdio.h>
+ #include <glib-object.h>
+ 
++#ifdef __sun
++#define g_assert_cmpdouble(n1,cmp,n2) \
++  do { double __n1 = (n1), __n2 = (n2);					\
++    if (__n1 cmp __n2) ; else						\
++      g_assertion_message_cmpnum (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
++				  #n1 " " #cmp " " #n2, __n1, #cmp, __n2, 'f'); } while (0)
++#endif
++
++
+ typedef struct _BindingSource
+ {
+   GObject parent_instance;
+@@ -344,10 +353,10 @@ binding_transform (void)
+                                          &unused_data, data_free);
+ 
+   g_object_set (source, "value", 24.0, NULL);
+-  g_assert_cmpfloat (target->value, ==, ((9 * 24.0 / 5) + 32.0));
++  g_assert_cmpdouble (target->value, ==, ((9 * 24.0 / 5) + 32.0));
+ 
+   g_object_set (target, "value", 69.0, NULL);
+-  g_assert_cmpfloat (source->value, ==, (5 * (69.0 - 32.0) / 9));
++  g_assert_cmpdouble (source->value, ==, (5 * (69.0 - 32.0) / 9));
+ 
+   g_object_unref (source);
+   g_object_unref (target);
+@@ -375,10 +384,10 @@ binding_transform_closure (void)
+                                                   f2c_clos);
+ 
+   g_object_set (source, "value", 24.0, NULL);
+-  g_assert_cmpfloat (target->value, ==, ((9 * 24.0 / 5) + 32.0));
++  g_assert_cmpdouble (target->value, ==, ((9 * 24.0 / 5) + 32.0));
+ 
+   g_object_set (target, "value", 69.0, NULL);
+-  g_assert_cmpfloat (source->value, ==, (5 * (69.0 - 32.0) / 9));
++  g_assert_cmpdouble (source->value, ==, (5 * (69.0 - 32.0) / 9));
+ 
+   g_object_unref (source);
+   g_object_unref (target);
+-- 
+1.7.6
+

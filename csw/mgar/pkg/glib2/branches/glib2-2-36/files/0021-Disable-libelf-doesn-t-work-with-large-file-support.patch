@@ -1,0 +1,37 @@
+From 27aa5d04c12dc1ae97888c077812a91f1b817da8 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 15 May 2013 15:55:58 +0200
+Subject: [PATCH] Disable libelf, doesn't work with large file support
+
+---
+ configure | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index c7338ff..92a836e 100755
+--- a/configure
++++ b/configure
+@@ -26025,17 +26025,17 @@ fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$LIBELF_PKG_ERRORS" >&5
+ 
+-	have_libelf=maybe
++	have_libelf=no
+ elif test $pkg_failed = untried; then
+      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+ $as_echo "no" >&6; }
+-	have_libelf=maybe
++	have_libelf=no
+ else
+ 	LIBELF_CFLAGS=$pkg_cv_LIBELF_CFLAGS
+ 	LIBELF_LIBS=$pkg_cv_LIBELF_LIBS
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+-	have_libelf=yes
++	have_libelf=no
+ fi
+ 
+ if test $have_libelf = maybe; then
+-- 
+1.8.1.4
+

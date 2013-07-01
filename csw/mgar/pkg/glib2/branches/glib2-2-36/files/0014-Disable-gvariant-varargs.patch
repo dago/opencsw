@@ -1,0 +1,26 @@
+From 5d220fcda35d51b9fae86612b44ad62214e2ddc5 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sat, 25 Aug 2012 18:21:12 +0200
+Subject: [PATCH] Disable /gvariant/varargs
+
+---
+ glib/tests/gvariant.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/glib/tests/gvariant.c b/glib/tests/gvariant.c
+index a6bef23..e8f5795 100644
+--- a/glib/tests/gvariant.c
++++ b/glib/tests/gvariant.c
+@@ -4147,7 +4147,9 @@ main (int argc, char **argv)
+   g_test_add_func ("/gvariant/containers", test_containers);
+   g_test_add_func ("/gvariant/format-strings", test_format_strings);
+   g_test_add_func ("/gvariant/invalid-varargs", test_invalid_varargs);
++/*
+   g_test_add_func ("/gvariant/varargs", test_varargs);
++*/
+   g_test_add_func ("/gvariant/valist", test_valist);
+   g_test_add_func ("/gvariant/builder-memory", test_builder_memory);
+   g_test_add_func ("/gvariant/hashing", test_hashing);
+-- 
+1.7.11.3
+

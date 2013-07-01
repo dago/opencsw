@@ -1,0 +1,27 @@
+From 858b0b602ea793f40fec1e60113ecc15f858d521 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Thu, 23 Aug 2012 14:23:28 +0200
+Subject: [PATCH] Include sys/filio.h to provide FIONREAD
+
+---
+ gio/gsocket.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/gio/gsocket.c b/gio/gsocket.c
+index b24000f..cb252de 100644
+--- a/gio/gsocket.c
++++ b/gio/gsocket.c
+@@ -48,6 +48,10 @@
+ #include <sys/uio.h>
+ #endif
+ 
++#ifndef FIONREAD
++#include <sys/filio.h>
++#endif
++
+ #include "gcancellable.h"
+ #include "gioenumtypes.h"
+ #include "ginetaddress.h"
+-- 
+1.7.11.3
+
