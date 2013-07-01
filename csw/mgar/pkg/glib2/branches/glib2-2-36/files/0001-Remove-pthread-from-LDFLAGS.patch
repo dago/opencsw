@@ -1,0 +1,25 @@
+From 8190e5963ceee1e8e85f5ed76fe34a1d5dca7491 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Thu, 23 Aug 2012 14:06:14 +0200
+Subject: [PATCH] Remove -pthread from LDFLAGS.
+
+---
+ glib/tests/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/glib/tests/Makefile.in b/glib/tests/Makefile.in
+index 87ed831..9da054b 100644
+--- a/glib/tests/Makefile.in
++++ b/glib/tests/Makefile.in
+@@ -818,7 +818,7 @@ gwakeup_LDADD = $(progs_ldadd)
+ @HAVE_EVENTFD_TRUE@gwakeup_fallback_SOURCES = gwakeuptest.c ../../glib/gwakeup.c
+ @HAVE_EVENTFD_TRUE@gwakeup_fallback_CFLAGS = $(AM_CFLAGS) -DTEST_EVENTFD_FALLBACK
+ @HAVE_EVENTFD_TRUE@gwakeup_fallback_LDADD = $(progs_ldadd)
+-@OS_UNIX_TRUE@private_LDFLAGS = -pthread
++@OS_UNIX_TRUE@private_LDFLAGS = 
+ @OS_UNIX_TRUE@unix_multithreaded_SOURCES = $(top_srcdir)/glib/tests/unix.c
+ @OS_UNIX_TRUE@unix_multithreaded_CFLAGS = -DTEST_THREADED
+ @OS_UNIX_TRUE@unix_multithreaded_LDADD = $(progs_ldadd)
+-- 
+1.7.11.3
+

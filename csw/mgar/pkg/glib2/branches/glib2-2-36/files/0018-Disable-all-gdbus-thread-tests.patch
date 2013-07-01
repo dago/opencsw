@@ -1,0 +1,28 @@
+From c1a1c2956d4981f5ae56ba4e4d3198a18d4cb7a5 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 26 Aug 2012 14:21:04 +0200
+Subject: [PATCH] Disable all gdbus/*thread* tests
+
+---
+ gio/tests/gdbus-threading.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/gio/tests/gdbus-threading.c b/gio/tests/gdbus-threading.c
+index b46af0b..b0f7813 100644
+--- a/gio/tests/gdbus-threading.c
++++ b/gio/tests/gdbus-threading.c
+@@ -610,9 +610,11 @@ main (int   argc,
+   g_assert_no_error (error);
+   g_assert (c != NULL);
+ 
++/*
+   g_test_add_func ("/gdbus/delivery-in-thread", test_delivery_in_thread);
+   g_test_add_func ("/gdbus/method-calls-in-thread", test_method_calls_in_thread);
+   g_test_add_func ("/gdbus/threaded-singleton", test_threaded_singleton);
++*/
+ 
+   ret = g_test_run();
+ 
+-- 
+1.7.11.3
+
