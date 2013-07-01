@@ -1,0 +1,87 @@
+From 9c192361f6b43ef872ffa98229c188b62bb1ca9f Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Fri, 28 Jun 2013 11:27:49 +0200
+Subject: [PATCH] fix solaris10 compiler errors
+
+---
+ sys/shm/shmpipe.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
+
+diff --git a/sys/shm/shmpipe.c b/sys/shm/shmpipe.c
+index 9d1ab56..b19fd0f 100644
+--- a/sys/shm/shmpipe.c
++++ b/sys/shm/shmpipe.c
+@@ -69,6 +69,10 @@
+ 
+ #define LISTEN_BACKLOG 10
+ 
++#if ! defined(MSG_NOSIGNAL)
++#define MSG_NOSIGNAL 0
++#endif
++
+ enum
+ {
+   COMMAND_NEW_SHM_AREA = 1,
+@@ -190,7 +194,7 @@ sp_writer_create (const char *path, size_t size, mode_t perms)
+ {
+   ShmPipe *self = spalloc_new (ShmPipe);
+   int flags;
+-  struct sockaddr_un sun;
++  struct sockaddr_un sock_un;
+   int i = 0;
+ 
+   memset (self, 0, sizeof (ShmPipe));
+@@ -208,10 +212,10 @@ sp_writer_create (const char *path, size_t size, mode_t perms)
+   if (fcntl (self->main_socket, F_SETFL, flags | O_NONBLOCK | FD_CLOEXEC) < 0)
+     RETURN_ERROR ("fcntl(F_SETFL) failed (%d): %s\n", errno, strerror (errno));
+ 
+-  sun.sun_family = AF_UNIX;
+-  strncpy (sun.sun_path, path, sizeof (sun.sun_path) - 1);
++  sock_un.sun_family = AF_UNIX;
++  strncpy (sock_un.sun_path, path, sizeof (sock_un.sun_path) - 1);
+ 
+-  while (bind (self->main_socket, (struct sockaddr *) &sun,
++  while (bind (self->main_socket, (struct sockaddr *) &sock_un,
+           sizeof (struct sockaddr_un)) < 0) {
+     if (errno != EADDRINUSE)
+       RETURN_ERROR ("bind() failed (%d): %s\n", errno, strerror (errno));
+@@ -219,11 +223,11 @@ sp_writer_create (const char *path, size_t size, mode_t perms)
+     if (i > 256)
+       RETURN_ERROR ("Could not find a free socket name for %s", path);
+ 
+-    snprintf (sun.sun_path, sizeof (sun.sun_path), "%s.%d", path, i);
++    snprintf (sock_un.sun_path, sizeof (sock_un.sun_path), "%s.%d", path, i);
+     i++;
+   }
+ 
+-  self->socket_path = strdup (sun.sun_path);
++  self->socket_path = strdup (sock_un.sun_path);
+ 
+   if (listen (self->main_socket, LISTEN_BACKLOG) < 0)
+     RETURN_ERROR ("listen() failed (%d): %s\n", errno, strerror (errno));
+@@ -704,7 +708,7 @@ ShmPipe *
+ sp_client_open (const char *path)
+ {
+   ShmPipe *self = spalloc_new (ShmPipe);
+-  struct sockaddr_un sun;
++  struct sockaddr_un sock_un;
+ 
+   memset (self, 0, sizeof (ShmPipe));
+ 
+@@ -712,10 +716,10 @@ sp_client_open (const char *path)
+   if (self->main_socket < 0)
+     goto error;
+ 
+-  sun.sun_family = AF_UNIX;
+-  strncpy (sun.sun_path, path, sizeof (sun.sun_path) - 1);
++  sock_un.sun_family = AF_UNIX;
++  strncpy (sock_un.sun_path, path, sizeof (sock_un.sun_path) - 1);
+ 
+-  if (connect (self->main_socket, (struct sockaddr *) &sun,
++  if (connect (self->main_socket, (struct sockaddr *) &sock_un,
+           sizeof (struct sockaddr_un)) < 0)
+     goto error;
+ 
+-- 
+1.8.1.4
+
