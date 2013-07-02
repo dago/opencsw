@@ -1,0 +1,26 @@
+From e6a9c6f2f223cceb23279f3e4eb4ea7933f626cf Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Mon, 1 Jul 2013 18:50:00 +0200
+Subject: [PATCH] Reorder link objects, glib2 must come first, otherwise the
+ installed glib2 is linked in
+
+---
+ gobject/tests/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gobject/tests/Makefile.in b/gobject/tests/Makefile.in
+index 7fe8dcc..e94e470 100644
+--- a/gobject/tests/Makefile.in
++++ b/gobject/tests/Makefile.in
+@@ -508,7 +508,7 @@ AM_CPPFLAGS = \
+ AM_CFLAGS = $(GLIB_WARN_CFLAGS)
+ @CROSS_COMPILING_FALSE@glib_genmarshal = $(top_builddir)/gobject/glib-genmarshal
+ @CROSS_COMPILING_TRUE@glib_genmarshal = $(GLIB_GENMARSHAL)
+-LDADD = ../libgobject-2.0.la $(top_builddir)/gthread/libgthread-2.0.la $(top_builddir)/glib/libglib-2.0.la
++LDADD = $(top_builddir)/glib/libglib-2.0.la ../libgobject-2.0.la $(top_builddir)/gthread/libgthread-2.0.la
+ signals_SOURCES = signals.c marshalers.c
+ BUILT_SOURCES = marshalers.h marshalers.c
+ CLEANFILES = marshalers.h marshalers.c
+-- 
+1.8.3.1
+

@@ -1,6 +1,6 @@
-From 31f4bd7e9569fd7ca3c6c98c55c0c5a2da92926c Mon Sep 17 00:00:00 2001
+From 66e3d6a4db2e23e01e9bda332d99e0a05cac9b01 Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
-Date: Thu, 23 May 2013 11:08:17 +0200
+Date: Fri, 28 Jun 2013 19:25:14 +0200
 Subject: [PATCH] Increase timedwait tolerance
 
 ---
@@ -8,18 +8,18 @@ Subject: [PATCH] Increase timedwait tolerance
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/gio/tests/socket.c b/gio/tests/socket.c
-index 61112a1..315ff01 100644
+index f32eeea..b1f661e 100644
 --- a/gio/tests/socket.c
 +++ b/gio/tests/socket.c
-@@ -617,7 +617,7 @@ test_timed_wait (void)
+@@ -628,7 +628,7 @@ test_timed_wait (void)
    poll_duration = g_get_monotonic_time () - start_time;
  
    g_assert_cmpint (poll_duration, >=, 98000);
--  g_assert_cmpint (poll_duration, <, 110000);
+-  g_assert_cmpint (poll_duration, <, 112000);
 +  g_assert_cmpint (poll_duration, <, 120000);
  
    g_socket_close (client, &error);
    g_assert_no_error (error);
 -- 
-1.8.1.4
+1.8.3.1
 

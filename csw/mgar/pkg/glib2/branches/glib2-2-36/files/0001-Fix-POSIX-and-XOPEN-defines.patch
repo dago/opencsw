@@ -1,0 +1,38 @@
+From 5732b4f00b153318dd9d7e10979c81f64da1a534 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Mon, 1 Jul 2013 16:42:06 +0200
+Subject: [PATCH] Fix POSIX and XOPEN defines
+
+---
+ configure | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 0537a4c..3e88334 100755
+--- a/configure
++++ b/configure
+@@ -23808,10 +23808,10 @@ fi
+ case $host in
+   *-*-solaris* )
+ 
+-$as_echo "#define _XOPEN_SOURCE_EXTENDED 1" >>confdefs.h
++# $as_echo "#define _XOPEN_SOURCE_EXTENDED 1" >>confdefs.h
+ 
+ 
+-$as_echo "#define _XOPEN_SOURCE 2" >>confdefs.h
++$as_echo "#define _XOPEN_SOURCE 600" >>confdefs.h
+ 
+ 
+ $as_echo "#define __EXTENSIONS__ 1" >>confdefs.h
+@@ -26092,7 +26092,7 @@ if  test "x$with_threads" = xyes || test "x$with_threads" = xposix; then :
+ 	# -U_OSF_SOURCE is for Digital UNIX 4.0d
+ 	GTHREAD_COMPILE_IMPL_DEFINES="-D_POSIX4_DRAFT_SOURCE -D_POSIX4A_DRAFT10_SOURCE -U_OSF_SOURCE"
+ 	glib_save_CPPFLAGS="$CPPFLAGS"
+-	CPPFLAGS="$CPPFLAGS $GTHREAD_COMPILE_IMPL_DEFINES"
++#	CPPFLAGS="$CPPFLAGS $GTHREAD_COMPILE_IMPL_DEFINES"
+         if  test "x$have_threads" = xno; then :
+ 
+                 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-- 
+1.8.3.1
+

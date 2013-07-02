@@ -1,0 +1,25 @@
+From 586d137de59bbd3c14e0a2268af34920f1be3f81 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sun, 30 Jun 2013 10:53:03 +0200
+Subject: [PATCH] Remove _XOPEN_SOURCE_EXTENDED
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 91a179a..3e88334 100755
+--- a/configure
++++ b/configure
+@@ -23808,7 +23808,7 @@ fi
+ case $host in
+   *-*-solaris* )
+ 
+-$as_echo "#define _XOPEN_SOURCE_EXTENDED 1" >>confdefs.h
++# $as_echo "#define _XOPEN_SOURCE_EXTENDED 1" >>confdefs.h
+ 
+ 
+ $as_echo "#define _XOPEN_SOURCE 600" >>confdefs.h
+-- 
+1.8.3.1
+
