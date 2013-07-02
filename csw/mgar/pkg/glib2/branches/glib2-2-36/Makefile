@@ -12,7 +12,7 @@ VERSION = 2.36.3
 GARTYPE = v2
 # for memory synchronisation primitives like __sync_synchronize we need gcc
 GARCOMPILER = GNU
-PYCOMPILE = 1OMPILER = SOS12U3
+MPILER = SOS12U3
 
 DESCRIPTION = The GLib library of C routines.
 define BLURB
@@ -228,7 +228,7 @@ BUILD_DEPBUILD_DEP_PKGS += CSWlibz-devP_PK-xO4 is necessary on sparc so that fun
 EXTRA_CFLAGS  = -std=gnu99 # -xO4 -features=extensions -xc99 -D_XPG6
 EXTRA_LDFLAGS = -lsocket
 
-# H_LINKER_FLAGIGURE_ARGS-64 =
+H_LINKER_FLAGIGURE_ARGS-64 =
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
