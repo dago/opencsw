@@ -22,6 +22,11 @@ BUILD_DEP_PKGS += CSWfconfig CSWftype2
 
 GARCOMPILER = GCC4
 
+REINPLACE_USRLOCAL += gst/frei0r/gstfrei0r.c
+REINPLACE_USRLOCAL += gst/real/gstreal.h
+
+PACKAGES += CSWgstplugins-bad
+SPKG_DESC_CSWgstplugins-bad += $(DESCRIPTION), base package
 RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgstsdp0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgstinterfaces0-10-0
@@ -45,6 +50,34 @@ RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgstbase0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgstcontroller0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgstplugins-bad += CSWlibgstpluginsbase-bad-10-0
+
+PACKAGES += CSWlibgstpluginsbase-bad-10-0
+CATALOGNAME_CSWlibgstpluginsbase-bad-10-0 = libgstpluginsbase_bad_10_0
+SPKG_DESC_CSWlibgstpluginsbase-bad-10-0 += $(DESCRIPTION), base libs
+PKGFILES_CSWlibgstpluginsbase-bad-10-0 += $(call baseisadirs,$(libdir),libgstbasevideo-0\.10\.so\.0\.0\.0)
+PKGFILES_CSWlibgstpluginsbase-bad-10-0 += $(call baseisadirs,$(libdir),libgstbasevideo-0\.10\.so\.0(\.\d+)*)
+PKGFILES_CSWlibgstpluginsbase-bad-10-0 += $(call baseisadirs,$(libdir),libgstphotography-0\.10\.so\.0\.0\.0)
+PKGFILES_CSWlibgstpluginsbase-bad-10-0 += $(call baseisadirs,$(libdir),libgstphotography-0\.10\.so\.0(\.\d+)*)
+PKGFILES_CSWlibgstpluginsbase-bad-10-0 += $(call baseisadirs,$(libdir),libgstsignalprocessor-0\.10\.so\.0\.0\.0)
+PKGFILES_CSWlibgstpluginsbase-bad-10-0 += $(call baseisadirs,$(libdir),libgstsignalprocessor-0\.10\.so\.0(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibgstbase0-10-0
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibgstreamer0-10-0
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibgstcontroller0-10-0
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibgstvideo0-10-0
+RUNTIME_DEP_PKGS_CSWlibgstpluginsbase-bad-10-0 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibgstpluginsbase-bad-10-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgstbasevideo-0.10.so.0.0.0|soname=libgstbasevideo-0.10.so.0|pkgname=CSWlibgstpluginsbase-bad-10-0|expected=CSWlibgstbasevideo0-10-0
+CHECKPKG_OVERRIDES_CSWlibgstpluginsbase-bad-10-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgstphotography-0.10.so.0.0.0|soname=libgstphotography-0.10.so.0|pkgname=CSWlibgstpluginsbase-bad-10-0|expected=CSWlibgstphotography0-10-0
+CHECKPKG_OVERRIDES_CSWlibgstpluginsbase-bad-10-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgstsignalprocessor-0.10.so.0.0.0|soname=libgstsignalprocessor-0.10.so.0|pkgname=CSWlibgstpluginsbase-bad-10-0|expected=CSWlibgstsignalprocessor0-10-0
+
+PACKAGES += CSWgstplugins-bad-dev
+CATALOGNAME_CSWgstplugins-bad-dev = gstplugins_bad_dev
+SPKG_DESC_CSWgstplugins-bad-dev += $(DESCRIPTION), development files
+PKGFILES_CSWgstplugins-bad-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWgstplugins-bad-dev += CSWlibgstpluginsbase-bad-10-0
+RUNTIME_DEP_PKGS_CSWgstplugins-bad-dev += CSWgstplugins-bad
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug
