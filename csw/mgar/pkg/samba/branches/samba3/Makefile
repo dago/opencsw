@@ -164,8 +164,10 @@ PACKAGES += CSWsamba-nss-system-links
 CATALOGNAME_CSWsamba-nss-system-links = samba_nss_system_links
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/nss_winbind_csw.so.1
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/nss_wins_csw.so.1
-PKGFILES_CSWsamba-nss-system-links += /usr/lib/64/nss_winbind_csw.so.1
-PKGFILES_CSWsamba-nss-system-links += /usr/lib/64/nss_wins_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/amd64/nss_winbind_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/amd64/nss_wins_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/sparcv9/nss_winbind_csw.so.1
+PKGFILES_CSWsamba-nss-system-links += /usr/lib/sparcv9/nss_wins_csw.so.1
 SPKG_DESC_CSWsamba-nss-system-links += Samba nss modules links for the system
 RUNTIME_DEP_PKGS_CSWsamba-nss-system-links += CSWsamba-nssiCHECKPKG_OVERRIDES_CSWsamba-nss-system-links += surplus-dependency|CSWsamba-nss
 CHECKPKG_OVERRIDES_CSWsamba-nss-system-links += bad-location-of-fileibnss_winbind.so.libtevent0
@@ -325,7 +327,7 @@ BUILD_SCRIPTS = $(WORKSRC)/source3/Makefile
 TEST_SCRIPTS = $(WORKSRC)/source3/Makefile
 TEST_TARGET = test
 
-# Tests need root
+# Tests need rot
 SKIPTEST ?= 1
 
 
@@ -335,9 +337,15 @@ INITSMF += /etc/opt/csw/init.d/cswsamba
 INITSMF += /etc/opt/csw/init.d/cswwinbind
 
 MIGRATE_FILES_CSWsamba += samba
-PRESERVECONF += $(sysconfdir)/samba/smb.conf
+PRESERVECONF += $(sysconfdirEXTRA_MERGE_DIRS_isa-extra += /usr/lib
 
 include gar/category.mk
+
+# Set the target dir for modules with the proper arch
+MODULE_DIR = /usr/lib
+ifeq ($(MEMORYMODEL),64)
+        MODULE_DIR = /usr/lib/64
+endifde gar/category.mk
 
 # Use this hack until this bug has been fixed:
 #   https://bugzilla.samba.org/show_bug.cgi?id=8571
@@ -361,19 +369,17 @@ post-install-modulated:
 	ginstall $(WORKSRC)/nsswitch/nss_wins.so $(DESTDIR)/$(libdir)/nss_wins.so.1
 	# This bit is to install the symlinks to use the NSS modules with the
 	# system's nsswitch.conf
+	ginstall -d  -m 0755 $(DESTDIR)$(MODULE_DIR)
 	if [ "$(MEMORYMODEL)" = "32" ]; then \
-		ginstall -d $(DESTDIR)/usr/lib; \
-		ln -s ../../opt/csw/lib/nss_winbind.so.1 \
-			$(DESTDIR)/usr/lib/nss_winbind_csw.so.1; \
-		ln -s ../../opt/csw/lib/nss_wins.so.1 \
-			$(DESTDIR)/usr/lib/nss_wins_csw.so.1; \
-	fi
-	if [ "$(MEMORYMODEL)" = "64" ]; then \
-		ginstall -d $(DESTDIR)/usr/lib/$(MEMORYMODEL); \
-		ln -s ../../../opt/csw/lib/$(MEMORYMODEL)/nss_winbind.so.1 \
-			$(DESTDIR)/usr/lib/$(MEMORYMODEL)/nss_winbind_csw.so.1; \
-		ln -s ../../../opt/csw/lib/$(MEMORYMODEL)/nss_wins.so.1 \
-			$(DESTDIR)/usr/lib/$(MEMORYMODEL)/nss_wins_csw.so.1; \
+		ln -s ../..$(libdir)/nss_winbind.so.1 \
+			$(DESTDIR)$(MODULE_DIR)/nss_winbind_csw.so.1; \
+		ln -s ../..$(libdir)/nss_wins.so.1 \
+			$(DESTDIR)$(MODULE_DIR)/nss_wins_csw.so.1; \
+	else \
+		ln -s ../../..$(libdir)/nss_winbind.so.1 \
+			$(DESTDIR)$(MODULE_DIR)/nss_winbind_csw.so.1; \
+		ln -s ../../..$(libdir)/nss_wins.so.1 \
+			$(DESTDIR)$(MODULE_DIR)/nss_wins_csw.so.1; \
 	fi
 	@$(MAKECOOKIE)
 
