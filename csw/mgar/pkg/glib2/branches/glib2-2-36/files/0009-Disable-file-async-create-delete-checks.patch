@@ -1,6 +1,6 @@
-From e44f674fab8cca219bc4c4a64f720c55ab9ca9dd Mon Sep 17 00:00:00 2001
-From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Fri, 24 Aug 2012 19:53:13 +0200
+From 534ad61163d5e0a59fbfe1f27a969e676d2ff4b0 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 28 Jun 2013 17:59:39 +0200
 Subject: [PATCH] Disable /file/async-create-delete/* checks.
 
 ---
@@ -8,10 +8,10 @@ Subject: [PATCH] Disable /file/async-create-delete/* checks.
  1 file changed, 2 insertions(+)
 
 diff --git a/gio/tests/file.c b/gio/tests/file.c
-index c7f840b..57042a8 100644
+index bca461a..e590af1 100644
 --- a/gio/tests/file.c
 +++ b/gio/tests/file.c
-@@ -603,11 +603,13 @@ main (int argc, char *argv[])
+@@ -794,11 +794,13 @@ main (int argc, char *argv[])
    g_test_add_func ("/file/parent", test_parent);
    g_test_add_func ("/file/child", test_child);
    g_test_add_func ("/file/type", test_type);
@@ -23,8 +23,8 @@ index c7f840b..57042a8 100644
    g_test_add_data_func ("/file/async-create-delete/4096", GINT_TO_POINTER (4096), test_create_delete);
 +*/
    g_test_add_func ("/file/replace-load", test_replace_load);
- 
-   return g_test_run ();
+   g_test_add_func ("/file/replace-cancel", test_replace_cancel);
+   g_test_add_func ("/file/async-delete", test_async_delete);
 -- 
-1.7.11.3
+1.8.3.1
 

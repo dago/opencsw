@@ -1,0 +1,27 @@
+From 66e969e091b198dbea41f9b2f643c83a4a60d43d Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sun, 30 Jun 2013 11:11:44 +0200
+Subject: [PATCH] Don't undefine _XOPEN_SOURCE
+
+---
+ glib/tests/include.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/glib/tests/include.c b/glib/tests/include.c
+index 0e8627b..a6e8323 100644
+--- a/glib/tests/include.c
++++ b/glib/tests/include.c
+@@ -1,8 +1,10 @@
+ /* Test case for bug 659866 */
+ 
++#if 0
+ #define _POSIX_C_SOURCE 199309L
+ #undef _GNU_SOURCE
+ #undef _XOPEN_SOURCE
++#endif
+ #include <pthread.h>
+ #include <glib.h>
+ 
+-- 
+1.8.3.1
+

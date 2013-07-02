@@ -1,0 +1,28 @@
+From 2effa885ef13a476dfcfde1f0f5d8dc3d17e6554 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Thu, 16 May 2013 20:29:54 +0200
+Subject: [PATCH] Move around statfs_result
+
+---
+ gio/glocalfile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gio/glocalfile.c b/gio/glocalfile.c
+index 9007faa..54bbd44 100644
+--- a/gio/glocalfile.c
++++ b/gio/glocalfile.c
+@@ -2422,10 +2422,10 @@ static gboolean
+ is_remote_fs (const gchar *filename)
+ {
+   const char *fsname = NULL;
++  int statfs_result = 0;
+ 
+ #ifdef USE_STATFS
+   struct statfs statfs_buffer;
+-  int statfs_result = 0;
+ 
+ #if STATFS_ARGS == 2
+   statfs_result = statfs (filename, &statfs_buffer);
+-- 
+1.8.1.4
+

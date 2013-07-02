@@ -1,0 +1,25 @@
+From eece377834ba3f26be7a4a18a318341d24fb27d7 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sun, 30 Jun 2013 08:13:07 +0200
+Subject: [PATCH] Remove extra POSIX defines in pthread detection
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 8563a12..91a179a 100755
+--- a/configure
++++ b/configure
+@@ -26092,7 +26092,7 @@ if  test "x$with_threads" = xyes || test "x$with_threads" = xposix; then :
+ 	# -U_OSF_SOURCE is for Digital UNIX 4.0d
+ 	GTHREAD_COMPILE_IMPL_DEFINES="-D_POSIX4_DRAFT_SOURCE -D_POSIX4A_DRAFT10_SOURCE -U_OSF_SOURCE"
+ 	glib_save_CPPFLAGS="$CPPFLAGS"
+-	CPPFLAGS="$CPPFLAGS $GTHREAD_COMPILE_IMPL_DEFINES"
++#	CPPFLAGS="$CPPFLAGS $GTHREAD_COMPILE_IMPL_DEFINES"
+         if  test "x$have_threads" = xno; then :
+ 
+                 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-- 
+1.8.3.1
+
