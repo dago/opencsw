@@ -1,6 +1,6 @@
 # $Id$
 NAME = mc
-VERSION = 4.8.6
+VERSION = 4.8.8
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -12,20 +12,22 @@ endef
 # gnulib and build on Solaris 9, or build on Solaris 10.
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-MASTER_SITES = http://www.midnight-commander.org/downloads/
-DISTFILES  = $(EXTRA_LDFLAGS= -lsocket
+MASftp.midnight-commander.org/
+DISTFILES  = $(DISTNAME).tar.xz
+
+VENDOR_URL = http://www.midnight-commander.org
 
 RUNTIME_DEP_PKGS_CSWmc += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWmc += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWmc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWmc += CSWlibslang2
 RUNTIME_DEP_PKGS_CSWmc += CSWlibssh2-1
+RUNTIME_DEP_PKGS_CSWmc += CSWperl
 /opt/csw/mc/mc.menu
 CHECKPKG_OVERRIDES_CSWmc += file-with-bad-content|/usr/local|root/etc/opt/csw/mc/mc.menu
 CHECKPKG_OVERRIDES_CSWmc += file-with-bad-content|/usr/local|root/etc/opt/csw/mc/mc.menu.sr
 CHECKPKG_OVERRIDES_CSWmc += file-with-bad-content|/usr/local|root/opt/csw/libexec/mc/extfs.d/README
-CHECKPKG_OVERRIDES_CSWmc += missing-CHECKPKG_OVERRIDES_CSWmc += file-with-bad-content|/usr/local|root/opt/csw/libexec/mc/extfs.d/ulib-dependency|CSWperl
+CHECKPKG_file-with-bad-content|/usr/local|root/opt/csw/libexec/mc/extfs.d/ulib
+CHECKPKG_OVERRIDES_CSWmc += missing-dependency|CSWemacs-common
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-inclu
+include gar/category.mk
