@@ -162,7 +162,7 @@ CHECKPKG_OVERRIDES_CSWsamba-nss += shared-lib-pkgname-mismatch
 
 PACKAGES += CSWsamba-nss-system-links
 CATALOGNAME_CSWsamba-nss-system-links = samba_nss_system_links
-PKGFILES_CSWsamba-nss-system-links += /usr/lib/nss_winbind_csw.so.1
+PKGFILES_CSWsamba-nss-system-links  = /usr/lib/nss_winbind_csw.so.1
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/nss_wins_csw.so.1
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/amd64/nss_winbind_csw.so.1
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/amd64/nss_wins_csw.so.1
@@ -170,7 +170,20 @@ PKGFILES_CSWsamba-nss-system-links += /usr/lib/sparcv9/nss_winbind_csw.so.1
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/sparcv9/nss_wins_csw.so.1
 SPKG_DESC_CSWsamba-nss-system-links += Samba nss modules links for the system
 RUNTIME_DEP_PKGS_CSWsamba-nss-system-links += CSWsamba-nssiCHECKPKG_OVERRIDES_CSWsamba-nss-system-links += surplus-dependency|CSWsamba-nss
-CHECKPKG_OVERRIDES_CSWsamba-nss-system-links += bad-location-of-fileibnss_winbind.so.libtevent0
+CHECKPKG_OVERRIDES_CSWsamba-nss-system-links += bad-location-of-fileibnss_winbind.so.samba-pam-system-links
+CATALOGNAME_CSWsamba-pam-system-links = samba_pam_system_links
+PKGFILES_CSWsamba-pam-system-links  = /usr/lib/security/pam_smbpass_csw.so
+PKGFILES_CSWsamba-pam-system-links += /usr/lib/security/pam_winbind_csw.so
+PKGFILES_CSWsamba-pam-system-links += /usr/lib/security/amd64/pam_smbpass_csw.so
+PKGFILES_CSWsamba-pam-system-links += /usr/lib/security/amd64/pam_winbind_csw.so
+PKGFILES_CSWsamba-pam-system-links += /usr/lib/security/sparcv9/pam_smbpass_csw.so
+PKGFILES_CSWsamba-pam-system-links += /usr/lib/security/sparcv9/pam_winbind_csw.so
+SPKG_DESC_CSWsamba-pam-system-links += Samba pam modules links for the system
+RUNTIME_DEP_PKGS_CSWsamba-pam-system-links += CSWsamba-winbind
+RUNTIME_DEP_PKGS_CSWsamba-pam-system-links += CSWsamba
+CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += surplus-dependency|CSWsamba
+CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += surplus-dependency|CSWsamba-winbind
+CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += bad-location-of-fileibnss_winbind.so.libtevent0
 CATALOGNAME_CSWlibtevent0 = libtevent0
 PKGFILES_CSWlibtevent0 += $(call baseisadirs,$(libdir),libtevent\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibtevent0 += $(DESCRIPTION), libtevent.so.0
@@ -337,16 +350,33 @@ INITSMF += /etc/opt/csw/init.d/cswsamba
 INITSMF += /etc/opt/csw/init.d/cswwinbind
 
 MIGRATE_FILES_CSWsamba += samba
-PRESERVECONF += $(sysconfdirEXTRA_MERGE_DIRS_isa-extra += /usr/lib/64
-MERGEBASE_/usr/lib/64 = /usr/lib
+PRESERVECONF += $(sysconfdirEXTRA_MERGE_DIRS_isa-extra += /usr/lib/64 /usr/lib/security/64
+MERGEBASE_/usr/lib/64          = /usr/lib
+MERGEBASE_/usr/lib/security/64 = /usr/lib/security
+
+EXTRA_PKGFILES_EXCLUDED += /usr/lib/security
 
 include gar/category.mk
 
 # Set the target dir for modules with the proper arch
-MODULE_DIR = /usr/lib
+NSS_MODULE_DIR = /usr/lib
+PAM_MODULE_DIR = /usr/lib/security
+
 ifeq ($(MEMORYMODEL),64)
-        MODULE_DIR = /usr/lib/64
-endifde gar/category.mk
+	NSS_MODULE_DIR = /usr/lib/64
+	PAM_MODULE_DIR = /usr/lib/security/64
+endif
+
+# Define the targets for the links
+NSS_WINBIND_32 = ../..$(libdir)/nss_winbind.so.1
+NSS_WINS_32    = ../..$(libdir)/nss_wins.so.1
+NSS_WINBIND_64 = ../../..$(libdir)/nss_winbind.so.1
+NSS_WINS_64    = ../../..$(libdir)/nss_wins.so.1
+
+PAM_WINBIND_32 = ../../..$(libdir)/security/pam_winbind.so
+PAM_SMBPASS_32 = ../../..$(libdir)/security/pam_smbpass.so
+PAM_WINBIND_64 = ../../../..$(libdir)/security/pam_winbind.so
+PAM_SMBPASS_64 = ../../../..$(libdir)/security/pam_smbpass.sode gar/category.mk
 
 # Use this hack until this bug has been fixed:
 #   https://bugzilla.samba.org/show_bug.cgi?id=8571
@@ -370,17 +400,12 @@ post-install-modulated:
 	ginstall $(WORKSRC)/nsswitch/nss_wins.so $(DESTDIR)/$(libdir)/nss_wins.so.1
 	# This bit is to install the symlinks to use the NSS modules with the
 	# system's nsswitch.conf
-	ginstall -d  -m 0755 $(DESTDIR)$(MODULE_DIR)
-	if [ "$(MEMORYMODEL)" = "32" ]; then \
-		ln -s ../..$(libdir)/nss_winbind.so.1 \
-			$(DESTDIR)$(MODULE_DIR)/nss_winbind_csw.so.1; \
-		ln -s ../..$(libdir)/nss_wins.so.1 \
-			$(DESTDIR)$(MODULE_DIR)/nss_wins_csw.so.1; \
-	else \
-		ln -s ../../..$(libdir)/nss_winbind.so.1 \
-			$(DESTDIR)$(MODULE_DIR)/nss_winbind_csw.so.1; \
-		ln -s ../../..$(libdir)/nss_wins.so.1 \
-			$(DESTDIR)$(MODULE_DIR)/nss_wins_csw.so.1; \
-	fi
+	ginstall -d  -m 0755 $(DESTDIR)$(NSS_MODULE_DIR)
+	gln -s $(NSS_WINBIND_$(MEMORYMODEL)) $(DESTDIR)$(NSS_MODULE_DIR)/nss_winbind_csw.so.1
+	gln -s $(NSS_WINS_$(MEMORYMODEL)) $(DESTDIR)$(NSS_MODULE_DIR)/nss_wins_csw.so.1
+	# This bit is to install the symlinks to use the PAM modules with the
+	# system's pam.conf
+	ginstall -d  -m 0755 $(DESTDIR)$(PAM_MODULE_DIR)
+	gln -s $(PAM_WINBIND_$(MEMORYMODEL)) $(DESTDIR)$(PAM_MODULE_DIR)/pam_winbind_csw.so
+	gln -s $(PAM_SMBPASS_$(MEMORYMODEL)) $(DESTDIR)$(PAM_MODULE_DIR)/pam_smbpass_csw.so
 	@$(MAKECOOKIE)
-
