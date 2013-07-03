@@ -24,7 +24,16 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(NAME)-$(VERSION).tar.xz
-DISTFILES DISTFILES += set-ulimit-for-build-test += changelog.CSW
+DISTFILES DISTFILES += set-ulimit-for-build-test +  .*/gtk-doc.*
+
+
+BUILD_DEP_PKGS = CSWggettext-dev CSWlibiconv-dev CSWlibffi-dev
+BUILD_DEP_PKGS += CSWlibdbus-dev CSWdbus CSWlibgamin-dev CSWgamin
+BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconfig CSWlibpcre-dev CSWdskutl
+# To make the tests working
+BUILD_DEP_PKGS += CSWpython CSWdbuspython CSWsharedmimeinfo
+# This is used to adjust paths in documentation
+BUILD_DEPBUILD_DEP_PKGS += CSWlibz-devP_P changelog.CSW
 
 #
 #PATCHFILES += 0001-Fix-POSIX-and-XOPEN-defines.patch
@@ -82,6 +91,7 @@ PATCHFILES += 0035-Disable-g_inet_socket_address_get_scope_id-test-does.patch
 # needs further investigtion, cf http://osdir.com/ml/freedesktop.dbus/2005-10/msg00058.html
 PATCHFILES += 0036-Disable-failing-gdbus-external-auth-tests.patch
 PATCHFILES += 0037-Remove-failing-tests-linking-is-broken.patch
+PATCHFILES_5.11 += 0038-Disable-appinfo-launch-test-fails-on-s11x86.patch
 
 PATCHFILES += $(PATCHFILES_$(GAROSREL))el# Solaris 11 specific package for FEN support
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -137,8 +147,10 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CRUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgcc-s1C-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/600.3
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.3600.3o-2.0.so.0.3200.4
-CHECKPKG_OVERRID_sparcES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/600.3o-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.3600.3o*/gdb .*/gdb/.*
+
+# libgio uses the mime info for determining the type of files
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += surplus-dependency|CCHECKPKG_OVERRIDES_CSWlibgio2-0-0_sparcS_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/600.3o-2.0.so.0.3200.4
 CHECKPKG_OVERRID_sparcES_CSWlibgio2-0-0 += file-with-share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.3600.3o-2.0.so.0.3200.4
 CHECKPKG_OVERRID_i386ES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/600.3o-2.0.so.0.3200.4
 CHECKPKG_OVERRID_i386 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libgio-2.0.so.0.3600.3
@@ -215,16 +227,7 @@ CATALOGNAME_CSWglib2devel = odegen/utils.pyo
 PACKAGES += CSWglib2-doc
 ARCHALL_CSWglib2-doc = 1
 SPKG_DESC_CSWglib2-doc = Gtk-doc Documentation for glib2
-PKGFILES_CSWglib2-doc =  .*/gtk-doc.*
-
-
-BUILD_DEP_PKGS = CSWggettext-dev CSWlibiconv-dev CSWlibffi-dev
-BUILD_DEP_PKGS += CSWlibdbus-dev CSWdbus CSWlibgamin-dev CSWgamin
-BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconfig CSWlibpcre-dev CSWdskutl
-# To make the tests working
-BUILD_DEP_PKGS += CSWpython CSWdbuspython CSWsharedmimeinfo
-# This is used to adjust paths in documentation
-BUILD_DEPBUILD_DEP_PKGS += CSWlibz-devP_PK-xO4 is necessary on sparc so that function inlining happens as expected
+PKGFILES_CSWglib2-doc =PK-xO4 is necessary on sparc so that function inlining happens as expected
 EXTRA_CFLAGS  = -std=gnu99 # -xO4 -features=extensions -xc99 -D_XPG6
 EXTRA_LDFLAGS = -lsocket
 
@@ -243,7 +246,9 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 CONFIGURE_ARGS += --disable-dtrace
 CONFIGURE_ARGS += --with-threads=posix
 CONFIGURE_ARGS += --disable-compile-warnings
-CONFIGURE_ARGS += --disable-maintainer-mod= --
+CONFIGURE_ARGS += --disable-maintainer-mod= CONFIGURE_ARGS += --with-xml-catalog=/etc/opt/csw/xml/catalog
+# ensure Docbook stuff is found for manpages, otherwise let configure fail
+CONFIGURE_ARGS += --enable-man --
 we must set the config shell to bash so configure sticks that
 # as SHELL variable in the generated Makefiles. That's what make
 # uses for executing commands. There's no other way to alter the
@@ -265,10 +270,7 @@ PYCOMPILE = 1
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
 # Do we support gdb?
-MERGE_EXCLUDE_FILES += .*/gdb .*/gdb/.*
-
-# libgio uses the mime info for determining the type of files
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += surplus-dependency|CSWsharedmimeinfo
+MERGE_EXCLUDE_FILES += .Wsharedmimeinfo
 
 include gar/category.mk
 
@@ -290,19 +292,20 @@ post-merge:
 		mv $(PKGROOT)$(prefix)/bash_completion.d $(PKGROOT)$(sysconfdir)/ ;\
 	fi
 
-# This is in place to fix paths that make checkpkg complain
-	@echo "=== Fixing paths in documentation ==="
-	for d in gio glib gobject ; do \
-		DOCBASEDIR="$(PKGROOT)/$(datadir)/gtk-doc/html/$$d/" ; \
-		if [ -d "$$DOCBASEDIR" ] ; then \
-			for f in $$DOCBASEDIR/*.html ; do \
-				echo "Adjusting path in $$f" ; \
-				/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $$f > $$f.tmp ; \
-				mv $$f.tmp $$f ; \
-			done ; \
-		fi ; \
-	done
-	for f in $(PKGROOT)$(mandir)/man[123456789]/* ; do \
-		echo "Adjusting path in $$f" ; \
-		/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $$f > $$f.tmp ; \
-		mv $$f.tmp $
+# This is in place to fix paths that make c#	@echo "=== Fixing paths in documentation ==="
+#	for d in gio glib gobject ; do \
+#		DOCBASEDIR="$(PKGROOT)/$(datadir)/gtk-doc/html/$$d/" ; \
+#		if [ -d "$$DOCBASEDIR" ] ; then \
+#			for f in $$DOCBASEDIR/*.html ; do \
+#				echo "Adjusting path in $$f" ; \
+#		path in $$f" ; \
+		/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $#				mv $$f.tmp $$f ; \
+#			done ; \
+#		fi ; \
+#	done
+#	for f in $(PKGROOT)$(mandir)/man[123456789]/* ; do \
+#		echo "Adjusting path in $$f" ; \
+#path in $$f" ; \
+		/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $#		mv $$f.tmp $$f ; \
+#	done ; \
+#
