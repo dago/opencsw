@@ -7,12 +7,13 @@
 #   shipping ipythonx?)
 # 
 NAME    = ipython
-VERSION = 0.12.1
+VERSION = 0.13.2
 CATEGORIES = python
 GARTYPE = v2
 
 DESCRIPTION = Enhanced interactive python shell
 define BLURB
+  IPython is a replacement for the standard Python shell.
 endef
 
 MASTER_SITES = http://archive.ipython.org/release/$(VERSION)/
@@ -21,15 +22,22 @@ ARCHALL      = 1
 PACKAGES     = CSWipython
 CATALOGNAME  = ipython
 
+PATCHFILES += 0001-rename-filenames-containing-spaces.patch
+
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/IPython/core/usage.py
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/IPython/external/mglob/_mglob.py
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/core/magic.py
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/utils/tests/test_path.py
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/pexpect/_pexpect.py
 CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/path/_path.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/core/magics/osm.py
 CHECKPKG_OVERRIDES_CSWipython += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWipython += catalogname-does-not-start-with-py_
 
 SKIPTEST = 1
 
 include gar/category.mk
+
+post-extract:
+	@( cd $(WORKSRC)/docs/examples/notebooks && mv Capturing\ Output.ipynb Capturing_Output.ipynb )
+	@( cd $(WORKSRC)/docs/examples/notebooks && mv Script\ Magics.ipynb Script_Magics.ipynb )
+	@( cd $(WORKSRC)/docs/examples/parallel && mv Parallel\ Magics.ipynb Parallel_Magics.ipynb )
+	@$(MAKECOOKIE)
