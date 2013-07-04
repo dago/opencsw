@@ -1,6 +1,5 @@
 NAME = xmlstarlet
-VERSION = 1.3.1
-CATEGORIES = utils
+VERSION = 1.4.= utils
 GARTYPE = v2
 
 DESCRIPTION = XML transformation utility
@@ -34,7 +33,7 @@ EXTRA_CONFIGURE_ENV += LIBXSLT_CONFIG=$(bindir)/xslt-config
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static-libs
 CONFIGURE_ARGS += --with-libxml-include-prefix=$(includedir)/libxml2
-CONFIGURE_ARGS += --with-libxml-libs-prefix=$(libdir)
+CONFIGURE_ARGS += --with-libxml-libsCONFIGURE_ARGS += --enable-build-docsbs-prefix=$(libdir)
 
 BUILD_OVERRIDE_VARS = CFLAGS CPPFLAGS LDFLAGS
 BUILD_OVERRIDE_VAR_CFLAGS = $(CFLAGS)
