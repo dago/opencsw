@@ -79,5 +79,5 @@ Pinclude gar/category.mk
 post-extractextract-modulated:
 	@# We have patched something in although the package has not been unpacked.
 	@# Make sure it is uncompressed afterwards.
-	-cd $(WORKSRC)/src && gtar xzvf spidermonkey/js-?.?.?.tar.gz # $(if $(filter sparc,$(GARCH)),echo "Sparc is fast!!",rm -f $(WORKSRC)/src/spidermonkey/js/src/lock_SunOS.s)
+	-cd $(WORKSRC)/src && gtar xzvf spidermonkey/js-?.?.?.tar.gz $(if $(filter sparc,$(GARCH)),echo "Sparc is fast!!",rm -f $(WORKSRC)/src/spidermonkey/js/src/lock_SunOS.s)
 	#@$(MAKECOOKIE)
