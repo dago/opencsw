@@ -1,0 +1,25 @@
+From c313817d166996dc0dca1c2d544855debf280c53 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Fri, 5 Jul 2013 00:24:45 +0200
+Subject: [PATCH] add missing include
+
+---
+ src/duffstring.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/duffstring.h b/src/duffstring.h
+index 28475a7..20645d9 100644
+--- a/src/duffstring.h
++++ b/src/duffstring.h
+@@ -22,6 +22,8 @@
+  *     distribution.
+  */
+ 
++#include <varargs.h>
++
+ #if !HAVE_VASPRINTF
+ int vasprintf(char** result, const char* format, va_list vl);
+ #endif /*HAVE_VASPRINTF*/
+-- 
+1.8.3.1
+
