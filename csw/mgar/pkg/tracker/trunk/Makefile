@@ -113,6 +113,8 @@ PATCHFILES += 0002-strnlen-replacement-function.patch
 PATCHFILES += 0003-Replace-uuid_unparse_lower-with-uuid_unparse.patch
 PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
+# submitted upstream
+PATCHFILES += 0006-Use-procfs-psinfo-instead-of-cmdline-on-Solaris.patch
 
 # Packages
 PACKAGES += CSWtracker
