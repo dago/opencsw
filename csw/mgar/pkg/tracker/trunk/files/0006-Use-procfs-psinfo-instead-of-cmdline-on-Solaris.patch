@@ -1,0 +1,69 @@
+From d32ac25093d37871c2ce3889314d5db9bb34d1ad Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 5 Jul 2013 13:15:15 +0200
+Subject: [PATCH] Use procfs psinfo instead of cmdline on Solaris
+
+---
+ src/tracker-control/tracker-control-general.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/src/tracker-control/tracker-control-general.c b/src/tracker-control/tracker-control-general.c
+index 07231ef..b00c60d 100644
+--- a/src/tracker-control/tracker-control-general.c
++++ b/src/tracker-control/tracker-control-general.c
+@@ -24,6 +24,10 @@
+ #include <glib.h>
+ #include <glib/gi18n.h>
+ 
++#ifdef __sun
++#include <procfs.h>
++#endif
++
+ #include <libtracker-common/tracker-common.h>
+ #include <libtracker-data/tracker-data.h>
+ #include <libtracker-miner/tracker-miner.h>
+@@ -528,7 +532,11 @@ get_uid_for_pid (const gchar  *pid_as_string,
+ 	gchar *fn;
+ 	guint uid;
+ 
++#ifdef __sun /* Solaris */
++	fn = g_build_filename ("/proc", pid_as_string, "psinfo", NULL);
++#else 
+ 	fn = g_build_filename ("/proc", pid_as_string, "cmdline", NULL);
++#endif
+ 
+ 	f = g_file_new_for_path (fn);
+ 	info = g_file_query_info (f,
+@@ -667,7 +675,12 @@ tracker_control_general_run (void)
+ 		for (l = pids; l; l = l->next) {
+ 			GError *error = NULL;
+ 			gchar *filename;
++            gchar *basename;
++#ifdef __sun /* Solaris */
++            psinfo_t psinfo = { 0 };
++#endif
+ 			gchar *contents = NULL;
++
+ 			gchar **strv;
+ 			guint uid;
+ 
+@@ -691,11 +704,13 @@ tracker_control_general_run (void)
+ 
+ 				continue;
+ 			}
+-
++#ifdef __sun /* Solaris */
++            memcpy(&psinfo, contents, sizeof(psinfo));
++			strv = g_strsplit (psinfo.pr_psargs, " ", 2); /* won't work with paths containing spaces :( */
++#else
+ 			strv = g_strsplit (contents, "^@", 2);
++#endif
+ 			if (strv && strv[0]) {
+-				gchar *basename;
+-
+ 				basename = g_path_get_basename (strv[0]);
+ 
+ 				if ((g_str_has_prefix (basename, "tracker") == TRUE ||
+-- 
+1.8.3.1
+
