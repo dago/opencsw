@@ -1,0 +1,71 @@
+From 51625c4d79ede0386f6034bd08a113ee626b8aa0 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Fri, 5 Jul 2013 14:56:15 +0200
+Subject: [PATCH] adapt Makefile for opencsw
+
+---
+ Makefile.Solaris | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile.Solaris b/Makefile.Solaris
+index 3513f4d..74dd04c 100644
+--- a/Makefile.Solaris
++++ b/Makefile.Solaris
+@@ -26,11 +26,11 @@ FILTER = 1
+ EXTNS = GIF TIFF XPM PNG PPM PNM PGM PCX BMP EIM JPEG SVG WMF ICO
+ 
+ # Comment this line out if your system doesn't have getopt_long().
+-#GETOPT_LONG = -DHAVE_GETOPT_LONG
++GETOPT_LONG = -DHAVE_GETOPT_LONG
+ 
+ # This program will be run on the manual page after it is installed.
+ # If you don't want to compress the manpage, change it to 'true'.
+-COMPRESS_PROG = gzip -9f
++COMPRESS_PROG = true
+ 
+ # Comment this line out if your system doesn't have libXinerama
+ # installed (for centering on dual-screen)
+@@ -47,8 +47,8 @@ MAGIC = -DHAVE_MAGIC
+ # Do not edit below here!
+ ######################################################################
+ 
+-CC        = gcc
+-CFLAGS    = -O2 -Wall -fomit-frame-pointer -finline-functions \
++#CC        = gcc
++#CFLAGS    = -O2 -Wall -fomit-frame-pointer -finline-functions \
+ 	    -fcaller-saves -ffast-math -fno-strength-reduce \
+ 	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
+ 
+@@ -129,21 +129,15 @@ distclean : clean
+ 
+ install: $(PROGRAM)
+ 	@echo "Installing QIV..."
+-	@if [ ! -d $(PREFIX)/bin ]; then \
+-	  install -d -m 0755 $(PREFIX)/bin; \
+-	  echo install -d -m 0755 $(PREFIX)/bin; \
++	@if [ ! -d $(DESTDIR)$(bindir) ]; then \
++	  ginstall -d -m 0755 $(DESTDIR)$(bindir); \
++	  echo ginstall -d -m 0755 $(DESTDIR)$(bindir); \
+         fi
+-	install -s -m 0755 $(PROGRAM) $(PREFIX)/bin
+-	@if [ ! -d $(PREFIX)/man/man1 ]; then \
+-	  echo install -d -m 0755 $(PREFIX)/man/man1; \
+-	  install -d -m 0755 $(PREFIX)/man/man1; \
++	ginstall -s -m 0755 $(PROGRAM) $(DESTDIR)$(bindir)
++	@if [ ! -d $(DESTDIR)$(mandir)/man1 ]; then \
++	  echo ginstall -d -m 0755 $(DESTDIR)$(mandir)/man1; \
++	  ginstall -d -m 0755 $(DESTDIR)$(mandir)/man1; \
+ 	fi
+-	install -m 0644 $(PROGRAM).1 $(PREFIX)/man/man1
+-	$(COMPRESS_PROG) $(PREFIX)/man/man1/$(PROGRAM).1
+-	@if ./qiv -f ./intro.jpg ; \
+-	then echo "-- Test Passed --" ; \
+-	else echo "-- Test Failed --" ; \
+-	fi
+-	@echo "\nDont forget to look into the \"qiv-command\" file and install it!\n-> cp qiv-command.example /usr/local/bin/qiv-command\n\n"
++	ginstall -m 0644 $(PROGRAM).1 $(DESTDIR)$(mandir)/man1
+ 
+ # the end... ;-)
+-- 
+1.8.3.1
+

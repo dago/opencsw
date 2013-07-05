@@ -15,6 +15,7 @@ DESCRIPTION = Enhanced interactive python shell
 define BLURB
   IPython is a replacement for the standard Python shell.
 endef
+LICENSE = COPYING.txt
 
 MASTER_SITES = http://archive.ipython.org/release/$(VERSION)/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
