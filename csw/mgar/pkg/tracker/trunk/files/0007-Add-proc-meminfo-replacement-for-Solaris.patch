@@ -1,0 +1,62 @@
+From d67d0544ba6700b5fa2a69530f52071470ae71f1 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 5 Jul 2013 17:03:18 +0200
+Subject: [PATCH] Add /proc/meminfo replacement for Solaris
+
+---
+ src/libtracker-common/tracker-os-dependant-unix.c | 32 ++++++++++++-----------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
+
+diff --git a/src/libtracker-common/tracker-os-dependant-unix.c b/src/libtracker-common/tracker-os-dependant-unix.c
+index 79eb837..d23eee1 100644
+--- a/src/libtracker-common/tracker-os-dependant-unix.c
++++ b/src/libtracker-common/tracker-os-dependant-unix.c
+@@ -230,7 +230,22 @@ tracker_create_permission_string (struct stat finfo)
+ static glong
+ get_memory_total (void)
+ {
+-#if !defined (__OpenBSD__)
++#if defined (__OpenBSD__)
++	glong total = 0;
++	int64_t physmem;
++	size_t len;
++	static gint mib[] = { CTL_HW, HW_PHYSMEM64 };
++
++	len = sizeof (physmem);
++
++	if (sysctl (mib, G_N_ELEMENTS (mib), &physmem, &len, NULL, 0) == -1) {
++		g_critical ("Couldn't get memory information: %d", errno);
++	} else {
++		total = physmem;
++	}
++#elif defined (__sun)
++    glong total = (glong)sysconf(_SC_PAGESIZE) * (glong)sysconf(_SC_PHYS_PAGES);
++#else
+ 	GError      *error = NULL;
+ 	const gchar *filename;
+ 	gchar       *contents = NULL;
+@@ -264,20 +279,7 @@ get_memory_total (void)
+ 		}
+ 		g_free (contents);
+ 	}
+-#else /* OpenBSD */
+-	glong total = 0;
+-	int64_t physmem;
+-	size_t len;
+-	static gint mib[] = { CTL_HW, HW_PHYSMEM64 };
+-
+-	len = sizeof (physmem);
+-
+-	if (sysctl (mib, G_N_ELEMENTS (mib), &physmem, &len, NULL, 0) == -1) {
+-		g_critical ("Couldn't get memory information: %d", errno);
+-	} else {
+-		total = physmem;
+-	}
+-#endif /* !OpenBSD */
++#endif
+ 
+ 	return total;
+ }
+-- 
+1.8.3.1
+
