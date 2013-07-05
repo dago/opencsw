@@ -1,0 +1,53 @@
+From 1bf577c42323a4d018f4d674b7617f6c09379498 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 5 Jul 2013 13:13:37 +0200
+Subject: [PATCH] Add headers for kill(2)
+
+---
+ main.cc  | 2 ++
+ zcmp.cc  | 2 ++
+ zdiff.cc | 2 ++
+ 3 files changed, 6 insertions(+)
+
+diff --git a/main.cc b/main.cc
+index f0a66e1..f98ac85 100644
+--- a/main.cc
++++ b/main.cc
+@@ -20,6 +20,8 @@
+ #include <cerrno>
+ #include <climits>
+ #include <csignal>
++#include <sys/types.h>
++#include <signal.h>
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
+diff --git a/zcmp.cc b/zcmp.cc
+index 0e5b781..52cbe6a 100644
+--- a/zcmp.cc
++++ b/zcmp.cc
+@@ -22,6 +22,8 @@
+ #include <cerrno>
+ #include <climits>
+ #include <csignal>
++#include <sys/types.h>
++#include <signal.h>
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
+diff --git a/zdiff.cc b/zdiff.cc
+index 14b679e..c5b3ff9 100644
+--- a/zdiff.cc
++++ b/zdiff.cc
+@@ -22,6 +22,8 @@
+ #include <cerrno>
+ #include <climits>
+ #include <csignal>
++#include <sys/types.h>
++#include <signal.h>
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
+-- 
+1.8.3.1
+
