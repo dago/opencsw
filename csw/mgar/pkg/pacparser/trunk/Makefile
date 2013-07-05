@@ -1,6 +1,6 @@
 # $Id$
 NAME = pacparser
-VERSION = 1.2.7
+VERSION = 1.3.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,35 +16,43 @@ define BLURB
 endef
 
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  = $(D#PATCHFILES  = 0001-Adjust-Makefile.patch
 
-PATCHFILES  = 0001-Adjust-Makefile.patch
-
-PATCHFILES += 0003-Only-GNU-grep-knows-q.patch
-PATCHFILES += 0004-Some-more-Makefile-tweaks.patch
+#PATCHFILES += 0003-Only-GNU-grep-knows-q.patch
+#PATCHFILES += 0004-Some-more-Makefile-tweaks.patch
+#ile-tweaks.patch
 PATCHFILES += 0005-Fix-soname-and-pactester-compilation.patch
-PATCHFILES += 0006-Add-flags-to-make-library-self-sufficient.patch
-PATCHFILES += 0007-Add-config-for-spidermonkey-i386.patch
+PATCHFILES += 0006-Add-flags-to-make-library-self-#PATCHFILES += 0007-Add-config-for-spidermonkey-i386.patch
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-PACKAGES = CSWpacparser CSWlibpacparser1 CSWlibpacparser-devel CSWpy-libpacparser
-CATALOGNAME_CSWpacparser = pacparser
-CATALOGNAME_CSWlibpacparser1 = libpacparser1
-CATALOGNAME_CSWlibpacparser-devel = libpacparser_devel
-CATALOGNAME_CSWpy-libpacparser = py_libpacparser
-
-SPKG_DESC_CSWpacparser = $(DESCRIPTION)
-SPKG_DESC_CSWlibpacparser1 = Library libpacparser.so.1
-SPKG_DESC_CSWlibpacparser-devel = Development Files for libpacparser.so
-SPKG_DESC_CSWpy-libpacparser = Python Bindings for libpacparser
-
-RUNTIME_DEP_PKGS_CSWpacparser = CSWlibpacparser1
-RUNTIME_DEP_PKGS_CSWlibpacparser-devel = CSWlibpacparser1
-RUNTIME_DEP_PKGS_CSWpy-libpacparser = CSWlibpython2-6-1-0 CSWpython
+PATCHFILES += 0001-Add-spidermonkey-config-for-Solaris-10.patch
+PATCHFILES += 0002-Do-not-add-Wall-unconditionally.patch
+PATCHFILES += 0003-Search-libpacparser.so-in-current-directory-first-do.patch
 
 VENDOR_URL = http://code.google.com/p/pacparser/
+
+PACKAGES += CSWpacparser
+SPKG_DESC_CSWpacparser = $(DESCRIPTION)
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpacparser += CSWlibpacparser1
+
+PACKAGES += CSWlibpacparser1
+SPKG_DESC_CSWlibpacparser1 = A library to parse proxy auto-config (PAC) files, libpacparser.so.1
+PKGFILES_CSWlibpacparser1 += $(call pkgfiles_lib,libpacparser.so.1)
+
+PACKAGES += CSWlibpacparser-dev
+SPKG_DESC_CSWlibpacparser-dev = Development Files for libpacparser.so.1
+PKGFILES_CSWlibpacparser-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpacparser-dev += $(docdir)/pacparser/html/.*
+PKGFILES_CSWlibpacparser-dev += .*\.c
+RUNTIME_DEP_PKGS_CSWlibpacparser-dev += CSWlibpacparser1
+OBSOLETED_BY_CSWlibpacparser-dev += CSWlibpacparser-devel
+
+PACKAGES += CSWpy-libpacparser
+SPKG_DESC_CSWpy-libpacparser = Python Bindings for libpacparser
+PKGFILES_CSWpy-libpacparser += $(libdir)/python/.*
+PKGFILES_CSWpy-libpacparser += .*\.py
+RUNTIME_DEP_PKGS_CSWpy-libpacparser += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-libpacparser += CSWpython.com/p/pacparser/
 
 # There is some Python stuff in the package
 PYCOMPILE = 1
@@ -58,29 +66,18 @@ BUILD_ARGS = all pymod
 BUILD_OVERRIDE_VARS = PREFIX
 BUILD_OVERRIDE_VAR_PREFIX = $(prefix)
 
-# Tests are run after build
+# Tests are run after build# Needed for 'install' during build and install-phase
+BUILD_ENV_PATH = /opt/csw/gnu:$(PATH)
+INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)ld
 TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
 INSTALL_ARGS = install install-pymod
 INSTALL_OVERRIDE_DIRS = PREFIX
-PREFIX=$(prefix)
+Pinclude gar/category.mk
 
-PKGFILES_CSWlibpacparser1 = $(PKGFILES_RT)
-PKGFILES_CSWlibpacparser-devel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpacparser-devel += $(docdir)/pacparser/html/.*
-PKGFILES_CSWlibpacparser-devel += .*\.c
-PKGFILES_CSWpy-libpacparser  = $(libdir)/python/.*
-PKGFILES_CSWpy-libpacparser += .*\.py
-
-include gar/category.mk
-
-# Needed for 'install' during install-phase
-PATH := /opt/csw/gnu:$(PATH)
-
-post-extract-modulated:
+post-extractextract-modulated:
 	@# We have patched something in although the package has not been unpacked.
 	@# Make sure it is uncompressed afterwards.
-	-cd $(WORKSRC)/src && gtar xzvf spidermonkey/js-?.?.?.tar.gz -C spidermonkey
-	$(if $(filter sparc,$(GARCH)),echo "Sparc is fast!!",rm -f $(WORKSRC)/src/spidermonkey/js/src/lock_SunOS.s)
-	@$(MAKECOOKIE)
+	-cd $(WORKSRC)/src && gtar xzvf spidermonkey/js-?.?.?.tar.gz # $(if $(filter sparc,$(GARCH)),echo "Sparc is fast!!",rm -f $(WORKSRC)/src/spidermonkey/js/src/lock_SunOS.s)
+	#@$(MAKECOOKIE)

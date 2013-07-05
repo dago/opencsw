@@ -1,0 +1,25 @@
+From 95eac472c83226b233e38406bd3c4f1c00419c1e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 5 Jul 2013 09:58:03 +0200
+Subject: [PATCH 2/3] Do not add -Wall unconditionally
+
+---
+ src/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index 84fd389..8c6ccbc 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -55,7 +55,7 @@ ifeq ($(OS_ARCH),Darwin)
+   endif
+ endif
+ 
+-CFLAGS = -g -DXP_UNIX -Wall -DVERSION=$(VERSION)
++CFLAGS = -g -DXP_UNIX -DVERSION=$(VERSION)
+ 
+ ifndef PYTHON
+   PYTHON = python
+-- 
+1.8.3.1
+
