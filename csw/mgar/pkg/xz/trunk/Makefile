@@ -1,5 +1,5 @@
 NAME = xz
-VERSION = 5.0.4
+VERSION = 5.0.5
 CATEGORIES = utils
 GARTYPE = v2
 
