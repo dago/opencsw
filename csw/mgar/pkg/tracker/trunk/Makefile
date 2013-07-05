@@ -115,6 +115,7 @@ PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
 # submitted upstream
 PATCHFILES += 0006-Use-procfs-psinfo-instead-of-cmdline-on-Solaris.patch
+PATCHFILES += 0007-Add-proc-meminfo-replacement-for-Solaris.patch
 
 # Packages
 PACKAGES += CSWtracker
