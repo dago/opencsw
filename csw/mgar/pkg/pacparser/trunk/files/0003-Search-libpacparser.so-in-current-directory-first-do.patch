@@ -1,0 +1,35 @@
+From a54c4f8f3c4dcbc5085bf7f36403c769faa29504 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 5 Jul 2013 10:02:05 +0200
+Subject: [PATCH 3/3] Search libpacparser.so in current directory first, do not
+ use non-generic link option
+
+---
+ src/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index 8c6ccbc..9e2380e 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -38,7 +38,7 @@ LIB_VER = 1
+ SO_SUFFIX = so
+ LIBRARY = $(LIBRARY_NAME).$(SO_SUFFIX).$(LIB_VER)
+ MKSHLIB = $(CC) -shared
+-LIB_OPTS = -Wl,-soname=$(LIBRARY) -Wl,-exclude-libs=libjs.a
++LIB_OPTS = -Wl,-soname=$(LIBRARY)
+ SHFLAGS = -fPIC
+ SMCFLAGS = -DHAVE_VA_COPY -DVA_COPY=__va_copy
+ 
+@@ -97,7 +97,7 @@ $(LIBRARY_LINK): $(LIBRARY)
+ 	ln -sf $(LIBRARY) $(LIBRARY_LINK)
+ 
+ pactester: pactester.c pacparser.h $(LIBRARY_LINK)
+-	$(CC) pactester.c -o pactester -lpacparser -L. -I.
++	$(CC) pactester.c -o pactester -L. -lpacparser -I.
+ 
+ testpactester: pactester
+ 	echo "Running tests for pactester."
+-- 
+1.8.3.1
+
