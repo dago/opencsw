@@ -2,8 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tracker
-# Tracker version after this require glib2 >= 2.35.1
-VERSION = 0.15.2
+VERSION = 0.16.1
 GARTYPE = v2
 
 DESCRIPTION = Gnome Tracker, semantic data storage
