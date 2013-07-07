@@ -1,0 +1,33 @@
+From 0044c3dd9faee7fdcb0f01174df824f395f518f2 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 7 Jul 2013 17:03:51 +0200
+Subject: [PATCH] Adjust configure.in
+
+---
+ configure.in | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 87c7320..938f3e7 100644
+--- a/configure.in
++++ b/configure.in
+@@ -1,7 +1,7 @@
+ dnl Process this file with autoconf to produce a configure script.
+ AC_PREREQ(2.52)
+ AC_INIT(libgamin)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ AC_CANONICAL_SYSTEM
+ 
+ # get any external flags setting before we start playing with the CFLAGS variable
+@@ -31,7 +31,6 @@ AM_PROG_LIBTOOL
+ 
+ AC_USE_SYSTEM_EXTENSIONS
+ AC_PROG_CC
+-AM_PROG_CC_STDC
+ AC_HEADER_STDC
+ AC_PROG_INSTALL
+ AC_PROG_MAKE_SET
+-- 
+1.8.3.1
+

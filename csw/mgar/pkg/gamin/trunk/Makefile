@@ -2,7 +2,8 @@
 
 NAME = gamin
 VERSION = 0.1.10
-CATEGORIES = server
+GARTYPE = v2
+GARCOMPILER = SOS12U3 server
 GARTYPE = v2
 
 DESCRIPTION = GNOME replacement for FAM which watches for file alterations
@@ -27,7 +28,7 @@ PATCHDIRLEVEL = 0
 PATCHFILES += gamin-01-all.diff
 PATCHFILES += gamin-02-gamin.diff
 
-PATCHFILES += 0003-Enable-64-bit-builds.patch
+PATCHFILES += 0003-Enable-6PATCHFILES += 0004-Adjust-configure.inEnable-64-bit-builds.patch
 
 VENDOR_URL = http://people.gnome.org/~veillard/gamin/
 
@@ -43,20 +44,18 @@ PKGFILES_CSWlibgamin1-0 += $(call pkgfiles_lib,libgamin-1.so.0)
 PACKAGES += CSWlibgamin-dev
 SPKG_DESC_CSWlibgamin-dev = Development files for libgamin-1.so.0 and legacy compat libfam.so.0
 PKGFILES_CSWlibgamin-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibgamin-dev += CSWlibgamin1-0
-# That is a legacy-only library, no need to pull it in unless for legacy CSWfam
-CHECKPKG_OVERRIDES_CSWlibgamin-dev += missing-dependency|CSWlibfam0
+RUNTIME_DEP_PKGS_CSWlibgamin-deRUNTIME_DEP_PKGS_CSWlibgamin-dev +=  missing-dependency|CSWlibfam0
 
 PACKAGES += CSWpy-gamin
 SPKG_DESC_CSWpy-gamin = Python bindings for GAMIN file alteration monitor
 PKGFILES_CSWpy-gamin += $(libdir)/site-packages/.*
 RUNTIME_DEP_PKGS_CSWpy-gamin += CSWpython
-RUNTIME_DEP_PKGS_CSWpy-gamin += CSWlibgamin1-0
+RUNTIME_DEP_PKGS_CSWpy-gami# Build choked when trying to build python for 64bit
+CHECKPKG_OVERRIDES_CSWpy-gamin += 64-bit-binaries-missingin += CSWlibgamin1-0
 
 PACKAGES += CSWgamin
 SPKG_DESC_CSWgamin = GAMIN file alteration monitor daemon (compatible to FAM)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWgamin += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgamin += CSWlibglib2-0-0
 OBSOLETED_BY_CSWgamin += CSWfam
 
@@ -73,13 +72,17 @@ BUILD64_LIBS_ONLY = 1
 
 # This is not passed to configure, although it is defined (but wrong) in configure.in
 EXTRA_CONFIGURE_EXPORTS += ENV_CFLAGS
-CONFIGURE_ENV_ENV_CFLAGS = $(CFLAGS)
-
-# No 64 bit Python yet
-CONFIGURE_ARGS-64 += --without-python
+CONFIGURE_ENV_ENV# Build chokes on G_CONST_RETURN
+# "gam_subscription.h", line 24: syntax error before or at: char
+# "gam_subscription.c", line 144: warning: old-style declaration or incorrect type for: G_CONST_RETURN
+EXTRA_CPPFLAGS = -DG_CONST_RETURN=const
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+
+# Build chokes with python enabled for
+# 64bit
+CONFIGURE_ARGS-64 += --without-pythonARGS-$(MEMORYMODEL))
 
 PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
@@ -92,5 +95,4 @@ pre-configure-modulated:
 	cd $(WORKSRC) && libtoolize --copy --force
 	cd $(WORKSRC) && aclocal
 	cd $(WORKSRC) && autoconf --force
-	cd $(WORKSRC) && automake -a -c -f
-	@$(MAKECOOKIE)
+	cd $(WORKSRC) && automake -a -c
