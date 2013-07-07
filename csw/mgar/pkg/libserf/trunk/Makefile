@@ -1,5 +1,5 @@
 NAME = libserf
-VERSION = 1.2.0
+VERSION = 1.2.1
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -21,24 +21,24 @@ VENDOR_URL = http://code.google.com/p/serf/
 # openssl-1.0 only available for sol-10
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-PACKAGES += CSWlibserf1-0
-CATALOGNAME_CSWlibserf1-0 = libserf1_0
-SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWbdb48
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibz1
+PACKAGE2
+CATALOGNAME_CSWlibserf1-2 = libserf1_2
+SPKG_DESC_CSWlibserf1-2ESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
+RUNTIME_DEP_2 += CSWbdb48
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibserf1-2KGS_CSWlibserf1-0 += CSWlibz1
 
 PACKAGES += CSWlibserf-dev
 CATALOGNAME_CSWlibserf-dev = libserf_dev
 SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
 PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf1-0
+RUNTIME_DEP_PKGS_CSWlibserf-d2v = CSWlibserf1-0
 
 EXTRA_LIB = $(prefix)/bdb48/lib
 
