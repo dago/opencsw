@@ -15,10 +15,26 @@ MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-bad/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES = CSWgstplugins-bad
 
-BUILD_DEP_PKGS += CSWlibxml2 CSWgtk2 CSWlibx11 CSWlibice CSWlibglade2 CSWlibsm
-BUILD_DEP_PKGS += CSWgstreamer CSWgstplugins CSWglib2 CSWpango CSWlibatk CSWlibcairo
-BUILD_DEP_PKGS += CSWbzip2 CSWfaac CSWlibfaad-dev CSWggettextrt CSWjasper CSWliboil
-BUILD_DEP_PKGS += CSWfconfig CSWftype2
+BUILD_DEP_PKGS += CSWlibxml2
+BUILD_DEP_PKGS += CSWgtk2
+BUILD_DEP_PKGS += CSWlibx11
+BUILD_DEP_PKGS += CSWlibice
+BUILD_DEP_PKGS += CSWlibglade2
+BUILD_DEP_PKGS += CSWlibsm
+BUILD_DEP_PKGS += CSWgstreamer
+BUILD_DEP_PKGS += CSWgstplugins-dev
+BUILD_DEP_PKGS += CSWglib2
+BUILD_DEP_PKGS += CSWpango
+BUILD_DEP_PKGS += CSWlibatk
+BUILD_DEP_PKGS += CSWlibcairo
+BUILD_DEP_PKGS += CSWbzip2
+BUILD_DEP_PKGS += CSWfaac
+BUILD_DEP_PKGS += CSWlibfaad-dev
+BUILD_DEP_PKGS += CSWggettextrt
+BUILD_DEP_PKGS += CSWjasper
+BUILD_DEP_PKGS += CSWliboil
+BUILD_DEP_PKGS += CSWfconfig
+BUILD_DEP_PKGS += CSWftype2
 
 GARCOMPILER = GCC4
 
