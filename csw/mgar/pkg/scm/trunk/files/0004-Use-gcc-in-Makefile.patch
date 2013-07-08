@@ -1,6 +1,6 @@
-From b38a7aae12b4b5102bb5c1ceeb6ab4be10fc2fe7 Mon Sep 17 00:00:00 2001
+From cb8af8d92f6e61c8ccb86ebc41ad75b7e121c1b1 Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Fri, 1 Feb 2013 13:31:22 +0100
+Date: Mon, 8 Jul 2013 16:03:40 +0200
 Subject: [PATCH] Use gcc in Makefile
 
 ---
@@ -8,12 +8,12 @@ Subject: [PATCH] Use gcc in Makefile
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index cf1b2b9..4aab1c4 100644
+index d0ffbf6..8b877a6 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -35,7 +35,7 @@ CHPAT = $(HOME)/bin/chpat
- RSYNC = rsync -av
- Uploadee = csail
+@@ -47,7 +47,7 @@ SETARCH = env DYLD_NO_PIE=1
+ # Fedora-Core-1
+ #SETARCH = setarch i386
  
 -#CC = gcc
 +CC = gcc
@@ -21,5 +21,5 @@ index cf1b2b9..4aab1c4 100644
  #LIBS =
  #LD = $(CC) -g
 -- 
-1.8.1
+1.8.3.1
 

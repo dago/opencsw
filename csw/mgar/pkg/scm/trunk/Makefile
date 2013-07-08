@@ -1,8 +1,8 @@
 # $Id$
 
 NAME = scm
-VERSION = 5e7
-SLIB_VERSION = 3b3
+VERSION = 5f1
+SLIB_VERSION = 3b4
 GARTYPE = v2
 CATEGORIES = devel
 
