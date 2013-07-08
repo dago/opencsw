@@ -1,3 +1,10 @@
+sasl (2.1.25,REV=2013.07.08)
+
+  * Updated README.CSW for sasl package to add information about
+    sasl group.
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 08 Jul 2013 21:01:23 +0200
+
 sasl (2.1.25,REV=2012.04.22)
 
   * Fixed core dump when using gss (dmichelsen)

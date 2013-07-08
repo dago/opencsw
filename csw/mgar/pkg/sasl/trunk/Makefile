@@ -268,13 +268,13 @@ DOC_FILES = rfc1321.txt \
 
 install-doc:
 	mkdir -p $(DESTDIR)$(docdir)/sasl
-	cp $(WORKDIR)/README.sasl $(DESTDIR)$(docdir)/sasl/README.CSW
+	cp $CSW$(WORKDIR)/README.sasl $(DESTDIR)$(docdir)/sasl/README.CSW
 	list='$(DOC_FILES)'; for file in $$list; do \
 		$(SED_USR_LOCAL) $(WORKSRC)/doc/$$file > $(DESTDIR)$(docdir)/sasl/$$file; \
 	     done
 	mkdir -p $(DESTDIR)$(docdir)/saslauthd
 	$(SED_USR_LOCAL) $(WORKSRC)/saslauthd/LDAP_SASLAUTHD > $(DESTDIR)$(docdir)/saslauthd/LDAP_SASLAUTHD
-	cp $(WORKDIR)/README.saslauthd $(DESTDIR)$(docdir)/saslauthd/README.CSW
+	cp $CSW$(WORKDIR)/README.saslauthd $(DESTDIR)$(docdir)/saslauthd/README.CSW
 
 fix-path-manpages:
 	for f in $(DESTDIR)$(mandir)/*/*.? ; do \
