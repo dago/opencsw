@@ -294,7 +294,10 @@ PROTOTYPE_FILES_lp_group_etc = $(sysconfdir).*
 PROTOTYPE_GROUP_lp_group_etc = lp
 
 PROTOTYPE_MODIFIERS = lp_group_var
-PROTOTYPE_FILES_lp_group_var = $(localstatedir).*
+PROTOTYPE_FILES_lp_group_var += $(localstatedir)/cache/.*
+PROTOTYPE_FILES_lp_group_var += $(localstatedir)/log/.*
+PROTOTYPE_FILES_lp_group_var += $(localstatedir)/run/.*
+PROTOTYPE_FILES_lp_group_var += $(localstatedir)/spool/.*
 PROTOTYPE_GROUP_lp_group_var = lp
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
