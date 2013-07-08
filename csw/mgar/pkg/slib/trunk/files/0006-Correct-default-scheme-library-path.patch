@@ -1,0 +1,39 @@
+From 9c6742763d01e5dafd1ea443a9a1e2a5fb4a21e0 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 8 Jul 2013 18:28:39 +0200
+Subject: [PATCH] Correct default scheme library path
+
+---
+ slib.sh | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/slib.sh b/slib.sh
+index fd0ef04..bf4c69c 100644
+--- a/slib.sh
++++ b/slib.sh
+@@ -106,19 +106,15 @@ case $implementation in
+ 	fi
+      fi
+      if [ -z "${SCHEME_LIBRARY_PATH}" ]; then
+-       if [ -d /usr/local/lib/slib/ ]; then
+-	  SCHEME_LIBRARY_PATH=/usr/local/lib/slib/
+-       elif [ -d /usr/share/slib/ ]; then
+-	  SCHEME_LIBRARY_PATH=/usr/share/slib/
+-       fi
+-     export SCHEME_LIBRARY_PATH
++		 SCHEME_LIBRARY_PATH=/opt/csw/share/guile/slib
++		 export SCHEME_LIBRARY_PATH
+      fi;;
+ esac
+ 
+ # for gambit
+ case $implementation in
+   gam) if [ -z "${LD_LIBRARY_PATH}" ]; then
+-	LD_LIBRARY_PATH=/usr/local/lib
++	LD_LIBRARY_PATH=/opt/csw/lib
+ 	export LD_LIBRARY_PATH
+ 	fi;;
+ esac
+-- 
+1.8.3.1
+
