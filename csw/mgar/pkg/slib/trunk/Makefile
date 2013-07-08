@@ -16,6 +16,7 @@ PATCHFILES		=	0001-Fix-configure-shebang.patch
 PATCHFILES		+=	0002-Fix-slib-scri#PATCHFILES		+=	0003-Adapt-to-Guile-2.patch
 PATCHFILES		+=	0004-Force-libraries-directory.patch
 PATCHFILES		+=	0005-Do-not-compress-info-file.patch
+PATCHFILES		+=	0006-Correct-default-scheme-library-path.patch
 
 PACKAGES					=	CSWslib
 CATALOGNAME_CSWslib			=	slib
