@@ -1,0 +1,9 @@
+--- graphviz2/lib/sfdpgen/post_process.c.orig	2011-05-20 11:08:31.253933170 -0400
++++ graphviz2/lib/sfdpgen/post_process.c	2011-05-20 11:06:43.000000000 -0400
+@@ -412,7 +412,7 @@
+ 
+ 
+ void SparseStressMajorizationSmoother_delete(SparseStressMajorizationSmoother sm){
+-  return StressMajorizationSmoother_delete(sm);
++  StressMajorizationSmoother_delete(sm);
+ }
