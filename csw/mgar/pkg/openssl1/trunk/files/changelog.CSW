@@ -1,3 +1,11 @@
+openssl (1.0.1e,rev=2013.07.09) unstable
+
+  * Removed checkinstall, preinstall and postinstall scripts
+    that are not necessary anymore (Solaris 8 support and 
+    old modification of certificates location).
+
+   -- Yann Rouillard <yann@opencsw.org>  Tue, 09 Jul 2013 16:14:39 +0200
+
 openssl (1.0.1e,rev=2013.03.22) unstable
 
   * Fixed missing 64 bits libraries bug
