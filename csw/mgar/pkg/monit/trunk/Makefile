@@ -22,6 +22,9 @@ CHECKPKG_OVERRIDES_CSWmonit += $(CHECKPKG_OVERRIDES_CSWmonit_$(GARCH))
 CHECKPKG_OVERRIDES_CSWmonit_sparc += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/monit
 CHECKPKG_OVERRIDES_CSWmonit_i386 = file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/monit
 
+-MIGRATE_FILES_CSWmonit = monitrc
+MIGRATE_SOURCE_DIR = $(prefix)/etc/
+MIGRATE_DEST_DIR = $(sysconfdir)/
 -e#tc-monitrc-.patch
 # We build the 64 bits version to be have >2 Go file support
 # and because monit build system is configured to build in
@@ -37,10 +40,5 @@ BUILD_DEP_PKGS += CSWlibssl-dev
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl-dir=$(prefix)
 
-RUNTIME_DEP_PKGS_CSWmonit TEST_SCRIPTS = t # Revert to the old configuration path 
-# so we don't change anything 
-# for the ssl update
-sysconfdir = $(prefix)/etc
-
-include gar/category.mk
+RUNTIME_DEP_PKGS_CSWmonit TEST_SCRIPTS = t include gar/category.mk
 
