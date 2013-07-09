@@ -41,13 +41,14 @@ if [ "x${CONFIG_FILE}" != "x" ]; then
     PARAMS="${PARAMS} -O ${CONFIG_FILE}"
 fi
 
-start() {
+
+start_daemon() {
     echo "Starting saslauthd " 
     /opt/csw/sbin/saslauthd ${PARAMS}
     echo
 }
 
-stop() {
+stop_daemon() {
     if test "x`pgrep -x saslauthd`" != x; then
         echo "Stopping saslauthd "
         pkill saslauthd
@@ -57,14 +58,14 @@ stop() {
 
 case "$1" in
         start)
-            start
+            start_daemon
             ;;
         stop)
-            stop
+            stop_daemon
             ;;
         restart)
-            stop
-            start
+            stop_daemon
+            start√_daemon
             ;;
         *)
             echo $"Usage: $0 {start|stop|restart}"
