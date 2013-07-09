@@ -20,8 +20,8 @@ LICENSE			=	LICENSE.GPL3
 PATCHFILES		+=	0001-disable-ocsw-unsupported-modules.patch
 PATCHFILES		+=	0002-force-xpg6-where-not-set-by-configure.patch
 
-BUILD_DEPS_PKG	+=	CSWqt4-dev
-BUILD_DEPS_PKG	+=	CSWpy-sip
+BUILD_DEP_PKGS	+=	CSWqt4-dev
+BUILD_DEP_PKGS	+=	CSWpy-sip
 
 GARCOMPILER		=	GNU
 EXTRA_CFLAGS	+=	-std=gnu99 -D_XPG6
@@ -68,7 +68,9 @@ RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtsvg4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqttest4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtxml4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWpy-pyqt-common
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWpy-pyqt-common
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/plugins/designer/libpythonplugin.so|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/plugins/designer/libpythonplugin.so|arch_id=3|arch_name=i386
 
