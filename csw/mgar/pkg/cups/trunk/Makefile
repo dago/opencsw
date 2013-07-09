@@ -99,7 +99,7 @@ SPKG_DESC_CSWphp5-cups = PHP5 bindings for CUPS
 PKGFILES_CSWphp5-cups += $(prefix)/php5/.*
 RUNTIME_DEP_PKGS_CSWphp5-cups += CSWlibcups2
 # lib is located in /opt/csw/php5, not in csw standard bin path
-CHECKPKG_OVERRIDES_CSWphp5-cups += 64bits-binaries-missing
+CHECKPKG_OVERRIDES_CSWphp5-cups += 64bit-binaries-missing
 
 # The daemon
 PACKAGES += CSWcupsd
