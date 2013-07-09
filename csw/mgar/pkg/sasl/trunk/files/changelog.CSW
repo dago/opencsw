@@ -1,7 +1,9 @@
-sasl (2.1.25,REV=2013.07.08)
+sasl (2.1.25,REV=2013.07.09)
 
   * Updated README.CSW for sasl package to add information about
     sasl group.
+  * Fixed init script so it doesn't use stop/start function names that are
+    already sh reserved keywords.
 
  -- Yann Rouillard <yann@opencsw.org>  Mon, 08 Jul 2013 21:01:23 +0200
 
