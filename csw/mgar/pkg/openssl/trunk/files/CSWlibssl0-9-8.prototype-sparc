@@ -42,9 +42,6 @@ f none /opt/csw/share/doc/libssl0_9_8/NEWS 644 root bin
 f none /opt/csw/share/doc/libssl0_9_8/README.ENGINE 644 root bin
 f none /opt/csw/share/doc/libssl0_9_8/README.CSW 644 root bin
 i checkpkg_override=checkpkg_override.CSWlibssl0-9-8
-i checkinstall=CSWlibssl0-9-8.checkinstall
 i copyright=CSWlibssl0-9-8.copyright
 i depend=CSWlibssl0-9-8.depend
 i pkginfo=CSWlibssl0-9-8.pkginfo
-i postinstall=CSWlibssl0-9-8.postinstall
-i preinstall=CSWlibssl0-9-8.preinstall
