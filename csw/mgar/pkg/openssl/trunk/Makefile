@@ -134,7 +134,7 @@ UFILES_REGEX = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWopenssl.prototype
-DISTFILES += CSWlibssl0-9-8.checkinstall CSWlibssl0-9-8.preinstall CSWlibssl0-9-8.postinstall CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
+DISTFILES +l CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
 DISTFILES += CSWlibssl-dev.prototype-i386 CSWlibssl-dev.prototype-sparc
 DISTFILES += CSWopenssl-utils.prototype 
 DISTFILES += changelog.CSW README.CSW
