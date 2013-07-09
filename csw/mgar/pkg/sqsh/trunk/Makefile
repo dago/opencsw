@@ -69,7 +69,9 @@ CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct.so|is|needed|by|opt/
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl64.so|is|needed|by|opt/csw/biCHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcomn.so|is|needed|by|opt/csw/bin/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/bin/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += surplus-dependency|CSWlibreadline6in/sparcv9/sqsh-ocs
 # This is for /usr/local/lib/sqsh/help, this is not in the distribution, don't know where to find that, ignore for now.
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/sqsh-ocs
@@ -82,6 +84,7 @@ RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWlibct4
 RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWlibreadline6
 # This is for /usr/local/lib/sqsh/help in sqsh, this is not in the distribution, don't know where to find that, ignore for now.
 CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/sqsh-freetds
+CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/locai386csw/bin/pentium_pro/sqsh-freetds
 CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/sqsh-freetds
 CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/sqsh-freetds
 CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/sqsh-freetds
