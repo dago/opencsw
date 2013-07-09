@@ -1,3 +1,11 @@
+openssl (0.9.8y,REV=2013.07.09) unstable
+
+  * Removed checkinstall, preinstall and postinstall scripts
+    that are not necessary anymore (Solaris 8 support and 
+    old modification of certificates location).
+
+   -- Yann Rouillard <yann@opencsw.org>  Tue, 09 Jul 2013 16:23:34 +0200
+
 openssl (0.9.8y,REV=2013.03.06) unstable
 
   * New upstream release.
