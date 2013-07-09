@@ -18,6 +18,7 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PATCHFILES += 0001-syminfo+symbol_versioning_support.patch
+PATCHFILES += 0002-Correctly-handle-the-multiple-string-tables-case-for.patch
 
 TEST_SCRIPTS =
 
