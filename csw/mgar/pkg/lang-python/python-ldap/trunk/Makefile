@@ -1,6 +1,6 @@
 # $Id$
 NAME = python-ldap
-VERSION = 2.3.13
+VERSION = 2.4.13
 CATEGORIES = python
 GARTYPE = v2
 PACKAGES = CSWpy-ldap
