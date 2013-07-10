@@ -1,8 +1,8 @@
-pm_cyrus (2.4.17,REV=2013.03.13)
+pm_cyrus (2.4.17,REV=2013.07.10)
 
   * New upstream release.
 
- -- Yann Rouillard <yann@opencsw.org>  Sat, 24 Nov 2012 15:12:49 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 10 Jul 2013 15:22:49 +0200
 
 pm_cyrus (2.4.16,REV=2012.11.24)
 
