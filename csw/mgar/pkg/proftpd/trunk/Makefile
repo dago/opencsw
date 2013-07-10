@@ -20,6 +20,8 @@ DISTFILES   += cswproftpdCENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-gz
 
+BUILD_DEP_PKGS = CSWmysql-dev
+
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibz1
