@@ -742,7 +742,7 @@ BASEWORKSRC = $(shell basename $(WORKSRC))
 # apply xzipped patches
 xz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@xz -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@xz -dc $(DOWNLOADDIR)/$* | $(GARPATCH) || exit 1
 	@( if [ -z "$(NOGITPATCH)" ]; then \
 		cd $(PATCHDIR); git add -A; \
 		git commit -am "old xz-style patch: $*"; \
@@ -752,7 +752,7 @@ xz-patch-%:
 # apply bzipped patches
 bz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@bzip2 -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@bzip2 -dc $(DOWNLOADDIR)/$* | $(GARPATCH) || exit 1
 	@( if [ -z "$(NOGITPATCH)" ]; then \
 		cd $(PATCHDIR); git add -A; \
 		git commit -am "old bz-style patch: $*"; \
@@ -762,7 +762,7 @@ bz-patch-%:
 # apply gzipped patches
 gz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@gzip -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@gzip -dc $(DOWNLOADDIR)/$* | $(GARPATCH) || exit 1
 	@( if [ -z "$(NOGITPATCH)" ]; then \
 		cd $(PATCHDIR); git add -A; \
 		git commit -am "old gz-style patch: $*"; \
@@ -772,16 +772,16 @@ gz-patch-%:
 # apply normal patches (git format-patch output or old-style diff -r)
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
+	( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
 		if [ -z "$(NOGITPATCH)" ]; then \
 			cd $(PATCHDIR);\
-			git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
+			git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*) || exit 1; \
 		else \
-			$(GARPATCH) < $(DOWNLOADDIR)/$*; \
+			$(GARPATCH) < $(DOWNLOADDIR)/$* || exit 1; \
 		fi; \
 	  else \
 		echo Adding old-style patch...; \
-		$(GARPATCH) < $(DOWNLOADDIR)/$*; \
+		$(GARPATCH) < $(DOWNLOADDIR)/$* || exit 1; \
 		if [ -z "$(NOGITPATCH)" ]; then \
 			cd $(PATCHDIR); \
 			git add -A; \
