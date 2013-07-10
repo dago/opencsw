@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash_completion
-VERSION = 2.0
+VERSION = 2.1
 GARTYPE = v2
 
 DESCRIPTION = Programmable completion for bash
