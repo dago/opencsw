@@ -76,7 +76,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # instead of gnutls, no need to change that
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 # Requested see https://www.opencsw.org/mantis/view.php?id=4481
-CONFIGURE_ARGS += --with-socksdante
+CONFIGURE_ARGS += --wiFor an unknown reason so far, lftp crashes when compiled
+# with compiled with lazyload enabled
+EXTRA_LD_OPTIONS = -z nolazyload--with-socksdante
 
 # No test suite here
 TEST_SCRIPTS =
