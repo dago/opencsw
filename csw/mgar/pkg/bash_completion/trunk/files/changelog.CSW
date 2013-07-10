@@ -1,6 +1,8 @@
 bash_completion (2.1,REV=2013.07.10)
 
   * New upstream release.
+  * Dropped pkgutil, pkgadd, pkgrm and svcadm completions that
+    were merged upstream.
 
    -- Yann Rouillard <yann@opencsw.org>  Wed, 10 Jul 2013 14:35:54 +0200
 
