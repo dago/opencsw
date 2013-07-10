@@ -1,6 +1,8 @@
 bash (4.2.45,REV=2013.07.10) unstable
 
   * Added bash patches bash42-038 and bash42-045.
+  * Removed map file and direct binding options in the recipe
+    as it is now the default at OpenCSW.
 
  -- Yann Rouillard <yann@opencsw.org>  Wed, 10 Jul 2013 14:35:54 +0200
 

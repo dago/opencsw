@@ -53,7 +53,6 @@ UPSTREAM_MASTER_SITES = $(GNU_MIRROR)
 DISTNAME = $(NAME)-$(BASH_VERSION)
 DISTFILES  = $(NAME)-$(BASH_VERSION).tar.gz
 DISTFILES += changelog.CSW
-DISTFILES += map.bash
 
 PATCHFILE_PREFIX = bash$(subst .,,$(BASH_VERSION))
 PATCHDIRLEVEL = 0
@@ -83,8 +82,6 @@ ETCSHELLS = /opt/csw/bin/bash
 ##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-EXTRA_LD_OPTIONS = -z ignore -Bdirect -M "$(abspath $(WORKDIR)/map.bash)"
 
 include gar/category.mk
 
