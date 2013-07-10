@@ -772,7 +772,7 @@ gz-patch-%:
 # apply normal patches (git format-patch output or old-style diff -r)
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
+	@( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
 		if [ -z "$(NOGITPATCH)" ]; then \
 			cd $(PATCHDIR);\
 			git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*) || exit 1; \
