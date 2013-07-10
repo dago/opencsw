@@ -2,16 +2,17 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pyOpenSSL
-VERSION = 0.11
+VERSION = 0.13
 GARTYPE = v2
 CATEGORIES = python
 
 DESCRIPTION = OpenSSL bindings for Python
 define BLURB
-  Long description
+  OpenSSL bindings for Python
 endef
 
-MASTER_SITES = http://launchpad.net/pyopenssl/main/$(VERSION)/+download/
+MASTER_SITE_DIR = $(shell echo $(NAME) | cut -c 1)
+MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 
 PACKAGES = CSWpy-openssl
