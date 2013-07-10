@@ -21,6 +21,7 @@ DISTFILES   += cswproftpdCENSE      = COPYING
 UFILES_REGEX = $(NAME)-gz
 
 BUILD_DEP_PKGS = CSWmysql-dev
+BUILD_DEP_PKGS += CSWggettext-dev
 
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibssl1-0-0
