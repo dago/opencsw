@@ -31,6 +31,10 @@ endef
 
 PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
 
+BUILD_DEP_PKGS = CSWbdb48devel
+BUILD_DEP_PKGS += CSWsasl-dev
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+
 SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
 CATALOGNAME_CSWcyrusimapd = cyrus_imapd
 PKGFILES_CSWcyrusimapd = $(sbindir)/.*
