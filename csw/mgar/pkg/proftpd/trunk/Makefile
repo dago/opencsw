@@ -1,5 +1,5 @@
 NAME = proftpd
-VERSION = 1.3.4b
+VERSION = 1.3.4d
 CATEGORIES = server
 GARTYPE = v2
 
