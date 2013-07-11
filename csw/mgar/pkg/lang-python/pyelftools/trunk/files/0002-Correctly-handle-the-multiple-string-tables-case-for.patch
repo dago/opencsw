@@ -1,20 +1,20 @@
-From b6a5e70d938ccf3532b5c6ae6de04fd68bfaca39 Mon Sep 17 00:00:00 2001
+From 9bded48f12ea546cc8ef958032000af2097daf6b Mon Sep 17 00:00:00 2001
 From: Yann Rouillard <yann@pleiades.fr.eu.org>
 Date: Tue, 9 Jul 2013 20:22:27 +0200
 Subject: [PATCH] Correctly handle the "multiple string tables" case for string
  resolution in the dynamic section
 
-The string table used to resolve various strings in the dynamic section
-is given by an entry of the dynamic section, the one with the DT_STRTAB tag.
+The index of the string table section used to resolve various strings in the
+dynamic section is given by the sh_link field in the dynamic section header.
 As several string tables with the same name can co-exist in an elf file
-we must explicitely look for the string table pointed by this tag instead
-of relying on a section search by name.
+we must explicitely look for this specific string table instead of
+looking for the first string table in the file.
 ---
- elftools/elf/dynamic.py | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ elftools/elf/dynamic.py | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/elftools/elf/dynamic.py b/elftools/elf/dynamic.py
-index 60fb450..dd150be 100644
+index 60fb450..e36598e 100644
 --- a/elftools/elf/dynamic.py
 +++ b/elftools/elf/dynamic.py
 @@ -28,12 +28,11 @@ class DynamicTag(object):
@@ -22,56 +22,33 @@ index 60fb450..dd150be 100644
           'DT_SUNW_FILTER'])
  
 -    def __init__(self, entry, elffile):
-+    def __init__(self, entry, stringtable=None):
++    def __init__(self, entry, stringtable):
          self.entry = entry
--        if entry.d_tag in self._HANDLED_TAGS:
+         if entry.d_tag in self._HANDLED_TAGS:
 -            dynstr = elffile.get_section_by_name(b'.dynstr')
-+        if entry.d_tag in self._HANDLED_TAGS and stringtable:
              setattr(self, entry.d_tag[3:].lower(),
 -                    dynstr.get_string(self.entry.d_val))
 +                    stringtable.get_string(self.entry.d_val))
  
      def __getitem__(self, name):
          """ Implement dict-like access to entries
-@@ -44,7 +43,7 @@ class DynamicTag(object):
-         return '<DynamicTag (%s): %r>' % (self.entry.d_tag, self.entry)
- 
-     def __str__(self):
--        if self.entry.d_tag in self._HANDLED_TAGS:
-+        if hasattr(self, self.entry.d_tag[3:].lower()):
-             s = '"%s"' % getattr(self, self.entry.d_tag[3:].lower())
-         else:
-             s = '%#x' % self.entry.d_ptr
-@@ -61,6 +60,28 @@ class Dynamic(object):
+@@ -54,13 +53,14 @@ class DynamicTag(object):
+ class Dynamic(object):
+     """ Shared functionality between dynamic sections and segments.
+     """
+-    def __init__(self, stream, elffile, position):
++    def __init__(self, stream, elffile, stringtable, position):
+         self._stream = stream
+         self._elffile = elffile
+         self._elfstructs = elffile.structs
          self._num_tags = -1
          self._offset = position
          self._tagsize = self._elfstructs.Elf_Dyn.sizeof()
-+        # Several string tables can exist in a elf file, so we
-+        # must find the one associated with the dynamic section,
-+        # which is the one pointed at by the DT_STRTAB dynamic tag
-+        self._find_and_set_stringtable()
-+
-+    def _find_and_set_stringtable(self):
-+        """ Find and set the stringtable section associated
-+            with the dynamic section
-+        """
-+        # We don't have yet the stringtable, so we set it to None to be able
-+        # to iterate through tags without trying to do string table resolution
-+        # at that time
-+        self._stringtable = None
-+        for tag in self.iter_tags():
-+            if tag['d_tag'] == 'DT_STRTAB':
-+                # the DT_STRTAB tag points directly to the string table address
-+                # not the section header, so we iterate throught sections until
-+                # we found the one which points to the same offset
-+                for section in self._elffile.iter_sections():
-+                    if section['sh_addr'] == tag['d_val']:
-+                        self._stringtable = section
-+                        return
++        self._stringtable = stringtable
  
      def iter_tags(self, type=None):
          """ Yield all tags (limit to |type| if specified)
-@@ -80,7 +101,7 @@ class Dynamic(object):
+@@ -80,7 +80,7 @@ class Dynamic(object):
              self._elfstructs.Elf_Dyn,
              self._stream,
              stream_pos=offset)
@@ -80,6 +57,33 @@ index 60fb450..dd150be 100644
  
      def num_tags(self):
          """ Number of dynamic tags in the file
+@@ -100,12 +100,24 @@ class DynamicSection(Section, Dynamic):
+     """
+     def __init__(self, header, name, stream, elffile):
+         Section.__init__(self, header, name, stream)
+-        Dynamic.__init__(self, stream, elffile, self['sh_offset'])
++        stringtable = elffile.get_section(header['sh_link'])
++        Dynamic.__init__(self, stream, elffile, stringtable, self['sh_offset'])
+ 
+ 
+ class DynamicSegment(Segment, Dynamic):
+     """ ELF dynamic table segment.  Knows how to process the list of tags.
+     """
+     def __init__(self, header, stream, elffile):
++        # The string table section to be used to resolve string names in
++        # the dynamic tag array is the one pointed at by the sh_link field
++        # of the dynamic section header.
++        # So we must look for the dynamic section contained in the dynamic
++        # segment, we do so by searching for the dynamic section whose content
++        # is located at the same offset as the dynamic segment
++        for section in elffile.iter_sections():
++            if (isinstance(section, DynamicSection) and
++                    section['sh_offset'] == header['p_offset']):
++                stringtable = elffile.get_section(section['sh_link'])
++                break
+         Segment.__init__(self, header, stream)
+-        Dynamic.__init__(self, stream, elffile, self['p_offset'])
++        Dynamic.__init__(self, stream, elffile, stringtable, self['p_offset'])
 -- 
-1.8.3.1
+1.8.1.2
 
