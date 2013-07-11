@@ -35,6 +35,7 @@ BUILD_DEP_PKGS += CSWjasper
 BUILD_DEP_PKGS += CSWliboil
 BUILD_DEP_PKGS += CSWfconfig
 BUILD_DEP_PKGS += CSWftype2
+BUILD_DEP_PKGS += CSWlibsndfile-dev
 
 GARCOMPILER = GCC4
 
