@@ -51,7 +51,6 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibmeanwhile1
 RUNTIME_DEP_PKGS_CSWpidgin += CSWpango
 RUNTIME_DEP_PKGS_CSWpidgin += CSWperl
 RUNTIME_DEP_PKGS_CSWpidgin += CSWpython
-RUNTIME_DEP_PKGS_CSWpidgin += CSWsilctoolkit
 RUNTIME_DEP_PKGS_CSWpidgin += CSWtcl
 RUNTIME_DEP_PKGS_CSWpidgin += CSWtk
 RUNTIME_DEP_PKGS_CSWpidgin += CSWdbus
@@ -72,8 +71,10 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpanelw5
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilc1-1-2
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilcclient1-1-3
 
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibxml2-dev
@@ -81,7 +82,7 @@ BUILD_DEP_PKGS += CSWlibgtk2-dev
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
-BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWfontconfig-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWsunx11devel
@@ -95,7 +96,7 @@ BUILD_DEP_PKGS += CSWtk-dev
 BUILD_DEP_PKGS += CSWlibgnutls-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnspr-dev
-BUILD_DEP_PKGS += CSWmeanwhile-devdev CSWgnutlsdevel
+BUILD_DEP_PKGS += CSWmeanwhile-devdBUILD_DEP_PKGS += CSWlibsilc-devdev CSWgnutlsdevel
 
 PATCHFILES += patch-pidgin-Makefile.in
 PATCHFILES += patch-pidgin-plugin.c
