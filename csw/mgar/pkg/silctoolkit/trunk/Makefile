@@ -13,15 +13,22 @@ PATCHFILES += function.patch
 
 VENDOR_URL = http://silcnet.org/software/download/toolkit/
 
+# This is the same as what Debian used to do:
+# http://packages.debian.org/squeeze/libsilc-1.1-2
+# http://packages.debian.org/squeeze/libsilcclient-1.1-3
+# It seems they now have dropped SILC altogether
 PACKAGES += CSWlibsilc1-1-2
 SPKG_DESC_CSWlibsilc1-1-2 = Secure internet live conferencing toolkit, libsilc-1.1.so.2
-# This is the same as Debian:
-#   http://packages.debian.org/sid/m68k/libsilc-1.1-2/filelist
 PKGFILES_CSWlibsilc1-1-2 += $(call pkgfiles_lib,libsilc-1.1.so.2)
-PKGFILES_CSWlibsilc1-1-2 += $(call pkgfiles_lib,libsilcclient-1.1.so.2)
 PKGFILES_CSWlibsilc1-1-2 += $(call baseisadirs,$(libdir)/silc,.*)
 
 OBSOLETED_BY_CSWlibsilc1-1-2 += CSWsilctoolkit
+
+PACKAGES += CSWlibsilcclient1-1-3
+SPKG_DESC_CSWlibsilcclient1-1-3 += Secure internet live conferencing toolkit, libsilcclient-1.1.so.3
+PKGFILES_CSWlibsilcclient1-1-3 += $(call pkgfiles_lib,libsilcclient-1.1.so.3)
+
+OBSOLETED_BY_CSWlibsilcclient1-1-3 += CSWsilctoolkit
 
 # This is because of the modules in lib/silc/*.so
 CHECKPKG_OVERRIDES_CSWlibsilc1-1-2 += soname-not-part-of-filename
@@ -33,10 +40,7 @@ PACKAGES += CSWlibsilc-dev
 SPKG_DESC_CSWlibsilc-dev = Development files for libsilc-1.1.so.2
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibsilc-dev += CSWlibsilc1-1-2
-
-# False positives
-CHECKPKG_OVERRIDES_CSWlibsilc-dev += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWlibsilc-dev += shared-lib-pkgname-mismatch
+RUNTIME_DEP_PKGS_CSWlibsilc-dev += CSWlibsilcclient1-1-3
 
 BUILD64 = 1
 
