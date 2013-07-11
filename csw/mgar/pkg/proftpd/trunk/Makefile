@@ -46,11 +46,10 @@ MIGRATE_FILES   = proftpd.conf
 
 EXTRA_CONFIGURE_ENshell /usr/xpg4/bin/id -un) install_group=$(shell /usr/xpg4/bin/id -gn)R) install_group=csw
 EXTRA_CONFIGURE_ENV += LD_LIBRARlibexecdir = $(libdir)/proftpd
-localstatedir = /var/run/proftpd
-tatedir --libexecdir
+localstatedir = /var/run/
+
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --libexecdir=$(libdir)/proftpd
-CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
+CONFIGURE_ARGS += --libexecdir=$(libdir)calstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --enable-dso --disable-static
 CONFIGURE_ARGS += --enable-facl
 CONFIGURE_ARGS += --enable-openssl
@@ -113,8 +112,7 @@ post-configure-modulated:
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -d $(DESTDIR)$(docdir)/proftpd
-	ginstall -d $(DESTDIR)$(localstatedir)/proftpd
-	ginstall -d $(DESTDIR)$(localstatedir)/proftpd/logs
+	ginstall -d $(DESTDIR)$(locaedir)/proftpd/logs
 	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(docdir)/proftpd
 	cd $(WORKSRC)/contrib ; cp $(CONTRIBUTILS) $(DESTDIR)$(bindir)
