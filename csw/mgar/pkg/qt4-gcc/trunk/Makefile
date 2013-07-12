@@ -115,7 +115,7 @@ RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibqtcore4
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibqtgui4 += CSWlibfreetype6
-CHECKPKG_OVERRIDES_CSWlibqtgui4 += file-with-bad-content|/usr/share|root/opt/csw/lib/libQtGui.so.4.8.1
+CHECKPKG_OVERRIDES_CSWlibqtgui4 += file-with-bad-content|/usr/share|root/opt/csw/lib/libQtGui.so.$(VERSION)
 
 PACKAGES += CSWqt4-dev
 SPKG_DESC_CSWqt4-dev += $(DESCRIPTION), development files
@@ -208,7 +208,8 @@ SPKG_DESC_CSWlibqtnetwork4libqtnetwork4-gxx += $(DESCRIPTION), libQtNetwork.so.4
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtnetwork4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtnetwork4 += CSWlibqtcore4
-CHECKPKG_OVERRIDES_CSWlibqtnetwork4libqtnetwork4-gxx += file-with-bad-content|/usr/shroot/opt/csw/gxx/lib/libQtNetwork.so.4.8.1
+CHECKPKG_OVERRIDES_CSWlibqtnetwork4libqtnetwork4-gxx += file-with-bad-content|/usr/shroot/opt/csw/gxx/lib$(VERSION)
+tNetwork.so.4.8.1
 
 PACKAGES +
 PKGFILES_CSWlibqtopengl4Wlibqtopengl4-gxx += $(call baseisadirs,$(libdir),libQtOpenGL\.so\.4(\.\d+)*)
