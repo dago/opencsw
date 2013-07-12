@@ -1,7 +1,7 @@
 # $Id$
 
 NAME		=	pyqt
-VERSION		=	4.10.1
+VERSION		=	4.10.2
 CATEGORIES	=	python
 GARTYPE		=	v2
 
@@ -76,11 +76,53 @@ CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|fi
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
+
+# all this hoopla to obtain the file required by projects based on the
+# old PyQt build system providing this script
+$(WORKSRC)/pyqtconfig.py:
+	cd $(WORKSRC) && \
+		rm -f reference && \
+		touch reference && \
+	 	/usr/bin/env -i \
+		  $(CONFIGURE_ENV) \
+			python configure.py \
+				--verbose \
+				--confirm-license \
+				--assume-shared \
+				CFLAGS="${CFLAGS} ${CPPFLAGS}" \
+				CXXFLAGS="${CXXFLAGS} ${CPPFLAGS}" \
+				LFLAGS="${LDFLAGS}" \
+			&& \
+		gfind . -type f -newer reference | \
+			ggrep -v '^[.]/pyqtconfig.py$$' | \
+			xargs rm \
+			&& \
+		rmdir \
+			./phonon \
+			./Qt \
+			./QtCore \
+			./QtDBus \
+			./QtDeclarative \
+			./QtDesigner \
+			./QtGui \
+			./QtHelp \
+			./QtMultimedia \
+			./QtNetwork \
+			./QtOpenGL \
+			./QtScript \
+			./QtScriptTools \
+			./QtSql \
+			./QtSvg \
+			./QtTest \
+			./QtXml \
+			./sip/Qt \
+			&& \
+		rm reference
 
 # assume share because QT_SHARED doesn't get defined in the
 # configuration environment (TODO: explore issue in depth)
-configure-custom:
+configure-custom: $(WORKSRC)/pyqtconfig.py
 	cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
@@ -108,4 +150,6 @@ install-custom:
 	 	/usr/bin/env -i \
 		  $(INSTALL_ENV) \
 			$(MAKE) DESTDIR=$(DESTDIR) INSTALL_ROOT=$(DESTDIR) install
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/pyqtconfig.py $(DESTDIR)/$(libdir)/python/site-packages/PyQt4
+
 	@$(MAKECOOKIE)

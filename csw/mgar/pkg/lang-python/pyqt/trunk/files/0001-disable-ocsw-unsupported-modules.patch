@@ -1,15 +1,14 @@
-From 7ad6eea32906e2cf2f0f016b48854a4cb5d247ff Mon Sep 17 00:00:00 2001
+From a61b2572022b23ee0f6f6b1c3cebf786d850e62f Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Mon, 6 May 2013 14:23:33 +0200
+Date: Wed, 10 Jul 2013 19:14:25 +0200
 Subject: [PATCH] disable ocsw unsupported modules
 
 ---
- configure-ng.py | 15 ---------------
- configure.py    | 25 +------------------------
- 2 files changed, 1 insertion(+), 39 deletions(-)
+ configure-ng.py | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
 diff --git a/configure-ng.py b/configure-ng.py
-index ad7b594..0a64412 100644
+index 100ba59..3ee4977 100644
 --- a/configure-ng.py
 +++ b/configure-ng.py
 @@ -73,10 +73,8 @@ class ModuleMetadata:
@@ -68,89 +67,16 @@ index ad7b594..0a64412 100644
  
      if target_config.qt_version < 0x050000:
          check_module(target_config, verbose, 'phonon', 'phonon/videowidget.h',
-diff --git a/configure.py b/configure.py
-index 81eb0e1..2934fad 100644
---- a/configure.py
-+++ b/configure.py
-@@ -366,14 +366,9 @@ class ConfigurePyQt4:
-                 extra_libs=sql_libs)
-         check_module("QtSvg", "qsvgwidget.h", "new QSvgWidget()")
-         check_module("QtTest", "QtTest", "QTest::qSleep(0)")
--        check_module("QtWebKit", "qwebpage.h", "new QWebPage()")
-         check_module("QtXml", "qdom.h", "new QDomDocument()")
--        check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
-         check_module("phonon", "phonon/videowidget.h",
-                 "new Phonon::VideoWidget()")
--        check_module("QtAssistant", "qassistantclient.h",
--                "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
--                extra_libs=ass_libs)
+@@ -969,9 +954,6 @@ def check_modules(target_config, verbose):
+     else:
+         inform("QtDesigner module disabled with static Qt libraries.")
  
-         if not qt_shared:
-             sipconfig.inform("QtDesigner module disabled with static Qt libraries.")
-@@ -381,8 +376,6 @@ class ConfigurePyQt4:
-             check_module("QtDesigner", "QExtensionFactory",
-                     "new QExtensionFactory()")
- 
--        check_module("QAxContainer", "qaxobject.h", "new QAxObject()")
+-    check_module(target_config, verbose, 'QAxContainer', 'qaxobject.h',
+-            'new QAxObject()')
 -
-         if os.path.isdir(os.path.join(src_dir, "dbus")):
-             check_dbus()
- 
-@@ -507,21 +500,12 @@ class ConfigurePyQt4:
-         if "QtTest" in pyqt_modules:
-             generate_code("QtTest")
- 
--        if "QtWebKit" in pyqt_modules:
--            generate_code("QtWebKit")
--
-         if "QtXml" in pyqt_modules:
-             generate_code("QtXml")
- 
--        if "QtXmlPatterns" in pyqt_modules:
--            generate_code("QtXmlPatterns")
--
-         if "phonon" in pyqt_modules:
-             generate_code("phonon")
- 
--        if "QtAssistant" in pyqt_modules:
--            generate_code("QtAssistant")
--
-         if "QtDesigner" in pyqt_modules:
-             qpy_inc_dir, qpy_lib_dir, qpy_lib = self._qpy_directories("QtDesigner", "qpydesigner")
- 
-@@ -535,9 +519,6 @@ class ConfigurePyQt4:
-                 generate_code("QtDesigner", extra_include_dirs=[qpy_inc_dir],
-                         extra_lib_dirs=[qpy_lib_dir], extra_libs=[qpy_lib])
- 
--        if "QAxContainer" in pyqt_modules:
--            generate_code("QAxContainer")
--
-         # Generate the composite module.
-         qtmod_sipdir = os.path.join("sip", "Qt")
-         mk_clean_dir(qtmod_sipdir)
-@@ -1277,7 +1258,7 @@ def compile_qt_program(name, mname, extra_include_dirs=None, extra_lib_dirs=None
-     opengl = (mname == "QtOpenGL")
- 
-     qt = [mname]
--    if mname in ("QtAssistant", "QtHelp", "QtOpenGL", "QtWebKit"):
-+    if mname in ("QtHelp", "QtOpenGL"):
-         qt.append("QtCore")
- 
-     makefile = sipconfig.ProgramMakefile(sipcfg, console=1, qt=qt, warnings=0,
-@@ -1576,13 +1557,9 @@ def needed_qt_libs(mname, qt_libs):
-         "QtSql": ["QtGui"],
-         "QtSvg": ["QtGui"],
-         "QtTest": ["QtGui"],
--        "QtWebKit": ["QtNetwork", "QtGui"],
-         "QtXml": ["QtCore"],
--        "QtXmlPatterns": ["QtNetwork", "QtCore"],
-         "phonon": ["QtGui"],
--        "QtAssistant": ["QtNetwork", "QtGui"],
-         "QtDesigner": ["QtGui"],
--        "QAxContainer": ["QtGui"]
-     }
- 
-     # Handle the dependencies first.
+     # Qt v4.7 was current when we added support for QtDBus and we didn't bother
+     # properly versioning its API.
+     if target_config.qt_version >= 0x040700:
 -- 
-1.8.1.4
+1.8.3.1
 
