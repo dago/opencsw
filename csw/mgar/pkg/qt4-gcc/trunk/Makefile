@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = qt
-VERSION = 4.8.1
+VERSION = 4.8.4
 GARTYPE = v2
 MAJOR = $(basename $(basename $(VERSION)))
 CATEGORIES = lib
@@ -23,9 +23,11 @@ REINPLACE_USRLOCAL += src/network/ssl/qsslsocket_openssl.cpp
 # replace SSL cert location
 REINPLACE_USRLOCAL += src/network/ssl/qsslsocket.cpp
 REINPLACE_USRLOCAL += src/3rdparty/webkit/Source/WebCore/plugins/PluginDatabase.cpp
+
 PATCHFILES += mkspec-csw.patch
 # bug in 4.8.1, see: https//bugreports.qt-project.org/browse/QTBUG-25281
-PATCHFILES += 0001-shapeinputILES +=BUILD_DEP_PKGS += CSWlibssl-dev
+# PATCHFILES += 0001-shapeinput.patch
+=BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWunixodbc-dev
 BUILD_DEP_PKGS += CSWpostgresql-dev
 BUILD_DEP_PKGS += CSWfreetds-devsBUILD_DEP_PKGS += CSWmysql-devsl/qsslsocket.cpp
