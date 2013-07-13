@@ -9,15 +9,17 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES  =xzDISTNAME).tar.bz2
 
 # Upstream develops on gcc only 
 PATCHFILES += pdiff.patch
 PATCHFILES += perceptualdiff.patch
 
-VENDOR_URL = http://librsvg.sourceforge.net 
+s://wiki.gnome.org/LibRsvg
 
 LICENSE = COPYING.LIB
+
+GARCOMPILER = SOS12U3NSE = COPYING.LIB
 
 # We need the new glib only available on Solaris 10
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
@@ -29,17 +31,12 @@ PACKAGES += CSWlibrsvg2-2
 SPKG_DESC_CSWlibrsvg2-2 = Scalable Vector Graphics library, librsvg-2.so.2
 PKGFILES_CSWlibrsvg2-2 += $(call pkgfiles_lib,librsvg-2.so.2)
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWgtk2
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibcroco
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibrsvg2-2 +=RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgdk-pixbuf2-2 += CSWlibglib2-0-0
 OBSOLETED_BY_CSWlibrsvg2-2  = CSWlibrsvg
 
 PACKAGES += CSWlibrsvg-dev
@@ -55,41 +52,22 @@ PACKAGES += CSWrsvg
 SPKG_DESC_CSWrsvg += SVG to raster image conversion utility
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibrsvg2-2
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWrsvg += CSWftype2
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWrsvg += CSWgtk2
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWrsvg += CSWpango
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibcroco
-RUNTIME_DEP_PKGS_CSWrsvg += CSWfconfig
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_cairo2SWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_Cdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgtk-x11-rsvg += CSWlibgio2-0-0
 
 PACKAGES += CSWlibrsvg-gnome
 SPKG_DESC_CSWlibrsvg-gnome += Scalable Vector Graphics library - Gnome module
 PKGFILES_CSWlibrsvg-gnome += $(call baseisadirs,$(libdir),gtk-2.0/.*)
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibrsvg2-2
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWpango
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibcroco
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibrsvgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgtk-x11-nome += CSWlibgio2-0-0
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes --enable-static=no
@@ -103,4 +81,4 @@ STRIP_LIBTOOL = 1
 
 EXTRA_MERGE_DIRS_isa-extra = $(bindir)
 
-include gar/category.mk
+include
