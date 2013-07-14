@@ -1,7 +1,7 @@
-NAME = imagemagick
-VERSION = 6.7.3
-GARSUBREV = 10
-GARTYPE = v2
+NAME      = imagemagick
+VERSION   = 6.8.6
+GARSUBREV = 5
+GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
 define BLURB
@@ -20,81 +20,51 @@ PATCHFILES += 0001-Do-not-strip-norunpath.patch
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # Compilation breaks with internal error on SOS12 and SOS12U1
-GARCOMPILER = SOS12U2
+GARCOMPILER = SOS12U3
 
 VENDOR_URL = http://www.imagemagick.org
 
 LICENSE = LICENSE
 
-BUILD_DEP_PKGS += CSWdjvulibredevel
 BUILD_DEP_PKGS += CSWgraphvizdevel
-BUILD_DEP_PKGS += CSWilmbasedevel
 BUILD_DEP_PKGS += CSWliblcms-dev
 BUILD_DEP_PKGS += CSWlibcairo-dev
-BUILD_DEP_PKGS += CSWliblqrdevel
 BUILD_DEP_PKGS += CSWlibwmf-dev
 BUILD_DEP_PKGS += CSWliblzma-dev
 BUILD_DEP_PKGS += CSWopenexrdevel
 BUILD_DEP_PKGS += CSWlibwebp-dev
 BUILD_DEP_PKGS += CSWlibfpx-dev
+BUILD_DEP_PKGS += CSWlibdjvulibre-dev
+BUILD_DEP_PKGS += CSWgraphvizdevel
+BUILD_DEP_PKGS += CSWilmbase-dev
+BUILD_DEP_PKGS += CSWliblqr-dev
+BUILD_DEP_PKGS += CSWlibjasper-dev
 
-PACKAGES += CSWlibmagick++5
-PKGFILES_CSWlibmagick++5 += $(call pkgfiles_lib,libMagick++.so.5)
-SPKG_DESC_CSWlibmagick++5 += Library from ImageMagick, libMagick++.so.5
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibtiff3
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibmagickcore5
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibmagickwand5
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagick++5 += CSWliblzma5
+PACKAGES += CSWlibmagickcore6q16hdri1
+CATALOGNAME_CSWlibmagickcore6q16hdri1 = libmagickcore6q16hdri1
+SPKG_DESC_CSWlibmagickcore6q16hdri1 += Library from ImageMagick, libMagickCore-6.Q16HDRI.so.1
+PKGFILES_CSWlibmagickcore6q16hdri1 += $(call baseisadirs,$(libdir),libMagickCore-6\.Q16HDRI\.so\.1\.0\.0)
+PKGFILES_CSWlibmagickcore6q16hdri1 += $(call baseisadirs,$(libdir),libMagickCore-6\.Q16HDRI\.so\.1(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWliblqr1-0
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibfftw3-3
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibglib2-0-0
 
-PACKAGES += CSWlibmagickcore5
-PKGFILES_CSWlibmagickcore5 += $(call pkgfiles_lib,libMagickCore.so.5)
-SPKG_DESC_CSWlibmagickcore5 += Library from ImageMagick, libMagickCore.so.5
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibtiff3
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagickcore5 += CSWliblzma5
+# For some reason, on sparc only, this gets linked against glib2
+# Override is for x86 only
+CHECKPKG_OVERRIDES_CSWlibmagickcore6q16hdri1 += surplus-dependency|CSWlibglib2-0-0
 
-# Gnuplot is detected by the magic cookie #!/usr/local/bin/gnuplot
-# XXX: Is this correct?
-# CHECKPKG_OVERRIDES_CSWlibmagickcore5 += file-with-bad-content|/usr/local|root/opt/csw/lib/libMagickCore.so.5.0.0
-
-PACKAGES += CSWlibmagickwand5
-PKGFILES_CSWlibmagickwand5 += $(call pkgfiles_lib,libMagickWand.so.5)
-SPKG_DESC_CSWlibmagickwand5 += Library from ImageMagick, libMagickWand.so.5
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibtiff3
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibmagickcore5
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagickwand5 += CSWliblzma5
+PACKAGES += CSWlibmagickwand6q16hdri1
+CATALOGNAME_CSWlibmagickwand6q16hdri1 = libmagickwand6q16hdri1
+SPKG_DESC_CSWlibmagickwand6q16hdri1 += Library from ImageMagick, libMagickWand-6.Q16HDRI.so.1
+PKGFILES_CSWlibmagickwand6q16hdri1 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.1\.0\.0)
+PKGFILES_CSWlibmagickwand6q16hdri1 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.1(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibmagickcore6q16hdri1
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
@@ -102,53 +72,35 @@ SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
 PKGFILES_DEVEL_MAN3_MANPAGE =
 PKGFILES_CSWimagemagick-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWimagemagick-dev += $(docdir)/.*
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++5
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore5
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand5
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWimagemagick
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore6q16hdri1
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand6q16hdri1
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWperl
-# This is all in /opt/csw/share/doc
-CHECKPKG_OVERRIDES_CSWimagemagick-dev += file-with-bad-content
 
 PACKAGES += CSWimagemagick
 SPKG_DESC_CSWimagemagick = A comprehensive package supporting automated and interative manipulation of images
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibmagickcore5
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibmagickwand5
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibmagickcore6q16hdri1
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibmagickwand6q16hdri1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWilmbase
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfpx1
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWjasper
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWfconfig
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWjbigkit
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcdt5
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibz1
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWftype2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWopenexrrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWdjvulibrert
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgraph5
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWpango
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgvc6
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmf0-2-7
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblzma5
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwebp0
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwebp4
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjbig2
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibdjvulibre21
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjasper1
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg2-2
 
 PACKAGES += CSWpm-image-magick
 SPKG_DESC_CSWpm-image-magick = Image::Magick: Perl binding for Imagemagick
@@ -156,49 +108,42 @@ PKGFILES_CSWpm-image-magick += $(libdir)/perl/.*
 PKGFILES_CSWpm-image-magick += $(mandir)/.*\.3perl
 
 RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWperl
-RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWlibmagickcore5
+RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWlibmagickcore6q16hdri1
+
+# No binary in that package, since no 64 bit perl
+CHECKPKG_OVERRIDES_CSWpm-image-magick += 64-bit-binaries-missing
 
 REINPLACE_USRLOCAL += config/mime.xml
 
-REINPLACEMENTS += gnuplot
-REINPLACE_MATCH_gnuplot = /usr/local/bin/gnuplot
-REINPLACE_WITH_gnuplot = $(bindir)/gnuplot
-REINPLACE_FILES_gnuplot += magick/magic.c
-
-# This is part of ImageMagick and should be automatically adjusted during configure time
-REINPLACEMENTS += display
-REINPLACE_MATCH_display = /usr/local/bin/display
-REINPLACE_WITH_display = $(bindir)/display
-REINPLACE_FILES_display += magick/delegate.c
-
-REINPLACEMENTS += nostdcpplib
-REINPLACE_MATCH_nostdcpplib = -lstdc\+\+
-REINPLACE_WITH_nostdcpplib =
-REINPLACE_FILES_nostdcpplib = Makefile.in
-
-EXTRA_LINKER_FLAGS = -norunpath
-
-# This is for libdps, skipping this line makes the following tests fail:
-#   FAIL: tests/validate-formats-on-disk.sh
-#   FAIL: Magick++/tests/coderInfo.sh
-EXTRA_LIB = /usr/openwin/lib
+EXTRA_LINKER_FLAGS = -Bdirect -norunpath -lsocket -lnsl
+EXTRA_LD_OPTIONS = -z nolazyload
+EXTRA_CFLAGS = -xc99 -norunpath
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
 # This should be reworked after a general rework of ISALIST in GAR
 RUNPATH_ISALIST = $(libpath_install)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-shared --disable-static
-CONFIGURE_ARGS += --enable-hdri
-CONFIGURE_ARGS += --with-dps=yes
+CONFIGURE_ARGS += --enable-shared 
+CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --enable-maintainer-mode
 
-# Ghostscript lib is linked to Sun X11
-# CONFIGURE_ARGS += --with-gslib=no
+# This one causes the Q16HDR in the lib name
+CONFIGURE_ARGS += --enable-hdri
+
+# At this point, adding the C++ bits might cause more grief than good
+CONFIGURE_ARGS += --without-magick-plus-plus
+
+# For some reason, on x86, DPS is only available as a 32 bit lib, and
+# really, it's not the future anymore: drop it.
+CONFIGURE_ARGS += --without-dps
 
 CONFIGURE_ARGS += --with-modules=yes
 CONFIGURE_ARGS += --disable-silent-rules
+CONFIGURE_ARGS += --with-wmf
+CONFIGURE_ARGS += --with-rsvg
 
-# Until librsvg,graphviz and perl is 64bit
+# Until graphviz and perl is 64bit
 CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS-64 += --without-gvc
 CONFIGURE_ARGS-64 += --without-perl
@@ -212,6 +157,11 @@ SKIPTEST ?= 1
 
 BUILD64 = 1
 ISAEXEC = 1
+
+REINPLACEMENTS += gnuplot
+REINPLACE_MATCH_gnuplot = /usr/local/bin/gnuplot
+REINPLACE_WITH_gnuplot = $(bindir)/gnuplot
+REINPLACE_FILES_gnuplot += magick/magic.c
 
 # Only remove libtool files from the public lib directory, keep the private ones for libtool dlopn
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
