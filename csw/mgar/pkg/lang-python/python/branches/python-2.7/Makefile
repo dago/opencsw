@@ -1,12 +1,13 @@
 # $Id$
 
 NAME = Python
-VERSION = 2.7.3
+VERSION = 2.7.5
 VER = 2.7
 DVER = 2-7
 UVER = 2_7
 PVER = python$(VER)
-CVER = 27
+# I wish to replace 2.6 by 2.7:
+#CVER = 27
 
 # Known issues:
 #
@@ -50,10 +51,12 @@ PATCHFILES += setup.diff
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
-SKIPTEST = 1
+#SKIPTEST = 1
+TEST_SCRIPTS = custom
 
 BUILD64 = 1
 
+GARCOMPILER	=	GNU
 EXTRA_INC += $(prefix)/bdb47/include
 EXTRA_LIB += $(prefix)/bdb47/lib
 
@@ -155,6 +158,10 @@ EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/unittest/test.*
 
 BUILD_DEP_PKGS += CSWlibffi-dev
 BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibreadline-dev
+BUILD_DEP_PKGS += CSWlibsqlite3-dev
+BUILD_DEP_PKGS += CSWlibgdbm-dev
+BUILD_DEP_PKGS += CSWlibgcrypt-dev
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
@@ -239,6 +246,10 @@ post-configure-modulated:
 		gsed -i -e 's+/usr/share+/opt/csw/share+g' $(WORKSRC)/$${f}; \
 	done
 	@$(MAKECOOKIE)
+
+test-custom:
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) test
+	$(MAKECOOKIE)
 
 post-merge-modulated:
 	echo "This is post-merge-modulated, which should not work. But it does."
