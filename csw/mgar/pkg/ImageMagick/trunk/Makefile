@@ -66,6 +66,14 @@ PKGFILES_CSWlibmagickwand6q16hdri1 += $(call baseisadirs,$(libdir),libMagickWand
 PKGFILES_CSWlibmagickwand6q16hdri1 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.1(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibmagickcore6q16hdri1
 
+PACKAGES += CSWlibmagick++6q16hdri1
+CATALOGNAME_CSWlibmagick++6q16hdri1 = libmagick++6q16hdri1
+PKGFILES_CSWlibmagick++6q16hdri1 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.1\.0\.0)
+PKGFILES_CSWlibmagick++6q16hdri1 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibmagick++6q16hdri1 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri1 += CSWlibmagickcore6q16hdri1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri1 += CSWlibmagickwand6q16hdri1
+
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
 # In man3 there is just the manpage for the Perl module
@@ -75,6 +83,7 @@ PKGFILES_CSWimagemagick-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWimagemagick
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore6q16hdri1
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand6q16hdri1
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri1
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWperl
 
 PACKAGES += CSWimagemagick
@@ -117,7 +126,8 @@ REINPLACE_USRLOCAL += config/mime.xml
 
 EXTRA_LINKER_FLAGS = -Bdirect -norunpath -lsocket -lnsl
 EXTRA_LD_OPTIONS = -z nolazyload
-EXTRA_CFLAGS = -xc99 -norunpath
+EXTRA_CFLAGS   = -xc99 -norunpath
+EXTRA_CXXFLAGS = -xnorunpath
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
 # This should be reworked after a general rework of ISALIST in GAR
@@ -130,9 +140,6 @@ CONFIGURE_ARGS += --enable-maintainer-mode
 
 # This one causes the Q16HDR in the lib name
 CONFIGURE_ARGS += --enable-hdri
-
-# At this point, adding the C++ bits might cause more grief than good
-CONFIGURE_ARGS += --without-magick-plus-plus
 
 # For some reason, on x86, DPS is only available as a 32 bit lib, and
 # really, it's not the future anymore: drop it.
