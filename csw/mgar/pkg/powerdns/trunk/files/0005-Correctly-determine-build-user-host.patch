@@ -1,0 +1,39 @@
+From f63be3823949306e6e10760358a4d645dafe75d2 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Mon, 15 Jul 2013 00:22:19 +0200
+Subject: [PATCH] Correctly determine build user@host
+
+---
+ pdns/Makefile.am | 2 +-
+ pdns/Makefile.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pdns/Makefile.am b/pdns/Makefile.am
+index a9157bb..b52815d 100644
+--- a/pdns/Makefile.am
++++ b/pdns/Makefile.am
+@@ -297,7 +297,7 @@ backends/bind/bindparser.cc:
+ 
+ 
+ build_date=$(shell LC_TIME=C date '+%Y%m%d%H%M%S')
+-build_host=$(shell id -u -n)@$(shell hostname -f)
++build_host=$(shell /usr/xpg4/bin/id -u -n)@$(shell uname -n)
+ if RELEASE_BUILD
+ pdns_version=$(PACKAGE_VERSION)
+ dist_host=$(DIST_HOST)
+diff --git a/pdns/Makefile.in b/pdns/Makefile.in
+index 9ff359c..a2b62e0 100644
+--- a/pdns/Makefile.in
++++ b/pdns/Makefile.in
+@@ -922,7 +922,7 @@ misc.cc unix_utility.cc qtype.cc
+ pdns_control_LDFLAGS = @THREADFLAGS@
+ TESTS_ENVIRONMENT = env BOOST_TEST_LOG_LEVEL=message
+ build_date = $(shell LC_TIME=C date '+%Y%m%d%H%M%S')
+-build_host = $(shell id -u -n)@$(shell hostname -f)
++build_host = $(shell /usr/xpg4/bin/id -u -n)@$(shell uname -n)
+ # Do the test in shell, so we don't confuse automake with ifeq/ifneq.
+ @RELEASE_BUILD_FALSE@pdns_version = $(shell test -z "$(git_version)" && echo UNKNOWN || echo "git-$(git_version)")
+ @RELEASE_BUILD_TRUE@pdns_version = $(PACKAGE_VERSION)
+-- 
+1.8.3.1
+

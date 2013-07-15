@@ -1,0 +1,29 @@
+From f96765da7184034ecf9962a98425ff88326f3541 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Mon, 15 Jul 2013 00:24:19 +0200
+Subject: [PATCH 7/7] Correct #defines
+
+---
+ pdns/nameserver.cc | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/pdns/nameserver.cc b/pdns/nameserver.cc
+index 3efe3ca..ceb4c87 100644
+--- a/pdns/nameserver.cc
++++ b/pdns/nameserver.cc
+@@ -76,10 +76,9 @@ extern StatBag S;
+     The main() of PowerDNS can be found in receiver.cc - start reading there for further insights into the operation of the nameserver
+ */
+ 
+-#ifdef IP_PKTINFO
++#if defined (IP_PKTINFO)
+   #define GEN_IP_PKTINFO IP_PKTINFO
+-#endif
+-#ifdef IP_RECVDSTADDR
++#elif defined (IP_RECVDSTADDR)
+   #define GEN_IP_PKTINFO IP_RECVDSTADDR 
+ #endif
+ 
+-- 
+1.8.3.1
+
