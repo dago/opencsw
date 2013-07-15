@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = pdns
-VERSION = 3.1
+VERSION = 3.3
 CATEGORIES = server
 GARTYPE = v2
 
@@ -32,7 +32,9 @@ SPKG_SOURCEURL = http://www.powerdns.com/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 DISTFILES += cswpdns
-PATCHFILES += 0003-Use-gar-instead-of-ar-for-ranlib.patch
+PATCHFILES += 0003-Use-gar-instead-of-PATCHFILES += 0004-Use-PF_UNIX-instead-of-AF_LOCAL.patch
+PATCHFILES += 0005-Correctly-determine-build-user-host.patch
+PATCHFILES += 0006-Correct-definesead-of-ar-for-ranlib.patch
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 
@@ -55,16 +57,12 @@ REINPLACE_FILES_usrlocallib = pdns/pdns.conf-dist
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc$(prefix)/pdns
 CONFIGURE_ARGS += --libdir=$(prefix)/lib/pdns
-CONFIGURE_ARGS += --disable-recursor
 CONFIGURE_ARGS += --with-lua=no
 CONFIGURE_ARGS += --with-boost=/opt/csw/gxx
 CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-mysql-lib=$(prefix)/lib
 CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
 CONFIGURE_ARGS += --with-sqlite3
-CONFIGURE_ARGS += --with-sqlite=$(prefix)
-CONFIGURE_ARGS += --with-sqlite-lib=$(prefix)/lib
-CONFIGURE_ARGS += --with-sqlite-includes=$(prefix)/include
 CONFIGURE_ARGS += --with-modules="ldap geo gmysql gsqlite3"
 
 EXTRA_CONFIGURE_ENV += "PKG_CONFIG=/opt/csw/bin/pkg-config"
@@ -72,17 +70,18 @@ EXTRA_CONFIGURE_ENV += "PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig"
 
 # Prepend Boost 1.49 installation in paths so we pick up the correct one
 EXTRA_INC = /opt/csw/gxx/include
-LDFLAGS += -L/opt/csw/gxx/lib
+LDFLAGS +=LDFLAGS += -Wl,-B,direct
+LDFLAGS += -Wl,-z,ignore= -L/opt/csw/gxx/lib
 
 # PowerDNS does not have any "test" target
 SKIPTEST = 1
 
 PACKAGES = CSWpdns
 CATALOGNAME_CSWpdns = powerdns
-SPKG_DESC_CSWpdns = PowerDNS
+SPKG_DESC#_CSWpdns = PowerDNS
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWpdns += CSWlibmysqlclient15
+RUNTIME_DEP_PKGS_CSWpdns +8 CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
@@ -96,7 +95,7 @@ BUILD_DEP_PGKS_CSWpdns += CSWopenldap-dev
 BUILD_DEP_PGKS_CSWpdns += CSWlibz-dev
 
 # These are not errors!
-CHECKPKG_OVERRIDES_CSWpdns += catalogname-does-not-match-pkgname|pkgname=CSWpdns|catalogname=powerdns|expected-catalogname=pdns
+CHECKPKG_OVERRIDES_CSWpdns += catalogname-does-not-match-pkgname|pkgname=CSWpdns|catalogname=powerdns|expectCHECKPKG_OVERRIDES_CSWpdns += soname-unusedted-catalogname=pdns
 
 INITSMF = /etc/opt/csw/init.d/cswpdns
 PRESERVECONF = /etc/opt/csw/pdns/pdns.conf
@@ -109,4 +108,4 @@ post-install-modulated:
 	@mv $(DESTDIR)/etc$(prefix)/pdns/pdns.conf-dist $(DESTDIR)/etc$(prefix)/pdns/pdns.conf
 	@$(MAKECOOKIE)
 
-include gar/category.mk
+incl

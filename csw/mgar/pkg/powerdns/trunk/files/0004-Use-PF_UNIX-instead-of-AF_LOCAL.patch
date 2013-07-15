@@ -1,0 +1,25 @@
+From 45fdb1b0623f3e8fafc101046e07d1cf78ae4479 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Sun, 14 Jul 2013 23:14:56 +0200
+Subject: [PATCH] Use PF_UNIX instead of AF_LOCAL
+
+---
+ modules/pipebackend/coprocess.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/pipebackend/coprocess.cc b/modules/pipebackend/coprocess.cc
+index 8f9f454..ee9c42b 100644
+--- a/modules/pipebackend/coprocess.cc
++++ b/modules/pipebackend/coprocess.cc
+@@ -166,7 +166,7 @@ void CoProcess::sendReceive(const string &snd, string &rcv)
+ 
+ UnixRemote::UnixRemote(const string& path, int timeout) 
+ {
+-  d_fd = socket(AF_LOCAL, SOCK_STREAM, 0);
++  d_fd = socket(PF_UNIX, SOCK_STREAM, 0);
+   if(d_fd < 0)
+     throw AhuException("Unable to create UNIX domain socket: "+string(strerror(errno)));
+ 
+-- 
+1.8.3.1
+
