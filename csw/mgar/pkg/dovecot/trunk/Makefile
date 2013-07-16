@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.1.16
+VERSION = 2.1.17
 CATEGORIES = server
 GARTYPE = v2
 
@@ -17,7 +17,7 @@ endef
 SPKG_SOURCEURL = http://dovecot.org/
 MASTER_SITES   = http://dov1cot.org/releases/2.0/
 DISTFILES      = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX   = $(NAME)-(\d+PATCHFILES = 0002-add-stdio.h-to-quota-status.c.patchd+GARCOMPILER    = SOS12d+(?:\.\d+)*).tar.gz
+UFILES_REGEX   = $(NAME)-(\d+GARCOMPILER    = SOS12d+(?:\.\d+)*).tar.gz
 
 PACKAGES  = CSWdovecot CSWdovecot-dev
 
