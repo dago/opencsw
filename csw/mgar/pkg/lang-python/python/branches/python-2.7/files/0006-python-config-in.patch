@@ -1,0 +1,24 @@
+From 220ff3d78b11ae5e1f00c42f20b77d8898156ca1 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 15 Jul 2013 14:41:26 +0200
+Subject: [PATCH] python config in
+
+based on python-config-in.diff from 2.6 with adaptations
+---
+ Misc/python-config.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Misc/python-config.in b/Misc/python-config.in
+index ca9857a..40d5357 100644
+--- a/Misc/python-config.in
++++ b/Misc/python-config.in
+@@ -53,5 +53,6 @@ for opt in opt_flags:
+                 libs.insert(0, '-L' + getvar('LIBPL'))
+             if not getvar('PYTHONFRAMEWORK'):
+                 libs.extend(getvar('LINKFORSHARED').split())
++            libs.insert(0, '-R/opt/csw/lib/$ISALIST -L/opt/csw/lib')
+         print ' '.join(libs)
+ 
+-- 
+1.8.3.1
+

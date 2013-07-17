@@ -1,0 +1,26 @@
+From 0dc3e5cd576a09af3d88a00c473291b7c2cb0d3f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 15 Jul 2013 12:58:31 +0200
+Subject: [PATCH] faqwiz
+
+based on faqwiz.diff from 2.6
+---
+ Tools/faqwiz/faqconf.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Tools/faqwiz/faqconf.py b/Tools/faqwiz/faqconf.py
+index d1acd80..05d060a 100644
+--- a/Tools/faqwiz/faqconf.py
++++ b/Tools/faqwiz/faqconf.py
+@@ -21,7 +21,7 @@ OWNERNAME = "FAQ owner"                 # Name for feedback
+ OWNEREMAIL = "nobody@anywhere.org"      # Email for feedback
+ HOMEURL = "http://www.python.org"       # Related home page
+ HOMENAME = "Python home"                # Name of related home page
+-RCSBINDIR = "/usr/local/bin/"           # Directory containing RCS commands
++RCSBINDIR = "/opt/csw/bin/"           # Directory containing RCS commands
+                                         # (must end in a slash)
+ 
+ # Parameters you can normally leave alone
+-- 
+1.8.3.1
+
