@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.1.17
+VERSION = 2.2.4
 CATEGORIES = server
 GARTYPE = v2
 
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://dovecot.org/
-MASTER_SITES   = http://dov1cot.org/releases/2.0/
+MASTER_SITES   = http://dov2cot.org/releases/2.0/
 DISTFILES      = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX   = $(NAME)-(\d+GARCOMPILER    = SOS12d+(?:\.\d+)*).tar.gz
 
