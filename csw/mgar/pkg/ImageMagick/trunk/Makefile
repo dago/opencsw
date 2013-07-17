@@ -15,12 +15,12 @@ MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
 DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 DISTFILES  = $(DISTNAME).tar.xz
 
-PATCHFILES += 0001-Do-not-strip-norunpath.patch
+# Not needed anymore with GCC, I think
+#PATCHFILES += 0001-Do-not-strip-norunpath.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-# Compilation breaks with internal error on SOS12 and SOS12U1
-GARCOMPILER = SOS12U3
+GARCOMPILER = GCC4
 
 VENDOR_URL = http://www.imagemagick.org
 
@@ -124,10 +124,8 @@ CHECKPKG_OVERRIDES_CSWpm-image-magick += 64-bit-binaries-missing
 
 REINPLACE_USRLOCAL += config/mime.xml
 
-EXTRA_LINKER_FLAGS = -Bdirect -norunpath -lsocket -lnsl
+EXTRA_LINKER_FLAGS = -lsocket -lnsl
 EXTRA_LD_OPTIONS = -z nolazyload
-EXTRA_CFLAGS   = -xc99 -norunpath
-EXTRA_CXXFLAGS = -xnorunpath
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
 # This should be reworked after a general rework of ISALIST in GAR
@@ -151,9 +149,9 @@ CONFIGURE_ARGS += --with-wmf
 CONFIGURE_ARGS += --with-rsvg
 
 # Until graphviz and perl is 64bit
-CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
+#CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS-64 += --without-gvc
-CONFIGURE_ARGS-64 += --without-perl
+CONFIGURE_ARGS += --without-perl
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 # One test is failing:
