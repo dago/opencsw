@@ -14,6 +14,7 @@ endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxmlDISTNAME).tar.gz
 # PATCHFILES = 0001-Forcefully-disable-the-symbol-versioning.patch
+# see Bug: https://www.opencsw.org/mantis/view.php?id=5093
 PATCHFILES = 0002-fix-PyCapsulate-for-python-version-less-2.7.patch
 
 sysconfdir = /etc/opt/csw
