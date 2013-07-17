@@ -1,0 +1,111 @@
+From d2205faf194d7cc3adfc11a0f8f58e6e75f4da7a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 15 Jul 2013 11:43:50 +0200
+Subject: [PATCH] setup
+
+based on the 2.6 site.diff with adaptations
+---
+ setup.py | 36 ++++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 716f08e..fc58444 100644
+--- a/setup.py
++++ b/setup.py
+@@ -436,9 +436,9 @@ class PyBuildExt(build_ext):
+             os.unlink(tmpfile)
+ 
+     def detect_modules(self):
+-        # Ensure that /usr/local is always used
+-        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++        # Ensure that /opt/csw is always used
++        add_dir_to_list(self.compiler.library_dirs, '/opt/csw/lib')
++        add_dir_to_list(self.compiler.include_dirs, '/opt/csw/include')
+         self.add_gcc_paths()
+         self.add_multiarch_paths()
+ 
+@@ -783,7 +783,7 @@ class PyBuildExt(build_ext):
+                                libraries=math_libs) )
+         # Detect SSL support for the socket module (via _ssl)
+         search_for_ssl_incs_in = [
+-                              '/usr/local/ssl/include',
++                              '/opt/csw/ssl/include',
+                               '/usr/contrib/ssl/include/'
+                              ]
+         ssl_incs = find_file('openssl/ssl.h', inc_dirs,
+@@ -795,7 +795,7 @@ class PyBuildExt(build_ext):
+             if krb5_h:
+                 ssl_incs += krb5_h
+         ssl_libs = find_library_file(self.compiler, 'ssl',lib_dirs,
+-                                     ['/usr/local/ssl/lib',
++                                     ['/opt/csw/ssl/lib',
+                                       '/usr/contrib/ssl/lib/'
+                                      ] )
+ 
+@@ -920,10 +920,10 @@ class PyBuildExt(build_ext):
+         # top of the normal inc_dirs.
+         db_inc_paths = [
+             '/usr/include/db4',
+-            '/usr/local/include/db4',
++            '/opt/csw/include/db4',
+             '/opt/sfw/include/db4',
+             '/usr/include/db3',
+-            '/usr/local/include/db3',
++            '/opt/csw/include/db3',
+             '/opt/sfw/include/db3',
+             # Fink defaults (http://fink.sourceforge.net/)
+             '/sw/include/db4',
+@@ -933,8 +933,8 @@ class PyBuildExt(build_ext):
+         for x in gen_db_minor_ver_nums(4):
+             db_inc_paths.append('/usr/include/db4%d' % x)
+             db_inc_paths.append('/usr/include/db4.%d' % x)
+-            db_inc_paths.append('/usr/local/BerkeleyDB.4.%d/include' % x)
+-            db_inc_paths.append('/usr/local/include/db4%d' % x)
++            db_inc_paths.append('/opt/csw/BerkeleyDB.4.%d/include' % x)
++            db_inc_paths.append('/opt/csw/include/db4%d' % x)
+             db_inc_paths.append('/pkg/db-4.%d/include' % x)
+             db_inc_paths.append('/opt/db-4.%d/include' % x)
+             # MacPorts default (http://www.macports.org/)
+@@ -942,8 +942,8 @@ class PyBuildExt(build_ext):
+         # 3.x minor number specific paths
+         for x in gen_db_minor_ver_nums(3):
+             db_inc_paths.append('/usr/include/db3%d' % x)
+-            db_inc_paths.append('/usr/local/BerkeleyDB.3.%d/include' % x)
+-            db_inc_paths.append('/usr/local/include/db3%d' % x)
++            db_inc_paths.append('/opt/csw/BerkeleyDB.3.%d/include' % x)
++            db_inc_paths.append('/opt/csw/include/db3%d' % x)
+             db_inc_paths.append('/pkg/db-3.%d/include' % x)
+             db_inc_paths.append('/opt/db-3.%d/include' % x)
+ 
+@@ -1094,9 +1094,9 @@ class PyBuildExt(build_ext):
+         sqlite_inc_paths = [ '/usr/include',
+                              '/usr/include/sqlite',
+                              '/usr/include/sqlite3',
+-                             '/usr/local/include',
+-                             '/usr/local/include/sqlite',
+-                             '/usr/local/include/sqlite3',
++                             '/opt/csw/include',
++                             '/opt/csw/include/sqlite',
++                             '/opt/csw/include/sqlite3',
+                            ]
+         if cross_compiling:
+             sqlite_inc_paths = []
+@@ -1555,6 +1555,14 @@ class PyBuildExt(build_ext):
+             macros = dict()
+             libraries = []
+ 
++        elif host_platform == 'sunos5':
++            macros = dict(                  # Solaris
++                HAVE_SEM_OPEN=0,        # Not Implemented
++                HAVE_SEM_TIMEDWAIT=0,   # Not Implemented
++                HAVE_FD_TRANSFER=1,
++                )
++            libraries = ['rt']
++
+         else:                                   # Linux and other unices
+             macros = dict()
+             libraries = ['rt']
+-- 
+1.8.3.1
+
