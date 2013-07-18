@@ -1,0 +1,36 @@
+From bfb169f465df815ce2858acfd9d813b42606aea0 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 18 Jul 2013 11:00:52 +0200
+Subject: [PATCH] remove linux specials 2nd
+
+---
+ dist/snmptrapd-init.d | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/dist/snmptrapd-init.d b/dist/snmptrapd-init.d
+index 8225242..7e3c98c 100644
+--- a/dist/snmptrapd-init.d
++++ b/dist/snmptrapd-init.d
+@@ -6,18 +6,9 @@
+ # chkconfig: - 25 75
+ # description: snmptrapd is net-snmp SNMPTRAP daemon.
+ 
+-# Source function library.
+-. /etc/rc.d/init.d/functions
+-
+-# Source networking configuration.
+-. /etc/sysconfig/network
+-
+-# Check that networking is up.
+-[ "${NETWORKING}" = "no" ] && exit 0
+-
+ RETVAL=0
+ name="snmptrapd"
+-prog="/usr/local/sbin/snmptrapd"
++prog="/opt/csw/sbin/snmptrapd"
+ 
+ [ -x $prog ] || exit 0
+ 
+-- 
+1.8.3.1
+
