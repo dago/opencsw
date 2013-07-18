@@ -1,0 +1,39 @@
+From c45b6c9eafe714fb4f2fbaf2ebeecd1e2213dc0f Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 18 Jul 2013 10:58:52 +0200
+Subject: [PATCH] remove linux specials
+
+---
+ dist/snmpd-init.d | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
+
+diff --git a/dist/snmpd-init.d b/dist/snmpd-init.d
+index bd15b00..2ea583f 100755
+--- a/dist/snmpd-init.d
++++ b/dist/snmpd-init.d
+@@ -6,20 +6,11 @@
+ # chkconfig: - 26 74
+ # description: snmpd is net-snmp SNMP daemon.
+ 
+-# Source function library.
+-. /etc/rc.d/init.d/functions
+-
+-# Source networking configuration.
+-. /etc/sysconfig/network
+-
+-# Check that networking is up.
+-[ "${NETWORKING}" = "no" ] && exit 0
+-
+ RETVAL=0
+ name="snmpd"
+-prog="/usr/local/sbin/snmpd"
++prog="/opt/csw/sbin/snmpd"
+ 
+-[ -x $prog -a -f /usr/local/share/snmp/snmpd.conf ] || exit 0
++[ -x $prog -a -f /etc/opt/csw/snmp/snmpd.conf ] || exit 0
+ 
+ start() {
+         # Start daemons.
+-- 
+1.8.3.1
+
