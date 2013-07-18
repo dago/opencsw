@@ -7,7 +7,7 @@ DVER = 2-7
 UVER = 2_7
 PVER = python$(VER)
 # I wish to replace 2.6 by 2.7:
-#CVER = 27
+CVER = 27
 
 # Known issues:
 #
@@ -38,27 +38,27 @@ DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += pyport.h
 
 # Patches
-PATCHFILES += 0001-setup.patch
-PATCHFILES += 0002-faqwiz.patch
-PATCHFILES += 0003-makesetup.patch
-PATCHFILES += 0004-modules.patch
-PATCHFILES += 0005-multiprocess.patch
-PATCHFILES += 0006-python-config-in.patch
-PATCHFILES += 0007-pyport.patch
-# after experiments and failures I think that with the upstream
-# byzantine build system using a generic /opt/csw/lib/python directory
-# is not such a good idea, e.g. there are interferences in early
-# stages of the build when not all shared objects are built,
-# e.g. cStringIO, and the system falls back on the 2.6 provided one,
-# if the previous version is installed, and havoc ensues... Building
-# without previous Python installed works.
-PATCHFILES += 0008-site.patch
+# PATCHFILES += 0001-setup.patch
+# PATCHFILES += 0002-faqwiz.patch
+# PATCHFILES += 0003-makesetup.patch
+# PATCHFILES += 0004-modules.patch
+# PATCHFILES += 0005-multiprocess.patch
+# PATCHFILES += 0006-python-config-in.patch
+# PATCHFILES += 0007-pyport.patch
+# # after experiments and failures I think that with the upstream
+# # byzantine build system using a generic /opt/csw/lib/python directory
+# # is not such a good idea, e.g. there are interferences in early
+# # stages of the build when not all shared objects are built,
+# # e.g. cStringIO, and the system falls back on the 2.6 provided one,
+# # if the previous version is installed, and havoc ensues... Building
+# # without previous Python installed works.
+# PATCHFILES += 0008-site.patch
 
-# TODO: evaluate the following patches from this branch files directory:
-# 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
-# getpass.patch
-# patch_2.diff.txt
-# and review the complement patches from the trunk's files directory
+# # TODO: evaluate the following patches from this branch files directory:
+# # 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
+# # getpass.patch
+# # patch_2.diff.txt
+# # and review the complement patches from the trunk's files directory
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
@@ -157,16 +157,16 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
 
 # Don't merge test files.
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/test
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/test/.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/bsddb/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/ctypes/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/email/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/distutils/tests.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/json/tests.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/lib2to3/tests.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/sqlite3/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/unittest/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/test
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/test/.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/bsddb/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/ctypes/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/email/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/distutils/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/json/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/lib2to3/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/sqlite3/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/unittest/test.*
 
 BUILD_DEP_PKGS += CSWlibffi-dev
 BUILD_DEP_PKGS += CSWggettext-dev
