@@ -55,7 +55,6 @@ RUNTIME_DEP_PKGS_CSWautogen		+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWautogen		+=	CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWautogen		+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWautogen		+=	CSWlibintl8
-CHECKPKG_OVERRIDES_CSWautogen	+=	file-with-bad-content|/usr/share|root/opt/csw/share/autogen/mdoc2texi
 CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/autogen|is|not|directly|bound|to|soname|libgc.so.1
 CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/autogen|is|not|directly|bound|to|soname|libgen.so.1
 CHECKPKG_OVERRIDES_CSWautogen	+=	no-direct-binding|/opt/csw/bin/autogen|is|not|directly|bound|to|soname|libguile-2.0.so.22
@@ -85,8 +84,6 @@ OBSOLETED_BY_CSWautogen-doc			=	CSWautogendoc
 CATALOGNAME_CSWautogendoc			=	autogen_doc_stub
 ARCHALL_CSWautogen-doc				=	1
 CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/autogen.info-1
-CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/doc/autogen/autogen.ps
-CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/doc/autogen/autogen.dvi
 
 PACKAGES						+=	CSWlibopts25
 CATALOGNAME_CSWlibopts25		=	libopts25
@@ -97,8 +94,8 @@ OBSOLETED_BY_CSWlibopts25		=	CSWautogenrt
 RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibintl8
 CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.14.0|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.14.0|is|not|directly|bound|to|soname|libgen.so.1
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.14.0|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libgen.so.1
+CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libintl.so.8
 
 PACKAGES							+=	CSWautogen-dev
 CATALOGNAME_CSWautogen-dev 			=	autogen_dev
