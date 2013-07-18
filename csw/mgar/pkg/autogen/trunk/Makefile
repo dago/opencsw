@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.17.4
+VERSION = 5.18
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)/rel$(VERSION)/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  = $(DISTNAME).tar.xz
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -113,7 +113,7 @@ ARCHALL_CSWautogen-dev				=	1
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
 build-nominal:
 	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR)
