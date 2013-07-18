@@ -1,6 +1,6 @@
 NAME      = imagemagick
 VERSION   = 6.8.6
-GARSUBREV = 5
+GARSUBREV = 6
 GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -53,11 +53,8 @@ RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibglib2-0-0
-
-# For some reason, on sparc only, this gets linked against glib2
-# Override is for x86 only
-CHECKPKG_OVERRIDES_CSWlibmagickcore6q16hdri1 += surplus-dependency|CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibgomp1
+RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri1 += CSWlibgcc-s1
 
 PACKAGES += CSWlibmagickwand6q16hdri1
 CATALOGNAME_CSWlibmagickwand6q16hdri1 = libmagickwand6q16hdri1
@@ -65,14 +62,18 @@ SPKG_DESC_CSWlibmagickwand6q16hdri1 += Library from ImageMagick, libMagickWand-6
 PKGFILES_CSWlibmagickwand6q16hdri1 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.1\.0\.0)
 PKGFILES_CSWlibmagickwand6q16hdri1 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.1(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibmagickcore6q16hdri1
+RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibgomp1
+RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibgcc-s1
 
-PACKAGES += CSWlibmagick++6q16hdri1
-CATALOGNAME_CSWlibmagick++6q16hdri1 = libmagick++6q16hdri1
-PKGFILES_CSWlibmagick++6q16hdri1 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.1\.0\.0)
-PKGFILES_CSWlibmagick++6q16hdri1 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.1(\.\d+)*)
-SPKG_DESC_CSWlibmagick++6q16hdri1 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri1 += CSWlibmagickcore6q16hdri1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri1 += CSWlibmagickwand6q16hdri1
+PACKAGES += CSWlibmagick++6q16hdri2
+CATALOGNAME_CSWlibmagick++6q16hdri2 = libmagick++6q16hdri2
+PKGFILES_CSWlibmagick++6q16hdri2 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.2\.0\.0)
+PKGFILES_CSWlibmagick++6q16hdri2 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.2(\.\d+)*)
+SPKG_DESC_CSWlibmagick++6q16hdri2 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.2
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibmagickcore6q16hdri1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibmagickwand6q16hdri1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibstdc++6
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
@@ -83,7 +84,7 @@ PKGFILES_CSWimagemagick-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWimagemagick
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore6q16hdri1
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand6q16hdri1
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri1
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri2
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWperl
 
 PACKAGES += CSWimagemagick
@@ -110,21 +111,22 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjasper1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg2-2
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgcc-s1
 
-PACKAGES += CSWpm-image-magick
-SPKG_DESC_CSWpm-image-magick = Image::Magick: Perl binding for Imagemagick
-PKGFILES_CSWpm-image-magick += $(libdir)/perl/.*
-PKGFILES_CSWpm-image-magick += $(mandir)/.*\.3perl
+#PACKAGES += CSWpm-image-magick
+#SPKG_DESC_CSWpm-image-magick = Image::Magick: Perl binding for Imagemagick
+#PKGFILES_CSWpm-image-magick += $(libdir)/perl/.*
+#PKGFILES_CSWpm-image-magick += $(mandir)/.*\.3perl
 
-RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWperl
-RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWlibmagickcore6q16hdri1
+#RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWperl
+#RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWlibmagickcore6q16hdri1
 
 # No binary in that package, since no 64 bit perl
-CHECKPKG_OVERRIDES_CSWpm-image-magick += 64-bit-binaries-missing
+#CHECKPKG_OVERRIDES_CSWpm-image-magick += 64-bit-binaries-missing
 
 REINPLACE_USRLOCAL += config/mime.xml
 
-EXTRA_LINKER_FLAGS = -lsocket -lnsl
+EXTRA_LINKER_FLAGS = -Bdirect -lsocket -lnsl
 EXTRA_LD_OPTIONS = -z nolazyload
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
@@ -148,10 +150,12 @@ CONFIGURE_ARGS += --disable-silent-rules
 CONFIGURE_ARGS += --with-wmf
 CONFIGURE_ARGS += --with-rsvg
 
-# Until graphviz and perl is 64bit
-#CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
-CONFIGURE_ARGS-64 += --without-gvc
+# Disable perl completely for now
 CONFIGURE_ARGS += --without-perl
+# Until graphviz and perl is 64bit
+CONFIGURE_ARGS-64 += --without-gvc
+#CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
+#CONFIGURE_ARGS-64 += --without-perl
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 # One test is failing:
