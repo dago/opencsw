@@ -83,7 +83,6 @@ PKGFILES_CSWautogen-doc				+=	/opt/csw/share/doc/$(NAME)/$(NAME)[.].*
 OBSOLETED_BY_CSWautogen-doc			=	CSWautogendoc
 CATALOGNAME_CSWautogendoc			=	autogen_doc_stub
 ARCHALL_CSWautogen-doc				=	1
-CHECKPKG_OVERRIDES_CSWautogen-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/autogen.info-1
 
 PACKAGES						+=	CSWlibopts25
 CATALOGNAME_CSWlibopts25		=	libopts25
@@ -93,7 +92,7 @@ SPKG_DESC_CSWlibopts25			+=	$(DESCRIPTION), libopts.so.25
 OBSOLETED_BY_CSWlibopts25		=	CSWautogenrt
 RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibintl8
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.14.0|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libgcc_s.so.1
 CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libgen.so.1
 CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libintl.so.8
 
