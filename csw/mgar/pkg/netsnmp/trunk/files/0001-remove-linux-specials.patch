@@ -1,17 +1,18 @@
-From c45b6c9eafe714fb4f2fbaf2ebeecd1e2213dc0f Mon Sep 17 00:00:00 2001
+From 449bf468f7d928c06c1ce893b36ba100e92abd1b Mon Sep 17 00:00:00 2001
 From: Carsten Grzemba <cgrzemba@opencsw.org>
-Date: Thu, 18 Jul 2013 10:58:52 +0200
-Subject: [PATCH] remove linux specials
+Date: Thu, 18 Jul 2013 16:59:00 +0200
+Subject: [PATCH] remove-linux-specials
 
 ---
- dist/snmpd-init.d | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ dist/snmpd-init.d     | 17 ++++-------------
+ dist/snmptrapd-init.d | 15 +++------------
+ 2 files changed, 7 insertions(+), 25 deletions(-)
 
 diff --git a/dist/snmpd-init.d b/dist/snmpd-init.d
-index bd15b00..2ea583f 100755
+index bd15b00..ba4140b 100755
 --- a/dist/snmpd-init.d
 +++ b/dist/snmpd-init.d
-@@ -6,20 +6,11 @@
+@@ -6,25 +6,16 @@
  # chkconfig: - 26 74
  # description: snmpd is net-snmp SNMP daemon.
  
@@ -34,6 +35,62 @@ index bd15b00..2ea583f 100755
  
  start() {
          # Start daemons.
+         echo -n $"Starting $name: "
+-        daemon $prog
++        $prog
+ 	RETVAL=$?
+         echo
+         [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$name
+@@ -34,7 +25,7 @@ start() {
+ stop() {
+         # Stop daemons.
+         echo -n $"Shutting down $name: "
+-	killproc $prog
++	pkill `basename $prog`
+ 	RETVAL=$?
+         echo
+         [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$name
+diff --git a/dist/snmptrapd-init.d b/dist/snmptrapd-init.d
+index 8225242..b61debc 100644
+--- a/dist/snmptrapd-init.d
++++ b/dist/snmptrapd-init.d
+@@ -6,25 +6,16 @@
+ # chkconfig: - 25 75
+ # description: snmptrapd is net-snmp SNMPTRAP daemon.
+ 
+-# Source function library.
+-. /etc/rc.d/init.d/functions
+-
+-# Source networking configuration.
+-. /etc/sysconfig/network
+-
+-# Check that networking is up.
+-[ "${NETWORKING}" = "no" ] && exit 0
+-
+ RETVAL=0
+ name="snmptrapd"
+-prog="/usr/local/sbin/snmptrapd"
++prog="/opt/csw/sbin/snmptrapd"
+ 
+ [ -x $prog ] || exit 0
+ 
+ start() {
+         # Start daemons.
+         echo -n $"Starting $name: "
+-        daemon $prog
++        $prog
+ 	RETVAL=$?
+         echo
+         [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$name
+@@ -34,7 +25,7 @@ start() {
+ stop() {
+         # Stop daemons.
+         echo -n $"Shutting down $name: "
+-	killproc $prog
++	pkill `basename $prog`
+ 	RETVAL=$?
+         echo
+         [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$name
 -- 
 1.8.3.1
 

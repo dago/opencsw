@@ -31,7 +31,7 @@ PATCHFILES = perl_makefiles.diff
 # Patch for python module
 PATCHFILES += Makefile.in.diff
 PATCHFILES PATCHFILES += 0001-remove-linux-specials.patch
-PATCHFILES += 0001-remove-linux-specials-2ndHFILES += setup-py.patch
++= setup-py.patch
 
 VENDOR_URL = http://www.net-snmp.org/
 
