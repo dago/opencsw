@@ -1,0 +1,13 @@
+diff --git a/backend/pdf/ev-poppler.cc b/backend/pdf/ev-poppler.cc
+index fef0738..fe53c5a 100644
+--- a/backend/pdf/ev-poppler.cc
++++ b/backend/pdf/ev-poppler.cc
+@@ -1986,7 +1986,7 @@ pdf_selection_get_selected_text (EvSelection     *selection,
+ 	r.x2 = points->x2;
+ 	r.y2 = height - points->y1;
+ 
+-	retval = poppler_page_get_text (poppler_page,
++	retval = poppler_page_get_selected_text (poppler_page,
+ 					(PopplerSelectionStyle)style,
+ 					&r);
+ 

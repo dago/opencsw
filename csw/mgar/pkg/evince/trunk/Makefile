@@ -90,7 +90,6 @@ SPKG_DESC_CSWevince += $(DESCRIPTION), base
 RUNTIME_DEP_PKGS_CSWevince += CSWlibevdocument2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibevview2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibdjvulibre21
-RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler-glib5
 RUNTIME_DEP_PKGS_CSWevince += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWevince += CSWlibcairo2
@@ -106,6 +105,8 @@ RUNTIME_DEP_PKGS_CSWevince += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibtiff3
 RUNTIME_DEP_PKGS_CSWevince += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler-glib8
+RUNTIME_DEP_PKGS_CSWevince += CSWlibkpathsea6
 # RUNTIME_DEP_PKGS_CSWevince += CSWgnomevfs2
 # RUNTIME_DEP_PKGS_CSWevince += CSWnautilus
 # RUNTIME_DEP_PKGS_CSWevince += CSWdbus
@@ -249,8 +250,13 @@ BUILD_DEP_PKGS += CSWpy-libxml2
 include gar/category.mk
 
 pre-configure-modulated:
-	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
-	cd $(WORKSRC) && autoreconf
+	( cd $(WORKSRC); \
+	[ -f ltmain.sh ] && rm ltmain.sh || true; \
+	libtoolize --copy --force; \
+	aclocal-1.13 --force; \
+	autoconf --force; \
+	autoheader --force; \
+	automake-1.13 --add-missing --copy --force-missing  )
 	@$(MAKECOOKIE)
 
 PATH := /opt/csw/gnu:$(PATH)
