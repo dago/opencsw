@@ -40,8 +40,17 @@ PATCHFILES += faqwiz.diff
 PATCHFILES += makesetup.diff
 PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
-PATCHFILES += pyport.diff
+PATCHFIL
+# <maciej> This patch is an abomination. It should have never been done.
+# e.g.: # http://lists.opencsw.org/pipermail/users/2012-October/009332.html
+#
+# The only reason it is still here is that once done it's really hard to undo,
+# because it affects every single python module and python package, so to
+# change this you have to rebuild the whole Python world.
+#
+# I really hope we never ever do this again.
 PATCHFILES += site.diff
+FILES += site.diff
 PATCHFILES += python-config-in.diff
 PATCHFILES += setup.diff
 PATCHFILES += 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
