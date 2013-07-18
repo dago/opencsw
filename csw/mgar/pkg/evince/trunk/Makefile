@@ -22,6 +22,7 @@ GARCOMPILER=SOS12U3
 STRIP_LIBTOOL = 1
 
 PATCHFILES += 0001-honor-aclocal_flags.patch
+PATCHFILES += 0002-poppler-api-changed.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -249,15 +250,15 @@ BUILD_DEP_PKGS += CSWpy-libxml2
 
 include gar/category.mk
 
-pre-configure-modulated:
-	( cd $(WORKSRC); \
-	[ -f ltmain.sh ] && rm ltmain.sh || true; \
-	libtoolize --copy --force; \
-	aclocal-1.13 --force; \
-	autoconf --force; \
-	autoheader --force; \
-	automake-1.13 --add-missing --copy --force-missing  )
-	@$(MAKECOOKIE)
+# pre-configure:
+# 	( cd $(WORKSRC); \
+# 	[ -f ltmain.sh ] && rm ltmain.sh || true; \
+# 	libtoolize --copy --force; \
+##  	aclocal-1.11 --force; \
+# 	autoconf --force; \
+# 	autoheader --force; \
+# 	automake-1.11 --add-missing --copy --force-missing  )
+# 	@$(MAKECOOKIE)
 
 PATH := /opt/csw/gnu:$(PATH)
 AM_DEFAULT_VERBOSITY := 1
