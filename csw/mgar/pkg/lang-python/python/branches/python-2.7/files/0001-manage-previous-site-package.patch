@@ -1,0 +1,25 @@
+From 6e0c0e2e1d3fd1284b4c002c04898dc5da6cf859 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 18 Jul 2013 17:46:39 +0200
+Subject: [PATCH] manage previous site package
+
+this is to support the transition between an unversiond installation tree
+---
+ Lib/site.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Lib/site.py b/Lib/site.py
+index f1b0ae8..ebe09e3 100644
+--- a/Lib/site.py
++++ b/Lib/site.py
+@@ -292,6 +292,7 @@ def getsitepackages():
+                                         "python" + sys.version[:3],
+                                         "site-packages"))
+             sitepackages.append(os.path.join(prefix, "lib", "site-python"))
++            sitepackages.append(os.path.join(prefix, "lib", "python"))
+         else:
+             sitepackages.append(prefix)
+             sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
+-- 
+1.8.3.1
+
