@@ -6,7 +6,6 @@ VER = 2.7
 DVER = 2-7
 UVER = 2_7
 PVER = python$(VER)
-# I wish to replace 2.6 by 2.7:
 CVER = 27
 
 # Known issues:
@@ -37,28 +36,7 @@ UFILES_REGEX = $(VER)\.\d+
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += pyport.h
 
-# Patches
-# PATCHFILES += 0001-setup.patch
-# PATCHFILES += 0002-faqwiz.patch
-# PATCHFILES += 0003-makesetup.patch
-# PATCHFILES += 0004-modules.patch
-# PATCHFILES += 0005-multiprocess.patch
-# PATCHFILES += 0006-python-config-in.patch
-# PATCHFILES += 0007-pyport.patch
-# # after experiments and failures I think that with the upstream
-# # byzantine build system using a generic /opt/csw/lib/python directory
-# # is not such a good idea, e.g. there are interferences in early
-# # stages of the build when not all shared objects are built,
-# # e.g. cStringIO, and the system falls back on the 2.6 provided one,
-# # if the previous version is installed, and havoc ensues... Building
-# # without previous Python installed works.
-# PATCHFILES += 0008-site.patch
-
-# # TODO: evaluate the following patches from this branch files directory:
-# # 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
-# # getpass.patch
-# # patch_2.diff.txt
-# # and review the complement patches from the trunk's files directory
+PATCHFILES += 0001-manage-previous-site-package.patch
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
