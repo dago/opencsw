@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = gsl
-VERSION = 1.15
+VERSION = 1.16
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -77,4 +77,4 @@ test-custom:
 
 # this is private and not available publicly
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	$(HOME)/bin/ocswdeplist -
