@@ -44,7 +44,10 @@ PATCHFILES += 0001-manage-previous-site-package.patch
 TEST_SCRIPTS = custom
 
 # for a faster turn-around:
-#BUILD64 = 1
+#
+# For the current 64-bit building issue: http://bugs.python.org/issue18083
+# A possible fix is to rename plat-linux to plat-<multiarch-tuple>
+# BUILD64 = 1
 
 GARCOMPILER	=	GNU
 GARFLAVOR = DBG
@@ -57,8 +60,7 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 # pkgchk -L CSWlibffi-dev
 # (...)
 # /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
-# EXTRA_LINKER_FLAGS += -L$(libdir)/ffi
-# The above doesn't work; we need to put the flag in front of LINKER_FLAGS.
+PREPEND_LINKER_FLAGS += -L$(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -153,6 +155,12 @@ BUILD_DEP_PKGS += CSWlibsqlite3-dev
 BUILD_DEP_PKGS += CSWlibgdbm-dev
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 
+# Allow to choose the default Python version.
+# Python 2.6 is the default one as of 2013-07-21.
+ALTERNATIVES_CSWpython$(CVER) = python-2.7
+ALTERNATIVE_python-symlink = $(bindir)/python python-symlink $(bindir)/python2.7 270
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
+
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
 
@@ -185,7 +193,7 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|b
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/$(PVER)/lib-dynload/_gdbm.so
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += surplus-dependency|CSWgdbm
 
-CHECKPKG_OVERRIDES_CSWpython27 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += file-with-bad-content
 
 # To avoid file collisions with CSWpython:
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/idle,$(bindir)/idle-$(VER),'
@@ -193,36 +201,33 @@ EXTRA_PAX_ARGS += -s ',^\.$(bindir)/smtpd.py,$(bindir)/smtpd.py-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/pydoc,$(bindir)/pydoc-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/2to3,$(bindir)/2to3-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER),'
-#EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
 
 EXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-32.h,p"
 EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-64.h,p"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
 
-CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
-CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
-CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_hashlib.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0
-CHECKPKG_OVERRIDES_CSWpython27-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_tkinter.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27-tk += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_hashlib.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_tkinter.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += no-direct-binding|/opt/csw/lib/python2.7/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
 
 
 # 64-bit overrides
-CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
-CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
-CHECKPKG_OVERRIDES_CSWpython27 += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_hashlib.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27 += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0
-CHECKPKG_OVERRIDES_CSWpython27 += missing-dependency|CSWlibffi4
-CHECKPKG_OVERRIDES_CSWpython27-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_tkinter.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython27-tk += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_hashlib.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += missing-dependency|CSWlibffi4
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_tkinter.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += no-direct-binding|/opt/csw/lib/sparcv9/python2.7/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
 
 include gar/category.mk
-
-LINKER_FLAGS := -L$(libdir)/ffi $(LINKER_FLAGS)
 
 post-configure-modulated:
 	for f in Modules/Setup \
