@@ -49,7 +49,10 @@ PATCHFIL
 # change this you have to rebuild the whole Python world.
 #
 # I really hope we never ever do this again.
-PATCHFILES += site.diff
+# PATCHFILES += site.diff
+#
+# Let's try to break free:
+PATCHFILES += 0015-Look-for-modules-in-the-unversioned-directory.patch
 FILES += site.diff
 PATCHFILES += python-config-in.diff
 PATCHFILES += setup.diff
@@ -95,7 +98,14 @@ CHECKPKG_OVERRIDES_CSWpython += soname-unused|libncursesw.so.5|is|needed|by|/opt
 CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libncursesw.so.5
 CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_curses_panel.so|is|not|directly|bound|to|soname|libcurses.so.1
 CHECKPKG_OVERRIDES_CSWpython += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python/lib-dynload/_hashlib.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0PORTS = BASECFLAGS
+CHECKPKG_OVERRIDES_CSWpython += no-direct-binding|/opt/csw/lib/python/lib-dynload/_hashlib.so|is|not|directly|bound|to|soname|libssl.so.1.0.0PO# With the versioned directory:
+CHECKPKG_OVERRIDES_CSWpython-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python2.6/lib-dynload/_tkinter.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/test/test_subprocess.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/test/test_posixpath.py
+CHECKPKG_OVERRIDES_CSWpython += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/python2.6/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/python2.6/lib-dynload/_curses_panel.so|but|never|used
+CHECKPKG_OVERRIDES_CSWpython += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python2.6/lib-dynload/_hashlib.so|but|never|used
+PORTS = BASECFLAGS
 
 NOISALIST = 1
 CONFIGURE_AGS  = $(DIRPATHS) 
@@ -159,31 +169,41 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += # Don't merge test files.
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/test
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/test/.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/bsddb/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/ctypes/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/email/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/distutils/tests.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/json/tests.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/lib2to3/tests.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/sqlite3/test.*
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python/unittest/test.*
-= CSWpython$(CVER)
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/test
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/test/.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/bsddb/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/ctypes/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/email/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/distutils/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/json/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/lib2to3/tests.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/sqlite3/test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python2.6/unittest/test.*
 
-BUILD_DEP_PKGS += Cython2-5-1-0
+BUILD_DEP_PKGS += CSWlibffi-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibreadline-dev
+BUILD_DEP_PKGS += CSWlibsqlite3-dev
+BUILD_DEP_PKGS += CSWlibgdbm-dev
+BUILD_DEP_PKGS += CSWlibgcrypt-dev
+
+# Allow to choose the default Python version.
+# Python 2.6 is the default one as of 2013-07-21.
+ALTERNATIVES_CSWpython$(CVER) = python-2.6
+ALTERNATIVE_python-2.6 = $(bindir)/python python-symlink $(bindir)/python2.6 2600
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/pythonS += Cython2-5-1-0
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWwith-bad-content
 
 CATALOGNAME_CSWidle$(CVER)         = idle
 CATALOGNAME_CSWpython$(CVER)       = python
-CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_dev
+CATALOGNAME_CSW Wpython$(CVER)-dev = python$(CVER)_dev
 CATALOGNAME_CSWpython$(CVER)-tk    =ython$(CVER)_test
 
 SPKG_DESC_CSWidle$(CVER)         = Python IDE
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
-SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
+SPKG_DESC_CSW Wpython$(CVER)-dev = Development Files for Python
 SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Inthon Test modules
 
 LICENSE = LICENSE
@@ -196,11 +216,11 @@ CHECKPKG_OVERRIDE-devython$(CVER)-test  += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDEStk   S_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDE-tk  python$(CVER)-test  += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-noGARCOMPILER = SOS12U3not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-noGARCOMPILER = SOS12U3noot-start-with-py_
 
 includEXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-32.h,p"
 EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-64.h,p"
-EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
+EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
 de gar/category.mk
 
 post-configure-modulated:
@@ -217,8 +237,8 @@ post-configure-modulated:
 post-merge-modulated:
 	# Some checks
 	# Prevent things like https://www.opencsw.org/mantis/view.php?id=5040
-	test ! -f $(PKGROOT)/opt/csw/lib/python/lib-dynload/_socket_failed.so
-	test -f $(PKGROOT)/opt/csw/lib/python/lib-dynload/_socket.so
+	test ! -f $(PKGROOT)/opt/csw/lib/python2.6/lib-dynload/_socket_failed.so
+	test -f $(PKGROOT)/opt/csw/lib/python2.6/lib-dynload/_socket.so
 	# This is post-merge-modulated, which should not work. But it does.
 	ginstall -m 755 -d $(PKGROOT)$(includedir)/python$(VER)
 	ginstall -m 644 $(WORKDIR)/pyport.h $(PKGROOT)$(includedir)/python$(VER)/pyport.h
