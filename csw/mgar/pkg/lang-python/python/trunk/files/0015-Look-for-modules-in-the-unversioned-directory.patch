@@ -1,0 +1,26 @@
+From d8a8549dd74e0da789fba02a444b7c617f86f420 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 22 Jul 2013 01:08:16 +0200
+Subject: [PATCH] Look for modules in the unversioned directory.
+
+---
+ Lib/site.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Lib/site.py b/Lib/site.py
+index 9afbc09..598d8a8 100644
+--- a/Lib/site.py
++++ b/Lib/site.py
+@@ -268,6 +268,9 @@ def addsitepackages(known_paths):
+             sitedirs.append(os.path.join(prefix, "lib",
+                                         "python" + sys.version[:3],
+                                         "site-packages"))
++            # To find modules in the unversioned directory.
++            sitedirs.append(os.path.join(prefix, "lib",
++                                         "python", "site-packages"))
+             sitedirs.append(os.path.join(prefix, "lib", "site-python"))
+         else:
+             sitedirs.append(prefix)
+-- 
+1.8.3.1
+
