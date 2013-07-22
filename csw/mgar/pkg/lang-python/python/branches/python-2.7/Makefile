@@ -50,7 +50,7 @@ TEST_SCRIPTS = custom
 # BUILD64 = 1
 
 GARCOMPILER	=	GNU
-GARFLAVOR = DBG
+
 EXTRA_INC += $(prefix)/bdb47/include
 EXTRA_LIB += $(prefix)/bdb47/lib
 
