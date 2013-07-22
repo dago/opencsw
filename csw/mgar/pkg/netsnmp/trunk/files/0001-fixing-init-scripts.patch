@@ -1,0 +1,170 @@
+From a3fb8b0eaa2b8105120b689240cb64f66e80c89b Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Mon, 22 Jul 2013 12:13:13 +0200
+Subject: [PATCH] fixing init scripts
+
+---
+ dist/snmpd-init.d     | 43 +++++++++++++++++++++----------------------
+ dist/snmptrapd-init.d | 31 ++++++++++---------------------
+ 2 files changed, 31 insertions(+), 43 deletions(-)
+
+diff --git a/dist/snmpd-init.d b/dist/snmpd-init.d
+index bd15b00..9e25f6c 100755
+--- a/dist/snmpd-init.d
++++ b/dist/snmpd-init.d
+@@ -6,38 +6,29 @@
+ # chkconfig: - 26 74
+ # description: snmpd is net-snmp SNMP daemon.
+ 
+-# Source function library.
+-. /etc/rc.d/init.d/functions
+-
+-# Source networking configuration.
+-. /etc/sysconfig/network
+-
+-# Check that networking is up.
+-[ "${NETWORKING}" = "no" ] && exit 0
+-
+ RETVAL=0
+-name="snmpd"
+-prog="/usr/local/sbin/snmpd"
+-
+-[ -x $prog -a -f /usr/local/share/snmp/snmpd.conf ] || exit 0
++prog="/opt/csw/sbin/snmpd"
++name=`basename $prog`
+ 
+ start() {
++	[ -x $prog -a -f /etc/opt/csw/snmp/snmpd.conf ] || exit 1
++
+         # Start daemons.
+-        echo -n $"Starting $name: "
+-        daemon $prog
++        echo -n "Starting $name: "
++        $prog
+ 	RETVAL=$?
+         echo
+-        [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$name
++        [ $RETVAL -eq 0 ] && touch /var/run/daemon/$name
+ 	return $RETVAL
+ }
+ 
+ stop() {
+         # Stop daemons.
+-        echo -n $"Shutting down $name: "
+-	killproc $prog
++        echo -n "Shutting down $name: "
++	pkill -z `zonename` -x $name
+ 	RETVAL=$?
+         echo
+-        [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$name
++        [ $RETVAL -eq 0 ] && rm -f /var/run/daemon/$name
+ 	return $RETVAL
+ }
+ 
+@@ -50,8 +41,16 @@ case "$1" in
+ 	stop
+         ;;
+   status)
+-	status $name
++        [ -x $prog ] || (RETVAL=$?; echo "$prog not executable")
++        [ -f /etc/opt/csw/snmp/snmpd.conf ] || (RETVAL=$?; echo "configfile missing")
++
++	pgrep -l -z `zonename` -x $name
+ 	RETVAL=$?
++        if [ $RETVAL -eq 0 ]; then
++                echo "$name running"
++        else
++                echo "$name not running"
++        fi
+ 	;;
+   restart|reload)
+ 	stop
+@@ -59,14 +58,14 @@ case "$1" in
+ 	RETVAL=$?
+ 	;;
+   condrestart)
+-	if [ -f /var/lock/subsys/$name ]; then
++	if [ -f /var/run/daemon/$name ]; then
+ 	    stop
+ 	    start
+ 	    RETVAL=$?
+ 	fi
+ 	;;
+   *)
+-        echo $"Usage: $0 {start|stop|restart|condrestart|status}"
++        echo "Usage: $0 {start|stop|restart|condrestart|status}"
+         exit 1
+ esac
+ 
+diff --git a/dist/snmptrapd-init.d b/dist/snmptrapd-init.d
+index 8225242..160ce5b 100644
+--- a/dist/snmptrapd-init.d
++++ b/dist/snmptrapd-init.d
+@@ -6,38 +6,27 @@
+ # chkconfig: - 25 75
+ # description: snmptrapd is net-snmp SNMPTRAP daemon.
+ 
+-# Source function library.
+-. /etc/rc.d/init.d/functions
+-
+-# Source networking configuration.
+-. /etc/sysconfig/network
+-
+-# Check that networking is up.
+-[ "${NETWORKING}" = "no" ] && exit 0
+-
+ RETVAL=0
+-name="snmptrapd"
+-prog="/usr/local/sbin/snmptrapd"
+-
+-[ -x $prog ] || exit 0
++prog="/opt/csw/sbin/snmptrapd"
++name=`basename $prog`
+ 
+ start() {
+         # Start daemons.
+-        echo -n $"Starting $name: "
+-        daemon $prog
++        echo -n "Starting $name: "
++        $prog
+ 	RETVAL=$?
+         echo
+-        [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$name
++        [ $RETVAL -eq 0 ] && touch /var/run/daemon/$name
+ 	return $RETVAL
+ }
+ 
+ stop() {
+         # Stop daemons.
+-        echo -n $"Shutting down $name: "
+-	killproc $prog
++        echo -n "Shutting down $name: "
++	pkill -z `zonename` -x $name
+ 	RETVAL=$?
+         echo
+-        [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$name
++        [ $RETVAL -eq 0 ] && rm -f /var/run/daemon/$name
+ 	return $RETVAL
+ }
+ 
+@@ -50,7 +39,7 @@ case "$1" in
+ 	stop
+         ;;
+   status)
+-	status $name
++	pgrep -l -z `zonename` -x $name
+ 	RETVAL=$?
+ 	;;
+   restart|reload)
+@@ -59,7 +48,7 @@ case "$1" in
+ 	RETVAL=$?
+ 	;;
+   condrestart)
+-	if [ -f /var/lock/subsys/$name ]; then
++	if [ -f /var/run/daemon/$name ]; then
+ 	    stop
+ 	    start
+ 	    RETVAL=$?
+-- 
+1.8.3.1
+
