@@ -8,7 +8,7 @@ Subject: [PATCH] poppler api changed
  1 file changed, 1 insertion(+), 10 deletions(-)
 
 diff --git a/backend/pdf/ev-poppler.cc b/backend/pdf/ev-poppler.cc
-index fef0738..671d39b 100644
+index fef0738..e5380ad 100644
 --- a/backend/pdf/ev-poppler.cc
 +++ b/backend/pdf/ev-poppler.cc
 @@ -1974,21 +1974,12 @@ pdf_selection_get_selected_text (EvSelection     *selection,
@@ -27,7 +27,8 @@ index fef0738..671d39b 100644
 -	r.x2 = points->x2;
 -	r.y2 = height - points->y1;
 -
- 	retval = poppler_page_get_selected_text (poppler_page,
+-	retval = poppler_page_get_text (poppler_page,
++	retval = poppler_page_get_selected_text (poppler_page,
  					(PopplerSelectionStyle)style,
 -					&r);
 +					(PopplerRectangle *)points);
@@ -36,4 +37,3 @@ index fef0738..671d39b 100644
  }
 -- 
 1.8.3.1
-
