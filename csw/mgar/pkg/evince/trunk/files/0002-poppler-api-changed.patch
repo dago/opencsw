@@ -27,7 +27,7 @@ index fef0738..671d39b 100644
 -	r.x2 = points->x2;
 -	r.y2 = height - points->y1;
 -
- 	retval = poppler_page_get_text (poppler_page,
+ 	retval = poppler_page_get_selected_text (poppler_page,
  					(PopplerSelectionStyle)style,
 -					&r);
 +					(PopplerRectangle *)points);
