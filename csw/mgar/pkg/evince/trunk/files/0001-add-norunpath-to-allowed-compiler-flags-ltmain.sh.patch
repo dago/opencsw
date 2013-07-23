@@ -1,0 +1,34 @@
+From 37170963829a6dcbf6f303113671168a3984a106 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 23 Jul 2013 09:43:29 +0200
+Subject: [PATCH] add norunpath to allowed compiler flags ltmain.sh
+
+---
+ ltmain.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index b36c4ad..bc79f69 100755
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -4765,7 +4765,7 @@ func_mode_link ()
+       # -p, -pg, --coverage, -fprofile-* pass through profiling flag for GCC
+       # @file GCC response files
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-norunpath|-xnorunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+@@ -5095,7 +5095,7 @@ func_mode_link ()
+ 	    searchdirs="$newlib_search_path $lib_search_path $sys_lib_search_path $shlib_search_path"
+ 	  fi
+ 	  for searchdir in $searchdirs; do
+-	    for search_ext in .la $std_shrext .so .a; do
++	    for search_ext in  $std_shrext .so .a; do
+ 	      # Search the libtool library
+ 	      lib="$searchdir/lib${name}${search_ext}"
+ 	      if test -f "$lib"; then
+-- 
+1.8.3.1
+

@@ -23,6 +23,7 @@ STRIP_LIBTOOL = 1
 
 PATCHFILES += 0001-honor-aclocal_flags.patch
 PATCHFILES += 0002-poppler-api-changed.patch
+PATCHFILES += 0001-add-norunpath-to-allowed-compiler-flags-ltmain.sh.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -38,11 +39,11 @@ TEST_TARGET =
 # EXTRA_CFLAGS_DBG = -g
 # EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARFLAVOR))
 # EXTRA_CXXFLAGS += -DPOPPLER_WITH_GDK
-EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO
-EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0
+EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO -norunpath
+EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0 -xnorunpath
 
 EXTRA_LD_OPTIONS = -lm
-EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
+# EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
 # EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
 # There are no shared-object dependencies on CSWdbus, but it's required for
 # evince to work.
