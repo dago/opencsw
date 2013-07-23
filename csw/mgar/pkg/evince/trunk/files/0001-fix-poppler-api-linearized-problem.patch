@@ -1,0 +1,41 @@
+From c0353a442793dc139da3b4be79162523c0e0dafb Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 23 Jul 2013 16:20:01 +0200
+Subject: [PATCH] fix poppler api linearized problem
+
+---
+ backend/pdf/ev-poppler.cc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/backend/pdf/ev-poppler.cc b/backend/pdf/ev-poppler.cc
+index e5380ad..dd2cab3 100644
+--- a/backend/pdf/ev-poppler.cc
++++ b/backend/pdf/ev-poppler.cc
+@@ -685,6 +685,7 @@ pdf_document_get_info (EvDocument *document)
+ 	PopplerPermissions permissions;
+ 	EvPage *page;
+ 	char *metadata;
++	gboolean linearized;
+ 
+ 	info = g_new0 (EvDocumentInfo, 1);
+ 
+@@ -721,7 +722,7 @@ pdf_document_get_info (EvDocument *document)
+ 		      "producer", &(info->producer),
+ 		      "creation-date", &(info->creation_date),
+ 		      "mod-date", &(info->modified_date),
+-		      "linearized", &(info->linearized),
++		      "linearized", &linearized,
+ 		      "metadata", &metadata,
+ 		      NULL);
+ 
+@@ -826,6 +827,7 @@ pdf_document_get_info (EvDocument *document)
+ 		/* translators: this is the document security state */
+ 		info->security = g_strdup (_("No"));
+ 	}
++	info->linearized = linearized ? g_strdup (_("Yes")) : g_strdup (_("No"));
+ 
+ 	return info;
+ }
+-- 
+1.8.3.1
+
