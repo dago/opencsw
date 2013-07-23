@@ -1,11 +1,39 @@
+From c7c832fdb52b64d32e2554daf52f8834b906fc7f Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Tue, 23 Jul 2013 14:31:15 +0200
+Subject: [PATCH] poppler api changed
+
+---
+ backend/pdf/ev-poppler.cc | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/backend/pdf/ev-poppler.cc b/backend/pdf/ev-poppler.cc
+index fef0738..671d39b 100644
 --- a/backend/pdf/ev-poppler.cc
 +++ b/backend/pdf/ev-poppler.cc
-@@ -1986,7 +1986,7 @@ pdf_selection_get_selected_text (EvSelection     *selection,
- 	r.x2 = points->x2;
- 	r.y2 = height - points->y1;
- 
--	retval = poppler_page_get_text (poppler_page,
-+	retval = poppler_page_get_selected_text (poppler_page,
+@@ -1974,21 +1974,12 @@ pdf_selection_get_selected_text (EvSelection     *selection,
+ 				 EvRectangle     *points)
+ {
+ 	PopplerPage *poppler_page;
+-	PopplerRectangle r;
+-	double height;
+ 	char *retval;
+ 	
+ 	poppler_page = POPPLER_PAGE (rc->page->backend_page);
+-
+-	poppler_page_get_size (poppler_page, NULL, &height);
+-	r.x1 = points->x1;
+-	r.y1 = height - points->y2;
+-	r.x2 = points->x2;
+-	r.y2 = height - points->y1;
+-
+ 	retval = poppler_page_get_text (poppler_page,
  					(PopplerSelectionStyle)style,
- 					&r);
+-					&r);
++					(PopplerRectangle *)points);
  
+ 	return retval;
+ }
+-- 
+1.8.3.1
+
