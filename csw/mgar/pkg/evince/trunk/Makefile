@@ -24,6 +24,7 @@ STRIP_LIBTOOL = 1
 PATCHFILES += 0001-honor-aclocal_flags.patch
 PATCHFILES += 0002-poppler-api-changed.patch
 PATCHFILES += 0001-add-norunpath-to-allowed-compiler-flags-ltmain.sh.patch
+PATCHFILES += 0001-fix-poppler-api-linearized-problem.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
