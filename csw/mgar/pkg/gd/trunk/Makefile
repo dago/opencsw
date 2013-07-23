@@ -51,6 +51,7 @@ CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 # This is evaluated twice, quote properly
 EXTRA_CPPFLAGS = -DDEFAULT_FONTPATH=\\\"$(CSW_DEFAUL# For the success of the test for iconv
 EXTRA_LINKER_FLAGS = -liconv
+EXTRA_LD_OPTIONS   = -z ignore -Bdirect
 
 BUILD64 = 1
 ISAEXEC = 1
