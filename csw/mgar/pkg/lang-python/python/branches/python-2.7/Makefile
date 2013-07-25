@@ -162,7 +162,7 @@ BUILD_DEP_PKGS += CSWlibgcrypt-dev
 # Allow to choose the default Python version.
 # Python 2.6 is the default one as of 2013-07-21.
 ALTERNATIVES_CSWpython$(CVER) = python-$(VER)
-ALTERNATIVE_python-$(VER) = $(bindir)/python python-symlink python$(VER) 270
+ALTERNATIVE_python-$(VER) = $(bindir)/python python-symlink $(bindir)/python$(VER) 270
 # TODO(maciej): Implement alternatives for the man page.
 # ALTERNATIVES_CSWpython$(CVER) = python-man-$(VER)
 # ALTERNATIVE_python-man-$(VER) = $(mandir)/man1/python.1 python-man-symlink python$(VER) 270
