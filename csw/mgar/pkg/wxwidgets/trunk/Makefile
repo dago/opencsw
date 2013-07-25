@@ -38,7 +38,7 @@ RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibmspack0
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWmesa
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWpango
@@ -107,7 +107,7 @@ CONFIGURE_ARGS += --with-gnomeprint=yes
 EXTRA_CFLAGS     += -xnorunpath
 EXTRA_CXXFLAGS   += -norunpath
 EXTRA_LDFLAGS    += -norunpath
-EXTRA_LD_OPTIONS += -z nolazyload -B direct -lCrun -lCstd
+EXTRA_LD_OPTIONS += -z nolazyload -z ignore -Bdirect -lCrun -lCstd
 
 # wxWidget contains a bunch of .so, let's keep them together as one big
 # happy family
