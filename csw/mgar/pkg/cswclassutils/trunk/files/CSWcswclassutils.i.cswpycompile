@@ -25,10 +25,10 @@ fi
 
 
 TMPDIR=/var/opt/csw/cswclassutils
-[ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+mkdir -p "$TMPDIR"
 TMPPY=$TMPDIR/pycomp.$$.`date +%Y%m%d%H%M%S`.py
 
-cat <<EOF > $TMPPY
+cat > $TMPPY <<EOF
 import py_compile
 
 pyfiles = [
@@ -53,8 +53,8 @@ cat <<EOF >> $TMPPY
 for f in pyfiles:
 	try:
 		py_compile.compile(f, doraise=True)
-	except py_compile.PyCompileError:
-		print "Error compiling: %s" % f
+	except py_compile.PyCompileError as e:
+    print 'Error compiling %s: %s' % (f, e)
 
 EOF
 
@@ -63,7 +63,7 @@ if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
     echo "Check your Python installation."
     exit 2
 fi
-    
+
 echo "Compiling py files to normal bytecode ..."
 ${PY_BINDIR}/python -Wi -t $TMPPY
 
