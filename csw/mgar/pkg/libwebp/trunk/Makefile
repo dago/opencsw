@@ -38,7 +38,7 @@ RUNTIME_DEP_PKGS_CSWwebp += CSWlibtiff5
 ISAEXEC = 1
 BUILD64 = 1
 
-EXTRA_LD_OPTIONS = -z ignore -BdirectSOS-$(ISA)),-xO3)
+S-$(ISA)),-xO3)
 
 include gar/category.mk
 
