@@ -1,5 +1,5 @@
 NAME = libserf
-VERSION = 1.2.1
+VERSION = 1.3.0
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -21,9 +21,9 @@ VENDOR_URL = http://code.google.com/p/serf/
 # openssl-1.0 only available for sol-10
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-PACKAGE2
-CATALOGNAME_CSWlibserf1-2 = libserf1_2
-SPKG_DESC_CSWlibserf1-2ESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
+PACKAGE3
+CATALOGNAME_CSWlibserf1-3 = libserf1_3
+SPKG_DESC_CSWlibserf1-3ESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
 RUNTIME_DEP_2 += CSWbdb48
 RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibaprutil1-0
@@ -38,7 +38,7 @@ PACKAGES += CSWlibserf-dev
 CATALOGNAME_CSWlibserf-dev = libserf_dev
 SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
 PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibserf-d2v = CSWlibserf1-0
+RUNTIME_DEP_PKGS_CSWlibserf-d3v = CSWlibserf1-0
 
 EXTRA_LIB = $(prefix)/bdb48/lib
 
