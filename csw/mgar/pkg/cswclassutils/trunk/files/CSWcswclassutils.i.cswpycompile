@@ -21,9 +21,7 @@ PATH=/usr/bin:/usr/sbin:/opt/csw/bin
 PY_PREFIX=${PKG_INSTALL_ROOT:-}/opt/csw
 PY_BINDIR=${PY_PREFIX}/bin
 
-# Uncomment to enable debugging. In the debug mode, the script will not
-# compile the files, but will save the information about which files would be
-# compiled with which interpreter.
+# Uncomment to enable debugging.
 # DEBUG=1
 if [ "${DEBUG:-}" ]; then
   echo PACKAGE: $PKGINST
@@ -35,57 +33,30 @@ HAVE_33=0  # fd=5
 
 TMPDIR=/var/opt/csw/cswclassutils
 mkdir -p "${TMPDIR}"
-FIFODIR=`/usr/bin/mktemp -p "${TMPDIR}" -d -t cswpycompile-XXXXXX`
+PYCOMPILETMPDIR=`/usr/bin/mktemp -p "${TMPDIR}" -d -t cswpycompile-XXXXXX`
 
 # We're unconditionally opening all available Python interpreters. It's not
 # optimal for efficiency, but easier to script.
 
 if [ -x "${PY_BINDIR}/python2.6" ]; then
   HAVE_26=1
-  fifo26="${FIFODIR}/pycompile2.6"
-  mkfifo "${fifo26}"
-  # We make the command read from the file descriptor directly.
-  if [ ${DEBUG:-} ]; then
-    ( < "${fifo26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
-      > /tmp/python2.6-pycompile-input ) &
-  else
-    ( < "${fifo26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
-      | xargs ${PY_BINDIR}/python2.6 -m py_compile ) &
-  fi
-  # Open a file descriptor for writing
-  exec 3>"${fifo26}"
+  filelist26="${PYCOMPILETMPDIR}/pycompile2.6"
+  # Open a file descriptor for writing.
+  exec 3>"${filelist26}"
 fi
 
 if [ -x "${PY_BINDIR}/python2.7" ]; then
   HAVE_27=1
-  fifo27="${FIFODIR}/pycompile2.7"
-  mkfifo "${fifo27}"
-  # We make the command read from the file descriptor directly.
-  if [ ${DEBUG:-} ]; then
-    ( < "${fifo27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
-      > /tmp/python2.7-pycompile-input ) &
-  else
-    (< "${fifo27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
-      | xargs ${PY_BINDIR}/python2.7 -m py_compile ) &
-  fi
-  # Open a file descriptor for writing
-  exec 4>"${fifo27}"
+  filelist27="${PYCOMPILETMPDIR}/pycompile2.7"
+  # Open a file descriptor for writing.
+  exec 4>"${filelist27}"
 fi
 
 if [ -x "${PY_BINDIR}/python3.3" ]; then
   HAVE_33=1
-  fifo33="${FIFODIR}/pycompile3.3"
-  mkfifo "${fifo33}"
-  # We make the command read from the file descriptor directly.
-  if [ ${DEBUG:-} ]; then
-    ( < "${fifo33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
-      > /tmp/python3.3-pycompile-input ) &
-  else
-    ( < "${fifo33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
-      | xargs ${PY_BINDIR}/python3.3 -m py_compile ) &
-  fi
+  filelist33="${PYCOMPILETMPDIR}/pycompile3.3"
   # Open a file descriptor for writing
-  exec 5>"${fifo33}"
+  exec 5>"${filelist33}"
 fi
 
 echo "Installing class <cswpycompile> ..."
@@ -109,24 +80,33 @@ while read src dest; do
 done
 
 if [ ${HAVE_26} -eq 1 ]; then
-  # Close the file descriptor. It will terminate the command.
+  # Close the file descriptor.
   exec 3>&-
-  rm "${fifo26}"
+  # Run the compilation.
+  < "${filelist26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
+      | xargs ${PY_BINDIR}/python2.6 -m py_compile
+  rm "${filelist26}"
 fi
 
 if [ ${HAVE_27} -eq 1 ]; then
-  # Close the file descriptor. It will terminate the command.
+  # Close the file descriptor.
   exec 4>&-
-  rm "${fifo27}"
+  # Run the compilation.
+  < "${filelist27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
+    | xargs ${PY_BINDIR}/python2.7 -m py_compile
+  rm "${filelist27}"
 fi
 
 if [ ${HAVE_33} -eq 1 ]; then
-  # Close the file descriptor. It will terminate the command.
+  # Close the file descriptor.
   exec 5>&-
-  rm "${fifo33}"
+  # Run the compilation.
+  < "${filelist33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
+    | xargs ${PY_BINDIR}/python3.3 -m py_compile
+  rm "${filelist33}"
 fi
 
-rmdir "$FIFODIR"
+rmdir "$PYCOMPILETMPDIR"
 
 if [ ${DEBUG:-} ]; then
   echo 'Inspect the following files /tmp/pythonX.X-pycompile-input'
