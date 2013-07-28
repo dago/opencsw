@@ -83,8 +83,11 @@ if [ ${HAVE_26} -eq 1 ]; then
   # Close the file descriptor.
   exec 3>&-
   # Run the compilation.
+  echo "Compiling .py files to bytecode (2.6, if any)."
   < "${filelist26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
       | xargs ${PY_BINDIR}/python2.6 -m py_compile
+  < "${filelist26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
+      | xargs ${PY_BINDIR}/python2.6 -O -m py_compile
   rm "${filelist26}"
 fi
 
@@ -92,8 +95,11 @@ if [ ${HAVE_27} -eq 1 ]; then
   # Close the file descriptor.
   exec 4>&-
   # Run the compilation.
+  echo "Compiling .py files to bytecode (2.7, if any)."
   < "${filelist27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
     | xargs ${PY_BINDIR}/python2.7 -m py_compile
+  < "${filelist27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
+    | xargs ${PY_BINDIR}/python2.7 -O -m py_compile
   rm "${filelist27}"
 fi
 
@@ -101,15 +107,14 @@ if [ ${HAVE_33} -eq 1 ]; then
   # Close the file descriptor.
   exec 5>&-
   # Run the compilation.
+  echo "Compiling .py files to bytecode (3.3, if any)."
   < "${filelist33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
     | xargs ${PY_BINDIR}/python3.3 -m py_compile
+  < "${filelist33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
+    | xargs ${PY_BINDIR}/python3.3 -O -m py_compile
   rm "${filelist33}"
 fi
 
 rmdir "$PYCOMPILETMPDIR"
-
-if [ ${DEBUG:-} ]; then
-  echo 'Inspect the following files /tmp/pythonX.X-pycompile-input'
-fi
 
 exit 0
