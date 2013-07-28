@@ -2,74 +2,134 @@
 #
 # i.pycompile - Class action script for compiling pyo and pyc files
 #
-# $Id: i.pycompile 5069 2009-05-27 17:36:24Z valholla $
+# $Id$
 #
 # Written by Mike Watters
 #
 # 2009-05-25 First Release
 # 2009-10-14 Update to only compile package specific files (Ben Walton)
 # 2010-10-12 Update to ensure creation of TMPDIR  (Ben Walton)
+# 2012-07-28 Rewrite to support Python 2.6, 2.7 and 3.3. (Maciej Blizinski)
 #
+
+set -u
+set -e
 
 # Force Path for the script to use
 PATH=/usr/bin:/usr/sbin:/opt/csw/bin
 
-PY_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+PY_PREFIX=${PKG_INSTALL_ROOT:-}/opt/csw
 PY_BINDIR=${PY_PREFIX}/bin
-PY_LIBDIR=${PY_PREFIX}/lib/python
 
-#DEBUG = 1  # Uncomment to enable debug
-if [ "${DEBUG}" ]; then
-    echo PACKAGE: $PKGINST
+# Uncomment to enable debugging. In the debug mode, the script will not
+# compile the files, but will save the information about which files would be
+# compiled with which interpreter.
+# DEBUG=1
+if [ "${DEBUG:-}" ]; then
+  echo PACKAGE: $PKGINST
 fi
 
+HAVE_26=0  # fd=3
+HAVE_27=0  # fd=4
+HAVE_33=0  # fd=5
 
 TMPDIR=/var/opt/csw/cswclassutils
-mkdir -p "$TMPDIR"
-TMPPY=$TMPDIR/pycomp.$$.`date +%Y%m%d%H%M%S`.py
+mkdir -p "${TMPDIR}"
+FIFODIR=`/usr/bin/mktemp -p "${TMPDIR}" -d -t cswpycompile-XXXXXX`
 
-cat > $TMPPY <<EOF
-import py_compile
+# We're unconditionally opening all available Python interpreters. It's not
+# optimal for efficiency, but easier to script.
 
-pyfiles = [
-EOF
+if [ -x "${PY_BINDIR}/python2.6" ]; then
+  HAVE_26=1
+  fifo26="${FIFODIR}/pycompile2.6"
+  mkfifo "${fifo26}"
+  # We make the command read from the file descriptor directly.
+  if [ ${DEBUG:-} ]; then
+    ( < "${fifo26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
+      > /tmp/python2.6-pycompile-input ) &
+  else
+    ( < "${fifo26}" /usr/bin/egrep '/opt/csw/lib/python(2\.6)?/' \
+      | xargs ${PY_BINDIR}/python2.6 -m py_compile ) &
+  fi
+  # Open a file descriptor for writing
+  exec 3>"${fifo26}"
+fi
+
+if [ -x "${PY_BINDIR}/python2.7" ]; then
+  HAVE_27=1
+  fifo27="${FIFODIR}/pycompile2.7"
+  mkfifo "${fifo27}"
+  # We make the command read from the file descriptor directly.
+  if [ ${DEBUG:-} ]; then
+    ( < "${fifo27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
+      > /tmp/python2.7-pycompile-input ) &
+  else
+    (< "${fifo27}" /usr/bin/egrep '/opt/csw/lib/python2\.7/' \
+      | xargs ${PY_BINDIR}/python2.7 -m py_compile ) &
+  fi
+  # Open a file descriptor for writing
+  exec 4>"${fifo27}"
+fi
+
+if [ -x "${PY_BINDIR}/python3.3" ]; then
+  HAVE_33=1
+  fifo33="${FIFODIR}/pycompile3.3"
+  mkfifo "${fifo33}"
+  # We make the command read from the file descriptor directly.
+  if [ ${DEBUG:-} ]; then
+    ( < "${fifo33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
+      > /tmp/python3.3-pycompile-input ) &
+  else
+    ( < "${fifo33}" /usr/bin/egrep '/opt/csw/lib/python3\.3/' \
+      | xargs ${PY_BINDIR}/python3.3 -m py_compile ) &
+  fi
+  # Open a file descriptor for writing
+  exec 5>"${fifo33}"
+fi
 
 echo "Installing class <cswpycompile> ..."
 
 while read src dest; do
-    if [ "$DEBUG" ]; then
-        echo SRC: $src DEST: $dest
+    /usr/bin/cp -p $src $dest || exit 2
+    echo "$dest"
+
+    # Piping the destination file name to all available file descriptors. The
+    # grep processes will take care of filtering.
+    if [ ${HAVE_26} -eq 1 ]; then
+      echo "${dest}" >&3
+    fi
+    if [ ${HAVE_27} -eq 1 ]; then
+      echo "${dest}" >&4
+    fi
+    if [ ${HAVE_33} -eq 1 ]; then
+      echo "${dest}" >&5
     fi
 
-    /usr/bin/cp -p $src $dest || exit 2
-    echo $dest
-
-    echo "	\"$dest\"," >> $TMPPY
 done
 
-cat <<EOF >> $TMPPY
-	]
-
-for f in pyfiles:
-  try:
-    py_compile.compile(f, doraise=True)
-  except py_compile.PyCompileError as e:
-    print 'Error compiling %s: %s' % (f, e)
-
-EOF
-
-if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
-    echo "Could not find or execute ${PY_BINDIR}/python"
-    echo "Check your Python installation."
-    exit 2
+if [ ${HAVE_26} -eq 1 ]; then
+  # Close the file descriptor. It will terminate the command.
+  exec 3>&-
+  rm "${fifo26}"
 fi
 
-echo "Compiling py files to normal bytecode ..."
-${PY_BINDIR}/python -Wi -t $TMPPY
+if [ ${HAVE_27} -eq 1 ]; then
+  # Close the file descriptor. It will terminate the command.
+  exec 4>&-
+  rm "${fifo27}"
+fi
 
-echo "Compiling py files to optimized bytecode ..."
-${PY_BINDIR}/python -Wi -t -O $TMPPY
+if [ ${HAVE_33} -eq 1 ]; then
+  # Close the file descriptor. It will terminate the command.
+  exec 5>&-
+  rm "${fifo33}"
+fi
 
-rm $TMPPY
+rmdir "$FIFODIR"
+
+if [ ${DEBUG:-} ]; then
+  echo 'Inspect the following files /tmp/pythonX.X-pycompile-input'
+fi
 
 exit 0
