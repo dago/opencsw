@@ -53,9 +53,17 @@ TEST_TARGET = test
 # Installation paths are defined in:
 # http://hg.python.org/cpython/file/26588b6a39d9/Makefile.pre.in#l114
 # http://wiki.debian.org/Python/MultiArch
-GARFLAVOR = DBG
-BUILD64 = 1
-ISAEXEC = 1
+# GARFLAVOR = DBG
+# BUILD64 = 1
+# ISAEXEC = 1
+
+# There is a file name conflict over libffi.so symlink between libffi package
+# and a gcc-java package.  While it will ultimately belong to libffi_dev, the
+# symlink is currently under a subdirectory.
+# pkgchk -L CSWlibffi-dev
+# (...)
+# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
+PREPEND_LINKER_FLAGS += -L$(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -73,9 +81,10 @@ CONFIGURE_ARGS += --with-system-ffi
 # This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
 # PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
+
 # use prototype filters to set the class
-# Do not use 2.6 pycompile for 3.3.
-# PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+# cswpycompile can how handle Python 3 files.
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
 
 PACKAGES  = CSWidle$(CVER)
@@ -215,4 +224,3 @@ include gar/category.mk
 # EXTRA_LINKER_FLAGS += $(libdir)/ffi
 # LDFLAGS += -L$(libdir)/ffi
 
-LINKER_FLAGS := -L$(libdir)/ffi $(LINKER_FLAGS)
