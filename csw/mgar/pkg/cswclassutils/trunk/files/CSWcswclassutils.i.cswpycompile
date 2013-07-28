@@ -9,7 +9,7 @@
 # 2009-05-25 First Release
 # 2009-10-14 Update to only compile package specific files (Ben Walton)
 # 2010-10-12 Update to ensure creation of TMPDIR  (Ben Walton)
-# 2012-07-28 Rewrite to support Python 2.6, 2.7 and 3.3. (Maciej Blizinski)
+# 2013-07-28 Rewrite to support Python 2.6, 2.7 and 3.3. (Maciej Blizinski)
 #
 
 set -u
