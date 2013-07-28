@@ -16,7 +16,10 @@ endef
 MASTER_SITES = http://serf.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.bz2
 LICENSE = LICENSE
-VENDOR_URL = http://code.google.com/p/serf/
+VENDOR_URL = http://code.gooCONFIGURE_SCRIPTS =
+BUILD_SCRIPTS = serf
+INSTALL_SCRIPTS = serf
+TEST_SCRIPTS =oogle.com/p/serf/
 
 # openssl-1.0 only available for sol-10
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
@@ -40,10 +43,23 @@ SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
 PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibserf-d3v = CSWlibserf1-0
 
-EXTRA_LIB = $(prefix)/bdb48/lib
+EXTRA_LIB = $(prSCONS_FLAGS += PREFIX=$(prefix) 
+SCONS_FLAGS += APR=$(bindir)/apr-1-config
+SCONS_FLAGS += APU=$(bindir)/apu-1-config
 
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
-CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
+include gar/category.mk
 
-include
+build-serf:
+	(cd $(WORKSRC); \
+		scons \
+		$(SCONS_FLAGS))
+	@$(MAKECOOKIE)
+
+install-serf:
+	(cd $(WORKSRC); \
+		scons  \
+		$(SCONS_FLAGS) \
+		-Q --prefix=$(DESTDIR)$(BUILD_PREFIX) \
+		install)
+	@$(MAKECOOKIE)
+
