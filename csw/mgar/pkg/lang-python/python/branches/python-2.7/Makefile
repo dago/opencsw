@@ -33,6 +33,9 @@ MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 UFILES_REGEX = $(VER)\.\d+
 
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
+
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += pyport.h
 
@@ -134,11 +137,15 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
 
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtcl8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibtk8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWpython$(CVER)
+
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.9    += CSWlibtcl8-4
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.9    += CSWtk
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.10   += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.10   += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += $(RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_$(GAROSREL))
 
 # Don't merge test files.
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/test
@@ -177,11 +184,13 @@ SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) serie
 SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
 
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += surplus-dependency|CSWpython$(CVER)
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused
 
 LICENSE = LICENSE
 
