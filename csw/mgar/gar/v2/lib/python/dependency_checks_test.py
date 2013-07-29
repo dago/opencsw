@@ -217,7 +217,7 @@ class TestLibraries(mox.MoxTestBase):
     pass
 
   def testByFilename(self):
-    self.pkg_data = tree_stats[0]
+    self.pkg_data = copy.deepcopy(tree_stats[0])
     self.pkg_data["pkgmap"] = [
         {'class': 'none',
          'line': 'not important',
@@ -228,6 +228,42 @@ class TestLibraries(mox.MoxTestBase):
          'user': 'root'}]
     self.error_mgr_mock.NeedPackage(u'CSWtree', u'CSWapache2',
         "found file(s) matching /opt/csw/apache2/, e.g. '/opt/csw/apache2/bin/foo'")
+    self.mox.ReplayAll()
+    result = dependency_checks.ByFilename(
+        self.pkg_data,
+        self.error_mgr_mock,
+        self.logger_stub,
+        self.messenger_stub,
+        None, None)
+    self.mox.VerifyAll()
+
+  def testByFilenamePython(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"] = [
+        {'class': 'none', 'line': 'not important', 'mode': '0755',
+         'path': '/opt/csw/lib/python/site-packages/foo.py',
+         'type': 'f', 'group': 'bin', 'user': 'root'}]
+    self.error_mgr_mock.NeedPackage('CSWtree', u'CSWpython',
+        "found file(s) matching /?opt/csw/lib/python(2\\.6)?/site-packages/.+\\.py$, "
+        "e.g. '/opt/csw/lib/python/site-packages/foo.py'")
+    self.mox.ReplayAll()
+    result = dependency_checks.ByFilename(
+        self.pkg_data,
+        self.error_mgr_mock,
+        self.logger_stub,
+        self.messenger_stub,
+        None, None)
+    self.mox.VerifyAll()
+
+  def testByFilenamePython27(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"] = [
+        {'class': 'none', 'line': 'not important', 'mode': '0755',
+         'path': '/opt/csw/lib/python2.7/site-packages/foo.py',
+         'type': 'f', 'group': 'bin', 'user': 'root'}]
+    self.error_mgr_mock.NeedPackage('CSWtree', u'CSWpython27',
+        "found file(s) matching /?opt/csw/lib/python2\\.7/site-packages/.+\\.py$, "
+        "e.g. '/opt/csw/lib/python2.7/site-packages/foo.py'")
     self.mox.ReplayAll()
     result = dependency_checks.ByFilename(
         self.pkg_data,

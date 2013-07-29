@@ -31,7 +31,12 @@ DLOPEN_LIB_LOCATIONS = (
 DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.pl$",   (u"CSWperl",)),
     (r".*\.pm$",   (u"CSWperl",)),
-    (r".*\.py$",   (u"CSWpython",)),
+    (r"/?opt/csw/lib/python(2\.6)?/site-packages/.+\.py$",
+                   (u"CSWpython",)),
+    (r"/?opt/csw/lib/python2\.7/site-packages/.+\.py$",
+                   (u"CSWpython27",)),
+    (r"/?opt/csw/lib/python3\.3/site-packages/.+\.py$",
+                   (u"CSWpython33",)),
     (r".*\.rb$",   (u"CSWruby", u"CSWruby18", u"CSWruby191", u"CSWlibruby1-9-1-1")),
     (r".*\.elc?$", (u"CSWemacs-common",)),
     (r"/opt/csw/apache2/", (u"CSWapache2",)),
