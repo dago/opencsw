@@ -861,30 +861,25 @@ class TestCheckVendorURL(CheckTestHelper, unittest.TestCase):
     self.pkg_data["pkginfo"]["VENDOR"] = "https://www.example.com/"
 
 
-class TestCheckPythonPackageName(CheckTestHelper, unittest.TestCase):
-  FUNCTION_NAME = "CheckPythonPackageName"
+class TestCheckPackageDoesNotBreakPython26(CheckTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckPackageDoesNotBreakPython26"
   def testBad(self):
     self.pkg_data["pkgmap"].append({
-      "class": "none",
-      "group": "bin",
-      "line": "",
-      "mode": '0755',
-      "path": "/opt/csw/lib/python/site-packages/hachoir_parser/video/mov.py",
-      "type": "f",
-      "user": "root"
+      "class": "none", "group": "bin", "line": "", "mode": '0755',
+      "type": "f", "user": "root",
+      "path": "/opt/csw/lib/python2.7/site-packages/"
+              "hachoir_parser/video/mov.py",
+      # No file in /opt/csw/lib/python/site-packages
     })
-    self.error_mgr_mock.ReportError('pkgname-does-not-start-with-CSWpy-')
-    self.error_mgr_mock.ReportError('catalogname-does-not-start-with-py_')
+    self.pkg_data["basic_stats"]["catalogname"] = "py_foo"
+    self.pkg_data["basic_stats"]["pkgname"] = "CSWpy-foo"
+    self.error_mgr_mock.ReportError('python-package-missing-py26-files')
 
   def testGood(self):
     self.pkg_data["pkgmap"].append({
-      "class": "none",
-      "group": "bin",
-      "line": "",
-      "mode": '0755',
+      "class": "none", "group": "bin", "line": "", "mode": '0755',
+      "type": "f", "user": "root",
       "path": "/opt/csw/lib/python/site-packages/hachoir_parser/video/mov.py",
-      "type": "f",
-      "user": "root"
     })
     self.pkg_data["basic_stats"]["catalogname"] = "py_foo"
     self.pkg_data["basic_stats"]["pkgname"] = "CSWpy-foo"
