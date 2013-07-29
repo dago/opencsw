@@ -1,5 +1,5 @@
 NAME = xmlstarlet
-VERSION = 1.4.= utils
+VERSION = 1.5.0 utils
 GARTYPE = v2
 
 DESCRIPTION = XML transformation utility
