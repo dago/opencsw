@@ -94,6 +94,11 @@ CONFIGURE_ARGS += --with-cgi-bin=$(sharedstatedir)/www/apcupsd/cgi
 #CONFIGURE_ARGS += --with-css-dir=$(sharedstatedir)/www/apcupsd/html
 CONFIGURE_ARGS += --enable-gapcmon
 
+# This is needed to avoid picking up /opt/csw/bin/sh which creates an implicit
+# and unneeded dependency on schilyutils (and without it, the apccontrol script
+# does not work)
+CONFIGURE_ARGS += SCRIPTSHELL=/bin/ksh
+
 TEST_SCRIPTS =
 
 EXTRA_PAX_ARGS += -s ',.*/apcupsd\.css$$,.$(sharedstatedir)/www/apcupsd/html/apcupsd.css,'
