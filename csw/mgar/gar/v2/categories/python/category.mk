@@ -1,5 +1,5 @@
 # Add a dependency to CSWpython
-_EXTRA_GAR_PKGS += CSWpython
+_EXTRA_GAR_PKGS += $(PYTHON_PACKAGE)
 
 # For the record, do not include the following line:
 # _MERGE_EXCLUDE_CATEGORY += .*\.egg-info.*
@@ -28,11 +28,11 @@ TEST_TARGET ?= test
 LICENSE ?= PKG-INFO
 SPKG_SOURCEURL ?= http://pypi.python.org/pypi/$(NAME)
 MASTER_SITES ?= $(PYPI_MIRROR)
-PACKAGES ?= CSWpy-$(DASHED_NAME)
+PACKAGES ?= $(PYTHON_MODULE_PACKAGE_PREFIX)$(DASHED_NAME)
 
 # for use in any references by specific recipes so it can be replaced easily
 # across the tree.  this could later be parameterized for use by multiple
 # versions of python too.
-SITE_PACKAGES = $(libdir)/python2.6/site-packages
+SITE_PACKAGES = $(PYTHON_SITE_PACKAGES)
 
 include gar/gar.mk

@@ -910,7 +910,7 @@ build-%/waf:
 PYBUILD_CMD ?= build
 build-%/setup.py:
 	@echo " ==> Running setup.py $(PYBUILD_TYPE) in $*"
-	@( cd $* ; $(BUILD_ENV) python ./setup.py $(PYBUILD_CMD) $(BUILD_ARGS) )
+	@( cd $* ; $(BUILD_ENV) $(PYTHON_EXECUTABLE) ./setup.py $(PYBUILD_CMD) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
 #################### CLEAN RULES ####################
@@ -988,6 +988,7 @@ test-%/waf:
 test-%/setup.py:
 	@echo " ==> Running setup.py test in $*"
 	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) python ./setup.py test $(TEST_ARGS) )
+	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) $(PYTHON_EXECUTABLE) ./setup.py test $(TEST_ARGS) )
 	@$(MAKECOOKIE)
 
 ################# INSTALL RULES ####################
@@ -1035,7 +1036,7 @@ install-%/waf:
 PYINSTALL_CMD ?= install
 install-%/setup.py:
 	@echo " ==> Running setup.py $(PYINSTALL_CMD) in $*"
-	@( cd $* ; $(INSTALL_ENV) python ./setup.py $(PYINSTALL_CMD) $(INSTALL_ARGS) )
+	@( cd $* ; $(INSTALL_ENV) $(PYTHON_EXECUTABLE) ./setup.py $(PYINSTALL_CMD) $(INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
 # pkg-config scripts
