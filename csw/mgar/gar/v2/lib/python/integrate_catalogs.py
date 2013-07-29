@@ -145,8 +145,9 @@ def IndexDictByField(d, field):
   return dict((x[field], x) for x in d)
 
 
-def GetCatalogs(catrel_from, catrel_to, include_downgrades,
-                          include_version_changes):
+def GetCatalogs(catrel_from, catrel_to,
+                include_version_changes,
+                include_downgrades):
   rest_client = rest.RestClient()
   def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
     key = r_catrel, r_arch, r_osrel
@@ -284,11 +285,13 @@ def main():
         for x in jsonable_catalogs)
   else:
     catalogs = GetCatalogs(
-        catrel_from, catrel_to, options.include_downgrades,
-        options.include_version_changes)
+        catrel_from, catrel_to,
+        options.include_version_changes,
+        options.include_downgrades)
     diffs_by_catalogname = ComposeDiffsByCatalogname(
-        catalogs, catrel_from, catrel_to, include_version_changes,
-        include_downgrades)
+        catalogs, catrel_from, catrel_to,
+        options.include_version_changes,
+        options.include_downgrades)
     bundles_by_md5 = {}
     bundles_missing = set()
     cp = rest.CachedPkgstats("pkgstats")
