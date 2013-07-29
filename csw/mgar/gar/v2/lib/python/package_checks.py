@@ -814,9 +814,9 @@ def SetCheckFileCollisions(pkgs_data, error_mgr, logger, messenger):
             '%s %s' % (file_path, " ".join(pkgnames)))
 
 
-def CheckPythonPackageName(pkg_data, error_mgr, logger, messenger):
-  """Checks for CSWpy-* and py_* package names."""
-  pyfile_re = re.compile(r"/opt/csw/lib/python.*/.*")
+def CheckPython2PackageName(pkg_data, error_mgr, logger, messenger):
+  """Packages providing Python modules are named CSWpy-* and py_*."""
+  pyfile_re = re.compile(r"/opt/csw/lib/python(2\.6|2\.7)?/.*")
   pkgname = pkg_data["basic_stats"]["pkgname"]
   has_py_files = False
   example_py_file = ""
@@ -829,16 +829,42 @@ def CheckPythonPackageName(pkg_data, error_mgr, logger, messenger):
       break
   if has_py_files and not pkgname.startswith("CSWpy-"):
     error_mgr.ReportError("pkgname-does-not-start-with-CSWpy-")
-    messenger.Message("The package "
-                      "installs files into /opt/csw/lib/python. For example, %s. "
-                      "However, the pkgname doesn't start with 'CSWpy-'."
-                      % repr(example_py_file))
-  if has_py_files and not pkg_data["basic_stats"]["catalogname"].startswith("py_"):
+    messenger.Message(
+        "The package "
+        "installs files into /opt/csw/lib/python. For example, %s. "
+        "However, the pkgname doesn't start with 'CSWpy-'."
+        % repr(example_py_file))
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  if has_py_files and not catalogname.startswith("py_"):
     error_mgr.ReportError("catalogname-does-not-start-with-py_")
     messenger.Message("The package installs files into /opt/csw/lib/python. "
         "For example, %s. "
         "However, the catalogname doesn't start with 'py_'."
         % repr(example_py_file))
+
+
+def CheckPackageDoesNotBreakPython26(pkg_data, error_mgr, logger, messenger):
+  """Packages named CSWpy- must provide files for Python 2.6."""
+  py26_file_re = re.compile(r"/opt/csw/lib/python(2\.6)?/.*")
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  has_py_prefix = pkgname.startswith("CSWpy-")
+  if not has_py_prefix:
+    # It's not a Python 2.x module. Nothing to see here.
+    return
+  spotted_a_py26_file = False
+  example_py_file = ""
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if not pkgmap_entry["path"]:
+      continue
+    if py26_file_re.match(pkgmap_entry["path"]):
+      spotted_a_py26_file = True
+      example_py_file = pkgmap_entry["path"]
+      break
+  if not spotted_a_py26_file:
+    error_mgr.ReportError("python-package-missing-py26-files")
+    messenger.Message(
+        "The package has the CSWpy- prefix but "
+        "does not contain any files for Python 2.6. ")
 
 
 def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
