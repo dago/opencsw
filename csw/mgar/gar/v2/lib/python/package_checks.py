@@ -4,16 +4,17 @@
 # - individual package checks
 # - set checks
 #
-# Individual checks need to be named "Check<something>", while set checks are named
-# "SetCheck<something>".
+# Individual checks need to be named "Check<something>", while set checks are
+# named "SetCheck<something>".
 #
 # def CheckSomething(pkg_data, error_mgr, logger, messenger):
 #   logger.debug("Checking something.")
 #   error_mgr.ReportError("something-is-wrong")
 #
-# TODO(maciej): In general, the development package should depend on all the libraries.
-# TODO(maciej): If foo.so links to foo.so.1, the devel package should depend on
-#               the library package.
+# TODO(maciej): In general, the development package should depend on all the
+# libraries.
+# TODO(maciej): If foo.so links to foo.so.1, the devel package should depend
+# on the library package.
 
 import copy
 import re
@@ -32,7 +33,7 @@ import common_constants
 import logging
 
 PATHS_ALLOWED_ONLY_IN = {
-    # Leading slash must be removed.
+    # The leading slash must be removed.
     # Using strings where possible for performance.
     "CSWcommon":  {"string": [
                        r"opt",
