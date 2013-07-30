@@ -1,0 +1,87 @@
+From 60a35b1739bbb86e149aca4ed523db6fcc4c00b9 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 31 Jul 2013 00:36:24 +0200
+Subject: [PATCH] Assorted changes to make it compile
+
+---
+ Makefile  |  9 +++------
+ config.mk | 13 +++++++------
+ dmenu.c   |  2 ++
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c127f6a..a8ab397 100644
+--- a/Makefile
++++ b/Makefile
+@@ -15,18 +15,15 @@ options:
+ 	@echo "CC       = ${CC}"
+ 
+ .c.o:
+-	@echo CC -c $<
+-	@${CC} -c $< ${CFLAGS}
++	${CC} -c $< ${CFLAGS}
+ 
+ ${OBJ}: config.mk draw.h
+ 
+ dmenu: dmenu.o draw.o
+-	@echo CC -o $@
+-	@${CC} -o $@ dmenu.o draw.o ${LDFLAGS}
++	${CC} -o $@ dmenu.o draw.o ${LDFLAGS}
+ 
+ stest: stest.o
+-	@echo CC -o $@
+-	@${CC} -o $@ stest.o ${LDFLAGS}
++	${CC} -o $@ stest.o ${LDFLAGS}
+ 
+ clean:
+ 	@echo cleaning
+diff --git a/config.mk b/config.mk
+index 92a5e63..3161d1c 100644
+--- a/config.mk
++++ b/config.mk
+@@ -2,11 +2,11 @@
+ VERSION = 4.5
+ 
+ # paths
+-PREFIX = /usr/local
++PREFIX = /opt/csw
+ MANPREFIX = ${PREFIX}/share/man
+ 
+-X11INC = /usr/X11R6/include
+-X11LIB = /usr/X11R6/lib
++X11INC = /usr/openwin/share/include
++X11LIB = /usr/openwin/lib
+ 
+ # Xinerama, comment if you don't want it
+ XINERAMALIBS  = -lXinerama
+@@ -17,10 +17,11 @@ INCS = -I${X11INC}
+ LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS}
+ 
+ # flags
+-CPPFLAGS = -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
++# CPPFLAGS = -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
++CPPFLAGS = -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
+ #CFLAGS   = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
+-CFLAGS   = -std=c99 -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
++CFLAGS   = -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
+ LDFLAGS  = -s ${LIBS}
+ 
+ # compiler and linker
+-CC = cc
++CC = gcc
+diff --git a/dmenu.c b/dmenu.c
+index 4ea95f8..cac3c58 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -12,6 +12,8 @@
+ #include <X11/extensions/Xinerama.h>
+ #endif
+ #include "draw.h"
++#include <sys/ddi.h>
++#include <X11/keysym.h>
+ 
+ #define INTERSECT(x,y,w,h,r)  (MAX(0, MIN((x)+(w),(r).x_org+(r).width)  - MAX((x),(r).x_org)) \
+                              * MAX(0, MIN((y)+(h),(r).y_org+(r).height) - MAX((y),(r).y_org)))
+-- 
+1.8.3.1
+
