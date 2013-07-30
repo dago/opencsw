@@ -244,8 +244,9 @@ class TestLibraries(mox.MoxTestBase):
          'path': '/opt/csw/lib/python/site-packages/foo.py',
          'type': 'f', 'group': 'bin', 'user': 'root'}]
     self.error_mgr_mock.NeedPackage('CSWtree', u'CSWpython',
-        "found file(s) matching /?opt/csw/lib/python(2\\.6)?/site-packages/.+\\.py$, "
-        "e.g. '/opt/csw/lib/python/site-packages/foo.py'")
+        "found file(s) matching "
+        "/?opt/csw/lib/python(2\\.6)?/(site-packages|lib-dynload)/.+"
+        "\\.py$, e.g. '/opt/csw/lib/python/site-packages/foo.py'")
     self.mox.ReplayAll()
     result = dependency_checks.ByFilename(
         self.pkg_data,
@@ -262,8 +263,9 @@ class TestLibraries(mox.MoxTestBase):
          'path': '/opt/csw/lib/python2.7/site-packages/foo.py',
          'type': 'f', 'group': 'bin', 'user': 'root'}]
     self.error_mgr_mock.NeedPackage('CSWtree', u'CSWpython27',
-        "found file(s) matching /?opt/csw/lib/python2\\.7/site-packages/.+\\.py$, "
-        "e.g. '/opt/csw/lib/python2.7/site-packages/foo.py'")
+        "found file(s) matching "
+        "/?opt/csw/lib/python2\\.7/(site-packages|lib-dynload)/.+"
+        "\\.py$, e.g. '/opt/csw/lib/python2.7/site-packages/foo.py'")
     self.mox.ReplayAll()
     result = dependency_checks.ByFilename(
         self.pkg_data,
