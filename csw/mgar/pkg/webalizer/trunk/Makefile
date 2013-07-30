@@ -32,12 +32,11 @@ BUILD_DEP_PKGS += CSWgeoip-dev
 PACKAGES += CSWwebalizer
 SPKG_DESC_CSWwebalizer = A flexible web server log file analysis program
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibgd2
-RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWwe3er += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibz1
 RUNTIME_DEP_PKGS_CSWwebalizer += CSWbdb48
 RUNTIME_DEP_PKGS_CSWwebalizer += CSWgeoip
-RUNTIME_DEP_PKGS_CSWwebalizer += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWwebalizeRUNTIME_DEP_PKGS_CSWwebalizer += CSWlibgeoip1er += CSWlibbz2-1-0
 
 # Fix config file later
 CHECKPKG_OVERRIDES_CSWwebalizer += file-with-bad-content|/usr/share|root/etc/opt/csw/webalizer.conf.CSW
@@ -64,5 +63,4 @@ PRESERVECONF += $(sysconfdir)/webalizer.conf
 
 EXTRA_PAX_ARGS += -s ',/webalizer\.conf\.sample$$,/webalizer.conf.CSW,'
 
-include gar/category.mk
-
+includ
