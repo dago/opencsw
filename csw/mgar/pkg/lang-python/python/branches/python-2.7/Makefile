@@ -15,6 +15,7 @@ CVER = 27
 #   - http://forums.sun.com/thread.jspa?threadID=5148204
 #   - http://bugs.python.org/issue4902
 #     - Python-2.6.1/Modules/_ctypes/libffi/src/x86/sysv.S
+# - test_threading locks up on Solaris 9: http://bugs.python.org/issue6643
 
 SPKG_SOURCEURL = http://python.org/download/releases/$(VERSION)
 
