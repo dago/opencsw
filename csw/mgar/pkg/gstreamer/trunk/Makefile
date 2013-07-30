@@ -143,8 +143,7 @@ CONFIGURE_ARGS += --disable-debug
 
 include gar/category.mk
 
+PATH:=:/opt/csw/gnu:$(PATH)
+
 # remove -L/opt/csw/lib
 LDFLAGS = $(strip $($(GARCOMPILER)_LD_FLAGS))
-
-# select the right flex parser aka CSWflex-new
-CONFIGURE_ENV  += FLEX_PATH=/opt/csw/bin/flex-2.5.35
