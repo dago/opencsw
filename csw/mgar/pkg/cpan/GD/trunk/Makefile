@@ -1,5 +1,5 @@
 NAME = GD
-VERSION = 2.45
+VERSION = 2.50
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = LDS
@@ -16,19 +16,13 @@ endef
 #   https://rt.cpan.org/Ticket/Display.html?id=49053
 PATCHFILES = diff-GD.t
 
-LICENSE = LICENSE
+# The LICENSE file is missing in v2.50
+LICENSE = README
 
 PACKAGES += CSWpm-gd
 SPKG_DESC_CSWpm-gd = Interface to GD graphics library
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibgd2
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWxpm
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWpm-gd += CSWlibgd3
 OBSOLETED_BY_CSWpm-gd += CSWpmgd
 CATALOGNAME_CSWpmgd = pm_gd_stub
 
@@ -53,3 +47,8 @@ BUILD_OVERRIDE_VARS = CCFLAGS
 BUILD_OVERRIDE_VAR_CCFLAGS =
 
 include gar/category.mk
+
+# Needed to avoid https://rt.cpan.org/Public/Bug/Display.html?id=85789
+pre-test-modulated:
+	@cp files/t/test.out.* ${WORKSRC}/t/
+	@$(MAKECOOKIE)
