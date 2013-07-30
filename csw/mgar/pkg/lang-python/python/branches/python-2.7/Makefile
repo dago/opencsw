@@ -210,6 +210,9 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|b
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/$(PVER)/lib-dynload/_gdbm.so
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += surplus-dependency|CSWgdbm
 
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython
+
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += file-with-bad-content
 
 # To avoid file collisions with CSWpython:
