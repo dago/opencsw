@@ -16,6 +16,7 @@ MASTER_SITES	=	$(GNU_MIRROR)
 DISTFILES		=	$(NAME)-$(VERSION).tar.xz
 PREVLIBSAR		=	guilelib12-$(GARCH)-libs-1.6.7.tar.gz
 DISTFILES		+=	$(PREVLIBSAR)
+PATCHFILES		+=	0001-move-up-prototypes.patch
 
 GARCOMPILER = GNU
 

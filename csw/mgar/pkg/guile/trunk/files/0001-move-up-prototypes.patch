@@ -1,0 +1,38 @@
+From b8e59be6be12b0ba924b6c10e751b796ba65356f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 31 Jul 2013 11:39:57 +0200
+Subject: [PATCH] move up prototypes
+
+this solves https://www.opencsw.org/mantis/view.php?id=5073
+---
+ libguile/gc.h | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/libguile/gc.h b/libguile/gc.h
+index a9a499b..ee31517 100644
+--- a/libguile/gc.h
++++ b/libguile/gc.h
+@@ -219,6 +219,9 @@ SCM_API char *scm_gc_strndup (const char *str, size_t n, const char *what)
+ #define SCM_GC_MALLOC_POINTERLESS(size) scm_gc_malloc_pointerless (size, NULL)
+ #endif
+ 
++SCM_API void scm_remember_upto_here_1 (SCM obj);
++SCM_API void scm_remember_upto_here_2 (SCM obj1, SCM obj2);
++SCM_API void scm_remember_upto_here (SCM obj1, ...);
+ 
+ SCM_INLINE SCM scm_cell (scm_t_bits car, scm_t_bits cdr);
+ SCM_INLINE SCM scm_double_cell (scm_t_bits car, scm_t_bits cbr,
+@@ -317,10 +320,6 @@ scm_words (scm_t_bits car, scm_t_uint16 n_words)
+ 
+ #endif /* SCM_CAN_INLINE || defined SCM_INLINE_C_IMPLEMENTING_INLINES */
+ 
+-SCM_API void scm_remember_upto_here_1 (SCM obj);
+-SCM_API void scm_remember_upto_here_2 (SCM obj1, SCM obj2);
+-SCM_API void scm_remember_upto_here (SCM obj1, ...);
+-
+ /* In GCC we can force a reference to an SCM by making it an input to an
+    empty asm.  This avoids the code size and slowdown of an actual function
+    call.  Unfortunately there doesn't seem to be any way to do the varargs
+-- 
+1.8.3.1
+
