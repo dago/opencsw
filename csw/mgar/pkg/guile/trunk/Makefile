@@ -114,6 +114,7 @@ RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWguile
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguilereadline-v18-18
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibgmp-dev
+CHECKPKG_OVERRIDES_CSWguile-dev	+=	surplus-dependency|CSWlibgmp-dev
 ARCHALL_CSWguile-dev			=	1
 CHECKPKG_OVERRIDES_CSWguile-dev	+=	archall-devel-package
 
