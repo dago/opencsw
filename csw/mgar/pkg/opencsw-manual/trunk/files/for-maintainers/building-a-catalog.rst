@@ -2,10 +2,24 @@
 Building a package catalog
 --------------------------
 
-If you have built a package (or a set of them), you might want to test
-them.  You could just ``gunzip`` the packages and run ``pkgadd``, but if
-you wanted to test your package on a couple of systems, it's better to
-build a catalog.
+When to build your own catalog
+------------------------------
+
+In short, any time you have a set of packages you want to install with
+pkgutil, but there isn't an existing catalog that provides you with the right
+mix. The typical cases include:
+
+# You've built a set of packages and you want to test them.
+# You want to pick a subset of packages from an existing catalog on the
+  mirror.
+# You want to install older versions of some packages, for instance pick a few
+  packages from the old package stash (``allpkgs``) and some other, newer
+  packages.
+# You have a set of packages internal to your company that you want to
+  distribute across your servers.
+
+How to build your own catalog
+-----------------------------
 
 Make sure you've installed the ``pkgutilplus`` package. It contains the
 ``bldcat`` utility. You can use it to create a local catalog containing
@@ -25,18 +39,13 @@ can refer to a local filesystem path::
 If you create a persistent local catalog, you can add the path or URL to
 ``/etc/opt/csw/pkgutil.conf``.
 
-Building your own catalogs
---------------------------
+More details on catalog building
+--------------------------------
 
-If you have test packages that you have built for OpenCSW or your own
-packages that have dependencies on each other, you may want to use
-pkgutil to install them. For that to work you need a catalog for your
-packages just like the ones OpenCSW publishes.
-
-There's a simple perl script to parse your packages in a directory and
-build a catalog for them. The one argument is the directory to parse for
-``*.pkg.gz`` files and the ``catalog`` file is put in the same directory
-together with the ``descriptions`` of all packages::
+``bldcat`` is relatively a simple perl script which parses your packages in
+a directory and builds a catalog for them. The one argument is the directory
+to parse for ``*.pkg.gz`` files and the ``catalog`` file is put in the same
+directory together with the ``descriptions`` of all packages::
 
   $ bldcat .
   Inspecting ./xv-3.10a,REV=2008.10.17-SunOS5.8-sparc-CSW.pkg.gz
@@ -61,7 +70,7 @@ begin and end with chars. It also warns if packages are not compressed
 
 Test run on a manipulated catalog::
 
-  # chkcat /var/opt/csw/pkgutil/catalog 
+  # chkcat /var/opt/csw/pkgutil/catalog
   Skipping signature.
   Skipping comment.
   Skipping comment.
