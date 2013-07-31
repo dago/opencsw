@@ -18,8 +18,8 @@ FOREIGN_PACKAGES += NIMOSSlibgettextsrc0-17
 FOREIGN_PACKAGES += NIMOSSlibintl2
 FOREIGN_PACKAGES += NIMOSSlibintl3
 
-BUILD_DEP_PKGS += NIMOSSlibncurses-dev NIMOSSlibxml2-dev NIMOSSlibexpat-dev
-BUILD_DEP_PKGS += NIMOSSlibiconv-dev NIMOSSggettext-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev CSWlibxml2-dev CSWlibexpat-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev CSWggettext-dev
 
 PACKAGES += NIMOSSggettext
 PACKAGES += NIMOSSggettextdoc
@@ -159,8 +159,8 @@ COMPILE_ELISP = 1
 MASTER_SITES = $(GNU_MIRROR)
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += NIMOSSggettextdoc.cswreleasenotes
-DISTFILES += NIMOSS
+DISTFILES += CSWggettextdoc.cswreleasenotes
+DISTFILES += CSW
 DISTFILES += CSWggettext.cswreleasenotes
 
 PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
