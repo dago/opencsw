@@ -42,7 +42,7 @@ CONFIGURE_ARGS += --enable-cxx
 CONFIGURE_ARGS += --enable-java
 
 # Exclude TCL support for 64 bit until we have a 64 bit TCL
-CONFIGURE_ARGS-mm-32 = --enable-tcl --with-tcl=$(libpath)
+CONFIGURE_ARGS-mm-32 = --enable-tcl --with-tcl=/opt/csw/lib
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
 
 # bdb tests are *very* time consuming
