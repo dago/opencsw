@@ -42,6 +42,7 @@ BUILD_DEP_PKGS += CSWtcl-dev
 BUILD_DEP_PKGS += CSWtk-dev
 BUILD_DEP_PKGS += CSWswig
 BUILD_DEP_PKGS += CSWlibgc-dev
+BUILD_DEP_PKGS += CSWpython27-dev
 
 BUILD_DEP_PKGS = 
 
