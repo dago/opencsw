@@ -51,20 +51,11 @@ SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 libcord.so.1 and libgc
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibcord1
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgc1
-RUNTIME_DEP_PKGS_CSWlibgc-devARCHALL_CSWlibgc-dev = 1
+RUNTIME_DEP_PKGS_CSWlibgc-dev# beware that this package cannot be architecture neutral even though
+# it bring only that kind of components; however, given the
+# multi-platform build system, only the specific paths of the last one
+# are brought in, in this case amd64 but not sparc9
 CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-devel-package
-# all the following are either architecture neutral scripts or
-# symbolic links which are also architecture neutral...
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/libcord.so
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/libgc.so
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/libgccpp.so
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/pkgconfig
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/pkgconfig/bdw-gc.pc
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/amd64/libcord.so
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/amd64/libgc.so
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/amd64/libgccpp.so
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig
-CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig/bdw-gc.pc
 nuary/004904.html
 TEST_SIPTS	=	custom
 
