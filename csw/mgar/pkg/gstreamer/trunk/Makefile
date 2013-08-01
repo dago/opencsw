@@ -11,9 +11,6 @@ define BLURB
   editing) processing.
 endef
 
-PACKAGES = CSWgstreamer
-CATALOGNAME = gstreamer
-
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gstreamer/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
@@ -21,10 +18,16 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = SOS12U3
-PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+# do not compile with gcc4: 
+# gstelementfactory.c:393:8: note: in expansion of macro 'g_atomic_pointer_compare_and_exchange'
+# GARCOMPILER = GCC4
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 RUNTIME_DEP_PKGS += CSWglib2 CSWggettextrt CSWlibxml2
-BUILD_DEP_PKGS   += CSWbison CSWflex-new CSWglib2devel CSWpkgconfig
+BUILD_DEP_PKGS   += CSWbison
+BUILD_DEP_PKGS   += CSWflex
+BUILD_DEP_PKGS   += CSWglib2devel
+BUILD_DEP_PKGS   += CSWpkgconfig
 # BUILD_DEP_PKGS   += CSWlibxml2devel
 BUILD_DEP_PKGS   += CSWgobject-introspection
 
@@ -114,6 +117,8 @@ CATALOGNAME_CSWgstreamer-dev = gstreamer_dev
 SPKG_DESC_CSWgstreamer-dev += $(DESCRIPTION), development files
 PKGFILES_CSWgstreamer-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWgstreamer-dev += $(prefix)/share/gtk-doc/.*
+PKGFILES_CSWgstreamer-dev += $(prefix)/share/gir-1.0/.*
+PKGFILES_CSWgstreamer-dev += $(libdir)/girepository-1.0/.*
 RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstbase0-10-0
 RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstnet0-10-0
 RUNTIME_DEP_PKGS_CSWgstreamer-dev += CSWlibgstreamer0-10-0
