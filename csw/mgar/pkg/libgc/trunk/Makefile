@@ -1,5 +1,7 @@
 NAME = libgc
-VERSION = 7.1
+theVersion = 7.2
+thePatch = d
+VERSION = $(theVersion)$(thePatch)
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -13,9 +15,8 @@ define BLURB
 	accessed.
 endef
 
-MASTER_SITES = http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/
-DISTNAME = gc-$(VERSION)
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/theVersion)
+DISTFILES  = $(DISTNAME)$(thePatchLES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.hpl.hp.com/personal/Hans_Boehm/gc/
 
@@ -55,7 +56,7 @@ CHECKPKG_OVERRIDES_CSWlibgc-dev += file-with-bad-content|/usr/local|root/opt/csw
 #   FAIL: gctest
 # The bugreport has been posted on
 #   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/004904.html
-TEST_SCRIPTS	=	custom
+TEST_SIPTS	=	custom
 
 # BUILD64_LIBS_ONLY = 1
 
@@ -69,5 +70,4 @@ post-install-modulated: pkgdoc = $(DESTDIR)/$(docdir)/$(NAME)-dev
 post-install-modulated:
 	ginstall --directory --mode=u=rwx,go=rx $(pkgdoc)
 	cd $(DESTDIR)/$(sharedstatedir)/gc && mv * $(pkgdoc)
-	rmdir $(DESTDIR)/$(sharedstatedir)/gc
-	$(MAKECOOKIE)
+	rmdir $(DESTDIR)/$(sharedstatedir)/g
