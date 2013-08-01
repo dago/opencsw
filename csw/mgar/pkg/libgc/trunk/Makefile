@@ -32,19 +32,19 @@ SPKG_DESC_CSWlibcord1 = A garbage collector for C and C++, libcord.so.1
 PKGFILES_CSWlibcord1 += $(call pkgfiles_lib,libcord.so.1)
 RUNTIME_DEP_PKGS_CSWlibcord1 += CSWlibgc1
 OBSOLETED_BY_CSWlibcRUNTIME_DEP_PKGS_CSWlibcord1 += CSWlibgcc-s1cCHECKPKG_OVERRIDES_CSWlibcord1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/libcord.so.1.0.3
-CHECKPKG_OVERRIDES_CSWlibcord1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/sparcv9/libcord.so.1.0.3cord1 += CSWlibgc
+CHECKPKG_OVERRIDES_CSWlibcord1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/sparcv9/libcord.so.1.0.3cCHECKPKG_OVERRIDES_CSWlibcord1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/amd64/libcord.so.1.0.3cord1 += CSWlibgc
 
 PACKAGES += CSWlibgc1
 SPKG_DESC_CSWlibgc1 = A garbage collector for C and C++, libgc.so.1
 PKGFILES_CSWlibgc1 += $(call pkgfiles_lib,libgc.so.1)
 OBSOLETED_BY_CSWliRUNTIME_DEP_PKGS_CSWlibgc1 += CSWlibgcc-s1iCHECKPKG_OVERRIDES_CSWlibgc1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/libgc.so.1.0.3
-CHECKPKG_OVERRIDES_CSWlibgc1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/sparcv9/libgc.so.1.0.3ibgc1 += CSWlibgc
+CHECKPKG_OVERRIDES_CSWlibgc1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/sparcv9/libgc.so.1.0.3iCHECKPKG_OVERRIDES_CSWlibgc1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/amd64/libgc.so.1.0.3ibgc1 += CSWlibgc
 
 PACKAGES += CSWlibgccpp1
 SPKG_DESC_CSWlibgccpp1 = A garbage collector for C and C++, libgccpp.so.1
 PKGFILES_CSWlibgccpp1 += $(call pkgfiles_liRUNTIME_DEP_PKGS_CSWlibgccpp1 += CSWlibgc1
 RUNTIME_DEP_PKGS_CSWlibgccpp1 += CSWlibgcc-s1iCHECKPKG_OVERRIDES_CSWlibgccpp1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/libgccpp.so.1.0.3
-CHECKPKG_OVERRIDES_CSWlibgccpp1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/sparcv9/libgccpp.so.1.0.3ib,libgccpp.so.1)
+CHECKPKG_OVERRIDES_CSWlibgccpp1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/sparcv9/libgccpp.so.1.0.3iCHECKPKG_OVERRIDES_CSWlibgccpp1 += bad-rpath-entry|/usr/lib/lwp/.|opt/csw/lib/amd64/libgccpp.so.1.0.3ib,libgccpp.so.1)
 
 PACKAGES += CSWlibgc-dev
 SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 libcord.so.1 and libgccpp.so.1
