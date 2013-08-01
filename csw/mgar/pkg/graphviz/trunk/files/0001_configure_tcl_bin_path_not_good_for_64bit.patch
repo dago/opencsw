@@ -1,0 +1,20 @@
+--- a/configure	jeu. févr 14 14:30:22 2013
++++ b/configure	mar. juil 30 22:09:59 2013
+@@ -23637,7 +23637,7 @@
+   # can't assume ksh on all architectures
+   # TCLSH_EXEC_PREFIX=${TCLSH%%/bin/tclsh.*}
+   # so use sed instead
+-  TCLSH_EXEC_PREFIX=`echo $TCLSH|sed -e 's%/bin/tclsh.*$%%'`
++  TCLSH_EXEC_PREFIX=`echo $TCLSH|sed -e 's%/bin/.*tclsh.*$%%'`
+ 
+   if test -f ${TCLSH_EXEC_PREFIX}/include/tcl${TCL_VERSION_FOUND}/tcl.h; then
+     TCL_INCLUDES="-I${TCLSH_EXEC_PREFIX}/include/tcl${TCL_VERSION_FOUND} -I${TCLSH_EXEC_PREFIX}/include/tcl${TCL_VERSION_FOUND}/generic"
+@@ -23853,7 +23853,7 @@
+     # can't assume ksh on all architectures
+     # WISH_EXEC_PREFIX=${WISH%%/bin/tclsh.*}
+     # so use sed instead
+-    WISH_EXEC_PREFIX=`echo $WISH|sed -e 's%/bin/wish.*$%%'`
++    WISH_EXEC_PREFIX=`echo $WISH|sed -e 's%/bin/.*wish.*$%%'`
+ 
+     if test -f ${WISH_EXEC_PREFIX}/include/tk${TK_VERSION_FOUND}/tk.h; then
+ 	TK_INCLUDES="-I${WISH_EXEC_PREFIX}/include/tk${TK_VERSION_FOUND} -I${WISH_EXEC_PREFIX}/include/tk${TK_VERSION_FOUND}/generic -I${WISH_EXEC_PREFIX}/include/tk${TK_VERSION_FOUND}/unix"
