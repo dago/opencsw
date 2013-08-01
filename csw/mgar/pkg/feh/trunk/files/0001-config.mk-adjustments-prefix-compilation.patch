@@ -1,0 +1,35 @@
+From 60fa5fe0dbe652be136de08b4c14706a23e0c364 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 1 Aug 2013 09:54:25 +0200
+Subject: [PATCH] config.mk adjustments: prefix, compilation
+
+---
+ config.mk | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/config.mk b/config.mk
+index 54cf7e9..42acc24 100644
+--- a/config.mk
++++ b/config.mk
+@@ -2,7 +2,7 @@ PACKAGE ?= feh
+ VERSION ?= 2.9.3
+ 
+ # Prefix for all installed files
+-PREFIX ?= /usr/local
++PREFIX ?= /opt/csw
+ 
+ # Directories for manuals, executables, docs, data, etc.
+ main_dir = ${DESTDIR}${PREFIX}
+@@ -16,7 +16,8 @@ desktop_dir = ${main_dir}/share/applications
+ 
+ # default CFLAGS
+ CFLAGS ?= -g -O2
+-CFLAGS += -Wall -Wextra -pedantic
++CFLAGS += -DNAME_MAX=FILENAME_MAX
++# CFLAGS += -Wall -Wextra -pedantic
+ 
+ curl ?= 1
+ debug ?= 0
+-- 
+1.8.3.1
+
