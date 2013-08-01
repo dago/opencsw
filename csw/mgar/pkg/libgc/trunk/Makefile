@@ -51,13 +51,16 @@ SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 libcord.so.1 and libgc
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibcord1
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgc1
-RUNTIME_DEP_PKGS_CSWlibgc-devCHECKPKG_OVERRIDES_CSWlibgc-dev += archall-devel-package
-ARCHALL_CSWlibgc-dev = ev +=ADME.autoconf
-
-# One test is failing on amd64, disable for now:
-#   FAIL: gctest
-# The bugreport has been posted on
-#   http://www.hpl.hp.com/hosted/linux/mail-archives/gc/2012-January/004904.html
+RUNTIME_DEP_PKGS_CSWlibgc-devARCHALL_CSWlibgc-dev = 1
+CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-devel-package
+# all the following are either architecture neutral scripts or
+# symbolic links which are also architecture neutral...
+CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/libcord.so
+CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/libgc.so
+CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/libgccpp.so
+CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/pkgconfig
+CHECKPKG_OVERRIDES_CSWlibgc-dev += archall-with-arch-paths|/opt/csw/lib/sparcv9/pkgconfig/bdw-gc.pc
+nuary/004904.html
 TEST_SIPTS	=	custom
 
 # BUILD64_LIBS_ONLY = 1
