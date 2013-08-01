@@ -51,7 +51,8 @@ SPKG_DESC_CSWlibgc-dev = Development files for libgc.so.1 libcord.so.1 and libgc
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibcord1
 RUNTIME_DEP_PKGS_CSWlibgc-dev += CSWlibgc1
-RUNTIME_DEP_PKGS_CSWlibgc-dev +=ADME.autoconf
+RUNTIME_DEP_PKGS_CSWlibgc-devCHECKPKG_OVERRIDES_CSWlibgc-dev += archall-devel-package
+ARCHALL_CSWlibgc-dev = ev +=ADME.autoconf
 
 # One test is failing on amd64, disable for now:
 #   FAIL: gctest
