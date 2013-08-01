@@ -40,7 +40,6 @@ BUILD_DEP_PKGS += CSWlibuuid-dev
 BUILD_DEP_PKGS += CSWlibiptcdata
 BUILD_DEP_PKGS += CSWpoppler-dev
 # BUILD_DEP_PKGS += CSWexempidevel
-BUILD_DEP_PKGS += CSWgstreamer
 BUILD_DEP_PKGS += CSWlibexif-dev
 
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgsf1-114
@@ -81,7 +80,7 @@ RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibiptcdata
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibpoppler-glib8
 # RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWexempi
-RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWgstreamer
+# RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWgstreamer
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS_CSWlibtracker-extract0-16-0 += CSWlibtracker-common
 
