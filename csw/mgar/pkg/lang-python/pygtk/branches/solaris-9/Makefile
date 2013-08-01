@@ -40,7 +40,7 @@ RUNTIME_DEP_PKGS_CSWpygtk += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpygtk += CSWpango
 
 CHECKPKG_OVERRIDES_CSWpygtk += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpygtk += catalogname-does-not-start-with-py_ginfo|cswpycompile
+CHECKPKG_OVERRIDES_CSWpygtk += catalogname-does-not-start-with-py_gCHECKPKG_OVERRIDES_CSWpygtk += missing-dependency|CSWpythonginfo|cswpycompile
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
@@ -53,4 +53,3 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 CONFIGURE_ARGS  = $(DIRPATHS
 
 include gar/category.mk
-
