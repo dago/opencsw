@@ -52,7 +52,7 @@ CHECKPKG_OVERRIDES_CSWapcups-gui += bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/gap
 PACKAGES += CSWapcups-cgi
 SPKG_DESC_CSWapcups-cgi = CGI scripts for apcupsd
 PKGFILES_CSWapcups-cgi += $(sharedstatedir)/www/.*
-RUNTIME_DEP_PKGS_CSWapcups-cgi += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWapcups-cgi += CSWlibgd3
 
 # We need this for libusb and I definitely want this from Sun
 CHECKPKG_OVERRIDES_CSWapcups-cgi += bad-rpath-entry|/usr/sfw/lib|opt/csw/share/www/apcupsd/cgi/upsstats.cgi
