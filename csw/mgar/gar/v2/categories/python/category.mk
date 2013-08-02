@@ -1,6 +1,3 @@
-# Add a dependency to CSWpython
-_EXTRA_GAR_PKGS += $(PYTHON_PACKAGE)
-
 # For the record, do not include the following line:
 # _MERGE_EXCLUDE_CATEGORY += .*\.egg-info.*
 #
@@ -35,4 +32,23 @@ PACKAGES ?= $(PYTHON_MODULE_PACKAGE_PREFIX)$(DASHED_NAME)
 # versions of python too.
 SITE_PACKAGES = $(PYTHON_SITE_PACKAGES)
 
+# Do not make all Python modules depend on the interpreter. With the
+# dual-version packages we would have to make all modules depend on both
+# Python versions. It's better to not depend on any Python version.
+# _EXTRA_GAR_PKGS += $(PYTHON_PACKAGE_2_6)
+# _EXTRA_GAR_PKGS += $(PYTHON_PACKAGE_2_7)
+
+# During the transition to Python 2.7, all modules are built for two Python
+# versions: 2.6 and 2.7. This implies the dependency on both CSWpython and
+# CSWpython27.
+_CATEGORY_MODULATORS ?= PYTHON_VERSION
+MODULATIONS_PYTHON_VERSION ?= 2_6 2_7
+MERGE_SCRIPTS_isa-default-python_version-2_6 ?= copy-all
+MERGE_SCRIPTS_isa-default-python_version-2_7 ?= copy-all
+MERGE_SCRIPTS_isa-default-python_version-3_3 ?= copy-all
+
 include gar/gar.mk
+
+GARCOMPILER_PYTHON_2_6 = SOS12U3
+GARCOMPILER_PYTHON_2_7 = GNU
+GARCOMPILER = $(GARCOMPILER_$(PYTHON_VERSION))
