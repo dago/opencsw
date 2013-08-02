@@ -16,7 +16,7 @@ CONF=/etc/opt/csw/dovecot/dovecot.conf
 
 [ "`ulimit -n`" -lt 1024 ] && ulimit -n 1024
 
-base_dir=`$DAEMON -a|grep '^base_dir: '|sed 's/^base_dir: //'`
+base_dir=`$DAEMON -a | sed -n 's/^base_dir[ 	]*=[ 	]*//p'`
 pidfile=$base_dir/master.pid
 
 if test -f $pidfile; then
