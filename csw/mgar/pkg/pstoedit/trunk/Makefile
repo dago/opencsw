@@ -21,7 +21,7 @@ BUILD_DEP_PKGS		+=	CSWbison
 GARCOMPILER			=	GNU
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
-PACKAGING_PLATFORMS	+=	solaris10-i386
+PACKAGING_PLATFORMS	+=BUILD64_LIBS_ONLY	=	1+=	solaris10-i386
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--with-libplot
@@ -35,7 +35,7 @@ CATALOGNAME_CSWpstoedit					=	pstoedit
 SPKG_DESC_CSWpstoedit					=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibpstoedit0
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibgd2
+RUNTIME_DEP_PKGS_CSWpstoe3it			+=	CSWlibgd2
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagick++5
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibmagickcore5
 RUNTIME_DEP_PKGS_CSWpstoedit			+=	CSWlibplotter2
@@ -56,9 +56,7 @@ PACKAGES								+=	CSWpstoedit-dev
 CATALOGNAME_CSWpstoedit-dev				=	pstoedit_dev
 SPKG_DESC_CSWpstoedit-dev				+=	$(DESCRIPTION), development files
 PKGFILES_CSWpstoedit-dev				+=	/opt/csw/lib/libpstoedit.so
-PKGFILES_CSWpstoedit-dev				+=	$(PKGFILES_DEVEL)
-ARCHALL_CSWpstoedit-dev					=	1
-CHECKPKG_OVERRIDES_CSWpstoedit-dev		+=	archall-devel-package
+PKGFILES_CSWpstoedit-dev				+=	$ll-devel-package
 OBSOLETED_BY_CSWpstoedit-dev			=	CSWpstoeditdevel
 CATALOGNAME_CSWpstoeditdevel			=	pstoedit_devel_stub
 RUNTIME_DEP_PKGS_CSWpstoedit-dev		+=	CSWlibpstoedit0
