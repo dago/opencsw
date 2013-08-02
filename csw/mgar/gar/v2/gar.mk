@@ -82,7 +82,7 @@ include $(GARDIR)/gar.conf.mk
 # ========================= MODULATIONS ======================== 
 
 # The default is to modulate over ISAs
-MODULATORS ?= ISA $(EXTRA_MODULATORS) $(EXTRA_MODULATORS_$(GARCH))
+MODULATORS ?= ISA $(_CATEGORY_MODULATORS) $(EXTRA_MODULATORS) $(EXTRA_MODULATORS_$(GARCH))
 MODULATIONS_ISA = $(NEEDED_ISAS)
 
 tolower = $(shell echo $(1) | tr '[A-Z]' '[a-z]')
