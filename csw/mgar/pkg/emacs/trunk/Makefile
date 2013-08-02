@@ -20,7 +20,6 @@ DISTFILES		+=	CSWemacs-common.preinstall
 INSTALL_ARGS		+=	PATH="/opt/csw/gnu:$$PATH"
 
 GARCOMPILER			=	GNU
-#GCC4_VERSION		=	4.7
 
 BUILD_DEP_PKGS		=	CSWcoreutils
 BUILD_DEP_PKGS		+=	CSWfconfig-dev
@@ -270,7 +269,7 @@ RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibotf-utils
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibrsvg2-2
-RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibxft2
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWemacs-athena	+=	CSWlibxpm4
@@ -310,7 +309,7 @@ RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibotf-utils
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibrsvg2-2
-RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibxft2
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWemacs-gtk	+=	CSWlibxpm4
