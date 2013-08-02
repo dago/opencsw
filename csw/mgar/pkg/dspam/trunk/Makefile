@@ -58,5 +58,6 @@ post-install:
 	ginstall -m 444 $(WORKSRC)/RELEASE.NOTES $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 444 $(WORKSRC)/README $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 444 $(WORKSRC)/UPGRADING $(DESTDIR)$(docdir)/$(NAME)
+	ginstall -d $(DESTDIR)$(sysconfdir)/pkg/CSWdspam/cswusergroup
 	ginstall -m 644 $(FILEDIR)/CSWdspam.cswusergroup $(DESTDIR)$(sysconfdir)/pkg/CSWdspam/cswusergroup
 	@$(MAKECOOKIE)
