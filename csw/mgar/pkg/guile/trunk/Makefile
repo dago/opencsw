@@ -25,14 +25,8 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--disable-silent-rules
-# this is necessary because libgc is not correctly built: at least the
-# following symbols are not defined:
-#    GC_unregister_my_thread
-#    GC_register_my_thread
-#    GC_pthread_create
-#    GC_pthread_detach
-CONFIGURE_ARGS	+=	--without-threads
-#GARFLAVOR	=	DBG
+
+BUILD64_LIBS_ONLY	=	1
 
 # runtime dependencies as explicited in the project's README file:
 BUILD_DEP_PKGS	+=	CSWlibgmp-dev
@@ -115,8 +109,6 @@ RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguilereadline-v18-18
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibgmp-dev
 CHECKPKG_OVERRIDES_CSWguile-dev	+=	surplus-dependency|CSWlibgmp-dev
-ARCHALL_CSWguile-dev			=	1
-CHECKPKG_OVERRIDES_CSWguile-dev	+=	archall-devel-package
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
 REINPLACE_USRLOCAL		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
