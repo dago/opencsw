@@ -104,9 +104,17 @@ TEST_SCRIPTS =
 EXTRA_PAX_ARGS += -s ',.*/apcupsd\.css$$,.$(sharedstatedir)/www/apcupsd/html/apcupsd.css,'
 
 INITSMF += $(sysconfdir)/init.d/cswapcupsd
-PRESERVECONF += $(sysconfdir)/apcupsd.conf
-PRESERVECONF += $(sysconfdir)/multimon.conf
-PRESERVECONF += $(sysconfdir)/hosts.conf
+PRESERVECONF += $(sysconfdir)/apcupsd/apcupsd.conf
+PRESERVECONF += $(sysconfdir)/apcupsd/multimon.conf
+PRESERVECONF += $(sysconfdir)/apcupsd/hosts.conf
+
+# Scripts can be modified for site use too (email dest, mesg, ...)
+PRESERVECONF += $(sysconfdir)/apcupsd/apccontrol
+PRESERVECONF += $(sysconfdir)/apcupsd/changeme
+PRESERVECONF += $(sysconfdir)/apcupsd/commfailure
+PRESERVECONF += $(sysconfdir)/apcupsd/commok
+PRESERVECONF += $(sysconfdir)/apcupsd/offbattery
+PRESERVECONF += $(sysconfdir)/apcupsd/onbattery
 
 #DISTRETC     = init.d rc0.d rc1.d rc2.d
 APCUPSDDOC   = COPYING ChangeLog DISCLAIMER Developers ReleaseNotes VERIFYING
