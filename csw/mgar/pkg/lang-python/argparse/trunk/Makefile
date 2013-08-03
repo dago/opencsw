@@ -17,4 +17,6 @@ VENDOR_URL = http://pypi.python.org/pypi/argparse
 PACKAGES = CSWpy-argparse
 ARCHALL_CSWpy-argparse = 1
 
+MODULATIONS_PYTHON_VERSION = 2_6
+
 include gar/category.mk
