@@ -49,6 +49,7 @@ CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/sha
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-1
 # even though I replace it in the sources ...
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/guile/2.0/ccache/ice-9/slib.go
+CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/guile/2.0/ccache/ice-9/slib.go
 
 PACKAGES								+=	CSWlibguile2-0-22
 CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
@@ -96,8 +97,12 @@ PKGFILES_CSWlibguile12				+=	$(call baseisadirs,$(libdir),libguile\.so\.12\.3\.0
 PKGFILES_CSWlibguile12				+=	$(call baseisadirs,$(libdir),libguile\.so\.12(\.\d+)*)
 SPKG_DESC_CSWlibguile12				+=	$(DESCRIPTION), libguile.so.12
 RUNTIME_DEP_PKGS_CSWlibguile12		+=	CSWlibguile-ltdl1
-CHECKPKG_OVERRIDES_CSWlibguile12 += file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
-CHECKPKG_OVERRIDES_CSWlibguile12 += no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/sparcv9/libguile.so.12.3.0
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/sparcv9/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile.so.12.3.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
+CHECKPKG_OVERRIDES_CSWlibguile-ltdl1	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile-ltdl.so.1.0.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
 
 PACKAGES						+=	CSWguile-dev
 CATALOGNAME_CSWguile-dev		=	guile_dev
@@ -119,6 +124,8 @@ REINPLACE_USRSHARE		+=	/opt/csw/share/guile/2.0/ice-9/slib.scm
 
 # this is part of libcharset1 which is built from iconv:
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/sparcv9/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/amd64/charset.alias
 
 include gar/category.mk
 
