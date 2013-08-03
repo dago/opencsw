@@ -22,7 +22,7 @@ INSTALL_ARGS		+=	PATH="/opt/csw/gnu:$$PATH"
 GARCOMPILER			=	GNU
 
 BUILD_DEP_PKGS		=	CSWcoreutils
-BUILD_DEP_PKGS		+=	CSWfconfig-dev
+BUILD_DEP_PKGS		+=	CSWfontconfig-dev
 BUILD_DEP_PKGS		+=	CSWglib2devel
 BUILD_DEP_PKGS		+=	CSWimagemagick-dev
 BUILD_DEP_PKGS		+=	CSWlibatk-dev
