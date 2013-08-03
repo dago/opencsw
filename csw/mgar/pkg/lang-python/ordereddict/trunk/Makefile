@@ -7,17 +7,15 @@ VERSION = 1.1
 CATEGORIES = python
 GARTYPE = v2
 
-DESCRIPTION = A drop-in substitute for Py2.7's new collections
+DESCRIPTION = A drop-in substitute for Python 2.7 new collections
 
-MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES = $(DISTNAME).tar.gz
-
 VENDOR_URL = http://pypi.python.org/pypi/ordereddict/1.1
-
-PACKAGES = CSWpy-ordereddict
-ARCHALL_CSWpy-ordereddict = 1
+ARCHALL_CSWpy-$(NAME) = 1
 
 # There is no testsuite
 TEST_SCRIPTS =
+
+MODULATIONS_PYTHON_VERSION = 2_6
 
 include gar/category.mk
