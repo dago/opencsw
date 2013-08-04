@@ -125,6 +125,8 @@ PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtDeclarative/private/.*
 PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtGui/private/.*
 PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtScript/private/.*
 ARCHALL_CSWqt4-private-dev		=	1
+RUNTIME_DEP_PKGS_CSWqt4-private-dev += CSWqt4-dev
+CHECKPKG_OVERRIDES_CSWqt4-private-dev += surplus-dependency|CSWqt4-dev
 
 PACKAGES += CSWqt4-dev
 SPKG_DESC_CSWqt4-dev += $(DESCRIPTION), development files
