@@ -124,8 +124,7 @@ REINPLACE_USRSHARE		+=	/opt/csw/share/guile/2.0/ice-9/slib.scm
 
 # this is part of libcharset1 which is built from iconv:
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/charset.alias
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/sparcv9/charset.alias
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/amd64/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/64/charset.alias
 
 include gar/category.mk
 
