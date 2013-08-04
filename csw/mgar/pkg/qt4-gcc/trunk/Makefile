@@ -124,6 +124,7 @@ PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtCore/private/.*
 PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtDeclarative/private/.*
 PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtGui/private/.*
 PKGFILES_CSWqt4-private-dev		+=	$(includedir)/QtScript/private/.*
+PKGFILES_CSWqt4-private-dev		+=	$(includedir)/src/.*
 ARCHALL_CSWqt4-private-dev		=	1
 RUNTIME_DEP_PKGS_CSWqt4-private-dev += CSWqt4-dev
 CHECKPKG_OVERRIDES_CSWqt4-private-dev += surplus-dependency|CSWqt4-dev
@@ -353,8 +354,9 @@ PATH:=:/opt/csw/gnu:$(PATH)e gar/category.mk
 # Ship private headers - ugly hack to build Qt Creator QML Designer;
 # adapted from Debian rules
 post-install:
-	gtar --directory=$(WORKSRC)/include/QtCore --create --file=- private | gtar --directory=$(DESTDIR)/$(includedir)/QtCore --extract --file=-
-	gtar --directory=$(WORKSRC)/include/QtDeclarative --create --file=- private | gtar --directory=$(DESTDIR)/$(includedir)/QtDeclarative --extract --file=-
-	gtar --directory=$(WORKSRC)/include/QtGui --create --file=- private | gtar --directory=$(DESTDIR)/$(includedir)/QtGui --extract --file=-
-	gtar --directory=$(WORKSRC)/include/QtScript --create --file=- private | gtar --directory=$(DESTDIR)/$(includedir)/QtScript --extract --file=-
+	gtar --directory=$(WORKSRC)/include/QtCore --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtCore --extract --file=-
+	gtar --directory=$(WORKSRC)/include/QtDeclarative --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtDeclarative --extract --file=-
+	gtar --directory=$(WORKSRC)/include/QtGui --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtGui --extract --file=-
+	gtar --directory=$(WORKSRC)/include/QtScript --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtScript --extract --file=-
+	cd $(WORKSRC) && gtar --create --file=- src/corelib/*/*_p.h src/declarative/*/*_p.h src/gui/*/*_p.h src/script/*/*_p.h | gtar --directory=$(DESTDIR)$(includedir) --extract --file=-
 	$(MAKECOOKIE)
