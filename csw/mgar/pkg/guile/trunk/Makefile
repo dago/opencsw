@@ -129,7 +129,7 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/amd64/charset.alias
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
 # there are failing tests:
 #    test-with-guile-module: needs more exploration, especially libgc debug
