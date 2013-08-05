@@ -4,6 +4,9 @@ NAME = cswclassutils
 VERSION = 1.49
 GARTYPE = v2
 
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
+
 # a few handy functions for defining 'generic' things dynamically
 set = $(eval $1 := $2)
 
