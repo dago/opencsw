@@ -36,7 +36,11 @@ BUILD_DEP_PKGS	+=	CSWlibgc-dev
 BUILD_DEP_PKGS	+=	CSWlibffi-dev
 BUILD_DEP_PKGS	+=	CSWlibreadline-dev
 
+# the cheks takes a lot of time, especially when activating the 64 bit
+# build; strangely, there is a test which loops forever on build farm's
+# i386 server, for pentiumpro modulation; consequently, when building on the build farm, use SKIPTEST=1 in the invocation of mgar
 TEST_SCRIPTS = custom
+
 
 PACKAGES					+=	CSWguile
 CATALOGNAME_CSWguile		=	guile
@@ -50,6 +54,7 @@ CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/sha
 # even though I replace it in the sources ...
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/guile/2.0/ccache/ice-9/slib.go
 CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/guile/2.0/ccache/ice-9/slib.go
+CHECKPKG_OVERRIDES_CSWguile += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/guile/2.0/ccache/ice-9/slib.go
 
 PACKAGES								+=	CSWlibguile2-0-22
 CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
@@ -99,10 +104,14 @@ SPKG_DESC_CSWlibguile12				+=	$(DESCRIPTION), libguile.so.12
 RUNTIME_DEP_PKGS_CSWlibguile12		+=	CSWlibguile-ltdl1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/sparcv9/libguile.so.12.3.0
+CHECKPKG_OVERRIDES_CSWlibguile12 += binary-disallowed-placement|file=opt/csw/lib/amd64/libguile.so.12.3.0|arch_id=3|arch_name=i386|bad_path=amd64
+CHECKPKG_OVERRIDES_CSWlibguile12 += file-with-bad-content|/export/home|root/opt/csw/lib/amd64/libguile.so.12.3.0
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/sparcv9/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
+CHECKPKG_OVERRIDES_CSWlibguile12 += no-direct-binding|/opt/csw/lib/amd64/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile.so.12.3.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
 CHECKPKG_OVERRIDES_CSWlibguile-ltdl1	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile-ltdl.so.1.0.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
+CHECKPKG_OVERRIDES_CSWlibguile-ltdl1 += binary-disallowed-placement|file=opt/csw/lib/amd64/libguile-ltdl.so.1.0.0|arch_id=3|arch_name=i386|bad_path=amd64
 
 PACKAGES						+=	CSWguile-dev
 CATALOGNAME_CSWguile-dev		=	guile_dev
