@@ -1,6 +1,8 @@
+# $Id$
+
 NAME      = pycairo
-VERSION   = 1.8.10
-CATEGORIES   = lib
+VERSION   = 1.4.12
+CATEGORIES   = python
 GARTYPE = v2
 
 DESCRIPTION  = Python binding for Cairo library
@@ -10,30 +12,31 @@ define BLURB
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
-DISTFILES     = py2cairo-$(VERSION).tar.gz
+DISTFILES     = pycairo-$(VERSION).tar.gz
 
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 
-PYCOMPILE = 1 
-# EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-
-PACKAGES = CSWpy-cairo
-SPKG_DESC_CSWpy-cairo = $(DESCRIPTION); main
-OBSOLETED_BY_CSWpy-cairo = CSWpycairo
-RUNTIME_DEP_PKGS_CSWpy-cairo += CSWpython
-RUNTIME_DEP_PKGS_CSWpy-cairo += CSWlibcairo2
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = py2cairo-(\d+(?:\.\d+)*).tar.gz
+PACKAGES = CSWpycairo
+SPKG_DESC_CSWpycairo = $(DESCRIPTION); main
 
 CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/\$$ISALIST -lcairo
 CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo
-EXTRA_CONFIGURE_EXPORTS += CAIRO_LIBS CAIRO_CFLAGS
+EXTRA_BUILD_EXPORTS += CAIRO_LIBS CAIRO_CFLAGS
 
-CONFIGURE_ARGS = $(DIRPATHS)
+LICENSE = COPYING-LGPL-2.1
+
+MODULATIONS_PYTHON_VERSION = 2_6
+
+TEST_SCRIPTS =
+
+RUNTIME_DEP_PKGS_CSWpycairo += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpycairo += CSWlibcairo2
+
+# Solaris 9 specifics.
+CHECKPKG_OVERRIDES_CSWpycairo += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpycairo += catalogname-does-not-start-with-py_
 
 include gar/category.mk
 
+GARCOMPILER := SOS12
 
