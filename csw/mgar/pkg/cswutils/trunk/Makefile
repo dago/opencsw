@@ -15,6 +15,9 @@ SVN_REV_gar = HEAD
 
 MASTER_SITES =
 
+PACKAGING_PLATFORMS  = solaris9-i386 solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
+
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
 DISTFILES += cpan2pkg
