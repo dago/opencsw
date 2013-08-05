@@ -20,14 +20,7 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 LICENSE = COPYING
 
 GARCOMPILER = G0001_configure_tcl_bin_path_not_good_for_64bit.patch
-PATCHFILES += 0002_configure_guile_version_detection_needs_gsed.patch
-#PATCHFILES += configure.patch
-#PATCHFILES += Makefile.am.patch
-#PATCHFILES += trapezoid.c.patch
-#PATCHFILES += post_process.c.patch
-#PATCHFILES += gvpr_Makefile.am.patch
-#_Makefile.am.patch
-PATCHFILES += gv_Makefile.am.patch
+_Makefile.am.patch
 
 INCOMPATIBLE_PKGS = CSWgraphvis
 # defer for some time to allow CSWgraphviz2 upgrades
@@ -242,10 +235,11 @@ RUNTIME_DEP_PKGS_CSWpy-graphviz += CSWlibgcc-s1
 PKGFILES_CSWpy-graphviz += $(call baseisadirs,$(libdir),graphviz/python.*)
 PKGFILES_CSWpy-graphviz += $(call baseisadirs,$(libdir),python.*)
 PKGFILES_CSWpy-graphviz += $(mandir)/man3/.*\.3python
-PKGFILES_CSWpy-graphvizS_CSWgraphvizpython += $(sharedstatedir)/gr# Keep the right Python as a dependency
-CHECKPKG_OVERRIDES_CSWpy-graphviz += surplus-dependency|CSWpython27
+PKGFILES_CSWpy-graphvizS_CSWgraphvizpython += $(sharedstatedir)/grOBSOLETED_BY_CSWpy-graphviz = CSWgraphvizpython
 # No 64 bit python
-CHECKPKG_OVERRIDES_CSWpy-graphviz += 64-bit-binaries-missingraphviz/demo/.*\.py
+CHECKPKG_OVERRIDES_CSWpy-graphviz += 64-bit-binaries-missing
+# Python 2.6 won't work
+CHECKPKG_OVERRIDES_CSWpy-graphviz += python-package-missing-py26-filesraphviz/demo/.*\.py
 
 #PACKAGES += CSWgraphvizr
 SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
@@ -409,3 +403,7 @@ CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/gvpr_static
 
 include gar/category.mk
+
+# gsed is needed by configure
+PATH := /opt/csw/gnu:$(PATH)
+
