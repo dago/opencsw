@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = ddrescue
-VERSION = 1.15
+VERSION = 1.17
 GARTYPE = v2
 
 DESCRIPTION = A data recovery tool
