@@ -4,7 +4,7 @@
 # investigated.
 
 NAME = graphviz
-VERSION = 2.30.1
+VERSION = 2.32.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -43,6 +43,7 @@ BUILD_DEP_PKGS += CSWtk-dev
 BUILD_DEP_PKGS += CSWswig
 BUILD_DEP_PKGS += CSWlibgc-dev
 BUILD_DEP_PKGS += CSWpython27-dev
+BUILD_DEP_PKGS += CSWpoppler-dev
 
 BUILD_DEP_PKGS = 
 
@@ -231,25 +232,20 @@ RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWlibcdt5
 RUNTIME_DEP_PKGS_CSWgraphvihp += CSWlibgraph5
 PKGFILES_CSWgraphvizphp = $(libdir)/graphviz/php/.*
 PKGFILES_CSWgraphvizphp += $(mandir)/man3/.*\.3php
-PKGFILES_CSWgraphvizphp += $(sharedstatedir)/graphviz/demo/.*\.php
-
-PACKAGES += CSWgraphvizpython
-SPKG_DESC_CSWgraphvizpython = Graphviz language binding for python
-RUNTIME_DEP_PKGS+= CSWpython27
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibgvc6
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibcgraph6
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibgcc-s1
-PKGFILES_CSWgraphvizpython += $(call baseisadirs,$(libdir),graphviz/python.*)
-PKGFILES_CSWgraphvizpython += $(call baseisadirs,$(libdir),python.*)/graphviz/python/.*
-PKGFILES_CSWgraphvizpython += $(mandir)/man3/.*\.3python
-PKGFILES_CSWgraphvizpython += $(sharedstatedir)/gr# Keep the right Python as a dependency
-CHECKPKG_OVERRIDES_CSWgraphvizpython += surplus-dependency|CSWpython27
+PKGFILES_CSWgraphvizphp += $(sharedstatedir)/graphviz/demo/.*\.ppy-graphviz
+SPKG_DESC_CSWpy-graphviz = Graphviz language binding for python
+RUNTIME_DEP_PKGS_CSWpy-graphviz += CSWpython27
+RUNTIME_DEP_PKGS_CSWpy-graphviz += CSWlibgvc6
+RUNTIME_DEP_PKGS_CSWpy-graphviz += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWpy-graphviz += CSWlibcgraph6
+RUNTIME_DEP_PKGS_CSWpy-graphviz += CSWlibgcc-s1
+PKGFILES_CSWpy-graphviz += $(call baseisadirs,$(libdir),graphviz/python.*)
+PKGFILES_CSWpy-graphviz += $(call baseisadirs,$(libdir),python.*)
+PKGFILES_CSWpy-graphviz += $(mandir)/man3/.*\.3python
+PKGFILES_CSWpy-graphvizS_CSWgraphvizpython += $(sharedstatedir)/gr# Keep the right Python as a dependency
+CHECKPKG_OVERRIDES_CSWpy-graphviz += surplus-dependency|CSWpython27
 # No 64 bit python
-CHECKPKG_OVERRIDES_CSWgraphvizpython += 64-bit-binaries-missing
-# Those ones should be considered
-CHECKPKG_OVERRIDES_CSWgraphvizpython += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWgraphvizpython += catalogname-does-not-start-with-py_raphviz/demo/.*\.py
+CHECKPKG_OVERRIDES_CSWpy-graphviz += 64-bit-binaries-missingraphviz/demo/.*\.py
 
 #PACKAGES += CSWgraphvizr
 SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
