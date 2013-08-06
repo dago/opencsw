@@ -68,7 +68,9 @@ RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibgvpr2
-PKGFILES_CSWgraphviz += $(call baseisadirs,$(bindir),(?:(?!diffimg|dot_static).)*)
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWgraphvizgd
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWliblasi1
+PKGFILES_CSWgraphviz += $(call baseisadirs,$(bindir),(?:(?!diffimg).)*)
 PKGFILES_CSWgraphviz += $(call baseisadirs,$(libdir),graphviz/libgvplugin_core\.so\..*)
 PKGFILES_CSWgraphviz += $(call baseisadirs,$(libdir),graphviz/libgvplugin_gdk_pixbuf\.so\..*)
 PKGFILES_CSWgraphviz += $(call baseisadirs,$(libdir),graphviz/libgvplugin_gs\.so\..*)
@@ -113,21 +115,14 @@ PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.*
 
 PACKAGES += CSWgraphvizgd
 SPKG_DESC_CSWgraphvizgd = Graphviz RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgd3
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWpango
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgts0-7-5
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibcgraph6
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgvc6
 PKGFILES_CSWgraphvizgd += $(call baseisadirs,$(libdir),graphviz/libgvplugin_gd\.so.*)
 PKGFILES_CSWgraphvizgd += $(call baseisadirs,$(bindir),diffimg)
-PKGFILES_CSWgraphvizgd += $(call baseisadirs,$(bindir),dot_static)(bindir)/dot_static
+bindir)/dot_static
 
 #PACKAGES += CSWgraphvizdevil
 SPKG_DESC_CSWgraphvizdevil = Graphviz renderers using DevIL
