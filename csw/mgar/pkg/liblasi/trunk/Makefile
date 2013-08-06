@@ -1,5 +1,5 @@
 NAME = liblasi
-VERSION = 1.1.0
+VERSION = 1.1.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -25,33 +25,36 @@ SF_PROJ = lasi
 MASTER_SITES = $(SF_MIRRORS)
 SOURCENAME = libLASi
 DISTNAME = $(SOURCENAME)-$(VERSION)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  = $(DVENDOR_URL = http://unifont.org/lasi/
 
-PATCHFILES = liblasi-consts.diff
+GARCOMPILER = GCC4
 
-VENDOR_URL = http://unifont.org/lasi/
-
-PACKAGES += CSWliblasi0
-SPKG_DESC_CSWliblasi0 = C++ Unicode support for PostScript, libLASi.so.0
-PKGFILES_CSWliblasi0 = $(call pkgfiles_lib,libLASi.so.0)
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWftype2
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWglib2
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWpango
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWfconfig
-OBSOLETED_BY_CSWliblasi0 = CSWliblasi
+PACKAGES += CSWliblasi1
+SPKG_DESC_CSWliblasi1 = C++ Unicode support for PostScript, libLASi.so.1
+PKGFILES_CSWliblasi1 = $(call pkgfiles_lib,libLASi.so.1)
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWliblasi1 += CSWpango
+OBSOLETED_BY_CSWliblasi1 = CSWliblasi
+# A lot of those, but the test returns nothing, so false positive
+CHECKPKG_OVERRIDES_CSWliblasi1 += no-direct-bindingasi0 = CSWliblasi
 
 PACKAGES += CSWliblasi-dev
 SPKG_DESC_CSWliblasi-dev = Developer support for libLASi.so.0
 PKGFILES_CSWliblasi-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWliblasi-dev += $(sharedstatedir)/doc/.*
-RUNTIME_DEP_PKGS_CSWliblasi-dev += CSWliblasi0
-# That is ok
-CHECKPKG_OVERRIDES_CSWliblasi-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liblasi/examples/README
+RUNTIME_DEP_PKGS_CSWliblasi-1
 
 BUILD64_LIBS_ONLY = 1
 
-EXTRA_CXX_FLAGS = -lCstd -norunpath
+# It doesn't remove the no-direct-binding errors, but it shouldn't hurt either
+EXTRA_LD_OPTIONS = -z nolazyload-lCstd -norunpath
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
@@ -63,15 +66,16 @@ include gar/category.mk
 configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
-		cmake	-DCMAKE_INSTALL_PREFIX="$(prefix)" \
-      -DCMAKE_INSTALL_EXEC_PREFIX:PATH="$(exec_prefix)" \
-      -DCMAKE_INSTALL_BINDIR:PATH="$(bindir)" \
-      -DCMAKE_INSTALL_DATADIR:PATH="$(datadir)" \
-      -DCMAKE_INSTALL_LIBDIR:PATH="$(libdir)" \
-      -DCMAKE_INSTALL_INCLUDEDIR:PATH="$(includedir)" \
-      -DCMAKE_INSTALL_INFODIR:PATH="$(infodir)" \
-      -DCMAKE_INSTALL_MANDIR:PATH="$(mandir)" \
-			-DCMAKE_VERBOSE_MAKEFILE=ON \
+		cmake	-DCMAKE_INSTALL_PREF	-DCMAKE_INSTALL_EXEC_PREFIX:PATH="$(exec_prefix)" \
+	-DCMAKE_INSTALL_BINDIR:PATH="$(bindir)" \
+	-DCMAKE_INSTALL_DATADIR:PATH="$(datadir)" \
+	-DCMAKE_INSTALL_LIBDIR:PATH="$(libdir)" \
+	-DCMAKE_INSTALL_INCLUDEDIR:PATH="$(includedir)" \
+	-DCMAKE_INSTALL_INFODIR:PATH="$(infodir)" \
+	-DCMAKE_INSTALL_MANDIR:PATH="$(mandir)" \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	-DCMAKE_CXX_COMPILER="$(CXX)" \
+	EFILE=ON \
       -DCMAKE_CXX_FLAGS:STRING="$(CXXFLAGS)" \
 			. )
 	@$(MAKECOOKIE)
