@@ -15,7 +15,7 @@ DISTFILES += CSWnagios.preinstall
 DISTFILES += CSWnagios.postinstall
 DISTFILES += cswnagios
 DISTFILES += cswusergroup
-DISTFILES += README.CSW
+DISTFIDISTFILES += mapfileILES += README.CSW
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
@@ -30,12 +30,9 @@ PATCHFILES 	+= 0008-changed-paths-to-match-csw-standards.patch
 
 RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWjpeg CSWlibtoolrt CSWggettextrt
 RUNTIME_DEP_PKGS_CSWnagios += CSWperl CSWnagios-plugins CSWap2-modphp5 
-RUNTIME_DEP_PKGS_CSWnagios += CSWlibgd2
+RUNTIME_DEP_PKGS_CSW3
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWnagios += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWnagios += CSWlibz1
-RUNTIME_DEP_PKGS_CSWnagios += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWnagios += CSWfreetype
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibltdl7ios += CSWfreetype
 
 LICENSE = LICENSE
 
@@ -74,11 +71,11 @@ CONFIGURE_ARGS += --with-gd-inc=$(BUILD_PREFIX)/inc
 CONFIGURE_ARGS += --enable-embedded-perl
 CONFIGURE_ARGS += --with-checkresult-dir=/var/opt/csw/nagios/spool/checkresults
 CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/nagios/nagios.lock
-CONFIGURE_ARGS += --localstatedir=/var$(prefix)
-CONFIGURE_ENV  += install_user=$(USER) install_grp=csw # see PATCHFILES
-CONFIGURE_ENV   += PATH=/usr/bin:/usr/ccs/bin:/opt/csw/bin:/opt/csw/bin/
-CONFIGURE_ENV  += CC=/opt/SUNWspro/bin/cc
-CONFIGURE_ENV  += PERL=/opt/csw/bin/perl
+CONFIGURE_ARGS += --localstateEXTRA_CONFIGURE_ENV  += install_user=$(USER) install_grp=csw # see PATCHFILES
+#EXTRA_CONFIGURE_ENV  += PATH=/usr/bin:/usr/ccs/bin:/opt/csw/bin:/opt/csw/bin/
+#EXTRA_CONFIGURE_ENV  += CC=/opt/SUNWspro/bin/cc
+#EXTRA_CONFIGURE_ENV  += PERL=/opt/csw/bin/perl
+#CONFIGURE_ENV  += LD_OPTIONS="-M $(abspath $(WORKDIR)/mapfile)"
 
 #
 # build
@@ -88,8 +85,9 @@ BUILD_ENV_PATH = $(bindir):$(PATH)
 
 EXTRA_LIB = $(BUILD_PREFIX)/lib
 
-LD_OPTIONS += -R/opt/csw/lib
-LD_OPTIONS += -R/opt/csw/nagios/lib
+#EXTRA_LD_OPTIONS += -R/opt/csw/lib
+EXTRA_LD_OPTIONS += -R/opt/csw/nagios/lib
+EXTRA_LD_OPTIONS += -M "$(abspath $(WORKDIR)/mapfile)"opt/csw/nagios/lib
 
 BUILD_ARGS = all
 
@@ -178,5 +176,4 @@ post-install-modulated:
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWnagios/cswusergroup
 	@#
 	@# end of post-install
-	@#
-	@$(MAKECOOKIE)
+	@
