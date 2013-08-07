@@ -169,13 +169,39 @@ BUILD_DEP_PKGS += CSWlibgcrypt-dev
 
 # Allow to choose the default Python version.
 # Python 2.6 is the default one as of 2013-07-21.
-ALTERNATIVES_CSWpython$(CVER) = python-$(VER)
-ALTERNATIVE_python-$(VER) = $(bindir)/python python-symlink $(bindir)/python$(VER) 270
-# TODO(maciej): Implement alternatives for the man page.
-# ALTERNATIVES_CSWpython$(CVER) = python-man-$(VER)
-# ALTERNATIVE_python-man-$(VER) = $(mandir)/man1/python.1 python-man-symlink python$(VER) 270
+# alternatives management begins:
 
+# this is rebuilt in the merge phase
+
+ALTERNATIVES_CSWpython$(CVER) = python-$(VER)
+ALTERNATIVE_python-$(VER) = $(bindir)/python2 python $(bindir)/python$(VER) 270
+ALTERNATIVE_python-$(VER) += $(bindir)/python python2 $(bindir)/python2
+ALTERNATIVE_python-$(VER) += $(bindir)/2to3 2to3 $(bindir)/2to32
+ALTERNATIVE_python-$(VER) += $(bindir)/2to32 2to32 $(bindir)/2to3$(VER)
+ALTERNATIVE_python-$(VER) += $(bindir)/idle idle $(bindir)/idle2
+ALTERNATIVE_python-$(VER) += $(bindir)/idle2 idle2 $(bindir)/idle$(VER)
+ALTERNATIVE_python-$(VER) += $(bindir)/pydoc pydoc $(bindir)/pydoc2
+ALTERNATIVE_python-$(VER) += $(bindir)/pydoc2 pydoc2 $(bindir)/pydoc$(VER)
+ALTERNATIVE_python-$(VER) += $(bindir)/python-config python-config $(bindir)/python-config2
+ALTERNATIVE_python-$(VER) += $(bindir)/python-config2 python-config2 $(bindir)/python-config$(VER)
+ALTERNATIVE_python-$(VER) += $(bindir)/smtpd.py smtpd $(bindir)/smtpd.py2
+ALTERNATIVE_python-$(VER) += $(bindir)/smtpd.py2 smtpd2 $(bindir)/smtpd.py$(VER)
+ALTERNATIVE_python-$(VER) += $(mandir)/man1/python.1 man $(mandir)/man1/python2.1
+ALTERNATIVE_python-$(VER) += $(mandir)/man1/python2.1 man2 $(mandir)/man1/python$(VER).1
+
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/2to3
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/idle
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/pydoc
 EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python2
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python-config
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python2-config
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/smtpd.py
+EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/python.1
+EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/python2.1
+
+# see also post-install for related actions
+# : alternatives management ends
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
@@ -215,15 +241,6 @@ CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython
 
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += file-with-bad-content
-
-# To avoid file collisions with CSWpython:
-EXTRA_PAX_ARGS += -s ',^\.$(bindir)/idle,$(bindir)/idle-$(VER),'
-EXTRA_PAX_ARGS += -s ',^\.$(bindir)/smtpd.py,$(bindir)/smtpd.py-$(VER),'
-EXTRA_PAX_ARGS += -s ',^\.$(bindir)/pydoc,$(bindir)/pydoc-$(VER),'
-EXTRA_PAX_ARGS += -s ',^\.$(bindir)/2to3,$(bindir)/2to3-$(VER),'
-EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER),'
-# Needs to be turned into alternatives.
-EXTRA_PAX_ARGS += -s ',^\.$(mandir)/man1/python.1,$(mandir)/man1/python.1-$(VER),'
 
 EXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-32.h,p"
 EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/python$(VER)/pyport.h$$,.$(includedir)/python$(VER)/pyport-64.h,p"
@@ -269,6 +286,13 @@ post-configure-modulated:
 test-custom:
 	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -i -k -C $(OBJDIR) test
 	$(MAKECOOKIE)
+
+post-install:
+	cd $(DESTDIR)$(bindir) && test -f 2to3 && mv -f 2to3 2to3$(VER)
+	cd $(DESTDIR)$(bindir) && test -f idle && mv -f idle idle$(VER)
+	cd $(DESTDIR)$(bindir) && test -f pydoc && mv -f pydoc pydoc$(VER)
+	cd $(DESTDIR)$(bindir) && test -f smtpd.py && mv -f smtpd.py smtpd.py$(VER)
+	@$(MAKECOOKIE)
 
 post-merge-modulated:
 	# Some checks
