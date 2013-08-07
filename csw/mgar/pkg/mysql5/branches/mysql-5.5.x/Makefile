@@ -94,9 +94,6 @@ PATCHFILES += 0003-I-HATE-CMAKE.patch
 PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
 
-# Cf http://bugs.mysql.com/bug.php?id=62572
-PATCHFILES += 0005_my_vsnprintf-t_fails_bug_62572.patch
-
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
