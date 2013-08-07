@@ -180,6 +180,8 @@ ALTERNATIVE_python-$(VER) += $(bindir)/2to3 2to3 $(bindir)/2to32
 ALTERNATIVE_python-$(VER) += $(bindir)/2to32 2to32 $(bindir)/2to3$(VER)
 ALTERNATIVE_python-$(VER) += $(bindir)/idle idle $(bindir)/idle2
 ALTERNATIVE_python-$(VER) += $(bindir)/idle2 idle2 $(bindir)/idle$(VER)
+ALTERNATIVE_python-$(VER) += $(bindir)/pdb pdb $(bindir)/pdb2
+ALTERNATIVE_python-$(VER) += $(bindir)/pdb2 pdb2 $(bindir)/pdb$(VER)
 ALTERNATIVE_python-$(VER) += $(bindir)/pydoc pydoc $(bindir)/pydoc2
 ALTERNATIVE_python-$(VER) += $(bindir)/pydoc2 pydoc2 $(bindir)/pydoc$(VER)
 ALTERNATIVE_python-$(VER) += $(bindir)/python-config python-config $(bindir)/python-config2
@@ -292,6 +294,7 @@ post-install:
 	cd $(DESTDIR)$(bindir) && test -f idle && mv -f idle idle$(VER)
 	cd $(DESTDIR)$(bindir) && test -f pydoc && mv -f pydoc pydoc$(VER)
 	cd $(DESTDIR)$(bindir) && test -f smtpd.py && mv -f smtpd.py smtpd.py$(VER)
+	cd $(DESTDIR)$(bindir) && ln -s -f ../lib/python$(VER)/pdb.py pdb$(VER)
 	@$(MAKECOOKIE)
 
 post-merge-modulated:
