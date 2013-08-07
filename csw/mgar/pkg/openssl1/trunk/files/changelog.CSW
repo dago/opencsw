@@ -1,10 +1,17 @@
+openssl (1.0.1e,rev=2013.08.07) unstable
+
+  * Disabled pkcs11 engine patch under sparc for now as it 
+  creates some problem with the tls protocol (see bug #5098).
+
+   -- yann rouillard <yann@opencsw.org>  Wed, 07 Aug 2013 20:51:08 +0200
+
 openssl (1.0.1e,rev=2013.07.09) unstable
 
-  * Removed checkinstall, preinstall and postinstall scripts
-    that are not necessary anymore (Solaris 8 support and 
+  * removed checkinstall, preinstall and postinstall scripts
+    that are not necessary anymore (solaris 8 support and 
     old modification of certificates location).
 
-   -- Yann Rouillard <yann@opencsw.org>  Tue, 09 Jul 2013 16:14:39 +0200
+   -- yann rouillard <yann@opencsw.org>  Tue, 09 jul 2013 16:14:39 +0200
 
 openssl (1.0.1e,rev=2013.03.22) unstable
 

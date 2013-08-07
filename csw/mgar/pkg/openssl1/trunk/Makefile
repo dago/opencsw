@@ -122,8 +122,11 @@ PATCHFILES += 0007-enables-symbols-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integratee
 ifdef PKCS11
-ifneq ($(shell /usr/bin/uname-r),5.9)
-        PATCHFILES += pkcs11_engine-1.0.1b.patch.4-30
+ifneq ($(shell /usr/bi# There is a problem with this patch under sparc when using tls protocol
+# See https://www.opencsw.org/mantis/view.php?id=5098
+ifneq ($(shell /usr/bin/uname -p),sparc)
+       PATCHFILES += pkcs11_engine-1.0.1b.patch.2012-04-30
+endif.patch.4-30
 endif
 endif
 
@@ -176,8 +179,11 @@ LIBDIR = $(LIBDIR_$(MEMORYMODEL))aris64-sparcv9-cc
 CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_ $(LIBall_prefix=$(DESTDIR)
 
 # PKCS11 is only for Solaris 10 so we must create solaris 10 spesolaris10-i386
-ifneq ($(shell /usr/bin/uname -r),5.9)
-        CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/lib ri= SOS12
+ifneq ($(shell /usr/bi# There is a problem with this patch under sparc when using tls protocol
+# See https://www.opencsw.org/mantis/view.php?id=5098
+ifneq ($(shell /usr/bin/uname -p),sparc)
+        CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
+endifR)/lib ri= SOS12
 endif
 
 
