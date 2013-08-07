@@ -13,7 +13,7 @@
 PROJ_NAME    = mysql
 NAME         = $(PROJ_NAME)5
 BASE_VERSION = 5.5
-PATCHLEVEL   = 32
+PATCHLEVEL   = 33
 ALTS_PRIO    = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 
@@ -202,6 +202,7 @@ DISTFILES += map.mysql
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
 BUILD_DEP_PKGS += CSWcmake
 BUILD_DEP_PKGS += CSWbison
+BUILD_DEP_PKGS += CSWlibwrap-dev
 
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
