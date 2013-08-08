@@ -19,6 +19,23 @@ CATALOGNAME_CSWpm-dbd-informix = pm_dbd_informix
 SPKG_DESC_CSWpm-dbd-informix = IBM Informix Database Driver for Perl DBI
 RUNTIME_DEP_PKGS_CSWpm-dbd-informix += CSWpm-dbi
 
+# This is the location of the client library which we are not allowed to distribute
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += bad-rpath-entry|/opt/IBM/informix/lib|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += bad-rpath-entry|/opt/IBM/informix/lib|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += bad-rpath-entry|/opt/IBM/informix/lib/esql|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += soname-not-found|/opt/IBM/informix/lib/esql/libifgen.so|is|needed|by|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += soname-not-found|/opt/IBM/informix/lib/esql/libifglx.so|is|needed|by|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += soname-not-found|/opt/IBM/informix/lib/esql/libifos.so|is|needed|by|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += soname-not-found|/opt/IBM/informix/lib/esql/libifgls.so|is|needed|by|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += soname-not-found|/opt/IBM/informix/lib/libifasf.so|is|needed|by|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += soname-not-found|/opt/IBM/informix/lib/esql/libifsql.so|is|needed|by|opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += no-direct-binding|/opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so|is|not|directly|bound|to|soname|/opt/IBM/informix/lib/esql/libifglx.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += no-direct-binding|/opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so|is|not|directly|bound|to|soname|/opt/IBM/informix/lib/esql/libifgls.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += no-direct-binding|/opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so|is|not|directly|bound|to|soname|/opt/IBM/informix/lib/libifasf.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += no-direct-binding|/opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so|is|not|directly|bound|to|soname|/opt/IBM/informix/lib/esql/libifsql.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += no-direct-binding|/opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so|is|not|directly|bound|to|soname|/opt/IBM/informix/lib/esql/libifos.so
+CHECKPKG_OVERRIDES_CSWpm-dbd-informix += no-direct-binding|/opt/csw/lib/perl/csw/auto/DBD/Informix/Informix.so|is|not|directly|bound|to|soname|/opt/IBM/informix/lib/esql/libifgen.so
+
 NOISALIST = 1
 
 INFORMIXDIR = /opt/IBM/informix
@@ -39,5 +56,7 @@ BUILD_ENV_PATH = $(INFORMIXDIR)/bin:$(PATH)
 
 EXTRA_LIB += $(INFORMIXDIR)/lib
 EXTRA_LIB += $(INFORMIXDIR)/lib/esql
+
+SKIPTEST ?= 1
 
 include gar/category.mk
