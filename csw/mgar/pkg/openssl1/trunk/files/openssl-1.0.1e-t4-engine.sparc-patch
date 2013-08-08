@@ -98,7 +98,7 @@ diff -ru openssl-1.0.0d/crypto/engine/Makefile openssl-1.0.0d/crypto/engine/Make
  	eng_openssl.c eng_cnf.c eng_dyn.c eng_cryptodev.c \
 +	eng_t4.c eng_t4_des.c eng_t4_md5.c \
 +	eng_t4_sha1.c eng_t4_sha256.c eng_t4_sha512.c eng_t4_montmul.c \
- 	eng_rsax.c eng_rdrand.c hw_pk11.c hw_pk11_pub.c hw_pk11_uri.c
+ 	eng_rsax.c eng_rdrand.c
  LIBOBJ= eng_err.o eng_lib.o eng_list.o eng_init.o eng_ctrl.o \
  	eng_table.o eng_pkey.o eng_fat.o eng_all.o \
  	tb_rsa.o tb_dsa.o tb_ecdsa.o tb_dh.o tb_ecdh.o tb_rand.o tb_store.o \
@@ -106,7 +106,7 @@ diff -ru openssl-1.0.0d/crypto/engine/Makefile openssl-1.0.0d/crypto/engine/Make
  	eng_openssl.o eng_cnf.o eng_dyn.o eng_cryptodev.o \
 +	eng_t4.o eng_t4_des.o eng_t4_md5.o \
 +	eng_t4_sha1.o eng_t4_sha256.o eng_t4_sha512.o eng_t4_montmul.o \
- 	eng_rsax.o eng_rdrand.o hw_pk11.o hw_pk11_pub.o hw_pk11_uri.o
+ 	eng_rsax.o eng_rdrand.o
  
  SRC= $(LIBSRC)
 Index: crypto/engine/eng_all.c
@@ -130,12 +130,11 @@ Index: crypto/engine/engine.h
 diff -ru openssl-1.0.0d/crypto/engine/engine.h openssl-1.0.0d/crypto/engine/engine.h
 --- openssl-1.0.0d/crypto/engine/engine.h	2011-05-24 17:02:20.000000000 -0700
 +++ openssl-1.0.0d/crypto/engine/engine.h	2011-05-24 18:05:29.075766123 -0700
-@@ -351,6 +351,7 @@
+@@ -351,5 +351,6 @@
  #endif
  #endif
  void ENGINE_load_cryptodev(void);
 +void ENGINE_load_t4(void);
- void ENGINE_load_pk11(void);
  void ENGINE_load_rsax(void);
  void ENGINE_load_rdrand(void);
 Index: crypto/md5/Makefile
