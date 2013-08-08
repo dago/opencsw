@@ -1,6 +1,6 @@
 NAME      = imagemagick
 VERSION   = 6.8.6
-GARSUBREV = 6
+GARSUBREV = 8
 GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -39,6 +39,9 @@ BUILD_DEP_PKGS += CSWgraphvizdevel
 BUILD_DEP_PKGS += CSWilmbase-dev
 BUILD_DEP_PKGS += CSWliblqr-dev
 BUILD_DEP_PKGS += CSWlibjasper-dev
+BUILD_DEP_PKGS += CSWlibrsvg-dev
+BUILD_DEP_PKGS += CSWliblcms2-dev
+BUILD_DEP_PKGS += CSWgraphviz-dev
 
 PACKAGES += CSWlibmagickcore6q16hdri1
 CATALOGNAME_CSWlibmagickcore6q16hdri1 = libmagickcore6q16hdri1
@@ -96,7 +99,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfpx1
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibz1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWopenexrrt
@@ -112,6 +115,9 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjasper1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgs9
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcgraph6
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgvc6
 
 #PACKAGES += CSWpm-image-magick
 #SPKG_DESC_CSWpm-image-magick = Image::Magick: Perl binding for Imagemagick
@@ -126,7 +132,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgcc-s1
 
 REINPLACE_USRLOCAL += config/mime.xml
 
-EXTRA_LINKER_FLAGS = -Bdirect -lsocket -lnsl
+EXTRA_LINKER_FLAGS = -lsocket -lnsl
 EXTRA_LD_OPTIONS = -z nolazyload
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
@@ -149,11 +155,11 @@ CONFIGURE_ARGS += --with-modules=yes
 CONFIGURE_ARGS += --disable-silent-rules
 CONFIGURE_ARGS += --with-wmf
 CONFIGURE_ARGS += --with-rsvg
+CONFIGURE_ARGS += --with-gvc
+CONFIGURE_ARGS += --with-gslib
 
-# Disable perl completely for now
+# Disable perl completely until it's rebuilt with GCC
 CONFIGURE_ARGS += --without-perl
-# Until graphviz and perl is 64bit
-CONFIGURE_ARGS-64 += --without-gvc
 #CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
 #CONFIGURE_ARGS-64 += --without-perl
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
