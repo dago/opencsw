@@ -119,6 +119,7 @@ PACKAGES += CSWtracker
 SPKG_DESC_CSWtracker = $(DESCRIPTION)
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdbus
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
+CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWlibglib2-dev
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
