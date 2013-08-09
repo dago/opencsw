@@ -988,7 +988,7 @@ test-%/waf:
 test-%/setup.py:
 	@echo " ==> Running setup.py test in $*"
 	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) python ./setup.py test $(TEST_ARGS) )
-	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) $(PYTHON_EXECUTABLE) ./setup.py test $(TEST_ARGS) )
+	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) $(PYTHON_EXECUTABLE) ./setup.py $(PYTHON_TEST_TARGET) $(TEST_ARGS) )
 	@$(MAKECOOKIE)
 
 ################# INSTALL RULES ####################
