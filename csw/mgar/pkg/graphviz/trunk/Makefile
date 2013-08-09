@@ -45,6 +45,7 @@ RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibcdt5
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibcgraph6
 RUNTIME_DEP_PKGS_CSWvc6hviz += CSWlibgvpr2
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibpathplan4
+RUNTIME_DEP_PKGSgraphvizgd += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSrsvg2-2
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibgdk-pixbuf2-0-0
@@ -59,7 +60,6 @@ RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibgvpr2
-RUNTIME_DEP_PKGS_CSWgraphviz += CSWgraphvizgd
 RUNTIME_DEP_PKGS_CSWgraphviz += CSWliblasi1
 PKGFILES_CSWgraphviz += $(call baseisadirs,$(bindir),(?:(?!diffimg).)*)
 PKGFILES_CSWgraphviz += $(call baseisadirs,$(libdir),graphviz/libgvplugin_core\.so\..*)
@@ -331,7 +331,6 @@ RUNTIME_DEP_PKGS_CSgcc-s1t4 += CSWgcc4corert
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgraphviz.postinstall
-DISTFILES += CSWgraphvizgd.postinstall CSWgraphvizgd.postuninstall
 DISTFILES += CSWgraphvizdevil.postinstall CSWgraphvizdevil.postuninstall
 
 CONFIGURE_ARGS = $(DIRPATHS)
