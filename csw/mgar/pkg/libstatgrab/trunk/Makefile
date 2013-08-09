@@ -1,5 +1,5 @@
 NAME = libstatgrab
-VERSION = 0.17
+VERSION = 0.90
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -13,20 +13,18 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.uk.i-scream.org/pub/i-scream/libstatsgrab/
-MASTER_SITES += http://dl.ambiweb.de/mirrors/ftp.i-scream.org/libstatgrab/
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES += http://dl.ambiweb.de/mirrors/ftp.i-scream.org/libsta+= $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.i-scream.org/libstatgrab/
 
-PACKAGES += CSWlibstatgrab6
-SPKG_DESC_CSWlibstatgrab6 = A library that provides cross platform access to statistics, libstatgrab.so.6
-PKGFILES_CSWlibstatgrab6 += $(call pkgfiles_lib,libstatgrab.so.6)
-OBSOLETED_BY_CSWlibstatgrab6 = CSWlibstatgrab
+PACKAGES += CSWlibstatgrab9
+SPKG_DESC_CSWlibstatgrab9 = A library that provides cross platform access to statistics, libstatgrab.so.9
+PKGFILES_CSWlibstatgrab9 += $(call pkgfiles_lib,libstatgrab.so.9)
 
 PACKAGES += CSWlibstatgrab-dev
-SPKG_DESC_CSWlibstatgrab-dev = Development files for libstatgrab.so.6
+SPKG_DESC_CSWlibstatgrab-dev = Development files for libstatgrab.so.9 libstatgrab.so.6
 PKGFILES_CSWlibstatgrab-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibstatgrab-dev += CSWlibstatgrab6
+RUNTIME_DEP_PKGS_CSWlibstatgrab-dev 9= CSWlibstatgrab6
 
 # Put this in -utils:
 #   statgrab-make-mrtg-config
@@ -38,10 +36,10 @@ ISAEXEC_EXCLUDE_FILES =
 PACKAGES += CSWlibstatgrab-utils
 SPKG_DESC_CSWlibstatgrab-utils = Statistic gathering tools based on libstatgrab.so.6
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibstatgrab-utils += CSWlibstatgrab6
+RUNTIME_DEP_PKGS_CSWlibstatgrab-utils 9
 
 # Don't pull in ncurses from CSW, but add needed libraries to be self-sufficient
-LINKER_FLAGS = -lkstat -ldevinfo -lsocket -lnsl
+LINKER_FLAGS =fo -lsocket -lnsl
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -49,4 +47,4 @@ NORUNPATH = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses-prefix=/usr
 
-include gar/category.mk
+include
