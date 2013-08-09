@@ -113,6 +113,8 @@ PATCHFILES += 0002-strnlen-replacement-function.patch
 PATCHFILES += 0003-Replace-uuid_unparse_lower-with-uuid_unparse.patch
 PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
+# Submitted upstream, should be in 0.16.3
+PATCHFILES += 0008-libtracker-common-Use-procfs-psinfo-instead-of-cmdli.patch
 
 # Packages
 PACKAGES += CSWtracker
