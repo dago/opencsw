@@ -40,8 +40,6 @@ PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += pyport.h
 
-PATCHFILES += 0001-manage-previous-site-package.patch
-
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
 #SKIPTEST = 1
