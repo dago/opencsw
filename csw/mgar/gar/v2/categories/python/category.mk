@@ -49,6 +49,7 @@ MERGE_SCRIPTS_isa-default-python_version-3_3 ?= copy-all
 
 include gar/gar.mk
 
+# TODO: how can we transform this in SUN and GNU respectively?
 GARCOMPILER_PYTHON_2_6 = SOS12U3
-GARCOMPILER_PYTHON_2_7 = GNU
+GARCOMPILER_PYTHON_2_7 = GCC4
 GARCOMPILER = $(GARCOMPILER_PYTHON_$(PYTHON_VERSION))
