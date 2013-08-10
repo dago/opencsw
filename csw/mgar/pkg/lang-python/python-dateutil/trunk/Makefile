@@ -15,7 +15,7 @@ endef
 MASTER_SITES = http://labix.org/download/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 SPKG_SOURCEURL = http://labix.org/$(NAME)/
-BUILD_DEP_PKGS = CSWpysetuptools
+BUILD_DEP_PKGS = CSWpy-setuptools
 PACKAGES = CSWpy-dateutil
 
 UPSTREAM_MASTER_SITES = http://labix.org/python-dateutil/
