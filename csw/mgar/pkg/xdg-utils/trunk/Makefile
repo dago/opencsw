@@ -35,12 +35,19 @@ REINPLACE_USRSHARE		+=	/opt/csw/bin/xdg-icon-resource
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
-# TODO there is work remaining on specific tests
+# TODO there is work remaining on specific tests; most of them fail as
+# they cannot acces to the X server
 test-custom:
 	-(cd $(WORKSRC)/tests && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
 			./testrun -R -C -I)
+	@$(MAKECOOKIE)
+
+# replace all shebangs sh to bash as that is expected:
+post-install:
+	cd $(DESTDIR)$(bindir) && \
+		gsed -i 's;^#!/bin/sh$$;#!/usr/bin/env bash;' *
 	@$(MAKECOOKIE)
