@@ -1,0 +1,145 @@
+#!/usr/bin/perl
+#
+# check_db_symbols - print some statistics about the direct binding
+#                    status of symbols of a given binary
+#
+
+use strict;
+use warnings;
+
+###################################################################
+# Useful functions
+###################################################################
+
+my $ELFDUMP_BIN = '/usr/ccs/bin/elfdump';
+
+# Returns the list of symbols bind flags for a given binary
+# as a hash where symbol name is the key and flag is the value
+sub get_symbols_flags {
+    my ($binary) = @_;
+    my %symbol_flags_of;
+
+    open( my $elfdump, '-|', "$ELFDUMP_BIN -y $binary" ) or die "ERROR: Can't analyze $binary with elfdump !";
+    while (my $line = <$elfdump>) {
+        chomp($line);
+        next if not(
+                  $line =~ m{
+            \[(?<index>\d+)\]\s+
+            (?<flags>\S+)\s+    
+            (?:(?<boundto>
+                \[\d+\]\s(?<soname>\S+)  
+                |<self>)\s+)?
+            (?<symbol>\S+)
+        }x
+        );
+
+        my $soname = defined $+{'soname'} ? $+{'soname'} : '<self>';
+        $symbol_flags_of{$soname}{ $+{'symbol'} } = $+{'flags'};
+    }
+    close($elfdump);
+
+    return ( \%symbol_flags_of );
+}
+
+my $LDD_BIN = '/usr/bin/ldd';
+
+# Find the real location of libraries against which the given
+# binary is linked.
+# Returns a hash where soname is the key and real path is the value
+sub get_libraries_location {
+    my ($binary) = @_;
+    my %library_location;
+
+    open( my $ldd, '-|', "$LDD_BIN $binary" ) or die "ERROR: Can't analyze $binary with elfdump !";
+    while (my $line = <$ldd>) {
+        my ( $soname, $library_path ) = (
+            $line =~ m{\s*(\S+)      # soname
+                             \s+=>\s+
+                             (\S+)      # library path
+                         }x
+        );
+        $library_location{$soname} = $library_path;
+    }
+    close($ldd);
+
+    return ( \%library_location );
+}
+
+sub usage {
+    my ($exit_code) = @_;
+    print <<'EOF';
+Usage: check_db_symbols BINARY
+Print some statistics about the direct binding status of symbols of a given binary
+
+EOF
+    exit ($exit_code);
+}
+
+###################################################################
+# Main program
+###################################################################
+
+if (@ARGV < 1) {
+    usage (1);
+}
+
+my $binary = $ARGV[0];
+
+if ( ! -f $binary ) {
+    print STDERR "ERROR: $binary file doesn't exist !!\n\n";
+    exit(2);
+}
+
+my $library_location_of = get_libraries_location($binary);
+my $symbol_flags_of     = get_symbols_flags($binary);
+
+printf(
+    "\n%-20s    %10s    %10s    %10s\n",
+    (
+        'Library',
+        'Directly bound',
+        'Not directly bound',
+        'Not directly bindable'
+    )
+);
+
+foreach my $soname ( keys( %{$symbol_flags_of} ) ) {
+    next if ( $soname eq '<self>' );
+
+    my %symbol_counts = (
+        directly_bound        => 0,
+        not_directly_bound    => 0,
+        non_directly_bindable => 0,
+    );
+
+    my $soname_symbol_flags_for =
+      get_symbols_flags( $library_location_of->{$soname} );
+
+    foreach my $symbol ( keys( %{ $symbol_flags_of->{$soname} } ) ) {
+        my $flag = $symbol_flags_of->{$soname}{$symbol};
+        if ( $flag =~ /B/ ) {
+            $symbol_counts{directly_bound}++;
+        }
+        else {
+            if ( $soname_symbol_flags_for->{'<self>'}{$symbol} =~ /N/ ) {
+                $symbol_counts{non_directly_bindable}++;
+            }
+            else {
+                $symbol_counts{not_directly_bound}++;
+            }
+        }
+    }
+    printf(
+        "%-20s   %10i         %10i             %10i\n",
+        (
+            $soname,
+            @symbol_counts{
+                'directly_bound', 'not_directly_bound',
+                'non_directly_bindable'
+              }
+        )
+    );
+}
+
+print "\n";
+
