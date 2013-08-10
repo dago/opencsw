@@ -18,11 +18,15 @@ DISTFILES  = $(DISTNAME).tar.gz
 UFILES_REGEX = Imaging-(\d+(?:\.\d+)*).tar.gz
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 
+BUILD_DEP_PKGS	+=	CSWpython-dev
+BUILD_DEP_PKGS	+=	CSWpython27-dev
+
 PACKAGES = CSWpy-pil
 SPKG_DESC_CSWpy-pil = Python Imaging Library
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWtcl
