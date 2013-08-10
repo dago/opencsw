@@ -29,6 +29,13 @@ DISTFILES  = $(DVENDOR_URL = http://unifont.org/lasi/
 
 GARCOMPILER = GCC4
 
+BUILD_DEP_PKGS  = CSWcmake
+BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWfontconfig-dev
+
 PACKAGES += CSWliblasi1
 SPKG_DESC_CSWliblasi1 = C++ Unicode support for PostScript, libLASi.so.1
 PKGFILES_CSWliblasi1 = $(call pkgfiles_lib,libLASi.so.1)
