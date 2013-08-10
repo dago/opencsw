@@ -1,5 +1,5 @@
 NAME = poppler-data
-VERSION = 0.4.5
+VERSION = 0.4.6
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -31,4 +31,4 @@ INSTALL_ARGS = "prefix=$(prefix)"
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /opt
