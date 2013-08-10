@@ -49,8 +49,7 @@ RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWliblasi1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWliblasi1 += CSWpango
 OBSOLETED_BY_CSWliblasi1 = CSWliblasi
-# A lot of those, but the test returns nothing, so false positive
-CHECKPKG_OVERRIDES_CSWliblasi1 += no-direct-bindingasi0 = CSWliblasi
+si0 = CSWliblasi
 
 PACKAGES += CSWliblasi-dev
 SPKG_DESC_CSWliblasi-dev = Developer support for libLASi.so.0
@@ -63,10 +62,8 @@ BUILD64_LIBS_ONLY = 1
 # It doesn't remove the no-direct-binding errors, but it shouldn't hurt either
 EXTRA_LD_OPTIONS = -z nolazyload-lCstd -norunpath
 
-CONFIGURE_SCRIPTS = custom
-BUILD_SCRIPTS = custom
-TEST_SCRIPTS = custom
-INSTALL_SCRIPTS = custom
+CONFIGURE_INSTALL_SCRIPTS = custom
+TEST_TARGET = test_SCRIPTS = custom
 
 include gar/category.mk
 
@@ -85,16 +82,6 @@ configure-custom:
 	EFILE=ON \
       -DCMAKE_CXX_FLAGS:STRING="$(CXXFLAGS)" \
 			. )
-	@$(MAKECOOKIE)
-
-build-custom:
-	@echo " ==> Building $(NAME) (custom)"
-	@( cd $(WORKSRC) ; gmake )
-	@$(MAKECOOKIE)
-
-test-custom:
-	@echo " ==> Testing $(NAME) (custom)"
-	@( cd $(WORKSRC) ; gmake  test)
 	@$(MAKECOOKIE)
 
 install-custom:
