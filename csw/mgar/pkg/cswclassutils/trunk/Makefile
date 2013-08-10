@@ -128,6 +128,10 @@ PKGFILES_CSWcas-sslcert += /etc/opt/csw/cas-ssl.conf.CSW
 RUNTIME_DEP_PKGS_CSWcas-sslcert += CSWopenssl-utils
 CHECKPKG_OVERRIDES_CSWcas-sslcert += surplus-dependency|CSWopenssl-utils
 
+# For gmktemp on Solaris 9
+RUNTIME_DEP_PKGS_CSWcas-pycompile += CSWcoreutils
+CHECKPKG_OVERRIDES_CSWcas-pycompile += surplus-dependency|CSWcoreutils
+
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-missing-cswinitsmf-class
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample

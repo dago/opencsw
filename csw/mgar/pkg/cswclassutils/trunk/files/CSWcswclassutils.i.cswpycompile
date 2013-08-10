@@ -33,7 +33,7 @@ HAVE_33=0  # fd=5
 
 TMPDIR=/var/opt/csw/cswclassutils
 mkdir -p "${TMPDIR}"
-PYCOMPILETMPDIR=`/usr/bin/mktemp -p "${TMPDIR}" -d -t cswpycompile-XXXXXX`
+PYCOMPILETMPDIR=`/opt/csw/bin/gmktemp -p "${TMPDIR}" -d -t cswpycompile-XXXXXX`
 
 # We're unconditionally opening all available Python interpreters. It's not
 # optimal for efficiency, but easier to script.
