@@ -31,6 +31,6 @@ CHECKPKG_OVERRIDES_CSWpysetuptools += surplus-dependency|CSWpython
 include gar/category.mk
 
 post-merge:
-	@(cd $(PKGROOT)/$(SITE_PACKAGES/setuptools/; \
+	@(cd $(PKGROOT)/$(SITE_PACKAGES)/setuptools/; \
 		rm -rf tests )
 	@$(MAKECOOKIE)
