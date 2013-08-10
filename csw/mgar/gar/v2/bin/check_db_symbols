@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/opt/csw/bin/perl
 #
 # check_db_symbols - print some statistics about the direct binding
 #                    status of symbols of a given binary
