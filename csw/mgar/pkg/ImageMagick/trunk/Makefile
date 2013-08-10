@@ -26,7 +26,6 @@ VENDOR_URL = http://www.imagemagick.org
 
 LICENSE = LICENSE
 
-BUILD_DEP_PKGS += CSWgraphvizdevel
 BUILD_DEP_PKGS += CSWliblcms-dev
 BUILD_DEP_PKGS += CSWlibcairo-dev
 BUILD_DEP_PKGS += CSWlibwmf-dev
