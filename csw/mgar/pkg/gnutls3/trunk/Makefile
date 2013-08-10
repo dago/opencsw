@@ -12,6 +12,10 @@ DISTFILES += $(DISTNAME).tar.xz
 # PATCHFILES += 0001-Do-not-strip-norunpath.patch
 PATCHFILES += 0002-Use-AF_UNIX-instead-of-AF_LOCAL-on-Solaris.patch
 
+# Some test scripts now uses some bashisms, so we make
+# sure that bash is used instead of sh
+PATCHFILES += 0003-force-use-of-bash-shell-in-non-portable-test-scripts.patch
+
 # Sun Studio 12 bails out on .deinit_func
 GARCOMPILER = GCC4
 
