@@ -1,5 +1,5 @@
 NAME = ilmbase
-VERSION = 1.0.2
+VERSION = 2.0.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -24,51 +24,76 @@ endef
 MASTER_SITES = http://download.savannah.nongnu.org/releases/openexr/ 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PATCHFILES += ImathMath.patch
+PATCHFILES +=PATCHFILES += 0002_avoid_cpu_opt_on_sparcILES += ImathMath.patch
 
 VENDOR_URL = http://www.openexr.com
 
-LICENSE = LICENSE
+LIGARCOMPILER = GCC4
 
-PACKAGES += CSWlibhalf6
-SPKG_DESC_CSWlibhalf6 += $(DESCRIPTION), libHalf.so.6
-PKGFILES_CSWlibhalf6 += $(call pkgfiles_lib,libHalf.so.6)
-OBSOLETED_BY_CSWlibhalf6 += CSWilmbase
-RUNTIME_DEP_PKGS_CSWlibilmthread6 += CSWlibiex6
+PACKAGES += CSWlibhalf10
+CATALOGNAME_CSWlibhalf10 = libhalf10
+PKGFILES_CSWlibhalf10 += $(call baseisadirs,$(libdir),libHalf\.so\.10\.0\.1)
+PKGFILES_CSWlibhalf10 += $(call baseisadirs,$(libdir),libHalf\.so\.10(\.\d+)*)
+SPKG_DESC_CSWlibhalf10 += $(DESCRIPTION), libHalf.so.10
+RUNTIME_DEP_PKGS_CSWlibhalf10 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibhalf10 += CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSWlibhalf10 += no-direct-binding
 
-PACKAGES += CSWlibiex6
-SPKG_DESC_CSWlibiex6 += $(DESCRIPTION), libIex.so.6
-PKGFILES_CSWlibiex6 += $(call pkgfiles_lib,libIex.so.6)
-OBSOLETED_BY_CSWlibiex6 += CSWilmbase
+PACKAGES += CSWlibiex2-0-10
+CATALOGNAME_CSWlibiex2-0-10 = libiex2_0_10
+PKGFILES_CSWlibiex2-0-10 += $(call baseisadirs,$(libdir),libIex-2_0\.so\.10\.0\.1)
+PKGFILES_CSWlibiex2-0-10 += $(call baseisadirs,$(libdir),libIex-2_0\.so\.10(\.\d+)*)
+SPKG_DESC_CSWlibiex2-0-10 += $(DESCRIPTION), libIex-2_0.so.10
+RUNTIME_DEP_PKGS_CSWlibiex2-0-10 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibiex2-0-10 += CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSWlibiex2-0-10 += no-direct-binding
 
-PACKAGES += CSWlibilmthread6
-SPKG_DESC_CSWlibilmthread6 += $(DESCRIPTION), libIlmThread.so.6
-PKGFILES_CSWlibilmthread6 += $(call pkgfiles_lib,libIlmThread.so.6)
-OBSOLETED_BY_CSWlibilmthread6 += CSWilmbase
+PACKAGES += CSWlibiexmath2-0-10
+CATALOGNAME_CSWlibiexmath2-0-10 = libiexmath2_0_10
+PKGFILES_CSWlibiexmath2-0-10 += $(call baseisadirs,$(libdir),libIexMath-2_0\.so\.10\.0\.1)
+PKGFILES_CSWlibiexmath2-0-10 += $(call baseisadirs,$(libdir),libIexMath-2_0\.so\.10(\.\d+)*)
+SPKG_DESC_CSWlibiexmath2-0-10 += $(DESCRIPTION), libIexMath-2_0.so.10
+RUNTIME_DEP_PKGS_CSWlibiexmath2-0-10 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibiexmath2-0-10 += CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSWlibiexmath2-0-10 += no-direct-binding
 
-PACKAGES += CSWlibimath6
-SPKG_DESC_CSWlibimath6 += $(DESCRIPTION), libImath.so.6
-PKGFILES_CSWlibimath6 += $(call pkgfiles_lib,libImath.so.6)
-RUNTIME_DEP_PKGS_CSWlibimath6 += CSWlibiex6
-OBSOLETED_BY_CSWlibimath6 += CSWilmbase
+PACKAGES += CSWlibilmthread2-0-10
+CATALOGNAME_CSWlibilmthread2-0-10 = libilmthread2_0_10
+PKGFILES_CSWlibilmthread2-0-10 += $(call baseisadirs,$(libdir),libIlmThread-2_0\.so\.10\.0\.1)
+PKGFILES_CSWlibilmthread2-0-10 += $(call baseisadirs,$(libdir),libIlmThread-2_0\.so\.10(\.\d+)*)
+SPKG_DESC_CSWlibilmthread2-0-10 += $(DESCRIPTION), libIlmThread-2_0.so.10
+RUNTIME_DEP_PKGS_CSWlibilmthread2-0-10 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibilmthread2-0-10 += CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSWlibilmthread2-0-10 += no-direct-binding
+
+PACKAGES += CSWlibimath2-0-10
+CATALOGNAME_CSWlibimath2-0-10 = libimath2_0_10
+PKGFILES_CSWlibimath2-0-10 += $(call baseisadirs,$(libdir),libImath-2_0\.so\.10\.0\.1)
+PKGFILES_CSWlibimath2-0-10 += $(call baseisadirs,$(libdir),libImath-2_0\.so\.10(\.\d+)*)
+SPKG_DESC_CSWlibimath2-0-10 += $(DESCRIPTION), libImath-2_0.so.10
+RUNTIME_DEP_PKGS_CSWlibimath2-0-10 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibimath2-0-10 += CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSWlibimath2-0-10 += no-direct-bindingth6 += CSWilmbase
 
 PACKAGES += CSWilmbase-dev
 SPKG_DESC_CSWilmbase-dev += Development files for ILM base libraries
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibilmthread6
-RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibhalf6
-RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibiex6
-RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibimath6
+RUNTIME_DEP_PKGS_CSWilmbhalf10
+RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibiex2-0-10
+RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibiexmath2-0-10
+RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibilmthread2-0-10
+RUNTIME_DEP_PKGS_CSWilmbase-dev += CSWlibimath2-0-10v += CSWlibimath6
 OBSOLETED_BY_CSWilmbase-dev += CSWilmbasedevel
-CATALOGNAME_CSWilmbasedevel = ilmbase_devel_stub
-
-EXTRA_LD_FLAGS = -lm
-
-EXTRA_CXXFLAGS += -norunpath
-REINPLACE_MATCH = (\|-xarch=)
-REINPLACE_WITH = |-norunpath$$1
-REINPLACE_FILES += ltmain.sh
+CATALOGNAME_CSWilmbasedevel = ilmbase_devel_stub  = -lm
+EXTRA_LD_OPTIONS = -z nolazyload
 
 BUILD64_LIBS_ONLY = 1
 
-include gar/category.mk
+# make check has some linking issues
+SKIPTEST = 1
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --disable-staticD64_LIBS_ONLY = 1
+
+include
