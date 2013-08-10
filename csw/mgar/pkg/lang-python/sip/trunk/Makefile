@@ -1,9 +1,10 @@
 # $Id$
 
-NAME		=	sip
-VERSION		=	4.14.6
-CATEGORIES	=	python
-GARTYPE		=	v2
+NAME			=	sip
+VERSION			=	4.14.7
+CATEGORIES		=	python
+PYTHON_VERSION	=	2_7
+GARTYPE			=	v2
 
 DESCRIPTION	=	Tool for creating Python bindings for C and C++
 define BLURB
@@ -24,23 +25,28 @@ GARCOMPILER			=	GNU
 CONFIGURE_ARGS		=	$(DIRPATHS)
 CONFIGURE_SCRIPTS	=	custom
 
+BUILD_DEP_PKGS	+=	CSWpython-dev
+BUILD_DEP_PKGS	+=	CSWpython27-dev
+
 BUILD_SCRIPTS	=	custom
 
 TEST_SCRIPTS	=
 
 INSTALL_SCRIPTS	=	custom
 
+RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
 configure-custom:
 	cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
-			bash -c 'python configure.py \
+			bash -c '$(PYTHON_EXECUTABLE) configure.py \
 				--platform=solaris-g++ \
 				CC="$${CC}" \
 				CFLAGS="$${CFLAGS}" \
