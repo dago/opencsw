@@ -997,6 +997,39 @@ class Catalog(SqlobjectHelperMixin):
                   ".AndReturn(%s)", repr(basename), pprint.pformat(pkgs))
     return pkgs
 
+  def GetPathsAndPkgnamesByBasedir(self, basedir, osrel, arch, catrel):
+    sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
+        osrel, arch, catrel)
+    connection = m.CswFile._connection
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          m.Pkginst,
+          m.CswFile.q.pkginst==m.Pkginst.q.id),
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileStats,
+          m.CswFile.q.srv4_file==m.Srv4FileStats.q.id),
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileInCatalog,
+          m.Srv4FileStats.q.id==m.Srv4FileInCatalog.q.srv4file),
+    ]
+    where = sqlobject.AND(
+        m.CswFile.q.path==basedir,
+        m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+        m.Srv4FileInCatalog.q.arch==sqo_arch,
+        m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+    )
+    query = connection.sqlrepr(
+        sqlbuilder.Select(
+          [m.CswFile.q.basename, m.Pkginst.q.pkgname],
+          where=where,
+          join=join))
+    rows = connection.queryAll(query)
+    pkgs = {}
+    for row in rows:
+    	basename, pkginst = row
+    	pkgs.setdefault(pkginst, []).append(basename)
+    return pkgs
+
   def GetPkgByPath(self, full_file_path, osrel, arch, catrel):
     """Returns a list of packages."""
     # Memoization for performance

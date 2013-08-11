@@ -43,7 +43,9 @@ urls_rest = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames-and-paths-by-basename',
-      'PkgnamesAndPathsByBasename',
+      'PkgnamesAndPathsByBasename',  # with ?basename=...
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames-and-paths-by-basedir',
+      'PkgnamesAndPathsByBasedir',  # with ?basedir=...
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/',
       'CatalogForGeneration',
   # Query by catalog release, arch, OS release and catalogname
@@ -359,6 +361,32 @@ class PkgnamesAndPathsByBasename(object):
     web.header('Content-Disposition',
                'attachment; filename=%s' % send_filename)
     return cjson.encode(data)
+
+
+class PkgnamesAndPathsByBasedir(object):
+  def GET(self, catrel, arch, osrel):
+    user_data = web.input()
+    try:
+      basedir = user_data.basedir
+    except AttributeError, e:
+      raise web.badrequest()
+    send_filename = (
+        '%s-%s-%s-%s-packages.txt'
+        % (catrel, arch, osrel, basedir.replace('/', '-')))
+    db_catalog = checkpkg_lib.Catalog()
+    try:
+      data = db_catalog.GetPathsAndPkgnamesByBasedir(
+          basedir, osrel, arch, catrel)
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+    web.header(
+        'Content-type',
+        'application/x-vnd.opencsw.pkg;type=pkgname-list')
+    web.header('Content-Disposition',
+               'attachment; filename=%s' % send_filename)
+    response = cjson.encode(data)
+    web.header('Content-Length', str(len(response)))
+    return response
 
 
 class RestSrv4Detail(object):
