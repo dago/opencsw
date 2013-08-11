@@ -13,6 +13,7 @@ import pprint
 import sqlobject
 import web
 import time
+import re
 
 from lib.python import models
 from lib.python import configuration
@@ -112,7 +113,12 @@ class Srv4Detail(object):
       "As of January 2013, the stats stored are so big that "
       "processing them can take several minutes before they "
       "can be served. Disabling until a proper solution "
-      "is in place.")
+      "is in place.\n")
+    if re.match(r'[0-9a-f]{32}', md5_sum):
+      pkgstats_raw += '\n'
+      pkgstats_raw += ('curl -s http://buildfarm.opencsw.org/pkgdb/rest/srv4/'
+                       '%s/pkg-stats/ '
+                       '| python -m json.tool | less' % md5_sum)
     # pkgstats_raw = pprint.pformat(pkg.GetStatsStruct())
     if pkg.arch.name == 'all':
       archs = models.Architecture.select(models.Architecture.q.name!='all')
