@@ -1026,8 +1026,8 @@ class Catalog(SqlobjectHelperMixin):
     rows = connection.queryAll(query)
     pkgs = {}
     for row in rows:
-    	basename, pkginst = row
-    	pkgs.setdefault(pkginst, []).append(basename)
+      basename, pkginst = row
+      pkgs.setdefault(pkginst, []).append(basename)
     return pkgs
 
   def GetPkgByPath(self, full_file_path, osrel, arch, catrel):
