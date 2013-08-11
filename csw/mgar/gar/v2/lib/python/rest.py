@@ -253,6 +253,15 @@ class RestClient(object):
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
+  def GetBasenamesByCatalogAndDir(self, catrel, arch, osrel, basedir):
+    url = (
+        self.rest_url
+        + self.PKGDB_APP
+        + "/catalogs/%s/%s/%s/pkgnames-and-paths-by-basedir?basedir=%s"
+           % (catrel, arch, osrel, urlencode(basedir)))
+    data = urllib2.urlopen(url).read()
+    return cjson.decode(data)
+
 
 class CachedPkgstats(object):
   """Class responsible for holding and caching package stats.
