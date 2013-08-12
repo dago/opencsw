@@ -969,33 +969,40 @@ class Catalog(SqlobjectHelperMixin):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
 
-    # Looks like this join is hard to do that way.
-    # res = m.Srv4FileInCatalog.select(
-    #           sqlobject.AND(
-    #               m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-    #               m.Srv4FileInCatalog.q.arch==sqo_arch,
-    #               m.Srv4FileInCatalog.q.catrel==sqo_catrel)).
-    #           throughTo.srv4file.thoughTo.files
+    connection = m.CswFile._connection
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          m.Pkginst,
+          m.CswFile.q.pkginst==m.Pkginst.q.id),
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileStats,
+          m.CswFile.q.srv4_file==m.Srv4FileStats.q.id),
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileInCatalog,
+          m.Srv4FileStats.q.id==m.Srv4FileInCatalog.q.srv4file),
+    ]
+    where = sqlobject.AND(
+        m.CswFile.q.basename==basename,
+        m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+        m.Srv4FileInCatalog.q.arch==sqo_arch,
+        m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+    )
+    query = connection.sqlrepr(
+        sqlbuilder.Select(
+          [m.CswFile.q.path, m.Pkginst.q.pkgname],
+          where=where,
+          join=join))
+    rows = connection.queryAll(query)
+    pkgs = {}
 
-    # We'll implement it on the application level.  First, we'll get all
-    # the files that match the basename, and then filter them based on
-    # catalog properties.
-    res = m.CswFile.select(m.CswFile.q.basename==basename)
-    file_list = []
-    for f in res:
-      # Check whether osrel, arch and catrel are matching.
-      for cat in f.srv4_file.in_catalogs:
-        if (f.srv4_file.registered
-            and cat.osrel == sqo_osrel
-            and cat.arch == sqo_arch
-            and cat.catrel == sqo_catrel):
-          file_list.append(f)
-    for obj in file_list:
-      pkgs.setdefault(obj.path, [])
-      pkgs[obj.path].append(obj.pkginst.pkgname)
+    for row in rows:
+      file_path, pkginst = row
+      pkgs.setdefault(file_path, []).append(pkginst)
+
     logging.debug("self.error_mgr_mock.GetPathsAndPkgnamesByBasename(%s)"
                   ".AndReturn(%s)", repr(basename), pprint.pformat(pkgs))
     return pkgs
+
 
   def GetPathsAndPkgnamesByBasedir(self, basedir, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
