@@ -1,8 +1,8 @@
-# $Id: Makefile 19383 2012-10-05 10:07:53Z bilko50000 $
+# $Id$
 #
 
 NAME = bzr
-VERSION = 2.5.1
+VERSION = 2.6.0
 GARTYPE = v2
 CATEGORIES = python
 
@@ -12,15 +12,16 @@ define BLURB
 	to branch and merge upstream code very easily.
 endef
 
-MASTER_SITES = http://launchpad.net/bzr/2.5/$(VERSION)/\+download/
+MASTER_SITES = http://launchpad.net/bzr/2.6/$(VERSION)/\+download/
 DISTFILES    = $(DISTNAME).tar.gz
 PACKAGES     = CSWbzr
 LICENSE = COPYING.txt
-TEST_SCRIPTS = 
+TEST_SCRIPTS =
 
 RUNTIME_DEP_PKGS = CSWpy-crypto
 RUNTIME_DEP_PKGS += CSWpy-paramiko
 RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS += CSWlibpython2-7-1-0
 
 CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-crypto
 CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-paramiko
