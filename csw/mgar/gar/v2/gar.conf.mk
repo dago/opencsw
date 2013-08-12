@@ -689,6 +689,7 @@ RUNPATH_DIRS ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_instal
 ifndef NOISALIST
 RUNPATH_ISALIST ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 endif
+endif
 
 LINKER_MAP_RELEASE-5.10 ?= solaris10
 LINKER_MAP_RELEASE ?= $(LINKER_MAP_RELEASE-$(GAROSREL))
@@ -700,7 +701,6 @@ LINKER_IGNORE ?= -z ignore
 # Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
 # with $ISALIST if it exists in RUNPATH_ISALIST, then append remaining dirs from RUNPATH_ISALIST
 RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $(abspath $D/$(MM_LIBDIR)))) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
-endif
 
 LINKER_FLAGS ?= $(PREPEND_LINKER_FLAGS) $(foreach ELIB,$(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
 
