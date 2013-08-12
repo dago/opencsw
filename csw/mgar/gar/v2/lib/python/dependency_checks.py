@@ -193,7 +193,7 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
         # not to be directly bound to.
         # So we consider that direct binding is enabled if at least one
         # symbol is directly bound to the library
-        if (syminfo['shndx'] in ('UNDEF', '.bss') and 'B' in syminfo['flags']):
+        if 'B' in syminfo['flags']:
           db_libs.add(syminfo['soname'])
 
 
