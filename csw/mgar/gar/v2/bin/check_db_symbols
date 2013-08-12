@@ -19,6 +19,7 @@ sub get_symbols_flags {
     my ($binary) = @_;
     my %symbol_flags_of;
 
+    local $ENV{'LANG'} = 'C';
     open( my $elfdump, '-|', "$ELFDUMP_BIN -y $binary" ) or die "ERROR: Can't analyze $binary with elfdump !";
     while (my $line = <$elfdump>) {
         chomp($line);
@@ -50,6 +51,7 @@ sub get_libraries_location {
     my ($binary) = @_;
     my %library_location;
 
+    local $ENV{'LANG'} = 'C';
     open( my $ldd, '-|', "$LDD_BIN $binary" ) or die "ERROR: Can't analyze $binary with elfdump !";
     while (my $line = <$ldd>) {
         my ( $soname, $library_path ) = (
@@ -58,6 +60,10 @@ sub get_libraries_location {
                              (\S+)      # library path
                          }x
         );
+	# (file not found) case
+	if ($library_path eq '(file') {
+		$library_path = undef;
+	}
         $library_location{$soname} = $library_path;
     }
     close($ldd);
@@ -103,6 +109,7 @@ printf(
     )
 );
 
+my @unfound_libraries;
 foreach my $soname ( keys( %{$symbol_flags_of} ) ) {
     next if ( $soname eq '<self>' );
 
@@ -112,8 +119,12 @@ foreach my $soname ( keys( %{$symbol_flags_of} ) ) {
         non_directly_bindable => 0,
     );
 
-    my $soname_symbol_flags_for =
-      get_symbols_flags( $library_location_of->{$soname} );
+    my $library_location = $library_location_of->{$soname};
+    if (not defined($library_location)) {
+	push (@unfound_libraries, $soname);
+	next;
+    }
+    my $soname_symbol_flags_for = get_symbols_flags( $library_location );
 
     foreach my $symbol ( keys( %{ $symbol_flags_of->{$soname} } ) ) {
         my $flag = $symbol_flags_of->{$soname}{$symbol};
@@ -139,6 +150,15 @@ foreach my $soname ( keys( %{$symbol_flags_of} ) ) {
               }
         )
     );
+}
+
+if (@unfound_libraries) {
+   print <<'EOF';
+
+The following libraries were not found, please make sure
+I can find them next time by setting LD_LIBRARY_PATH adequately:
+EOF
+   print ("\t" . join(', ', @unfound_libraries) . "\n");
 }
 
 print "\n";
