@@ -1,0 +1,16 @@
+--- a/IlmImf/ImfSystemSpecific.h	Tue Jun 18 21:51:39 2013
++++ b/IlmImf/ImfSystemSpecific.h	Mon Aug 12 00:39:35 2013
+@@ -61,8 +61,13 @@
+ static void* EXRAllocAligned(size_t size, size_t alignment)
+ {
+     void* ptr = 0;
++#if !defined(sun)
+     posix_memalign(&ptr, alignment, size);
+     return ptr;
++#else
++// Solaris 10 doesn't have posix_memalign()
++    return memalign(alignment, size);
++#endif
+ }
+ 
+ 
