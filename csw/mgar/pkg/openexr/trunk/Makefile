@@ -26,6 +26,8 @@ LICGARCOMPILER = GCC4
 
 PATCHFILES += 0003_no_posix_memalign.patch
 
+BUILD_DEP_PKGS += CSWilmbase-dev
+
 PACKAGES += CSWopenexr
 CATALOGNAME_CSWopenexr = openexr
 SPKG_DESC_CSWopenexr = $(DESCRIPTION)
