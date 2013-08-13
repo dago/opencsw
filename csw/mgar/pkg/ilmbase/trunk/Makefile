@@ -37,7 +37,6 @@ PKGFILES_CSWlibhalf10 += $(call baseisadirs,$(libdir),libHalf\.so\.10(\.\d+)*)
 SPKG_DESC_CSWlibhalf10 += $(DESCRIPTION), libHalf.so.10
 RUNTIME_DEP_PKGS_CSWlibhalf10 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibhalf10 += CSWlibstdc++6
-#CHECKPKG_OVERRIDES_CSWlibhalf10 += no-direct-binding
 
 PACKAGES += CSWlibiex2-0-10
 CATALOGNAME_CSWlibiex2-0-10 = libiex2_0_10
@@ -46,7 +45,6 @@ PKGFILES_CSWlibiex2-0-10 += $(call baseisadirs,$(libdir),libIex-2_0\.so\.10(\.\d
 SPKG_DESC_CSWlibiex2-0-10 += $(DESCRIPTION), libIex-2_0.so.10
 RUNTIME_DEP_PKGS_CSWlibiex2-0-10 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibiex2-0-10 += CSWlibstdc++6
-#CHECKPKG_OVERRIDES_CSWlibiex2-0-10 += no-direct-binding
 
 PACKAGES += CSWlibiexmath2-0-10
 CATALOGNAME_CSWlibiexmath2-0-10 = libiexmath2_0_10
@@ -55,7 +53,6 @@ PKGFILES_CSWlibiexmath2-0-10 += $(call baseisadirs,$(libdir),libIexMath-2_0\.so\
 SPKG_DESC_CSWlibiexmath2-0-10 += $(DESCRIPTION), libIexMath-2_0.so.10
 RUNTIME_DEP_PKGS_CSWlibiexmath2-0-10 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibiexmath2-0-10 += CSWlibstdc++6
-#CHECKPKG_OVERRIDES_CSWlibiexmath2-0-10 += no-direct-binding
 
 PACKAGES += CSWlibilmthread2-0-10
 CATALOGNAME_CSWlibilmthread2-0-10 = libilmthread2_0_10
@@ -64,7 +61,6 @@ PKGFILES_CSWlibilmthread2-0-10 += $(call baseisadirs,$(libdir),libIlmThread-2_0\
 SPKG_DESC_CSWlibilmthread2-0-10 += $(DESCRIPTION), libIlmThread-2_0.so.10
 RUNTIME_DEP_PKGS_CSWlibilmthread2-0-10 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibilmthread2-0-10 += CSWlibstdc++6
-#CHECKPKG_OVERRIDES_CSWlibilmthread2-0-10 += no-direct-binding
 
 PACKAGES += CSWlibimath2-0-10
 CATALOGNAME_CSWlibimath2-0-10 = libimath2_0_10
@@ -73,7 +69,7 @@ PKGFILES_CSWlibimath2-0-10 += $(call baseisadirs,$(libdir),libImath-2_0\.so\.10(
 SPKG_DESC_CSWlibimath2-0-10 += $(DESCRIPTION), libImath-2_0.so.10
 RUNTIME_DEP_PKGS_CSWlibimath2-0-10 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibimath2-0-10 += CSWlibstdc++6
-#CHECKPKG_OVERRIDES_CSWlibimath2-0-10 += no-direct-bindingth6 += CSWilmbase
+h6 += CSWilmbase
 
 PACKAGES += CSWilmbase-dev
 SPKG_DESC_CSWilmbase-dev += Development files for ILM base libraries
