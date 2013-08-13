@@ -18,10 +18,10 @@ PACKAGES     = CSWbzr
 LICENSE = COPYING.txt
 TEST_SCRIPTS =
 
-RUNTIME_DEP_PKGS = CSWpy-crypto
-RUNTIME_DEP_PKGS += CSWpy-paramiko
-RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWbzr = CSWpy-crypto
+RUNTIME_DEP_PKGS_CSWbzr += CSWpy-paramiko
+RUNTIME_DEP_PKGS_CSWbzr += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWbzr += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbzr += CSWlibgcc-s1
 
 CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-crypto
