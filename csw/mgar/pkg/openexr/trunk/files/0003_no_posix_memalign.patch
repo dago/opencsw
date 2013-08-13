@@ -4,7 +4,7 @@
  static void* EXRAllocAligned(size_t size, size_t alignment)
  {
      void* ptr = 0;
-+#if !defined(sun)
++#if !defined(__sun)
      posix_memalign(&ptr, alignment, size);
      return ptr;
 +#else
