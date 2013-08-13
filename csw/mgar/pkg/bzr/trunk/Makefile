@@ -22,12 +22,14 @@ RUNTIME_DEP_PKGS = CSWpy-crypto
 RUNTIME_DEP_PKGS += CSWpy-paramiko
 RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWbzr += CSWlibgcc-s1
 
 CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-crypto
 CHECKPKG_OVERRIDES_CSWbzr += surplus-dependency|CSWpy-paramiko
 CHECKPKG_OVERRIDES_CSWbzr += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWbzr += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWbzr += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/bzrlib/transport/http/_urllib2_wrappers.py
+CHECKPKG_OVERRIDES_CSWbzr += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/bzrlib/transport/http/_urllib2_wrappers.py
+CHECKPKG_OVERRIDES_CSWbzr += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/bzrlib/transport/http/_urllib2_wrappers.py
 
 include gar/category.mk
 
