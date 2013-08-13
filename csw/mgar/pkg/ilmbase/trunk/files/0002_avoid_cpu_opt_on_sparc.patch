@@ -5,7 +5,7 @@
  
  
 -#ifdef HAVE_UCONTEXT_H
-+#if defined(HAVE_UCONTEXT_H) && !defined (sun)
++#if defined(HAVE_UCONTEXT_H) && !defined (__sun)
  
  
  #include <ucontext.h>
