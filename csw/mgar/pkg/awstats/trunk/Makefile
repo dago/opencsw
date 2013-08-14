@@ -1,5 +1,5 @@
 NAME = awstats
-VERSION = 7.1
+VERSION = 7.2
 GARTYPE = v2
 
 DESCRIPTION = Featureful tool for web, ftp and mail server statistics
@@ -25,27 +25,9 @@ SPKG_DESC_CSWawstats = Featureful tool for web, ftp and mail server statistics
 RUNTIME_DEP_PKGS_CSWawstats += CSWperl
 ARCHALL_CSWawstats = 1
 
-# These are documentation files, ignore for now
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_setup.html
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_faq.html
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_contrib.html
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_webmin.html
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_changelog.txt
-
-# Only in comments, patches by 0001
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/www/awstats/cgi-bin/awstats.pl
-
 # These are all comments, I patched all important occurrences
 CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/etc/opt/csw/awstats.conf.CSW
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/awstats_buildstaticpages.pl
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/awstats_configure.pl
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/geoip_generator.pl
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/webmin/awstats-1.9.wbm
 CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/etc/opt/csw/awstats.conf.CSW
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/www/awstats/cgi-bin/awstats.pl
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/www/awstats/cgi-bin/plugins/tooltips.pm
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/awstats/awstats_exportlib.pl
-CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/doc/awstats/awstats_config.html
 
 # awstats is pretty generic, do not directly depend
 CHECKPKG_OVERRIDES_CSWawstats += missing-dependency|CSWapache2
