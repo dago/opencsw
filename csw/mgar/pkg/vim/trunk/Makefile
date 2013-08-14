@@ -12,7 +12,7 @@ define BLURB
   commandline history, online help, filename completion, and block operations.
   It is descended from the vi clone "stevie" and runs on many systems, including
   Unix, MS Windows, OS/2, Macintosh, VMS,# Let's build a CLI vim for those stuck with S9
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386S,ifneq ($(shell /usr/bin/uname -r),5.9)
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386SPACKAGING_PLATFORMS += solaris10-sparc solaris10-i386S,ifneq ($(shell /usr/bin/uname -r),5.9)
        GARCOMPILER = SOS12U3
 endifS, and Amig          = CSWvim
 CATALOGNAME_CSWvim = vim
@@ -67,10 +67,8 @@ CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(NAME)
 CONFIGURE_ARGS += --with-features=huge
 CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --enable-multibyte
-CONFIGURE_ARGS CONFIGURE_ARGS += --without-local-dir += --enable-cscope
-
-CONFIGURE_ARGS += --enable-pythoninterp=dynamic
-CONFIGURE_ARGS += --with-python-config-d/configir=$(libdir)/python
+CONFIGURE_ARGS CONFIGURE_ARGS += --without-local-dir CONFIGURE_ARGS += --enable-pythoninterp=dynamic
+CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.6/configir=$(libdir)/python
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim$(subst .,PATCHDIRLEVEL = 0
