@@ -83,7 +83,7 @@ RUNTIME_DERUNTIME_DEP_PKGS	+=	CSWliblzma5EP_PKGS	+=	CSWlibz1
 
 # this should be declared only for the 32 bit ISAs but I doubt that
 # checkpkg can deal with this subtility
-RUNTIME_DEP_PKGS	+=	CSWpython
+RUNTIME_DEPCHECKPKG_OVERRIDES_CSWgdb	+=	surplus-dependency|UNTIME_DEP_PKGS	+=	CSWpython
 
 CHECKPKG_OVERRIDES_CSWgdb	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/gdb.info
 CHECKPKG_OVERRIDES_CSWgdb	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/gdb.info
