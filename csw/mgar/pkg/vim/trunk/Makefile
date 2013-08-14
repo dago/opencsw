@@ -1,6 +1,6 @@
 NAME           = vim
-DISTVERSION    = 7.3
-PATCHREV       = 905
+DISTVERSION    = 7.4
+PATCHREV       = 0
 VERSION        = $(DISTVERSION).$(PATCHREV)
 GARTYPE        = v2
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -12,7 +12,9 @@ define BLURB
   commandline history, online help, filename completion, and block operations.
   It is descended from the vi clone "stevie" and runs on many systems, including
   Unix, MS Windows, OS/2, Macintosh, VMS,# Let's build a CLI vim for those stuck with S9
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386S, and Amig          = CSWvim
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386S,ifneq ($(shell /usr/bin/uname -r),5.9)
+       GARCOMPILER = SOS12U3
+endifS, and Amig          = CSWvim
 CATALOGNAME_CSWvim = vim
 SPKG_DESC_CSWvim   = Vi IMproved without GUI
 
@@ -51,10 +53,7 @@ DISTFILES += vimrc.tiny
 DISTFILES += gvimrc
 DISTFILES += COPYING
 
-PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))3-solaris-sleep-does-not-do-decimals.patch
-PATCHFILES += 0004-solaris9-msgfmt-hates-empty-files.patch
-
-PATCHDIRLEVEL = 0of-whitespace.patch
+PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVEDIRLEVEL = 0of-whitespace.patch
 
 DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
 
