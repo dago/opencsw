@@ -24,16 +24,16 @@ define BLURB
   (and many other languages). Those programs might be executing on the same
    machine as GDB (native) or on another machine (remote). GDB can run on most
   popular UNIX and Microsoft Windows variants.
-endef
-
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+	=	$(GNU_MIRROR)
+DISTFILES		= $(DISTNAME).tar.gz
 # from private patch 2:
-PATCHFILES	+=	0001-OpenSolaris-gdb-solib-svr4.patch
+PATCHFILES		+=	0001-OpenSolaris-gdb-solib-svr4.patch
 # from private patch 3:
-PATCHFILES	+=	0002-OpenSolaris-gdb-fork-child.patch
+PATCHFILES		+=	0002-OpenSolaris-gdb-fork-child.patch
 # from private patch 4:
-PATCHFILES	+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
+PATCHFILES		+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
+# aggregate from http://sourceware.org/bugzilla/show_bug.cgi?id=15420%3E
+PATCHFILES		+=	0004-missing-symbol-ps_lgetxregsizearis-gdb-fork-child.patch
 
 GARCOMPILER		=	GNU
 
@@ -67,10 +67,9 @@ CONFIGURE_ARGS	+=	--with-expat
 #CONFIGURE_ARGS	+=	--with-tcl=/opt/csw/lib
 #CONFIGURE_ARGS	+=	--with-tk=/opt/csw/lib
 CONFIGURE_ARGS	+=	--with-x
-CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-$(MEMORYMODEL))
-
-# we skip the lengthy test until the linker on the build platforms are
+CONFIGURE_ARGS	+=	$(CONFIGURE_ARGS-skip the lengthy test until the linker on the build platforms are
 # of the same and latest version...
+.
 SKIPTEST			=	1
 # TEST_SCRIPTS		=	parallel
 
