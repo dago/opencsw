@@ -1,0 +1,30 @@
+From d68782a36ade485723a049d040008899434553d7 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 14 Aug 2013 14:45:44 +0200
+Subject: [PATCH] Remove log calls in signal handler
+
+---
+ src/tracker-extract/tracker-extract-pdf.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/src/tracker-extract/tracker-extract-pdf.c b/src/tracker-extract/tracker-extract-pdf.c
+index f68914c..1aaae2f 100644
+--- a/src/tracker-extract/tracker-extract-pdf.c
++++ b/src/tracker-extract/tracker-extract-pdf.c
+@@ -463,10 +463,9 @@ extract_content_child_cleanup (int action)
+ 	pid_t child_pid;
+ 	int status;
+ 
+-	g_debug ("Parent: Zombies, say hello to my little friend!");
+-	while ((child_pid = waitpid (-1, &status, WNOHANG)) > 0) {
+-		g_debug ("Parent:   Zombie %d reaped", child_pid);
+-	}
++	while ((child_pid = waitpid (-1, &status, WNOHANG)) > 0)
++        ;
++
+ }
+ 
+ static gchar *
+-- 
+1.8.3.4
+
