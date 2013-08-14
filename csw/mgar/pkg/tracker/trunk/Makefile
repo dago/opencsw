@@ -115,6 +115,7 @@ PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
 # Submitted upstream, should be in 0.16.3
 PATCHFILES += 0008-libtracker-common-Use-procfs-psinfo-instead-of-cmdli.patch
+PATCHFILES += 0008-Remove-log-calls-in-signal-handler.patch
 
 # Packages
 PACKAGES += CSWtracker
