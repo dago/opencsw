@@ -1,6 +1,6 @@
 NAME           = vim
-DISTVERSION    = 7.3
-PATCHREV       = 905
+DISTVERSION    = 7.4
+PATCHREV       = 0
 VERSION        = $(DISTVERSION).$(PATCHREV)
 GARTYPE        = v2
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -10,7 +10,7 @@ define BLURB
   features have been added including multi-level undo, syntax highlighting,
   commandline history, online help, filename completion, and block operations.
   It is descended from the vi clone "stevie" and runs on many systems, including
-  Unix, MS Windows, OS/2, Macintosh, VMS, and Amig           = CSWgvim
+  Unix, MS Windows, OS/2, Macintosh, VMS,GARCOMPILER = SOS12U3S, and Amig           = CSWgvim
 CATALOGNAME_CSWgvim = gvim
 
 MASTER_SITES  = http://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
@@ -22,8 +22,7 @@ DISTFILES  = $(NAME)-$(DISTVERSION).tar.bz2
 DISTFILES += gvim.desktop
 DISTFILES += COPYING
 
-PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(PATCHFILES += 0003-solaris-sleep-does-not-do-decimals.patch
-
+PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(
 PATCHDIRLEVEL = 0
 
 DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
@@ -41,7 +40,7 @@ CONFIout-local-dir
 CONFIGURE_ARGS += --with-vim-name="vim-gnome"
 
 CONFIGURE_ARGS += --enable-pythoninterp=dynamic
-CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python/config--enable-gui=gnome2
+CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.6/config--enable-gui=gnome2
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim$(subst .,BUILD_DEP_PKGS += CSWpkgconfig
@@ -52,7 +51,7 @@ BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
-BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWfontconfig-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWsunx11devel
 BUILD_DEP_PKGS += CSWlibgnomeui-devel
