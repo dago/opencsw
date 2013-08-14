@@ -75,6 +75,10 @@ install-custom:
 		-e 's!/usr/local/awstats/!$(sharedstatedir)/www/awstats/!;' \
 		> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf
 	rm -f $(DESTDIR)$(sharedstatedir)/awstats/httpd_conf
+	chmod -R +rX $(DESTDIR)$(sharedstatedir)/www/awstats \
+		$(DESTDIR)$(docdir)/awstats
+	chmod +rx $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/*.pl \
+		$(DESTDIR)$(sharedstatedir)/awstats/*.pl
 	@$(MAKECOOKIE)
 
 # ./awstats_updateall.pl now -awstatsprog=/opt/csw/share/www/awstats/cgi-bin/awstats.pl -configdir=/etc/opt/csw
