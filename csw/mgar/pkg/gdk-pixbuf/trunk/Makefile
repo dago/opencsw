@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = gdk-pixbuf
-VERSION = 2.24.1
+VERSION = 2.28.2
 GARTYPE = v2
 CATEGORIES = gnome
 
@@ -30,8 +30,9 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibintl8
 # I assume if one installs CSWgdkpixbuf, one wants all the stuff
 # except -dev
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWlibgdk-pixbuf-xlib2-0-0
@@ -80,9 +81,14 @@ BUILD64 = 1
 # We need the binaries to query 64 bit modules
 MERGE_DIRS_isa-extra = $(bindir) $(libdir)
 
+CONFIGURE_ARGS-32 = 
+# Fails on introspection build on 64bits
+CONFIGURE_ARGS-64 = --enable-introspection=no
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv-prefix
 CONFIGURE_ARGS += --with-libintl-prefix
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 include gar/category.mk
 
