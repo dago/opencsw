@@ -11,26 +11,31 @@ define BLURB
 An HTML Syntax Checker and Reformatter
 endef
 
-MASTER_SITES = http://tidy.sourceforge.net
+MASTER_SITES = http://t/idy.sourceforge.net
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-correct-the-path-to-tidy-for-use-by-tests.patch
 
 LICENSE = LICENSE
 
-PACKAGES = CSWtidy CSWlibtidy0-99 CSWtidy-dev
-
-OBSOLETED_BY_CSWtidy = CSWhtmltidy
-
 SPKG_DESC_CSWtidy = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWtidy = CSWlibtidy0-99
+RUNTIME_DEP_PKGS_CSWtidy = CSWlibtidy0-99-0
+OBSOLETED_BY_CSWtidy = CSWhtmltidy
+# Catchall
 
+PACKAGES += CSWtidy-dev
 SPKG_DESC_CSWtidy-dev = Development files for libtidy
-RUNTIME_DEP_PKGS_CSWtidy-dev = CSWlibtidy0-99
-
-SPKG_DESC_CSWlibtidy0-99 = Tidy, libtidy-0.99.so
-
 PKGFILES_CSWtidy-dev = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibtidy0-99 = $(call baseisadirs,$(libdir),libtidy-0\.99\.so(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWtidy-dev += CSWlibtidy0-99-0
+
+PACKAGES += CSWlibtidy0-99-0
+CATALOGNAME_CSWlibtidy0-99-0 = libtidy0_99_0
+PKGFILES_CSWlibtidy0-99-0 += $(call baseisadirs,$(libdir),libtidy-0\.99\.so\.0\.0\.0)
+PKGFILES_CSWlibtidy0-99-0 += $(call baseisadirs,$(libdir),libtidy-0\.99\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibtidy0-99-0 += $(DESCRIPTION), libtidy-0.99.so.0
+OBSOLETED_BY_CSWlibtidy0-99-0 += CSWlibtidy0-99
+
+BUILD64 = 1
+ISAEXEC = 1-0\.99\.so(\.\d+)*)
 
 include gar/category.mk
 
@@ -40,5 +45,4 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 test-modulated:
-	@(cd $(WORKSRC)/test; ./testall.sh)
-	@$(MAKECOOKIE)
+	@(cd $(WORKSRC)/test; ./testall.s
