@@ -1,0 +1,31 @@
+From 3c21cb559af89b1311d8f01ee4e8b1f2bbeaf293 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 16 Aug 2013 15:46:45 +0200
+Subject: [PATCH] libtracker-common: Use procfs psinfo instead of cmdline on
+ Solaris
+
+Earlier commit 5b62dbd808928c1886d3ffa54ca01b289d50304e was missing
+the correct /proc filename for Solaris.
+---
+ src/libtracker-common/tracker-dbus.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/libtracker-common/tracker-dbus.c b/src/libtracker-common/tracker-dbus.c
+index beb1814..53da8e7 100644
+--- a/src/libtracker-common/tracker-dbus.c
++++ b/src/libtracker-common/tracker-dbus.c
+@@ -165,7 +165,11 @@ client_data_new (gchar *sender)
+ 		filename = g_build_filename (G_DIR_SEPARATOR_S,
+ 		                             "proc",
+ 		                             pid_str,
++#ifdef __sun /* Solaris */
++		                             "psinfo",
++#else
+ 		                             "cmdline",
++#endif
+ 		                             NULL);
+ 		g_free (pid_str);
+ 
+-- 
+1.8.3.4
+
