@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.6p8
+VERSION = 1.8.7
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -65,7 +65,7 @@ LDAP_MANFILES += $(mandir)/man4/sudoers.ldap.4
 
 PACKAGES += CSWsudo-ldap
 SPKG_DESC_CSWsudo-ldap = LDAP bindings for SUDO
-PKGFILES_CSWsudo-ldap += $(libexecdir)/sudoers-ldap.so
+PKGFILES_CSWsudo-ldap +=ap += $(libexecdir)/sudoers-ldap.so
 PKGFILES_CSWsudo-ldap += $(LDAP_DOCFILES)
 PKGFILES_CSWsudo-ldap += $(LDAP_MANFILES)
 RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibintl8
@@ -83,10 +83,10 @@ CHECKPKG_OVERRIDES_CSWsudo-ldap += surplus-dependency|CSWliblber2-4-2oc/sudo/REA
 # This is a private library
 CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-not-part-of-filename|soname=sudoers.so|filenam# Looks like these are still needed
 CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/sbin/visudo|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudoers.so|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo_noexec.so|but|never|used
+CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers.so|but|never|used
+CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudo_noexec.so|but|never|used
 CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/bin/sudoreplay|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudoers-ldap.so|but|never|usedmme=sudoers-ldap.so
+CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers-ldap.so|but|never|usedmme=sudoers-ldap.so
 
 LOGPATH    = $(localstatedir)/log/sudo
 TIMEPATH   = $(localstatedir)/sudo
@@ -141,7 +141,7 @@ PROTOTYPE_GROUP_sudoers = root
 MERGE_SCRIPTS_isa-default-ldap-disabled = copy-all
 MERGE_SCRIPTS_isa-default-ldap-enabled = copy-all
 
-EXTRA_PAX_ARGS_LDAP-enabled += -s ',($(libexecdir))/sudoers.so,$$1/sudoers-ldap.so,'
+EXTRA_PAX_ARGS_LDAP-enabled += -s ',(/sudoers.so,$$1/sudoir))/sudoers.so,$$1/sudoers-ldap.so,'
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_LDAP-$(LDAP))
 
 MIGRATE_FILES_CSWsudo += sudoers
