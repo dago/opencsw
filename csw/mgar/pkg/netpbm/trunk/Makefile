@@ -39,8 +39,6 @@ RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibjbig2
 RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibjasper1
-# Plenty of those, but check_db_symbols returns absolutely nothing
-CHECKPKG_OVERRIDES_CSWnetpbm += no-direct-binding
 
 PACKAGES += CSWlibnetpbm11
 CATALOGNAME_CSWlibnetpbm11 = libnetpbm11
@@ -70,14 +68,10 @@ EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/config_template
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/man/.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/link/.*
 
-EXTRA_PAX_ARGS = -s ",$(prefix)/misc,$(sharedsEXTRA_LD_OPTIONS += -z nolazyload -B direct
-
-# Needed so the newly built libis picked before the installed one
+EXTRA_PAX_ARGS = -s ",$(prefix)/misc,$(shareds# Needed so the newly built libis picked before the installed one
 EXTRA_LD_OPTIONS += -L$(abspath $(WORKSRC)/lib)
 
 include gar/category.mk
-
-PATH := /opt/csw/gnu:$(PATH)
 
 configure-custom:
 	cp $(WORKDIR)/config.mk $(WORKSRC)
