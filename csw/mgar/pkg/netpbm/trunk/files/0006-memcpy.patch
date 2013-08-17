@@ -1,0 +1,23 @@
+--- a/pm_config.in.h	ven. août 16 23:48:28 2013
++++ b/pm_config.in.h	ven. août 16 23:51:30 2013
+@@ -91,9 +91,11 @@
+ 
+ #ifndef __SASC
+ #ifndef _DCC    /* Amiga DICE Compiler */
++#ifndef sun    /* Solaris */
+ #define bzero(dst,len) memset(dst,0,len)
+ #define bcopy(src,dst,len) memcpy(dst,src,len)
+ #define bcmp memcmp
++#endif /* sun */
+ #endif /* _DCC */
+ #endif /* __SASC */
+ 
+@@ -93,7 +93,7 @@
+ ** If you have compilation problems that point here, feel free to tweak
+ ** or remove these declarations.
+ */
+-#ifdef BSD
++#if defined(BSD) || defined(sun)
+ #include <stdlib.h>
+ #endif
+ #if defined(SYSV)

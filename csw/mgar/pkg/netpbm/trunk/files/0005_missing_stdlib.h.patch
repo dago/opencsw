@@ -1,0 +1,70 @@
+--- a/urt/rle_putrow.c	ven. août 16 22:25:35 2013
++++ b/urt/rle_putrow.c	ven. août 16 22:27:13 2013
+@@ -31,6 +31,7 @@
+  */
+  
+ #include <stdio.h>
++#include <stdlib.h>
+ 
+ #include "rle_put.h"
+ #include "rle.h"
+--- a/urt/scanargs.c	ven. août 16 22:32:22 2013
++++ b/urt/scanargs.c	ven. août 16 22:33:13 2013
+@@ -41,6 +41,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <ctype.h>
+ #include <stdarg.h>
+ 
+--- a/urt/rle_open_f.c	ven. août 16 22:45:04 2013
++++ b/urt/rle_open_f.c	ven. août 16 23:03:01 2013
+@@ -12,6 +12,7 @@
+ 
+ #include <string.h>
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <unistd.h>
+ #include <fcntl.h>
+ 
+--- a/converter/other/zeisstopnm.c	ven. août 16 23:25:57 2013
++++ b/converter/other/zeisstopnm.c	ven. août 16 23:28:37 2013
+@@ -49,6 +49,7 @@
+ **
+ */
+ 
++#include <stdlib.h>
+ #include "pnm.h"
+ 
+ int
+--- a/lib/util/nstring.h	ven. août 16 23:41:47 2013
++++ b/lib/util/nstring.h	ven. août 16 23:44:39 2013
+@@ -3,6 +3,7 @@
+ 
+ #include <stdarg.h>
+ #include <string.h>
++#include <strings.h>
+ #include <ctype.h>
+ 
+ #include "pm_c_util.h"
+--- a/urt/rle_error.c	ven. août 16 23:45:33 2013
++++ b/urt/rle_error.c	ven. août 16 23:47:33 2013
+@@ -25,6 +25,7 @@
+  * Copyright (c) 1992, University of Michigan
+  */
+ 
++#include <stdlib.h>
+ #include <string.h>
+ 
+ #include "rle_config.h"
+--- a/converter/other/sirtopnm.c	ven. août 16 23:54:50 2013
++++ b/converter/other/sirtopnm.c	ven. août 16 23:57:14 2013
+@@ -10,6 +10,7 @@
+ ** implied warranty.
+ */
+ 
++#include <stdlib.h>
+ #include "pnm.h"
+ 
+ int main( argc, argv )
