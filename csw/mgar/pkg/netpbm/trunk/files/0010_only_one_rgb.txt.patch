@@ -1,0 +1,12 @@
+--- a/pm_config.in.h	Sat Aug 17 19:10:14 2013
++++ b/pm_config.in.h	Sat Aug 17 19:33:52 2013
+@@ -60,9 +60,6 @@
+ ** hex and decimal forms to specify colors (see ppm/pgmtoppm.1 for details).  */
+ 
+ #define RGB_DB_PATH \
+-"/usr/share/netpbm/rgb.txt:" \
+-"/usr/lib/X11/rgb.txt:" \
+-"/usr/share/X11/rgb.txt:" \
+ "/usr/X11R6/lib/X11/rgb.txt"
+ 
+ /* CONFIGURE: This is the name of an environment variable that tells

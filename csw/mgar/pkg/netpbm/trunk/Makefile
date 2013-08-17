@@ -19,6 +19,9 @@ EXPANDVARS += config.mk
 
 PATCHFILES += 0006-memcpy_stdlib.patch
 PATCHFILES += 0007_stdout_already_used.patch
+PATCHFILES += 0008_wordaccess_missing_quotes.patch
+PATCHFILES += 0009_wordaccess_missing_semicolon.patch
+PATCHFILES += 0010_only_one_rgb.txt.patch
 
 VENDOR_URL = http://netpbm.sourceforge.net/
 
@@ -44,14 +47,12 @@ CATALOGNAME_CSWlibnetpbm11 = libnetpbm11
 PKGFILES_CSWlibnetpbm11 += $(call baseisadirs,$(libdir),libnetpbm\.so\.11\.63)
 PKGFILES_CSWlibnetpbm11 += $(call baseisadirs,$(libdir),libnetpbm\.so\.11(\.\d+)*)
 SPKG_DESC_CSWlibnetpbm11 += $(DESCRIPTION), libnetpbm.so.11
-# Acceptable, list of locations for rgb.txt
-CHECKPKG_OVERRIDES_CSWlibnetpbm11 += file-with-bad-content|/usr/share|root/opt/csw/lib/libnetpbm.so.11.63ib,libnetpbm.so.10)
+b,libnetpbm.so.10)
 
 PACKAGES += CSWlibnetpbm-dev
 SPKG_DESC_CSWlibnetpbm-dev = Development files for libnetpbm.so.10
 PKGFILES_CSWlibnetpbm-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibnetpbm-dev# Acceptable, list of locations for rgb.txt
-CHECKPKG_OVERRIDES_CSWlibnetpbm-dev += file-with-bad-content|/usr/share|root/opt/csw/include/netpbm/pm_config.hv += CSWlibnetpbm10
+RUNTIME_DEP_PKGS_CSWlibnetpbm-dev += CSWlibnetpbm10
 
 CONFIGUREGS += -D__inline=
 
@@ -69,25 +70,23 @@ EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/config_template
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/man/.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/link/.*
 
-EXTRA_PAX_ARGS = -s ",$(prefix)/misc,$(sharedsEXTRA_LD_OPTIONS = -z nolazyload
+EXTRA_PAX_ARGS = -s ",$(prefix)/misc,$(sharedsEXTRA_LD_OPTIONS += -z nolazyload -B direct
 
 # Needed so the newly built libis picked before the installed one
-EXTRA_LD_OPTIONS += -L$(abspath $(WORKSRC)/libs)dstatedir)/netpbm,"
+EXTRA_LD_OPTIONS += -L$(abspath $(WORKSRC)/lib)
 
-includPATH := /opt/csw/gnu:$(PATH):/opt/csw/gcc4/bin
+include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
 
 configure-custom:
-	cp $(WORKDIR)/config.mkIR)/Makefile.config $(WORKSRC)
-	perl -pi \
-		-e 's,(#define\s+RGB_DB1\s+).*,$$1"/opt/csw/share/netpbm/rgb.txt",;' \
-		-e 's,(#define\s+RGB_DB2\s+).*,$$1"/usr/openwin/lib/X11/rgb.txt",;' \
-		-e 's,(#define\s+RGB_DB3\s+).*,$$1"/usr/openwin/lib/rgb.txt",;' \
-		$(WORKSRC)/pm_config.in.h
+	cp $(WORKDIR)/config.mk $(WORKSRC)
 	@$(MAKECOOKIE)
 
 pre-install-modulated:
 	mkdir -p $(DESTDIR)/opt
+	@$(MAKECOOKIE)
 
-post-install-modulated:
-	rm -f $(DESTDIR)$(libdir)/libnetpbm.so
-	gln -s libnetpbm.so.10 $(DESTDIR)$(li
+#post-install-modulated:
+	#rm -f $(DESTDIR)$(libdir)/libnetpbm.so
+	#gln -s libnetpbm.so.11 $(DESTDIR)$(libdir)/libnetpbm.so
