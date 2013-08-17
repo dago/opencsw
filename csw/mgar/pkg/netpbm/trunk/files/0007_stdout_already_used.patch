@@ -1,0 +1,29 @@
+--- a/converter/other/pstopnm.c	sam. août 17 00:04:17 2013
++++ b/converter/other/pstopnm.c	sam. août 17 00:11:44 2013
+@@ -64,7 +64,7 @@
+     unsigned int ysize;  /* zero means unspecified */
+     unsigned int dpi;    /* zero means unspecified */
+     enum Orientation orientation;
+-    unsigned int stdout;
++    unsigned int npstdout;
+     unsigned int textalphabits;
+ };
+ 
+@@ -112,7 +112,7 @@
+     OPTENT3(0, "dpi",        OPT_UINT,  &cmdlineP->dpi, &dpiSpec,        0);
+     OPTENT3(0, "portrait",   OPT_FLAG,  NULL, &portraitOpt,             0);
+     OPTENT3(0, "landscape",  OPT_FLAG,  NULL, &landscapeOpt,            0);
+-    OPTENT3(0, "stdout",     OPT_FLAG,  NULL, &cmdlineP->stdout,         0);
++    OPTENT3(0, "stdout",     OPT_FLAG,  NULL, &cmdlineP->npstdout,         0);
+     OPTENT3(0, "textalphabits", OPT_UINT,
+             &cmdlineP->textalphabits,  &textalphabitsSpec, 0);
+ 
+@@ -623,7 +623,7 @@
+ -----------------------------------------------------------------------------*/
+     const char * retval;  /* malloc'ed */
+ 
+-    if (cmdline.stdout)
++    if (cmdline.npstdout)
+         retval = strdup("-");
+     else if (streq(cmdline.inputFileName, "-"))
+         retval = strdup("-");
