@@ -48,9 +48,9 @@ SPKG_DESC_CSWlibnetpbm11 += $(DESCRIPTION), libnetpbm.so.11
 b,libnetpbm.so.10)
 
 PACKAGES += CSWlibnetpbm-dev
-SPKG_DESC_CSWlibnetpbm-dev = Development files for libnetpbm.so.10
+SPKG_DESC_CSWlibnetpbm-dev = Development files1for libnetpbm.so.10
 PKGFILES_CSWlibnetpbm-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibnetpbm-dev += CSWlibnetpbm10
+RUNTIME_DEP_PKGS_CSWlibnetpbm-d1v += CSWlibnetpbm10
 
 CONFIGUREGS += -D__inline=
 
@@ -81,6 +81,6 @@ pre-install-modulated:
 	mkdir -p $(DESTDIR)/opt
 	@$(MAKECOOKIE)
 
-#post-install-modulated:
-	#rm -f $(DESTDIR)$(libdir)/libnetpbm.so
-	#gln -s libnetpbm.so.11 $(DESTDIR)$(libdir)/libnetpbm.so
+post-install-modulated:
+	rm -f $(DESTDIR)$(libdir)/libnetpbm.so
+	gln -s libnetpbm.so.11 $(DESTDIR)$(libdir)/libnetpbm.so
