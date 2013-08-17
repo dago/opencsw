@@ -23,6 +23,8 @@ SPKG_DESC_CSWlibgssglue-dev = Development files for libgssglue.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibgssglue-dev += CSWlibgssglue0
 
+EXTRA_CPPFLAGS += -DUSE_SOLARIS_SHARED_LIBRARIES=1
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
