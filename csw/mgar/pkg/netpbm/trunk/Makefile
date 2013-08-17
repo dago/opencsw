@@ -84,3 +84,6 @@ pre-install-modulated:
 post-install-modulated:
 	rm -f $(DESTDIR)$(libdir)/libnetpbm.so
 	gln -s libnetpbm.so.11 $(DESTDIR)$(libdir)/libnetpbm.so
+	# Wherever that comes from, it must go
+	rmdir $(DESTDIR)/link
+	@$(MAKECOOKIE)
