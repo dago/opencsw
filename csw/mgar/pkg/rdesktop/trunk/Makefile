@@ -1,5 +1,5 @@
 NAME = rdesktop
-VERSION = 1.7.1
+VERSION = 1.8.0
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -17,6 +17,7 @@ DISTFILES  = $(NAME)-$VENDOR_URL = http://www.rdesktop.org/www.rdesktop.org/
 BUILD_DEP_PKGS += CSWlibao-dev
 BUILD_DEP_PKGS += CSWlibsamplerate-dev
 BUIlibssl-dev
+BUILD_DEP_PKGS += CSWlibgssglue-dev
 
 PACKAGES += CSWrdesktop
 SPKG_DESC_CSWrdesktop = RDP client for Windows NT/2000/2003/XP Terminal Server
@@ -24,12 +25,14 @@ RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibiconv2esktop += CSWiconv
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibao4
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibsamplerate0
 RUNTIME_DEP_PKGS_libssl1-0-0
+RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibgssglue0
 
 BUILD64 = 1
 ISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-openssl=$(prefix)sktop += CSWosslrt
+CONFIGURE_ARGS += --with-openssl=$(prefix)sktoWe don't have that framework
+CONFIGURE_ARGS += --disable-smartcardsktop += CSWosslrt
 
 # No test/check target provided by rdesktop
 TEST_SCRIPTS =
