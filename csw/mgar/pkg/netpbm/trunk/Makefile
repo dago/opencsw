@@ -17,8 +17,8 @@ GARCOMPILER = GCC4
 
 EXPANDVARS += config.mk
 
-PATCHFILES += 0005_missing_stdlib.h.patch
-PATCHFILES += 0006-memcpy.patch
+#PATCHFILES += 0005_missing_stdlib.h.patch
+PATCHFILES += 0006-memcpy_stdlib.patch
 PATCHFILES += 0007_stdout_already_used.patch
 
 VENDOR_URL = http://netpbm.sourceforge.net/
