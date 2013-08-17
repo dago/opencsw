@@ -21,30 +21,23 @@ code.
 
 endef
 
-MASTER_SITES = $(PYPI_MIRROR)
+CATEGORIES = python
 DISTFILES  = $(DISTNAME).tar.gz
-arc Solaris10-i386
-GARCOMPILER = SOS12U3
 
 LICENSE = LICENSE.txt
 
-REINPLACE_USRLOCAL = $(libdir)/python/site-packages/pyximport/pyximport.py
+REINPLACE_USRLOCAL = $(libdir)/python/site-packages.*thon/site-packages/pyximport/pyximport.py
 REINPLACE_WHEN_USRLOCAL = postnstall
 
 PACKAGES += CSWcython
-RUNTIME_DEP_PKGS_CSWcython += CSWpython
-RUNTIME_DEP_PKGS_CSWcython += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWcython += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWcython += CSWlibgcc-s1
 
-PYCOMPILE = 1
-STRIP_LIBTOOL = 1
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .PATHS)
-
-CNFIGURE_SCRIPTS= 
-TEST_SCRIPTS = 
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-INSTALL_ARGS += --root=$(DESTDIR)
-INSTALL_ARGS += --CHECKPKG_OVERRIDES_CSWcython += pkgname-does-not-start-with-CSWpy-
+TEST_SCRIPTS =
+STRIP_LIBTOOL = 1--CHECKPKG_OVERRIDES_CSWcython += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcython += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWcython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/pyximport/pyximport.py
+CHECKPKG_OVERRIDES_CSWcython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/pyximport/pyximport.py
 
 include gar/category.mk
-
