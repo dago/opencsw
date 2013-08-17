@@ -268,7 +268,7 @@ class InspectivePackage(package.DirectoryFormatPackage):
         stderr = re.sub(ignored_error_re, "", stderr)
         if stderr:
           with open("/tmp/elfdump_stdout.log", "w") as fd:
-            fd.write(stdout)
+            fd.write(elfdump_output_file.read())
           with open("/tmp/elfdump_stderr.log", "w") as fd:
             fd.write(stderr)
           msg = ("%s returned one or more errors: %s" % (args, stderr) +
