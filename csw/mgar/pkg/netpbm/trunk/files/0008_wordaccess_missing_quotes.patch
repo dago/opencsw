@@ -1,0 +1,15 @@
+--- a/lib/util/wordaccess.h	Sat Aug 17 18:28:17 2013
++++ b/lib/util/wordaccess.h	Sat Aug 17 18:33:46 2013
+@@ -49,10 +49,10 @@
+   #include "wordaccess_generic.h"
+ #elif BYTE_ORDER == BIG_ENDIAN
+   #if UNALIGNED_OK
+-     #include wordaccess_be_unaligned.h
++     #include "wordaccess_be_unaligned.h"
+   #else
+     /* Sparc */
+-    #include wordaccess_be_aligned.h
++    #include "wordaccess_be_aligned.h"
+   #endif
+ #elif HAVE_GCC_BITCOUNT
+   #if (BITS_PER_LONG == 64)
