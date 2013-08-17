@@ -66,7 +66,7 @@ EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/pkginfo
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/VERSION
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/config_template
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/man/.*
-EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/link/.*
+EXTRA_MERGE_EXCLUDE_FILE += $(prefix)/link/.*
 
 EXTRA_PAX_ARGS = -s ",$(prefix)/misc,$(shareds# Needed so the newly built libis picked before the installed one
 EXTRA_LD_OPTIONS += -L$(abspath $(WORKSRC)/lib)
@@ -82,8 +82,6 @@ pre-install-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated:
+	rm -rf $(DESTDIR)$(prefix)/link
 	rm -f $(DESTDIR)$(libdir)/libnetpbm.so
 	gln -s libnetpbm.so.11 $(DESTDIR)$(libdir)/libnetpbm.so
-	# Wherever that comes from, it must go
-	rmdir $(DESTDIR)/link
-	@$(MAKECOOKIE)
