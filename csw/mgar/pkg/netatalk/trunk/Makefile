@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.0.4
+VERSION = 3.0.5
 GARTYPE = v2
 
 DESCRIPTION = Open Source AFP fileserver
@@ -40,10 +40,6 @@ RUNTIME_DEP_PKGS += CSWbdb48
 # Don't know yet why but this dependency is only picked under sparc
 RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
 RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH))
-
-# Patches are in upstream and will be in 3.0.5
-PATCHFILES += 0000-Add-rpath-for-bdb.patch
-PATCHFILES += 0001-Fix-use-of-unnamed-union-inside-struct.patch
 
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
