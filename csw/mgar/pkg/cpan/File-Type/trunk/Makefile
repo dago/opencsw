@@ -4,12 +4,25 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = PMISON
 
-DESCRIPTION = determine file type using magic
+DESCRIPTION = 
 define BLURB
-  File::Type uses magic numbers (typically at the start of a file) to
-  determine the MIME type of that file.
 endef
 
-DISTFILES = $(call admfiles,CSWpmfiletype,depend prototype)
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-file-type
+CATALOGNAME_CSWpm-file-type = pm_file_type
+SPKG_DESC_CSWpm-file-type = Determine file type using magic
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-file-type = 1
+OBSOLETED_BY_CSWpm-file-type += CSWpmfiletype
+CATALOGNAME_CSWpmfiletype = pm_filetype_stub
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
