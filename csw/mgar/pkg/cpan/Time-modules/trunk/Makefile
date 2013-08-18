@@ -1,29 +1,24 @@
 NAME = Time-modules
-VERSION = 2006.0814
+VERSION = 2011.0517
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MUIR
 
-DESCRIPTION = Various time manipulation modules
+DESCRIPTION = Parse and format time values
 define BLURB
 endef
 
 MASTER_SITES = $(addsuffix modules/,$(CPAN_MIRRORS))
-DISTFILES = COPYING
 
-PACKAGES = CSWpmtimemodules CSWpmtimemods
+CATALOG_RELEASE = unstable
 
-CATALOGNAME_CSWpmtimemodules = pm_timemodules
-CATALOGNAME_CSWpmtimemods = pm_timemods
+LICENSE_TEXT = This module is licensed under the unknown license
 
-SPKG_DESC_CSWpmtimemodules = $(DESCRIPTION)
-SPKG_DESC_CSWpmtimemods = Empty stub as contents has been moved to CSWpmtimemodules
-
-ARCHALL = 1
-
-RUNTIME_DEP_PKGS_ONLY_CSWpmtimemods = CSWpmtimemodules
-
-PKGFILES_CSWpmtimemods = NOFILES
+PACKAGES += CSWpm-time-ctime
+CATALOGNAME_CSWpm-time-ctime = pm_time_ctime
+SPKG_DESC_CSWpm-time-ctime = Parse and format time values
+ARCHALL_CSWpm-time-ctime = 1
+OBSOLETED_BY_CSWpm-time-ctime += CSWpmtimemods
+CATALOGNAME_CSWpmtimemods = pm_timemods_stub
 
 include gar/category.mk
-
