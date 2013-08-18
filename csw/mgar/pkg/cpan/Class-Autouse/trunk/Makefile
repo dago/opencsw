@@ -1,31 +1,23 @@
 NAME = Class-Autouse
-VERSION = 1.29
+VERSION = 2.01
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ADAMK
 
-DESCRIPTION = Run-time class loading on first method call
+DESCRIPTION = Run-time load a class the first time you call a method in it
 define BLURB
-  Class::Autouse allows you to specify a class the will only load when a
-  method of that class is called. For large classes that might not be used
-  during the running of a program, such as Date::Manip, this can save you
-  large amounts of memory, and decrease the script load time a great deal.
 endef
 
-PACKAGES = CSWpmclassautouse CSWpmclsautouse
-
-CATALOGNAME_CSWpmclassautouse = pm_classautouse
-CATALOGNAME_CSWpmclsautouse = pm_clsautouse
-
-SPKG_DESC_CSWpmclassautouse = $(DESCRIPTION)
-SPKG_DESC_CSWpmclsautouse = Empty stub as contents has been moved to CSWpmclassautouse
-
-RUNTIME_DEP_PKGS_ONLY_CSWpmclsautouse = CSWpmclassautouse
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-ARCHALL = 1
-
-PKGFILES_CSWpmclsautouse = NOFILES
+PACKAGES += CSWpm-class-autouse
+CATALOGNAME_CSWpm-class-autouse = pm_class_autouse
+SPKG_DESC_CSWpm-class-autouse = Run-time load a class the first time you call a method in it
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-class-autouse = 1
+OBSOLETED_BY_CSWpm-class-autouse += CSWpmclsautouse
+CATALOGNAME_CSWpmclsautouse = pm_clsautouse_stub
 
 include gar/category.mk
