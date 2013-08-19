@@ -1,17 +1,21 @@
 NAME = Data-Dump
-VERSION = 1.08
+VERSION = 1.22
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = GAAS
 
-DESCRIPTION = pretty printing of data structures
+DESCRIPTION = Pretty printing of data structures
 define BLURB
-  This module provides a single function called dump() that takes a list of
-  values as its argument and produces a string as its result. The string
-  contains Perl code that, when evaled, produces a deep copy of the original
-  arguments. The string is formatted for easy reading.
 endef
 
-DISTFILES += $(call admfiles,CSWpmdatadump,depend prototype)
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-data-dump
+CATALOGNAME_CSWpm-data-dump = pm_data_dump
+SPKG_DESC_CSWpm-data-dump = Pretty printing of data structures
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-data-dump = 1
 
 include gar/category.mk
