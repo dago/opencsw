@@ -20,7 +20,7 @@ SPKG_DESC_CSWpm-term-detect = Detect running under terminal (and get terminal em
 # There was no information if this is pure Perl or not. Please remove if necessary.
 ARCHALL_CSWpm-term-detect = 1
 RUNTIME_DEP_PKGS_CSWpm-term-detect += CSWpm-experimental
-RUNTIME_DEP_PKGS_CSWpm-term-detect += CSWpm-sharyanto-utils
+RUNTIME_DEP_PKGS_CSWpm-term-detect += CSWpm-sharyanto-proc-util
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
