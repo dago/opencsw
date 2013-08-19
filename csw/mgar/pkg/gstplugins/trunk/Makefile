@@ -18,12 +18,12 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGING_PLATFORMS = Solaris10-sparc Solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 GARCOMPILER = GCC4 # SOS12U3
 
-BUILD_DEP_PKGS += CSWpkgconfig 
+BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWgstreamer-dev
-BUILD_DEP_PKGS += CSWliboildevel CSWlibglib2-dev 
+BUILD_DEP_PKGS += CSWliboildevel
 BUILD_DEP_PKGS += CSWlibglib2-dev 
 BUILD_DEP_PKGS += CSWgnomevfs2-dev
 BUILD_DEP_PKGS += CSWlibogg-dev
@@ -31,25 +31,17 @@ BUILD_DEP_PKGS += CSWlibgtk2-dev
 BUILD_DEP_PKGS += CSWlibatk-dev
 BUILD_DEP_PKGS += CSWlibgconf-dev
 BUILD_DEP_PKGS += CSWggettextrt
-BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibz-dev
-BUILD_DEP_PKGS += CSWlibogg-dev
 BUILD_DEP_PKGS += CSWlibtheora-dev
-BUILD_DEP_PKGS += CSWlibice
-BUILD_DEP_PKGS += CSWlibx11
-# BUILD_DEP_PKGS += CSWx11videoproto
-BUILD_DEP_PKGS += CSWlibsm
+# BUILD_DEP_PKGS += CSWlibice
+# BUILD_DEP_PKGS += CSWlibsm CSWlibxext
 BUILD_DEP_PKGS += CSWlibvorbis-dev
 BUILD_DEP_PKGS += CSWpangodevel
 BUILD_DEP_PKGS += CSWlibpixman-dev 
-BUILD_DEP_PKGS += CSWfconfig-dev
+# BUILD_DEP_PKGS += CSWfconfig-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
-BUILD_DEP_PKGS += CSWx11xproto
-# BUILD_DEP_PKGS += CSWx11renderproto 
-# BUILD_DEP_PKGS += CSWlibx11devel
-# BUILD_DEP_PKGS += CSWlibxcbdevel
-# BUILD_DEP_PKGS += CSWlibxaudevel
-# BUILD_DEP_PKGS += CSWlibxdmcpdevel
+# BUILD_DEP_PKGS += CSWx11xproto
+# BUILD_DEP_PKGS += CSWlibx11devel CSWlibxcbdevel CSWlibxaudevel CSWlibxdmcpdevel
 
 # PATCHFILES += 0001-Makefile.in.patch
 PATCHFILES += 0002-add-gtk-options.patch
@@ -60,7 +52,6 @@ CATALOGNAME = gstplugins
 SPKG_DESC_CSWgstplugins += $(DESCRIPTION), base
 RUNTIME_DEP_PKGS_CSWgstplugins += CSWlibgstdataprotocol0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgstplugins += CSWlibx11
 RUNTIME_DEP_PKGS_CSWgstplugins += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWgstplugins += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWgstplugins += CSWlibogg0
@@ -94,7 +85,6 @@ RUNTIME_DEP_PKGS_CSWlibgstapp0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstapp0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstapp0-10-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstapp0-10-0 += CSWlibgcc-s1
-
 
 PACKAGES += CSWlibgstaudio0-10-0
 CATALOGNAME_CSWlibgstaudio0-10-0 = libgstaudio0_10_0
@@ -138,7 +128,6 @@ SPKG_DESC_CSWlibgstinterfaces0-10-0 += $(DESCRIPTION), libgstinterfaces-0.10.so.
 RUNTIME_DEP_PKGS_CSWlibgstinterfaces0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstinterfaces0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstinterfaces0-10-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgstinterfaces0-10-0 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgstnetbuffer0-10-0
 CATALOGNAME_CSWlibgstnetbuffer0-10-0 = libgstnetbuffer0_10_0
@@ -158,8 +147,8 @@ SPKG_DESC_CSWlibgstpbutils0-10-0 += $(DESCRIPTION), libgstpbutils-0.10.so.0
 RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibgstreamer0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibglib2-0-0
+# RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibgstvideo0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibgstvideo0-10-0
 RUNTIME_DEP_PKGS_CSWlibgstpbutils0-10-0 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgstriff0-10-0
@@ -190,9 +179,9 @@ PKGFILES_CSWlibgstrtsp0-10-0 += $(call baseisadirs,$(libdir),libgstrtsp-0\.10\.s
 PKGFILES_CSWlibgstrtsp0-10-0 += $(call baseisadirs,$(libdir),libgstrtsp-0\.10\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgstrtsp0-10-0 += $(DESCRIPTION), libgstrtsp-0.10.so.0
 RUNTIME_DEP_PKGS_CSWlibgstrtsp0-10-0 += CSWlibgstreamer0-10-0
-RUNTIME_DEP_PKGS_CSWlibgstrtsp0-10-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstrtsp0-10-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgstrtsp0-10-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgstrtsp0-10-0 += CSWlibgobject2-0-0
 
 PACKAGES += CSWlibgstsdp0-10-0
 CATALOGNAME_CSWlibgstsdp0-10-0 = libgstsdp0_10_0
@@ -244,6 +233,7 @@ RUNTIME_DEP_PKGS_CSWgstplugins-dev += CSWlibgstvideo0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-dev += CSWlibgstrtsp0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-dev += CSWlibgstapp0-10-0
 RUNTIME_DEP_PKGS_CSWgstplugins-dev += CSWlibgstaudio0-10-0
+RUNTIME_DEP_PKGS_CSWlibgstinterfaces0-10-0 += CSWlibgcc-s1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-silent-rules
@@ -254,12 +244,12 @@ CONFIGURE_ARGS += --disable-cdparanoia
 CONFIGURE_ARGS += --disable-gst_v4l
 CONFIGURE_ARGS += --disable-libvisual
 # CONFIGURE_ARGS += --disable-pango
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
+# CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+# CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
 
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
+# EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+# EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+# EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 EXTRA_CONFIGURE_ENV    = PATH=$(PATH):/opt/csw/gcc4/bin
 EXTRA_BUILD_ENV    = PATH=$(PATH):/opt/csw/gcc4/bin
 EXTRA_INSTALL_ENV    = PATH=$(PATH):/opt/csw/gcc4/bin
