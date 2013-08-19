@@ -4,13 +4,18 @@ CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = FERREIRA
 
-DESCRIPTION = Retrieve terminal size
+DESCRIPTION = Retrieve terminal size (Unix version)
 define BLURB
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmtermsize
-CATALOGNAME = pm_termsize
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-term-size
+CATALOGNAME_CSWpm-term-size = pm_term_size
+SPKG_DESC_CSWpm-term-size = Retrieve terminal size (Unix version)
+OBSOLETED_BY_CSWpm-term-size += CSWpmtermsize
+CATALOGNAME_CSWpmtermsize = pm_termsize_stub
 
 include gar/category.mk
