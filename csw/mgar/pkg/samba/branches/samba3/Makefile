@@ -290,6 +290,8 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsasamba-nssCRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CRUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtevent0
+# Needed for smb.conf
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWsamba
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
 CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
