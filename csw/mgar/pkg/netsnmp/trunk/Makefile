@@ -102,7 +102,7 @@ SPKG_DESC_CSWpy-netsnmp += $(DESCRIPTION), Python binding
 PKGFILES_CSWpy-netsnmp = $(libdir)/python.*
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpy-netsnmp ++= CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpy-netsnmp +CHECKPKG_OVERRIDES_CSWpy-netsnmp += surplus-dependency|CSWpython++= CSWlibssl1-0-0
 
 PACKAGES += CSWnetsnmp
 SPKG_DESC_CSWnetsnmp += $(DESCRIPTION), Base
@@ -123,7 +123,7 @@ CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/lshare/man/man5/snmp
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/localtraptoemail
 # w/bin/traptoemail
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/c# w/bin/traptoemail
-CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/snmp/mib2c-data/mfd-makefile.m2m
+CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/local|root/opt/csw/share/snmp/mib2c-data# /mfd-makefile.m2m
 CHECKPKG_OVERRIDES_CSWnetsnmp += file-with-bad-content|/usr/share|root/opt/csw/bin/net-snmp-cert
 
 # BUILD64 = 1
