@@ -1,0 +1,43 @@
+From d96a1551d777bb117dc2641f5a91c8b13aec7b88 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 22 Aug 2013 10:00:49 +0200
+Subject: [PATCH 2/2] workaround ksh stop alias problem
+
+---
+ dist/snmpd-init.d     | 4 ++++
+ dist/snmptrapd-init.d | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/dist/snmpd-init.d b/dist/snmpd-init.d
+index 9e25f6c..08d9ec9 100755
+--- a/dist/snmpd-init.d
++++ b/dist/snmpd-init.d
+@@ -5,6 +5,10 @@
+ #
+ # chkconfig: - 26 74
+ # description: snmpd is net-snmp SNMP daemon.
++alias stop > /dev/null 2>&1
++if [ $? -eq 0 ]; then
++  unalias stop
++fi
+ 
+ RETVAL=0
+ prog="/opt/csw/sbin/snmpd"
+diff --git a/dist/snmptrapd-init.d b/dist/snmptrapd-init.d
+index 160ce5b..e45600d 100644
+--- a/dist/snmptrapd-init.d
++++ b/dist/snmptrapd-init.d
+@@ -5,6 +5,10 @@
+ #
+ # chkconfig: - 25 75
+ # description: snmptrapd is net-snmp SNMPTRAP daemon.
++alias stop > /dev/null 2>&1
++if [ $? -eq 0 ]; then
++  unalias stop
++fi
+ 
+ RETVAL=0
+ prog="/opt/csw/sbin/snmptrapd"
+-- 
+1.8.3.4
+
