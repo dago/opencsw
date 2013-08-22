@@ -1,4 +1,6 @@
-634d72f4ffbb2de57efa468add572d38  GeoIP.dat.gz
-42a24002066543943220721adf304ee1  GeoIPv6.dat.gz
-645e2b1f351bc7740786670708ef90d5  GeoLiteCity.dat.xz
-4beb1bf51a56bd0775684e8fb6f446f2  GeoLiteCityv6.dat.gz
+f3eee10daa10fe5a4ca204daf8aff689  GeoIP.dat.gz
+7787b1b75626cef57680c809cd9ca059  GeoIPASNum.dat.gz
+55af75660db5db2f94effcbdc1b7fed9  GeoIPASNumv6.dat.gz
+e02d3809e312cf0a0628015c9a0190fa  GeoIPv6.dat.gz
+a273ba6bef3e3e60cb3f1a71378fdb3e  GeoLiteCity.dat.xz
+c5dd0ae06fd3d9fa9d2b09fa6d963497  GeoLiteCityv6.dat.gz
