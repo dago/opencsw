@@ -1,6 +1,6 @@
 # $Id$
 NAME = alternatives
-VERSION = 1.0
+VERSION = 1.2
 
 DESCRIPTION = Alternatives implementation specific to OpenCSW
 define BLURB
