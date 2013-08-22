@@ -38,8 +38,8 @@ build-man:
 	@$(MAKECOOKIE)
 
 install-custom:
-	ginstall -d $(DESTDIR)$(bindir)
-	ginstall $(WORKDIR)/alternatives $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(sbindir)
+	ginstall $(WORKDIR)/alternatives $(DESTDIR)$(sbindir)
 	ginstall -d $(DESTDIR)$(mandir)/man8
 	ginstall $(WORKDIR)/alternatives.8 $(DESTDIR)$(mandir)/man8
 	ginstall -d $(DESTDIR)/etc/opt/csw/alternatives
