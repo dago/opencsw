@@ -29,6 +29,7 @@ BUILD_SCRIPTS = man
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS = 
 
+CHECKPKG_OVERRIDES_CSWalternatives	+=	bad-location-of-file
 ARCHALL	=	1
 
 include gar/category.mk
