@@ -3,7 +3,8 @@
 # ksh high-level implentation of linux style "alternatives".
 # Adjusted for OpenCSW needs
 # Author: Philip Brown, phil@bolthole.com, 2010-2011
-# 
+# $Id$
+Revision="$(echo '$Revision$' | sed -e 's/^[$]Revision: //' -e 's/ [$]$//')"
 
 PRIORITIESDIR=/opt/csw/share/alternatives 
 MANUALDIR=/etc/opt/csw/alternatives  #manual override location
@@ -460,6 +461,12 @@ case $1 in
 		;;
 	--relink-missing)
 		relink_missing
+		;;
+	--help)
+		usage
+		;;
+	--version)
+		print ${Revision}
 		;;
 	*)
 		print -- $1 is not a recognized command.
