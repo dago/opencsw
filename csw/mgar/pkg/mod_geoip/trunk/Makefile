@@ -29,6 +29,7 @@ CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
 
 BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWapache2-dev
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
+RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
 PKGFILES_CSWap2modgeoip2 += $(AP2_ROOT)/libexec/mod_geoip2.so
 
 LICENSE_TEXT = Apache
