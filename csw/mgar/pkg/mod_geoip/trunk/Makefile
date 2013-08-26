@@ -13,7 +13,7 @@ PACKAGES = CSWap2modgeoip2mind.com/app/c
 endef
 
 MASTER_SITES = http://www.maxmind.com/download/geoip/api/mod_gmod_geoip2-latest.tar.gz
-#WORKSRC = $(WORKDIR)/$(DISTNAME)-src/native
+WORKSRC = $(WORKDIR)/mod_geoip2_$(VERSION)
 #PATCHDIR = $(WORKDIR)/$(DISTNAME)-src
 
 # Apache paths
@@ -29,11 +29,24 @@ CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
 
 BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWapache2-dev
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
+PKGFILES_CSWap2modgeoip2 += $(AP2_ROOT)/libexec/mod_geoip2.so
 
 LICENSE_TEXT = Apache
 
 # No test suite available
 TEST_SCRIPTS =
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS = custom
+INSTALL_SCRIPTS = custom
 
 include gar/category.mk
+
+build-custom:
+	$(AP2_APXS) -c $(WORKSRC)/mod_geoip.c
+	@$(MAKECOOKIE)
+
+install-custom:
+	@ginstall -d -m 755 $(DESTDIR)$(AP2_ROOT)/libexec
+	@ginstall -m 755 $(WORKSRC)/mod_geoip.o $(DESTDIR)$(AP2_ROOT)/libexec/mod_geoip2.so
+	@$(MAKECOOKIE)
 
