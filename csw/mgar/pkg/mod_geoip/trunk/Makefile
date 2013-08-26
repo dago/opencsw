@@ -28,8 +28,10 @@ CONFIGURE_ARGS += --libexecdir=$(AP2_ROOT)/libexec
 CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
 
 BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWapache2-dev
+BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWgeoip-dev
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
+RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWlibgeoip1
 PKGFILES_CSWap2modgeoip2 += $(AP2_ROOT)/libexec/mod_geoip2.so
 
 # This dependency should be in place.
@@ -46,7 +48,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 build-custom:
-	$(AP2_APXS) -c $(WORKSRC)/mod_geoip.c
+	$(AP2_APXS) -L$(prefix)/lib -lGeoIP -c $(WORKSRC)/mod_geoip.c
 	@$(MAKECOOKIE)
 
 install-custom:
