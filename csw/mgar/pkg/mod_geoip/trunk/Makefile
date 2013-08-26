@@ -32,6 +32,9 @@ RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
 PKGFILES_CSWap2modgeoip2 += $(AP2_ROOT)/libexec/mod_geoip2.so
 
+# This dependency should be in place.
+CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWgeolitedb
+
 LICENSE_TEXT = Apache
 
 # No test suite available
