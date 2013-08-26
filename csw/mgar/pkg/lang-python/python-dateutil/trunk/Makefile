@@ -25,7 +25,8 @@ TEST_SCRIPTS = dateutil
 LICENSE = LICENSE
 ARCHALL = 1
 
-CHECKPKG_OVERRIDES_CSWpy-dateutil += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/dateutil/tz.py
+CHECKPKG_OVERRIDES_CSWpy-dateutil += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/dateutil/tz.py
+CHECKPKG_OVERRIDES_CSWpy-dateutil += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/dateutil/tz.py
 
 include gar/category.mk
 
