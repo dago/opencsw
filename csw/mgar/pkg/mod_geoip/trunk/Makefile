@@ -36,6 +36,7 @@ PKGFILES_CSWap2modgeoip2 += $(AP2_ROOT)/libexec/mod_geoip2.so
 
 # This dependency should be in place.
 CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWgeolitedb
+CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWlibgeoip1
 
 LICENSE_TEXT = Apache
 
