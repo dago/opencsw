@@ -30,13 +30,13 @@ CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
 BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWapache2-dev
 BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWgeoip-dev
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
-RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
-RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWlibgeoip1
+#RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
+#RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWlibgeoip1
 PKGFILES_CSWap2modgeoip2 += $(AP2_ROOT)/libexec/mod_geoip2.so
 
 # This dependency should be in place.
-CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWgeolitedb
-CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWlibgeoip1
+#CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWgeolitedb
+#CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWlibgeoip1
 
 LICENSE_TEXT = Apache
 
