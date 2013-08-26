@@ -1,44 +1,39 @@
-NAME = ap2_modgeoip
-SPKG_NAME = mod_geoip
-VERSION = 1.2.5
-GARTYPE = v1
-CATEGORIES = server
+NAME = mod_geoip2
+VERSION = 1.2.8
+GARTYPE = v2
 
-DESCRIPTION = Apache 2.x GeoIP module
+DESCRIPTION = GeoIP Apache module
 define BLURB
-  mod_geoip2 is an Apache 2.x module for finding the country and city
-  that a web request originated from.  It uses the GeoIP library and
-  database to perform the lookup.  It is free software, licensed under
-  the Apache license.  It requires the C API, version 1.4.3 and above, see:
-  http://www.maxmind.com/app/c
+  The mod_geoip2 module embeds GeoIP database lookups into the Apache web server.
+  It is only capable of looking up the IP of a client that connects to the web server,
+  as opposed to looking up arbitrary addresses.
 endef
 
-MASTER_SITES = http://www.maxmind.com/download/geoip/api/mod_geoip2/
-DISTFILES  = $(SPKG_NAME)2_$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWap2modgeoip,depend postinstall preremove)
+PACKAGES = CSWap2modgeoip2mind.com/app/c
+endef
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(SPKG_NAME)2-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://www.maxmind.com/download/geoip/api/mod_gmod_geoip2-latest.tar.gz
+#WORKSRC = $(WORKDIR)/$(DISTNAME)-src/native
+#PATCHDIR = $(WORKDIR)/$(DISTNAME)-src
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = custom
-INSTALL_SCRIPTS = custom
+# Apache paths
+AP2_ROOT      = $(prefix)/apache2
+AP2_LIBEXEC   = $(DESTDIR)$(AP2_ROOT)/libexec
+AP2_APXS      = $(AP2_ROOT)/sbin/apxs
+AP2_MODS = 1
+AP2_MODFILES += mod_geoip2.so
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --libexecdir=$(AP2_ROOT)/libexec
+CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
+
+BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWapache2-dev
+RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
+
+LICENSE_TEXT = Apache
+
+# No test suite available
 TEST_SCRIPTS =
 
 include gar/category.mk
-include ../apache2/files/extensionbuild.mk
 
-WORKSRC := $(WORKDIR)/$(SPKG_NAME)2_$(VERSION)
-SPKG_SOURCEURL = http://www.maxmind.com/app/mod_geoip/
-
-build-custom:
-	@( cd $(WORKSRC) ; $(APXS2_BUILD) -L$(libdir) -Wl,"-R $(libdir)" -lGeoIP $(SPKG_NAME).c )
-	@$(MAKECOOKIE)
-
-install-custom:
-	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
-	@( cd $(WORKSRC) ; \
-		$(APXS2_INSTALL) $(SPKG_NAME).la ; \
-		cp Changes README* INSTALL $(DESTDIR)$(docdir)/$(NAME) )
-	@cp $(FILEDIR)/CSWap2modgeoip.copyright $(DESTDIR)$(docdir)/$(NAME)/copyright
-	@$(MAKECOOKIE)
