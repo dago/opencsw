@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.28.1
+VERSION = 7.32.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -33,7 +33,9 @@ PKGFILES_CSWlibcurl4 = $(call pkgfiles_lib,libcurl.so.4)
 OBSOLETED_BY_CSWlibcurl4 = CSWcurlrt
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWlibcurl# We want the certs needed for ssl
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWcacertificates
+CHECKPKG_OVERRIDES_CSWlibcurl4 += surplus-dependency|CSWcacertificatesl4 += CSWlibidn11
 
 PACKAGES += CSWlibcurl4-feature
 CATALOGNAME_CSWlibcurl4-feature = libcurl4_feature
@@ -95,13 +97,14 @@ EXTRA_LDFLAGS = -L$(libdir)/libnet-new
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
-#CONFIGURE_ARGS += --with-ssl=/opt/csw/ssl
-CONFIGURE_ARGS += --with-ca-path=/opt/csw/ssl/certs
+#CONFIGURE_ARGS += --with-
+# Update cert path as reported in #5104
+CONFIGURE_ARGS += --with-ca-path=/etc= --with-ca-path=/opt/csw/ssl/certs
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_features-$(FEATURES))
 
 BUILD64 = 1
 
-# There are some failing tests, ignore for now
+# There are some failing tests# , ignore for now
 SKIPTEST ?= 1
 
 # We do special 32/64 merging for this one, see post-merge
