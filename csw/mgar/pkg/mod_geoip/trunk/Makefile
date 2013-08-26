@@ -32,7 +32,7 @@ BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWgeoip-dev
 #RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
 #RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
 #RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWlibgeoip1
-PKGFILES_CSWap2modgeoip2 += $(AP2_LIBEXEC)/mod_geoip2.so
+PKGFILES_CSWap2modgeoip2 += $(AP2_LIBEXEC)/mod_geoip.so
 
 # This dependency should be in place.
 #CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWgeolitedb
