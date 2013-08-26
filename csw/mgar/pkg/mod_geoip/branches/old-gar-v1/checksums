@@ -1,0 +1,5 @@
+5d35c9a9cbf47c2cb636bed26cd5fa19  download/mod_geoip2_1.2.5.tar.gz
+3c890c2b8db8b7366fc36eddfaaaefb8  download/CSWap2modgeoip.gspec
+3794fa588d42ec4ba824a145666a813e  download/CSWap2modgeoip.depend
+a4bc5e76c41a6e2e468b45b3d938bac8  download/CSWap2modgeoip.postinstall
+8dc70925d3bd5e484cd453d9b8401f03  download/CSWap2modgeoip.preremove
