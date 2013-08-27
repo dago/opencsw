@@ -21,9 +21,11 @@ MASTER_SITES	=	http://www.dnspython.org/kits/$(VERSION)/
 DISTFILES 		=	$(DISTNAME).tar.gz
 PATCHFILES		+=	0001-consistent-use-of-tabs-and-spaces-in-indentation.patch
 SPKG_SOURCEURL	=	$(MASTER_SITES)
-BUILD_DEP_PKGS	=	CSWpysetuptools
+BUILD_DEP_PKGS	=	CSWpy-setuptools
 
 TEST_SCRIPTS	=	nominal
+
+ARCHALL	=	1
 
 include gar/category.mk
 
