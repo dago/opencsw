@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = virtualenv
-VERSION = 1.8.2
+VERSION = 1.10.1
 PACKAGES = CSWpy-virtualenv
 CATALOGNAME_CSWpy-virtualenv = py_virtualenv
 CATEGORIES = python
@@ -11,6 +11,7 @@ GARTYPE = v2
 SPKG_DESC_CSWpy-virtualenv = Virtual Python Environment builder
 ARCHALL_CSWpy-virtualenv = 1
 define BLURB
+A tool to create isolated Python environments.
 endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/virtualenv
 MASTER_SITES = http://pypi.python.org/packages/source/v/virtualenv/
