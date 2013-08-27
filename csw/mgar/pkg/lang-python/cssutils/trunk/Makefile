@@ -24,10 +24,7 @@ TEST_SCRIPTS	=	non-stop
 
 ARCHALL	=	1
 
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
-
-EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/python/site-packages/tests.*
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/python.*/site-packages/tests.*
 
 include gar/category.mk
 
