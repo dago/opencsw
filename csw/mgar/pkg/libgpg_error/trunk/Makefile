@@ -1,5 +1,5 @@
 NAME = libgpg-error
-VERSION = 1.10
+VERSION = 1.12
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -41,4 +41,4 @@ RUNTIME_DEP_PKGS = CSWggettextrt
 
 BUILD64_LIBS_ONLY = 1
 
-include gar/category.mk
+include
