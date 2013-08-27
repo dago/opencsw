@@ -23,15 +23,18 @@ BUILD_DEP_PKGS	+=	CSWpython27-dev
 
 PACKAGES = CSWpy-pil
 SPKG_DESC_CSWpy-pil = Python Imaging Library
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibgcc-s1
+
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWliblcms1
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWtcl
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpy-pil += CSWtk
-
 CHECKPKG_OVERRIDES_CSWpy-pil += surplus-dependency|CSWtcl
 CHECKPKG_OVERRIDES_CSWpy-pil += surplus-dependency|CSWtk
 
