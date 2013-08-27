@@ -1,0 +1,17 @@
+--- a/pth.h.in
++++ b/pth.h.in
+@@ -89,7 +89,13 @@ struct timespec;
+ 
+     /* check if the user requests a bigger FD_SETSIZE than we can handle */
+ #if defined(FD_SETSIZE)
+-#if FD_SETSIZE > @PTH_FDSETSIZE@
++#ifdef _LP64
++#if FD_SETSIZE > 65536
++#error "FD_SETSIZE is larger than what GNU Pth can handle."
++#endif
++#else /* ! _LP64 */
++#if FD_SETSIZE > 1024
+ #error "FD_SETSIZE is larger than what GNU Pth can handle."
++#endif
+ #endif
+ #endif
