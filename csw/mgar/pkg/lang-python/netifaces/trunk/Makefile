@@ -19,6 +19,7 @@ BUILD_DEP_PKGS	=	CSWpy-setuptools
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 
+RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
 
