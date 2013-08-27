@@ -1,5 +1,5 @@
 NAME = pkgutil
-VERSION = 2.6.5
+VERSION = 2.6.6b1
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -71,10 +71,15 @@ CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWcswpkgloghooks
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWgnupg
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpmstringapprox
-CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpkgutil
-
-# This is slightly suspicious, may take a look later
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWDago's script
 CHECKPKG_OVERRIDES_CSWpkgutilplus += file-with-bad-content|/export/home|root/opt/csw/bin/cswcatalog
+
+# There's actually a Python script in this package
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpython
+
+# These are just included binaries used as last resort
+CHECKPKG_OVERRIDES_CSWpkgutil += no-direct-binding|/opt/csw/libexec/pkgutil/wget-i386|is|not|directly|bound|to|soname|libmd5.so.1
+CHECKPKG_OVERRIDES_CSWpkgutil += no-direct-binding|/opt/csw/libexec/pkgutil/wget-sparc|is|not|directly|bound|to|soname|libmd5.so.1/csw/bin/cswcatalog
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
@@ -123,5 +128,4 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/var/$(NAME)
 	@ginstall -m 644 $(WORKSRC)/admin $(DESTDIR)/opt/csw/var/$(NAME)/admin.CSW
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/packages
-	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/pkgask
-	@$(MAKECOOKIE)
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/pkga
