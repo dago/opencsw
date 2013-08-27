@@ -1,0 +1,8 @@
+--- a/tests/gpg/start-stop-agent	lun. août 12 11:29:38 2013
++++ b/tests/gpg/start-stop-agent	mar. août 27 11:15:20 2013
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/ksh
+ # Copyright (C) 2013 g10 Code GmbH
+ #
+ # This file is free software; as a special exception the author gives

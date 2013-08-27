@@ -1,5 +1,5 @@
 NAME = gpgme
-VERSION = 1.1.8
+VERSION = 1.4.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -13,18 +13,26 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gpgme/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgpgme,)
+DISTFILES  = $(NAME)-$mfiles,CSWgpgme,)
 
-SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-GPGME
+SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.eGARCOMPILER = GCC4
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
+PATCHFILES += 0001_need_posix_shell.patch
+
+BUILD_DEP_PKGS += CSWlibgpg-error-dev
+BUILD_DEP_PKGS += CSWlibpth-dev
+BUILD_DEP_PKGS += CSWgnupg2
 
 RUNTIME_DEP_PKGS = CSWgpgerr CSWpth
 
 BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-gpg-version=2
+CONFIGURE_ARGS += --with-gpgsm-version=2
+CONFIGURE_ARGS += --with-gpgconf-version=2
+CONFIGURE_ARGS += --with-gpgconf=$(prefix)/bin
+CONFIGURE_ARGS += --with-gpg=$(prefix)/bin
+CONFIGURE_ARGS += --with-gpgsm=$(prefix)/bin
 
 include gar/category.mk
