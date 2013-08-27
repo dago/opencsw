@@ -15,12 +15,12 @@ endef
 MASTER_SITES	=	http://alastairs-place.net/projects/netifaces/
 DISTFILES 		=	$(DISTNAME).tar.gz
 
-BUILD_DEP_PKGS	=	CSWpysetuptools
+BUILD_DEP_PKGS	=	CSWpy-setuptools
 
 CONFIGURE_ARGS	=	$(DIRPATHS)
 
 RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
-CHECKPKG_OVERRIDES_CSWpy-netifaces += surplus-dependency|CSWpython
+RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
 
 include gar/category.mk
 
