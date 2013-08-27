@@ -30,9 +30,4 @@ SPKG_DESC_CSWlibpth-dev = Development files for libpth.so.20
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibpth-dev = CSWlibpth20
 
-BUILD6CONFIGURE_ARGS = $(DIRPATHS)D64_LIBS_ONLY = 1
-
-# This is an example of 'configure'
-CHECKPKG_OVERRIDES_CSWlibpth-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/pth.3
-
-include
+BUILD6CONFIGURE_ARGS = $(DIRPATHS)D6include gar/category.mk
