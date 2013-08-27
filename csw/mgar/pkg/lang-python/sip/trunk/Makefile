@@ -34,8 +34,6 @@ TEST_SCRIPTS	=
 
 INSTALL_SCRIPTS	=	custom
 
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
 
 include gar/category.mk
