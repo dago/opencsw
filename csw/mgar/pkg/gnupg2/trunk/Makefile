@@ -3,7 +3,7 @@
 # $Id$
 
 NAME    = gnupg
-VERSION = 2.0.18
+VERSION = 2.0.21
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -29,7 +29,8 @@ BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWlibassuan-dev
 BUILD_DEP_PKGS += CSWlibksba-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
-BUILD_DEP_PKGS += CSWoldapdevel
+BUILpenldap-dev
+BUILD_DEP_PKGS += CSWlibpth-devS += CSWoldapdevel
 
 PACKAGES += CSWgnupg2
 SPKG_DESC_CSWgnupg2 = GnuPG is a complete and free replacement for PGP
@@ -73,13 +74,8 @@ RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpinentry
 CHECKPKG_OVERRIDES_CSWgnupg-agent += surplus-dependency|CSWpinentry
 
 # Documentation overrides
-CHECKPKG_OVERRIDES_CSWgnupg-agent += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg-agent.1
-
-NOISALIST = 1
-
-# Unfortunately GNU PTH does not handle 64 bit sanely:
-#   "/opt/csw/include/pth.h", line 93: #error: "FD_SETSIZE is larger than what GNU Pth can handle."
-#BUILD64_LIBS_ONLY = 1
+CHECKPKG_OVERRIDES_CSWgnupg-agent += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg-agent.BUILD64 = 1
+ISAEXEC#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl=$(prefix)
@@ -94,4 +90,4 @@ PROTOTYPE_MODIFIERS = suid
 PROTOTYPE_FILES_suid = .*/gpg2
 PROTOTYPE_PERMS_suid = 4755
 
-include gar/category.mk
+includ
