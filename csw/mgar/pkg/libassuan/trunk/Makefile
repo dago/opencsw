@@ -12,7 +12,11 @@ DISTFILES  = $(DISTNAME).tar.bz2
 
 VENDOR_URL = http://www.gnupg.org/download/#libassuan
 
-BUILD_DEP_-erroGS += CSWlibgpgerr-dev
+BUILD_DEP_-erroGS += C# Related to:
+# https://bugs.g10code.com/gnupg/msg4081
+# http://bugs.g10code.com/gnupg/issue1477
+# http://bugs.g10code.com/gnupg/issue1350
+PATCHFILES += 0001-Fix-usage-of-variadic-arguments.patch CSWlibgpgerr-dev
 
 PACKAGES += CSWlibassuan0
 SPKG_DESC_CSWlibassuan0 = IPC library used by some GnuPG related software, libassuan.so.0
@@ -25,10 +29,4 @@ SPKG_DESC_CSWlibassuan-dev = Development files for libassuan.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibassuan-dev += CSWlibassuan0
 
-BUILD64_LIBS_ONLY = 1
-
-# Disable tests until this is fixed:
-#   https://bugs.g10code.com/gnupg/msg4081
-SKIPTEST ?= 1
-
-include
+BUILD6include gar/category.mk
