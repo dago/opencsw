@@ -1,0 +1,65 @@
+From 0fff25442b1661069e4e995864d7b32924305ac6 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 28 Aug 2013 12:22:08 +0200
+Subject: [PATCH] Fix usage of variadic arguments
+
+---
+ src/vasprintf.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/src/vasprintf.c b/src/vasprintf.c
+index bacb71c..fffeb71 100644
+--- a/src/vasprintf.c
++++ b/src/vasprintf.c
+@@ -43,13 +43,13 @@ Boston, MA 02111-1307, USA.  */
+ int global_total_width;
+ #endif
+ 
+-static int int_vasprintf (char **, const char *, va_list *);
++static int int_vasprintf (char **, const char *, va_list);
+ 
+ static int
+ int_vasprintf (result, format, args)
+      char **result;
+      const char *format;
+-     va_list *args;
++     va_list args;
+ {
+ #if defined(HAVE_W32CE_SYSTEM) && defined(_MSC_VER)
+   /* No va_copy and the replacement above doesn't work.  */
+@@ -70,7 +70,7 @@ int_vasprintf (result, format, args)
+   int total_width = strlen (format) + 1;
+   va_list ap;
+ 
+-  va_copy (ap, *args);
++  va_copy (ap, args);
+ 
+   while (*p != '\0')
+     {
+@@ -138,12 +138,13 @@ int_vasprintf (result, format, args)
+ 	  p++;
+ 	}
+     }
++  va_end(ap);
+ #ifdef TEST
+   global_total_width = total_width;
+ #endif
+   *result = malloc (total_width);
+   if (*result != NULL)
+-    return vsprintf (*result, format, *args);
++    return vsprintf (*result, format, args);
+   else
+     return 0;
+ #endif
+@@ -154,7 +155,7 @@ int_vasprintf (result, format, args)
+ int
+ _assuan_vasprintf (char **result, const char *format, va_list args)
+ {
+-  return int_vasprintf (result, format, &args);
++  return int_vasprintf (result, format, args);
+ }
+ 
+ 
+-- 
+1.8.3.4
+
