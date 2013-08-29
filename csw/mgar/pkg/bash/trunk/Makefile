@@ -98,4 +98,3 @@ post-merge:
 	done )
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
 	( cd "$(PKGROOT)/$(bindir)" && rm -f rbash && ln -sf bash rbash )
-	rm -f $(PKGROOT)/$(infodir)/bash.info
