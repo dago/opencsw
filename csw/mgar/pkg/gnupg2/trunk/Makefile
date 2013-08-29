@@ -64,10 +64,7 @@ RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibassuan0
 # Pinentry is not because of shared libraries.
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpinentry
-CHECKPKG_OVERRIDES_CSWgnupg-agent += surplus-dependency|CSWpinentry
-
-# Documentation overrides
-CHECKPKG_OVERRIDES_CSWgnupg-agent += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg-agent.BUILD64 = 1
+CHECKPKG_OVERRIDES_CSWgnupg-agent += surplus-dependman1/gpg-agent.BUILD64 = 1
 ISAEXEC#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
