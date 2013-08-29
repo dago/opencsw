@@ -1,0 +1,45 @@
+From 4585ceaf27b3cc33d7ac198e1f2783f66e9023fa Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 29 Aug 2013 11:18:14 +0200
+Subject: [PATCH] add timer macros
+
+not defined for Solaris but existing in Linux
+---
+ src/qtcurve/config.h | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/src/qtcurve/config.h b/src/qtcurve/config.h
+index 19ce0bf..aa34f0c 100644
+--- a/src/qtcurve/config.h
++++ b/src/qtcurve/config.h
+@@ -9,4 +9,26 @@
+ #undef QTC_STYLE_SUPPORT
+ /* #undef QTC_KWIN_MAX_BUTTON_HACK */
+ 
+-
++#if !defined(timeradd)
++#define timeradd(a, b, result)                                                \
++  do {                                                                        \
++    (result)->tv_sec = (a)->tv_sec + (b)->tv_sec;                             \
++    (result)->tv_usec = (a)->tv_usec + (b)->tv_usec;                          \
++    if ((result)->tv_usec >= 1000000)                                         \
++      {                                                                       \
++        ++(result)->tv_sec;                                                   \
++        (result)->tv_usec -= 1000000;                                         \
++      }                                                                       \
++  } while (0)
++#endif /* : !defined(timeradd) */
++#if !defined(timersub)
++#define timersub(a, b, result)                                                \
++  do {                                                                        \
++    (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;                             \
++    (result)->tv_usec = (a)->tv_usec - (b)->tv_usec;                          \
++    if ((result)->tv_usec < 0) {                                              \
++      --(result)->tv_sec;                                                     \
++      (result)->tv_usec += 1000000;                                           \
++    }                                                                         \
++  } while (0)
++#endif /* : !defined(timersub) */
+-- 
+1.8.3.4
+
