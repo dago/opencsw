@@ -1,3 +1,9 @@
+bash (4.2.45,REV=2013.08.29) unstable
+
+  * Added the bash.info file in the package (Closes: #5103).
+
+ -- Yann Rouillard <yann@opencsw.org>  Thu, 29 Aug 2013 22:14:48 +0200
+
 bash (4.2.45,REV=2013.07.10) unstable
 
   * Added bash patches bash42-038 and bash42-045.
