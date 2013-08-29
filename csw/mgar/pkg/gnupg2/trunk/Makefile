@@ -45,16 +45,9 @@ RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibpth20
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibassuan0
-RUNTIME_DEP_PKGS_CSWgnupg2 += CSWoldaprt
-
-# Documentation overrides
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/share|root/opt/csw/share/gnupg/help.txt
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpgconf.1
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/share|root/opt/csw/share/info/gnupg.info-1
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnupg.info-1
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnupg.info-2
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/gpgsm.1
-CHECKPKG_OVERRIDES_CSWgnupg2 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpgsm.1
+RUNTIME_DEP_PKGlibadns1
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibldap2-4-2e/man/man1/gpgsm.1
 
 PACKAGES += CSWgnupg-agent
 SPKG_DESC_CSWgnupg-agent = GNU privacy guard - password agent
