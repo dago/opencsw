@@ -21,9 +21,42 @@ PATCHFILES += 0001_need_posix_shell.patch
 
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWlibpth-dev
+BUILD_DEP_PKGS += CSWlibassuan-dev
+BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWgnupg2
 
-RUNTIME_DEP_PKGS = CSWgpgerr CSWpth
+PACKAGES += CSWgpgme
+CATALOGNAME_CSWgpgme = gpgme
+SPKG_DESC_CSWgpgme += $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWgpgme += CSWlibgpgme-pthread11
+RUNTIME_DEP_PKGS_CSWgpgme += CSWlibgpgme11
+CHECKPKG_OVERRIDES_CSWgpgme += surplus-dependency|CSWlibgpgme-pthread11
+CHECKPKG_OVERRIDES_CSWgpgme += surplus-dependency|CSWlibgpgme11
+
+PACKAGES += CSWlibgpgme-pthread11
+CATALOGNAME_CSWlibgpgme-pthread11 = libgpgme_pthread11
+PKGFILES_CSWlibgpgme-pthread11 += $(call baseisadirs,$(libdir),libgpgme-pthread\.so\.11\.11\.0)
+PKGFILES_CSWlibgpgme-pthread11 += $(call baseisadirs,$(libdir),libgpgme-pthread\.so\.11(\.\d+)*)
+SPKG_DESC_CSWlibgpgme-pthread11 += $(DESCRIPTION), libgpgme-pthread.so.11
+RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibassuan0
+RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgcc-s1
+
+PACKAGES += CSWlibgpgme11
+CATALOGNAME_CSWlibgpgme11 = libgpgme11
+PKGFILES_CSWlibgpgme11 += $(call baseisadirs,$(libdir),libgpgme\.so\.11\.11\.0)
+PKGFILES_CSWlibgpgme11 += $(call baseisadirs,$(libdir),libgpgme\.so\.11(\.\d+)*)
+SPKG_DESC_CSWlibgpgme11 += $(DESCRIPTION), libgpgme.so.11
+RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibassuan0
+RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgcc-s1
+
+PACKAGES += CSWgpgme-dev
+CATALOGNAME_CSWgpgme-dev = gpgme_dev
+SPKG_DESC_CSWgpgme-dev += $(DESCRIPTION), development files
+PKGFILES_CSWgpgme-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme11
+RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme-pthread11
 
 BUILD64_LIBS_ONLY = 1
 
