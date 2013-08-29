@@ -1,5 +1,5 @@
 NAME = gnupg
-VERSION = 1.4.12
+VERSION = 1.4.14
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -46,6 +46,7 @@ PROTOTYPE_PERMS_suid = 4755
 
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.ru.1
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.1
-CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnupg1.info
+CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/BUILD64 = 1
+ISAEXEC = 1
 
 include gar/category.mk
