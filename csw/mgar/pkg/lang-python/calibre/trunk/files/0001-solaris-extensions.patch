@@ -1,0 +1,93 @@
+From c7ad91b291cd486fcf6e0b5444b1a6aaad0150d2 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 29 Aug 2013 11:13:46 +0200
+Subject: [PATCH] solaris extensions
+
+- introduce a specific platform boolean
+- adapt the extensions to the platform
+- includes CSW specifc X11 header for some definitions not found in the system
+  provided ones
+---
+ setup/__init__.py   |  1 +
+ setup/extensions.py | 39 ++++++++++++++++++++-------------------
+ 2 files changed, 21 insertions(+), 19 deletions(-)
+
+diff --git a/setup/__init__.py b/setup/__init__.py
+index 49d3225..f77e832 100644
+--- a/setup/__init__.py
++++ b/setup/__init__.py
+@@ -13,6 +13,7 @@ iswindows = re.search('win(32|64)', sys.platform)
+ isosx = 'darwin' in sys.platform
+ isfreebsd = 'freebsd' in sys.platform
+ isnetbsd = 'netbsd' in sys.platform
++issolaris = 'sunos5' in sys.platform
+ isbsd = isnetbsd or isfreebsd
+ islinux = not isosx and not iswindows and not isbsd
+ SRC = os.path.abspath('src')
+diff --git a/setup/extensions.py b/setup/extensions.py
+index 3b4a37a..939f08a 100644
+--- a/setup/extensions.py
++++ b/setup/extensions.py
+@@ -12,7 +12,7 @@ from multiprocessing import cpu_count
+ 
+ from PyQt4.pyqtconfig import QtGuiModuleMakefile
+ 
+-from setup import Command, islinux, isbsd, isosx, SRC, iswindows
++from setup import Command, islinux, issolaris, isbsd, isosx, SRC, iswindows
+ from setup.build_environment import (chmlib_inc_dirs,
+         podofo_inc, podofo_lib, podofo_error, pyqt, OSX_SDK, NMAKE, QMAKE,
+         msvc, MT, win_inc, win_lib, win_ddk, magick_inc_dirs, magick_lib_dirs,
+@@ -248,23 +248,24 @@ if isosx:
+             )
+ 
+ if islinux or isosx:
+-    extensions.append(Extension('libusb',
+-        ['calibre/devices/libusb/libusb.c'],
+-        libraries=['usb-1.0']
+-    ))
+-
+-    extensions.append(Extension('libmtp',
+-        [
+-        'calibre/devices/mtp/unix/devices.c',
+-        'calibre/devices/mtp/unix/libmtp.c'
+-        ],
+-        headers=[
+-        'calibre/devices/mtp/unix/devices.h',
+-        'calibre/devices/mtp/unix/upstream/music-players.h',
+-        'calibre/devices/mtp/unix/upstream/device-flags.h',
+-        ],
+-        libraries=['mtp']
+-    ))
++    if not issolaris:
++        extensions.append(Extension('libusb',
++            ['calibre/devices/libusb/libusb.c'],
++            libraries=['usb-1.0']
++        ))
++
++        extensions.append(Extension('libmtp',
++            [
++            'calibre/devices/mtp/unix/devices.c',
++            'calibre/devices/mtp/unix/libmtp.c'
++            ],
++            headers=[
++            'calibre/devices/mtp/unix/devices.h',
++            'calibre/devices/mtp/unix/upstream/music-players.h',
++            'calibre/devices/mtp/unix/upstream/device-flags.h',
++            ],
++            libraries=['mtp']
++        ))
+ 
+ if isunix:
+     cc = os.environ.get('CC', 'gcc')
+@@ -498,7 +499,7 @@ class Build(Command):
+         DESTDIR = .
+         TARGET = calibre
+         QT *= svg
+-        INCLUDEPATH *= {conf} {inc}
++        INCLUDEPATH *= {conf} {inc} "/opt/csw/X11/include"
+         win32-msvc*:DEFINES *= _CRT_SECURE_NO_WARNINGS
+ 
+         # Force C++ language
+-- 
+1.8.3.4
+
