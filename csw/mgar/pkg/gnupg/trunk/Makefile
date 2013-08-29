@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS_CSWgnupg += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgnupg += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgnupg += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnupg += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt
+RUNTIME_DEP_PKlibldap2-4-2nupg += CSWoldaprt
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl=$(prefix)
@@ -42,11 +42,7 @@ EXTRA_MERGE_EXCLUDE_FILES += .*/gpg-zip.1
 
 PROTOTYPE_MODIFIERS  = suid
 PROTOTYPE_FILES_suid = .*/gpg
-PROTOTYPE_PERMS_suid = 4755
-
-CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.ru.1
-CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.1
-CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/BUILD64 = 1
+PROTOTYPE_PBUILD64 = 1
 ISAEXEC = 1
 
 include gar/category.mk
