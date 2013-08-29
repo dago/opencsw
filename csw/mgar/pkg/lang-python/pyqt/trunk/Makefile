@@ -1,9 +1,10 @@
 # $Id$
 
-NAME		=	pyqt
-VERSION		=	4.10.2
-CATEGORIES	=	python
-GARTYPE		=	v2
+NAME			=	pyqt
+VERSION			=	4.10.2
+CATEGORIES		=	python
+PYTHON_VERSION	=	2_7
+GARTYPE			=	v2
 
 DESCRIPTION	=	Python bindings for Qt
 define BLURB
@@ -86,7 +87,7 @@ $(WORKSRC)/pyqtconfig.py:
 		touch reference && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
-			python configure.py \
+			$(PYTHON_EXECUTABLE) configure.py \
 				--verbose \
 				--confirm-license \
 				--assume-shared \
@@ -126,7 +127,7 @@ configure-custom: $(WORKSRC)/pyqtconfig.py
 	cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
-			python configure-ng.py \
+			$(PYTHON_EXECUTABLE) configure-ng.py \
 				--verbose \
 				--confirm-license \
 				--assume-shared \
@@ -150,6 +151,6 @@ install-custom:
 	 	/usr/bin/env -i \
 		  $(INSTALL_ENV) \
 			$(MAKE) DESTDIR=$(DESTDIR) INSTALL_ROOT=$(DESTDIR) install
-	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/pyqtconfig.py $(DESTDIR)/$(libdir)/python/site-packages/PyQt4
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/pyqtconfig.py $(DESTDIR)/$(PYTHON_SITE_PACKAGES)/PyQt4
 
 	@$(MAKECOOKIE)
