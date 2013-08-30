@@ -4,7 +4,7 @@
 #RC_SLEV 3
 
 # rc-script for CSW SpamAssassin
-# Peter Bonivart, 2010-02-01
+# Peter Bonivart, 2013-08-30
 
 # Source SMF includes
 [ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
@@ -21,7 +21,7 @@ ZONE= # used for initialization, do not change
 case "$1" in
   start)
     if [ -x /opt/csw/bin/spamd ]; then
-      if [ -d /var/opt/csw/spamassassin/3.003001 ]; then
+      if [ -d /var/opt/csw/spamassassin/3.003002 ]; then
         echo "Starting $PROG."
         /opt/csw/bin/spamd -d $OPTIONS
       else
