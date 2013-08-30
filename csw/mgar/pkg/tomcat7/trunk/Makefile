@@ -1,5 +1,5 @@
 NAME      = tomcat7
-VERSION   = 7.0.39
+VERSION   = 7.0.42
 GARTYPE = v2
 
 DESCRIPTION  =  Apache Jakarta Tomcat 7 Servlet/JSP Container
@@ -25,9 +25,9 @@ CATALOGNAME = tomcat7
 LICENSE = LICENSE
 ARCHALL = 1
 
-CONFIGURE_SCRIPTS = none
-BUILD_SCRIPTS     = none
-TEST_SCRIPTS	  = none
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS     =
+TEST_SCRIPTS	  =
 INSTALL_SCRIPTS   = tomcat
 prefix            = /
 
@@ -45,24 +45,7 @@ PROTOTYPE_PERMS_etcperm = 0640
 PROTOTYPE_USER_etcperm  = tomcat
 PROTOTYPE_GROUP_etcperm = tomcat
 
-# Reviewed and fine to override
-CHECKPKG_OVERRIDES_CSWtomcat7 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat7/webapps/docs/virtual-hosting-howto.html
-CHECKPKG_OVERRIDES_CSWtomcat7 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat7/webapps/docs/manager-howto.html
-CHECKPKG_OVERRIDES_CSWtomcat7 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat7/webapps/docs/ssl-howto.html
-CHECKPKG_OVERRIDES_CSWtomcat7 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat7/webapps/docs/appdev/processes.html
-CHECKPKG_OVERRIDES_CSWtomcat7 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat7/webapps/docs/building.html
-CHECKPKG_OVERRIDES_CSWtomcat7 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat7/webapps/docs/BUILDING.txt
-
 include gar/category.mk
-
-configure-none:
-	@$(MAKECOOKIE)
-
-test-none:
-	@$(MAKECOOKIE)
-
-build-none:
-	@$(MAKECOOKIE)
 
 post-extract:
 	( mv $(WORKDIR)/apache-tomcat-$(VERSION) $(WORKDIR)/$(DISTNAME) )
