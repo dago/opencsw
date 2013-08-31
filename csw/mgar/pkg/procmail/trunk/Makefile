@@ -40,6 +40,5 @@ configure-custom:
 
 pre-install-modulated:
 	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall -d $(DESTDIR)$(sysconfdir)/procmailrcs
 	@$(MAKECOOKIE)
-
-
