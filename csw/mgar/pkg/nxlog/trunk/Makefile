@@ -19,6 +19,10 @@ GARCOMPILER = GCC4
 BUILD_DEP_PKGS += CSWlibdbi-dev
 BUILD_DEP_PKGS += CSWlibapr-dev
 
+PACKAGES += CSWnxlog-ce
+CATALOGNAME_CSWnxlog-ce = nxlog_ce
+SPKG_DESC_CSWnxlog-ce += $(DESCRIPTION), utilities
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibz1
