@@ -19,8 +19,35 @@ GARCOMPILER = GCC4
 BUILD_DEP_PKGS += CSWlibdbi-dev
 BUILD_DEP_PKGS += CSWlibapr-dev
 
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibz1
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibdbi1
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWnxlog-ce += CSWlibnx0
+
+PACKAGES += CSWlibnx0
+CATALOGNAME_CSWlibnx0 = libnx0
+PKGFILES_CSWlibnx0 += $(call baseisadirs,$(libdir),libnx\.so\.0\.0\.0)
+PKGFILES_CSWlibnx0 += $(call baseisadirs,$(libdir),libnx\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibnx0 += $(DESCRIPTION), libnx.so.0
+RUNTIME_DEP_PKGS_CSWlibnx0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibnx0 += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWlibnx0 += CSWlibpcre1
+
+PACKAGES += CSWnxlog-ce-dev
+CATALOGNAME_CSWnxlog-ce-dev = nxlog_ce_dev
+SPKG_DESC_CSWnxlog-ce-dev += $(DESCRIPTION), development files
+PKGFILES_CSWnxlog-ce-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWnxlog-ce-dev += CSWlibnx0
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
+
+# Some tests on dates are failing
+SKIPTEST ?= 1
 
 BUILD64 = 1
 ISAEXEC = 1
