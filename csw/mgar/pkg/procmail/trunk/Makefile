@@ -32,6 +32,11 @@ PROTOTYPE_FILES_procmail = $(bindir)/procmail.*
 PROTOTYPE_PERMS_procmail = 6755
 PROTOTYPE_GROUP_procmail = mail
 
+# Move the old configuration, if any
+MIGRATE_FILES_CSWprocmail = procmailrc
+MIGRATE_SOURCE_DIR = $(prefix)/etc
+MIGRATE_DEST_DIR   = $(sysconfdir)
+
 include gar/category.mk
 
 configure-custom:
