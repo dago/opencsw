@@ -12,7 +12,7 @@ endef
 
 GOOGLE_PROJECT = webp
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(DGARCOMPILER = SOS12U3(DISTNAME).tar.gz
+DISTFILES  = $(VENDOR_URL = https://code.google.com/p/webp/(DGARCOMPILER = SOS12U3(DISTNAME).tar.gz
 
 PACKAGES += CSWlibwebp-dev
 SPKG_DESC_CSWlibwebp-dev = Development file4
