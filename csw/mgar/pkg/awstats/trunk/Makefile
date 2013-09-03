@@ -47,26 +47,36 @@ PRESERVECONF += $(sysconfdir)/awstats.conf
 include gar/category.mk
 
 install-custom:
+	ginstall -d $(DESTDIR)$(localstatedir)/awstats/
 	ginstall -d $(DESTDIR)$(docdir)/awstats/
 	cp -R $(WORKSRC)/docs/* $(DESTDIR)$(docdir)/awstats/
 	ginstall -d $(DESTDIR)$(sharedstatedir)/awstats/
 	cp -R $(WORKSRC)/tools/* $(DESTDIR)$(sharedstatedir)/awstats/
 	ginstall -d $(DESTDIR)$(sharedstatedir)/www/awstats/htdocs/
+
+	# Create the hierarchy that will be used by the webserver
 	cp -R $(WORKSRC)/wwwroot/classes \
 			$(WORKSRC)/wwwroot/css \
 			$(WORKSRC)/wwwroot/icon \
 			$(WORKSRC)/wwwroot/js \
 		$(DESTDIR)$(sharedstatedir)/www/awstats/htdocs/
+
 	ginstall -d $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
 	cp -R $(WORKSRC)/wwwroot/cgi-bin/* \
 		$(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
 
 	ginstall -d $(DESTDIR)$(sysconfdir)/awstats/
+
+	# Configure the default configuration file location for extracted data
+	# and where to find the OpenCSW Apache logs
 	cat $(WORKSRC)/wwwroot/cgi-bin/awstats.model.conf | perl -p \
-		-e 's!/var/log/httpd/mylog.log!/var/opt/csw/awstats/awstats.log!;' \
+		-e 's!^LogFile=.*!LogFile="$(prefix)/apache2/var/log/access_log"!;' \
+		-e 's!^DirData=.*!DirData="$(localstatedir)/awstats"!;' \
 		> $(DESTDIR)$(sysconfdir)/awstats.conf
+
 	rm -f $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/awstats.model.conf
 
+	# Substitute defaults with OpenCSW locations
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra/
 	cat $(WORKSRC)/tools/httpd_conf | perl -p \
 		-e 's!/usr/local/awstats/wwwroot/cgi-bin/!$(sharedstatedir)/www/awstats/cgi-bin/!;' \
@@ -75,11 +85,9 @@ install-custom:
 		-e 's!/usr/local/awstats/!$(sharedstatedir)/www/awstats/!;' \
 		> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf
 	rm -f $(DESTDIR)$(sharedstatedir)/awstats/httpd_conf
+
 	chmod -R +rX $(DESTDIR)$(sharedstatedir)/www/awstats \
 		$(DESTDIR)$(docdir)/awstats
 	chmod +rx $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/*.pl \
 		$(DESTDIR)$(sharedstatedir)/awstats/*.pl
 	@$(MAKECOOKIE)
-
-# ./awstats_updateall.pl now -awstatsprog=/opt/csw/share/www/awstats/cgi-bin/awstats.pl -configdir=/etc/opt/csw
-
