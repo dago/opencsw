@@ -236,6 +236,10 @@ class Srv4Uploader(object):
         try:
           srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
               catrel, arch, osrel, catalogname)
+          # To get the full information; the Srv4ByCatalogAndCatalogname
+          # return a smaller set of data.
+          srv4_in_catalog = self._rest_client.GetPkgByMd5(
+              srv4_in_catalog['md5_sum'])
         except urllib2.HTTPError, e:
           srv4_in_catalog = None
         if srv4_in_catalog:
