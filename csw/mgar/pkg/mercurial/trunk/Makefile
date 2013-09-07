@@ -22,6 +22,10 @@ TEST_SCRIPTS      =
 #TEST_SCRIPTS      = $(WORKSRC)/tests/run_tests.py
 #TEST_TARGET       = 
 
+RUNTIME_DEP_PKGS_CSWmercurial += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWmercurial += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWmercurial += CSWlibpython2-7-1-0
+
 CHECKPKG_OVERRIDES_CSWmercurial += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWmercurial += catalogname-does-not-start-with-py_
 
