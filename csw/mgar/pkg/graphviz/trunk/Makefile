@@ -4,7 +4,7 @@
 # investigated.
 
 NAME = graphviz
-VERSION = 2.32.0
+VERSION = 2.34.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -19,8 +19,7 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 
 LICENSE = COPYING
 
-GARCOMPILER = G0001_configure_tcl_bin_path_not_good_for_64bit.patch
-_Makefile.am.patch
+GMakefile.am.patch
 
 INCOMPATIBLE_KBUILD64 = 1
 ISAEXEC = 1
