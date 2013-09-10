@@ -25,7 +25,7 @@ index 0000000..9f6b517
 +#
 +
 +exists("/opt/csw/gxx/include") {
-+   INCLUDEPATH += "/opt/csw/gxx/include"
++   INCLUDEPATH += "/opt/csw/include"
 +   INCLUDEPATH += "/opt/csw/gxx/include/boost"
 +   INCLUDEPATH += "/opt/csw/include/freetype2"
 +}
