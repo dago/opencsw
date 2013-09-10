@@ -43,7 +43,7 @@ BUILD64 =	1
 ISAEXEC	=	1
 
 BUILD_DEP_PKGS	+=	CSWgcc4ada
-BUILD_DEP_PKGS	+=	CSWflex-new
+BUILD_PKGS	+=	CSWflex-new
 BUILD_DEP_PKGS	+=	CSWexpect
 BUILD_DEP_PKGS	+=	CSWdejagnu
 BUILD_DEP_PKGS	+=	CSWlibiconv-dev
@@ -141,7 +141,7 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/share/locale/zh_CN/LC_MESSAGES/opcodes.mo
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PAec/flex-2.5.35/bin:$(PATH)
 
 # this halves at least the test time on a mono-core:
 test-parallel:
