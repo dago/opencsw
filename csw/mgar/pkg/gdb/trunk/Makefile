@@ -33,7 +33,7 @@ PATCHFILES		+=	0002-OpenSolaris-gdb-fork-child.patch
 # from private patch 4:
 PATCHFILES		+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
 # aggregate from http://sourceware.org/bugzilla/show_bug.cgi?id=15420%3E
-PATCHFILES		+=	0004-missing-symbol-ps_lgetxregsizearis-gdb-fork-child.patch
+b-fork-child.patch
 
 GARCOMPILER		=	GNU
 
