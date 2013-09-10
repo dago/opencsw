@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.18
+VERSION = 5.18.1
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
