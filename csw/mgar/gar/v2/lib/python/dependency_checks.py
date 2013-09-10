@@ -55,17 +55,49 @@ BASE_SOLARIS_LIBRARIES = set([
 ])
 
 ALLOWED_VERSION_DEPENDENCIES = {
-    "libc.so.1": ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6',
-                  'SUNW_1.22.5', 'SUNW_1.22.4', 'SUNW_1.22.3', 'SUNW_1.22.2',
-                  'SUNW_1.22.1', 'SUNW_1.22', 'SUNW_1.21.3', 'SUNW_1.21.2',
-                  'SUNW_1.21.1', 'SUNW_1.21', 'SUNW_1.20.4', 'SUNW_1.20.1',
-                  'SUNW_1.20', 'SUNW_1.19', 'SUNW_1.18.1', 'SUNW_1.18',
-                  'SUNW_1.17', 'SUNW_1.16', 'SUNW_1.15', 'SUNW_1.14',
-                  'SUNW_1.13', 'SUNW_1.12', 'SUNW_1.11', 'SUNW_1.10',
-                  'SUNW_1.9', 'SUNW_1.8', 'SUNW_1.7', 'SUNW_1.6', 'SUNW_1.5',
-                  'SUNW_1.4', 'SUNW_1.3', 'SUNW_1.2', 'SUNW_1.1', 'SUNW_0.9',
-                  'SUNW_0.8', 'SUNW_0.7', 'SISCD_2.3'],
+    "libc.so.1": {
+        u'SunOS5.11': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.23', 'SISCD_2.3'],
+        u'SunOS5.10': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6', 'SISCD_2.3'],
+    },
 }
+
+
+def CompareLibraryVersions(version1, version2):
+  """Compare two library versions
+
+  Library versions often have the following forms:
+   PREFIX_NUMBER1.NUMBER2.NUMBER3 (e.g. SUNW_1.22.3)
+  with the more recent one having the highest numbers.
+
+  It is useful to compare two versions of this form and
+  this function will do this job as long as the given
+  versions have the same format and same prefix.
+
+  Returns:
+     0   if two versions are equal
+     1   if version1 > version2
+    -1   if version1 < version2
+    None if two versions are completely differents
+         and can't be compared
+  """
+  version1_parts = re.findall('([^_.]+)', version1)
+  version2_parts = re.findall('([^_.]+)', version2)
+
+  for part1, part2 in zip(version1_parts, version2_parts):
+    if part1.isdigit() and part2.isdigit():
+      comp_value = cmp(int(part1), int(part2))
+      if comp_value != 0:
+        return comp_value
+    elif part1 != part2:
+      # Not equal string means not the same form
+      # or prefix so we can't compare them
+      return None
+
+  # if we are here it means all parts compared are equal.
+  # if there are some remaining parts, it means one version is longer.
+  # The longest is the most recent (1.22.1 is more recent than 1.22)
+  # so we just compare the size
+  return cmp(len(version1_parts), len(version2_parts))
 
 
 def ProcessSoname(
@@ -259,10 +291,21 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
       # We should then emulate ldd but that will not be for today...
       pass
 
+    osrel = pkg_data['basic_stats']['parsed_basename']['osrel']
     for version_dep in binary_elf_info['version needed']:
-      if (version_dep['soname'] in ALLOWED_VERSION_DEPENDENCIES and
-          not version_dep['version'] in
-          ALLOWED_VERSION_DEPENDENCIES[version_dep['soname']]):
+      soname = version_dep['soname']
+      if not soname in ALLOWED_VERSION_DEPENDENCIES:
+        continue
+
+      allowed = False
+      versions_allowed = ALLOWED_VERSION_DEPENDENCIES[soname][osrel]
+      for version_ref in versions_allowed:
+        ret = CompareLibraryVersions(version_dep['version'], version_ref)
+        if ret is not None and ret <= 0:
+          allowed = True
+          break
+
+      if not allowed:
         messenger.Message(
           "Binary %s requires interface version %s in library %s which is"
           " only available in recent Solaris releases."
