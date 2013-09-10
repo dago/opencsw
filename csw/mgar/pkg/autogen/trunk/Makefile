@@ -92,9 +92,9 @@ SPKG_DESC_CSWlibopts25			+=	$(DESCRIPTION), libopts.so.25
 OBSOLETED_BY_CSWlibopts25		=	CSWautogenrt
 RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibopts25	+=	CSWlibintl8
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libgen.so.1
-CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.0|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.1|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.1|is|not|directly|bound|to|soname|libgen.so.1
+CHECKPKG_OVERRIDES_CSWlibopts25	+=	no-direct-binding|/opt/csw/lib/libopts.so.25.15.1|is|not|directly|bound|to|soname|libintl.so.8
 
 PACKAGES							+=	CSWautogen-dev
 CATALOGNAME_CSWautogen-dev 			=	autogen_dev
