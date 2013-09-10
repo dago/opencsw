@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gdb
-VERSION = 7.6
+VERSION = 7.6.1
 GARTYPE = v2
 CATEGORIES = devel
 
