@@ -15,8 +15,9 @@ endef
 SPKG_SOURCEURL = http://www.noah.org/wiki/Pexpect
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = LICENSE
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
+CHECKPKG_OVERRIDES_CSWpy-pexpect += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/pexpect.py
+CHECKPKG_OVERRIDES_CSWpy-pexpect += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/pexpect.py
 include gar/category.mk
