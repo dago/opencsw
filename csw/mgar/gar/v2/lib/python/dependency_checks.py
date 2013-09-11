@@ -58,6 +58,7 @@ ALLOWED_VERSION_DEPENDENCIES = {
     "libc.so.1": {
         u'SunOS5.11': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.23', 'SISCD_2.3'],
         u'SunOS5.10': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6', 'SISCD_2.3'],
+        u'SunOS5.9': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.21.2', 'SISCD_2.3'],
     },
 }
 
