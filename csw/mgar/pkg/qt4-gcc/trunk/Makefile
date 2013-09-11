@@ -13,7 +13,7 @@ define BLURB
 DISTNAME = qt-everywhere-opensource-src-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
-LNOGITPATCH = 1
+L#NOGITPATCH = 1
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 GARCOMPILER = GNU
@@ -29,10 +29,17 @@ REINPLACE_USRLOCAL += src/3rdparty/webkit/Source/WebCore/plugins/PluginDatabase.
 PATCHFILES += mkspec-csw.patch
 # bug in 4.8.1, see: https//bugreports.qt-project.org/browse/QTBUG-25281
 # PATCHFILES += 0001-shapeinput.patch
+PATCHFILES += 0003-configure-must-use-bash.patch
+PATCHFILES += 0004-webkit-port.patch
 =BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWunixodbc-dev
 BUILD_DEP_PKGS += CSWpostgresql-dev
-BUILD_DEP_PKGS += CSWfreetds-devsBUILD_DEP_PKGS += CSWmysql-devsl/qsslsocket.cpp
+BUILD_DEP_PKGS += CSWfreetds-devsBUILD_DEP_PKGS += CSWmysql-devsBUILD_DEP_PKGS += CSWcups-dev
+BUILD_DEP_PKGS += CSWgstplugins-dev
+BUILD_DEP_PKGS += CSWgstreamer-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+BUILD_DEP_PKGS += CSWlibxml2-devsl/qsslsocket.cpp
 
 # http://wiki.opencsw.org/porting-faq#toc9
 EXTRA_CFLAGS = -DSUN_OGL_NO_VERTEX_MACROS
@@ -85,25 +92,30 @@ CONFIGURE_ARGS += -sm
 CONFIGURE_ARGS += -qt-libjpeg
 CONFIGURE_ARGS += -qt-libpng
 CONFIGURE_ARGS += -qt-libmng
-CONFIGURE_ARGS +=libpng -qt-# compile error: error: 'QGtkStyle' has not been declared ??? since 10.12.2012
+CONFIGURE_ARGS +=libpng -qt-CONFIGURE_ARGS += -xmlpatterns
+CONFIGURE_ARGS += -webkit-# compile error: error: 'QGtkStyle' has not been declared ??? since 10.12.2012
 CONFIGURE_ARGS += -no-gtkstyle-libmng -qt-zlib 
-CON$(includedir)/gtk-2.0
+CON$(includedir)/glib-2.0
+CONFIGURE_ARGS += -I$(libdir)/glib-2.0/include
+CONFIGURE_ARGS += -I$(includedir)/gtk-2.0
+CONFIGURE_ARGS += -I$(includedir)/gstreamer-0.10
+CONFIGURE_ARGS += -I$(includedir)/libxml2
 CONFIGURE_ARGS +=+= -I/usr/include -I/usr/X11/include 
 CONFIGURE_ARGS += -I/usr/XGS += -no-xshape
 CONFIGURE_ARGS_sparc += -big-endian 
 
 # not build for Sparc because core dump in designer, qmlplugindump, ..
-CONFIGURE_ARGS_sparc += -no-javascript-jit
+# not built for i386 because of cti_vm_throw referenced in JITStubs
+CONFIGURE_ARGS += -no-javascript-jit
 CONFIGURE_ARGS_sparc += -no-script
 
 # CONFIGURE_ARGS_i386 += -little-endian -host-big-endian
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVORGURE_ARGS_$(GARCH))
-
-# TEST_TARGET =
-
-INSTALL_ROOT = $(DESTDIR)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVORGUREINSTALL_ROOT = $(DESTDIR)
 EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
+
+# skip this if you are not connected to as X Windows server
+TEST_SCRIPTS		=	customS = INSTALL_ROOT
 
 
 PACKAGES
@@ -373,17 +385,24 @@ SPKG_DESC_CSWqt4G_DESC_CSWqt4-gxx-doc += $(DESCRIPTION), documentation
 # Catch-aldoc = 1
 CHECKPKG_OVERRIDES_CSWqt4RRIDES_CSWqt4-gxx-doc += file-winclude gar/category.mk
 
-PATH:=:/opt/csw/gnu:$(PATH)e gar/category.mk
+PATH:=:/opt/csw/gnu:$(PATH)e libraries4test=$(shell pwd)/$(WORKSRC)/lib
+test-custom:
+	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) LD_LIBRARY_PATH=$(libraries4test) && $(MAKE) -i -k -C $(OBJDIR) TESTRUNNER='LD_LIBRARY_PATH=$(libraries4test)' check
+	$(MAKECOOKIE)e gar/category.mk
 
 # pre-reconfigure-modulated:
 # 	cd $(WORKSRC) && gmake confclean
 # 
 # Ship private headers - ugly hack to build Qt Creator QML Designer;
 # adapted from Debian rules
+# and
+# prune tests from the destination directory (we don't want them in
+# our packages isn't it?)
 post-install:
 	gtar --directory=$(WORKSRC)/include/QtCore --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtCore --extract --file=-
 	gtar --directory=$(WORKSRC)/include/QtDeclarative --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtDeclarative --extract --file=-
 	gtar --directory=$(WORKSRC)/include/QtGui --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtGui --extract --file=-
 	gtar --directory=$(WORKSRC)/include/QtScript --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtScript --extract --file=-
 	cd $(WORKSRC) && gtar --create --file=- src/corelib/*/*_p.h src/declarative/*/*_p.h src/gui/*/*_p.h src/script/*/*_p.h | gtar --directory=$(DESTDIR)$(includedir) --extract --file=-
+	rm -rf $(DESTDIR)/$(prefix)/tests
 	$(MAKECOOKIE)

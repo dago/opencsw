@@ -1,0 +1,23 @@
+From 1f4c381cfd6306da028778639d4c3b5e9b634cf9 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 11 Sep 2013 12:01:49 +0200
+Subject: [PATCH] configure must use bash
+
+As a linuxism, but not only; anyway, without this, there is no webkit...
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 460b446..3e51ec7 100755
+--- a/configure
++++ b/configure
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#! /usr/bin/env bash
+ #############################################################################
+ ##
+ ## Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+-- 
+1.8.3.4
+
