@@ -1,0 +1,863 @@
+From a25f273e5af1653f7c7d7f1529fb9d11d26cd547 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 11 Sep 2013 12:19:17 +0200
+Subject: [PATCH] webkit port
+
+All this to port WebKit at least for Solaris 10. It is very possible that the
+pthread_getattr_np implementation must be tweaked for Solaris 11.
+---
+ .../Source/JavaScriptCore/API/JSValueRef.cpp       |   2 +-
+ .../JavaScriptCore/bytecode/SamplingTool.cpp       |   9 +-
+ .../JavaScriptCore/heap/MachineStackMarker.cpp     | 162 ++++++++++++++++++++-
+ .../Source/JavaScriptCore/heap/MarkStackPosix.cpp  |   4 +-
+ .../JavaScriptCore/runtime/DateConstructor.cpp     |  28 ++--
+ .../JavaScriptCore/runtime/DateConversion.cpp      |   2 +-
+ .../Source/JavaScriptCore/runtime/DateInstance.cpp |   4 +-
+ .../JavaScriptCore/runtime/DatePrototype.cpp       |  10 +-
+ .../runtime/JSGlobalObjectFunctions.cpp            |   6 +-
+ .../Source/JavaScriptCore/runtime/JSValue.cpp      |   2 +-
+ .../Source/JavaScriptCore/runtime/MathObject.cpp   |   6 +-
+ .../JavaScriptCore/runtime/NumberPrototype.cpp     |   8 +-
+ .../webkit/Source/JavaScriptCore/wtf/DateMath.cpp  |   7 +-
+ .../Source/JavaScriptCore/wtf/PageAllocation.h     |   2 +-
+ .../Source/JavaScriptCore/wtf/RandomNumberSeed.h   |   6 +-
+ .../webkit/Source/JavaScriptCore/wtf/dtoa.cpp      |   6 +-
+ src/3rdparty/webkit/Source/WebCore/WebCore.pri     |   2 +-
+ .../WebCore/bindings/js/JSDataViewCustom.cpp       |   2 +-
+ .../bindings/js/JSHTMLOptionsCollectionCustom.cpp  |   2 +-
+ .../WebCore/bindings/js/JSWebKitPointCustom.cpp    |   4 +-
+ .../webkit/Source/WebCore/css/WebKitCSSMatrix.cpp  |  32 ++--
+ .../WebCore/html/canvas/IntegralTypedArrayBase.h   |   2 +-
+ .../webkit/Source/WebCore/page/DOMWindow.cpp       |   8 +-
+ .../webkit/Source/WebCore/page/WindowFeatures.cpp  |   2 +-
+ .../webkit/Source/WebCore/xml/XPathFunctions.cpp   |   6 +-
+ .../webkit/Source/WebCore/xml/XPathValue.cpp       |   4 +-
+ 26 files changed, 248 insertions(+), 80 deletions(-)
+
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/API/JSValueRef.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/API/JSValueRef.cpp
+index e2626be..e3c857e 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/API/JSValueRef.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/API/JSValueRef.cpp
+@@ -216,7 +216,7 @@ JSValueRef JSValueMakeNumber(JSContextRef ctx, double value)
+     // Our JSValue representation relies on a standard bit pattern for NaN. NaNs
+     // generated internally to JavaScriptCore naturally have that representation,
+     // but an external NaN might not.
+-    if (isnan(value))
++    if (std::isnan(value))
+         value = NaN;
+ 
+     return toRef(exec, jsNumber(value));
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/bytecode/SamplingTool.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/bytecode/SamplingTool.cpp
+index f47e698..edfd600 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/bytecode/SamplingTool.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/bytecode/SamplingTool.cpp
+@@ -34,7 +34,7 @@
+ #include "Opcode.h"
+ 
+ #if !OS(WINDOWS)
+-#include <unistd.h>
++// #include <unistd.h>
+ #endif
+ 
+ namespace JSC {
+@@ -103,9 +103,14 @@ static void sleepForMicroseconds(unsigned us)
+ 
+ #else 
+ 
++extern "C"
++{
++	int usleep(useconds_t useconds);
++}
++
+ static void sleepForMicroseconds(unsigned us)
+ {
+-    usleep(us);
++	usleep(us);
+ }
+ 
+ #endif
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/heap/MachineStackMarker.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/heap/MachineStackMarker.cpp
+index 01d77d6..a420dee 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/heap/MachineStackMarker.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/heap/MachineStackMarker.cpp
+@@ -61,7 +61,7 @@
+ #if !OS(HAIKU)
+ #include <sys/mman.h>
+ #endif
+-#include <unistd.h>
++// #include <unistd.h>
+ 
+ #if OS(SOLARIS)
+ #include <thread.h>
+@@ -341,6 +341,166 @@ typedef pthread_attr_t PlatformThreadRegisters;
+ #error Need a thread register struct for this platform
+ #endif
+ 
++#include <stdlib.h>
++#include <unistd.h>
++#include <stdio.h>
++#include <string.h>
++#include <errno.h>
++#include <pthread.h>
++#include <thread.h>
++#include <sched.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <procfs.h>
++
++#define	PTHREAD_CREATE_NODAEMON_NP 0
++#define	PTHREAD_CREATE_DAEMON_NP THR_DAEMON
++
++typedef	struct	_thrattr {
++	size_t	stksize;    // pr_stkbase lwpstatus_pr_ustack
++	void	*stkaddr;   // pr_stksize lwpstatus_pr_ustack
++	int	detachstate;    // {PTHREAD_CREATE_JOINABLE, PTHREAD_CREATED_DETACHED}
++                     // from /proc/self/lwp/tid/lwpstatus.pr_flags PR_DETACH
++	int	daemonstate;    // {PTHREAD_CREATE_DAEMON_NP, }
++                     // from /proc/self/lwp/tid/lwpstatus.pr_flags PR_DAEMON
++	int	scope;          // {PTHREAD_SCOPE_PROCESS, PTHREAD_SCOPE_SYSTEM}
++	int	prio;           // lwpsinfo.pr_pri
++	int	policy;         // {SCHED_OTHER, SCHED_FIFO, SCHED_RR}
++	/* these are reversed in Solaris 11 TODO: conditionally define */
++	size_t	guardsize;
++	int	inherit;        // {PTHREAD_EXPLICIT_SCHED, PTHREAD_INHERIT_SCHED}
++} thrattr_t;
++
++static const char* prefix = "/proc/self/lwp/";
++static const char* prefixFormat = "%s%lu/lwp%s";
++
++static int getStatus(pthread_t thread, lwpstatus_t *status)
++{
++	static const char* name = "status";
++	int rc = 0;
++	if(status != (lwpstatus_t*)0)
++	{
++		unsigned int length = snprintf((char*)0, 0, prefixFormat, prefix, thread, name) + 1;
++		char* path = (char*)malloc(sizeof(char) * length);
++		if(path != (char*)0)
++		{
++			snprintf(path, length, prefixFormat, prefix, thread, name);
++			int fd = open(path, O_RDONLY);
++			if(fd != -1)
++			{
++				ssize_t size = read(fd, status, sizeof(lwpstatus_t));
++				switch(size)
++				{
++				case -1:
++					rc = errno;
++					break;
++				case sizeof(lwpstatus_t):
++					break;
++				default:
++					rc = ENODATA;
++					break;
++				}
++				close(fd);
++			}
++			else
++			{
++				rc = (errno) ? errno : EIO;
++			}
++			free(path);
++		}
++		else
++		{
++			rc = (errno) ? errno : EIO;
++		}
++	}
++	else
++	{
++		rc = EINVAL;
++	}
++	return(rc);
++}
++
++static int getInfo(pthread_t thread, lwpsinfo_t *info)
++{
++	static const char* name = "sinfo";
++	int rc = 0;
++	if(info != (lwpsinfo_t*)0)
++	{
++		unsigned int length = snprintf((char*)0, 0, prefixFormat, prefix, thread, name) + 1;
++		char* path = (char*)malloc(sizeof(char) * length);
++		if(path != (char*)0)
++		{
++			snprintf(path, length, prefixFormat, prefix, thread, name);
++			int fd = open(path, O_RDONLY);
++			if(fd != -1)
++			{
++				ssize_t size = read(fd, info, sizeof(lwpsinfo_t));
++				switch(size)
++				{
++				case -1:
++					rc = errno;
++					break;
++				case sizeof(lwpsinfo_t):
++					break;
++				default:
++					rc = ENODATA;
++					break;
++				}
++				close(fd);
++			}
++			else
++			{
++				rc = (errno) ? errno : EIO;
++			}
++			free(path);
++		}
++		else
++		{
++			rc = (errno) ? errno : EIO;
++		}
++	}
++	else
++	{
++		rc = EINVAL;
++	}
++	return(rc);
++}
++
++static int pthread_getattr_np(pthread_t thread, pthread_attr_t *attr)
++{
++	int rc = 0;
++	if(attr != (pthread_attr_t*)0)
++	{
++		lwpstatus_t status;
++		lwpsinfo_t info;
++		if(getStatus(thread, &status) == 0 && getInfo(thread, &info) == 0)
++		{
++			thrattr_t *ap = (thrattr_t *)attr->__pthread_attrp;
++			stack_t* stack = (stack_t*)status.pr_ustack;
++			ap->stksize = stack->ss_size;
++			ap->stkaddr = stack->ss_sp + stack->ss_size; /* from high to low */
++			ap->detachstate = status.pr_flags & PR_DETACH;
++			ap->daemonstate = status.pr_flags & PR_DAEMON;
++			/* scope not needed*/
++			ap->prio = info.pr_pri;
++			/* policy not needed */
++			/* inherit not needed */
++			/* guard size not needed */
++		}
++		else
++		{
++			rc = (errno) ? errno : EIO;
++		}
++	}
++	else
++	{
++		rc = EINVAL;
++	}
++	return(rc);
++}
++
++
+ static size_t getPlatformThreadRegisters(const PlatformThread& platformThread, PlatformThreadRegisters& regs)
+ {
+ #if OS(DARWIN)
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/heap/MarkStackPosix.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/heap/MarkStackPosix.cpp
+index 2a5b298..3ca4c05 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/heap/MarkStackPosix.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/heap/MarkStackPosix.cpp
+@@ -28,7 +28,9 @@
+ 
+ #if OS(UNIX) && !OS(SYMBIAN)
+ 
+-#include <unistd.h>
++extern "C" {
++	int getpagesize(void);
++}
+ #include <sys/mman.h>
+ 
+ namespace JSC {
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConstructor.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConstructor.cpp
+index 9bbb688..01abf7c 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConstructor.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConstructor.cpp
+@@ -98,13 +98,13 @@ JSObject* constructDate(ExecState* exec, JSGlobalObject* globalObject, const Arg
+             args.at(5).toNumber(exec), 
+             args.at(6).toNumber(exec)
+         };
+-        if (isnan(doubleArguments[0])
+-                || isnan(doubleArguments[1])
+-                || (numArgs >= 3 && isnan(doubleArguments[2]))
+-                || (numArgs >= 4 && isnan(doubleArguments[3]))
+-                || (numArgs >= 5 && isnan(doubleArguments[4]))
+-                || (numArgs >= 6 && isnan(doubleArguments[5]))
+-                || (numArgs >= 7 && isnan(doubleArguments[6])))
++        if (std::isnan(doubleArguments[0])
++			|| std::isnan(doubleArguments[1])
++			|| (numArgs >= 3 && std::isnan(doubleArguments[2]))
++			|| (numArgs >= 4 && std::isnan(doubleArguments[3]))
++			|| (numArgs >= 5 && std::isnan(doubleArguments[4]))
++			|| (numArgs >= 6 && std::isnan(doubleArguments[5]))
++			|| (numArgs >= 7 && std::isnan(doubleArguments[6])))
+             value = NaN;
+         else {
+             GregorianDateTime t;
+@@ -178,13 +178,13 @@ static EncodedJSValue JSC_HOST_CALL dateUTC(ExecState* exec)
+         exec->argument(6).toNumber(exec)
+     };
+     int n = exec->argumentCount();
+-    if (isnan(doubleArguments[0])
+-            || isnan(doubleArguments[1])
+-            || (n >= 3 && isnan(doubleArguments[2]))
+-            || (n >= 4 && isnan(doubleArguments[3]))
+-            || (n >= 5 && isnan(doubleArguments[4]))
+-            || (n >= 6 && isnan(doubleArguments[5]))
+-            || (n >= 7 && isnan(doubleArguments[6])))
++    if (std::isnan(doubleArguments[0])
++		|| std::isnan(doubleArguments[1])
++		|| (n >= 3 && std::isnan(doubleArguments[2]))
++		|| (n >= 4 && std::isnan(doubleArguments[3]))
++		|| (n >= 5 && std::isnan(doubleArguments[4]))
++		|| (n >= 6 && std::isnan(doubleArguments[5]))
++		|| (n >= 7 && std::isnan(doubleArguments[6])))
+         return JSValue::encode(jsNaN());
+ 
+     GregorianDateTime t;
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConversion.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConversion.cpp
+index 1418876..3560ef6 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConversion.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateConversion.cpp
+@@ -60,7 +60,7 @@ double parseDate(ExecState* exec, const UString &date)
+     if (date == exec->globalData().cachedDateString)
+         return exec->globalData().cachedDateStringValue;
+     double value = parseES5DateFromNullTerminatedCharacters(date.utf8().data());
+-    if (isnan(value))
++    if (std::isnan(value))
+         value = parseDateFromNullTerminatedCharacters(exec, date.utf8().data());
+     exec->globalData().cachedDateString = date;
+     exec->globalData().cachedDateStringValue = value;
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateInstance.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateInstance.cpp
+index d8ca072..b8df6f6 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateInstance.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DateInstance.cpp
+@@ -51,7 +51,7 @@ DateInstance::DateInstance(ExecState* exec, Structure* structure, double time)
+ const GregorianDateTime* DateInstance::calculateGregorianDateTime(ExecState* exec) const
+ {
+     double milli = internalNumber();
+-    if (isnan(milli))
++    if (std::isnan(milli))
+         return 0;
+ 
+     if (!m_data)
+@@ -67,7 +67,7 @@ const GregorianDateTime* DateInstance::calculateGregorianDateTime(ExecState* exe
+ const GregorianDateTime* DateInstance::calculateGregorianDateTimeUTC(ExecState* exec) const
+ {
+     double milli = internalNumber();
+-    if (isnan(milli))
++    if (std::isnan(milli))
+         return 0;
+ 
+     if (!m_data)
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DatePrototype.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DatePrototype.cpp
+index 444fa98..cec40cc 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DatePrototype.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/DatePrototype.cpp
+@@ -799,7 +799,7 @@ EncodedJSValue JSC_HOST_CALL dateProtoFuncGetMilliSeconds(ExecState* exec)
+ 
+     DateInstance* thisDateObj = asDateInstance(thisValue); 
+     double milli = thisDateObj->internalNumber();
+-    if (isnan(milli))
++    if (std::isnan(milli))
+         return JSValue::encode(jsNaN());
+ 
+     double secs = floor(milli / msPerSecond);
+@@ -815,7 +815,7 @@ EncodedJSValue JSC_HOST_CALL dateProtoFuncGetUTCMilliseconds(ExecState* exec)
+ 
+     DateInstance* thisDateObj = asDateInstance(thisValue); 
+     double milli = thisDateObj->internalNumber();
+-    if (isnan(milli))
++    if (std::isnan(milli))
+         return JSValue::encode(jsNaN());
+ 
+     double secs = floor(milli / msPerSecond);
+@@ -860,7 +860,7 @@ static EncodedJSValue setNewValueFromTimeArgs(ExecState* exec, int numArgsToUse,
+     DateInstance* thisDateObj = asDateInstance(thisValue);
+     double milli = thisDateObj->internalNumber();
+     
+-    if (!exec->argumentCount() || isnan(milli)) {
++    if (!exec->argumentCount() || std::isnan(milli)) {
+         JSValue result = jsNaN();
+         thisDateObj->setInternalValue(exec->globalData(), result);
+         return JSValue::encode(result);
+@@ -905,7 +905,7 @@ static EncodedJSValue setNewValueFromDateArgs(ExecState* exec, int numArgsToUse,
+     double ms = 0; 
+ 
+     GregorianDateTime gregorianDateTime; 
+-    if (numArgsToUse == 3 && isnan(milli)) 
++    if (numArgsToUse == 3 && std::isnan(milli)) 
+         msToGregorianDateTime(exec, 0, true, gregorianDateTime); 
+     else { 
+         ms = milli - floor(milli / msPerSecond) * msPerSecond; 
+@@ -1029,7 +1029,7 @@ EncodedJSValue JSC_HOST_CALL dateProtoFuncSetYear(ExecState* exec)
+     double ms = 0;
+ 
+     GregorianDateTime gregorianDateTime;
+-    if (isnan(milli))
++    if (std::isnan(milli))
+         // Based on ECMA 262 B.2.5 (setYear)
+         // the time must be reset to +0 if it is NaN. 
+         msToGregorianDateTime(exec, 0, true, gregorianDateTime);
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSGlobalObjectFunctions.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSGlobalObjectFunctions.cpp
+index f0da773..9651888 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSGlobalObjectFunctions.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSGlobalObjectFunctions.cpp
+@@ -472,7 +472,7 @@ EncodedJSValue JSC_HOST_CALL globalFuncParseInt(ExecState* exec)
+         double d = value.asDouble();
+         if (isfinite(d))
+             return JSValue::encode(jsNumber((d > 0) ? floor(d) : ceil(d)));
+-        if (isnan(d) || isinf(d))
++        if (std::isnan(d) || isinf(d))
+             return JSValue::encode(jsNaN());
+         return JSValue::encode(jsNumber(0));
+     }
+@@ -487,13 +487,13 @@ EncodedJSValue JSC_HOST_CALL globalFuncParseFloat(ExecState* exec)
+ 
+ EncodedJSValue JSC_HOST_CALL globalFuncIsNaN(ExecState* exec)
+ {
+-    return JSValue::encode(jsBoolean(isnan(exec->argument(0).toNumber(exec))));
++    return JSValue::encode(jsBoolean(std::isnan(exec->argument(0).toNumber(exec))));
+ }
+ 
+ EncodedJSValue JSC_HOST_CALL globalFuncIsFinite(ExecState* exec)
+ {
+     double n = exec->argument(0).toNumber(exec);
+-    return JSValue::encode(jsBoolean(!isnan(n) && !isinf(n)));
++    return JSValue::encode(jsBoolean(!std::isnan(n) && !isinf(n)));
+ }
+ 
+ EncodedJSValue JSC_HOST_CALL globalFuncDecodeURI(ExecState* exec)
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSValue.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSValue.cpp
+index d3ee89e..aa0c332 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSValue.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/JSValue.cpp
+@@ -44,7 +44,7 @@ double JSValue::toInteger(ExecState* exec) const
+     if (isInt32())
+         return asInt32();
+     double d = toNumber(exec);
+-    return isnan(d) ? 0.0 : trunc(d);
++    return std::isnan(d) ? 0.0 : trunc(d);
+ }
+ 
+ double JSValue::toIntegerPreserveNaN(ExecState* exec) const
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/MathObject.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/MathObject.cpp
+index 52bd76a..3858e38 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/MathObject.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/MathObject.cpp
+@@ -173,7 +173,7 @@ EncodedJSValue JSC_HOST_CALL mathProtoFuncMax(ExecState* exec)
+     double result = -Inf;
+     for (unsigned k = 0; k < argsCount; ++k) {
+         double val = exec->argument(k).toNumber(exec);
+-        if (isnan(val)) {
++        if (std::isnan(val)) {
+             result = NaN;
+             break;
+         }
+@@ -189,7 +189,7 @@ EncodedJSValue JSC_HOST_CALL mathProtoFuncMin(ExecState* exec)
+     double result = +Inf;
+     for (unsigned k = 0; k < argsCount; ++k) {
+         double val = exec->argument(k).toNumber(exec);
+-        if (isnan(val)) {
++        if (std::isnan(val)) {
+             result = NaN;
+             break;
+         }
+@@ -206,7 +206,7 @@ EncodedJSValue JSC_HOST_CALL mathProtoFuncPow(ExecState* exec)
+     double arg = exec->argument(0).toNumber(exec);
+     double arg2 = exec->argument(1).toNumber(exec);
+ 
+-    if (isnan(arg2))
++    if (std::isnan(arg2))
+         return JSValue::encode(jsNaN());
+     if (isinf(arg2) && fabs(arg) == 1)
+         return JSValue::encode(jsNaN());
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/NumberPrototype.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/NumberPrototype.cpp
+index 24532dd..765d156 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/runtime/NumberPrototype.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/runtime/NumberPrototype.cpp
+@@ -110,7 +110,7 @@ EncodedJSValue JSC_HOST_CALL numberProtoFuncToExponential(ExecState* exec)
+         return throwVMError(exec, createRangeError(exec, "toExponential() argument must be between 0 and 20"));
+ 
+     // Handle NaN and Infinity.
+-    if (isnan(x) || isinf(x))
++    if (std::isnan(x) || isinf(x))
+         return JSValue::encode(jsString(exec, UString::number(x)));
+ 
+     // Round if the argument is not undefined, always format as exponential.
+@@ -149,7 +149,7 @@ EncodedJSValue JSC_HOST_CALL numberProtoFuncToFixed(ExecState* exec)
+ 
+     // The check above will return false for NaN or Infinity, these will be
+     // handled by numberToString.
+-    ASSERT(!isnan(x) && !isinf(x));
++    ASSERT(!std::isnan(x) && !isinf(x));
+ 
+     // Convert to decimal with rounding, and format as decimal.
+     NumberToStringBuffer buffer;
+@@ -184,7 +184,7 @@ EncodedJSValue JSC_HOST_CALL numberProtoFuncToPrecision(ExecState* exec)
+         return JSValue::encode(jsString(exec, UString::number(x)));
+ 
+     // Handle NaN and Infinity.
+-    if (isnan(x) || isinf(x))
++    if (std::isnan(x) || isinf(x))
+         return JSValue::encode(jsString(exec, UString::number(x)));
+ 
+     // Convert to decimal with rounding.
+@@ -241,7 +241,7 @@ EncodedJSValue JSC_HOST_CALL numberProtoFuncToString(ExecState* exec)
+     char s[2048 + 3];
+     const char* lastCharInString = s + sizeof(s) - 1;
+     double x = v.uncheckedGetNumber();
+-    if (isnan(x) || isinf(x))
++    if (std::isnan(x) || isinf(x))
+         return JSValue::encode(jsString(exec, UString::number(x)));
+ 
+     bool isNegative = x < 0.0;
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/DateMath.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/DateMath.cpp
+index b181ee2..723d888 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/DateMath.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/DateMath.cpp
+@@ -91,7 +91,6 @@
+ #include <stdint.h>
+ #include <time.h>
+ 
+-
+ #if HAVE(ERRNO_H)
+ #include <errno.h>
+ #endif
+@@ -998,7 +997,7 @@ double parseDateFromNullTerminatedCharacters(const char* dateString)
+     bool haveTZ;
+     int offset;
+     double ms = parseDateFromNullTerminatedCharacters(dateString, haveTZ, offset);
+-    if (isnan(ms))
++    if (std::isnan(ms))
+         return NaN;
+ 
+     // fall back to local timezone
+@@ -1092,7 +1091,7 @@ static double getDSTOffset(ExecState* exec, double ms, double utcOffset)
+ double getUTCOffset(ExecState* exec)
+ {
+     double utcOffset = exec->globalData().cachedUTCOffset;
+-    if (!isnan(utcOffset))
++    if (!std::isnan(utcOffset))
+         return utcOffset;
+     exec->globalData().cachedUTCOffset = calculateUTCOffset();
+     return exec->globalData().cachedUTCOffset;
+@@ -1144,7 +1143,7 @@ double parseDateFromNullTerminatedCharacters(ExecState* exec, const char* dateSt
+     bool haveTZ;
+     int offset;
+     double ms = WTF::parseDateFromNullTerminatedCharacters(dateString, haveTZ, offset);
+-    if (isnan(ms))
++    if (std::isnan(ms))
+         return NaN;
+ 
+     // fall back to local timezone
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/PageAllocation.h b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/PageAllocation.h
+index ad3d217..a6da78d 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/PageAllocation.h
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/PageAllocation.h
+@@ -58,7 +58,7 @@
+ 
+ #if HAVE(MMAP)
+ #include <sys/mman.h>
+-#include <unistd.h>
++/* #include <unistd.h> */
+ #endif
+ 
+ namespace WTF {
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/RandomNumberSeed.h b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/RandomNumberSeed.h
+index 0703abf..dcb5388 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/RandomNumberSeed.h
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/RandomNumberSeed.h
+@@ -35,7 +35,9 @@
+ 
+ #if OS(UNIX)
+ #include <sys/types.h>
+-#include <unistd.h>
++extern "C"{
++pid_t getpid(void);
++}
+ #endif
+ 
+ #if USE(MERSENNE_TWISTER_19937)
+@@ -62,7 +64,7 @@ inline void initializeRandomNumberGenerator()
+     // srandomdev is not guaranteed to exist on linux so we use this poor seed, this should be improved
+     timeval time;
+     gettimeofday(&time, 0);
+-    srandom(static_cast<unsigned>(time.tv_usec * getpid()));
++    srandom(static_cast<unsigned>(time.tv_usec * ::getpid()));
+ #else
+     srand(static_cast<unsigned>(time(0)));
+ #endif
+diff --git a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/dtoa.cpp b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/dtoa.cpp
+index b162543..800a0a7 100644
+--- a/src/3rdparty/webkit/Source/JavaScriptCore/wtf/dtoa.cpp
++++ b/src/3rdparty/webkit/Source/JavaScriptCore/wtf/dtoa.cpp
+@@ -1317,7 +1317,7 @@ void dtoa(DtoaBuffer result, double dd, int ndigits, bool& signOut, int& exponen
+     // roundingNone only allowed (only sensible?) with leftright set.
+     ASSERT(!roundingNone || leftright);
+ 
+-    ASSERT(!isnan(dd) && !isinf(dd));
++    ASSERT(!std::isnan(dd) && !isinf(dd));
+ 
+     int bbits, b2, b5, be, dig, i, ieps, ilim = 0, ilim0, ilim1 = 0,
+         j, j1, k, k0, k_check, m2, m5, s2, s5,
+@@ -1811,8 +1811,8 @@ static ALWAYS_INLINE void copyAsciiToUTF16(UChar* next, const char* src, unsigne
+ unsigned numberToString(double d, NumberToStringBuffer buffer)
+ {
+     // Handle NaN and Infinity.
+-    if (isnan(d) || isinf(d)) {
+-        if (isnan(d)) {
++    if (std::isnan(d) || isinf(d)) {
++        if (std::isnan(d)) {
+             copyAsciiToUTF16(buffer, "NaN", 3);
+             return 3;
+         }
+diff --git a/src/3rdparty/webkit/Source/WebCore/WebCore.pri b/src/3rdparty/webkit/Source/WebCore/WebCore.pri
+index d83eec7..25e6dd5 100644
+--- a/src/3rdparty/webkit/Source/WebCore/WebCore.pri
++++ b/src/3rdparty/webkit/Source/WebCore/WebCore.pri
+@@ -326,7 +326,7 @@ mac {
+ }
+ 
+ unix:!mac:*-g++*:QMAKE_CXXFLAGS += -ffunction-sections -fdata-sections
+-unix:!mac:*-g++*:QMAKE_LFLAGS += -Wl,--gc-sections
++unix:!mac:*-g++*:QMAKE_LFLAGS += -Wl,-z,ignore
+ linux*-g++*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
+ 
+ unix|win32-g++*:QMAKE_PKGCONFIG_REQUIRES = QtCore QtGui QtNetwork
+diff --git a/src/3rdparty/webkit/Source/WebCore/bindings/js/JSDataViewCustom.cpp b/src/3rdparty/webkit/Source/WebCore/bindings/js/JSDataViewCustom.cpp
+index 48d56d8..c49baf4 100644
+--- a/src/3rdparty/webkit/Source/WebCore/bindings/js/JSDataViewCustom.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/bindings/js/JSDataViewCustom.cpp
+@@ -89,7 +89,7 @@ static JSValue getDataViewMember(ExecState* exec, DataView* imp, DataViewAccessT
+     case AccessDataViewMemberAsFloat32:
+     case AccessDataViewMemberAsFloat64: {
+         double value = (type == AccessDataViewMemberAsFloat32) ? imp->getFloat32(byteOffset, littleEndian, ec) : imp->getFloat64(byteOffset, littleEndian, ec);
+-        result = isnan(value) ? JSValue(nonInlineNaN()) : jsNumber(value);
++        result = std::isnan(value) ? JSValue(nonInlineNaN()) : jsNumber(value);
+         break;
+     } default:
+         ASSERT_NOT_REACHED();
+diff --git a/src/3rdparty/webkit/Source/WebCore/bindings/js/JSHTMLOptionsCollectionCustom.cpp b/src/3rdparty/webkit/Source/WebCore/bindings/js/JSHTMLOptionsCollectionCustom.cpp
+index d169bc4..d356fb9 100644
+--- a/src/3rdparty/webkit/Source/WebCore/bindings/js/JSHTMLOptionsCollectionCustom.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/bindings/js/JSHTMLOptionsCollectionCustom.cpp
+@@ -47,7 +47,7 @@ void JSHTMLOptionsCollection::setLength(ExecState* exec, JSValue value)
+     ExceptionCode ec = 0;
+     unsigned newLength = 0;
+     double lengthValue = value.toNumber(exec);
+-    if (!isnan(lengthValue) && !isinf(lengthValue)) {
++    if (!std::isnan(lengthValue) && !isinf(lengthValue)) {
+         if (lengthValue < 0.0)
+             ec = INDEX_SIZE_ERR;
+         else if (lengthValue > static_cast<double>(UINT_MAX))
+diff --git a/src/3rdparty/webkit/Source/WebCore/bindings/js/JSWebKitPointCustom.cpp b/src/3rdparty/webkit/Source/WebCore/bindings/js/JSWebKitPointCustom.cpp
+index e1b20ce..734242e 100644
+--- a/src/3rdparty/webkit/Source/WebCore/bindings/js/JSWebKitPointCustom.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/bindings/js/JSWebKitPointCustom.cpp
+@@ -41,9 +41,9 @@ EncodedJSValue JSC_HOST_CALL JSWebKitPointConstructor::constructJSWebKitPoint(Ex
+     if (exec->argumentCount() >= 2) {
+         x = static_cast<float>(exec->argument(0).toNumber(exec));
+         y = static_cast<float>(exec->argument(1).toNumber(exec));
+-        if (isnan(x))
++        if (std::isnan(x))
+             x = 0;
+-        if (isnan(y))
++        if (std::isnan(y))
+             y = 0;
+     }
+     return JSValue::encode(asObject(toJS(exec, jsConstructor->globalObject(), WebKitPoint::create(x, y))));
+diff --git a/src/3rdparty/webkit/Source/WebCore/css/WebKitCSSMatrix.cpp b/src/3rdparty/webkit/Source/WebCore/css/WebKitCSSMatrix.cpp
+index 26fe286..776366b 100644
+--- a/src/3rdparty/webkit/Source/WebCore/css/WebKitCSSMatrix.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/css/WebKitCSSMatrix.cpp
+@@ -105,53 +105,53 @@ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::inverse(ExceptionCode& ec) const
+ 
+ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::translate(double x, double y, double z) const
+ {
+-    if (isnan(x))
++    if (std::isnan(x))
+         x = 0;
+-    if (isnan(y))
++    if (std::isnan(y))
+         y = 0;
+-    if (isnan(z))
++    if (std::isnan(z))
+         z = 0;
+     return WebKitCSSMatrix::create(TransformationMatrix(m_matrix).translate3d(x, y, z));
+ }
+ 
+ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::scale(double scaleX, double scaleY, double scaleZ) const
+ {
+-    if (isnan(scaleX))
++    if (std::isnan(scaleX))
+         scaleX = 1;
+-    if (isnan(scaleY))
++    if (std::isnan(scaleY))
+         scaleY = scaleX;
+-    if (isnan(scaleZ))
++    if (std::isnan(scaleZ))
+         scaleZ = 1;
+     return WebKitCSSMatrix::create(TransformationMatrix(m_matrix).scale3d(scaleX, scaleY, scaleZ));
+ }
+ 
+ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::rotate(double rotX, double rotY, double rotZ) const
+ {
+-    if (isnan(rotX))
++    if (std::isnan(rotX))
+         rotX = 0;
+         
+-    if (isnan(rotY) && isnan(rotZ)) {
++    if (std::isnan(rotY) && std::isnan(rotZ)) {
+         rotZ = rotX;
+         rotX = 0;
+         rotY = 0;
+     }
+ 
+-    if (isnan(rotY))
++    if (std::isnan(rotY))
+         rotY = 0;
+-    if (isnan(rotZ))
++    if (std::isnan(rotZ))
+         rotZ = 0;
+     return WebKitCSSMatrix::create(TransformationMatrix(m_matrix).rotate3d(rotX, rotY, rotZ));
+ }
+ 
+ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::rotateAxisAngle(double x, double y, double z, double angle) const
+ {
+-    if (isnan(x))
++    if (std::isnan(x))
+         x = 0;
+-    if (isnan(y))
++    if (std::isnan(y))
+         y = 0;
+-    if (isnan(z))
++    if (std::isnan(z))
+         z = 0;
+-    if (isnan(angle))
++    if (std::isnan(angle))
+         angle = 0;
+     if (x == 0 && y == 0 && z == 0)
+         z = 1;
+@@ -160,14 +160,14 @@ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::rotateAxisAngle(double x, double y,
+ 
+ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::skewX(double angle) const
+ {
+-    if (isnan(angle))
++    if (std::isnan(angle))
+         angle = 0;
+     return WebKitCSSMatrix::create(TransformationMatrix(m_matrix).skewX(angle));
+ }
+ 
+ PassRefPtr<WebKitCSSMatrix> WebKitCSSMatrix::skewY(double angle) const
+ {
+-    if (isnan(angle))
++    if (std::isnan(angle))
+         angle = 0;
+     return WebKitCSSMatrix::create(TransformationMatrix(m_matrix).skewY(angle));
+ }
+diff --git a/src/3rdparty/webkit/Source/WebCore/html/canvas/IntegralTypedArrayBase.h b/src/3rdparty/webkit/Source/WebCore/html/canvas/IntegralTypedArrayBase.h
+index 0b26844..7f534cd 100644
+--- a/src/3rdparty/webkit/Source/WebCore/html/canvas/IntegralTypedArrayBase.h
++++ b/src/3rdparty/webkit/Source/WebCore/html/canvas/IntegralTypedArrayBase.h
+@@ -43,7 +43,7 @@ class IntegralTypedArrayBase : public TypedArrayBase<T> {
+     {
+         if (index >= TypedArrayBase<T>::m_length)
+             return;
+-        if (isnan(value)) // Clamp NaN to 0
++        if (std::isnan(value)) // Clamp NaN to 0
+             value = 0;
+         // The double cast is necessary to get the correct wrapping
+         // for out-of-range values with Int32Array and Uint32Array.
+diff --git a/src/3rdparty/webkit/Source/WebCore/page/DOMWindow.cpp b/src/3rdparty/webkit/Source/WebCore/page/DOMWindow.cpp
+index a86c1af..ba482bf 100644
+--- a/src/3rdparty/webkit/Source/WebCore/page/DOMWindow.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/page/DOMWindow.cpp
+@@ -333,13 +333,13 @@ void DOMWindow::adjustWindowRect(const FloatRect& screen, FloatRect& window, con
+     ASSERT(isfinite(window.height()));
+     
+     // Update window values if new requested values are not NaN.
+-    if (!isnan(pendingChanges.x()))
++    if (!std::isnan(pendingChanges.x()))
+         window.setX(pendingChanges.x());
+-    if (!isnan(pendingChanges.y()))
++    if (!std::isnan(pendingChanges.y()))
+         window.setY(pendingChanges.y());
+-    if (!isnan(pendingChanges.width()))
++    if (!std::isnan(pendingChanges.width()))
+         window.setWidth(pendingChanges.width());
+-    if (!isnan(pendingChanges.height()))
++    if (!std::isnan(pendingChanges.height()))
+         window.setHeight(pendingChanges.height());
+     
+     // Resize the window to between 100 and the screen width and height.
+diff --git a/src/3rdparty/webkit/Source/WebCore/page/WindowFeatures.cpp b/src/3rdparty/webkit/Source/WebCore/page/WindowFeatures.cpp
+index 7564152..cea8c99 100644
+--- a/src/3rdparty/webkit/Source/WebCore/page/WindowFeatures.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/page/WindowFeatures.cpp
+@@ -225,7 +225,7 @@ float WindowFeatures::floatFeature(const DialogFeaturesMap& features, const char
+     // return the number 0 and false for ok. But "0q" should yield the minimum rather than the default.
+     bool ok;
+     double parsedNumber = it->second.toDouble(&ok);
+-    if ((parsedNumber == 0 && !ok) || isnan(parsedNumber))
++    if ((parsedNumber == 0 && !ok) || std::isnan(parsedNumber))
+         return defaultValue;
+     if (parsedNumber < min || max <= min)
+         return min;
+diff --git a/src/3rdparty/webkit/Source/WebCore/xml/XPathFunctions.cpp b/src/3rdparty/webkit/Source/WebCore/xml/XPathFunctions.cpp
+index 1807172..06c6b93 100644
+--- a/src/3rdparty/webkit/Source/WebCore/xml/XPathFunctions.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/xml/XPathFunctions.cpp
+@@ -507,14 +507,14 @@ Value FunSubstring::evaluate() const
+ {
+     String s = arg(0)->evaluate().toString();
+     double doublePos = arg(1)->evaluate().toNumber();
+-    if (isnan(doublePos))
++    if (std::isnan(doublePos))
+         return "";
+     long pos = static_cast<long>(FunRound::round(doublePos));
+     bool haveLength = argCount() == 3;
+     long len = -1;
+     if (haveLength) {
+         double doubleLen = arg(2)->evaluate().toNumber();
+-        if (isnan(doubleLen))
++        if (std::isnan(doubleLen))
+             return "";
+         len = static_cast<long>(FunRound::round(doubleLen));
+     }
+@@ -664,7 +664,7 @@ Value FunCeiling::evaluate() const
+ 
+ double FunRound::round(double val)
+ {
+-    if (!isnan(val) && !isinf(val)) {
++    if (!std::isnan(val) && !isinf(val)) {
+         if (signbit(val) && val >= -0.5)
+             val *= 0; // negative zero
+         else
+diff --git a/src/3rdparty/webkit/Source/WebCore/xml/XPathValue.cpp b/src/3rdparty/webkit/Source/WebCore/xml/XPathValue.cpp
+index 29e211e..5b7c518 100644
+--- a/src/3rdparty/webkit/Source/WebCore/xml/XPathValue.cpp
++++ b/src/3rdparty/webkit/Source/WebCore/xml/XPathValue.cpp
+@@ -76,7 +76,7 @@ bool Value::toBoolean() const
+         case BooleanValue:
+             return m_bool;
+         case NumberValue:
+-            return m_number != 0 && !isnan(m_number);
++            return m_number != 0 && !std::isnan(m_number);
+         case StringValue:
+             return !m_data->m_string.isEmpty();
+     }
+@@ -125,7 +125,7 @@ String Value::toString() const
+         case StringValue:
+             return m_data->m_string;
+         case NumberValue:
+-            if (isnan(m_number))
++            if (std::isnan(m_number))
+                 return "NaN";
+             if (m_number == 0)
+                 return "0";
+-- 
+1.8.3.4
+
