@@ -93,3 +93,11 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --disable-staticD64_LIBS_ONLY = 1
 
 include
+post-install-modulated:
+	# Make -pthread option Studio-compatible
+	# The replacement comes from gcc-4.8 -dumpspecs
+	perl -i -p \
+          -e 's,-pthread,-lpthread -D_REENTRANT -D_PTHREADS,' \
+          $(DESTDIR)$(libdir)/pkgconfig/*.pc
+	@$(MAKECOOKIE)
+
