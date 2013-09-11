@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = fusioninventory-agent
-VERSION = 2.3.0
+VERSION = 2.3.1
 GARTYPE = v2
 CATEGORIES = cpan
 
@@ -70,7 +70,6 @@ RUNTIME_DEP_PKGS_CSWfi-agent-task-esx = CSWfi-agent
 PKGFILES_CSWfi-agent-task-esx  = $(bindir)/fusioninventory-esx
 PKGFILES_CSWfi-agent-task-esx += $(mandir)/man1/fusioninventory-esx.1
 PKGFILES_CSWfi-agent-task-esx += $(datadir)/fusioninventory/lib/FusionInventory/Agent/Task/ESX.pm
-PKGFILES_CSWfi-agent-task-esx += $(datadir)/fusioninventory/lib/FusionInventory/Agent/SOAP/.*
 CHECKPKG_OVERRIDES_CSWfi-agent-task-esx += surplus-dependency|CSWperl
 
 PACKAGES += CSWfi-agent-task-network
@@ -84,7 +83,6 @@ PKGFILES_CSWfi-agent-task-network += $(mandir)/man1/fusioninventory-netinventory
 PKGFILES_CSWfi-agent-task-network += $(datadir)/fusioninventory/lib/FusionInventory/Agent/Task/NetDiscovery.*
 PKGFILES_CSWfi-agent-task-network += $(datadir)/fusioninventory/lib/FusionInventory/Agent/Task/NetInventory.*
 PKGFILES_CSWfi-agent-task-network += $(datadir)/fusioninventory/lib/FusionInventory/Agent/SNMP.*
-PKGFILES_CSWfi-agent-task-network += $(datadir)/fusioninventory/lib/FusionInventory/Agent/Tools/SNMP.pm
 CHECKPKG_OVERRIDES_CSWfi-agent-task-network += surplus-dependency|CSWperl
 
 PACKAGES += CSWfi-agent-task-deploy
