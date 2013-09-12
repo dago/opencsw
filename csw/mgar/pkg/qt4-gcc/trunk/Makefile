@@ -380,6 +380,18 @@ RUNTIME_DEP_PKGS_CSWlibqtxml4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibqtxml4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibqtxml4 += CSWlibqtcore4
 
+PACKAGES += CSWlibqtwebkit4
+CATALOGNAME_CSWlibqtwebkit4 = libqtwebkit4
+PKGFILES_CSWlibqtwebkit4 += $(call baseisadirs,$(libdir),libQtWebKit\.so\.4\.9\.4)
+PKGFILES_CSWlibqtwebkit4 += $(call baseisadirs,$(libdir),libQtWebKit\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibqtwebkit4 += $(DESCRIPTION), libQtWebKit.so.4
+
+PACKAGES += CSWlibqtxmlpatterns4
+CATALOGNAME_CSWlibqtxmlpatterns4 = libqtxmlpatterns4
+PKGFILES_CSWlibqtxmlpatterns4 += $(call baseisadirs,$(libdir),libQtXmlPatterns\.so\.4\.8\.5)
+PKGFILES_CSWlibqtxmlpatterns4 += $(call baseisadirs,$(libdir),libQtXmlPatterns\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibqtxmlpatterns4 += $(DESCRIPTION), libQtXmlPatterns.so.4
+
 PACKAGES += CSWqt4-doc
 SPKG_DESC_CSWqt4G_DESC_CSWqt4-gxx-doc += $(DESCRIPTION), documentation
 # Catch-aldoc = 1
