@@ -399,9 +399,13 @@ test-custom:
 # prune tests from the destination directory (we don't want them in
 # our packages isn't it?)
 post-install:
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(includedir)/QtCore
 	gtar --directory=$(WORKSRC)/include/QtCore --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtCore --extract --file=-
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(includedir)/QtDeclarative
 	gtar --directory=$(WORKSRC)/include/QtDeclarative --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtDeclarative --extract --file=-
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(includedir)/QtGui
 	gtar --directory=$(WORKSRC)/include/QtGui --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtGui --extract --file=-
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(includedir)/QtScript
 	gtar --directory=$(WORKSRC)/include/QtScript --create --file=- private | gtar --directory=$(DESTDIR)$(includedir)/QtScript --extract --file=-
 	cd $(WORKSRC) && gtar --create --file=- src/corelib/*/*_p.h src/declarative/*/*_p.h src/gui/*/*_p.h src/script/*/*_p.h | gtar --directory=$(DESTDIR)$(includedir) --extract --file=-
 	rm -rf $(DESTDIR)/$(prefix)/tests
