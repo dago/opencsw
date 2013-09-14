@@ -204,8 +204,7 @@ class Srv4CatalogAssignment(object):
           srv4_to_remove = pkg_in_catalog.srv4file
           c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
 
-      # Retrieving logged in user name from the HTTP environment.
-      # This does not work on the buildfarm. :-(
+      # This is set by basic HTTP auth.
       username = web.ctx.env.get('REMOTE_USER')
 
       c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, who=username)

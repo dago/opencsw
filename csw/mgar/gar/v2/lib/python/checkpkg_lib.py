@@ -1185,7 +1185,7 @@ class Catalog(SqlobjectHelperMixin):
         osrel=sqo_osrel,
         catrel=sqo_catrel,
         srv4file=sqo_srv4,
-        created_by=getpass.getuser())
+        created_by=who)
 
   def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
