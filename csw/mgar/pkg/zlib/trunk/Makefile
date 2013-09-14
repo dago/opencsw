@@ -25,7 +25,7 @@ DISTFILES  =xz
 DISTFILES += COPYING
 
 PATCHFILES += 0003-Add-h-to-the-linker-invocation.patch
-PATCHFILES += 0004-remove-fast-from-configure.patch+= configure.diff
+= configure.diff
 
 PACKAGES += CSWlibz1
 SPKG_DESC_CSWlibz1 = Zlib data compression library, libz.so.1
