@@ -268,9 +268,13 @@ class RestMaintainerList(object):
 
 
 class RestMaintainerDetail(object):
+
   def GET(self, id):
-    maintainer = models.Maintainer.selectBy(id=id).getOne()
-    return cjson.encode(maintainer.GetRestRepr())
+    try:
+      maintainer = models.Maintainer.selectBy(id=id).getOne()
+      return cjson.encode(maintainer.GetRestRepr())
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
 
 
 class RestMaintainerDetailByName(object):
