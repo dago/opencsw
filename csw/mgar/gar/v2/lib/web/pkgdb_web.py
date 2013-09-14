@@ -477,6 +477,7 @@ class Srv4ByCatAndCatalogname(object):
 
   def GET(self, catrel_name, arch_name, osrel_name, catalogname):
     """Get a srv4 reference by catalog ane catalogname."""
+    web.header('Access-Control-Allow-Origin', '*')
     try:
       sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
@@ -500,7 +501,6 @@ class Srv4ByCatAndCatalogname(object):
       srv4 = res.getOne()
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
-      web.header('Access-Control-Allow-Origin', '*')
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
       raise web.notfound()
