@@ -57,6 +57,7 @@ urls_rest = (
       'Srv4ByCatAndCatalogname',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/',
       'Srv4ByCatAndPkgname',
+  r'/rest/maintainers/', 'RestMaintainerList',
   r'/rest/maintainers/([0-9]+)/', 'RestMaintainerDetail',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
@@ -255,6 +256,14 @@ class MaintainerDetail(object):
         ),
     ).orderBy('basename')
     return render.MaintainerDetail(maintainer, pkgs)
+
+
+class RestMaintainerList(object):
+
+  def GET(self):
+    maintainers = models.Maintainer.select().orderBy('email')
+    maintainers = [m.GetRestRepr() for m in maintainers]
+    return cjson.encode(maintainers)
 
 
 class RestMaintainerDetail(object):
