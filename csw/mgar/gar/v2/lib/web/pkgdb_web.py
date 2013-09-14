@@ -224,8 +224,11 @@ class CatalogList(object):
 class CatalogDetail(object):
   def GET(self, catrel_name, arch_name, osrel_name):
     cat_name = " ".join((catrel_name, arch_name, osrel_name))
-    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     t2 = time.time()
     pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
     t3 = time.time()
@@ -342,8 +345,11 @@ class ErrorTagList(object):
 class RestCatalogDetail(object):
 
   def GET(self, catrel_name, arch_name, osrel_name):
-    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
     if not len(pkgs):
       raise web.notfound()
@@ -513,8 +519,11 @@ class Srv4ByCatAndPkgname(object):
   def GET(self, catrel_name, arch_name, osrel_name, pkgname):
     """Get a srv4 reference by catalog ane pkgname."""
     configuration.SetUpSqlobjectConnection()
-    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     join = [
         sqlbuilder.INNERJOINOn(None,
           models.Srv4FileInCatalog,
@@ -608,8 +617,11 @@ class CatalogForGeneration(object):
     catalogname version_string pkgname
     basename md5_sum size deps category i_deps
     """
-    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
     def GenCatalogEntry(row):
       i_deps = cjson.decode(row[7])
