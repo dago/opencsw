@@ -1180,17 +1180,20 @@ class Catalog(SqlobjectHelperMixin):
                       sqo_srv4, osrel, arch, catrel)
       # Our srv4 is already part of that catalog.
       return
+    # SQL INSERT happens here.
     obj = m.Srv4FileInCatalog(
         arch=sqo_arch,
         osrel=sqo_osrel,
         catrel=sqo_catrel,
         srv4file=sqo_srv4,
         created_by=who)
+    # The package is now in the catalog.
 
   def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
     try:
+      # There's a race condition in here. Maybe SQLObject allows to delete atomically?
       sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
           sqlobject.AND(
             m.Srv4FileInCatalog.q.arch==sqo_arch,
