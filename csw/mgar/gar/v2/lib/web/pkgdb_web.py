@@ -39,6 +39,7 @@ urls_html = (
   r'/catalognames/([^/]+)/', 'Catalogname',
 )
 urls_rest = (
+  r'/rest/svr4/recent/', 'RestSrv4List',
   r'/rest/catalogs/', 'RestCatalogList',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'RestCatalogDetail',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
@@ -513,6 +514,28 @@ class Srv4ByCatAndPkgname(object):
       return cjson.encode(None)
     except sqlobject.dberrors.OperationalError, e:
       raise web.internalerror(e)
+
+
+class RestSrv4List(object):
+
+  def GET(self):
+    pkgs = models.Srv4FileStats.select().orderBy('-mtime')[:30]
+    now = datetime.datetime.now()
+    def Ago(timedelta):
+      # Not sure why there is a time difference between mysql and the datetime
+      # module.
+      timezone_diff = 1.0
+      return "%.1fh" % (timedelta.seconds / 60.0 / 60.0 - timezone_diff)
+    pkgs_ago = [(x, Ago(now - x.mtime)) for x in pkgs]
+    def PrepareForJson(pkg_ago):
+      pkg, ago = pkg_ago
+      _, pkg_dict = pkg.GetRestRepr(quick=True)
+      pkg_dict['ago'] = ago
+      pkg_dict['maintainer'] = pkg.maintainer.GetRestRepr()
+      return pkg_dict
+    response = cjson.encode([PrepareForJson(x) for x in pkgs_ago])
+    web.header('Content-Length', str(len(response)))
+    return response
 
 
 class RestCatalogList(object):
