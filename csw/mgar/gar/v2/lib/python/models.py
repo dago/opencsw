@@ -528,6 +528,45 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
   return rows
 
 
+def GetRecentlyBuiltPackages():
+  join = [
+      # sqlbuilder.INNERJOINOn(None,
+      #   Srv4FileInCatalog,
+      #   Srv4FileInCatalog.q.srv4file==Srv4FileStats.q.id),
+      # sqlbuilder.INNERJOINOn(None,
+      #   CatalogGenData,
+      #   Srv4FileStats.q.md5_sum==CatalogGenData.q.md5_sum),
+  ]
+  where = sqlbuilder.AND(
+        # Srv4FileStats.q.use_to_generate_catalogs==True,
+  )
+  select = sqlbuilder.Select(
+      [
+       'srv4_file_stats.md5_sum', # Hardcoded table name, is it portable?
+       'srv4_file_stats.catalogname',
+       # 'version_string',
+       # 'pkgname',
+       # 'basename',
+       # 'size',
+       # 'deps',
+       # 'i_deps',
+       # 'pkginfo_name',
+       # The above columns are used to generate catalogs.
+       # Additional columns can be added blow.
+       'srv4_file_stats.maintainer_id',
+       'srv4_file_stats.mtime',
+       # 'created_on',
+       # 'created_by',
+       ],
+      where=where,
+      orderBy='-mtime',
+      join=join,
+      limit=30)
+  query = sqlobject.sqlhub.processConnection.sqlrepr(select)
+  rows = sqlobject.sqlhub.processConnection.queryAll(query)
+  return rows
+
+
 def GetSqoTriad(osrel, arch, catrel):
   sqo_osrel = OsRelease.selectBy(short_name=osrel).getOne()
   sqo_arch = Architecture.selectBy(name=arch).getOne()
