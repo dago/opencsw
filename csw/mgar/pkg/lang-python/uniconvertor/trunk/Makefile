@@ -11,9 +11,24 @@ DESCRIPTION = UniConvertor is a universal vector graphics translator
 MASTER_SITES = http://uniconvertor.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.gz
 
+REINPLACEMENTS += pyimport
+REINPLACE_MATCH_pyimport = imaging.Image, imaging.ImageChops
+REINPLACE_WITH_pyimport = imaging
+REINPLACE_FILES_pyimport += src/app/scripts/export_raster.py
+
 PACKAGES += CSWuniconvertor
 SPKG_DESC_CSWuniconvertor = UniConvertor is a universal vector graphics translator
 RUNTIME_DEP_PKGS_CSWuniconvertor += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWuniconvertor += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWuniconvertor += CSWlibpython2-7-1-0
+
+# Can't track this with checkpkg
+RUNTIME_DEP_PKGS_CSWuniconvertor += CSWpy-sk1libs
+CHECKPKG_OVERRIDES_CSWuniconvertor += surplus-dependency|CSWpy-sk1libs
+
+# Again /usr/share/fonts/ ...
+CHECKPKG_OVERRIDES_CSWuniconvertor += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/uniconvertor/app/conf/configurator.py
+CHECKPKG_OVERRIDES_CSWuniconvertor += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/uniconvertor/app/conf/configurator.py
 
 # This is intentional as it is a program, not a module
 CHECKPKG_OVERRIDES_CSWuniconvertor += pkgname-does-not-start-with-CSWpy-
