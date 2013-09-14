@@ -515,7 +515,7 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
        'version_string',
        'pkgname',
        'basename',
-       'srv4_file_stats.md5_sum',
+       'srv4_file_stats.md5_sum', # Hardcoded table name, is it portable?
        'size',
        'deps',
        'i_deps',
