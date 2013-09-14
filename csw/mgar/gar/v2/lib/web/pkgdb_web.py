@@ -499,7 +499,7 @@ class Srv4ByCatAndCatalogname(object):
     )
     try:
       srv4 = res.getOne()
-      mimetype, data = srv4.GetRestRepr()
+      mimetype, data = srv4.GetRestRepr(quick=True)
       web.header('Content-type', mimetype)
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
