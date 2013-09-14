@@ -58,6 +58,7 @@ urls_rest = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/',
       'Srv4ByCatAndPkgname',
   r'/rest/maintainers/', 'RestMaintainerList',
+  r'/rest/maintainers/by-email/', 'RestMaintainerDetailByName', # with ?email=...
   r'/rest/maintainers/([0-9]+)/', 'RestMaintainerDetail',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
@@ -270,6 +271,18 @@ class RestMaintainerDetail(object):
   def GET(self, id):
     maintainer = models.Maintainer.selectBy(id=id).getOne()
     return cjson.encode(maintainer.GetRestRepr())
+
+
+class RestMaintainerDetailByName(object):
+
+  def GET(self):
+    user_data = web.input()
+    email = user_data.email
+    try:
+      maintainer = models.Maintainer.selectBy(email=email).getOne()
+      return cjson.encode(maintainer.GetRestRepr())
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
 
 
 class MaintainerCheckpkgReport(object):
