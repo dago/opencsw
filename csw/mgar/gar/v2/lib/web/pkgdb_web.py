@@ -225,8 +225,7 @@ class CatalogDetail(object):
     sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     t2 = time.time()
-    pkgs = models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
-    pkgs = list(pkgs)
+    pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
     t3 = time.time()
     timeinfo = "Query evaluation: %.2fs" % (t3-t2)
     return render.CatalogDetail(cat_name, pkgs, timeinfo, len(pkgs))
@@ -315,6 +314,7 @@ class ErrorTagList(object):
 
 
 class RestCatalogDetail(object):
+
   def GET(self, catrel_name, arch_name, osrel_name):
     sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
@@ -339,7 +339,7 @@ class PkgnameByFilename(object):
     db_catalog = checkpkg_lib.Catalog()
     try:
       pkgs = db_catalog.GetPkgByPath(filename, osrel, arch, catrel)
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound:
       raise web.notfound()
     web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkgname-list')
     web.header('X-Rest-Info', 'I could tell you about the format, but I won\'t')
