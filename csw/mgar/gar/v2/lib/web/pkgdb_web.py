@@ -50,6 +50,8 @@ urls_rest = (
       'PkgnamesAndPathsByBasedir',  # with ?basedir=...
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/',
       'CatalogForGeneration',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/timing/',
+      'CatalogTiming',
   # Query by catalog release, arch, OS release and catalogname
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/',
       'Srv4ByCatAndCatalogname',
@@ -610,6 +612,39 @@ class CatalogForGeneration(object):
       return entry
     entries_list = [GenCatalogEntry(row) for row in rows]
     response = cjson.encode([tuple(x) for x in entries_list])
+    web.header('Content-Length', str(len(response)))
+    return response
+
+
+class CatalogTiming(object):
+
+  def GET(self, catrel_name, arch_name, osrel_name):
+    """A list of tuples, aligning with the catalog format.
+
+    catalogname version_string pkgname
+    basename md5_sum size deps category i_deps
+    """
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+        osrel_name, arch_name, catrel_name)
+    rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
+    def PrepareForJson(row):
+      # The size (5th row) is returned as a large integer, which cannot be represented
+      # in JSON.
+      # 'maintainer', #9
+      # 'mtime',      #10
+      # 'created_on', #11
+      # 'created_by', #12
+      newrow = list(row)
+      newrow[5] = int(newrow[5])
+      newrow[6] = cjson.decode(newrow[6])
+      newrow[7] = cjson.decode(newrow[7])
+      if newrow[10]:
+        newrow[10] = newrow[10].isoformat()
+      if newrow[11]:
+        newrow[11] = newrow[11].isoformat()
+      return newrow
+    rows = [PrepareForJson(x) for x in rows]
+    response = cjson.encode(rows)
     web.header('Content-Length', str(len(response)))
     return response
 

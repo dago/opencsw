@@ -519,7 +519,14 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
        'size',
        'deps',
        'i_deps',
-       'pkginfo_name'],
+       'pkginfo_name',
+       # The above columns are used to generate catalogs.
+       # Additional columns can be added blow.
+       'maintainer_id',
+       'mtime',
+       'created_on',
+       'created_by',
+       ],
       where=where,
       orderBy='catalogname',
       join=join)
