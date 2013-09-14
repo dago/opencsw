@@ -50,7 +50,7 @@ Voila! You have installed your first package!
 
 
 ------------------
-Selecting a mirror
+Selecting catalog and mirror
 ------------------
 
 Now that you are about to install lots of stuff it may be a good time to select
