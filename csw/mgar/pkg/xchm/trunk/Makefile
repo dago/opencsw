@@ -18,7 +18,7 @@ PATCHFILES += 0003-Use-inttypes-instead-of-stdint.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(BUILD_DEP_PKGS += CSWwxwidgets-dev
-BUILD_DEP_PKGS += CSWlibncurses-dev+(?:\.\d+)*).tar.gz
+BUILD_DEP_PKGS += CSWlibncurses-dev+BUILD_DEP_PKGS += CSWlibchm-dev+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWxchm  = CSWchmlib
 RUNTIME_DEP_PKGS_CSWxchm += CSWwxwidgetscommon
