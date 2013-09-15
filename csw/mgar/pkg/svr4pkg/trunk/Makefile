@@ -2,18 +2,33 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = svr4pkg
-VERSION = X.Y
+VERSION = 0.1
 GARTYPE = v2
 
-DESCRIPTION = Brief description
+DESCRIPTION = Basic perl implementation of solaris native svr4 packages tools
 define BLURB
-  Long description
+  Basic perl implementation of solaris native svr4 packages tools
 endef
 
-MASTER_SITES =
-DISTFILES  = $(DISTNAME).tar.gz
+GITHUB_USER = yannrouillard
+MASTER_SITES = $(GITHUB_MIRROR)
+DISTNAME = $(GITHUB_USER)-$(NAME)-35370d6
+DISTFILES = $(NAME)-$(VERSION)$(GITHUB_BALL_EXT)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+ARCHALL = 1
+
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+TEST_SCRIPTS =
+INSTALL_SCRIPTS = custom
 
 include gar/category.mk
+
+install-custom:
+	@echo " ==> Installing $(NAME)"
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall $(WORKSRC)/svr4pkg $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(docdir)$(NAME)
+	ginstall $(WORKSRC)/README.md $(DESTDIR)$(docdir)$(NAME)
+	@$(MAKECOOKIE)
 
