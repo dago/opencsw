@@ -15,6 +15,12 @@ MASTER_SITES = $(GITHUB_MIRROR)
 DISTNAME = $(GITHUB_USER)-$(NAME)-35370d6
 DISTFILES = $(NAME)-$(VERSION)$(GITHUB_BALL_EXT)
 
+# We disable inclusion of CSWcommon by default as
+# this package could be installed before anything
+COMMON_PKG_DEPENDS = 
+# We disable the checkpkg alarms related
+CHECKPKG_OVERRIDES_CSWsvr4pkg += missing-dependency|
+
 ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
