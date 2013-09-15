@@ -24,10 +24,15 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
+NATIVE_TOOLS = pkgadd pkgrm pkginfo pkgchk pkgparam
+
 install-custom:
 	@echo " ==> Installing $(NAME)"
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/svr4pkg $(DESTDIR)$(bindir)
+	cd "$(DESTDIR)$(bindir)" && for TOOL in $(NATIVE_TOOLS); do \
+	    gln -sf svr4pkg "$$TOOL"; \
+	done
 	ginstall -d $(DESTDIR)$(docdir)$(NAME)
 	ginstall $(WORKSRC)/README.md $(DESTDIR)$(docdir)$(NAME)
 	@$(MAKECOOKIE)
