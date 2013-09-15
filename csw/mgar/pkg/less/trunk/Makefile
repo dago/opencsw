@@ -1,5 +1,5 @@
 NAME = less
-VERSION = 451
+VERSION = 458
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -33,4 +33,4 @@ TEST_TARGET =
 # a default.
 CHECKPKG_OVERRIDES_CSWless += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/less.1
 
-include gar/category.mk
+inclu
