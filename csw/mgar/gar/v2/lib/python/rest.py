@@ -262,6 +262,14 @@ class RestClient(object):
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
+  def GetCatalogTimingInformation(self, catrel, arch, osrel):
+    url = (
+      self.rest_url
+      + self.PKGDB_APP
+      + "/catalogs/%s/%s/%s/timing/" % (catrel, arch, osrel))
+    data = urllib2.urlopen(url).read()
+    return cjson.decode(data)
+
 
 class CachedPkgstats(object):
   """Class responsible for holding and caching package stats.
