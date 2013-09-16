@@ -860,6 +860,13 @@ configure-%/waf:
 	cd $* && $(CONFIGURE_ENV) ./waf configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
+PYCONFIGURE_CMD = config
+configure-%/setup.py:
+	@echo " ==> Running setup.py $(PYBUILD_TYPE) in $*"
+	@( cd $* ; $(BUILD_ENV) $(PYTHON_EXECUTABLE) ./setup.py $(PYCONFIGURE_CMD) $(CONFIGURE_ARGS) )
+	@$(MAKECOOKIE)
+
+
 #################### BUILD RULES ####################
 
 # build from a standard gnu-style makefile's default rule.
