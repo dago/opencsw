@@ -11,14 +11,11 @@ endef
 SF_PROJ = mad
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION)$(REV).tar.gz
-DISTFILES += id3tag.pc-32 id3tag.pc-64
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES += id3tag.pc-GARCOMPILER = GCC4
 
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
 
-RUNTIME_DEP_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWlibz1EP_PKGS = CSWzlib
 
 BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
