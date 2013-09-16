@@ -2,8 +2,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = LibreCAD
-VERSION = 2.0.0beta2
-# GIT_VERSION = 216dc66b2a
+VERSION = 2.0.0rc2
+GIT_VERSION = $(VERSION)
 GARTYPE = v2
 CATEGORIES = gnome
 
@@ -24,7 +24,7 @@ MASTER_SITES =
 # DISTFILES  = $(DISTNAME).tar.gz
 GIT_REPOS = http://github.com/$(NAME)/$(NAME).git
 GIT_USE_PROXY = 1
-# GIT_TREEISH_LibreCAD.git = $(GIT_VERSION)
+GIT_TREEISH_LibreCAD.git = $(GIT_VERSION)
 
 GARCOMPILER = GNU
 # prefix = $(BUILD_PREFIX)/gxx
@@ -40,7 +40,7 @@ BUILD_DEP_PKGS += CSWmuparser-dev
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 
-PACKAGES += CSWlibreCAD
+PACKAGES = CSWlibreCAD
 CATALOGNAME_CSWlibreCAD = libreCAD
 PKGFILES_CSWlibreCAD += $(call baseisadirs,$(bindir),.*)
 PKGFILES_CSWlibreCAD += $(datadir)/$(call tolower,$(NAME))/.*
