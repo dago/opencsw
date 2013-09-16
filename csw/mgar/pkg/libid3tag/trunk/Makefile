@@ -1,7 +1,7 @@
-NAME    = libid3tag
-VERSION = 0.15.1
-REV     = b
-CATEGORIES = lib
+NAME      = libid3tag
+VERSION   = 0.15.1
+GARSUBREV = b
+GARTYPE  IES = lib
 GARTYPE = v2
 
 DESCRIPTION = A library for reading and (eventually) writing ID3 tags
@@ -10,17 +10,17 @@ endef
 
 SF_PROJ = mad
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION)$(REV).tar.gz
+DISTFILES  = $(NGARSUBAME)-$(VERSION)$(REV).tar.gz
 DISTFILES += id3tag.pc-GARCOMPILER = GCC4
 
-WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(GARSUBREV)
 
-RUNTIME_DEP_PKGS = CSWlibz1EP_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWlibz1
 
 BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 
-CONFIGURE_ARGSPKG_VERSION := $(SPKG_VERSION)_rev=$(REV)
+CONFIGURE_ARGS = $(DIRPATHS)
 
 PACKAGES += CSWlibid3tag0
 CATALOGNAME_CSWlibid3tag0 = libid3tag0
@@ -37,7 +37,7 @@ SPKG_DESC_CSWlibid3tag-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibid3tag-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibid3tag-dev += CSWlibid3tag0
 
-include gar/category.mkRSION)_rev=$(REV)
+include gar/category.mkRSSPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)RSION)_rev=$(REV)
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(libdir)/pkgconfig
