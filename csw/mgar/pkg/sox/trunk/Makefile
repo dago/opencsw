@@ -1,5 +1,5 @@
 NAME = sox
-VERSION = 14.4.0
+VERSION = 14.4.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,12 +11,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES bz2$(DISTNAME).tar.gz
+DISTFILES bz2$(GARCOMPILER = GCC4$(DISTNAME).tar.gz
 
 # There is a hack in there to rewind pipes when detecting file formats.
-# As the FILE struct is opaque in 64 bit we must disable this for 64 bit.
-# But as we only need the library in 64 bit anyway this shouldn't hurt.
-PATCHFILES = 0001-Disable-stdio-hack-to-rePATCHFILES += 0001-Fix-SunStudio-version-string.patch(?:\.\d+)*).tar.gz
+# As the FILE struct is opaque in 64 bit we:
+# I believe the behaviour should be consistent in both 32 and 64, and
+# anyway, rewinding a *pipe*?!
+PATCHFILES = 0001-Disable-stdio-hack-to-rewind-pipes.patch(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://sox.BUILD_DEP_PKGS += CSWlibvorbis-dev
 BUILD_DEP_PKGS += CSWlibogg-dev
@@ -28,7 +29,7 @@ BUILD_DEP_PKGS += CSWlibwavpack-dev
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibmagic-dev
 BUILD_DEP_PKGS += CSWlibmp3lame-dev
-BUILD_DEP_PKGS += CSWlibsndfile
+BUILD_DEP_PKGS += CSWlibsndfile-dev
 BUILD_DEP_PKGS += CSWlibid3tagx.sourceforge.net/
 
 PACKAGES += CSWsox
