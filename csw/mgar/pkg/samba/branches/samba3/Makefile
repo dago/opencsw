@@ -26,10 +26,10 @@ DISTFILES += smb.conf
 # This is taken from the old Samba package
 DISTFILESPATCHFILES += 0001-nss_winbind.patch
 PATCHFILES += 0002-smbd-patch-for-setgroups.c.patch
-PATCHFILES += 0003-rename-nss-modules.patchESGARCOMPILER=SOS12U3ES += cswkrb5.conf
-
-#What needs to be fixed:
-# Split libs and packages
+PATCHFILES += 0003-rename-nss-modules.patchES# Studio 12 is the last supported on Solaris 9
+GARCOMPILER-5.9  = SOS12
+GARCOMPILER-5.10 = SOS12U3
+GARCOMPILER = $(GARCOMPILER-$(GAROSREL)) libs and packages
 
 BUILD_DEP_PKGS +=BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
@@ -37,7 +37,8 @@ BUILD_DEP_PKGS += CSWcups-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev
 = CSWlibtalloc-dev
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PA =  solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS +CKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACCATALOGNAME_CSWsamba= 6
 
@@ -48,7 +49,6 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibz1
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWsamba += CSWlibfam0
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibcom-err3
@@ -59,7 +59,10 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_readline6
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtevent0+= Can/man8/swat.8
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtevent0+= CDifferent dependency names on different repos
+RUNTIME_DEP_PKGS_CSWsamba_5.9  += CSWgamin
+RUNTIME_DEP_PKGS_CSWsamba_5.10 += CSWlibfam0
+RUNTIME_DEP_PKGS_CSWsamba += $(RUNTIME_DEP_PKGS_CSWsamba_$(GAROSREL))+= Can/man8/swat.8
 
 # Make one unified package for now
 OBSOLETED_BY_CSWsamba += CSWsambacommon
@@ -295,7 +298,10 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWsamba
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
 CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
-EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_LDFLAGS = -lintl
+EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_# 32 bit only on Solaris 9 - just to save build time
+BUILD64-5.9 =
+BUILD64-5.10 = 1
+BUILD64 = $(BUILD64-$(GAROSREL))lintl
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -313,8 +319,12 @@ CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-winbind
-CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
+CONFIGURE_ARGS += --with-static-modul
+# ZFS is only on S10+
+CONFIGURE_ARGS_5.9 += --with-shared-modules=odules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_a_5.10acl
 CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_adex
+$(CONFIGURE_ARGS_$(GAROSREL))
+ap_hash,idmap_adex
 CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-ads
 CONFIGURE_ARGS += --with-ldap
