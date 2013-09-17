@@ -54,8 +54,9 @@ RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibmp3lame0
 RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibgomp1
-RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibsndfile
-RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibid3tag += CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibsndfile1
+RUNTIME_DEP_PKGS_CSWlibsox2 += CSWlibid3tag0 += CSWlibmp3lame0
 
 PACKAGES += CSWlibsox-dev
 CATALOGNAME_CSWlibsox-dev = libsox_dev
