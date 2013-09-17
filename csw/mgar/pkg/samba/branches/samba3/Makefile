@@ -27,9 +27,11 @@ DISTFILES += smb.conf
 DISTFILESPATCHFILES += 0001-nss_winbind.patch
 PATCHFILES += 0002-smbd-patch-for-setgroups.c.patch
 PATCHFILES += 0003-rename-nss-modules.patchES# Studio 12 is the last supported on Solaris 9
-GARCOMPILER-5.9  = SOS12
-GARCOMPILER-5.10 = SOS12U3
-GARCOMPILER = $(GARCOMPILER-$(GAROSREL)) libs and packages
+ifeq ($(shell /usr/bin/uname -r),5.9)
+  GARCOMPILER = SOS12
+else
+  GARCOMPILER = SOS12U3
+endif libs and packages
 
 BUILD_DEP_PKGS +=BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
