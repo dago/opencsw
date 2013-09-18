@@ -32,8 +32,8 @@
 
 -QMAKE_INCDIR		= /usr/sfw/include
 -QMAKE_LIBDIR		= /usr/sfw/lib/64
-+QMAKE_INCDIR		= /opt/csw/gxx/include
-+QMAKE_LIBDIR		= /opt/csw/gxx/lib/64
++QMAKE_INCDIR		= /opt/csw/include
++QMAKE_LIBDIR		= /opt/csw/lib/64
  QMAKE_INCDIR_X11	= /usr/openwin/include
  QMAKE_LIBDIR_X11	= /usr/openwin/lib/64
  QMAKE_INCDIR_QT		= $$[QT_INSTALL_HEADERS]
@@ -45,8 +45,8 @@
 
 -QMAKE_INCDIR		= /usr/sfw/include
 -QMAKE_LIBDIR		= /usr/sfw/lib
-+QMAKE_INCDIR		= /opt/csw/gxx/include
-+QMAKE_LIBDIR		= /opt/csw/gxx/lib
++QMAKE_INCDIR		= /opt/csw/include
++QMAKE_LIBDIR		= /opt/csw/lib
  QMAKE_INCDIR_X11	= /usr/openwin/include
  QMAKE_LIBDIR_X11	= /usr/openwin/lib
  QMAKE_INCDIR_QT		= $$[QT_INSTALL_HEADERS]
