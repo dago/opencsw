@@ -1,0 +1,25 @@
+From 78ca4ca4eba27103d007b9044efa7ffda49ee949 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 18 Sep 2013 09:09:53 +0200
+Subject: [PATCH] Strings must not be thrown as exceptions
+
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 09f74e4..104ee90 100644
+--- a/setup.py
++++ b/setup.py
+@@ -60,7 +60,7 @@ class config_pcap(config.config):
+                                 print 'found', cfg
+                                 self._write_config_h(cfg)
+                                 return cfg
+-        raise "couldn't find pcap build or installation directory"
++        raise Exception("couldn't find pcap build or installation directory")
+     
+     def run(self):
+         #config.log.set_verbosity(0)
+-- 
+1.8.3.4
+
