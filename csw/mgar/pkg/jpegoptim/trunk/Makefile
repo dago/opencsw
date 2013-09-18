@@ -1,5 +1,5 @@
 NAME = jpegoptim
-VERSION = 1.2.4
+VERSION = 1.3.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -9,11 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.kokkonen.net/tjko/src/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
-PATCHFILES += 0001-Remove-Wall-reference.patch
-
-RUNTIME_DEP_PKGS = CSWjpeg
+DISTFILES  = $(NAME)-RUNTIME_DEP_PKGS += CSWlibjpeg7
+_DEP_PKGS = CSWjpeg
 
 TEST_TARGET =
 INSTALL_SCRIPTS = custom
@@ -33,5 +30,4 @@ install-custom:
 	@( cd $(WORKSRC) ; \
 	   cp -r $(NAME) $(DESTDIR)$(bindir)/$(NAME) ; \
 	   cp -r README $(DESTDIR)$(docdir)/$(NAME) ; \
-	   cp -r $(NAME).1 $(DESTDIR)$(mandir)/man1/$(NAME).1 )
-	@$(MAKECOOKIE)
+	   cp -r $(NAME).1 $(DESTDIR)$(mandir)/man1/$(NAME).1
