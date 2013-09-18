@@ -1,0 +1,24 @@
+From f51d387c2bdb7b4c302d11eff4a49ce32a09a7d9 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 18 Sep 2013 09:37:08 +0200
+Subject: [PATCH] Use a shared object if available
+
+---
+ setup.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/setup.py b/setup.py
+index 104ee90..24eaa1e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -48,6 +48,7 @@ class config_pcap(config.config):
+                     cfg['include_dirs'] = [ os.path.join(d, sd) ]
+                     for sd in ('lib', ''):
+                         for lib in (('pcap', 'libpcap.a'),
++                                    ('pcap', 'libpcap.so'),
+                                     ('pcap', 'libpcap.dylib'),
+                                     ('wpcap', 'wpcap.lib')):
+                             if os.path.exists(os.path.join(d, sd, lib[1])):
+-- 
+1.8.3.4
+

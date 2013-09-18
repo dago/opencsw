@@ -1,0 +1,25 @@
+From 39090d39583a80ed4d412bed41e837bed8414afa Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 18 Sep 2013 09:43:43 +0200
+Subject: [PATCH] include/pcap must be first to pick pcap_file()
+
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 24eaa1e..7a0728f 100644
+--- a/setup.py
++++ b/setup.py
+@@ -42,7 +42,7 @@ class config_pcap(config.config):
+             dirs = [ '/usr', sys.prefix ] + glob.glob('/opt/libpcap*') + \
+                    glob.glob('../libpcap*') + glob.glob('../wpdpack*')
+         for d in dirs:
+-            for sd in ('include', 'include/pcap', ''):
++            for sd in ('include/pcap', 'include', ''):
+                 incdirs = [ os.path.join(d, sd) ]
+                 if os.path.exists(os.path.join(d, sd, 'pcap.h')):
+                     cfg['include_dirs'] = [ os.path.join(d, sd) ]
+-- 
+1.8.3.4
+
