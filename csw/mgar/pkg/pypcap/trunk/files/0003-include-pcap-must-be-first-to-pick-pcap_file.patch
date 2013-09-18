@@ -3,6 +3,16 @@ From: Maciej Blizinski <maciej@opencsw.org>
 Date: Wed, 18 Sep 2013 09:43:43 +0200
 Subject: [PATCH] include/pcap must be first to pick pcap_file()
 
+If /opt/csw/include/pcap.h gets picked up first, it and only it gets parsed
+and searched for "pcap_file(". But /opt/csw/include/pcap.h is only
+an empty compatibility file, it only includes the /opt/csw/include/pcap/pcap.h
+file. But since this code only parses the first found include file,
+.../include/pcap/pcap.h doesn't get parsed and the configure script thinks
+that the pcap_file() function is not available.
+
+The downsides of custom configure scripts with custom discovery methods, not
+actually running the compiler.
+
 ---
  setup.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
