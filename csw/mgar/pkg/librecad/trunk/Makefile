@@ -30,10 +30,11 @@ GARCOMPILER = GNU
 # prefix = $(BUILD_PREFIX)/gxx
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
-PATCHFILES += 0000-adjust-for-csw-environment.patch
+# PATCHFILES += 0000-adjust-for-csw-environment.patch
 PATCHFILES += 0000-add-csw-settings.patch
 PATCHFILES += 0001-adjust-rs_system-forcsw.patch
 PATCHFILES += 0002-set-version-from-git.patch
+PATCHFILES += 0003-fix-postprocessing.patch
 
 BUILD_DEP_PKGS += CSWqt4-dev
 BUILD_DEP_PKGS += CSWmuparser-dev
