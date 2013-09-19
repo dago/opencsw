@@ -1,0 +1,20 @@
+--- a/scripts/postprocess-unix.sh
++++ b/scripts/postprocess-unix.sh
+@@ -10,7 +10,7 @@ SPTDIR="${LCDIR}/support"
+ DOCDIR="${SPTDIR}/doc"
+ LRELEASE="lrelease"
+ 
+-[ "$( which lrelease-qt4 )" ] && LRELEASE="lrelease-qt4"
++# [ "$( which lrelease-qt4 )" ] && LRELEASE="lrelease-qt4"
+ 
+ # Generate Help Files
+ cd "${DOCDIR}"
+@@ -27,7 +27,7 @@ cp "${SPTDIR}"/fonts/*.lff* "${RESOURCEDIR}"/fonts
+ cp "${SPTDIR}"/doc/*.qch "${RESOURCEDIR}"/doc
+ cp "${SPTDIR}"/doc/*.qhc "${RESOURCEDIR}"/doc
+ find "${SPTDIR}"/library -type d | sed 's:^.*support/::' | xargs -IFILES  mkdir "${RESOURCEDIR}"/FILES
+-find "${SPTDIR}"/library -type f -iname *.dxf | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
++gfind "${SPTDIR}"/library -type f -iname *.dxf | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
+ 
+ # Generate translations
+ ${LRELEASE} "${LCDIR}"/src/src.pro

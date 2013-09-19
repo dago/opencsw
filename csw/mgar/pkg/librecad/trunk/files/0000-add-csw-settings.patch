@@ -4,19 +4,18 @@ Date: Thu, 24 May 2012 16:09:30 +0200
 Subject: [PATCH] add csw settings
 
 ---
- settings_csw.pro |   15 +++++++++++++++
- 1 Datei geändert, 15 Zeilen hinzugefügt(+)
- create mode 100644 settings_csw.pro
+ custom.pro |   13 +++++++++++++++
+ 1 Datei geändert, 13 Zeilen hinzugefügt(+)
+ create mode 100644 custom.pro
 
-diff --git a/settings_csw.pro b/settings_csw.pro
+diff --git a/custom.pro b/custom.pro
 new file mode 100644
 index 0000000..9f6b517
 --- /dev/null
-+++ b/settings_csw.pro
-@@ -0,0 +1,15 @@
++++ b/custom.pro
+@@ -0,0 +1,13 @@
 +
 +
-+SUBDIRS += ttff2lff
 +INSTALLDIR = ../../unix
 +
 +
@@ -24,11 +23,10 @@ index 0000000..9f6b517
 +# add csw muparser include dir
 +#
 +
-+exists("/opt/csw/gxx/include") {
-+   INCLUDEPATH += "/opt/csw/include"
-+   INCLUDEPATH += "/opt/csw/gxx/include/boost"
-+   INCLUDEPATH += "/opt/csw/include/freetype2"
-+}
++INCLUDEPATH += "/opt/csw/include"
++INCLUDEPATH += "/opt/csw/include/freetype2"
++BOOST_DIR += "/opt/csw/gxx"
++QMAKE_LFLAGS += -Bdirect -zignore
 -- 
 1.7.10.2
 
