@@ -1,5 +1,5 @@
 NAME = xapian-core
-VERSION = 1.2.13
+VERSION = 1.3.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -12,14 +12,21 @@ endef
 
 MASTER_SITES = http://oligarchy.co.uk/xapian/$(VERSION)/
 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(# VERSION).tar.gz
 
 2-Do-not-strip-norunpath-on-libtool.patch
 
 # Use patch until this is fixed:
-#   http://trac.xapian.org/ticket/611
-PATCHFILES += quest-fix.patch 
-PATCHDIRLEVEL = 0missing-.la.patch
+#   http://trac.xapian.org/ticket/626
+PATCHFILES += 0001-Check-for-explicit-value-or-HAVE_UUID_UNPARSE_LOWER-.patch
+
+# This is strange and needs further examination
+PATCHFILES += 0002-Somehow-round-is-missing-in-cmath.patch
+
+# Use patch until this is fixed:
+#   http://trac.xapian.org/ticket/627
+PATCHFILES += 0003-log-is-ambigous-to-float-and-double.patch
+missing-.la.patch
 
 VENDOR_URL = http://xapian.org/
 
@@ -53,3 +60,6 @@ ISAEXEC = 1
 CHECKPKG_OVERRIDES_CSWxapian += file-with-bad-content|/usr/local|root/opt/csw/share/doc/xapian-core/install.html
 
 include
+post-patch:
+	cd $(WORKSRC) && autoreconf -fi
+	@$(MAKECOOKIE)

@@ -1,0 +1,25 @@
+From bdf4d8e5b1d788ab2ebc4f736ea0c2d837a8dfd0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 20 Sep 2013 21:47:43 +0200
+Subject: [PATCH] log() is ambigous to float and double
+
+---
+ weight/tfidfweight.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/weight/tfidfweight.cc b/weight/tfidfweight.cc
+index e02ed88..355d438 100644
+--- a/weight/tfidfweight.cc
++++ b/weight/tfidfweight.cc
+@@ -123,7 +123,7 @@ TfIdfWeight::get_wdfn(Xapian::termcount wdf, char c) const
+ 	    return (wdf * wdf);
+ 	case 'l':
+ 	    if (wdf == 0) return 0;
+-	    return (1 + log(wdf));
++	    return (1 + log((double)wdf));
+ 	default:
+ 	    return wdf;
+     }
+-- 
+1.8.3.4
+
