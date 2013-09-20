@@ -41,23 +41,23 @@ BUILD_DEP_PKGS += CSWmuparser-dev
 BUILD_DEP_PKGS += CSWboost-gcc-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 
-PACKAGES = CSWlibreCAD
-CATALOGNAME_CSWlibreCAD = libreCAD
-PKGFILES_CSWlibreCAD += $(call baseisadirs,$(bindir),.*)
-PKGFILES_CSWlibreCAD += $(datadir)/$(call tolower,$(NAME))/.*
-PKGFILES_CSWlibreCAD += $(libdir)/$(call tolower,$(NAME))/.*
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqthelp4
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtcore4
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtgui4
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsvg4
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibmuparser2
-# RUNTIME_DEP_PKGS_CSWlibreCAD += CSWlibqtsql4
-CHECKPKG_OVERRIDES_CSWlibreCAD += file-with-bad-content|/usr/share|root/opt/csw/bin/librecad
-CHECKPKG_OVERRIDES_CSWlibreCAD += catalogname-not-lowercase
-
+PACKAGES = CSWlibrecad
+CATALOGNAME_CSWlibrecad = librecad
+SPKG_DESC_CSWlibrecad = $(DESCRIPTION) 
+PKGFILES_CSWlibrecad += $(call baseisadirs,$(bindir),.*)
+PKGFILES_CSWlibrecad += $(datadir)/$(call tolower,$(NAME))/.*
+PKGFILES_CSWlibrecad += $(libdir)/$(call tolower,$(NAME))/.*
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqthelp4
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtcore4
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtgui4
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtsvg4
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibmuparser2
+# RUNTIME_DEP_PKGS_CSWlibrecad += CSWlibqtsql4
+# CHECKPKG_OVERRIDES_CSWlibrecad += file-with-bad-content|/usr/share|root/opt/csw/bin/librecad
+OBSOLETED_BY_CSWlibrecad = CSWLibreCAD
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -75,8 +75,8 @@ install-custom:
 	ginstall -d $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
 	gcp -rf  $(WORKSRC)/unix/resources/* \
                   $(DESTDIR)$(libdir)/$(call tolower, $(NAME))/resources
-	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibreCAD)
-	$(foreach L,$(EXTRA_LICENSE),gcp $(WORKSRC)/$L $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibreCAD);)
+	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibrecad)
+	$(foreach L,$(EXTRA_LICENSE),gcp $(WORKSRC)/$L $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWlibrecad);)
 	@$(MAKECOOKIE)
 
 include gar/category.mk
