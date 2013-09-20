@@ -1,0 +1,24 @@
+From fb227745970abc9da3e03d31e9fabeb8a2210783 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 20 Sep 2013 21:46:53 +0200
+Subject: [PATCH] Somehow round is missing in cmath
+
+---
+ geospatial/geoencode.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/geospatial/geoencode.cc b/geospatial/geoencode.cc
+index 4eaabb9..339b736 100644
+--- a/geospatial/geoencode.cc
++++ b/geospatial/geoencode.cc
+@@ -27,6 +27,7 @@
+ #include "geoencode.h"
+ 
+ #include <cmath>
++#include <math.h>
+ 
+ using namespace std;
+ 
+-- 
+1.8.3.4
+
