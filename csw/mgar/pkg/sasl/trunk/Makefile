@@ -35,7 +35,9 @@ POSTMSG = $(docdir)/saslauthd/CSWsaslauthd.postmsg
 PATCHFILES = 0001-Install-plugin-at-proper-location.patch
 # This patch makes libtool honor -R properly, without this
 # patch libtool discards -R options passed with LDFLAGS
-PATCHFILESck-realloc.patch
+PATCHFILES# sasl thinks it must define gethostname on Solaris but
+# it's not the case
+PATCHFILES += 0003-remove-gethostname-re-definition-on-sun.patchSck-realloc.patch
 
 VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
