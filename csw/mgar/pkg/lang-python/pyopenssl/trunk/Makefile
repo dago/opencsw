@@ -15,9 +15,14 @@ MASTER_SITE_DIR = $(shell echo $(NAME) | cut -c 1)
 MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 
+BUILD_DEP_PKGS_CSWpy-openssl += CSWpython_dev
+BUILD_DEP_PKGS_CSWpy-openssl += CSWpython27_dev
+
 PACKAGES = CSWpy-openssl
-RUNTIME_DEP_PKGS_CSWpy-openssl += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpy-openssl += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWpy-openssl += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-openssl += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-openssl += CSWlibssl1-0-0
 
 TEST_SCRIPTS =
 
