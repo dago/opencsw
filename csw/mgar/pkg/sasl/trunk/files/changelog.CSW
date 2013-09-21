@@ -1,6 +1,7 @@
 sasl (2.1.26,REV=2013.09.21)
 
   * New upstream version.
+  * Removed patch check-realloc.patch that has been applied upstream.
 
  -- Yann Rouillard <yann@opencsw.org>  Sat, 21 Sep 2013 14:24:32 +0200
 
