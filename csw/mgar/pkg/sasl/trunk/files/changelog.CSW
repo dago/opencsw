@@ -1,3 +1,9 @@
+sasl (2.1.26,REV=2013.09.21)
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 21 Sep 2013 14:24:32 +0200
+
 sasl (2.1.25,REV=2013.07.09)
 
   * Updated README.CSW for sasl package to add information about
