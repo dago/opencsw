@@ -1,8 +1,0 @@
-
----
-
-Please adjust @sysconfdir@/saslauthd.init before starting saslauthd.
-
-See also @docdir@/saslauthd/README.CSW
-
----
