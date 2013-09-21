@@ -1,0 +1,28 @@
+From 48ff17f70e0c9caf46eec2623de5532c60e5a847 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sat, 21 Sep 2013 16:46:07 +0200
+Subject: [PATCH] remove gethostname re-definition on sun
+
+---
+ lib/saslutil.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/lib/saslutil.c b/lib/saslutil.c
+index 6174124..00c76b4 100644
+--- a/lib/saslutil.c
++++ b/lib/saslutil.c
+@@ -80,11 +80,6 @@
+  * sasl_erasebuffer
+  */
+ 
+-#ifdef sun
+-/* gotta define gethostname ourselves on suns */
+-extern int gethostname(char *, int);
+-#endif
+-
+ char *encode_table;
+ char *decode_table;
+ 
+-- 
+1.8.3.4
+
