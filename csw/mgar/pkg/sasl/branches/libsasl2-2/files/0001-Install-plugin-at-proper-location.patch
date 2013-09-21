@@ -1,0 +1,56 @@
+From 761c2cf16086430bfbd76d07bc9efdbd957762d2 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Mon, 17 Oct 2011 21:42:30 +0200
+Subject: [PATCH] Install plugin at proper location
+
+---
+ Makefile.in         |   18 +-----------------
+ plugins/Makefile.in |    3 ++-
+ 2 files changed, 3 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 8cee0e4..764fd68 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -834,23 +834,7 @@ dist-hook:
+ 	@find $(distdir) -name CVS -print | xargs -t rm -rf
+ 	(cd $(distdir)/plugins && sh makeinit.sh)
+ install-exec-local: $(INSTALLOSX)
+-	@if test "$(plugindir)" != "$(prefix)/lib/sasl2"; then \
+-	  echo "********************************************************"; \
+-	  echo "* WARNING:"; \
+-	  echo "* Plugins are being installed into $(prefix)/lib/sasl2,"; \
+-	  echo "* but the library will look for them in $(plugindir)."; \
+-	  echo "* You need to make sure that the plugins will eventually"; \
+-	  echo "* be in $(plugindir) -- the easiest way is to make a"; \
+-	  echo "* symbolic link from $(plugindir) to $(prefix)/lib/sasl2,"; \
+-	  echo "* but this may not be appropriate for your site, so this"; \
+-	  echo "* installation procedure won't do it for you."; \
+-	  echo "*"; \
+-          echo "* If you don't want to do this for some reason, you can"; \
+-          echo "* set the location where the library will look for plugins"; \
+-	  echo "* by setting the environment variable SASL_PATH to the path"; \
+-	  echo "* the library should use."; \
+-	  echo "********************************************************"; \
+-	fi
++
+ install-exec-local-osx:
+ 	$(mkinstalldirs) $(framedir)/Versions/A/Headers
+ 	$(mkinstalldirs) $(framedir)/Versions/A/Resources
+diff --git a/plugins/Makefile.in b/plugins/Makefile.in
+index 3ecf9b5..f30c804 100644
+--- a/plugins/Makefile.in
++++ b/plugins/Makefile.in
+@@ -368,7 +368,8 @@ COMPAT_OBJS = @LTGETADDRINFOOBJS@ @LTGETNAMEINFOOBJS@ @LTSNPRINTFOBJS@
+ EXTRA_DIST = makeinit.sh NTMakefile
+ noinst_SCRIPTS = makeinit.sh
+ common_sources = plugin_common.c plugin_common.h
+-sasldir = $(prefix)/lib/sasl2
++# We want them to have installed in the proper location
++sasldir = $(plugindir)
+ sasl_LTLIBRARIES = @SASL_MECHS@
+ EXTRA_LTLIBRARIES = libplain.la libanonymous.la libkerberos4.la libcrammd5.la \
+ 	libgs2.la libgssapiv2.la libdigestmd5.la liblogin.la libsrp.la libotp.la \
+-- 
+1.7.6.1
+
