@@ -1,5 +1,5 @@
 NAME = sasl
-VERSION = 2.1.25
+VERSION = 2.1.26
 FILEVERSION = $(VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -13,7 +13,7 @@ define BLURB
    layer is inserted between the protocol and the connection.
 endef
 
-MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
+MASTER_Scyrusimap.org/cyrus-sasedu/pub/cyrus-mail/
 DISTNAME = cyrus-$(NAME)-$(VERSION)
 DISTFILES = cyrus-$(NAME)-$(FILEVERSION).tar.gz
 # This file will be renamed to cswsaslauthd during install
