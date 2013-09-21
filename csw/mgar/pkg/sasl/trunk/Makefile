@@ -45,7 +45,12 @@ PACKAGES += CSWsasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 RUNTIME_DEP_PKGS_CSW1-0-0+= CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsasl += CSWbdb48
-RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsas3
+CHECKPKG_OVERRIDES_CSWsasl += surplus-dependency|CSWlibsasl2-3
+
+# The sasl package contains the sasl modules which are .so files
+# This is normal even if it's not a  developement package
+CHECKPKG_OVERRIDES_CSWsasl += shared-lib-package-contains-so-symlink += CSWlibsasl2-2
 
 PACKAGES += CSWsaslauthd
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
@@ -90,20 +95,22 @@ RUNTIME_DEP_PKGS_CSWsaslsql += C8Wlibmysqlclient15
 CHECKPKG_OVERRIDES_CSWsaslsql += catalogname-does-not-match-pkgname|pkgname=CSWsaslsql|catalogname=sasl_sql|expected-catalogname=saslsql
 PKGFILES_CSWsaslsql = $(call pkgfiles_lib,sasl2/libsql.so)
 
-PACKAGES += CSWlibsasl2-2
-SPKG_DESC_CSWlibsasl2-2 = Simple authentication and security layer library, libsasl2.so.2
-PKGFILES_CSWlibsasl2-2 += $(call pkgfiles_lib,libsasl2.so.2)
+PACKAGE3
+SPKG_DESC_CSWlibsasl2-3 = Simple authentication and security layer library, libsasl2.so.2
+PKGFILES_CSWlibsasl2-3 += $(call pkgfiles_lib,libsasl2.so.3lib,libsasl2.so.2)
 
 PACKAGES += CSWsasl-dev
 SPKG_DESC_CSWsasl-dev = Development files for SASL
 PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWsasl-dev += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsasl-de3
+RUNTIME_DEP_PKGS_CSWsasl-dev += CSWsasl
+ += CSWlibsasl2-2
 
 PACKAGES += CSWsaslsample
 CATALOGNAME_CSWsaslsample = sasl_sample
 SPKG_DESC_CSWsaslsample = Cyrus Simple Authentication and Security Layer sample client/server
 RUNTIME_DEP_PKGS_CSWsaslsample = CSWsasl
-RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsaslsampl3 += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWsasgssapi-krb5-2SWlibkrb5support0
 PKGFILES_CSWsaslsample = $(bindir)/sasl-sample-server
 PKGFILES_CSWsaslsample += $(bindir)/sasl-sample-client
