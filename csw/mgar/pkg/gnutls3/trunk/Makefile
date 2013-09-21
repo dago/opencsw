@@ -1,5 +1,5 @@
 NAME = gnutls
-VERSION = 3.1.13
+VERSION = 3.1.14
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
@@ -37,7 +37,7 @@ RUNTIME_DEP_PKGS_CSWgnutls += CSWlibintl8 += CSWggettextrt
 # CSWlibgnutls13 is built from a branch
 RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls13
 CHECKPKG_OVERRIDES_CSWgnutls += unidentified-dependency|CSWlibgnutls13
-CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls13
+CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependencCHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls28cy|CSWlibgnutls13
 
 PACKAGES8
 CATALOGNAME_CSWlibgnutls = libgnutls28
