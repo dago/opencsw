@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pyOpenSSL
-VERSION = 0.13
+VERSION = 0.13.1
 GARTYPE = v2
 CATEGORIES = python
 
