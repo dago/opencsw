@@ -662,8 +662,11 @@ class CatalogTiming(object):
     catalogname version_string pkgname
     basename md5_sum size deps category i_deps
     """
-    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
-        osrel_name, arch_name, catrel_name)
+    try:
+      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
     rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
     def PrepareForJson(row):
       # The size (5th row) is returned as a large integer, which cannot be represented
