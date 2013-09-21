@@ -230,7 +230,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/auth2-gss.c openssh-5.8p1.
 +		    authctxt->pw));
 +	
 +	buffer_free(&b);
-+	xfree(mic.value);
++	free(mic.value);
 +
 +	return (authenticated);
 +}
@@ -432,8 +432,8 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/gss-genr.c openssh-5.8p1.n
 +
 +	if (gss_enc2oid != NULL) {
 +		for (i = 0; gss_enc2oid[i].encoded != NULL; i++)
-+			xfree(gss_enc2oid[i].encoded);
-+		xfree(gss_enc2oid);
++			free(gss_enc2oid[i].encoded);
++		free(gss_enc2oid);
 +	}
 +
 +	gss_enc2oid = xmalloc(sizeof(ssh_gss_kex_mapping) *
@@ -490,7 +490,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/gss-genr.c openssh-5.8p1.n
 +	buffer_free(&buf);
 +
 +	if (strlen(mechs) == 0) {
-+		xfree(mechs);
++		free(mechs);
 +		mechs = NULL;
 +	}
 +	
@@ -717,9 +717,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/gss-serv-krb5.c openssh-5.
   * Redistribution and use in source and binary forms, with or without
   * modification, are permitted provided that the following conditions
 @@ -120,6 +120,7 @@
- 	krb5_principal princ;
  	OM_uint32 maj_status, min_status;
  	int len;
+	const char *errmsg;
 +	const char *new_ccname;
  
  	if (client->creds == NULL) {
@@ -853,8 +853,8 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/gss-serv.c openssh-5.8p1.n
  
  static ssh_gssapi_client gssapi_client =
      { GSS_C_EMPTY_BUFFER, GSS_C_EMPTY_BUFFER,
--    GSS_C_NO_CREDENTIAL, NULL, {NULL, NULL, NULL}};
-+    GSS_C_NO_CREDENTIAL, GSS_C_NO_NAME,  NULL, {NULL, NULL, NULL}, 0, 0};
+-    GSS_C_NO_CREDENTIAL, NULL, {NULL, NULL, NULL, NULL}};
++    GSS_C_NO_CREDENTIAL, GSS_C_NO_NAME,  NULL, {NULL, NULL, NULL, NULL}, 0, 0};
  
  ssh_gssapi_mech gssapi_null_mech =
 -    { NULL, NULL, {0, NULL}, NULL, NULL, NULL, NULL};
@@ -1157,27 +1157,18 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kex.c openssh-5.8p1.new/ke
  #if OPENSSL_VERSION_NUMBER >= 0x00907000L
  # if defined(HAVE_EVP_SHA256)
  # define evp_ssh_sha256 EVP_sha256
-@@ -358,6 +362,20 @@
-  		k->kex_type = KEX_ECDH_SHA2;
- 		k->evp_md = kex_ecdh_name_to_evpmd(k->name);
+@@ -80,6 +84,11 @@
+ 	{ KEX_ECDH_SHA2_NISTP384, KEX_ECDH_SHA2, NID_secp384r1, EVP_sha384 },
+ 	{ KEX_ECDH_SHA2_NISTP521, KEX_ECDH_SHA2, NID_secp521r1, EVP_sha512 },
  #endif
 +#ifdef GSSAPI
-+	} else if (strncmp(k->name, KEX_GSS_GEX_SHA1_ID,
-+	    sizeof(KEX_GSS_GEX_SHA1_ID) - 1) == 0) {
-+		k->kex_type = KEX_GSS_GEX_SHA1;
-+		k->evp_md = EVP_sha1();
-+	} else if (strncmp(k->name, KEX_GSS_GRP1_SHA1_ID,
-+	    sizeof(KEX_GSS_GRP1_SHA1_ID) - 1) == 0) {
-+		k->kex_type = KEX_GSS_GRP1_SHA1;
-+		k->evp_md = EVP_sha1();
-+	} else if (strncmp(k->name, KEX_GSS_GRP14_SHA1_ID,
-+	    sizeof(KEX_GSS_GRP14_SHA1_ID) - 1) == 0) {
-+		k->kex_type = KEX_GSS_GRP14_SHA1;
-+		k->evp_md = EVP_sha1();
++	{ KEX_GSS_GEX_SHA1_ID, KEX_GSS_GEX_SHA1, 0, EVP_sha1 },
++	{ KEX_GSS_GRP1_SHA1_ID, KEX_GSS_GRP1_SHA1, 0, EVP_sha1 },
++	{ KEX_GSS_GRP14_SHA1_ID, KEX_GSS_GRP14_SHA1, 0, EVP_sha1 },
 +#endif
- 	} else
- 		fatal("bad kex alg %s", k->name);
- }
+ 	{ NULL, -1, -1, NULL},
+ };
+ 
 diff --speed-large-files --minimal -Nru openssh-5.8p1/kex.h openssh-5.8p1.new/kex.h
 --- openssh-5.8p1/kex.h	2010-09-24 14:11:14.000000000 +0200
 +++ openssh-5.8p1.new/kex.h	2011-02-12 18:07:11.161650596 +0100
@@ -1192,9 +1183,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kex.h openssh-5.8p1.new/ke
  };
  
 @@ -129,6 +132,12 @@
- 	sig_atomic_t done;
  	int	flags;
  	const EVP_MD *evp_md;
+ 	int	ec_nid;
 +#ifdef GSSAPI
 +	int	gss_deleg_creds;
 +	int	gss_trust_dns;
@@ -1366,7 +1357,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgssc.c openssh-5.8p1.ne
 +
 +		/* If we've got an old receive buffer get rid of it */
 +		if (token_ptr != GSS_C_NO_BUFFER)
-+			xfree(recv_tok.value);
++			free(recv_tok.value);
 +
 +		if (maj_status == GSS_S_COMPLETE) {
 +			/* If mutual state flag is not true, kex fails */
@@ -1483,7 +1474,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgssc.c openssh-5.8p1.ne
 +		fatal("kexdh_client: BN_bin2bn failed");
 +
 +	memset(kbuf, 0, klen);
-+	xfree(kbuf);
++	free(kbuf);
 +
 +	switch (kex->kex_type) {
 +	case KEX_GSS_GRP1_SHA1:
@@ -1526,11 +1517,11 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgssc.c openssh-5.8p1.ne
 +	if (GSS_ERROR(ssh_gssapi_checkmic(ctxt, &gssbuf, &msg_tok)))
 +		packet_disconnect("Hash's MIC didn't verify");
 +
-+	xfree(msg_tok.value);
++	free(msg_tok.value);
 +
 +	DH_free(dh);
 +	if (serverhostkey)
-+		xfree(serverhostkey);
++		free(serverhostkey);
 +	BN_clear_free(dh_server_pub);
 +
 +	/* save session id */
@@ -1640,7 +1631,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +	 */
 +	if (!ssh_gssapi_oid_table_ok()) 
 +		if ((mechs = ssh_gssapi_server_mechanisms()))
-+			xfree(mechs);
++			free(mechs);
 +
 +	debug2("%s: Identifying %s", __func__, kex->name);
 +	oid = ssh_gssapi_id_kex(NULL, kex->name, kex->kex_type);
@@ -1718,7 +1709,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +		maj_status = PRIVSEP(ssh_gssapi_accept_ctx(ctxt, &recv_tok, 
 +		    &send_tok, &ret_flags));
 +
-+		xfree(recv_tok.value);
++		free(recv_tok.value);
 +
 +		if (maj_status != GSS_S_COMPLETE && send_tok.length == 0)
 +			fatal("Zero length token output when incomplete");
@@ -1767,7 +1758,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +		fatal("kexgss_server: BN_bin2bn failed");
 +
 +	memset(kbuf, 0, klen);
-+	xfree(kbuf);
++	free(kbuf);
 +
 +	switch (kex->kex_type) {
 +	case KEX_GSS_GRP1_SHA1:
@@ -1849,24 +1840,14 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 diff --speed-large-files --minimal -Nru openssh-5.8p1/key.c openssh-5.8p1.new/key.c
 --- openssh-5.8p1/key.c	2011-02-04 01:48:34.000000000 +0100
 +++ openssh-5.8p1.new/key.c	2011-02-12 18:07:11.202089386 +0100
-@@ -971,6 +971,8 @@
- 		}
- 		break;
+@@ -929,6 +929,7 @@
+ 	{ "ecdsa-sha2-nistp521-cert-v01@openssh.com", "ECDSA-CERT",
+ 	    KEY_ECDSA_CERT, NID_secp521r1, 1 },
  #endif /* OPENSSL_HAS_ECC */
-+	case KEY_NULL:
-+		return "null";
- 	}
- 	return "ssh-unknown";
- }
-@@ -1276,6 +1278,8 @@
- 	    strcmp(name, "ecdsa-sha2-nistp521-cert-v01@openssh.com") == 0) {
- 		return KEY_ECDSA_CERT;
- #endif
-+	} else if (strcmp(name, "null") == 0) {
-+		return KEY_NULL;
- 	}
- 
- 	debug2("key_type_from_name: unknown key type '%s'", name);
++	{ "null", "null", KEY_NULL, 0, 0 },
+ 	{ "ssh-rsa-cert-v00@openssh.com", "RSA-CERT-V00",
+ 	    KEY_RSA_CERT_V00, 0, 1 },
+ 	{ "ssh-dss-cert-v00@openssh.com", "DSA-CERT-V00",
 diff --speed-large-files --minimal -Nru openssh-5.8p1/key.h openssh-5.8p1.new/key.h
 --- openssh-5.8p1/key.h	2010-11-05 00:19:49.000000000 +0100
 +++ openssh-5.8p1.new/key.h	2011-02-12 18:07:11.216270794 +0100
@@ -2028,7 +2009,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.ne
 +	}
 +	major = ssh_gssapi_sign(gsscontext, &data, &hash);
 +
-+	xfree(data.value);
++	free(data.value);
 +
 +	buffer_clear(m);
 +	buffer_put_int(m, major);
@@ -2058,9 +2039,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.ne
 +
 +	ok = ssh_gssapi_update_creds(&store);
 +
-+	xfree(store.filename);
-+	xfree(store.envvar);
-+	xfree(store.envval);
++	free(store.filename);
++	free(store.envvar);
++	free(store.envval);
 +
 +	buffer_clear(m);
 +	buffer_put_int(m, ok);
@@ -2591,12 +2572,12 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshconnect2.c openssh-5.8p
 +		orig = myproposal[PROPOSAL_SERVER_HOST_KEY_ALGS];
 +		xasprintf(&myproposal[PROPOSAL_SERVER_HOST_KEY_ALGS], 
 +		    "%s,null", orig);
-+		xfree(gss);
++		free(gss);
 +	}
 +#endif
 +
- 	if (options.rekey_limit)
- 		packet_set_rekey_limit((u_int32_t)options.rekey_limit);
+ 	if (options.rekey_limit || options.rekey_interval)
+ 		packet_set_rekey_limits((u_int32_t)options.rekey_limit,
  
 @@ -206,10 +242,30 @@
  	kex->kex[KEX_DH_GEX_SHA1] = kexgex_client;
@@ -2695,8 +2676,8 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshconnect2.c openssh-5.8p
  	if (authctxt == NULL)
  		fatal("input_gssapi_response: no authentication context");
 @@ -845,6 +919,48 @@
- 	xfree(msg);
- 	xfree(lang);
+ 	free(msg);
+ 	free(lang);
  }
 +
 +int
