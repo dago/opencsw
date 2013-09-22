@@ -1,0 +1,85 @@
+From e9e2ae967643bd37ed0533aadffac2f7503d8006 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Sun, 22 Sep 2013 14:55:21 +0200
+Subject: [PATCH] Enable conf files, fix some paths
+
+---
+ etc/clamav-milter.conf.sample | 4 ++--
+ etc/clamd.conf.sample         | 4 ++--
+ etc/freshclam.conf.sample     | 2 +-
+ shared/optparser.c            | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/etc/clamav-milter.conf.sample b/etc/clamav-milter.conf.sample
+index b7d66a4..2a968c7 100644
+--- a/etc/clamav-milter.conf.sample
++++ b/etc/clamav-milter.conf.sample
+@@ -3,7 +3,7 @@
+ ##
+ 
+ # Comment or remove the line below.
+-Example
++#Example
+ 
+ 
+ ##
+@@ -201,7 +201,7 @@ Example
+ # Note #3: clamav-milter will wait for the process to exit. Be quick or fork to
+ # avoid unnecessary delays in email delievery
+ # Default: disabled
+-#VirusAction /usr/local/bin/my_infected_message_handler
++#VirusAction /opt/csw/bin/my_infected_message_handler
+ 
+ ##
+ ## Logging options
+diff --git a/etc/clamd.conf.sample b/etc/clamd.conf.sample
+index 9aab51a..4c3f4d6 100644
+--- a/etc/clamd.conf.sample
++++ b/etc/clamd.conf.sample
+@@ -5,7 +5,7 @@
+ 
+ 
+ # Comment or remove the line below.
+-Example
++#Example
+ 
+ # Uncomment this option to enable logging.
+ # LogFile must be writable for the user running daemon.
+@@ -82,7 +82,7 @@ Example
+ 
+ # Path to a local socket file the daemon will listen on.
+ # Default: disabled (must be specified by a user)
+-#LocalSocket /tmp/clamd.socket
++LocalSocket /tmp/clamd.socket
+ 
+ # Sets the group ownership on the unix socket.
+ # Default: disabled (the primary group of the user running clamd)
+diff --git a/etc/freshclam.conf.sample b/etc/freshclam.conf.sample
+index d2ea3d1..859bfea 100644
+--- a/etc/freshclam.conf.sample
++++ b/etc/freshclam.conf.sample
+@@ -5,7 +5,7 @@
+ 
+ 
+ # Comment or remove the line below.
+-Example
++#Example
+ 
+ # Path to the database directory.
+ # WARNING: It must match clamd.conf's directive!
+diff --git a/shared/optparser.c b/shared/optparser.c
+index d706098..b34db39 100644
+--- a/shared/optparser.c
++++ b/shared/optparser.c
+@@ -483,7 +483,7 @@ const struct clam_option __clam_options[] = {
+ 
+     { "ReportHostname", NULL, 0, TYPE_STRING, NULL, -1, NULL, 0, OPT_MILTER, "When AddHeader is in use, this option allows to arbitrary set the reported\nhostname. This may be desirable in order to avoid leaking internal names.\nIf unset the real machine name is used.", "my.mail.server.name" },
+ 
+-    { "VirusAction", NULL, 0, TYPE_STRING, NULL, -1, NULL, 0, OPT_MILTER, "Execute a command when an infected message is processed.\nThe following parameters are passed to the invoked program in this order:\nvirus name, queue id, sender, destination, subject, message id, message date.\nNote #1: this requires MTA macroes to be available (see LogInfected below)\nNote #2: the process is invoked in the context of clamav-milter\nNote #3: clamav-milter will wait for the process to exit. Be quick or fork to\navoid unnecessary delays in email delievery", "/usr/local/bin/my_infected_message_handler" },
++    { "VirusAction", NULL, 0, TYPE_STRING, NULL, -1, NULL, 0, OPT_MILTER, "Execute a command when an infected message is processed.\nThe following parameters are passed to the invoked program in this order:\nvirus name, queue id, sender, destination, subject, message id, message date.\nNote #1: this requires MTA macroes to be available (see LogInfected below)\nNote #2: the process is invoked in the context of clamav-milter\nNote #3: clamav-milter will wait for the process to exit. Be quick or fork to\navoid unnecessary delays in email delievery", "/opt/csw/bin/my_infected_message_handler" },
+ 
+     { "Chroot", NULL, 0, TYPE_STRING, NULL, -1, NULL, 0, OPT_MILTER, "Chroot to the specified directory.\nChrooting is performed just after reading the config file and before\ndropping privileges.", "/newroot" },
+ 
+-- 
+1.8.3.4
+
