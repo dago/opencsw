@@ -1,0 +1,26 @@
+From 81c917d4af507aad4678c91b1cdaa8d0c72a625c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej@opencsw.org>
+Date: Mon, 23 Sep 2013 20:48:59 +0100
+Subject: [PATCH] Replace an obsolete macro
+
+AM_CONFIG_HEADER -> AM_CONFIG_HEADERS
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 81dd98d..5494755 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -79,7 +79,7 @@ gccwarnings=yes
+ dnl  Instead of putting a long list of defines on the command line
+ dnl  for each compile, use a file called "pbs_config.h" that will
+ dnl  be created in the include directory.
+-AM_CONFIG_HEADER([src/include/pbs_config.h])
++AC_CONFIG_HEADERS([src/include/pbs_config.h])
+ 
+ dnl
+ dnl Find our git revision hash for program outputs
+-- 
+1.8.3.4
+
