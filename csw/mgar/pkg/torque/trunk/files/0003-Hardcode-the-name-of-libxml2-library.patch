@@ -1,0 +1,26 @@
+From 76b05d335f1e06e252a630dfac81b2c6992fba62 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej@opencsw.org>
+Date: Mon, 23 Sep 2013 21:19:20 +0100
+Subject: [PATCH] Hardcode the name of libxml2 library.
+
+---
+ configure | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 2b00e82..70eeafd 100755
+--- a/configure
++++ b/configure
+@@ -17763,7 +17763,8 @@ fi
+ 
+ 
+ 
+-xmlLib=`xml2-config --libs | sed 's/-L[^[:space:]]* //g;s/-l//'`
++# xmlLib=`xml2-config --libs | sed 's/-L[^[:space:]]* //g;s/-l//'`
++xmlLib=xml2
+ 
+ 
+ as_ac_Lib=`$as_echo "ac_cv_lib_${xmlLib}''_xmlGetProp" | $as_tr_sh`
+-- 
+1.8.3.4
+

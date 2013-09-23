@@ -1,0 +1,50 @@
+From d212de7e660a354ce0e214cbc7bf99d2d2ceda1a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej@opencsw.org>
+Date: Mon, 23 Sep 2013 20:43:10 +0100
+Subject: [PATCH] Disable the broken -lxml2 detection
+
+The xml2-config utility returns not just "-lxml2" like on Ubuntu, but instead it outputs this:
+
+-L/opt/csw/lib -R/opt/csw/lib -lxml2 -lz -lpthread -liconv -lm -lsocket -lnsl
+
+...and so the sed expression fails to extract the right information.
+---
+ configure    | 2 +-
+ configure.ac | 8 +++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 364455e..2b00e82 100755
+--- a/configure
++++ b/configure
+@@ -17841,7 +17841,7 @@ as_val=`eval 'as_val=${'$as_ac_Lib'}
+ #define `$as_echo "HAVE_LIB${xmlLib}" | $as_tr_cpp` 1
+ _ACEOF
+ 
+-  LIBS="-l${xmlLib} $LIBS"
++  LIBS="${xmlLib} $LIBS"
+ 
+ else
+   { { $as_echo "$as_me:$LINENO: error: TORQUE needs libxml2-devel in order to build" >&5
+diff --git a/configure.ac b/configure.ac
+index fbadb19..81dd98d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -749,7 +749,13 @@ AC_CHECK_LIB(crypto, BN_init,
+ dnl
+ dnl we need libxml2
+ dnl 
+-xmlLib=`xml2-config --libs | sed 's/-L@<:@^@<:@:space:@:>@@:>@* //g;s/-l//'`
++dnl xmlLib=`xml2-config --libs | sed 's/-L@<:@^@<:@:space:@:>@@:>@* //g;s/-l//'`
++dnl on Solaris:
++dnl -L/opt/csw/lib -R/opt/csw/lib -lxml2 -lz -lpthread -liconv -lm -lsocket -lnsl
++dnl on Ubuntu:
++dnl -lxml2
++dnl so the sed expression doesn't work on Solaris at all.
++xmlLib=xml2
+ 
+ dnl skip the first two chars because its -l<libname>
+ AC_CHECK_LIB(${xmlLib}, xmlGetProp,
+-- 
+1.8.3.4
+
