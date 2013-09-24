@@ -108,7 +108,7 @@ PA4-dev
 SPKG_DESC_CSWsamba4-dev = Development files for Samba 4
 # OBSOLETED_BY_CSWsamba4-dev += CSWsamba-dev
 PKGFILES_CSWsamba4-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWsamba4-dev += $(libdir)/lib.*\.so)
+PKGFILES_CSWsamba4-dev += $(libdir)/lib.*\.so
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWsamba4
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibdcerpc-server0
