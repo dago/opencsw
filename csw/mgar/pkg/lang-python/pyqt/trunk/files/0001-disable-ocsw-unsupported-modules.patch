@@ -1,14 +1,16 @@
-From a61b2572022b23ee0f6f6b1c3cebf786d850e62f Mon Sep 17 00:00:00 2001
+From 43252bcbc6f7166bc5dc75a1a5c552f425f0737d Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Wed, 10 Jul 2013 19:14:25 +0200
+Date: Tue, 24 Sep 2013 10:17:14 +0200
 Subject: [PATCH] disable ocsw unsupported modules
 
+- QAxContainer is for COM
+- QtAssistant is obsoleted
 ---
- configure-ng.py | 18 ------------------
- 1 file changed, 18 deletions(-)
+ configure-ng.py | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/configure-ng.py b/configure-ng.py
-index 100ba59..3ee4977 100644
+index 100ba59..5781614 100644
 --- a/configure-ng.py
 +++ b/configure-ng.py
 @@ -73,10 +73,8 @@ class ModuleMetadata:
@@ -22,18 +24,7 @@ index 100ba59..3ee4977 100644
      'QtCore':           ModuleMetadata(qmake_QT=['-gui'], qpy_lib='qpycore'),
      'QtDBus':           ModuleMetadata(qmake_QT=['dbus', '-gui'],
                                  qpy_lib='qpydbus'),
-@@ -95,10 +93,7 @@ QT4_MODULES = {
-     'QtSql':            ModuleMetadata(qmake_QT=['sql']),
-     'QtSvg':            ModuleMetadata(qmake_QT=['svg']),
-     'QtTest':           ModuleMetadata(qmake_QT=['testlib']),
--    'QtWebKit':         ModuleMetadata(qmake_QT=['webkit', 'network']),
-     'QtXml':            ModuleMetadata(qmake_QT=['xml', '-gui']),
--    'QtXmlPatterns':    ModuleMetadata(
--                                qmake_QT=['xmlpatterns', '-gui', 'network']),
-     'phonon':           ModuleMetadata(qmake_QT=['phonon'])
- }
- 
-@@ -106,7 +101,6 @@ QT4_MODULES = {
+@@ -106,7 +104,6 @@ QT4_MODULES = {
  QT5_MODULES = {
      'dbus':             ModuleMetadata(qmake_QT=['-gui'], qmake_TARGET='qt',
                                  in_consolidated=False),
@@ -41,33 +32,7 @@ index 100ba59..3ee4977 100644
      'Qt':               ModuleMetadata(qmake_QT=['-core', '-gui'],
                                  in_consolidated=False),
      'QtCore':           ModuleMetadata(qmake_QT=['-gui'], qpy_lib='qpycore'),
-@@ -129,12 +123,7 @@ QT5_MODULES = {
-     'QtSql':            ModuleMetadata(qmake_QT=['sql', 'widgets']),
-     'QtSvg':            ModuleMetadata(qmake_QT=['svg']),
-     'QtTest':           ModuleMetadata(qmake_QT=['testlib', 'widgets']),
--    'QtWebKit':         ModuleMetadata(
--                                qmake_QT=['webkit', 'webkitwidgets',
--                                        'network']),
-     'QtXml':            ModuleMetadata(qmake_QT=['xml', '-gui']),
--    'QtXmlPatterns':    ModuleMetadata(
--                                qmake_QT=['xmlpatterns', '-gui', 'network'])
- }
- 
- 
-@@ -948,12 +937,8 @@ def check_modules(target_config, verbose):
-             'new QSvgWidget()')
-     check_module(target_config, verbose, 'QtTest', 'QtTest',
-             'QTest::qSleep(0)')
--    check_module(target_config, verbose, 'QtWebKit', 'qwebpage.h',
--            'new QWebPage()')
-     check_module(target_config, verbose, 'QtXml', 'qdom.h',
-             'new QDomDocument()')
--    check_module(target_config, verbose, 'QtXmlPatterns', 'qxmlname.h',
--            'new QXmlName()')
- 
-     if target_config.qt_version < 0x050000:
-         check_module(target_config, verbose, 'phonon', 'phonon/videowidget.h',
-@@ -969,9 +954,6 @@ def check_modules(target_config, verbose):
+@@ -969,9 +966,6 @@ def check_modules(target_config, verbose):
      else:
          inform("QtDesigner module disabled with static Qt libraries.")
  
@@ -78,5 +43,5 @@ index 100ba59..3ee4977 100644
      # properly versioning its API.
      if target_config.qt_version >= 0x040700:
 -- 
-1.8.3.1
+1.8.3.4
 
