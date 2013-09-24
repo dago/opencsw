@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#RC_KNUM 03         # Number used for kill script symlink, e.g. K20cswfoo
+#RC_SNUM 89         # Number used for start script symlink, e.g. S80cswfoo
+#RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+#RC_SLEV 3          # Run levels that should have a start script symlink
+#AUTOENABLE no      # Before running always manual adjustment of smb.conf is needed
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+
+SMBCONF=@sysconfdir@/samba/smb.conf
+
+case "$1" in
+	start)
+		if [ -f $SMBCONF ]; then
+			echo "Starting winbind..."
+			@sbindir@/winbindd -D
+		else
+			echo "No $SMBCONF found. Not starting";
+		fi
+	;;
+	stop)
+		echo "Stopping Winbind..."
+		pkill winbindd
+	;;
+	restart)
+		$0 stop
+		$0 start
+	;;
+	*)
+		echo "$0 {start | stop | restart}"
+		exit 1;
+	;;
+esac
+
