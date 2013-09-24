@@ -39,6 +39,10 @@ TEST_SCRIPTS	=
 
 INSTALL_SCRIPTS	=	custom
 
+# experimental Python 3 code which is indiscriminately included and
+# raises compilation error when Python 2 is used...
+EXTRA_MERGE_EXCLUDE_FILES		+=	$(PYTHON_SITE_PACKAGES)/PyQt4/uic/port_v3/.*
+
 PACKAGES						+=	CSWpy-pyqt-common
 CATALOGNAME_CSWpy-pyqt-common	=	py_pyqt_common
 SPKG_DESC_CSWpy-pyqt-common		=	$(DESCRIPTION), common files
