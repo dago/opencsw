@@ -15,10 +15,6 @@ MASTER_SITES = $(GNU+= $(DISTNAME).tar.xz
 
 VENDOR_URL = http://www.gnu.org/software/m4/
 
-GARCOMPILER = SOS12U3
-PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
 # Having a .git in $WORKSRC turns on developer mode and enabled gcc flags.
 # Disable until this is fixed:
 #   http://lists.gnu.org/archive/html/bug-m4/2013-09/msg00009.html
