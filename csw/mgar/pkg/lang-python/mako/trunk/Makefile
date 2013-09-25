@@ -1,6 +1,6 @@
 # $Id$
 NAME = mako
-VERSION = 0.4.1
+VERSION = 0.9.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -24,6 +24,9 @@ DISTFILES    = $(DISTNAME).tar.gz
 DISTFILES   += changelog.CSW
 
 UPSTREAM_MASTER_SITES = http://www.makotemplates.org/download.html
+
+BUILD_DEP_PKGS	+=	CSWpython-dev
+BUILD_DEP_PKGS	+=	CSWpython27-dev
 
 ARCHALL = 1
 
