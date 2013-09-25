@@ -250,7 +250,6 @@ CHECKPKG_OVERRIDES_CSWsamba4-libs += file-collision|/opt/csw/share/man/man7/libs
 CHECKPKG_OVERRIDES_CSWsamba4-libs += no-direct-binding|/opt/csw/lib/samba4/libtdb_compat.so|is|not|directly|bound|to|soname|libgcc_s.so.1
 CHECKPKG_OVERRIDES_CSWsamba4-libs += missing-dependency|CSWlibwbclient0
 CHECKPKG_OVERRIDES_CSWsamba4-libs += missing-dependency|CSWlibtevent0
-CHECKPKG_OVERRIDES_CSWsamba4-libs += surplus-dependency|CSWsamba4-libs
 INCOMPATIBLE_PKGS_CSWsamba4-libs += CSWlibwbclient0 CSWlibsmbclient0 CSWlibnetapi0 CSWlibsmbsharemodes0
 
 PACKAGES += CSWlibdcerpc-atsvc0
