@@ -7,7 +7,7 @@ index eb54f37..e734c44 100755
      else
 -	whoami=`whoami || id -un`
 +	# Solaris id does not like -u
-+	whoami 2> /dev/null || id -a 2> /dev/null || /usr/xpg4/bin/id -un
++	whoami 2> /dev/null || id -un 2> /dev/null || /usr/xpg4/bin/id -un
      fi
  fi
  
