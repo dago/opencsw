@@ -1,0 +1,25 @@
+From 0a4382b02f30efcebf1f3337722d012ae79e8fe7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 5 Aug 2013 13:29:27 +0200
+Subject: [PATCH] Use Sun Studio syntax for shared libs
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 7be45f7..3d0e4df 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -21,7 +21,7 @@ lib$(libname).a : lzlib.o
+ 	$(AR) -rcs $@ $<
+ 
+ lib$(libname).so.$(pkgversion) : lzlib_sh.o
+-	$(CC) -shared -Wl,--soname=lib$(libname).so.$(soversion) -o $@ $<
++	$(CC) $(LDFLAGS) -G -h lib$(libname).so.$(soversion) -o $@ $<
+ 
+ $(progname) : $(objs) lib$(libname).a
+ 	$(CC) $(LDFLAGS) -o $@ $(objs) lib$(libname).a
+-- 
+1.8.3.1
+

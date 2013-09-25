@@ -1,0 +1,31 @@
+From 0afe0e4a52cd6b0e8db4e5c3c48aaf3346d8151d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 25 Sep 2013 16:01:48 +0200
+Subject: [PATCH] sh does not support -e
+
+---
+ Makefile.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 3d0e4df..1cab86e 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -86,12 +86,12 @@ install-bin : all
+ 	$(INSTALL_DATA) ./lib$(libname).a "$(DESTDIR)$(libdir)/lib$(libname).a"
+ 	if [ -n "$(progname_shared)" ] ; then \
+ 	  $(INSTALL_PROGRAM) ./lib$(libname).so.$(pkgversion) "$(DESTDIR)$(libdir)/lib$(libname).so.$(pkgversion)" ; \
+-	  if [ -e "$(DESTDIR)$(libdir)/lib$(libname).so.$(soversion)" ] ; then \
++	  if [ -f "$(DESTDIR)$(libdir)/lib$(libname).so.$(soversion)" ] ; then \
+ 	    rm -f "$(DESTDIR)$(libdir)/lib$(libname).so.$(soversion)" ; \
+ 	    run_ldconfig=no ; \
+ 	  else run_ldconfig=yes ; \
+ 	  fi ; \
+-	  if [ -e "$(DESTDIR)$(libdir)/lib$(libname).so" ] ; then \
++	  if [ -f "$(DESTDIR)$(libdir)/lib$(libname).so" ] ; then \
+ 	    rm -f "$(DESTDIR)$(libdir)/lib$(libname).so" ; \
+ 	  fi ; \
+ 	  cd "$(DESTDIR)$(libdir)" && ln -s lib$(libname).so.$(pkgversion) lib$(libname).so ; \
+-- 
+1.8.3.4
+

@@ -1,5 +1,5 @@
 NAME = lzlib
-VERSION = 1.2
+VERSION = 1.5
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -10,10 +10,9 @@ define BLURB
   data. The compressed data format used by the library is the lzip format. 
 endef
 
-MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES =  0001-gcc-to-sunstudio.patch
-PATCHFILES += 0002-gcc-to-sunstudio-2.patch
+MASTER_SITES = http://download.savannah.gnu.org/releases+= $(DISTNAME).tar.lz
+PATCHFILES += 0001-Use-Sun-Studio-syntax-for-shared-libs.patch
+PATCHFILES += 0001-sh-does-not-support-ecc-to-sunstudio-2.patch
 
 VENDOR_URL = http://www.nongnu.org/lzip/lzlib.html
 
@@ -25,7 +24,7 @@ OBSOLETED_BY_CSWliblz1 = CSWlzlib
 PACKAGES += CSWliblz-dev
 SPKG_DESC_CSWliblz-dev = Development files for liblz.so.1
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWliblz-dev = CSWliblz1
+RUNTIME_DEP_PKGS_CSWliblz-dev = CFLAGS = -xc99=all-dev = CSWliblz1
 
 EXTRA_CXXFLAGS = -xcode=pic32
 EXTRA_LINKER_FLAGS = -lCrun -norunpath
@@ -34,9 +33,9 @@ BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += CXX="$(CXX)"
+COC="$(CC)"
 CONFIGURE_ARGS += CPPFLAGS="$(CPPFLAGS)"
-CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
+CONFIGURE_ARGS += CFLAGS="$(C= CXXFLAGS="$(CXXFLAGS)"
 CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
 
 INSTALL_OVERRIDE_VARS = INSTALL LDCONFIG
@@ -44,9 +43,4 @@ INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 # This is close to a NOP
 INSTALL_OVERRIDE_VAR_LDCONFIG = echo
 
-include gar/category.mk
-
-post-install-modulated:
-	gln -s liblz.so.1 $(DESTDIR)$(libdir)/liblz.so
-	@$(MAKECOOKIE)
-
+include
