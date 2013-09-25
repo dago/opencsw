@@ -22,6 +22,8 @@ EXPANDVARS += smb.conf
 GARCOMPILER = GNU
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 BUILD_DEP_PKGS += CSWlibtalloc-dev
+BUILD_DEP_PKGS += CSWlibpopt-dev
+BUILD_DEP_PKGS += CSWlibgamin-dev
 
 PATCHFILES += 0001-fix-xml.patch
 # From https://bugzilla.samba.org/show_bug.cgi?id=7588
