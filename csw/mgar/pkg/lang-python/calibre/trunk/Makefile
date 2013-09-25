@@ -53,6 +53,8 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
+RUNTIME_DEP_PKGS	=	CSWexo
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
