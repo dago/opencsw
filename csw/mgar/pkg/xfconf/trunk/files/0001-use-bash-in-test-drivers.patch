@@ -1,0 +1,22 @@
+From 8d213e97a8589ebe040d87977276766c79f9f5c8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 25 Sep 2013 12:11:27 +0200
+Subject: [PATCH] use bash in test drivers
+
+---
+ tests/test-template.sh.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/test-template.sh.in b/tests/test-template.sh.in
+index 2e638a8..fe621a3 100644
+--- a/tests/test-template.sh.in
++++ b/tests/test-template.sh.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ 
+ cleanup() {
+     if [ "$XFCONFD_PID" ]; then
+-- 
+1.8.3.4
+
