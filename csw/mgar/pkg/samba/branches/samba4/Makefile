@@ -29,6 +29,8 @@ PATCHFILES += nss_winbind.patch
 PATCHFILES += smbd_patch_for_setgroups.patch
 # From https://bugzilla.samba.org/show_bug.cgi?id=10112
 PATCHFILES += 0003-Use-R-linker-flag-instead-of-rpath.patch
+# Help the script to find the username
+PATCHFILES += 0004-solaris-id-is-not-xpg4.patch
 
 # Filesystem layout4 = 1
 ISAEXEC = 1
@@ -515,7 +517,7 @@ SPKG_DESC_CSWsamba4-catchall = Samba 4 catch all
 
 # The build fails to add the right rpath to at least the public libs
 EXTRA_LDFLAGS = -R$(SMBPRIVATELIB) -Wl,-zignore -Wl,-Bdirect
-# EXTRA_LD_OPTIONS = -B direct -z ignore
+EXTRA_LD_OPTIONS = -Bdirect -z ignore -z nolazyload
 
 # At the moment there are errors about python headers missing on 64 bit
 #BUILD64 = 1
