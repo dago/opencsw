@@ -80,7 +80,6 @@ PKGFILES_CSWsamba4 += $(call baseisadirs,$(mandir),man8/vfs_.*)
 PKGFILES_CSWsamba4 += $(call baseisadirs,$(mandir),man8/idmap_.*)
 PKGFILES_CSWsamba4 += $(call baseisadirs,$(libdir),mit_samba\.so)
 PKGFILES_CSWsamba4 += $(call baseisadirs,$(libdir),security/pam_smbpass\.so)
-RUNTIME_DEP_PKGS_CSWsamba4 += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibgcrypt11
@@ -88,6 +87,10 @@ RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWperl
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibtevent0
+RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibsmbclient0
+RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibtdb1
+RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibtalloc2
 
 # Package with clients, finished
 PACKAGES += CSWsamba4-client
@@ -99,10 +102,13 @@ SMB_CLIENT_BINS += smbspool smbta-util smbtar smbtree tdbbackup tdbdump tdbresto
 SMB_CLIENT_BINS += ldbadd ldbdel ldbedit ldbmodify ldbrename ldbsearch
 PKGFILES_CSWsamba4-client += $(foreach C,$(SMB_CLIENT_BINS),$(call baseisadirs,$(bindir),$C))
 PKGFILES_CSWsamba4-client += $(foreach C,$(SMB_CLIENT_BINS),$(call baseisadirs,$(mandir),man1/$C\.1))
-RUNTIME_DEP_PKGS_CSWsamba4-client += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibsmbclient0
+RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibtdb1
+RUNTIME_DEP_PKGS_CSWsamba4-client += CSWlibtevent0
 
 # Development packagebnss_winbind.so.1
 
@@ -114,7 +120,6 @@ PKGFILES_CSWsamba4-dev += $(libdir)/lib.*\.so
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWsamba4
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibdcerpc-server0
-RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibdcerpc-atsvc0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibregistry0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibtorture0
@@ -124,7 +129,6 @@ RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibsmbclient-raw0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibsamba-policy0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibsamdb0
-RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWsamba4-winbind
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibndr-krb5pac0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibndr0
@@ -163,6 +167,9 @@ RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibpytalloc-util2
+RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibtevent0
+RUNTIME_DEP_PKGS_CSWsamba4-libs += CSWlibtdb1
 
 PACKAGES += CSWlibdcerpc-atsvc0
 PKGFILES_CSWlibdcerpc-atsvc0 += $(call baseisadirs,$(libdir),libdcerpc-atsvc\.so\.0\.0\.1)
@@ -192,7 +199,6 @@ SPKG_DESC_CSWlibdcerpc-samr0 += $(DESCRIPTION), libdcerpc-samr.so.0
 RUNTIME_DEP_PKGS_CSWlibdcerpc-samr0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibdcerpc-samr0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibdcerpc-samr0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibdcerpc-samr0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibdcerpc-server0
 PKGFILES_CSWlibdcerpc-server0 += $(call baseisadirs,$(libdir),libdcerpc-server\.so\.0\.0\.1)
@@ -218,19 +224,10 @@ PACKAGES += CSWlibdcerpc0
 PKGFILES_CSWlibdcerpc0 += $(call baseisadirs,$(libdir),libdcerpc\.so\.0\.0\.1)
 PKGFILES_CSWlibdcerpc0 += $(call baseisadirs,$(libdir),libdcerpc\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibdcerpc0 += $(DESCRIPTION), libdcerpc.so.0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibndr0
 RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibsamba-credentials0
 RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibtevent0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibsmbclient-raw0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibgensec0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibtevent-util0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibsamba-hostconfig0
 RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibdcerpc-binding0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibndr-nbt0
-RUNTIME_DEP_PKGS_CSWlibdcerpc0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibgensec0
 PKGFILES_CSWlibgensec0 += $(call baseisadirs,$(libdir),libgensec\.so\.0\.0\.1)
@@ -246,41 +243,35 @@ RUNTIME_DEP_PKGS_CSWlibgensec0 += CSWlibsamdb0
 RUNTIME_DEP_PKGS_CSWlibgensec0 += CSWlibtevent-util0
 RUNTIME_DEP_PKGS_CSWlibgensec0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgensec0 += CSWlibsamba-util0
+RUNTIME_DEP_PKGS_CSWlibgensec0 += CSWlibtalloc2
 
 PACKAGES += CSWlibndr-krb5pac0
 PKGFILES_CSWlibndr-krb5pac0 += $(call baseisadirs,$(libdir),libndr-krb5pac\.so\.0\.0\.1)
 PKGFILES_CSWlibndr-krb5pac0 += $(call baseisadirs,$(libdir),libndr-krb5pac\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibndr-krb5pac0 += $(DESCRIPTION), libndr-krb5pac.so.0
 RUNTIME_DEP_PKGS_CSWlibndr-krb5pac0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibndr-krb5pac0 += CSWlibndr0
-RUNTIME_DEP_PKGS_CSWlibndr-krb5pac0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibndr-krb5pac0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibndr-krb5pac0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibndr-nbt0
 PKGFILES_CSWlibndr-nbt0 += $(call baseisadirs,$(libdir),libndr-nbt\.so\.0\.0\.1)
 PKGFILES_CSWlibndr-nbt0 += $(call baseisadirs,$(libdir),libndr-nbt\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibndr-nbt0 += $(DESCRIPTION), libndr-nbt.so.0
 RUNTIME_DEP_PKGS_CSWlibndr-nbt0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibndr-nbt0 += CSWlibndr0
-RUNTIME_DEP_PKGS_CSWlibndr-nbt0 += CSWsamba4-libs
-RUNTIME_DEP_PKGS_CSWlibndr-nbt0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibndr-nbt0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibndr-nbt0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibndr-standard0
 PKGFILES_CSWlibndr-standard0 += $(call baseisadirs,$(libdir),libndr-standard\.so\.0\.0\.1)
 PKGFILES_CSWlibndr-standard0 += $(call baseisadirs,$(libdir),libndr-standard\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibndr-standard0 += $(DESCRIPTION), libndr-standard.so.0
+RUNTIME_DEP_PKGS_CSWlibndr-standard0 += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWlibndr-standard0 += CSWlibgcc-s1
 
 PACKAGES += CSWlibndr0
 PKGFILES_CSWlibndr0 += $(call baseisadirs,$(libdir),libndr\.so\.0\.0\.1)
 PKGFILES_CSWlibndr0 += $(call baseisadirs,$(libdir),libndr\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibndr0 += $(DESCRIPTION), libndr.so.0
 RUNTIME_DEP_PKGS_CSWlibndr0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibndr0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibndr0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibndr0 += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWlibndr0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibnetapi0
@@ -288,40 +279,26 @@ PKGFILES_CSWlibnetapi0 += $(call baseisadirs,$(libdir),libnetapi\.so\.0)
 PKGFILES_CSWlibnetapi0 += $(call baseisadirs,$(libdir),libnetapi\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibnetapi0 += $(DESCRIPTION), libnetapi.so.0
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibndr0
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibpdb0
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibsmbconf0
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibpdb0
 PKGFILES_CSWlibpdb0 += $(call baseisadirs,$(libdir),libpdb\.so\.0)
 PKGFILES_CSWlibpdb0 += $(call baseisadirs,$(libdir),libpdb\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibpdb0 += $(DESCRIPTION), libpdb.so.0
-RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibndr0
+RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibsmbconf0
 RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibtdb1
-RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibsamba-hostconfig0
-RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibsamdb0
-RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibwbclient0
-RUNTIME_DEP_PKGS_CSWlibpdb0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibregistry0
 PKGFILES_CSWlibregistry0 += $(call baseisadirs,$(libdir),libregistry\.so\.0\.0\.1)
 PKGFILES_CSWlibregistry0 += $(call baseisadirs,$(libdir),libregistry\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibregistry0 += $(DESCRIPTION), libregistry.so.0
-RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibndr0
 RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibdcerpc0
-RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibsamba-hostconfig0
 RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibregistry0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibsamba-credentials0
 PKGFILES_CSWlibsamba-credentials0 += $(call baseisadirs,$(libdir),libsamba-credentials\.so\.0\.0\.1)
@@ -350,7 +327,6 @@ PKGFILES_CSWlibsamba-policy0 += $(call baseisadirs,$(libdir),libsamba-policy\.so
 SPKG_DESC_CSWlibsamba-policy0 += $(DESCRIPTION), libsamba-policy.so.0
 RUNTIME_DEP_PKGS_CSWlibsamba-policy0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibsamba-policy0 += CSWlibndr0
-RUNTIME_DEP_PKGS_CSWlibsamba-policy0 += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWlibsamba-policy0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibsamba-policy0 += CSWlibsamba-hostconfig0
 RUNTIME_DEP_PKGS_CSWlibsamba-policy0 += CSWlibdcerpc0
@@ -362,7 +338,6 @@ PACKAGES += CSWlibsamba-util0
 PKGFILES_CSWlibsamba-util0 += $(call baseisadirs,$(libdir),libsamba-util\.so\.0\.0\.1)
 PKGFILES_CSWlibsamba-util0 += $(call baseisadirs,$(libdir),libsamba-util\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibsamba-util0 += $(DESCRIPTION), libsamba-util.so.0
-RUNTIME_DEP_PKGS_CSWlibsamba-util0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibsamba-util0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibsamba-util0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibsamba-util0 += CSWlibiconv2
@@ -383,17 +358,10 @@ PACKAGES += CSWlibsmbclient-raw0
 PKGFILES_CSWlibsmbclient-raw0 += $(call baseisadirs,$(libdir),libsmbclient-raw\.so\.0\.0\.1)
 PKGFILES_CSWlibsmbclient-raw0 += $(call baseisadirs,$(libdir),libsmbclient-raw\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibsmbclient-raw0 += $(DESCRIPTION), libsmbclient-raw.so.0
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibndr0
 RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWsamba4-libs
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibsamba-credentials0
 RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibtevent0
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibgensec0
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibtevent-util0
 RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibndr-nbt0
-RUNTIME_DEP_PKGS_CSWlibsmbclient-raw0 += CSWlibsamba-util0
 
 PACKAGES += CSWlibsmbconf0
 PKGFILES_CSWlibsmbconf0 += $(call baseisadirs,$(libdir),libsmbconf\.so\.0)
@@ -401,13 +369,13 @@ PKGFILES_CSWlibsmbconf0 += $(call baseisadirs,$(libdir),libsmbconf\.so\.0(\.\d+)
 SPKG_DESC_CSWlibsmbconf0 += $(DESCRIPTION), libsmbconf.so.0
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibndr0
-RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibtevent0
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibsamba-hostconfig0
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibtdb1
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibtevent-util0
 RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibsamba-util0
+RUNTIME_DEP_PKGS_CSWlibsmbconf0 += CSWlibgcc-s1
 
 
 PACKAGES += CSWlibsmbldap0
@@ -438,20 +406,19 @@ PKGFILES_CSWlibtorture0 += $(call baseisadirs,$(libdir),libtorture\.so\.0\.0\.1)
 PKGFILES_CSWlibtorture0 += $(call baseisadirs,$(libdir),libtorture\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibtorture0 += $(DESCRIPTION), libtorture.so.0
 RUNTIME_DEP_PKGS_CSWlibtorture0 += CSWlibtalloc2
-RUNTIME_DEP_PKGS_CSWlibtorture0 += CSWsamba4-libs
-RUNTIME_DEP_PKGS_CSWlibtorture0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibtorture0 += CSWlibsamba-hostconfig0
 RUNTIME_DEP_PKGS_CSWlibtorture0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibtorture0 += CSWlibsamba-util0
 
 # Python package
 PACKAGES += CSWsamba4-python
 SPKG_DESC_CSWsamba4-python = Samba 4 python files
 PKGFILES_CSWsamba4-python += $(call baseisadirs,$(libdir),python2.6/site-packages/.*)
-RUNTIME_DEP_PKGS_CSWsamba4-python += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibpytalloc-util2
+RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibtevent0
+RUNTIME_DEP_PKGS_CSWsamba4-python += CSWlibtdb1
 
 # winbind daemon, NSS and PAM modules
 PACKAGES += CSWsamba4-winbind
@@ -474,11 +441,13 @@ PKGFILES_CSWsamba4
 PKGFILES_CSWsmandir)/man1/wbinfo\.1
 PKGFILES_CSWsamba4-winbind += $(mandir)/man8/winbindd\.8
 PKGFILES_CSWsamba4-winbind += $(sysconfdir)/init\.d/cswwinbind4
-RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWsamba4-libs
 RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWlibtevent0
+RUNTIME_DEP_PKGS_CSWsamba4-winbind += CSWlibtdb1
 
 PACKAGES += CSWsamba4-nss-system-links
 CATALOGNAME_CSWsamba4-nss-system-links = samba4_nss_system_links
@@ -502,11 +471,7 @@ PKGFILES_CSWsamba4-pam-system-links += /usr/lib/security/amd64/pam_winbind_csw.s
 PKGFILES_CSWsamba4-pam-system-links += /usr/lib/security/sparcv9/pam_smbpass_csw.so
 PKGFILES_CSWsamba4-pam-system-links += /usr/lib/security/sparcv9/pam_winbind_csw.so
 SPKG_DESC_CSWsamba4-pam-system-links += Samba 4 pam modules links for the system
-RUNTIME_DEP_PKGS_CSWsamba4-pam-system-links += CSW4samba-winbind
-RUNTIME_DEP_PKGS_CSWsamba4-pam-system-links += CSW4samba
-
-CHECKPKG_OVERRIDES_CSWsamba4-pam-system-links += surplus-dependency|CSWsamba4
-CHECKPKG_OVERRIDES_CSWsamba4-pam-system-links += surplus-dependency|CSWsamba4-winbind
+RUNTIME_DEP_PKGS_CSWsamba4-pam-system-links += CSWsamba4-winbind
 CHECKPKG_OVERRIDES_CSWsamba4-pam-system-links += bad-location-of-file
 ARCHALL_CSWsamba4-pam-system-links = 1
 
