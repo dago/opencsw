@@ -1,0 +1,25 @@
+From aac5b289ecb8f46d8fc71ecd4c1501422e3c3bad Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 25 Sep 2013 11:13:43 +0200
+Subject: [PATCH] search fallback for pixmaps
+
+---
+ libxfce4util/xfce-resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libxfce4util/xfce-resource.c b/libxfce4util/xfce-resource.c
+index d39e6ad..92d6e9e 100644
+--- a/libxfce4util/xfce-resource.c
++++ b/libxfce4util/xfce-resource.c
+@@ -243,7 +243,7 @@ _res_init (void)
+   _list[XFCE_RESOURCE_ICONS] = g_slist_append (_list[XFCE_RESOURCE_ICONS], "/usr/share/pixmaps");
+ 
+   /* fallback for system which that don't install everything in /usr */
+-  _list[XFCE_RESOURCE_ICONS] = g_slist_append (_list[XFCE_RESOURCE_ICONS], "/usr/local/share/pixmaps");
++  _list[XFCE_RESOURCE_ICONS] = g_slist_append (_list[XFCE_RESOURCE_ICONS], "/opt/csw/share/pixmaps");
+   _list[XFCE_RESOURCE_ICONS] = g_slist_append (_list[XFCE_RESOURCE_ICONS], DATADIR "/share/pixmaps");
+ 
+   /*
+-- 
+1.8.3.4
+
