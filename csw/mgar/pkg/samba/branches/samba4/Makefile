@@ -92,8 +92,6 @@ RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibsmbclient0
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibtdb1
 RUNTIME_DEP_PKGS_CSWsamba4 += CSWlibtalloc2
-# We seem not to be able to get rid of these even though using -z ignore -B direct
-CHECKPKG_OVERRIDES_CSWsamba4 += soname-unused
 # Silence conflicts with CSWsamba
 CHECKPKG_OVERRIDES_CSWsamba4 += file-collision
 CHECKPKG_OVERRIDES_CSWsamba4 += file-with-bad-content|/usr/share|root/opt/csw/bin/smbtorture
