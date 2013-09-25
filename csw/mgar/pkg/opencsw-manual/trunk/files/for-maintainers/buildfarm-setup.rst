@@ -404,11 +404,11 @@ SSH Agent for each user
 It is advised to use a passphrase for the SSH key. This can easily be done by
 using the following steps:
 
-1. Set passphrase on the key::
+Set passphrase on the key::
 
   ssh-keygen -p -f .ssh/id_dsa
 
-2. Add this to your .zshrc (or the respective file for your favorite shell)::
+Add this to your .zshrc (or the respective file for your favorite shell)::
 
   # executed for interactive shells
   if [ "x$HOSTNAME" = "xlogin" ]; then
@@ -425,11 +425,12 @@ using the following steps:
     fi
   fi
 
-3. Make sure the ssh agent information is forwarded to trusted machines::
+Make sure the ssh agent information is forwarded to trusted machines::
 
   (echo "Host current*"; echo "\tForwardAgent yes") >> ~/.ssh/config
 
 There are similar methods with keychain available:
+
 * http://lists.opencsw.org/pipermail/maintainers/2009-December/010732.html GPG, agent, pinentry and keychain
 
 Installing DB2 client
