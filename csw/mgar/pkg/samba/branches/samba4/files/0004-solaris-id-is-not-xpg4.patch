@@ -1,0 +1,13 @@
+index eb54f37..e734c44 100755
+--- a/source3/script/build_env.sh
++++ b/source3/script/build_env.sh
+@@ -18,7 +18,8 @@ else
+     if [ ! "x$LOGNAME" = "x" ]; then
+ 	whoami=$LOGNAME
+     else
+-	whoami=`whoami || id -un`
++	# Solaris id does not like -u
++	whoami 2> /dev/null || id -a 2> /dev/null || /usr/xpg4/bin/id -un
+     fi
+ fi
+ 
