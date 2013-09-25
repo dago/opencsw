@@ -16,12 +16,15 @@ Prerequisites
 
 * `basic OpenCSW installation`_, as you would do on any Solaris host where
   you're using OpenCSW packages.
+* You need a `local catalog mirror`_ which will allow you to quickly access
+  all packages that are in any of OpenCSW catalogs for any Solaris version.
+  A typical location is ``/export/mirror/opencsw``.
 
 
-Core setup
+Base setup
 ----------
 
-The core setup is enough to build packages but does not allow to automatically
+The base setup is enough to build packages but does not allow to automatically
 check your packages for errors.
 
 ::
@@ -154,21 +157,119 @@ Fetch all the build recipes:
 
     mgar up --all
 
-Done!
-^^^^^
+checkpkg database
+-----------------
 
-Congratulations, you now have all pre-requisites in place to continue to learn
-building packages with GAR.
+You can use any database engine supported by sqlobject.  MySQL and sqlite have
+been tested.
+
+When using MySQL, you need to create the database and a user which has access
+to that database (not covered here).
+
+max_allowed_packet problem in MySQL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Since checkpkg stores objects in JSON, it sometimes stores values way bigger
+than the default allowed 1MB.  For this to work with MySQL, the following
+needs to be present in ``/etc/opt/csw/my.cnf``::
+
+  [mysqld]
+     max_allowed_packet=64M
+
+There are packages which require data structures larger than 32MB, hence the
+64MB value.
+
+case-insensitive string comparison in MySQL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _C.5.5.1. Case Sensitivity in String Searches:
+   http://dev.mysql.com/doc/refman/5.0/en/case-sensitivity.html
+
+MySQL documentation in section `C.5.5.1. Case Sensitivity in String Searches`_
+says:
+
+  For nonbinary strings (CHAR, VARCHAR, TEXT), string searches use the
+  collation of the comparison operands. For binary strings (BINARY, VARBINARY,
+  BLOB), comparisons use the numeric values of the bytes in the operands; this
+  means that for alphabetic characters, comparisons will be case sensitive.
+
+In SQLObject, the UnicodeCol column type is translated into VARCHAR, which
+results in case-insensitive comparisons.  This makes checkpkg throw file
+collision errors between files such as "Zcat.1" and "zcat.1".  In order to
+work around this, a case-sensitive collation needs to be used; for example,
+latin1_bin.  Collation setting can be altered for certain columns, as
+follows::
+
+  ALTER TABLE csw_file MODIFY COLUMN path VARCHAR(900) NOT NULL COLLATE latin1_bin;
+  ALTER TABLE csw_file MODIFY COLUMN basename VARCHAR(255) NOT NULL COLLATE latin1_bin;
+
+Before applying these changes, make sure that you're using the same column
+settings as the ones in the database.
+
+Configuration
+^^^^^^^^^^^^^
+
+The database access configuration is held in ``~/.checkpkg/checkpkg.ini`` or,
+in the shared config scenario, in ``/etc/opt/csw/checkpkg.ini``.  The format
+is as follows::
+
+  [database]
+  
+  type = mysql
+  name = checkpkg
+  host = mysql
+  user = checkpkg
+  password = yourpassword
+
+
+Initializing tables and indexes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The next step is creating the tables in the database.
+
+::
+
+  bin/pkgdb initdb
+
+System files indexing
+^^^^^^^^^^^^^^^^^^^^^
+
+The following commands will index and import files on the filesystem.  Please
+note that you might need to change 'SunOS5.10' and 'sparc' to match your file.
+
+::
+
+  bin/pkgdb system-files-to-file
+  bin/pkgdb import-system-file install-contents-SunOS5.10-sparc.marshal
+
+You can notice that there are separate steps: collecting the data and saving
+as a file, and importing the data. Why are they separate? You need to collect
+data on the host that contains them, but you might import the data on
+a different host.
+
+OpenCSW catalog indexing
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Next step, import your OpenCSW catalog mirror::
+
+  bin/pkgdb sync-catalogs-from-tree unstable /home/mirror/opencsw/unstable
+
+Importing the whole catalog takes time, and depending on the speed of your
+machine, it can take anything from a few hours to a few days.  The good news
+is that you only need to import each package once, and once catalog updates
+come in, pkgdb only imports the new packages.
+
+You will need to perform this operation each time the OpenCSW catalog is
+updated.  Otherwise your packages will be checked against an old state of the
+catalog.
+
+Your database is now ready.
 
 Advanced setup
-^^^^^^^^^^^^^^
+--------------
 
 The following components are not required, but are quite useful.
 
-* `local catalog mirror`_ will allow you to quickly access all packages that
-  are in any of OpenCSW catalogs for any Solaris version.
-* `checkpkg database`_ will allow you to check packages for common problems,
-  for example library dependencies.
 * pkgdb-web (with Apache) is a web app on which you can browse your package
   database and inspect package metadata without having to unpack and examine
   packages in the terminal. Information such as list of files, pkginfo content
@@ -189,9 +290,6 @@ The following components are not required, but are quite useful.
 
 .. _GAR setup:
   http://sourceforge.net/apps/trac/gar/wiki/GarSetup
-
-.. _checkpkg database:
-  http://wiki.opencsw.org/checkpkg#toc2
 
 .. _Additional setup documented on the wiki:
   http://wiki.opencsw.org/buildfarm
