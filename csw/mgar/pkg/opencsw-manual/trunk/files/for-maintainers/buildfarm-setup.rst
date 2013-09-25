@@ -265,6 +265,196 @@ catalog.
 
 Your database is now ready.
 
+Multi-host setup
+----------------
+
+How to set up hosts allowing you to build for both Intel and SPARC
+architectures.  At least three servers are needed:
+
+* Solaris 9 Sparc to build 32 bit and 64 bit Sparc binaries
+* Solaris 9 x86 to build 32 bit build x86 binaries
+* Solaris 10 x86 to build 64 bit x86 binaries
+
+Servers with Solaris 10 Sparc are optional for most of the packages.  However,
+there may be packages which rely on private kernel data (like "top") which
+needs to be build for each and every Solaris version to run on.
+
+The user homes should be in ``/home/<user>`` and the home directory should be
+shared between the build machines. This is important for building x86 packages
+as the 32 bit part needs to be build on Solaris 9 and the 64 bit part on
+Solaris 10.
+
+Under ``/home/experimental/<project>/`` are project-specific directories with
+permissions 0755 which are accessible via
+``http://buildfarm.opencsw.org/experimental.html``. ``experimental/`` itself
+is 01755 and users are free to create new projects as needed.
+
+The installed packages are listed on http://buildfarm.opencsw.org/versionmatrix.html.
+
+Installing Software
+^^^^^^^^^^^^^^^^^^^
+
+All software is archived and available from ``/home/farm`` on the bo
+Buildfarm.  Make sure you deinstall ``SUNWgmake``. That version is outdated
+and misses functions needed by GAR (e.g. abspath).
+
+Install Java Package
+++++++++++++++++++++
+
+There are versions of JDK and JRE between Java 1.3 and Java 6 installed in ``/usr``.
+
+* Solaris 9 Sparc: ``cd /usr; for F in java/*sparc*; do sh $F; done``
+* Solaris 9 x86: ``cd /usr; for F in java/*i586*; do sh $F; done``
+* Solaris 10 Sparc: ``cd /usr; for F in java/*sparc*; do sh $F; done``
+* Solaris 10 x86: ``cd /usr; for F in java/*i586* java/*amd64* java/*x64*; do sh $F; done``
+
+Install Sun Studio Compiler
++++++++++++++++++++++++++++
+
+On Solaris 8 the Sun Studio 11 Compiler is installed, on Solaris 9 and 10 both
+Sun Studio 11 and 12 is installed. Solaris 10 has also Sun Studio 12u1
+installed.
+
+Sun Studio 11
++++++++++++++
+
+::
+
+  cd ss11
+  cd /CD1 # Sparc only
+  PATH=/usr/j2re1.4.2_17/bin:$PATH ./batch_installer -d /opt/studio/SOS11
+
+Uninstall::
+
+  cd /var/sadm/prod/com.sun.studio_11
+  ./batch_uninstall_all
+
+Please note: If you have also Sun Studio 12 installed the installer will
+erranously remove some packages from Sun Studio 12 so you may need to
+reinstall it after SOS 11 removal.
+
+Sun Studio 12
++++++++++++++
+
+::
+
+  cd ss12
+  ./batch_installer -d /opt --accept-sla
+
+Uninstall::
+
+  export PATH=/usr/jre1.6.0_20/bin:$PATH
+  cd /opt
+  java -cp . uninstall_Sun_Studio_12 -nodisplay -noconsole
+
+Please note: If you have also Sun Studio 11 installed the installer will
+erranously remove some packages from Sun Studio 11 so you may need to
+reinstall it after SOS 12 removal.
+
+Sun Studio 12u1
++++++++++++++++
+
+Headless installation is a bit more complicated, see
+http://docs.sun.com/app/docs/doc/820-7601/gemyt?a=view for details.
+
+Sun Studio Compilers for OpenSolaris
+++++++++++++++++++++++++++++++++++++
+
+* Sun Studio 12u1
+* Sun Studio Express 11/08
+* Sun Studio Express 3/09
+
+See http://developers.sun.com/sunstudio/downloads/opensolaris/index.jsp for details.
+
+Don't forget to patch the compilers, with `PCA`_ or `manually`_.
+
+.. _PCA:
+   http://www.opencsw.org/packages/pca
+
+.. _manually:
+   http://www.oracle.com/technetwork/server-storage/solarisstudio/downloads/index-jsp-136213.html
+
+Sun Studio for Solaris 11
++++++++++++++++++++++++++
+
+
+Adding Users 
+^^^^^^^^^^^^
+
+From here on in (Jan 2009), we are trying to keep userids in sync across all
+machines. www.opencsw.org is consider the "master".  If a user exists on www,
+then an account created from them on other machines, should be made to match
+up userids.
+
+There are some older, legacy, nonmatchedup accounts. To make it easier to
+identify between newer and older accounts, "cleanly" created accounts are
+created in the range 17100-18000.  Older accounts may be migrated/synced into
+the range 17000-17099 if desired.
+
+thus, if there is an account created on non-www machines, that is desired to
+be non-synced, it should be OUTSIDE the range of 17000-18000
+
+The normal process for creating accounts across all machines, is that Phil
+runs a script on www, which in turn calls scripts maintained by Ihsan and
+Dagobert, to create accounts on www and buildfarm machines, respectively.
+
+SSH Agent for each user
+^^^^^^^^^^^^^^^^^^^^^^^
+
+It is advised to use a passphrase for the SSH key. This can easily be done by
+using the following steps:
+
+1. Set passphrase on the key::
+
+  ssh-keygen -p -f .ssh/id_dsa
+
+2. Add this to your .zshrc (or the respective file for your favorite shell)::
+
+  # executed for interactive shells
+  if [ "x$HOSTNAME" = "xlogin" ]; then
+    if [ -f ~/.ssh-agent ]; then
+      source ~/.ssh-agent
+    fi
+  
+    if [ -z "$SSH_AUTH_SOCK" -o ! -w "$SSH_AUTH_SOCK" ]; then
+      if read -q '?Start ssh-agent? (y/n) '; then
+          ssh-agent -s >~/.ssh-agent              && \
+              source ~/.ssh-agent                 && \
+              ssh-add
+      fi
+    fi
+  fi
+
+3. Make sure the ssh agent information is forwarded to trusted machines::
+
+  (echo "Host current*"; echo "\tForwardAgent yes") >> ~/.ssh/config
+
+There are similar methods with keychain available:
+* http://lists.opencsw.org/pipermail/maintainers/2009-December/010732.html GPG, agent, pinentry and keychain
+
+Installing DB2 client
+^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+  useradd -u 1007 -g csw -c "DB2 Instance User" -d /export/db2inst1 -s /bin/sh db2inst1
+  mkdir /export/db2inst1
+  chown db2inst1:csw /export/db2inst1
+  cd /opt/IBM/db2/V8.1/instance
+  ./db2icrt -s client db2inst1
+
+Installing IBM Informix Client SDK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+  cd clientsdk.4.10.FC1DE.SOL
+  ./installclientsdk
+    (accept default everywhere)
+    Default Install Folder: /opt/IBM/informix
+
+It seems the 32 bit and 64 bit clients can not be installed in the same directory.
+
 Advanced setup
 --------------
 
@@ -276,23 +466,10 @@ The following components are not required, but are quite useful.
   and /usr/ccs/bin/dump output are available on that page.
 * system garrc is useful when you have multiple users, for example colleagues
   at work who also want to build packages.
-* `Additional setup documented on the wiki`_
-
-  * Java setup
-  * Solaris Studio setup if you want to build software with that compiler.
-    Many of existing build recipes at OpenCSW use this compiler, not GCC.
-  * ssh agent setup for paswordless logins
-
 * catalog signing daemon is useful if you wish to build package catalogs
   locally and sign them with a GPG key.
 
   * `Catalog signing daemon source code`_
-
-.. _GAR setup:
-  http://sourceforge.net/apps/trac/gar/wiki/GarSetup
-
-.. _Additional setup documented on the wiki:
-  http://wiki.opencsw.org/buildfarm
 
 .. _local catalog mirror:
   ../for-administrators/mirror-setup.html
