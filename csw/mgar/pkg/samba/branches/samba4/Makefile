@@ -57,7 +57,6 @@ SMB_MODULES = $(SMB_VFS_MODULES),$(SMB_IDMAP_MODULES),$(SMB_PDB_MODULES),$(SMB_A
 # Main package CSWsamba4
 PACKAGES += CSWsamba4
 SPKG_DESC_CSWsamba4 = $(DESCRIPTION)
-# OBSOLETED_BY_CSWsamba4 += CSWsamba
 SMB_BINS  = eventlogadm gentest locktest masktest ndrdump net ntlm_auth pdbedit pidl
 SMB_BINS += profiles samba-tool smbcontrol smbstatus smbtorture testparm
 SMB_SBINS = smbd nmbd samba samba_dnsupdate samba_kcc samba_spnupdate samba_upgradedns
@@ -105,7 +104,6 @@ INCOMPATIBLE_PKGS_CSWsamba4 += CSWsamba
 # Package with clients, finished
 PACKAGES += CSWsamba4-client
 SPKG_DESC_CSWsamba4-client = Samba 4 clients
-# OBSOLETED_BY_CSWsamba4-client += CSWsamba-client
 SMB_CLIENT_BINS  = cifsdd dbwrap_tool nmblookup nmblookup4 oLschema2ldif regdiff regpatch regshell regtree rpcclient
 SMB_CLIENT_BINS += samba-regedit sharesec smbcacls smbclient smbclient4 smbcquotas smbget smbpasswd smbprint
 SMB_CLIENT_BINS += smbspool smbta-util smbtar smbtree tdbbackup tdbdump tdbrestore tdbtool
@@ -154,9 +152,11 @@ INCOMPATIBLE_PKGS_CSWsamba4-client += CSWsamba-client
 
 PA4-dev
 SPKG_DESC_CSWsamba4-dev = Development files for Samba 4
-# OBSOLETED_BY_CSWsamba4-dev += CSWsamba-dev
-PKGFILES_CSWsamba4-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWsamba4-dev += $(includedir)/.*\.h
 PKGFILES_CSWsamba4-dev += $(libdir)/lib.*\.so
+PKGFILES_CSWsamba4-dev += $(libdir)/pkgconfig/.*\.pc
+PKGFILES_CSWsamba4-dev += $(mandir)/man3/.*\.3
+PKGFILES_CSWsamba4-dev += $(mandir)/man3/.*\.3perl
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWsamba4
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibdcerpc-server0
@@ -184,17 +184,13 @@ RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibsamba-hostconfig0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibgensec0
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsamba4-dev += CSWlibdcerpc-binding0
-CHECKPKG_OVERRIDES_CSWsamba4-dev += soname-unused
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/include/smb_share_modes.h|CSWsamba-dev|CSWsamba4-dev
-CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/lib/winbind_krb5_locator.so|CSWsamba4-dev|CSWsamba4-winbind
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/share/man/man3/talloc.3|CSWlibtalloc-dev|CSWsamba4-dev
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/lib/libnetapi.so|CSWsamba-dev|CSWsamba4-dev
-CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/lib/mit_samba.so|CSWsamba4|CSWsamba4-dev
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/include/libsmbclient.h|CSWsamba-dev|CSWsamba4-dev
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/include/netapi.h|CSWsamba-dev|CSWsamba4-dev
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/include/pytalloc.h|CSWpy-talloc-dev|CSWsamba4-dev
 CHECKPKG_OVERRIDES_CSWsamba4-dev += file-collision|/opt/csw/include/wbclient.h|CSWsamba-dev|CSWsamba4-dev
-CHECKPKG_OVERRIDES_CSWsamba4-dev += missing-dependency|CSWlibwbclient0
 CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibsmbconf0
 CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibpdb0
 CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibgensec0
@@ -219,7 +215,6 @@ CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibdcerpc-atsvc0
 CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibtorture0
 CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibtevent-util0
 CHECKPKG_OVERRIDES_CSWsamba4-dev += surplus-dependency|CSWlibdcerpc-server0
-CHECKPKG_OVERRIDES_CSWsamba4-dev += missing-dependency|CSWlibtevent0
 INCOMPATIBLE_PKGS_CSWsamba4-dev += CSWsamba-dev
 
 # Package CSWsamba4 libraries
