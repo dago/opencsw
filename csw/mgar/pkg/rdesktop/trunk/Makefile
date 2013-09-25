@@ -27,12 +27,18 @@ RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibsamplerate0
 RUNTIME_DEP_PKGS_libssl1-0-0
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibgssglue0
 
+RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibgssapi-krb5-2
+CHECKPKG_OVERRIDES_CSWrdesktop += soname-unused
+
 BUILD64 = 1
 ISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=$(prefix)sktoWe don't have that framework
-CONFIGURE_ARGS += --disable-smartcardsktop += CSWosslrt
+CONFIGURE_ARGS += --disable-smartcardskLINKER_IGNORE =
+EXTRA_LINKER_FLAGS += -lkrb5 -lkrb5support -lgssapi_krb5sktop += CSWosslrt
 
 # No test/check target provided by rdesktop
 TEST_SCRIPTS =
