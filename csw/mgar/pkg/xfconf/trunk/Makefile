@@ -59,7 +59,7 @@ include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
-# abicheck.sh fails for incocuous reasons and the ABI is not in question:
+# abicheck.sh fails for innocuous reasons and the ABI is not in question:
 test-custom:
 	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) VERBOSE=true && $(MAKE) -i -k -C $(OBJDIR) check
 	$(MAKECOOKIE)
