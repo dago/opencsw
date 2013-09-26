@@ -32,11 +32,19 @@ RUNTIME_DEP_PKGS_CSWlibxfce4ui	+=	CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibxfce4ui	+=	CSWlibgtk-x11-2-0-0
 
 # this is private to Xfce but not to libxfce4ui...
-PACKAGES								+=	CSWlibxfce4kbd-private2-0
-CATALOGNAME_CSWlibxfce4kbd-private2-0	=	libxfce4kbd_private2_0
-PKGFILES_CSWlibxfce4kbd-private2-0		+=	$(call baseisadirs,$(libdir),libxfce4kbd-private-2\.so\.0\.0\.0)
-PKGFILES_CSWlibxfce4kbd-private2-0		+=	$(call baseisadirs,$(libdir),libxfce4kbd-private-2\.so\.0(\.\d+)*)
-SPKG_DESC_CSWlibxfce4kbd-private2-0		+=	$(DESCRIPTION), libxfce4kbd-private-2.so.0
+PACKAGES									+=	CSWlibxfce4kbd-private2-0
+CATALOGNAME_CSWlibxfce4kbd-private2-0		=	libxfce4kbd_private2_0
+PKGFILES_CSWlibxfce4kbd-private2-0			+=	$(call baseisadirs,$(libdir),libxfce4kbd-private-2\.so\.0\.0\.0)
+PKGFILES_CSWlibxfce4kbd-private2-0			+=	$(call baseisadirs,$(libdir),libxfce4kbd-private-2\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibxfce4kbd-private2-0			+=	$(DESCRIPTION), libxfce4kbd-private-2.so.0
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibxfce4ui1-0
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibxfce4util6
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibxfce4kbd-private2-0	+=	CSWlibxfconf0-2
 
 PACKAGES							+=	CSWlibxfce4ui1-0
 CATALOGNAME_CSWlibxfce4ui1-0		=	libxfce4ui1_0
@@ -45,7 +53,6 @@ PKGFILES_CSWlibxfce4ui1-0			+=	$(call baseisadirs,$(libdir),libxfce4ui\-1.so\.0(
 SPKG_DESC_CSWlibxfce4ui1-0			+=	$(DESCRIPTION), libxfce4ui-1.so.0
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibxfce4kbd-private2-0
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibxfce4util6
@@ -54,7 +61,6 @@ RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWstartupnotif
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWpango
 RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibxfce4ui1-0	+=	CSWlibxfconf0-2
 
 PACKAGES								+=	CSWlibxfce4ui-dev
 CATALOGNAME_CSWlibxfce4ui-dev			=	libxfce4ui_dev
@@ -63,6 +69,7 @@ PKGFILES_CSWlibxfce4ui-dev			+=	/opt/csw/lib/libxfce4ui-1.so
 PKGFILES_CSWlibxfce4ui-dev			+=	/opt/csw/lib/libxfce4kbd-private-2.so
 PKGFILES_CSWlibxfce4ui-dev			+=	$(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibxfce4ui-dev	+=	CSWlibxfce4ui1-0
+RUNTIME_DEP_PKGS_CSWlibxfce4ui-dev	+=	CSWlibxfce4kbd-private2-0
 ARCHALL_CSWlibxfce4ui-dev				=	1
 CHECKPKG_OVERRIDES_CSWlibxfce4ui-dev	+=	archall-devel-package
 
