@@ -27,6 +27,8 @@ GARCOMPILER		=	GNU
 
 TEST_SCRIPTS = custom
 
+EXTRA_MERGE_EXCLUDE_FILES	=	/opt/csw/lib/perl/5.10.1/perllocal.pod
+
 PACKAGES						+=	CSWxfconf
 CATALOGNAME_CSWxfconf			=	xfconf
 SPKG_DESC_CSWxfconf				+=	$(DESCRIPTION)
@@ -43,7 +45,6 @@ CATALOGNAME_CSWlibxfconf0-2			=	libxfconf0_2
 PKGFILES_CSWlibxfconf0-2			+=	$(call baseisadirs,$(libdir),libxfconf-0\.so\.2\.0\.0)
 PKGFILES_CSWlibxfconf0-2			+=	$(call baseisadirs,$(libdir),libxfconf-0\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibxfconf0-2			+=	$(DESCRIPTION), libxfconf-0.so.2
-RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibgobject2-0-0
