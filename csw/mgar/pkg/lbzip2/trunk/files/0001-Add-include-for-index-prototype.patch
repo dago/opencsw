@@ -1,0 +1,24 @@
+From a6fb7080461d3dfa7719a1fd8560beda9e3a6e55 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 23 Sep 2013 14:49:53 +0200
+Subject: [PATCH] Add include for index() prototype
+
+---
+ src/main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/main.c b/src/main.c
+index 3721e17..f6e02a9 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -27,6 +27,7 @@
+ #include <stdarg.h>             /* va_list */
+ #include <stdio.h>              /* vfprintf() */
+ #include <string.h>             /* strcpy() */
++#include <strings.h>		/* index() */
+ #include <sys/stat.h>           /* lstat() */
+ #include <fcntl.h>              /* open() */
+ 
+-- 
+1.8.3.4
+
