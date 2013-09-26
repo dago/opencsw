@@ -18,7 +18,8 @@ DISTFILES  = $(NAME)-$(# VERSION).tar.gz
 
 # Use patch until this is fixed:
 #   http://trac.xapian.org/ticket/626
-PATCHFILES += 0001-Check-for-explicit-value-or-HAVE_UUID_UNPARSE_LOWER-.patch
+#PATCHFILES += 0001-Check-for-explicit-value-or-HAVE_UUID_UNPARSE_LOWER-.patch
+# PATCHFILES += 0001-Do-not-make-uuid_unparse_lower-inline.patch
 
 # This is strange and needs further examination
 PATCHFILES += 0002-Somehow-round-is-missing-in-cmath.patch
@@ -26,6 +27,9 @@ PATCHFILES += 0002-Somehow-round-is-missing-in-cmath.patch
 # Use patch until this is fixed:
 #   http://trac.xapian.org/ticket/627
 PATCHFILES += 0003-log-is-ambigous-to-float-and-double.patch
+mPATCHFILES += 0001-Force-float-to-disambiguise-float-double-invocation-.patch
+
+#GARCOMPILER = GNU
 missing-.la.patch
 
 VENDOR_URL = http://xapian.org/
@@ -47,11 +51,14 @@ SPKG_DESC_CSWlibxapian-dev = Xapian development files for libxapian.so.22
 PKGFILES_CSWlibxapian-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxapian-dev += $(docdir)/xapian-core/apidoc/.*
 PKGFILES_CSWlibxapian-dev += .*\.cmake
-RUNTIME_DEP_PKGS_CSWlibxapian-dev += CSWlibxapian22+= -norunpath -lCrun
+RUNTIME_DEP_PKGS_CSWlibxapian-dev +=# EXTRA_LD_FLAGS += -norunpath -lCrun
 
 # We don't need it and if defined the test breaks
-LD_OPTIONS = $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNORE)
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)-norunpath -lCrun
+# LD_OPTIONS = $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNORE)
+# EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
+# libuuid.so must be searched in /opt/csw/lib
+EXTRA_CXXFLAGS += -L$(libdir)-norunpath -lCrun
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -60,6 +67,6 @@ ISAEXEC = 1
 CHECKPKG_OVERRIDES_CSWxapian += file-with-bad-content|/usr/local|root/opt/csw/share/doc/xapian-core/install.html
 
 include
-post-patch:
-	cd $(WORKSRC) && autoreconf -fi
-	@$(MAKECOOKIE)
+#post-patch:
+#	cd $(WORKSRC) && autoreconf -fi
+#	@$(MAKECOOKIE)

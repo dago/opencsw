@@ -1,0 +1,45 @@
+From faeb07f303894b6be6234c7988fc7b358fd6d02f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 25 Sep 2013 15:21:43 +0200
+Subject: [PATCH] Force float to disambiguise float/double invocation of log
+
+---
+ tests/api_weight.cc | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/tests/api_weight.cc b/tests/api_weight.cc
+index 792a7ae..b03d8c5 100644
+--- a/tests/api_weight.cc
++++ b/tests/api_weight.cc
+@@ -141,7 +141,7 @@ DEFINE_TESTCASE(tfidfweight3, backend) {
+     TEST_EQUAL(mset.size(), 2);
+     // doc 2 should have higher weight than 4 as only tf(wdf) will dominate.
+     mset_expect_order(mset, 2, 4);
+-    TEST_EQUAL_DOUBLE(mset[0].get_weight(), (8 * log(6 / 2)));
++    TEST_EQUAL_DOUBLE(mset[0].get_weight(), (8 * log((double)6.0 / 2)));
+ 
+     // Check for "bnn" and for both branches of 'b'.
+     enquire.set_query(Xapian::Query("test"));
+@@ -157,7 +157,7 @@ DEFINE_TESTCASE(tfidfweight3, backend) {
+     mset = enquire.get_mset(0, 10);
+     TEST_EQUAL(mset.size(), 2);
+     mset_expect_order(mset, 2, 4);
+-    TEST_EQUAL_DOUBLE(mset[0].get_weight(), (1 + log(8))); // idfn=1 and so wt=tfn=1+log(tf)
++    TEST_EQUAL_DOUBLE(mset[0].get_weight(), (1 + log((double)8.0))); // idfn=1 and so wt=tfn=1+log(tf)
+     TEST_EQUAL_DOUBLE(mset[1].get_weight(), 1.0);         // idfn=1 and wt=tfn=1+log(tf)=1+log(1)=1
+ 
+     // Check for "snn"
+@@ -194,8 +194,8 @@ DEFINE_TESTCASE(tfidfweight3, backend) {
+     mset = enquire.get_mset(0, 10);
+     TEST_EQUAL(mset.size(), 2);
+     mset_expect_order(mset, 2, 4);
+-    TEST_EQUAL_DOUBLE(mset[0].get_weight(), 8 * log((6 - 2) / 2));
+-    TEST_EQUAL_DOUBLE(mset[1].get_weight(), 1 * log((6 - 2) / 2));
++    TEST_EQUAL_DOUBLE(mset[0].get_weight(), 8 * log(((double)6.0 - 2) / 2));
++    TEST_EQUAL_DOUBLE(mset[1].get_weight(), 1 * log(((double)6.0 - 2) / 2));
+ 
+     return true;
+ }
+-- 
+1.8.3.4
+
