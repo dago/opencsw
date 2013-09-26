@@ -16,7 +16,8 @@ Prerequisites
 
 * `basic OpenCSW installation`_, as you would do on any Solaris host where
   you're using OpenCSW packages.
-* You need a `local catalog mirror`_ which will allow you to quickly access
+
+* `local catalog mirror`_ which will allow you to quickly access
   all packages that are in any of OpenCSW catalogs for any Solaris version.
   A typical location is ``/export/mirror/opencsw``.
 
@@ -29,7 +30,7 @@ check your packages for errors.
 
 ::
 
-    sudo pkgutil -y -i vim gar_dev mgar gcc4core gcc4g++ sudo
+  sudo pkgutil -y -i vim gar_dev mgar gcc4core gcc4g++ sudo
 
 Oracle Solaris Studio Compiler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -53,8 +54,8 @@ with the following lines:
 
 ::
 
-    SOS11_CC_HOME = /opt/SUNWspro
-    SOS12_CC_HOME = /opt/studio12/SUNWspro
+  SOS11_CC_HOME = /opt/SUNWspro
+  SOS12_CC_HOME = /opt/studio12/SUNWspro
 
 
 Installing Oracle Solaris Studio 12
@@ -62,15 +63,15 @@ Installing Oracle Solaris Studio 12
 
 ::
 
-    cd ss12
-    ./batch_installer -d /opt/studio/SOS12 --accept-sla
+  cd ss12
+  ./batch_installer -d /opt/studio/SOS12 --accept-sla
 
 Installing Oracle Solaris Studio 12u3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
-    sudo ./solarisstudio.sh --non-interactive --tempdir /var/tmp
+  sudo ./solarisstudio.sh --non-interactive --tempdir /var/tmp
 
 Patching the installed compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -90,25 +91,25 @@ Here's an example:
 
 ::
 
-    # Data for pkginfo
-    SPKG_PACKAGER   = Dagobert Michelsen
-    SPKG_EMAIL      = dam@example.com
-    #
-    # Where to store generated packages
-    SPKG_EXPORT     = /home/dam/pkgs
-    #
-    # Where to store downloaded sources
-    GARCHIVEDIR     = /home/dam/src
-    #
-    # Disable package sanity checks by checkpkg if you are building on your
-    # own host (checkpkg depends on OpenCSW buildfarm infrastructure)
-    ENABLE_CHECK    = 0
+  # Data for pkginfo
+  SPKG_PACKAGER   = Dagobert Michelsen
+  SPKG_EMAIL      = dam@example.com
+  #
+  # Where to store generated packages
+  SPKG_EXPORT     = /home/dam/pkgs
+  #
+  # Where to store downloaded sources
+  GARCHIVEDIR     = /home/dam/src
+  #
+  # Disable package sanity checks by checkpkg if you are building on your
+  # own host (checkpkg depends on OpenCSW buildfarm infrastructure)
+  ENABLE_CHECK    = 0
 
 In case you are sitting behind a proxy, you would also want to configure this in ~/.garrc.
 
 ::
 
-    http_proxy = http://proxy[:port]
+  http_proxy = http://proxy[:port]
 
 You can customize several other things in ``~/.garrc`` which we'll see later.
 Do not customize anything which makes the build dependent on your
@@ -125,8 +126,8 @@ patching easier. Provide basic configuration for git:
 
 ::
 
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
 
 You also need to set up the EDITOR command, because git's expectations don't
 match up with the behavior of ``/bin/vi``. Here's an example how to set it to
@@ -134,8 +135,8 @@ use vim:
 
 ::
 
-    sudo pkgutil -y -i vim
-    echo "export EDITOR=/opt/csw/bin/vim" >> ~/.bashrc
+  sudo pkgutil -y -i vim
+  echo "export EDITOR=/opt/csw/bin/vim" >> ~/.bashrc
 
 Of course, it can be your editor of choice.
 
@@ -147,7 +148,7 @@ building init your local repository:
 
 ::
 
-    mgar init [<path-for-build-recipes>] (defaults to ~/opencsw)
+  mgar init [<path-for-build-recipes>] (defaults to ~/opencsw)
 
 Please make yourself familiar with `mgar`_.
 
@@ -155,7 +156,7 @@ Fetch all the build recipes:
 
 ::
 
-    mgar up --all
+  mgar up --all
 
 checkpkg database
 -----------------
@@ -289,14 +290,61 @@ permissions 0755 which are accessible via
 ``http://buildfarm.opencsw.org/experimental.html``. ``experimental/`` itself
 is 01755 and users are free to create new projects as needed.
 
-The installed packages are listed on http://buildfarm.opencsw.org/versionmatrix.html.
+There is a `matrix of packages installed on the buildfarm`_.
+
+.. _matrix of packages installed on the buildfarm:
+   http://buildfarm.opencsw.org/versionmatrix.html
+
+System-wide garrc
+^^^^^^^^^^^^^^^^^
+
+System-wide ``garrc`` is useful when you have multiple users, for example
+colleagues at work who also build packages.  It can also contain information
+about which hosts are used to build packages for which architectures. Create
+the ``/etc/opt/csw/garrc`` file with appropriate content. For example::
+
+  GARCHIVEDIR     = /home/src
+  GARCHIVEPATH    = /home/src
+  
+  SPKG_EXPERIMENTAL = /home/experimental
+  
+  BUILDHOST_platform-solaris9-sparc-32 = unstable9s
+  BUILDHOST_platform-solaris9-sparc-64 = unstable9s
+  BUILDHOST_platform-solaris10-sparc-32 = unstable10s
+  BUILDHOST_platform-solaris10-sparc-64 = unstable10s
+  BUILDHOST_platform-solaris11-sparc-32 = unstable11s
+  BUILDHOST_platform-solaris11-sparc-64 = unstable11s
+  BUILDHOST_platform-solaris9-i386-32 = unstable9x
+  BUILDHOST_platform-solaris9-i386-64 = unstable10x
+  BUILDHOST_platform-solaris10-i386-32 = unstable10x
+  BUILDHOST_platform-solaris10-i386-64 = unstable10x
+  BUILDHOST_platform-solaris11-i386-32 = unstable11x
+  BUILDHOST_platform-solaris11-i386-64 = unstable11x
+  
+  define modulation2host
+  $(BUILDHOST_platform-$(GAR_PLATFORM)-$(MEMORYMODEL_$(ISA)))
+  endef
+  
+  PACKAGING_HOST_solaris9-sparc = unstable9s
+  PACKAGING_HOST_solaris9-i386 = unstable9x
+  PACKAGING_HOST_solaris10-sparc = unstable10s
+  PACKAGING_HOST_solaris10-i386 = unstable10x
+  PACKAGING_HOST_solaris11-sparc = unstable11s
+  PACKAGING_HOST_solaris11-i386 = unstable11x
+  
+  http_proxy = http://proxy:3128
+  frp_proxy = http://proxy:3128
+  GIT_USE_PROXY = 1
+  
+  SOS12_CC_HOME = /opt/SUNWspro
+
 
 Installing Software
 ^^^^^^^^^^^^^^^^^^^
 
-All software is archived and available from ``/home/farm`` on the bo
-Buildfarm.  Make sure you deinstall ``SUNWgmake``. That version is outdated
-and misses functions needed by GAR (e.g. abspath).
+All software is archived and available from ``/home/farm`` on the buildfarm.
+Make sure you deinstall ``SUNWgmake``. That version is outdated and misses
+functions needed by GAR (e.g. abspath).
 
 Install Java Package
 ++++++++++++++++++++
@@ -377,24 +425,25 @@ Don't forget to patch the compilers, with `PCA`_ or `manually`_.
 Sun Studio for Solaris 11
 +++++++++++++++++++++++++
 
+TODO
 
 Adding Users 
 ^^^^^^^^^^^^
 
 From here on in (Jan 2009), we are trying to keep userids in sync across all
-machines. www.opencsw.org is consider the "master".  If a user exists on www,
-then an account created from them on other machines, should be made to match
-up userids.
+machines. www.opencsw.org is considered the "master".  If a user exists on
+www, then an account created from them on other machines, should be made to
+match up userids.
 
-There are some older, legacy, nonmatchedup accounts. To make it easier to
-identify between newer and older accounts, "cleanly" created accounts are
+There are some older, legacy, non-matched-up accounts. To make it easier to
+identify between newer and older accounts, cleanly created accounts are
 created in the range 17100-18000.  Older accounts may be migrated/synced into
 the range 17000-17099 if desired.
 
 thus, if there is an account created on non-www machines, that is desired to
-be non-synced, it should be OUTSIDE the range of 17000-18000
+be non-synced, it should be outside the range of 17000-18000
 
-The normal process for creating accounts across all machines, is that Phil
+The normal process for creating accounts across all machines, is that Ben
 runs a script on www, which in turn calls scripts maintained by Ihsan and
 Dagobert, to create accounts on www and buildfarm machines, respectively.
 
@@ -431,7 +480,10 @@ Make sure the ssh agent information is forwarded to trusted machines::
 
 There are similar methods with keychain available:
 
-* http://lists.opencsw.org/pipermail/maintainers/2009-December/010732.html GPG, agent, pinentry and keychain
+* `GPG, agent, pinentry and keychain`_
+
+.. _GPG, agent, pinentry and keychain:
+   http://lists.opencsw.org/pipermail/maintainers/2009-December/010732.html
 
 Installing DB2 client
 ^^^^^^^^^^^^^^^^^^^^^
@@ -456,21 +508,21 @@ Installing IBM Informix Client SDK
 
 It seems the 32 bit and 64 bit clients can not be installed in the same directory.
 
-Advanced setup
---------------
+Buildfarm web app
+-----------------
 
-The following components are not required, but are quite useful.
+pkgdb-web is a web app on which you can browse your package database and
+inspect package metadata without having to unpack and examine packages in the
+terminal. Information such as list of files, pkginfo content and information
+about binaries output are available on that page.
 
-* pkgdb-web (with Apache) is a web app on which you can browse your package
-  database and inspect package metadata without having to unpack and examine
-  packages in the terminal. Information such as list of files, pkginfo content
-  and /usr/ccs/bin/dump output are available on that page.
-* system garrc is useful when you have multiple users, for example colleagues
-  at work who also want to build packages.
-* catalog signing daemon is useful if you wish to build package catalogs
-  locally and sign them with a GPG key.
+Catalog signing daemon
+----------------------
 
-  * `Catalog signing daemon source code`_
+Catalog signing daemon is useful if you wish to build package catalogs locally
+and automatically sign them with a GPG key.
+
+* `Catalog signing daemon source code`_
 
 .. _local catalog mirror:
   ../for-administrators/mirror-setup.html
