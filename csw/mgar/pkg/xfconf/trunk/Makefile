@@ -12,6 +12,7 @@ endef
 MASTER_SITES	=	http://archive.xfce.org/xfce/4.10/src/
 DISTFILES 		=	$(DISTNAME).tar.bz2
 PATCHFILES		+=	0001-use-bash-in-test-drivers.patch
+PATCHFILES		+=	0002-set-manual-pages-destination.patch
 
 BUILD_DEP_PKGS	+=	CSWgtk-doc
 BUILD_DEP_PKGS	+=	CSWvim
@@ -30,6 +31,12 @@ PACKAGES						+=	CSWxfconf
 CATALOGNAME_CSWxfconf			=	xfconf
 SPKG_DESC_CSWxfconf				+=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWlibxfconf0-2
+RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWlibxfce4util6
+RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWperl
+RUNTIME_DEP_PKGS_CSWxfconf		+=	CSWlibdbus1-3
 
 PACKAGES							+=	CSWlibxfconf0-2
 CATALOGNAME_CSWlibxfconf0-2			=	libxfconf0_2
@@ -39,6 +46,8 @@ SPKG_DESC_CSWlibxfconf0-2			+=	$(DESCRIPTION), libxfconf-0.so.2
 RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibxfconf0-2	+=	CSWlibdbus-glib1-2
 
 PACKAGES							+=	CSWxfconf-dev
 CATALOGNAME_CSWxfconf-dev			=	xfconf_dev
