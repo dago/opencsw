@@ -16,12 +16,14 @@ DISTFILES 	=	$(DISTNAME).tgz
 PATCHFILES	+=	0001-adapt-to-available-utilities-set.patch
 
 BUILD_DEP_PKGS	+=	CSWxmlto
+BUILD_DEP_PKGS	+=	CSWexo-dev
 
 GARCOMPILER		=	GNU
 CONFIGURE_ARGS	=	$(DIRPATHS)
 
 TEST_SCRIPTS	=	custom
 
+RUNTIME_DEP_PKGS	=	CSWexo
 ARCHALL	=	1
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
