@@ -53,8 +53,8 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
-RUNTIME_DEP_PKGS	=	CSWexo
-
+RUNTIME_DEP_PKGS_CSWcalibre		=	CSWxdg-utils
+CHECKPKG_OVERRIDES_CSWcalibre	+=	surplus-dependency|CSWxdg-utils
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
