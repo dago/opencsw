@@ -138,9 +138,6 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-with-bad-content
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += file-with-bad-content
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += file-with-bad-content
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/i386-pc-solaris2.9/$(VERSION)/liblto_plugin.la
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/sparc-sun-solaris2.9/$(VERSION)/liblto_plugin.la
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/sparc-sun-solaris2.10/$(VERSION)/liblto_plugin.la
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += file-with-bad-content
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += file-with-bad-content
 # Due to complex regular expressions
@@ -154,9 +151,6 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
 
 # Only man pages, so not a big problem. Alternatives could be used, but it
 # requires rebuilding libffi.
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(mandir)/man3/ffi_call.3|$(PKG_BASENAME)core|CSWlibffi-dev
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(mandir)/man3/ffi.3|$(PKG_BASENAME)core|CSWlibffi-dev
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(mandir)/man3/ffi_prep_cif.3|$(PKG_BASENAME)core|CSWlibffi-dev
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|/opt/csw/share/info/libffi.info|$(PKG_BASENAME)core|CSWlibffi-dev
 
 # The .a files are necessary
@@ -165,19 +159,6 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += discouraged-path-in-pkgmap
 
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += discouraged-path-in-pkgmap
-
-# From the 'hopeless errors' department:
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/libffi.so|CSWgcc3javart|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/libgcc_s.so|CSWgcc3core|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/libgcj.so|CSWgcc3javart|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/libobjc.so|CSWgcc3objcrt|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/sparcv9/lib-gnu-awt-xlib.so|CSWgcc3javart|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/sparcv9/libffi.so|CSWgcc3javart|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/sparcv9/libgcj.so|CSWgcc3javart|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/sparcv9/libobjc.so|CSWgcc3objcrt|$(PKG_BASENAME)core
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += file-collision|$(libdir)/libobjc.so|CSWgcc3objcrt|$(PKG_BASENAME)objc
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += file-collision|$(libdir)/sparcv9/libobjc.so|CSWgcc3objcrt|$(PKG_BASENAME)objc
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|$(libdir)/lib-gnu-awt-xlib.so|CSWgcc3javart|$(PKG_BASENAME)core
 
 # Some static libraries are required to build binaries with gcc, for example
 # libgcc.a and libgcc_eh.a. Otherwise: ld: fatal: library -lgcc: not found
@@ -515,16 +496,12 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 #Direct binding is disabled to to problem with amd64 libs
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += no-direct-binding
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += soname-unused
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += no-direct-binding
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += soname-unused
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += no-direct-binding
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += no-direct-binding
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += no-direct-binding
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += soname-unused
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += soname-unused
 CHECKPKG_OVERRIDES_CSWlibatomic1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibffi4 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
