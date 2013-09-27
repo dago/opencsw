@@ -25,6 +25,7 @@ TEST_SCRIPTS	=	custom
 
 RUNTIME_DEP_PKGS	=	CSWexo
 ARCHALL	=	1
+CHECKPKG_OVERRIDES_CSWxdg-utils	+=	surplus-dependency|CSWexo
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
 REINPLACE_USRLOCAL		+=	/opt/csw/bin/xdg-mime
