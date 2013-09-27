@@ -4,12 +4,24 @@ Buildfarm setup
 
 .. highlight:: text
 
-Buildfarm is a set of hosts where you can build Solaris packages. You can
-connect Intel and SPARC and build a set of packages with one shell command.
+  If you prefer a video tutorial instead of a written document, there is
+  a `packaging video tutorial`_ available. It covers a subset of this document,
+  starting from a fresh Solaris 10 install and ends with a built package. It
+  takes about 2-3h to complete.
 
-If you prefer a video tutorial instead of a written document, there is
-a `packaging video tutorial`_ available. It covers all the steps from a fresh
-Solaris 10 install to a built package. It takes about 2-3h to complete.
+A buildfarm is a set of hosts where you can build Solaris packages. You can
+connect Intel and SPARC hosts together to build a set of packages with one
+shell command.
+
+There is a few separate parts which you can set up (in no particular order):
+
+* mgar (builds packages)
+* checkpkg (checks packages for errors)
+* web app (for browsing package metadata and manipulating catalogs)
+* catalog generation (to generate your own catalogs)
+* signing daemon (to automatically add GPG signatures to your catalogs)
+* platforms (multi-architecture builds, e.g. intel+sparc)
+* additional software: Solaris Studio compiler, Java, etc.
 
 Prerequisites
 -------------
@@ -196,9 +208,9 @@ says:
 
 In SQLObject, the UnicodeCol column type is translated into VARCHAR, which
 results in case-insensitive comparisons.  This makes checkpkg throw file
-collision errors between files such as "Zcat.1" and "zcat.1".  In order to
+collision errors between files such as ``Zcat.1`` and ``zcat.1``.  In order to
 work around this, a case-sensitive collation needs to be used; for example,
-latin1_bin.  Collation setting can be altered for certain columns, as
+``latin1_bin``.  Collation setting can be altered for certain columns, as
 follows::
 
   ALTER TABLE csw_file MODIFY COLUMN path VARCHAR(900) NOT NULL COLLATE latin1_bin;
@@ -210,9 +222,9 @@ settings as the ones in the database.
 Configuration
 ^^^^^^^^^^^^^
 
-The database access configuration is held in ``~/.checkpkg/checkpkg.ini`` or,
-in the shared config scenario, in ``/etc/opt/csw/checkpkg.ini``.  The format
-is as follows::
+The database access configuration is held in ``/etc/opt/csw/checkpkg.ini``.
+You can also use a per-user file: ``~/.checkpkg/checkpkg.ini``.  The format is
+as follows::
 
   [database]
   
@@ -226,27 +238,25 @@ is as follows::
 Initializing tables and indexes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The next step is creating the tables in the database.
-
-::
+The next step is creating the tables in the database::
 
   bin/pkgdb initdb
 
 System files indexing
 ^^^^^^^^^^^^^^^^^^^^^
 
-The following commands will index and import files on the filesystem.  Please
-note that you might need to change 'SunOS5.10' and 'sparc' to match your file.
-
-::
+The following commands will index and import files on the filesystem::
 
   bin/pkgdb system-files-to-file
-  bin/pkgdb import-system-file install-contents-SunOS5.10-sparc.marshal
+  bin/pkgdb import-system-file install-contents-SunOS$(uname -r)-$(uname -p).marshal
 
-You can notice that there are separate steps: collecting the data and saving
-as a file, and importing the data. Why are they separate? You need to collect
-data on the host that contains them, but you might import the data on
-a different host.
+You can notice that there are two separate steps:
+
+1. collecting the data and saving as a file
+2. importing the data
+
+Why are they separate? You need to collect data on the host that contains
+them, but you might import the data on a different host.
 
 OpenCSW catalog indexing
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -261,7 +271,7 @@ is that you only need to import each package once, and once catalog updates
 come in, pkgdb only imports the new packages.
 
 You will need to perform this operation each time the OpenCSW catalog is
-updated.  Otherwise your packages will be checked against an old state of the
+updated. Otherwise your packages will be checked against an old state of the
 catalog.
 
 Your database is now ready.
@@ -285,10 +295,10 @@ shared between the build machines. This is important for building x86 packages
 as the 32 bit part needs to be build on Solaris 9 and the 64 bit part on
 Solaris 10.
 
-Under ``/home/experimental/<project>/`` are project-specific directories with
-permissions 0755 which are accessible via
-``http://buildfarm.opencsw.org/experimental.html``. ``experimental/`` itself
-is 01755 and users are free to create new projects as needed.
+There are project specific directories under
+``/home/experimental/<project>/``, with permissions 0755 which are accessible
+via ``http://buildfarm.opencsw.org/experimental.html``. The ``experimental/``
+directory is 01755 and users are free to create new projects as needed.
 
 There is a `matrix of packages installed on the buildfarm`_.
 
@@ -431,7 +441,7 @@ Adding Users
 ^^^^^^^^^^^^
 
 From here on in (Jan 2009), we are trying to keep userids in sync across all
-machines. www.opencsw.org is considered the "master".  If a user exists on
+machines. ``www.opencsw.org`` is considered the master.  If a user exists on
 www, then an account created from them on other machines, should be made to
 match up userids.
 
@@ -443,9 +453,9 @@ the range 17000-17099 if desired.
 thus, if there is an account created on non-www machines, that is desired to
 be non-synced, it should be outside the range of 17000-18000
 
-The normal process for creating accounts across all machines, is that Ben
-runs a script on www, which in turn calls scripts maintained by Ihsan and
-Dagobert, to create accounts on www and buildfarm machines, respectively.
+The normal process for creating accounts across all machines, is that Ben runs
+a script on www, which in turn calls scripts maintained by Ihsan and Dagobert,
+to create accounts on www and buildfarm machines, respectively.
 
 SSH Agent for each user
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -520,6 +530,7 @@ The checkpkg database also holds information about catalogs.
 
 * Live app on the OpenCSW buildfarm http://buildfarm.opencsw.org/pkgdb/
 * Source code:
+
   * Browse http://gar.svn.sourceforge.net/viewvc/gar/csw/mgar/gar/v2/lib/web
   * Checkout:
     http://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2/lib/web
