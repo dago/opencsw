@@ -514,13 +514,34 @@ Buildfarm web app
 pkgdb-web is a web app on which you can browse your package database and
 inspect package metadata without having to unpack and examine packages in the
 terminal. Information such as list of files, pkginfo content and information
-about binaries output are available on that page.
+about binaries are available on that page.
+
+The checkpkg database also holds information about catalogs.
+
+* Live app on the OpenCSW buildfarm http://buildfarm.opencsw.org/pkgdb/
+* Source code:
+  * Browse http://gar.svn.sourceforge.net/viewvc/gar/csw/mgar/gar/v2/lib/web
+  * Checkout:
+    http://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2/lib/web
+
+There are specifically two web apps: One is read-only (``pkgdb_web.py``) and
+one is read-write (``releases_web.py``).
+
+Catalog generation
+------------------
+
+Once you have the buildfarm database, you can generate your own package
+catalogs. The main entry point which you can add to cron is the
+``opencsw-future-update`` script.
+
+* Source code:
+  https://sourceforge.net/p/opencsw/code/HEAD/tree/buildfarm/bin/
 
 Catalog signing daemon
 ----------------------
 
-Catalog signing daemon is useful if you wish to build package catalogs locally
-and automatically sign them with a GPG key.
+Catalog signing daemon is useful if you wish to automatically sign your built
+catalogs with a GPG key.
 
 * `Catalog signing daemon source code`_
 
