@@ -395,23 +395,22 @@ PKGFILES_$(PKG_BASENAME)java += $(includedir)/.*org/.*
 
 # The following list could be probably expanded from $(JAVA_BINARIES)
 ALTERNATIVES_$(PKG_BASENAME)java += $(PKG_VERSION_TOKEN)java
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/aot-compile gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/aot-compile gcc_gjava $(bindir)/aot-compile$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gc-analyze gcc_gjava $(bindir)/gc-analyze$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcj gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcj gcc_gjava $(bindir)/gcj$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcj-dbtool gcc_gjava $(bindir)/gcj-dbtool$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcjh gcc_gjava $(bindir)/gcjh$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gij gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gij gcc_gjava $(bindir)/gij$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gjar gcc_gjava $(bindir)/gjar$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gjarsigner gcc_gjava $(bindir)/gjarsigner$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gjavah gcc_gjava $(bindir)/gjavah$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gkeytool gcc_gjava $(bindir)/gkeytool$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gnative2ascii gcc_gjava $(bindir)/$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gnative2ascii gcc_gjava $(bindir)/gnative2ascii$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
@@ -463,6 +462,20 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
+
+ALTERNATIVES_$(PKG_BASENAME)ada += $(PKG_VERSION_TOKEN)ada
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnat      gcc_ada $(bindir)/gnat$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatbind  gcc_ada $(bindir)/gnatbind$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatchop  gcc_ada $(bindir)/gnatchop$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatclean gcc_ada $(bindir)/gnatclean$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatfind  gcc_ada $(bindir)/gnatfind$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatkr    gcc_ada $(bindir)/gnatkr$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatlink  gcc_ada $(bindir)/gnatlink$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatls    gcc_ada $(bindir)/gnatls$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatmake  gcc_ada $(bindir)/gnatmake$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatname  gcc_ada $(bindir)/gnatname$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatprep  gcc_ada $(bindir)/gnatprep$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnatxref  gcc_ada $(bindir)/gnatxref$(PROGRAM_SUFFIX)
 
 # This is an obsolete package. Nothing depends on it, so we can remove it.
 INCOMPATIBLE_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
