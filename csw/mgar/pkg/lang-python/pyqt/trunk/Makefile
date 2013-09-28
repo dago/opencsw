@@ -110,7 +110,7 @@ $(WORKSRC)/pyqtconfig.py:
 			ggrep -v '^[.]/pyqtconfig.py$$' | \
 			xargs rm \
 			&& \
-		rmdir -f \
+		rm -r -f \
 			./phonon \
 			./Qt \
 			./QtCore \
