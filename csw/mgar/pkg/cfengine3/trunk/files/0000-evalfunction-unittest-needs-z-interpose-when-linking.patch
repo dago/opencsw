@@ -1,0 +1,25 @@
+From 861b9272653520866f07cee72b1a9277ab4410f3 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Sat, 28 Sep 2013 16:53:23 +0200
+Subject: [PATCH] evalfunction unittest needs `-z interpose' when linking.
+
+---
+ tests/unit/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/unit/Makefile.in b/tests/unit/Makefile.in
+index 05df581..1bfaa6d 100644
+--- a/tests/unit/Makefile.in
++++ b/tests/unit/Makefile.in
+@@ -205,7 +205,7 @@ domainname_test_DEPENDENCIES = ../../libpromises/libpromises.la \
+ 	libtest.la
+ evalfunction_test_SOURCES = evalfunction_test.c
+ evalfunction_test_OBJECTS = evalfunction_test.$(OBJEXT)
+-evalfunction_test_LDADD = $(LDADD)
++evalfunction_test_LDADD = $(LDADD) -z interpose
+ evalfunction_test_DEPENDENCIES = ../../libpromises/libpromises.la \
+ 	libtest.la
+ am_exec_config_test_OBJECTS = exec-config-test.$(OBJEXT) \
+-- 
+1.8.3.4
+
