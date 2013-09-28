@@ -1,0 +1,46 @@
+From aebe5bd0345de68adc904a5e450fd18f75f3b85f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sat, 28 Sep 2013 17:47:18 +0200
+Subject: [PATCH] disable ocsw unsupported modules on SPARC
+
+---
+ configure-ng.py | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/configure-ng.py b/configure-ng.py
+index 5781614..1505d6d 100644
+--- a/configure-ng.py
++++ b/configure-ng.py
+@@ -88,8 +88,6 @@ QT4_MODULES = {
+     'QtNetwork':        ModuleMetadata(qmake_QT=['network', '-gui']),
+     'QtOpenGL':         ModuleMetadata(qmake_QT=['opengl'],
+                                 qpy_lib='qpyopengl'),
+-    'QtScript':         ModuleMetadata(qmake_QT=['script', '-gui']),
+-    'QtScriptTools':    ModuleMetadata(qmake_QT=['scripttools', 'script']),
+     'QtSql':            ModuleMetadata(qmake_QT=['sql']),
+     'QtSvg':            ModuleMetadata(qmake_QT=['svg']),
+     'QtTest':           ModuleMetadata(qmake_QT=['testlib']),
+@@ -120,9 +118,6 @@ QT5_MODULES = {
+     'QtNetwork':        ModuleMetadata(qmake_QT=['network', '-gui']),
+     'QtOpenGL':         ModuleMetadata(qmake_QT=['opengl'],
+                                 qpy_lib='qpyopengl'),
+-    'QtScript':         ModuleMetadata(qmake_QT=['script', '-gui']),
+-    'QtScriptTools':    ModuleMetadata(
+-                                qmake_QT=['scripttools', 'script', 'widgets']),
+     'QtSql':            ModuleMetadata(qmake_QT=['sql', 'widgets']),
+     'QtSvg':            ModuleMetadata(qmake_QT=['svg']),
+     'QtTest':           ModuleMetadata(qmake_QT=['testlib', 'widgets']),
+@@ -935,10 +930,6 @@ def check_modules(target_config, verbose):
+             'new QDeclarativeView()')
+     check_module(target_config, verbose, 'QtOpenGL', 'qgl.h',
+             'new QGLWidget()')
+-    check_module(target_config, verbose, 'QtScript', 'qscriptengine.h',
+-            'new QScriptEngine()')
+-    check_module(target_config, verbose, 'QtScriptTools',
+-            'qscriptenginedebugger.h', 'new QScriptEngineDebugger()')
+     check_module(target_config, verbose, 'QtSql', 'qsqldatabase.h',
+             'new QSqlDatabase()')
+     check_module(target_config, verbose, 'QtSvg', 'qsvgwidget.h',
+-- 
+1.8.3.4
+

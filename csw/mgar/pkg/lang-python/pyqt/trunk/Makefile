@@ -22,6 +22,7 @@ DISTFILES 		=	$(DISTNAME).tar.gz
 LICENSE			=	LICENSE.GPL3
 PATCHFILES		+=	0001-disable-ocsw-unsupported-modules.patch
 PATCHFILES		+=	0002-force-xpg6-where-not-set-by-configure.patch
+PATCHFILES_isa-sparcv8plus-python_version-2_7	+=	0003-disable-ocsw-unsupported-modules-on-SPARC.patch
 
 BUILD_DEP_PKGS	+=	CSWqt4-dev
 BUILD_DEP_PKGS	+=	CSWpy-sip
