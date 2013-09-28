@@ -55,9 +55,11 @@ SPKG_DESC_CSW$(NAME)utils = CFEngine 3 utilities and documentation
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibgcc-s1
 OBSOLETED_BY_CSW$(NAME)utils = CSWlibpromises1 CSW$(NAME)rt
 CATALOGNAME_CSWlibpromises1 = libpromises1_stub
 CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
+CHECKPKG_OVERRIDES_CSW$(NAME)utils += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)utils|catalogname=$(NAME)_utils|expected-catalogname=$(NAME)utils
 
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
@@ -70,11 +72,11 @@ PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-serverd.*
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-runagent.*
 PKGFILES_CSW$(NAME)server += $(initddir)/csw$(NAME)-cfserverd
 PKGFILES_CSW$(NAME)server += $(docdir)/$(NAME)_server/.*\.CSW
+CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)server|catalogname=$(NAME)_server|expected-catalogname=$(NAME)server
 
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
 SPKG_DESC_CSW$(NAME)client = CFEngine 3 client binaries
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)utils
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibxml2-2
@@ -88,6 +90,7 @@ PKGFILES_CSW$(NAME)client += $(cfengine_workdir_bin)/cf-agent
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfexecd
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfmonitord
 PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/.*\.CSW
+CHECKPKG_OVERRIDES_CSW$(NAME)client += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)client|catalogname=$(NAME)_client|expected-catalogname=$(NAME)client
 
 # CFEngine provides three daemons
 #  - cf-execd (client)
