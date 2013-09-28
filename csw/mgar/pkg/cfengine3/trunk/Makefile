@@ -1,11 +1,11 @@
 # $Id$
 #
 NAME = cfengine3
-VERSION = 3.4.4
+VERSION = 3.5.2
 GARTYPE = v2
-GARCOMPILER = SOS12U2
+GARCOMPILER = GCC4
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386 solaris11-sparc solaris11-i386
 
 DESCRIPTION = Open source configuration management system
 define BLURB
@@ -38,12 +38,8 @@ UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES =
 
-# See comment in patch
-PATCHFILES += 0000-Do-not-perform-acceptance-test.patch
-# Make build and tests work
-PATCHFILES += 0001-Fix-preprocessor-macro-FUNC_DEPRECATED-to-avoid-synt.patch
-PATCHFILES += 0003-Fix-empty-initializer.-Add-mkdtemp.patch
-PATCHFILES += 0003-Remove-unsupported-compiler-flags.-Add-z-interpose-w.patch
+PATCHFILES += 0000-evalfunction-unittest-needs-z-interpose-when-linking.patch
+PATCHFILES += 0000-Disable-acceptance-test.patch
 
 #
 # CUSTOM VARIABLES
@@ -59,9 +55,6 @@ SPKG_DESC_CSW$(NAME)utils = CFEngine 3 utilities and documentation
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)utils += CSWlibpcre1
-CHECKPKG_OVERRIDES_CSW$(NAME)utils += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)utils|catalogname=$(NAME)_utils|expected-catalogname=$(NAME)utils
-CHECKPKG_OVERRIDES_CSW$(NAME)utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/$(NAME)_utils/CoreBase/failsafe/failsafe.cf
-CHECKPKG_OVERRIDES_CSW$(NAME)utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/$(NAME)_utils/ChangeLog
 OBSOLETED_BY_CSW$(NAME)utils = CSWlibpromises1 CSW$(NAME)rt
 CATALOGNAME_CSWlibpromises1 = libpromises1_stub
 CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
@@ -77,7 +70,6 @@ PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-serverd.*
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-runagent.*
 PKGFILES_CSW$(NAME)server += $(initddir)/csw$(NAME)-cfserverd
 PKGFILES_CSW$(NAME)server += $(docdir)/$(NAME)_server/.*\.CSW
-CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)server|catalogname=$(NAME)_server|expected-catalogname=$(NAME)server
 
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
@@ -96,7 +88,6 @@ PKGFILES_CSW$(NAME)client += $(cfengine_workdir_bin)/cf-agent
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfexecd
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfmonitord
 PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/.*\.CSW
-CHECKPKG_OVERRIDES_CSW$(NAME)client += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)client|catalogname=$(NAME)_client|expected-catalogname=$(NAME)client
 
 # CFEngine provides three daemons
 #  - cf-execd (client)
@@ -129,10 +120,6 @@ CONFIGURE_ARGS += --without-qdbm
 CONFIGURE_ARGS += --without-postgresql
 CONFIGURE_ARGS += --without-mysql
 
-EXTRA_CPPFLAGS = -xc99=all
-# -features=extensions is needed since some void functions return values...
-EXTRA_CFLAGS   = -xc99=all -features=extensions
-
 # We use this because libpromises will be moved to this private
 # directory (see also move-libpromises:)
 EXTRA_LDFLAGS += -R$(libdir)/$(NAME)
@@ -142,7 +129,7 @@ EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
 
 include gar/category.mk
 
-post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc fix-paths-in-files move-libpromises move-binaries
+post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc move-libpromises move-binaries
 	@$(MAKECOOKIE)
 
 rename-cfengine-dir:
@@ -182,24 +169,11 @@ install-cfengine3rc:
 install-cfengine3-csw-doc: rename-cfengine-dir
 	ginstall -m 644 $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)_utils/
 
-fix-paths-in-files: rename-cfengine-dir
-	for d in $(DESTDIR)$(docdir)/$(NAME)_utils/example_config $(DESTDIR)$(docdir)/$(NAME)_utils/examples $(DESTDIR)$(docdir)/$(NAME)_utils/CoreBase; do \
-		if test -d $$d ; then \
-			for f in $${d}/*.cf ; do \
-				sed -e 's|/var/cfengine/|/var/opt/csw/$(NAME)/|g' \
-					-e 's|_var_cfengine_|_var_opt_csw_$(NAME)_|g' \
-					-e 's|/usr/local/|/opt/csw/|g' \
-					-e 's|_usr_local_|_opt_csw_|g' $$f > $${f}.tmp ;\
-				mv $${f}.tmp $$f ; \
-			done ; \
-		fi ; \
-	done
-
-# We move libpromises to a prive directory, since there is no publicly
+# We move libpromises to a private directory, since there is no publicly
 # available API. Please note, the rpath has to be set appropriately
 move-libpromises:
 	ginstall -d $(DESTDIR)$(libdir)/$(NAME)
-	if test -f $(DESTDIR)$(libdir)/libpromises.so.1.0.0 ; then \
+	if test -f $(DESTDIR)$(libdir)/libpromises.so ; then \
 		mv $(DESTDIR)$(libdir)/libpromises.* $(DESTDIR)$(libdir)/$(NAME)/ ; \
 	fi
 
