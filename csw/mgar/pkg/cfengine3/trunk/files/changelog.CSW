@@ -1,10 +1,10 @@
-cfengine3 (3.5.2,REV=2013.09.28)
+cfengine3 (3.5.2,REV=2013.09.29)
 
   * New upstream release 3.5.2.
 
   * Built using GCC 4.8.
 
- -- Rafael Ostertag <raos@opencsw.org>  Sat, 28 Sep 2013 17:57:13 +0200
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 29 Sep 2013 14:56:14 +0200
 
 
 cfengine3 (3.4.4,REV=2013.03.26)
