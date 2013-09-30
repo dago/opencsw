@@ -132,6 +132,9 @@ ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PR
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcc gcc_core $(bindir)/gcc$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gccgo gcc_core $(bindir)/gccgo$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcc-ar gcc_core $(bindir)/gcc-ar$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcc-nm gcc_core $(bindir)/gcc-nm$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcc-ranlib gcc_core $(bindir)/gcc-ranlib$(PROGRAM_SUFFIX)
 
 # Because I can.
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-with-bad-content
@@ -301,6 +304,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(PKG_BASENAME)core
 
 ALTERNATIVES_$(PKG_BASENAME)g++ += $(PKG_VERSION_TOKEN)g++
 ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/c++ gcc_gplusplus $(bindir)/c++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
@@ -391,7 +395,7 @@ ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gnative2ascii gcc_gjava $(bind
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmiregistry gcc_gjava $(bindir)/grmiregistry$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
 ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
@@ -465,9 +469,9 @@ PACKAGES += $(PACKAGES_$(GARCH))
 CORE_BINARIES = cpp gcc gcov
 CXX_BINARIES = g\+\+ c\+\+
 FORTRAN_BINARIES = gfortran
-JAVA_BINARIES  = gcj gij aot-compile grmiregistry
+JAVA_BINARIES  = gcj gij aot-compile
 JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
-JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
+JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmiregistry
 JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 # GCC-4.7 contains assembler specific to sparcv9, incompatible with sparcv8.
