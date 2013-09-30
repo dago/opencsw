@@ -504,5 +504,5 @@ post-install-isa-sparcv8plus:
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(stODir)/QScriptEngineDebugger $(stDDir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(stODir)/QtScriptTools $(stDDir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(dODir)/qscriptenginedebugger.h $(DDir)
-	ginstall --preserve-timestamps --mode=u=rwx,go=r $(ODir)/qscriptenginedebugger.h $(stDDir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(dDir)/qscriptenginedebugger.h $(stDDir)
 	$(MAKECOOKIE)
