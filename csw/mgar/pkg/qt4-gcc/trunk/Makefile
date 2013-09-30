@@ -445,7 +445,7 @@ post-install:
 # scripting module.
 #    origin:
 post-install-isa-sparcv8plus: sODir		=	$(WORKSRC)/include/QtScript
-post-install-isa-sparcv8plus: stODir	=	$(WORKSRC)/include/QtScriptTools/QtScriptTools
+post-install-isa-sparcv8plus: stODir	=	$(WORKSRC)/include/QtScriptTools
 post-install-isa-sparcv8plus: ODir		=	$(WORKSRC)/src/script/api
 post-install-isa-sparcv8plus: dODir		=	$(WORKSRC)/src/scripttools/debugging
 #    destination:
