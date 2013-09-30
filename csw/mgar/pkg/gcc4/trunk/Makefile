@@ -304,7 +304,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(PKG_BASENAME)core
 
 ALTERNATIVES_$(PKG_BASENAME)g++ += $(PKG_VERSION_TOKEN)g++
 ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
-ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/c++ gcc_gplusplus $(bindir)/c++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/c++ gcc_gplusplus $(bindir)/c++$(PROGRAM_SUFFIX)
 
 RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
