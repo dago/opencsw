@@ -13,4 +13,5 @@ DISTFILES = $(DISTNAME).zip
 VENDOR_URL = https://pypi.python.org/pypi/distribute
 ARCHALL = 1
 TEST_SCRIPTS =
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 include gar/category.mk
