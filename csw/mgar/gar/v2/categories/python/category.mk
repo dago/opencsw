@@ -47,16 +47,21 @@ MERGE_SCRIPTS_isa-default-python_version-2_6 ?= copy-all
 MERGE_SCRIPTS_isa-default-python_version-2_7 ?= copy-all
 MERGE_SCRIPTS_isa-default-python_version-3_3 ?= copy-all
 
-include gar/gar.mk
-
 # TODO: how can we transform this in SUN and GNU respectively? note
 # that it's to early(?) to use the generic name
+# Global modulation
+GARCOMPILER_PYTHON__5.9 = SOS12
+GARCOMPILER_PYTHON__5.10 = SOS12
+GARCOMPILER_PYTHON__5.11 = SOS12
+# Specific modulations
 GARCOMPILER_PYTHON_2_6_5.9 = SOS12
 GARCOMPILER_PYTHON_2_7_5.9 = GCC4
 GARCOMPILER_PYTHON_2_6_5.10 = SOS12U3
 GARCOMPILER_PYTHON_2_7_5.10 = GCC4
 GARCOMPILER_PYTHON_2_6_5.11 = SOS12U3
 GARCOMPILER_PYTHON_2_7_5.11 = GCC4
-GARCOMPILER = $(GARCOMPILER_PYTHON_$(PYTHON_VERSION)_$(GAROSREL))
+GARCOMPILER ?= $(GARCOMPILER_PYTHON_$(PYTHON_VERSION)_$(GAROSREL))
 
 PACKAGING_PLATFORMS ?= solaris9-i386 solaris9-sparc solaris10-i386 solaris10-sparc
+
+include gar/gar.mk
