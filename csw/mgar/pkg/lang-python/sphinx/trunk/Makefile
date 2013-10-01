@@ -11,6 +11,7 @@ DESCRIPTION = Helps create documentation consisting of reStructuredText sources
 define BLURB
 endef
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES += 0001-fix-infodir.patch
 ARCHALL_CSWpy-sphinx = 1
 BUILD_DEP_PKGS	+=	CSWpython-dev
 BUILD_DEP_PKGS	+=	CSWpython27-dev
@@ -18,8 +19,6 @@ DEP_PKGS += CSWpy-docutils
 DEP_PKGS += CSWpy-jinja2
 DEP_PKGS += CSWpy-pygments
 DEP_PKGS += CSWpysetuptools
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-docutils
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
