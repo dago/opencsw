@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = Sphinx
-VERSION = 1.1.2
+VERSION = 1.1.3
 PACKAGES = CSWpy-sphinx
 CATEGORIES = python
 GARTYPE = v2
@@ -12,10 +12,14 @@ define BLURB
 endef
 DISTFILES  = $(DISTNAME).tar.gz
 ARCHALL_CSWpy-sphinx = 1
+BUILD_DEP_PKGS	+=	CSWpython-dev
+BUILD_DEP_PKGS	+=	CSWpython27-dev
 DEP_PKGS += CSWpy-docutils
 DEP_PKGS += CSWpy-jinja2
 DEP_PKGS += CSWpy-pygments
 DEP_PKGS += CSWpysetuptools
+RUNTIME_DEP_PKGS	+=	CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS	+=	CSWlibpython2-7-1-0
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-docutils
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
