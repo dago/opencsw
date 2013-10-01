@@ -205,6 +205,7 @@ DEF_BASE_PKGS += CSWpy-libmagic
 DEF_BASE_PKGS += CSWpy-progressbar
 DEF_BASE_PKGS += CSWpy-pyelftools
 DEF_BASE_PKGS += CSWpy-sqlobject
+DEF_BASE_PKGS += CSWpy-mysql
 DEF_BASE_PKGS += CSWpython
 DEF_BASE_PKGS += CSWwget
 DEF_BASE_PKGS += CSWxz
