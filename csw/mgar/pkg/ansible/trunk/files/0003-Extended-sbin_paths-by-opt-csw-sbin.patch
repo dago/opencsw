@@ -1,0 +1,25 @@
+From cd7a83573c952d9f8fc63cab2c7f5623663ecff6 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 1 Oct 2013 16:52:39 +0200
+Subject: [PATCH] Extended sbin_paths by '/opt/csw/sbin'.
+
+---
+ lib/ansible/module_common.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/ansible/module_common.py b/lib/ansible/module_common.py
+index 55f184f..02aaf56 100644
+--- a/lib/ansible/module_common.py
++++ b/lib/ansible/module_common.py
+@@ -740,7 +740,7 @@ class AnsibleModule(object):
+            - opt_dirs:  optional list of directories to search in addition to PATH
+         if found return full path; otherwise return None
+         '''
+-        sbin_paths = ['/sbin', '/usr/sbin', '/usr/local/sbin']
++        sbin_paths = ['/sbin', '/usr/sbin', '/usr/local/sbin', '/opt/csw/sbin']
+         paths = []
+         for d in opt_dirs:
+             if d is not None and os.path.exists(d):
+-- 
+1.8.3.4
+
