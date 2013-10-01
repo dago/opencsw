@@ -87,6 +87,15 @@ CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWpy-pyqt-common
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/lib/qt4/plugins/designer/libpythonplugin.so|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/lib/qt4/plugins/designer/libpythonplugin.so|arch_id=3|arch_name=i386
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	python-package-missing-py26-files
+# the following 3 libraries are suported by Qt only on i386:
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdeclarative4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtscript4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtscripttools4
+# the following 3 overrides are only for SPARc as the libraires are
+# not supportd yet:
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWlibqtdeclarative4
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWlibqtscript4
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWlibqtscripttools4
 
 include gar/category.mk
 
