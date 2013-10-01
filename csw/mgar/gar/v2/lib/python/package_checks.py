@@ -852,19 +852,39 @@ def CheckPackageDoesNotBreakPython26(pkg_data, error_mgr, logger, messenger):
     # It's not a Python 2.x module. Nothing to see here.
     return
   spotted_a_py26_file = False
-  example_py_file = ""
   for pkgmap_entry in pkg_data["pkgmap"]:
     if not pkgmap_entry["path"]:
       continue
     if py26_file_re.match(pkgmap_entry["path"]):
       spotted_a_py26_file = True
-      example_py_file = pkgmap_entry["path"]
       break
   if not spotted_a_py26_file:
     error_mgr.ReportError("python-package-missing-py26-files")
     messenger.Message(
         "The package has the CSWpy- prefix but "
         "does not contain any files for Python 2.6. ")
+
+
+def CheckPyPackageContainsPyFiles(pkg_data, error_mgr, logger, messenger):
+  """Packages named CSWpy- must provide files for Python 2.6."""
+  py_file_re = re.compile(r"/opt/csw/lib/python.*\.py$")
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  has_py_prefix = pkgname.startswith("CSWpy-")
+  if not has_py_prefix:
+    # It's not a Python module. Nothing to see here.
+    return
+  spotted_a_py_file = False
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if not pkgmap_entry["path"]:
+      continue
+    if py_file_re.match(pkgmap_entry["path"]):
+      spotted_a_py_file = True
+      break
+  if not spotted_a_py_file:
+    error_mgr.ReportError("python-package-missing-py-files")
+    messenger.Message(
+        "The package has the CSWpy- prefix but "
+        "does not contain any .py files.")
 
 
 def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
