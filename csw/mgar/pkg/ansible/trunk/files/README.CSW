@@ -1,0 +1,19 @@
+Note
+====
+
+OpenCSW Ansible does not support  Paramiko as a connection method, due
+to  lack of  a Paramiko  OpenCSW package.  Therefore, OpenCSW  Ansible
+requires    an    SSH   implementation    supporting    ControlPersist
+functionality,  which  is  provided  by  the  OpenCSW  OpenSSH  Client
+package.
+
+In order  to make to  make use of  the OpenCSW OpenSSH  Client, please
+make  sure  /opt/csw/bin  is  listed  before  /usr/bin  in  your  PATH
+environment variable, e.g.
+
+
+  PATH=/opt/csw/bin:$PATH ansible ...
+
+
+Or you  might follow  the instructions given  in the  section `Setting
+your PATH' on http://www.opencsw.org/use-it/.
