@@ -99,10 +99,6 @@ ifeq ($(GARCOMPILER),GNU)
   GARCOMPILER = GCC4
 endif
 
-ifeq (,$(filter $(GARCOMPILER),$(GARCOMPILERS)))
-  $(error The compiler '$(GARCOMPILER)' is unknown. Please select one of $(GARCOMPILERS))
-endif
-
 # Build flavor (OPT/DBG)
 GARFLAVOR ?= OPT
 
@@ -111,6 +107,9 @@ GARCHLIST ?= sparc i386
 GARCH    := $(if $(GARCH),$(GARCH),$(shell /usr/bin/uname -p))
 GAROSREL := $(if $(GAROSREL),$(GAROSREL),$(shell /usr/bin/uname -r))
 
+ifeq (,$(filter $(GARCOMPILER),$(GARCOMPILERS)))
+  $(error The compiler '$(GARCOMPILER)' is unknown. Please select one of $(GARCOMPILERS))
+endif
 
 # These are the standard directory name variables from all GNU
 # makefiles.  They're also used by autoconf, and can be adapted
@@ -935,6 +934,7 @@ ccenv:
 	@echo
 
 modenv:
+	@echo "     Platforms: $(PACKAGING_PLATFORMS)"
 	@echo "          Arch: $(GARCH)"
 	@echo "        Kernel: $(KERNELISA)"
 	@echo
