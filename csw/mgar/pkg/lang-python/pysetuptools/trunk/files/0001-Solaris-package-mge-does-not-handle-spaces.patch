@@ -1,0 +1,25 @@
+From 2b9d28c7baad8086bba0afdbb343051a3b55f235 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 1 Oct 2013 17:57:01 +0200
+Subject: [PATCH] Solaris package mge does not handle spaces
+
+---
+ setuptools/command/easy_install.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setuptools/command/easy_install.py b/setuptools/command/easy_install.py
+index 6ce19fa..f0ab449 100644
+--- a/setuptools/command/easy_install.py
++++ b/setuptools/command/easy_install.py
+@@ -759,7 +759,7 @@ Please make the appropriate changes for your system and try again.
+             return clean_template
+ 
+         if is_script:
+-            template_name = 'script template.py'
++            template_name = 'script_template.py'
+             if dev_path:
+                 template_name = template_name.replace('.py', ' (dev).py')
+             script_text = (get_script_header(script_text) +
+-- 
+1.7.10.3
+
