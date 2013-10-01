@@ -49,12 +49,13 @@ install-manual:
 	@$(MAKECOOKIE)
 
 post-install-modulated: copy-to-web
-	@$(MAKECOOKIE)
-
-echo $(DESTDIR) | grep global; then :; else \
-	  if [ -d $(HOME)/public_html/opencsw-manual ]; then \
-  		rsync -r $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)/ \
-  		$(HOME)/public_html/opencsw-manual; \
+# define HTDOCS such as to be possible to install anywhere:
+copy-to-web: HTDOCS = $(HOME)/public_html
+copy-to-web:
+	if echo $(DESTDIR) | grep global; then :; else \
+	  if [ -d $(HTDOCS)/opencsw-manual ]; then \
+		rsync -r $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)/ \
+		$(HTDOCS)/opencsw-manual; \
 	  fi \
 	fi
 
