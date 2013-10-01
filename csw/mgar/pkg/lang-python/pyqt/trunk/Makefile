@@ -44,16 +44,18 @@ INSTALL_SCRIPTS	=	custom
 # raises compilation error when Python 2 is used...
 EXTRA_MERGE_EXCLUDE_FILES		+=	$(PYTHON_SITE_PACKAGES)/PyQt4/uic/port_v3/.*
 
-PACKAGES						+=	CSWpy-pyqt-common
-CATALOGNAME_CSWpy-pyqt-common	=	py_pyqt_common
-SPKG_DESC_CSWpy-pyqt-common		=	$(DESCRIPTION), common files
-ARCHALL_CSWpy-pyqt-common		=	1
+PACKAGES								+=	CSWpy-pyqt-common
+CATALOGNAME_CSWpy-pyqt-common			=	py_pyqt_common
+SPKG_DESC_CSWpy-pyqt-common				=	$(DESCRIPTION), common files
+ARCHALL_CSWpy-pyqt-common				=	1
+CHECKPKG_OVERRIDES_CSWpy-pyqt-common	+=	python-package-missing-py26-files
 
-PACKAGES						+=	CSWpy-pyqt-doc
-CATALOGNAME_CSWpy-pyqt-doc		=	py_pyqt_doc
-SPKG_DESC_CSWpy-pyqt-doc		=	$(DESCRIPTION), documentation
-PKGFILES_CSWpy-pyqt-doc			+=	$(docdir)/$(CATALOGNAME_CSWpy-pyqt-doc)/.*
-ARCHALL_CSWpy-pyqt-doc			=	1
+PACKAGES							+=	CSWpy-pyqt-doc
+CATALOGNAME_CSWpy-pyqt-doc			=	py_pyqt_doc
+SPKG_DESC_CSWpy-pyqt-doc			=	$(DESCRIPTION), documentation
+PKGFILES_CSWpy-pyqt-doc				+=	$(docdir)/$(CATALOGNAME_CSWpy-pyqt-doc)/.*
+ARCHALL_CSWpy-pyqt-doc				=	1
+CHECKPKG_OVERRIDES_CSWpy-pyqt-doc	+=	python-package-missing-py26-files
 
 PACKAGES						+=	CSWpy-pyqt
 CATALOGNAME_CSWpy-pyqt			=	py_pyqt
@@ -62,30 +64,29 @@ PKGFILES_CSWpy-pyqt				+=	/opt/csw/bin/pylupdate4
 PKGFILES_CSWpy-pyqt				+=	/opt/csw/bin/pyrcc4
 PKGFILES_CSWpy-pyqt				+=	$(PYTHON_SITE_PACKAGES)/PyQt4/.*
 PKGFILES_CSWpy-pyqt				+=	/opt/csw/lib/qt4/plugins/designer/.*
-RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibphonon4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtcore4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdbus4
-RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdeclarative4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtdesigner4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtgui4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqthelp4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtmultimedia4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtnetwork4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtopengl4
-RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtscript4
-RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtscripttools4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtsql4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtsvg4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqttest4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtxml4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtxmlpatterns4
+RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWlibqtwebkit4
 RUNTIME_DEP_PKGS_CSWpy-pyqt		+=	CSWpy-pyqt-common
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	surplus-dependency|CSWpy-pyqt-common
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/lib/qt4/plugins/designer/libpythonplugin.so|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	binary-architecture-does-not-match-placement|file=opt/csw/lib/qt4/plugins/designer/libpythonplugin.so|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWpy-pyqt	+=	python-package-missing-py26-files
 
 include gar/category.mk
 
