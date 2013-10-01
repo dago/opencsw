@@ -61,6 +61,9 @@ CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
 OBSOLETED_BY_CSWlibguile2-0-22			=	CSWguilelib12
 PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22\.6\.0)
 PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22(\.\d+)*)
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/guile/.*
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/amd64/guile/.*
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/share/guile/.*
 # old libraries:
 SPKG_DESC_CSWlibguile2-0-22				+=	$(DESCRIPTION), libguile-2.0.so.22
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibltdl7
