@@ -1,0 +1,25 @@
+From 7dd31a5801abe68b2b85055ea3fbc79f5422ed4e Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 1 Oct 2013 19:21:39 +0200
+Subject: [PATCH] fix infodir
+
+---
+ sphinx/builders/texinfo.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sphinx/builders/texinfo.py b/sphinx/builders/texinfo.py
+index 535c527..dbff6d2 100644
+--- a/sphinx/builders/texinfo.py
++++ b/sphinx/builders/texinfo.py
+@@ -29,7 +29,7 @@ from sphinx.writers.texinfo import TexinfoWriter
+ TEXINFO_MAKEFILE = '''\
+ # Makefile for Sphinx Texinfo output
+ 
+-infodir ?= /usr/share/info
++infodir ?= /opt/csw/share/info
+ 
+ MAKEINFO = makeinfo --no-split
+ MAKEINFO_html = makeinfo --no-split --html
+-- 
+1.8.3.4
+
