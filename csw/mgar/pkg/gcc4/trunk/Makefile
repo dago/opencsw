@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.8.0
+VERSION   = 4.8.1
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
 PKG_VERSION_TOKEN = gcc4
@@ -107,7 +107,6 @@ PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibatomic1
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibffi4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
@@ -146,15 +145,10 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += file-with-bad-content
 # Due to complex regular expressions
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += file-collision|$(includedir)/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|$(PKG_BASENAME)g++|$(PKG_BASENAME)java
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += file-collision|$(includedir)/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|$(PKG_BASENAME)g++|$(PKG_BASENAME)java
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWbinutils
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWggrep
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
-
-# Only man pages, so not a big problem. Alternatives could be used, but it
-# requires rebuilding libffi.
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-collision|/opt/csw/share/info/libffi.info|$(PKG_BASENAME)core|CSWlibffi-dev
 
 # The .a files are necessary
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap
@@ -177,13 +171,6 @@ PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),
 SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
-
-PACKAGES += CSWlibffi4
-CATALOGNAME_CSWlibffi4 = libffi4
-PKGFILES_CSWlibffi4 += $(call baseisadirs,$(libdir),libffi\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibffi4 += $(DESCRIPTION), libffi.so.4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlibffi4
-RUNTIME_DEP_PKGS_CSWlibffi4 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgcc-s1
 CATALOGNAME_CSWlibgcc-s1 = libgcc_s1
@@ -360,7 +347,6 @@ PKGFILES_$(PKG_BASENAME)java += $(mandir)/.*/gnative2ascii.*
 PKGFILES_$(PKG_BASENAME)java += $(mandir)/.*/gc-analyze.*
 PKGFILES_$(PKG_BASENAME)java += $(datadir)/java/.*
 PKGFILES_$(PKG_BASENAME)java += $(libdir)/.*libgij.*a
-PKGFILES_$(PKG_BASENAME)java += $(libdir)/.*libffi.*a
 PKGFILES_$(PKG_BASENAME)java += $(libdir)/.*lib-gnu-awt.*a
 PKGFILES_$(PKG_BASENAME)java += $(libdir)/.*security.*
 PKGFILES_$(PKG_BASENAME)java += $(libdir)/.*logging.properties
@@ -417,14 +403,6 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibz1
 
-# libiconv deps cropped up relatively late in the porting process. Perhaps
-# they apply to all arch/OS combinations.
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibiconv2
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibiconv2
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibiconv2
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibiconv2
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibiconv2
-
 PACKAGES += $(PKG_BASENAME)ada
 SPKG_DESC_$(PKG_BASENAME)ada       = GCC Ada compiler (GNAT)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada         = $(PKG_BASENAME)core
@@ -438,12 +416,10 @@ PKGFILES_$(PKG_BASENAME)ada += $(prefix)/bin/gnat(?!ive).*
 # There are static libraries, .a files in the ada package. Let them be.
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += discouraged-path-in-pkgmap
 # It needs the core compiler.
-CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += surplus-dependency|$(PKG_BASENAME)core
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += file-with-bad-content
 
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
@@ -474,27 +450,6 @@ JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
 JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmiregistry
 JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
-# GCC-4.7 contains assembler specific to sparcv9, incompatible with sparcv8.
-# If we wanted to build it on Solaris 9, we would have to add these overrides.
-# CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibffi4 += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibgcc-s1 += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibgfortran3 += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibgomp1 += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibobjc$(LIBOBJC) += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibobjc-gc$(LIBOBJC) += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibssp0 += binary-architecture-does-not-match-placement
-# CHECKPKG_OVERRIDES_CSWlibstdc++6 += binary-architecture-does-not-match-placement
-
 # We're building with the default GAR maps, currently U5.
 # LINKER_MAP_RELEASE = solaris10u8
 
@@ -507,7 +462,6 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += no-direct-binding
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibatomic1 += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibffi4 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
