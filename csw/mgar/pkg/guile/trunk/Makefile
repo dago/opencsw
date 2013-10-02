@@ -46,15 +46,6 @@ PACKAGES					+=	CSWguile
 CATALOGNAME_CSWguile		=	guile
 SPKG_DESC_CSWguile			+=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWguile	+=	CSWlibguile2-0-22
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/guile.info-4
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/guile.info-5
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/local|root/opt/csw/share/info/guile.info-1
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-4
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/share/info/guile.info-1
-# even though I replace it in the sources ...
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/guile/2.0/ccache/ice-9/slib.go
-CHECKPKG_OVERRIDES_CSWguile	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/guile/2.0/ccache/ice-9/slib.go
-CHECKPKG_OVERRIDES_CSWguile += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/guile/2.0/ccache/ice-9/slib.go
 
 PACKAGES								+=	CSWlibguile2-0-22
 CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
@@ -74,7 +65,9 @@ RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibunistring0
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibffi4
-# overrides for the old libraries:
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/guile/2.0/ccache/ice-9/slib.go
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/guile/2.0/ccache/ice-9/slib.go
+CHECKPKG_OVERRIDES_CSWlibguile2-0-22 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/guile/2.0/ccache/ice-9/slib.go
 
 PACKAGES										+=	CSWlibguilereadline-v18-18
 CATALOGNAME_CSWlibguilereadline-v18-18			=	libguilereadline_v18_18
@@ -109,7 +102,6 @@ CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/sparcv9/libguile.so.12.3.0
 CHECKPKG_OVERRIDES_CSWlibguile12 += binary-disallowed-placement|file=opt/csw/lib/amd64/libguile.so.12.3.0|arch_id=3|arch_name=i386|bad_path=amd64
 CHECKPKG_OVERRIDES_CSWlibguile12 += file-with-bad-content|/export/home|root/opt/csw/lib/amd64/libguile.so.12.3.0
-CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/sparcv9/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12 += no-direct-binding|/opt/csw/lib/amd64/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile.so.12.3.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
@@ -125,7 +117,6 @@ RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWguile
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguilereadline-v18-18
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWguile-dev	+=	CSWlibgmp-dev
-CHECKPKG_OVERRIDES_CSWguile-dev	+=	surplus-dependency|CSWlibgmp-dev
 
 REINPLACE_WHEN_USRLOCAL	=	postinstall
 REINPLACE_USRLOCAL		+=	/opt/csw/share/guile/2.0/guile-procedures.txt
