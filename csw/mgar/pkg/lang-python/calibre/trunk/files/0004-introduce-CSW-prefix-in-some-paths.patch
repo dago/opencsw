@@ -1,14 +1,38 @@
-From 6a605c24c3a27678541e9ffa76aff78a03cb2a9e Mon Sep 17 00:00:00 2001
+From 85e24e781d10c073c2b48e75e6e5bdcf04c1f365 Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Wed, 2 Oct 2013 09:46:08 +0200
+Date: Wed, 2 Oct 2013 10:50:45 +0200
 Subject: [PATCH] introduce CSW prefix in some paths
 
 ---
+ src/calibre/devices/kobo/driver.py       | 4 ++--
  src/calibre/ebooks/lrf/fonts/__init__.py | 2 +-
  src/calibre/linux.py                     | 6 +++---
  src/calibre/utils/fonts/scanner.py       | 3 +--
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ src/unrar/pathfn.cpp                     | 2 +-
+ 5 files changed, 8 insertions(+), 9 deletions(-)
 
+diff --git a/src/calibre/devices/kobo/driver.py b/src/calibre/devices/kobo/driver.py
+index cb325ef..38f7d34 100644
+--- a/src/calibre/devices/kobo/driver.py
++++ b/src/calibre/devices/kobo/driver.py
+@@ -314,7 +314,7 @@ class KOBO(USBMS):
+             changed = False
+             for i, row in enumerate(cursor):
+             #  self.report_progress((i+1) / float(numrows), _('Getting list of books on device...'))
+-                if not hasattr(row[3], 'startswith') or row[3].startswith("file:///usr/local/Kobo/help/"):
++                if not hasattr(row[3], 'startswith') or row[3].startswith("file:///opt/csw/share/Kobo/help/"):
+                     # These are internal to the Kobo device and do not exist
+                     continue
+                 path = self.path_from_contentid(row[3], row[5], row[4], oncard)
+@@ -1706,7 +1706,7 @@ class KOBOTOUCH(KOBO):
+                     debug_print("KoboTouch:books - looping on database - row=%d" % i)
+                     debug_print("KoboTouch:books - title='%s'"%row[0], "authors=", row[1])
+                     debug_print("KoboTouch:books - row=", row)
+-                if not hasattr(row[3], 'startswith') or row[3].lower().startswith("file:///usr/local/kobo/help/") or row[3].lower().startswith("/usr/local/kobo/help/"):
++                if not hasattr(row[3], 'startswith') or row[3].lower().startswith("file:///opt/csw/share/kobo/help/") or row[3].lower().startswith("/opt/csw/share/kobo/help/"):
+                     # These are internal to the Kobo device and do not exist
+                     continue
+                 externalId = None if row[15] and len(row[15]) == 0 else row[15]
 diff --git a/src/calibre/ebooks/lrf/fonts/__init__.py b/src/calibre/ebooks/lrf/fonts/__init__.py
 index 3f16936..13a4507 100644
 --- a/src/calibre/ebooks/lrf/fonts/__init__.py
@@ -61,6 +85,19 @@ index b562898..19ce032 100644
          os.path.expanduser('~/.local/share/fonts'),
          os.path.expanduser('~/.fonts')
      ]
+diff --git a/src/unrar/pathfn.cpp b/src/unrar/pathfn.cpp
+index b9244cd..be3a421 100644
+--- a/src/unrar/pathfn.cpp
++++ b/src/unrar/pathfn.cpp
+@@ -448,7 +448,7 @@ bool EnumConfigPaths(char *Path,int Number)
+   return(true);
+ #elif defined(_UNIX)
+   static const char *AltPath[]={
+-    "/etc","/etc/rar","/usr/lib","/usr/local/lib","/usr/local/etc"
++	  "/opt/csw/lib", "/opt/csw/etc", "/etc","/etc/rar","/usr/lib"
+   };
+   if (Number==0)
+   {
 -- 
 1.8.3.4
 
