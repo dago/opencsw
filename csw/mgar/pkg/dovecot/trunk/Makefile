@@ -17,7 +17,7 @@ endef
 SPKG_SOURCEURL = http://dovecot.org/
 MASTER_SITES   = http://dov2cot.org/releases/2.0/
 DISTFILES      = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX   = $(NAME)-(\d+GARCOMPILER    = SOS12d+(?:\.\d+)*).tar.gz
+UFILES_REGEX   = $(NAME)-(\d+GARCOMPILER	= GCC4d+(?:\.\d+)*).tar.gz
 
 PACKAGES  = CSWdovecot CSWdovecot-dev
 
