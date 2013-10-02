@@ -15,22 +15,26 @@ PATCHFILES += 0001-fix-infodir.patch
 
 BUILD_DEP_PKGS	+=	CSWpython-dev
 BUILD_DEP_PKGS	+=	CSWpython27-dev
+BUILD_DEP_PKGS	+=	CSWpy-docutils
+BUILD_DEP_PKGS	+=	CSWpy-jinja2
+BUILD_DEP_PKGS	+=	CSWpy-pygments
+BUILD_DEP_PKGS	+=	CSWpysetuptools
 BUILD_DEP_PKGS	+=	CSWtexinfo
-DEP_PKGS += CSWpy-docutils
-DEP_PKGS += CSWpy-jinja2
-DEP_PKGS += CSWpy-pygments
-DEP_PKGS += CSWpysetuptools
-CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-docutils
-CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-jinja2
-CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
-CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpysetuptools
 
 PACKAGES					+=	CSWpy-sphinx
 CATALOGNAME_CSWpy-sphinx	=	py_sphinx
 SPKG_DESC_CSWpy-sphinx		+=	$(DESCRIPTION)
 ARCHALL_CSWpy-sphinx		=	1
+RUNTIME_DEP_PKGS += CSWpy-docutils
+RUNTIME_DEP_PKGS += CSWpy-jinja2
+RUNTIME_DEP_PKGS += CSWpy-pygments
+RUNTIME_DEP_PKGS += CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-docutils
+CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-jinja2
+CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
+CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpysetuptools
 
-PACKAGES					+=	CSWpy-sphinx-doc
+PACKAGES						+=	CSWpy-sphinx-doc
 CATALOGNAME_CSWpy-sphinx-doc	=	py_sphinx_doc
 SPKG_DESC_CSWpy-sphinx-doc		+=	$(DESCRIPTION), documentation
 PKGFILES_CSWpy-sphinx-doc		+=	/opt/csw/share/info/.*
