@@ -6,9 +6,9 @@ VERSION			=	0.9.38
 PYTHON_VERSION	=	2_7
 GARTYPE			=	v2
 
-DESCRIPTION	=	e-book converter and library management
+DESCRIPTION	=	An e-book converter and library management
 define BLURB
-    calibre is an e-book manager. It can view, convert and catalog e-books 
+    Calibre is an e-book manager. It can view, convert and catalog e-books 
     in all of the major e-book formats. It can also talk to e-book reader 
     devices. It can go out to the internet and fetch metadata for your books. 
     It can download newspapers and convert them into e-books for convenient 
@@ -24,6 +24,7 @@ LICENSE			=	LICENSE
 PATCHFILES 		+= 	0001-solaris-extensions.patch
 PATCHFILES		+= 	0002-add-timer-macros.patch
 PATCHFILES		+=	0003-endianness-and-byte-order.patch
+PATCHFILES		+=	0004-introduce-CSW-prefix-in-some-paths.patch
 
 BUILD_DEP_PKGS	+=	CSWpy-sip
 BUILD_DEP_PKGS	+=	CSWpython27-dev
@@ -53,6 +54,20 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibchm0
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtdbus4
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtcore4
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibmagickwand6q16hdri1
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibicui18n51
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtgui4
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtsvg4
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWcalibre += CSWlibpodofo0-9-1
 RUNTIME_DEP_PKGS_CSWcalibre		=	CSWxdg-utils
 CHECKPKG_OVERRIDES_CSWcalibre	+=	surplus-dependency|CSWxdg-utils
 include gar/category.mk
