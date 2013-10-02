@@ -39,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWdovecot += CSWlibpq5Wdovecot += CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWdovecot += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWdovecot += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWdovecotRUNTIME_DEP_PKGS_CSWdovecot += CSWlibgcc-s1t += CSWlibldap2-4-2
 
 PKGFILES_CSWdovecot-dev = $(PKGFILES_DEVEL)
 
