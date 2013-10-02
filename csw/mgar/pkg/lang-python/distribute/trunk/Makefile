@@ -9,9 +9,15 @@ GARTYPE = v2
 
 DESCRIPTION = This package is a simple compatibility layer that installs Setuptools 0.7+
 
+MASTER_SITES += http://python-distribute.org/
 DISTFILES = $(DISTNAME).zip
+DISTFILES += distribute_setup.py
 VENDOR_URL = https://pypi.python.org/pypi/distribute
 ARCHALL = 1
 TEST_SCRIPTS =
-PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+DEP_PKGS_CSWpy-distribute = CSWpy-setuptools
 include gar/category.mk
+
+post-install:
+	ginstall $(WORKDIR)/distribute_setup.py $(DESTDIR)$(PYTHON_SITE_PACKAGES)
+	@$(MAKECOOKIE)
