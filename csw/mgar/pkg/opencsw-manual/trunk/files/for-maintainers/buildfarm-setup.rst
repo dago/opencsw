@@ -34,8 +34,8 @@ Prerequisites
   A typical location is ``/export/mirror/opencsw``.
 
 
-Base setup
-----------
+Base setup (required)
+---------------------
 
 The base setup is enough to build packages but does not allow to automatically
 check your packages for errors.
@@ -44,8 +44,8 @@ check your packages for errors.
 
   sudo pkgutil -y -i vim gar_dev mgar gcc4core gcc4g++ sudo
 
-Oracle Solaris Studio Compiler
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Oracle Solaris Studio Compiler (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You need a compiler. Most of the packages built by OpenCSW use Oracle Solaris
 Studio (historically called 'SOS'), which you can `download from Oracle`_. You
@@ -70,16 +70,16 @@ with the following lines:
   SOS12_CC_HOME = /opt/studio12/SUNWspro
 
 
-Installing Oracle Solaris Studio 12
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installing Oracle Solaris Studio 12 (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
   cd ss12
   ./batch_installer -d /opt/studio/SOS12 --accept-sla
 
-Installing Oracle Solaris Studio 12u3
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installing Oracle Solaris Studio 12u3 (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -91,8 +91,8 @@ Patching the installed compilers
 Remember to patch the compilers, with PCA or manually (requires a software
 service contract from Oracle).
 
-Setup ``~/.garrc``
-^^^^^^^^^^^^^^^^^^
+Setup ``~/.garrc`` (required)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Finally, you need to create your personal ``~/.garrc`` configuration file. It
 contains your name and e-mail adress, both of which are included in the
@@ -130,8 +130,8 @@ This is equally true for ``gar.conf.mk`` - please don't modify it! If you feel
 it needs change please subscribe to the `users mailing list`_ and discuss your
 change there.
 
-Basic git configuration
-^^^^^^^^^^^^^^^^^^^^^^^
+Basic git configuration (required)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Git will be installed as one of dependencies. It is used by GAR to make source
 patching easier. Provide basic configuration for git:
@@ -152,8 +152,8 @@ use vim:
 
 Of course, it can be your editor of choice.
 
-Initialize the source tree
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initialize the source tree (required)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As regular user (do not use ``root`` for safety reasons) to be used for
 building init your local repository:
@@ -170,8 +170,10 @@ Fetch all the build recipes:
 
   mgar up --all
 
-checkpkg database
------------------
+checkpkg database (optional)
+----------------------------
+
+Necessary if you want to check your packages for errors using ``checkpkg``.
 
 You can use any database engine supported by sqlobject.  MySQL and sqlite have
 been tested.
@@ -276,8 +278,8 @@ catalog.
 
 Your database is now ready.
 
-Multi-host setup
-----------------
+Multi-host setup (optional)
+---------------------------
 
 How to set up hosts allowing you to build for both Intel and SPARC
 architectures.  At least three servers are needed:
@@ -305,8 +307,8 @@ There is a `matrix of packages installed on the buildfarm`_.
 .. _matrix of packages installed on the buildfarm:
    http://buildfarm.opencsw.org/versionmatrix.html
 
-System-wide garrc
-^^^^^^^^^^^^^^^^^
+System-wide garrc (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 System-wide ``garrc`` is useful when you have multiple users, for example
 colleagues at work who also build packages.  It can also contain information
@@ -349,8 +351,8 @@ the ``/etc/opt/csw/garrc`` file with appropriate content. For example::
   SOS12_CC_HOME = /opt/SUNWspro
 
 
-Installing Software
-^^^^^^^^^^^^^^^^^^^
+Installing Software (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 All software is archived and available from ``/home/farm`` on the buildfarm.
 Make sure you deinstall ``SUNWgmake``. That version is outdated and misses
@@ -518,8 +520,8 @@ Installing IBM Informix Client SDK
 
 It seems the 32 bit and 64 bit clients can not be installed in the same directory.
 
-Buildfarm web app
------------------
+Buildfarm web app (optional)
+----------------------------
 
 pkgdb-web is a web app on which you can browse your package database and
 inspect package metadata without having to unpack and examine packages in the
@@ -538,8 +540,8 @@ The checkpkg database also holds information about catalogs.
 There are specifically two web apps: One is read-only (``pkgdb_web.py``) and
 one is read-write (``releases_web.py``).
 
-Catalog generation
-------------------
+Catalog generation (optional)
+-----------------------------
 
 Once you have the buildfarm database, you can generate your own package
 catalogs. The main entry point which you can add to cron is the
@@ -548,8 +550,8 @@ catalogs. The main entry point which you can add to cron is the
 * Source code:
   https://sourceforge.net/p/opencsw/code/HEAD/tree/buildfarm/bin/
 
-Catalog signing daemon
-----------------------
+Catalog signing daemon (optional)
+---------------------------------
 
 Catalog signing daemon is useful if you wish to automatically sign your built
 catalogs with a GPG key.
