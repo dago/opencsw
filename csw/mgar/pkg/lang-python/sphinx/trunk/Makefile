@@ -34,11 +34,12 @@ CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpysetuptools
 
-PACKAGES						+=	CSWpy-sphinx-doc
-CATALOGNAME_CSWpy-sphinx-doc	=	py_sphinx_doc
-SPKG_DESC_CSWpy-sphinx-doc		+=	$(DESCRIPTION), documentation
-PKGFILES_CSWpy-sphinx-doc		+=	/opt/csw/share/info/.*
-ARCHALL_CSWpy-sphinx-doc		=	1
+PACKAGES							+=	CSWpy-sphinx-doc
+CATALOGNAME_CSWpy-sphinx-doc		=	py_sphinx_doc
+SPKG_DESC_CSWpy-sphinx-doc			+=	$(DESCRIPTION), documentation
+PKGFILES_CSWpy-sphinx-doc			+=	/opt/csw/share/info/.*
+ARCHALL_CSWpy-sphinx-doc			=	1
+CHECKPKG_OVERRIDES_CSWpy-sphinx-doc	+=	python-package-missing-py26-files
 
 include gar/category.mk
 
