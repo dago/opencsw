@@ -1,0 +1,66 @@
+From 6a605c24c3a27678541e9ffa76aff78a03cb2a9e Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 2 Oct 2013 09:46:08 +0200
+Subject: [PATCH] introduce CSW prefix in some paths
+
+---
+ src/calibre/ebooks/lrf/fonts/__init__.py | 2 +-
+ src/calibre/linux.py                     | 6 +++---
+ src/calibre/utils/fonts/scanner.py       | 3 +--
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/src/calibre/ebooks/lrf/fonts/__init__.py b/src/calibre/ebooks/lrf/fonts/__init__.py
+index 3f16936..13a4507 100644
+--- a/src/calibre/ebooks/lrf/fonts/__init__.py
++++ b/src/calibre/ebooks/lrf/fonts/__init__.py
+@@ -12,7 +12,7 @@ except ImportError:
+ Default fonts used in the PRS500
+ '''
+ 
+-SYSTEM_FONT_PATH = '/usr/share/fonts/truetype/ttf-liberation/'
++SYSTEM_FONT_PATH = '/opt/csw/share/fonts/truetype/ttf-liberation/'
+ 
+ FONT_MAP = {
+             'Swis721 BT Roman'     : 'tt0003m_',
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index 41af312..615443f 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -46,7 +46,7 @@ class PreserveMIMEDefaults(object):
+         self.initial_values = {}
+ 
+     def __enter__(self):
+-        def_data_dirs = '/usr/local/share:/usr/share'
++        def_data_dirs = '/opt/csw/share:/usr/share'
+         paths = os.environ.get('XDG_DATA_DIRS', def_data_dirs)
+         paths = paths.split(':')
+         paths.append(os.environ.get('XDG_DATA_HOME', os.path.expanduser(
+@@ -131,8 +131,8 @@ class ZshCompleter(object):  # {{{
+         base = os.path.dirname(self.opts.staging_sharedir)
+         self.detect_zsh(base)
+         if not self.dest and base == '/usr/share':
+-            # Ubuntu puts site-functions in /usr/local/share
+-            self.detect_zsh('/usr/local/share')
++            # Ubuntu puts site-functions in / usr / local /share
++            self.detect_zsh('/opt/csw/share')
+ 
+         self.commands = {}
+ 
+diff --git a/src/calibre/utils/fonts/scanner.py b/src/calibre/utils/fonts/scanner.py
+index b562898..19ce032 100644
+--- a/src/calibre/utils/fonts/scanner.py
++++ b/src/calibre/utils/fonts/scanner.py
+@@ -23,9 +23,8 @@ class NoFonts(ValueError):
+ 
+ def default_font_dirs():
+     return [
+-        '/opt/share/fonts',
++        '/opt/csw/share/fonts',
+         '/usr/share/fonts',
+-        '/usr/local/share/fonts',
+         os.path.expanduser('~/.local/share/fonts'),
+         os.path.expanduser('~/.fonts')
+     ]
+-- 
+1.8.3.4
+
