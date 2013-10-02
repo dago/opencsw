@@ -4,10 +4,10 @@ Buildfarm setup
 
 .. highlight:: text
 
-  If you prefer a video tutorial instead of a written document, there is
-  a `packaging video tutorial`_ available. It covers a subset of this document,
-  starting from a fresh Solaris 10 install and ends with a built package. It
-  takes about 2-3h to complete.
+If you prefer a video tutorial instead of a written document, there is
+a `packaging video tutorial`_ available. It covers a subset of this document,
+starting from a fresh Solaris 10 install and ends with a built package. It
+takes about 2-3h to complete.
 
 A buildfarm is a set of hosts where you can build Solaris packages. You can
 connect Intel and SPARC hosts together to build a set of packages with one
