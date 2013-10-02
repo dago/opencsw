@@ -44,53 +44,6 @@ check your packages for errors.
 
   sudo pkgutil -y -i vim gar_dev mgar gcc4core gcc4g++ sudo
 
-Oracle Solaris Studio Compiler (optional)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-You need a compiler. Most of the packages built by OpenCSW use Oracle Solaris
-Studio (historically called 'SOS'), which you can `download from Oracle`_. You
-want to go with the packaged (non-tar) version. In case you have access to an
-Oracle Solaris development tools support contract, please make sure to also
-install `the latest Oracle Solaris Studio compiler patches`_. The compilers
-should be installed at the following locations:
-
-* Sun Studio 11: ``/opt/studio/SOS11``
-* Sun Studio 12: ``/opt/studio/SOS12``
-* Sun Studio 12u1: ``/opt/studio/sunstudio12.1``
-* Solaris Studio 12u2: ``/opt/solstudio12.2``
-* Solaris Studio 12u3: ``/opt/solarisstudio12.3``
-
-You can install multiple versions of SOS on one system. If you have your
-compiler installed at a different location you can set it in your ``~/.garrc``
-with the following lines:
-
-::
-
-  SOS11_CC_HOME = /opt/SUNWspro
-  SOS12_CC_HOME = /opt/studio12/SUNWspro
-
-
-Installing Oracle Solaris Studio 12 (optional)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-::
-
-  cd ss12
-  ./batch_installer -d /opt/studio/SOS12 --accept-sla
-
-Installing Oracle Solaris Studio 12u3 (optional)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-::
-
-  sudo ./solarisstudio.sh --non-interactive --tempdir /var/tmp
-
-Patching the installed compilers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Remember to patch the compilers, with PCA or manually (requires a software
-service contract from Oracle).
-
 Setup ``~/.garrc`` (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -438,6 +391,53 @@ Sun Studio for Solaris 11
 +++++++++++++++++++++++++
 
 TODO
+
+Oracle Solaris Studio Compiler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You need a compiler. Most of the packages built by OpenCSW use Oracle Solaris
+Studio (historically called 'SOS'), which you can `download from Oracle`_. You
+want to go with the packaged (non-tar) version. In case you have access to an
+Oracle Solaris development tools support contract, please make sure to also
+install `the latest Oracle Solaris Studio compiler patches`_. The compilers
+should be installed at the following locations:
+
+* Sun Studio 11: ``/opt/studio/SOS11``
+* Sun Studio 12: ``/opt/studio/SOS12``
+* Sun Studio 12u1: ``/opt/studio/sunstudio12.1``
+* Solaris Studio 12u2: ``/opt/solstudio12.2``
+* Solaris Studio 12u3: ``/opt/solarisstudio12.3``
+
+You can install multiple versions of SOS on one system. If you have your
+compiler installed at a different location you can set it in your ``~/.garrc``
+with the following lines:
+
+::
+
+  SOS11_CC_HOME = /opt/SUNWspro
+  SOS12_CC_HOME = /opt/studio12/SUNWspro
+
+
+Installing Oracle Solaris Studio 12
++++++++++++++++++++++++++++++++++++
+
+::
+
+  cd ss12
+  ./batch_installer -d /opt/studio/SOS12 --accept-sla
+
+Installing Oracle Solaris Studio 12u3
++++++++++++++++++++++++++++++++++++++
+
+::
+
+  sudo ./solarisstudio.sh --non-interactive --tempdir /var/tmp
+
+Patching the installed compilers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remember to patch the compilers, with PCA or manually (requires a software
+service contract from Oracle).
 
 Adding Users 
 ^^^^^^^^^^^^
