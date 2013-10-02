@@ -54,22 +54,26 @@ BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=
 INSTALL_SCRIPTS		=	custom
 
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibchm0
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtdbus4
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtcore4
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibmagickwand6q16hdri1
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibz1
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibicui18n51
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibpython2-7-1-0
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtgui4
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibqtsvg4
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibicuuc51
-RUNTIME_DEP_PKGS_CSWcalibre += CSWlibpodofo0-9-1
-RUNTIME_DEP_PKGS_CSWcalibre		=	CSWxdg-utils
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibchm0
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibqtdbus4
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibqtcore4
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibmagickwand6q16hdri1
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibz1
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibicui18n51
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibqtgui4
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibqtsvg4
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWcalibre 	+= CSWlibpodofo0-9-1
+RUNTIME_DEP_PKGS_CSWcalibre		+=	CSWxdg-utils
 CHECKPKG_OVERRIDES_CSWcalibre	+=	surplus-dependency|CSWxdg-utils
+# I let the /usr/share as a fallback; /opt/csw/share is first anyway:
+CHECKPKG_OVERRIDES_CSWcalibre	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/calibre/calibre/linux.py
+CHECKPKG_OVERRIDES_CSWcalibre	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/calibre/calibre/utils/fonts/scanner.py
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
