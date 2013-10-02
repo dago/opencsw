@@ -47,6 +47,7 @@ BUILD_DEP_PKGS += CSWlibmpc-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
 BUILD_DEP_PKGS += CSWlibppl-dev
 BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
 
 # Could be used to break out of the /opt/csw/$(PKG_VERSION_TOKEN) prefix
 PROGRAM_SUFFIX = -$(BASE_VERSION)
@@ -125,6 +126,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWbinutils
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWcoreutils
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWggrep
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWgsed
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibiconv2
 
 ALTERNATIVES_$(PKG_BASENAME)core += $(PKG_VERSION_TOKEN)core
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
@@ -154,7 +156,6 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)objc += discouraged-path-in-pkgmap
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += discouraged-path-in-pkgmap
-
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += discouraged-path-in-pkgmap
 
 # Some static libraries are required to build binaries with gcc, for example
@@ -210,7 +211,6 @@ CATALOGNAME_CSWlibgomp1 = libgomp1
 PKGFILES_CSWlibgomp1 += $(call baseisadirs,$(libdir),libgomp\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
-
 
 PACKAGES += CSWlibobjc$(LIBOBJC)
 CATALOGNAME_CSWlibobjc$(LIBOBJC) = libobjc$(LIBOBJC)
@@ -285,6 +285,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibiconv2
 
 # The C++ compiler needs the C compiler.
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(PKG_BASENAME)core
@@ -310,6 +311,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibiconv2
 
 ALTERNATIVES_$(PKG_BASENAME)gfortran += gfortran
 ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
@@ -325,6 +327,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWecj
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibiconv2
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += surplus-dependency|CSWecj
 
 PKGFILES_$(PKG_BASENAME)java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
@@ -402,6 +405,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibiconv2
 
 PACKAGES += $(PKG_BASENAME)ada
 SPKG_DESC_$(PKG_BASENAME)ada       = GCC Ada compiler (GNAT)
@@ -423,6 +427,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
 
 ALTERNATIVES_$(PKG_BASENAME)ada += $(PKG_VERSION_TOKEN)ada
 ALTERNATIVE_$(PKG_VERSION_TOKEN)ada += $(bindir)/gnat      gcc_ada $(bindir)/gnat$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
