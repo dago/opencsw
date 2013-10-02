@@ -56,9 +56,9 @@ Lets just go ahead and try one::
 Voila! You have installed your first package!
 
 
-------------------
+---------------------------------------------
 Selecting your mirror and the catalog release
-------------------
+---------------------------------------------
 
 Now that you are about to install lots of stuff it may be a good time to select
 one of the mirrors from ``mirror.opencsw.org`` close to you. The official

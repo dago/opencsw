@@ -9,7 +9,7 @@ A user's manual for people who manage Solaris systems with OpenCSW packages.
 
   introduction
   getting-started
-  installing-en-masse
+  installation-en-masse
   configuring-services
   mirror-setup
 

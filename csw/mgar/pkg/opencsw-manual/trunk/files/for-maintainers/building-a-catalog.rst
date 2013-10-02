@@ -9,14 +9,14 @@ In short, any time you have a set of packages you want to install with
 pkgutil, but there isn't an existing catalog that provides you with the right
 mix. The typical cases include:
 
-# You've built a set of packages and you want to test them.
-# You want to pick a subset of packages from an existing catalog on the
-  mirror.
-# You want to install older versions of some packages, for instance pick a few
-  packages from the old package stash (``allpkgs``) and some other, newer
-  packages.
-# You have a set of packages internal to your company that you want to
-  distribute across your servers.
+#. You've built a set of packages and you want to test them.
+#. You want to pick a subset of packages from an existing catalog on the
+   mirror.
+#. You want to install older versions of some packages, for instance pick a few
+   packages from the old package stash (``allpkgs``) and some other, newer
+   packages.
+#. You have a set of packages internal to your company that you want to
+   distribute across your servers.
 
 How to build your own catalog
 -----------------------------
