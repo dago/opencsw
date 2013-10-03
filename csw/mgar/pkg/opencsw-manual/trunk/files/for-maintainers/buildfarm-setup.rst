@@ -415,12 +415,20 @@ TODO
 Oracle Solaris Studio Compiler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You need a compiler. Most of the packages built by OpenCSW use Oracle Solaris
-Studio (historically called 'SOS'), which you can `download from Oracle`_. You
-want to go with the packaged (non-tar) version. In case you have access to an
+You need a compiler. You have one in our repository, the GNU one.
+
+Until recently, most of the packages built by OpenCSW used Oracle Solaris
+Studio (historically called 'SOS'), which you can `download from
+Oracle`_.
+
+Note that We are now, as of October 2013, transitioning to GCC.
+
+However, if you wish to use the platform specific compiler, you should
+install the packaged (non-tar) version. In case you have access to an
 Oracle Solaris development tools support contract, please make sure to also
-install `the latest Oracle Solaris Studio compiler patches`_. The compilers
-should be installed at the following locations:
+install `the latest Oracle Solaris Studio compiler patches`_.
+
+The compilers should be installed at the following locations:
 
 * Sun Studio 11: ``/opt/studio/SOS11``
 * Sun Studio 12: ``/opt/studio/SOS12``
