@@ -1,3 +1,5 @@
+.. $Id$
+
 ---------------
 Buildfarm setup
 ---------------
@@ -42,7 +44,7 @@ check your packages for errors.
 
 ::
 
-  sudo pkgutil -y -i vim gar_dev mgar gcc4core gcc4g++ sudo
+  pkgutil -y -i gar_dev mgar gcc4core gcc4g++ sudo
 
 Setup ``~/.garrc`` (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -86,8 +88,10 @@ change there.
 Basic git configuration (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Git will be installed as one of dependencies. It is used by GAR to make source
-patching easier. Provide basic configuration for git:
+Git is installed as one of dependencies of the base setup. It is used
+by GAR to make source patching easier.
+
+The required configuration for our usage of git is:
 
 ::
 
@@ -101,27 +105,42 @@ use vim:
 ::
 
   sudo pkgutil -y -i vim
-  echo "export EDITOR=/opt/csw/bin/vim" >> ~/.bashrc
+  echo "export EDITOR=/opt/csw/bin/vim" >> ~/.bash_profile
 
 Of course, it can be your editor of choice.
 
 Initialize the source tree (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As regular user (do not use ``root`` for safety reasons) to be used for
-building init your local repository:
+As regular user, initialize your local repository. **For obvious
+security reasons, do not use** ``root``.
+
+To initialize de source tree, you execute:
 
 ::
 
-  mgar init [<path-for-build-recipes>] (defaults to ~/opencsw)
+  mgar init
+
+This will create, by default, in your home directory, the ``opencsw``
+entry. If you wish to use another place, please use a third argument,
+e.g.:
+
+::
+
+  mgar init /tank/opencsw
+
+or set the ``BUILDTREE`` parameter in the configuration file
+``~/.garrc``
 
 Please make yourself familiar with `mgar`_.
 
-Fetch all the build recipes:
+To fetch all the build recipes, you execute:
 
 ::
 
   mgar up --all
+
+Beware that this takes a lot of time an create hundreds of directories.
 
 checkpkg database (optional)
 ----------------------------
