@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = guile
 VERSION = 2.0.9
 CATEGORIES = lib
@@ -54,6 +56,7 @@ PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\
 PKGFILES_CSWlibguile2-0-22				+=	$(call baseisadirs,$(libdir),libguile-2\.0\.so\.22(\.\d+)*)
 PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/guile/.*
 PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/amd64/guile/.*
+PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/lib/sparcv9/guile/.*
 PKGFILES_CSWlibguile2-0-22				+=	/opt/csw/share/guile/.*
 # old libraries:
 SPKG_DESC_CSWlibguile2-0-22				+=	$(DESCRIPTION), libguile-2.0.so.22
@@ -100,13 +103,14 @@ SPKG_DESC_CSWlibguile12				+=	$(DESCRIPTION), libguile.so.12
 RUNTIME_DEP_PKGS_CSWlibguile12		+=	CSWlibguile-ltdl1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/libguile.so.12.3.0
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/sparcv9/libguile.so.12.3.0
-CHECKPKG_OVERRIDES_CSWlibguile12 += binary-disallowed-placement|file=opt/csw/lib/amd64/libguile.so.12.3.0|arch_id=3|arch_name=i386|bad_path=amd64
-CHECKPKG_OVERRIDES_CSWlibguile12 += file-with-bad-content|/export/home|root/opt/csw/lib/amd64/libguile.so.12.3.0
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	binary-disallowed-placement|file=opt/csw/lib/amd64/libguile.so.12.3.0|arch_id=3|arch_name=i386|bad_path=amd64
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	file-with-bad-content|/export/home|root/opt/csw/lib/amd64/libguile.so.12.3.0
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/sparcv9/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
-CHECKPKG_OVERRIDES_CSWlibguile12 += no-direct-binding|/opt/csw/lib/amd64/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
+CHECKPKG_OVERRIDES_CSWlibguile12	+=	no-direct-binding|/opt/csw/lib/amd64/libguile.so.12.3.0|is|not|directly|bound|to|soname|libguile-ltdl.so.1
 CHECKPKG_OVERRIDES_CSWlibguile12	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile.so.12.3.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
 CHECKPKG_OVERRIDES_CSWlibguile-ltdl1	+=	binary-disallowed-placement|file=opt/csw/lib/sparcv9/libguile-ltdl.so.1.0.0|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
-CHECKPKG_OVERRIDES_CSWlibguile-ltdl1 += binary-disallowed-placement|file=opt/csw/lib/amd64/libguile-ltdl.so.1.0.0|arch_id=3|arch_name=i386|bad_path=amd64
+CHECKPKG_OVERRIDES_CSWlibguile-ltdl1	+=	binary-disallowed-placement|file=opt/csw/lib/amd64/libguile-ltdl.so.1.0.0|arch_id=3|arch_name=i386|bad_path=amd64
 
 PACKAGES						+=	CSWguile-dev
 CATALOGNAME_CSWguile-dev		=	guile_dev
