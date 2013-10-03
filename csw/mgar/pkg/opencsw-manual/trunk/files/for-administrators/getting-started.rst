@@ -1,3 +1,5 @@
+.. $Id$
+
 ---------------
 Getting started
 ---------------
@@ -36,8 +38,8 @@ You can now start installing packages. For a list of available packages use::
 For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of
 ``PATH``, and ``/opt/csw/share/man`` in front of ``MANPATH``. On
 Solaris 10, you can do that by editing the ``/etc/default/login``
-file, uncomment the ``PATH`` and ``SUPATH`` variables definition, and
-logging out and back in.
+file, uncomment the ``PATH`` and ``SUPATH`` variables definition,
+adjust the values as required and log out and back in.
 
 As the list is quite long and you probably have an idea what you are looking for the
 list can be fuzzy-matched with::
