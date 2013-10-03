@@ -1,8 +1,8 @@
 .. $Id$
 
----------------
-Buildfarm setup
----------------
+----------------
+Build-farm setup
+----------------
 
 .. highlight:: text
 
@@ -11,7 +11,7 @@ a `packaging video tutorial`_ available. It covers a subset of this document,
 starting from a fresh Solaris 10 install and ends with a built package. It
 takes about 2-3h to complete.
 
-A buildfarm is a set of hosts where you can build Solaris packages. You can
+A build-farm is a set of hosts where you can build Solaris packages. You can
 connect Intel and SPARC hosts together to build a set of packages with one
 shell command.
 
@@ -19,10 +19,10 @@ There is a few separate parts which you can set up (in no particular order):
 
 * mgar (builds packages)
 * checkpkg (checks packages for errors)
-* web app (for browsing package metadata and manipulating catalogs)
+* web app (for browsing package meta-data and manipulating catalogs)
 * catalog generation (to generate your own catalogs)
 * signing daemon (to automatically add GPG signatures to your catalogs)
-* platforms (multi-architecture builds, e.g. intel+sparc)
+* platforms (multi-architecture builds, e.g. Intel+SPARC)
 * additional software: Solaris Studio compiler, Java, etc.
 
 Prerequisites
@@ -50,8 +50,8 @@ Setup ``~/.garrc`` (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Finally, you need to create your personal ``~/.garrc`` configuration file. It
-contains your name and e-mail adress, both of which are included in the
-metadata of built packages. Further, GAR needs to know where to store
+contains your name and e-mail address, both of which are included in the
+meta-data of built packages. Further, GAR needs to know where to store
 downloaded sources and generated packages.
 
 Here's an example:
@@ -69,7 +69,7 @@ Here's an example:
   GARCHIVEDIR     = /home/dam/src
   #
   # Disable package sanity checks by checkpkg if you are building on your
-  # own host (checkpkg depends on OpenCSW buildfarm infrastructure)
+  # own host (checkpkg depends on OpenCSW build-farm infrastructure)
   ENABLE_CHECK    = 0
 
 In case you are sitting behind a proxy, you would also want to configure this in ~/.garrc.
@@ -115,7 +115,7 @@ Initialize the source tree (required)
 As regular user, initialize your local repository. **For obvious
 security reasons, do not use** ``root``.
 
-To initialize de source tree, you execute:
+To initialize the source tree, you execute:
 
 ::
 
@@ -140,7 +140,8 @@ To fetch all the build recipes, you execute:
 
   mgar up --all
 
-Beware that this takes a lot of time an create hundreds of directories.
+Beware that this takes a lot of time and creates hundreds of
+directories and thousands files.
 
 checkpkg database (optional)
 ----------------------------
@@ -175,7 +176,7 @@ case-insensitive string comparison in MySQL
 MySQL documentation in section `C.5.5.1. Case Sensitivity in String Searches`_
 says:
 
-  For nonbinary strings (CHAR, VARCHAR, TEXT), string searches use the
+  For non-binary strings (CHAR, VARCHAR, TEXT), string searches use the
   collation of the comparison operands. For binary strings (BINARY, VARBINARY,
   BLOB), comparisons use the numeric values of the bytes in the operands; this
   means that for alphabetic characters, comparisons will be case sensitive.
@@ -256,11 +257,11 @@ Multi-host setup (optional)
 How to set up hosts allowing you to build for both Intel and SPARC
 architectures.  At least three servers are needed:
 
-* Solaris 9 Sparc to build 32 bit and 64 bit Sparc binaries
+* Solaris 9 SPARC to build 32 bit and 64 bit SPARC binaries
 * Solaris 9 x86 to build 32 bit build x86 binaries
 * Solaris 10 x86 to build 64 bit x86 binaries
 
-Servers with Solaris 10 Sparc are optional for most of the packages.  However,
+Servers with Solaris 10 SPARC are optional for most of the packages.  However,
 there may be packages which rely on private kernel data (like "top") which
 needs to be build for each and every Solaris version to run on.
 
@@ -274,9 +275,9 @@ There are project specific directories under
 via ``http://buildfarm.opencsw.org/experimental.html``. The ``experimental/``
 directory is 01755 and users are free to create new projects as needed.
 
-There is a `matrix of packages installed on the buildfarm`_.
+There is a `matrix of packages installed on the build-farm`_.
 
-.. _matrix of packages installed on the buildfarm:
+.. _matrix of packages installed on the build-farm:
    http://buildfarm.opencsw.org/versionmatrix.html
 
 System-wide garrc (optional)
@@ -326,8 +327,8 @@ the ``/etc/opt/csw/garrc`` file with appropriate content. For example::
 Installing Software (optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-All software is archived and available from ``/home/farm`` on the buildfarm.
-Make sure you deinstall ``SUNWgmake``. That version is outdated and misses
+All software is archived and available from ``/home/farm`` on the build-farm.
+Make sure you uninstall ``SUNWgmake``. That version is outdated and misses
 functions needed by GAR (e.g. abspath).
 
 Install Java Package
@@ -362,8 +363,8 @@ Uninstall::
   ./batch_uninstall_all
 
 Please note: If you have also Sun Studio 12 installed the installer will
-erranously remove some packages from Sun Studio 12 so you may need to
-reinstall it after SOS 11 removal.
+erroneously remove some packages from Sun Studio 12 so you may need to
+re-install it after SOS 11 removal.
 
 Sun Studio 12
 +++++++++++++
@@ -380,8 +381,8 @@ Uninstall::
   java -cp . uninstall_Sun_Studio_12 -nodisplay -noconsole
 
 Please note: If you have also Sun Studio 11 installed the installer will
-erranously remove some packages from Sun Studio 11 so you may need to
-reinstall it after SOS 12 removal.
+erroneously remove some packages from Sun Studio 11 so you may need to
+re-install it after SOS 12 removal.
 
 Sun Studio 12u1
 +++++++++++++++
@@ -461,10 +462,10 @@ service contract from Oracle).
 Adding Users 
 ^^^^^^^^^^^^
 
-From here on in (Jan 2009), we are trying to keep userids in sync across all
+From here on in (Jan 2009), we are trying to keep user ids in sync across all
 machines. ``www.opencsw.org`` is considered the master.  If a user exists on
 www, then an account created from them on other machines, should be made to
-match up userids.
+match up user ids.
 
 There are some older, legacy, non-matched-up accounts. To make it easier to
 identify between newer and older accounts, cleanly created accounts are
@@ -481,10 +482,10 @@ to create accounts on www and buildfarm machines, respectively.
 SSH Agent for each user
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-It is advised to use a passphrase for the SSH key. This can easily be done by
+It is advised to use a pass-phrase for the SSH key. This can easily be done by
 using the following steps:
 
-Set passphrase on the key::
+Set pass-phrase on the key::
 
   ssh-keygen -p -f .ssh/id_dsa
 
@@ -509,11 +510,11 @@ Make sure the ssh agent information is forwarded to trusted machines::
 
   (echo "Host current*"; echo "\tForwardAgent yes") >> ~/.ssh/config
 
-There are similar methods with keychain available:
+There are similar methods with key-chain available:
 
-* `GPG, agent, pinentry and keychain`_
+* `GPG, agent, pin-entry and key-chain`_
 
-.. _GPG, agent, pinentry and keychain:
+.. _GPG, agent, pin-entry and key-chain:
    http://lists.opencsw.org/pipermail/maintainers/2009-December/010732.html
 
 Installing DB2 client
@@ -539,17 +540,17 @@ Installing IBM Informix Client SDK
 
 It seems the 32 bit and 64 bit clients can not be installed in the same directory.
 
-Buildfarm web app (optional)
-----------------------------
+Build-farm web app (optional)
+-----------------------------
 
 pkgdb-web is a web app on which you can browse your package database and
-inspect package metadata without having to unpack and examine packages in the
+inspect package meta-data without having to unpack and examine packages in the
 terminal. Information such as list of files, pkginfo content and information
 about binaries are available on that page.
 
 The checkpkg database also holds information about catalogs.
 
-* Live app on the OpenCSW buildfarm http://buildfarm.opencsw.org/pkgdb/
+* Live app on the OpenCSW build-farm http://buildfarm.opencsw.org/pkgdb/
 * Source code:
 
   * Browse http://gar.svn.sourceforge.net/viewvc/gar/csw/mgar/gar/v2/lib/web
@@ -562,7 +563,7 @@ one is read-write (``releases_web.py``).
 Catalog generation (optional)
 -----------------------------
 
-Once you have the buildfarm database, you can generate your own package
+Once you have the build-farm database, you can generate your own package
 catalogs. The main entry point which you can add to cron is the
 ``opencsw-future-update`` script.
 
