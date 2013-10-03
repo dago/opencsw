@@ -1,3 +1,5 @@
+.. $Id$
+
 ---------------------------
 Setting up a private mirror
 ---------------------------
@@ -26,7 +28,8 @@ Then copy the files::
 
 The directory ``opencsw-mirror`` can either be shared via HTTP or via NFS to the
 ``pkgutil`` clients.  Use ``http://myserver/opencsw-mirror/`` for HTTP and
-``file:///myserver/opencsw-mirror`` for NFS as mirror option in ``pkgutil``.
+``file:///myserver/opencsw-mirror`` for NFS as mirror option in
+``pkgutil``'s configuration file ``/etc/opt/csw/pkgutil.conf``.
 
 .. _our list of mirrors:
   http://www.opencsw.org/get-it/mirrors/
