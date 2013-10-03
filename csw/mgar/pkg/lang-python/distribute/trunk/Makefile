@@ -14,4 +14,6 @@ VENDOR_URL = https://pypi.python.org/pypi/distribute
 ARCHALL = 1
 TEST_SCRIPTS =
 DEP_PKGS_CSWpy-distribute = CSWpy-setuptools
+CHECKPKG_OVERRIDES_CSWpy-distribute += python-package-missing-py-files
+CHECKPKG_OVERRIDES_CSWpy-distribute += surplus-dependency|CSWpy-setuptools
 include gar/category.mk
