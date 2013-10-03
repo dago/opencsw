@@ -34,9 +34,10 @@ You can now start installing packages. For a list of available packages use::
   /opt/csw/bin/pkgutil -l
 
 For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of
-``PATH``, and ``/opt/csw/share/man`` in front of ``MANPATH``. On Solaris 10,
-you can do that by editing the ``/etc/default/login`` file, and logging out
-and back in.
+``PATH``, and ``/opt/csw/share/man`` in front of ``MANPATH``. On
+Solaris 10, you can do that by editing the ``/etc/default/login``
+file, uncomment the ``PATH`` and ``SUPATH`` variables definition, and
+logging out and back in.
 
 As the list is quite long and you probably have an idea what you are looking for the
 list can be fuzzy-matched with::
@@ -75,7 +76,7 @@ By default, ``pkgutil`` is configured to use the ``testing`` catalog. You might
 change it to ``unstable`` on your development hosts to catch any issues before
 they hit the ``testing`` catalog.
 
-You can verify the setting with ``pkgutil -V``::
+You can verify the setting with ``pkgutil -V`` ::
 
   ...
   maxpkglist              10000 (default: 10000)
@@ -101,7 +102,7 @@ with pkgutil!)::
 
 Then you need to import the public key::
 
-  root# /opt/csw/bin/cswpki --import
+  root# cswpki --import
 
 The current fingerprint looks like this::
 
@@ -113,7 +114,7 @@ The current fingerprint looks like this::
 
 You may also trust the key once you verified the fingerprint::
 
-  root# /opt/csw/bin/gpg --homedir=/var/opt/csw/pki --edit-key board@opencsw.org trust
+  root# gpg --homedir=/var/opt/csw/pki --edit-key board@opencsw.org trust
 
 Now everything is in place for enabling security in ``pkgutil``. Edit the ``/etc/opt/csw/pkgutil.conf``
 and uncomment the two lines with ``use_gpg`` and ``use_md5`` so they look like this::
@@ -135,10 +136,29 @@ On the next ``pkgutil -U`` you should see a catalog integrity verification wit `
 
   ...
   Checking integrity of /var/opt/csw/pkgutil/catalog.mirror_opencsw_current_sparc_5.10 with gpg.
-  gpg: Signature made Sat Jan 21 18:34:45 2012 CET using DSA key ID 9306CC77
+  gpg: Signature made Thu Oct 03 00:32:57 2013 CEST using DSA key ID 9306CC77
   gpg: Good signature from "OpenCSW catalog signing <board@opencsw.org>"
   gpg: WARNING: This key is not certified with a trusted signature!
   gpg:          There is no indication that the signature belongs to the owner.
   Primary key fingerprint: 4DCE 3C80 AAB2 CAB1 E60C  9A3C 05F4 2D66 9306 CC77
-  ==> 3173 packages loaded from /var/opt/csw/pkgutil/catalog.mirror_opencsw_current_sparc_5.10
+  Looking for packages that can be upgraded ...
+  Solving needed dependencies ...
+  Solving dependency order ...
+  
+  Nothing to do.
   ...
+
+-------------------------------
+Installing other basic packages
+-------------------------------
+
+Installing the following packages is optional but recommended to have
+a coherent stack:
+
+* gzip
+* coreutils
+* wget
+
+Finally, installing the ``gnulinks`` package and putting the
+``/opt/csw/gnu`` value in the front of the list contained by the
+``PATH`` variable, gives priority to basic utilities supplied by us.
