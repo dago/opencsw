@@ -164,7 +164,7 @@ endifo.so .*/libssl.so
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
-i386_OS_COMPILER -sunw
+i38no-sse286_OS_COMPILER -sunw
 pentium_pro_OS_COMPILER	= solaris-x86-pentium_pro-cc-sunw
 amd64_OS_COMPILER 	= solaris64-x86_64-cc-sunw
 

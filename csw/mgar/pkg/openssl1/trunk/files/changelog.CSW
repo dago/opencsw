@@ -1,3 +1,9 @@
+openssl (1.0.1e,rev=2013.08.10) unstable
+
+  * Disabled sse2 support for the i386 architecture.
+
+   -- yann rouillard <yann@opencsw.org>  Thu, 03 Oct 2013 21:57:06 +0200
+
 openssl (1.0.1e,rev=2013.08.07) unstable
 
   * Disabled pkcs11 engine patch under sparc for now as it 
