@@ -35,6 +35,11 @@ Prerequisites
   all packages that are in any of OpenCSW catalogs for any Solaris version.
   A typical location is ``/export/mirror/opencsw``.
 
+* `Regular user setup`_ for details on setting up an user: creation,
+  sudo activation, etc.
+
+.. _Regular user setup:
+   http://usable-solaris.googlecode.com/svn/trunk/docs/solaris-10-preliminary-setup.html#_regular_user_setup
 
 Base setup (required)
 ---------------------
@@ -44,7 +49,7 @@ check your packages for errors.
 
 ::
 
-  pkgutil -y -i gar_dev mgar gcc4core gcc4g++ sudo
+  sudo pkgutil -y -i gar_dev mgar gcc4core gcc4g++ sudo
 
 Setup ``~/.garrc`` (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,21 +156,92 @@ Necessary if you want to check your packages for errors using ``checkpkg``.
 You can use any database engine supported by sqlobject.  MySQL and sqlite have
 been tested.
 
-When using MySQL, you need to create the database and a user which has access
-to that database (not covered here).
+Required packages
+^^^^^^^^^^^^^^^^^
 
-max_allowed_packet problem in MySQL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Install the required packages:
 
-Since checkpkg stores objects in JSON, it sometimes stores values way bigger
-than the default allowed 1MB.  For this to work with MySQL, the following
-needs to be present in ``/etc/opt/csw/my.cnf``::
+::
 
-  [mysqld]
-     max_allowed_packet=64M
+   sudo pkgutil --yes --install cswutils mysql5 mysql5client
 
-There are packages which require data structures larger than 32MB, hence the
+
+Create a minimal configuration file:
+
+::
+
+   sudo echo >>/etc/opt/csw/my.cnf "[mysqld]"
+   sudo echo >>/etc/opt/csw/my.cnf "max_allowed_packet=64M"
+
+This is needed since checkpkg stores objects in JSON, it sometimes
+stores values way bigger than the default allowed 1MB, as there are
+packages which require data structures larger than 32MB, hence the
 64MB value.
+
+You start the data base server:
+
+::
+
+   sudo svcadm enable svc:/network/cswmysql5:default
+
+Eventually, you make your installation secure:
+
+::
+
+   sudo /opt/csw/bin/mysql_secure_installation
+
+and answer affirmatively to all the questions.
+
+Creating the database
+^^^^^^^^^^^^^^^^^^^^^
+
+When using MySQL, you need to create the database and a user which has access
+to that database.
+
+::
+
+   mysql -u root -h 127.0.0.1 -p
+   > create database checkpkg;
+   > grant all privileges on checkpkg.* to "checkpkg" identified by "password";
+   > flush privileges;
+   > exit;
+
+Note that you must use your own value instead of ``password``.
+
+To verify that your user creation is correct you can execute this:
+
+::
+
+   mysql -u wp1 -h 127.0.0.1 -p
+   > use checkpkg;
+   > status;
+   > exit;
+
+Configuration
+^^^^^^^^^^^^^
+
+The database access configuration is held in ``/etc/opt/csw/checkpkg.ini``.
+You can also use a per-user file: ``~/.checkpkg/checkpkg.ini``.  The format is
+as follows:
+
+::
+
+   [database]
+   type = mysql
+   name = checkpkg
+   host = mysql
+   user = checkpkg
+   password = yourpassword
+
+
+Initializing tables and indexes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The next step is creating the tables in the database:
+
+::
+
+   pkgdb initdb
 
 case-insensitive string comparison in MySQL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -193,29 +269,6 @@ follows::
 
 Before applying these changes, make sure that you're using the same column
 settings as the ones in the database.
-
-Configuration
-^^^^^^^^^^^^^
-
-The database access configuration is held in ``/etc/opt/csw/checkpkg.ini``.
-You can also use a per-user file: ``~/.checkpkg/checkpkg.ini``.  The format is
-as follows::
-
-  [database]
-  
-  type = mysql
-  name = checkpkg
-  host = mysql
-  user = checkpkg
-  password = yourpassword
-
-
-Initializing tables and indexes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The next step is creating the tables in the database::
-
-  bin/pkgdb initdb
 
 System files indexing
 ^^^^^^^^^^^^^^^^^^^^^
@@ -415,13 +468,14 @@ TODO
 Oracle Solaris Studio Compiler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You need a compiler. You have one in our repository, the GNU one.
+You need a compiler. You have one in our repository, the GNU compiler
+suite.
 
 Until recently, most of the packages built by OpenCSW used Oracle Solaris
 Studio (historically called 'SOS'), which you can `download from
 Oracle`_.
 
-Note that We are now, as of October 2013, transitioning to GCC.
+Note that we are now, as of October 2013, transitioning to GCC.
 
 However, if you wish to use the platform specific compiler, you should
 install the packaged (non-tar) version. In case you have access to an
