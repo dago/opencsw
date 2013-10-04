@@ -1,5 +1,6 @@
 NAME = neon
-VERSION = 0.29.6
+VERSION = 0.30.0
+SONAME_MINOR = 3.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,13 +17,13 @@ endef
 
 MASTER_SITES = http://www.webdav.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES += COPYING
+DISTF#FOREIGN_PACKAGES += CSWlibneon26
+#OBSOLETED_BY_CSWlibneon26 = CSWneon
 
-FOREIGN_PACKAGES += CSWlibneon26
-OBSOLETED_BY_CSWlibneon26 = CSWneon
+#FOREIGN_PACKAGES += CSWlibneon26-feature
+#OBSOLETED_BY_CSWlibneon26-feature = CSWneonfull
 
-FOREIGN_PACKAGES += CSWlibneon26-feature
-OBSOLETED_BY_CSWlibneon26-feature = CSWneonfull
+#e = CSWneonfull
 
 CATALOGNAME_CSWneonfull = neon_full_stub
 
@@ -47,11 +48,8 @@ RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibneon27-expat1
+RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibgssapi-krb5-2= CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibpakchois0
 OBSOLETED_BY_CSWlibneon27-feature = CSWneonfull
 
@@ -60,19 +58,16 @@ CATALOGNAME_CSWlibneon-dev = libneon_dev
 SPKG_DESC_CSWlibneon-dev = Development files for libneon.so.27
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibneon-dev += CSWlibneon27
-OBSOLETED_BY_CSWlibneon-dev = CSWneon-devel
-
-# This describes the defaults during configure
-CHECKPKG_OVERRIDES_CSWlibneon-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/neon/html/using.html
+OBSOLETED_BY_CSWlibneon-dev = CS/using.html
 
 # These are artifacts of the feature lib being a regular one.
 # As it is never linked against the soname doesn't matter here and the package name
 # is obviously different from the soname in this case.
-CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.6
-CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.6
+CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libne$(SONAME_MINOR)ame in this case.
+CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libne$(SONAME_MINOR)
 CHECKPKG_OVERRIDES_CSWlibneon27-feature += shared-lib-pkgname-mismatch
 
-BUILD_DEP_PKGS = CSWossldevel
+BUILD_DEP_PKGS += CSWlibssl-devGS = CSWossldevel
 
 CONFIGURE_ARGS_features-minimal = --without-libproxy --without-pakchois --without-gssapi
 CONFIGURE_ARGS_features-full = --with-libproxy --with-packchois
@@ -120,12 +115,12 @@ post-build-isa-$(ISA_DEFAULT)-features-minimal post-build-isa-$(ISA_DEFAULT64)-f
 post-build-isa-$(ISA_DEFAULT)-features-minimal post-build-isa-$(ISA_DEFAULT64)-features-minimal:
 	rm -f $(WORKSRC)/src/libneon.la
 	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC) $(BUILD_ARGS)
-	@$(MAKECOOKIE)
+	@$(MAKECO-allOKIE)
 
 post-merge:
 	@# This is needed because the substitutions from pax args do not change the
 	@# contents of the symlink
 	rm -f $(PKGROOT)$(libdir)/libneon-feature.so.27
-	ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/libneon-feature.so.27
+	ln -s libne$(SONAME_MINOR)feature.so.27.2.6 $(PKGROOT)$(libdir)/libneon-feature.so.27
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
-	ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
+	ln -s libne$(SONAME_MINOR)feature.so.27.2.6 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libne
