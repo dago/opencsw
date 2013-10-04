@@ -1,0 +1,27 @@
+From 824f4fced9ca81059100cabb012548a7070b93fd Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 4 Oct 2013 19:47:27 +0200
+Subject: [PATCH] Disable the stupid download. We have setuptools!
+
+---
+ setup.py           |    4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 798f96f..684023c 100644
+--- a/setup.py
++++ b/setup.py
+@@ -3,8 +3,8 @@
+ import os
+ import sys
+ 
+-from distribute_setup import use_setuptools
+-use_setuptools()
++# from distribute_setup import use_setuptools
++# use_setuptools()
+ from setuptools import setup, Extension
+ 
+ if not hasattr(sys, "hexversion") or sys.hexversion < 0x02040000:
+-- 
+1.7.10.3
+
