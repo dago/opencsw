@@ -165,7 +165,7 @@ endifo.so .*/libssl.so
 # The corresponding os/compiler to pass to the
 # openssl Configure script
 i38no-sse286_OS_COMPILER -sunw
-pentium_pro_OS_COMPILER	= solaris-x86-pentium_pro-cc-sunw
+pentium_pro_OS_COMPILER	= no-sse2 solaris-x86-pentium_pro-cc-sunw
 amd64_OS_COMPILER 	= solaris64-x86_64-cc-sunw
 
 sparcv8_OS_COMPILER 		= solaris-sparcv8-cc-sunw
@@ -227,7 +227,7 @@ install-conf-misc:
 		ln -sf ../../..$(sysconfdir)/ssl/openssl.cnf $(PKGROOT)$(prefix)/ssl/openssl.cnf; \
 	fi	
 	[ ! -d "$(PKGROOT)$(sysconfdir)/ssl/misc" ] || \
-		mv "$(PKGROOT)$(sysconfdir)/ssl/misc" "$(PKGROOT)/$(prefix)/ssl/"
+		mv "$(PKGROOT)$(sysconfdir)/ssl/misc" "$(PKGROOT)(prefix)/ssl/"
 		
 merge-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
