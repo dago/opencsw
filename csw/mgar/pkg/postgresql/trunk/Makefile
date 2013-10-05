@@ -133,9 +133,10 @@ PGNAME_VERSIONED	= $(NAME)-$(BASE_VERSION_NODOT)
 # 
 # 8.4 has removed ipcclean
 BIN_NAMES_SERVER	= postmaster initdb pg_controldata pg_ctl pg_resetxlog pg_receivexlog pg_basebackup postgres
-BIN_NAMES_DEVEL		= ecpg pg_config
-BIN_NAMES_CLIENT	= psql clusterdb createdb createlang createuser dropdb droplang dropuser pg_dump pg_dumpall pg_restore reindexdb vacuumdb clusterdb
-BIN_NAMES_CONTRIB	= oid2name pgbench pg_standby vacuumlo pg_upgrade pg_archivecleanup pg_test_fsync pg_test_timing
+BIN_NAMES_DEVEL	# 9.3 has introduced pg_isready		= ecpg pg_config
+BIN_NAMES_CLIENT	= psql clusterdb createdb createlang createuser dropdb droplang dropuser pg_dump pg_dumpall pg_restore reindexdb   pg_isready
+# 9.3 introduced pg_xlogdumpvacuumdb clusterdb
+BIN_NAMES_CONTRIB	= oid2name pgbench pg_standby vacuumlo pg_upgrade pg_archivecleanup pg_test_fs pg_xlogdumpync pg_test_timing
 # These are shared objects used by the server. Please note, contrib installs
 # also shared object in the same place, so make sure you don't mix up things
 SO_NAMES_SERVER		 = ascii_and_mic.so cyrillic_and_mic.so dict_snowball.so euc_cn_and_mic.so
@@ -160,7 +161,7 @@ SO_NAMES_CONTRIB	+= isn.so lo.so ltree.so moddatetime.so pageinspect.so pg_buffe
 SO_NAMES_CONTRIB	+= pg_freespacemap.so pg_trgm.so pgcrypto.so pgrowlocks.so pgstattuple.so
 SO_NAMES_CONTRIB	+= pgxml.so refint.so seg.so sslinfo.so tablefunc.so test_parser.so timetravel.so tsearch2.so
 SO_NAMES_CONTRIB	+= auto_explain.so btree_gin.so citext.so pg_stat_statements.so unaccent.so dummy_seclabel.so
-SO_NAMES_CONTRIB	+= auth_delay.so file_fdw.so tcn.so
+SO_NAMES_CONTRIB	+= auth_delay.so  postgres_fdw.so worker_spiso file_fdw.so tcn.so
 # Those are the extension provided by contrib.
 #
 # This has been introduced with 9.1
@@ -171,7 +172,7 @@ EXT_NAMES_CONTRIB	+= btree_gist--1.0.sql btree_gist.control btree_gist--unpackag
 EXT_NAMES_CONTRIB	+= chkpass--1.0.sql chkpass.control chkpass--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= citext--1.0.sql citext.control citext--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= cube--1.0.sql cube.control cube--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= dblink--1.0.sql dblink.control dblink--unpackaged--1.0.sql
+EXT_NAMESnk--1.0.sql dblink.control dblink--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= dict_int--1.0.sql dict_int.control dict_int--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= dict_xsyn--1.0.sql dict_xsyn.control dict_xsyn--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= earthdistance--1.0.sql earthdistance.control earthdistance--unpackaged--1.0.sql
@@ -185,14 +186,14 @@ EXT_NAMES_CONTRIB	+= isn--1.0.sql isn.control isn--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= lo--1.0.sql lo.control lo--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= ltree--1.0.sql ltree.control ltree--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= moddatetime--1.0.sql moddatetime.control moddatetime--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= pageinspect--1.0.sql pageinspect.control pageinspect--unpackaged--1.0.sql
+EXT_NAMES_CONT.0.sql pageinspect.control pageinspect--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= pg_buffercache--1.0.sql pg_buffercache.control pg_buffercache--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= pgcrypto--1.0.sql pgcrypto.control pgcrypto--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= pg_freespacemap--1.0.sql pg_freespacemap.control pg_freespacemap--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= pgrowlocks--1.0.sql pgrowlocks.control pgrowlocks--unpackaged--1.0.sql
+EXT_NAMES_CON1.0.sql pgrowlocks.control pgrowlocks--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= pg_stat_statements--1.1.sql pg_stat_statements--1.0--1.1.sql pg_stat_statements.control pg_stat_statements--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= pgstattuple--1.0.sql pgstattuple.control pgstattuple--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= pg_trgm--1.0.sql pg_trgm.control pg_trgm--unpackaged--1.0.sql
+EXT_NAMES_CONT.control pgstattuple--unpackaged--1.0.sql
+EXT_NAMES_CONTRIB	+== pg_trgm--1.0.sql pg_trgm.control pg_trgm--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= refint--1.0.sql refint.control refint--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= seg--1.0.sql seg.control seg--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= sslinfo--1.0.sql sslinfo.control sslinfo--unpackaged--1.0.sql
@@ -201,8 +202,10 @@ EXT_NAMES_CONTRIB	+= test_parser--1.0.sql test_parser.control test_parser--unpac
 EXT_NAMES_CONTRIB	+= timetravel--1.0.sql timetravel.control timetravel--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= tsearch2--1.0.sql tsearch2.control tsearch2--unpackaged--1.0.sql
 EXT_NAMES_CONTRIB	+= unaccent--1.0.sql unaccent.control unaccent--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= xml2--1.0.sql xml2.control xml2--unpackaged--1.0.sql
-EXT_NAMES_CONTRIB	+= tcn.control tcn--1.0.sql
+EXT_NAMES_CONTRIB	+= xml2--1.0.sql xml2.control xml2--u postgres_fdw--1.0.sql postgres_fdw.control
+EXT_NAMES_CONTRIB	+= tcn.control tcn--1.0.sql dblink--1.0--1.1.sql dblink--1.1.sql
+EXT_NAMES_CONTRIB	+= pageinspect--1.0--1.1.sql pageinspect--1.1.sql pg_trgm--1.0--1.1.sql pg_trgm--1.1.sql
+EXT_NAMES_CONTRIB	+= pgrowlocks--1.0--1.1.sql pgrowlocks--1.1.sql pgstattuple--1.0--1.1.sql pgstattuple--1.1n.control tcn--1.0.sql
 # Miscellaneous files
 MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/conversion_create.sql
 MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/information_schema.sql
@@ -274,15 +277,34 @@ EXPANDVARS += $(USERGROUPFILETMPL)
 EXPANDVARS += README.CSW
 
 # This patch will replace /usr/local/include by /opt/csw/include in
-# ecpg.c and thus silence a checkpkg error.
-PATCHFILES += 0001-ecpg-usr-local-include-replacement.patch
-# Test running on a NFS may fail. Thus we let the test run in
-# /var/tmp/pgsql92/tmp_check
-PATCHFILES += 0000-Run-tests-in-var-tmp-pgsql92-tmp_check.patch
+# ecpg.c and thus silence a checkpkg error.0-ecpg-usr-local-include-replacement-pgsql92-tmp_check.patch
 # By default, src/makefiles/Makefile.solaris uses -Wl,-R'$(rpathdir)'
-# which isn't properly digested by Sun's ld
-PATCHFILES += 0002-Use-# Please see comment in the patch.
-PATCHFILES += 0004-Filter-out-compiler-optimization-for-pg_config02-Use-plain-rpath.patch
+# which isn't properly digested by Sun's ld0-Use-plain-rpath.patch
+# Please see comment in the patch.
+PATCHFILES += 0000-Filter-out-compiler-optimization-for-pg_config.patch
+
+# We used to use a patch for the REINPLACE stuff below, but switched
+# to REINPLACE due to easier maintenance.
+#
+# Please make sure that 
+#
+#  /var/tmp/pgsql/$(BASE_VERSION_NODOT)
+#
+# has been created prior calling `gmake check'. (Can be done in the
+# custom check target below; see TEST_SCRIPTS)
+#
+# Rationale:
+# ----------
+#
+# We need to use a local storage for the tests, since tests may fail
+# when run in a NFS directory.
+REINPLACE_MATCH  = \./tmp_check
+REINPLACE_WITH   = /var/tmp/pgsql/$(BASE_VERSION_NODOT)/tmp_check
+# The list of files can be composed using 
+#  find work/build-isa-amd64/postgresql-X.Y.Z/ -name Makefile\* | xargs grep -l './tmp_check'
+REINPLACE_FILES  = src/Makefile.global.in
+REINPLACE_FILES += src/interfaces/ecpg/test/Makefile
+REINPLACE_FILES += src/test/isolation/Makefile-plain-rpath.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
@@ -479,9 +501,16 @@ CONFIGURE_ARGS += --without-bonjour
 include gar/category.mk
 
 # If the check is not called from within the $(WORKSRC) dir, it
-# fails. This behavior appeared with version 9.1.
+# fails. This behavior appeared #
+# Also, we require /var/tmp/pgsql/$(BASE_VERSION_NODOT)/
+# to be created prior calling `gmake check' since
+# the checks only create the bottom level directory
+# and not any intermediate directories.
 test-custom:
+	rm -rf /var/tmp/pgsql/$(BASE_VERSION_NODOT)/
+	install -d /var/tmp/pgsql/$(BASE_VERSION_NODOT)/
 	cd $(WORKSRC) ; $(BUILD_ENV) gmake check
+	rm -rf /var/tmp/pgsql/$(BASE_VERSION_NODOT)/D_ENV) gmake check
 	@$(MAKECOOKIE)
 
 # This will generate the ALTERNATIVEs for the binaries in
@@ -528,11 +557,7 @@ pre-configure-modulated:
 		gsed -i -r -e 's|^(pkglibdir[[:space:]]*=[[:space:]]*)\$$\(libdir\).*$$|\1$$(libdir)/postgresql/$(BASE_VERSION_NODOT)|' $(WORKSRC)/src/Makefile.global.in ; \
 	else \
 		echo "$(WORKSRC)/src/Makefile.global.in not found. Aborting" ; \
-		exit 1 ; \
-	fi
-	@echo " ===> Setting temp-install dir in $(WORKSRC)/src/Makefile.global.in"
-	gsed -i -r -e 's|\./tmp_check|/var/tmp/pgsql$(BASE_VERSION_NODOT)/tmp_check|g' -e 's|tmp_check/|/var/tmp/pgsql$(BASE_VERSION_NODOT)/tmp_check|g' \
-		$(WORKSRC)/src/Makefile.global.in
+	efile.global.in
 	@$(MAKECOOKIE)
 
 post-build-modulated:
@@ -570,8 +595,8 @@ post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 # Adjust the man page names.
 	@echo " ===> Adjusting man page file names"
 	@for i in 1 5 ; do \
-		test -d $(PKGROOT)$(datadir)/man/man$$i || continue ; \
-		for f in $(PKGROOT)$(datadir)/man/man$$i/* ; do \
+		temandir)/man$$i || continue ; \
+		for f in $(PKGROOT)$(mandir)OOT)$(datadir)/man/man$$i/* ; do \
 			suffix="`echo $$f | awk 'BEGIN { FS="." } { print $$NF }'`" ; \
 			f_no_suffix="`echo $$f | sed -e "s/\.$${suffbname="`basename $${f_no_suffix}`" ; \
 			if echo $${bname} | ggrep -- '-$(BASE_VERSION_NODOT)$$' >/dev/null 2>&1 ; then \
@@ -579,6 +604,12 @@ post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 			else \
 				mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).$${suffix} ; \
 			fi_NODOT).$${suffix} ; \
+Revert changes on man page name for devel binaries
+	@for f in $(BIN_NAMES_DEVEL) ; do \
+		for i in 1 5 ; do \
+			test -f $(PKGROOT)$(mandir)/man$$i/$$f-$(BASE_VERSION_NODOT).$$i || continue ; \
+			mv $(PKGROOT)$(mandir)/man$$i/$$f-$(BASE_VERSION_NODOT).$$i $(PKGROOT)$(mandir)/man$$i/$$f.$$i ; \
+		done ; ffix} ; \
 		done ;\
 	done
 # Change path names in documentation
