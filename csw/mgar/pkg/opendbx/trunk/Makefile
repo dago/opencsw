@@ -1,5 +1,5 @@
 NAME = opendbx
-VERSION = 1.4.5
+VERSION = 1.4.6
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,20 +16,20 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.linuxnetworks.de/opendbx/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION). = CSWlibopendbx1
+PACKAGES +=CSWlibopendbxdevel
+PACKAGES += CSWlibopendbxmysql
+PACKAGES += CSWlibopendbxsqlite3
 
-PACKAGES = CSWopendbx CSWopendbxdevel CSWopendbxmysql CSWopendbxsqlite3 CSWopendbxoracle
-CATALOGNAME_CSWopendbx = opendbx
-CATALOGNAME_CSWopendbxdevel = opendbx_devel
-CATALOGNAME_CSWopendbxmysql = opendbx_mysql
-CATALOGNAME_CSWopendbxsqlite3 = opendbx_sqlite3
-CATALOGNAME_CSWopendbxoracle = opendbx_oracle
+CATALOGNAME_CSWlibopendbx1 = libopendbx1
+CATALOGNAME_CSWlibopendbxdevel = libopendbxdevel
+CATALOGNAME_CSWlibopendbxmysql = libopendbxmysql
+CATALOGNAME_CSWlibopendbxsqlite3 = libopendbxsqlite3
 
-SPKG_DESC_CSWopendbx = $(DESCRIPTION)
-SPKG_DESC_CSWopendbxdevel = $(DESCRIPTION), development package
-SPKG_DESC_CSWopendbxmysql = $(DESCRIPTION), mysql backend package
-SPKG_DESC_CSWopendbxsqlite3 = $(DESCRIPTION), sqlite3 backend package
-SPKG_DESC_CSWopendbxsoracle = $(DESCRIPTION), oracle backend package
+SPKG_DESC_CSWlibopendbx1 += $(DESCRIPTION), libopendbx.so.1
+SPKG_DESC_CSWlibopendbxdevel = $(DESCRIPTION), development package
+SPKG_DESC_CSWlibopendbxmysql = $(DESCRIPTION), mysql backend package
+SPKG_DESC_CSWlibopendbxsqlite3 = $(DESCRIPTION), sqlite3CRIPTION), oracle backend package
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -38,70 +38,35 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-GARCOMPILER = GCC3
+4ARCOMPILER = GCC3
 BUILD64_LIBS_ONLY = 1
 
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
-PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
+PACKAGING_PLAT10-sparc solaris10-i386
 
-EXTRA_INC =  $(prefix)/mysql5/include/mysql $(prefix)/instantclient_10_2/sdk/include
-EXTRA_LINKER_DIRS_MYSQL_32 = $(prefix)/mysql5/lib/mysql
-EXTRA_LINKER_DIRS_ORACLE_32 += $(prefix)/instantclient_10_2
-EXTRA_LINKER_DIRS_MYSQL_64 = $(prefix)/mysql5/lib/64/mysql
-EXTRA_LINKER_DIRS_ORACLE_64 += $(prefix)/instantclient_10_2/64
-EXTRA_LINKER_FLAGS = -L$(EXTRA_LINKER_DIRS_MYSQL_$(MEMORYMODEL)) -L$(EXTRA_LINKER_DIRS_ORACLE_$(MEMORYMODEL))
-EXTRA_RUNPATH_LINKER_FLAGS = -R$(EXTRA_LINKER_DIRS_MYSQL_$(MEMORYMODEL)) -R$(EXTRA_LINKER_DIRS_ORACLE_$(MEMORYMODEL))
+EXTRA_INC =  $(prefix)/include/mysqlE_$(MEMORYMODEL))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-utils
-CONFIGURE_ARGS += --with-backends="mysql sqlite3 oracle"
+CONFIGURE_ARGS += --with-backen"
+CONFIGURE_ARGS += --enable-maintainer-mode
 
-PKGFILES_CSWopendbxdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWopendbxmysql = $(call baseisadirs,$(libdir),opendbx/libmysqlbackend.*) 
-PKGFILES_CSWopendbxsqlite3 = $(call baseisadirs,$(libdir),opendbx/libsqlite3backend.*) 
-PKGFILES_CSWopendbxoracle = $(call baseisadirs,$(libdir),opendbx/liboraclebackend.*) 
+PKGFILES_CSWlibopendbxdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibopendbxmysql = $(call baseisadirs,$(libdir),opendbx/libmysqlbackend.*) 
+PKGFILES_CSWlibopendbxsqlite3 = $(call baseisadirs,$(libdir),opendbx/libsqlite3backend.*) 
+PKGFILES_CSWlibopendbx1 = $(PKGFILES_RT)
 
-CHECKPKG_OVERRIDES_CSWopendbxdevel += surplus-dependency|CSWopendbx
-CHECKPKG_OVERRIDES_CSWopendbxmysql += surplus-dependency|CSWopendbx
-CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += surplus-dependency|CSWopendbx
-CHECKPKG_OVERRIDES_CSWopendbxoracle += surplus-dependency|CSWopendbx
+RUNTIME_DEP_PKGS_CSWlibopendbxmysql += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibopendbxmysql += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWlibopendbxdevel += CSWlibopendbx1
+RUNTIME_DEP_PKGS_CSWlibopendbxsqlite3 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibopendbxsqlite3 += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibstdc++6
 
-CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/opendbx/libsqlite3backend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/opendbx/libsqlite3backend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/libsqlite3backend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/sparcv8plus/opendbx/libsqlite3backend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/libopendbx.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/libopendbxplus.so.1.0.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/libopendbx.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/libopendbxplus.so.1.0.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/libopendbx.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/libopendbxplus.so.1.0.
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/libopendbxplus.so.1.0.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/sparcv8plus/libopendbx.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/sparcv8plus/libopendbxplus.so.1.0.0
-CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/opendbx/libmysqlbackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/libmysqlbackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/opendbx/libmysqlbackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/sparcv8plus/opendbx/libmysqlbackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/opendbx/liboraclebackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/opendbx/liboraclebackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/liboraclebackend.so.1.2.0
-CHECKPKG_OVERRIDES_CSWopendbxoracle += missing-dependency|CSWorainstclient102
-CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/sparcv8plus/opendbx/liboraclebackend.so.1.2.0
-
-RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc3corert
-RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc3g++rt
-RUNTIME_DEP_PKGS_CSWopendbx += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWopendbxdevel += CSWopendbx
-RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWgcc3corert
-RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWzlib
-RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWmysql5rt
-RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWgcc3corert
-RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWgcc3corert
-RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWopendbx
-RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWorainstclient102
+CHECKPKG_OVERRIDES_CSWlibopendbx1 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libopendbxplus.so.1.0.0|soname=libopendbxplus.so.1|pkgname=CSWlibopendbx1|expected=CSWlibopendbxplus1
 
 include gar/category.mk
