@@ -16,7 +16,7 @@ index e459de3..a234c30 100644
  rpath = -Wl,-rpath,'$(rpathdir)'
  else
 -rpath = -Wl,-R'$(rpathdir)'
-+rpath = -R'$(rpathdir)'
++rpath = -R$(rpathdir)
  endif
  
  DLSUFFIX = .so
