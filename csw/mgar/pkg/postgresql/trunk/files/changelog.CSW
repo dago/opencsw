@@ -1,29 +1,6 @@
-postgresql92 (9.2.4,REV=2013.04.06)
+postgresql93 (9.3.0,REV=2013.10.05)
 
-  * New upstream release 9.2.4.
+  * New upstream release 9.3.0.
 
- -- Rafael Ostertag <raos@opencsw.org>  Fri, 05 Apr 2013 13:24:31 +0200
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 05 Oct 2013 15:52:31 +0200
 
-
-postgresql92 (9.2.2,REV=2012.12.09)
-
-  * New upstream release 9.2.2.
-
-  * pg_config: do not emit compiler optimization flags (see
-	       https://www.opencsw.org/mantis/view.php?id=5025)
-
- -- Rafael Ostertag <raos@opencsw.org>  Sun, 09 Dec 2012 10:02:08 +0100
-
-
-postgresql92 (9.2.1,REV=2012.10.03)
-
-  * New upstream release 9.2.1
-
- -- Rafael Ostertag <raos@opencsw.org>  Tue, 02 Oct 2012 15:16:34 +0200
-
-
-postgresql92 (9.2.0,REV=2012.09.16)
-
-  * New upstream release 9.2.0
-
- -- Rafael Ostertag <raos@opencsw.org>  Sun, 16 Sep 2012 14:55:51 +0200
