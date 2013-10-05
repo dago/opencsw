@@ -49,7 +49,9 @@ check your packages for errors.
 
 ::
 
-  sudo pkgutil -y -i gar_dev mgar gcc4core gcc4g++ sudo
+  pkgutil -y -i gar_dev mgar gcc4core gcc4g++ sudo
+
+Please note that this must be run as ``root``.
 
 Setup ``~/.garrc`` (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -163,7 +165,7 @@ Install the required packages:
 
 ::
 
-   sudo pkgutil --yes --install cswutils mysql5 mysql5client
+   sudo pkgutil --yes --install mysql5 mysql5client
 
 
 Create a minimal configuration file:
@@ -200,7 +202,7 @@ to that database.
 
 ::
 
-   mysql -u root -h 127.0.0.1 -p
+   mysql -u root -p
    > create database checkpkg;
    > grant all privileges on checkpkg.* to "checkpkg" identified by "password";
    > flush privileges;
@@ -212,7 +214,7 @@ To verify that your user creation is correct you can execute this:
 
 ::
 
-   mysql -u wp1 -h 127.0.0.1 -p
+   mysql -u checkpkg -p
    > use checkpkg;
    > status;
    > exit;
