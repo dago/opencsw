@@ -1,0 +1,25 @@
+From 94e59f7701fdf0e2b93796f16864aadaaaa14669 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 15 Aug 2010 12:34:41 +0200
+Subject: [PATCH] libintl for kproplog
+
+---
+ src/slave/Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/slave/Makefile.in b/src/slave/Makefile.in
+index 20bef7c..a9e1988 100644
+--- a/src/slave/Makefile.in
++++ b/src/slave/Makefile.in
+@@ -25,7 +25,7 @@ kpropd: $(SERVEROBJS) $(KDB5_DEPLIB) $(KADMCLNT_DEPLIBS) $(KRB5_BASE_DEPLIBS) $(
+ 	$(CC_LINK) -o kpropd $(SERVEROBJS) $(KDB5_LIB) $(KADMCLNT_LIBS) $(KRB5_BASE_LIBS) $(APPUTILS_LIB) @LIBUTIL@
+ 
+ kproplog: $(LOGOBJS)
+-	$(CC_LINK) -o kproplog $(LOGOBJS) $(KADMSRV_LIBS) $(KRB5_BASE_LIBS)
++	$(CC_LINK) -o kproplog $(LOGOBJS) $(KADMSRV_LIBS) $(KRB5_BASE_LIBS) -lintl
+ 
+ install::
+ 	for f in kprop kpropd kproplog; do \
+-- 
+1.7.1
+
