@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = numpy
-VERSION = 1.5.1rc1
+VERSION = 1.7.1
 CATEGORIES = python
 GARTYPE = v2
 
@@ -16,12 +16,7 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://numpy.scipy.org/
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-PACKAGES = CSWpy-numpy
-CATALOGNAME = py_numpy
+DISTFILES = $(DISTNAME).tar.gz
 
 # the so version (and package names) for libsunperf differ depending
 # on platform
@@ -29,12 +24,15 @@ SUNPERF_SO_sparc = 7
 SUNPERF_SO_i386 = 3
 SUNPERF_SO = $(SUNPERF_SO_$(GARCH))
 
+RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibsunperf$(SUNPERF_SO)
 
 LICENSE = LICENSE.txt
 
-EXTRA_CFLAGS = -xnorunpath
+EXTRA_CFLAGS_2_6 = -xnorunpath
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(PYTHON_VERSION))
 
 export ATLAS = None
 export BLAS = $(CC_HOME)/lib/libsunperf.so
