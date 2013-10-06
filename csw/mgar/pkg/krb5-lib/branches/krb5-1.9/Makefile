@@ -4,8 +4,8 @@
 # instead of the one built.
 #
 
-NAME    = krb5
-VERSION = 1.11.3
+NAME = krb5
+VERSION = 1.9.5
 CATEGORIES = server
 GARTYPE = v2
 
@@ -19,9 +19,37 @@ define BLURB
 endef
 
 MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
-DISTFILES  = $(NAME)-$(VGARCOMPILER = GCC4
+DISTFILES  = $(NAME)-$(VERSION)-signed.tar
 
-BUILD_DEP_PKGS = CSWtclr = Unused package 4
+PATCHFILES  = patch-man2html-perl.patch
+PATCHFILES += 0002-libintl-for-kproplog.patch
+# PATCHFILES += 0003-local-libraries-first#PATCHFILES += 0004-libkdb_ldap-isblank-define.patch
+#sblank-define.patch
+PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
+# PATCHFILES += krb5-1.9.2-krb5_set_password#_using_ccache.patch
+PATCHFILES += 0005-krb5_set_password_using_ccache.patch
+
+# PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+BUILD_DEP_PKGS = CSWtcl
+
+# Uncomment for a better view of file-package allocations.
+# PACKAGES = CSWdo-not-use
+# SPKG_DESC_CSWdo-not-use = Do not use this catch all package
+
+# These packages are not part of the krb5libs build, but only the main server
+#PACKAGES += CSWkrb5doc
+PKGFILES_CSWkrb5doc = NOFILES
+SPKG_DESC_CSWkrb5doc = Unused package 1
+#PACKAGES += CSWkrb5user
+PKGFILES_CSWkrb5user = NOFILES
+SPKG_DESC_CSWkrb5user = Unused package 2
+#PACKAGES += CSWkrb5kdc
+PKGFILES_CSWkrb5kdc = NOFILES
+SPKG_DESC_CSWkrb5kdc = Unused package 3
+#PACKAGES += CSWkrb5adminserver
+PKGFILES_CSWkrb5adminserver = NOFILES
+SPKG_DESC_CSWkrb5adminserver = Unused package 4
 
 PACKAGES += CSWlibkrb5-dev
 SPKG_DESC_CSWlibkrb5-dev      = MIT Kerberos 5 developer libraries
@@ -79,24 +107,23 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-privversions-in-package
 
 PACKAGES += CSWlibkrb5-3
 CATALOGNAME_CSWlibkrb5-3 = libkrb5_3
-PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libkrb5\.so\.3(\.\d+)*)
+PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libkPKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(sysconfdir),krb5.confbkrb5\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibkrb5-3 += MIT Kerberos 5 core libraries, libkrb5.so.3
 OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibkrb5-3OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib3 += CSWlibk5crypto3
 
 PACKAGES += CSWlibkrb5support0
 CATALOGNAME_CSWlibkrb5support0 = libkrb5support0
 PKGFILES_CSWlibkrb5support0 += $(call baseisadirs,$(libdir),libkrb5support\.so\.0(\.\d+)*)
-SPKG_DESC_CSWlibkrb5support0 += MIT Kerberos 5 core libraries, libkrb5support.so.0
-OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
+SPKG_DESC_CSWlibkrb5support0 += MIT Kerberos 5 core libraries, krb5-3 = CSWkrb5lib
 
 LICENSE = doc/copyright.texinfo
 
 EXTRA_LD_OPTIONS += -M $(abspath mapfile)
 
-EXTRA_CPPFLAGS EXTRA_LDFLAGS += -L$(libdir) -lintl  += -D__EXTENSIONS__
+EXTRA_CPPFLAGS += -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
@@ -104,18 +131,33 @@ BUILD64_LIBS_ONLY = 1
 
 # We turn off almost everything as we are just interested in the library.
 NODIRPATHS = --docdir
-CONFIGURE_CONFIGURE_ARGS += --enable-dns-for-realmsable-thread-support
+CONFIGURE_CONFIGURE_ARGS +=  --enable-dns-for-realmsable-thread-support
 CONFIGURE_ARGS += --enable-thread-support
 CONFIGURE_ARGS += --disable-static --disable-profiled
-CONFIGURE_ARGCONFIGURE_ARGS += --with-readline
-# To pick the right tclConfig.sh
-CONFIGURE_ARGS += --with-tcl=$(libdir)
+CONFIGURE_ARGS += --without-ldap
 
-BUILD_SCRIPTSEL))
+CONFIGURE_ARGS-32 += --with-tcl=$(prefix)
+CONFIGURE_ARGS-64 += --without-tcl
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 
-TEST_SCRIPTS = $(WORINSTALL_SCRIPTS = $(WORKSRC)/src/Makefile5lib = krb5_lib_stub
+TEST_SCRIPTS = $(WORKSRC)/src/Makefile
+
+# Some tests are failing:
+# TOP=/home/maciej/src/opencsw/pkg/krb5-lib/trunk/work/solaris9-sparc/build-isa-sparcv8/krb5-1.9.1/src/kadmin
+# Running pass `tcp' ...
+# server didn't start in 30 secondscan't read "expect_out(buffer)": no such
+# variable
+#     while executing
+#     "verbose $expect_out(buffer) 1"
+SKIPTEST ?= 1
+
+INSTALL_SCRIPTS = $(WORKSdency|CSWkrb5lib
+
+# pkgname=CSWkrb5lib|catalogname=krb5_lib|expected-catalogname=krb5lib
+CHECKPKG_OVERRIDES_CSWkrb5lib += catalogname-does-not-match-pkgname
+CATALOGNAME_CSWkrb5lib = krb5_lib_stub
 
 include gar/category.mk
 

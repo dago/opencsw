@@ -1,0 +1,24 @@
+From 2827729c42021ec00658d7836e981e4b02f837be Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 15 Aug 2010 00:10:24 +0200
+Subject: [PATCH] Add strings.h to setenv.c for strlen and other stuff
+
+---
+ src/clients/ksu/setenv.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/src/clients/ksu/setenv.c b/src/clients/ksu/setenv.c
+index 6e8710d..9658ee7 100644
+--- a/src/clients/ksu/setenv.c
++++ b/src/clients/ksu/setenv.c
+@@ -21,6 +21,7 @@
+ #include <sys/types.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <strings.h>
+ #include "autoconf.h"
+ 
+ static char *_findenv(char *, int *);
+-- 
+1.7.1
+
