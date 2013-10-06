@@ -32,29 +32,24 @@ PATCHDIR = $(WORKDIR)/$(DISTNAME)
 
 PACKAGES  = CSWtcl
 SPKG_DESC_CSWtcl = Tcl programming language 8.5
-RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-5
-RUNTIME_DEP_PKGS_CSWtcl-i386 = CSWsunmath
-RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
+RUNTIME_DEP_PKGS_CSWtc_CSWtcl-$(GARCH))
 
 # There are legacy packages depending on CSWtcl which require libtcl 8.4
 FOREIGN_PACKAGES += CSWlibtcl8-4
-RUNTIME_DEP_PKGS_CSWtcl += CSWlibtcl8-4
+RUNTIME_DEP_PKGS_CSWtc#RUNTIME_DEP_PKGS_CSWtcl-i386-5.9 = CSWsunmath
+#RUNTIME_DEP_PKGS_CSWtcl += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH)-$(GAROSREL))cl += CSWlibtcl8-4
 CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWlibtcl8-4
-CHECKPKG_OVERRIDES_CSWtcl += unidentified-dependency|CSWlibtcl8-4
-
-# This is to find zoneinfo
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
+CHECKPKG_OVERRIDES_CSWtcl += unidentified-dependeman/mann/clock.n
 
 PACKAGES += CSWlibtcl8-5
 SPKG_DESC_CSWlibtcl8-5 = $(DESCRIPTION), libraries
 PKGFILES_CSWlibtcl8-5 += $(call pkgfiles_lib,libtcl8.5.so)
 PKGFILES_CSWlibtcl8-5 += $(libdir)/tcl8.5/.*
 # This dependency can not be tracked by checkpkg
-RUNTIME_DEP_PKGS_CSWlibtcl8-5 += CSWtcl8-tclmodules
+RUNTIME_DEP_PKGS_CSWlibtcl8-5 += C#RUNTIME_DEP_PKGS_CSWlibtcl8-5-i386-5.9 += CSWsunmath
+#RUNTIME_DEP_PKGS_CSWlibtcl8-5 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-$(GARCH)-$(GAROSREL))
 CHECKPKG_OVERRIDES_CSWlibtcl8-5 += surplus-dependency|CSWtcl8-tclmodules
-RUNTIME_DEP_PKGS_CSWlibtcl8-5-i386 += CSWsunmath
-RUNTIME_DEP_PKGS_CSWlibtcl8-5 += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-$(GARCH))
+ibtcl8-5-$(GARCH))
 
 # This is correct, the soname with *.so is really the one to use
 CHECKPKG_OVERRIDES_CSWlibtcl8-5 += soname-equals-filename
@@ -73,7 +68,12 @@ SPKG_DESC_CSWtcl-dev = $(DESCRIPTION), development files
 PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWtcl-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWtcl-dev += $(call baseisadirs,$(libdir),tclConfig.sh)
-RUNTIME_DEP_PKGS_CSWtcl-dev += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWtcl-dev# Enable 64 bits, but not for Solaris 9 x86
+BUILD64_5.9_sparc = 1
+BUILD64_5.10_sparc = 1
+BUILD64_5.9_i386 =
+BUILD64_5.10_i386 = 1
+BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))cl8-5
 
 BUILD64 = 1
 ISAEXEC = 1
