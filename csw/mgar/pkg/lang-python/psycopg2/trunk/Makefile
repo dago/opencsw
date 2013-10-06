@@ -1,6 +1,6 @@
 # $Id$
 NAME = psycopg2
-VERSION = 2.4.5
+VERSION = 2.5.1
 CATEGORIES = python
 GARTYPE = v2
 
@@ -12,19 +12,18 @@ define BLURB
   the features offered by PostgreSQL.
 endef
 
-PACKAGES = CSWpy-psycopg2
-CATALOGNAME = py_psycopg2
+MASTER_SITES = http://www.psycopg.org/psycopg/tarballs/PSYCOPG-2-5/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+
 LICENSE = LICENSE
 
 BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWpostgresql-dev
-RUNTIME_DEP_PKGS_CSWpy-psycopg2 += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-psycopg2 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-psycopg2 += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpy-psycopg2 += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-psycopg2 += CSWlibpython2-7-1-0
 
-MASTER_SITES = http://www.psycopg.org/psycopg/tarballs/PSYCOPG-2-4/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
-CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
 include gar/category.mk
