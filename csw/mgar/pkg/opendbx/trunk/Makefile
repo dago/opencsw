@@ -72,5 +72,7 @@ RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibstdc++6
 CHECKPKG_OVERRIDES_CSWlibopendbx1 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libopendbxplus.so.1.0.0|soname=libopendbxplus.so.1|pkgname=CSWlibopendbx1|expected=CSWlibopendbxplus1
 CHECKPKG_OVERRIDES_CSWlibopendbx1 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libopendbxplus.so.1.0.0|soname=libopendbxplus.so.1|pkgname=CSWlibopendbx1|expected=CSWlibopendbxplus1
 CHECKPKG_OVERRIDES_CSWlibopendbx1 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libopendbxplus.so.1.0.0|soname=libopendbxplus.so.1|pkgname=CSWlibopendbx1|expected=CSWlibopendbxplus1
+CHECKPKG_OVERRIDES_CSWlibopendbxmysql += surplus-dependency|CSWlibopendbx1
+CHECKPKG_OVERRIDES_CSWlibopendbxsqlite3 += surplus-dependency|CSWlibopendbx1
 
 include gar/category.mk
