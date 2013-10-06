@@ -60,9 +60,11 @@ PKGFILES_CSWlibopendbx1 = $(PKGFILES_RT)
 
 RUNTIME_DEP_PKGS_CSWlibopendbxmysql += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibopendbxmysql += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWlibopendbxmysql += CSWlibopendbx1
 RUNTIME_DEP_PKGS_CSWlibopendbxdevel += CSWlibopendbx1
 RUNTIME_DEP_PKGS_CSWlibopendbxsqlite3 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibopendbxsqlite3 += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibopendbxsqlite3 += CSWlibopendbx1
 RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibopendbx1 += CSWlibstdc++6
