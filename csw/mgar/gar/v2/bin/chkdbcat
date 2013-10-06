@@ -1,0 +1,53 @@
+#!/opt/csw/bin/python2.6
+# -*- python -*-
+
+import argparse
+import logging
+from lib.python import chkdbcat
+
+class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
+    """Class overriding CheckDBCatalog.notify()"""
+    def __init__(self, catrel, arch, osrel, fn_ts, chkcat, verbose=False):
+        super(MyCheckDBCatalog,self).__init__(catrel, arch, osrel, fn_ts, chkcat)
+        self.__verbose = verbose
+
+    def notify(self, date, addr, pkginfo):
+        # TODO: Do actual notification. To be discussed.
+        if self.__verbose: print('Notify %s' % addr)
+        print(date, add, pkginfo)
+
+
+def argparser():
+    parser = argparse.ArgumentParser(description='Check Database Catalog.')
+    parser.add_argument('--debug', help='enable debug output', required=False, default=False, action='store_const', const=True)
+    parser.add_argument('--verbose', help='be verbose', required=False, default=False, action='store_const', const=True)
+    parser.add_argument('--arch', required=True)
+    parser.add_argument('--catalog-release', required=True)
+    parser.add_argument('--os-release', required=True)
+    parser.add_argument('--timestamp-file', default='/var/cache/chkdbcat/timestamp.json')
+    parser.add_argument('--chkcat-path', default='/opt/csw/bin/chkcat')
+    return parser.parse_args()
+
+def main():
+    args = argparser()
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
+
+    if args.verbose: print("Checking Database Catalog {0} {2} {1}".format(args.catalog_release, args.arch, args.os_release))
+    with MyCheckDBCatalog(args.catalog_release, args.arch,
+                          args.os_release, args.timestamp_file,
+                          args.chkcat_path, args.verbose) as checker:
+        success = checker.check()
+        if args.verbose:
+            if success:
+                print("Database Catalog {0} {2} {1}: OK".format(args.catalog_release, args.arch, args.os_release))
+            else:
+                print("Database Catalog {0} {2} {1}: FAILED".format(args.catalog_release, args.arch, args.os_release))
+                print("chkcat output")
+                print checker.stderr
+                
+        exit(0) if success else exit(1)
+
+if __name__ == '__main__':
+    main()
