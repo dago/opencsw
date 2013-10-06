@@ -1,6 +1,6 @@
 NAME      = imagemagick
-VERSION   = 6.8.6
-GARSUBREV = 9
+VERSION   = 6.8.7
+GARSUBREV = 0
 GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -14,9 +14,6 @@ endef
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
 DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 DISTFILES  = $(DISTNAME).tar.xz
-
-# Not needed anymore with GCC, I think
-#PATCHFILES += 0001-Do-not-strip-norunpath.patch
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
