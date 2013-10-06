@@ -37,7 +37,9 @@ FLIBS-i386 = libsunperf.so.2 libsunperf.so.3
 RUNTIME_DEP_PKGS += CSWsunmath
 RUNTIME_DEP_PKGS += CSWss12f95rt
 
-CHECKPKG_OVERRIDES += bad-rpath-entry
+C_CSWlibsunperf2 += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWlibsunperf3 += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWlibsunperf7HECKPKG_OVERRIDES += bad-rpath-entry
 CHECKPKG_OVERRIDES += soname-not-found
 CHECKPKG_OVERRIDES += surplus-dependency|CSWss12f95rt
 CHECKPKG_OVERRIDES += surplus-depend# They are binary blobs which we have no control of.
