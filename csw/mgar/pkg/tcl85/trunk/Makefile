@@ -105,6 +105,19 @@ include gar/category.mk
 
 post-install-modulated:
 	@echo Creating tclsh link
-	ln -s $(REN_TCLSH) $(DESTDIR)$(bindir)/tclsh
-	perl -pi -e "s|/usr/local|$(prefix)|g" $(DESTDIR)$(libdir)/tclConfig.sh
-	perl -pi -e "s|/usr/local|$(prefix)|g" $(DESTDIR)$(mandir)/man1/tclsh.1
+	ln -s $(REN_TCLSH) $(DESTDIR# Remove wrong path
+	perl -pi -e "s|/usr/local|$(prefix)|g" \
+		$(DESTDIR)$(libdir)/tclConfig.sh
+	perl -pi -e "s|/usr/local|$(prefix)|g" \
+		$(DESTDIR)$(mandir)/man1/tclsh.1
+	# Remove Studio-specific arch references
+	gsed -i \
+		-e '/^[^#]/s/-xO[0-5][^ ]* //' \
+		-e '/^[^#]/s/-xarch=[^ ]* //' \
+		-e '/^[^#]/s/-xchip=[^ ]* //' \
+		-e '/^[^#]/s/-norunpath[^ ]* //' \
+		-e '/^[^#]/s/-lCrun[^ ]* //' \
+		-e '/^[^#]/s/-lCstd[^ ]* //' \
+		$(DESTDIR)$(libdir)/tclConfig.sh
+	@$(MAKECOOKIE)
+
