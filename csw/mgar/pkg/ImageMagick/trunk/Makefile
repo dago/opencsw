@@ -63,15 +63,15 @@ RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibmagickcore6q16hdri1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri1 += CSWlibgcc-s1
 
-PACKAGES += CSWlibmagick++6q16hdri2
-CATALOGNAME_CSWlibmagick++6q16hdri2 = libmagick++6q16hdri2
-PKGFILES_CSWlibmagick++6q16hdri2 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.2\.0\.0)
-PKGFILES_CSWlibmagick++6q16hdri2 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.2(\.\d+)*)
-SPKG_DESC_CSWlibmagick++6q16hdri2 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibmagickcore6q16hdri1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibmagickwand6q16hdri1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri2 += CSWlibstdc++6
+PACKAGES += CSWlibmagick++6q16hdri3
+CATALOGNAME_CSWlibmagick++6q16hdri3 = libmagick++6q16hdri3
+PKGFILES_CSWlibmagick++6q16hdri3 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.3\.0\.0)
+PKGFILES_CSWlibmagick++6q16hdri3 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.3(\.\d+)*)
+SPKG_DESC_CSWlibmagick++6q16hdri3 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.3
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibmagickcore6q16hdri1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibmagickwand6q16hdri1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibstdc++6
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
@@ -82,7 +82,7 @@ PKGFILES_CSWimagemagick-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWimagemagick
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore6q16hdri1
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand6q16hdri1
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri2
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri3
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWperl
 
 PACKAGES += CSWimagemagick
