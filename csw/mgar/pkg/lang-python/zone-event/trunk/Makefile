@@ -10,5 +10,5 @@ LICENSE = LICENSE.txt
 DESCRIPTION = Simple event system
 VENDOR_URL = http://pypi.python.org/pypi/$(NAME)
 DISTFILES  = $(DISTNAME).tar.gz
-PACKAGES = CSWpy-zope-interface
+PACKAGES = CSWpy-zope-event
 include gar/category.mk
