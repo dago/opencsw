@@ -9,7 +9,7 @@ Build-farm setup
 If you prefer a video tutorial instead of a written document, there is
 a `packaging video tutorial`_ available. It covers a subset of this document,
 starting from a fresh Solaris 10 install and ends with a built package. It
-takes about 2-3h to complete.
+takes about 2-3h to complete. It covers the basic GAR setup.
 
 A build-farm is a set of hosts where you can build Solaris packages. You can
 connect Intel and SPARC hosts together to build a set of packages with one
@@ -44,26 +44,24 @@ Prerequisites
 Base setup (required)
 ---------------------
 
-The base setup is enough to build packages but does not allow to automatically
-check your packages for errors.
+The base setup is enough to start building packages.
 
 ::
 
   pkgutil -y -i gar_dev mgar gcc4core gcc4g++ sudo
 
-Please note that this must be run as ``root``.
+Please note that this must be run as ``root``. The rest of the instructions
+assume they're executed as a regular user or are prepended with ``sudo``.
 
 Setup ``~/.garrc`` (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Finally, you need to create your personal ``~/.garrc`` configuration file. It
-contains your name and e-mail address, both of which are included in the
-meta-data of built packages. Further, GAR needs to know where to store
-downloaded sources and generated packages.
+The ``~/.garrc`` file is specific to your user and contains your name and
+e-mail address. These values are later stored in the meta-data of packages
+built by you.  Further, GAR needs to know where to store downloaded sources
+and generated packages.
 
-Here's an example:
-
-::
+Here's an example::
 
   # Data for pkginfo
   SPKG_PACKAGER   = Dagobert Michelsen
@@ -119,20 +117,17 @@ Of course, it can be your editor of choice.
 Initialize the source tree (required)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As regular user, initialize your local repository. **For obvious
-security reasons, do not use** ``root``.
+As regular user, initialize your local repository.
 
-To initialize the source tree, you execute:
+**For security reasons, do not do it as root**.
 
 ::
 
   mgar init
 
-This will create, by default, in your home directory, the ``opencsw``
-entry. If you wish to use another place, please use a third argument,
-e.g.:
-
-::
+This will create, by default, in your home directory, the ``~/opencsw``
+directory. If you wish to use another place, please use a third argument,
+e.g.::
 
   mgar init /tank/opencsw
 
@@ -141,14 +136,12 @@ or set the ``BUILDTREE`` parameter in the configuration file
 
 Please make yourself familiar with `mgar`_.
 
-To fetch all the build recipes, you execute:
-
-::
+To fetch all the build recipes, you execute::
 
   mgar up --all
 
-Beware that this takes a lot of time and creates hundreds of
-directories and thousands files.
+Beware that this takes a lot of time and creates hundreds of directories and
+thousands of files.
 
 checkpkg database (optional)
 ----------------------------
@@ -161,34 +154,26 @@ been tested.
 Required packages
 ^^^^^^^^^^^^^^^^^
 
-Install the required packages:
-
-::
+Install the required packages::
 
    sudo pkgutil --yes --install mysql5 mysql5client
 
 
-Create a minimal configuration file:
+Create a minimal configuration file::
 
-::
-
-   sudo echo >>/etc/opt/csw/my.cnf "[mysqld]"
-   sudo echo >>/etc/opt/csw/my.cnf "max_allowed_packet=64M"
+   echo "[mysqld]" | sudo tail -a /etc/opt/csw/my.cnf
+   echo "max_allowed_packet=64M" | sudo tail -a /etc/opt/csw/my.cnf
 
 This is needed since checkpkg stores objects in JSON, it sometimes
 stores values way bigger than the default allowed 1MB, as there are
 packages which require data structures larger than 32MB, hence the
 64MB value.
 
-You start the data base server:
-
-::
+You start the data base server::
 
    sudo svcadm enable svc:/network/cswmysql5:default
 
-Eventually, you make your installation secure:
-
-::
+Eventually, you make your installation secure::
 
    sudo /opt/csw/bin/mysql_secure_installation
 
@@ -204,11 +189,9 @@ to that database.
 
    mysql -u root -p
    > create database checkpkg;
-   > grant all privileges on checkpkg.* to "checkpkg" identified by "password";
+   > grant all privileges on checkpkg.* to "checkpkg" identified by "<your-chosen-password>";
    > flush privileges;
    > exit;
-
-Note that you must use your own value instead of ``password``.
 
 To verify that your user creation is correct you can execute this:
 
@@ -224,26 +207,35 @@ Configuration
 
 The database access configuration is held in ``/etc/opt/csw/checkpkg.ini``.
 You can also use a per-user file: ``~/.checkpkg/checkpkg.ini``.  The format is
-as follows:
-
-::
+as follows::
 
    [database]
    type = mysql
    name = checkpkg
    host = mysql
    user = checkpkg
-   password = yourpassword
+   password = <your-chosen-password>
 
 
 Initializing tables and indexes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The next step is creating the tables in the database:
+**BEGIN OLD INSTRUCTIONS. As of October 2013, these instructions refer to the
+old, broken code. They do not work. If you want to set up the checkpkg
+database, you need to use the development version of the code, using the
+development checkpkg database setup instructions.**
+
+* `development checkpkg database setup instructions`_
+
+The next step is creating the tables in the database.
+
+NOTE: All the ``bin/pkgdb`` commands here and below are meant to be executed
+from GAR sources.
 
 ::
 
-   pkgdb initdb
+  cd /path/to/gar/sources/v2
+  bin/pkgdb initdb
 
 case-insensitive string comparison in MySQL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -304,7 +296,9 @@ You will need to perform this operation each time the OpenCSW catalog is
 updated. Otherwise your packages will be checked against an old state of the
 catalog.
 
-Your database is now ready.
+Your database is ready.
+
+**END OLD INSTRUCTIONS.**
 
 Multi-host setup (optional)
 ---------------------------
@@ -386,8 +380,8 @@ All software is archived and available from ``/home/farm`` on the build-farm.
 Make sure you uninstall ``SUNWgmake``. That version is outdated and misses
 functions needed by GAR (e.g. abspath).
 
-Install Java Package
-++++++++++++++++++++
+Install the Java Package
+++++++++++++++++++++++++
 
 There are versions of JDK and JRE between Java 1.3 and Java 6 installed in ``/usr``.
 
@@ -666,3 +660,8 @@ catalogs with a GPG key.
 
 .. _mgar:
    http://wiki.opencsw.org/gar-wrapper
+
+.. _development checkpkg database setup instructions:
+   http://wiki.opencsw.org/checkpkg#toc20
+
+   
