@@ -28,11 +28,13 @@ PGINIT=@bindir@/initdb-${VERSION}
 [ -s @sysconfdir@/${USERCONF} ] && . @sysconfdir@/${USERCONF}
 
 # Defaults
-[ -z "${PGDATA}" ] && PGDATA=@PGDATA@
-[ -z "${SHUTDOWNMODE}" ] && SHUTDOWNMODE=fast
-[ -z "${PGENCODING}" ] && PGENCODING=UTF8
-[ -z "${PGSUPERUSER}" ] && PGSUPERUSER=postgres
-[ -z "${PGLOGOUTPUT}" ] && PGLOGOUTPUT=${PGDATA}/postgresql.log
+PGDATA=${PGDATA-@PGDATA@}
+SHUTDOWNMODE=${SHUTDOWNMODE-fast}
+PGENCODING=${PGENCODING-UTF8}
+PGLOCALE=${PGLOCALE-en_US.UTF-8}
+PGSUPERUSER=${PGSUPERUSER-postgres}
+PGLOGOUTPUT=${PGLOGOUTPUT-${PGDATA}/postgresql.log}
+DATACHECKSUMS=${DATACHECKSUMS-0}
 
 if [ -n "${SERVEROPTS}" ]
 then
@@ -43,6 +45,15 @@ if [ -n "${PGLOCALE}" ]
 then
     PGLOCALE="--locale=${PGLOCALE}"
 fi
+case "${DATACHECKSUMS}" in
+    [yY][eE][sS]|[tT][rR][uU][eE]|1)
+	DATACHECKSUMS="-k"
+	;;
+    [nN][oO]|[fF][aA][lL][sS][eE]|0)
+	DATACHECKSUMS=""
+	;;
+esac
+
 
 
 # Exit if postgres user hasn't been created.
@@ -105,7 +116,7 @@ init)
      chown postgres "${PGDATA}"
      chmod 0700 "${PGDATA}"
      echo "Initialising PostgreSQL database..."
-     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E ${PGENCODING} -U ${PGSUPERUSER} ${PGLOCALE}"
+     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E ${PGENCODING} -U ${PGSUPERUSER} ${PGLOCALE} ${DATACHECKSUMS}"
      ;;
 
 *)

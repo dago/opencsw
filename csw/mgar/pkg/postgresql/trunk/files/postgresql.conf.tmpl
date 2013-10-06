@@ -50,7 +50,7 @@ PGDATA=@PGDATA@
 # If none is specified, the locale is inherited from the environment
 # that initdb runs in.
 #
-# Default: <empty>
+# Default: en_US.UTF-8
 #PGLOCALE=en_US.UTF-8
 
 # Selects the user name of the database superuser. This defaults to
@@ -61,3 +61,14 @@ PGDATA=@PGDATA@
 #
 # Default: postgres
 #PGSUPERUSER=postgres
+
+# Use checksums on data pages to help detect corruption by the I/O
+# system that would otherwise be silent. Enabling checksums may incur
+# a noticeable performance penalty. This option can only be set during
+# initialization, and cannot be changed later. If set, checksums are
+# calculated for all objects, in all databases.
+#
+# Set to 1 to enable checksums. 0 disables checksums.
+#
+# Default: 0
+#DATACHECKSUMS=0

@@ -1,6 +1,10 @@
-postgresql93 (9.3.0,REV=2013.10.05)
+postgresql93 (9.3.0,REV=2013.10.06)
 
   * New upstream release 9.3.0.
 
- -- Rafael Ostertag <raos@opencsw.org>  Sat, 05 Oct 2013 15:52:31 +0200
+  * Database cluster will be initialized using UTF-8 encoding by default.
+
+  * /etc/opt/csw/postgresql-93.conf has new configuration option `DATACHECKSUMS'.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 06 Oct 2013 11:54:20 +0200
 
