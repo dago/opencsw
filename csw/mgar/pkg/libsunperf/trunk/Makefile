@@ -4,14 +4,14 @@ VERSION = 20121030
 CATEGORIES = lib
 GARTYPE = v2
 
-DESCRIPTION = Sun Studio U1 Performance Libraries
-define BLURB
+DESCRIPTION = Sun Studio U1 Perfofine BLURB
 endef
 
-MASTER_SITES = http://www.oracle.com/technetwork/server-storage/solarisstudio/documentation/ss12u1-distributionreadme-429216.txt
+MASTER_SITES = http://www.oracle.com/technetwork/server-storage/solarisstudreadme-429216.txt
 DISTFILES  = ss12u1-distributionreadme-429216.txt
 
-VENDOR_URL = http://www.oracle.com/technetwork/server-storage/solarisstudio/documentation/ss12u1-distributionreadme-429216.txt
+VENDOR_URL = http://www.oracle.com/technetwork/server-storage/solarisstudio/documentation/ss12u1-distributionrePACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparcreadme-429216.txt
 
 LICENSE = ss12u1-distributionreadme-429216.txt
 
@@ -40,9 +40,13 @@ RUNTIME_DEP_PKGS += CSWss12f95rt
 CHECKPKG_OVERRIDES += bad-rpath-entry
 CHECKPKG_OVERRIDES += soname-not-found
 CHECKPKG_OVERRIDES += surplus-dependency|CSWss12f95rt
-CHECKPKG_OVERRIDES += surplus-dependency|CSWsunmath
+CHECKPKG_OVERRIDES += surplus-depend# They are binary blobs which we have no control of.
+CHECKPKG_OVERRIDES_CSWlibsunperf2 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibsunperf3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibsunperf7 += no-direct-binding
 
 include gar/category.mk
+e gar/category.mk
 
 SRCDIR-sparcv9 = v9
 SRCDIR-amd64   = amd64
@@ -52,4 +56,3 @@ install-custom:
 	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$L $(DESTDIR)$(libdir)/$L; fi;)
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)
 	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$(SRCDIR-$(ISA_DEFAULT64))/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$(SRCDIR-$(ISA_DEFAULT64))/$L $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)/$L; fi;)
-	@$(MAKECOOKIE)
