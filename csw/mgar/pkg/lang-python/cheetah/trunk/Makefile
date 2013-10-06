@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-NAME = cheetah
-VERSION = 2.4.0
+NAME = Cheetah
+VERSION = 2.4.4
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = A template engine and code generation tool
@@ -15,12 +15,10 @@ define BLURB
   emails and even Python code.
 endef
 SPKG_SOURCEURL = http://www.cheetahtemplate.org/
-MASTER_SITES = http://pypi.python.org/packages/source/C/Cheetah/
-DL_NAME = Cheetah
-DISTNAME = $(DL_NAME)-$(VERSION)
+DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
-UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
-CATALOGNAME = py_cheetah
 PACKAGES = CSWpy-cheetah
+RUNTIME_DEP_PKGS_CSWpy-cheetah += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-cheetah += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-cheetah += CSWlibpython2-7-1-0
 include gar/category.mk
