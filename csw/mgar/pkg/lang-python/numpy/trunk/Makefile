@@ -18,6 +18,8 @@ endef
 SPKG_SOURCEURL = http://numpy.scipy.org/
 DISTFILES = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-mvec-is-a-SPARC-only-library.patch
+
 # the so version (and package names) for libsunperf differ depending
 # on platform
 SUNPERF_SO_sparc = 7
