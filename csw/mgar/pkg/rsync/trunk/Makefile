@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = rsync
-VERSION = 3.0.9
+VERSION = 3.1.0
 CATEGORIES = utils
 GARTYPE = v2
 
