@@ -144,12 +144,14 @@ endif
 LICENSE = LICENSE
 
 ##### Build and installation inBUILD64 = 1
-ISAEXEC = 1information #####
+ISAEXEC = 1infoWe re-enable the i386 default ISA to be able
+# to provide an isa not requiring sse2 for old servers
+ISA_DEFAULT_i386 = i386information #####
 
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
-EXTRA_BUILD_ISAS_sparc = sparcv8pluthe openssl build system doesn't honor bindir
+EXTRA_BUILD_ISAS_sparc = sparcv8ppluthe openssl build system doesn't honor bindir
 # as it doesn't install 64 bits binaries in bin/{amd64,sparcv9}
 # we fix this at the merge step 
 EXTRA_MERGE_DIRS_isa-amd64 = $(bindir_install)
