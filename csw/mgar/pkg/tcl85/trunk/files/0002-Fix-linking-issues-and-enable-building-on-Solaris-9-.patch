@@ -47,3 +47,16 @@ index cb31f50..84a738c 100644
 -- 
 1.7.11.3
 
+diff --git a/unix/configure b/unix/configure
+index 753f7c0..5810fc3 100755
+--- a/unix/configure
++++ b/unix/configure
+@@ -8599,7 +8599,7 @@ else
+ 		arch=`isainfo`
+ 		echo "$as_me:$LINENO: checking whether to use -lsunmath for fp rounding control" >&5
+ echo $ECHO_N "checking whether to use -lsunmath for fp rounding control... $ECHO_C" >&6
+-		if test "$arch" = "amd64 i386"; then
++		if test "$arch" = "amd64 i386" -o "$arch" = "i386"; then
+ 
+ 			echo "$as_me:$LINENO: result: yes" >&5
+ echo "${ECHO_T}yes" >&6
