@@ -1,5 +1,5 @@
 NAME = tar
-VERSION = 1.26
+VERSION = 1.27
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -16,12 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES += 0001-Partial-working-xgetcwd.patch
-
-# Apply patch from
-#   http://debbugs.gnu.org/cgi/bugreport.cgi?bug=8230#20
-PATCHFILES += 0002-Fix-endless-recursion-when-compiling-on-Solaris-9-an.patch
+DISTFILES  = $(NAME)Solaris-9-an.patch
 
 VENDOR_URL = http://www.gnu.org/software/tar/
 
@@ -29,24 +24,18 @@ PACKAGES = CSWgtar
 
 BUILD_DEP_PKGS = CSWgcpio
 RUNTIME_DEP_PKGS_CSWgtar += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtar += CSWiconv
+RUNTIME_DEP_libiconv2CSWgtar += CSWiconv
 RUNTIME_DEP_PKGS_CSWgtar += CSWgcpio
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 CONFIGURE_ARGS += --with-rmt=/opt/csw/libexec/grmt
 
-EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
-
-CHECKPKG_OVERRIDES_CSWgtar += file-with-bad-content|/usr/local|root/opt/csw/share/info/tar.info-1
-
-# Test 56 is failing, reported upstream
+EXTRA_MERGE_EXCLUDE_FILES = $(libdeam
 SKIPTEST ?= 1
 
 include gar/category.mk
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(prefix)/gnu
-	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
-	@$(MAKECOOKIE)
-
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);
