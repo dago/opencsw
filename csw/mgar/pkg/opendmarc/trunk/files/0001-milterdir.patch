@@ -1,0 +1,25 @@
+From 580015892b416e7818dc13d9874db4035d9b334b Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Mon, 7 Oct 2013 12:52:30 +0200
+Subject: [PATCH] milterdir
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 775db7c..42f3109 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -273,7 +273,7 @@ fi
+ 
+ if test "$milterpath" = "auto" -o "$milterpath" = "yes"
+ then
+-	milterdirs="/usr/local /opt/local /usr"
++	milterdirs="/opt/csw"
+ 	for d in $milterdirs
+ 	do
+ 		if test -f $d/include/libmilter/mfapi.h
+-- 
+1.8.3.4
+
