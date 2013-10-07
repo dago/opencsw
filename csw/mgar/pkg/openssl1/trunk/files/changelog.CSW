@@ -1,6 +1,7 @@
 openssl (1.0.1e,rev=2013.08.10) unstable
 
-  * Disabled sse2 support for the i386 architecture.
+  * Re-enabled the i386 isa and disabled sse2 support for it to allow
+    openssl to run on old servers (Closes: #5112).
 
    -- yann rouillard <yann@opencsw.org>  Thu, 03 Oct 2013 21:57:06 +0200
 
