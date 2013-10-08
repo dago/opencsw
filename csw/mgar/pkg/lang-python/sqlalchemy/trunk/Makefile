@@ -6,18 +6,19 @@
 # http://www.sqlalchemy.org/trac/ticket/1837
 
 NAME = SQLAlchemy
-VERSION = 0.8.0
+VERSION = 0.8.2
 CATEGORIES = python
 
 PACKAGES = CSWpy-sqlalchemy
 DESCRIPTION = Python SQL toolkit and Object Relational Mapper
 
 VENDOR_URL = http://www.sqlalchemy.org/
-MASTER_SITES = $(PYPI_MIRROR)
 DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = LICENSE
 
+RUNTIME_DEP_PKGS_CSWpy-sqlalchemy += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-sqlalchemy += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-sqlalchemy += CSWlibpython2-7-1-0
 
 include gar/category.mk
