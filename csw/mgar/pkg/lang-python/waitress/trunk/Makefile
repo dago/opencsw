@@ -2,12 +2,10 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = waitress
-VERSION = 0.8.2
+VERSION = 0.8.7
 GARTYPE = v2
 
 DESCRIPTION = Waitress WSGI server
-define BLURB
-endef
 
 CATEGORIES = python
 TEST_SCRIPTS =
