@@ -33,7 +33,7 @@ need to download the package manually (e.g. using wget) and then install it::
 
 You can now start installing packages. For a list of available packages use::
 
-  /opt/csw/bin/pkgutil -l
+  /opt/csw/bin/pkgutil -a
 
 For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of
 ``PATH``, and ``/opt/csw/share/man`` in front of ``MANPATH``. On
