@@ -43,7 +43,7 @@ PACKAGES += CSWlibxapian-dev
 SPKG_DESC_CSWlibxapian-dev = Xapian development fi-1.3.so.1r libxapian.so.22
 PKGFILES_CSWlibxapian-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxapian-dev += $(docdir)/xapian-core/apidoc/.*
-PKGFILES_CSWlibxapian-dev += .*\.cmake
+PKGFILES_CSWlibxapian-PKGFILES_CSWlibxapian-dev += $(call baseisadirs,$(bindir),xapian-config-1.3)-dev += .*\.cmake
 RUNTIME_DEP_PKGS_CSWlibxapian-de1-3-1
 
 EXTRA_LD_FLAGS += -norunpath
@@ -51,7 +51,7 @@ EXTRA_LD_FLAGS += -norunpath
 # libuuid.so must be searched in /opt/csw/lib
 EXTRA_CXXFLAGS += -L$(libdir)-norunpath -lCrun
 
-BUILD64 = 1
+BUILD64 EXTRA_ISAEXEC_EXCLUDE_FILES += $(bindir)/xapian-config-1.3 $(bindir)/%/xapian-config-1.34 = 1
 ISAEXEC = 1
 
 # This is just an example of the default install location
