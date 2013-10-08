@@ -58,7 +58,12 @@ ISAEXEC = 1
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ACONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-threads
+# This is supposed to be needed for completeness, but what it does in configure
+# is really questionable. Should not break stuff, though.
+CONFIGURE_ARGS-64 += --enable-64bit
+CONFIGURE_ARGS += CONFIGURE_ARGS-$(MEMORYMODEL_ARGS = $(DIRPATHS)
 
 # tk need the static tclstub library for some reason
 MERGE_EXCLUDE_STATICLIBS =
