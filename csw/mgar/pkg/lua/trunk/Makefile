@@ -5,7 +5,7 @@
 #     http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560139
 
 NAME = lua
-VERSION = 5.2.1
+VERSION = 5.2.2
 MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}') lang
 GARTYPE = v2
 
