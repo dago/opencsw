@@ -6,8 +6,6 @@ VERSION = 1.2.4
 GARTYPE = v2
 
 DESCRIPTION = A jquery-like library for python
-define BLURB
-endef
 
 CATEGORIES = python
 TEST_SCRIPTS =
