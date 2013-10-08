@@ -14,7 +14,7 @@ DISTFILES  = $(DISTNAMEILES  = $(DISTNAME)-src.tar.gz
 
 # Separate build for Solaris 10 with DTrace support
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparGARCOMPILER = GCC4arc solaris10-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
@@ -23,7 +23,8 @@ REN_#TCLSH = tclsh8.5
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 #PATCHFILES += 0001-Enable-SONAME-in-library.patch
-#PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on-Solaris-9-.patch
+#PATCHFILES += 0002-Fix-linking-issues-and-enable-building-on#PATCHFILES += 0003_ld_lacks_LDFLAGS.patch
+PATCHFILES += 0004-disable-libsunmathding-on-Solaris-9-.patch
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
@@ -45,8 +46,7 @@ SPKG_DESC_CSWlibtcl8-5 = $(DESCRIPTION), libraries
 PKGFILES_CSWlibtcl8-5 += $(call pkgfiles_lib,libtcl8.5.so)
 PKGFILES_CSWlibtcl8-5 += $(libdir)/tcl8.5/.*
 # This dependency can not be tracked by checkpkg
-RUNTIME_DEP_PKGS_CSWlibtcl8-5 += CRUNTIME_DEP_PKGS_CSWlibtcl8-5 += CSWlibgcc-s1
-CHECKPKG_OVERRIDES_CSWlibtcl8-5 += surplus-dependency|CSWtcl8-tclmodules
+RUNTIME_DEP_PKGS_CSWlibtcl8-5 += CCHECKPKG_OVERRIDES_CSWlibtcl8-5 += surplus-dependency|CSWtcl8-tclmodules
 ibtcl8-5-$(GARCH))
 
 # This is correct, the soname with *.so is really the one to use
@@ -67,10 +67,10 @@ PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWtcl-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWtcl-dev += $(call baseisadirs,$(libdir),tclConfig.sh)
 RUNTIME_DEP_PKGS_CSWtcl-dev# Enable 64 bits, but not for Solaris 9 x86
-BUILD64_5.9_sparc = 1
+BUILD64_5.9_sparc  = 1
 BUILD64_5.10_sparc = 1
-BUILD64_5.9_i386 =
-BUILD64_5.10_i386 = 1
+BUILD64_5.9_i386   =
+BUILD64_5.10_i386  = 1
 BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))cl8-5
 
 BUILD64 = 1
@@ -83,10 +83,10 @@ WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGUREshared
 CONFIGURE_ARGS += --enable-threads
+# This is supposed to be needed for completeness, but what it does in configure
+# is really questionable. Should not break stuff, though.
 CONFIGURE_ARGS-64 += --enable-64bit
-CONFIGURE_ARGS-64-sparc += --enable-64bit-vis
-CONFIGURE_ARGS += CONFIGURE_ARGS-$(MEMORYMODEL)
-CONFIGURE_ARGS += CONFIGURE_ARGS-$(MEMORYMODEL)-$(GARCH)= --enable-threads
+CONFIGURE_ARGS += CONFIGURE_ARGS-$(MEMORYMODEL)= --enable-threads
 
 # DTrace support is currently broken, disable for now
 #  Text relocation remains                         referenced
@@ -126,6 +126,7 @@ post-install-modulated:
 		-e '/^[^#]/s/-march=[^ ]* *//g' \
 		-e '/^[^#]/s/-Wall *//g' \
 		-e '/^[^#]/s/-pipe *//g' \
+		-e '/^[^#]/s/-KPIC/-fPIC/g' \
 		$(DESTDIR)$(libdir)/tclConfig.sh
 	@$(MAKECOOKIE)
 
