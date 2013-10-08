@@ -18,7 +18,7 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
 
-PATCHFILES += 0001-disable-libsunmath.patchSPATCHFILES += 0002-CFLAGS-should-be-at-the-end.patchSE = license.terms
+PATCHFILES += 0001-disable-libsunmath.patchSPATCHFILES += 0002-CFLAGS-should-be-at-the-end.patchSPATCHFILES += 0003-make-xft-use-pkgconfig.patchSE = license.terms
 
 PACKAGES += CSWtk
 SPKG_DESC_CSWtk = GUI toolkit for tcl

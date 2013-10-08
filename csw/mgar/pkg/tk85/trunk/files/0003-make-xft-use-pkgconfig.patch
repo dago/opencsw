@@ -1,0 +1,13 @@
+--- a/unix/configure
++++ b/unix/configure
+@@ -10548,8 +10548,8 @@ fi;
+ echo "${ECHO_T}$enable_xft" >&6
+     else
+ 	found_xft="yes"
+-			XFT_CFLAGS=`xft-config --cflags 2>/dev/null` || found_xft="no"
+-	XFT_LIBS=`xft-config --libs 2>/dev/null` || found_xft="no"
++	false || found_xft="no"
++	false || found_xft="no"
+ 	if test "$found_xft" = "no" ; then
+ 	    found_xft=yes
+ 	    XFT_CFLAGS=`pkg-config --cflags xft 2>/dev/null` || found_xft="no"
