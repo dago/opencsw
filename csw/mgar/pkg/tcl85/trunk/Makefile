@@ -1,4 +1,4 @@
-NAME = tcl8.5
+NAME = tcl
 VERSION = 8.5.15
 CATEGORIES = lang
 GARTYPE = v2
@@ -8,8 +8,7 @@ define BLECTURB
 endef
 
 SF_PROJ = tcl
-MASTER_SITES = $(SF_MIRRORS)
-DIECT)$(VERSION)
+MASTER_SITES = $(SF_MIRRNAME)$(VERSION)
 DISTFILES  = $(DISTNAMEILES  = $(DISTNAME)-src.tar.gz
 
 # Separate build for Solaris 10 with DTrace support
