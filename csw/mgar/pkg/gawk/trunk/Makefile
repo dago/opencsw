@@ -1,5 +1,5 @@
 NAME = gawk
-VERSION = 4.0.2
+VERSION = 4.1.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -16,30 +16,25 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $PACKAGES += CSWgawk
+DISTFILES = $PATCHFILES += 0001-Add-inclusion-of-mkdev.h-for-major-minor.patch
+
+# Use patch until this is fixed:
+#   http://lists.gnu.org/archive/html/bug-gawk/2013-10/msg00000.html
+PATCHFILES += 0001-Allow-null-pointer-on-readline-detect.patch $PACKAGES += CSWgawk
 SPKG_DESC_CSWgawk = GNU awk
 # PKGFILES is catchall$(DISTNAME).tar.xz
 
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibsigsegv2
-RUNTIME_DEP_PKGS_CSWgawk +# This is just an example (YMMV in the docs)
-CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/gawk.1 +BUILD64 = 1
+RUNTIME_DEP_PKGS_CSWgawk RUNTIME_DEP_PKGS_CSWgawk += CSWlibmpfr4
+RUNTIME_DEP_PKGS_CSWgawk += CSWlibgmp10 +BUILD64 = 1
 ISAEXEC = 1 += CSWlibreadline6
 
 # Otherwise libsigsegv is not detected properly on Solaris 9 i386 as reported in
 #   http://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00008.html
 # Additionally, there is probably a bug in /usr/include/ia32/sys/reg.h which requires
 # the replacement of uint64_t by upad64_t.
-EXTRA_CFLAGS = -Xc -D_XPG4_2 -Duint64_t=upad64_t
-
-# These are install instructions for other platforms (os/2... 'nuff said.)
-CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/share|root/opt/csw/share/info/gawk.info
-
-# These are instruction for awk, possible adjust them later
-CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/share/info/gawk.info
-
-# This is an example path (YMMV in the docs)
-CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/pgawk.1
+EXTRA_CFLAGS = -Xc -D_XPG4_2 -D/man/man1/pgawk.1
 
 include gar/categot-install-modulated:
 	ginstall -d $(DESTDIR)$(prefix)/gnu

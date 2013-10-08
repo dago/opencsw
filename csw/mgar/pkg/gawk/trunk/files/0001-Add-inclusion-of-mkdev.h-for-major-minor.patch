@@ -1,0 +1,25 @@
+From db9ef348f2cc44c63e96085210497e373a583497 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 2 Oct 2013 11:15:47 +0200
+Subject: [PATCH] Add inclusion of mkdev.h for major/minor
+
+---
+ extension/filefuncs.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/extension/filefuncs.c b/extension/filefuncs.c
+index 1e8fc8d..f28e041 100644
+--- a/extension/filefuncs.c
++++ b/extension/filefuncs.c
+@@ -46,6 +46,8 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
++#include <sys/mkdev.h>
++
+ #include "gawkapi.h"
+ 
+ #include "gettext.h"
+-- 
+1.8.3.4
+

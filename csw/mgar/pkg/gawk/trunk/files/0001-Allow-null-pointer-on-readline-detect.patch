@@ -1,0 +1,25 @@
+From 3924b644d63bcb5f7bbb4c39de13e1c72009e0d5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 8 Oct 2013 11:21:56 +0200
+Subject: [PATCH] Allow null pointer on readline detect
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 5ef6ac8..6408fcd 100755
+--- a/configure
++++ b/configure
+@@ -10437,7 +10437,7 @@ int main(int argc, char **argv)
+ 	dup(fd);
+ 	line = readline("giveittome> ");
+ 
+-	printf("got <%s>\n", line);
++	printf("got <%s>\n", line ? line : "(NULL)");
+ 	return 0;
+ }
+ _ACEOF
+-- 
+1.8.3.4
+
