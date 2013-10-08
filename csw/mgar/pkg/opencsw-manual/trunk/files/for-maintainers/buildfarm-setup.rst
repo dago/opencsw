@@ -125,7 +125,7 @@ As regular user, initialize your local repository.
 
   mgar init
 
-This will create, by default, in your home directory, the ``~/opencsw``
+This will create, by default, in your home directory, the ``opencsw``
 directory. If you wish to use another place, please use a third argument,
 e.g.::
 
@@ -161,8 +161,8 @@ Install the required packages::
 
 Create a minimal configuration file::
 
-   echo "[mysqld]" | sudo tail -a /etc/opt/csw/my.cnf
-   echo "max_allowed_packet=64M" | sudo tail -a /etc/opt/csw/my.cnf
+   echo "[mysqld]" | sudo tee -a /etc/opt/csw/my.cnf
+   echo "max_allowed_packet=64M" | sudo tee -a /etc/opt/csw/my.cnf
 
 This is needed since checkpkg stores objects in JSON, it sometimes
 stores values way bigger than the default allowed 1MB, as there are
