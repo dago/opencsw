@@ -168,6 +168,12 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|no
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/sparcv9/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/amd64/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 
+PACKAGES += CSW$(NAME)-doc
+CATALOGNAME_CSW$(NAME)-doc	=	$(NAME)_doc
+SPKG_DESC_CSW$(NAME)-doc	+=	$(DESCRIPTION), documentation
+PKGFILES_CSW$(NAME)-doc		+=	/opt/csw/share/info/mysql.info
+ARCHALL_CSW$(NAME)-doc		=	1
+
 # An example:
 # s9_preload.so.1|is|needed|by|/opt/csw/bin/innochecksum|but|never|used
 #CHECKPKG_OVERRIDES_CSW$(NAME) += soname-unused
@@ -347,6 +353,8 @@ post-install-modulated:
 		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
 		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
+	ginstall -m 755 -d $(DESTDIR)$(infodir)
+	ginstall -m 644 $(WORKSRC)/Docs/mysql.info $(DESTDIR)/$(infodir)
 	@$(MAKECOOKIE)
 
 post-merge:
