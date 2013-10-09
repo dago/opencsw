@@ -99,7 +99,8 @@ INSTALL_ARGS = install install-libraries install-private-headers install-tzdata 
 # tk need the static tclstub library for some reason
 MERGE_EXCLUDE_STATICLIBS =
 
-TEST_TARGET = test
+TE# To help it find the libsunmath it so desperately needs
+EXTRA_LD_OPTIONS = -L$(libdir)TEST_TARGET = test
 
 include gar/category.mk
 
