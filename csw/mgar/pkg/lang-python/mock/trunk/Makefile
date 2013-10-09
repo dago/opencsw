@@ -12,5 +12,4 @@ DESCRIPTION = A Python Mocking and Patching Library for Testing
 DISTFILES = $(DISTNAME).tar.gz
 VENDOR_URL = https://pypi.python.org/pypi/mock/1.0.1
 ARCHALL = 1
-TEST_SCRIPTS =
 include gar/category.mk
