@@ -16,7 +16,7 @@ PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://www.tcl.tk/
-LICENSE = license.terms
+LICENSEPATCHFILES += 0001-libsunmath-needs-fix-on-S9.patchSE = license.terms
 
 REN_#olaris-9-.patch
 
