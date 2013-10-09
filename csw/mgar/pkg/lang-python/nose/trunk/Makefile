@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = nose
-VERSION = 0.11.3
+VERSION = 1.3.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -14,14 +14,10 @@ define BLURB
   other common use cases.
 endef
 
-SPKG_SOURCEURL = http://code.google.com/p/python-nose/
-GOOGLE_PROJECT = python-nose
-MASTER_SITES = $(GOOGLE_MIRROR)
+VENDOR_URL = https://github.com/nose-devs/nose
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UPSTREAM_MASTER_SITES = http://code.google.com/p/python-nose/downloads/list
 
 PACKAGES = CSWpy-nose
-CATALOGNAME = py_nose
 SPKG_DESC = $(DESCRIPTION)
 
 TEST_SCRIPTS =
