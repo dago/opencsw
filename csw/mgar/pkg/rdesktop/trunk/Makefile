@@ -27,6 +27,7 @@ RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibsamplerate0
 RUNTIME_DEP_PKGS_libssl1-0-0
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibgssglue0
 
+# If these are not added directly here auth against win7 won't work, haven't figured out why yet
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibgssapi-krb5-2
