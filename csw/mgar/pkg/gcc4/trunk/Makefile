@@ -102,7 +102,7 @@ SKIPTEST ?= 1
 # Used multiple times in package definitions
 JAVA_LIB_VERSION = 14
 
-ALTERNATIVES_PRIO = 470
+ALTERNATIVES_PRIO = 481
 
 PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
