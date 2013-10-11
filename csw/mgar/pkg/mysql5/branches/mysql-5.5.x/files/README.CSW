@@ -1,12 +1,18 @@
-[[needs review]]
 
-MySQL 5.5 OpenCSW package
-=======================
+  MySQL 5.5 OpenCSW package
+  =========================
 
-* Read only /opt/csw support
-  - data in /var/opt/csw
-  - configuration in /etc/opt/csw
-* The prefix is /opt/csw, and all the binaries are now in
-  /opt/csw, so that the standard PATH setting allows to use them
-* The startup script is now in /etc/opt/csw/init.d
-* SMF support is handled by cswclassutils
+  * Read only /opt/csw support
+    - data in /var/opt/csw/mysql5
+    - configuration in /etc/opt/csw/my.cnf
+  * The prefix is /opt/csw, and all the client binaries are now in
+    /opt/csw, so that the standard PATH setting allows to use them.
+  * The server binaries are in /opt/csw/libexec for the 32 bit one and
+    /opt/csw/libexec/0amd64|sparcv9] for the 64 bit one.
+  * The startup script is now in /etc/opt/csw/init.d
+  * SMF support is handled by cswclassutils
+    Running MySQL is handled by the cswmysql5 service in Solaris >= 10,
+    and the traditional /etc/init.d/cswmysql5 in Solaris 9.
+  * The preferred architecture can be set using mysql5_arch=<arch> in csw.conf:
+    the default is to use the kernel's.
+

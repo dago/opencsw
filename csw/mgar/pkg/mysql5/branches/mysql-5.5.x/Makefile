@@ -65,13 +65,7 @@ OPT_FLAGS_SOS-32 = -xO2
 OPT_FLAGS_SOS-64 = -xO3
 OPT_FLAGS_SOS = $(OPT_FLAGS_SOS-$(MEMORYMODEL))
 
-
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
-
-# Existing databases are in this location
-localstatedir = /var$(BUILD_PREFIX)/$(NAME)
-# To avoid file conflicts
-# datadir = $(prefix)/share/mysql/$(BASE_VERSION)
 
 MYSQL_LIB_VER = 18
 
@@ -85,11 +79,10 @@ RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient$(MYSQL_LIB_VER)
 CSWmysql-dev_programs += mysql_config
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)))
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(bindir)/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(sbindir)/$(bin_name))
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
-PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 PATCHFILES += 0003-I-HATE-CMAKE.patch
 PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
@@ -131,11 +124,8 @@ SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
 PKGFILES_CSW$(NAME)client  = $(bindir)
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name))
-# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
-# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(bindir)/$(bin_name))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(sbindir)/$(bin_name))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
@@ -153,11 +143,8 @@ endif
 CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
-# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
-# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
@@ -188,12 +175,11 @@ MASTER_SITES += http://mysql.skynet.be/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME).tpl
 DISTFILES += quick_start-csw
-DISTFILES += README.CSW
-DISTFILES += ChangeLog
 DISTFILES += CSW$(NAME).preinstall
 DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
 DISTFILES += map.mysql
+DISTFILES += README.CSW
 
 # TODO: Do the proper prerequsite pkgs.
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
@@ -204,12 +190,17 @@ BUILD_DEP_PKGS += CSWlibwrap-dev
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
 CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
 CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
-CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
+CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)/$(NAME)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
 CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
 CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
 CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
 CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
+CMAKE_ARGS += -DINSTALL_DOCDIR=$(subst $(prefix)/,,$(docdir))/$(NAME)
+CMAKE_ARGS += -DINSTALL_DOCREADMEDIR=$(subst $(prefix)/,,$(docdir))/$(NAME)
+CMAKE_ARGS += -DINSTALL_INFODIR=$(subst $(prefix)/,,$(infodir))/$(NAME)
+CMAKE_ARGS += -DINSTALL_MYSQLSHAREDIR=$(subst $(prefix)/,,$(sharedstatedir))/$(NAME)
+CMAKE_ARGS += -DINSTALL_SUPPORTFILESDIR=$(subst $(prefix)/,,$(sharedstatedir))/$(NAME)/support-files
 CMAKE_ARGS += -DWITH_LIBWRAP=1
 CMAKE_ARGS += -DWITH_SSL=system
 CMAKE_ARGS += -DWITH_ZLIB=system
@@ -224,7 +215,7 @@ CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
-CMAKE_ARGS += -DBISON_EXECUTABLE=/opt/csw/bin/bison
+CMAKE_ARGS += -DBISON_EXECUTABLE=$(prefix)/bin/bison
 
 # The line below come from the official MySQL build configuration
 CMAKE_ARGS += "-DENABLED_PROFILING:BOOL=ON"
@@ -249,11 +240,11 @@ CMAKE_ARGS += "-DENABLE_DTRACE:BOOL=ON"
 endif
 
 
-USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
+USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
 
-PROTOTYPE_MODIFIERS = dbdir
-PROTOTYPE_FILES_dbdir = $(localstatedir)
-PROTOTYPE_USER_dbdir = mysql
+PROTOTYPE_MODIFIERS   = dbdir
+PROTOTYPE_FILES_dbdir = $(localstatedir)/$(NAME)
+PROTOTYPE_USER_dbdir  = mysql
 PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
@@ -332,7 +323,7 @@ configure-custom:
 post-configure-modulated:
 	gsed \
 		-e 's+@prefix@+$(prefix)+g' \
-		-e 's+@localstatedir@+$(localstatedir)+g' \
+		-e 's+@localstatedir@+$(localstatedir)/$(NAME)+g' \
 		-e 's+@sysconfdir@+$(sysconfdir)+g' \
 		-e 's+@bindir@+$(bindir)+g' \
 		-e 's+@BASE_VERSION@+$(BASE_VERSION)+g' \
@@ -350,15 +341,8 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge:
-	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
-	ginstall -m 755 -d $(PKGROOT)$(datadir)/$(NAME)/doc
-	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/$(NAME)/doc/ChangeLog-$(BASE_VERSION)
-	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/$(NAME)/doc/README-$(BASE_VERSION).CSW
-	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/$(NAME)/doc
-	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README-$(BASE_VERSION).CSW \
-		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README-$(BASE_VERSION).CSW
-	# The quick_start-csw file is almost the same as postinstall.
-	# [ -d $(PKGROOT)$(datadir)/mysql ]
+	ginstall -m 755 -d $(PKGROOT)$(localstatedir)/$(NAME)
+	ginstall -m 755 -d $(PKGROOT)$(datadir)/doc/$(NAME)
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
