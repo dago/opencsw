@@ -21,7 +21,7 @@ endef
 MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES  = $(NAME)-$(VGARCOMPILER = GCC4
 
-BUILD_DEP_PKGS = CSWtclr = Unused package 4
+BUILD_DEP_PKGS += CSWtclr = Unused package 4
 
 PACKAGES += CSWlibkrb5-dev
 SPKG_DESC_CSWlibkrb5-dev      = MIT Kerberos 5 developer libraries
@@ -92,11 +92,13 @@ PKGFILES_CSWlibkrb5support0 += $(call baseisadirs,$(libdir),libkrb5support\.so\.
 SPKG_DESC_CSWlibkrb5support0 += MIT Kerberos 5 core libraries, libkrb5support.so.0
 OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
-LICENSE = doc/copyright.texinfo
+LICErst
 
 EXTRA_LD_OPTIONS += -M $(abspath mapfile)
 
-EXTRA_CPPFLAGS EXTRA_LDFLAGS += -L$(libdir) -lintl  += -D__EXTENSIONS__
+EXTRA_CFLAGS   += -std=gnu99
+EXTRA_CPPFLAGS += -D__EXTENSIONS__ 
+EXTRA_LDFLAGS  += -L$(libdir) -lintl  += -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
@@ -108,8 +110,13 @@ CONFIGURE_CONFIGURE_ARGS += --enable-dns-for-realmsable-thread-support
 CONFIGURE_ARGS += --enable-thread-support
 CONFIGURE_ARGS += --disable-static --disable-profiled
 CONFIGURE_ARGCONFIGURE_ARGS += --with-readline
+CONFIGURE_ARGS += --with-system-db
 # To pick the right tclConfig.sh
 CONFIGURE_ARGS += --with-tcl=$(libdir)
+CONFIGURE_ARGS += DB_HEADER=$(prefix)/bdb48/include/db_185.h
+CONFIGURE_ARGS += DB_LIB="-L$(prefix)/bdb48/$(MM_LIBDIR) -R$(prefix)/bdb48/$(MM_LIBDIR)"
+
+SKIPTEST = 1
 
 BUILD_SCRIPTSEL))
 
