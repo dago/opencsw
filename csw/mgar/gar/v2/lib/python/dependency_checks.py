@@ -1,4 +1,4 @@
-# $Id$
+# $Id: dependency_checks.py 21908 2013-09-11 19:48:35Z chninkel $
 
 import checkpkg_lib
 import os.path
@@ -293,6 +293,13 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
       pass
 
     osrel = pkg_data['basic_stats']['parsed_basename']['osrel']
+
+    if (osrel == u'SunOS5.9' and
+        binary_info['path'].endswith('/amd64/' + binary_info['base_name'])):
+      # amd64 binaries in Solaris 5.9 packages were in fact compiled under
+      # Solaris 5.10 so we have a special case here
+      osrel = u'SunOS5.10'
+
     for version_dep in binary_elf_info['version needed']:
       soname = version_dep['soname']
       if not soname in ALLOWED_VERSION_DEPENDENCIES:
