@@ -28,6 +28,10 @@ endef
 MASTER_SITES = http://stedolan.github.io/jq/download/source/
 DISTFILES  = $(DISTNAME).tar.gz
 
+# The jq test suite uses valgrind to check for memory leaks
+# but we don't have it on Solaris
+PATCHFILES += 0001-remove-valgrind-usage-in-tests.patch
+
 ##### Build and installation information #####
 
 GARCOMPILER = GNU
