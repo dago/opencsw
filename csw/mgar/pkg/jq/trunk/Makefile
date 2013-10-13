@@ -30,6 +30,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 ##### Build and installation information #####
 
+GARCOMPILER = GNU
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
