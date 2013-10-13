@@ -56,7 +56,7 @@ EXTRA_CXXFLAGS_64  += -features=no%except
 
 # Required at -xO4
 # https://java.net/projects/solaris-userland/sources/gate/content/make-rules/shared-macros.mk?rev=1505`
-EXTRA_CFLAGS_sparc += -Qoption cg -xregs=no%appl
+EXTRA_CFLAGS_sparc += -xregs=no%appl
 EXTRA_CFLAGS_i386  += -xregs=no%frameptr
 
 EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
