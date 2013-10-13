@@ -8,8 +8,9 @@
 #
 # About building MySQL with cmake:
 # http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
-
-
+#
+# http://dev.mysql.com/doc/refman/5.5/en/source-configuration-options.html
+#
 PROJ_NAME    = mysql
 NAME         = $(PROJ_NAME)5
 BASE_VERSION = 5.5
@@ -40,8 +41,6 @@ ifneq ($(shell /usr/bin/uname -r),5.9)
 	LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.mysql)"
 endif
 
-
-
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
 
@@ -51,19 +50,24 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# Those options follow those of the official builds
-EXTRA_CFLAGS-sparc = -Xa -xstrconst
-EXTRA_CFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt
-EXTRA_CXXFLAGS-sparc = -noex 
-EXTRA_CXXFLAGS-i386  = -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -features=no%except -xlibmil -xlibmopt
-EXTRA_CFLAGS   += $(EXTRA_CFLAGS-$(GARCH)) -g -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm
-EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS-$(GARCH)) -g0 -mt -KPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm
+# Those options follow those of the Solaris 11 build
+# https://java.net/projects/solaris-userland/sources/gate/show/components/mysql-5-1?rev=1502
+EXTRA_CXXFLAGS_64  += -features=no%except
 
-# The official build used -xO2 on 32 bit x86, -xO3 for 64 bit
-# Use that for all builds
-OPT_FLAGS_SOS-32 = -xO2
-OPT_FLAGS_SOS-64 = -xO3
-OPT_FLAGS_SOS = $(OPT_FLAGS_SOS-$(MEMORYMODEL))
+# Required at -xO4
+# https://java.net/projects/solaris-userland/sources/gate/content/make-rules/shared-macros.mk?rev=1505`
+EXTRA_CFLAGS_sparc += -Qoption cg -xregs=no%appl
+EXTRA_CFLAGS_i386  += -xregs=no%frameptr
+
+EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
+EXTRA_CXXFLAGS += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+
+# The Solaris 11 build uses -xO4 by default
+OPT_FLAGS_SOS_32 = -xO4
+OPT_FLAGS_SOS_64 = -xO4
+OPT_FLAGS_SOS_sparc_32 = -xmemalign=8s
+OPT_FLAGS_SOS_sparc_64 = -xmemalign=16s
+OPT_FLAGS_SOS += $(OPT_FLAGS_SOS_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(GARCH)_$(MEMORYMODEL))
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -71,6 +75,13 @@ MYSQL_LIB_VER = 18
 
 MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(sbindir) $(libexecdir)
 
+PATCHFILES += 0003-I-HATE-CMAKE.patch
+PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
+PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
+# https://java.net/projects/solaris-userland/sources/gate/content/components/mysql-5-1/patches/xO4_optimization.patch?rev=1502
+PATCHFILES += 0004-xO4-fix.patch
+
+PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PACKAGES += CSWmysql-dev
 SPKG_DESC_CSWmysql-dev = MySQL development files
 PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
@@ -83,11 +94,7 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(bindir)/
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(sbindir)/$(bin_name))
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
-PATCHFILES += 0003-I-HATE-CMAKE.patch
-PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
-PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
 
-PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1

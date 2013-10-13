@@ -1,0 +1,11 @@
+index fbb5d00..09a54d2 100644
+--- a/sql/sql_select.cc
++++ b/sql/sql_select.cc
+@@ -102,6 +102,7 @@ static bool find_best(JOIN *join,table_map rest_tables,uint index,
+ 		      double record_count,double read_time);
+ static uint cache_record_length(JOIN *join,uint index);
+ static double prev_record_reads(JOIN *join, uint idx, table_map found_ref);
++#pragma opt 2 (prev_record_reads)
+ static bool get_best_combination(JOIN *join);
+ static store_key *get_store_key(THD *thd,
+ 				KEYUSE *keyuse, table_map used_tables,
