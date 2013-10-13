@@ -38,5 +38,7 @@ GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+TEST_SCRIPTS = 
+
 include gar/category.mk
 
