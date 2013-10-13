@@ -19,7 +19,9 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = PKG-INFO
 BUILD_DEP_PKGS += CSWpy-mock
 DEP_PKGS = CSWpython-dev
+DEP_PKGS = CSWpy-setuptools
 # /usr/share references are fine, these are docstrings.
 CHECKPKG_OVERRIDES_CSWpy-virtualenv += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWpy-virtualenv += surplus-dependency|CSWpython-dev
+CHECKPKG_OVERRIDES_CSWpy-virtualenv += surplus-dependency|CSWpy-setuptools
 include gar/category.mk
