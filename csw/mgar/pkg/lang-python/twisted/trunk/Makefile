@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-NAME = twisted
-MAJ_VERSION = 12.2
-PATCHLEVEL = 0
-VERSION = $(MAJ_VERSION).$(PATCHLEVEL)
+NAME = Twisted
+VERSION = 13.1.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -15,11 +13,11 @@ define BLURB
   mail servers, and more.
 endef
 
-PYPI_PROJECT = Twisted
 MASTER_SITES += $(PYPI_MIRROR)
-DISTNAME = $(PYPI_PROJECT)-$(VERSION)
 DISTFILES += $(DISTNAME).tar.bz2
-# TEST_SCRIPTS  = 
+
+# For /usr/include/sys/socket.h to make msghdr.msg_control available
+EXTRA_CPPFLAGS += -D_XPG4_2
 
 LICENSE = LICENSE
 
@@ -27,18 +25,19 @@ PACKAGES += CSWpy-twisted
 SPKG_DESC_CSWpy-twisted = An event-driven networking engine
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWpy-zope-interface
+RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibgcc-s1
 OBSOLETED_BY_CSWpy-twisted = CSWtwisted
 
-ARCHALL_CSWtwisted = 1
-
-# CSWtwisted is now empty, so we need to tell checkpkg that it really needs to
-# depend on these two packages.
-CHECKPKG_OVERRIDES_CSWtwisted += surplus-dependency|CSWpy-twisted
-CHECKPKG_OVERRIDES_CSWtwisted += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpy-twisted += surplus-dependency|CSWpy-zope-interface
-CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/tap/ftp.py
-CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/conch/unix.py
-CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/twisted/conch/openssh_compat/factory.py
-CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/twisted/scripts/tap2deb.py
+
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/twisted/conch/unix.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/twisted/conch/unix.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/twisted/conch/openssh_compat/factory.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/twisted/conch/openssh_compat/factory.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/twisted/tap/ftp.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/twisted/tap/ftp.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/twisted/scripts/tap2deb.py
+CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/twisted/scripts/tap2deb.py
 
 include gar/category.mk
