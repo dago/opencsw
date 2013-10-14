@@ -11,8 +11,12 @@ define BLURB
 	encrypted sections of a DVD.
 endef
 
-MASTER_SITES = http://dvdnav.mplayerhq.hu/releases/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+GITHUB_USER		=	microe
+GITHUB_REFERENCE=	3762e09
+MASTER_SITES	=	$(GITHUB_MIRROR)
+VENDOR_URL		=	http://dvdnav.mplayerhq.hu/
+DISTNAME		=	$(GITHUB_USER)-$(NAME)-$(GITHUB_REFERENCE)
+DISTFILES		=	$(NAME)-$(VERSION)$(GITHUB_BALL_EXT)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
