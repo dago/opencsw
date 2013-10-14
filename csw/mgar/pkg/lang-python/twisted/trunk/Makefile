@@ -16,7 +16,9 @@ endef
 MASTER_SITES += $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.bz2
 
-# For /usr/include/sys/socket.h to make msghdr.msg_control available
+# For /usr/include/sys/socket.h to make msghdr.msg_control available.
+# Add definition until this is fixed:
+#   https://twistedmatrix.com/trac/ticket/6787
 EXTRA_CPPFLAGS += -D_XPG4_2
 
 LICENSE = LICENSE
