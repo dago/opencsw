@@ -3,8 +3,7 @@
 # $Id$
 
 NAME = buildbot
-VERSION = 0.7.12
-PATCHLEVEL =
+VERSION = 0.8.8
 CATEGORIES = python
 GARTYPE = v2
 
@@ -23,42 +22,25 @@ define BLURB
   easier to improve. 
 endef
 
-MASTER_SITES = $(SF_MIRROR)
+MASTER_SITES = $(PYPI_MIRROR)
 PATCHFILES  = buildbot-tail.patch
-PATCHFILES += buildbot-debug.patch
-DISTFILES  = $(NAME)-$(VERSION)$(PATCHLEVEL).tar.gz $(PATCHFILES)
+#PATCHFILES += buildbot-debug.patch
+DISTFILES += $(DISTNAME).tar.gz
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWbuildbot
+SPKG_DESC_CSWbuildbot = A system to automate the compile/test cycle
+# PKGFILES is catchall
+RUNTIME_DEP_PKGSbuildbot += CSWcoreutils
+RUNTIME_DEP_PKGSbuildbot += CSWpy-twisted
+RUNTIME_DEP_PKGSbuildbot += CSWpy-zope-interface
 
-PYCOMPILE = 1
+# This is more like an application than a python module
+CHECKPKG_OVERRIDES_CSWbuildbot += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWbuildbot += catalogname-does-not-start-with-py_
 
-RUNTIME_DEP_PKGS += CSWcoreutils
-RUNTIME_DEP_PKGS += CSWtwisted
-RUNTIME_DEP_PKGS += CSWzope
+ARCHALL_CSWbuildbot = 1
 
-ARCHALL = 1
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = buildbot
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = buildbot
-
-WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(PATCHLEVEL)
-
-CHECKPKG_OVERRIDES_CSWbuildbot += unidentified-dependency|CSWcoreutils
-CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWtwisted
-CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWzope
-CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWcoreutils
-
-build-buildbot:
-	(cd $(WORKSRC); python setup.py build)
-	@$(MAKECOOKIE)
-
-install-buildbot:
-	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
-	@$(MAKECOOKIE)
-
-post-install-modulated:
-	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
-	@$(MAKECOOKIE)
+# There seems to be 'trial' missing
+SKIPTEST ?= 1
 
 include gar/category.mk
