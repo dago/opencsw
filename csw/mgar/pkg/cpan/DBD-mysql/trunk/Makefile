@@ -14,10 +14,8 @@ define BLURB
   ever requested them.
 endef
 
-CATALOGNAME = pm_dbdmysql
-PACKAGES    = CSWpmdbdmysql
-
-# ARCHALL_CSWpmdbdmysql = 1
+CATALOGNAME = pm_dbd_mysql
+PACKAGES    = CSWpm-dbd-mysql
 
 LICENSE = README
 
@@ -25,14 +23,20 @@ BUILD_DEP_PKGS += CSWmysql-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWpm-dbi
 
-RUNTIME_DEP_PKGS += CSWlibmysqlclient18
-RUNTIME_DEP_PKGS += CSWlibz1
-RUNTIME_DEP_PKGS += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS += CSWpm-dbi
+SPKG_DESC_CSWpm-dbd-mysql = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWpm-dbd-mysql += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWpm-dbd-mysql += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpm-dbd-mysql += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpm-dbd-mysql += CSWpm-dbi
+
+OBSOLETED_BY_CSWpm-dbd-mysql = CSWpmdbdmysql
 
 CONFIGURE_ARGS += --ssl
 CONFIGURE_ARGS += --testuser=root
 CONFIGURE_ARGS += --mysql_config=$(prefix)/bin/mysql_config
-#EXTRA_LIB = $(prefix)/mysql5/lib/mysql
+
+REINPLACE_WHEN_USRLOCAL = postinstall
+REINPLACE_USRLOCAL     += /opt/csw/lib/perl/csw/DBD/mysql.pm
+REINPLACE_USRLOCAL     += /opt/csw/lib/perl/csw/DBD/mysql/INSTALL.pod
 
 include gar/category.mk
