@@ -21,6 +21,8 @@ import os
 import cjson
 import urllib2
 
+from lib.python import configuration
+
 USAGE = """%prog --os-releases=SunOS5.10,SunOS5.11 -c <catalogname>
 
 A practical usage example - let's say we have a list of packages to remove in
@@ -42,6 +44,9 @@ done
 
 UNSTABLE = "unstable"
 EVERY_N_DOTS = 100
+datadir = configuration.CHECKPKG_DIR % os.environ
+fn_revdeps = os.path.join(datadir,'revdeps-%s-%s-%s.json')
+fn_pkgstatsdb = os.path.join(datadir,"pkgstats")
 
 class Error(Exception):
   """A generic error."""
@@ -49,18 +54,24 @@ class Error(Exception):
 class DataError(Exception):
   """Wrong data encountered."""
 
+
 class RevDeps(object):
+  ''' 
+  returns a list of [md5_sum,pkgname]
+  in the moment not used, perhaps later usefull:
+    RevDepsSet = namedtuple('RevDepsSet','md5_sum pkgname')
+  '''
 
   def __init__(self):
     self.cached_catalogs = {}
     self.rest_client = rest.RestClient()
-    self.cp = rest.CachedPkgstats("pkgstats")
+    self.cp = rest.CachedPkgstats(fn_pkgstatsdb)
 
   def MakeRevIndex(self, catrel, arch, osrel, quiet=False):
     key = (catrel, arch, osrel)
     if key in self.cached_catalogs:
       return
-    fn = "revdeps-%s-%s-%s.json" % key
+    fn = fn_revdeps % key
     if os.path.exists(fn):
       with open(fn, "r") as fd:
         self.cached_catalogs[key] = cjson.decode(fd.read())
@@ -88,7 +99,7 @@ class RevDeps(object):
     with open(fn, "w") as fd:
       fd.write(cjson.encode(self.cached_catalogs[key]))
 
-  def RevDeps(self, catrel, arch, osrel, md5_sum):
+  def RevDepsByMD5(self, catrel, arch, osrel, md5_sum):
     self.MakeRevIndex(catrel, arch, osrel)
     pkg = self.cp.GetPkgstats(md5_sum)
     pkgname = pkg["basic_stats"]["pkgname"]
@@ -98,6 +109,13 @@ class RevDeps(object):
     else:
       return []
 
+  def RevDepsByPkg(self, catrel, arch, osrel, pkgname):
+    self.MakeRevIndex(catrel, arch, osrel)
+    key = (catrel, arch, osrel)
+    if pkgname in self.cached_catalogs[key]:
+      return self.cached_catalogs[key][pkgname]
+    else:
+      return []
 
 class PackageRemover(object):
 
@@ -143,9 +161,9 @@ class PackageRemover(object):
         if pkg_simple:
           found_anywhere = True
         md5 = pkg_simple["md5_sum"]
-        pkg = rd.cp.GetPkgstats(md5)
+        # pkg = rd.cp.GetPkgstats(md5)
         key = UNSTABLE, arch, osrel
-        cat_rev_deps = rd.RevDeps(UNSTABLE, arch, osrel, md5)
+        cat_rev_deps = rd.RevDepsByMD5(UNSTABLE, arch, osrel, md5)
         if cat_rev_deps:
           rev_deps[key] = cat_rev_deps
         to_remove.append((UNSTABLE, arch, osrel, md5))
@@ -168,7 +186,7 @@ class PackageRemover(object):
 
 def main():
   parser = optparse.OptionParser(USAGE)
-  parser.add_option("-c", "--catalogname", dest="catalogname")
+  parser.add_option("-c", "--catalogname", dest="catalogname", help='the name of the package in catalog')
   parser.add_option("--os-releases", dest="os_releases",
                     help=("Comma separated OS releases, e.g. "
                           "SunOS5.9,SunOS5.10"))
@@ -181,7 +199,10 @@ def main():
   if options.debug:
     debug_level = logging.DEBUG
   logging.basicConfig(level=debug_level)
-  os_relases = None
+  if not options.catalogname:
+    logging.error('option catalogname required \n%s',USAGE)
+    sys.exit(1)
+  os_releases = common_constants.OS_RELS
   if options.os_releases:
     os_releases = options.os_releases.split(",")
   pr = PackageRemover()
