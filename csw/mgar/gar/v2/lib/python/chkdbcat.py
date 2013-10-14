@@ -115,7 +115,7 @@ class TimestampRecord(object):
             """Set time stamp for a given catrel, arch, and osrel.
 
             If date is an instance of datetime, the value obtained by
-            calling isoformat() will be stored. 
+            calling isoformat() will be stored.
 
             If date is an instance of str, it has to be a date in iso format.
 
@@ -144,7 +144,7 @@ class CatalogTiming(object):
 
       # Mapping of key name to list index with optional transformation.
       # Used by __list_to_dict_generator()
-      __list_to_dict_translation = ( 
+      __list_to_dict_translation = (
             ('pkg', 0),
             ('version', 1),
             ('spkg', 2),
@@ -205,7 +205,6 @@ class CatalogTiming(object):
              . . .
             ]
 
-            
             Output is a list of dictionaries:
 
             [
@@ -310,7 +309,7 @@ class CheckDBCatalog(object):
             logging.debug("Remove tmp directory %s" % (self.tmpdir,))
             shutil.rmtree(self.tmpdir)
             self.tmpdir = None
-                  
+
       def __get_notification_address(self, pkginfo):
             """Returns the address where the notification will be sent to.
 
@@ -322,7 +321,7 @@ class CheckDBCatalog(object):
             if pkginfo['uploadby'] is not None and pkginfo['uploadby'] != "web":
                   return pkginfo['uploadby']+'@opencsw.org'
             else:
-                  return RestClient().GetMaintainerByMd5(pkginfo['md5'])['maintainer_email']      
+                  return RestClient().GetMaintainerByMd5(pkginfo['md5'])['maintainer_email']
 
       def notify(self, date, addr, pkginfo):
             """Notification.
@@ -402,7 +401,7 @@ class CheckDBCatalog(object):
                               addr=self.__get_notification_address(np)
                               notifications.setdefault(addr,{ 'lastsuccessful': lastsuccessful })
                               notifications[addr].setdefault('newpkgs', []).append(np)
-                  
+
                         for n in notifications:
                               self.notify(notifications[n]['lastsuccessful'], n, notifications[n]['newpkgs'])
 
