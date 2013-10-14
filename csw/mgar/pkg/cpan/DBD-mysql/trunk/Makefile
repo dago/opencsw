@@ -1,5 +1,5 @@
 NAME = DBD-mysql
-VERSION = 4.013
+VERSION = 4.024
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = CAPTTOFU
@@ -14,20 +14,25 @@ define BLURB
   ever requested them.
 endef
 
-
 CATALOGNAME = pm_dbdmysql
-PACKAGES	= CSWpmdbdmysql
+PACKAGES    = CSWpmdbdmysql
 
 # ARCHALL_CSWpmdbdmysql = 1
 
 LICENSE = README
 
-BUILD_DEP_PKGS = CSWmysql5 CSWmysql5rt CSWmysql5devel CSWzlib CSWosslrt CSWpmdbi
-RUNTIME_DEP_PKGS = CSWmysql5rt CSWzlib CSWosslrt CSWpmdbi
+BUILD_DEP_PKGS += CSWmysql-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWpm-dbi
+
+RUNTIME_DEP_PKGS += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS += CSWlibz1
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS += CSWpm-dbi
 
 CONFIGURE_ARGS += --ssl
 CONFIGURE_ARGS += --testuser=root
-CONFIGURE_ARGS += --mysql_config=$(prefix)/mysql5/bin/mysql_config
-EXTRA_LIB = $(prefix)/mysql5/lib/mysql
+CONFIGURE_ARGS += --mysql_config=$(prefix)/bin/mysql_config
+#EXTRA_LIB = $(prefix)/mysql5/lib/mysql
 
 include gar/category.mk
