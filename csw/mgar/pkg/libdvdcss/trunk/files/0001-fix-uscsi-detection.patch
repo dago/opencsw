@@ -1,0 +1,25 @@
+From 5466eff64940b0a089f0b38869122079803e4194 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 15 Oct 2013 11:05:41 +0200
+Subject: [PATCH] fix uscsi detection
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index a736aac..3c13580 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -174,7 +174,7 @@ AC_CHECK_HEADERS(sys/ioctl.h,[
+   dnl Solaris: sys/scsi/scsi_types.h, sys/scsi/impl/uscsi.h
+   dnl
+   solaris_uscsi=yes
+-  AC_CHECK_HEADERS([sys/scsi/scsi_types.h, sys/scsi/impl/uscsi.h], [],
++  AC_CHECK_HEADERS([sys/scsi/scsi_types.h sys/scsi/impl/uscsi.h], [],
+     [solaris_uscsi=no; break;])
+   AS_IF([test "$solaris_uscsi" = "yes"], [
+     AC_DEFINE(SOLARIS_USCSI, 1, Have userspace SCSI headers.)
+-- 
+1.8.3.4
+
