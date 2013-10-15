@@ -14,7 +14,7 @@ REINPLACE_USRLOCAL = requests/utils.py
 
 VENDOR_URL = https://pypi.python.org/pypi/requests
 
-RUNTIME_DEP_PKGS += CSWpy-chardet
+DEP_PKGS += CSWpy-chardet
 CHECKPKG_OVERRIDES_CSWpy-requests += surplus-dependency|CSWpy-chardet
 
 PACKAGES = CSWpy-requests
