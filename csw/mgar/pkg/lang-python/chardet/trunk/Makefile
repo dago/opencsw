@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = chardet
-VERSION = 1.0.1
+VERSION = 2.1.1
 CATEGORIES = python
 GARTYPE = v2
 
