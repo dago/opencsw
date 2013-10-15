@@ -15,7 +15,7 @@ BASEDIR="${prefix}"
 MYSQL_HOME="/var${prefix}/mysql5"
 sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
-DEFAULTS_FILE="${prefix}/share/mysql5/support-files/my-small.cnf
+DEFAULTS_FILE="${sysconfdir}/my.cnf"
 MYSQLD_USER="mysql"
 MYSQLD_GROUP="mysql"
 # Provide the default data directory
@@ -33,7 +33,7 @@ if [ -r "${DEPRECATED_DEFAULTS_FILE}" ]; then
 fi
 
 if [ ! -f "$DEFAULTS_FILE" ]; then
-    IN_DEFAULTS_FILE=$BASEDIR/share/mysql5/support-files/my-small.cnf
+    IN_DEFAULTS_FILE=${prefix}/share/mysql5/support-files/my-small.cnf
     echo "Using $IN_DEFAULTS_FILE to create the options file."
 else
     IN_DEFAULTS_FILE=$DEFAULTS_FILE
@@ -70,6 +70,7 @@ echo "###  The following messages are from mysql_install_db."
     --user="$MYSQLD_USER" \
     --basedir="$BASEDIR" \
     --datadir="$MYSQLD_DATADIR"
+echo "### End mysql_install_db messages."
 
 # Fix permissions on the data directory, since mysql_install_db was run as
 # root.
