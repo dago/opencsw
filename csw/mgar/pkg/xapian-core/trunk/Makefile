@@ -14,13 +14,14 @@ MASTER_SITES = http://oligarchy.co.uk/xaDISTFILES += $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0002-Do-not-strip-norunpath-on-libtool.patch
 
-# This is strange and needs further examination
+# Use patch until this is fixed:
+#   http://trac.xapian.org/ticket/628
 PATCHFILES += 0002-Somehow-round-is-missing-in-cmath.patch
 
 # Use patch until this is fixed:
 #   http://trac.xapian.org/ticket/627
 PATCHFILES += 0003-log-is-ambigous-to-float-and-double.patch
-mPATCHFILES += 0001-Force-float-to-disambiguise-float-double-invocation-.patch
+PATCHFILES += 0001-Force-float-to-disambiguise-float-double-invocation-.patch
 
 ssing-.la.patch
 
@@ -48,7 +49,8 @@ RUNTIME_DEP_PKGS_CSWlibxapian-de1-3-1
 
 EXTRA_LD_FLAGS += -norunpath
 
-# libuuid.so must be searched in /opt/csw/lib
+# libuuid.so must be searched in /opt/csw/lib, use explicit setting until this is fixed:
+#   http://trac.xapian.org/ticket/626
 EXTRA_CXXFLAGS += -L$(libdir)-norunpath -lCrun
 
 BUILD64 EXTRA_ISAEXEC_EXCLUDE_FILES += $(bindir)/xapian-config-1.3 $(bindir)/%/xapian-config-1.34 = 1
