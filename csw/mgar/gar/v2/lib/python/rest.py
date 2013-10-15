@@ -250,6 +250,7 @@ class RestClient(object):
   def GetCatalogForGeneration(self, catrel, arch, osrel):
     url = (self.rest_url + self.PKGDB_APP + "/catalogs/%s/%s/%s/for-generation/"
            % (catrel, arch, osrel))
+    logging.debug("GetCatalogForGeneration(): url=%r", url)
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
