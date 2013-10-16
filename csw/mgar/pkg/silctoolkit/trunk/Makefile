@@ -46,6 +46,9 @@ RUNTIME_DEP_PKGS_CSWlibsilc-dev += CSWlibsilcclient1-1-3
 
 BUILD64 = 1
 
+# Avoid a collision between its client.h and Samba's
+includedir = $(prefix)/include/silc
+
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-simdir=$(libdir)/silc
 
