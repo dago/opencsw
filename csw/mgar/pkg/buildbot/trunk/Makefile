@@ -30,9 +30,10 @@ DISTFILES += $(DISTNAME).tar.gz
 PACKAGES += CSWbuildbot
 SPKG_DESC_CSWbuildbot = A system to automate the compile/test cycle
 # PKGFILES is catchall
-RUNTIME_DEP_PKGSbuildbot += CSWcoreutils
-RUNTIME_DEP_PKGSbuildbot += CSWpy-twisted
-RUNTIME_DEP_PKGSbuildbot += CSWpy-zope-interface
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWcoreutils
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-twisted
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-zope-interface
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-sqlalchemy
 
 # This is more like an application than a python module
 CHECKPKG_OVERRIDES_CSWbuildbot += pkgname-does-not-start-with-CSWpy-
