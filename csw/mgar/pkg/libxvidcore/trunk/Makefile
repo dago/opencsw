@@ -27,26 +27,25 @@ RUNTIME_DEP_PKGS	+=	CSWlibgcc-s1
 CONFIGURE_SCRIPTS	=	custom
 BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS	=
-INSTALL_SCRIPTS		=	custom
+INSTALL_SCRIPTS		=	custo	+=	CSWlibxvidcore4
+CATALOGNAME_CSWlibxvidcore4 		=	libxvidcore4
+PKGFILES_CSWlibxvidcore4			+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4\.3)
+PKGFILES_CSWlibxvidcore4			+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibxvidcore4			+=	$(DESCRIPTION), libxvidcore.so.4
+OBSOLETED_BY_CSWlibxvidcore4		=	CSWlibxvidcore
+CATALOGNAME_CSWlibxvidcore			=	libxvidcore_stub
+CHECKPKG_OVERRIDES_CSWlibxvidcore4	+=	no-direct-binding|/opt/csw/lib/libxvidcore.so.4.3|is|not|directly|bound|to|soname|libgcc_s.so.1
 
-PACKAGES						+=	CSWlibxvidcore4
-CATALOGNAME_CSWlibxvidcore4 	=	libxvidcore4
-PKGFILES_CSWlibxvidcore4		+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4\.3)
-PKGFILES_CSWlibxvidcore4		+=	$(call baseisadirs,$(libdir),libxvidcore\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibxvidcore4		+=	$(DESCRIPTION), libxvidcore.so.4
-RUNTIME_DEP_PKGS_CSWlibxvidcore	+=	CSWlibxvidcore4
-OBSOLETED_BY_CSWlibxvidcore4	=	CSWlibxvidcore
-CATALOGNAME_CSWlibxvidcore		=	libxvidcore_stub
-
-PACKAGES						+=	CSWlibxvidcore-dev
-CATALOGNAME_CSWlibxvidcore-dev	=	libxvidcore_dev
-SPKG_DESC_CSWlibxvidcore-dev	+=	$(DESCRIPTION), development files
-PKGFILES_CSWlibxvidcore-dev		+=	/opt/csw/lib/libxvidcore.4.so
-PKGFILES_CSWlibxvidcore-dev		+=	$(PKGFILES_DEVEL)
-OBSOLETED_BY_CSWlibxvidcore-dev	=	CSWlibxvidcoredevel
-CATALOGNAME_CSWlibxvidcoredevel	=	libxvidcore_devel_stub
-ARCHALL_CSWlibxvidcore-dev		=	1
-CHECKPKG_OVERRIDES_CSWlibxvidcore-dev += archall-devel-package
+PACKAGES								+=	CSWlibxvidcore-dev
+CATALOGNAME_CSWlibxvidcore-dev			=	libxvidcore_dev
+SPKG_DESC_CSWlibxvidcore-dev			+=	$(DESCRIPTION), development files
+PKGFILES_CSWlibxvidcore-dev				+=	/opt/csw/lib/libxvidcore.4.so
+PKGFILES_CSWlibxvidcore-dev				+=	$(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibxvidcore-dev		+=	CSWlibxvidcore4
+OBSOLETED_BY_CSWlibxvidcore-dev			=	CSWlibxvidcoredevel
+CATALOGNAME_CSWlibxvidcoredevel			=	libxvidcore_devel_stub
+ARCHALL_CSWlibxvidcore-dev				=	1
+CHECKPKG_OVERRIDES_CSWlibxvidcore-dev	+=	bxvidcore-dev += archall-devel-package
 
 include gar/category.mk
 
@@ -63,10 +62,10 @@ install-custom:
 	$(MAKECOOKIE)
 
 post-install-modulated:
-	cd $(DESTDIR)/$(libdir) && ln -s libxvidcore.4.3.so libxvidcore.4.so
-	cd $(DESTDIR)/$(libdir) && ln -s libxvidcore.4.so libxvidcore.so
+	cd $(DESTDIR)/$(libdir) && lso.4.3 libxvidcore.so.4
+	cd $(DESTDIR)/$(libdir) && ln -s libxvidcore.so.4 libxvidcore.4.so libxvidcore.so
 	$(MAKECOOKIE)
 
 # this is private and not available publicly
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	$(HOME)/bin/ocswdeplist -
