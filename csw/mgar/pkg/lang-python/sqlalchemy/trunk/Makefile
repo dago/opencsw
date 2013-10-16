@@ -9,12 +9,10 @@ NAME = SQLAlchemy
 VERSION = 0.8.2
 CATEGORIES = python
 
-PACKAGES = CSWpy-sqlalchemy
-DESCRIPTION = Python SQL toolkit and Object Relational Mapper
-
-VENDOR_URL = http://www.sqlalchemy.org/
 DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
+
+VENDOR_URL = http://www.sqlalchemy.org/
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS_CSWpy-sqlalchemy += CSWlibgcc-s1
