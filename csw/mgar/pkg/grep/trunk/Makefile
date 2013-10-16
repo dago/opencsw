@@ -1,5 +1,5 @@
 NAME = grep
-VERSION = 2.11
+VERSION = 2.14
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -26,7 +26,11 @@ RUNTIME_DEP_PKGS_CSWggrep += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWggrep += CSWlibiconv2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --program-prefix=g
+CONFIGURE_ARGS += CONFIGURE_ARGS += --with-included-regex
+
+# Use GNUlib for wcscoll as there is an issue with the ru_RU.KOI8-R locale
+# See for details http://lists.gnu.org/archive/html/bug-grep/2013-10/msg00020.html
+EXTRA_CONFIGURE_ENV += ac_cv_func_wcscoll=no --program-prefix=g
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
@@ -34,5 +38,4 @@ include gar/category.mk
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(prefix)/gnu
-	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
-	@$(MAKECOOKIE)
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G)
