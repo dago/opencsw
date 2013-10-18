@@ -309,7 +309,7 @@ ARCHFLAGS_SOS12U3_sparcv8plus+vis = -m32 -xarch=sparcvis
         ARCHFLAGS_SOS12U2_sparcv8 = -m32 -xarch=v8
         ARCHFLAGS_SOS12U3_sparcv8 = -m32 -xarch=v8
            ARCHFLAGS_GCC3_sparcv8 = -mcpu=v8
-           ARCHFLAGS_GCC4_sparcv8 = -mcpu=v9 -Wa,-xarch=v8plus
+           ARCHFLAGS_GCC4_sparcv8 = -mcpu=v8
               MEMORYMODEL_sparcv8 = 32
 
    ARCHFLAGS_SOS11_sparcv8-fsmuld = -xarch=v8a
