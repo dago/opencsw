@@ -120,11 +120,10 @@ EXTRA_PAX_ARGS_isa-extra-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",
 EXTRA_PAX_ARGS_features-full = -s ",.*/pkgconfig.*,,"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_featur# Make sure to pick the "curl" binary from features-full as e.g. metalink support is only in the binary
 # and not libmetalink
-MERGE_SCRIPTS_isa-default-features-minimal = copy-onlyinimal = copy-all
+MERGE_SCRIPTS_isa-default-features-minimal = copy-onlyinimal DIRS_isa-default-features-minimal = $(libdir)inimal = copy-all
 MERGE_SCRIPTS_isa-default64-features-minimal = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-default64-features-minimal = $(libdir)
-MERGE_SCRIPTS_isa-default-featall-full = copy-only
-MERGE_DIRS_isa-default-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default-featall-full = $(libdir)
 MERGE_SCRIPTS_isa-default64-features-full = copy-relocated-only
 MERGE_DIRS_isa-default64-features-full = $(libdir)
 
