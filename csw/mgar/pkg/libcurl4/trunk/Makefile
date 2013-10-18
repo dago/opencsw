@@ -14,7 +14,9 @@ define BLURB
   environments.
 endef
 
-MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VVENDOR_URL = http://curl.haxx.se
+MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(V# Use patch until this is fixed:
+#   http://sourceforge.net/p/curl/bugs/1291/
+PATCHFILES += 0001-Add-patch-from-bug-1291.patch(VVENDOR_URL = http://curl.haxx.se
 
 # Because of OpenSSL 1.0 update
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386+ency|CSWlibcurl3
@@ -104,7 +106,7 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_features-$(FEATURES))
 
 BUILD64 = 1
 
-# There are some failing tests# , ignore for now
+# There are some failing tests, ignore for now
 SKIPTEST ?= 1
 
 # We do special 32/64 merging for this one, see post-merge
