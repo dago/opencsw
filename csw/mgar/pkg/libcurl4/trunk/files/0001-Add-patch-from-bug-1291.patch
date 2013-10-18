@@ -1,0 +1,26 @@
+From 8faa296be2f98a26456a5b8e73cb3baaa6f6b9ab Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 18 Oct 2013 17:44:40 +0200
+Subject: [PATCH] Add patch from bug #1291
+
+---
+ tests/data/test906 | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tests/data/test906 b/tests/data/test906
+index 5072e90..6cf6bed 100644
+--- a/tests/data/test906
++++ b/tests/data/test906
+@@ -41,6 +41,9 @@ mail body
+  <command>
+ smtp://%HOSTIP:%SMTPPORT/906 --mail-rcpt recipient@example.com --mail-from sender@example.com -u testuser:testpass -T -
+ </command>
++<precheck>
++chkhostname curlhost
++</precheck>
+ </client>
+ 
+ #
+-- 
+1.8.3.4
+
