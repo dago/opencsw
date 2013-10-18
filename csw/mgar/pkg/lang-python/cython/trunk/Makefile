@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = Cython
-VERSION = 0.18
+VERSION = 0.19.2
 CATEGORIES = lang
 
 DESCRIPTION = Cython Comp
