@@ -237,7 +237,7 @@ ARCHFLAGS_SOS12U1_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
 ARCHFLAGS_SOS12U2_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
 ARCHFLAGS_SOS12U3_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
    ARCHFLAGS_GCC3_sparcv9+fmuladd = ERROR
-   ARCHFLAGS_GCC4_sparcv9+fmuladd = ERROR
+   ARCHFLAGS_GCC4_sparcv9+fmuladd = -m64 -mcpu=ultrasparc3 -mfmaf -Wa,-xarch=v9b
       MEMORYMODEL_sparcv9+fmuladd = 64
 
      ARCHFLAGS_SOS11_sparcv9+vis2 = -xarch=v9b
@@ -246,7 +246,7 @@ ARCHFLAGS_SOS12U3_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
    ARCHFLAGS_SOS12U2_sparcv9+vis2 = -m64 -xarch=sparcvis2
    ARCHFLAGS_SOS12U3_sparcv9+vis2 = -m64 -xarch=sparcvis2
       ARCHFLAGS_GCC3_sparcv9+vis2 = ERROR
-      ARCHFLAGS_GCC4_sparcv9+vis2 = ERROR
+      ARCHFLAGS_GCC4_sparcv9+vis2 = -m64 -mcpu=ultrasparc3 -mvis2 -Wa,-xarch=v9b
          MEMORYMODEL_sparcv9+vis2 = 64
 
       ARCHFLAGS_SOS11_sparcv9+vis = -xarch=v9a
@@ -255,7 +255,7 @@ ARCHFLAGS_SOS12U3_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
     ARCHFLAGS_SOS12U2_sparcv9+vis = -m64 -xarch=sparcvis
     ARCHFLAGS_SOS12U3_sparcv9+vis = -m64 -xarch=sparcvis
        ARCHFLAGS_GCC3_sparcv9+vis = -m64 -mcpu=ultrasparc -mvis
-       ARCHFLAGS_GCC4_sparcv9+vis = -m64 -mcpu=ultrasparc -mvis
+       ARCHFLAGS_GCC4_sparcv9+vis = -m64 -mcpu=ultrasparc -mvis -Wa,-xarch=v9a
           MEMORYMODEL_sparcv9+vis = 64
 
           ARCHFLAGS_SOS11_sparcv9 = -xarch=v9
@@ -264,7 +264,7 @@ ARCHFLAGS_SOS12U3_sparcv9+fmuladd = -m64 -xarch=sparcfmaf -fma=fused
         ARCHFLAGS_SOS12U2_sparcv9 = -m64 -xarch=sparc
         ARCHFLAGS_SOS12U3_sparcv9 = -m64 -xarch=sparc
            ARCHFLAGS_GCC3_sparcv9 = -m64 -mcpu=v9
-           ARCHFLAGS_GCC4_sparcv9 = -m64 -mcpu=v9
+           ARCHFLAGS_GCC4_sparcv9 = -m64 -mcpu=v9 -Wa,-xarch=v9
               MEMORYMODEL_sparcv9 = 64
 
   ARCHFLAGS_SOS11_sparcv8plus+fmuladd = ERROR
@@ -273,7 +273,7 @@ ARCHFLAGS_SOS12U1_sparcv8plus+fmuladd = -m32 -xarch=xparcfmaf -fma=fused
 ARCHFLAGS_SOS12U2_sparcv8plus+fmuladd = -m32 -xarch=xparcfmaf -fma=fused
 ARCHFLAGS_SOS12U3_sparcv8plus+fmuladd = -m32 -xarch=xparcfmaf -fma=fused
    ARCHFLAGS_GCC3_sparcv8plus+fmuladd = ERROR
-   ARCHFLAGS_GCC4_sparcv8plus+fmuladd = ERROR
+   ARCHFLAGS_GCC4_sparcv8plus+fmuladd = -mcpu=v9 -mfmaf -Wa,-xarch=v8plusb
       MEMORYMODEL_sparcv8plus+fmuladd = 32
 
   ARCHFLAGS_SOS11_sparcv8plus+vis2 = -xarch=v8plusb
@@ -282,7 +282,7 @@ ARCHFLAGS_SOS12U1_sparcv8plus+vis2 = -m32 -xarch=sparcvis2
 ARCHFLAGS_SOS12U2_sparcv8plus+vis2 = -m32 -xarch=sparcvis2
 ARCHFLAGS_SOS12U3_sparcv8plus+vis2 = -m32 -xarch=sparcvis2
    ARCHFLAGS_GCC3_sparcv8plus+vis2 = ERROR
-   ARCHFLAGS_GCC4_sparcv8plus+vis2 = ERROR
+   ARCHFLAGS_GCC4_sparcv8plus+vis2 = -mcpu=v9 -mvis2 -Wa,-xarch=v8plusb
       MEMORYMODEL_sparcv8plus+vis2 = 32
 
   ARCHFLAGS_SOS11_sparcv8plus+vis = -xarch=v8plusa
@@ -291,7 +291,7 @@ ARCHFLAGS_SOS12U1_sparcv8plus+vis = -m32 -xarch=sparcvis
 ARCHFLAGS_SOS12U2_sparcv8plus+vis = -m32 -xarch=sparcvis
 ARCHFLAGS_SOS12U3_sparcv8plus+vis = -m32 -xarch=sparcvis
    ARCHFLAGS_GCC3_sparcv8plus+vis = -mcpu=v8 -mvis
-   ARCHFLAGS_GCC4_sparcv8plus+vis = -mcpu=v8 -mvis
+   ARCHFLAGS_GCC4_sparcv8plus+vis = -mcpu=v9 -mvis -Wa,-xarch=v8plusa
       MEMORYMODEL_sparcv8plus+vis = 32
 
       ARCHFLAGS_SOS11_sparcv8plus = -xarch=v8plus
@@ -300,7 +300,7 @@ ARCHFLAGS_SOS12U3_sparcv8plus+vis = -m32 -xarch=sparcvis
     ARCHFLAGS_SOS12U2_sparcv8plus = -m32 -xarch=sparc
     ARCHFLAGS_SOS12U3_sparcv8plus = -m32 -xarch=sparc
        ARCHFLAGS_GCC3_sparcv8plus = -mcpu=v8 -mv8plus
-       ARCHFLAGS_GCC4_sparcv8plus = -mcpu=v9
+       ARCHFLAGS_GCC4_sparcv8plus = -mcpu=v9 -Wa,-xarch=v8plus
           MEMORYMODEL_sparcv8plus = 32
 
           ARCHFLAGS_SOS11_sparcv8 = -xarch=v8
@@ -309,7 +309,7 @@ ARCHFLAGS_SOS12U3_sparcv8plus+vis = -m32 -xarch=sparcvis
         ARCHFLAGS_SOS12U2_sparcv8 = -m32 -xarch=v8
         ARCHFLAGS_SOS12U3_sparcv8 = -m32 -xarch=v8
            ARCHFLAGS_GCC3_sparcv8 = -mcpu=v8
-           ARCHFLAGS_GCC4_sparcv8 = -mcpu=v8
+           ARCHFLAGS_GCC4_sparcv8 = -mcpu=v9 -Wa,-xarch=v8plus
               MEMORYMODEL_sparcv8 = 32
 
    ARCHFLAGS_SOS11_sparcv8-fsmuld = -xarch=v8a
