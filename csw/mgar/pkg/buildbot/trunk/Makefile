@@ -34,11 +34,17 @@ RUNTIME_DEP_PKGS_CSWbuildbot += CSWcoreutils
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-twisted
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-zope-interface
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-sqlalchemy
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-jinja2
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-tempita
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-decorator
 
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-sqlalchemy
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-zope-interface
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-jinja2
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-tempita
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-decorator
 
 # This is more like an application than a python module
 CHECKPKG_OVERRIDES_CSWbuildbot += pkgname-does-not-start-with-CSWpy-
