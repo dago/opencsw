@@ -1,0 +1,22 @@
+From c684fab9ad172ac202c468b95fecca7e6176e90a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 17 Oct 2013 10:25:57 +0200
+Subject: [PATCH] version uses bash
+
+---
+ version.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/version.sh b/version.sh
+index ab9b8e8..0114248 100755
+--- a/version.sh
++++ b/version.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ 
+ test "$1" && extra="-$1"
+ 
+-- 
+1.8.3.4
+
