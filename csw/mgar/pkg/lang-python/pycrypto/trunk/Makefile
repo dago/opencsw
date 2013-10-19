@@ -26,6 +26,9 @@ DISTFILES += $(DISTNAME).tar.gz
 
 LICENSE = COPYRIGHT
 
+# We must have sem_open and this is only available in Python for Solaris 10
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+
 BUILD_DEP_PACKAGES += CSWlibgmp-dev
 
 PACKAGES += CSWpy-crypto
