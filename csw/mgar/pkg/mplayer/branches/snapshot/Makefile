@@ -75,6 +75,32 @@ CONFIGURE_SCRIPTS	=	custom
 BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=	custom
 
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibaudiofile0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibfaad2
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibx264-133
+RUNTIME_DEP_PKGS_CSWmplayer += CSWliba52
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibjpeg62
+RUNTIME_DEP_PKGS_CSWmplayer += CSWfaac
+RUNTIME_DEP_PKGS_CSWmplayer += CSWliblzo2-2
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibz1
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibesd0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibaa1
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWmesa
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibmad0
+RUNTIME_DEP_PKGS_CSWmplayer += CSWmpg123
+RUNTIME_DEP_PKGS_CSWmplayer += CSWnas
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
