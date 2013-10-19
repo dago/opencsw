@@ -24,10 +24,11 @@ endef
 MASTER_SITES = http://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/
 DISTFILES += $(DISTNAME).tar.gz
 
-LICENSE = COPYRIGHT
+# Make sure to skip test when sem_open is not available. Use patch until this is fixed:
+#   https://github.com/dlitz/pycrypto/pull/61
+PATCHFILES += 0001-Allow-testing-when-sem_open-does-not-exist.-See-http.patch
 
-# We must have sem_open and this is only available in Python for Solaris 10
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+LICENSE = COPYRIGHT
 
 BUILD_DEP_PACKAGES += CSWlibgmp-dev
 
