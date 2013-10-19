@@ -1,0 +1,29 @@
+From 289eff0caf5199cf95308a6b9ab3c558da800ebe Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 19 Oct 2013 22:56:33 +0200
+Subject: [PATCH] Allow testing when sem_open does not exist. See
+ https://github.com/dlitz/pycrypto/pull/61
+
+---
+ lib/Crypto/SelfTest/Random/test__UserFriendlyRNG.py |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/lib/Crypto/SelfTest/Random/test__UserFriendlyRNG.py b/lib/Crypto/SelfTest/Random/test__UserFriendlyRNG.py
+index 771a663..3fd7ad4 100644
+--- a/lib/Crypto/SelfTest/Random/test__UserFriendlyRNG.py
++++ b/lib/Crypto/SelfTest/Random/test__UserFriendlyRNG.py
+@@ -39,6 +39,11 @@ from Crypto.Util.py3compat import *
+ 
+ try:
+     import multiprocessing
++    # multiprocessing.Pool uses classes from multiprocessing.synchronize, so we
++    # need to check if multiprocessing.semaphore will work. Otherwise creating a
++    # multiprocessing.Pool instance will fail with an ImportError. See Python
++    # bug #3770 for details.
++    import multiprocessing.synchronize
+ except ImportError:
+     multiprocessing = None
+ 
+-- 
+1.7.10.3
+
