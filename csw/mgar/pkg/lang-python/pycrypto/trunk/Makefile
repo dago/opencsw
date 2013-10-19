@@ -10,7 +10,7 @@
 #
 
 NAME = pycrypto
-VERSION = 2.6
+VERSION = 2.6.1
 GARTYPE = v2
 CATEGORIES = python
 
@@ -22,13 +22,18 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/
-DISTFILES    = $(DISTNAME).tar.gz
-LICENSE      = COPYRIGHT
-PACKAGES     = CSWpy-crypto
+DISTFILES += $(DISTNAME).tar.gz
+
+LICENSE = COPYRIGHT
 
 BUILD_DEP_PACKAGES += CSWlibgmp-dev
 
-RUNTIME_DEP_PKGS  = CSWlibgmp10
-RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
+PACKAGES += CSWpy-crypto
+SPKG_DESC_CSWpy-crypte = The Python Cryptography Toolkit
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpy-crypto += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpy-crypto += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWpy-crypto += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-crypto += CSWlibpython2-7-1-0
 
 include gar/category.mk
