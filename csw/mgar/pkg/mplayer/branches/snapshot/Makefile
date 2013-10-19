@@ -78,7 +78,6 @@ TEST_SCRIPTS		=	custom
 RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWfaac
 RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWliba52
 RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWlibaa1
-RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWlibaudiofile0
 RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWlibesd0
 RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWlibfaad2
 RUNTIME_DEP_PKGS_CSWmplayer	+=	CSWlibfontconfig1
