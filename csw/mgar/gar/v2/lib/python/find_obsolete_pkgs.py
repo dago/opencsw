@@ -4,7 +4,7 @@
     - Which packages need rebuilding (so they don't depend on the _stub any more)
     - Which _stub packages can be removed
     - Which packages can declare incompatibility on the old packages, so that the old packages can be removed
-    
+
     set PYTHONPATH=/path/to/.buildsys/v2
     alternatively can used: sys.path.append('/path/to/.buildsys/v2')
 
@@ -12,7 +12,7 @@
     - read the sub hint from catalog
       * if stub has consumer -> rebuild
       * if stub has no consumer and the stub is present in the old/"from" catalog -> remove
-      * if stub has no consumer and the stub does not yet present in the old/"from" catalog -> keep      
+      * if stub has no consumer and the stub does not yet present in the old/"from" catalog -> keep
 '''
 
 import optparse
@@ -42,7 +42,7 @@ fn_cat = os.path.join(datadir,'catalog_%s_%s_%s.json')
 fn_removelst = 'PkgsToRemoveFrom_%s_%s_%s.lst'
 fn_rebuildlst = 'PkgsToRebuildFrom_%s_%s_%s.lst'
 revdeplst = {}
-    
+
 CatSubSet = namedtuple('CatSubSet','catalogname md5_sum version dependlist')
 
 class CompCatalog(object):
@@ -52,7 +52,7 @@ class CompCatalog(object):
         self.catrel = name
         self.arch = arch
         self.osrel = osrel
-      
+
     def __getCat(self, name,arch,osrel):
         ''' get dependcy list from catalog, read cached list if available '''
         catlst = {}
@@ -73,37 +73,37 @@ class CompCatalog(object):
                 fd.write(cjson.encode(catlst))
                 logger.info('CompCatalog::getCat: write cache file: %s' % (fn_cat % (name,osrel,arch)))
         return catlst
-    
+
     def getCatalog(self):
         return self.__getCat(self.catrel,self.arch,self.osrel)
 
 def processCat(catrel,arch,osrel):
     revdeplst = {}
-    
+
     logger.info("processCat: -> %s %s %s" % (catrel, arch, osrel))
     cc = CompCatalog(catrel,arch,osrel)
     catlst = cc.getCatalog()
     logger.info("processCat: iterate on %s" % (catrel))
-    
+
     ''' build reverse dependency list '''
     rd = RevDeps()
     for p in catlst.keys():
         revdeplst[p] = rd.RevDepsByPkg(catrel,arch,osrel,p)
-    
+
     logger.info("processCat: <- %s %s %s" % (catrel, arch, osrel))
     return catlst, revdeplst
-  
+
 def main():
     parser = optparse.OptionParser()
     parser.add_option("--debug", dest="debug", action="store_true")
     parser.add_option("--verbose", dest="verbose", action="store_true")
-    parser.add_option("--to-catalog-release", dest="newcatalog", default='kiel', 
+    parser.add_option("--to-catalog-release", dest="newcatalog", default='kiel',
                     help='set name of catalog to fetch', metavar = 'catalogname')
-    parser.add_option("--from-catalog-release", dest="oldcatalog", default='dublin', 
+    parser.add_option("--from-catalog-release", dest="oldcatalog", default='dublin',
                     help='set name of previous (older) catalog to fetch', metavar = 'old catalogname')
-    parser.add_option("--os-arch", dest="arch", default='i386', 
+    parser.add_option("--os-arch", dest="arch", default='i386',
                     help='set name of architecture (sparc|i386) to fetch', metavar = 'OS Architecture')
-    parser.add_option("--os-release", dest="osrel", default='SunOS5.10', 
+    parser.add_option("--os-release", dest="osrel", default='SunOS5.10',
                     help='set os release to fetch (SunOS5.10|SunOS5.11)', metavar = 'OS Release')
     options, args = parser.parse_args()
     opterror = False
@@ -126,17 +126,17 @@ def main():
     else:
         logger.error('unknown architecture: %s',options.arch)
         opterror = True
-    if options.osrel in common_constants.OS_RELS: 
+    if options.osrel in common_constants.OS_RELS:
         osrel     = options.osrel
     else:
         logger.error('unknown OS Release: %s',options.osrel)
         opterror = True
     if opterror:
         sys.exit(1)
-    
+
     newcatlst, newrevdeplst = processCat(newcatrel,arch,osrel)
     oldcatlst, oldrevdeplst = processCat(oldcatrel,arch,osrel)
-    
+
     to_remove_candidates = []
     rebuildlst = []
     logger.debug(' process dependecies in %s' % newcatrel)
@@ -164,15 +164,15 @@ def main():
             logger.info(" DROP   : %s from %s" % (p,newcatrel))
         else:
             logger.info(" KEEP   : {0} not a _stub package in {1}".format(p,oldcatrel))
-    
-    print ('write %s' % (fn_removelst % (newcatrel,osrel,arch))) 
+
+    print ('write %s' % (fn_removelst % (newcatrel,osrel,arch)))
     rmcnt = 0
     with open(fn_removelst % (newcatrel,osrel,arch), "w") as fd:
         for rp in reallyremovelst:
             fd.write(CatSubSet(*newcatlst[rp]).catalogname+'\n')
             rmcnt = rmcnt + 1
     logger.info("packages to remove: %d" % rmcnt)
-    print ('write %s' % (fn_rebuildlst % (newcatrel,osrel,arch))) 
+    print ('write %s' % (fn_rebuildlst % (newcatrel,osrel,arch)))
     rbcnt = 0
     with open(fn_rebuildlst % (newcatrel,osrel,arch), "w") as fd:
         for rp in rebuildlst:
