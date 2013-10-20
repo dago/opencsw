@@ -164,6 +164,10 @@ class Srv4Uploader(object):
       osrel = file_metadata['osrel']
       arch = file_metadata['arch']
       metadata_by_md5[md5_sum] = file_metadata
+      # TODO(unassigned): The problem is that the assignment can (should) also
+      # depend on other packages in the same batch. This function shouldn't
+      # really take a single package as an argument, but a group of packages.
+      # Or it should not return ready assignments, but weights instead.
       catalogs = self._MatchSrv4ToCatalogs(
           filename, self.catrel, arch, osrel, md5_sum)
       for unused_catrel, cat_arch, cat_osrel in catalogs:
