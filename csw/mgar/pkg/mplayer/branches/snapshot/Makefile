@@ -174,6 +174,13 @@ post-extract:
 
 # configure is not configure !
 # must use internal dvdnav as our library is not a snapshot
+
+ifneq ($(GARCH),sparc)
+CPU_DETECTION	=--enable-runtime-cpudetection
+else
+CPU_DETECTION	=
+endif
+
 configure-custom:
 	cd $(WORKSRC) && \
 	./configure \
@@ -181,7 +188,7 @@ configure-custom:
 	--host-cc=gcc \
 	--extra-cflags='-std=gnu99' \
 	--extra-ldflags='-lrt' \
-	--enable-runtime-cpudetection \
+	$(CPU_DETECTION) \
 	--prefix=$(prefix) \
 	--codecsdir=$(libexecdir)/mplayer
 	$(MAKECOOKIE)
