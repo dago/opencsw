@@ -1,3 +1,10 @@
+postgresql90 (9.0.14,REV=2013.10.21)
+
+  * New upstream release 9.0.14.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 21 Oct 2013 12:33:27 +0200
+
+
 postgresql90 (9.0.13,REV=2013.04.06)
 
   * New upstream release 9.0.13.
