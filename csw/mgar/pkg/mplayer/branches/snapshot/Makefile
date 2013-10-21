@@ -148,6 +148,7 @@ CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|d
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libx264.so.133
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libxvidcore.so.4
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libz.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so.1
 
 PACKAGES						+=	CSWmencoder
 CATALOGNAME_CSWmencoder			=	mencoder
