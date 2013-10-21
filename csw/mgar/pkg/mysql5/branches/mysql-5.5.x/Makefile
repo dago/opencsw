@@ -21,13 +21,14 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-# Use newest Sun Studio on Solaris10 to solve problems on Solaris10 x86
-# 64bit build:
+# Keep Studio 12.0 for old S9 only
 ifneq ($(shell /usr/bin/uname -r),5.9)
-       GARCOMPILER = SOS12U3
+       GARCOMPILER = GCC4
+       # Try to get some more oomph out of a sparc
+       EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9+vis2
 endif
 
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
@@ -52,28 +53,45 @@ endef
 
 # Those options follow those of the Solaris 11 build
 # https://java.net/projects/solaris-userland/sources/gate/show/components/mysql-5-1?rev=1502
-EXTRA_CXXFLAGS_64  += -features=no%except
+#EXTRA_CXXFLAGS_64  += -features=no%except
 
 # Required at -xO4
 # https://java.net/projects/solaris-userland/sources/gate/content/make-rules/shared-macros.mk?rev=1505`
-EXTRA_CFLAGS_sparc += -xregs=no%appl
+#EXTRA_CFLAGS_sparc += -xregs=no%appl
+EXTRA_CFLAGS_sparc += -mno-app-regs
 EXTRA_CFLAGS_i386  += -xregs=no%frameptr
 
-EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
-EXTRA_CXXFLAGS += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+#EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
+#EXTRA_CXXFLAGS += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+EXTRA_CFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
+EXTRA_CXXFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
 
 # The Solaris 11 build uses -xO4 by default
-OPT_FLAGS_SOS_32 = -xO4
-OPT_FLAGS_SOS_64 = -xO4
-OPT_FLAGS_SOS_sparc_32 = -xmemalign=8s
-OPT_FLAGS_SOS_sparc_64 = -xmemalign=16s
-OPT_FLAGS_SOS += $(OPT_FLAGS_SOS_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(GARCH)_$(MEMORYMODEL))
+#OPT_FLAGS_SOS_32 = -xO4
+#OPT_FLAGS_SOS_64 = -xO4
+#OPT_FLAGS_SOS_sparc_32 = -xmemalign=8s
+#OPT_FLAGS_SOS_sparc_64 = -xmemalign=16s
+#OPT_FLAGS_SOS += $(OPT_FLAGS_SOS_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(ISA))
+OPT_FLAGS_GCC4_32 = -O3
+OPT_FLAGS_GCC4_64 = -O3
+OPT_FLAGS_GCC4 += $(OPT_FLAGS_GCC4_$(MEMORYMODEL)) $(OPT_FLAGS_GCC4_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_GCC4_$(ISA))
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 MYSQL_LIB_VER = 18
 
-MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(sbindir) $(libexecdir)
+# Ensure that the install directories match the ISA name so
+# the scripts will work as expected
+bindir     = $(abspath $(bindir_install)/$(ISABINDIR))
+sbindir    = $(abspath $(sbindir_install)/$(ISABINDIR))
+libexecdir = $(abspath $(libexecdir_install)/$(ISABINDIR))
+
+# The daemon to launch is selected by script, should not be automatic
+# Some other files too should probably not be isaexec'd
+EXTRA_ISAEXEC_EXCLUDE_FILES  = /opt/csw/libexec/mysqld
+EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/my_print_defaults
+EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqlaccess
+EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqlaccess.conf
 
 PATCHFILES += 0003-I-HATE-CMAKE.patch
 PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
@@ -81,7 +99,6 @@ PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
 # https://java.net/projects/solaris-userland/sources/gate/content/components/mysql-5-1/patches/xO4_optimization.patch?rev=1502
 PATCHFILES += 0004-xO4-fix.patch
 
-PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PACKAGES += CSWmysql-dev
 SPKG_DESC_CSWmysql-dev = MySQL development files
 PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
@@ -95,12 +112,14 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(sbindir)
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 
+PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -137,6 +156,8 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
@@ -156,6 +177,10 @@ RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
@@ -176,6 +201,7 @@ BUILD64_5.10_sparc = 1
 BUILD64_5.9_i386 =
 BUILD64_5.10_i386 = 1
 BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))
+ISAEXEC = 1
 
 MASTER_SITES  = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 MASTER_SITES += http://mysql.skynet.be/Downloads/MySQL-$(BASE_VERSION)/
@@ -329,11 +355,11 @@ configure-custom:
 
 post-configure-modulated:
 	gsed \
-		-e 's+@prefix@+$(prefix)+g' \
-		-e 's+@localstatedir@+$(localstatedir)/$(NAME)+g' \
-		-e 's+@sysconfdir@+$(sysconfdir)+g' \
-		-e 's+@bindir@+$(bindir)+g' \
-		-e 's+@BASE_VERSION@+$(BASE_VERSION)+g' \
+		-e 's|@prefix@|$(prefix)|g' \
+		-e 's|@localstatedir@|$(localstatedir)/$(NAME)|g' \
+		-e 's|@sysconfdir@|$(sysconfdir)|g' \
+		-e 's|@bindir@|$(bindir)|g' \
+		-e 's|@BASE_VERSION@|$(BASE_VERSION)|g' \
 		< $(WORKDIR)/csw$(NAME).tpl \
 		> $(WORKDIR)/csw$(NAME)
 	@$(MAKECOOKIE)
