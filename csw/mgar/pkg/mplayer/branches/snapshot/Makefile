@@ -32,6 +32,7 @@ DISTNAME		=	$(NAME)-export-$(YEAR)-$(MONTH)-$(DAY)
 PATCHFILES		+=	0001-configure-uses-bash.patch
 PATCHFILES		+=	0002-version-uses-bash.patch
 PATCHFILES		+=	0003-use-csw-catalog-for-documentation.patch
+PATCHFILES		+=	0004-test-sse-support.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
