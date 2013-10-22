@@ -167,16 +167,18 @@ def main():
 
     print ('write %s' % (fn_removelst % (newcatrel,osrel,arch)))
     rmcnt = 0
+    remove_catnames = sorted(CatSubSet(*newcatlst[rp]).catalogname for rp in reallyremovelst)
     with open(fn_removelst % (newcatrel,osrel,arch), "w") as fd:
-        for rp in reallyremovelst:
-            fd.write(CatSubSet(*newcatlst[rp]).catalogname+'\n')
+        for c in remove_catnames:
+            fd.write(c+'\n')
             rmcnt = rmcnt + 1
     logger.info("packages to remove: %d" % rmcnt)
     print ('write %s' % (fn_rebuildlst % (newcatrel,osrel,arch)))
     rbcnt = 0
+    rebuild_catnames = sorted(CatSubSet(*newcatlst[rp]).catalogname for rp in rebuildlst)
     with open(fn_rebuildlst % (newcatrel,osrel,arch), "w") as fd:
-        for rp in rebuildlst:
-            fd.write(CatSubSet(*newcatlst[rp]).catalogname+'\n')
+        for c in rebuild_catnames:
+            fd.write(c+'\n')
             rbcnt = rbcnt + 1
     logger.info("packages to rebuild: %d" % rbcnt)
 
