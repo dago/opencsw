@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = puppet3
-VERSION = 3.2.4
+VERSION = 3.3.1
 GARTYPE = v2
 
 define BLURB
