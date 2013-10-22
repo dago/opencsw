@@ -80,12 +80,6 @@ INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 MYSQL_LIB_VER = 18
 
-# Ensure that the install directories match the ISA name so
-# the scripts will work as expected
-bindir     = $(abspath $(bindir_install)/$(ISABINDIR))
-sbindir    = $(abspath $(sbindir_install)/$(ISABINDIR))
-libexecdir = $(abspath $(libexecdir_install)/$(ISABINDIR))
-
 # The daemon to launch is selected by script, should not be automatic
 # Some other files too should probably not be isaexec'd
 EXTRA_ISAEXEC_EXCLUDE_FILES  = /opt/csw/libexec/mysqld
@@ -371,6 +365,17 @@ post-install-modulated:
 		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
 		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
+
+	# Make sure the proper binary is called by the script since
+	# mgar does the configure part using only the base arch name, w/o
+	# the special instructions part
+	for file in mysqld_safe mysqld_multi; do \
+		gsed -i \
+			-e 's|bin/$(MM_BINDIR)|bin/$(ISABINDIR)/|g' \
+			-e 's|sbin/$(MM_BINDIR)|sbin/$(ISABINDIR)|g' \
+			-e 's|libexec/$(MM_BINDIR)|sbin/$(ISABINDIR)|g' \
+			$(DESTDIR)$(bindir)/$$file; \
+	done
 	@$(MAKECOOKIE)
 
 post-merge:
