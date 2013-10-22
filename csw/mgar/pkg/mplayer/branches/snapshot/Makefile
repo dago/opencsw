@@ -33,6 +33,7 @@ PATCHFILES		+=	0001-configure-uses-bash.patch
 PATCHFILES		+=	0002-version-uses-bash.patch
 PATCHFILES		+=	0003-use-csw-catalog-for-documentation.patch
 PATCHFILES		+=	0004-test-sse-support.patch
+PATCHFILES		+=	0005-enhance-X-Windows-detection.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -150,6 +151,12 @@ CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|d
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libxvidcore.so.4
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libz.so.1
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXext.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXinerama.so.1
+# these is available only for i386 and BTW is not part of our libraires
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvdpau.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	missing-dependency|NVDAgraphics
 
 PACKAGES						+=	CSWmencoder
 CATALOGNAME_CSWmencoder			=	mencoder
@@ -222,8 +229,13 @@ post-extract:
 	mv ../ffmpeg ffmpeg
 	$(MAKECOOKIE)
 
-# configure is not configure !
-# must use internal dvdnav as our library is not a snapshot
+# - configure is not configure !
+# - must use internal dvdnav as our library is not a snapshot and
+#   mplayer uses new primitives
+# - run-time CPU detection is not implemented only for SPARC
+# - disable shared memory, used only for X11, which, in Solaris 10
+#    extensions doesn't support all the required primitives,
+#   e.g. XShmGetEventBase
 
 ifneq ($(GARCH),sparc)
 CPU_DETECTION	=--enable-runtime-cpudetection
@@ -239,6 +251,7 @@ configure-custom:
 	--extra-cflags='-std=gnu99' \
 	--extra-ldflags='-lrt' \
 	$(CPU_DETECTION) \
+	--disable-shm \
 	--prefix=$(prefix) \
 	--codecsdir=$(libexecdir)/mplayer
 	$(MAKECOOKIE)

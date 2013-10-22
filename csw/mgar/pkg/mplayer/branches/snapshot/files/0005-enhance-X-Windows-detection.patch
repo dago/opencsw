@@ -1,0 +1,56 @@
+From f65b3b496e17ae71669e9dd3b3431ac709898e82 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 22 Oct 2013 14:12:27 +0200
+Subject: [PATCH] enhance X Windows detection
+
+---
+ configure | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 53bfb0d..407837e 100755
+--- a/configure
++++ b/configure
+@@ -4443,6 +4443,12 @@ echocheck "X11 headers presence"
+   fi
+ echores "$_x11_headers"
+ 
++ifBroken=''
++needsXlib=''
++if sunos; then
++	ifBroken="_broken"
++	needsXlib="X11/Xlib.h"
++fi
+ 
+ echocheck "X11"
+ if test "$_x11" = auto && test "$_x11_headers" = yes ; then
+@@ -4454,7 +4460,7 @@ if test "$_x11" = auto && test "$_x11_headers" = yes ; then
+     else
+       ld_tmp="$I -lXext -lX11 $ld_pthread"
+     fi
+-    statement_check X11/Xutil.h 'XCreateWindow(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)' $ld_tmp &&
++    statement_check${ifBroken} ${needsXlib} X11/Xutil.h 'XCreateWindow(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)' $ld_tmp &&
+       libs_mplayer="$libs_mplayer $ld_tmp" && _x11=yes && break
+   done
+ fi
+@@ -4472,7 +4478,7 @@ echores "$_x11"
+ echocheck "Xss screensaver extensions"
+ if test "$_xss" = auto ; then
+   _xss=no
+-  statement_check "X11/extensions/scrnsaver.h" 'XScreenSaverSuspend(NULL, True)' -lXss && _xss=yes
++  statement_check${ifBroken} ${neddsXlib} "X11/extensions/scrnsaver.h" 'XScreenSaverSuspend(NULL, True)' -lXss && _xss=yes
+ fi
+ if test "$_xss" = yes ; then
+   def_xss='#define CONFIG_XSS 1'
+@@ -4598,7 +4604,7 @@ echores "$_vdpau"
+ echocheck "Xinerama"
+ if test "$_xinerama" = auto && test "$_x11" = yes ; then
+   _xinerama=no
+-  statement_check X11/extensions/Xinerama.h 'XineramaIsActive(0)' -lXinerama && _xinerama=yes
++  statement_check${ifBroken} ${needsXlib} X11/extensions/Xinerama.h 'XineramaIsActive(0)' -lXinerama && _xinerama=yes
+ fi
+ 
+ if test "$_xinerama" = yes ; then
+-- 
+1.8.3.4
+
