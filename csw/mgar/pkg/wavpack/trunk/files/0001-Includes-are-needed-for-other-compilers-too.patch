@@ -1,0 +1,25 @@
+From 175ce749675ad7891f35a5b8a9f064e6d3383a73 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 22 Oct 2013 23:22:42 +0200
+Subject: [PATCH] Includes are needed for other compilers too
+
+---
+ cli/wavpack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cli/wavpack.c b/cli/wavpack.c
+index 95a9728..43860a0 100644
+--- a/cli/wavpack.c
++++ b/cli/wavpack.c
+@@ -37,7 +37,7 @@
+ #include "utils.h"
+ #include "md5.h"
+ 
+-#if defined (__GNUC__) && !defined(WIN32)
++#if (defined(__GNUC__) || defined(__sun)) && !defined(WIN32)
+ #include <unistd.h>
+ #include <glob.h>
+ #include <sys/time.h>
+-- 
+1.8.3.4
+
