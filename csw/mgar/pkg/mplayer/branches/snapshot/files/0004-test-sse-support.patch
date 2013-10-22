@@ -1,0 +1,91 @@
+From 808e6ddb5b81148c8c521cbbc813ed88b29db0ec Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 22 Oct 2013 10:14:41 +0200
+Subject: [PATCH] test sse support
+
+---
+ cpudetect.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 60 insertions(+), 1 deletion(-)
+
+diff --git a/cpudetect.c b/cpudetect.c
+index 99dff23..3a499e0 100644
+--- a/cpudetect.c
++++ b/cpudetect.c
+@@ -46,6 +46,10 @@ CpuCaps gCpuCaps;
+ #include <os2.h>
+ #elif defined(__AMIGAOS4__)
+ #include <proto/exec.h>
++#elif defined(sun)
++#include <errno.h>
++#include <sys/utsname.h>
++#include <sys/auxv.h>
+ #endif
+ 
+ /* Thanks to the FreeBSD project for some of this cpuid code, and
+@@ -208,7 +212,62 @@ static void check_os_katmai_support( void )
+      * safe to go ahead and hook out the SSE code throughout Mesa.
+      */
+     mp_msg(MSGT_CPUDETECT,MSGL_V, "Tests of OS support for SSE %s\n", gCpuCaps.hasSSE ? "passed." : "failed!" );
+-#else
++#elif defined(sun)
++    /* determine if SSE is available for the current CPU running
++     * Solaris in 32 bit mode; this can be done only for 5.10 or
++     * greater.
++     */
++    struct utsname un;
++    char* dot;
++    int minor;
++    int major;
++    uint_t ui;
++    gCpuCaps.hasSSE=0;
++    if(uname(&un) != -1)
++    {
++        if(strcmp(un.sysname, "SunOS") == 0)
++        {
++            dot = strchr(un.release, '.');
++            errno = 0;
++            if(dot != (char*)0)
++            {
++                minor = atoi(dot + 1);
++                *dot = '\0';
++                if(!errno)
++                {
++                    major = atoi(un.release);
++                    if(!errno)
++                    {
++                        if(major >= 5 && minor >= 10)
++                        {
++                            (void)getisax(&ui, 1);
++                            if(ui & AV_386_SSE)
++                            {
++                                gCpuCaps.hasSSE=1;
++                            }
++                            if(ui & AV_386_SSE2)
++                            {
++                                gCpuCaps.hasSSE2=1;
++                            }
++                            if(ui & AV_386_SSE3)
++                            {
++                                gCpuCaps.hasSSE3=1;
++                            }
++                            if(ui & AV_386_SSSE3)
++                            {
++                                gCpuCaps.hasSSSE3=1;
++                            }
++                            if(ui & AV_386_AMD_SSE4A)
++                            {
++                                gCpuCaps.hasSSE4a=1;
++                            }
++                        }
++                    }
++                }
++            }
++        }
++    }
++#else /* : defined(sun) */
+     /* Do nothing on other platforms for now.
+      */
+     mp_msg(MSGT_CPUDETECT,MSGL_WARN, "Cannot test OS support for SSE, leaving disabled.\n" );
+-- 
+1.8.3.4
+
