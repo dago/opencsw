@@ -44,6 +44,7 @@ BUILD_DEP_PKGS	+=	CSWdocbookdtds
 BUILD_DEP_PKGS	+=	CSWdocbookxsl
 BUILD_DEP_PKGS	+=	CSWfaac
 BUILD_DEP_PKGS	+=	CSWfontconfig-dev
+BUILD_DEP_PKGS	+=	CSWgroff
 BUILD_DEP_PKGS	+=	CSWliba52
 BUILD_DEP_PKGS	+=	CSWlibaa-dev
 BUILD_DEP_PKGS	+=	CSWlibaudiofile-dev
@@ -162,13 +163,17 @@ CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|d
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXinerama.so.1
 # these is available only for i386 and BTW is not part of our libraires
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvdpau.so.1
+# this exists only on i386 and Solaris 10
 CHECKPKG_OVERRIDES_CSWmplayer	+=	missing-dependency|NVDAgraphics
+# this in incongruous (dur to man/cat1 usage):
+CHECKPKG_OVERRIDES_CSWmencoder += missing-dependency|CSWfltk
 
 PACKAGES						+=	CSWmencoder
 CATALOGNAME_CSWmencoder			=	mencoder
 SPKG_DESC_CSWmencoder			=	$(DESCRIPTION), the encoder
 PKGFILES_CSWmencoder			+=	/opt/csw/bin/mencoder
 PKGFILES_CSWmencoder			+=	/opt/csw/share/man/man1/mencoder.1
+PKGFILES_CSWmencoder			+=	/opt/csw/share/man/cat1/mencoder.1
 
 RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWliba52
@@ -279,7 +284,11 @@ endif
 
 post-install: thedocdir = $(docdir)/$(NAME)_doc
 post-install: thehtmldocdir = $(thedocdir)/html
+post-install: thecatmandir = $(mandir)/cat1
 post-install:
+	ginstall -d "$(DESTDIR)/$(thecatmandir)"
+	gnroff -Tlatin1 -mman $(WORKSRC)/DOCS/man/en/mplayer.1 > "$(DESTDIR)/$(thecatmandir)/mplayer.1"
+	cd "$(DESTDIR)/$(thecatmandir)" && ln -s mplayer.1 mencoder.1
 	ginstall -d "$(DESTDIR)/$(thedocdir)"
 	gtar --directory $(WORKSRC)/DOCS --create --file=- tech | \
 	gtar --directory $(DESTDIR)/$(thedocdir) --extract
