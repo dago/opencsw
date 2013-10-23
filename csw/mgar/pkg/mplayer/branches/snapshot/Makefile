@@ -34,6 +34,8 @@ PATCHFILES		+=	0002-version-uses-bash.patch
 PATCHFILES		+=	0003-use-csw-catalog-for-documentation.patch
 PATCHFILES		+=	0004-test-sse-support.patch
 PATCHFILES		+=	0005-enhance-X-Windows-detection.patch
+PATCHFILES		+=	0006-fix-memalign-detection.patch
+PATCHFILES		+=	0007-fix-memalign-prototype.patch
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
@@ -118,6 +120,10 @@ RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWnas
 
 # only on BO build farm; on my build farm it's included and detected TODO
 CHECKPKG_OVERRIDES_CSWmplayer	+=	surplus-dependency|CSWlibaudiofile0
+
+# this cannot be computed:
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWunrar
+CHECKPKG_OVERRIDES_CSWmplayer	+=	surplus-dependency|CSWunrar
 
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libSDL-1.2.so.0
@@ -226,7 +232,8 @@ PATH := /opt/csw/gnu:$(PATH)
 
 post-extract:
 	cd $(WORKSRC) && \
-	mv ../ffmpeg ffmpeg
+	mv ../ffmpeg ffmpeg && \
+	rm -f .gitignore
 	$(MAKECOOKIE)
 
 # - configure is not configure !
