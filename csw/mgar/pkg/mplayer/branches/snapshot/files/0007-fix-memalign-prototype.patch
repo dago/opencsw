@@ -1,0 +1,27 @@
+From 20d2bba739c17c9c3f7148fe2287e5ef3a50c5a7 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 23 Oct 2013 15:58:38 +0200
+Subject: [PATCH] fix memalign prototype
+
+---
+ ffmpeg/libavutil/mem.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/ffmpeg/libavutil/mem.c b/ffmpeg/libavutil/mem.c
+index 5aad97a..488e433 100644
+--- a/ffmpeg/libavutil/mem.c
++++ b/ffmpeg/libavutil/mem.c
+@@ -31,6 +31,10 @@
+ #include <limits.h>
+ #include <stdint.h>
+ #include <stdlib.h>
++#if defined(sun)
++/* when _XOPEN_SOURCE is defined, the prototype is excluded from stdlib!? */
++extern void *memalign(size_t, size_t);
++#endif /* : defined(sun) */
+ #include <string.h>
+ #if HAVE_MALLOC_H
+ #include <malloc.h>
+-- 
+1.8.3.4
+
