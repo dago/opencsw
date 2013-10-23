@@ -83,7 +83,7 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpanelw5
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilc1-1-2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilcclient1-1-3
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsasl2-2
+#RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsasl2-2
 
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibxml2-dev
@@ -106,7 +106,7 @@ BUILD_DEP_PKGS += CSWlibgnutls-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWmeanwhile-devdBUILD_DEP_PKGS += CSWlibsilc-devdBUILD_DEP_PKGS += CSWgstreamer-dev
-BUILD_DEP_PKGS += CSWsasl-devdev CSWgnutlsdevel
+#BUILD_DEP_PKGS += CSWsasl-devdev CSWgnutlsdevel
 
 PATCHFILES += patch-pidgin-Makefile.in
 PATCHFILES += patch-pidgin-plugin.c
