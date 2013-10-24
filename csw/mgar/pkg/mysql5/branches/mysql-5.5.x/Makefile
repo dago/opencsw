@@ -21,14 +21,15 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # Keep Studio 12.0 for old S9 only
 ifneq ($(shell /usr/bin/uname -r),5.9)
-       GARCOMPILER = GCC4
+       GARCOMPILER = SOS12U3
        # Try to get some more oomph out of a sparc
-       EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9+vis2
+       # Benchmarks w/ 5.5.34 show no obvious benefit, so disabled for now
+       #EXTRA_BUILD_ISAS_sparc = sparcv9+vis2
 endif
 
 # There is some assembler code, which doesn't work on sparcv8, and I don't see
@@ -51,27 +52,32 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
+### For Studio 12.3
 # Those options follow those of the Solaris 11 build
 # https://java.net/projects/solaris-userland/sources/gate/show/components/mysql-5-1?rev=1502
-#EXTRA_CXXFLAGS_64  += -features=no%except
+EXTRA_CXXFLAGS_64  += -features=no%except
 
 # Required at -xO4
 # https://java.net/projects/solaris-userland/sources/gate/content/make-rules/shared-macros.mk?rev=1505`
-#EXTRA_CFLAGS_sparc += -xregs=no%appl
-EXTRA_CFLAGS_sparc += -mno-app-regs
+EXTRA_CFLAGS_sparc += -xregs=no%appl
 EXTRA_CFLAGS_i386  += -xregs=no%frameptr
 
-#EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
-#EXTRA_CXXFLAGS += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
-EXTRA_CFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
-EXTRA_CXXFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
+EXTRA_CXXFLAGS += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+
+### For GCC4
+#EXTRA_CFLAGS_sparc += -mno-app-regs
+
+#EXTRA_CFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
+#EXTRA_CXXFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
 
 # The Solaris 11 build uses -xO4 by default
-#OPT_FLAGS_SOS_32 = -xO4
-#OPT_FLAGS_SOS_64 = -xO4
-#OPT_FLAGS_SOS_sparc_32 = -xmemalign=8s
-#OPT_FLAGS_SOS_sparc_64 = -xmemalign=16s
-#OPT_FLAGS_SOS += $(OPT_FLAGS_SOS_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(ISA))
+OPT_FLAGS_SOS_32 = -xO4
+OPT_FLAGS_SOS_64 = -xO4
+OPT_FLAGS_SOS_sparc_32 = -xmemalign=8s
+OPT_FLAGS_SOS_sparc_64 = -xmemalign=16s
+OPT_FLAGS_SOS += $(OPT_FLAGS_SOS_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(ISA))
+
 OPT_FLAGS_GCC4_32 = -O3
 OPT_FLAGS_GCC4_64 = -O3
 OPT_FLAGS_GCC4 += $(OPT_FLAGS_GCC4_$(MEMORYMODEL)) $(OPT_FLAGS_GCC4_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_GCC4_$(ISA))
@@ -83,6 +89,8 @@ MYSQL_LIB_VER = 18
 # The daemon to launch is selected by script, should not be automatic
 # Some other files too should probably not be isaexec'd
 EXTRA_ISAEXEC_EXCLUDE_FILES  = /opt/csw/libexec/mysqld
+EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqld_safe
+EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqld_multi
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/my_print_defaults
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqlaccess
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqlaccess.conf
@@ -150,8 +158,9 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
+### For GCC4
+#RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
+#RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
@@ -171,9 +180,10 @@ RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+### For GCC4
+#RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
+#RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
+#RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
@@ -373,7 +383,7 @@ post-install-modulated:
 		gsed -i \
 			-e 's|bin/$(MM_BINDIR)|bin/$(ISABINDIR)/|g' \
 			-e 's|sbin/$(MM_BINDIR)|sbin/$(ISABINDIR)|g' \
-			-e 's|libexec/$(MM_BINDIR)|sbin/$(ISABINDIR)|g' \
+			-e 's|libexec/$(MM_BINDIR)|libexec/$(ISABINDIR)|g' \
 			$(DESTDIR)$(bindir)/$$file; \
 	done
 	@$(MAKECOOKIE)
