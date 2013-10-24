@@ -121,7 +121,8 @@ RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
+# For GCC4
+#RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
