@@ -1,0 +1,12 @@
+index b39690d..d362782 100644
+--- a/libpurple/protocols/irc/Makefile.in
++++ b/libpurple/protocols/irc/Makefile.in
+@@ -105,7 +105,7 @@ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+ am__v_lt_0 = --silent
+ libirc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libirc_la_CFLAGS) \
+-	$(CFLAGS) $(libirc_la_LDFLAGS) $(LDFLAGS) -o $@
++	$(CFLAGS) $(libirc_la_LDFLAGS) $(LDFLAGS) $(SASL_LIBS) -o $@
+ @STATIC_IRC_FALSE@am_libirc_la_rpath = -rpath $(pkgdir)
+ @STATIC_IRC_TRUE@am_libirc_la_rpath =
+ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
