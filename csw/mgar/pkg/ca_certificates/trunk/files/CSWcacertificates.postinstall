@@ -1,6 +1,6 @@
 # Update ca lists
-if [ -n "${BASEDIR}" ]; then
-	chroot ${BASEDIR} /opt/csw/sbin/update-ca-certificates
+if [ -n "${PKG_INSTALL_ROOT}" ]; then
+	chroot "${PKG_INSTALL_ROOT}" /opt/csw/sbin/update-ca-certificates
 else
 	/opt/csw/sbin/update-ca-certificates
 fi
