@@ -16,7 +16,7 @@ PACKAGES += CSWbuildbot-slave
 SPKG_DESC_CSWbuildbot-slave = BuildBot Slave Daemon
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWbuildbot-slave += CSWpy-twisted
-CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-twisted
+CHECKPKG_OVERRIDES_CSWbuildbot-slave += surplus-dependency|CSWpy-twisted
 
 ARCHALL_CSWbuildbot-slave = 1
 
