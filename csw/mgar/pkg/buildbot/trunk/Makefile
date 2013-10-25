@@ -23,8 +23,6 @@ define BLURB
 endef
 
 MASTER_SITES = $(PYPI_MIRROR)
-PATCHFILES  = buildbot-tail.patch
-#PATCHFILES += buildbot-debug.patch
 DISTFILES += $(DISTNAME).tar.gz
 
 PACKAGES += CSWbuildbot
