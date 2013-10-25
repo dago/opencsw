@@ -30,7 +30,6 @@ DISTFILES += $(DISTNAME).tar.gz
 PACKAGES += CSWbuildbot
 SPKG_DESC_CSWbuildbot = A system to automate the compile/test cycle
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWbuildbot += CSWcoreutils
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-twisted
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-zope-interface
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-sqlalchemy
@@ -41,7 +40,6 @@ RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-openssl
 
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-sqlalchemy
-CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-zope-interface
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-tempita
@@ -53,6 +51,12 @@ CHECKPKG_OVERRIDES_CSWbuildbot += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWbuildbot += catalogname-does-not-start-with-py_
 
 ARCHALL_CSWbuildbot = 1
+
+# logwatcher uses 'tail -f -n 0' only available on XPG4 tail or GNU tail, let's prefer XPG4
+REINPLACEMENTS += tail
+REINPLACE_MATCH_tail = /usr/bin/tail
+REINPLACE_WITH_tail = /usr/xpg4/bin/tail
+REINPLACE_FILES_tail += buildbot/scripts/logwatcher.py
 
 # There seems to be 'trial' missing
 SKIPTEST ?= 1
