@@ -1,0 +1,47 @@
+README
+======
+
+You find the README.ip4r included in the source distribution in
+/opt/csw/share/doc/postgresql/<VERSION>/contrib/.
+
+
+Installation
+============
+
+See also README.ip4r.
+
+
+PostgreSQL Version < 9.1
+------------------------
+
+psql-<XY> -U postgres -f /opt/csw/share/postgresql/<XY>/contrib/ip4r.sql <DB>
+
+ * <XY> is the PostgreSQL version without dot:
+
+   	 8.3.Z -> 83
+	 8.4.Z -> 84
+	 9.0.Z -> 90
+
+ * <DB> is the name of the database.
+
+It is not strictly necessary to use the `postgres' user when calling
+psql-<XY>. Any user with administrator privileges on the database
+should do.
+
+
+PostgreSQL Version >= 9.1
+-------------------------
+
+psql-<XY> -U postgres -c 'CREATE EXTENSION ip4r' <DB>
+
+ * <XY> is the PostgreSQL version without dot:
+
+   	 9.1.Z -> 91
+	 9.2.Z -> 92
+	 9.3.Z -> 93
+
+ * <DB> is the name of the database.
+
+It is not strictly necessary to use the `postgres' user when calling
+psql-<XY>. Any user with administrator privileges on the database
+should do.
