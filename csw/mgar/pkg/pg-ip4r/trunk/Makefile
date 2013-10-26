@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pg-ip4r
-VERSION = 1.05
+VERSION = 2.0
 GARTYPE = v2
 GARCOMPILER = SOS12U3
 
@@ -32,22 +32,17 @@ endef
 #
 # Therefore, ip4r-XY has to be downloaded manually and placed in the
 # proper place.
-MASTER_SITES  = http://ftp.postgresql.org/pub/source/v8.3.23/
 MASTER_SITES += http://ftp.postgresql.org/pub/source/v8.4.18/
 MASTER_SITES += http://ftp.postgresql.org/pub/source/v9.0.14/
 MASTER_SITES += http://ftp.postgresql.org/pub/source/v9.1.10/
 MASTER_SITES += http://ftp.postgresql.org/pub/source/v9.2.5/
 MASTER_SITES += http://ftp.postgresql.org/pub/source/v9.3.1/
 DISTFILES  = README.CSW
-DISTFILES += postgresql-8.3.23.tar.gz
 DISTFILES += postgresql-8.4.18.tar.gz
 DISTFILES += postgresql-9.0.14.tar.gz
 DISTFILES += postgresql-9.1.10.tar.gz
 DISTFILES += postgresql-9.2.5.tar.gz
 DISTFILES += postgresql-9.3.1.tar.gz
-# This is only required for Postgres 8.3, since version 2.0 source
-# references to numeric_div_trun() which is not available in 8.3
-DISTFILES += ip4r-1.05.tar.gz
 # This is used for Postgres 8.4-9.0, which do not feature extension
 # packaging mechanism
 DISTFILES += ip4r-2.0.tgz
@@ -56,14 +51,9 @@ DISTFILES += ip4r-2.0.tgz
 DISTFILES += ip4r-extension-2.0.tgz
 
 EXTRA_MODULATORS	= PGVERSION
-MODULATIONS_PGVERSION	= 83 84 90 91 92 93
+MODULATIONS_PGVERSION	= 84 90 91 92 93
 
 # Variables for PGVERSION modulations
-PG_SOURCE_NAME_83		= postgresql-8.3.23
-PG_BASEVERSION_DOT_83		= 8.3
-IP4R_SOURCE_NAME_83		= ip4r-1.05
-CONFIGURE_ARGS_83		= --with-docdir=$(docdir)/postgresql/$(PGVERSION)
-
 PG_SOURCE_NAME_84		= postgresql-8.4.18
 PG_BASEVERSION_DOT_84		= 8.4
 IP4R_SOURCE_NAME_84		= ip4r-2.0
@@ -95,8 +85,21 @@ MERGE_SCRIPTS_$(MODULATION)	= copy-relocate
 PACKAGES  =  $(foreach v,$(MODULATIONS_PGVERSION),CSWpg$(v)-ip4r)
 $(foreach v,$(MODULATIONS_PGVERSION),\
 	$(eval SPKG_DESC_CSWpg$(v)-ip4r = Indexable version of the cidr type for PostgreSQL $(PG_BASEVERSION_DOT_$(v)))\
-	$(eval PKGFILES_CSWpg$(v)-ip4r = .*/postgresql/$(v)/.*)\
+	$(eval PKGFILES_CSWpg$(v)-ip4r = .*/postgresql/$(v)/.* .*/pg$(v)_ip4r/.*README.CSW)\
 )
+
+BUILD_DEP_PKGS  = CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWlibxslt-dev
+BUILD_DEP_PKGS += CSWperl
+BUILD_DEP_PKGS += CSWpython-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWlibreadline-dev
+BUILD_DEP_PKGS += CSWgsed # gsed is used in this recipe
+BUILD_DEP_PKGS += CSWlibz-dev
+
+# Needed for thread safety check by configure
+LIBS		= -lrt
+EXTRA_CONFIGURE_ENV = LIBS=$(LIBS)
 
 BUILD64 = 1
 
