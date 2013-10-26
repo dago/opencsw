@@ -49,7 +49,8 @@ IP4R_SOURCE_NAME_83		= ip4r-1.05
 CONFIGURE_ARGS_83		= --with-docdir=$(docdir)/postgresql/$(PGVERSION)
 
 MERGE_SCRIPTS_$(MODULATION)	= copy-relocate
-
+# Only set MERGE_DIRS_$(MODULATION) if it is a 64bit ISA
+MERGE_DIRS_$(MODULATION)	= $(if $(subst $(ISA_DEFAULT64),,$(ISA)),,$(libdir))
 
 PACKAGES  =  $(foreach v,$(MODULATIONS_PGVERSION),CSWpg$(v)-ip4r)
 $(foreach v,$(MODULATIONS_PGVERSION),\
