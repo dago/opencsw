@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = pgadmin3
-VERSION = 1.16.1
+VERSION = 1.18.1
 GARTYPE = v2COMPILER = SOS12U1
 LICENSE = LICENSE
 
@@ -17,13 +17,12 @@ SPKG_SOURCEURL = http://www.pgadmin.org/
 MASTER_SITES = http://ftp.postgresql.org/pub/pgadmin3/release/v$(VERSION)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
-UFILES_REGEX = $(NAME)-(\d+(?PATCHFILES += 0001-use-wxT.patch
-
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWwxwidgetsCSWwxwidgetscommon
+UFILES_REGEX = $(NAME)-(\d+(?RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWwxwidgetsCSWwxwidgetscommon
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWwxwidgetsgtk2
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpgadRUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpgadmin3 += CSWlibz1dmin3 += CSWlibpq5
 
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
