@@ -1,3 +1,10 @@
+DBD-Pg (2.19.3,REV=2013.10.27)
+
+  * New upstream release 2.19.3.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 27 Oct 2013 14:53:16 +0100
+
+
 DBD-Pg (2.17.2,REV=2012.08.22)
 
   * Linked against CSWlibpg5.

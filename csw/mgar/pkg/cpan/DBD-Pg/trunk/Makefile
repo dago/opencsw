@@ -1,5 +1,5 @@
 NAME = DBD-Pg
-VERSION = 2.17.2
+VERSION = 2.19.3
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = TURNSTEP
@@ -13,8 +13,6 @@ endef
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DISTFILES += changelog.CSW
-
-PATCHFILES = 0001-Dont-return-value-in-dequote_bytea.patch
 
 PACKAGES = CSWpm-dbd-pg
 SPKG_DESC_$(PACKAGES) = $(DESCRIPTION)
