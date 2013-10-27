@@ -1,6 +1,6 @@
-From b1ceadb4298a86763b059ac5c9136f4a7e9bb6f2 Mon Sep 17 00:00:00 2001
+From 667867e20bbc4cdc0d0946e62cb4b8a9eca82134 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Sun, 28 Jul 2013 14:09:19 +0200
+Date: Sun, 27 Oct 2013 13:30:26 +0100
 Subject: [PATCH] Avoid difference in tr semantics between System V and BSD
 
 Solaris' tr (both /usr/bin/ and /usr/xpg4/bin) uses the System V
@@ -25,13 +25,13 @@ Replace four identical transforms with a function named
 broken_c_unquote. Replace the other two identical transforms with a
 fuction named broken_c_unquote_verbose.
 
-Signed-off-by: Ben Walton <bdwalton@gmail.com>
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
  t/t0008-ignores.sh | 30 ++++++++++++++++++------------
  1 file changed, 18 insertions(+), 12 deletions(-)
 
 diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 9c1bde1..e455eb4 100755
+index c29342d..b176057 100755
 --- a/t/t0008-ignores.sh
 +++ b/t/t0008-ignores.sh
 @@ -37,6 +37,14 @@ test_stderr () {
@@ -49,7 +49,7 @@ index 9c1bde1..e455eb4 100755
  stderr_contains () {
  	regexp="$1"
  	if grep "$regexp" "$HOME/stderr"
-@@ -517,12 +525,11 @@ cat <<-EOF >expected-verbose
+@@ -552,12 +560,11 @@ cat <<-EOF >expected-verbose
  	$global_excludes:2:!globaltwo	b/globaltwo
  EOF
  
@@ -67,9 +67,9 @@ index 9c1bde1..e455eb4 100755
  
  test_expect_success '--stdin' '
  	expect_from_stdin <expected-default &&
-@@ -606,12 +613,11 @@ cat <<-EOF >expected-verbose
- 	$global_excludes:2:!globaltwo	../b/globaltwo
- EOF
+@@ -638,12 +645,11 @@ EOF
+ grep -v '^::	' expected-all >expected-verbose
+ sed -e 's/.*	//' expected-verbose >expected-default
  
 -sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
 -	tr "\n" "\0" >stdin0
@@ -86,5 +86,5 @@ index 9c1bde1..e455eb4 100755
  test_expect_success '--stdin from subdirectory' '
  	expect_from_stdin <expected-default &&
 -- 
-1.8.3.1
+1.8.3.4
 
