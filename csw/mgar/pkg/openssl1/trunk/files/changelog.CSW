@@ -2,6 +2,7 @@ openssl (1.0.1e,rev=2013.10.27) unstable
 
   * Enabled use of solaris native issetugid function in crypto/uid.c
     thanks to Joerg Schilling.
+  * Enable sse2 usage based on runtime selection.
 
    -- yann rouillard <yann@opencsw.org>  Sun, 27 Oct 2013 20:01:23 +0100
 
