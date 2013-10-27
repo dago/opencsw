@@ -106,7 +106,11 @@ PATCHFILES += c_rehash-compat.patch
 
 # Oh yes, let's do symbol versioning so we don't become
 # crazy during library migration
-PATCHFILES += 0007-enables-symbols-versioning.patch
+PATCHFILES += 0007-enables-symbols-veropenssl currently only uses issetugid on freebsd and openbsd 
+# althought it is also available on Solaris 10
+# We make issetugid support configurable via preprocessor flag
+# to be able to enable it for Solaris
+PATCHFILES += make_issetugid_support_configurableymbols-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integratee
 ifdef PKCS11
@@ -161,12 +165,14 @@ amd64_OS_COMPILER 	= solaris64-x86_64-cc-sunw
 sparcv8_OS_COMPILER 		= solaris-sparcv8-cc-sunw
 sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc-sunw
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc-sunw
-sparcv9_OS_COMPILER		= solaris64-sparcv9-cc-sunwar# --libdir must only be given if the directory is actually different from lib or the creation will fail
+sparcv9_OS_COMPILER		= solaris64-sparcv9-cc-sunwar# Solaris has the issetugid function since libc version interface SUNW_1.21
+# but openssl doesn't use it by default so we manually enable it
+CONFIGURE_FLAGS = -DHAVE_ISSETUGIDar# --libdir must only be given if the directory is actually different from lib or the creation will fail
 # as the directory is already there
 LIBDIR_64 = --libdir=lib/64
 LIBDIR = $(LIBDIR_$(MEMORYMODEL))aris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_ $(LIBall_prefix=$(DESTDIR)
+CONFIGURE_ARGS = --prefix=$(CONFIGURE_FLAGS)=$(prefix) shared $($(ISA)_OS_COMPILER) --install_ $(LIBall_prefix=$(DESTDIR)
 
 # PKCS11 is only for Solaris 10 so we must create solaris 10 spesolaris10-i386
 ifneq ($(shell /usr/bi# There is a problem with this patch under sparc when using tls protocol
