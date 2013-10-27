@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.0.5
+VERSION = 3.0.6
 GARTYPE = v2
 
 DESCRIPTION = Open Source AFP fileserver
@@ -36,6 +36,7 @@ RUNTIME_DEP_PKGS += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWbdb48
+RUNTIME_DEP_PKGS += CSWlibgssapi-krb5-2
 
 # Don't know yet why but this dependency is only picked under sparc
 RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
@@ -54,6 +55,9 @@ REINPLACE_FILES_manifest2 += distrib/initscripts/netatalk.xml.tmpl
 PRESERVECONF += $(sysconfdir)/afp.conf
 PRESERVECONF += $(sysconfdir)/extmap.conf
 
+# workaround for missing include in 3.0.6
+# EXTRA_CFLAG = -I/usr/include/kerberosv5/
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --libdir=$(prefix)/lib/netatalk
 CONFIGURE_ARGS += --with-uams-path=$(prefix)/lib/netatalk
@@ -61,6 +65,7 @@ CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --disable-tcp-wrappers
 CONFIGURE_ARGS += --with-bdb=/opt/csw/bdb48
 CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
+CONFIGURE_ARGS += --enable-krbV-uam
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
 
