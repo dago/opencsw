@@ -15,7 +15,6 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  =DISTFILES += CSWnetatalk.postinstall CSWnetatalk.preremove
-GARCOMPILER = GNU
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -39,14 +38,9 @@ RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWbdb48
 RUNTIME_DEP_PKGS += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWlibicuuc51
-RUNTIME_DEP_PKGS += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS += CSWlibgcc-s1
-RUNTIME_DEP_PKGS += CSWlibtracker-common
 RUNTIME_DEP_PKGS += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
+RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 
 # Don't know yet why but this dependency is only picked under sparc
 RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
@@ -75,14 +69,10 @@ CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
 CONFIGURE_ARGS += --enable-krbV-uam
 CONFIGURE_ARGS += --with-tracker-prefix=/opt/csw
 CONFIGURE_ARGS += --with-tracker-pkgconfig-version=0.16
+# disable until asprintf() compat func is available in 3.1.1
+CONFIGURE_ARGS += --with-mysql-config=no
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
-CHECKPKG_OVERRIDES_CSWnetatalk += soname-unused|libicuuc.so.51|is|needed|by|/opt/csw/lib/netatalk/slmod_sparql.so|but|never|used
-CHECKPKG_OVERRIDES_CSWnetatalk += soname-unused|libintl.so.8|is|needed|by|/opt/csw/lib/netatalk/slmod_sparql.so|but|never|used
-CHECKPKG_OVERRIDES_CSWnetatalk += soname-unused|libthread.so.1|is|needed|by|/opt/csw/lib/netatalk/slmod_sparql.so|but|never|used
-CHECKPKG_OVERRIDES_CSWnetatalk += soname-unused|libtracker-data.so.0|is|needed|by|/opt/csw/lib/netatalk/slmod_sparql.so|but|never|used
-CHECKPKG_OVERRIDES_CSWnetatalk += soname-unused|libintl.so.8|is|needed|by|/opt/csw/sbin/afpd|but|never|used
-CHECKPKG_OVERRIDES_CSWnetatalk += surplus-dependency|CSWlibldap2-4-2
 
 include gar/category.mk
 
