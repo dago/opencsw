@@ -58,23 +58,23 @@ RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf2-0-0 += CSWlibintl8
 PACKAGES += CSWlibgdk-pixbuf-xlib2-0-0
 SPKG_DESC_CSWlibgdk-pixbuf-xlib2-0-0 = $(DESCRIPTION), libgdk_pixbuf_xlib-2.0.so.0
 PKGFILES_CSWlibgdk-pixbuf-xlib2-0-0 = $(call pkgfiles_lib,libgdk_pixbuf_xlib-2.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibglib2-0-0
 
 PACKAGES += CSWlibgdk-pixbuf-dev
 SPKG_DESC_CSWlibgdk-pixbuf-dev = Developtment files $(DESCRIPTION)
 PKGFILES_CSWlibgdk-pixbuf-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-dev = CSWgdkpixbuf
-# CSWgdkpixbuf is supposed to pull in all deps.
-CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev = missing-dependency|CSWlibgdk-pixbuf2-0-0
-
+RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-dev += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-dev += CSWlibgdk-pixbuf-xlib2-0-0
 
 BUILD_DEP_PKGS  = CSWggettext-dev
-BUILD_DEP_PKGS += CSWjbigkit
+BUILD_DEP_PKGS += CSWlibjbig-dev
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibiconv-dev
-BUILD_DEP_PKGS += CSWlibintl8
 BUILD_DEP_PKGS += CSWlibjpeg-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
-BUILD_DEP_PKGS += CSWtiff
+BUILD_DEP_PKGS += CSWlibtiff-dev
 
 BUILD64 = 1
 
@@ -88,6 +88,7 @@ CONFIGURE_ARGS-64 = --enable-introspection=no
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv-prefix
 CONFIGURE_ARGS += --with-libintl-prefix
+CONFIGURE_ARGS += --with-x11
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 include gar/category.mk
