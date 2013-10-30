@@ -30,7 +30,7 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-NATIVE_TOOLS = pkgadd pkgrm pkginfo pkgchk pkgparam
+NATIVE_TOOLS = pkgadd pkgrm pkginfo pkgchk pkgparam installf removef
 
 install-custom:
 	@echo " ==> Installing $(NAME)"
