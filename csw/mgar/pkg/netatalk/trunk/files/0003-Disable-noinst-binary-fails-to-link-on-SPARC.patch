@@ -1,0 +1,25 @@
+From 06753f73ca93e6a475c6dc9826d102139f36dc50 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 30 Oct 2013 11:37:56 +0100
+Subject: [PATCH] Disable noinst binary, fails to link on SPARC
+
+---
+ etc/spotlight/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/etc/spotlight/Makefile.in b/etc/spotlight/Makefile.in
+index c9c696e..2c42393 100644
+--- a/etc/spotlight/Makefile.in
++++ b/etc/spotlight/Makefile.in
+@@ -144,7 +144,7 @@ slmod_sparql_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+ 	$(LDFLAGS) -o $@
+ @HAVE_TRACKER_SPARQL_TRUE@am_slmod_sparql_la_rpath = -rpath \
+ @HAVE_TRACKER_SPARQL_TRUE@	$(moduledir)
+-@HAVE_TRACKER_SPARQL_TRUE@am__EXEEXT_1 = srp$(EXEEXT)
++@HAVE_TRACKER_SPARQL_TRUE@am__EXEEXT_1 =
+ PROGRAMS = $(noinst_PROGRAMS)
+ am__srp_SOURCES_DIST = slmod_sparql_map.c slmod_sparql_parser.y \
+ 	spotlight_rawquery_lexer.l
+-- 
+1.8.3.4
+
