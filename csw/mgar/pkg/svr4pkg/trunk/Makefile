@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = svr4pkg
-VERSION = 0.2
+VERSION = 0.3
 GARTYPE = v2
 
 DESCRIPTION = Basic perl implementation of solaris native svr4 packages tools
@@ -12,7 +12,7 @@ endef
 
 GITHUB_USER = yannrouillard
 MASTER_SITES = $(GITHUB_MIRROR)
-DISTNAME = $(GITHUB_USER)-$(NAME)-79588fe
+DISTNAME = $(GITHUB_USER)-$(NAME)-dab9dcf
 DISTFILES = $(NAME)-$(VERSION)$(GITHUB_BALL_EXT)
 
 # We disable inclusion of CSWcommon by default as
