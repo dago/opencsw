@@ -21,6 +21,11 @@ COMMON_PKG_DEPENDS =
 # We disable the checkpkg alarms related
 CHECKPKG_OVERRIDES_CSWsvr4pkg += missing-dependency|
 
+# We provide some default class action script
+# located in a place not standard so we disable 
+# the checkpkg warning
+CHECKPKG_OVERRIDES_CSWsvr4pkg += bad-location-of-file|
+
 ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
@@ -43,7 +48,7 @@ install-custom:
 	done
 	ginstall -d $(DESTDIR)$(CAS_LOCATION)
 	cd "$(FILEDIR)" && for CAS in *.sh; do \
-	    ginstall $$CAS $(DESTDIR)$(CAS_LOCATION)/$${CAS#.sh}; \
+	    ginstall $$CAS $(DESTDIR)$(CAS_LOCATION)/`echo ${CAS} | sed -e '/\.sh$$//'`; \
         done
 	ginstall -d $(DESTDIR)$(docdir)$(NAME)
 	ginstall $(WORKSRC)/README.md $(DESTDIR)$(docdir)$(NAME)
