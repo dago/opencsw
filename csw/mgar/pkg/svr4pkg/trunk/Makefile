@@ -32,6 +32,8 @@ include gar/category.mk
 
 NATIVE_TOOLS = pkgadd pkgrm pkginfo pkgchk pkgparam installf removef
 
+CAS_LOCATION = /var/sadm/install/scripts
+
 install-custom:
 	@echo " ==> Installing $(NAME)"
 	ginstall -d $(DESTDIR)$(bindir)
@@ -39,7 +41,12 @@ install-custom:
 	cd "$(DESTDIR)$(bindir)" && for TOOL in $(NATIVE_TOOLS); do \
 	    gln -sf svr4pkg "$$TOOL"; \
 	done
+	ginstall -d $(DESTDIR)$(CAS_LOCATION)
+	cd "$(FILEDIR)" && for CAS in *.sh; do \
+	    ginstall $$CAS $(DESTDIR)$(CAS_LOCATION)/$${CAS#.sh}; \
+        done
 	ginstall -d $(DESTDIR)$(docdir)$(NAME)
 	ginstall $(WORKSRC)/README.md $(DESTDIR)$(docdir)$(NAME)
+
 	@$(MAKECOOKIE)
 
