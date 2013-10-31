@@ -330,5 +330,6 @@ install-nss:
 	ginstall -m 644 $(FILEDIR)/nss.pc \
 		$(DESTDIR)$(libdir)/pkgconfig
 	if [ $(MEMORYMODEL) = 64 ]; then \
-	    gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nss.pc ; \
+	    gsed/lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nss.pc ; \
 	fi
+	@$(MAKECOOKIE)
