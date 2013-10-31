@@ -14,7 +14,7 @@ endef
 DISTNAME		=	metauml_manual
 WORKSRC			=	$(WORKDIR)/$(DISTNAME)2
 PATCHDIR		=	$(WORKSRC)
-MASTER_SITES	=	$(SF_MIRRORS)
+MASTER_SITES	=	$(SECTF_MIRRORS)
 SF_PROJ			=	metauml
 DISTFILES		=	$(DISTNAME)_src_$(VERSION).tgz
 DISTFILES		+=	fdl-1.3.txt
@@ -254,5 +254,4 @@ install-custom:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgdoc)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/metauml_manual.pdf $(DESTDIR)/$(pkgdoc)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgdoc)/examples
-	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/fig/*.mp $(DESTDIR)/$(pkgdoc)/examples
-	$(MAKECOOKIE)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/fig/*.mp $(DESTDIR)/$(pkgdoc)/exampl

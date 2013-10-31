@@ -13,7 +13,7 @@ endef
 DISTNAME		=	metauml_lop
 WORKSRC			=	$(WORKDIR)
 PATCHDIR		=	$(WORKSRC)
-MASTER_SITES	=	$(SF_MIRRORS)
+MASTER_SITES	=	$(SECTF_MIRRORS)
 SF_PROJ			=	metauml
 DISTFILES		=	lop-release.tgz
 DISTFILES		+=	COPYING
@@ -52,5 +52,4 @@ install-custom:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgdoc)/html
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/lop.html $(WORKSRC)/*.jpg $(DESTDIR)/$(pkgdoc)/html
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgmp)
-	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/*.mp $(DESTDIR)/$(pkgmp)
-	$(MAKECOOKIE)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/*.mp $(DESTDIR)/$(pkgm

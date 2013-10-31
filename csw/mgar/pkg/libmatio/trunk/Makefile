@@ -9,7 +9,7 @@ endef
 
 SF_PROJ = matio
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = $(SF_PROJ)-$(VERSION)
+DISECTTNAME = $(SF_PROJ)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release

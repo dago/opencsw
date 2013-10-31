@@ -16,7 +16,7 @@ endef
 
 SF_PROJ = flac
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = $(SF_PROJ)-$(VERSION)
+DISECTTNAME = $(SF_PROJ)-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
 PATCHFILES = strip-nasm-1.0.4.patch

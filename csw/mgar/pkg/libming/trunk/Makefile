@@ -14,9 +14,8 @@ define BLURB
   Perl.
 endef
 
-MASTER_SITES	=	 $(SF_MIRRORS)
-SF_PROJ			=	ming
-DISTNAME		=	$(SF_PROJ)-$(VERSION)
+MASTER_SITES	=	 $(SFECT			=	ming
+DISTNAME		=	$(SF_PROJECTNAME		=	$(SF_PROJ)-$(VERSION)
 DISTFILES		=	$(DISTNAME).tar.bz2
 PATCHFILES		+=	0001-PrintGifError-to-GifErrorString.patch
 PATCHFILES		+=	0002-makeswf-include-path.patch
@@ -110,4 +109,4 @@ test-custom:
 
 # this is private and not available publicly
 mydependencies:
-	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/wo

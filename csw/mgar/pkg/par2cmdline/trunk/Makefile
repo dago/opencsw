@@ -11,7 +11,7 @@ define BLURB
   files and repair them if necessary
 endef
 
-MASTER_SITES	=	$(SF_MIRRORS)
+MASTER_SITES	=	$(SECTF_MIRRORS)
 SF_PROJ			=	parchive
 DISTFILES		=	$(DISTNAME).tar.gz
 PATCHFILES		=	0001-Debian-0.4-11-serial-000_unidentified.patch
@@ -40,4 +40,4 @@ post-install-modulated:
 
 # this is private and not available publicly
 mydependencies:
-	$(HOME)/bin/ocswdeplist --package $(NAME)
+	$(HOME)/bin/ocswdeplist 
