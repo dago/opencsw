@@ -45,6 +45,9 @@ RUNTIME_DEP_PKGS_CSWlibxmlsec1gcrypt1 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibxmlsec1gcrypt1 += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWlibxmlsec1gcrypt1 += CSWlibxml2-2
 
+# This is on i386 only, some day I need to investigate this
+CHECKPKG_OVERRIDES_CSWlibxmlsec1gcrypt1 += surplus-dependency|CSWlibgpg-error0
+
 PACKAGES += CSWlibxmlsec1gnutls1
 SPKG_DESC_CSWlibxmlsec1gnutls1 = XML security library for GNU TLS
 PKGFILES_CSWlibxmlsec1gnutls1 += $(call pkgfiles_lib,libxmlsec1-gnutls.so.1)
