@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = Python
-VERSION = 2.6.8 lang
+VERSION = 2.6.9 lang
 GARTYPE = v2
 VER = 2.6
 DVER = 2-6
@@ -34,7 +34,7 @@ MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://pythoUFILES_REGEX = $(VER)\.\d+onPACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparcon.org/ftp/python/
 
-DISTFILES  = $(DISTFILES += pyport.harc solaris10-i386
+DISTFILES  xz(DISTFILES += pyport.harc solaris10-i386
 
 # Patches
 PATCHFILES += faqwiz.diff
@@ -167,13 +167,9 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev +=
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWpython$(CVER)
-
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.9    += CSWlibtcl8-4
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.9    += CSWtk
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.10   += CSWlibtcl8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.10   += CSWlibtk8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += $(RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_$(GAROSREL))
 
 # Don't merge test files.
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/test
