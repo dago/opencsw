@@ -1,0 +1,39 @@
+From 5eba57875fa506df9954769795572c5b34bfd5c9 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 30 Oct 2013 15:24:20 +0100
+Subject: [PATCH] =?UTF-8?q?Do=20not=20use=20-Wall=C3=82=20unless=20gcc?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ Makefile.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index fbe7f92..1b139ca 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -2825,7 +2825,7 @@ lib_tukey_libtukey_la_SOURCES = \
+ 	lib/tukey/qtukey.c \
+ 	lib/tukey/tukey.h
+ 
+-@HAVE_GUI_TRUE@lib_gtk_contrib_libxpaned_a_CFLAGS = $(GTK_CFLAGS) -Wall -DGDK_MULTIHEAD_SAFE=1
++@HAVE_GUI_TRUE@lib_gtk_contrib_libxpaned_a_CFLAGS = $(GTK_CFLAGS) -DGDK_MULTIHEAD_SAFE=1
+ @HAVE_GUI_TRUE@lib_gtk_contrib_libxpaned_a_SOURCES = \
+ @HAVE_GUI_TRUE@	lib/gtk-contrib/gtkxpaned.c \
+ @HAVE_GUI_TRUE@	lib/gtk-contrib/gtkxpaned.h
+@@ -3458,8 +3458,8 @@ UI_FILES = \
+ 	src/ui/gui/var-sheet.ui \
+ 	src/ui/gui/var-type-dialog.ui
+ 
+-@HAVE_GUI_TRUE@src_ui_gui_psppire_CFLAGS = $(GTK_CFLAGS) $(GTKSOURCEVIEW_CFLAGS) -Wall -DGDK_MULTIHEAD_SAFE=1
+-@HAVE_GUI_TRUE@src_ui_gui_spreadsheet_test_CFLAGS = $(GTK_CFLAGS) -Wall -DGDK_MULTIHEAD_SAFE=1
++@HAVE_GUI_TRUE@src_ui_gui_psppire_CFLAGS = $(GTK_CFLAGS) $(GTKSOURCEVIEW_CFLAGS) -DGDK_MULTIHEAD_SAFE=1
++@HAVE_GUI_TRUE@src_ui_gui_spreadsheet_test_CFLAGS = $(GTK_CFLAGS) -DGDK_MULTIHEAD_SAFE=1
+ @HAVE_GUI_TRUE@src_ui_gui_psppire_LDFLAGS = $(PSPPIRE_LDFLAGS) \
+ @HAVE_GUI_TRUE@	$(PG_LDFLAGS) $(am__append_9) $(am__append_10)
+ @HAVE_GUI_TRUE@src_ui_gui_psppire_LDADD = \
+-- 
+1.8.3.4
+
