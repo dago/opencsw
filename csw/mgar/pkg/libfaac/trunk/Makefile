@@ -10,8 +10,8 @@ endef
 
 SF_PROJ = faac
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(SF_PROJ)-$(VERSION).tar.bz2
-DISTNAME = $(SF_PROJ)-$(VERSION)
+DISTFECT)-$(VERSION).tar.bz2
+DISTNAME = $(SF_PROJECTTNAME = $(SF_PROJ)-$(VERSION)
 
 PACKAGES = CSWfaac
 CATALOGNAME = $(NAME)
@@ -19,7 +19,7 @@ CATALOGNAME = $(NAME)
 SPKG_SOURCEURL = http://www.audiocoding.com/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_ECTREGEX = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.bz2
 
 #PATCHFILES += Makefile.am.diff Makefile.in.diff Makefile.in.frontend.diff 
 PATCHFILES += Makefile.in.frontend.diff Makefile.in.common.mp4v2.diff

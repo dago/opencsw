@@ -11,7 +11,7 @@ define BLURB
 endef
 
 DISTNAME		=	metauml_lib
-MASTER_SITES	=	$(SF_MIRRORS)
+MASTER_SITES	=	$(SECTF_MIRRORS)
 SF_PROJ			=	metauml
 DISTFILES		=	$(DISTNAME)_$(VERSION).tgz
 DISTFILES		+=	README.CSW
@@ -40,5 +40,4 @@ install-custom:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgtexmf)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(source)/*.mp $(DESTDIR)/$(pkgtexmf)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgdoc)
-	ginstall --preserve-timestamps --mode=u=rwx,go=r $(source)/version.txt $(DESTDIR)/$(pkgdoc)
-	$(MAKECOOKIE)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(source)/version.txt $(DESTDIR)/$(pkgdo

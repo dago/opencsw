@@ -10,7 +10,7 @@ endef
 
 SF_PROJ = uriparser
 MASTER_SITES = $(SF_MIRROR)
-DISTNAME = $(SF_PROJ)-$(VERSION)
+DISECTTNAME = $(SF_PROJ)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # File name regex to get notifications about upstream software releases
