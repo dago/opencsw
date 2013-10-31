@@ -165,7 +165,7 @@ CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|d
 CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvdpau.so.1
 # this exists only on i386 and Solaris 10
 CHECKPKG_OVERRIDES_CSWmplayer	+=	missing-dependency|NVDAgraphics
-# this in incongruous (dur to man/cat1 usage):
+# this in incongruous (due to man/cat1 usage):
 CHECKPKG_OVERRIDES_CSWmencoder += missing-dependency|CSWfltk
 
 PACKAGES						+=	CSWmencoder
