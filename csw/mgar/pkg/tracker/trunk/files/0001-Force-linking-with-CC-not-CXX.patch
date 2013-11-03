@@ -1,20 +1,20 @@
-From 418c1723f87ae488294d9744657ce5a34e49c4f1 Mon Sep 17 00:00:00 2001
+From eb09edeb8c9b0a6212331f75f6017ea8010c3e3f Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
-Date: Mon, 29 Apr 2013 07:39:43 +0200
+Date: Fri, 1 Nov 2013 18:13:22 +0100
 Subject: [PATCH] Force linking with CC, not CXX
 
 Linking with CXX introduces bizarre linker errors where dependent
 libs are linked with their relative sourcetree path even in the final
 installed libarary.
 ---
- src/libtracker-extract/Makefile.in |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ src/libtracker-extract/Makefile.in | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/libtracker-extract/Makefile.in b/src/libtracker-extract/Makefile.in
-index 0ce7b1d..3d046e9 100644
+index 9cd71d5..b3b4b2e 100644
 --- a/src/libtracker-extract/Makefile.in
 +++ b/src/libtracker-extract/Makefile.in
-@@ -74,7 +74,7 @@ DIST_COMMON = $(libtracker_extractinclude_HEADERS) $(noinst_HEADERS) \
+@@ -101,7 +101,7 @@ DIST_COMMON = $(top_srcdir)/Makefile.decl $(srcdir)/Makefile.in \
  @HAVE_MEEGOTOUCH_TRUE@	tracker-encoding-meegotouch.cpp                \
  @HAVE_MEEGOTOUCH_TRUE@	tracker-encoding-meegotouch.h
  
@@ -23,9 +23,9 @@ index 0ce7b1d..3d046e9 100644
  @HAVE_INTROSPECTION_TRUE@am__append_4 = TrackerExtract-$(TRACKER_API_VERSION).gir
  subdir = src/libtracker-extract
  ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-@@ -152,8 +152,8 @@ AM_V_lt = $(am__v_lt_@AM_V@)
- am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+@@ -180,8 +180,8 @@ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
  am__v_lt_0 = --silent
+ am__v_lt_1 = 
  libtracker_extract_@TRACKER_API_VERSION@_la_LINK = $(LIBTOOL) \
 -	$(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 -	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
@@ -33,19 +33,10 @@ index 0ce7b1d..3d046e9 100644
 +	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
  	$(libtracker_extract_@TRACKER_API_VERSION@_la_LDFLAGS) \
  	$(LDFLAGS) -o $@
- DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
-@@ -531,7 +531,7 @@ GTESTER_REPORT = gtester-report
+ AM_V_P = $(am__v_P_@AM_V@)
+@@ -734,7 +734,7 @@ clean-libLTLIBRARIES:
+ 	}
  
- # initialize variables for unconditional += appending
- TEST_PROGS = 
--AM_CPPFLAGS = \
-+AM_CFLAGS = \
- 	$(BUILD_CFLAGS)                                \
- 	-I$(top_srcdir)/src                            \
- 	-I$(top_builddir)/src                          \
-@@ -662,7 +662,7 @@ clean-libLTLIBRARIES:
- 	  rm -f "$${dir}/so_locations"; \
- 	done
  libtracker-extract-@TRACKER_API_VERSION@.la: $(libtracker_extract_@TRACKER_API_VERSION@_la_OBJECTS) $(libtracker_extract_@TRACKER_API_VERSION@_la_DEPENDENCIES) $(EXTRA_libtracker_extract_@TRACKER_API_VERSION@_la_DEPENDENCIES) 
 -	$(AM_V_CXXLD)$(libtracker_extract_@TRACKER_API_VERSION@_la_LINK) -rpath $(libdir) $(libtracker_extract_@TRACKER_API_VERSION@_la_OBJECTS) $(libtracker_extract_@TRACKER_API_VERSION@_la_LIBADD) $(LIBS)
 +	$(AM_V_CCLD)$(libtracker_extract_@TRACKER_API_VERSION@_la_LINK) -rpath $(libdir) $(libtracker_extract_@TRACKER_API_VERSION@_la_OBJECTS) $(libtracker_extract_@TRACKER_API_VERSION@_la_LIBADD) $(LIBS)
@@ -53,5 +44,5 @@ index 0ce7b1d..3d046e9 100644
  mostlyclean-compile:
  	-rm -f *.$(OBJEXT)
 -- 
-1.7.9.2
+1.8.3.4
 
