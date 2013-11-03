@@ -63,7 +63,22 @@ SPKG_DESC_CSWlibcairo-doc = $(DESCRIPTION) documentation
 PKGFILES_CSWlibcairo-doc += $(sharedstatedir)/gtk-doc.*
 ARCHALL_CSWlibcairo-doc = 1
 OBSOLETED_BY_CSWlibcairo-doc = CSWlibcairodoc
-CATALOGNAME_CSWlibcairodoc = liBUILD64_LIBS_ONLY = 1
+CATALOGNAME_CSWlibcairodoc = liBUILD_DEP_PKGS  = CSWgtk-doc
+BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibspectre-dev
+BUILD_DEP_PKGS += CSWpkgconfig
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWfontconfig-dev
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWpoppler-dev
+BUILD_DEP_PKGS += CSWghostscript-dev 
+BUILD_DEP_PKGS += CSWghostscript
+BUILD_DEP_PKGS += CSWlibrsvg-dev
+BUILD_DEP_PKGS += CSWlibxext
+BUILD_DEP_PKGS += CSWlibxrender
+BUILD_DEP_PKGS += CSWlibxrenderdevel
+BUILD_DEP_PKGS += CSWsunx11devel
+liBUILD64_LIBS_ONLY = 1
 EXTRA_CFLAGS  =  -xc99=all
 
 # There are several tests failing, but I'm in a hurry to release... :/
