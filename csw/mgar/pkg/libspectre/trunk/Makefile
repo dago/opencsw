@@ -22,8 +22,6 @@ CATALOGNAME_CSWlibspectre = libspectre_stub
 PACKAGES += CSWlibspectre-dev
 SPKG_DESC_CSWlibspectre-dev = Development files for libspectre.so.1
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibspectre-dev = CSWlibspectre1
-
-# Disable for now as libgs iBUILD64_LIBS_ONLY = 1
+RUNTIME_DEP_PKGS_CSWlibspectre-dev =BUILD64_LIBS_ONLY = 1
 
 include gar/category.mk
