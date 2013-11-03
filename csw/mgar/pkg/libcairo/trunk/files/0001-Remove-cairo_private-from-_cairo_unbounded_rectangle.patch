@@ -1,0 +1,26 @@
+From 5bf236145de19d5468accbfef4969cc5fb79958c Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 3 Nov 2013 15:04:52 +0100
+Subject: [PATCH] Remove cairo_private from _cairo_unbounded_rectangle
+
+---
+ src/cairoint.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/cairoint.h b/src/cairoint.h
+index 861e2f7..8cc0367 100644
+--- a/src/cairoint.h
++++ b/src/cairoint.h
+@@ -293,7 +293,8 @@ _cairo_boxes_get_extents (const cairo_box_t *boxes,
+ 			  cairo_box_t *extents);
+ 
+ cairo_private extern const cairo_rectangle_int_t _cairo_empty_rectangle;
+-cairo_private extern const cairo_rectangle_int_t _cairo_unbounded_rectangle;
++/* using cairo_private on cairo_rectangle leads to a scope issue when linking */
++extern const cairo_rectangle_int_t _cairo_unbounded_rectangle;
+ 
+ static inline void
+ _cairo_unbounded_rectangle_init (cairo_rectangle_int_t *rect)
+-- 
+1.8.3.4
+
