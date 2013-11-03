@@ -1,6 +1,31 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
 #
+# What's going on in this recipe?
+# -------------------------------
+#
+# This recipe uses modulation to build ip4r in the sources of each
+# PostgreSQL version separately.
+#
+# The sources of each PostgreSQL version supported by OpenCSW are
+# extracted and configured (i.e. ./configure is called with the same
+# arguments used as if building PostgreSQL), and ip4r is copied to the
+# contrib directory. Then, make and 'make install' are called only in
+# contrib/ip4r.
+#
+# Further, PostgreSQL 8.4 to 9.0 use ip4r without support for
+# extensions, which were introduced in 9.1. So 9.1+ use ip4r with
+# support for extensions.
+#
+#
+# Why doing it the hard way?
+# --------------------------
+#
+# Currently, OpenCSW PostgreSQL provides development files only for
+# the most recent PostgreSQL version. Though it might be possible to
+# build ip4r using the latest development files, and provide the
+# resulting library for earlier versions, I stayed away from that
+# approach, in order to avoid any possible incompatibilities.
+# 
 NAME = pg-ip4r
 VERSION = 2.0
 GARTYPE = v2
