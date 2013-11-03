@@ -16,9 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES = $(D#ISTNAME).tar.xz
-
-PATCHFILES += 0001-Comment-out-problematic-definition-of-AtkTextRange.patch
+DISTFILES = $(DTextRange.patch
 
 PACKAGES += CSWlibatk1-0-0
 SPKG_DESC_CSWlibatk1-0-0 = An accessibility toolkit for GNOME, libatk-1.0.so.0
@@ -33,7 +31,7 @@ PACKAGES += CSWlibatk-dev
 SPKG_DESC_CSWlibatk-dev = Development files for libatk-1.0.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibatk-dev += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWlibatk-dev += CSWglib2devel
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWglib2devel
 OBSOLETED_BY_CSWlibatk-dev = CSWlibatkdevel
 CATALOGNAME_CSWlibatkdevel = libatk_devel_stub
 
