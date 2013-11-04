@@ -1,0 +1,29 @@
+From 24496b0da2cd09bc62723e33231cad80105e3a0c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 9 Jun 2011 20:30:55 +0200
+Subject: [PATCH 2/2] Use inttypes.h when stdint.h is not available
+
+---
+ pango/opentype/hb-common.h |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/pango/opentype/hb-common.h b/pango/opentype/hb-common.h
+index 11f64ed..a6be6ba 100644
+--- a/pango/opentype/hb-common.h
++++ b/pango/opentype/hb-common.h
+@@ -27,7 +27,11 @@
+ #ifndef HB_COMMON_H
+ #define HB_COMMON_H
+ 
+-#include <stdint.h>
++# ifdef HAVE_STDINT_H
++#  include <stdint.h>
++# else ifdef HAVE_INTTYPES_H
++# include <inttypes.h>
++# endif
+ 
+ # ifdef __cplusplus
+ #  define HB_BEGIN_DECLS	extern "C" {
+-- 
+1.7.5.4
+
