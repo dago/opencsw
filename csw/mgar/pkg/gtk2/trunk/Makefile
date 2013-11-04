@@ -25,12 +25,7 @@ DISTFILES += README.CSW
 
 EXPANDVARS = CSWgtk2.postinstall
 
-# This makes the tests work in#PATCHFILES += 0002-Use-absolute-path-to-Xvfbpe_from_name-GtkT.patch
-
-# This patch adds a command line option `--update-modules` to
-# gtk-query-immodules-2.0 which has the default location of
-# gtk.immodules hardcoded and takes 32/64bit ISAs into account.
-1-Add-update-modules-cmd-line-option.patch
+# This makes the tests work inPATCHFILES += 0000-Use-absolute-path-to-Xvfb.patch
 
 PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
 
@@ -185,7 +180,7 @@ CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibcairo2
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibgobject2-0-0
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += missing-dependency|CSWlibglib2-0-0
 
-libgdk-pixbuf-dev
+lgdk-pixbuf-dev
 
 
 PACKAGES += CSWgtk2doc
@@ -212,7 +207,9 @@ BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWggettext
 BUILD_DEP_PKGS += CSWlibpixman-dev
 BUILD_DEP_PKGS BUILD_DEP_PKGS += CSWfontconfig-dev
-BUILD_DEP_PKGS += CSWlibfreetypePKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibfreetypePKGS BUILD_DEP_PKGS += CSWlibgcrypt-dev
+BUILD_DEP_PKGS += CSWlibgpg-error-dev
+BUILD_DEP_PKGS += CSWlibgnutls-dev  += CSWlibpng-dev
 # Needed to make a test work
 BUILD_DEP_PKGS += CSWgamin
 # Used to adjust documentation
@@ -236,8 +233,8 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 include gar/category.mk
 
 post-merge:
-	ginstall -d $(PKGROOT)$(sysconfdir)/64/gtk-2.0
-	ginstall $(PKGROOT)$(sysconfdir)/gtk-2.0/im-multipress.conf $(PKGROOT)$(sysconfdir)/64/gtk-2.0/
+	ginstall -d $(PKGROgtk-2.0
+	[ -f $(PKGROOT)$(sysconfdir)/gtk-2.0/im-multipress.conf ] || ginstall $(PKGROOT)/etc/opt/csw/gtk-2.0/im-multipress.conf $(PKGROOT)$(sysconfdir))$(sysconfdir)/64/gtk-2.0/
 	gsed -i -e 's|/usr/share/|$(sharedstatedir)/|g' \
 		-e 's|/usr/lib|$(libdir)|g' \
 		-e 's|/usr/include|$(includedir)|g' `find $(PKGROOT)$(sharedstatedir)/gtk-doc -type f`
