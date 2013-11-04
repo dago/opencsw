@@ -1,0 +1,25 @@
+From 8f4ed5e421c668213e57da64ee73eb4de443b727 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Mon, 4 Nov 2013 08:55:28 +0100
+Subject: [PATCH] Use absolute path to Xvfb
+
+---
+ tests/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/Makefile.in b/tests/Makefile.in
+index 8b937c9..a1b316e 100644
+--- a/tests/Makefile.in
++++ b/tests/Makefile.in
+@@ -934,7 +934,7 @@ TEST_PROGS =
+ ### testing rules
+ 
+ # Xvfb based test rules
+-XVFB = Xvfb -ac -noreset -screen 0 800x600x16
++XVFB = /usr/X11/bin/Xvfb -ac -noreset -screen 0 800x600x16
+ XIDS = 101 102 103 104 105 106 107 197 199 211 223 227 293 307 308 309 310 311 \
+    491 492 493 494 495 496 497 498 499 500 501 502 503 504 505 506 507 508 509 \
+    991 992 993 994 995 996 997 998 999 1000 1001 1002 1003 1004 1005 1006 1007 \
+-- 
+1.8.3.4
+

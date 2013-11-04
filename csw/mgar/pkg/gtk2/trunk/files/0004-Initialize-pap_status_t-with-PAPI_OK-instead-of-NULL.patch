@@ -1,0 +1,25 @@
+From 4f10d808cf516fb2068445d59a5410e56ff9c122 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Mon, 4 Nov 2013 10:21:49 +0100
+Subject: [PATCH] Initialize pap_status_t with PAPI_OK instead of NULL
+
+---
+ modules/printbackends/papi/gtkprintbackendpapi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/printbackends/papi/gtkprintbackendpapi.c b/modules/printbackends/papi/gtkprintbackendpapi.c
+index d349010..3f81f7f 100644
+--- a/modules/printbackends/papi/gtkprintbackendpapi.c
++++ b/modules/printbackends/papi/gtkprintbackendpapi.c
+@@ -352,7 +352,7 @@ gtk_print_backend_papi_print_stream (GtkPrintBackend        *print_backend,
+   const gchar *title;
+   char *prtnm = NULL;
+   GtkPrintDuplex val;
+-  papi_status_t pstatus = NULL;
++  papi_status_t pstatus = PAPI_OK;
+   papi_attribute_t **attrs = NULL;
+   papi_job_ticket_t *ticket = NULL;
+   
+-- 
+1.8.3.4
+
