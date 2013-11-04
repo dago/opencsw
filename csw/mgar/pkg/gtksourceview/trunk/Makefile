@@ -1,67 +1,61 @@
 NAME = gtksourceview
-VERSION = 2.9.3
+VERSION = 2.11.2
 CATEGORIES = gnome
 GARTYPE = v2
 
 DESCRIPTION = A text widget with features typical of a source code editor
-define BLURB
-	GtkSourceView is a text widget that extends the standard gtk+ 2.x
-	text widget GtkTextView.
-
-	It improves GtkTextView by implementing syntax highlighting and other
-	features typical of a source code editor.
-endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTNAME  = $(NAME)-$(VERSION)
+DISTFILES += $(NAME)-$(VERSION).tar.bz2
 
-PACKAGES = CSWgtksourceview CSWgtksourceviewdev CSWgtksourceviewdoc
-CATALOGNAME_CSWgtksourceview = gtksourceview
-CATALOGNAME_CSWgtksourceviewdev = gtksourceview_devel
-CATALOGNAME_CSWgtksourceviewdoc = gtksourceview_doc
+VENDOR_URL = http://live.gnome.org/GtkSourceView
 
-SPKG_DESC_CSWgtksourceview += A text widget with features typical of a source code editor
-SPKG_DESC_CSWgtksourceviewdev += A text widget with features typical of a source code editor - developer package
-SPKG_DESC_CSWgtksourceviewdoc += A text widget with features typical of a source code editor - documentation
+PACKAGES += CSWlibgtksourceview2-0-0
+SPKG_DESC_CSWlibgtksourceview2-0-0 = A text widget with features typical of a source code editor
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtksourceview2-0-0 += CSWlibglib2-0-0
+OBSOLETED_BY_CSWlibgtksourceview2-0-0 += CSWgtksourceview
 
-RUNTIME_DEP_PKGS_CSWgtksourceview += CSWfconfig CSWftype2 CSWgconf2 CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWgtksourceview += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
-RUNTIME_DEP_PKGS_CSWgtksourceview += CSWlibxml2 CSWpango CSWlibxext
-RUNTIME_DEP_PKGS_CSWgtksourceviewdev += CSWgtksourceview
-RUNTIME_DEP_PKGS_CSWgtksourceviewdoc += CSWgtksourceview
+# Harmless
+CHECKPKG_OVERRIDES_CSWlibgtksourceview2-0-0 += soname-unused|libthread.so.1|is|needed|by|/opt/csw/lib/libgtksourceview-2.0.so.0.0.0|but|never|used
+CHECKPKG_OVERRIDES_CSWlibgtksourceview2-0-0 += soname-unused|libthread.so.1|is|needed|by|/opt/csw/lib/sparcv9/libgtksourceview-2.0.so.0.0.0|but|never|used
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-SPKG_SOURCEURL = http://live.gnome.org/GtkSourceView
-
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-
-#NOISAEXEC = 1
-#NOISALIST = 1
-# gconf-2 not 64-bit yet
-#BUILD64 = 1
-
-PKGFILES_CSWgtksourceviewdev = $(PKGFILES_DEVEL)
-PKGFILES_CSWgtksourceviewdoc = $(sharedstatedir)/gtk-doc/.*
-
-ARCHALL_CSWgtksourceviewdoc = 1
-
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-
-# Test fails due to:
-# Xlib:  extension "Generic Event Extension" missing on display ":0.0".
-#
-#TEST_TARGET = check
-TEST_TARGET = 
+PACKAGES += CSWlibgtksourceview-dev
+SPKG_DESC_CSWlibgtksourceview-dev = Development files for libgtksourceview-2.0.so.0
+PKGFILES_CSWlibgtksourceview-dev  += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibgtksourceview-dev += $(sharedstatedir)/gtk-doc/.*
+RUNTIME_DEP_PKGS_CSWlibgtksourceview-dev += CSWlibgtksourceview2-0-0
 
 STRIP_LIBTOOL = 1
 
-include gar/category.mk
+BUILD64 = 1
 
-PATH := /opt/csw/gnu:$(PATH)
+# Work around for old pango stuff:
+#   http://lists.opencsw.org/pipermail/maintainers/2013-April/017892.html
+EXTRA_CFLAGS += -DG_CONST_RETURN=const
+
+# This is also deprecated
+EXTRA_CFLAGS += -DG_UNICODE_COMBINING_MARK
+
+EXTRA_CONFIGURE_EXPORTS += XGETTEXT MSGMERGE MSGFMT
+CONFIGURE_ENV_XGETTEXT = $(bindir_install)/gxgettext
+CONFIGURE_ENV_MSGMERGE = $(bindir_install)/gmsgmerge
+CONFIGURE_ENV_MSGFMT = $(bindir_install)/gmsgfmt
+
+CONFIGURE_ARGS += $(DIRPATHS)
+# We are missing Gtk-2.0.gir
+CONFIGURE_ARGS += --enable-introspection=no
+
+# We probably don't have a display
+SKIPTEST ?= 1
+
+include gar/category.mk
