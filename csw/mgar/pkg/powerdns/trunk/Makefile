@@ -63,7 +63,7 @@ CONFIGURE_ARGS += --with-mysql=$(prefix)
 CONFIGURE_ARGS += --with-mysql-lib=$(prefix)/lib
 CONFIGURE_ARGS += --with-mysql-includes=$(prefix)/include
 CONFIGURE_ARGS += --with-sqlite3
-CONFIGURE_ARGS += --with-modules="ldap remote geo gmysql gsqlite3"
+CONFIGURE_ARGS += --with-modules="ldap pipe remote geo gmysql gsqlite3"
 
 EXTRA_CONFIGURE_ENV += "PKG_CONFIG=/opt/csw/bin/pkg-config"
 EXTRA_CONFIGURE_ENV += "PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig"
