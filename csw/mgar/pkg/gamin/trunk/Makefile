@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES += http://people.gnome.org/~veillard/gamin/sources/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  =DISTFILES += changelog.CSW= $(DISTNAME).tar.gz
 
 # Solaris Nevada FEN support from
 #   https://bugzilla.gnome.org/show_bug.cgi?id=491319
@@ -48,15 +48,21 @@ RUNTIME_DEP_PKGS_CSWlibgamin-deRUNTIME_DEP_PKGS_CSWlibgamin-dev +=  missing-depe
 
 PACKAGES += CSWpy-gamin
 SPKG_DESC_CSWpy-gamin = Python bindings for GAMIN file alteration monitor
-PKGFILES_CSWpy-gamin += $(libdir)/site-packages/.*
+PKGFILES_CSWpy-gamin += $(libdiCHECKPKG_OVERRIDES_CSWpy-gamin += python-package-missing-py-files
+CHECKPKG_OVERRIDES_CSWpy-gamin += python-package-missing-py26-files
+CHECKPKG_OVERRIDES_CSWpy-gamin += 64-bit-binaries-missing
+CHECKPKG_OVERRIDES_CSWpy-gamin += surplus-dependency|CSWpythonir)/site-packages/.*
 RUNTIME_DEP_PKGS_CSWpy-gamin += CSWpython
-RUNTIME_DEP_PKGS_CSWpy-gami# Build choked when trying to build python for 64bit
-CHECKPKG_OVERRIDES_CSWpy-gamin += 64-bit-binaries-missingin += CSWlibgamin1-0
+RUNTIME_DEP_PKGS_CSWpy-gamin += CSWlibgamin1-0
 
 PACKAGES += CSWgamin
 SPKG_DESC_CSWgamin = GAMIN file alteration monitor daemon (compatible to FAM)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWgamin += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgaminRUNTIME_DEP_PKGS_CSWgamin += CSWlibintl8
+# Currently (2013-11-04) behave differently: sparc seems to ignore -z ignore and 
+# x86 does respect it. I have to report this to the list...
+CHECKPKG_OVERRIDES_CSWgamin += soname-unused
+CHECKPKG_OVERRIDES_CSWgamin += surplus-dependency|CSWlibintl8n += CSWlibglib2-0-0
 OBSOLETED_BY_CSWgamin += CSWfam
 
 BUILD_DEP_PKGS  = CSWlibtool
@@ -64,9 +70,9 @@ BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWautoconf
 BUILD_DEP_PKGS += CSWautomake
 
-# For socket, recvmsg, connect
-# Overwrite existing -L/opt/csw/lib or installed libs will be picked up first
-LINKER_FLAGS = -lsocket -lnsl
+# For sockeEXTRA_LINKER_FLAGS = -lsocket -lnsl
+
+BUILD64l
 
 BUILD64_LIBS_ONLY = 1
 
@@ -85,7 +91,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 CONFIGURE_ARGS-64 += --without-pythonARGS-$(MEMORYMODEL))
 
 PYCOMPILE = 1
-EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
+EXTRA_MERGE_EXCLUDE_FILE .*/python2.6S += .*\.pyo .*\.pyc
 EXTRA_PAX_ARGS += -s ,$(libdir)/python2.6/site-packages,$(libdir)/site-packages,
 EXTRA_PAX_ARGS += -s ,$(libdir)/python2.4/site-packages,$(libdir)/site-packages,
 

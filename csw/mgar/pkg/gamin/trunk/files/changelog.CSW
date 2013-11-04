@@ -1,0 +1,5 @@
+gamin (0.1.10,REV=2013.11.04)
+
+  * Include gam_server for 64bit builds.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 04 Nov 2013 13:19:59 +0100
