@@ -1,11 +1,10 @@
 # $Id$
 
 NAME = gtk2
-VERSION = 2.24.14
-CATEGORIES = lib
+VERSION = 2.24.22
 GARTYPE = v2
 
-GARCOMPILER = SOS12U3
+GARCOMPILER = GNUOMPILER = SOS12U3
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DESCRIPTION = GTK+, the multiplatform X11 toolkit for GUI development
@@ -26,21 +25,17 @@ DISTFILES += README.CSW
 
 EXPANDVARS = CSWgtk2.postinstall
 
-# This makes the tests work in the first place
-PATCHFILES += 0000-Use-absolute-path-to-Xvfb.patch
-
-# This disables a check that I wasn't able to fix
-#
-# This bug has already been reported by Tim Mooney
-#  https://bugzilla.gnome.org/show_bug.cgi?id=643338
-PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
+# This makes the tests work in#PATCHFILES += 0002-Use-absolute-path-to-Xvfbpe_from_name-GtkT.patch
 
 # This patch adds a command line option `--update-modules` to
 # gtk-query-immodules-2.0 which has the default location of
 # gtk.immodules hardcoded and takes 32/64bit ISAs into account.
-PATCHFILES += 0000-Add-update-modules-cmd-line-option.patch
+1-Add-update-modules-cmd-line-option.patch
 
-PATCHFILES += 0000-Adjust-hardcoded-path-to-opt-csw-share.patch
+PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
+
+PATCHFILES += 0003-Adjust-hardcoded-path-to-opt-csw-share.patch
+PATCHFILES += 0004-Initialize-pap_status_t-with-PAPI_OK-instead-of-NULL-to-opt-csw-share.patch
 
 PACKAGES += CSWgtk2
 SPKG_DESC_CSWgtk2 = $(DESCRIPTION)
@@ -235,8 +230,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shm
 CONFIGURE_ARGS += --enable-xkb
 CONFIGURE_ARGS += --enable-xinerama
-CONFIGURE_ARGS += --enable-cu += --enable-introspection=no += --enable-cups
-CONFIGURE_ARGS-64 += --disable-cups
+CONFIGURE_ARGS += --enable-cu += --disable-introspection+= --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 include gar/category.mk
