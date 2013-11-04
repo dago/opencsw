@@ -87,7 +87,7 @@ RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWpdnsRUNTIME_DEP_PKGS_CSWpdns += CSWlibcurl4s += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWpdns += CSWlibsqlite3-0
 BUILD_DEP_PKGS_CSWpdns += CSWmysql-dev
 BUILD_DEP_PGKS_CSWpdns += CSWboostdevel
 BUILD_DEP_PKGS_CSWpdns += CSWlibsqlite3-dev
