@@ -24,7 +24,7 @@ RUNTIME_DEP_PKGS_CSWpspp += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibgsl0
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWpspp += CSWgtksourceview
+RUNTIME_DEP_PKGS_CSWpspp += CSWlibgtksourceview2-0-0
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpspp += CSWpango
@@ -32,13 +32,15 @@ RUNTIME_DEP_PKGS_CSWpspp += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWpspp += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpspp += CSWlibgslcblas0
+
+# Yes...
+CHECKPKG_OVERRIDES_CSWpspp += soname-unused
 
 GARCOMPILER = GNU
 
-# Do not use 64 bit until this is fixed:
-#   https://www.opencsw.org/mantis/view.php?id=5120
-#BUILD64 = 1
-#ISAEXEC = 1
+BUILD64 = 1
+ISAEXEC = 1
 
 # Use GNU tools
 BUILD_OVERRIDE_VARS += XGETTEXT
