@@ -36,7 +36,7 @@ PKGFILES_CSWlibcairo-script-interpreter2 = $(call pkgfiles_lib,libcairo-script-i
 RUNTIME_DEP_PKGS_CSWlibcairo-script-inlibcairo2
 RUNTIME_DEP_PKGS_CSWlibcairo-script-interpreter2 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibcairo-script-interpreter2 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibcairo-script-interpreter2 += CSWlibz1= CSWlibpixman1-0
+RUNTIME_DEP_PKGS_CSWlibcairo-script-interpreter2 += CSWlibz1=RUNTIME_DEP_PKGS_CSWlibcairo-script-interpreter2 += CSWliblzo2-2= CSWlibpixman1-0
 OBSOLETED_BY_CSWlibcairo-script-interpreter2 = CSWlibcairo
 
 PACKAGES += CSWlibcairo-gobject2
@@ -44,15 +44,16 @@ SPKG_DESC_CSWlibcairo-gobject2 = The Cairo 2D Graphics Library, libcairo-gobject
 PKGFILES_CSWlibcairo-gobject2 = $(call pkgfiles_lib,libcairo-gobject.so.2)
 RUNTIME_DEP_PKGS_CSWlibcairo-gcairo2
 RUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibgobject2-0-0ject2 += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibgobject2-0-0jRUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibintl8
 OBSOLETED_BY_CSWlibcairo-gobject2 = CSWlibcairo
+HECKPKG_OVERRIDES_CSWlibcairo-gobject2 += soname-unusedct2 = CSWlibcairo
 
 PACKAGES += CSWlibcairo-dev
 SPKG_DESC_CSWlibcairo-dev = Development files for libcairo.so.2
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibcairo-script-interpreter2
-RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibcairo-gobject2
+RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlRUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibz1libcairo-gobject2
 # This is important or pkgconfig on cairo will fail
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibpixman-dev
 OBSOLETED_BY_CSWlibcairo-dev = CSWlibcairodevel
