@@ -1,0 +1,32 @@
+From 271f5476cf4c9c627eb6c480266fc23adca51bff Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 30 Oct 2013 17:41:14 +0100
+Subject: [PATCH] setting release build
+
+---
+ cmake/admMainChecks.cmake | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/cmake/admMainChecks.cmake b/cmake/admMainChecks.cmake
+index 9d17dd2..d7b02a1 100644
+--- a/cmake/admMainChecks.cmake
++++ b/cmake/admMainChecks.cmake
+@@ -51,10 +51,15 @@ IF (CMAKE_VERBOSE_MAKEFILE)
+    OPTION(VERBOSE "" ON)
+ ENDIF (CMAKE_VERBOSE_MAKEFILE)
+ 
++MESSAGE(STATUS "build type '${CMAKE_BUILD_TYPE}'")
+ IF (NOT CMAKE_BUILD_TYPE)
+ 	SET(CMAKE_BUILD_TYPE "Release")
+ ENDIF (NOT CMAKE_BUILD_TYPE)
+ 
++if (CMAKE_BUILD_TYPE STREQUAL "Release")
++   OPTION(RELEASE "" ON)
++endif (CMAKE_BUILD_TYPE STREQUAL "Release")
++
+ ########################################
+ # Avidemux system specific tweaks
+ ########################################
+-- 
+1.8.3.4
+

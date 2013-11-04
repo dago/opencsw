@@ -1,0 +1,25 @@
+From 7b88926104f32a87e388b92e2c4914b2c73306e8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Nov 2013 14:16:38 +0100
+Subject: [PATCH] fabs desambiguation 2
+
+---
+ avidemux_plugins/ADM_scriptEngines/tinyPy/src/tinypy/tinypy.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/avidemux_plugins/ADM_scriptEngines/tinyPy/src/tinypy/tinypy.cpp b/avidemux_plugins/ADM_scriptEngines/tinyPy/src/tinypy/tinypy.cpp
+index 4abd94f..a74a5b7 100644
+--- a/avidemux_plugins/ADM_scriptEngines/tinyPy/src/tinypy/tinypy.cpp
++++ b/avidemux_plugins/ADM_scriptEngines/tinyPy/src/tinypy/tinypy.cpp
+@@ -1881,7 +1881,7 @@ tp_obj tp_str(TP,tp_obj self) {
+     if (type == TP_STRING) { return self; }
+     if (type == TP_NUMBER) {
+         tp_num v = self.number.val;
+-        if ((fabs(v)-fabs((long)v)) < 0.000001) { return tp_printf(tp,"%ld",(long)v); }
++        if ((fabs(v)-fabs((tp_num)(long)v)) < 0.000001) { return tp_printf(tp,"%ld",(long)v); }
+         return tp_printfFloat(tp,"%f",v);
+     } else if(type == TP_DICT) {
+         return tp_printf(tp,"<dict 0x%x>",self.dict.val);
+-- 
+1.8.3.4
+

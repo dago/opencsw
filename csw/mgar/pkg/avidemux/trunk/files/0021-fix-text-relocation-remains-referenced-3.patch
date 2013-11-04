@@ -1,0 +1,25 @@
+From 18a2b83bbef0d28f079f2ae74bf931f5b7f462b6 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Nov 2013 14:19:45 +0100
+Subject: [PATCH] fix text relocation remains referenced 3
+
+---
+ avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp b/avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp
+index bfdc43e..eb8867b 100644
+--- a/avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp
++++ b/avidemux_plugins/ADM_videoFilters6/fluxSmooth/ADM_vidFluxAsm.cpp
+@@ -178,7 +178,7 @@ void attribute_used ADMVideoFlux::DoFilter_C(
+ 	ADM_assert(ycnt == 0);
+ 
+ }
+-#ifdef ADM_CPU_X86
++#if defined(ADM_CPU_X86) && !defined(__sun__)
+ /*
+ 	__asm movq mm2, mm0 \
+ 	__asm movq mm3, mm1 \
+-- 
+1.8.3.4
+

@@ -1,0 +1,25 @@
+From 8ad678c03ff39338b4f05baa247d553f4780623b Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 28 Oct 2013 16:45:57 +0100
+Subject: [PATCH] abs desabiguation
+
+---
+ avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp b/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp
+index 62da626..c5079f8 100644
+--- a/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp
++++ b/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp
+@@ -46,7 +46,7 @@ bool ADM_audioStreamBuffered::refill(void)
+         // By construction, the error should be minimal
+         if(newDts!=ADM_AUDIO_NO_DTS)
+         {
+-            if( abs(newDts-lastDts)>ADM_MAX_SKEW)
++            if( abs(long(newDts-lastDts))>ADM_MAX_SKEW)
+             {
+                 printf("[AudioStream] Warning skew in dts =%"PRId64", \n",(int64_t)newDts-(uint64_t)lastDts);
+                 printf("[AudioStream] Warning skew lastDts=%s \n",ADM_us2plain(lastDts));
+-- 
+1.8.3.4
+

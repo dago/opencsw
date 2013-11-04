@@ -1,0 +1,25 @@
+From 2876c12a2b7ed70a3dd01e8b4fa11d43de7e4079 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 30 Oct 2013 17:44:21 +0100
+Subject: [PATCH] fabs desambiguation
+
+---
+ avidemux/common/ADM_audioFilter/src/audiocopy.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/avidemux/common/ADM_audioFilter/src/audiocopy.cpp b/avidemux/common/ADM_audioFilter/src/audiocopy.cpp
+index 8189503..f7a938c 100644
+--- a/avidemux/common/ADM_audioFilter/src/audiocopy.cpp
++++ b/avidemux/common/ADM_audioFilter/src/audiocopy.cpp
+@@ -372,7 +372,7 @@ again:
+         {
+             uint64_t currentClock=clock->getTimeUs();
+             aprintf("Duping clockDts=%d, syncDts=%d\n",currentClock,nextDts);
+-            if( fabs((double)nextDts-(double)currentClock<MIN_SKEW) || (currentClock>nextDts) )
++            if( (fabs((double)nextDts-(double)currentClock)<MIN_SKEW) || (currentClock>nextDts) )
+             {
+                 aprintf("Close enough..\n");
+                 changeState(Flushing);
+-- 
+1.8.3.4
+

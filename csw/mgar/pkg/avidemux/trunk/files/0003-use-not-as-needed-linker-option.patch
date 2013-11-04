@@ -1,0 +1,26 @@
+From 0998c2e88d9818d54703c8dab569584899f3db97 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 28 Oct 2013 18:26:41 +0100
+Subject: [PATCH] use not as needed linker option
+
+---
+ cmake/admAsNeeded.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/admAsNeeded.cmake b/cmake/admAsNeeded.cmake
+index 80a2f21..53ada16 100644
+--- a/cmake/admAsNeeded.cmake
++++ b/cmake/admAsNeeded.cmake
+@@ -1,7 +1,7 @@
+ MACRO(AS_NEEDED name)
+-	if (CMAKE_COMPILER_IS_GNUCC AND NOT APPLE)
++	if (CMAKE_COMPILER_IS_GNUCC AND NOT APPLE AND NOT CMAKE_SYSTEM_NAME STREQUAL "SunOS")
+ 		TARGET_LINK_LIBRARIES( ${name} "-Wl,--as-needed")
+-	endif (CMAKE_COMPILER_IS_GNUCC AND NOT APPLE)
++	endif (CMAKE_COMPILER_IS_GNUCC AND NOT APPLE AND NOT CMAKE_SYSTEM_NAME STREQUAL "SunOS")
+ ENDMACRO(AS_NEEDED name)
+ 
+ MACRO(ADM_ADD_SHARED_LIBRARY name)
+-- 
+1.8.3.4
+

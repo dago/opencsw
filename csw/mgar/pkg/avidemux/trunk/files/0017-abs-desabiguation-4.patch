@@ -1,0 +1,53 @@
+From c24a10e2d394c11b21d840890dfd74fc89d0eacf Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 31 Oct 2013 16:49:16 +0100
+Subject: [PATCH] abs desabiguation 4
+
+---
+ avidemux_plugins/ADM_demuxers/Matroska/ADM_mkv.cpp         | 2 +-
+ avidemux_plugins/ADM_muxers/muxerAvi/muxerAvi.cpp          | 2 +-
+ avidemux_plugins/ADM_muxers/muxerMp4v2/muxerMp4v2Audio.cpp | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkv.cpp b/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkv.cpp
+index 18c8806..25f3455 100644
+--- a/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkv.cpp
++++ b/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkv.cpp
+@@ -263,7 +263,7 @@ bool mkvHeader::ComputeDeltaAndCheckBFrames(uint32_t *minDeltaX, uint32_t *maxDe
+     ADM_info("Maximum delta found %"PRId64" us\n",maxDelta);
+     if(minDelta)
+     {
+-        if(minDelta<track->_defaultFrameDuration && abs(minDelta-track->_defaultFrameDuration)>1000)
++        if(minDelta<track->_defaultFrameDuration && abs((long)(minDelta-track->_defaultFrameDuration))>1000)
+         {
+             ADM_info("Changing default frame duration from %"PRIu64" to %"PRIu64" us\n",
+                     track->_defaultFrameDuration,minDelta);
+diff --git a/avidemux_plugins/ADM_muxers/muxerAvi/muxerAvi.cpp b/avidemux_plugins/ADM_muxers/muxerAvi/muxerAvi.cpp
+index df0cd80..f7dd2c5 100644
+--- a/avidemux_plugins/ADM_muxers/muxerAvi/muxerAvi.cpp
++++ b/avidemux_plugins/ADM_muxers/muxerAvi/muxerAvi.cpp
+@@ -124,7 +124,7 @@ bool muxerAvi::fillAudio(uint64_t targetDts)
+                             aprintf("[Audio] Packet size %"PRIu32" sample:%"PRIu32" dts:%"PRIu64" target :%"PRIu64"\n",
+                                             aPacket->sizeInBytes,aPacket->nbSamples,aPacket->dts,targetDts);
+                             if(aPacket->dts!=ADM_NO_PTS)
+-                                if( abs(aPacket->dts-clk->getTimeUs())>32000)
++                                if( abs((long)(aPacket->dts-clk->getTimeUs()))>32000)
+                                 {
+                                     ADM_warning("[AviMuxer] Audio skew!\n");
+                                     clk->setTimeUs(aPacket->dts);
+diff --git a/avidemux_plugins/ADM_muxers/muxerMp4v2/muxerMp4v2Audio.cpp b/avidemux_plugins/ADM_muxers/muxerMp4v2/muxerMp4v2Audio.cpp
+index 1541d06..0c0a2ed 100644
+--- a/avidemux_plugins/ADM_muxers/muxerMp4v2/muxerMp4v2Audio.cpp
++++ b/avidemux_plugins/ADM_muxers/muxerMp4v2/muxerMp4v2Audio.cpp
+@@ -265,7 +265,7 @@ bool muxerMp4v2::fillAudio(uint64_t targetDts)
+                             bprintf("Current audio Dts=%"PRId64"\n",currentDts);
+                             bprintf("Incoming block, dts=%"PRId64"\n",currentBlock->dts);
+                             bprintf("Delta =%d ms\n",(int)(currentDts-currentBlock->dts));
+-                            if( abs(currentBlock->dts-currentDts)>MP4V2_MAX_JITTER)
++                            if( abs((long)(currentBlock->dts-currentDts))>MP4V2_MAX_JITTER)
+                             {
+                                 if(currentBlock->dts<currentDts)
+                                     {
+-- 
+1.8.3.4
+

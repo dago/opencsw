@@ -1,0 +1,29 @@
+From 6a2343f9fbdd99abc81ef96d746b37f624ed557b Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 4 Nov 2013 14:48:08 +0100
+Subject: [PATCH] fix font reference
+
+---
+ avidemux_plugins/ADM_videoFilters6/ass/ADM_vidASS.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/avidemux_plugins/ADM_videoFilters6/ass/ADM_vidASS.cpp b/avidemux_plugins/ADM_videoFilters6/ass/ADM_vidASS.cpp
+index 2efb87a..19c0a38 100644
+--- a/avidemux_plugins/ADM_videoFilters6/ass/ADM_vidASS.cpp
++++ b/avidemux_plugins/ADM_videoFilters6/ass/ADM_vidASS.cpp
+@@ -69,7 +69,11 @@ DECLARE_VIDEO_FILTER(   subAss,   // Class
+ #   define DEFAULT_FONT_DIR "c:"
+ # else
+ #   define DIR_SEP '/'
+-#   define DEFAULT_FONT_DIR "/usr/share/fonts/truetype/"
++#   if defined(__sun__)
++#       define DEFAULT_FONT_DIR "/opt/csw/share/fonts/truetype/"
++#   else
++#       define DEFAULT_FONT_DIR "/usr/share/fonts/truetype/"
++#   endif
+ # endif
+ #endif
+ //*****************
+-- 
+1.8.3.4
+

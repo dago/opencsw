@@ -1,0 +1,34 @@
+From 804ad9cbcffd36c7624a11c7b6b95f74b1762083 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Nov 2013 14:21:39 +0100
+Subject: [PATCH] abs desabiguation 5
+
+---
+ avidemux_plugins/ADM_videoFilters6/telecide/Telecide_getFrame.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/avidemux_plugins/ADM_videoFilters6/telecide/Telecide_getFrame.cpp b/avidemux_plugins/ADM_videoFilters6/telecide/Telecide_getFrame.cpp
+index 4052fcf..4fba3d9 100644
+--- a/avidemux_plugins/ADM_videoFilters6/telecide/Telecide_getFrame.cpp
++++ b/avidemux_plugins/ADM_videoFilters6/telecide/Telecide_getFrame.cpp
+@@ -245,7 +245,7 @@ teleCide *_param=&configuration;
+                         {
+                                 // The chosen frame doesn't match the prediction.
+                                 if (predicted_metric == 0) mismatch = 0.0;
+-                                else mismatch = (100.0*abs(predicted_metric - lowest))/predicted_metric;
++                                else mismatch = (100.0*abs((int)(predicted_metric - lowest)))/predicted_metric;
+                                 if (mismatch < gthresh)
+                                 {
+                                         // It's close enough, so use the predicted one.
+@@ -288,7 +288,7 @@ teleCide *_param=&configuration;
+                                         {
+                                                 // The chosen frame doesn't match the prediction.
+                                                 if (predicted_metric == 0) mismatch = 0.0;
+-                                                else mismatch = (100.0*abs(predicted_metric - lowest))/predicted_metric;
++                                                else mismatch = (100.0*abs((int)(predicted_metric - lowest)))/predicted_metric;
+                                                 if ((int) mismatch <= gthresh)
+                                                 {
+                                                         // It's close enough, so use the predicted one.
+-- 
+1.8.3.4
+
