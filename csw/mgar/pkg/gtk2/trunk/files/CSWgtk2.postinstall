@@ -41,10 +41,11 @@ done
 echo "** Done Updating Icon cache"
 
 BIN=gtk-query-immodules-2.0
-BIN_OPTS="--update-cache"
+BIN_OPTS="--update-modules"
 
 echo "** Querying IM Modules"
 
+# Now, do all other
 for i in @NEEDED_ISAS@
 do
     # The default ISA is removed
@@ -58,6 +59,10 @@ do
         else
             /usr/bin/printf "- ${isa} ISA... "
         fi
+
+	# Figure out the default file path (binary has to be patched for this)
+	gtk_immodules="`${ISABIN} | /usr/bin/awk '/DefaultFile =/ { print $4 }`"
+
 
 	/usr/sbin/chroot "${PKG_ROOT_DIR}" "${ISABIN}" ${BIN_OPTS} >/dev/null 2>&1
 	if [ $? -ne 0 ]
