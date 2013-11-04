@@ -1,4 +1,4 @@
-# $Id: dependency_checks.py 21908 2013-09-11 19:48:35Z chninkel $
+# $Id$
 
 import checkpkg_lib
 import os.path
@@ -274,11 +274,11 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
           " because of the configure script itself or because of the"
           " \"pkg-config --libs\" output of one the dependency."
           % ("/" + binary_info["path"], ", ".join(unused_libs)))
-        for soname in unused_libs:
-          error_mgr.ReportError(
-            pkgname, "soname-unused",
-            "%s is needed by %s but never used"
-            % (soname, "/" + binary_info["path"]))
+        #for soname in unused_libs:
+        #  error_mgr.ReportError(
+        #    pkgname, "soname-unused",
+        #    "%s is needed by %s but never used"
+        #    % (soname, "/" + binary_info["path"]))
 
     else:
       # No "really needed libs" means either:
