@@ -1,39 +1,32 @@
 # $Id$
 #
 NAME = libmemcached
-VERSION = 0.53
-VENDOR_URL = http://libmemcached.org/
-CATEGORIES = lib
+VERSION = 1.0.17
 DESCRIPTION = Library memcached interface
-define BLURB
-  memcached url
-endef
-SPKG_SOURCEURL = http://libmemcached.org/
-MASTER_SITES = http://launchpad.net/libmemcached/1.0/$(VERSION)/+download/
 
-PATCHFILES += 0001-Do-not-do-PANDORA_TEST_VC_DIR.patch
-PATCHFILES += 0002-Use-opt-csw-bin-ggrep.patch
+
+MASTER_SITES = http://launchpad.net/libmemcached/1.0/$(VERSION)/+download/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+
+#PATCHFILES += 0001-Do-not-do-PANDORA_TEST_VC_DIR.patch
+#PATCHFILES += 0002-Use-opt-csw-bin-ggrep.patch
+
+VENDOR_URL = http://libmemcached.org/
 
 BUILD_DEP_PKGS += CSWlibevent-dev
 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-dtrace
-CONFIGURE_ARGS += --disable-rpath
+#CONFIGURE_ARGS += --disable-dtrace
+#CONFIGURE_ARGS += --disable-rpath
 
 GARCOMPILER = GNU
-GARTYPE = 2
+BUILD64 = 1
 ISAEXEC = 1
 
-BUILD64 = 1
-SKIPTEST = 1
+#SKIPTEST = 1
 
-OPT_FLAGS_SOS = -xO3
-OPT_FLAGS_GCC = -O2 -pipe
-
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+#OPT_FLAGS_SOS = -xO3
+#OPT_FLAGS_GCC = -O2 -pipe6 solaris10-sparc
 
 PACKAGES += CSWlibmemcached
 RUNTIME_DEP_PKGS_CSWlibmemcached += CSWlibgcc-s1
@@ -82,5 +75,4 @@ RUNTIME_DEP_PKGS_CSWlibmemcachedprotocol0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibmemcachedprotocol0 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibmemcached += CSWlibmemcachedprotocol0
 
-include gar/category.mk
-
+include 
