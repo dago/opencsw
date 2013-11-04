@@ -46,7 +46,7 @@ RUNTIME_DEP_PKGS_CSWlibcairo-gcairo2
 RUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibgobject2-0-0jRUNTIME_DEP_PKGS_CSWlibcairo-gobject2 += CSWlibintl8
 OBSOLETED_BY_CSWlibcairo-gobject2 = CSWlibcairo
-CHECKPKG_OVERRIDES_CSWlibcairo-gobject2 += soname-unusedct2 = CSWlibcairo
+CHECKPKG_OVERRIDES_CSWlibcairo-gobject2 += soname-unusedcCHECKPKG_OVERRIDES_CSWlibcairo-gobject2 += surplus-dependency|CSWlibintl8ct2 = CSWlibcairo
 
 PACKAGES += CSWlibcairo-dev
 SPKG_DESC_CSWlibcairo-dev = Development files for libcairo.so.2
