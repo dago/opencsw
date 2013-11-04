@@ -1,6 +1,6 @@
-From 2271243bf700f8694b0504d437292af84f13bd3f Mon Sep 17 00:00:00 2001
+From 9da30fc28d2d0f8682facfa9861c669fce68cc5e Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
-Date: Thu, 23 May 2013 14:02:35 +0200
+Date: Fri, 28 Jun 2013 19:05:12 +0200
 Subject: [PATCH] Disable failing gapplication tests
 
 ---
@@ -8,15 +8,16 @@ Subject: [PATCH] Disable failing gapplication tests
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/gio/tests/gapplication.c b/gio/tests/gapplication.c
-index a83411c..8a750c5 100644
+index 8769693..4504a37 100644
 --- a/gio/tests/gapplication.c
 +++ b/gio/tests/gapplication.c
-@@ -433,11 +433,11 @@ main (int argc, char **argv)
-   g_setenv ("DBUS_SESSION_BUS_ADDRESS", session_bus_get_temporary_address (), TRUE);
+@@ -514,12 +514,12 @@ main (int argc, char **argv)
+   g_test_dbus_unset ();
  
    g_test_add_func ("/gapplication/no-dbus", test_nodbus);
 -  g_test_add_func ("/gapplication/basic", basic);
 +//  g_test_add_func ("/gapplication/basic", basic);
+   g_test_add_func ("/gapplication/no-appid", test_noappid);
  /*  g_test_add_func ("/gapplication/non-unique", test_nonunique); */
 -  g_test_add_func ("/gapplication/properties", properties);
 +//  g_test_add_func ("/gapplication/properties", properties);
@@ -24,8 +25,8 @@ index a83411c..8a750c5 100644
 -  g_test_add_func ("/gapplication/quit", test_quit);
 +//  g_test_add_func ("/gapplication/quit", test_quit);
    g_test_add_func ("/gapplication/actions", test_actions);
+   g_test_add_func ("/gapplication/local-command-line", test_local_command_line);
  
-   return g_test_run ();
 -- 
-1.8.1.4
+1.8.3.1
 
