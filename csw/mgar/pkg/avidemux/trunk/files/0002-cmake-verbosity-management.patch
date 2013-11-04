@@ -1,0 +1,31 @@
+From 06506d707c5fb038dc2e1d085ca1a08cb3e8c629 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sat, 26 Oct 2013 10:24:19 +0200
+Subject: [PATCH] cmake verbosity management
+
+---
+ cmake/admMainChecks.cmake | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/cmake/admMainChecks.cmake b/cmake/admMainChecks.cmake
+index c760cdc..9d17dd2 100644
+--- a/cmake/admMainChecks.cmake
++++ b/cmake/admMainChecks.cmake
+@@ -43,7 +43,13 @@ ENDIF (FRESH_BUILD)
+ ########################################
+ # Global options
+ ########################################
+-OPTION(VERBOSE "" OFF)
++IF (NOT CMAKE_VERBOSE_MAKEFILE)
++   OPTION(VERBOSE "" OFF)
++ENDIF (NOT CMAKE_VERBOSE_MAKEFILE)
++
++IF (CMAKE_VERBOSE_MAKEFILE)
++   OPTION(VERBOSE "" ON)
++ENDIF (CMAKE_VERBOSE_MAKEFILE)
+ 
+ IF (NOT CMAKE_BUILD_TYPE)
+ 	SET(CMAKE_BUILD_TYPE "Release")
+-- 
+1.8.3.4
+

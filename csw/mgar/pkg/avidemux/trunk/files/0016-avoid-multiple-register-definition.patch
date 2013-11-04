@@ -1,0 +1,28 @@
+From 3fa0645368406053739cc94f42adcb3c20d574b1 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 31 Oct 2013 17:11:31 +0100
+Subject: [PATCH] avoid multiple register definition
+
+---
+ avidemux_core/ADM_core/include/ADM_mangle.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/avidemux_core/ADM_core/include/ADM_mangle.h b/avidemux_core/ADM_core/include/ADM_mangle.h
+index 1ab0c48..cf17162 100644
+--- a/avidemux_core/ADM_core/include/ADM_mangle.h
++++ b/avidemux_core/ADM_core/include/ADM_mangle.h
+@@ -75,7 +75,10 @@
+ #define REG_d  "edx" 
+ #define REG_S  "esi" 
+ #define REG_D  "edi" 
+-#define REG_SP "esp" 
++#if defined(__sun__) && defined(REG_SP)
++#undef REG_SP
++#endif /* : defined(__sun__) */
++#define REG_SP "esp"
+ #define REGSP   esp  
+ #define REG_BP "ebp" 
+ #endif
+-- 
+1.8.3.4
+

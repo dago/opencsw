@@ -1,0 +1,26 @@
+From a0f25f5fd1e44a85f8661c9bd554cea9df37acf6 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 30 Oct 2013 17:51:34 +0100
+Subject: [PATCH] include alloca declaration
+
+---
+ avidemux/common/ADM_videoCodec/src/ADM_ffmpeg_vdpau.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/avidemux/common/ADM_videoCodec/src/ADM_ffmpeg_vdpau.cpp b/avidemux/common/ADM_videoCodec/src/ADM_ffmpeg_vdpau.cpp
+index 8eac0f4..408af14 100644
+--- a/avidemux/common/ADM_videoCodec/src/ADM_ffmpeg_vdpau.cpp
++++ b/avidemux/common/ADM_videoCodec/src/ADM_ffmpeg_vdpau.cpp
+@@ -41,6 +41,9 @@ extern "C" {
+ #include "ADM_codecVdpau.h"
+ #include "ADM_threads.h"
+ 
++#if defined(__sun__)
++#include <alloca.h>
++#endif /* : defined(__sun__) */
+ 
+ static bool         vdpauWorking=false;
+ static admMutex     surfaceMutex;
+-- 
+1.8.3.4
+

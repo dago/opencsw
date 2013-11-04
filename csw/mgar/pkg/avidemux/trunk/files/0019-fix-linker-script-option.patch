@@ -1,0 +1,51 @@
+From c13e1fa445fce9d4e13e7c7d72e9d43195b4136a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 1 Nov 2013 11:10:00 +0100
+Subject: [PATCH] fix linker script option
+
+---
+ avidemux_plugins/ADM_scriptEngines/qtScript/src/CMakeLists.txt     | 2 +-
+ avidemux_plugins/ADM_scriptEngines/spiderMonkey/src/CMakeLists.txt | 2 +-
+ avidemux_plugins/ADM_scriptEngines/tinyPy/src/CMakeLists.txt       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/avidemux_plugins/ADM_scriptEngines/qtScript/src/CMakeLists.txt b/avidemux_plugins/ADM_scriptEngines/qtScript/src/CMakeLists.txt
+index b1885ac..0ee3977 100644
+--- a/avidemux_plugins/ADM_scriptEngines/qtScript/src/CMakeLists.txt
++++ b/avidemux_plugins/ADM_scriptEngines/qtScript/src/CMakeLists.txt
+@@ -36,7 +36,7 @@ target_link_libraries(
+ INSTALL_SCRIPT_ENGINE(ADM_script_qt)
+ 
+ if (NOT APPLE)
+-	target_link_libraries(ADM_script_qt -Wl,--version-script,"${CMAKE_CURRENT_SOURCE_DIR}/ADM_script_qt.v")
++	target_link_libraries(ADM_script_qt -Wl,-M,"${CMAKE_CURRENT_SOURCE_DIR}/ADM_script_qt.v")
+ endif (NOT APPLE)
+ 
+ if (QT_QTSCRIPTTOOLS_FOUND)
+diff --git a/avidemux_plugins/ADM_scriptEngines/spiderMonkey/src/CMakeLists.txt b/avidemux_plugins/ADM_scriptEngines/spiderMonkey/src/CMakeLists.txt
+index 1218a23..e35f7df 100644
+--- a/avidemux_plugins/ADM_scriptEngines/spiderMonkey/src/CMakeLists.txt
++++ b/avidemux_plugins/ADM_scriptEngines/spiderMonkey/src/CMakeLists.txt
+@@ -46,5 +46,5 @@ endif (USE_SYSTEM_SPIDERMONKEY)
+ target_link_libraries(ADM_script_spiderMonkey ADM_coreUI6 ADM_coreUtils6 ADM_scriptDF ADM_coreScript ADM_core6)
+ 
+ if (NOT APPLE)
+-    target_link_libraries(ADM_script_spiderMonkey -Wl,--version-script,"${CMAKE_CURRENT_SOURCE_DIR}/ADM_script_spiderMonkey.v")
++    target_link_libraries(ADM_script_spiderMonkey -Wl,-M,"${CMAKE_CURRENT_SOURCE_DIR}/ADM_script_spiderMonkey.v")
+ endif (NOT APPLE)
+diff --git a/avidemux_plugins/ADM_scriptEngines/tinyPy/src/CMakeLists.txt b/avidemux_plugins/ADM_scriptEngines/tinyPy/src/CMakeLists.txt
+index 7ac388e..15176b9 100644
+--- a/avidemux_plugins/ADM_scriptEngines/tinyPy/src/CMakeLists.txt
++++ b/avidemux_plugins/ADM_scriptEngines/tinyPy/src/CMakeLists.txt
+@@ -24,7 +24,7 @@ include_directories(${AVIDEMUX_TOP_SOURCE_DIR}/avidemux/common/ADM_editor/includ
+ target_link_libraries(ADM_script_tinyPy ADM_coreScript ADM_coreUtils6 ADM_core6 ADM_coreUI6 m)
+ 
+ if (NOT APPLE)
+-	target_link_libraries(ADM_script_tinyPy -Wl,--version-script,"${CMAKE_CURRENT_SOURCE_DIR}/ADM_script_tinyPy.v")
++	target_link_libraries(ADM_script_tinyPy -Wl,-M,"${CMAKE_CURRENT_SOURCE_DIR}/ADM_script_tinyPy.v")
+ elseif (NOT ADM_CPU_X86_64)
+ 	target_link_libraries(ADM_script_tinyPy -Wl,-read_only_relocs,suppress)
+ endif (NOT APPLE)
+-- 
+1.8.3.4
+

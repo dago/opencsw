@@ -1,0 +1,25 @@
+From 79a32b8ed82e45d113cb56ffec84f7ef0b2e1ec5 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Thu, 31 Oct 2013 16:51:17 +0100
+Subject: [PATCH] floor desabiguation
+
+---
+ avidemux_plugins/ADM_demuxers/Matroska/ADM_mkvEntries.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkvEntries.cpp b/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkvEntries.cpp
+index db483f0..93c2fd4 100644
+--- a/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkvEntries.cpp
++++ b/avidemux_plugins/ADM_demuxers/Matroska/ADM_mkvEntries.cpp
+@@ -194,7 +194,7 @@ uint8_t mkvHeader::analyzeOneTrack(void *head,uint32_t headlen)
+ 
+         }
+ 
+-        _mainaviheader.dwMicroSecPerFrame=(uint32_t)floor(50);;
++        _mainaviheader.dwMicroSecPerFrame=(uint32_t)floor(50.0F);;
+         _videostream.fccType=fourCC::get((uint8_t *)"vids");
+         _video_bih.biBitCount=24;
+         _videostream.dwInitialFrames= 0;
+-- 
+1.8.3.4
+

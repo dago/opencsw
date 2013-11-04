@@ -1,0 +1,25 @@
+From fb833f83d5c7208af82ca5d74272fac4a4b986c8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sun, 27 Oct 2013 16:23:40 +0100
+Subject: [PATCH] fix processors cardinality gathering
+
+---
+ avidemux_core/ADM_core/src/ADM_cpuCap.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/avidemux_core/ADM_core/src/ADM_cpuCap.cpp b/avidemux_core/ADM_core/src/ADM_cpuCap.cpp
+index 8ec2841..0aafcce 100644
+--- a/avidemux_core/ADM_core/src/ADM_cpuCap.cpp
++++ b/avidemux_core/ADM_core/src/ADM_cpuCap.cpp
+@@ -161,6 +161,8 @@ int ADM_cpu_num_processors(void)
+         np = 1;
+ 
+     return np;
++#elif defined(__sun__)
++	return sysconf( _SC_NPROCESSORS_ONLN );
+ #elif defined(__unix__) && !defined(__CYGWIN__)
+     unsigned int bit;
+     int np;
+-- 
+1.8.3.4
+

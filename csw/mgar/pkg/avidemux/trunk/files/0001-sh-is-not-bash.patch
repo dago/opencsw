@@ -1,0 +1,25 @@
+From 07be5aab65c8bc11f66cb610feafe7bd57edc87e Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sat, 26 Oct 2013 11:34:19 +0200
+Subject: [PATCH] sh is not bash
+
+---
+ cmake/FindBourne.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/FindBourne.cmake b/cmake/FindBourne.cmake
+index e0f469e..0977b87 100644
+--- a/cmake/FindBourne.cmake
++++ b/cmake/FindBourne.cmake
+@@ -3,7 +3,7 @@ if (NOT BASH_EXECUTABLE)
+ 	message(STATUS "*************************")
+ 
+ 	find_program(BASH_EXECUTABLE
+-		sh
++		bash
+ 		${BASH_DIR}
+ 		/bin
+ 		/usr/bin 
+-- 
+1.8.3.4
+

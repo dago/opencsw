@@ -1,0 +1,24 @@
+From ea3919d0a0026cbc0b161ae2992fddbc663f04a8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 30 Oct 2013 19:34:30 +0100
+Subject: [PATCH] avoid empty library
+
+---
+ avidemux/cli/ADM_userInterfaces/ADM_filters/filter_none.cpp | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/avidemux/cli/ADM_userInterfaces/ADM_filters/filter_none.cpp b/avidemux/cli/ADM_userInterfaces/ADM_filters/filter_none.cpp
+index e69de29..481ec66 100644
+--- a/avidemux/cli/ADM_userInterfaces/ADM_filters/filter_none.cpp
++++ b/avidemux/cli/ADM_userInterfaces/ADM_filters/filter_none.cpp
+@@ -0,0 +1,7 @@
++#if defined(__sun__)
++/*
++  this is to avoid an empty library, with no symbols, raising
++ "ld: elf error: file libADM_filtersCli6.a: elf_getarsym"
++*/
++int Sun_ar_require_a_symbol_here_4_cli = 0;
++#endif /* : defined(__sun__) */
+-- 
+1.8.3.4
+
