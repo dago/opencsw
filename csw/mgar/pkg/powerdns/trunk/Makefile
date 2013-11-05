@@ -78,8 +78,8 @@ SKIPTEST = 1
 
 PACKAGES = CSWpdns
 CATALOGNAME_CSWpdns = powerdns
-SPKG_DESC#_CSWpdns = PowerDNS
-RUNTIME_DEP_PKGS_CSWpdns += CSWlibz1
+SPKG_DESCRUNTIME_DEP_PKGS_CSWpdns_sparc += CSWlibz1
+_CSWpdns += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpdns +8 CSWlibmysqlclient15
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibstdc++6
@@ -87,7 +87,7 @@ RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibboost-s13n1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWpdns += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWpdns += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWpdnsRUNTIME_DEP_PKGS_CSWpdns_sparc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpdnsRUNTIME_DEP_PKGS_CSWpdns += $(RUNTIME_DEP_PKGS_CSWpdns_$(GARCH))
 s += CSWlibsqlite3-0
 BUILD_DEP_PKGS_CSWpdns += CSWmysql-dev
 BUILD_DEP_PGKS_CSWpdns += CSWboostdevel
