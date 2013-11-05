@@ -1,0 +1,62 @@
+From 8f7dd119814c55039b117a35ed50008bb6798f9f Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 5 Nov 2013 11:08:01 +0100
+Subject: [PATCH] Patch for test-migration
+
+---
+ test/test-migration.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/test/test-migration.c b/test/test-migration.c
+index a0ab839..9511b3c 100644
+--- a/test/test-migration.c
++++ b/test/test-migration.c
+@@ -6,6 +6,13 @@
+ #include <dirent.h>
+ #include <fontconfig/fontconfig.h>
+ 
++/* Quick and dirty mkdtemp */
++char* mkdtemp_qnd(char * wdc) {
++        char *name = tmpnam(NULL);
++        if (mkdir(name, S_IRWXU)) abort();
++        return name;
++}
++
+ FcBool
+ mkdir_p(const char *dir)
+ {
+@@ -36,6 +43,7 @@ unlink_dirs(const char *dir)
+     size_t len = strlen (dir);
+     char *n = NULL;
+     FcBool ret = FcTrue;
++    struct stat statbuf;
+ 
+     if (!d)
+ 	return FcFalse;
+@@ -53,7 +61,13 @@ unlink_dirs(const char *dir)
+ 	strcpy (n, dir);
+ 	n[len] = '/';
+ 	strcpy (&n[len + 1], e->d_name);
+-	if (e->d_type == DT_DIR)
++
++	/* Welcome to the wonderful world of LinuxSoft: Using stuff like dirent.d_type really makes my day */
++	if (stat(n, &statbuf))	{
++		fprintf(stderr, "E: %s\n", dir);
++		return FcFalse;
++	}
++	if (S_ISDIR(statbuf.st_mode))
+ 	{
+ 	    if (!unlink_dirs (n))
+ 	    {
+@@ -89,7 +103,7 @@ int
+ main(void)
+ {
+     char template[32] = "fontconfig-XXXXXXXX";
+-    char *tmp = mkdtemp (template);
++    char *tmp = mkdtemp_qnd (template);
+     size_t len = strlen (tmp), xlen, dlen;
+     char xdg[256], confd[256], fn[256], nfn[256], ud[256], nud[256];
+     int ret = -1;
+-- 
+1.8.4.1
+

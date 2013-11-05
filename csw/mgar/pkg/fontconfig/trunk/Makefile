@@ -3,6 +3,7 @@
 NAME = fontconfig
 VERSION = 2.11.0
 GARTYPE = v2
+GARCOMPILER = SOS12U3
 
 DESCRIPTION = A library for configuring and customizing font accesszing font access.
 define BLURB
@@ -17,6 +18,11 @@ DISTFILES += CSWfontconfig.postinstall
 
 VENDOR_URL = http://www.fontconfig.org
 
+PATCHFILES_SOS12U3 += 0001-Use-errwarn-instead-of-Werror.patch
+
+PATCHFILES += 0002-Patch-for-test-migration.patch
+PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
+
 PACKAGES += CSWlibfontconfig1
 PKGFILES_CSWlibfontconfig1 += $(call pkgfiles_lib,libfontconfig.so.1)
 SPKG_DESC_CSWlibfontconfig1 += A library for configuring and customizing font access+= $(DESCRIPTION), libfontconfig.so.1
@@ -29,13 +35,18 @@ PKGFILES_CSWfontconfig-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWfontconfig-dev += CSWlibfontconfig1
 OBSOLETED_BY_CSWfontconfig-dev += CSWfconfig-dev
 
+PACKAGES += CSWfontconfig-doc
+SPKG_DESC_CSWfontconfig-doc += Development documentation for fontconfig
+PKGFILES_CSWfontconfig-doc = .*/fontconfig/fontconfig-devel.*
+
 PACKAGES += CSWfontconfig
 SPKG_DESC_CSWfontconfig = A library for configuring and customizing font access
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWfontconfig += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWfontconfig += CSWlibfreetype6
 # This is for /usr/share/fonts which is ok
 CHECKPKG_OVERRIDES_CSWfontconfig += file-with-bad-content|/usr/share|root/etc/opt/csw/fontconfig/fonts.conf
-
+CHECKPKG_OVERRIDES_CSWfontconfig += file-with-bad-content|/usr/share|root/etc/opt/csw/fontconfig/conf.d/README
 OBSOLETED_BY_CSWfontconfig += CSWfconfig
 CATALOGNAME_CSWfconfig = fontconfig_stub
 

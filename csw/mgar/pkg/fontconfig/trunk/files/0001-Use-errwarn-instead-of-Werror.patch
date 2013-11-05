@@ -1,0 +1,25 @@
+From 5cf3803e8ab16132869e0ad12213df6d056b61d6 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 5 Nov 2013 08:39:09 +0100
+Subject: [PATCH] Use -errwarn instead of -Werror
+
+---
+ configure    | 2 +-
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 5866ce0..dae17dd 100755
+--- a/configure
++++ b/configure
+@@ -13922,7 +13922,7 @@ done
+ 
+ 
+ fc_saved_CFLAGS="$CFLAGS"
+-CFLAGS="$CFLAGS $WARN_CFLAGS -Werror"
++CFLAGS="$CFLAGS $WARN_CFLAGS -errwarn"
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for posix_fadvise" >&5
+ $as_echo_n "checking for posix_fadvise... " >&6; }
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-- 
+1.8.4.1
+
