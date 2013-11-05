@@ -36,6 +36,7 @@ RUNTIME_DEP_PKGS_CSWfontconfig-dev += CSWlibfontconfig1
 OBSOLETED_BY_CSWfontconfig-dev += CSWfconfig-dev
 
 PACKAGES += CSWfontconfig-doc
+ARCHALL_CSWfontconfig-doc = 1
 SPKG_DESC_CSWfontconfig-doc += Development documentation for fontconfig
 PKGFILES_CSWfontconfig-doc = .*/fontconfig/fontconfig-devel.*
 
