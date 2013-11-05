@@ -43,6 +43,8 @@ RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
+# will be in 3.1.1
+PATCHFILES += uam.patch
 
 # Don't know yet why but this dependency is only picked under sparc
 RUNTIME_DEP_PKGS_sparc = CSWlibgpg-error0
