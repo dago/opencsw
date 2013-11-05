@@ -52,6 +52,8 @@ RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibglibmm-extra-defs2-4-1 += surplus-dependency|CSWlibintl8
 # Package name would be too long
 CHECKPKG_OVERRIDES_CSWlibglibmm-extra-defs2-4-1 += shared-lib-pkgname-mismatch
 
