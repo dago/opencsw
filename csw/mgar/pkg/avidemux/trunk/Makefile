@@ -109,6 +109,67 @@ RUNTIME_DEP_PKGS_CSWavidemux	+=	CSWlibvorbisenc2
 RUNTIME_DEP_PKGS_CSWavidemux	+=	CSWmesa
 RUNTIME_DEP_PKGS_CSWavidemux	+=	CSWlibgcc-s1
 
+# these are here because I don't wish to have separate packages for
+# all these libraries which are private; however, making them really
+# private is a real pain and anyhow they are not in conflict with
+# past, present or future ones:
+
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM6avcodec.so.54|soname=libADM6avcodec.so.54|pkgname=CSWavidemux|expected=CSWlibadm6avcodec54
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM6avformat.so.54|soname=libADM6avformat.so.54|pkgname=CSWavidemux|expected=CSWlibadm6avformat54
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM6avutil.so.52|soname=libADM6avutil.so.52|pkgname=CSWavidemux|expected=CSWlibadm6avutil52
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM6postproc.so.52|soname=libADM6postproc.so.52|pkgname=CSWavidemux|expected=CSWlibadm6postproc52
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM6swscale.so.2|soname=libADM6swscale.so.2|pkgname=CSWavidemux|expected=CSWlibadm6swscale2
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_UIQT46.so|soname=libADM_UIQT46.so|pkgname=CSWavidemux|expected=CSWlibadm-uiqt46
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_UI_Cli6.so|soname=libADM_UI_Cli6.so|pkgname=CSWavidemux|expected=CSWlibadm-ui-cli6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_audioParser6.so|soname=libADM_audioParser6.so|pkgname=CSWavidemux|expected=CSWlibadm-audioparser6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_core6.so|soname=libADM_core6.so|pkgname=CSWavidemux|expected=CSWlibadm-core6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreAudio6.so|soname=libADM_coreAudio6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreaudio6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreAudioDevice6.so|soname=libADM_coreAudioDevice6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreaudiodevice6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreAudioEncoder6.so|soname=libADM_coreAudioEncoder6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreaudioencoder6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreAudioFilterAPI6.so|soname=libADM_coreAudioFilterAPI6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreaudiofilterapi6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreDemuxer6.so|soname=libADM_coreDemuxer6.so|pkgname=CSWavidemux|expected=CSWlibadm-coredemuxer6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreDemuxerMpeg6.so|soname=libADM_coreDemuxerMpeg6.so|pkgname=CSWavidemux|expected=CSWlibadm-coredemuxermpeg6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreImage6.so|soname=libADM_coreImage6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreimage6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreImageLoader6.so|soname=libADM_coreImageLoader6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreimageloader6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreJobs.so|soname=libADM_coreJobs.so|pkgname=CSWavidemux|expected=CSWlibadm-corejobs
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreMuxer6.so|soname=libADM_coreMuxer6.so|pkgname=CSWavidemux|expected=CSWlibadm-coremuxer6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreScript.so|soname=libADM_coreScript.so|pkgname=CSWavidemux|expected=CSWlibadm-corescript
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreSocket6.so|soname=libADM_coreSocket6.so|pkgname=CSWavidemux|expected=CSWlibadm-coresocket6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreSqlLight3.so|soname=libADM_coreSqlLight3.so|pkgname=CSWavidemux|expected=CSWlibadm-coresqllight3
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreUI6.so|soname=libADM_coreUI6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreui6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreUtils6.so|soname=libADM_coreUtils6.so|pkgname=CSWavidemux|expected=CSWlibadm-coreutils6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreVDPAU6.so|soname=libADM_coreVDPAU6.so|pkgname=CSWavidemux|expected=CSWlibadm-corevdpau6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreVideoCodec6.so|soname=libADM_coreVideoCodec6.so|pkgname=CSWavidemux|expected=CSWlibadm-corevideocodec6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreVideoEncoder6.so|soname=libADM_coreVideoEncoder6.so|pkgname=CSWavidemux|expected=CSWlibadm-corevideoencoder6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_coreVideoFilter6.so|soname=libADM_coreVideoFilter6.so|pkgname=CSWavidemux|expected=CSWlibadm-corevideofilter6
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_render6_cli.so|soname=libADM_render6_cli.so|pkgname=CSWavidemux|expected=CSWlibadm-render6cli
+CHECKPKG_OVERRIDES_CSWavidemux	+=	shared-lib-pkgname-mismatch|file=opt/csw/lib/libADM_render6_qt4.so|soname=libADM_render6_qt4.so|pkgname=CSWavidemux|expected=CSWlibadm-render6qt4
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_UIQT46.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_UI_Cli6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_audioParser6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_core6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreAudio6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreAudioDevice6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreAudioEncoder6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreAudioFilterAPI6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreDemuxer6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreDemuxerMpeg6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreImage6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreImageLoader6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreJobs.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreMuxer6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreScript.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreSocket6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreSqlLight3.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreUI6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreUtils6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreVDPAU6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreVideoCodec6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreVideoEncoder6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_coreVideoFilter6.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_render6_cli.so
+CHECKPKG_OVERRIDES_CSWavidemux	+=	soname-equals-filename|file=/opt/csw/lib/libADM_render6_qt4.so
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
