@@ -41,6 +41,12 @@ RUNTIME_DEP_PKGS += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
+# needed because of 7051963 but fails checkpkg
+# http://lists.opencsw.org/pipermail/maintainers/2013-November/018794.html
+RUNTIME_DEP_PKGS += CSWlibintl8
+RUNTIME_DEP_PKGS += CSWlibk5crypto3
+RUNTIME_DEP_PKGS += CSWlibcom-err3
+RUNTIME_DEP_PKGS += CSWlibgmodule2-0-0
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
 # will be in 3.1.1
