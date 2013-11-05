@@ -15,30 +15,44 @@ endef
 
 MASTER_SITES = http://www.freedesktop.org/software/harfbuzz/release/
 DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += changelog.CSW
 
 PACKAGES  = CSWharfbuzz-bin
 SPKG_DESC_CSWharfbuzz-bin = $(DESCRIPTION), utilities
 PKGFILES_CSWharfbuzz-bin = .*/bin/.*
+RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibharfbuzz0
+RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibgcc-s1
 
 PACKAGES += CSWlibharfbuzz-dev
 SPKG_DESC_CSWlibharfbuzz-dev = $(DESCRIPTION), development files
 PKGFILES_CSWlibharfbuzz-dev = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibharfbuzz-dev  = CSWlibharfbuzz-icu-0
-RUNTIME_DEP_PKGS_CSWlibharfbuzz-dev  = CSWlibharfbuzz-0
+RUNTIME_DEP_PKGS_CSWlibharfbuzz-dev  = CSWlibharfbuzz-icu0
+RUNTIME_DEP_PKGS_CSWlibharfbuzz-dev += CSWlibharfbuzz0
 
-PACKAGES += CSWlibharfbuzz-icu-0
-SPKG_DESC_CSWlibharfbuzz-icu-0 = $(DESCRIPTION), libharfbuzz-icu.so.0
-PKGFILES_CSWlibharfbuzz-icu-0 = $(call pkgfiles_lib,libharfbuzz-icu.so.0)
-RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu-0  = CSWlibharfbuzz-0
+PACKAGES += CSWlibharfbuzz-icu0
+SPKG_DESC_CSWlibharfbuzz-icu0 = $(DESCRIPTION), libharfbuzz-icu.so.0
+PKGFILES_CSWlibharfbuzz-icu0 = $(call pkgfiles_lib,libharfbuzz-icu.so.0)
+RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0  = CSWlibharfbuzz0
+RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0 += CSWlibicudata51
+RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0 += CSWlibgcc-s1
 
-PACKAGES += CSWlibharfbuzz-0
-SPKG_DESC_CSWlibharfbuzz-0 = $(DESCRIPTION), libharfbuzz.so.0
-PKGFILES_CSWlibharfbuzz-0 = $(call pkgfiles_lib,libharfbuzz.so.0)
+PACKAGES += CSWlibharfbuzz0
+SPKG_DESC_CSWlibharfbuzz0 = $(DESCRIPTION), libharfbuzz.so.0
+PKGFILES_CSWlibharfbuzz0 = $(call pkgfiles_lib,libharfbuzz.so.0)
+RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibgcc-s1
 
 PACKAGES += CSWharfbuzz-doc
+ARCHALL_CSWharfbuzz-doc = 1
 SPKG_DESC_CSWharfbuzz-doc = $(DESCRIPTION), documentation
-PKGFILES_CSWharfbuzz-doc = .*/gtk-doc.*
-
+# Catch all
 
 BUILD64 = 1
 
@@ -62,3 +76,4 @@ PATH := /opt/csw/gnu:$(PATH)
 
 test-custom:
 	cd $(WORKSRC)/test && env $(BUILD_ENV) $(MAKE) check
+	@$(MAKECOOKIE)
