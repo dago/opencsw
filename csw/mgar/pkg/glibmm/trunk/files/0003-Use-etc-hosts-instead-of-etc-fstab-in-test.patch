@@ -1,0 +1,25 @@
+From 5f8d95da8791e57e9d3ec280447269ac3b50a18e Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 5 Nov 2013 18:47:21 +0100
+Subject: [PATCH] Use /etc/hosts instead of /etc/fstab in test
+
+---
+ tests/giomm_ioerror/main.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/giomm_ioerror/main.cc b/tests/giomm_ioerror/main.cc
+index 0a44d33..135275f 100644
+--- a/tests/giomm_ioerror/main.cc
++++ b/tests/giomm_ioerror/main.cc
+@@ -28,7 +28,7 @@ int main(int, char**)
+ 
+   try
+   {
+-    Glib::RefPtr<Gio::File> file = Gio::File::create_for_path("/etc/fstab");
++    Glib::RefPtr<Gio::File> file = Gio::File::create_for_path("/etc/hosts");
+     if(!file)
+     {
+       std::cerr << "Gio::File::create_for_path() returned an empty RefPtr." << std::endl;
+-- 
+1.8.4.1
+
