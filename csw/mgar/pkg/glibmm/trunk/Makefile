@@ -26,6 +26,9 @@ RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibglib2-0-0
+# Remove once ld -z ignore issue has been resolved on sparc
+RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgmodule2-0-0
 CHECKPKG_OVERRIDES_CSWlibgiomm2-4-1 += surplus-dependency|CSWlibgmodule2-0-0
 CHECKPKG_OVERRIDES_CSWlibgiomm2-4-1 += surplus-dependency|CSWlibintl8
 
@@ -38,6 +41,8 @@ RUNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibglibmm2-4-1 += surplus-dependency|CSWlibintl8
 
 # Had to shorten package name :/
 PACKAGES += CSWlibglibmm-extra-defs2-4-1
@@ -49,10 +54,6 @@ RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibglib2-0-0
 # Package name would be too long
 CHECKPKG_OVERRIDES_CSWlibglibmm-extra-defs2-4-1 += shared-lib-pkgname-mismatch
-# Remove once ld -z ignore issue has been resolved on sparc
-UNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgmodule2-0-0
 
 PACKAGES += CSWlibglibmm-dev
 SPKG_DESC_CSWlibglibmm-dev = $(DESCRIPTION), development files
