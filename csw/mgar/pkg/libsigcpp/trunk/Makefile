@@ -22,6 +22,7 @@ OBSOLETED_BY_CSWlibsigc2-0-0 = CSWlibsigc++
 INCOMPATIBLE_PKGS_CSWlibsigc++ = CSWsigc++
 
 PACKAGEoc
+ARCHALL_CSWlibsigc-doc = 1
 SPKG_DESC_CSWlibsigc-doc = Documentation for libsigc++
 PKGFILES_CSWlibsigc-doc  = .*/doc/libsigc\+\+-2\.0/.*
 PKGFILES_CSWlibsigc-doc += .*/devhelp/.*igc++ = CSWsigc++
