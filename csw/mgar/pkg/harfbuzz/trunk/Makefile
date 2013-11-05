@@ -26,6 +26,9 @@ RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWharfbuzz-bin += CSWlibgcc-s1
+# remove once ld -z ignore is resolved on sparc
+CHECKPKG_OVERRIDES_CSWharfbuzz-bin += surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWharfbuzz-bin += surplus-dependency|CSWlibintl8
 
 PACKAGES += CSWlibharfbuzz-dev
 SPKG_DESC_CSWlibharfbuzz-dev = $(DESCRIPTION), development files
@@ -40,6 +43,8 @@ RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0  = CSWlibharfbuzz0
 RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0 += CSWlibicudata51
 RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0 += CSWlibicuuc51
 RUNTIME_DEP_PKGS_CSWlibharfbuzz-icu0 += CSWlibgcc-s1
+# remove once ld -z ignore is resolved on sparc
+CHECKPKG_OVERRIDES_CSWlibharfbuzz-icu0 += surplus-dependency|CSWlibicudata51
 
 PACKAGES += CSWlibharfbuzz0
 SPKG_DESC_CSWlibharfbuzz0 = $(DESCRIPTION), libharfbuzz.so.0
@@ -48,6 +53,8 @@ RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibharfbuzz0 += CSWlibgcc-s1
+# remove once ld -z ignore is resolved on sparc
+CHECKPKG_OVERRIDES_CSWlibharfbuzz0 += surplus-dependency|CSWlibintl8
 
 PACKAGES += CSWharfbuzz-doc
 ARCHALL_CSWharfbuzz-doc = 1
