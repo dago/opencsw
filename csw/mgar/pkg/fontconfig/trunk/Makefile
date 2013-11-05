@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = fontconfig
-VERSION = 2.10.2
+VERSION = 2.11.0
 GARTYPE = v2
 
 DESCRIPTION = A library for configuring and customizing font accesszing font access.
