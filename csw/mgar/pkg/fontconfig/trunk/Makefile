@@ -32,7 +32,10 @@ RUNTIME_DEP_PKGS_CSWlibfontexpat1
 PACKAGES += CSWfontconfig-dev
 SPKG_DESC_CSWfontconfig-dev += Development files for libfontconfig.so.1
 PKGFILES_CSWfontconfig-dev += $(PKGFILES_DEVEL)
+# pkg-config fails without dev files for expat
+RUNTIME_DEP_PKGS_CSWfontconfig-dev += CSWlibexpat-dev
 RUNTIME_DEP_PKGS_CSWfontconfig-dev += CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWfontconfig-dev += surplus-dependency|CSWlibexpat-dev
 OBSOLETED_BY_CSWfontconfig-dev += CSWfconfig-dev
 
 PACKAGES += CSWfontconfig-doc
@@ -48,6 +51,7 @@ RUNTIME_DEP_PKGS_CSWfontconfig += CSWlibfreetype6
 # This is for /usr/share/fonts which is ok
 CHECKPKG_OVERRIDES_CSWfontconfig += file-with-bad-content|/usr/share|root/etc/opt/csw/fontconfig/fonts.conf
 CHECKPKG_OVERRIDES_CSWfontconfig += file-with-bad-content|/usr/share|root/etc/opt/csw/fontconfig/conf.d/README
+CHECKPKG_OVERRIDES_CSWfontconfig += soname-unused
 OBSOLETED_BY_CSWfontconfig += CSWfconfig
 CATALOGNAME_CSWfconfig = fontconfig_stub
 
