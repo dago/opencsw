@@ -26,6 +26,8 @@ RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibglib2-0-0
+CHECKPKG_OVERRIDES_CSWlibgiomm2-4-1 += surplus-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWlibgiomm2-4-1 += surplus-dependency|CSWlibintl8
 
 PACKAGES += CSWlibglibmm2-4-1
 SPKG_DESC_CSWlibglibmm2-4-1 = $(DESCRIPTION), libglibmm-2.4.so.1
@@ -47,8 +49,10 @@ RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibglibmm-extra-defs2-4-1 += CSWlibglib2-0-0
 # Package name would be too long
 CHECKPKG_OVERRIDES_CSWlibglibmm-extra-defs2-4-1 += shared-lib-pkgname-mismatch
-# Nothing to worry, just in a comment
-CHECKPKG_OVERRIDES_CSWlibglibmm-dev += file-with-bad-content|/usr/local|root/opt/csw/include/glibmm-2.4/glibmm/miscutils.h
+# Remove once ld -z ignore issue has been resolved on sparc
+UNTIME_DEP_PKGS_CSWlibglibmm2-4-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgiomm2-4-1 += CSWlibgmodule2-0-0
 
 PACKAGES += CSWlibglibmm-dev
 SPKG_DESC_CSWlibglibmm-dev = $(DESCRIPTION), development files
@@ -60,6 +64,8 @@ RUNTIME_DEP_PKGS_CSWlibglibmm-dev += CSWlibglibmm-extra-defs2-4-1
 RUNTIME_DEP_PKGS_CSWlibglibmm-dev += CSWlibgiomm2-4-1
 RUNTIME_DEP_PKGS_CSWlibglibmm-dev += CSWlibglibmm2-4-1
 RUNTIME_DEP_PKGS_CSWlibglibmm-dev += CSWperl
+# Nothing to worry, just in a comment
+CHECKPKG_OVERRIDES_CSWlibglibmm-dev += file-with-bad-content|/usr/local|root/opt/csw/include/glibmm-2.4/glibmm/miscutils.h
 
 PACKAGES += CSWglibmm-doc
 ARCHALL_CSWglibmm-doc = 1
