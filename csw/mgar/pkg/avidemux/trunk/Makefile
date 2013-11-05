@@ -43,6 +43,26 @@ PATCHFILES		+=	0023-fix-font-reference.patch
 
 BUILD_DEP_PKGS	+=	CSWcmake
 BUILD_DEP_PKGS	+=	CSWgpatch
+BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
+BUILD_DEP_PKGS	+=	CSWfontconfig-dev
+BUILD_DEP_PKGS	+=	CSWggettext-dev
+BUILD_DEP_PKGS	+=	CSWqt4-dev
+BUILD_DEP_PKGS	+=	CSWlibiconv-dev
+BUILD_DEP_PKGS	+=	CSWlibfribidi-dev
+BUILD_DEP_PKGS	+=	CSWlibmp3lame-dev
+BUILD_DEP_PKGS	+=	CSWlibfaad2
+BUILD_DEP_PKGS	+=	CSWlibx264-dev
+BUILD_DEP_PKGS	+=	CSWfaac
+BUILD_DEP_PKGS	+=	CSWlibsqlite3-dev
+BUILD_DEP_PKGS	+=	CSWlibz-dev
+BUILD_DEP_PKGS	+=	CSWlibvorbis-dev
+BUILD_DEP_PKGS	+=	CSWlibesd0
+BUILD_DEP_PKGS	+=	CSWmesa
+
+# SPARC platform is explicitely not supported by the upstream project;
+# I'll work on it later to support it (TODO)
+#PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
 
 GARCOMPILER			=	GNU
 CONFIGURE_ARGS		=	$(DIRPATHS)
