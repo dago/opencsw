@@ -5,7 +5,6 @@ import inspective_package
 import package
 import shell
 import mox
-import hachoir_parser
 import magic
 import os
 import common_constants
