@@ -20,7 +20,6 @@ PACKAGES += CSWpango
 SPKG_DESC_CSWpango = Pango, $(DESCRIPTION)
 # Catch allnternational text
 RUNTIME_DEP_PKGS_CSWpango += CSWlibxft2
-RUNTIME_DEP_PKGS_CSWpango += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWpango += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWpango += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibgobject2-0-0
@@ -29,20 +28,50 @@ RUNTIME_DEP_PKGS_CSWpango += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWpangRUNTIME_DEP_PKGS_CSWpango += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibpangocairo1-0-0
-RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoft21-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoft2-1-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoxft1-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibthai0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibharfbuzz0
+CHECKPKG_OVERRIDES_CSWpango += surplus-dependency|CSWlibintl8
 
 PACKAGES += CSWlibpango1-0-0
 SPKG_DESC_CSWlibpango1-0-0 = $(DESCRIPTION), libpango-1.0.so.0
 bpango-1.0.so.0
-#PKGFILES_CSWlibpango1-0-0 = $(call pkgfiles_lib,li
+#PKGFILES_CSWlibpango1-0-0 = $(call pkgfiles_lib,liRUNTIME_DEP_PKGS_CSWlibpango1-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpango1-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpango1-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpango1-0-0 += CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWlibpango1-0-0 += surplus-dependency|CSWlibintl8i
 PACKAGES += CSWlibpangocairo1-0-0
 SPKG_DESC_CSWlibpangocairo1-0-0 = Cairo bindings for Pango, libpangocairo-1.0.so.0
 ocairo-1.0.so.0
-#PKGFILES_CSWlibpangocairo1-0-0 = $(call pkgfiles_lib,libpang
-PACKAGES += CSWlibpangoft21-0-0
-SPKG_DESC_CSWlibpangoft21-0-0 = Freetype bindings for Pango, libpangoft2-1.0.so.0
-PKGFILES_CSWlibpangoft21-0-0 = $(call pkgfiles_lib,libpangoft2-1.0.so.0)
+#PKGFILES_CSWlibpangocairo1-0-0 = $(call pkgfiles_lib,libpangRUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibharfbuzz0
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibpangocairo1-0-0 += CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWlibpangocairo1-0-0 += surplus-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWlibpangocairo1-0-0 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibpangocairo1-0-0 += surplus-dependency|CSWlibharfbuzz0
+
+PACKAGES += CSWlibpangoft2-1-0-0
+SPKG_DESC_CSWlibpangoft2-1-0-0 = Freetype bindings for Pango, libpangoft2-1.0.so.0
+PKGFILES_CSWlibpangoft2-1-0-0 = $(call pkgfiles_lib,libpangoft2-1.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibharfbuzz0
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoft2-1-0-0 += CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWlibpangoft2-1-0-0 += surplus-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWlibpangoft2-1-0-0 += surplus-dependency|CSWlibintl8
 
 # I wonder where this has gone...goft2-1.0.so.0)
 #
@@ -52,14 +81,32 @@ PKGFILES_CSWlibpangoft21-0-0 = $(call pkgfiles_lib,libpangoft2-1.0.so.0)
 PACKAGES += CSWlibpangoxft1-0-0
 SPKG_DESC_CSWlibpangoxft1-0-0 = XFT bindings for Pango, libpangoxft-1.0.so.0
 ngoxft-1.0.so.0
-#PKGFILES_CSWlibpangoxft1-0-0 = $(call pkgfiles_lib,libpangoxft-1.0.so.0)libpango-dev
+#PKGFILES_CSWlibpangoxft1-0-0 = $(call pkgfiles_lib,libpaRUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibharfbuzz0
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibpangoxft1-0-0 += CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWlibpangoxft1-0-0 += surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWlibpangoxft1-0-0 += surplus-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWlibpangoxft1-0-0 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibpangoxft1-0-0 += surplus-dependency|CSWlibharfbuzz0angoxft-1.0.so.0)libpango-dev
 OBSOLETED_BY_CSWlibpango-dev += CSWpangodevel
 CATALOGNAME_CSWpangodevel = libpangodevel_stub
 SPKG_DESC_CSWlibpango-dev = Developer files for libpango-1.0.so.0 and assorted libs
 PKGFILES_CSWlibpango-dev = $(PKGFILES_DEVEL)
-# CSWpango pulls in all libraries
+# To make sure pango-querymodules will be called
 RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWpango
 RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWlibcairo-dev
+RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWlibpangoxft1-0-0
+RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWlibpangocairo1-0-0
 
 PACKAGES += CSWpango-doc
 ARCHALL_CSWpango-doc = 1
@@ -90,6 +137,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONenable-gtk-doc
 CONFIGURE_ARGS += --with-xft
 CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --disable-introspection
 
 STRIP_LIBTOOL = 1
 
