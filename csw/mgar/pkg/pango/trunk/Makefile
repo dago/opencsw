@@ -1,33 +1,24 @@
 NAME = pango
-VERSION = 1.29.5
-CATEGORIES = lib
+VERSION = 1.34.1
 GARTYPE = v2
+GARCOMPILER = SOS12U3
 
-DESCRIPTION = A framework for the layout and rendering of international text
+DESCRIPTION = FDESCRIPTION = A framework for the layout and rendering of international text
 define BLURB
   The goal of the Pango project is to provide an Open Source framework for the
   layout and rendering of internationalized text. It uses Unicode for all of its
   encoding, and will eventually support output in all the world's major
-  languages.
-endef
+  lPACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES = $(DISTNAME).tar.bz2
+DISTFILES = $(DISTNAME).tar.xz
 DISTFILES += CSWpango.postinstall
-
-# Use patch unless this is fixed
-#   https://bugzilla.gnome.org/show_bug.cgi?id=652228
-PATCHFILES += 0001-Do-not-use-gcc-specific-flags-unconditionally.patch
-# Use patch unless this is fixed:
-#   https://bugzilla.gnome.org/show_bug.cgi?id=652227
-# PATCHFILES += 0002-Use-inttypes.h-when-stdint.h-is-not-available.patch
 
 VENDOR_URL = http://www.pango.org/
 
 PACKAGES += CSWpango
-CATALOGNAME_CSWpango = libpango
-CHECKPKG_OVERRIDES_CSWpango += catalogname-does-not-match-pkgname|pkgname=CSWpango|catalogname=libpango|expected-catalogname=pango
-SPKG_DESC_CSWpango = Pango, a framework for the layout and rendering of international text
+SPKG_DESC_CSWpango = Pango, $(DESCRIPTION)
+# Catch allnternational text
 RUNTIME_DEP_PKGS_CSWpango += CSWlibxft2
 RUNTIME_DEP_PKGS_CSWpango += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWpango += CSWlibcairo2
@@ -36,64 +27,58 @@ RUNTIME_DEP_PKGS_CSWpango += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpango += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpango += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWpango += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpangRUNTIME_DEP_PKGS_CSWpango += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoft21-0-0
+RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoxft1-0-0
 
-# No split for now as it is unclear how the plugins depend on each one
-CHECKPKG_OVERRIDES_CSWpango += shared-lib-pkgname-mismatch
+PACKAGES += CSWlibpango1-0-0
+SPKG_DESC_CSWlibpango1-0-0 = $(DESCRIPTION), libpango-1.0.so.0
+bpango-1.0.so.0
+#PKGFILES_CSWlibpango1-0-0 = $(call pkgfiles_lib,li
+PACKAGES += CSWlibpangocairo1-0-0
+SPKG_DESC_CSWlibpangocairo1-0-0 = Cairo bindings for Pango, libpangocairo-1.0.so.0
+ocairo-1.0.so.0
+#PKGFILES_CSWlibpangocairo1-0-0 = $(call pkgfiles_lib,libpang
+PACKAGES += CSWlibpangoft21-0-0
+SPKG_DESC_CSWlibpangoft21-0-0 = Freetype bindings for Pango, libpangoft2-1.0.so.0
+PKGFILES_CSWlibpangoft21-0-0 = $(call pkgfiles_lib,libpangoft2-1.0.so.0)
 
-#RUNTIME_DEP_PKGS_CSWpango += CSWlibpango1-0-0
-#RUNTIME_DEP_PKGS_CSWpango += CSWlibpangocairo-1-0-0
-#RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoft2-1-0-0
-#RUNTIME_DEP_PKGS_CSWpango += CSWlibpangox1-0-0
-#RUNTIME_DEP_PKGS_CSWpango += CSWlibpangoxft1-0-0
-
-#PACKAGES += CSWlibpango1-0-0
-#SPKG_DESC_CSWlibpango1-0-0 = Pango, a framework for the layout and rendering of international text, libpango-1.0.so.0
-#PKGFILES_CSWlibpango1-0-0 = $(call pkgfiles_lib,libpango-1.0.so.0)
-#
-#PACKAGES += CSWlibpangocairo-1-0-0
-#SPKG_DESC_CSWlibpangocairo-1-0-0 = Cairo bindings for Pango, libpangocairo-1.0.so.0
-#PKGFILES_CSWlibpangocairo1-0-0 = $(call pkgfiles_lib,libpangocairo-1.0.so.0)
-#
-#PACKAGES += CSWlibpangoft2-1-0-0
-#SPKG_DESC_CSWlibpangoft2-1-0-0 = Freetype bindings for Pango, libpangoft2-1.0.so.0
-#PKGFILES_CSWlibpangoft2-1-0-0 = $(call pkgfiles_lib,libpangoft2-1.0.so.0)
+# I wonder where this has gone...goft2-1.0.so.0)
 #
 #PACKAGES += CSWlibpangox1-0-0
 #SPKG_DESC_CSWlibpangox1-0-0 = X11 bindings for Pango, libpangox-1.0.so.0
-#PKGFILES_CSWlibpangox1-0-0 = $(call pkgfiles_lib,libpangox-1.0.so.0)
-#
-#PACKAGES += CSWlibpangoxft1-0-0
-#SPKG_DESC_CSWlibpangoxft1-0-0 = XFT bindings for Pango, libpangoxft-1.0.so.0
-#PKGFILES_CSWlibpangoxft1-0-0 = $(call pkgfiles_lib,libpangoxft-1.0.so.0)
+#PKGFILES_CSWlibpangox1-0-0 = $(call pkgfiles_lib,lib
+PACKAGES += CSWlibpangoxft1-0-0
+SPKG_DESC_CSWlibpangoxft1-0-0 = XFT bindings for Pango, libpangoxft-1.0.so.0
+ngoxft-1.0.so.0
+#PKGFILES_CSWlibpangoxft1-0-0 = $(call pkgfiles_lib,libpangoxft-1.0.so.0)libpango-dev
+OBSOLETED_BY_CSWlibpango-dev += CSWpangodevel
+CATALOGNAME_CSWpangodevel = libpangodevel_stub
+SPKG_DESC_CSWlibpango-dev = Developer files for libpango-1.0.so.0 and assorted libs
+PKGFILES_CSWlibpango-dev = $(PKGFILES_DEVEL)
+# CSWpango pulls in all libraries
+RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWpango
+RUNTIME_DEP_PKGS_CSWlibpango-dev += CSWlibcairo-dev
 
-PACKAGES += CSWpangodevel
-CATALOGNAME_CSWpangodevel = libpango_devel
-CHECKPKG_OVERRIDES_CSWpangodevel += catalogname-does-not-match-pkgname|pkgname=CSWpangodevel|catalogname=libpango_devel|expected-catalogname=pangodevel
-SPKG_DESC_CSWpangodevel = Developer files for libpango-1.0.so.0 and assorted libs
-PKGFILES_CSWpangodevel = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWpangodevel += CSWpango
-RUNTIME_DEP_PKGS_CSWpangodevel += CSWlibcairo-dev
-#RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpango1-0-0
-#RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangocairo-1-0-0
-#RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangoft2-1-0-0
-#RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangox1-0-0
-#RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangoxft1-0-0
-
-PACKAGES += CSWpangodoc
-# This is a legacy name
-CATALOGNAME_CSWpangodoc = libpango_doc
-CHECKPKG_OVERRIDES_CSWpangodoc += catalogname-does-not-match-pkgname|pkgname=CSWpangodoc|catalogname=libpango_doc|expected-catalogname=pangodoc
-SPKG_DESC_CSWpangodoc = Documentation for Pango
-PKGFILES_CSWpangodoc = $(sharedstatedir)/gtk-doc/.*
-ARCHALL_CSWpangodoc = 1
+PACKAGES += CSWpango-doc
+ARCHALL_CSWpango-doc = 1
+OBSOLETED_BY_CSWpango-doc += CSWpangodoc
+CATALOGNAME_CSWpangodoc += libpango_doc_stub
+SPKG_DESC_CSWpango-doc = Documentation for Pango
+PKGFILES_CSWpango-doc = $(sharedstatedir)/gtk-doc/.*
+L_CSWpangodoc = 1
 
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWgtk-doc
 BUILD_DEP_PKGS += CSWlibxslt
-BUILD_DEP_PKGS += CSWglib2devel
+BUILD_DEP_PKGS BUILD_DEP_PKGS += CSWlibharfbuzz-dev
+ CSWglib2devel
 # BUILD_DEP_PKGS += CSWlibxft2devel
-BUILD_DEP_PKGS += CSWvim # for generating docs
+BUILD_DEP_PKGS += CSWvim # for generating do# check.defs fails, and I'dont care too much about it.
+#
+# So, employing a custom test script only performing tests in tests
+TEST_SCRIPTS = customdocs
 
 BUILD64 = 1
 
@@ -102,24 +87,18 @@ sysconfdir = /etc/opt/csw$(sysconfdir-suffix-$(MEMORYMODEL))
 
 # EXTRA_ISAEXEC_EXCLUDE_FILES = $(bindir)/pango-querymodules
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-x --enable-gtk-doc
-# CONFIGURE_ARGS += --with-included-modules 
+CONenable-gtk-doc
+CONFIGURE_ARGS += --with-xft
+CONFIGURE_ARGS += --disable-static
 
 STRIP_LIBTOOL = 1
 
-# Lots of compiler-specific tests failing (Sun Studio?)
-SKIPTEST ?= 1
-
-EXTRA_MERGE_EXCLUDE_FILES = .*/preload\.1\.gz
-
 include gar/category.mk
 
-post-extract-modulated:
-	-perl -pi \
-		-e 's,#!/bin/sh,#!/bin/bash,' \
-		$(WORKSRC)/pango/check.defs
+test-custom:
+	cd $(WORKSRC)/tests && env $(BUILD_ENV) $(MAKE) check
 	@$(MAKECOOKIE)
 
 post-merge:
-	mkdir -p $(PKGROOT)$(sysconfdir)/64/pango
+	[ -d $(PKGROOT)$(sysconfdir)/pango ] || mkdir -p $(PKGROOT)$(sysconfdir)/pango
 	@$(MAKECOOKIE)
