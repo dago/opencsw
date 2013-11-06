@@ -6,9 +6,8 @@ DESCRIPTION = C++ interface to glib2
 define BLURB
 endef
 
-#PATCHFILES += 0001-Fix-disable-tests-1.patch
-#PATCHFILES += 0003-Disable-Tests-2.patch
-#PATCHFILES += 0003-Use-etc-hosts-instead-of-etc-fstab-in-test.patch
+PATCHFILES += 0001-Fix-disable-tests-1.patch
+PATCHFILES += 0002-Disable-tests-2.patch
 
 MASTER_SITES += $(GNOME_MIRROR)
 DISTFILES += $(DISTNAME).tar.xz
