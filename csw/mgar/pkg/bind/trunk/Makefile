@@ -37,6 +37,7 @@ RUNTIME_DEP_PKGS_CSWbind  = CSWlibbind
 RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
 RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWbind += CSWlibssl1-0-0
 
 PACKAGES += CSWbind-dev
 CATALOGNAME_CSWbind-dev = bind_dev
@@ -109,6 +110,7 @@ USERGROUP   = /etc/opt/csw/pkg/CSWbind/cswusergroup
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
+CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
 
