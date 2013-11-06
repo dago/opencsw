@@ -69,6 +69,8 @@ RUNTIME_DEP_PKGS_CSWlibglibmm-dev += CSWlibglibmm2-4-1
 RUNTIME_DEP_PKGS_CSWlibglibmm-dev += CSWperl
 # Nothing to worry, just in a comment
 CHECKPKG_OVERRIDES_CSWlibglibmm-dev += file-with-bad-content|/usr/local|root/opt/csw/include/glibmm-2.4/glibmm/miscutils.h
+# Nothing to worry, just in a comment
+CHECKPKG_OVERRIDES_CSWlibglibmm-dev += file-with-bad-content|/usr/share|root/opt/csw/include/giomm-2.4/giomm/desktopappinfo.h
 
 PACKAGES += CSWglibmm-doc
 ARCHALL_CSWglibmm-doc = 1
