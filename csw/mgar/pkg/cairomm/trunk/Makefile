@@ -20,6 +20,11 @@ RUNTIME_DEP_PKGS_CSWlibcairomm1-0-1 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibcairomm1-0-1 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibcairomm1-0-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibcairomm1-0-1 += CSWlibgcc-s1
+# Inconsistency because of different interpretations of -z ignore
+CHECKPKG_OVERRIDES_CSWlibcairomm1-0-1 += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWlibcairomm1-0-1 += surplus-dependency|CSWlibpng15-15
+CHECKPKG_OVERRIDES_CSWlibcairomm1-0-1 += surplus-dependency|CSWlibxrender
+CHECKPKG_OVERRIDES_CSWlibcairomm1-0-1 += surplus-dependency|CSWlibfreetype6
 
 PACKAGES += CSWlibcairomm-dev
 SPKG_DESC_CSWlibcairomm-dev = Development files for libcairo-1.0.so.1
