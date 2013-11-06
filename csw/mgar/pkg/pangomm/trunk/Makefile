@@ -23,6 +23,10 @@ RUNTIME_DEP_PKGS_CSWlibpangomm1-4-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibpangomm1-4-1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibpangomm1-4-1 += CSWpango
 RUNTIME_DEP_PKGS_CSWlibpangomm1-4-1 += CSWlibgcc-s1
+# May be extra
+CHECKPKG_OVERRIDES_CSWlibpangomm1-4-1 += surplus-dependency|CSWlibcairo2
+CHECKPKG_OVERRIDES_CSWlibpangomm1-4-1 += surplus-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWlibpangomm1-4-1 += surplus-dependency|CSWlibintl8
 
 PACKAGES += CSWlibpangomm-dev
 SPKG_DESC_CSWlibpangomm-dev = Development files for libpangomm-1.4.so.1
