@@ -1,5 +1,5 @@
 NAME = tcpdump
-VERSION = 4.3.0
+VERSION = 4.4.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -35,4 +35,4 @@ CONFIGURE_ARGS += --with-smi
 # There is a versioned tcpdump, which is not a hardlink. No need for that.
 EXTRA_MERGE_EXCLUDE_FILES = $(sbindir)/tcpdump\..*
 
-include gar/category.mk
+inclu
