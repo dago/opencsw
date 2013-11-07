@@ -20,6 +20,8 @@ RUNTIME_DEP_PKGS_CSWlibatkmm1-6-1 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibatkmm1-6-1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibatkmm1-6-1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibatkmm1-6-1 += CSWlibatk1-0-0
+# Problematic -z ignore between sparc/i386
+CHECKPKG_OVERRIDES_CSWlibatkmm1-6-1 += surplus-dependency|CSWlibintl8
 
 PACKAGES += CSWlibatkmm-dev
 SPKG_DESC_CSWlibatkmm-dev = Development files for libatkmm-1.6.so.1
