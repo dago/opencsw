@@ -34,6 +34,28 @@ RUNTIME_DEP_PKGS_CSWlibgdkmm2-4-1 += CSWlibpangocairo1-0-0
 RUNTIME_DEP_PKGS_CSWlibgdkmm2-4-1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdkmm2-4-1 += CSWlibgio2-0-0
 
+# Overrides due to problems with -z ignore
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibcairo2
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibpangocairo1-0-0
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibatk1-0-0
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibgio2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibgiomm2-4-1
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWlibgdkmm2-4-1 += surplus-dependency|CSWlibpango1-0-0
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibgio2-0-0
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibcairo2
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibpangocairo1-0-0
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibatk1-0-0
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibgdk-pixbuf2-0-0
+CHECKPKG_OVERRIDES_CSWlibgtkmm2-4-1 += surplus-dependency|CSWlibpango1-0-0
+
 PACKAGES += CSWlibgtkmm2-4-1
 SPKG_DESC_CSWlibgtkmm2-4-1 = C++ interface to gtk2, libgtkmm-2.4.so.1
 PKGFILES_CSWlibgtkmm2-4-1 += $(call pkgfiles_lib,libgtkmm-2.4.so.1)
