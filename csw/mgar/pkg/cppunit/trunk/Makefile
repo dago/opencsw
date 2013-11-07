@@ -18,6 +18,8 @@ PATCHFILES += cppunit-1.12.1-configure.in-ieeefp.h.patch
 #   http://sourceforge.net/tracker/?func=detail&aid=3483400&group_id=11795&atid=111795
 PATCHFILES += cppunit-1.12.1-configure.in-fabs.patch
 
+PATCHFILES += cppunit-1.12.1-configure.in-config-headers.patch
+
 PACKAGES += CSWlibcppunit1-12-1
 SPKG_DESC_CSWlibcppunit1-12-1 = C++ port of JUnit, libcppunit-1.12.so.1
 PKGFILES_CSWlibcppunit1-12-1 += $(call pkgfiles_lib,libcppunit-1.12.so.1)
@@ -41,5 +43,5 @@ BUILD64 = 1
 include gar/category.mk
 
 post-patch-modulated:
-	-cd $(WORKSRC) && autoreconf -fi
+	cd $(WORKSRC) && autoreconf -fi
 	@$(MAKECOOKIE)

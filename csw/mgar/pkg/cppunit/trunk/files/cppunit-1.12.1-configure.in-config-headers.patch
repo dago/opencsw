@@ -1,0 +1,11 @@
+--- a/configure.in
++++ b/configure.in
+@@ -37,7 +37,7 @@ AC_SUBST(LT_REVISION)
+ AC_SUBST(LT_AGE)
+ 
+ AC_CONFIG_AUX_DIR(config)
+-AM_CONFIG_HEADER(config/config.h)
++AC_CONFIG_HEADERS(config/config.h)
+ AM_INIT_AUTOMAKE(cppunit, $CPPUNIT_VERSION)
+ 
+ # General "with" options
