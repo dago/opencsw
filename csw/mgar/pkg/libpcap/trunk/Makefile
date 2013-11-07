@@ -1,5 +1,5 @@
 NAME = libpcap
-VERSION = 1.3.0
+VERSION = 1.4.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -52,4 +52,4 @@ MERGE_DIRS_isa-pentium = $(libdir)
 # These are in the binaries only and specifiy compiler lines for unused includes
 CHECKPKG_OVERRIDES_CSWlibpcap1 += file-with-bad-content
 
-include gar/category.mk
+include
