@@ -45,41 +45,8 @@ install-custom:
 	ginstall -d "$(pkgfontdir)"
 	cd $(WORKSRC) && \
 	ginstall \
-		FreeMono.otf \
-		FreeMono.ttf \
-		FreeMono.woff \
-		FreeMonoBold.otf \
-		FreeMonoBold.ttf \
-		FreeMonoBold.woff \
-		FreeMonoBoldOblique.otf \
-		FreeMonoBoldOblique.ttf \
-		FreeMonoBoldOblique.woff \
-		FreeMonoOblique.otf \
-		FreeMonoOblique.ttf \
-		FreeMonoOblique.woff \
-		FreeSans.otf \
-		FreeSans.ttf \
-		FreeSans.woff \
-		FreeSansBold.otf \
-		FreeSansBold.ttf \
-		FreeSansBold.woff \
-		FreeSansBoldOblique.otf \
-		FreeSansBoldOblique.ttf \
-		FreeSansBoldOblique.woff \
-		FreeSansOblique.otf \
-		FreeSansOblique.ttf \
-		FreeSansOblique.woff \
-		FreeSerif.otf \
-		FreeSerif.ttf \
-		FreeSerif.woff \
-		FreeSerifBold.otf \
-		FreeSerifBold.ttf \
-		FreeSerifBold.woff \
-		FreeSerifBoldItalic.otf \
-		FreeSerifBoldItalic.ttf \
-		FreeSerifBoldItalic.woff \
-		FreeSerifItalic.otf \
-		FreeSerifItalic.ttf \
-		FreeSerifItalic.woff \
+		*.otf \
+		*.ttf \
+		*.woff \
 		$(pkgfontdir)
 	$(MAKECOOKIE)
