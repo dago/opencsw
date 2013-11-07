@@ -2,7 +2,7 @@
 
 NAME_PREFIX	=	org
 NAME		=	$(NAME_PREFIX)-mode
-VERSION		=	7.9.4
+VERSION		=	8.2.1
 GARTYPE		=	v2
 
 DESCRIPTION = An Emacs Mode for Notes, Planning, and Authoring
@@ -29,21 +29,31 @@ CONFIGURE_SCRIPTS	=
 TEST_SCRIPTS		=
 
 ARCHALL							=	1
+CATALOGNAME_CSWorg-mode			=	org_mode
 RUNTIME_DEP_PKGS				+=	CSWemacs
 CHECKPKG_OVERRIDES_CSWorg-mode	+=	surplus-dependency|CSWemacs
-CHECKPKG_OVERRIDES_CSWorg-mode	+=	missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWorg-mode	+=	file-with-bad-content|/usr/local|root/opt/csw/share/org-mode/lisp/htmlize.el
+CHECKPKG_OVERRIDES_CSWorg-mode	+=	missing-dependency|CSWemacs-common
+CHECKPKG_OVERRIDES_CSWorg-mode	+=	file-with-bad-content|/usr/local|root/opt/csw/share/org/lisp/htmlize.el
 
 EXTRA_TEXINFO						=	$(infodir)/.*
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
+
+# remove not supported contributions (this is the easiest way to do it)
+post-extract:
+	cd $(WORKSRC)/contrib/lisp && \
+	rm -f \
+		ob-oz.el \
+		org-jira.el
+	$(MAKECOOKIE)
 
 pre-build-modulated:
 	cp $(WORKDIR)/local.mk $(WORKSRC)
+	$(MAKECOOKIE)
 
-post-install-modulated: pkgdoc = $(docdir)/$(NAME)
+post-install-modulated: pkgdoc = $(docdir)/$(CATALOGNAME_CSWorg-mode)
 post-install-modulated: source = $(WORKSRC)/doc
 post-install-modulated: contrib = $(sharedstatedir)/$(NAME)
 post-install-modulated:

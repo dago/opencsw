@@ -3,4 +3,4 @@ prefix	= /opt/csw/share
 
 ORG_MAKE_DOC = info html pdf card
 
-ORG_ADD_CONTRIB = org-e-* org-md org-export
+ORG_ADD_CONTRIB = org* ox* ob* htmlize*
