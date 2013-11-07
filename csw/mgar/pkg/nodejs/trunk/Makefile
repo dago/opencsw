@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nodejs
-VERSION = 0.6.18
+VERSION = 0.10.21
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -42,4 +42,3 @@ PATH := /opt/csw/gnu:$(PATH)
 
 configure-custom:
 	cd $(WORKSRC) && /usr/bin/env -i $(CONFIGURE_ENV) PWD=$(abspath $(WORKSRC)) ./configure $(CONFIGURE_ARGS)
-	@$(MAKECOOKIE)
