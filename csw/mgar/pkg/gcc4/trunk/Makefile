@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.8.1
+VERSION   = 4.8.2
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
 PKG_VERSION_TOKEN = gcc4
@@ -102,7 +102,7 @@ SKIPTEST ?= 1
 # Used multiple times in package definitions
 JAVA_LIB_VERSION = 14
 
-ALTERNATIVES_PRIO = 481
+ALTERNATIVES_PRIO = 482
 
 PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
@@ -113,7 +113,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo3
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgomp1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibitm1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc2
@@ -151,6 +151,8 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWbinutils
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWggrep
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
+# This is basically the devel package
+CHECKPKG_OVERRIDES_CSWgcc4core += shared-lib-package-contains-so-symlink
 
 # The .a files are necessary
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap
@@ -172,6 +174,7 @@ PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),
 SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++6
 
 PACKAGES += CSWlibgcc-s1
 CATALOGNAME_CSWlibgcc-s1 = libgcc_s1
@@ -230,12 +233,12 @@ PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 
-PACKAGES += CSWlibgo3
-PKGFILES_CSWlibgo3 += $(call baseisadirs,$(libdir),libgo\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibgo3 += $(DESCRIPTION), libgo.so.3
-RUNTIME_DEP_PKGS_CSWlibgo3 += CSWlibgcc-s1
+PACKAGES += CSWlibgo4
+PKGFILES_CSWlibgo4 += $(call baseisadirs,$(libdir),libgo\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibgo4 += $(DESCRIPTION), libgo.so.4
+RUNTIME_DEP_PKGS_CSWlibgo4 += CSWlibgcc-s1
 # Hasn't been investigated. I feel lucky.
-CHECKPKG_OVERRIDES_CSWlibgo3 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgo4 += file-with-bad-content
 
 PACKAGES += CSWlibitm1
 PKGFILES_CSWlibitm1 += $(call baseisadirs,$(libdir),libitm\.so\.1(\.\d+)*)
@@ -471,7 +474,7 @@ CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgo3 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgo4 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
