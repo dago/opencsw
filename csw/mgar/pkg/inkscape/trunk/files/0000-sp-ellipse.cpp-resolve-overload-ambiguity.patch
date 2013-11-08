@@ -1,0 +1,25 @@
+From 81c50b04ead79d6ef33a5fa7184209869cc73575 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 16:08:15 +0100
+Subject: [PATCH] sp-ellipse.cpp: resolve overload ambiguity
+
+---
+ src/sp-ellipse.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/sp-ellipse.cpp b/src/sp-ellipse.cpp
+index dbc5b14..c02a9a5 100644
+--- a/src/sp-ellipse.cpp
++++ b/src/sp-ellipse.cpp
+@@ -147,7 +147,7 @@ sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags)
+         if (viewbox) {
+             double const dx = viewbox->width();
+             double const dy = viewbox->height();
+-            double const dr = sqrt(dx*dx + dy*dy)/sqrt(2);
++            double const dr = sqrt(dx*dx + dy*dy)/sqrt(2.0);
+             double const em = style->font_size.computed;
+             double const ex = em * 0.5; // fixme: get from pango or libnrtype
+             ellipse->cx.update(em, ex, dx);
+-- 
+1.8.4.1
+
