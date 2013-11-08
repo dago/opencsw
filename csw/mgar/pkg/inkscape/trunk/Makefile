@@ -16,7 +16,9 @@ PATCHFILES += 0000-color-profile.cpp-Add-required-headers.patch
 PATCHFILES += 0000-desktop-widget.h-Remove-stray-comma.patch
 PATCHFILES += 0000-sp-ellipse.cpp-resolve-overload-ambiguity.patch
 PATCHFILES += 0000-fixed_point.h-Resolved-ambiguity.patch
-
+PATCHFILES += 0000-lpe-lattice.cpp-resolve-overload-ambiguity.patch
+PATCHFILES += 0000-round.cpp-resolve-overload-ambiguity.patch
+PATCHFILES += 0000-svg-length.cpp-resolve-overload-ambiguity.patch
 
 BUILD_DEP_PKGS += CSWlibwpg-dev
 BUILD_DEP_PKGS += CSWpm-xml-parser
@@ -46,9 +48,6 @@ CONFIGURE_ENV_MSGFMT = $(bindir)/gmsgfmt
 # Use this until GCC boost is moved to /opt/csw
 EXTRA_INC += $(prefix)/gxx/include
 EXTRA_LIB += $(prefix)/gxx/lib
-# Make gcc 4.8 stop yapping about stuff that was previously allowed
-EXTRA_CXXFLAGS += -fpermissive
-
 
 include gar/category.mk
 
