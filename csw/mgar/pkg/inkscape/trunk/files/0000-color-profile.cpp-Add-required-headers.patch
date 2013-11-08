@@ -1,0 +1,26 @@
+From bb09effb1bad8c23e74e063ebf1d5cc323573e21 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 15:49:55 +0100
+Subject: [PATCH] color-profile.cpp: Add required headers
+
+---
+ src/color-profile.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/color-profile.cpp b/src/color-profile.cpp
+index 05328c0..6a4afd7 100644
+--- a/src/color-profile.cpp
++++ b/src/color-profile.cpp
+@@ -8,6 +8,9 @@
+ #include <sys/fcntl.h>
+ #include <gdkmm/color.h>
+ #include <glib/gi18n.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
+ 
+ #ifdef DEBUG_LCMS
+ #include <gtk.h>
+-- 
+1.8.4.1
+

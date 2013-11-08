@@ -1,0 +1,25 @@
+From 8d463f8ae15db61f6f56697889cd47780fe319bb Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 15:54:45 +0100
+Subject: [PATCH] desktop-widget.h: Remove stray comma
+
+---
+ src/widgets/desktop-widget.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/widgets/desktop-widget.h b/src/widgets/desktop-widget.h
+index d853e09..aab73c9 100644
+--- a/src/widgets/desktop-widget.h
++++ b/src/widgets/desktop-widget.h
+@@ -239,7 +239,7 @@ struct SPDesktopWidget {
+ private:
+     GtkWidget *tool_toolbox;
+     GtkWidget *aux_toolbox;
+-    GtkWidget *commands_toolbox,;
++    GtkWidget *commands_toolbox;
+     GtkWidget *snap_toolbox;
+ 
+     static void init(SPDesktopWidget *widget);
+-- 
+1.8.4.1
+

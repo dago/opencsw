@@ -1,0 +1,26 @@
+From da1e920058ce7e665768b87e6c5833324c0d531a Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 16:35:07 +0100
+Subject: [PATCH] fixed_point.h: Resolved ambiguity.
+
+Please note: no guarantee this cast is fool-proof.
+---
+ src/util/fixed_point.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/util/fixed_point.h b/src/util/fixed_point.h
+index 05a73da..31bc036 100644
+--- a/src/util/fixed_point.h
++++ b/src/util/fixed_point.h
+@@ -79,7 +79,7 @@ public:
+     operator unsigned int() const { return v>>precision; }
+ 
+     operator float() const { return ldexpf(v,-precision); }
+-    operator double() const { return ldexp(v,-precision); }
++    operator double() const { return ldexp(static_cast<double>(v),-precision); }
+ private:
+     T v;
+ };
+-- 
+1.8.4.1
+
