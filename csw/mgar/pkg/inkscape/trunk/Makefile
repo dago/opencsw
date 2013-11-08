@@ -19,6 +19,9 @@ PATCHFILES += 0000-fixed_point.h-Resolved-ambiguity.patch
 PATCHFILES += 0000-lpe-lattice.cpp-resolve-overload-ambiguity.patch
 PATCHFILES += 0000-round.cpp-resolve-overload-ambiguity.patch
 PATCHFILES += 0000-svg-length.cpp-resolve-overload-ambiguity.patch
+PATCHFILES += 0000-desktop-widget.cpp-resolve-overload-ambiguity.patch
+PATCHFILES += 0000-ruler.cpp-resolved-overload-ambiguity.patch
+PATCHFILES += 0000-tile.cpp-resolved-overload-ambiguity.patch
 
 BUILD_DEP_PKGS += CSWlibwpg-dev
 BUILD_DEP_PKGS += CSWpm-xml-parser
