@@ -1,0 +1,25 @@
+From a35942b2e26790bbb6ad8ad2f9031f9a68ee8e65 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 19:45:24 +0100
+Subject: [PATCH] ruler.cpp: resolved overload ambiguity
+
+---
+ src/widgets/ruler.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/widgets/ruler.cpp b/src/widgets/ruler.cpp
+index dd03364..0512163 100644
+--- a/src/widgets/ruler.cpp
++++ b/src/widgets/ruler.cpp
+@@ -359,7 +359,7 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
+                 (label_spacing_px > 6*digit_height || tick_index%2 == 0 || cur == 0) && 
+                 (label_spacing_px > 3*digit_height || tick_index%4 == 0 || cur == 0))
+             {
+-                if (fabs((int)cur) >= 2000 && (((int) cur)/1000)*1000 == ((int) cur))
++                if (fabs(cur) >= 2000 && (((int) cur)/1000)*1000 == ((int) cur))
+                     sprintf (unit_str, "%dk", ((int) cur)/1000);
+                 else
+                     sprintf (unit_str, "%d", (int) cur);
+-- 
+1.8.4.1
+

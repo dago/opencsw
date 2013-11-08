@@ -1,0 +1,38 @@
+From 3350ffea792a92a02c9b2804312405622d17a896 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 20:28:44 +0100
+Subject: [PATCH] tile.cpp: resolved overload ambiguity
+
+---
+ src/ui/dialog/tile.cpp | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/ui/dialog/tile.cpp b/src/ui/dialog/tile.cpp
+index e615c08..c29353e 100644
+--- a/src/ui/dialog/tile.cpp
++++ b/src/ui/dialog/tile.cpp
+@@ -581,8 +581,8 @@ void TileDialog::updateSelection()
+                 prefs->setInt("/dialogs/gridtiler/NoOfCols", NoOfCols);
+             }
+         } else {
+-            double PerRow = ceil(sqrt(selcount));
+-            double PerCol = ceil(sqrt(selcount));
++            double PerRow = ceil(sqrt(static_cast<double>(selcount)));
++            double PerCol = ceil(sqrt(static_cast<double>(selcount)));
+             NoOfRowsSpinner.set_value(PerRow);
+             NoOfColsSpinner.set_value(PerCol);
+             prefs->setInt("/dialogs/gridtiler/NoOfCols", static_cast<int>(PerCol));
+@@ -647,8 +647,8 @@ TileDialog::TileDialog()
+ 
+     /*#### Number of Rows ####*/
+ 
+-    double PerRow = ceil(sqrt(selcount));
+-    double PerCol = ceil(sqrt(selcount));
++    double PerRow = ceil(sqrt(static_cast<double>(selcount)));
++    double PerCol = ceil(sqrt(static_cast<double>(selcount)));
+ 
+     #ifdef DEBUG_GRID_ARRANGE
+         g_print("/n PerRox = %f PerCol = %f selcount = %d",PerRow,PerCol,selcount);
+-- 
+1.8.4.1
+
