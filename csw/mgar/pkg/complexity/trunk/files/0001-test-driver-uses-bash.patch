@@ -1,0 +1,22 @@
+From 5881460315d818e34f3f50ed475c49228a72816b Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Fri, 8 Nov 2013 16:07:43 +0100
+Subject: [PATCH] test driver uses bash
+
+---
+ tests/complexity.test | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/complexity.test b/tests/complexity.test
+index bb9463e..486d69c 100755
+--- a/tests/complexity.test
++++ b/tests/complexity.test
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ 
+ srcdir=`cd ${top_srcdir} ; pwd`/src
+ tstdir=`pwd`
+-- 
+1.8.4.1
+
