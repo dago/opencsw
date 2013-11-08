@@ -1,0 +1,25 @@
+From fdc4bf86cf74476de9d4eb3c04a78de36ebd6cbf Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 17:07:43 +0100
+Subject: [PATCH] lpe-lattice.cpp: resolve overload ambiguity
+
+---
+ src/live_effects/lpe-lattice.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/live_effects/lpe-lattice.cpp b/src/live_effects/lpe-lattice.cpp
+index 50ecdf0..f823e3c 100644
+--- a/src/live_effects/lpe-lattice.cpp
++++ b/src/live_effects/lpe-lattice.cpp
+@@ -150,7 +150,7 @@ LPELattice::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
+                         // corner = actual corner of the rectangle
+                         // origin = Upperleft point
+                         double dl = dot((*handles[corner+4*i] - (base + origin)), dir)/dot(dir,dir);
+-                        sb2[dim][i][corner] = dl/( dim ? height : width )*pow(4.0,ui+vi);
++                        sb2[dim][i][corner] = dl/( dim ? height : width )*pow(4.0,static_cast<int>(ui+vi));
+                     }
+                 }
+             }
+-- 
+1.8.4.1
+

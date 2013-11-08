@@ -1,0 +1,32 @@
+From f36ec4fec9096d96aeed3d9f1b1dc9e85b380b88 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 18:34:36 +0100
+Subject: [PATCH] svg-length.cpp: resolve overload ambiguity
+
+---
+ src/svg/svg-length.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/svg/svg-length.cpp b/src/svg/svg-length.cpp
+index ae5f758..1f1ec02 100644
+--- a/src/svg/svg-length.cpp
++++ b/src/svg/svg-length.cpp
+@@ -114,13 +114,13 @@ static unsigned sp_svg_number_write_d(gchar *buf, int bufLen, double val, unsign
+     /* Determine the actual number of fractional digits */
+     fprec = MAX(static_cast<int>(fprec), static_cast<int>(tprec) - idigits);
+     /* Round value */
+-    val += 0.5 / pow(10.0, fprec);
++    val += 0.5 / pow(10.0, static_cast<int>(fprec));
+     /* Extract integral and fractional parts */
+     double dival = floor(val);
+     double fval = val - dival;
+     /* Write integra */
+     if (idigits > (int)tprec) {
+-        i += sp_svg_number_write_ui(buf + i, (unsigned int)floor(dival/pow(10.0, idigits-tprec) + .5));
++        i += sp_svg_number_write_ui(buf + i, (unsigned int)floor(dival/pow(10.0, idigits-static_cast<int>(tprec)) + .5));
+         for(unsigned int j=0; j<(unsigned int)idigits-tprec; j++) {
+             buf[i+j] = '0';
+         }
+-- 
+1.8.4.1
+

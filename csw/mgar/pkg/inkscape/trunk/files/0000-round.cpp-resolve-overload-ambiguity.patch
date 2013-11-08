@@ -1,0 +1,24 @@
+From b73e07efa8eb3001a331be46a1050d9422851e87 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 8 Nov 2013 17:42:13 +0100
+Subject: [PATCH] round.cpp: resolve overload ambiguity.
+
+---
+ src/svg/round.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/svg/round.cpp b/src/svg/round.cpp
+index 9e7b91e..0fce122 100644
+--- a/src/svg/round.cpp
++++ b/src/svg/round.cpp
+@@ -42,6 +42,6 @@ double rround(double x)
+ double rround(double x, int k)
+ {
+ 	if (k==0) return rround(x);
+-	else return rround(x*pow(10,k)) / pow(10,k);
++	else return rround(x*pow(10.0,k)) / pow(10.0,k);
+ }
+ 
+-- 
+1.8.4.1
+
