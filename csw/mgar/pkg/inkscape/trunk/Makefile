@@ -35,6 +35,7 @@ BUILD_DEP_PKGS += CSWlibatk-dev
 BUILD_DEP_PKGS += CSWlibatkmm-dev
 BUILD_DEP_PKGS += CSWgsl-dev
 BUILD_DEP_PKGS += CSWimagemagick-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -47,6 +48,10 @@ CONFIGURE_ENV_MSGFMT = $(bindir)/gmsgfmt
 
 #EXTRA_CONFIGURE_EXPORTS += PROTOC
 #CONFIGURE_ENV_PROTOC = $(prefix)/gxx/bin/protoc
+
+REINPLACE_MATCH = -Wl,--export-dynamic
+REINPLACE_WITH = 
+REINPLACE_FILES = src/Makefile.in
 
 # Use this until GCC boost is moved to /opt/csw
 EXTRA_INC += $(prefix)/gxx/include
