@@ -28,6 +28,22 @@ PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpoppler-cpp\.so\.
 SPKG_DESC_CSWlibpoppler-cpp0 += $(DESCRIPTION), libpoppler-cpp.so.0
 RUNTIME_DEP_PKGS_CSWlibpoppler-cpp043
 RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibstdc++6
+# Those dependencies are due to `ld -z ignore' has changed (patch 147147-26).
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibjpeg7
+# Those overrides are due to `ld -z ignore' has changed (patch 147147-26).
+CHECKPKG_OVERRIDES_CSWlibpoppler-cpp0 += surplus-dependency|CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWlibpoppler-cpp0 += surplus-dependency|CSWlibtiff5
+CHECKPKG_OVERRIDES_CSWlibpoppler-cpp0 += surplus-dependency|CSWlibpng15-15
+CHECKPKG_OVERRIDES_CSWlibpoppler-cpp0 += surplus-dependency|CSWlibjpeg7
+CHECKPKG_OVERRIDES_CSWlibpoppler-cpp0 += surplus-dependency|CSWliblcms2-2
+CHECKPKG_OVERRIDES_CSWlibpoppler-cpp0 += surplus-dependency|CSWlibfreetype6
 
 PACKAGES += CSWlibpoppler-glib8
 PKGFILES_CSWlibpoppler-glib8 += $(call baseisadirs,$(libdir),libpoppler-glib\.so\.8\.6\.0)
@@ -39,6 +55,22 @@ RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibpoppler43
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibstdc++6
+# Those dependencies are due to `ld -z ignore' has changed (patch 147147-26).
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWliblcms2-2
+# Those overrides are due to `ld -z ignore' has changed (patch 147147-26).
+CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibtiff5
+CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibpng15-15
+CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibjpeg7
+CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWliblcms2-2
 
 PACKAGES += CSWlibpoppler43
 PKGFILES_CSWlibpoppler43 += $(call baseisadirs,$(libdir),libpoppler\.so\.43\.0\.0)
@@ -50,6 +82,8 @@ RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibstdc++6
 
 PACKAGES += CSWpoppler-er-dev = poppler_dev
 SPKG_DESC_CSWpoppler-dev += $(DESCRIPTION), development files
@@ -83,7 +117,8 @@ CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftohtm
 RUNTIME_DEP_PKGS_CSWpoppler43
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpoppler += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2er += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2eRUNTIME_DEP_PKGS_CSWpoppler += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibstdc++6er += CSWliblcms1
 
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
 # when relinking libpoppler-glib during install phaze
