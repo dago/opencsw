@@ -15,8 +15,11 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  =DISTFILES += CSWnetatalk.postinstall CSWnetatalk.preremove
+GARCOMPILER = GNU
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+# Solaris 11 for Zeroconf support
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWbdb48devel
@@ -26,6 +29,7 @@ BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWlibdbus-dev
 BUILD_DEP_PKGS += CSWlibdbus-glib-dev
 BUILD_DEP_PKGS += CSWlibtracker-dev
+BUILD_DEP_PKGS += CSWlibssl-dev
 
 RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcrypt11
@@ -41,6 +45,8 @@ RUNTIME_DEP_PKGS += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 # needed because of 7051963 but fails checkpkg
 # http://lists.opencsw.org/pipermail/maintainers/2013-November/018794.html
 RUNTIME_DEP_PKGS += CSWlibintl8
@@ -79,10 +85,15 @@ CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
 CONFIGURE_ARGS += --enable-krbV-uam
 CONFIGURE_ARGS += --with-tracker-prefix=/opt/csw
 CONFIGURE_ARGS += --with-tracker-pkgconfig-version=0.16
+CONFIGURE_ARGS += --with-ssl-dir=/opt/csw
 # disable until asprintf() compat func is available in 3.1.1
 CONFIGURE_ARGS += --with-mysql-config=no
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
+CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/bin/afppasswd
+CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_pam.so
+CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_passwd.so
+CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_randnum.so
 
 include gar/category.mk
 
