@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = svr4pkg
-VERSION = 0.3
+VERSION = 0.4
 GARTYPE = v2
 
 DESCRIPTION = Basic perl implementation of solaris native svr4 packages tools
@@ -11,9 +11,8 @@ define BLURB
 endef
 
 GITHUB_USER = yannrouillard
-MASTER_SITES = $(GITHUB_MIRROR)
-DISTNAME = $(GITHUB_USER)-$(NAME)-dab9dcf
-DISTFILES = $(NAME)-$(VERSION)$(GITHUB_BALL_EXT)
+MASTER_SITES = https://github.com/${GITHUB_USER}/${NAME}/archive/
+DISTFILES = v$(VERSION).tar.gz
 
 # We disable inclusion of CSWcommon by default as
 # this package could be installed before anything
