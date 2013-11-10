@@ -30,6 +30,7 @@ BUILD_DEP_PKGS += CSWlibdbus-dev
 BUILD_DEP_PKGS += CSWlibdbus-glib-dev
 BUILD_DEP_PKGS += CSWlibtracker-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
 
 RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcrypt11
@@ -45,12 +46,10 @@ RUNTIME_DEP_PKGS += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 
-# this sucks!
-RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSWlibcom-err3 CSWlibldap2-4-2 CSWlibgpg-error0
-RUNTIME_DEP_PKGS_i386_5.10 = CSWlibldap2-4-2 CSWlibgpg-error0
-RUNTIME_DEP_PKGS_i386_5.11 = CSWlibgpg-error0
+RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSWlibcom-err3 CSWlibgpg-error0
 RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL))
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
