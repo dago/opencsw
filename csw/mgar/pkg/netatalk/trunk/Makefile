@@ -83,6 +83,7 @@ CONFIGURE_ARGS += --with-tracker-pkgconfig-version=0.16
 CONFIGURE_ARGS += --with-ssl-dir=/opt/csw
 # disable until asprintf() compat func is available in 3.1.1
 CONFIGURE_ARGS += --with-mysql-config=no
+CONFIGURE_ARGS += --with-ldap=/opt/csw
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/bin/afppasswd
