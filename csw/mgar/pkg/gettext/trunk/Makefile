@@ -99,6 +99,9 @@ RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-3 += CSWlibunistring0
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-3 += CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-3 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-3 += soname-equals-filename
+# On i386 only
+CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-3 += surplus-dependency|CSWlibxml2-2
+CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-3 += surplus-dependency|CSWlibncurses5
 
 PACKAGES += CSWlibintl8
 SPKG_DESC_CSWlibintl8 += GNU locale utilities, libintl.so.8
