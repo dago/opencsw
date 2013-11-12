@@ -37,6 +37,7 @@ include gar/category.mk
 
 post-merge:
 	if [ -d $(PKGROOT)$(datadir)/autoconf-archive ] ; then \
+		[ -d $(PKGROOT)$(docdir)/autoconf_archive/ ] || mkdir -p $(PKGROOT)$(docdir)/autoconf_archive ; \
 		mv $(PKGROOT)$(datadir)/autoconf-archive/* $(PKGROOT)$(docdir)/autoconf_archive/ ; \
 		rmdir $(PKGROOT)$(datadir)/autoconf-archive ; \
 	fi
