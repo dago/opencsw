@@ -1,0 +1,11 @@
+----
+
+ You might want to install the spell checking backends
+
+   CSWlibenchant-aspell
+   CSWlibenchant-ispell
+   CSWlibenchant-myspell
+
+ They can be installed individually or all toghether.
+
+----

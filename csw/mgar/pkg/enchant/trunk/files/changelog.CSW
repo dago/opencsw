@@ -1,0 +1,17 @@
+enchant (1.6.0,REV=2013.11.12)
+
+  * Package split:
+	CSWenchant
+	CSWenchant-bin
+	CSWlibenchant1
+	CSWlibenchant-aspell
+	CSWlibenchant-ispell
+	CSWlibenchant-myspell
+	CSWlibenchant-dev
+
+  * CSWenchant is now a meta package, that pulls in all enchant
+    packages except for CSWlibenchant-dev.
+
+  * 64bit libraries provided.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 12 Nov 2013 08:04:46 +0100
