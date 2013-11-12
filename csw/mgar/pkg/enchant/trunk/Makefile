@@ -14,7 +14,7 @@ DISTFILES += CSWlibenchant1.postmsg
 SPKG_SOURCEURL = http://www.abisource.com/projects/enchant/
 
 
-POSTMSG = /opt/csw/share/doc/libenchant1/CSWenchant.postmsg
+POSTMSG = /opt/csw/share/doc/libenchant1/CSWlibenchant1.postmsg
 
 PACKAGES = CSWenchant
 SPKG_DESC_CSWenchant += $(DESCRIPTION), meta package
