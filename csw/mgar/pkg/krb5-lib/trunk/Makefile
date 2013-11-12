@@ -5,7 +5,7 @@
 #
 
 NAME    = krb5
-VERSION = 1.11.3
+VERSION = 1.11.4
 CATEGORIES = server
 GARTYPE = v2
 
@@ -134,9 +134,19 @@ post-extract-modulated:
 		$(WORKSRC)/src/plugins/preauth/pkinit/Makefile
 post-install-modulated:
 	# Remove Studio-specific arch references
+
 	gsed -i \
-		-e '/^[^#]/s/-xarch=[^ ]* //' \
-		-e '/^[^#]/s/-xchip=[^ ]* //' \
+		-e '/^[^#]/s/-xO[0-5][^ ]* *//g' \
+		-e '/^[^#]/s/-xarch=[^ ]* *//g' \
+		-e '/^[^#]/s/-xchip=[^ ]* *//g' \
+		-e '/^[^#]/s/-norunpath[^ ]* *//g' \
+		-e '/^[^#]/s/-lCrun[^ ]* *//g' \
+		-e '/^[^#]/s/-lCstd[^ ]* *//g' \
+		-e '/^[^#]/s/-mtune=[^ ]* *//g' \
+		-e '/^[^#]/s/-march=[^ ]* *//g' \
+		-e '/^[^#]/s/-Wall *//g' \
+		-e '/^[^#]/s/-pipe *//g' \
+		-e '/^[^#]/s/-KPIC/-fPIC/g' \
 		$(DESTDIR)$(bindir)/krb5-config
 	# Add a link to the system's Kerberos configuration
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)
