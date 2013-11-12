@@ -13,6 +13,9 @@ DISTFILES  = $(NAME)-$(VEFILES += changelog.CSW
 DISTFILES += CSWlibenchant1.postmsg
 SPKG_SOURCEURL = http://www.abisource.com/projects/enchant/
 
+
+POSTMSG = /opt/csw/share/doc/libenchant1/CSWenchant.postmsg
+
 PACKAGES = CSWenchant
 SPKG_DESC_CSWenchant += $(DESCRIPTION), meta package
 ARCHALL_CSWenchant = 1
@@ -43,7 +46,6 @@ SPKG_DESC_CSWlibenchant1 = $(DESCRIPTION), libenchant.so.1
 PKGFILES_CSWlibenchant1 += $(call pkgfiles_lib,libenchant.so.1)
 PKGFILES_CSWlibenchant1 += $(sharedstatedir)/enchant.*
 PKGFILES_CSWlibenchant1 += $(docdir)/libenchant1.*
-POSTMSG_CSWlibenchant1 = /opt/csw/share/doc/libenchant1/CSWenchant.postmsg
 RUNTIME_DEP_PKGS_CSWlibenchant1 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibenchant1 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibenchant1 += CSWlibgcc-s1
