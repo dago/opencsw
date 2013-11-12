@@ -22,15 +22,15 @@ GARCOMPILER = GCC4
 BUILD_DEP_PKGS += CSWpkgconfig
 
 PACKAGES = NIMOSSgd
-CATALOGNAME_CSWgd = gd
-SPKG_DESC_CSWgd = Utilities facilitating libgd for dynamic image creation
+CATALOGNAME_NIMOSSgd = gd
+SPKG_DESC_NIMOSSgd = Utilities facilitating libgd for dynamic image creation
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWgd += NIMOSSlibgd3
+RUNTIME_DEP_PKGS_NIMOSSgd += NIMOSSlibgd3
 
 PACKAGES += NIMOSSlibgd3
-CATALOGNAME_CSWlibgd3 = libgd3
-SPKG_DESC_CSWlibgd3 = A library used for dynamic image creation providing libgd.so.3
-PKGFILES_CSWlibgd3 += $(call pkgfiles_lib,libgd.so.3)
+CATALOGNAME_NIMOSSlibgd3 = libgd3
+SPKG_DESC_NIMOSSlibgd3 = A library used for dynamic image creation providing libgd.so.3
+PKGFILES_SIMOSSlibgd3 += $(call pkgfiles_lib,libgd.so.3)
 RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibiconv2
@@ -42,10 +42,10 @@ RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibtiff5
 
 PACKAGES += NIMOSSlibgd-dev
-CATALOGNAME_CSWlibgd-dev = libgd_dev
-SPKG_DESC_CSWlibgd-dev = Development files for libgd.so.3
-PKGFILES_CSWlibgd-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibgd-dev = NIMOSSlibgd3
+CATALOGNAME_NIMOSSlibgd-dev = libgd_dev
+SPKG_DESC_NIMOSSlibgd-dev = Development files for libgd.so.3
+PKGFILES_NIMOSSlibgd-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_NIMOSSlibgd-dev = NIMOSSlibgd3
 
 CSWd+)*).tar.gz
 
@@ -74,10 +74,10 @@ CONFIGURE_ARGS += --disable-fast-install
 # GD does not have a testsuite
 TEST_SCRIPTS =
 it comes from a default error message
-CHECKPKG_OVERRIDES_CSWgd += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/annotate
-CHECKPKG_OVERRIDES_CSWgd += file-with-bad-content|/usr/share|root/opt/csw/bin/pentium_pro/annotate
-CHECKPKG_OVERRIDES_CSWgd += file-with-bad-content|/usr/share|root/opt/csw/bin/sparcv8plus/annotate
-CHECKPKG_OVERRIDES_CSWgd += file-with-bad-content|/usr/share|root/opt/csw/bin/sparcv9/annotate/csw/include/gd.h
+CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/annotate
+CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/pentium_pro/annotate
+CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/sparcv8plus/annotate
+CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/sparcv9/annotate/csw/include/gd.h
 
 include gar/category.mk
 
