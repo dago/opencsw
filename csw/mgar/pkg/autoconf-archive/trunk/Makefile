@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = autoconf-archive
-VERSION = 2012.09.08
+VERSION = 2013.11.01
 GARTYPE = v2
 ARCHALL = 1
 
