@@ -94,8 +94,6 @@ OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
 LICErst
 
-EXTRA_LD_OPTIONS += -M $(abspath mapfile)
-
 EXTRA_CFLAGS   += -std=gnu99
 EXTRA_CPPFLAGS += -D__EXTENSIONS__ 
 EXTRA_LDFLAGS  += -L$(libdir) -lintl  += -D__EXTENSIONS__
