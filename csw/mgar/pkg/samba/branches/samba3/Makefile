@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME    = samba
-VERSION = 3.6.19
+VERSION = 3.6.20
 GARTYPE = v2
 
 DESCRIPTION =er)
