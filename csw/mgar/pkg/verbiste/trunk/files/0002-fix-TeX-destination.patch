@@ -1,0 +1,25 @@
+From 76e557835899a057bd7483e51099e02e7354f3ef Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 13 Nov 2013 15:09:54 +0100
+Subject: [PATCH] fix TeX destination
+
+---
+ src/gtk/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gtk/Makefile.am b/src/gtk/Makefile.am
+index b83eb11..28bb898 100644
+--- a/src/gtk/Makefile.am
++++ b/src/gtk/Makefile.am
+@@ -10,7 +10,7 @@ localedir = $(datadir)/locale
+ hicolordir = $(datadir)/icons/hicolor
+ pixmapdir = $(hicolordir)/scalable/apps
+ libdatadir = $(datadir)/$(PACKAGE)-$(API)
+-latexdir = $(datadir)/texmf/tex/latex/$(PACKAGE)
++latexdir = $(datadir)/texmf-local/tex/latex/$(PACKAGE)
+ 
+ ###############################################################################
+ 
+-- 
+1.8.4.1
+
