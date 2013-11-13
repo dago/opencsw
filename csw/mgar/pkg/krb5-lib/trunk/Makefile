@@ -155,3 +155,4 @@ post-install-modulated:
 	# Add a link to the system's Kerberos configuration
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)
 	gln -s ../../krb5/krb5.conf $(DESTDIR)$(sysconfdir)/krb5.conf
+	@$(MAKECOOKIE)
