@@ -53,6 +53,40 @@ EXTRA_CXXFLAGS	+=	-I${includedir}/gnome-vfs-2.0
 
 EXTRA_LDFLAGS	=	-lintl
 
+PACKAGES						+=	CSWverbiste
+CATALOGNAME_CSWverbiste			=	verbiste
+SPKG_DESC_CSWverbiste			=	$(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibpopt0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgnomeui2-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibintl8
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgnome2-0
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibverbiste0-1-0
+
+PACKAGES								+=	CSWlibverbiste0-1-0
+CATALOGNAME_CSWlibverbiste0-1-0			=	libverbiste0_1_0
+PKGFILES_CSWlibverbiste0-1-0			+=	$(call baseisadirs,$(libdir),libverbiste-0\.1\.so\.0\.0\.0)
+PKGFILES_CSWlibverbiste0-1-0			+=	$(call baseisadirs,$(libdir),libverbiste-0\.1\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibverbiste0-1-0			+=	$(DESCRIPTION), libverbiste-0.1.so.0
+RUNTIME_DEP_PKGS_CSWlibverbiste0-1-0	+=	CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibverbiste0-1-0	+=	CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibverbiste0-1-0	+=	CSWlibxml2-2
+
+PACKAGES							+=	CSWverbiste-dev
+CATALOGNAME_CSWverbiste-dev			=	verbiste_dev
+SPKG_DESC_CSWverbiste-dev			+=	$(DESCRIPTION), development files
+PKGFILES_CSWverbiste-dev			+=	/opt/csw/lib/libverbiste-0.1.so
+PKGFILES_CSWverbiste-dev			+=	$(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWverbiste-dev	+=	CSWlibverbiste0-1-0
+CHECKPKG_OVERRIDES_CSWverbiste-dev	+=	surplus-dependency|CSWlibverbiste0-1-0
+ARCHALL_CSWverbiste-dev				=	1
+CHECKPKG_OVERRIDES_CSWverbiste-dev	+=	archall-devel-package
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
