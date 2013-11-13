@@ -12,6 +12,7 @@ endef
 MASTER_SITES	=	http://perso.b2b2c.ca/sarrazip/dev/
 DISTFILES		=	$(DISTNAME).tar.gz
 PATCHFILES		+=	0001-fix-locale.patch
+PATCHFILES		+=	0002-fix-TeX-destination.patch
 
 BUILD_DEP_PKGS	+=	CSWlibglib2-dev
 BUILD_DEP_PKGS	+=	CSWlibgtk2-dev
@@ -75,11 +76,13 @@ RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibverbiste0-1-0
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWorbit2
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWtexlive-binaries
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibatk1-0-0
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibgio2-0-0
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWorbit2
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibpango1-0-0
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWtexlive-binaries
 
 PACKAGES								+=	CSWlibverbiste0-1-0
 CATALOGNAME_CSWlibverbiste0-1-0			=	libverbiste0_1_0
