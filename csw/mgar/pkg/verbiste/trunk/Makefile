@@ -26,6 +26,8 @@ BUILD_DEP_PKGS	+=	CSWlibgnomecanvas-dev
 BUILD_DEP_PKGS	+=	CSWlibart
 BUILD_DEP_PKGS	+=	CSWlibgnome-dev
 BUILD_DEP_PKGS	+=	CSWgnomevfs2-dev
+BUILD_DEP_PKGS	+=	CSWorbit2
+BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
 
 GARCOMPILER		=	GNU
 GARFLAVOR		=	DBG
@@ -73,6 +75,11 @@ RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibverbiste0-1-0
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWorbit2
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibatk1-0-0
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibgio2-0-0
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWorbit2
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibpango1-0-0
 
 PACKAGES								+=	CSWlibverbiste0-1-0
 CATALOGNAME_CSWlibverbiste0-1-0			=	libverbiste0_1_0
