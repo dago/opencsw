@@ -7,9 +7,10 @@ GARTYPE = v2
 
 GARCOMPILER = GNU
 
-DESCRIPTION = Brief description
+DESCRIPTION = smart and user-friendly command line shell
 define BLURB
-  Long description
+ fish is a smart and user-friendly command line
+ shell for OS X, Linux, and the rest of the family.
 endef
 
 MASTER_SITES = http://fishshell.com/files/$(VERSION)/
