@@ -28,6 +28,7 @@ PATCHFILES += 0006-Include-strings.h-to-make-bzero-available-2.patch
 PATCHFILES += 0007-Add-opt-csw-where-deemed-neccessary.patch
 PATCHFILES += 0008-Use-gfind-instead-of-find.patch
 PATCHFILES += 0009-Use-default-man-path-instead-of-manpath-command.patch
+PATCHFILES += 0010-Invoke-man-solaris-style.patch
 
 RUNTIME_DEP_PKGS_CSWfish += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWfish += CSWlibgcc-s1

@@ -1,0 +1,27 @@
+From ed358a79a7dbdf83bd1400bb3f4586d7581d0895 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 18:02:25 +0100
+Subject: [PATCH] Invoke man solaris-style
+
+---
+ share/functions/help.fish | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/share/functions/help.fish b/share/functions/help.fish
+index 04992e3..632951d 100644
+--- a/share/functions/help.fish
++++ b/share/functions/help.fish
+@@ -98,7 +98,9 @@ function help --description 'Show help for the fish shell'
+ 				# installs on OS X
+ 				set -l man_arg "$__fish_datadir/man/man1/$fish_help_item.1"
+ 				if test -f "$man_arg"
+-					man $man_arg
++					# That doesn't work with Solaris' man
++					# man $man_arg
++					man -M "$__fish_datadir/man" "$fish_help_item"
+ 					return
+ 				end
+ 			end
+-- 
+1.8.4.1
+
