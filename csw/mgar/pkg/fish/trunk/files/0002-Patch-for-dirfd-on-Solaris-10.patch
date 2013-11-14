@@ -1,0 +1,54 @@
+From 8f1c8fda824f925f166294407a98ad19564a7bdd Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 10:58:14 +0100
+Subject: [PATCH] Patch for dirfd() on Solaris 10
+
+---
+ configure.ac  |  1 +
+ highlight.cpp | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/configure.ac b/configure.ac
+index ea7c592..ebaf2d2 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -699,6 +699,7 @@ AC_CHECK_FUNCS( wcsdup wcsndup wcslen wcscasecmp wcsncasecmp fwprintf )
+ AC_CHECK_FUNCS( futimes wcwidth wcswidth wcstok fputwc fgetwc )
+ AC_CHECK_FUNCS( wcstol wcslcat wcslcpy lrand48_r killpg )
+ AC_CHECK_FUNCS( backtrace backtrace_symbols sysconf getifaddrs )
++AC_CHECK_FUNCS( dirfd )
+ 
+ if test x$local_gettext != xno; then
+   AC_CHECK_FUNCS( gettext dcgettext )
+diff --git a/highlight.cpp b/highlight.cpp
+index fd5ffb7..962023a 100644
+--- a/highlight.cpp
++++ b/highlight.cpp
+@@ -12,6 +12,8 @@
+ #include <wctype.h>
+ #include <termios.h>
+ #include <signal.h>
++// dirfd() defined in dirent.h on Solaris 11
++#include <dirent.h>
+ 
+ #include "fallback.h"
+ #include "util.h"
+@@ -35,6 +37,15 @@
+ #include "path.h"
+ #include "history.h"
+ 
++#if !defined(HAVE_DIRFD)
++#  if defined(sun)
++#   if !defined(__XOPEN_OR_POSIX)
++#    define dirfd(d) (d->dd_fd)
++#   else // !defined(__XOPEN_OR_POSIX)
++#    define dirfd(d) (d->d_fd)
++#   endif // !defined(__XOPEN_OR_POSIX)
++#  endif // defined(sun)
++#endif // !defined(HAVE_DIRFD)
+ /**
+    Number of elements in the highlight_var array
+ */
+-- 
+1.8.4.1
+

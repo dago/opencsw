@@ -1,0 +1,62 @@
+From 3f6f10d210d2c7826f74a95d4c6ea4403bfa957a Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 11:31:29 +0100
+Subject: [PATCH] LinuxSoft patch #1
+
+---
+ configure.ac |  1 +
+ wutil.cpp    | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+
+diff --git a/configure.ac b/configure.ac
+index ebaf2d2..4e206ed 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -716,6 +716,7 @@ fi
+ # features that Autoconf doesn't tell us about
+ #
+ 
++AC_CHECK_MEMBERS(struct dirent.d_type)
+ 
+ #
+ # Check if realpath accepts null for its second argument
+diff --git a/wutil.cpp b/wutil.cpp
+index 3f70368..99da36d 100644
+--- a/wutil.cpp
++++ b/wutil.cpp
+@@ -76,11 +76,32 @@ bool wreaddir_resolving(DIR *dir, const std::wstring &dir_path, std::wstring &ou
+     {
+         /* The caller cares if this is a directory, so check */
+         bool is_dir;
++#if !defined(HAVE_STRUCT_DIRENT_D_TYPE)
++        // Construct full path in order to use lstat() on it
++	cstring tmp_fullpath = wcs2string(dir_path);
++	tmp_fullpath.push_back('/');
++	tmp_fullpath.append(d->d_name);
++
++	struct stat tmp_buf;
++	// I use lstat() to blend in existing code
++	if (lstat(tmp_fullpath.c_str(), &tmp_buf) != 0)
++	{
++	    *out_is_dir = false;
++	    return true;
++        }
++	if (S_ISDIR(tmp_buf.st_mode))
++#else // !defined(HAVE_DIRENT_D_TYPE)
+         if (d->d_type == DT_DIR)
++#endif
+         {
+             is_dir = true;
+         }
++#if !defined(HAVE_STRUCT_DIRENT_D_TYPE)
++	// Don't know how to emulate DT_UNKNOWN
++	else if (S_ISLNK(tmp_buf.st_mode))
++#else // !defined(HAVE_DIRENT_D_TYPE)
+         else if (d->d_type == DT_LNK || d->d_type == DT_UNKNOWN)
++#endif
+         {
+             /* We want to treat symlinks to directories as directories. Use stat to resolve it. */
+             cstring fullpath = wcs2string(dir_path);
+-- 
+1.8.4.1
+
