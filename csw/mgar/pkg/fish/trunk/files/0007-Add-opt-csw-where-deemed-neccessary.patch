@@ -1,0 +1,53 @@
+From 82677631e84976b848bb16cd134e1ecae6e86336 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 12:31:58 +0100
+Subject: [PATCH] Add /opt/csw/* where deemed neccessary
+
+---
+ env.cpp     | 2 +-
+ mimedb.cpp  | 2 +-
+ xdgmime.cpp | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/env.cpp b/env.cpp
+index 13f87b6..7314f26 100644
+--- a/env.cpp
++++ b/env.cpp
+@@ -436,7 +436,7 @@ static void setup_path()
+     const env_var_t path = env_get_string(L"PATH");
+     if (path.missing_or_empty())
+     {
+-        const wchar_t *value = L"/usr/bin" ARRAY_SEP_STR L"/bin";
++        const wchar_t *value = L"/opt/csw/bin" ARRAY_SEP_STR L"/usr/bin" ARRAY_SEP_STR L"/bin";
+         env_set(L"PATH", value, ENV_GLOBAL | ENV_EXPORT);
+     }
+ }
+diff --git a/mimedb.cpp b/mimedb.cpp
+index fdf5da1..e7fcd25 100644
+--- a/mimedb.cpp
++++ b/mimedb.cpp
+@@ -349,7 +349,7 @@ static int append_filenames(string_list_t &list, const char *f, int all)
+ 
+     xdg_data_dirs = getenv("XDG_DATA_DIRS");
+     if (xdg_data_dirs == NULL)
+-        xdg_data_dirs = "/usr/local/share:/usr/share";
++        xdg_data_dirs = "/opt/csw/share:/usr/local/share:/usr/share";
+ 
+     ptr = xdg_data_dirs;
+ 
+diff --git a/xdgmime.cpp b/xdgmime.cpp
+index 39d0a18..e3cd60d 100644
+--- a/xdgmime.cpp
++++ b/xdgmime.cpp
+@@ -211,7 +211,7 @@ xdg_run_command_on_dirs(XdgDirectoryFunc  func,
+ 
+     xdg_data_dirs = getenv("XDG_DATA_DIRS");
+     if (xdg_data_dirs == NULL)
+-        xdg_data_dirs = "/usr/local/share/:/usr/share/";
++        xdg_data_dirs = "/opt/csw/share/:/usr/local/share/:/usr/share/";
+ 
+     ptr = xdg_data_dirs;
+ 
+-- 
+1.8.4.1
+
