@@ -1,0 +1,12 @@
+Fish
+====
+
+ * If you have set MANPATH, consider adding /opt/csw/share/fish/man at
+   first position, before everything else, e.g.
+
+   	 set -x MANPATH /opt/csw/share/fish/man:$MANPATH
+
+
+   	 
+
+   	 

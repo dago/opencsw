@@ -1,0 +1,23 @@
+From a2cdea497552bed072b47133657f8adc34fe3ad1 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 16:01:13 +0100
+Subject: [PATCH] Use gfind instead of find
+
+---
+ share/functions/__fish_print_commands.fish | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/share/functions/__fish_print_commands.fish b/share/functions/__fish_print_commands.fish
+index 21c0876..25507fb 100644
+--- a/share/functions/__fish_print_commands.fish
++++ b/share/functions/__fish_print_commands.fish
+@@ -1,5 +1,5 @@
+ function __fish_print_commands --description "Print a list of documented fish commands"
+ 	if test -d $__fish_datadir/man/man1/
+-		find $__fish_datadir/man/man1/ -type f -name \*.1 -execdir basename '{}' .1 ';'
++		/opt/csw/bin/gfind $__fish_datadir/man/man1/ -type f -name \*.1 -execdir basename '{}' .1 ';'
+ 	end
+ end
+-- 
+1.8.4.1
+
