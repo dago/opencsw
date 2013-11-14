@@ -9,7 +9,17 @@ DESCRIPTION =er)
 define BLURB
   Tools to access a servers filespace and printers via SMB (server)
 define BLURB
-  Tools to access a servers filespace and printers via SM# GARCOMPILER is set below the includeSMB (server)
+  Tools to access a servers filespace and printers via SM# Temp overrides for ld bug
+CHECKPKG_OVERRIDES_CSWlibtdb1 += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibnetapi0 += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWsamba-client += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWsamba-swat += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibwbclient0 += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibsmbclient0 += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibtevent0 += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWsamba-nss += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibsmbsharemodes0 += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibsmbsharemodes0 += missing-dependency|CSWlibtalloc2SM# GARCOMPILER is set below the includeSMB (server)
 endef
 
 MASTER_SITES = http://samba.org/samba/ftp/stable/
