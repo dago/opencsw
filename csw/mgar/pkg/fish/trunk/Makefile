@@ -22,9 +22,17 @@ PATCHFILES += 0003-LinuxSoft-patch-1.patch
 PATCHFILES += 0004-LinuxSoft-patch-2.patch
 PATCHFILES += 0005-Include-strings.h-to-make-bzero-available.patch
 PATCHFILES += 0006-Include-strings.h-to-make-bzero-available-2.patch
+PATCHFILES += 0007-Add-opt-csw-where-deemed-neccessary.patch
 
+RUNTIME_DEP_PKGS_CSWfish += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWfish += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWfish += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWfish += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWfish += CSWlibncurses5
 
-RUNTIME_PKG_DEPS = CSWcswclassutils
+# That's fine, directory list has been adjusted to include /opt/csw/share
+CHECKPKG_OVERRIDES_CSWfish += file-with-bad-content|/usr/local|root/opt/csw/bin/mimedb
+CHECKPKG_OVERRIDES_CSWfish += file-with-bad-content|/usr/share|root/opt/csw/bin/mimedb
 
 EXTRA_CPPFLAGS = -I$(includedir)/ncurses
 # Ain't pulled in automatically...
@@ -39,10 +47,16 @@ REINPLACE_MATCH = \#!/bin/sh
 REINPLACE_WITH = \#!/bin/bash
 REINPLACE_FILES = build_tools/git_version_gen.sh
 
+TEST_SCRIPTS = custom
+
 include gar/category.mk
 
 PATH := $(prefix)/gnu:$(PATH)
 
 pre-configure:
 	cd $(WORKSRC) && autoreconf -fi
+	@$(MAKECOOKIE)
+
+test-custom:
+	cd $(WORKSRC) && env $(BUILD_ENV) $(MAKE) test
 	@$(MAKECOOKIE)
