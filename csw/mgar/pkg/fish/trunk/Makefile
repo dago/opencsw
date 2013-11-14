@@ -15,6 +15,8 @@ endef
 
 MASTER_SITES = http://fishshell.com/files/$(VERSION)/
 DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += changelog.CSW
+DISTFILES += README.CSW
 
 ETCSHELLS = $(bindir)/fish
 
@@ -24,14 +26,19 @@ PATCHFILES += 0004-LinuxSoft-patch-2.patch
 PATCHFILES += 0005-Include-strings.h-to-make-bzero-available.patch
 PATCHFILES += 0006-Include-strings.h-to-make-bzero-available-2.patch
 PATCHFILES += 0007-Add-opt-csw-where-deemed-neccessary.patch
+PATCHFILES += 0008-Use-gfind-instead-of-find.patch
+PATCHFILES += 0009-Use-default-man-path-instead-of-manpath-command.patch
 
 RUNTIME_DEP_PKGS_CSWfish += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWfish += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWfish += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWfish += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWfish += CSWlibncurses5
+# This is due to 0008-Use-gfind-instead-of-find.patch
+RUNTIME_DEP_PKGS_CSWfish += CSWfindutils
+CHECKPKG_OVERRIDES_CSWfish += surplus-dependency|CSWfindutils
 
-# That's fine, directory list has been adjusted to include /opt/csw/share
+# That's fine, directory list has been adjusted to include /opt/csw/*
 CHECKPKG_OVERRIDES_CSWfish += file-with-bad-content|/usr/local|root/opt/csw/bin/mimedb
 CHECKPKG_OVERRIDES_CSWfish += file-with-bad-content|/usr/share|root/opt/csw/bin/mimedb
 
