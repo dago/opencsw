@@ -15,13 +15,20 @@ endef
 MASTER_SITES = http://fishshell.com/files/$(VERSION)/
 DISTFILES  = $(DISTNAME).tar.gz
 
+ETCSHELLS = $(bindir)/fish
+
 PATCHFILES += 0002-Patch-for-dirfd-on-Solaris-10.patch
 PATCHFILES += 0003-LinuxSoft-patch-1.patch
 PATCHFILES += 0004-LinuxSoft-patch-2.patch
 PATCHFILES += 0005-Include-strings.h-to-make-bzero-available.patch
 PATCHFILES += 0006-Include-strings.h-to-make-bzero-available-2.patch
 
+
+RUNTIME_PKG_DEPS = CSWcswclassutils
+
 EXTRA_CPPFLAGS = -I$(includedir)/ncurses
+# Ain't pulled in automatically...
+EXTRA_LINKER_FLAGS = -lintl -liconv
 
 EXTRA_CONFIGURE_EXPORTS += MAKE
 CONFIGURE_ENV_MAKE = gmake
