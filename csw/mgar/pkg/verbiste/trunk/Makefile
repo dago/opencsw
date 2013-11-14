@@ -76,13 +76,13 @@ RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWlibverbiste0-1-0
 RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWorbit2
-RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWtexlive-binaries
+RUNTIME_DEP_PKGS_CSWverbiste	+=	CSWtexlive
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibatk1-0-0
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibgio2-0-0
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWorbit2
 CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWlibpango1-0-0
-CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWtexlive-binaries
+CHECKPKG_OVERRIDES_CSWverbiste	+=	surplus-dependency|CSWtexlive
 
 PACKAGES								+=	CSWlibverbiste0-1-0
 CATALOGNAME_CSWlibverbiste0-1-0			=	libverbiste0_1_0
