@@ -7,7 +7,7 @@ GARTYPE = v2
 
 GARCOMPILER = GNU
 
-DESCRIPTION = smart and user-friendly command line shell
+DESCRIPTION = Smart and user-friendly command line shell
 define BLURB
  fish is a smart and user-friendly command line
  shell for OS X, Linux, and the rest of the family.
