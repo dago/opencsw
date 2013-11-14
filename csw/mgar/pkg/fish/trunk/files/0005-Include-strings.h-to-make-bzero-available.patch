@@ -1,0 +1,27 @@
+From 79db4046ad5135b305bb476c182ddf6dfda35be0 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 11:57:17 +0100
+Subject: [PATCH] Include strings.h to make bzero() available
+
+---
+ common.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/common.cpp b/common.cpp
+index 7a9f7a5..a95aad8 100644
+--- a/common.cpp
++++ b/common.cpp
+@@ -17,6 +17,10 @@ parts of fish.
+ #include <siginfo.h>
+ #endif
+ 
++#if defined(sun)
++// Required for bzero()
++#include <strings.h>
++#endif
+ #include <stdlib.h>
+ #include <termios.h>
+ #include <wchar.h>
+-- 
+1.8.4.1
+

@@ -1,0 +1,29 @@
+From 82f51a55df0f746c899c5410ef9575dc6cfe4699 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 11:51:32 +0100
+Subject: [PATCH] LinuxSoft patch #2
+
+---
+ wutil.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/wutil.cpp b/wutil.cpp
+index 042a7c5..28f9fc4 100644
+--- a/wutil.cpp
++++ b/wutil.cpp
+@@ -340,9 +340,11 @@ static inline void safe_append(char *buffer, const char *s, size_t buffsize)
+ 
+ const char *safe_strerror(int err)
+ {
+-#if defined(__UCLIBC__)
++#if defined(__UCLIBC__) || defined(sun)
+     // uClibc does not have sys_errlist, however, its strerror is believed to be async-safe
+     // See #808
++    //
++    // As for the Solaris strerror(): man page neither confirms nor denies async-safeness.
+     return strerror(err);
+ #else
+     if (err >= 0 && err < sys_nerr && sys_errlist[err] != NULL)
+-- 
+1.8.4.1
+

@@ -1,0 +1,28 @@
+From 2a15a294b34a2f2f2fcb78dc9ac2d6b389268b21 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 14 Nov 2013 12:03:09 +0100
+Subject: [PATCH] Include strings.h to make bzero() available #2
+
+---
+ color.cpp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/color.cpp b/color.cpp
+index 884410d..3ecc242 100644
+--- a/color.cpp
++++ b/color.cpp
+@@ -4,6 +4,11 @@
+ #include "color.h"
+ #include "fallback.h"
+ 
++#if defined(sun)
++// Required for bzero()
++#include <strings.h>
++#endif
++
+ bool rgb_color_t::try_parse_special(const wcstring &special)
+ {
+     bzero(&data, sizeof data);
+-- 
+1.8.4.1
+
