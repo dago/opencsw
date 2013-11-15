@@ -1,0 +1,25 @@
+From f4f66f9f5ed8f2cd6c0f7a8ac11f1d29834ea2c5 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 15 Nov 2013 12:12:14 +0100
+Subject: [PATCH] minupnpc.c: add missing preproc test
+
+---
+ third-party/miniupnp/miniupnpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third-party/miniupnp/miniupnpc.c b/third-party/miniupnp/miniupnpc.c
+index e56790a..1585ab9 100644
+--- a/third-party/miniupnp/miniupnpc.c
++++ b/third-party/miniupnp/miniupnpc.c
+@@ -17,7 +17,7 @@
+ #endif
+ #endif
+ 
+-#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(MACOSX) && !defined(_WIN32)
++#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(MACOSX) && !defined(_WIN32) && !defined(__sun)
+ #define HAS_IP_MREQN
+ #endif
+ 
+-- 
+1.8.4.1
+
