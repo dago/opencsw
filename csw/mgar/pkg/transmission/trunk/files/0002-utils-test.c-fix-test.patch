@@ -1,0 +1,25 @@
+From 4cb6186435e2c207e02f84c52f3dc82c60de3fc9 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 15 Nov 2013 12:27:53 +0100
+Subject: [PATCH] utils-test.c: fix test
+
+---
+ libtransmission/utils-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libtransmission/utils-test.c b/libtransmission/utils-test.c
+index f163ce2..9248560 100644
+--- a/libtransmission/utils-test.c
++++ b/libtransmission/utils-test.c
+@@ -451,7 +451,7 @@ test_truncd( void )
+     check( !strcmp( buf, "3" ) );
+ 
+     tr_snprintf( buf, sizeof( buf ), "%.2f", tr_truncd( nan, 2 ) );
+-    check( strstr( buf, "nan" ) != NULL );
++    check( strstr( buf, "-NaN" ) != NULL );
+ 
+     return 0;
+ }
+-- 
+1.8.4.1
+

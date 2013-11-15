@@ -1,25 +1,25 @@
-From dd67c49e650fa2ba33eb8e168a3be51d662c53a9 Mon Sep 17 00:00:00 2001
-From: Jan Holzhueter <jh@opencsw.org>
-Date: Mon, 7 Feb 2011 16:05:00 +0100
-Subject: [PATCH] fix-usr-share
+From f410b1e71286a8d26b96d29739f25790b4e93146 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 15 Nov 2013 12:34:18 +0100
+Subject: [PATCH] platform.c: remove /usr/local/share and add /opt/csw/share
 
 ---
- libtransmission/platform.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ libtransmission/platform.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/libtransmission/platform.c b/libtransmission/platform.c
-index fb3a7fd..1073936 100644
+index b5101f3..8a0aae6 100644
 --- a/libtransmission/platform.c
 +++ b/libtransmission/platform.c
-@@ -650,7 +650,7 @@ tr_getWebClientDir( const tr_session * session UNUSED )
+@@ -646,7 +646,7 @@ tr_getWebClientDir( const tr_session * session UNUSED )
              {
                  const char * pkg = PACKAGE_DATA_DIR;
                  const char * xdg = getenv( "XDG_DATA_DIRS" );
 -                const char * fallback = "/usr/local/share:/usr/share";
-+                const char * fallback = "/opt/csw/share";
++                const char * fallback = "/opt/csw/share:/usr/share";
                  char * buf = tr_strdup_printf( "%s:%s:%s", (pkg?pkg:""), (xdg?xdg:""), fallback );
                  tmp = buf;
                  while( tmp && *tmp ) {
 -- 
-1.7.3.2
+1.8.4.1
 
