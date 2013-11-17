@@ -1,4 +1,4 @@
-VERSION = 1.1.0
+VERSION = 1.2.0
 CATEGORIES = x11
 PROTONAME = resourceproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11resourceproto += catalogname-does-not-match-pkgname|pkgname=CSWx11resourceproto|catalogname=x11_resourceproto|expected-catalogname=x11resourceproto
+CHECKPKG_OVERRIDES_CSWx11resourceproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
