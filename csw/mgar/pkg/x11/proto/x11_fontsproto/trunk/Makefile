@@ -1,4 +1,4 @@
-VERSION = 2.1.0
+VERSION = 2.1.2
 CATEGORIES = x11
 PROTONAME = fontsproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,10 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11fontsproto += catalogname-does-not-match-pkgname|pkgname=CSWx11fontsproto|catalogname=x11_fontsproto|expected-catalogname=x11fontsproto
+CHECKPKG_OVERRIDES_CSWx11fontsproto += surplus-dependency|CSWx11common
+
 
 RUNTIME_DEP_PKGS = CSWx11common
 
