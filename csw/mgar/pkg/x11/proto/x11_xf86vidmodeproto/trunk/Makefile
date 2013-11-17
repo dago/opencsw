@@ -1,4 +1,4 @@
-VERSION = 2.3
+VERSION = 2.3.1
 CATEGORIES = x11
 PROTONAME = xf86vidmodeproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11xf86vidmdproto
 CATALOGNAME_CSWx11xf86vidmdproto = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11xf86vidmdproto += catalogname-does-not-match-pkgname|pkgname=CSWx11xf86vidmdproto|catalogname=x11_xf86vidmodeproto|expected-catalogname=x11xf86vidmdproto
+CHECKPKG_OVERRIDES_CSWx11xf86vidmdproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
