@@ -1,4 +1,4 @@
-VERSION = 2.3
+VERSION = 2.3.1
 CATEGORIES = x11
 PROTONAME = dmxproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11dmxproto += catalogname-does-not-match-pkgname|pkgname=CSWx11dmxproto|catalogname=x11_dmxproto|expected-catalogname=x11dmxproto
+CHECKPKG_OVERRIDES_CSWx11dmxproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
