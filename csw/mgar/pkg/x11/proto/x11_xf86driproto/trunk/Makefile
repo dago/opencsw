@@ -1,4 +1,4 @@
-VERSION = 2.1.0
+VERSION = 2.1.1
 CATEGORIES = x11
 PROTONAME = xf86driproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11xf86driproto += catalogname-does-not-match-pkgname|pkgname=CSWx11xf86driproto|catalogname=x11_xf86driproto|expected-catalogname=x11xf86driproto
+CHECKPKG_OVERRIDES_CSWx11xf86driproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
