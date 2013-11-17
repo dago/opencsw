@@ -19,6 +19,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
 
+CHECKPKG_OVERRIDES_CSWx11inputproto += catalogname-does-not-match-pkgname|pkgname=CSWx11inputproto|catalogname=x11_inputproto|expected-catalogname=x11inputproto
+CHECKPKG_OVERRIDES_CSWx11inputproto += surplus-dependency|CSWx11common
+
 RUNTIME_DEP_PKGS = CSWx11common
 INCOMPATIBLE_PKGS = CSWinputproto
 
