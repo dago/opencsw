@@ -18,6 +18,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
 
+CHECKPKG_OVERRIDES_CSWx11windowswmproto += catalogname-does-not-match-pkgname|pkgname=CSWx11windowswmproto|catalogname=x11_windowswmproto|expected-catalogname=x11windowswmproto
+CHECKPKG_OVERRIDES_CSWx11windowswmproto += surplus-dependency|CSWx11common
+
 RUNTIME_DEP_PKGS = CSWx11common
 
 BUILD64 = 1
