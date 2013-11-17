@@ -1,4 +1,4 @@
-VERSION = 1.14
+VERSION = 1.14.2
 CATEGORIES = x11
 PROTONAME = recordproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11recordproto += catalogname-does-not-match-pkgname|pkgname=CSWx11recordproto|catalogname=x11_recordproto|expected-catalogname=x11recordproto
+CHECKPKG_OVERRIDES_CSWx11recordproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
