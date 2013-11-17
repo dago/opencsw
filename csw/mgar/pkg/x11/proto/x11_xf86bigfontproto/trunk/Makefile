@@ -18,6 +18,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWx11xf86bigftproto
 CATALOGNAME_CSWx11xf86bigftproto = x11_$(PROTONAME)
 
+CHECKPKG_OVERRIDES_CSWx11xf86bigftproto += catalogname-does-not-match-pkgname|pkgname=CSWx11xf86bigftproto|catalogname=x11_xf86bigfontproto|expected-catalogname=x11xf86bigftproto
+CHECKPKG_OVERRIDES_CSWx11xf86bigftproto += surplus-dependency|CSWx11common
+
 RUNTIME_DEP_PKGS = CSWx11common
 
 BUILD64 = 1
