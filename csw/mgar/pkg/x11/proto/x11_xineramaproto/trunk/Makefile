@@ -1,4 +1,4 @@
-VERSION = 1.2
+VERSION = 1.2.1
 CATEGORIES = x11
 PROTONAME = xineramaproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11xineramaproto += catalogname-does-not-match-pkgname|pkgname=CSWx11xineramaproto|catalogname=x11_xineramaproto|expected-catalogname=x11xineramaproto
+CHECKPKG_OVERRIDES_CSWx11xineramaproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
