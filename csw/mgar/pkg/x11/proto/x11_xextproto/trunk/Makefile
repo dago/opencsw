@@ -1,4 +1,4 @@
-VERSION = 7.1.1
+VERSION = 7.2.1
 PROTONAME = xextproto
 NAME = x11_$(PROTONAME)
 DISTNAME = $(PROTONAME)-$(VERSION)
@@ -18,6 +18,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11xextproto += catalogname-does-not-match-pkgname|pkgname=CSWx11xextproto|catalogname=x11_xextproto|expected-catalogname=x11xextproto
+CHECKPKG_OVERRIDES_CSWx11xextproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 INCOMPATIBLE_PKGS = CSWxextproto
