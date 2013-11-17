@@ -1,4 +1,4 @@
-VERSION = 1.2.0
+VERSION = 1.2.2
 CATEGORIES = x11
 PROTONAME = scrnsaverproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11scrnsaverproto += catalogname-does-not-match-pkgname|pkgname=CSWx11scrnsaverproto|catalogname=x11_scrnsaverproto|expected-catalogname=x11scrnsaverproto
+CHECKPKG_OVERRIDES_CSWx11scrnsaverproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
