@@ -1,4 +1,4 @@
-VERSION = 0.11
+VERSION = 0.11.1
 CATEGORIES = x11
 PROTONAME = renderproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11renderproto += catalogname-does-not-match-pkgname|pkgname=CSWx11renderproto|catalogname=x11_renderproto|expected-catalogname=x11renderproto
+CHECKPKG_OVERRIDES_CSWx11renderproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 INCOMPATIBLE_PKGS = CSWrenderproto
