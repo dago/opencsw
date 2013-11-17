@@ -1,4 +1,4 @@
-VERSION = 1.4.10
+VERSION = 1.4.15
 CATEGORIES = x11
 PROTONAME = glproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11glproto += catalogname-does-not-match-pkgname|pkgname=CSWx11glproto|catalogname=x11_glproto|expected-catalogname=x11glproto
+CHECKPKG_OVERRIDES_CSWx11glproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
