@@ -1,5 +1,5 @@
 PROTONAME = applewmproto
-VERSION = 1.4.1
+VERSION = 1.4.2
 CATEGORIES = x11
 NAME = x11_$(PROTONAME)
 DISTNAME = $(PROTONAME)-$(VERSION)
@@ -22,6 +22,9 @@ RUNTIME_DEP_PKGS = CSWx11common
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+CHECKPKG_OVERRIDES_CSWx11applewmproto += catalogname-does-not-match-pkgname|pkgname=CSWx11applewmproto|catalogname=x11_applewmproto|expected-catalogname=x11applewmproto
+CHECKPKG_OVERRIDES_CSWx11applewmproto += surplus-dependency|CSWx11common
 
 include gar/category.mk
 
