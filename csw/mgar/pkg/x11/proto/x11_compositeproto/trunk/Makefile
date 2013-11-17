@@ -1,4 +1,4 @@
-VERSION = 0.4.1
+VERSION = 0.4.2
 CATEGORIES = x11
 PROTONAME = compositeproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11compositeproto += catalogname-does-not-match-pkgname|pkgname=CSWx11compositeproto|catalogname=x11_compositeproto|expected-catalogname=x11compositeproto
+CHECKPKG_OVERRIDES_CSWx11compositeproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
