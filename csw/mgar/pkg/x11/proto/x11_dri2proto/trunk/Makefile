@@ -1,4 +1,4 @@
-VERSION = 2.1
+VERSION = 2.6
 CATEGORIES = x11
 PROTONAME = dri2proto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11dri2proto += catalogname-does-not-match-pkgname|pkgname=CSWx11dri2proto|catalogname=x11_dri2proto|expected-catalogname=x11dri2proto
+CHECKPKG_OVERRIDES_CSWx11dri2proto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
