@@ -1,4 +1,4 @@
-VERSION = 1.3.1
+VERSION = 1.3.2
 CATEGORIES = x11
 PROTONAME = randrproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11randrproto += catalogname-does-not-match-pkgname|pkgname=CSWx11randrproto|catalogname=x11_randrproto|expected-catalogname=x11randrproto
+CHECKPKG_OVERRIDES_CSWx11randrproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
