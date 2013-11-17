@@ -1,4 +1,4 @@
-VERSION = 2.3.0
+VERSION = 2.3.1
 CATEGORIES = x11
 PROTONAME = videoproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11videoproto += catalogname-does-not-match-pkgname|pkgname=CSWx11videoproto|catalogname=x11_videoproto|expected-catalogname=x11videoproto
+CHECKPKG_OVERRIDES_CSWx11videoproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
