@@ -2,7 +2,7 @@ PROTONAME = bigreqsproto
 CATEGORIES = x11
 NAME = x11_$(PROTONAME)
 DISTNAME = $(PROTONAME)-$(VERSION)
-VERSION = 1.1.0
+VERSION = 1.1.2
 
 DESCRIPTION = Prototype headers for BigReqs extension to X11
 define BLURB
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11bigreqsproto
 CATALOGNAME_CSWx11bigreqsproto = x11_bigreqsproto
+
+CHECKPKG_OVERRIDES_CSWx11bigreqsproto += catalogname-does-not-match-pkgname|pkgname=CSWx11bigreqsproto|catalogname=x11_bigreqsproto|expected-catalogname=x11bigreqsproto
+CHECKPKG_OVERRIDES_CSWx11bigreqsproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
