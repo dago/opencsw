@@ -18,6 +18,10 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
 
+CHECKPKG_OVERRIDES_CSWx11xf86dgaproto += catalogname-does-not-match-pkgname|pkgname=CSWx11xf86dgaproto|catalogname=x11_xf86dgaproto|expected-catalogname=x11xf86dgaproto
+CHECKPKG_OVERRIDES_CSWx11xf86dgaproto += surplus-dependency|CSWx11common
+
+
 RUNTIME_DEP_PKGS = CSWx11common
 
 BUILD64 = 1
