@@ -1,4 +1,4 @@
-VERSION = 4.1.1
+VERSION = 5.0
 CATEGORIES = x11
 PROTONAME = fixesproto
 NAME = x11_$(PROTONAME)
@@ -17,6 +17,9 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11$(PROTONAME)
 CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
+
+CHECKPKG_OVERRIDES_CSWx11fixesproto += catalogname-does-not-match-pkgname|pkgname=CSWx11fixesproto|catalogname=x11_fixesproto|expected-catalogname=x11fixesproto
+CHECKPKG_OVERRIDES_CSWx11fixesproto += surplus-dependency|CSWx11common
 
 RUNTIME_DEP_PKGS = CSWx11common
 
