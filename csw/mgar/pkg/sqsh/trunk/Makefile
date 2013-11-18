@@ -60,7 +60,9 @@ CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct.so|is|needed|by|opt/
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocsparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocspCHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocsparcv8plus/sqsh-ocs
 
 PACKAGES += CSWsqsh-freetds
 SPKG_DESC_CSWsqsh-freetds = $(DESCRIPTION) (Linked against FreeTDS)
