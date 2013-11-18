@@ -50,44 +50,17 @@ PKGFILES_CSWsqsh-ocs += $(sysconfdir)/.*-ocs.*
 RUNTIME_DEP_PKGS_CSWsqsh-ocs += CSWlibreadline6
 # This is for libintl.so which is provided by Sybase and should be used from there,
 # it is not to be taken from the development package CSWggettext-dev
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += missing-dependency|CSWggettext-dev
-# The Sybase package can not be released due to license restrictions
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybtcl64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybtcl64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybtcl.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl64.so|is|needed|by|opt/csw/biCHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcomn.so|is|needed|by|opt/csw/bin/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += missing-dependen
+# These are all provided by Sybase. A library from freetds-dev is also included in Sybase, hence the false detection.iCHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcomn.so|is|needed|by|opt/csw/bin/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/bin/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += surplus-dependency|CSWlibreadline6in/sparcv9/sqsh-ocs
-# This is for /usr/local/lib/sqsh/help, this is not in the distribution, don't know where to find that, ignore for now.
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += missing-dependency|CSWfreetds-dev
+parcv8plus/sqsh-ocs
 
 PACKAGES += CSWsqsh-freetds
 SPKG_DESC_CSWsqsh-freetds = $(DESCRIPTION) (Linked against FreeTDS)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWlibct4
-RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWlibreadline6
-# This is for /usr/local/lib/sqsh/help in sqsh, this is not in the distribution, don't know where to find that, ignore for now.
-CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/sqsh-freetds
-CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/locai386csw/bin/pentium_pro/sqsh-freetds
-CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/sqsh-freetds
-CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/sqsh-freetds
-CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/sqsh-freetds
+RUNTIME_DEP_PKGS_CSWsqsh-freetds 8plus/sqsh-freetds
 
 ARGS-32 =
 ARGS-64 = -m64
@@ -126,7 +99,9 @@ CONFIGURE_ENV_INCDIRS = $(includedir)
 CONFIGURE_ENV_LIBDIRS = $(SYBASE)/lib:$(libdir)
 
 BUILD64-5.10 = 1
-BUILD64 = $(BUILD64-$(GAROSREL))
+BUILD64 = $(BUILD64-$(GAROS# Defaults to /usr/local/lib/sqsh/help
+# There are no help pages yet, make sure to relocate these later on when the are included in tarballs of later versions
+EXTRA_CPPFLAGS += -DSQSH_HELP=\\\"$(sharedstatedir)/sqsh/help\\\"OSREL))
 ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
