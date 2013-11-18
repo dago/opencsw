@@ -5308,8 +5308,8 @@ post-install-modulated:
 	rm -rf $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)
 	: create additional hierarchy to reflect texmf.cnf
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(datadir)/texmf-local
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/lib/texmf-var
-	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
+	ginstall --directory --mode=a=rwx,o+t $(DESTDIR)/$(localstatedir)/lib/texmf-var
+	ginstall --directory --mode=a=rwx,o+t $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(sysconfdir)/texmf
 	: create all the available formats:
 	PATH=$(DESTDIR)/$(bindir):${PATH} LD_LIBRARY_PATH=$(DESTDIR)/$(libdir) fmtutil-sys --all
