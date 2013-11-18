@@ -1,5 +1,5 @@
 NAME = sqsh
-VERSION = 2.2.0
+VERSION = 2.4
 CATEGORIES = utils
 GARTYPE = v2
 
