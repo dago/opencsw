@@ -3,8 +3,8 @@ VERSION = 2.4.2
 CATEGORIES = devel
 GARTYPE = v2
 
-EXTRA_MODULATORS = GARCOMPILER
-MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS12
+EXTRA_MODULA#MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS12
+MODULATIONS_GARCOMPILER =_GARCOMPILER = GCC3 GCC4 SOS12
 
 # Modulate over compiler only for 2.4
 # Compile 64 bit libraries only with SOS12
@@ -23,10 +23,13 @@ DISTFILES += README.CSW
 
 PATCH_LIBTOOL = 0002-Forward-port-GCC-tags-patch.patch
 PATCHFILES_POSTINSTALL_isa-pentium_pro-garcompiler-SOS12 = $(PATCH_LIBTOOL)
-PATCHFILES_POSTINSTALL_isa-sparcv8-garcompiler-SOS12 = $(PATCH_LIBTOOL)
+PATCHFILES_POSTplus-garcompiler-SOS12 = $(PATCH_LIBTOOL)
 DISTFILES += $(PATCH_LIBTOOL)
 
 PATCHFILES  = 0001-Preserve-norunpath.patch
+
+#EXTRA_TAGS = gcc3 gcc4 sos12
+EXTRA_TAGS =
 
 EXTRA_TAGS = gcc3 gcc4 sos12
 COMPILER_TAGNAME_GCC3 = gcc3
@@ -89,7 +92,7 @@ post-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-
 	@$(MAKECOOKIE)
 
 patch-libtool:
-	-cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && gpatch --forward -p1)
+	-cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && 0patch --forward -p1)
 	# Remove arch-specific flags from the libtool-compilation so they don't spoil the target build
 	# Instead we inherit from CFLAGS as removing the arch specified leads to the default arch which
 	# may very well be wrong (especially on sparc default is v8+ instead of the requested default v8
@@ -115,6 +118,3 @@ merge-copy-tags: $(PKGROOT)
 		-s ",.*,," \
 		. $(PKGROOT) \
 	)
-	@$(MAKECOOKIE)
-
-

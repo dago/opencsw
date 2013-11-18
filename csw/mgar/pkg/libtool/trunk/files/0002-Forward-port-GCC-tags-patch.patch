@@ -1,17 +1,6 @@
-From 184e7e0619ef31887fc1986e368d48f0a3677b6b Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 24 Nov 2010 11:15:29 +0100
-Subject: [PATCH] Forward-port GCC tags patch
-
----
- libtool |   24 ++++++++++++++++++------
- 1 files changed, 18 insertions(+), 6 deletions(-)
-
-diff --git a/libtool b/libtool
-index 4539216..8ac45c1 100755
---- a/libtool
-+++ b/libtool
-@@ -576,6 +576,8 @@ $lt_unset CDPATH
+--- libtool	2013-11-18 14:15:21.212825370 +0100
++++ libtool.new	2013-11-18 14:18:36.734017047 +0100
+@@ -576,6 +576,8 @@
  # positional parameter $0, within a function call, is the name of the
  # function.
  progpath="$0"
@@ -20,7 +9,7 @@ index 4539216..8ac45c1 100755
  
  
  
-@@ -1347,11 +1349,11 @@ func_config ()
+@@ -1342,11 +1344,11 @@
      re_endcf='^# ### END LIBTOOL'
  
      # Default configuration.
@@ -34,7 +23,7 @@ index 4539216..8ac45c1 100755
      done
  
      exit $?
-@@ -1401,14 +1403,14 @@ func_enable_tag ()
+@@ -1396,14 +1398,14 @@
    case $tagname in
      CC) ;;
      *)
@@ -51,16 +40,12 @@ index 4539216..8ac45c1 100755
  	eval "$extractedcf"
        else
  	func_error "ignoring unknown tag $tagname"
-@@ -1609,6 +1611,16 @@ func_enable_tag "$optarg"
+@@ -1609,6 +1611,12 @@
  
    # save first non-option argument
    if test "$#" -gt 0; then
 +    case `which "$opt"` in
-+      /opt/csw/gcc3/bin/*)
-+        . /opt/csw/share/libtool/gcc3.conf
-+        tagspath=/opt/csw/share/libtool/gcc3.tags
-+        ;;
-+      /opt/csw/gcc4/bin/*|/opt/csw/bin/gcc|/opt/csw/bin/gcc-4.6)
++      /opt/csw/gcc4/bin/*|/opt/csw/bin/gcc|/opt/csw/bin/g++|/opt/csw/bin/gcc-4.8|/opt/csw/bin/g++-4.8)
 +        . /opt/csw/share/libtool/gcc4.conf
 +        tagspath=/opt/csw/share/libtool/gcc4.tags
 +        ;;
@@ -68,7 +53,7 @@ index 4539216..8ac45c1 100755
      nonopt="$opt"
      shift
    fi
-@@ -1828,9 +1840,9 @@ func_infer_tag ()
+@@ -1828,9 +1836,9 @@
        # if we don't check for them as well.
        *)
  	for z in $available_tags; do
@@ -80,6 +65,3 @@ index 4539216..8ac45c1 100755
  	    CC_quoted=
  	    for arg in $CC; do
  	      # Double-quote args containing other shell metacharacters.
--- 
-1.7.3
-
