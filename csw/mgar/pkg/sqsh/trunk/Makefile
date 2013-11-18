@@ -54,7 +54,13 @@ CHECKPKG_OVERRIDES_CSWsqsh-ocs += missing-dependen
 # These are all provided by Sybase. A library from freetds-dev is also included in Sybase, hence the false detection.iCHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcomn.so|is|needed|by|opt/csw/bin/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/bin/sqsh-ocs
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += missing-dependency|CSWfreetds-dev
-parcv8plus/sqsh-ocs
+p# Maybe these are still needed...
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocsparcv8plus/sqsh-ocs
 
 PACKAGES += CSWsqsh-freetds
 SPKG_DESC_CSWsqsh-freetds = $(DESCRIPTION) (Linked against FreeTDS)
