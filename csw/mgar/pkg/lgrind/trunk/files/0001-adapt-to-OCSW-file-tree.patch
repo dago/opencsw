@@ -1,6 +1,6 @@
-From 823936598c0bd41f63b0e6ce5d096532c27b0a77 Mon Sep 17 00:00:00 2001
+From 1321d330d9f89fc1742ab1baec28dd1510dc61f5 Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Mon, 18 Nov 2013 11:58:51 +0100
+Date: Mon, 18 Nov 2013 12:10:10 +0100
 Subject: [PATCH] adapt to OCSW file tree
 
 ---
@@ -53,7 +53,7 @@ index 01f4c7e..a70ec8f 100644
 -	make install BASEDIR=$(BASEDIR) INSTALL=$(INSTALL)
 +	make install BASEDIR=$(DESTDIR)$(BASEDIR) INSTALL=$(INSTALL)
 diff --git a/source/Makefile b/source/Makefile
-index b785122..83d4343 100644
+index b785122..cbe7ede 100644
 --- a/source/Makefile
 +++ b/source/Makefile
 @@ -3,7 +3,7 @@
@@ -73,7 +73,7 @@ index b785122..83d4343 100644
  	$(INSTALL) -s lgrind $(BINDIR)/lgrind
 +	$(INSTALL) -m 755 -d $(MANDIR)/man1
  	$(INSTALL) -m 644 $(MANPAGES1) $(MANDIR)/man1
-+	$(INSTALL) -m 755 -d $(MANDIR)/man1
++	$(INSTALL) -m 755 -d $(MANDIR)/man5
  	$(INSTALL) -m 644 $(MANPAGES5) $(MANDIR)/man5
  
  clean:
