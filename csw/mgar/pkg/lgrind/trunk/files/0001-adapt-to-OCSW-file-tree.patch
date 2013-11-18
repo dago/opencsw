@@ -1,0 +1,82 @@
+From 823936598c0bd41f63b0e6ce5d096532c27b0a77 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 18 Nov 2013 11:58:51 +0100
+Subject: [PATCH] adapt to OCSW file tree
+
+---
+ Makefile        | 22 +++++++++++-----------
+ source/Makefile |  5 ++++-
+ 2 files changed, 15 insertions(+), 12 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 01f4c7e..a70ec8f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,17 +2,17 @@
+ 
+ # $Id: Makefile,v 1.10 2000/12/27 21:42:37 mike Exp $
+ 
+-BASEDIR=/usr
++BASEDIR=$(prefix)
+ #DEFSFILE=${HOME}/Work/lgrind/lgrindef
+-DEFSFILE=$(BASEDIR)/share/texmf/tex/latex/lgrind/lgrindef
+-TEXFILEDIR=$(BASEDIR)/share/texmf/tex/latex/lgrind
++TEXFILEDIR=$(BASEDIR)/share/texmf-local/tex/latex/lgrind
++DEFSFILE=$(TEXFILEDIR)/lgrindef
+ DOCDIR=$(BASEDIR)/doc/lgrind
+ 
+-INSTALL=install
++INSTALL=ginstall
+ SOURCES=lgrind.c lgutil.c regexp.c regexp.h lgrindef.c lgrindef.h retest.c v2lg.c
+ TEXFILES=lgrind.dtx lgrind.sty lgrind.ins
+ 
+-VERSION=3.66
++VERSION=3.67
+ DISTVERSION=lgrind-$(VERSION)
+ 
+ .PHONY:	all install clean distribution lgrind
+@@ -54,10 +54,10 @@ distribution: clean
+ 	rm -r $(DISTVERSION)
+ 
+ install: all
+-	$(INSTALL) -m 755 -d $(TEXFILEDIR)
+-	$(INSTALL) -m 644 lgrind.sty $(TEXFILEDIR)
+-	$(INSTALL) -m 755 -d $(DOCDIR)
+-	$(INSTALL) -m 644 lgrind.dvi $(DOCDIR)
+-	$(INSTALL) -m 644 lgrindef $(DEFSFILE)
++	$(INSTALL) -m 755 -d $(DESTDIR)$(TEXFILEDIR)
++	$(INSTALL) -m 644 lgrind.sty $(DESTDIR)$(TEXFILEDIR)
++	$(INSTALL) -m 755 -d $(DESTDIR)$(DOCDIR)
++	$(INSTALL) -m 644 lgrind.dvi $(DESTDIR)$(DOCDIR)
++	$(INSTALL) -m 644 lgrindef $(DESTDIR)$(DEFSFILE)
+ 	cd source; \
+-	make install BASEDIR=$(BASEDIR) INSTALL=$(INSTALL)
++	make install BASEDIR=$(DESTDIR)$(BASEDIR) INSTALL=$(INSTALL)
+diff --git a/source/Makefile b/source/Makefile
+index b785122..83d4343 100644
+--- a/source/Makefile
++++ b/source/Makefile
+@@ -3,7 +3,7 @@
+ # $Id: Makefile,v 1.4 1999/12/18 21:54:29 mike Exp $
+ 
+ BINDIR=$(BASEDIR)/bin
+-MANDIR=$(BASEDIR)/man
++MANDIR=$(BASEDIR)/share/man
+ 
+ CC=gcc
+ MANPAGES1=lgrind.1
+@@ -31,8 +31,11 @@ retest: retest.o regexp.o
+ 	$(CC) $(CFLAGS) -o retest retest.o regexp.o
+ 
+ install: all
++	$(INSTALL) -m 755 -d $(BINDIR)
+ 	$(INSTALL) -s lgrind $(BINDIR)/lgrind
++	$(INSTALL) -m 755 -d $(MANDIR)/man1
+ 	$(INSTALL) -m 644 $(MANPAGES1) $(MANDIR)/man1
++	$(INSTALL) -m 755 -d $(MANDIR)/man1
+ 	$(INSTALL) -m 644 $(MANPAGES5) $(MANDIR)/man5
+ 
+ clean:
+-- 
+1.8.4.1
+
