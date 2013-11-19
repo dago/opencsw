@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = svr4pkg
-VERSION = 0.5
+VERSION = 0.6
 GARTYPE = v2
 
 DESCRIPTION = Basic perl implementation of solaris native svr4 packages tools
