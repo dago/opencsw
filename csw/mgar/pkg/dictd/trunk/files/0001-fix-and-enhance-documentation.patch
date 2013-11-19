@@ -1,0 +1,33 @@
+From 4bb0c5ef38b6fedcf08c24c6ef4f6d5a7a7b7a37 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 19 Nov 2013 11:22:41 +0100
+Subject: [PATCH] fix and enhance documentation
+
+---
+ doc/Makefile.in | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/doc/Makefile.in b/doc/Makefile.in
+index 233cc9f..6dcd143 100644
+--- a/doc/Makefile.in
++++ b/doc/Makefile.in
+@@ -84,10 +84,16 @@ dicf.txt: dicf.ms dicftoc.ms
+ 	@echo "Building document..."
+ 	$(NROFF) -ms dicf.ms | ./rfc.sh | $(EXPAND) > dicf.txt
+ 
++dicftoc.ms: toc.ms
++	sed -e 's/^[.]so rfc.ms$$/.so dicf.ms/' toc.ms > $@
++
+ # This is pretty ugly
+ rfc.ps: rfc.ms
+ 	$(TROFF) -ms rfc.ms > rfc.ps
+ 
++dicf.ps: dicf.ms
++	$(TROFF) -ms dicf.ms > dicf.ps
++
+ .PHONY: clean distclean tags
+ clean:
+ 	-rm -f *.ps *.txt rfc.toc rfc.toc.new
+-- 
+1.8.4.1
+
