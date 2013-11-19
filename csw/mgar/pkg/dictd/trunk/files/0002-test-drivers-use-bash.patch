@@ -1,0 +1,47 @@
+From 405b9e0e727ccef3888014a17e5b13208a4b163a Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 19 Nov 2013 12:02:28 +0100
+Subject: [PATCH] test drivers use bash
+
+---
+ Makefile.in          | 2 +-
+ test/dictd_test.in   | 2 +-
+ test/dictzip_test.in | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index ea1cb3f..27e7fd3 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -411,7 +411,7 @@ deps:
+ 
+ .PHONY: test
+ test: $(EXES) $(LIBRARIES)
+-	cd test && sh dictd_test && sh dictzip_test
++	cd test && bash dictd_test && bash dictzip_test
+ 
+ # The following is based on the "Automatic Remaking" node in the GNU
+ # Autoconf documentation:
+diff --git a/test/dictd_test.in b/test/dictd_test.in
+index d9e4179..0850f1e 100755
+--- a/test/dictd_test.in
++++ b/test/dictd_test.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ 
+ set -e
+ 
+diff --git a/test/dictzip_test.in b/test/dictzip_test.in
+index 35c2f95..776eef9 100755
+--- a/test/dictzip_test.in
++++ b/test/dictzip_test.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ 
+ set -e
+ 
+-- 
+1.8.4.1
+
