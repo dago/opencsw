@@ -21,7 +21,8 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-dbus-services=$(sysconfdir)/dbus-1
 CONFIGURE_ARGS += --with-tclconfig=$(libdir)
 CONFIGURE_ARGS += --with-tkconfig=$(libdir)
-CONFIGURE_ARGS += --enable-gnutls=yes
+# GNUtls causes issues and failures to connect using SSL
+CONFIGURE_ARGS += --enable-gnutls=no
 CONFIGURE_ARGS += --enable-nss=yes
 CONFIGURE_ARGS += --disable-avahi
 CONFIGURE_ARGS += --disable-nm
@@ -85,7 +86,9 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsasl2-2
 
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWlibharfbuzz-dev
 BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibgtkspell-dev
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
