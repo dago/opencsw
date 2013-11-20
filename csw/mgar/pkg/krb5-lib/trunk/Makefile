@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-priv
+RUNTIME_DEP_PKGS_CSWlibkrb5-devRUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibverto0v += CSWlibkrb5-priv
 PKGFILES_CSWlibkrb5-dev  = $(mandir)/man8/sserver.8
 PKGFILES_CSWlibkrb5-dev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
 PKGFILES_CSWlibkrb5-dev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
@@ -99,7 +99,11 @@ CATALOGNAME_CSWlibkrb5support0 = libkrb5support0
 PKGFILES_CSWlibkrb5support0 += $(call baseisadirs,$(libdir),libkrb5support\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibkrb5support0 += MIT Kerberos 5 core libraries, RUNTIME_DEP_PKGS_CSWlibkrb5support0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibkrb5support0 += CSWlibgcc-s1 libkrb5support.so.0
-OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
+OBSOLETED_BY_CSWlibkPACKAGES += CSWlibverto0
+CATALOGNAME_CSWlibverto0 = libverto0
+PKGFILES_CSWlibverto0 += $(call baseisadirs,$(libdir),libverto\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibverto0 += MIT Kerberos 5 core libraries, libverto.so.0
+RUNTIME_DEP_PKGS_CSWlibverto0 += CSWlibgcc-s1bkrb5-3 = CSWkrb5lib
 
 LICErst
 
