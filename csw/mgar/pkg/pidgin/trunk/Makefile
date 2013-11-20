@@ -17,16 +17,6 @@ GARCOMPILER = SOS12U3
 
 VENDOR_URL = http://pidgin.im
 
-# Temporary to circumvent ld issue
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibpangoft2-1-0-0
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibfreetype6
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibgio2-0-0
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibfontconfig1
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibplc4
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibnssutil3
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibplds4
-CHECKPKG_OVERRIDES_CSWpidgin += missing-dependency|CSWlibpangocairo1-0-0
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-dbus-services=$(sysconfdir)/dbus-1
 CONFIGURE_ARGS += --with-tclconfig=$(libdir)
