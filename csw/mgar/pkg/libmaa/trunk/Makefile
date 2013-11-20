@@ -37,17 +37,17 @@ SPKG_DESC_CSWlibmaa-dev				+=	$(DESCRIPTION), development files
 PKGFILES_CSWlibmaa-dev				+=	/opt/csw/lib/liblibmaa.so
 PKGFILES_CSWlibmaa-dev				+=	$(PKGFILES_DEVEL)
 PKGFILES_CSWlibmaa-dev				+=	$(docdir)/$(CATALOGNAME_CSWlibmaa-dev)/.*
-RUNTIME_DEP_PKGS_CSWlibmaa-dev		+=	CSWlibmaa3-0-0
-CHECKPKG_OVERRIDES_CSWlibmaa-dev	+=	surplus-dependency|CSWliblibmaa3-0-0
+RUNTIME_DEP_PKGS_CSWlibmaa-dev		+=	CSWlibmaa3
+CHECKPKG_OVERRIDES_CSWlibmaa-dev	+=	surplus-dependency|CSWlibmaa3
 ARCHALL_CSWlibmaa-dev				=	1
 CHECKPKG_OVERRIDES_CSWlibmaa-dev	+=	archall-devel-package
 
-PACKAGES						+=	CSWlibmaa3-0-0
-CATALOGNAME_CSWlibmaa3-0-0		=	libmaa3_0_0
-PKGFILES_CSWlibmaa3-0-0			+=	$(call baseisadirs,$(libdir),libmaa.so\.3\.0\.0)
-PKGFILES_CSWlibmaa3-0-0			+=	$(call baseisadirs,$(libdir),libmaa\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibmaa3-0-0		+=	$(DESCRIPTION), libmaa-0.1.so.3.0.0
-RUNTIME_DEP_PKGS_CSWlibmaa3-0-0	+=	CSWlibgcc-s1
+PACKAGES					+=	CSWlibmaa3
+CATALOGNAME_CSWlibmaa3		=	libmaa3
+PKGFILES_CSWlibmaa3			+=	$(call baseisadirs,$(libdir),libmaa.so\.3\.0\.0)
+PKGFILES_CSWlibmaa3			+=	$(call baseisadirs,$(libdir),libmaa\.so\.3(\.\d+)*)
+SPKG_DESC_CSWlibmaa3		+=	$(DESCRIPTION), libmaa-0.1.so.3.0.0
+RUNTIME_DEP_PKGS_CSWlibmaa3	+=	CSWlibgcc-s1
 
 include gar/category.mk
 
