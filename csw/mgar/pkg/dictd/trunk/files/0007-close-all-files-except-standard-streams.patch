@@ -1,0 +1,38 @@
+From cdb6de797b44ac66577ccf62abdabddc5e5dec18 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 20 Nov 2013 18:52:57 +0100
+Subject: [PATCH] close all files except standard streams
+
+Adapted from Debian's 08 dictd close-fds patch
+---
+ dictd.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/dictd.c b/dictd.c
+index 74597e3..9b83774 100644
+--- a/dictd.c
++++ b/dictd.c
+@@ -37,6 +37,7 @@
+ #include <ctype.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
++#include <unistd.h>
+ 
+ #define MAXPROCTITLE 2048       /* Maximum amount of proc title we'll use. */
+ #undef MIN
+@@ -1529,6 +1530,12 @@ int main (int argc, char **argv, char **envp)
+       { 0,                  0, 0, 0  }
+    };
+ 
++   /* close all file descriptors except for the standard ones */
++   for (i=getdtablesize()-1; i > 2; --i)
++   {
++	   close(i);
++   }
++
+    set_umask ();
+    init (argv[0]);
+ 
+-- 
+1.8.4.1
+

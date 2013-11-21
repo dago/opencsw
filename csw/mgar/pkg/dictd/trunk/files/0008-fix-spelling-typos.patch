@@ -1,0 +1,99 @@
+From 2e601b33394ad8b8690a277cdb77d5ddcc953372 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 20 Nov 2013 19:05:44 +0100
+Subject: [PATCH] fix spelling typos
+
+Inspired from Debian's 09 spelling typos patch
+---
+ daemon.c     | 2 +-
+ dictd.8.in   | 8 ++++----
+ dictfmt.1.in | 4 ++--
+ dictfmt.c    | 2 +-
+ 4 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index 7154a50..5d9af85 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -253,7 +253,7 @@ static int daemon_check_range(const char *spec, const char *ip)
+       return DICT_DENY;
+    }
+    if (!*pt) {
+-      log_info( ":E: Misformed range %s, denying access to %s\n", spec, ip);
++      log_info( ":E: Malformed range %s, denying access to %s\n", spec, ip);
+       return DICT_DENY;
+    }
+    
+diff --git a/dictd.8.in b/dictd.8.in
+index 5091834..497adff 100644
+--- a/dictd.8.in
++++ b/dictd.8.in
+@@ -410,7 +410,7 @@ differently depending on whether
+ .I OPTION MIME
+ command was received from client or was not,
+ i.e. the database created by this section
+-allows to return to the client either a plain text or
++allows one to return to the client either a plain text or
+ specially formatted content depending on whether DICT client supports
+ (or wants to receive) MIMEized content or doesn't.
+ The
+@@ -1218,7 +1218,7 @@ you can get only 100 ones skipping the first 800 matches.
+ This is made by specified these limits in a query like this:
+ 800#100#app, where 800 is skip count, 100 is a number of matches
+ you want to get and "app" is your query.
+-This strategy allows to implement DICT client with fast autocompletion
++This strategy allows one to implement DICT client with fast autocompletion
+ (although it is not trivial)
+ just like many standalone dictionary programs do.
+ .P
+@@ -1330,13 +1330,13 @@ Some headwords are used by
+ especially
+ .P
+ .BI 00\-database\-info
+-Containts the information about database
++Contains the information about database
+ which is 
+ returned by SHOW INFO command,
+ unless it is specified in the configuration file.
+ .P
+ .BI 00\-database\-short
+-Containts the short name of the database
++Contains the short name of the database
+ which is
+ returned by SHOW DB command,
+ unless it is specified in the configuration file.
+diff --git a/dictfmt.1.in b/dictfmt.1.in
+index 1ded30b..fa33800 100644
+--- a/dictfmt.1.in
++++ b/dictfmt.1.in
+@@ -273,12 +273,12 @@ and the input file contains \'autumn%%%fall', both 'autumn' and 'fall'
+ will be indexed as  headwords, with the same definition.
+ .TP
+ .BI \-\-index\-data\-separator " sep"
+-sets the index/data separator, which allows to set the first and fourth
++sets the index/data separator, which allows one to set the first and fourth
+ columns of .index file independently. That is
+ the first column can be treated as an index column
+ (where the MATCH command searches) and the fourth column as a result column
+ (where the MATCH gets things to be returned),
+-and they (1-st and 4-th columns) are completely independant of each other.
++and they (1-st and 4-th columns) are completely independent of each other.
+ The default value for this separator is ASCII symbol " \\034".
+ .TP
+ .BI \-\-break\-headwords
+diff --git a/dictfmt.c b/dictfmt.c
+index 4c348fa..f8e80dd 100644
+--- a/dictfmt.c
++++ b/dictfmt.c
+@@ -840,7 +840,7 @@ static void help( FILE *out_stream )
+                      Example: autumn%%%fall can be used\n\
+                      if '--headword-separator %%%' is supplied",
+ "--index-data-separator <sep> sets index/data separator which allows\n\
+-                     to explicitely set fourth column in .index file,\n\
++                     to explicitly set fourth column in .index file,\n\
+                      the default is \"\\034\"",
+ "--break-headwords    multiple headwords will be written on separate lines\n\
+                      in the .dict file.  For use with '--headword-separator.",
+-- 
+1.8.4.1
+

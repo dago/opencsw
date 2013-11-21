@@ -15,9 +15,32 @@ endef
 MASTER_SITES	=	$(SF_MIRRORS)
 SF_PROJECT		=	dict
 DISTFILES 		=	$(DISTNAME).tar.gz
+# documentation
+DISTFILES		+=	readme-dictd-locales
+DISTFILES		+=	README.Index2suffix
+DISTFILES		+=	README.Index2word
+DISTFILES		+=	README.Unformat
+DISTFILES		+=	README.Virtual_dictionaries
+# configuration:
+DISTFILES		+=	colorit.conf
+DISTFILES		+=	dict.conf
+DISTFILES		+=	dictd.conf
+DISTFILES		+=	dictd.order
+DISTFILES		+=	dictdconfig.alias
+# example:
+DISTFILES		+=	dictd_virtual2.conf
+# configurator:
+DISTFILES		+=	dictdconfig
+DISTFILES		+=	dictdconfig.8
+# patches:
 PATCHFILES		+=	0001-fix-and-enhance-documentation.patch
 PATCHFILES		+=	0002-test-drivers-use-bash.patch
 PATCHFILES		+=	0003-plugin-needs-limits.patch
+PATCHFILES		+=	0004-fix-hyphen-used-as-minus-sign.patch
+PATCHFILES		+=	0005-use-transliteration-with-iconv.patch
+PATCHFILES		+=	0006-fix-inexistent-groff-macro.patch
+PATCHFILES		+=	0007-close-all-files-except-standard-streams.patch
+PATCHFILES		+=	0008-fix-spelling-typos.patch
 
 BUILD_DEP_PKGS	+=	CSWlibmaa-dev
 BUILD_DEP_PKGS	+=	CSWlibz-dev
@@ -44,6 +67,8 @@ PKGFILES_CSWdict			+=	$(bindir)/colorit
 PKGFILES_CSWdict			+=	$(bindir)/dict
 PKGFILES_CSWdict			+=	$(bindir)/dict_lookup
 PKGFILES_CSWdict			+=	$(bindir)/dictl
+PKGFILES_CSWdict			+=	$(sysconfdir)/$(NAME)/colorit.conf
+PKGFILES_CSWdict			+=	$(sysconfdir)/$(NAME)/dict.conf
 PKGFILES_CSWdict			+=	$(docdir)/$(CATALOGNAME_CSWdict)/ANNOUNCE
 PKGFILES_CSWdict			+=	$(docdir)/$(CATALOGNAME_CSWdict)/ChangeLog
 PKGFILES_CSWdict			+=	$(docdir)/$(CATALOGNAME_CSWdict)/NEWS
@@ -52,8 +77,6 @@ PKGFILES_CSWdict			+=	$(mandir)/man1/colorit.1
 PKGFILES_CSWdict			+=	$(mandir)/man1/dict.1
 PKGFILES_CSWdict			+=	$(mandir)/man1/dict_lookup.1
 PKGFILES_CSWdict			+=	$(mandir)/man1/dictl.1
-
-RUNTIME_DEP_PKGS_CSWdicd	+= CSWlibmaa3-0-0
 
 PACKAGES						+=	CSWdictfmt
 SPKG_DESC_CSWdictfmt			=	$(DESCRIPTION), converter
@@ -82,6 +105,9 @@ PACKAGES					+=	CSWdictd
 SPKG_DESC_CSWdictd			=	$(DESCRIPTION), server
 CATALOGNAME_CSWdictd		=	dictd
 PKGFILES_CSWdictd			+=	$(sbindir)/.*
+PKGFILES_CSWdictd			+=	$(sysconfdir)/$(NAME)/dictd.conf
+PKGFILES_CSWdictd			+=	$(sysconfdir)/$(NAME)/dictd.order
+PKGFILES_CSWdictd			+=	$(sysconfdir)/$(NAME)/dictdconfig.alias
 PKGFILES_CSWdictd			+=	$(mandir)/man8/.*
 
 PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/ANNOUNCE
@@ -95,9 +121,15 @@ PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/.*[.]txt
 PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/.*[.]ps
 PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/security.doc
 PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/examples/dictd.*
+PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/readme-dictd-locales
+PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/README.Index2suffix
+PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/README.Index2word
+PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/README.Unformat
+PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/README.Virtual_dictionaries
 PKGFILES_CSWdictd			+=	$(libexecdir)/$(NAME)/.*
+PKGFILES_CSWdictd			+=	$(localstatedir)/lib/$(NAME)
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWdicd	+=	CSWlibmaa3-0-0
+RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibmaa3-0-0
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibdbi1
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWdictzip
@@ -106,6 +138,8 @@ CHECKPKG_OVERRIDES_CSWdictd	+=	no-direct-binding|/opt/csw/libexec/dictd/dictdplu
 CHECKPKG_OVERRIDES_CSWdictd	+=	no-direct-binding|/opt/csw/libexec/dictd/dictdplugin_exit.so.0.0.0|is|not|directly|bound|to|soname|libmaa.so.3
 CHECKPKG_OVERRIDES_CSWdictd	+=	no-direct-binding|/opt/csw/libexec/dictd/dictdplugin_popen.so.0.0.0|is|not|directly|bound|to|soname|libgcc_s.so.1
 CHECKPKG_OVERRIDES_CSWdictd	+=	no-direct-binding|/opt/csw/libexec/dictd/dictdplugin_popen.so.0.0.0|is|not|directly|bound|to|soname|libmaa.so.3
+CHECKPKG_OVERRIDES_CSWdictd	+=	file-with-bad-content|/usr/share|root/opt/csw/sbin/dictdconfig
+CHECKPKG_OVERRIDES_CSWdictd	+=	file-with-bad-content|/usr/share|root/etc/opt/csw/dictd/dictdconfig.alias
 
 PACKAGES						+=	CSWdictd-dev
 CATALOGNAME_CSWdictd-dev		=	dictd_dev
@@ -134,6 +168,7 @@ post-install: pkgsdocdir	=	$(docdir)/$(NAME)
 post-install: pkgcdocdir	=	$(docdir)/$(CATALOGNAME_CSWdict)
 post-install: pkgsexdir		=	$(docdir)/$(NAME)/examples
 post-install: pkgcexdir		=	$(docdir)/$(CATALOGNAME_CSWdict)/examples
+post-install: pkgconfdir	=	$(sysconfdir)/$(NAME)
 post-install:
 	cd $(WORKSRC) && \
 	/usr/bin/env -i $(INSTALL_ENV) && $(MAKE) DESTDIR=$(DESTDIR) -C $(OBJDIR) install.samples
@@ -145,6 +180,11 @@ post-install:
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/NEWS $(DESTDIR)/$(pkgsdocdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/README $(DESTDIR)/$(pkgsdocdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/TODO $(DESTDIR)/$(pkgsdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/readme-dictd-locales $(DESTDIR)/$(pkgsdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/README.Index2suffix $(DESTDIR)/$(pkgsdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/README.Index2word $(DESTDIR)/$(pkgsdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/README.Unformat $(DESTDIR)/$(pkgsdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/README.Virtual_dictionaries $(DESTDIR)/$(pkgsdocdir)
 	cd $(WORKSRC)/doc && \
 	ginstall --preserve-timestamps --mode=u=rwx,go=r dicf.txt dicf.ps rfc.txt rfc.ps security.doc $(DESTDIR)/$(pkgsdocdir)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgcdocdir)
@@ -154,6 +194,16 @@ post-install:
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgsexdir)
 	cd $(WORKSRC)/examples && \
 	ginstall --preserve-timestamps --mode=u=rwx,go=r dictd* $(DESTDIR)/$(pkgsexdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dictd_virtual2.conf $(DESTDIR)/$(pkgsexdir)
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgcexdir)
 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/examples/dict1.conf $(DESTDIR)/$(pkgcexdir)
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(pkgconfdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/colorit.conf $(DESTDIR)/$(pkgconfdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dict.conf $(DESTDIR)/$(pkgconfdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dictd.conf $(DESTDIR)/$(pkgconfdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dictd.order $(DESTDIR)/$(pkgconfdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dictdconfig.alias $(DESTDIR)/$(pkgconfdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dictdconfig $(DESTDIR)/$(sbindir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKDIR)/dictdconfig.8 $(DESTDIR)/$(mandir)/man8
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(localstatedir)/lib/$(NAME)
 	$(MAKECOOKIE)
