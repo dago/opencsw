@@ -86,7 +86,8 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-priv += CSWlibgcc-s1vversions-in-package
 
 PACKAGES += CSWlibkrb5-3
 CATALOGNAME_CSWlibkrb5-3 = libkrb5_3
-PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libkrb5\.so\.3(\.\d+)*)
+PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libkPKGFILES_CSWlibkrb5-3 += $(sysconfdir)/krb5.conf
+PKGFILES_CSWlibkrb5-3 += $(mandir)/man5/krb5.conf.5krb5\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibkrb5-3 += MIT Kerberos 5 core libraries, libkrb5.so.3
 OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrb5support0
@@ -113,14 +114,12 @@ EXTRA_LDFLAGS  += -L$(libdir) -lintl += -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
-BUILD64_LIBS_ONLY = 1
-
-# We turn off almost everything as we are just interested in the library.
+BUIted in the library.
 NODIRPATHS = --docdir
 CONFIGURE_CONFIGURE_ARGS += --enable-dns-for-realmsable-thread-support
 CONFIGURE_ARGS += --enable-thread-support
 CONFIGURE_ARGS += --disable-static --disable-profiled
-CONFIGURE_ARGCONFIGURE_ARGS += --with-readline
+CONF-readline
 # To pick the right tclConfig.sh
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 
