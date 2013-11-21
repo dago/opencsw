@@ -1,0 +1,26 @@
+From 3be0de3de3a97aff1eedb6018b6d74f85b8a1c50 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 20 Nov 2013 18:40:06 +0100
+Subject: [PATCH] use transliteration with iconv
+
+Inspired by Debian's 04 dictl translit patch
+---
+ dictl.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dictl.in b/dictl.in
+index 913c7ef..9edde07 100755
+--- a/dictl.in
++++ b/dictl.in
+@@ -20,7 +20,7 @@ if test -z "$DICTL_CHARSET"; then
+ fi
+ 
+ internal_iconv (){
+-    iconv -c -f $1 -t $2
++    iconv -c -f $1 -t $2//TRANSLIT
+ }
+ 
+ internal_recode (){
+-- 
+1.8.4.1
+
