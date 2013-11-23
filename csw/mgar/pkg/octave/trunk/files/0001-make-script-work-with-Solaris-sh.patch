@@ -1,0 +1,25 @@
+From a75ecf2a90ad3969962fc78e08a8bc7b65ff15fe Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Fri, 15 Nov 2013 14:00:51 +0100
+Subject: [PATCH] make script work with Solaris sh
+
+---
+ src/find-defun-files.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/find-defun-files.sh b/src/find-defun-files.sh
+index d8b5ad2..fae1e8e 100755
+--- a/src/find-defun-files.sh
++++ b/src/find-defun-files.sh
+@@ -20,7 +20,7 @@ do
+   else
+     file="$srcdir/$arg"
+   fi
+-  if [ "`$EGREP -l "$DEFUN_PATTERN" $file`" ]; then
++  if $EGREP "$DEFUN_PATTERN" $file >/dev/null; then
+     echo "$file" | $SED 's,.*/,,; s/\.cc$/.df/; s/\.ll$/.df/; s/\.yy$/.df/';
+   fi
+ done
+-- 
+1.8.4.1
+

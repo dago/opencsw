@@ -1,0 +1,25 @@
+From 50fa5dfc9c4dc2f3d961f8688cce2332517b9d74 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Fri, 15 Nov 2013 14:02:37 +0100
+Subject: [PATCH 3/3] workaround conflict with gets
+
+---
+ libgnu/stdio.in.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libgnu/stdio.in.h b/libgnu/stdio.in.h
+index 83f6862..7d56d47 100644
+--- a/libgnu/stdio.in.h
++++ b/libgnu/stdio.in.h
+@@ -706,7 +706,7 @@ _GL_WARN_ON_USE (getline, "getline is unportable - "
+    removed it.  */
+ #undef gets
+ #if HAVE_RAW_DECL_GETS
+-_GL_WARN_ON_USE (gets, "gets is a security hole - use fgets instead");
++/* _GL_WARN_ON_USE (gets, "gets is a security hole - use fgets instead"); */
+ #endif
+ 
+ 
+-- 
+1.8.4.1
+
