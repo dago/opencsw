@@ -77,6 +77,7 @@ PKGFILES_CSWdict			+=	$(mandir)/man1/colorit.1
 PKGFILES_CSWdict			+=	$(mandir)/man1/dict.1
 PKGFILES_CSWdict			+=	$(mandir)/man1/dict_lookup.1
 PKGFILES_CSWdict			+=	$(mandir)/man1/dictl.1
+RUNTIME_DEP_PKGS_CSWdict	+=	CSWlibmaa3
 
 PACKAGES						+=	CSWdictfmt
 SPKG_DESC_CSWdictfmt			=	$(DESCRIPTION), converter
