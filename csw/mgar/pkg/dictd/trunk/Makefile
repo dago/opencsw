@@ -89,7 +89,7 @@ PKGFILES_CSWdictfmt				+=	$(mandir)/man1/dictfmt.1
 PKGFILES_CSWdictfmt				+=	$(mandir)/man1/dictfmt_index2suffix.1
 PKGFILES_CSWdictfmt				+=	$(mandir)/man1/dictfmt_index2word.1
 PKGFILES_CSWdictfmt				+=	$(mandir)/man1/dictunformat.1
-RUNTIME_DEP_PKGS_CSWdictfmt		+=	CSWlibmaa3-0-0
+RUNTIME_DEP_PKGS_CSWdictfmt		+=	CSWlibmaa3
 RUNTIME_DEP_PKGS_CSWdictfmt		+=	CSWrecode
 CHECKPKG_OVERRIDES_CSWdictfmt	+=	surplus-dependency|CSWrecode
 
@@ -99,7 +99,7 @@ CATALOGNAME_CSWdictzip		=	dictzip
 PKGFILES_CSWdictzip			+=	$(bindir)/dictzip
 PKGFILES_CSWdictzip			+=	$(mandir)/man1/dictzip.1
 RUNTIME_DEP_PKGS_CSWdictzip	+=	CSWlibz1
-RUNTIME_DEP_PKGS_CSWdictzip	+=	CSWlibmaa3-0-0
+RUNTIME_DEP_PKGS_CSWdictzip	+=	CSWlibmaa3
 
 PACKAGES					+=	CSWdictd
 SPKG_DESC_CSWdictd			=	$(DESCRIPTION), server
@@ -129,7 +129,7 @@ PKGFILES_CSWdictd			+=	$(docdir)/$(NAME)/README.Virtual_dictionaries
 PKGFILES_CSWdictd			+=	$(libexecdir)/$(NAME)/.*
 PKGFILES_CSWdictd			+=	$(localstatedir)/lib/$(NAME)
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibmaa3-0-0
+RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibmaa3
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWlibdbi1
 RUNTIME_DEP_PKGS_CSWdictd	+=	CSWdictzip
