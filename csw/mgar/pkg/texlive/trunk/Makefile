@@ -164,10 +164,25 @@ CATALOGNAME_CSWtetex				=	tetex_stub
 ARCHALL_CSWtetex					=	1
 ARCHALL_CSWtexlive-common			=	1
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWpython
-RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWruby
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWperl
-CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content
+CHECKPKG_OVERRIDES_CSWtexlive-common+=	file-with-bad-content
+PROTOTYPE_MODIFIERS					+=	varsticky
+PROTOTYPE_FILES_varsticky			+=	$(localstatedir)/lib/texmf-var
+PROTOTYPE_PERMS_varsticky			=	1777
+PROTOTYPE_MODIFIERS					+=	fontssticky
+PROTOTYPE_FILES_fontssticky			+=	$(localstatedir)/cache/texmf-fonts
+PROTOTYPE_PERMS_fontssticky			=	1777
+PROTOTYPE_MODIFIERS					+=	fontspksticky
+PROTOTYPE_FILES_fontspksticky			+=	$(localstatedir)/cache/texmf-fonts/pk
+PROTOTYPE_PERMS_fontspksticky		=	1777
+PROTOTYPE_MODIFIERS					+=	fontssourcesticky
+PROTOTYPE_FILES_fontssourcesticky	+=	$(localstatedir)/cache/texmf-fonts/source
+PROTOTYPE_PERMS_fontssourcesticky	=	1777
+PROTOTYPE_MODIFIERS					+=	fontstfmsticky
+PROTOTYPE_FILES_fontstfmsticky		+=	$(localstatedir)/cache/texmf-fonts/tfm
+PROTOTYPE_PERMS_fontstfmsticky		=	1777
 
 # I don't know what to do with this:
 CHECKPKG_OVERRIDES_CSWtexlive-common	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/scripts/latexmk/latexmk.pl
@@ -638,7 +653,7 @@ RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgs9
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWgsfonts
 CHECKPKG_OVERRIDES_CSWtexlive-binaries	+=	surplus-dependency|CSWgsfonts
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWtexlive-common
-RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgd2
+RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibgd3
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibptexenc1
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibt1-5
 RUNTIME_DEP_PKGS_CSWtexlive-binaries	+=	CSWlibz1
@@ -759,7 +774,7 @@ PKGFILES_CSWtexlive-doc-en			+=	/opt/csw/share/texmf-dist/doc/plain/impatient/.*
 PKGFILES_CSWtexlive-doc-en			+=	/opt/csw/share/texmf-dist/doc/plain/plain-doc/.*
 PKGFILES_CSWtexlive-doc-en			+=	/opt/csw/share/texmf-dist/doc/plain/texbytopic/.*
 ARCHALL_CSWtexlive-doc-en			=	1
-RUNTIME_DEP_PKGS_CSWtexlive-doc-en	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-doc-en	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-doc-en	+=	CSWperl
 CHECKPKG_OVERRIDES_CSWtexlive-doc-en	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/generic/tds/tds.tex
 CHECKPKG_OVERRIDES_CSWtexlive-doc-en	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/generic/FAQ-en/ChangeLog
@@ -1035,7 +1050,7 @@ PKGFILES_CSWtexlive-extra-utils			+=	/opt/csw/share/texmf/doc/tpic2pdftex/.*
 PKGFILES_CSWtexlive-extra-utils			+=	/opt/csw/share/texmf/scripts/a2ping/.*
 PKGFILES_CSWtexlive-extra-utils			+=	/opt/csw/share/texmf/scripts/tetex/e2pall.pl
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWpython
-RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWperl
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWtexlive-common
 RUNTIME_DEP_PKGS_CSWtexlive-extra-utils += CSWlibgcc-s1
@@ -1922,7 +1937,7 @@ PKGFILES_CSWtexlive-formats-extra		+=	/opt/csw/share/texmf-dist/tex/startex/base
 PKGFILES_CSWtexlive-formats-extra		+=	/opt/csw/share/texmf-dist/tex/texsis/base/.*
 PKGFILES_CSWtexlive-formats-extra		+=	/opt/csw/share/texmf-dist/tex/texsis/config/.*
 ARCHALL_CSWtexlive-formats-extra		=	1
-RUNTIME_DEP_PKGS_CSWtexlive-formats-extra	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-formats-extra	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-formats-extra	+=	CSWtexlive-binaries
 CHECKPKG_OVERRIDES_CSWtexlive-formats-extra	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/eplain/doc/eplain.html
 CHECKPKG_OVERRIDES_CSWtexlive-formats-extra	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/otherformats/texsis/base/texsis.1
@@ -2571,7 +2586,7 @@ PKGFILES_CSWtexlive-lang-polish		+=	/opt/csw/share/texmf-dist/tex/plain/gustlib/
 PKGFILES_CSWtexlive-lang-polish		+=	/opt/csw/share/texmf-dist/tex/plain/gustlib/map/.*
 PKGFILES_CSWtexlive-lang-polish		+=	/opt/csw/share/texmf-dist/tex/plain/gustlib/.*
 ARCHALL_CSWtexlive-lang-polish		=	1
-RUNTIME_DEP_PKGS_CSWtexlive-lang-polish	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-lang-polish	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-lang-polish	+=	CSWtexlive-binaries
 RUNTIME_DEP_PKGS_CSWtexlive-lang-polish	+=	CSWperl
 
@@ -4008,7 +4023,7 @@ PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/latex/ziff
 PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/latex/zwgetfdate/.*
 PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/latex/zwpagelayout/.*
 PKGFILES_CSWtexlive-latex-extra-doc		+=	/opt/csw/share/texmf-dist/doc/otherformats/xmltex/xmlplay/.*
-RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWpython
 RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWperl
 RUNTIME_DEP_PKGS_CSWtexlive-latex-extra-doc	+=	CSWruby
@@ -4476,7 +4491,7 @@ PKGFILES_CSWtexlive-pictures-doc		+=	/opt/csw/share/texmf-dist/doc/support/epspd
 PKGFILES_CSWtexlive-pictures-doc		+=	/opt/csw/share/texmf-dist/doc/support/fig4latex/.*
 PKGFILES_CSWtexlive-pictures-doc		+=	/opt/csw/share/texmf-dist/doc/support/texdraw/.*
 ARCHALL_CSWtexlive-pictures-doc			=	1
-RUNTIME_DEP_PKGS_CSWtexlive-pictures-doc	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-pictures-doc	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-pictures-doc	+=	CSWperl
 CHECKPKG_OVERRIDES_CSWtexlive-pictures-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/pb-diagram/pb-manual.tex
 CHECKPKG_OVERRIDES_CSWtexlive-pictures-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/pgfplots/pgfplotstodo.tex
@@ -4919,7 +4934,7 @@ PKGFILES_CSWtexlive-publishers-doc		+=	/opt/csw/share/texmf-dist/doc/latex/uwthe
 PKGFILES_CSWtexlive-publishers-doc		+=	/opt/csw/share/texmf-dist/doc/latex/york-thesis/.*
 PKGFILES_CSWtexlive-publishers-doc		+=	/opt/csw/share/texmf-dist/doc/plain/tugboat-plain/.*
 ARCHALL_CSWtexlive-publishers-doc		=	1
-RUNTIME_DEP_PKGS_CSWtexlive-publishers-doc	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-publishers-doc	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-publishers-doc	+=	CSWperl
 CHECKPKG_OVERRIDES_CSWtexlive-publishers-doc	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/latex/aastex/README
 CHECKPKG_OVERRIDES_CSWtexlive-publishers-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/nddiss/example-v1.3/example.tex
@@ -5045,7 +5060,7 @@ PKGFILES_CSWtexlive-science-doc		+=	/opt/csw/share/texmf-dist/doc/latex/ulqda/.*
 PKGFILES_CSWtexlive-science-doc		+=	/opt/csw/share/texmf-dist/doc/latex/unitsdef/.*
 ARCHALL_CSWtexlive-science-doc		=	1
 RUNTIME_DEP_PKGS_CSWtexlive-science	+=	CSWperl
-RUNTIME_DEP_PKGS_CSWtexlive-science-doc	+=	CSWemacscommon
+RUNTIME_DEP_PKGS_CSWtexlive-science-doc	+=	CSWemacs-common
 CHECKPKG_OVERRIDES_CSWtexlive-science-doc	+=	file-with-bad-content|/usr/share|root/opt/csw/share/texmf-dist/doc/latex/struktex/struktex.mk
 CHECKPKG_OVERRIDES_CSWtexlive-science-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/objectz/ozguide.tex
 CHECKPKG_OVERRIDES_CSWtexlive-science-doc	+=	file-with-bad-content|/usr/local|root/opt/csw/share/texmf-dist/doc/latex/complexity/complexity.tex
@@ -5308,8 +5323,8 @@ post-install-modulated:
 	rm -rf $(DESTDIR)/$(datadir)/$(TEXMFARPREFIX)
 	: create additional hierarchy to reflect texmf.cnf
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(datadir)/texmf-local
-	ginstall --directory --mode=a=rwx,o+t $(DESTDIR)/$(localstatedir)/lib/texmf-var
-	ginstall --directory --mode=a=rwx,o+t $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
+	ginstall --directory --mode=a=rwx $(DESTDIR)/$(localstatedir)/lib/texmf-var
+	ginstall --directory --mode=a=rwx $(DESTDIR)/$(localstatedir)/cache/texmf-fonts
 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)/$(sysconfdir)/texmf
 	: create all the available formats:
 	PATH=$(DESTDIR)/$(bindir):${PATH} LD_LIBRARY_PATH=$(DESTDIR)/$(libdir) fmtutil-sys --all
