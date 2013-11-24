@@ -164,6 +164,7 @@ CATALOGNAME_CSWtetex				=	tetex_stub
 ARCHALL_CSWtetex					=	1
 ARCHALL_CSWtexlive-common			=	1
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWpython
+CHECKPKG_OVERRIDES_CSWtexlive-common+=	surplus-dependency|CSWpython
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWemacs-common
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWruby
 RUNTIME_DEP_PKGS_CSWtexlive-common	+=	CSWperl
