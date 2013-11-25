@@ -160,7 +160,14 @@ SPKG_DESC_CSWqt4-dev += $(DESCRIPTION), development files
 PKGFILES_CSWqt4-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWqt4-dev += $(call baseisadirs,$(bindir),.*)
 PKGFILES_CSWqt4-dev += $(libdir)/libQt.*\.prl
-PKGFILES_CSWqt4-dev += $(libdir)/libQtUiTools.a
+# to provide a static library we need to do this:
+MERGE_EXCLUDE_STATICLIBS =
+# but to exclude those static libraries that we don't wish to provide,
+# we do this:
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/qt4/examples/tools/plugandpaint/plugins/libpnp_basictools.a
+EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/qt4/demos/shared/libdemo_shared.a
+# finally, we do this:
+PKGFILES_CSWqt4-dev += $(libdir)/libQtUiTools\.a
 PKGFILES_CSWqt4-dev += $(libdir)/$(NAME)$(MAJOR)/examples/.*
 PKGFILES_CSWqt4-dev += $(libdir)/$(NAME)$(MAJOR)/plugins/.*
 PKGFILES_CSWqt4-dev += $(libdir)/$(NAME)$(MAJOR)/demos/.*
