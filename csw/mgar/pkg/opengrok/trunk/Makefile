@@ -1,6 +1,8 @@
+# TODO: Add run.sh for cron update
+# TODO: Repository under /var/opt/csw/repos
+
 NAME = opengrok
-VERSION = 0.7
-GARTYPE = v1
+VERSION = 0.11.1
 CATEGORIES = devel
 
 DESCRIPTION = A wicked fast source browser
@@ -14,20 +16,21 @@ define BLURB
   the name OpenGrok. It is written in Java.
 endef
 
-MASTER_SITES = http://www.opensolaris.org/os/project/opengrok/files/
+MASjava.net/projects/opengrok/downloads/download/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWopengrok,postinstall preremove)
 
-RUNTIME_DEP_PKGS = CSWectags CSWjavasvn CSWtomcat5 CSWmercurial
+RUNTIME_DEP_PKGS = CSWectags CSWjavasvn CSWtomcat6 CSWmercurial
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://opengrok.github.io/OpenGrok/
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
+
+include gar/category.mk
+LL_SCRIPTS = custom
 install-custom:
 	@echo " ==> Installing files"
 	@rm -rf $(DESTDIR)$(prefix)/share/tomcat5/webapps/source
@@ -37,7 +40,7 @@ install-custom:
 		jar xf /dev/fd/0) \
 	)
 	@# For Indexing. Structure of opengrok is opengrok in application root
-	@# directory and all libs in lib/. We use only WEB-INF whose directory structure \
+	@# directory and all libs in lib/. We use only WEB-INF whose rectory structure \
 	@# is slightly different.
 	@gln -s $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/. \
 		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/lib
@@ -52,10 +55,3 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
 	@ginstall $(WORKSRC)/*.txt \
 		$(DESTDIR)$(prefix)/share/doc/opengrok/
-	@$(MAKECOOKIE)
-	
-
-include gar/category.mk
-
-# TODO: Add run.sh for cron update
-# TODO: Repository under /var/opt/csw/repos
