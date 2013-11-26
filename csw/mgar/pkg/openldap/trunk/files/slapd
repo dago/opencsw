@@ -1,0 +1,54 @@
+#!/bin/sh -x
+
+### START OPENCSW ARCHITECTURE SELECTION
+# Source the configuration
+# This is used to define the binary architeture to run
+
+# Check the old location first
+[ -r @prefix@/etc/csw.conf ] && . @prefix@/etc/csw.conf
+
+# Check the current location, its content overrides the previous one
+[ -r @sysconfdir@/csw.conf ] && . @sysconfdir@/csw.conf
+
+# If the package-specific variable is not set, try the default
+if [ -z "$openldap_arch" ]; then
+  if [ -n "$default_arch" ]; then
+    openldap_arch="$default_arch"
+  else
+    openldap_arch=`/usr/bin/uname -p`
+  fi
+fi
+
+# In that specific case, by default, there is no subdir
+if [ "$openldap_arch" = "i386" ]; then
+  openldap_arch="@ISA_DEFAULT_i386@"
+else
+  if [ "$openldap_arch" = "sparc" ]; then
+    openldap_arch="@ISA_DEFAULT_sparc@"
+  fi
+fi
+
+# If a value was found
+if [ -n "$openldap_arch" ]; then
+  if [ "$openldap_arch" = "kernel" ]; then
+    # Use the system's default arch
+    openldap_arch=`isainfo -k`
+  fi
+
+  # Add the architecture suffix to the executables' directories, if it exists
+  # The binaries themselves are tested below, so the script should fail
+  # mostly gracefully if a non-present arch is set up.
+  if [ -d "$bindir/$openldap_arch" -a \
+       -d "$sbindir/$openldap_arch" -a \
+       -d "$libexecdir/$openldap_arch" ]; then
+    bindir="$bindir/$openldap_arch"
+    sbindir="$sbindir/$openldap_arch"
+    libexecdir="$libexecdir/$openldap_arch"
+  fi
+fi
+
+subdir="$openldap_arch"
+
+### END OPENCSW ARCHITECTURE SELECTION
+
+exec `dirname $0`/$subdir/`basename $0` "$@"

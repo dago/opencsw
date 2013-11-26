@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = openldap
-VERSION = 2.4.33
+VERSION = 2.4.38
 GARTYPE = v2
 CATEGORIES = server
 
@@ -18,14 +18,22 @@ MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 DISTFILES  = $(DISTNAME).tgz
 DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
-DISTFILES += cswopenldap openldap.xml
+DISTFILES += cswop# This is the 32/64 exec wrapper
+DISTFILES += slapd
 
-EXPANDVARS = cswopenldap
 EXPANDVARS += CSWoldap.postinstall
+EXPANDVARS += cswopenldap
+EXPANDVARS += slapd
 
 PATCHFILES += patch-oldap-2.4.16-ntlm.diff
+
+# Use patch until this is fixed:
+#   http://www.openldap.org/its/index.cgi/Build?id=6306
 PATCHFILES += patch-libtool-64bit.diff
+
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
+
+#PATCHFILES += 0001-Do-not-hardcode-name-of-make.patchdap-2.4.16-ntlm.diff
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -60,7 +68,8 @@ RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWopenRUNTIME_DEP_PKGS_CSWopenldap += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc5enldap += CSWlibwrap1
 OBSOLETED_BY_CSWopenldap += CSWoldap
 CATALOGNAME_CSWoldap = openldap_stub
 
@@ -97,7 +106,8 @@ PKGFILES_CSWopenldap-back-perl += $(mandir)/man5/slapd-perl.5
 RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWperl
 RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap-back-perl += CSWopenldap
+RUNTIME_DEP_PKGS_CSWopenldap-back-p# We don't have 64 bit Perl yet
+CHECKPKG_OVERRIDES_CSWopenldap-back-perl += 64-bit-binaries-missing-perl += CSWopenldap
 
 PACKAGES += CSWopenldap-back-bdb
 SPKG_DESC_CSWopenldap-back-bdb = OpenLDAP BerkerleyDB bdb backend
@@ -152,7 +162,7 @@ RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWlibssl1-0-0
 OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
 
-EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
+EXTRE.CSW $(PATCHFILES) openldaprc
 
 # This is also used during EXPANDVARS
 bdbdir = $(prefix)/bdb48
@@ -176,7 +186,7 @@ NODIRPATHS = --docdir
 
 BUILD64 = 1
 
-# This takes some more work, the sbin/ files should be linked to libexec but the linklevel is not deep enough
+# This takes some more work, the sbin/ files should be linked to libexec but the linklevel s not deep enough
 # ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -210,12 +220,14 @@ CONFIGURE_ARGS_64 += --enable-perl=no
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
-# The testsuite takes a couple of hours
+# The testsuite take# s a couple of hours
 SKIPTEST ?= 1
 
-# Perl backend is built, although it has been told not to.
-EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
-EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
+# Perl backend is built, although it has been told not+= -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
+EXTRA_PAX_ARGS += -s ,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
+
+# Relocate 32 bit slapd to default isa subdir for 32/64 selector
+EXTRA_PAX_ARGS += -s ,/opt/csw/libexec/slapd,/opt/csw/libexec/$(ISA_DEFAULT)/slapdpenldap/back_perl.*,,
 
 # These are the config templates. As we have preserveconf which takes
 # care of this we exclude them in the package.
@@ -226,11 +238,10 @@ PRESERVECONF += /etc/opt/csw/openldap/slapd.conf
 
 INITSMF = /etc/opt/csw/init.d/cswopenldap
 
-include gar/category.mk
-
-post-merge-modulated:
+include gar/cateallpost-merge-modulated:
 	ginstall -D $(WORKDIR)/cswopenldap \
 		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
-	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(NAME)/$F;)
+	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(doginstall -D $(WORKDIR)/slapd $(PKGROOT)$(libexecdir)/slapddocdir)/$(NAME)/$F;)
 	@# Enable BDB backend so OpenLDAP can start
-	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir)/openldap/slapd.c
+	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir).CSW
+	@$(MAKECOOKIE)
