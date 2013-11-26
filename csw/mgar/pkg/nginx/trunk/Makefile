@@ -1,5 +1,5 @@
 NAME = nginx
-VERSION = 1.3.15
+VERSION = 1.5.7
 GARTYPE = v2
 GARCOMPILER = SOS11
 
@@ -33,7 +33,7 @@ RUNTIME_DEP_PKGS_CSWnginx += CSWlibgeoip1
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibxslt1
-RUNTIME_DEP_PKGS_CSWnginx += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWnginx += CSWlibgd3
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWnginx += CSWlibz1
 parThere is just one script on contrib/, do not pull in Perl for that
