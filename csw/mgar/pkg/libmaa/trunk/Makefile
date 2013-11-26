@@ -53,23 +53,21 @@ include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
-# # TODO: postponed until I solve the issue with texlive /var directories
-# post-build:
-# 	cd $(WORKSRC)/doc && \
-# 	/usr/bin/env -i $(BUILD_ENV) && \
-# 	$(MAKE)
-# 	cd $(WORKSRC)/doc && \
-# 	/usr/bin/env -i $(BUILD_ENV) && \
-# 	dvipdf $(NAME).dvi $(NAME).pdf
-# 	@$(MAKECOOKIE)
+post-build:
+	cd $(WORKSRC)/doc && \
+	/usr/bin/env -i $(BUILD_ENV) && \
+	$(MAKE)
+	cd $(WORKSRC)/doc && \
+	/usr/bin/env -i $(BUILD_ENV) && \
+	dvipdf $(NAME).dvi $(NAME).pdf
+	@$(MAKECOOKIE)
 
 test-custom:
 	cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) test
 	$(MAKECOOKIE)
 
-# # TODO: postponed until I solve the issue with texlive /var directories
-# post-install: pkgdocdir	=	$(docdir)/$(NAME)_dev
-# post-install:
-# 	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(pkgdocdir)
-# 	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/doc/$(NAME).pdf $(DESTDIR)$(pkgdocdir)
-# 	@$(MAKECOOKIE)
+post-install: pkgdocdir	=	$(docdir)/$(NAME)_dev
+post-install:
+	ginstall --directory --mode=u=rwx,go=rx $(DESTDIR)$(pkgdocdir)
+	ginstall --preserve-timestamps --mode=u=rwx,go=r $(WORKSRC)/doc/$(NAME).pdf $(DESTDIR)$(pkgdocdir)
+	@$(MAKECOOKIE)
