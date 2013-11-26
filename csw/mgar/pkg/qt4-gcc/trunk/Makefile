@@ -168,6 +168,7 @@ EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/qt4/examples/tools/plugandpaint/plugin
 EXTRA_MERGE_EXCLUDE_FILES	+=	/opt/csw/lib/qt4/demos/shared/libdemo_shared.a
 # finally, we do this:
 PKGFILES_CSWqt4-dev += $(libdir)/libQtUiTools\.a
+CHECKPKG_OVERRIDES_CSWqt4-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libQtUiTools.a
 PKGFILES_CSWqt4-dev += $(libdir)/$(NAME)$(MAJOR)/examples/.*
 PKGFILES_CSWqt4-dev += $(libdir)/$(NAME)$(MAJOR)/plugins/.*
 PKGFILES_CSWqt4-dev += $(libdir)/$(NAME)$(MAJOR)/demos/.*
