@@ -1,0 +1,22 @@
+From c93d8f4a68b9f9e38651b2c5e82532bbbf1f00ed Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 26 Nov 2013 15:34:55 +0100
+Subject: [PATCH] Do not hardcode name of make
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index b566233..0e9da64 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -35,4 +35,4 @@ distclean: veryclean FORCE
+ 
+ check: test
+ test: FORCE
+-	cd tests; make test
++	cd tests; $(MAKE) test
+-- 
+1.8.3.4
+
