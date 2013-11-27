@@ -1,0 +1,28 @@
+From bc3d581dd410a4bb6abe398d1e436af0088f8fca Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 27 Nov 2013 16:34:17 +0100
+Subject: [PATCH] Only one author allowed
+
+---
+ Makefile.PL | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 94b33ff..85b583e 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -9,10 +9,8 @@ WriteMakefile(
+     DISTNAME        => 'MARC-Charset',
+     VERSION_FROM    => 'lib/MARC/Charset.pm',
+     ABSTRACT_FROM   => 'lib/MARC/Charset.pm',
+-    AUTHOR          => [
++    AUTHOR          => 
+                             'Ed Summers <ehs@pobox.com>',
+-                            'Galen Charlton <gmcharlt@gmail.com>',
+-                       ],
+     LICENSE         => 'perl',
+     PMLIBDIRS       => ['lib'],
+     PREREQ_PM       => {
+-- 
+1.8.4.1
+
