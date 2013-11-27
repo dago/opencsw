@@ -1,0 +1,5 @@
+#!/bin/sh
+
+Configurator=/opt/csw/sbin/dictdconfig
+
+test -x  ${Configurator} && ${Configurator} --write
