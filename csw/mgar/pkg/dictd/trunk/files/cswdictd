@@ -1,0 +1,53 @@
+#!/sbin/sh
+
+# $Id$
+#
+# init script for dictd.
+
+# Copyright (C) 2013 Peter Felecan peter@felecan.org
+#
+# This file is part of dictd package offered by OpenCSW
+#
+# This script is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This script is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+
+#RC_KNUM 10
+#RC_SNUM 90
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+#FMRI network
+
+PIDFile=/var/opt/csw/run/dictd/pid
+
+case "$1" in
+  start)
+    if [ -f /opt/csw/sbin/dictd ]
+	then
+    {
+		echo "Starting dictd."
+		/opt/csw/sbin/dictd
+	}
+    fi
+    ;;
+  stop)
+    echo "Shutting down dictd."
+    kill `cat ${PIDFile}`
+    ;;
+  reload|refresh)
+    echo "Reloading dictd."
+    kill -1 `cat ${PIDFile}`
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | reload | refresh }"
+    ;;
+esac

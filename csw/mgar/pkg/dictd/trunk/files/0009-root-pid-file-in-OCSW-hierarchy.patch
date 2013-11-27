@@ -1,0 +1,48 @@
+From 61640cd17b8089464f4796210358753fcfdf2cb9 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Tue, 26 Nov 2013 20:23:50 +0100
+Subject: [PATCH] root pid file in OCSW hierarchy
+
+---
+ dictd.8.in | 4 ++--
+ dictd.c    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dictd.8.in b/dictd.8.in
+index 497adff..892bba6 100644
+--- a/dictd.8.in
++++ b/dictd.8.in
+@@ -902,7 +902,7 @@ The specified filename will be created to contain
+ the process id of the main
+ .B dictd
+ process. The default is
+-.I /var/run/dictd.pid
++.I /var/opt/csw/run/dictd/pid
+ .TP
+ .BI fast\_start
+ By default, dictd creates (in memory) additional index
+@@ -1451,7 +1451,7 @@ configuration file
+ .B dictd
+ daemon itself
+ .TP
+-.I /var/run/dictd.pid
++.I /var/opt/csw/run/dictd/pid
+ File for storing pid of
+ .B dictd
+ daemon
+diff --git a/dictd.c b/dictd.c
+index 9b83774..c92c642 100644
+--- a/dictd.c
++++ b/dictd.c
+@@ -76,7 +76,7 @@ int                logOptions   = 0;
+ const char         *logFile     = NULL;
+ int logFile_set; /* 1 if set by command line option */
+ 
+-const char *pidFile     = "/var/run/dictd.pid";
++const char *pidFile     = "/var/opt/csw/run/dictd/pid";
+ int pidFile_set; /* 1 if set by command line option */
+ 
+ const char         *daemon_service     = DICT_DEFAULT_SERVICE;
+-- 
+1.8.4.1
+
