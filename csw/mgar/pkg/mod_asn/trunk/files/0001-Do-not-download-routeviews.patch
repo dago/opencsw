@@ -1,0 +1,45 @@
+From f13c5d16afeb23c23aeff4c8bd042d0adb3d0ffe Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 26 Nov 2013 17:01:42 +0100
+Subject: [PATCH] Do not download routeviews
+
+---
+ asn_get_routeviews.py | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/asn_get_routeviews.py b/asn_get_routeviews.py
+index ada1cc4..8ebda83 100755
+--- a/asn_get_routeviews.py
++++ b/asn_get_routeviews.py
+@@ -8,20 +8,20 @@ import urllib
+ # the data snapshot that we need is put into monthly directories, like this:
+ # example url: 'http://archive.routeviews.org/oix-route-views/2008.11/oix-full-snapshot-latest.dat.bz2'
+ 
+-filename = 'oix-full-snapshot-latest.dat.bz2'
++filename = '/opt/csw/share/routeviews/oix-full-snapshot-latest.dat.bz2'
+ #url = 'http://archive.routeviews.org/oix-route-views/%s/%s' \
+ #        % (time.strftime("%Y.%m", time.gmtime()), filename)
+ 
+ # mirrored daily from archive.routeviews.org, to save routeviews.org the traffic
+ url = 'http://mirrorbrain.org/routeviews/%s' % filename
+ 
+-if os.path.exists(filename) \
+-   and (time.time() - os.path.getmtime(filename)) < (60 * 60 * 8):
+-    print >>sys.stderr, 'Using existing file, because it is less than 8h old.'
+-    print >>sys.stderr, 'Remove it to have it downloaded again.'
+-else:
+-    print >>sys.stderr, 'Downloading', url
+-    urllib.urlretrieve(url, filename=filename)
++#if os.path.exists(filename) \
++#   and (time.time() - os.path.getmtime(filename)) < (60 * 60 * 8):
++#    print >>sys.stderr, 'Using existing file, because it is less than 8h old.'
++#    print >>sys.stderr, 'Remove it to have it downloaded again.'
++#else:
++#    print >>sys.stderr, 'Downloading', url
++#    urllib.urlretrieve(url, filename=filename)
+ 
+ 
+ 
+-- 
+1.8.4.1
+
