@@ -1,0 +1,28 @@
+From 27826b9ed58043480c54686a0cf5507939faf4f0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 27 Nov 2013 16:35:17 +0100
+Subject: [PATCH] Only one author allowed
+
+---
+ Makefile.PL | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index d903911..8c1b228 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -8,10 +8,8 @@ WriteMakefile(
+     'DISTNAME'      => 'MARC-XML',
+     'VERSION_FROM'  => 'lib/MARC/File/XML.pm',
+     'PMLIBDIRS'     => [ qw( lib/ ) ],
+-    'AUTHOR'        => [
++    'AUTHOR'        => 
+                             'Ed Summers <ehs@pobox.com>',
+-                            'Galen Charlton <gmcharlt@gmail.com>',
+-                       ],
+     'LICENSE'       => 'perl',
+     'PREREQ_PM'     => {
+                             'XML::LibXML'   => 1.66,
+-- 
+1.8.4.1
+
