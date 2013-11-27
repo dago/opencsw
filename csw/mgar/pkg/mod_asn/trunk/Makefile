@@ -10,12 +10,28 @@ DISTFILES += CSWap2-mod-asn.postinstall
 DISTFILES += CSWap2-mod-asn.preremove
 DISTFILES += asn_import.conf
 
+PATCHFILES += 0001-Do-not-download-routeviews.patch
+
 VENDOR_URL = http://mirrorbrain.org/mod_asn/
 
 LICENSE = debian/copyright
 
 PACKAGES = CSWap2-mod-asn
+SPKG_DESC_CSWap2-mod-asn = An Apache module to look up routing data
 RUNTIME_DEP_PKGS_CSWap2-mod-asn += CSWapache2
+
+PACKAGES += CSWmod-asn-utils
+SPKG_DESC_CSWmod-asn-utils = Utilities to maintain the database for mod_asn
+PKGFILES_CSWmod-asn-utils += $(sysconfdir)/.*
+PKGFILES_CSWmod-asn-utils += $(bindir)/.*
+PKGFILES_CSWmod-asn-utils += .*/asn\.sql
+ARCHALL_CSWmod-asn-utils = 1
+# The data, checkpkg cannot detect that
+RUNTIME_DEP_PKGS_CSWmod-asn-utils += CSWroute-views-data
+CHECKPKG_OVERRIDES_CSWmod-asn-utils += surplus-dependency|CSWroute-views-data
+# For asn_import
+RUNTIME_DEP_PKGS_CSWmod-asn-utils += CSWpy-psycopg2
+CHECKPKG_OVERRIDES_CSWmod-asn-utils += surplus-dependency|CSWpy-psycopg2
 
 REINPLACEMENTS += cswpython
 REINPLACE_MATCH_cswpython = \#!/usr/bin/env\ python
@@ -24,7 +40,7 @@ REINPLACE_FILES_cswpython += asn_get_routeviews.py
 REINPLACE_FILES_cswpython += asn_import.py
 
 REINPLACEMENTS += importconf
-REINPLACE_MATCH_importconf = /etc/etc/asn_import.conf
+REINPLACE_MATCH_importconf = /etc/asn_import.conf
 REINPLACE_WITH_importconf = $(sysconfdir)/asn_import.conf
 REINPLACE_FILES_importconf += asn_import.py
 
