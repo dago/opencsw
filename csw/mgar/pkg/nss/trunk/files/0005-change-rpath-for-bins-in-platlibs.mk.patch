@@ -5,10 +5,10 @@
  ifeq ($(OS_ARCH), SunOS) 
  ifeq ($(USE_64), 1)
 -EXTRA_SHARED_LIBS += -R '$$ORIGIN/../lib:/usr/lib/mps/secv1/64:/usr/lib/mps/64'
-+EXTRA_SHARED_LIBS += -R'/opt/csw/lib/64/$$ISALIST' -M ${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10 -B direct -z ignore
++EXTRA_SHARED_LIBS += -R'/opt/csw/lib/64/$$ISALIST' -Wl,-M${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10 -Wl,-Bdirect -Wl,-zignore
  else
 -EXTRA_SHARED_LIBS += -R '$$ORIGIN/../lib:/usr/lib/mps/secv1:/usr/lib/mps'
-+EXTRA_SHARED_LIBS += -R'/opt/csw/lib/$$ISALIST' -M ${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10 -B direct -z ignore
++EXTRA_SHARED_LIBS += -R'/opt/csw/lib/$$ISALIST' -Wl,-M${HOME}/opencsw/.buildsys/v2/gar/lib/map.solaris10 -Wl,-Bdirect -Wl,-zignore
  endif
  endif
  

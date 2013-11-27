@@ -1,0 +1,17 @@
+diff --git a/mozilla/security/nss/lib/freebl/intel-gcm-wrap.c b/mozilla/security/nss/lib/freebl/intel-gcm-wrap.c
+index b2f6f5e..6ecebc7 100644
+--- a/mozilla/security/nss/lib/freebl/intel-gcm-wrap.c
++++ b/mozilla/security/nss/lib/freebl/intel-gcm-wrap.c
+@@ -29,6 +29,12 @@
+ #elif defined(__GNUC__)
+ #include <emmintrin.h>
+ #include <tmmintrin.h>
++#elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#include <sys/emmintrin.h>
++__m128i _mm_shuffle_epi8( 
++   __m128i a,
++   __m128i mask
++);
+ #endif
+ 
+ 

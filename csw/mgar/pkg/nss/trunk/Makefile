@@ -25,7 +25,7 @@
 NAME = nss
 MAJOR_VERSION = 3
 MINOR_VERSION = 14
-PATCHLEVEL    = 1
+PATCHLEVEL    = 4
 VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 # #VERSION = $(MAJOR_VERSION).$(MINOR_VERSION)
 GARTYPE = v2
@@ -46,7 +46,8 @@ MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RT
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += mpl
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-GARCOMPILER = SOS12U3rc solaris10-i386
+# GARCOMPILER = GCC4
+# GARCOMPILER = SOS12U3rc solaris10-i386
 
 PACKAGES += CSWlibnss3
 CATALOGNAME_CSWlibnss3 = libnss3
@@ -56,9 +57,9 @@ PKGFILES_CSWlibnss3 += $(call baseisadirs,$(libdir),libnss3\.so(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibnssutil3
 RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibplc4
-CHECKPKG_OVERRIDES_CSWlibnss3 += sonam
-CHECKPKG_OVERRIDES_CSWlibnss3 += shared-lib-pkgname-mismatch/amd64/libnss3.so
+RUNTIME_DEP_PKGS_CSWlibnsRUNTIME_DEP_PKGS_CSWlibnss3 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibnss3 += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibnss3 += shared-lib-pkgname-mismatch/amd64/libnss3.so
 
 PACKAGES += CSWlibnssckbi
 CATALOGNAME_CSWlibnssckbi = libnssckbi
@@ -67,8 +68,9 @@ PKGFILES_CSWlibnssckbi += $(call baseisadirs,$(libdir),libnssckbi\.so(\.\d+)*)
 SPKG_DESC_CSWlibnssckbi += $(DESCRIPTION), libnssckbi.so
 RUNTIME_DEP_PKGS_CSWlibnssckbi += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibnssckbi += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibnssckCHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename
-CHECKPKG_OVERRIDES_CSWlibnssckb1 += shared-lib-pkgname-mismatchkbi += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWlibnssckRUNTIME_DEP_PKGS_CSWlibnssckbi += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibnssckbi += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibnssckb1 += shared-lib-pkgname-mismatchkbi += CSWlibplc4
 
 PACKAGES += CSWlibnssdbm3
 CATALOGNAME_CSWlibnssdbm3 = libnssdbm3
@@ -79,10 +81,10 @@ SPKG_DESC_CSWlibnssdbm3 += $(DESCRIPTION), libnssdbm3.so
 RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibnssutil3 
 RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibnssdb# i368 needs that, sparcs hates that
+RUNTIME_DEP_PKGS_CSWlibnssdbRUNTIME_DEP_PKGS_CSWlibnssdbm3 += CSWlibgcc-s1b# i368 needs that, sparcs hates that
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += surplus-dependency|CSWlibplc4
 CHECKPKG_OVERRIDES_CSWlibnssdbm3 += soname-equals-filename
-CHECKPKG_OVERRIDES_CSWlibnssdbm3 += shared-lib-pkgname-mismatchd64/libnssdbm3.so
+# CHECKPKG_OVERRIDES_CSWlibnssdbm3 += shared-lib-pkgname-mismatchd64/libnssdbm3.so
 
 PACKAGES += CSWlibnssutil3
 CATALOGNAME_CSWlibnssutil3 = libnssutil3
@@ -91,9 +93,9 @@ PKGFILES_CSWlibnssutil3 += $(call baseisadirs,$(libdir),libnssutil3\.so(\.\d+)*)
 SPKG_DESC_CSWlibnssutil3 += $(DESCRIPTION), libnssutil3.so
 RUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibplc4
-CHECKPKG_OVERRIDES_CSWlibnssutil3 += sonam
-CHECKPKG_OVERRIDES_CSWlibnssutil3 += shared-lib-pkgname-mismatch64/libnssutil3.so
+RUNTIME_DEP_PKGS_CSWlibnssutiRUNTIME_DEP_PKGS_CSWlibnssutil3 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibnssutil3 += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibnssutil3 += shared-lib-pkgname-mismatch64/libnssutil3.so
 
 PACKAGES += CSWlibsmime3
 CATALOGNAME_CSWlibsmime3 = libsmime3
@@ -104,9 +106,9 @@ RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibnssutil3 
 RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibplc4
-CHECKPKG_OVERRIDES_CSWlibsmime3 += sonam
-CHECKPKG_OVERRIDES_CSWlibsmine3 += shared-lib-pkgname-mismatchmd64/libsmime3.so
+RUNTIME_DEP_PKGS_CSWlibsmimRUNTIME_DEP_PKGS_CSWlibsmime3 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibsmime3 += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibsmine3 += shared-lib-pkgname-mismatchmd64/libsmime3.so
 
 PACKAGES += CSWlibsoftokn3
 CATALOGNAME_CSWlibsoftokn3 = libsoftokn3
@@ -118,9 +120,9 @@ RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibnssutil3 
-RUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibplds4
-CHECKPKG_OVERRIDES_CSWlibsoftokn3 += sonam
-CHECKPKG_OVERRIDES_CSWlibsoftokn3 += shared-lib-pkgname-mismatch64/libsoftokn3.so
+RUNTIME_DEP_PKGS_CSWlibsoftoknRUNTIME_DEP_PKGS_CSWlibsoftokn3 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibsoftokn3 += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibsoftokn3 += shared-lib-pkgname-mismatch64/libsoftokn3.so
 
 PACKAGES += CSWlibssl3
 CATALOGNAME_CSWlibssl3 = libssl3
@@ -130,9 +132,9 @@ PKGFILES_CSWlibssl3 += $(call baseisadirs,$(libdir),libssl3\.so(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibplc4
-RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibnssutil3
-CHECKPKG_OVERRIDES_CSWlibssl3 += sonam
-CHECKPKG_OVERRIDES_CSWlibssl3 += shared-lib-pkgname-mismatch/amd64/libssl3.so
+RUNTIME_DEP_PKGS_CSWlibssl3 +RUNTIME_DEP_PKGS_CSWlibssl3 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibssl3 += soname-equals-filename
+# CHECKPKG_OVERRIDES_CSWlibssl3 += shared-lib-pkgname-mismatch/amd64/libssl3.so
 
 PACKAGES += CSWlibfreebl3
 CATALOGNAME_CSWlibfreebl3 = libfreebl3
@@ -141,10 +143,11 @@ SPKG_DESC_CSWlibfreebl3 += $(DESCRIPTION)# PKGFILES_CSWlibfreebl3 += $(call base
 # PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.chk)
 PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*libfreebl.*3\.chk)
 RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnssutil3
-RUNTIME_DEP_PKGS_CSWlibfreebl# 3 += CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibfreeblRUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibgcc-s1l# 3 += CSWlibnspr4
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWlibfreebl3 += sonam
-CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatchlib/libfreebl3.so
+# 3 += CSWlibnspr4
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-ib/libfreebl3.so
 
 PACKAGES += CSWlibnss-dev
 CATALOGNAME_CSWlibnss-dev = libnss_dev
@@ -224,7 +227,7 @@ else
 	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
 endif
 endif
-expo# LD_OPTIONS = -z ignore -Bdirect
+expo# LD_OPTIONS = -z ignore
 ifeq ($(USE_64),1) 
   SQLITE_LIB_DIR = /opt/csw/lib/64
 #   LD_OPTIONS += -R/opt/csw/lib/64/\$$ISALIST
@@ -254,7 +257,7 @@ LICENSE = mpl-tri-license-txt
 # For DBG builds
 # PATCHFILES  = whoami.patch
 
-# Required patches.
+# R# equired patches.
 PATCHFILES # += include.patch
 PATCHFILES += ld-options.patch
 PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
@@ -276,14 +279,14 @@ build-nss: build-coreconf build-dbm build-nss-compile
 build-coreconf:
 	(cd $(WORKSRC)/mozilla/security/coreconf \
 		&& \
-	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS)' \
+	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIO NS_USE_GCC=1 NO_MDUPDATE=ONS)' \
 	gmake -j1)
 	@$(MAKECOOKIE)
 
 build-dbm:
 	(cd $(WORKSRC)/mozilla/security/dbm \
 		&& \
-	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIONS)' \
+	CPPFLAGS='$(CPPFLAGS)' LD_OPTIONS='$(LD_OPTIO NS_USE_GCC=1 NO_MDUPDATE=ONS)' \
 	gmake -j1)
 	@$(MAKECOOKIE)
 
@@ -292,7 +295,7 @@ build-dbm:
 bui@echo $(LD_OPTIONS)
 	(cd $(WORKSRC)/mozilla/security/nss \
 		&& env \
-	gmake -j1 BUILD_SUN_PKG=1b/\$$\$$ISALIST\')
+		&& gmake -j1 BUILD_SUN_PKG=1 NS_USE_GCC=1 NO_MDUPDATE=1b/\$$\$$ISALIST\')
 	@$(MAKECOOKIE)
 
 install-nss:
