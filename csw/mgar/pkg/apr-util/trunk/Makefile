@@ -23,6 +23,9 @@ RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibuuid1
 OBSOLETED_BY_CSWlibaprutil1-0 += CSWapr-util
 
+# This is due to different interpretation of -z ignore
+CHECKPKG_OVERRIDES_CSWlibaprutil1-0 += surplus-dependency|CSWlibuuid1
+
 PACKAGES += CSWlibaprutil1-dbd-freetds
 SPKG_DESC_CSWlibaprutil1-dbd-freetds = Apache Portable Runtime database binding, apr-util-1/apr_dbd_freetds-1.so
 PKGFILES_CSWlibaprutil1-dbd-freetds += $(call baseisadirs,$(libdir),apr-util-1/apr_dbd_freetds.*\.so)
@@ -72,6 +75,9 @@ CHECKPKG_OVERRIDES_CSWlibaprutil1-ldap += surplus-dependency|CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWlibaprutil1-ldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibaprutil1-ldap += CSWlibldap2-4-2
 OBSOLETED_BY_CSWlibaprutil1-ldap += CSWapr-util
+
+# This is due to different interpretation of -z ignore
+CHECKPKG_OVERRIDES_CSWlibaprutil1-ldap += surplus-dependency|CSWliblber2-4-2
 
 PACKAGES += CSWlibaprutil-dev
 SPKG_DESC_CSWlibaprutil-dev += Apache Portable Runtime Utilities, libaprutil-dev
