@@ -143,11 +143,9 @@ SPKG_DESC_CSWlibfreebl3 += $(DESCRIPTION)# PKGFILES_CSWlibfreebl3 += $(call base
 # PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*3\.chk)
 PKGFILES_CSWlibfreebl3 += $(call baseisadirs,$(libdir),libfreebl.*libfreebl.*3\.chk)
 RUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibnssutil3
-RUNTIME_DEP_PKGS_CSWlibfreeblRUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibgcc-s1l# 3 += CSWlibnspr4
-CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-pkgname-mismatch
-CHECKPKG_OVERRIDES_CSWlibfreebl3 += sonam
-# 3 += CSWlibnspr4
-CHECKPKG_OVERRIDES_CSWlibfreebl3 += shared-lib-ib/libfreebl3.so
+RUNTIME_DEP_PKGS_CSWlibfreeblRUNTIME_DEP_PKGS_CSWlibfreebl3 += CSWlibgcc-s1lCHECKPKG_OVERRIDES_CSWlibfreebl3 += soname-equals-filename
+CHECKPKG_OVERRIDES_CSWlibfreebl3_sparc += shared-lib-pkgname-mismatch
+CHECKPKG_OVERRIDES_CSWlibfreebl3 += $(CHECKPKG_OVERRIDES_CSWlibfreebl3_$(GARCH))-ib/libfreebl3.so
 
 PACKAGES += CSWlibnss-dev
 CATALOGNAME_CSWlibnss-dev = libnss_dev
