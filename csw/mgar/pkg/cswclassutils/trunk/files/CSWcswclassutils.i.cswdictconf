@@ -1,0 +1,46 @@
+#!/bin/sh
+# $Id$
+#
+# i.cswdictconf - Class action script
+# 		 for registering dictionary packages
+#
+# Copyright (C) 2013 Peter Felecan peter@felecan.org
+#
+# This file is part of cswclassutils  package offered by OpenCSW
+#
+# This script is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This script is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+
+echo "Installing class <cswdictconf> ..."
+
+while read src dest; do
+  echo $dest
+  /usr/bin/cp $src $dest || exit 2
+done
+
+if [ -x ${PKG_INSTALL_ROOT}/opt/csw/sbin/dictdconfig ]
+then
+{
+	echo "Registering Dictionaries. This may take some time..."
+	/usr/sbin/chroot ${PKG_INSTALL_ROOT:-/} /opt/csw/sbin/dictdconfig --write ||
+	echo "Registering Dictionaries failed! You need to run dictdconfig again"
+	/usr/sbin/chroot ${PKG_INSTALL_ROOT:-/} /usr/bin/pkill -HUP dictd ||
+	echo "reload request to DICT server failed"
+}
+else
+{
+    echo "$dest (Dictionaries will be registered when CSWdictd is installed)"
+}
+fi
+
+exit 0
