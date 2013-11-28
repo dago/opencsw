@@ -1,5 +1,5 @@
 NAME = nrpe
-VERSION = 2.13
+VERSION = 2.15
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -80,8 +80,8 @@ PKGFILES_CSWnrpe-plugin	 += /opt/csw/share/doc/nrpe_plugin/license
 # replace /usr/local
 #
 
-REINPLACE_USRLOCAL	+= .*/nrpe-2.13/SECURITY
-REINPLACE_USRLOCAL	+= .*/nrpe-2.13/README
+REINPLACE_USRLO5/SECURITY
+REINPLACE_USRLOCAL	+= .*/nrpe-2.15AL	+= .*/nrpe-2.13/README
 REINPLACE_USRLOCAL	+= sample-config/nrpe.cfg.in
 
 #
