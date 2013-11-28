@@ -72,6 +72,13 @@ Currently it has:
   all TeX packages installed. It adds index entries on package
   installation and removes them on package removal.
 
+- cswdictconf
+
+  This class takes care of keeping the dictionaries used by the DICT
+  server in sync with all the dictionary packages installed. It add
+  entries in the servers configuration on package installation and
+  removes them on package removal.
+
 Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.
 
 -- 
