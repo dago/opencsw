@@ -254,6 +254,9 @@ TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 # These are the default paths for TeX packages to be picked up.
 TEXHASH ?= $(texmfdir)/.* $(texmfconfigdir)/.* $(texmfdistdir)/.* $(texmflocaldir)/.* $(texmfvardir)/.* 
 
+# These are the default paths for DICT server dictionaries  packages to be picked up.
+DICTCONF ?= $(dictddir)/.*
+
 # if AP2_MODS is set, files matching this shell glob (passed to find)
 # will have 'build' set as their class
 AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
@@ -274,6 +277,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(TEXHASH),$$F[1] = "cswtexhash" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SSLCERT),$$F[1] = "cswsslcert" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(DICTCONF),$$F[1] = "cswdictconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
 		$(if $(PHP5_EXT),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/php5/extensions/.*));) \
 		$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^/opt/csw/etc/templates/.+$$) and $$F[0] eq "f" ); \
@@ -310,6 +314,7 @@ _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
 _CSWCLASSES += cswpostmsg
 _CSWCLASSES += cswtexhash
+_CSWCLASSES += cswdictconf
 
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
