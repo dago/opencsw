@@ -20,6 +20,8 @@ SPKG_DESC_CSWpy-setproctitle = A library to allow customization of the process t
 RUNTIME_DEP_PKGS_CSWpy-setproctitle += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-setproctitle += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-setproctitle += CSWlibgcc-s1
+# This is just a shared library with the foreign function stuff
+CHECKPKG_OVERRIDES_CSWpy-setproctitle += python-package-missing-py-files
 
 # There is no testsuite
 TEST_SCRIPTS =
