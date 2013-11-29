@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = setproctitle
-VERSION = 1.1.5
+VERSION = 1.1.8
 CATEGORIES = python
 GARTYPE = v2
 
@@ -14,9 +14,12 @@ DISTFILES = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://code.google.com/p/py-setproctitle/
 
-PACKAGES = CSWpy-setproctitle
+PACKAGES += CSWpy-setproctitle
+SPKG_DESC_CSWpy-setproctitle = A library to allow customization of the process title
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWpy-setproctitle += CSWlibpython2-6-1-0
-CHECKPKG_OVERRIDES_CSWpy-setproctitle += surplus-dependency|CSWpython
+RUNTIME_DEP_PKGS_CSWpy-setproctitle += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWpy-setproctitle += CSWlibgcc-s1
 
 # There is no testsuite
 TEST_SCRIPTS =
