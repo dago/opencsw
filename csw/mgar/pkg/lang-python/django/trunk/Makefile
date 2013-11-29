@@ -7,7 +7,7 @@
 # http://bugs.python.org/issue7208
 
 NAME = django
-VERSION = 1.2.3
+VERSION = 1.4.10
 CATEGORIES = python
 GARTYPE = v2
 
@@ -40,6 +40,11 @@ LICENSE = LICENSE
 # the URL and using a custom target to fit the rest of mGAR.
 http//www.djangoproject.com/download/$(VERSION)/tarball/Django-$(VERSION).tar.gz:
 	@wget $(WGET_OPTS) -T 30 -c -P $(PARTIALDIR) http://www.djangoproject.com/download/$(VERSION)/tarball
+	pwd
+	mv $(DOWNLOADDIR)/partial/tarball $(DOWNLOADDIR)/partial/$(DISTFILES)
+
+CHECKPKG_OVERRIDES_CSWpy-django += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/django/conf/__init__.py
+CHECKPKG_OVERRIDES_CSWpy-django += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/django/conf/__init__.py
 
 include gar/category.mk
 
