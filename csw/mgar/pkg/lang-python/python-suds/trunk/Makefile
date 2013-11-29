@@ -16,5 +16,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-suds
 CATALOGNAME_CSWpy-suds = py_suds
 ARCHALL_CSWpy-suds = 1
+CHECKPKG_OVERRIDES_CSWpy-suds += pkginfo-description-not-starting-with-uppercase
+
 LICENSE = LICENSE
 include gar/category.mk
