@@ -1,18 +1,18 @@
-From 7c9db391d6cb487169575e9627f2dcc1d8789593 Mon Sep 17 00:00:00 2001
+From d66bef54d6ba8c874f4e7c7abb3df27366d64121 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Mon, 28 Mar 2011 11:48:10 +0200
+Date: Fri, 29 Nov 2013 09:17:54 +0100
 Subject: [PATCH] Do not use stdbool.h
 
 ---
- ascii.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ ascii.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/ascii.c b/ascii.c
-index 40b4301..08623df 100644
+index a2f8db0..231bcf5 100644
 --- a/ascii.c
 +++ b/ascii.c
-@@ -18,7 +18,10 @@
- #include <ctype.h>
+@@ -20,7 +20,10 @@
+ #include <stdio.h>
  #include <string.h>
  #include <stdlib.h>
 -#include <stdbool.h>
@@ -20,9 +20,9 @@ index 40b4301..08623df 100644
 +#define bool int
 +#define false 0
 +#define true 1
+ #include <getopt.h>
  
- typedef char	*string;
- 
+ #ifdef __CYGWIN__
 -- 
-1.7.3.2
+1.8.4.1
 
