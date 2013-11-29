@@ -33,8 +33,9 @@ ARCHALL_CSWantdoc = 1
 PACKAGES += CSWant
 SPKG_DESC_CSWant = $(DESCRIPTION), base
 # not really 
-RUNTIME_DEP_PKGS_CSWant += CSWpython
 RUNTIME_DEP_PKGS_CSWant += CSWperl
+# RUNTIME_DEP_PKGS_CSWant += CSWpython
+# CHECKPKG_OVERRIDES_CSWant += surplus-dependency|CSWpython
 # usr share is ok
 # CHECKPKG_OVERRIDES_CSWant += file-with-bad-content|/usr/share|root/opt/csw/share/java/ant/bin/ant
 
