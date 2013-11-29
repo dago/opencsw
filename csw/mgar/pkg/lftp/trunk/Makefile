@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.4.9
+VERSION = 4.4.13
 CATEGORIES = net
 GARTYPE = v2
 
@@ -37,7 +37,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 ###### Upstream and opencsw files information #######
 
-MASTElftp.cybermirror.orgt/pub/source/lftp/
+MASTElftp.yar.ru/ftpt/pub/source/lftp/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
