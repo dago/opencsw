@@ -1,5 +1,5 @@
-NAME    = gd
-VERSION = 2.1.0
+NAME = gd
+VERSION = 2.0.36RC1
 GARTYPE = bts lib
 GARTYPE = v2
 
@@ -13,53 +13,47 @@ define BLURB
 	applications of GD involve web site development.
 endef
 
-MAs://bitbucket.org/libgd/gd-libgd/downloads/
-DISTNAME = lib$(NAME)-$(VERSION)
-DISTFILES  = $(DISTNAME).tar.xz
+MA://www.libgd.org/releases/
+# Master site down.  This version archived at:  http://www.graphviz.org/pub/tmp/gd-2.0.36RC1.tar.gz
+#     Contact:  ellson@opencsw.org
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-GARCOMPILER = GCC4
-
-BUILD_DEP_PKGS += CSWpkgconfig
+PATCHFILES += gdkanji.c.patch
 
 PACKAGES = NIMOSSgd
 CATALOGNAME_NIMOSSgd = gd
 SPKG_DESC_NIMOSSgd = Utilities facilitating libgd for dynamic image creation
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_NIMOSSgd += NIMOSSlibgd3
+RUNTIME_DEP_PKGS_NIMOSSgd += NIMOSSlibgd2
 
-PACKAGES += NIMOSSlibgd3
-CATALOGNAME_NIMOSSlibgd3 = libgd3
-SPKG_DESC_NIMOSSlibgd3 = A library used for dynamic image creation providing libgd.so.3
-PKGFILES_SIMOSSlibgd3 += $(call pkgfiles_lib,libgd.so.3)
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibiconv2
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibpng15-15
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibxpm4
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibz1
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgd3 += NIMOSSlibtiff5
+PACKAGES += NIMOSSlibgd2
+CATALOGNAME_NIMOSSlibgd2 = libgd2
+SPKG_DESC_NIMOSSlibgd2 = A library used for dynamic image creation providing libgd.so.2
+PKGFILES_NIMOSSlibgd2 += $(call pkgfiles_lib,libgd.so.2)
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibfontconfig1
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibfreetype6
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibiconv2
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibjpeg7
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibpng15-15
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibxpm4
+RUNTIME_DEP_PKGS_NIMOSSlibgd2 += NIMOSSlibz1
 
 PACKAGES += NIMOSSlibgd-dev
 CATALOGNAME_NIMOSSlibgd-dev = libgd_dev
-SPKG_DESC_NIMOSSlibgd-dev = Development files for libgd.so.3
+SPKG_DESC_NIMOSSlibgd-dev = Development files for libgd.so.2
 PKGFILES_NIMOSSlibgd-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_NIMOSSlibgd-dev = NIMOSSlibgd3
+RUNTIME_DEP_PKGS_NIMOSSlibgd-dev = NIMOSSlibgd2
 
-CSWd+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+
+NIMOSSd+)*).tar.gz
 
 CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 
 # This is evaluated twice, quote properly
-EXTRA_CPPFLAGS = -DDEFAULCSW_DEFAULT_FONTPATH)\\\"
+EXTRA_CPPFLAGS = -DDEFAULNIMOSS_DEFAULT_FONTPATH)\\\"
 
-# For the success of the test for iconv
-EXTRA_LINKER_FLAGS = -liconv
-
-BUILD64 = 1
-ISAEXEC = 1
-D64_LIBS_ONLY = 1
+BUILD64_LIBS_ONLY = 1D64_LIBS_ONLY = 1
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -73,20 +67,25 @@ CONFIGURE_ARGS += --disable-fast-install
 
 # GD does not have a testsuite
 TEST_SCRIPTS =
-it comes from a default error message
-CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/amd64/annotate
-CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/pentium_pro/annotate
-CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/sparcv8plus/annotate
-CHECKPKG_OVERRIDES_NIMOSSgd += file-with-bad-content|/usr/share|root/opt/csw/bin/sparcv9/annotate/csw/include/gd.h
+there are a number of search pathes for fonts in there.
+# We made sure that the $NIMOSS_DEFAULT_FONTPATH is the first one in the list.
+CHECKPKG_OVERRIDES_NIMOSSlibgd-dev += file-with-bad-content|/usr/share|root/opt/csw/nimoss/include/gd.h/csw/include/gd.h
 
 include gar/category.mk
 
 # Make sure GDFONTPATH is set correctly
 post-extract-modulated:
-	perl -pi -e 's,/usr/share/CSWts/truetype,$(CSW_DEFAULT_FONTPATH),' \
+	perl -pi -e 's,/usr/share/NIMOSSts/truetype,$(CSW_DEFAULT_FONTPATH),' \
 		$(WORKSRC)/gdtestft.c \
 		$(WORKSRC)/annotate.c
-	perl -pi -e 's,(DEFAULT_FCSW_DEFAULT_FONTPATH):,' \
+	perl -pi -e 's,(DEFAULT_FNIMOSS_DEFAULT_FONTPATH):,' \
 		$(WORKSRC)/gd.h
+	@$(MAKECOOKIE)
+
+# The shipped libtool doesn't know about Sun Studio C++ compiler 'CC'
+pre-configure-modulated:
+#	grm -f $(WORKSRC)/config/ltmain.sh
+#	gcp /opt/csw/nimoss/share/libtool/config/ltmain.sh $(WORKSRC)/config/ltmain.sh
+#	cd $(WORKSRC) && aclocal && automake
 	@$(MAKECOOKIE)
 
