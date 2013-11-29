@@ -1,6 +1,6 @@
 # $Id$
 NAME = ascii
-VERSION = 3.11
+VERSION = 3.14
 GARTYPE = v2
 
 DESCRIPTION = Interactive ASCII name and synonym chart
