@@ -45,9 +45,7 @@ DISTFILES += changelog.CSW
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
 # (patch only mandatory to compile with gnutls)
-#PATCHFILES = munmap.patch
-
-PATCHFILES += dont_use_csw_glaris-9.patch
+#PATCHFILES_glaris-9.patch
 
 # Update the system-wide lftp.conf path in the man page
 PATCHFILES += 0007-update-configuration-files-paths-in-documentation.patch
@@ -80,9 +78,9 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-# we re-run autoconf because we patched a m4 file
-pre-configure-modulated:
-	cd $(WORKSRC) && autoconf
+# we re-run autoconf because we p#pre-configure-modulated:
+#	cd $(WORKSRC) && autoconf
+#SRC) && autoconf
 	@$(MAKECOOKIE)
 
 post-merge:

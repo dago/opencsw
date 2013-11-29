@@ -1,6 +1,7 @@
 lftp (4.4.13,REV=2013.11.29) unstable
 
   * New upstream release.
+  * Removed patch dont_use_csw_getopt_h.patch that is not required anymore
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 29 Nov 2013 21:34:50 +0100
 
