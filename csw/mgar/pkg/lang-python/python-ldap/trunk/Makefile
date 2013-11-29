@@ -3,9 +3,6 @@ NAME = python-ldap
 VERSION = 2.4.13
 CATEGORIES = python
 GARTYPE = v2
-PACKAGES = CSWpy-ldap
-CATALOGNAME = py_ldap
-LICENSE = LICENCE
 
 DESCRIPTION = LDAP bindings for Python
 define BLURB
@@ -14,25 +11,24 @@ define BLURB
   for that purpose.
 endef
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-BUILD_DEP_PKGS = CSWpython-dev CSWopenldap-dev CSWsasl-dev
-RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibpython2-6-1-0
-
-
-MASTER_SITE_DIR = $(shell echo $(NAME) | cut -c 1)
-MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-VENDOR_URL = http://www.python-ldap.org/
+MASTER_SITES += $(PYPI_MIRROR)
+DISTFILES += $(DISTNAME).tar.gz
 PATCHFILES += 0000-openldap-path.patch
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.python-ldap.org/
+LICENSE = LICENCE
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+BUILD_DEP_PKGS += CSWpython-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWsasl-dev
+
+PACKAGES = CSWpy-ldap
+SPKG_DESC_CSWpy-ldap = LDAP bindings for Python
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibgcc-s1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
