@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.8.4.1
+VERSION = 1.8.5
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -117,7 +117,7 @@ PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # this patch is required on current9s (not necessarily all sparc boxes) due
 # to the selection of available utf8 locales.
 PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
-PATCHFILES += 0006-Patch-out-a-few-usr-sharPATCHFILES += 0007-Avoid-difference-in-tr-semantics-between-System-V-ansr-sharPATCHFILES += 0008-Change-sed-invocation-to-something-Solaris-sed-can-hsr-share-references.patch
+PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
