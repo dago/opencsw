@@ -1,0 +1,29 @@
+From 48efd8d53f9ed778146fcc524eafa1709a11ad08 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 3 Dec 2013 22:33:16 +0100
+Subject: [PATCH] getcwd with size 0 return EINVAL on Solaris, even when
+ pointer is NULL
+
+---
+ src/new/newgetcwd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/new/newgetcwd.c b/src/new/newgetcwd.c
+index 345ceb0..274b558 100644
+--- a/src/new/newgetcwd.c
++++ b/src/new/newgetcwd.c
+@@ -1,9 +1,10 @@
+ #include "new.ih"
+ #include <stdio.h>
++#include <limits.h>
+ 
+ char *new_getcwd()
+ {
+-    char *cwd = getcwd(NULL, 0);
++    char *cwd = getcwd(NULL, PATH_MAX+1);
+ 
+     if (cwd == NULL)
+     {
+-- 
+1.8.3.4
+
