@@ -16,10 +16,27 @@ PATCHFILES += 0002-realpath-does-not-like-second-argument-to-be-NULL-on.patch
 
 EXPANDVARS += INSTALL.im
 
+BUILD_DEP_PKGS += CSWicmake
+# For epsf.sty
+BUILD_DEP_PKGS += CSWtexlive-generic-recommended
+
+PACKAGES += CSWyodl
+SPKG_DESC_CSWyodl = Your Own Document Language
+# PKGFILES is catchall
+
+# This is really just a comment
+CHECKPKG_OVERRIDES_CSWyodl += file-with-bad-content|/usr/local|root/opt/csw/bin/yodl2whatever
+
 REINPLACEMENTS += icmake
 REINPLACE_MATCH_icmake = /usr/bin/icmake
 REINPLACE_WITH_icmake = $(bindir)/icmake
 REINPLACE_FILES_icmake += build
+
+# There is a dependency between the directory layout depth and the path depth here, very ugly
+REINPLACEMENTS += xlatin1
+REINPLACE_MATCH_xlatin1 = ../../../../../wip/macros/xlatin1.tex
+REINPLACE_WITH_xlatin1 = ../../../../../../wip/macros/xlatin1.tex
+REINPLACE_FILES_xlatin1 += manual/yo/manual.yo
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
