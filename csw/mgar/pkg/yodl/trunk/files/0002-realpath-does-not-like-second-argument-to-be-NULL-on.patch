@@ -1,0 +1,27 @@
+From bc05f7210190d5e757f78c375d5566f9412f3590 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 3 Dec 2013 22:37:07 +0100
+Subject: [PATCH] realpath does not like second argument to be NULL on Solaris
+
+---
+ src/lexer/lchdir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/lexer/lchdir.c b/src/lexer/lchdir.c
+index afa3a0a..3117d23 100644
+--- a/src/lexer/lchdir.c
++++ b/src/lexer/lchdir.c
+@@ -6,8 +6,9 @@ void l_noChdir(Lexer *lp, char const *pathname)
+ void l_chdir(Lexer *lp, char const *pathname)
+ {
+ // fprintf(stderr, "CHANGING WD\n");
++    char resolved_name[PATH_MAX];
+  
+-    char *resolved = realpath(media_filename(lp->d_media_ptr), NULL);
++    char *resolved = realpath(media_filename(lp->d_media_ptr), resolved_name);
+ 
+     if (resolved == NULL)
+         out_of_memory();
+-- 
+1.8.3.4
+
