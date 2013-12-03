@@ -11,6 +11,8 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
+RUNTIME_DEP_PKGS = CSWlibhdf5-7 CSWlibsunperf7 CSWsunmath CSWss12f95rt
+
 PATCHFILES += 0001-make-script-work-with-Solaris-sh.patch 0002-workaround-conflict-with-gets.patch
 
 # using the sunperf library for blas and lapack and therefore also the
