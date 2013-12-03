@@ -1,0 +1,34 @@
+From d7ab461f09450812cda1308cbfb6c25fe60751c3 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 3 Dec 2013 18:45:34 +0100
+Subject: [PATCH] Use the correct dir for etc
+
+---
+ icm_install | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/icm_install b/icm_install
+index ecd44f2..4dc7324 100755
+--- a/icm_install
++++ b/icm_install
+@@ -67,7 +67,7 @@ case $1 in
+         into ${SKELDIR}
+         into ${DOCDIR}
+         into ${DOCDOCDIR}
+-        into etc/icmake
++        into ${CONFDIR}
+     ;;
+ 
+     (progs)
+@@ -91,7 +91,7 @@ case $1 in
+     ;;
+ 
+     (etc)
+-        into etc/icmake
++        into ${CONFDIR}
+     ;;
+ 
+     (docdoc)
+-- 
+1.8.4.1
+
