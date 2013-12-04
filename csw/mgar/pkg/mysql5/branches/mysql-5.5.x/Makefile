@@ -24,9 +24,9 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-# Keep Studio 12.0 for old S9 only
+# Keep default old Studio 12.0 for old S9 only
 ifneq ($(shell /usr/bin/uname -r),5.9)
-       GARCOMPILER = SOS12U3
+       GARCOMPILER = GCC4
        # Try to get some more oomph out of a sparc
        # Benchmarks w/ 5.5.34 show no obvious benefit, so disabled for now
        #EXTRA_BUILD_ISAS_sparc = sparcv9+vis2
@@ -55,28 +55,32 @@ endef
 ### For Studio 12.3
 # Those options follow those of the Solaris 11 build
 # https://java.net/projects/solaris-userland/sources/gate/show/components/mysql-5-1?rev=1502
-EXTRA_CXXFLAGS_64  += -features=no%except
+EXTRA_CXXFLAGS_SOS12_64  += -features=no%except
 
 # Required at -xO4
 # https://java.net/projects/solaris-userland/sources/gate/content/make-rules/shared-macros.mk?rev=1505`
-EXTRA_CFLAGS_sparc += -xregs=no%appl
-EXTRA_CFLAGS_i386  += -xregs=no%frameptr
+EXTRA_CFLAGS_SOS12_sparc += -xregs=no%appl
+EXTRA_CFLAGS_SOS12_i386  += -xregs=no%frameptr
 
-EXTRA_CFLAGS += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
-EXTRA_CXXFLAGS += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+EXTRA_CFLAGS_SOS12 += -xstrconst -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -xnorunpath -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_SOS12_$(GARCH))
+EXTRA_CXXFLAGS_SOS12 += -noex -xprefetch=auto -xprefetch_level=3 -fns=no -fsimple=1 -xbuiltin=%none -xlibmil -xlibmopt -mt -KPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_SOS12_$(MEMORYMODEL))
 
 ### For GCC4
-#EXTRA_CFLAGS_sparc += -mno-app-regs
+EXTRA_CFLAGS_GCC4_sparc += -mno-app-regs
 
-#EXTRA_CFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_$(GARCH))
-#EXTRA_CXXFLAGS += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_$(MEMORYMODEL))
+EXTRA_CFLAGS_GCC4 += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CFLAGS_GCC4_$(GARCH))
+EXTRA_CXXFLAGS_GCC4 += -pthread -fPIC -DPIC -DDBUG_OFF -DHAVE_OPENSSL -DMULTI_THREADED -lm $(EXTRA_CXXFLAGS_GCC4_$(MEMORYMODEL))
+
+###
+EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCOMPILER))
+###
 
 # The Solaris 11 build uses -xO4 by default
-OPT_FLAGS_SOS_32 = -xO4
-OPT_FLAGS_SOS_64 = -xO4
-OPT_FLAGS_SOS_sparc_32 = -xmemalign=8s
-OPT_FLAGS_SOS_sparc_64 = -xmemalign=16s
-OPT_FLAGS_SOS += $(OPT_FLAGS_SOS_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_SOS_$(ISA))
+OPT_FLAGS_SOS12_32 = -xO4
+OPT_FLAGS_SOS12_64 = -xO4
+OPT_FLAGS_SOS12_sparc_32 = -xmemalign=8s
+OPT_FLAGS_SOS12_sparc_64 = -xmemalign=16s
+OPT_FLAGS_SOS12 += $(OPT_FLAGS_SOS12_$(MEMORYMODEL)) $(OPT_FLAGS_SOS12_$(GARCH)_$(MEMORYMODEL)) $(OPT_FLAGS_SOS12_$(ISA))
 
 OPT_FLAGS_GCC4_32 = -O3
 OPT_FLAGS_GCC4_64 = -O3
