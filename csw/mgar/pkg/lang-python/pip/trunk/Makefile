@@ -16,6 +16,7 @@ REINPLACE_USRLOCAL += pip/locations.py
 
 ARCHALL_CSWpy-pip = 1
 
+RUNTIME_DEP_PKGS += CSWpy-setuptools
 # These are hardcodes for Mac OS X
 CHECKPKG_OVERRIDES_CSWpy-pip += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/pip/util.py
 CHECKPKG_OVERRIDES_CSWpy-pip += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/pip/util.py
