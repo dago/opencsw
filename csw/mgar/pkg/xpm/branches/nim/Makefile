@@ -31,6 +31,4 @@ RUNTIME_DEP_PKGS_NIMOSSlibxpm-dev += NIMOSSlibxpm-dev += CSWlibxpm4
 BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += ac_cv_searchEXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
-
-include gar/category.mk
+CONFIGURE_ARGS += ac_cv_searchinclude gar/category.mk
