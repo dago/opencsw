@@ -1,25 +1,23 @@
 NAME = XML-Twig
-VERSION = 3.34
+VERSION = 3.44
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MIROD
 
-DESCRIPTION = A module for processing huge XML documents in tree mode.
+DESCRIPTION = XML, The Perl Way
 define BLURB
-  This module provides a way to process XML documents. It is build on top of
-  XML::Parser.  The module offers a tree interface to the document, while
-  allowing you to output the parts of it that have been completely processed.
 endef
 
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmxmltwig
-CATLOGNAME_CSWpmxmltwig = pm_xmltwig
+LICENSE_TEXT = This module is licensed under the perl license
 
-RUNTIME_DEP_PKGS += CSWpmxmlparser
-
-ARCHALL_CSWpmxmltwig = 1
-
-# Force installation without prompting
-PATCHFILES = install.diff
+PACKAGES += CSWpm-xml-twig
+CATALOGNAME_CSWpm-xml-twig = pm_xml_twig
+SPKG_DESC_CSWpm-xml-twig = XML, The Perl Way
+ARCHALL_CSWpm-xml-twig = 1
+RUNTIME_DEP_PKGS_CSWpm-xml-twig += CSWpm-xml-parser
+OBSOLETED_BY_CSWpm-xml-twig += CSWpmxmltwig
+CATALOGNAME_CSWpmxmltwig = pm_xmltwig_stub
 
 include gar/category.mk
