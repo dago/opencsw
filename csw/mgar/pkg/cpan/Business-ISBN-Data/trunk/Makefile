@@ -1,13 +1,10 @@
 NAME = Business-ISBN-Data
-VERSION = 20081208
+VERSION = 20120719.001
 GARTYPE = v2
 CATEGORIES = cpan
 AUTHOR = BDFOY
 
 DESCRIPTION = Data pack for Business::ISBN
-define BLURB
-  Data pack for Business::ISBN
-endef
 
 LICENSE = LICENSE
 
