@@ -1,13 +1,10 @@
 NAME = Cache-Memcached-Fast
-VERSION = 0.19
+VERSION = 0.21
 GARTYPE = v2
 CATEGORIES = cpan
 AUTHOR = KROKI
 
 DESCRIPTION = Perl client for memcached, in C language
-define BLURB
-  Perl client for memcached, in C language
-endef
 
 DISTFILES += COPYING
 
