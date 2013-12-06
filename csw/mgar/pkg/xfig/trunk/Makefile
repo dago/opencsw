@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = xfig
-VERSION = 3.2.5b
+VERSION = 3.2.5c
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -14,9 +14,7 @@ endef
 SF_PROJ = mcj
 MASTER_SITES = $(SF_MIRROR)
 DISTNAME = $(NAME).$(VERSION)
-DISTFILES  = $(DISTNAME).full.tar.gz
-
-PATCHFILES = 0001-Add-missing-define-for-REG_NOERROR.patch
+DISTFILES  = $(DISTNAME).full.+= 0002-set-csw-environment-and-reg_noerrorine-for-REG_NOERROR.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).full.tar.gz
@@ -25,9 +23,22 @@ VENOR_URL = http://www.xfig.org/
 
 LICENSE = Libraries/GUI/LICENSE
 
-DEP_PKGS = CSWxpm CSWzlib CSWjpeg CSWpng CSWxaw3d
+DEP_PKGS = CSWxpm CSWzlib CSWjpGARCOMPILER = GCC4
 
-CONFIGURE_SCRIPTS = $(WORKSRC)/Imakefile
+REINPLACE_USRLOCAL += Imakefile
+EXTRA_CONFIGURE_ENV += PATH=$(PATH):/usr/openwin/bin
+
+RUNTIME_DEP_PKGS_CSWxfig += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWxfig += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWxfig += CSWlibxpm4
+RUNTIME_DEP_PKGS_CSWxfig += CSWxaw3d
+
+CONFIGURE_SCRIPTS = xmkmf
+configure-xmkmf:
+	(cd $(WORKSRC) && OPENWINHOME=/usr/openwin export OPENWINHOME && \
+	[ -f Makefile ] && mv -f Makefile Makefile.bak; \
+	imake -DUseInstalled -I/usr/openwin/lib/X11/config -DHasGcc2=YES)
+	$(MAKECOOKIE)(WORKSRC)/Imakefile
 
 BUILD_OVERRIDE_VARS  = PNGLIBDIR PNGINC ZLIBDIR
 BUILD_OVERRIDE_VARS += JPEGLIBDIR JPEGINC
