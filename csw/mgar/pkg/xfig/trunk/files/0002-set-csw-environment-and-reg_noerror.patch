@@ -1,0 +1,54 @@
+From 3d9b3e1d426ba267256d4d753fe6c2e258f35b20 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 5 Dec 2013 11:52:34 +0100
+Subject: [PATCH] set csw environment and reg_noerror
+
+---
+ Imakefile    | 4 ++--
+ w_keyboard.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Imakefile b/Imakefile
+index e2f43b7..ac31bd6 100755
+--- a/Imakefile
++++ b/Imakefile
+@@ -30,9 +30,9 @@ XCOMM to the full path of the directory where you want xfig to be installed.
+ XCOMM Also, you may have to uncomment and redefine MKDIRHIER because "make" looks
+ XCOMM for it relative to the BINDIR variable.
+ XCOMM
+-XCOMM BINDIR = /usr/bin
++BINDIR = /opt/csw/bin
+ XCOMM MKDIRHIER = /bin/sh /usr/bin/X11/mkdirhier -p
+-MKDIRHIER = mkdirhier 
++MKDIRHIER = mkdir -p
+ 
+ XCOMM Uncomment and change XAPPLOADDIR to the directory where you want the
+ XCOMM app-defaults resource files to go.  You will have to use the environment
+diff --git a/w_keyboard.c b/w_keyboard.c
+index 427d60c..a3360fd 100755
+--- a/w_keyboard.c
++++ b/w_keyboard.c
+@@ -41,7 +41,7 @@
+ #define REG_NOERROR 0
+ #endif
+ 
+-#if defined(__FreeBSD__) && !defined(REG_NOERROR)
++#if (defined(__FreeBSD__) || defined(__sun)) && !defined(REG_NOERROR)
+ #define REG_NOERROR 0
+ #endif
+ 
+diff --git a/Imakefile b/Imakefile
+index ac31bd6..21471e0 100755
+--- a/Imakefile
++++ b/Imakefile
+@@ -428,7 +428,6 @@ install.rhtml::
+        echo Copying pdf and html files to $(DESTDIR)$(XFIGDOCDIR) ; \
+        if [ -d $(DESTDIR)$(XFIGDOCDIR)/html ]; then set +x; \
+           else (set -x; $(MKDIRHIER) $(DESTDIR)$(XFIGDOCDIR)/html ); fi ; \
+-       $(INSTALL) -m 644 -c xfig_man.html $(DESTDIR)$(XFIGDOCDIR) ; \
+        $(INSTALL) -m 644 -c xfig_ref_en.pdf $(DESTDIR)$(XFIGDOCDIR) ; \
+        $(INSTALL) -m 644 -c xfig-howto.pdf $(DESTDIR)$(XFIGDOCDIR) ; \
+        if [ -d html ]; then \
+-- 
+1.8.4.1
+
