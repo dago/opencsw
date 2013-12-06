@@ -5,9 +5,6 @@ CATEGORIES = cpan
 AUTHOR = PERIGRIN
 
 DESCRIPTION = SAX2 Writer
-define BLURB
-  SAX2 Writer
-endef
 
 DISTFILES += COPYING
 
@@ -20,7 +17,5 @@ RUNTIME_DEP_PKGS += CSWpm-xml-namespacesupport
 RUNTIME_DEP_PKGS += CSWpm-xml-filter-buffertext
 
 CONFIGURE_ARGS = 
-
-CHECKPKG_OVERRIDES_CSWpm-xml-sax-writer += unidentified-dependency|CSWpm-xml-filter-buffertext
 
 include gar/category.mk
