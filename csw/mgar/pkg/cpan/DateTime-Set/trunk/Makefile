@@ -1,13 +1,10 @@
 NAME = DateTime-Set
-VERSION = 0.31
+VERSION = 0.33
 GARTYPE = v2
 CATEGORIES = cpan
 AUTHOR = FGLOCK
 
 DESCRIPTION = Datetime sets and set math
-define BLURB
-  Datetime sets and set math
-endef
 
 LICENSE = LICENSE
 
@@ -18,8 +15,5 @@ ARCHALL = 1
 RUNTIME_DEP_PKGS += CSWpm-set-infinite
 
 CONFIGURE_ARGS = 
-
-# Remove this on next build
-CHECKPKG_OVERRIDES_CSWpm-datetime-set += unidentified-dependency|CSWpm-set-infinite
 
 include gar/category.mk
