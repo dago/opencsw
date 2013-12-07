@@ -1,13 +1,10 @@
 NAME = CGI-Compile
-VERSION = 0.15
+VERSION = 0.16
 GARTYPE = v2
 CATEGORIES = cpan
 AUTHOR = MIYAGAWA
 
 DESCRIPTION = Compile .cgi scripts to a code reference like ModPerl::Registry
-define BLURB
-  Compile .cgi scripts to a code reference like ModPerl::Registry
-endef
 
 DISTFILES += COPYING
 
@@ -16,9 +13,6 @@ CATALOGNAME = pm_cgi_compile
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS += CSWpm-file-pushd
-
-# Remove on next build
-CHECKPKG_OVERRIDES_CSWpm-cgi-compile += unidentified-dependency|CSWpm-file-pushd
 
 CONFIGURE_ARGS = 
 
