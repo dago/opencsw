@@ -1,13 +1,10 @@
 NAME = Text-CSV-Encoded
-VERSION = 0.10
+VERSION = 0.22
 GARTYPE = v2
 CATEGORIES = cpan
 AUTHOR = MAKAMAKA
 
 DESCRIPTION = Encoding aware Text::CSV
-define BLURB
-  Encoding aware Text::CSV
-endef
 
 DISTFILES += COPYING
 
