@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gnucash
-VERSION = 2.4.11
+VERSION = 2.4.13
 GARTYPE = v2
 CATEGORIES = apps
 
@@ -45,7 +45,6 @@ BUILD_DEP_PKGS	+=	CSWswig
 BUILD_DEP_PKGS	+=	CSWgtkhtml31
 BUILD_DEP_PKGS	+=	CSWlibdbi-dev
 BUILD_DEP_PKGS	+=	CSWlibgnome-dev
-BUILD_DEP_PKGS	+=	CSWlibgtkhtml
 BUILD_DEP_PKGS	+=	CSWlibgnomecanvas-dev
 
 GARCOMPILER		=	GNU
@@ -56,8 +55,8 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATc/flex-2.5.35/bin:$(PATH)
 
 # this is private and not available publicly
 mydependencies:
-	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/work/pkgroot; done
+	for package in $(PACKAGES); do echo '___' $${package}; $(HOME)/bin/ocswdeplist --depth 1 --dependencies --packaging --csw --prototype $(HOME)/opencsw/$(NAME)/trunk/work/build-global/$${package}.prototype --target $(HOME)/opencsw/$(NAME)/trunk/w
