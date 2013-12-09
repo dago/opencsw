@@ -1,5 +1,5 @@
 NAME = tig
-VERSION = 0.18
+VERSION = 1.2.1
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -20,10 +20,10 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://jonas.nitro.dk/tig/
 
-BUILD_DEP_PKGS += CSWncurses
+BUlibncurses-dev
 BUILD_DEP_PKGS += CSWasciidoc
 BUILD_DEP_PKGS += CSWxmlto
-BUILD_DEP_PKGS += CSWiconv
+BUILD_DEP_PKGS += CSWlibiconv-deDEP_PKGS += CSWiconv
 
 RUNTIME_DEP_PKGS += CSWlibncursesw5
 RUNTIME_DEP_PKGS += CSWlibiconv2
@@ -31,20 +31,20 @@ RUNTIME_DEP_PKGS += CSWgit
 # Yes, we do need git
 CHECKPKG_OVERRIDES_CSWtig += surplus-dependency|CSWgit
 
-GARCOMPILER = GNU
-
-sysconfdir = /etc/opt/csw
+ir = /etc/opt/csw
 
 EXTRA_CPPFLAGS = -I$(includedir)/ncursesw
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-libiconv=$(prefix)
-
+CONFIGURE_ARGS += --with-l# There is no testsuite
 TEST_SCRIPTS =
 
-INSTALL_ARGS = install install-doc
+# For GNU install to be available as "install"
+INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
+
+# Installer uses $(...) idiom not available in /bin/sh
+# CONFIG_SHELL is correctly detected as /bin/bash, but not used during make invocation
+INSTALL_ARGS = SHELL=/opt/csw/bin/bash install install-doc 
 
 include gar/category.mk
 
-# For GNU install to be available as "install"
-PATH := /opt/csw/gnu:$(PATH)
