@@ -2,7 +2,7 @@ NAME = GD
 VERSION = 2.50
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = LDS
+AUTHOR = bts
 
 DESCRIPTION = Interface to GD Graphics Library
 define BLURB
