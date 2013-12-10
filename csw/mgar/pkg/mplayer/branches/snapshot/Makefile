@@ -1,15 +1,14 @@
 # $Id$
 
 NAME	=	mplayer
-YEAR	=	$(shell date '+%Y')
-MONTH	=	$(shell date '+%m')
-DAY		=	$(shell date '+%d')
-VERSION	=	$(YEAR)$(MONTH)$(DAY)
+YEAR	?=	$(shell date '+%Y')
+MONTH	?=	$(shell date '+%m')
+DAY		?=	$(shell date '+%d')
+VERSION	?=	$(YEAR)$(MONTH)$(DAY)
 GARTYPE	=	v2
 
-DESCRIPTION	=	The Movie Player and Encoder
+DESCRIPTION	=	Development snapshot of The Movie Player and Encoder
 define BLURB
-
     MPlayer can play most standard video formats out of the box and
     almost all others with the help of external codecs.  MPlayer
     currently works best from the command line, but visual feedback
@@ -87,149 +86,100 @@ CONFIGURE_SCRIPTS	=	custom
 BUILD_SCRIPTS		=	custom
 TEST_SCRIPTS		=	custom
 
-PACKAGES						=	CSWmplayer
-CATALOGNAME_CSWmplayer			=	mplayer
-SPKG_DESC_CSWmplayer			=	$(DESCRIPTION), the player
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWfaac
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWliba52
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibaa1
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibaudiofile0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibesd0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfaad2
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfribidi0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibjpeg62
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWliblzo2-2
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibmad0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibmp3lame0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibogg0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibrtmp0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibsdl1-2-0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibtheoradec1
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibvorbisenc2
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibx264-133
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibxvidcore4
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibz1
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWmesa
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWmpg123
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWnas
+PACKAGES								=	CSWmplayer-snapshot
+CATALOGNAME_CSWmplayer-snapshot			=	mplayer_snapshot
+SPKG_DESC_CSWmplayer-snapshot			=	$(DESCRIPTION), the player
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWfaac
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWliba52
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibaa1
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibaudiofile0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibesd0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibfaad2
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibfribidi0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibjpeg62
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWliblzo2-2
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibmad0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibogg0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibrtmp0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibx264-133
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibxvidcore4
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibz1
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWmesa
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWmpg123
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWnas
+
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libGL.so
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libSDL-1.2.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libXext.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libXinerama.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libXt.so.4
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|liba52.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libaa.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libaudio.so.2
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libbz2.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libesd.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libfaac.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libfaad.so.2
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libfreetype.so.6
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libfribidi.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libiconv.so.2
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libjpeg.so.62
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libkstat.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|liblzo2.so.2
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libmad.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libmp3lame.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libmpg123.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libogg.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libpng12.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|librtmp.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libspeex.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libtheoradec.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libvdpau.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libvorbis.so.0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libvorbisenc.so.2
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libx264.so.133
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libxvidcore.so.4
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libz.so.1
 
 # only on BO build farm; on my build farm it's included and detected TODO
-CHECKPKG_OVERRIDES_CSWmplayer	+=	surplus-dependency|CSWlibaudiofile0
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	surplus-dependency|CSWlibaudiofile0
 
 # this cannot be computed:
-RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWunrar
-CHECKPKG_OVERRIDES_CSWmplayer	+=	surplus-dependency|CSWunrar
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot		+=	CSWunrar
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	surplus-dependency|CSWunrar
 
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libSDL-1.2.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXt.so.4
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|liba52.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libaa.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libaudio.so.2
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libaudiofile.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libbz2.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libesd.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfaac.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfaad.so.2
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfontconfig.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfreetype.so.6
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfribidi.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libiconv.so.2
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libjpeg.so.62
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libkstat.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|liblzo2.so.2
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libmad.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libmp3lame.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libmpg123.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libogg.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libpng12.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|librtmp.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libspeex.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libtheoradec.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvorbis.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvorbisenc.so.2
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libx264.so.133
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libxvidcore.so.4
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libz.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so.1
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libX11.so.4
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXext.so.0
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXinerama.so.1
-# these is available only for i386 and BTW is not part of our libraires
-CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvdpau.so.1
 # this exists only on i386 and Solaris 10
-CHECKPKG_OVERRIDES_CSWmplayer	+=	missing-dependency|NVDAgraphics
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	missing-dependency|NVDAgraphics
 # this in incongruous (due to man/cat1 usage):
-CHECKPKG_OVERRIDES_CSWmencoder += missing-dependency|CSWfltk
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot += missing-dependency|CSWfltk
 
-PACKAGES						+=	CSWmencoder
-CATALOGNAME_CSWmencoder			=	mencoder
-SPKG_DESC_CSWmencoder			=	$(DESCRIPTION), the encoder
-PKGFILES_CSWmencoder			+=	/opt/csw/bin/mencoder
-PKGFILES_CSWmencoder			+=	/opt/csw/share/man/man1/mencoder.1
-PKGFILES_CSWmencoder			+=	/opt/csw/share/man/cat1/mencoder.1
+PACKAGES								+=	CSWmencoder-snapshot
+CATALOGNAME_CSWmencoder-snapshot		=	mencoder_snapshot
+SPKG_DESC_CSWmencoder-snapshot			=	$(DESCRIPTION), the encoder
+PKGFILES_CSWmencoder-snapshot			+=	/opt/csw/bin/mencoder-snapshot
+PKGFILES_CSWmencoder-snapshot			+=	/opt/csw/share/man/man1/mencoder-snapshot.1
+PKGFILES_CSWmencoder-snapshot			+=	/opt/csw/share/man/cat1/mencoder-snapshot.1
+ARCHALL_CSWmencoder-snapshot			=	1
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWmplayer-snapshot
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	surplus-dependency|CSWmplayer-snapshot
 
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWliba52
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfribidi0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibxvidcore4
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibmp3lame0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibspeex1
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfaad2
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibx264-133
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibogg0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibjpeg62
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWfaac
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibrtmp0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWliblzo2-2
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibz1
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibvorbis0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibtheoradec1
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibvorbisenc2
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibmad0
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWmpg123
-RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWmplayer
-CHECKPKG_OVERRIDES_CSWmencoder	+=	surplus-dependency|CSWmplayer
-
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|liba52.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libbz2.so.1
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfaac.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfaad.so.2
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfontconfig.so.1
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfreetype.so.6
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfribidi.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libiconv.so.2
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libjpeg.so.62
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libkstat.so.1
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|liblzo2.so.2
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libmad.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libmp3lame.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libmpg123.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libogg.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libpng12.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|librtmp.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libspeex.so.1
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libtheoradec.so.1
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libvorbis.so.0
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libvorbisenc.so.2
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libx264.so.133
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libxvidcore.so.4
-CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libz.so.1
-
-PACKAGES						+=	CSWmplayer-doc
-CATALOGNAME_CSWmplayer-doc		=	$(NAME)_doc
-SPKG_DESC_CSWmplayer-doc		=	$(DESCRIPTION), the documentation
-PKGFILES_CSWmplayer-doc			+=	$(docdir)/$(NAME)_doc/.*
-ARCHALL_CSWmplayer-doc			=	1
+PACKAGES							+=	CSWmplayer-snapshot-doc
+CATALOGNAME_CSWmplayer-snapshot-doc	=	$(NAME)_snapshot_doc
+SPKG_DESC_CSWmplayer-snapshot-doc	=	$(DESCRIPTION), the documentation
+PKGFILES_CSWmplayer-snapshot-doc	+=	$(docdir)/$(NAME)_snapshot_doc/.*
+ARCHALL_CSWmplayer-snapshot-doc		=	1
 
 include gar/category.mk
 
@@ -265,7 +215,8 @@ configure-custom:
 	$(CPU_DETECTION) \
 	--disable-shm \
 	--prefix=$(prefix) \
-	--codecsdir=$(libexecdir)/mplayer
+	--confdir=$(sysconfdir)/$(NAME)-snapshot \
+	--codecsdir=$(libexecdir)/mplayer-snapshot
 	$(MAKECOOKIE)
 
 build-custom:
@@ -282,17 +233,25 @@ ifdef testData
 endif
 	$(MAKECOOKIE)
 
-post-install: thedocdir = $(docdir)/$(NAME)_doc
+post-install: thedocdir = $(docdir)/$(NAME)_snapshot_doc
 post-install: thehtmldocdir = $(thedocdir)/html
 post-install: thecatmandir = $(mandir)/cat1
 post-install:
 	ginstall -d "$(DESTDIR)/$(thecatmandir)"
-	gnroff -Tlatin1 -mman $(WORKSRC)/DOCS/man/en/mplayer.1 > "$(DESTDIR)/$(thecatmandir)/mplayer.1"
-	cd "$(DESTDIR)/$(thecatmandir)" && ln -s mplayer.1 mencoder.1
+	gnroff -Tlatin1 -mman $(WORKSRC)/DOCS/man/en/mplayer.1 > "$(DESTDIR)/$(thecatmandir)/mplayer-snapshot.1"
+	cd "$(DESTDIR)/$(thecatmandir)" && ln -s mplayer-snapshot.1 mencoder-snapshot.1
 	ginstall -d "$(DESTDIR)/$(thedocdir)"
 	gtar --directory $(WORKSRC)/DOCS --create --file=- tech | \
 	gtar --directory $(DESTDIR)/$(thedocdir) --extract
 	ginstall -d "$(DESTDIR)/$(thehtmldocdir)"
 	gtar --directory $(WORKSRC)/DOCS/HTML/en --create --file=- . | \
 	gtar --directory $(DESTDIR)/$(thehtmldocdir) --extract
+	cd $(DESTDIR)/$(bindir) && \
+	mv mplayer mplayer-snapshot && \
+	rm -f mencoder && \
+	ln -s mplayer-snapshot mencoder-snapshot
+	cd $(DESTDIR)/$(mandir)/man1 && \
+	mv mplayer.1 mplayer-snapshot.1 && \
+	rm -f mencoder.1 && \
+	ln -s mplayer-snapshot.1 mencoder-snapshot.1
 	$(MAKECOOKIE)
