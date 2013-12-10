@@ -52,3 +52,8 @@ include gar/category.mk
 pre-test-modulated:
 	@cp files/t/test.out.* ${WORKSRC}/t/
 	@$(MAKECOOKIE)
+
+REINPLACE_MATH = -Wformat=0
+REINPLACE_WITH = 
+REPLACE_FILES += Makefile.PL
+
