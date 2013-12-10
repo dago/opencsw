@@ -152,6 +152,7 @@ CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer
 CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libx264.so.133
 CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libxvidcore.so.4
 CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libz.so.1
+CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libGL.so.1
 
 # only on BO build farm; on my build farm it's included and detected TODO
 CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	surplus-dependency|CSWlibaudiofile0
