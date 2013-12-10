@@ -214,6 +214,7 @@ configure-custom:
 	--extra-cflags='-std=gnu99' \
 	--extra-ldflags='-lrt' \
 	$(CPU_DETECTION) \
+	--enable-mlib \
 	--disable-shm \
 	--prefix=$(prefix) \
 	--confdir=$(sysconfdir)/$(NAME)-snapshot \
