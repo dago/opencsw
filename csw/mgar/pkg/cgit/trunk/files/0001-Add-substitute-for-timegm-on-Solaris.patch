@@ -1,0 +1,51 @@
+From 4a79c7edf62b0fa5d8903d413f76649fc67274ec Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 9 Dec 2013 13:55:04 +0100
+Subject: [PATCH] Add substitute for timegm on Solaris
+
+---
+ ui-stats.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/ui-stats.c b/ui-stats.c
+index 28b794f..9e3c848 100644
+--- a/ui-stats.c
++++ b/ui-stats.c
+@@ -19,6 +19,34 @@ struct authorstat {
+ #define DAY_SECS (60 * 60 * 24)
+ #define WEEK_SECS (DAY_SECS * 7)
+ 
++ time_t timegm(struct tm *t)
++{
++  time_t tl, tb;
++  struct tm *tg;
++
++  tl = mktime (t);
++  if (tl == -1)
++    {
++      t->tm_hour--;
++      tl = mktime (t);
++      if (tl == -1)
++        return -1; /* can't deal with output from strptime */
++      tl += 3600;
++    }
++  tg = gmtime (&tl);
++  tg->tm_isdst = 0;
++  tb = mktime (tg);
++  if (tb == -1)
++    {
++      tg->tm_hour--;
++      tb = mktime (tg);
++      if (tb == -1)
++        return -1; /* can't deal with output from gmtime */
++      tb += 3600;
++    }
++  return (tl - (tb - tl));
++}
++
+ static void trunc_week(struct tm *tm)
+ {
+ 	time_t t = timegm(tm);
+-- 
+1.8.4.1
+
