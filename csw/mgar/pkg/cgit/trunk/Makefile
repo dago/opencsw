@@ -1,69 +1,76 @@
 NAME = cgit
-VERSION = 0.8.3_opencsw_1
+VERSION = 0.9.2
 GARTYPE = v2
 
 DESCRIPTION = Web front-end for Git
-define BLURB
-cgit is 
- * a cgi application implemented in C: it's basically (yet) another git command, used to generate html.
- * not forking: all git operations are performed by linking with libgit.a.
- * using a built-in cache: the generated html is stored on disk for the benefit of later requests.
- * fond of virtual urls - using PATH_INFO or modules like mod_rewrite makes cgit generate urls with few or no querystring parameters, e.g.
- * http://hjemli.net/git/cgit/log/Makefile vs.
- * http://hjemli.net/git?r=cgit&p=log&path=Makefile.
- * not too visual, but sometimes a bit of graphics can be justified.
- * open source - it is licensed under GPL v2.
- * maintained by Lars Hjemli, who is happy to receive patches, suggestions and bug reports.
-endef
 
-RUNTIME_DEP_PKGS_CSWcgit = CSWiconv CSWosslrt CSWzlib
+MASTER_SITES += http://git.zx2c4.com/cgit/snapshot/
+DISTFILES += $(NAME)-$(VERSION).tar.xz
 
-#MASTER_SITES = http://hjemli.net/git/cgit/snapshot/
-#DISTFILES = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES += https://git-core.googlecode.com/files/
+DISTFILES += git-1.8.3.tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES += cgit.conf
+EXPANDVARS += cgit.conf
 
-GIT_REPOS  = git://github.com/trygvis/cgit.git
-#GIT_TREEISH_cgit = v$(VERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
-GIT_TREEISH_cgit.git = solaris
+# The existing one ends at Solaris 9, we added Solaris 10 and 11
+DISTFILES += config.mak.uname
 
-DISTFILES = apache.conf.CSW cgitrc.CSW
+DISTFILES += httpd-cgit.conf.CSW
+DISTFILES += cgitrc.CSW
 
-# The Makefile use "install" to install files but the Sun one is not really compatible
-PATH := /usr/ucb:$(PATH)
+PATCHFILES += 0001-Add-substitute-for-timegm-on-Solaris.patch
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGES += CSWcgit
+SPKG_DESC_CSWcgit = Web front-end for Git
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWcgit += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcgit += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcgit += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWcgit += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWcgit += CSWperl
 
-PATCHFILES  = 0001-cgit.conf
+# This may be used with any other webserver, just preconfigured for apache
+CHECKPKG_OVERRIDES_CSWcgit += missing-dependency|CSWapache2
 
+PRESERVECONF += $(sysconfdir)/cgitrc
+PRESERVECONF += $(prefix)/apache2/etc/extra/httpd-cgit.conf
+
+GARCOMPILER = GNU
+
+# There is no configure step
 CONFIGURE_SCRIPTS = 
 
-# Disable tests for now, need a round GNU'ism removal there too
-TEST_SCRIPTS =
+BUILD_ARGS += V=1
+
+TEST_TARGET = test
+# Tetsuite has major problems on this platform due to shell and calling conventions
+SKIPTEST ?= 1
+
+INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
 
 # pdf-doc does not work yet
-INSTALL_ARGS += man-doc html-doc
-
-PRESERVECONF  = /etc/opt/csw/cgit/apache.conf
-PRESERVECONF += /etc/opt/csw/cgit/cgitrc
-
-# Trick to get the gar+git support to export the source code
-pre-extract-modulated: git-extract-cgit
-
-post-install-modulated:
-	@mkdir -p $(DESTDIR)/etc/opt/csw/cgit
-	@mkdir -p $(DESTDIR)/opt/csw/share/man/man5
-	@mkdir -p $(DESTDIR)/opt/csw/share/doc/cgit
-	@cp $(FILEDIR)/apache.conf.CSW \
-		$(FILEDIR)/cgitrc.CSW \
-		$(DESTDIR)/etc/opt/csw/cgit/
-	@cp $(WORKSRC)/cgitrc.5 $(DESTDIR)/opt/csw/share/man/man5
-	@cp $(WORKSRC)/cgitrc.5.txt $(DESTDIR)/opt/csw/share/doc/cgit
-	@cp $(WORKSRC)/cgitrc.5.html $(DESTDIR)/opt/csw/share/doc/cgit
-#	@cp $(WORKSRC)/cgitrc.5.pdf $(DESTDIR)/opt/csw/share/doc/cgit
-	@$(MAKECOOKIE)
+INSTALL_ARGS += install install-man install-html
 
 include gar/category.mk
+
+post-extract:
+	@# Link in GIT
+	rmdir $(WORKSRC)/git
+	mv $(WORKDIR)/git-1.8.3 $(WORKSRC)/git
+	cp $(WORKDIR)/config.mak.uname $(WORKSRC)/git/config.mak.uname
+	@$(MAKECOOKIE)
+
+post-patch:
+	@# EXPANDVARS is done at patch phase
+	cp $(WORKDIR)/cgit.conf $(WORKSRC)/cgit.conf
+	@$(MAKECOOKIE)
+
+post-install:
+	ginstall -D $(WORKDIR)/cgitrc.CSW $(DESTDIR)$(sysconfdir)
+	ginstall -D $(WORKDIR)/httpd-cgit.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-cgit.conf.CSW
+	mkdir -p $(DESTDIR)$(prefix)/apache2/share/htdocs
+	ln -s ../../../share/www/cgit/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/cgit
+	mkdir -p $(DESTDIR)$(prefix)/apache2/share/cgi-bin
+	ln -s ../../../share/www/cgit/cgi-bin $(DESTDIR)$(prefix)/apache2/share/cgi-bin/cgit
+	@$(MAKECOOKIE)
