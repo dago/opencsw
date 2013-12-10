@@ -67,7 +67,7 @@ post-patch:
 	@$(MAKECOOKIE)
 
 post-install:
-	ginstall -D $(WORKDIR)/cgitrc.CSW $(DESTDIR)$(sysconfdir)
+	ginstall -D $(WORKDIR)/cgitrc.CSW $(DESTDIR)$(sysconfdir)/cgitrc.CSW
 	ginstall -D $(WORKDIR)/httpd-cgit.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-cgit.conf.CSW
 	mkdir -p $(DESTDIR)$(prefix)/apache2/share/htdocs
 	ln -s ../../../share/www/cgit/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/cgit
