@@ -5,16 +5,15 @@ CATEGORIES = cpan
 AUTHOR = DROLSKY
 
 DESCRIPTION = Parse and format iCal datetime and duration strings
-define BLURB
-  Parse and format iCal datetime and duration strings
-endef
-
-LICENSE = LICENSE
 
 PACKAGES = CSWpm-datetime-format-ical
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmdatetime
+RUNTIME_DEP_PKGS += CSWpm-datetime
+RUNTIME_DEP_PKGS += CSWpm-datetime-event-ical
+RUNTIME_DEP_PKGS += CSWpm-datetime-set
+RUNTIME_DEP_PKGS += CSWpm-datetime-timezone
+RUNTIME_DEP_PKGS += CSWpm-params-validate
 
 CONFIGURE_ARGS =
 
