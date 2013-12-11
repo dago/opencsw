@@ -1,0 +1,24 @@
+From 291e34c28c9d9e7f488da650d0df9e907d14f991 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 23 Oct 2013 14:34:30 +0200
+Subject: [PATCH] fix  memalign detection
+
+---
+ configure | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configure b/configure
+index 407837e..89368a7 100755
+--- a/configure
++++ b/configure
+@@ -3703,6 +3703,7 @@ echocheck "memalign()"
+ def_memalign_hack='#define CONFIG_MEMALIGN_HACK 0'
+ _memalign=no
+ statement_check malloc.h 'memalign(64, sizeof(char))' && _memalign=yes
++sunos && [ "${_memalign}" = "no" ] && statement_check stdlib.h 'memalign(64, sizeof(char))' && _memalign=yes
+ if test "$_memalign" = yes ; then
+   def_memalign='#define HAVE_MEMALIGN 1'
+ else
+-- 
+1.8.3.4
+

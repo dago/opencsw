@@ -1,0 +1,33 @@
+From 8fb46fc11b2cb11fe712ad67713b5d614a400f4c Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 11 Dec 2013 10:59:11 +0100
+Subject: [PATCH] ffmpeg script uses bash
+
+---
+ ffmpeg/libavcodec/codec_names.sh | 2 +-
+ ffmpeg/version.sh                | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ffmpeg/libavcodec/codec_names.sh b/ffmpeg/libavcodec/codec_names.sh
+index 0e499c9..dcb3437 100755
+--- a/ffmpeg/libavcodec/codec_names.sh
++++ b/ffmpeg/libavcodec/codec_names.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ 
+ # Copyright (c) 2011 Nicolas George
+ #
+diff --git a/ffmpeg/version.sh b/ffmpeg/version.sh
+index 8d084c2..9fa06c7 100755
+--- a/ffmpeg/version.sh
++++ b/ffmpeg/version.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ 
+ # check for git short hash
+ if ! test "$revision"; then
+-- 
+1.8.4.1
+
