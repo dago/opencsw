@@ -1,0 +1,36 @@
+From 51254d28ae3fa12862f9007ac169897e9fc740fd Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Mon, 21 Oct 2013 11:20:17 +0200
+Subject: [PATCH] use csw catalog for documentation
+
+---
+ configure | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
+
+diff --git a/configure b/configure
+index f284646..53bfb0d 100755
+--- a/configure
++++ b/configure
+@@ -8057,18 +8057,7 @@ extra_ldflags="$extra_ldflags -lm"
+ # XML documentation tests
+ echocheck "XML catalogs"
+ for try_catalog in \
+-  /etc/sgml/catalog \
+-  /usr/share/xml/docbook/*/catalog.xml \
+-  /opt/local/share/xml/docbook-xml/*/catalog.xml \
+-  /opt/local/share/xml/docbook/*/catalog.xml \
+-  /usr/share/sgml/docbook/*/*catalog \
+-  /usr/share/apps/ksgmltools2/customization/en/catalog \
+-  /usr/share/sgml/catalog \
+-  /usr/local/share/sgml/catalog \
+-  /usr/lib/sgml/catalog \
+-  /usr/local/lib/sgml/catalog \
+-  /usr/share/docbook-xml42/catalog.xml \
+-  /usr/share/sgml/docbook/xmlcatalog; do
++  /opt/csw/share/sgml/docbook/xml-dtd-4.1.2/catalog; do
+   if test -f "$try_catalog"; then
+     catalog=$try_catalog
+     break
+-- 
+1.8.3.4
+

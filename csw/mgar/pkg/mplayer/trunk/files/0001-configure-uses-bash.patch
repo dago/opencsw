@@ -1,0 +1,22 @@
+From d230c38db7bcad8063f7597ff2569ceccc938e0f Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 16 Oct 2013 19:06:15 +0200
+Subject: [PATCH] configure uses bash
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 72f8ee5..f284646 100755
+--- a/configure
++++ b/configure
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/env bash
+ #
+ # Original version (C) 2000 Pontscho/fresh!mindworkz
+ #                      pontscho@makacs.poliod.hu
+-- 
+1.8.3.4
+

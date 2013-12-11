@@ -1,350 +1,281 @@
-# $Id$
-#
-##Mplayer and $ISAEXEC makefile example###
-#
-# This makefile has a lot of notes and extra information in it, as I've been
-# using it as documentation while working away at this project. It will be 
-# tidied up before I submit it for official review.
+# $Id: Makefile 22672 2013-12-10 19:05:07Z pfelecan $
 
-NAME = MPlayer
-VERSION = 1.0rc2
-VERSION_Blue = 1.7
-CATEGORIES = apps
-GARTYPE = v2
+NAME	=	mplayer
+ALIAS	=	MPlayer
+VERSION	=	1.1.1
+GARTYPE	=	v2
 
-DESCRIPTION = MPlayer is a movie player which runs on many systems
+DESCRIPTION	=	Stable Release of The Movie Player and Encoder
 define BLURB
+    MPlayer can play most standard video formats out of the box and
+    almost all others with the help of external codecs.  MPlayer
+    currently works best from the command line, but visual feedback
+    for many functions is available from its onscreen status display
+    (OSD), which is also used for displaying subtitles. MPlayer also
+    has a GUI with skin support and several unofficial alternative
+    graphical frontends are available.
 
-  MPlayer is a movie player which runs on many systems (see the documentation).
-  It plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4,
-  RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files,
-  supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD,
-  SVCD, DVD, 3ivx, DivX 3/4/5 and even WMV movies..
-
+	MEncoder is a command line video encoder for advanced users that
+	can be built from the MPlayer source tree. Unofficial graphical
+	frontends exist but are not included.
 endef
 
-MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.hu/MPlayer/skins/
+VENDOR_URL		=	http://www.mplayerhq.hu/MPlayer/
+MASTER_SITES	=	http://www.mplayerhq.hu/MPlayer/releases/
+DISTFILES		=	$(ALIAS)-$(VERSION).tar.xz
+DISTNAME		=	$(ALIAS)-$(VERSION)
+PATCHFILES		+=	0001-configure-uses-bash.patch
+PATCHFILES		+=	0002-version-uses-bash.patch
+PATCHFILES		+=	0003-use-csw-catalog-for-documentation.patch
+PATCHFILES		+=	0004-test-sse-support.patch
+PATCHFILES		+=	0005-enhance-X-Windows-detection.patch
+PATCHFILES		+=	0006-fix-memalign-detection.patch
+PATCHFILES		+=	0007-fix-memalign-prototype.patch
+PATCHFILES		+=	0008-ffmpeg-script-uses-bash.patch
 
-GARCOMPILER = GCC4
-GNU_CC_HOME = /opt/csw/gcc4
+PACKAGING_PLATFORMS	=	solaris10-sparc
+PACKAGING_PLATFORMS	+=	solaris10-i386
 
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += Blue-$(VERSION_Blue).tar.bz2
+BUILD_DEP_PKGS	+=	CSWdocbookdtds
+BUILD_DEP_PKGS	+=	CSWdocbookxsl
+BUILD_DEP_PKGS	+=	CSWfaac
+BUILD_DEP_PKGS	+=	CSWfontconfig-dev
+BUILD_DEP_PKGS	+=	CSWgroff
+BUILD_DEP_PKGS	+=	CSWliba52
+BUILD_DEP_PKGS	+=	CSWlibaa-dev
+BUILD_DEP_PKGS	+=	CSWlibaudiofile-dev
+BUILD_DEP_PKGS	+=	CSWlibdvdcss-dev
+BUILD_DEP_PKGS	+=	CSWlibdvdnav-dev
+BUILD_DEP_PKGS	+=	CSWlibdvdread-dev
+BUILD_DEP_PKGS	+=	CSWlibfaad-dev
+BUILD_DEP_PKGS	+=	CSWlibfreetype-dev
+BUILD_DEP_PKGS	+=	CSWlibfribidi-dev
+BUILD_DEP_PKGS	+=	CSWlibgif-dev
+BUILD_DEP_PKGS	+=	CSWlibiconv-dev
+BUILD_DEP_PKGS	+=	CSWlibjpeg-dev
+BUILD_DEP_PKGS	+=	CSWliblz-dev
+BUILD_DEP_PKGS	+=	CSWliblzo-dev
+BUILD_DEP_PKGS	+=	CSWlibmad-dev
+BUILD_DEP_PKGS	+=	CSWlibmp3lame-dev
+BUILD_DEP_PKGS	+=	CSWlibncurses-dev
+BUILD_DEP_PKGS	+=	CSWlibogg-dev
+BUILD_DEP_PKGS	+=	CSWliboggz-dev
+BUILD_DEP_PKGS	+=	CSWlibpng-dev
+BUILD_DEP_PKGS	+=	CSWlibrtmp-dev
+BUILD_DEP_PKGS	+=	CSWlibsdl-dev
+BUILD_DEP_PKGS	+=	CSWlibspeex-dev
+BUILD_DEP_PKGS	+=	CSWlibtheora-dev
+BUILD_DEP_PKGS	+=	CSWlibx264-dev
+BUILD_DEP_PKGS	+=	CSWlibxvidcore-dev
+BUILD_DEP_PKGS	+=	CSWmesa
+BUILD_DEP_PKGS	+=	CSWmpg123
+BUILD_DEP_PKGS	+=	CSWnas
+BUILD_DEP_PKGS	+=	CSWunrar
+BUILD_DEP_PKGS	+=	CSWlibxmms-dev
+BUILD_DEP_PKGS	+=	CSWyasm
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-LICENSE = LICENSE
+GARCOMPILER		=	GNU
 
-PACKAGES = CSWmplayer
-CATALOGNAME_CSWmplayer = mplayer
+# 2 packages: mplayer, mencoder; separate recipe for codec, fonts and
+# skin
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
+CONFIGURE_SCRIPTS	=	custom
+BUILD_SCRIPTS		=	custom
+TEST_SCRIPTS		=	custom
 
-RUNTIME_DEP_PKGS_CSWmplayer += CSWaalib
-RUNTIME_DEP_PKGS_CSWmplayer += CSWesound
-RUNTIME_DEP_PKGS_CSWmplayer += CSWfaac
-RUNTIME_DEP_PKGS_CSWmplayer += CSWfconfig
-RUNTIME_DEP_PKGS_CSWmplayer += CSWftype2
-RUNTIME_DEP_PKGS_CSWmplayer += CSWgiflibrt
-RUNTIME_DEP_PKGS_CSWmplayer += CSWglib
-RUNTIME_DEP_PKGS_CSWmplayer += CSWgtk
-RUNTIME_DEP_PKGS_CSWmplayer += CSWiconv
-RUNTIME_DEP_PKGS_CSWmplayer += CSWjpeg
-RUNTIME_DEP_PKGS_CSWmplayer += CSWlame
-RUNTIME_DEP_PKGS_CSWmplayer += CSWlibmad
-RUNTIME_DEP_PKGS_CSWmplayer += CSWlibogg
-RUNTIME_DEP_PKGS_CSWmplayer += CSWlibx11
-RUNTIME_DEP_PKGS_CSWmplayer += CSWlibxext
-RUNTIME_DEP_PKGS_CSWmplayer += CSWlibxt
-RUNTIME_DEP_PKGS_CSWmplayer += CSWmesa
-RUNTIME_DEP_PKGS_CSWmplayer += CSWnas
-RUNTIME_DEP_PKGS_CSWmplayer += CSWncurses
-RUNTIME_DEP_PKGS_CSWmplayer += CSWopenal
-RUNTIME_DEP_PKGS_CSWmplayer += CSWpng
-RUNTIME_DEP_PKGS_CSWmplayer += CSWspeex
-RUNTIME_DEP_PKGS_CSWmplayer += CSWtheora
-RUNTIME_DEP_PKGS_CSWmplayer += CSWzlib
+PACKAGES						=	CSWmplayer
+CATALOGNAME_CSWmplayer			=	mplayer
+SPKG_DESC_CSWmplayer			=	$(DESCRIPTION), the player
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWfaac
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWliba52
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibaa1
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibaudiofile0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibesd0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfaad2
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibfribidi0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWliblzo2-2
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibmad0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibogg0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibrtmp0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibx264-133
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibxvidcore4
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWlibz1
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWmesa
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWmpg123
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWnas
 
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWmplayer)
-BUILD_DEP_PKGS += CSWgnulinks
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libSDL-1.2.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXext.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXinerama.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libXt.so.4
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|liba52.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libaa.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libaudio.so.2
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libesd.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfaac.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfaad.so.2
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfreetype.so.6
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libfribidi.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libiconv.so.2
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libkstat.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|liblzo2.so.2
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libmad.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libmp3lame.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libmpg123.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libogg.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|librtmp.so.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libspeex.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libtheoradec.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libvdpau.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libx264.so.133
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libxvidcore.so.4
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libz.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libGL.so.1
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libbz2.so.1.0
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libjpeg.so.7
+CHECKPKG_OVERRIDES_CSWmplayer	+=	no-direct-binding|/opt/csw/bin/mplayer|is|not|directly|bound|to|soname|libpng15.so.15
 
-PATCHFILES  = fix-configure.diff
-PATCHFILES += fix-libavcodec-gcc-bug.diff
-PATCHFILES += fix-manpage-macros.diff
-PATCHFILES += sparc-v8-novis.diff
-#Sol8 only PATCHFILES += stdint-wrapper.diff
+# only on BO build farm; on my build farm it's included and detected TODO
+CHECKPKG_OVERRIDES_CSWmplayer	+=	surplus-dependency|CSWlibaudiofile0
 
-UNWANTED_CONF_ARGS = --sysconfdir=/opt/csw/etc --sbindir=/opt/csw/sbin --exec_prefix=/opt/csw --libexecdir=/opt/csw/libexec
-UNWANTED_CONF_ARGS += --sharedstatedir=/opt/csw/share
-UNWANTED_CONF_ARGS += --localstatedir=/opt/csw/var
-UNWANTED_CONF_ARGS += --infodir=/opt/csw/share/info
-UNWANTED_CONF_ARGS += --includedir=/opt/csw/include
-UNWANTED_CONF_ARGS += --sbindir=/opt/csw/sbin/amd64
-UNWANTED_CONF_ARGS += --libexecdir=/opt/csw/libexec/amd64
+# this cannot be computed:
+RUNTIME_DEP_PKGS_CSWmplayer		+=	CSWunrar
+CHECKPKG_OVERRIDES_CSWmplayer	+=	surplus-dependency|CSWunrar
 
-CONFIGURE_ARGS  = $(filter-out $(UNWANTED_CONF_ARGS),$(DIRPATHS))
-CONFIGURE_ARGS += --with-extraincdir=/opt/csw/X11/include
-CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
-CONFIGURE_ARGS += --enable-gui
-CONFIGURE_ARGS += --disable-win32dll
-CONFIGURE_ARGS += --disable-libvorbis #Having trouble compiling it
+# this exists only on i386 and Solaris 10
+CHECKPKG_OVERRIDES_CSWmplayer	+=	missing-dependency|NVDAgraphics
+# this in incongruous (due to man/cat1 usage):
+CHECKPKG_OVERRIDES_CSWmencoder	+=	missing-dependency|CSWfltk
 
-NO_MMX_ARGS += --disable-sse
-NO_MMX_ARGS += --disable-sse2
-NO_MMX_ARGS += --disable-ssse3
-NO_MMX_ARGS += --disable-mmx
-NO_MMX_ARGS += --disable-mmxext
-CONFIGURE_ARGS_isa-i386  += $(NO_MMX_ARGS)
-CONFIGURE_ARGS_isa-amd64 += $(NO_MMX_ARGS)
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
-#CONFIGURE_ARGS += --disable-libcdio
-#CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
+PACKAGES						+=	CSWmencoder
+CATALOGNAME_CSWmencoder			=	mencoder
+SPKG_DESC_CSWmencoder			=	$(DESCRIPTION), the encoder
+PKGFILES_CSWmencoder			+=	/opt/csw/bin/mencoder
+PKGFILES_CSWmencoder			+=	/opt/csw/share/man/man1/mencoder.1
+PKGFILES_CSWmencoder			+=	/opt/csw/share/man/cat1/mencoder.1
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWmplayer
+CHECKPKG_OVERRIDES_CSWmencoder	+=	surplus-dependency|CSWmplayer
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibogg0
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfribidi0
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibxvidcore4
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfaad2
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibx264-133
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWliba52
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWfaac
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibrtmp0
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWliblzo2-2
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibz1
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWlibmad0
+RUNTIME_DEP_PKGS_CSWmencoder	+=	CSWmpg123
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|liba52.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libbz2.so.1.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfaac.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfaad.so.2
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfreetype.so.6
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libfribidi.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libiconv.so.2
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libjpeg.so.7
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libkstat.so.1
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|liblzo2.so.2
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libmad.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libmp3lame.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libmpg123.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libogg.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libpng15.so.15
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|librtmp.so.0
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libspeex.so.1
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libtheoradec.so.1
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libx264.so.133
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libxvidcore.so.4
+CHECKPKG_OVERRIDES_CSWmencoder	+=	no-direct-binding|/opt/csw/bin/mencoder|is|not|directly|bound|to|soname|libz.so.1
 
-# Mplayer sparc-specific patches
-# Openal for sparc is broken
-# OpenGL isn't working on osiris
-ifeq ($(shell uname -p),sparc)
-CONFIGURE_ARGS += --disable-openal 
-CONFIGURE_ARGS += --disable-gl
-endif
+PACKAGES					+=	CSWmplayer-doc
+CATALOGNAME_CSWmplayer-doc	=	$(NAME)_doc
+SPKG_DESC_CSWmplayer-doc	=	$(DESCRIPTION), the documentation
+PKGFILES_CSWmplayer-doc		+=	$(docdir)/$(NAME)_doc/.*
+ARCHALL_CSWmplayer-doc		=	1
 
-# Fails in amd64
-# BUILD64 = 1
-
-TEST_SCRIPTS =
-
-###Framework for an $ISAEXEC optimised build###
-# To allow for the same build to run multiple times without each version
-# clobbering the non-unique work/cookie folders each time, we append the
-# target $ISA to each foldername.
-#
-# 1) gmake optbuild: runs the standard gar framework through the optbuild for 
-#	loop. This loop allows for each of the targets in $ISATARGET to be built
-#	using the appropriate compiler flags for optimisation.
-#	The optbuild target takes us to the end of the install step.
-#	When all the building is done, we're going to only want the one package,
-#	(not N versions). All the resultant binaries from each $ISATARGET are 
-#	merged into the $BASEISA $DESTDIR by the merge-opt-bins target.
-#	It's this $BASEISA that will be used for the final resultant ISAEXEC pkg
-#
-#	Gar currently merges and overlaps the install & package targets.
-#	We want the install phase to be run in a for loop, but the package
-#	phase to run only once (on our $BASEISA), so I've had to explictly
-#	split the phases.
-#
-# 2) gmake only-package: Runs the standard packing steps on the $BASEISA	
-#	install dir ($DESTDIR), however I've run into a problem with the
-#	mkpackage perl script's handling of the prototype file; we need it to
-#	merge both our standard directory structure, and also the added isaexec
-#	hardlinks.
-#	The isa-post-package step adds the appropriate lines to the prototype
-#	however mkpackage will then either 1) overwrite it anyway, or 
-#	2) in merge mode, it will take our 2 isaexec lines, and only append 
-#	those 2 lines (ignoring all the standard files in our package).
-#
-#	My sneaky workaround for this is to add the extra lines in the 
-# 	isa-post-package target, followed by re-running the package-create step.
-#	The package-create target the prototype already contains a full 
-#	file/dir layout and our isaexec hardlink(s), so mkpackage simply
-#	merges(appends)	the key isaexec links.
-#	In fact, the admfiles are actually already there (from the first trip
-#	through package-create), but mkpackage is smart enough to remove the
-#	duplicate lines! :)
-
-### Makefile target order ###
-# 1) "gmake optbuild" runs the following gar steps on each of the $ISALIST
-#	build (and all of it's dependanies - extract/patch/etc etc)
-#	pre-install (calls timestamp, skins, fonts, and merge-opt-bins)
-#	 ===> timestamp (creates timestamp to track the new files for packaging)
-#	 ===> skins (copies the Mplayer skins into the install dirs)
-#	 ===> fonts (creates a symlink for the Mplayer OSD font)
-#	 ===> merge-opt-bins (Moves the optimised $ISAEXEC_BINS from $ISALIST
-#			into the appropriate $ISAEXEC_DIR within the $BASEISA)
-#	install (standard install target)
-#	post-install (calls strip/fixconfig)
-# The $BASISA $DESTDIR now contain all ISAEXEC'ed bins, in the correct layout,
-# reading for packaging.
-#
-# 2) gmake only-package (which won't run through the optbuild loop) will just
-#	act apon the $BASEISA. It will run the following steps:
-#	pre-package 	(empty)
-#	package-create	(creates the package as per normal)
-#	post-package	(Sneakily adds the isaexec symlinks, and reruns package-create)
-#	package-check	(Standard target)
-
-
-# Gar uses the $DESTIMG variable to create these directory names, so we need to
-# change that variable to reflect a unique $ISATARGET name.
-# $DESTDIR is where the package is installed to prior to packaging. We also 
-# need to make this directory name unique for each $ISA.
-# $DESTDIR is defined in the core GAR makefile, which hasn't been included yet,
-# so I have to set this variable after the main include.
-
-# Disabling for non-isaexec build, it breaks the depend generation path
-# DESTIMG=$(NAME)-$(ISA)
-
-###Optimisation section###
-#
-# This gar package builds a plain non-optimised version of Mplayer by default.
-# To build the fully optimised $ISAEXEC version use "gmake optbuild"
-# 
-# $ISATARGETS represents the optimised cpu targets.
-# These targets can be used in a couple of ways. We need to feed a desired 
-# optimisation target into our compiler, but we also need to create and copy
-# the binaries into the `isalist` dir structure for the final install layout.
-#
-# Unfortunately for GCC at least, these names don't match, and 64-bit is even
-# worse.
-#
-# $BASEISA is used for the base build, and for legacy use with plain "gmake".
-# The $BASEISA represents the minimum optimisation level, but it's also used as
-# the base (master) template for creating the package. All other $ISATARGET 
-# builds will have their binaries and libraries copied into the $BASEISA 
-# install dir, prior to final packaging.
-#
-# In theory, I should be able to just use the first string in $ISATARGET.
-# Need to work out if Makefiles support this function.
-
-# ifeq ($(shell uname -p),i386)
-#  ISATARGETS ?= pentium pentium-mmx pentium2
-#  BASEISA ?= pentium
-# else
-#  ISATARGETS ?= v8 ultrasparc ultrasparc3
-#  BASEISA ?= v8
-# endif
-
-# Mapping
-# Do Makefiles have a concept of a hash table for matching these?
-# $ISAEXEC name: | GCC mtune name:
-# pentium=pentium
-# pentium+mmx=pentium-mmx
-# pentium_pro+mmx=pentium2
-# 64-bit is athlon=amd64 but I expect -m64 will be what we're after.
-
-## #If statement for gcc needed here!
-## pentium_dir 	= pentium
-## pentium-mmx_dir = pentium+mmx
-## pentium2_dir 	= pentium_pro+mmx
-## 
-## #Sparc
-## v8_dir 	= sparcv8
-## # ?? 	= sparcv8plus
-## # ?? 	= sparcv8plus+vis
-## ultrasparc_dir 	= sparcv9
-## ultrasparc3_dir	= sparcv9+vis
-## #v9_dir	= sparcv9+vis2 
-
-
-# ISAEXEC_DIR = $($(ISA)_dir)
-
-# If you just typed gmake, this will build the stardard BASEISA build.
-# For a single optimised build use gmake ISA=your-target-here.
-# For all optimised versions ($ISAEXEC), use gmake optbuild 
-# ISA ?= $(BASEISA)
-
-#Which binaries do you want to use $ISAEXEC for?
-# Note: These must be the full paths!
-# ISAEXEC_BINS = opt/csw/bin/mplayer opt/csw/bin/mencoder
-
-
-# Inclue all standard GAR variables and functionality from here onward:
 include gar/category.mk
 
-# See earlier, we needed to set this VAR _after_ the category.mk include
-# BASE_DESTDIR :=$(DESTDIR)-$(BASEISA)
-# DESTDIR := $(DESTDIR)-$(ISA)
-
-####Mplayer specific optimisation notes####
-
-# Mplayer uses -mtune, not -march
-
-## # Compiler options 
-## ifeq ($(GARCH),i386)
-## ifeq ($(ISA),amd64)
-## CFLAGS = -O2 -pipe -mtune=opteron
-## else
-## CFLAGS = -O2 -pipe -mtune=$(ISA)
-## endif
-## else # I.E sparc
-## CFLAGS = -O2 -pipe -mcpu=$(ISA)
-## endif
-
-#CPPFLAGS = $(CFLAGS)
-#CXXFLAGS = $(CFLAGS)
-#ASFLAGS = $(CFLAGS)
-#OPTFLAGS = $(CFLAGS)
-
-# Makefile debugging/testing
-showvars:
-	@echo " CFLAGS: $(CFLAGS)"
-	@echo " PATCHFILES: $(PATCHFILES)"
-
-###Fix the standard POST_INSTALL_TARGET Definition##
-# By default Gar uses the install: target to install and then create a package.
-# The package target simply points at install: (????)
-# With this ISAEXEC framework, we actually need to separate these steps out!
-#
-# By setting the POST_INSTALL_TARGETS to the below, we're stripping off the
-# packaging phase of the install: target.
-# With the packaging steps striped, make install only installs the package into
-# it's $DESTDIR as you would expect.
-#
-# We save the full unedited definiton of $PACKAGE for later, as we still to need
-# to build a package at the end. Actually, no, I just define it manually...
-# I've created a full-package: target which runs $(FULL_PACKAGE). This will be the final step
-
-# PLAIN_PACKAGE := $(POST_INSTALL_TARGETS)
-# POST_INSTALL_TARGETS := strip fixconfig
-
-# This is the main target used by this Makefile for creating $ISAEXEC format pkgs.
-# This for loop is very important for handling the $DESTDIR var as it applies in
-# the post-install steps (I.E the ISA-specific dirs)
-
-# optbuild:
-# 	(for TARGET in $(ISATARGETS); do \
-# 	gmake -e ISA=$$TARGET build only-install; done)
-
-
-# This target is copied from gar.pkg.mk, just with $(POST_INSTALL_TARGETS) stripped
-# from the end. This prevents the install target from kicking off the packaging step.
-# only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) isa-post-install
-
-
-###Tidy ups and files below
-# We need the skins dir copied into the master install dir
-# We need the default font copied into the master install dir
-# Finally, merge in all the optimised binaries
-
-#Isaexec version
-post-install-modulated: skins fonts merge-opt-bins
-
-#### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
-#	the expanded $(DESTDIR) variable which includes their expanded path
-#	In Mplayer's case we don't actually need the skins/fonts in each ISA build
-#	but pulling them out of the loop is proving tricky 
-
-
-skins:
-	ginstall -m 755 -d $(DESTDIR)$(datadir)/mplayer/skins/default
-	(cp -r $(WORKSRC)/../Blue/* $(DESTDIR)$(datadir)/mplayer/skins/default)
-
-fonts:
-	(ln -f -s /usr/openwin/lib/X11/fonts/TrueType/Arial.ttf $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/subfont.ttf)
-
-#Codecs aren't currently being bundled
-codecs:
-	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/lib/codecs)
-	(cp -r $(WORKSRC)/../all-20061022/* $(DESTDIR)$(BUILD_PREFIX)/share/codecs) 
-
-merge-opt-bins:
-	@echo "====> Running merge-opt-bins <===="
-	(mkdir -p $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
-	(cd $(DESTDIR); if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR)/* ; then mv $(ISAEXEC_BINS) $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR); fi )
-
-###not yet implemented, mplayer specific
-## --enable-runtime-cpudetection allows the binary to run anywhere, use for i386?
-#run-anywhere-build:
-#	(gmake ISA=pentium)
-#CONFIGURE_ARGS += --enable-runtime-cpudetection
-
 PATH := /opt/csw/gnu:$(PATH)
+
+# - configure is not configure !
+# - must use internal dvdnav as our library is not a snapshot and
+#   mplayer uses new primitives
+# - run-time CPU detection is not implemented only for SPARC
+# - disable shared memory, used only for X11, which, in Solaris 10
+#    extensions doesn't support all the required primitives,
+#   e.g. XShmGetEventBase
+
+ifneq ($(GARCH),sparc)
+CPU_DETECTION	=--enable-runtime-cpudetection
+else
+CPU_DETECTION	=
+endif
+
+configure-custom:
+	cd $(WORKSRC) && \
+	./configure \
+	--cc=gcc \
+	--host-cc=gcc \
+	--extra-cflags='-std=gnu99' \
+	--extra-ldflags='-lrt' \
+	$(CPU_DETECTION) \
+	--enable-mlib \
+	--disable-shm \
+	--prefix=$(prefix) \
+	--confdir=$(sysconfdir)/$(NAME) \
+	--codecsdir=$(libexecdir)/mplayer
+	$(MAKECOOKIE)
+
+build-custom:
+	cd $(WORKSRC) && \
+	$(MAKE) && \
+	$(MAKE) doc
+	$(MAKECOOKIE)
+
+test-custom:
+ifdef testData
+	cd $(WORKSRC) && \
+	[ -d $(testData) ] && \
+	$(MAKE) FATE_SAMPLES=$(testData) fatetest
+endif
+	$(MAKECOOKIE)
+
+post-install: thedocdir = $(docdir)/$(NAME)_doc
+post-install: thehtmldocdir = $(thedocdir)/html
+post-install: thecatmandir = $(mandir)/cat1
+post-install:
+	ginstall -d "$(DESTDIR)/$(thecatmandir)"
+	gnroff -Tlatin1 -mman $(WORKSRC)/DOCS/man/en/mplayer.1 > "$(DESTDIR)/$(thecatmandir)/mplayer.1"
+	cd "$(DESTDIR)/$(thecatmandir)" && ln -s mplayer.1 mencoder.1
+	ginstall -d "$(DESTDIR)/$(thedocdir)"
+	gtar --directory $(WORKSRC)/DOCS --create --file=- tech | \
+	gtar --directory $(DESTDIR)/$(thedocdir) --extract
+	ginstall -d "$(DESTDIR)/$(thehtmldocdir)"
+	gtar --directory $(WORKSRC)/DOCS/HTML/en --create --file=- . | \
+	gtar --directory $(DESTDIR)/$(thehtmldocdir) --extract
+	$(MAKECOOKIE)
