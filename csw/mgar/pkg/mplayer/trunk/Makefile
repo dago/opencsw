@@ -1,4 +1,4 @@
-# $Id: Makefile 22672 2013-12-10 19:05:07Z pfelecan $
+# $Id$
 
 NAME	=	mplayer
 ALIAS	=	MPlayer
