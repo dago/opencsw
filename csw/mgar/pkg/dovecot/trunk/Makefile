@@ -39,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWdovecot += CSWlibpq5Wdovecot += CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWdovecot += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWdovecotRUNTIME_DEP_PKGS_CSWdovecot += CSWliblzma5t += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWdovecotRUNTIME_DEP_PKGS_CSWdovecot += CSWliblzma5tRUNTIME_DEP_PKGS_CSWdovecot += CSWlibintl8t += CSWlibldap2-4-2
 
 PKGFILES_CSWdovecot-dev = $(PKGFILES_DEVEL)
 
@@ -83,7 +83,8 @@ MIGRATE_FILES = dovecot.conf
 # the perl search and replace is missing this.  Need to rework the below perl
 # lines.  For now overriding since the file(s) are oi/LDA.Sendmail.txt
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sp# override needed until ld inconsistancy is resolved on buildfarm
+CHECKPKG_OVERRIDES_CSWdovecot += surplus-dependency|CSWlibintl8sparc solaris10-i386
 
 include gar/category.mk
 
