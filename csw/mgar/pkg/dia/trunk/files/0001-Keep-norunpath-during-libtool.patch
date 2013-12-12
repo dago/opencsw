@@ -1,0 +1,25 @@
+From 2b9f48028b669ad74c060998e3e947251885cd4b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 12 Dec 2013 16:06:44 +0100
+Subject: [PATCH] Keep -norunpath during libtool
+
+---
+ ltmain.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index 04eaea4..fd4ac68 100755
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -5091,7 +5091,7 @@ func_mode_link ()
+       # @file                GCC response files
+       # -tp=*                Portland pgcc target processor selection
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.8.4.1
+
