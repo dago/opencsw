@@ -1,16 +1,11 @@
 # known build facts
 #
 # no linkage against
-# - ldap
 # - mysql 
 # - pgsql
-NAME = pureftpd
+NAME = pure-ftpd
 VERSION = 1.0.36
-CATEGORIES = net
-GARTYPE = v2
-SRCNAME = pure-ftpd
-
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+GARTYPE = v26 solaris10-sparc
 
 DESCRIPTION = A secure FTP daemon
 define BLURB
@@ -21,17 +16,19 @@ define BLURB
   as well as hosting providers.
 endef
 
-MASTER_SITES = http://download.pureftpd.org/pub/pure-ftpd/releases/
-DISTFILES  = $(SRCNAME)-$(VERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(SRCNAME)-$(VERSION)
+MASTER_SITES = http://download.pureftpd.org/pub/pure-ftpd/rel+= $(DISTNAME).tar.gz
 
 BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
 
-# we require openssl for tls
-RUNTIME_DEP_PKGS = CSWlibssl1-0-0
-RUNTIME_DEP_PKGS += CSWlibssp0
+PACKAGES += CSWpureftpd
+SPKG_DESC_CSWpureftpd = A secure FTP daemon
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpureftpd += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpureftpd += CSWlibssp0
+RUNTIME_DEP_PKGS_CSWpureftpd += CSWlibldap2-4-2(SRCNAME)/*.conf
 
-GARCOMPILER = GNU
+CHECKPKG_OVERRIDES_CSWpureftpd += file-with-bad-content|/usr/share|root/opt/csw/share/man/mGARCOMPILER = GNU
 
 # configure args
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -43,38 +40,31 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-altlog
 CONFIGURE_ARGS += --with-brokenrealpath
 CONFIGURE_ARGS += --enable-largefile
-CONFIGURE_ARGS += --sysconfdir=$(prefix)/etc/$(SRCNAME)
+CONFIGURE_ARGS += --sysconfdpure-ftpd
+CONFIGURE_ARGS += --with-ldapx)/etc/$(SRCNAME)
 
 # use X/Open CAE specifications
 EXTRA_CFLAGS = -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1
 
-# No test suite available
-TEST_SCRIPTS =
-
-sysconfdir = /etc/opt/csw
-SAMPLECONF = $(sysconfdir)/$(SRCNAME)/*.conf
-
-CHECKPKG_OVERRIDES_CSWpureftpd += file-with-bad-content|/usr/share|root/opt/csw/share/man/man8/pure-ftpd.8
+# No test suite availableSAMPLECONF = $(sysconfdir)/pure-ftpd/*.conf
 
 include gar/category.mk
 
 # make sure, the linker uses libcrypt before libssl
-post-configure-modulated:
+post-configurenfigure-modulated:
 	@perl -pi -e 's@-lssl -lcrypto -lcrypt@-lcrypt -lssl -lcrypto@' \
            ${WORKSRC}/Makefile
 	@perl -pi -e 's@-lssl -lcrypto -lcrypt@-lcrypt -lssl -lcrypto@' \
            ${WORKSRC}/src/Makefile
 
 
-# strange archive...
-post-build-modulated:
+# strange arch:
 	@chmod 751 $(WORKSRC)/x
 
 # create config directory
-pre-install-modulated:
-	ginstall -d $(DESTDIR)$(sysconfdir)/$(SRCNAME)
-	ginstall -d $(DESTDIR)$(docdir)/$(SRCNAME)
-	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+pre-install:
+	ginstall -d $(DESTDIR)$(sysconfdir)/pure-ftpd
+	ginstall -d $(DESTDIR)$(docdir)/pure-ftpd$(docdir)/$(NAME)
 	ginstall -d $(DESTDIR)/var/opt/csw/run
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpd.h
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpwho-update.h
@@ -83,11 +73,9 @@ pre-install-modulated:
 
 conf-list  = $(WORKSRC)/pureftpd-ldap.conf
 conf-list += $(WORKSRC)/pureftpd-mysql.conf
-conf-list += $(WORKSRC)/pureftpd-pgsql.conf
-post-install-modulated:
+conf-list += $(WORKSRC)/pureftpd-pgsql.install-modulated:
 	( for file in $(conf-list) ; do \
-		ginstall -m 644 $$file $(DESTDIR)$(sysconfdir)/$(SRCNAME) ; \
+		ginstall -m 644 $$file $(DESTDpure-ftpd ; \
 		done )
-	ginstall -m 644 $(WORKSRC)/pureftpd.schema $(DESTDIR)$(docdir)/$(SRCNAME)
-	ginstall -m 644 $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/$(NAME)/license
+	ginstall -m 644 $(WORKSRC)/pureftpd.schema $(DESTDIR)$(docdir)/pure-ftpd
 	@$(MAKECOOKIE)
