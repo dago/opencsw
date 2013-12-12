@@ -1,14 +1,14 @@
-From 023a228660a6cdb955db4d4a5b3da3b5edfcde30 Mon Sep 17 00:00:00 2001
+From 3d08d8589aa7974d0eea96f59e6b5c5faf2354ea Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Tue, 1 Jan 2013 19:18:22 +0100
+Date: Thu, 12 Dec 2013 15:48:49 +0100
 Subject: [PATCH] Use __sparc and __i386 for Solaris
 
 ---
- include/libEMF/wine/winnt.h | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ include/libEMF/wine/winnt.h | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/include/libEMF/wine/winnt.h b/include/libEMF/wine/winnt.h
-index f76c08a..3a8d6f2 100644
+index f76c08a..ad66499 100644
 --- a/include/libEMF/wine/winnt.h
 +++ b/include/libEMF/wine/winnt.h
 @@ -29,7 +29,11 @@
@@ -24,7 +24,18 @@ index f76c08a..3a8d6f2 100644
  # undef  WORDS_BIGENDIAN
  # undef  BITFIELDS_BIGENDIAN
  # define ALLOW_UNALIGNED_ACCESS
-@@ -45,6 +49,10 @@
+@@ -37,6 +41,10 @@
+ # undef  WORDS_BIGENDIAN
+ # undef  BITFIELDS_BIGENDIAN
+ # define ALLOW_UNALIGNED_ACCESS
++#elif defined(__amd64)
++# undef  WORDS_BIGENDIAN
++# undef  BITFIELDS_BIGENDIAN
++# define ALLOW_UNALIGNED_ACCESS
+ #elif defined(__alpha__)
+ # undef  WORDS_BIGENDIAN
+ # undef  BITFIELDS_BIGENDIAN
+@@ -45,6 +53,10 @@
  # undef  WORDS_BIGENDIAN
  # undef  BITFIELDS_BIGENDIAN
  # undef  ALLOW_UNALIGNED_ACCESS
@@ -35,7 +46,7 @@ index f76c08a..3a8d6f2 100644
  #elif defined(__sparc__)
  # define WORDS_BIGENDIAN
  # define BITFIELDS_BIGENDIAN
-@@ -676,7 +684,7 @@ typedef struct _CONTEXT86
+@@ -676,7 +688,7 @@ typedef struct _CONTEXT86
  #define CONTEXT86_FULL (CONTEXT86_CONTROL | CONTEXT86_INTEGER | CONTEXT86_SEGMENTS)
  
  /* i386 context definitions */
@@ -44,7 +55,7 @@ index f76c08a..3a8d6f2 100644
  
  #define CONTEXT_CONTROL         CONTEXT86_CONTROL
  #define CONTEXT_INTEGER         CONTEXT86_INTEGER
-@@ -1225,7 +1233,7 @@ typedef struct _STACK_FRAME_HEADER
+@@ -1225,7 +1237,7 @@ typedef struct _STACK_FRAME_HEADER
  
  #endif  /* __PPC__ */
  
@@ -54,5 +65,5 @@ index f76c08a..3a8d6f2 100644
  /* 
   * FIXME:  
 -- 
-1.8.0
+1.8.4.1
 
