@@ -1,6 +1,6 @@
-From bafb52e605898a5afe86c5a7b007cd534c76ef1b Mon Sep 17 00:00:00 2001
+From ff6871e3463c9242151c4684b1ee0c59d510c0fb Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Wed, 11 Dec 2013 10:25:19 +0100
+Date: Wed, 11 Dec 2013 14:24:15 +0100
 Subject: [PATCH] test sse support
 
 ---
@@ -8,7 +8,7 @@ Subject: [PATCH] test sse support
  1 file changed, 60 insertions(+), 1 deletion(-)
 
 diff --git a/cpudetect.c b/cpudetect.c
-index e643bdc..d2fd844 100644
+index e643bdc..e30ea2d 100644
 --- a/cpudetect.c
 +++ b/cpudetect.c
 @@ -46,6 +46,10 @@ CpuCaps gCpuCaps;
@@ -22,10 +22,10 @@ index e643bdc..d2fd844 100644
  #endif
  
  /* Thanks to the FreeBSD project for some of this cpuid code, and
-@@ -209,7 +213,62 @@ static void check_os_katmai_support( void )
-      * safe to go ahead and hook out the SSE code throughout Mesa.
-      */
-     mp_msg(MSGT_CPUDETECT,MSGL_V, "Tests of OS support for SSE %s\n", gCpuCaps.hasSSE ? "passed." : "failed!" );
+@@ -216,7 +220,62 @@ static void check_os_katmai_support( void )
+     mp_msg(MSGT_CPUDETECT,MSGL_WARN, "Cannot test OS support for SSE, disabling to be safe.\n" );
+     gCpuCaps.hasSSE=0;
+ #endif /* _POSIX_SOURCE */
 -#else
 +#elif defined(sun)
 +    /* determine if SSE is available for the current CPU running
@@ -83,9 +83,9 @@ index e643bdc..d2fd844 100644
 +        }
 +    }
 +#else /* : defined(sun) */
-     /* We can't use POSIX signal handling to test the availability of
-      * SSE, so we disable it by default.
+     /* Do nothing on other platforms for now.
       */
+     mp_msg(MSGT_CPUDETECT,MSGL_WARN, "Cannot test OS support for SSE, leaving disabled.\n" );
 -- 
 1.8.4.1
 
