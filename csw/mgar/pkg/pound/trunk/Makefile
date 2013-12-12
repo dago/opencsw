@@ -41,7 +41,8 @@ EXTRA_DOCS += README
 EXTRA_DOCS += FAQ
 EXTRA_DOCS += CHANGELOG
 EXTRA_DOCS += z2_2_5_1.py
-EXTRA_DOCS += z2_2_6_1.pyCSPOUNDCFG = $(sysconfdir)/pound.cfg
+EXTRA_DOCS += z2_2_6_1.pyCSPOUNDCONFIGDIR = $(sysconfdir)/pound
+POUNDCFG = $(POUNDCONFIGDIR)/pound.cfg
 
 REINPLACEMENTS += poundcfg
 REINPLACE_MATCH_poundcfg = /usr/local/etc/pound.cfg
@@ -50,13 +51,19 @@ REINPLACE_FILES_poundcfg += pound.8
 
 REINPLACEMENTS += certpath
 REINPLACE_MATCH_certpath = /usr/local/etc/pound/cert.pem
-REINPLACE_WITH_certpath = $(sysconfdir)/cert.pem
+REINPLACE_WITH_certpath = $(POUNDCONFIGDIR)/cert.pem
 REINPLACE_FILES_certpath += pound.8
 
 REINPLACEMENTS += config
 REINPLACE_MATCH_config = /etc/pound/
-REINPLACE_WITH_config = $(sysconfdir)/pound/
+REINPLACE_WITH_config = $(POUNDCONFIGDIR)/
 REINPLACE_FILES_config += pound.8
+
+# Make sure to use OpenCSW OpenSSL as the generated code from Solaris OpenSSL uses different functions not present in the other libcrypto
+REINPLACEMENTS += openssl
+REINPLACE_MATCH_openssl = openssl
+REINPLACE_WITH_openssl = $(bindir)/openssl
+REINPLACE_FILES_openssl += Makefile.in
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -87,7 +94,7 @@ install-custom:
 	ginstall -m 644 $(WORKSRC)/pound.8 $(DESTDIR)$(mandir)/man8/pound.8
 	ginstall -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/poundandir)/man8/poundctl.8
 	ginstall -d $(DESTDIR)$(sysconfdir)/$(NAME)
-	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDpound.cfg
+	ginstall -m 644 $(FILEDIR)/pound2-samplePOUNDCFG)
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 644 $(addprefix $(WORKSRC)/,$(EXTRA_DOCS)) $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)
