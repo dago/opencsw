@@ -3,8 +3,8 @@
 # $Id$
 
 NAME = evince
-GNOME_VERSION = 2.30
-VERSION = $(GNOME_VERSION).3
+GNOME_VERSION = 2.32
+VERSION = $(GNOME_VERSION).0
 CATEGORIES = gnome
 GARTYPE = v2
 DESCRIPTION = Document viewer for multiple document formats: pdf, ps ,dvi
@@ -17,14 +17,17 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # GARFLAVOR = DBG
-# GARCOMPILER=GNU
-GARCOMPILER=SOS12U3
+GARCOMPILER=GCC4
+# GARCOMPILER=SOS12U3
 STRIP_LIBTOOL = 1
 
 PATCHFILES += 0001-honor-aclocal_flags.patch
-PATCHFILES += 0002-poppler-api-changed.patch
-PATCHFILES += 0001-add-norunpath-to-allowed-compiler-flags-ltmain.sh.patch
+# PATCHFILES += 0002-poppler-api-changed.patch
+# PATCHFILES += 0001-add-norunpath-to-allowed-compiler-flags-ltmain.sh.patch
 PATCHFILES += 0001-fix-poppler-api-linearized-problem.patch
+# remove this patch if Mantis 5130 is closed!!!
+
+# PATCHFILES += 0003-libxml-2.0.pc-workaround
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -40,64 +43,84 @@ TEST_TARGET =
 # EXTRA_CFLAGS_DBG = -g
 # EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARFLAVOR))
 # EXTRA_CXXFLAGS += -DPOPPLER_WITH_GDK
-EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO -norunpath
-EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0 -xnorunpath
+EXTRA_CXXFLAGS += -DHAVE_POPPLER_PAGE_RENDER -DPOPPLER_HAS_CAIRO  # -norunpath
+EXTRA_CFLAGS += -I/opt/csw/include/nautilus -I/opt/csw/include/gnome-vfs-2.0 # -xnorunpath
+EXTRA_CONFIGURE_ENV += PATH=/opt/csw/gnu:$(PATH)
+EXTRA_INSTALL_ENV += PATH=/opt/csw/gnu:$(PATH)
 
 EXTRA_LD_OPTIONS = -lm
+# EXTRA_LD_OPTIONS = -lgmodule-2.0 -lm -lz
 # EXTRA_LINKER_FLAGS = -norunpath -xnorunpath
 # EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
 # There are no shared-object dependencies on CSWdbus, but it's required for
 # evince to work.
+EXTRA_BUILD_ENV = V=1
 
-PACKAGES += CSWlibevdocument2
-CATALOGNAME_CSWlibevdocument2 = libevdocument2
-PKGFILES_CSWlibevdocument2 += $(call baseisadirs,$(libdir),libevdocument\.so\.2\.0\.0)
-PKGFILES_CSWlibevdocument2 += $(call baseisadirs,$(libdir),libevdocument\.so\.2(\.\d+)*)
-SPKG_DESC_CSWlibevdocument2 += $(DESCRIPTION), libevdocument.so.2
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibevdocument2 += CSWlibgio2-0-0
+PACKAGES += CSWlibevdocument3
+CATALOGNAME_CSWlibevdocument3 = libevdocument3
+PKGFILES_CSWlibevdocument3 += $(call baseisadirs,$(libdir),libevdocument\.so\.3\.0\.0)
+PKGFILES_CSWlibevdocument3 += $(call baseisadirs,$(libdir),libevdocument\.so\.3(\.\d+)*)
+SPKG_DESC_CSWlibevdocument3 += $(DESCRIPTION), libevdocument.so.3
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += CSWlibgdk-pixbuf2-0-0
+# sparc, there is not realy a difference either elfdump nor ldd
+RUNTIME_DEP_PKGS_CSWlibevdocument3_sparc += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3_sparc+= CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibevdocument3_sparc += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibevdocument3_sparc += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWlibevdocument3 += $(RUNTIME_DEP_PKGS_CSWlibevdocument3_$(GARCH))
 
-PACKAGES += CSWlibevview2
-CATALOGNAME_CSWlibevview2 = libevview2
-PKGFILES_CSWlibevview2 += $(call baseisadirs,$(libdir),libevview\.so\.2\.0\.0)
-PKGFILES_CSWlibevview2 += $(call baseisadirs,$(libdir),libevview\.so\.2(\.\d+)*)
-SPKG_DESC_CSWlibevview2 += $(DESCRIPTION), libevview.so.2
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibevdocument2
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibevview2 += CSWlibglib2-0-0
+PACKAGES += CSWlibevview3
+CATALOGNAME_CSWlibevview3 = libevview3
+PKGFILES_CSWlibevview3 += $(call baseisadirs,$(libdir),libevview\.so\.3\.0\.0)
+PKGFILES_CSWlibevview3 += $(call baseisadirs,$(libdir),libevview\.so\.3(\.\d+)*)
+SPKG_DESC_CSWlibevview3 += $(DESCRIPTION), libevview.so.3
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibevdocument3
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibgailutil18
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3 += CSWlibgcc-s1
+# sparc, there is not realy a difference either elfdump nor ldd
+RUNTIME_DEP_PKGS_CSWlibevview3_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibevview3_sparc += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3_sparc += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3_sparc += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWlibevview3_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibevview3 += $(RUNTIME_DEP_PKGS_CSWlibevview3_$(GARCH))
 
 PACKAGES += CSWevince-dev
 CATALOGNAME_CSWevince-dev = evince_dev
 SPKG_DESC_CSWevince-dev += $(DESCRIPTION), development files
 PKGFILES_CSWevince-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevdocument2
-RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevview2
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevdocument3
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWlibevview3
+RUNTIME_DEP_PKGS_CSWevince-dev += CSWevince
 
 PACKAGES += CSWevince
 SPKG_DESC_CSWevince += $(DESCRIPTION), base
-RUNTIME_DEP_PKGS_CSWevince += CSWlibevdocument2
-RUNTIME_DEP_PKGS_CSWevince += CSWlibevview2
+RUNTIME_DEP_PKGS_CSWevince += CSWlibevdocument3
+RUNTIME_DEP_PKGS_CSWevince += CSWlibevview3
 RUNTIME_DEP_PKGS_CSWevince += CSWlibdjvulibre21
 RUNTIME_DEP_PKGS_CSWevince += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWevince += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWevince += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS_CSWevince += CSWlibspectre1
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgconf2-4
@@ -106,13 +129,21 @@ RUNTIME_DEP_PKGS_CSWevince += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWevince += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWevince += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWevince += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler-glib8
 RUNTIME_DEP_PKGS_CSWevince += CSWlibkpathsea6
-# RUNTIME_DEP_PKGS_CSWevince += CSWgnomevfs2
-# RUNTIME_DEP_PKGS_CSWevince += CSWnautilus
-# RUNTIME_DEP_PKGS_CSWevince += CSWdbus
+RUNTIME_DEP_PKGS_CSWevince += CSWlibgcc-s1
+# sparc, there is not realy a difference either elfdump nor ldd
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWevince += $(RUNTIME_DEP_PKGS_CSWevince_$(GARCH))
+
 # at least the machine-id file must exist, dbus-daemon creates this
 # CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
 # Solaris10 paths: these are resuts of cmd: 
@@ -262,5 +293,4 @@ include gar/category.mk
 # 	automake-1.11 --add-missing --copy --force-missing  )
 # 	@$(MAKECOOKIE)
 
-PATH := /opt/csw/gnu:$(PATH)
 AM_DEFAULT_VERBOSITY := 1

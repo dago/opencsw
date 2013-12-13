@@ -1,0 +1,26 @@
+From c0aa9fa861d6488980e6729bd6a275a7ac26f939 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Thu, 12 Dec 2013 11:23:45 +0100
+Subject: [PATCH 3/3] libxml-2.0.ps workaround
+
+---
+ configure | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index e63571a..7a270d4 100755
+--- a/configure
++++ b/configure
+@@ -20398,7 +20399,8 @@ fi
+ 
+     if test "x$enable_pdf" = "xyes"; then
+ 	    evince_save_LIBS=$LIBS
+-	    LIBS="$LIBS $POPPLER_LIBS"
++	    LIBS="$LIBS $POPPLER_LIBS -lz"
++	    echo "#### LIBS: $LIBS"
+ 	    for ac_func in poppler_page_get_text_layout
+ do :
+   ac_fn_c_check_func "$LINENO" "poppler_page_get_text_layout" "ac_cv_func_poppler_page_get_text_layout"
+-- 
+1.8.4.1
+
