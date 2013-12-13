@@ -71,7 +71,7 @@ BUILD_DEP_PKGS	+=	CSWlibtheora-dev
 BUILD_DEP_PKGS	+=	CSWlibx264-dev
 BUILD_DEP_PKGS	+=	CSWlibxvidcore-dev
 BUILD_DEP_PKGS	+=	CSWmesa
-BUILD_DEP_PKGS	+=	CSWmpg123
+BUILD_DEP_PKGS	+=	CSWlibmpg123-dev
 BUILD_DEP_PKGS	+=	CSWnas
 BUILD_DEP_PKGS	+=	CSWunrar
 BUILD_DEP_PKGS	+=	CSWlibxmms-dev
@@ -115,7 +115,7 @@ RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibx264-133
 RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibxvidcore4
 RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibz1
 RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWmesa
-RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWmpg123
+RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWlibmpg123-0
 RUNTIME_DEP_PKGS_CSWmplayer-snapshot	+=	CSWnas
 
 CHECKPKG_OVERRIDES_CSWmplayer-snapshot	+=	no-direct-binding|/opt/csw/bin/mplayer-snapshot|is|not|directly|bound|to|soname|libGL.so
@@ -172,9 +172,54 @@ SPKG_DESC_CSWmencoder-snapshot			=	$(DESCRIPTION), the encoder
 PKGFILES_CSWmencoder-snapshot			+=	/opt/csw/bin/mencoder-snapshot
 PKGFILES_CSWmencoder-snapshot			+=	/opt/csw/share/man/man1/mencoder-snapshot.1
 PKGFILES_CSWmencoder-snapshot			+=	/opt/csw/share/man/cat1/mencoder-snapshot.1
-ARCHALL_CSWmencoder-snapshot			=	1
 RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWmplayer-snapshot
 CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	surplus-dependency|CSWmplayer-snapshot
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWfaac
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWliba52
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibfaad2
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibfribidi0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibjpeg62
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWliblzo2-2
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibmad0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibmpg123-0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibogg0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibrtmp0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibx264-133
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibxvidcore4
+RUNTIME_DEP_PKGS_CSWmencoder-snapshot	+=	CSWlibz1
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|liba52.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libbz2.so.1
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libfaac.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libfaad.so.2
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libfreetype.so.6
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libfribidi.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libiconv.so.2
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libjpeg.so.62
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libkstat.so.1
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|liblzo2.so.2
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libmad.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libmp3lame.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libmpg123.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libogg.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libpng12.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|librtmp.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libspeex.so.1
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libtheoradec.so.1
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libvorbis.so.0
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libvorbisenc.so.2
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libx264.so.133
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libxvidcore.so.4
+CHECKPKG_OVERRIDES_CSWmencoder-snapshot	+=	no-direct-binding|/opt/csw/bin/mencoder-snapshot|is|not|directly|bound|to|soname|libz.so.1
 
 PACKAGES							+=	CSWmplayer-snapshot-doc
 CATALOGNAME_CSWmplayer-snapshot-doc	=	$(NAME)_snapshot_doc
@@ -250,8 +295,7 @@ post-install:
 	gtar --directory $(DESTDIR)/$(thehtmldocdir) --extract
 	cd $(DESTDIR)/$(bindir) && \
 	mv mplayer mplayer-snapshot && \
-	rm -f mencoder && \
-	ln -s mplayer-snapshot mencoder-snapshot
+	mv mencoder mencoder-snapshot && \
 	cd $(DESTDIR)/$(mandir)/man1 && \
 	mv mplayer.1 mplayer-snapshot.1 && \
 	rm -f mencoder.1 && \
