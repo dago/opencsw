@@ -1,6 +1,6 @@
 # $Id$
 NAME = libicu
-VERSION = 51.1
+VERSION = 51.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -24,35 +24,42 @@ PACKAGES += CSWlibicui18n51
 SPKG_DESC_CSWlibicui18n51 = International Components for Unicode, libicui18n.so.51
 PKGFILES_CSWlibicui18n51 += $(call pkgfiles_lib,libicui18n.so.51)
 RUNTIME_DEP_PKGS_CSWlibicui18n51 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWlibicui18n51 += CSWlibicudata51
 
 PACKAGES += CSWlibicuio51
 SPKG_DESC_CSWlibicuio51 = International Components for Unicode, libicuio.so.51
 PKGFILES_CSWlibicuio51 += $(call pkgfiles_lib,libicuio.so.51)
 RUNTIME_DEP_PKGS_CSWlibicuio51 += CSWlibicui18n51
 RUNTIME_DEP_PKGS_CSWlibicuio51 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWlibicuio51 += CSWlibicudata51
 
 PACKAGES += CSWlibicule51
 SPKG_DESC_CSWlibicule51 = International Components for Unicode, libicule.so.51
 PKGFILES_CSWlibicule51 += $(call pkgfiles_lib,libicule.so.51)
 RUNTIME_DEP_PKGS_CSWlibicule51 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWlibicule51 += CSWlibicudata51
 
 PACKAGES += CSWlibiculx51
 SPKG_DESC_CSWlibiculx51 = International Components for Unicode, libiculx.so.51
 PKGFILES_CSWlibiculx51 += $(call pkgfiles_lib,libiculx.so.51)
 RUNTIME_DEP_PKGS_CSWlibiculx51 += CSWlibicuuc51
 RUNTIME_DEP_PKGS_CSWlibiculx51 += CSWlibicule51
+RUNTIME_DEP_PKGS_CSWlibiculx51 += CSWlibicudata51
 
 PACKAGES += CSWlibicutest51
 SPKG_DESC_CSWlibicutest51 = International Components for Unicode, libicutest.so.51
 PKGFILES_CSWlibicutest51 += $(call pkgfiles_lib,libicutest.so.51)
 RUNTIME_DEP_PKGS_CSWlibicutest51 += CSWlibicutu51
 RUNTIME_DEP_PKGS_CSWlibicutest51 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWlibicutest51 += CSWlibicui18n51
+RUNTIME_DEP_PKGS_CSWlibicutest51 += CSWlibicudata51
 
 PACKAGES += CSWlibicutu51
 SPKG_DESC_CSWlibicutu51 = International Components for Unicode, libicutu.so.51
 PKGFILES_CSWlibicutu51 += $(call pkgfiles_lib,libicutu.so.51)
 RUNTIME_DEP_PKGS_CSWlibicutu51 += CSWlibicuuc51
 RUNTIME_DEP_PKGS_CSWlibicutu51 += CSWlibicui18n51
+RUNTIME_DEP_PKGS_CSWlibicutu51 += CSWlibicudata51
 
 PACKAGES += CSWlibicuuc51
 SPKG_DESC_CSWlibicuuc51 = International Components for Unicode, libicuuc.so.51
@@ -60,9 +67,9 @@ PKGFILES_CSWlibicuuc51 += $(call pkgfiles_lib,libicuuc.so.51)
 RUNTIME_DEP_PKGS_CSWlibicuuc51 += CSWlibicudata51
 
 # This is the presence of /usr/share/lib/zoneinfo which is ok
-CHECKPKG_OVERRIDES_CSWlibicuuc51 += file-with-bad-content|/usr/share|root/opt/csw/lib/libicuuc.so.51.1
-CHECKPKG_OVERRIDES_CSWlibicuuc51 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libicuuc.so.51.1
-CHECKPKG_OVERRIDES_CSWlibicuuc51 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libicuuc.so.51.1
+CHECKPKG_OVERRIDES_CSWlibicuuc51 += file-with-bad-content|/usr/share|root/opt/csw/lib/libicuuc.so.51.2
+CHECKPKG_OVERRIDES_CSWlibicuuc51 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libicuuc.so.51.2
+CHECKPKG_OVERRIDES_CSWlibicuuc51 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libicuuc.so.51.2
 
 PACKAGES += CSWlibicu-dev
 SPKG_DESC_CSWlibicu-dev = Development files for libicu.so.51
