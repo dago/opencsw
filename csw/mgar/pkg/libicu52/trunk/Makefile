@@ -83,6 +83,15 @@ RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicutest52
 RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicutu52
 RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicuuc52
 
+# For i386 due to different linker settings
+CHECKPKG_OVERRIDES_CSWlibicutest51 += surplus-dependency|CSWlibicudata51
+CHECKPKG_OVERRIDES_CSWlibicutest51 += surplus-dependency|CSWlibicui18n51
+CHECKPKG_OVERRIDES_CSWlibicutu51 += surplus-dependency|CSWlibicudata51
+CHECKPKG_OVERRIDES_CSWlibicui18n51 += surplus-dependency|CSWlibicudata51
+CHECKPKG_OVERRIDES_CSWlibiculx51 += surplus-dependency|CSWlibicudata51
+CHECKPKG_OVERRIDES_CSWlibicule51 += surplus-dependency|CSWlibicudata51
+CHECKPKG_OVERRIDES_CSWlibicuio51 += surplus-dependency|CSWlibicudata51
+
 DISTNAME = icu
 WORKSRC = $(WORKDIR)/$(DISTNAME)/source
 
