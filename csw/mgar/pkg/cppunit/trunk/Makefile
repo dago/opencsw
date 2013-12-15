@@ -27,15 +27,15 @@ PKGFILES_CSWlibcppunit1-12-1 += $(call pkgfiles_lib,libcppunit-1.12.so.1)
 RUNTIME_DEP_PKGS_CSWlibcppunit1-12-1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibcppunit1-12-1 += CSWlibstdc++6
 
-PACKAGES += CSWcppunit-dev
-SPKG_DESC_CSWcppunit-dev = Development files C++ port of JUnit
+PACKAGES += CSWlibcppunit-dev
+SPKG_DESC_CSWlibcppunit-dev = Development files C++ port of JUnit
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibcppunit1-12-1
-RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibcppunit-dev += CSWlibcppunit1-12-1
+RUNTIME_DEP_PKGS_CSWlibcppunit-dev += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibcppunit-dev += CSWlibstdc++6
 
 # This is just an example
-CHECKPKG_OVERRIDES_CSWcppunit-dev += file-with-bad-content|/usr/local|root/opt/csw/gxx/share/doc/cppunit/money_example.html
+CHECKPKG_OVERRIDES_CSWlibcppunit-dev += file-with-bad-content|/usr/local|root/opt/csw/gxx/share/doc/cppunit/money_example.html
 
 GARCOMPILER = GNU
 
