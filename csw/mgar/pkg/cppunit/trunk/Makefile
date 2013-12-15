@@ -18,7 +18,8 @@ PATCHFILES += cppunit-1.12.1-configure.in-ieeefp.h.patch
 #   http://sourceforge.net/tracker/?func=detail&aid=3483400&group_id=11795&atid=111795
 PATCHFILES += cppunit-1.12.1-configure.in-fabs.patch
 
-PATCHFILES += cppunit-1.12.1-configure.in-config-headers.patch
+# Replace really outdated macros
+PATCHFILES += 0003-Replace-macro-which-is-so-deprecated-that-its-use-is.patch
 
 PACKAGES += CSWlibcppunit1-12-1
 SPKG_DESC_CSWlibcppunit1-12-1 = C++ port of JUnit, libcppunit-1.12.so.1
@@ -29,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWlibcppunit1-12-1 += CSWlibstdc++6
 PACKAGES += CSWcppunit-dev
 SPKG_DESC_CSWcppunit-dev = Development files C++ port of JUnit
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibcppunit1-12-1-gxx
+RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibcppunit1-12-1
 RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcppunit-dev += CSWlibstdc++6
 
@@ -42,6 +43,6 @@ BUILD64 = 1
 
 include gar/category.mk
 
-post-patch-modulated:
+post-patch:
 	cd $(WORKSRC) && autoreconf -fi
 	@$(MAKECOOKIE)
