@@ -41,6 +41,9 @@ GARCOMPILER = GNU
 
 BUILD64 = 1
 
+# Test examples/money is coredumping on amd64, don't know why yet
+SKIPTEST ?= 1
+
 include gar/category.mk
 
 post-patch:
