@@ -1,0 +1,2 @@
+
+glib-compile-schemas /opt/csw/share/glib-2.0/schemas/org.gnome.Evince.gschema.xml
