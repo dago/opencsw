@@ -14,6 +14,7 @@ endef
 SPKG_SOURCEURL = http://projects.gnome.org/evince/
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(GNOME_VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += CSWevince.postinstall
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # GARFLAVOR = DBG
@@ -134,6 +135,7 @@ RUNTIME_DEP_PKGS_CSWevince += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWevince += CSWlibpoppler-glib8
 RUNTIME_DEP_PKGS_CSWevince += CSWlibkpathsea6
 RUNTIME_DEP_PKGS_CSWevince += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWevince += CSWlibglib2-dev
 # sparc, there is not realy a difference either elfdump nor ldd
 RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibpangoft2-1-0-0
@@ -143,6 +145,7 @@ RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWevince_sparc += CSWlibpangocairo1-0-0
 RUNTIME_DEP_PKGS_CSWevince += $(RUNTIME_DEP_PKGS_CSWevince_$(GARCH))
+CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWlibglib2-dev
 
 # at least the machine-id file must exist, dbus-daemon creates this
 # CHECKPKG_OVERRIDES_CSWevince += surplus-dependency|CSWdbus
