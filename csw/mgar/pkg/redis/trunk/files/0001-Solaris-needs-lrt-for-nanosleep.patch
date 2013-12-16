@@ -1,0 +1,25 @@
+From 754f0d38b843f84f01d3617257f8ec1fe82cf1c7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 16 Dec 2013 09:37:56 +0100
+Subject: [PATCH] Solaris needs -lrt for nanosleep
+
+---
+ src/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index c37549d..eadd6b7 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -57,7 +57,7 @@ DEBUG=-g -ggdb
+ ifeq ($(uname_S),SunOS)
+ 	INSTALL=cp -pf
+ 	FINAL_CFLAGS+= -D__EXTENSIONS__ -D_XPG6
+-	FINAL_LIBS+= -ldl -lnsl -lsocket -lpthread
++	FINAL_LIBS+= -ldl -lnsl -lsocket -lpthread -lrt
+ else ifeq ($(uname_S),Darwin)
+ 	
+ else
+-- 
+1.8.4.1
+

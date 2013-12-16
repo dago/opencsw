@@ -2,23 +2,24 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = redis
-VERSION = 2.6.14
+VERSION = 2.8.3
 
-DESCRIPTION = An advanced key-value storee
-define BLURB
-endef
+DESCRIPTION = An advanced key-value store
 
-MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(Solalaris10-i386
+MASTER_SITES = http://download.redis.io/releases/
+DISTFILES += $(DISTNAME).tar.gz
 
 PACKAGES += CSWredis
-SPKG_DESC_CSWredis = An advan
-#BUILD64 = 1
-#ISAEXEC = 1
+SPKG_DESC_CSWredis = An advanced key-value store
+
+BUILD64 = 1
+ISAEXEC = 1
 
 GARCOMPILER = GNU
 
 PATCHFILES += 0001-Fix-tclsh-finding.patch
+
+PATCHFILES += 0001-Solaris-needs-lrt-for-nanosleep.patch
 
 GARCOMPILER = GCC4
 
@@ -30,13 +31,13 @@ CONFIGURE_SCRIPTS =
 
 BUILD_ARGS += V=1
 
-# There are three tests failing which are harmless because strings are not compared in the actual program:
-#   Expected 'Infinity' to be equal to 'inf'
-#   https://groups.google.com/forum/#!msg/redis-db/gNtfZ3J-FAU/Ul-P_huFcdMJ
-SKIPTEST ?= 1
+# Some tests fail
+# SKIPTEST ?= 1
 
 INSTALL_OVERRIDE_VARS += PREFIX
 INSTALL_OVERRIDE_VAR_PREFIX = $(DESTDIR)$(prefix)
+INSTALL_OVERRIDE_VARS += INSTALL_BIN
+INSTALL_OVERRIDE_VAR_INSTALL_BIN = $(DESTDIR)$(bindir)
 
 # This is for tail taking -n namely gtail for us
 TEST_ENV_PATH = $(prefix)/gnu:$(PATH)
