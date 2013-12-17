@@ -43,7 +43,8 @@ TEST_SCRIPTS =
 CONFIGURE_ARGS += $(DIRPATHS)
 
 # build package on Solaris 10
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-spar# work around ld out of sync on buildfarm
+CHECKPKG_OVERRIDES_CSWfreeciv += surplus-dependency|CSWlibfreetypeparc solaris10-i386
 
 include gar/category.mk
 
