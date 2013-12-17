@@ -23,13 +23,16 @@ RUNTIME_DEP_PKGS_CSz1
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibsdl1-2-0
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWpango
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibreadline6eciv += CSWfconfig
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWsdlmixer
 RUNTIME_DEP_PKGS_CSWdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgdk-x11-eeciv += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgdk-x11-eeciv RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWliblzma5
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibfreetype6
+ += CSWlibgio2-0-0
 
 GARCOMPILER = GNU
 
