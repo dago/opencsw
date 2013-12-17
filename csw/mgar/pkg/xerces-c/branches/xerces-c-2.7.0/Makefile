@@ -17,48 +17,46 @@ MASTEarchive.apache.org/dist/xml/xerces-c/source/
 DISTNAME = $(NAME)-src_$(VERSION)
 DISTFILES += $(DISTNAME).tar.gz
 
-# PATCHFILES += 0001-Do-not-strip-norunpath.patchrc solaris10-i386
+ solaris10-i386
 
 VENDOR_URL = http://xerces.apache.org/xerces-c/
 
 LICENSE = LICENSE
 
-PACKAGES += CSWlibxerces-c3-1
-SPKG_DESC_CSWlibxerces-c3-1 = Xerces XML parser for C++ providing libxerces-c-3.1.so
-PKGFILES_CSWlibxerces-c3-1 = $(call pkgfiles_lib,libxerces-c-3.1.so)
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicui18n48
+PACKAGES 27
+SPKG_DESC_CSWlibxerces-c27 = Xerces XML parser for C++ providing libxerces-c.so.27
+PKGFILES_CSWlibxerces-c27 = $(call pkgfiles_lib,libxerces-c.so.27)
 
-# The version number is in the base and not appended to .so as usual
-CHECKPKG_OVERRIDES_CSWlibxerces-c3-1 += soname-equals-filename
+PACKAGES += CSWlibxerces-depdom27
+SPKG_DESC_CSWlibxerces-depdom27 = Xerces XML parser for C++ providing libxerces-depdom.so.27
+PKGFILES_CSWlibxerces-depdom27 = $(call pkgfiles_lib,libxerces-depdom.so.27)
 
-PACKAGES += CSWlibxerces-c-dev
-SPKG_DESC_CSWlibxerces-c-dev = Development files for libxerces-c-3.1.so
+PACKAGES += CSWlibxerces-c27-dev
+SPKG_DESC_CSWlibxerces-c27-dev = Development files for libxerces-c.so.27
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWlibxerces-c3-1
+RUNTIME_DEP_PKGS_CSWlibxerces-c27-dev += CSWlibxerces-c27
+CHECKPKG_OVERRIDES_CSWlibxerces-c27-dev += surplus-dependency|CSWlibxerces-c27
+RUNTIME_DEP_PKGS_CSWlibxerces-c27-dev += CSWlibxerces-depdom27
+CHECKPKG_OVERRIDES_CSWlibxerces-c27-dev += surplus-dependency|CSWlibxerces-depdom27
 
-PACKAGES += CSWxerces-c
-CATALOGNAME_CSWxerces-c = xerces_c
-SPKG_DESC_CSWxerces-c = Utility programs from the Xerces XML parser
-PKGFILES_CSWxerces-c = $(bindir)/.*
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibxerces-c3-1
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibz1
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicui18n48
+WORKSRC = $(WORKDIR)/$(DISTNAME)/src/xercesc
 
-BUILD64 WORKSRC = $(WORKDIR)/$(DISTNAME)/src/xercesc4 = 1
-ISAEXEC = 1
+EXTRA_LINKER_FLAGS += -norunpath
 
-EXTRA_CONFIGURE_EXPORTS = icu_config
-EXTRA_CONFIGURE_ENV_icu_config = $(bindir)/icu-config
+EXTRA_BUILD_EXPORTS += XERCESCROOT
+BUILD_ENV_XERCESCROOT = $(abspath $(WORKDIR)/$(DISTNAME))
 
-include
+EXTRA_INSTALL_EXPORTS += XERCESCROOT
+INSTALL_ENV_XERCESCROOT = $(abspath $(WORKDIR)/$(DISTNAME))
+
+# Arguments are not passed in the default Makefile
+EXTRA_INSTALL_EXPORTS += MAKE
+INSTALL_ENV_MAKE = gmake DESTDIR=$(DESTDIR)
+
+# There is no testsuite
+TEST_SCRIPTS =
+
+EXTRA_PAX_ARGS += -s ',/include/,/include/xercesc-2.7.0/,'
+EXTRA_PAX_ARGS += -s ',/lib/(.*\.so)$$,/lib/xercesc-2.7.0/$$1,'
+
+include gar/category.mk
