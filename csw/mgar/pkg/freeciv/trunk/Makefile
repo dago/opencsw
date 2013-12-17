@@ -1,5 +1,5 @@
 NAME = freeciv
-VERSION = 2.3.4
+VERSION = 2.4.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -9,7 +9,7 @@ Freeciv is a Free and Open Source empire-building strategy game inspired by the 
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAMbz2-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=138322
@@ -33,7 +33,7 @@ RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgdk-x11-eeciv += CSWlibgio2-0-0
 
 GARCOMPILER = GNU
 
-PATCHFILES += 0001-use-finite-instead-of-isfinite.patch
+PATCHFILES += 0001-use-finite-i-functionnstead-of-isfinite.patch
 
 TEST_SCRIPTS =
 
