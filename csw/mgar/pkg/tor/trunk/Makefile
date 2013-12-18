@@ -1,6 +1,6 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.3.25
+VERSION = 0.2.4.19
 CATEGORIES = net
 GARTYPE = v2
 
