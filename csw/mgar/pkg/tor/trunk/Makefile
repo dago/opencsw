@@ -1,8 +1,4 @@
 # $Id$
-# TODO: need to create smf start/stop script.
-#	add "PidFile /var/run/tor.pid" to torrc.CSW sample conf.
-#	also add "Log syslog" to torrc.CSW sample conf.
-#	also add "RunAsDaemon 1" to torrc.CSW.
 NAME = tor
 VERSION = 0.2.4.19
 GARTYPE = v2
@@ -40,3 +36,11 @@ MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILES += tor/torrc
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include
+post-install-modulated:
+
+	# add some config options to sample conf
+	echo "# OpenCSW added default options" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
+	echo "Log syslog" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
+	echo "PidFile /var/run/tor.pid" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
+	echo "RunAsDaemon 1" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
+	@$(MAKECOOKIE)
