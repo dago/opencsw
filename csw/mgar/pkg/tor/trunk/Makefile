@@ -33,7 +33,7 @@ PRESERVECONF += $(sysconfdir)/tor/torrc
 MIGRATE_FILES += tor/tor-tsocks.conf
 MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILES += tor/torrc
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparcPKGFILES_CSWtor = /opt/csw/share/doc/tor/README.CSWrc solaris10-i386
 
 include
 post-install-modulated:
@@ -43,4 +43,13 @@ post-install-modulated:
 	echo "Log syslog" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
 	echo "PidFile /var/run/tor.pid" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
 	echo "RunAsDaemon 1" >> $(DESTDIR)$(sysconfdir)/tor/torrc.sample
+
+	# Copy SMF script
+	ginstall -Dm 755 $(FILEDIR)/cswtor \
+		$(DESTDIR)/etc/opt/csw/init.d/cswtor
+
+	# Copy README.CSW to docs
+	ginstall -m 444 $(FILEDIR)/README.CSW \
+		$(DESTDIR)/opt/csw/share/doc/tor/
+
 	@$(MAKECOOKIE)
