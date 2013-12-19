@@ -1,0 +1,30 @@
+#!/bin/sh
+
+#FMRI network
+
+DAEMON=/opt/csw/bin/tor
+CONF=/etc/opt/csw/tor/torrc
+pidfile=/var/run/tor.pid
+
+case "$1" in
+  start)
+    echo "Starting Tor"
+    $DAEMON -f $CONF
+    ;;
+  stop)
+    echo "Stopping Tor"
+    kill `cat $pidfile`
+    ;;
+  restart)
+    echo "Restarting Tor"
+    kill `cat $pidfile`
+    sleep 1
+    $DAEMON -f $CONF
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | restart }"
+    exit 1
+    ;;
+esac
+
+exit 0

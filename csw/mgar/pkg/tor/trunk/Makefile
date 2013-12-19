@@ -1,10 +1,15 @@
 # $Id$
+# TODO: need to create smf start/stop script.
+#	add "PidFile /var/run/tor.pid" to torrc.CSW sample conf.
+#	also add "Log syslog" to torrc.CSW sample conf.
+#	also add "RunAsDaemon 1" to torrc.CSW.
 NAME = tor
 VERSION = 0.2.4.19
-CATEGORIES = net
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
+define BLURB
+Basically tor provides a distributed network of servers (onion routers). Users bounce their TCP streams (web traffic, ftp, ssh, etc) around the routers, and recipients, observers, and even the routers themselves have difficulty tracking the source of the stream.uter
 define BLURB
 endef
 
@@ -30,7 +35,7 @@ PRESERVECONF += $(sysconfdir)/tor/tor-tsocks.conf
 PRESERVECONF += $(sysconfdir)/tor/torrc
 
 MIGRATE_FILES += tor/tor-tsocks.conf
-MIGRATE_FILES += tor/torrc
+MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILES += tor/torrc
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
