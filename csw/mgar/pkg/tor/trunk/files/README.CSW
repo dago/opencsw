@@ -1,0 +1,3 @@
+NOTE: This is a system level instance of Tor which may not be the most secure way to implement Tor.  You should read the Tor documentation and understand the security implications of running a system level Tor before depending on this method for anonymity.
+
+https://www.torproject.org/docs/documentation.html
