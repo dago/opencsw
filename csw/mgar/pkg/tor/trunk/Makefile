@@ -33,7 +33,7 @@ PRESERVECONF += $(sysconfdir)/tor/torrc
 MIGRATE_FILES += tor/tor-tsocks.conf
 MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILES += tor/torrc
 
-PACKAGING_PLATFORMS = solaris10-sparcPKGFILES_CSWtor = /opt/csw/share/doc/tor/README.CSWrc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include
 post-install-modulated:
