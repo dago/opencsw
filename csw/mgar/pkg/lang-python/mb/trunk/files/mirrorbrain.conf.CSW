@@ -1,0 +1,15 @@
+[general]
+instances = main
+
+[main]
+dbuser = mirrorbrain
+dbpass = 12345
+dbdriver = postgresql
+dbhost = 127.0.0.1
+# optional: dbport = ...
+dbname = mirrorbrain
+
+[mirrorprobe]
+# logfile = /var/opt/csw/mirrorbrain/mirrorprobe.log
+# loglevel = INFO
+
