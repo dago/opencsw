@@ -9,13 +9,23 @@ GARTYPE = v2
 DESCRIPTION = Brief description
 
 MASTER_SITES = http://mirrorbrain.org/files/releases/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += mirrorbrain.conf.CSW
 
 PATCHFILES += 0001-New-locations-for-GeoIP-databases.patch
 
-WORKSRC = $(WORKDIR)/$(DISTNAME)/mb
+# We really do only care for MirrorBrain on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 LICENSE = COPYING
+
+WORKSRC = $(WORKDIR)/$(DISTNAME)/mb
+
+REINPLACEMENTS += conf
+REINPLACE_MATCH_conf = /etc/mirrorbrain\.conf
+REINPLACE_WITH_conf = $(sysconfdir)/mirrorbrain.conf
+REINPLACE_FILES_conf += mb.py
+REINPLACE_FILES_conf += mb/conf.py
 
 PACKAGES += CSWpy-mb
 SPKG_DESC_CSWpy-mb = Python module used by the MirrorBrain commandline tools
@@ -29,9 +39,12 @@ RUNTIME_DEP_PKGS_CSWpy-mb += CSWgeolitedb
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpy-cmdln
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWgeolitedb
 
+PRESERVECONF += $(sysconfdir)/mirrorbrain.conf
+
 # There is no testsuite
 SKIPTEST ?= 1
 
 include gar/category.mk
 
-
+post-merge-all:
+	ginstall -D -m 0640 $(WORKDIR)/mirrorbrain.conf.CSW $(PKGROOT)$(sysconfdir)/mirrorbrain.conf.CSW
