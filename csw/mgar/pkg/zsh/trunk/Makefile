@@ -29,6 +29,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-maildir-support
 CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(NAME)/functions
 CONFIGURE_ARGCONFIGURE_ARGS += --enable-etcdir=$(sysconfdir)
+/CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/bin/zsh-$(VERSION)
 /sh/functions/mere
 
 ETCSHELLS = /opt/csw/bin/zsh
