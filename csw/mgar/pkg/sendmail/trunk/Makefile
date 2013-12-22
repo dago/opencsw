@@ -31,12 +31,11 @@
 # + #4150 Sendmail 8.14.4 released -> this is 8.14.5
 
 NAME = sendmail
-VERSION = 8.14.6
-CATEGORIES = server
+VERSION = 8.14.7
 GARTYPE = v2
 
 DESCRIPTION = Sendmail MTA
-define BLURB
+define BLURBBLURB
   Sendmail MTA
 endef
 
@@ -145,33 +144,16 @@ ALTERNATIVE_sendmail  = $(bindir)/mailq sendmail $(bindir)/mailq.sendmail 100
 ALTERNATIVE_sendmail += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail
 ALTERNATIVE_sendmail += $(mandir)/man1/mailq.1 mailq.1 $(mandir)/man1/mailq1.1.sendmail
 ALTERNATIVE_sendmail += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail
-ALTERNATIVE_sendmail += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/REINPLACE_USRLOCAL += $(sysconfdir)/movemail.conf
+REINPLACE_USRLOCAL += $(bindir)/bounce-resender.pl
+REINPLACE_USRLOCAL += $(bindir)/movemail.pl
+REINPLACE_USRLOCAL += $(bindir)/doublebounce.pl
+REINPLACE_USRLOCAL += $(bindir)/re-mqueue.pl
+REINPLACE_USRLOCAL += $(bindir)/expn.pl
+REINPLACE_WHEN_USRLOCAL = postinstall
 
-# Look thru these to see if they are harmless, e.g. examples
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/etc/opt/csw/movemail.conf
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/bounce-resender.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/etrn.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/re-mqueue.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/movemail.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/doublebounce.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/expn.pl
-CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sendmail_contrib/mmuegel
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/README
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/fax.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/qpage.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/procmail.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/mailer/phquery.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/dragonfly.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/freebsd5.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/freebsd6.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/ostype/powerux.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/cf/mail.cs.mc
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/cf/mail.eecs.mc
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/cf/knecht.mc
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/sendmail/cf/feature/local_procmail.m4
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sendmail.8
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smrsh.8
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/sendmail/cf/README
+# Don't know how to fix this or if it needs fixing
+CHECKPKG_OVERRIDES_CSWsendmail += no-direct-bindinge/sendmail/cf/README
 
 # The static libs from libmilter
 CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsmutil.a
@@ -214,7 +196,7 @@ configure-custom:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@echo " ==> Building $(NAME) (custom)"
+	@echo " ==> Building $(NAME) (custom)PATH=/opt/csw/gnu:/opt/csw/bin:/bin)"
 	cd $(WORKSRC) && ./Build
 	@$(MAKECOOKIE)
 
