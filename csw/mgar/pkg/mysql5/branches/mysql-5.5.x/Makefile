@@ -21,7 +21,7 @@ VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # Keep default old Studio 12.0 for old S9 only
@@ -126,7 +126,7 @@ RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER)_$(GAROSREL))
 # For GCC4
-#RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -164,9 +164,9 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROSREL))
 ### For GCC4
-#RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
-#RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
-CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
 # must build for sparcv8+ on Solaris 9.
@@ -176,7 +176,7 @@ ifeq ($(shell /usr/bin/uname -pr),5.9 sparc)
   CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
 endif
 
-CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
+#CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
@@ -186,9 +186,9 @@ RUNTIME_DEP_PKGS_CSW$(NAME)_5.9 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)_5.10 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME) += $(RUNTIME_DEP_PKGS_CSW$(NAME)_$(GAROSREL))
 ### For GCC4
-#RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
-#RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
-#RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
