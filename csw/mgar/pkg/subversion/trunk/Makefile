@@ -20,7 +20,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.8.0
+VERSION = 1.8.5
 GARTYPE = v2
 utils
 GARTYPE = v2
