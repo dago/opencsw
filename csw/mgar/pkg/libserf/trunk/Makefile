@@ -43,8 +43,7 @@ SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
 PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibserf-d3v = CSWlibserf1-0
 
-EXTRA_LIB = $(prSCONS_FLAGS += PREFIX=$(prefix) 
-SCONS_FLAGS += APR=$(bindir)/apr-1-config
+EXTRA_LIB = $(prSCONS_FLAGS += APR=$(bindir)/apr-1-config
 SCONS_FLAGS += APU=$(bindir)/apu-1-config
 
 include gar/category.mk
@@ -52,14 +51,14 @@ include gar/category.mk
 build-serf:
 	(cd $(WORKSRC); \
 		scons \
-		$(SCONS_FLAGS))
+		$(SCONS_FLAGS) PREFIX=$(prefix) )
 	@$(MAKECOOKIE)
 
 install-serf:
 	(cd $(WORKSRC); \
 		scons  \
 		$(SCONS_FLAGS) \
-		-Q --prefix=$(DESTDIR)$(BUILD_PREFIX) \
+		-Q PREFIX=$(DESTDIR)$(BUILD_PREFIX) \
 		install)
 	@$(MAKECOOKIE)
 
