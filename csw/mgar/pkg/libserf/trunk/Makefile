@@ -13,9 +13,10 @@ define BLURB
     operation.
 endef
 
-MASTER_SITES = http://serf.googlecode.com/files/
-DISTFILES  = $(DISTNAME).tar.bz2
-LICENSE = LICENSE
+MASTER_SITES = http://serf.googlecode.com/f  = $(DISTNAME).tar.bz2
+PATCHFILES  += 0001-mark-solaris-as-posix-for-scons.patch
+LICENSE      = LICENSE
+VENDOR_URL  ICENSE
 VENDOR_URL = http://code.gooCONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = serf
 INSTALL_SCRIPTS = serf
