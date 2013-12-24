@@ -1,0 +1,24 @@
+From 885dd84598fdf04abc0daf28cd26bded41dba2bc Mon Sep 17 00:00:00 2001
+From: THURNER rupert <rupert@opencsw.org>
+Date: Tue, 24 Dec 2013 18:42:21 +0100
+Subject: [PATCH] mark solaris as posix for scons
+
+---
+ SConstruct | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/SConstruct b/SConstruct
+index d9be156..1de6cb7 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -248,6 +248,7 @@ if sys.platform != 'win32':
+ 
+   if sys.platform == 'sunos5':
+     env.Append(LIBS='m')
++    env['PLATFORM'] = 'posix'
+ else:
+   # Warning level 4, no unused argument warnings
+   env.Append(CCFLAGS=['/W4', '/wd4100'])
+-- 
+1.8.4.1
+
