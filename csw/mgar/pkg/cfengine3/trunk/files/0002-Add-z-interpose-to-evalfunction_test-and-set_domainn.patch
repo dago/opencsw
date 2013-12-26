@@ -1,0 +1,34 @@
+From 7db6e67b943a7f8d04c0e9d05028239c0727a048 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 26 Dec 2013 18:26:17 +0100
+Subject: [PATCH] Add -z interpose to evalfunction_test and set_domainname_test
+
+---
+ tests/unit/Makefile.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/unit/Makefile.in b/tests/unit/Makefile.in
+index 9304065..cfea627 100644
+--- a/tests/unit/Makefile.in
++++ b/tests/unit/Makefile.in
+@@ -205,7 +205,7 @@ domainname_test_DEPENDENCIES = ../../libpromises/libpromises.la \
+ 	libtest.la
+ evalfunction_test_SOURCES = evalfunction_test.c
+ evalfunction_test_OBJECTS = evalfunction_test.$(OBJEXT)
+-evalfunction_test_LDADD = $(LDADD)
++evalfunction_test_LDADD = $(LDADD) -z interpose
+ evalfunction_test_DEPENDENCIES = ../../libpromises/libpromises.la \
+ 	libtest.la
+ am_exec_config_test_OBJECTS = exec-config-test.$(OBJEXT) \
+@@ -728,7 +728,7 @@ csv_writer_test_SOURCES = csv_writer_test.c ../../libutils/csv_writer.c
+ csv_writer_test_LDADD = libtest.la libstr.la
+ conversion_test_SOURCES = conversion_test.c ../../libpromises/conversion.c
+ set_domainname_test_SOURCES = set_domainname_test.c
+-set_domainname_test_LDADD = libstr.la ../../libpromises/libpromises.la
++set_domainname_test_LDADD = -z interpose libstr.la ../../libpromises/libpromises.la
+ str_test_SOURCES = str_test.c
+ str_test_LDADD = libstr.la
+ xml_writer_test_SOURCES = xml_writer_test.c ../../libutils/xml_writer.c
+-- 
+1.8.4.1
+
