@@ -17,6 +17,7 @@ RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWsvn
+RUNTIME_DEP_PKGS_CSWpy-subvertpy_5.10 += CSWlibuuid1
 RUNTIME_DEP_PKGS_CSWpy-subvertpy_5.11 += CSWlibuuid1
 
 SVN_LIBRARY_PATH = $(libdir)/svn
