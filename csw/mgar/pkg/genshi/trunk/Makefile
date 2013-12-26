@@ -21,8 +21,6 @@ RUNTIME_DEP_PKGS_CSWgenshi += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgenshi += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWgenshi += CSWlibpython2-7-1-0
 
-ARCHALL = 1
-
 VENDOR_URL = http://genshi.edgewall.org/
 
 TEST_SCRIPTS =
