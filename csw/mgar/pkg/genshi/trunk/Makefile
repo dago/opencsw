@@ -28,6 +28,11 @@ TEST_SCRIPTS =
 # This is a legacy name, don't change for now
 CHECKPKG_OVERRIDES_CSWgenshi += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWgenshi += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWgenshi += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/genshi/template/tests/plugin.py
+CHECKPKG_OVERRIDES_CSWgenshi += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/genshi/template/tests/plugin.py
+CHECKPKG_OVERRIDES_CSWgenshi += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/genshi/template/tests/plugin.py
+CHECKPKG_OVERRIDES_CSWgenshi += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/genshi/template/tests/plugin.py
+
 
 include gar/category.mk
 
