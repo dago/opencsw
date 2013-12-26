@@ -13,7 +13,7 @@ UPSTREAM_MASTER_SITES = http://pypi.python.org/pypi/subvertpy
 LICENSE = COPYING
 
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWsvn
 
 SVN_LIBRARY_PATH = $(libdir)/svn
