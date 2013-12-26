@@ -73,6 +73,8 @@ PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-runagent.*
 PKGFILES_CSW$(NAME)server += $(initddir)/csw$(NAME)-cfserverd
 PKGFILES_CSW$(NAME)server += $(docdir)/$(NAME)_server/.*\.CSW
 CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)server|catalogname=$(NAME)_server|expected-catalogname=$(NAME)server
+RUNTIME_DEP_PKGS_CSW$(NAME)server+= CSWlibtokyocabinet9
+CHECKPKG_OVERRIDES_CSW$(NAME)server += surplus-dependency|CSWlibtokyocabinet9
 
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
@@ -91,6 +93,8 @@ PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfexecd
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfmonitord
 PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/.*\.CSW
 CHECKPKG_OVERRIDES_CSW$(NAME)client += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)client|catalogname=$(NAME)_client|expected-catalogname=$(NAME)client
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibtokyocabinet9
+CHECKPKG_OVERRIDES_CSW$(NAME)client += surplus-dependency|CSWlibtokyocabinet9
 
 # CFEngine provides three daemons
 #  - cf-execd (client)
