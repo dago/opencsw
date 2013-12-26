@@ -17,6 +17,9 @@ UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWgenshi
 CATALOGNAME = genshi
+RUNTIME_DEP_PKGS_CSWgenshi += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgenshi += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWgenshi += CSWlibpython2-7-1-0
 
 ARCHALL = 1
 
