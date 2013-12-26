@@ -12,14 +12,12 @@ DISTFILES  = $(DISTNAME).tar.gz
 UPSTREAM_MASTER_SITES = http://pypi.python.org/pypi/subvertpy
 LICENSE = COPYING
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-7-1-0
-RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibuuid1
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWsvn
+RUNTIME_DEP_PKGS_CSWpy-subvertpy_5.11 += CSWlibuuid1
 
 SVN_LIBRARY_PATH = $(libdir)/svn
 SVN_HEADER_PATH = $(includedir)/subversion-1
