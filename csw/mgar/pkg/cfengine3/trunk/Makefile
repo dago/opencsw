@@ -40,6 +40,7 @@ UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += 0000-Disable-acceptance-test.patch
 PATCHFILES += 0002-Add-z-interpose-to-evalfunction_test-and-set_domainn.patch
+PATCHFILES += 0003-Make-it-compile-under-solaris-11.patch
 
 #
 # CUSTOM VARIABLES

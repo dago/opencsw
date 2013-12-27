@@ -1,0 +1,2557 @@
+From ae4b57fd3c073eecd9c21c0eeb59df73eddd0851 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Fri, 27 Dec 2013 15:54:51 +0100
+Subject: [PATCH] Make it compile under solaris 11.
+
+---
+ cf-agent/cf-agent.c               |   4 +-
+ cf-agent/files_editline.c         |   2 +-
+ cf-agent/files_editxml.c          |   2 +-
+ cf-agent/vercmp.c                 |   4 +-
+ cf-agent/verify_environments.c    |   2 +-
+ cf-agent/verify_exec.c            |   2 +-
+ cf-agent/verify_files.c           |   4 +-
+ cf-agent/verify_files_utils.c     |   2 +-
+ cf-agent/verify_methods.c         |   2 +-
+ cf-agent/verify_packages.c        |  24 +-
+ cf-agent/verify_processes.c       |   2 +-
+ cf-agent/verify_services.c        |  10 +-
+ cf-execd/cf-execd.c               |   2 +-
+ cf-gendoc/export_xml.c            |   4 +-
+ cf-gendoc/manual.c                |   2 +-
+ cf-monitord/verify_measurements.c |   2 +-
+ libpromises/attributes.c          |   2 +-
+ libpromises/bootstrap.c           |   6 +-
+ libpromises/cf3.defs.h            |   4 +-
+ libpromises/conversion.c          |   4 +-
+ libpromises/evalfunction.c        | 466 +++++++++++++++++++-------------------
+ libpromises/expand.c              |  30 +--
+ libpromises/generic_agent.c       |   4 +-
+ libpromises/policy.c              |   4 +-
+ libpromises/rlist.c               |   4 +-
+ libpromises/scope.c               |  18 +-
+ libpromises/syntax.c              |  14 +-
+ libpromises/syntax.h              |   4 +-
+ libpromises/sysinfo.c             | 100 ++++----
+ libpromises/unix.c                |  28 +--
+ libpromises/vars.c                |  10 +-
+ libpromises/verify_reports.c      |   2 +-
+ tests/unit/assoc_test.c           |   2 +-
+ tests/unit/exec-config-test.c     |   2 +-
+ tests/unit/expand_test.c          |  30 +--
+ tests/unit/scope_test.c           |   6 +-
+ tests/unit/set_domainname_test.c  |   2 +-
+ 37 files changed, 406 insertions(+), 406 deletions(-)
+
+diff --git a/cf-agent/cf-agent.c b/cf-agent/cf-agent.c
+index 61ca750..d969bc9 100644
+--- a/cf-agent/cf-agent.c
++++ b/cf-agent/cf-agent.c
+@@ -1311,7 +1311,7 @@ static void DefaultVarPromise(EvalContext *ctx, const Promise *pp)
+ 
+     switch (dt)
+        {
+-       case DATA_TYPE_STRING:
++       case CFE_DATA_TYPE_STRING:
+        case DATA_TYPE_INT:
+        case DATA_TYPE_REAL:
+ 
+@@ -1327,7 +1327,7 @@ static void DefaultVarPromise(EvalContext *ctx, const Promise *pp)
+ 
+            break;
+ 
+-       case DATA_TYPE_STRING_LIST:
++       case CFE_DATA_TYPE_STRING_LIST:
+        case DATA_TYPE_INT_LIST:
+        case DATA_TYPE_REAL_LIST:
+ 
+diff --git a/cf-agent/files_editline.c b/cf-agent/files_editline.c
+index ab8e7a7..12dcde6 100644
+--- a/cf-agent/files_editline.c
++++ b/cf-agent/files_editline.c
+@@ -114,7 +114,7 @@ int ScheduleEditLineOperations(EvalContext *ctx, Bundle *bp, Attributes a, const
+         return false;
+     }
+ 
+-    ScopeNewSpecial(ctx, "edit", "filename", edcontext->filename, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "edit", "filename", edcontext->filename, CFE_DATA_TYPE_STRING);
+ 
+     for (pass = 1; pass < CF_DONEPASSES; pass++)
+     {
+diff --git a/cf-agent/files_editxml.c b/cf-agent/files_editxml.c
+index ebe953e..ef5510f 100644
+--- a/cf-agent/files_editxml.c
++++ b/cf-agent/files_editxml.c
+@@ -160,7 +160,7 @@ int ScheduleEditXmlOperations(EvalContext *ctx, Bundle *bp, Attributes a, const
+         return false;
+     }
+ 
+-    ScopeNewSpecial(ctx, "edit", "filename", edcontext->filename, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "edit", "filename", edcontext->filename, CFE_DATA_TYPE_STRING);
+ 
+     for (pass = 1; pass < CF_DONEPASSES; pass++)
+     {
+diff --git a/cf-agent/vercmp.c b/cf-agent/vercmp.c
+index ce932a5..3e32cf8 100644
+--- a/cf-agent/vercmp.c
++++ b/cf-agent/vercmp.c
+@@ -64,8 +64,8 @@ static VersionCmpResult RunCmpCommand(EvalContext *ctx, const char *command, con
+     char expanded_command[CF_EXPANDSIZE];
+ 
+     {
+-        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "v1" }, (Rval) { v1, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "v2" }, (Rval) { v2, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "v1" }, (Rval) { v1, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "v2" }, (Rval) { v2, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         ExpandScalar(ctx, "cf_pack_context", command, expanded_command);
+ 
+         ScopeClear("cf_pack_context");
+diff --git a/cf-agent/verify_environments.c b/cf-agent/verify_environments.c
+index 67e6fab..fe0471f 100644
+--- a/cf-agent/verify_environments.c
++++ b/cf-agent/verify_environments.c
+@@ -136,7 +136,7 @@ void VerifyEnvironmentsPromise(EvalContext *ctx, Promise *pp)
+         }
+ 
+         PromiseBanner(pp);
+-        ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, CFE_DATA_TYPE_STRING);
+ 
+         pexp = ExpandDeRefPromise(ctx, "this", pp);
+         VerifyEnvironments(ctx, a, pp);
+diff --git a/cf-agent/verify_exec.c b/cf-agent/verify_exec.c
+index 1dd7a86..b7c46d7 100644
+--- a/cf-agent/verify_exec.c
++++ b/cf-agent/verify_exec.c
+@@ -64,7 +64,7 @@ void VerifyExecPromise(EvalContext *ctx, Promise *pp)
+ 
+     a = GetExecAttributes(ctx, pp);
+ 
+-    ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, CFE_DATA_TYPE_STRING);
+ 
+     if (!SyntaxCheckExec(a, pp))
+     {
+diff --git a/cf-agent/verify_files.c b/cf-agent/verify_files.c
+index 8e28387..c1e556f 100644
+--- a/cf-agent/verify_files.c
++++ b/cf-agent/verify_files.c
+@@ -197,7 +197,7 @@ static void VerifyFilePromise(EvalContext *ctx, char *path, Promise *pp)
+     }
+ 
+     ScopeDeleteSpecial("this", "promiser");
+-    ScopeNewSpecial(ctx, "this", "promiser", path, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "this", "promiser", path, CFE_DATA_TYPE_STRING);
+     
+     thislock = AcquireLock(ctx, path, VUQNAME, CFSTARTTIME, a.transaction, pp, false);
+ 
+@@ -589,7 +589,7 @@ static void FindFilePromiserObjects(EvalContext *ctx, Promise *pp)
+     if (literal)
+     {
+         // Prime the promiser temporarily, may override later
+-        ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, CFE_DATA_TYPE_STRING);
+         VerifyFilePromise(ctx, pp->promiser, pp);
+     }
+     else                        // Default is to expand regex paths
+diff --git a/cf-agent/verify_files_utils.c b/cf-agent/verify_files_utils.c
+index 85d0637..ef4de98 100644
+--- a/cf-agent/verify_files_utils.c
++++ b/cf-agent/verify_files_utils.c
+@@ -124,7 +124,7 @@ int VerifyFileLeaf(EvalContext *ctx, char *path, struct stat *sb, Attributes att
+ /* We still need to augment the scope of context "this" for commands */
+ 
+     ScopeDeleteSpecial("this", "promiser");
+-    ScopeNewSpecial(ctx, "this", "promiser", path, DATA_TYPE_STRING);        // Parameters may only be scalars
++    ScopeNewSpecial(ctx, "this", "promiser", path, CFE_DATA_TYPE_STRING);        // Parameters may only be scalars
+ 
+     if (attr.transformer != NULL)
+     {
+diff --git a/cf-agent/verify_methods.c b/cf-agent/verify_methods.c
+index 14296e2..8288c56 100644
+--- a/cf-agent/verify_methods.c
++++ b/cf-agent/verify_methods.c
+@@ -227,7 +227,7 @@ static void GetReturnValue(EvalContext *ctx, char *scope, Promise *pp)
+                     snprintf(newname, CF_BUFSIZE, "%s", result);
+                 }
+ 
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(pp)->name, newname }, assoc->rval, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(pp)->name, newname }, assoc->rval, CFE_DATA_TYPE_STRING);
+             }
+         }
+         
+diff --git a/cf-agent/verify_packages.c b/cf-agent/verify_packages.c
+index fc8823d..38bec73 100644
+--- a/cf-agent/verify_packages.c
++++ b/cf-agent/verify_packages.c
+@@ -940,9 +940,9 @@ static void SchedulePackageOp(EvalContext *ctx, const char *name, const char *ve
+ 
+     if ((a.packages.package_name_convention) || (a.packages.package_delete_convention))
+     {
+-        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "version" }, (Rval) { version, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "arch" }, (Rval) { arch, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "version" }, (Rval) { version, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "arch" }, (Rval) { arch, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+ 
+         if ((a.packages.package_delete_convention) && (a.packages.package_policy == PACKAGE_ACTION_DELETE))
+         {
+@@ -1004,9 +1004,9 @@ static void SchedulePackageOp(EvalContext *ctx, const char *name, const char *ve
+             if ((a.packages.package_file_repositories != NULL))
+             {
+                 {
+-                    EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-                    EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "version" }, (Rval) { "(.*)", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-                    EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "arch" }, (Rval) { arch, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                    EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++                    EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "version" }, (Rval) { "(.*)", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++                    EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "arch" }, (Rval) { arch, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                     ExpandScalar(ctx, "cf_pack_context_anyver", a.packages.package_name_convention, refAnyVer);
+ 
+                     ScopeClear("cf_pack_context_anyver");
+@@ -1124,9 +1124,9 @@ static void SchedulePackageOp(EvalContext *ctx, const char *name, const char *ve
+         if ((a.packages.package_file_repositories != NULL))
+         {
+             {
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "version" }, (Rval) { "(.*)", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "arch" }, (Rval) { arch, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "version" }, (Rval) { "(.*)", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context_anyver", "arch" }, (Rval) { arch, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                 ExpandScalar(ctx, "cf_pack_context_anyver", a.packages.package_name_convention, refAnyVer);
+ 
+                 ScopeClear("cf_pack_context_anyver");
+@@ -1189,9 +1189,9 @@ static void SchedulePackageOp(EvalContext *ctx, const char *name, const char *ve
+                     }
+ 
+                     {
+-                        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-                        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "version" }, (Rval) { instVer, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
+-                        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "arch" }, (Rval) { instArch, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "name" }, (Rval) { name, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++                        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "version" }, (Rval) { instVer, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
++                        EvalContextVariablePut(ctx, (VarRef) { NULL, "cf_pack_context", "arch" }, (Rval) { instArch, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                         ExpandScalar(ctx, "cf_pack_context", a.packages.package_delete_convention, reference2);
+                         id_del = reference2;
+ 
+diff --git a/cf-agent/verify_processes.c b/cf-agent/verify_processes.c
+index ebd9975..700f0d8 100644
+--- a/cf-agent/verify_processes.c
++++ b/cf-agent/verify_processes.c
+@@ -124,7 +124,7 @@ static void VerifyProcesses(EvalContext *ctx, Attributes a, Promise *pp)
+     }
+ 
+     ScopeDeleteSpecial("this", "promiser");
+-    ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, CFE_DATA_TYPE_STRING);
+     PromiseBanner(pp);
+     VerifyProcessOp(ctx, PROCESSTABLE, a, pp);
+     ScopeDeleteSpecial("this", "promiser");
+diff --git a/cf-agent/verify_services.c b/cf-agent/verify_services.c
+index 9adb726..613136e 100644
+--- a/cf-agent/verify_services.c
++++ b/cf-agent/verify_services.c
+@@ -163,7 +163,7 @@ void VerifyServices(EvalContext *ctx, Attributes a, Promise *pp)
+         return;
+     }
+ 
+-    ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, CFE_DATA_TYPE_STRING);
+     PromiseBanner(pp);
+ 
+     if (strcmp(a.service.service_type, "windows") == 0)
+@@ -229,21 +229,21 @@ static void DoVerifyServices(EvalContext *ctx, Attributes a, Promise *pp)
+     switch (a.service.service_policy)
+     {
+     case SERVICE_POLICY_START:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "start", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "start", CFE_DATA_TYPE_STRING);
+         break;
+ 
+     case SERVICE_POLICY_RESTART:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "restart", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "restart", CFE_DATA_TYPE_STRING);
+         break;
+ 
+     case SERVICE_POLICY_RELOAD:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "reload", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "reload", CFE_DATA_TYPE_STRING);
+         break;
+         
+     case SERVICE_POLICY_STOP:
+     case SERVICE_POLICY_DISABLE:
+     default:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "stop", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "stop", CFE_DATA_TYPE_STRING);
+         break;
+     }
+ 
+diff --git a/cf-execd/cf-execd.c b/cf-execd/cf-execd.c
+index 7f25dc2..0ac4cb1 100644
+--- a/cf-execd/cf-execd.c
++++ b/cf-execd/cf-execd.c
+@@ -553,7 +553,7 @@ static bool ScheduleRun(EvalContext *ctx, Policy **policy, GenericAgentConfig *c
+             free(existing_policy_server);
+         }
+ 
+-        ScopeNewSpecial(ctx, "sys", "policy_hub", POLICY_SERVER, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "policy_hub", POLICY_SERVER, CFE_DATA_TYPE_STRING);
+ 
+         GetNameInfo3(ctx, AGENT_TYPE_EXECUTOR);
+         GetInterfacesInfo(ctx, AGENT_TYPE_EXECUTOR);
+diff --git a/cf-gendoc/export_xml.c b/cf-gendoc/export_xml.c
+index e8699ff..1e8463c 100644
+--- a/cf-gendoc/export_xml.c
++++ b/cf-gendoc/export_xml.c
+@@ -454,8 +454,8 @@ static void XmlExportType(Writer *writer, const ConstraintSyntax *constraint_syn
+             break;
+         }
+ 
+-    case DATA_TYPE_STRING:
+-    case DATA_TYPE_STRING_LIST:
++    case CFE_DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING_LIST:
+     case DATA_TYPE_CONTEXT:
+     case DATA_TYPE_CONTEXT_LIST:
+         /* XML ELEMENT -- ACCEPTED-VALUES */
+diff --git a/cf-gendoc/manual.c b/cf-gendoc/manual.c
+index f1096ee..18cca16 100644
+--- a/cf-gendoc/manual.c
++++ b/cf-gendoc/manual.c
+@@ -249,7 +249,7 @@ void TexinfoManual(EvalContext *ctx, const char *source_dir, const char *output_
+ 
+ // scopes const and sys
+ 
+-    ScopeNewSpecial(ctx, "edit", "filename", "x", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "edit", "filename", "x", CFE_DATA_TYPE_STRING);
+ 
+     ScopePutMatch(0, "x");
+ 
+diff --git a/cf-monitord/verify_measurements.c b/cf-monitord/verify_measurements.c
+index 1c35a16..6ee995c 100644
+--- a/cf-monitord/verify_measurements.c
++++ b/cf-monitord/verify_measurements.c
+@@ -98,7 +98,7 @@ static bool CheckMeasureSanity(Measurement m, Promise *pp)
+             switch (m.data_type)
+             {
+             case DATA_TYPE_COUNTER:
+-            case DATA_TYPE_STRING:
++            case CFE_DATA_TYPE_STRING:
+             case DATA_TYPE_INT:
+             case DATA_TYPE_REAL:
+                 break;
+diff --git a/libpromises/attributes.c b/libpromises/attributes.c
+index 3b8e1f4..8c95b14 100644
+--- a/libpromises/attributes.c
++++ b/libpromises/attributes.c
+@@ -1608,7 +1608,7 @@ Measurement GetMeasurementConstraint(const EvalContext *ctx, const Promise *pp)
+ 
+     if (m.data_type == DATA_TYPE_NONE)
+     {
+-        m.data_type = DATA_TYPE_STRING;
++        m.data_type = CFE_DATA_TYPE_STRING;
+     }
+ 
+     m.history_type = ConstraintGetRvalValue(ctx, "history_type", pp, RVAL_TYPE_SCALAR);
+diff --git a/libpromises/bootstrap.c b/libpromises/bootstrap.c
+index 0cd27f1..c6dbe3f 100644
+--- a/libpromises/bootstrap.c
++++ b/libpromises/bootstrap.c
+@@ -113,12 +113,12 @@ void SetPolicyServer(EvalContext *ctx, const char *new_policy_server)
+     if (new_policy_server)
+     {
+         snprintf(POLICY_SERVER, CF_MAX_IP_LEN, "%s", new_policy_server);
+-        ScopeNewSpecial(ctx, "sys", "policy_hub", new_policy_server, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "policy_hub", new_policy_server, CFE_DATA_TYPE_STRING);
+     }
+     else
+     {
+         POLICY_SERVER[0] = '\0';
+-        ScopeNewSpecial(ctx, "sys", "policy_hub", "undefined", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "policy_hub", "undefined", CFE_DATA_TYPE_STRING);
+     }
+ 
+     // Get the timestamp on policy update
+@@ -137,7 +137,7 @@ void SetPolicyServer(EvalContext *ctx, const char *new_policy_server)
+     char timebuf[26];
+     cf_strtimestamp_local(sb.st_mtime, timebuf);
+     
+-    ScopeNewSpecial(ctx, "sys", "last_policy_update", timebuf, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "last_policy_update", timebuf, CFE_DATA_TYPE_STRING);
+ }
+ 
+ static char *PolicyServerFilename(const char *workdir)
+diff --git a/libpromises/cf3.defs.h b/libpromises/cf3.defs.h
+index c04c2a1..db6c565 100644
+--- a/libpromises/cf3.defs.h
++++ b/libpromises/cf3.defs.h
+@@ -428,10 +428,10 @@ typedef struct FnCall_ FnCall;
+ 
+ typedef enum
+ {
+-    DATA_TYPE_STRING,
++    CFE_DATA_TYPE_STRING,
+     DATA_TYPE_INT,
+     DATA_TYPE_REAL,
+-    DATA_TYPE_STRING_LIST,
++    CFE_DATA_TYPE_STRING_LIST,
+     DATA_TYPE_INT_LIST,
+     DATA_TYPE_REAL_LIST,
+     DATA_TYPE_OPTION,
+diff --git a/libpromises/conversion.c b/libpromises/conversion.c
+index 4c4b7c6..81a8fe7 100644
+--- a/libpromises/conversion.c
++++ b/libpromises/conversion.c
+@@ -274,10 +274,10 @@ FileComparator FileComparatorFromString(const char *s)
+ 
+ static const char *datatype_strings[] =
+ {
+-    [DATA_TYPE_STRING] = "string",
++    [CFE_DATA_TYPE_STRING] = "string",
+     [DATA_TYPE_INT] = "int",
+     [DATA_TYPE_REAL] = "real",
+-    [DATA_TYPE_STRING_LIST] = "slist",
++    [CFE_DATA_TYPE_STRING_LIST] = "slist",
+     [DATA_TYPE_INT_LIST] = "ilist",
+     [DATA_TYPE_REAL_LIST] = "rlist",
+     [DATA_TYPE_OPTION] = "option",
+diff --git a/libpromises/evalfunction.c b/libpromises/evalfunction.c
+index e714fec..e18970a 100644
+--- a/libpromises/evalfunction.c
++++ b/libpromises/evalfunction.c
+@@ -228,7 +228,7 @@ static FnCallResult FnCallAnd(EvalContext *ctx, FnCall *fp, Rlist *finalargs)
+ /* We need to check all the arguments, ArgTemplate does not check varadic functions */
+     for (arg = finalargs; arg; arg = arg->next)
+     {
+-        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, DATA_TYPE_STRING, "", 1);
++        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, CFE_DATA_TYPE_STRING, "", 1);
+         if (err != SYNTAX_TYPE_MATCH_OK && err != SYNTAX_TYPE_MATCH_ERROR_UNEXPANDED)
+         {
+             FatalError(ctx, "in %s: %s", id, SyntaxTypeMatchToString(err));
+@@ -635,7 +635,7 @@ static FnCallResult FnCallConcat(EvalContext *ctx, FnCall *fp, Rlist *finalargs)
+ /* We need to check all the arguments, ArgTemplate does not check varadic functions */
+     for (arg = finalargs; arg; arg = arg->next)
+     {
+-        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, DATA_TYPE_STRING, "", 1);
++        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, CFE_DATA_TYPE_STRING, "", 1);
+         if (err != SYNTAX_TYPE_MATCH_OK && err != SYNTAX_TYPE_MATCH_ERROR_UNEXPANDED)
+         {
+             FatalError(ctx, "in %s: %s", id, SyntaxTypeMatchToString(err));
+@@ -684,7 +684,7 @@ static FnCallResult FnCallIfElse(EvalContext *ctx, FnCall *fp, Rlist *finalargs)
+     /* We need to check all the arguments, ArgTemplate does not check varadic functions */
+     for (arg = finalargs; arg; arg = arg->next)
+     {
+-        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, DATA_TYPE_STRING, "", 1);
++        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, CFE_DATA_TYPE_STRING, "", 1);
+         if (err != SYNTAX_TYPE_MATCH_OK && err != SYNTAX_TYPE_MATCH_ERROR_UNEXPANDED)
+         {
+             FatalError(ctx, "in %s: %s", id, SyntaxTypeMatchToString(err));
+@@ -1611,7 +1611,7 @@ static FnCallResult FnCallGetFields(EvalContext *ctx, FnCall *fp, Rlist *finalar
+             for (rp = newlist; rp != NULL; rp = rp->next)
+             {
+                 snprintf(name, CF_MAXVARSIZE - 1, "%s[%d]", array_lval, vcount);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, name }, (Rval) { RlistScalarValue(rp), RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, name }, (Rval) { RlistScalarValue(rp), RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                 Log(LOG_LEVEL_VERBOSE, "getfields: defining '%s' => '%s'", name, RlistScalarValue(rp));
+                 vcount++;
+             }
+@@ -1795,12 +1795,12 @@ static FnCallResult FnCallMapArray(EvalContext *ctx, FnCall *fp, Rlist *finalarg
+ 
+             if (strlen(index) > 0)
+             {
+-                ScopeNewSpecial(ctx, "this", "k", index, DATA_TYPE_STRING);
++                ScopeNewSpecial(ctx, "this", "k", index, CFE_DATA_TYPE_STRING);
+ 
+                 switch (assoc->rval.type)
+                 {
+                 case RVAL_TYPE_SCALAR:
+-                    ScopeNewSpecial(ctx, "this", "v", assoc->rval.item, DATA_TYPE_STRING);
++                    ScopeNewSpecial(ctx, "this", "v", assoc->rval.item, CFE_DATA_TYPE_STRING);
+                     ExpandScalar(ctx, PromiseGetBundle(fp->caller)->name, map, expbuf);
+ 
+                     if (strstr(expbuf, "$(this.k)") || strstr(expbuf, "${this.k}") ||
+@@ -1819,7 +1819,7 @@ static FnCallResult FnCallMapArray(EvalContext *ctx, FnCall *fp, Rlist *finalarg
+                 case RVAL_TYPE_LIST:
+                     for (rp = assoc->rval.item; rp != NULL; rp = rp->next)
+                     {
+-                        ScopeNewSpecial(ctx, "this", "v", rp->item, DATA_TYPE_STRING);
++                        ScopeNewSpecial(ctx, "this", "v", rp->item, CFE_DATA_TYPE_STRING);
+                         ExpandScalar(ctx, PromiseGetBundle(fp->caller)->name, map, expbuf);
+ 
+                         if (strstr(expbuf, "$(this.k)") || strstr(expbuf, "${this.k}") ||
+@@ -1903,7 +1903,7 @@ static FnCallResult FnCallMapList(EvalContext *ctx, FnCall *fp, Rlist *finalargs
+         return (FnCallResult) { FNCALL_FAILURE };
+     }
+ 
+-    if (retype != DATA_TYPE_STRING_LIST && retype != DATA_TYPE_INT_LIST && retype != DATA_TYPE_REAL_LIST)
++    if (retype != CFE_DATA_TYPE_STRING_LIST && retype != DATA_TYPE_INT_LIST && retype != DATA_TYPE_REAL_LIST)
+     {
+         return (FnCallResult) { FNCALL_FAILURE };
+     }
+@@ -1911,7 +1911,7 @@ static FnCallResult FnCallMapList(EvalContext *ctx, FnCall *fp, Rlist *finalargs
+     for (const Rlist *rp = RvalRlistValue(rval); rp != NULL; rp = rp->next)
+     {
+         const char *current_value = RlistScalarValue(rp);
+-        ScopeNewSpecial(ctx, "this", "this", current_value, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "this", current_value, CFE_DATA_TYPE_STRING);
+ 
+         ExpandScalar(ctx, "this", map, expbuf);
+ 
+@@ -2051,7 +2051,7 @@ static FnCallResult FnCallSelectServers(EvalContext *ctx, FnCall *fp, Rlist *fin
+             {
+                 Log(LOG_LEVEL_VERBOSE, "Host '%s' is alive and responding correctly", RlistScalarValue(rp));
+                 snprintf(buffer, CF_MAXVARSIZE - 1, "%s[%d]", array_lval, count);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, buffer }, (Rval) { rp->item, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, buffer }, (Rval) { rp->item, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                 count++;
+             }
+         }
+@@ -2059,7 +2059,7 @@ static FnCallResult FnCallSelectServers(EvalContext *ctx, FnCall *fp, Rlist *fin
+         {
+             Log(LOG_LEVEL_VERBOSE, "Host '%s' is alive", RlistScalarValue(rp));
+             snprintf(buffer, CF_MAXVARSIZE - 1, "%s[%d]", array_lval, count);
+-            EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, buffer }, (Rval) { rp->item, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++            EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, buffer }, (Rval) { rp->item, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+ 
+             if (IsDefinedClass(ctx, CanonifyName(rp->item), PromiseGetNamespace(fp->caller)))
+             {
+@@ -2099,7 +2099,7 @@ static FnCallResult FnCallShuffle(EvalContext *ctx, FnCall *fp, Rlist *finalargs
+         return (FnCallResult) { FNCALL_FAILURE };
+     }
+ 
+-    if (list_dtype != DATA_TYPE_STRING_LIST)
++    if (list_dtype != CFE_DATA_TYPE_STRING_LIST)
+     {
+         Log(LOG_LEVEL_ERR, "Function '%s' expected a variable that resolves to a string list, got '%s'", fp->name, DataTypeToString(list_dtype));
+         return (FnCallResult) { FNCALL_FAILURE };
+@@ -2727,7 +2727,7 @@ static FnCallResult FnCallSort(EvalContext *ctx, FnCall *fp, Rlist *finalargs)
+ 
+     VarRefDestroy(list_var_lval);
+ 
+-    if (list_var_dtype != DATA_TYPE_STRING_LIST)
++    if (list_var_dtype != CFE_DATA_TYPE_STRING_LIST)
+     {
+         return (FnCallResult) { FNCALL_FAILURE };
+     }
+@@ -2748,7 +2748,7 @@ static FnCallResult FnCallFormat(EvalContext *ctx, FnCall *fp, Rlist *finalargs)
+ /* We need to check all the arguments, ArgTemplate does not check varadic functions */
+     for (const Rlist *arg = finalargs; arg; arg = arg->next)
+     {
+-        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, DATA_TYPE_STRING, "", 1);
++        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, CFE_DATA_TYPE_STRING, "", 1);
+         if (err != SYNTAX_TYPE_MATCH_OK && err != SYNTAX_TYPE_MATCH_ERROR_UNEXPANDED)
+         {
+             FatalError(ctx, "in %s: %s", id, SyntaxTypeMatchToString(err));
+@@ -3549,7 +3549,7 @@ static FnCallResult FnCallRegExtract(EvalContext *ctx, FnCall *fp, Rlist *finala
+             else
+             {
+                 snprintf(var, CF_MAXVARSIZE - 1, "%s[%s]", arrayname, assoc->lval);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, var }, assoc->rval, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(fp->caller)->name, var }, assoc->rval, CFE_DATA_TYPE_STRING);
+             }
+         }
+     }
+@@ -3766,7 +3766,7 @@ static FnCallResult FnCallReverse(EvalContext *ctx, FnCall *fp, Rlist *finalargs
+         return (FnCallResult) { FNCALL_FAILURE };
+     }
+ 
+-    if (list_dtype != DATA_TYPE_STRING_LIST)
++    if (list_dtype != CFE_DATA_TYPE_STRING_LIST)
+     {
+         Log(LOG_LEVEL_ERR, "Function '%s' expected a variable that resolves to a string list, got '%s'", fp->name, DataTypeToString(list_dtype));
+         return (FnCallResult) { FNCALL_FAILURE };
+@@ -3836,7 +3836,7 @@ static FnCallResult FnCallOr(EvalContext *ctx, FnCall *fp, Rlist *finalargs)
+ /* We need to check all the arguments, ArgTemplate does not check varadic functions */
+     for (arg = finalargs; arg; arg = arg->next)
+     {
+-        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, DATA_TYPE_STRING, "", 1);
++        SyntaxTypeMatch err = CheckConstraintTypeMatch(id, (Rval) {arg->item, arg->type}, CFE_DATA_TYPE_STRING, "", 1);
+         if (err != SYNTAX_TYPE_MATCH_OK && err != SYNTAX_TYPE_MATCH_ERROR_UNEXPANDED)
+         {
+             FatalError(ctx, "in %s: %s", id, SyntaxTypeMatchToString(err));
+@@ -4116,7 +4116,7 @@ static FnCallResult ReadList(EvalContext *ctx, FnCall *fp, Rlist *finalargs, Dat
+ 
+     switch (type)
+     {
+-    case DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING:
+         break;
+ 
+     case DATA_TYPE_INT:
+@@ -4163,7 +4163,7 @@ static FnCallResult ReadList(EvalContext *ctx, FnCall *fp, Rlist *finalargs, Dat
+ 
+ static FnCallResult FnCallReadStringList(EvalContext *ctx, FnCall *fp, Rlist *args)
+ {
+-    return ReadList(ctx, fp, args, DATA_TYPE_STRING);
++    return ReadList(ctx, fp, args, CFE_DATA_TYPE_STRING);
+ }
+ 
+ static FnCallResult FnCallReadIntList(EvalContext *ctx, FnCall *fp, Rlist *args)
+@@ -4228,7 +4228,7 @@ static FnCallResult ReadArray(EvalContext *ctx, FnCall *fp, Rlist *finalargs, Da
+ 
+     switch (type)
+     {
+-    case DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING:
+     case DATA_TYPE_INT:
+     case DATA_TYPE_REAL:
+         break;
+@@ -4249,14 +4249,14 @@ static FnCallResult ReadArray(EvalContext *ctx, FnCall *fp, Rlist *finalargs, Da
+ 
+ static FnCallResult FnCallReadStringArray(EvalContext *ctx, FnCall *fp, Rlist *args)
+ {
+-    return ReadArray(ctx, fp, args, DATA_TYPE_STRING, false);
++    return ReadArray(ctx, fp, args, CFE_DATA_TYPE_STRING, false);
+ }
+ 
+ /*********************************************************************/
+ 
+ static FnCallResult FnCallReadStringArrayIndex(EvalContext *ctx, FnCall *fp, Rlist *args)
+ {
+-    return ReadArray(ctx, fp, args, DATA_TYPE_STRING, true);
++    return ReadArray(ctx, fp, args, CFE_DATA_TYPE_STRING, true);
+ }
+ 
+ /*********************************************************************/
+@@ -4327,7 +4327,7 @@ static FnCallResult ParseArray(EvalContext *ctx, FnCall *fp, Rlist *finalargs, D
+ 
+     switch (type)
+     {
+-    case DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING:
+     case DATA_TYPE_INT:
+     case DATA_TYPE_REAL:
+         break;
+@@ -4348,14 +4348,14 @@ static FnCallResult ParseArray(EvalContext *ctx, FnCall *fp, Rlist *finalargs, D
+ 
+ static FnCallResult FnCallParseStringArray(EvalContext *ctx, FnCall *fp, Rlist *args)
+ {
+-    return ParseArray(ctx, fp, args, DATA_TYPE_STRING, false);
++    return ParseArray(ctx, fp, args, CFE_DATA_TYPE_STRING, false);
+ }
+ 
+ /*********************************************************************/
+ 
+ static FnCallResult FnCallParseStringArrayIndex(EvalContext *ctx, FnCall *fp, Rlist *args)
+ {
+-    return ParseArray(ctx, fp, args, DATA_TYPE_STRING, true);
++    return ParseArray(ctx, fp, args, CFE_DATA_TYPE_STRING, true);
+ }
+ 
+ /*********************************************************************/
+@@ -4854,7 +4854,7 @@ static int BuildLineArray(EvalContext *ctx, const Bundle *bundle, char *array_lv
+ 
+             switch (type)
+             {
+-            case DATA_TYPE_STRING:
++            case CFE_DATA_TYPE_STRING:
+                 strncpy(this_rval, rp->item, CF_MAXVARSIZE - 1);
+                 break;
+ 
+@@ -5028,7 +5028,7 @@ void ModuleProtocol(EvalContext *ctx, char *command, char *line, int print, cons
+         if (CheckID(name))
+         {
+             Log(LOG_LEVEL_VERBOSE, "Defined variable '%s' in context '%s' with value '%s'", name, context, content);
+-            EvalContextVariablePut(ctx, (VarRef) { NULL, context, name }, (Rval) { content, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++            EvalContextVariablePut(ctx, (VarRef) { NULL, context, name }, (Rval) { content, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         }
+         break;
+ 
+@@ -5043,7 +5043,7 @@ void ModuleProtocol(EvalContext *ctx, char *command, char *line, int print, cons
+             list = RlistParseString(content);
+             Log(LOG_LEVEL_VERBOSE, "Defined variable '%s' in context '%s' with value '%s'", name, context, content);
+ 
+-            EvalContextVariablePut(ctx, (VarRef) { NULL, context, name }, (Rval) { list, RVAL_TYPE_LIST }, DATA_TYPE_STRING_LIST);
++            EvalContextVariablePut(ctx, (VarRef) { NULL, context, name }, (Rval) { list, RVAL_TYPE_LIST }, CFE_DATA_TYPE_STRING_LIST);
+         }
+         break;
+ 
+@@ -5095,8 +5095,8 @@ FnCallResult CallFunction(EvalContext *ctx, const FnCallType *function, FnCall *
+ 
+ FnCallArg ACCESSEDBEFORE_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Newer filename"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Older filename"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Newer filename"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Older filename"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5140,26 +5140,26 @@ FnCallArg LATERTHAN_ARGS[] =
+ 
+ FnCallArg CANONIFY_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "String containing non-identifier characters"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "String containing non-identifier characters"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg CHANGEDBEFORE_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Newer filename"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Older filename"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Newer filename"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Older filename"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg CLASSIFY_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Input string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Input string"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg CLASSMATCH_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5170,38 +5170,38 @@ FnCallArg CONCAT_ARGS[] =
+ 
+ FnCallArg COUNTCLASSESMATCHING_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg COUNTLINESMATCHING_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Filename"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Filename"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg DIRNAME_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "File path"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "File path"},
+     {NULL, DATA_TYPE_NONE, NULL},
+ };
+ 
+ FnCallArg DISKFREE_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File system directory"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File system directory"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg ESCAPE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "IP address or string to escape"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "IP address or string to escape"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg EXECRESULT_ARGS[] =
+ {
+-    {CF_PATHRANGE, DATA_TYPE_STRING, "Fully qualified command path"},
++    {CF_PATHRANGE, CFE_DATA_TYPE_STRING, "Fully qualified command path"},
+     {"useshell,noshell,powershell", DATA_TYPE_OPTION, "Shell encapsulation option"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+@@ -5210,27 +5210,27 @@ FnCallArg EXECRESULT_ARGS[] =
+ 
+ FnCallArg FILESTAT_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File object name"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File object name"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg FILESTAT_DETAIL_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File object name"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File object name"},
+     {"size,gid,uid,ino,nlink,ctime,atime,mtime,mode,modeoct,permstr,permoct,type,devno,dev_minor,dev_major,basename,dirname", DATA_TYPE_OPTION, "stat() field to get"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg FILESEXIST_ARGS[] =
+ {
+-    {CF_NAKEDLRANGE, DATA_TYPE_STRING, "Array identifier containing list"},
++    {CF_NAKEDLRANGE, CFE_DATA_TYPE_STRING, "Array identifier containing list"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg FILTER_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression or string"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression or string"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {CF_BOOL, DATA_TYPE_OPTION, "Match as regular expression if true, as exact string otherwise"},
+     {CF_BOOL, DATA_TYPE_OPTION, "Invert matches"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of matches to return"},
+@@ -5239,95 +5239,95 @@ FnCallArg FILTER_ARGS[] =
+ 
+ FnCallArg GETFIELDS_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression to match line"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Filename to read"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression to split fields"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Return array name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression to match line"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Filename to read"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression to split fields"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Return array name"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GETINDICES_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine array identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine array identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GETUSERS_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Comma separated list of User names"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Comma separated list of UserID numbers"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Comma separated list of User names"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Comma separated list of UserID numbers"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GETENV_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Name of environment variable"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Name of environment variable"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of characters to read "},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GETGID_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Group name in text"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Group name in text"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GETUID_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "User name in text"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "User name in text"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GREP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg GROUPEXISTS_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Group name or identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Group name or identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg HASH_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Input text"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Input text"},
+     {"md5,sha1,sha256,sha512,sha384,crypt", DATA_TYPE_OPTION, "Hash or digest algorithm"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg HASHMATCH_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Filename to hash"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Filename to hash"},
+     {"md5,sha1,crypt,cf_sha224,cf_sha256,cf_sha384,cf_sha512", DATA_TYPE_OPTION, "Hash or digest algorithm"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "ASCII representation of hash for comparison"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "ASCII representation of hash for comparison"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg HOST2IP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Host name in ascii"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Host name in ascii"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg IP2HOST_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "IP address (IPv4 or IPv6)"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "IP address (IPv4 or IPv6)"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg HOSTINNETGROUP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Netgroup name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Netgroup name"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg HOSTRANGE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Hostname prefix"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Enumerated range"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Hostname prefix"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Enumerated range"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5341,7 +5341,7 @@ FnCallArg HOSTSSEEN_ARGS[] =
+ 
+ FnCallArg HOSTSWITHCLASS_ARGS[] =
+ {
+-    {"[a-zA-Z0-9_]+", DATA_TYPE_STRING, "Class name to look for"},
++    {"[a-zA-Z0-9_]+", CFE_DATA_TYPE_STRING, "Class name to look for"},
+     {"name,address", DATA_TYPE_OPTION, "Type of return value desired"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+@@ -5353,7 +5353,7 @@ FnCallArg IFELSE_ARGS[] =
+ 
+ FnCallArg IPRANGE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "IP address range syntax"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "IP address range syntax"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5366,51 +5366,51 @@ FnCallArg IRANGE_ARGS[] =
+ 
+ FnCallArg ISGREATERTHAN_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Larger string or value"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Smaller string or value"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Larger string or value"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Smaller string or value"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg ISLESSTHAN_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Smaller string or value"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Larger string or value"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Smaller string or value"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Larger string or value"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg ISNEWERTHAN_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Newer file name"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Older file name"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Newer file name"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Older file name"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg ISVARIABLE_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Variable identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Variable identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg JOIN_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Join glue-string"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Join glue-string"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg LASTNODE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Input string"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Link separator, e.g. /,:"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Input string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Link separator, e.g. /,:"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg LDAPARRAY_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Array name"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "URI"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Distinguished name"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Filter"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Array name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "URI"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Distinguished name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Filter"},
+     {"subtree,onelevel,base", DATA_TYPE_OPTION, "Search scope policy"},
+     {"none,ssl,sasl", DATA_TYPE_OPTION, "Security level"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5418,10 +5418,10 @@ FnCallArg LDAPARRAY_ARGS[] =
+ 
+ FnCallArg LDAPLIST_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "URI"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Distinguished name"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Filter"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Record name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "URI"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Distinguished name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Filter"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Record name"},
+     {"subtree,onelevel,base", DATA_TYPE_OPTION, "Search scope policy"},
+     {"none,ssl,sasl", DATA_TYPE_OPTION, "Security level"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5429,10 +5429,10 @@ FnCallArg LDAPLIST_ARGS[] =
+ 
+ FnCallArg LDAPVALUE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "URI"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Distinguished name"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Filter"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Record name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "URI"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Distinguished name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Filter"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Record name"},
+     {"subtree,onelevel,base", DATA_TYPE_OPTION, "Search scope policy"},
+     {"none,ssl,sasl", DATA_TYPE_OPTION, "Security level"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5440,29 +5440,29 @@ FnCallArg LDAPVALUE_ARGS[] =
+ 
+ FnCallArg LSDIRLIST_ARGS[] =
+ {
+-    {CF_PATHRANGE, DATA_TYPE_STRING, "Path to base directory"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression to match files or blank"},
++    {CF_PATHRANGE, CFE_DATA_TYPE_STRING, "Path to base directory"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression to match files or blank"},
+     {CF_BOOL, DATA_TYPE_OPTION, "Include the base path in the list"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg MAPLIST_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Pattern based on $(this) as original text"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "The name of the list variable to map"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Pattern based on $(this) as original text"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "The name of the list variable to map"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg MAPARRAY_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Pattern based on $(this.k) and $(this.v) as original text"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "The name of the array variable to map"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Pattern based on $(this.k) and $(this.v) as original text"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "The name of the array variable to map"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg NOT_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Class value"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Class value"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5478,13 +5478,13 @@ FnCallArg OR_ARGS[] =
+ 
+ FnCallArg SUM_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "A list of arbitrary real values"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "A list of arbitrary real values"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg PRODUCT_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "A list of arbitrary real values"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "A list of arbitrary real values"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5501,24 +5501,24 @@ FnCallArg DATE_ARGS[] =
+ 
+ FnCallArg PEERS_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File name of host list"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Comment regex pattern"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File name of host list"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Comment regex pattern"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Peer group size"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg PEERLEADER_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File name of host list"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Comment regex pattern"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File name of host list"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Comment regex pattern"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Peer group size"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg PEERLEADERS_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File name of host list"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Comment regex pattern"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File name of host list"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Comment regex pattern"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Peer group size"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+@@ -5532,17 +5532,17 @@ FnCallArg RANDOMINT_ARGS[] =
+ 
+ FnCallArg READFILE_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File name"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File name"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg READSTRINGARRAY_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Array identifier to populate"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File name to read"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex matching comments"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to split data"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Array identifier to populate"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File name to read"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex matching comments"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to split data"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of entries to read"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5550,10 +5550,10 @@ FnCallArg READSTRINGARRAY_ARGS[] =
+ 
+ FnCallArg PARSESTRINGARRAY_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Array identifier to populate"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "A string to parse for input data"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex matching comments"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to split data"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Array identifier to populate"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "A string to parse for input data"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex matching comments"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to split data"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of entries to read"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5561,10 +5561,10 @@ FnCallArg PARSESTRINGARRAY_ARGS[] =
+ 
+ FnCallArg READSTRINGARRAYIDX_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Array identifier to populate"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "A string to parse for input data"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex matching comments"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to split data"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Array identifier to populate"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "A string to parse for input data"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex matching comments"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to split data"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of entries to read"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5572,10 +5572,10 @@ FnCallArg READSTRINGARRAYIDX_ARGS[] =
+ 
+ FnCallArg PARSESTRINGARRAYIDX_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Array identifier to populate"},
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "A string to parse for input data"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex matching comments"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to split data"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Array identifier to populate"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "A string to parse for input data"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex matching comments"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to split data"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of entries to read"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5583,9 +5583,9 @@ FnCallArg PARSESTRINGARRAYIDX_ARGS[] =
+ 
+ FnCallArg READSTRINGLIST_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "File name to read"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex matching comments"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to split data"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "File name to read"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex matching comments"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to split data"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of entries to read"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5593,94 +5593,94 @@ FnCallArg READSTRINGLIST_ARGS[] =
+ 
+ FnCallArg READTCP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Host name or IP address of server socket"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Host name or IP address of server socket"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Port number"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Protocol query string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Protocol query string"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of bytes to read"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGARRAY_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine array identifier"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine array identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGCMP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Match string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Match string"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGEXTRACT_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Match string"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Identifier for back-references"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Match string"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Identifier for back-references"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGISTRYVALUE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Windows registry key"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Windows registry value-id"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Windows registry key"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Windows registry value-id"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGLINE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Filename to search"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Filename to search"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGLIST_ARGS[] =
+ {
+-    {CF_NAKEDLRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
++    {CF_NAKEDLRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REGLDAP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "URI"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Distinguished name"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Filter"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Record name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "URI"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Distinguished name"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Filter"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Record name"},
+     {"subtree,onelevel,base", DATA_TYPE_OPTION, "Search scope policy"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to match results"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to match results"},
+     {"none,ssl,sasl", DATA_TYPE_OPTION, "Security level"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REMOTESCALAR_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Variable identifier"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Hostname or IP address of server"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Variable identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Hostname or IP address of server"},
+     {CF_BOOL, DATA_TYPE_OPTION, "Use enryption"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg HUB_KNOWLEDGE_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Variable identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Variable identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REMOTECLASSESMATCHING_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Server name or address"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Server name or address"},
+     {CF_BOOL, DATA_TYPE_OPTION, "Use encryption"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Return class prefix"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Return class prefix"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg RETURNSZERO_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Fully qualified command path"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Fully qualified command path"},
+     {"useshell,noshell,powershell", DATA_TYPE_OPTION, "Shell encapsulation option"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+@@ -5694,48 +5694,48 @@ FnCallArg RRANGE_ARGS[] =
+ 
+ FnCallArg SELECTSERVERS_ARGS[] =
+ {
+-    {CF_NAKEDLRANGE, DATA_TYPE_STRING, "The identifier of a cfengine list of hosts or addresses to contact"},
++    {CF_NAKEDLRANGE, CFE_DATA_TYPE_STRING, "The identifier of a cfengine list of hosts or addresses to contact"},
+     {CF_VALRANGE, DATA_TYPE_INT, "The port number"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "A query string"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "A regular expression to match success"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "A query string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "A regular expression to match success"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of bytes to read from server"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "Name for array of results"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "Name for array of results"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg SPLAYCLASS_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Input string for classification"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Input string for classification"},
+     {"daily,hourly", DATA_TYPE_OPTION, "Splay time policy"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg SPLITSTRING_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "A data string"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regex to split on"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "A data string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regex to split on"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of pieces"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg STRCMP_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "String"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "String"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "String"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "String"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg STRFTIME_ARGS[] =
+ {
+     {"gmtime,localtime", DATA_TYPE_OPTION, "Use GMT or local time"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "A format string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "A format string"},
+     {CF_VALRANGE, DATA_TYPE_INT, "The time as a Unix epoch offset"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg SUBLIST_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {"head,tail", DATA_TYPE_OPTION, "Whether to return elements from the head or from the tail of the list"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Maximum number of elements to return"},
+     {NULL, DATA_TYPE_NONE, NULL}
+@@ -5743,79 +5743,79 @@ FnCallArg SUBLIST_ARGS[] =
+ 
+ FnCallArg TRANSLATEPATH_ARGS[] =
+ {
+-    {CF_ABSPATHRANGE, DATA_TYPE_STRING, "Unix style path"},
++    {CF_ABSPATHRANGE, CFE_DATA_TYPE_STRING, "Unix style path"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg USEMODULE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Name of module command"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Argument string for the module"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Name of module command"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Argument string for the module"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg UNIQUE_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg NTH_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {CF_VALRANGE, DATA_TYPE_INT, "Offset of element to return"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg EVERY_SOME_NONE_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Regular expression or string"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Regular expression or string"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg USEREXISTS_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "User name or identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "User name or identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg SORT_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
+-    {"lex", DATA_TYPE_STRING, "Sorting method: lex"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
++    {"lex", CFE_DATA_TYPE_STRING, "Sorting method: lex"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg REVERSE_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg SHUFFLE_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "Any seed string"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "Any seed string"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg LENGTH_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg SETOP_ARGS[] =
+ {
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine base list identifier"},
+-    {CF_IDRANGE, DATA_TYPE_STRING, "CFEngine filter list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine base list identifier"},
++    {CF_IDRANGE, CFE_DATA_TYPE_STRING, "CFEngine filter list identifier"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+ FnCallArg FORMAT_ARGS[] =
+ {
+-    {CF_ANYSTRING, DATA_TYPE_STRING, "CFEngine format string"},
++    {CF_ANYSTRING, CFE_DATA_TYPE_STRING, "CFEngine format string"},
+     {NULL, DATA_TYPE_NONE, NULL}
+ };
+ 
+@@ -5830,47 +5830,47 @@ const FnCallType CF_FNCALL_TYPES[] =
+     FnCallTypeNew("accessedbefore", DATA_TYPE_CONTEXT, ACCESSEDBEFORE_ARGS, &FnCallIsAccessedBefore, "True if arg1 was accessed before arg2 (atime)", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("accumulated", DATA_TYPE_INT, ACCUM_ARGS, &FnCallAccumulatedDate, "Convert an accumulated amount of time into a system representation", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("ago", DATA_TYPE_INT, AGO_ARGS, &FnCallAgoDate, "Convert a time relative to now to an integer system representation", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("and", DATA_TYPE_STRING, AND_ARGS, &FnCallAnd, "Calculate whether all arguments evaluate to true", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("canonify", DATA_TYPE_STRING, CANONIFY_ARGS, &FnCallCanonify, "Convert an abitrary string into a legal class name", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("concat", DATA_TYPE_STRING, CONCAT_ARGS, &FnCallConcat, "Concatenate all arguments into string", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("and", CFE_DATA_TYPE_STRING, AND_ARGS, &FnCallAnd, "Calculate whether all arguments evaluate to true", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("canonify", CFE_DATA_TYPE_STRING, CANONIFY_ARGS, &FnCallCanonify, "Convert an abitrary string into a legal class name", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("concat", CFE_DATA_TYPE_STRING, CONCAT_ARGS, &FnCallConcat, "Concatenate all arguments into string", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("changedbefore", DATA_TYPE_CONTEXT, CHANGEDBEFORE_ARGS, &FnCallIsChangedBefore, "True if arg1 was changed before arg2 (ctime)", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("classify", DATA_TYPE_CONTEXT, CLASSIFY_ARGS, &FnCallClassify, "True if the canonicalization of the argument is a currently defined class", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("classmatch", DATA_TYPE_CONTEXT, CLASSMATCH_ARGS, &FnCallClassMatch, "True if the regular expression matches any currently defined class", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("classesmatching", DATA_TYPE_STRING_LIST, CLASSMATCH_ARGS, &FnCallClassesMatching, "List the defined classes matching regex arg1", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("classesmatching", CFE_DATA_TYPE_STRING_LIST, CLASSMATCH_ARGS, &FnCallClassesMatching, "List the defined classes matching regex arg1", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("countclassesmatching", DATA_TYPE_INT, COUNTCLASSESMATCHING_ARGS, &FnCallCountClassesMatching, "Count the number of defined classes matching regex arg1", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("countlinesmatching", DATA_TYPE_INT, COUNTLINESMATCHING_ARGS, &FnCallCountLinesMatching, "Count the number of lines matching regex arg1 in file arg2", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("difference", DATA_TYPE_STRING_LIST, SETOP_ARGS, &FnCallSetop, "Returns all the unique elements of list arg1 that are not in list arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("dirname", DATA_TYPE_STRING, DIRNAME_ARGS, &FnCallDirname, "Return the parent directory name for given path", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("difference", CFE_DATA_TYPE_STRING_LIST, SETOP_ARGS, &FnCallSetop, "Returns all the unique elements of list arg1 that are not in list arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("dirname", CFE_DATA_TYPE_STRING, DIRNAME_ARGS, &FnCallDirname, "Return the parent directory name for given path", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("diskfree", DATA_TYPE_INT, DISKFREE_ARGS, &FnCallDiskFree, "Return the free space (in KB) available on the directory's current partition (0 if not found)", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("escape", DATA_TYPE_STRING, ESCAPE_ARGS, &FnCallEscape, "Escape regular expression characters in a string", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("escape", CFE_DATA_TYPE_STRING, ESCAPE_ARGS, &FnCallEscape, "Escape regular expression characters in a string", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("every", DATA_TYPE_CONTEXT, EVERY_SOME_NONE_ARGS, &FnCallEverySomeNone, "True if every element in the named list matches the given regular expression", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("execresult", DATA_TYPE_STRING, EXECRESULT_ARGS, &FnCallExecResult, "Execute named command and assign output to variable", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("execresult", CFE_DATA_TYPE_STRING, EXECRESULT_ARGS, &FnCallExecResult, "Execute named command and assign output to variable", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("fileexists", DATA_TYPE_CONTEXT, FILESTAT_ARGS, &FnCallFileStat, "True if the named file can be accessed", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("filesexist", DATA_TYPE_CONTEXT, FILESEXIST_ARGS, &FnCallFileSexist, "True if the named list of files can ALL be accessed", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("filesize", DATA_TYPE_INT, FILESTAT_ARGS, &FnCallFileStat, "Returns the size in bytes of the file", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("filestat", DATA_TYPE_STRING, FILESTAT_DETAIL_ARGS, &FnCallFileStatDetails, "Returns stat() details of the file", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("filter", DATA_TYPE_STRING_LIST, FILTER_ARGS, &FnCallFilter, "Similarly to grep(), filter the list arg2 for matches to arg2.  The matching can be as a regular expression or exactly depending on arg3.  The matching can be inverted with arg4.  A maximum on the number of matches returned can be set with arg5.", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("format", DATA_TYPE_STRING, FORMAT_ARGS, &FnCallFormat, "Applies a list of string values in arg2,arg3... to a string format in arg1 with sprintf() rules", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("getenv", DATA_TYPE_STRING, GETENV_ARGS, &FnCallGetEnv, "Return the environment variable named arg1, truncated at arg2 characters", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("filestat", CFE_DATA_TYPE_STRING, FILESTAT_DETAIL_ARGS, &FnCallFileStatDetails, "Returns stat() details of the file", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("filter", CFE_DATA_TYPE_STRING_LIST, FILTER_ARGS, &FnCallFilter, "Similarly to grep(), filter the list arg2 for matches to arg2.  The matching can be as a regular expression or exactly depending on arg3.  The matching can be inverted with arg4.  A maximum on the number of matches returned can be set with arg5.", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("format", CFE_DATA_TYPE_STRING, FORMAT_ARGS, &FnCallFormat, "Applies a list of string values in arg2,arg3... to a string format in arg1 with sprintf() rules", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("getenv", CFE_DATA_TYPE_STRING, GETENV_ARGS, &FnCallGetEnv, "Return the environment variable named arg1, truncated at arg2 characters", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("getfields", DATA_TYPE_INT, GETFIELDS_ARGS, &FnCallGetFields, "Get an array of fields in the lines matching regex arg1 in file arg2, split on regex arg3 as array name arg4", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("getgid", DATA_TYPE_INT, GETGID_ARGS, &FnCallGetGid, "Return the integer group id of the named group on this host", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("getindices", DATA_TYPE_STRING_LIST, GETINDICES_ARGS, &FnCallGetIndices, "Get a list of keys to the array whose id is the argument and assign to variable", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("getindices", CFE_DATA_TYPE_STRING_LIST, GETINDICES_ARGS, &FnCallGetIndices, "Get a list of keys to the array whose id is the argument and assign to variable", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("getuid", DATA_TYPE_INT, GETUID_ARGS, &FnCallGetUid, "Return the integer user id of the named user on this host", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("getusers", DATA_TYPE_STRING_LIST, GETUSERS_ARGS, &FnCallGetUsers, "Get a list of all system users defined, minus those names defined in arg1 and uids in arg2", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("getvalues", DATA_TYPE_STRING_LIST, GETINDICES_ARGS, &FnCallGetValues, "Get a list of values corresponding to the right hand sides in an array whose id is the argument and assign to variable", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("grep", DATA_TYPE_STRING_LIST, GREP_ARGS, &FnCallGrep, "Extract the sub-list if items matching the regular expression in arg1 of the list named in arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("getusers", CFE_DATA_TYPE_STRING_LIST, GETUSERS_ARGS, &FnCallGetUsers, "Get a list of all system users defined, minus those names defined in arg1 and uids in arg2", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("getvalues", CFE_DATA_TYPE_STRING_LIST, GETINDICES_ARGS, &FnCallGetValues, "Get a list of values corresponding to the right hand sides in an array whose id is the argument and assign to variable", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("grep", CFE_DATA_TYPE_STRING_LIST, GREP_ARGS, &FnCallGrep, "Extract the sub-list if items matching the regular expression in arg1 of the list named in arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("groupexists", DATA_TYPE_CONTEXT, GROUPEXISTS_ARGS, &FnCallGroupExists, "True if group or numerical id exists on this host", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("hash", DATA_TYPE_STRING, HASH_ARGS, &FnCallHash, "Return the hash of arg1, type arg2 and assign to a variable", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("hash", CFE_DATA_TYPE_STRING, HASH_ARGS, &FnCallHash, "Return the hash of arg1, type arg2 and assign to a variable", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("hashmatch", DATA_TYPE_CONTEXT, HASHMATCH_ARGS, &FnCallHashMatch, "Compute the hash of arg1, of type arg2 and test if it matches the value in arg3", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("host2ip", DATA_TYPE_STRING, HOST2IP_ARGS, &FnCallHost2IP, "Returns the primary name-service IP address for the named host", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("ip2host", DATA_TYPE_STRING, IP2HOST_ARGS, &FnCallIP2Host, "Returns the primary name-service host name for the IP address", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("host2ip", CFE_DATA_TYPE_STRING, HOST2IP_ARGS, &FnCallHost2IP, "Returns the primary name-service IP address for the named host", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("ip2host", CFE_DATA_TYPE_STRING, IP2HOST_ARGS, &FnCallIP2Host, "Returns the primary name-service host name for the IP address", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("hostinnetgroup", DATA_TYPE_CONTEXT, HOSTINNETGROUP_ARGS, &FnCallHostInNetgroup, "True if the current host is in the named netgroup", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("hostrange", DATA_TYPE_CONTEXT, HOSTRANGE_ARGS, &FnCallHostRange, "True if the current host lies in the range of enumerated hostnames specified", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("hostsseen", DATA_TYPE_STRING_LIST, HOSTSSEEN_ARGS, &FnCallHostsSeen, "Extract the list of hosts last seen/not seen within the last arg1 hours", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("hostswithclass", DATA_TYPE_STRING_LIST, HOSTSWITHCLASS_ARGS, &FnCallHostsWithClass, "Extract the list of hosts with the given class set from the hub database (enterprise extension)", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("hubknowledge", DATA_TYPE_STRING, HUB_KNOWLEDGE_ARGS, &FnCallHubKnowledge, "Read global knowledge from the hub host by id (enterprise extension)", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("ifelse", DATA_TYPE_STRING, IFELSE_ARGS, &FnCallIfElse, "Do If-ElseIf-ElseIf-...-Else evaluation of arguments", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("intersection", DATA_TYPE_STRING_LIST, SETOP_ARGS, &FnCallSetop, "Returns all the unique elements of list arg1 that are also in list arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("hostsseen", CFE_DATA_TYPE_STRING_LIST, HOSTSSEEN_ARGS, &FnCallHostsSeen, "Extract the list of hosts last seen/not seen within the last arg1 hours", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("hostswithclass", CFE_DATA_TYPE_STRING_LIST, HOSTSWITHCLASS_ARGS, &FnCallHostsWithClass, "Extract the list of hosts with the given class set from the hub database (enterprise extension)", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("hubknowledge", CFE_DATA_TYPE_STRING, HUB_KNOWLEDGE_ARGS, &FnCallHubKnowledge, "Read global knowledge from the hub host by id (enterprise extension)", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("ifelse", CFE_DATA_TYPE_STRING, IFELSE_ARGS, &FnCallIfElse, "Do If-ElseIf-ElseIf-...-Else evaluation of arguments", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("intersection", CFE_DATA_TYPE_STRING_LIST, SETOP_ARGS, &FnCallSetop, "Returns all the unique elements of list arg1 that are also in list arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("iprange", DATA_TYPE_CONTEXT, IPRANGE_ARGS, &FnCallIPRange, "True if the current host lies in the range of IP addresses specified", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("irange", DATA_TYPE_INT_RANGE, IRANGE_ARGS, &FnCallIRange, "Define a range of integer values for cfengine internal use", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("isdir", DATA_TYPE_CONTEXT, FILESTAT_ARGS, &FnCallFileStat, "True if the named object is a directory", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+@@ -5881,64 +5881,64 @@ const FnCallType CF_FNCALL_TYPES[] =
+     FnCallTypeNew("isnewerthan", DATA_TYPE_CONTEXT, ISNEWERTHAN_ARGS, &FnCallIsNewerThan, "True if arg1 is newer (modified later) than arg2 (mtime)", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("isplain", DATA_TYPE_CONTEXT, FILESTAT_ARGS, &FnCallFileStat, "True if the named object is a plain/regular file", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("isvariable", DATA_TYPE_CONTEXT, ISVARIABLE_ARGS, &FnCallIsVariable, "True if the named variable is defined", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("join", DATA_TYPE_STRING, JOIN_ARGS, &FnCallJoin, "Join the items of arg2 into a string, using the conjunction in arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("lastnode", DATA_TYPE_STRING, LASTNODE_ARGS, &FnCallLastNode, "Extract the last of a separated string, e.g. filename from a path", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("join", CFE_DATA_TYPE_STRING, JOIN_ARGS, &FnCallJoin, "Join the items of arg2 into a string, using the conjunction in arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("lastnode", CFE_DATA_TYPE_STRING, LASTNODE_ARGS, &FnCallLastNode, "Extract the last of a separated string, e.g. filename from a path", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("laterthan", DATA_TYPE_CONTEXT, LATERTHAN_ARGS, &FnCallLaterThan, "True if the current time is later than the given date", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("ldaparray", DATA_TYPE_CONTEXT, LDAPARRAY_ARGS, &FnCallLDAPArray, "Extract all values from an ldap record", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("ldaplist", DATA_TYPE_STRING_LIST, LDAPLIST_ARGS, &FnCallLDAPList, "Extract all named values from multiple ldap records", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("ldapvalue", DATA_TYPE_STRING, LDAPVALUE_ARGS, &FnCallLDAPValue, "Extract the first matching named value from ldap", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("ldaplist", CFE_DATA_TYPE_STRING_LIST, LDAPLIST_ARGS, &FnCallLDAPList, "Extract all named values from multiple ldap records", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("ldapvalue", CFE_DATA_TYPE_STRING, LDAPVALUE_ARGS, &FnCallLDAPValue, "Extract the first matching named value from ldap", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("length", DATA_TYPE_INT, LENGTH_ARGS, &FnCallLength, "Return the length of a list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("lsdir", DATA_TYPE_STRING_LIST, LSDIRLIST_ARGS, &FnCallLsDir, "Return a list of files in a directory matching a regular expression", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("maparray", DATA_TYPE_STRING_LIST, MAPARRAY_ARGS, &FnCallMapArray, "Return a list with each element modified by a pattern based $(this.k) and $(this.v)", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("maplist", DATA_TYPE_STRING_LIST, MAPLIST_ARGS, &FnCallMapList, "Return a list with each element modified by a pattern based $(this)", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("lsdir", CFE_DATA_TYPE_STRING_LIST, LSDIRLIST_ARGS, &FnCallLsDir, "Return a list of files in a directory matching a regular expression", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("maparray", CFE_DATA_TYPE_STRING_LIST, MAPARRAY_ARGS, &FnCallMapArray, "Return a list with each element modified by a pattern based $(this.k) and $(this.v)", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("maplist", CFE_DATA_TYPE_STRING_LIST, MAPLIST_ARGS, &FnCallMapList, "Return a list with each element modified by a pattern based $(this)", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("none", DATA_TYPE_CONTEXT, EVERY_SOME_NONE_ARGS, &FnCallEverySomeNone, "True if no element in the named list matches the given regular expression", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("not", DATA_TYPE_STRING, NOT_ARGS, &FnCallNot, "Calculate whether argument is false", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("not", CFE_DATA_TYPE_STRING, NOT_ARGS, &FnCallNot, "Calculate whether argument is false", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("now", DATA_TYPE_INT, NOW_ARGS, &FnCallNow, "Convert the current time into system representation", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("nth", DATA_TYPE_STRING, NTH_ARGS, &FnCallNth, "Get the element at arg2 in list arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("nth", CFE_DATA_TYPE_STRING, NTH_ARGS, &FnCallNth, "Get the element at arg2 in list arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("on", DATA_TYPE_INT, DATE_ARGS, &FnCallOn, "Convert an exact date/time to an integer system representation", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("or", DATA_TYPE_STRING, OR_ARGS, &FnCallOr, "Calculate whether any argument evaluates to true", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("or", CFE_DATA_TYPE_STRING, OR_ARGS, &FnCallOr, "Calculate whether any argument evaluates to true", true, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("parseintarray", DATA_TYPE_INT, PARSESTRINGARRAY_ARGS, &FnCallParseIntArray, "Read an array of integers from a file and assign the dimension to a variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("parserealarray", DATA_TYPE_INT, PARSESTRINGARRAY_ARGS, &FnCallParseRealArray, "Read an array of real numbers from a file and assign the dimension to a variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("parsestringarray", DATA_TYPE_INT, PARSESTRINGARRAY_ARGS, &FnCallParseStringArray, "Read an array of strings from a file and assign the dimension to a variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("parsestringarrayidx", DATA_TYPE_INT, PARSESTRINGARRAYIDX_ARGS, &FnCallParseStringArrayIndex, "Read an array of strings from a file and assign the dimension to a variable with integer indeces", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("peers", DATA_TYPE_STRING_LIST, PEERS_ARGS, &FnCallPeers, "Get a list of peers (not including ourself) from the partition to which we belong", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("peerleader", DATA_TYPE_STRING, PEERLEADER_ARGS, &FnCallPeerLeader, "Get the assigned peer-leader of the partition to which we belong", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("peerleaders", DATA_TYPE_STRING_LIST, PEERLEADERS_ARGS, &FnCallPeerLeaders, "Get a list of peer leaders from the named partitioning", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("peers", CFE_DATA_TYPE_STRING_LIST, PEERS_ARGS, &FnCallPeers, "Get a list of peers (not including ourself) from the partition to which we belong", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("peerleader", CFE_DATA_TYPE_STRING, PEERLEADER_ARGS, &FnCallPeerLeader, "Get the assigned peer-leader of the partition to which we belong", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("peerleaders", CFE_DATA_TYPE_STRING_LIST, PEERLEADERS_ARGS, &FnCallPeerLeaders, "Get a list of peer leaders from the named partitioning", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("product", DATA_TYPE_REAL, PRODUCT_ARGS, &FnCallProduct, "Return the product of a list of reals", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("randomint", DATA_TYPE_INT, RANDOMINT_ARGS, &FnCallRandomInt, "Generate a random integer between the given limits", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("readfile", DATA_TYPE_STRING, READFILE_ARGS, &FnCallReadFile, "Read max number of bytes from named file and assign to variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("readfile", CFE_DATA_TYPE_STRING, READFILE_ARGS, &FnCallReadFile, "Read max number of bytes from named file and assign to variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("readintarray", DATA_TYPE_INT, READSTRINGARRAY_ARGS, &FnCallReadIntArray, "Read an array of integers from a file and assign the dimension to a variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("readintlist", DATA_TYPE_INT_LIST, READSTRINGLIST_ARGS, &FnCallReadIntList, "Read and assign a list variable from a file of separated ints", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("readrealarray", DATA_TYPE_INT, READSTRINGARRAY_ARGS, &FnCallReadRealArray, "Read an array of real numbers from a file and assign the dimension to a variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("readreallist", DATA_TYPE_REAL_LIST, READSTRINGLIST_ARGS, &FnCallReadRealList, "Read and assign a list variable from a file of separated real numbers", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("readstringarray", DATA_TYPE_INT, READSTRINGARRAY_ARGS, &FnCallReadStringArray, "Read an array of strings from a file and assign the dimension to a variable", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("readstringarrayidx", DATA_TYPE_INT, READSTRINGARRAYIDX_ARGS, &FnCallReadStringArrayIndex, "Read an array of strings from a file and assign the dimension to a variable with integer indeces", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("readstringlist", DATA_TYPE_STRING_LIST, READSTRINGLIST_ARGS, &FnCallReadStringList, "Read and assign a list variable from a file of separated strings", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("readtcp", DATA_TYPE_STRING, READTCP_ARGS, &FnCallReadTcp, "Connect to tcp port, send string and assign result to variable", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("readstringlist", CFE_DATA_TYPE_STRING_LIST, READSTRINGLIST_ARGS, &FnCallReadStringList, "Read and assign a list variable from a file of separated strings", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("readtcp", CFE_DATA_TYPE_STRING, READTCP_ARGS, &FnCallReadTcp, "Connect to tcp port, send string and assign result to variable", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("regarray", DATA_TYPE_CONTEXT, REGARRAY_ARGS, &FnCallRegArray, "True if arg1 matches any item in the associative array with id=arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("regcmp", DATA_TYPE_CONTEXT, REGCMP_ARGS, &FnCallRegCmp, "True if arg1 is a regular expression matching that matches string arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("regextract", DATA_TYPE_CONTEXT, REGEXTRACT_ARGS, &FnCallRegExtract, "True if the regular expression in arg 1 matches the string in arg2 and sets a non-empty array of backreferences named arg3", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("registryvalue", DATA_TYPE_STRING, REGISTRYVALUE_ARGS, &FnCallRegistryValue, "Returns a value for an MS-Win registry key,value pair", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("registryvalue", CFE_DATA_TYPE_STRING, REGISTRYVALUE_ARGS, &FnCallRegistryValue, "Returns a value for an MS-Win registry key,value pair", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("regline", DATA_TYPE_CONTEXT, REGLINE_ARGS, &FnCallRegLine, "True if the regular expression in arg1 matches a line in file arg2", false, FNCALL_CATEGORY_IO, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("reglist", DATA_TYPE_CONTEXT, REGLIST_ARGS, &FnCallRegList, "True if the regular expression in arg2 matches any item in the list whose id is arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("regldap", DATA_TYPE_CONTEXT, REGLDAP_ARGS, &FnCallRegLDAP, "True if the regular expression in arg6 matches a value item in an ldap search", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("remotescalar", DATA_TYPE_STRING, REMOTESCALAR_ARGS, &FnCallRemoteScalar, "Read a scalar value from a remote cfengine server", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("remotescalar", CFE_DATA_TYPE_STRING, REMOTESCALAR_ARGS, &FnCallRemoteScalar, "Read a scalar value from a remote cfengine server", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("remoteclassesmatching", DATA_TYPE_CONTEXT, REMOTECLASSESMATCHING_ARGS, &FnCallRemoteClassesMatching, "Read persistent classes matching a regular expression from a remote cfengine server and add them into local context with prefix", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("returnszero", DATA_TYPE_CONTEXT, RETURNSZERO_ARGS, &FnCallReturnsZero, "True if named shell command has exit status zero", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("rrange", DATA_TYPE_REAL_RANGE, RRANGE_ARGS, &FnCallRRange, "Define a range of real numbers for cfengine internal use", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("reverse", DATA_TYPE_STRING_LIST, REVERSE_ARGS, &FnCallReverse, "Reverse a string list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("reverse", CFE_DATA_TYPE_STRING_LIST, REVERSE_ARGS, &FnCallReverse, "Reverse a string list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("selectservers", DATA_TYPE_INT, SELECTSERVERS_ARGS, &FnCallSelectServers, "Select tcp servers which respond correctly to a query and return their number, set array of names", false, FNCALL_CATEGORY_COMM, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("shuffle", DATA_TYPE_STRING_LIST, SHUFFLE_ARGS, &FnCallShuffle, "Shuffle a string list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("shuffle", CFE_DATA_TYPE_STRING_LIST, SHUFFLE_ARGS, &FnCallShuffle, "Shuffle a string list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("some", DATA_TYPE_CONTEXT, EVERY_SOME_NONE_ARGS, &FnCallEverySomeNone, "True if an element in the named list matches the given regular expression", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("sort", DATA_TYPE_STRING_LIST, SORT_ARGS, &FnCallSort, "Sort a string list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("sort", CFE_DATA_TYPE_STRING_LIST, SORT_ARGS, &FnCallSort, "Sort a string list", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("splayclass", DATA_TYPE_CONTEXT, SPLAYCLASS_ARGS, &FnCallSplayClass, "True if the first argument's time-slot has arrived, according to a policy in arg2", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("splitstring", DATA_TYPE_STRING_LIST, SPLITSTRING_ARGS, &FnCallSplitString, "Convert a string in arg1 into a list of max arg3 strings by splitting on a regular expression in arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("splitstring", CFE_DATA_TYPE_STRING_LIST, SPLITSTRING_ARGS, &FnCallSplitString, "Convert a string in arg1 into a list of max arg3 strings by splitting on a regular expression in arg2", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("strcmp", DATA_TYPE_CONTEXT, STRCMP_ARGS, &FnCallStrCmp, "True if the two strings match exactly", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("strftime", DATA_TYPE_STRING, STRFTIME_ARGS, &FnCallStrftime, "Format a date and time string", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("sublist", DATA_TYPE_STRING_LIST, SUBLIST_ARGS, &FnCallSublist, "Returns arg3 element from either the head or the tail (according to arg2) of list arg1.", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("strftime", CFE_DATA_TYPE_STRING, STRFTIME_ARGS, &FnCallStrftime, "Format a date and time string", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("sublist", CFE_DATA_TYPE_STRING_LIST, SUBLIST_ARGS, &FnCallSublist, "Returns arg3 element from either the head or the tail (according to arg2) of list arg1.", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("sum", DATA_TYPE_REAL, SUM_ARGS, &FnCallSum, "Return the sum of a list of reals", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("translatepath", DATA_TYPE_STRING, TRANSLATEPATH_ARGS, &FnCallTranslatePath, "Translate path separators from Unix style to the host's native", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
+-    FnCallTypeNew("unique", DATA_TYPE_STRING_LIST, UNIQUE_ARGS, &FnCallUnique, "Returns all the unique elements of list arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("translatepath", CFE_DATA_TYPE_STRING, TRANSLATEPATH_ARGS, &FnCallTranslatePath, "Translate path separators from Unix style to the host's native", false, FNCALL_CATEGORY_FILES, SYNTAX_STATUS_NORMAL),
++    FnCallTypeNew("unique", CFE_DATA_TYPE_STRING_LIST, UNIQUE_ARGS, &FnCallUnique, "Returns all the unique elements of list arg1", false, FNCALL_CATEGORY_DATA, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("usemodule", DATA_TYPE_CONTEXT, USEMODULE_ARGS, &FnCallUseModule, "Execute cfengine module script and set class if successful", false, FNCALL_CATEGORY_UTILS, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNew("userexists", DATA_TYPE_CONTEXT, USEREXISTS_ARGS, &FnCallUserExists, "True if user name or numerical id exists on this host", false, FNCALL_CATEGORY_SYSTEM, SYNTAX_STATUS_NORMAL),
+     FnCallTypeNewNull()
+diff --git a/libpromises/expand.c b/libpromises/expand.c
+index 4df3e84..7981e12 100644
+--- a/libpromises/expand.c
++++ b/libpromises/expand.c
+@@ -652,7 +652,7 @@ bool ExpandScalar(const EvalContext *ctx, const char *scopeid, const char *strin
+         {
+             switch (type)
+             {
+-            case DATA_TYPE_STRING:
++            case CFE_DATA_TYPE_STRING:
+             case DATA_TYPE_INT:
+             case DATA_TYPE_REAL:
+ 
+@@ -664,7 +664,7 @@ bool ExpandScalar(const EvalContext *ctx, const char *scopeid, const char *strin
+                 strlcat(buffer, (char *) rval.item, CF_EXPANDSIZE);
+                 break;
+ 
+-            case DATA_TYPE_STRING_LIST:
++            case CFE_DATA_TYPE_STRING_LIST:
+             case DATA_TYPE_INT_LIST:
+             case DATA_TYPE_REAL_LIST:
+             case DATA_TYPE_NONE:
+@@ -782,9 +782,9 @@ static void ExpandPromiseAndDo(EvalContext *ctx, const Promise *pp, Rlist *listv
+ 
+         if (PromiseGetBundle(pp)->source_path)
+         {
+-            ScopeNewSpecial(ctx, "this", "promise_filename",PromiseGetBundle(pp)->source_path, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "this", "promise_filename",PromiseGetBundle(pp)->source_path, CFE_DATA_TYPE_STRING);
+             snprintf(number, CF_SMALLBUF, "%zu", pp->offset.line);
+-            ScopeNewSpecial(ctx, "this", "promise_linenumber", number, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "this", "promise_linenumber", number, CFE_DATA_TYPE_STRING);
+         }
+ 
+         snprintf(v, CF_MAXVARSIZE, "%d", (int) getuid());
+@@ -792,8 +792,8 @@ static void ExpandPromiseAndDo(EvalContext *ctx, const Promise *pp, Rlist *listv
+         snprintf(v, CF_MAXVARSIZE, "%d", (int) getgid());
+         ScopeNewSpecial(ctx, "this", "promiser_gid", v, DATA_TYPE_INT);
+ 
+-        ScopeNewSpecial(ctx, "this", "bundle", PromiseGetBundle(pp)->name, DATA_TYPE_STRING);
+-        ScopeNewSpecial(ctx, "this", "namespace", PromiseGetNamespace(pp), DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "bundle", PromiseGetBundle(pp)->name, CFE_DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "namespace", PromiseGetNamespace(pp), CFE_DATA_TYPE_STRING);
+ 
+         /* Must expand $(this.promiser) here for arg dereferencing in things
+            like edit_line and methods, but we might have to
+@@ -802,7 +802,7 @@ static void ExpandPromiseAndDo(EvalContext *ctx, const Promise *pp, Rlist *listv
+ 
+         if (pp->has_subbundles)
+         {
+-            ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "this", "promiser", pp->promiser, CFE_DATA_TYPE_STRING);
+         }
+ 
+         if (handle)
+@@ -812,11 +812,11 @@ static void ExpandPromiseAndDo(EvalContext *ctx, const Promise *pp, Rlist *listv
+             ExpandScalar(ctx, "this", handle, tmp);
+             CanonifyNameInPlace(tmp);
+             Log(LOG_LEVEL_DEBUG, "Expanded handle to '%s'", tmp);
+-            ScopeNewSpecial(ctx, "this", "handle", tmp, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "this", "handle", tmp, CFE_DATA_TYPE_STRING);
+         }
+         else
+         {
+-            ScopeNewSpecial(ctx, "this", "handle", PromiseID(pp), DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "this", "handle", PromiseID(pp), CFE_DATA_TYPE_STRING);
+         }
+ 
+         /* End special variables */
+@@ -958,7 +958,7 @@ static void CopyLocalizedIteratorsToThisScope(EvalContext *ctx, const char *scop
+             {
+                 Rlist *list = RvalCopy((Rval) {retval.item, RVAL_TYPE_LIST}).item;
+                 RlistFlatten(ctx, &list);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, scope, rp->item }, (Rval) { list, RVAL_TYPE_LIST }, DATA_TYPE_STRING_LIST);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, scope, rp->item }, (Rval) { list, RVAL_TYPE_LIST }, CFE_DATA_TYPE_STRING_LIST);
+             }
+         }
+     }
+@@ -984,7 +984,7 @@ static void CopyLocalizedScalarsToThisScope(EvalContext *ctx, const char *scope,
+ 
+             if (EvalContextVariableGet(ctx, (VarRef) { NULL, orgscope, orgname }, &retval, NULL))
+             {
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, scope, rp->item }, (Rval) { retval.item, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, scope, rp->item }, (Rval) { retval.item, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+             }
+         }
+     }
+@@ -1317,21 +1317,21 @@ static void ParseServices(EvalContext *ctx, Promise *pp)
+     switch (a.service.service_policy)
+     {
+     case SERVICE_POLICY_START:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "start", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "start", CFE_DATA_TYPE_STRING);
+         break;
+ 
+     case SERVICE_POLICY_RESTART:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "restart", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "restart", CFE_DATA_TYPE_STRING);
+         break;
+ 
+     case SERVICE_POLICY_RELOAD:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "reload", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "reload", CFE_DATA_TYPE_STRING);
+         break;
+         
+     case SERVICE_POLICY_STOP:
+     case SERVICE_POLICY_DISABLE:
+     default:
+-        ScopeNewSpecial(ctx, "this", "service_policy", "stop", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "service_policy", "stop", CFE_DATA_TYPE_STRING);
+         break;
+     }
+ 
+diff --git a/libpromises/generic_agent.c b/libpromises/generic_agent.c
+index 1e41efb..9996519 100644
+--- a/libpromises/generic_agent.c
++++ b/libpromises/generic_agent.c
+@@ -1442,8 +1442,8 @@ static void CheckControlPromises(EvalContext *ctx, GenericAgentConfig *config, c
+             ScopeDeleteSpecial("sys", "domain");
+             ScopeDeleteSpecial("sys", "fqhost");
+             snprintf(VFQNAME, CF_MAXVARSIZE, "%s.%s", VUQNAME, VDOMAIN);
+-            ScopeNewSpecial(ctx, "sys", "fqhost", VFQNAME, DATA_TYPE_STRING);
+-            ScopeNewSpecial(ctx, "sys", "domain", VDOMAIN, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "sys", "fqhost", VFQNAME, CFE_DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "sys", "domain", VDOMAIN, CFE_DATA_TYPE_STRING);
+             EvalContextHeapAddHard(ctx, VDOMAIN);
+         }
+ 
+diff --git a/libpromises/policy.c b/libpromises/policy.c
+index 9e29c16..7337dc3 100644
+--- a/libpromises/policy.c
++++ b/libpromises/policy.c
+@@ -274,14 +274,14 @@ static bool RvalTypeCheckDataType(RvalType rval_type, DataType expected_datatype
+     case DATA_TYPE_OPTION:
+     case DATA_TYPE_REAL:
+     case DATA_TYPE_REAL_RANGE:
+-    case DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING:
+         return rval_type == RVAL_TYPE_SCALAR;
+ 
+     case DATA_TYPE_CONTEXT_LIST:
+     case DATA_TYPE_INT_LIST:
+     case DATA_TYPE_OPTION_LIST:
+     case DATA_TYPE_REAL_LIST:
+-    case DATA_TYPE_STRING_LIST:
++    case CFE_DATA_TYPE_STRING_LIST:
+         return (rval_type == RVAL_TYPE_SCALAR) || (rval_type == RVAL_TYPE_LIST);
+ 
+     default:
+diff --git a/libpromises/rlist.c b/libpromises/rlist.c
+index 65361fa..995b0f0 100644
+--- a/libpromises/rlist.c
++++ b/libpromises/rlist.c
+@@ -53,14 +53,14 @@ RvalType DataTypeToRvalType(DataType datatype)
+     case DATA_TYPE_OPTION:
+     case DATA_TYPE_REAL:
+     case DATA_TYPE_REAL_RANGE:
+-    case DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING:
+         return RVAL_TYPE_SCALAR;
+ 
+     case DATA_TYPE_CONTEXT_LIST:
+     case DATA_TYPE_INT_LIST:
+     case DATA_TYPE_OPTION_LIST:
+     case DATA_TYPE_REAL_LIST:
+-    case DATA_TYPE_STRING_LIST:
++    case CFE_DATA_TYPE_STRING_LIST:
+         return RVAL_TYPE_LIST;
+ 
+     case DATA_TYPE_NONE:
+diff --git a/libpromises/scope.c b/libpromises/scope.c
+index 5d53f12..263e947 100644
+--- a/libpromises/scope.c
++++ b/libpromises/scope.c
+@@ -106,13 +106,13 @@ void ScopePutMatch(int index, const char *value)
+             }
+             RvalDestroy(assoc->rval);
+             assoc->rval = RvalCopy(rval);
+-            assoc->dtype = DATA_TYPE_STRING;
++            assoc->dtype = CFE_DATA_TYPE_STRING;
+             Log(LOG_LEVEL_DEBUG, "Stored '%s' in context '%s'", lval, "match");
+         }
+     }
+     else
+     {
+-        if (!HashInsertElement(ptr->hashtable, lval, rval, DATA_TYPE_STRING))
++        if (!HashInsertElement(ptr->hashtable, lval, rval, CFE_DATA_TYPE_STRING))
+         {
+             ProgrammingError("Hash table is full");
+         }
+@@ -220,14 +220,14 @@ void ScopeAugment(EvalContext *ctx, const Bundle *bp, const Promise *pp, const R
+ 
+             switch (vtype)
+             {
+-            case DATA_TYPE_STRING_LIST:
++            case CFE_DATA_TYPE_STRING_LIST:
+             case DATA_TYPE_INT_LIST:
+             case DATA_TYPE_REAL_LIST:
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { retval.item, RVAL_TYPE_LIST}, DATA_TYPE_STRING_LIST);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { retval.item, RVAL_TYPE_LIST}, CFE_DATA_TYPE_STRING_LIST);
+                 break;
+             default:
+                 Log(LOG_LEVEL_ERR, "List parameter '%s' not found while constructing scope '%s' - use @(scope.variable) in calling reference", naked, bp->name);
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { rpr->item, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { rpr->item, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                 break;
+             }
+         }
+@@ -236,7 +236,7 @@ void ScopeAugment(EvalContext *ctx, const Bundle *bp, const Promise *pp, const R
+             switch(rpr->type)
+             {
+             case RVAL_TYPE_SCALAR:
+-                EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { rpr->item, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { rpr->item, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                 break;
+ 
+             case RVAL_TYPE_FNCALL:
+@@ -245,7 +245,7 @@ void ScopeAugment(EvalContext *ctx, const Bundle *bp, const Promise *pp, const R
+                     Rval rval = FnCallEvaluate(ctx, subfp, pp).rval;
+                     if (rval.type == RVAL_TYPE_SCALAR)
+                     {
+-                        EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { rval.item, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++                        EvalContextVariablePut(ctx, (VarRef) { NULL, bp->name, lval }, (Rval) { rval.item, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+                     }
+                     else
+                     {
+@@ -665,8 +665,8 @@ void ScopeDeRefListsInHashtable(char *scope, Rlist *namelist, Rlist *dereflist)
+ 
+                 switch (assoc->dtype)
+                 {
+-                case DATA_TYPE_STRING_LIST:
+-                    assoc->dtype = DATA_TYPE_STRING;
++                case CFE_DATA_TYPE_STRING_LIST:
++                    assoc->dtype = CFE_DATA_TYPE_STRING;
+                     assoc->rval.type = RVAL_TYPE_SCALAR;
+                     break;
+                 case DATA_TYPE_INT_LIST:
+diff --git a/libpromises/syntax.c b/libpromises/syntax.c
+index 447fa82..553702c 100644
+--- a/libpromises/syntax.c
++++ b/libpromises/syntax.c
+@@ -292,7 +292,7 @@ SyntaxTypeMatch CheckConstraintTypeMatch(const char *lval, Rval rval, DataType d
+     case RVAL_TYPE_SCALAR:
+         switch (dt)
+         {
+-        case DATA_TYPE_STRING_LIST:
++        case CFE_DATA_TYPE_STRING_LIST:
+         case DATA_TYPE_INT_LIST:
+         case DATA_TYPE_REAL_LIST:
+         case DATA_TYPE_CONTEXT_LIST:
+@@ -312,7 +312,7 @@ SyntaxTypeMatch CheckConstraintTypeMatch(const char *lval, Rval rval, DataType d
+ 
+         switch (dt)
+         {
+-        case DATA_TYPE_STRING_LIST:
++        case CFE_DATA_TYPE_STRING_LIST:
+         case DATA_TYPE_INT_LIST:
+         case DATA_TYPE_REAL_LIST:
+         case DATA_TYPE_CONTEXT_LIST:
+@@ -362,8 +362,8 @@ SyntaxTypeMatch CheckConstraintTypeMatch(const char *lval, Rval rval, DataType d
+ 
+     switch (dt)
+     {
+-    case DATA_TYPE_STRING:
+-    case DATA_TYPE_STRING_LIST:
++    case CFE_DATA_TYPE_STRING:
++    case CFE_DATA_TYPE_STRING_LIST:
+         return CheckParseString(lval, (const char *) rval.item, range);
+ 
+     case DATA_TYPE_INT:
+@@ -450,12 +450,12 @@ vars:
+             else
+             {
+                 /* Must force non-pure substitution to be generic type CF_SCALAR.cf_str */
+-                return DATA_TYPE_STRING;
++                return CFE_DATA_TYPE_STRING;
+             }
+         }
+     }
+ 
+-    return DATA_TYPE_STRING;
++    return CFE_DATA_TYPE_STRING;
+ }
+ 
+ /****************************************************************************/
+@@ -873,7 +873,7 @@ static SyntaxTypeMatch CheckFnCallType(const char *lval, const char *s, DataType
+         {
+             /* Ok to allow fn calls of correct element-type in lists */
+ 
+-            if (dt == DATA_TYPE_STRING && dtype == DATA_TYPE_STRING_LIST)
++            if (dt == CFE_DATA_TYPE_STRING && dtype == CFE_DATA_TYPE_STRING_LIST)
+             {
+                 return SYNTAX_TYPE_MATCH_OK;
+             }
+diff --git a/libpromises/syntax.h b/libpromises/syntax.h
+index 722a59e..b8155ea 100644
+--- a/libpromises/syntax.h
++++ b/libpromises/syntax.h
+@@ -92,8 +92,8 @@ JsonElement *SyntaxToJson(void);
+ #define ConstraintSyntaxNewOption(lval, options, description, status) { lval, DATA_TYPE_OPTION, .range.validation_string = options, description, status }
+ #define ConstraintSyntaxNewOptionList(lval, item_range, description, status) { lval, DATA_TYPE_OPTION_LIST, .range.validation_string = item_range, description, status }
+ 
+-#define ConstraintSyntaxNewString(lval, regex, description, status) { lval, DATA_TYPE_STRING, .range.validation_string = regex, description, status }
+-#define ConstraintSyntaxNewStringList(lval, item_range, description, status) { lval, DATA_TYPE_STRING_LIST, .range.validation_string = item_range, description, status }
++#define ConstraintSyntaxNewString(lval, regex, description, status) { lval, CFE_DATA_TYPE_STRING, .range.validation_string = regex, description, status }
++#define ConstraintSyntaxNewStringList(lval, item_range, description, status) { lval, CFE_DATA_TYPE_STRING_LIST, .range.validation_string = item_range, description, status }
+ 
+ #define ConstraintSyntaxNewInt(lval, int_range, description, status) { lval, DATA_TYPE_INT, .range.validation_string = int_range, description, status }
+ #define ConstraintSyntaxNewIntRange(lval, int_range, description, status ) { lval , DATA_TYPE_INT_RANGE, .range.validation_string = int_range, description, status }
+diff --git a/libpromises/sysinfo.c b/libpromises/sysinfo.c
+index 2024f3b..acc848a 100644
+--- a/libpromises/sysinfo.c
++++ b/libpromises/sysinfo.c
+@@ -260,10 +260,10 @@ void DetectDomainName(EvalContext *ctx, const char *orig_nodename)
+     EvalContextHeapAddHard(ctx, VUQNAME);
+     EvalContextHeapAddHard(ctx, VDOMAIN);
+ 
+-    ScopeNewSpecial(ctx, "sys", "host", nodename, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "uqhost", VUQNAME, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "fqhost", VFQNAME, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "domain", VDOMAIN, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "host", nodename, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "uqhost", VUQNAME, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "fqhost", VFQNAME, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "domain", VDOMAIN, CFE_DATA_TYPE_STRING);
+ }
+ 
+ /*******************************************************************/
+@@ -278,17 +278,17 @@ void DiscoverVersion(EvalContext *ctx)
+         char workbuf[CF_BUFSIZE];
+ 
+         snprintf(workbuf, CF_MAXVARSIZE, "%d", major);
+-        ScopeNewSpecial(ctx, "sys", "cf_version_major", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cf_version_major", workbuf, CFE_DATA_TYPE_STRING);
+         snprintf(workbuf, CF_MAXVARSIZE, "%d", minor);
+-        ScopeNewSpecial(ctx, "sys", "cf_version_minor", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cf_version_minor", workbuf, CFE_DATA_TYPE_STRING);
+         snprintf(workbuf, CF_MAXVARSIZE, "%d", patch);
+-        ScopeNewSpecial(ctx, "sys", "cf_version_patch", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cf_version_patch", workbuf, CFE_DATA_TYPE_STRING);
+     }
+     else
+     {
+-        ScopeNewSpecial(ctx, "sys", "cf_version_major", "BAD VERSION " VERSION, DATA_TYPE_STRING);
+-        ScopeNewSpecial(ctx, "sys", "cf_version_minor", "BAD VERSION " VERSION, DATA_TYPE_STRING);
+-        ScopeNewSpecial(ctx, "sys", "cf_version_patch", "BAD VERSION " VERSION, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cf_version_major", "BAD VERSION " VERSION, CFE_DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cf_version_minor", "BAD VERSION " VERSION, CFE_DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cf_version_patch", "BAD VERSION " VERSION, CFE_DATA_TYPE_STRING);
+     }
+ }
+ 
+@@ -364,7 +364,7 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+                     found = true;
+ 
+                     VSYSTEMHARDCLASS = (PlatformContext) i;
+-                    ScopeNewSpecial(ctx, "sys", "class", CLASSTEXT[i], DATA_TYPE_STRING);
++                    ScopeNewSpecial(ctx, "sys", "class", CLASSTEXT[i], CFE_DATA_TYPE_STRING);
+                     break;
+                 }
+             }
+@@ -424,19 +424,19 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+         Log(LOG_LEVEL_ERR, "Chop was called on a string that seemed to have no terminator");
+     }
+ 
+-    ScopeNewSpecial(ctx, "sys", "date", workbuf, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "cdate", CanonifyName(workbuf), DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "os", VSYSNAME.sysname, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "release", VSYSNAME.release, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "version", VSYSNAME.version, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "arch", VSYSNAME.machine, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "workdir", CFWORKDIR, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "fstab", VFSTAB[VSYSTEMHARDCLASS], DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "resolv", VRESOLVCONF[VSYSTEMHARDCLASS], DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "maildir", VMAILDIR[VSYSTEMHARDCLASS], DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "exports", VEXPORTS[VSYSTEMHARDCLASS], DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "date", workbuf, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "cdate", CanonifyName(workbuf), CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "os", VSYSNAME.sysname, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "release", VSYSNAME.release, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "version", VSYSNAME.version, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "arch", VSYSNAME.machine, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "workdir", CFWORKDIR, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "fstab", VFSTAB[VSYSTEMHARDCLASS], CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "resolv", VRESOLVCONF[VSYSTEMHARDCLASS], CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "maildir", VMAILDIR[VSYSTEMHARDCLASS], CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "exports", VEXPORTS[VSYSTEMHARDCLASS], CFE_DATA_TYPE_STRING);
+ /* FIXME: type conversion */
+-    ScopeNewSpecial(ctx, "sys", "cf_version", (char *) Version(), DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "cf_version", (char *) Version(), CFE_DATA_TYPE_STRING);
+ 
+     DiscoverVersion(ctx);
+ 
+@@ -447,7 +447,7 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+         HashPubKey(PUBKEY, digest, CF_DEFAULT_DIGEST);
+         HashPrintSafe(CF_DEFAULT_DIGEST, digest, pubkey_digest);
+ 
+-        ScopeNewSpecial(ctx, "sys", "key_digest", pubkey_digest, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "key_digest", pubkey_digest, CFE_DATA_TYPE_STRING);
+ 
+         snprintf(workbuf, CF_MAXVARSIZE - 1, "PK_%s", pubkey_digest);
+         CanonifyNameInPlace(workbuf);
+@@ -479,7 +479,7 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+         if (stat(name, &sb) != -1)
+         {
+             snprintf(quoteName, sizeof(quoteName), "\"%s\"", name);
+-            ScopeNewSpecial(ctx, "sys", shortname, quoteName, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "sys", shortname, quoteName, CFE_DATA_TYPE_STRING);
+             have_component[i] = true;
+         }
+     }
+@@ -500,7 +500,7 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+         if (stat(name, &sb) != -1)
+         {
+             snprintf(quoteName, sizeof(quoteName), "\"%s\"", name);
+-            ScopeNewSpecial(ctx, "sys", shortname, quoteName, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "sys", shortname, quoteName, CFE_DATA_TYPE_STRING);
+         }
+     }
+ 
+@@ -509,12 +509,12 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+ #ifdef __MINGW32__
+     if (NovaWin_GetWinDir(workbuf, sizeof(workbuf)))
+     {
+-        ScopeNewSpecial(ctx, "sys", "windir", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "windir", workbuf, CFE_DATA_TYPE_STRING);
+     }
+ 
+     if (NovaWin_GetSysDir(workbuf, sizeof(workbuf)))
+     {
+-        ScopeNewSpecial(ctx, "sys", "winsysdir", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "winsysdir", workbuf, CFE_DATA_TYPE_STRING);
+ 
+         char filename[CF_BUFSIZE];
+         if (snprintf(filename, sizeof(filename), "%s%s", workbuf, "\\WindowsPowerShell\\v1.0\\powershell.exe") < sizeof(filename))
+@@ -529,19 +529,19 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+ 
+     if (NovaWin_GetProgDir(workbuf, sizeof(workbuf)))
+     {
+-        ScopeNewSpecial(ctx, "sys", "winprogdir", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "winprogdir", workbuf, CFE_DATA_TYPE_STRING);
+     }
+ 
+ # ifdef _WIN64
+ // only available on 64 bit windows systems
+     if (NovaWin_GetEnv("PROGRAMFILES(x86)", workbuf, sizeof(workbuf)))
+     {
+-        ScopeNewSpecial(ctx, "sys", "winprogdir86", workbuf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "winprogdir86", workbuf, CFE_DATA_TYPE_STRING);
+     }
+ 
+ # else/* NOT _WIN64 */
+ 
+-    ScopeNewSpecial(ctx, "sys", "winprogdir86", "", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "winprogdir86", "", CFE_DATA_TYPE_STRING);
+ 
+ # endif
+ 
+@@ -549,10 +549,10 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+ 
+ // defs on Unix for manual-building purposes
+ 
+-    ScopeNewSpecial(ctx, "sys", "windir", "/dev/null", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "winsysdir", "/dev/null", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "winprogdir", "/dev/null", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "winprogdir86", "/dev/null", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "windir", "/dev/null", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "winsysdir", "/dev/null", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "winprogdir", "/dev/null", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "winprogdir86", "/dev/null", CFE_DATA_TYPE_STRING);
+ 
+ #endif /* !__MINGW32__ */
+ 
+@@ -617,13 +617,13 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+     }
+ 
+     sp = xstrdup(CanonifyName(workbuf));
+-    ScopeNewSpecial(ctx, "sys", "long_arch", sp, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "long_arch", sp, CFE_DATA_TYPE_STRING);
+     EvalContextHeapAddHard(ctx, sp);
+     free(sp);
+ 
+     snprintf(workbuf, CF_BUFSIZE, "%s_%s", VSYSNAME.sysname, VSYSNAME.machine);
+     sp = xstrdup(CanonifyName(workbuf));
+-    ScopeNewSpecial(ctx, "sys", "ostype", sp, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "ostype", sp, CFE_DATA_TYPE_STRING);
+     EvalContextHeapAddHard(ctx, sp);
+     free(sp);
+ 
+@@ -666,7 +666,7 @@ void GetNameInfo3(EvalContext *ctx, AgentType agent_type)
+     zid = getzoneid();
+     getzonenamebyid(zid, zone, ZONENAME_MAX);
+ 
+-    ScopeNewSpecial(ctx, "sys", "zone", zone, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "zone", zone, CFE_DATA_TYPE_STRING);
+     snprintf(vbuff, CF_BUFSIZE - 1, "zone_%s", zone);
+     EvalContextHeapAddHard(ctx, vbuff);
+ 
+@@ -715,7 +715,7 @@ void Get3Environment(EvalContext *ctx, AgentType agent_type)
+     }
+ 
+     ScopeDeleteSpecial("mon", "env_time");
+-    ScopeNewSpecial(ctx, "mon", "env_time", value, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "mon", "env_time", value, CFE_DATA_TYPE_STRING);
+ 
+     Log(LOG_LEVEL_VERBOSE, "Loading environment...");
+ 
+@@ -751,7 +751,7 @@ void Get3Environment(EvalContext *ctx, AgentType agent_type)
+            
+             Log(LOG_LEVEL_DEBUG, "Setting new monitoring list '%s' => '%s'", name, value);
+             list = RlistParseShown(value);
+-            ScopeNewSpecial(ctx, "mon", name, list, DATA_TYPE_STRING_LIST);
++            ScopeNewSpecial(ctx, "mon", name, list, CFE_DATA_TYPE_STRING_LIST);
+ 
+             RlistDestroy(list);
+         }
+@@ -765,7 +765,7 @@ void Get3Environment(EvalContext *ctx, AgentType agent_type)
+             if (agent_type != AGENT_TYPE_EXECUTOR)
+             {
+                 ScopeDeleteSpecial("mon", name);
+-                ScopeNewSpecial(ctx, "mon", name, value, DATA_TYPE_STRING);
++                ScopeNewSpecial(ctx, "mon", name, value, CFE_DATA_TYPE_STRING);
+                 Log(LOG_LEVEL_DEBUG, "Setting new monitoring scalar '%s' => '%s'", name, value);
+             }
+         }
+@@ -834,8 +834,8 @@ void CreateHardClassesFromCanonification(EvalContext *ctx, const char *canonifie
+ static void SetFlavour(EvalContext *ctx, const char *flavour)
+ {
+     EvalContextHeapAddHard(ctx, flavour);
+-    ScopeNewSpecial(ctx, "sys", "flavour", flavour, DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "sys", "flavor", flavour, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "flavour", flavour, CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "flavor", flavour, CFE_DATA_TYPE_STRING);
+ }
+ 
+ void OSClasses(EvalContext *ctx)
+@@ -1027,7 +1027,7 @@ void OSClasses(EvalContext *ctx)
+         }
+     }
+ 
+-    ScopeNewSpecial(ctx, "sys", "crontab", "", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", "crontab", "", CFE_DATA_TYPE_STRING);
+ 
+ #endif /* __CYGWIN__ */
+ 
+@@ -1080,7 +1080,7 @@ void OSClasses(EvalContext *ctx)
+             snprintf(vbuff, CF_BUFSIZE, "/var/spool/cron/crontabs/%s", pw->pw_name);
+         }
+ 
+-        ScopeNewSpecial(ctx, "sys", "crontab", vbuff, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "crontab", vbuff, CFE_DATA_TYPE_STRING);
+     }
+ 
+ #endif
+@@ -1102,17 +1102,17 @@ void OSClasses(EvalContext *ctx)
+ 
+     if (IsDefinedClass(ctx, "redhat", NULL))
+     {
+-        ScopeNewSpecial(ctx, "sys", "doc_root", "/var/www/html", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "doc_root", "/var/www/html", CFE_DATA_TYPE_STRING);
+     }
+ 
+     if (IsDefinedClass(ctx, "SuSE", NULL))
+     {
+-        ScopeNewSpecial(ctx, "sys", "doc_root", "/srv/www/htdocs", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "doc_root", "/srv/www/htdocs", CFE_DATA_TYPE_STRING);
+     }
+ 
+     if (IsDefinedClass(ctx, "debian", NULL))
+     {
+-        ScopeNewSpecial(ctx, "sys", "doc_root", "/var/www", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "doc_root", "/var/www", CFE_DATA_TYPE_STRING);
+     }
+ }
+ 
+@@ -2408,11 +2408,11 @@ static void GetCPUInfo(EvalContext *ctx)
+ 
+     if (count == 1) {
+         EvalContextHeapAddHard(ctx, buf);  // "1_cpu" from init - change if buf is ever used above
+-        ScopeNewSpecial(ctx, "sys", "cpus", "1", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cpus", "1", CFE_DATA_TYPE_STRING);
+     } else {
+         snprintf(buf, CF_SMALLBUF, "%d_cpus", count);
+         EvalContextHeapAddHard(ctx, buf);
+         snprintf(buf, CF_SMALLBUF, "%d", count);
+-        ScopeNewSpecial(ctx, "sys", "cpus", buf, DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", "cpus", buf, CFE_DATA_TYPE_STRING);
+     }
+ }
+diff --git a/libpromises/unix.c b/libpromises/unix.c
+index 5c3105a..3b51f72 100644
+--- a/libpromises/unix.c
++++ b/libpromises/unix.c
+@@ -360,7 +360,7 @@ static void GetMacAddress(EvalContext *ctx, AgentType ag, int fd, struct ifreq *
+              (unsigned char) ifr->ifr_hwaddr.sa_data[4], 
+              (unsigned char) ifr->ifr_hwaddr.sa_data[5]);
+ 
+-    ScopeNewSpecial(ctx, "sys", name, hw_mac, DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", name, hw_mac, CFE_DATA_TYPE_STRING);
+     RlistAppend(hardware, hw_mac, RVAL_TYPE_SCALAR);
+     RlistAppend(interfaces, ifp->ifr_name, RVAL_TYPE_SCALAR);
+ 
+@@ -378,7 +378,7 @@ static void GetMacAddress(EvalContext *ctx, AgentType ag, int fd, struct ifreq *
+         Log(LOG_LEVEL_ERR, "getifaddrs", "!! Could not get interface %s addresses",
+           ifp->ifr_name);
+ 
+-        ScopeNewSpecial(ctx, "sys", name, "mac_unknown", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "sys", name, "mac_unknown", CFE_DATA_TYPE_STRING);
+         EvalContextHeapAddHard(ctx, "mac_unknown");
+         return;
+     }
+@@ -399,7 +399,7 @@ static void GetMacAddress(EvalContext *ctx, AgentType ag, int fd, struct ifreq *
+                     (unsigned char) m[4],
+                     (unsigned char) m[5]);
+ 
+-                ScopeNewSpecial(ctx, "sys", name, hw_mac, DATA_TYPE_STRING);
++                ScopeNewSpecial(ctx, "sys", name, hw_mac, CFE_DATA_TYPE_STRING);
+                 RlistAppend(hardware, hw_mac, RVAL_TYPE_SCALAR);
+                 RlistAppend(interfaces, ifa->ifa_name, RVAL_TYPE_SCALAR);
+ 
+@@ -412,7 +412,7 @@ static void GetMacAddress(EvalContext *ctx, AgentType ag, int fd, struct ifreq *
+     freeifaddrs(ifaddr);
+ 
+ # else
+-    ScopeNewSpecial(ctx, "sys", name, "mac_unknown", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "sys", name, "mac_unknown", CFE_DATA_TYPE_STRING);
+     EvalContextHeapAddHard(ctx, "mac_unknown");
+ # endif
+ }
+@@ -455,7 +455,7 @@ void GetInterfaceFlags(EvalContext *ctx, AgentType ag, struct ifreq *ifr, Rlist
+     {
+       // Skip leading space
+       fp = buffer + 1;
+-      ScopeNewSpecial(ctx, "sys", name, fp, DATA_TYPE_STRING);
++      ScopeNewSpecial(ctx, "sys", name, fp, CFE_DATA_TYPE_STRING);
+       RlistAppend(flags, fp, RVAL_TYPE_SCALAR);
+     }
+ }
+@@ -544,7 +544,7 @@ void GetInterfacesInfo(EvalContext *ctx, AgentType ag)
+         if (strcmp(last_name, ifp->ifr_name) != 0)
+         {
+             strcpy(last_name, ifp->ifr_name);
+-            ScopeNewSpecial(ctx, "sys", "interface", last_name, DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "sys", "interface", last_name, CFE_DATA_TYPE_STRING);
+         }
+ 
+         snprintf(workbuf, sizeof(workbuf), "net_iface_%s", CanonifyName(ifp->ifr_name));
+@@ -641,7 +641,7 @@ void GetInterfacesInfo(EvalContext *ctx, AgentType ag)
+                         {
+                             *sp = '\0';
+                             snprintf(name, sizeof(name), "ipv4_%d[%s]", i--, CanonifyName(VIPADDRESS));
+-                            ScopeNewSpecial(ctx, "sys", name, ip, DATA_TYPE_STRING);
++                            ScopeNewSpecial(ctx, "sys", name, ip, CFE_DATA_TYPE_STRING);
+                         }
+                     }
+                     continue;
+@@ -658,7 +658,7 @@ void GetInterfacesInfo(EvalContext *ctx, AgentType ag)
+                  * interface. */
+                 if (!address_set && !(ifr.ifr_flags & IFF_LOOPBACK))
+                 {
+-                    ScopeNewSpecial(ctx, "sys", "ipv4", txtaddr, DATA_TYPE_STRING);
++                    ScopeNewSpecial(ctx, "sys", "ipv4", txtaddr, CFE_DATA_TYPE_STRING);
+ 
+                     strcpy(VIPADDRESS, txtaddr);
+                     Log(LOG_LEVEL_VERBOSE, "IP address of host set to %s",
+@@ -691,7 +691,7 @@ void GetInterfacesInfo(EvalContext *ctx, AgentType ag)
+                     snprintf(name, sizeof(name), "ipv4[interface_name]");
+                 }
+ 
+-                ScopeNewSpecial(ctx, "sys", name, ip, DATA_TYPE_STRING);
++                ScopeNewSpecial(ctx, "sys", name, ip, CFE_DATA_TYPE_STRING);
+ 
+                 i = 3;
+ 
+@@ -710,7 +710,7 @@ void GetInterfacesInfo(EvalContext *ctx, AgentType ag)
+                             snprintf(name, sizeof(name), "ipv4_%d[interface_name]", i--);
+                         }
+ 
+-                        ScopeNewSpecial(ctx, "sys", name, ip, DATA_TYPE_STRING);
++                        ScopeNewSpecial(ctx, "sys", name, ip, CFE_DATA_TYPE_STRING);
+                     }
+                 }
+             }
+@@ -722,10 +722,10 @@ void GetInterfacesInfo(EvalContext *ctx, AgentType ag)
+ 
+     close(fd);
+ 
+-    ScopeNewSpecial(ctx, "sys", "interfaces", interfaces, DATA_TYPE_STRING_LIST);
+-    ScopeNewSpecial(ctx, "sys", "hardware_addresses", hardware, DATA_TYPE_STRING_LIST);
+-    ScopeNewSpecial(ctx, "sys", "hardware_flags", flags, DATA_TYPE_STRING_LIST);
+-    ScopeNewSpecial(ctx, "sys", "ip_addresses", ips, DATA_TYPE_STRING_LIST);
++    ScopeNewSpecial(ctx, "sys", "interfaces", interfaces, CFE_DATA_TYPE_STRING_LIST);
++    ScopeNewSpecial(ctx, "sys", "hardware_addresses", hardware, CFE_DATA_TYPE_STRING_LIST);
++    ScopeNewSpecial(ctx, "sys", "hardware_flags", flags, CFE_DATA_TYPE_STRING_LIST);
++    ScopeNewSpecial(ctx, "sys", "ip_addresses", ips, CFE_DATA_TYPE_STRING_LIST);
+ 
+     RlistDestroy(interfaces);
+     RlistDestroy(hardware);
+diff --git a/libpromises/vars.c b/libpromises/vars.c
+index 94c7b6b..3400298 100644
+--- a/libpromises/vars.c
++++ b/libpromises/vars.c
+@@ -38,11 +38,11 @@ static int IsCf3Scalar(char *str);
+ 
+ void LoadSystemConstants(EvalContext *ctx)
+ {
+-    ScopeNewSpecial(ctx, "const", "dollar", "$", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "const", "n", "\n", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "const", "r", "\r", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "const", "t", "\t", DATA_TYPE_STRING);
+-    ScopeNewSpecial(ctx, "const", "endl", "\n", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "const", "dollar", "$", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "const", "n", "\n", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "const", "r", "\r", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "const", "t", "\t", CFE_DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "const", "endl", "\n", CFE_DATA_TYPE_STRING);
+ /* NewScalar("const","0","\0",cf_str);  - this cannot work */
+ 
+ }
+diff --git a/libpromises/verify_reports.c b/libpromises/verify_reports.c
+index 35f522b..dab2c5e 100644
+--- a/libpromises/verify_reports.c
++++ b/libpromises/verify_reports.c
+@@ -69,7 +69,7 @@ void VerifyReportPromise(EvalContext *ctx, Promise *pp)
+             snprintf(unique_name, CF_BUFSIZE, "last-result");
+         }
+ 
+-        EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(pp)->name, unique_name }, (Rval) { pp->promiser, RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, (VarRef) { NULL, PromiseGetBundle(pp)->name, unique_name }, (Rval) { pp->promiser, RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         return;
+     }
+        
+diff --git a/tests/unit/assoc_test.c b/tests/unit/assoc_test.c
+index c87061e..46a8646 100644
+--- a/tests/unit/assoc_test.c
++++ b/tests/unit/assoc_test.c
+@@ -4,7 +4,7 @@
+ 
+ static void test_create_destroy(void)
+ {
+-    CfAssoc *ap = NewAssoc("hello", (Rval) { "world", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++    CfAssoc *ap = NewAssoc("hello", (Rval) { "world", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+     DeleteAssoc(ap);
+ }
+ 
+diff --git a/tests/unit/exec-config-test.c b/tests/unit/exec-config-test.c
+index f155610..ab86486 100644
+--- a/tests/unit/exec-config-test.c
++++ b/tests/unit/exec-config-test.c
+@@ -49,7 +49,7 @@ static void test_load(void)
+     EvalContext *ctx = EvalContextNew();
+     {
+         VarRef lval = VarRefParse("g.host");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "snookie", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "snookie", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+diff --git a/tests/unit/expand_test.c b/tests/unit/expand_test.c
+index 59c03dc..edd5a3f 100644
+--- a/tests/unit/expand_test.c
++++ b/tests/unit/expand_test.c
+@@ -44,7 +44,7 @@ static void test_map_iterators_from_rval_naked_list_var(void)
+ 
+     VarRef lval = VarRefParse("scope.jwow");
+ 
+-    EvalContextVariablePut(ctx, lval, (Rval) { list, RVAL_TYPE_LIST }, DATA_TYPE_STRING_LIST);
++    EvalContextVariablePut(ctx, lval, (Rval) { list, RVAL_TYPE_LIST }, CFE_DATA_TYPE_STRING_LIST);
+ 
+     Rlist *lists = NULL;
+     Rlist *scalars = NULL;
+@@ -63,12 +63,12 @@ static void test_expand_scalar_two_scalars_concat(void)
+     EvalContext *ctx = EvalContextNew();
+     {
+         VarRef lval = VarRefParse("default:bundle.one");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+     {
+         VarRef lval = VarRefParse("default:bundle.two");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "second", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "second", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+@@ -85,12 +85,12 @@ static void test_expand_scalar_two_scalars_nested(void)
+     EvalContext *ctx = EvalContextNew();
+     {
+         VarRef lval = VarRefParse("default:bundle.one");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+     {
+         VarRef lval = VarRefParse("default:bundle.two");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "one", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "one", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+@@ -107,12 +107,12 @@ static void test_expand_scalar_array_concat(void)
+     EvalContext *ctx = EvalContextNew();
+     {
+         VarRef lval = VarRefParse("default:bundle.foo[one]");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+     {
+         VarRef lval = VarRefParse("default:bundle.foo[two]");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "second", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "second", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+@@ -129,12 +129,12 @@ static void test_expand_scalar_array_with_scalar_arg(void)
+     EvalContext *ctx = EvalContextNew();
+     {
+         VarRef lval = VarRefParse("default:bundle.foo[one]");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+     {
+         VarRef lval = VarRefParse("default:bundle.bar");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "one", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "one", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+@@ -156,12 +156,12 @@ static void test_expand_promise_array_with_scalar_arg(void)
+     EvalContext *ctx = EvalContextNew();
+     {
+         VarRef lval = VarRefParse("default:bundle.foo[one]");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+     {
+         VarRef lval = VarRefParse("default:bundle.bar");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "one", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "one", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+@@ -210,7 +210,7 @@ static void test_expand_promise_slist(void)
+         RlistAppendScalar(&list, "a");
+         RlistAppendScalar(&list, "b");
+ 
+-        EvalContextVariablePut(ctx, lval, (Rval) { list, RVAL_TYPE_LIST }, DATA_TYPE_STRING_LIST);
++        EvalContextVariablePut(ctx, lval, (Rval) { list, RVAL_TYPE_LIST }, CFE_DATA_TYPE_STRING_LIST);
+ 
+         RlistDestroy(list);
+         VarRefDestroy(lval);
+@@ -263,7 +263,7 @@ static void test_expand_promise_array_with_slist_arg(void)
+         RlistAppendScalar(&list, "one");
+         RlistAppendScalar(&list, "two");
+ 
+-        EvalContextVariablePut(ctx, lval, (Rval) { list, RVAL_TYPE_LIST }, DATA_TYPE_STRING_LIST);
++        EvalContextVariablePut(ctx, lval, (Rval) { list, RVAL_TYPE_LIST }, CFE_DATA_TYPE_STRING_LIST);
+ 
+         RlistDestroy(list);
+         VarRefDestroy(lval);
+@@ -271,13 +271,13 @@ static void test_expand_promise_array_with_slist_arg(void)
+ 
+     {
+         VarRef lval = VarRefParse("default:bundle.arr[one]");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "first", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+     {
+         VarRef lval = VarRefParse("default:bundle.arr[two]");
+-        EvalContextVariablePut(ctx, lval, (Rval) { "second", RVAL_TYPE_SCALAR }, DATA_TYPE_STRING);
++        EvalContextVariablePut(ctx, lval, (Rval) { "second", RVAL_TYPE_SCALAR }, CFE_DATA_TYPE_STRING);
+         VarRefDestroy(lval);
+     }
+ 
+diff --git a/tests/unit/scope_test.c b/tests/unit/scope_test.c
+index 9c343c4..b56bec7 100644
+--- a/tests/unit/scope_test.c
++++ b/tests/unit/scope_test.c
+@@ -44,7 +44,7 @@ static void test_push_pop_this(void)
+ 
+     EvalContext *ctx = EvalContextNew();
+ 
+-    ScopeNewSpecial(ctx, "this", "lval", "rval1", DATA_TYPE_STRING);
++    ScopeNewSpecial(ctx, "this", "lval", "rval1", CFE_DATA_TYPE_STRING);
+     assert_true(EvalContextVariableGet(ctx, lval, &rval, NULL));
+     assert_string_equal("rval1", RvalScalarValue(rval));
+     {
+@@ -52,7 +52,7 @@ static void test_push_pop_this(void)
+ 
+         assert_false(EvalContextVariableGet(ctx, lval, &rval, NULL));
+ 
+-        ScopeNewSpecial(ctx, "this", "lval", "rval2", DATA_TYPE_STRING);
++        ScopeNewSpecial(ctx, "this", "lval", "rval2", CFE_DATA_TYPE_STRING);
+         assert_true(EvalContextVariableGet(ctx, lval, &rval, NULL));
+         assert_string_equal("rval2", RvalScalarValue(rval));
+         {
+@@ -60,7 +60,7 @@ static void test_push_pop_this(void)
+ 
+             assert_false(EvalContextVariableGet(ctx, lval, &rval, NULL));
+ 
+-            ScopeNewSpecial(ctx, "this", "lval", "rval3", DATA_TYPE_STRING);
++            ScopeNewSpecial(ctx, "this", "lval", "rval3", CFE_DATA_TYPE_STRING);
+             assert_true(EvalContextVariableGet(ctx, lval, &rval, NULL));
+             assert_string_equal("rval3", RvalScalarValue(rval));
+             {
+diff --git a/tests/unit/set_domainname_test.c b/tests/unit/set_domainname_test.c
+index bd72ec8..2e7e68b 100644
+--- a/tests/unit/set_domainname_test.c
++++ b/tests/unit/set_domainname_test.c
+@@ -84,7 +84,7 @@ void ScopeNewSpecial(EvalContext *ctx, const char *ns, const char *varname, cons
+     int i;
+ 
+     assert_string_equal(ns, "sys");
+-    assert_int_equal(type, DATA_TYPE_STRING);
++    assert_int_equal(type, CFE_DATA_TYPE_STRING);
+ 
+     for (i = 0; i < sizeof(expected_vars) / sizeof(expected_vars[0]); ++i)      /* LCOV_EXCL_LINE */
+     {
+-- 
+1.8.4.1
+
