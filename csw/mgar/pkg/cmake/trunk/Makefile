@@ -42,7 +42,7 @@ CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakecommands.1
 CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmake.1
 CHECKPKG_OVERRIDES_CSWcmake += disallowed-path|opt/csw/man/man1/cmakevars.1
 CHECKPKG_OVERRIDES_CSWcmake += missing-dependency|CSWemacscommon
-
+CHECKPKG_OVERRIDES_CSWcmake += missing-dependency|CSWemacs-common
 
 NOISALIST = 1
 CONFIGURE_ARGS = --prefix=$(prefix)
