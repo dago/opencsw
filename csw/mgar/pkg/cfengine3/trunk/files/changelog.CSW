@@ -1,8 +1,8 @@
-cfengine3 (3.5.3,REV=2013.12.26)
+cfengine3 (3.5.3,REV=2013.12.27)
 
   * New upstream release 3.5.3.
 
- -- Rafael Ostertag <raos@opencsw.org>  Thu, 26 Dec 2013 18:53:39 +0100
+ -- Rafael Ostertag <raos@opencsw.org>  Fri, 27 Dec 2013 16:13:29 +0100
 
 
 cfengine3 (3.5.2,REV=2013.09.29)
