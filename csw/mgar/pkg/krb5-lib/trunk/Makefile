@@ -39,7 +39,7 @@ PKGFILES_CSWlibkrb5-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibkrb5-dev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gssRUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibintl8s-client|compile_et)
 OBSOLETED_BY_CSWlibkrb5-dev = CSWkrb5libdev
 CATALOGNAME_CSWkrb5libdev # On unstable10x, that lib does not appear to be linked
-#CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWlibintl8 /man/man8/sserver.8
+CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWlibintl8 /man/man8/sserver.8
 
 PACKAGES += CSWlibcom-err3
 CATALOGNAME_CSWlibcom-err3 = libcom_err3
