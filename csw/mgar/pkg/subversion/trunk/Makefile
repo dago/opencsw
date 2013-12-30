@@ -59,6 +59,7 @@ RUNTIME_DEP_PKGS_CSWsvn   += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibneon27
+RUNT   += CSWlibserf1-3n   += CSWlibneon27
 RUNT_5.10   += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibglib2-0-0
