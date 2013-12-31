@@ -244,6 +244,7 @@ post-configure-modulated:
 	@# -mt\|* effectively strips any occasion of -mt or -mt| out of
 	@# libtool.gcc, but what for? -mt is recognized by both Sun's cc
 	@# and gcc and is responsible for adding multi-threading support.
+	Wno-int-to-pointer-cast,,'g support.
 	gsed -i \
 		-e 's,-mt|*,,' \
 		-e 's,-xO3,-pipe -O2,' \
