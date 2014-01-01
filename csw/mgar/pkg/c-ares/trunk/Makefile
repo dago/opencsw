@@ -1,5 +1,5 @@
 NAME = c-ares
-VERSION = 1.9.1
+VERSION = 1.10.0
 GARTYPE = v2
 
 DESCRIPTION = C-ares library to perform DNS requests and name resolves asynchronously
