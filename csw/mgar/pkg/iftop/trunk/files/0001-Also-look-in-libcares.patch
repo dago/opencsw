@@ -1,0 +1,34 @@
+From d4fecf72fcc090a4547dc119b0900d7e9615c860 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 1 Jan 2014 21:20:09 +0100
+Subject: [PATCH] Also look in libcares
+
+---
+ configure.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 6c369a8..81b39fa 100644
+--- a/configure.in
++++ b/configure.in
+@@ -28,7 +28,7 @@ AC_CONFIG_AUX_DIR(config)
+ 
+ AC_CANONICAL_SYSTEM
+ 
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS([config.h])
+ AM_INIT_AUTOMAKE(iftop, "1.0pre3")
+ 
+ AC_DEFINE_UNQUOTED(IFTOP_VERSION, "$VERSION", [The iftop version number])
+@@ -259,7 +259,7 @@ fi
+ dnl They may have asked for ares.
+ if test x$resolver = xares ; then
+     dnl See if ares is to hand....
+-    AC_SEARCH_LIBS(ares_init, [ares], [
++    AC_SEARCH_LIBS(ares_init, [ares cares], [
+         AC_DEFINE(USE_ARES, 1, [use ARES for name resolution])
+         ], [
+         dnl They asked for ares, but we can't give it to them, so stop.
+-- 
+1.8.4.1
+
