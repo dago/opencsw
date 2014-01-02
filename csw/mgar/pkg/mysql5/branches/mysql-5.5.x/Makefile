@@ -384,13 +384,16 @@ post-install-modulated:
 	# Make sure the proper binary is called by the script since
 	# mgar does the configure part using only the base arch name, w/o
 	# the special instructions part
-	for file in mysqld_safe mysqld_multi; do \
-		gsed -i \
-			-e 's|bin/$(MM_BINDIR)|bin/$(ISABINDIR)/|g' \
-			-e 's|sbin/$(MM_BINDIR)|sbin/$(ISABINDIR)|g' \
-			-e 's|libexec/$(MM_BINDIR)|libexec/$(ISABINDIR)|g' \
-			$(DESTDIR)$(bindir)/$$file; \
-	done
+	# Only needed for 64 bit
+	if [ "$(MEMORYMODEL)" = 64 ]; then \
+		for file in mysqld_safe mysqld_multi; do \
+			perl -pi \
+				-e 'if (/^[^#]/) { s|/bin(?!/$(ISABINDIR))|/bin/$(ISABINDIR)|g }' \
+				-e 'if (/^[^#]/) { s|/sbin(?!/$(ISABINDIR))|/sbin/$(ISABINDIR)|g }' \
+				-e 'if (/^[^#]/) { s|/libexec(?!/$(ISABINDIR))|/libexec/$(ISABINDIR)|g }' \
+				$(DESTDIR)$(bindir)/$$file; \
+		done; \
+	fi
 	@$(MAKECOOKIE)
 
 post-merge:
