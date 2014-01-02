@@ -5,14 +5,24 @@
   * Read only /opt/csw support
     - data in /var/opt/csw/mysql5
     - configuration in /etc/opt/csw/my.cnf
+
   * The prefix is /opt/csw, and all the client binaries are now in
     /opt/csw, so that the standard PATH setting allows to use them.
+
   * The server binaries are in /opt/csw/libexec for the 32 bit one and
-    /opt/csw/libexec/0amd64|sparcv9] for the 64 bit one.
+    /opt/csw/libexec/amd64|sparcv9] for the 64 bit one.
+
   * The startup script is now in /etc/opt/csw/init.d
+
   * SMF support is handled by cswclassutils
-    Running MySQL is handled by the cswmysql5 service in Solaris >= 10,
-    and the traditional /etc/init.d/cswmysql5 in Solaris 9.
+    Running MySQL is handled by the cswmysql5 service in Solaris >= 10.
+    As of 5.5.35, MySQL does not build cleanly on Solaris 9, so only a Solaris
+    10 version is available.
+
   * The preferred architecture can be set using mysql5_arch=<arch> in csw.conf:
-    the default is to use the kernel's.
+    the current default (no value) is to use the 32-bit version, to avoid 
+    changing the architecture without user interaction. Since 32-bit hardware
+    is becoming scarce, This may be modified in a future Mysql release (5.6) to
+    have the kernel ISA be the default.
+    Possible value are: sparcv9 amd64
 
