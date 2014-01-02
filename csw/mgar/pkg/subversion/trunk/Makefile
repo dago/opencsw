@@ -244,15 +244,18 @@ post-configure-modulated:
 	@# -mt\|* effectively strips any occasion of -mt or -mt| out of
 	@# libtool.gcc, but what for? -mt is recognized by both Sun's cc
 	@# and gcc and is responsible for adding multi-threading support.
-	Wno-int-to-pointer-cast,,'g support.
 	gsed -i \
 		-e 's,-mt|*,,' \
 		-e 's,-xO3,-pipe -O2,' \
 		-e 's,KPIC,fPIC,' \
 		-e 's,/opt/SUNWspro/bin/cc,/opt/csw/bin/gcc,' \
 		-e 's,/opt/SUNWspro/bin/CC,/opt/csw/bin/g++,' \
-		 $(WORKSRC)/*.gcc
-	gsed -i -e 's,libtool,libtool.gcc,' $(WORKSRC)/Makefile.gcc
+		 $(WORKS\
+		-e 's,libtool,libtool.gcc,' \
+         $(WORKSRC)/Makefile.gcc
+	gsed -i \
+		-e 's,-Wno-int-to-pointer-cast,,' \
+         $(WORKSRC)/MakefileRKSRC)/Makefile.gcc
 	gsed -i -e 's,postdeps=.*,postdeps="",' $(WORKSRC)/libtool.gcc
 	( if [ "$(GARCH)" = "sparc" ]; then \
     	perl -i -pe 's,-xarch=v8,-mcpu=v8,' $(WORKSRC)/*.gcc; \
