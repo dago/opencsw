@@ -108,5 +108,8 @@ install-custom:
 	ginstall -m 0755 $(WORKSRC)/tools/geoiplookup_continent $(DESTDIR)$(bindir)/geoiplookup_continent
 	ginstall -m 0755 $(WORKSRC)/tools/null-rsync $(DESTDIR)$(bindir)/null-rsync
 	ginstall -m 0755 $(WORKSRC)/tools/scanner.pl $(DESTDIR)$(bindir)/scanner
+	ginstall -d $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql
+	ginstall -m 0644 $(WORKSRC)/sql/initialdata-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/initialdata-postgresql.sql
+	ginstall -m 0644 $(WORKSRC)/sql/schema-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/schema-postgresql.sql
 	@$(MAKECOOKIE)
 
