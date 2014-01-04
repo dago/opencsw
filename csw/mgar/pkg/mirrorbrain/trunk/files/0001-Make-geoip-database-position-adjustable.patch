@@ -1,0 +1,46 @@
+From 8fc9dd041d6c86b62ef81c69f9a121941799be02 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 19 Dec 2013 23:14:38 +0100
+Subject: [PATCH] Make geoip database position adjustable
+
+---
+ tools/geoiplookup_city.c      | 6 ++++--
+ tools/geoiplookup_continent.c | 2 ++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/tools/geoiplookup_city.c b/tools/geoiplookup_city.c
+index 9c1c24e..2b33c1d 100644
+--- a/tools/geoiplookup_city.c
++++ b/tools/geoiplookup_city.c
+@@ -27,10 +27,12 @@
+ #include <GeoIP.h>
+ #include <GeoIPCity.h>
+ 
+-#define DEFAULT_GEOIPFILE "/var/lib/GeoIP/GeoLiteCity.dat"
++#ifndef DEFAULT_GEOIPCITYFILE
++#define DEFAULT_GEOIPCITYFILE "/var/lib/GeoIP/GeoLiteCity.dat"
++#endif
+ 
+ int main(int argc, char **argv) {
+-	const char *geoipfilename = DEFAULT_GEOIPFILE;
++	const char *geoipfilename = DEFAULT_GEOIPCITYFILE;
+ 	GeoIP *gip = NULL;
+ 	GeoIPRecord *gir = NULL;
+ 	char *name;
+diff --git a/tools/geoiplookup_continent.c b/tools/geoiplookup_continent.c
+index 1691e8a..983afe2 100644
+--- a/tools/geoiplookup_continent.c
++++ b/tools/geoiplookup_continent.c
+@@ -25,7 +25,9 @@
+ #include <GeoIP.h>
+ #include <GeoIPCity.h>
+ 
++#ifndef DEFAULT_GEOIPFILE
+ #define DEFAULT_GEOIPFILE "/var/lib/GeoIP/GeoIP.dat"
++#endif
+ 
+ int main(int argc, char **argv) {
+ 	const char *geoipfilename = DEFAULT_GEOIPFILE;
+-- 
+1.8.3.4
+
