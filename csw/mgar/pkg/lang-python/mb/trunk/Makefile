@@ -36,10 +36,15 @@ RUNTIME_DEP_PKGS_CSWpy-mb += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-mb += CSWpy-cmdln
 RUNTIME_DEP_PKGS_CSWpy-mb += CSWpy-psycopg2
 RUNTIME_DEP_PKGS_CSWpy-mb += CSWgeolitedb
+# This is for the 'mb' executable
+RUNTIME_DEP_PKGS_CSWpy-mb += CSWpython27
+RUNTIME_DEP_PKGS_CSWpy-mb += CSWpy-sqlobject
 # checkpkg cannot detect these deps
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpy-cmdln
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpy-psycopg2
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWgeolitedb
+CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpython27
+CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpy-sqlobject
 
 PRESERVECONF += $(sysconfdir)/mirrorbrain.conf
 
