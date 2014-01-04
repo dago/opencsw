@@ -1,5 +1,8 @@
+# TODO:
+# DONE: 1.8.6 does not compile yet as reported in https://bugzilla.gnome.org/show_bug.cgi?id=721479
+#
 NAME = doxygen
-VERSION = 1.8.5
+VERSION = 1.8.6
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -30,10 +33,7 @@ ARCHALL_CSWdoxygen-doc = 1
 # for these tiny examples seems overkill.
 CHECKPKG_OVERRIDES_CSWdoxygen-doc = missing-dependency|CSWpython
 OBSOLETED_BY_CSWdoxygen-doc = CSWdoxygendoc
-CATALOGNAME_CSWdoxygendoc = doxygen_doc_stub
-# These are pure examples
-CHECKPKG_OVERRIDES_CSWdoxygen-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/doxygen/html/config.html
-CHECKPKG_OVERRIDES_CSWdoxygen-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/doxygen/html/install.html
+CATALOGNAME_CSWdoxygendoc /html/install.html
 
 REINPLACEMENTS += cflags
 REINPLACE_MATCH_cflags = (TMAKE_CFLAGS_RELEASE\s*=\s*).*
@@ -48,7 +48,8 @@ REINPLACE_FILES_cxxflags += tmake/lib/solaris-cc/tmake.conf
 REINPLACEMENTS += ldflags
 REINPLACE_MATCH_ldflags = (TMAKE_LFLAGS_RELEASE\s*=).*
 REINPLACE_WITH_ldflags = \1 $(LDFLAGS)
-REINPLACE_FILES_ldflags += tmake/lib/solaris-cc/tmake.conf
+REINPLACE_FILES_ldflags += tmake/lib/sola# Sun Studio 12 is too old and actually does not work any more
+GARCOMPILER = SOS12U3laris-cc/tmake.conf
 
 EXTRA_CXXFLAGS += -features=tmplrefstatic
 EXTRA_CXXFLAGS += -features=extensions -D__FUNCTION__=__func__
