@@ -1,3 +1,9 @@
+openssl (1.0.1f,rev=2014.01.06) unstable
+
+  * New upstream release.
+
+   -- yann rouillard <yann@opencsw.org>  Mon, 06 Jan 2014 19:09:38 +0100
+
 openssl (1.0.1e,rev=2013.10.27) unstable
 
   * Enabled use of solaris native issetugid function in crypto/uid.c
