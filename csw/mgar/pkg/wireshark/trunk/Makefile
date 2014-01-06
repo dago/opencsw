@@ -43,7 +43,8 @@ SPKG_DESC_CSWwireshark = Wireshark (was Ethereal) is a free network protocol ana
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWwireshark += CSWpango
+RUNTIME_DEP_PKGS_Clibpango1-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibpangocairo1-0-0 eshark += CSWpango
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibz1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibpcap1
@@ -58,7 +59,11 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWwilib2-0-0
-RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-hark +RUNTIME_DEP_PKGS_CSWwireshark += CSWliblua5-2+= CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-hark +RUNTIME_DEP_PKGS_CSWwireshark += CSWliblua5-2+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcc-s1
+
+# For the ld bug
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibintl8+= CSWlibglib2-0-0
 
 # No more library splitting unless absolutely necessary
 CHECKPKG_OVERRIDES_CSWwireshark += shared-lib-package-contains-so-symlink
