@@ -7,7 +7,7 @@
 # http://bugs.python.org/issue7208
 
 NAME = django
-VERSION = 1.4.10
+VERSION = 1.6.1
 CATEGORIES = python
 GARTYPE = v2
 
@@ -22,16 +22,20 @@ define BLURB
   lets you build high-performing, elegant Web applications quickly.
 endef
 SPKG_SOURCEURL = http://www.djangoproject.com/
+# UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
 
 MASTER_SITES = http://www.djangoproject.com/download/$(VERSION)/tarball/
 DISTFILES  = $(DISTNAME).tar.gz
+DISTNAME = Django-$(VERSION)
+
 PACKAGES = CSWpy-django
 CATALOGNAME_CSWpy-django = py_django
 ARCHALL = 1
-UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
-DISTNAME = Django-$(VERSION)
+PYCOMPILE = 1
+
 RUNTIME_DEP_PKGS =
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython-dev
+
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 LICENSE = LICENSE
