@@ -17,7 +17,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS = solaris10-spar solaris10-i386
 
 
-VENDOR_URL = http://www.wireshark.org/
+VENDOR_URL = http://wwGARCOMPILER = GCC4www.wireshark.org/
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWglib2devel
