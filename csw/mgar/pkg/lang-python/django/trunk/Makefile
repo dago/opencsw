@@ -2,10 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-# A known issue: There's a problem with getpass.getpass() on Solaris, in which
-# it echoes the entered password.
-# http://bugs.python.org/issue7208
-
 NAME = django
 VERSION = 1.6.1
 CATEGORIES = python
@@ -31,7 +27,10 @@ DISTNAME = Django-$(VERSION)
 PACKAGES = CSWpy-django
 CATALOGNAME_CSWpy-django = py_django
 ARCHALL = 1
-PYCOMPILE = 1
+# /opt/csw/lib/python2.6/site-packages/django/contrib/auth/hashers.py 
+# likes to import test/signals.py
+# https://code.djangoproject.com/ticket/20349
+MERGE_EXCLUDE_CATEGORY = 
 
 RUNTIME_DEP_PKGS =
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython-dev
