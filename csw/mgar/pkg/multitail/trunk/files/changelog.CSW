@@ -1,3 +1,9 @@
+multitail (6.0,REV=2013.01.07)
+
+  * Upgrade to 6.0
+
+ -- Dagobert Michelsen <dam@opencsw.org>  Tue,  1 Jan 2014 09:04:02 +0200
+
 multitail (5.2.8,REV=2011.08.14)
 
   * Upgrade to 5.2.8.

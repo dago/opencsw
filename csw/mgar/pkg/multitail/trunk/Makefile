@@ -1,5 +1,5 @@
 NAME = multitail
-VERSION = 5.2.9
+VERSION = 6.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -16,8 +16,7 @@ define BLURB
   can mimic the functionality of tools like 'watch' and such.
 endef
 
-MASTER_SITES = http://www.vanheusden.com/multitail/
-DISTFILES = $(NAME)-$(VERSION).tgz
+MASTER_SITES = http://www.vanheusden.com/mu+= $(DISTNAME= $(NAME)-$(VERSION).tgz
 LICENSE = license.txt
 
 RUNTIME_DEP_PKGS_CSWmultitail += CSWlibncurses5
@@ -28,9 +27,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 # Adjust path to configuration file and compiler options
-PATCHFILES = patch-CSW.diff
-
-sysconfdir = /etc/opt/csw
+PATCHFILESir = /etc/opt/csw
 
 # Use provided Solaris Makefile
 BUILD_ARGS  = -f makefile.solaris_sunwspro
@@ -59,5 +56,4 @@ install-custom:
 	ginstall -d $(DATADEST) $(DOCDEST)
 	(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DATA) $(DATADEST))
 	(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DOCS) $(DOCDEST))
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+	cp $(FILEDIR)/changelog.CSW $(DOCDES
