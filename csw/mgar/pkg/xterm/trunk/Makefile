@@ -1,6 +1,6 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 NAME = xterm
-VERSION = 267
+VERSION = 300
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -10,19 +10,21 @@ define BLURB
   DEC VT102 and Tektronix 4014 compatible terminals for programs that can't use
   the window system directly. This version implements ISO/ANSI colors using the
   "new" color model (i.e., background color erase). It also implements most of
-  the control sequences for VT220.
-endef
+  the control sequences MASTER_SITES += ftp://invisible-island.net/xterm/
+DISTFILES += $(NAME)-$(VERSION).tgz
 
-VENDOR_URL    = http://invisible-island.net/xterm/
-MASTER_SITES  = ftp://invisible-island.net/xterm/
-DISTFILES     = $(NAME)-$(VERSION).tgz
-UFILES_REGEX  = $(NAME)-(\d+(?:\.\d+)*).tgz
-DISTFILES    += COPYING
+VENDOR_URL = http://invisible-island.net/xterm/
+LICENSE = INSTALL
 
-RUNTIME_DEP_PKGS  = CSWfconfig
-RUNTIME_DEP_PKGS += CSWlibxft2
+PACKAGES += CSWxterm
+SPKG_DESC_CSWxterm = Terminal emulator for the X Window System
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWxterm += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWxterm += CSWlibxpm4
+RUNTIME_DEP_PKGS_CSWxterm += CSWlibfontconfig1
 
-# xterm Makefile doesn't have a test target
+PIXMAPDIR = $(sharedstatedir)/pixmaps/xterm
+EXTRA_CPPFLAGS += -DPIXMAP_ROOTDIR=\\\"$(PIXMAPDIR)\\\"rget
 TEST_TARGET =
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -38,21 +40,21 @@ CONFIGURE_ARGS += --enable-logging
 CONFIGURE_ARGS += --enable-sun-fkeys
 CONFIGURE_ARGS += --enable-warnings
 CONFIGURE_ARGS += --enable-wide-chars
-CONFIGURE_ARGS += --program-suffix=86 --with-xterm-symlink
+CONFIGURE_ARGS += --program-suffix=86 --wCONFIGURE_ARGS += --with-pixmapdir=$(PIXMAPDIR)with-xterm-symlink
 
 # Specify freetype linker flags, otherwise /opt/csw/X11/bin/xft-config is used
 CONFIGURE_ARGS += --with-freetype-cflags="-I$(includedir)/freetype2"
-CONFIGURE_ARGS += --with-freetype-libs="-lXft -lfontconfig -lfreetype"
-
+CONFIGURE_ARGS += --with-freetype-libs="-lXft -lfontco
 #GARFLAVOR = DBG
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 
 # luit comes with snv_85 
-#   http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6662431
+#   http://bugs.opensolaris.org/bugdatabase/view_bug.o?bug_id=6662431
 #CONFIGURE_ARGS += --enable-luit
 
-# xterm doesn't rely on optimized libs, fasten startup
+# xterm doesn't rely on optimized libs, fasten start# xterm Makefile doesn't have a test target
+TEST_TARGET =tup
 NOISALIST = 1
 
 
@@ -64,5 +66,4 @@ post-install-modulated: DOCS=xterm.log.html ctlseqs.txt
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(FILEDIR)/,$(CSWDOCS)) $(DOCDEST)
-	cp $(addprefix $(WORKSRC)/,$(DOCS))    $(DOCDEST)
-	@$(MAKECOOKIE)
+	cp $(addprefix $(WORKSRC)/,$(DOCS))    $(DOCDEST
