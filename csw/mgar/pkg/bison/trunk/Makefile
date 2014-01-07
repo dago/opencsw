@@ -28,6 +28,9 @@ CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWiconv
 # Tests 217-222 use zero-sized structs
 EXTRA_CFLAGS += -features=extensions
 
+# Our gcj just does not work cleanly
+SKIPTEST ?= 1
+
 include gar/category.mk
 
 # Must use GNU grep during test
