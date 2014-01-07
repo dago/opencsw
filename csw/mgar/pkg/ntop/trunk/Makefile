@@ -43,7 +43,7 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 RUNTIME_DEP_PKGS_CSWntop += CSWCHECKPKG_OVERRIDES_CSWntop += surplus-dependency|CSWpython
-RUNTIME_DEP_PKGS_CSWntop += CSWlibiconv2Wlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWntop += CSWlibiconv2WCHECKPKG_OVERRIDES_CSWntop += surplus-dependency|CSWlibiconv2Wlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWn1
 RUNTIME_DEP_PKGS_CSWntop += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWntop += CSWlibrrd-th4
