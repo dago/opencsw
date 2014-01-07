@@ -1,5 +1,5 @@
 NAME = bison
-VERSION = 2.5
+VERSION = 3.0.2
 GARTYPE = v2
 
 DESCRIPTION = GNU Project parser generator (yacc replacement)
@@ -25,8 +25,8 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset\.alias
 CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWgm4
 CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWiconv
 
-# Skip tests as some fail due to problems in CSWlibgnugetopt includes
-SKIPTEST ?= 1
+# Tests 217-222 use zero-sized structs
+EXTRA_CFLAGS += -features=extensions
 
 include gar/category.mk
 
