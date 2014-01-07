@@ -1,5 +1,5 @@
 NAME = texinfo
-VERSION = 4.13a
+VERSION = 5.2
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -7,23 +7,35 @@ DESCRIPTION = The GNU Documentation System
 define BLURB
   Texinfo is a documentation system that uses a single source to produce both
   on-line information (info, HTML, XML, Docbook) and printed output (DVI, PDF).
-endef
-
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+e+= $(GNU_MIRROR)
+DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += CSWtexinfo.postinstall
 DISTFILES += mkdirentries
 
-SPKG_SOURCEURL = http://www.gnu.org/software/texinfo/
+VENDOR_URL = http://www.gnu.org/software/texinfo/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWtexinfo
+SPKG_DESC_CSWtexinfo = The GNU Documentation System
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWtexinfo += CSWbash
+RUNTIME_DEP_PKGS_CSWtexinfo += CSWgsed
+RUNTIME_DEP_PKGS_CSWtexinfo += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWtexinfo += CSWlibncurses5dir)/charset.alias
 
-RUNTIME_DEP_PKGS = CSWbash CSWgsed CSWncurses CSWiconv CSWggettextrt
+# Are these really needed? May investigate deeply later.
+CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWgsed
+CHECKPKG_OVERRmissing-dependency|CSWperl
+
+# These are in fact commented out
+CHECKPKG_OVERRIDES_CSWtexinfo += file-with-bad-content|/usr/local|root/opt/csw/bin/texi2any
+CHECKPKG_OVERRIDES_CSWtexinfo += file-with-bad-content|/usr/local|root/opt/csw/bin/info
+CHECKPKG_OVERRIDES_CSWtexinfo += file-with-bad-content|/usr/share|root/opt/csw/bin/texi2any
+CHECKPKG_OVERRIDES_CSWtexinfo += file-with-bad-content|/usr/share|root/opt/csw/bin/info
+
 # CSWgzip is needed for zdiff
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWgzip
-
-DISTNAME = $(NAME)-4.13
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS += CSWgzipNAME = $(NAME)-4.13
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -31,12 +43,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # required libraries don't offer optimized versions, hence no $ISALIST.
 NORUNPATH = 1
 
-EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
-
-# Are these really needed? May investigate deeply later.
-CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWbash
-CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWgsed
-CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWiconv
+EXTRA_MERGE_EXCLUDE_FILES = $(libdpendency|CSWiconv
 
 include gar/category.mk
 
@@ -49,5 +56,4 @@ post-extract-modulated:
 # cswtexinfo class.
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(sbindir)
-	ginstall -m 755 $(WORKDIR)/mkdirentries $(DESTDIR)$(sbindir)/mkdirentries
-	@$(MAKECOOKIE)
+	ginstall -m 755 $(WORKDIR)/mkdirentries $(DESTDIR)$(sbindir)/mkdirentri
