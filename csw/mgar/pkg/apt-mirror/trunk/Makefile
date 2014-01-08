@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = apt-mirror
-VERSION = 0.4.8
+VERSION = 0.4.9
 GARTYPE = v2
 
 DESCRIPTION = Debian and Ubuntu apt sources mirroring tool
@@ -12,11 +12,14 @@ define BLURB
   which typically provided by open source developers.
 endef
 
-MASTER_SITES	=	$(SF_MIRRORS)
-DISTFILES		=	$(NAME)_$(VERSION).orig.tar.gz
-DISTFILES		+=	COPYING
-PATCHFILES		+=	0001-From-private-recipe.patch
-PATCHFILES		+=	0002-Adapt-to-OpenCSW-file-system-layout.patch
+GITHUB_USER		=	$(NAME)
+GITHUB_REFERENCE=	f7254b8
+MASTER_SITES	=	$(GITHUB_MIRROR)
+VENDOR_URL		=	http://apt-mirror.github.com/
+LICENSE			=	LICENSE
+DISTNAME		=	$(GITHUB_USER)-$(NAME)-$(GITHUB_REFERENCE)
+DISTFILES		=	$(NAME)-$(VERSION)$(GITHUB_BALL_EXT)
+PATCHFILES		+=	0001-Adapt-to-OpenCSW-file-system-layout.patch
 
 CONFIGURE_SCRIPTS	=
 BUILD_SCRIPTS		=
@@ -34,7 +37,7 @@ ARCHALL	=	1
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/libexec/flex-2.5.35/bin:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
 install-custom: pkgdocdir = $(docdir)/$(NAME)
 install-custom: pkgsysconfdir = $(sysconfdir)/$(NAME)
