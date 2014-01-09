@@ -22,7 +22,7 @@ REINPLACE_FILES_etc += conf/zabbix_proxy.confsparc solaris10-i386
 # This is just for the server which is in 64 bit only on Solars 10
 BUILD64-5.9 =
 BUILD64-5.10 = 1
-BUILD64 = $(BUILD64-$(GAROSREL))
+BUILD64 = $(BUILD64-$(GAROBUILD_DEP_PKGS += CSWlibiksemel-devROSREL))
 ISAEXEC = 1
 
 PACKAGES += CSWzabbix-agent
@@ -52,7 +52,7 @@ RUNTIME_DEP_PKGS_CSWzabcurl4
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibssh2-1
-RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibldap2-4-2erver += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibldap2-4-2eRUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibiksemel3erver += CSWlibidn11
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-mysql=$(bindir)/mysql_config
@@ -77,7 +77,7 @@ CONFIGURE_ARGS += --with-mysql
 # CONFIGURE_ARGS += --with-postgresql
 CONFIGURE_ARGS += --with-libcurl=$(bindir)/curl-config
 
-CONFIGURE_ARGS += --with-net-snmp=$(bindir)/net-snmp-configREL)-$(MEMORYMODEL))
+CONFIGURE_ARGS += --with-net-snmp=$(bindir)/net-snmp-configRECONFIGURE_ARGS += --with-jabberREL)-$(MEMORYMODEL))
 
 PRESERVECONF += $(sysconfdir)/zabbix_agent.conf
 PRESERVECONF += $(sysconfdir)/zabbix_agentd.conf
