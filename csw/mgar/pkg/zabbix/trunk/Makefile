@@ -52,7 +52,8 @@ RUNTIME_DEP_PKGS_CSWzabcurl4
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibssh2-1
-RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibldap2-4-2eRUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibiksemel3erver += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibldap2-4-2eRUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibiksemel3er# MySQL uses gcc, so we need to do also or the compiler flags bust
+GARCOMPILER = GCC4erver += CSWlibidn11
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-mysql=$(bindir)/mysql_config
