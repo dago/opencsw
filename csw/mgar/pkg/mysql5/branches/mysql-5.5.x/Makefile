@@ -93,6 +93,7 @@ MYSQL_LIB_VER = 18
 # The daemon to launch is selected by script, should not be automatic
 # Some other files too should probably not be isaexec'd
 EXTRA_ISAEXEC_EXCLUDE_FILES  = /opt/csw/libexec/mysqld
+EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysql_config
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqld_safe
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqld_multi
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/my_print_defaults
@@ -394,6 +395,27 @@ post-install-modulated:
 				$(DESTDIR)$(bindir)/$$file; \
 		done; \
 	fi
+
+	# Remove compiler-specific parameters
+	gsed -i \
+		-e '/^[^#]/s/-xO[0-5][^ ]* *//g' \
+		-e '/^[^#]/s/-xarch=[^ ]* *//g' \
+		-e '/^[^#]/s/-xchip=[^ ]* *//g' \
+		-e '/^[^#]/s/-norunpath[^ ]* *//g' \
+		-e '/^[^#]/s/-lCrun[^ ]* *//g' \
+		-e '/^[^#]/s/-lCstd[^ ]* *//g' \
+		-e '/^[^#]/s/-mtune=[^ ]* *//g' \
+		-e '/^[^#]/s/-march=[^ ]* *//g' \
+		-e '/^[^#]/s/-Wall *//g' \
+		-e '/^[^#]/s/-pipe *//g' \
+		-e '/^[^#]/s/-KPIC/-fPIC/g' \
+		-e '/^[^#]/s/-mno-app-regs//g' \
+		-e '/^[^#]/s/-fno-omit-frame-pointer//g' \
+		-e '/^[^#]/s/-fno-strict-aliasing//g' \
+		-e '/^[^#]/s/-Wa,-xarch=[^ ]*//g' \
+		-e '/^[^#]/s/-static-libgcc//g' \
+		$(DESTDIR)$(bindir)/mysql_config
+
 	@$(MAKECOOKIE)
 
 post-merge:
