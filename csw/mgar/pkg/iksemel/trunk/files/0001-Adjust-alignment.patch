@@ -1,0 +1,61 @@
+From a120c658914d3941bd1c82d73e13e1aad256e942 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 9 Jan 2014 16:43:00 +0100
+Subject: [PATCH] Adjust alignment
+
+---
+ src/ikstack.c      | 24 ++++++++++++++++++++----
+ test/tst-ikstack.c | 12 ++++++++++--
+ 2 files changed, 30 insertions(+), 6 deletions(-)
+
+diff --git a/src/ikstack.c b/src/ikstack.c
+index bed4656..9c46cc7 100644
+--- a/src/ikstack.c
++++ b/src/ikstack.c
+@@ -7,9 +7,18 @@
+ #include "common.h"
+ #include "iksemel.h"
+ 
+-struct align_test { char a; double b; };
+-#define DEFAULT_ALIGNMENT  ((size_t) ((char *) &((struct align_test *) 0)->b - (char *) 0))
++// struct align_test { char a; double b; };
++struct align_test {
++	struct ikschunk_struct *next;
++	size_t size;
++	size_t used;
++	size_t last;
++	char data[4];
++};
++// #define DEFAULT_ALIGNMENT  ((size_t) ((char *) &((struct align_test *) 0)->b - (char *) 0))
++#define DEFAULT_ALIGNMENT  ((size_t) ((char *) &(((struct align_test *) 0)->data) - (char *) &(((struct align_test *) 0)->last)))
+ #define ALIGN_MASK ( DEFAULT_ALIGNMENT - 1 )
++
+ #define MIN_CHUNK_SIZE ( DEFAULT_ALIGNMENT * 8 )
+ #define MIN_ALLOC_SIZE DEFAULT_ALIGNMENT
+ #define ALIGN(x) ( (x) + (DEFAULT_ALIGNMENT - ( (x) & ALIGN_MASK)) )
+diff --git a/test/tst-ikstack.c b/test/tst-ikstack.c
+index aba36af..77179b4 100644
+--- a/test/tst-ikstack.c
++++ b/test/tst-ikstack.c
+@@ -10,8 +10,16 @@
+ 
+ #include "iksemel.h"
+ 
+-struct align_test { char a; double b; };
+-#define DEFAULT_ALIGNMENT  ((size_t) ((char *) &((struct align_test *) 0)->b - (char *) 0))
++// struct align_test { char a; double b; };
++// #define DEFAULT_ALIGNMENT  ((size_t) ((char *) &((struct align_test *) 0)->b - (char *) 0))
++struct align_test {
++        struct ikschunk_struct *next;
++        size_t size;
++        size_t used;
++        size_t last;
++        char data[4];
++};
++#define DEFAULT_ALIGNMENT  ((size_t) ((char *) &(((struct align_test *) 0)->data) - (char *) &(((struct align_test *) 0)->last)))
+ #define ALIGN_MASK ( DEFAULT_ALIGNMENT - 1 )
+ 
+ const char buf[] = "1234567890abcdefghijklmnopqrstuv";
+-- 
+1.8.4.1
+
