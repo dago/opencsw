@@ -412,7 +412,7 @@ post-install-modulated:
 		-e '/^[^#]/s/-mno-app-regs//g' \
 		-e '/^[^#]/s/-fno-omit-frame-pointer//g' \
 		-e '/^[^#]/s/-fno-strict-aliasing//g' \
-		-e '/^[^#]/s/-Wa,-xarch=[^ ]*//g' \
+		-e '/^[^#]/s/-Wa[^ ]*//g' \
 		-e '/^[^#]/s/-static-libgcc//g' \
 		$(DESTDIR)$(bindir)/mysql_config
 
