@@ -414,6 +414,7 @@ post-install-modulated:
 		-e '/^[^#]/s/-fno-strict-aliasing//g' \
 		-e '/^[^#]/s/-Wa[^ ]*//g' \
 		-e '/^[^#]/s/-static-libgcc//g' \
+		-e '/^[^#]/s/-pthread//g' \
 		$(DESTDIR)$(bindir)/mysql_config
 
 	@$(MAKECOOKIE)
