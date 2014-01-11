@@ -1,0 +1,25 @@
+From 34570a310386716b6b0f41de8071d944cb10c34d Mon Sep 17 00:00:00 2001
+From: Jon Craig <jcraig@opencsw.org>
+Date: Sat, 11 Jan 2014 21:55:10 +0100
+Subject: [PATCH 11/11] Change default PID file location to /var/opt/csw/ntop
+
+---
+ globals-defines.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/globals-defines.h b/globals-defines.h
+index 4acb19f..e78dbc5 100644
+--- a/globals-defines.h
++++ b/globals-defines.h
+@@ -1874,7 +1874,7 @@
+  * default file and directories
+  */
+ #define DEFAULT_NTOP_PIDFILE                "ntop.pid"
+-#define DEFAULT_NTOP_PID_DIRECTORY          "/var/run"
++#define DEFAULT_NTOP_PID_DIRECTORY          "/var/opt/csw/run"
+ 
+ /*
+  * default configuration parameters  -- the comment gives the (short getopt) name
+-- 
+1.8.4.1
+
