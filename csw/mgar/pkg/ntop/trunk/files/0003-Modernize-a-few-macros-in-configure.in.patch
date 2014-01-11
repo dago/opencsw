@@ -1,0 +1,46 @@
+From faa52dcdbb20e4882f1f6d093c0fbab1fd04dce1 Mon Sep 17 00:00:00 2001
+From: Jon Craig <jcraig@opencsw.org>
+Date: Sat, 11 Jan 2014 21:46:57 +0100
+Subject: [PATCH 5/5] Modernize a few macros in configure.in
+
+Use the recommended macro names for modern autoconf/automake.
+
+Also, don't call AC_PROG_CC early, call it when the script will
+indicate that it's checking for cc, etc.
+---
+ configure.in | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index d7b7979..67a3869 100644
+--- a/configure.in
++++ b/configure.in
+@@ -56,7 +56,7 @@ dnl>
+ dnl> generate the config header
+ dnl>
+ umask 002
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ 
+ HAS_ERROR=
+ HAS_WARNING=
+@@ -151,7 +151,6 @@ dnl> NTOPCONFIGDEBUG_SETTINGS([ntop defaults])
+ # Checks for programs.
+ 
+ AC_PROG_CPP
+-AC_PROG_CC
+ dnl> AC_PROG_CXX no c++ code (yet?)
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
+@@ -324,7 +323,7 @@ dnl>
+ echo
+ echo "Checking C compiler program and features..."
+ echo
+-AM_PROG_CC_STDC
++AC_PROG_CC
+ if test ".${ac_cv_prog_cc_stdc}" = ".no"; then
+     echo
+     echo "*******************************************************************"
+-- 
+1.8.4.1
+

@@ -1,0 +1,36 @@
+From 05f0b44e903151d06bc87c5b34dfaac6e57e9d04 Mon Sep 17 00:00:00 2001
+From: Jon Craig <jcraig@opencsw.org>
+Date: Sat, 11 Jan 2014 21:58:21 +0100
+Subject: [PATCH 13/13] Update the URL for etter.finger.os
+
+---
+ Makefile.am | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index a8709f2..520446a 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -61,8 +61,8 @@ SUBDIRS = . @PLUGINS@
+ 
+ ETTER_PASSIVE_FILE = etter.finger.os
+ ETTER_PASSIVE = $(ETTER_PASSIVE_FILE).gz
+-ETTER_PASSIVE_DOWNLOAD_FROM = "http://ettercap.cvs.sourceforge.net/ettercap/ettercap_ng/share"
+-ETTER_PASSIVE_DOWNLOAD_PARMS = "rev=HEAD"
++#ETTER_PASSIVE_DOWNLOAD_FROM = "http://ettercap.cvs.sourceforge.net/ettercap/ettercap_ng/share"
++ETTER_PASSIVE_DOWNLOAD_FROM = "https://github.com/Ettercap/ettercap/blob/master/share"
+ 
+ NTOPDATA = ntop-cert.pem \
+            $(ETTER_PASSIVE) \
+@@ -416,7 +416,7 @@ dnetter:
+ 	@echo ""
+ 	@echo "...Downloading new file..."
+ 	@wget -O $(ETTER_PASSIVE_FILE) \
+-		$(ETTER_PASSIVE_DOWNLOAD_FROM)/$(ETTER_PASSIVE_FILE)?$(ETTER_PASSIVE_DOWNLOAD_PARMS)
++		$(ETTER_PASSIVE_DOWNLOAD_FROM)/$(ETTER_PASSIVE_FILE)
+ 	@echo ""
+ 	@echo "gziping downloaded file..."
+ 	@gzip $(ETTER_PASSIVE_FILE)
+-- 
+1.8.4.1
+
