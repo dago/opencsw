@@ -6,7 +6,7 @@ VERSION = 9.9.4
 GARTYPE = v2
 
 # Enable these for Px-releases
-RELEASE = P1
+RELEASE = P2
 DISTVERSION = $(VERSION)-$(RELEASE)
 SPKG_VERSION = $(VERSION)$(RELEASE)
 DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
@@ -38,6 +38,7 @@ RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
 RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWbind += CSWlibiconv2
 
 PACKAGES += CSWbind-dev
 CATALOGNAME_CSWbind-dev = bind_dev
@@ -54,7 +55,6 @@ RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgcc-s1
 
@@ -64,6 +64,7 @@ SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 RUNTIME_DEP_PKGS_CSWbindutils  = CSWlibbind
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
 
 PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
@@ -109,6 +110,8 @@ USERGROUP   = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
+CHECKPKG_OVERRIDES_CSWbindutils += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWlibiconv2
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
