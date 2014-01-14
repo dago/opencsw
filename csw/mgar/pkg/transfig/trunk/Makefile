@@ -42,6 +42,8 @@ configure-xmkmf:
 	gsed -i -e '/ MAKE = /s/usr\/ccs\/bin\/make/opt\/csw\/bin\/gmake/' fig2dev/Makefile ; \
 	imake -DUseInstalled -I/usr/openwin/lib/X11/config -DHasGcc2=YES ; \
 	gsed -i -e '/ MAKE = /s/usr\/ccs\/bin\/make/opt\/csw\/bin\/gmake/' Makefile ; \
+	gsed -i -e '/ MANPATH = /s/usr\/openwin/opt\/csw/' fig2dev/Makefile ; \
+	gsed -i -e '/ MANPATH = /s/usr\/openwin/opt\/csw/' transfig/Makefile ; \
 	)
 	$(MAKECOOKIE)
 
@@ -49,3 +51,6 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+post-install:
+	( cd $(WORKSRC) && gmake install.man DESTDIR=$(DESTDIR) ) 
+	$(MAKECOOKIE)
