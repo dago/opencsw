@@ -1,6 +1,6 @@
 NAME      = imagemagick
 VERSION   = 6.8.8
-GARSUBREV = 1
+GARSUBREV = 2
 GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
