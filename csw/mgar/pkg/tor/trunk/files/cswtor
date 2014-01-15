@@ -4,12 +4,12 @@
 
 DAEMON=/opt/csw/bin/tor
 CONF=/etc/opt/csw/tor/torrc
-pidfile=/var/run/tor.pid
+pidfile=/var/opt/csw/run/tor.pid
 
 case "$1" in
   start)
     echo "Starting Tor"
-    $DAEMON -f $CONF
+    $DAEMON --RunAsDaemon 1 --PidFile /var/opt/csw/run/tor.pid
     ;;
   stop)
     echo "Stopping Tor"
@@ -19,7 +19,7 @@ case "$1" in
     echo "Restarting Tor"
     kill `cat $pidfile`
     sleep 1
-    $DAEMON -f $CONF
+    $DAEMON --RunAsDaemon 1 --PidFile /var/opt/csw/run/tor.pid
     ;;
   *)
     echo "Usage: $0 { start | stop | restart }"
