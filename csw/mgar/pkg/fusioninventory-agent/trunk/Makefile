@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = fusioninventory-agent
-VERSION = 2.3.4
+VERSION = 2.3.5.1
 GARTYPE = v2
 CATEGORIES = cpan
 
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(CPAN_MIRRORS)
-AUTHOR = GONERI
+AUTHOR = GROUSSE
 MODDIST =
 DISTNAME = FusionInventory-Agent-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
