@@ -53,15 +53,19 @@ RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibfftw3-3
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibgcc-s1
+OBSOLETED_BY_CSWlibmagickcore6q16hdri2 += CSWlibmagickcore6q16hdri1
 
 PACKAGES += CSWlibmagickwand6q16hdri2
 CATALOGNAME_CSWlibmagickwand6q16hdri2 = libmagickwand6q16hdri2
 SPKG_DESC_CSWlibmagickwand6q16hdri2 += Library from ImageMagick, libMagickWand-6.Q16HDRI.so.2
 PKGFILES_CSWlibmagickwand6q16hdri2 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.2\.0\.0)
 PKGFILES_CSWlibmagickwand6q16hdri2 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.2(\.\d+)*)
+PKGFILES_CSWlibmagickwand6q16hdri2 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.2\.0\.0)
+PKGFILES_CSWlibmagickwand6q16hdri2 += $(call baseisadirs,$(libdir),libMagickWand-6\.Q16HDRI\.so\.2(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgcc-s1
+OBSOLETED_BY_CSWlibmagickwand6q16hdri2 += CSWlibmagickwand6q16hdri1
 
 PACKAGES += CSWlibmagick++6q16hdri3
 CATALOGNAME_CSWlibmagick++6q16hdri3 = libmagick++6q16hdri3
@@ -72,6 +76,7 @@ RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibmagickwand6q16hdri2
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibstdc++6
+OBSOLETED_BY_CSWlibmagick++6q16hdri3 += CSWlibmagick++6q16hdri2
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
