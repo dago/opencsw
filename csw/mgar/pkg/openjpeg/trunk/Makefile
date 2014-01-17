@@ -27,7 +27,14 @@ SPKG_DESC_CSWopenjpeg-dev += $(DESCRIPTION), development files
 PKGFILES_CSWopenjpeg-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWopenjpeg-dev += CSWlibopenjp2-6
 
+PACKAGES += CSWopenjpeg
+CATALOGNAME_CSWopenjpeg = openjpeg
+SPKG_DESC_CSWopenjpeg += $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibopenjp2-6
+RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWopenjpeg += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibpng15-15
+# PKGFILES is catchall
 
 # For some reason the so.6 links to the so.2.0.0
 CHECKPKG_OVERRIDES_CSWlibopenjp2-6 += soname-not-part-of-filename|soname=libopenjp2.so.6|filename=libopenjp2.so.2.0.0
@@ -37,11 +44,15 @@ CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
-CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
-CMAKE_ARGS += -DBUILD_SHARED_LIBS:bool=on
-CMAKE_ARGS += -DBUILD_CODEC:bool=on
-CMAKE_ARGS += -DOPENJPEG_INSTALL_BIN_DIR=$(subst $(prefix)/,,$(bindir))
-CMAKE_ARGS += -DOPENJPEG_INSTALL_LIB_DIR=$(subst $(prefix)/,,$(libdir))
+CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX="$(prefix)"
+# Those two lines are absolutely needed so the RPATH is set properly in the
+# final binary.
+CMAKE_ARGS += -DCMAKE_BUILD_WITH_INSTALL_RPATH:bool=TRUE
+CMAKE_ARGS += -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:bool=TRUE
+CMAKE_ARGS += -DBUILD_SHARED_LIBS:bool=TRUE
+CMAKE_ARGS += -DBUILD_CODEC:bool=TRUE
+CMAKE_ARGS += -DOPENJPEG_INSTALL_BIN_DIR="$(subst $(prefix)/,,$(bindir))"
+CMAKE_ARGS += -DOPENJPEG_INSTALL_LIB_DIR="$(subst $(prefix)/,,$(libdir))"
 
 BUILD64 = 1
 ISAEXEC = 1
