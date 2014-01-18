@@ -33,10 +33,11 @@ BUILD_DEP_PKGS += CSWlibfpx-dev
 BUILD_DEP_PKGS += CSWlibdjvulibre-dev
 BUILD_DEP_PKGS += CSWilmbase-dev
 BUILD_DEP_PKGS += CSWliblqr-dev
-BUILD_DEP_PKGS += CSWlibjasper-dev
+BUILD_DEP_PKGS += CSWopenjpeg-dev
 BUILD_DEP_PKGS += CSWlibrsvg-dev
 BUILD_DEP_PKGS += CSWliblcms2-dev
 BUILD_DEP_PKGS += CSWgraphviz-dev
+BUILD_DEP_PKGS += CSWlibfftw-dev
 
 PACKAGES += CSWlibmagickcore6q16hdri2
 CATALOGNAME_CSWlibmagickcore6q16hdri2 = libmagickcore6q16hdri2
@@ -112,7 +113,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjbig2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibdjvulibre21
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjasper1
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibopenjpeg2-6
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgcc-s1
@@ -239,6 +240,7 @@ CONFIGURE_ARGS += --with-wmf
 CONFIGURE_ARGS += --with-rsvg
 CONFIGURE_ARGS += --with-gvc
 CONFIGURE_ARGS += --with-gslib
+CONFIGURE_ARGS += --with-openjp2
 
 # Disable perl completely until it's rebuilt with GCC
 CONFIGURE_ARGS += --without-perl
