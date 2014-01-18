@@ -58,12 +58,12 @@ RUNTIME_DEP_PKGS_CSWsvn   += CSWlibz1
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn   += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibneon27
-RUNT   += CSWlibserf1-3n   += CSWlibneon27
+RUNTIME_DEP_PKGSserf1-3n   += CSWlibneon27
 RUNT_5.10   += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibglib2-0-0
 CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibdbus1-3
+CHECKPKG_OVERRIDES_CSWsvn += file-with-bad-content|/usr/local|root/opt/csw/lib/svn/libsvn_repos-1.so.0.0.0
 
 RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn_$(GAROSREL))
 dency|CSWlibdbus1-3
@@ -88,7 +88,10 @@ RUNTIME_DEP_PKGS_CSWap2svn += CSWapache2
 RUNTIME_DEP_PKGS_expat1Wap2svn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-catalogname=ap2svn
+CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWsvn
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibapr1-0
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibaprutil1-0-catalogname=ap2svn
 
 
 PACKAGES += CSWjavasvn
@@ -139,12 +142,12 @@ PKGFILES_CSWpythonsvn         += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn         += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWapr1-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvnn += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
+RUNTIME_DEP_PKGS_CSWpythCHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|GS_CSWpythonsvn += CSWpython
 
 
 DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
-DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
+DISTFILES += httpd-svn.conf.CSW svvn_access.conf.CSW
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
