@@ -12,6 +12,10 @@ MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES    = $(DISTNAME).tar.gz
 LICENSE      = LICENSE
 
+# .pc file needed at least for ImageMagick
+# http://code.google.com/p/openjpeg/source/detail?spec=svn2250&r=2250#
+PATCHFILES += 0001-add-pc-file.patch
+
 GARCOMPILER = GCC4
 
 PACKAGES += CSWlibopenjp2-6
