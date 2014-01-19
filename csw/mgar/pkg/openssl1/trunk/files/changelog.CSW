@@ -1,3 +1,10 @@
+openssl (1.0.1f,rev=2014.01.19) unstable
+
+  * Update pkcs11 engine patch from Oracle userland sources.
+  * Re-enabled pkcs11 engine support for sparc.
+
+   -- yann rouillard <yann@opencsw.org>  Sun, 19 Jan 2014 13:05:33 +0100
+
 openssl (1.0.1f,rev=2014.01.06) unstable
 
   * New upstream release.
