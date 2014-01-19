@@ -126,8 +126,8 @@ endif
 #     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
 # patch taken from https://hg.openindiana.org/upstream/oracl# To update the patch, do:
 #   cd files && ./update-t4-patch.sh OPENSSL_VERSION
-#lPATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine.sparc-patch
-PATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine.sparc-patch.sparcv9+vis
+#lPATCHFILES.sparc.5.11 += openssl-1.0.1f-t4-engine.sparc.5.11.patch
+PATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine-sparcv9+vis.sparc.5.11.patch
 
 PATCHFILES += $(PATCHFILES.$(GARCH).$(GAROSREL))
 en-25
