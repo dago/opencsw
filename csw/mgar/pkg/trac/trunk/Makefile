@@ -31,7 +31,6 @@ CHECKPKG_OVERRIDES_CSWtrac += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpysetuptools
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWgenshi
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpythonsvn
-CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/share/doc/trac/contrib/bugzilla2trac.py
 
 
 TEST_SCRIPTS           =
