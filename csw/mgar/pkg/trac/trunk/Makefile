@@ -32,6 +32,25 @@ CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpysetuptools
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWgenshi
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpythonsvn
 
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracInstall
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracPlugins
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracModPython
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracFineGrainedPermissions
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracModWSGI
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracModWSGI
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracFineGrainedPermissions
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracModPython
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracPlugins
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracInstall
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracInstall
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracModPython
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracFastCgi
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracModWSGI
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracModWSGI
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracModPython
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracFastCgi
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracInstall
+
 
 TEST_SCRIPTS           =
 
