@@ -1,5 +1,5 @@
 NAME = zsh
-VERSION = 5.0.4
+VERSION = 5.0.5
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -29,8 +29,8 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-maildir-support
 CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(NAME)/functions
 CONFIGURE_ARGCONFIGURE_ARGS += --enable-etcdir=$(sysconfdir)
-/CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/bin/zsh-$(VERSION)
-/sh/functions/mere
+/CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/bin/zsh
+EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/zsh-$(VERSION)/sh/functions/mere
 
 ETCSHELLS = /opt/csw/bin/zsh
 
