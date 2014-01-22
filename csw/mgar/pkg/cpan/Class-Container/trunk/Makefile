@@ -6,21 +6,24 @@ AUTHOR = KWILLIAMS
 
 DESCRIPTION = Glues object frameworks together transparently
 define BLURB
-  This class facilitates building frameworks of several classes that
-  inter-operate. It was first designed and built for HTML::Mason, in which the
-  Compiler, Lexer, Interpreter, Resolver, Component, Buffer, and several other
-  objects must create each other transparently, passing the appropriate
-  parameters to the right class, possibly substituting other subclasses for
-  any of these objects.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-DEP_PKGS = CSWpmparamsvalidate
+LICENSE_TEXT = This module is licensed under the perl license
 
-PACKAGES = CSWpmclscontainer
-CATALOGNAME = pm_clscontainer
+PACKAGES += CSWpm-class-container
+CATALOGNAME_CSWpm-class-container = pm_class_container
+SPKG_DESC_CSWpm-class-container = Glues object frameworks together transparently
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-class-container = 1
+RUNTIME_DEP_PKGS_CSWpm-class-container += CSWpm-params-validate
+OBSOLETED_BY_CSWpm-class-container += CSWpmclscontainer
+CATALOGNAME_CSWpmclscontainer = pm_clscontainer_stub
 
-ARCHALL = 1
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
