@@ -4,7 +4,7 @@
 #     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
 
 NAME = wget
-VERSION = 1.14 net
+VERSION = 1.15 net
 GARTYPE = v2
 
 DESCRIPTION = A network utility to retrieve files from the Web
@@ -30,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWwget += CSWlibiconv2
 RUNTIME_DEP_PKGS_z1
 RUNTIME_DEP_PKGS_CSWwget += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWwget += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWwget += CSWlibpcreget += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWwget += CSWlibpcregeRUNTIME_DEP_PKGS_CSWwget += CSWlibuuidget += CSWlibidn11
 
 EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
