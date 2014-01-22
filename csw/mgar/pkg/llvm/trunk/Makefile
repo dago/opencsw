@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = llvm
-VERSION = 2.9
+VERSION = 3.0
 GARTYPE = v2
 CATEGORIES = lib
 
@@ -11,12 +11,14 @@ define BLURB
   Long description
 endef
 
-MASTER_SITES = http://llvm.org/releases/$(VERSION)/
-DISTFILES  = $(DISTNAME).tgz
+MASTER_SITES = http://llvm.org/releases/$(VERS = llvm-$(VERSION).tar.gz
+DISTFILES  += clang-$(VERSION).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+DISTNAME = llvm-$(VERSION).src
+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+NOGITPATCH = 1M_MASTER_SITES = 
 
 GARCOMPILER = GNU
 
@@ -28,7 +30,10 @@ CONFIGURE_ARGS += --disable-optimized
 # http://lists.cs.uiuc.edu/pipermail/llvmbugs/2010-December/015967.html
 # http://lists.cs.uiuc.edu/pipermail/llvmbugs/2010-December/015968.html
 CONFIGURE_ARGS += --enable-bindings=none
-# CONFIGURE_ARGS += --enable-libffi
+# CONFIGURE_ARGS +=CONFIGURE_ARGS += --enable-shared
+# CONFIGURE_ARGS += --with-llvmgcc
+# CONFIGURE_ARGS += --with-llvmgxx
+# CONFIGURE_ARGS += --with-clang= --enable-libffi
 
 PATCHFILES += 0001-limits.h-used-for-MAX_PATH.patch
 PATCHFILES += 0002-OpenCSW-bash-for-tests.patch
@@ -39,14 +44,14 @@ RUNTIME_DEP_PKGS_CSWllvm += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWllvm += CSWgcc4corert
 
 ENABLE_OPTIMIZED = 1
-OPTIMIZE_OPTION = -O0
-SHELL = /opt/csw/bin/bash
+OPTIMopt/csw/bin/bash
 CONFIG_SHELL = /opt/csw/bin/bash
 EXTRA_CONFIGURE_EXPORTS  = ENABLE_OPTIMIZED
 EXTRA_CONFIGURE_EXPORTS += OPTIMIZE_OPTION
 EXTRA_CONFIGURE_EXPORTS += CONFIG_SHELL
 EXTRA_BUILD_EXPORTS  = ENABLE_OPTIMIZED
-EXTRA_BUILD_EXPORTS += OPTIMIZE_OPTION
+EXTRA_BUILD_EXPORTS +=# SHELL = /opt/csw/bin/bash
+#  OPTIMIZE_OPTION
 EXTRA_TEST_EXPORTS = SHELL
 
 NM = /opt/csw/bin/gnm
@@ -67,10 +72,15 @@ PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
 # Undefined symbol __sync_fetch_and_add_4
 # http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
 # http://opencsw.wikidot.com/porting-faq#toc6
-# ifeq ($(ISA),sparcv8)
+# ifeq # ($(ISA),sparcv8)
 OPT_FLAGS_GCC = -O0
 # endif
 # ifeq ($(ISA),i386)
-# OPT_FLAGS_GCC =
-# endif
+# OPT_FLAG# pre-configure-modulated:
+# 	(cd $(WORKSRC)/tools && gln -s -v ../../clang-$(VERSION) clang)
+# 	@$(MAKECOOKIE)
 
+pre-configure-modulated:
+	(cd $(WORKSRC)/tools; gln -v -s ../../clang-$(VERSION).src clang)
+	# $(FILEDIR)/gar_helper.sh $@ "$(WORKSRC)"
+	@$(MAKECOOKIE)
