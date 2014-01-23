@@ -1,0 +1,23 @@
+From 66a87373e049ad52a919d8cc71c76a3b0c25ddb9 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Mon, 22 Apr 2013 14:32:37 +0200
+Subject: [PATCH] use_a_tail_that_works
+
+---
+ unittests/ExecutionEngine/JIT/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/unittests/ExecutionEngine/JIT/Makefile b/unittests/ExecutionEngine/JIT/Makefile
+index 9e0bb9e..dbe4022 100644
+--- a/unittests/ExecutionEngine/JIT/Makefile
++++ b/unittests/ExecutionEngine/JIT/Makefile
+@@ -45,5 +45,5 @@ LD.Flags += $(RDYNAMIC)
+ # Symbol exports are necessary (at least for now) when building with LTO.
+ $(LLVMUnitTestExe): $(NativeExportsFile)
+ $(PROJ_OBJ_DIR)/JITTests.exports: $(PROJ_SRC_DIR)/JITTests.def $(PROJ_OBJ_DIR)/.dir
+-	tail -n +2 $< > $@
++	/usr/xpg4/bin/tail -n +2 $< > $@
+ 
+-- 
+1.8.1.4
+

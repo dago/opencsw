@@ -1,0 +1,37 @@
+From 9ad289ac739368dd2eb7e5ec0aa6da8017fb5e27 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Wed, 22 Jan 2014 11:33:43 +0100
+Subject: [PATCH] fix-endiness
+
+---
+ include/llvm/Support/Host.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/include/llvm/Support/Host.h b/include/llvm/Support/Host.h
+index 28c4cc7..138c2c0 100644
+--- a/include/llvm/Support/Host.h
++++ b/include/llvm/Support/Host.h
+@@ -18,6 +18,20 @@
+ 
+ #if defined(__linux__) || defined(__GNU__)
+ #include <endian.h>
++#elif defined(__sun) & defined(__SVR4)
++# ifndef BYTE_ORDER
++# define LITTLE_ENDIAN 1234
++# define BIG_ENDIAN 4321
++# if defined(__sun) & defined(__SVR4)
++# include <sys/isa_defs.h>
++# ifdef _LITTLE_ENDIAN
++# define BYTE_ORDER LITTLE_ENDIAN
++# endif
++# ifdef _BIG_ENDIAN
++# define BYTE_ORDER BIG_ENDIAN
++# endif
++# endif /* sun */
++# endif /* BYTE_ORDER */
+ #else
+ #if !defined(BYTE_ORDER) && !defined(LLVM_ON_WIN32)
+ #include <machine/endian.h>
+-- 
+1.8.4.1
+
