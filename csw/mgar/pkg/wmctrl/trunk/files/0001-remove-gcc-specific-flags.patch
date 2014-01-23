@@ -1,0 +1,25 @@
+From 6e326d38e74027686a891e7b5aa95434a271a8a5 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Thu, 23 Jan 2014 12:49:37 +0100
+Subject: [PATCH] remove gcc specific flags
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index ec70e02..6dd0a0b 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -113,7 +113,7 @@ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ 
+-AM_CFLAGS = -Wall
++AM_CFLAGS =
+ AM_CPPFLAGS = @X_CFLAGS@ @GLIB_CFLAGS@
+ LDADD = @X_LIBS@ @X_PRE_LIBS@ -lX11 -lXmu @X_EXTRA_LIBS@ @GLIB_LIBS@
+ 
+-- 
+1.8.4.1
+
