@@ -1,0 +1,191 @@
+From cff1b46375ed812e052023d0ca71c47b2d5c5ae8 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Wed, 22 Jan 2014 12:37:53 +0100
+Subject: [PATCH] fix_Solaris_opencsw_gcc
+
+---
+ tools/clang/lib/Driver/Tools.cpp | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/tools/clang/lib/Driver/Tools.cpp b/tools/clang/lib/Driver/Tools.cpp
+index 29713ed..2f58fbc 100644
+--- a/tools/clang/lib/Driver/Tools.cpp
++++ b/tools/clang/lib/Driver/Tools.cpp
+@@ -4653,7 +4653,7 @@ void darwin::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   // asm_final spec is empty.
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5085,7 +5085,7 @@ void darwin::Link::ConstructJob(Compilation &C, const JobAction &JA,
+   Args.AddAllArgs(CmdArgs, options::OPT_F);
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++    Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5176,7 +5176,7 @@ void solaris::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5187,18 +5187,18 @@ void solaris::Link::ConstructJob(Compilation &C, const JobAction &JA,
+                                   const ArgList &Args,
+                                   const char *LinkingOutput) const {
+   // FIXME: Find a real GCC, don't hard-code versions here
+-  std::string GCCLibPath = "/usr/gcc/4.5/lib/gcc/";
++  std::string GCCLibPath = "/opt/csw/lib/gcc/";
+   const llvm::Triple &T = getToolChain().getTriple();
+   std::string LibPath = "/usr/lib/";
+   llvm::Triple::ArchType Arch = T.getArch();
+   switch (Arch) {
+   case llvm::Triple::x86:
+     GCCLibPath +=
+-        ("i386-" + T.getVendorName() + "-" + T.getOSName()).str() + "/4.5.2/";
++        ("i386-" + T.getVendorName() + "-" + T.getOSName()).str() + "/4.8.2/";
+     break;
+   case llvm::Triple::x86_64:
+     GCCLibPath += ("i386-" + T.getVendorName() + "-" + T.getOSName()).str();
+-    GCCLibPath += "/4.5.2/amd64/";
++    GCCLibPath += "/4.8.2/amd64/";
+     LibPath += "amd64/";
+     break;
+   default:
+@@ -5282,7 +5282,7 @@ void solaris::Link::ConstructJob(Compilation &C, const JobAction &JA,
+   addProfileRT(getToolChain(), Args, CmdArgs, getToolChain().getTriple());
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++    Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5394,7 +5394,7 @@ void auroraux::Link::ConstructJob(Compilation &C, const JobAction &JA,
+   addProfileRT(getToolChain(), Args, CmdArgs, getToolChain().getTriple());
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++    Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5452,7 +5452,7 @@ void openbsd::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5584,7 +5584,7 @@ void openbsd::Link::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++    Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5608,7 +5608,7 @@ void bitrig::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5724,7 +5724,7 @@ void bitrig::Link::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++    Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -5799,7 +5799,7 @@ void freebsd::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -6063,7 +6063,7 @@ void netbsd::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+     CmdArgs.push_back(II.getFilename());
+   }
+ 
+-  const char *Exec = Args.MakeArgString((getToolChain().GetProgramPath("as")));
++  const char *Exec = Args.MakeArgString((getToolChain().GetProgramPath("gas")));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -6183,7 +6183,7 @@ void netbsd::Link::ConstructJob(Compilation &C, const JobAction &JA,
+ 
+   addProfileRT(getToolChain(), Args, CmdArgs, getToolChain().getTriple());
+ 
+-  const char *Exec = Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++  const char *Exec = Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -6302,7 +6302,7 @@ void gnutools::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ 
+   // Handle the debug info splitting at object creation time if we're
+@@ -6654,7 +6654,7 @@ void minix::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -6708,7 +6708,7 @@ void minix::Link::ConstructJob(Compilation &C, const JobAction &JA,
+          Args.MakeArgString(getToolChain().GetFilePath("crtend.o")));
+   }
+ 
+-  const char *Exec = Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++  const char *Exec = Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -6741,7 +6741,7 @@ void dragonfly::Assemble::ConstructJob(Compilation &C, const JobAction &JA,
+   }
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("as"));
++    Args.MakeArgString(getToolChain().GetProgramPath("gas"));
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+@@ -6892,7 +6892,7 @@ void dragonfly::Link::ConstructJob(Compilation &C, const JobAction &JA,
+   addProfileRT(getToolChain(), Args, CmdArgs, getToolChain().getTriple());
+ 
+   const char *Exec =
+-    Args.MakeArgString(getToolChain().GetProgramPath("ld"));
++    Args.MakeArgString("/usr/ccs/bin/ld");
+   C.addCommand(new Command(JA, *this, Exec, CmdArgs));
+ }
+ 
+-- 
+1.8.4.1
+
