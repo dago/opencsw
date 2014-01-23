@@ -1,14 +1,14 @@
-From 51625c4d79ede0386f6034bd08a113ee626b8aa0 Mon Sep 17 00:00:00 2001
+From 1e2f9e4981200dff4884c21eb9add3c1a18ad01e Mon Sep 17 00:00:00 2001
 From: Oliver Kiddle <opk@opencsw.org>
-Date: Fri, 5 Jul 2013 14:56:15 +0200
+Date: Thu, 23 Jan 2014 21:46:32 +0100
 Subject: [PATCH] adapt Makefile for opencsw
 
 ---
- Makefile.Solaris | 30 ++++++++++++------------------
- 1 file changed, 12 insertions(+), 18 deletions(-)
+ Makefile.Solaris | 46 ++++++++++++----------------------------------
+ 1 file changed, 12 insertions(+), 34 deletions(-)
 
 diff --git a/Makefile.Solaris b/Makefile.Solaris
-index 3513f4d..74dd04c 100644
+index 527ec58..94c3c2a 100644
 --- a/Makefile.Solaris
 +++ b/Makefile.Solaris
 @@ -26,11 +26,11 @@ FILTER = 1
@@ -23,9 +23,9 @@ index 3513f4d..74dd04c 100644
 -COMPRESS_PROG = gzip -9f
 +COMPRESS_PROG = true
  
- # Comment this line out if your system doesn't have libXinerama
- # installed (for centering on dual-screen)
-@@ -47,8 +47,8 @@ MAGIC = -DHAVE_MAGIC
+ # Comment this line out if your system doesn't have lcms2 installed
+ # (for minimal Color Management support)
+@@ -51,13 +51,13 @@ EXIF = -DHAVE_EXIF
  # Do not edit below here!
  ######################################################################
  
@@ -36,36 +36,53 @@ index 3513f4d..74dd04c 100644
  	    -fcaller-saves -ffast-math -fno-strength-reduce \
  	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
  
-@@ -129,21 +129,15 @@ distclean : clean
+-INCLUDES  := $(shell pkg-config --cflags gdk-2.0 imlib2)
+-LIBS      := $(shell pkg-config --libs gdk-2.0 imlib2) -lX11 lXext
++INCLUDES  := -I/opt/csw/include $(shell pkg-config --cflags gdk-2.0 imlib2)
++LIBS      := $(filter-out -lintl,$(shell pkg-config --libs gdk-2.0 imlib2)) -lX11 -lXext
+ 
+ # [as] thinks that this is not portable enough:
+ # [lc] I use a virtual screen of 1600x1200, and the resolution is 1024x768,
+@@ -140,33 +140,11 @@ distclean : clean
  
  install: $(PROGRAM)
  	@echo "Installing QIV..."
 -	@if [ ! -d $(PREFIX)/bin ]; then \
 -	  install -d -m 0755 $(PREFIX)/bin; \
 -	  echo install -d -m 0755 $(PREFIX)/bin; \
-+	@if [ ! -d $(DESTDIR)$(bindir) ]; then \
-+	  ginstall -d -m 0755 $(DESTDIR)$(bindir); \
-+	  echo ginstall -d -m 0755 $(DESTDIR)$(bindir); \
-         fi
+-        fi
 -	install -s -m 0755 $(PROGRAM) $(PREFIX)/bin
 -	@if [ ! -d $(PREFIX)/man/man1 ]; then \
 -	  echo install -d -m 0755 $(PREFIX)/man/man1; \
 -	  install -d -m 0755 $(PREFIX)/man/man1; \
-+	ginstall -s -m 0755 $(PROGRAM) $(DESTDIR)$(bindir)
-+	@if [ ! -d $(DESTDIR)$(mandir)/man1 ]; then \
-+	  echo ginstall -d -m 0755 $(DESTDIR)$(mandir)/man1; \
-+	  ginstall -d -m 0755 $(DESTDIR)$(mandir)/man1; \
- 	fi
+-	fi
 -	install -m 0644 $(PROGRAM).1 $(PREFIX)/man/man1
 -	$(COMPRESS_PROG) $(PREFIX)/man/man1/$(PROGRAM).1
+-	install -D -m 0644 qiv.png $(PREFIX)/share/pixmaps/qiv.png
+-	install -D -m 0644 qiv.desktop $(PREFIX)/share/applications/qiv.desktop
+-	@if [ ! -e $(PREFIX)/share/pixmaps ]; then \
+-	  echo install -d -m 0755 $(PREFIX)/share/pixmaps; \
+-	  install -d -m 0755 $(PREFIX)/share/pixmaps; \
+-	fi
+-	install -m 0644 qiv.png $(PREFIX)/share/pixmaps/qiv.png
+-	@if [ ! -e $(PREFIX)/share/applications ]; then \
+-	  echo install -d -m 0755 $(PREFIX)/share/applications; \
+-	  install -d -m 0755 $(PREFIX)/share/applications; \
+-	fi
+-	install -m 0644 qiv.desktop $(PREFIX)/share/applications/qiv.desktop
 -	@if ./qiv -f ./intro.jpg ; \
 -	then echo "-- Test Passed --" ; \
 -	else echo "-- Test Failed --" ; \
 -	fi
--	@echo "\nDont forget to look into the \"qiv-command\" file and install it!\n-> cp qiv-command.example /usr/local/bin/qiv-command\n\n"
-+	ginstall -m 0644 $(PROGRAM).1 $(DESTDIR)$(mandir)/man1
+-	@echo "\nDont forget to look into the \"qiv-command\" file and install it!\n-> cp qiv-command.example $(PREFIX)/bin/qiv-command\n\n"
++	ginstall -D -s -m 0755 $(PROGRAM) $(DESTDIR)$(bindir)/$(PROGRAM)
++	ginstall -D -m 0644 $(PROGRAM).1 $(DESTDIR)$(mandir)/man1/$(PROGRAM).1
++	$(COMPRESS_PROG) $(DESTDIR)/man/man1/$(PROGRAM).1
++	ginstall -D -m 0644 qiv.png $(DESTDIR)$(datadir)/share/pixmaps/qiv.png
++	ginstall -D -m 0644 qiv.desktop $(DESTDIR)$(datadir)/applications/qiv.desktop
++	ginstall -D -m 0644 contrib/qiv-command.example $(DESTDIR)$(datadir)/doc/qiv/qiv-command.example
  
  # the end... ;-)
 -- 
-1.8.3.1
+1.8.4.1
 
