@@ -2,20 +2,26 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = meld
-VERSION = 1.5.4
+VERSION = 1.8.3
 GARTYPE = v2
-CATEGORIES = apps
 
 DESCRIPTION = Visual diff and merge tool
 define BLURB
-  Long description
+  Meld is a visual diff and merge tool targeted at developers. Meld
+  helps you compare files, directories and version controlled
+  projects. It provides tow- and three-way comparison of both files
+  and directories and has support for many popular version control
+  systems.
 endef
 
-MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/meld/1.5/
+MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/meld/$(basename $(VERSION))E/sources/meld/1.5/
 DISTFILES  = $(DISTNAME).tar.xz
 
 # PATCHFILES += 0001-Allow-to-use-a-different-install-utility.patch
-PATCHFILES += 0001-Use-conditionals-for-installation-places.patch
+PATCHFILES += 0001-Use-conditionals-for-installatREINPLACEMENTS += python
+REINPLACE_MATCH_python = \#!.*python.*
+REINPLACE_WITH_python = \#!$(bindir)/python
+REINPLACE_FILES_python += bin/meldation-places.patch
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -25,21 +31,10 @@ TEST_SCRIPTS =
 EXTRA_MERGE_EXCLUDE_FILES = .*\.py[co]
 
 ARCHALL_CSWmeld = 1
-RUNTIME_DEP_PKGS_CSWmeld += CSWpython
+RUNTIME_DEP_PKG-gtk CSWpy-gobject
 
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/opt/csw/bin/meld
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/meld/paths.py
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/opt/csw/lib/meld/meld/paths.py
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/opt/csw/share/omf/meld/meld-fr.omf
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/opt/csw/share/omf/meld/meld-C.omf
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/opt/csw/share/omf/meld/meld-es.omf
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/scrollkeeper_docs
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/fr/scrollkeeper_cl.xml
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/fr/scrollkeeper_extended_cl.xml
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/es/scrollkeeper_cl.xml
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/es/scrollkeeper_extended_cl.xml
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/C/scrollkeeper_extended_cl.xml
-CHECKPKG_OVERRIDES_CSWmeld += file-with-bad-content|/usr/local|root/var/opt/csw/lib/scrollkeeper/C/scrollkeeper_cl.xml
+CHECKPKG_OVERRIDES_CSWmeld += surplus-dependency|CSWpy-gobject
+CHECKPKG_OVERRIDES_CSWmeld += surplus-dependency|CSWpy-gtkcrollkeeper_cl.xml
 CHECKPKG_OVERRIDES_CSWmeld += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWmeld += catalogname-does-not-start-with-py_
 
@@ -56,4 +51,4 @@ install-meld:
 	@$(MAKECOOKIE)
 
 # msgfmt, install
-PATH := /opt/csw/gnu:$(PATH)
+PATH := /op
