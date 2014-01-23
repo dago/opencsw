@@ -19,7 +19,7 @@ MASTER_SITES = http://tomas.styblo.name/wmctrl/dist/
 DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS_CSWwmctrl += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWwmctrl += CSWlibglib2-0-0 CSWlibintl8
 
 PATCHFILES += 0001-remove-gcc-specific-flags.patch
 CONFIGURE_ARGS = $(DIRPATHS)
