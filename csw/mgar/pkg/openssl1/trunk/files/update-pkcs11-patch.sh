@@ -23,7 +23,8 @@ echo "Updating pkcs11 engine patch from ${SOURCE_URL}..."
 	# ar in in /usr/ccs/bin under Solaris 9 and 10 so we change the path
 	wget $WGET_OPTIONS --output-document=- ${SOURCE_URL}/patches/15-pkcs11_engine-0.9.8a.patch | \
 
-		sed -e 's/\/usr\/bin\/ar/\/usr\/ccs\/bin\/ar/g'
+		gsed -e 's/\/usr\/bin\/ar/\/usr\/ccs\/bin\/ar/g' | \
+		gsed -e 's,"/lib/openssl/engines\(/64\)*/libpk11.so","/opt/csw/lib/openssl-1.0.0/engines\1/libpk11.so",'
 
 	# in the repository, the new files are not part of the patch, but we merge them
 	# in a single patch
