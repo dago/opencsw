@@ -8,6 +8,8 @@ SF_PROJECT = phppgadmin
 MASTER_SITES += $(SF_MIRROR)
 DISTFILES += $(DISTNAME).tar.bz2
 
+VENDOR_URL = http://phppgadmin.sourceforge.net/
+
 # We copy stuff verbatim to the package, a .git would not be useful
 NOGITPATCH = 1
 
@@ -28,13 +30,13 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-VENDOR_URL = http://phppgadmin.sourceforge.net/__external.inc.php
+PRESERVECONF = $(sharedstatedir)/www/phppgadmin/conf/config.inc.php
 
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(NAME) (custom)"
-	@rm -rf $(DESTDIR)$(prepgadmin
-	@ginstall -d $(DESTDIR)$(prefix)/share/www
-	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/share/www/phppgadmin
+	@echo " ==> Installing $(NAME)"
+	@rm -rf $(DESTDIR)$(sharedstatedir)/www/phppgadmin
+	@ginstall -d $(DESTDIR)$(sharedstatedir)/www
+	@cp -R $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/phppgadmin
 	@$(MAKECOOKIE)
