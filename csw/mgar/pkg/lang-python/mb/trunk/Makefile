@@ -14,6 +14,10 @@ DISTFILES += mirrorbrain.conf.CSW
 
 PATCHFILES += 0001-New-locations-for-GeoIP-databases.patch
 
+# Use patch until this is fixed:
+#   http://mirrorbrain.org/issues/issue135
+PATCHFILES += 0001-Change-default-for-getaddrinfo.patch
+
 # We really do only care for MirrorBrain on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
