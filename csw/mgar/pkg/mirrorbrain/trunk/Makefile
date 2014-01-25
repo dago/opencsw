@@ -5,12 +5,18 @@ NAME = mirrorbrain
 VERSION = 2.17.0
 GARTYPE = v2
 
-DESCRIPTION = Brief description
+DESCRIPTION = Content distribution tool
 
 MASTER_SITES = http://mirrorbrain.org/files/releases/
 DISTFILES  = $(DISTNAME).tar.gz
 
+# Use patch until this is fixed:
+#   http://mirrorbrain.org/issues/issue130
 PATCHFILES += 0001-Make-geoip-database-position-adjustable.patch
+
+# Use patch until this is fixed:
+#   http://mirrorbrain.org/issues/issue135
+PATCHFILES += 0001-Change-default-for-getaddrinfo.patch
 
 VENDOR_URL = http://mirrorbrain.org
 
@@ -52,12 +58,15 @@ RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpy-sqlobject
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpy-psycopg2
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWlibgeoip1
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWperl
+# This is needed for /opt/csw/bin/scanner
+RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-dbi
 # I know these are needed
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-cmdln
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-mb
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-sqlobject
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-psycopg2
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-dbi
 
 # The Python CSWpy-mb module "mb" and the "mb" binary are in lang-py/mb
 
@@ -75,6 +84,12 @@ REINPLACEMENTS += mbconf
 REINPLACE_MATCH_mbconf = /etc/mirrorbrain.conf
 REINPLACE_WITH_mbconf = $(sysconfdir)/mirrorbrain.conf
 REINPLACE_FILES_mbconf += tools/scanner.pl
+
+# The language must be in lower case
+REINPLACEMENTS += sql
+REINPLACE_MATCH_sql = 'SQL'
+REINPLACE_WITH_sql = 'sql'
+REINPLACE_FILES_sql += sql/schema-postgresql.sql
 
 GEOIPCITYFILE = $(sharedstatedir)/GeoIP/GeoIPCity.dat
 GEOIPFILE = $(sharedstatedir)/GeoIP/GeoIP.dat
@@ -110,6 +125,7 @@ install-custom:
 	ginstall -m 0755 $(WORKSRC)/tools/scanner.pl $(DESTDIR)$(bindir)/scanner
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql
 	ginstall -m 0644 $(WORKSRC)/sql/initialdata-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/initialdata-postgresql.sql
+	@# LANG SQL must in fact be LANG sql (lowercase!) or the creation faills
 	ginstall -m 0644 $(WORKSRC)/sql/schema-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/schema-postgresql.sql
 	@$(MAKECOOKIE)
 
