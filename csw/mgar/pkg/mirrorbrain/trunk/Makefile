@@ -60,6 +60,10 @@ RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWlibgeoip1
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWperl
 # This is needed for /opt/csw/bin/scanner
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-dbi
+RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-dbd-pg
+RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-timedate
+RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-libwww-perl
+RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-config-inifiles
 # I know these are needed
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-cmdln
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-mb
@@ -67,6 +71,10 @@ CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-sqlobject
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-psycopg2
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-dbi
+CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-dbd-pg
+CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-timedate
+CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-libwww-perl
+CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-config-inifiles
 
 # The Python CSWpy-mb module "mb" and the "mb" binary are in lang-py/mb
 
