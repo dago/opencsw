@@ -30,7 +30,7 @@ PACKAGES = CSWlibssl1-0-0 CSWlibssl-dev CPACKAGING_PLATFORMS = solaris9-sparc so
 
 SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
 PKGFILES_CSWlibssl1-0-0 = $(PKGFILES_RT)
-PKGFILES_CSWlibdir)(/amd64)?/openssl-1.0.0/engines/.* = $(PKGFILES_RT)
+PKGFILES_CSWlibdir)(/[^/]*)?/openssl-1.0.0/engines/.* = $(PKGFILES_RT)
 PKGFILES_CSWlibssl1-0-0 += $(prefix)/etc/ssl/private $(prefix)/etc/ssl/certs 
 PKGFILES_CSWlibssl1-0-0 += $(docdir)/libssl1_0_0/.* 
 
