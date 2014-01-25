@@ -1,0 +1,25 @@
+From 3f59a009b2997cfe2f79ad020613a4a1dbf1ae14 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 25 Jan 2014 11:17:09 +0100
+Subject: [PATCH] Change default for getaddrinfo
+
+---
+ mb/mb/asn.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mb/mb/asn.py b/mb/mb/asn.py
+index 0b6d602..3a5c2c4 100644
+--- a/mb/mb/asn.py
++++ b/mb/mb/asn.py
+@@ -17,7 +17,7 @@ def iplookup(conn, s):
+         ips = []
+         ip6s = []
+         try:
+-            for res in socket.getaddrinfo(s, 0):
++            for res in socket.getaddrinfo(s, None):
+                 af, socktype, proto, canonname, sa = res
+                 if ':' in sa[0]:
+                     if sa[0] not in ip6s:
+-- 
+1.8.4.1
+
