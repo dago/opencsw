@@ -55,9 +55,8 @@ include gar/category.mk
 
 build-serf:
 	(cd $(WORKSRC); \
-		/usr/bin/env -i $(BUILD_ENV) \
 		scons \
-		$(SCONS_FLAGS) PREFIX=$(prefix) )
+		$(SCONS_FLAGS) LINKFLAGS="$(LD_OPTIONS)" CFLAGS="$(CFLAGS)" PREFIX=$(prefix) )
 	@$(MAKECOOKIE)
 
 install-serf:
