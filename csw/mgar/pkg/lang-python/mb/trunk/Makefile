@@ -34,7 +34,7 @@ REINPLACE_FILES_conf += mb/conf.py
 REINPLACEMENTS += scanner
 REINPLACE_MATCH_scanner = /usr/bin/scanner
 REINPLACE_WITH_scanner = $(bindir)/scanner
-REINPLACE_FILES_scanner += mb/mb.py
+REINPLACE_FILES_scanner += mb.py
 
 PACKAGES += CSWpy-mb
 SPKG_DESC_CSWpy-mb = Python module used by the MirrorBrain commandline tools
