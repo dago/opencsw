@@ -50,30 +50,12 @@ EXTRA_LIB = $(prSCONS_FLAGS += APR=$(bindir)/apr-1-config
 SCONS_FLAGS += APU=$(bindir)/apu-1-config
 
 CHECKPKG_OVERRIDES_CSWlibserf1-3 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libserf-1.so.1.3.0|soname=libserf-1.so.1|pkgname=CSWlibserf1-3|expected=CSWlibserf1-1
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libapr-1.so.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libaprutil-1.so.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libcrypto.so.1.0.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libdb-4.8.so
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libexpat.so.1
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|liblber-2.4.so.2
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libldap-2.4.so.2
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libsendfile.so.1
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libssl.so.1.0.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libuuid.so.1
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += no-direct-binding|/opt/csw/lib/libserf-1.so.1.3.0|is|not|directly|bound|to|soname|libz.so.1
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|liblber-2.4.so.2|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libapr-1.so.0|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libdb-4.8.so|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libldap-2.4.so.2|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libssl.so.1.0.0|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libaprutil-1.so.0|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libcrypto.so.1.0.0|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += soname-not-found|libexpat.so.1|is|needed|by|opt/csw/lib/libserf-1.so.1.3.0
 
 include gar/category.mk
 
 build-serf:
 	(cd $(WORKSRC); \
+		/usr/bin/env -i $(BUILD_ENV) \
 		scons \
 		$(SCONS_FLAGS) PREFIX=$(prefix) )
 	@$(MAKECOOKIE)
