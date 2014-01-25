@@ -19,11 +19,13 @@ ARCHALL_CSWphppgadmin = 1
 RUNTIME_DEP_PKGS_CSWphppgadmin += CSWap2-modphp5
 RUNTIME_DEP_PKGS_CSWphppgadmin += CSWapache2
 RUNTIME_DEP_PKGS_CSWphppgadmin += CSWphp5
+RUNTIME_DEP_PKGS_CSWphppgadmin += CSWphp5-session
 
 # I know these are needed
-CHECKPKG_OVERRIDES_CSWphppgadmin += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphppgadmin += surplus-dependency|CSWap2-modphp5
 CHECKPKG_OVERRIDES_CSWphppgadmin += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWphppgadmin += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphppgadmin += surplus-dependency|CSWphp5-session
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
