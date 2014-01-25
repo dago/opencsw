@@ -36,7 +36,9 @@ RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWlibserf1-2 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibserf1-2KGS_CSWlibserf1-0 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibserf1-2KGS_CSWlibserBUILD_DEP_PKGS += CSWscons
+BUILD_DEP_PKGS += CSWlibapr-dev
+BUILD_DEP_PKGS += CSWlibaprutil-devrf1-0 += CSWlibz1
 
 PACKAGES += CSWlibserf-dev
 CATALOGNAME_CSWlibserf-dev = libserf_dev
