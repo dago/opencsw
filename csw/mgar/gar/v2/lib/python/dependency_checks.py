@@ -294,8 +294,7 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
 
     osrel = pkg_data['basic_stats']['parsed_basename']['osrel']
 
-    if (osrel == u'SunOS5.9' and
-        binary_info['path'].endswith('/amd64/' + binary_info['base_name'])):
+    if osrel == u'SunOS5.9' and '/amd64/' in binary_info['path']:
       # amd64 binaries in Solaris 5.9 packages were in fact compiled under
       # Solaris 5.10 so we have a special case here
       osrel = u'SunOS5.10'
