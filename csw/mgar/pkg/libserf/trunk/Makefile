@@ -32,8 +32,6 @@ RUNTIME_DEP_3 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-3 += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-3 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibserf1-3 += CSWlibz1
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += bad-rpath-entry|/opt/csw/bdb48/lib/|opt/csw/lib/libserf-1.so.1.3.0
-CHECKPKG_OVERRIDES_CSWlibserf1-3 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libserf-1.so.1.3.0
 rBUILD_DEP_PKGS += CSWscons
 BUILD_DEP_PKGS += CSWlibapr-dev
 BUILD_DEP_PKGS += CSWlibaprutil-devrff1-0 += CSWlibz1
@@ -47,14 +45,23 @@ RUNTIME_DEP_PKGS_CSWlibserf-d3v = CSWlibserf1-0
 EXTRA_LIB = $(prSCONS_FLAGS += APR=$(bindir)/apr-1-config
 SCONS_FLAGS += APU=$(bindir)/apu-1-config
 
+# scons doesn't honor CFLAGS, LDFLAGS... environment variables
+# so we must explicitely pass them as arguments
+SCONS_FLAGS += CFLAGS="$(CFLAGS)" 
+
+# scons expands the $ISADIR variable, so we must do some more
+# escape magics to make sure it is passed as is to the linker
+SCONS_FLAGS += LINKFLAGS="$(subst $$,\\$$\\,$(LD_OPTIONS))"
+
 CHECKPKG_OVERRIDES_CSWlibserf1-3 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libserf-1.so.1.3.0|soname=libserf-1.so.1|pkgname=CSWlibserf1-3|expected=CSWlibserf1-1
 
 include gar/category.mk
 
+
 build-serf:
 	(cd $(WORKSRC); \
 		scons \
-		$(SCONS_FLAGS) LINKFLAGS="$(LD_OPTIONS)" CFLAGS="$(CFLAGS)" PREFIX=$(prefix) )
+		$(SCONS_FLAGS) PREFIX="$(prefix)")
 	@$(MAKECOOKIE)
 
 install-serf:
