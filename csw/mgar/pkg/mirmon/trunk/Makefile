@@ -83,4 +83,6 @@ install-custom:
 	cd $(WORKSRC) && cp -r Mirmon.pm $(PKGROOT)$(sharedstatedir)/perl/csw
 	ginstall -d $(PKGROOT)$(sysconfdir)
 	cd $(WORKDIR) && ginstall -m 0644 mirmon.conf.CSW $(PKGROOT)$(sysconfdir)
+	ginstall -d $(PKGROOT)/var/opt/csw/mirmon/
+	touch $(PKGROOT)/var/opt/csw/mirmon/state.mirmon
 	@$(MAKECOOKIE)
