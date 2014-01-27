@@ -34,7 +34,7 @@ project_name OpenCSW
 
 project_url http://www.opencsw.org/
 
-mirror_list /var/tmp/mirror-list.mirmon
+mirror_list /var/opt/csw/mirmon/mirror-list.mirmon
 
 web_page /var/opt/csw/mirmon/html/mirmon.html
 
