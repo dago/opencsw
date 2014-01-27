@@ -16,6 +16,8 @@ endef
 
 MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VVENDOR_URL = http://curl.haxx.se
 
+PATCHFILES += 0000-trynextip-logic-inversion-bug.patch
+
 # Because of OpenSSL 1.0 update
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386+ency|CSWlibcurl3
 
