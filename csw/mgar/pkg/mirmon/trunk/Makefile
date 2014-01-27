@@ -26,6 +26,7 @@ CHECKPKG_OVERRIDES_CSWmirmon += surplus-dependency|CSWwget
 
 PACKAGES += CSWpm-mirmon
 SPKG_DESC_CSWpm-mirmon = OO interface for mirmon objects
+ARCHALL_CSWpm-mirmon = 1
 PKGFILES_CSWpm-mirmon += $(bindir)/mirmon.pl
 PKGFILES_CSWpm-mirmon += $(sharedstatedir)/perl/.*
 RUNTIME_DEP_PKGS_CSWpm-mirmon += CSWperl
