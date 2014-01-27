@@ -8,7 +8,8 @@ GARTYPE = v2
 DESCRIPTION = Monitor the status of mirrors
 
 MASTER_SITES = http://www.staff.science.uu.nl/~penni101/mirmon/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += mirmon.conf.CSW
 
 VENDOR_URL = http://www.staff.science.uu.nl/~penni101/mirmon/
 LICENSE = LICENSE
@@ -55,10 +56,17 @@ REINPLACE_MATCH_mirmonpm = \\'\\.\\'
 REINPLACE_WITH_mirmonpm = \\'$(sharedstatedir)/perl/csw\\'
 REINPLACE_FILES_mirmonpm += mirmon.pl
 
+REINPLACEMENTS += conf
+REINPLACE_MATCH_conf = /etc/mirmon.conf
+REINPLACE_WITH_conf = $(sysconfdir)/mirmon.conf
+REINPLACE_FILES_conf += *
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
+
+PRESERVECONF += $(sysconfdir)/mirmon.conf
 
 include gar/category.mk
 
@@ -73,4 +81,6 @@ install-custom:
 	cd $(WORKSRC) && cp -r countries.list icons $(PKGROOT)$(sharedstatedir)/mirmon
 	ginstall -d $(PKGROOT)$(sharedstatedir)/perl/csw
 	cd $(WORKSRC) && cp -r Mirmon.pm $(PKGROOT)$(sharedstatedir)/perl/csw
+	ginstall -d $(PKGROOT)$(sysconfdir)
+	cd $(WORKDIR) && ginstall -m 0644 mirmon.conf.CSW $(PKGROOT)$(sysconfdir)
 	@$(MAKECOOKIE)
