@@ -1,0 +1,48 @@
+From bf6bfdd8c9591de27eceeb1ad18a0b18842796a4 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@csw.org>
+Date: Tue, 28 Jan 2014 12:26:44 +0000
+Subject: [PATCH] avoid reserved variable names
+
+---
+ lib/matplotlib/tri/_tri.cpp | 6 +++---
+ lib/matplotlib/tri/_tri.h   | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/lib/matplotlib/tri/_tri.cpp b/lib/matplotlib/tri/_tri.cpp
+index 9dd538a..ce5260b 100644
+--- a/lib/matplotlib/tri/_tri.cpp
++++ b/lib/matplotlib/tri/_tri.cpp
+@@ -2177,14 +2177,14 @@ TrapezoidMapTriFinder::Trapezoid::set_upper_right(Trapezoid* upper_right_)
+ 
+ 
+ RandomNumberGenerator::RandomNumberGenerator(unsigned long seed)
+-    : _M(21870), _A(1291), _C(4621), _seed(seed % _M)
++    : M_(21870), A_(1291), C_(4621), _seed(seed % M_)
+ {}
+ 
+ unsigned long
+ RandomNumberGenerator::operator()(unsigned long max_value)
+ {
+-    _seed = (_seed*_A + _C) % _M;
+-    return (_seed*max_value) / _M;
++    _seed = (_seed*A_ + C_) % M_;
++    return (_seed*max_value) / M_;
+ }
+ 
+ 
+diff --git a/lib/matplotlib/tri/_tri.h b/lib/matplotlib/tri/_tri.h
+index 3662678..0d5acef 100644
+--- a/lib/matplotlib/tri/_tri.h
++++ b/lib/matplotlib/tri/_tri.h
+@@ -818,7 +818,7 @@ public:
+     unsigned long operator()(unsigned long max_value);
+ 
+ private:
+-    const unsigned long _M, _A, _C;
++    const unsigned long M_, A_, C_;
+     unsigned long _seed;
+ };
+ 
+-- 
+1.8.4.1
+
