@@ -23,16 +23,7 @@ define BLURB
   commercial-grade, fully featured, and Open Source toolkit implementing the
   Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) as well
   as a full-strength general-purpose cryptography library.
-endef
-
-PACKAGES = CSWopenssl CSWlibssl0-9-8 CSWlibssl-dev CSWopenssl-utils
-
-SPKG_DESC_CSWopenssl = Openssl meta package
-CATALOGNAME_CSWopenssl = openssl
-RUNTIME_DEP_PKGS_CSWopenssl = CSWlibssl-dev CSWopenssl-utils CSWlibssl0-9-8
-ARCHALL_CSWopenssl = 1
-OBSOLETED_BY_CSWopenssl = CSWossl
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWopenssl
+endelibssl0-9-8 CSWlibssl-dev CSWopenssl-utilsndency|CSWopenssl
 
 SPKG_DESC_CSWlibssl0-9-8 = Openssl runtime libraries
 CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
@@ -51,12 +42,7 @@ CATALOGNAME_CSWopenssl-utils = openssl_utils
 RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl0-9-8
 SPKG_CLASSES_CSWopenssl-utils = none cswpreserveconf
 OBSOLETED_BY_CSWopenssl-utils = CSWosslutils
-CHECKPKG_OVERRIDES_CSWosslutils += surplus-dependency|CSWopenssl-utils
-
-# openssl is a meta-package
-CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWopenssl-utils
-CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWlibssl-dev
-CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWlibssl0-9-8
+CHECKPKG_OVERRIDES_CSWosslutils += surplus-dependency|CSWSWlibssl0-9-8
 
 # we use sun perl not csw one
 CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
@@ -112,12 +98,9 @@ endif
 CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
 CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
 CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
-CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/INSTALL
-CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/CHANGES
-CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl0_9_8/INSTALL
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl0_9_8/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl0_9_8/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/shareINSTALLe/doc/openssl/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/sharehare/doc/openssl/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/sharee/doc/libssl_dev/CHANGES
 CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/CHANGES
 CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/FAQ
 CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/INSTALL
@@ -133,7 +116,6 @@ UPSTREAM_MASTER_SITES = http://www.openssl.org/source/
 UFILES_REGEX = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
-DISTFILES += CSWopenssl.prototype
 DISTFILES +l CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
 DISTFILES += CSWlibssl-dev.prototype-i386 CSWlibssl-dev.prototype-sparc
 DISTFILES += CSWopenssl-utils.prototype 
