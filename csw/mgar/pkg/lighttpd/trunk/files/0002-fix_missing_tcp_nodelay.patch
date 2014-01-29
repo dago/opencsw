@@ -1,0 +1,27 @@
+From e908bdfe2c326786152a7cd62a6c4f6fd7d0fa55 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Wed, 29 Jan 2014 15:07:49 +0100
+Subject: [PATCH] fix_missing_tcp_nodelay
+
+---
+ src/network.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/network.c b/src/network.c
+index 14f2ebd..976f54d 100644
+--- a/src/network.c
++++ b/src/network.c
+@@ -274,6 +274,10 @@ static int network_server_init(server *srv, buffer *host_token, specific_config
+ 		log_error_write(srv, __FILE__, __LINE__, "ss", "socketsockopt(SO_REUSEADDR) failed:", strerror(errno));
+ 		goto error_free_socket;
+ 	}
++        if (setsockopt(srv_socket->fd, IPPROTO_TCP, TCP_NODELAY, &val, sizeof(val)) < 0) {
++                log_error_write(srv, __FILE__, __LINE__, "ss", "socketsockopt(TCP_NODELAY) failed:", strerror(errno));
++                goto error_free_socket;
++        }
+ 
+ 	switch(srv_socket->addr.plain.sa_family) {
+ #ifdef HAVE_IPV6
+-- 
+1.8.4.1
+
