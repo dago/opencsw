@@ -19,6 +19,7 @@ PATCHFILES += 0001-Make-geoip-database-position-adjustable.patch
 PATCHFILES += 0001-Change-default-for-getaddrinfo.patch
 
 # Use patch until this is fixed:
+#   http://mirrorbrain.org/issues/issue138
 PATCHFILES += 0001-Exit-if-geoip-file-cannot-be-opened.patch
 
 VENDOR_URL = http://mirrorbrain.org
