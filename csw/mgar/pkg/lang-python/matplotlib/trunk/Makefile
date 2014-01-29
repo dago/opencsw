@@ -29,17 +29,18 @@ LICENSE = LICENSE/LICENSE
 
 BUILD_DEP_PKGS = CSWpython27-dev
 
-RUNTIME_DEP_PKGS = CSWlibatk
-RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWpng
-RUNTIME_DEP_PKGS += CSWfconfig
-RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWftype2
-RUNTIME_DEP_PKGS += CSWpango
-RUNTIME_DEP_PKGS += CSWlibcairo
-RUNTIME_DEP_PKGS += CSWgtk2
-RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS = CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS += CSWlibstdc++6
+RUNTIME_DEP_PKGS += CSWlibpng15-15
+RUNTIME_DEP_PKGS += CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibfreetype6
+
+CHECKPKG_OVERRIDES_CSWpy-matplotlib += python-package-missing-py26-files
+CHECKPKG_OVERRIDES_CSWpy-matplotlib += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/matplotlib/dviread.py
+CHECKPKG_OVERRIDES_CSWpy-matplotlib += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/matplotlib/font_manager.py
+CHECKPKG_OVERRIDES_CSWpy-matplotlib += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/matplotlib/_mathtext_data.py
+CHECKPKG_OVERRIDES_CSWpy-matplotlib += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/matplotlib/tests/test_agg.py
+CHECKPKG_OVERRIDES_CSWpy-matplotlib += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/matplotlib/font_manager.py
 
 PATCHFILES += 0001-avoid-reserved-variable-names.patch
 MODULATIONS_PYTHON_VERSION = 2_7
