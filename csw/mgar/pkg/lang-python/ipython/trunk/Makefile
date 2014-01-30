@@ -7,7 +7,7 @@
 #   shipping ipythonx?)
 # 
 NAME    = ipython
-VERSION = 0.13.2
+VERSION = 1.1.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -23,13 +23,18 @@ ARCHALL      = 1
 PACKAGES     = CSWipython
 CATALOGNAME  = ipython
 
-PATCHFILES += 0001-rename-filenames-containing-spaces.patch
+EXTRA_MERGE_EXCLUDE_FILES = .*\.gitignore
 
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/IPython/core/usage.py
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/utils/tests/test_path.py
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/pexpect/_pexpect.py
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/external/path/_path.py
-CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/IPython/core/magics/osm.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/IPython/utils/tests/test_path.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/IPython/external/path/_path.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/IPython/external/pexpect/_pexpect.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/IPython/core/magics/osm.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/IPython/core/usage.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/IPython/external/path/_path.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/IPython/external/pexpect/_pexpect.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/IPython/utils/tests/test_path.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/IPython/core/magics/osm.py
+CHECKPKG_OVERRIDES_CSWipython += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/IPython/core/usage.py
 CHECKPKG_OVERRIDES_CSWipython += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWipython += catalogname-does-not-start-with-py_
 
@@ -37,8 +42,7 @@ SKIPTEST = 1
 
 include gar/category.mk
 
-post-extract:
-	@( cd $(WORKSRC)/docs/examples/notebooks && mv Capturing\ Output.ipynb Capturing_Output.ipynb )
-	@( cd $(WORKSRC)/docs/examples/notebooks && mv Script\ Magics.ipynb Script_Magics.ipynb )
-	@( cd $(WORKSRC)/docs/examples/parallel && mv Parallel\ Magics.ipynb Parallel_Magics.ipynb )
+post-build-modulated:
+	@gsed -i '1 s/$(subst _,.,$(PYTHON_VERSION))//' $(WORKSRC)/build/scripts-$(subst _,.,$(PYTHON_VERSION))/*
 	@$(MAKECOOKIE)
+
