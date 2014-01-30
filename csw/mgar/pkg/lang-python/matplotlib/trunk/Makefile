@@ -34,6 +34,7 @@ RUNTIME_DEP_PKGS += CSWlibstdc++6
 RUNTIME_DEP_PKGS += CSWlibpng15-15
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibfreetype6
+RUNTIME_DEP_PKGS += CSWpy-pyparsing
 
 CHECKPKG_OVERRIDES_CSWpy-matplotlib += python-package-missing-py26-files
 CHECKPKG_OVERRIDES_CSWpy-matplotlib += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/matplotlib/dviread.py
