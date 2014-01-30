@@ -68,6 +68,7 @@ RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-dbd-pg
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-timedate
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-config-inifiles
+RUNTIME_DEP_PKGS_CSWmirrorbrain-tools += CSWpm-digest-md4
 # I know these are needed
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-cmdln
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpy-mb
@@ -79,6 +80,7 @@ CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-dbd-pg
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-timedate
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-libwww-perl
 CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-config-inifiles
+CHECKPKG_OVERRIDES_CSWmirrorbrain-tools += surplus-dependency|CSWpm-digest-md4
 
 # The Python CSWpy-mb module "mb" and the "mb" binary are in lang-py/mb
 
@@ -86,6 +88,7 @@ REINPLACEMENTS += python
 REINPLACE_MATCH_python = \#!.*python.*
 REINPLACE_WITH_python = \#!$(bindir)/python
 REINPLACE_FILES_python += tools/null-rsync
+REINPLACE_FILES_python += mirrorprobe/mirrorprobe.py
 
 REINPLACEMENTS += perl
 REINPLACE_MATCH_perl = \#!.*perl.*
@@ -135,6 +138,7 @@ install-custom:
 	ginstall -m 0755 $(WORKSRC)/tools/geoiplookup_continent $(DESTDIR)$(bindir)/geoiplookup_continent
 	ginstall -m 0755 $(WORKSRC)/tools/null-rsync $(DESTDIR)$(bindir)/null-rsync
 	ginstall -m 0755 $(WORKSRC)/tools/scanner.pl $(DESTDIR)$(bindir)/scanner
+	ginstall -m 0755 $(WORKSRC)/mirrorprobe/mirrorprobe.py $(DESTDIR)$(bindir)/mirrorprobe
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql
 	ginstall -m 0644 $(WORKSRC)/sql/initialdata-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/initialdata-postgresql.sql
 	@# LANG SQL must in fact be LANG sql (lowercase!) or the creation faills
