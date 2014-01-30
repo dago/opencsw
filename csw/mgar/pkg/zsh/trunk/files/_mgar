@@ -7,6 +7,9 @@ local -a cmds
 if (( CURRENT == 2 )); then
   cmds=(
     help:list\ available\ commands
+    install:install\ files\ to\ staging\ directory
+    makepatch:create\ a\ patch\ for\ outstanding\ changes
+    check-prereqs checksum test
     ${${(M)${(f)"$(_call_program commands ${words[1]} help)"}:#  *}//  (#b)([a-z-]##)[^A-Z]##(?)/$match[1]:${match[2]:l}}
   )
 
