@@ -1,0 +1,13 @@
+#compdef alternatives
+
+local -a args
+args=(
+  '(- 2)'{--display,--auto,--config} '(-)'{--set,--remove}
+  '(1 2 -)--install:path:_files:name: :priority'
+  '(1 2 -)'{--relink-missing,--list}
+  '2:path:_files'
+)
+(( CURRENT > 2 )) &&
+  args+='1:name:( ${${(f)"$(/opt/csw/sbin/alternatives --list)"}[2,-1]} )'
+
+_arguments $args
