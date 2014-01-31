@@ -1,5 +1,5 @@
 NAME = Text-Autoformat
-VERSION = 1.669003
+VERSION = 1.669004
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DCONWAY
@@ -14,10 +14,10 @@ PACKAGES = CSWpm-text-autoformat
 CATALOGNAME = pm_text_autoformat
 SPKG_DESC_CSWpm-text-autoformat = $(DESCRIPTION)
 OBSOLETED_BY_CSWpm-text-autoformat = CSWpmtxtautofmt
-CATALOGNAME_CSWpmtxtautofmt = pm_txtautofmt
+CATALOGNAME_CSWpmtxtautofmt = pm_txtautofmt_stub
 
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmtxtreform
+RUNTIME_DEP_PKGS += CSWpm-text-reform
 
 include gar/category.mk
