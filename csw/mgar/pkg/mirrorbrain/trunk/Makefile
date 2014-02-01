@@ -22,6 +22,9 @@ PATCHFILES += 0001-Change-default-for-getaddrinfo.patch
 #   http://mirrorbrain.org/issues/issue138
 PATCHFILES += 0001-Exit-if-geoip-file-cannot-be-opened.patch
 
+# Use patch until this is fixed:
+PATCHFILES += 0001-Do-not-take-ref-on-a-simple-scalar-string-or-it-wont.patch
+
 VENDOR_URL = http://mirrorbrain.org
 
 # Apache paths
