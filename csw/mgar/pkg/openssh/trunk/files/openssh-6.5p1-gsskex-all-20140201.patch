@@ -129,7 +129,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/Makefile.in openssh-5.8p1.
 @@ -91,7 +92,7 @@
  	auth2-none.o auth2-passwd.o auth2-pubkey.o auth2-jpake.o \
  	monitor_mm.o monitor.o monitor_wrap.o kexdhs.o kexgexs.o kexecdhs.o \
- 	auth-krb5.o \
+ 	kexc25519s.o auth-krb5.o \
 -	auth2-gss.o gss-serv.o gss-serv-krb5.o \
 +	auth2-gss.o gss-serv.o gss-serv-krb5.o kexgsss.o\
  	loginrec.o auth-pam.o auth-shadow.o auth-sia.o md5crypt.o \
@@ -1157,25 +1157,26 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kex.c openssh-5.8p1.new/ke
  #if OPENSSL_VERSION_NUMBER >= 0x00907000L
  # if defined(HAVE_EVP_SHA256)
  # define evp_ssh_sha256 EVP_sha256
-@@ -80,6 +84,11 @@
- 	{ KEX_ECDH_SHA2_NISTP384, KEX_ECDH_SHA2, NID_secp384r1, EVP_sha384 },
- 	{ KEX_ECDH_SHA2_NISTP521, KEX_ECDH_SHA2, NID_secp521r1, EVP_sha512 },
+@@ -94,6 +98,11 @@
+ #ifdef HAVE_EVP_SHA256
+ 	{ KEX_CURVE25519_SHA256, KEX_C25519_SHA256, 0, SSH_DIGEST_SHA256 },
  #endif
 +#ifdef GSSAPI
 +	{ KEX_GSS_GEX_SHA1_ID, KEX_GSS_GEX_SHA1, 0, EVP_sha1 },
 +	{ KEX_GSS_GRP1_SHA1_ID, KEX_GSS_GRP1_SHA1, 0, EVP_sha1 },
 +	{ KEX_GSS_GRP14_SHA1_ID, KEX_GSS_GRP14_SHA1, 0, EVP_sha1 },
 +#endif
- 	{ NULL, -1, -1, NULL},
+ 	{ NULL, -1, -1, -1},
  };
  
 diff --speed-large-files --minimal -Nru openssh-5.8p1/kex.h openssh-5.8p1.new/kex.h
 --- openssh-5.8p1/kex.h	2010-09-24 14:11:14.000000000 +0200
 +++ openssh-5.8p1.new/kex.h	2011-02-12 18:07:11.161650596 +0100
-@@ -73,6 +73,9 @@
+@@ -73,7 +73,10 @@
  	KEX_DH_GEX_SHA1,
  	KEX_DH_GEX_SHA256,
  	KEX_ECDH_SHA2,
+	KEX_C25519_SHA256,
 +	KEX_GSS_GRP1_SHA1,
 +	KEX_GSS_GRP14_SHA1,
 +	KEX_GSS_GEX_SHA1,
@@ -1492,7 +1493,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgssc.c openssh-5.8p1.ne
 +		break;
 +	case KEX_GSS_GEX_SHA1:
 +		kexgex_hash(
-+		    kex->evp_md,
++		    kex->hash_alg,
 +		    kex->client_version_string,
 +		    kex->server_version_string,
 +		    buffer_ptr(&kex->my), buffer_len(&kex->my),
@@ -1539,7 +1540,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgssc.c openssh-5.8p1.ne
 +	else
 +		ssh_gssapi_delete_ctx(&ctxt);
 +
-+	kex_derive_keys(kex, hash, hashlen, shared_secret);
++	kex_derive_keys_bn(kex, hash, hashlen, shared_secret);
 +	BN_clear_free(shared_secret);
 +	kex_finish(kex);
 +}
@@ -1774,7 +1775,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +		break;
 +	case KEX_GSS_GEX_SHA1:
 +		kexgex_hash(
-+		    kex->evp_md,
++		    kex->hash_alg,
 +		    kex->client_version_string, kex->server_version_string,
 +		    buffer_ptr(&kex->peer), buffer_len(&kex->peer),
 +		    buffer_ptr(&kex->my), buffer_len(&kex->my),
@@ -1827,7 +1828,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +
 +	DH_free(dh);
 +
-+	kex_derive_keys(kex, hash, hashlen, shared_secret);
++	kex_derive_keys_bn(kex, hash, hashlen, shared_secret);
 +	BN_clear_free(shared_secret);
 +	kex_finish(kex);
 +
@@ -1914,10 +1915,11 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.ne
  	} else {
  		mon_dispatch = mon_dispatch_postauth15;
  		monitor_permit(mon_dispatch, MONITOR_REQ_TERM, 1);
-@@ -1692,6 +1709,13 @@
+@@ -1692,7 +1709,14 @@
  	kex->kex[KEX_DH_GEX_SHA1] = kexgex_server;
  	kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
  	kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 +#ifdef GSSAPI
 +	if (options.gss_keyex) {
 +		kex->kex[KEX_GSS_GRP1_SHA1] = kexgss_server;
@@ -2579,10 +2581,11 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshconnect2.c openssh-5.8p
  	if (options.rekey_limit || options.rekey_interval)
  		packet_set_rekey_limits((u_int32_t)options.rekey_limit,
  
-@@ -206,10 +242,30 @@
+@@ -206,11 +242,31 @@
  	kex->kex[KEX_DH_GEX_SHA1] = kexgex_client;
  	kex->kex[KEX_DH_GEX_SHA256] = kexgex_client;
  	kex->kex[KEX_ECDH_SHA2] = kexecdh_client;
+	kex->kex[KEX_C25519_SHA256] = kexc25519_client;
 +#ifdef GSSAPI
 +	if (options.gss_keyex) {
 +		kex->kex[KEX_GSS_GRP1_SHA1] = kexgss_client;
@@ -2866,6 +2869,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshd.c openssh-5.8p1.new/s
  	kex->kex[KEX_DH_GEX_SHA1] = kexgex_server;
  	kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
  	kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 +#ifdef GSSAPI
 +	if (options.gss_keyex) {
 +		kex->kex[KEX_GSS_GRP1_SHA1] = kexgss_server;
