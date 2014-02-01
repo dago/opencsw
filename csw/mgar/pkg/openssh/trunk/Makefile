@@ -33,13 +33,22 @@ endpenssh CSWopenssh-client
 CATALOGNAME_CSWopenssh = openssh
 SPKG_DESC_CSWopenssh = OpenSSH Secure Shell server 
 BUILD_DEP_PKGS = CSWautoconf CSWlibssl-dev CSWlibz-dev
-RUNTIME_DEP_PKGS_CSWopenssh = CSWlibssl1-0-0 CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWopenssh-client
+RUNTIME_DEP_PKGS_CSWopenssh += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWopenssh += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWopenssh += CSWlibz1
+RUNTIME_DEP_PKGS_CSWopenssh += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWopenssh += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWopenssh += CSWopenssh-client
+
+
 
 OBSOLETED_BY_CSWopenssh = CSWossh
 
 CATALOGNAME_CSWopenssh-client = openssh_client
 SPKG_DESC_CSWopenssh-client = OpenSSH Secure Shell client 
-RUNTIME_DEP_PKGS_CSWopenssh-client = CSWlibssl1-0-0 CSWlibz1 CSWlibgssapi-krb5-2 
+RUNTIME_DEP_PKGS_CSWopenssh-client += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWopenssh-client += CSWlibz1
+RUNTIME_DEP_PKGS_CSWopenssh-client += CSWlibkrb5-3
 
 OBSOLETED_BY_CSWopenssh-client = CSWosshclient
 
