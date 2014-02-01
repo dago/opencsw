@@ -40,7 +40,11 @@ RUNTIME_DEP_PKGS_CSWopenssh += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWopenssh += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWopenssh += CSWopenssh-client
 
-
+# Linking on sparc gives an additional dependency
+# probably because of the current bug with Solaris 10
+# sparc linker (see http://lists.opencsw.org/pipermail/maintainers/2013-November/018780.html)
+RUNTIME_DEP_PKGS_CSWopenssh += $(RUNTIME_DEP_PKGS_CSWopenssh_$(GARCH))
+RUNTIME_DEP_PKGS_CSWopenssh_sparc += CSWlibintl8
 
 OBSOLETED_BY_CSWopenssh = CSWossh
 
@@ -49,6 +53,12 @@ SPKG_DESC_CSWopenssh-client = OpenSSH Secure Shell client
 RUNTIME_DEP_PKGS_CSWopenssh-client += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWopenssh-client += CSWlibz1
 RUNTIME_DEP_PKGS_CSWopenssh-client += CSWlibkrb5-3
+
+# Linking on sparc gives an additional dependency
+# probably because of the current bug with Solaris 10
+# sparc linker (see http://lists.opencsw.org/pipermail/maintainers/2013-November/018780.html)
+RUNTIME_DEP_PKGS_CSWopenssh-client += $(RUNTIME_DEP_PKGS_CSWopenssh-client_$(GARCH))
+RUNTIME_DEP_PKGS_CSWopenssh-client_sparc += CSWlibintl8
 
 OBSOLETED_BY_CSWopenssh-client = CSWosshclient
 
