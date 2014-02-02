@@ -2,25 +2,17 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mirrorbrain
-VERSION = 2.17.0
+VERSION = 2.18.0
 GARTYPE = v2
 
 DESCRIPTION = Content distribution tool
 
 MASTER_SITES = http://mirrorbrain.org/files/releases/
 DISTFILES  = $(DISTNAME).tar.gz
-
-# Use patch until this is fixed:
-#   http://mirrorbrain.org/issues/issue130
-PATCHFILES += 0001-Make-geoip-database-position-adjustable.patch
-
-# Use patch until this is fixed:
-#   http://mirrorbrain.org/issues/issue135
-PATCHFILES += 0001-Change-default-for-getaddrinfo.patch
-
-# Use patch until this is fixed:
-#   http://mirrorbrain.org/issues/issue138
-PATCHFILES += 0001-Exit-if-geoip-file-cannot-be-opened.patch
+DTSTFILES += CSWap2-mod-autoindex-mb.postinstall
+DTSTFILES += CSWap2-mod-autoindex-mb.preremove
+DTSTFILES += CSWap2-mod-mirrorbrain.postinstall
+DTSTFILES += CSWap2-mod-mirrorbrain.preremove
 
 # Use patch until this is fixed:
 #   http://mirrorbrain.org/issues/issue139
@@ -93,6 +85,10 @@ REINPLACE_MATCH_python = \#!.*python.*
 REINPLACE_WITH_python = \#!$(bindir)/python
 REINPLACE_FILES_python += tools/null-rsync
 REINPLACE_FILES_python += mirrorprobe/mirrorprobe.py
+REINPLACE_FILES_python += tools/bdecode
+REINPLACE_FILES_python += tools/rsyncinfo
+REINPLACE_FILES_python += tools/rsyncusers
+REINPLACE_FILES_python += tools/create_timestamp
 
 REINPLACEMENTS += perl
 REINPLACE_MATCH_perl = \#!.*perl.*
@@ -103,12 +99,18 @@ REINPLACEMENTS += mbconf
 REINPLACE_MATCH_mbconf = /etc/mirrorbrain.conf
 REINPLACE_WITH_mbconf = $(sysconfdir)/mirrorbrain.conf
 REINPLACE_FILES_mbconf += tools/scanner.pl
+REINPLACE_FILES_mbconf += mirrorprobe/mirrorprobe.py
+
+REINPLACEMENTS += mplog
+REINPLACE_MATCH_mplog = /var/log/mirrorbrain/mirrorprobe.log
+REINPLACE_WITH_mplog = $(localstatedur)/mirrorbrain/mirrorprobe.log
+REINPLACE_FILES_mplog += mirrorprobe/mirrorprobe.py
 
 # The language must be in lower case
-REINPLACEMENTS += sql
-REINPLACE_MATCH_sql = 'SQL'
-REINPLACE_WITH_sql = 'sql'
-REINPLACE_FILES_sql += sql/schema-postgresql.sql
+#REINPLACEMENTS += sql
+#REINPLACE_MATCH_sql = 'SQL'
+#REINPLACE_WITH_sql = 'sql'
+#REINPLACE_FILES_sql += sql/schema-postgresql.sql
 
 GEOIPCITYFILE = $(sharedstatedir)/GeoIP/GeoIPCity.dat
 GEOIPFILE = $(sharedstatedir)/GeoIP/GeoIP.dat
@@ -142,6 +144,10 @@ install-custom:
 	ginstall -m 0755 $(WORKSRC)/tools/geoiplookup_continent $(DESTDIR)$(bindir)/geoiplookup_continent
 	ginstall -m 0755 $(WORKSRC)/tools/null-rsync $(DESTDIR)$(bindir)/null-rsync
 	ginstall -m 0755 $(WORKSRC)/tools/scanner.pl $(DESTDIR)$(bindir)/scanner
+	ginstall -m 0755 $(WORKSRC)/tools/bdecode $(DESTDIR)$(bindir)/bdecode
+	ginstall -m 0755 $(WORKSRC)/tools/rsyncinfo $(DESTDIR)$(bindir)/rsyncinfo
+	ginstall -m 0755 $(WORKSRC)/tools/rsyncusers $(DESTDIR)$(bindir)/rsyncusers
+	ginstall -m 0755 $(WORKSRC)/tools/create_timestamp $(DESTDIR)$(bindir)/create_timestamp
 	ginstall -m 0755 $(WORKSRC)/mirrorprobe/mirrorprobe.py $(DESTDIR)$(bindir)/mirrorprobe
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql
 	ginstall -m 0644 $(WORKSRC)/sql/initialdata-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/initialdata-postgresql.sql
