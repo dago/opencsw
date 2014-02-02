@@ -6,12 +6,33 @@ import argparse
 import urllib2
 import sys
 import re
+from lib.python import catalog
 
 logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
 logger = logging.getLogger(__name__)
 
 remote_scheme = ['http','https']
 local_scheme = ['file']
+catalog_keys = ['catalogname','version','pkgname','file_basename',
+                    'md5sum','size','deps','category','i_deps']
+
+def SplitPkgList(pkglist):
+      if not pkglist:
+        pkglist = ()
+      elif pkglist == "none":
+        pkglist = ()
+      else:
+        pkglist = tuple(pkglist.split("|"))
+      return pkglist
+
+def convToDict(catlst):
+    catdict = []
+    for entry in catlst:
+        del entry[9]
+	entry[6] = SplitPkgList(entry[6])
+	entry[8] = SplitPkgList(entry[8])
+        catdict.append(dict(zip(catalog_keys,entry)))
+    return catdict
 
 def prepareCatListFromURI(uri):
     catlst = []
@@ -20,52 +41,14 @@ def prepareCatListFromURI(uri):
         if scheme in remote_scheme:
             logger.info("fetch remote %s", uri)
             data = urllib2.urlopen(uri).read()
-            catlst = cjson.decode(data)
-            for e in catlst:
-                del e[9]
-            return catlst
+            return convToDict(cjson.decode(data))
         elif scheme in local_scheme:
             uri = re.sub('.*://','',uri)
         else:
             logger.error('unsupported URI format')
             sys.exit(4)
-    with open(uri) as lcat:
-        logger.info("fetch local %s", uri)
-        for line in lcat: # skip 4 lines header '# CREATIONDATE'
-            if line.startswith("# CREATIONDATE"): 
-                break
-        for line in lcat:
-            if line.startswith("-----BEGIN PGP SIGNATURE"): 
-                break
-            catlst.append(line.rstrip().split(' '))
-    return catlst
-            
-def compareOutOfOrder(a_catlst, b_catlst, idx):
-    a_pkgName2Idx = {}
-    i = idx 
-    for j in range(idx,len(a_catlst)):
-        a_pkgName2Idx[a_catlst[j][0]] = j
-    # import pdb; pdb.set_trace()
-    while i < len(b_catlst):
-        if b_catlst[i][0] in a_pkgName2Idx:
-            if b_catlst[i] != a_catlst[a_pkgName2Idx[b_catlst[i][0]]]:
-                logger.warning("pkgs different at {0},{1}: {2} {3}".format(i,a_pkgName2Idx[b_catlst[i][0]],a_catlst[a_pkgName2Idx[b_catlst[i][0]]],b_catlst[i]))
-                sys.exit(1)
-        else:
-            logger.warning("not in acat: %s", b_catlst[i])
-            sys.exit(1)
-        i += 1 
-    b_pkgName2Idx = {}
-    for j in range(idx,len(b_catlst)):
-        b_pkgName2Idx[b_catlst[j][0]] = j
-    # import pdb; pdb.set_trace()
-    i = idx
-    while i < len(a_catlst):
-        if a_catlst[i][0] not in b_pkgName2Idx:
-            logger.warning("not in bcat: %s", a_catlst[i])
-            sys.exit(1)
-        i += 1 
-        
+    return catalog.OpencswCatalog(open(uri)).GetCatalogData()
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v","--verbose", dest="verbose", action="store_true",default=False)
@@ -86,26 +69,15 @@ def main():
     b_catlst = prepareCatListFromURI(args.bcat)
 
     logger.info("compare ...")
-    if len(a_catlst) != len(b_catlst):
-        logger.warning("a has %d, b has %d packages",len(a_catlst),len(b_catlst))
-        # sys.exit(1)
-    for i in range(len(b_catlst)):
-        try:
-            if b_catlst[i] != a_catlst[i] :
-                if b_catlst[i][0] != a_catlst[i][0]: 
-                    logger.warning("packages out of order: A: %s; B: %s",a_catlst[i][0], b_catlst[i][0])
-                    compareOutOfOrder(a_catlst, b_catlst, i)
-                    break
-                else:
-                    logger.warning("pkgs different: {0} {1}".format(a_catlst[i],b_catlst[i]))
-                    sys.exit(1)
-        except IndexError as e:
-            logger.info("package %s not in acat", b_catlst[i])
-            
-    # import pdb; pdb.set_trace()
-    logger.info("catalogs are same")
-    sys.exit(0)
-
+    if a_catlst == b_catlst:
+        logger.info("catalogs are same")
+        sys.exit(0)
+    else:
+        for i in range(len(a_catlst)):
+	    for k in catalog_keys:
+                if a_catlst[i][k] != b_catlst[i][k]:
+                    logger.warning("catalogs are different; package index:%d, kex: %s", i, k);
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()
