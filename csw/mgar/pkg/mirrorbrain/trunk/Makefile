@@ -9,10 +9,10 @@ DESCRIPTION = Content distribution tool
 
 MASTER_SITES = http://mirrorbrain.org/files/releases/
 DISTFILES  = $(DISTNAME).tar.gz
-DTSTFILES += CSWap2-mod-autoindex-mb.postinstall
-DTSTFILES += CSWap2-mod-autoindex-mb.preremove
-DTSTFILES += CSWap2-mod-mirrorbrain.postinstall
-DTSTFILES += CSWap2-mod-mirrorbrain.preremove
+DISTFILES += CSWap2-mod-autoindex-mb.postinstall
+DISTFILES += CSWap2-mod-autoindex-mb.preremove
+DISTFILES += CSWap2-mod-mirrorbrain.postinstall
+DISTFILES += CSWap2-mod-mirrorbrain.preremove
 
 # Use patch until this is fixed:
 #   http://mirrorbrain.org/issues/issue139
