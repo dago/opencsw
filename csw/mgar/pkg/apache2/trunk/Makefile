@@ -121,6 +121,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWlibapr-dev
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWlibaprutil-dev
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWlibaprutil1-dbm-db
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWlibaprutil1-ldap
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWliblber2-4-2
 CHECKPKG_OVERRIDES_CSWapache2-utils += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWapache2-utils += missing-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
