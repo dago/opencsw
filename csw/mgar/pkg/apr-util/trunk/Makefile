@@ -21,6 +21,7 @@ PKGFILES_CSWlibaprutil1-0 += $(call pkgfiles_lib,libaprutil-1.so.0)
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibiconv2
 OBSOLETED_BY_CSWlibaprutil1-0 += CSWapr-util
 
 # This is due to different interpretation of -z ignore
@@ -110,6 +111,7 @@ CONFIGURE_ARGS += --with-sqlite3=$(prefix)
 CONFIGURE_ARGS += --with-freetds=$(prefix)
 CONFIGURE_ARGS += --with-odbc
 CONFIGURE_ARGS += --with-pgsql
+CONFIGURE_ARGS += --with-iconv=$(prefix)
 
 # How do we deal with 64 bit?
 CONFIGURE_ARGS += --with-expat=$(prefix)
