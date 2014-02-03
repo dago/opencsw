@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = httpd
-VERSION = 2.2.24
+VERSION = 2.2.26
 GARTYPE = v2
 
 DESCRIPTION = A high performance HTTP server.
@@ -98,12 +98,14 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c CSWperl CSWapache2-utils
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibapr-dev CSWlibaprutil-dev
 # Note: This is included as something in mod_dav uses dlopen to leverage it
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-dbm-db
+RUNTIME_DEP_PKGS_CSWapache2       += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-dev  = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWperl
+RUNTIME_DEP_PKGS_CSWapache2-utils += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2 CSWapache2c
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWap2prefork
