@@ -1,0 +1,5 @@
+<IfModule mod_geoip.c>
+   GeoIPEnable On
+   GeoIPDBFile /opt/csw/share/GeoIP/GeoIPCity.dat MMapCache
+   GeoIPOutput Env
+</IfModule>
