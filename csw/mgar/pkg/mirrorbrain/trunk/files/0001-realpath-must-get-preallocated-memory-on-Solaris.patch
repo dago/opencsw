@@ -1,0 +1,63 @@
+From 502e0e73c9c453c6514b44b0f6ed2a5b142c33a8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 4 Feb 2014 10:43:45 +0100
+Subject: [PATCH] realpath must get preallocated memory on Solaris
+
+---
+ mod_mirrorbrain/mod_mirrorbrain.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/mod_mirrorbrain/mod_mirrorbrain.c b/mod_mirrorbrain/mod_mirrorbrain.c
+index 228fb65..da5fdf5 100644
+--- a/mod_mirrorbrain/mod_mirrorbrain.c
++++ b/mod_mirrorbrain/mod_mirrorbrain.c
+@@ -83,6 +83,7 @@
+ 
+ #include <unistd.h> /* for getpid */
+ #include <math.h>   /* for sqrt() and pow() */
++#include <limits.h> /* for PATH_MAX */
+ #include <arpa/inet.h>
+ #ifdef WITH_MEMCACHE
+ #include "mod_memcache.h"
+@@ -1859,7 +1860,17 @@ static int mb_handler(request_rec *r)
+ 
+     /* The basedir might contain symlinks. That needs to be taken into account. 
+      * See discussion in http://mirrorbrain.org/issues/issue17 */
+-    ptr = realpath(cfg->mirror_base, NULL);
++#if defined(__sun) && defined(__SVR4)
++    ptr = malloc( PATH_MAX );
++    if (ptr == NULL) {
++        ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, 
++                "[mod_mirrorbrain] Error allocating memory for path for document root");
++        return DECLINED; /* fail gracefully */
++    }
++#else
++    ptr = NULL;
++#endif
++    ptr = realpath(cfg->mirror_base, ptr);
+     if (ptr == NULL) {
+         /* this should never happen, because the MirrorBrainEngine directive would never
+          * be applied to a non-existing directories */
+@@ -1878,8 +1889,17 @@ static int mb_handler(request_rec *r)
+         filename = apr_pstrcat(r->pool, mirror_base, "/", yum->dir, "/", yum->file, NULL);
+         debugLog(r, cfg, "yum path on disk: %s", filename);
+     }
+-
+-    ptr = realpath(filename, NULL);
++#if defined(__sun) && defined(__SVR4)
++    ptr = malloc( PATH_MAX );
++    if (ptr == NULL) {
++        ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, 
++                "[mod_mirrorbrain] Error allocating memory for path for filename");
++        return DECLINED; /* fail gracefully */
++    }
++#else
++    ptr = NULL;
++#endif
++    ptr = realpath(filename, ptr);
+     if (ptr == NULL) {
+         ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, 
+                 "[mod_mirrorbrain] Error canonicalizing filename '%s'", filename);
+-- 
+1.8.4.1
+
