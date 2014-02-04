@@ -18,6 +18,10 @@ DISTFILES += CSWap2-mod-mirrorbrain.preremove
 #   http://mirrorbrain.org/issues/issue139
 PATCHFILES += 0001-Do-not-take-ref-on-a-simple-scalar-string-or-it-wont.patch
 
+# Use patch until this is fixed:
+#   
+PATCHFILES += 0001-realpath-must-get-preallocated-memory-on-Solaris.patch
+
 VENDOR_URL = http://mirrorbrain.org
 
 # Apache paths
