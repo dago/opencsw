@@ -1,28 +1,24 @@
 NAME = dhcp
-VERSION = 4.2.5
+VERSION = 4.3.0
 
 # Enable these for Px-releases
-RELEASE = P1
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P1
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 GARTYPE = v2
 
 DESCRIPTION = ISC DHCP reference implementation
 define BLURB
-  ISC DHCP is open-source software that implements the Dynamic Host
-  Configuration Protocols for connection to a local network. It is a reference
-  implementation of those protocols, but it is also production-grade software,
-  suitable for use in high-volume and high-reliability applications. 
 endef
 
 # Toggle between these for normal/Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
-MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(DISTVERSION)/
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
+#MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(DISTVERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+#DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
 
