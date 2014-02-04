@@ -1,3 +1,7 @@
+# TBD:
+# - Test, test, test!! Especially mirrorbrain
+# - Make sure httpd-geoip.conf is installed and added to httpd.conf
+
 NAME = mod_geoip2
 VERSION = 1.2.8
 GARTYPE = v2
@@ -9,12 +13,19 @@ define BLURB
   as opposed to looking up arbitrary addresses.
 endef
 
-PACKAGES = CSWap2modgeoip2mind.com/app/c
+nd.com/app/c
 endef
 
 MASTER_SITES = http://www.maxmind.com/download/geoip/api/mod_gmod_geoip2-latest.tar.gz
+DISTFILES += CSWap2-mod-geoip.postinstall
+DISTFILES += CSWap2-mod-geoip.preremove
+DISTFILES += httpd-geoip.conf.CSW
+
 WORKSRC = $(WORKDIR)/mod_geoip2_$(VERSION)
 #PATCHDIR = $(WORKDIR)/$(DISTNAME)-src
+
+BUILD_DEP_PKGS += CSWapache2-dev
+BUILD_DEP_PKGS += CSWgeoip-dev
 
 # Apache paths
 AP2_ROOT      = $(prefix)/apache2
@@ -27,12 +38,11 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --libexecdir=$(AP2_ROOT)/libexec
 CONFIGURE_ARGS += --with-apxs=$(AP2_ROOT)/sbin/apxs
 
-BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWapache2-dev
-BUILD_DEP_PKGS_CSWap2modgeoip2 += CSWgeoip-dev
+PACKAGES = CSWap2modgeoip2
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWgeolitedb
 RUNTIME_DEP_PKGS_CSWap2modgeoip2 += CSWlibgeoip1
-#PKGFILES_CSWap2modgeoip2 += $(AP2_LIBEXEC)/mod_geoip2.so
+OBSOLETED_BY_CSWap2-mod-geoip += CSWap2modgeoip2
 
 # This dependency should be in place.
 CHECKPKG_OVERRIDES_CSWap2modgeoip2 += surplus-dependency|CSWgeolitedb
