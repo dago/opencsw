@@ -83,6 +83,18 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilc1-1-2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilcclient1-1-3
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsasl2-2
 
+###
+# due to the ld bug
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibnssutil3
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpangocairo1-0-0
+###
+
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibharfbuzz-dev
