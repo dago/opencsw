@@ -137,7 +137,8 @@ CFLAGS += -I$(includedir)
 ifeq ($(GARCOMPILER),GNU)
 CFLAGS += -idirafter dummyinc
 else
-CFLAGS += -I/usr/include -Idummyinc 
+CFLAGS += -I/usr/includeEXTRA_LD_OPTIONS += -z nolazyload
+de -Idummyinc 
 endif
 
 INSTALL_ENV += INSTALL="ginstall"
@@ -173,5 +174,4 @@ merge-doc-files:
 
 merge-special-directories:
 	ginstall -d "$(PKGROOT)/var/opt/csw/empty/vsftpd"
-	ginstall -d "$(PKGROOT)/var/opt/csw/ftp"
-	
+	ginstall -d "$(PKGROOT)
