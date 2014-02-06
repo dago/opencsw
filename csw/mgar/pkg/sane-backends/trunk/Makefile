@@ -24,6 +24,7 @@ CATALOGNAME_CSWlibsane1 = libsane1
 PKGFILES_CSWlibsane1 += $(call baseisadirs,$(libdir),libsane\.so\.1\.0\.24)
 PKGFILES_CSWlibsane1 += $(call baseisadirs,$(libdir),libsane\.so\.1(\.\d+)*)
 PKGFILES_CSWlibsane1 += $(libdir)/sane/libsane.*
+PKGFILES_CSWlibsane1 += $(sysconfdir)/sane.d/.*
 SPKG_DESC_CSWlibsane1 += $(DESCRIPTION), libsane.so.1
 RUNTIME_DEP_PKGS_CSWlibsane1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibsane1 += CSWlibtiff5
@@ -48,8 +49,8 @@ OBSOLETED_BY_CSWsane-backends-dev = CSWsaneback
 
 EXTRA_LDFLAGS = -lrt
 
-
 CONFIGURE_ARGS = $(DIRPATHS)
+# option from net-snmp-config --cflags prevents comiling with gcc
 CONFIGURE_ARGS += --with-snmp=no
 
 EXTRA_TEST_ENV = PATH=/opt/csw/gnu:$(PATH)
