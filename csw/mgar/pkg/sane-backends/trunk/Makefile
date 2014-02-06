@@ -16,6 +16,7 @@ MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = cupsdriverkodak
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-fix-config-script.patch
 # solaris studio does not like __attribute__ and __pack__
 GARCOMPILER = GCC4
 
