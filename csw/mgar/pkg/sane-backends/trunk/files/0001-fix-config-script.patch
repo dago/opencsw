@@ -1,0 +1,8 @@
+--- a/tools/sane-config.in
++++ b/tools/sane-config.in
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ #
+ # This script is part of SANE, <URL:http://www.sane-project.org/>
+ #
