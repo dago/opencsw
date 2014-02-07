@@ -14,18 +14,17 @@ define BLURB
   later analysis. 
 endef
 
-MASTER_SITES = http://www.circlemud.org/pub/jelson/tcpflow/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://www.circlemud.org/pub/jelson/tc+= $(DISTNAME$(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:VENDOR_URL = http://www.circlemud.org/jelson/software/tcpflow/
 
-# we require
-RUNTIME_DEP_PKGS = CSWlibpcap
+PACKAGES += CSWtcpflow
+SPKG_DESC_CSWtcpflow = A TCP Flow Recorder
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWtcpflow += CSWlibpcap1
 
-# no testscript
-CONFIGURE_ARGS = $(DIRPATHS)
-
+# There is no testsuite
 TEST_SCRIPTS =
 
 include gar/category.mk
