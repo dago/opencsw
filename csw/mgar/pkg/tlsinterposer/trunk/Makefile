@@ -26,6 +26,9 @@ NORUNPATH = 1
 # Make sure to use relocatable code
 EXTRA_CFLAGS += -xcode=pic13
 
+# Do not use direct linking as it goes against lazy load for interposed libs
+LINKER_DIRECT =
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
