@@ -1,5 +1,5 @@
 NAME = gobject-introspection
-VERSION = 1.31.22
+VERSION = 1.34.2
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -13,9 +13,11 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.xz
 
-PATCHFILES += 0001-Use-named-union.patch
+# PATCHFILES += 0001-Use-named-union.patch
 
 VENDOR_URL = http://live.gnome.org/GObjectIntrospection
+
+GARCOMPILER = GCC4
 
 # the warn tests fail, because it reports more warnings than expected
 SKIPTEST ?= 1
@@ -23,6 +25,7 @@ SKIPTEST ?= 1
 BUILD_DEP_PKGS += CSWbison
 BUILD_DEP_PKGS += CSWlibffi-dev
 BUILD_DEP_PKGS += CSWgtk-doc
+
 
 PACKAGES += CSWlibgirepository1-0-1
 CATALOGNAME_CSWlibgirepository1-0-1 = libgirepository1_0_1
