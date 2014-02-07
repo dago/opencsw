@@ -121,7 +121,9 @@ PATCHFILES += make_issetugid_support_configurableymbols-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integratee
 ifdef PKCS11
-ifneq ($(shell /usr/bi       PATCHFILES += openssl-1.0.1f-pkcs11-engine.patch
+ifneq ($(shell /usr/bi       # The upstream pkcs11 engine patch depends on the wanboot one
+       # so we will apply the wanboot patch even if we will not enable wanboot
+       PATCHFILES += openssl-1.0.1f-wanboot.patchi       PATCHFILES += openssl-1.0.1f-pkcs11-engine.patch
        ENGINES += pk11.patch.4-30
 endif
 endif
