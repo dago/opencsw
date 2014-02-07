@@ -21,6 +21,7 @@ SPKG_DESC_CSWtlsinterposer = OpenSSL library interposer to make existing binary 
 CHECKPKG_OVERRIDES_CSWtlsinterposer += soname-equals-filename
 
 BUILD64 = 1
+NORUNPATH = 1
 
 # Make sure to use relocatable code
 EXTRA_CFLAGS += -xcode=pic13
@@ -33,7 +34,8 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 build-custom:
-	cd $(WORKSRC) && $(BUILD_ENV) $(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -G -o tlsinterposer.so tlsinterposer.c -ldl
+	cd $(WORKSRC) && $(BUILD_ENV) $(CC) $(CPPFLAGS) $(CFLAGS) -c tlsinterposer.c
+	cd $(WORKSRC) && $(BUILD_ENV) $(CC) $(LDFLAGS) -G -o tlsinterposer.so tlsinterposer.o -ldl
 	@$(MAKECOOKIE)
 
 install-custom:
