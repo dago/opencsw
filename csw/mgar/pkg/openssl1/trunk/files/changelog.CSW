@@ -1,3 +1,9 @@
+openssl (1.0.1f,rev=2014.02.07) unstable
+
+  * Manpages and html doc are back in the package !
+
+   -- yann rouillard <yann@opencsw.org>  Fri, 07 Feb 2014 20:48:46 +0100
+
 openssl (1.0.1f,rev=2014.01.19) unstable
 
   * Update pkcs11 engine patch from Oracle userland sources.

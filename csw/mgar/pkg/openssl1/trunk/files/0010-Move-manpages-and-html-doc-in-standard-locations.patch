@@ -1,0 +1,31 @@
+From e23e288f52c13eb2bde51017107583fa2c8c3ed6 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Fri, 7 Feb 2014 20:28:56 +0100
+Subject: [PATCH] Move manpages and html doc in standard locations
+
+---
+ Makefile.org | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.org b/Makefile.org
+index 41ed9bd..c52129a 100644
+--- a/Makefile.org
++++ b/Makefile.org
+@@ -160,12 +160,12 @@ TESTS = alltests
+ 
+ MAKEFILE= Makefile
+ 
+-MANDIR=$(OPENSSLDIR)/man
++MANDIR=$(INSTALLTOP)/share/man
+ MAN1=1
+ MAN3=3
+ MANSUFFIX=
+ HTMLSUFFIX=html
+-HTMLDIR=$(OPENSSLDIR)/html
++HTMLDIR=$(INSTALLTOP)/share/doc/html
+ SHELL=/bin/sh
+ 
+ TOP=    .
+-- 
+1.8.4.1
+
