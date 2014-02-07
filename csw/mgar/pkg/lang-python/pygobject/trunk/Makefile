@@ -3,7 +3,7 @@
 NAME = pygobject
 VERSION = 2.90.4
 CATEGORIES = lang
-RELVER = $(shell echo $(VERSION) | gsed -e 's/\.[0-9]\+$$//')
+RELVER = $(shell echo $(VERSION) | gsed -e '# CATEGORIES = python's/\.[0-9]\+$$//')
 
 DESCRIPTION = Python bindings for the GObject library
 define BLURB
@@ -21,7 +21,10 @@ PKGFILES_CSWlibpyglib-gi2-0python0 += $(call baseisadirs,$(libdir),libpyglib-gi-
 SPKG_DESC_CSWlibpyglib-gi2-0python0 += $(DESCRIPTION), libpyglib-gi-2.0-python.so.0
 RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibpyglib-gi2-0python0
 RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibpyglib-gi_PKGS_CSWlibpyglib2-0python0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibpyglib-gi_PKGS_CSWlibpyglib2-0python0 +=RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_sparc += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_sparc += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0 += $(RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_$(GARCH))+= CSWlibglib2-0-0
 
 PACKAGES += CSWpy-gobject-dev
 OBSOLETED_BY_CSWpy-gobject-dev += CSWpygobject
@@ -32,7 +35,7 @@ RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWli-dev += CSWpython
 CHECKPKG_OVERRIDES_CSWpython-package-missing-py26-files
 CHECKPKG_OVERRIDES_CSWpy-gobject-dev += python-package-missing-py-files0/codegen/h2def.py
 
-PACKAGES += CSWpy-gobject
+PACKAGES#  += CSWpy-gobject
 OBSOLETED_BY_CSWpy-gobject += CSWpygobject
 SPKG_DESC_CSWpy-gobject = $(DESCRIPTION)
 PKGFILES_CSWpy-gobject .*/site-packages/.*
@@ -42,6 +45,11 @@ RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgirepository1-0-1
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibglibt += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpypyglib-gi2-0python0
+
+RUNTIME_DEP_PKGS_CSWpy-gobject_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpy-gobject_sparc += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gobject_sparc += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gobject += $(RUNTIME_DEP_PKGS_CSWpy-gobject_$(GARCH))
 
 PYCOMPILE = 1
 STRIP_LIBTOOL = 1
