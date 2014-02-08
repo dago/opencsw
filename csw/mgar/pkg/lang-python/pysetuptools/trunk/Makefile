@@ -15,6 +15,9 @@ define BLURB
   Distribution Utilities for Python
 endef
 
+# Upstream has rejected our patch. :(
+# https://bitbucket.org/pypa/setuptools/issue/134/spaces-in-file-names-make-it-impossible-to
+# https://bitbucket.org/pypa/setuptools/pull-request/33/rename-script-templatepy-to-script/diff
 PATCHFILES += 0001-Solaris-package-mge-does-not-handle-spaces.patch
 
 ARCHALL_CSWpy-setuptools = 1
