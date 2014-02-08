@@ -56,6 +56,7 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWntop)
 BUILD_DEP_PKGS += CSWlibtool CSWautoconf CSWautomake
 BUILD_DEP_P-dev CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWgeoip-dev
+BUILD_DEP_PKGS += CSWrrdtool-dev
 
 # These are ntop plugins so these check alerts are not important
 CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libcpacketPlugin-4.0.3.so
