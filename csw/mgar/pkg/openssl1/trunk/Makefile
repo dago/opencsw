@@ -121,9 +121,7 @@ PATCHFILES += make_issetugid_support_configurableymbols-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integratee
 ifdef PKCS11
-ifneq ($(shell /usr/bi       # The upstream pkcs11 engine patch depends on the wanboot one
-       # so we will apply the wanboot patch even if we will not enable wanboot
-       PATCHFILES += openssl-1.0.1f-wanboot.patchi       PATCHFILES += openssl-1.0.1f-pkcs11-engine.patch
+ifneq ($(shell /usr/bi       PATCHFILES += openssl-1.0.1f-pkcs11-engine.patch
        ENGINES += pk11.patch.4-30
 endif
 endif
@@ -133,10 +131,13 @@ endif
 #     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
 # patch taken from https://hg.openindiana.org/upstream/oracl# To update the patch, do:
 #   cd files && ./update-t4-patch.sh OPENSSL_VERSION
-#lPATCHFILES.sparc.5.11 += openssl-1.0.1f-t4-engine.sparc.5.11.patch
-PATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine-sparcv9+vis.sparc.5.11.patch
 
+# The upstream t4 engine patch depends on the wanboot one
+# so we will apply the wanboot patch even if we will not enable wanboot
+PATCHFILES.sparc.5.11 += openssl-1.0.1f-wanboot.patchlPATCHFILES.sparc.5.11 += openssl-1.0.1f-t4-engine.sparc.5.11.patch
+PATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine-sparcv9+vis.sparc.5.11.patch
 PATCHFILES += $(PATCHFILES.$(GARCH).$(GAROSREL))
+
 en-25
 endif
 endif
