@@ -89,7 +89,7 @@ PKGFILES_CSWruby18-dev += /opt/csw/lib/libruby.*.so
 
 PKGFILES_CSWruby18-mode = $(datadir)/emacs/site-lisp/.*elc$
 
-PKGFILES_CSWruby18-mode-el = $(datadir)/emacs/site-lisp/.*el$
+PKGFILES_CSWruby18-mode-el = $(datadir)/emacsEXTRA_PKGFILES_EXCLUDED_CSWruby18 += $(libdir)/ruby/1.8/test/unit/ui/tk/.*cs/site-lisp/.*el$
 
 PKGFILES_CSWlibruby18-1 += /opt/csw/lib/libruby.*.so.1
 PKGFILES_CSWlibruby18-1 += /opt/csw/lib/libruby.*.so.1.*
