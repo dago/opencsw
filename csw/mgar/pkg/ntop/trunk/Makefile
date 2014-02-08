@@ -31,7 +31,7 @@ PATCHFILES += 0004-Add-an-extra-automake-option-for-per-target-compiler.patch
 PATCHFILES += 0005-Strip-default-Solaris-library-pathes-as-we-set-our-o.patch
 PATCHFILES += 0006-Change-default-PID-file-location-to-var-opt-csw-ntop.patch
 PATCHFILES += 0007-Update-the-URL-for-etter.finger.os.patch
-PATCHFILES += 0008-Update-defaults-from-usr-local-to-opt-csw-etc-opt-cspt-csw-etc-opt-cs.patch
+PATCHFILES += 0008-Update-defaults-from-usr-local-to-opt-csw-etc-opt-cspt-csw-PATCHFILES += 0009-Fix-python-config-detection-and-python-cflags-assignpt-csw-etc-opt-cs.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=17233
@@ -84,7 +84,7 @@ CONFIGURE_ARGS += --with-ossl-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-ossl-include=/opt/csw/include
 CONFIGURE_ARGS += --enable-jumbo-frames
 # CONFIGURE_ARGS += --enable-fc
-# CONFIGURE_ARGS +== --enable-mysql
+# CONFIGURE_ARGS +=EXTRA_CONFIGURE_ENV += PYTHON=/opt/csw/bin/python2.6-config== --enable-mysql
 
 # We don't have a separate devel-package, so this is ok
 CHECKPKG_OVERRIDES_CSWntop += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libcpacketPlugin.so
