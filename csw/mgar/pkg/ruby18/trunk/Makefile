@@ -10,11 +10,11 @@ PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm-dev CSWcoreutils CSWlibiconv-dev
+BUI CSWbdb48devel CSWlibgdbm-dev CSWcoreutils CSWlibiconv-dev
 BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibz-dev CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibncurses-dev
 
-PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
+PACKAGES = CSWruby18 CSWrubby18-tk CSWruby18-dev CSWruby18-mode
 PACKAGES += CSWruby18-mode-el CSWlibruby18-1 CSWruby18-gcc4
 
 EXTRA_MODULATORS = COMPILER
@@ -24,7 +24,6 @@ MERGE_SCRIPTS_isa-default-compiler-gcc4 = copy-custom
 
 OBSOLETED_BY_CSWruby18 = CSWruby
 OBSOLETED_BY_CSWruby18-doc = CSWrubydoc
-OBSOLETED_BY_CSWruby18-tk = CSWrubytk
 OBSOLETED_BY_CSWruby18-dev = CSWrubydev
 OBSOLETED_BY_CSWruby18-mode = CSWrubymode
 OBSOLETED_BY_CSWruby18-mode-el = CSWrubymodeel
@@ -42,7 +41,7 @@ ARCHALL_CSWruby18-mode-el = 1
 
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm4 CSWlibiconv2 CSWlibruby18-1
+RUNTIME_DEP_PKy18 = CSWbdb48 CSWlibgdbm4 CSWlibiconv2 CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWruby18 += CSWlibncurses5 CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby18 += CSWlibreadline6 CSWlibz1
 
@@ -50,13 +49,11 @@ RUNTIME_DEP_PKGS_CSWruby18-gcc4 = CSWruby18 CSWgcc4core
 
 RUNTIME_DEP_PKGS_CSWruby18-doc = CSWruby18
 
-RUNTIME_DEP_PKGS_CSWruby18-tk = CSWruby18 CSWtk CSWtcl CSWlibruby18-1
+RUNTIME_Ddev = CSWruby18 CSWlibruby18-1 CSWcoreutils
 
-RUNTIME_DEP_PKGS_CSWruby18-dev = CSWruby18 CSWlibruby18-1 CSWcoreutils
+RUNTIME_DEP_PKGS_CSWruby18-mode = CSWemacs-common
 
-RUNTIME_DEP_PKGS_CSWruby18-mode = CSWemacscommon
-
-RUNTIME_DEP_PKGS_CSWruby18-mode-el = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby18-mode-el = CSWemacs-mode-el = CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -77,8 +74,6 @@ SPKG_DESC_CSWlibruby18-1 = The libruby.so.1* files (Ruby 1.8)
 
 SPKG_DESC_CSWruby18-doc = Documentation for Ruby 1.8
 
-SPKG_DESC_CSWruby18-tk = Ruby 1.8 Tcl/TK Extension
-
 SPKG_DESC_CSWruby18-dev = Ruby 1.8 Extension Development Files
 
 SPKG_DESC_CSWruby18-mode = Ruby 1.8 major mode for Emacs
@@ -88,8 +83,6 @@ SPKG_DESC_CSWruby18-mode-el = Elisp source for ruby mode (Ruby 1.8)
 PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/$(NAME)/sample.*
 
 PKGFILES_CSWruby18-gcc4 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/.*gcc4
-
-PKGFILES_CSWruby18-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWruby18-dev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 PKGFILES_CSWruby18-dev += /opt/csw/lib/libruby.*.so
@@ -110,7 +103,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 DISTFILES += CSWruby.cswreleasenotes
-DISTFILES += CSWrubydoc.cswreleasenotes CSWrubytk.cswreleasenotes
+DISTFILES += CSWrubydtk.cswreleasenotes
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
@@ -183,14 +176,12 @@ post-install-modulated:
 	@$(MAKECONFIG)
 
 post-merge:
-	@echo "Copying in sample code..."
-	@mkdir -p $(DESTDIR)$(docdir)/ruby18/
+	@echo "Copying in sample codePKGROOTmkdir -p $(DESTDIR)$(docdir)/ruby18/
 	@cp -R $(WORKSRC_FIRSTMOD)/sample $(PKGROOT)$(docdir)/ruby18/
-	@for ext in bigdecimal dl tk ; do \
+	@for ex bigdecimal dl tk ; do \
 		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample \
 			$(PKGROOT)$(docdir)/ruby18/sample/$$ext ; \
 	done
 	@echo "Fixing shebang path in distributed ruby scripts..."
 	@find $(PKGROOT)$(prefix) -type f -name '*.rb' -exec \
-		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby18}g" {} \;
-	@$(MAKECOOKIE)
+		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby18}g" {} \
