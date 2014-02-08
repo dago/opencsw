@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mirrorbrain
-VERSION = 2.18.0
+VERSION = 2.19.0
 GARTYPE = v2
 
 DESCRIPTION = Content distribution tool
@@ -13,14 +13,6 @@ DISTFILES += CSWap2-mod-autoindex-mb.postinstall
 DISTFILES += CSWap2-mod-autoindex-mb.preremove
 DISTFILES += CSWap2-mod-mirrorbrain.postinstall
 DISTFILES += CSWap2-mod-mirrorbrain.preremove
-
-# Use patch until this is fixed:
-#   http://mirrorbrain.org/issues/issue139
-PATCHFILES += 0001-Do-not-take-ref-on-a-simple-scalar-string-or-it-wont.patch
-
-# Use patch until this is fixed:
-#   
-PATCHFILES += 0001-realpath-must-get-preallocated-memory-on-Solaris.patch
 
 VENDOR_URL = http://mirrorbrain.org
 
@@ -34,7 +26,7 @@ APXS          = $(AP2_SBIN)/apxs
 BUILD_DEP_PKGS += CSWapache2-dev
 BUILD_DEP_PKGS += CSWap2-mod-form
 
-PACKAGES = CSWap2-mod-mirrorbrain
+PACKAGES += CSWap2-mod-mirrorbrain
 SPKG_DESC_CSWap2-mod-mirrorbrain = MirrorBrain redirector Apache module
 PKGFILES_CSWap2-mod-mirrorbrain += $(AP2_LIBEXEC)/mod_mirrorbrain.so
 PKGFILES_CSWap2-mod-mirrorbrain += $(AP2_EXTRACONF)/mod_mirrorbrain.conf.CSW
