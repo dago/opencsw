@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mirrorbrain
-VERSION = 2.17.0
+VERSION = 2.19.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -13,10 +13,6 @@ DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += mirrorbrain.conf.CSW
 
 PATCHFILES += 0001-New-locations-for-GeoIP-databases.patch
-
-# Use patch until this is fixed:
-#   http://mirrorbrain.org/issues/issue135
-PATCHFILES += 0001-Change-default-for-getaddrinfo.patch
 
 # We really do only care for MirrorBrain on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -55,10 +51,14 @@ CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWgeolitedb
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpython27
 CHECKPKG_OVERRIDES_CSWpy-mb += surplus-dependency|CSWpy-sqlobject
 
+# PATH gets an additionally /usr/share/mirrorbrain, what for? Overwrite for now.
+CHECKPKG_OVERRIDES_CSWpy-mb += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/mb/geoip.py
+CHECKPKG_OVERRIDES_CSWpy-mb += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/mb/geoip.py
+
 PRESERVECONF += $(sysconfdir)/mirrorbrain.conf
 
 # There is no testsuite
-SKIPTEST ?= 1
+TEST_SCRIPTS =
 
 include gar/category.mk
 
