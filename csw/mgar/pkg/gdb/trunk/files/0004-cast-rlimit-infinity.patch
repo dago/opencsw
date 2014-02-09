@@ -1,0 +1,25 @@
+From 462881f0945f43c07ba03fcd21d85ba2a0470ef2 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sun, 9 Feb 2014 17:10:23 +0100
+Subject: [PATCH] cast rlimit infinity
+
+---
+ bfd/cache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bfd/cache.c b/bfd/cache.c
+index 4d46936..6d76131 100644
+--- a/bfd/cache.c
++++ b/bfd/cache.c
+@@ -82,7 +82,7 @@ bfd_cache_max_open (void)
+ #ifdef HAVE_GETRLIMIT
+       struct rlimit rlim;
+       if (getrlimit (RLIMIT_NOFILE, &rlim) == 0
+-	  && rlim.rlim_cur != RLIM_INFINITY)
++		  && rlim.rlim_cur != (unsigned long)RLIM_INFINITY)
+ 	max = rlim.rlim_cur / 8;
+       else
+ #endif /* HAVE_GETRLIMIT */
+-- 
+1.8.4.1
+

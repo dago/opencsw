@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gdb
-VERSION = 7.6.2
+VERSION = 7.7
 GARTYPE = v2
 CATEGORIES = devel
 
@@ -32,6 +32,7 @@ PATCHFILES		+=	0001-OpenSolaris-gdb-solib-svr4.patch
 PATCHFILES		+=	0002-OpenSolaris-gdb-fork-child.patch
 # from private patch 4:
 PATCHFILES		+=	0003-Extend-to-OpenCSW-the-OpenSolaris-gdb-fork-child.patch
+bPATCHFILES		+=	0004-cast-rlimit-infinity.patch
 b-fork-child.patch
 
 GARCOMPILER		=	GNU

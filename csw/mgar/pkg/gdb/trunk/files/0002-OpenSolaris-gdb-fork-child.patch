@@ -1,17 +1,17 @@
-From 8a377eecfc6cd2ee3fc1cf1cccc6614917306555 Mon Sep 17 00:00:00 2001
+From f661e528c55de3eb4ec1182c497c27a05f652d26 Mon Sep 17 00:00:00 2001
 From: Peter Felecan <pfelecan@opencsw.org>
-Date: Fri, 20 Jul 2012 15:56:22 +0200
+Date: Sun, 9 Feb 2014 15:26:06 +0100
 Subject: [PATCH] OpenSolaris gdb fork child
 
 ---
- gdb/fork-child.c |   37 +++++++++++++++++++++++++++++++++++++
+ gdb/fork-child.c | 37 +++++++++++++++++++++++++++++++++++++
  1 file changed, 37 insertions(+)
 
 diff --git a/gdb/fork-child.c b/gdb/fork-child.c
-index cba91f9..8a45a62 100644
+index 6c42d2e..2a749eb 100644
 --- a/gdb/fork-child.c
 +++ b/gdb/fork-child.c
-@@ -43,6 +43,16 @@ extern char **environ;
+@@ -42,6 +42,16 @@ extern char **environ;
  
  static char *exec_wrapper;
  
@@ -28,7 +28,7 @@ index cba91f9..8a45a62 100644
  /* Break up SCRATCH into an argument vector suitable for passing to
     execvp and store it in ARGV.  E.g., on "run a b c d" this routine
     would get as input the string "a b c d", and as output it would
-@@ -144,6 +154,8 @@ fork_inferior (char *exec_file_arg, char *allargs, char **env,
+@@ -143,6 +153,8 @@ fork_inferior (char *exec_file_arg, char *allargs, char **env,
    int i;
    int save_errno;
  
@@ -37,9 +37,9 @@ index cba91f9..8a45a62 100644
    /* If no exec file handed to us, get it from the exec-file command
       -- with a good, common error message if none is specified.  */
    exec_file = exec_file_arg;
-@@ -156,12 +168,34 @@ fork_inferior (char *exec_file_arg, char *allargs, char **env,
+@@ -155,12 +167,34 @@ fork_inferior (char *exec_file_arg, char *allargs, char **env,
    shell_file = shell_file_arg;
-   if (STARTUP_WITH_SHELL)
+   if (startup_with_shell)
      {
 +      /* Solaris only, is the shell a hard link to isaexec?  */
 +      struct stat buf1, buf2;
@@ -72,7 +72,7 @@ index cba91f9..8a45a62 100644
      }
  
    if (!shell)
-@@ -425,6 +459,9 @@ startup_inferior (int ntraps)
+@@ -429,6 +463,9 @@ startup_inferior (int ntraps)
    else
      resume_ptid = minus_one_ptid;
  
@@ -83,5 +83,5 @@ index cba91f9..8a45a62 100644
       have stopped one instruction after execing the shell.  Here we
       must get it up to actual execution of the real program.  */
 -- 
-1.7.10.3
+1.8.4.1
 
