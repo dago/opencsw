@@ -28,6 +28,9 @@ RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += CSWlibglib2-0-0
 
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += $(RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0_$(GARCH))
+
 # PACKAGES += CSWlibpyglib-gi2-0python0
 # PKGFILES_CSWlibpyglib-gi2-0python0 += $(call baseisadirs,$(libdir),libpyglib-gi-2\.0-python\.so\.0(\.\d+)*)
 # SPKG_DESC_CSWlibpyglib-gi2-0python0 += $(DESCRIPTION), libpyglib-gi-2.0-python.so.0
