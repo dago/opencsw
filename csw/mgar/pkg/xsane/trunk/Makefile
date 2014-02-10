@@ -14,6 +14,9 @@ endef
 MASTER_SITES = http://www.xsane.org/download/
 DISTFILES  = $(DISTNAME).tar.gz
 
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibpango-dev
+
 # on libpng15 API changed
 PATCHFILES = 0001-libpng15.patch
 
