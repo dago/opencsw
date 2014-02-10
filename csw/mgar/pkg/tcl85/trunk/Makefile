@@ -63,14 +63,23 @@ SPKG_DESC_CSWtcl-dev = $(DESCRIPTION), development files
 PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWtcl-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWtcl-dev += $(call baseisadirs,$(libdir),tclConfig.sh)
-RUNTIME_DEP_PKGS_CSWtcl-dev# Enable 64 bits, but not for Solaris 9 x86
+RUNTIME_DEP_PKGS_CSWtcl-dev#EXTRA_ISAEXEC_EXCLUDE_FILES += $(bindir)/tclsh8.5
+
+# No isaexec, use alternatives for now
+# ISAEXEC = 1
+
+# Relocate binaries away as we have the symlink in bindir
+EXTRA_MERGE_DIRS += $(bindir)
+
+ALTERNATIVES += 32 64
+ALTERNATIVE_32 = $(bindir_install)/tclsh8.5 tclsh $(bindir_install)/$(ISA_DEFAULT)/tclsh8.5 320
+ALTERNATIVE_64 = $(bindir_install)/tclsh8.5 tclsh $(bindir_install)/$(ISA_DEFAULT64)/tclsh8.5 640
+#ALTERNATIVE_isaexec = $(bindir_install)/tclsh8.5 tclsh $(bindir_install)/isaexec 100ev# Enable 64 bits, but not for Solaris 9 x86
 BUILD64_5.9_sparc  = 1
 BUILD64_5.10_sparc = 1
 BUILD64_5.9_i386   =
 BUILD64_5.10_i386  = 1
-BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))cl8-5
-
-BUILD64 = 1
+BUILD64 = $(BUILD64_$(GAROSREL)_$(GARCH))c4 = 1
 ISAEXEC = 1
 
 INCLUDE_FLAGS =
@@ -89,8 +98,8 @@ CONFIGURE_ARGS += CONFIGURE_ARGS-$(MEMORYMODEL)= --enable-threads
 #  Text relocation remains                         referenced
 #      against symbol                  offset      in file
 #  st                                  0x634       tclDTrace.o
-#  ld: fatal: relocations remain against allocatable but non-writable sections
-# CONFIGURE_ARGS-5.10 +#  --enable-dtrace
+#  ld: fatal: relocations remain against allocatable but non-CONFIGURE_ARGS-5.10 += --enable-dtrace
+ --enable-dtrace
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
 
