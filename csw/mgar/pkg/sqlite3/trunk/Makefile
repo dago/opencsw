@@ -1,5 +1,5 @@
 NAME = sqlite3
-VERSION = 3080200
+VERSION = 3080300
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 # Download informations
-MASTER_SITES = h2013http://sqlite.org/
+MASTER_SITES = h2014http://sqlite.org/
 DISTNAME = sqlite-autoconf-$(VERSION)
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += copyrigVENDOR_URL = http://sqlite.orgight-release.html
