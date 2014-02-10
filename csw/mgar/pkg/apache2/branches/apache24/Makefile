@@ -1,7 +1,7 @@
 # $Id: Makefile 18185 2012-06-01 02:30:46Z bdwalton $
 
 NAME = httpd
-VERSION = 2.4.3
+VERSION = 2.4.7
 CATEGORIES = server
 GARTYPE = v2
 
