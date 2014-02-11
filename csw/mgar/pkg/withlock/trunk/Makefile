@@ -12,6 +12,11 @@ DISTFILES += $(DISTNAME).tar.gz
 
 VENDOR_URL = https://code.google.com/p/withlock/
 
+PACKAGES += CSWwithlock
+SPKG_DESC_CSWwithlock = A locking wrapper script
+# PKGFILES is catchall
+ARCHALL_CSWwithlock = 1
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
