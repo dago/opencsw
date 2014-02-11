@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.14
+VERSION = 5.16
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -15,10 +15,20 @@ endef
 
 MASTER_SITES = ftp://ftp.astron.com/pub/file/
 DISTFILES  = $PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
-
-PATCHFILES += 0001-Use-PCRE_library-at-runtime.patch
+PATCHFILES += 0001-Use-PCRE.patch
 
 VENDOR_URL = http://www.darwinsys.com/file/
+
+EXTRA_MODULATORS += PYTHON_VERSION
+MODULATIONS_PYTHON_VERSION = 2.6 2.7
+# We need 64 bit just once as it is without python anyway
+SKIP_MODULATIONS += isa-sparcv9-python_version-2.7
+SKIP_MODULATIONS += isa-amd64-python_version-2.7
+PYTHON = $(bindir)/python$(PYTHON_VERSION)
+MERGE_SCRIPTS_isa-default-python_version-2.6 += copy-all
+MERGE_SCRIPTS_isa-default-python_version-2.7 += copy-all
+MERGE_SCRIPTS_isa-default64-python_version-2.6 += copy-relocated-only
+MERGE_DIRS_isa-default64-python_version-2.6 += $(libdir)darwinsys.com/file/
 
 PACKAGES += CSWgfile
 SPKG_DESC_CSWgfile = A file type guesser
@@ -32,7 +42,14 @@ SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
-RUNTIME_DEP_PKGS_CSWpy-libmagdency|CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWpy-libmagOBSOLETED_BY_CSWpy-libmagic += CSWpy-magic
+
+# This is *obsoleted*! Come on, checkpkg...
+CHECKPKG_OVERRIDES_CSWpy-magic += python-package-missing-py26-files
+CHECKPKG_OVERRIDES_CSWpy-magic += python-package-missing-py-files
+
+# checkpkg cannot detect this
+CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|_CSWpy-libmagdency|CSWlibmagic1
 
 PACKAGES += CSWlibmagic-data
 SPKG_DESC_CSWlibmagic-data = Database for libmagic
@@ -72,25 +89,25 @@ BUILD64_LIBS_ONLY = 1
 
 PYCOMPILE = 1
 
-include gar/cateost-build-modulated:
+include gar/cate-isa-sparcv8plus-python_version-2.6 post-build-isa-sparcv8plus-python_version-2.7:
 	# This fails for a mysterious reason.  Can't find libmagic (-lmagic).
-	(cd $(WORKSRC)/python && python setup.py build --compiler=unix)
-	###(cd $(WORKSRC)/python && python setup.py build)
-	@$(MAKECOt-install-modulated:
+	(cd $(WORKSRC)/python && $(PYTHON) setup.py build --compiler=unix)
+	###(cd $(WORKSRC)/python && $(PYTHON) setup.py build)
+	@$(MAKECOOKIE)
+
+post-install-isa-sparcv8plus-python_version-2.6 post-install-isa-sparcv8plus-python_version-2.7:
 	(cd $(WORKSRC)/python && \
-		$(BUILD_ENV) python setup.py install --root=$(DESTDIR) --prefix=$(prefix))
+		$(BUILD_ENV) $(PYTHON) setup.py install --root=$(DESTDIR) --prefix=$(prefix))
+	@$(MAKECOOKIE)
+
+post-install:--prefix=$(prefix))
 	(cd $(DESTDIR) && \
 		mv $(DESTDIR)$(bindir)/file $(DESTDIR)$(bindir)/gfile && \
 		mv $(DESTDIR)$(mandir)/man1/file\.1 $(DESTDIR)$(mandir)/man1/gfile\.1)
 	ginstall -d -m 755 $(DESTDIR)$(prefix)/gnu
 	(cd $(DESTDIR) && \
-		gln -s ../bin/gfile $(DESTDIR)$(prefix)/gnu/file)
-	# Injecting a symlink pointing at libmagic.so.1 on the filesystem, so that
-	# checkpkg realizes that the dependency is necessary.
-	if [ -d $(DESTDIR)$(libdir)/python/site-packages ]; then \
-	  ln -s ../../libmagic.so.1 $(DESTDIR)$(libdir)/python/site-packages/need-libmagic; \
-	fi
-	@$(MAKECOOKIE)
+		gln -s ../bin/gfile $(DESTDIR)$(@$(MAKECOOKIE)
 
-post-merge:
-	$(FILEDIR)/check_pkgroot.sh "$(PKGROOT
+post-merge-all:
+	$(FILEDIR)/check_pkgroot.sh "$(PKGROOT)"
+	@$(MAKECOOKIE)
