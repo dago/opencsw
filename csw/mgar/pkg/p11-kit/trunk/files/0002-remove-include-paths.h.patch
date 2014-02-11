@@ -1,0 +1,13 @@
+--- a/trust/tests/test-trust.c
++++ b/trust/tests/test-trust.c
+@@ -54,10 +54,6 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
+-#ifdef OS_UNIX
+-#include <paths.h>
+-#endif
+-
+ void
+ test_check_object_msg (const char *file,
+                        int line,
