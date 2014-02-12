@@ -3,7 +3,7 @@ VERSION = 1.9.3
 # Change this when the build starts putting files in $(libdir)/ruby/$(newver)
 API_VERSION = 1.9.1
 API_SHORT = $(subst .,,$(API_VERSION))
-PATCHLEVEL = p194
+PATCHLEVEL = p0
 CATEGORIES = lang
 GARTYPE = v2
 
@@ -18,10 +18,10 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # solaris.
 #
 # [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543805
-# [2] http://redmine.ruby-lang.org#ifneq ($(VERSION)$(PATCHLEVEL), 1.9.3p0)
-#else
+# [2] http://redmine.ruby-lang.orgifneq ($(VERSION)$(PATCHLEVEL), 1.9.3p0)
+else
 TEST_SCRIPTS = 
-#e
+e
 TEST_SCRIPTS = 
 endif
 
