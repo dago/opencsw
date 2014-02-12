@@ -47,10 +47,10 @@ RUNTIME_DEP_PKGS_CSWruby191 += CSWlibruby1-9-1-1
 
 SPKG_DESC_CSWlibruby1-9-1-1 = The libruby shared object files (Ruby $(VERSION), API $(API_VERSION))
 RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1  = CSWlibgdbm4 CSWlibiconv2 CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1 += CSWlibssl0-9-8 CSWlibyaml
-RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1 += CSWlibreadline6 CSWlibz1 CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibruby1-1-0-0 CSWlibyaml0-2
+RUNTIME_DEP_PKGS_CSWlibruby1-9-1-1 += CSWlibreadline6 CSWlibz1 CSWlibffi5SWlibz1 CSWlibffi4
 PKGFILES_CSWlibruby1-9-1-1 += $(call baseisadirs,$(libdir),libruby$(API_VERSION)\.so\.1.*)
-PKGFILES_CSWlibruby1-9-1-1 += $(libdir)/ruby/.*
+PKGFILES_CSWlibruby1-9-1-1 +=  $(libdir)/ruby/.*
 # the next two have /usr/local/bin from dln_find.c.  it should be innocuous and
 # not worth patching
 CHECKPKG_OVERRIDES_CSWlibruby1-9-1-1 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby1.9.1.so.1
