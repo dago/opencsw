@@ -58,6 +58,13 @@ RUNTIME_DEP_PKGS_CSWpy-gtk += CSWpygobject
 RUNTIME_DEP_PKGS_CSWpy-gRUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibpangocairo1-0-0
+
+RUNTIME_DEP_PKGS_CSWpy-gtk_sparc += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWpy-gtk_sparc += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWpy-gtk_sparc += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWpy-gtk_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpy-gtk += $(RUNTIME_DEP_PKGS_CSWpy-gtk_$(GARCH))
+
 CHECKPKG_OVERRIDES_CSWpy-gtk += surplus-dependency|CSWpythongtk += CSWpy-cairo
 CHECKPKG_OVERRIDES_CSWpy-gtk += file-with-bad-content|/usr/share|root/opt/csw/share/gtk-doc/html/pygtk/class-gtkfilechooser.html
 CHECKPKG_OVERRIDES_CSWpy-gtk += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/pygtk/class-gtkrcstyle.html
