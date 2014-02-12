@@ -1,5 +1,5 @@
 NAME = ntop
-VERSION = 4.1.0
+VERSION = 4.0.3
 CATEGORIES = net
 GARTYPE = v2
 
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(Nar.AME)-$(VERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 DISTFILES  += cswntop
 EXPANDVARS += cswntop
@@ -59,13 +59,13 @@ BUILD_DEP_PKGS += CSWlibgdbm-dev CSWgeoip-dev
 BUILD_DEP_PKGS += CSWrrdtool-dev
 
 # These are ntop plugins so these check alerts are not important
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libcpacketPlugin-4.1.0.so
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libicmpPlugin-4.1.0.so
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libnetflowPlugin-4.1.0.so
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libntop-4.1.0.so
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libntopreport-4.1.0.so
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/librrdPlugin-4.1.0.so
-CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libsflowPlugin-4.1.0.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libcpacketPlugin-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libicmpPlugin-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libnetflowPlugin-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libntop-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libntopreport-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/librrdPlugin-4.0.3.so
+CHECKPKG_OVERRIDES_CSWntop += soname-equals-filename|file=/opt/csw/lib/libsflowPlugin-4.0.3.so
 + CSWlibgdbm-dev
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/autogen.sh
@@ -97,12 +97,12 @@ CHECKPKG_OVERRIDES_CSWntop += shared-lib-package-contains-so-symlink|file=/opt/c
 CHECKPKG_OVERRIDES_CSWntop += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libsflowPlugin.so
 
 # Upstream has chosen it that way...
-CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname=li1.0acketPlugin-4.0.3.so|filename=cpacketPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname1.0bicmpPlugin-4.0.3.so|filename=icmpPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname=li1.0tflowPlugin-4.0.3.so|filename=netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|sonam1.0.so|filename=rrdPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname=libsflowPlugin-4.1.0sflowPlugin-4.0.3.so|filename=sflowPlugin.so
-#CHECKPKG_OVERRIDES_CSWntop += shared-lib-pkgname-mismatch|sonames=['li1.0.so',|'libicmpPlugin-4.1.0.so',|'libnetflowPlugin-4.1.0.so',|'libntop-4.1.0.so',|'libntopreport-4.1.0.so',|'librrdPlugin-4.1.0.so',|'libsflowPlugin-4.1.0.so']|pkgname=CSWntop|expected=['CSWlib4.1.0ted=['CSWlib4-0-3']|
+CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname=li0.3acketPlugin-4.0.3.so|filename=cpacketPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname0.3bicmpPlugin-4.0.3.so|filename=icmpPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname=li0.3.so|filename=netflow.so|filename=icmpPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-firrdPlugin-4.0.3.so|filename=rrd.so|filename=icmpPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-fisflowPlugin-4.0.3sflowPlugin-4.0.3.so|filename=sflowPlugin.so
+#CHECKPKG_OVERRIDES_CSWntop += shared-lib-pkgname-mismatch|sonames=['li0.3.so',|'libicmpPlugin-4.0.3.so',|'libnetflowPlugin-4.0.3.so',|'libntop-4.0.3.so',|'libntopreport-4.0.3.so',|'librrdPlugin-4.0.3.so',|'libsflowPlugin-4.0.3.so']|pkgname=CSWntop|expected=['CSWlib4.0.3ted=['CSWlib4-0-3']|
 CHECKPKG_OVERRIDES_CSWntop += shared-lib-pkgname-mismatch
 
 # Bad content files#netflowPlugin.so
@@ -114,16 +114,16 @@ CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/loshare/ntop/html/ntop.
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/ntop.8
 
 # Bad content files - Shared libraries (Captured Build Info for Version Output)
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/lib/li1.0ins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libicmpPlugin-4.1.0ins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libsflowPlugin-4.1.0ins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libntop-4.1.0ins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libntopreport-4.1.0ins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libnetflowPlugin-4.1.0ins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|librrdPlugin-4.1.0ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/lib/li0.3ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libicmpPlugin-4.0.3ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libsflowPlugin-4.0.3ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libntop-4.0.3ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libntopreport-4.0.3ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|libnetflowPlugin-4.0.3ins/netflowPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|librrdPlugin-4.0.3ins/netflowPlugin.so
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/s/ntop/plugins/netflowPlugin.so
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/cpacketp/plugins/netflowPlugin.so
-CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/lib/ntop/plugins/rrdPlugin.so
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/rrdp/plugins/netflowPlugin.so
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/lib/ntop/plugins/netflowPlugin.so
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/lib/ntop/plugins/icmpPlugin.so
 
