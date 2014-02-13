@@ -15,7 +15,8 @@ DISTNAME = sqlite-autoconf-$(VERSION)
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += copyrigVENDOR_URL = http://sqlite.orgight-release.html
 
-LICENSE = copyright-release.html
+LICENSE = copyright-relING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386ight-release.html
 
 PACKAGES += CSWsqlite3
 SPKG_DESC_CSWsqlite3 = An embeddable SQL engine in a C library
@@ -40,9 +41,12 @@ CATALOGNAME_CSWsqlite3devel = sqlite3_devel_stub
 BUILD_DEP_PKGS += CSWreadline
 
 # Enable sqlite3_unlock_notify() API as requested in #4837
-EXTRA_CPPFLAGS += -DSQLITE_ENABLE_UNLOCK_NOTIFY=1
+EXTRA_CPPFLAGS += -DSQLITE_ENABLE_# FOr fchmod in stat.h
+EXTRA_CPPFLAGS-5.9 += -D__EXTENSIONS__=1
+EXTRA_CPPFLAGS += $(EXTRA_CPPFLAGS-$(GAROSREL))
 
 BUILD64 = 1
 ISAEXEC = 1
 
-include 
+include gar/category.mk
+
