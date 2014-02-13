@@ -1,5 +1,5 @@
 NAME = sshguard
-VERSION = 1.5rc3
+VERSION = 1.5
 CATEGORIES = net
 GARTYPE = v2
 
@@ -10,14 +10,32 @@ endef
 
 MASTER_SITES = $(SFECT_MIRRORS)
 SF_PROJ = $(NAME)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VLICENSE = README
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+EXTRA_MODULATORS += FIREWALL
+MODULATIONS_FIREWALL = ipfilter hosts
 
 GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-firewall=hosts
+CONFIGURE_ARGS += --with-firewall=$(FIREWALL)
 
-include
+# See ipf(1m) and ipf(4) 
+CONFIGURE_ARGS-ipfilter += --with-ipf=/usr/sbin/ipf
+CONFIGURE_ARGS-ipfilter += --with-ipfilterconf=/etc/ipf/ipf.conf
+
+# This is defined in OpenCSW TCPwrapper
+CONFIGURE_ARGS-hosts += --with-hostsfile=/etc/opt/csw/hosts.allow
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(FIREWALL))
+
+EXTRA_PAX_ARGS += -s ",\($(sbindir)/sshguard\),/\1-$(FIREWALL),"
+
+MERGE_SCRIPTS_isa-default-firewall-ipfilter = copy-all
+MERGE_SCRIPTS_isa-default-firewall-hosts = copy-all
+
+ALTERNATIVES += ipfilter hosts
+ALTERNATIVE_ipfilter += $(sbindir)/sshguard sshguard $(sbindir)/sshguard-ipfilter 200
+ALTERNATIVE_hosts    += $(sbindir)/sshguard sshguard $(sbindir)/sshguard-hosts 100
+
+include gar/category.mk
