@@ -23,7 +23,11 @@ INSTALL_SCRIPTS = serf
 TEST_SCRIPTS =oogle.com/p/serf/
 
 # openssl-1.0 only available for sol-10
+PACKAGING_PLA9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+rBUILD_DEP_PKGS += CSWscons
+BUILD_DEP_PKGS += CSWlibapr-dev
+BUILD_DEP_PKGS += CSWlibaprutil-devrf solaris10-i386
 
 PACKAGE3
 CATALOGNAME_CSWlibserf1-3 = libserf1_3
@@ -32,9 +36,7 @@ RUNTIME_DEP_3 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-3 += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-3 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibserf1-3 += CSWlibz1
-rBUILD_DEP_PKGS += CSWscons
-BUILD_DEP_PKGS += CSWlibapr-dev
-BUILD_DEP_PKGS += CSWlibaprutil-devrff1-0 += CSWlibz1
+r1-0 += CSWlibz1
 
 PACKAGES += CSWlibserf-dev
 CATALOGNAME_CSWlibserf-dev = libserf_dev
@@ -54,6 +56,7 @@ SCONS_FLAGS += CFLAGS="$(CFLAGS)"
 SCONS_FLAGS += LINKFLAGS="$(subst $$,\\$$\\,$(LD_OPTIONS))"
 
 CHECKPKG_OVERRIDES_CSWlibserf1-3 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libserf-1.so.1.3.0|soname=libserf-1.so.1|pkgname=CSWlibserf1-3|expected=CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWlibserf1-3 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libserf-1.so.1.3.0|soname=libserf-1.so.1.3.0|pkgname=CSWlibserf1-3|expected=CSWlibserf1-1-3-0
 
 include gar/category.mk
 
@@ -65,6 +68,7 @@ build-serf:
 	@$(MAKECOOKIE)
 
 install-serf:
+	mkdir -p $(DESTDIR)$(BUILD_PREFIX)
 	(cd $(WORKSRC); \
 		scons  \
 		$(SCONS_FLAGS) \
