@@ -73,9 +73,9 @@ EXTRA_MERGE_DIRS += $(bindir)
 
 ALTERNATIVES += 32 64
 ALTERNATIVE_32 = $(bindir_install)/tclsh tclsh $(bindir_install)/$(ISA_DEFAULT)/tclsh 320
-ALTERNATIVE_32 = $(bindir_install)/tclsh8.5 tclsh8.5 $(bindir_install)/$(ISA_DEFAULT)/tclsh8.5
+ALTERNATIVE_32 = $(bindir_install)/tclsh8.5 tclsh $(bindir_install)/$(ISA_DEFAULT)/tclsh8.5
 ALTERNATIVE_64 = $(bindir_install)/tclsh tclsh $(bindir_install)/$(ISA_DEFAULT64)/tclsh 640
-ALTERNATIVE_64 = $(bindir_install)/tclsh8.5 tclsh8.5 $(bindir_install)/$(ISA_DEFAULT64)/tclsh8.5
+ALTERNATIVE_64 = $(bindir_install)/tclsh8.5 tclsh $(bindir_install)/$(ISA_DEFAULT64)/tclsh8.5
 #ALTERNATIVE_isaexec = $(bindir_install)/tclsh8.5 tclsh $(bindir_install)/isaexec 100ev# Enable 64 bits, but not for Solaris 9 x86
 BUILD64_5.9_sparc  = 1
 BUILD64_5.10_sparc = 1
