@@ -3,7 +3,8 @@ NAME = pygtk
 VERSION = 2.24.0
 CATEGORIES = lang
 GARTYPE = v2
-RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\.[0-9].# keep the 'configure; make; make install'-mantra
+# CATEGORIES = python.*\)\.[0-9]*/\1/')
 
 DESCRIPTION = Python bindings for the GTK library
 define BLURB
@@ -20,6 +21,21 @@ STRIP_LIBTOOL = 1
 SKIPTEST = 1
 
 PACKAGING_PLATFORMS=solaris10-i38
+# add this because we do not use the pyton category
+_MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test
+_MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test/.*
+PYCOMPILE = 1
+_CATEGORY_MODULATORS ?= PYTHON_VERSION
+EXTRA_MODULATORS += PYTHON_VERSION
+MODULATIONS_PYTHON_VERSION = 2.6 2.7
+# We need 64 bit just once as it is without python anyway
+SKIP_MODULATIONS += isa-sparcv9-python_version-2.7
+SKIP_MODULATIONS += isa-amd64-python_version-2.7
+PYTHON = $(bindir)/python$(PYTHON_VERSION)
+MERGE_SCRIPTS_isa-default-python_version-2.6 += copy-all
+MERGE_SCRIPTS_isa-default-python_version-2.7 += copy-all
+MERGE_SCRIPTS_isa-default64-python_version-2.6 += copy-relocated-only
+MERGE_DIRS_isa-default64-python_version-2.6 += $(libdir)8
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWpython27-dev
@@ -82,10 +98,10 @@ SPKG_CLASSES = none cswpycompile
 RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
-# EXTRA_EXPORTS = PKG_CONFIG_PATH
-
+# EXTRA_EXPORTS =EXTRA_CONFIGURE_ENV = PYTHON=python$(PYTHON_VERSION)
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 #TEST_SCRIPTS = 
 
-include
+include gar/category.mk
+
