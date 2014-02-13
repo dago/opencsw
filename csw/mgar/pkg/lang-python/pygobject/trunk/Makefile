@@ -3,7 +3,7 @@
 NAME = pygobject
 VERSION = 2.28.6
 CATEGORIES = lang
-RELVER = $(shell echo $(VERSION) | gsed -e '# keep the 'configure; make; make install'-mantra'# CATEGORIES = python's/\.[0-9]\+$$//')
+RELVER = $(shell echo $(VERSION) | gsed -e 'MAJOR = $(shell echo $(VERSION) | gsed -e 's/\(^[0-9]\+\)\..*/\1-e '# keep the 'configure; make; make install'-mantra'# CATEGORIES = python's/\.[0-9]\+$$//')
 
 DESCRIPTION = Python bindings for the GObject library
 define BLURB
@@ -21,45 +21,53 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 BUILD_DEP_PKGS = CSWlibffi-dev
 
 # add this because we do not use the pyton category
-_MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test
-_MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test/.*
-PYCOMPILE = 1
-_CATEGORY_MODULATORS ?= PYTHON_VERSION
-MODULATIONS_PYTHON_VERSION ?= 2_6 2_7
-MERGE_SCRIPTS_isa-default-python_version-2_6 ?= copy-all
-MERGE_SCRIPTS_isa-default-python_version-2_7 ?= copy-all
-MERGE_SCRIPTS_isa-default-python_version-3_3 ?= copy-all
+# _MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test
+# _MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test/.*
 
-PACKAGES += CSWlibpyglib2-0python0
-CATALOGNAME_CSWlibpyglib2-0python0 = libpyglib2_0python0
-PKGFILES_CSWlibpyglib2-0python0 += $(call baseisadirs,$(libdir),libpyglib-2\.0-python\.so\.0\.0\.0)
-PKGFILES_CSWlibpyglib2-0python0 += $(call baseisadirs,$(libdir),libpyglib-2\.0-python\.so\.0(\.\d+)*)
-SPKG_DESC_CSWlibpyglib2-0python0 += $(DESCRIPTION), libpyglib-2.0-python.so.0
-RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += CSWlibglib2-0-0
 
-RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0_sparc += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0 += $(RUNTIME_DEP_PKGS_CSWlibpyglib2-0python0_$(GARCH))
+EXTRA_MODULATORS += PYTHON_VERSION
+MODULATIONS_PYTHON_VERSION = 2.6 2.7
+# We need 64 bit just once as it is without python anyway
+SKIP_MODULATIONS += isa-sparcv9-python_version-2.7
+SKIP_MODULATIONS += isa-amd64-python_version-2.7
+PYTHON = $(bindir)/python$(PYTHON_VERSION)
+MERGE_SCRIPTS_isa-default-python_version-2.6 += copy-all
+MERGE_SCRIPTS_isa-default-python_version-2.7 += copy-all
+MERGE_SCRIPTS_isa-default64-python_version-2.6 += copy-relocated-only
+MERGE_DIRS_isa-default64-python_version-2.6 += $(libdir)
 
-# PACKAGES += CSWlibpyglib-gi2-0python0
-# PKGFILES_CSWlibpyglib-gi2-0python0 += $(call baseisadirs,$(libdir),libpyglib-gi-2\.0-python\.so\.0(\.\d+)*)
-# SPKG_DESC_CSWlibpyglib-gi2-0python0 += $(DESCRIPTION), libpyglib-gi-2.0-python.so.0
-# RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibpyglib-gi2-0python0
-# RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0 += CSWlibgthread2-0-0
-# RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0 += CSWlibglib2-0-0
-# 
-# RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_sparc += CSWlibintl8
-# RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_sparc += CSWlibgobject2-0-0
-# RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_sparc += CSWlibffi5
-# RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0 += $(RUNTIME_DEP_PKGS_CSWlibpyglib-gi2-0python0_$(GARCH))+= CSWlibglib2-0-0
+PACKAGES += CSWlibpyglib2-0python2-6-0
+CATALOGNAME_CSWlibpyglib2-0python2-6-0 = libpyglib2_0python2_6_0
+PKGFILES_CSWlibpyglib2-0python2-6-0 += $(call baseisadirs,$(libdir),libpyglib-2\.0-python2\.6\.so\.0\.0\.0)
+PKGFILES_CSWlibpyglib2-0python2-6-0 += $(call baseisadirs,$(libdir),libpyglib-2\.0-python2\.6\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibpyglib2-0python2-6-0 += $(DESCRIPTION), libpyglib-2.0-python2.6.so.0
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-6-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-6-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-6-0 += CSWlibglib2-0-0
+
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-6-0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-6-0 += $(RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-6-0_$(GARCH))
+
+
+PACKAGES += CSWlibpyglib2-0python2-7-0
+CATALOGNAME_CSWlibpyglib2-0python2-7-0 = libpyglib2_0python2_7_0
+PKGFILES_CSWlibpyglib2-0python2-7-0 += $(call baseisadirs,$(libdir),libpyglib-2\.0-python2\.7\.so\.0\.0\.0)
+PKGFILES_CSWlibpyglib2-0python2-7-0 += $(call baseisadirs,$(libdir),libpyglib-2\.0-python2\.7\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibpyglib2-0python2-7-0 += $(DESCRIPTION), libpyglib-2.0-python2.7.so.0
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-7-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-7-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-7-0 += CSWlibglib2-0-0
+
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-7-0_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-7-0 += $(RUNTIME_DEP_PKGS_CSWlibpyglib2-0python2-7-0_$(GARCH))+= CSWlibglib2-0-0
 
 PACKAGES += CSWpy-gobject-dev
 OBSOLETED_BY_CSWpy-gobject-dev += CSWpygobject
 SPKG_DESC_CSWpy-gobject-dev = Development files for the Python GObject library
-RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWliRUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gobgthread2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibglib2-0-li-dev += CSWpython
+RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibglib2-0-liRUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibpyglib2-0python2-6-0
+RUNTIME_DEP_PKGS_CSWpy-gobject-dev += CSWlibpyglib2-0python2-7-li-dev += CSWpython
 
 # These are just comments
 CHECKPKG_OVERRIDES_CSWpython-package-missing-py26-files
@@ -68,15 +76,17 @@ CHECKPKG_OVERRIDES_CSWpy-gobject-dev += python-package-missing-py-files0/codegen
 PACKAGES#  += CSWpy-gobject
 OBSOLETED_BY_CSWpy-gobject += CSWpygobject
 SPKG_DESC_CSWpy-gobject = $(DESCRIPTION)
-PKGFILES_CSWpy-gobject .*/site-packages/.*
+PKGFI+= $(libdir)/python.*/site-packages/.*
+PKGFILES_CSWpy-gobject += $(datadir)/$(NAME)/$(MAJOR)\.2/.*
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgirepository1-0-1
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibglibt += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpygio2-0-0
-RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibpyglib2-0python0
 RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibpyglib2-0python2-7-0
+RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibpyglib2-0python2-6-0
 
 RUNTIME_DEP_PKGS_CSWpy-gobject_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpy-gobject_sparc += CSWlibgthread2-0-0
@@ -87,15 +97,14 @@ STRIP_LIBTOOL = 1
 
 EXTRA_CFLAGS = -std=c99 -D_XPG6 -D__EXTENSIONS__
 EXTRA_BUILD_ENV = V=1
+EXTRA_CONFIGURE_ENV = PYTHON=python$(PYTHON_VERSION)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 # GS  = $(DIRPATHS)
 CONFIGURE_ARGS += --without-ffi
 
 ## Tests require gtk, but gtk requries gobject
-TEST_TARGET = check
-TEST_SCRIPTS =
-
+TEST_TARGET = checPYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
-includ
+include gar/category.mk
