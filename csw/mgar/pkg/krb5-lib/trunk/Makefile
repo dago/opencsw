@@ -21,8 +21,8 @@ endef
 MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES  = $(NAME)-$(VGARCOMPILER = GCC4
 
-BUILD_DEP_PKGS += CSWggettext
-BUILD_DEP_PKGS += CSWtcl
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWtcl-dev
  = Unused package 4
 
 PACKAGES += CSWlibkrb5-dev
@@ -144,15 +144,13 @@ BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 
 TEST_SCRIPTS = $(WORINSTALL_SCRIPTS = $(WORKSRC)/src/Makefile5lib = krb5_lib_stub
 
-include gar/category.mk
-
-post-extract-modulated:
+include gar/categst-extract-modulated:
 	@# TODO: Check signature
 	cd $(WORKDIR) && (gzip -c -d $(NAME)-g$(VERSION).tar.gz | tar xf -)
 	@# libcrypto.so is part of openssl and expected to be linkable without setting a linker search path
 	perl -pi -e 's,-lcrypto,-L$(libdir) -lcrypto,' \
 		$(WORKSRC)/src/plugins/preauth/pkinit/Makefile
-post-install-modulated:
+post-install:
 	# Remove Studio-specific arch references
 	gsed -i \
 		-e '/^[^#]/s/-xO[0-5][^ ]* *//g' \
