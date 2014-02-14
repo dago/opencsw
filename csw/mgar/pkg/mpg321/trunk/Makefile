@@ -29,4 +29,9 @@ CONFIGURE_ARGS += --enable-mpg123-symlink=no
 CONFIGURE_ARGS += --enable-ipv6=yes
 CONFIGURE_ARGS += --enable-alsa=no
 
+# The other one is mpg123
+# This fixes #4342
+ALTERNATIVES_CSWmpg321 = mpg321
+ALTERNATIVE_mpg321 = $(bindir)/mpg123 mpg123 $(bindir)/mpg321 50
+
 include gar/category.mk
