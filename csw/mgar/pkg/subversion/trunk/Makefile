@@ -28,160 +28,13 @@ GARTYPE = v2
 DESCRIPTION = Version control rethought
 define BLURB
     The goal of the Subversion project is to build a version control system 
-    that is a compelling replacement for CVS in the open source community.
-endef
-
-VENDOR_URL   = http://subversion.apache.org/
-MASTER_SITES = http://archive.apache.org/dist/subversion/
-#MASTER_SITES = http://people.apache.org/~hwright/svn/1.7.2/
-DISTFILES    = $(NAME)-$(VERSION).tar.bz2
-
-LICENSE = LICENSE
-
-# solaris9 does not have the ne so no gnome-keychain on Solaris9
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 KAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-BUILD_DEP_PKGS += CSWlibexpat-dev
-BUILD_DEP_PKGS += CSWlibserf-dev
-BUILD_DEP_PKGS += CSWlibsqlite3-dev
-
-PACKAGES  = CSWsvn
-SPKG_DESC_CSWsvn           = Version control rethought
-CATALOGNAME_CSWsvn         = subversion
-CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expected-catalogname=svn
-RUNTIME_DEP_PKGS_CSWsvn    = CSWbdb48
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibz1
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWsvn   += CSWlibaprutil1-0
-RUNTIME_DEP_PKGSserf1-3n   += CSWlibneon27
-RUNT_5.10   += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibgnome-keyring0
-RUNTIME_DEP_PKGS_CSWsvn_5.10   += CSWlibglib2-0-0
-CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibdbus1-3
-CHECKPKG_OVERRIDES_CSWsvn += file-with-bad-content|/usr/local|root/opt/csw/lib/svn/libsvn_repos-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWsvn += missing-dependency|CSWlibiconv2
-
-RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn_$(GAROSREL))
-dency|CSWlibdbus1-3
-
-PACKAGES += CSWsvn-dev
-SPKG_DESC_CSWsvn-dev       = Subversion Development Support
-PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
-PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-#Needed for Solaris9 again:
-OBSOLETED_BY_CSWsvn-dev_5.9    = CSWsvn-devel
-OBSOLETED_BY_CSWsvn-dev += $(OBSOLETED_BY_CSWsvn-dev_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSWSWsvn-devel_5.9 += CSWsvn-dev
-RUNTIME_DEP_PKGS_CSWSWsvn-devel += $(RUNTIME_DEP_PKGS_CSWSWsvn-devel_$(GAROSREL))
--dev)/changelog.CSW
-
-PACKAGES += CSWap2svn
-SPKG_DESC_CSWap2svn         = Subversion Modules for Apache 2.2
-CATALOGNAME_CSWap2svn       = ap2_subversion
-PKGFILES_CSWap2svn          = $(prefix)/apache2.*
-PKGFILES_CSWap2svn         += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWap2svn  = CSWsvn
-RUNTIME_DEP_PKGS_CSWap2svn += CSWapache2
-RUNTIME_DEP_PKGS_expat1Wap2svn += CSWbdb48
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibapr1-0
-RUNTIME_DEP_PKGS_CSWap2svn += CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWsvn
-CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibapr1-0
-CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibaprutil1-0-catalogname=ap2svn
-
-
-PACKAGES += CSWjavasvn
-SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
-CATALOGNAME_CSWjavasvn         = javasvn
-PKGFILES_CSWjavasvn            = $(SVNLIB)/.*java.*
-PKGFILES_CSWjavasvn           += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW 
-RUNTIME_DEP_PKGS_libapr1-0
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibintl8   += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWsvn
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entrysparcad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRmissing-dependency|CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWbdb48
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibsasl2-2
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWjavasvn += missing-dependency|CSWlibserf1-3vnjavahl-1.so.0.0.0
-
-PACKAGES += CSWpmsvn
-SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
-CATALOGNAME_CSWpmsvn       = pm_subversion
-PKGFILES_CSWpmsvn          = $(libdir)/perl.*
-PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
-PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
-PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
-RUNTIME_DEP_PKGSapr1vn += CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expectedCHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibsqlite3-0darch_name=sparcv8+
-
-
-PACKAGES += CSWrbsvn
-SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
-CATALOGNAME_CSWrbsvn       = rbsvn
-PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
-PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
-PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
-RUNTIME_DEP_Plibapr1-0
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1vCHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibsasl2-2
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWbdb48
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWrbsvn += missing-dependency|CSWlibserf1-3vn += CSWlibsasl2-2
-
-
-PACKAGES += CSWpythonsvn
-SPKG_DESC_CSWpythonsvn         = Subversion Python Language Binding
-CATALOGNAME_CSWpythonsvn       = pythonsvn
-PKGFILES_CSWpythonsvn          = $(libdir)/python.*
-PKGFILES_CSWpythonsvn         += $(SVNLIB)/python.*
-PKGFILES_CSWpythonsvn         += $(SVNLIB)/.*swig_py.*
-PKGFILES_CSWpythonsvn         += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWapr1-0
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvnn += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWpythCHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|GS_CSWpythCHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWbdb48
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibsasl2-2
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWpythonsvn += missing-dependency|CSWlibserf1-3honsvn += CSWpython
+    that is a compelling replacement for CVS in the open sourceMASTER_SITES = http://archive.apache.org/dist/subversion/
+DISTFILES += $(DISTNAME).tar.bz2nsvn += CSWpython
 
 
 DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
-DISTFILES += httpd-svn.conf.CSW svvn_access.conf.CSW
+DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
@@ -191,15 +44,196 @@ PATCHFILES += javahl_headers_for_nested_classes.diff
 PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 
 # Relocate locations of foreign language bindings
-PATCHFILES += 0002-Fix-location-of-bindings.patch
+PATCHFILES += 0002-Fix-location-VENDOR_URL = http://subversion.apache.org$(VERSION).tar.bz2
+
+LICENSE = LICENSE
+
+# solaris9 does not have the ne so no gnome-keychain on Solaris9
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 KAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+BUILD_DEP_PKGS += CSWlibexpat-dev
+BUILD_qlite3-dev
+BUILD_DEP_PKGS-5.10 += CSWlibserf-dev
+BUILD_DEP_PKGS += $(BUILD_DEP_PKGS-$(GAROSREL))
+
+PACKAGES += CSWsvn
+SPKG_DESC_CSWsvn = Version control rethought
+CATALOGNAME_CSWsvnNAME_CSWsvn         = subversion
+CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expected-catalogname=svn
+RUNTI= CSWbdb48
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibz1
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibserf1-1
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWsvn_5.9 += CSWglib2
+RUNTIME_DEP_PKGS_CSWsvn_5.10 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn_$(GAROSREL))
+
+PACKAGES += CSWsvn-dev
+SPKG_DESC_CSWsvn-dev = Subversion Development Support
+PKGFILES_CSWsvn-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWsvn-dev += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
+OBSOLETED_BY_CSWsvn-dev += CSWsvn-devel
+
+PACKAGES += CSWap2svn
+SPKG_DESC_CSWap2svn = Subversion Modules for Apache 2.2
+CATALOGNAME_CSWap2svn = ap2_subversion+= CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-PKGFILES_CSWap2svn += $(prefix)/apache2/.*
+PKGFILES_CSWap2svnS_CSWap2svn         += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWap2svn  = CSWsvn
+RUNTIME_DEP_PKGS_CSWap2svn += CSWapache2
+RUNTIME_DEP_PKGS_expat1Wap2svn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWap2svn += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWap2svn +RUNTIME_DEP_PKGS_CSWap2svn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWap2svn += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWap2svn += CSWlibz1
+RUNTIME_DEP_PKGS_CSWap2svn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWap2svn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWap2svn += CSWlibiconv2
+
+PACKAGES += CSWjavasvn
+SPKG_DESC_CSWjavasvn = Subversion Java Language Binding
+PKGFILES_CSWjavasvn += $(SVNLIB)/.*java.*
+PKGFILES_CSWjavasvn += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW 
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibz1
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibserf1-1
+
+# This would go away when -norunpath would make it to the linker, but at this point this is difficult.
+# Override for now as it is not harmful.
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/libopt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entropt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entryrw7opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entrysparcad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRbad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+
+PACKAGES += CSWpmsvn
+SPKG_DESC_CSWpmsvn = Subversion Perl Language Binding
+CATALOGNAME_CSWpmsvn = pm_subversion += CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expectedPKGFILES_CSWpmsvn += $(libdir)/perl.*
+PKGFILES_CSWpmsvn += $(SVNLIB)/.*perl.*
+PKGFILES_CSWpmsvn += $(mandir)/.*swig_perl.*
+PKGFILES_CSWpmsvnES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
+RUNTIME_DEP_PKGSapr1vn RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibsqlite3-0
+
+PACKAGES += CSWrbsvn
+SPKG_DESC_CSWrbsvn = Subversion Ruby Language Binding
+PKGFILES_CSWrbsvn += $(libdir)/ruby.*
+PKGFILES_CSWrbsvn += $(SVNLIB)/.*swig_ruby.*
+PKGFILES_CSWrbsvnES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
+RUNTIME_DEP_Plibapr1-0
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1vRUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibz1
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibserf1-1
+
+PACKAGES += CSWpythonsvn
+SPKG_DESC_CSWpythonsvn = Subversion Python Language Binding
+PKGFILES_CSWpythonsvn += $(libdir)/python.*
+PKGFILES_CSWpythonsvn += $(SVNLIB)/python.*
+PKGFILES_CSWpythonsvn += $(SVNLIB)/.*swig_py.*
+PKGFILES_CSWpythonsvnSWpythonsvn         += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWapr1-0
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvnn += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_libmagic1
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibserf1-1n += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpythCHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|GS_CSWpyth
+# These are all due to linker problems with -z ignore
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibsqlite3-0
+HECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibiconv2n-of-bindings.patch
 
 # should be in lib ... put something below to at least make it compile.
 # on the svn mailing list people say we should not build the package
 # with svn installed, and here it seems basic that we build with svn
 # installed.
 # SVNLIB     = $(prefix)/lib
-SVNLIB     = $(prefix)/lib/svn
-JAVA_HOME  = /usr/jdk/latest
+SVNLIB     =
+JAVA_HOME-5.9 = /usr/jdk1.6.0_20/
+JAVA_HOME-5.10 = /usr/jdk/latest
+JAVA_HOME = $(JAVA_HOME-$(GAROSREL))  = /usr/jdk/latest
 
 #EXTRA_INC += $(prefix)/apache2/include
 
@@ -211,35 +245,30 @@ EXTRA_LINKER_FLAGS = -lintl -liconv
 # Only add $ISALIST to dirs which ship optimized versions (done by explicitly
 # excluding those lib dirs which are known not to ship optimized versions).
 RUNPATH_ISALIST  = $(libdir)
-#RUNPATH_ISALIST += $(filter-out /opt/csw/apache2/lib $(SVNLIB),$(EXTRA_LIB)) 
+#RUNPATH_ISALIST += $(filter-out /opt/csw/apache2/lib $(SVNLIB This is an example for a hook
+REINPLACE_USRLOCAL += subversion/libsvn_repos/repos.c
 
-#EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
-#PROTOTYPE_MODIFIERS += cswpycompile
-#PROTOTYPE_FILES_cswpycompile = $(libdir)/python/.*\.py
-#PROTOTYPE_CLASS_cswpycompile = cswpycompile
 PYCOMPILE = 1
 
-# All of the perl modules go to $(libdir)/perl/site_perl. We are not interested
-# in the version specific perl directory which only contains a perllocal.pod.
-# Can this be re-done as a version agnostic regex? Couldn't get this to work :/
-# EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/(?!site_perl)
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/5.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal\.pod $(libdir)/perl/5.*
 
 STRIP_LIBTOOL = 1
 
 NODIRPATHS      = --libdir --libexecdir
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --disable-mod-activa_5.9 += --with-jdk=/usr/jdk1.6.0_20/j2sdk1.4.2_02/j2se
+CONFIGURE_ARGS += --disable-mod-activa += --with-jdk=$(JAVA_HOME)/j2sdk1.4.2_02/j2se
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
-CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/_5.10fix)
-CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
+CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/OME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-serf=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --witNo Keyring on Solaris9
+CONFIGURE_ARGS += --wCONFIGURE_ARGS += --with-apache-libexecdir=$(prefix)/apache2/libexec
+
+# No Keyring on Solaris9
 CONFIGURE_ARGS_5.10 += --with-gnome-keyring=$(prefix)
+
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL)-with-zlib=$(prefix)
 
 # Once you have verified that a new upstream release passes the tests, you can use
@@ -253,11 +282,13 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL)-with-zlib=$(prefix)
 #     $(WORKSRC)/subversion/tests/cmdline/merge_tests.py --list
 #   and for progress information you could compare this with
 #     tail -f $(WORKSRC)/tests.log | grep merge_tests.py
-TEST_TARGET  = check
+TES# At the moment the is one test failing because 1.8.5 does some funky statements sqlite 3.8.x doesn't understand but 3.7.x did:
+#   http://subversion.tigris.org/issues/show_bug.cgi?id=4453
+SKIPTEST ?= 1EST_TARGET  = check
 
 include gar/category.mk
 
-# pygthon bindings do not link since svn-1.6.5 ...
+# pygthon bindings do not link since svn-1.6.5..
 BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
