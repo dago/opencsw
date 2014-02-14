@@ -1,0 +1,25 @@
+From feb87c6d43dfb361f771cf4d2ddc456cd8746fef Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 14 Feb 2014 10:14:28 +0100
+Subject: [PATCH] Solaris 9 ld(1) needs -h for soname
+
+---
+ engine/SCons/Tool/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/engine/SCons/Tool/__init__.py b/engine/SCons/Tool/__init__.py
+index b12095f..344c934 100644
+--- a/engine/SCons/Tool/__init__.py
++++ b/engine/SCons/Tool/__init__.py
+@@ -306,7 +306,7 @@ symlinks for the platform we are on"""
+             (major, age, revision) = version.split(".")
+             # soname will have only the major version number in it
+             soname = re.sub(suffix_re, shlib_suffix, libname) + '.' + major
+-            shlink_flags += [ '-Wl,-Bsymbolic', '-Wl,-soname=%s' % soname ]
++            shlink_flags += [ '-Wl,-Bsymbolic', '-Wl,-h%s' % soname ]
+             if Verbose:
+                 print " soname ",soname,", shlink_flags ",shlink_flags
+         elif platform == 'cygwin':
+-- 
+1.8.4.1
+

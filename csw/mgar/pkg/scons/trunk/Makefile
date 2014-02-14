@@ -18,9 +18,15 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES += $(NAME)-$(VERSION).tar.gz
 
+# Linker patch for Solaris 9 only
+PATCHFILES-5.9 += 0001-Solaris-9-ld-1-needs-h-for-soname.patch
+PATCHFILES += $(PATCHFILES-$(GAROSREL))
+
 # We have only one package and that is archall, choose sparc
 # We need libserf on Solaris 9 for subversion and that requires a current scons
-PACKAGING_PLATFORMS = solaris9-sparc
+# Solaris 10 has different link options, so different packages for SOolaris 9 and 10
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-sparc
 
 VENDOR_URL = http://www.scons.org/
 
