@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME    = samba
-VERSION = 3.6.20
+VERSION = 3.6.22
 GARTYPE = v2
 
 DESCRIPTION =er)
@@ -26,7 +26,7 @@ DISTFILES += smb.conf
 # This is taken from the old Samba package
 DISTFILESPATCHFILES += 0001-nss_winbind.patch
 PATCHFILES += 0002-smbd-patch-for-setgroups.c.patch
-PATCHFILES += 0003-rename-nss-modules.patchEPATCHFILES += 0004-illegal-multibyte-error.patch libs and packages
+PATCHFILES += 0003-rename-nss-modules.patchElibs and packages
 
 BUILD_DEP_PKGS +=BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
@@ -316,7 +316,8 @@ CONFIGURE_ARGS += --with-acl-support
 CONFIGURE_ARGS += --with-aio-support
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-winbind
-CONFIGURE_ARGS += --with-static-modul
+COenable-nss-wrapper 
+CONFIGURE_ARGS += --with-static-modules=vfs_solarisacl
 # ZFS is only on S10+
 CONFIGURE_ARGS_5.9 += --with-shared-modules=odules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_a_5.10acl
 CONFIGURE_ARGS += --with-shared-modules=vfs_zfsacl,vfs_prealloc,vfs_cacheprime,vfs_commit,idmap_ldap,idmap_tdb2,idmap_rid,idmap_ad,idmap_hash,idmap_adex
@@ -337,7 +338,8 @@ CONFIGURE_ARGS += --with-cachedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-piddir=$(SMBLOCKDIR)
 
 CONFIGURE_ARGS += --with-logfileb# Can't use fdatasync atm do to linker problems
-# Symbols are not in the right libcto linker problems
+# Symbols are not in the right libc:
+#(symbol belongs to unavailable version /lib/libc.so (SUNW_1.22.7))to linker problems
 CONFIGURE_ARGS += ac_cv_lib_rt_fdatasync=no
 CONFIGURE_ARGS += ac_cv_have_fdatasync_decl=no
 CONFIGURE_ARGS += ac_cv_lib_extt_fdatasync=no
