@@ -17,6 +17,10 @@ DISTFILES  = $(DISTNAME).tar.xz
 
 VENDOR_URL = http://www.midnight-commander.org
 
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibslang-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+
 RUNTIME_DEP_PKGS_CSWmc += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWmc += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWmc += CSWlibintl8
