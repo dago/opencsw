@@ -1,5 +1,5 @@
 NAME = mpg123
-VERSION = 1.16.0
+VERSION = 1.18.0
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -33,8 +33,8 @@ PKGFILES_CSWlibmpg123-0 += $(call pkgfiles_lib,libmpg123.so.0)
 PKGFILES_CSWlibmpg123-0 += $(call baseisadirs,$(libdir),mpg123/.*)
 RUNTIME_DEP_PKGS_CSWlibmpg123-0 += CSWnas
 RUNTIME_DEP_PKGS_CSWlibmpg123-0 += CSWlibsdl1-2-0
-RUNTIME_DEP_PKGS_CSWlibmpg123-0 += CSWlibesd0pg123 += CSWlibsdl
-
+RUNTIME_DEP_PKGS_CSWlibmpg123-0 += CSWlibesd0pg123 +=  = 1
+ISAEXEC
 BUILD64_LIBS_ONLY = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium
 
@@ -48,18 +48,4 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 # Looks like we do need libtool files for plugins:
 #   http://www.opencsw.org/mantis/view.php?id=4145
 # Skip for libmpg123, though.
-MERGE_EXCLUDE_LIBTOOL = $(libdir)/[^/]*\.la
-
-# The other one is mpg321
-# This fixes _CSWmpg123#4342
-ALTERNATIVES = mpg123
-ALTERNATIVE_mpg123 = $(bindir)/mpg123 mpg123 $(bindir)/mpg123 100
-
-# Checkpkg can't check this
-CHECKPKG_OVERRIDES_CSWmpg123 += surplus-dependency|CSWalternatives
-
-# No package split as nobody seems to use the library
-CHECKPKG_OVERRIDES_CSWmpg123 += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWmpg123 += shared-lib-pkgname-mismatch
-
-includ
+MERGE_EXCLUDE_LIBTOOL = $(linclude gar/category.mk
