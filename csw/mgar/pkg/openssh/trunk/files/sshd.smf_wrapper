@@ -5,7 +5,7 @@ PATH=/usr/bin:/opt/csw/bin:/usr/sbin
 KEYDIR=/etc/opt/csw/ssh
 PIDFILE=/var/run/cswsshd.pid
 if [ -x /opt/csw/bin/ssh-keygen ]; then
-	ssh-keygen -A
+	/opt/csw/bin/ssh-keygen -A
 fi
 
 /opt/csw/sbin/sshd
