@@ -287,7 +287,18 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CRUNTIME_DEP_PKGS_CSWsamba-winbin
 # Needed for smb.conf
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWsamba
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
-CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS# Needed as the configure script doesn't add it
+CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS### Needed to work around the ld Bug 
+RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibtdb1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibwbclient0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibtevent0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibsmbsharemodes0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibsmbsharemodes0 += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibintl8
+###CS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
 EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_# 32 bit only on Solaris 9 - just to save build time
 BUILD64-5.9 =
