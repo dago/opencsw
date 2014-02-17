@@ -3,7 +3,7 @@
     <title>
       OpenCSW buildfarm database
     </title>
-    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+    <link rel="stylesheet" type="text/css" href="static/pkgdb.css" />
   </head>
   <body>
     <h1>
@@ -28,14 +28,22 @@
     </ul>
 
     <p>
-    There's also a read-only RESTful interface available.
-    For available URLs, please look at the <a
-      href="http://sourceforge.net/apps/trac/gar/browser/csw/mgar/gar/v2/lib/web/pkgdb_web.py#L16">URL
-      patterns</a> in the source code.
+    See the raw Python data structure of a package with a given MD5 sum:
+    <form action="form-redirect/" method="GET">
+      <input name="redirection_type" type="hidden" value="svr4_struct_dump" />
+      <input name="md5_sum" type="text" label="MD5 sum of the package" size="32" />
+      <input type="submit"/>
+    </form>
     </p>
 
-    <p>Project resources:</p>
     <p>
+    There's also a read-only RESTful interface available.
+    For available URLs, please look at the <a
+      href="http://sourceforge.net/apps/trac/gar/browser/csw/mgar/gar/v2/lib/web/pkgdb_web.py#L40"
+      >URL patterns</a> in the source code.
+    </p>
+
+    <p>Project resources:
       [
       <a href="http://www.opencsw.org" title="Main, official project web site">Home page</a>
       |
@@ -46,6 +54,10 @@
       <a href="http://wiki.opencsw.org" title="Package maintainers documentation">wiki</a>
       |
       <a href="http://www.opencsw.org/bugtrack" title="Bugtracking system">bugs</a>
+      |
+      <a href="http://lists.opencsw.org/" title="Mailing lists">lists</a>
+      |
+      <a href="http://www.opencsw.org/manual/" title="OpenCSW Manual">manual</a>
       ]
     </p>
 

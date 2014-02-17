@@ -1,11 +1,18 @@
 #!/usr/bin/env python2.6
 
-import unittest
+# Try to use unittest2, fall back to unittest
+try:
+  import unittest2 as unittest
+except ImportError:
+  import unittest
+
 import mox
-import test_base
-import models
 import sqlobject
 import datetime
+
+from lib.python import models
+from lib.python import test_base
+
 
 class CheckpkgErrorTagUnitTest(unittest.TestCase):
 
@@ -34,7 +41,9 @@ class CheckpkgErrorTagUnitTest(unittest.TestCase):
     self.assertEquals(t1, t2)
 
 
-class Srv4FileStatsUnitTest(test_base.SqlObjectTestMixin, mox.MoxTestBase):
+class Srv4FileStatsUnitTest(test_base.SqlObjectTestMixin,
+                            mox.MoxTestBase,
+                            unittest.TestCase):
 
   def setUp(self):
     super(Srv4FileStatsUnitTest, self).setUp()
@@ -50,20 +59,22 @@ class Srv4FileStatsUnitTest(test_base.SqlObjectTestMixin, mox.MoxTestBase):
         arch=self.sqo_arch,
         basename="foo.pkg",
         catalogname="foo",
-        data_obj=None,
-        data_obj_mimetype='text/plain',
         filename_arch=self.sqo_arch,
         maintainer=self.maintainer,
         md5_sum="not a real one",
         size=1L,
         mtime=datetime.datetime.now(),
-        os_rel=self.sqo_osrel,
-        pkginst=self.pkginst,
-        registered=True,
+        osrel_str=self.sqo_osrel,
+        os_relID=1,
+        pkginstID=self.pkginst,
+        pkginst_str=self.pkginst.pkgname,
+        registered_level_one=True,
+        registered_level_two=True,
         use_to_generate_catalogs=True,
         rev="2011.01.01",
         stats_version=0,
         version_string="1.0,REV=2011.01.01",
+        bundle="fake_bundle",
     )
 
   def testRemoveCheckpkgResults(self):
@@ -82,4 +93,3 @@ class Srv4FileStatsUnitTest(test_base.SqlObjectTestMixin, mox.MoxTestBase):
 
 if __name__ == '__main__':
   unittest.main()
-

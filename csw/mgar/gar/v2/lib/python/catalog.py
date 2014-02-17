@@ -3,15 +3,13 @@
 import os
 import re
 import logging
-import opencsw
+
+from lib.python import errors
+from lib.python import opencsw
 
 
-class Error(Exception):
-  pass
-
-
-class CatalogLineParseError(Error):
-  pass
+class CatalogLineParseError(errors.Error):
+  """Failed to parse a line from a catalog file."""
 
 
 class OpencswCatalogBuilder(object):
@@ -25,9 +23,7 @@ class OpencswCatalogBuilder(object):
     for pkg_dir in pkg_dirs:
       pkg_path = os.path.join(self.product_dir, pkg_dir)
       pkginfo_path = os.path.join(pkg_path, "pkginfo")
-      if (os.path.isdir(pkg_path)
-            and
-          os.path.exists(pkginfo_path)):
+      if (os.path.isdir(pkg_path) and os.path.exists(pkginfo_path)):
         if not self.Srv4Exists(pkg_path):
           pkg = None
           tmpdir = None
@@ -51,7 +47,6 @@ class OpencswCatalogBuilder(object):
           logging.warn("srv4 file for %s already exists, skipping", pkg_path)
       else:
         logging.warn("%s is not a directory.", pkg_path)
-
 
   def Srv4Exists(self, pkg_dir):
     pkg = DirectoryFormatPackage(pkg_dir)

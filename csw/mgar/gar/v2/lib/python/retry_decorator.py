@@ -27,7 +27,7 @@ class Retry(object):
       for _ in range(self.tries):
         try:
           return f(*args, **kwargs)
-        except self.exceptions, e:
+        except self.exceptions as e:
           msg = "Retry, exception: "+str(e)
           if self.logger:
             self.logger.info(msg)

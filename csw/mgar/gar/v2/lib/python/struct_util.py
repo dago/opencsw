@@ -20,6 +20,18 @@ def IndexDictsBy(list_of_dicts, field_key):
   return index
 
 
+def IndexNamedtuplesBy(list_of_namedtuples, field_key):
+  """Creates an index of list of dictionaries by a field name.
+
+  Returns a dictionary of lists.
+  """
+  index = {}
+  for named_tuple in list_of_namedtuples:
+    value = getattr(named_tuple, field_key)
+    index.setdefault(value, []).append(named_tuple)
+  return index
+
+
 def OsReleaseToLong(osrel):
   if osrel.startswith("SunOS"):
     return osrel

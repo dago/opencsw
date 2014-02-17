@@ -3,23 +3,25 @@
 # checkpkg
 #
 
+import datetime
+import hashlib
 import logging
 import operator
 import optparse
 import os
+import sqlobject
 import sys
 import textwrap
-import configuration
-import datetime
-import database
 
-import common_constants
-import package_stats
-import struct_util
-import checkpkg_lib
-import overrides
-import models
-import sqlobject
+from lib.python import checkpkg_lib
+from lib.python import common_constants
+from lib.python import configuration
+from lib.python import errors
+from lib.python import models
+from lib.python import overrides
+from lib.python import package_stats
+from lib.python import rest
+from lib.python import struct_util
 
 USAGE = """%prog [ options ] pkg1 [ pkg2 [ ... ] ]"""
 CHECKPKG_MODULE_NAME = "The main checking module."
@@ -43,12 +45,40 @@ same time, maybe you didn't specify your overrides correctly.""")
 
 cc = common_constants
 
-class Error(Exception):
-  """Generic error."""
-
-
-class UsageError(Error):
+class UsageError(errors.Error):
   """Problem with usage, e.g. command line options."""
+
+
+def VerifyContents(sqo_osrel, sqo_arch):
+  """Verify that we know the system files on the OS release and architecture."""
+  res = models.Srv4FileStats.select(
+      sqlobject.AND(
+        models.Srv4FileStats.q.use_to_generate_catalogs==False,
+        models.Srv4FileStats.q.registered_level_two==True,
+        models.Srv4FileStats.q.os_rel==sqo_osrel,
+        models.Srv4FileStats.q.arch==sqo_arch))
+  # logging.warning("VerifyContents(): Packages Count: %s", res.count())
+  system_pkgs = res.count()
+  logging.debug("VerifyContents(%s, %s): %s", sqo_osrel, sqo_arch, system_pkgs)
+  if system_pkgs < 10:
+    msg = (
+        "Checkpkg can't find system files for %s %s in the cache database.  "
+        "These are files such as /usr/lib/libc.so.1.  "
+        "Private DB setup: "
+        "you can only check packages built for the same Solaris version "
+        "you're running on this machine.  "
+        "For instance, you can't check a SunOS5.9 package on SunOS5.10. "
+        "Shared DB setup (e.g. OpenCSW maintainers): "
+        "If you have one home directory on multiple hosts, make sure you "
+        "run checkpkg on the host you intended to.  "
+        "To fix, go to a %s %s host and execute: pkgdb system-files-to-file; "
+        "pkgdb import-system-file install-contents-%s-%s.marshal; "
+        "See http://wiki.opencsw.org/checkpkg for more information."
+        % (sqo_osrel.short_name, sqo_arch.name,
+           sqo_arch.name, sqo_osrel.short_name,
+           sqo_osrel.short_name, sqo_arch.name))
+    logging.fatal(msg)
+    raise errors.DatabaseContentsError('OS files not indexed.')
 
 
 def main():
@@ -90,8 +120,6 @@ def main():
   logging.debug("Starting.")
 
   configuration.SetUpSqlobjectConnection()
-  dm = database.DatabaseManager()
-  dm.AutoManage()
 
   err_msg_list = []
   if not options.osrel_commas:
@@ -105,7 +133,7 @@ def main():
   if err_msg_list:
     raise UsageError(" ".join(err_msg_list))
 
-  stats_list = []
+  md5_sums_from_files = []
   collector = package_stats.StatsCollector(
       logger=logging,
       debug=options.debug)
@@ -116,10 +144,35 @@ def main():
       md5_sums.append(arg)
     else:
       file_list.append(arg)
+
+  config = configuration.GetConfig()
+  rest_client = rest.RestClient(
+      pkgdb_url=config.get('rest', 'pkgdb'),
+      releases_url=config.get('rest', 'releases'))
+
   if file_list:
-    stats_list = collector.CollectStatsFromFiles(file_list, None)
+    def MakeEntry(file_name):
+      file_hash = hashlib.md5()
+      with open(file_name, "r") as fd:
+        chunk_size = 2 * 1024 * 1024
+        data = fd.read(chunk_size)
+        while data:
+          file_hash.update(data)
+          data = fd.read(chunk_size)
+        md5_sum = file_hash.hexdigest()
+        del file_hash
+      _, file_basename = os.path.split(file_name)
+      return {
+          'pkg_path': file_name,
+          'md5sum': md5_sum,
+          'file_basename': file_basename,
+      }
+    entries = [MakeEntry(x) for x in file_list]
+    md5_sums_from_files = collector.CollectStatsFromCatalogEntries(entries, False)
+    for md5_sum in md5_sums_from_files:
+      rest_client.RegisterLevelOne(md5_sum)
   # We need the md5 sums of these files
-  md5_sums.extend([x["basic_stats"]["md5_sum"] for x in stats_list])
+  md5_sums.extend(md5_sums_from_files)
   assert md5_sums, "The list of md5 sums must not be empty."
   logging.debug("md5_sums: %s", md5_sums)
   osrel_list = options.osrel_commas.split(",")
@@ -145,7 +198,7 @@ def main():
   sqo_arch = models.Architecture.selectBy(name=options.arch).getOne()
   for osrel in osrel_list:
     sqo_osrel = models.OsRelease.selectBy(short_name=osrel).getOne()
-    dm.VerifyContents(sqo_osrel, sqo_arch)
+    VerifyContents(sqo_osrel, sqo_arch)
     check_manager = checkpkg_lib.CheckpkgManager2(
         CHECKPKG_MODULE_NAME,
         sqo_pkgs,

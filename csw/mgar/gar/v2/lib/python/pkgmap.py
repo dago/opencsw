@@ -1,8 +1,10 @@
 #!/usr/bin/env python2.6
 
 import re
-import struct_util
 import os
+
+from lib.python import representations
+from lib.python import struct_util
 
 class Pkgmap(object):
   """Represents the pkgmap of the package.
@@ -41,20 +43,22 @@ class Pkgmap(object):
     for line in input:
       entry, line_to_add = self._ParseLine(line)
       # Relocatable packages support
-      if "path" in entry and entry["path"]:
+      if entry.path:
+        entry = entry._asdict()
         entry["path"] = os.path.join(basedir, entry["path"])
         # basedir here does not include the leading slash, but in pkgmap we
-        # need it.
+        # do need it.
         if not entry["path"].startswith("/"):
           entry["path"] = "/" + entry["path"]
+        entry = representations.PkgmapEntry(**entry)
       self.entries.append(entry)
       if line_to_add:
         self.paths.add(line_to_add)
-    self.entries_by_line = struct_util.IndexDictsBy(self.entries, "line")
-    self.entries_by_type = struct_util.IndexDictsBy(self.entries, "type")
-    self.entries_by_class = struct_util.IndexDictsBy(self.entries, "class")
-    self.entries_by_path = struct_util.IndexDictsBy(self.entries, "path")
-    self.entries = sorted(self.entries, key=lambda x: x["path"])
+    self.entries_by_line = struct_util.IndexNamedtuplesBy(self.entries, "line")
+    self.entries_by_type = struct_util.IndexNamedtuplesBy(self.entries, "type_")
+    self.entries_by_class = struct_util.IndexNamedtuplesBy(self.entries, "class_")
+    self.entries_by_path = struct_util.IndexNamedtuplesBy(self.entries, "path")
+    self.entries = sorted(self.entries, key=lambda x: x.path)
 
   def _ParseLine(self, line):
     fields = re.split(r'\s+', line)
@@ -97,16 +101,28 @@ class Pkgmap(object):
         prototype_class = fields[2]
     if line_to_add:
       self.paths.add(line_to_add)
-    entry = {
-        "line": line.strip(),
-        "type": line_type,
-    }
-    entry["path"] = installed_path
-    entry["class"] = prototype_class
-    entry["mode"] = mode
-    entry["user"] = user
-    entry["group"] = group
-    entry["target"] = target
+
+    # entry = {
+    #     "line": line.strip(),
+    # }
+    # 'line, class_, mode, owner, group, path, target, type_, '
+    # 'major, minor, size, cksum, modtime, pkgnames')
+    entry = representations.PkgmapEntry(
+        line=line.strip(),
+        class_=prototype_class,
+        mode=mode,
+        owner=user,
+        group=group,
+        path=installed_path,
+        target=target,
+        type_=line_type,
+        major=None,
+        minor=None,
+        size=None,
+        cksum=None,
+        modtime=None,
+        pkgnames=[])
+
     return entry, line_to_add
 
   def GetClasses(self):

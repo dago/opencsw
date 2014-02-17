@@ -1,4 +1,5 @@
 #!/opt/csw/bin/python2.6
+# coding=utf-8
 
 # A webpy application to allow HTTP access to the checkpkg database.
 
@@ -7,51 +8,84 @@ import os
 sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
 
 import base64
-import web
-import sqlobject
 import cjson
-from lib.python import models
-from lib.python import checkpkg_lib
-from lib.python import package_stats
-from lib.python import opencsw
-from lib.python import common_constants
 import datetime
 import hashlib
 import logging
+import sqlobject
 import tempfile
+import web
+
+from lib.python import checkpkg_lib
+from lib.python import configuration
+from lib.python import common_constants
+from lib.python import errors
+from lib.python import models
+from lib.python import opencsw
+from lib.python import relational_util
+from lib.web import web_lib
 
 from lib.web import web_lib
 
 urls = (
   r'/', 'Index',
+  r'/favicon\.ico', 'Favicon',
   r'/srv4/', 'Srv4List',
   r'/srv4/([0-9a-f]{32})/', 'Srv4Detail',
-  # We only accept submissions into unstable.
-  # /catalogs/unstable/sparc/SunOS5.9/<md5-sum>/
+  # The 'relational' resource is a concept representing the state of the
+  # package in the relational part of the database. Meanings:
+  # PUT creates or updates relational entries
+  # DELETE deletes them
+  # GET returns some basic information (not too useful, maybe for checking)
+  r'/svr4/([0-9a-f]{32})/db-level-1/', 'Srv4RelationalLevelOne',
+  r'/svr4/([0-9a-f]{32})/db-level-2/', 'Srv4RelationalLevelTwo',
+  r'/blob/([^/]+)/([0-9a-f]{32})/', 'JsonStorage',
   r'/catalogs/([^/]+)/([^/]+)/([^/]+)/([0-9a-f]{32})/', 'Srv4CatalogAssignment',
+  r'/rpc/bulk-existing-svr4/', 'QueryExistingSvr4',
 )
 
-# render = web.template.render('templates/')
-render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
+templatedir = os.path.join(os.path.dirname(__file__), "templates/")
+render = web.template.render(templatedir)
 
-OPENCSW_ROOT = "/home/mirror/opencsw-official"
-ALLPKGS_DIR = os.path.join(OPENCSW_ROOT, "allpkgs")
+config = configuration.GetConfig()
+ALLPKGS_DIR = os.path.join(config.get("buildfarm", "opencsw_root"), "allpkgs")
 CAN_UPLOAD_TO_CATALOGS = frozenset([
     "beanie",
     "bratislava",
     "dublin",
     "kiel",
     "unstable",
+    "legacy",
 ])
 
+
 class Index(object):
+
   def GET(self):
-    return "It works!\n"
+    return """<html><body>
+    <p>OpenCSW RESTful interface of the package database.
+    <a href=\"http://buildfarm.opencsw.org/pkgdb/\">Learn more</a>.
+    </p></body></html>
+    """
+
+
+class Favicon(object):
+
+  def GET(self):
+    """To reduce the number of 404 messages in the logs."""
+    return ""
+
 
 class Srv4List(object):
+
   def POST(self):
     messages = []
+    # The 'srv4_file={}' is necessary for the .filename attribute to work.
+    # Reference: http://webpy.org/cookbook/fileupload
     x = web.input(srv4_file={})
+    for field_name in ('srv4_file', 'md5_sum', 'basename'):
+      if field_name not in x:
+        raise web.badrequest('srv4_file not found')
     web.header(
         'Content-type',
         'application/x-vnd.opencsw.pkg;type=upload-results')
@@ -85,10 +119,8 @@ class Srv4List(object):
           os.rename(tmp_filename, target_path)
           # Since mkstemp creates files with mode 0600 by default:
           os.chmod(target_path, 0644)
-      except sqlobject.main.SQLObjectNotFound, e:
+      except sqlobject.main.SQLObjectNotFound:
         messages.append("File %s not found in the db." % data_md5_sum)
-    else:
-      save_attempt = False
     messages.append({
         "received_md5": data_md5_sum,
         "declared_md5": declared_md5_sum,
@@ -98,12 +130,13 @@ class Srv4List(object):
 
 
 class Srv4Detail(object):
+
   def GET(self, md5_sum):
     """Allows to verify whether a given srv4 file exists."""
     srv4 = None
     try:
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound:
       raise web.notfound()
     # Verifying whether the package exists in allpkgs.
     basename_in_allpkgs = os.path.join(ALLPKGS_DIR, srv4.basename)
@@ -111,10 +144,11 @@ class Srv4Detail(object):
       raise web.notfound()
     # Verify the hash; the file might already exist with the same filename,
     # but different content.
-    hash = hashlib.md5()
+    file_hash = hashlib.md5()
+    # TODO: Do not read the whole file into memory at once.
     with open(basename_in_allpkgs) as fd:
-      hash.update(fd.read())
-    if not md5_sum == hash.hexdigest():
+      file_hash.update(fd.read())
+    if md5_sum != file_hash.hexdigest():
       raise web.notfound()
     web.header(
         'Content-type',
@@ -135,11 +169,15 @@ class Srv4Detail(object):
 
 
 class Srv4CatalogAssignment(object):
+
   def GET(self, catrel_name, arch_name, osrel_name):
     """See if that package is in that catalog."""
     sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
-    srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    try:
+      srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound as e:
+      raise web.notfound("Object %s not found" % (md5_sum))
     logging.debug("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
     srv4_in_c = models.Srv4FileInCatalog.selectBy(
         osrel=sqo_osrel,
@@ -164,24 +202,33 @@ class Srv4CatalogAssignment(object):
     if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
       # We should return an error message instead.
-      raise web.forbidden('Not allowed to upload to %s' % catrel_name)
+      # Sadly, we cannot return a response body due to webpy's API
+      # limitation.
+      raise web.forbidden()
     try:
       if arch_name == 'all':
-        raise checkpkg_lib.CatalogDatabaseError(
-            "There is no 'all' catalog, cannot proceed.")
-      srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+        raise web.badrequest("There is no 'all' catalog, cannot proceed.")
+      try:
+        srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      except sqlobject.main.SQLObjectNotFound:
+        try:
+          srv4, _ = relational_util.StatsStructToDatabaseLevelOne(md5_sum)
+        except errors.DataError as exc:
+          logging.warning(exc)
+          # TODO(maciej): Add the exception to the web.conflict() call.
+          # webpy 0.37 apparently doesn't allow that.
+          raise web.conflict()
       parsed_basename = opencsw.ParsePackageFileName(srv4.basename)
-      if parsed_basename["vendortag"] != "CSW":
-        raise checkpkg_lib.CatalogDatabaseError(
-            "Package vendor tag is %s instead of CSW."
+      if parsed_basename["vendortag"] not in ("CSW", "FAKE"):
+        raise web.badrequest(
+            "Package vendor tag is %s instead of CSW or FAKE."
             % parsed_basename["vendortag"])
-      if not srv4.registered:
+      if not srv4.registered_level_two:
+        relational_util.StatsStructToDatabaseLevelTwo(md5_sum, True)
         # Package needs to be registered for releases
-        stats = srv4.GetStatsStruct()
         # This can throw CatalogDatabaseError if the db user doesn't have
         # enough permissions.
-        package_stats.PackageStats.ImportPkg(stats, True)
-        srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+        # raise web.internalerror('Package not registered')
       c = checkpkg_lib.Catalog()
       sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
@@ -220,15 +267,15 @@ class Srv4CatalogAssignment(object):
       return response
     except (
         checkpkg_lib.CatalogDatabaseError,
-        sqlobject.dberrors.OperationalError), e:
+        sqlobject.dberrors.OperationalError) as exc:
       web.header(
-          'Content-type',
+          'Content-Type',
           'application/x-vnd.opencsw.pkg;type=error-message')
       response = cjson.encode({
-        "error_message": unicode(e),
+        "error_message": unicode(exc),
       })
-      web.header('Content-Length', len(response))
-      raise web.notacceptable(data=response)
+      web.header('Content-Length', str(len(response)))
+      raise web.badrequest(response)
 
   def DELETE(self, catrel_name, arch_name, osrel_name, md5_sum):
     try:
@@ -236,7 +283,8 @@ class Srv4CatalogAssignment(object):
         self.ReturnError(
             "%s is not one of %s (OS releases)"
             % (osrel_name, common_constants.OS_RELS))
-      if osrel_name in common_constants.OBSOLETE_OS_RELS and catrel_name == 'unstable':
+      if (osrel_name in common_constants.OBSOLETE_OS_RELS
+          and catrel_name == 'unstable'):
         self.ReturnError(
             "package deletions from an obsolete OS release such as %s "
             "are not allowed" % osrel_name)
@@ -251,7 +299,7 @@ class Srv4CatalogAssignment(object):
 
     except (
         sqlobject.main.SQLObjectNotFound,
-        sqlobject.dberrors.OperationalError), e:
+        sqlobject.dberrors.OperationalError) as e:
       self.ReturnError("An error occurred: %s" % e)
 
   def ReturnError(self, message):
@@ -265,19 +313,172 @@ class Srv4CatalogAssignment(object):
     raise web.notacceptable(data=response)
 
 
-web.webapi.internalerror = web.debugerror
+class JsonStorage(object):
 
-def app_wrapper():
+  BLOB_CLASSES = {
+      'pkgstats': models.Srv4FileStatsBlob,
+      'elfdump': models.ElfdumpInfoBlob,
+  }
+
+  def GetBlobClass(self, tag):
+    if tag not in self.BLOB_CLASSES:
+      raise web.badrequest(cjson.encode(
+        {'message': 'We do not store %r type objects.' % tag}))
+    return self.BLOB_CLASSES[tag]
+
+
+  def GetObject(self, blob_class, md5_sum):
+    try:
+      obj = blob_class.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound as e:
+      raise web.notfound(cjson.encode(
+        {'message': 'Object %s/%s not found.'
+                    % (blob_class, md5_sum)}))
+    return obj
+
+  def GET(self, tag, md5_sum):
+    BlobClass = self.GetBlobClass(tag)
+    obj = self.GetObject(BlobClass, md5_sum)
+    return obj.json
+
+  def HEAD(self, tag, md5_sum):
+    BlobClass = self.GetBlobClass(tag)
+    c = BlobClass.selectBy(md5_sum=md5_sum).count()
+    if c > 0:
+      web.header('X-OpenCSW-Message', 'Data exists')
+      return ''
+    else:
+      web.header('X-OpenCSW-Message', 'Data does not exist')
+      raise web.notfound()
+
+  def PUT(self, tag, md5_sum):
+    BlobClass = self.GetBlobClass(tag)
+    mime_type = 'application/json'
+    # This sometimes fails with 'No space left' ‒ can be amended by
+    # adding more swap, which in turn adds more space into the /tmp
+    # directory. The issue is that /tmp resides (partly?) in the swap
+    # area.
+    x = web.input()
+    if 'json_data' not in x:
+      raise web.badrequest('Missing "json_data" in the request.')
+    if 'md5_sum' not in x:
+      raise web.badrequest('Missing "md5_sum" in the request.')
+    if md5_sum != x['md5_sum']:
+      raise web.badrequest('URL: %s, request: %s' % (md5_sum, x['md5_sum']))
+    json_data = x['json_data']
+    content_hash = hashlib.md5()
+    content_hash.update(json_data)
+    content_md5_sum = content_hash.hexdigest()
+    try:
+      obj = BlobClass(md5_sum=md5_sum, json=json_data, mime_type=mime_type,
+                      content_md5_sum=content_md5_sum)
+    except sqlobject.dberrors.DuplicateEntryError:
+      # Saving/updating the new data (idempotence).
+      #
+      # This might throw a NotFound exception if the object was deleted
+      # in the meantime. This kind of race condition is inherent to SQL,
+      # so we'll let the exception propagate and fail the query.
+      try:
+        obj = self.GetObject(BlobClass, md5_sum)
+        obj.mime_type = mime_type
+        obj.content_md5_sum = content_md5_sum
+        obj.json = json_data
+        # sqlobject immediately saves the changes.
+      except sqlobject.main.SQLObjectNotFound:
+        raise web.internalerror('A race condition. Sorry, please retry.')
+    return cjson.encode({'message': 'Save of %s successful.' % md5_sum})
+
+  def DELETE(self, tag, md5_sum):
+    BlobClass = self.GetBlobClass(tag)
+    obj = self.GetObject(BlobClass, md5_sum)
+    obj.destroySelf()
+    return cjson.encode({'message': 'Delete successful.'})
+
+
+class QueryExistingSvr4(object):
+  """Bulk query the existence of stats of md5_sums.
+
+  The same can be achieved by repeated calls to HEAD of the blob storage class,
+  but this implementation is much faster.
+  """
+
+  def POST(self):
+    form_data = web.input(query_data={})
+    md5_sum_list = cjson.decode(form_data['query_data'])
+    existing_stats = []
+    missing_stats = []
+    # Maybe there's a more effective way of doing this? For example, a single query?
+    # But the list of md5 sums is usually long, e.g. 3k or 4k items.
+    for md5 in md5_sum_list:
+      stats_count = models.Srv4FileStatsBlob.selectBy(md5_sum=md5).count()
+      if stats_count < 1:
+        missing_stats.append(md5)
+      else:
+        existing_stats.append(md5)
+    ret_payload = cjson.encode({
+      'existing_stats': existing_stats,
+      'missing_stats': missing_stats,
+    })
+    web.header('Content-Length', str(len(ret_payload)))
+    return ret_payload
+
+
+class Srv4RelationalLevelOne(object):
+  """Registers the package: creates a set of relational database entries."""
+
+  def PUT(self, md5_sum):
+    try:
+      relational_util.StatsStructToDatabaseLevelOne(md5_sum)
+      response = cjson.encode({'message': 'Package registered to level 1'})
+      web.header('Content-Length', str(len(response)))
+      return response
+    except errors.DataError as exc:
+      raise web.notacceptable(exc)
+
+
+class Srv4RelationalLevelTwo(object):
+  """Registers the package: creates a set of relational database entries."""
+
+  def PUT(self, md5_sum):
+    url_data = web.input(use_in_catalogs='1')
+    negative_values = (0, '0', 'False', 'false', 'No', 'no')
+    use_in_catalogs = True
+    if url_data['use_in_catalogs'] in negative_values:
+      use_in_catalogs = False
+    try:
+      relational_util.StatsStructToDatabaseLevelTwo(
+          md5_sum, use_in_catalogs=use_in_catalogs)
+      response = cjson.encode({'message': 'Package registered to level 2'})
+      web.header('Content-Length', str(len(response)))
+      return response
+    except errors.DataError as exc:
+      raise web.notacceptable(exc)
+
+  def HEAD(self, md5_sum):
+    try:
+      srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound('Stats not in the database')
+    if not srv4.registered_level_two:
+      raise web.notfound('Stats in the db, but not registered')
+    return ''
+
+# web.webapi.internalerror = web.debugerror
+
+
+app = web.application(urls, globals())
+
+def app_wrapper(app):
   web_lib.ConnectToDatabase()
-  app = web.application(urls, globals())
   logging.basicConfig(level=logging.DEBUG)
   return app.wsgifunc()
 
-application = app_wrapper()
 
-from paste.exceptions.errormiddleware import ErrorMiddleware
-application = ErrorMiddleware(application, debug=True)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
   logging.basicConfig(level=logging.INFO)
   app.run()
+else:
+  application = app_wrapper(app)
+  # application = app
+  # from paste.exceptions.errormiddleware import ErrorMiddleware
+  # application = ErrorMiddleware(application, debug=True)

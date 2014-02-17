@@ -1,8 +1,10 @@
-import common_constants
 import os
 import re
 import logging
-import configuration as c
+
+from lib.python import common_constants
+from lib.python import configuration as c
+from lib.python import representations
 
 RUNPATH = "runpath"
 NEEDED_SONAMES = "needed sonames"
@@ -122,36 +124,3 @@ class LddEmulator(object):
         # logging.debug("Found %s",
         #               original_paths_by_expanded_paths[runpath_expanded])
         return original_paths_by_expanded_paths[runpath_expanded]
-
-
-def ParseDumpOutput(dump_output):
-  binary_data = {RUNPATH: [],
-                 NEEDED_SONAMES: []}
-  runpath = []
-  rpath = []
-  for line in dump_output.splitlines():
-    fields = re.split(c.WS_RE, line)
-    if len(fields) < 3:
-      continue
-    if fields[1] == "NEEDED":
-      binary_data[NEEDED_SONAMES].append(fields[2])
-    elif fields[1] == "RUNPATH":
-      runpath.extend(fields[2].split(":"))
-    elif fields[1] == "RPATH":
-      rpath.extend(fields[2].split(":"))
-    elif fields[1] == "SONAME":
-      binary_data[SONAME] = fields[2]
-  if runpath:
-    binary_data[RUNPATH].extend(runpath)
-  elif rpath:
-    binary_data[RUNPATH].extend(rpath)
-
-  # Converting runpath to a tuple, which is a hashable data type and can act as
-  # a key in a dict.
-  binary_data[RUNPATH] = tuple(binary_data[RUNPATH])
-  # the NEEDED list must not be modified, converting to a tuple.
-  binary_data[NEEDED_SONAMES] = tuple(binary_data[NEEDED_SONAMES])
-  binary_data["RUNPATH RPATH the same"] = (runpath == rpath)
-  binary_data["RPATH set"] = bool(rpath)
-  binary_data["RUNPATH set"] = bool(runpath)
-  return binary_data

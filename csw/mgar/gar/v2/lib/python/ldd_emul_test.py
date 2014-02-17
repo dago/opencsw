@@ -1,12 +1,14 @@
 #!/usr/bin/env python2.6
 
 import unittest
-import ldd_emul
 import mox
 
-import testdata.dump_output_1 as dump_1
-import testdata.dump_output_2 as dump_2
-import testdata.dump_output_3 as dump_3
+from lib.python import ldd_emul
+from lib.python import representations
+
+import lib.python.testdata.dump_output_1 as dump_1
+import lib.python.testdata.dump_output_2 as dump_2
+import lib.python.testdata.dump_output_3 as dump_3
 
 class GetLinesBySonameUnitTest(unittest.TestCase):
 
@@ -181,62 +183,6 @@ class LddEmulartorUnitTest(unittest.TestCase):
     result = self.e.ResolveSoname(runpath_list, soname, isalist,
                                   path_list, binary_path)
     self.assertEqual("/opt/csw/bdb47/lib", result)
-
-
-class ParseDumpOutputUnitTest(unittest.TestCase):
-
-  def test_1(self):
-    expected = {
-        'RPATH set': True,
-        'RUNPATH RPATH the same': True,
-        'RUNPATH set': True,
-        'needed sonames': ('librt.so.1',
-                           'libresolv.so.2',
-                           'libc.so.1',
-                           'libgen.so.1',
-                           'libsocket.so.1',
-                           'libnsl.so.1',
-                           'libm.so.1',
-                           'libz.so.1'),
-        'runpath': ('/opt/csw/lib/$ISALIST',
-                    '/opt/csw/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST',
-                    '/opt/csw/mysql5/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST/mysql'),
-        'soname': 'libmysqlclient.so.15',
-    }
-    self.assertEqual(expected,
-                     ldd_emul.ParseDumpOutput(dump_1.DATA_DUMP_OUTPUT))
-
-  def testEmpty(self):
-    expected_runpath = ()
-    self.assertEqual(
-        expected_runpath,
-        ldd_emul.ParseDumpOutput(dump_2.DATA_DUMP_OUTPUT)["runpath"])
-
-  def testRpathOnly(self):
-    expected = {
-        'RPATH set': True,
-        'RUNPATH RPATH the same': False,
-        'RUNPATH set': False,
-        'needed sonames': ('librt.so.1',
-                           'libresolv.so.2',
-                           'libc.so.1',
-                           'libgen.so.1',
-                           'libsocket.so.1',
-                           'libnsl.so.1',
-                           'libm.so.1',
-                           'libz.so.1'),
-        'runpath': ('/opt/csw/lib/$ISALIST',
-                    '/opt/csw/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST',
-                    '/opt/csw/mysql5/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST/mysql'),
-        'soname': 'libmysqlclient.so.15',
-    }
-    self.assertEqual(
-        expected,
-        ldd_emul.ParseDumpOutput(dump_3.DATA_DUMP_OUTPUT))
 
 
 if __name__ == '__main__':

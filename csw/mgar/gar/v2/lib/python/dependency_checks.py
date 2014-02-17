@@ -1,13 +1,15 @@
 # $Id$
 
-import checkpkg_lib
 import os.path
 import re
-import ldd_emul
-import sharedlib_utils
-import common_constants
 import operator
 import logging
+
+from lib.python import checkpkg_lib
+from lib.python import common_constants
+from lib.python import ldd_emul
+from lib.python import representations
+from lib.python import sharedlib_utils
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -56,12 +58,31 @@ BASE_SOLARIS_LIBRARIES = set([
 
 ALLOWED_VERSION_DEPENDENCIES = {
     "libc.so.1": {
-        u'SunOS5.11': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.23', 'SISCD_2.3'],
-        u'SunOS5.10': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.22.6', 'SISCD_2.3'],
-        u'SunOS5.9': ['SYSVABI_1.3', 'SUNWprivate_1.1', 'SUNW_1.21.2', 'SISCD_2.3'],
+        # TODO(yann): Review if this list is correct for Solaris 8.
+        u'SunOS5.8': ['SYSVABI_1.3',
+                      'SUNWprivate_1.1',
+                      'SUNW_1.21.2',
+                      'SISCD_2.3'],
+        u'SunOS5.9': ['SYSVABI_1.3',
+                      'SUNWprivate_1.1',
+                      'SUNW_1.21.2',
+                      'SISCD_2.3'],
+        u'SunOS5.10': ['SYSVABI_1.3',
+                       'SUNWprivate_1.1',
+                       'SUNW_1.22.6',
+                       'SISCD_2.3'],
+        u'SunOS5.11': ['SYSVABI_1.3',
+                       'SUNWprivate_1.1',
+                       'SUNW_1.23',
+                       'SISCD_2.3'],
     },
 }
 
+# All OS releases must have entries here.
+for soname in ALLOWED_VERSION_DEPENDENCIES:
+  os_rels = ALLOWED_VERSION_DEPENDENCIES[soname].keys()
+  assert set(os_rels) == set(common_constants.OS_RELS)
+del soname, os_rels
 
 def CompareLibraryVersions(version1, version2):
   """Compare two library versions
@@ -112,12 +133,12 @@ def ProcessSoname(
     orphan_sonames
   """
   logging.debug("ProcessSoname(), %s %s"
-                % (binary_info["path"], soname))
+                % (binary_info.path, soname))
   orphan_sonames = []
   resolved = False
   path_list = path_and_pkg_by_basename[soname].keys()
   runpath_tuple = (
-      tuple(binary_info["runpath"])
+      tuple(binary_info.runpath)
       + tuple(checkpkg_lib.SYS_DEFAULT_RUNPATH))
   runpath_history = []
   first_lib = None
@@ -139,9 +160,9 @@ def ProcessSoname(
       already_resolved_paths.add(resolved_path)
       resolved = True
       reason = ("%s needs the %s soname"
-                % (binary_info["path"], soname))
+                % (binary_info.path, soname))
       logger.debug("soname %s found in %s for %s"
-                   % (soname, resolved_path, binary_info["path"]))
+                   % (soname, resolved_path, binary_info.path))
       error_mgr.NeedFile(pkgname, os.path.join(resolved_path, soname), reason)
       # Looking for deprecated libraries.  However, only alerting if the
       # deprecated library is the first one found in the RPATH.  For example,
@@ -158,12 +179,12 @@ def ProcessSoname(
                 pkgname,
                 "deprecated-library",
                 ("file=%s lib=%s/%s"
-                 % (binary_info["path"], resolved_path, soname)))
+                 % (binary_info.path, resolved_path, soname)))
             messenger.Message(
                 "Binary %s links to a deprecated library %s/%s. %s"
-                % (binary_info["path"], resolved_path, soname, msg))
+                % (binary_info.path, resolved_path, soname, msg))
   if not resolved:
-    orphan_sonames.append((soname, binary_info["path"]))
+    orphan_sonames.append((soname, binary_info.path))
     if path_list:
       path_msg = "was available at the following paths: %s." % path_list
     else:
@@ -173,7 +194,7 @@ def ProcessSoname(
       messenger.Message(
           "%s could not be resolved for %s, with rpath %s, expanded to %s, "
           "while the file %s"
-          % (soname, binary_info["path"],
+          % (soname, binary_info.path,
              runpath_tuple, runpath_history, path_msg))
   return orphan_sonames
 
@@ -200,9 +221,11 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
   isalist = pkg_data["isalist"]
   ldd_emulator = ldd_emul.LddEmulator()
   orphan_sonames = []
+  binary_md5_by_path = dict(pkg_data["binary_md5_sums"])
   for binary_info in pkg_data["binaries_dump_info"]:
-    binary_path, binary_basename = os.path.split(binary_info["path"])
-    for soname in binary_info["needed sonames"]:
+    binary_info = representations.BinaryDumpInfo._make(binary_info)
+    binary_path, binary_basename = os.path.split(binary_info.path)
+    for soname in binary_info.needed_sonames:
       orphan_sonames_tmp = ProcessSoname(
           ldd_emulator,
           soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
@@ -212,23 +235,29 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
 
     # Some common information gathering for
     # "direct bind" and "soname unused" checks
-    binary_elf_info = pkg_data["binaries_elf_info"][binary_info["path"]]
 
-    needed_libs = set(binary_info["needed sonames"])
+    if binary_info.path not in binary_md5_by_path:
+      error_mgr.ReportError(pkgname, 'elf-info-missing',
+                            'binary_path=%r' % binary_info.path)
+      continue
+    binary_md5 = binary_md5_by_path[binary_info.path]
+    # This causes a runtime lookup to be made during checking.
+    binary_elf_info = error_mgr.GetElfdumpInfo(binary_md5)
+
+    needed_libs = set(binary_info.needed_sonames)
     db_libs = set()
     really_needed_libs = set()
     for syminfo in binary_elf_info['symbol table']:
-      if (syminfo['soname'] is not None and
-          syminfo['flags'] is not None):
-        really_needed_libs.add(syminfo['soname'])
+      if (syminfo.soname is not None and
+          syminfo.flags is not None):
+        really_needed_libs.add(syminfo.soname)
         # Even when direct binding is enabled, some symbols might not be
         # directly bound because the library explicitely requested the symbol
         # not to be directly bound to.
         # So we consider that direct binding is enabled if at least one
         # symbol is directly bound to the library
-        if 'B' in syminfo['flags']:
-          db_libs.add(syminfo['soname'])
-
+        if 'B' in syminfo.flags:
+          db_libs.add(syminfo.soname)
 
     # Direct bind check
 
@@ -249,12 +278,12 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
         "No symbol of binary %s is directly bound against the following"
         " libraries: %s. Please make sure the binaries are compiled using"
         " the \"-Bdirect\" linker option."
-        % ("/" + binary_info["path"], ", ".join(no_db_libs)))
+        % ("/" + binary_info.path, ", ".join(no_db_libs)))
       for soname in no_db_libs:
         error_mgr.ReportError(
           pkgname, "no-direct-binding",
           "%s is not directly bound to soname %s"
-           % ("/" + binary_info["path"], soname))
+           % ("/" + binary_info.path, soname))
 
     # Unused soname check
 
@@ -273,12 +302,12 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
           " superfluous libraries were added to the linker options, either"
           " because of the configure script itself or because of the"
           " \"pkg-config --libs\" output of one the dependency."
-          % ("/" + binary_info["path"], ", ".join(unused_libs)))
+          % ("/" + binary_info.path, ", ".join(unused_libs)))
         #for soname in unused_libs:
         #  error_mgr.ReportError(
         #    pkgname, "soname-unused",
         #    "%s is needed by %s but never used"
-        #    % (soname, "/" + binary_info["path"]))
+        #    % (soname, "/" + binary_info.path))
 
     else:
       # No "really needed libs" means either:
@@ -294,7 +323,7 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
 
     osrel = pkg_data['basic_stats']['parsed_basename']['osrel']
 
-    if osrel == u'SunOS5.9' and '/amd64/' in binary_info['path']:
+    if osrel == u'SunOS5.9' and '/amd64/' in binary_info.path:
       # amd64 binaries in Solaris 5.9 packages were in fact compiled under
       # Solaris 5.10 so we have a special case here
       osrel = u'SunOS5.10'
@@ -316,12 +345,12 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
         messenger.Message(
           "Binary %s requires interface version %s in library %s which is"
           " only available in recent Solaris releases."
-          % ("/" + binary_info["path"], version_dep['version'],
+          % ("/" + binary_info.path, version_dep['version'],
              version_dep['soname']))
         error_mgr.ReportError(
           pkgname, "forbidden-version-interface-dependencies",
           "%s requires forbidden interface version %s in library %s"
-          % ("/" + binary_info["path"], version_dep['version'],
+          % ("/" + binary_info.path, version_dep['version'],
              version_dep['soname']))
 
 
@@ -340,9 +369,10 @@ def ByFilename(pkg_data, error_mgr, logger, messenger,
                  for x, y in DEPENDENCY_FILENAME_REGEXES]
   for regex, regex_str, dep_pkgnames in dep_regexes:
     for pkgmap_entry in pkg_data["pkgmap"]:
-      if pkgmap_entry["path"] and regex.match(pkgmap_entry["path"]):
+      pkgmap_entry = representations.PkgmapEntry._make(pkgmap_entry)
+      if pkgmap_entry.path and regex.match(pkgmap_entry.path):
         reason = ("found file(s) matching %s, e.g. %s"
-               % (regex_str, repr(pkgmap_entry["path"])))
+                  % (regex_str, repr(pkgmap_entry.path)))
         for dep_pkgname in dep_pkgnames:
           error_mgr.NeedPackage(pkgname, dep_pkgname, reason)
         break
@@ -364,8 +394,9 @@ def ByDirectory(pkg_data, error_mgr, logger, messenger,
   needed_dirs = set()
   # Adding base dirs of all the files to the dirs that need to be checked.
   for pkgmap_entry in pkg_data["pkgmap"]:
-    if "path" in pkgmap_entry and pkgmap_entry["path"]:
-      base_dir, dirname = os.path.split(pkgmap_entry["path"])
+    pkgmap_entry = representations.PkgmapEntry._make(pkgmap_entry)
+    if pkgmap_entry.path:
+      base_dir, dirname = os.path.split(pkgmap_entry.path)
       needed_dirs.add(base_dir)
   for needed_dir in needed_dirs:
     reason_group = []

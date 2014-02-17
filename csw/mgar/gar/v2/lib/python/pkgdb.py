@@ -4,41 +4,43 @@
 # $Id$
 
 import ConfigParser
-import cPickle
-import catalog
-import checkpkg_lib
-import code
-import common_constants
-import configuration
-import database
 import datetime
 import getpass
+import hashlib
 import itertools
 import logging
-import models as m
 import optparse
 import os
 import os.path
-import package_checks
-import package_stats
 import progressbar
+import progressbar.widgets
 import re
-import rest
-import shell
 import socket
 import sqlobject
-import struct_util
 import sys
-import system_pkgmap
+
 from sqlobject import sqlbuilder
 from Cheetah.Template import Template
+
+from lib.python import catalog
+from lib.python import checkpkg_lib
+from lib.python import common_constants
+from lib.python import configuration
+from lib.python import database
+from lib.python import models as m
+from lib.python import package_checks
+from lib.python import package_stats
+from lib.python import rest
+from lib.python import shell
+from lib.python import struct_util
+from lib.python import system_pkgmap
 
 USAGE = """
   Preparing the database:
        %prog initdb
-       %prog system-files-to-file [ <infile-contents> <infile-pkginfo>
+       %prog system-metadata-to-disk [ <infile-contents> <infile-pkginfo>
                                     [ <outfile> [ <osrel> <arch> ] ] ]
-       %prog import-system-file <infile>
+       %prog import-system-metadata <osrel> <arch>
 
   Managing individual packages:
        %prog importpkg <file1> [ ... ]
@@ -61,6 +63,8 @@ USAGE = """
        %prog show filename [options] <filename>
        %prog show files <md5-sum>
 
+  osrel := SunOS5.8 | SunOS5.9 | SunOS5.10 | SunOS5.11
+  arch := i386 | sparc
 
 Examples:
     %prog add-to-cat SunOS5.9 sparc unstable <md5sum>
@@ -82,13 +86,18 @@ stats_version:  $stats_version
 
 DEFAULT_TEMPLATE_FILENAME = "../lib/python/pkg-review-template.html"
 CATALOGS_ALLOWED_TO_GENERATE = frozenset([
-  "unstable",
+  "beanie",
+  "bratislava",
   "dublin",
   "kiel",
-  "bratislava",
-  "beanie",
+  "unstable",
 ])
 CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
+  "beanie",
+  "bratislava",
+  "dublin",
+  "kiel",
+  "legacy",
   "unstable",
 ])
 
@@ -195,6 +204,11 @@ class CatalogImporter(object):
 
   def __init__(self, debug=False):
     self.debug = debug
+    config = configuration.GetConfig()
+    self.rest_client = rest.RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'),
+        debug=debug)
 
   def SyncFromCatalogFile(self, osrel, arch, catrel, catalog_file,
       force_unpack=False):
@@ -222,34 +236,25 @@ class CatalogImporter(object):
     # - import all srv4 files that were not in the database so far
     entries_to_import = []
 
-    logging.debug("Checking which srv4 files are already in the db.")
-    for md5 in cat_entry_by_md5:
-      try:
-        sqo_list = m.Srv4FileStats.selectBy(md5_sum=md5).getOne()
-      except sqlobject.main.SQLObjectNotFound, e:
-        entries_to_import.append(cat_entry_by_md5[md5])
+    logging.debug("Checking which srv4 files have already been indexed.")
+    existence_data = (
+        self.rest_client.BulkQueryStatsExistence(list(cat_entry_by_md5)))
+    entries_to_import = [cat_entry_by_md5[x]
+                         for x in existence_data['missing_stats']]
 
-    basenames = [x["file_basename"] for x in entries_to_import]
-    file_list = []
-
+    md5_sums = []
     if entries_to_import:
-      logging.info("Srv4 files to import:")
-      for basename in sorted(basenames):
-        logging.info(" + %s", basename)
-        file_list.append(os.path.join(catalog_dir, basename))
-    new_statdicts = []
-    if file_list:
-      collector = package_stats.StatsCollector(
-          logger=logging,
-          debug=self.debug)
-      new_statdicts = collector.CollectStatsFromFiles(
-          file_list, None, force_unpack=force_unpack)
-    new_statdicts_by_md5 = {}
-    if new_statdicts:
-      logging.info("Marking imported packages as registered.")
-      for statdict in new_statdicts:
-        new_statdicts_by_md5[statdict["basic_stats"]["md5_sum"]] = statdict
-        package_stats.PackageStats.ImportPkg(statdict)
+      collector = package_stats.StatsCollector(logger=logging, debug=self.debug)
+      for entry in entries_to_import:
+        entry['pkg_path'] = os.path.join(catalog_dir, entry['file_basename'])
+      if len(entries_to_import) < 15:
+        logging.info("Srv4 files to unpack:")
+        for basename in sorted(x['file_basename'] for x in entries_to_import):
+          logging.info(" + %s", basename)
+      else:
+        logging.info('Importing %d packages.', len(entries_to_import))
+      md5_sums = collector.CollectStatsFromCatalogEntries(
+          entries_to_import, force_unpack=force_unpack)
 
     # - sync the specific catalog
     #   - find the md5 sum list of the current catalog
@@ -263,12 +268,13 @@ class CatalogImporter(object):
           m.Srv4FileInCatalog.q.arch==sqo_arch,
           m.Srv4FileInCatalog.q.catrel==sqo_catrel))
     db_srv4s_in_cat_by_md5 = {}
+    # TODO(maciej): Convert package removals to REST. Maybe in bulk?
     for srv4_in_cat in res:
       try:
         srv4 = srv4_in_cat.srv4file
         if srv4.use_to_generate_catalogs:
           db_srv4s_in_cat_by_md5[srv4.md5_sum] = srv4_in_cat
-      except sqlobject.main.SQLObjectNotFound, e:
+      except sqlobject.main.SQLObjectNotFound as e:
         logging.warning("Could not retrieve a srv4 file from the db: %s", e)
         # Since the srv4_in_cat object has lost its reference, there's no use
         # keeping it around.
@@ -289,7 +295,7 @@ class CatalogImporter(object):
             " - %s",
             db_srv4s_in_cat_by_md5[md5].srv4file.basename)
 
-    if md5_sums_to_add:
+    if md5_sums_to_add and len(md5_sums_to_add) < 15:
       logging.info("To add to from %s %s %s:", osrel, arch, catrel)
       for md5 in md5_sums_to_add:
         logging.info(
@@ -301,41 +307,49 @@ class CatalogImporter(object):
     # We could use checkpkg_lib.Catalog.RemoveSrv4(), but it would redo
     # many of the database queries and would be much slower.
     if md5_sums_to_remove:
-      logging.info("Removing assignments from the catalog.")
+      logging.info("Removing %d packages from the %s %s %s catalog.",
+                   len(md5_sums_to_remove), osrel, arch, catrel)
       for md5 in md5_sums_to_remove:
         db_srv4s_in_cat_by_md5[md5].destroySelf()
 
-    # Add
-    if md5_sums_to_add:
-      logging.info("Adding srv4 files to the %s %s %s catalog.",
-                   osrel, arch, catrel)
-      db_catalog = checkpkg_lib.Catalog()
-      pbar = progressbar.ProgressBar()
-      pbar.maxval = len(md5_sums_to_add)
-      pbar.start()
-      counter = itertools.count(1)
-      for md5 in md5_sums_to_add:
-        logging.debug("Adding %s", cat_entry_by_md5[md5]["file_basename"])
-        sqo_srv4 = m.Srv4FileStats.selectBy(md5_sum=md5).getOne()
+    if not md5_sums_to_add:
+      return
+    logging.info("Adding %d packages to the %s %s %s catalog.",
+                 len(md5_sums_to_add),
+                 osrel, arch, catrel)
+    pbar = progressbar.ProgressBar(widgets=[
+      progressbar.widgets.Percentage(),
+      ' ',
+      progressbar.widgets.ETA(),
+      ' ',
+      progressbar.widgets.Bar()
+    ])
+    pbar.maxval = len(md5_sums_to_add)
+    pbar.start()
+    counter = itertools.count(1)
+    for md5 in md5_sums_to_add:
+      logging.debug("Adding %s", cat_entry_by_md5[md5]["file_basename"])
 
-        # If a package was previously examined, but not registered, we need to
-        # register it now, to allow inclusion in a catalog.
-        if not sqo_srv4.registered:
-          logging.debug(
-              "Package %s was not registered for releases. Registering it.",
-              sqo_srv4.basename)
-          stats = sqo_srv4.GetStatsStruct()
-          package_stats.PackageStats.ImportPkg(stats, True)
-        try:
-          db_catalog.AddSrv4ToCatalog(
-              sqo_srv4, osrel, arch, catrel,
-              who=user)
-        except checkpkg_lib.CatalogDatabaseError, e:
-          logging.warning(
-              "Could not insert %s (%s) into the database. %s",
-              sqo_srv4.basename, sqo_srv4.md5_sum, e)
-        pbar.update(counter.next())
+      # Explicitly calling the RegisterLevelTwo function, in case the
+      # packages have the flag "use_in_catalogs" set to False. Calling
+      # this function will set it to True.
+      # Note: This makes populating catalogs really, really slow, and
+      # causes subsequent runs to be slow as well. It should only be
+      # a temporary measure.
+      try:
+        pkg = m.Srv4FileStats.selectBy(md5_sum=md5).getOne()
+        if (not pkg.registered_level_two or
+            not pkg.use_to_generate_catalogs):
+          self.rest_client.RegisterLevelTwo(md5, use_in_catalogs=True)
+      except sqlobject.main.SQLObjectNotFound:
+        pass
 
+      # No need to explicitly register the package here; the REST
+      # interface will implicitly take care of that (except it will not
+      # touch the "use_package_in_catalogs" flag.
+      self.rest_client.AddSvr4ToCatalog(catrel, arch, osrel, md5)
+      pbar.update(counter.next())
+    pbar.finish()
 
   def SyncFromCatalogTree(self, catrel, base_dir, force_unpack=False):
     logging.debug("SyncFromCatalogTree(%s, %s, force_unpack=%s)",
@@ -347,18 +361,10 @@ class CatalogImporter(object):
           "The catalog release %s is not one of the default releases.",
           repr(catrel))
     sqo_catrel = m.CatalogRelease.selectBy(name=catrel).getOne()
-    _, uname_stdout, _ = shell.ShellCommand(["uname", "-p"])
-    current_host_arch = uname_stdout.strip()
     for osrel in common_constants.OS_RELS:
       logging.info("  OS release: %s", repr(osrel))
       sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
-        if current_host_arch != arch:
-          logging.warning(
-              "Cannot process packages for achitecture %r "
-              "because we're currently running on architecture %r.",
-              arch, current_host_arch)
-          continue
         logging.info("    Architecture: %s", repr(arch))
         sqo_arch = m.Architecture.selectBy(name=arch).getOne()
         catalog_file = self.ComposeCatalogFilePath(base_dir, osrel, arch)
@@ -423,12 +429,6 @@ def main():
 
   md5_sums = args
 
-  dm = database.DatabaseManager()
-  # Automanage is not what we want to do, if the intention is to initialize
-  # the database.
-  if command != 'initdb':
-    dm.AutoManage()
-
   if (command, subcommand) == ('show', 'errors'):
     for md5_sum in md5_sums:
       srv4 = GetPkg(md5_sum)
@@ -452,37 +452,40 @@ def main():
     sys.stdout.write(g.GenerateHtml())
   elif command == 'initdb':
     config = configuration.GetConfig()
-    db_uri = configuration.ComposeDatabaseUri(config)
-    dbc = database.CatalogDatabase(uri=db_uri)
-    dbc.CreateTables()
-    dbc.InitialDataImport()
+    database.InitDB(config)
   elif command == 'importpkg':
     collector = package_stats.StatsCollector(
         logger=logging,
         debug=options.debug)
     file_list = args
-    try:
-      stats_list = collector.CollectStatsFromFiles(file_list, None,
-          force_unpack=options.force_unpack)
-    except sqlobject.dberrors.OperationalError, e:
-      exception_msg = ("DELETE command denied to user "
-                       "'pkg_maintainer'@'192.168.1.2' for table 'csw_file'")
-      if exception_msg in str(e):
-        logging.fatal(
-            "You don't have sufficient privileges to overwrite previously "
-            "imported package. Did you run checkpkg before running "
-            "csw-upload-pkg?")
-        sys.exit(1)
-      else:
-        raise
+    catalog_entries = []
+    for file_name in file_list:
+      file_hash = hashlib.md5()
+      chunk_size = 2 * 1024 * 1024
+      with open(file_name, 'rb') as fd:
+        data = fd.read(chunk_size)
+        while data:
+          file_hash.update(data)
+          data = fd.read(chunk_size)
+      data_md5_sum = file_hash.hexdigest()
+      catalog_entry = {
+          'md5sum': data_md5_sum,
+          'file_basename': os.path.basename(file_name),
+          'pkg_path': file_name,
+      }
+      catalog_entries.append(catalog_entry)
+    md5_list = collector.CollectStatsFromCatalogEntries(catalog_entries,
+        force_unpack=options.force_unpack)
+    config = configuration.GetConfig()
+    rest_client = rest.RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'),
+        debug=options.debug)
+
     for md5_sum in md5_list:
       logging.debug("Importing %s", md5_sum)
-      try:
-        package_stats.PackageStats.ImportPkg(stats, options.replace)
-      except sqlobject.dberrors.OperationalError, e:
-        logging.fatal(
-            "A problem when importing package data has occurred: %s", e)
-        sys.exit(1)
+      rest_client.RegisterLevelTwo(md5_sum)
+
   elif command == 'removepkg':
     for md5_sum in md5_sums:
       srv4 = GetPkg(md5_sum)
@@ -516,7 +519,7 @@ def main():
     rest_client = rest.RestClient(username=username, password=password)
     for md5_sum in md5_sums:
       rest_client.RemoveSvr4FromCatalog(catrel, arch, osrel, md5_sum)
-  elif command == 'system-files-to-file':
+  elif command == 'system-metadata-to-disk':
     logging.debug("Args: %s", args)
     outfile = None
     infile_contents = common_constants.DEFAULT_INSTALL_CONTENTS_FILE
@@ -539,11 +542,14 @@ def main():
                                 osrel,
                                 arch)
     spi.IndexAndSave()
-  elif command == 'import-system-file':
-    infile = args[0]
-    importer = system_pkgmap.InstallContentsImporter()
-    infile_fd = open(infile, "r")
-    importer.ImportFromFile(infile_fd, show_progress=True)
+  elif command == 'import-system-metadata':
+    if len(args) < 2:
+      raise UsageError("Usage: ... import-system-metadata <osrel> <arch>")
+    osrel = args[0]
+    arch = args[1]
+    importer = system_pkgmap.InstallContentsImporter(osrel, arch,
+                                                     debug=options.debug)
+    importer.Import(show_progress=(not options.debug))
   elif (command, subcommand) == ('pkg', 'search'):
     logging.debug("Searching for %s", args)
     sqo_osrel = m.OsRelease.selectBy(short_name=options.osrel).getOne()

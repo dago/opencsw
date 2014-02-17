@@ -1,10 +1,10 @@
-$def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs, pkgstats_raw, pkgmap)
+$def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs, pkgstats_raw, pkgmap, binary_md5_sums)
 <html>
   <head>
     <title>
       $pkg.basename
     </title>
-    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/pkgdb.css" />
   </head>
   <body>
 
@@ -14,7 +14,7 @@ $def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs, pkgstats_raw, p
       <li><tt>$pkg.md5_sum</tt></li>
       <li>$pkg.basename</li>
       <li>$pkg.pkginst.pkgname</li>
-      <li><a href="../../catalognames/$pkg.catalogname/">$pkg.catalogname</a></li>
+      <li>$pkg.catalogname &mdash; see other packages with catalogname <a href="../../catalognames/$pkg.catalogname/">$pkg.catalogname</a></li>
       <li>$pkg.version_string</li>
       <li>Filename $pkg.filename_arch</li>
       <li>Pkginfo $pkg.arch</li>
@@ -36,9 +36,10 @@ $else:
 
 
 <li>Size: $pkg.size bytes</li>
-<li>Registered: $pkg.registered</li>
+<li>Registration Level 1: $pkg.registered_level_one</li>
+<li>Registration Level 2: $pkg.registered_level_two</li>
 
-$if pkg.registered:
+$if pkg.registered_level_two:
   <li><a href="files/">Files of $pkg.basename</a></li>
 
 <li>Use to generate catalogs: $pkg.use_to_generate_catalogs</li>
@@ -46,6 +47,13 @@ $if pkg.registered:
 <li>Metadata data structure version: $pkg.stats_version</li>
 
 </ul>
+
+$if binary_md5_sums:
+  <h3>ELF inforomation for binaries</h3>
+  <ul>
+  $for bin_path, md5_sum in binary_md5_sums:
+    <li><a href="../../elfdump/$md5_sum/">$bin_path</a></li>
+  </ul>
 
 $if overrides:
   <h3>Overrides</h3>

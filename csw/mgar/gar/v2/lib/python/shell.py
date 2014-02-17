@@ -1,29 +1,32 @@
+import copy
 import logging
 import os
+import pipes
 import signal
 import subprocess
 
-class Error(Exception):
-  """Generic error"""
+from lib.python import errors
 
-class ShellError(Error):
+class ShellError(errors.Error):
   """Problem running a shell command."""
 
-class TimeoutExpired(Error):
-  pass
+
+class TimeoutExpired(errors.Error):
+  """Command running for too long."""
+
 
 def TimeoutHandler(signum, frame):
   raise TimeoutExpired
 
-def ShellCommand(args, env={}, timeout=None,
-                 quiet=True, allow_error=False,
+def ShellCommand(args, env=None,
+                 timeout=None,
+                 quiet=True,
+                 allow_error=False,
                  stdout=subprocess.PIPE,
                  stderr=subprocess.PIPE):
-  logging.debug("Running: %s", args)
-
-  if not quiet:
-    stdout = subprocess.STDOUT
-    stderr = subprocess.STDOUT
+  logging.debug("ShellCommand(%s)", " ".join(pipes.quote(x) for x in args))
+  if not env:
+    env = copy.copy(os.environ)
 
   env['LC_ALL'] = 'C'
 
@@ -42,9 +45,7 @@ def ShellCommand(args, env={}, timeout=None,
                             close_fds=True)
     stdout, stderr = proc.communicate()
     retcode = proc.wait()
-
     signal.alarm(0)
-
   except TimeoutExpired:
     os.kill(-proc.pid, signal.SIGKILL)
     msg = "Process %s killed after timeout expiration" % args
@@ -53,6 +54,25 @@ def ShellCommand(args, env={}, timeout=None,
   if retcode and not allow_error:
     logging.critical(stdout)
     logging.critical(stderr)
-    raise Error("Running %s has failed." % repr(args))
+    raise ShellError(
+        'Running %r has failed, error code: %s. To find out why the command '
+        'failed, please run it in the foreground, like this: %s'
+        % (args, retcode, ' '.join(pipes.quote(x) for x in args)))
 
   return retcode, stdout, stderr
+
+def MakeDirP(self, dir_path, exc_class=None):
+  """mkdir -p equivalent.
+
+  http://stackoverflow.com/questions/600268/mkdir-p-functionality-in-python
+  """
+  try:
+    os.makedirs(dir_path)
+  except OSError as exc:
+    if exc.errno == errno.EEXIST and os.path.isdir(dir_path):
+      pass
+    else:
+      if exc_class:
+        raise exc_class('cannot mkdir %s: %s' % (dir_path, exc))
+      else:
+        raise

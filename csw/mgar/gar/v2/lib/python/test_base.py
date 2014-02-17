@@ -1,5 +1,8 @@
-import sqlobject
 import database
+import logging
+import sqlobject
+
+from lib.python import representations
 
 class SqlObjectTestMixin(object):
 
@@ -20,3 +23,21 @@ class SqlObjectTestMixin(object):
     sqlobject.dbconnection.TheURIOpener.cachedURIs={}
 
 
+class PackageStatsMixin(object):
+
+  def PrepareElfinfo(self, pkg_data):
+    for binary_md5 in pkg_data['elfdump_info']:
+      d = pkg_data['elfdump_info'][binary_md5]
+      syminfo_list = []
+      for syminfo_as_list in d['symbol table']:
+        if isinstance(syminfo_as_list, dict):
+          del syminfo_as_list['type']
+          symbol = representations.ElfSymInfo(**syminfo_as_list)
+        else:
+          symbol = representations.ElfSymInfo._make(syminfo_as_list)
+        syminfo_list.append(symbol)
+      d['symbol table'] = syminfo_list
+    def PkgMapify(as_list):
+      return representations.PkgmapEntry._make(as_list)
+    new_pkgmap = [PkgMapify(x) for x in pkg_data['pkgmap']]
+    pkg_data['pkgmap'] = new_pkgmap
