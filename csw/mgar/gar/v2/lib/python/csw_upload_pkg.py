@@ -7,25 +7,26 @@ http://pycurl.cvs.sourceforge.net/pycurl/pycurl/tests/test_post2.py?view=markup
 """
 
 from StringIO import StringIO
-import pycurl
+import getpass
+import hashlib
+import json
 import logging
 import optparse
-import hashlib
 import os.path
-import opencsw
-import json
-import common_constants
-import socket
+import pycurl
 import rest
-import struct_util
+import socket
 import subprocess
-import file_set_checker
 import sys
-import getpass
 import urllib2
 
-BASE_URL = "http://buildfarm.opencsw.org"
-RELEASES_APP = "/releases"
+import common_constants
+import configuration
+import errors
+import file_set_checker
+import opencsw
+import struct_util
+
 DEFAULT_CATREL = "unstable"
 USAGE = """%prog [ options ] <file1.pkg.gz> [ <file2.pkg.gz> [ ... ] ]
 
@@ -59,33 +60,25 @@ For more information, see:
 http://wiki.opencsw.org/automated-release-process#toc0
 """
 
-class Error(Exception):
-  pass
+class PackageCheckError(errors.Error):
+  """A problem with a package."""
 
 
-class RestCommunicationError(Error):
-  pass
-
-
-class PackageCheckError(Error):
-  """A problem with the package."""
-
-
-class DataError(Error):
+class DataError(errors.Error):
   """Unexpected data found."""
 
 
-class WorkflowError(Error):
+class WorkflowError(errors.Error):
   """Unexpected state of workflow, e.g. expected element not found."""
 
 
-class OurInfrastructureSucksError(Error):
+class OurInfrastructureSucksError(errors.Error):
   """Something that would work in a perfect world, but here it doesn't."""
 
 
 class Srv4Uploader(object):
 
-  def __init__(self, filenames, rest_url, os_release=None, debug=False,
+  def __init__(self, filenames, os_release=None, debug=False,
       output_to_screen=True,
       username=None, password=None,
       catrel=DEFAULT_CATREL):
@@ -96,9 +89,10 @@ class Srv4Uploader(object):
     self.md5_by_filename = {}
     self.debug = debug
     self.os_release = os_release
-    self.rest_url = rest_url
+    config = configuration.GetConfig()
     self._rest_client = rest.RestClient(
-        self.rest_url,
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'),
         username=username,
         password=password)
     self.output_to_screen = output_to_screen
@@ -142,13 +136,14 @@ class Srv4Uploader(object):
     for filename in self.filenames:
       self._ImportMetadata(filename)
       md5_sum = self._GetFileMd5sum(filename)
+      self._rest_client.RegisterLevelTwo(md5_sum)
       file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
       if file_in_allpkgs:
         logging.debug("File %s already uploaded.", filename)
       else:
         if do_upload:
           logging.debug("Uploading %s.", filename)
-          self._PostFile(filename)
+          self._rest_client.PostFile(filename, md5_sum)
           # Querying the database again, this time the data should be
           # there
           file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
@@ -240,11 +235,7 @@ class Srv4Uploader(object):
         try:
           srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
               catrel, arch, osrel, catalogname)
-          # To get the full information; the Srv4ByCatalogAndCatalogname
-          # return a smaller set of data.
-          srv4_in_catalog = self._rest_client.GetPkgByMd5(
-              srv4_in_catalog['md5_sum'])
-        except urllib2.HTTPError, e:
+        except urllib2.HTTPError:
           srv4_in_catalog = None
         if srv4_in_catalog:
           logging.debug("Catalog %s %s contains version %s of the %s package",
@@ -298,70 +289,7 @@ class Srv4Uploader(object):
     return self._rest_client.AddSvr4ToCatalog(self.catrel, arch, osrel, md5_sum)
 
   def _GetSrv4FileMetadata(self, md5_sum):
-    logging.debug("_GetSrv4FileMetadata(%s)", repr(md5_sum))
-    url = self.rest_url + RELEASES_APP + "/srv4/" + md5_sum + "/"
-    c = pycurl.Curl()
-    d = StringIO()
-    h = StringIO()
-    c.setopt(pycurl.URL, url)
-    c.setopt(pycurl.WRITEFUNCTION, d.write)
-    c.setopt(pycurl.HEADERFUNCTION, h.write)
-    c = self._SetAuth(c)
-    if self.debug:
-      c.setopt(c.VERBOSE, 1)
-    c.perform()
-    http_code = c.getinfo(pycurl.HTTP_CODE)
-    logging.debug(
-        "curl getinfo: %s %s %s",
-        type(http_code),
-        http_code,
-        c.getinfo(pycurl.EFFECTIVE_URL))
-    c.close()
-    logging.debug("HTTP code: %s", http_code)
-    if http_code == 401:
-      raise RestCommunicationError("Received HTTP code {0}".format(http_code))
-    successful = (http_code >= 200 and http_code <= 299)
-    metadata = None
-    if successful:
-      metadata = json.loads(d.getvalue())
-    else:
-      logging.debug("Metadata for %s were not found in the database" % repr(md5_sum))
-    return successful, metadata
-
-  def _PostFile(self, filename):
-    if self.output_to_screen:
-      print "Uploading %s" % repr(filename)
-    md5_sum = self._GetFileMd5sum(filename)
-    c = pycurl.Curl()
-    d = StringIO()
-    h = StringIO()
-    url = self.rest_url + RELEASES_APP + "/srv4/"
-    c.setopt(pycurl.URL, url)
-    c.setopt(pycurl.POST, 1)
-    c = self._SetAuth(c)
-    post_data = [
-        ('srv4_file', (pycurl.FORM_FILE, filename)),
-        ('submit', 'Upload'),
-        ('md5_sum', md5_sum),
-        ('basename', os.path.basename(filename)),
-    ]
-    c.setopt(pycurl.HTTPPOST, post_data)
-    c.setopt(pycurl.WRITEFUNCTION, d.write)
-    c.setopt(pycurl.HEADERFUNCTION, h.write)
-    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
-    if self.debug:
-      c.setopt(c.VERBOSE, 1)
-    c.perform()
-    http_code = c.getinfo(pycurl.HTTP_CODE)
-    c.close()
-    if self.debug:
-      logging.debug("*** Headers")
-      logging.debug(h.getvalue())
-      logging.debug("*** Data")
-      logging.debug(d.getvalue())
-    logging.debug("File POST http code: %s", http_code)
-    if http_code >= 400 and http_code <= 499:
-      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+    return self._rest_client.GetSrv4FileMetadataForReleases(md5_sum)
 
   def _CheckpkgSets(self, planned_modifications):
     """Groups packages according to catalogs.
@@ -404,6 +332,9 @@ class Srv4Uploader(object):
                       % (repr(by_osrel),))
     return sorted_filenames
 
+  def _PluralS(self, number):
+    return 's' if number == 0 or number >= 2 else ''
+
   def _RunCheckpkg(self, checkpkg_sets):
     bin_dir = os.path.dirname(__file__)
     checkpkg_executable = os.path.join(bin_dir, "checkpkg")
@@ -414,8 +345,10 @@ class Srv4Uploader(object):
     checks_failed_for_catalogs = []
     args_by_cat = {}
     for arch, osrel in checkpkg_sets:
-      print ("Checking %s package(s) against catalog %s %s %s"
-             % (len(checkpkg_sets[(arch, osrel)]), self.catrel, arch, osrel))
+      number_checked = len(checkpkg_sets[(arch, osrel)])
+      print ("Checking %s package%s against catalog %s %s %s"
+             % (number_checked, self._PluralS(number_checked),
+                self.catrel, arch, osrel))
       md5_sums = []
       basenames = []
       for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
@@ -437,14 +370,14 @@ class Srv4Uploader(object):
             (arch, osrel, basenames)
         )
     if checks_failed_for_catalogs:
-      print "Checks failed for catalogs:"
+      print "Checks failed for the following catalogs:"
       for arch, osrel, basenames in checks_failed_for_catalogs:
         print "  - %s %s" % (arch, osrel)
         for basename in basenames:
           print "    %s" % basename
-        print "To see errors, run:"
+        print "To see the errors, run:"
         print " ", " ".join(args_by_cat[(arch, osrel)])
-      print ("Packages have not been submitted to the %s catalog."
+      print ("Your packages have not been submitted to the %s catalog."
              % self.catrel)
     return not checks_failed_for_catalogs
 
@@ -458,10 +391,6 @@ if __name__ == '__main__':
       dest="os_release",
       help="If specified, only uploads to the specified OS release. "
            "Valid values: {0}".format(" ".join(common_constants.OS_RELS)))
-  parser.add_option("--rest-url",
-      dest="rest_url",
-      default=BASE_URL,
-      help="Base URL for REST, e.g. %s" % BASE_URL)
   parser.add_option("--no-filename-check",
       dest="filename_check",
       default=True, action="store_false",
@@ -503,7 +432,7 @@ if __name__ == '__main__':
 
   if os_release and os_release not in common_constants.OS_RELS:
     raise DataError(
-        "OS release %r is not valid. Valid values: %r"
+        "OS release %r is not valid. The valid values are: %r"
         % (os_release, common_constants.OS_RELS))
 
   username, password = rest.GetUsernameAndPassword()

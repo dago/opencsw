@@ -5,52 +5,32 @@ import copy
 import dateutil.parser
 import itertools
 import logging
+import mute_progressbar
 import os
+import pprint
 import progressbar
 import progressbar.widgets
-import mute_progressbar
 import re
-import pprint
 import sqlobject
-
-import catalog
-import ldd_emul
-import database
-import inspective_package
-import opencsw
-import overrides
-import models as m
-import tag
-import sharedlib_utils
-
+import subprocess
+import sys
 from sqlobject import sqlbuilder
 
-PACKAGE_STATS_VERSION = 12L
-BAD_CONTENT_REGEXES = (
-    # Slightly obfuscating these by using the default concatenation of
-    # strings.
-    r'/export' r'/home',
-    r'/export' r'/medusa',
-    r'/opt' r'/build',
-    r'/usr' r'/local',
-    r'/usr' r'/share',
-)
+from lib.python import catalog
+from lib.python import configuration
+from lib.python import database
+from lib.python import errors
+from lib.python import models
+from lib.python import opencsw
+from lib.python import overrides
+from lib.python import rest
+from lib.python import sharedlib_utils
+from lib.python import shell
+from lib.python import tag
 
 
-class Error(Exception):
-  """Generic error."""
-
-
-class PackageError(Error):
+class PackageError(errors.Error):
   """Problem with the package file examined."""
-
-
-class DatabaseError(Error):
-  """Problem with the database contents or schema."""
-
-
-class StdoutSyntaxError(Error):
-  """A utility's output is bad, e.g. impossible to parse."""
 
 
 class PackageStats(object):
@@ -66,30 +46,20 @@ class PackageStats(object):
     self.dir_format_pkg = None
     self.all_stats = {}
     self.db_pkg_stats = None
+    config = configuration.GetConfig()
+    self.rest_client = rest.RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'))
 
   def __unicode__(self):
     return (u"<PackageStats srv4_pkg=%s md5sum=%s>"
             % (self.srv4_pkg, self.md5sum))
 
-  def GetPkgchkData(self):
-    ret, stdout, stderr = self.srv4_pkg.GetPkgchkOutput()
-    data = {
-        'return_code': ret,
-        'stdout_lines': stdout.splitlines(),
-        'stderr_lines': stderr.splitlines(),
-    }
-    return data
-
-  def GetMd5sum(self):
-    if not self.md5sum:
-      self.md5sum = self.srv4_pkg.GetMd5sum()
-    return self.md5sum
-
   def GetDbObject(self):
     if not self.db_pkg_stats:
       md5_sum = self.GetMd5sum()
       logging.debug(u"GetDbObject(): %s md5sum: %s", self, md5_sum)
-      res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
+      res = models.Srv4FileStats.select(models.Srv4FileStats.q.md5_sum==md5_sum)
       try:
         self.db_pkg_stats = res.getOne()
       except sqlobject.SQLObjectNotFound as e:
@@ -97,327 +67,6 @@ class PackageStats(object):
         return None
       logging.debug(u"GetDbObject(): %s succeeded", md5_sum)
     return self.db_pkg_stats
-
-  def StatsExist(self):
-    """Checks if statistics of a package exist.
-
-    Returns:
-      bool
-    """
-    pkg_stats = self.GetDbObject()
-    if not pkg_stats:
-      logging.debug("Could not get db object for %s", self.GetMd5sum())
-      return False
-    if pkg_stats.stats_version != PACKAGE_STATS_VERSION:
-      logging.debug("Stats version mismatch: package=%s code=%s",
-                    pkg_stats.stats_version,
-                    PACKAGE_STATS_VERSION)
-      return False
-    elif pkg_stats.data_obj is None:
-      logging.debug("Could not find data object for %s", self.GetMd5sum())
-      return False
-    else:
-      return True
-    return False
-
-  def GetInspectivePkg(self):
-    if not self.dir_format_pkg:
-      self.dir_format_pkg = self.srv4_pkg.GetInspectivePkg()
-    return self.dir_format_pkg
-
-  def GetMtime(self):
-    """Get svr4 file mtime value.
-
-    Returns: a datetime.datetime object.
-    """
-    return self.srv4_pkg.GetMtime()
-
-  def GetSize(self):
-    return self.srv4_pkg.GetSize()
-
-  def _MakeDirP(self, dir_path):
-    """mkdir -p equivalent.
-
-    http://stackoverflow.com/questions/600268/mkdir-p-functionality-in-python
-    """
-    try:
-      os.makedirs(dir_path)
-    except OSError as e:
-      if e.errno == errno.EEXIST:
-        pass
-      else:
-        raise
-
-  def GetBinaryDumpInfo(self):
-    dir_pkg = self.GetInspectivePkg()
-    return dir_pkg.GetBinaryDumpInfo()
-
-  def GetBasicStats(self):
-    dir_pkg = self.GetInspectivePkg()
-    basic_stats = {}
-    basic_stats["stats_version"] = PACKAGE_STATS_VERSION
-    basic_stats["pkg_path"] = self.srv4_pkg.pkg_path
-    basic_stats["pkg_basename"] = os.path.basename(self.srv4_pkg.pkg_path)
-    basic_stats["parsed_basename"] = opencsw.ParsePackageFileName(
-        basic_stats["pkg_basename"])
-    basic_stats["pkgname"] = dir_pkg.pkgname
-    basic_stats["catalogname"] = dir_pkg.GetCatalogname()
-    basic_stats["md5_sum"] = self.GetMd5sum()
-    basic_stats["size"] = self.GetSize()
-    return basic_stats
-
-  def GetOverrides(self):
-    dir_pkg = self.GetInspectivePkg()
-    override_list = dir_pkg.GetOverrides()
-    def OverrideToDict(override):
-      return {
-        "pkgname":  override.pkgname,
-        "tag_name":  override.tag_name,
-        "tag_info":  override.tag_info,
-      }
-    overrides_simple = [OverrideToDict(x) for x in override_list]
-    return overrides_simple
-
-  def CollectStats(self, force=False, register_files=False):
-    """Lazy stats collection."""
-    if force or not self.StatsExist():
-      return self._CollectStats(register_files=register_files)
-    return self.ReadSavedStats()
-
-  def _CollectStats(self, register_files):
-    """The list of variables needs to be synchronized with the one
-    at the top of this class.
-
-    Args:
-        register_files: Whether to register all files in the database, so that
-                        they can be used for file collision checking.
-
-    """
-    dir_pkg = self.GetInspectivePkg()
-    logging.debug("Collecting %r (%r) package statistics.", dir_pkg, dir_pkg.pkgname)
-    override_dicts = self.GetOverrides()
-    basic_stats = self.GetBasicStats()
-    # This would be better inferred from pkginfo, and not from the filename, but
-    # there are packages with 'i386' in the pkgname and 'all' as the
-    # architecture.
-    arch = basic_stats["parsed_basename"]["arch"]
-    depends, i_depends = dir_pkg.GetDependencies()
-    pkg_stats = {
-        "binaries": dir_pkg.ListBinaries(),
-        "binaries_dump_info": self.GetBinaryDumpInfo(),
-        "depends": depends,
-        "i_depends": i_depends,
-        "obsoleteness_info": dir_pkg.GetObsoletedBy(),
-        # GetIsaList returns a frozenset, but we need a list.
-        "isalist": list(sharedlib_utils.GetIsalist(arch)),
-        "overrides": override_dicts,
-        "pkgchk": self.GetPkgchkData(),
-        "pkginfo": dir_pkg.GetParsedPkginfo(),
-        "pkgmap": dir_pkg.GetPkgmap().entries,
-        "bad_paths": dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES),
-        "basic_stats": basic_stats,
-        "files_metadata": dir_pkg.GetFilesMetadata(),
-        # Data in json must be stored using simple structures such as numbers
-        # or strings. We cannot store a datetime.datetime object, we must
-        # convert it into a string.
-        "mtime": self.GetMtime().isoformat(),
-        "binaries_elf_info": dir_pkg.GetBinaryElfInfo(),
-    }
-    self.SaveStats(pkg_stats)
-    logging.debug("_CollectStats(): Stats of %s have been collected and saved in the db.",
-                  repr(dir_pkg.pkgname))
-    return pkg_stats
-
-  @classmethod
-  def GetOrSetPkginst(cls, pkgname):
-    try:
-      pkginst = m.Pkginst.select(m.Pkginst.q.pkgname==pkgname).getOne()
-    except sqlobject.main.SQLObjectNotFound as e:
-      logging.debug(e)
-      pkginst = m.Pkginst(pkgname=pkgname)
-    return pkginst
-
-  @classmethod
-  def SaveStats(cls, pkg_stats, register=False):
-    """Saves a data structure to the database.
-
-    Does not require an instance of the class.
-    """
-    logging.debug("SaveStats()")
-    pkgname = pkg_stats["basic_stats"]["pkgname"]
-    # Getting sqlobject representations.
-    pkginst = cls.GetOrSetPkginst(pkgname)
-    try:
-      res = m.Architecture.select(
-          m.Architecture.q.name==pkg_stats["pkginfo"]["ARCH"])
-      arch = res.getOne()
-    except sqlobject.main.SQLObjectNotFound as e:
-      logging.debug(e)
-      arch = m.Architecture(name=pkg_stats["pkginfo"]["ARCH"])
-    try:
-      filename_arch = m.Architecture.select(
-          m.Architecture.q.name
-            ==
-          pkg_stats["basic_stats"]["parsed_basename"]["arch"]).getOne()
-    except sqlobject.main.SQLObjectNotFound as e:
-      filename_arch = m.Architecture(
-          name=pkg_stats["basic_stats"]["parsed_basename"]["arch"])
-    basename = pkg_stats["basic_stats"]["parsed_basename"]
-    parsed_basename = basename
-    os_rel_name = parsed_basename["osrel"]
-    try:
-      os_rel = m.OsRelease.select(
-          m.OsRelease.q.short_name==os_rel_name).getOne()
-    except sqlobject.main.SQLObjectNotFound as e:
-      logging.debug(e)
-      os_rel = m.OsRelease(short_name=os_rel_name, full_name=os_rel_name)
-    try:
-      maint_email = pkg_stats["pkginfo"]["EMAIL"]
-      maintainer = m.Maintainer.select(
-          m.Maintainer.q.email==maint_email).getOne()
-    except sqlobject.main.SQLObjectNotFound as e:
-      logging.debug(e)
-      maintainer = m.Maintainer(email=maint_email)
-
-    rev=None
-    if "revision_info" in parsed_basename:
-      if "REV" in parsed_basename["revision_info"]:
-        rev = parsed_basename["revision_info"]["REV"]
-    # If the object already exists in the database, delete it.
-    md5_sum = pkg_stats["basic_stats"]["md5_sum"]
-    db_pkg_stats = None
-    try:
-      db_pkg_stats = m.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-      logging.debug("Cleaning %s before saving it again", db_pkg_stats)
-      db_pkg_stats.DeleteAllDependentObjects()
-    except sqlobject.main.SQLObjectNotFound as e:
-      logging.debug("Package %s not present in the db, proceeding with insert.",
-                    basename)
-      pass
-    # Creating the object in the database.
-    try:
-      data_obj = m.Srv4FileStatsBlob(pickle=cjson.encode(pkg_stats))
-      data_obj_mimetype = 'application/json'
-    except cjson.EncodeError as e:
-      logging.fatal(pprint.pformat(pkg_stats))
-      raise
-    if db_pkg_stats:
-      # If the database row exists already, update it.
-      #
-      # Assigning properties one by one isn't pretty, but I don't have
-      # a better way of doing it.  Ideally, both creation and update would be
-      # driven by the same data structure.
-      db_pkg_stats.arch = arch
-      db_pkg_stats.basename = pkg_stats["basic_stats"]["pkg_basename"]
-      db_pkg_stats.catalogname = pkg_stats["basic_stats"]["catalogname"]
-      db_pkg_stats.data_obj = data_obj
-      db_pkg_stats.data_obj_mimetype = data_obj_mimetype
-      db_pkg_stats.use_to_generate_catalogs = True
-      db_pkg_stats.filename_arch = filename_arch
-      db_pkg_stats.maintainer = maintainer
-      db_pkg_stats.md5_sum = pkg_stats["basic_stats"]["md5_sum"]
-      db_pkg_stats.size = pkg_stats["basic_stats"]["size"]
-      db_pkg_stats.mtime = dateutil.parser.parse(pkg_stats["mtime"])
-      db_pkg_stats.os_rel = os_rel
-      db_pkg_stats.pkginst = pkginst
-      db_pkg_stats.registered = register
-      db_pkg_stats.rev = rev
-      db_pkg_stats.stats_version = PACKAGE_STATS_VERSION
-      db_pkg_stats.version_string = parsed_basename["full_version_string"]
-    else:
-      db_pkg_stats = m.Srv4FileStats(
-          arch=arch,
-          basename=pkg_stats["basic_stats"]["pkg_basename"],
-          catalogname=pkg_stats["basic_stats"]["catalogname"],
-          data_obj=data_obj,
-          data_obj_mimetype=data_obj_mimetype,
-          use_to_generate_catalogs=True,
-          filename_arch=filename_arch,
-          maintainer=maintainer,
-          md5_sum=pkg_stats["basic_stats"]["md5_sum"],
-          size=pkg_stats["basic_stats"]["size"],
-          mtime=dateutil.parser.parse(pkg_stats["mtime"]),
-          os_rel=os_rel,
-          pkginst=pkginst,
-          registered=register,
-          rev=rev,
-          stats_version=PACKAGE_STATS_VERSION,
-          version_string=parsed_basename["full_version_string"])
-    # Inserting overrides as rows into the database
-    for override_dict in pkg_stats["overrides"]:
-      m.CheckpkgOverride(srv4_file=db_pkg_stats,
-                             **override_dict)
-    # Adding the catalog generation info.
-    catalog_gen_data = m.CatalogGenData(
-        md5_sum=pkg_stats["basic_stats"]["md5_sum"],
-        deps=cjson.encode(pkg_stats["depends"]),
-        pkgname=pkg_stats["basic_stats"]["pkgname"],
-        i_deps=cjson.encode(pkg_stats["i_depends"]),
-        pkginfo_name=pkg_stats["pkginfo"]["NAME"])
-    return db_pkg_stats
-
-  @classmethod
-  def ImportPkg(cls, pkg_stats, replace=False):
-    """Registers a package in the database.
-
-    Srv4FileStats
-    CswFile
-    """
-    pkgname = pkg_stats["basic_stats"]["pkgname"]
-    md5_sum = pkg_stats["basic_stats"]["md5_sum"]
-    try:
-      stats = m.Srv4FileStats.select(
-         m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
-    except sqlobject.SQLObjectNotFound as e:
-      stats = cls.SaveStats(pkg_stats, register=False)
-    if stats.registered and not replace:
-      logging.debug(
-          "@classmethod ImportPkg(): "
-          "Package %r is already registered. Exiting.", stats)
-      return stats
-    stats.RemoveAllCswFiles()
-    for pkgmap_entry in pkg_stats["pkgmap"]:
-      if not pkgmap_entry["path"]:
-        continue
-      pkginst = cls.GetOrSetPkginst(pkgname)
-      try:
-        # The line might be not decodable using utf-8
-        line_u = pkgmap_entry["line"].decode("utf-8")
-        f_path, basename = os.path.split(
-            pkgmap_entry["path"].decode('utf-8'))
-      except UnicodeDecodeError as e:
-        line_u = pkgmap_entry["line"].decode("latin1")
-        f_path, basename = os.path.split(
-            pkgmap_entry["path"].decode('latin1'))
-      except UnicodeEncodeError as e:
-        # the line was already in unicode
-        line_u = pkgmap_entry['line']
-        f_path, basename = os.path.split(pkgmap_entry["path"])
-        # If this fails too, code change will be needed.
-
-      f = m.CswFile(
-          basename=basename,
-          path=f_path,
-          line=line_u,
-          pkginst=pkginst,
-          srv4_file=stats)
-    # Save dependencies in the database.  First remove any dependency rows
-    # that might be in the database.
-    # TODO(maciej): Unit test it
-    deps_res = m.Srv4DependsOn.select(
-        m.Srv4DependsOn.q.srv4_file==stats)
-    for dep_obj in deps_res:
-      dep_obj.destroySelf()
-    for dep_pkgname, unused_desc in pkg_stats["depends"]:
-      dep_pkginst = cls.GetOrSetPkginst(dep_pkgname)
-      obj = m.Srv4DependsOn(
-          srv4_file=stats,
-          pkginst=dep_pkginst)
-
-    # At this point, we've registered the srv4 file.
-    # Setting the registered bit to True
-    stats.registered = True
-    return stats
 
   def GetAllStats(self):
     if not self.all_stats and self.StatsExist():
@@ -430,7 +79,7 @@ class PackageStats(object):
     if not self.StatsExist():
       raise PackageError("Package stats not ready.")
     pkg_stats = self.GetDbObject()
-    res = m.CheckpkgOverride.select(m.CheckpkgOverride.q.srv4_file==pkg_stats)
+    res = models.CheckpkgOverride.select(models.CheckpkgOverride.q.srv4_file==pkg_stats)
     override_list = []
     for db_override in res:
       d = {
@@ -443,38 +92,13 @@ class PackageStats(object):
 
   def GetSavedErrorTags(self):
     pkg_stats = self.GetDbObject()
-    res = m.CheckpkgErrorTag.select(m.CheckpkgErrorTag.q.srv4_file==pkg_stats)
+    res = models.CheckpkgErrorTag.select(models.CheckpkgErrorTag.q.srv4_file==pkg_stats)
     tag_list = [tag.CheckpkgTag(x.pkgname, x.tag_name, x.tag_info, x.msg)
                 for x in res]
     return tag_list
 
   def ReadSavedStats(self):
-    if not self.all_stats:
-      md5_sum = self.GetMd5sum()
-      res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
-      srv4 = res.getOne()
-      if not srv4.data_obj:
-        raise DatabaseError("Could not find the data object for %s (%s)"
-                            % (srv4.basename, md5_sum))
-      self.all_stats = srv4.GetStatsStruct()
-    return self.all_stats
-
-
-def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
-  packages = [inspective_package.InspectiveCswSrv4File(x, debug)
-              for x in file_name_list]
-  if catalog_file_name:
-    with open(catalog_file_name, "rb") as fd:
-      catalog_obj = catalog.OpencswCatalog(fd)
-    md5s_by_basename = catalog_obj.GetDataByBasename()
-    for pkg in packages:
-      basename = os.path.basename(pkg.pkg_path)
-      # It might be the case that a file is present on disk, but missing from
-      # the catalog file.
-      if basename in md5s_by_basename:
-        pkg.md5sum = md5s_by_basename[basename]["md5sum"]
-  stats_list = [PackageStats(pkg) for pkg in packages]
-  return stats_list
+    return self.rest_client.GetBlob('pkgstats', self.GetMd5sum())
 
 
 class StatsCollector(object):
@@ -486,26 +110,29 @@ class StatsCollector(object):
     else:
       self.logger = logging
     self.debug = debug
+    self.config = configuration.GetConfig()
+    self.rest_client = rest.RestClient(
+        pkgdb_url=self.config.get('rest', 'pkgdb'),
+        releases_url=self.config.get('rest', 'releases'))
 
-  def CollectStatsFromFiles(self, file_list, catalog_file, force_unpack=False):
+  def CollectStatsFromCatalogEntries(self, catalog_entries, force_unpack=False):
     """Returns: A list of md5 sums of collected statistics."""
-    args_display = file_list
+    args_display = [x['file_basename'] for x in catalog_entries]
     if len(args_display) > 5:
       args_display = args_display[:5] + ["...more..."]
     self.logger.debug("Processing: %s, please be patient", args_display)
-    stats_list = StatsListFromCatalog(
-        file_list, catalog_file, self.debug)
-    data_list = []
+    md5_sum_list = []
     # Reversing the item order in the list, so that the pop() method can be used
     # to get packages, and the order of processing still matches the one in the
     # catalog file.
-    stats_list.reverse()
-    total_packages = len(stats_list)
+    total_packages = len(catalog_entries)
     if not total_packages:
       raise PackageError("The length of package list is zero.")
     counter = itertools.count(1)
     self.logger.info("Juicing the svr4 package stream files...")
-    if not self.debug:
+    if self.debug:
+      pbar = mute_progressbar.MuteProgressBar()
+    else:
       pbar = progressbar.ProgressBar(widgets=[
         progressbar.widgets.Percentage(),
         ' ',
@@ -515,16 +142,36 @@ class StatsCollector(object):
       ])
       pbar.maxval = total_packages
       pbar.start()
-    else:
-      pbar = mute_progressbar.MuteProgressBar()
-    while stats_list:
-      # This way objects will get garbage collected as soon as they are removed
-      # from the list by pop().  The destructor (__del__()) of the srv4 class
-      # removes the temporary directory from the disk.  This allows to process
-      # the whole catalog.
-      stats = stats_list.pop()
-      stats.CollectStats(force=force_unpack)
-      data_list.append(stats.GetAllStats())
+    base_dir, _ = os.path.split(__file__)
+    collect_pkg_metadata = os.path.join(base_dir, "collect_pkg_metadata.py")
+    for catalog_entry in catalog_entries:
+      pkg_file_name = catalog_entry['pkg_path']
+      args = [collect_pkg_metadata]
+      stderr_file = subprocess.PIPE
+      if self.debug:
+        args.append('--debug')
+        stderr_file = None
+      if force_unpack:
+        args += ['--force-unpack']
+      args += ['--input', pkg_file_name]
+      ret_code, stdout, stderr = shell.ShellCommand(args, allow_error=False,
+                                                    stderr=stderr_file)
+      try:
+        data_back = cjson.decode(stdout)
+        if data_back['md5_sum'] != catalog_entry['md5sum']:
+          msg = ('Unexpected file content: catalog said '
+                 'that %r would have MD5 sum %r but it '
+                 'turned out to be %r when read from allpkgs. '
+                 'We cannot continue, because we have no '
+                 'access to the data we are asked to examine.'
+                 % (catalog_entry['file_basename'],
+                    catalog_entry['md5sum'],
+                    data_back['md5_sum']))
+          raise PackageError(msg)
+        md5_sum_list.append(data_back['md5_sum'])
+      except cjson.DecodeError:
+        logging.fatal('Could not deserialize %r', stdout)
+        raise
       pbar.update(counter.next())
     pbar.finish()
-    return data_list
+    return md5_sum_list

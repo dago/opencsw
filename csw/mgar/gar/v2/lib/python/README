@@ -1,6 +1,27 @@
 This directory contains Python libraries, mostly related to checkpkg.
 
-==Checkpkg==
+== TODO items ==
+
+- populating allpkgs based on an existing catalog tree
+- Testing uploads (locally)
+- Auth for users on the buildfarm
+- Unit tests (unit test data)
+  - what about callbacks?
+
+== Private Buildfarm ==
+
+Notes:
+
+- When running a RESTful web app, /tmp is used to store temporary files.
+  Therefore, if you're uploading a large file and your system has little space
+  in /tmp, the server side process will fail with an error. Make sure that the
+  /tmp directory has about 1GB of free space.
+  If you increase the swap size, /tmp will grow too.
+  References:
+  http://docs.oracle.com/cd/E19963-01/html/821-1448/ggrln.html
+  http://www.c0t0d0s0.org/archives/5815-Less-known-Solaris-features-The-curious-case-of-the-tmp-in-Solaris.html
+
+== Checkpkg ==
 
 Checks to implement:
  - *dev(el)? -> error, suggest *-dev
@@ -25,15 +46,8 @@ Checks implemented:
 
 Development plan for checkpkg:
   Primary focus:
-  - Add support for tiering (core/active/unsupported)
-  - Remeber, against which catalogs has a package been checked, and
-    when.
-  - Add MySQL database garbage collection
-    - Currently, the database is growing indefinitely, at the time of writing
-      it's 1.5GB uncompressed.
-  - When adding a package to a catalog, store the time and date of the
-    addition
-    - Can be generalized as logging
+  - Allow to create a package database on a machine with 1-1.5GB of RAM
+    (e.g. for virtual machines)
   - Add fields to the srv4_file_stats table:
     - source URL (for grouping by software)
     - Description (to search for the word 'transitional')
@@ -62,6 +76,7 @@ Items done:
 - Notify maintainers when their package is available from mirrors
 - Add support for the 'overridden' field in the database
 - Support for relocatable packages
+- Database objects garbage collection
 
 Known problems:
 - libmagic fails sometimes when processing the whole catalog
@@ -73,21 +88,27 @@ tests as means to run various bits of code.  Here's the dependency list
 for Ubuntu.
 
 sudo aptitude install \
-  python-mysql \
   python-cheetah \
   python-magic \
   python-mox \
+  python-mysql \
   python-progressbar \
   python-pycurl \
   python-sqlobject \
   python-unittest2 \
+  python-webpy \
   python-yaml
 
 Seem unpackaged: elftools from
 http://eli.thegreenplace.net/2012/01/06/pyelftools-python-library-for-parsing-elf-and-dwarf/
 
-Solaris package dependencies.
+The progressbar package in older Ubuntu versions (12.4) is too old and does not
+have the progressbar.widget submodule.
 
+Solaris package dependencies:
+
+CSWap2-modwsgi
+CSWapache2
 CSWpy-cheetah
 CSWpy-curl
 CSWpy-libmagic
@@ -97,11 +118,7 @@ CSWpy-progressbar
 CSWpy-pyelftools
 CSWpy-sqlobject
 CSWpy-unittest2
-
-For pkgdb-web
-
-CSWapache2
-CSWap2-modwsgi
+CSWpy-webpy
 
 ===Checkpkg database===
 
@@ -112,3 +129,28 @@ Additional database indexes:
 CREATE INDEX srv4_mtime_idx ON srv4_file_stats(mtime);
 CREATE INDEX srv4_md5_idx ON srv4_file_stats(md5_sum);
 CREATE INDEX catalog_idx ON srv4_file_in_catalog (arch_id, osrel_id, catrel_id);
+
+A query showing how many packages there are in each catalog.
+
+SELECT
+  a.name as arch, o.short_name as osrel, c.name as catrel,
+  s.use_to_generate_catalogs, count(*)
+FROM
+  srv4_file_in_catalog as sit,
+  architecture as a,
+  os_release as o,
+  catalog_release as c,
+  srv4_file_stats as s
+WHERE
+  sit.srv4file_id = s.id
+  and
+  sit.arch_id = a.id
+  and
+  sit.osrel_id = o.id
+  and
+  sit.catrel_id = c.id
+GROUP BY
+  a.id, osrel_id, catrel_id, s.use_to_generate_catalogs
+ORDER BY
+  c.name
+;

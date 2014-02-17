@@ -12,14 +12,16 @@ necessary to bring one catalog to the state of another catalog.
 
 from Cheetah import Template
 import cjson
-import catalog
-import common_constants
 import logging
-import opencsw
 import optparse
 import rest
 import sys
 import re
+
+from lib.python import configuration
+from lib.python import common_constants
+from lib.python import catalog
+from lib.python import opencsw
 
 
 CATALOG_MOD_TMPL = """#!/bin/bash
@@ -148,7 +150,10 @@ def IndexDictByField(d, field):
 def GetCatalogs(catrel_from, catrel_to,
                 include_version_changes,
                 include_downgrades):
-  rest_client = rest.RestClient()
+  config = configuration.GetConfig()
+  rest_client = rest.RestClient(
+      pkgdb_url=config.get('rest', 'pkgdb'),
+      releases_url=config.get('rest', 'releases'))
   def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
     key = r_catrel, r_arch, r_osrel
     catalog = rest_client.GetCatalog(*key)

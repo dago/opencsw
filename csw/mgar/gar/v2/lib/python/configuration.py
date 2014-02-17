@@ -46,6 +46,18 @@ CONFIGURATION_FILE_LOCATIONS = [
     (USER_CONFIG_FILE_TMPL,        False)
 ]
 
+CONFIG_DEFAULTS = {
+    'host': '',
+    'user': '',
+    'password': '',
+    # Caching is disabled by default to conserve RAM. The buildfarm
+    # infrastructure is suffering from OutOfMemory errors on systems with
+    # e.g.  1GB or 1.5GB of RAM.
+    'cache': 'false',
+    'debug': 'false',
+    'debugOutput': 'false',
+}
+
 
 class Error(Exception):
   "Generic error."
@@ -70,7 +82,8 @@ def HomeExists():
 
 
 def GetConfig():
-  config = ConfigParser.SafeConfigParser()
+  # TODO(maciej): set defaults here in the constructor
+  config = ConfigParser.SafeConfigParser(CONFIG_DEFAULTS)
   file_was_found = False
   filenames_read = []
   for file_name_tmpl, default_file in CONFIGURATION_FILE_LOCATIONS:
@@ -83,7 +96,7 @@ def GetConfig():
         filename_found = file_name_tmpl % os.environ
         filenames_read.append(filename_found)
         config.read(filename_found)
-    except KeyError, e:
+    except KeyError as e:
       logging.warn(e)
   if not file_was_found:
     if HomeExists():
@@ -102,7 +115,13 @@ def GetConfig():
       config.set("database", "host", "")
       config.set("database", "user", "")
       config.set("database", "password", "")
-      config.set("database", "auto_manage", "yes")
+      if not config.has_section("rest"):
+        config.add_section("rest")
+      config.set("rest", "pkgdb", "http://localhost:8000")
+      config.set("rest", "releases", "http://localhost:8001")
+      if not config.has_section("buildfarm"):
+        config.add_section("buildfarm")
+      config.set("buildfarm", "catalog_root", "/export/opencsw")
       with open(config_file, "w") as fd:
         config.write(fd)
       logging.debug("Configuration has been written.")
@@ -115,21 +134,35 @@ def GetConfig():
   return config
 
 
-def ComposeDatabaseUri(config):
+def ComposeDatabaseUri(config, cache=False):
   db_data = {
       'db_type': config.get("database", "type"),
       'db_name': config.get("database", "name"),
       'db_host': config.get("database", "host"),
       'db_user': config.get("database", "user"),
-      'db_password': config.get("database", "password")}
-  logging.debug("db_name: %(db_name)s, db_user: %(db_user)s" % db_data)
+      'db_password': config.get("database", "password"),
+      'cache': config.get("database", "cache"),
+      'debug': config.get("database", "debug"),
+      'debugOutput': config.get("database", "debugOutput"),
+  }
+  display_db_data = dict(db_data)
+  display_db_data['db_password'] = '******'
+  logging.debug("db_data: %s" % display_db_data)
   if db_data["db_type"] == "mysql":
-    db_uri_tmpl = "%(db_type)s://%(db_user)s:%(db_password)s@%(db_host)s/%(db_name)s"
+    db_uri_tmpl = ("%(db_type)s://%(db_user)s:%(db_password)s@%(db_host)s/"
+                   "%(db_name)s?cache=%(cache)s")
   elif db_data["db_type"] == "sqlite":
-    db_uri_tmpl = "%(db_type)s://%(db_name)s"
+    connector = '://'
+    if db_data["db_name"] == ":memory:":
+      connector = ':/'
+    db_uri_tmpl = '%(db_type)s'
+    db_uri_tmpl += connector
+    db_uri_tmpl += '%(db_name)s?cache=%(cache)s'
+    db_uri_tmpl += '&debug=%(debug)s'
+    db_uri_tmpl += '&debugOutput=%(debugOutput)s'
   else:
     raise ConfigurationError(
-        "Database type %s is not supported" % repr(db_data["db_type"]))
+        "Database type %r is not supported" % db_data["db_type"])
   db_uri = db_uri_tmpl % db_data
   return db_uri
 
@@ -139,3 +172,6 @@ def SetUpSqlobjectConnection():
   db_uri = ComposeDatabaseUri(config)
   sqo_conn = sqlobject.connectionForURI(db_uri)
   sqlobject.sqlhub.processConnection = sqo_conn
+
+def TearDownSqlobjectConnection():
+  sqlobject.sqlhub.processConnection = None

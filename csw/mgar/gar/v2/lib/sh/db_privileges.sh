@@ -28,16 +28,16 @@ fi
 TABLES_ADMIN=(
   architecture
   catalog_release
-  catalog_release_type
   csw_config
-  data_source
   host
   os_release
 )
+
 TABLES_REL_MGR=(
   srv4_file_in_catalog
   csw_file
   maintainer
+  elfdump_info_blob
 )
 TABLES_REGULAR=(
   pkginst
@@ -47,6 +47,7 @@ TABLES_REGULAR=(
   srv4_depends_on
   srv4_file_stats
   srv4_file_stats_blob
+  srv4_incompatible_with
 )
 
 function print_table_grant {

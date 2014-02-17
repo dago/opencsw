@@ -1,7 +1,14 @@
 #!/usr/bin/env python2.6
 
-import unittest
-import pkgmap
+# Try to use unittest2, fall back to unittest
+try:
+  import unittest2 as unittest
+except ImportError:
+  import unittest
+
+
+from lib.python import pkgmap
+from lib.python import representations
 
 PKGMAP_1 = """1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689
 """
@@ -30,57 +37,69 @@ class PkgmapUnitTest(unittest.TestCase):
 
   def test_1(self):
     pm = pkgmap.Pkgmap(PKGMAP_1.splitlines())
-    expected = [
-        {
-            'group': 'bin',
-            'user':  'root',
-            'path':  '/etc/opt/csw/cups/cupsd.conf.CSW',
-            'line':  '1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689',
-            'type':  'f',
-            'class': 'cswcpsampleconf',
-            'mode':  '0644',
-            'target': None,
-        }
-    ]
-    self.assertEqual(expected, pm.entries)
+    entry = representations.PkgmapEntry(
+            cksum=None,
+            class_='cswcpsampleconf',
+            group='bin',
+            line=('1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW '
+                  '0644 root bin 4053 20987 1264420689'),
+            major=None,
+            minor=None,
+            mode='0644',
+            modtime=None,
+            owner='root',
+            path='/etc/opt/csw/cups/cupsd.conf.CSW',
+            pkgnames=[],
+            size=None,
+            target=None,
+            type_='f',
+    )
+    self.assertEqual(1, len(pm.entries))
+    self.assertEqual(entry, pm.entries[0])
 
   def test_2(self):
     pm = pkgmap.Pkgmap(PKGMAP_2.splitlines())
-    line = ": 1 18128"
+    line = ': 1 18128'
     self.assertTrue(line in pm.entries_by_line)
 
   def test_3(self):
     pm = pkgmap.Pkgmap(PKGMAP_2.splitlines())
-    self.assertTrue("cswcpsampleconf" in pm.entries_by_class)
+    self.assertTrue('cswcpsampleconf' in pm.entries_by_class)
 
   def test_4(self):
     pm = pkgmap.Pkgmap(PKGMAP_3.splitlines())
-    self.assertTrue("build" in pm.entries_by_class)
+    self.assertTrue('build' in pm.entries_by_class)
 
   def testPkgmapSortedByPaths(self):
     pm = pkgmap.Pkgmap(PKGMAP_2.splitlines())
-    paths = [x["path"] for x in pm.entries]
+    paths = [x.path for x in pm.entries]
     self.assertEquals(paths, sorted(paths))
 
   def test_ParseLineSymlink(self):
     pm = pkgmap.Pkgmap(PKGMAP_2.splitlines())
-    line = ("1 s none "
-            "/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5=libpq.so.5.3")
+    line = ('1 s none '
+            '/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5=libpq.so.5.3')
     # s none /opt/csw/lib/sparcv9/libpq.so.5=..//sparcv9/libpq.so.5
     # s none /opt/csw/lib/sparcv9/libpq.so.5.3=..//sparcv9/libpq.so.5.3
-    line_to_add = ("/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5 --> "
-                   "libpq.so.5.3")
-    entry = {
-        'group': None,
-        'target': '/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5.3',
-        'user': None,
-        'path': '/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5',
-        'line': ('1 s none /opt/csw/lib/postgresql/9.0/lib/sparcv9/'
-                 'libpq.so.5=libpq.so.5.3'),
-        'type': 's',
-        'class': 'none',
-        'mode': None,
-    }
+    line_to_add = ('/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5 --> '
+                   'libpq.so.5.3')
+    entry = representations.PkgmapEntry(
+        cksum=None,
+        class_='none',
+        group=None,
+        line=('1 s none /opt/csw/lib/postgresql/9.0/lib/sparcv9/'
+              'libpq.so.5=libpq.so.5.3'),
+        major=None,
+        minor=None,
+        mode=None,
+        modtime=None,
+        owner=None,
+        path='/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5',
+        pkgnames=[],
+        size=None,
+        target='/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5.3',
+        type_='s',
+    )
     self.assertEqual((entry, line_to_add), pm._ParseLine(line))
 
 

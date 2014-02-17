@@ -5,7 +5,8 @@ $def with (srv4, files)
       files of
       $srv4.basename
     </title>
-    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../../static/pkgdb.css" />
   </head>
   <body>
 
@@ -13,13 +14,16 @@ $def with (srv4, files)
   files of $srv4.catalogname $srv4.version_string
 </h2>
 
-<ul>
+<table>
 $for file in files:
-  <li>
-  $file
-  </li>
-
-</ul>
+  <tr>
+  <td>$file.perm_mode</td>
+  <td>$file.perm_user</td>
+  <td>$file.perm_group</td>
+  <td>$file.FullPath()</td>
+  <td>$file.mimetype</td>
+  </tr>
+</table>
 
 </body>
 </html>

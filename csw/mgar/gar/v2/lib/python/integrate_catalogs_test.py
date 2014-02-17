@@ -2,9 +2,9 @@
 
 import Cheetah
 import mox
-import unittest2 as unittest
+import unittest
 
-import integrate_catalogs
+from lib.python import integrate_catalogs
 
 OUT_1 = u"""#!/bin/bash
 # Catalog modification (not integration yet): unstable-fake -> kiel-fake
@@ -67,7 +67,7 @@ new_pkg_fake_catalogname_2
 upgrade_fake_catalogname_2 # version 1.1.31,REV=2013.01.07 to 1.0,REV=2013.01.08 # bundles:
 """
 
-class TemplateUnitTest(mox.MoxTestBase, unittest.TestCase):
+class TemplateUnitTest(mox.MoxTestBase):
 
   def testTemplateMinimal(self):
     self.maxDiff = None

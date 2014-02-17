@@ -4,37 +4,37 @@ from StringIO import StringIO
 import anydbm
 import cjson
 import getpass
+import httplib
 import logging
 import os
 import pycurl
 import re
+import urllib
 import urllib2
 import httplib
 
-import retry_decorator
+# Reading or writing via HTTP can be flaky at times. Since all REST calls are
+# idempotent, it's safe to repeat a failed query.
+from lib.python import retry_decorator
 
-DEFAULT_URL = "http://buildfarm.opencsw.org"
-
-class Error(Exception):
-  """Generic error."""
+from lib.python import configuration
+from lib.python import errors
 
 
-class ArgumentError(Error):
+class ArgumentError(errors.Error):
   """Wrong arguments passed."""
 
 
-class RestCommunicationError(Error):
+class RestCommunicationError(errors.Error):
   """An error during REST request processing."""
 
 
 class RestClient(object):
 
-  PKGDB_APP = "/pkgdb/rest"
-  RELEASES_APP = "/releases"
-
-  def __init__(self, rest_url=DEFAULT_URL, username=None, password=None,
-      debug=False):
-    self.rest_url = rest_url
+  def __init__(self, pkgdb_url, releases_url,
+               username=None, password=None, debug=False):
+    self.pkgdb_url = pkgdb_url
+    self.releases_url = releases_url
     self.username = username
     self.password = password
     self.debug = debug
@@ -45,7 +45,7 @@ class RestClient(object):
 
   def GetPkgByMd5(self, md5_sum):
     self.ValidateMd5(md5_sum)
-    url = self.rest_url + self.PKGDB_APP + "/srv4/%s/" % md5_sum
+    url = self.releases_url + "/srv4/%s/" % md5_sum
     logging.debug("GetPkgByMd5(): GET %s", url)
     try:
       data = urllib2.urlopen(url).read()
@@ -62,20 +62,7 @@ class RestClient(object):
 
   def GetPkgstatsByMd5(self, md5_sum):
     self.ValidateMd5(md5_sum)
-    url = self.rest_url + self.PKGDB_APP + "/srv4/%s/pkg-stats/" % md5_sum
-    logging.debug("GetPkgstatsByMd5(): GET %s", url)
-    try:
-      data = urllib2.urlopen(url).read()
-      return cjson.decode(data)
-    except urllib2.HTTPError, e:
-      logging.warning("%s -- %s", url, e)
-      if e.code == 404:
-        # Code 404 is fine, it means that the package with given md5 does not
-        # exist.
-        return None
-      else:
-        # Other HTTP errors are should be thrown.
-        raise
+    return self.GetBlob('pkgstats', md5_sum)
 
   @retry_decorator.Retry(tries=4, exceptions=(RestCommunicationError, httplib.BadStatusLine))
   def GetCatalogData(self, md5_sum):
@@ -98,7 +85,7 @@ class RestClient(object):
     }
 
   def GetCatalogList(self):
-    url = self.rest_url + self.PKGDB_APP + "/catalogs/"
+    url = self.releases_url + "/catalogs/"
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
@@ -106,8 +93,7 @@ class RestClient(object):
     if not catrel:
       raise ArgumentError("Missing catalog release.")
     url = (
-        self.rest_url
-        + self.PKGDB_APP
+        self.pkgdb_url
         + "/catalogs/%s/%s/%s/?quick=true" % (catrel, arch, osrel))
     logging.debug("GetCatalog(): GET %s", url)
     try:
@@ -119,7 +105,7 @@ class RestClient(object):
 
   def Srv4ByCatalogAndCatalogname(self, catrel, arch, osrel, catalogname):
     """Returns a srv4 data structure or None if not found."""
-    url = self.rest_url + self.PKGDB_APP + (
+    url = self.pkgdb_url + (
         "/catalogs/%s/%s/%s/catalognames/%s/"
         % (catrel, arch, osrel, catalogname))
     logging.debug("Srv4ByCatalogAndCatalogname(): GET %s", url)
@@ -130,7 +116,7 @@ class RestClient(object):
 
   def Srv4ByCatalogAndPkgname(self, catrel, arch, osrel, pkgname):
     """Returns a srv4 data structure or None if not found."""
-    url = self.rest_url + self.PKGDB_APP + (
+    url = self.pkgdb_url + (
         "/catalogs/%s/%s/%s/pkgnames/%s/"
         % (catrel, arch, osrel, pkgname))
     logging.debug("Srv4ByCatalogAndPkgname(): GET %s", url)
@@ -152,10 +138,7 @@ class RestClient(object):
   def RemoveSvr4FromCatalog(self, catrel, arch, osrel, md5_sum):
     url = (
         "%s%s/catalogs/%s/%s/%s/%s/"
-        % (self.rest_url,
-           self.RELEASES_APP,
-           catrel, arch, osrel,
-           md5_sum))
+        % (self.releases_url, catrel, arch, osrel, md5_sum))
     logging.debug("DELETE @ URL: %s %s", type(url), url)
     c = pycurl.Curl()
     d = StringIO()
@@ -181,7 +164,6 @@ class RestClient(object):
           "%s - HTTP code: %s, content: %s"
           % (url, http_code, d.getvalue()))
 
-  @retry_decorator.Retry(tries=4, exceptions=RestCommunicationError)
   def _CurlPut(self, url, data):
     """Makes a PUT request, potentially uploading data.
 
@@ -200,8 +182,14 @@ class RestClient(object):
     d = StringIO()
     h = StringIO()
     c.setopt(pycurl.URL, str(url))
-    c.setopt(pycurl.HTTPPOST, data)
     c.setopt(pycurl.CUSTOMREQUEST, "PUT")
+    if data:
+      c.setopt(pycurl.POST, 1)
+      c.setopt(pycurl.HTTPPOST, data)
+    else:
+      # This setting would make the client hang indefinitely.
+      # c.setopt(pycurl.PUT, 1)
+      pass
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
     # The empty Expect: header fixes the HTTP 417 error on the buildfarm,
@@ -213,8 +201,7 @@ class RestClient(object):
     c.perform()
     http_code = c.getinfo(pycurl.HTTP_CODE)
     logging.debug(
-        "curl getinfo: %s %s %s",
-        type(http_code),
+        "curl getinfo: %s %s",
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
@@ -228,24 +215,138 @@ class RestClient(object):
       logging.debug("Response: %s %s", http_code, d.getvalue())
     return http_code
 
+  @retry_decorator.Retry(tries=4, delay=5,
+                         exceptions=(RestCommunicationError, pycurl.error))
   def AddSvr4ToCatalog(self, catrel, arch, osrel, md5_sum):
     self.ValidateMd5(md5_sum)
     url = (
-        "%s%s/catalogs/%s/%s/%s/%s/"
-        % (self.rest_url,
-           self.RELEASES_APP,
-           catrel,
-           arch,
-           osrel,
-           md5_sum))
-    logging.debug("URL: %s %s", type(url), url)
+        "%s/catalogs/%s/%s/%s/%s/"
+        % (self.releases_url, catrel, arch, osrel, md5_sum))
+    logging.debug("AddSvr4ToCatalog: %s", url)
     return self._CurlPut(url, [])
 
-  def SavePkgstats(self, pkgstats):
-    md5_sum = pkgstats['basic_stats']['md5_sum']
-    url = self.rest_url + self.RELEASES_APP + "/srv4/%s/pkg-stats/" % md5_sum
-    logging.debug("SavePkgstats(): url=%r", url)
-    return self._CurlPut(url, [('pkgstats', cjson.encode(pkgstats))])
+  @retry_decorator.Retry(tries=4, delay=5,
+                         exceptions=(RestCommunicationError, pycurl.error))
+  def SaveBlob(self, tag, md5_sum, data):
+    url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
+    logging.debug("SaveBlob(%s, %s): url=%r", tag, md5_sum, url)
+    json_data = cjson.encode(data)
+    logging.debug("JSON data size: %.1fKB", len(json_data) / 1024)
+    return self._CurlPut(url, [
+      ('json_data', json_data),
+      ('md5_sum', md5_sum),
+    ])
+
+  @retry_decorator.Retry(tries=4, delay=5,
+                         exceptions=(RestCommunicationError, pycurl.error))
+  def GetBlob(self, tag, md5_sum):
+    url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
+    data = urllib2.urlopen(url).read()
+    return cjson.decode(data)
+
+  def _HttpHeadRequest(self, url):
+    """Make a HTTP HEAD request and return the http code."""
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    c.setopt(pycurl.URL, str(url))
+    c.setopt(pycurl.NOPROGRESS, 1)
+    c.setopt(pycurl.NOBODY, 1)
+    c.setopt(pycurl.HEADER, 1)
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    c.close()
+    return http_code
+
+  @retry_decorator.Retry(tries=4, delay=5,
+                         exceptions=(RestCommunicationError, pycurl.error))
+  def BlobExists(self, tag, md5_sum):
+    url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
+    logging.debug('BlobExists(): HEAD %r' % url)
+    http_code = self._HttpHeadRequest(url)
+    if http_code == 404:
+      logging.debug("Stats for %s don't exist" % md5_sum)
+      return False
+    elif http_code == 200:
+      logging.debug('Stats for %s do exist' % md5_sum)
+      return True
+    else:
+      raise RestCommunicationError(
+          "URL HEAD %r HTTP code: %d"
+          % (url, http_code))
+
+  def _RPC(self, url, query_struct):
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    c.setopt(pycurl.URL, str(url))
+    c.setopt(pycurl.POST, 1)
+    data = [
+        ('query_data', cjson.encode(query_struct)),
+    ]
+    c.setopt(pycurl.HTTPPOST, data)
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    # The empty Expect: header fixes the HTTP 417 error on the buildfarm,
+    # related to the use of squid as a proxy (squid only supports HTML/1.0).
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"])
+    c = self._SetAuth(c)
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    logging.debug("curl getinfo: %s %s", http_code, c.getinfo(pycurl.EFFECTIVE_URL))
+    c.close()
+    if http_code >= 400 and http_code < 600:
+      if not self.debug:
+        # In debug mode, all headers are printed to screen, and we aren't
+        # interested in the response body.
+        logging.fatal("Response: %s %s", http_code, d.getvalue())
+      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+    else:
+      d.seek(0)
+      display_response = d.read(100)
+      if d.len > 100:
+        display_response += " (...)"
+      logging.debug('Response: HTTP %d %r', http_code, display_response)
+
+    return cjson.decode(d.getvalue())
+
+  def BulkQueryStatsExistence(self, md5_sum_list):
+    url = self.releases_url + "/rpc/bulk-existing-svr4/"
+    return self._RPC(url, md5_sum_list)
+
+  def RegisterLevelOne(self, md5_sum):
+    self.ValidateMd5(md5_sum)
+    url = self.releases_url + "/svr4/%s/db-level-1/" % md5_sum
+    return self._CurlPut(url, [])
+
+  @retry_decorator.Retry(tries=4, delay=5,
+                         exceptions=(RestCommunicationError, pycurl.error))
+  def IsRegisteredLevelTwo(self, md5_sum):
+    self.ValidateMd5(md5_sum)
+    url = self.releases_url + '/svr4/%s/db-level-2/' % md5_sum
+    http_code = self._HttpHeadRequest(url)
+    if http_code == 404:
+      return False
+    elif http_code == 200:
+      return True
+    else:
+      raise RestCommunicationError("URL %r HTTP code: %d"
+                                   % (url, http_code))
+
+  def RegisterLevelTwo(self, md5_sum, use_in_catalogs=True):
+    self.ValidateMd5(md5_sum)
+    url = self.releases_url + '/svr4/%s/db-level-2/' % md5_sum
+    if use_in_catalogs:
+      url += '?use_in_catalogs=1'
+    else:
+      url += '?use_in_catalogs=0'
+    return self._CurlPut(url, [])
 
   def GetCatalogForGeneration(self, catrel, arch, osrel):
     url = (self.rest_url + self.PKGDB_APP + "/catalogs/%s/%s/%s/for-generation/"
@@ -256,10 +357,17 @@ class RestClient(object):
 
   def GetBasenamesByCatalogAndDir(self, catrel, arch, osrel, basedir):
     url = (
-        self.rest_url
-        + self.PKGDB_APP
-        + "/catalogs/%s/%s/%s/pkgnames-and-paths-by-basedir?basedir=%s"
-           % (catrel, arch, osrel, urlencode(basedir)))
+        self.pkgdb_url
+        + "/catalogs/%s/%s/%s/pkgnames-and-paths-by-basedir?%s"
+           % (catrel, arch, osrel, urllib.urlencode({'basedir': basedir})))
+    data = urllib2.urlopen(url).read()
+    return cjson.decode(data)
+
+  def GetPathsAndPkgnamesByBasename(self, catrel, arch, osrel, basename):
+    url = (
+        self.pkgdb_url
+        + "/catalogs/%s/%s/%s/pkgnames-and-paths-by-basename?%s"
+           % (catrel, arch, osrel, urllib.urlencode({'basename': basename})))
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
@@ -271,6 +379,78 @@ class RestClient(object):
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
 
+  def GetSrv4FileMetadataForReleases(self, md5_sum):
+    """I have no idea what I was thinking when I wrote this.
+
+    This function seems to be looking for the existence of package stats.
+
+    Returns:
+      a tuple: (successful_fetch, metadata)
+    """
+    logging.debug("_GetSrv4FileMetadata(%s)", repr(md5_sum))
+    url = self.releases_url + "/srv4/" + md5_sum + "/"
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    c.setopt(pycurl.URL, url)
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c = self._SetAuth(c)
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    logging.debug(
+        "curl getinfo: %s %s %s",
+        type(http_code),
+        http_code,
+        c.getinfo(pycurl.EFFECTIVE_URL))
+    c.close()
+    logging.debug("HTTP code: %s", http_code)
+    if http_code == 401:
+      raise RestCommunicationError("Received HTTP code {0}".format(http_code))
+    successful = (http_code >= 200 and http_code <= 299)
+    metadata = None
+    if successful:
+      metadata = cjson.decode(d.getvalue())
+    else:
+      logging.debug("Metadata for %s were not found in the database" % repr(md5_sum))
+    return successful, metadata
+
+  def PostFile(self, filename, md5_sum):
+    if self.output_to_screen:
+      print "Uploading %s" % repr(filename)
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    url = self.rest_url + RELEASES_APP + "/srv4/"
+    c.setopt(pycurl.URL, url)
+    c.setopt(pycurl.POST, 1)
+    c = self._SetAuth(c)
+    post_data = [
+        ('srv4_file', (pycurl.FORM_FILE, filename)),
+        ('submit', 'Upload'),
+        ('md5_sum', md5_sum),
+        ('basename', os.path.basename(filename)),
+    ]
+    c.setopt(pycurl.HTTPPOST, post_data)
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    c.close()
+    if self.debug:
+      logging.debug("*** Headers")
+      logging.debug(h.getvalue())
+      logging.debug("*** Data")
+      logging.debug(d.getvalue())
+    logging.debug("File POST http code: %s", http_code)
+    if http_code >= 400 and http_code <= 499:
+      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+
 
 class CachedPkgstats(object):
   """Class responsible for holding and caching package stats.
@@ -281,7 +461,10 @@ class CachedPkgstats(object):
   def __init__(self, filename):
     self.filename = filename
     self.d = anydbm.open("%s.db" % self.filename, "c")
-    self.rest_client = RestClient()
+    config = configuration.GetConfig()
+    self.rest_client = RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'))
     self.deps = anydbm.open("%s-deps.db" % self.filename, "c")
 
   def __del__(self):

@@ -1,15 +1,18 @@
 #!/usr/bin/env python2.6
 
-import checkpkg_lib
 import copy
 import mox
 import unittest
 import pprint
-import dependency_checks
-from testdata import stubs
-from testdata.tree_stats import pkgstats as tree_stats
-from testdata.sudo_stats import pkgstats as sudo_stats
-from testdata.javasvn_stats import pkgstats as javasvn_stats
+
+from lib.python import checkpkg_lib
+from lib.python import dependency_checks
+from lib.python import representations
+from lib.python import test_base
+from lib.python.testdata import stubs
+from lib.python.testdata import tree_stats
+from lib.python.testdata.javasvn_stats import pkgstats as javasvn_stats
+from lib.python.testdata.sudo_stats import pkgstats as sudo_stats
 
 
 class TestGetPkgByFullPath(unittest.TestCase):
@@ -69,7 +72,7 @@ class TestByDirectory(unittest.TestCase):
     self.messenger_stub = stubs.MessengerStub()
     self.error_mgr_mock = self.mox.CreateMock(
         checkpkg_lib.SetCheckInterface)
-    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data = copy.deepcopy(tree_stats.pkgstats[0])
 
   def testByDirectory_1(self):
     path_and_pkg_by_basename = {
@@ -201,7 +204,7 @@ class TestByDirectory(unittest.TestCase):
     self.assertEquals(expected, result)
 
 
-class TestLibraries(mox.MoxTestBase):
+class TestLibraries(test_base.PackageStatsMixin, mox.MoxTestBase):
 
   def setUp(self):
     super(TestLibraries, self).setUp()
@@ -217,17 +220,26 @@ class TestLibraries(mox.MoxTestBase):
     pass
 
   def testByFilename(self):
-    self.pkg_data = copy.deepcopy(tree_stats[0])
-    self.pkg_data["pkgmap"] = [
-        {'class': 'none',
-         'line': 'not important',
-         'mode': '0755',
-         'path': '/opt/csw/apache2/bin/foo',
-         'type': 'f',
-         'group': 'bin',
-         'user': 'root'}]
+    self.pkg_data = copy.deepcopy(tree_stats.pkgstats[0])
+    self.PrepareElfinfo(self.pkg_data)
+    self.pkg_data['pkgmap'] = [representations.PkgmapEntry(
+        line='not important',
+        class_='none',
+        mode='0755',
+        owner='root',
+        group='bin',
+        path='/opt/csw/apache2/bin/foo',
+        target=None,
+        type_='f',
+        major=None,
+        minor=None,
+        size=None,
+        cksum=None,
+        modtime=None,
+        pkgnames=None)]
     self.error_mgr_mock.NeedPackage(u'CSWtree', u'CSWapache2',
-        "found file(s) matching /opt/csw/apache2/, e.g. '/opt/csw/apache2/bin/foo'")
+        "found file(s) matching /opt/csw/apache2/, "
+        "e.g. '/opt/csw/apache2/bin/foo'")
     self.mox.ReplayAll()
     result = dependency_checks.ByFilename(
         self.pkg_data,
@@ -238,7 +250,7 @@ class TestLibraries(mox.MoxTestBase):
     self.mox.VerifyAll()
 
   # def testByFilenamePython(self):
-  #   self.pkg_data = copy.deepcopy(tree_stats[0])
+  #   self.pkg_data = copy.deepcopy(tree_stats.pkgstats[0])
   #   self.pkg_data["pkgmap"] = [
   #       {'class': 'none', 'line': 'not important', 'mode': '0755',
   #        'path': '/opt/csw/lib/python/site-packages/foo.py',
@@ -257,7 +269,7 @@ class TestLibraries(mox.MoxTestBase):
   #   self.mox.VerifyAll()
 
   # def testByFilenamePython27(self):
-  #   self.pkg_data = copy.deepcopy(tree_stats[0])
+  #   self.pkg_data = copy.deepcopy(tree_stats.pkgstats[0])
   #   self.pkg_data["pkgmap"] = [
   #       {'class': 'none', 'line': 'not important', 'mode': '0755',
   #        'path': '/opt/csw/lib/python2.7/site-packages/foo.py',
@@ -276,7 +288,8 @@ class TestLibraries(mox.MoxTestBase):
   #   self.mox.VerifyAll()
 
   def testLibraries_1(self):
-    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data = copy.deepcopy(tree_stats.pkgstats[0])
+    self.PrepareElfinfo(self.pkg_data)
     path_and_pkg_by_basename = {
          'libc.so.1': {u'/usr/lib': [u'SUNWcsl'],
                        u'/usr/lib/libp/sparcv9': [u'SUNWdplx'],
@@ -298,12 +311,17 @@ class TestLibraries(mox.MoxTestBase):
        '/opt/csw/share/man/man1/tree.1': ['CSWtree']}
     self.error_mgr_mock.NeedFile('CSWtree', u'/usr/lib/libc.so.1',
         'opt/csw/bin/tree needs the libc.so.1 soname')
+    self.error_mgr_mock.GetElfdumpInfo(
+        'e92eb6031f1549ccff7bc74dc67a661d').AndReturn(
+            self.pkg_data['elfdump_info']['e92eb6031f1549ccff7bc74dc67a661d'])
     self.mox.ReplayAll()
-    result = dependency_checks.Libraries(self.pkg_data,
-                          self.error_mgr_mock,
-                          self.logger_stub,
-                          self.messenger_stub,
-                          path_and_pkg_by_basename, pkg_by_path)
+    result = dependency_checks.Libraries(
+        self.pkg_data,
+        self.error_mgr_mock,
+        self.logger_stub,
+        self.messenger_stub,
+        path_and_pkg_by_basename,
+        pkg_by_path)
     self.mox.VerifyAll()
 
 

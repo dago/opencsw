@@ -2,14 +2,13 @@
 #
 # Defines models for package database.
 
+import cjson
+import datetime
 import logging
+import os.path
 import re
 import sqlobject
-import os.path
 from sqlobject import sqlbuilder
-import cjson
-import cPickle
-import datetime
 
 
 def SanitizeDatetime(d):
@@ -27,18 +26,13 @@ class DataError(Error):
   """A problem with data in the database."""
 
 
-class CatalogReleaseType(sqlobject.SQLObject):
-  "Unstable, testing, stable."
-  name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
-
-
 class CatalogRelease(sqlobject.SQLObject):
   "Release names: potato, etc."
   name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
-  type = sqlobject.ForeignKey('CatalogReleaseType', notNone=True)
 
   def __unicode__(self):
     return u"Catalog release: %s" % self.name
+
 
 class OsRelease(sqlobject.SQLObject):
   "Short name: SunOS5.9, long name: Solaris 9"
@@ -84,6 +78,12 @@ class Maintainer(sqlobject.SQLObject):
         self.full_name or "Maintainer full name unknown",
         self.ObfuscatedEmail())
 
+  def Username(self):
+    if '@' in self.email:
+      return self.email.split('@')[0]
+    else:
+      return unicode(self)
+
   def GetRestRepr(self):
     return {
         'maintainer_email': self.email,
@@ -127,27 +127,58 @@ class CswFile(sqlobject.SQLObject):
   ensure that they can't be associated with a catalog.  Also, we'd have
   to generate fake md5 sums for them.
   """
+  class sqlmeta:
+    # MySQL uses case-insensitive collation by default, which doesn't make sense
+    # for file names. If the utf8_bin (or other case sensitive) collation is not
+    # used, it reports e.g. Zcat and zcat as a file collision, while it really
+    # isn't one.
+    createSQL = {
+        'mysql' : [
+        'ALTER TABLE csw_file CONVERT TO CHARACTER SET utf8 '
+        'COLLATE utf8_bin']
+    }
   basename = sqlobject.UnicodeCol(length=255, notNone=True)
   path = sqlobject.UnicodeCol(notNone=True, length=900)
   line = sqlobject.UnicodeCol(notNone=True, length=900)
+  # Symlinks don't have permissions on their own
+  perm_user = sqlobject.UnicodeCol(notNone=False, length=255)
+  perm_group = sqlobject.UnicodeCol(notNone=False, length=255)
+  perm_mode = sqlobject.UnicodeCol(notNone=False, length=5)
+  target = sqlobject.UnicodeCol(notNone=False, length=900)
+  mimetype = sqlobject.UnicodeCol(notNone=False, length=255)
+  machine = sqlobject.UnicodeCol(notNone=False, length=255)
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
   srv4_file = sqlobject.ForeignKey('Srv4FileStats')
   basename_idx = sqlobject.DatabaseIndex('basename')
+  path_idx = sqlobject.DatabaseIndex('path')
+
+  def FullPath(self):
+    return os.path.join(self.path, self.basename)
 
   def __unicode__(self):
-    return u"File: %s" % os.path.join(self.path, self.basename)
+    return u"%s %s %s %s %s" % (self.perm_user, self.perm_group, self.perm_mode,
+                                self.FullPath(), self.mimetype)
 
 
+# Storing binary blobs. Caching is disabled for these blobs, because they tend
+# to be large and we don't want them to stick around in the cache.
 class Srv4FileStatsBlob(sqlobject.SQLObject):
-  """Holds pickled data structures.
+  """Holds serialized data structures in JSON.
 
   This table holds potentially large amounts of data (>1MB per row),
   and is separated to make Srv4FileStats lighter.  Sometimes, we don't
   need to retrieve the heavy pickled data if we want to read just a few
   text fields.
   """
-  pickle = sqlobject.BLOBCol(notNone=True, length=(2**24))
-  srv4_file = sqlobject.SingleJoin('Srv4FileStats')
+  class sqlmeta:
+    cacheValues = False
+  md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True, length=32)
+  json = sqlobject.BLOBCol(notNone=True, length=(2**24))
+  content_md5_sum = sqlobject.UnicodeCol(notNone=True, unique=False, length=32)
+  mime_type = sqlobject.UnicodeCol(notNone=True, length=250)
+  created_on = sqlobject.DateTimeCol(
+      notNone=True,
+      default=sqlobject.DateTimeCol.now)
 
 
 class CatalogGenData(sqlobject.SQLObject):
@@ -156,11 +187,24 @@ class CatalogGenData(sqlobject.SQLObject):
   Having this smaller table lets us avoid fetching the main big data
   structure.
   """
-  deps = sqlobject.UnicodeCol(notNone=True, length=(2 ** 14 - 1))
-  i_deps = sqlobject.UnicodeCol(notNone=True, length=(2 ** 14 - 1))
-  pkginfo_name = sqlobject.UnicodeCol(notNone=True, length=(2 ** 14 - 1))
+  deps = sqlobject.BLOBCol(notNone=True, length=(2 ** 14 - 1))
+  i_deps = sqlobject.BLOBCol(notNone=True, length=(2 ** 14 - 1))
+  pkginfo_name = sqlobject.BLOBCol(notNone=True, length=(2 ** 14 - 1))
   pkgname = sqlobject.UnicodeCol(default=None, length=250)
   md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True, length=32)
+
+
+class ElfdumpInfoBlob(sqlobject.SQLObject):
+  """Holds JSON with elfdump information for a package.
+
+  Indexed by the md5 sum of the binary.
+  """
+  class sqlmeta:
+    cacheValues = False
+  md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True, length=32)
+  json = sqlobject.BLOBCol(notNone=True, length=(2**24 - 1))
+  content_md5_sum = sqlobject.UnicodeCol(notNone=True, unique=False, length=32)
+  mime_type = sqlobject.UnicodeCol(notNone=True, length=250)
 
 
 class Srv4FileStats(sqlobject.SQLObject):
@@ -171,40 +215,41 @@ class Srv4FileStats(sqlobject.SQLObject):
   arch = sqlobject.ForeignKey('Architecture', notNone=True)
   basename = sqlobject.UnicodeCol(notNone=True, length=250)
   catalogname = sqlobject.UnicodeCol(notNone=True, length=250)
-  # The data structure can be missing - necessary for fake SUNW
-  # packages.
-  data_obj = sqlobject.ForeignKey('Srv4FileStatsBlob', notNone=False)
-  data_obj_mimetype = sqlobject.UnicodeCol(notNone=True, length=250)
   filename_arch = sqlobject.ForeignKey('Architecture', notNone=True)
   maintainer = sqlobject.ForeignKey('Maintainer', notNone=False)
   md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True, length=32)
   size = sqlobject.IntCol()
   mtime = sqlobject.DateTimeCol(notNone=False)
   os_rel = sqlobject.ForeignKey('OsRelease', notNone=True)
+  osrel_str = sqlobject.UnicodeCol(notNone=True, length=9) # "SunOS5.10"
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
-  registered = sqlobject.BoolCol(notNone=True)
+  pkginst_str = sqlobject.UnicodeCol(notNone=True, length=255)
+  registered_level_one = sqlobject.BoolCol(notNone=True)
+  registered_level_two = sqlobject.BoolCol(notNone=True)
   use_to_generate_catalogs = sqlobject.BoolCol(notNone=True)
   rev = sqlobject.UnicodeCol(notNone=False, length=250)
   stats_version = sqlobject.IntCol(notNone=True)
   version_string = sqlobject.UnicodeCol(notNone=True, length=250)
+  bundle = sqlobject.UnicodeCol(length=250)
   in_catalogs = sqlobject.MultipleJoin(
           'Srv4FileInCatalog',
           joinColumn='srv4file_id')
   files = sqlobject.MultipleJoin('CswFile',
           joinColumn='id')
+  catalog_idx = sqlobject.DatabaseIndex('catalogname')
+  basename_idx = sqlobject.DatabaseIndex('basename')
+  pkginst_idx = sqlobject.DatabaseIndex('pkginst')
 
   def __init__(self, *args, **kwargs):
     super(Srv4FileStats, self).__init__(*args, **kwargs)
 
   def DeleteAllDependentObjects(self):
-    data_obj = self.data_obj
-    self.data_obj = None
-    if data_obj:
-      # It could be already missing
-      data_obj.destroySelf()
+    self.RemoveCatalogAssignments()
     self.RemoveAllCswFiles()
     self.RemoveAllCheckpkgResults()
     self.RemoveOverrides()
+    self.RemoveDepends()
+    self.RemoveIncompatibles()
 
   def RemoveAllCswFiles(self):
     # Removing existing files, using sqlbuilder to use sql-level
@@ -214,6 +259,24 @@ class Srv4FileStats(sqlobject.SQLObject):
         sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
           CswFile.sqlmeta.table,
           CswFile.q.srv4_file==self)))
+
+  def RemoveDepends(self):
+    sqlobject.sqlhub.processConnection.query(
+        sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
+          Srv4DependsOn.sqlmeta.table,
+          Srv4DependsOn.q.srv4_file==self)))
+
+  def RemoveIncompatibles(self):
+    sqlobject.sqlhub.processConnection.query(
+        sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
+          Srv4IncompatibleWith.sqlmeta.table,
+          Srv4IncompatibleWith.q.srv4_file==self)))
+
+  def RemoveCatalogAssignments(self):
+    sqlobject.sqlhub.processConnection.query(
+        sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
+          Srv4FileInCatalog.sqlmeta.table,
+          Srv4FileInCatalog.q.srv4file==self)))
 
   def GetOverridesResult(self):
     return CheckpkgOverride.select(CheckpkgOverride.q.srv4_file==self)
@@ -275,32 +338,8 @@ class Srv4FileStats(sqlobject.SQLObject):
         s = s + u" (bad unicode detected)"
     return s
 
-  def GetStatsStruct(self):
-    if self.data_obj_mimetype == 'application/json':
-      pkgstats = cjson.decode(str(self.data_obj.pickle))
-    elif self.data_obj_mimetype == 'application/python-pickle':
-      pkgstats = cPickle.loads(str(self.data_obj.pickle))
-    else:
-      raise DataError("Unrecognized mime type: %s" % self.data_obj_mimetype)
-    # There was a problem with bad utf-8 in the VENDOR field.
-    # This is a workaround.
-    if "VENDOR" in pkgstats["pkginfo"]:
-      pkgstats["pkginfo"]["VENDOR"] = self.GetUnicodeOrNone(
-          pkgstats["pkginfo"]["VENDOR"])
-    # The end of the hack.
-    #
-    # One more workaround
-    for d in pkgstats["pkgmap"]:
-      if "path" in d:
-        d["path"] = self.GetUnicodeOrNone(d["path"])
-        d["line"] = self.GetUnicodeOrNone(d["line"])
-    # End of the workaround
-    pkgstats['mtime'] = SanitizeDatetime(pkgstats['mtime'])
-    if isinstance(pkgstats['isalist'], frozenset):
-      pkgstats['isalist'] = list(pkgstats['isalist'])
-    return pkgstats
-
   def _GetBuildSource(self):
+    return "_GetBuildSource(): Not implemented"
     data = self.GetStatsStruct()
     build_src = None
     if "OPENCSW_REPOSITORY" in data["pkginfo"]:
@@ -325,6 +364,7 @@ class Srv4FileStats(sqlobject.SQLObject):
     return trac_url
 
   def GetVendorUrl(self):
+    return "GetVendorUrl(): Not implemented"
     data = self.GetStatsStruct()
     vendor_url = None
     if "VENDOR" in data["pkginfo"]:
@@ -352,6 +392,8 @@ class Srv4FileStats(sqlobject.SQLObject):
         'version_string': self.version_string,
         # For compatibility with the catalog parser from catalog.py
         'version': self.version_string,
+        'osrel': self.osrel_str,
+        'pkgname': self.pkginst_str,
     }
     if not quick:
        data['arch'] = self.arch.name
@@ -359,8 +401,6 @@ class Srv4FileStats(sqlobject.SQLObject):
        data['maintainer_email'] = self.maintainer.email
        data['maintainer_full_name'] = self.maintainer.full_name
        data['maintainer_id'] = self.maintainer.id
-       data['osrel'] = self.os_rel.short_name
-       data['pkgname'] = self.pkginst.pkgname
        data['vendor_url'] = self.GetVendorUrl()
        data['repository_url'] = self.GetSvnUrl()
        # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
@@ -456,20 +496,23 @@ class Srv4FileInCatalog(sqlobject.SQLObject):
           unique=True)
 
   def __unicode__(self):
-    return (
-        u"%s is in catalog %s %s %s"
-        % (self.srv4file,
-           self.arch.name,
-           self.osrel.full_name,
-           self.catrel.name))
+    return (u"%s is in catalog %s %s %s"
+            % (self.srv4file,
+               self.arch.name, self.osrel.full_name, self.catrel.name))
 
 
 class Srv4DependsOn(sqlobject.SQLObject):
   """Models dependencies."""
   srv4_file = sqlobject.ForeignKey('Srv4FileStats', notNone=True)
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
-  dep_uniq_idx = sqlobject.DatabaseIndex(
-      'srv4_file', 'pkginst')
+  dep_uniq_idx = sqlobject.DatabaseIndex('srv4_file', 'pkginst')
+
+
+class Srv4IncompatibleWith(sqlobject.SQLObject):
+  """Models dependencies."""
+  srv4_file = sqlobject.ForeignKey('Srv4FileStats', notNone=True)
+  pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
+  dep_uniq_idx = sqlobject.DatabaseIndex('srv4_file', 'pkginst')
 
 
 def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):

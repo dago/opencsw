@@ -6,6 +6,8 @@ import re
 import os.path
 import common_constants
 
+from lib.python import representations
+
 class Error(Exception):
   """Generic error."""
 
@@ -174,10 +176,9 @@ def GetSharedLibs(pkg_data):
   # Finding all shared libraries
   shared_libs = []
   for metadata in pkg_data["files_metadata"]:
-    if "mime_type" in metadata and metadata["mime_type"]:
-      # TODO: Find out where mime_type is missing and why
-      if "sharedlib" in metadata["mime_type"]:
-        shared_libs.append(metadata["path"])
+    metadata = representations.FileMetadata(*metadata)
+    if "sharedlib" in metadata.mime_type:
+      shared_libs.append(metadata.path)
   return shared_libs
 
 
@@ -202,7 +203,7 @@ def LongestCommonSubstring(S, T):
   return LCS
 
 
-def IsBinary(file_info, check_consistency=True):
+def IsBinary(file_info, check_consistency=True, allow_missing=False):
   """Returns True or False depending on file metadata.
 
   Args:
@@ -215,11 +216,13 @@ def IsBinary(file_info, check_consistency=True):
   is_a_binary = False
   if "mime_type" not in file_info:
     # This would be a problem in the data.
-    raise DataInconsistencyError("%r is missing a file type" % file_info)
+    raise DataInconsistencyError("%s is missing a file type" % repr(file_info))
   if not file_info["mime_type"]:
     # This should never happen, but it seems to have happened at least once.
     # TODO: Find the affected data and figure out why.
-    raise DataError("file_info is missing mime_type:" % file_info)
+    if allow_missing:
+      return False
+    raise DataError("%s is missing mime_type:" % repr(file_info))
   for mimetype in BIN_MIMETYPES:
     if mimetype in file_info["mime_type"]:
       is_a_binary = True

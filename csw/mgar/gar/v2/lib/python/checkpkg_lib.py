@@ -3,35 +3,34 @@
 # This file is supposed to drain the checkpkg.py file until is becomes
 # empty and goes away.
 
-import copy
 from Cheetah import Template
-import logging
-import getpass
-import package_stats
-import package_checks
-import sqlobject
-import collections
-import itertools
-import progressbar
-import database
-import models as m
-import textwrap
-import os.path
-import tag
-import pprint
-import operator
-import common_constants
-import sharedlib_utils
-import mute_progressbar
-import cPickle
-import dependency_checks
 from sqlobject import sqlbuilder
+import collections
+import copy
+import getpass
+import itertools
+import logging
+import operator
+import os.path
+import pprint
+import progressbar
 import re
+import sqlobject
+import textwrap
 
+from lib.python import mute_progressbar
+from lib.python import common_constants
+from lib.python import configuration
+from lib.python import database
+from lib.python import errors
+from lib.python import models as m
+from lib.python import rest
+from lib.python import sharedlib_utils
+from lib.python import tag
+from lib.python import representations
 
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 
-INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
 SYS_DEFAULT_RUNPATH = [
     "/usr/lib/$ISALIST",
     "/usr/lib",
@@ -39,61 +38,21 @@ SYS_DEFAULT_RUNPATH = [
     "/lib",
 ]
 
-class Error(Exception):
-  """Generic error."""
 
-
-class CatalogDatabaseError(Error):
+class CatalogDatabaseError(errors.Error):
   """Problem with the catalog database."""
 
 
-class DataError(Error):
+class DataError(errors.Error):
   """A problem with reading required data."""
 
 
-class ConfigurationError(Error):
+class ConfigurationError(errors.Error):
   """A problem with checkpkg configuration."""
 
 
-class PackageError(Error):
-  pass
-
-
-class StdoutSyntaxError(Error):
-  pass
-
-
-class SetupError(Error):
-  pass
-
-
-class InternalDataError(Error):
+class InternalDataError(errors.Error):
   """Problem with internal checkpkg data structures."""
-
-
-def GetPackageStatsByFilenamesOrMd5s(args, debug=False):
-  filenames = []
-  md5s = []
-  for arg in args:
-    if struct_util.IsMd5(arg):
-      md5s.append(arg)
-    else:
-      filenames.append(arg)
-  srv4_pkgs = [inspective_package.InspectiveCswSrv4File(x) for x in filenames]
-  pkgstat_objs = []
-  pbar = progressbar.ProgressBar()
-  pbar.maxval = len(md5s) + len(srv4_pkgs)
-  pbar.start()
-  counter = itertools.count()
-  for pkg in srv4_pkgs:
-    pkgstat_objs.append(package_stats.PackageStats(pkg, debug=debug))
-    pbar.update(counter.next())
-  for md5 in md5s:
-    pkgstat_objs.append(package_stats.PackageStats(None, md5sum=md5, debug=debug))
-    pbar.update(counter.next())
-  pbar.finish()
-  return pkgstat_objs
-
 
 
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
@@ -204,6 +163,23 @@ class SqlobjectHelperMixin(object):
     return self.triad_cache[key]
 
 
+class LazyElfinfo(object):
+  """Used at runtime for lazy fetches of elfdump info data."""
+
+  def __init__(self, rest_client):
+    self.rest_client = rest_client
+
+  def __getitem__(self, md5_sum):
+    elfdump_data = self.rest_client.GetBlob('elfdump', md5_sum)
+    # json doesn't preserve namedtuple so we do some post-processing
+    # to transform symbol info from List to NamedTuple
+    symbols = elfdump_data['symbol table']
+    for idx, symbol_as_list in enumerate(symbols):
+      symbols[idx] = representations.ElfSymInfo(*symbol_as_list)
+
+    return elfdump_data
+
+
 class CheckpkgManagerBase(SqlobjectHelperMixin):
   """Common functions between the older and newer calling functions."""
 
@@ -220,6 +196,10 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
     self._ResetState()
     self.individual_checks = []
     self.set_checks = []
+    config = configuration.GetConfig()
+    self.rest_client = rest.RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'))
 
   def _ResetState(self):
     self.errors = []
@@ -277,16 +257,12 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
       #
       # Python strings are already implementing the flyweight pattern. What's
       # left is lists and dictionaries.
-      i = counter.next()
-      if stats_obj.data_obj:
-        raw_pkg_data = stats_obj.GetStatsStruct()
-      else:
-        raise CatalogDatabaseError(
-            "%s (%s) is missing the data object."
-            % (stats_obj.basename, stats_obj.md5_sum))
-      pkg_data = raw_pkg_data
-      pkgs_data.append(pkg_data)
-      pbar.update(i)
+      raw_pkg_data = self.rest_client.GetBlob('pkgstats', stats_obj.md5_sum)
+      # Registering a callback allowing the receiver to retrieve the elfdump
+      # information when necessary.
+      raw_pkg_data['elfdump_info'] = LazyElfinfo(self.rest_client)
+      pkgs_data.append(raw_pkg_data)
+      pbar.update(counter.next())
     pbar.finish()
     return pkgs_data
 
@@ -360,13 +336,17 @@ class CheckInterfaceBase(object):
   It wraps access to the catalog database.
   """
 
-  def __init__(self, osrel, arch, catrel, catalog, pkg_set_files, lines_dict=None):
+  def __init__(self, osrel, arch, catrel, catalog, pkg_set_files, lines_dict=None,
+               rest_client=None):
     """
     Args:
       osrel: OS release
       arch: Architecture
       catrel: Catalog release
+      catalog: ?
       pkgs_set_files: A dictionary of collections of pairs path / basename
+      lines_dict: ?
+      rest_client: the rest interface client
 
     An example:
     {
@@ -406,6 +386,7 @@ class CheckInterfaceBase(object):
         self.pkgs_by_basename.setdefault(base_name, {})
         self.pkgs_by_basename[base_name].setdefault(base_path, set())
         self.pkgs_by_basename[base_name][base_path].add(pkgname)
+    self.rest_client = rest_client
 
   def GetErrors(self):
     return self.__errors
@@ -417,9 +398,8 @@ class CheckInterfaceBase(object):
 
   def GetPathsAndPkgnamesByBasename(self, basename):
     """Proxies calls to class member."""
-    catalog_paths = self.catalog.GetPathsAndPkgnamesByBasename(
-        basename, self.osrel, self.arch, self.catrel)
-    paths_and_pkgs = copy.deepcopy(catalog_paths)
+    paths_and_pkgs = self.rest_client.GetPathsAndPkgnamesByBasename(
+      self.catrel, self.arch, self.osrel, basename)
     # Removing references to packages under test
     for catalog_path in paths_and_pkgs:
       for pkgname in self.pkg_set_files:
@@ -446,9 +426,9 @@ class CheckInterfaceBase(object):
       if file_path in self.pkgs_by_file:
         for pkg in self.pkgs_by_file[file_path]:
           pkgs.add(pkg)
-      logging_response = pprint.pformat(pkgs)
-      logging.debug("GetPkgByPath(%s).AndReturn(%s)"
-                    % (file_path, logging_response))
+      # logging_response = pprint.pformat(pkgs)
+      # logging.debug("GetPkgByPath(%s).AndReturn(%s)"
+      #               % (file_path, logging_response))
       self.pkgs_by_path_cache[key] = pkgs
     return self.pkgs_by_path_cache[key]
 
@@ -512,6 +492,9 @@ class CheckInterfaceBase(object):
     checkpkg_tag = tag.CheckpkgTag(pkgname, tag_name, tag_info, msg=msg)
     self.AddError(checkpkg_tag)
 
+  def GetElfdumpInfo(self, md5_sum):
+    return self.rest_client.GetBlob('elfinfo', md5_sum)
+
 
 class IndividualCheckInterface(CheckInterfaceBase):
   """To be passed to the checking functions.
@@ -519,14 +502,14 @@ class IndividualCheckInterface(CheckInterfaceBase):
   Wraps the creation of tag.CheckpkgTag objects.
   """
 
-  def __init__(self, pkgname, osrel, arch, catrel, catalog, pkg_set_files):
+  def __init__(self, pkgname, osrel, arch, catrel, catalog, pkg_set_files, rest_client):
     super(IndividualCheckInterface, self).__init__(
-        osrel, arch, catrel, catalog, pkg_set_files)
+        osrel, arch, catrel, catalog, pkg_set_files, rest_client=rest_client)
     self.pkgname = pkgname
 
   def ReportError(self, tag_name, tag_info=None, msg=None):
-    logging.debug("self.error_mgr_mock.ReportError(%s, %s, %s)",
-                  repr(tag_name), repr(tag_info), repr(msg))
+    # logging.debug("self.error_mgr_mock.ReportError(%s, %s, %s)",
+    #               repr(tag_name), repr(tag_info), repr(msg))
     self.ReportErrorForPkgname(
         self.pkgname, tag_name, tag_info, msg=msg)
 
@@ -542,8 +525,9 @@ class IndividualCheckInterface(CheckInterfaceBase):
 class SetCheckInterface(CheckInterfaceBase):
   """To be passed to set checking functions."""
 
-  def __init__(self, osrel, arch, catrel, catalog, pkg_set_files):
-    super(SetCheckInterface, self).__init__(osrel, arch, catrel, catalog, pkg_set_files)
+  def __init__(self, osrel, arch, catrel, catalog, pkg_set_files, rest_client):
+    super(SetCheckInterface, self).__init__(
+      osrel, arch, catrel, catalog, pkg_set_files, rest_client=rest_client)
 
   def NeedFile(self, pkgname, full_path, reason):
     "See base class _NeedFile."
@@ -554,9 +538,9 @@ class SetCheckInterface(CheckInterfaceBase):
     self._NeedPackage(pkgname, needed_pkg, reason)
 
   def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
-    logging.debug("self.error_mgr_mock.ReportError(%s, %s, %s, %s)",
-                  repr(pkgname),
-                  repr(tag_name), repr(tag_info), repr(msg))
+    # logging.debug("self.error_mgr_mock.ReportError(%s, %s, %s, %s)",
+    #               repr(pkgname),
+    #               repr(tag_name), repr(tag_info), repr(msg))
     self.ReportErrorForPkgname(pkgname, tag_name, tag_info, msg)
 
 
@@ -568,16 +552,16 @@ class CheckpkgMessenger(object):
     self.gar_lines = []
 
   def Message(self, m):
-    logging.debug("self.messenger.Message(%s)", repr(m))
+    # logging.debug("self.messenger.Message(%s)", repr(m))
     self.messages.append(m)
 
   def OneTimeMessage(self, key, m):
-    logging.debug("self.messenger.OneTimeMessage(%s, %s)", repr(key), repr(m))
+    # logging.debug("self.messenger.OneTimeMessage(%s, %s)", repr(key), repr(m))
     if key not in self.one_time_messages:
       self.one_time_messages[key] = m
 
   def SuggestGarLine(self, m):
-    logging.debug("self.messenger.SuggestGarLine(%s)", repr(m))
+    # logging.debug("self.messenger.SuggestGarLine(%s)", repr(m))
     self.gar_lines.append(m)
 
 
@@ -606,6 +590,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     if self.checks_registered:
       logging.debug("Checks already registered.")
       return
+    from lib.python import package_checks
     checkpkg_module = package_checks
     members = dir(checkpkg_module)
     for member_name in members:
@@ -822,6 +807,18 @@ class CheckpkgManager2(CheckpkgManagerBase):
         new_missing_dep_groups.add(frozenset(new_missing_deps_group))
     return new_missing_dep_groups
 
+  def _ExaminedFilesByPkg(self, pkgs_data):
+    examined_files_by_pkg = {}
+    for pkg_data in pkgs_data:
+      pkgname = pkg_data["basic_stats"]["pkgname"]
+      examined_files_by_pkg.setdefault(pkgname, set())
+      for entry in pkg_data["pkgmap"]:
+        if "path" in entry and entry["path"]:
+          base_path, base_name = os.path.split(entry["path"])
+          examined_files_by_pkg[pkgname].add((base_path, base_name))
+    return examined_files_by_pkg
+
+
   def GetAllTags(self, stats_obj_list):
     errors = {}
     catalog = Catalog()
@@ -839,19 +836,13 @@ class CheckpkgManager2(CheckpkgManagerBase):
     pbar.start()
     declared_deps_by_pkgname = {}
     # Build a map between packages and files:
-    examined_files_by_pkg = {}
-    for pkg_data in pkgs_data:
-      pkgname = pkg_data["basic_stats"]["pkgname"]
-      examined_files_by_pkg.setdefault(pkgname, set())
-      for entry in pkg_data["pkgmap"]:
-        if "path" in entry and entry["path"]:
-          base_path, base_name = os.path.split(entry["path"])
-          examined_files_by_pkg[pkgname].add((base_path, base_name))
+    examined_files_by_pkg = self._ExaminedFilesByPkg(pkgs_data)
     # Running individual checks
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
       check_interface = IndividualCheckInterface(
-          pkgname, self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg)
+          pkgname, self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg,
+          rest_client=self.rest_client)
       for function in self.individual_checks:
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
@@ -879,7 +870,8 @@ class CheckpkgManager2(CheckpkgManagerBase):
     for function in self.set_checks:
       logger = logging.getLogger(function.__name__)
       check_interface = SetCheckInterface(
-          self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg)
+          self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg,
+          rest_client=self.rest_client)
       logger.debug("Calling %s", function.__name__)
       function(pkgs_data, check_interface, logger=logger, messenger=messenger)
       if check_interface.errors:
@@ -887,12 +879,11 @@ class CheckpkgManager2(CheckpkgManagerBase):
       needed_files.extend(check_interface.needed_files)
       needed_pkgs.extend(check_interface.needed_pkgs)
     check_interface = SetCheckInterface(
-        self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg)
+        self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg,
+        rest_client=self.rest_client)
     self._ReportDependencies(check_interface,
         needed_files, needed_pkgs, messenger, declared_deps_by_pkgname)
     errors = self.SetErrorsToDict(check_interface.errors, errors)
-    # open("/home/maciej/debug.py", "w").write(pprint.pformat(
-    #     (needed_files, needed_pkgs, pkgname, declared_deps_by_pkgname)))
     messages = messenger.messages + messenger.one_time_messages.values()
     return errors, messages, messenger.gar_lines
 
@@ -1044,6 +1035,8 @@ class Catalog(SqlobjectHelperMixin):
     # Memoization won't buy us much.  Perhaps we can fetch all the files
     # belonging to the same package, so that we quickly prepopulate the cache.
 
+    # TODO(maciej): Move this to models.py and have pkgdb_web return the JSON
+    # structure. This is a step towards RESTification.
     key = (full_file_path, osrel, arch, catrel)
     if key not in self.pkgs_by_path_cache:
       file_path, basename = os.path.split(full_file_path)
@@ -1057,7 +1050,7 @@ class Catalog(SqlobjectHelperMixin):
           oac,
           m.CswFile.q.path==file_path,
           m.CswFile.q.basename==basename,
-          m.Srv4FileStats.q.registered==True)
+          m.Srv4FileStats.q.registered_level_two==True)
       join = [
           sqlbuilder.INNERJOINOn(None,
             m.Srv4FileStats,
@@ -1134,7 +1127,7 @@ class Catalog(SqlobjectHelperMixin):
     if not who:
       who = 'unknown'
     # There are only i386 and sparc catalogs.
-    if arch != 'i386' and arch != 'sparc':
+    if arch not in ('i386', 'sparc'):
       raise CatalogDatabaseError("Wrong architecture: %s" % arch)
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
@@ -1143,7 +1136,7 @@ class Catalog(SqlobjectHelperMixin):
           "Specified package does not match the catalog. "
           "Package: %s, catalog: %s %s %s"
           % (sqo_srv4, osrel, arch, catrel))
-    if not sqo_srv4.registered:
+    if not sqo_srv4.registered_level_two:
       raise CatalogDatabaseError(
           "Package %s (%s) is not registered for releases."
           % (sqo_srv4.basename, sqo_srv4.md5_sum))
@@ -1176,12 +1169,12 @@ class Catalog(SqlobjectHelperMixin):
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileInCatalog.q.srv4file==sqo_srv4))
     if res.count():
-      logging.warning("%s is already part of %s %s %s",
+      logging.debug("%s is already part of %s %s %s",
                       sqo_srv4, osrel, arch, catrel)
       # Our srv4 is already part of that catalog.
       return
     # SQL INSERT happens here.
-    obj = m.Srv4FileInCatalog(
+    m.Srv4FileInCatalog(
         arch=sqo_arch,
         osrel=sqo_osrel,
         catrel=sqo_catrel,

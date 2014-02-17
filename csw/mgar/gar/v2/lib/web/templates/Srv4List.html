@@ -2,19 +2,24 @@ $def with (pkgs)
 <html>
   <head>
     <title>
-      Recently built and checked packages
+      Recently registered packages
     </title>
-    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+    <link rel="stylesheet" type="text/css" href="../static/pkgdb.css" />
   </head>
   <body>
     <table>
-$for pkg, ago in pkgs:
-  <tr>
-  <td><a href="$pkg.md5_sum/">$pkg.basename</a></td>
-  <td><a href="../maintainers/$pkg.maintainer.id/">$pkg.maintainer.email.split("@")[0]</a></td>
-  <td>$ago ago</td>
-  <td>$pkg.mtime</td>
-  </tr>
+$if pkgs:
+  $for pkg, ago in pkgs:
+    <tr>
+    <td><a href="$pkg.md5_sum/">$pkg.basename</a></td>
+    <td><a href="../maintainers/$pkg.maintainer.id/">$pkg.maintainer.Username()</a></td>
+    <td>$ago ago</td>
+    <td>$pkg.mtime</td>
+    </tr>
+$else:
+  <p>There are no packages registered in the database. There might still be
+  blobs with data, but they aren't displayed here. Are you currently running
+  catalog indexing?</p>
 </ul>
 </body>
 </html>
