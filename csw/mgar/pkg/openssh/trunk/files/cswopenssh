@@ -17,7 +17,7 @@ PIDFILE=/var/run/cswsshd.pid
 case $1 in 
 'start')
         if [ -x /opt/csw/bin/ssh-keygen ]; then
-		ssh-keygen -A 
+		/opt/csw/bin/ssh-keygen -A 
         fi
 
         [ -x /opt/csw/sbin/sshd ] && [ -f /etc/opt/csw/ssh/sshd_config ] && /opt/csw/sbin/sshd &
