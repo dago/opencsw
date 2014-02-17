@@ -121,8 +121,8 @@ UPSTREAM_MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTFILES  = $(NAME)-$(VERSION).nstall
-DISTFILES += changelog.CSW
+DISTFILES  = $(NAME)-$(VERSION).CSWopenssh.cswreleasenotes
+DISTFILES += CSWopenssh_client.cswreleasenotesLES += changelog.CSW
 DISTFILES += cswusergroup
 
 DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
@@ -209,8 +209,7 @@ merge-doc-files:
 	for DOCDIR in $(foreach _PKG,$(PACKAGES),$(call catalogname,$(_PKG))); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$$DOCDIR; \
 		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$DOCDIR/); \
-		(cd $(PKGROOT)/$(docdir)/$$DOCDIR && chmod -x $(DOCFILES)); \
-		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)one
+		(cd $(PKGROOT)/$(docdir)/$$DOCDIR && chmod cdir)one
 	@$(MAKECOOKIE)
 
 merge-config-files:
