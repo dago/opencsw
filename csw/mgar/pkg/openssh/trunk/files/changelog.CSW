@@ -1,3 +1,10 @@
+openssh (6.5p1,REV=2014.02.17) unstable
+
+  * Fixed the host key generation script so that keys for all
+  types are always generared (closes: #5151)
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 17 Feb 2014 12:10:39 +0100
+
 openssh (6.5p1,REV=2014.01.31) unstable
 
   * New upstream release.
