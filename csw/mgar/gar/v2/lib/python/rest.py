@@ -19,6 +19,7 @@ from lib.python import retry_decorator
 
 from lib.python import configuration
 from lib.python import errors
+from lib.python import shell
 
 
 class ArgumentError(errors.Error):
@@ -530,5 +531,15 @@ def GetUsernameAndPassword():
       password = af.read().strip()
   except IOError, e:
     logging.warning("Error reading %s: %s", authfile, e)
+
+  if password is None:
+    # This part is specific to OpenCSW buildfarm.
+    args = ['ssh', 'login', 'cat', authfile]
+    ret_code, stdout, stderr = shell.ShellCommand(args)
+    if not ret_code:
+      password = stdout.strip()
+
+  if password is None:
     password = getpass.getpass("{0}'s pkg release password> ".format(username))
+
   return username, password
