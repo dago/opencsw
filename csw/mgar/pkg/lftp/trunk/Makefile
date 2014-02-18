@@ -39,8 +39,7 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 MASTElftp.yar.ru/ftpt/pub/source/lftp/
 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += changelog.CSW
+DISTFILES  = $(NAME)-$(VERSION).tarCSWlftp.cswreleasenotes += changelog.CSW
 
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
