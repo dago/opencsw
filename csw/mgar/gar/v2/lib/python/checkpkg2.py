@@ -146,9 +146,11 @@ def main():
       file_list.append(arg)
 
   config = configuration.GetConfig()
+  username, password = rest.GetUsernameAndPassword()
   rest_client = rest.RestClient(
       pkgdb_url=config.get('rest', 'pkgdb'),
-      releases_url=config.get('rest', 'releases'))
+      releases_url=config.get('rest', 'releases'),
+      username=username, password=password)
 
   if file_list:
     def MakeEntry(file_name):

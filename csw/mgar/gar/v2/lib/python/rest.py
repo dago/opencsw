@@ -237,12 +237,39 @@ class RestClient(object):
       ('md5_sum', md5_sum),
     ])
 
-  @retry_decorator.Retry(tries=4, delay=5,
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, delay=DEFAULT_RETRY_DELAY,
                          exceptions=(RestCommunicationError, pycurl.error))
   def GetBlob(self, tag, md5_sum):
     url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
-    data = urllib2.urlopen(url).read()
-    return cjson.decode(data)
+    logging.warning('GetBlob() url=%r', url)
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    c.setopt(pycurl.URL, str(url))
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c = self._SetAuth(c)
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    logging.warning(
+        "curl getinfo: %s %s %s",
+        type(http_code),
+        http_code,
+        c.getinfo(pycurl.EFFECTIVE_URL))
+    c.close()
+    logging.warning("HTTP code: %s", http_code)
+    if http_code == 401:
+      raise RestCommunicationError("Received HTTP code {0}".format(http_code))
+    successful = (http_code >= 200 and http_code <= 299)
+    metadata = None
+    if successful:
+      metadata = cjson.decode(d.getvalue())
+    else:
+      logging.warning("Blob %r for %r was not found in the database"
+                      % (tag, md5_sum))
+    return metadata
 
   def _HttpHeadRequest(self, url):
     """Make a HTTP HEAD request and return the http code."""
@@ -253,6 +280,7 @@ class RestClient(object):
     c.setopt(pycurl.NOPROGRESS, 1)
     c.setopt(pycurl.NOBODY, 1)
     c.setopt(pycurl.HEADER, 1)
+    c = self._SetAuth(c)
     if self.debug:
       c.setopt(c.VERBOSE, 1)
     c.setopt(pycurl.WRITEFUNCTION, d.write)

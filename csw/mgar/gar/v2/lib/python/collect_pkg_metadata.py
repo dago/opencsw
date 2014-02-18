@@ -86,9 +86,12 @@ class Unpacker(object):
     self._binaries = None
     self._file_paths = None
     self.config = configuration.GetConfig()
+    username, password = rest.GetUsernameAndPassword()
     self.rest_client = rest.RestClient(
         pkgdb_url=self.config.get('rest', 'pkgdb'),
-        releases_url=self.config.get('rest', 'releases'))
+        releases_url=self.config.get('rest', 'releases'),
+        username=username,
+        password=password)
 
   def __del__(self):
     self.Cleanup()
