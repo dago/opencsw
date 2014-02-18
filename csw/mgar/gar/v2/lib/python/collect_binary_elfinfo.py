@@ -35,9 +35,12 @@ class ElfExtractor(object):
     self.debug = debug
     self._binary_path = binary_path
     self.config = configuration.GetConfig()
+    username, password = rest.GetUsernameAndPassword()
     self.rest_client = rest.RestClient(
         pkgdb_url=self.config.get('rest', 'pkgdb'),
-        releases_url=self.config.get('rest', 'releases'))
+        releases_url=self.config.get('rest', 'releases'),
+        username=username,
+        password=password)
     fd = open(self._binary_path, 'rb')
     self._mmap = mmap.mmap(fd.fileno(), 0, access=mmap.PROT_READ)
     self._elffile = ELFFile(self._mmap)
