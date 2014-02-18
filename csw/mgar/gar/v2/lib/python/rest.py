@@ -22,6 +22,10 @@ from lib.python import errors
 from lib.python import shell
 
 
+DEFAULT_TRIES = 1
+DEFAULT_RETRY_DELAY = 1
+
+
 class ArgumentError(errors.Error):
   """Wrong arguments passed."""
 
@@ -65,7 +69,7 @@ class RestClient(object):
     self.ValidateMd5(md5_sum)
     return self.GetBlob('pkgstats', md5_sum)
 
-  @retry_decorator.Retry(tries=4, exceptions=(RestCommunicationError, httplib.BadStatusLine))
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, exceptions=(RestCommunicationError, httplib.BadStatusLine))
   def GetCatalogData(self, md5_sum):
     self.ValidateMd5(md5_sum)
     url = self.rest_url + self.PKGDB_APP + "/srv4/%s/catalog-data/" % md5_sum
@@ -216,7 +220,7 @@ class RestClient(object):
       logging.debug("Response: %s %s", http_code, d.getvalue())
     return http_code
 
-  @retry_decorator.Retry(tries=4, delay=5,
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, delay=DEFAULT_RETRY_DELAY,
                          exceptions=(RestCommunicationError, pycurl.error))
   def AddSvr4ToCatalog(self, catrel, arch, osrel, md5_sum):
     self.ValidateMd5(md5_sum)
@@ -226,7 +230,7 @@ class RestClient(object):
     logging.debug("AddSvr4ToCatalog: %s", url)
     return self._CurlPut(url, [])
 
-  @retry_decorator.Retry(tries=4, delay=5,
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, delay=DEFAULT_RETRY_DELAY,
                          exceptions=(RestCommunicationError, pycurl.error))
   def SaveBlob(self, tag, md5_sum, data):
     url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
@@ -291,7 +295,7 @@ class RestClient(object):
     c.close()
     return http_code
 
-  @retry_decorator.Retry(tries=4, delay=5,
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, delay=DEFAULT_RETRY_DELAY,
                          exceptions=(RestCommunicationError, pycurl.error))
   def BlobExists(self, tag, md5_sum):
     url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
@@ -354,7 +358,7 @@ class RestClient(object):
     url = self.releases_url + "/svr4/%s/db-level-1/" % md5_sum
     return self._CurlPut(url, [])
 
-  @retry_decorator.Retry(tries=4, delay=5,
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, delay=DEFAULT_RETRY_DELAY,
                          exceptions=(RestCommunicationError, pycurl.error))
   def IsRegisteredLevelTwo(self, md5_sum):
     self.ValidateMd5(md5_sum)
