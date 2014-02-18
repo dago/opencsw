@@ -80,7 +80,3 @@ include gar/category.mk
 # we re-run autoconf because we p#pre-configure-modulated:
 #	cd $(WORKSRC) && autoconf
 #SRC) && autoconf
-	@$(MAKECOOKIE)
-
-post-merge:
-	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
