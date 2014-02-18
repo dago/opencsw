@@ -900,6 +900,10 @@ PYTHON_TEST_TARGET_2_7	=	check
 PYTHON_TEST_TARGET_3_3	=	check
 PYTHON_TEST_TARGET		=	$(PYTHON_TEST_TARGET_$(PYTHON_VERSION))
 
+# BUILDTREE comes from ~/.garrc
+PYTHONPATH = $(BUILDTREE)/.buildsys/v2
+export PYTHONPATH
+
 # Global environment
 export PATH PKG_CONFIG_PATH
 
