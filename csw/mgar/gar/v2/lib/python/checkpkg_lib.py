@@ -163,6 +163,16 @@ class SqlobjectHelperMixin(object):
     return self.triad_cache[key]
 
 
+def ElfinfoBlobToStruct(elfdump_data):
+  # json doesn't preserve namedtuple so we do some post-processing
+  # to transform symbol info from List to NamedTuple
+  symbols = elfdump_data['symbol table']
+  for idx, symbol_as_list in enumerate(symbols):
+    symbols[idx] = representations.ElfSymInfo(*symbol_as_list)
+
+  return elfdump_data
+
+
 class LazyElfinfo(object):
   """Used at runtime for lazy fetches of elfdump info data."""
 
@@ -171,13 +181,7 @@ class LazyElfinfo(object):
 
   def __getitem__(self, md5_sum):
     elfdump_data = self.rest_client.GetBlob('elfdump', md5_sum)
-    # json doesn't preserve namedtuple so we do some post-processing
-    # to transform symbol info from List to NamedTuple
-    symbols = elfdump_data['symbol table']
-    for idx, symbol_as_list in enumerate(symbols):
-      symbols[idx] = representations.ElfSymInfo(*symbol_as_list)
-
-    return elfdump_data
+    return ElfinfoBlobToStruct(elfdump_data)
 
 
 class CheckpkgManagerBase(SqlobjectHelperMixin):
@@ -496,7 +500,8 @@ class CheckInterfaceBase(object):
     self.AddError(checkpkg_tag)
 
   def GetElfdumpInfo(self, md5_sum):
-    return self.rest_client.GetBlob('elfinfo', md5_sum)
+    elfdump_data = self.rest_client.GetBlob('elfdump', md5_sum)
+    return ElfinfoBlobToStruct(elfdump_data)
 
 
 class IndividualCheckInterface(CheckInterfaceBase):
