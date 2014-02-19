@@ -898,9 +898,10 @@ def CheckPyPackageContainsPyFiles(pkg_data, error_mgr, logger, messenger):
     return
   spotted_a_py_file = False
   for pkgmap_entry in pkg_data["pkgmap"]:
-    if not pkgmap_entry["path"]:
+    pkgmap_entry = representations.PkgmapEntry._make(pkgmap_entry)
+    if not pkgmap_entry.path:
       continue
-    if py_file_re.match(pkgmap_entry["path"]):
+    if py_file_re.match(pkgmap_entry.path):
       spotted_a_py_file = True
       break
   if not spotted_a_py_file:
