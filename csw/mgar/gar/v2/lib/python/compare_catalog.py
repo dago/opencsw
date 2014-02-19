@@ -16,21 +16,21 @@ local_scheme = ['file']
 catalog_keys = ['catalogname','version','pkgname','file_basename',
                     'md5sum','size','deps','category','i_deps']
 
-def xxxSplitPkgList(pkglist):
-    if not pkglist:
+def SplitPkgList(pkglist):
+      if not pkglist:
         pkglist = ()
-    elif pkglist == "none":
+      elif pkglist == "none":
         pkglist = ()
-    else:
-       pkglist = tuple(pkglist.split("|"))
-    return pkglist
+      else:
+        pkglist = tuple(pkglist.split("|"))
+      return pkglist
 
 def convToDict(catlst):
     catdict = []
     for entry in catlst:
         del entry[9]
-	entry[6] = catalog.SplitPkgList(entry[6])
-	entry[8] = catalog.SplitPkgList(entry[8])
+	entry[6] = SplitPkgList(entry[6])
+	entry[8] = SplitPkgList(entry[8])
         catdict.append(dict(zip(catalog_keys,entry)))
     return catdict
 
