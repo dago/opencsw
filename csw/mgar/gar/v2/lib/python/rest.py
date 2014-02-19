@@ -72,7 +72,7 @@ class RestClient(object):
   @retry_decorator.Retry(tries=DEFAULT_TRIES, exceptions=(RestCommunicationError, httplib.BadStatusLine))
   def GetCatalogData(self, md5_sum):
     self.ValidateMd5(md5_sum)
-    url = self.pkgdb_url "/srv4/%s/catalog-data/" % md5_sum
+    url = self.pkgdb_url + "/srv4/%s/catalog-data/" % md5_sum
     try:
       data = urllib2.urlopen(url).read()
       return cjson.decode(data)
@@ -536,7 +536,7 @@ def GetUsernameAndPassword():
 
   if password is None:
     # This part is specific to OpenCSW buildfarm.
-    args = ['ssh', 'login', 'cat', authfile]
+    args = ['ssh', '-o BatchMode=yes', '-o StrictHostKeyChecking=no', 'login', 'cat', authfile]
     ret_code, stdout, stderr = shell.ShellCommand(args)
     if not ret_code:
       password = stdout.strip()
