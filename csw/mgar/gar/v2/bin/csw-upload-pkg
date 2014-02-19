@@ -1,1 +1,8 @@
-../lib/python/csw_upload_pkg.py
+#!/opt/csw/bin/bash
+
+set -e
+set -u
+
+basedir=$(dirname $0)/..
+export PYTHONPATH=$basedir
+exec /opt/csw/bin/python2.6 "$basedir/lib/python/csw_upload_pkg.py" "$@"

@@ -337,7 +337,7 @@ class Srv4Uploader(object):
 
   def _RunCheckpkg(self, checkpkg_sets):
     bin_dir = os.path.dirname(__file__)
-    checkpkg_executable = os.path.join(bin_dir, "checkpkg")
+    checkpkg_executable = os.path.join(bin_dir, "checkpkg2.py")
     assert os.path.exists(checkpkg_executable), (
         "Could not find %s. Make sure that the checkpkg executable is "
         "available \n"
