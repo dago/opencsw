@@ -50,7 +50,7 @@ class RestClient(object):
 
   def GetPkgByMd5(self, md5_sum):
     self.ValidateMd5(md5_sum)
-    url = self.releases_url + "/srv4/%s/" % md5_sum
+    url = self.pkgdb_url + "/srv4/%s/" % md5_sum
     logging.debug("GetPkgByMd5(): GET %s", url)
     try:
       data = urllib2.urlopen(url).read()
@@ -72,7 +72,7 @@ class RestClient(object):
   @retry_decorator.Retry(tries=DEFAULT_TRIES, exceptions=(RestCommunicationError, httplib.BadStatusLine))
   def GetCatalogData(self, md5_sum):
     self.ValidateMd5(md5_sum)
-    url = self.rest_url + self.PKGDB_APP + "/srv4/%s/catalog-data/" % md5_sum
+    url = self.pkgdb_url "/srv4/%s/catalog-data/" % md5_sum
     try:
       data = urllib2.urlopen(url).read()
       return cjson.decode(data)
@@ -382,7 +382,7 @@ class RestClient(object):
     return self._CurlPut(url, [])
 
   def GetCatalogForGeneration(self, catrel, arch, osrel):
-    url = (self.rest_url + self.PKGDB_APP + "/catalogs/%s/%s/%s/for-generation/"
+    url = (self.pkgdb_url + "/catalogs/%s/%s/%s/for-generation/"
            % (catrel, arch, osrel))
     logging.debug("GetCatalogForGeneration(): url=%r", url)
     data = urllib2.urlopen(url).read()
@@ -406,8 +406,7 @@ class RestClient(object):
 
   def GetCatalogTimingInformation(self, catrel, arch, osrel):
     url = (
-      self.rest_url
-      + self.PKGDB_APP
+      self.pkgdb_url
       + "/catalogs/%s/%s/%s/timing/" % (catrel, arch, osrel))
     data = urllib2.urlopen(url).read()
     return cjson.decode(data)
@@ -451,12 +450,11 @@ class RestClient(object):
     return successful, metadata
 
   def PostFile(self, filename, md5_sum):
-    if self.output_to_screen:
-      print "Uploading %s" % repr(filename)
+    logging.info("Uploading %s" % repr(filename))
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
-    url = self.rest_url + RELEASES_APP + "/srv4/"
+    url = self.releases_url + "/srv4/"
     c.setopt(pycurl.URL, url)
     c.setopt(pycurl.POST, 1)
     c = self._SetAuth(c)

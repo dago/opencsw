@@ -437,7 +437,6 @@ if __name__ == '__main__':
 
   username, password = rest.GetUsernameAndPassword()
   uploader = Srv4Uploader(args,
-                          options.rest_url,
                           os_release=os_release,
                           debug=options.debug,
                           username=username,
