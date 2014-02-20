@@ -1,5 +1,5 @@
 NAME = freeciv
-VERSION = 2.4.1
+VERSION = 2.4.2
 CATEGORIES = apps
 GARTYPE = v2
 
