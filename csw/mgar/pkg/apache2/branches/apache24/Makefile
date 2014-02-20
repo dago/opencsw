@@ -90,6 +90,8 @@ CONFIGURE_ARGS += --enable-mods-shared=all
 CONFIGURE_ARGS += --enable-privileges
 CONFIGURE_ARGS += --enable-vhost-alias
 CONFIGURE_ARGS += --with-ssl=$(prefix)
+# As requested in https://www.opencsw.org/mantis/view.php?id=5152
+CONFIGURE_ARGS += --enable-proxy-html
 
 # Fixup target variables
 APACHE_ROOT   = $(DESTDIR)$(prefix)
