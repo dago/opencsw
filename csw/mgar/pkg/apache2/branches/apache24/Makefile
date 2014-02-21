@@ -13,17 +13,15 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
-# Source location
 MASTER_SITES  = http://www.eu.apache.org/dist/httpd/
-
-# work around dumb checkpkg not recognizing the license file ...
-LICENSE = LICENSE
-
-# Visitor information
-SPKG_SOURCEURL = http://httpd.apache.org/
-
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += cswapache24
+
+PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
+PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
+
+VENDOR_URL = http://httpd.apache.org/
+LICENSE = LICENSE
 
 PACKAGES = CSWapache24
 SPKG_DESC_CSWapache24 = $(DESCRIPTION)
@@ -48,8 +46,8 @@ PACKAGES += CSWapache24-dev
 SPKG_DESC_CSWapache24-dev = The Apache 2.4 Development Files
 PKGFILES_CSWapache24-dev = $(PKGFILES_DEVEL)
 
-PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
-PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
+# This is a fallback
+CHECKPKG_OVERRIDES_CSWapache24-dev += file-with-bad-content|/usr/local|root/opt/csw/include/apache2/httpd.h
 
 BUILD_DEP_PKGS += CSWlibaprutil-dev
 
