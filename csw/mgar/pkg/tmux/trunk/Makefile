@@ -1,15 +1,13 @@
 NAME = tmux
-VERSION = 1.8
+VERSION = 1.9
 GARTYPE = v2
 
 DESCRIPTION = Terminal Multiplexer
 
 MASTER_SITES = $(SF_MIRRORS)
-MASTER_SITES += http://sourceforge.net/code-snapshots/git/u/u/u/dmichelsen/tmux.git/
-DISTNAME = tmux-tmux-code-ce52e45d44b38fcedfe27bce519ce6f4fc76a25d
+#MASTER_SITES += http://sourceforge.net/code-snapshots/git/u/u/u/dmichelsen/tmux.git/
+#DISTNAME = tmux-tmux-code-ce52e45d44b38fcedfe27bce519ce6f4fc76a25d
 DISTFILES  = $(DISTNAME).tar.gz
-
-#PATCHFILES += 0001-Modifications-for-Solaris-to-use-fcntl-instead-of-fl.patch
 
 VENDOR_URL = http://tmux.sourceforge.net
 
@@ -34,6 +32,6 @@ CONFIGURE_ENV_PATH = /opt/csw/gnu:$(PATH)
 PRESERVECONF += $(sysconfdir)/tmux.conf
 
 includ
-post-extract:
+xxxpost-extract:
 	cd $(WORKSRC) && ./autogen.sh
 	@$(MAKECOOKIE)
