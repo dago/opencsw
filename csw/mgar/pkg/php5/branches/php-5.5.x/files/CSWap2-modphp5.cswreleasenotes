@@ -1,0 +1,2 @@
+/usr/local references:
+	   libexec/libphp5.so -> embeds 'magic' filetype info in the binary
