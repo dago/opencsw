@@ -31,6 +31,10 @@ RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpy-curl += CSWlibgcc-s1
 
+# These are indirect dependencies which are stripped with -z ignore but not on sparc
+CHECKPKG_OVERRIDES_CSWpy-curl += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWpy-curl += surplus-dependency|CSWlibidn11
+
 # These are essentially from libcurl4_feature and are not needed by default
 CHECKPKG_OVERRIDES_CSWpy-curl += missing-dependency|CSWlibcares2
 CHECKPKG_OVERRIDES_CSWpy-curl += missing-dependency|CSWliblber2-4-2
