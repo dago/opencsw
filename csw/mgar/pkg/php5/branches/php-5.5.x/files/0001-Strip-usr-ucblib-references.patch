@@ -1,0 +1,114 @@
+From 4e2ddc9551f0ceb91f000463812b3c6ba6d395ec Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 18 Mar 2011 01:43:02 +0100
+Subject: [PATCH] Strip /usr/ucblib references
+
+Remove all occurrences of /usr/ucblib that exist.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ acinclude.m4 |    2 +-
+ aclocal.m4   |    2 +-
+ configure    |   39 +--------------------------------------
+ configure.in |    2 --
+ 4 files changed, 3 insertions(+), 42 deletions(-)
+
+diff --git a/acinclude.m4 b/acinclude.m4
+index 557722f..28d8b1c 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -2051,7 +2051,7 @@ dnl
+ dnl Search for the sendmail binary
+ dnl
+ AC_DEFUN([PHP_PROG_SENDMAIL], [
+-  PHP_ALT_PATH=/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/ucblib:/usr/lib
++  PHP_ALT_PATH=/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/lib
+   AC_PATH_PROG(PROG_SENDMAIL, sendmail,[], $PATH:$PHP_ALT_PATH)
+   PHP_SUBST(PROG_SENDMAIL)
+ ])
+diff --git a/aclocal.m4 b/aclocal.m4
+index cde7793..bb24bf9 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -2051,7 +2051,7 @@ dnl
+ dnl Search for the sendmail binary
+ dnl
+ AC_DEFUN([PHP_PROG_SENDMAIL], [
+-  PHP_ALT_PATH=/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/ucblib:/usr/lib
++  PHP_ALT_PATH=/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/lib
+   AC_PATH_PROG(PROG_SENDMAIL, sendmail,[], $PATH:$PHP_ALT_PATH)
+   PHP_SUBST(PROG_SENDMAIL)
+ ])
+diff --git a/configure b/configure
+index 5658cd7..65da668 100755
+--- a/configure
++++ b/configure
+@@ -13963,7 +13963,7 @@ fi
+ 
+ 
+ 
+-  PHP_ALT_PATH=/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/ucblib:/usr/lib
++  PHP_ALT_PATH=/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/lib
+   # Extract the first word of "sendmail", so it can be a program name with args.
+ set dummy sendmail; ac_word=$2
+ echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+@@ -14166,43 +14166,6 @@ if test -d /usr/pkg/include -a -d /usr/pkg/lib ; then
+    CPPFLAGS="$CPPFLAGS -I/usr/pkg/include"
+    LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
+ fi
+-test -d /usr/ucblib && 
+-  if test "/usr/ucblib" != "/usr/$PHP_LIBDIR" && test "/usr/ucblib" != "/usr/lib"; then
+-    
+-  if test -z "/usr/ucblib" || echo "/usr/ucblib" | grep '^/' >/dev/null ; then
+-    ai_p=/usr/ucblib
+-  else
+-    
+-    ep_dir="`echo /usr/ucblib|$SED 's%/*[^/][^/]*/*$%%'`"
+-    
+-    ep_realdir="`(cd \"$ep_dir\" && pwd)`"
+-    ai_p="$ep_realdir/`basename \"/usr/ucblib\"`"
+-  fi
+-
+-    
+-      
+-  
+-  
+-  unique=`echo $ai_p|$SED 's/[^a-zA-Z0-9]/_/g'`
+-  
+-  cmd="echo $ac_n \"\$LIBPATH$unique$ac_c\""
+-  if test -n "$unique" && test "`eval $cmd`" = "" ; then
+-    eval "LIBPATH$unique=set"
+-    
+-    test -n "$ld_runpath_switch" && LDFLAGS="$LDFLAGS $ld_runpath_switch$ai_p"
+-    LDFLAGS="$LDFLAGS -L$ai_p"
+-    PHP_RPATHS="$PHP_RPATHS $ai_p"
+-  
+-  fi
+-
+-
+-    
+-  fi
+-
+-
+-
+-
+-
+ 
+   unset ac_cv_func_socket
+   unset ac_cv_func___socket
+diff --git a/configure.in b/configure.in
+index 7b6e2a8..7568ed7 100644
+--- a/configure.in
++++ b/configure.in
+@@ -359,8 +359,6 @@ if test -d /usr/pkg/include -a -d /usr/pkg/lib ; then
+    CPPFLAGS="$CPPFLAGS -I/usr/pkg/include"
+    LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
+ fi
+-test -d /usr/ucblib && PHP_ADD_LIBPATH(/usr/ucblib)
+-
+ 
+ dnl First, library checks.
+ dnl -------------------------------------------------------------------------
+-- 
+1.7.3.2
+

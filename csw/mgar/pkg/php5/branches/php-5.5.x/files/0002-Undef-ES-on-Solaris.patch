@@ -1,0 +1,24 @@
+From 7a6340a8064446a4b45683ea09f4a38739b5c5d2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 14 Dec 2013 22:59:43 +0100
+Subject: [PATCH] Undef ES on Solaris
+
+---
+ ext/json/JSON_parser.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/ext/json/JSON_parser.c b/ext/json/JSON_parser.c
+index dd832a7..faa71d8 100644
+--- a/ext/json/JSON_parser.c
++++ b/ext/json/JSON_parser.c
+@@ -116,6 +116,7 @@ enum states {
+     VA,  /* value    */
+     AR,  /* array    */
+     ST,  /* string   */
++# undef ES
+     ES,  /* escape   */
+     U1,  /* u1       */
+     U2,  /* u2       */
+-- 
+1.8.4.1
+
