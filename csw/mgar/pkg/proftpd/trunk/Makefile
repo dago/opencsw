@@ -45,8 +45,7 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(prefix)/bin/sparcv9/ftpasswd $(prefix)
 MIGRATE_FILES   = proftpd.conf
 
 EXTRA_CONFIGURE_ENshell /usr/xpg4/bin/id -un) install_group=$(shell /usr/xpg4/bin/id -gn)R) install_group=csw
-EXTRA_CONFIGURE_ENV += LD_LIBRARlibexecdir = $(libdir)/proftpd
-localstatedir = /var/run/
+EXTRA_CONFIGURE_ENV += LD_LIBRARlocalstatedir = /var/run/
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --libexecdir=$(libdir)calstatedir=/var/run/proftpd
