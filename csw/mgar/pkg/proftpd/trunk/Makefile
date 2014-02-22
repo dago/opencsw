@@ -31,6 +31,12 @@ RUNTIME_DEP_PKGS_CSWproftpd += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWproftpd += CSWlibldap2-4-2
 
+# Linking on sparc gives an additional dependency
+# probably because of the current bug with Solaris 10
+# sparc linker (see http://lists.opencsw.org/pipermail/maintainers/2013-November/018780.html)
+RUNTIME_DEP_PKGS_CSWproftpd += $(RUNTIME_DEP_PKGS_CSWproftpd_$(GARCH))
+RUNTIME_DEP_PKGS_CSWproftpd_sparc += CSWliblber2-4-2
+
 BUILD64 = 1
 
 ISAEXEC_DIRS                = $(bindir) $(sbindir)
