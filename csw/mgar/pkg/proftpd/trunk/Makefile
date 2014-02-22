@@ -66,7 +66,7 @@ CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl:$(
 CONFIGURE_ARGS += --with-modules=mod_facl
 CONFIGURE_ARGS += --with-shared=mod_auth_pam:mod_ban:mod_ctrls_admin:mod_dynmasq:mod_exec:mod_ident:mod_ifsession:mod_ldap:mod_load:mod_quotatab:mod_quotatab_file:mod_quotatab_ldap:mod_quotatab_radius:mod_quotatab_sql:mod_radius:mod_ratio:mod_readme:mod_rewrite:mod_sftp:mod_sftp_pam:mod_sftp_sql:mod_shaper:mod_site_misc:mod_sql:mod_sql_mysql:mod_sql_passwd:mod_sql_sqlite:mod_tls:mod_tls_shmcache:mod_unique_id:mod_wrap2:mod_wrap2_file:mod_wrap2_sql
 
-CHECKPKG_OVERRIDES_CSWproftpd += bad-location-of-file|file=/var/run/proftpd
+CHECKPKG_OVERRIDES_CSWproftpd += bad-location-of-file|fiCHECKPKG_OVERRIDES_CSWproftpd += missing-dependency|CSWbonnie++|or|CSWcollectd|or|CSWgnupg2|or|CSWleafnode|or|CSWlighttpd|or|CSWlogrotate|or|CSWnginx|or|CSWopenldap|or|CSWpound|or|CSWsamba|or|CSWsamba-swat|or|CSWsamba-winbind|or|CSWsysstat|or|CSWzabbix-agent|or|CSWzabbix-serverile=/var/run/proftpd
 
 TEST_SCRIPTS =
 
