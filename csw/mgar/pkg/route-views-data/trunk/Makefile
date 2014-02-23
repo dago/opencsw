@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = oix-full-snapshot
-VERSION = 2013.10.22.0000
+VERSION = 2014.02.23.0000
 GARTYPE = v2
 
 DESCRIPTION = OIX route views data
