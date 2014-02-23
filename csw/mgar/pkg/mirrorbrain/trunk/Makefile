@@ -149,5 +149,6 @@ install-custom:
 	ginstall -m 0644 $(WORKSRC)/sql/initialdata-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/initialdata-postgresql.sql
 	@# LANG SQL must in fact be LANG sql (lowercase!) or the creation faills
 	ginstall -m 0644 $(WORKSRC)/sql/schema-postgresql.sql $(DESTDIR)$(sharedstatedir)/mirrorbrain/sql/schema-postgresql.sql
+	ginstall -d $(DESTDIR)$(localstatedir)/mirrorbrain
 	@$(MAKECOOKIE)
 
