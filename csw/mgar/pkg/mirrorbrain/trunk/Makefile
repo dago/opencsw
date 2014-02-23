@@ -99,7 +99,7 @@ REINPLACE_FILES_mbconf += mirrorprobe/mirrorprobe.py
 
 REINPLACEMENTS += mplog
 REINPLACE_MATCH_mplog = /var/log/mirrorbrain/mirrorprobe.log
-REINPLACE_WITH_mplog = $(localstatedur)/mirrorbrain/mirrorprobe.log
+REINPLACE_WITH_mplog = $(localstatedir)/mirrorbrain/mirrorprobe.log
 REINPLACE_FILES_mplog += mirrorprobe/mirrorprobe.py
 
 # The language must be in lower case
