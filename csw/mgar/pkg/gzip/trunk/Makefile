@@ -1,5 +1,9 @@
+# TBD:
+# ! Transformation from 'z' to 'gz' prefix does not apply to invocations:
+#     http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16876
+
 NAME = gzip
-VERSION = 1.4
+VERSION = 1.6
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -13,7 +17,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)#-$(VERSION).tar.gz
 PATCHFILES = 0001-Force-ggrep-as-Solaris-grep-doesn-t-understand-the-f.patch
 
 # From TODO:
@@ -22,33 +26,30 @@ PATCHFILES = 0001-Force-ggrep-as-Solaris-grep-doesn-t-understand-the-f.patch
 #   independently, but this reduces the compression ratio.
 # 
 # For one possible approach to this, please see:
-#   http://www.samba.org/netfilter/diary/gzip.rsync.patch
-#
-# Update patch from
-#  http://cvs.fedoraproject.org/viewvc/rpms/gzip/F-12/gzip-1.3.9-rsync.patch?revision=1.2&content-type=text%2Fplain&view=co
-PATCHFILES += gzip-1.3.9-rsync.patch
+#   http://www.samba.org/netfilter/diar
+# Reformatted version of debian_patches_rsyncable.diff
+PATCHFILES += 0001-Debian-patch-for-rsyncable.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-PACKAGES = CSWgzip CSWgzipextras
-
-CATALOGNAME_CSWgzip       = gzip
-CATALOGNAME_CSWgzipextras = gzip_extras
-
-SPKG_DESC_CSWgzip       = GNU zip
-SPKG_DESC_CSWgzipextras = GNU zip additional tools
-
-RUNTIME_DEP_PKGS_CSWgzipextras = CSWgzip CSWggrep
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
+PACKAGES += CSWgzip
+CATALOGNAME_CSWgzip = gzip
+SPKG_DESC_CSWgzip = GNU zipdir)/charset.alias
 
 PKGFILES_CSWgzip  = $(bindir)/gzip
 PKGFILES_CSWgzip += $(bindir)/gunzip
 PKGFILES_CSWgzip += $(bindir)/uncompress
 PKGFILES_CSWgzip += $(mandir)/man1/gzip\.1
-PKGFILES_CSWgzip += $(mandir)/man1/gunzip\.1
+PKGFILES_CSWgzip += $(mandiPACKAGES += CSWgzip-extras
+SPKG_DESC_CSWgzip-extras = GNU zip additional tools
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWgzip-extras += CSWgzip
+RUNTIME_DEP_PKGS_CSWgzip-extras += CSWggrep
+OBSOLETED_BY_CSWgzip-extras = CSWgzipextras
+CATALOGNAME_CSWgzipextras = gzip_extras_stub
+
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
+
+# The 'z'-prefix commands now belong to zutils whereas the gzip-commands are prefixed with 'gz' instead:
+#   http://lists.nongnu.org/archive/html/zutils-bug/2012-10/msg00002.html
+EXTRA_CONFIGURE_ARGS += --program-transform-name='s/^z/gz/'
 
 include gar/category.mk
