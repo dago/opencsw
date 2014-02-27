@@ -70,6 +70,13 @@ CONFIGURE_ARGetc/opt/csw/ssl
 CONFIGURE_ARGS += --with-zlib
 CONFIGURE_ARGS += --with-bzlib
 
+# Disable linker map forcing SUNW_1.22.2 as the linked MySQL needs SUNW_1.22.5
+LINKER_MAPS =
+
+# This is because libmysqlclient.so is not self-contained as it should be:
+# it uses floor() but does not link to libm. 
+EXTRA_LINKER_FLAGS = -lm
+
 EXTRA_INC = /opt/csw/include/mysql /opt/csw/include/postgresqlw/postgresql/include
 
 STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
