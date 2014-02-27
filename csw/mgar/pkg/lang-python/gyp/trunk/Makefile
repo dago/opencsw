@@ -18,6 +18,8 @@ DISTFILES += $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 PACKAGES += CSWgyp
 SPKG_DESC_CSWgyp = Generate Your Projects
 # PKGFILES is catchall
@@ -27,11 +29,11 @@ CHECKPKG_OVERRIDES_CSWgyp += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWgyp += catalogname-does-not-start-with-py_
 
 # These are default pathes
-CHECKPKG_OVERRIDES_CSWgyp += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/gyp/generator/eclipse.py
-CHECKPKG_OVERRIDES_CSWgyp += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/gyp/generator/xcode.py
-CHECKPKG_OVERRIDES_CSWgyp += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/gyp/xcode_emulation.py
 CHECKPKG_OVERRIDES_CSWgyp += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/gyp/generator/eclipse.py
 CHECKPKG_OVERRIDES_CSWgyp += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/gyp/generator/xcode.py
 CHECKPKG_OVERRIDES_CSWgyp += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/gyp/xcode_emulation.py
+
+# The software uses 2.7 syntax, so do not include 2.6 here
+MODULATIONS_PYTHON_VERSION = 2_7
 
 include gar/category.mk
