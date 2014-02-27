@@ -1,0 +1,11 @@
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -19,7 +19,7 @@ ocamlmktop: ocamlmktop.tpl ../config/Makefile
+ 	chmod +x ocamlmktop
+ 
+ install::
+-	cp ocamlmktop $(BINDIR)
++	cp ocamlmktop $(DESTDIR)$(BINDIR)
+ 
+ clean::
+ 	rm -f ocamlmktop
