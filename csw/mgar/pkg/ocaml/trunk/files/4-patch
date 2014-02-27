@@ -1,11 +1,18 @@
 --- a/stdlib/Makefile.shared
 +++ b/stdlib/Makefile.shared
-@@ -41,7 +41,7 @@ OTHERS=array.cmo list.cmo char.cmo string.cmo sys.cmo \
- all: stdlib.cma std_exit.cmo camlheader camlheader_ur
+@@ -40,13 +40,13 @@ all: stdlib.cma std_exit.cmo camlheader camlheader_ur
  
- install:
--	cp stdlib.cma std_exit.cmo *.cmi *.mli *.ml camlheader camlheader_ur $(LIBDIR)
-+	cp stdlib.cma std_exit.cmo *.cmi *.mli *.ml camlheader camlheader_ur $(DESTDIR)$(LIBDIR)
+ install: install-$(RUNTIMED)
+ 	cp stdlib.cma std_exit.cmo *.cmi *.mli *.ml camlheader camlheader_ur \
+-	  $(LIBDIR)
++	  $(DESTDIR)$(LIBDIR)
+ 
+ install-noruntimed:
+ .PHONY: install-noruntimed
+ 
+ install-runtimed: camlheaderd
+-	cp camlheaderd $(LIBDIR)
++	cp camlheaderd $(DESTDIR)$(LIBDIR)
+ .PHONY: install-runtimed
  
  stdlib.cma: $(OBJS)
- 	$(CAMLC) -a -o stdlib.cma $(OBJS)

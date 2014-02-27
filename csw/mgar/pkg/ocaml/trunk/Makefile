@@ -1,5 +1,6 @@
 NAME = ocaml
-VERSION = 3.12.1
+VERSION = 4.01.0
+# VERSION = 3.12.1
 GARTYPE = v2
 
 DESCRIPTION = Objective Caml programming language
@@ -7,7 +8,7 @@ define BLURB
   OCaml's toolset includes an interactive top level interpreter, a bytecode compiler, and an optimizing native code compiler. It has a large standard library that makes it useful for many of the same applications as Python or Perl, as well as robust modular and object-oriented programming constructs that make it applicable for large-scale software engineering. OCaml is the successor to Caml Light. The acronym CAML originally stood for Categorical Abstract Machine Language, although OCaml abandons this abstract machine.  Long description
 endef
 
-MASTER_SITES = http://caml.inria.fr/pub/distrib/ocaml-3.11/
+MASTER_SITES = http://caml.inria.fr/$(basename $(VERSION))distrib/ocaml-3.11/
 DISTFILES  = $(NAME)-GARCOMPILER = GCC4
 
 LICENSE = LICENSE
@@ -34,6 +35,7 @@ PATCHFILES += 6-patch
 PATCHFILES += 7-patch
 PATCHFILES += 8-patch
 PATCHFILES += 9-patch
+PATCHFILES += 22-patch
 PATCHFILES += 0023-fix-build-for-tk-X11.patch
 #
 # this is only a error ignor patch taken from here:

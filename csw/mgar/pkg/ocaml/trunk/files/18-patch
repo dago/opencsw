@@ -1,6 +1,6 @@
 --- a/otherlibs/threads/Makefile
 +++ b/otherlibs/threads/Makefile
-@@ -100,12 +100,12 @@ clean: partialclean
+@@ -96,14 +96,14 @@ clean: partialclean
  	rm -f pervasives.mli marshal.mli unix.mli
  
  install:
@@ -8,14 +8,16 @@
 -	mkdir -p $(LIBDIR)/vmthreads
 -	cp libvmthreads.a $(LIBDIR)/vmthreads/libvmthreads.a
 -	cd $(LIBDIR)/vmthreads; $(RANLIB) libvmthreads.a
--	cp thread.cmi mutex.cmi condition.cmi event.cmi threadUnix.cmi threads.cma stdlib.cma unix.cma $(LIBDIR)/vmthreads
--	cp thread.mli mutex.mli condition.mli event.mli threadUnix.mli $(LIBDIR)/vmthreads
 +	if test -f dllvmthreads.so; then cp dllvmthreads.so $(DESTDIR)$(STUBLIBDIR)/.; fi
 +	mkdir -p $(DESTDIR)$(LIBDIR)/vmthreads
 +	cp libvmthreads.a $(DESTDIR)$(LIBDIR)/vmthreads/libvmthreads.a
 +	cd $(DESTDIR)$(LIBDIR)/vmthreads; $(RANLIB) libvmthreads.a
-+	cp thread.cmi mutex.cmi condition.cmi event.cmi threadUnix.cmi threads.cma stdlib.cma unix.cma $(DESTDIR)$(LIBDIR)/vmthreads
-+	cp thread.mli mutex.mli condition.mli event.mli threadUnix.mli $(DESTDIR)$(LIBDIR)/vmthreads
+ 	cp thread.cmi mutex.cmi condition.cmi event.cmi threadUnix.cmi \
+-	   threads.cma stdlib.cma unix.cma $(LIBDIR)/vmthreads
++	   threads.cma stdlib.cma unix.cma $(DESTDIR)$(LIBDIR)/vmthreads
+ 	cp thread.mli mutex.mli condition.mli event.mli threadUnix.mli \
+-	   $(LIBDIR)/vmthreads
++	   $(DESTDIR)$(LIBDIR)/vmthreads
  
  installopt:
  
