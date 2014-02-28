@@ -22,8 +22,8 @@ from lib.python import errors
 from lib.python import shell
 
 
-DEFAULT_TRIES = 1
-DEFAULT_RETRY_DELAY = 1
+DEFAULT_TRIES = 5
+DEFAULT_RETRY_DELAY = 10
 
 
 class ArgumentError(errors.Error):

@@ -205,9 +205,12 @@ class CatalogImporter(object):
   def __init__(self, debug=False):
     self.debug = debug
     config = configuration.GetConfig()
+    username, password = rest.GetUsernameAndPassword()
     self.rest_client = rest.RestClient(
         pkgdb_url=config.get('rest', 'pkgdb'),
         releases_url=config.get('rest', 'releases'),
+        username=username,
+        password=password,
         debug=debug)
 
   def SyncFromCatalogFile(self, osrel, arch, catrel, catalog_file,
