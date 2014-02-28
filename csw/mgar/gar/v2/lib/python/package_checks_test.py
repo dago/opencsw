@@ -2671,36 +2671,32 @@ class TestCheckBaseDirsNotNoneClass(CheckTestHelper,
     self.error_mgr_mock.NeedFile('/etc/opt/csw/init.d', mox.IsA(str))
 
 
-# class TestCheckDanglingSymlinks(CheckTestHelper,
-#                                 unittest.TestCase):
-#   FUNCTION_NAME = 'CheckDanglingSymlinks'
-# 
-#   def testSymlinkTargetNeeded(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
-#     self.pkg_data["pkgmap"].append(
-#         {'class': 'none',
-#          'group': None,
-#          'line': None,
-#          'mode': None,
-#          'path': '/opt/csw/lib/postgresql/9.0/lib/libpq.so.5',
-#          'type': 's',
-#          'user': None,
-#          'target': '/opt/csw/lib/libpq.so.5'})
-#     self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
-# 
-#   # Hardlinks work the same way.
-#   def testHardlinkTargetNeeded(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
-#     self.pkg_data["pkgmap"].append(
-#         {'class': 'none',
-#          'group': None,
-#          'line': None,
-#          'mode': None,
-#          'path': '/opt/csw/lib/postgresql/9.0/lib/libpq.so.5',
-#          'type': 'l',
-#          'user': None,
-#          'target': '/opt/csw/lib/libpq.so.5'})
-#     self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
+class TestCheckDanglingSymlinks(CheckTestHelper,
+                                unittest.TestCase):
+  FUNCTION_NAME = 'CheckDanglingSymlinks'
+
+  def testSymlinkTargetNeeded(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        self.TestPkgmapEntry(
+          entry_path='/opt/csw/lib/postgresql/9.0/lib/libpq.so.5',
+          class_='none',
+          type_='s',
+          target='/opt/csw/lib/libpq.so.5',
+        ))
+    self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
+
+  # Hardlinks work the same way.
+  def disabledtestHardlinkTargetNeeded(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        self.TestPkgmapEntry(
+          entry_path='/opt/csw/lib/postgresql/9.0/lib/libpq.so.5',
+          class_='none',
+          type_='l',
+          target='/opt/csw/lib/libpq.so.5',
+        ))
+    self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
 
 
 # class TestCheckPrefixDirs(CheckTestHelper,
