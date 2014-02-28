@@ -3,20 +3,21 @@
 """Polls a designated catalog tree, and sends notifications about
 package updates."""
 
-import optparse
-import catalog
-import common_constants
 from Cheetah import Template
-import urllib2
-import logging
-import configuration
-import pprint
+from email.mime.text import MIMEText
 import cPickle
 import json
+import logging
+import optparse
 import os.path
+import pprint
 import smtplib
-from email.mime.text import MIMEText
-import rest
+import urllib2
+
+from lib.python import common_constants
+from lib.python import configuration
+from lib.python import rest
+from lib.python import catalog
 
 REPORT_TMPL = u"""Catalog update report for $email
 Catalog URL: $url
@@ -249,7 +250,13 @@ def main():
     else:
       logging.debug("%s not found in previous_catalogs_by_triad", key)
   formatter = NotificationFormatter()
-  rest_client = rest.RestClient()
+  username, password = rest.GetUsernameAndPassword()
+  config = configuration.GetConfig()
+  rest_client = rest.RestClient(
+      pkgdb_url=config.get('rest', 'pkgdb'),
+      releases_url=config.get('rest', 'releases'),
+      username=username,
+      password=password)
   notifications = formatter.FormatNotifications(
       cat_tree_url, catalogs, rest_client)
   whitelist = frozenset()
