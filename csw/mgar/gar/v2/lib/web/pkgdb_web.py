@@ -4,7 +4,7 @@
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
+# sys.path.append(os.path.join(os.path.split(__file__)[0], "..", ".."))
 
 import cjson
 import datetime
@@ -17,6 +17,9 @@ import re
 import web
 
 from sqlobject import sqlbuilder
+
+# sys.stderr.write("Running Python binary from {}.\n".format(sys.executable))
+# sys.stderr.write("Python path is {}.\n".format(sys.path))
 
 from lib.python import checkpkg_lib
 from lib.python import models
@@ -499,16 +502,11 @@ class RestSrv4FullStats(object):
 
   def GET(self, md5_sum):
     try:
-      pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      blob = models.Srv4FileStatsBlob.selectBy(md5_sum=md5_sum).getOne()
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
     web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
-    if pkg.data_obj_mimetype == 'application/json':
-      # If data are in JSON already, we can send them without decoding.
-      return pkg.data_obj.pickle
-    else:
-      data_structure = pkg.GetStatsStruct()
-      return cjson.encode(data_structure)
+    return blob.json
 
 
 class Srv4ByCatAndCatalogname(object):
@@ -753,5 +751,5 @@ if __name__ == "__main__":
 else:
   application = app_wrapper(app).wsgifunc()
   # application = app.wsgifunc()
-  from paste.exceptions.errormiddleware import ErrorMiddleware
-  application = ErrorMiddleware(application, debug=debugme)
+  # from paste.exceptions.errormiddleware import ErrorMiddleware
+  # application = ErrorMiddleware(application, debug=debugme)
