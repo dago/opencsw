@@ -40,7 +40,11 @@ PATCHFILES += 0001-use-finite-i-functionnstead-of-isfinite.patch
 
 TEST_SCRIPTS =
 
-CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARCONFIGURE_ARGS += --enable-fcdb=all
+CONFIGURE_ARGS += --enable-client=gtk2,sdl,xaw
+
+# Disable linker map forcing SUNW_1.22.2 as the linked MySQL needs SUNW_1.22.5
+LINKER_MAPS =RGS += $(DIRPATHS)
 
 # build package on Solaris 10
 PACKAGING_PLATFORMS = solaris10-spar# work around ld out of sync on buildfarm
