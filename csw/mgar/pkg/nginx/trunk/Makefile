@@ -1,5 +1,5 @@
 NAME = nginx
-VERSION = 1.5.7
+VERSION = 1.5.9
 GARTYPE = v2
 GARCOMPILER = SOS11
 
@@ -97,6 +97,7 @@ CONFIGURE_ARGS += --with-http_random_index= --with-http_realip_module
 CONFIGURE_ARGS += --with-http_secure_link_module
 CONFIGURE_degradation_module
 CONFIGURE_ARGS += --with-http_stub_status_module
+CONFIGURE_ARGS += --with-http_spdy_module
 # Enable when we have 64 bit perl
 # CONFIGURE_ARGS += --with-http_perl_module
 
