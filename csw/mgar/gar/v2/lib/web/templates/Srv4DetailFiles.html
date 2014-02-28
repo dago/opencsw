@@ -15,6 +15,14 @@ $def with (srv4, files)
 </h2>
 
 <table>
+<tr>
+<th>mode</th>
+<th>user</th>
+<th>group</th>
+<th>path</th>
+<th>mime type</th>
+<th>machine</th>
+</tr>
 $for file in files:
   <tr>
   <td>$file.perm_mode</td>
@@ -22,6 +30,7 @@ $for file in files:
   <td>$file.perm_group</td>
   <td>$file.FullPath()</td>
   <td>$file.mimetype</td>
+  <td>$file.machine</td>
   </tr>
 </table>
 
