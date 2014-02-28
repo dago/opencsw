@@ -72,11 +72,12 @@ ISALISTS_BY_ARCH = {
 # a symlink, so should not be listed here.
 DEFAULT_CATALOG_RELEASES = frozenset([
     'beanie',
+    'bratislava',
     'dublin',
-    'unstable',
-    'legacy',
     'kiel',
-    ])
+    'legacy',
+    'unstable',
+])
 
 # At some point, it was used to prevent people from linking against
 # libX11.so.4, but due to issues with 3D acceleration.
