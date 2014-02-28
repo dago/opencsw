@@ -21,13 +21,15 @@ PKG_DATA_1 = {
 CATALOG_FN = "catalog"
 DESC_FN = "descriptions"
 
-import rest
 import os
 import optparse
 import logging
 import sys
 import datetime
-import representations
+
+from lib.python import configuration
+from lib.python import representations
+from lib.python import rest
 
 
 class Error(Exception):
@@ -35,13 +37,12 @@ class Error(Exception):
 
 class CatalogFileGenerator(object):
 
-  def __init__(self, catrel, arch, osrel,
-               rest_client=None):
+  def __init__(self, catrel, arch, osrel, rest_client):
     self.catrel = catrel
     self.arch = arch
     self.osrel = osrel
     home_dir = os.environ['HOME']
-    self.rest_client = rest_client or rest.RestClient()
+    self.rest_client = rest_client
     self._catalog = None
 
   @property
@@ -99,7 +100,15 @@ def main():
   parser.add_option("--arch", dest="arch")
   parser.add_option("--os-release", dest="osrel")
   options, args = parser.parse_args()
-  cfg = CatalogFileGenerator(options.catrel, options.arch, options.osrel)
+  username, password = rest.GetUsernameAndPassword()
+  config = configuration.GetConfig()
+  rest_client = rest.RestClient(
+      pkgdb_url=config.get('rest', 'pkgdb'),
+      releases_url=config.get('rest', 'releases'),
+      username=username,
+      password=password)
+  cfg = CatalogFileGenerator(options.catrel, options.arch, options.osrel,
+                             rest_client)
   cfg.GenerateCatalog(options.out_dir)
 
 
