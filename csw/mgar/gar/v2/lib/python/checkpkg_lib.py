@@ -633,11 +633,21 @@ class CheckpkgManager2(CheckpkgManagerBase):
     reasons_by_pkg_by_pkgname = {}
     pkgs_by_reasons_by_pkgname = {}
     needed_pkgs = copy.deepcopy(needed_pkgs)
+    unsatisfied_needed_files = []
     # Resolving files into packages and adding to the common data structure.
-    for pkgname, full_path, reason in needed_files:
-      needed_pkgs_tmp = checkpkg_interface.GetPkgByPath(full_path)
-      for needed_pkgname in needed_pkgs_tmp:
-        needed_pkgs.append(NeededPackage(pkgname, needed_pkgname, reason))
+    for needed_file in needed_files:
+      pkgname, full_path, reason = needed_file
+      logging.debug('_ReportDependencies(): processing %r %r %r', pkgname,
+                    full_path, reason)
+      needed_pkgnames = checkpkg_interface.GetPkgByPath(full_path)
+      if needed_pkgnames:
+        for needed_pkgname in needed_pkgnames:
+          needed_pkg = NeededPackage(pkgname, needed_pkgname, reason)
+          logging.debug('Need package %r', needed_pkg)
+          needed_pkgs.append(needed_pkg)
+      else:
+        logging.warning('Did not find packages for %r', full_path)
+        unsatisfied_needed_files.append(needed_file)
     for pkgname, needed_pkgname, reason in needed_pkgs:
       reasons_by_pkg_by_pkgname.setdefault(pkgname, {})
       reasons_by_pkg_by_pkgname[pkgname].setdefault(needed_pkgname, [])
@@ -690,6 +700,14 @@ class CheckpkgManager2(CheckpkgManagerBase):
               "%sRUNTIME_DEP_PKGS_%s += %s" % (prefix, pkgname, missing_dep))
         if alternatives:
           messenger.SuggestGarLine("# (end of the list of alternative dependencies)")
+
+    # Files that were declared as needed, but we did not find any packages
+    # providing these files.
+    for unsatisfied_file in unsatisfied_needed_files:
+      checkpkg_interface.ReportErrorForPkgname(
+          unsatisfied_file.pkgname,
+          'file-needed-but-no-package-satisfies-it',
+          '%s %s' % (unsatisfied_file.full_path, unsatisfied_file.reason))
 
   def _ReportMissingDependencies(self,
                                  error_mgr,
