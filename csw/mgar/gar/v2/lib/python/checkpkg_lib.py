@@ -3,8 +3,6 @@
 # This file is supposed to drain the checkpkg.py file until is becomes
 # empty and goes away.
 
-from Cheetah import Template
-from sqlobject import sqlbuilder
 import collections
 import copy
 import getpass
@@ -18,16 +16,19 @@ import re
 import sqlobject
 import textwrap
 
-from lib.python import mute_progressbar
+from Cheetah import Template
+from sqlobject import sqlbuilder
+
 from lib.python import common_constants
 from lib.python import configuration
 from lib.python import database
 from lib.python import errors
 from lib.python import models as m
+from lib.python import mute_progressbar
+from lib.python import representations
 from lib.python import rest
 from lib.python import sharedlib_utils
 from lib.python import tag
-from lib.python import representations
 
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 
@@ -522,11 +523,11 @@ class IndividualCheckInterface(CheckInterfaceBase):
         self.pkgname, tag_name, tag_info, msg=msg)
 
   def NeedFile(self, full_path, reason):
-    "See base class _NeedFile."
+    """See base class _NeedFile."""
     self._NeedFile(self.pkgname, full_path, reason)
 
   def NeedPackage(self, needed_pkg, reason):
-    "See base class _NeedPackage."
+    """See base class _NeedPackage."""
     self._NeedPackage(self.pkgname, needed_pkg, reason)
 
 
@@ -538,11 +539,11 @@ class SetCheckInterface(CheckInterfaceBase):
       osrel, arch, catrel, catalog, pkg_set_files, rest_client=rest_client)
 
   def NeedFile(self, pkgname, full_path, reason):
-    "See base class _NeedFile."
+    """See base class _NeedFile."""
     self._NeedFile(pkgname, full_path, reason)
 
   def NeedPackage(self, pkgname, needed_pkg, reason):
-    "See base class _NeedPackage."
+    """See base class _NeedPackage."""
     self._NeedPackage(pkgname, needed_pkg, reason)
 
   def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
@@ -620,7 +621,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     Needed files are extracted from the Interface objects.
     """
     # The idea behind reasons is that if two packages are necessary for
-    # the same reason, any of them would be satisfactory.
+    # the same reason, any of these two would be satisfactory.
     # For example:
     # (CSWfoo, /opt/csw/bin/foo, "provides foo support"),
     # (CSWbar, /opt/csw/bin/bar, "provides foo support"),
@@ -654,6 +655,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
           reason_group.append((needed_pkg, reason))
         req_pkgs_reasons_by_pkgname.setdefault(pkgname, [])
         req_pkgs_reasons_by_pkgname[pkgname].append(reason_group)
+
     for pkgname in declared_deps_by_pkgname:
       declared_deps = declared_deps_by_pkgname[pkgname]
       req_pkgs_reasons_by_pkgname.setdefault(pkgname, [])
@@ -662,6 +664,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
        missing_dep_groups) = self._ReportMissingDependencies(
            checkpkg_interface, pkgname, declared_deps,
            req_pkgs_reasons_by_pkgname[pkgname])
+
       namespace = {
           "pkgname": pkgname,
           "missing_deps": missing_deps_reasons_by_pkg,
@@ -673,6 +676,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
       if report.strip():
         for line in report.splitlines():
           messenger.Message(line)
+
       for missing_deps in missing_dep_groups:
         alternatives = False
         prefix = ""
@@ -752,7 +756,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
         # If one of the packages suggested is the package under examination,
         # consider the dependency satisifed.
         if pkgname == for_pkgname or pkgname in declared_deps_set:
-          logging.debug("%s is satisfied by %s", repr(reason), pkgname)
+          logging.debug("%r is satisfied by %s", reason, pkgname)
           dependency_fulfilled = True
           break
       if not dependency_fulfilled:
@@ -1039,11 +1043,6 @@ class Catalog(SqlobjectHelperMixin):
 
   def GetPkgByPath(self, full_file_path, osrel, arch, catrel):
     """Returns a list of packages."""
-    # Memoization for performance
-
-    # Memoization won't buy us much.  Perhaps we can fetch all the files
-    # belonging to the same package, so that we quickly prepopulate the cache.
-
     # TODO(maciej): Move this to models.py and have pkgdb_web return the JSON
     # structure. This is a step towards RESTification.
     key = (full_file_path, osrel, arch, catrel)
@@ -1205,5 +1204,5 @@ class Catalog(SqlobjectHelperMixin):
       # Files belonging to this package should not be removed from the catalog
       # as the package might be still present in another catalog.
       sqo_srv4_in_cat.destroySelf()
-    except sqlobject.main.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound as e:
       logging.warning(e)
