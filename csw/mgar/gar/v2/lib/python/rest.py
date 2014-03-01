@@ -246,7 +246,7 @@ class RestClient(object):
                          exceptions=(RestCommunicationError, pycurl.error))
   def GetBlob(self, tag, md5_sum):
     url = self.releases_url + "/blob/%s/%s/" % (tag, md5_sum)
-    logging.warning('GetBlob() url=%r', url)
+    logging.debug('GetBlob() url=%r', url)
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
@@ -258,13 +258,13 @@ class RestClient(object):
       c.setopt(c.VERBOSE, 1)
     c.perform()
     http_code = c.getinfo(pycurl.HTTP_CODE)
-    logging.warning(
+    logging.debug(
         "curl getinfo: %s %s %s",
         type(http_code),
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
-    logging.warning("HTTP code: %s", http_code)
+    logging.debug("HTTP code: %s", http_code)
     if http_code == 401:
       raise RestCommunicationError("Received HTTP code {0}".format(http_code))
     successful = (http_code >= 200 and http_code <= 299)
