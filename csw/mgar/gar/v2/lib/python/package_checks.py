@@ -1190,8 +1190,8 @@ def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
         link_type = "hardlink"
       error_mgr.NeedFile(
           pkgmap_entry.target,
-          "%s contains a %s (%s) which needs the target file: %s."
-          % (link_type, pkgname, repr(pkgmap_entry.path), repr(pkgmap_entry.target)))
+          '%s contains %r (a %s) which needs the target file: %r.'
+          % (pkgname, pkgmap_entry.path, link_type, pkgmap_entry.target))
 
 
 def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):
