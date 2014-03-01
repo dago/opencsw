@@ -25,19 +25,23 @@ PATCHFILES += 0002-One-more-test.patch
 ATHS)
 BUILD64 = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
-MERGE_DIRS_isa-amdd
-PACKAGES += CSWlibgflags2
+MERGE_DIRS_isa-amddPACKAGES += CSWlibgflags2
 PKGFILES_CSWlibgflags2 += $(call baseisadirs,$(libdir),libgflags\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibgflags2 += $(DESCRIPTION), libgflags.so.2
 RUNTIME_DEP_PKGS_CSWlibgflags2 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgflags2 += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWgflags += CSWlibgflags2
 
 PACKAGES += CSWlibgflags-nothreads2
 PKGFILES_CSWlibgflags-nothreads2 += $(call baseisadirs,$(libdir),libgflags_nothreads\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibgflags-nothreads2 += $(DESCRIPTION), libgflags_nothreads.so.2
 RUNTIME_DEP_PKGS_CSWlibgflags-nothreads2 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgflags-nothreads2 += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWgflags += CSWlibgflags-nothreads2
+
+PACKAGES += CSWgflags-dev
+SPKG_DESC_CSWgflags-dev = $(DESCRIPTION)
+OBSOLETED_BY_CSWgflags-dev = CSWgflags
+RUNTIME_DEP_PKGS_CSWgflags-dev += CSWlibgflags2
+RUNTIME_DEP_PKGS_CSWgflags-dev += CSWlibgflags-nothreads2
+CHECKPKG_OVERRIDES_CSWgflags-dev += file-with-bad-content|/usr/local|root/opt/csw/bin/gflags_completions.sh
 
 include gar/category.mk
