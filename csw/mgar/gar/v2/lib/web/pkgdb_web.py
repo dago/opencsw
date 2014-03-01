@@ -123,8 +123,12 @@ class Srv4Detail(object):
       archs = models.Architecture.select(models.Architecture.q.name!='all')
     else:
       archs = [pkg.arch]
-    # pkgmap is disabled for now.
+
     pkgmap = []
+    for pkgmap_entry in pkg_stats['pkgmap']:
+      pkgmap_entry = representations.PkgmapEntry._make(pkgmap_entry)
+      pkgmap.append(pkgmap_entry.line)
+
     for catrel in catrels:
       for arch in archs:
         for osrel in osrels:
