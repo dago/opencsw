@@ -704,6 +704,11 @@ class CheckpkgManager2(CheckpkgManagerBase):
     # Files that were declared as needed, but we did not find any packages
     # providing these files.
     for unsatisfied_file in unsatisfied_needed_files:
+      # We need to ass a special case for isaexec, because
+      # /opt/csw/bin/isaexec in CSWisaexec is created in postinstall, and it
+      # isn't present in pkgmap, so it looks like the file is missing.
+      if unsatisfied_file.full_path == '/opt/csw/bin/isaexec':
+        continue
       checkpkg_interface.ReportErrorForPkgname(
           unsatisfied_file.pkgname,
           'file-needed-but-no-package-satisfies-it',
