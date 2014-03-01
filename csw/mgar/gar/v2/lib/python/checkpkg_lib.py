@@ -821,8 +821,9 @@ class CheckpkgManager2(CheckpkgManagerBase):
       pkgname = pkg_data["basic_stats"]["pkgname"]
       examined_files_by_pkg.setdefault(pkgname, set())
       for entry in pkg_data["pkgmap"]:
-        if "path" in entry and entry["path"]:
-          base_path, base_name = os.path.split(entry["path"])
+        entry = representations.PkgmapEntry._make(entry)
+        if entry.path:
+          base_path, base_name = os.path.split(entry.path)
           examined_files_by_pkg[pkgname].add((base_path, base_name))
     return examined_files_by_pkg
 
