@@ -256,22 +256,22 @@ ul.overrides li {
     </a>
   </h2>
   <ul>
-#for bin in $pkg["binaries_dump_info"]
+#for path, base_name, soname, needed_sonames, runpath, runpath_rpath_the_same, rpath_set, runpath_set in $pkg["binaries_dump_info"]
   <li>
-  <strong>$bin.path</strong>
+  <strong>$path</strong>
 ## ['base_name', 'RUNPATH RPATH the same', 'runpath', 'RPATH set', 'needed sonames', 'path', 'RUNPATH set']
   <ul>
   <li>
-    base name: <code>$bin.base_name</code>
+    base name: <code>$base_name</code>
   </li>
-#if 'soname' in $bin
+#if $soname
   <li>
     soname:
     <ul>
       <li>
         <code>
-          <a href="http://www.opencsw.org/packagesContainingFile/?fileName=$bin.soname&searchsubmit=1">
-            $bin.soname
+          <a href="http://www.opencsw.org/packagesContainingFile/?fileName=$soname&searchsubmit=1">
+            $soname
           </a>
         </code>
       </li>
@@ -280,7 +280,7 @@ ul.overrides li {
 #end if
   <li> runpath:
     <ul>
-#for runpath_el in $bin.runpath
+#for runpath_el in $runpath
       <li>
         <code>
             $runpath_el
@@ -290,11 +290,11 @@ ul.overrides li {
     </ul>
   <li> needed sonames:
     <ul>
-#for soname in $bin["needed sonames"]
+#for needed_soname in $needed_sonames
       <li>
         <code>
-          <a href="http://www.opencsw.org/packagesContainingFile/?fileName=$soname&searchsubmit=1">
-            $soname
+          <a href="http://www.opencsw.org/packagesContainingFile/?fileName=$needed_soname&searchsubmit=1">
+            $needed_soname
           </a>
         </code>
       </li>
@@ -338,11 +338,11 @@ ul.overrides li {
   </tr>
 #for md in $pkg.files_metadata
   <tr>
-  <td> $md.path </td>
-  <td> $md.mime_type </td>
+  <td> $md[0] </td>
+  <td> $md[1] </td>
   <td style="text-align: center;">
-#if "machine_id" in $md
-  $hachoir_machines[$md.machine_id].name
+#if $md[2] is not None
+  $hachoir_machines[$md[2]].name
 #else
   &nbsp;
 #end if
@@ -413,7 +413,7 @@ $l
   <ul class="code">
 #for entry in $pkg.pkgmap
   <li>
-  $entry.line
+  $entry[0]
   </li>
 #end for
   </ul>

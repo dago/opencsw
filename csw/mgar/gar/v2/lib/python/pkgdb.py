@@ -116,7 +116,7 @@ class OpencswTreeError(Error):
 
 class HtmlGenerator(object):
 
-  def __init__(self, identifiers, template=None):
+  def __init__(self, identifiers, template=None, rest_client=None, debug=False):
     """Initialize the object
 
     args: identifiers: md5 sums or file names of packages
@@ -124,6 +124,9 @@ class HtmlGenerator(object):
     """
     self.template = template
     self.identifiers = identifiers
+    self.debug = debug
+    assert rest_client is not None, 'You need to pass rest_client here'
+    self.rest_client = rest_client
 
   def GetErrorTagsResult(self, srv4):
     res = m.CheckpkgErrorTag.select(
@@ -140,7 +143,7 @@ class HtmlGenerator(object):
     # Add error tags
     for identifier in self.identifiers:
       srv4 = GetPkg(identifier)
-      data = srv4.GetStatsStruct()
+      data = self.rest_client.GetPkgstatsByMd5(srv4.md5_sum)
       build_src_url_svn = srv4.GetSvnUrl()
       build_src_url_trac = srv4.GetTracUrl()
       if "OPENCSW_REPOSITORY" in data["pkginfo"]:
@@ -451,7 +454,16 @@ def main():
       t = Template(SHOW_PKG_TMPL, searchList=[srv4])
       sys.stdout.write(unicode(t))
   elif command == 'gen-html':
-    g = HtmlGenerator(md5_sums, options.pkg_review_template)
+    config = configuration.GetConfig()
+    username, password = rest.GetUsernameAndPassword()
+    rest_client = rest.RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'),
+        username=username,
+        password=password,
+        debug=options.debug)
+
+    g = HtmlGenerator(md5_sums, options.pkg_review_template, rest_client, options.debug)
     sys.stdout.write(g.GenerateHtml())
   elif command == 'initdb':
     config = configuration.GetConfig()
