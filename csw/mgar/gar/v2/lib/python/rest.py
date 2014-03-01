@@ -48,6 +48,7 @@ class RestClient(object):
     if not re.match(r'^[0-9a-f]{32}$', md5_sum):
       raise ArgumentError('Passed argument is not a valid md5 sum: %r' % md5_sum)
 
+  @retry_decorator.Retry(tries=DEFAULT_TRIES, exceptions=(RestCommunicationError, httplib.BadStatusLine))
   def GetPkgByMd5(self, md5_sum):
     self.ValidateMd5(md5_sum)
     url = self.pkgdb_url + "/srv4/%s/" % md5_sum
