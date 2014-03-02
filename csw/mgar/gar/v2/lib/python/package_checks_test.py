@@ -10,9 +10,9 @@ except ImportError:
 
 import copy
 import datetime
-import os.path
-import mox
 import logging
+import mox
+import os.path
 import pprint
 
 from lib.python.testdata.djvulibre_rt_stats import pkgstats as djvulibre_rt_stats
@@ -2600,38 +2600,29 @@ class TestSetCheckDirectoryDepsMissing(CheckTestHelper,
 #         'soname=libneon.so.27 filename=foo.so.1')
 
 
-# class TestCheckLicenseFilePlacementLicense(CheckTestHelper,
-#                                            unittest.TestCase):
-#   FUNCTION_NAME = 'CheckLicenseFilePlacement'
-#   def testBadLicensePlacement(self):
-#     self.pkg_data = copy.deepcopy(neon_stats[0])
-#     self.pkg_data["pkgmap"].append({
-#       "class": "none", "type": "f", "line": "",
-#       "user": "root", "group": "bin", "mode": '0755',
-#       "path": "/opt/csw/share/doc/alien/license",
-#     })
-#     self.error_mgr_mock.ReportError(
-#         'wrong-docdir',
-#         'expected=/opt/csw/shared/doc/neon/... '
-#         'in-package=/opt/csw/share/doc/alien/license')
-# 
-#   def testGoodRandomFileWithSuffix(self):
-#     """A differently suffixed file should not trigger an error."""
-#     self.pkg_data = copy.deepcopy(neon_stats[0])
-#     self.pkg_data["pkgmap"].append({
-#       "class": "none", "type": "f", "line": "",
-#       "user": "root", "group": "bin", "mode": '0755',
-#       "path": "/opt/csw/share/doc/alien/license.html",
-#     })
-# 
-#   def testGoodRandomFile(self):
-#     "A random file should not trigger the message; only license files."
-#     self.pkg_data = copy.deepcopy(neon_stats[0])
-#     self.pkg_data["pkgmap"].append({
-#       "class": "none", "type": "f", "line": "",
-#       "user": "root", "group": "bin", "mode": '0755',
-#       "path": "/opt/csw/share/doc/alien/random_file",
-#     })
+class TestCheckLicenseFilePlacementLicense(CheckTestHelper,
+                                           unittest.TestCase):
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
+  def testBadLicensePlacement(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["pkgmap"].append(
+        self.TestPkgmapEntry("/opt/csw/share/doc/alien/license"))
+    self.error_mgr_mock.ReportError(
+        'wrong-docdir',
+        'expected=/opt/csw/shared/doc/neon/... '
+        'in-package=/opt/csw/share/doc/alien/license')
+
+  def testGoodRandomFileWithSuffix(self):
+    """A differently suffixed file should not trigger an error."""
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["pkgmap"].append(
+        self.TestPkgmapEntry("/opt/csw/share/doc/alien/license.html"))
+
+  def testGoodRandomFile(self):
+    "A random file should not trigger the message; only license files."
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["pkgmap"].append(
+        self.TestPkgmapEntry("/opt/csw/share/doc/alien/random_file"))
 
 
 class TestCheckObsoleteDepsCups(CheckTestHelper, unittest.TestCase):
@@ -2790,45 +2781,45 @@ class TestCheckDanglingSymlinks(CheckTestHelper,
 #     self.pkg_data = mercurial_stats[0]
 
 
-# class TestCheckCatalognameMatchesPkgname(CheckTestHelper,
-#                                          unittest.TestCase):
-#   FUNCTION_NAME = 'CheckCatalognameMatchesPkgname'
-# 
-#   def testMismatch(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
-#     basic_stats = self.pkg_data["basic_stats"]
-#     basic_stats["catalogname"] = "foo_bar"
-#     basic_stats["pkgname"] = "CSWfoo-bar-baz"
-#     self.error_mgr_mock.ReportError(
-#         'catalogname-does-not-match-pkgname',
-#         'pkgname=CSWfoo-bar-baz catalogname=foo_bar '
-#         'expected-catalogname=foo_bar_baz')
-# 
-#   def testGoodMatch(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
+class TestCheckCatalognameMatchesPkgname(CheckTestHelper,
+                                         unittest.TestCase):
+  FUNCTION_NAME = 'CheckCatalognameMatchesPkgname'
+
+  def testMismatch(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    basic_stats = self.pkg_data["basic_stats"]
+    basic_stats["catalogname"] = "foo_bar"
+    basic_stats["pkgname"] = "CSWfoo-bar-baz"
+    self.error_mgr_mock.ReportError(
+        'catalogname-does-not-match-pkgname',
+        'pkgname=CSWfoo-bar-baz catalogname=foo_bar '
+        'expected-catalogname=foo_bar_baz')
+
+  def testGoodMatch(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
 
 
-# class TestCheckCatalognameMatchesPkgname(CheckTestHelper,
-#                                          unittest.TestCase):
-#   FUNCTION_NAME = 'CheckPkginfoOpencswRepository'
-# 
-#   def testRepositoryInfoGood(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
-#     # No errors reported.
-# 
-#   def testRepositoryInfoMissing(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
-#     del self.pkg_data["pkginfo"]["OPENCSW_REPOSITORY"]
-#     self.error_mgr_mock.ReportError('pkginfo-opencsw-repository-missing')
-# 
-#   def testRepositoryInfoUncommitted(self):
-#     self.pkg_data = copy.deepcopy(tree_stats[0])
-#     self.pkg_data["pkginfo"]["OPENCSW_REPOSITORY"] = (
-#         "https://gar.svn.sourceforge.net/svnroot/gar/"
-#         "csw/mgar/pkg/puppet/trunk@UNCOMMITTED")
-#     self.error_mgr_mock.ReportError('pkginfo-opencsw-repository-uncommitted')
-# 
-# 
+class TestCheckCatalognameMatchesPkgname(CheckTestHelper,
+                                         unittest.TestCase):
+  FUNCTION_NAME = 'CheckPkginfoOpencswRepository'
+
+  def testRepositoryInfoGood(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    # No errors reported.
+
+  def testRepositoryInfoMissing(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    del self.pkg_data["pkginfo"]["OPENCSW_REPOSITORY"]
+    self.error_mgr_mock.ReportError('pkginfo-opencsw-repository-missing')
+
+  def testRepositoryInfoUncommitted(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkginfo"]["OPENCSW_REPOSITORY"] = (
+        "https://gar.svn.sourceforge.net/svnroot/gar/"
+        "csw/mgar/pkg/puppet/trunk@UNCOMMITTED")
+    self.error_mgr_mock.ReportError('pkginfo-opencsw-repository-uncommitted')
+
+
 # class TestCheckAlternativesDependency(CheckTestHelper, unittest.TestCase):
 #   FUNCTION_NAME = 'CheckAlternativesDependency'
 #   ALTERNATIVES_EXECUTABLE = "/opt/csw/sbin/alternatives"
