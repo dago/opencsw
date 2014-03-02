@@ -44,8 +44,8 @@ logger = logging.getLogger(__name__)
 datadir=configuration.CHECKPKG_DIR % os.environ
 # fn_revdep = os.path.join(datadir,'RevDeps_%s_%s_%s.json')
 fn_cat = os.path.join(datadir,'catalog_%s_%s_%s.json')
-fn_removelst = 'PkgsToRemoveFrom_%s_%s_%s.lst'
-fn_rebuildlst = 'PkgsToRebuildFrom_%s_%s_%s.lst'
+fn_pkgs_to_remove = 'PkgsToRemoveFrom_%s_%s_%s.lst'
+fn_pkgs_to_rebuild = 'PkgsToRebuildFrom_%s_%s_%s.lst'
 
 CatSubSet = namedtuple('CatSubSet',
                        'pkgname, catalogname, md5_sum, version, dependlist')
@@ -171,8 +171,8 @@ def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel):
 
 
 def WriteToTextFiles(pkgs_to_drop, pkgs_to_rebuild, newcatrel, arch, osrel):
-    print ('write %s' % (fn_removelst % (newcatrel,osrel,arch)))
-    with open(fn_removelst % (newcatrel, osrel, arch), "w") as fd:
+    print ('write %s' % (fn_pkgs_to_remove % (newcatrel,osrel,arch)))
+    with open(fn_pkgs_to_remove % (newcatrel, osrel, arch), "w") as fd:
         for pkg in sorted(pkgs_to_drop, key=lambda p: p.catalogname):
             fd.write(pkg.catalogname + '\n')
     logger.info("number of packages to remove: %d" % len(pkgs_to_drop))

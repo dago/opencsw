@@ -10,18 +10,18 @@ Takes a catalog name and:
 
 """
 
-import optparse
-import rest
-import common_constants
-import pprint
+import cjson
 import gdbm
 import logging
-import sys
+import optparse
 import os
-import cjson
+import pprint
+import sys
 import urllib2
 
 from lib.python import configuration
+from lib.python import rest
+from lib.python import common_constants
 
 USAGE = """%prog --os-releases=SunOS5.10,SunOS5.11 -c <catalogname>
 
@@ -42,7 +42,7 @@ done
 """
 
 
-UNSTABLE = "unstable"
+UNSTABLE = 'unstable'
 EVERY_N_DOTS = 100
 datadir = configuration.CHECKPKG_DIR % os.environ
 fn_revdeps = os.path.join(datadir, 'revdeps-%s-%s-%s.json')
@@ -57,24 +57,15 @@ class DataError(Exception):
 
 
 class RevDeps(object):
-  ''' 
-  returns a list of [md5_sum,pkgname]
+  """returns a list of [md5_sum,pkgname]
   in the moment not used, perhaps later usefull:
     RevDepsSet = namedtuple('RevDepsSet','md5_sum pkgname')
-  '''
+  """
 
-  def __init__(self, rest_client=None):
+  def __init__(self, rest_client):
     self.cached_catalogs = {}
-    self.cp = rest.CachedPkgstats(fn_pkgstatsdb)
+    self.cp = rest.CachedPkgstats(fn_pkgstatsdb, rest_client)
     self.rest_client = rest_client
-    if self.rest_client is None:
-      config = configuration.GetConfig()
-      username, password = rest.GetUsernameAndPassword()
-      self.rest_client = rest.RestClient(
-          pkgdb_url=config.get('rest', 'pkgdb'),
-          releases_url=config.get('rest', 'releases'),
-          username=username,
-          password=password)
 
   def MakeRevIndex(self, catrel, arch, osrel, quiet=False):
     key = (catrel, arch, osrel)
@@ -85,6 +76,7 @@ class RevDeps(object):
       with open(fn, "r") as fd:
         self.cached_catalogs[key] = cjson.decode(fd.read())
       return
+    # This should be rewritten to use RestClient.GetCatalogForGeneration
     logging.info(
         "Building a database of reverse dependencies. "
         "This can take up to multiple hours.")
@@ -93,7 +85,6 @@ class RevDeps(object):
     counter = 0
     for pkg_simple in catalog:
       md5 = pkg_simple["md5_sum"]
-      # pkg = self.cp.GetPkgstats(md5)
       short_data = self.cp.GetDeps(md5)
       pkgname = short_data["pkgname"]
       for dep_pkgname, _ in short_data["deps"]:
@@ -126,7 +117,11 @@ class RevDeps(object):
     else:
       return []
 
+
 class PackageRemover(object):
+
+  def __init__(self, rest_client):
+    self.rest_client = rest_client
 
   def CachePackageIsGone(self, catalogname):
     with open("packages_dropped_cache.txt", "ab") as fd:
@@ -136,8 +131,7 @@ class PackageRemover(object):
     if not os_releases:
       os_releases = common_constants.OS_RELS
     username, password = rest.GetUsernameAndPassword()
-    rest_client = rest.RestClient(username=username, password=password)
-    rd = RevDeps()
+    rd = RevDeps(self.rest_client)
     rev_deps = {}
     # md5 sums to remove
     to_remove = []
@@ -153,7 +147,8 @@ class PackageRemover(object):
         continue
       for arch in common_constants.PHYSICAL_ARCHITECTURES:
         try:
-          pkg_simple = rest_client.Srv4ByCatalogAndCatalogname(UNSTABLE, arch, osrel, catalogname)
+          pkg_simple = self.rest_client.Srv4ByCatalogAndCatalogname(
+              UNSTABLE, arch, osrel, catalogname)
         except urllib2.HTTPError, e:
           logging.warning("could not fetch %r from %s/%s: %s",
                           catalogname, arch, osrel, e)
@@ -161,7 +156,7 @@ class PackageRemover(object):
         if not pkg_simple:
           # Maybe we were given a pkgname instead of a catalogname? We can try
           # that before failing.
-          pkg_simple = rest_client.Srv4ByCatalogAndPkgname(
+          pkg_simple = self.rest_client.Srv4ByCatalogAndPkgname(
               UNSTABLE, arch, osrel, catalogname)
           if not pkg_simple:
             msg = "{0} was not in the unstable {1} {2} catalog."
@@ -170,7 +165,6 @@ class PackageRemover(object):
         if pkg_simple:
           found_anywhere = True
         md5 = pkg_simple["md5_sum"]
-        # pkg = rd.cp.GetPkgstats(md5)
         key = UNSTABLE, arch, osrel
         cat_rev_deps = rd.RevDepsByMD5(UNSTABLE, arch, osrel, md5)
         if cat_rev_deps:
@@ -188,7 +182,7 @@ class PackageRemover(object):
       for catrel, arch, osrel, md5_sum in to_remove:
         print "# [%s]" % pkg_simple["catalogname"], catrel, arch, osrel, md5_sum
         if execute:
-          rest_client.RemoveSvr4FromCatalog(catrel, arch, osrel, md5_sum)
+          self.rest_client.RemoveSvr4FromCatalog(catrel, arch, osrel, md5_sum)
       if found_anywhere:
         self.CachePackageIsGone(catalogname)
 
@@ -215,7 +209,16 @@ def main():
   os_releases = common_constants.OS_RELS
   if options.os_releases:
     os_releases = options.os_releases.split(",")
-  pr = PackageRemover()
+
+  config = configuration.GetConfig()
+  username, password = rest.GetUsernameAndPassword()
+  rest_client = rest.RestClient(
+      pkgdb_url=config.get('rest', 'pkgdb'),
+      releases_url=config.get('rest', 'releases'),
+      username=username,
+      password=password)
+
+  pr = PackageRemover(rest_client)
   pr.RemovePackage(options.catalogname, not options.dry_run, os_releases)
 
 

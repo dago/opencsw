@@ -149,11 +149,7 @@ def IndexDictByField(d, field):
 
 def GetCatalogs(catrel_from, catrel_to,
                 include_version_changes,
-                include_downgrades):
-  config = configuration.GetConfig()
-  rest_client = rest.RestClient(
-      pkgdb_url=config.get('rest', 'pkgdb'),
-      releases_url=config.get('rest', 'releases'))
+                include_downgrades, rest_client):
   def GetCatalog(rest_client, r_catrel, r_arch, r_osrel):
     key = r_catrel, r_arch, r_osrel
     catalog = rest_client.GetCatalog(*key)
@@ -277,6 +273,14 @@ def main():
   fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
   logging.basicConfig(format=fmt, level=logging_level)
 
+  config = configuration.GetConfig()
+  username, password = rest.GetUsernameAndPassword()
+  rest_client = rest.RestClient(
+      pkgdb_url=config.get('rest', 'pkgdb'),
+      releases_url=config.get('rest', 'releases'),
+      username=username,
+      password=password)
+
   if not options.output_file:
     raise UsageError("Please specify the output file.  See --help.")
   catrel_from = options.catrel_from
@@ -294,18 +298,17 @@ def main():
     catalogs = GetCatalogs(
         catrel_from, catrel_to,
         options.include_version_changes,
-        options.include_downgrades)
+        options.include_downgrades, rest_client)
     diffs_by_catalogname = ComposeDiffsByCatalogname(
         catalogs, catrel_from, catrel_to,
         options.include_version_changes,
         options.include_downgrades)
     bundles_by_md5 = {}
     bundles_missing = set()
-    cp = rest.CachedPkgstats("pkgstats")
+    cp = rest.CachedPkgstats("pkgstats", rest_client)
     for key in catalogs:
       if catalogs[key]: # could be None
         for pkg in catalogs[key]:
-          # logging.debug("%r", pkg)
           md5 = pkg["md5_sum"]
           if md5 not in bundles_by_md5 and md5 not in bundles_missing:
             stats = cp.GetPkgstats(md5)

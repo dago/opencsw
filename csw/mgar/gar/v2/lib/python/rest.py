@@ -143,7 +143,7 @@ class RestClient(object):
 
   def RemoveSvr4FromCatalog(self, catrel, arch, osrel, md5_sum):
     url = (
-        "%s%s/catalogs/%s/%s/%s/%s/"
+        "%s/catalogs/%s/%s/%s/%s/"
         % (self.releases_url, catrel, arch, osrel, md5_sum))
     logging.debug("DELETE @ URL: %s %s", type(url), url)
     c = pycurl.Curl()
@@ -490,13 +490,11 @@ class CachedPkgstats(object):
   Wraps RestClient and provides a caching layer.
   """
 
-  def __init__(self, filename):
+  def __init__(self, filename, rest_client):
     self.filename = filename
     self.d = anydbm.open("%s.db" % self.filename, "c")
     config = configuration.GetConfig()
-    self.rest_client = RestClient(
-        pkgdb_url=config.get('rest', 'pkgdb'),
-        releases_url=config.get('rest', 'releases'))
+    self.rest_client = rest_client
     self.deps = anydbm.open("%s-deps.db" % self.filename, "c")
 
   def __del__(self):
