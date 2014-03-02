@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = bison
 VERSION = 3.0.2
 GARTYPE = v2
@@ -9,21 +11,21 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-# MASTER_SITES += http://alpha.gnu.org/gnu/bison/
 
 DISTFILES = $(DISTNAME).tar.gz
 
 RUNTIME_DEP_PKGS_CSWbison += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWbison += CSWiconv
 RUNTIME_DEP_PKGS_CSWbison += CSWgm4
 
 VENDOR_URL = http://www.gnu.org/software/bison/
+
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset\.alias
 
 # I guess we really need these
 CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWgm4
-CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWiconv
 
 # Tests 217-222 use zero-sized structs
 EXTRA_CFLAGS += -features=extensions
