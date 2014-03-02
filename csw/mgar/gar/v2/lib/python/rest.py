@@ -530,8 +530,8 @@ def GetUsernameAndPassword():
   try:
     with open(authfile, 'r') as af:
       password = af.read().strip()
-  except IOError, e:
-    logging.warning("Error reading %s: %s", authfile, e)
+  except IOError as e:
+    logging.debug("Error reading %s: %s", authfile, e)
 
   if password is None:
     # This part is specific to OpenCSW buildfarm.
@@ -539,8 +539,13 @@ def GetUsernameAndPassword():
     ret_code, stdout, stderr = shell.ShellCommand(args)
     if not ret_code:
       password = stdout.strip()
+    else:
+      logging.debug('Failed running %r', args)
 
   if password is None:
+    logging.warning(
+        'Could not find password for user %r. '
+        'Falling back to getpass.getpass().', username)
     password = getpass.getpass("{0}'s pkg release password> ".format(username))
 
   return username, password
