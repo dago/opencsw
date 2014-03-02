@@ -412,11 +412,13 @@ def main():
                     default=False, action="store_true",
                     help="Force unpacking of packages")
   options, args = parser.parse_args()
+
+  logging_level = logging.INFO
   if options.debug:
-    logging.basicConfig(level=logging.DEBUG)
-    logging.debug("Debugging on")
-  else:
-    logging.basicConfig(level=logging.INFO)
+    logging_level = logging.DEBUG)
+  fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
+  logging.basicConfig(format=fmt, level=logging_level)
+
   if not args:
     raise UsageError("Please specify a command.  See --help.")
   # SetUpSqlobjectConnection needs to be called after

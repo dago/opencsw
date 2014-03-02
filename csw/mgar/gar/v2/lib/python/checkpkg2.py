@@ -116,7 +116,8 @@ def main():
   elif options.debug:
     # If both flags are set, debug wins.
     logging_level = logging.DEBUG
-  logging.basicConfig(level=logging_level)
+  fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
+  logging.basicConfig(format=fmt, level=logging_level)
   logging.debug("Starting.")
 
   configuration.SetUpSqlobjectConnection()

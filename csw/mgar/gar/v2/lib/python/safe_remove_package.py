@@ -204,10 +204,11 @@ def main():
                     default=False, action="store_true",
                     help=("Don't apply changes (no REST calls)."))
   options, args = parser.parse_args()
-  debug_level = logging.INFO
+  logging_level = logging.INFO
   if options.debug:
-    debug_level = logging.DEBUG
-  logging.basicConfig(level=debug_level)
+    logging_level = logging.DEBUG
+  fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
+  logging.basicConfig(format=fmt, level=logging_level)
   if not options.catalogname:
     logging.error('option catalogname required \n%s',USAGE)
     sys.exit(1)
