@@ -2634,8 +2634,7 @@ class TestCheckObsoleteDepsCups(CheckTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('obsolete-dependency', 'CSWlibcups')
 
 
-class TestCheckBaseDirs(CheckTestHelper,
-                        unittest.TestCase):
+class TestCheckBaseDirs(CheckTestHelper, unittest.TestCase):
   """Test whether appropriate base directories are provided."""
   FUNCTION_NAME = 'CheckBaseDirs'
 

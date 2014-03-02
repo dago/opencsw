@@ -492,39 +492,6 @@ def CheckFileNameSanity(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckPkginfoSanity(pkg_data, error_mgr, logger, messenger):
-  """pkginfo sanity checks.
-
-if [ "$maintname" = "" ] ; then
-  # the old format, in the DESC field
-  maintname=`sed -n 's/^DESC=.*for CSW by //p' $TMPFILE`
-
-  # Since the DESC field has been coopted, take
-  # description from second half of NAME field now.
-  desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
-else
-  if [ "$desc" = "" ] ; then
-    desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
-  fi
-fi
-
-software=`sed -n 's/^NAME=\([^ -]*\) -.*$/\1/p' $TMPFILE`
-version=`sed -n 's/^VERSION=//p' $TMPFILE`
-desc=`sed -n 's/^DESC=//p' $TMPFILE`
-email=`sed -n 's/^EMAIL=//p' $TMPFILE`
-maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
-hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
-basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
-pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
-
-if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
-if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
-if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
-if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
-if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
-if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
-if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
-if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
-  """
   catalogname = pkg_data["basic_stats"]["catalogname"]
   pkgname = pkg_data["basic_stats"]["pkgname"]
   pkginfo = pkg_data["pkginfo"]
