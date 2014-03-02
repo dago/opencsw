@@ -45,8 +45,9 @@ done
 UNSTABLE = "unstable"
 EVERY_N_DOTS = 100
 datadir = configuration.CHECKPKG_DIR % os.environ
-fn_revdeps = os.path.join(datadir,'revdeps-%s-%s-%s.json')
-fn_pkgstatsdb = os.path.join(datadir,"pkgstats")
+fn_revdeps = os.path.join(datadir, 'revdeps-%s-%s-%s.json')
+fn_pkgstatsdb = os.path.join(datadir, 'pkgstats')
+
 
 class Error(Exception):
   """A generic error."""
@@ -62,10 +63,18 @@ class RevDeps(object):
     RevDepsSet = namedtuple('RevDepsSet','md5_sum pkgname')
   '''
 
-  def __init__(self):
+  def __init__(self, rest_client=None):
     self.cached_catalogs = {}
-    self.rest_client = rest.RestClient()
     self.cp = rest.CachedPkgstats(fn_pkgstatsdb)
+    self.rest_client = rest_client
+    if self.rest_client is None:
+      config = configuration.GetConfig()
+      username, password = rest.GetUsernameAndPassword()
+      self.rest_client = rest.RestClient(
+          pkgdb_url=config.get('rest', 'pkgdb'),
+          releases_url=config.get('rest', 'releases'),
+          username=username,
+          password=password)
 
   def MakeRevIndex(self, catrel, arch, osrel, quiet=False):
     key = (catrel, arch, osrel)
@@ -88,7 +97,7 @@ class RevDeps(object):
       short_data = self.cp.GetDeps(md5)
       pkgname = short_data["pkgname"]
       for dep_pkgname, _ in short_data["deps"]:
-        rev_dep_set = rev_deps.setdefault(dep_pkgname, list())
+        rev_dep_set = rev_deps.setdefault(dep_pkgname, [])
         rev_dep_set.append((md5, pkgname))
       if not quiet and not counter % EVERY_N_DOTS:
         sys.stdout.write(".")

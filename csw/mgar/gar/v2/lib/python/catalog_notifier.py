@@ -113,6 +113,7 @@ class NotificationFormatter(object):
       )
       for label, pkg_list in labels_and_lists:
         for pkg in pkg_list:
+          # This is inefficient: it pulls down the whole package just to fetch the maintainer's email.
           maintainer = rest_client.GetMaintainerByMd5(pkg["md5sum"])
           maintainer_email = maintainer["maintainer_email"]
           pkgs_by_maintainer.setdefault(maintainer_email, {})
