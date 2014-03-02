@@ -404,7 +404,7 @@ if __name__ == '__main__':
   options, args = parser.parse_args()
   logging_level = logging.INFO
   if options.debug:
-    logging_level = logging.DEBUG)
+    logging_level = logging.DEBUG
   fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
   logging.basicConfig(format=fmt, level=logging_level)
   logging.debug("args: %s", args)
