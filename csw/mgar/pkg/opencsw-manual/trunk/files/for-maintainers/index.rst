@@ -17,4 +17,4 @@ package repositories, either at OpenCSW or at their own organization.
   package-naming
   buildfarm-setup
   32-bit-and-64-bit
-  staging
+  catalog-staging
