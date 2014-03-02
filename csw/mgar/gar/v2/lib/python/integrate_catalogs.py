@@ -271,10 +271,12 @@ def main():
   parser.add_option("--debug", dest="debug",
                     default=False, action="store_true")
   options, args = parser.parse_args()
-  loglevel = logging.INFO
+  logging_level = logging.INFO
   if options.debug:
-    loglevel = logging.DEBUG
-  logging.basicConfig(level=loglevel)
+    logging_level = logging.DEBUG
+  fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
+  logging.basicConfig(format=fmt, level=logging_level)
+
   if not options.output_file:
     raise UsageError("Please specify the output file.  See --help.")
   catrel_from = options.catrel_from

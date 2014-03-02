@@ -402,10 +402,11 @@ if __name__ == '__main__':
             "Note that the server side only allows to upload to a limited "
             "set of catalogs."))
   options, args = parser.parse_args()
+  logging_level = logging.INFO
   if options.debug:
-    logging.basicConfig(level=logging.DEBUG)
-  else:
-    logging.basicConfig(level=logging.INFO)
+    logging_level = logging.DEBUG)
+  fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
+  logging.basicConfig(format=fmt, level=logging_level)
   logging.debug("args: %s", args)
   hostname = socket.gethostname()
   if not hostname.startswith('login'):
