@@ -1,0 +1,10 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -588,6 +588,7 @@ dnl includes some assembler stuff in counter.o
+         TARGET='SPARC'
+         ;;
+     esac
++    AC_DEFINE([USE_POSIX_RWLOCKS], [1], [POSIX rwlocks])
+     ;;
+   *)
+     platform=""
