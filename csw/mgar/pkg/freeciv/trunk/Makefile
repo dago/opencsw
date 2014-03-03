@@ -32,7 +32,11 @@ RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibgdk-x11-eeciv RUNTIME_DEP_PKGS_CSWfreeciv +
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWliblzma5
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibfreetype6
- += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWsdlimage
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibmysqlclient18 += CSWlibgio2-0-0
 
 GARCOMPILER = GNU
 
