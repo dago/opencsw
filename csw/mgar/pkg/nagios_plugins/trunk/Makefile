@@ -1,8 +1,7 @@
 # $Id$
 #
 NAME 		= nagios-plugins
-VERSION 	= 1.4.16
-CATEGORIES 	= apps
+VERSION 	= 1.5
 GARTYPE 	= v2
 
 #
@@ -16,21 +15,17 @@ OBSOLETED_BY_CSWnagios-plugins	= CSWnagiosp
 CATALOGNAME_CSWnagiosp 	= nagiosp_stub
 
 SPKG_DESC_CSWnagios-plugins = Plugins for Nagios
-define BLURB
-   Plugins for Nagios
-endef
 
-SF_PROJECT 	 = nagiosplug
-MASTER_SITES 	 = $(SF_MIRRORS)
-DISTFILES  	 = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES 	 = http://assets.nagios.com/downloads/nagiosplugins/
+DISTFILES  	 = $(DISTNAME).tar.gz
 DISTFILES	+= README.CSW
 
 PATCHFILES	+= 0002-Use-32-bit-pst3-on-Solaris.patch
 
-REINPLACE_USRLOCAL += contrib/*
+#REINPLACE_USRLOCAL += contrib/*
 REINPLACE_USRLOCAL += plugins/*
 REINPLACE_USRLOCAL += plugins-scripts/*
-REINPLACE_USRLOCAL += ChangeLog
+#REINPLACE_USRLOCAL += ChangeLog
 REINPLACE_USRLOCAL += README
 
 POSTMSG		+= /opt/csw/share/doc/nagios-plugins/README.CSW
@@ -40,7 +35,7 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin
 CONFIGURE_ARGS += --with-mysql=/opt/csw
 CONFIGURE_ARGS += --with-pgsql=/opt/csw/postgresql
-CONFIGURE_ARGS += --disable-largefile
+CONFIGURE_ARGS += --enable-largefile
 CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-openssl=/opt/csw
@@ -51,6 +46,10 @@ CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -A inet6 -s %s 56 %d"
 CONFIGURE_ARGS += --with-snmpget-command=/opt/csw/bin/snmpget
 CONFIGURE_ARGS += --with-snmpgetnext-command=/opt/csw/bin/snmpgetnext
 
+# We currently fix on 1.22.5, libmysql needs a higher level due to getpagesize2
+LINKER_MAPS =
+CHECKPKG_OVERRIDES_CSWnagios-plugins += forbidden-version-interface-dependencies
+
 libexecdir 	?= $(prefix)/libexec/nagios-plugins
 
 EXTRA_INC += /opt/csw/postgresql/include
@@ -58,10 +57,14 @@ EXTRA_LIB += /opt/csw/postgresql/lib
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
-RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibintl8 CSWlibpq5
-RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient18 CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibz1 CSWperl CSWliblber2-4-2 CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWperl
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWnetsnmp
+RUNTIME_DEP_PKGS_CSWnagios-plugins += CSWlibdbi1
 
 # Add this override for now
 CHECKPKG_OVERRIDES_CSWnagios-plugins += surplus-dependency|CSWnetsnmp
@@ -71,11 +74,12 @@ BUILD_DEP_PKGS	+= CSWpostgresql-dev
 BUILD_DEP_PKGS	+= CSWlibz-dev
 BUILD_DEP_PKGS	+= CSWlibnet-dev
 
-TEST_TARGET = 
+# Testsuite is interactive
+SKIPTEST ?= 1
 
 include gar/category.mk
 
-DOCS = BUGS ChangeLog FAQ README REQUIREMENTS SUPPORT COPYING 
+DOCS += FAQ README REQUIREMENTS SUPPORT COPYING 
 DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 ROOT_PLUGINS = check_dhcp check_icmp pst3
 PLUGINDEST = $(DESTDIR)$(libexecdir)
