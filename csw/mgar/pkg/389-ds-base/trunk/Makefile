@@ -33,14 +33,14 @@ PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
 # PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
 # PATCHFILES += 0007-fixup-plugin_syntax.c.patch
-# PATCHFILES += 0008-mntent-daemon.c.patch
+PATCHFILES += 0008-mntent-daemon.c.patch
 # PATCHFILES += 0009-mozldap-pw.c.patch
 # PATCHFILES += 0010-mntent-config.ac.patch
 # PATCHFILES += 0011-Makefile.am.patch
 # PATCHFILES += 0009-fix-for-550-memberuid-not-created.patch
 # PATCHFILES += 0012-fix-for-47327.patch
 PATCHFILES += 0013-use-posix-threads-configure.ac.patch
-# PATCHFILES += 0014-ldap-include-Makefile.am.patch
+PATCHFILES += 0014-ldap-include-Makefile.am.patch
 
 
 BUILD_DEP_PKGS += CSWautoconf
@@ -62,7 +62,6 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWperl
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpython
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsvrcore0
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap60
 # RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpmibs25
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmp25
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpagent25
@@ -93,6 +92,7 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicudata52
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/dbgen.pl.1
+CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
 # is needed for setup scripts!
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpm-mozldap
