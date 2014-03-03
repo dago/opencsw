@@ -124,6 +124,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgvc6
 
 ### 
 # Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibltdl7
@@ -162,6 +163,7 @@ RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWliblqr1-0
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibglib2-0-0
+endif
 ###
 
 #PACKAGES += CSWpm-image-magick
