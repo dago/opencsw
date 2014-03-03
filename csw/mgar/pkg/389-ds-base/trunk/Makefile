@@ -71,7 +71,6 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWbdb48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
-# RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-mozldap
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibssl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibsasl2-2
@@ -81,17 +80,16 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-netaddr-ip
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n52
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibintl8
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc52
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH))
 
 
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
-CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/dirsrv/updates/exampleupdate.ldif
-CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/dbgen.pl.1
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
 # is needed for setup scripts!
