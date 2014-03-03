@@ -17,6 +17,17 @@ GIT_REPOS = git://github.com/python-imaging/Pillow.git
 LICENSE = docs/COPYING
 
 PACKAGES += CSWpy-pillow
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibwebp4
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpy-pillow += CSWliblcms2-2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
