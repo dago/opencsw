@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = Pillow
-VERSION = 2.3.0
+VERSION = 2.3.0b
 GARTYPE = v2
 CATEGORIES = python
 
@@ -11,7 +11,10 @@ define BLURB
   Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 endef
 
-DISTFILES  = $(DISTNAME).zip
+GIT_REPOS = git://github.com/python-imaging/Pillow.git
+# DISTFILES  = $(DISTNAME).zip
+
+LICENSE = docs/COPYING
 
 PACKAGES += CSWpy-pillow
 
