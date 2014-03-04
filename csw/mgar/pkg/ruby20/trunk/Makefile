@@ -6,7 +6,7 @@ SHORTVER = 2.0
 DISTVERSION = $(SHORTVER).0
 DISTNAME = ruby-$(VERSION)-$(PATCHLEVEL)
 VERSION = $(DISTVERSION)
-PATCHLEVEL = p0
+PATCHLEVEL = p451
 GARTYPE = v2
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
