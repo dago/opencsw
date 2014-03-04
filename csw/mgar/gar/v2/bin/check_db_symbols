@@ -56,12 +56,16 @@ sub get_libraries_location {
     while (my $line = <$ldd>) {
         my ( $soname, $library_path ) = (
             $line =~ m{\s*(\S+)      # soname
-                             \s+=>\s+
-                             (\S+)      # library path
+                             (?:\s+=>\s+
+                             (\S+))?      # library path
                          }x
         );
 	# (file not found) case
-	if ($library_path eq '(file') {
+	if (not defined ($library_path)) {
+		$library_path = $soname;
+		$soname = (split(/\//, $soname))[-1]
+
+	} elsif ($library_path eq '(file') {
 		$library_path = undef;
 	}
         $library_location{$soname} = $library_path;
