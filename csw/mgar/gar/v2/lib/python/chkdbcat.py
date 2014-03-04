@@ -1,3 +1,4 @@
+#!/opt/csw/bin/python2.6
 """Check catalog data stored in the database for consistency.
 
 Check catalog data stored in the database for consistency using Peter
@@ -5,7 +6,6 @@ Bonivart's chkcat.
 
 Notifications for invalid catalogs can be customized by overriding
 CheckDBCat.notify().
-
 """
 import cjson
 import datetime
@@ -16,8 +16,10 @@ import shutil
 import subprocess
 import sys
 import tempfile
+
+from lib.python import configuration
 from lib.python.shell import ShellCommand
-from lib.python.rest import RestClient
+from lib.python.rest import RestClient, GetUsernameAndPassword
 from lib.python.generate_catalog_file import CatalogFileGenerator
 
 class FSLock(object):
@@ -221,13 +223,12 @@ class CatalogTiming(object):
             ]
 
             """
-            return [dict(self.__list_to_dict_genrator(v)) for v in jdat]
+            return [dict(self.__list_to_dict_generator(v)) for v in jdat]
 
       def fetch(self):
             """Fetch timing information using REST."""
-            return RestClient().GetCatalogTimingInformation(self.__catrel,
-                                                          self.__arch,
-                                                          self.__osrel)
+            return self.rest_client.GetCatalogTimingInformation(
+                self.__catrel, self.__arch, self.__osrel)
 
       def upload_newer_than(self, date):
             """Retrieve timing information on upload newer than "date"."""
@@ -282,7 +283,16 @@ class CheckDBCatalog(object):
             methods.
 
             """
-            self.__catalogfgen = CatalogFileGenerator(catrel, arch, osrel)
+            config = configuration.GetConfig()
+            username, password = GetUsernameAndPassword()
+            self.rest_client = RestClient(
+                pkgdb_url=config.get('rest', 'pkgdb'),
+                releases_url=config.get('rest', 'releases'),
+                username=username,
+                password=password)
+
+            self.__catalogfgen = CatalogFileGenerator(
+                catrel, arch, osrel, self.rest_client)
             self.__chkcat = chkcat
 
             # store for later use
@@ -321,7 +331,8 @@ class CheckDBCatalog(object):
             if pkginfo['uploadby'] is not None and pkginfo['uploadby'] != "web":
                   return pkginfo['uploadby']+'@opencsw.org'
             else:
-                  return RestClient().GetMaintainerByMd5(pkginfo['md5'])['maintainer_email']
+                  return self.rest_client.GetMaintainerByMd5(
+                      pkginfo['md5'])['maintainer_email']
 
       def notify(self, date, addr, pkginfo):
             """Notification.
