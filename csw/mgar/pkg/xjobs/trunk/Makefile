@@ -1,5 +1,5 @@
 NAME = xjobs
-VERSION = 20120412
+VERSION = 20140125
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -18,7 +18,13 @@ endef
 MASTER_SITES = http://www.maier-komor.de/xjobs/
 DISTFILES  = $(DISTNAME).tgz
 
-VENDOR_URL = http://www.maier-komor.de/xjobs.html
+VENDOR_URL = http://www.maier-komolibumem.so.1 has only symbols which are not directly bindable
+# dam@unstable10s [unstable10s]:/home/dam/mgar/pkg/xjobs/trunk > $(mgar show-buildsys | cut -f1)/bin/check_db_symbols work/solaris10-sparc/pkgroot/opt/csw/bin/xjobs
+# Library                 Directly bound    Not directly bound    Not directly bindable
+# libumem.so.1                    0                  0            3
+# libc.so.1                      74                  0            2
+# libm.so.2                       2                  0            0
+CHECKPKG_OVERRIDES_CSWxjobs += no-direct-binding|/opt/csw/bin/xjobs|is|not|directly|bound|to|soname|libumem.so.1
 
 # No tests available
 TEST_SCRIPTS =
