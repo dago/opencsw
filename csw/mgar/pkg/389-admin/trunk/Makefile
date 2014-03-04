@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-admin
-VERSION = 1.1.30
+VERSION = 1.1.31
 GARTYPE = v2
 
 DESCRIPTION = The 389 LDAP server Admin Tools
@@ -29,6 +29,18 @@ LICENSE = LICENSE
 PATCHFILES += 0002-add-i386-platform-to-configure.ac.patch
 PATCHFILES += 0003-correct-initscript-and-http.conf.in.patch
 PATCHFILES += 0004-change-include-preferences-in-Makefile.am.patch
+
+BUILD_DEP_PKGS += CSWnspr-dev
+BUILD_DEP_PKGS += CSWlibnss-dev
+BUILD_DEP_PKGS += CSW389-adminutil-dev
+BUILD_DEP_PKGS += CSWapache2-dev CSWapache2
+BUILD_DEP_PKGS += CSWap2modnss
+BUILD_DEP_PKGS += CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWlibicu-dev
+BUILD_DEP_PKGS += CSWsasl-dev
+BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWlibtool CSWautoconf CSWautomake
+
 
 PACKAGES += CSWlibds-admin-serv0
 CATALOGNAME_CSWlibds-admin-serv0 = libds_admin_serv0
@@ -80,26 +92,28 @@ CPPFLAGS =
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ldapsdk-inc=/opt/csw/include/dirsrv 
-CONFIGURE_ARGS += --with-ldapsdk-lib=/opt/csw/lib
-CONFIGURE_ARGS += --with-icu-inc=/opt/csw/include 
-CONFIGURE_ARGS += --with-icu-lib=/opt/csw/lib
-CONFIGURE_ARGS += --with-icu-bin=/opt/csw/bin 
-CONFIGURE_ARGS += --with-sasl-inc=/opt/csw/include/sasl 
-CONFIGURE_ARGS += --with-sasl-lib=/opt/csw/lib
-CONFIGURE_ARGS += --with-nspr-lib=/opt/csw/lib
-CONFIGURE_ARGS += --with-nspr-inc=/opt/csw/include/nspr 
-CONFIGURE_ARGS += --with-nss-lib=/opt/csw/lib
-CONFIGURE_ARGS += --with-nss-inc=/opt/csw/include/nss 
+CONFIGURE_ARGS += --with-openldap-inc=$(includedir)
+CONFIGURE_ARGS += --with-openldap=$(prefix)
+CONFIGURE_ARGS += --with-icu-inc=$(includedir) 
+CONFIGURE_ARGS += --with-icu-lib=$(libdir)
+CONFIGURE_ARGS += --with-icu-bin=$(bindir)
+CONFIGURE_ARGS += --with-sasl-inc=$(includedir)/sasl 
+CONFIGURE_ARGS += --with-sasl-lib=$(libdir)
+CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
+CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr 
+CONFIGURE_ARGS += --with-nss-lib=$(libdir)
+CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss 
 CONFIGURE_ARGS += --with-apxs=/opt/csw/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-httpd=/opt/csw/apache2/sbin/httpd
 CONFIGURE_ARGS += --with-modnss-lib=/opt/csw/apache2/libexec
 CONFIGURE_ARGS += --with-modnss-bin=/opt/csw/apache2/sbin
+# CONFIGURE_ARGS += --with-adminutil=/opt/csw
+
 
 include gar/category.mk
 
 pre-configure-modulated:
-	cd $(WORKSRC) && rm ltmain.sh && libtoolize --copy --force
+	cd $(WORKSRC) && rm -f ltmain.sh && libtoolize --copy --force
 	cd $(WORKSRC) && aclocal
 	cd $(WORKSRC) && autoconf --force
 	cd $(WORKSRC) && automake -a -c -f
