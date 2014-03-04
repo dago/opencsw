@@ -20,11 +20,12 @@ sub get_symbols_flags {
     my %symbol_flags_of;
 
     local $ENV{'LANG'} = 'C';
-    open( my $elfdump, '-|', "$ELFDUMP_BIN -y $binary" ) or die "ERROR: Can't analyze $binary with elfdump !";
-    while (my $line = <$elfdump>) {
+    open( my $elfdump, '-|', "$ELFDUMP_BIN -y $binary" )
+      or die "ERROR: Can't analyze $binary with elfdump !";
+    while ( my $line = <$elfdump> ) {
         chomp($line);
         next if not(
-                  $line =~ m{
+            $line =~ m{
             \[(?<index>\d+)\]\s+
             (?<flags>\S+)\s+    
             (?:(?<boundto>
@@ -52,22 +53,25 @@ sub get_libraries_location {
     my %library_location;
 
     local $ENV{'LANG'} = 'C';
-    open( my $ldd, '-|', "$LDD_BIN $binary" ) or die "ERROR: Can't analyze $binary with elfdump !";
-    while (my $line = <$ldd>) {
+    open( my $ldd, '-|', "$LDD_BIN $binary" )
+      or die "ERROR: Can't analyze $binary with elfdump !";
+    while ( my $line = <$ldd> ) {
         my ( $soname, $library_path ) = (
             $line =~ m{\s*(\S+)      # soname
                              (?:\s+=>\s+
                              (\S+))?      # library path
                          }x
         );
-	# (file not found) case
-	if (not defined ($library_path)) {
-		$library_path = $soname;
-		$soname = (split(/\//, $soname))[-1]
 
-	} elsif ($library_path eq '(file') {
-		$library_path = undef;
-	}
+        # (file not found) case
+        if ( not defined($library_path) ) {
+            $library_path = $soname;
+            $soname = ( split( /\//, $soname ) )[-1]
+
+        }
+        elsif ( $library_path eq '(file' ) {
+            $library_path = undef;
+        }
         $library_location{$soname} = $library_path;
     }
     close($ldd);
@@ -82,20 +86,20 @@ Usage: check_db_symbols BINARY
 Print some statistics about the direct binding status of symbols of a given binary
 
 EOF
-    exit ($exit_code);
+    exit($exit_code);
 }
 
 ###################################################################
 # Main program
 ###################################################################
 
-if (@ARGV < 1) {
-    usage (1);
+if ( @ARGV < 1 ) {
+    usage(1);
 }
 
 my $binary = $ARGV[0];
 
-if ( ! -f $binary ) {
+if ( !-f $binary ) {
     print STDERR "ERROR: $binary file doesn't exist !!\n\n";
     exit(2);
 }
@@ -124,11 +128,11 @@ foreach my $soname ( keys( %{$symbol_flags_of} ) ) {
     );
 
     my $library_location = $library_location_of->{$soname};
-    if (not defined($library_location)) {
-	push (@unfound_libraries, $soname);
-	next;
+    if ( not defined($library_location) ) {
+        push( @unfound_libraries, $soname );
+        next;
     }
-    my $soname_symbol_flags_for = get_symbols_flags( $library_location );
+    my $soname_symbol_flags_for = get_symbols_flags($library_location);
 
     foreach my $symbol ( keys( %{ $symbol_flags_of->{$soname} } ) ) {
         my $flag = $symbol_flags_of->{$soname}{$symbol};
@@ -157,12 +161,12 @@ foreach my $soname ( keys( %{$symbol_flags_of} ) ) {
 }
 
 if (@unfound_libraries) {
-   print <<'EOF';
+    print <<'EOF';
 
 The following libraries were not found, please make sure
 I can find them next time by setting LD_LIBRARY_PATH adequately:
 EOF
-   print ("\t" . join(', ', @unfound_libraries) . "\n");
+    print( "\t" . join( ', ', @unfound_libraries ) . "\n" );
 }
 
 print "\n";
