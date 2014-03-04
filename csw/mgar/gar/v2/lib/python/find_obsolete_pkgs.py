@@ -52,18 +52,11 @@ CatSubSet = namedtuple('CatSubSet',
 
 class CompCatalog(object):
 
-    def __init__(self, name, arch, osrel):
-        config = configuration.GetConfig()
-        username, password = rest.GetUsernameAndPassword()
-        self.rest_client = rest.RestClient(
-            pkgdb_url=config.get('rest', 'pkgdb'),
-            releases_url=config.get('rest', 'releases'),
-            username=username,
-            password=password)
-
+    def __init__(self, name, arch, osrel, rest_client):
         self.catrel = name
         self.arch = arch
         self.osrel = osrel
+        self.rest_client = rest_client
 
     def __getCat(self, name,arch,osrel):
         ''' get dependcy list from catalog, read cached list if available '''
@@ -100,14 +93,15 @@ class CompCatalog(object):
         return self.__getCat(self.catrel,self.arch,self.osrel)
 
 
-def processCat(catrel,arch,osrel):
+def processCat(catrel, arch, osrel, rest_client):
     logger.info("processCat: -> %r %r %r" % (catrel, arch, osrel))
-    cc = CompCatalog(catrel,arch,osrel)
+
+    cc = CompCatalog(catrel, arch, osrel, rest_client)
     pkg_by_pkgname = cc.getCatalog()
     logger.info("processCat: iterate on %r" % (catrel))
 
     # build reverse dependency list
-    rev_deps_access = RevDeps()
+    rev_deps_access = RevDeps(rest_client)
     rev_deps_by_pkg = {}
     for pkgname in pkg_by_pkgname:
         pkg = pkg_by_pkgname[pkgname]
@@ -130,9 +124,9 @@ def processCat(catrel,arch,osrel):
     return pkg_by_pkgname, rev_deps_by_pkg
 
 
-def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel):
-    newcatlst, newrevdeplst = processCat(newcatrel,arch,osrel)
-    oldcatlst, oldrevdeplst = processCat(oldcatrel,arch,osrel)
+def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel, rest_client):
+    newcatlst, newrevdeplst = processCat(newcatrel, arch, osrel, rest_client)
+    oldcatlst, oldrevdeplst = processCat(oldcatrel, arch, osrel, rest_client)
 
     to_remove_candidates = []
     rebuildlst = set()
@@ -231,8 +225,17 @@ def GetCLIOptions():
 
 def main():
     oldcatrel, newcatrel, arch, osrel = GetCLIOptions()
+
+    config = configuration.GetConfig()
+    username, password = rest.GetUsernameAndPassword()
+    rest_client = rest.RestClient(
+        pkgdb_url=config.get('rest', 'pkgdb'),
+        releases_url=config.get('rest', 'releases'),
+        username=username,
+        password=password)
+
     reallyremovelst, rebuildlst = ComputeRemoveAndRebuild(oldcatrel, newcatrel,
-                                                          arch, osrel)
+                                                          arch, osrel, rest_client)
     WriteToTextFiles(reallyremovelst, rebuildlst, newcatrel, arch, osrel)
 
 
