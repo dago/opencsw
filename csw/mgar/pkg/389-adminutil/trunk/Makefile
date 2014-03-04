@@ -29,10 +29,11 @@ PKGFILES_CSWlibadminutil0 +=  $(call baseisadirs,$(sharedstatedir),.*\.res)
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicuuc52
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicui18n52
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibadminutil0_sparc += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWlibadminutil0_sparc += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWlibadminutil0 += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWlibadminutil0_sparc += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWlibadminutil0 += $(RUNTIME_DEP_PKGS_CSWlibadminutil0_$(GARCH))
 
 PACKAGES += CSWlibadmsslutil0
 CATALOGNAME_CSWlibadmsslutil0 = libadmsslutil0
@@ -43,20 +44,17 @@ RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibssl3
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicuuc52
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicui18n52
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0_sparc += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0_sparc += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0_sparc += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibldap2-4-2
-RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0_sparc += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += $(RUNTIME_DEP_PKGS_CSWlibadmsslutil0_$(GARCH))
 
 PACKAGES += CSW389-adminutil-dev
 CATALOGNAME_CSW389-adminutil-dev = 389_adminutil_dev
 ARCHALL_CSW389-adminutil-dev = 1
 SPKG_DESC_CSW389-adminutil-dev += $(DESCRIPTION), development files
-# PKGFILES_CSW389-adminutil-dev += $(PKGFILES_DEV)
-# PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadminutil\.so)
-# PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir),libadmsslutil\.so)
-# PKGFILES_CSW389-adminutil-dev += $(call baseisadirs,$(libdir)/pkgconfig,389adminutil\.pc)
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadmsslutil0
 CHECKPKG_OVERRIDES_CSW389-adminutil-dev += archall-devel-package
@@ -81,9 +79,6 @@ CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss
 CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr
 
-# CHECKPKG_OVERRIDES_CSWlibadmsslutil0 += pkginfo-opencsw-repository-uncommitted
-# CHECKPKG_OVERRIDES_CSWlibadminutil0 += pkginfo-opencsw-repository-uncommitted
-# CHECKPKG_OVERRIDES_CSW389-adminutil-dev += pkginfo-opencsw-repository-uncommitted
 include gar/category.mk
 
 pre-configure-modulated:
