@@ -49,7 +49,7 @@ PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])
 
 BASE_SOLARIS_LIBRARIES = set([
      "libsocket.so.1", "libnsl.so.1", "libdl.so.1", "librt.so.1",
-     "libresolv.so.2", "libpthread.so.1",
+     "libresolv.so.2", "libpthread.so.1", "libumem.so.1",
      # linked by default with C++, see "Default C++ Libraries"
      # in Solaris Studio C++ User's Guide
      "libCstd.so.1", "libCrun.so.1", "libm.so.1", "libm.so.2",
