@@ -545,7 +545,9 @@ class Srv4ByCatAndCatalogname(object):
       web.header('Content-type', mimetype)
       return cjson.encode(data)
     except sqlobject.main.SQLObjectNotFound:
-      raise web.notfound('Query returned no results.')
+      data = {'message': 'no %s %s %s %s packages found'
+              % (catrel_name, arch_name, osrel_name, catalogname)}
+      raise web.notfound(cjson.encode(data))
     except sqlobject.dberrors.OperationalError as exc:
       raise web.internalerror(exc)
 
