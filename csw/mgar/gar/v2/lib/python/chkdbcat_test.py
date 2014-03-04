@@ -1,3 +1,5 @@
+#!/opt/csw/bin/python2.6
+
 """Tests for chkdbcat.py."""
 
 import os
@@ -284,5 +286,5 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
       
 
 if __name__ == '__main__':
-      logging.basicConfig(level=logging.DEBUG)
+      logging.basicConfig(level=logging.INFO)
       unittest.main()
