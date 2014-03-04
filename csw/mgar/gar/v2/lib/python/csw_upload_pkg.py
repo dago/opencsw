@@ -136,7 +136,8 @@ class Srv4Uploader(object):
     for filename in self.filenames:
       self._ImportMetadata(filename)
       md5_sum = self._GetFileMd5sum(filename)
-      self._rest_client.RegisterLevelTwo(md5_sum)
+      if not self._rest_client.IsRegisteredLevelTwo(md5_sum):
+        self._rest_client.RegisterLevelTwo(md5_sum)
       file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
       if file_in_allpkgs:
         logging.debug("File %s already uploaded.", filename)
