@@ -45,6 +45,9 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
 
   This function is intended to be called by the restful interface, not by
   applications directly. Therefore, we're not using the RESTful interface here.
+
+  Note: This operation is destructive! Calling it results in the package being
+  removed from all the catalogs.
   """
   # We assume stats already exist. If not, we're letting sqlobject throw an
   # exception.
