@@ -42,6 +42,7 @@ RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibjbig2
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibwebp4
 
 PACKAGES += CSWgraphicsmagick-dev
 CATALOGNAME_CSWgraphicsmagick-dev = graphicsmagick_dev
@@ -100,7 +101,6 @@ RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWliblzma5
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibwebp4
 RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibfreetype6
 endif
 ###
