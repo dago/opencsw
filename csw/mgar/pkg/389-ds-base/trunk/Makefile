@@ -105,6 +105,8 @@ EXTRA_LIB = /opt/csw/bdb48/lib
 CPPFLAGS = 
 EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
 
+GARFLAVOR = DBG
+
 CONFIGURE_ARGS = $(DIRPATHS)
 # CONFIGURE_ARGS += --with-ldapsdk-inc=$(includedir)/dirsrv 
 # CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
@@ -125,6 +127,7 @@ CONFIGURE_ARGS += --with-nss-lib=$(libdir)
 CONFIGURE_ARGS += --with-nss-inc=$(includedir)/nss 
 CONFIGURE_ARGS += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += --with-nspr-inc=$(includedir)/nspr
+CONFIGURE_ARGS_DBG += --enable-debug
 
 include gar/category.mk
 
