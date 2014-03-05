@@ -82,6 +82,29 @@ SPKG_DESC_CSWlibgraphicsmagickwand-q16-2 += $(DESCRIPTION), libGraphicsMagickWan
 RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibgraphicsmagick-q16-3
 RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibgcc-s1
 
+###
+# Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagickwand-q16-2 += CSWlibgomp1
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibgraphicsmagick++q16-3 += CSWlibgomp1
+RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWliblzma5
+RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibwebp4
+RUNTIME_DEP_PKGS_CSWgraphicsmagick += CSWlibfreetype6
+endif
+###
+
 # A few tests are failing
 SKIPTEST ?= 1
 
