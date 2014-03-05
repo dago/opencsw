@@ -27,8 +27,11 @@ PATCHFILES += 0003-correctly-handle-the-null-key-caset-strip# Some certificates 
 # We workaround the problem by changing the test so it expects
 # the certificates to be expired (another solution is to use LD_PRELOAD).
 PATCHFILES += 0004-workaround-certificate-expiration-issue-in-the-test-.patch
-# Security fix for CVE-2013-2116
+
+# Security fixes
 PATCHFILES += 0005-CVE-2013-2116.patch
+PATCHFILES += 0006-CVE-2014-1959.patch
+PATCHFILES += 0007-CVE-2014-0092.patch
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
