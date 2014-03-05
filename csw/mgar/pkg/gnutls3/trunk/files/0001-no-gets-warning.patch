@@ -1,25 +1,32 @@
-From d65e6e5f4ae8d5a326ead9db9c2e0117b149835b Mon Sep 17 00:00:00 2001
+From efecc963e72e780f46e5be39287871d8793303e4 Mon Sep 17 00:00:00 2001
 From: Yann Rouillard <yann@pleiades.fr.eu.org>
-Date: Mon, 13 May 2013 17:51:35 +0200
-Subject: [PATCH] no gets warning
+Date: Wed, 5 Mar 2014 21:58:57 +0100
+Subject: [PATCH] gets
 
 ---
- gl/m4/stdio_h.m4 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gl/stdio.in.h | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/gl/m4/stdio_h.m4 b/gl/m4/stdio_h.m4
-index ebade06..9788ded 100644
---- a/gl/m4/stdio_h.m4
-+++ b/gl/m4/stdio_h.m4
-@@ -74,7 +74,7 @@ AC_DEFUN([gl_STDIO_H],
-   dnl corresponding gnulib module is not in use, and which is not
-   dnl guaranteed by both C89 and C11.
-   gl_WARN_ON_USE_PREPARE([[#include <stdio.h>
--    ]], [dprintf fpurge fseeko ftello getdelim getline gets pclose popen
-+    ]], [dprintf fpurge fseeko ftello getdelim getline pclose popen
-     renameat snprintf tmpfile vdprintf vsnprintf])
- ])
+diff --git a/gl/stdio.in.h b/gl/stdio.in.h
+index 76e62fb..2d15310 100644
+--- a/gl/stdio.in.h
++++ b/gl/stdio.in.h
+@@ -714,15 +714,6 @@ _GL_WARN_ON_USE (getline, "getline is unportable - "
+ # endif
+ #endif
  
+-/* It is very rare that the developer ever has full control of stdin,
+-   so any use of gets warrants an unconditional warning; besides, C11
+-   removed it.  */
+-#undef gets
+-#if HAVE_RAW_DECL_GETS
+-_GL_WARN_ON_USE (gets, "gets is a security hole - use fgets instead");
+-#endif
+-
+-
+ #if @GNULIB_OBSTACK_PRINTF@ || @GNULIB_OBSTACK_PRINTF_POSIX@
+ struct obstack;
+ /* Grow an obstack with formatted output.  Return the number of
 -- 
-1.8.1.4
+1.8.4.1
 

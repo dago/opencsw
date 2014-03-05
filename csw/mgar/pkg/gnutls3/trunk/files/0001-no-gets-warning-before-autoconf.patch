@@ -1,0 +1,25 @@
+From d65e6e5f4ae8d5a326ead9db9c2e0117b149835b Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Mon, 13 May 2013 17:51:35 +0200
+Subject: [PATCH] no gets warning
+
+---
+ gl/m4/stdio_h.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gl/m4/stdio_h.m4 b/gl/m4/stdio_h.m4
+index ebade06..9788ded 100644
+--- a/gl/m4/stdio_h.m4
++++ b/gl/m4/stdio_h.m4
+@@ -74,7 +74,7 @@ AC_DEFUN([gl_STDIO_H],
+   dnl corresponding gnulib module is not in use, and which is not
+   dnl guaranteed by both C89 and C11.
+   gl_WARN_ON_USE_PREPARE([[#include <stdio.h>
+-    ]], [dprintf fpurge fseeko ftello getdelim getline gets pclose popen
++    ]], [dprintf fpurge fseeko ftello getdelim getline pclose popen
+     renameat snprintf tmpfile vdprintf vsnprintf])
+ ])
+ 
+-- 
+1.8.1.4
+
