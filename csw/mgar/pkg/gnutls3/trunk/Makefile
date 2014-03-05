@@ -72,7 +72,9 @@ BUILD64 = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARCONFIGURE_ARGS += --disable-guileRCONFIGURE_ARGS += --disable-libdaneRCONFIGURE_ARGS += --with-default-trust-store-file=$(sysconfdir)/ssl/certs/ca-certificates.crt
-CONFIGURE_ARGS += --with-unbound-root-key-file=$(sysconfdir)/unbound/root.keyR# Workaround a host detection bug in configure for amd64
+CONFIGURE_ARGS += --with-unbound-root-key-file=$(sysconfdir)/unbound/root.keyR# libopts doesn't contains yet 64 bits libraries so we have to use
+# the included one meanwhile: see https://www.opencsw.org/mantis/view.php?id=5156
+CONFIGURE_ARGS += --enable-local-liboptsR# Workaround a host detection bug in configure for amd64
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(ISA))
 CONFIGURE_ARGS_amd64 += --build=x86_64-pc-solaris2$(shell uname -r |sed -e 's/[^.]*//')
 
