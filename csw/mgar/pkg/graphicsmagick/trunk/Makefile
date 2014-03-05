@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = graphicsmagick
-VERSION = 1.3.18
+VERSION = 1.3.19
 GARTYPE = v2
 
 DESCRIPTION = GraphicsMagick Image Processing System
