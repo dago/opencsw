@@ -37,3 +37,16 @@ index 40b646d..25d0e76 100755
          initconfig_dir=@initconfigdir@
      else
          initconfig_dir=$HOME/.@package_name@
+diff --git a/ldap/admin/src/scripts/DSUtil.pm.in b/ldap/admin/src/scripts/DSUtil.pm.in
+index cc64a2d..df63e63 100644
+--- a/ldap/admin/src/scripts/DSUtil.pm.in
++++ b/ldap/admin/src/scripts/DSUtil.pm.in
+@@ -146,7 +146,7 @@ sub isValidServerID {
+ # use confess here because if we cannot determine the user, something is really,
+ # really wrong and we need to abort immediately
+ sub getLogin {
+-    return (getpwuid($>))[0] || $ENV{USER} || confess "Error: could not determine the current user ID: $!";
++    return (getpwuid($>))[0] || $ENV{LOGNAME} || confess "Error: could not determine the current user ID: $!";
+ }
+ 
+ # Look up the primary group name for the supplied user
