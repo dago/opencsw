@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.3.2.13
+VERSION = 1.2.11.25
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server
@@ -27,8 +27,10 @@ GARCOMPILER = SOS12U3
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
+# PATCHFILES += 0006-remove-bashism-in-shell-templates.patch
 PATCHFILES += 0005-smf-autoenable-no.patch
 PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
+PATCHFILES += 0005-add-var-run-create-template-initconfig.in.patch
 # until Red Hat Bugzilla Bug 773617 is open do it yourself
 # PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
@@ -39,7 +41,6 @@ PATCHFILES += 0008-mntent-daemon.c.patch
 # PATCHFILES += 0011-Makefile.am.patch
 # PATCHFILES += 0009-fix-for-550-memberuid-not-created.patch
 # PATCHFILES += 0012-fix-for-47327.patch
-PATCHFILES += 0013-use-posix-threads-configure.ac.patch
 PATCHFILES += 0014-ldap-include-Makefile.am.patch
 
 
@@ -49,7 +50,7 @@ BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
-BUILD_DEP_PKGS += CSWmozldap-dev
+# BUILD_DEP_PKGS += CSWmozldap-dev
 BUILD_DEP_PKGS += CSWmozldap-tools
 BUILD_DEP_PKGS += CSWsasl-dev
 BUILD_DEP_PKGS += CSWlibicu-dev
