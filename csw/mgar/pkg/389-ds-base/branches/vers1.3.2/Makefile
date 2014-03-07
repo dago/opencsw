@@ -23,7 +23,7 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 LICENSE = LICENSE
 
-GARCOMPILER = SOS12U3
+GARCOMPILER = GCC4
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
@@ -43,6 +43,9 @@ PATCHFILES += 0008-mntent-daemon.c.patch
 # PATCHFILES += 0012-fix-for-47327.patch
 PATCHFILES += 0013-use-posix-threads-configure.ac.patch
 PATCHFILES += 0014-ldap-include-Makefile.am.patch
+# needed at least on GCC4
+PATCHFILES += 0015-use-PL_strcasestr-acllas.c.patch
+PATCHFILES += 0010-no-Crun-Cstd-lib-config.ac.patch
 
 
 BUILD_DEP_PKGS += CSWautoconf
@@ -51,7 +54,7 @@ BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
-BUILD_DEP_PKGS += CSWmozldap-tools
+BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWsasl-dev
 BUILD_DEP_PKGS += CSWlibicu-dev
 BUILD_DEP_PKGS += CSWlibsvrcore0-dev
@@ -103,8 +106,11 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 
 EXTRA_LIB = /opt/csw/bdb48/lib
 # remove -I/opt/csw/include
-CPPFLAGS = 
-EXTRA_LINKER_FLAGS = -xnorunpath -norunpath
+# CPPFLAGS = 
+# EXTRA_CFLAGS = -xnorunpath
+# EXTRA_CXXFLAGS = -norunpath
+EXTRA_CPPFLAGS = -DSOLARIS_GCC
+STRIP_LIBTOOL = 1
 
 GARFLAVOR = DBG
 
