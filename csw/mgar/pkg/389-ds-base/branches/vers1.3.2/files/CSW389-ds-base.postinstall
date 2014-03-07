@@ -1,0 +1,18 @@
+# define exit func
+my_exit () 
+{
+	echo "postinstall failed on cmd: $1"
+	exit 1
+}
+
+# add group ldap
+getent group ldap > /dev/null || groupadd -g 389 ldap || my_exit groupadd
+# add user ldap
+getent passwd ldap > /dev/null || useradd -g 389 -u 389 -d /var/opt/csw/lib/dirsrv ldap || my_exit useradd
+# add /var/opt/csw/lib/dirserv
+[ -d /var/opt/csw/lib/dirsrv ] || mkdir -p /var/opt/csw/lib/dirsrv || my_exit mkdir
+# add /var/opt/csw/log/dirserv
+[ -d /var/opt/csw/log/dirsrv ] || mkdir -p /var/opt/csw/log/dirsrv || my_exit mkdir
+# change owner
+chown ldap:ldap /var/opt/csw/lib/dirsrv || my_exit chown
+chown ldap:ldap /var/opt/csw/log/dirsrv || my_exit chown

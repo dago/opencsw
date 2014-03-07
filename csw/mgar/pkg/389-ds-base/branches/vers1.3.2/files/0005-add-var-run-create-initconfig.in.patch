@@ -1,0 +1,13 @@
+--- a/ldap/admin/src/initconfig.in
++++ b/ldap/admin/src/initconfig.in
+@@ -4,7 +4,9 @@ OS=`uname -s`
+ # this requires Solaris 9 update 3 or later
+ if [ "$OS" = "SunOS" -a -f /usr/lib/libumem.so ] ; then
+     LD_PRELOAD=/usr/lib/libumem.so
+-    export LD_PRELOAD
++#   UMEM_DEBUG=default
++#   UMEM_LOGGING=transaction
++    export LD_PRELOAD # UMEM_DEBUG UMEM_LOGGING
+ fi
+ if [ "$OS" = "SunOS" -a -f /usr/lib/64/libumem.so ] ; then
+     LD_PRELOAD_64=/usr/lib/64/libumem.so

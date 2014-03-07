@@ -1,0 +1,39 @@
+diff --git a/ldap/admin/src/scripts/restart-dirsrv.in b/ldap/admin/src/scripts/restart-dirsrv.in
+index cd4a9b0..2334584 100644
+--- a/ldap/admin/src/scripts/restart-dirsrv.in
++++ b/ldap/admin/src/scripts/restart-dirsrv.in
+@@ -37,7 +37,7 @@ done
+ shift $(($OPTIND-1))
+ 
+ if [ "$initconfig_dir" = "" ]; then
+-    if [ $USER = root ] ; then
++    if [ $LOGNAME = root ] ; then
+         initconfig_dir=@initconfigdir@
+     else
+         initconfig_dir=$HOME/.@package_name@
+diff --git a/ldap/admin/src/scripts/start-dirsrv.in b/ldap/admin/src/scripts/start-dirsrv.in
+index dfdce06..e4ae974 100755
+--- a/ldap/admin/src/scripts/start-dirsrv.in
++++ b/ldap/admin/src/scripts/start-dirsrv.in
+@@ -114,7 +114,7 @@ done
+ shift $(($OPTIND-1))
+ 
+ if [ "$initconfig_dir" = "" ]; then
+-    if [ $USER = root ] ; then
++    if [ $LOGNAME = root ] ; then
+         initconfig_dir=@initconfigdir@
+     else
+         initconfig_dir=$HOME/.@package_name@
+diff --git a/ldap/admin/src/scripts/stop-dirsrv.in b/ldap/admin/src/scripts/stop-dirsrv.in
+index 40b646d..25d0e76 100755
+--- a/ldap/admin/src/scripts/stop-dirsrv.in
++++ b/ldap/admin/src/scripts/stop-dirsrv.in
+@@ -62,7 +62,7 @@ done
+ shift $(($OPTIND-1))
+ 
+ if [ "$initconfig_dir" = "" ]; then
+-    if [ $USER = root ] ; then
++    if [ $LOGNAME = root ] ; then
+         initconfig_dir=@initconfigdir@
+     else
+         initconfig_dir=$HOME/.@package_name@
