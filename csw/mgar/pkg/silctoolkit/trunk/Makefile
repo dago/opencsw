@@ -26,6 +26,7 @@ PACKAGES += CSWlibsilc1-1-2
 SPKG_DESC_CSWlibsilc1-1-2 = Secure internet live conferencing toolkit, libsilc-1.1.so.2
 PKGFILES_CSWlibsilc1-1-2 += $(call pkgfiles_lib,libsilc-1.1.so.2)
 PKGFILES_CSWlibsilc1-1-2 += $(call baseisadirs,$(libdir),silc/.*)
+RUNTIME_DEP_PKGS_CSWlibsilc1-1-2 += CSWlibiconv2
 
 OBSOLETED_BY_CSWlibsilc1-1-2 += CSWsilctoolkit
 
@@ -50,7 +51,7 @@ RUNTIME_DEP_PKGS_CSWlibsilc-dev += CSWlibsilcclient1-1-3
 BUILD64 = 1
 
 # These are at least needed for libsilc.so
-EXTRA_LIBS += -lsocket -lnsl -liconv
+EXTRA_LINKER_FLAGS += -lsocket -lnsl -liconv
 
 # Avoid a collision between its client.h and Samba's
 includedir = $(prefix)/include/silc
