@@ -23,10 +23,14 @@ define BLURB
   The OpenSSL Project is a collaborative effort to develop a robust,
   commercial-grade, fully featured, and Open Source toolkit implementing the
   Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) as well
-  as a full-strength general-purpose cryptography library.
+  as a full-strength general-purpose cryptography# This recipe can be used to compile openssl with Sun Studio or GCC
+# Just define the GARCOMPILER to the GNU or SUN
+GARCOMPILER = SUN
+GARCOMPILER_TYPE = $(if $(findstring GCC,$(GARCOMPILER)),GNU,SUN)hy library.
 endef
 
-PACKAGES = CSWlibssl1-0-0 CSWlibssl-dev CPACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386 solaris11-sparc solaris11-i386 CSWopenssl-utils
+PACKAGES = CSWlibssl1-0-0 CSWlibssl-dev CPACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386 solaris11-sparc solaris11-i386 CRUNTIME_DEP_PKGS_CSWlibssl1-0-0 = $(RUNTIME_DEP_PKGS_CSWlibssl1-0-0_$(GARCOMPILER_TYPE))
+RUNTIME_DEP_PKGS_CSWlibssl1-0-0_GNU = CSWlibgcc-s1CSWopenssl-utils
 
 SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
 PKGFILES_CSWlibssl1-0-0 = $(PKGFILES_RT)
@@ -159,19 +163,30 @@ EXTRA_MERGE_DIRS_isa-sparcv9 = $(bindir_install)
 EXTRA_ISAEXEC_EXCLUDE_FILES = /opt/csw/bin/c_rehasho.soWe use Studio 12.3 to have the "-Qoption cg" option
 # but this version is not available under Solaris 9
 ifneq ($(shell /usr/bin/uname -r),5.9)
-	GARCOMPILER=SOS12U3
+	ifneq ($(GARCOMPILER),GNU)
+		GARCOMPILER = SOS12U3
+	endif
 endifo.so .*/libssl.so
 
 # The corresponding os/compiler to pass to the
-# openssl Configure script
-i38no-sse286_OS_COMPILER -sunw
-pentium_pro_OS_COMPILER	= solaris-x86-pentium_pro-cc-sunw
-amd64_OS_COMPILER 	= solaris64-x86_64-cc-sunw
+# openssl ConfiSUN_CONFIGURE_TARGET		= no-sse2 solaris-x86-cc-sunw
+pentium_pro_SUN_CONFIGURE_TARGET	= solaris-x86-pentium_pro-cc-sunw
+amd64_SUN_CONFIGURE_TARGET	 	= solaris64-x86_64-cc-sunw
 
-sparcv8_OS_COMPILER 		= solaris-sparcv8-cc-sunw
-sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc-sunw
-sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc-sunw
-sparcv9_OS_COMPILER		= solaris64-sparcv9-cc-sunwar# Solaris has the issetugid function since libc version interface SUNW_1.21
+i386_GNU_CONFIGURE_TARGET       	= no-sse2 solaris-x86-gcc
+pentium_pro_GNU_CONFIGURE_TARGET        = solaris-x86-gcc
+amd64_GNU_CONFIGURE_TARGET		= solaris64-x86_64-gcc
+
+sparcv8_SUN_CONFIGURE_TARGET		= solaris-sparcv8-cc-sunw
+sparcv8plus_SUN_CONFIGURE_TARGET	= solaris-sparcv9-cc-sunw
+sparcv8plus+vis_SUN_CONFIGURE_TARGET	= solaris-sparcv9+vis-cc-sunw
+sparcv9_SUN_CONFIGURE_TARGET		= solaris64-sparcv9-cc-sunw
+
+sparcv9_GNU_CONFIGURE_TARGET		= solaris-sparcv8-gcc
+sparcv8plus_GNU_CONFIGURE_TARGET	= solaris-sparcv9-gcc
+sparcv8plus+vis_GNU_CONFIGURE_TARGET	= solaris-sparcv9+vis-gcc
+sparcv9_GNU_CONFIGURE_TARGET		= solaris64-sparcv9-gcc
+ar# Solaris has the issetugid function since libc version interface SUNW_1.21
 # but openssl doesn't use it by default so we manually enable it
 CONFIGURE_FLAGS = -DHAVE_ISSETUGIDar# PKCS11 Patch also works on sparc64 athena processors thanks for the FJAES 
 # instruction set. The presence of this instruction set is checked at runtime
