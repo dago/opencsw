@@ -7,7 +7,7 @@ DESCRIPTION = secure internet live conferencing toolkit
 define BLURB
   SILC Project develops the Secure Internet Live Conferencing protocol, which provides secure conferencing s###
 # client.h collides with Samba and has to be somehow dealt with
-### sGARCOMPILER=GCC4 services. 
+### services. 
 endef
 
 MASTER_SITES = http://silcnet.org/download/toolkit/so+= $(DISTNAME).tar.bz2
