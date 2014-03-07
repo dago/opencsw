@@ -1,0 +1,31 @@
+From a287c9cbd150be9a079f725f4ca803cc347c3ac1 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 7 Mar 2014 14:49:29 +0100
+Subject: [PATCH] xargs splits into multiple invocations, make sure to use only
+ one libtool invocation
+
+---
+ lib/Makefile.in | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index ec94aaf..850e0d7 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -678,10 +678,11 @@ install-exec-hook:
+ 	-$(LIBTOOL) --mode=install $(INSTALL) libsilcclient.la $(DESTDIR)$(libdir)/
+ 
+ libsilc.a:
+-	find $(SILCLIB_DIRS) -type f -name *.lo | xargs	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS) $(SILC_LINK_LIBS)	$(LIBTOOL_SILC_VERSION)	$(LIBTOOL_OPTS) -o libsilc.la
++	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS) $(SILC_LINK_LIBS)	$(LIBTOOL_SILC_VERSION)	$(LIBTOOL_OPTS) -o libsilc.la `find $(SILCLIB_DIRS) -type f -name *.lo`
+ 
+ libsilcclient.a:
+-	find $(SILCCLIENTLIB_DIRS) -type f -name *.lo | xargs	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS)	$(SILCCLIENT_LINK_LIBS) $(LIBTOOL_SILCCLIENT_VERSION)	$(LIBTOOL_OPTS) -o libsilcclient.la
++	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS)	$(SILCCLIENT_LINK_LIBS) $(LIBTOOL_SILCCLIENT_VERSION)	$(LIBTOOL_OPTS) -o libsilcclient.la `find $(SILCCLIENTLIB_DIRS) -type f -name *.lo`
++
+ toolkit-install:
+ 	-mkdir -p $(docdir)/toolkit/
+ 	-$(INSTALL_DATA) $(top_srcdir)/doc/toolkit/* $(docdir)/toolkit
+-- 
+1.8.4.1
+
