@@ -1,0 +1,14 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -570,9 +570,9 @@ dnl socket nsl and dl are required to link several programs and libdb
+     LIBDL=-ldl
+     AC_SUBST([LIBDL], [$LIBDL])
+ dnl Cstd and Crun are required to link any C++ related code
+-    LIBCSTD=-lCstd
++    LIBCSTD=
+     AC_SUBST([LIBCSTD], [$LIBCSTD])
+-    LIBCRUN=-lCrun
++    LIBCRUN=
+     AC_SUBST([LIBCRUN], [$LIBCRUN])
+     platform="solaris"
+     initdir='$(sysconfdir)/init.d'
