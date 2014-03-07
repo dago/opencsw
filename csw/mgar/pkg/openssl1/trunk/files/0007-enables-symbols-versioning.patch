@@ -16,7 +16,7 @@ index e753f44..a52ac8c 100644
  		ALLSYMSFLAGS="$${MINUSZ}allextract"; \
  		NOALLSYMSFLAGS="$${MINUSZ}defaultextract"; \
 -		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
-+		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -M map.openssl.lib$(LIBNAME) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
++		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -Wl,-Mmap.openssl.lib$(LIBNAME) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
  	fi; \
  	$(LINK_SO_O)
  link_a.solaris:
@@ -25,7 +25,7 @@ index e753f44..a52ac8c 100644
  		ALLSYMSFLAGS="$${MINUSZ}allextract"; \
  		NOALLSYMSFLAGS="$${MINUSZ}defaultextract"; \
 -		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
-+		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -M map.openssl.lib$(LIBNAME) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
++		SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -Wl,-Mmap.openssl.lib$(LIBNAME) -h $$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX -Wl,-Bsymbolic"; \
  	fi; \
  	$(LINK_SO_A)
  link_app.solaris:
