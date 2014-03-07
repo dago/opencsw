@@ -1,0 +1,263 @@
+From 76daf2857988a218400fe4d7c747862118112700 Mon Sep 17 00:00:00 2001
+From: Carsten Grzemba <cgrzemba@opencsw.org>
+Date: Wed, 5 Mar 2014 11:14:22 +0100
+Subject: [PATCH 2/2] remove bashism in shell templates
+
+---
+ ldap/admin/src/scripts/bak2db.in          | 4 ++--
+ ldap/admin/src/scripts/db2bak.in          | 4 ++--
+ ldap/admin/src/scripts/db2index.in        | 4 ++--
+ ldap/admin/src/scripts/db2ldif.in         | 4 ++--
+ ldap/admin/src/scripts/dbverify.in        | 4 ++--
+ ldap/admin/src/scripts/dn2rdn.in          | 4 ++--
+ ldap/admin/src/scripts/ldif2db.in         | 4 ++--
+ ldap/admin/src/scripts/ldif2ldap.in       | 4 ++--
+ ldap/admin/src/scripts/monitor.in         | 4 ++--
+ ldap/admin/src/scripts/restart-dirsrv.in  | 2 +-
+ ldap/admin/src/scripts/restoreconfig.in   | 4 ++--
+ ldap/admin/src/scripts/saveconfig.in      | 4 ++--
+ ldap/admin/src/scripts/start-dirsrv.in    | 2 +-
+ ldap/admin/src/scripts/stop-dirsrv.in     | 2 +-
+ ldap/admin/src/scripts/suffix2instance.in | 4 ++--
+ ldap/admin/src/scripts/upgradedb.in       | 4 ++--
+ ldap/admin/src/scripts/upgradednformat.in | 4 ++--
+ ldap/admin/src/scripts/vlvindex.in        | 4 ++--
+ 18 files changed, 33 insertions(+), 33 deletions(-)
+
+diff --git a/ldap/admin/src/scripts/bak2db.in b/ldap/admin/src/scripts/bak2db.in
+index f0cede4..b7ff1a7 100755
+--- a/ldap/admin/src/scripts/bak2db.in
++++ b/ldap/admin/src/scripts/bak2db.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/db2bak.in b/ldap/admin/src/scripts/db2bak.in
+index dacd7b0..4394100 100755
+--- a/ldap/admin/src/scripts/db2bak.in
++++ b/ldap/admin/src/scripts/db2bak.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/db2index.in b/ldap/admin/src/scripts/db2index.in
+index a1321ea..9d42b1a 100755
+--- a/ldap/admin/src/scripts/db2index.in
++++ b/ldap/admin/src/scripts/db2index.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/db2ldif.in b/ldap/admin/src/scripts/db2ldif.in
+index d7e0ff0..a3e6ed6 100755
+--- a/ldap/admin/src/scripts/db2ldif.in
++++ b/ldap/admin/src/scripts/db2ldif.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/dbverify.in b/ldap/admin/src/scripts/dbverify.in
+index 6306a07..a5258d7 100755
+--- a/ldap/admin/src/scripts/dbverify.in
++++ b/ldap/admin/src/scripts/dbverify.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/dn2rdn.in b/ldap/admin/src/scripts/dn2rdn.in
+index 32a70c8..5a38dc0 100755
+--- a/ldap/admin/src/scripts/dn2rdn.in
++++ b/ldap/admin/src/scripts/dn2rdn.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/ldif2db.in b/ldap/admin/src/scripts/ldif2db.in
+index ce15349..7763c04 100755
+--- a/ldap/admin/src/scripts/ldif2db.in
++++ b/ldap/admin/src/scripts/ldif2db.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/ldif2ldap.in b/ldap/admin/src/scripts/ldif2ldap.in
+index 874b1bb..bc3840f 100755
+--- a/ldap/admin/src/scripts/ldif2ldap.in
++++ b/ldap/admin/src/scripts/ldif2ldap.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@ldapsdk_libdir@"
+ libpath_add "@libdir@"
+diff --git a/ldap/admin/src/scripts/monitor.in b/ldap/admin/src/scripts/monitor.in
+index 7b2058b..4bb51b1 100755
+--- a/ldap/admin/src/scripts/monitor.in
++++ b/ldap/admin/src/scripts/monitor.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@ldapsdk_libdir@"
+diff --git a/ldap/admin/src/scripts/restart-dirsrv.in b/ldap/admin/src/scripts/restart-dirsrv.in
+index 270b71b..4dfb8ed 100644
+--- a/ldap/admin/src/scripts/restart-dirsrv.in
++++ b/ldap/admin/src/scripts/restart-dirsrv.in
+@@ -7,7 +7,7 @@
+ #       2: Server started successfully (was not running)
+ #       3: Server could not be stopped
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ restart_instance() {
+     SERV_ID=$1
+diff --git a/ldap/admin/src/scripts/restoreconfig.in b/ldap/admin/src/scripts/restoreconfig.in
+index 9bb1acf..c500e21 100755
+--- a/ldap/admin/src/scripts/restoreconfig.in
++++ b/ldap/admin/src/scripts/restoreconfig.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@nss_libdir@"
+diff --git a/ldap/admin/src/scripts/saveconfig.in b/ldap/admin/src/scripts/saveconfig.in
+index 65d80f3..55b3a3c 100755
+--- a/ldap/admin/src/scripts/saveconfig.in
++++ b/ldap/admin/src/scripts/saveconfig.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@libdir@"
+diff --git a/ldap/admin/src/scripts/start-dirsrv.in b/ldap/admin/src/scripts/start-dirsrv.in
+index a5c1bf6..ebc5c50 100755
+--- a/ldap/admin/src/scripts/start-dirsrv.in
++++ b/ldap/admin/src/scripts/start-dirsrv.in
+@@ -6,7 +6,7 @@
+ #       1: Server could not be started
+ #       2: Server already running
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ # Starts a single instance
+ start_instance() {
+diff --git a/ldap/admin/src/scripts/stop-dirsrv.in b/ldap/admin/src/scripts/stop-dirsrv.in
+index 5cf126b..278af70 100755
+--- a/ldap/admin/src/scripts/stop-dirsrv.in
++++ b/ldap/admin/src/scripts/stop-dirsrv.in
+@@ -6,7 +6,7 @@
+ #       1: Server could not be stopped
+ #       2: Server was not running
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ stop_instance() {
+     SERV_ID=$1
+diff --git a/ldap/admin/src/scripts/suffix2instance.in b/ldap/admin/src/scripts/suffix2instance.in
+index e2f73c3..5507bb6 100755
+--- a/ldap/admin/src/scripts/suffix2instance.in
++++ b/ldap/admin/src/scripts/suffix2instance.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@libdir@"
+diff --git a/ldap/admin/src/scripts/upgradedb.in b/ldap/admin/src/scripts/upgradedb.in
+index 211bdce..8a941f4 100755
+--- a/ldap/admin/src/scripts/upgradedb.in
++++ b/ldap/admin/src/scripts/upgradedb.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@libdir@"
+diff --git a/ldap/admin/src/scripts/upgradednformat.in b/ldap/admin/src/scripts/upgradednformat.in
+index e9d8cab..30a5eb9 100755
+--- a/ldap/admin/src/scripts/upgradednformat.in
++++ b/ldap/admin/src/scripts/upgradednformat.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ # upgradednformat -- upgrade DN format to the new style (RFC 4514)
+ # Usgae: upgradednformat [-N] -n backend_instance -a db_instance_directory
+diff --git a/ldap/admin/src/scripts/vlvindex.in b/ldap/admin/src/scripts/vlvindex.in
+index 0b46b27..175c618 100755
+--- a/ldap/admin/src/scripts/vlvindex.in
++++ b/ldap/admin/src/scripts/vlvindex.in
+@@ -1,6 +1,6 @@
+-#!/bin/sh
++#!/usr/xpg4/bin/sh
+ 
+-source @datadir@/@package_name@/data/DSSharedLib
++. @datadir@/@package_name@/data/DSSharedLib
+ 
+ libpath_add "@libdir@/@package_name@/"
+ libpath_add "@libdir@"
+-- 
+1.8.4.1
+

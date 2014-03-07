@@ -1,0 +1,15 @@
+--- a/ldap/admin/src/template-initconfig.in
++++ b/ldap/admin/src/template-initconfig.in
+@@ -20,3 +20,12 @@ PRODUCT_NAME={{PRODUCT-NAME}}
+ 
+ # Put custom instance specific settings below here.
+ # if using systemd, omit the "; export VARNAME" at the end
++[ ! -d $RUN_DIR ] && mkdir -p $RUN_DIR
++if [ -f $CONFIG_DIR/dse.ldif ]; then
++  slapduser=`grep nsslapd-localuser: $CONFIG_DIR/dse.ldif | cut -d: -f2 | tr -d ' '`
++  slapdgroup=`getent passwd ldap | cut -d: -f4`
++  chown $slapduser:$slapdgroup $RUN_DIR
++fi
++chmod g+w $RUN_DIR
++chmod +rx `dirname $RUNDIR`
++

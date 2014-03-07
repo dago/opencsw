@@ -1,0 +1,1 @@
+echo "Directories /var/opt/csw/lib/dirsrv and /var/opt/csw/log/dirsrv not removed! remove them manually, if you do not want use them any longer"
