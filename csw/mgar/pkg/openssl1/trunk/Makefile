@@ -205,9 +205,7 @@ CONFIGURE_ARGS += $($(ISA)_$(GARCOMPILER_TYPE)_CONFIGURE_TARGET)
 CONFIGURE_ARGS += sharedprefix=$(DESTDIR)
 
 # PKCS11 is only for Solaris 10 so we must create solaris 10 spesolaris10-i386
-ifneq ($(shell /usr/bi# There is a problem with this patch under sparc when using tls protocol
-# See https://www.opencsw.org/mantis/view.php?id=5098
-	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) R)/lib ri= SOS12
+ifneq ($(shell /usr/bi	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) R)/lib ri= SOS12
 endif
 
 
