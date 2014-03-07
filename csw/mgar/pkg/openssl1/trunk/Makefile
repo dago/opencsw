@@ -51,12 +51,11 @@ PKGFILES_CSWopenssl-utils += $(docdir)/openssl_utils/.*
 PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
 
 # We do ship libcrypto in libssl package
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-ifeq ($(shell /usr/bin/uname -p),sparc) 
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-else
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CCHECKPKG_OVERRIDES_CSWlibssl1-0-0 += $(CHECKPKG_OVERRIDES_CSWlibssl1-0-0_$(GARCH))
+
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRID_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=C
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0_i386ES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=Crypto1-0-0
 endif
 
 
@@ -184,7 +183,11 @@ CONFIGURE_FLAGS += -DAV_SPARC_FJAES=0ar# --libdir must only be given if the dire
 LIBDIR_64 = --libdir=lib/64
 LIBDIR = $(LIBDIR_$(MEMORYMODEL))aris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(CONFIGURE_FLAGS)=$(prefix) shared $($(ISA)_OS_COMPILER) --install_ $(LIBall_prefix=$(DESTDIR)
+CONFIGURE_ARGS = -
+CONFIGURE_ARGS += --install_prefix=$(DESTDIR) $(LIBDIR)
+CONFIGURE_ARGS += $(CONFIGURE_FLAGS)
+CONFIGURE_ARGS += $($(ISA)_$(GARCOMPILER_TYPE)_CONFIGURE_TARGET)
+CONFIGURE_ARGS += sharedprefix=$(DESTDIR)
 
 # PKCS11 is only for Solaris 10 so we must create solaris 10 spesolaris10-i386
 ifneq ($(shell /usr/bi# There is a problem with this patch under sparc when using tls protocol
@@ -230,8 +233,7 @@ pre-configure-modulated:
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
 	ln -nf $(WORKDIR)/map.openssl.libcrypto $(WORKSRC)/map.openssl.libcrypto 
-	ln -nf $(WORKDIR)/map.openssl.libssl $(WORKSRC)/map.openssl.libssl 
-	for ENGINE in 4758cca aep atalla cswift gmp chil nuron sureware u pk11bsec padlock capi; do \
+	ln -nf $(WORKDIR)/map.openssl.libssl $(WORKSRC)/map.openssl.libssl$(ENGINES)bsec padlock capi; do \
 		ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/map.openssl.lib$$ENGINE; \
 	done 
 	ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/ccgost/map.openssl.libgost
