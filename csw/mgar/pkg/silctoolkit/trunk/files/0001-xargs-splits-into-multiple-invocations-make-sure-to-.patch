@@ -21,7 +21,7 @@ index ec94aaf..850e0d7 100644
  
  libsilcclient.a:
 -	find $(SILCCLIENTLIB_DIRS) -type f -name *.lo | xargs	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS)	$(SILCCLIENT_LINK_LIBS) $(LIBTOOL_SILCCLIENT_VERSION)	$(LIBTOOL_OPTS) -o libsilcclient.la
-+	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS)	$(SILCCLIENT_LINK_LIBS) $(LIBTOOL_SILCCLIENT_VERSION)	$(LIBTOOL_OPTS) -o libsilcclient.la `find $(SILCCLIENTLIB_DIRS) -type f -name *.lo`
++	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) $(LDFLAGS)	$(SILCCLIENT_LINK_LIBS) $(LIBTOOL_SILCCLIENT_VERSION)	$(LIBTOOL_OPTS) -o libsilcclient.la `find $(SILCCLIENTLIB_DIRS) -type f -name *.lo` -lsilc
 +
  toolkit-install:
  	-mkdir -p $(docdir)/toolkit/
