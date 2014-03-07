@@ -31,8 +31,6 @@ PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0005-smf-autoenable-no.patch
 PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
 PATCHFILES += 0005-add-var-run-create-template-initconfig.in.patch
-# until Red Hat Bugzilla Bug 773617 is open do it yourself
-# PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
 PATCHFILES += 0007-fixup-Makefile.am.patch
 # PATCHFILES += 0007-fixup-plugin_syntax.c.patch
 PATCHFILES += 0008-mntent-daemon.c.patch
