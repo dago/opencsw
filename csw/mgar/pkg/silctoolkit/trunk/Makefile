@@ -33,6 +33,7 @@ OBSOLETED_BY_CSWlibsilc1-1-2 += CSWsilctoolkit
 PACKAGES += CSWlibsilcclient1-1-3
 SPKG_DESC_CSWlibsilcclient1-1-3 += Secure internet live conferencing toolkit, libsilcclient-1.1.so.3
 PKGFILES_CSWlibsilcclient1-1-3 += $(call pkgfiles_lib,libsilcclient-1.1.so.3)
+RUNTIME_DEP_PKGS_CSWlibsilcclient1-1-3 += CSWlibsilc1-1-2
 
 OBSOLETED_BY_CSWlibsilcclient1-1-3 += CSWsilctoolkit
 
