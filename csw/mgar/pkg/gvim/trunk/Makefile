@@ -1,6 +1,6 @@
 NAME           = vim
 DISTVERSION    = 7.4
-PATCHREV       = 27
+PATCHREV       = 193
 VERSION        = $(DISTVERSION).$(PATCHREV)
 GARTYPE        = v2
 SPKG_SOURCEURL = http://www.vim.org/download.php
