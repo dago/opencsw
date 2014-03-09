@@ -116,7 +116,7 @@ ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby$(API_SHORT) 1 $(bindir)/ir
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-Skip-a-chmod-fileutils-test-on-solaris.patch
+PATCHFILES += 0001-Skip-a-chmod-fileutils-teston-solaris.patch
 #PATCHFILES += 0002-vm.c-vm_define_method-improve-guard-of-iseq-from-GC..patch
 PATCHFILES += 0003-Use-echo-port-instead-of-http-for-gem-server-test.patch
 
