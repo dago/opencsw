@@ -2,7 +2,7 @@
 
 NAME = autogen
 
-VERSION = 5.18.1
+VERSION = 5.18.2
 GARTYPE = v2
 
 DESCRIPTION = The Automated Text and Program Generation Tool
@@ -18,6 +18,8 @@ DISTFILES  = $(DISTNAME).tar.xz
 
 PACKAGING_PLATFORMS	=	solaris10-sparc
 PACKAGING_PLATFORMS	+=	solaris10-i386
+
+BUILD64_LIBS_ONLY	=	1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER			=	GNU
