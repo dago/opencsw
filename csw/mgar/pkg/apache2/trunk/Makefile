@@ -87,7 +87,7 @@ SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
 
-RUNTIME_DEP_PKGS_CSWapache2       += CSWosslutils
+RUNTIME_DEP_PKGS_CSWapache2       += CSWopenssl-utils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWlibldap2-4-2 
 # the loadable ldap module dynamically opens files in this apr sub-package
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-ldap
@@ -113,7 +113,7 @@ RUNTIME_DEP_PKGS_CSWap2worker     += CSWlibapr1-0 CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
-CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWopenssl-utils
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2-utils
