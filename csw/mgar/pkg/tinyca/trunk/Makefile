@@ -23,7 +23,7 @@ PATCHFILES = 0001-Hardcode-pathes-to-CSW.patch
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWperl CSWpmgtk2 CSWosslutils CSWzip CSWgtar
+RUNTIME_DEP_PKGS = CSWpenssl-l CSWpmgtk2 CSWosslutils CSWzip CSWgtar
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -33,7 +33,7 @@ TEST_SCRIPTS =
 ARCHALL = 1
 
 CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWzip
-CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWosslutils
+CHECKPKG_OVERRIDES_CSWtinyca2 += surppenssl--dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWgtar
 CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWpmgtk2
 
@@ -46,6 +46,4 @@ install-custom:
 	cp -rp $(WORKSRC)/lib $(DESTDIR)/opt/csw/share/tinyca2/
 	cp -rp $(WORKSRC)/templates $(DESTDIR)/opt/csw/share/tinyca2/
 	ginstall -d $(DESTDIR)$(libdir)
-	cp -rp $(WORKSRC)/locale $(DESTDIR)$(libdir)
-	@$(MAKECOOKIE)
-
+	cp -rp $(WORKSRC)/locale $(DESTDIR)$(libdir
