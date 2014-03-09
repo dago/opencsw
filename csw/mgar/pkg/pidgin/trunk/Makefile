@@ -83,11 +83,13 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
 
 ###
 # due to the ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpangoft2-1-0-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpangocairo1-0-0
+endif
 ###
 
 BUILD_DEP_PKGS += CSWpkgconfig
