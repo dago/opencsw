@@ -48,6 +48,7 @@ PACKAGES					+=	CSWguile
 CATALOGNAME_CSWguile		=	guile
 SPKG_DESC_CSWguile			+=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWguile	+=	CSWlibguile2-0-22
+RUNTIME_DEP_PKGS_CSWguile	+=	CSWlibintl8
 
 PACKAGES								+=	CSWlibguile2-0-22
 CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
@@ -67,7 +68,7 @@ RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgc1
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibunistring0
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibguile2-0-22		+=	CSWlibffi5
 CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/guile/2.0/ccache/ice-9/slib.go
 CHECKPKG_OVERRIDES_CSWlibguile2-0-22	+=	file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/guile/2.0/ccache/ice-9/slib.go
 CHECKPKG_OVERRIDES_CSWlibguile2-0-22 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/guile/2.0/ccache/ice-9/slib.go
@@ -85,6 +86,10 @@ RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibunistring0
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibffi5
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgc1
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgcc-s1
 
 # old library provided for those dependencies which didn't change to 2.x
