@@ -22,8 +22,9 @@ CONFIGURE_ARGS += --with-dbus-services=$(sysconfdir)/dbus-1
 CONFIGURE_ARGS += --with-tclconfig=$(libdir)
 CONFIGURE_ARGS += --with-tkconfig=$(libdir)
 # GNUtls causes issues and failures to connect using SSL
-CONFIGURE_ARGS += --enable-gnutls=no
-CONFIGURE_ARGS += --enable-nss=yes
+# ... or not. Or sometimes it works better. Who knows.
+CONFIGURE_ARGS += --enable-gnutls=yes
+CONFIGURE_ARGS += --enable-nss=no
 CONFIGURE_ARGS += --disable-avahi
 CONFIGURE_ARGS += --disable-nm
 CONFIGURE_ARGS += --with-x
