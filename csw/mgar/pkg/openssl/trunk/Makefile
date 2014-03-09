@@ -27,15 +27,11 @@ endelibssl0-9-8 CSWlibssl-dev CSWopenssl-utilsndency|CSWopenssl
 
 SPKG_DESC_CSWlibssl0-9-8 = Openssl runtime libraries
 CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
-RUNTIME_DEP_PKGS_CSWlibssl0-9-8 = CSWcacertificates
-OBSOLETED_BY_CSWlibssl0-9-8 = CSWosslrt
-CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWlibssl0-9-8 = Cy|CSWlibssl0-9-8
 
 SPKG_DESC_CSWlibssl-dev = Openssl development libraries and headers
 CATALOGNAME_CSWlibssl-dev = libssl_dev
-RUNTIME_DEP_PKGS_CSWlibssl-dev = CSWlibssl0-9-8
-OBSOLETED_BY_CSWlibssl-dev = CSWossldevel
-CHECKPKG_OVERRIDES_CSWossldevel += archall-devel-package
+RUNTIME_DEP_PKGS_CSWlibssl-dev ll-devel-package
 
 SPKG_DESC_CSWopenssl-utils = Openssl binaries and related tools 
 CATALOGNAME_CSWopenssl-utils = openssl_utils
