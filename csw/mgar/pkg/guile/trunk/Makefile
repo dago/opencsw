@@ -28,7 +28,7 @@ PACKAGING_PLATFORMS	+=	solaris10-i386
 CONFIGURE_ARGS	=	$(DIRPATHS)
 CONFIGURE_ARGS	+=	--disable-silent-rules
 
-BUILD64_LIBS_ONLY	=	1
+BUILD64			=	1
 
 # runtime dependencies as explicited in the project's README file:
 BUILD_DEP_PKGS	+=	CSWlibgmp-dev
