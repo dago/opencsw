@@ -1,4 +1,5 @@
 # $Id$
+# ! Move ap2xs into devel package
 
 NAME = httpd
 VERSION = 2.2.26
