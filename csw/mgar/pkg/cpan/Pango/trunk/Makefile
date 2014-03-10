@@ -1,31 +1,29 @@
 NAME = Pango
-VERSION = 1.221
+VERSION = 1.226
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = TSCH
+AUTHOR = XAOC
 
 DESCRIPTION = Layout and render international text
 define BLURB
-  Layout and render international text
 endef
 
-PACKAGES = CSWpmpango
-CATALOGNAME = pm_pango
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWlibcairo CSWpango
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+PACKAGES += CSWpm-pango
+SPKG_DESC_CSWpm-pango = Layout and render international text
+OBSOLETED_BY_CSWpm-pango += CSWpmpango
+CATALOGNAME_CSWpmpango = pm_pango_stub
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpm-pango += CSWlibpango1-0-0
 
 include gar/category.mk
-
-post-merge:
-	ginstall -m 755 -d $(PKGROOT)$(prefix)/share/checkpkg/overrides
-	echo "CSWpmpango: symbol-not-found" \
-	  > $(PKGROOT)$(prefix)/share/checkpkg/overrides/$(CATALOGNAME)
-	@$(MAKECOOKIE)
-
