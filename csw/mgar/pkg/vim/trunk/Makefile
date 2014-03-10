@@ -53,7 +53,8 @@ DISTFILES += vimrc.tiny
 DISTFILES += gvimrc
 DISTFILES += COPYING
 
-PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVEDIRLEVEL = 0of-whitespace.patch
+PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVEFILES += 0005-test-does-not-have--e.patch
+PATCHFILES += 0006-then-should-be-than.patch(DISTVEDIRLEVEL = 0of-whitespace.patch
 
 DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
 
