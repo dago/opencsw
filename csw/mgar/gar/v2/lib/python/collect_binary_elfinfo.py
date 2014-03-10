@@ -229,7 +229,11 @@ if __name__ == '__main__':
   if not options.input_file:
     sys.stdout.write("Please provide input file name. See --help\n")
     sys.exit(1)
-  logging.basicConfig(level=logging.DEBUG)
+  logging_level = logging.INFO
+  if options.debug:
+    logging_level = logging.DEBUG
+  fmt = '%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s'
+  logging.basicConfig(format=fmt, level=logging_level)
   extractor = ElfExtractor(options.input_file, debug=options.debug)
   md5_sum = extractor.CollectBinaryElfinfo()
   return_struct = {
