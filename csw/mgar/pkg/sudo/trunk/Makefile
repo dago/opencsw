@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.9p5
+VERSION = 1.8.10
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -80,8 +80,8 @@ CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/cs
 CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/bin/sudoreplay|but|never|used
 CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers-ldap.so|but|never|usedmme=sudoers-ldap.so
 
-LOGPATH    = $(localstatedir)/log/sudo
-TIMEPATH   = $(localstatedir)/sudo
+LOGPATH    = $(localVARDIR     = $(localstatedir)/sudo
+TIMEPATH   = $(VARDIR)localstatedir)/sudo
 IOLOGPATH  = $(LOGPATH)/io
 
 REINPLACE_USRLOCAL += plugins/sudoers/sudoers
@@ -97,7 +97,8 @@ CONFIGURE_ARGS += --enable-zlib=$(libdir)
 CONFIGURE_ARGS += --disable-path-info
 CONFIGURE_ARGS += --with-logpath=$(LOGPATH)/sudolog
 CONFIGURE_ARGS += --with-iologdir=$(IOLOGPATH)
-CONFIGURE_ARGS += --with-timedir=$(TIMEPATH)
+CONFIGrundir=$(TIMEPATH)
+CONFIGURE_ARGS += --with-vardir=$(VARDIR-timedir=$(TIMEPATH)
 CONFIGURE_ARGSCONFIGURE_ARGS += --with-fqdnS += --with-project
 
 CONFIGURE_ARGS_LDAP-enabled += --with-ldap=$(prefix)
