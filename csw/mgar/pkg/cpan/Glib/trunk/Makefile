@@ -1,24 +1,25 @@
 NAME = Glib
-VERSION = 1.223
+VERSION = 1.304
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = TSCH
+AUTHOR = XAOC
 
-DESCRIPTION = wrappers for the GLib utility and Object libraries
+DESCRIPTION = Perl wrappers for the GLib utility and Object libraries
 define BLURB
-  This module provides perl access to GLib and GLib's GObject libraries. GLib
-  is a portability and utility library; GObject provides a generic type system
-  with inheritance and a powerful signal system. Together these libraries are
-  used as the foundation for many of the libraries that make up the Gnome
-  environment, and are used in many unrelated projects.
 endef
 
-BUILD_DEP_PKGS 	= CSWpmextutilsdepends CSWpmextutpkgconf
-RUNTIME_DEP_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf CSWggettextrt CSWglib2
+CATALOG_RELEASE = unstable
 
-CATALOGNAME 	= pm_glib
-PACKAGES	= CSWpmglib
+LICENSE = LICENSE
 
-LICENSE = README
+PACKAGES += CSWpm-glib
+CATALOGNAME_CSWpm-glib = pm_glib
+SPKG_DESC_CSWpm-glib = Perl wrappers for the GLib utility and Object libraries
+OBSOLETED_BY_CSWpm-glib += CSWpmglib
+CATALOGNAME_CSWpmglib = pm_glib_stub
+
+RUNTIME_DEP_PKGS_CSWpm-glib += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpm-glib += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWpm-glib += CSWlibglib2-0-0
 
 include gar/category.mk
