@@ -18,24 +18,24 @@ endef
 MASTER_SITES = http://tinyca.sm-zone.net/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += COPYING
-PATCHFILES = 0001-Hardcode-pathes-to-CSW.patch
-
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-RUNTIME_DEP_PKGS = CSWpenssl-l CSWpmgtk2 CSWosslutils CSWzip CSWgtar
-
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-INSTALL_SCRIPTS = custom
-TEST_SCRIPTS = 
+PATCHFILES = 0001-Hardcode-paPACKAGES += CSWtinyca2
+SPKG_DESC_CSWtinyca2 = Graphical userinterface to manage a small CA
+ARCHALL_CSWtinyca2 = 1
+RUNTIME_DEP_PKGS_CSWtinyca2 += CSWperl
+RUNTIME_DEP_PKGS_CSWtinyca2 += CSWpmgtk2
+RUNTIME_DEP_PKGS_CSWtinyca2 += CSWopenssl-utils
+RUNTIME_DEP_PKGS_CSWtinyca2 += CSWzip
+RUNTIME_DEP_PKGS_CSWtinyca2 += CSWgtarPTS = 
 
 ARCHALL = 1
 
 CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWzip
 CHECKPKG_OVERRIDES_CSWtinyca2 += surppenssl--dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWgtar
-CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-dependency|CSWpmgtk2
+CHECKPKG_OVERRIDES_CSWtinyca2 += surplus-depCONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+INSTALL_SCRIPTS = custom
+TEST_SCRIPTS = ependency|CSWpmgtk2
 
 include gar/category.mk
 
