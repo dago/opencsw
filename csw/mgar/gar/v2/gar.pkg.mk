@@ -15,8 +15,10 @@
 
 ifeq ($(DEBUG_PACKAGING),)
 _DBG=@
+DEBUG_FLAG =
 else
 _DBG=
+DEBUG_FLAG = --debug
 endif
 
 PKGINFO ?= /usr/bin/pkginfo
@@ -1019,6 +1021,7 @@ package-p:
 #
 pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
 	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg \
+		$(DEBUG_FLAG) \
 		--catalog-architecture "$(GARCH)" \
 		--os-releases "$(SPKG_OSNAME)" \
 		--catalog-release "$(CATALOG_RELEASE)" \
