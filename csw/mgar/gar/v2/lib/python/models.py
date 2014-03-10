@@ -338,8 +338,12 @@ class Srv4FileStats(sqlobject.SQLObject):
         s = s + u" (bad unicode detected)"
     return s
 
+  def GetStatsStruct(self):
+    pkg_stats_sqo = Srv4FileStatsBlob.selectBy(
+        md5_sum=self.md5_sum).getOne()
+    return cjson.decode(pkg_stats_sqo.json)
+
   def _GetBuildSource(self):
-    return "_GetBuildSource(): Not implemented"
     data = self.GetStatsStruct()
     build_src = None
     if "OPENCSW_REPOSITORY" in data["pkginfo"]:
@@ -364,7 +368,6 @@ class Srv4FileStats(sqlobject.SQLObject):
     return trac_url
 
   def GetVendorUrl(self):
-    return "GetVendorUrl(): Not implemented"
     data = self.GetStatsStruct()
     vendor_url = None
     if "VENDOR" in data["pkginfo"]:
@@ -396,14 +399,14 @@ class Srv4FileStats(sqlobject.SQLObject):
         'pkgname': self.pkginst_str,
     }
     if not quick:
-       data['arch'] = self.arch.name
-       data['filename_arch'] = self.filename_arch.name
-       data['maintainer_email'] = self.maintainer.email
-       data['maintainer_full_name'] = self.maintainer.full_name
-       data['maintainer_id'] = self.maintainer.id
-       data['vendor_url'] = self.GetVendorUrl()
-       data['repository_url'] = self.GetSvnUrl()
-       # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
+      # These data are used by the package database integration
+      data['arch'] = self.arch.name
+      data['filename_arch'] = self.filename_arch.name
+      data['maintainer_email'] = self.maintainer.email
+      data['maintainer_full_name'] = self.maintainer.full_name
+      data['maintainer_id'] = self.maintainer.id
+      data['vendor_url'] = self.GetVendorUrl()
+      data['repository_url'] = self.GetSvnUrl()
     return mimetype, data
 
 
