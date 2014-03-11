@@ -1,6 +1,5 @@
 NAME = cabextract
-VERSION = 1.2
-GARTYPE = v1
+VERSION = 1.4
 
 DESCRIPTION = Extract Microsoft cabinet files
 define BLURB
@@ -11,22 +10,15 @@ define BLURB
   Microsoft cabinet files.
 endef
 
-MASTER_SITES = http://www.kyz.uklinux.net/downloads/
+MASTER_SITES = http://www.cabextract.org.uk/
+DISTFILES += $(DISTNAME).tar.gz
 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcabextract,prototype depend)
+VENDOR_URL = http://www.cabextract.org.uk
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-# cabextract doesn't have a test target
-TEST_TARGET =
-
-SPKG_SOURCEURL = http://www.kyz.uklinux.net/cabextract.php
+PACKAGES += CSWcabextract
+SPKG_DESC_CSWcabextract = Extract Microsoft cabinet files
+# PKGFILES is catchall
+OBSOLETED_BY_CSWcabextract += CSWcabex
+CATALOGNAME_CSWcabex = cabextract_stub
 
 include gar/category.mk
-
-# cabextract is forgetting to link against libintl, so reminding it
-LDFLAGS += -lintl
