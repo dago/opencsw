@@ -1,19 +1,9 @@
-NAME 		= fping
-VERSION 	= 3.2
-CATEGORIES 	= utils
-GARTYPE 	= v2
+NAME = fping
+VERSION = 3.9
+GARTYPE = v2
 
-#
-# package definitions
-#
-
-PACKAGES		= CSWfping
-SPKG_DESC_CSWfping	= A ping like program accepting any number of hosts
-CATALOGNAME_CSWfping	= fping
-
-#
-# blurb
-#
+MASTER_SITES = http://fping.org/dist/
+DISTFILES = $(DISTNAME).tar.gz
 
 define BLURB
   fping is a ping(1) like program which uses the Internet Control
@@ -28,32 +18,12 @@ define BLURB
   unreachable.
 endef
 
-#
-# download, distfiles, patchfiles
-#
+VENDOR_URL = http://fping.org
 
-MASTER_SITES	= http://fping.org/dist/
-DISTFILES	= $(NAME)-$(VERSION).tar.gz
-VENDOR_URL	= http://fping.org/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-#
-# reinplacements
-#
+PACKAGES += CSWfping
+SPKG_DESC_CSWfping = A ping like program accepting any number of hosts
 
 REINPLACE_USRLOCAL	+= doc/fping*
-
-#
-# configure
-#
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-#
-# nothing to be done here for installation and packaging
-#
 
 include gar/category.mk
 
