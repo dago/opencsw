@@ -81,7 +81,8 @@ CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/cs
 CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers-ldap.so|but|never|usedmme=sudoers-ldap.so
 
 LOGPATH    = $(localVARDIR     = $(localstatedir)/sudo
-TIMEPATH   = $(VARDIR)localstatedir)/sudo
+# It is important that this really gets cleaned on reboot
+TIMEPATH   = /var/runlocalstatedir)/sudo
 IOLOGPATH  = $(LOGPATH)/io
 
 REINPLACE_USRLOCAL += plugins/sudoers/sudoers
