@@ -73,10 +73,14 @@ RUNTIME_DEP_PKGS_CSWgvim += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibbonoboui RUNTIME_DEP_PKGS_CSWgvim += CSWlibpango1-0-0
+
+# Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
 RUNTIME_DEP_PKGS_CSWgvim += CSWorbit2
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgvim += CSWlibfreetype6 CSWorbit2 CSWpango
+RUNTIME_DEP_PKGS_CSWgvim += CSWlibfreetype6 endif
+# CSWorbit2 CSWpango
 
 # It is ok to depend on the base files
 CHECKPKG_OVERRIDES_CSWgvim += surplus-dependency|CSWvimrt
