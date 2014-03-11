@@ -1,5 +1,5 @@
 NAME = bvi
-VERSION = 1.3.2
+VERSION = 1.4.0rc
 GARTYPE = v2
 
 DESCRIPTION = A vi-like binary file (hex) editor
@@ -16,6 +16,9 @@ DISTFILES    = $(NAME)-$(VERSION).src.tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).src.tar.gz
 UPSTREAM_MASTER_SITES = http://sourceforge.net/projects/bvi/files/
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 TEST_SCRIPTS =
 
 # bvi uses --libdir to store a help file
@@ -30,6 +33,5 @@ post-install-modulated: DOCS=CHANGES CREDITS
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)
 	@$(MAKECOOKIE)
