@@ -67,13 +67,16 @@ RUNTIME_DEP_PKGS_CSWgvim += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgnome2-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgnomeui2-0
-RUNTIME_DEP_PKGS_CSWgvim += CSWpango
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgvim += CSWlibbonoboui CSWorbit2 CSWpango
+RUNTIME_DEP_PKGS_CSWgvim += CSWlibbonoboui RUNTIME_DEP_PKGS_CSWgvim += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgvim += CSWorbit2
+RUNTIME_DEP_PKGS_CSWgvim += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWgvim += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWgvim += CSWlibfreetype6 CSWorbit2 CSWpango
 
 # It is ok to depend on the base files
 CHECKPKG_OVERRIDES_CSWgvim += surplus-dependency|CSWvimrt
