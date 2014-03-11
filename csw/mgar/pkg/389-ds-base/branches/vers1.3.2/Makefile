@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.3.2.13
+VERSION = 1.3.2.14
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server
@@ -12,12 +12,13 @@ endef
 
 BUNDLE = 389-ds
 
-MASTER_SITES = http://port389.org/sources/
+MASTER_SITES = https://git.fedorahosted.org/cgit/389/ds.git/snapshot/
+# MASTER_SITES = http://port389.org/sources/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSW389-ds-base.postinstall
 DISTFILES += CSW389-ds-base.postremove
 
-# BUILD64	= 1
+BUILD64	= 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 
@@ -46,6 +47,7 @@ PATCHFILES += 0014-ldap-include-Makefile.am.patch
 # needed at least on GCC4
 PATCHFILES += 0015-use-PL_strcasestr-acllas.c.patch
 PATCHFILES += 0010-no-Crun-Cstd-lib-config.ac.patch
+PATCHFILES += 0016-fix-bigendian-utf8compare.c
 
 
 BUILD_DEP_PKGS += CSWautoconf
