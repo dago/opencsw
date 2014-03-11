@@ -34,7 +34,7 @@ RUNTIME_DEP_PKGS_CSWdovecot += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibz1
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_gssapi-krb5-2
+RUNTIME_DEP_PKGS_krb5-3
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibpq5Wdovecot += CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibssl1-0-0
