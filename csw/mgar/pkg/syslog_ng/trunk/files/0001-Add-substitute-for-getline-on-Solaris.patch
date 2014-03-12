@@ -1,0 +1,74 @@
+From e16517fc1f6a56a100b3dc4981392ccfee4bdf3e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 12 Mar 2014 14:38:31 +0100
+Subject: [PATCH] Add substitute for getline() on Solaris
+
+---
+ lib/filter/filter-in-list.c | 51 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+
+diff --git a/lib/filter/filter-in-list.c b/lib/filter/filter-in-list.c
+index 2fbbbe6..7222876 100644
+--- a/lib/filter/filter-in-list.c
++++ b/lib/filter/filter-in-list.c
+@@ -30,6 +30,57 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
++#if defined(__SVR4) && defined(__sun)
++
++#define _GETLINE_BUFLEN 255
++
++ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
++	int c;
++	size_t alloced = 0;
++	char *linebuf;
++
++	if (*lineptr == NULL) {
++		linebuf = malloc(sizeof(char) * (_GETLINE_BUFLEN + 1));
++		alloced = _GETLINE_BUFLEN + 1;
++	} else {
++		linebuf = *lineptr;
++		alloced = *n;
++	}
++	ssize_t linelen = 0;
++
++	do {
++		c = fgetc(stream);
++		if (c == EOF) {
++			break;
++		}
++		if (linelen >= alloced) {
++			linebuf = realloc(linebuf, sizeof(char) * (alloced + _GETLINE_BUFLEN + 1));
++			alloced += (_GETLINE_BUFLEN + 1);
++		}
++		*(linebuf + linelen) = (unsigned char)c;
++		linelen++;
++	} while (c != '\n');
++
++	/* empty line means EOF or some other error */
++	if (linelen == 0) {
++		if (linebuf != NULL && *lineptr == NULL) {
++			free(linebuf);
++			linebuf = NULL;
++		}
++		linelen = -1;
++		*n = alloced;
++	} else {
++		if (linebuf != NULL) {
++			linebuf[linelen] = '\0';
++		}
++		*n = alloced;
++		*lineptr = linebuf;
++	}
++
++	return linelen;
++}
++#endif
++
+ typedef struct _FilterInList
+ {
+   FilterExprNode super;
+-- 
+1.8.4.1
+

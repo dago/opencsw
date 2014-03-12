@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = syslog-ng
-VERSION = 3.2.5
+VERSION = 3.5.3
 CATEGORIES = server
 GARTYPE = v2
 
@@ -12,27 +12,27 @@ define BLURB
   logs using TCP.
 endef
 
-MASTER_SITES = http://www.balabit.com/downloads/files/$(NAME)/open-source-edition/$(VERSION)/source/
+MASTER_SITES = http://www.balabit.com/downloads/files/$(NAME)/open-source-edition/$(VERSION+/source/
 DISTFILES  = $(NAME)_$(VERSION).tar.gz
 DISTFILES += $(NAME).conf.CSW
 DISTFILES += cswsyslog_ng
 DISTFILES += CSWsyslog-ng.preinstall
 DISTFILES += CSWsyslog-ng.postremove
-DISTFILES += CSWsyslog-ng.cswreleasenotes
+DISTFILES += CSWsyslog-# Patch taken from
+#   https://www.redhat.com/archives/open-scap-list/2011-May/msg00021.html
+PATCHFILES += 0001-Add-substitute-for-getline-on-Solaris.patch
 
-SPKG_SOURCEURL = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
-INITSMF = /etc/opt/csw/init\.d/cswsyslog_ng
-SAMPLECONF = /etc/opt/csw/syslog-ng\.conf\.CSW
+VENDOR_URL = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
+
+INITSMF += /etc/opt/csw/init\.d/cswsyslog_ng
+PRESERVECONF += $(sysconfdir)/syslog-ng\.conf
+PRESERVECONF += $(sysconfdir)/scl\.confsyslog-ng\.conf\.CSW
 
 # Syslog links against glib2, which is packaged in different packages on
 # Solaris 9 and Solaris 10. Therefore, we need to build separately on 9 and
 # 10, and declare different dependencies.
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-# shared /opt/csw support:
-localstatedir = /var/opt/csw
-sysconfdir = /etc/opt/csw
+PACKAGING_PLATFORMS += solaris10-spdir = /etc/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic-linking
@@ -60,7 +60,17 @@ RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibevtlog0
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSssl1-0-0og-ng += CSWlibpcre1
-RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWsysloRUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWsyslog-ng += CSWlibgnutls28
+
+# This is correct, zoneinfo is searched at
+#   /usr/share/zoneinfo/
+#   /usr/share/lib/zoneinfo/r/share/lib/zoneinfo
+CHECKPKG_OVERRIDES_CSWsyslog-ng += file-with-bad-content|/usr/share|root/opt/-3.5.3.so
+
+# This is optional
+CHECKPKG_OVERRIDES_CSWsyslog-ng += missing-dependency|CSWperlog-ng += CSWlibwrap1
 
 # Specifying different dependencies for 5.9 and 5.10.
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibglib2-0-0
@@ -99,7 +109,7 @@ CHECKPKG_OVERRIDES_CSWsyslog-ng += file-with-bad-content|/usr/share|root/opt/csw
 # Not splitting the syslog-ng libraries.  There are no known packages linking
 # to syslog's shared objects.
 CHECKPKG_OVERRIDES_CSWsyslog-ng += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWsyslog-ng += shared-lib-pkgname-mismatch
+CHECKPKG_OVERRIDES_CSWsyslog-ng += shared-lCHECKPKG_OVERRIDES_CSWsyslog-ng += soname-equals-filenamelib-pkgname-mismatch
 
 # Missing TLS symbols
 EXTRA_LINKEinclude gar/category.mkKER_FLAGS = -lgnutls
