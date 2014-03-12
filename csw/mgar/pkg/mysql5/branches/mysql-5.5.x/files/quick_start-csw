@@ -107,9 +107,7 @@ echo
 echo "###  The following messages are from mysql_install_db."
 $MYSQL_HOME/bin/mysql_install_db \
     --defaults-extra-file=$DEFAULTS_FILE \
-    --user=$MYSQLD_USER \
-    --basedir=$MYSQL_HOME \
-    --datadir=$MYSQLD_DATADIR
+    --user=$MYSQLD_USER
 
 #
 # Fix permissions on the data directory
