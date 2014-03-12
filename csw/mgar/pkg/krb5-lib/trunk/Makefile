@@ -104,6 +104,10 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-3RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibgcc-s13RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrad0
+# Linker anomaly dep
+RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibverto0
+CHECKPKG_OVERRIDES_CSWlibkrb5-3 += surplus-dependency|CSWlibverto0
+
 CHECKPKG_OVERRIDES_CSWlibkrb5-3 += soname-not-part-of-filename
 CHECKPKG_OVERRIDES_CSWlibkrb5-3 += shared-lib-pkgname-mismatch3 += CSWlibk5crypto3
 
@@ -121,7 +125,13 @@ PKGFILES_CSWlibkrad0 += $(call pkgfiles_lib,libkrad.so.0)
 RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibverto0
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibk5crypto3bkrb5-3 = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibk5crypto3bk# Linker anomaly deps
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibcom-err3
+CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibkrb5support0
+CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibcom-err3bkrb5-3 = CSWkrb5lib
 
 LICErst
 
