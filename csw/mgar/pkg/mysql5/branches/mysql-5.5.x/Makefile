@@ -241,6 +241,7 @@ CMAKE_ARGS += -DINSTALL_LAYOUT=RPM
 CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)/$(NAME)
 CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
 CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
+CMAKE_ARGS += -DINSTALL_SCRIPTDIR=$(subst $(prefix)/,,$(bindir))
 CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
 CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
 CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/plugin
