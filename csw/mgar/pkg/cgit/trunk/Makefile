@@ -1,5 +1,5 @@
 NAME = cgit
-VERSION = 0.9.2
+VERSION = 0.10.1
 GARTYPE = v2
 
 DESCRIPTION = Web front-end for Git
@@ -28,6 +28,7 @@ RUNTIME_DEP_PKGS_CSWcgit += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWcgit += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcgit += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWcgit += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWcgit += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWcgit += CSWperl
 
 # This may be used with any other webserver, just preconfigured for apache
