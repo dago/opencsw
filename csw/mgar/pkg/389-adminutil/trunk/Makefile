@@ -16,7 +16,7 @@ LICENSE = LICENSE
 MASTER_SITES = http://port389.org/sources/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# BUILD64 = 1
+BUILD64 = 1
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
 GARCOMPILER = SOS12U2
@@ -53,7 +53,6 @@ RUNTIME_DEP_PKGS_CSWlibadmsslutil0 += $(RUNTIME_DEP_PKGS_CSWlibadmsslutil0_$(GAR
 
 PACKAGES += CSW389-adminutil-dev
 CATALOGNAME_CSW389-adminutil-dev = 389_adminutil_dev
-ARCHALL_CSW389-adminutil-dev = 1
 SPKG_DESC_CSW389-adminutil-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadminutil0
 RUNTIME_DEP_PKGS_CSW389-adminutil-dev += CSWlibadmsslutil0
