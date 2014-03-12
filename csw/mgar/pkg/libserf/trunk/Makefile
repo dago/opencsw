@@ -35,8 +35,12 @@ RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibkrb5-3
 # The name libserf1_3 was wrong due to false soname interpretation
 OBSOLETED_BY_CSWlibserf1-1 += CSWlibserf1-3
+r# Linker anomaly
+CHECKPKG_OVERRIDES_CSWlibserf1-1 += surplus-dependency|CSWlibintl8
 r1-0 += CSWlibz1
 
 PACKAGES += CSWlibserf-dev
@@ -58,7 +62,14 @@ SCONS_FLAGS += CFLAGS="$(CFLAGS)"
 # escape magics to make sure it is passed as is to the linker
 SCONS_FLAGS += LINKFLAGS="$(LDFLAGS) $(subst $$,\\$$\\,$(LD_OPTIONS))"
 
+# Enable Kerberos, usually this is $(prefix) and bin/krb5-config is appended, but we need explicit
+# specification as bin/ may also be bin/sparcv9 for 64 bit.
+SCONS_FLAGS += GSSAPI=$(bindir)/krb5-config
+
 include gar/category.mk
+
+# scons debugging: --debug=<type> with
+#   count, duplicate, explain, findlibs, includes, memoizer, memory, objects, pdb, prepare, presub, stacktrace, time
 
 build-serf:
 	(cd $(WORKSRC); \
