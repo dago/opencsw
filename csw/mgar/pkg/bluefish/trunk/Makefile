@@ -1,5 +1,5 @@
 NAME = bluefish
-VERSION = 2.2.4
+VERSION = 2.2.5
 
 DESCRIPTION = Advanced Gtk+ HTML editor
 define BLURB
@@ -16,19 +16,23 @@ TEST_SCRIPTS =
 CONFIGURE_ARGS += $(DIRPATHS)
 
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWbluefish += CSWenchant
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWbluefish += CSWpango
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWbluefish += CSWpython
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibenchant1
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWbluefish += CSWlibpangocairo1-0-0
 
 EXTRA_MERGE_EXCLUDE_FILES = .*treemagic.*
 EXTRA_MERGE_EXCLUDE_FILES += .*globs.*
