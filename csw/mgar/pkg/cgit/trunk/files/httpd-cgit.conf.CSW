@@ -1,11 +1,11 @@
-<Directory "/opt/csw/libexec/cgit">
+<Directory "/opt/csw/share/www/cgit/cgi-bin">
   AllowOverride None
   Options ExecCGI
   Order allow,deny
   Allow from all
 </Directory>
 
-<Directory "/opt/csw/share/cgit/httpd">
+<Directory "/opt/csw/share/www/cgit/htdocs">
   AllowOverride None
   Order allow,deny
   Allow from all
