@@ -89,6 +89,7 @@ RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibunistring0
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgc1
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgcc-s1
 
