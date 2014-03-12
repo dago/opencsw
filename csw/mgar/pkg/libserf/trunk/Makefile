@@ -36,7 +36,9 @@ RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibserf1-1 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibserf1-1-5.9 += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibserf1-1-5.10 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibserf1-1 += $(RUNTIME_DEP_PKGS_CSWlibserf1-1-$(GAROSREL))
 # The name libserf1_3 was wrong due to false soname interpretation
 OBSOLETED_BY_CSWlibserf1-1 += CSWlibserf1-3
 r# Linker anomaly
