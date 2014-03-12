@@ -31,7 +31,7 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWlverto0v += CSWlibkrb5-priv
+RUNTIME_DEP_PKGS_CSWlverto0vRUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrad0v += CSWlibkrb5-priv
 PKGFILES_CSWlibkrb5-dev  = $(mandir)/man8/sserver.8
 PKGFILES_CSWlibkrb5-dev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
 PKGFILES_CSWlibkrb5-dev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
@@ -103,6 +103,7 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-3RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibgcc-s13RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrad0
 CHECKPKG_OVERRIDES_CSWlibkrb5-3 += soname-not-part-of-filename
 CHECKPKG_OVERRIDES_CSWlibkrb5-3 += shared-lib-pkgname-mismatch3 += CSWlibk5crypto3
 
@@ -114,7 +115,13 @@ RUNTIME_DEP_PKGS_CSWlibkrb5support0 += CSWlibgcc-s1 kPACKAGES += CSWlibverto0
 CATALOGNAME_CSWlibverto0 = libverto0
 PKGFILES_CSWlibverto0 += $(call baseisadirs,$(libdir),libverto\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibverto0 += MIT Kerberos 5 core libraries, libverto.so.0
-RUNTIME_DEP_PKGS_CSWlibverto0 += CSWlibgcc-s1bkrb5-3 = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWlibverto0 += CSWlibgcc-s1bkPACKAGES += CSWlibkrad0
+SPKG_DESC_CSWlibkrad0 = MIT Kerberos 5 support library
+PKGFILES_CSWlibkrad0 += $(call pkgfiles_lib,libkrad.so.0)
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibverto0
+RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibk5crypto3bkrb5-3 = CSWkrb5lib
 
 LICErst
 
