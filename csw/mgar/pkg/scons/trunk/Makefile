@@ -35,6 +35,15 @@ SPKG_DESC_CSWscons = A next-generation build tool
 # PKGFILES is catchall
 ARCHALL_CSWscons = 1
 CHECKPKG_OVERRIDES_CSWscons += file-with-bad-content
+# We definitely need Python 2.7
+RUNTIME_DEP_PKGS_CSWscons += CSWpython27
+CHECKPKG_OVERRIDES_CSWscons += surplus-dependency|CSWpython27
+
+# scons needs Python 2.7
+REINPLACEMENTS += python
+REINPLACE_MATCH_python = \#!.*
+REINPLACE_WITH_python = \#!/opt/csw/bin/python27
+REINPLACE_FILES_python += script/scons
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS = 
