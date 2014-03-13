@@ -1273,8 +1273,16 @@ def CheckSharedLibrarySoExtension(pkg_data, error_mgr, logger, messenger):
 
 
 def Check64bitBinariesPresence(pkg_data, error_mgr, logger, messenger):
+  paths_64 = {
+      common_constants.ARCH_i386: common_constants.AMD64_PATHS,
+      common_constants.ARCH_SPARC: common_constants.SPARCV9_PATHS,
+  }
+
   pkginfo = pkg_data['pkginfo']
   arch = pkginfo['ARCH']
+
+  if arch not in paths_64:
+    return
 
   if 'OPENCSW_MODE64' not in pkginfo:
     error_mgr.ReportError('pkginfo-opencsw-mode64-missing',
@@ -1297,10 +1305,6 @@ def Check64bitBinariesPresence(pkg_data, error_mgr, logger, messenger):
   if not binaries:
     return
 
-  paths_64 = {
-      'i386': common_constants.AMD64_PATHS,
-      'sparc': common_constants.SPARCV9_PATHS,
-  }
   paths_64_str = (
       r"opt/csw/(%s)/(%s)"
       % (binaries_path, '|'.join(paths_64[arch])))
