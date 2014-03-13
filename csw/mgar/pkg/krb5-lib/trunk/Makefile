@@ -31,7 +31,7 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWlverto0vRUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrad0v += CSWlibkrb5-priv
+RUNTIME_DEP_PKGS_CSWlverto0v#RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrad0v += CSWlibkrb5-priv
 PKGFILES_CSWlibkrb5-dev  = $(mandir)/man8/sserver.8
 PKGFILES_CSWlibkrb5-dev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
 PKGFILES_CSWlibkrb5-dev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
@@ -95,6 +95,7 @@ PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libgssrpc\.so\.\d+(\.\d+)*
 PKGFILES_CSWlibkrb5-3ILES_CSWlibkrb5-priv += $(call baseisadirs,$(libdir),libkadm5clnt_mit\.so\.\d+(\.\d+)*)
 3 += $(call baseisadirs,$(libdir),libkadm5srv_mit\.so\.\d+(\.\d+)*)
 PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libkdb5\.so\.\d+(\.\d+)*)
+PKGFILES_CSWlibkrb5-3 += $(call pkgfiles_lib,libkrad.so.0)
 PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),krb5.*)
 SPKG_DESC_CSWlibkrb5-3 += MIT Kerberos 5 core and private libraries, libkrb5.so.3
 OBSOLETED_BY_CSWlibkrb5-3 += CSWkrb5lib
@@ -119,7 +120,9 @@ RUNTIME_DEP_PKGS_CSWlibkrb5support0 += CSWlibgcc-s1 kPACKAGES += CSWlibverto0
 CATALOGNAME_CSWlibverto0 = libverto0
 PKGFILES_CSWlibverto0 += $(call baseisadirs,$(libdir),libverto\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibverto0 += MIT Kerberos 5 core libraries, libverto.so.0
-RUNTIME_DEP_PKGS_CSWlibverto0 += CSWlibgcc-s1bkPACKAGES += CSWlibkrad0
+RUNTIME_DEP_PKGS_CSWlibverto0 += CSWlibgcc-s1bk# Cyclic dependency CSWlibkrad0 -> CSWlibkrb5-3 -> CSWlibkrad0, disable for now.
+OBSOLETED_BY_CSWlibkrb5-3 += CSWlibkrad0
+#PACKAGES += CSWlibkrad0
 SPKG_DESC_CSWlibkrad0 = MIT Kerberos 5 support library
 PKGFILES_CSWlibkrad0 += $(call pkgfiles_lib,libkrad.so.0)
 RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5-3
