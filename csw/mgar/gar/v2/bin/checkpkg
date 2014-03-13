@@ -1,1 +1,8 @@
-../lib/python/checkpkg2.py
+#!/opt/csw/bin/bash
+
+set -e
+set -u
+
+basedir=$(dirname $0)/..
+export PYTHONPATH=$basedir
+exec /opt/csw/bin/python2.6 "$basedir/lib/python/checkpkg2.py" "$@"
