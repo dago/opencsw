@@ -21,8 +21,6 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # Solaris 11 for Zeroconf support
 PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
-LINKER_MAP_RELEASE = solaris10u8
-
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWlibiconv-dev
@@ -33,7 +31,6 @@ BUILD_DEP_PKGS += CSWlibdbus-glib-dev
 BUILD_DEP_PKGS += CSWlibtracker-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWopenldap-dev
-BUILD_DEP_PKGS += CSWmysql-dev
 
 RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcrypt11
@@ -50,7 +47,6 @@ RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_sparc += CSWlibz1
 
 RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSWlibcom-err3 CSWlibgpg-error0
@@ -83,13 +79,14 @@ CONFIGURE_ARGS += --with-tracker-prefix=/opt/csw
 CONFIGURE_ARGS += --with-tracker-pkgconfig-version=0.16
 CONFIGURE_ARGS += --with-ssl-dir=/opt/csw
 CONFIGURE_ARGS += --with-ldap=/opt/csw
+# compiling with MySQL on opencsw is a major pita atm :)
+CONFIGURE_ARGS += --with-mysql-config=no
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/bin/afppasswd
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_pam.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_passwd.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_randnum.so
-# CHECKPKG_OVERRIDES_CSWnetatalk += $(CHECKPKG_OVERRIDES_CSWnetatalk_$(GARCH))
 
 include gar/category.mk
 
