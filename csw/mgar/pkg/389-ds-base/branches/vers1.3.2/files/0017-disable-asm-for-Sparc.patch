@@ -1,0 +1,10 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -583,7 +583,6 @@ dnl I dont know why i386 need this explicit
+         ;;
+       sparc-*-solaris*)
+ dnl includes some assembler stuff in counter.o
+-        AC_DEFINE([ATOMIC_64BIT_OPERATIONS], [1], [enabling atomic counter])
+         AC_DEFINE([CPU_sparc], [], [cpu type sparc])
+         TARGET='SPARC'
+         ;;
