@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.1.0
+VERSION = 3.1.1
 GARTYPE = v2
 
 DESCRIPTION = Open Source AFP fileserver
@@ -31,6 +31,7 @@ BUILD_DEP_PKGS += CSWlibdbus-glib-dev
 BUILD_DEP_PKGS += CSWlibtracker-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWmysql-dev
 
 RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcrypt11
@@ -41,21 +42,21 @@ RUNTIME_DEP_PKGS += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWbdb48
-RUNTIME_DEP_PKGS += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS += CSWlibtracker-sparql0-16-0
 RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS += CSWlibmysqlclient18
 
 RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSWlibcom-err3 CSWlibgpg-error0
 RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL))
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
-# will be in 3.1.1
-PATCHFILES += uam.patch
 
+# Disable linker map forcing SUNW_1.22.2 as the linked MySQL needs SUNW_1.22.5
+LINKER_MAPS =
 
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
@@ -81,8 +82,6 @@ CONFIGURE_ARGS += --enable-krbV-uam
 CONFIGURE_ARGS += --with-tracker-prefix=/opt/csw
 CONFIGURE_ARGS += --with-tracker-pkgconfig-version=0.16
 CONFIGURE_ARGS += --with-ssl-dir=/opt/csw
-# disable until asprintf() compat func is available in 3.1.1
-CONFIGURE_ARGS += --with-mysql-config=no
 CONFIGURE_ARGS += --with-ldap=/opt/csw
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
