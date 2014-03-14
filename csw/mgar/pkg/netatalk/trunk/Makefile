@@ -21,6 +21,8 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 # Solaris 11 for Zeroconf support
 PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
+LINKER_MAP_RELEASE = solaris10u8
+
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWlibiconv-dev
@@ -49,14 +51,12 @@ RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_sparc += CSWlibz1
 
 RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSWlibcom-err3 CSWlibgpg-error0
-RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL))
+RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL)) $(RUNTIME_DEP_PKGS_$(GARCH))
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
-
-# Disable linker map forcing SUNW_1.22.2 as the linked MySQL needs SUNW_1.22.5
-LINKER_MAPS =
 
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
@@ -89,6 +89,7 @@ CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/bin/afppasswd
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_pam.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_passwd.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_randnum.so
+# CHECKPKG_OVERRIDES_CSWnetatalk += $(CHECKPKG_OVERRIDES_CSWnetatalk_$(GARCH))
 
 include gar/category.mk
 
