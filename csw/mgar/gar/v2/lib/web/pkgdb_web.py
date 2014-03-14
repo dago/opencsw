@@ -56,6 +56,8 @@ urls_rest = (
       'PkgnamesAndPathsByBasename',  # with ?basename=...
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames-and-paths-by-basedir',
       'PkgnamesAndPathsByBasedir',  # with ?basedir=...
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/as-dicts/',
+      'CatalogForGenerationAsDicts',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/',
       'CatalogForGeneration',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/timing/',
@@ -658,6 +660,56 @@ class RestSvr4CatalogData(object):
     return response
 
 
+def GetCatalogEntries(catrel_name, arch_name, osrel_name):
+  """Returns a list of CatalogEntry tuples."""
+  try:
+    sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
+        osrel_name, arch_name, catrel_name)
+  except sqlobject.main.SQLObjectNotFound:
+    raise web.notfound()
+  rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
+  def FormatList(lst):
+    if lst:
+      return '|'.join(lst)
+    else:
+      return 'none'
+  def GenCatalogEntry(row):
+    i_deps = cjson.decode(row[7])
+    i_deps_str = FormatList(i_deps)
+    deps_with_desc = cjson.decode(row[6])
+    deps = [x[0] for x in deps_with_desc if x[0].startswith('CSW')]
+    deps_str = FormatList(deps)
+    entry = representations.CatalogEntry(
+        catalogname=row[0],  # 0
+        version=row[1],      # 1
+        pkgname=row[2],      # 2
+        basename=row[3],     # 3
+        md5_sum=row[4],      # 4
+        size=str(row[5]),    # 5
+        deps=deps_str,       # 6
+        category="none",     # 7
+        i_deps=i_deps_str,   # 8
+        desc=row[8],         # 9
+    )
+    return entry
+  entries_list = [GenCatalogEntry(row) for row in rows]
+  return entries_list
+
+
+class CatalogForGenerationAsDicts(object):
+
+  def GET(self, catrel_name, arch_name, osrel_name):
+    """A list of tuples, aligning with the catalog format.
+
+    catalogname version_string pkgname
+    basename md5_sum size deps category i_deps
+    """
+    entries_list = GetCatalogEntries(catrel_name, arch_name, osrel_name)
+    response = cjson.encode([x._asdict() for x in entries_list])
+    web.header('Content-Length', str(len(response)))
+    return response
+
+
 class CatalogForGeneration(object):
 
   def GET(self, catrel_name, arch_name, osrel_name):
@@ -666,37 +718,7 @@ class CatalogForGeneration(object):
     catalogname version_string pkgname
     basename md5_sum size deps category i_deps
     """
-    try:
-      sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
-          osrel_name, arch_name, catrel_name)
-    except sqlobject.main.SQLObjectNotFound:
-      raise web.notfound()
-    rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
-    def FormatList(lst):
-      if lst:
-        return '|'.join(lst)
-      else:
-        return 'none'
-    def GenCatalogEntry(row):
-      i_deps = cjson.decode(row[7])
-      i_deps_str = FormatList(i_deps)
-      deps_with_desc = cjson.decode(row[6])
-      deps = [x[0] for x in deps_with_desc if x[0].startswith('CSW')]
-      deps_str = FormatList(deps)
-      entry = representations.CatalogEntry(
-          catalogname=row[0],  # 0
-          version=row[1],      # 1
-          pkgname=row[2],      # 2
-          basename=row[3],     # 3
-          md5_sum=row[4],      # 4
-          size=str(row[5]),    # 5
-          deps=deps_str,       # 6
-          category="none",     # 7
-          i_deps=i_deps_str,   # 8
-          desc=row[8],         # 9
-      )
-      return entry
-    entries_list = [GenCatalogEntry(row) for row in rows]
+    entries_list = GetCatalogEntries(catrel_name, arch_name, osrel_name)
     response = cjson.encode([tuple(x) for x in entries_list])
     web.header('Content-Length', str(len(response)))
     return response
