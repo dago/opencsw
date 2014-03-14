@@ -24,7 +24,8 @@ PACKAGING_PLATFORMS += solaris10-i386
 
 LICENSE = LICENSE
 
-GARCOMPILER = GCC4
+GARCOMPILER = SOS12U3
+# GARCOMPILER = GCC4
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
@@ -46,8 +47,12 @@ PATCHFILES += 0013-use-posix-threads-configure.ac.patch
 PATCHFILES += 0014-ldap-include-Makefile.am.patch
 # needed at least on GCC4
 PATCHFILES += 0015-use-PL_strcasestr-acllas.c.patch
-PATCHFILES += 0010-no-Crun-Cstd-lib-config.ac.patch
+PATCHFILES_GCC4 += 0010-no-Crun-Cstd-lib-config.ac.patch
 PATCHFILES += 0016-fix-bigendian-utf8compare.c
+PATCHFILES += 0017-disable-asm-for-Sparc.patch
+# probably only with openLDAP 
+PATCHFILES += 0018-correct-64bit-ptr-bind.c
+PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
 
 
 BUILD_DEP_PKGS += CSWautoconf
@@ -107,11 +112,14 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 
 
 EXTRA_LIB = /opt/csw/bdb48/lib
-# remove -I/opt/csw/include
+# if use MozillaLDAP remove -I/opt/csw/include because there are OpenLDAP header
 # CPPFLAGS = 
-# EXTRA_CFLAGS = -xnorunpath
-# EXTRA_CXXFLAGS = -norunpath
-EXTRA_CPPFLAGS = -DSOLARIS_GCC
+EXTRA_CFLAGS_SOS12U3 = -xnorunpath
+EXTRA_CXXFLAGS_SOS12U3 = -norunpath
+EXTRA_CPPFLAGS_GCC4 = -DSOLARIS_GCC
+EXTRA_CPPFLAGS += $(EXTRA_CPPFLAGS_$(GARCOMPILER))
+EXTRA_CXXFLAGS += $(EXTRA_CXXFLAGS_$(GARCOMPILER))
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARCOMPILER))
 STRIP_LIBTOOL = 1
 
 GARFLAVOR = DBG
