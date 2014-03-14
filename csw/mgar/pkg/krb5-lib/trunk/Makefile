@@ -104,7 +104,7 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-3RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibgcc-s13RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrad0
+#RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibkrad0
 # Linker anomaly dep
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibverto0
 CHECKPKG_OVERRIDES_CSWlibkrb5-3 += surplus-dependency|CSWlibverto0
@@ -123,18 +123,20 @@ SPKG_DESC_CSWlibverto0 += MIT Kerberos 5 core libraries, libverto.so.0
 RUNTIME_DEP_PKGS_CSWlibverto0 += CSWlibgcc-s1bk# Cyclic dependency CSWlibkrad0 -> CSWlibkrb5-3 -> CSWlibkrad0, disable for now.
 OBSOLETED_BY_CSWlibkrb5-3 += CSWlibkrad0
 #PACKAGES += CSWlibkrad0
-SPKG_DESC_CSWlibkrad0 = MIT Kerberos 5 support library
-PKGFILES_CSWlibkrad0 += $(call pkgfiles_lib,libkrad.so.0)
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibverto0
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibk5crypto3bk# Linker anomaly deps
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5support0
-RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibcom-err3
-CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibkrb5support0
-CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibcom-err3bkrb5-3 = CSWkrb5lib
+#SPKG_DESC_CSWlibkrad0 = MIT Kerberos 5 support library
+#PKGFILES_CSWlibkrad0 += $(call pkgfiles_lib,libkrad.so.0)
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5-3
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibgcc-s1
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibverto0
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibk5crypto3
+
+# Linker anomaly deps
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibintl8
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibkrb5support0
+#RUNTIME_DEP_PKGS_CSWlibkrad0 += CSWlibcom-err3
+#CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibintl8
+#CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibkrb5support0
+#CHECKPKG_OVERRIDES_CSWlibkrad0 += surplus-dependency|CSWlibcom-err3bkrb5-3 = CSWkrb5lib
 
 LICErst
 
