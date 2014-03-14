@@ -1,5 +1,5 @@
 NAME = mutt
-VERSION = 1.5.22
+VERSION = 1.5.23
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -12,16 +12,13 @@ define BLURB
   highly configurable, and is well suited to the mail power user with
   advanced features like key bindings, keyboard macros, mail threading,
   regular expression searches and a powerful pattern matching language for
-  selecting groups of messages.
-endef
-
-VENDOR_URL   = http://www.mutt.org
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
+  selecting groups ofMASTER_SITES += ftp://ftp.mutt.org/mutt/
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILEStar.gz
 DISTFILES   += CSWmutt.postmsg
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-POSTMSG = $(docdir)/mutt/CSWmutt.postmsg
+POSTMSG = $(docdir)/muttVENDOR_URL = http://www.mutt.orgt/CSWmutt.postmsg
 
 LICENSE = COPYRIGHT
 
@@ -84,9 +81,7 @@ REINPLACE_FILES_mailcap += doc/mimesupport.html
 #   http://dev.mutt.org/trac/ticket/3347
 OPT_# Needed to use stdbool.h, add manually until this is fixed:
 #   http://dev.mutt.org/trac/ticket/3657
-EXTRA_CPPFLAGS += -xc99=allT_FLAGS_SOS = -xO4
-
-sysconfdir = /etc/opt/csw
+EXTRA_CPPFLAGS += -xc99=allT_r = /etc/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pop
