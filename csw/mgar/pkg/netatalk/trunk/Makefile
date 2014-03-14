@@ -53,6 +53,7 @@ RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSW
 RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL)) $(RUNTIME_DEP_PKGS_$(GARCH))
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
+PATCHFILES += 0004-Ensure-gsettings-is-called-from-opt-csw-bin.patch
 
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
