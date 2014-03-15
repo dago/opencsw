@@ -48,7 +48,6 @@ PACKAGES					+=	CSWguile
 CATALOGNAME_CSWguile		=	guile
 SPKG_DESC_CSWguile			+=	$(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWguile	+=	CSWlibguile2-0-22
-RUNTIME_DEP_PKGS_CSWguile	+=	CSWlibintl8
 
 PACKAGES								+=	CSWlibguile2-0-22
 CATALOGNAME_CSWlibguile2-0-22			=	libguile2_0_22
@@ -86,11 +85,6 @@ RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibguile2-0-22
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibunistring0
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibffi5
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgc1
 RUNTIME_DEP_PKGS_CSWlibguilereadline-v18-18		+=	CSWlibgcc-s1
 
 # old library provided for those dependencies which didn't change to 2.x
