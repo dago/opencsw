@@ -1,3 +1,9 @@
+bash (4.2.45,REV=2014.03.15) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 15 Mar 2014 21:12:08 +0100
+
 bash (4.2.45,REV=2013.08.29) unstable
 
   * Added the bash.info file in the package (Closes: #5103).
