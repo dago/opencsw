@@ -1,3 +1,10 @@
+postgresql92 (9.2.7,REV=2014.03.16)
+
+  * New upstream release 9.2.7.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 16 Mar 2014 10:10:33 +0100
+
+
 postgresql92 (9.2.6,REV=2013.12.10)
 
   * New upstream release 9.2.6.
