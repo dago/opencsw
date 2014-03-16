@@ -531,7 +531,7 @@ def GetUsernameAndPassword():
     with open(authfile, 'r') as af:
       password = af.read().strip()
   except IOError as e:
-    logging.debug("Error reading %s: %s", authfile, e)
+    logging.debug("%s could not be read: %s", authfile, e)
 
   if password is None:
     # This part is specific to OpenCSW buildfarm.
