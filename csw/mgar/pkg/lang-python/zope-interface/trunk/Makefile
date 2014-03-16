@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = zope.interface
-VERSION = 4.0.5
+VERSION = 4.1.0
 CATEGORIES = python
 GARTYPE = v2
 
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES += $(PYPI_MIRROR)
-DISTFILES += $(DISTNAME).zip
+DISTFILES += $(DISTNAME).tar.gz
 
 VENDOR_URL = http://pypi.python.org/pypi/zope.interface
 LICENSE = LICENSE.txt
