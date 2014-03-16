@@ -1,5 +1,5 @@
 NAME = ansible
-VERSION = 1.3.2
+VERSION = 1.5.3
 GARTYPE = v2
 CATEGORIES = python
 
@@ -8,25 +8,29 @@ define BLURB
 endef
 
 GITHUB_USER     =       ansible
-GITHUB_REFERENCE=       release1.3.2
+GITHUB_REFERENCE=       release$(VERSION)
 MASTER_SITES    =       $(GITHUB_MIRROR)
-DISTNAME	=	$(GITHUB_USER)-$(NAME)-9d5d88b
+DISTNAME	=	$(GITHUB_USER)-$(NAME)-157b783
 DISTFILES       =       $(GITHUB_REFERENCE)$(GITHUB_BALL_EXT)
 DISTFILES	+=	README.CSW
 DISTFILES	+=	hosts.CSW
-
-PATCHFILES += 0003-Extended-sbin_paths-by-opt-csw-sbin.patch
 
 PACKAGES     = CSWansible
 CATALOGNAME  = ansible
 CHECKPKG_OVERRIDES_CSWansible += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWansible += catalogname-does-not-start-with-py_
 
+PATCHFILES += 0003-Extended-sbin_paths-by-opt-csw-sbin.patch
+PATCHFILES += 0003-Add-etc-opt-csw-ssl-certs-to-the-path-searched-for-..patch
+
 # There are many OS specific (Linux, FreeBSD, etc.) paths stored in those files.
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/module_common.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/callbacks.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/playbook/__init__.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/runner/__init__.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/module_utils/basic.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/module_utils/urls.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/module_utils/urls.py
 
 CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWpy-yaml
 CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWopenssh-client

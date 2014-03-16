@@ -1,0 +1,28 @@
+From ccdf5dd16bf0ba322e33db0bd23ea885aebd023d Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 16 Mar 2014 09:44:48 +0100
+Subject: [PATCH] Add /etc/opt/csw/ssl/certs to the path searched for
+ .crt./.pem files.
+
+---
+ lib/ansible/module_utils/urls.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/lib/ansible/module_utils/urls.py b/lib/ansible/module_utils/urls.py
+index 053dfc0..049e14a 100644
+--- a/lib/ansible/module_utils/urls.py
++++ b/lib/ansible/module_utils/urls.py
+@@ -95,7 +95,9 @@ class SSLValidationHandler(urllib2.BaseHandler):
+         # build a list of paths to check for .crt/.pem files
+         # based on the platform type
+         paths_checked.append('/etc/ssl/certs')
+-        if platform == 'Linux':
++	if platform == 'SunOS':
++	    paths_checked.append('/etc/opt/csw/ssl/certs')
++        elif platform == 'Linux':
+             paths_checked.append('/etc/pki/ca-trust/extracted/pem')
+             paths_checked.append('/etc/pki/tls/certs')
+             paths_checked.append('/usr/share/ca-certificates/cacert.org')
+-- 
+1.8.4.1
+
