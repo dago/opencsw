@@ -536,16 +536,12 @@ def GetUsernameAndPassword():
   if password is None:
     # This part is specific to OpenCSW buildfarm.
     args = ['ssh', '-o BatchMode=yes', '-o StrictHostKeyChecking=no', 'login', 'cat', authfile]
-    ret_code, stdout, stderr = shell.ShellCommand(args)
+    ret_code, stdout, stderr = shell.ShellCommand(args, allow_error=True)
     if not ret_code:
       password = stdout.strip()
     else:
       logging.debug('Failed running %r', args)
 
-  if password is None:
-    logging.warning(
-        'Could not find password for user %r. '
-        'Falling back to getpass.getpass().', username)
-    password = getpass.getpass("{0}'s pkg release password> ".format(username))
+  logging.warning('Could not find password for user %r.', username)
 
   return username, password
