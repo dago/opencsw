@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cloog
-VERSION = 0.18.0
+VERSION = 0.18.2
 GARTYPE = v2
 DESCRIPTION = Code Generator in the Polyhedral Model
 define BLURB
@@ -11,6 +11,8 @@ endef
 VENDOR_URL = http://www.cloog.org/
 MASTER_SITES = http://www.bastoul.net/cloog/pages/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += isl-config.cmake
+DISTFILES += cloog-isl-config.cmake
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64_LIBS_ONLY = 1
 GARCOMPILER = GNU
@@ -30,7 +32,7 @@ PKGFILES_CSWlibcloog-isl4 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.4(\.
 SPKG_DESC_CSWlibcloog-isl4 += $(DESCRIPTION), libcloog-isl.so.4
 RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibisl7
+RUNTIME_DEP_PKGS_CSWlibcloog-isl4 += CSWlibisl10
 
 PACKAGES += CSWlibisl10
 PKGFILES_CSWlibisl10 += $(call baseisadirs,$(libdir),libisl\.so\.10(\.\d+)*)
@@ -54,3 +56,11 @@ CHECKPKG_OVERRIDES_CSWcloog-dev += missing-dependency|CSWpython
 SKIPTEST = 1
 
 include gar/category.mk
+
+post-extract:
+	if [ -d $(WORKSRC) ]; then \
+		mkdir $(WORKSRC)/cmake; \
+		gcp -v $(WORKDIR)/isl-config.cmake $(WORKSRC)/cmake; \
+		gcp -v $(WORKDIR)/cloog-isl-config.cmake $(WORKSRC)/cmake; \
+	fi
+	@$(MAKECOOKIE)
