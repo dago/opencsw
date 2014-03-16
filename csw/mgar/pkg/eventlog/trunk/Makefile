@@ -20,15 +20,15 @@ endef
 MASTER_SITES = http://www.balabit.com/downloads/files/eventlog/0.2/
 DISTFILES  = $(NAME)_$(VERSION).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-RUNTIME_DEP_PKGS += CSWgcc4corert
+CONFIGURE_ARGPACKAGING_PLATFORMS  = solaris9-i386
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386
+PACKAGING_PLATFORMS += solaris10-sparc
 
 GARCOMPILER = GNU
 TEST_SCRIPTS =
 
-OBSOLETED_BY_CSWeventlog-dev = CSWeventlog
-OBSOLETED_BY_CSWlibeventlog0 = CSWeventlog
+RUNTIME_DEP_PKGS_CSWlibevtlog0 += CSWlibgcc-s1og0 = CSWeventlog
 
 PACKAGES = CSWlibevtlog0
 CATALOGNAME_CSWlibevtlog0 = libevtlog0
@@ -42,4 +42,4 @@ CATALOGNAME_CSWeventlog-dev = eventlog_dev
 SPKG_DESC_CSWeventlog-dev = $(DESCRIPTION) - development files
 RUNTIME_DEP_PKGS_CSWeventlog-dev += CSWlibevtlog0
 
-include gar/category.mk
+include
