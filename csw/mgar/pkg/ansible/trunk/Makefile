@@ -35,6 +35,7 @@ CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/l
 CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWpy-yaml
 CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWopenssh-client
 CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWpy-jinja2
+CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWpy-markupsafe
 
 REINPLACEMENTS = etc
 REINPLACE_MATCH_etc = /etc/ansible
@@ -47,6 +48,7 @@ REINPLACE_WITH_usr  = /opt/csw/share/ansible
 REINPLACE_FILES_usr = lib/ansible/constants.py
 
 RUNTIME_DEP_PKGS  = CSWpy-jinja2
+RUNTIME_DEP_PKGS += CSWpy-markupsafe
 RUNTIME_DEP_PKGS += CSWpy-yaml
 RUNTIME_DEP_PKGS += CSWopenssh-client
 
