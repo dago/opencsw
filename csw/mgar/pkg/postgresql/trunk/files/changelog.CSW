@@ -1,3 +1,10 @@
+postgresql93 (9.3.3,REV=2014.03.16)
+
+  * New upstream release 9.3.3.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sun, 16 Mar 2014 10:10:33 +0100
+
+
 postgresql93 (9.3.2,REV=2013.12.10)
 
   * New upstream release 9.3.2.
