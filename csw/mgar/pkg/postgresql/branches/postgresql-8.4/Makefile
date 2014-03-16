@@ -90,7 +90,7 @@ NAME = postgresql
 BASE_VERSION = 8.4
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 19
+PATCHLEVEL = 20
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -278,7 +278,7 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(docdir)/$(NAME)$(BASE_VER
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibkrb5-3
 #CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach n,$(SO_NAMES_SERVER), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
 # This one isn't covered by the above.
 #CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += soname-not-part-of-filename|soname=libplpgsql.so.1|filename=plpgsql.so
@@ -334,7 +334,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibecpg6
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpq5
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpgtypes3
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibreadline6
@@ -380,7 +380,7 @@ SPKG_DESC_CSWlibpq5 = PostgreSQL $(VERSION), libpq
 PKGFILES_CSWlibpq5  = $(call pkgfiles_lib,libpq.so.5)
 PKGFILES_CSWlibpq5 += .*/libpq5/changelog.CSW
 RUNTIME_DEP_PKGS_CSWlibpq5  = CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibpq5 += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibpq5 += CSWlibkrb5-3
 
 BUILD_DEP_PKGS  = CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
