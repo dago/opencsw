@@ -623,47 +623,60 @@ func GroupCatalogsBySpec(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]catalogPair
 }
 
 func MassCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
-  result := make(map[CatalogSpec]bool)
+  diff_detected := make(map[CatalogSpec]bool)
 
   pairs_by_spec := GroupCatalogsBySpec(c1, c2)
 
   // The catalog disk/db pairs are ready to be compared.
   for spec, pair := range *pairs_by_spec {
-    result[spec] = false
+    diff_detected[spec] = false
     // DeepEqual could do it, but it is too crude; doesn't provide details
     // This code can probably be simplified.
     catalognames := make(map[string]bool)
-    on_disk_by_catn := make(map[string]PkgInCatalog)
-    in_db_by_catn := make(map[string]PkgInCatalog)
+    c1_by_catn := make(map[string]PkgInCatalog)
+    c2_by_catn := make(map[string]PkgInCatalog)
+    if len(pair.c1.pkgs) != len(pair.c2.pkgs) {
+      log.Printf("%v: %v vs %v are different length\n",
+                 spec, len(pair.c1.pkgs), len(pair.c2.pkgs))
+      diff_detected[spec] = true
+      continue
+    }
     for _, pkg := range pair.c1.pkgs {
       catalognames[pkg.Catalogname] = true
-      on_disk_by_catn[pkg.Catalogname] = pkg
+      c1_by_catn[pkg.Catalogname] = pkg
     }
     for _, pkg := range pair.c2.pkgs {
       catalognames[pkg.Catalogname] = true
-      in_db_by_catn[pkg.Catalogname] = pkg
+      c2_by_catn[pkg.Catalogname] = pkg
     }
     for catalogname, _ := range catalognames {
-      pkg_disk, ok := on_disk_by_catn[catalogname]
+      pkg_disk, ok := c1_by_catn[catalogname]
       if ok {
-        pkg_db, ok := in_db_by_catn[catalogname]
+        pkg_db, ok := c2_by_catn[catalogname]
         if ok {
           // This comparison method is a bit silly. But we can't simply compare
           // the structs, because they contain slices, and slices are not
           // comparable.
           if pkg_db.FormatCatalogIndexLine() != pkg_disk.FormatCatalogIndexLine() {
-            log.Printf("different in %s: %v %v vs %v, enough to trigger " +
+            log.Printf("different in %v: %v %v vs %v, enough to trigger " +
                        "catalog index generation\n", spec, pkg_db.Filename,
                        pkg_db.Md5_sum, pkg_disk.Md5_sum)
-            result[spec] = true
+            diff_detected[spec] = true
             break
           }
+          log.Printf("different in %v: %v not found in c2\n", spec, catalogname)
+          diff_detected[spec] = true
+          break
         }
+      } else {
+        log.Printf("different in %v: %v not found in c1\n", spec, catalogname)
+        diff_detected[spec] = true
+        break
       }
     }
   }
 
-  return &result
+  return &diff_detected
 }
 
 func GenerateCatalogIndexFile(catalog_root string,
