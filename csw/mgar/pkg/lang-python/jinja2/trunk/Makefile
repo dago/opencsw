@@ -11,4 +11,6 @@ DISTFILES  = $(DISTNAME).tar.gz
 PACKAGES = CSWpy-jinja2
 ARCHALL = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+RUNTIME_DEP_PKGS = CSWpy-markupsafe
+CHECKPKG_OVERRIDES_CSWpy-jinja2 += surplus-dependency|CSWpy-markupsafe
 include gar/category.mk
