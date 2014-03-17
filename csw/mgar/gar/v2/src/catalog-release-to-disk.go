@@ -683,6 +683,34 @@ func GenerateCatalogIndexFile(catalog_root string,
                               cws CatalogWithSpec) {
   log.Printf("GenerateCatalogIndexFile(%v, %v)\n", catalog_root, cws.spec)
   catalog_file_path := FormatCatalogFilePath(catalog_root, cws.spec, "catalog")
+  desc_file_path := FormatCatalogFilePath(catalog_root, cws.spec, "descriptions")
+
+  defer func() {
+    // If there's a "catalog.gz" here, remove it. It will be recreated later by
+    // the shell script which signs catalogs.
+    gzip_catalog := catalog_file_path + ".gz";
+    if err := os.Remove(gzip_catalog); err != nil {
+      log.Println("Not removed", gzip_catalog, "error was", err)
+    } else {
+      log.Println(gzip_catalog, "was removed")
+    }
+  }()
+
+  // If there are no files in the catalog, simply remove the catalog files.
+  if len(cws.pkgs) <= 0 {
+    for _, filename := range []string{catalog_file_path, desc_file_path} {
+      // If the files are missing, that's okay
+      if err := os.Remove(filename); err != nil {
+        if err != syscall.ENOENT {
+          log.Println("Could not remove", filename, "error:", err)
+        }
+      } else {
+        log.Println("Removed", filename, "because the", cws.spec,
+                    "catalog is empty")
+      }
+    }
+    return
+  }
 
   var catbuf *bufio.Writer
   var descbuf *bufio.Writer
@@ -697,7 +725,6 @@ func GenerateCatalogIndexFile(catalog_root string,
     catbuf = bufio.NewWriter(catalog_fd)
     defer catbuf.Flush()
 
-    desc_file_path := FormatCatalogFilePath(catalog_root, cws.spec, "descriptions")
     desc_fd, err := os.Create(desc_file_path)
     if err != nil {
       log.Fatalln("Could not open", desc_file_path, "for writing:", err)
