@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = mpfr
-VERSION = 3.1.0
+VERSION = 3.1.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -11,10 +11,13 @@ define BLURB
 	computations with correct rounding.
 endef
 
-DL_VER = $(shell echo $(VERSION) | gsed -e 's/\([^-]\+\)\(-.*\)/\1/')
+DL_VER = $(shell echo $(VERSION) | gsed -e 's/\([^-]\PACKAGING_PLATFORMS = solaris9-i386
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386
+PACKAGING_PLATFORMS += solaris10-sparc\+\)\(-.*\)/\1/')
 
 MASTER_SITES = http://www.mpfr.org/mpfr-$(DL_VER)/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VUPSTREAM_MASTER_SITES = http://www.mpfr.org/mpfr-current/(VERSION).tar.bz2
 
 BUILD_DEP_PKGS = CSWlibgmp-dev
 
@@ -24,14 +27,21 @@ STRIP_LIBTOOL = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 # With the default -xO3, there are failing unit tests.
-OPT_FLAGS_SOS = -xO2
+OPT_F# GCC4_CC_HOME = /opt/csw/gcc4
+# GCC4_CC = $(GCC4_CC_HOME)/bin/gcc
+# GCC4_CXX = $(GCC4_CC_HOME)/bin/g++
+# prefix = $(HOME)/usr-$(GARCH)-$(GAROSREL)
+# EXTRA_INC = $(prefix)/include
+# EXTRA_INC += $(BUILD_PREFIX)/include
+# # For linking against the old gcc
+# EXTRA_LIB = $(prefix)/gcc4/lib_FLAGS_SOS = -xO2
 
 PACKAGES =
 PACKAGES += CSWlibmpfr4
 CATALOGNAME_CSWlibmpfr4 = libmpfr4
 PKGFILES_CSWlibmpfr4 += $(call baseisadirs,$(libdir),libmpfr\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibmpfr4 += $(DESCRIPTION), libmpfr.so.4
-RUNTIME_DEP_PKGS_CSWlibmpfr4 += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibmpfrCHECKPKG_OVERRIDES_CSWlibmpfr4 += no-direct-bindingr4 += CSWlibgmp10
 
 PACKAGES += CSWlibmpfr-dev
 SPKG_DESC_CSWlibmpfr-dev = MPFR development files
@@ -49,4 +59,4 @@ CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/c
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
-include gar/category.mk
+include
