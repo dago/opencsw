@@ -33,7 +33,6 @@ REINPLACE_USRLOCAL += docs/api/davical/_htdocs---always.php.html
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.in
 
-RUNTIME_DEP_PKGS += CSWpostgresql84
 RUNTIME_DEP_PKGS += CSWap2-modphp5
 RUNTIME_DEP_PKGS += CSWpm-dbi
 RUNTIME_DEP_PKGS += CSWpm-yaml
@@ -49,10 +48,8 @@ CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-pdopgsql
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWap2-modphp5
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-curl
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-iconv
-CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpostgresql84
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-dbd-pg
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWpm-yaml
-CHECKPKG_OVERRIDES_CSWdavical += unidentified-dependency|CSWphp5-awl
 CHECKPKG_OVERRIDES_CSWdavical += surplus-dependency|CSWphp5-awl
 
 
