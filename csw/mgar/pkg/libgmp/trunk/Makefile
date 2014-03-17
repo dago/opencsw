@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gmp
-VERSION = 5.0.4
+VERSION = 5.1.3
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -20,12 +20,15 @@ define BLURB
   operations, since GMP in many cases has asymptotically faster algorithms.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = $(GNU_MIRRORDISTNAME).tar.bz2
 
 SPKG_SOURCEURL = http://gmplib.org/
 
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 BUILD64_LIBS_ONLY = 1
+
+PATCHFILES += 0001-Add-missing-cmath-includes.patch
+PATCHFILES += 0002-Work-around-a-compilation-issue.patchD64_LIBS_ONLY = 1
 
 # Disabling sparcv8plus with GCC
 # /var/tmp//ccPKyHnL.s: Assembler messages:
@@ -33,7 +36,7 @@ BUILD64_LIBS_ONLY = 1
 # /var/tmp//ccPKyHnL.s:11:  (Requires v9|v9a|v9b; requested architecture is
 # v8.)
 # EXTRA_BUILD_ISAS_sparc = sparcv8plus
-# EXTRA_BUILD_ISAS_sparc += sparcv8plus+vis 
+# EXTRA_BUILD_ISAS_sparc + sparcv8plus+vis 
 #
 # If you believe that a sparcv8plus build is necessary, feel free to develop
 # this recipe so that these ISAs successfully build.
@@ -133,4 +136,3 @@ include gar/category.mk
 post-merge:
 	ginstall $(FILEDIR)/gmp.h $(PKGROOT)$(includedir)/gmp.h
 	ginstall $(FILEDIR)/gmpxx.h $(PKGROOT)$(includedir)/gmpxx.h
-	@$(MAKECOOKIE)
