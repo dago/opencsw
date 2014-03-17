@@ -542,6 +542,6 @@ def GetUsernameAndPassword():
     else:
       logging.debug('Failed running %r', args)
 
-  logging.warning('Could not find password for user %r.', username)
+  logging.debug('Could not find password for user %r.', username)
 
   return username, password
