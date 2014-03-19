@@ -664,6 +664,7 @@ func MassCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
             diff_detected[spec] = true
             break
           }
+        } else {
           log.Printf("different in %v: %v not found in c2\n", spec, catalogname)
           diff_detected[spec] = true
           break
