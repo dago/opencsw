@@ -15,11 +15,13 @@ DISTFILES  = $(DISTNAME).tar.gz
 VENDOR_URL = http://www.sqlalchemy.org/
 LICENSE = LICENSE
 
+# Buildbot is 2.7 only
+MODULATIONS_PYTHON_VERSION = 2_7
+
 PACKAGES += CSWbuildbot-sqlalchemy
 SPKG_DESC_CSWbuildbot-sqlalchemy = Python SQL toolkit and Object Relational Mapper, private Buildbot version
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWbuildbot-sqlalchemy += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWbuildbot-sqlalchemy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbuildbot-sqlalchemy += CSWlibpython2-7-1-0
 
 # Yes, this is intended
