@@ -25,24 +25,29 @@ endef
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Use-private-version-of-sqlalchemy.patch
+
 PACKAGES += CSWbuildbot
 SPKG_DESC_CSWbuildbot = A system to automate the compile/test cycle
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-twisted
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-zope-interface
-RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-sqlalchemy
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-tempita
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-decorator
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-openssl
+# This is in fact an old 0.7.10 version private to buildbot. The documentation says
+#   "The requirement to install SQLAlchemy-0.7.10 is due to a conflict between newer
+#    versions of SQLAlchemy and SQLAlchemy-Migrate."
+RUNTIME_DEP_PKGS_CSWbuildbot += CSWbuildbot-sqlalchemy
 
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-twisted
-CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-sqlalchemy
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-zope-interface
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-tempita
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-decorator
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-openssl
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWbuildbot-sqlalchemy
 
 # This is more like an application than a python module
 CHECKPKG_OVERRIDES_CSWbuildbot += pkgname-does-not-start-with-CSWpy-

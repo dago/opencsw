@@ -1,0 +1,23 @@
+From 05c10c10c31f60c4c7cce17c846616d69589b349 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 19 Mar 2014 16:05:53 +0100
+Subject: [PATCH] Use private version of sqlalchemy
+
+---
+ bin/buildbot | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/bin/buildbot b/bin/buildbot
+index 7295b00..8d5d21f 100755
+--- a/bin/buildbot
++++ b/bin/buildbot
+@@ -1,4 +1,6 @@
+ #!/usr/bin/env python
+ 
+ from buildbot.scripts import runner
++import sys
++sys.path.insert(0,'/opt/csw/share/buildbot/lib/python2.7/site-packages/')
+ runner.run()
+-- 
+1.8.4.1
+
