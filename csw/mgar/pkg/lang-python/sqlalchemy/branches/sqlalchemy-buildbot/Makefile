@@ -15,8 +15,9 @@ DISTFILES  = $(DISTNAME).tar.gz
 VENDOR_URL = http://www.sqlalchemy.org/
 LICENSE = LICENSE
 
-# Buildbot is 2.7 only
+# Buildbot is 2.7 only and the server is Solaris 10 only
 MODULATIONS_PYTHON_VERSION = 2_7
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES += CSWbuildbot-sqlalchemy
 SPKG_DESC_CSWbuildbot-sqlalchemy = Python SQL toolkit and Object Relational Mapper, private Buildbot version
