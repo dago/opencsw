@@ -24,8 +24,8 @@ endef
 
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
-
-PATCHFILES += 0001-Use-private-version-of-sqlalchemy.patch
+# Wrapper
+DISTFILES += buildbot
 
 PACKAGES += CSWbuildbot
 SPKG_DESC_CSWbuildbot = A system to automate the compile/test cycle
@@ -65,3 +65,10 @@ REINPLACE_FILES_tail += buildbot/scripts/logwatcher.py
 SKIPTEST ?= 1
 
 include gar/category.mk
+
+post-install:
+	ginstall -d $(DESTDIR)$(libexecdir)
+	mv $(DESTDIR)$(bindir)/buildbot $(DESTDIR)$(libexecdir)/buildbot
+	ginstall -m 0755 $(WORKDIR)/buildbot $(DESTDIR)$(bindir)/buildbot
+	@$(MAKECOOKIE)
+	
