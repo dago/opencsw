@@ -1,0 +1,5 @@
+#!/bin/sh
+
+PYTHONPATH=/opt/csw/share/buildbot/lib/python2.7/site-packages
+export PYTHONPATH
+exec /opt/csw/libexec/buildbot "$@"
