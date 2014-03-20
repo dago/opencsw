@@ -27,6 +27,10 @@ DISTFILES += $(DISTNAME).tar.gz
 # Wrapper
 DISTFILES += buildbot
 
+# Buildbot is 2.7 only and the server is Solaris 10 only
+MODULATIONS_PYTHON_VERSION = 2_7
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 PACKAGES += CSWbuildbot
 SPKG_DESC_CSWbuildbot = A system to automate the compile/test cycle
 # PKGFILES is catchall
