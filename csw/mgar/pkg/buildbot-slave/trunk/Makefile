@@ -12,6 +12,9 @@ DESCRIPTION = BuildBot Slave Daemon
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
 
+# Buildbot is 2.7 only and the server is Solaris 10 only
+MODULATIONS_PYTHON_VERSION = 2_7
+
 PACKAGES += CSWbuildbot-slave
 SPKG_DESC_CSWbuildbot-slave = BuildBot Slave Daemon
 # PKGFILES is catchall
