@@ -1,5 +1,5 @@
 NAME = perl
-VERSION = 5.16.2
+VERSION = 5.18.2
 VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
 #CATEGORIES = lang
 GARTYPE = v2
@@ -26,32 +26,32 @@ PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 #BUILD64_ONLY 		  = 1
 PACKAGES                 += CSWperl
 PKG_DESC_CSWperl         = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
-RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
+#RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
+#RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 #RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm4
-INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
+#INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
-PACKAGES                   += CSWperldoc
-SPKG_DESC_CSWperldoc        = Perl documentation
-SPKG_DESC_CSWperl       	= Core Perl distribution
-RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
-ARCHALL_CSWperldoc          = 1
+#PACKAGES                   += CSWperldoc
+#SPKG_DESC_CSWperldoc        = Perl documentation
+#SPKG_DESC_CSWperl       	= Core Perl distribution
+#RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
+#ARCHALL_CSWperldoc          = 1
 
 LICENSE = Copying
 
-CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
+#CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
+#CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-OBSOLETED_BY_CSWperl += CSWpm-module-build 
-OBSOLETED_BY_CSWperl += CSWpm-json-pp 
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
-OBSOLETED_BY_CSWperldoc += CSWpm-parse-cpan-meta
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-yaml
-OBSOLETED_BY_CSWperldoc += CSWpm-module-metadata
-CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
-OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-requirements
-OBSOLETED_BY_CSWperldoc += CSWpm-perl-ostype
-CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
+#OBSOLETED_BY_CSWperl += CSWpm-module-build 
+#OBSOLETED_BY_CSWperl += CSWpm-json-pp 
+#OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta
+#OBSOLETED_BY_CSWperldoc += CSWpm-parse-cpan-meta
+#OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-yaml
+#OBSOLETED_BY_CSWperldoc += CSWpm-module-metadata
+#CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
+#OBSOLETED_BY_CSWperldoc += CSWpm-cpan-meta-requirements
+#OBSOLETED_BY_CSWperldoc += CSWpm-perl-ostype
+#CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
 
 
@@ -93,6 +93,7 @@ CONFIGURE_SCRIPTS = perl
 # Configuration flags
 # Commented options were not needed, or broke the build. Alternatives were supplied.
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION_MAJOR)
+#CONFIGURE_ARGS += -Dcc="$(CC) -B/usr/ccs/bin/"
 CONFIGURE_ARGS += -Dcc=$(CC)
 #CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 #CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
@@ -143,7 +144,7 @@ CONFIGURE_ARGS += -Dcccdlflags=-fPIC
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
-EXTRA_INC += /usr/include
+#EXTRA_INC += /usr/include
 #LD_LIBRARY_PATH for testing
 #LD_LIBRARY_PATH += $(prefix)/bdb48/lib/$(MEMORYMODEL)
 
@@ -162,18 +163,18 @@ EXTRA_INC += /usr/include
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) -R /usr/lib -R/opt/csw/bdb48/lib -R/opt/csw/lib
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) -R /usr/lib/64 -R/opt/csw/bdb48/lib/64 -R/opt/csw/lib/64
 #EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL))
-EXTRA_LDFLAGS = -lperl
+#EXTRA_LDFLAGS = -lperl
 
 # We want 64 bit binaries
-#MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
+MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
-PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
+#EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
+#PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 
 # The diagnostics.pm module needs the podfile to output its messages.
 # That means it must be included in the main package, not the docs.
-EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
-EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
+#EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
+#EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
 # Tests take a long time, run once for every release
 BUILD_SCRIPTS = perl
@@ -212,7 +213,9 @@ include gar/category.mk
 #endif
 
 # How to configure Perl
-#configure-perl: CONFIGURE_EXPORTS = PATH LD_OPTIONS
+
+
+configure-perl: CONFIGURE_EXPORTS = PATH LD_OPTIONS
 configure-perl:
 	(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -ders)
 	@$(MAKECOOKIE)
@@ -220,7 +223,7 @@ configure-perl:
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-	cd $(WORKSRC) && $(BUILD_ENV) gmake $(MAKE_OPT)
+	cd $(WORKSRC) && $(BUILD_ENV) gmake perldtrace.h && $(BUILD_ENV) gmake $(MAKE_OPT)
 	@$(MAKECOOKIE)
 
 test-perl:
@@ -229,13 +232,13 @@ test-perl:
 	@$(MAKECOOKIE)
 
 # Make links to libperl and minor-major lib dirs
-POST_TARGETS += syslinks
-syslinks:
-	@echo "Creating links to libperl and minor-major lib dirs"
-	cd $(DESTDIR)$(libdir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) &&\
-	cd $(VERSION_MAJOR) && ln -s libperl.so libperl.so.$(VERSION) && ln -s libperl.so libperl.so.$(VERSION_MAJOR) &&\
-	cd $(DESTDIR)$(datadir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) 
-	@$(MAKECOOKIE)
+#POST_TARGETS += syslinks
+#syslinks:
+#	@echo "Creating links to libperl and minor-major lib dirs"
+#	cd $(DESTDIR)$(libdir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) &&\
+#	cd $(VERSION_MAJOR) && ln -s libperl.so libperl.so.$(VERSION) && ln -s libperl.so libperl.so.$(VERSION_MAJOR) &&\
+#	cd $(DESTDIR)$(datadir)/perl && ln -s $(VERSION_MAJOR) $(VERSION) 
+#	@$(MAKECOOKIE)
 
 # Remove build paths from Config
 #POST_TARGETS += perlconf
