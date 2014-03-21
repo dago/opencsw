@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = requests
-VERSION = 2.0.0
+VERSION = 2.2.1
 GARTYPE = v2
 CATEGORIES = python
 
@@ -12,7 +12,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 REINPLACE_USRLOCAL = requests/utils.py
 
-VENDOR_URL = https://pypi.python.org/pypi/requests
+VENDOR_URL = http://docs.python-requests.org/
 
 DEP_PKGS += CSWpy-chardet
 CHECKPKG_OVERRIDES_CSWpy-requests += surplus-dependency|CSWpy-chardet
