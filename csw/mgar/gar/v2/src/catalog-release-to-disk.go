@@ -226,7 +226,10 @@ func GetCatalogSpecs() (CatalogSpecs, error) {
 
   catspecs := make(CatalogSpecs, 0)
   dec := json.NewDecoder(resp.Body)
-  dec.Decode(&catspecs)
+  if err := dec.Decode(&catspecs); err != nil {
+    log.Println("Failed to decode JSON from", url)
+    return nil, err
+  }
 
   if len(catspecs) <= 0 {
     return nil, fmt.Errorf("Retrieved 0 catalogs")
@@ -249,7 +252,10 @@ func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
 
   var pkgs Catalog
   dec := json.NewDecoder(resp.Body)
-  dec.Decode(&pkgs)
+  if err := dec.Decode(&pkgs); err != nil {
+    log.Println("Failed to decode JSON output from", url, ":", err)
+    return CatalogWithSpec{}, err
+  }
 
   log.Println("Retrieved", catspec, "with", len(pkgs), "packages")
 
