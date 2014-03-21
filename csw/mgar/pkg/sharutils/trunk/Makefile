@@ -3,15 +3,15 @@
 # $Id$
 
 # There is a problem with the test suite, which is affected by the presence of
-# .git directories in $(WORKSRC).  A temporary workaround might be to use gar
-# at r10011.
+# .git directories in $(WORKSRC).
+NOGITPATCH = 1
 
 NAME = sharutils
 VERSION = 4.11.1
-CATEGORIES = utils
 GARTYPE = v2
-DESCRIPTION = Makes so-called shell archives out of many files
-define BLURB
+DESCRIPTION = Creates self-extracting shell archives
+
+VENDOR_B
 endef
 SPKG_SOURCEURL = http://www.gnu.org/software/sharutils/
 MASTER_SITES = ftp://ftp.gnu.org/gnu/sharutils/
@@ -41,5 +41,4 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge:
-	rm $(PKGROOT)$(libdir)/charset.alias
-	@$(MAKECOOKIE)
+	rm $(PKGROOT)$(libdir)/charset.ali
