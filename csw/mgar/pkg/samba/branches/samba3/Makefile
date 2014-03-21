@@ -166,7 +166,7 @@ PKGFILES_CSWsamba-nss-system-links += /usr/lib/sparcv9/nss_winbind_csw.so.1
 PKGFILES_CSWsamba-nss-system-links += /usr/lib/sparcv9/nss_wins_csw.so.1
 SPKG_DESC_CSWsamba-nss-system-links += Samba nss modules links for the system
 RUNTIME_DEP_PKGS_CSWsamba-nss-system-links += CSWsamba-nssiCHECKPKG_OVERRIDES_CSWsamba-nss-system-links += surplus-dependency|CSWsamba-nss
-CHECKPKG_OVERRIDES_CSWsamba-nss-system-links += bad-location-of-fileibnss_winbind.so.samba-pam-system-links
+CHECKPKG_OVERRIDES_CSWsamba-nss-system-links += bad-location-of-fileiCHECKPKG_OVERRIDES_CSWsamba-nss-system-links += file-needed-but-no-package-satisfies-itibnss_winbind.so.samba-pam-system-links
 CATALOGNAME_CSWsamba-pam-system-links = samba_pam_system_links
 PKGFILES_CSWsamba-pam-system-links  = /usr/lib/security/pam_smbpass_csw.so
 PKGFILES_CSWsamba-pam-system-links += /usr/lib/security/pam_winbind_csw.so
@@ -179,7 +179,7 @@ RUNTIME_DEP_PKGS_CSWsamba-pam-system-links += CSWsamba-winbind
 RUNTIME_DEP_PKGS_CSWsamba-pam-system-links += CSWsamba
 CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += surplus-dependency|CSWsamba
 CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += surplus-dependency|CSWsamba-winbind
-CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += bad-location-of-fileibnss_winbind.so.libtevent0
+CHECKPKG_OVERRIDES_CSWsamba-pam-system-links += bad-location-of-fileiCHECKPKG_OVERRIDES_CSWsamba-pam-system-links += file-needed-but-no-package-satisfies-itibnss_winbind.so.libtevent0
 CATALOGNAME_CSWlibtevent0 = libtevent0
 PKGFILES_CSWlibtevent0 += $(call baseisadirs,$(libdir),libtevent\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibtevent0 += $(DESCRIPTION), libtevent.so.0
@@ -287,7 +287,19 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibtdb CRUNTIME_DEP_PKGS_CSWsamba-winbin
 # Needed for smb.conf
 RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWsamba
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawawbn/man8/winbindd.8
-CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS### Needed to work around the ld Bug 
+CHECKPKG_OVERRIDES_CSWsamba-winbind += surpsamba-nssCS### The dependencies names in S10 are getting simpler
+ifeq ($(shell /usr/bin/uname -r),5.9)
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWlibgssapi-krb5-2
+endif
+###
+
+### Needed to work around the ld Bug 
+ifeq ($(shell /usr/bin/uname -rp),5.10 sparc)
 RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibtdb1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibwbclient0 += CSWlibintl8
@@ -298,6 +310,7 @@ RUNTIME_DEP_PKGS_CSWlibsmbsharemodes0 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba-nss += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibnetapi0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibintl8
+endif
 ###CS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
 EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_# 32 bit only on Solaris 9 - just to save build time
