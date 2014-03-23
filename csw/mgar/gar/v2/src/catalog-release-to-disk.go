@@ -277,6 +277,14 @@ func shortenOsrel(longosrel string) string {
   return strings.Replace(longosrel, "SunOS", "", -1)
 }
 
+func longOsrel(shortosrel string) string {
+  if strings.HasPrefix(shortosrel, "SunOS") {
+    return shortosrel
+  } else {
+    return fmt.Sprintf("SunOS%s", shortosrel)
+  }
+}
+
 // Defines layout of files on disk. Can be built from the database or from
 // disk.
 type FilesOfCatalog map[CatalogSpec]map[string]LinkOnDisk
@@ -397,7 +405,7 @@ func GetFilesOfCatalogFromDisk(files_from_disk_chan chan *FilesOfCatalog, root_p
       log.Println("Wrong path found:", fields)
     }
     arch := fields[0]
-    osrel := fmt.Sprintf("SunOS%s", fields[1])
+    osrel := longOsrel(fields[1])
     basename := fields[2]
     catspec := CatalogSpec{catrel, arch, osrel}
     // Figuring out the file type: hardlink/symlink
