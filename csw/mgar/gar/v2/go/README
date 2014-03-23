@@ -1,0 +1,14 @@
+This is the workspace of Go code.
+
+For information about the directory layout, see:
+http://golang.org/doc/code.html
+
+To build the Go code on Solaris using gccgo, run:
+
+cd /path/to/this/directory
+export GOPATH=$(pwd)
+gmake
+
+To build the Go code using the go command, run:
+
+go build catalog-release-to-disk
