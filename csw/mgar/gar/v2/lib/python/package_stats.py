@@ -159,12 +159,17 @@ class StatsCollector(object):
       try:
         data_back = cjson.decode(stdout)
         if data_back['md5_sum'] != catalog_entry['md5sum']:
-          msg = ('Unexpected file content: catalog said '
-                 'that %r would have MD5 sum %r but it '
-                 'turned out to be %r when read from allpkgs. '
+          msg = ('Unexpected file content: on disk (or in catalog) the file '
+                 '%r (%r) has MD5 sum %r but it turned out to be %r as '
+                 'seen by collect_pkg_metadata.py. '
                  'We cannot continue, because we have no '
-                 'access to the data we are asked to examine.'
+                 'access to the data we are asked to examine. '
+                 'This can happen when you run mgar on intel and sparc in '
+                 'parallel, and you have some arch=all packages in the '
+                 'package set. This error will not happen if you run '
+                 'mgar platforms.'
                  % (catalog_entry['file_basename'],
+                    catalog_entry['pkg_path'],
                     catalog_entry['md5sum'],
                     data_back['md5_sum']))
           raise PackageError(msg)
