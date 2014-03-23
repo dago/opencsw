@@ -822,10 +822,9 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
     }
   }
 
-  // 6. TODO: Generate the catalog index files
-  //    First of all, are the current files up to date? Just that we modified
-  //    linked/unlinked files on disk doesn't mean the catalog file needs to be
-  //    updated.
+  // 6. Generate the catalog index files
+  //    Are the current files up to date? Just that we modified linked/unlinked
+  //    files on disk doesn't mean the catalog file needs to be updated.
 
   // Getting the content of catalog index files
   catalogs_idx_on_disk := GetCatalogIndexes(catspecs, catalog_root)
