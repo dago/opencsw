@@ -18,14 +18,15 @@ import (
   "time"
 )
 
-
+// Do not actually perform any operations on disk. Read data and process, but do
+// not write anything.
 var Dry_run bool
 // Keeping Pkgdb_url as a package global variable is probably not the best idea,
 // but let's not refactor without a good plan.
 var Pkgdb_url string
 
 
-// 3 strings that define a specific catalog
+// 3 strings that define a specific catalog, e.g. "unstable sparc 5.10"
 type CatalogSpec struct {
   catrel string
   arch string
@@ -162,6 +163,28 @@ func MakeCatalogWithSpec(catspec CatalogSpec, pkgs Catalog) CatalogWithSpec {
   return cws
 }
 
+// Run sanity checks and return the result. Currently only checks if there are
+// any dependencies on packages absent from the catalog.
+func (cws *CatalogWithSpec) IsSane() bool {
+  catalog_ok := true
+  deps_by_pkginst := make(map[string]PkginstSlice)
+  for _, pkg := range cws.pkgs {
+    deps_by_pkginst[pkg.Pkginst] = pkg.Depends
+  }
+  for _, pkg := range cws.pkgs {
+    for _, dep := range pkg.Depends {
+      if _, ok := deps_by_pkginst[dep]; !ok {
+        log.Printf(
+          "Problem in the catalog: Package %s declares dependency on %s " +
+          "but %s is missing from the %s catalog.", pkg.Pkginst, dep, dep,
+          cws.spec)
+        catalog_ok = false
+      }
+    }
+  }
+  return catalog_ok;
+}
+
 func NewPkgInCatalog(lst []string) (*PkgInCatalog, error) {
   size, err := strconv.ParseUint(lst[5], 10, 64)
   if err != nil {
@@ -255,6 +278,11 @@ func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
   log.Println("Retrieved", catspec, "with", len(pkgs), "packages")
 
   cws := MakeCatalogWithSpec(catspec, pkgs)
+  if !cws.IsSane() {
+    return cws, fmt.Errorf("There are sanity issues with the %s catalog. " +
+                           "Please check the log for more information.",
+                           cws.spec)
+  }
   return cws, nil
 }
 
