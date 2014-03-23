@@ -3,8 +3,7 @@
 // Obtains catalog contents via a REST interface, analyzes the disk state, and
 // only performs the necessary operations.
 //
-// Building this program:
-//   gccgo -o catalog-release-to-disk catalog-release-to-disk.go
+// Building this program: See README in the go/ directory
 //
 // As of 2014-03-16, this program is not packaged, but instead simply compiled
 // and put in place.
