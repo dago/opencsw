@@ -1,9 +1,11 @@
+// Package diskformat contains code and utilities to work with OpenCSW catalogs
+// in the disk format, as they are provided on the master mirror at
+// http://mirror.opencsw.org/
 package diskformat
 
 import (
   "bufio"
   "encoding/json"
-  "errors"
   "fmt"
   "log"
   "net/http"
@@ -20,17 +22,17 @@ import (
 
 // Do not actually perform any operations on disk. Read data and process, but do
 // not write anything.
-var Dry_run bool
-// Keeping Pkgdb_url as a package global variable is probably not the best idea,
+var DryRun bool
+// Keeping PkgdbUrl as a package global variable is probably not the best idea,
 // but let's not refactor without a good plan.
-var Pkgdb_url string
+var PkgdbUrl string
 
 
 // 3 strings that define a specific catalog, e.g. "unstable sparc 5.10"
 type CatalogSpec struct {
-  catrel string
-  arch string
-  osrel string
+  Catrel string
+  Arch string
+  Osrel string
 }
 
 func longOsrelAsInt(long_osrel string) int64 {
@@ -46,25 +48,29 @@ func longOsrelAsInt(long_osrel string) int64 {
   return sunos_version
 }
 // We want to order catalog specs by OS release, so we can go from the oldest
-// Solaris releases to the newest.
-type CatalogSpecs []CatalogSpec
-func (cs CatalogSpecs) Len() int { return len(cs) }
-func (cs CatalogSpecs) Swap(i, j int) { cs[i], cs[j] = cs[j], cs[i] }
-func (cs CatalogSpecs) Less(i, j int) bool {
+// Solaris releases to the newest. This specialized array implements the sorting
+// order we need.
+type byOsRelease []CatalogSpec
+func (cs byOsRelease) Len() int { return len(cs) }
+func (cs byOsRelease) Swap(i, j int) { cs[i], cs[j] = cs[j], cs[i] }
+func (cs byOsRelease) Less(i, j int) bool {
   // Ordering by: 1. catrel, 2. arch, 3. osrel
-  if cs[i].catrel != cs[j].catrel {
-    return cs[i].catrel < cs[j].catrel
+  if cs[i].Catrel != cs[j].Catrel {
+    return cs[i].Catrel < cs[j].Catrel
   }
-  if cs[i].arch != cs[j].arch {
-    return cs[i].arch < cs[j].arch
+  if cs[i].Arch != cs[j].Arch {
+    return cs[i].Arch < cs[j].Arch
   }
-  i_as_n := longOsrelAsInt(cs[i].osrel)
-  j_as_n := longOsrelAsInt(cs[j].osrel)
+  i_as_n := longOsrelAsInt(cs[i].Osrel)
+  j_as_n := longOsrelAsInt(cs[j].Osrel)
   return i_as_n < j_as_n
 }
 
+// Specialized array of strings to allow automatic unmarshalling from JSON.
 type PkginstSlice []string
 
+// Format the list of pkgnames as requred by the package catalog:
+// CSWfoo|CSWbar|CSWbaz; or "none" if empty.
 func (p *PkginstSlice) FormatForIndexFile() string {
   if len(*p) <= 0 {
     return "none"
@@ -72,8 +78,21 @@ func (p *PkginstSlice) FormatForIndexFile() string {
   return strings.Join(*p, "|")
 }
 
-// A line in the catalog file; plus the extra description field
-type PkgInCatalog struct {
+// Deserialize from the format output by the RESTful interface.
+func (self *PkginstSlice) UnmarshalJSON(data []byte) error {
+  var foo string
+  err := json.Unmarshal(data, &foo)
+  if err != nil {
+    return err
+  }
+  *self = parseCatalogFormatPkginstList(foo)
+  return nil
+}
+
+// A line in the catalog file; plus the extra description field.
+// As described in the manual:
+// http://www.opencsw.org/manual/for-maintainers/catalog-format.html 
+type Package struct {
   Catalogname string     `json:"catalogname"`
   Version string         `json:"version"`
   Pkginst string         `json:"pkgname"`
@@ -86,7 +105,8 @@ type PkgInCatalog struct {
   Description string     `json:"desc"`
 }
 
-func (p *PkgInCatalog) FormatCatalogIndexLine() string {
+// Format line as required by the catalog format.
+func (p *Package) AsCatalogEntry() string {
   lst := []string{
     p.Catalogname,
     p.Version,
@@ -101,30 +121,29 @@ func (p *PkgInCatalog) FormatCatalogIndexLine() string {
   return strings.Join(lst, " ")
 }
 
-func (p *PkgInCatalog) FormatDescriptionLine() string {
+// Format a line as required by the "descriptions" file.
+func (p *Package) AsDescription() string {
   lst := []string{ p.Catalogname, "-", p.Description, }
   return strings.Join(lst, " ")
 }
 
-type Catalog []PkgInCatalog
-
 type CatalogWithSpec struct {
-  spec CatalogSpec
-  pkgs Catalog
+  Spec CatalogSpec
+  Pkgs []Package
 }
 
 const (
-  Symlink = iota
-  Hardlink
+  symlink = iota
+  hardlink
 )
 
-type LinkOnDisk struct {
+type linkOnDisk struct {
   file_name string
   link_type int
   target *string
 }
 
-func ParseCatalogFormatPkginstList(s string) []string {
+func parseCatalogFormatPkginstList(s string) []string {
   if s == "none" {
     slice := make(PkginstSlice, 0)
     return slice
@@ -132,91 +151,26 @@ func ParseCatalogFormatPkginstList(s string) []string {
   return strings.Split(s, "|")
 }
 
-func (self *PkginstSlice) UnmarshalJSON(data []byte) error {
-  var foo string
-  err := json.Unmarshal(data, &foo)
-  if err != nil {
-    return err
-  }
-  *self = ParseCatalogFormatPkginstList(foo)
-  return nil
-}
-
-// Our REST interface returns catspecs as lists, so let's have a common
-// function to construct catspec structs from lists.
-func MakeCatalogSpec(lst []string) (CatalogSpec, error) {
-  var catspec CatalogSpec
-  if len(lst) != 3 {
-    return catspec, errors.New("Array of length 3 is needed.")
-  }
-  // We already have this in the unmarshal bit.
-  catspec.catrel = lst[2]
-  catspec.arch = lst[1]
-  catspec.osrel = lst[0]
-  return catspec, nil
-}
-
-func MakeCatalogWithSpec(catspec CatalogSpec, pkgs Catalog) CatalogWithSpec {
-  var cws CatalogWithSpec
-  cws.spec = catspec
-  cws.pkgs = pkgs
-  return cws
-}
-
 // Run sanity checks and return the result. Currently only checks if there are
 // any dependencies on packages absent from the catalog.
 func (cws *CatalogWithSpec) IsSane() bool {
   catalog_ok := true
   deps_by_pkginst := make(map[string]PkginstSlice)
-  for _, pkg := range cws.pkgs {
+  for _, pkg := range cws.Pkgs {
     deps_by_pkginst[pkg.Pkginst] = pkg.Depends
   }
-  for _, pkg := range cws.pkgs {
+  for _, pkg := range cws.Pkgs {
     for _, dep := range pkg.Depends {
       if _, ok := deps_by_pkginst[dep]; !ok {
         log.Printf(
           "Problem in the catalog: Package %s declares dependency on %s " +
           "but %s is missing from the %s catalog.", pkg.Pkginst, dep, dep,
-          cws.spec)
+          cws.Spec)
         catalog_ok = false
       }
     }
   }
   return catalog_ok;
-}
-
-func NewPkgInCatalog(lst []string) (*PkgInCatalog, error) {
-  size, err := strconv.ParseUint(lst[5], 10, 64)
-  if err != nil {
-    return nil, err
-  }
-  if size <= 0 {
-    return nil, fmt.Errorf(
-      "Package size must be greater than 0: %v in %v", lst[5],  lst)
-  }
-
-  depends := make([]string, 0)
-  if lst[6] != "none" {
-    depends = strings.Split(lst[6], "|")
-  }
-
-  i_depends := make([]string, 0)
-  if lst[8] != "none" {
-    i_depends = strings.Split(lst[8], "|")
-  }
-
-  var pkg PkgInCatalog
-  pkg.Catalogname = lst[0]
-  pkg.Version = lst[1]
-  pkg.Pkginst = lst[2]
-  pkg.Filename = lst[3]
-  pkg.Md5_sum = lst[4]
-  pkg.Size = size
-  pkg.Depends = depends
-  pkg.Category = lst[7]
-  pkg.I_depends = i_depends
-  pkg.Description = lst[9]
-  return &pkg, nil
 }
 
 func (self *CatalogSpec) UnmarshalJSON(data []byte) error {
@@ -228,21 +182,21 @@ func (self *CatalogSpec) UnmarshalJSON(data []byte) error {
   if len(slice) != 3 {
     return fmt.Errorf("%+v is wrong length, should be 3", slice)
   }
-  self.catrel = slice[2]
-  self.arch = slice[1]
-  self.osrel = slice[0]
+  self.Catrel = slice[2]
+  self.Arch = slice[1]
+  self.Osrel = slice[0]
   return nil
 }
 
-func GetCatalogSpecs() (CatalogSpecs, error) {
-  url := fmt.Sprintf("%s/catalogs/", Pkgdb_url)
+func GetCatalogSpecsFromDatabase() ([]CatalogSpec, error) {
+  url := fmt.Sprintf("%s/catalogs/", PkgdbUrl)
   resp, err := http.Get(url)
   if err != nil {
     return nil, err
   }
   defer resp.Body.Close()
 
-  catspecs := make(CatalogSpecs, 0)
+  catspecs := make([]CatalogSpec, 0)
   dec := json.NewDecoder(resp.Body)
   if err := dec.Decode(&catspecs); err != nil {
     log.Println("Failed to decode JSON from", url)
@@ -253,13 +207,13 @@ func GetCatalogSpecs() (CatalogSpecs, error) {
     return nil, fmt.Errorf("Retrieved 0 catalogs")
   }
 
-  log.Println("GetCatalogSpecs returns", len(catspecs), "catalogs from", url)
+  log.Println("GetCatalogSpecsFromDatabase returns", len(catspecs), "catalogs from", url)
   return catspecs, nil
 }
 
 func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
   url := fmt.Sprintf("%s/catalogs/%s/%s/%s/for-generation/as-dicts/",
-                     Pkgdb_url, catspec.catrel, catspec.arch, catspec.osrel)
+                     PkgdbUrl, catspec.Catrel, catspec.Arch, catspec.Osrel)
   log.Println("Making a request to", url)
   resp, err := http.Get(url)
   if err != nil {
@@ -268,7 +222,7 @@ func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
   }
   defer resp.Body.Close()
 
-  var pkgs Catalog
+  var pkgs []Package
   dec := json.NewDecoder(resp.Body)
   if err := dec.Decode(&pkgs); err != nil {
     log.Println("Failed to decode JSON output from", url, ":", err)
@@ -277,19 +231,19 @@ func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
 
   log.Println("Retrieved", catspec, "with", len(pkgs), "packages")
 
-  cws := MakeCatalogWithSpec(catspec, pkgs)
+  cws := CatalogWithSpec{catspec, pkgs}
   if !cws.IsSane() {
     return cws, fmt.Errorf("There are sanity issues with the %s catalog. " +
                            "Please check the log for more information.",
-                           cws.spec)
+                           cws.Spec)
   }
   return cws, nil
 }
 
-func filterCatspecs(all_catspecs CatalogSpecs, catrel string) CatalogSpecs {
-  catspecs := make(CatalogSpecs, 0)
+func filterCatspecs(all_catspecs []CatalogSpec, catrel string) []CatalogSpec {
+  catspecs := make([]CatalogSpec, 0)
   for _, catspec := range all_catspecs {
-    if catspec.catrel == catrel {
+    if catspec.Catrel == catrel {
       catspecs = append(catspecs, catspec)
     }
   }
@@ -310,9 +264,9 @@ func longOsrel(shortosrel string) string {
 
 // Defines layout of files on disk. Can be built from the database or from
 // disk.
-type FilesOfCatalog map[CatalogSpec]map[string]LinkOnDisk
+type filesOfCatalog map[CatalogSpec]map[string]linkOnDisk
 
-func GetCatalogsFromREST(catalogs_ch chan []CatalogWithSpec, catspecs CatalogSpecs) {
+func getCatalogsFromREST(catalogs_ch chan []CatalogWithSpec, catspecs []CatalogSpec) {
   catalogs := make([]CatalogWithSpec, 0)
   var wg sync.WaitGroup
   type fetchResult struct {cws CatalogWithSpec; err error }
@@ -351,26 +305,26 @@ func GetCatalogsFromREST(catalogs_ch chan []CatalogWithSpec, catspecs CatalogSpe
   catalogs_ch <- catalogs
 }
 
-func GetFilesOfCatalogFromDatabase(files_from_db_chan chan *FilesOfCatalog,
+func getFilesOfCatalogFromDatabase(files_from_db_chan chan *filesOfCatalog,
                                    catrel string, catalog_ch chan []CatalogWithSpec) {
   catalogs := <-catalog_ch
   catalogs_by_spec := make(map[CatalogSpec]CatalogWithSpec)
-  catspecs := make(CatalogSpecs, 0)
+  catspecs := make([]CatalogSpec, 0)
   for _, cws := range catalogs {
-    catalogs_by_spec[cws.spec] = cws
-    catspecs = append(catspecs, cws.spec)
+    catalogs_by_spec[cws.Spec] = cws
+    catspecs = append(catspecs, cws.Spec)
   }
-  files_by_catspec := make(FilesOfCatalog)
+  files_by_catspec := make(filesOfCatalog)
   // We must traverse catalogs in sorted order, e.g. Solaris 9 before Solaris 10.
-  sort.Sort(catspecs)
-  visited_catalogs := make(map[CatalogSpec]CatalogSpecs)
+  sort.Sort(byOsRelease(catspecs))
+  visited_catalogs := make(map[CatalogSpec][]CatalogSpec)
   for _, catspec := range catspecs {
     // Used to group catalogs we can symlink from
-    compatible_catspec := CatalogSpec{catspec.catrel, catspec.arch, "none"}
-    pkgs := catalogs_by_spec[catspec].pkgs
+    compatible_catspec := CatalogSpec{catspec.Catrel, catspec.Arch, "none"}
+    pkgs := catalogs_by_spec[catspec].Pkgs
     for _, pkg := range pkgs {
       if _, ok := files_by_catspec[catspec]; !ok {
-        files_by_catspec[catspec] = make(map[string]LinkOnDisk)
+        files_by_catspec[catspec] = make(map[string]linkOnDisk)
       }
       var target string
       var exists_already bool
@@ -386,32 +340,32 @@ func GetFilesOfCatalogFromDatabase(files_from_db_chan chan *FilesOfCatalog,
             if _, ok := files_by_catspec[cand_catspec][pkg.Filename]; ok {
               exists_already = true
               target = fmt.Sprintf("../%s/%s",
-                                   shortenOsrel(cand_catspec.osrel),
+                                   shortenOsrel(cand_catspec.Osrel),
                                    pkg.Filename)
               break
             }
           }
         }
       }
-      var link LinkOnDisk
+      var link linkOnDisk
       if exists_already {
-        link = LinkOnDisk{pkg.Filename, Symlink, &target}
+        link = linkOnDisk{pkg.Filename, symlink, &target}
       } else {
-        link = LinkOnDisk{pkg.Filename, Hardlink, nil}
+        link = linkOnDisk{pkg.Filename, hardlink, nil}
       }
       files_by_catspec[catspec][pkg.Filename] = link
     }
     if _, ok := visited_catalogs[compatible_catspec]; !ok {
-      visited_catalogs[compatible_catspec] = make(CatalogSpecs, 0)
+      visited_catalogs[compatible_catspec] = make([]CatalogSpec, 0)
     }
     visited_catalogs[compatible_catspec] = append(visited_catalogs[compatible_catspec], catspec)
   }
   files_from_db_chan <- &files_by_catspec
 }
 
-func GetFilesOfCatalogFromDisk(files_from_disk_chan chan *FilesOfCatalog, root_path string,
+func getFilesOfCatalogFromDisk(files_from_disk_chan chan *filesOfCatalog, root_path string,
                                catrel string) {
-  files_by_catspec := make(FilesOfCatalog)
+  files_by_catspec := make(filesOfCatalog)
   path_to_scan := path.Join(root_path, catrel)
   err := filepath.Walk(path_to_scan,
                        func(path string, f os.FileInfo, err error) error {
@@ -432,7 +386,7 @@ func GetFilesOfCatalogFromDisk(files_from_disk_chan chan *FilesOfCatalog, root_p
     basename := fields[2]
     catspec := CatalogSpec{catrel, arch, osrel}
     // Figuring out the file type: hardlink/symlink
-    var link LinkOnDisk
+    var link linkOnDisk
     if !(strings.HasSuffix(basename, ".pkg.gz") ||
          strings.HasSuffix(basename, ".pkg")) {
       // Not a package, won't be processed. This means the file won't be
@@ -440,19 +394,19 @@ func GetFilesOfCatalogFromDisk(files_from_disk_chan chan *FilesOfCatalog, root_p
       return nil
     }
     if f.Mode().IsRegular() {
-      link = LinkOnDisk{basename, Hardlink, nil}
+      link = linkOnDisk{basename, hardlink, nil}
     } else if f.Mode() & os.ModeSymlink > 0 {
       target, err := os.Readlink(path)
       if err != nil {
         log.Printf("Reading link of %v failed: %v\n", path, err)
       } else {
-        link = LinkOnDisk{basename, Symlink, &target}
+        link = linkOnDisk{basename, symlink, &target}
       }
     } else {
       log.Println(path, "Is not a hardlink or a symlink. What is it then? Ignoring.")
     }
     if _, ok := files_by_catspec[catspec]; !ok {
-      files_by_catspec[catspec] = make(map[string]LinkOnDisk)
+      files_by_catspec[catspec] = make(map[string]linkOnDisk)
     }
     files_by_catspec[catspec][basename] = link
     return nil
@@ -463,9 +417,9 @@ func GetFilesOfCatalogFromDisk(files_from_disk_chan chan *FilesOfCatalog, root_p
   files_from_disk_chan <- &files_by_catspec
 }
 
-func FilesOfCatalogDiff(base_files *FilesOfCatalog,
-                        to_substract *FilesOfCatalog) *FilesOfCatalog {
-  left_in_base := make(FilesOfCatalog)
+func filesOfCatalogDiff(base_files *filesOfCatalog,
+                        to_substract *filesOfCatalog) *filesOfCatalog {
+  left_in_base := make(filesOfCatalog)
   for catspec, filemap := range *base_files {
     for path, link := range filemap {
       // Is it in the database?
@@ -477,7 +431,7 @@ func FilesOfCatalogDiff(base_files *FilesOfCatalog,
       }
       if !in_db {
         if _, ok := left_in_base[catspec]; !ok {
-          left_in_base[catspec] = make(map[string]LinkOnDisk)
+          left_in_base[catspec] = make(map[string]linkOnDisk)
         }
         left_in_base[catspec][path] = link
       }
@@ -487,18 +441,18 @@ func FilesOfCatalogDiff(base_files *FilesOfCatalog,
 }
 
 // Returns true if there were any operations performed
-func UpdateDisk(files_to_add *FilesOfCatalog,
-                files_to_remove *FilesOfCatalog,
+func updateDisk(files_to_add *filesOfCatalog,
+                files_to_remove *filesOfCatalog,
                 catalog_root string) bool {
   changes_made := false
 
   for catspec, files_by_path := range *files_to_add {
     for path, link := range files_by_path {
-      tgt_path := filepath.Join(catalog_root, catspec.catrel, catspec.arch,
-                                shortenOsrel(catspec.osrel), path)
-      if link.link_type == Hardlink {
+      tgt_path := filepath.Join(catalog_root, catspec.Catrel, catspec.Arch,
+                                shortenOsrel(catspec.Osrel), path)
+      if link.link_type == hardlink {
         src_path := filepath.Join(catalog_root, "allpkgs", path)
-        if !Dry_run {
+        if !DryRun {
           if err := syscall.Link(src_path, tgt_path); err != nil {
             log.Fatalf("Could not create hardlink from %v to %v: %v",
                        src_path, tgt_path, err)
@@ -506,10 +460,10 @@ func UpdateDisk(files_to_add *FilesOfCatalog,
         }
         log.Printf("ln \"%s\"\n   \"%s\"\n", src_path, tgt_path)
         changes_made = true
-      } else if link.link_type == Symlink {
+      } else if link.link_type == symlink {
         // The source path is relative to the target, because it's a symlink
         src_path := *(link.target)
-        if !Dry_run {
+        if !DryRun {
           if err := syscall.Symlink(src_path, tgt_path); err != nil {
             log.Fatalf("Could not symlink %v to %v: %v", src_path, tgt_path, err)
           }
@@ -524,9 +478,9 @@ func UpdateDisk(files_to_add *FilesOfCatalog,
 
   for catspec, files_by_path := range *files_to_remove {
     for path, _ := range files_by_path {
-      pkg_path := filepath.Join(catalog_root, catspec.catrel, catspec.arch,
-                                shortenOsrel(catspec.osrel), path)
-      if !Dry_run {
+      pkg_path := filepath.Join(catalog_root, catspec.Catrel, catspec.Arch,
+                                shortenOsrel(catspec.Osrel), path)
+      if !DryRun {
         if err:= syscall.Unlink(pkg_path); err != nil {
           log.Fatalf("Could not unlink %v: %v", pkg_path, err)
         }
@@ -538,20 +492,20 @@ func UpdateDisk(files_to_add *FilesOfCatalog,
   return changes_made
 }
 
-func FormatCatalogFilePath(root_path string, catspec CatalogSpec,
+func formatCatalogFilePath(root_path string, catspec CatalogSpec,
                            filename string) string {
-  return filepath.Join(root_path, catspec.catrel,
-                       catspec.arch, shortenOsrel(catspec.osrel),
+  return filepath.Join(root_path, catspec.Catrel,
+                       catspec.Arch, shortenOsrel(catspec.Osrel),
                        filename)
 }
 
-func GetCatalogFromIndexFile(catalog_root string,
+func getCatalogFromIndexFile(catalog_root string,
                              catspec CatalogSpec) (*CatalogWithSpec, error) {
-  pkgs := make(Catalog, 0)
+  pkgs := make([]Package, 0)
   // Read the descriptions first, and build a map so that descriptions can be
   // easily accessed when parsing the catalog file.
-  desc_file_path := FormatCatalogFilePath(catalog_root, catspec, "descriptions")
-  catalog_file_path := FormatCatalogFilePath(catalog_root, catspec, "catalog")
+  desc_file_path := formatCatalogFilePath(catalog_root, catspec, "descriptions")
+  catalog_file_path := formatCatalogFilePath(catalog_root, catspec, "catalog")
   desc_by_catalogname := make(map[string]string)
   desc_file, err := os.Open(desc_file_path)
   if err != nil {
@@ -598,9 +552,9 @@ func GetCatalogFromIndexFile(catalog_root string,
     if size <= 0 {
       log.Fatalln("Package size must be > 0:", fields[5])
     }
-    deps := ParseCatalogFormatPkginstList(fields[6])
-    i_deps := ParseCatalogFormatPkginstList(fields[8])
-    pkg := PkgInCatalog{
+    deps := parseCatalogFormatPkginstList(fields[6])
+    i_deps := parseCatalogFormatPkginstList(fields[8])
+    pkg := Package{
       catalogname,
       fields[1],
       fields[2],
@@ -618,16 +572,16 @@ func GetCatalogFromIndexFile(catalog_root string,
     log.Fatalf("Error reading %v: %v", catalog_file_path, err)
   }
   log.Println("Catalog index found:", catspec, "and", len(pkgs), "pkgs")
-  cws := MakeCatalogWithSpec(catspec, pkgs)
+  cws := CatalogWithSpec{catspec, pkgs}
   return &cws, nil
 }
 
-func GetCatalogIndexes(catspecs CatalogSpecs,
+func getCatalogIndexes(catspecs []CatalogSpec,
                        root_dir string) []CatalogWithSpec {
   // Read all catalog files and parse them.
   catalogs := make([]CatalogWithSpec, 0)
   for _, catspec := range catspecs {
-    catalog, err := GetCatalogFromIndexFile(root_dir, catspec)
+    catalog, err := getCatalogFromIndexFile(root_dir, catspec)
     if err != nil {
       log.Fatalln("Could not get the index file of", catspec, "in",
                   root_dir, "error:", err)
@@ -643,26 +597,26 @@ type catalogPair struct {
   c2 CatalogWithSpec
 }
 
-func GroupCatalogsBySpec(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]catalogPair) {
+func groupCatalogsBySpec(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]catalogPair) {
   pairs_by_spec := make(map[CatalogSpec]catalogPair)
   for _, cws := range c1 {
-    pairs_by_spec[cws.spec] = catalogPair{cws, CatalogWithSpec{}}
+    pairs_by_spec[cws.Spec] = catalogPair{cws, CatalogWithSpec{}}
   }
   for _, cws := range c2 {
-    if pair, ok := pairs_by_spec[cws.spec]; ok {
+    if pair, ok := pairs_by_spec[cws.Spec]; ok {
       pair.c2 = cws
-      pairs_by_spec[cws.spec] = pair
+      pairs_by_spec[cws.Spec] = pair
     } else {
-      log.Println("Did not find", cws.spec, "in c2")
+      log.Println("Did not find", cws.Spec, "in c2")
     }
   }
   return &pairs_by_spec
 }
 
-func MassCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
+func massCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
   diff_detected := make(map[CatalogSpec]bool)
 
-  pairs_by_spec := GroupCatalogsBySpec(c1, c2)
+  pairs_by_spec := groupCatalogsBySpec(c1, c2)
 
   // The catalog disk/db pairs are ready to be compared.
   for spec, pair := range *pairs_by_spec {
@@ -670,19 +624,19 @@ func MassCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
     // DeepEqual could do it, but it is too crude; doesn't provide details
     // This code can probably be simplified.
     catalognames := make(map[string]bool)
-    c1_by_catn := make(map[string]PkgInCatalog)
-    c2_by_catn := make(map[string]PkgInCatalog)
-    if len(pair.c1.pkgs) != len(pair.c2.pkgs) {
+    c1_by_catn := make(map[string]Package)
+    c2_by_catn := make(map[string]Package)
+    if len(pair.c1.Pkgs) != len(pair.c2.Pkgs) {
       log.Printf("%v: %v vs %v are different length\n",
-                 spec, len(pair.c1.pkgs), len(pair.c2.pkgs))
+                 spec, len(pair.c1.Pkgs), len(pair.c2.Pkgs))
       diff_detected[spec] = true
       continue
     }
-    for _, pkg := range pair.c1.pkgs {
+    for _, pkg := range pair.c1.Pkgs {
       catalognames[pkg.Catalogname] = true
       c1_by_catn[pkg.Catalogname] = pkg
     }
-    for _, pkg := range pair.c2.pkgs {
+    for _, pkg := range pair.c2.Pkgs {
       catalognames[pkg.Catalogname] = true
       c2_by_catn[pkg.Catalogname] = pkg
     }
@@ -694,7 +648,7 @@ func MassCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
           // This comparison method is a bit silly. But we can't simply compare
           // the structs, because they contain slices, and slices are not
           // comparable.
-          if pkg_db.FormatCatalogIndexLine() != pkg_disk.FormatCatalogIndexLine() {
+          if pkg_db.AsCatalogEntry() != pkg_disk.AsCatalogEntry() {
             log.Printf("different in %v: %v %v vs %v, enough to trigger " +
                        "catalog index generation\n", spec, pkg_db.Filename,
                        pkg_db.Md5_sum, pkg_disk.Md5_sum)
@@ -717,11 +671,11 @@ func MassCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
   return &diff_detected
 }
 
-func GenerateCatalogIndexFile(catalog_root string,
+func generateCatalogIndexFile(catalog_root string,
                               cws CatalogWithSpec) {
-  log.Printf("GenerateCatalogIndexFile(%v, %v)\n", catalog_root, cws.spec)
-  catalog_file_path := FormatCatalogFilePath(catalog_root, cws.spec, "catalog")
-  desc_file_path := FormatCatalogFilePath(catalog_root, cws.spec, "descriptions")
+  log.Printf("generateCatalogIndexFile(%v, %v)\n", catalog_root, cws.Spec)
+  catalog_file_path := formatCatalogFilePath(catalog_root, cws.Spec, "catalog")
+  desc_file_path := formatCatalogFilePath(catalog_root, cws.Spec, "descriptions")
 
   defer func() {
     // If there's a "catalog.gz" here, remove it. It will be recreated later by
@@ -735,7 +689,7 @@ func GenerateCatalogIndexFile(catalog_root string,
   }()
 
   // If there are no files in the catalog, simply remove the catalog files.
-  if len(cws.pkgs) <= 0 {
+  if len(cws.Pkgs) <= 0 {
     for _, filename := range []string{catalog_file_path, desc_file_path} {
       // If the files are missing, that's okay
       if err := os.Remove(filename); err != nil {
@@ -743,7 +697,7 @@ func GenerateCatalogIndexFile(catalog_root string,
           log.Println("Could not remove", filename, "error:", err)
         }
       } else {
-        log.Println("Removed", filename, "because the", cws.spec,
+        log.Println("Removed", filename, "because the", cws.Spec,
                     "catalog is empty")
       }
     }
@@ -753,7 +707,7 @@ func GenerateCatalogIndexFile(catalog_root string,
   var catbuf *bufio.Writer
   var descbuf *bufio.Writer
 
-  if !Dry_run {
+  if !DryRun {
     catalog_fd, err := os.Create(catalog_file_path)
     if err != nil {
       log.Fatalln("Could not open", catalog_file_path, "for writing:", err)
@@ -783,19 +737,20 @@ func GenerateCatalogIndexFile(catalog_root string,
   ts_line := fmt.Sprintf("# CREATIONDATE %s\n", time.Now().Format(time.RFC3339))
   catbuf.WriteString(ts_line)
 
-  for _, pkg := range cws.pkgs {
-    catbuf.WriteString(pkg.FormatCatalogIndexLine())
+  for _, pkg := range cws.Pkgs {
+    catbuf.WriteString(pkg.AsCatalogEntry())
     catbuf.WriteString("\n")
-    descbuf.WriteString(pkg.FormatDescriptionLine())
+    descbuf.WriteString(pkg.AsDescription())
     descbuf.WriteString("\n")
   }
 }
 
+// The main function of this package.
 func GenerateCatalogRelease(catrel string, catalog_root string) {
   log.Println("catrel:", catrel)
   log.Println("catalog_root:", catalog_root)
 
-  all_catspecs, err := GetCatalogSpecs()
+  all_catspecs, err := GetCatalogSpecsFromDatabase()
   if err != nil {
     log.Panicln("Could not get the catalog spec list")
   }
@@ -807,14 +762,14 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
   //    based on the catalogs
 
   catalog_ch := make(chan []CatalogWithSpec)
-  go GetCatalogsFromREST(catalog_ch, catspecs)
-  files_from_db_chan := make(chan *FilesOfCatalog)
-  go GetFilesOfCatalogFromDatabase(files_from_db_chan, catrel, catalog_ch)
+  go getCatalogsFromREST(catalog_ch, catspecs)
+  files_from_db_chan := make(chan *filesOfCatalog)
+  go getFilesOfCatalogFromDatabase(files_from_db_chan, catrel, catalog_ch)
 
   // 2. build a data structure based on the contents of the disk
   //    it should be done in parallel
-  files_from_disk_chan := make(chan *FilesOfCatalog)
-  go GetFilesOfCatalogFromDisk(files_from_disk_chan, catalog_root, catrel)
+  files_from_disk_chan := make(chan *filesOfCatalog)
+  go getFilesOfCatalogFromDisk(files_from_disk_chan, catalog_root, catrel)
 
   // 3. Retrieve results
   files_by_catspec_disk := <-files_from_disk_chan
@@ -823,21 +778,21 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
   // 4. compare, generate a list of operations to perform
 
   log.Println("Calculating the difference")
-  files_to_add := FilesOfCatalogDiff(files_by_catspec_db,
+  files_to_add := filesOfCatalogDiff(files_by_catspec_db,
                                      files_by_catspec_disk)
-  files_to_remove := FilesOfCatalogDiff(files_by_catspec_disk,
+  files_to_remove := filesOfCatalogDiff(files_by_catspec_disk,
                                         files_by_catspec_db)
 
   // 5. perform these operations
   //    ...or save a disk file with instructions.
-  if Dry_run {
+  if DryRun {
     log.Println("Dry run, only logging operations that would have been made.")
   } else {
     log.Println("Applying link/unlink operations to disk")
   }
-  changes_made := UpdateDisk(files_to_add, files_to_remove, catalog_root)
+  changes_made := updateDisk(files_to_add, files_to_remove, catalog_root)
   if !changes_made {
-    if Dry_run {
+    if DryRun {
       log.Println("It was a dry run, but there would not have been any " +
                   "link/unlink operations performed anyway")
     } else {
@@ -850,24 +805,24 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
   //    files on disk doesn't mean the catalog file needs to be updated.
 
   // Getting the content of catalog index files
-  catalogs_idx_on_disk := GetCatalogIndexes(catspecs, catalog_root)
+  catalogs_idx_on_disk := getCatalogIndexes(catspecs, catalog_root)
   catalogs_in_db := <-catalog_ch
 
-  diff_flag_by_spec := MassCompareCatalogs(catalogs_in_db, catalogs_idx_on_disk)
+  diff_flag_by_spec := massCompareCatalogs(catalogs_in_db, catalogs_idx_on_disk)
   log.Println(*diff_flag_by_spec)
 
   var wg sync.WaitGroup
   for _, cws := range catalogs_in_db {
-    diff_present, ok := (*diff_flag_by_spec)[cws.spec]
+    diff_present, ok := (*diff_flag_by_spec)[cws.Spec]
     if !ok { continue }
     if diff_present {
       wg.Add(1)
       go func(catalog_root string, cws CatalogWithSpec) {
         defer wg.Done()
-        GenerateCatalogIndexFile(catalog_root, cws)
+        generateCatalogIndexFile(catalog_root, cws)
       }(catalog_root, cws)
     } else {
-      log.Println("Not regenerating", cws.spec,
+      log.Println("Not regenerating", cws.Spec,
                   "because catalog contents on disk and in the database " +
                   "is the same.")
     }
