@@ -277,7 +277,7 @@ func getCatalogsFromREST(catalogs_ch chan []CatalogWithSpec, catspecs []CatalogS
       defer wg.Done()
       catalog_with_spec, err := GetCatalogWithSpec(catspec)
       if err != nil {
-        log.Println(err)
+        log.Println("Error while retrieving the", catspec, "catalog:", err)
         ch <- fetchResult{CatalogWithSpec{}, err}
       }
       ch <- fetchResult{catalog_with_spec, nil}
@@ -809,7 +809,6 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
   catalogs_in_db := <-catalog_ch
 
   diff_flag_by_spec := massCompareCatalogs(catalogs_in_db, catalogs_idx_on_disk)
-  log.Println(*diff_flag_by_spec)
 
   var wg sync.WaitGroup
   for _, cws := range catalogs_in_db {
