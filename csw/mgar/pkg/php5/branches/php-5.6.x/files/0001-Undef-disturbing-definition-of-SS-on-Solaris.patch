@@ -1,0 +1,25 @@
+From c452bab41f87cebf7da533d967973b28046dd92c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 14 Dec 2013 22:50:22 +0100
+Subject: [PATCH] Undef disturbing definition of SS on Solaris
+
+---
+ ext/hash/hash_ripemd.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ext/hash/hash_ripemd.c b/ext/hash/hash_ripemd.c
+index c7c53c6..02786c7 100644
+--- a/ext/hash/hash_ripemd.c
++++ b/ext/hash/hash_ripemd.c
+@@ -172,6 +172,8 @@ static const unsigned char S[80] = {
+ 	11, 12, 14, 15, 14, 15,  9,  8,  9, 14,  5,  6,  8,  6,  5, 12,
+ 	 9, 15,  5, 11,  6,  8, 13, 12,  5, 12, 13, 14, 11,  8,  5,  6 };
+ 
++/* There is some strange definition on Solaris SS being 18 */
++#undef SS
+ static const unsigned char SS[80] = {
+ 	 8,  9,  9, 11, 13, 15, 15,  5,  7,  7,  8, 11, 14, 14, 12,  6,
+ 	 9, 13, 15,  7, 12,  8,  9, 11,  7,  7, 12,  7,  6, 15, 13, 11,
+-- 
+1.8.4.1
+

@@ -1,5 +1,5 @@
 NAME = php
-VERSION = 5.5.7
+VERSION = 5.5.10
 GARTYPE = v2
 
 DESCRIPTION = A high-level scripting language.
@@ -37,7 +37,7 @@ EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
 VENDOR_URL = http://www.php.net/
 LICENSE = LICENSE
 
-DISTFILES += $(DISTNAME).tar.xz
+DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
 DISTFILES += CSWap2-modphp5.cswreleasenotes
@@ -223,7 +223,7 @@ $(eval $(call php5_subpackage,ibm_db2,))
 
 # Use reinplacement until this is fixed:
 #   https://bugs.php.net/bug.php?id=66298
-REINPLACEMENTS += dos
+#REINPLACEMENTS += dos
 REINPLACE_MATCH_dos = \r$$
 REINPLACE_WITH_dos = 
 REINPLACE_FILES_dos += ext/opcache/Optimizer/zend_optimizer.c
@@ -237,10 +237,13 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 # using CC as linker would have made this automatic.
 SUBDIR64-sparc = v9
 SUBDIR64-i386 = amd64
-EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
+EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lCrun -lz
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
+
+# We need to link against libmysql which requires a recent libc
+LINKER_MAPS =
 
 EXTRA_CONFIGURE_EXPORTS += IBM_DB_INCLUDE
 EXTRA_CONFIGURE_EXPORTS += IBM_DB_LIB
@@ -256,7 +259,8 @@ CONFIGURE_ENV_DB2DIR = /opt/IBM/db2/V8.1
 EXTRA_RUNPATH_LINKER_FLAGS += -R$(CONFIGURE_ENV_IBM_DB_LIB)
 
 # We need CMSG_SPACE
-EXTRA_CPPFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
+# EXTRA_CPPFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
+EXTRA_CFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
 
 sysconfdir = /etc$(prefix)/php5
 

@@ -1,0 +1,25 @@
+From 6bd0d4115244bbe36f3c5512be6f110a128ca492 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 15 Dec 2013 20:48:53 +0100
+Subject: [PATCH] Do not add -Wno-write-strings unconditionally
+
+---
+ ext/intl/config.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ext/intl/config.m4 b/ext/intl/config.m4
+index 4630a30..02efa69 100644
+--- a/ext/intl/config.m4
++++ b/ext/intl/config.m4
+@@ -85,7 +85,7 @@ if test "$PHP_INTL" != "no"; then
+     breakiterator/codepointiterator_internal.cpp \
+     breakiterator/codepointiterator_methods.cpp \
+     idn/idn.c \
+-    $icu_spoof_src, $ext_shared,,$ICU_INCS -Wno-write-strings)
++    $icu_spoof_src, $ext_shared,,$ICU_INCS)
+   PHP_ADD_BUILD_DIR($ext_builddir/collator)
+   PHP_ADD_BUILD_DIR($ext_builddir/converter)
+   PHP_ADD_BUILD_DIR($ext_builddir/common)
+-- 
+1.8.4.1
+
