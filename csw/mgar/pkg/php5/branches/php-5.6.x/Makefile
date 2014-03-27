@@ -1,5 +1,5 @@
 NAME = php
-VERSION = 5.5.10
+VERSION = 5.6.0alpha3
 GARTYPE = v2
 
 DESCRIPTION = A high-level scripting language.
@@ -30,6 +30,7 @@ AP2_MODFILES = *libphp5.so
 PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 
 MASTER_SITES += http://de1.php.net/distributions/
+MASTER_SITES += http://downloads.php.net/tyrael/
 # SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 
 EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
@@ -37,7 +38,7 @@ EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
 VENDOR_URL = http://www.php.net/
 LICENSE = LICENSE
 
-DISTFILES += $(DISTNAME).tar.bz2
+DISTFILES += $(DISTNAME).tar.xz
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
 DISTFILES += CSWap2-modphp5.cswreleasenotes
@@ -224,9 +225,9 @@ $(eval $(call php5_subpackage,ibm_db2,))
 # Use reinplacement until this is fixed:
 #   https://bugs.php.net/bug.php?id=66298
 #REINPLACEMENTS += dos
-REINPLACE_MATCH_dos = \r$$
-REINPLACE_WITH_dos = 
-REINPLACE_FILES_dos += ext/opcache/Optimizer/zend_optimizer.c
+#REINPLACE_MATCH_dos = \r$$
+#REINPLACE_WITH_dos = 
+#REINPLACE_FILES_dos += ext/opcache/Optimizer/zend_optimizer.c
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 EXTRA_LIB = /opt/csw/postgresql/lib
@@ -237,12 +238,13 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 # using CC as linker would have made this automatic.
 SUBDIR64-sparc = v9
 SUBDIR64-i386 = amd64
-EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lCrun -lz
+#EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
+EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCrun
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
 
-# We need to link against libmysql which requires a recent libc
+# We must not cut back on libc as we need current libmysql requiring getpagesizes2
 LINKER_MAPS =
 
 EXTRA_CONFIGURE_EXPORTS += IBM_DB_INCLUDE
@@ -261,6 +263,10 @@ EXTRA_RUNPATH_LINKER_FLAGS += -R$(CONFIGURE_ENV_IBM_DB_LIB)
 # We need CMSG_SPACE
 # EXTRA_CPPFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
 EXTRA_CFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
+
+# Otherwise we get the following error because std:: is not explicitly used:
+#   "/opt/SUNWspro/prod/include/CC/Cstd/rw/traits", line 535: Error: The function "wcsstr" must have a prototype.
+#EXTRA_CPPFLAGS += -D_RWSTD_NO_NEW_HEADER
 
 sysconfdir = /etc$(prefix)/php5
 
@@ -365,7 +371,7 @@ CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 endif
 
 # Disable Tests (report submitted to PHP QA)
-SKIPTEST = 1
+#SKIPTEST = 1
 #ENABLE_CHECK = 0
 TEST_TARGET = test
 
@@ -377,7 +383,7 @@ pre-patch-modulated:
 	@(cd $(WORKSRC); rm .gitignore; git add -A; git commit -m 'adding files that were previously ignored' )
 	@$(MAKECOOKIE)
 
-pre-configure-modulated:
+xxxxpre-configure-modulated:
 	@echo Munging c-client routine in configure.
 	@(cd $(WORKSRC); \
 		perl -pi -e "s|c-client4 c-client|c-client.2007f|g" configure; \
@@ -415,7 +421,7 @@ post-install-modulated:
 	   done )
 	@$(MAKECOOKIE)
 
-post-merge:
+post-merge-all:
 	@echo " ==> Fixing php.ini: adding loadable session.so support"
 	@-( cd $(PKGROOT)/$(sysconfdir)/; \
 		perl -pi -e 's/extension=bz2.so/extension=session.so\n;extension=bz2.so/' php.ini.CSW; )

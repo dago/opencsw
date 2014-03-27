@@ -1,0 +1,25 @@
+From eb07582022356607281c52215eea2ce375413d47 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 15 Dec 2013 21:36:41 +0100
+Subject: [PATCH] Remove another -Wno...
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index ad5d449..4be4068 100755
+--- a/configure
++++ b/configure
+@@ -51018,7 +51018,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
+   ext_builddir=ext/intl
+   ext_srcdir=$abs_srcdir/ext/intl
+ 
+-  ac_extra=`echo "$ICU_INCS -Wno-write-strings"|$SED s#@ext_srcdir@#$ext_srcdir#g|$SED s#@ext_builddir@#$ext_builddir#g`
++  ac_extra=`echo "$ICU_INCS"|$SED s#@ext_srcdir@#$ext_srcdir#g|$SED s#@ext_builddir@#$ext_builddir#g`
+ 
+   if test "$ext_shared" != "shared" && test "$ext_shared" != "yes" && test "" != "cli"; then
+     PHP_INTL_SHARED=no
+-- 
+1.8.4.1
+

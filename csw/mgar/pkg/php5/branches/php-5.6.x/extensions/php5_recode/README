@@ -1,0 +1,2 @@
+recode can not be configured with imap and mysql extensions
+compile and enable this module seperately

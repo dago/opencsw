@@ -1,0 +1,4 @@
+/usr/local references:
+	   bin/php -> embeds 'magic' filetype info in the binary
+	   bin/php-cgi -> embeds 'magic' filetype info in the binary
+	   PEAR/Config.php -> default for gpg if not in $PATH
