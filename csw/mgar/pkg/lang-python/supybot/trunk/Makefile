@@ -21,6 +21,8 @@ DISTFILES    = $(DISTNAME).tar.gz
 DISTNAME     = Supybot-$(VERSION)
 LICENSE      = LICENSE
 
+PACKAGING_PLATFORMS = solaris9-sparc
+
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWpy-twisted
 
