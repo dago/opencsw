@@ -10,10 +10,13 @@ GARTYPE = v2
 MASTER_SITES += $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
 
-#LICENSE = LICENSE
+BUILD_DEP_PKGS += CSWpy-crypto
 
 PACKAGES += CSWpy-send-nsca
 SPKG_DESC_CSWpy-send-nsca = Python implementation of Nagios send_nsca
 # PKGFILES is catchall
+# This is indeed needed
+RUNTIME_DEP_PKGS_CSWpy-send-nsca += CSWpy-crypto
+CHECKPKG_OVERRIDES_CSWpy-send-nsca += surplus-dependency|CSWpy-crypto
 
 include gar/category.mk
