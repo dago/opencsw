@@ -22,15 +22,15 @@ DISTNAME     = Supybot-$(VERSION)
 LICENSE      = LICENSE
 
 ARCHALL = 1
-RUNTIME_DEP_PKGS = CSWtwisted
+RUNTIME_DEP_PKGS = CSWpy-twisted
 
 EXTRA_PAX_ARGS = -s ",ChangeLog$$,changelog,p"
-TEST_SCRIPTS = 
+TEST_SCRIPTS =
 
 PACKAGES = CSWsupybot
 CHECKPKG_OVERRIDES_CSWsupybot += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWsupybot += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWsupybot += surplus-dependency|CSWtwisted
+CHECKPKG_OVERRIDES_CSWsupybot += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWsupybot += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWsupybot += file-with-bad-content
 
@@ -41,7 +41,7 @@ post-install-modulated: DOCS=ChangeLog ACKS docs/*
 post-install-modulated: MANDEST=$(DESTDIR)$(mandir)/man1
 post-install-modulated:
 	ginstall -d $(DOCDEST)
-	-cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)	
+	-cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)
 	ginstall -d $(MANDEST) && cp $(WORKSRC)/docs/man/* $(MANDEST)
 	@$(MAKECOOKIE)
 
