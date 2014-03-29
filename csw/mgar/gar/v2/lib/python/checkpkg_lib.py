@@ -1214,7 +1214,8 @@ class Catalog(SqlobjectHelperMixin):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
     try:
-      # There's a race condition in here. Maybe SQLObject allows to delete atomically?
+      # There's a race condition in here. Maybe SQLObject allows to delete
+      # atomically?
       sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
           sqlobject.AND(
             m.Srv4FileInCatalog.q.arch==sqo_arch,
