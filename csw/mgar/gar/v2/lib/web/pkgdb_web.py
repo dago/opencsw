@@ -27,6 +27,8 @@ from lib.python import representations
 from lib.web import web_lib
 
 
+LOG_FILE_TMPL = '/opt/csw/apache2/var/log/buildfarm/pkgdb-web.log'
+
 urls_html = (
   r'/', 'index',
   r'/favicon\.ico', 'Favicon',
@@ -771,13 +773,24 @@ if debugme:
 
 app = web.application(urls, globals())
 
+applogger = logging.getLogger('pkgdb')
+applogger.setLevel(logging.DEBUG)
+log_handler = logging.FileHandler(filename=LOG_FILE_TMPL)
+log_handler.setLevel(logging.DEBUG)
+log_formatter = logging.Formatter(
+    '%(process)d %(levelname)s %(asctime)s '
+    '%(filename)s:%(lineno)d %(funcName)s: %(message)s')
+log_handler.setFormatter(log_formatter)
+applogger.addHandler(log_handler)
+
 
 def app_wrapper(app):
+  applogger.debug('Connecting to the database')
   web_lib.ConnectToDatabase()
   return app
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   if debugme:
     logging.basicConfig(level=logging.DEBUG)
   app.run()
