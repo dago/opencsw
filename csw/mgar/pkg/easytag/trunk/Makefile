@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = easytag
-VERSION = 2.1.8
+VERSION = 2.1.10
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -22,7 +22,7 @@ BUILD_DEP_PKGS += CSWlibflac-dev
 BUILD_DEP_PKGS += CSWlibspeex-dev
 BUILD_DEP_PKGS += C# Add more dependencies as suggested by Laurent Blume in
 #   http://lists.opencsw.org/pipermail/users/2013-April/009549.html
-BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWfontconfig-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWintltool
 BUILD_DEP_PKGS += CSWlibfreetype-dev
