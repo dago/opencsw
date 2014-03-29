@@ -43,6 +43,8 @@ urls = (
   r'/rpc/bulk-existing-svr4/', 'QueryExistingSvr4',
 )
 
+LOG_FILE_TMPL = '/opt/csw/apache2/var/log/buildfarm/releases-web.log'
+
 templatedir = os.path.join(os.path.dirname(__file__), "templates/")
 render = web.template.render(templatedir)
 
@@ -198,12 +200,17 @@ class Srv4CatalogAssignment(object):
     is to add the 'Content-Length' header.  However, it sometimes still gets
     stuck and I don't know why.
     """
+    # used for logging
+    catspec = (catrel_name, arch_name, osrel_name)
+    logging.info('PUT %s %s', catspec, md5_sum)
     if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
       # We should return an error message instead.
       # Sadly, we cannot return a response body due to webpy's API
       # limitation.
-      raise web.forbidden()
+      raise web.forbidden(
+          'You can only upload to the following catalogs:'
+          + ' '.join(CAN_UPLOAD_TO_CATALOGS))
     try:
       if arch_name == 'all':
         raise web.badrequest("There is no 'all' catalog, cannot proceed.")
@@ -223,6 +230,7 @@ class Srv4CatalogAssignment(object):
             "Package vendor tag is %s instead of CSW or FAKE."
             % parsed_basename["vendortag"])
       if not srv4.registered_level_two:
+        applogger.info('Registering the %s package in the database', srv4.basename)
         relational_util.StatsStructToDatabaseLevelTwo(md5_sum, True)
         # Package needs to be registered for releases
         # This can throw CatalogDatabaseError if the db user doesn't have
@@ -231,28 +239,35 @@ class Srv4CatalogAssignment(object):
       c = checkpkg_lib.Catalog()
       sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
-      # See if there already is a package with that catalogname.
+      applogger.info('See if there already is a package with that '
+                     'catalogname (%s)', srv4.basename)
       res = c.GetConflictingSrv4ByCatalognameResult(
           srv4, srv4.catalogname,
           sqo_osrel, sqo_arch, sqo_catrel)
-      if res.count() == 1:
-        # Removing old version of the package from the catalog
+      if res.count() >= 1:
         for pkg_in_catalog in res:
           srv4_to_remove = pkg_in_catalog.srv4file
+          applogger.info('Removing %s from the %s catalog',
+                         srv4_to_remove.catalogname, catspec)
           c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
+      else:
+        applogger.info('Package with the same catalogname (%s) not found in %s (good)',
+                       srv4.catalogname, catspec)
       # See if there already is a package with that pkgname.
       res = c.GetConflictingSrv4ByPkgnameResult(
           srv4, srv4.pkginst.pkgname,
           sqo_osrel, sqo_arch, sqo_catrel)
-      if res.count() == 1:
+      if res.count() >= 1:
         # Removing old version of the package from the catalog
         for pkg_in_catalog in res:
           srv4_to_remove = pkg_in_catalog.srv4file
+          applogger.info('Removing %s from %s', srv4_to_remove.basename, catspec)
           c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
 
       # This is set by basic HTTP auth.
       username = web.ctx.env.get('REMOTE_USER')
 
+      applogger.info('Adding %s to the %s catalog', srv4.basename, catspec)
       c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, who=username)
       web.header(
           'Content-type',
@@ -267,6 +282,8 @@ class Srv4CatalogAssignment(object):
     except (
         checkpkg_lib.CatalogDatabaseError,
         sqlobject.dberrors.OperationalError) as exc:
+      applogger.error('Failed while attempting to add %s to the %s catalog',
+                      srv4.basename, catspec)
       web.header(
           'Content-Type',
           'application/x-vnd.opencsw.pkg;type=error-message')
@@ -274,7 +291,11 @@ class Srv4CatalogAssignment(object):
         "error_message": unicode(exc),
       })
       web.header('Content-Length', str(len(response)))
-      raise web.badrequest(response)
+      # If we are in this state, there's a possibility that a package has been
+      # removed from the database, and its replacesment has not been inserted.
+      # In such case we want to make sure that the client sees the failure.
+      # Therefore, we're throwing a HTTP internal error.
+      raise web.internalerror(response)
 
   def DELETE(self, catrel_name, arch_name, osrel_name, md5_sum):
     try:
@@ -464,12 +485,21 @@ class Srv4RelationalLevelTwo(object):
 
 # web.webapi.internalerror = web.debugerror
 
+applogger = logging.getLogger('releases-web')
+applogger.setLevel(logging.DEBUG)
+log_handler = logging.FileHandler(filename=LOG_FILE_TMPL)
+log_handler.setLevel(logging.DEBUG)
+log_formatter = logging.Formatter(
+    '%(process)d %(levelname)s %(asctime)s '
+    '%(filename)s:%(lineno)d %(funcName)s: %(message)s')
+log_handler.setFormatter(log_formatter)
+applogger.addHandler(log_handler)
 
 app = web.application(urls, globals())
 
 def app_wrapper(app):
+  applogger.debug('Connecting to the database')
   web_lib.ConnectToDatabase()
-  logging.basicConfig(level=logging.DEBUG)
   return app.wsgifunc()
 
 
