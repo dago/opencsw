@@ -20,13 +20,13 @@ import (
   "time"
 )
 
-// Do not actually perform any operations on disk. Read data and process, but do
-// not write anything.
+
+// Do not perform any operations on disk. Read data and process them, but do not
+// write anything. Variable meant to be controlled by a command line flag.
 var DryRun bool
 // Keeping PkgdbUrl as a package global variable is probably not the best idea,
 // but let's not refactor without a good plan.
 var PkgdbUrl string
-
 
 // 3 strings that define a specific catalog, e.g. "unstable sparc 5.10"
 type CatalogSpec struct {
@@ -180,7 +180,7 @@ func (self *CatalogSpec) UnmarshalJSON(data []byte) error {
     return err
   }
   if len(slice) != 3 {
-    return fmt.Errorf("%+v is wrong length, should be 3", slice)
+    return fmt.Errorf("%v is wrong length, should be 3", slice)
   }
   self.Catrel = slice[2]
   self.Arch = slice[1]
@@ -207,7 +207,8 @@ func GetCatalogSpecsFromDatabase() ([]CatalogSpec, error) {
     return nil, fmt.Errorf("Retrieved 0 catalogs")
   }
 
-  log.Println("GetCatalogSpecsFromDatabase returns", len(catspecs), "catalogs from", url)
+  log.Println("GetCatalogSpecsFromDatabase returns", len(catspecs),
+              "catalogs from", url)
   return catspecs, nil
 }
 
@@ -681,6 +682,10 @@ func generateCatalogIndexFile(catalog_root string,
     // If there's a "catalog.gz" here, remove it. It will be recreated later by
     // the shell script which signs catalogs.
     gzip_catalog := catalog_file_path + ".gz";
+    if DryRun {
+      log.Println("Would have tried to remove", gzip_catalog)
+      return
+    }
     if err := os.Remove(gzip_catalog); err != nil {
       log.Println("Not removed", gzip_catalog, "error was", err)
     } else {
@@ -691,8 +696,13 @@ func generateCatalogIndexFile(catalog_root string,
   // If there are no files in the catalog, simply remove the catalog files.
   if len(cws.Pkgs) <= 0 {
     for _, filename := range []string{catalog_file_path, desc_file_path} {
-      // If the files are missing, that's okay
+      if DryRun {
+        log.Println("Would have tried to remove", filename, "because the",
+                    cws.Spec, "catalog is empty")
+        continue
+      }
       if err := os.Remove(filename); err != nil {
+        // If the files are missing, that's okay
         if err != syscall.ENOENT {
           log.Println("Could not remove", filename, "error:", err)
         }
