@@ -705,7 +705,12 @@ class CatalogForGenerationAsDicts(object):
     basename md5_sum size deps category i_deps
     """
     entries_list = GetCatalogEntries(catrel_name, arch_name, osrel_name)
-    response = cjson.encode([x._asdict() for x in entries_list])
+    response_list = []
+    for entry in entries_list:
+      entry_dict = entry._asdict()
+      entry_dict["size"] = int(entry_dict["size"])
+      response_list.append(entry_dict)
+    response = cjson.encode(response_list)
     web.header('Content-Length', str(len(response)))
     return response
 
