@@ -305,7 +305,7 @@ func getCatalogsFromREST(catalogs_ch chan []CatalogWithSpec, catspecs []CatalogS
   catalogs_ch <- catalogs
 }
 
-func getFilesOfCatalogFromDatabase(files_from_db_chan chan *filesOfCatalog,
+func getFilesOfCatalogFromDatabase(files_from_db_chan chan filesOfCatalog,
                                    catrel string, catalog_ch chan []CatalogWithSpec) {
   catalogs := <-catalog_ch
   catalogs_by_spec := make(map[CatalogSpec]CatalogWithSpec)
@@ -360,10 +360,10 @@ func getFilesOfCatalogFromDatabase(files_from_db_chan chan *filesOfCatalog,
     }
     visited_catalogs[compatible_catspec] = append(visited_catalogs[compatible_catspec], catspec)
   }
-  files_from_db_chan <- &files_by_catspec
+  files_from_db_chan <- files_by_catspec
 }
 
-func getFilesOfCatalogFromDisk(files_from_disk_chan chan *filesOfCatalog, root_path string,
+func getFilesOfCatalogFromDisk(files_from_disk_chan chan filesOfCatalog, root_path string,
                                catrel string) {
   files_by_catspec := make(filesOfCatalog)
   path_to_scan := path.Join(root_path, catrel)
@@ -414,17 +414,17 @@ func getFilesOfCatalogFromDisk(files_from_disk_chan chan *filesOfCatalog, root_p
   if err != nil {
     log.Fatalf("filepath.Walk() failed with: %v\n", err)
   }
-  files_from_disk_chan <- &files_by_catspec
+  files_from_disk_chan <- files_by_catspec
 }
 
-func filesOfCatalogDiff(base_files *filesOfCatalog,
-                        to_substract *filesOfCatalog) *filesOfCatalog {
+func filesOfCatalogDiff(base_files filesOfCatalog,
+                        to_substract filesOfCatalog) filesOfCatalog {
   left_in_base := make(filesOfCatalog)
-  for catspec, filemap := range *base_files {
+  for catspec, filemap := range base_files {
     for path, link := range filemap {
       // Is it in the database?
       in_db := false
-      if files_db, ok := (*to_substract)[catspec]; ok {
+      if files_db, ok := to_substract[catspec]; ok {
         if _, ok := files_db[path]; ok {
           in_db = true
         }
@@ -437,16 +437,16 @@ func filesOfCatalogDiff(base_files *filesOfCatalog,
       }
     }
   }
-  return &left_in_base
+  return left_in_base
 }
 
 // Returns true if there were any operations performed
-func updateDisk(files_to_add *filesOfCatalog,
-                files_to_remove *filesOfCatalog,
+func updateDisk(files_to_add filesOfCatalog,
+                files_to_remove filesOfCatalog,
                 catalog_root string) bool {
   changes_made := false
 
-  for catspec, files_by_path := range *files_to_add {
+  for catspec, files_by_path := range files_to_add {
     for path, link := range files_by_path {
       tgt_path := filepath.Join(catalog_root, catspec.Catrel, catspec.Arch,
                                 shortenOsrel(catspec.Osrel), path)
@@ -476,7 +476,7 @@ func updateDisk(files_to_add *filesOfCatalog,
     }
   }
 
-  for catspec, files_by_path := range *files_to_remove {
+  for catspec, files_by_path := range files_to_remove {
     for path, _ := range files_by_path {
       pkg_path := filepath.Join(catalog_root, catspec.Catrel, catspec.Arch,
                                 shortenOsrel(catspec.Osrel), path)
@@ -597,7 +597,7 @@ type catalogPair struct {
   c2 CatalogWithSpec
 }
 
-func groupCatalogsBySpec(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]catalogPair) {
+func groupCatalogsBySpec(c1, c2 []CatalogWithSpec) (map[CatalogSpec]catalogPair) {
   pairs_by_spec := make(map[CatalogSpec]catalogPair)
   for _, cws := range c1 {
     pairs_by_spec[cws.Spec] = catalogPair{cws, CatalogWithSpec{}}
@@ -610,16 +610,16 @@ func groupCatalogsBySpec(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]catalogPair
       log.Println("Did not find", cws.Spec, "in c2")
     }
   }
-  return &pairs_by_spec
+  return pairs_by_spec
 }
 
-func massCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
+func massCompareCatalogs(c1, c2 []CatalogWithSpec) (map[CatalogSpec]bool) {
   diff_detected := make(map[CatalogSpec]bool)
 
   pairs_by_spec := groupCatalogsBySpec(c1, c2)
 
   // The catalog disk/db pairs are ready to be compared.
-  for spec, pair := range *pairs_by_spec {
+  for spec, pair := range pairs_by_spec {
     diff_detected[spec] = false
     // DeepEqual could do it, but it is too crude; doesn't provide details
     // This code can probably be simplified.
@@ -668,7 +668,7 @@ func massCompareCatalogs(c1, c2 []CatalogWithSpec) (*map[CatalogSpec]bool) {
     }
   }
 
-  return &diff_detected
+  return diff_detected
 }
 
 func generateCatalogIndexFile(catalog_root string,
@@ -763,12 +763,12 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
 
   catalog_ch := make(chan []CatalogWithSpec)
   go getCatalogsFromREST(catalog_ch, catspecs)
-  files_from_db_chan := make(chan *filesOfCatalog)
+  files_from_db_chan := make(chan filesOfCatalog)
   go getFilesOfCatalogFromDatabase(files_from_db_chan, catrel, catalog_ch)
 
   // 2. build a data structure based on the contents of the disk
   //    it should be done in parallel
-  files_from_disk_chan := make(chan *filesOfCatalog)
+  files_from_disk_chan := make(chan filesOfCatalog)
   go getFilesOfCatalogFromDisk(files_from_disk_chan, catalog_root, catrel)
 
   // 3. Retrieve results
@@ -812,7 +812,7 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
 
   var wg sync.WaitGroup
   for _, cws := range catalogs_in_db {
-    diff_present, ok := (*diff_flag_by_spec)[cws.Spec]
+    diff_present, ok := diff_flag_by_spec[cws.Spec]
     if !ok { continue }
     if diff_present {
       wg.Add(1)
