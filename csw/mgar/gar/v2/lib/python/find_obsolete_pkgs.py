@@ -22,13 +22,10 @@ TODO:
 """
 
 import cjson
-import gdbm
+import jinja2
 import logging
 import optparse
 import os
-import pprint
-import re
-import subprocess
 import sys
 
 from collections import namedtuple
@@ -45,10 +42,51 @@ datadir=configuration.CHECKPKG_DIR % os.environ
 # fn_revdep = os.path.join(datadir,'RevDeps_%s_%s_%s.json')
 fn_cat = os.path.join(datadir,'catalog_%s_%s_%s.json')
 fn_pkgs_to_remove = 'PkgsToRemoveFrom_%s_%s_%s.lst'
-fn_pkgs_to_rebuild = 'PkgsToRebuildFrom_%s_%s_%s.lst'
+fn_pkgs_to_rebuild = 'PkgsToRebuildFrom_%s_%s_%s.html'
 
 CatSubSet = namedtuple('CatSubSet',
-                       'pkgname, catalogname, md5_sum, version, dependlist')
+                       'pkgname, catalogname, md5_sum, version, dependlist, maintainer')
+
+REBUILD_TMPL = """<html>
+<head>
+  <title>Packages to rebuild</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <style TYPE="text/css">
+    body, p, li {
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+    .obsolete, .obsolete a { color: brown; }
+    .non-obsolete { color: #DDD; }
+  </style>
+</head>
+<body>
+  <h1>Packages to rebuild</h1>
+  <p>Packages displayed in brown are empty, obsolete packages. The packages on
+  the list are the packages which need to be rebuilt with their dependencies
+  modified to not include the obsolete packages any more.</p>
+  <ul>
+  {% for pkg in pkgs %}
+    <li>
+      {{ pkg.maintainer }}
+      <a href="http://buildfarm.opencsw.org/pkgdb/srv4/{{ pkg.md5_sum }}/"
+        >{{ pkg.catalogname }}</a>
+      {% for dep in pkg.dependlist %}
+        {% if dep in obsolete %}
+          <span class="obsolete">
+          <a href="http://buildfarm.opencsw.org/pkgdb/srv4/{{ obsolete[dep].md5_sum }}/"
+             title="{{ dep }} is obsolete; {{ pkg.pkgname }} needs to be rebuilt with {{ dep }} removed from RUNTIME_DEP_PKGS"
+          >{{ dep }}</a>
+          </span>
+        {% endif %}
+      {% endfor %}
+    </li>
+  {% endfor %}
+  </ul>
+</body>
+</html>
+"""
+
 
 class CompCatalog(object):
 
@@ -77,9 +115,11 @@ class CompCatalog(object):
                 pkgname = pkgitems['basic_stats']['pkgname']
                 try:
                     pkgdeplst = [ i[0] for i in pkgitems['depends']]
+                    maintainer = pkgitems['pkginfo']['EMAIL'].split('@')[0]
                     pkg_by_pkgname[pkgname] = CatSubSet(pkgname, pkg['catalogname'],
                                                         pkg['md5_sum'], pkg['version'],
-                                                        tuple(pkgdeplst))
+                                                        tuple(pkgdeplst),
+                                                        maintainer)
                 except Exception as exc:
                     logger.error("CompCatalog::getPkgStat: %s %s %s",
                                  type(exc), pkg.catalogname, pkg.md5_sum)
@@ -105,7 +145,6 @@ def processCat(catrel, arch, osrel, rest_client):
     rev_deps_by_pkg = {}
     for pkgname in pkg_by_pkgname:
         pkg = pkg_by_pkgname[pkgname]
-        # logger.info('pkg: %r', pkg)
         # RevDepsByPkg returns only md5 sums and pkgnames, so we need to map
         # them back to CatSubSet
         revdeps = rev_deps_access.RevDepsByPkg(catrel, arch, osrel, pkgname)
@@ -128,6 +167,7 @@ def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel, rest_client):
     newcatlst, newrevdeplst = processCat(newcatrel, arch, osrel, rest_client)
     oldcatlst, oldrevdeplst = processCat(oldcatrel, arch, osrel, rest_client)
 
+    obsolete_pkgs_by_pkgname = {}
     to_remove_candidates = []
     rebuildlst = set()
     logger.debug(' process dependecies in %s' % newcatrel)
@@ -135,6 +175,7 @@ def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel, rest_client):
         # Checking stub packages
         catalogname = pkg.catalogname
         if catalogname.endswith("_stub"):
+            obsolete_pkgs_by_pkgname[pkg.pkgname] = pkg
             if not newrevdeplst[pkg]:
                 # Stub has no reverse dependencies, so it will be considered for removal.
                 to_remove_candidates.append(pkg)
@@ -161,10 +202,11 @@ def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel, rest_client):
         else:
             logger.info(" KEEP   : {0} not a _stub package in {1}"
                         .format(pkg.pkgname, oldcatrel))
-    return pkgs_to_drop, rebuildlst
+    return pkgs_to_drop, rebuildlst, obsolete_pkgs_by_pkgname
 
 
-def WriteToTextFiles(pkgs_to_drop, pkgs_to_rebuild, newcatrel, arch, osrel):
+def WriteToTextFiles(pkgs_to_drop, pkgs_to_rebuild, newcatrel, arch, osrel,
+                     obsolete):
     print ('write %s' % (fn_pkgs_to_remove % (newcatrel,osrel,arch)))
     with open(fn_pkgs_to_remove % (newcatrel, osrel, arch), "w") as fd:
         for pkg in sorted(pkgs_to_drop, key=lambda p: p.catalogname):
@@ -172,8 +214,12 @@ def WriteToTextFiles(pkgs_to_drop, pkgs_to_rebuild, newcatrel, arch, osrel):
     logger.info("number of packages to remove: %d" % len(pkgs_to_drop))
     print ('write %s' % (fn_pkgs_to_rebuild % (newcatrel,osrel,arch)))
     with open(fn_pkgs_to_rebuild % (newcatrel,osrel,arch), "w") as fd:
-        for pkg in sorted(pkgs_to_rebuild, key=lambda p: p.catalogname):
-            fd.write(pkg.catalogname+'\n')
+        # for pkg in sorted(pkgs_to_rebuild, key=lambda p: p.catalogname):
+        #     fd.write(pkg.catalogname+'\n')
+        template = jinja2.Template(REBUILD_TMPL)
+        pkgs = sorted(pkgs_to_rebuild, key=lambda p: (p.maintainer, p.catalogname))
+        fd.write(template.render(catrel=newcatrel, osrel=osrel, arch=arch,
+                                 pkgs=pkgs, obsolete=obsolete))
     logger.info("packages to rebuild: %d" % len(pkgs_to_rebuild))
 
 
@@ -234,9 +280,10 @@ def main():
         username=username,
         password=password)
 
-    reallyremovelst, rebuildlst = ComputeRemoveAndRebuild(oldcatrel, newcatrel,
-                                                          arch, osrel, rest_client)
-    WriteToTextFiles(reallyremovelst, rebuildlst, newcatrel, arch, osrel)
+    removelst, rebuildlst, obsolete = (
+        ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel,
+                                rest_client))
+    WriteToTextFiles(removelst, rebuildlst, newcatrel, arch, osrel, obsolete)
 
 
 if __name__ == '__main__':
