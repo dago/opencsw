@@ -1,5 +1,5 @@
 NAME = rcs
-VERSION = 5.9.1
+VERSION = 5.9.2
 GARTYPE = v2
 
 DESCRIPTION = GNU Revision Control System
@@ -8,8 +8,6 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(DISTNAME).tar.xz
-
-PATCHFILES += 0001-Do-not-halt-on-errors.patch
 
 VENDOR_URL = http://www.gnu.org/software/rcs/
 
