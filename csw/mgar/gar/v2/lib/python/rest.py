@@ -382,8 +382,8 @@ class RestClient(object):
       url += '?use_in_catalogs=0'
     return self._CurlPut(url, [])
 
-  def GetCatalogForGeneration(self, catrel, arch, osrel):
-    url = (self.pkgdb_url + "/catalogs/%s/%s/%s/for-generation/"
+  def GetCatalogForGenerationAsDicts(self, catrel, arch, osrel):
+    url = (self.pkgdb_url + "/catalogs/%s/%s/%s/for-generation/as-dicts/"
            % (catrel, arch, osrel))
     logging.debug("GetCatalogForGeneration(): url=%r", url)
     data = urllib2.urlopen(url).read()
