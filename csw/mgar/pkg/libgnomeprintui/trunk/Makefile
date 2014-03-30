@@ -13,6 +13,10 @@ DISTFILES  = $(DISTNAME).tar.gz
 UFILES_REGEX = href=\"(\d+(?:\.\d+)*)/\"
 UPSTREAM_MASTER_SITES = http://ftp.acc.umu.se/pub/GNOME/sources/libgnomeprintui/
 
+BUILD_DEP_PKGS = CSWfontconfig-dev
+# TODO: Add more *-dev packages. Maybe we should have some automation which
+# would detect which *-dev packages to add?
+
 PACKAGES += CSWlibgnomeprintui2-2-0
 PKGFILES_CSWlibgnomeprintui2-2-0 += $(call baseisadirs,$(libdir),libgnomeprintui-2-2\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibgnomeprintui2-2-0 += $(DESCRIPTION), libgnomeprintui-2-2.so.0
