@@ -9,9 +9,14 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(DISTNAME).tar.xz
 
-PATCHFILES += 0001-sh-bails-out-if-returncode-of-grep-is-1.patch
+PATCHFILES += 0001-Do-not-halt-on-errors.patch
 
 VENDOR_URL = http://www.gnu.org/software/rcs/
+
+# Make extra package for Solaris 11 as the Solaris 10 package dumps core:
+#   https://www.opencsw.org/mantis/view.php?id=5159
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
 PACKAGES += CSWrcs
 SPKG_DESC_CSWrcs = GNU Revision Control System
