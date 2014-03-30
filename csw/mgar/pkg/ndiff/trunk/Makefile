@@ -10,22 +10,22 @@ define BLURB
   similar. ndiff allows you to specify absolute and/or relative error
   tolerances for differences between numerical values in the two files,
   and then reports only the lines with values exceeding those tolerances.
-  It also tells you by how much they differ. 
+  It also tells you by ho much they differ. 
 endef
 
 MASTER_SITES = ftp://ftp.math.utah.edu/pub/misc/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
-PATCHFILES = 0001-fixed-make-install-target.patch
+PATCHFILES = 0001-fixed-make-insPACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+RUNTIME_DEP_PKGS_CSWndiff += CSWlibgmp10
+BUILD_DEP_PKGS =
 
-RUNTIME_DEP_PKGS_CSWndiff += CSWlibgmp
+# The test suite seems to be broken
+SKIPTEST = 1p
 BUILD_DEP_PKGS = 
 
 VENDOR_URL = http://www.math.utah.edu/~beebe/software/ndiff/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include gar/category.mk
-
+includ
