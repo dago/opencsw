@@ -19,9 +19,10 @@ import pprint
 import sys
 import urllib2
 
-from lib.python import configuration
-from lib.python import rest
 from lib.python import common_constants
+from lib.python import configuration
+from lib.python.representations import CatalogSpec
+from lib.python import rest
 
 USAGE = """%prog --os-releases=SunOS5.10,SunOS5.11 -c <catalogname>
 
@@ -63,47 +64,44 @@ class RevDeps(object):
   """
 
   def __init__(self, rest_client):
+    """Initialize class instance.
+
+    self.cached_catalogs is a dict of:
+      CatalogSpec: [(md5, pkgname), ...]
+    """
     self.cached_catalogs = {}
+    self.pkgs_by_md5 = {}
+    self.pkgs_by_pkgname = {}
     self.cp = rest.CachedPkgstats(fn_pkgstatsdb, rest_client)
     self.rest_client = rest_client
 
   def MakeRevIndex(self, catrel, arch, osrel, quiet=False):
-    key = (catrel, arch, osrel)
+    def PkgnameListFromString(s):
+      if s == 'none':
+        return []
+      return s.split('|')
+    logging.info('MakeRevIndex(%r, %r, %r, %r)', catrel, arch, osrel, quiet)
+    key = CatalogSpec(catrel=catrel, arch=arch, osrel=osrel)
     if key in self.cached_catalogs:
       return
-    fn = fn_revdeps % key
-    if os.path.exists(fn):
-      with open(fn, "r") as fd:
-        self.cached_catalogs[key] = cjson.decode(fd.read())
-      return
-    # This should be rewritten to use RestClient.GetCatalogForGeneration
-    logging.info(
-        "Building a database of reverse dependencies. "
-        "This can take up to multiple hours.")
-    catalog = self.rest_client.GetCatalog(*key)
+    # This takes 30-40s
+    catalog = self.rest_client.GetCatalogForGenerationAsDicts(catrel, arch, osrel)
     rev_deps = {}
-    counter = 0
-    for pkg_simple in catalog:
-      md5 = pkg_simple["md5_sum"]
-      short_data = self.cp.GetDeps(md5)
-      pkgname = short_data["pkgname"]
-      for dep_pkgname, _ in short_data["deps"]:
-        rev_dep_set = rev_deps.setdefault(dep_pkgname, [])
-        rev_dep_set.append((md5, pkgname))
-      if not quiet and not counter % EVERY_N_DOTS:
-        sys.stdout.write(".")
-        sys.stdout.flush()
-      counter += 1
-    sys.stdout.write("\n")
+    for pkg in catalog:
+      self.pkgs_by_pkgname[pkg['pkgname']] = pkg
+      self.pkgs_by_md5[pkg['md5_sum']] = pkg
+    for pkg in catalog:
+      deps = PkgnameListFromString(pkg['deps'])
+      for dep_pkgname in deps:
+        rev_dep_lst = rev_deps.setdefault(dep_pkgname, [])
+        rev_dep_lst.append((pkg['md5_sum'], pkg['pkgname']))
     self.cached_catalogs[key] = rev_deps
-    with open(fn, "w") as fd:
-      fd.write(cjson.encode(self.cached_catalogs[key]))
 
   def RevDepsByMD5(self, catrel, arch, osrel, md5_sum):
     self.MakeRevIndex(catrel, arch, osrel)
-    pkg = self.cp.GetPkgstats(md5_sum)
-    pkgname = pkg["basic_stats"]["pkgname"]
-    key = (catrel, arch, osrel)
+    pkg = self.pkgs_by_md5[md5_sum]
+    pkgname = pkg['pkgname']
+    key = CatalogSpec(catrel=catrel, arch=arch, osrel=osrel)
     if pkgname in self.cached_catalogs[key]:
       return self.cached_catalogs[key][pkgname]
     else:
@@ -111,7 +109,7 @@ class RevDeps(object):
 
   def RevDepsByPkg(self, catrel, arch, osrel, pkgname):
     self.MakeRevIndex(catrel, arch, osrel)
-    key = (catrel, arch, osrel)
+    key = CatalogSpec(catrel=catrel, arch=arch, osrel=osrel)
     if pkgname in self.cached_catalogs[key]:
       return self.cached_catalogs[key][pkgname]
     else:
@@ -189,7 +187,8 @@ class PackageRemover(object):
 
 def main():
   parser = optparse.OptionParser(USAGE)
-  parser.add_option("-c", "--catalogname", dest="catalogname", help='the name of the package in catalog')
+  parser.add_option("-c", "--catalogname", dest="catalogname",
+                    help='the name of the package in catalog')
   parser.add_option("--os-releases", dest="os_releases",
                     help=("Comma separated OS releases, e.g. "
                           "SunOS5.9,SunOS5.10"))

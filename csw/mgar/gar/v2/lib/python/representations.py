@@ -27,3 +27,6 @@ PkgmapEntry = collections.namedtuple(
 
 ElfSymInfo = collections.namedtuple('Symbol', ['bind', 'flags', 'shndx',
                                                'soname', 'symbol', 'version'])
+
+# Since we use this idea everywhere, it deserves its own named tuple.
+CatalogSpec = collections.namedtuple('CatalogSpec', ['catrel', 'arch', 'osrel'])
