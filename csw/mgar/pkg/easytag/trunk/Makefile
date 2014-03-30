@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = easytag
-VERSION = 2.1.10
+VERSION = 2.1.8
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -9,12 +9,11 @@ DESCRIPTION = Tag editor for MP3, Ogg Vorbis files and more
 define BLURB
   EasyTAG is a utility for viewing and editing tags for MP3, MP2, MP4/AAC, FLAC,
   Ogg Vorbis, MusePack, Monkey's Audio and WavPack files. Its simple and nice GTK+
-  interface makes tagging easier under GNU/Linux or Windows.
-endef
-GNOME_MIRRORS)
+  interface makes tagging easier under GNU/Linux o# MASTER_SITES = $(GNOME_MIRRORS)
+MASTER_SITES = https://download.gnome.org/sources/easytag/2.1/
 DISTFILES += $(NAME)-$(VERSION).tar.xz
 
-VENDOR_URL = http://projects.gnome.org/easytag/al_search_fix.diff
+VENDOR_URL = https://wiki.gnome.org/Apps/EasyTAGal_search_fix.diff
 
 BUILD_DEP_PKGS += CSWlibogg-dev
 BUILD_DEP_PKGS += CSWlibvorbis-dev
