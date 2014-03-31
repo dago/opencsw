@@ -5,9 +5,11 @@ NAME = transfig
 VERSION = 3.2.5e
 GARTYPE = v2
 
-DESCRIPTION = Brief description
+DESCRIPTION =  Create and convert graphics
 define BLURB
-  Long description
+  TransFig is a set of tools for creating TeX documents with graphics
+  which are portable, in the sense that they can be printed in a wide
+  variety of environments.
 endef
 
 MASTER_SITES =  $(SF_MIRROR)
