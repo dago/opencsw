@@ -1,0 +1,33 @@
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -306,7 +306,7 @@ am__libhpmud_la_SOURCES_DIST = io/hpmud/hpmud.c io/hpmud/mlc.c \
+ libhpmud_la_OBJECTS = $(am_libhpmud_la_OBJECTS)
+ libhpmud_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libhpmud_la_CFLAGS) \
+-	$(CFLAGS) $(libhpmud_la_LDFLAGS) $(LDFLAGS) -o $@
++	$(CFLAGS) $(LDFLAGS) $(libhpmud_la_LDFLAGS) -o $@
+ @HPLIP_BUILD_TRUE@am_libhpmud_la_rpath = -rpath $(libdir)
+ am__DEPENDENCIES_1 =
+ @HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@libsane_hpaio_la_DEPENDENCIES =  \
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -346,7 +346,7 @@ am__libsane_hpaio_la_SOURCES_DIST = scan/sane/hpaio.c \
+ libsane_hpaio_la_OBJECTS = $(am_libsane_hpaio_la_OBJECTS)
+ libsane_hpaio_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libsane_hpaio_la_CFLAGS) \
+-	$(CFLAGS) $(libsane_hpaio_la_LDFLAGS) $(LDFLAGS) -o $@
++	$(CFLAGS) $(LDFLAGS) $(libsane_hpaio_la_LDFLAGS) -o $@
+ @HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@am_libsane_hpaio_la_rpath = -rpath \
+ @HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@	$(libsane_hpaiodir)
+ pcardext_la_LIBADD =
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -366,7 +366,7 @@ am__scanext_la_SOURCES_DIST = scan/scanext/scanext.c
+ scanext_la_OBJECTS = $(am_scanext_la_OBJECTS)
+ scanext_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(scanext_la_CFLAGS) \
+-	$(CFLAGS) $(scanext_la_LDFLAGS) $(LDFLAGS) -o $@
++	$(CFLAGS) $(LDFLAGS) $(scanext_la_LDFLAGS) -o $@
+ @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@am_scanext_la_rpath =  \
+ @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@	-rpath \
+ @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@	$(scanextdir)

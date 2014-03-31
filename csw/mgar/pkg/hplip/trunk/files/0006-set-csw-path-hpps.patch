@@ -1,0 +1,20 @@
+--- a/prnt/filters/hpps
++++ b/prnt/filters/hpps
+@@ -44,7 +44,7 @@ output_fd = 1
+ 
+ job_id = 0
+ pid = os.getpid()
+-config_file = '/etc/hp/hplip.conf'
++config_file = '/etc/opt/csw/hp/hplip.conf'
+ home_dir = ''
+ 
+ 
+@@ -64,7 +64,7 @@ if os.path.exists(config_file):
+         bug("Error setting home directory: home= under [dirs] not found.")
+         sys.exit(CUPS_FILTER_FAILED)
+ else:
+-    bug("Error setting home directory: /etc/hp/hplip.conf not found")
++    bug("Error setting home directory: %s not found" % config_file)
+     sys.exit(CUPS_FILTER_FAILED)
+ 
+ if not home_dir or not os.path.exists(home_dir):

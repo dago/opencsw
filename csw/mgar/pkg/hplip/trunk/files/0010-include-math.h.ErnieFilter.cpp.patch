@@ -1,0 +1,13 @@
+--- a/prnt/hpcups/ErnieFilter.cpp
++++ b/prnt/hpcups/ErnieFilter.cpp
+@@ -50,10 +50,7 @@
+ #include "ErnieFilter.h"
+ 
+ 
+-#if defined(__APPLE__) || defined(__linux) || defined(__GLIBC__) || defined(__NetBSD__)
+ #include <math.h>
+-#endif
+-
+ 
+ #if kGatherStats == 1
+ extern int blockStats[];

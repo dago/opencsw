@@ -1,0 +1,41 @@
+--- a/common/utils.c
++++ b/common/utils.c
+@@ -4,6 +4,8 @@
+ #include <sys/stat.h>
+ #include <errno.h>
+ #include <stdlib.h>
++#include <string.h>
++#include <strings.h>
+ 
+ extern int errno;
+ 
+@@ -245,4 +247,16 @@ int createTempFile(char* szFileName, FILE** pFilePtr)
+     }
+ 
+     return iFD;
+-}
+\ No newline at end of file
++}
++
++char *strcasestr(char *a, char *b)
++{
++  size_t l;
++  char f[3];
++
++  snprintf(f, sizeof(f), "%c%c", tolower(*b), toupper(*b));
++  for (l = strcspn(a, f); l != strlen(a); l += strcspn(a + l + 1, f) + 1)
++    if (strncasecmp(a + l, b, strlen(b)) == 0)
++      return a + l;
++  return NULL;
++}
+--- a/common/utils.h
++++ b/common/utils.h
+@@ -152,6 +152,8 @@ extern "C" {
+ 
+     int createTempFile(char* szFileName, FILE** pFilePtr);
+ 
++    char *strcasestr(char *a, char *b);
++
+ #ifdef __cplusplus
+ }
+ #endif
