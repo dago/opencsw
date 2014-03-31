@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = textile
-VERSION = 2.1.4
+VERSION = 2.1.5
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = XHTML generator using simple markup
