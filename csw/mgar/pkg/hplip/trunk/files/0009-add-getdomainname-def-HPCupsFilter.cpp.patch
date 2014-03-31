@@ -1,0 +1,24 @@
+--- a/prnt/hpcups/HPCupsFilter.cpp
++++ b/prnt/hpcups/HPCupsFilter.cpp
+@@ -34,12 +34,21 @@
+ #include <signal.h>
+ #include <sys/wait.h>
+ #include <sys/utsname.h>
++#include <sys/systeminfo.h>
+ #include <time.h>
+ #include "utils.h"
+ 
+ #define HP_FILE_VERSION_STR    "03.09.08.0"
+ 
+ static HPCupsFilter    filter;
++int
++getdomainname(char *name, size_t namelen)
++{
++    long sysinfostatus;
++
++    sysinfostatus = sysinfo(SI_SRPC_DOMAIN, name, namelen);
++    return ((sysinfostatus < 0) ? -1 : 0);
++}
+ 
+ int main (int  argc, char *argv[])
+ {
