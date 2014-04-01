@@ -63,7 +63,8 @@ RUNTIME_DEP_PKGS_CSWhplip += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWhplip += CSWlibsane1
 RUNTIME_DEP_PKGS_CSWhplip += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWhplip += CSWlibhpmud0
-RUNTIME_DEP_PKGS_CSWhplip += CSWlibhpip012.2/upgrading.html
+RUNTIME_DEP_PKGS_CSWhplip += CSWlibhpip01RUNTIME_DEP_PKGS_CSWhplip += CSWghostscript
+CHECKPKG_OVERRIDES_CSWhplip += surplus-dependency|CSWghostscript12.2/upgrading.html
 CHECKPKG_OVERRIDES_CSWhplip += file-with-bad-content|/usr/share|root$(NAME)-$(VERSION)/u/doc/hplip-3.12.2/upgrading.html
 CHECKPKG_OVERRIDES_CSWhplip += file-with-bad-content|/usr/share|root$(NAME)-$(VERSION)/uninstalling.html
 CHECKPKG_OVERRIDES_CSWhplip += bad-rpath-entry
