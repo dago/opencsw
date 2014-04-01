@@ -9,8 +9,6 @@
  @HPLIP_BUILD_TRUE@am_libhpmud_la_rpath = -rpath $(libdir)
  am__DEPENDENCIES_1 =
  @HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@libsane_hpaio_la_DEPENDENCIES =  \
---- a/Makefile.in
-+++ b/Makefile.in
 @@ -346,7 +346,7 @@ am__libsane_hpaio_la_SOURCES_DIST = scan/sane/hpaio.c \
  libsane_hpaio_la_OBJECTS = $(am_libsane_hpaio_la_OBJECTS)
  libsane_hpaio_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -20,8 +18,6 @@
  @HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@am_libsane_hpaio_la_rpath = -rpath \
  @HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@	$(libsane_hpaiodir)
  pcardext_la_LIBADD =
---- a/Makefile.in
-+++ b/Makefile.in
 @@ -366,7 +366,7 @@ am__scanext_la_SOURCES_DIST = scan/scanext/scanext.c
  scanext_la_OBJECTS = $(am_scanext_la_OBJECTS)
  scanext_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -31,3 +27,21 @@
  @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@am_scanext_la_rpath =  \
  @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@	-rpath \
  @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@@SCAN_BUILD_TRUE@	$(scanextdir)
+@@ -4449,7 +4449,7 @@ cups_drv = prnt/drv/hpcups.drv
+ @HPLIP_BUILD_TRUE@dist_halpre_DATA = data/rules/20-hplip-devices.fdi
+ 
+ # hplip.conf
+-@HPLIP_BUILD_TRUE@hplip_confdir = /etc/hp
++@HPLIP_BUILD_TRUE@hplip_confdir = /etc/opt/csw/hp
+ @HPLIP_BUILD_TRUE@hplip_conf_DATA = hplip.conf
+ 
+ #pstotiff filter
+@@ -4457,7 +4457,7 @@ cups_drv = prnt/drv/hpcups.drv
+ @HPLIP_BUILD_TRUE@pstotiff_SCRIPTS = fax/filters/pstotiff
+ 
+ # hplip.state
+-@HPLIP_BUILD_TRUE@hplip_statedir = /var/lib/hp
++@HPLIP_BUILD_TRUE@hplip_statedir = /var/opt/csw/lib/hp
+ @HPLIP_BUILD_TRUE@dist_hplip_state_DATA = 
+ @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@dist_hplip_SCRIPTS = hpssd.py __init__.py hpdio.py
+ @FULL_BUILD_TRUE@@HPLIP_BUILD_TRUE@cmddir = $(hplipdir)
