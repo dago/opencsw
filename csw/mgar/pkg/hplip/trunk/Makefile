@@ -14,7 +14,11 @@ endef
 # GARCOMPILER = GNU
 GARCOMPILER = SOS12U3
 
-PACKAGING_PLATFORMS = solaris10-i386  += CSWlibjpeg7
+PACKAGING_PLATFORMS = solaris10-i38REINPLACE_USRSHARE += fax/filters/pstotiff
+REINPLACEMENTS += usrbin
+REINPLACE_MATCH_usrbin = /usr/bin/gs
+REINPLACE_WITH_usrbin = /opt/csw/bin/gs
+REINPLACE_FILES_usrbin += fax/filters/pstotiff386  += CSWlibjpeg7
 
 PATCHFILES += 0001-add-strnlen.patch
 PATCHFILES += 0002-set-csw-path-hpijs.cpp.patch
