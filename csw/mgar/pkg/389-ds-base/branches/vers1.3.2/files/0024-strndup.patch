@@ -1,0 +1,27 @@
+--- a/ldap/servers/plugins/automember/automember.c
++++ b/ldap/servers/plugins/automember/automember.c
+@@ -44,7 +44,10 @@
+  */
+ #include "automember.h"
+ 
+-
++#include "plstr.h"
++#ifndef strndup
++#define strndup PL_strndup
++#endif
+ /*
+  * Plug-in globals
+  */
+--- a/ldap/servers/plugins/mep/mep.c
++++ b/ldap/servers/plugins/mep/mep.c
+@@ -39,6 +39,10 @@
+ #  include <config.h>
+ #endif
+ 
++#include "plstr.h"
++#ifndef strndup
++#define strndup PL_strndup
++#endif
+ /*
+  * Managed Entries Plug-in
+  */

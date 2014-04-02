@@ -1,0 +1,14 @@
+--- a/ldap/servers/slapd/main.c
++++ b/ldap/servers/slapd/main.c
+@@ -124,6 +124,11 @@ static void cmd_set_shutdown(int);
+  * global variables
+  */
+ 
++#if defined(USE_MOZLDAP) && defined(LDAP_DEBUG)
++int ldap_debug = 1;
++int lber_debug = 1;
++#endif
++
+ static int slapd_exemode = SLAPD_EXEMODE_UNKNOWN;
+ 
+ static int init_cmd_shutdown_detect()

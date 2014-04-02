@@ -1,0 +1,62 @@
+--- a/ldap/servers/plugins/posix-winsync/posix-winsync.c
++++ b/ldap/servers/plugins/posix-winsync/posix-winsync.c
+@@ -373,8 +373,12 @@ sync_acct_disable(void *cbdata, /* the usual domain config data */
+ }
+ 
+ /* Returns non-zero if the attribute value sets are identical.  */
++/* reuse it from windwos_protocol_util.c */
+ static int
+-attr_compare_equal(Slapi_Attr *a, Slapi_Attr *b)
++attr_compare_equal(Slapi_Attr *a, Slapi_Attr *b, int n);
++
++static int
++pw_attr_compare_equal(Slapi_Attr *a, Slapi_Attr *b)
+ {
+     int i = 0;
+     Slapi_Value *va = NULL;
+@@ -944,15 +948,17 @@ posix_winsync_pre_ds_mod_group_cb(void *cbdata, const Slapi_Entry *rawentry, Sla
+                 Slapi_Attr *local_attr = NULL;
+                 char *local_type = NULL;
+ 
+-                slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "1.\n");
++                slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, 
++                                "_pre_ds_mod_group_cb -- found AD attr %s\n", type);
+                 slapi_attr_get_valueset(attr, &vs);
+                 local_type = slapi_ch_strdup(attr_map[i].ldap_attribute_name);
+                 slapi_entry_attr_find(ds_entry, local_type, &local_attr);
+                 is_present_local = (NULL == local_attr) ? 0 : 1;
+                 if (is_present_local) {
+                     int values_equal = 0;
+-                    slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "2.\n");
+-                    values_equal = attr_compare_equal(attr, local_attr);
++                    slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, 
++                                    "_pre_ds_mod_group_cb -- compare with DS attr %s\n", local_type);
++                    values_equal = attr_compare_equal(attr, local_attr, 0);
+                     if (!values_equal) {
+                         slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name,
+                                         "_pre_ds_mod_group_cb -- update mods: %s, %s : values are different -> modify\n",
+@@ -964,13 +970,13 @@ posix_winsync_pre_ds_mod_group_cb(void *cbdata, const Slapi_Entry *rawentry, Sla
+                         *do_modify = 1;
+                     }
+                 } else {
+-                    slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "3.\n");
++                    slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "_pre_ds_mod_group_cb --  add attr\n");
+ 
+                     slapi_mods_add_mod_values(smods, LDAP_MOD_ADD, local_type,
+                                               valueset_get_valuearray(vs));
+                     *do_modify = do_modify_local = 1;
+                 }
+-                slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "4.\n");
++                slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "_pre_ds_mod_group_cb -- values compared\n");
+ 
+                 slapi_ch_free((void**) &local_type);
+                 slapi_valueset_free(vs);
+@@ -1109,7 +1115,7 @@ posix_winsync_pre_ds_add_user_cb(void *cbdata, const Slapi_Entry *rawentry, Slap
+             }
+         }
+     }
+-    sync_acct_disable(cbdata, rawentry, ds_entry, ACCT_DISABLE_TO_DS, ds_entry, NULL, NULL);
++    sync_acct_disable(cbdata, ad_entry, ds_entry, ACCT_DISABLE_TO_DS, ds_entry, NULL, NULL);
+     slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "<-- _pre_ds_add_user_cb -- end\n");
+ 
+     return;

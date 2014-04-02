@@ -1,0 +1,13 @@
+--- a/ldap/servers/slapd/slapi2nspr.c
++++ b/ldap/servers/slapd/slapi2nspr.c
+@@ -60,7 +60,9 @@
+  * directly to their NSPR equivalents.  Clever, huh?
+  */
+ 
+-
++#ifdef USE_POSIX_RWLOCKS
++#include <pthread.h>
++#endif
+ /*
+  * ---------------- SLAPI API Functions --------------------------------------
+  */
