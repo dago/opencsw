@@ -15,7 +15,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 EXTRA_INC = $(prefix)/include/gtk-2.0
 CONFIGURE_ARGS = $(DIRPATHS)
-RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWgxmessage_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWgxmessage += $(RUNTIME_DEP_PKGS_CSWgxmessage_$(GARCH))
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibgobject2-0-0
