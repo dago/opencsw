@@ -20,4 +20,10 @@ ARCHALL_CSWpy-send-nsca = 1
 RUNTIME_DEP_PKGS_CSWpy-send-nsca += CSWpy-crypto
 CHECKPKG_OVERRIDES_CSWpy-send-nsca += surplus-dependency|CSWpy-crypto
 
+REINPLACEMENTS += cfg
+REINPLACE_MATCH_cfg = /etc/send_nsca.cfg
+REINPLACE_WITH_cfg = $(sysconfdir)/nagios/send_nsca.cfg
+REINPLACE_FILES_cfg += bin/py_send_nsca
+REINPLACE_FILES_cfg += send_nsca/nsca.py
+
 include gar/category.mk
