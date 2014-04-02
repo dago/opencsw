@@ -9,3 +9,14 @@
  # We need to make sure that libpthread is linked before libc on HP-UX.
  if HPUX
  AM_LDFLAGS = -lpthread
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1362,7 +1362,7 @@ ldap_agent_bin_SOURCES = ldap/servers/snmp/main.c \
+ 	ldap/servers/snmp/ldap-agent.c \
+ 	ldap/servers/slapd/agtmmap.c
+ 
+-ldap_agent_bin_CPPFLAGS = $(AM_CPPFLAGS) @netsnmp_inc@ @openldap_inc@ @ldapsdk_inc@ @nss_inc@ @nspr_inc@
++ldap_agent_bin_CPPFLAGS = $(AM_CPPFLAGS) @openldap_inc@ @ldapsdk_inc@ @netsnmp_inc@ @nss_inc@ @nspr_inc@
+ ldap_agent_bin_LDADD = $(LDAPSDK_LINK_NOTHR) $(SASL_LINK) $(NSS_LINK) $(NSPR_LINK) $(NETSNMP_LINK) $(THREADLIB)
+ if SOLARIS
+ ldap_agent_bin_LDADD += -lrt

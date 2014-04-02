@@ -52,8 +52,12 @@ PATCHFILES += 0016-fix-bigendian-utf8compare.c
 PATCHFILES += 0017-disable-asm-for-Sparc.patch
 # probably only with openLDAP 
 PATCHFILES += 0018-correct-64bit-ptr-bind.c
+PATCHFILES += 0021-include-lber.h-slapi-plugin.h.patch
+PATCHFILES += 0022-adjust-mozldap-version-sasl_io.c.patch
+PATCHFILES += 0023-phtread-include-slapi2nspr.c.patch
+PATCHFILES += 0024-strndup.patch
+PATCHFILES += 0025-posix-winsync.rawentry.patch
 PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
-
 
 BUILD_DEP_PKGS += CSWautoconf
 BUILD_DEP_PKGS += CSWautomake
@@ -61,7 +65,8 @@ BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWnspr-dev
 BUILD_DEP_PKGS += CSWlibnss-dev
 BUILD_DEP_PKGS += CSWnetsnmp-dev
-BUILD_DEP_PKGS += CSWopenldap-dev
+# BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWmozldap-dev
 BUILD_DEP_PKGS += CSWsasl-dev
 BUILD_DEP_PKGS += CSWlibicu-dev
 BUILD_DEP_PKGS += CSWlibsvrcore0-dev
@@ -113,7 +118,7 @@ CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWlibnssdbm3
 
 EXTRA_LIB = /opt/csw/bdb48/lib
 # if use MozillaLDAP remove -I/opt/csw/include because there are OpenLDAP header
-# CPPFLAGS = 
+CPPFLAGS = 
 EXTRA_CFLAGS_SOS12U3 = -xnorunpath
 EXTRA_CXXFLAGS_SOS12U3 = -norunpath
 EXTRA_CPPFLAGS_GCC4 = -DSOLARIS_GCC
@@ -125,12 +130,12 @@ STRIP_LIBTOOL = 1
 GARFLAVOR = DBG
 
 CONFIGURE_ARGS = $(DIRPATHS)
-# CONFIGURE_ARGS += --with-ldapsdk-inc=$(includedir)/dirsrv 
-# CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
-## CONFIGURE_ARGS += --with-ldapsdk-bin=$(abspath $(prefix)/dirsrv/bin/$(MM_BINDIR))
+CONFIGURE_ARGS += --with-ldapsdk-inc=$(includedir)/dirsrv 
+CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
+CONFIGURE_ARGS += --with-ldapsdk-bin=$(abspath $(prefix)/dirsrv/bin/$(MM_BINDIR))
 # CONFIGURE_ARGS += --with-ldapsdk-bin=$(bindir)
-CONFIGURE_ARGS += --with-openldap=$(prefix)
-CONFIGURE_ARGS += --with-openldap-inc=$(includedir)
+# CONFIGURE_ARGS += --with-openldap=$(prefix)
+# CONFIGURE_ARGS += --with-openldap-inc=$(includedir)
 CONFIGURE_ARGS += --with-db-inc=$(prefix)/bdb48/include 
 CONFIGURE_ARGS += --with-db-lib=$(abspath $(prefix)/bdb48/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --with-icu-inc=$(includedir)
