@@ -26,8 +26,9 @@ PATCHFILES += 0001-removing-a-usr-local-reference.patch
 include gar/category.mk
 
 post-install-modulated:
-	ln -s gxmessage $(DESTDIR)$(bindir)/gmessage
-	ln -s ../bin/gxmessage $(DESTDIR)$(prefix)/gnu/xmessage
+	ln -sf gxmessage $(DESTDIR)$(bindir)/gmessage
+	install -d -m 755 $(DESTDIR)$(prefix)/gnu
+	ln -sf ../bin/gxmessage $(DESTDIR)$(prefix)/gnu/xmessage
 	@$(MAKECOOKIE)
 
 # Otherwise it keeps finding /usr/bin/xgettext and failing.
