@@ -1,0 +1,26 @@
+From e5e112029773ecd6e43b520623ef2ac291b988c5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 3 Apr 2014 11:30:41 +0200
+Subject: [PATCH] dofile must not be static as it is used as extern somewhere
+ else
+
+---
+ parser_gram.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/parser_gram.c b/parser_gram.c
+index 5359e65..88b7554 100644
+--- a/parser_gram.c
++++ b/parser_gram.c
+@@ -114,7 +114,7 @@ static GetLine *gl;
+ /* executable name to execute worker processes later */
+ char *execname;
+ 
+-static int dofile = DOFILE_FALSE;
++int dofile = DOFILE_FALSE;
+ static FILE *parentscript;
+ 
+ static char *fbbasepath = FILEBENCHDIR;
+-- 
+1.8.4.1
+
