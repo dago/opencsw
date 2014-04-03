@@ -1,0 +1,75 @@
+diff -u -r torsocks-HEAD-2034625.orig/configure torsocks-HEAD-2034625/configure
+--- torsocks-HEAD-2034625.orig/configure	2013-02-08 15:06:29.754054200 +0100
++++ torsocks-HEAD-2034625/configure	2013-02-08 15:05:00.720451700 +0100
+@@ -7507,10 +7507,12 @@
+ PROTO2='int __fd, const struct sockaddr_in * __name, socklen_t *__namelen'
+ PROTO3='int __fd, struct sockaddr * __name, socklen_t *__namelen'
+ PROTO4='int __fd, const struct sockaddr * __name, socklen_t *__namelen'
++PROTO5='int __fd, struct sockaddr * __name, Psocklen_t __namelen'
+ for testproto in "${PROTO1}" \
+                  "${PROTO2}" \
+                  "${PROTO3}" \
+-                 "${PROTO4}"
++                 "${PROTO4}" \
++                 "${PROTO5}"
+ do
+   if test "${PROTO}" = ""; then
+     cat >conftest.$ac_ext <<_ACEOF
+diff -u -r torsocks-HEAD-2034625.orig/configure.in torsocks-HEAD-2034625/configure.in
+--- torsocks-HEAD-2034625.orig/configure.in	2013-01-28 15:55:50.000000000 +0100
++++ torsocks-HEAD-2034625/configure.in	2013-02-08 14:14:32.442589900 +0100
+@@ -460,10 +460,12 @@
+ PROTO2='int __fd, const struct sockaddr_in * __name, socklen_t *__namelen'
+ PROTO3='int __fd, struct sockaddr * __name, socklen_t *__namelen'
+ PROTO4='int __fd, const struct sockaddr * __name, socklen_t *__namelen'
++PROTO5='int __fd, struct sockaddr * __name, Psocklen_t __namelen'
+ for testproto in "${PROTO1}" \
+                  "${PROTO2}" \
+                  "${PROTO3}" \
+-                 "${PROTO4}"
++                 "${PROTO4}" \
++                 "${PROTO5}"
+ do
+   if test "${PROTO}" = ""; then
+     AC_TRY_COMPILE([
+diff -u -r torsocks-HEAD-2034625.orig/test/test_torsocks.c torsocks-HEAD-2034625/test/test_torsocks.c
+--- torsocks-HEAD-2034625.orig/test/test_torsocks.c	2013-01-28 15:55:50.000000000 +0100
++++ torsocks-HEAD-2034625/test/test_torsocks.c	2013-02-08 14:53:59.478363600 +0100
+@@ -40,6 +40,8 @@
+ #if defined(__APPLE__) || defined(__darwin__)
+ #include <arpa/nameser_compat.h>
+ #endif
++#include <netinet/in_systm.h>
++#include <netinet/ip_compat.h>
+ #include <netinet/ip.h>
+ #include <netinet/ip_icmp.h>
+ #include <pthread.h>
+@@ -83,7 +85,7 @@
+     char datagram[400];
+     struct sockaddr_in dest;
+     struct ip *iphdr=(struct ip *) datagram;
+-#if defined(OPENBSD) || defined(FREEBSD) ||defined(__APPLE__) || defined(__darwin__)
++#if defined(OPENBSD) || defined(FREEBSD) ||defined(__APPLE__) || defined(__darwin__) || defined(SOLARIS)
+     struct icmp *icmphdr=(struct icmp *)(iphdr +1);
+ #else
+     struct icmphdr *icmphdr=(struct icmphdr *)(iphdr +1);
+@@ -115,7 +117,7 @@
+     iphdr->ip_dst.s_addr=dest.sin_addr.s_addr;
+     iphdr->ip_sum=csum((unsigned short *)datagram,iphdr->ip_len >> 1);
+ 
+-#if defined(OPENBSD) || defined(FREEBSD) ||defined(__APPLE__) || defined(__darwin__)
++#if defined(OPENBSD) || defined(FREEBSD) ||defined(__APPLE__) || defined(__darwin__) || defined(SOLARIS)
+     icmphdr->icmp_type=130;
+     icmphdr->icmp_code=0;
+     icmphdr->icmp_cksum=htons(0xc3b0);
+@@ -340,8 +342,10 @@
+     msg.msg_namelen = sizeof(addr);
+     msg.msg_iov = &iov;
+     msg.msg_iovlen = 1;
++#if !defined(SOLARIS)
+     msg.msg_control = NULL;
+     msg.msg_controllen = 0;
++#endif
+ 
+     printf("\n----------------------udp sendmsg() TEST-------------------\n\n");
+     wb=0;
