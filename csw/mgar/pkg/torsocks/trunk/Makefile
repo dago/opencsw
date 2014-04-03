@@ -19,3 +19,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
+pre-configure:
+	cd $(WORKSRC) && autoreconf -i
+	@$(MAKECOOKIE)
