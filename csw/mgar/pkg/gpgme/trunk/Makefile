@@ -25,13 +25,8 @@ BUILD_DEP_PKGS += CSWlibassuan-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWgnupg2
 
-PACKAGES += CSWgpgme
-CATALOGNAME_CSWgpgme = gpgme
-SPKG_DESC_CSWgpgme += $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWgpgme += CSWlibgpgme-pthread11
-RUNTIME_DEP_PKGS_CSWgpgme += CSWlibgpgme11
-CHECKPKG_OVERRIDES_CSWgpgme += surplus-dependency|CSWlibgpgme-pthread11
-CHECKPKG_OVERRIDES_CSWgpgme += surplus-dependency|CSWlibgpgme11
+OBSOLETED_BY_CSWlibgpgme11 = CSWgpgme
+OBSOLETED_BY_CSWlibgpgme-pthread11 = CSWgpgme
 
 PACKAGES += CSWlibgpgme-pthread11
 CATALOGNAME_CSWlibgpgme-pthread11 = libgpgme_pthread11
@@ -54,7 +49,6 @@ RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgcc-s1
 PACKAGES += CSWgpgme-dev
 CATALOGNAME_CSWgpgme-dev = gpgme_dev
 SPKG_DESC_CSWgpgme-dev += $(DESCRIPTION), development files
-PKGFILES_CSWgpgme-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme11
 RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme-pthread11
 
