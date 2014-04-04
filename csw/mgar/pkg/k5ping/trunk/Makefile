@@ -1,4 +1,4 @@
-NAME = zsh
+NAME = k5ping
 VERSION = 9fb8c5
 GARTYPE = v2
 
@@ -14,6 +14,13 @@ DISTFILES += k5ping.8
 VENDOR_URL = http://oskt.secure-endpoints.com/k5ping.html
 
 BUILD_DEP_PKGS += CSWlibkrb5-dev
+BUILD_DEP_PKGS += CSWgroff
+
+PACKAGES += CSWk5ping
+SPKG_DESC_CSWk5ping = A test that KDC is performing AS_REQs, TGS_REQs, and krb524
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWk5ping += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWk5ping += CSWlibcom-err3
 
 # There is no configure
 CONFIGURE_SCRIPTS =
@@ -30,5 +37,7 @@ build-custom:
 
 install-custom:
 	ginstall -D -m 0755 $(WORKDIR)/k5ping $(DESTDIR)$(bindir)/k5ping
-	ginstall -D -m 0644 $(WORKDIR)/k5ping.8 $(DESTDIR)$(mandir)/man8/k5ping.8
+	@# The manpage uses special macro packages, preformat for now
+	ginstall -d -m 0755 $(DESTDIR)$(mandir)/cat8
+	$(bindir)/gnroff -man $(WORKDIR)/k5ping.8 >$(DESTDIR)$(mandir)/cat8/k5ping.8
 	@$(MAKECOOKIE)
