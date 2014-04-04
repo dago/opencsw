@@ -32,13 +32,9 @@ RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWpy-zope-interface
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpy-twisted += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWpy-twisted += CSWpy-crypto
-RUNTIME_DEP_PKGS_CSWpy-twisted += CSWpy-asn1
 OBSOLETED_BY_CSWpy-twisted = CSWtwisted
 
 CHECKPKG_OVERRIDES_CSWpy-twisted += surplus-dependency|CSWpy-zope-interface
-CHECKPKG_OVERRIDES_CSWpy-twisted += surplus-dependency|CSWpy-crypto
-CHECKPKG_OVERRIDES_CSWpy-twisted += surplus-dependency|CSWpy-asn1
 
 CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/twisted/conch/unix.py
 CHECKPKG_OVERRIDES_CSWpy-twisted += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/twisted/conch/unix.py
