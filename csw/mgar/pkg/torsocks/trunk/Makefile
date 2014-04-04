@@ -15,6 +15,13 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = torsocks-HEAD-2034625.nww.solaris.patch
 
+# replace shell in wrapper executable scripts
+REINPLACEMENTS += shell 
+REINPLACE_MATCH_shell = /bin/sh
+REINPLACE_WITH_shell = /opt/csw/bin/bash
+REINPLACE_FILES_shell += src/torsocks.in
+REINPLACE_FILES_shell += src/usewithtor.in
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
