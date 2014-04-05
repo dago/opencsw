@@ -17,7 +17,7 @@ $def with (tag_name, tags)
     <th>Additional information</th>
     </tr>
 $for tag in tags:
-  $if tag.srv4_file.registered:
+  $if tag.srv4_file.registered_level_two:
     <tr
     $if tag.overridden:
       class="overridden"
