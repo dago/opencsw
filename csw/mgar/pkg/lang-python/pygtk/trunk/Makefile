@@ -39,7 +39,7 @@ MERGE_DIRS_isa-default64-python_version-2.6 += $(libdir)8
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWpython27-dev
-BUILD_DEP_PKGS += CSWpy-gobject-devGS += CSWpygobject
+# BUILD_DEP_PKGS += CSWpy-gobject-devGS += CSWpygobject
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibatk-dev
 BUILD_DEP_PKGS += CSWpangodevel
@@ -69,7 +69,7 @@ RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWpy-gtk # += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWpygobject
 RUNTIME_DEP_PKGS_CSWpy-gRUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWpy-gtk += CSWlibgcc-s1
@@ -84,7 +84,7 @@ RUNTIME_DEP_PKGS_CSWpy-gtk += $(RUNTIME_DEP_PKGS_CSWpy-gtk_$(GARCH))
 CHECKPKG_OVERRIDES_CSWpy-gtk += surplus-dependency|CSWpythongtk += CSWpy-cairo
 CHECKPKG_OVERRIDES_CSWpy-gtk += file-with-bad-content|/usr/share|root/opt/csw/share/gtk-doc/html/pygtk/class-gtkfilechooser.html
 CHECKPKG_OVERRIDES_CSWpy-gtk += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/pygtk/class-gtkrcstyle.html
-# pygtk do not work without this
+# pygtk do not # work without this
 CHECKPKG_OVERRIDES_CSWpy-gtk += surplus-dependency|CSWpygobject
 # gtk do not work without this
 CHECKPKG_OVERRIDES_CSWpy-gtk += surplus-dependency|CSWpy-cairo
