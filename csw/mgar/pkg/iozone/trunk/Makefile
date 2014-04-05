@@ -1,5 +1,5 @@
 NAME = iozone
-VERSION = 3.398
+VERSION = 3.420
 DISTVERSION = $(subst .,_,$(VERSION))
 GARTYPE = v2
 CATEGORIES = apps
@@ -103,5 +103,4 @@ install-custom:
 	ginstall $(WORKSRC)/src/current/iozone_visualizer.pl $(DESTDIR)$(datadir)/iozone/contrib/iozone_visualizer.pl
 	ginstall $(WORKSRC)/src/current/report.pl $(DESTDIR)$(datadir)/iozone/contrib/report.pl
 	ginstall $(WORKSRC)/src/current/Gnuplot.txt $(DESTDIR)$(datadir)/iozone/contrib/Gnuplot.txt
-	chmod 444 $(DESTDIR)$(datadir)/iozone/contrib/Gnuplot.txt
-	@$(MAKECOOKIE)
+	chmod 444 $(DESTDIR)$(datadir)/iozone/contrib/Gnuplot.tx
