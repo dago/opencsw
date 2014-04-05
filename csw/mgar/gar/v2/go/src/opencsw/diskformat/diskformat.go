@@ -743,16 +743,30 @@ func generateCatalogIndexFile(catalog_root string,
     defer descbuf.Flush()
   }
 
-  // http://www.opencsw.org/manual/for-maintainers/catalog-format.html
-  ts_line := fmt.Sprintf("# CREATIONDATE %s\n", time.Now().Format(time.RFC3339))
-  catbuf.WriteString(ts_line)
+  if err := WriteCatalogIndex(catbuf, cws); err != nil {
+    log.Println("Failed while writing to", catalog_file_path,
+                ":", err)
+  }
 
   for _, pkg := range cws.Pkgs {
-    catbuf.WriteString(pkg.AsCatalogEntry())
-    catbuf.WriteString("\n")
     descbuf.WriteString(pkg.AsDescription())
     descbuf.WriteString("\n")
   }
+}
+
+// Write the catalog file to given Writer. File format as defined by
+// http://www.opencsw.org/manual/for-maintainers/catalog-format.html
+func WriteCatalogIndex(w *bufio.Writer, cws CatalogWithSpec) error {
+  ts_line := fmt.Sprintf("# CREATIONDATE %s\n", time.Now().Format(time.RFC3339))
+  w.WriteString(ts_line)
+
+  for _, pkg := range cws.Pkgs{
+    _, err := w.WriteString(pkg.AsCatalogEntry())
+    if err != nil { return err }
+    _, err = w.WriteString("\n")
+    if err != nil { return err }
+  }
+  return nil
 }
 
 // The main function of this package.
