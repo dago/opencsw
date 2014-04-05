@@ -240,7 +240,7 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
                         ]
                   }
             }
-                        
+
             def notify(self, date, addr, pkginfo):
                   assert date == self.expected_notification_on[addr]['lastsuccessful']
 
@@ -253,20 +253,28 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
 
                   for p in pkginfo:
                         assert p['fullname'] in self.expected_notification_on[addr]['newpkgs']
-            
+
 
       def setUp(self):
             self.__timestamp_file = '/tmp/TestCheckDBCatalog.ts'
 
       def test_InvalidCatalog(self):
             """Test a locally generated invalid catalog"""
-            
-            with self.TCheckDBCatalogInvalid('unstable','sparc','SunOS5.10', self.__timestamp_file, cattiming_class=TCatalogTiming) as test:
+
+            with self.TCheckDBCatalogInvalid('unstable', 'sparc',
+                                             'SunOS5.10',
+                                             self.__timestamp_file,
+                                             'go/bin/gen-catalog-index',
+                                             cattiming_class=TCatalogTiming) as test:
                   self.assertFalse(test.check())
 
       def test_ValidCatalog(self):
             """Test a locally generated valid catalog"""
-            with self.TCheckDBCatalogValid('unstable','sparc','SunOS5.10', self.__timestamp_file, cattiming_class=TCatalogTiming) as test:
+            with self.TCheckDBCatalogValid('unstable', 'sparc',
+                                           'SunOS5.10',
+                                           self.__timestamp_file,
+                                           'go/bin/gen-catalog-index',
+                                           cattiming_class=TCatalogTiming) as test:
                   self.assertFalse(test.check())
 
       def test_Notification(self):
@@ -275,15 +283,19 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
             with TimestampRecord(self.__timestamp_file) as tsobj:
                   tsobj.set('unstable','sparc','SunOS5.10',datetime.datetime(2013,5,17,0,0,0))
 
-            with self.TCheckDBCatalogNotification('unstable', 'sparc', 'SunOS5.10', self.__timestamp_file, cattiming_class=TCatalogTiming) as test:
+            with self.TCheckDBCatalogNotification('unstable', 'sparc',
+                                                  'SunOS5.10',
+                                                  self.__timestamp_file,
+                                                  'go/bin/gen-catalog-index',
+                                                  cattiming_class=TCatalogTiming) as test:
                   self.assertFalse(test.check())
 
       def tearDown(self):
             try:
                   os.unlink(self.__timestamp_file)
             except:
-                  pass            
-      
+                  pass
+
 
 if __name__ == '__main__':
       logging.basicConfig(level=logging.INFO)

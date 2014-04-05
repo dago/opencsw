@@ -11,6 +11,7 @@ import cjson
 import datetime
 import dateutil.parser
 import logging
+import os
 import os.path
 import shutil
 import subprocess
@@ -20,7 +21,6 @@ import tempfile
 from lib.python import configuration
 from lib.python.shell import ShellCommand
 from lib.python.rest import RestClient, GetUsernameAndPassword
-from lib.python.generate_catalog_file import CatalogFileGenerator
 
 class FSLock(object):
       """Simple Lock class
@@ -42,6 +42,37 @@ class FSLock(object):
             logging.debug("Remove lock dir: %s", self.__dirname)
             os.rmdir(self.__dirname)
 
+
+class GenerateCatalog(object):
+      """Dumping a database catalog to disk in a format digestable for chkcat.
+
+      Replacement for lib.python.generate_catalog_file
+
+      """
+
+      def __init__(self, catrel,
+                   arch,
+                   osrel,
+                   catgenbin):
+            self._catrel = catrel
+            self._arch = arch
+            self._osrel = osrel
+            self._catgenbin = catgenbin
+
+      def generate_catalog(self, catalogdir):
+            """Generate the catalog and place it to :param catalogdir:"""
+            logging.debug("Generate catalog %s %s %s using %s/catalog", self._catrel,
+                         self._osrel,
+                         self._arch,
+                         self._catgenbin)
+
+            (retval,
+             wdc1,
+             wdc2) = ShellCommand([self._catgenbin,
+                                   "-arch", self._arch,
+                                   "-catalog-release", self._catrel,
+                                   "-os-release", self._osrel,
+                                   "-output", os.path.join(catalogdir, "catalog")])
 
 class TimestampRecord(object):
       """Record Timestamp for a given Catalog, Architecture, and OS Release into a json encoded file."""
@@ -268,12 +299,15 @@ class CheckDBCatalog(object):
       removed by __exit__().
 
       """
-      def __init__(self, catrel, arch, osrel, fn_ts, chkcat="/opt/csw/bin/chkcat",
+      def __init__(self, catrel, arch, osrel, fn_ts, gen_catalog_bin,
+                   chkcat="/opt/csw/bin/chkcat",
                    cattiming_class=CatalogTiming,
                    tsrecord_class=TimestampRecord):
             """Constructor.
 
             "fn_ts" is the path name to the time stamp file.
+
+            "gen_catalog_bin" is the path to the gen-catalog-index binary
 
             "chkcat" is the path to `chkcat'. By default
             `/opt/csw/bin/chkcat'.
@@ -291,8 +325,8 @@ class CheckDBCatalog(object):
                 username=username,
                 password=password)
 
-            self.__catalogfgen = CatalogFileGenerator(
-                catrel, arch, osrel, self.rest_client)
+            self.__catalogfgen = GenerateCatalog(catrel, arch, osrel,
+                                                 gen_catalog_bin)
             self.__chkcat = chkcat
 
             # store for later use
@@ -348,7 +382,7 @@ class CheckDBCatalog(object):
       def fetch_db_cat(self):
             """Fetch catalog stored in database into temporary direcotry."""
             assert self.tmpdir is not None
-            self.__catalogfgen.GenerateCatalog(self.tmpdir)
+            self.__catalogfgen.generate_catalog(self.tmpdir)
 
       def run_chkcat(self):
             """Run `chkcat' on catalog retrieved into temporary directory."""
