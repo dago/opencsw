@@ -9,7 +9,7 @@
 set PYTHONPATH=/path/to/.buildsys/v2
 alternatively can used: sys.path.append('/path/to/.buildsys/v2')
 
-Overview: 
+Overview:
 - read the stub hint from catalog
   * if any packages depend on the stub -> rebuild them
   * if nothing depends on the stub and the stub is present in the old/"from"
@@ -38,14 +38,14 @@ from lib.python.safe_remove_package import RevDeps
 logging.basicConfig(format='%(levelname)s %(asctime)s %(filename)s:%(lineno)d %(message)s')
 logger = logging.getLogger(__name__)
 
-datadir=configuration.CHECKPKG_DIR % os.environ
-# fn_revdep = os.path.join(datadir,'RevDeps_%s_%s_%s.json')
-fn_cat = os.path.join(datadir,'catalog_%s_%s_%s.json')
-fn_pkgs_to_remove = 'PkgsToRemoveFrom_%s_%s_%s.lst'
-fn_pkgs_to_rebuild = 'PkgsToRebuildFrom_%s_%s_%s.html'
+DATA_DIR = configuration.CHECKPKG_DIR % os.environ
+CATALOG_CACHE_FILENAME_TMPL = os.path.join(DATA_DIR,'catalog_%s_%s_%s.json')
 
-CatSubSet = namedtuple('CatSubSet',
-                       'pkgname, catalogname, md5_sum, version, dependlist, maintainer')
+PKGS_TO_REMOVE_TMPL = 'PkgsToRemoveFrom_%s_%s_%s.lst'
+PKGS_TO_REBUILD_TMPL = 'PkgsToRebuildFrom_%s_%s_%s.html'
+
+CatSubSet = namedtuple('CatSubSet', ['pkgname', 'catalogname', 'md5_sum',
+                                     'version', 'dependlist', 'maintainer'])
 
 REBUILD_TMPL = """<html>
 <head>
@@ -89,48 +89,39 @@ REBUILD_TMPL = """<html>
 
 
 class CompCatalog(object):
+  def __init__(self, name, arch, osrel, rest_client):
+    self.catrel = name
+    self.arch = arch
+    self.osrel = osrel
+    self.rest_client = rest_client
+    self.cached_stats = rest.CachedPkgstats(
+        os.path.join(DATA_DIR, 'pkgstats'), rest_client)
 
-    def __init__(self, name, arch, osrel, rest_client):
-        self.catrel = name
-        self.arch = arch
-        self.osrel = osrel
-        self.rest_client = rest_client
+  def CatSubSetFromFull(self, pkgitems):
+    """Returns a CatSubSet from full package stats."""
+    pkgname = pkgitems['basic_stats']['pkgname']
+    pkgdeplst = [i[0] for i in pkgitems['depends']]
+    maintainer = pkgitems['pkginfo']['EMAIL'].split('@')[0]
+    return CatSubSet(pkgname,
+                     pkgitems['basic_stats']['catalogname'],
+                     pkgitems['basic_stats']['md5_sum'],
+                     pkgitems['basic_stats']['parsed_basename']['full_version_string'],
+                     tuple(pkgdeplst),
+                     maintainer)
 
-    def __getCat(self, name,arch,osrel):
-        ''' get dependcy list from catalog, read cached list if available '''
-        pkg_by_pkgname = {}
-        disk_cache_path = fn_cat % (name, osrel, arch)
-        if os.path.exists(disk_cache_path):
-            logger.info('CompCatalog::getCat: use cached data: %s' % (fn_cat % (name,osrel,arch)))
-            with open(disk_cache_path) as fd:
-                data = cjson.decode(fd.read())
-            pkg_by_pkgname = {}
-            for pkgname, lst in data.iteritems():
-              lst[4] = tuple(lst[4])
-              pkg_by_pkgname[pkgname] = CatSubSet(*lst)
-        else:
-            cat = self.rest_client.GetCatalog(name,arch,osrel)
-            for pkg in cat:
-                pkgitems = self.rest_client.GetPkgstatsByMd5(pkg['md5_sum'])
-                pkgname = pkgitems['basic_stats']['pkgname']
-                try:
-                    pkgdeplst = [ i[0] for i in pkgitems['depends']]
-                    maintainer = pkgitems['pkginfo']['EMAIL'].split('@')[0]
-                    pkg_by_pkgname[pkgname] = CatSubSet(pkgname, pkg['catalogname'],
-                                                        pkg['md5_sum'], pkg['version'],
-                                                        tuple(pkgdeplst),
-                                                        maintainer)
-                except Exception as exc:
-                    logger.error("CompCatalog::getPkgStat: %s %s %s",
-                                 type(exc), pkg.catalogname, pkg.md5_sum)
-            with open(disk_cache_path, "w") as fd:
-                fd.write(cjson.encode(pkg_by_pkgname))
-                logger.info('CompCatalog::getCat: write cache file: %s'
-                            % (fn_cat % (name,osrel,arch)))
-        return pkg_by_pkgname
+  def __getCat(self, catrel, arch, osrel):
+    """Get dependcy list from the database."""
+    logging.info('__getCat(%s, %s, %s)' % (catrel, arch, osrel))
+    pkg_by_pkgname = {}
+    cat = self.rest_client.GetCatalog(catrel, arch, osrel)
+    for pkg in cat:
+      pkgitems = self.rest_client.GetPkgstatsByMd5(pkg['md5_sum'])
+      catsubset = self.CatSubSetFromFull(pkgitems)
+      pkg_by_pkgname[catsubset.pkgname] = catsubset
+    return pkg_by_pkgname
 
-    def getCatalog(self):
-        return self.__getCat(self.catrel,self.arch,self.osrel)
+  def getCatalog(self):
+    return self.__getCat(self.catrel, self.arch, self.osrel)
 
 
 def processCat(catrel, arch, osrel, rest_client):
@@ -207,20 +198,18 @@ def ComputeRemoveAndRebuild(oldcatrel, newcatrel, arch, osrel, rest_client):
 
 def WriteToTextFiles(pkgs_to_drop, pkgs_to_rebuild, newcatrel, arch, osrel,
                      obsolete):
-    print ('write %s' % (fn_pkgs_to_remove % (newcatrel,osrel,arch)))
-    with open(fn_pkgs_to_remove % (newcatrel, osrel, arch), "w") as fd:
+    print ('writing %s' % (PKGS_TO_REMOVE_TMPL % (newcatrel,osrel,arch)))
+    with open(PKGS_TO_REMOVE_TMPL % (newcatrel, osrel, arch), "w") as fd:
         for pkg in sorted(pkgs_to_drop, key=lambda p: p.catalogname):
             fd.write(pkg.catalogname + '\n')
     logger.info("number of packages to remove: %d" % len(pkgs_to_drop))
-    print ('write %s' % (fn_pkgs_to_rebuild % (newcatrel,osrel,arch)))
-    with open(fn_pkgs_to_rebuild % (newcatrel,osrel,arch), "w") as fd:
-        # for pkg in sorted(pkgs_to_rebuild, key=lambda p: p.catalogname):
-        #     fd.write(pkg.catalogname+'\n')
+    print ('write %s' % (PKGS_TO_REBUILD_TMPL % (newcatrel,osrel,arch)))
+    with open(PKGS_TO_REBUILD_TMPL % (newcatrel,osrel,arch), "w") as fd:
         template = jinja2.Template(REBUILD_TMPL)
         pkgs = sorted(pkgs_to_rebuild, key=lambda p: (p.maintainer, p.catalogname))
         fd.write(template.render(catrel=newcatrel, osrel=osrel, arch=arch,
                                  pkgs=pkgs, obsolete=obsolete))
-    logger.info("packages to rebuild: %d" % len(pkgs_to_rebuild))
+    logger.info("# of packages to rebuild: %d" % len(pkgs_to_rebuild))
 
 
 def GetCLIOptions():
