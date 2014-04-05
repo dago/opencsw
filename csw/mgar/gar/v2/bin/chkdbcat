@@ -7,8 +7,8 @@ from lib.python import chkdbcat
 
 class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
     """Class overriding CheckDBCatalog.notify()"""
-    def __init__(self, catrel, arch, osrel, fn_ts, chkcat, verbose=False):
-        super(MyCheckDBCatalog,self).__init__(catrel, arch, osrel, fn_ts, chkcat)
+    def __init__(self, catrel, arch, osrel, fn_ts, gencat_bin, chkcat, verbose=False):
+        super(MyCheckDBCatalog,self).__init__(catrel, arch, osrel, fn_ts, gencat_bin, chkcat)
         self.__verbose = verbose
 
     def notify(self, date, addr, pkginfo):
@@ -26,6 +26,8 @@ def argparser():
     parser.add_argument('--os-release', required=True)
     parser.add_argument('--timestamp-file', default='/var/cache/chkdbcat/timestamp.json')
     parser.add_argument('--chkcat-path', default='/opt/csw/bin/chkcat')
+    parser.add_argument('--gen-catalog-path',
+                        help="Path to gen-catalog-index")
     return parser.parse_args()
 
 def main():
@@ -37,6 +39,7 @@ def main():
     if args.verbose: print("Checking Database Catalog {0} {2} {1}".format(args.catalog_release, args.arch, args.os_release))
     with MyCheckDBCatalog(args.catalog_release, args.arch,
                           args.os_release, args.timestamp_file,
+                          args.gen_catalog_path,
                           args.chkcat_path, args.verbose) as checker:
         success = checker.check()
         if args.verbose:
