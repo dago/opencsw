@@ -662,6 +662,12 @@ class RestSvr4CatalogData(object):
     return response
 
 
+def FormatPkginstList(lst):
+  if lst:
+    return '|'.join(lst)
+  else:
+    return 'none'
+
 def GetCatalogEntries(catrel_name, arch_name, osrel_name):
   """Returns a list of CatalogEntry tuples."""
   try:
@@ -670,31 +676,26 @@ def GetCatalogEntries(catrel_name, arch_name, osrel_name):
   except sqlobject.main.SQLObjectNotFound:
     raise web.notfound()
   rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
-  def FormatList(lst):
-    if lst:
-      return '|'.join(lst)
-    else:
-      return 'none'
-  def GenCatalogEntry(row):
+  def MakeCatalogEntry(row):
     i_deps = cjson.decode(row[7])
-    i_deps_str = FormatList(i_deps)
+    i_deps_str = FormatPkginstList(i_deps)
     deps_with_desc = cjson.decode(row[6])
     deps = [x[0] for x in deps_with_desc if x[0].startswith('CSW')]
-    deps_str = FormatList(deps)
+    deps_str = FormatPkginstList(deps)
     entry = representations.CatalogEntry(
         catalogname=row[0],  # 0
         version=row[1],      # 1
         pkgname=row[2],      # 2
         basename=row[3],     # 3
         md5_sum=row[4],      # 4
-        size=str(row[5]),    # 5
+        size=row[5],         # 5 # This needs to be an int in JSON
         deps=deps_str,       # 6
         category="none",     # 7
         i_deps=i_deps_str,   # 8
         desc=row[8],         # 9
     )
     return entry
-  entries_list = [GenCatalogEntry(row) for row in rows]
+  entries_list = [MakeCatalogEntry(row) for row in rows]
   return entries_list
 
 
@@ -709,9 +710,7 @@ class CatalogForGenerationAsDicts(object):
     entries_list = GetCatalogEntries(catrel_name, arch_name, osrel_name)
     response_list = []
     for entry in entries_list:
-      entry_dict = entry._asdict()
-      entry_dict["size"] = int(entry_dict["size"])
-      response_list.append(entry_dict)
+      response_list.append(entry._asdict())
     response = cjson.encode(response_list)
     web.header('Content-Length', str(len(response)))
     return response
@@ -745,23 +744,29 @@ class CatalogTiming(object):
     except sqlobject.main.SQLObjectNotFound:
       raise web.notfound()
     rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
-    def PrepareForJson(row):
-      # The size (5th row) is returned as a large integer, which cannot be represented
-      # in JSON.
-      # 'maintainer', #9
-      # 'mtime',      #10
-      # 'created_on', #11
-      # 'created_by', #12
-      newrow = list(row)
-      newrow[5] = int(newrow[5])
-      newrow[6] = cjson.decode(newrow[6])
-      newrow[7] = cjson.decode(newrow[7])
-      if newrow[10]:
-        newrow[10] = newrow[10].isoformat()
-      if newrow[11]:
-        newrow[11] = newrow[11].isoformat()
-      return newrow
-    rows = [PrepareForJson(x) for x in rows]
+    # Change this to return a list of dicts
+    def MakeCatalogTimingEntry(row):
+      i_deps = tuple(cjson.decode(row[7]))
+      deps_with_desc = cjson.decode(row[6])
+      deps = tuple(x[0] for x in deps_with_desc if x[0].startswith('CSW'))
+      entry = representations.CatalogTimingEntry(
+        catalogname=row[0],  # 0
+        version=row[1],      # 1
+        pkgname=row[2],      # 2
+        basename=row[3],     # 3
+        md5_sum=row[4],      # 4
+        size=row[5],         # 5 # This needs to be an int in JSON
+        deps=deps,           # 6
+        category="none",     # 7
+        i_deps=i_deps,       # 8
+        desc=row[8],         # 9
+        maintainer=row[9],
+        mtime=row[10].isoformat(),
+        inserted_on=row[11].isoformat(),
+        inserted_by=row[12],
+      )
+      return entry
+    rows = [MakeCatalogTimingEntry(x)._asdict() for x in rows]
     response = cjson.encode(rows)
     web.header('Content-Length', str(len(response)))
     return response

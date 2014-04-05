@@ -549,6 +549,9 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
       sqlbuilder.INNERJOINOn(None,
         CatalogGenData,
         Srv4FileStats.q.md5_sum==CatalogGenData.q.md5_sum),
+      sqlbuilder.INNERJOINOn(None,
+        Maintainer,
+        Srv4FileStats.q.maintainer==Maintainer.q.id),
   ]
   where = sqlbuilder.AND(
       Srv4FileInCatalog.q.osrel==sqo_osrel,
@@ -557,22 +560,23 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
         Srv4FileStats.q.use_to_generate_catalogs==True,
   )
   select = sqlbuilder.Select(
-      ['catalogname',
-       'version_string',
-       'pkgname',
-       'basename',
+      ['catalogname',    # 0
+       'version_string', # 1
+       'pkgname',        # 2
+       'basename',       # 3
        'srv4_file_stats.md5_sum', # Hardcoded table name, is it portable?
-       'size',
-       'deps',
-       'i_deps',
-       'pkginfo_name',
+       'size',           # 5
+       'deps',           # 6
+       'i_deps',         # 7
+       'pkginfo_name',   # 8
        # The above columns are used to generate catalogs.
        # Additional columns can be added blow.
-       'maintainer_id',
-       'mtime',
-       'created_on',
-       'created_by',
-       ],
+       # 'maintainer.id',  # 9
+       'maintainer.email',  # 9
+       'mtime',          # 10
+       'created_on',     # 11
+       'created_by',     # 12
+      ],
       where=where,
       orderBy='catalogname',
       join=join)
