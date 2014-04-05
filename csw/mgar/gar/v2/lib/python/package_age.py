@@ -3,6 +3,17 @@
 """Download and generate package age dataset for analysis with R.
 
 It's a toy as of 2014-04-05.
+
+To draw a histogram of package ages, run this in R:
+
+data <- read.table(file="/media/ivy-shared/package-ages.txt", header=TRUE,
+                   colClasses=c("factor", "factor", "Date"))
+
+png(filename="package-ages.png", width=1024, height=1024)
+plot(hist(data$date, breaks="quarters", labels=TRUE, xlab="Quarters",
+          axes=FALSE), xaxt="n")
+axis(1, data$date, format(data$date, "%Y"), cex.axis = 1.7)
+dev.off()
 """
 
 import logging
