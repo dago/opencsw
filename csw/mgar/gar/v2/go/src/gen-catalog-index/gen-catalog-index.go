@@ -1,3 +1,8 @@
+// Command gen-catalog-index genereates a catalog index file as described on
+// http://www.opencsw.org/manual/for-maintainers/catalog-format.html -- the
+// same code is used in the larger catalog generation program. This standalone
+// utility is used to generate on-disk catalogs for other purposes like
+// catalog checking.
 package main
 
 import (

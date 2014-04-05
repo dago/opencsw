@@ -1,13 +1,12 @@
-// Generate OpenCSW catalog - symlinks and hardlinks on disk
+// Command catalog-release to disk obtains catalog contents via the OpenCSW
+// REST interface on the buildfarm, analyzes the state state of the
+// filesystem, and performs the necessary operations to bring the catalog on
+// disk to the state defined in the database.
 //
-// Obtains catalog contents via a REST interface, analyzes the disk state, and
-// only performs the necessary operations.
-//
-// Building this program: See README in the go/ directory
+// Building this program: See README in the go/ directory.
 //
 // As of 2014-03-16, this program is not packaged, but instead simply compiled
 // and put in place.
-
 package main
 
 import (
