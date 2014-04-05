@@ -24,6 +24,9 @@ REINPLACE_FILES_shell += src/usewithtor.in
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+RUNTIME_DEP_PKGS_CSWtorsocks += CSWbash
+CHECKPKG_OVERRIDES_CSWtorsocks += surplus-dependency|CSWbash
+
 include gar/category.mk
 
 pre-configure:
