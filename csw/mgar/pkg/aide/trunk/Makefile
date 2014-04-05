@@ -37,11 +37,8 @@ CHECKPKG_OVERRIDES_CSWaide += file-with-bad-content|/usr/local|root/etc/opt/csw/
 
 RUNTIME_DEP_PKGS_CSWaide += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWaide += CSWlibz1
-RUNTIME_DEP_PKGS_CSWaide += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWaide += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWaide += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWaide += CSWlibmhash
-RUNTIME_DEP_PKGS_CSWaide += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWaide += CSWlibmhash2
 RUNTIME_DEP_PKGS_CSWaide += CSWlibpq5
 
 
