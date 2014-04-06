@@ -13,10 +13,9 @@ DISTFILES = $(DISTNAME).tar.bz2
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES += CSWlibbonoboui2-0
-PKGFILES_CSWlibbonoboui2-0 += $(call baseisadirs,$(libdir),libbonoboui-2\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibbonoboui2-0 += $(DESCRIPTION), libbonoboui-2.so.0
-
 OBSOLETED_BY_CSWlibbonoboui2-0 = CSWlibbonoboui
+
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibart
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibbonobo2
@@ -25,6 +24,7 @@ RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgconf2-4
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibglade2
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgnome2-0
@@ -39,6 +39,7 @@ RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWorbit2
 
 PACKAGES += CSWlibbonoboui-dev
 SPKG_DESC_CSWlibbonoboui-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibbonoboui-dev += $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibbonobo2
