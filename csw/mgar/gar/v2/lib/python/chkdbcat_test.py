@@ -241,7 +241,7 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
                   }
             }
 
-            def notify(self, date, addr, pkginfo):
+            def notify(self, date, addr, pkginfo, chkcat_stdout, chkcat_stderr):
                   assert date == self.expected_notification_on[addr]['lastsuccessful']
 
                   if addr == "raos@opencsw.org":
@@ -255,7 +255,7 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
                         assert p['fullname'] in self.expected_notification_on[addr]['newpkgs']
 
                   mail = InformMaintainer((self._catrel, self._osrel, self._arch),
-                                          date, addr, pkginfo)
+                                          date, addr, pkginfo, chkcat_stdout, chkcat_stderr)
                   print mail._compose_mail('TestScript')
 
 

@@ -450,7 +450,7 @@ class CheckDBCatalog(object):
                               notifications[addr].setdefault('newpkgs', []).append(np)
 
                         for n in notifications:
-                              self.notify(notifications[n]['lastsuccessful'], n, notifications[n]['newpkgs'])
+                              self.notify(notifications[n]['lastsuccessful'], n, notifications[n]['newpkgs'], self.stdout, self.stderr)
 
             return retval
 
@@ -471,15 +471,23 @@ since the last successful check on %s.
 
 Please check the package(s) and re-upload if necessary.
 
+Here is the output from chkcat:
+
+%s
+
+%s
+
 Your Check Database Catalog script
 
 """
 
-      def __init__(self, cat_tuple, date, addr, pkginfo):
+      def __init__(self, cat_tuple, date, addr, pkginfo, chkcat_stdout, chkcat_stderr):
             self._cat_tuple = cat_tuple
             self._date = date
             self._addr = addr
             self._pkginfo = pkginfo
+            self._chkcat_stdout = chkcat_stdout
+            self._chkcat_stderr = chkcat_stderr
 
       def _compose_mail(self, from_address):
             """Compose Mail"""
@@ -489,7 +497,8 @@ Your Check Database Catalog script
                   msg = msg + p['fullname'] + "\n"
             msg = msg + InformMaintainer.MAIL_CAT_BROKEN_FOOTER
 
-            mail = MIMEText(msg  % (self._cat_tuple + (str(self._date),)))
+            mail = MIMEText(msg % (self._cat_tuple +
+                                   (str(self._date), self._chkcat_stdout, self._chkcat_stderr)))
             mail['From'] = from_address
             mail['To'] = self._addr
             mail['Subject'] = "[chkdbcat] Database Catalog broken by recent upload"
