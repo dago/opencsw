@@ -4,22 +4,18 @@
 #
 NAME = httping
 VERSION = 1.5.3
-CATEGORIES = net
-GARTYPE = v2
-
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+CATEGORIES = n solaris10-i386
 
 DESCRIPTION = Httping is like 'ping' but for http-requests.
 define BLURB
   Httping is like 'ping' but for http-requests.  Give it an url, and it'll
   show you how long it takes to connect, send a request and retrieve the
   reply (only the headers). Be aware that the transmission across the
-  network also takes time! 
+  network
 endef
 
 MASTER_SITES = http://www.vanheusden.com/httping/
-DISTFILES    = $(NAME)-$(VERSION).tgz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES    = $(NAME)-$(VERSIONE)-(\d+(?:\.\d+)*).tgz
 
 BUILD_DEP_PKGS += CSWlibssl-dev
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
