@@ -11,27 +11,28 @@ define BLURB
   wouldn't be possible without ProxyTunnel.
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tgz
+MASTER_SITES = $(SF_+= $(DISTNAME).tgz
+DISTFILES += changelog.CSW
 PATCHFILES = patch-Makefile.diff
 
-SPKG_SOURCEURL = http://proxytunnel.sourceforge.net/
+VENDOR_URL = http://proxytunnel.sourceforge.net/
 
-Blibssl-dev
-RUNTIME_DEP_PKGS = CSWlibssl1-0-0EP_PKGS = CSWosslrt
+BUILD_DEP_PKGS += CSWlibssl-dev
 
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
-# UPSTREAM_MASTER_SITES = 
+PACKAGES += CSWproxytunnel
+SPKG_DESC_CSWproxytunnel = Tunnels network connections through a HTTPS proxy
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWproxytunnel = CSWlibssl1-0-0
 
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS = 
 
-CONFIGURE_AEXTRA_CFLAGS = -I/opt/csw/include
-EXTRA_LDFLAGS = -lnsl -lsocket_ARGS = $(DIRPATHS)
+EXTRA_CFLAGS += -I$(includedir)
+EXTRA_LDFLAGS += -lnsl -lsocket_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDES
+	@ginstall -dWORKDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
