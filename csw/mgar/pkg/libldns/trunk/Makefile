@@ -1,5 +1,5 @@
 NAME = ldns
-VERSION = 1.6.13
+VERSION = 1.6.17
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -43,7 +43,7 @@ RUNTIME_DEP_PKGS_CSWlibldns1 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibldns-devel += CSWlibldns1
 
 INCOMPATIBLE_PKGS_CSWlibldns1 = CSWldns
-INCOMPATIBLE_PKGS_CSWlibldns-devel = CSWldnsdevel
+INCOMPATIBLE_PKGS_CSWlibldns-devel# = CSWldnsdevel
 
 PATCHFILES = CSWldns.doxyparse.diff
 
@@ -59,4 +59,4 @@ TEST_TARGET =
 PKGFILES_CSWlibldns-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibldnsrt = $(PKGFILES_RT)
 
-include gar/category.mk
+include
