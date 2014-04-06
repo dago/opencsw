@@ -492,6 +492,7 @@ Your Check Database Catalog script
             mail = MIMEText(msg  % (self._cat_tuple + (str(self._date),)))
             mail['From'] = from_address
             mail['To'] = self._addr
+            mail['Subject'] = "[chkdbcat] Database Catalog broken by recent upload"
 
             return mail
 
