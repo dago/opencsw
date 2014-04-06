@@ -16,21 +16,25 @@ PACKAGES += CSWlibbonoboui2-0
 SPKG_DESC_CSWlibbonoboui2-0 += $(DESCRIPTION), libbonoboui-2.so.0
 OBSOLETED_BY_CSWlibbonoboui2-0 = CSWlibbonoboui
 
+# These are only required on sparc. It could be a build problem.
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0_sparc += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0_sparc += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0_sparc += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0_sparc += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += $(RUNTIME_DEP_PKGS_CSWlibbonoboui2-0_$(GARCH))
+
+# Common between intel and sparc.
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibart
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibbonobo2
-RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgconf2-4
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibglade2
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgnome2-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgnomecanvas2-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibpopt0
