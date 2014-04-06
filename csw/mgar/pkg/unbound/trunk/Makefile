@@ -19,7 +19,7 @@ PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 PACKAGES = CSWunbound CSWlibunbound2 CSWunbound-devel CSWunbound-host
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+PATCHFILES += 0001-fix-preprocessing-bug.patchd+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+#PATCHFILES += 0001-fix-preprocessing-bug.patchd+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -74,13 +74,13 @@ USERGROUP               = /etc/opt/csw/pkg/CSWunbound/cswusergroup
 CATALOGNAME_CSWunbound       = unbound
 SPKG_DESC_CSWunbound         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibunbound2
-RUNTIME_DEP_PKGS_CSWunbound += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWunbo#und += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibldns1
 RUNTIME_DEP_PKGS_CSW1-0-0 RUNTIME_DEP_PKGS_CSWunbound += CSWlibevent2-0-5 += CSWlibevent2-0-5
 
 CATALOGNAME_CSWlibunbound2       = libunbound2
 SPKG_DESC_CSWlibunbound2         = Library implementing DNS resolution and validation
-PKGFILES_CSWlibunbound2         += $(PKGFILES_RT)
+PKGFILES_CSWlibunbound2       #  += $(PKGFILES_RT)
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibldns1
 RUNTIME_DEP_PKGS_CSWlibu1-0-0 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibevent2-0-5 += CSWlibevent2-0-5
 
@@ -92,9 +92,9 @@ RUNTIME_DEP_PKGS_CSWunbound-devel += CSWlibunbound2
 CATALOGNAME_CSWunbound-host       = unbound_host
 SPKG_DESC_CSWunbound-host         = Unbound DNS lookup utility
 PKGFILES_CSWunbound-host         += $(sbindir)/unbound-host
-PKGFILES_CSWunbound-host         += $(mandir)/man1/unbound-host.1
-RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibldns1
-RUNTIME_DEP_PKGS_CSWununbound2 += CSWlibevent2-0-5
+PKGFILES_CSWunbound-host         += $(mandir)/#RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibldns1
+RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibunbound2
+RUNTIME_DEP_PKGS_CSWunbound-host += CSWlibssl1-0-0 += CSWlibevent2-0-5
 
 include gar/category.mk
 
