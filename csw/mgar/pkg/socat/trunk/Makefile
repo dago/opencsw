@@ -20,7 +20,7 @@
 #   Solaris 9 bin bash doesn't support here strings.
 #
 NAME = socat
-VERSION = 1.7.1.3
+VERSION = 1.7.2.4
 CATEGORIES = net
 GARTYPE = v2
 
@@ -37,13 +37,12 @@ endef
 
 VENDOR_URL   = http://www.dest-unreach.org/socat/
 MASTER_SITES = http://www.dest-unreach.org/socat/download/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$:\.\d+)*).tar.gz
 
 
 RUNTIlibssl1-0-0 CSWlibreadline6 CSWlibwrap1adline CSWtcpwrap
 
-# test.sh uses unescaped nested double quotes (doesn't work with /bin/bash)
+# test.sh uses unescaped nested double quotes (doesn't work#  with /bin/bash)
 PATCHFILES += 0001-Escape-nested-double-quotes.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
