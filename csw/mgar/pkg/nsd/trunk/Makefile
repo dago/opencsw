@@ -1,5 +1,5 @@
 NAME = nsd
-VERSION = 3.2.16
+VERSION = 4.0.3
 CATEGORIES = server
 GARTYPE = v2
 
@@ -19,8 +19,8 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWnsd
-RUNTIME_DEP_PKGS = CSWlibssl1-0-0
+PACKAGES = CSWn = CSWlibssl1-0-0
+RUNTIME_DEP_PKGS += CSWlibevent2-0-5KGS = CSWlibssl1-0-0
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
 PACKAGING_PLATFORMS =  solaris10-sparc solaris10-i386
@@ -35,11 +35,12 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswnsd$$$$/ { $$$$2 = "cswinitsmf" } 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIlibeventE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/nsd.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 CONFIGURE_ARGS += --with-dbfile=/var/opt/csw/nsd/nsd.db
 CONFIGURE_ARGS += --with-difffile=/var/opt/csw/nsd/ixfr.db
-CONFIGURE_ARGS += --with-xfrdfile=/var/opt/csw/nsd/xfrd.state
+CONFIGURE_ARGS += --with-xfrdfile=/var/opt/csw/nsd/xfrd.s#CHECKPKG_OVERRIDES_CSWnsd += bad-location-of-file|file=/tmp.state
 
 SKIPTEST = 1
 
@@ -49,6 +50,6 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWnsd
 	@ginstall -m 755 $(FILEDIR)/cswnsd $(DESTDIR)/etc/opt/csw/init.d/cswnsd
 	@mv $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.sample $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.CSW
-	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWnsd/cswusergroup
+	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/	@rmdir $(DESTDIR)/tmp
 
-incl
+include gar/category.mk
