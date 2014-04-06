@@ -17,6 +17,8 @@ from lib.python import opencsw
 INACTIVE_MAINTAINER_CUTOFF = 2
 STALE_PACKAGE_CUTOFF = 4
 REMOVE_SUGGESTION_CUTOFF = 4
+STALE_FROM_COLOR = '#FFDDBB'
+STALE_TO_COLOR = '#F995A0'
 REPORT_TMPL = u"""<html>
 <head>
   <title>Packages to rebuild</title>
@@ -228,8 +230,8 @@ def main():
       pkgs[catalogname]['age'] = years
       after_cutoff = stale_pkg_cutoff - pkgs[catalogname]['date'] 
       frac = after_cutoff.days / float(365 * 4)
-      # frac = age.days / (365 * 4)
-      pkgs[catalogname]['color'] = IntermediateColor('#FFCC00', '#F995A0', frac)
+      pkgs[catalogname]['color'] = IntermediateColor(
+          STALE_FROM_COLOR, STALE_TO_COLOR, frac)
       
       # Package dropping logic
       entry = pkgs[catalogname]
