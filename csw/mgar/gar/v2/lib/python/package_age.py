@@ -16,10 +16,10 @@ axis(1, data$date, format(data$date, "%Y"), cex.axis = 1.7)
 dev.off()
 """
 
-import logging
-import requests
 import argparse
 import dateutil.parser
+import logging
+import requests
 
 from lib.python import opencsw
 
