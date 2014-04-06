@@ -7,7 +7,7 @@ import cjson
 import datetime
 import logging
 import unittest
-from lib.python.chkdbcat import TimestampRecord, CatalogTiming, CheckDBCatalog
+from lib.python.chkdbcat import TimestampRecord, CatalogTiming, CheckDBCatalog, InformMaintainer
 
 ##
 ## Unit tests
@@ -253,6 +253,10 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
 
                   for p in pkginfo:
                         assert p['fullname'] in self.expected_notification_on[addr]['newpkgs']
+
+                  mail = InformMaintainer((self._catrel, self._osrel, self._arch),
+                                          date, addr, pkginfo)
+                  print mail._compose_mail('TestScript')
 
 
       def setUp(self):
