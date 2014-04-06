@@ -8,6 +8,7 @@ Notifications for invalid catalogs can be customized by overriding
 CheckDBCat.notify().
 """
 from email.mime.text import MIMEText
+from Cheetah import Template
 import cjson
 import datetime
 import dateutil.parser
@@ -456,26 +457,29 @@ class CheckDBCatalog(object):
 
 
 class InformMaintainer(object):
-      MAIL_CAT_BROKEN_HEADER = u"""Hi
+      """Inform maintainers about broken database catalog
+
+      """
+
+      MAIL_TEMPLATE = u"""Hi there
 
 You uploaded following packages
 
-"""
+#for pkg in $pkg_data
+ * $pkg["fullname"]
+#end for
 
-      MAIL_CAT_BROKEN_FOOTER = u"""
 which may (or may not) have broken the catalog for
 
- %s %s %s
+ $catrel[0] $catrel[1] $catrel[2]
 
-since the last successful check on %s.
+since the last successful check on $date.
 
 Please check the package(s) and re-upload if necessary.
 
 Here is the output from chkcat:
 
-%s
-
-%s
+$stdout
 
 Your Check Database Catalog script
 
@@ -492,13 +496,16 @@ Your Check Database Catalog script
       def _compose_mail(self, from_address):
             """Compose Mail"""
 
-            msg = InformMaintainer.MAIL_CAT_BROKEN_HEADER
-            for p in self._pkginfo:
-                  msg = msg + p['fullname'] + "\n"
-            msg = msg + InformMaintainer.MAIL_CAT_BROKEN_FOOTER
+            namespace = {
+                  'pkg_data': self._pkginfo,
+                  'catrel': self._cat_tuple,
+                  'date': self._date,
+                  'stdout': self._chkcat_stdout
+            }
 
-            mail = MIMEText(msg % (self._cat_tuple +
-                                   (str(self._date), self._chkcat_stdout, self._chkcat_stderr)))
+            t = Template.Template(InformMaintainer.MAIL_TEMPLATE, searchList=[namespace])
+
+            mail = MIMEText(unicode(t))
             mail['From'] = from_address
             mail['To'] = self._addr
             mail['Subject'] = "[chkdbcat] Database Catalog broken by recent upload"
