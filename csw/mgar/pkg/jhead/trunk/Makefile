@@ -1,5 +1,6 @@
 NAME = jhead
 VERSION = 2.97
+GARTYPE = v2
 
 CATEGORIES = utils
 
@@ -9,21 +10,18 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.sentex.net/~mwandel/jhead/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWjhead.gspec CSWjhead.prototype
+DISTFILES  = $(NAME)PATCHFILES += makefile.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(GARCOMPILER = GCC4(?:\.\d+)*).tar.gz
+GARCOMPILER = GCC4
 
-PATCHFILES = makefile.patch
+PACKAGES += CSWjheadES = makefile.patch
 
 # jhead doesn't use configure
 CONFIGURE_SCRIPTS = 
 
-# jhead doesn't have a test target
-TEST_TARGET = 
+# jhead doesn't have SCRIPTS = 
 
-SPKG_SOURCEURL = http://www.sentex.net/~mwandel/jhead/
-SPKG_PKGBASE = $(DESTDIR)$(prefix)
+VENDOR_URL = http://www.sentex.net/~mwandel/jhead/
+#SPKG_PKGBASE = $(DESTDIR)$(prefix)
 
-inclu
+include gar/category.mk
