@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = 389-adminutil
-VERSION = 1.1.18
+VERSION = 1.1.20
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server, libadminutil, libadmsslutil
