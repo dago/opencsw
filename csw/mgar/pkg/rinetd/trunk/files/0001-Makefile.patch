@@ -1,0 +1,18 @@
+--- a/Makefile
++++ b/Makefile
+@@ -1,9 +1,11 @@
+-CFLAGS=-DLINUX -g
++CFLAGS=-D_XPG6
+ 
+ rinetd: rinetd.o match.o
+-	gcc rinetd.o match.o -o rinetd
++	$(CC) rinetd.o match.o -lnsl -lsocket -o rinetd
+ 
+ install: rinetd
+-	install -m 700 rinetd /usr/sbin
+-	install -m 644 rinetd.8 /usr/man/man8
++	ginstall -d $(DESTDIR)/$(bindir)
++	ginstall -d $(DESTDIR)/$(mandir)/man8
++	ginstall -m 700 rinetd $(DESTDIR)/$(bindir)
++	ginstall -m 644 rinetd.8 $(DESTDIR)/$(mandir)/man8
+ 
