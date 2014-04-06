@@ -3,14 +3,11 @@
 case "$1" in
   start)
     echo "Starting nsd."
-    if [ ! -f /var/opt/csw/nsd/nsd.db ]; then
-      /opt/csw/sbin/nsdc rebuild >/dev/null 2>/dev/null
-    fi
-    /opt/csw/sbin/nsdc start
+    /opt/csw/sbin/nsd-control start
     ;;
   stop)
     echo "Stopping nsd."
-    /opt/csw/sbin/nsdc stop
+    /usr/bin/kill -TERM `cat /var/run/nsd.pid`
     ;;
   restart)
     $0 stop
@@ -19,7 +16,7 @@ case "$1" in
     ;;
     refresh)
     echo "Refreshing nsd."
-    /opt/csw/sbin/nsdc reload
+    /usr/bin/kill -HUP `cat /var/run/nsd.pid`
     ;;
   *)
     echo "Usage: $0 { start | stop | restart | refresh }"
