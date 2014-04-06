@@ -32,6 +32,10 @@ GARCOMPILER = GNU
 
 include gar/category.mk
 
+post-extract:
+	gfind "$(WORKSRC)" -name '*.sh' -exec gsed -e 's+#!/bin/sh+#!/opt/csw/bin/bash+' -i {} \;
+	@$(MAKECOOKIE)
+
 build-sbcl:
 	(cd $(WORKSRC) && env -i INSTALL_ROOT=$(DESTDIR)$(prefix) $(BUILD_ENV) /opt/csw/bin/bash make.sh)
 
