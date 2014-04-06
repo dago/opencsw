@@ -4,8 +4,6 @@ CATEGORIES = gnome
 GARTYPE = v2
 
 DESCRIPTION = UI code for the GNOME 2 Object Activation Framework
-define BLURB
-endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
 DISTNAME = $(GNOME_PROJ)-$(VERSION)
@@ -14,26 +12,52 @@ DISTFILES = $(DISTNAME).tar.bz2
 # New glib only available on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgnome2-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgnomecanvas2-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibpopt0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgtk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWorbit2
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgconf2-4
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibglade2
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibart
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibbonobo2
-RUNTIME_DEP_PKGS_CSWlibbonoboui += CSWlibatk1-0-0
+PACKAGES += CSWlibbonoboui2-0
+PKGFILES_CSWlibbonoboui2-0 += $(call baseisadirs,$(libdir),libbonoboui-2\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibbonoboui2-0 += $(DESCRIPTION), libbonoboui-2.so.0
 
+OBSOLETED_BY_CSWlibbonoboui2-0 = CSWlibbonoboui
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibart
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibbonobo2
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgnome2-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgnomecanvas2-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibpopt0
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibbonoboui2-0 += CSWorbit2
 
-CHECKPKG_OVERRIDES_CSWlibbonoboui += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libbonoboui-2.so
-CHECKPKG_OVERRIDES_CSWlibbonoboui += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbonoboui-2.so.0.0.0|soname=libbonoboui-2.so.0|pkgname=CSWlibbonoboui|expected=CSWlibbonoboui2-0
+PACKAGES += CSWlibbonoboui-dev
+SPKG_DESC_CSWlibbonoboui-dev += $(DESCRIPTION), development files
+
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibbonobo2
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibbonoboui2-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibglade2
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgnome2-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibbonoboui-dev += CSWorbit2
 
 # There is a problem with the 64 bits build and the
 # the previous package didn't have the 64 bits libraries
@@ -44,10 +68,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS += --enable-static=no
 #CONFIGURE_ARGS += --enable-gtk-doc
 
-EXTRA_LD_OPTIONS = -z ignore -Bdirect
-
 EXTRA_TEST_EXPORTS = DISPLAY
-TEST_SCRIPTS = 
+TEST_SCRIPTS =
 
 include gar/category.mk
 
