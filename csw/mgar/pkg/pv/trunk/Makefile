@@ -1,5 +1,5 @@
 NAME = pv
-VERSION = 1.2.0
+VERSION = 1.5.2
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -14,24 +14,22 @@ define BLURB
 endef
 
 VENDOR_URL   = http://www.ivarch.com/programs/pv.shtml
-MASTER_SITES = http://pipeviewer.googlecode.com/files/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
-LICENSE      = doc/COPYING
+MASwww.ivarch.com/programs/sources/
+DISTFILES += $(DISTNAME).tar.bz2
+LICENSE = doc/COPYING
 
-UPSTREAM_MASTER_SITES = $(VENDOR_URL)
+PACKAGES += CSWpv
+SPKG_DESC_CSWpv = Monitor the progress of data through a pipe
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWpv += CSWlibintl8
 
-RUNTIME_DEP_PKGS = CSWlibintl8
+# We require GNU grep
+TEST_ENV_PATH = /opt/csw/gnu:$(PATH)
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-include gar/category.mk
-
-# test-012 uses tr complements (-c) which don't work with /usr/bin/tr
-PATH := /opt/csw/gnu:$(PATH)
+include gar/category.mkopt/csw/gnu:$(PATH)
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
 	ginstall -d -m 755 $(DOCDEST)
-	cp $(WORKSRC)/doc/NEWS $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+	cp $(WORKSRC)/doc/NEWS $(FILEDIR)/changelog.CSW $(DOCDES
