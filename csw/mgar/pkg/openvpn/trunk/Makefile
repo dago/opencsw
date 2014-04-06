@@ -10,11 +10,18 @@ OpenVPN is a full-featured SSL VPN solution which can accomodate a wide range of
 endef
 
 # master files
-MASTER_SITES = http://openvpn.net/release/
-DISTFILES = $(NAME)-$(VERSION).tBUILD_DEP_PKGS = CSWtuntar.gz
+MASTER_SITES = http://openvpn.net+= $(DISTNAME).tar.gz
+PATCHFILES += patch.openvpn-2.0.9.tun.c
 
-# we require
-RUlibssl1-0-0 CSWliblzo2-2
+VENDOR_URL = http://openvpn.net
+
+BUILD_DEP_PKGS += CSWtun
+
+PACKAGES += CSWopenvpn
+SPKG_DESC_CSWopenvpn = Secure IP tunnel daemon
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWopenvpn += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWopenvpn += CSWliblzo2-2
 
 # The references are located in document or sample files and are harmless
 CHECKPKG_OVERRIDES_CSWopenvpn += file-with-bad-content|/usr/share|root/opt/csw/share/doc/openvpn/easy-rsa/vars
@@ -29,14 +36,11 @@ CHECKPKG_OVERRIDES_CSWopenvpn += missing-dependency|CSWperlS = CSWosslrt CSWlzo
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
-PATCHFILES = patch.openvpn-2.0.9.tun.c
+CONFIGURE_ARGS  = --prefix=$(prefix) --mandiropenvpn-2.0.9.tun.c
 
 # use classes #for install/removal
 PRESERVECONF = $(sysconfdir)/ME)/$(NAME).conf.CSW
-INITSMF = /etc/opt/csw/init.d/cswopenvpn
-
-# no build tests
+INITSMF = /etc/opt/csw/init.d/cswopenvpTEST_SCRIPTS =d tests
 SKIPTEST = 1
 
 include gar/category.mk
