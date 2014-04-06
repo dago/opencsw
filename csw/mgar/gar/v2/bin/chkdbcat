@@ -4,6 +4,7 @@
 import argparse
 import logging
 from lib.python import chkdbcat
+import smtplib
 
 class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
     """Class overriding CheckDBCatalog.notify()"""
@@ -12,9 +13,9 @@ class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
         self.__verbose = verbose
 
     def notify(self, date, addr, pkginfo):
-        # TODO: Do actual notification. To be discussed.
-        if self.__verbose: print('Notify %s' % addr)
-        print(date, add, pkginfo)
+        notifier = chkdbcat.InformMaintainer((self._catrel, self._osrel, self._arch),
+                                             date, addr, pkginfo))
+        notfier.send_mail()
 
 
 def argparser():

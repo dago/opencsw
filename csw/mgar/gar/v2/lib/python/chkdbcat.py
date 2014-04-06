@@ -7,6 +7,7 @@ Bonivart's chkcat.
 Notifications for invalid catalogs can be customized by overriding
 CheckDBCat.notify().
 """
+from email.mime.text import MIMEText
 import cjson
 import datetime
 import dateutil.parser
@@ -14,6 +15,7 @@ import logging
 import os
 import os.path
 import shutil
+import smtplib
 import subprocess
 import sys
 import tempfile
@@ -330,9 +332,9 @@ class CheckDBCatalog(object):
             self.__chkcat = chkcat
 
             # store for later use
-            self.__catrel = catrel
-            self.__arch = arch
-            self.__osrel = osrel
+            self._catrel = catrel
+            self._arch = arch
+            self._osrel = osrel
 
             # will be set by __enter__ and unset by __exit__
             self.tmpdir = None
@@ -415,9 +417,9 @@ class CheckDBCatalog(object):
                   # Only record successful checks.
                   if retval:
                         with self.__timestamp_record:
-                              self.__timestamp_record.set(self.__catrel,
-                                                          self.__arch,
-                                                          self.__osrel,
+                              self.__timestamp_record.set(self._catrel,
+                                                          self._arch,
+                                                          self._osrel,
                                                           datetime.datetime.now())
 
                   # Compose list of packages uploaded since last successful
@@ -425,18 +427,18 @@ class CheckDBCatalog(object):
                   notifications = {}
                   if not retval:
                         lastsuccessful = self.__timestamp_record.get(
-                              self.__catrel,
-                              self.__arch,
-                              self.__osrel)
+                              self._catrel,
+                              self._arch,
+                              self._osrel)
 
                         if lastsuccessful is None:
                               logging.warn("No successful catalog check recorded for %s,%s,%s" %
-                                           (self.__catrel, self.__arch, self.__osrel))
+                                           (self._catrel, self._arch, self._osrel))
                               return retval;
 
-                        newpkgs = self.__cattiming_class(self.__catrel,
-                                                         self.__arch,
-                                                         self.__osrel).upload_newer_than(lastsuccessful)
+                        newpkgs = self.__cattiming_class(self._catrel,
+                                                         self._arch,
+                                                         self._osrel).upload_newer_than(lastsuccessful)
 
                         # compose notifications list in a manner so that
                         # each email address is notified exactly once, even
@@ -451,3 +453,57 @@ class CheckDBCatalog(object):
                               self.notify(notifications[n]['lastsuccessful'], n, notifications[n]['newpkgs'])
 
             return retval
+
+
+class InformMaintainer(object):
+      MAIL_CAT_BROKEN_HEADER = u"""Hi
+
+You uploaded following packages
+
+"""
+
+      MAIL_CAT_BROKEN_FOOTER = u"""
+which may (or may not) have broken the catalog for
+
+ %s %s %s
+
+since the last successful check on %s.
+
+Please check the package(s) and re-upload if necessary.
+
+Your Check Database Catalog script
+
+"""
+
+      def __init__(self, cat_tuple, date, addr, pkginfo):
+            self._cat_tuple = cat_tuple
+            self._date = date
+            self._addr = addr
+            self._pkginfo = pkginfo
+
+      def _compose_mail(self, from_address):
+            """Compose Mail"""
+
+            msg = InformMaintainer.MAIL_CAT_BROKEN_HEADER
+            for p in self._pkginfo:
+                  msg = msg + p['fullname'] + "\n"
+            msg = msg + InformMaintainer.MAIL_CAT_BROKEN_FOOTER
+
+            mail = MIMEText(msg  % (self._cat_tuple + (str(self._date),)))
+            mail['From'] = from_address
+            mail['To'] = self._addr
+
+            return mail
+
+      def send_mail(self):
+            from_address = "Check Database Catalog <noreply@opencsw.org>"
+            s = smtplib.SMTP('mail.opencsw.org')
+            try:
+                  s.sendmail(from_address, [self._addr],
+                             self._compose_mail(from_address).as_string())
+                  logging.debug("E-mail sending finished.")
+            except smtplib.SMTPRecipientsRefused, e:
+                  logging.error(
+                        "Sending email to %s failed, recipient refused.",
+                        repr(self._addr))
+            
