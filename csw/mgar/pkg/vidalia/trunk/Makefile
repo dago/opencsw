@@ -46,7 +46,7 @@ configure-custom:
 	@$(MAKECOOKIE)
 
 build-custom:
-	cd $(WORKSRC)/build && /opt/csw/bin/gmake
+	cd $(WLD_OPTIONS=-BdirectWORKSRC)/build && /opt/csw/bin/gmake
 	@$(MAKECOOKIE)
 
 install-custom:
