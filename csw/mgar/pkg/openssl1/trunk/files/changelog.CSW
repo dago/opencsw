@@ -1,3 +1,9 @@
+openssl (1.0.1g,rev=2014.04.07) unstable
+
+  * New upstream release.
+
+   -- yann rouillard <yann@opencsw.org>  Mon, 07 Apr 2014 21:07:48 +0200
+
 openssl (1.0.1f,rev=2014.02.07) unstable
 
   * Manpages and html doc are back in the package !
