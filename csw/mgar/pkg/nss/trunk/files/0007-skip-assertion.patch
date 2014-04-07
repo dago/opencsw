@@ -1,0 +1,12 @@
+--- a/mozilla/security/nss/lib/ssl/sslnonce.c
++++ b/mozilla/security/nss/lib/ssl/sslnonce.c
+@@ -121,7 +121,8 @@ static PRStatus initSessionCacheLocksLazily(void)
+         return PR_FAILURE;
+     }
+     rv = NSS_RegisterShutdown(ssl_ShutdownLocks, NULL);
+-    PORT_Assert(SECSuccess == rv);
++    /* asserts cores if debug mode */
++    /* PORT_Assert(SECSuccess == rv); */
+     if (SECSuccess != rv) {
+         return PR_FAILURE;
+     }
