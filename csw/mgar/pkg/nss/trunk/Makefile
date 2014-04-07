@@ -259,7 +259,8 @@ PATCHFILES += 0004-fix-xarch-and-add-SQLITE_LIB_DIR-var.patch
 6-platlibs.mk-linking-bltest.patch
 PATCHFILES += 0006-config.mk-linkingmk-linking-bltest.patch
 PASunOS5.mkmk-linking-bltest.patch
-PATCHFILES += 0005-change-rpath-for-bins-in-platlibs.mk.patch
+PATCHFILES += 0005-change-rpath-for-bins-in-pPATCHFILES_DBG += 0007-skip-assertion.patch
+PATCHFILES += $(PATCHFILES_$(GARFLAVOR))platlibs.mk.patch
 
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-February/000167.html
 GARCOMP_FLAGS_GCC4 = NS_USE_GCC=1
