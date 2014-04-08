@@ -1,0 +1,53 @@
+--- a/ldap/servers/plugins/posix-winsync/posix-winsync.c
++++ b/ldap/servers/plugins/posix-winsync/posix-winsync.c
+@@ -954,17 +955,19 @@ posix_winsync_pre_ds_mod_group_cb(void *cbdata, const Slapi_Entry *rawentry, Sla
+ 
+         slapi_attr_get_type(attr, &type);
+         for (; attr_map[i].windows_attribute_name != NULL; i++) {
++            Slapi_Attr *local_attr = NULL;
++            char *local_type = NULL;
++            local_type = slapi_ch_strdup(attr_map[i].ldap_attribute_name);
++            slapi_entry_attr_find(ds_entry, local_type, &local_attr);
++            is_present_local = (NULL == local_attr) ? 0 : 1;
+             if (0 == slapi_attr_type_cmp(type, attr_map[i].windows_attribute_name,
+-                                         SLAPI_TYPE_CMP_SUBTYPE)) {
+-                Slapi_Attr *local_attr = NULL;
+-                char *local_type = NULL;
++                                         SLAPI_TYPE_CMP_SUBTYPE)) 
++            {
++
+ 
+                 slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, 
+                                 "_pre_ds_mod_group_cb -- found AD attr %s\n", type);
+                 slapi_attr_get_valueset(attr, &vs);
+-                local_type = slapi_ch_strdup(attr_map[i].ldap_attribute_name);
+-                slapi_entry_attr_find(ds_entry, local_type, &local_attr);
+-                is_present_local = (NULL == local_attr) ? 0 : 1;
+                 if (is_present_local) {
+                     int values_equal = 0;
+                     slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, 
+@@ -989,10 +992,21 @@ posix_winsync_pre_ds_mod_group_cb(void *cbdata, const Slapi_Entry *rawentry, Sla
+                 }
+                 slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name, "_pre_ds_mod_group_cb -- values compared\n");
+ 
+-                slapi_ch_free((void**) &local_type);
+                 slapi_valueset_free(vs);
+-                /* what about if delete all values on windows ???? */
+-            }
++             } else {
++                 /* what about if delete all values on windows ? -> delete*/
++                 if (is_present_local) {
++                     slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name,
++                                    "_pre_ds_mod_group_cb -- update mods: %s, %s : values deleted -> modify\n",
++                                    slapi_sdn_get_dn(slapi_entry_get_sdn_const(ds_entry)),
++                                    local_type);
++
++                               
++                               slapi_mods_add_mod_values(smods, LDAP_MOD_DELETE, local_type, NULL);
++                    *do_modify = 1;
++                 }
++             }
++            slapi_ch_free((void**) &local_type);
+         }
+     }
+     slapi_log_error(SLAPI_LOG_PLUGIN, posix_winsync_plugin_name,
