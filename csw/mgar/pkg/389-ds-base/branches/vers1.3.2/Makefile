@@ -31,6 +31,7 @@ PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
 PATCHFILES += 0005-smf-autoenable-no.patch
 PATCHFILES += 0005-add-var-run-create-initconfig.in.patch
+truct-memberuid-generation-task.patch
 PATCHFILES += 0005-add-var-run-create-template-initconfig.in.patch
 # until Red Hat Bugzilla Bug 773617 is open do it yourself
 # PATCHFILES += 0006-add-i386-platform-in-configure.ac.patch
@@ -43,7 +44,11 @@ PATCHFILES += 0008-mntent-daemon.c.patch
 # PATCHFILES += 0011-Makefile.am.patch
 # PATCHFILES += 0009-fix-for-550-memberuid-not-created.patch
 # PATCHFILES += 0012-fix-for-47327.patch
-PATCHFILES += 0013-use-posix-threads-configure.ac.patch
+
+# PATCHFILES += 0013-use-posix-threads-configure.ac.patch
+# PATCHFILES += 0023-phtread-include-slapi2nspr.c.patch
+PATCHFILES += 0027-Slapi-rwlock-size.patch
+
 PATCHFILES += 0014-ldap-include-Makefile.am.patch
 # needed at least on GCC4
 PATCHFILES += 0015-use-PL_strcasestr-acllas.c.patch
@@ -54,9 +59,9 @@ PATCHFILES += 0017-disable-asm-for-Sparc.patch
 PATCHFILES += 0018-correct-64bit-ptr-bind.c
 PATCHFILES += 0021-include-lber.h-slapi-plugin.h.patch
 PATCHFILES += 0022-adjust-mozldap-version-sasl_io.c.patch
-PATCHFILES += 0023-phtread-include-slapi2nspr.c.patch
 PATCHFILES += 0024-strndup.patch
 PATCHFILES += 0025-posix-winsync.rawentry.patch
+PATCHFILES += 0030-reconstruct-memberuid-generation-task.patch
 PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
 
 BUILD_DEP_PKGS += CSWautoconf
