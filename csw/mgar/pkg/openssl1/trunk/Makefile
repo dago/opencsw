@@ -10,10 +10,12 @@
 # software causes damage.
 #####################################################################
 
+# Note: This build recipe does not work with parallel gmake (-j N) invocation.
+
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.1g
+VERSION = 1.0.1f
 CATEGORIES = lib
 GARTYPE = v2
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
@@ -35,19 +37,19 @@ RUNTIME_DEP_PKGS_CSWlibssl1-0-0_GNU = CSWlibgcc-s1CSWopenssl-utils
 SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
 PKGFILES_CSWlibssl1-0-0 = $(PKGFILES_RT)
 PKGFILES_CSWlibdir)(/[^/]*)?/openssl-1.0.0/engines/.* = $(PKGFILES_RT)
-PKGFILES_CSWlibssl1-0-0 += $(prefix)/etc/ssl/private $(prefix)/etc/ssl/certs 
-PKGFILES_CSWlibssl1-0-0 += $(docdir)/libssl1_0_0/.* 
+PKGFILES_CSWlibssl1-0-0 += $(prefix)/etc/ssl/private $(pref
+PKGFILES_CSWlibssl1-0-0 += $(docdir)/libssl1_0_0/.*)/libssl1_0_0/.* 
 
 RUNTIME_DEP_PKGS_CSWlibssl-dev = CSWlibssl1-0-0
 SPKG_DESC_CSWlibssl-dev = Openssl 1.0 development support files
-PKGFILES_CSWlibssl-dev = $(PKGFILES_DEVEL) 
+PKGFILES_CSWlibssl-dev = (PKGFILES_DEVEL) 
 PKGFILES_CSWlibssl-dev += $(docdir)/libssl_dev/.*
 
 RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl1-0-0
 SPKG_DESC_CSWopenssl-utils = Openssl 1.0 binaries and related tools
-PKGFILES_CSWopenssl-utils = $bindir)/.*/openssl 
-PKGFILES_CSWopenssl-utils +== $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
-PKGFILES_CSWopenssl-utils += $(prefix)/ssl/misc/.* 
+PKGFILES_CSWopenssl-utils = $bindir)/.*/openssl
+PKGFILES_CSWopenssl-utils += $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.*
+PKGFILES_CSWopenssl-utils += $(prefix)/ssl/misc/.*fix)/ssl/misc/.* 
 PKGFILES_CSWopenssl-utils += $(prefix)/ssl/openssl\.cnf.*
 PKGFILES_CSWopenssl-utils += $(sysconfdir)/ssl/openssl\.cnf.*
 PKGFILES_CSWopenssl-utils += $(docdir)/openssl_utils/.*
@@ -72,16 +74,16 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-depnkpkg.overrides
 
 MASTER_SITES = http://www.openssl.org/source/
 
-DISTFILES  = $(NAME)-$(VERSION).tar.all
+DISTFILES  = $(NAME)-(VERSION).tar.all
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += map.openssl.libcrypto map.openssl.libssl map.openssl.engines
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS List of engines that will be shipped in the packages
 ENGINES = 4758cca aep atalla cswift gmp chil nuron sureware ubsec padlock capiEWS configure targets patchs needs to be different for Solaris 9 as some map files
-# are not available 
+# are not available
 ifeq ($(shell /usr/bin/uname -r),5.9)
 	PATCH_SUFFIX = .SunOS5.9
-endifEWS README.ENGIis taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
+endifEWS README.ENGIis taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
 # original file: components/openssl/openssl-1.0.1/patches/18-compiler_opts.patch
 # I think they are smarter than me to figure what are the best compiler options
 PATCHFILES = optimized_configure_targets.patch$(PATCH_SUFFIX)
@@ -90,7 +92,10 @@ PATCHFILES = optimized_configure_targets.patch$(PATCH_SUFFIX)
 # solaris-sparcv8-cc-sunw, solaris-pentium_pro-cc-sunw and solaris-sparcv9+vis-cc-sunw
 # (wonder if they are really worth it)
 PATCHFILES +is-cc
-PATCHFILES = more_config$(PATCH_SUFFIX)ure_targets.patch
+PATCHFILES = more_config$(PATCH_SUFFIX)ur
+PATCHFILES += CVE-2014-0076.patch
+PATCHFILES += CVE-2014-0160.patch
+ure_targets.patch
 
 #PATCHFILES += fix-test-failure.patch
 
@@ -111,13 +116,13 @@ csw_paths.patch
 PATCHFILES += block_bad_certificates.patch
 
 # Add old-style certificates hash generation to maintain compatibilies
-# with gnutls and programs linked with openssl 0.9.8 
+# with gnutls and programs linked wth openssl 0.9.8 
 # Patch taken from Debian
 PATCHFILES += c_rehash-compat.patch
 
 # Oh yes, let's do symbol versioning so we don't become
 # crazy during library migration
-PATCHFILES += 0007-enables-symbols-veropenssl currently only uses issetugid on freebsd and openbsd 
+PATCHFILES += 0007-enables-symbols-veropenssl currently only uses issetugid on freebsd and openbsd
 # althought it is also available on Solaris 10
 # We make issetugid support configurable via preprocessor flag
 # to be able to enable it for Solaris
@@ -131,7 +136,7 @@ ifneq ($(shell /usr/bi       PATCHFILES += openssl-1.0.1f-pkcs11-engine.patch
 endif
 endif
 
-# support for sparc t4 crypto engine 
+# support for sparct4 crypto engine 
 # see http://bubbva.blogspot.fr/2011/11/exciting-crypto-advances-with-t4.html
 #     https://blogs.oracle.com/DanX/entry/sparc_t4_openssl_engine
 # patch taken from https://hg.openindiana.org/upstream/oracl# To update the patch, do:
@@ -152,12 +157,12 @@ LICENSE = LICENSE
 ##### Build and installation inBUILD64 = 1
 ISAEXEC = 1information #####
 
-# The list of instructions set for which we will 
+# The list of instructions set or which we will 
 # provide optimized libraries and binaries
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8ppluthe openssl build system doesn't honor bindir
 # as it doesn't install 64 bits binaries in bin/{amd64,sparcv9}
-# we fix this at the merge step 
+# we fix this at the merge step
 EXTRA_MERGE_DIRS_isa-amd64 = $(bindir_install)
 EXTRA_MERGE_DIRS_isa-sparcv9 = $(bindir_install)
 
@@ -190,10 +195,10 @@ sparcv8plus+vis_GNU_CONFIGURE_TARGET	= solaris-sparcv9+vis-gcc
 sparcv9_GNU_CONFIGURE_TARGET		= solaris64-sparcv9-gcc
 ar# Solaris has the issetugid function since libc version interface SUNW_1.21
 # but openssl doesn't use it by default so we manually enable it
-CONFIGURE_FLAGS = -DHAVE_ISSETUGIDar# PKCS11 Patch also works on sparc64 athena processors thanks for the FJAES 
+CONFIGURE_FLAGS = -DHAVE_ISSETUGIDar# PKCS11 Patch also works on sparc64 athena processors thanks for the FJAES
 # instruction set. The presence of this instruction set is checked at runtime
 # by looking for the AV_SPARC_JFAES instruction set bit, unfortunately the
-# corresponding macro in not present in Solaris 9-11 headers, so we manually 
+# corresponding macro in not present in Solaris 9-11 headers, so we manually
 # define it.
 CONFIGURE_FLAGS += -DAV_SPARC_FJAES=0ar# --libdir must only be given if the directory is actually different from lib or the creation will fail
 # as the directory is already there
@@ -207,7 +212,8 @@ CONFIGURE_ARGS += $($(ISA)_$(GARCOMPILER_TYPE)_CONFIGURE_TARGET)
 CONFIGURE_ARGS += sharedprefix=$(DESTDIR)
 
 # PKCS11 is only for Solaris 10 so we must create solaris 10 spesolaris10-i386
-ifneq ($(shell /usr/bi	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) R)/lib ri= SOS12
+ifneq ($(shell /usr/bi	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so)
+endifri= SOS12
 endif
 
 
@@ -217,7 +223,7 @@ CONFIGURE_ENV += PERL="/usr/bin/perl"
 
 # Configure uses make and sun make is not happy
 # with the shell command addedEXTRA_ by the t4 patch
-CONFIGURE_ENV += MAKE="/opt/cThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/ 
+CONFIGURE_ENV += MAKE="/opt/cThe new compiler options taken from https://hg.openindiana.org/upstream/oracle/userland-gate/
 # added "-z defs" to the linker options. That causes object compilation to fail because
 # they are not linked against libc and libdl (for Sol9). This is workaround until I find a better fix.
 EXTRA_LD_OPTIONS = -lc -ldlLAGS += -noex -mt
@@ -227,7 +233,7 @@ EXTRA_LD_OPTIONS = -lc -ldlLAGS += -noex -mt
 INSTALL_ARGS += MANDIR=$(mandir)
 
 # library files are not automatically stripped
-STRIP_DIRS = $(DESTDIR)/$(libdir) $(DESTDIR)/$(libdir)/openssl-$(SONAME)/engines/
+STRIP_DIRS = $(DESTDIR)/$(libdir) $(DESTDIR)/$(libdir)/openssl-$(SONAME)/engines
 
 
 TEST_SCRIPTS = 
@@ -247,18 +253,18 @@ post-install:
 pre-configure-modulated:
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
-	ln -nf $(WORKDIR)/map.openssl.libcrypto $(WORKSRC)/map.openssl.libcrypto 
-	ln -nf $(WORKDIR)/map.openssl.libssl $(WORKSRC)/map.openssl.libssl$(ENGINES)bsec padlock capi; do \
-		ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/map.openssl.lib$$ENGINE; \
+	ln -nf $(WORKDIR)/map.openssl.libcrypto $(WORKSRC)/map.
+	ln -nf $(WORKDIR)/map.openssl.libssl $(WORKSRC)/map.openssl.libsslp.openssl.libssl$(ENGINES)bsec padlock capi; do \
+		ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/map.openssl.lib$ENGINE; \
 	done 
 	ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/ccgost/map.openssl.libgost
 indir)/c_rehash
 
-install-conf-misc: 
+istall-conf-misc: 
 	if [ -f "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ] && [ ! -h "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ]; then \
 		ginstall -d "$(PKGROOT)$(sysconfdir)/ssl"; \
 		mv "$(PKGROOT)$(prefix)/ssl/openssl.cnf" $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW; \
-		ln -sf ../../..$(sysconfdir)/ssl/openssl.cnf $(PKGROOT)$(prefix)/ssl/openssl.cnf; \
+		ln -sf ../../..$(sysconfdir)/ssl/openssl.cnf $(PKGROOT)$(prefix)/ssl/oenssl.cnf; \
 	fi	
 	[ ! -d "$(PKGROOT)$(sysconfdir)/ssl/misc" ] || \
 		mv "$(PKGROOT)$(sysconfdir)/ssl/misc" "$(PKGROOT)(prefix)/ssl/"
@@ -269,5 +275,6 @@ merge-doc:
 		(cd $(DOWNLOADDIR)/ && ginstall -m 0644 README.CSW changelog.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 		(cd $(WORKSRC_FIRSTMOD)/ && ginstall -m 0644 $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 	done
-	@$(MAKECO-all: merge-doc install-conf-misc 
+	@$(MAKECO-all: merge-doc install-conf-misc
 
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=heartbleed

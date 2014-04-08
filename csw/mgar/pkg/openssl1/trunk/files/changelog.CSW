@@ -1,3 +1,9 @@
+openssl (1.0.1g,rev=2014.04.08) unstable
+
+  * 1.0.1g does not build. Revert to 1.0.1f and add backported changes.
+
+   -- Maciej Blizinski <maciej@opencsw.org>  Tue, 08 Apr 2014 16:07:48 +0100
+
 openssl (1.0.1g,rev=2014.04.07) unstable
 
   * New upstream release.
