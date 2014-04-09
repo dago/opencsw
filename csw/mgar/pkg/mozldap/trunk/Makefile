@@ -60,8 +60,6 @@ PKGFILES_CSWlibprldap60 += $(call baseisadirs,$(libdir),libprldap60\.so)
 PKGFILES_CSWlibprldap60 += $(call baseisadirs,$(libdir),libprldap60\.so(\.\d+)*)
 SPKG_DESC_CSWlibprldap60 += $(DESCRIPTION), libprldap60.so
 RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibplc4
-RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibldap60
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/libprldap60.so
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libprldap60.so
@@ -78,7 +76,6 @@ RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibprldap60
-RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibsoftokn3
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibssl3
 
 CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/libssldap60.so
@@ -99,29 +96,19 @@ PKGFILES_CSWmozldap-tools = $(call pkgfiles_etc,ldapfilter.conf)
 PKGFILES_CSWmozldap-tools = $(call pkgfiles_etc,ldapsearchprefs.conf)
 PKGFILES_CSWmozldap-tools = $(call pkgfiles_etc,ldaptemplates.conf)
 PKGFILES_CSWmozldap-tools = $(call pkgfiles_etc,ldapfriendly)
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibssldap60
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibldif60
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibldap60
+RUNTIME_DEP_PKGS_CSWmozldaprldap60
+RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnss3s += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnss3
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplc4
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsvrcore0
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibplds4
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsoftokn3
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibssl3
-RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibsasl2-2
-# it not depends on oldapclient!
-CHECKPKG_OVERRIDES_CSWmozldap-tools += missing-dependency|CSWoldapclient
+RUNTIME_DEP_PKGS_CSWmozldassldap60cy|CSWoldapclient
 
 PACKAGES += CSWmozldap-dev
 CATALOGNAME_CSWmozldap-dev = mozldap_dev
 SPKG_DESC_CSWmozldap-dev += $(DESCRIPTION), development files
 PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWmozldap-dev = $(PKGFILES_DEVEL_INCLUDEDIR)
-PKGFILES_CSWmozldap-dev = $(PKGFILES_DEVEL_PKGCONFIG)
-ARCHALL_CSWmozldap-dev = 1
+PKGFILES_CSWmozldap-dev = $(PKGFILES_Wmozldap-dev = 1
 RUNTIME_DEP_PKGS_CSWmozldap-dev += CSWlibssldap60
 RUNTIME_DEP_PKGS_CSWmozldap-dev += CSWlibprldap60
 RUNTIME_DEP_PKGS_CSWmozldap-dev += CSWlibldif60
