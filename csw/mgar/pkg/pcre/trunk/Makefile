@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.33
+VERSION = 8.35
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -37,14 +37,7 @@ RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcreposix0
 RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcrecpp0
 PKGFILES_CSWlibpcre-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibpcre-dev += $(docdir)/.*
-OBSOLETED_BY_CSWlibpcre-dev += CSWpcre-devel
-# Leave these in the docs for now
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/pcre-config.txt
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/pcre.txt
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/README
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcre-config.html
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcresample.html
-CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/htm# We don't want to depend on pcre
+OBSOLETED_BY_CSWlibpcre-dev m# We don't want to depend on pcre
 CHECKPKG_OVERRIDES_CSWlibpcre-dev += missing-dependency|CSWpcretml/pcredemo.html
 
 PACKAGES += CSWlibpcre1
@@ -70,7 +63,11 @@ PKGFILES_CSWlibpcreposix0 += $(call pkgfiles_lib,libpcreposix.so.0)
 RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre1
 
 REINPLACE_USRLOCAL += doc/pcre-config.1
-REINPLACE_USRLOCAL += doc/pcresample.3
+REINPLACE_USRLOCAL += d# Older compiler like Sun Studio 12 behave differently on -Wl,-i... and -Qoption ld -i...
+# This leads to configure detecting something works which later on does not work.
+# Newer compilers behave consistently.
+# See also http://bugs.exim.org/show_bug.cgi?id=1278
+GARCOMPILER = SOS12U= doc/pcresample.3
 
 BUILD64_LIBS_ONLY = 1
 
