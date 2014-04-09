@@ -24,14 +24,16 @@ of Michigan and Netscape LDAP libraries.  They use Mozilla
 NSPR and NSS for crypto.
 endef
 
-MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/directory/c-sdk/releases/v6.0.7/src
+MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/directory/c-sdk/re/leases/v6.0.7/src
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
-BUILD_DEP_PKGS = CSWlibsvrcore0-dev
+BUILD_DEP_PKGS = CS
 PACKAGING_PLATFORMS += solaris10-sparc
 PACKAGING_PLATFORMS += solaris10-i386
-GARCOMPILER = SOS12U2
+
+GARCOMPILER = SOS12U3
+# GARFLAVOR = DBGOMPILER = SOS12U2
 
 PACKAGES += CSWlibldap60
 CATALOGNAME_CSWlibldap60 = libldap60
@@ -131,25 +133,26 @@ CHECKPKG_OVERRIDES_CSWmozldap-dev += archall-devel-package
 # header file namespace.
 
 # override the standard paths
-bindir=$(prefix)/dirsrv/bin
+bindir=$(p/$(MM_BINDIR)refix)/dirsrv/bin
 includedir=$(prefix)/include/dirsrv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_isa-sparcv9 = --enable-64bit
 CONFIGURE_ARGS_isa-amd64 = --enable-64bit
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
-CONFIGURE_ARGS_OPT += --with-svrcore=$(prefix)
-CONFIGURE_ARGS_OPT += --with-sasl
-CONFIGURE_ARGS_OPT += --with-sasl-inc=$(prefix)/include/sasl
-CONFIGURE_ARGS_OPT += --with-sasl-lib=$(libdir)
-CONFIGURE_ARGS_OPT += --enable-clu
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION += --with-svrcore=$(libdir)
+CONFIGURE_ARGS += --with-sasl
+CONFIGURE_ARGS += --with-sasl-inc=$(prefix)/include/sasl
+CONFIGURE_ARGS += --with-sasl-lib=$(libdir)
+CONFIGURE_ARGSONFIGURE_ARGS_OPT += --enable-clu
 CONFIGURE_ARGS_OPT += --enable-optimize="-xO3"
 CONFIGURE_ARGS_OPT += --disable-debug
-CONFIGURE_ARGS_OPT += --enable-strip
-CONFIGURE_ARGS_OPT += --with-nss-inc=$(prefix)/include/nss
-CONFIGURE_ARGS_OPT += --with-nss-lib=$(libdir)
-CONFIGURE_ARGS_OPT += --with-nspr-inc=$(prefix)/include/nspr
-CONFIGURE_ARGS_OPT += --with-nspr-lib=$(libdir)
+CONFIGURE_ARGS_OPT += --enable-striDBG += --enable-optimize="no"
+CONFIGURE_ARGS_DBG += --enable-debug
+CONFIGURE_ARGS_DBG += --disable-strip
+CONFIGURE_ARGS += --with-nss-inc=$(prefix)/include/nss
+CONFIGURE_ARGS += --with-nss-lib=$(libdir)
+CONFIGURE_ARGS += --with-nspr-inc=$(prefix)/include/nspr
+CONFIGURE_ARGSONFIGURE_ARGS_OPT += --with-nspr-lib=$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 CPPFLAGS=
@@ -159,8 +162,11 @@ BUILD_SCRIPTS = c-sdk
 INSTALL_SCRIPTS = c-sdk
 TEST_TARGET = 
 TEST_SCRIPTS = 
-BUILD64_LIBS_ONLY = 1
-EXTRA_LINKER_FLAGS = -liconv
+BUILD# EXTRA_LINKER_FLAGS = -liconv
+# remove -L/opt/csw/lib
+LDFLAGS = $(CFLAGS)
+EXTRA_BUILD_ENV_DBG += LDAP_DEBUG=1
+EXTRA_BUILD_ENV += $(EXTRA_BUILD_ENV_$(GARFLAVOR))R_FLAGS = -liconv
 
 configure-c-sdk:
 	(cd $(WORKSRC) && mkdir -p build inst)
@@ -215,4 +221,4 @@ install-c-sdk:
 	@mv $(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc.in $(DESTDIR)/$(libdir)/pkgconfig/$(NAME).pc
 	@$(MAKECOOKIE)
 
-include gar/category.mk
+include
