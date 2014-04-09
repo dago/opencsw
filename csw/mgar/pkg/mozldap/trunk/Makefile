@@ -60,7 +60,8 @@ PKGFILES_CSWlibprldap60 += $(call baseisadirs,$(libdir),libprldap60\.so)
 PKGFILES_CSWlibprldap60 += $(call baseisadirs,$(libdir),libprldap60\.so(\.\d+)*)
 SPKG_DESC_CSWlibprldap60 += $(DESCRIPTION), libprldap60.so
 RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibprldap60 += CSWlibldap60
+RUNTIME_DEP_PKGS_CSWlibprldap60RUNTIME_DEP_PKGS_CSWlibprldap60_sparc += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWlibprldap60 += $(RUNTIME_DEP_PKGS_CSWlibprldap60_$(GARCH))0 += CSWlibldap60
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/libprldap60.so
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libprldap60.so
 CHECKPKG_OVERRIDES_CSWlibprldap60 += soname-equals-filename|file=/opt/csw/lib/amd64/libprldap60.so
@@ -76,9 +77,10 @@ RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibplds4
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibprldap60
-RUNTIME_DEP_PKGS_CSWlibssldap60 += CSWlibssl3
-
-CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/libssldap60.so
+RUNTIME_DEP_PKGS_CSWlibssldapRUNTIME_DEP_PKGS_CSWlibssldap60_sparc += CSWlibsoftokn3
+RUNTIME_DEP_PKGS_CSWlibssldap60 += $(RUNTIME_DEP_PKGS_CSWlibssldap60_$(GARCH))
+v9/libssldap60.so
+CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|f/csw/lib/sparcv9/libssldap60.so
 CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libssldap60.so
 CHECKPKG_OVERRIDES_CSWlibssldap60 += soname-equals-filename|file=/opt/csw/lib/amd64/libssldap60.so
 
@@ -101,7 +103,9 @@ RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWmozldaprldap60
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnss3s += CSWlibldap60
 RUNTIME_DEP_PKGS_CSWmozldap-tools += CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWmozldassldap60cy|CSWoldapclient
+RUNTIME_DEP_PKGS_CSWmozldassldap60cRUNTIME_DEP_PKGS_CSWmozldap-tools_sparc += CSWlibplds4
+RUNTIME_DEP_PKGS_CSWmozldap-tools_sparc += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWmozldap-tools += $(RUNTIME_DEP_PKGS_CSWmozldap-tools_$(GARCH))cy|CSWoldapclient
 
 PACKAGES += CSWmozldap-dev
 CATALOGNAME_CSWmozldap-dev = mozldap_dev
