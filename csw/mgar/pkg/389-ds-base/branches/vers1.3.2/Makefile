@@ -25,7 +25,10 @@ PACKAGING_PLATFORMS += solaris10-i386
 LICENSE = LICENSE
 
 GARCOMPILER = SOS12U3
+# builds but was not able to debug
 # GARCOMPILER = GCC4
+LDAPAPI=mozldap
+# LDAPAPI=openldap
 
 PATCHFILES += 0005-add-standard-path.patch
 PATCHFILES += 0006-replace-SV-sh-with-Posix-sh.patch
@@ -96,18 +99,30 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnssdbm3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWpm-netaddr-ip
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicui18n52
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibicuuc52
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSW389-ds-base_openldap += CSWlibldap2-4-2
+
+RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibprldap60
+RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibldif60
+RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibldap60
+RUNTIME_DEP_PKGS_CSW389-ds-base_mozldap += CSWlibssldap60
+
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSW389-ds-base_sparc += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW389-ds-base_sparc_GCC4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH))
+RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(GARCH)_$(GARCOMPILER))
+RUNTIME_DEP_PKGS_CSW389-ds-base += $(RUNTIME_DEP_PKGS_CSW389-ds-base_$(LDAPAPI))
 
 
+# it is only a comment
 CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/dirsrv/perl/DSUpdate.pm
+CHECKPKG_OVERRIDES_CSW389-ds-base += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/dirsrv/perl/DSUpdate.pm
 CHECKPKG_OVERRIDES_CSW389-ds-base += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSW389-ds-base += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/dirsrv-snmp|class=none
 # is needed for setup scripts!
@@ -134,7 +149,7 @@ STRIP_LIBTOOL = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ldapsdk-inc=$(includedir)/dirsrv 
 CONFIGURE_ARGS += --with-ldapsdk-lib=$(libdir)
-CONFIGURE_ARGS += --with-ldapsdk-bin=$(abspath $(prefix)/dirsrv/bin/$(MM_BINDIR))
+CONFIGURE_ARGS += --with-ldapsdk-bin=$(prefix)/dirsrv/bin
 # CONFIGURE_ARGS += --with-ldapsdk-bin=$(bindir)
 # CONFIGURE_ARGS += --with-openldap=$(prefix)
 # CONFIGURE_ARGS += --with-openldap-inc=$(includedir)
