@@ -8,13 +8,13 @@ define BLURB
   The tmpwatch utility recursively searches through specified directories
   and removes files which have not been accessed in a specified period of
   time. tmpwatch is normally used to clean up directories which are used
-  for temporarily holding files (for example, /tmp). 
+  for temporarily holding files (fr example, /tmp). 
 endef
 
 VENDOR_URL   = https://fedorahosted.org/tmpwatch/
 MASTER_SITES = https://fedorahosted.org/releases/t/m/tmpwatch/
-DISTFILES    = $(NAME)-$(VERSION).tar.bz2
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES    = $(NAME)-$
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
@@ -27,5 +27,4 @@ include gar/category.mk
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 install-changelog-%:
 	ginstall -D $(FILEDIR)/changelog.CSW \
-		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
-	@$(MAKECOOKIE)
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CS
