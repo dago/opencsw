@@ -1,0 +1,32 @@
+--- a/ldap/servers/slapd/entry.c
++++ b/ldap/servers/slapd/entry.c
+@@ -2064,7 +2064,7 @@ slapi_entry_size(Slapi_Entry *e)
+     if (e->e_uniqueid) size += strlen(e->e_uniqueid) + 1;
+     if (e->e_dncsnset) size += csnset_size(e->e_dncsnset);
+     if (e->e_maxcsn) size += sizeof( CSN );
+-    if (e->e_virtual_lock) size += sizeof(Slapi_RWLock);
++    if (e->e_virtual_lock) size += sizeof(Slapi_RWLock_size);
+     /* Slapi_DN and RDN are included in Slapi_Entry */
+     size += (slapi_sdn_get_size(&e->e_sdn) - sizeof(Slapi_DN));
+     size += (slapi_rdn_get_size(&e->e_srdn) - sizeof(Slapi_RDN));
+--- a/ldap/servers/slapd/pw.c
++++ b/ldap/servers/slapd/pw.c
+@@ -2728,7 +2728,7 @@ pw_get_ext_size(Slapi_Entry *entry, size_t *size)
+         return LDAP_SUCCESS;
+     }
+     *size += sizeof(struct slapi_pw_entry_ext);
+-    *size += sizeof(Slapi_RWLock);
++    *size += sizeof(Slapi_RWLock_size);
+     if (LDAP_SUCCESS == slapi_pw_get_entry_ext(entry, &pw_entry_values)) {
+         Slapi_Value *cvalue;
+         int idx = valuearray_first_value(pw_entry_values, &cvalue);
+--- a/ldap/servers/slapd/slapi-plugin.h
++++ b/ldap/servers/slapd/slapi-plugin.h
+@@ -6000,6 +6000,7 @@ typedef struct slapi_condvar	Slapi_CondVar;
+ typedef pthread_rwlock_t	Slapi_RWLock;
+ #else
+ typedef struct slapi_rwlock	Slapi_RWLock;
++#define Slapi_RWLock_size (5*sizeof(void*)+(4*sizeof(PRUint32)))
+ #endif
+ Slapi_Mutex *slapi_new_mutex( void );
+ void slapi_destroy_mutex( Slapi_Mutex *mutex );
