@@ -1,12 +1,14 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
-#
+# 
+# Programs to build from this source:
+# - watch
+# - column
 NAME = util-linux
-VERSION = 2.21
-PATCHLEVEL = .2
-GARTYPE = v2
-CATEGORIES = utils
-DISTNAME = $(NAME)-$(VERSION)$(PATCHLEVEL)
+MINOR_VER = 2.24
+PATCHLEVEL = .1
+VERSION = $(MINOR_VER)$(PATCHLEVEL)
+GARTYPE = v2RSION)$(PATCHLEVEL)
 
 DESCRIPTION = A collection of basic utilities
 define BLURB
@@ -16,10 +18,13 @@ others, Util-linux contains the fdisk configuration tool and the login
 program.
 endef
 
-MASTER_SITES = http://www.kernel.org/pub/linux/utils/$(NAME)/v$(VERSION)/
-DISTFILES  = $(DISTNAME).tar.gz
+s://www.kernel.org/pub/linux/utils/$(NAME)/v$(MINOR_VER)/
+DISTFILES  = $(DISTNAME).tar.xz
+
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+
+GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
-
