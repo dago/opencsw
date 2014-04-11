@@ -53,7 +53,7 @@ RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibds-admin-serv0 += CSWlibiconv2
 
 PACKAGES += CSW389-admin-dev
-OBSOLETED_BY_CSW389-admin-dev = CSW389admin-dev
+# OBSOLETED_BY_CSW389-admin-dev = CSW389admin-dev
 SPKG_DESC_CSW389-admin-dev += $(DESCRIPTION), development files
 PKGFILES_CSW389-admin-dev += /opt/csw/lib/libds-admin-serv.so
 RUNTIME_DEP_PKGS_CSW389-admin-dev += CSWlibds-admin-serv0
