@@ -1,0 +1,11 @@
+--- a/ldap/servers/slapd/sasl_io.c
++++ b/ldap/servers/slapd/sasl_io.c
+@@ -47,7 +47,7 @@
+ #include <arpa/inet.h>
+ #ifndef USE_OPENLDAP
+ #include "mozldap.h"
+-#if LDAP_VENDOR_VERSION > 604
++#if LDAP_VENDOR_VERSION > 607
+ /* garbage to cause build to fail */
+ MOZLDAP is newer than expected, if the ber structure has not changed
+ (see ldap/server/slapd/mozldap.h), please bump the version number(604 -> new version)

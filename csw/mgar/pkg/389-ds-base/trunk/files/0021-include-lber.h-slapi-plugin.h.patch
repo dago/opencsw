@@ -1,0 +1,17 @@
+--- a/ldap/servers/slapd/slapi-plugin.h
++++ b/ldap/servers/slapd/slapi-plugin.h
+@@ -7347,14 +7347,6 @@ char **slapi_str2charray_ext( char *str, char *brkstr, int allow_dups );
+ #define LDAP_SASL_EXTERNAL      "EXTERNAL"      /* TLS/SSL extension */
+ #endif
+ 
+-#ifndef LBER_SOCKET
+-#ifdef LBER_SOCKET_T
+-#define LBER_SOCKET LBER_SOCKET_T
+-#else
+-#define LBER_SOCKET int
+-#endif
+-#endif
+-
+ /* Used to make unhashed passwords available to plugins. */
+ #define	PSEUDO_ATTR_UNHASHEDUSERPASSWORD	"unhashed#user#password"
+ 
