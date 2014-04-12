@@ -26,6 +26,14 @@ PKGFILES_CSWlibgeos3-4-2 += $(call baseisadirs,$(libdir),libgeos-3\.4\.2\.so)
 PKGFILES_CSWlibgeos3-4-2 += $(call baseisadirs,$(libdir),libgeos-3\.4\.2\.so(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibgeos3-4-2 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibgeos3-4-2 += CSWlibgcc-s1
+# Can't change this, obviously developers decided to do so
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += soname-equals-filename|file=/opt/csw/lib/libgeos-3.4.2.so
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libgeos-3.4.2.so
+# Direct binding messes with unwind handler. We require the unwind handler from libgcc_s.so
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libstdc++.so.6
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libstdc++.so.6
 OBSOLETED_BY_CSWlibgeos3-4-2Y_CSWlibgeos3-3-3 = CSWgeos
 
 SPKG_DESC_CSWlibgeos-c1 += Geometry Engine, Open Source, libgeos_c.so.1
@@ -33,7 +41,13 @@ PKGFILES_CSWlibgeos-c1 += $(call baseisadirs,$(libdir),l8bgeos_c\.so\.1\.6\.2)
 PKGFILES_CSWlibgeos-c1 += $(call baseisadirs,$(libdir),libgeos_c\.so\.1(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibgeos-c4-2= CSWlibgeos3-3-3
 RUNTIME_DEP_PKGS_CSWlibgeos-c1 += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibgeos-c1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgeos-c1# Direct binding messes with unwind handler. We require the unwind handler from libgcc_s.so
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgeos-3.4.2.so
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libstdc++.so.6
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgeos-3.4.2.so
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libstdc++.so.61 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgeos-c1 = CSWgeos
 
 SPKG_DESC_CSWgeos-dev = $(DESCRIPTION), development files
@@ -70,7 +84,9 @@ CONFIGURE_ARGS += --disable-inline
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORY_MODEL))
 
-# -B direct breaks code amd64
+# -B direct breaks code amd64. N.B. the unwind handler from libgcc_s
+# -has to be used, therefore libgcc_s has to be loaded before libc on
+# -amd64.
 LINKER_DIRECT =
 
 include gar/category.mk
