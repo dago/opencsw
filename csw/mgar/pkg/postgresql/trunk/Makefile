@@ -85,12 +85,24 @@
 # Further, it does not use alternatives and puts binaries in $(bindir)
 # (see 'post-merge-modulated:'). This will make it easier for
 # maintainers to use `pg_config'.
+#
+# The following headers are architecture dependend:
+#
+#  $(includedir)/pg_config.h
+#  $(includedir)/pg_config_ext.h
+#  $(includedir)/ecpg_config.h
+#  $(includedir)/postgresql/server/pg_config.h
+#  $(includedir)/postgresql/server/pg_config_ext.h
+#
+# therefore, they will be renamed to _32.h, or _64.h repectively, and
+# a wrapper header file will be placed which includes the proper
+# header file upon compile time.
 
 NAME = postgresql
 BASE_VERSION = 9.3
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 3
+PATCHLEVEL = 4
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 GARTYPE = v2
 GARCOMPILER = SOS12U3 apps
@@ -261,7 +273,9 @@ POSTMSG = $(foreach n,$(myALTERNATIVES),\
 MASTER_SITES = http://ftp.postgresql.org/pub/source/v$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += README.CSW
-DISTFILES += changelog.CSW
+DISTFILES += changelogpg_config.h
+DISTFILES += pg_config_ext.h
+DISTFILES += ecpg_config.hS += changelog.CSW
 DISTFILES += $(SERVERPOSTINSTTMPL)
 DISTFILES += $(INITSCRIPTFILETMPL)
 DISTFILES += $(USERGROUPFILETMPL)
@@ -570,7 +584,13 @@ post-build-modulated:
 post-install-modulated:
 	@echo " ===> Installing contrib stuff"
 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
-	$(INSTALL_ENV) gmake -C $(WORKSRC) DESTDIR=$(DESTDIR) install-docs
+	$(INSTALL_ENV) gmake -C $(WORKSRC) DESTDIR=$(DEST# Move headers depending on the memory model aside.
+# In post-merge, a wrapper header file will be dropped in their place including the proper header dynamically.
+	gmv $(DESTDIR)$(includedir)/pg_config.h $(DESTDIR)$(includedir)/pg_config_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/pg_config_ext.h $(DESTDIR)$(includedir)/pg_config_ext_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/ecpg_config.h $(DESTDIR)$(includedir)/ecpg_config_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/postgresql/server/pg_config.h $(DESTDIR)$(includedir)/postgresql/server/pg_config_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/postgresql/server/pg_config_ext.h $(DESTDIR)$(includedir)/postgresql/server/pg_config_ext_$(MEMORYMODEL).hTDIR) install-docs
 	@$(MAKECOOKIE)
 
 # We suck in the libpgport.a since pg_config is emitting
@@ -585,7 +605,13 @@ endif
 # Move the development binaries to the standard location
 	ginstall -d $(PKGROOT)$(bindir)/
 	for f in $(BIN_NAMES_DEVEL) ; do \
-		gmv -v $(PKGROOT)$(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)/$$f $(PKGROOT)$(bindir)/ ; \
+		gmv -v $(PKGROOT)$(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)/$$f $(PKGROOT)$(b# here, we pull in the header architecture dependend header files
+	gmv $(DESTDIR)$(includedir)/pg_config_$(MEMORYMODEL).h $(PKGROOT)$(includedir)/pg_config_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/pg_config_ext_$(MEMORYMODEL).h $(PKGROOT)$(includedir)/pg_config_ext_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/ecpg_config_$(MEMORYMODEL).h $(PKGROOT)$(includedir)/ecpg_config_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/postgresql/server/pg_config_$(MEMORYMODEL).h $(PKGROOT)$(includedir)/postgresql/server/pg_config_$(MEMORYMODEL).h
+	gmv $(DESTDIR)$(includedir)/postgresql/server/pg_config_ext_$(MEMORYMODEL).h $(PKGROOT)$(includedir)/postgresql/server/pg_config_ext_$(MEMORYMODEL).h
+	@$(MAKECOOKIE)bindir)/ ; \
 	done
 
 post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
@@ -593,7 +619,17 @@ post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 	$(foreach a,$(myALTERNATIVES), $(foreach i,$(NEEDED_ISAS), $(info ===> Create alternative $(i) $(a)) $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i) ) ) )
 # Create the PGDATA directory
 	@echo " ===> Create pgdata directory"
-	@ginstall -d $(PKGROOT)$(PGDATA)
+	@ginstall -d $(PKInstall the omnipotent pg_config.h
+	@echo " ===> Install omnipotent pg_config.h"
+	@ginstall $(FILEDIR)/pg_config.h $(PKGROOT)$(includedir)
+	@echo " ===> Install omnipotent pg_config_ext.h"
+	@ginstall $(FILEDIR)/pg_config_ext.h $(PKGROOT)$(includedir)
+	@echo " ===> Install omnipotent postgresql/server/pg_config.h"
+	@ginstall $(FILEDIR)/pg_config.h $(PKGROOT)$(includedir)/postgresql/server
+	@echo " ===> Install omnipotent postgresql/server/pg_config_ext.h"
+	@ginstall $(FILEDIR)/pg_config_ext.h $(PKGROOT)$(includedir)/postgresql/server
+	@echo " ===> Install omnipotent ecpg_config.h"
+	@ginstall $(FILEDIR)/ecpg_config.h $(PKGROOT)$(includedir$(PKGROOT)$(PGDATA)
 # Adjust the man page names.
 	@echo " ===> Adjusting man page file names"
 	@for i in 1 5 ; do \
