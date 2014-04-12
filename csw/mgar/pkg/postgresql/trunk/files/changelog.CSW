@@ -1,3 +1,15 @@
+postgresql93 (9.3.4,REV=2014.04.12)
+
+ * New upstream release 9.3.4.
+
+ * /opt/csw/include/pg_config.h, /opt/csw/include/pg_config_ext.h,
+   /opt/csw/include/ecpg_config.h, /opt/csw/include/postgresql/server/pg_config.h,
+   /opt/csw/include/postgresql/server/pg_config_ext.h: are moved to <filename>_32.h,
+   and <filename>_64.h respectively, and a wrapper <filename>.h is put in place.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 12 Apr 2014 20:28:05 +0200
+
+
 postgresql93 (9.3.3,REV=2014.03.16)
 
   * New upstream release 9.3.3.
@@ -14,7 +26,7 @@ postgresql93 (9.3.2,REV=2013.12.10)
 
 postgresql93 (9.3.1,REV=2013.10.22)
 
-  * New upstream release 9.3.1. 
+  * New upstream release 9.3.1.
 
  -- Rafael Ostertag <raos@opencsw.org>  Tue, 22 Oct 2013 19:16:40 +0200
 
@@ -28,4 +40,3 @@ postgresql93 (9.3.0,REV=2013.10.06)
   * /etc/opt/csw/postgresql-93.conf has new configuration option `DATACHECKSUMS'.
 
  -- Rafael Ostertag <raos@opencsw.org>  Sun, 06 Oct 2013 11:54:20 +0200
-
