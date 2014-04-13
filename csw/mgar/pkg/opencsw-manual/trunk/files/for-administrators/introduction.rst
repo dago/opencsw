@@ -8,8 +8,8 @@ software, but you will almost always need a piece of software that is missing
 from the companion disc, or isn't up to date enough.
 
 OpenCSW fills this gap by providing binary packages and the corresponding build
-recipes. Installing our packages is easy: you can install a package with all
-dependencies with a single command.
+recipes. Installing our packages is easy: you can install a package together
+with all dependencies with a single command.
 
 If you want to build your own packages, build recipes for our package are
 available in the `source code repository`_.
@@ -30,7 +30,7 @@ Support for different Solaris versions
 As of April 2014:
 
 * Solaris 11 – can use OpenCSW packages thanks to the backward binary compatibility
-* Solaris 10 – is the main focus
+* **Solaris 10 – is the main focus**
 * Solaris 9 – best effort, occasional updates
 * Solaris 8 – no package updates at all
 
