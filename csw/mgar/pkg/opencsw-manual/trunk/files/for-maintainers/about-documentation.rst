@@ -94,5 +94,5 @@ to be incorrect.
 .. _OpenCSW wiki: http://wiki.opencsw.org/buildfarm
 .. _OpenCSW manual: http://www.opencsw.org/manual/
 .. _GAR documentation: http://gar.opencsw.org/
-.. _Main OpenCSW website: http://www.opencsw.org/use-it/
+.. _Main OpenCSW website: http://www.opencsw.org/
 .. _Community Q&A: http://www.opencsw.org/community/
