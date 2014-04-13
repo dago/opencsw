@@ -10,58 +10,34 @@ manually once, after that all maintenance is done via ``pkgutil``.
 
 .. _pkgutil: http://pkgutil.net
 
-Solaris 10
-^^^^^^^^^^
+Step 1: pkgutil
+===============
 
-
-On a Solaris 10 system, you can use the capacity of ``pkgadd`` to download
-and install it via http in one step::
+You can use ``pkgadd`` to download and install it from http in one step::
 
   pkgadd -d http://get.opencsw.org/now
 
-You may need to specify a proxy with ``-x <proxy>:<port>``, be aware that there are
-known issues with Squid and possibly other proxies.
-
-Solaris 8 and 9
-^^^^^^^^^^^^^^^
-
-On Solaris 8 and 9 (or 10 if you have issues with the above ``pkgadd``) you
-need to download the package manually (e.g. using wget) and then install it::
+You may need to specify a proxy with ``-x <proxy>:<port>``, be aware that there
+are known issues with Squid and possibly other proxies. Also, ``pkgadd`` on
+Solaris 8 and 9 does not support installation directly via http. In such case
+you need to download pkgutil with a separate tool like wget, and install it
+from disk::
 
   wget http://mirror.opencsw.org/opencsw/pkgutil.pkg
   pkgadd -d pkgutil.pkg all
 
-You can now start installing packages. For a list of available packages use::
+.. NOTE::
+   Solaris 9 is on its way to deprecation. Solaris 9 catalogs get very few
+   package updates.
 
-  /opt/csw/bin/pkgutil -a
-
-For easy access to OpenCSW programs, put ``/opt/csw/bin`` in front of
-``PATH``, and ``/opt/csw/share/man`` in front of ``MANPATH``. On
-Solaris 10, you can do that by editing the ``/etc/default/login``
-file, uncomment the ``PATH`` and ``SUPATH`` variables definition,
-adjust the values as required and log out and back in.
-
-As the list is quite long and you probably have an idea what you are looking for the
-list can be fuzzy-matched with::
-
-  root# pkgutil -a vim
-  common               package              catalog                        size
-  gvim                 CSWgvim              7.3.055,REV=2010.11.25       1.1 MB
-  vim                  CSWvim               7.3.055,REV=2010.11.25    1002.2 KB
-  vimrt                CSWvimrt             7.3.055,REV=2010.11.25       7.3 MB
-
-Lets just go ahead and try one::
-
-  root# pkgutil -y -i vim
-  ...
-  root# vim
-
-Voila! You have installed your first package!
+.. NOTE::
+   Solaris 8 does not get any updates any more. As of April 2014, only the dublin release contains Solaris 8 packages. 
 
 
----------------------------------------------
-Selecting your mirror and the catalog release
----------------------------------------------
+Skip to :ref:`Step 2: installing packages <getting-started-installing-packages>`.
+
+Optional: Selecting your package source
+=======================================
 
 Now that you are about to install lots of stuff it may be a good time to select
 one of the mirrors from ``mirror.opencsw.org`` close to you. The official
@@ -89,10 +65,11 @@ You can verify the setting with ``pkgutil -V`` ::
 
 On the next catalog update with ``pkgutil -U`` the catalogs are pulled from the new mirror.
 
+Skip to :ref:`Step 2: installing packages <getting-started-installing-packages>`.
 
--------------------------------------
-Setting up cryptographic verification
--------------------------------------
+
+Optional: Cryptographic verification
+====================================
 
 The catalog is signed with PGP and it is a good idea to set up your system to
 verify the integrity of the catalog. As the catalog itself contains hashes for
@@ -150,17 +127,30 @@ On the next ``pkgutil -U`` you should see a catalog integrity verification wit `
   Nothing to do.
   ...
 
--------------------------------
-Installing other basic packages
--------------------------------
+.. _getting-started-installing-packages:
 
-Installing the following packages is optional but recommended to have
-a coherent stack:
+Step 2: installing packages
+===========================
 
-* gzip
-* coreutils
-* wget
+You can now start installing packages. For a list of available packages use::
 
-Finally, installing the ``gnulinks`` package and putting the
-``/opt/csw/gnu`` value in the front of the list contained by the
-``PATH`` variable, gives priority to basic utilities supplied by us.
+  /opt/csw/bin/pkgutil -a
+
+As the list is quite long and you probably have an idea what you are looking for the
+list can be fuzzy-matched with::
+
+  root# /opt/csw/bin/pkgutil -a vim
+  common               package              catalog                        size
+  gvim                 CSWgvim              7.3.055,REV=2010.11.25       1.1 MB
+  vim                  CSWvim               7.3.055,REV=2010.11.25    1002.2 KB
+  vimrt                CSWvimrt             7.3.055,REV=2010.11.25       7.3 MB
+
+Let's go ahead and try installing one::
+
+  root# /opt/csw/bin/pkgutil -y -i vim
+  ...
+  root# /opt/csw/bin/vim
+
+Voila! You have installed your first package!
+
+Continue to :ref:`Full setup <installation-full-setup>`.

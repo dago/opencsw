@@ -46,17 +46,15 @@ build-manual:
 install-manual:
 	ginsDESTDIR 755 -d $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
 	rsync -rv $(WORKSRCDESTDIRd/html/ $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
-	@$(MAKECOOKIE)
-
-post-install-modulated: copy-to-web
+	@$(MAKECOOKinstall-modulated: copy-to-web
 # define HTDOCS such as to be possible to install anywhere:
 copy-to-web: HTDOCS = $(HOME)/public_html
 copy-to-web:
-	if echo $(DESTDIR) | grep global; then :; else \
+	if echo $(DESTDIR) | grep global >/dev/null; then :; else \
 	  if [ -d $(HTDOCS)/opencsw-manual ]; then \
-		rsync -rv $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)/ \
+		rsync -rv --delete $(DESTDIR)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)/ \
 		$(HTDOCS)/opencsw-manual; \
-	  fi \
+	  fi; \
 	fi
 
 .PHONY: copy-to-web
