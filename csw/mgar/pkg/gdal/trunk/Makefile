@@ -82,8 +82,12 @@ CONFIGURE_ARGS += --with-libz=$(prefix)
 CONFIGURE_ARGS += --with-png=$(prefix)
 CONFIGURE_ARGS += --with-libtiff=$(prefix)
 CONFIGURE_ARGS += --with-jpeg=$(prefix)
-CONFIGURE_ARGS += --with-expat=$(prefix)
+CONFIGURE_ARGS += --with# Fails w/
+#  ld: fatal: file /lib/libc.so: version 'SUNW_1.22.5' is unavailable:
+#        required by file /opt/csw/lib/libmysqlclient.so
+#-expat=$(prefix)
 CONFIGURE_ARGS$(bindir)/mysql_config
+CONFIGURE_ARGS += --without-mysql
 CONFIGURE_ARGS += --with-sqlite3=$(prefix)
 CONFIGURE_ARGS += --with-pg=$(bindir)h-pg=/opt/csw/bin/pg_config
 
