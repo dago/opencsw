@@ -29,10 +29,8 @@ application-specific.
 How can I transfer packages to a computer without an Internet connection?
 =========================================================================
 
-Have a look at pkgutil's ``--download``, ``--stream``, and ``--target``
-options. You can download packages for a specific platform with all
-dependencies into one big file in order to transfer and install them on another
-computer.
+Please see :ref:`installing on a host without an Internet connection
+<installing-on-a-host-without-an-internet-connection>`.
 
 Why do packages go by two names (e.g. CSWftype2 and freetype2)?
 ===============================================================
