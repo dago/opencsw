@@ -36,12 +36,10 @@ from disk::
 
 Skip to :ref:`Step 2: installing packages <getting-started-installing-packages>`.
 
-Optional: Selecting your package source
-=======================================
+Optional: Selecting your mirror
+===============================
 
-Now that you are about to install lots of stuff it may be a good time to select
-one of the mirrors from ``mirror.opencsw.org`` close to you. The official
-mirrors are listed at::
+For faster downloads, you can select a mirror geographically close to you.
 
   http://www.opencsw.org/get-it/mirrors/
 
@@ -50,9 +48,16 @@ so it looks similar to this with the URL replaced by the mirror you picked::
 
   mirror=http://mirror.opencsw.org/opencsw/unstable
 
-By default, ``pkgutil`` is configured to use the ``testing`` catalog. You might
-change it to ``unstable`` on your development hosts to catch any issues before
-they hit the ``testing`` catalog.
+
+Optional: Selecting the catalog release
+=======================================
+
+By default, ``pkgutil`` is configured to use the ``testing`` catalog.  See
+:ref:`catalog releases <catalog-releases>` for information on releases.
+
+You might want change it to ``unstable`` on your development hosts to catch any
+issues before they hit the ``testing`` catalog. Or you can switch it to
+``stable`` if you want no updates (except for new stable releases).
 
 You can verify the setting with ``pkgutil -V`` ::
 
@@ -63,7 +68,8 @@ You can verify the setting with ``pkgutil -V`` ::
   noncsw                  false (default: false)
   ...
 
-On the next catalog update with ``pkgutil -U`` the catalogs are pulled from the new mirror.
+On the next catalog update with ``pkgutil -U`` the catalogs indexes are
+downloaded from the new mirror.
 
 Skip to :ref:`Step 2: installing packages <getting-started-installing-packages>`.
 

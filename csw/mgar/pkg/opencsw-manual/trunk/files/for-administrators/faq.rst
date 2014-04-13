@@ -57,8 +57,8 @@ Problems with declaring SUNW and SFW packages as dependencies are:
   version of libfoo.so.1 might be in SUNWfoo on Solaris 10 and SUNWfoox on
   Solaris 9.
 
-Where are the Solaris 10 version of a package I'm looking at?
-=============================================================
+Where is the Solaris 10 version of a package I'm looking at?
+============================================================
 
 As of April 2014 most packages are built for Solaris 10, but since it's
 possible to install a Solaris 9 package on Solaris 10, we take advantage of
@@ -70,9 +70,12 @@ There are cases where a package can benefit from features specific to Solaris
 Are the binaries compiled for advanced Instruction Set Architectures?
 =====================================================================
 
-Binaries are compiled for basic ISAs. In most cases, performance is not
-significantly improved by compiling for advanced ISAs.  For those cases where
-it is, we usually provide cpu-optimized libraries.
+Binaries are compiled for basic ISAs. As of April 2014, it means pentium_pro on
+Intel and sparcv8+ on SPARC.
+
+In most cases, performance is not significantly improved by compiling for
+advanced ISAs.  For those cases where it is, we usually provide cpu-optimized
+libraries.
 
 If you know of a specific binary that would benefit from cpu-specific
 optimizations, feel free to contact this package's maintainer and ask about it.
