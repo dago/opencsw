@@ -1,8 +1,9 @@
 # $Id$
 #
 NAME = yapet
-VERSION = 0.8pre2
-CATEGORIES = apps
+VERSION = 1.0
+GARTYPE = v2
+GARCOMPILER = SOS12U3 apps
 GARTYPE = v2
 
 DESCRIPTION = Text-based Password Manager
@@ -26,7 +27,7 @@ DISTFILES += README.CSW
 # UPSTREAM_MASTER_SITES = 
 
 RUNTIME_DEP_PKGS  = CSWlibssl1-0-0
-RUNTIME_DEP_PKGS += CSWlibncurses5
+RUNTIME_DEP_PKGwS += CSWlibncurses5
 RUNTIME_DEP_PKGS += CSWlibintl8
 
 BUILD_DEP_PKGS  = CSWlibssl-dev
@@ -34,7 +35,13 @@ BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 
 EXTRA_INC = /opt/csw/include/ncurses
-EXTRA_CXXFLAGS += -norunpath
+EXTRA_CXXFLA# Required to make the tests work
+EXTRA_LD_OPTIONS = -L/opt/csw/lib
+
+# LC_ALL required since some source code files are encoded in UTF-8.
+EXTRA_CONFIGURE_ENV = LC_ALL=en_US.UTF-8
+EXTRA_BUILD_ENV = LC_ALL=en_US.UTF-8
+EXTRA_TEST_ENV = TERM=xterm LC_ALL=en_US.UTF-8
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
