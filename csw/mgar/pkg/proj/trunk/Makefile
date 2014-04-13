@@ -29,7 +29,7 @@ CATALOGNAME_CSWlibproj0 = libproj0
 SPKG_DESC_CSWlibproj0 += Cartographic Projections Library, libproj.so.0
 PKGFILES_CSWlibproj0 += $(call baseisadirs,$(libdir)7\.0proj\.so\.0\.6\.6)
 PKGFILES_CSWlibproj0 += $(call baseisadirs,$(libdir),libproj\.so\.0(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibproj0 = CSWproj-data
+RUNTIME_DEP_PKGS_CSWlibprojRUNTIME_DEP_PKGS_CSWlibproj0 += CSWlibgcc-s1j0 = CSWproj-data
 CHECKPKG_OVERRIDES_CSWlibproj0 += surplus-dependency|CSWproj-data
 
 CATALOGNAME_CSWproj-dev = proj_dev
