@@ -2,6 +2,8 @@
 Installing packages en masse
 ============================
 
+.. _installing-on-a-host-without-an-internet-connection:
+
 ---------------------------------------------------
 Installing on a host without an Internet connection
 ---------------------------------------------------

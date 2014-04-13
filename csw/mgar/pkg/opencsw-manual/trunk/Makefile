@@ -16,9 +16,9 @@ CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION 
 VENDOR_endef
-SPKG_SOURCEURL = http://www.opencsw.org
-MASTER_SITES = http://www.gnu.org/licenses/
+SPKG_SOURCEURL = http://www.opencsw.o
 DISTFILES  = fdl-1.3.txt
+DISTFILES += check.shES  = fdl-1.3.txt
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = manual
 INSTALL_SCRIPTS = manual
@@ -46,7 +46,7 @@ build-manual:
 install-manual:
 	ginsDESTDIR 755 -d $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
 	rsync -rv $(WORKSRCDESTDIRd/html/ $(PKGROOT)$(docdir)/$(CATALOGNAME_CSWopencsw-manual)
-	@$(MAKECOOKinstall-modulated: copy-to-web
+	@$(MAKECOOKinstall-modulat$(WORKSRC)/check.sh $(WORKSRC)/conf.pyated: copy-to-web
 # define HTDOCS such as to be possible to install anywhere:
 copy-to-web: HTDOCS = $(HOME)/public_html
 copy-to-web:
