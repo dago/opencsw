@@ -29,7 +29,10 @@ RUNTIME_DEP_PKGS_CSWlibgeos3-4-2 += CSWlibgcc-s1
 # Can't change this, obviously developers decided to do so
 CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += soname-equals-filename|file=/opt/csw/lib/libgeos-3.4.2.so
 CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += soname-equals-filename|file=/opt/csw/lib/sparcv9/libgeos-3.4.2.so
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += soname-equals-filename|file=/opt/csw/lib/amd64/libgeos-3.4.2.so
 # Direct binding messes with unwind handler. We require the unwind handler from libgcc_s.so
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/amd64/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/amd64/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libstdc++.so.6
 CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libgcc_s.so.1
 CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libstdc++.so.6
 CHECKPKG_OVERRIDES_CSWlibgeos3-4-2 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos-3.4.2.so|is|not|directly|bound|to|soname|libgcc_s.so.1
@@ -47,8 +50,10 @@ CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/libgeos_c.so.
 CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libstdc++.so.6
 CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgcc_s.so.1
 CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgeos-3.4.2.so
-CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libstdc++.so.61 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibgeos-c1 = CSWgeos
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/sparcv9/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libstdc++.so.61CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/amd64/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/amd64/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libgeos-3.4.2.so
+CHECKPKG_OVERRIDES_CSWlibgeos-c1 += no-direct-binding|/opt/csw/lib/amd64/libgeos_c.so.1.8.2|is|not|directly|bound|to|soname|libstdc++.so.6
+OBSOLETED_BY_CSWlibgeosTED_BY_CSWlibgeos-c1 = CSWgeos
 
 SPKG_DESC_CSWgeos-dev = $(DESCRIPTION), development files
 PKGFILES_CSWgeos-dev += $(PKGFILES_DEVEL_CONFIG)
