@@ -20,7 +20,8 @@ of each package is available for Solaris 10 and 11, for both SPARC and Intel
 architectures. There are some exceptions, where the software is not available
 for one of the architectures, or has a version mismatch (e.g. acroread).
 
-For more information, you can watch our `project overview video`_ (1h).
+For more information, you can watch our `project overview video`_ (1h) and
+take a look at the `slide deck`_.
 
 
 Support for different Solaris versions
@@ -46,3 +47,6 @@ We suggest subscribing to our low traffic `announce list`_.
 
 .. _project overview video:
    http://youtu.be/Qmv5tvHEf4Q
+
+.. _slide deck:
+   http://de.slideshare.net/dmichelsen/opencsw-what-is-the-project-about
