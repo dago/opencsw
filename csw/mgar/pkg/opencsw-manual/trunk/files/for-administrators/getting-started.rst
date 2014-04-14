@@ -4,22 +4,30 @@
 Getting started
 ---------------
 
-OpenCSW uses a tool named pkgutil_ on top of the Solaris packaging utilities to
-automatically download, install and update packages. It needs to be installed
-manually once, after that all maintenance is done via ``pkgutil``.
-
-.. _pkgutil: http://pkgutil.net
-
-Step 1: pkgutil
-===============
-
-You can use ``pkgadd`` to download and install it from http in one step::
+::
 
   pkgadd -d http://get.opencsw.org/now
+  /opt/csw/bin/pkgutil -U
+  /opt/csw/bin/pkgutil -a vim
+  /opt/csw/bin/pkgutil -y -i vim
+
+Done!
+
+Skip to :ref:`selecting your mirror <selecting-mirror>`.
+
+
+Behind a proxy
+==============
 
 You may need to specify a proxy with ``-x <proxy>:<port>``, be aware that there
-are known issues with Squid and possibly other proxies. Also, ``pkgadd`` on
-Solaris 8 and 9 does not support installation directly via http. In such case
+are known issues with Squid and possibly other proxies::
+
+  pkgadd -x myproxy:3128 -d http://get.opencsw.org/now
+
+Solaris 8 or 9
+==============
+
+``pkgadd`` on Solaris 8 and 9 does not support installation directly via http. In such case
 you need to download pkgutil with a separate tool like wget, and install it
 from disk::
 
@@ -33,8 +41,7 @@ from disk::
 .. NOTE::
    Solaris 8 does not get any updates any more. As of April 2014, only the dublin release contains Solaris 8 packages. 
 
-
-Skip to :ref:`Step 2: installing packages <getting-started-installing-packages>`.
+.. _selecting-mirror:
 
 Optional: Selecting your mirror
 ===============================
@@ -70,8 +77,6 @@ You can verify the setting with ``pkgutil -V`` ::
 
 On the next catalog update with ``pkgutil -U`` the catalogs indexes are
 downloaded from the new mirror.
-
-Skip to :ref:`Step 2: installing packages <getting-started-installing-packages>`.
 
 
 Optional: Cryptographic verification
@@ -132,31 +137,5 @@ On the next ``pkgutil -U`` you should see a catalog integrity verification wit `
   
   Nothing to do.
   ...
-
-.. _getting-started-installing-packages:
-
-Step 2: installing packages
-===========================
-
-You can now start installing packages. For a list of available packages use::
-
-  /opt/csw/bin/pkgutil -a
-
-As the list is quite long and you probably have an idea what you are looking for the
-list can be fuzzy-matched with::
-
-  root# /opt/csw/bin/pkgutil -a vim
-  common               package              catalog                        size
-  gvim                 CSWgvim              7.3.055,REV=2010.11.25       1.1 MB
-  vim                  CSWvim               7.3.055,REV=2010.11.25    1002.2 KB
-  vimrt                CSWvimrt             7.3.055,REV=2010.11.25       7.3 MB
-
-Let's go ahead and try installing one::
-
-  root# /opt/csw/bin/pkgutil -y -i vim
-  ...
-  root# /opt/csw/bin/vim
-
-Voila! You have installed your first package!
 
 Continue to :ref:`Full setup <installation-full-setup>`.
