@@ -24,7 +24,12 @@ SPKG_DESC_CSWgdal = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_Cdal1
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgdal += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWgdal += CSWlibstdc++6l += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgdal += CSWlibstdc++6lRUNTIME_DEP_PKGS_CSWgdal += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWgdal += CSWlibgeos-c1
+# On sparc, those are required
+CHECKPKG_OVERRIDES_CSWgdal += surplus-dependency|CSWlibgeos-c1
+CHECKPKG_OVERRIDES_CSWgdal += surplus-dependency|CSWlibhdf5-7
+CHECKPKG_OVERRIDES_CSWgdal += surplus-dependency|CSWlibiconv2l += CSWlibiconv2
 
 PACKAG
 OBSOLETED_BY_CSWlibgdal1 = CSWlibgdal1-gxx
@@ -46,8 +51,12 @@ RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibgif4
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWlibgdal1 += CSWlibssl1-0-0
 PKGFILES_CSWlibgdal1 += $(call baseisadirs,$(libdir),libgdal\.so\.1\.16\.0)
-PKGFILES_CSWlibgdal1S_CSWlibgdal1-gxx += $(call baseisadirs,$(libdir),libgdal\.so\.1(\.\d+)*)
+PKGFILES_CSWlibgdal1S_CSWlibgdal1-gxx += $(call baseisadirs,$(libdir),libgdal# On sparc, those are required
+CHECKPKG_OVERRIDES_CSWlibgdal1 += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWlibgdal1 += surplus-dependency|CSWlibidn11l\.so\.1(\.\d+)*)
 
 PACKAGES += CSWgdal-dev
 CATALOGNAME_CSWgdal-dev = gdal_dev
