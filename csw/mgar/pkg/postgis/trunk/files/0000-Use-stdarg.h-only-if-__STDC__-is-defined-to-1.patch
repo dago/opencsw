@@ -1,0 +1,143 @@
+From 89b5005b81ab3231c41a579d512dd6a9a90f4a7e Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Fri, 4 Apr 2014 13:58:38 +0200
+Subject: [PATCH] Use stdarg.h only if __STDC__ is defined to 1
+
+---
+ liblwgeom/liblwgeom.h.in       | 6 +++++-
+ liblwgeom/liblwgeom_internal.h | 6 +++++-
+ liblwgeom/lwgeom.c             | 6 +++++-
+ liblwgeom/lwgeom_log.h         | 6 +++++-
+ liblwgeom/lwsegmentize.c       | 6 +++++-
+ liblwgeom/lwutil.c             | 6 +++++-
+ liblwgeom/stringbuffer.h       | 8 ++++++--
+ 7 files changed, 36 insertions(+), 8 deletions(-)
+
+diff --git a/liblwgeom/liblwgeom.h.in b/liblwgeom/liblwgeom.h.in
+index ab3807e..500e4a2 100644
+--- a/liblwgeom/liblwgeom.h.in
++++ b/liblwgeom/liblwgeom.h.in
+@@ -16,7 +16,11 @@
+ #ifndef _LIBLWGEOM_H
+ #define _LIBLWGEOM_H 1
+ 
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ #include <stdio.h>
+ #include <stdint.h>
+ #include "proj_api.h"
+diff --git a/liblwgeom/liblwgeom_internal.h b/liblwgeom/liblwgeom_internal.h
+index 0e63d1a..db6e425 100644
+--- a/liblwgeom/liblwgeom_internal.h
++++ b/liblwgeom/liblwgeom_internal.h
+@@ -19,7 +19,11 @@
+ #include "../postgis_config.h"
+ 
+ #include <assert.h>
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <string.h>
+diff --git a/liblwgeom/lwgeom.c b/liblwgeom/lwgeom.c
+index d2bd421..062d4cd 100644
+--- a/liblwgeom/lwgeom.c
++++ b/liblwgeom/lwgeom.c
+@@ -12,7 +12,11 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ 
+ #include "liblwgeom_internal.h"
+ #include "lwgeom_log.h"
+diff --git a/liblwgeom/lwgeom_log.h b/liblwgeom/lwgeom_log.h
+index fb8bc00..108d366 100644
+--- a/liblwgeom/lwgeom_log.h
++++ b/liblwgeom/lwgeom_log.h
+@@ -20,7 +20,11 @@
+ #ifndef LWGEOM_LOG_H
+ #define LWGEOM_LOG_H 1
+ 
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ 
+ /*
+  * Debug macros
+diff --git a/liblwgeom/lwsegmentize.c b/liblwgeom/lwsegmentize.c
+index 193ef03..7dbfdef 100644
+--- a/liblwgeom/lwsegmentize.c
++++ b/liblwgeom/lwsegmentize.c
+@@ -12,7 +12,11 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ #include <string.h>
+ 
+ #include "liblwgeom_internal.h"
+diff --git a/liblwgeom/lwutil.c b/liblwgeom/lwutil.c
+index 3c4a6bb..228ae0b 100644
+--- a/liblwgeom/lwutil.c
++++ b/liblwgeom/lwutil.c
+@@ -1,6 +1,10 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ #include <string.h>
+ 
+ /* Global variables */
+diff --git a/liblwgeom/stringbuffer.h b/liblwgeom/stringbuffer.h
+index 0574aea..34f6c26 100644
+--- a/liblwgeom/stringbuffer.h
++++ b/liblwgeom/stringbuffer.h
+@@ -40,7 +40,11 @@
+ #define _STRINGBUFFER_H 1
+ 
+ #include <stdlib.h>
+-#include <stdarg.h>
++#if __STDC__
++# include <stdarg.h>
++#else
++# include <varargs.h>
++#endif
+ #include <string.h>
+ #include <stdio.h>
+ 
+@@ -69,4 +73,4 @@ extern char stringbuffer_lastchar(stringbuffer_t *s);
+ extern int stringbuffer_trim_trailing_white(stringbuffer_t *s);
+ extern int stringbuffer_trim_trailing_zeroes(stringbuffer_t *s);
+ 
+-#endif /* _STRINGBUFFER_H */
+\ No newline at end of file
++#endif /* _STRINGBUFFER_H */
+-- 
+1.8.4.1
+
