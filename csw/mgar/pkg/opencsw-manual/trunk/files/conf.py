@@ -102,7 +102,7 @@ html_theme = 'default'
 # documentation.
 #html_theme_options = {}
 html_theme_options = {
-    # "rightsidebar": "true",
+    "rightsidebar": "true",
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
