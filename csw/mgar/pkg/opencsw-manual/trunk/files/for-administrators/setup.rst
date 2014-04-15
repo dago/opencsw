@@ -7,15 +7,12 @@ Full setup
 Optional: A few basic packages
 ==============================
 
-Installing the following packages is optional but recommended:
+Optional but recommended:
 
 * gzip
 * coreutils
 * wget
 
-Finally, installing the ``gnulinks`` package and putting the
-``/opt/csw/gnu`` value in the front of the list contained by the
-``PATH`` variable, gives priority to basic utilities supplied by us.
 
 PATH
 ====
@@ -27,20 +24,30 @@ that by editing the ``/etc/default/login`` file, uncomment the ``PATH`` and
 back in.
 
 
-Gotcha: LD_LIBRARY_PATH
-=======================
+Symlinks in /opt/csw/gnu
+========================
+
+OpenCSW tries to avoid providing binaries which clash with those in
+``/usr/bin``. Coreutils get a prefix for all the binary names, e.g. ``cp``
+becomes ``gcp``. Some packages provide symlinks with original file names, from
+the ``/opt/csw/gnu`` directory, for example ``/opt/csw/gnu/cp`` is a symlink to
+``/opt/csw/bin/gcp``. You can put ``/opt/csw/gnu`` in front of your ``PATH``.
+
+
+Do not set LD_LIBRARY_PATH
+==========================
 
 LD_LIBRARY_PATH is an environment variable which can be used to make the
 dynamic linker look for shared libraries in specific places. It is not
 necessary to set it for OpenCSW binaries. All of them are built with the ``-R``
 flag, so each binary itself knows where to look for the shared objects.
 
-You do not need to set ``LD_LIBRARY_PATH`` system-wide; and if you do, you will
+You do not need to set LD_LIBRARY_PATH system-wide; and if you do, you will
 likely break your system, even to the point of locking yourself out. Some of
 the library names clash between ``/usr/lib`` and ``/opt/csw/lib``, and if you
-run the Solaris openssh daemon with ``LD_LIBRARY_PATH`` set to
+run the Solaris openssh daemon with LD_LIBRARY_PATH set to
 ``/opt/csw/lib``, ``/usr/lib/ssh/sshd`` will try to load libcrypto from
-``/opt/csw/lib`` and fail.
+``/opt/csw/lib`` and fail to start.
 
 
 Upgrading packages
@@ -77,7 +84,7 @@ time.
 pkgutil
 =======
 
-``pkgutil`` can use **two** configuration files:
+pkgutil can use two configuration files:
 
 - ``/etc/opt/csw/pkgutil.conf``
 - ``/opt/csw/etc/pkgutil.conf``
