@@ -49,7 +49,11 @@ PKGFILES_CSWliblwgeom-dev = include/.*
 EXTRA_LINKER_FLAGS = -lm
 EXTRA_CFLAGS = -std=c99 -D__EXTENSIONS__
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-xml2config=$(bindir)/xml2-config
+CONFIGURE_ARGS += --with-pgconfig=$(bindir)/pg_config
+CONFIGURE_ARGS += --with-geosconfig=$(bindir)/geos-config
+CONFIGURE_ARGS += --with-gdalconfig=$(bindir)/gdal-config
 
 BUILD64 = 1
 
