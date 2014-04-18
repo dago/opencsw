@@ -13,4 +13,5 @@ User's manual for people who manage Solaris systems and use OpenCSW packages.
   solaris-10-sparse-zones
   installation-en-masse
   mirror-setup
+  migrating-from-blastwave-to-opencsw
   faq
