@@ -7,7 +7,7 @@
 Welcome to the OpenCSW manual!
 ==============================
 
-Contents:
+First time here? Go to :ref:`getting started <getting-started>`.
 
 .. toctree::
    :maxdepth: 1
