@@ -1,8 +1,8 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = fabric
-VERSION = 1.0.1
+NAME = Fabric
+VERSION = 1.8.3
 GARTYPE = v2
 CATEGORIES = python
 
@@ -16,10 +16,22 @@ define BLURB
   prompting the running user for input, or aborting execution.
 endef
 
-MASTER_SITES = http://code.fabfile.org/projects/fabric/files/
-DISTNAME     = Fabric-$(VERSION)
-DISTFILES    = $(DISTNAME).tar.gz
+MASTER_SITES = $(PYPI_MIRROR)
+DISTFILES += $(DISTNAME).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+VENDOR_URL = http://www.fabfile.org
+
+BUILD_DEP_PKGS += CSWpy-paramiko
+
+# Skip 2.6 as it fails 'with path'
+MODULATIONS_PYTHON_VERSION = 2_7
+
+PACKAGES += CSWpy-fabric
+ARCHALL_CSWpy-fabric = 1
+# As listed as dependencies
+RUNTIME_DEP_PKGS_CSWpy-fabric += CSWpy-paramiko
+CHECKPKG_OVERRIDES_CSWpy-fabric += surplus-dependency|CSWpy-paramiko
+# Doesn't work on 2.6
+CHECKPKG_OVERRIDES_CSWpy-fabric += python-package-missing-py26-files
 
 include gar/category.mk
