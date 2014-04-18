@@ -37,8 +37,8 @@ the ``/opt/csw/gnu`` directory, for example ``/opt/csw/gnu/cp`` is a symlink to
 Do not set LD_LIBRARY_PATH
 ==========================
 
-LD_LIBRARY_PATH is an environment variable which can be used to make the
-dynamic linker look for shared libraries in specific places. It is not
+:index:`LD_LIBRARY_PATH` is an environment variable which can be used to make
+the dynamic linker look for shared libraries in specific places. It is not
 necessary to set it for OpenCSW binaries. All of them are built with the ``-R``
 flag, so each binary itself knows where to look for the shared objects.
 

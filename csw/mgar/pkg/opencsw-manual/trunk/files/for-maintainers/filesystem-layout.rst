@@ -22,7 +22,7 @@ In this setup, non-global zones see ``/opt/csw`` as mounted read-only. Any
 local state needs to be kept under ``/var/opt/csw``.
 
 Inside the ``/opt/csw`` prefix, the typical hierarchy rules apply. You can
-consult the Debian `filesystem hierarchy standard`_ for an overview. A short version is:
+consult the `Debian filesystem hierarchy standard`_ for an overview. A short version is:
 
 * Executables go to ``/opt/csw/bin`` ``/opt/csw/sbin`` ``/opt/csw/libexec``
 * Shared libraries go to ``/opt/csw/lib``
@@ -43,5 +43,5 @@ binaries might be in ``/opt/csw/bin`` and 64-bit Intel binaries would be in
 .. _Shared /opt/csw configuration files:
    http://wiki.opencsw.org/shared-opt-csw-setup
 
-.. _filesystem hierarchy standard:
+.. _Debian filesystem hierarchy standard:
    http://wiki.debian.org/FilesystemHierarchyStandard

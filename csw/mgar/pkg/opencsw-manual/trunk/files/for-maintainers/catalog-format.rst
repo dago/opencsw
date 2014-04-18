@@ -23,8 +23,8 @@ The catalog may have to be extended to support more features like if
 there's a source package available. In that case extra fields should be
 added to the end so not to break existing tools.
 
-Signatures
-==========
+GPG Signatures
+==============
 
 A catalog file can be signed with gpg, cleartext style, with the signature
 embedded in the file.
@@ -36,9 +36,10 @@ The first line can contain::
 
   # CREATIONDATE 2014-03-16T08:39:58Z
 
-See also:
+.. seealso::
 
-* `Building a catalog`_
+   `Building a catalog`_
+      Information on how to build your own catalog.
 
 .. _Building a catalog:
-  building-a-catalog.html
+   building-a-catalog.html

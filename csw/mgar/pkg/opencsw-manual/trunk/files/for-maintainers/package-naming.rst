@@ -13,13 +13,12 @@ package repository is a good idea.
 pkgname vs catalogname
 ----------------------
 
-pkgname is also known as pkginst. It's a name of a package in the Solaris
-packaging system. These package names start with the company ticker (e.g.
-SUNW). OpenCSW package start with “CSW”.
+:index:`pkgname` is also known as :index:`pkginst`. It's a name of a package in
+the Solaris packaging system. These package names start with the company ticker
+(e.g.  SUNW). OpenCSW package start with “CSW”.
 
 Catalognames are names used in the catalog index. This means that one package
-has two names, for example “CSWfoo” (pkgname) and “foo”
-(catalogname).
+has two names, for example "CSWfoo" (pkgname) and "foo" (:index:`catalogname`).
 
 Applications and named projects
 -------------------------------

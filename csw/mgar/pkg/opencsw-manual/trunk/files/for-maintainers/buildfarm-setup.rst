@@ -11,9 +11,9 @@ a `packaging video tutorial`_ available. It covers a subset of this document,
 starting from a fresh Solaris 10 install and ends with a built package. It
 takes about 2-3h to complete. It covers the basic GAR setup.
 
-A build-farm is a set of hosts where you can build Solaris packages. You can
-connect Intel and SPARC hosts together to build a set of packages with one
-shell command.
+A :index:`buildfarm` is a set of hosts where you can build Solaris packages.
+You can connect Intel and SPARC hosts together to build a set of packages with
+one shell command.
 
 There is a few separate parts which you can set up (in no particular order):
 

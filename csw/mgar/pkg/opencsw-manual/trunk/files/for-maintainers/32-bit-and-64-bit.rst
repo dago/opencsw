@@ -5,9 +5,8 @@
 64-bit binaries aren't always best
 ----------------------------------
 
-It's counter-intuitive, but 64-bit binaries are more memory-hungry and
-often slower than 32-bit ones. It makes sense to build 64-bit binaries
-when:
+It's counter-intuitive, but :index:`64-bit` binaries are more memory-hungry and
+often slower than 32-bit ones. It makes sense to build 64-bit binaries when:
 
 * There's a measurable speed boost.
 * The application needs to access more than 2G of RAM.
@@ -58,8 +57,8 @@ to run.
 Development packages (header files)
 -----------------------------------
 
-Development packages in most cases don't distinguish between 32-bit and
-64-bit ‒ you don't have to do anything.
+:index:`Development packages` in most cases don't distinguish between 32-bit
+and 64-bit ‒ you don't have to do anything.
 
 However, there are some software projects (e.g. ``gmp``) which install
 different headers depending on bitness. These have to be handled
@@ -136,10 +135,11 @@ In GAR, there's a shortcut::
   BUILD64 = 1
 
 
-**See also**
+.. seealso::
 
-* `Solaris 64-bit Developer's Guide`_
-* `Are 64-bit Binaries Really Slower than 32-bit Binaries?`_
+   `Solaris 64-bit Developer's Guide`_
+
+   `Are 64-bit Binaries Really Slower than 32-bit Binaries?`_
 
 .. _Solaris 64-bit Developer's Guide:
    http://docs.sun.com/app/docs/doc/816-5138

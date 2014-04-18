@@ -1,3 +1,5 @@
+.. _building-a-catalog:
+
 --------------------------
 Building a package catalog
 --------------------------

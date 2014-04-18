@@ -11,7 +11,7 @@ done in a way that doesn't break existing binaries.
 
 Life cycle of a shared library can be summarized in the following way:
 
-1. A SONAME appears
+1. A :index:`SONAME` appears
 2. We decide to distribute it
 3. Binaries start linking to it
 4. Time passes, new version of the same library comes along

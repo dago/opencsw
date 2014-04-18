@@ -1,6 +1,6 @@
------------------------
-Solaris 10 sparse zones
------------------------
+--------------------------------
+Solaris 10 :index:`sparse zones`
+--------------------------------
 
 1. set inherit-pkg-dir on ``/opt/csw``
 2. install OpenCSW packages in the global zone
