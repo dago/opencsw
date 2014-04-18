@@ -4,6 +4,8 @@
 Getting started
 ---------------
 
+.. _getting-started:
+
 ::
 
   pkgadd -d http://get.opencsw.org/now
