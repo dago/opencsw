@@ -10,6 +10,7 @@ User's manual for people who manage Solaris systems and use OpenCSW packages.
   introduction
   getting-started
   setup
+  solaris-10-sparse-zones
   installation-en-masse
   mirror-setup
   faq

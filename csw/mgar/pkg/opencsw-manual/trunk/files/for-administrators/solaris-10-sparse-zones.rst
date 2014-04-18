@@ -1,0 +1,37 @@
+-----------------------
+Solaris 10 sparse zones
+-----------------------
+
+1. set inherit-pkg-dir on ``/opt/csw``
+2. install packages in the global zone
+
+When inherited by non-global zones, ``/opt/csw`` is read-only.  Two directories
+that might need local (per-zone) modifications are ``etc`` and ``var``.
+Instead of using ``/opt/csw/etc`` and ``/opt/csw/var`` (which are read-only),
+we use ``/var/opt/csw`` and ``/etc/opt/csw`` instead.
+
+Most packages built after July 2010 support local ``var``.
+
+
+Local mount hack (unsupported)
+------------------------------
+
+If you're using a package which wasn't configured to use ``/etc/opt/csw``
+and/or ``/var/opt/csw`` but you still need to have per-zone changes, you can
+mount your own, writable ``/opt/csw/etc`` on top of the read only ``/opt/csw``::
+
+  # /etc/vfstab entries
+  /path/to/your/local/etc - /opt/csw/etc lofs - yes -
+  /path/to/your/local/var - /opt/csw/var lofs - yes -
+
+This is only a hack that might help you with a legacy package, it's not a
+supported way of using OpenCSW packages.
+
+Sparse zone with shared ``/usr``
+--------------------------------
+
+This setup won't work with OpenCSW packages, because the CSWcas-* package
+family installs `class action scripts`_ into ``/usr``.
+
+.. _class action scripts:
+   http://wiki.opencsw.org/cswclassutils-package
