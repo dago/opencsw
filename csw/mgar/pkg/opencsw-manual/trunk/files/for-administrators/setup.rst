@@ -49,6 +49,10 @@ run the Solaris openssh daemon with LD_LIBRARY_PATH set to
 ``/opt/csw/lib``, ``/usr/lib/ssh/sshd`` will try to load libcrypto from
 ``/opt/csw/lib`` and fail to start.
 
+For more information see `LD_LIBRARY_PATH - just say no`_.
+
+.. _LD_LIBRARY_PATH - just say no:
+   https://blogs.oracle.com/rie/entry/tt_ld_library_path_tt
 
 Upgrading packages
 ==================

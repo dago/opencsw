@@ -27,13 +27,16 @@ If you're building a 64-bit binary, use these::
   LDFLAGS="-L/opt/csw/lib/64 -R/opt/csw/lib/64"
   PKG_CONFIG_PATH="/opt/csw/lib/64/pkgconfig"
 
-64-bit libraries live in the ``/opt/csw/lib/sparcv9`` and/or
-``/opt/csw/lib/amd64`` directories.  The ``/opt/csw/lib/64`` path is
-a symlink to a chosen architecture subdirectory. For example, on SPARC
-``/opt/csw/lib/64`` is a symlink to ``/opt/csw/lib/sparcv9``. All
-binaries compiled with the ``-R/opt/csw/lib/64`` flag will try to look
-at that path and find their libraries.
+64-bit libraries live in these directories, depending on the architecture::
 
+  /opt/csw/lib/sparcv9
+  /opt/csw/lib/amd64
 
-.. _LD_LIBRARY_PATH - just say no:
-   https://blogs.oracle.com/rie/entry/tt_ld_library_path_tt
+The ``/opt/csw/lib/64`` path is a symlink to a chosen architecture
+subdirectory. For example, on SPARC ``/opt/csw/lib/64`` is a symlink to
+``/opt/csw/lib/sparcv9``.
+
+All binaries compiled with the ``-R/opt/csw/lib/64`` flag will try to look at
+that path and find their corresponding sparcv9 or amd64 libraries. This way you
+can use the same ``-R`` flag for both sparc and intel 64-bit builds.
+
