@@ -30,8 +30,13 @@ supported way of using OpenCSW packages.
 Sparse zone with shared ``/usr``
 --------------------------------
 
-This setup won't work with OpenCSW packages, because the CSWcas-* package
-family installs `class action scripts`_ into ``/usr``.
+You need to install cswclassutils scripts (CSWcas-*) in the global zone.
+
+Otherwise your setup won't work with OpenCSW packages, because the CSWcas-*
+package family installs `class action scripts`_ into /usr. See the
+`cswclassutils wants to write in /usr`_ thread for more information. 
 
 .. _class action scripts:
    http://wiki.opencsw.org/cswclassutils-package
+.. _cswclassutils wants to write in /usr:
+   http://lists.opencsw.org/pipermail/maintainers/2009-December/010638.html
