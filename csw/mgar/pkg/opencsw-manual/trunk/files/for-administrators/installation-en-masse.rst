@@ -4,7 +4,6 @@ Installing packages en masse
 
 .. _installing-on-a-host-without-an-internet-connection:
 
----------------------------------------------------
 Installing on a host without an Internet connection
 ---------------------------------------------------
 
@@ -31,12 +30,12 @@ This topic is also `discussed on the community site`_.
 
 .. _discussed on the community site: http://www.opencsw.org/community/questions/92/installing-without-a-direct-internet-access
 
------------------
+
 Large deployments
 -----------------
 
-To manage package across multiple hosts, you can use a configuration management
-system like puppet, see `Andy Botting's blog post`_ for an example.
+1. :ref:`Set up a local mirror<setting-up-local-mirror>`.
+2. Manage packages with puppet, see `Andy Botting's blog post`_ for an example.
 
 .. _Andy Botting's blog post:
    http://www.andybotting.com/using-pkgutil-on-solaris-with-puppet-for-easy-package-management 

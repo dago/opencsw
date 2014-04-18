@@ -1,10 +1,8 @@
-.. $Id$
+.. _getting-started:
 
 ---------------
 Getting started
 ---------------
-
-.. _getting-started:
 
 ::
 
