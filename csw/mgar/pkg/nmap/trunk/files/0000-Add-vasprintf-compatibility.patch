@@ -1,0 +1,34 @@
+From dcbfe9dd12107e6cce8bd2fc8a121670be879eec Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Sat, 19 Apr 2014 12:07:20 +0200
+Subject: [PATCH] Add vasprintf() compatibility
+
+---
+ nsock/src/Makefile.in | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/nsock/src/Makefile.in b/nsock/src/Makefile.in
+index 7e7668f..e7d66ca 100644
+--- a/nsock/src/Makefile.in
++++ b/nsock/src/Makefile.in
+@@ -32,13 +32,15 @@ SRCS = 	error.c filespace.c gh_heap.c nsock_connect.c nsock_core.c \
+ 	nsock_iod.c nsock_read.c nsock_timers.c nsock_write.c \
+ 	nsock_ssl.c nsock_event.c nsock_pool.c netutils.c nsock_pcap.c \
+ 	nsock_engines.c engine_select.c engine_epoll.c engine_kqueue.c \
+-	engine_poll.c nsock_proxy.c nsock_log.c proxy_http.c proxy_socks4.c
++	engine_poll.c nsock_proxy.c nsock_log.c proxy_http.c proxy_socks4.c \
++	vasprintf.c asprintf.c
+ 
+ OBJS =	error.o filespace.o gh_heap.o nsock_connect.o nsock_core.o \
+ 	nsock_iod.o nsock_read.o nsock_timers.o nsock_write.o \
+ 	nsock_ssl.o nsock_event.o nsock_pool.o netutils.o nsock_pcap.o \
+ 	nsock_engines.o engine_select.o engine_epoll.o engine_kqueue.o \
+-	engine_poll.o nsock_proxy.o nsock_log.o proxy_http.o proxy_socks4.o
++	engine_poll.o nsock_proxy.o nsock_log.o proxy_http.o proxy_socks4.o \
++	vasprintf.o asprintf.o
+ 
+ DEPS =	error.h filespace.h gh_list.h nsock_internal.h netutils.h nsock_pcap.h \
+ 	nsock_log.h nsock_proxy.h gh_heap.h ../include/nsock.h \
+-- 
+1.8.4.1
+
