@@ -34,12 +34,13 @@ RUNTIME_DEP_PKGS_CSWnmap += CSWlibssl1-0-0nmap += CSWosslrt
 RUNTIME_DEP_PKGS_CSWnmap += CSWlibpcap1
 RUNTIME_DEP_PKGibstdc++6
 RUNTIME_DEP_PKGS_CSWnmap += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWnmap += CSWlua
-RUNTIME_DEP_PKGS_CSWnmap += CSWpythonWnmap += CSWpygtk
+RUNTIME_DEP_PKGS_CSWnmap += CSWliblua5-2
+RUNTIME_DEP_PKGS_CSWnmap += CSWpython
+CHECKPKG_OVERRIDES_CSWnmap += surplus-dependency|CSWpython
 
-# Tons of docs and identification of programs installed there
-CHECKPKG_OVERRIDES_CSWnmap += file-wPACKAGES += CSWzenmap
+PACKAGES += CSWzenmap
 SPKG_DESC_CSWzenmap = zenmap
+ARCHALL_CSWzenmap = 1
 PKGFILES_CSWzenmap += $(bindir)/zenmap
 PKGFILES_CSWzenmap += $(bindir)/nmapfe
 PKGFILES_CSWzenmap += $(bindir)/xnmap
@@ -49,7 +50,12 @@ PKGFILES_CSWzenmap += $(sharedstatedir)/zenmap/.*
 # For Zenmap
 RUNTIME_DEP_PKGS_CSWzenmap += CSWnmap
 RUNTIME_DEP_PKGS_CSWzenmap += CSWpy-gtk
-RUNTIME_DEP_PKGS_CSWzenmap += CSWpy-gobject-library=stlport4
+RUNTIME_DEP_PKGS_CSWzenmap += CSWpy-gobject-CHECKPKG_OVERRIDES_CSWzenmap += surplus-dependency|CSWnmap
+CHECKPKG_OVERRIDES_CSWzenmap += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWzenmap += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWzenmap += pkginfo-description-not-starting-with-uppercase|zenmap
+CHECKPKG_OVERRIDES_CSWzenmap += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/zenmapCore/Paths.py
+CHECKPKG_OVERRIDES_CSWzenmap += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/zenmapCore/NmapParser.py-library=stlport4
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libpcre=$(prefix)
@@ -72,4 +78,9 @@ pre-configure:
 	ginstall $(WORKDIR)/asprintf.c $(WORKSRC)/nsock/src
 	ginstall $(WORKDIR)/vasprintf.c $(WORKSRC)/nsock/src
 	ginstall $(WORKDIR)/file.h $(WORKSRC)/nsock/src
+	@$(MAKECOOKIE)
+
+post-configure:
+# it happens, that this define isn't set due to missing /dev/ip in solaris zones.
+	gsed -i -e 's;^/\* #undef HAVE_STREAMS_MIB2 \*/;#define HAVE_STREAMS_MIB2 1;' $(WORKSRC)/libdnet-stripped/include/config.h
 	@$(MAKECOOKIE)
