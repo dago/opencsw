@@ -10,7 +10,8 @@ from lib.python import colors
 from lib.python import opencsw
 
 Maintainer = namedtuple('Maintainer',
-    ['username', 'pkgs', 'last_activity', 'last_activity_pkg', 'active'])
+    ['username', 'pkgs', 'last_activity', 'last_activity_pkg',
+     'active', 'mantis_status', 'fullname'])
 
 INACTIVE_MAINTAINER_CUTOFF = 2
 STALE_PACKAGE_CUTOFF = 4
@@ -98,7 +99,9 @@ def Maintainers(pkgs):
         Maintainer(username=entry['maintainer'], pkgs={},
           last_activity=datetime.datetime(1970, 1, 1, 0, 0),
           last_activity_pkg=None,
-          active=True))
+          active=True,
+          mantis_status=None,
+          fullname=None))
     if entry['catalogname'] not in maintainer.pkgs:
       maintainer.pkgs[entry['catalogname']] = entry
     if maintainer.last_activity < date:
