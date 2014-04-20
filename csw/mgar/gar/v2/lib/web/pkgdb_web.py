@@ -61,7 +61,7 @@ urls_rest = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/as-dicts/',
       'CatalogForGenerationAsDicts',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/for-generation/',
-      'CatalogForGeneration',
+      'CatalogForGenerationAsDicts',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/timing/',
       'CatalogTiming',
   # Query by catalog release, arch, OS release and catalogname
@@ -81,6 +81,20 @@ urls = urls_html + urls_rest
 
 templatedir = os.path.join(os.path.dirname(__file__), "templates/")
 render = web.template.render(templatedir)
+
+
+def SanitizeDescription(catalogname, desc):
+  prefix = '%s - ' % catalogname
+  if desc.startswith(prefix):
+    return desc[len(prefix):]
+  return desc
+
+
+def FormatPkginstList(lst):
+  if lst:
+    return '|'.join(lst)
+  else:
+    return 'none'
 
 
 class index(object):
@@ -662,12 +676,6 @@ class RestSvr4CatalogData(object):
     return response
 
 
-def FormatPkginstList(lst):
-  if lst:
-    return '|'.join(lst)
-  else:
-    return 'none'
-
 def GetCatalogEntries(catrel_name, arch_name, osrel_name):
   """Returns a list of CatalogEntry tuples."""
   try:
@@ -677,6 +685,8 @@ def GetCatalogEntries(catrel_name, arch_name, osrel_name):
     raise web.notfound()
   rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
   def MakeCatalogEntry(row):
+    catalogname = row[0]
+    desc = SanitizeDescription(catalogname, row[8])
     i_deps = cjson.decode(row[7])
     i_deps_str = FormatPkginstList(i_deps)
     deps_with_desc = cjson.decode(row[6])
@@ -692,7 +702,7 @@ def GetCatalogEntries(catrel_name, arch_name, osrel_name):
         deps=deps_str,       # 6
         category="none",     # 7
         i_deps=i_deps_str,   # 8
-        desc=row[8],         # 9
+        desc=desc,           # 9
     )
     return entry
   entries_list = [MakeCatalogEntry(row) for row in rows]
@@ -716,20 +726,6 @@ class CatalogForGenerationAsDicts(object):
     return response
 
 
-class CatalogForGeneration(object):
-
-  def GET(self, catrel_name, arch_name, osrel_name):
-    """A list of tuples, aligning with the catalog format.
-
-    catalogname version_string pkgname
-    basename md5_sum size deps category i_deps
-    """
-    entries_list = GetCatalogEntries(catrel_name, arch_name, osrel_name)
-    response = cjson.encode([tuple(x) for x in entries_list])
-    web.header('Content-Length', str(len(response)))
-    return response
-
-
 class CatalogTiming(object):
 
   def GET(self, catrel_name, arch_name, osrel_name):
@@ -746,11 +742,13 @@ class CatalogTiming(object):
     rows = list(models.GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel))
     # Change this to return a list of dicts
     def MakeCatalogTimingEntry(row):
+      catalogname = row[0]
+      desc = SanitizeDescription(catalogname, row[8])
       i_deps = tuple(cjson.decode(row[7]))
       deps_with_desc = cjson.decode(row[6])
       deps = tuple(x[0] for x in deps_with_desc if x[0].startswith('CSW'))
       entry = representations.CatalogTimingEntry(
-        catalogname=row[0],  # 0
+        catalogname=catalogname,  # 0
         version=row[1],      # 1
         pkgname=row[2],      # 2
         basename=row[3],     # 3
@@ -759,7 +757,7 @@ class CatalogTiming(object):
         deps=deps,           # 6
         category="none",     # 7
         i_deps=i_deps,       # 8
-        desc=row[8],         # 9
+        desc=desc,           # 9
         maintainer=row[9],
         mtime=row[10].isoformat(),
         inserted_on=row[11].isoformat(),
