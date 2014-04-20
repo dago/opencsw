@@ -11,6 +11,7 @@ import logging
 import requests
 import argparse
 import datetime
+import dateutil.parser
 import jinja2
 import cPickle
 
@@ -29,8 +30,11 @@ REPORT_TMPL = u"""<!DOCTYPE html>
       font-size: 14px;
       font-family: sans-serif;
     }
-    .active-False .maintainer {
-      color: brown;
+    table.activity-report {
+      border-collapse: collapse;
+    }
+    tr.border-bottom td {
+      border-bottom: 1px gray;
     }
     .active-False .activity-tag {
       color: brown;
@@ -40,21 +44,36 @@ REPORT_TMPL = u"""<!DOCTYPE html>
       color: green;
       font-weight: bold;
     }
+    .retired-True .activity-tag {
+      color: #DDD;
+    }
     .warning {
       color: red;
       font-weight: bold;
     }
-    .retired-True {
-      background-color: #DDD;
-      color: #AAA;
+    .retired-True, .retired-True a {
+      color: #DDD;
     }
-    .action-needed-True {
-      background-color: #FA8;
+    .action-needed-True, .action-needed-True a {
+      background-color: MistyRose;
+      color: brown;
     }
   </style>
 </head>
 <body>
   <h1>OpenCSW Maintainer activity report</h1>
+
+  <h2>Summary</h2>
+
+  <ul>
+    <li>{{ counts.active }} active maintainers</li>
+    <li>{{ counts.new }} new maintainers</li>
+    <li>{{ counts.retired }} retired maintainers</li>
+    <li>{{ counts.to_retire }} maintainers to retire</li>
+    <li>{{ counts.bogus }} bogus maintainer entries;
+        package contents does not match any maintainers in the CSW database</li>
+  </ul>
+
   <h2>Maintainers to retire</h2>
 
   <p>Limitations: This report doesn't know which maintainers are new and which ones are old.
@@ -76,28 +95,50 @@ REPORT_TMPL = u"""<!DOCTYPE html>
   {% endif %}
   {% endfor %}
   </p>
+  <p>Bogus maintainers:
+  {% for username in analysis_by_username|sort %}
+  {% if analysis_by_username[username].bogus %}
+    {{ username }}
+  {% endif %}
+  {% endfor %}
+  </p>
   <h2>Activity</h2>
-  <table>
+  <table class="activity-report">
   <tr>
     <th>username</th>
+    <th>created</th>
     <th>last activity</th>
     <th>years</th>
+    <th>new?</th>
     <th>active?</th>
-    <th>mantis</th>
+    <th>status in db</th>
     <th>last pkg</th>
     <th># pkgs</th>
+    <th>suggestions</th>
   </tr>
   {% for username in maintainers|sort %}
-    <tr class="active-{{ maintainers[username].active }} retired-{{ maintainers[username].mantis_status != 'Active' }} action-needed-{{ analysis_by_username[username].to_retire }}">
+    <tr class="border-bottom active-{{ maintainers[username].active }} retired-{{ maintainers[username].csw_db_status != 'Active' }} action-needed-{{ analysis_by_username[username].to_retire }}">
       <td>
         <a id="{{ username }}" class="maintainer"
         href="http://www.opencsw.org/maintainers/{{ username }}/">{{ username }}</a>
+      </td>
+      <td>
+        {% if maintainers[username].date_created %}
+        {{ maintainers[username].date_created.strftime('%Y-%m-%d') }}
+        {% endif %}
       </td>
       <td>
         {{ maintainers[username].last_activity.strftime('%Y-%m-%d') }}
       </td>
       <td>
         {{ maintainers[username].last_activity_pkg.years }}
+      </td>
+      <td>
+        {% if analysis_by_username[username].new %}
+        <span style="background-color: SlateBlue; color: white; padding: 2px;" class="activity-tag">new</span>
+        {% else %}
+        <span style="color: #AAA;" class="activity-tag">old</span>
+        {% endif %}
       </td>
       <td class="activity-tag">
         {% if maintainers[username].active %}
@@ -107,7 +148,7 @@ REPORT_TMPL = u"""<!DOCTYPE html>
         {% endif %}
       </td>
       <td>
-        {{ maintainers[username].mantis_status }}
+        {{ maintainers[username].csw_db_status }}
       </td>
       <td>
         <a href="http://buildfarm.opencsw.org/pkgdb/srv4/{{ maintainers[username].last_activity_pkg.md5_sum }}/">
@@ -116,6 +157,17 @@ REPORT_TMPL = u"""<!DOCTYPE html>
       <td>
         {% if username in maintainers_in_unstable %}
         {{ maintainers_in_unstable[username].pkgs|length }}
+        {% endif %}
+      </td>
+      <td>
+        {% if maintainers[username].active and maintainers[username].csw_db_status != 'Active' %}
+          inconsistent status
+        {% endif %}
+        {% if analysis_by_username[username].new and not maintainers[username].pkgs %}
+          maybe needs help
+        {% endif %}
+        {% if analysis_by_username[username].bogus %}
+          bogus maintainer defined in a package?
         {% endif %}
       </td>
     </tr>
@@ -136,10 +188,10 @@ def ConcurrentFetchResults(catrels):
     key_by_future = dict((executor.submit(Fetch, catrel), catrel)
                          for catrel in catrels)
 
-    # Additional query: maintainers from Mantis
-    mantis_url = 'http://www.opencsw.org/buglist/maintainers'
-    mantis_future = executor.submit(lambda: requests.get(mantis_url).json())
-    key_by_future[mantis_future] = 'mantis'
+    # Additional query: maintainers from CSW on the website
+    csw_db_url = 'http://www.opencsw.org/buglist/maintainers'
+    csw_db_future = executor.submit(lambda: requests.get(csw_db_url).json())
+    key_by_future[csw_db_future] = 'csw_db'
 
     for future in concurrent.futures.as_completed(key_by_future):
       key = key_by_future[future]
@@ -170,9 +222,9 @@ def main():
     with open(args.save_as, 'w') as fd:
       cPickle.dump(results_by_catrel, fd)
 
-  # We need to remove the mantis part.
-  mantis_maintainers = results_by_catrel['mantis']
-  del results_by_catrel['mantis']
+  # We need to remove the csw_db part.
+  csw_db_maintainers = results_by_catrel['csw_db']
+  del results_by_catrel['csw_db']
 
   # Flatten packages from all catalogs into a single list. For activity
   # detection, we don't care which catalog a maintainer submitted a package to.
@@ -184,13 +236,25 @@ def main():
   maintainers, bad_dates = activity.Maintainers(pkgs)
   maintainers_in_unstable, _ = activity.Maintainers(results_by_catrel['unstable'])
 
-  for d in mantis_maintainers:
-    # maintainer, fullname, status
+  counts = {
+      'active': 0,
+      'to_retire': 0,
+      'retired': 0,
+      'bogus': 0,
+      'new': 0,
+  }
+
+  for d in csw_db_maintainers:
+    # maintainer, fullname, status, date_created
     username = d['maintainer']
     status = d['status']
+    date_created = None
+    if d['date_created']:
+      date_created = dateutil.parser.parse(d['date_created'])
     if username in maintainers:
       maintainers[username] = (
-          maintainers[username]._replace(mantis_status=status))
+          maintainers[username]._replace(csw_db_status=status,
+                                         date_created=date_created))
     else:
       maintainers[username] = (
           activity.Maintainer(
@@ -199,22 +263,41 @@ def main():
             last_activity=datetime.datetime(1970, 1, 1, 0, 0),
             last_activity_pkg=None,
             active=False,
-            mantis_status=status,
-            fullname=d['fullname']))
+            csw_db_status=status,
+            fullname=d['fullname'],
+            date_created=date_created))
 
-  mantis_m_by_username = dict((m['maintainer'], m) for m in mantis_maintainers)
+  csw_db_m_by_username = dict((m['maintainer'], m) for m in csw_db_maintainers)
   analysis_by_username = {}
-  for username, maintainer in maintainers.iteritems():
-    d = {'can_be_retired': False,
-         'to_retire': False,
-         'bogus': False}
-    if username not in mantis_m_by_username:
+  now = datetime.datetime.now()
+  new_maint_cutoff = now - datetime.timedelta(days=activity.NEW_MAINTAINER_CUTOFF*365)
+  for username in maintainers:
+    d = {'to_retire': False,
+         'bogus': False,
+         'new': False}
+
+    # Detect new maintainers. This could be also done in activity.py, because
+    # similar functionality already exists there.
+    if (maintainers[username].date_created is not None
+        and maintainers[username].date_created > new_maint_cutoff
+        and maintainers[username].csw_db_status != 'Retired'):
+      maintainers[username] = maintainers[username]._replace(active=True)
+      d['new'] = True
+      counts['new'] += 1
+
+    if username not in csw_db_m_by_username:
       d['bogus'] = True
-    if not maintainer.active:
-      if username not in maintainers_in_unstable:
-        d['can_be_retired'] = True
-      if maintainer.mantis_status != 'Retired' and not d['bogus']:
-        d['to_retire'] = True
+      counts['bogus'] += 1
+    if maintainers[username].active:
+      counts['active'] += 1
+    else:
+      if not d['bogus']:
+        if maintainers[username].csw_db_status != 'Retired':
+          d['to_retire'] = True
+          counts['to_retire'] += 1
+        else:
+          counts['retired'] += 1
+
     analysis_by_username[username] = d
 
   with open(args.output, 'w') as outfd:
@@ -222,7 +305,8 @@ def main():
     rendered = template.render(
         maintainers=maintainers,
         maintainers_in_unstable=maintainers_in_unstable,
-        analysis_by_username=analysis_by_username)
+        analysis_by_username=analysis_by_username,
+        counts=counts)
     outfd.write(rendered.encode('utf-8'))
 
 
