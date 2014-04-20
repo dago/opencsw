@@ -462,9 +462,12 @@ class InstallContentsImporter(OsIndexingBase):
     self.arch = arch
     self.pkginst_cache = {}
     config = configuration.GetConfig()
+    username, password = rest.GetUsernameAndPassword()
     self.rest_client = rest.RestClient(
         pkgdb_url=config.get('rest', 'pkgdb'),
         releases_url=config.get('rest', 'releases'),
+        username=username,
+        password=password,
         debug=debug)
 
   def _RemoveSystemPackagesFromCatalog(self, data):
