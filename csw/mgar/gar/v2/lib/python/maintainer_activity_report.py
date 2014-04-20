@@ -76,15 +76,8 @@ REPORT_TMPL = u"""<!DOCTYPE html>
 
   <h2>Maintainers to retire</h2>
 
-  <p>Limitations: This report doesn't know which maintainers are new and which ones are old.
-  New maintainers are reported as "to retire" until they release their first
-  package. The script only detects activity in the package catalogs. There are
-  people who are active in the project, even though they don't release
-  packages. They might be wrongly listed here as "to retire". Incorporating the
-  mailing list activity should help, but is not implemented right now.</p>
-
   <p>The following list contains maintainers with no detected activity within
-  the last 2 years.</p>
+  the last {{ counts.inactive_maintainer_cutoff }} years.</p>
 
   <p>
   {% for username in analysis_by_username|sort %}
@@ -161,7 +154,9 @@ REPORT_TMPL = u"""<!DOCTYPE html>
       </td>
       <td>
         {% if maintainers[username].active and maintainers[username].csw_db_status != 'Active' %}
-          inconsistent status
+          <span style="color: brown;">
+            inconsistent status
+          </span>
         {% endif %}
         {% if analysis_by_username[username].new and not maintainers[username].pkgs %}
           maybe needs help
@@ -288,7 +283,10 @@ def main():
     if username not in csw_db_m_by_username:
       d['bogus'] = True
       counts['bogus'] += 1
-    if maintainers[username].active:
+
+    # Some maintainers have bogus activity due to impersonation. If a
+    # maintainer is retired in the database, don't count them as active.
+    if maintainers[username].active and maintainers[username].csw_db_status != 'Retired':
       counts['active'] += 1
     else:
       if not d['bogus']:
@@ -297,8 +295,9 @@ def main():
           counts['to_retire'] += 1
         else:
           counts['retired'] += 1
-
     analysis_by_username[username] = d
+
+  counts['inactive_maintainer_cutoff'] = activity.INACTIVE_MAINTAINER_CUTOFF
 
   with open(args.output, 'w') as outfd:
     template = jinja2.Template(REPORT_TMPL)
