@@ -71,7 +71,6 @@ ISALISTS_BY_ARCH = {
 # the database, and not symlinks on the mirror. For example, 'testing' is
 # a symlink, so should not be listed here.
 DEFAULT_CATALOG_RELEASES = frozenset([
-    'beanie',
     'bratislava',
     'dublin',
     'kiel',
