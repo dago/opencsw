@@ -4,7 +4,6 @@
 import argparse
 import logging
 from lib.python import chkdbcat
-import smtplib
 
 class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
     """Class overriding CheckDBCatalog.notify()"""
@@ -12,23 +11,32 @@ class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
         super(MyCheckDBCatalog,self).__init__(catrel, arch, osrel, fn_ts, gencat_bin, chkcat)
         self.__verbose = verbose
 
-    def notify(self, date, addr, pkginfo):
+    def notify_broken(self, date, addr, pkginfo):
         notifier = chkdbcat.InformMaintainer((self._catrel, self._osrel, self._arch),
-                                             date, addr, pkginfo))
-        notfier.send_mail()
+                                             date, addr, pkginfo)
+        notfier.send_mail_broken()
+
+    def notify_unbroken(self, date, addr):
+        notifier = chkdbcat.InformMaintainer((self._catrel, self._osrel, self._arch),
+                                             date, addr, pkginfo)
+        notfier.send_mail_unbroken()
 
 
 def argparser():
     parser = argparse.ArgumentParser(description='Check Database Catalog.')
     parser.add_argument('--debug', help='enable debug output', required=False, default=False, action='store_const', const=True)
     parser.add_argument('--verbose', help='be verbose', required=False, default=False, action='store_const', const=True)
-    parser.add_argument('--arch', required=True)
-    parser.add_argument('--catalog-release', required=True)
-    parser.add_argument('--os-release', required=True)
+    parser.add_argument('--arch', required=True,
+                        help="i386, sparc")
+    parser.add_argument('--catalog-release', required=True,
+                        help="unstable, kiel, etc.")
+    parser.add_argument('--os-release', required=True,
+                        help="SunOS5.10, SunOS5.11")
     parser.add_argument('--timestamp-file', default='/var/cache/chkdbcat/timestamp.json')
     parser.add_argument('--chkcat-path', default='/opt/csw/bin/chkcat')
     parser.add_argument('--gen-catalog-path',
-                        help="Path to gen-catalog-index")
+                        help="path to gen-catalog-index",
+                        default="/home/web/bin/gen-catalog-index")
     return parser.parse_args()
 
 def main():
