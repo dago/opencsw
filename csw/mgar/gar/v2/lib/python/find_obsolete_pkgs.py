@@ -74,9 +74,13 @@ REBUILD_TMPL = """<html>
       {% for dep in pkg.dependlist %}
         {% if dep in obsolete %}
           <span class="obsolete">
+          <a href="http://www.opencsw.org/packages/{{ obsolete[dep].catalogname }}/"
+              title="{{ dep }} is obsolete; {{ pkg.pkgname }} needs to be rebuilt
+              with {{ dep }} removed from RUNTIME_DEP_PKGS"
+            >{{ dep }}</a>
           <a href="http://buildfarm.opencsw.org/pkgdb/srv4/{{ obsolete[dep].md5_sum }}/"
-             title="{{ dep }} is obsolete; {{ pkg.pkgname }} needs to be rebuilt with {{ dep }} removed from RUNTIME_DEP_PKGS"
-          >{{ dep }}</a>
+            title="{{ dep }} in the buildfarm database"
+            >[in pkgdb]</a>
           </span>
         {% endif %}
       {% endfor %}
