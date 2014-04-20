@@ -78,7 +78,8 @@ class GenerateCatalog(object):
                                    "-output", os.path.join(catalogdir, "catalog")])
 
 class TimestampRecord(object):
-      """Record Timestamp for a given Catalog, Architecture, and OS Release into a json encoded file."""
+      """Record Timestamp for a given Catalog, Architecture, and OS Release
+into a json encoded file."""
       def __init__(self, fn):
             """Constructor.
 
@@ -143,7 +144,7 @@ class TimestampRecord(object):
             """
             catkey = (catrel, arch, osrel)
             if self.__ts_by_catalog.has_key(catkey):
-                  return dateutil.parser.parse(self.__ts_by_catalog[catkey])
+                  return dateutil.parser.parse(self.__ts_by_catalog[catkey]['timestamp'])
             else:
                   return None
 
@@ -155,19 +156,51 @@ class TimestampRecord(object):
 
             If date is an instance of str, it has to be a date in iso format.
 
+            In any case, set will clear the notified list.
+
             """
             assert date is not None
 
             catkey = (catrel, arch, osrel)
+            
+            if not catkey in self.__ts_by_catalog:
+                  self.__ts_by_catalog[catkey] = dict()
+
             if isinstance(date, datetime.datetime):
-                  self.__ts_by_catalog[catkey] = date.replace(microsecond=0).isoformat()
+                  self.__ts_by_catalog[catkey]['timestamp'] = date.replace(microsecond=0).isoformat()
             elif isinstance(date, str):
                   # try to convert string into datetime, so that we
                   # know it has proper format.
-                  self.__ts_by_catalog[catkey] = dateutil.parser.parse(date).isoformat()
+                  self.__ts_by_catalog[catkey]['timestamp'] = dateutil.parser.parse(date).isoformat()
             else:
                   raise TypeError("Expected instance of str or datetime, got %s" % str(type(date)))
+            # clear out the notified list
+            self.__ts_by_catalog[catkey]['notified'] = list()
 
+      def notified(self, catrel, arch, osrel, email):
+            catkey = (catrel, arch, osrel)
+
+            assert 'notified' in self.__ts_by_catalog[catkey]
+            assert type(self.__ts_by_catalog[catkey]['notified']) is list
+
+            self.__ts_by_catalog[catkey]['notified'].append(email)
+
+      def is_notified(self, catrel, arch, osrel, email):
+            catkey = (catrel, arch, osrel)
+
+            assert 'notified' in self.__ts_by_catalog[catkey]
+            assert type(self.__ts_by_catalog[catkey]['notified']) is list
+
+            return email in self.__ts_by_catalog[catkey]['notified']
+
+      def get_notified(self):
+            catkey = (catrel, arch, osrel)
+
+            assert 'notified' in self.__ts_by_catalog[catkey]
+            assert type(self.__ts_by_catalog[catkey]['notified']) is list
+
+            return self.__ts_by_catalog[catkey]['notified']            
+            
 
 class CatalogTiming(object):
       """Fetch Catalog Timing information.
@@ -371,8 +404,8 @@ class CheckDBCatalog(object):
                   return self.rest_client.GetMaintainerByMd5(
                       pkginfo['md5'])['maintainer_email']
 
-      def notify(self, date, addr, pkginfo):
-            """Notification.
+      def notify_broken(self, date, addr, pkginfo):
+            """Notification on broken database catalog.
 
             Will be called for each "addr" once. "pkginfo" is a list
             with packages as retrieved by 'CatalogTiming' since last
@@ -381,6 +414,15 @@ class CheckDBCatalog(object):
             """
             logging.info("TO: %s" % addr)
             [logging.info("packge %s uploaded since %s might have caused catalog break" % (p['fullname'],str(date))) for p in pkginfo]
+
+      def notify_unbroken(self, date, addr):
+            """Notification on broken database catalog.
+
+            Will be called for each "addr" once. 
+
+            """
+            logging.info("TO: %s" % addr)
+            logging.info("catalog has been unbroken on %s" % (str(date),))
 
       def fetch_db_cat(self):
             """Fetch catalog stored in database into temporary direcotry."""
@@ -417,11 +459,18 @@ class CheckDBCatalog(object):
 
                   # Only record successful checks.
                   if retval:
+                        rightnow = datetime.datetime.now()
                         with self.__timestamp_record:
+                              try:
+                                    [self.notify_unbroken(rightnow, addr) for addr in
+                                     self.__timestamp_record.get_notified()]
+                              except Exception as ex:
+                                    logging.error("Error notifying about unbroken catalog: %s",
+                                                  repr(ex))
                               self.__timestamp_record.set(self._catrel,
                                                           self._arch,
                                                           self._osrel,
-                                                          datetime.datetime.now())
+                                                          rightnow)
 
                   # Compose list of packages uploaded since last successful
                   # check by `uploader'.
@@ -451,7 +500,7 @@ class CheckDBCatalog(object):
                               notifications[addr].setdefault('newpkgs', []).append(np)
 
                         for n in notifications:
-                              self.notify(notifications[n]['lastsuccessful'], n, notifications[n]['newpkgs'], self.stdout, self.stderr)
+                              self.notify_broken(notifications[n]['lastsuccessful'], n, notifications[n]['newpkgs'], self.stdout, self.stderr)
 
             return retval
 
@@ -461,7 +510,7 @@ class InformMaintainer(object):
 
       """
 
-      MAIL_TEMPLATE = u"""Hi there
+      MAIL_TEMPLATE_BROKEN = u"""Hi there
 
 You uploaded following packages
 
@@ -485,6 +534,12 @@ Your Check Database Catalog script
 
 """
 
+      MAIL_TEMPLATE_OK = u"""Hi There
+Apparently, somebody (maybe you) unbroke the Database Catalog on $date.
+
+Kudos.
+"""
+
       def __init__(self, cat_tuple, date, addr, pkginfo, chkcat_stdout, chkcat_stderr):
             self._cat_tuple = cat_tuple
             self._date = date
@@ -493,7 +548,7 @@ Your Check Database Catalog script
             self._chkcat_stdout = chkcat_stdout
             self._chkcat_stderr = chkcat_stderr
 
-      def _compose_mail(self, from_address):
+      def _compose_mail_broken(self, from_address):
             """Compose Mail"""
 
             namespace = {
@@ -503,7 +558,7 @@ Your Check Database Catalog script
                   'stdout': self._chkcat_stdout
             }
 
-            t = Template.Template(InformMaintainer.MAIL_TEMPLATE, searchList=[namespace])
+            t = Template.Template(InformMaintainer.MAIL_TEMPLATE_BROKEN, searchList=[namespace])
 
             mail = MIMEText(unicode(t))
             mail['From'] = from_address
@@ -512,15 +567,40 @@ Your Check Database Catalog script
 
             return mail
 
-      def send_mail(self):
+      def _compose_mail_unbroken(self, from_address):
+            namespace = {
+                  'date': self._date,
+            }
+
+            t = Template.Template(InformMaintainer.MAIL_TEMPLATE_OK, searchList=[namespace])
+
+            mail = MIMEText(unicode(t))
+            mail['From'] = from_address
+            mail['To'] = self._addr
+            mail['Subject'] = "[chkdbcat] Database Catalog unbroken"
+
+            return mail
+
+      def send_mail_broken(self):
             from_address = "Check Database Catalog <noreply@opencsw.org>"
             s = smtplib.SMTP('mail.opencsw.org')
             try:
                   s.sendmail(from_address, [self._addr],
-                             self._compose_mail(from_address).as_string())
+                             self._compose_mail_broken(from_address).as_string())
                   logging.debug("E-mail sending finished.")
             except smtplib.SMTPRecipientsRefused, e:
                   logging.error(
                         "Sending email to %s failed, recipient refused.",
                         repr(self._addr))
             
+      def send_mail_unbroken(self):
+            from_address = "Check Database Catalog <noreply@opencsw.org>"
+            s = smtplib.SMTP('mail.opencsw.org')
+            try:
+                  s.sendmail(from_address, [self._addr],
+                             self._compose_mail_unbroken(from_address).as_string())
+                  logging.debug("E-mail sending finished.")
+            except smtplib.SMTPRecipientsRefused, e:
+                  logging.error(
+                        "Sending email to %s failed, recipient refused.",
+                        repr(self._addr))
