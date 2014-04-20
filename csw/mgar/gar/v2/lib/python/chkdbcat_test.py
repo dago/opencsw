@@ -171,9 +171,53 @@ class TestTimestampRecord(unittest.TestCase):
             with TimestampRecord(self.__tmpfile) as obj:
                   self.assertRaises(TypeError,obj.set,'unstable', 'i386', 'SunOS5.11', 1)
 
+      def test_Notified(self):
+            with TimestampRecord(self.__tmpfile) as obj:
+                  obj.set('unstable', 'i386', 'SunOS5.10',
+                          datetime.datetime.now().replace(microsecond=0))
+                  obj.notified('unstable', 'i386', 'SunOS5.10',
+                               'raos@opencsw.org')
+                  obj.notified('unstable', 'i386', 'SunOS5.10',
+                               'somebodyelse@opencsw.org')
+
+                  obj.set('unstable', 'sparc', 'SunOS5.10',
+                          datetime.datetime.now().replace(microsecond=0))
+                  obj.notified('unstable', 'sparc', 'SunOS5.10',
+                               '1@opencsw.org')
+                  obj.notified('unstable', 'sparc', 'SunOS5.10',
+                               '2@opencsw.org')
+
+                  self.assertTrue(obj.is_notified('unstable', 'i386',
+                                                  'SunOS5.10',
+                                                  'raos@opencsw.org'))
+                  self.assertTrue(obj.is_notified('unstable', 'i386',
+                                                  'SunOS5.10',
+                                                  'somebodyelse@opencsw.org'))
+                  self.assertTrue(obj.is_notified('unstable', 'sparc',
+                                                  'SunOS5.10',
+                                                  '1@opencsw.org'))
+                  self.assertTrue(obj.is_notified('unstable', 'sparc',
+                                                  'SunOS5.10',
+                                                  '2@opencsw.org'))
+
+            with TimestampRecord(self.__tmpfile) as obj:
+                  self.assertTrue(obj.is_notified('unstable', 'i386',
+                                                  'SunOS5.10',
+                                                  'raos@opencsw.org'))
+                  self.assertTrue(obj.is_notified('unstable', 'i386',
+                                                  'SunOS5.10',
+                                                  'somebodyelse@opencsw.org'))
+                  self.assertTrue(obj.is_notified('unstable', 'sparc',
+                                                  'SunOS5.10',
+                                                  '1@opencsw.org'))
+                  self.assertTrue(obj.is_notified('unstable', 'sparc',
+                                                  'SunOS5.10',
+                                                  '2@opencsw.org'))
+
       def tearDown(self):
             try:
-                  os.unlink(self.__tmpfile)
+                  #os.unlink(self.__tmpfile)
+                  pass
             except:
                   pass
 
@@ -241,7 +285,7 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
                   }
             }
 
-            def notify(self, date, addr, pkginfo, chkcat_stdout, chkcat_stderr):
+            def notify_broken(self, date, addr, pkginfo, chkcat_stdout, chkcat_stderr):
                   assert date == self.expected_notification_on[addr]['lastsuccessful']
 
                   if addr == "raos@opencsw.org":
@@ -256,7 +300,7 @@ zutils 1.0,REV=2013.07.05 CSWzutils zutils-1.0,REV=2013.07.05-SunOS5.10-sparc-CS
 
                   mail = InformMaintainer((self._catrel, self._osrel, self._arch),
                                           date, addr, pkginfo, chkcat_stdout, chkcat_stderr)
-                  print mail._compose_mail('TestScript')
+                  print mail._compose_mail_broken('TestScript')
 
 
       def setUp(self):
