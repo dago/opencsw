@@ -193,7 +193,7 @@ into a json encoded file."""
 
             return email in self.__ts_by_catalog[catkey]['notified']
 
-      def get_notified(self):
+      def get_notified(self, catrel, arch, osrel):
             catkey = (catrel, arch, osrel)
 
             assert 'notified' in self.__ts_by_catalog[catkey]
@@ -462,8 +462,10 @@ class CheckDBCatalog(object):
                         rightnow = datetime.datetime.now()
                         with self.__timestamp_record:
                               try:
-                                    [self.notify_unbroken(rightnow, addr) for addr in
-                                     self.__timestamp_record.get_notified()]
+                                    [self.notify_unbroken(rightnow,
+                                                          addr) for addr in
+                                     self.__timestamp_record.get_notified(self._catrel,
+                                                                          self._arch, self._osrel)]
                               except Exception as ex:
                                     logging.error("Error notifying about unbroken catalog: %s",
                                                   repr(ex))
