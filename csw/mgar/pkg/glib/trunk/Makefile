@@ -22,16 +22,12 @@ MERGE_EXCLUDE_FILES = .*/charset.alias
 
 PACKAGES += CSWglib-dev
 SPKG_DESC_CSWglib-dev = $(DESCRIPTION), development files
-PKGFILES_CSWglib-dev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWglib-dev += $(sharedstatedir)/gtk-doc/.*
+# PKGFILES_CSWglib-dev  = $(PKGFILES_DEVEL)
+# PKGFILES_CSWglib-dev += $(sharedstatedir)/gtk-doc/.*
 RUNTIME_DEP_PKGS_CSWglib-dev += CSWlibgmodule1-2-0
 RUNTIME_DEP_PKGS_CSWglib-dev += CSWlibglib1-2-0
 RUNTIME_DEP_PKGS_CSWglib-dev += CSWlibgthread1-2-0
 # Historical reasons
-
-OBSOLETED_BY_CSWglib-dev = CSWglib-devel
-CATALOGNAME_CSWglibdevel = glib_devel
-# CHECKPKG_OVERRIDES_CSWglibdevel += catalogname-does-not-match-pkgname|pkgname=CSWglibdevel|catalogname=glib_devel|expected-catalogname=glibdevel
 
 PACKAGES += CSWlibglib1-2-0
 CATALOGNAME_CSWlibglib1-2-0 = libglib1_2_0
