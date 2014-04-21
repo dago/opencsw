@@ -1,0 +1,553 @@
+#!/usr/bin/env python
+"""
+Maintain OpenCSW changelog
+
+$Id$
+"""
+import argparse
+import datetime
+import dateutil.tz
+import email.utils
+import os
+import pwd
+import re
+import sys
+import time
+import unittest
+import logging
+
+### T E S T S ###
+
+class TestOpenCSWRev(unittest.TestCase):
+    """Test opencsw_rev()"""
+
+    def test_opencsw_rev(self):
+        """revision string from date"""
+        rev = ChangeLogHeader.opencsw_rev(datetime.date(1979, 1, 1))
+        self.assertEqual(rev, '1979.01.01')
+
+    def test_opencsw_rev_default(self):
+        """revision from current date"""
+        rev = ChangeLogHeader.opencsw_rev()
+        self.assertEqual(rev, datetime.date.today().strftime('%Y.%m.%d'))
+
+
+class TestChangeLogHeader(unittest.TestCase):
+    """Test ChangeLogHeader"""
+
+    def test_changelogheader(self):
+        """initialize changelog header with keywords"""
+        chlg = ChangeLogHeader(package='test', version='0.1', rev='1991.09.04')
+        self.assertEqual('test (0.1,REV=1991.09.04)', str(chlg))
+
+    def test_parser(self):
+        """initialize changelog header from line"""
+        chlg = ChangeLogHeader(line='test (0.1,REV=1991.09.04)')
+        self.assertEqual('test (0.1,REV=1991.09.04)', str(chlg))
+
+    def test_garbled(self):
+        """test garbled changelog header"""
+        self.assertRaises(GarbledChangeLogHeader,
+                          ChangeLogHeader, line='test (0,REV=1991.9.4)')
+
+
+class TestChangeLogFooter(unittest.TestCase):
+    """Test ChangeLogFooter"""
+
+    def test_changelogfooter(self):
+        """initialize changelog footer from arguments"""
+        chlg = ChangeLogFooter(maintainer="Rafael Ostertag",
+                               email="raos@opencsw.org",
+                               timestamp=datetime.datetime(1979, 1, 1,
+                                                           0, 0, 0))
+        self.assertEqual(' -- Rafael Ostertag <raos@opencsw.org>  Mon, 01 Jan 1979 00:00:00 +0100', str(chlg))
+
+    def test_parser(self):
+        """initialize changelog footer from line"""
+        test_footer = ' -- Rafael Ostertag <raos@opencsw.org>  Sun, 16 Mar 2014 10:10:33 +0100'
+        chlg = ChangeLogFooter(line=test_footer)
+        self.assertEqual(test_footer, str(chlg))
+
+    def test_garbled(self):
+        """test garbled changelog footer"""
+        self.assertRaises(GarbledChangeLogFooter,
+                          ChangeLogFooter, line=' -- Rafael Ostertag <raos@opencsw.org>  Sun, 16 Mar 2014 10:10:33 +010')
+
+
+class TestChangeLogParagraph(unittest.TestCase):
+    """Test ChangeLogParagraph."""
+
+    def test_init_single_line(self):
+        """initialize ChangeLog paragraph with one line"""
+        line = '  * Lorem ipsum dolor sit amet, consectetur adipiscing'
+        chpg = ChangeLogParagraph(line)
+        self.assertEqual(line, str(chpg))
+        self.assertEqual('Lorem ipsum dolor sit amet, consectetur adipiscing',
+                         repr(chpg))
+
+    def test_newline_handling(self):
+        """test newline handling of ChangeLogParagraph"""
+        lines = """  * Lorem ipsum dolor sit amet,
+    consectetur adipiscing"""
+        chpg = ChangeLogParagraph(lines)
+        self.assertEqual('  * Lorem ipsum dolor sit amet, consectetur adipiscing', str(chpg))
+        self.assertEqual('Lorem ipsum dolor sit amet, consectetur adipiscing', repr(chpg))
+
+    def test_init_from_multiple_lines(self):
+        """Test initialization from multiple lines"""
+
+        lines = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent posuere est a pellentesque imperdiet.',
+                  'Vivamus dapibus enim eu magna vehicula posuere. Pellentesque adipiscing purus id diam auctor gravida. Sed leo odio,',
+                  'molestie quis ante sed, commodo consequat nulla. Vivamus interdum vel lorem eget faucibus. Suspendisse dignissim orci sit amet dolor venenatis convallis.',
+                  'Suspendisse fringilla tortor vitae dolor blandit ullamcorper. Cras sed mauris eu lorem scelerisque blandit quis vel mauris. Nam a urna aliquet, cursus erat a, fermentum justo. Sed hendrerit dui magna, ac tempus est vestibulum at.',
+                  'Duis in massa ut nisl euismod auctor nec ac odio. Phasellus suscipit neque quis metus vestibulum molestie. Phasellus eget molestie elit, et fringilla purus. Morbi augue lectus, mattis ut mauris onvallis, eleifend condimentum nunc. Phasellus sit amet facilisis massa. Cras non porttitor turpis.']
+        formatted = """  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    posuere est a pellentesque imperdiet. Vivamus dapibus enim eu magna
+    vehicula posuere. Pellentesque adipiscing purus id diam auctor
+    gravida. Sed leo odio, molestie quis ante sed, commodo consequat
+    nulla. Vivamus interdum vel lorem eget faucibus. Suspendisse
+    dignissim orci sit amet dolor venenatis convallis. Suspendisse
+    fringilla tortor vitae dolor blandit ullamcorper. Cras sed mauris eu
+    lorem scelerisque blandit quis vel mauris. Nam a urna aliquet,
+    cursus erat a, fermentum justo. Sed hendrerit dui magna, ac tempus
+    est vestibulum at. Duis in massa ut nisl euismod auctor nec ac odio.
+    Phasellus suscipit neque quis metus vestibulum molestie. Phasellus
+    eget molestie elit, et fringilla purus. Morbi augue lectus, mattis
+    ut mauris onvallis, eleifend condimentum nunc. Phasellus sit amet
+    facilisis massa. Cras non porttitor turpis."""
+        chpg = ChangeLogParagraph(*lines)
+        self.assertEqual(formatted, str(chpg))
+
+
+### C O D E ###
+
+class GarbledChangeLogHeader(Exception):
+    """Garbled ChangeLog header
+
+    Raised if parsing of ChangeLog header fails.
+
+    """
+    def __init__(self, header):
+        super(GarbledChangeLogHeader, self).__init__()
+        self.header = header
+
+    def __str__(self):
+        return "Garbled ChangeLog header: %s" % self.header
+
+    def __repr__(self):
+        return str(self)
+
+
+class GarbledChangeLogFooter(Exception):
+    """Garbled ChangeLog footer
+
+    Raised if parsing of ChangeLog footer fails.
+
+    """
+    def __init__(self, footer):
+        super(GarbledChangeLogFooter, self).__init__()
+        self.footer = footer
+
+    def __str__(self):
+        return "Garbled ChangeLog footer: %s" % self.footer
+
+    def __repr__(self):
+        return str(self)
+
+
+class ChangeLogHeader(object):
+    """Constitutes a changelog header.
+
+    It has the form
+
+    package (version,REV=rev)
+
+    and marks the start of a changelog entry.
+
+    """
+    def __init__(self, **kwargs):
+        """Initialize ChangeLogHeader
+
+        :param line: parses the given line
+
+        :param package: the package name
+
+        :param version: version of the upstream packages
+
+        :param rev: revision of the opencsw package
+
+        """
+        if 'line' in kwargs:
+            self.parse_line(kwargs['line'])
+            return
+
+        assert 'package' in kwargs and 'version' in kwargs
+
+        self.package = kwargs['package']
+        self.version = kwargs['version']
+
+        if 'rev' not in kwargs:
+            self.rev = ChangeLogHeader.opencsw_rev()
+        else:
+            self.rev = kwargs['rev']
+
+    def __str__(self):
+        """Get the ChangeLog header"""
+        return ChangeLogHeader.format_str % {'package': self.package,
+                                              'version': self.version,
+                                              'rev': self.rev}
+
+    def parse_line(self, line):
+        """Parse ChangeLog header
+
+        Dissect a ChangeLog header into package, version, and
+        revision.
+
+        """
+        matches = ChangeLogHeader.compiled_re.match(line)
+
+        if matches is None:
+            raise GarbledChangeLogHeader(line)
+
+        self.package = matches.group('package')
+        self.version = matches.group('version')
+        self.rev = matches.group('rev')
+
+    @classmethod
+    def opencsw_rev(cls, date=None):
+        """Convert a date to as string suitable for REV=
+
+        If no date is specified, the current date is used.
+
+        """
+        if date is None:
+            date = datetime.date.today()
+
+        return date.strftime('%Y.%m.%d')
+
+    format_str = r'%(package)s (%(version)s,REV=%(rev)s)'
+    parse_re = r'(?P<package>[\w-]+) \((?P<version>[\d\.]+),REV=(?P<rev>\d{4}\.\d{2}\.\d{2})\)'
+    compiled_re = re.compile(parse_re)
+
+
+class ChangeLogFooter(object):
+    """End a changelog entry.
+
+    It has the form
+
+    [one space]-- maintainer name <email address>[two spaces]  date
+    """
+    def __init__(self, **kwargs):
+        if len(kwargs) == 0:
+            maintainer = ChangeLogFooter.get_maintainer()
+            self.maintainer = maintainer[0]
+            self.email = maintainer[1]
+            self.timestamp = ChangeLogFooter.get_rfc2822timestamp()
+
+            return
+
+        if 'line' in kwargs:
+            self.parse_line(kwargs['line'])
+            return
+
+        assert 'maintainer' in kwargs and 'email' in kwargs
+
+        self.maintainer = kwargs['maintainer']
+        self.email = kwargs['email']
+
+        if 'timestamp' in kwargs:
+            self.timestamp = ChangeLogFooter.get_rfc2822timestamp(kwargs['timestamp'])
+        else:
+            self.timestamp = ChangeLogFooter.get_rfc2822timestamp()
+
+    def __str__(self):
+        return ChangeLogFooter.format_str % {'maintainer': self.maintainer,
+                                             'email': self.email,
+                                             'timestamp': self.timestamp}
+
+    def parse_line(self, line):
+        """Parse ChangeLog footer
+
+        Dissect a ChangeLog footer into maintainer, email, and
+        timestamp.
+
+        """
+        matches = ChangeLogFooter.compiled_re.match(line)
+
+        if matches is None:
+            raise GarbledChangeLogFooter(line)
+
+        self.maintainer = matches.group('maintainer')
+        self.email = matches.group('email')
+        self.timestamp = matches.group('timestamp')
+
+    @classmethod
+    def get_rfc2822timestamp(cls, date_obj=None):
+        """Return a timestamp in the proper format.
+
+        The proper format is a timestamp in the format specified in RFC
+        2822.
+
+        :param dt: datetime object or none, in which case the current time
+        will be taken.
+        
+        """
+        if date_obj is None:
+            timezone = dateutil.tz.tzlocal()
+            today = datetime.datetime.now(timezone)
+            return email.utils.formatdate(time.mktime(today.timetuple()), True)
+
+        return email.utils.formatdate(time.mktime(date_obj.timetuple()), True)
+
+    @classmethod
+    def get_maintainer(cls):
+        """Get maintainer name and email.
+
+        Return maintainer and email as tuple.
+
+        """
+        if 'LOGNAME' in os.environ:
+            fullname = pwd.getpwnam(os.environ['LOGNAME'])[4]
+            m_email = "%s@opencsw.org" % os.environ['LOGNAME']
+        else:
+            fullname = pwd.getpwnam(os.getlogin())[4]
+            m_email = "%s@opencsw.org" % os.getlogin()
+
+        return (fullname, m_email)
+
+    format_str = r' -- %(maintainer)s <%(email)s>  %(timestamp)s'
+    parse_re = r' -- (?P<maintainer>[\w\d ]+) <(?P<email>[\w\d@ \.]+)>  (?P<timestamp>\w{3}, \d{1,2} \w{3} \d{4} \d{2}:\d{2}:\d{2} (\+|-)\d{4})'
+    compiled_re = re.compile(parse_re)
+
+
+class ChangeLogParagraph(object):
+    """A changelog paragraph
+
+    It has the form
+
+    [two spaces]* change details
+                  more change details
+    """
+    def __init__(self, *args, **kwargs):
+        """Initialize ChangeLog paragraph.
+
+        Initialize ChangeLog paragraph from one ore several
+        lines. Optionally, maxcol can be specified.
+
+        """
+        assert len(args) > 0
+
+        if 'maxcol' in kwargs:
+            self.maxcol = kwargs['maxcol']
+        else:
+            self.maxcol = 72
+
+        self.paragraph = ""
+        # Get rid of all leading '\s+\*?\s+' and concatenate all
+        # arguments.
+        self.paragraph = " ".join([ChangeLogParagraph.sanitize_re_c.sub("", l) for l in args])
+
+        # Some sanitation
+        self.paragraph = self.paragraph.strip()
+        self.paragraph = ChangeLogParagraph.whitespace_re_c.sub(' ',
+                                                                self.paragraph)
+
+    def __repr__(self):
+        return self.paragraph
+
+    def __str__(self):
+        words = self.paragraph.split()
+
+        # line length starts at 4, because we have to take ' * ' into
+        # account for the first line.
+        line_len = 4
+        formatted_paragraph = '  * '
+        for word in words:
+            if len(word) + line_len <= self.maxcol:
+                formatted_paragraph = formatted_paragraph + word + ' '
+                line_len = line_len + len(word) + 1
+            else:
+                # chop off the last space
+                formatted_paragraph = formatted_paragraph.rstrip()
+                # add newline and reset line length counter
+                formatted_paragraph = formatted_paragraph + '\n    ' + word + ' '
+                line_len = 5 + len(word)
+
+        formatted_paragraph = formatted_paragraph.rstrip()
+        return formatted_paragraph
+
+    sanitize_re = r'^\s+\*\s+'
+    sanitize_re_c = re.compile(sanitize_re)
+    whitespace_re = r'\s{2,}|\n+'
+    whitespace_re_c = re.compile(whitespace_re)
+
+def slurpin_changelog(filename):
+    """Load existing changelog"""
+
+    with open(filename, "r") as fobj:
+        changelog_entries = list()
+        paragraph = list()
+
+        only_whitespace_re = re.compile(r'^\s+$')
+        entry_start_re = re.compile(r'^[\w\d\.=(),]+')
+
+        for line in fobj:
+            line = line.rstrip('\n')
+
+            if only_whitespace_re.match(line) or line == "":
+                continue
+
+            # is it the start of an entry?
+            if entry_start_re.match(line):
+                entry_dict = {'header': ChangeLogHeader(line=line)}
+                continue
+            
+            # is it the footer, and thus marks the end of a entry?
+            if line.startswith(' -- '):
+                # is there a paragraph pending?
+                if len(paragraph) > 0:
+                    # add that paragraph to the dict and start a new
+                    # one
+                    if 'paragraphs' in entry_dict:
+                        entry_dict['paragraphs'].append(ChangeLogParagraph(*paragraph))
+                    else:
+                        entry_dict['paragraphs'] = [ChangeLogParagraph(*paragraph)]
+                        paragraph = list()
+
+                entry_dict['footer'] = ChangeLogFooter(line=line)
+                # append to the list
+                changelog_entries.append(entry_dict)
+                continue
+            
+            # is it the start of an entry paragraph?
+            if line.startswith('  * '):
+                # is the first item of the paragraph list a paragraph
+                # start?
+                if len(paragraph) > 0 and paragraph[0].startswith('  * '):
+                    # add that paragraph to the dict and start a new
+                    # one
+                    if 'paragraphs' in entry_dict:
+                        entry_dict['paragraphs'].append(ChangeLogParagraph(*paragraph))
+                    else:
+                        entry_dict['paragraphs'] = [ChangeLogParagraph(*paragraph)]
+
+                paragraph = [line]
+                continue
+
+            # It's not, the start, end, or start of entry paragraph,
+            # thus it must be a continuation of a paragraph
+            paragraph.append(line)
+
+        return changelog_entries
+
+
+def dump_entries(filename, entries):
+    with open(filename, 'w') as fobj:
+        for entry in entries:
+            fobj.write(str(entry['header']))
+            fobj.write('\n\n')
+            for paragraph in entry['paragraphs']:
+                fobj.write(str(paragraph))
+                fobj.write('\n\n')
+            fobj.write(str(entry['footer']))
+            fobj.write('\n\n')
+
+
+def new_changelog_entry(filename, version, log):
+    existing_entries = slurpin_changelog(filename)
+
+    assert len(existing_entries) > 0
+
+    # get the package from the first entry
+    package = existing_entries[0]['header'].package
+
+    header = ChangeLogHeader(package=package,
+                             version=version)
+    paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
+    footer = ChangeLogFooter()
+
+    existing_entries.insert(0, {'header': header,
+                                'paragraphs': paragraphs,
+                                'footer': footer})
+
+    dump_entries(filename, existing_entries)
+
+
+def create_changelog_file(filename, overwrite, package, version, log):
+    chlg_header = ChangeLogHeader(package=package,
+                                  version=version)
+    chlg_footer = ChangeLogFooter()
+    chlg_paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
+
+    if os.access(filename, os.F_OK) and not overwrite:
+        logging.error("Changelog '%s' already exists. Won't overwrite", filename)
+        sys.exit(1)
+
+    with open(filename,'w+') as fobj:
+        fobj.write(str(chlg_header))
+        fobj.write('\n\n')
+        for paragraph in chlg_paragraphs:
+            fobj.write(str(paragraph))
+            fobj.write('\n\n')
+        fobj.write(str(chlg_footer))
+        fobj.write('\n\n')
+
+def cmdline_parse():
+    """Parse the command line
+
+    Returns the result of argparse.parse_args()
+
+    """
+    parser = argparse.ArgumentParser(description="Maintain OpenCSW changelogs")
+    parser.add_argument('--logfile',
+                        help='filename to use (default: %(default)s)',
+                        default='files/changelog.CSW')
+    subparser = parser.add_subparsers(help='sub-command help',
+                                      dest='command')
+
+    parser_create = subparser.add_parser('create',
+                                         help="create new changelog.CSW file. Existing file will not be overwritten.")
+    parser_create.add_argument('package',
+                               help="package name")
+    parser_create.add_argument('version',
+                               help="package version")
+    parser_create.add_argument('--log',
+                               help="the log entry",
+                               nargs='+')
+    parser_create.add_argument('--force', help="force creation of file. Overwrite existing file.",
+                               default=False, action='store_const',
+                               const=True)
+
+    parser_new = subparser.add_parser('new',
+                                      help="new changelog entry")
+    parser_new.add_argument('version',
+                            help="new version")
+    parser_new.add_argument('--log',
+                            help="the log entry",
+                            nargs='+')
+
+    parser_test = subparser.add_parser('test', help="test cswch")
+
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    cmdline = cmdline_parse()
+
+    if cmdline.command == "test":
+        # cheat unittest into thinking that there are no command line
+        # arguments.
+        del sys.argv[1:]
+        unittest.main()
+
+    if cmdline.command == "create":
+        create_changelog_file(cmdline.logfile,
+                              cmdline.force,
+                              cmdline.package,
+                              cmdline.version,
+                              cmdline.log)
+
+    if cmdline.command == "new":
+        new_changelog_entry(cmdline.logfile,
+                            cmdline.version,
+                            cmdline.log)
