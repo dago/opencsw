@@ -14,6 +14,8 @@ DISTFILES  = $orig.tar.bz2
 
 UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).orig.tar.bz2
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
