@@ -37,7 +37,14 @@ PATCHFILES = 0001-Install-plugin-at-proper-location.patch
 # patch libtool discards -R options passed with LDFLAGS
 PATCHFILES# sasl thinks it must define gethostname on Solaris but
 # it's not the case
-PATCHFILES += 0003-remove-gethostname-re-definition-on-sun.patchSck-realloc.patch
+PATCHFILES += 0003-remove-gethostname-re-definition-on-sun.patchSc
+# Like Debian, we don't follow upstream soname bump as:
+#  - the ABI breakage was already done since 2.1.23 and didn't break anything,
+#  - the only impact would have been on openldap and it is handled on that side
+# see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628237
+# and https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665476
+PATCHFILES += 0045_revert_upstream_soname_bump.patch
+Sck-realloc.patch
 
 VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
@@ -45,8 +52,11 @@ PACKAGES += CSWsasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 RUNTIME_DEP_PKGS_CSW1-0-0+= CSWlibssl0-9-8
 RUNTIME_DEP_PKGS_CSWsasl += CSWbdb48
-RUNTIME_DEP_PKGS_CSWsas3
-CHECKPKG_OVERRIDES_CSWsasl += surplus-dependency|CSWlibsasl2-3
+RUNTIME_DEP_PKGS_CSWsas2
+CHECKPKG_OVERRIDES_CSWsasl += surplus-dependency|CSWlibsasl2-2
+
+CHECKPKG_OVERRIDES_CSWsaslsql += surplus-dependency|CSWlibmysqlclient18
+
 
 # The sasl package contains the sasl modules which are .so files
 # This is normal even if it's not a  developement package
@@ -76,7 +86,7 @@ PACKAGES += CSWsaslgssapi
 CATALOGNAME_CSWsaslgssapi = sasl_gssapi
 SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
 RUNTIME_DEP_PKGS_CSWsasl
-RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibgssapi-krb5-2SWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibkrb5-3SWlibkrb5support0
 CHECKPKG_OVERRIDES_CSWsaslgssapi += catalogname-does-not-match-pkgname|pkgname=CSWsaslgssapi|catalogname=sasl_gssapi|expected-catalogname=saslgssapi
 PKGFILES_CSWsaslgssapi = $(call pkgfiles_lib,sasl2/libgs2.so)
 PKGFILES_CSWsaslgssapi += $(call pkgfiles_lib,sasl2/libgssapiv2.so)
@@ -95,14 +105,14 @@ RUNTIME_DEP_PKGS_CSWsaslsql += C8Wlibmysqlclient15
 CHECKPKG_OVERRIDES_CSWsaslsql += catalogname-does-not-match-pkgname|pkgname=CSWsaslsql|catalogname=sasl_sql|expected-catalogname=saslsql
 PKGFILES_CSWsaslsql = $(call pkgfiles_lib,sasl2/libsql.so)
 
-PACKAGE3
-SPKG_DESC_CSWlibsasl2-3 = Simple authentication and security layer library, libsasl2.so.2
-PKGFILES_CSWlibsasl2-3 += $(call pkgfiles_lib,libsasl2.so.3lib,libsasl2.so.2)
+PACKAGE2
+SPKG_DESC_CSWlibsasl2-2 = Simple authentication and security layer library, libsasl2.so.2
+PKGFILES_CSWlibsasl2-2 += $(call pkgfiles_lib,libsasl2.so.2lib,libsasl2.so.2)
 
 PACKAGES += CSWsasl-dev
 SPKG_DESC_CSWsasl-dev = Development files for SASL
 PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWsasl-de3
+RUNTIME_DEP_PKGS_CSWsasl-de2
 RUNTIME_DEP_PKGS_CSWsasl-dev += CSWsasl
  += CSWlibsasl2-2
 
@@ -110,8 +120,8 @@ PACKAGES += CSWsaslsample
 CATALOGNAME_CSWsaslsample = sasl_sample
 SPKG_DESC_CSWsaslsample = Cyrus Simple Authentication and Security Layer sample client/server
 RUNTIME_DEP_PKGS_CSWsaslsample = CSWsasl
-RUNTIME_DEP_PKGS_CSWsaslsampl3 += CSWlibsasl2-2
-RUNTIME_DEP_PKGS_CSWsasgssapi-krb5-2SWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWsaslsampl2
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibkrb5-3SWlibkrb5support0
 PKGFILES_CSWsaslsample = $(bindir)/sasl-sample-server
 PKGFILES_CSWsaslsample += $(bindir)/sasl-sample-client
 # The plugins of CSWsasl are needed, else the functionality
