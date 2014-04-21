@@ -47,3 +47,5 @@ SPKG_DESC_CSWlibgthread1-2-0 += $(DESCRIPTION), libgthread-1.2.so.0
 OBSOLETED_BY_CSWlibgthread1-2-0 = CSWglibtedir)/gtk-doc/.*
 
 include
+# Remove after 2014-04-21
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=2
