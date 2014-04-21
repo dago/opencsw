@@ -13,6 +13,8 @@ VENDOR_URL = http://tmux.sourceforge.net
 
 BUILD_DEP_PKGS = CSWlibevent-dev
 
+GARCOMPILER = GNU
+
 RUNTIME_DEP_PKGS = CSWlibevent2-0-5uxPRESERVECONF += $(sysconfdir)/tmux.conf
 
 include gar/category.mk
