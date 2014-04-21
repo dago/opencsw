@@ -1,4 +1,4 @@
-# : Makefile 9089 2010-03-11 08:34:46Z wahwah $
+# $Id$
 NAME = fakeroot
 VERSION = 1.20
 CATEGORIES = apps
