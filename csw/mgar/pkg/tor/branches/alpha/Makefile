@@ -1,12 +1,11 @@
-# $Id$
+# $Id: Makefile 23124 2014-03-03 23:36:01Z jake_goerzen $
 NAME = tor
-VERSION = 0.2.4.21
+VERSION = 0.2.5.3-alpha
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
 define BLURB
-Basically tor provides a distributed network of servers (onion routers). Users bounce their TCP streams (web traffic, ftp, ssh, etc) around the routers, and recipients, observers, and even the routers themselves have difficulty tracking the source of the stream.uter
-define BLURB
+Basically tor provides a distributed network of servers (onion routers). Users bounce their TCP streams (web traffic, ftp, ssh, etc) around the routers, and recipients, observers, and even the routers themselves have difficulty tracking the source of the stream.
 endef
 
 MASTER_SITES = http://www.torproject.org/dist/
@@ -31,11 +30,14 @@ PRESERVECONF += $(sysconfdir)/tor/tor-tsocks.conf
 PRESERVECONF += $(sysconfdir)/tor/torrc
 
 MIGRATE_FILES += tor/tor-tsocks.conf
-MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILES += tor/torrc
+MIGRATE_FILES += tor/torrc
+
+INITSMF = /etc/opt/csw/init.d/cswtor
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-include
+include gar/category.mk
+
 post-install-modulated:
 
 	# Copy SMF script
