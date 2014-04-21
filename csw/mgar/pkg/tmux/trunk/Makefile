@@ -1,5 +1,5 @@
 NAME = tmux
-VERSION = 1.9
+VERSION = 1.9a
 GARTYPE = v2
 
 DESCRIPTION = Terminal Multiplexer
@@ -13,25 +13,6 @@ VENDOR_URL = http://tmux.sourceforge.net
 
 BUILD_DEP_PKGS = CSWlibevent-dev
 
-RUNTIME_DEP_PKGS = CSWlibevent2-0-5ux.sourceforge.net
+RUNTIME_DEP_PKGS = CSWlibevent2-0-5uxPRESERVECONF += $(sysconfdir)/tmux.conf
 
-# EXTRA_CPPFLAGS += -I/opt/csw/include/ncursesw
-#EXTRA_CPPFLAGS += -D__inline=inline
-# Grabbed from Solaris 10 /usr/include/iso/math_c99.h
-#EXTRA_CPPFLAGS += -DINFINITY=__builtin_infinity
-
-# Make sure tmux.conf is found in /etc/opt/csw as #REINPLACEMENTS += tmuxconf
-#REINPLACE_MATCH_tmuxconf = /etc/tmux\.conf
-#REINPLACE_WITH_tmuxconf = $(sysconfdir)/tmux.conf
-#REINPLACE_FILES_tmuxconf += tmux.h
-#muxconf += tmux.h
-REINPLACE_FILES_tmuxI/usr/ucbinclude
-
-CONFIGURE_ENV_PATH = /opt/csw/gnu:$(PATH)
-
-PRESERVECONF += $(sysconfdir)/tmux.conf
-
-includ
-xxxpost-extract:
-	cd $(WORKSRC) && ./autogen.sh
-	@$(MAKECOOKIE)
+include gar/category.mk
