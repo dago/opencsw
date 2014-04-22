@@ -64,9 +64,9 @@ CONFIGURE_ARGS += --enable-colors256
 CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
 CONFIGURE_ARGS += --with-socket-dir=/var$(prefix)/run/screen
 
-include Only configure.in is provided so we must run autoconfdified configure.in
+include Only configure.in is provided so we must run autogen.sh
 pre-configure-modulated:
-	cd $(WORKSRC) && $(prefix)/bin/autoconf
+	cd $(WORKSRC) && ./autogen.shrefix)/bin/autoconf
 
 post-merge:
 	for FILE in $(DOCFILES); do \
