@@ -1,5 +1,5 @@
---- screen-4.0.2-orig/config.h.in	2004-01-19 16:27:08.106776000 -0500
-+++ screen-4.0.2/config.h.in	2004-01-19 16:29:15.876778000 -0500
+--- screen-4.0.2-orig/acconfig.h	2004-01-19 16:27:08.106776000 -0500
++++ screen-4.0.2/acconfig.h	2004-01-19 16:29:15.876778000 -0500
 @@ -208,14 +208,16 @@
   * If screen is installed with permissions to update /etc/utmp (such
   * as if it is installed set-uid root), define UTMPOK.
