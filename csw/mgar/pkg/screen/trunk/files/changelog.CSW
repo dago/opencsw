@@ -5,8 +5,9 @@ screen (4.2.0,REV=2014.04.22) unstable
   * Removed obsolete patches screen-maxwin.patch and
     0004-solaris10-has-linux-like-setenv.patch.
   * Updated patches screen-utmp.patch and opencsw-patchs.patch.
-  * Added patch 60-644788-screen-4.1.0-4.0.3-interoperability.patch to have a
-    smooth upgrade path that do not break existing screen sessions.
+  * Added patch 60-644788-screen-4.1.0-4.0.3-interoperability.patch 
+    and patch 0004-force-named-pipe-usage.patch to have a smooth
+    upgrade path that do not break existing screen sessions.
  
  -- Yann Rouillard <yann@opencsw.org>  Tue, 22 Apr 2014 22:58:01 +0200
 
