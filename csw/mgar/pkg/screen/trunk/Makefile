@@ -55,7 +55,10 @@ PATCHFILES += op# This patch makes sure existing screen sessions survive the upg
 # This patch is taken from Debian.
 # see: https://lists.gnu.org/archive/html/screen-devel/2014-04/msg00024.html
 #      https://bugs.debian.org/644788
-PATCHFILES += 60-644788-screen-4.1.0-4.0.3-interoperabilityES += oplike-setenv.patch
+PATCHFILES += 60-644788-screen-4.1.0-4.0.3-interoperabilityES += op# Prior to screen 4.2.0, session sockets were in fact named pipe under Solaris
+# we force this behavior to continue to be sure upgrading screen doesn't break 
+# existing sessions
+PATCHFILES += 0004-force-named-pipe-usageES += oplike-setenv.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
@@ -70,7 +73,7 @@ CONFIGURE_ARGS += --with-socket-dir=/var$(p# We define this additional macros to
 # that are only available when the following macro are defined.
 # 
 # see: http://stackoverflow.com/questions/1034587/how-does-xpg4-2-and-other-defines-work-on-solaris
-EXTRA_CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1(prefix)/run/screen
+EXTRA_CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1(pprefix)/run/screen
 
 include Only configure.in is provided so we must run autogen.sh
 pre-configure-modulated:

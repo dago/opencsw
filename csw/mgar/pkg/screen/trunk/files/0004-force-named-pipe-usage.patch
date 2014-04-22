@@ -1,0 +1,25 @@
+From d59abe97bfdb53c2f0c7413c1e14985274950873 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Wed, 23 Apr 2014 01:03:54 +0200
+Subject: [PATCH] force named pipe usage
+
+---
+ acconfig.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/acconfig.h b/acconfig.h
+index de55102..dd84cbd 100644
+--- a/acconfig.h
++++ b/acconfig.h
+@@ -508,7 +508,7 @@
+ /*
+  * Define this if your system supports named pipes.
+  */
+-#undef NAMEDPIPE
++#define NAMEDPIPE
+ 
+ /*
+  * Define this if your system exits select() immediatly if a pipe is
+-- 
+1.8.4.1
+
