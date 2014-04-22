@@ -61,7 +61,7 @@ PACKAGES += CSWlibgnutls-dev
 SPKG_DESC_CSWlibgnutls-dev = Development Files for GNU TLS
 PKGFILES_CSWlibgnutls-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibgnutls-dev8
-OBSOLETED_BY_CSWlibgnutls-dev = CSWgnutlsdevelgn# The compilation complains with 
+n# The compilation complains with 
 # "gets is a security hole - use fgets instead"
 # even if it is not used, so we remove this warningnPATCHFILES += 0001-no-gets-warning.patchgnut
 LD_OPTIONS =
