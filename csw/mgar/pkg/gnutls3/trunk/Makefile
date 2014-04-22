@@ -32,12 +32,7 @@ PACKAGES += CSWgnutls
 CATALOGNAME_gnutls = gnutls
 SPKG_DESC_CSWgnutls = GNU Transport Layer Security Utility Programs
 RUNTIME_DEP_PKGS_CSWgnutls8
-RUNTIME_DEP_PKGS_CSWgnutls += CSWlibintl8 += CSWggettextrt
-# This is a dependency for legacy packages expecting to find libgnutls*.so.13 in CSWgnutls.
-# CSWlibgnutls13 is built from a branch
-RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls13
-CHECKPKG_OVERRIDES_CSWgnutls += unidentified-dependency|CSWlibgnutls13
-CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependencCHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls28cy|CSWlibgnutls13
+RUNTIME_DEP_PKGS_CSWgnutls += CSWlibintl8 CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls28cy|CSWlibgnutls13
 
 PACKAGES8
 CATALOGNAME_CSWlibgnutls = libgnutls28
