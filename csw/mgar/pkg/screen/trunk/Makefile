@@ -64,9 +64,7 @@ CONFIGURE_ARGS += --enable-colors256
 CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
 CONFIGURE_ARGS += --with-socket-dir=/var$(prefix)/run/screen
 
-include gar/category.mk
-
-# we must recreate configure as we modified configure.in
+include Only configure.in is provided so we must run autoconfdified configure.in
 pre-configure-modulated:
 	cd $(WORKSRC) && $(prefix)/bin/autoconf
 
