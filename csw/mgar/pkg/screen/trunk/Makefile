@@ -48,11 +48,7 @@ MIGRATE_FILES = screenrc
 
 # we want to use opencsw libncurses and not solaris libcurses
 # so we modify configure.in so ncurses is tried before curses
-# PATCHFILES += enable_ncurses.patch
-
-# this patch increases the maximum number of simultaneously allowed 
-# windows per screen session.
-PATCHFILES += screen-maxwin.patch
+# PATCHFILES += enablen-maxwin.patch
 
 # screen is not installed with setuid bit so we disable utmp update
 PATCHFILES += screen-utmp.patch
