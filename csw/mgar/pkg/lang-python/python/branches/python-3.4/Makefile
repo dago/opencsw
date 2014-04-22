@@ -1,12 +1,12 @@
 # $Id$
 
 NAME = Python
-VERSION = 3.3.2
-VER = 3.3
-DVER = 3-3
-UVER = 3_3
+VERSION = 3.4.0
+VER = 3.4
+DVER = 3-4
+UVER = 3_4
 PVER = python$(VER)
-CVER = 33
+CVER = 34
 
 # Known issues:
 #
@@ -34,13 +34,13 @@ MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 UFILES_REGEX = $(VER)\.\d+
 
-DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES  = $(DISTNAME).tar.xz
 
 # Patches
-PATCHFILES += makesetup.diff
-PATCHFILES += modules.diff
-PATCHFILES += multiprocess.diff
-PATCHFILES += 0004-Use-PY_CPPFLAGS-in-Modules-makesetup.patch
+# PATCHFILES += makesetup.diff
+# PATCHFILES += modules.diff
+# PATCHFILES += multiprocess.diff
+# PATCHFILES += 0004-Use-PY_CPPFLAGS-in-Modules-makesetup.patch
 PATCHFILES += 0005-Use-opt-csw-lib-for-module-search.patch
 PATCHFILES += 0007-Settings-for-Solaris.patch
 
@@ -53,9 +53,9 @@ TEST_TARGET = test
 # Installation paths are defined in:
 # http://hg.python.org/cpython/file/26588b6a39d9/Makefile.pre.in#l114
 # http://wiki.debian.org/Python/MultiArch
-# GARFLAVOR = DBG
-# BUILD64 = 1
-# ISAEXEC = 1
+GARFLAVOR = DBG
+BUILD64 = 1
+ISAEXEC = 1
 
 # There is a file name conflict over libffi.so symlink between libffi package
 # and a gcc-java package.  While it will ultimately belong to libffi_dev, the
@@ -68,6 +68,11 @@ PREPEND_LINKER_FLAGS += -L$(libdir)/ffi
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
 EXTRA_LINKER_FLAGS = -lsocket -lresolv -lrt
+
+# Otherwise function wcschar has a different prototype from what Python source
+# expects.
+CPPFLAGS = -D_XPG5
+EXTRA_COMMON_EXPORTS = CPPFLAGS
 
 NOISALIST = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -211,7 +216,12 @@ EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER)
 
 EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
 
+MACHDEP = $(ISA)
+EXTRA_CONFIGURE_EXPORTS += MACHDEP
+
 GARCOMPILER = GNU
+
+LINKER_IGNORE =
 
 include gar/category.mk
 
@@ -221,6 +231,5 @@ include gar/category.mk
 # pkgchk -L CSWlibffi-dev
 # (...)
 # /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
-# EXTRA_LINKER_FLAGS += $(libdir)/ffi
+# EXTRA_LINKER_FLAGS += -L$(libdir)/ffi
 # LDFLAGS += -L$(libdir)/ffi
-
