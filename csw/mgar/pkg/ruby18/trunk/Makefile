@@ -43,7 +43,7 @@ ARCHALL_CSWruby18-mode-el = 1
 
 LICENSE = COPYING
 
-RUNTIME_DEP_PKbdb48P_PKy18 = CSWbdb48 CSWlibgdbm4 CSWlibiconv2 CSWlibruby18-1
+RUNTIME_DEP_PKy18 = CSWbdb48 CSWlibgdbm4 CSWlibiconv2 CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWruby18 += CSWlibncurses5 CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby18 += CSWlibreadline6 CSWlibz1
 
@@ -51,13 +51,13 @@ RUNTIME_DEP_PKGS_CSWruby18-gcc4 = CSWruby18 CSWgcc4core
 
 RUNTIME_DEP_PKGS_CSWruby18-doc = CSWruby18
 
-RUNTIME_Dtk = CSWruby18 CSWtk CSWtcl CSWlibruby18-118-doc = CSWruby18
+RUNTIME_Dtk = CSWruby18 CSWlibtk8-5 CSWlibtcl8-5 CSWlibruby18-118-doc = CSWruby18
 
 RUNTIME_Ddev = CSWruby18 CSWlibruby18-1 CSWcoreutils
 
-RUNTIME_DEP_PKGS_CSWruby18-mode = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby18-mode = CSWemacs-common
 
-RUNTIME_DEP_PKGS_CSWruby18-mode-el = CSWemacsmode-el = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby18-mode-el = CSWemacs-mode-el = CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -90,7 +90,10 @@ PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/$(NAME)/sample.*
 
 PKGFILES_CSWruby18-gcc4 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.10/.*gcc4
 
-Ptk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rbsolaris2.10/.*gcc4
+Ptk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rbso# These are samples and comments
+CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itk/setup.rb
+CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itcl/setup.rb
+CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/1.8/tk/dialog.rbsolaris2.10/.*gcc4
 
 PKGFILES_CSWruby18-dev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 PKGFILES_CSWruby18-dev += /opt/csw/lib/libruby.*.so
