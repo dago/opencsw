@@ -32,7 +32,7 @@ PACKAGES += CSWgnutls
 CATALOGNAME_gnutls = gnutls
 SPKG_DESC_CSWgnutls = GNU Transport Layer Security Utility Programs
 RUNTIME_DEP_PKGS_CSWgnutls8
-RUNTIME_DEP_PKGS_CSWgnutls += CSWlibintl8 CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls28cy|CSWlibgnutls13
+RUNTIME_DEP_PKGS_CSWgnutls += CSWlibintl8 y|CSWlibgnutls13
 
 PACKAGES8
 CATALOGNAME_CSWlibgnutls = libgnutls28
