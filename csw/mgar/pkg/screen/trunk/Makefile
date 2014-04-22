@@ -72,6 +72,5 @@ post-merge:
 	for FILE in $(DOCFILES); do \
 		ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)/$(docdir)/$(NAME)/$$FILE; \
 	done
-	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(NAME)/changelog.CSW
 	ginstall -d $(PKGROOT)/var/$(prefix)/run/scree
