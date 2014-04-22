@@ -30,17 +30,7 @@ PROTOTYPE_GROUP_run = root
 PACKAGES = CSWscreen 
 
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-
-# Stub package that allow us to rename transparently the package
-# from CSWscrn to CSWscreen
-# We also include the postinstall code to migrate screen session from
-# /tmp/screens|uscreens to /var/opt/csw/run/screens as we changed the
-# screen socket dir path at the same time
-OBSOLETED_BY_CSWscreen = CSWscrn
-CATALOGNAME_CSWscrn = screen_stub
-DISTFILES += CSWscrn.postinstall
+PACKAGING_PLATFORMS = solaris10-spaWscrn.postinstall
 
 SPKG_DESC_CSWscreen = A window manager that multiplexes a physical terminal.
 CATALOGNAME_CSWscreen = screen
