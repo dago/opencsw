@@ -1,28 +1,27 @@
-From 9ad578b26aff7d81d413bae349294323f901d969 Mon Sep 17 00:00:00 2001
+From bd23f0a9e7bb5e09d73688ef2060d1f3a92d4855 Mon Sep 17 00:00:00 2001
 From: Yann Rouillard <yann@pleiades.fr.eu.org>
-Date: Tue, 19 Jul 2011 23:30:44 +0200
+Date: Tue, 22 Apr 2014 23:30:36 +0200
 Subject: [PATCH] Update of file paths in documentation files
 
 ---
- doc/screen.1      |   16 +-
- doc/screen.info-1 |    2 +-
- doc/screen.info-5 |   10 +-
- 5 files changed, 4432 insertions(+), 5458 deletions(-)
+ doc/screen.1       | 16 ++++++----------
+ doc/screen.texinfo | 16 ++++++----------
+ 2 files changed, 12 insertions(+), 20 deletions(-)
 
 diff --git a/doc/screen.1 b/doc/screen.1
-index 348d357..d7c9fdf 100644
+index 2ec73b5..2ef6b79 100644
 --- a/doc/screen.1
 +++ b/doc/screen.1
-@@ -581,7 +581,7 @@ Show a listing of all currently attached displays.
+@@ -622,7 +622,7 @@ Show a listing of all currently attached displays.
  
  .SH CUSTOMIZATION
  The \*Qsocket directory\*U defaults either to $HOME/.screen or simply to
 -/tmp/screens or preferably to /usr/local/screens chosen at compile-time. If
-+/tmp/screens or preferably to /var/run/screens chosen at compile-time. If
++/tmp/screens or preferably to /var/opt/csw/run/screens chosen at compile-time. If
  .I screen
  is installed setuid-root, then the administrator
  should compile
-@@ -594,7 +594,7 @@ in the environment variable $SCREENDIR.
+@@ -635,7 +635,7 @@ in the environment variable $SCREENDIR.
  When
  .I screen
  is invoked, it executes initialization commands from the files
@@ -31,7 +30,7 @@ index 348d357..d7c9fdf 100644
  \*Q.screenrc\*U in the user's home directory. These are the \*Qprogrammer's
  defaults\*U that can be overridden in the following ways: for the
  global screenrc file 
-@@ -1669,7 +1669,7 @@ and then compile the entry with
+@@ -1837,7 +1837,7 @@ and then compile the entry with
  The echo command may be used to annoy 
  .I screen
  users with a 'message of the
@@ -40,7 +39,7 @@ index 348d357..d7c9fdf 100644
  The option \*Q-n\*U may be used to suppress the line feed.
  See also \*Qsleep\*U.
  Echo is also useful for online checking of environment variables.
-@@ -4416,21 +4416,17 @@ Examples in the
+@@ -4846,21 +4846,17 @@ Examples in the
  .I screen
  distribution package for private and global initialization files.
  .IP $SYSSCREENRC 
@@ -54,7 +53,7 @@ index 348d357..d7c9fdf 100644
 +Read in after /etc/opt/csw/screenrc
  .IP $SCREENDIR/S-<login>
 -.IP /local/screens/S-<login>
-+.IP /var/run/screens/S-<login>
++.IP /var/opt/csw/run/screens/S-<login>
  Socket directories (default)
 -.IP /usr/tmp/screens/S-<login>
 -Alternate socket directories.
@@ -65,62 +64,60 @@ index 348d357..d7c9fdf 100644
  .IP /tmp/screen-exchange
  .I screen
  `interprocess communication buffer'
-diff --git a/doc/screen.info-1 b/doc/screen.info-1
-index ece1aba..e2ef7d2 100644
---- a/doc/screen.info-1
-+++ b/doc/screen.info-1
-@@ -402,7 +402,7 @@ The `.screenrc' file
+diff --git a/doc/screen.texinfo b/doc/screen.texinfo
+index d721647..8eaa47a 100644
+--- a/doc/screen.texinfo
++++ b/doc/screen.texinfo
+@@ -486,7 +486,7 @@ to be executed at startup, or on the fly using the @code{colon} command.
+ @cindex screenrc
+ When @code{screen} is invoked, it executes initialization commands from
+ the files @file{.screenrc} in the user's home directory and
+-@file{/usr/local/etc/screenrc}.  These defaults can be overridden in the 
++@file{/etc/opt/csw/screenrc}.  These defaults can be overridden in the 
+ following ways:
+ For the global screenrc file @code{screen} searches for the environment
+ variable @code{$SYSSCREENRC} (this override feature may be disabled at
+@@ -5671,27 +5671,23 @@ Examples in the @code{screen} distribution package for private and
+ global initialization files.
  
-    When `screen' is invoked, it executes initialization commands from
- the files `.screenrc' in the user's home directory and
--`/usr/local/etc/screenrc'.  These defaults can be overridden in the
-+`/etc/opt/csw/screenrc'.  These defaults can be overridden in the
- following ways: For the global screenrc file `screen' searches for the
- environment variable `$SYSSCREENRC' (this override feature may be
- disabled at compile-time).  The user specific screenrc file is searched
-diff --git a/doc/screen.info-5 b/doc/screen.info-5
-index fff18bd..1601db3 100644
---- a/doc/screen.info-5
-+++ b/doc/screen.info-5
-@@ -36,26 +36,22 @@ Files Referenced
-      global initialization files.
+ @item @code{$SYSSCREENRC}
+-@itemx /local/etc/screenrc
++@itemx /etc/opt/csw/screenrc
+ @code{screen} initialization commands
  
- ``$SYSSCREENRC''
--`/local/etc/screenrc'
-+`/etc/opt/csw/screenrc'
-      `screen' initialization commands
+ @item @code{$SCREENRC}
+ @itemx @code{$HOME}/.iscreenrc
+ @itemx @code{$HOME}/.screenrc
+-Read in after /local/etc/screenrc
++Read in after /etc/opt/csw/screenrc
  
- ``$SCREENRC''
- ``$HOME'/.iscreenrc'
- ``$HOME'/.screenrc'
--     Read in after /local/etc/screenrc
-+     Read in after /etc/opt/csw/screenrc
+ @item @code{$SCREENDIR}/S-@var{login}
  
- ``$SCREENDIR'/S-LOGIN'
+-@item /local/screens/S-@var{login}
++@item /var/opt/csw/run/screens/S-@var{login}
+ Socket directories (default)
  
--`/local/screens/S-LOGIN'
-+`/var/opt/csw/run/screen/S-LOGIN'
-      Socket directories (default)
- 
--`/usr/tmp/screens/S-LOGIN'
--     Alternate socket directories.
+-@item /usr/tmp/screens/S-@var{login}
+-Alternate socket directories.
 -
- `SOCKET DIRECTORY/.termcap'
-      Written by the `dumptermcap' command
+ @item @var{socket directory}/.termcap
+ Written by the @code{dumptermcap} command
  
--`/usr/tmp/screens/screen-exchange or'
- `/tmp/screen-exchange'
-      `screen' interprocess communication buffer
+-@item /usr/tmp/screens/screen-exchange or
+-@itemx /tmp/screen-exchange
++@item /tmp/screen-exchange
+ @code{screen} interprocess communication buffer
  
-@@ -248,7 +248,7 @@ Socket Directory
- ================
+ @item hardcopy.[0-9]
+@@ -5894,7 +5890,7 @@ does not include these features of 4.2 and 4.3 BSD UNIX.
+ @cindex socket directory
  
-    The socket directory defaults either to `$HOME/.screen' or simply to
--`/tmp/screens' or preferably to `/usr/local/screens' chosen at
-+`/tmp/screens' or preferably to `/var/opt/csw/run/screen' chosen at
- compile-time. If `screen' is installed setuid root, then the
- administrator should compile screen with an adequate (not NFS mounted)
- `SOCKDIR'. If `screen' is not running setuid-root, the user can specify
+ The socket directory defaults either to @file{$HOME/.screen} or simply to 
+-@file{/tmp/screens} or preferably to @file{/usr/local/screens} chosen at 
++@file{/tmp/screens} or preferably to @file{/var/opt/csw/run/screens} chosen at 
+ compile-time. If @code{screen} is installed
+ setuid root, then the administrator should compile screen with an
+ adequate (not NFS mounted) @code{SOCKDIR}. If @code{screen} is not
 -- 
-1.7.6
+1.8.4.1
 

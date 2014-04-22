@@ -3,7 +3,7 @@ screen (4.2.0,REV=2014.04.22) unstable
   * New upstream version.
   * Removed screen_stub package.
   * Removed patch screen-maxwin.patch which has been applied upstream.
-  * Updated patch screen-utmp.patch.
+  * Updated patches screen-utmp.patch and opencsw-patchs.patch.
  
  -- Yann Rouillard <yann@opencsw.org>  Tue, 22 Apr 2014 22:58:01 +0200
 
