@@ -62,7 +62,15 @@ CONFIGURE_ARGS += --enable-pam
 CONFIGURE_ARGS += --enable-telnet
 CONFIGURE_ARGS += --enable-colors256
 CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
-CONFIGURE_ARGS += --with-socket-dir=/var$(prefix)/run/screen
+CONFIGURE_ARGS += --with-socket-dir=/var$(p# We define this additional macros to avoid the following error:
+#  undefined struct/union member: msg_controllen
+#  undefined struct/union member: msg_control
+# 
+# msg_control(len)? are defined in the historical BSD interfaces 
+# that are only available when the following macro are defined.
+# 
+# see: http://stackoverflow.com/questions/1034587/how-does-xpg4-2-and-other-defines-work-on-solaris
+EXTRA_CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1(prefix)/run/screen
 
 include Only configure.in is provided so we must run autogen.sh
 pre-configure-modulated:
