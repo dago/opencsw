@@ -174,7 +174,7 @@ merge-copy-custom: $(PKGROOT) $(INSTALLISADIR)
 			cp $(DESTDIR)$(RBCONFIG).$(COMPILER) \
 				$(PKGROOT)$(RBCONFIG).$(COMPILER) )
 
-post-install-modulated: RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
+post-install-mDESTDIR) RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
 post-install-modulated:
 	@echo "Stripping DESTDIR from rbconfig.rb"
 	@gsed -i -e s,$(DESTDIR),, \
