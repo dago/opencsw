@@ -55,11 +55,7 @@ PATCHFILES += screen-utmp.patch
 
 # update of file paths referenced in documentation files to follow
 # opencsw policy
-PATCHFILES += opencsw_paths.patch
-
-# The wrong setenv prototype is used by default, this patch
-# fixes the problem
-PATCHFILES += 0004-solaris10-has-linux-like-setenv.patch
+PATCHFILES += oplike-setenv.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
