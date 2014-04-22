@@ -1,5 +1,5 @@
 NAME = screen
-VERSION = 4.0.3
+VERSION = 4.2.0
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 VENDOR_URL   = http://www.gnu.org/software/screen/
-MASTER_SITES = http://ftp.gnu.org/gnu/screen/
+MASdownload.savannah.gnu.org/releasesp://ftp.gnu.org/gnu/screen/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += screenrc
@@ -94,6 +94,4 @@ post-merge:
 	done
 	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(NAME)/changelog.CSW
-	ginstall -d $(PKGROOT)/var/$(prefix)/run/screen
-	@$(MAKECOOKIE)
-
+	ginstall -d $(PKGROOT)/var/$(prefix)/run/scree
