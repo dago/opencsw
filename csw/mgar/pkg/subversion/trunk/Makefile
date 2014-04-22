@@ -29,10 +29,7 @@ DESCRIPTION = Version control rethought
 define BLURB
     The goal of the Subversion project is to build a version control system 
     that is a compelling replacement for CVS in the open sourceMASTER_SITES = http://archive.apache.org/dist/subversion/
-DISTFILES += $(DISTNAME).tar.bz2nsvn += CSWpython
-
-
-DISTFILES += CSWsvn.checkinstall
+DISTFILES += $(DISTNAME).tar.bz2nsvn += CSWpythonll
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 
