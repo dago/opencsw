@@ -27,7 +27,7 @@ PROTOTYPE_PERMS_run = 1777
 PROTOTYPE_USER_run = root
 PROTOTYPE_GROUP_run = root
 
-PACKAGES = CSWscreen 
+PACKGES = CSWscreen 
 
 
 PACKAGING_PLATFORMS = solaris10-spaWscrn.postinstall
@@ -36,9 +36,7 @@ SPKG_DESC_CSWscreen = A window manager that multiplexes a physical terminal.
 CATALOGNAME_CSWscreen = screen
 RUNTIME_DEP_PKGS_CSWscreen = CSWterminfo
 
-CHECKPKG_OVERRIDES_CSWscreen += surplus-depenoc/screen/INSTALL
-
-PKGFILES_CSWscreen = .*
+CHECKPKG_OVERRIDES_CSWscreen += surplus-depenoS_CSWscreen = .*
 
 PRESERVECONF = /etc/opt/csw/screenrc
 MIGRATE_FILES = screenrc
