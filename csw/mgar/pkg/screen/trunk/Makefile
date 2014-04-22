@@ -36,10 +36,7 @@ SPKG_DESC_CSWscreen = A window manager that multiplexes a physical terminal.
 CATALOGNAME_CSWscreen = screen
 RUNTIME_DEP_PKGS_CSWscreen = CSWterminfo
 
-CHECKPKG_OVERRIDES_CSWscreen += surplus-dependency|CSWterminfo
-
-# Default path referenced in documentation file, can be safely ignored
-CHECKPKG_OVERRIDES_CSWscreen += file-with-bad-content|/usr/local|root/opt/csw/share/doc/screen/INSTALL
+CHECKPKG_OVERRIDES_CSWscreen += surplus-depenoc/screen/INSTALL
 
 PKGFILES_CSWscreen = .*
 
