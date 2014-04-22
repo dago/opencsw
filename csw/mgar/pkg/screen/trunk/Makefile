@@ -50,7 +50,12 @@ PATCHFILES += screen-utmp.patch
 
 # update of file paths referenced in documentation files to follow
 # opencsw policy
-PATCHFILES += oplike-setenv.patch
+PATCHFILES += op# This patch makes sure existing screen sessions survive the upgrade
+# from 4.0 to 4.2 despite the session protocol ugrade.
+# This patch is taken from Debian.
+# see: https://lists.gnu.org/archive/html/screen-devel/2014-04/msg00024.html
+#      https://bugs.debian.org/644788
+PATCHFILES += 60-644788-screen-4.1.0-4.0.3-interoperabilityES += oplike-setenv.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
