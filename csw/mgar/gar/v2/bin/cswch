@@ -1,8 +1,21 @@
 #!/usr/bin/env python
-"""
-Maintain OpenCSW changelog
+"""Maintain OpenCSW changelog.
+
+The changelog files generated are modeled after the Debian changelog
+
+ http://www.debian.org/doc/debian-policy/ch-source.html#s-dpkgchangelog
+
+except that the header line for each entry is somewhat
+simplyfied. Instead of using
+
+ package (version) distribution(s); urgency=urgency
+
+it uses
+
+ package (version,REV=revision)
 
 $Id$
+
 """
 import argparse
 import datetime
@@ -290,7 +303,7 @@ class ChangeLogFooter(object):
 
         :param dt: datetime object or none, in which case the current time
         will be taken.
-        
+
         """
         if date_obj is None:
             timezone = dateutil.tz.tzlocal()
@@ -381,6 +394,67 @@ class ChangeLogParagraph(object):
     whitespace_re = r'\s{2,}|\n+'
     whitespace_re_c = re.compile(whitespace_re)
 
+
+class ChangeLogEntry(object):
+    """A ChangeLogEntry
+
+    A ChangeLogEntry is comprised of a ChangeLogHeader,
+    ChangeLogFooter, and one or more ChangeLogParagraph's.
+
+    """
+
+    def __init__(self):
+        self.paragaphs = list()
+
+    def add_header(self, cl_header):
+        """Add a ChangeLog Entry header.
+
+        Add or replace the ChangeLog Entry header.
+
+        """
+        assert cl_header is not None
+        self.header = cl_header
+
+    def add_footer(self, cl_footer):
+        """Add a ChangeLog Entry footer.
+
+        Add or replace the ChangeLog Entry footer.
+
+        """
+        assert cl_footer is not None
+        self.footer = cl_footer
+
+    def add_paragraph(self, cl_paragraph, infront=True):
+        """Add a ChangeLog Entry paragraph.
+
+        Add another ChangeLog Entry paragraph.
+
+        If :param infront: is True, the paragraph will be prepended to
+        the paragraph list. Else it will be appended.
+
+        """
+        assert cl_paragraph is not None
+
+        if infront:
+            self.paragraphs.insert(0, cl_pargraph)
+        else:
+            self.paragraphs.append(cl_paragraph)
+
+    def remove_paragraph(self, index):
+        """Remove a ChangeLog paragraph
+
+        Remove a ChangeLog paragraph from the list of paragraphs. The
+        removed paragraph will be returned to the caller.
+
+        """
+        chlogp = self.paragraphs[index]
+        del self.paragraphs[index]
+        return chlogp
+
+    def __str__(self):
+        pass
+
+
 def slurpin_changelog(filename):
     """Load existing changelog"""
 
@@ -401,7 +475,7 @@ def slurpin_changelog(filename):
             if entry_start_re.match(line):
                 entry_dict = {'header': ChangeLogHeader(line=line)}
                 continue
-            
+
             # is it the footer, and thus marks the end of a entry?
             if line.startswith(' -- '):
                 # is there a paragraph pending?
@@ -418,7 +492,7 @@ def slurpin_changelog(filename):
                 # append to the list
                 changelog_entries.append(entry_dict)
                 continue
-            
+
             # is it the start of an entry paragraph?
             if line.startswith('  * '):
                 # is the first item of the paragraph list a paragraph
@@ -492,6 +566,17 @@ def create_changelog_file(filename, overwrite, package, version, log):
         fobj.write(str(chlg_footer))
         fobj.write('\n\n')
 
+
+def get_version(logfile, allversions):
+    chlg_entries = slurpin_changelog(logfile)
+
+    if allversions:
+        for entry in chlg_entries:
+            print entry['header'].version
+    else:
+        print chlg_entries[0]['header'].version
+
+
 def cmdline_parse():
     """Parse the command line
 
@@ -526,6 +611,13 @@ def cmdline_parse():
                             help="the log entry",
                             nargs='+')
 
+    parser_version = subparser.add_parser('version',
+                                          help="retrieve version from changelog.CSW")
+    parser_version.add_argument('--all-versions',
+                                help="retrieve all versions",
+                                default=False, action='store_const',
+                                const=True)
+
     parser_test = subparser.add_parser('test', help="test cswch")
 
     return parser.parse_args()
@@ -551,3 +643,6 @@ if __name__ == '__main__':
         new_changelog_entry(cmdline.logfile,
                             cmdline.version,
                             cmdline.log)
+
+    if cmdline.command == "version":
+        get_version(cmdline.logfile, cmdline.all_versions)
