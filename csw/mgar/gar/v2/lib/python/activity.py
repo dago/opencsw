@@ -18,6 +18,9 @@ NEW_MAINTAINER_CUTOFF = 2
 STALE_PACKAGE_CUTOFF = 4
 STALE_FROM_COLOR = '#FFDDBB'
 STALE_TO_COLOR = '#F995A0'
+MAINTAINER_STOPLIST = [
+    'orphaned',
+]
 
 def RevDeps(pkgs):
   revdeps = {}
@@ -72,6 +75,8 @@ def Maintainers(pkgs):
   maintainers = {}
   for entry in pkgs:
     entry['maintainer'] = entry['maintainer'].split('@')[0]
+    if entry['maintainer'] in MAINTAINER_STOPLIST:
+      continue
     parsed_fn = opencsw.ParsePackageFileName(entry['basename'])
     dates_to_try = []
     if 'REV' in parsed_fn['revision_info']:
