@@ -3,16 +3,17 @@
 
 # A webpy application to allow HTTP access to the checkpkg database.
 
-import sys
-import os
-
 import base64
-import cjson
 import datetime
 import hashlib
 import logging
-import sqlobject
+import os
+import sys
 import tempfile
+
+import cjson
+import lockfile
+import sqlobject
 import web
 
 from lib.python import checkpkg_lib
@@ -24,7 +25,8 @@ from lib.python import opencsw
 from lib.python import relational_util
 from lib.web import web_lib
 
-from lib.web import web_lib
+# Read and write files in chunks of this size:
+CHUNK_SIZE = 2 * (1024 ** 2)
 
 urls = (
   r'/', 'Index',
@@ -77,6 +79,24 @@ class Favicon(object):
     return ""
 
 
+def FileMd5(fd):
+  file_hash = hashlib.md5()
+  # Don't read the whole file into memory at once, do it in small chunks.
+  data = fd.read(CHUNK_SIZE)
+  while data:
+    file_hash.update(data)
+    data = fd.read(CHUNK_SIZE)
+  return file_hash.hexdigest()
+
+
+def CopyFile(infd, outfd):
+  infd.seek(0)
+  data = infd.read(CHUNK_SIZE)
+  while data:
+    os.write(outfd, data)
+    data = infd.read(CHUNK_SIZE)
+
+
 class Srv4List(object):
 
   def POST(self):
@@ -90,44 +110,65 @@ class Srv4List(object):
     web.header(
         'Content-type',
         'application/x-vnd.opencsw.pkg;type=upload-results')
-    file_hash = hashlib.md5()
-    # Don't read the whole file into memory at once, do it in small chunks.
-    chunk_size = 2 * 1024 * 1024
-    data = x['srv4_file'].file.read(chunk_size)
-    while data:
-      file_hash.update(data)
-      data = x['srv4_file'].file.read(chunk_size)
-    data_md5_sum = file_hash.hexdigest()
+    data_md5_sum = FileMd5(x['srv4_file'].file)
     declared_md5_sum = x['md5_sum']
     basename = x['basename']
     save_attempt = False
-    if declared_md5_sum == data_md5_sum:
-      save_attempt = True
+    error = False
+    if declared_md5_sum != data_md5_sum:
+      raise web.conflict()
+    try:
+      srv4 = models.Srv4FileStats.selectBy(md5_sum=data_md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound:
+      messages.append("File %s not found in the db." % data_md5_sum)
+      raise web.preconditionfailed()
+
+    if not srv4.use_to_generate_catalogs:
+      messages.append(
+          '%r is not a package meant to be in catalogs '
+          '(e.g. not CSW).' % basename)
+      raise web.preconditionfailed()
+
+    target_path = os.path.join(ALLPKGS_DIR, basename)
+    lock_path = os.path.join('/tmp', '{0}.lock'.format(basename))
+    target_file_lock = lockfile.FileLock(lock_path)
+
+    # Have to get this lock to avoid two processes writing to the same file at
+    # the same time.
+    with target_file_lock:
+      on_disk_md5_sum = data_md5_sum
       try:
-        srv4 = models.Srv4FileStats.selectBy(md5_sum=data_md5_sum).getOne()
-        if srv4.use_to_generate_catalogs:
-          # FieldStorage by default unlinks the temporary local file as soon as
-          # it's been opened. Therefore, we have to take care of writing data
-          # to the target location in an atomic way.
-          fd, tmp_filename = tempfile.mkstemp(dir=ALLPKGS_DIR)
-          x['srv4_file'].file.seek(0)
-          data = x['srv4_file'].file.read(chunk_size)
-          while data:
-            os.write(fd, data)
-            data = x['srv4_file'].file.read(chunk_size)
-          os.close(fd)
-          target_path = os.path.join(ALLPKGS_DIR, basename)
-          os.rename(tmp_filename, target_path)
-          # Since mkstemp creates files with mode 0600 by default:
-          os.chmod(target_path, 0644)
-      except sqlobject.main.SQLObjectNotFound:
-        messages.append("File %s not found in the db." % data_md5_sum)
+        with open(target_path, 'r') as fd:
+          on_disk_md5_sum = FileMd5(fd)
+      except IOError:
+        # The file doesn't exist yet. That's OK.
+        pass
+      if data_md5_sum != on_disk_md5_sum:
+        messages.append(
+            '%r already exists in the database with md5 sum %s. '
+            'The uploaded file is %s. We cannot overwrite the old filename '
+            'with new content.' % (basename, on_disk_md5_sum, data_md5_sum))
+        raise web.conflict()
+
+      save_attempt = True
+      # FieldStorage by default unlinks the temporary local file as soon as
+      # it's been opened. Therefore, we have to take care of writing data
+      # to the target location in an atomic way.
+      fd, tmp_filename = tempfile.mkstemp(dir=ALLPKGS_DIR)
+      CopyFile(x['srv4_file'].file, fd)
+      os.close(fd)
+      target_path = os.path.join(ALLPKGS_DIR, basename)
+      os.rename(tmp_filename, target_path)
+      # Since mkstemp creates files with mode 0600 by default:
+      os.chmod(target_path, 0644)
     messages.append({
         "received_md5": data_md5_sum,
         "declared_md5": declared_md5_sum,
         "save_attempt": save_attempt,
     })
-    return cjson.encode(messages)
+    response = cjson.encode(messages)
+    web.header('Content-Length', str(len(response)))
+    return response
 
 
 class Srv4Detail(object):
