@@ -113,7 +113,8 @@ REPORT_TMPL = u"""<!DOCTYPE html>
     <tr class="border-bottom active-{{ maintainers[username].active }} retired-{{ maintainers[username].csw_db_status != 'Active' }} action-needed-{{ analysis_by_username[username].to_retire }}">
       <td>
         <a id="{{ username }}" class="maintainer"
-        href="http://www.opencsw.org/maintainers/{{ username }}/">{{ username }}</a>
+        href="http://www.opencsw.org/maintainers/{{ username }}/"
+        title="{{ maintainers[username].fullname }}">{{ username }}</a>
       </td>
       <td>
         {% if maintainers[username].date_created %}
@@ -191,7 +192,7 @@ def ConcurrentFetchResults(catrels):
     for future in concurrent.futures.as_completed(key_by_future):
       key = key_by_future[future]
       if future.exception() is not None:
-        logging.warning('Fetching %r failed', url)
+        logging.warning('Fetching %r failed:', key, future.exception())
       else:
         results_by_catrel[key] = future.result()
   return results_by_catrel
@@ -242,6 +243,8 @@ def main():
   for d in csw_db_maintainers:
     # maintainer, fullname, status, date_created
     username = d['maintainer']
+    if username in activity.MAINTAINER_STOPLIST:
+      continue
     status = d['status']
     date_created = None
     if d['date_created']:
