@@ -440,8 +440,8 @@ class RestClient(object):
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
     logging.debug("HTTP code: %s", http_code)
-    if http_code == 401:
-      raise RestCommunicationError("Received HTTP code {0}".format(http_code))
+    if http_code == 401 or (http_code >= 500 and http_code < 600):
+      raise RestCommunicationError("Received HTTP code {0}: {0}".format(http_code, d.getvalue()))
     successful = (http_code >= 200 and http_code <= 299)
     metadata = None
     if successful:
@@ -459,11 +459,12 @@ class RestClient(object):
     c.setopt(pycurl.URL, url)
     c.setopt(pycurl.POST, 1)
     c = self._SetAuth(c)
+    basename = os.path.basename(filename)
     post_data = [
         ('srv4_file', (pycurl.FORM_FILE, filename)),
         ('submit', 'Upload'),
         ('md5_sum', md5_sum),
-        ('basename', os.path.basename(filename)),
+        ('basename', basename),
     ]
     c.setopt(pycurl.HTTPPOST, post_data)
     c.setopt(pycurl.WRITEFUNCTION, d.write)
@@ -480,8 +481,17 @@ class RestClient(object):
       logging.debug("*** Data")
       logging.debug(d.getvalue())
     logging.debug("File POST http code: %s", http_code)
-    if http_code >= 400 and http_code <= 499:
-      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+    if http_code == 409:
+      msg = ('The server returned HTTP 409 conflict. This probably means '
+             'that there already is a file named {0} in the allpkgs '
+             'directory. You must not overwrite the same file name '
+             'with new content. If you really need to upload a new version '
+             'of your package, add a new REV stamp to it, so that the file '
+             'name becomes unique..'.format(basename))
+      raise RestCommunicationError(msg)
+    if http_code >= 400 and http_code < 600:
+      msg = "{0} - HTTP code: {1}: {2}".format(url, http_code, d.getvalue())
+      raise RestCommunicationError(msg)
 
 
 class CachedPkgstats(object):
