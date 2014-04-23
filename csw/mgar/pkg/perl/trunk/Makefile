@@ -140,7 +140,7 @@ CONFIGURE_ARGS-64 += -Duse64bitint
 CONFIGURE_ARGS-64 += -Duse64bitall
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
 CONFIGURE_ARGS += -Dlddlflags=-shared
-CONFIGURE_ARGS += -Dcccdlflags=-fPIC
+#CONFIGURE_ARGS += -Dcccdlflags=-fPIC
 
 #EXTRA_LIB += $(prefix)/bdb48/lib
 #EXTRA_INC += $(prefix)/bdb48/include
@@ -214,7 +214,7 @@ include gar/category.mk
 
 # How to configure Perl
 
-
+PATH:=/opt/csw/gnu:$(PATH)
 configure-perl: CONFIGURE_EXPORTS = PATH LD_OPTIONS
 configure-perl:
 	(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -ders)
@@ -223,12 +223,12 @@ configure-perl:
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-	cd $(WORKSRC) && $(BUILD_ENV) gmake perldtrace.h && $(BUILD_ENV) gmake $(MAKE_OPT)
+	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) perldtrace.h && $(BUILD_ENV) $(MAKE) $(MAKE_OPT)
 	@$(MAKECOOKIE)
 
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	cd $(WORKSRC) && gmake test
+	cd $(WORKSRC) && $(MAKE) test
 	@$(MAKECOOKIE)
 
 # Make links to libperl and minor-major lib dirs
