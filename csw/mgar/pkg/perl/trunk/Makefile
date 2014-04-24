@@ -51,6 +51,9 @@ CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
 OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
 OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
+# Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
+CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
