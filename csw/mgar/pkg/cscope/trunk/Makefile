@@ -1,5 +1,5 @@
 NAME = cscope
-VERSION = 15.7a
+VERSION = 15.8a
 GARTYPE = v2
 
 DESCRIPTION = A text screen-based source browser
@@ -13,18 +13,15 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJECT = cscope
 
-DISTFILES = $(DISTNAME).tar.bz2
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+DISTFILES = $(DISTNAME).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Test suite won't run as root!
 TEST_SCRIPTS =
+
+CHECKPKG_OVERRIDES_CSWcscope += file-with-bad-content|/usr/local|root/opt/csw/bin/ocs
 
 include gar/category.mk
