@@ -20,8 +20,8 @@ VENDOR_URL = http://www.perl.org
 # The source has been patched to fix a failing patch (Solaris only). The patch was discussed with upstream (p5p) and committed to BLEAD. The patch is in the files directory.
 DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
-PACKAGES                 += CSWperl
-PKG_DESC_CSWperl         = $(DESCRIPTION)
+PACKAGE                = CSWperl
+PKG_DESC	       = $(DESCRIPTION)
 LICENSE = Copying
 
 # GCC build (Sunstudio is problematic)
@@ -31,9 +31,26 @@ MAKE_OPT_unstable10x = -j 4
 MAKE_OPT = $(MAKE_OPT_$(shell hostname))
 BUILD64 = 1
 ISAEXEC = 1
+IGNORE_DESTDIR = 1
 
 # a .git directory will cause failing upstream author tests (the source will be considered blead)
 NOGITPATCH = 1
+
+# Depends
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
+INCOMPATIBLE_PKGS = CSWperlmods CSWpmdigest CSWpmi18nlangtags CSWperldoc
+CHECKPKG_OVERRIDES    += file-with-bad-content
+OBSOLETED_BY_CSWperl += CSWperldoc
+OBSOLETED_BY_CSWperl += CSWpm-module-build 
+OBSOLETED_BY_CSWperl += CSWpm-json-pp 
+OBSOLETED_BY_CSWperl += CSWpm-cpan-meta
+OBSOLETED_BY_CSWperl += CSWpm-parse-cpan-meta
+OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-yaml
+OBSOLETED_BY_CSWperl += CSWpm-module-metadata
+CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
+OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
+OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
@@ -94,6 +111,9 @@ build-perl:
 	@$(MAKECOOKIE)
 
 # Test
+# Beware, test may fail when run in paralled. We leave it like this because it's a lot faster and the failure not very common. Just rerun mgar test.
+# You can always run the test single threaded if needed.
+
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
 	cd $(WORKSRC) && $(MAKE) test
