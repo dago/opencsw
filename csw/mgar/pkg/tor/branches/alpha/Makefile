@@ -8,8 +8,15 @@ define BLURB
 Basically tor provides a distributed network of servers (onion routers). Users bounce their TCP streams (web traffic, ftp, ssh, etc) around the routers, and recipients, observers, and even the routers themselves have difficulty tracking the source of the stream.
 endef
 
+# This is where the source git repo is located but we are building from the
+# official alpha release tar.gz distibution downloaded from MATER_SITES.
+# GIT_REPOS = git://git.torproject.org/tor.git
+
 MASTER_SITES = http://www.torproject.org/dist/
 DISTFILES  = $(DISTNAME).tar.gz
+
+PATCHFILES += fixes_bug11426.patch
+PATCHFILES += 0001-add-test-to-detech-we-are-on-Solaris.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
