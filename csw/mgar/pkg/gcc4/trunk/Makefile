@@ -1,12 +1,11 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.8.2
+VERSION   = 4.9.0
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
 PKG_VERSION_TOKEN = gcc4
 PKG_BASENAME = CSW$(PKG_VERSION_TOKEN)
-# PKG_BASENAME = CSWgcc-$(subst .,-,$(BASE_VERION))
 
 DESCRIPTION  = The GNU Compiler Collection
 define BLURB
@@ -18,6 +17,7 @@ endef
 DISTFILES    = $(DISTNAME).tar.bz2
 # MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 # MASTER_SITES += http://ftp.heanet.ie/mirrors/gnu/gcc/$(NAME)-$(VERSION)/
+MASTER_SITES += ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-4.9.0/
 MASTER_SITES += ftp://ftp.gnu.org/gnu/gcc/gcc-$(VERSION)/
 
 LIBOBJC = 4
@@ -26,6 +26,9 @@ LIBOBJC = 4
 # sparcv8+ architecture.
 # PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+ISA_DEFAULT_sparc-5.9 = sparcv8plus
+ISA_DEFAULT_i386-5.9  = pentium_pro
 
 # there is  a problem with direct linking on amd64 libs
 LINKER_DIRECT =
@@ -75,13 +78,19 @@ CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-system-zlib=$(BUILD_PREFIX)
 
-# Using ccs/bin/bas on x86 results in this problem:
+# Using ccs/bin/as on x86 results in this problem:
 # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=35531
-CONFIGURE_ARGS_sparc += --with-as=/usr/ccs/bin/as
-CONFIGURE_ARGS_sparc += --without-gnu-as
-CONFIGURE_ARGS_i386 += --with-gnu-as
-CONFIGURE_ARGS_i386 += --with-as=/opt/csw/bin/gas
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+# Using GNU as on sparc on 5.10 causes another problem which I don't exactly
+# remember, but we seem to need to use different as's on different platforms.
+CONFIGURE_ARGS_sparc_5.9 += --with-as=/opt/csw/bin/gas
+CONFIGURE_ARGS_sparc_5.9 += --with-gnu-as
+CONFIGURE_ARGS_sparc_5.10 += --with-as=/usr/ccs/bin/as
+CONFIGURE_ARGS_sparc_5.10 += --without-gnu-as
+CONFIGURE_ARGS_i386_5.9 += --with-gnu-as
+CONFIGURE_ARGS_i386_5.9 += --with-as=/opt/csw/bin/gas
+CONFIGURE_ARGS_i386_5.10 += --with-gnu-as
+CONFIGURE_ARGS_i386_5.10 += --with-as=/opt/csw/bin/gas
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH)_$(GAROSREL))
 
 # GCC can't be built in the same directory with the sources.
 # It also can't be built in a subdirectory of the sources.
@@ -100,7 +109,7 @@ GARCOMPILER = GNU
 SKIPTEST ?= 1
 
 # Used multiple times in package definitions
-JAVA_LIB_VERSION = 14
+JAVA_LIB_VERSION = 15
 
 ALTERNATIVES_PRIO = 482
 
@@ -113,10 +122,10 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgomp1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibitm1
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibssp0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibz1
@@ -233,12 +242,12 @@ PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 
-PACKAGES += CSWlibgo4
-PKGFILES_CSWlibgo4 += $(call baseisadirs,$(libdir),libgo\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibgo4 += $(DESCRIPTION), libgo.so.4
-RUNTIME_DEP_PKGS_CSWlibgo4 += CSWlibgcc-s1
+PACKAGES += CSWlibgo5
+PKGFILES_CSWlibgo5 += $(call baseisadirs,$(libdir),libgo\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibgo5 += $(DESCRIPTION), libgo.so.4
+RUNTIME_DEP_PKGS_CSWlibgo5 += CSWlibgcc-s1
 # Hasn't been investigated. I feel lucky.
-CHECKPKG_OVERRIDES_CSWlibgo4 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgo5 += file-with-bad-content
 
 PACKAGES += CSWlibitm1
 PKGFILES_CSWlibitm1 += $(call baseisadirs,$(libdir),libitm\.so\.1(\.\d+)*)
@@ -284,7 +293,7 @@ PKGFILES_$(PKG_BASENAME)g++ += $(mandir)/.*g\+\+.1
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/ostream.*
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibz1
@@ -311,7 +320,7 @@ PKGFILES_$(PKG_BASENAME)gfortran += $(infodir)/gfortran.*
 PKGFILES_$(PKG_BASENAME)gfortran += $(call baseisadirs,$(libdir),libgfortran\.so)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibiconv2
@@ -327,7 +336,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWecj
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibiconv2
@@ -403,7 +412,7 @@ PKGFILES_$(PKG_BASENAME)objc += $(libdir)/.*/include/objc/.*
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc.so)
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc$(LIBOBJC)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc$(LIBOBJC)
@@ -427,7 +436,7 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += file-with-bad-content
 
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
@@ -474,7 +483,7 @@ CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgo4 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgo5 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
@@ -498,7 +507,13 @@ post-install-modulated:
 
 # Use CSW or Solaris tools explicitly:
 AR = /usr/ccs/bin/ar
-AS = /usr/ccs/bin/as
+
+# AS_sparc_5.9 = /opt/csw/bin/gas
+AS_sparc_5.10 = /usr/ccs/bin/as
+# AS_i386_5.9 = /opt/csw/bin/gas
+AS_i386_5.10 = /opt/csw/bin/gas
+AS = $(AS_$(GARCH)_$(GAROSREL))
+
 NM = /usr/ccs/bin/nm
 RANLIB = /usr/ccs/bin/ranlib
 STRIP = /usr/css/bin/strip
