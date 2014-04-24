@@ -40,7 +40,6 @@ NOGITPATCH = 1
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
 INCOMPATIBLE_PKGS = CSWperlmods CSWpmdigest CSWpmi18nlangtags CSWperldoc
-CHECKPKG_OVERRIDES    += file-with-bad-content
 OBSOLETED_BY_CSWperl += CSWperldoc
 OBSOLETED_BY_CSWperl += CSWpm-module-build 
 OBSOLETED_BY_CSWperl += CSWpm-json-pp 
@@ -51,6 +50,7 @@ OBSOLETED_BY_CSWperl += CSWpm-module-metadata
 CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
 OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
 OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
+CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
