@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWgeeqie += CSWliblcms1
 
 # For some mysterious reason, this library is only used on intel.
 RUNTIME_DEP_PKGS_CSWgeeqie_sparc += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWgeeqie_sparc += $(RUNTIME_DEP_PKGS_CSWgeeqie_$(GARCH))
+RUNTIME_DEP_PKGS_CSWgeeqie += $(RUNTIME_DEP_PKGS_CSWgeeqie_$(GARCH))
 
 CHECKPKG_OVERRIDES_CSWgeeqie += file-with-bad-content|/usr/share|root/opt/csw/bin/geeqie
 
