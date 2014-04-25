@@ -25,10 +25,7 @@ CATALOGNAME_CSWdovecot = dovecot
 CATALOGNAME_CSWdovecot-dev = dovecot_dev
 
 SPKG_DESC_CSWdovecot = Secure IMAP server
-SPKG_DESC_CSWdovecot-dev = Dovecot secure IMAP server header files
-
-OBSOLETED_BY_CSWdovecot-dev = CSWdovecotdevel
-CATALOGNAME_CSWdovecotdevel = dovecot_devel_stub
+SPKG_DESC_CSWdovecot-dev = Dovecot secure IMAP sdovecot_devel_stub
 
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWdovecot += CSWlibiconv2
