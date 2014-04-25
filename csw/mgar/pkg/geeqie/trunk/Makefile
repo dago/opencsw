@@ -7,23 +7,30 @@ VERSION = 1.0
 CATEGORIES = gnome
 GARTYPE = v2
 DESCRIPTION = A lightweight image viewer, forked from GQview
-define BLURB
-endef
-SPKG_SOURCEURL = http://geeqie.sourceforge.net/
+VENDOR_URL = http://geeqie.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_LDFLAGS = -lsocket
 
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWgtk2
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWlcmsrt
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWglib2
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWpango
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibatk
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgeeqie += CSWftype2
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWgeeqie += CSWliblcms1
+
+CHECKPKG_OVERRIDES_CSWgeeqie += file-with-bad-content|/usr/share|root/opt/csw/bin/geeqie
+
+CHECKPKG_OVERRIDES_CSWgeeqie += bad-rpath-entry|/lib|opt/csw/bin/geeqie
+CHECKPKG_OVERRIDES_CSWgeeqie += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/geeqie
+CHECKPKG_OVERRIDES_CSWgeeqie += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/geeqie
+CHECKPKG_OVERRIDES_CSWgeeqie += bad-rpath-entry|/opt/SUNWspro/lib/sparc|opt/csw/bin/geeqie
 
 include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)

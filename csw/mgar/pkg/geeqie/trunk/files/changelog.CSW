@@ -1,0 +1,6 @@
+geeqie (1.0,REV=2014.04.25)
+
+  * Rebuild with updated dependencies; RPATH remains unsolved.
+
+ -- Maciej Blizinski <maciej@opencsw.org>  Fri, 25 Apr 2014 12:17:50 +0200
+
