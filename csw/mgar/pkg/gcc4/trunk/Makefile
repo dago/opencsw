@@ -243,8 +243,8 @@ SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgo5
-PKGFILES_CSWlibgo5 += $(call baseisadirs,$(libdir),libgo\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibgo5 += $(DESCRIPTION), libgo.so.4
+PKGFILES_CSWlibgo5 += $(call baseisadirs,$(libdir),libgo\.so\.5(\.\d+)*)
+SPKG_DESC_CSWlibgo5 += $(DESCRIPTION), libgo.so.5
 RUNTIME_DEP_PKGS_CSWlibgo5 += CSWlibgcc-s1
 # Hasn't been investigated. I feel lucky.
 CHECKPKG_OVERRIDES_CSWlibgo5 += file-with-bad-content
