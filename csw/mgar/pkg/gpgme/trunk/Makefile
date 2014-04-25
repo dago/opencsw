@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = gpgme
 VERSION = 1.4.3
 CATEGORIES = apps
@@ -13,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gpgme/
-DISTFILES  = $(NAME)-$mfiles,CSWgpgme,)
+DISTFILES  = $(NAME)-$mVENDOR_gme,)
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.eGARCOMPILER = GCC4
 
