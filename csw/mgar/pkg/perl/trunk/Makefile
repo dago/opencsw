@@ -1,3 +1,5 @@
+KIPTEST=1
+
 NAME = perl
 VERSION = 5.18.2
 VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
@@ -52,8 +54,8 @@ OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
 OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
-CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
+#CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+#CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
