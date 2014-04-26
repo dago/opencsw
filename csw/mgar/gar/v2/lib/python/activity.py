@@ -3,6 +3,7 @@
 import datetime
 import dateutil.parser
 import logging
+import json
 
 from collections import namedtuple
 
@@ -21,6 +22,14 @@ STALE_TO_COLOR = '#F995A0'
 MAINTAINER_STOPLIST = [
     'orphaned',
 ]
+# This should be moved to a better place.
+MAINTAINER_WHITELIST = set([
+    # People who haven't released packages in a long time, but are otherwise
+    # active.
+    'claudio',
+    'rmottola',
+    'wbonnet',
+])
 
 def RevDeps(pkgs):
   revdeps = {}
@@ -119,3 +128,16 @@ def Maintainers(pkgs):
   maintainers = ComputeMaintainerActivity(maintainers)
 
   return maintainers, bad_dates
+
+
+# http://stackoverflow.com/questions/12122007/python-json-encoder-to-support-datetime
+class DateTimeEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, datetime.datetime):
+      return obj.isoformat()
+    elif isinstance(obj, datetime.date):
+      return obj.isoformat()
+    elif isinstance(obj, datetime.timedelta):
+      return (datetime.datetime.min + obj).time().isoformat()
+    else:
+      return super(DateTimeEncoder, self).default(obj)
