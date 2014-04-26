@@ -7,13 +7,14 @@ It combines input from a few catalog releases to make sure we get a better
 image of activity of a maintainer.
 """
 
-import logging
-import requests
 import argparse
+import cPickle
 import datetime
 import dateutil.parser
 import jinja2
-import cPickle
+import json
+import logging
+import requests
 
 import concurrent.futures
 
@@ -252,7 +253,8 @@ def main():
     if username in maintainers:
       maintainers[username] = (
           maintainers[username]._replace(csw_db_status=status,
-                                         date_created=date_created))
+                                         date_created=date_created,
+                                         fullname=d['fullname']))
     else:
       maintainers[username] = (
           activity.Maintainer(
@@ -310,6 +312,18 @@ def main():
         analysis_by_username=analysis_by_username,
         counts=counts)
     outfd.write(rendered.encode('utf-8'))
+
+  # Save a JSON file too.
+  json_out = args.output
+  if json_out.endswith('.html'):
+    json_out = json_out[:-5] + '.json'
+  with open(json_out, 'w') as outfd:
+    json.dump(dict(
+      maintainers=maintainers,
+      maintainers_in_unstable=maintainers_in_unstable,
+      analysis_by_username=analysis_by_username,
+      counts=counts
+    ), outfd, cls=activity.DateTimeEncoder, indent=2)
 
 
 if __name__ == '__main__':
