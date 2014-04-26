@@ -280,11 +280,10 @@ PKGFILES_CSWlibatomic1 += $(call baseisadirs,$(libdir),libatomic\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibatomic1 += $(DESCRIPTION), libatomic.so.1
 RUNTIME_DEP_PKGS_CSWlibatomic1 += CSWlibgcc-s1
 
-PACKAGES += CSWlibcilkrts5
-CATALOGNAME_CSWlibcilkrts5 = libcilkrts5
+PACKAGES_i386 += CSWlibcilkrts5
 PKGFILES_CSWlibcilkrts5 += $(call baseisadirs,$(libdir),libcilkrts\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibcilkrts5 += $(DESCRIPTION), libcilkrts.so.5
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibcilkrts5
+RUNTIME_DEP_PKGS_CSW$(PKG_BASENAME)core_i386 += CSWlibcilkrts5
 
 PACKAGES += $(PKG_BASENAME)g++
 SPKG_DESC_$(PKG_BASENAME)g++ = GNU C++ Compiler
