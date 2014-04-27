@@ -270,9 +270,10 @@ SPKG_DESC_CSWlibquadmath0 += GNU C compiler, libquadmath.so.0
 RUNTIME_DEP_PKGS_CSWlibquadmath0 += CSWlibgcc-s1
 
 # Dependencies only on Intel
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_i386 += CSWlibcilkrts5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_i386 += CSWlibquadmath0
-RUNTIME_DEP_PKGS_CSWlibgfortran3_i386 += CSWlibquadmath0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_$(GARCH))
+RUNTIME_DEP_PKGS_CSWlibgfortran3_i386 += CSWlibquadmath0
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 
 PACKAGES += CSWlibatomic1
@@ -283,7 +284,8 @@ RUNTIME_DEP_PKGS_CSWlibatomic1 += CSWlibgcc-s1
 PACKAGES_i386 += CSWlibcilkrts5
 PKGFILES_CSWlibcilkrts5 += $(call baseisadirs,$(libdir),libcilkrts\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibcilkrts5 += $(DESCRIPTION), libcilkrts.so.5
-RUNTIME_DEP_PKGS_CSW$(PKG_BASENAME)core_i386 += CSWlibcilkrts5
+RUNTIME_DEP_PKGS_CSWlibcilkrts5 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibcilkrts5 += CSWlibstdc++6
 
 PACKAGES += $(PKG_BASENAME)g++
 SPKG_DESC_$(PKG_BASENAME)g++ = GNU C++ Compiler
