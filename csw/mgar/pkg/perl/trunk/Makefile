@@ -20,7 +20,7 @@ VENDOR_URL = http://www.perl.org
 # The source has been patched to fix a failing patch (Solaris only). The patch was discussed with upstream (p5p) and committed to BLEAD. The patch is in the files directory.
 DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
-PACKAGES               = CSWperl CSWperldoc 
+PACKAGES               = CSWperl
 PKG_DESC_CSWperl	       = $(DESCRIPTION)
 SPKG_DESC_CSWperl	       = $(DESCRIPTION)
 LICENSE = Copying
@@ -40,16 +40,16 @@ NOGITPATCH = 1
 # Depends
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
-OBSOLETED_BY_CSWperl += CSWperldoc
-OBSOLETED_BY_CSWperl += CSWpm-module-build 
-OBSOLETED_BY_CSWperl += CSWpm-json-pp 
-OBSOLETED_BY_CSWperl += CSWpm-cpan-meta
-OBSOLETED_BY_CSWperl += CSWpm-parse-cpan-meta
-OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-yaml
-OBSOLETED_BY_CSWperl += CSWpm-module-metadata
+OBSOLETED_BY_CSWperl += CSWperldoc CSWpm-parse-cpan-meta CSWpm-cpan-meta CSWpm-cpan-meta-requirements CSWpm-perl-ostype CSWpm-cpan-meta-yaml CSWpm-module-build CSWpm-json-pp CSWpm-module-metadata
+#OBSOLETED_BY_CSWperl += CSWpm-module-build 
+#OBSOLETED_BY_CSWperl += CSWpm-json-pp 
+#OBSOLETED_BY_CSWperl += CSWpm-cpan-meta
+#OBSOLETED_BY_CSWperl += CSWpm-parse-cpan-meta
+#OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-yaml
+#OBSOLETED_BY_CSWperl += CSWpm-module-metadata
 CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
-OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
-OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
+#OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
+#OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
 #INCOMPATIBLE_PKGS = CSWperldoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
