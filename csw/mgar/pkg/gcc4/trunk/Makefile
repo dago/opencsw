@@ -286,6 +286,8 @@ PKGFILES_CSWlibcilkrts5 += $(call baseisadirs,$(libdir),libcilkrts\.so\.5(\.\d+)
 SPKG_DESC_CSWlibcilkrts5 += $(DESCRIPTION), libcilkrts.so.5
 RUNTIME_DEP_PKGS_CSWlibcilkrts5 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibcilkrts5 += CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSWlibcilkrts5 += no-direct-binding|/opt/csw/lib/amd64/libcilkrts.so.5.0.0|is|not|directly|bound|to|soname|libstdc++.so.6
+CHECKPKG_OVERRIDES_CSWlibcilkrts5 += no-direct-binding|/opt/csw/lib/libcilkrts.so.5.0.0|is|not|directly|bound|to|soname|libstdc++.so.6
 
 PACKAGES += $(PKG_BASENAME)g++
 SPKG_DESC_$(PKG_BASENAME)g++ = GNU C++ Compiler
