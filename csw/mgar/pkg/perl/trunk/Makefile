@@ -52,6 +52,16 @@ CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
 #OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
 #INCOMPATIBLE_PKGS = CSWperldoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWpm-parse-cpan-meta += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-cpan-meta += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-perl-ostype += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-cpan-meta-yaml += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-module-build += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-json-pp += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpm-module-metadata += surplus-dependency|CSWperl
+
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
 #CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
 #CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
