@@ -53,6 +53,7 @@ CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
 #INCOMPATIBLE_PKGS = CSWperldoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
 CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWpm-module-metadata += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWpm-parse-cpan-meta += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpm-cpan-meta += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += surplus-dependency|CSWperl
