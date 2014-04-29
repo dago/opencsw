@@ -1,5 +1,5 @@
 NAME = php
-VERSION = 5.5.10
+VERSION = 5.5.11
 GARTYPE = v2
 
 DESCRIPTION = A high-level scripting language.
@@ -27,7 +27,7 @@ AP2_MODS = 1
 AP2_MODFILES = *libphp5.so
 
 # at least for a decent echo used during build.
-PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
+# PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 
 MASTER_SITES += http://de1.php.net/distributions/
 # SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
@@ -45,7 +45,9 @@ DISTFILES += CSWap2-modphp5.postinstall
 DISTFILES += CSWap2-modphp5.preremove
 DISTFILES += httpd-php5.conf
 
+# We probably need this, verify
 # PATCHFILES += 0001-Strip-usr-ucblib-references.patch
+
 PATCHFILES += 0003-Do-not-activate-php5-module-during-package-build.patch
 
 # TBD: Where specifically do these come from?
@@ -54,6 +56,10 @@ PATCHFILES += 0002-Undef-ES-on-Solaris.patch
 
 PATCHFILES += 0004-Do-not-add-Wno-write-strings-unconditionally.patch
 PATCHFILES += 0005-Remove-another-Wno.patch
+
+# Use patch for correct alignment. See for details
+#   http://lists.opencsw.org/pipermail/maintainers/2014-March/019106.html
+PATCHFILES += 0001-Align-correctly.patch
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWlibcurl-dev CSWjpeg
@@ -82,16 +88,23 @@ RUNTIME_DEP_PKGS_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5 $(2)
 OBSOLETED_BY_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5$(subst _,-,$(1))
 PKGFILES_CSWphp5-$(subst _,-,$(1)) ?= .*lib/php/extensions/.*/$(1).so .*php5/extensions/$(1)
 CHECKPKG_OVERRIDES_CSWphp5-$(subst _,-,$(1)) += surplus-dependency|CSWphp5
+RUNTIME_DEP_PKGS_sparc_CSWphp5-$(subst _,-,$(1)) += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-$(subst _,-,$(1)) += $(RUNTIME_DEP_PKGS_$(GARCH)_CSWphp5-$(subst _,-,$(1)))
 endef
 
 PACKAGES = CSWphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWlibexpat1 CSWlibz1
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n51
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuio52
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
+# This is an example
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/php/man/man1/php-config.1
 # embeded 'magic' information to detect file types...odd, but...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
@@ -135,9 +148,11 @@ PACKAGES += CSWap2-modphp5
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibexpat1 CSWlibz1
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n51
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuio52
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc52
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
@@ -153,7 +168,7 @@ $(eval $(call php5_subpackage,dom,CSWlibxml2-2))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif,))
 $(eval $(call php5_subpackage,ftp,CSWlibssl1-0-0))
-$(eval $(call php5_subpackage,gd,CSWlibgd2 CSWlibt1-5))
+$(eval $(call php5_subpackage,gd,CSWlibgd3 CSWlibxpm4 CSWlibt1-5))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8))
 $(eval $(call php5_subpackage,gmp,CSWlibgmp10))
@@ -211,7 +226,7 @@ $(eval $(call php5_subpackage,sqlite,CSWsqlite))
 $(eval $(call php5_subpackage,sysvmsg,))
 $(eval $(call php5_subpackage,sysvsem,))
 $(eval $(call php5_subpackage,sysvshm,))
-$(eval $(call php5_subpackage,tidy,CSWlibtidy0-99))
+$(eval $(call php5_subpackage,tidy,CSWlibtidy0-99-0))
 $(eval $(call php5_subpackage,tokenizer,))
 $(eval $(call php5_subpackage,wddx,))
 $(eval $(call php5_subpackage,xmlreader,CSWlibxml2-2))
@@ -219,7 +234,7 @@ $(eval $(call php5_subpackage,xmlrpc,CSWlibiconv2 CSWlibexpat1))
 $(eval $(call php5_subpackage,xmlwriter,CSWlibxml2-2))
 $(eval $(call php5_subpackage,xsl,CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0))
 $(eval $(call php5_subpackage,zip,CSWlibz1))
-$(eval $(call php5_subpackage,ibm_db2,))
+#$(eval $(call php5_subpackage,ibm_db2,))
 
 # Use reinplacement until this is fixed:
 #   https://bugs.php.net/bug.php?id=66298
@@ -251,15 +266,15 @@ EXTRA_CONFIGURE_EXPORTS += DB2INSTANCE
 EXTRA_CONFIGURE_EXPORTS += DB2DIR
 
 # This is needed for DB2 module
-CONFIGURE_ENV_IBM_DB_INCLUDE = /opt/IBM/db2/V8.1/include
-CONFIGURE_ENV_IBM_DB_LIB = /opt/IBM/db2/V8.1/lib
-CONFIGURE_ENV_DB2INSTANCE = db2inst1
-CONFIGURE_ENV_DB2DIR = /opt/IBM/db2/V8.1
+# Disable DB2 for now as the -R gets into *every* module with the latest linker anomalies
+#CONFIGURE_ENV_IBM_DB_INCLUDE = /opt/IBM/db2/V8.1/include
+#CONFIGURE_ENV_IBM_DB_LIB = /opt/IBM/db2/V8.1/lib
+#CONFIGURE_ENV_DB2INSTANCE = db2inst1
+#CONFIGURE_ENV_DB2DIR = /opt/IBM/db2/V8.1
 
-EXTRA_RUNPATH_LINKER_FLAGS += -R$(CONFIGURE_ENV_IBM_DB_LIB)
+#EXTRA_RUNPATH_LINKER_FLAGS += -R$(CONFIGURE_ENV_IBM_DB_LIB)
 
 # We need CMSG_SPACE
-# EXTRA_CPPFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
 EXTRA_CFLAGS  += -D_XPG4_2 -D__EXTENSIONS__
 
 sysconfdir = /etc$(prefix)/php5
@@ -317,7 +332,7 @@ CONFIGURE_ARGS += --with-gd=shared,$(prefix)
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
 CONFIGURE_ARGS += --with-gettext=shared,$(prefix)
 CONFIGURE_ARGS += --with-gmp=shared,$(prefix)
-CONFIGURE_ARGS += --with-ibm-db2=shared,/export/db2inst1/sqllib
+#CONFIGURE_ARGS += --with-ibm-db2=shared,/export/db2inst1/sqllib
 CONFIGURE_ARGS += --with-iconv=shared,$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)
 CONFIGURE_ARGS += --with-imap=shared,$(prefix)
