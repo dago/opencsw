@@ -1,5 +1,5 @@
 NAME = php
-VERSION = 5.6.0alpha3
+VERSION = 5.6-201404160230
 GARTYPE = v2
 
 DESCRIPTION = A high-level scripting language.
@@ -31,6 +31,7 @@ PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 
 MASTER_SITES += http://de1.php.net/distributions/
 MASTER_SITES += http://downloads.php.net/tyrael/
+MASTER_SITES += http://snaps.php.net/
 # SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 
 EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
@@ -38,6 +39,7 @@ EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
 VENDOR_URL = http://www.php.net/
 LICENSE = LICENSE
 
+DISTNAME = $(NAME)$(VERSION)
 DISTFILES += $(DISTNAME).tar.xz
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
@@ -380,7 +382,7 @@ include gar/category.mk
 # they're using git now and ship a .gitignore that excludes aclocal.m4
 # that broke one of our patches so we'll nuke .gitignore before we patch
 pre-patch-modulated:
-	@(cd $(WORKSRC); rm .gitignore; git add -A; git commit -m 'adding files that were previously ignored' )
+	@-(cd $(WORKSRC); rm .gitignore; git add -A; git commit -m 'adding files that were previously ignored' )
 	@$(MAKECOOKIE)
 
 xxxxpre-configure-modulated:
