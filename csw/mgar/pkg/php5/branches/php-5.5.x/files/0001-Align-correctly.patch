@@ -1,0 +1,25 @@
+From 4962fb7a6d1029a67f231aa8760ef61b1363a93e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 1 Apr 2014 14:10:25 +0200
+Subject: [PATCH] Align correctly
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index fee4bdf..08355c3 100755
+--- a/configure
++++ b/configure
+@@ -5443,7 +5443,7 @@ case $host_cpu in
+     ;;
+   sparc*)
+     if test "$SUNCC" = "yes"; then
+-      CFLAGS="$CFLAGS -xmemalign=8s"
++      CFLAGS="$CFLAGS -xmemalign=8i"
+     fi
+     ;;
+ esac
+-- 
+1.8.4.1
+
