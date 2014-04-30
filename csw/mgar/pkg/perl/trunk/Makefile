@@ -25,7 +25,7 @@ PKG_DESC_CSWperl	       = $(DESCRIPTION)
 SPKG_DESC_CSWperl	       = $(DESCRIPTION)
 LICENSE = Copying
 
-# GCC build (Sunstudio is problematic)
+# GCC build (Sun Studio build has been fixed)
 GARCOMPILER = GCC4
 MAKE_OPT_unstable10s = -j 24
 MAKE_OPT_unstable10x = -j 4
