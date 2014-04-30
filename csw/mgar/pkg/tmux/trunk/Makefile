@@ -13,6 +13,8 @@ VENDOR_URL = http://tmux.sourceforge.net
 
 BUILD_DEP_PKGS = CSWlibevent-dev
 
+# Switch to gcc, Sun Studio is causing core dumps:
+#   https://www.opencsw.org/mantis/view.php?id=5165
 GARCOMPILER = GNU
 
 RUNTIME_DEP_PKGS = CSWlibevent2-0-5uxPRESERVECONF += $(sysconfdir)/tmux.conf
