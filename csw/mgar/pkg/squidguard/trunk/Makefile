@@ -10,40 +10,33 @@ define BLURB
 endef
 
 MASTER_SITES  = http://squidguard.org/Downloads/
-MASTER_SITES += http://squidguard.org/Downloads/Patches/1.4/
+MASTER_SITES += http://squidguard.org/Downlo
 DISTNAME = squidGuard-$(PKGVERSION)
 DISTFILES  = $(DISTNAME).tar.gz
+
+PATCHFILES += 0001-Allow-options-for-LEX.patch(DISTNAME).tar.gz
 
 # These files do patch the source, but they are not in "patch-format"
 SQUIDGUARDPATCHES += squidGuard-1.4-patch-20091015.tar.gz
 SQUIDGUARDPATCHES += squidGuard-1.4-patch-20091019.tar.gz
 DISTFILES += $(SQUIDGUARDPATCHES)
-NOEXTRACT += $(SQUIDGUARDPATCHES)
+NOEXTRACT += $(SQUIDThis patch is for the new Squid helper format
+#   http://bugs.squid-cache.org/show_bug.cgi?id=3978
+DISTFILES += bug3978-attachment2988.patchQUIDGUARDPATCHES)
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-VENDOR_URL = http://squidguard.org/
+VENDOR_URL = http://BUILD_DEP_PKGS += CSWbison
+BUILD_DEP_PKGS += CSWflex
+BUILD_DEP_PKGS += CSWbdb48devel
+BUILD_DEP_PKGS += CSWopenldap-dev//squidguard.org/
 
 PACKAGES += CSWsquidguard
 SPKG_DESC_CSWsquidguard = URL redirector used to use blacklists with the proxysoftware Squid
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWsquidguard += CSWbdb48
-RUNTIME_DEP_PKGS_CSWsquidguard += CSWlibldap2-4-2
-
-# Just docs, leave for now
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/configure.txt
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/features.txt
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/features.html
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/faq.txt
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/installation.html
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/configuration.txt
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/install.txt
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/configure.html
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/configuration.html
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/install.html
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/faq.html
-CHECKPKG_OVERRIDES_CSWsquidguard += file-with-bad-content|/usr/local|root/opt/csw/share/doc/squidguard/installation.txt
+RUNTIME_DEP_PKGS_CSWsquidguard += nstallation.txt
 
 REINPLACEMENTS += nochown
 REINPLACE_MATCH_nochown = (.*)(chown.*)
@@ -65,7 +58,8 @@ CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-db=$(prefix)/bdb48
 CONFIGURE_ARGS += --with-sg-config=$(SQUIDGUARD_CONF)
 CONFIGURE_ARGS += --with-sg-logdir=$(SQUIDGUARD_LOG)
-CONFIGURE_ARGS += --with-sg-dbhome=$(SQUIDGUARD_DB)
+CONFIGURE_ARGS += --with-sg-dbhome=$EXTRA_CONFIGURE_EXPORTS += LEX
+CONFIGURE_ENV_LEX = $(bindir_install)/flex --noansi-definitions=$(SQUIDGUARD_DB)
 
 PRESERVECONF += $(SQUIDGUARD_CONF)
 
@@ -84,14 +78,12 @@ INSTALL_OVERRIDE_VAR_configfile = $(DESTDIR)$(SQUIDGUARD_CONF)
 INSTALL_OVERRIDE_VAR_logdir = $(DESTDIR)$(SQUIDGUARD_LOG)
 INSTALL_OVERRIDE_VAR_dbhomedir = $(DESTDIR)$(SQUIDGUARD_DB)
 
-include gar/category.mk
-
-post-extract-modulated:
+include gar/categoryextract-modulated:
 	-gzip -c -d $(DOWNLOADDIR)/squidGuard-1.4-patch-20091015.tar.gz | (cd $(WORKSRC) && tar xvf -)
-	-gzip -c -d $(DOWNLOADDIR)/squidGuard-1.4-patch-20091019.tar.gz | (cd $(WORKSRC) && tar xvf -)
+	-gzip -c -d $(DOWNLOADDIR)/squidGuard-1.4-patch-20091019.tar.gz | (cd $(WORKSRCcd $(WORKSRC) && gpatch -p1 <../bug3978-attachment2988.patch
+	cd $(WORKSRC)/test && perl -i.orig -npe 'if(/^$$/){s/^$$/ERR/}else{s/([^ ]*).*/OK rewrite-url="$$1"/}' test1.expected test2.expected
 	@$(MAKECOOKIE)
 
-post-install-modulated:
+post-installinstall-modulated:
 	ginstall -d $(DESTDIR)$(sharedstatedir)/doc/squidguard
 	ginstall $(WORKSRC)/doc/* $(DESTDIR)$(sharedstatedir)/doc/squidguard
-	@$(MAKECOOKIE)

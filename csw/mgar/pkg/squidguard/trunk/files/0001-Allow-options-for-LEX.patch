@@ -1,0 +1,25 @@
+From f6380127e08a6cfa0f20169eb9166d2c71e11649 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 1 May 2014 15:45:40 +0200
+Subject: [PATCH] Allow options for LEX
+
+---
+ src/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 44754ec..9117e1b 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -77,7 +77,7 @@ y.tab.o: y.tab.c y.tab.h sg.h sgEx.h
+ 	$(COMPILE) -c y.tab.c
+ 
+ lex.yy.c: sg.l sg.h
+-	@if [ $(LEX) != ":" ]; then \
++	@if [ "$(LEX)" != ":" ]; then \
+ 	$(LEX) sg.l  ; \
+ 	else \
+ 	echo " " ; \
+-- 
+1.8.4.1
+
