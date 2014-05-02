@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = Python
-VERSION = 2.7.5
+VERSION = 2.7.6
 VER = 2.7
 DVER = 2-7
 UVER = 2_7
@@ -37,7 +37,7 @@ UFILES_REGEX = $(VER)\.\d+
 PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 
-DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES  = $(DISTNAME).tar.xz
 DISTFILES += pyport.h
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
