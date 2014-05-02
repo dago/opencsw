@@ -1,0 +1,25 @@
+From 41a096b2d285342872396ab98594a0cadba310e5 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 27 Feb 2012 00:49:24 +0100
+Subject: [PATCH] Don't try to use fchmodat
+
+---
+ libs/filesystem/v3/src/operations.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libs/filesystem/v3/src/operations.cpp b/libs/filesystem/v3/src/operations.cpp
+index 226f107..116029b 100644
+--- a/libs/filesystem/v3/src/operations.cpp
++++ b/libs/filesystem/v3/src/operations.cpp
+@@ -1387,7 +1387,7 @@ namespace detail
+ 
+     // Mac OS X Lion and some other platforms don't support fchmodat()  
+ #   if defined(AT_FDCWD) && defined(AT_SYMLINK_NOFOLLOW) \
+-      && (!defined(__SUNPRO_CC) || __SUNPRO_CC > 0x5100)
++      && (!defined(__SUNPRO_CC) || __SUNPRO_CC > 0x5100) && 0
+       if (::fchmodat(AT_FDCWD, p.c_str(), mode_cast(prms),
+            !(prms & symlink_perms) ? 0 : AT_SYMLINK_NOFOLLOW))
+ #   else  // fallback if fchmodat() not supported
+-- 
+1.7.9
+
