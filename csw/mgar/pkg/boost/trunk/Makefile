@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = boost
-VERSION = 1.45.0
+VERSION = 1.55.0
 GARTYPE = v2
 
 define BLURB
@@ -16,10 +16,19 @@ define BLURB
   programming style of the Standard Template Library (STL).
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(NAME)/
+DESCRIPTION = Free peer-reviewed portable C++ source libraries
+
+MASTER_SITES = $(SF_MIRROR)
 DISTVERSION = $(subst .,_,$(VERSION))
 DISTNAME = $(NAME)_$(DISTVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
+
+# PATCHFILES += 0003-Bug-4757-fix-backported.patch
+
+# It takes an awful lot of time.
+NOGITPATCH = 1
+
+# PATCHFILES += 0001-Don-t-try-to-use-fchmodat.patch
 
 # Known problems:
 # https://svn.boost.org/trac/boost/ticket/4757
@@ -27,25 +36,19 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # https://svn.boost.org/trac/boost/changeset/66651
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7586
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+# UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7586
+# UPSTREAM_USE_SF = 1
+UPSTREAM_MASTER_SITES = http://www.boost.org/users/history/
+UFILES_REGEX = Version (\d+(?:\.\d+)*)
 
-# GARCOMPILER = GNU
+
 TOOLSET = sun
 COMPILER_SUFFIX_PKG =
 COMPILER_SUFFIX_CAT =
 
-PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG) += boost$(COMPILER_SUFFIX_CAT)
-SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG) = Boost libraries
-# The boost build system is hard to harness.
-CHECKPKG_OVERRIDES_CSWboost$(COMPILER_SUFFIX_PKG) += bad-rpath-entry
-
-PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)devel
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG)devel = boost$(COMPILER_SUFFIX_CAT)_devel
-SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG)devel = Boost libraries, development files
-PKGFILES_CSWboost$(COMPILER_SUFFIX_PKG)devel = $(PKGFILES_DEVEL)
+PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)-dev
+SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG)-dev = $(DESCRIPTION), development files
+PKGFILES_CSWboost$(COMPILER_SUFFIX_PKG)-dev = $(PKGFILES_DEVEL)
 
 # Empty transitional package
 PACKAGES += CSWboostrt
@@ -57,22 +60,33 @@ ARCHALL_CSWboostrt = 1
 LICENSE = LICENSE_1_0.txt
 
 BUILD_DEP_PKGS += CSWstar
-BUILD_DEP_PKGS += CSWboost-jam
 
 CONFIGURE_SCRIPTS = boost
 BUILD_SCRIPTS = boost
 INSTALL_SCRIPTS = bjam
 
+BUILD64 = 1
+
 BUILD_ARGS += toolset=$(TOOLSET)
 BUILD_ARGS += --prefix=$(DESTDIR)$(prefix)
+BUILD_ARGS += --libdir=$(DESTDIR)$(libdir)
 BUILD_ARGS += link=shared
-BUILD_ARGS += cflags="$(CFLAGS)"
-BUILD_ARGS += cxxflags="$(CXXFLAGS)"
-BUILD_ARGS += linkflags="$(LDFLAGS) $(LD_OPTIONS)"
+BUILD_ARGS += cflags='$(CFLAGS)'
+BUILD_ARGS += cxxflags='$(CXXFLAGS)'
+BUILD_ARGS += linkflags='$(LDFLAGS) $(LD_OPTIONS)'
 # Stop on the first error
 BUILD_ARGS += -q
 # Display commands as you run them, I want to know what you are doing there
 BUILD_ARGS += -d+2
+BUILD_ARGS += include='/opt/csw/include'
+BUILD_ARGS += --debug-building
+BUILD_ARGS += address-model=$(MEMORYMODEL)
+# We don't have 64-bit Python
+BUILD_ARGS += --without-python
+
+BUILD_ARGS_sparcv8plus = instruction-set=v9
+BUILD_ARGS_sparcv9 = instruction-set=v9
+BUILD_ARGS += $(BUILD_ARGS_$(ISA))
 
 TEST_SCRIPTS =
 
@@ -80,12 +94,12 @@ JAMDIR_sparc = solarissparc
 JAMDIR_i386 = solarisx86
 JAMDIR = $(JAMDIR_$(GARCH))
 
-# BUILD64_LIBS_ONLY = 1
+# BUILD64 = 1
 
 # These can't be just passed from Make's PARALLELMFLAGS because of the -l flag.
-BJAM_PARALLELMFLAGS_current9s = -j 32
-BJAM_PARALLELMFLAGS_current9x = -j 5
-BJAM_PARALLELMFLAGS = $(BJAM_PARALLELMFLAGS_$(call modulation2host))
+# BJAM_PARALLELMFLAGS_current9s = -j 32
+# BJAM_PARALLELMFLAGS_current9x = -j 5
+# BJAM_PARALLELMFLAGS = $(BJAM_PARALLELMFLAGS_$(call modulation2host))
 
 include gar/category.mk
 
@@ -100,19 +114,21 @@ tar-bz-extract-%:
 	@$(MAKECOOKIE)
 
 configure-boost:
-	cd $(WORKSRC) && ./bootstrap.sh
+	( cd $(WORKSRC) && \
+	  ./bootstrap.sh $(TOOLSET))
 	@$(MAKECOOKIE)
 
 build-boost:
 	cd $(WORKSRC) && \
-		./bjam \
+		./b2 \
+		  -d+2 \
 			$(BJAM_PARALLELMFLAGS) \
 			$(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 install-bjam:
 	cd $(WORKSRC) && \
-		./bjam \
+		./b2 \
 			$(BJAM_PARALLELMFLAGS) \
 			$(BUILD_ARGS) \
 			install

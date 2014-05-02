@@ -1,0 +1,86 @@
+From 8b06be191c2f4644d3a266bd140bdac7710aabf4 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 18 Dec 2010 02:13:56 +0100
+Subject: [PATCH 3/3] Bug 4757 fix, backported
+
+Bug 4757: Compiler error in boost/array.hpp on Solaris w/Sun Studio 12
+
+https://svn.boost.org/trac/boost/ticket/4757
+---
+ boost/array.hpp |   46 ++++++++++++++++++++++++++++++----------------
+ 1 files changed, 30 insertions(+), 16 deletions(-)
+
+diff --git a/boost/array.hpp b/boost/array.hpp
+index b56a84a..a5bee24 100644
+--- a/boost/array.hpp
++++ b/boost/array.hpp
+@@ -346,7 +346,34 @@ namespace boost {
+         x.swap(y);
+     }
+ 
+-    // Specific for boost::array: simply returns its elems data member.
++#if defined(__SUNPRO_CC)
++//	Trac ticket #4757; the Sun Solaris compiler can't handle
++//	syntax like 'T(&get_c_array(boost::array<T,N>& arg))[N]'
++//	
++//	We can't just use this for all compilers, because the 
++//		borland compilers can't handle this form. 
++	namespace detail {
++       template <typename T, std::size_t N> struct c_array
++       {
++           typedef T type[N];
++       };
++	}
++    
++   // Specific for boost::array: simply returns its elems data member.
++   template <typename T, std::size_t N>
++   typename detail::c_array<T,N>::type& get_c_array(boost::array<T,N>& arg)
++   {
++       return arg.elems;
++   }
++
++   // Specific for boost::array: simply returns its elems data member.
++   template <typename T, std::size_t N>
++   typename const detail::c_array<T,N>::type& get_c_array(const boost::array<T,N>& arg)
++   {
++       return arg.elems;
++   }
++#else
++// Specific for boost::array: simply returns its elems data member.
+     template <typename T, std::size_t N>
+     T(&get_c_array(boost::array<T,N>& arg))[N]
+     {
+@@ -359,7 +386,8 @@ namespace boost {
+     {
+         return arg.elems;
+     }
+-
++#endif
++	
+ #if 0
+     // Overload for std::array, assuming that std::array will have
+     // explicit conversion functions as discussed at the WG21 meeting
+@@ -381,20 +409,6 @@ namespace boost {
+ } /* namespace boost */
+ 
+ 
+-#else
+-// Specific for boost::array: simply returns its elems data member.
+-    template <typename T, std::size_t N>
+-    T(&get_c_array(boost::array<T,N>& arg))[N]
+-    {
+-        return arg.elems;
+-    }
+-    
+-    // Const version.
+-    template <typename T, std::size_t N>
+-    const T(&get_c_array(const boost::array<T,N>& arg))[N]
+-    {
+-        return arg.elems;
+-    }
+ #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+ # pragma warning(pop)  
+ #endif 
+-- 
+1.7.3.2
+
