@@ -5,7 +5,7 @@
 NAME = rxvt-unicode
 VERSION = 9.07
 CATEGORIES = apps
-GARTYPE = v2
+GARTYPE = 
 
 DESCRIPTION = A VT102 emulator for the X window system (pron. ouR XVT, unicode)
 define BLURB
@@ -17,30 +17,23 @@ define BLURB
 
   Documentation is available at:
   http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
-endef
-
-MASTER_SITES         = http://dist.schmorp.de/rxvt-unicode/
-DISTFILES            = $(NAME)-$(VERSION).tar.bz2
-DISTFILES           += urxvt-wrapper
-UFILES_REGEX         = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-SPKG_SOURCEURL       = http://software.schmorp.de/pkg/rxvt-unicode.html
-PACKAGES             = CSWurxvt
-CATALOGNAME_CSWurxvt = urxvt
-CONFIGURE_ARGS       = $(DIRPATHS)
-CONFIGURE_ARGS      += --disable-perl
-CONFIGURE_ARGS      += --with-terminfo=/opt/csw/share/terminfo
-# Because of terminfo
-RUNTIME_DEP_PKGS_CSWurxvt += CSWncurses
-# Shared library dependencies
-RUNTIME_DEP_PKGS_CSWurxvt += CSWfconfig
-RUNTIME_DEP_PKGS_CSWurxvt += CSWftype2
-RUNTIME_DEP_PKGS_CSWurxvt += CSWlibx11
-RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxft2
-RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxrender
+end= http://dist.schmorp.de/rxvt-unicode/
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
+DISTFILES += urxvt-wrapper
+VENDOR_URL = http://software.schmorp.de/pkg/rxvt-unicode.html
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 GARCOMPILER = GNU
-EXTRA_INC = /opt/csw/X11/include
-EXTRA_LIB = /opt/csw/X11/lib
-EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
+
+PATCHFILES += rxvt-unicode-9.06-solaris8.patch
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-perl
+CONFIGURE_ARGS += --with-terminfo=/opt/csw/share/terminfo
+
+PACKAGES = CSWrxvt-unicode
+SPKG_DESC_CSWrxvt-unicode = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo
+CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo
+OBSOLETED_BY_CSWrxvt-unicode = CSWurxvt= /opt/csw/X11/lib
 
 include gar/category.mk
 
@@ -50,5 +43,4 @@ post-install-modulated:
 	  mv $(DESTDIR)$(bindir)/$${b} $(DESTDIR)$(libexecdir); \
 	  ln -s ../libexec/urxvt-wrapper $(DESTDIR)$(bindir)/$${b}; \
 	done
-	ginstall -m 755 $(FILEDIR)/urxvt-wrapper $(DESTDIR)$(libexecdir)
-	@$(MAKECOOKIE)
+	ginstall -m 755 $(FILEDIR)/urxvt-wrapper $(DESTDIR)$(libexecdir

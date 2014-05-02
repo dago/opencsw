@@ -9,7 +9,9 @@ executable=`basename $0`
 libexec="/opt/csw/libexec"
 libexec_binary="${libexec}/${executable}"
 
-if [ ! -r "${libexec_binary}" ]; then
+if [ -r "${libexec_binary}" ]; then
+  :
+else
   echo "Can't read ${libexec_binary}"
   exit 1
 fi
