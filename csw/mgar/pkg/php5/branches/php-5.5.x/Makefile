@@ -1,5 +1,5 @@
 NAME = php
-VERSION = 5.5.11
+VERSION = 5.5.12
 GARTYPE = v2
 
 DESCRIPTION = A high-level scripting language.
