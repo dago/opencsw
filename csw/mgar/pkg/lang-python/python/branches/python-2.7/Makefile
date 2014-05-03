@@ -42,7 +42,8 @@ DISTFILES += pyport.h
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
-#SKIPTEST = 1
+SKIPTEST_5.9 = 1
+SKIPTEST = $(SKIPTEST_$(GAROSREL))
 TEST_SCRIPTS = custom
 
 # for a faster turn-around:
