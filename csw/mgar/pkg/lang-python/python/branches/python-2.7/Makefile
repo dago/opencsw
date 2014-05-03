@@ -87,7 +87,6 @@ PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }
 
 PACKAGES  = CSWidle$(CVER)
 PACKAGES += CSWpython$(CVER)
-PACKAGES += CSWpython$(CVER)-tk
 
 
 PACKAGES += CSWlibpython$(DVER)-1-0
@@ -115,8 +114,6 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
 
 PKGFILES_CSWidle$(CVER) += $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle$(CVER) += $(bindir)/idle
-PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
-PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 
 ARCHALL_CSWidle$(CVER)        = 1
 
@@ -135,16 +132,6 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
-
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibpython$(DVER)-1-0
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWpython$(CVER)
-
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.9    += CSWlibtcl8-4
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.9    += CSWtk
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.10   += CSWlibtcl8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_5.10   += CSWlibtk8-5
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += $(RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk_$(GAROSREL))
 
 # Don't merge test files.
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/python$(VER)/test
@@ -208,7 +195,6 @@ CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
 
 SPKG_DESC_CSWidle$(CVER)         = Python IDE
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
-SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
 
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused
@@ -216,8 +202,6 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += surplus-dependency|CSWpython$(CVER)
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused
 
 LICENSE = LICENSE
 
@@ -226,11 +210,8 @@ CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython$(CVER)
 
 # Checkpkg does not understand relocatable packages.
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/$(PVER)/lib-dynload/gdbm.so
@@ -238,7 +219,6 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|b
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += surplus-dependency|CSWgdbm
 
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython
 
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += file-with-bad-content
 
@@ -252,9 +232,6 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER) += no-direct-binding|/opt/csw/lib/python$(VE
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libcurses.so.1|is|needed|by|/opt/csw/lib/python$(VER)/lib-dynload/_curses_panel.so|but|never|used
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/python$(VER)/lib-dynload/_curses_panel.so|but|never|used
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/python$(VER)/lib-dynload/_hashlib.so|but|never|used
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += no-direct-binding|/opt/csw/lib/python$(VER)/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python$(VER)/lib-dynload/_tkinter.so|but|never|used
-
 
 # 64-bit overrides
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += missing-dependency|CSWlibffi4
@@ -265,6 +242,26 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libcurses.so.1|is|needed|by
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libncurses.so.5|is|needed|by|/opt/csw/lib/python2.7/lib-dynload/_curses_panel_failed.so|but|never|used
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libncursesw.so.5|is|needed|by|/opt/csw/lib/sparcv9/python$(VER)/lib-dynload/_curses_panel.so|but|never|used
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-unused|libssl.so.1.0.0|is|needed|by|/opt/csw/lib/sparcv9/python$(VER)/lib-dynload/_hashlib.so|but|never|used
+
+# Package definitions. We'll be gradually moving package definitions from the
+# old grouping by variable name into grouping by package.
+PACKAGES += CSWpython$(CVER)-tk
+SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
+PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk += CSWpython$(CVER)
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython$(CVER)
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += no-direct-binding|/opt/csw/lib/python$(VER)/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/python$(VER)/lib-dynload/_tkinter.so|but|never|used
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += no-direct-binding|/opt/csw/lib/sparcv9/python$(VER)/lib-dynload/_tkinter.so|is|not|directly|bound|to|soname|libX11.so.4
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += soname-unused|libX11.so.4|is|needed|by|/opt/csw/lib/sparcv9/python$(VER)/lib-dynload/_tkinter.so|but|never|used
 
