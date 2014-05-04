@@ -441,6 +441,7 @@ def main():
       srv4 = GetPkg(md5_sum)
       res = m.CheckpkgErrorTag.select(m.CheckpkgErrorTag.q.srv4_file==srv4)
       for row in res:
+        print 'overridden' if row.overridden else 'active',
         print row.pkgname, row.tag_name, row.tag_info, row.catrel.name, row.arch.name,
         print row.os_rel.short_name
   elif (command, subcommand) == ('show', 'overrides'):
