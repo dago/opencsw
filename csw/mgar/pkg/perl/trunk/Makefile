@@ -128,8 +128,7 @@ build-perl:
 # Test
 # Beware, test may fail when run in paralled. We leave it like this because it's a lot faster and the failure not very common. Just rerun mgar test.
 # You can always run the test single threaded if needed.
-
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	cd $(WORKSRC) && $(MAKE) test
+	cd $(WORKSRC) && $(MAKE) -j1 test
 	@$(MAKECOOKIE)
