@@ -17,7 +17,7 @@ endef
 DISTFILES    = $(DISTNAME).tar.bz2
 # MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 # MASTER_SITES += http://ftp.heanet.ie/mirrors/gnu/gcc/$(NAME)-$(VERSION)/
-MASTER_SITES += ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-4.9.0/
+MASTER_SITES += ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-$(VERSION)/
 MASTER_SITES += ftp://ftp.gnu.org/gnu/gcc/gcc-$(VERSION)/
 
 LIBOBJC = 4
@@ -110,6 +110,7 @@ SKIPTEST ?= 1
 
 # Used multiple times in package definitions
 JAVA_LIB_VERSION = 15
+GO_LIB_VERSION = 5
 
 ALTERNATIVES_PRIO = 482
 
@@ -122,7 +123,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo5
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgo$(GO_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgomp1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibitm1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc3
@@ -161,7 +162,7 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWggrep
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
 # This is basically the devel package
-CHECKPKG_OVERRIDES_CSWgcc4core += shared-lib-package-contains-so-symlink
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += shared-lib-package-contains-so-symlink
 
 # The .a files are necessary
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += discouraged-path-in-pkgmap
@@ -242,12 +243,12 @@ PKGFILES_CSWlibssp0 += $(call baseisadirs,$(libdir),libssp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 
-PACKAGES += CSWlibgo5
-PKGFILES_CSWlibgo5 += $(call baseisadirs,$(libdir),libgo\.so\.5(\.\d+)*)
-SPKG_DESC_CSWlibgo5 += $(DESCRIPTION), libgo.so.5
-RUNTIME_DEP_PKGS_CSWlibgo5 += CSWlibgcc-s1
+PACKAGES += CSWlibgo$(GO_LIB_VERSION)
+PKGFILES_CSWlibgo$(GO_LIB_VERSION) += $(call baseisadirs,$(libdir),libgo\.so\.$(GO_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgo$(GO_LIB_VERSION) += $(DESCRIPTION), libgo.so.$(GO_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgo$(GO_LIB_VERSION) += CSWlibgcc-s1
 # Hasn't been investigated. I feel lucky.
-CHECKPKG_OVERRIDES_CSWlibgo5 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgo$(GO_LIB_VERSION) += file-with-bad-content
 
 PACKAGES += CSWlibitm1
 PKGFILES_CSWlibitm1 += $(call baseisadirs,$(libdir),libitm\.so\.1(\.\d+)*)
@@ -272,8 +273,8 @@ RUNTIME_DEP_PKGS_CSWlibquadmath0 += CSWlibgcc-s1
 # Dependencies only on Intel
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_i386 += CSWlibcilkrts5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_i386 += CSWlibquadmath0
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_$(GARCH))
 RUNTIME_DEP_PKGS_CSWlibgfortran3_i386 += CSWlibquadmath0
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_$(GARCH))
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 
 PACKAGES += CSWlibatomic1
@@ -492,7 +493,7 @@ CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgfortran3 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgij$(JAVA_LIB_VERSION) += no-direct-binding
-CHECKPKG_OVERRIDES_CSWlibgo5 += no-direct-binding
+CHECKPKG_OVERRIDES_CSWlibgo$(GO_LIB_VERSION) += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibgomp1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibitm1 += no-direct-binding
 CHECKPKG_OVERRIDES_CSWlibobjc-gc4 += no-direct-binding
