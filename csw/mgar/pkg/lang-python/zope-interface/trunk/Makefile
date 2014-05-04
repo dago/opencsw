@@ -8,8 +8,6 @@ CATEGORIES = python
 GARTYPE = v2
 
 DESCRIPTION = Implementation of object interfaces in Python
-define BLURB
-endef
 
 MASTER_SITES += $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
