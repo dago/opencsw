@@ -35,7 +35,7 @@ PKGFILES_CSWlibfl2 += $(call pkgfiles_lib,libfl.so.2)
 
 PACKAGES += CSWlibfl-pic2
 SPKG_DESC_CSWlibfl-pic2 = Library for Flex, libfl_pic.so.2
-PKGFILES_CSWlibfl-pic2 += $(call pkgfiles_lib,libfl_pic.so.2)ude gar/category.mk
+PKGFILES_CSWlibfl-pic2 += $(call pkgfiles_lib,libfl_pic.so.2)udBUILD64 = 1ude gar/category.mk
 
 # Must use GNU diff for option '-q' or two tests fail due to bailing ou_PATH = $(prefix)/gnu:$(PATH)
 
