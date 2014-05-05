@@ -8,7 +8,7 @@
 # Set max open files to 1024
 
 NAME = glib
-VERSION = 2.36.3
+VERSION = 2.40.0
 GARTYPE = v2
 # for memory synchronisation primitives like __sync_synchronize we need gcc
 GARCOMPILER = GNUOMPILER = SOS12U3
@@ -28,9 +28,9 @@ DISTFILES DISTFILES += set-ulimit-for-build-test +  .*/gtk-doc.*
 
 BUILD_DEP_PKGS = CSWggettext-dev CSWlibiconv-dev CSWlibffi-dev
 BUILD_DEP_PKGS += CSWlibdbus-dev CSWdbus CSWlibgamin-dev CSWgamin
-BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconfig CSWlibpcre-dev CSWdskutl
+BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconf
 # To make the tests working
-BUILD_DEP_PKGS += CSWpython CSWdbuspython CSWsharedmimeinfo
+BUILD_DEP_PKGS += CSWCSWpython CSWdbuspython CSWsharedmimeinfo
 # This is used to adjust paths in documentation
 BUILD_DEPBUILD_DEP_PKGS += CSWlibz-devP_P
 # Build patches
@@ -42,7 +42,7 @@ PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW_5.10 += 0003-Make
 PATCHFILES_5.11 += 0020-Adjust-path-to-zoneinfo-databaseoneinfo-version-1.patch
 PATCHFILES += 0022-Change-shell-to-bash-in-test-shePATCHFILES += 0029-Don-t-undefine-_XOPEN_SOURCE.patch
 PATCHFILES += 0030-Move-around-statfs_result.patch
-PATCHFILES += 0034-Reorder-link-objects-glib2-must-come-first-otherwise-provide-FIONREAD.patch
+e-FIONREAD.patch
 
 #
 # Test patches
