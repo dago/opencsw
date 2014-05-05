@@ -1,0 +1,31 @@
+From a7dde1d6fa77d36ce1b6f87f48f5d0ed731a12be Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 5 May 2014 15:36:28 +0200
+Subject: [PATCH] Allow undefined symbols in shared libs
+
+---
+ Makefile.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 86e31c1..ec16e01 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -435,12 +435,12 @@ libfl_la_SOURCES = \
+ 	libmain.c \
+ 	libyywrap.c
+ 
+-libfl_la_LDFLAGS = -no-undefined -version-info @SHARED_VERSION_INFO@
++libfl_la_LDFLAGS = -version-info @SHARED_VERSION_INFO@
+ libfl_pic_la_SOURCES = \
+ 	libmain.c \
+ 	libyywrap.c
+ 
+-libfl_pic_la_LDFLAGS = -no-undefined -version-info @SHARED_VERSION_INFO@
++libfl_pic_la_LDFLAGS = -version-info @SHARED_VERSION_INFO@
+ noinst_HEADERS = \
+ 	flexdef.h \
+ 	flexint.h \
+-- 
+1.8.4.1
+
