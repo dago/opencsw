@@ -1,5 +1,5 @@
 NAME = augeas
-VERSION = 0.10.0
+VERSION = 1.2.0
 GARTYPE = v2
 
 DESCRIPTION = A configuration editing tool
@@ -10,7 +10,7 @@ define BLURB
   files.
 endef
 
-MASTER_SITES = http://augeas.net/download/
+MASTER_SITES = http://download.augeas.net/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
@@ -20,9 +20,9 @@ RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibxml2-2
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
 PATCHFILES += 0001-fix-compiling-on-solaris.patch \
-  0002-regexp-escape.patch \
-  0003-Remove-Linux-isms-so-tests-can-run-on-Solaris.patch \
-  0004-pkg-config-Augeas-requires-libxml2.patch
+              0002-regexp-escape.patch \
+              0003-Remove-Linux-isms-so-tests-can-run-on-Solaris.patch \
+              0004-pkg-config-Augeas-requires-libxml2.patch
 
 # Building on Solaris 10 doesn't work as it support C99 and the above fixes are
 # not necessary there.
