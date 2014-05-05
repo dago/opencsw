@@ -6,7 +6,7 @@
 #   at all
 # ! Python modules are clearly installed in a wrong plac
 NAME = mailman
-VERSION = 2.1.15
+VERSION = 2.1.18
 
 DESCRIPTION = Mailman mailing list software
 
@@ -16,15 +16,16 @@ DISTFILES  = $(DISTNAME).tgz
 PACKAGES += CSWmailman
 SPKG_DESC_CSWmailman = Mailman mailing list software
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWmailman += CSWpython
+RUNTIME_DEP_PKGS_CSWmailman += CSWpython27
 RUNTIME_DEP_PKGS_CSWmailman += CSWperl
+CHECKPKG_OVERRIDES_CSWmailman += surplus-dependency|CSWpython27
 
 # The mailman build system puts files in all sorts of strange places
 prefix=$(BUILD_PREFIX)/$(NAME)
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --without-permcheck
-CONFIGURE_ARGS += --with-python=/opt/csw/bin/python2.6
+CONFIGURE_ARGS += --with-python=/opt/csw/bin/python2.7
 
 # There is no testsuite
 TEST_SCRIPTS =
