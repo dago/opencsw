@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = squid
-VERSION = 3.4.49]\).*\.[0-9]*/\1/')
+VERSION = 3.4.59]\).*\.[0-9]*/\1/')
 GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
@@ -27,6 +27,7 @@ RUNTIME_DEP_PKGS_CSWsquid += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWsquid += CSWlibnettle4
 
 # Linker anomaly
 CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWlibintl8
@@ -43,18 +44,7 @@ MIGRATE_SOURCE_DIR = /opt/csw/etc
 MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)
 MIGRATE_FILES  = cachemgr.conf
 MIGRATE_FILES += mime.conf
-MIGRATE_F##PATCHFILES += 0002-Link-against-OpenSSL-from-OpenCSW.patch
-##PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
-#ain-in-libber.patch
-PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt#PATCHFILES += 0006-Use-default-cache_dir.patch
-##PATCHFILES += 0006-Use-usr-xpg4-bin-egrep.patch
-#PATCHFILES += 0007-Use-OpenCSW-specific-paths-for-various-helper-tests.patch
-#
-## Use patch until this is fixed:
-##   http://bugs.squid-cache.org/show_bug.cgi?id=3572
-#PATCHFILES += 0008-Rename-IpAddress-to-SquidIpAddress-to-make-mib2.h-ha.patch
-
-CONFIGURE_ARGS  = $(DIRPATHS)
+MIGRATE_FCONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/$(NAME)onfdir=${sysconfdir}
 CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
@@ -110,7 +100,8 @@ EXTRA_CPPFLAGS += -Du_int32_t=uint32_t -Du_int16_t=uint16_t
 # Use patch until this is fixed:
 #   http://bugs.squid-cache.4025
 EXTRA_CPPFLAGS += -DKRB5_DEPRECATED=1
-CONFIGURE_ARGS += --disable-strict-error-checkingMENT-$(MEMORYMODEL))
+CONFIGURE_ARGS += --disable-strict-error-checkingME# configure tests with 'id -u' and expects a uidnumber
+CONFIGURE_ENV_PATH = /usr/xpg4/bin:$(PATH)MENT-$(MEMORYMODEL))
 
 GARCOMPILER = GNU
 
