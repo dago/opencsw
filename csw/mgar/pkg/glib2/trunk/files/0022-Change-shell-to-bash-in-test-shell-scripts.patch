@@ -1,6 +1,6 @@
-From ebf6b06ed4aabe24425b09bd145c0191c431aa7d Mon Sep 17 00:00:00 2001
+From 6c908148118b5197ae44dd54209d9bf84faf7cc5 Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
-Date: Sat, 29 Jun 2013 08:28:38 +0200
+Date: Mon, 5 May 2014 15:10:53 +0200
 Subject: [PATCH] Change shell to bash in test shell scripts
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH] Change shell to bash in test shell scripts
  2 files changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/tests/run-assert-msg-test.sh b/tests/run-assert-msg-test.sh
-index 58305b0..2c162bc 100755
+index d4a5111..fe0d6ec 100755
 --- a/tests/run-assert-msg-test.sh
 +++ b/tests/run-assert-msg-test.sh
 @@ -1,4 +1,10 @@
@@ -28,8 +28,8 @@ index 58305b0..2c162bc 100755
  
  echo_v "Running assert-msg-test"
  OUT=$(./assert-msg-test 2>&1) && fail "assert-msg-test should abort"
--echo "$OUT" | grep -q '^ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)' || \
-+echo "$OUT" | ggrep -q '^ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)' || \
+-echo "$OUT" | grep -q '^GLib:ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)' || \
++echo "$OUT" | ggrep -q '^GLib:ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)' || \
    fail "does not print assertion message"
  
  if ! type gdb >/dev/null 2>&1; then
@@ -37,8 +37,8 @@ index 58305b0..2c162bc 100755
  OUT=$($LIBTOOL --mode=execute gdb --batch -x ${srcdir:-.}/assert-msg-test.gdb ./assert-msg-test 2> $error_out) || fail "failed to run gdb"
  
  echo_v "Checking if assert message is in __glib_assert_msg"
--if ! echo "$OUT" | grep -q '^$1.*"ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)"'; then
-+if ! echo "$OUT" | ggrep -q '^$1.*"ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)"'; then
+-if ! echo "$OUT" | grep -q '^$1.*"GLib:ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)"'; then
++if ! echo "$OUT" | ggrep -q '^$1.*"GLib:ERROR:.*assert-msg-test.c:.*:.*main.*: assertion failed: (42 < 0)"'; then
    fail "__glib_assert_msg does not have assertion message"
  fi
  
@@ -53,5 +53,5 @@ index 24f3d69..9fd1038 100755
  fail ()
  {
 -- 
-1.8.3.1
+1.8.4.1
 

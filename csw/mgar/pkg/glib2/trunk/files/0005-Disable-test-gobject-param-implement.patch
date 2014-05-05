@@ -1,25 +1,27 @@
-From b936bfdf3c84464552981b535ae41185027588ad Mon Sep 17 00:00:00 2001
-From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Thu, 23 Aug 2012 18:09:26 +0200
+From 4cda841e37fc05440d2be3cfe89493384e06fda0 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Mon, 5 May 2014 15:22:38 +0200
 Subject: [PATCH] Disable test gobject/param/implement
 
 ---
- gobject/tests/param.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gobject/tests/param.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/gobject/tests/param.c b/gobject/tests/param.c
-index 671642e..80871d9 100644
+index 40f453e..e865f01 100644
 --- a/gobject/tests/param.c
 +++ b/gobject/tests/param.c
-@@ -797,7 +797,7 @@ main (int argc, char *argv[])
-   g_test_add_func ("/param/qdata", test_param_qdata);
+@@ -840,8 +840,10 @@ main (int argc, char *argv[])
    g_test_add_func ("/param/validate", test_param_validate);
    g_test_add_func ("/param/convert", test_param_convert);
--  g_test_add_func ("/param/implement", test_param_implement);
-+  /* g_test_add_func ("/param/implement", test_param_implement); */
-   g_test_add_func ("/value/transform", test_value_transform);
  
-   return g_test_run ();
++#if 0
+   if (g_test_slow ())
+     g_test_add_func ("/param/implement", test_param_implement);
++#endif
+ 
+   for (data.change_this_flag = 0; data.change_this_flag < 16; data.change_this_flag++)
+     for (data.change_this_type = 0; data.change_this_type < 3; data.change_this_type++)
 -- 
-1.7.11.3
+1.8.4.1
 
