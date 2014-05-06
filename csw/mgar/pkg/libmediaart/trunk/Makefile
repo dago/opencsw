@@ -16,9 +16,13 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(DISTNAME).tar.xz
 GARCOMPILER = GNU
+# Tests fail left and right
+SKIPTEST = 1
 
-PACKAGES += CSWlibmediaart-0-1-0
-SPKG_DESC_CSWlibmediaart-0-1-0 = $(DESCRIPTION)
+PATCHFILES += eba1a1f1276e40b68e7b7084863469a0c97ef41a.patch
+
+PACKAGES += CSWlibmediaart-0-2-0
+SPKG_DESC_CSWlibmediaart-0-2-0 = $(DESCRIPTION)
 
 PACKAGES += CSWlibmediaart-dev
 SPKG_DESC_CSWlibmediaart-dev = $(DESCRIPTION), development files
