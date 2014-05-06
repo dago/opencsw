@@ -5,7 +5,7 @@ NAME = libmediaart
 VERSION = 0.1.0
 GARTYPE = v2
 
-DESCRIPTION = libmediaart, manage, extract and handle media art caches
+DESCRIPTION = Libmediaart, manage, extract and handle media art caches
 define BLURB
     Library tasked with managing, extracting and handling media art caches.
   The code for this project has been extracted from Tracker and inserted
@@ -21,15 +21,26 @@ SKIPTEST = 1
 
 PATCHFILES += eba1a1f1276e40b68e7b7084863469a0c97ef41a.patch
 
-PACKAGES += CSWlibmediaart-0-2-0
-SPKG_DESC_CSWlibmediaart-0-2-0 = $(DESCRIPTION)
+PACKAGES += CSWlibmediaart0-2-0
+CATALOGNAME_CSWlibmediaart0-2-0 = libmediaart0_2_0
+SPKG_DESC_CSWlibmediaart0-2-0 += $(DESCRIPTION), libmediaart-0.2.so.0
+PKGFILES_CSWlibmediaart0-2-0 += $(call baseisadirs,$(libdir),libmediaart-0\.2\.so\.0\.100\.0)
+PKGFILES_CSWlibmediaart0-2-0 += $(call baseisadirs,$(libdir),libmediaart-0\.2\.so\.0(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibqtcore4
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibqtgui4
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmediaart0-2-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibmediaart-dev += CSWlibmediaart0-2-0
 
 PACKAGES += CSWlibmediaart-dev
 SPKG_DESC_CSWlibmediaart-dev = $(DESCRIPTION), development files
 PKGFILES_CSWlibmediaart-dev = $(PKGFILES_DEVEL)
-
-# For gettext
-CONFIGURE_ENV_PATH = /opt/csw/gnu:$(PATH)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
