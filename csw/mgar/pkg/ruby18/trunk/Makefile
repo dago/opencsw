@@ -126,7 +126,12 @@ PATCHFILES += 0005-Correct-a-usr-local-reference-in-mkmf.rb.patch
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --# Needed for conformity with Tk
-CONFIGURE_ARGS += --enable-pthread-program-suffix=18
+CONFIGURE_ARGS += --enable-pthread-# As a result of pthreads getcontext/setcontext is used massively. These two presets are the essence of the proposed patch:
+#   http://timetobleed.com/fix-a-bug-in-rubys-configurein-and-get-a-30-performance-boost/
+#   https://github.com/ice799/matzruby/commit/0b9b69f9653782a33aee2b8937d405eae245b60c
+CONFIGURE_ARGS += ac_cv_func_getcontext=no
+CONFIGURE_ARGS += ac_cv_func_setcontext=no
+-program-suffix=18
 EXTRA_CONFIGURE_ARGS_isa-default-compiler-sun = --enable-install-doc
 
 INSTALL_ARGS = install
