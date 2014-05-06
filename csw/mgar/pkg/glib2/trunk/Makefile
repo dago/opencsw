@@ -41,8 +41,6 @@ PATCHFILES += 0002-Include-sys-filio.h-to-provide-FIONREAD.patchris environment
 PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW_5.10 += 0003-Make-glib-work-with-zoneinfo-version-1.patch
 PATCHFILES_5.11 += 0020-Adjust-path-to-zoneinfo-databaseoneinfo-version-1.patch
 PATCHFILES += 0022-Change-shell-to-bash-in-test-shePATCHFILES += 0029-Don-t-undefine-_XOPEN_SOURCE.patch
-# Seems to be fixed in 2.40.0
-# PATCHFILES += 0030-Move-around-statfs_result.patch
 
 #
 # Until someone invests some real resources into checking all test patches,
@@ -99,7 +97,7 @@ PATCHFILES_isa-sparcv9 += 0021-Disable-buffered-input-stream-set-buffer# Needs t
 #PATCHFILES += 0037-Remove-failing-tests-linking-is-broken.patch
 #PATCHFILES_5.11 += 0038-Disable-appinfo-launch-test-fails-on-s11x86.patch
 
-PATCHFILES += $(PATCHFILES_$(GAROSREL))el# Solaris 11 specific package for FEN support
+# PATCHFILES += $(PATCHFILES_$(GAROSREL))el# Solaris 11 specific package for FEN support
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGING_PLATFORMS += solaris11-sparc solaris110-sparc solaris10-i386
 
@@ -107,8 +105,7 @@ PACKAGING_PLATFORMS += solaris11-sparc solaris110-sparc solaris10-i386
 PACKAGES += CSWglib2
 SPKG_DESC_CSWglib2 = Low level core compatibility library for GTK+ and GNOME
 # PKGFILES is catchall
-RUNTIME_DEP_PKGgio-fam-backend
-RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgobject2-0-0
@@ -177,11 +174,7 @@ RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibglib2-0-RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibgcc-s1
 CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.4000.0ve added /opt/csw
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4000.0-# checkpkg doesn't take the solaris version into account and that this symbol version is okay to be used in solaris 11
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0_5.11 += forbidden-version-interface-dependencies|/opt/csw/lib/libglib-2.0.so.0.4000.0|requires|forbidden|interface|version|SUNW_1.23|in|library|libc.so.1b-2.0.so.0.3200.4
-CHECKPKG_OVERRIDE_5.11 += forbidden-version-interface-dependencies|/opt/csw/lib/amd64/libglib-2.0.so.0.4000.0|requires|forbidden|interface|version|SUNW_1.23|in|library|libc.so.1b-2.0.so.0.3200.4
-CHECKPKG_OVERRIDE_5.11 += forbidden-version-interface-dependencies|/opt/csw/lib/sparcv9/libglib-2.0.so.0.4000.0|requires|forbidden|interface|version|SUNW_1.23|in|library|libc.so.1b-2.0.so.0.3200.4
-CHECKPKG_OVERRIDES_CS$(CHECKPKG_OVERRIDES_CSWlibglib2-0-0_$(GAROSREL))--2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4000.0--2.0.so.0.3200.4
 
 
 PACKAGES += CSWlibgmodule2-0-0
@@ -229,7 +222,7 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWligio-fam-backend
 CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWgio-fam-backend--dev += CSWlibz1
-PKGFILES_CSWlibglib2-dev += $# FIXME: at least glib-compile-schemas and gsettings should be moved to CSWglib2$(PKGFILES_DEVEL)
+PKGFILES_CSWlibglib2-dev += $# FIXME: glib-compile-schemas should possibly be moved to CSWglib2$(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 PKGFILES_CSWlibglib2-dev += .*/gdbus-2.0.*
 PKGFILES_CSWlibglib2-dev += .*/bash-completion.*
@@ -237,7 +230,6 @@ PKGFILES_CSWlibglib2-dev += .*/bin.*/gdbus.*
 PKGFILES_CSWlibglib2-dev += .*/bin.*/glib.*
 PKGFILES_CSWlibglib2-dev += .*/bin.*/gobject-query
 PKGFILES_CSWlibglib2-dev += .*/bin.*/gresource
-PKGFILES_CSWlibglib2-dev += .*/bin.*/gsettings
 PKGFILES_CSWlibglib2-dev += .*/bin.*/gtester.*
 PKGFILES_CSWlibglib2-dev += .*/man1/gdbus.*
 PKGFILES_CSWlibglib2-dev += .*/man1/glib.*
