@@ -351,7 +351,7 @@ CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --with-pcre-dir=$(prefix)
-CONFIGURE_ARGS += --with-pcre-regex
+CONFIGURE_ARGS += --with-pcre-regex=$(prefix)
 # not documented, but you can pass the path to mysql_config directly
 # we need the 32-bit version, so we have to force this
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
@@ -378,6 +378,10 @@ CONFIGURE_ARGS += --enable-cli
 ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 endif
+
+
+# XXX TBD:
+# configure: WARNING: unrecognized options: --enable-magic-quotes, --enable-sqlite-utf8, --enable-sqlite3, --with-curlwrappers, --with-exec-dir, --with-sqlite
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
