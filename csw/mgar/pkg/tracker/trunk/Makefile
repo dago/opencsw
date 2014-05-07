@@ -56,6 +56,7 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-control1-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-sparql1-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-miner1-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-common
+RUNTIME_DEP_PKGS_CSWtracker += CSWlibtracker-extract
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgsf1-114
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibpng15-15
@@ -94,7 +95,6 @@ PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
 PKGFILES_CSWlibtracker-common += $(call pkgfiles_lib,tracker-1.0/libtracker-common.so.0)
 PKGFILES_CSWlibtracker-common += $(call pkgfiles_lib,tracker-1.0/libtracker-data.so.0)
-PKGFILES_CSWlibtracker-common += $(call pkgfiles_lib,tracker-1.0/libtracker-extract.so.0)
 RUNTIME_DEP_PKGS_CSWlibtracker-common += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWlibtracker-common += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibtracker-common += CSWlibintl8
@@ -110,6 +110,20 @@ RUNTIME_DEP_PKGS_CSWlibtracker-common += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibtracker-common_sparc += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibtracker-common_sparc += CSWlibicudata52
 RUNTIME_DEP_PKGS_CSWlibtracker-common += $(RUNTIME_DEP_PKGS_CSWlibtracker-common_$(GARCH))
+
+PACKAGES += CSWlibtracker-extract
+SPKG_DESC_CSWlibtracker-extract += $(DESCRIPTION), libtracker-extract
+PKGFILES_CSWlibtracker-extract += $(call pkgfiles_lib,tracker-1.0/libtracker-extract.so.0)
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibtracker-common
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibtracker-sparql1-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibiptcdata
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibexif12
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibglib2-0-0
 
 PACKAGES += CSWlibtracker-miner1-0-0
 SPKG_DESC_CSWlibtracker-miner1-0-0 += $(DESCRIPTION), libtracker-miner-1.0.so.0
@@ -168,6 +182,8 @@ PKGFILES_CSWlibtracker-dev += $(datadir)/vala/vapi/tracker-.*
 RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-control1-0-0
 RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-sparql1-0-0
 RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-miner1-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-common
+RUNTIME_DEP_PKGS_CSWlibtracker-dev += CSWlibtracker-extract
 
 # For gettext
 CONFIGURE_ENV_PATH = /opt/csw/gnu:$(PATH)
