@@ -121,6 +121,13 @@ RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibexif12
 RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibtracker-extract += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract_sparc += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibtracker-extract_sparc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibtracker-extract_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibtracker-extract_sparc += CSWlibuuid1
+RUNTIME_DEP_PKGS_CSWlibtracker-extract_sparc += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWlibtracker-extract_sparc += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWlibtracker-extract += $(RUNTIME_DEP_PKGS_CSWlibtracker-extract_$(GARCH))
 
 PACKAGES += CSWlibtracker-miner1-0-0
 SPKG_DESC_CSWlibtracker-miner1-0-0 += $(DESCRIPTION), libtracker-miner-1.0.so.0
