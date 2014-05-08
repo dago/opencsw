@@ -2,27 +2,27 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.9.4
+VERSION = 9.9.5
 GARTYPE = v2
 
 # Enable these for Px-releases
-RELEASE = P2
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P2
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
 endef
 
 # Enable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -83,14 +83,17 @@ CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 CONFIGURE_ARGS += --with-dlz-ldap=/opt/csw
 
-EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
+EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la $(mandir)/man1/isc-config.sh.1 $(bindir)/isc-config.sh
 
 #EXTRA_INC = /opt/csw/include
 
+PKGFILES_CSWbindutils  = $(bindir)/dig
+PKGFILES_CSWbindutils += $(bindir)/host
+PKGFILES_CSWbindutils += $(bindir)/nslookup
+PKGFILES_CSWbindutils += $(bindir)/nsupdate
 PKGFILES_CSWbind-dev   = $(PKGFILES_DEVEL)
 PKGFILES_CSWbind-dev  += .*\.so
 PKGFILES_CSWlibbind    = .*\.so\..*
-PKGFILES_CSWbindutils  = $(bindir)/.*
 PKGFILES_CSWbindchroot = .*chroot.*
 
 TEST_SCRIPTS    = custom
@@ -118,12 +121,12 @@ CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CS
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
 
 # Will not split out all these libs
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.8|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.100.1.1|soname=libdns.so.100|pkgname=CSWlibbind|expected=CSWlibdns100
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.95.2.1|soname=libisc.so.95|pkgname=CSWlibbind|expected=CSWlibisc95
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.90.0.4|soname=libisccc.so.90|pkgname=CSWlibbind|expected=CSWlibisccc90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.0.7|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.90.0.5|soname=liblwres.so.90|pkgname=CSWlibbind|expected=CSWliblwres90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.95.5.0|soname=libisc.so.95|pkgname=CSWlibbind|expected=CSWlibisc95
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.9|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.100.2.2|soname=libdns.so.100|pkgname=CSWlibbind|expected=CSWlibdns100
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.1.0|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccc.so.90.0.6|soname=libisccc.so.90|pkgname=CSWlibbind|expected=CSWlibisccc90
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.90.0.7|soname=liblwres.so.90|pkgname=CSWlibbind|expected=CSWliblwres90
 
 # Some new checks, have no idea about their relevance
 CHECKPKG_OVERRIDES_CSWlibbind += no-direct-binding
