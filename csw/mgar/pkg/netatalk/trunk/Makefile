@@ -43,7 +43,6 @@ RUNTIME_DEP_PKGS += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWbdb48
 RUNTIME_DEP_PKGS += CSWlibtracker-sparql1-0-0
-RUNTIME_DEP_PKGS += CSWlibtracker-miner1-0-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
