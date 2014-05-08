@@ -1,0 +1,73 @@
+From 33dd614058f32bbe3c88734654228d8715f2403e Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <rb@sernet.de>
+Date: Tue, 22 Apr 2014 16:25:34 +0200
+Subject: [PATCH] Remove tracker miner code
+
+tracker_miner_manager_new_full() was reported to be potentially
+locking up for an unknown reason.
+
+As we diddn't use the miner anyway for other reasons (see comment in
+the code), simply #ifdef 0 the whole code.
+---
+ etc/spotlight/slmod_sparql.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/etc/spotlight/slmod_sparql.c b/etc/spotlight/slmod_sparql.c
+index 11b1dac..e59db5a 100644
+--- a/etc/spotlight/slmod_sparql.c
++++ b/etc/spotlight/slmod_sparql.c
+@@ -34,7 +34,9 @@
+ #define MAX_SL_RESULTS 20
+ 
+ static TrackerSparqlConnection *connection;
++#if 0
+ static TrackerMinerManager *manager;
++#endif
+ 
+ static char *tracker_to_unix_path(const char *uri)
+ {
+@@ -73,7 +75,9 @@ static int sl_mod_init(void *p)
+ 
+     become_root();
+     connection = tracker_sparql_connection_get(NULL, &error);
++#if 0 /* this may hang, so disable it as we don't use the miner anyway  */
+     manager = tracker_miner_manager_new_full(FALSE, &error);
++#endif
+     unbecome_root();
+ 
+     if (!connection) {
+@@ -83,11 +87,13 @@ static int sl_mod_init(void *p)
+         EC_FAIL;
+     }
+ 
++#if 0
+     if (!manager) {
+         LOG(log_error, logtype_sl, "Couldn't connect to Tracker miner");
+         g_clear_error(&error);
+         EC_FAIL;
+     }
++#endif
+ 
+ EC_CLEANUP:
+     EC_EXIT;
+@@ -387,6 +393,7 @@ static int sl_mod_index_file(const void *p)
+      */
+     return 0;
+ 
++#if 0
+ #ifdef HAVE_TRACKER_MINER
+     EC_INIT;
+     const char *f = p;
+@@ -414,7 +421,8 @@ static int sl_mod_index_file(const void *p)
+     EC_EXIT;
+ #else
+     return 0;
+-#endif
++#endif /* HAVE_TRACKER_MINER */
++#endif /* 0 */
+ }
+ 
+ struct sl_module_export sl_mod = {
+-- 
+1.9.1
+

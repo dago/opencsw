@@ -31,6 +31,7 @@ BUILD_DEP_PKGS += CSWlibdbus-glib-dev
 BUILD_DEP_PKGS += CSWlibtracker-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWopenldap-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
 
 RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcrypt11
@@ -41,8 +42,8 @@ RUNTIME_DEP_PKGS += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS += CSWlibdbus-glib1-2
 RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWbdb48
-RUNTIME_DEP_PKGS += CSWlibtracker-sparql0-16-0
-RUNTIME_DEP_PKGS += CSWlibtracker-miner0-16-0
+RUNTIME_DEP_PKGS += CSWlibtracker-sparql1-0-0
+RUNTIME_DEP_PKGS += CSWlibtracker-miner1-0-0
 RUNTIME_DEP_PKGS += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibldap2-4-2
@@ -53,6 +54,8 @@ RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL)) $(RUNTIME_DEP_PKGS_
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
 PATCHFILES += 0004-Ensure-gsettings-is-called-from-opt-csw-bin.patch
+# will be in 3.1.2:
+PATCHFILES += 33dd614058f32bbe3c88734654228d8715f2403e.patch
 
 REINPLACEMENTS += manifest1
 REINPLACE_MATCH_manifest1 = network/netatalk
@@ -76,7 +79,7 @@ CONFIGURE_ARGS += --with-bdb=/opt/csw/bdb48
 CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/run/netatalk
 CONFIGURE_ARGS += --enable-krbV-uam
 CONFIGURE_ARGS += --with-tracker-prefix=/opt/csw
-CONFIGURE_ARGS += --with-tracker-pkgconfig-version=0.16
+CONFIGURE_ARGS += --with-tracker-pkgconfig-version=1.0
 CONFIGURE_ARGS += --with-ssl-dir=/opt/csw
 CONFIGURE_ARGS += --with-ldap=/opt/csw
 # compiling with MySQL on opencsw is a major pita atm :)
