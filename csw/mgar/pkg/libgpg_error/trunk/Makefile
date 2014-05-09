@@ -1,5 +1,5 @@
 NAME = libgpg-error
-VERSION = 1.12
+VERSION = 1.13
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -39,6 +39,6 @@ VENDOR_URL = http://www.gnupg.org/download/
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
-BUILD64_LIBS_ONLY = 1
+BUILD6EXTRA_LINKER_FLAGS = -lrt
 
-include
+include gar/category.mk
