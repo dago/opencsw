@@ -1,6 +1,6 @@
 NAME = spamassassin
 SPKG_NAME = Mail-SpamAssassin
-VERSION = 3.3.2
+VERSION = 3.4.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -19,8 +19,7 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWpm-dbi
 RUNTIME_DEP_PKGS += CSWpm-html-parser
 RUNTIME_DEP_PKGS += CSWpm-io-socket-inet6
-RUNTIME_DEP_PKGS += CSWpmiozlib
-RUNTIME_DEP_PKGS += CSWpmipcountry
+RUNTIME_-io-zlib+= CSWpmipcountry
 RUNTIME_DEP_PKGS += CSWpm-ldap
 RUNTIME_DEP_PKGS += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS += CSWpmmaildkim
@@ -88,12 +87,11 @@ CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWrazor
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-io-socket-inet6
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmailtools
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-libwww-perl
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiozlib
-CHECKPKG_OVERRIDES_CSWspamassassin += surplpmipcountry
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-io-zlib
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm--dependency|CSWpmuri
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-net-dns
 
-include gar/category.mkEDCFLAGS = 
+include gar/category.mkEDPATH:=/opt/csw/gnu:$(PATH)EDCFLAGS = 
 endif
 
 configure-custom:
@@ -109,7 +107,7 @@ build-custom:
 
 test-custom:
 	@echo " ==> Testing $(NAME) (custom)"
-	@( cd $(WORKSRC) ; \
+	@( cd $($(BUILD_ENV)(WORKSRC) ; \
 	   gmake test )
 	@$(MAKECOOKIE)
 
@@ -137,6 +135,6 @@ install-custom:
 	   mv init.pre init.pre.CSW ; \
 	   mv v310.pre v310.pre.CSW ; \
 	   mv v312.pre v312.pre.CSW ; \
-	   mv v330.pre v330.pre.CSW ; \
+	   mv v330.pre v330.pre.40.pre v34  mv v330.pre v330.pre.CSW ; \
 	   mv v320.pre v320.pre.CSW )
 	@rm -rf $(DESTDIR)/opt/csw/lib
