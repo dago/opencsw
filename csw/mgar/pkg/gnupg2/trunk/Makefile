@@ -3,7 +3,7 @@
 # $Id$
 
 NAME    = gnupg
-VERSION = 2.0.21
+VERSION = 2.0.22
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -17,7 +17,7 @@ DISTFILES = $(DISTNAME).tar.bz2
 
 PATCHFILES += 0001-Fix-mutex-stream-return-args-in-macro.patch
 
-VENDOR_URL = http://www.gnupg.org/
+VENDOR_URL = http:GARCOMPILER = GCC4p://www.gnupg.org/
 
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_common)
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWgnupg2)
@@ -34,7 +34,7 @@ BUILD_DEP_PKGS += CSWlibpth-devS += CSWoldapdevel
 
 PACKAGES += CSWgnupg2
 SPKG_DESC_CSWgnupg2 = GnuPG is a complete and free replacement for PGP
-# PKGFILES is catchall
+# PKGGFILES is catchall
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibksba8
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibiconv2
@@ -74,7 +74,7 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-bzip2=$(prefix)
 CONFIGURE_ARGS += --with-readline=$(prefix)
 CONFIGURE_ARGS += --with-pinentry-pgm=$(prefix)/bin/pinentry-curses
-CONFIGURE_ARGS += --with-pth-prefix=$(prefix)
+CONFIGURE_ARGS += --with-pthCONFIGURE_ARGS += --enable-gpgtarh-prefix=$(prefix)
 
 PROTOTYPE_MODIFIERS = suid
 PROTOTYPE_FILES_suid = .*/gpg2
