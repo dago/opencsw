@@ -37,9 +37,9 @@ configure-sourcegs:
 	@$(MAKECOOKIE)
 
 build-sourcegs:
-	. /opt/csw/System/Library/Makefiles/GNUstep.sh && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR)
+	. /opt/csw/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. /opt/csw/System/Library/Makefiles/GNUstep.sh && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) -C $(OBJDIR) install
+	. /opt/csw/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) install
 	@$(MAKECOOKIE)
