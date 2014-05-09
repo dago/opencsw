@@ -74,6 +74,7 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-dev
 RUNTIME_DEP_PKGS_CSWtracker += CSWdbus
 RUNTIME_DEP_PKGS_CSWtracker += CSWdconf
+RUNTIME_DEP_PKGS_CSWtracker += CSWglib2
 RUNTIME_DEP_PKGS_CSWtracker_sparc += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWtracker_sparc += CSWlibz1
 RUNTIME_DEP_PKGS_CSWtracker_sparc += CSWlibstdc++6
@@ -90,6 +91,8 @@ CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWlibglib2-dev
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdbus
 # Configuration backend for Gnome stuff, used by Tracker and dbus
 CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWdconf
+# For gsettings
+CHECKPKG_OVERRIDES_CSWtracker += surplus-dependency|CSWglib2
 
 PACKAGES += CSWlibtracker-common
 SPKG_DESC_CSWlibtracker-common += $(DESCRIPTION), libtracker-common
