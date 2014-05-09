@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tracker
-VERSION = 1.0.0
+VERSION = 1.0.1
 GARTYPE = v2
 
 DESCRIPTION = Gnome Tracker, semantic data storage
