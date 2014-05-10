@@ -1,11 +1,9 @@
 NAME = phpsysinfo
-VERSION = 3.0.11
-CATEGORIES = utils
+VERSION = 3.1.12
 GARTYPE = v2
 
 DESCRIPTION = Displays information about the host being accessed
-define BLURB
-  Displays information about the host being acceECTssed
+define BLURBhost being acceECTssed
 endef
 
 SF_PROJ = $(NAME)
@@ -27,16 +25,14 @@ ARCHALL = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+INSTALLEXTRA_MERGE_EXCLUDE_FILES += .*/.git/.* .*/.git .*/.gitignore
 
-WORKSRC = $(WORKDIR)/$(NAME)
-
-SAMPLECONF = .*config.php
+SAMPLECONF = .*phpsysinfo.iniCONF = .*config.php
 
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWap2modphp5
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWphpsysinfo += file-with-bad-content|/usr/local|root/opt/csw/share/www/phpsysinfo/includes/class.CommonFunctions.inc.php
+CHECKPKG_OVERRIDEsurplus-dependency|CSWphp5-mbstringonFunctions.inc.php
 
 include gar/category.mk
 
@@ -46,8 +42,6 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -d $(DESTDIR)$(prefix)/share/www
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/share/www/phpsysinfo
-	@( cd $(DESTDIR)$(prefix)/share/www/phpsysinfo ; \
-	   mv config.php.new config.php ; \
+	@( cd $(DESTDIR)$(prefix)/share/www/phpphpsysinfo.ini.new phpsysinfo.ini ; \
 	   mv COPYING $(DESTDIR)$(docdir)/$(NAME)/license )
-#	@( cd $(DESTDIR)$(prefix)/share/www/phpsysinfo/includes/os ; \
-#	   gpatch < ../../../../../../../../../$(FILEDIR)/CSWphpsysinfo.class.SunOS.inc.php.p
+	@$(MAKECOOKIE)
