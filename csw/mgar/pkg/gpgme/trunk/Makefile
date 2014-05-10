@@ -32,7 +32,6 @@ OBSOLETED_BY_CSWlibgpgme-pthread11 = CSWgpgme
 
 PACKAGES += CSWlibgpgme-pthread11
 CATALOGNAME_CSWlibgpgme-pthread11 = libgpgme_pthread11
-PKGFILES_CSWlibgpgme-pthread11 += $(call baseisadirs,$(libdir),libgpgme-pthread\.so\.11\.11\.0)
 PKGFILES_CSWlibgpgme-pthread11 += $(call baseisadirs,$(libdir),libgpgme-pthread\.so\.11(\.\d+)*)
 SPKG_DESC_CSWlibgpgme-pthread11 += $(DESCRIPTION), libgpgme-pthread.so.11
 RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibassuan0
@@ -41,7 +40,6 @@ RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgpgme11
 CATALOGNAME_CSWlibgpgme11 = libgpgme11
-PKGFILES_CSWlibgpgme11 += $(call baseisadirs,$(libdir),libgpgme\.so\.11\.11\.0)
 PKGFILES_CSWlibgpgme11 += $(call baseisadirs,$(libdir),libgpgme\.so\.11(\.\d+)*)
 SPKG_DESC_CSWlibgpgme11 += $(DESCRIPTION), libgpgme.so.11
 RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibassuan0
