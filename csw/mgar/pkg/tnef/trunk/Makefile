@@ -7,7 +7,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.sourceforge.net/tnef/
-DISTFILES    = $(NAME)-$(VERSION).tar.gztnRUNTIME_DEP_PKGS_CSWtnef += CSWlibintl8tnef += CSWlibintl8
+DISTFILES    = $(NAME)-$(VERSION).tar.gztn# Only Sparc needs this dep
+RUNTIME_DEP_PKGS_CSWtnef += CSWlibintl8
+CHECKPKG_OVERRIDES_CSWtnef += surplus-dependency|CSWlibintl8tnef += CSWlibintl8
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
