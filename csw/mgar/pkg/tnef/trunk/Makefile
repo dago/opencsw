@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.sourceforge.net/tnef/
-DISTFILES    = $(NAME)-$(VERSION).tar.gztnef += CSWlibintl8
+DISTFILES    = $(NAME)-$(VERSION).tar.gztnRUNTIME_DEP_PKGS_CSWtnef += CSWlibintl8tnef += CSWlibintl8
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
