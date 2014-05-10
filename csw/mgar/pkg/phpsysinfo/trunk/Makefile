@@ -16,9 +16,10 @@ SPKG_DESC = $(DESCRIPTION)
 SPKG_SOURCEURL = http://phpsysinfo.sourceforge.net
 
 RUNTIME_DEP_PKGS  = CSWapache2
-RUNTIME_DEP_PKGS += CSWap2modphp5
+RUNTIME-modphp5
 RUNTIME_DEP_PKGS += CSWphp5
 RUNTIME_DEP_PKGS += CSWphp5-mbstring
+RUNTIME_DEP_PKGS += CSWphp5-dom+= CSWphp5-mbstring
 
 ARCHALL = 1
 
@@ -30,9 +31,9 @@ INSTALLEXTRA_MERGE_EXCLUDE_FILES += .*/.git/.* .*/.git .*/.gitignore
 SAMPLECONF = .*phpsysinfo.iniCONF = .*config.php
 
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWap2modphp5
+CHECKPKG_OVERRIDES_CSWphpsysinfo += surplu-s-dependency|CSWap2modphp5
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDEsurplus-dependency|CSWphp5-mbstringonFunctions.inc.php
+CHECKPKG_OVERRIDEsurplus-dependency|CSWphp5-mbstringoCHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWphp5-domonFunctions.inc.php
 
 include gar/category.mk
 
