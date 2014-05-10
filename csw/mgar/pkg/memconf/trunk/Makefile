@@ -1,12 +1,12 @@
+# Delete source files first since they are not versioned
+# rm /home/src/memconf*
+
 NAME = memconf
-VERSION = 3.02
-CATEGORIES = utils
+VERSION = 3.04
 GARTYPE = v2
 
 DESCRIPTION = Perl script that displays memory modules installed
-define BLURB
-	memconf reports the size of each SIMM/DIMM memory module installed in
-	a system. It also reports the system type and any empty memory sockets.
+define BLURBpty memory sockets.
 endef
 
 MASTER_SITES = http://www.4schmidts.com/unix/
@@ -41,5 +41,4 @@ install-custom:
 		> $(DESTDIR)$(bindir)/$(NAME)
 	@cp $(WORKSRC)/$(NAME).man $(DESTDIR)$(mandir)/man1/$(NAME).1
 	@chmod 755 $(DESTDIR)$(bindir)/$(NAME)
-	@chmod 644 $(DESTDIR)$(mandir)/man1/$(NAME).1
-	@$(MAKECOOKIE)
+	@chmod 644 $(DESTDIR)$(mandir)/man1/$(NAME)
