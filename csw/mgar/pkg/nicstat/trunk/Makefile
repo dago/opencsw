@@ -1,5 +1,5 @@
 NAME = nicstat
-VERSION = 1.90
+VERSION = 1.95
 CATEGORIES = net
 GARTYPE = v2
 WORKSRC = $(WORKDIR)/$(NAME)-src-$(VERSION)
@@ -16,7 +16,7 @@ DISTFILES  = $(NAME)-src-$(VERSION).tar.gz
 VENDOR_URL = http://blogs.oracle.com/timc/entry/nicstat_the_solaris_and_linux
 
 # Harmless build example not relevant to usage
-CHECKPKG_OVERRIDES_CSWnicstat += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nicstat/README.txt
+CHECKPKG_OVERRIDno-direct-binding|/opt/csw/bin/nicstat|is|not|directly|bound|to|soname|libkstat.so.1icstat/README.txt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
