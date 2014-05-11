@@ -33,8 +33,6 @@ EXPANDVARS = CSWgtk2.postinstall
 
 PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
 
-PATCHFILES += 0001-Add-update-modules-cmd-line-option.patch
-
 PATCHFILES += 0003-Adjust-hardcoded-path-to-opt-csw-share.patch
 PATCHFILES += 0004-Initialize-pap_status_t-with-PAPI_OK-instead-of-NULL-to-opt-csw-share.patch
 

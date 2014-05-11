@@ -1,0 +1,9 @@
+gtk2 (2.24.22,REV=2014.05.11)
+
+  * let gtk-query-immodules-2.0 write
+    /opt/csw/lib/gtk-2.0/2.10.0/immodules.cache in postinstall script
+    instead of /etc/opt/csw/gtk-2.0/gtk.immodules, which had no effect.
+
+ -- Rafael Ostertag <rafisol@opencsw.org>  Sun, 11 May 2014 18:25:18 +0200
+
+
