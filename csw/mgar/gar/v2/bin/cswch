@@ -21,13 +21,15 @@ import argparse
 import datetime
 import dateutil.tz
 import email.utils
+import logging
 import os
 import pwd
+import pysvn
 import re
 import sys
 import time
 import unittest
-import logging
+import errno
 
 ### T E S T S ###
 
@@ -90,7 +92,7 @@ class TestChangeLogFooter(unittest.TestCase):
 class TestChangeLogParagraph(unittest.TestCase):
     """Test ChangeLogParagraph."""
 
-    def test_init_single_line(self):
+    def test_init_single_line_bullet(self):
         """initialize ChangeLog paragraph with one line"""
         line = '  * Lorem ipsum dolor sit amet, consectetur adipiscing'
         chpg = ChangeLogParagraph(line)
@@ -98,7 +100,38 @@ class TestChangeLogParagraph(unittest.TestCase):
         self.assertEqual('Lorem ipsum dolor sit amet, consectetur adipiscing',
                          repr(chpg))
 
-    def test_newline_handling(self):
+    def test_init_single_line_plain(self):
+        """initialize ChangeLog paragraph with one line"""
+        line = '  Lorem ipsum dolor sit amet, consectetur adipiscing'
+        chpg = ChangeLogParagraph(line)
+        self.assertEqual(line, str(chpg))
+        self.assertEqual('Lorem ipsum dolor sit amet, consectetur adipiscing',
+                         repr(chpg))
+
+    def test_line_add_bullet(self):
+        """Test adding a new line to an existing paragraph"""
+        line = "  * short line"
+        chpg = ChangeLogParagraph(line)
+
+        chpg.add_line("and another line appended")
+
+        self.assertEqual('short line and another line appended', repr(chpg))
+        self.assertEqual('  * short line and another line appended',
+                         str(chpg))
+
+    def test_line_add_plain(self):
+        """Test adding a new line to an existing paragraph"""
+        line = "  short line"
+        chpg = ChangeLogParagraph(line)
+
+        chpg.add_line("and another line appended")
+
+        self.assertEqual('short line and another line appended', repr(chpg))
+        self.assertEqual('  short line and another line appended',
+                         str(chpg))
+
+
+    def test_newline_handling_bullet(self):
         """test newline handling of ChangeLogParagraph"""
         lines = """  * Lorem ipsum dolor sit amet,
     consectetur adipiscing"""
@@ -106,10 +139,18 @@ class TestChangeLogParagraph(unittest.TestCase):
         self.assertEqual('  * Lorem ipsum dolor sit amet, consectetur adipiscing', str(chpg))
         self.assertEqual('Lorem ipsum dolor sit amet, consectetur adipiscing', repr(chpg))
 
+    def test_newline_handling_plain(self):
+        """test newline handling of ChangeLogParagraph"""
+        lines = """  Lorem ipsum dolor sit amet,
+  consectetur adipiscing"""
+        chpg = ChangeLogParagraph(lines)
+        self.assertEqual('  Lorem ipsum dolor sit amet, consectetur adipiscing', str(chpg))
+        self.assertEqual('Lorem ipsum dolor sit amet, consectetur adipiscing', repr(chpg))
+
     def test_init_from_multiple_lines(self):
         """Test initialization from multiple lines"""
 
-        lines = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent posuere est a pellentesque imperdiet.',
+        lines = ['  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent posuere est a pellentesque imperdiet.',
                   'Vivamus dapibus enim eu magna vehicula posuere. Pellentesque adipiscing purus id diam auctor gravida. Sed leo odio,',
                   'molestie quis ante sed, commodo consequat nulla. Vivamus interdum vel lorem eget faucibus. Suspendisse dignissim orci sit amet dolor venenatis convallis.',
                   'Suspendisse fringilla tortor vitae dolor blandit ullamcorper. Cras sed mauris eu lorem scelerisque blandit quis vel mauris. Nam a urna aliquet, cursus erat a, fermentum justo. Sed hendrerit dui magna, ac tempus est vestibulum at.',
@@ -130,6 +171,30 @@ class TestChangeLogParagraph(unittest.TestCase):
     facilisis massa. Cras non porttitor turpis."""
         chpg = ChangeLogParagraph(*lines)
         self.assertEqual(formatted, str(chpg))
+
+
+class TestChangeLogEntry(unittest.TestCase):
+    """Test ChangeLogEntry class"""
+
+    def test_entry(self):
+        """Test a simple changelog entry"""
+        clg_entry = ChangeLogEntry()
+        clg_header = ChangeLogHeader(package='cswch', version='0.1')
+        clg_paragraph1 = ChangeLogParagraph("  * One Line")
+        clg_paragraph2 = ChangeLogParagraph("  * Two Lines")
+        clg_footer = ChangeLogFooter()
+
+        clg_entry.add_header(clg_header)
+        clg_entry.add_footer(clg_footer)
+        clg_entry.add_paragraph(clg_paragraph1)
+        clg_entry.add_paragraph(clg_paragraph2)
+
+        expected_string = str(clg_header) + '\n\n' +\
+                          str(clg_paragraph1) + '\n\n' +\
+                          str(clg_paragraph2) + '\n\n' +\
+                          str(clg_footer) + '\n\n\n'
+
+        self.assertEqual(expected_string, str(clg_entry))
 
 
 ### C O D E ###
@@ -163,6 +228,24 @@ class GarbledChangeLogFooter(Exception):
 
     def __str__(self):
         return "Garbled ChangeLog footer: %s" % self.footer
+
+    def __repr__(self):
+        return str(self)
+
+
+class EmptyChangeLogFile(Exception):
+    """Empty ChangeLog File
+
+    Raised if operation expect existing entries in the ChangeLog File
+    but none is found.
+
+    """
+    def __init__(self, filename):
+        super(EmptyChangeLogFile, self).__init__()
+        self.filename = filename
+
+    def __str__(self):
+        return "Empty ChangeLog: %s" % (self.filename,)
 
     def __repr__(self):
         return str(self)
@@ -207,8 +290,8 @@ class ChangeLogHeader(object):
     def __str__(self):
         """Get the ChangeLog header"""
         return ChangeLogHeader.format_str % {'package': self.package,
-                                              'version': self.version,
-                                              'rev': self.rev}
+                                             'version': self.version,
+                                             'rev': self.rev}
 
     def parse_line(self, line):
         """Parse ChangeLog header
@@ -301,7 +384,7 @@ class ChangeLogFooter(object):
         The proper format is a timestamp in the format specified in RFC
         2822.
 
-        :param dt: datetime object or none, in which case the current time
+        :param date_obj: datetime object or none, in which case the current time
         will be taken.
 
         """
@@ -340,6 +423,15 @@ class ChangeLogParagraph(object):
 
     [two spaces]* change details
                   more change details
+
+    or
+
+    [two spaces]line1
+                line2
+
+    The first line added is analyzed to find out which type of
+    paragraph we're dealing with.
+
     """
     def __init__(self, *args, **kwargs):
         """Initialize ChangeLog paragraph.
@@ -355,10 +447,24 @@ class ChangeLogParagraph(object):
         else:
             self.maxcol = 72
 
+        # will be set according to the style of the first line
+        self.bullet_style = False
+
         self.paragraph = ""
+        [self.add_line(l) for l in args]
+
+    def add_line(self, line):
+        """Add another line to the paragraph"""
+
+        # Analyze the first line in order to find out the type of
+        # paragraph, i.e. bullet style or plain style
+        if self.paragraph == "" and ChangeLogParagraph.sanitize_re_c.match(line):
+            # it's a bullet style paragraph
+            self.bullet_style = True
+
         # Get rid of all leading '\s+\*?\s+' and concatenate all
         # arguments.
-        self.paragraph = " ".join([ChangeLogParagraph.sanitize_re_c.sub("", l) for l in args])
+        self.paragraph = " ".join([self.paragraph, ChangeLogParagraph.sanitize_re_c.sub("", line)])
 
         # Some sanitation
         self.paragraph = self.paragraph.strip()
@@ -371,20 +477,30 @@ class ChangeLogParagraph(object):
     def __str__(self):
         words = self.paragraph.split()
 
-        # line length starts at 4, because we have to take ' * ' into
-        # account for the first line.
-        line_len = 4
-        formatted_paragraph = '  * '
+        if self.bullet_style:
+            # line length starts at 4, because we have to take ' * ' into
+            # account for the first line.
+            line_indent = 4
+            continuation_indent = 4
+            formatted_paragraph = '  * '
+        else:
+            line_indent = 2
+            continuation_indent = 2
+            formatted_paragraph = '  '
+
+        line_length = line_indent
+
         for word in words:
-            if len(word) + line_len <= self.maxcol:
+            if len(word) + line_length < self.maxcol:
                 formatted_paragraph = formatted_paragraph + word + ' '
-                line_len = line_len + len(word) + 1
+                line_length = line_length + len(word) + 1
             else:
                 # chop off the last space
                 formatted_paragraph = formatted_paragraph.rstrip()
                 # add newline and reset line length counter
-                formatted_paragraph = formatted_paragraph + '\n    ' + word + ' '
-                line_len = 5 + len(word)
+                formatted_paragraph = formatted_paragraph + '\n' +\
+                                      ' ' * continuation_indent + word + ' '
+                line_length = continuation_indent + len(word)
 
         formatted_paragraph = formatted_paragraph.rstrip()
         return formatted_paragraph
@@ -403,8 +519,19 @@ class ChangeLogEntry(object):
 
     """
 
-    def __init__(self):
-        self.paragaphs = list()
+    def __init__(self, *args):
+        if len(args) == 3:
+            assert len(args) == 3
+            assert isinstance(args[0], ChangeLogHeader)
+            assert isinstance(args[1], list)
+            assert isinstance(args[2], ChangeLogFooter)
+            self.header = args[0]
+            self.paragraphs = args[1]
+            self.footer = args[2]
+        else:
+            self.header = None
+            self.footer = None
+            self.paragraphs = list()
 
     def add_header(self, cl_header):
         """Add a ChangeLog Entry header.
@@ -424,7 +551,7 @@ class ChangeLogEntry(object):
         assert cl_footer is not None
         self.footer = cl_footer
 
-    def add_paragraph(self, cl_paragraph, infront=True):
+    def add_paragraph(self, cl_paragraph, infront=False):
         """Add a ChangeLog Entry paragraph.
 
         Add another ChangeLog Entry paragraph.
@@ -436,7 +563,7 @@ class ChangeLogEntry(object):
         assert cl_paragraph is not None
 
         if infront:
-            self.paragraphs.insert(0, cl_pargraph)
+            self.paragraphs.insert(0, cl_paragraph)
         else:
             self.paragraphs.append(cl_paragraph)
 
@@ -452,130 +579,237 @@ class ChangeLogEntry(object):
         return chlogp
 
     def __str__(self):
-        pass
+        return str(self.header) + '\n\n' +\
+            "\n\n".join([str(paragraph) for paragraph in
+                         self.paragraphs]) + '\n\n' +\
+            str(self.footer) + '\n\n\n'
 
 
-def slurpin_changelog(filename):
-    """Load existing changelog"""
+class ChangeLogFile(object):
+    """A ChangeLog file"""
 
-    with open(filename, "r") as fobj:
-        changelog_entries = list()
-        paragraph = list()
+    def __init__(self, filename):
+        self.filename = filename
+        self.changelog_entries = list()
 
-        only_whitespace_re = re.compile(r'^\s+$')
-        entry_start_re = re.compile(r'^[\w\d\.=(),]+')
+    def read(self):
+        changelog_entry = None
+        current_paragraph = None
+        with open(self.filename, "r") as fobj:
+            only_whitespace_re = re.compile(r'^\s+$')
+            entry_start_re = re.compile(r'^[\w\d\.=(),]+')
 
-        for line in fobj:
-            line = line.rstrip('\n')
+            for line in fobj:
+                line = line.rstrip('\n')
 
-            if only_whitespace_re.match(line) or line == "":
-                continue
+                if only_whitespace_re.match(line) or line == "":
+                    if current_paragraph is not None:
+                        # This ends the current paragraph
+                        changelog_entry.add_paragraph(current_paragraph)
+                        current_paragraph = None
 
-            # is it the start of an entry?
-            if entry_start_re.match(line):
-                entry_dict = {'header': ChangeLogHeader(line=line)}
-                continue
+                    continue
 
-            # is it the footer, and thus marks the end of a entry?
-            if line.startswith(' -- '):
-                # is there a paragraph pending?
-                if len(paragraph) > 0:
-                    # add that paragraph to the dict and start a new
-                    # one
-                    if 'paragraphs' in entry_dict:
-                        entry_dict['paragraphs'].append(ChangeLogParagraph(*paragraph))
-                    else:
-                        entry_dict['paragraphs'] = [ChangeLogParagraph(*paragraph)]
-                        paragraph = list()
+                # is it the start of an entry?
+                if entry_start_re.match(line):
+                    assert changelog_entry is None
 
-                entry_dict['footer'] = ChangeLogFooter(line=line)
-                # append to the list
-                changelog_entries.append(entry_dict)
-                continue
+                    changelog_entry = ChangeLogEntry()
+                    changelog_entry.add_header(ChangeLogHeader(line=line))
+                    continue
 
-            # is it the start of an entry paragraph?
-            if line.startswith('  * '):
-                # is the first item of the paragraph list a paragraph
-                # start?
-                if len(paragraph) > 0 and paragraph[0].startswith('  * '):
-                    # add that paragraph to the dict and start a new
-                    # one
-                    if 'paragraphs' in entry_dict:
-                        entry_dict['paragraphs'].append(ChangeLogParagraph(*paragraph))
-                    else:
-                        entry_dict['paragraphs'] = [ChangeLogParagraph(*paragraph)]
+                # is it the footer, and thus marks the end of a entry?
+                if line.startswith(' -- '):
+                    # is there a paragraph pending?
+                    if current_paragraph is not None:
+                        changelog_entry.add_paragraph(current_paragraph)
 
-                paragraph = [line]
-                continue
+                    changelog_entry.add_footer(ChangeLogFooter(line=line))
+                    # append entry to the list
+                    self.changelog_entries.append(changelog_entry)
 
-            # It's not, the start, end, or start of entry paragraph,
-            # thus it must be a continuation of a paragraph
-            paragraph.append(line)
+                    changelog_entry = None
+                    current_paragraph = None
+                    continue
 
-        return changelog_entries
+                if current_paragraph is None:
+                    current_paragraph = ChangeLogParagraph(line)
+                else:
+                    current_paragraph.add_line(line)
+
+    def save(self):
+        """Save ChangeLog entries to file"""
+        with open(self.filename, 'w') as fobj:
+            [fobj.write(str(changelog_entry)) for changelog_entry in
+             self.changelog_entries]
+
+    def versions(self):
+        """Return a list of all versions in the ChangeLog file"""
+
+        if (len(self.changelog_entries) < 1):
+            return None
+
+        return [changelog_entry.header.version for changelog_entry in
+                self.changelog_entries]
+
+    def count_entries(self):
+        """Return the number of ChangeLog entries"""
+        return len(self.changelog_entries)
+
+    def get_package(self):
+        """Get the package name
+
+        Package name is returned as defined by the first entry of the
+        ChangeLog file.
+
+        """
+        if len(self.changelog_entries) < 1:
+            return ""
+
+        return self.changelog_entries[0].header.package
+
+    def add_entry(self, *args):
+        """Add an entry to the ChangeLog.
+
+        If only one argument is passed, it has to be a
+        ChangeLogEntry. Else three arguments are expected, which have
+        to be of the type ChangeLogHeader, ChangeLogParagraphs list,
+        ChangeLogFooter
+
+        """
+        if len(args) == 1:
+            assert args[0] is ChangeLogEntry
+            changelog_entry = args[0]
+        else:
+            assert len(args) == 3
+            assert isinstance(args[0], ChangeLogHeader)
+            assert isinstance(args[1], list)
+            assert isinstance(args[2], ChangeLogFooter)
+            changelog_entry = ChangeLogEntry(args[0], args[1],
+                                             args[2])
+
+        self.changelog_entries.insert(0, changelog_entry)
+
+    def create(self, *args):
+        """Create a new ChangeLog file
+
+        Create a new ChangeLog file. Any existing entries will be
+        overwritten.
+
+        """
+
+        self.changelog_entries = list()
+        self.add_entry(*args)
+        self.save()
+
+    def update_latest(self, paragraph):
+        """Add paragraph(s) to the latest entry.
+
+        :param paragraph: can be a list of ChangeLogParagraph or a
+        single ChangeLogParagrph.
+
+        """
+
+        assert len(self.changelog_entries) > 0
+
+        if paragraph is list:
+            [self.changelog_entries[0].add_paragraph(par, True) for par
+             in paragraph]
+        else:
+            self.changelog_entries[0].add_paragraph(paragraph, True)
+
+        latest_header = self.changelog_entries[0].header
+        latest_header.rev = ChangeLogHeader.opencsw_rev()
+        self.changelog_entries[0].add_header(latest_header)
+        self.changelog_entries[0].add_footer(ChangeLogFooter())
 
 
-def dump_entries(filename, entries):
-    with open(filename, 'w') as fobj:
-        for entry in entries:
-            fobj.write(str(entry['header']))
-            fobj.write('\n\n')
-            for paragraph in entry['paragraphs']:
-                fobj.write(str(paragraph))
-                fobj.write('\n\n')
-            fobj.write(str(entry['footer']))
-            fobj.write('\n\n')
+    def svn_add(self):
+        """Add file to svn repository
+
+        Has only effect if the directory is a subversion working
+        directory.  Else it does nothing.
+
+        """
+        assert len(self.changelog_entries) > 0
+
+        # First of all, make sure the file exists
+        if not os.path.exists(self.filename):
+            raise OSError((errno.ENOENT, 'No such file: %s' % self.filename))
+
+        svnclient = pysvn.Client()
+
+        # see if directory holding the file is part of a SVN
+        # repo
+        directory = os.path.dirname(self.filename)
+        if directory == "":
+            directory = './'
+
+        try:
+            svnentry = svnclient.info(directory)
+        except pysvn.ClientError:
+            # Most likely it is not a working directory, so we bail out
+            logging.warning("'%s' is not a SVN working directory. Cannot add file '%s'.",
+                            directory, self.filename)
+            return
+
+        svnclient.add([self.filename])
+        logging.info("Scheduled file '%s' for addition to SVN repository", self.filename)
 
 
 def new_changelog_entry(filename, version, log):
-    existing_entries = slurpin_changelog(filename)
+    changelog_file = ChangeLogFile(filename)
+    changelog_file.read()
 
-    assert len(existing_entries) > 0
+    if changelog_file.versions() is None:
+        raise EmptyChangeLogFile(filename)
 
     # get the package from the first entry
-    package = existing_entries[0]['header'].package
+    package = changelog_file.get_package()
 
     header = ChangeLogHeader(package=package,
                              version=version)
     paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
     footer = ChangeLogFooter()
 
-    existing_entries.insert(0, {'header': header,
-                                'paragraphs': paragraphs,
-                                'footer': footer})
+    changelog_file.add_entry(header, paragraphs, footer)
+    changelog_file.save()
 
-    dump_entries(filename, existing_entries)
+def update_changelog_entry(filename, log):
+    changelog_file = ChangeLogFile(filename)
+    changelog_file.read()
 
+    if changelog_file.versions() is None:
+        raise EmptyChangeLogFile(filename)
 
-def create_changelog_file(filename, overwrite, package, version, log):
-    chlg_header = ChangeLogHeader(package=package,
+    [changelog_file.update_latest(ChangeLogParagraph(l)) for l in
+     log]
+    changelog_file.save()
+
+def create_changelog_file(filename, overwrite, package, version, log, register_svn):
+    header = ChangeLogHeader(package=package,
                                   version=version)
-    chlg_footer = ChangeLogFooter()
-    chlg_paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
+    footer = ChangeLogFooter()
+    paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
 
-    if os.access(filename, os.F_OK) and not overwrite:
+    if os.path.exists(filename) and not overwrite:
         logging.error("Changelog '%s' already exists. Won't overwrite", filename)
         sys.exit(1)
 
-    with open(filename,'w+') as fobj:
-        fobj.write(str(chlg_header))
-        fobj.write('\n\n')
-        for paragraph in chlg_paragraphs:
-            fobj.write(str(paragraph))
-            fobj.write('\n\n')
-        fobj.write(str(chlg_footer))
-        fobj.write('\n\n')
+    changelog_file = ChangeLogFile(filename)
+    changelog_file.create(header, paragraphs, footer)
 
+    if (register_svn):
+        changelog_file.svn_add()
 
 def get_version(logfile, allversions):
-    chlg_entries = slurpin_changelog(logfile)
+    changelog_file = ChangeLogFile(logfile)
+    changelog_file.read()
 
     if allversions:
-        for entry in chlg_entries:
-            print entry['header'].version
+        print("\n".join(changelog_file.versions()))
     else:
-        print chlg_entries[0]['header'].version
-
+        print(changelog_file.versions()[0])
 
 def cmdline_parse():
     """Parse the command line
@@ -596,10 +830,16 @@ def cmdline_parse():
                                help="package name")
     parser_create.add_argument('version',
                                help="package version")
-    parser_create.add_argument('--log',
-                               help="the log entry",
-                               nargs='+')
+    parser_create.add_argument('--log-item',
+                               help="the log entry to be recorded as list item",
+                               nargs='*')
+    parser_create.add_argument('--log-paragraph',
+                               help="the log entry to be recorded as plain paragraph",
+                               nargs='*')
     parser_create.add_argument('--force', help="force creation of file. Overwrite existing file.",
+                               default=False, action='store_const',
+                               const=True)
+    parser_create.add_argument('--no-svn', help="Do not add file to SVN repository.",
                                default=False, action='store_const',
                                const=True)
 
@@ -607,9 +847,22 @@ def cmdline_parse():
                                       help="new changelog entry")
     parser_new.add_argument('version',
                             help="new version")
-    parser_new.add_argument('--log',
-                            help="the log entry",
-                            nargs='+')
+    parser_new.add_argument('--log-item',
+                               help="the log entry to be recorded as list item",
+                               nargs='*')
+    parser_new.add_argument('--log-paragraph',
+                               help="the log entry to be recorded as plain paragraph",
+                               nargs='*')
+
+
+    parser_update = subparser.add_parser('update',
+                                         help="update the latest changelog entry")
+    parser_update.add_argument('--log-item',
+                               help="the log entry to be recorded as list item",
+                               nargs='*')
+    parser_update.add_argument('--log-paragraph',
+                               help="the log entry to be recorded as plain paragraph",
+                               nargs='*')
 
     parser_version = subparser.add_parser('version',
                                           help="retrieve version from changelog.CSW")
@@ -620,29 +873,52 @@ def cmdline_parse():
 
     parser_test = subparser.add_parser('test', help="test cswch")
 
-    return parser.parse_args()
+    arguments = parser.parse_args()
+
+    if arguments.command in ['create', 'new', 'update'] and\
+       arguments.log_paragraph is None and\
+       arguments.log_item is None:
+        parser.error("'%s' requires either '--log-paragraph' or '--log-item'" % arguments.command)
+
+    return arguments
+
+def compile_log(logitem, logparagraph):
+    log = list()
+    if logitem:
+        log = ['  * ' + item for item in logitem]
+
+    if logparagraph:
+        log.extend(logparagraph)
+
+    return log
 
 
 if __name__ == '__main__':
-    cmdline = cmdline_parse()
+    arguments = cmdline_parse()
 
-    if cmdline.command == "test":
+    if arguments.command == "test":
         # cheat unittest into thinking that there are no command line
         # arguments.
         del sys.argv[1:]
         unittest.main()
 
-    if cmdline.command == "create":
-        create_changelog_file(cmdline.logfile,
-                              cmdline.force,
-                              cmdline.package,
-                              cmdline.version,
-                              cmdline.log)
+    if arguments.command == "create":
+        log = compile_log(arguments.log_item, arguments.log_paragraph)
+        create_changelog_file(arguments.logfile,
+                              arguments.force,
+                              arguments.package,
+                              arguments.version,
+                              log,
+                              not arguments.no_svn)
 
-    if cmdline.command == "new":
-        new_changelog_entry(cmdline.logfile,
-                            cmdline.version,
-                            cmdline.log)
+    if arguments.command == "new":
+        log = compile_log(arguments.log_item, arguments.log_paragraph)
+        new_changelog_entry(arguments.logfile,
+                            arguments.version,
+                            log)
 
-    if cmdline.command == "version":
-        get_version(cmdline.logfile, cmdline.all_versions)
+    if arguments.command == "update":
+        update_changelog_entry(arguments.logfile, log)
+
+    if arguments.command == "version":
+        get_version(arguments.logfile, arguments.all_versions)
