@@ -918,6 +918,7 @@ if __name__ == '__main__':
                             log)
 
     if arguments.command == "update":
+        log = compile_log(arguments.log_item, arguments.log_paragraph)
         update_changelog_entry(arguments.logfile, log)
 
     if arguments.command == "version":
