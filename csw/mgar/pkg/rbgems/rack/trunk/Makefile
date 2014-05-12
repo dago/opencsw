@@ -1,5 +1,5 @@
 NAME = rack
-VERSION = 1.1.0
+VERSION = 1.5.2
 CATEGORIES = rbgems
 GARTYPE = v2
 
@@ -18,14 +18,7 @@ LICENSE = COPYING
 
 ARCHALL = 1
 
-# These are all developer dependencies
-GEM_DEPS =
-# ==> Verifying installed package CSWgem-bacon: MISSING
-# ==> Verifying installed package CSWgem-rake: MISSING
-# ==> Verifying installed package CSWgem-fcgi: MISSING
-# ==> Verifying installed package CSWgem-memcache-client: MISSING
-# ==> Verifying installed package CSWgem-mongrel: MISSING
-# ==> Verifying installed package CSWgem-thin: MISSING
-
+CHECKPKG_OVERRIDES_CSWgem-rack += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/rack-1.5.2/README.rdoc
+CHECKPKG_OVERRIDES_CSWgem-rack += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/doc/rack-1.5.2/rdoc/files/README_rdoc.html
 
 include gar/category.mk
