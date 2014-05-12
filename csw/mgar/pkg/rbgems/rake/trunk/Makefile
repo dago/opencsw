@@ -1,5 +1,5 @@
 NAME = rake
-VERSION = 0.8.7
+VERSION = 10.3.1
 CATEGORIES = rbgems
 GARTYPE = v2
 
