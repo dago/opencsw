@@ -221,7 +221,9 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWligio-fam-backend
-CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWgio-fam-backend--dev += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibpcre-dev
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWgio-fam-backend
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWlibpcre-dev--dev += CSWlibz1
 PKGFILES_CSWlibglib2-dev += $# FIXME: glib-compile-schemas should possibly be moved to CSWglib2$(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 PKGFILES_CSWlibglib2-dev += .*/gdbus-2.0.*
