@@ -84,12 +84,10 @@ define php5_subpackage
 PACKAGES += CSWphp5-$(subst _,-,$(1))
 CATALOGNAME_CSWphp5-$(subst _,-,$(1)) ?= php5_$(subst -,_,$(1))
 SPKG_DESC_CSWphp5-$(subst _,-,$(1)) ?= The $(1) extention for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5 $(2)
+RUNTIME_DEP_PKGS_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5 CSWlibz1 $(2)
 OBSOLETED_BY_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5$(subst _,-,$(1))
 PKGFILES_CSWphp5-$(subst _,-,$(1)) ?= .*lib/php/extensions/.*/$(1).so .*php5/extensions/$(1)
 CHECKPKG_OVERRIDES_CSWphp5-$(subst _,-,$(1)) += surplus-dependency|CSWphp5
-RUNTIME_DEP_PKGS_sparc_CSWphp5-$(subst _,-,$(1)) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWphp5-$(subst _,-,$(1)) += $(RUNTIME_DEP_PKGS_$(GARCH)_CSWphp5-$(subst _,-,$(1)))
 endef
 
 PACKAGES = CSWphp5
@@ -101,16 +99,23 @@ RUNTIME_DEP_PKGS_CSWphp5 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc52
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n52
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuio52
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibpcre1
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
-# This is an example
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/php/man/man1/php-config.1
 # embeded 'magic' information to detect file types...odd, but...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
 # verify these...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/etc/opt/csw/php5/php.ini.CSW
+
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/php/man/man1/php-config.1
+
+CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/php5/bin/php
+CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/php5/bin/php-cgi
+
+CHECKPKG_OVERRIDES_CSWphp5 += forbidden-version-interface-dependencies|/opt/csw/php5/bin/php|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWphp5 += forbidden-version-interface-dependencies|/opt/csw/php5/bin/php-cgi|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 
 PACKAGES += CSWphp5-dev
 CATALOGNAME_CSWphp5-dev   = php5_dev
@@ -153,22 +158,27 @@ RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuio52
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n52
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibpcre1
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicudata52
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache2/libexec/libphp5.so
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/apache2/libexec/libphp5.so
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += forbidden-version-interface-dependencies|/opt/csw/apache2/libexec/libphp5.so|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 
 $(eval $(call php5_subpackage,bcmath,))
 $(eval $(call php5_subpackage,bz2,CSWlibbz2-1-0))
 $(eval $(call php5_subpackage,calendar,))
 $(eval $(call php5_subpackage,ctype,))
-$(eval $(call php5_subpackage,curl,CSWlibcurl4))
+$(eval $(call php5_subpackage,curl,CSWlibcurl4 CSWlibidn11 CSWlibssl1-0-0))
 $(eval $(call php5_subpackage,dba,CSWlibgdbm4 CSWbdb42))
-$(eval $(call php5_subpackage,dom,CSWlibxml2-2))
+$(eval $(call php5_subpackage,dom,CSWlibxml2-2 CSWlibiconv2))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif,))
 $(eval $(call php5_subpackage,ftp,CSWlibssl1-0-0))
-$(eval $(call php5_subpackage,gd,CSWlibgd3 CSWlibxpm4 CSWlibt1-5))
+$(eval $(call php5_subpackage,gd,CSWlibgd3 CSWlibxpm4 CSWlibt1-5 CSWlibbz2-1-0 CSWlibpng15-15 CSWlibjpeg7 CSWlibfreetype6))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8))
 $(eval $(call php5_subpackage,gmp,CSWlibgmp10))
@@ -176,23 +186,23 @@ $(eval $(call php5_subpackage,hash,))
 PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 $(eval $(call php5_subpackage,iconv,CSWlibiconv2))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
-$(eval $(call php5_subpackage,imap,CSWlibc-client2007f))
+$(eval $(call php5_subpackage,imap,CSWlibc-client2007f CSWlibssl1-0-0))
 $(eval $(call php5_subpackage,json,))
-$(eval $(call php5_subpackage,ldap,CSWliblber2-4-2 CSWlibldap2-4-2))
+$(eval $(call php5_subpackage,ldap,CSWliblber2-4-2 CSWlibldap2-4-2 CSWlibsasl2-2))
 $(eval $(call php5_subpackage,mbstring,))
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
-$(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4))
+$(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt4 CSWlibltdl7))
 $(eval $(call php5_subpackage,mssql,CSWlibsybdb5))
 $(eval $(call php5_subpackage,mysql,CSWlibmysqlclient18 CSWlibssl1-0-0))
 # likely a checkpkg glitch (uses sparcv8plus+vis path for the library)
 CHECKPKG_OVERRIDES_CSWphp5-mysql += surplus-dependency|CSWlibssl1-0-0
-$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient18))
+$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient18 CSWlibssl1-0-0))
 $(eval $(call php5_subpackage,odbc,CSWlibodbc2))
 $(eval $(call php5_subpackage,openssl,CSWlibssl1-0-0))
 $(eval $(call php5_subpackage,pcntl,))
 $(eval $(call php5_subpackage,pdo,))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
-$(eval $(call php5_subpackage,pdomysql,CSWlibmysqlclient18 CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdomysql,CSWlibmysqlclient18 CSWphp5-pdo CSWlibssl1-0-0))
 PKGFILES_CSWphp5-pdomysql += .*/lib/php/extensions/.*/pdo_mysql.so
 PKGFILES_CSWphp5-pdomysql += .*extensions/pdo_mysql
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
@@ -215,33 +225,27 @@ CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pgsql,CSWlibpq5))
 $(eval $(call php5_subpackage,posix,))
 $(eval $(call php5_subpackage,pspell,CSWlibaspell15))
-$(eval $(call php5_subpackage,readline,CSWlibreadline6))
+$(eval $(call php5_subpackage,readline,CSWlibreadline6 CSWlibncurses5))
 $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop,))
-$(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25))
-$(eval $(call php5_subpackage,soap,CSWlibxml2-2))
+$(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25 CSWlibssl1-0-0))
+$(eval $(call php5_subpackage,soap,CSWlibxml2-2 CSWlibiconv2))
 $(eval $(call php5_subpackage,sockets,))
-$(eval $(call php5_subpackage,sqlite,CSWsqlite))
+$(eval $(call php5_subpackage,sqlite3,CSWlibsqlite3-0))
+OBSOLETED_BY_CSWphp5-sqlite3 += CSWphp5-sqlite
 $(eval $(call php5_subpackage,sysvmsg,))
 $(eval $(call php5_subpackage,sysvsem,))
 $(eval $(call php5_subpackage,sysvshm,))
 $(eval $(call php5_subpackage,tidy,CSWlibtidy0-99-0))
 $(eval $(call php5_subpackage,tokenizer,))
 $(eval $(call php5_subpackage,wddx,))
-$(eval $(call php5_subpackage,xmlreader,CSWlibxml2-2))
+$(eval $(call php5_subpackage,xmlreader,CSWlibxml2-2 CSWlibiconv2))
 $(eval $(call php5_subpackage,xmlrpc,CSWlibiconv2 CSWlibexpat1))
-$(eval $(call php5_subpackage,xmlwriter,CSWlibxml2-2))
-$(eval $(call php5_subpackage,xsl,CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0))
-$(eval $(call php5_subpackage,zip,CSWlibz1))
+$(eval $(call php5_subpackage,xmlwriter,CSWlibxml2-2 CSWlibiconv2))
+$(eval $(call php5_subpackage,xsl,CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0 CSWlibiconv2))
+$(eval $(call php5_subpackage,zip,))
 #$(eval $(call php5_subpackage,ibm_db2,))
-
-# Use reinplacement until this is fixed:
-#   https://bugs.php.net/bug.php?id=66298
-#REINPLACEMENTS += dos
-REINPLACE_MATCH_dos = \r$$
-REINPLACE_WITH_dos = 
-REINPLACE_FILES_dos += ext/opcache/Optimizer/zend_optimizer.c
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 EXTRA_LIB = /opt/csw/postgresql/lib
@@ -302,7 +306,6 @@ CONFIGURE_ARGS += --enable-gd-jis-conv
 CONFIGURE_ARGS += --enable-gd-native-ttf
 CONFIGURE_ARGS += --enable-hash=shared
 CONFIGURE_ARGS += --enable-json=shared
-CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-pcntl=shared
 CONFIGURE_ARGS += --enable-pdo=shared
@@ -312,8 +315,6 @@ CONFIGURE_ARGS += --enable-session=shared
 CONFIGURE_ARGS += --enable-shmop=shared
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
-CONFIGURE_ARGS += --enable-sqlite-utf8
-CONFIGURE_ARGS += --enable-sqlite3=shared,$(prefix)
 CONFIGURE_ARGS += --enable-sysvmsg=shared
 CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
@@ -324,9 +325,8 @@ CONFIGURE_ARGS += --enable-xmlwriter=shared
 CONFIGURE_ARGS += --enable-zip=shared
 CONFIGURE_ARGS += --with-bz2=shared,$(prefix)
 CONFIGURE_ARGS += --with-curl=shared,$(prefix)
-CONFIGURE_ARGS += --with-curlwrappers
 CONFIGURE_ARGS += --with-db4=$(prefix)/bdb4
-CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
+#CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --with-freetype-dir=$(prefix)
 CONFIGURE_ARGS += --with-gd=shared,$(prefix)
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
@@ -364,7 +364,7 @@ CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,/opt/csw
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
-CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
+CONFIGURE_ARGS += --with-sqlite3=shared,$(prefix)
 CONFIGURE_ARGS += --with-t1lib=$(prefix)
 CONFIGURE_ARGS += --with-tidy=shared,$(prefix)
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
