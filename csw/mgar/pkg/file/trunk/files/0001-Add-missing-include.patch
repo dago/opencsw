@@ -1,0 +1,24 @@
+From b5dc5a6163074a7d92a4a239eafdeedce4fb07f6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 13 May 2014 10:25:27 +0200
+Subject: [PATCH] Add missing include
+
+---
+ src/strcasestr.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/strcasestr.c b/src/strcasestr.c
+index 546ed3f..38d9012 100644
+--- a/src/strcasestr.c
++++ b/src/strcasestr.c
+@@ -40,6 +40,7 @@ __RCSID("$NetBSD: strncasecmp.c,v 1.2 2007/06/04 18:19:27 christos Exp $");
+ #include <assert.h>
+ #include <ctype.h>
+ #include <string.h>
++#include <sys/types.h>
+ 
+ static int
+ _strncasecmp(const char *s1, const char *s2, size_t n)
+-- 
+1.8.4.1
+
