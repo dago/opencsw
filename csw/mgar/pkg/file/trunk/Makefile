@@ -16,6 +16,9 @@ endef
 MASTER_SITES = ftp://ftp.astron.com/pub/file/
 DISTFILES  = $PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 PATCHFILES += 0001-Use-PCRE.patch
+
+# Use patch until this is fixed:
+#   http://bugs.gw.com/view.php?id=353
 PATCHFILES += 0001-Add-missing-include.patch
 
 VENDOR_URL = http://www.darwinsys.com/file/
