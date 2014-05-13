@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.16
+VERSION = 5.18
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -16,6 +16,7 @@ endef
 MASTER_SITES = ftp://ftp.astron.com/pub/file/
 DISTFILES  = $PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 PATCHFILES += 0001-Use-PCRE.patch
+PATCHFILES += 0001-Add-missing-include.patch
 
 VENDOR_URL = http://www.darwinsys.com/file/
 
