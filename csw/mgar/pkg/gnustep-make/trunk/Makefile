@@ -21,10 +21,11 @@ GARCOMPILER = GNU
 #we have no tests anyway
 SKIPTEST = 1
 
+prefix = $(BUILD_PREFIX)/GNUstep
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-layout=gnustep 
 #CONFIGURE_ARGS += LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib"
-#CONFIGURE_ARGS += CPPFLAGS=-I/opt/csw/include
 
 include gar/category.mk
 
