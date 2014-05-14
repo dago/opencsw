@@ -30,21 +30,22 @@ INSTALL_SCRIPTS = sourcegs
 
 # Disable test scripts for now
 TEST_SCRIPTS = none
+SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
 configure-sourcegs:
-	. /opt/csw/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) ; $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) ; $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 build-sourcegs:
-	. /opt/csw/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. /opt/csw/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE) install
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install
 	@$(MAKECOOKIE)
 
 test-none :
