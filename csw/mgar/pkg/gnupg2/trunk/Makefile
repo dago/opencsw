@@ -47,24 +47,10 @@ RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibassuan0
 RUNTIME_DEP_PKGlibadns1
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibldap2-4-2e/man/man1/gpgsm.1
-
-PACKAGES += CSWgnupg-agent
-SPKG_DESC_CSWgnupg-agent = GNU privacy guard - password agent
-PKGFILES_CSWgnupg-agent += .*gpg-agent.*
-PKGFILES_CSWgnupg-agent += .*gpg-connect-agent.*
-PKGFILES_CSWgnupg-agent += .*gpgkey2ssh.*
-PKGFILES_CSWgnupg-agent += .*symcryptrun.*
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgnupg-age20 += CSWlibgcrypt11
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibpth20
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibassuan0
-# Pinentry is not because of shared libraries.
-RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpinentry
-CHECKPKG_OVERRIDES_CSWgnupg-agent += surplus-dependman1/gpg-agent.BUILD64 = 1
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibldap2-4-2e# For gpg-agent. Pinentry is not because of shared libraries.
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWpinentry
+CHECKPKG_OVERRIDES_CSWgnupg2 += surplus-dependency|CSWpinentry
+OBSOLETED_BY_CSWgnupg2 = CSWgnupg-agentndman1/gpg-agent.BUILD64 = 1
 ISAEXEC#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
