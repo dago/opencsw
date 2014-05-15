@@ -1,5 +1,5 @@
 NAME = openjpeg
-VERSION = 2.0.0
+VERSION = 2.1.0
 GARTYPE = v2
 
 DESCRIPTION = Open-source JPEG 2000 codec written in C
@@ -8,40 +8,38 @@ The OpenJPEG library is an open-source JPEG 2000 codec written in C language. It
 endef
 
 VENDOR_URL   = http://code.google.com/p/openjpeg/
-MASTER_SITES = $(GOOGLE_MIRROR)
+MASTER_SITES = $(SF_MIRROR)
+SF_PROJECT   = openjpeg.mirror
 DISTFILES    = $(DISTNAME).tar.gz
 LICENSE      = LICENSE
 
-# .pc file needed at least for ImageMagick
-# http://code.google.com/p/openjpeg/source/detail?spec=svn2250&r=2250#
-PATCHFILES += 0001-add-pc-file.patch
-
 GARCOMPILER = GCC4
 
-PACKAGES += CSWlibopenjp2-6
-CATALOGNAME_CSWlibopenjp2-6 = libopenjp2_6
-PKGFILES_CSWlibopenjp2-6 += $(call baseisadirs,$(libdir),libopenjp2\.so\.2\.0\.0)
-PKGFILES_CSWlibopenjp2-6 += $(call baseisadirs,$(libdir),libopenjp2\.so\.6)
-SPKG_DESC_CSWlibopenjp2-6 += $(DESCRIPTION), libopenjp2.so.6
-RUNTIME_DEP_PKGS_CSWlibopenjp2-6 += CSWlibgcc-s1
+PATCHFILES += 0002-big-endian-uint16_t.patch
+
+PACKAGES += CSWlibopenjp2-7
+CATALOGNAME_CSWlibopenjp2-7 = libopenjp2_7
+PKGFILES_CSWlibopenjp2-7 += $(call baseisadirs,$(libdir),libopenjp2\.so\.2\.1\.0)
+PKGFILES_CSWlibopenjp2-7 += $(call baseisadirs,$(libdir),libopenjp2\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibopenjp2-7 += $(DESCRIPTION), libopenjp2.so.7
+RUNTIME_DEP_PKGS_CSWlibopenjp2-7 += CSWlibgcc-s1
+# For some reason the so.7 links to the so.2.1.0
+CHECKPKG_OVERRIDES_CSWlibopenjp2-7 += soname-not-part-of-filename|soname=libopenjp2.so.7|filename=libopenjp2.so.2.1.0
 
 PACKAGES += CSWopenjpeg-dev
 CATALOGNAME_CSWopenjpeg-dev = openjpeg_dev
 SPKG_DESC_CSWopenjpeg-dev += $(DESCRIPTION), development files
 PKGFILES_CSWopenjpeg-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWopenjpeg-dev += CSWlibopenjp2-6
+RUNTIME_DEP_PKGS_CSWopenjpeg-dev += CSWlibopenjp2-7
 
 PACKAGES += CSWopenjpeg
 CATALOGNAME_CSWopenjpeg = openjpeg
 SPKG_DESC_CSWopenjpeg += $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibopenjp2-6
+RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibopenjp2-7
 RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWopenjpeg += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWopenjpeg += CSWlibpng15-15
 # PKGFILES is catchall
-
-# For some reason the so.6 links to the so.2.0.0
-CHECKPKG_OVERRIDES_CSWlibopenjp2-6 += soname-not-part-of-filename|soname=libopenjp2.so.6|filename=libopenjp2.so.2.0.0
 
 CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
