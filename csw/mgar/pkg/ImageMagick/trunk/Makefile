@@ -14,6 +14,10 @@ endef
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
 DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 DISTFILES  = $(DISTNAME).tar.xz
+DISTFILES += map.ImageMagick
+
+# libc 1.22.5 for gnutls
+LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.ImageMagick)"
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -113,7 +117,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibjbig2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibdjvulibre21
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibopenjp2-6
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibopenjp2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgcc-s1
