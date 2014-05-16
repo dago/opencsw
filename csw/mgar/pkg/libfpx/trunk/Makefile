@@ -13,10 +13,9 @@ DISTFILES    = $(DISTNAME).tar.xz
 
 GARCOMPILER = GCC4
 
-###ISTNAME).tar.xz
-
 PATCHFILES += olecomm.h.patch
-# PATCHFILES += tchar.patch
+
+# PATCHFILES += tchar.patchS += tchar.patch
 
 # PATCHFILES += 0001-Force-one-signature-for-CExposedDocFile-Ren###PATCHFILES += 0002-Fix-unresolved-symbols-part-1.patch
 ###ols-part-1.patch
@@ -27,7 +26,8 @@ LICENSE = flashpix.h
 
 PACKAGES += CSWlibfpx1
 SPKG_DESC_CSWlibfpx1 = FlashPIX library, libfpx.so.1
-PKGFILES_CSWlibfpx1 += $(call pkgfiles_lib,libfpx.so.1)
+PKGFILES_CSWlibfpx1 += $(call pkgfiles_RUNTIME_DEP_PKGS_CSWlibfpx1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibfpx1 += CSWlibstdc++6_lib,libfpx.so.1)
 OBSOLETED_BY_CSWlibfpx1 += CSWlibfpx
 
 PACKAGES += CSWlibfpx-dev
