@@ -121,7 +121,7 @@ RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2eRUNTIME_DEP_PKGS_CSWpoppler += CSWli
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibstdc++6er += CSWliblcms1
 
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
-# when relinking libpoppler-glib during install phaze
+# when relinking libpoppler-glib during ins phaze
 EXTRA_SOS_LD_FLAGS += -L$(abspath $(WORKSRC)/poppler/.libs)
 # EXTRA_CXXFLAGS += EXTRA_CFLAGS += -D_FILE_OFFSET_BITS=64 path -xnorunpath
 
