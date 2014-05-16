@@ -1,21 +1,25 @@
-NAME = libfpx
-VERSION = 1.3.1
-CATEGORIES = lib
+NAME      = libfpx
+VERSION   = 1.3.1
+GARSUBREV = 4
+GARTYPE  IES = lib
 GARTYPE = v2
 
 DESCRIPTION = FlashPIX library
 define BLURB
 endef
 
-MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/
-DISTFILES  = $(DISTNAME).tar.xz
+MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagicNAME     = libfpx-$(VERSION)-$(GARSUBREV)
+DISTFILES    = $(DISTNAME).tar.xz
+
+GARCOMPILER = GCC4
+
+###ISTNAME).tar.xz
 
 PATCHFILES += olecomm.h.patch
 # PATCHFILES += tchar.patch
 
-# PATCHFILES += 0001-Force-one-signature-for-CExposedDocFile-RenameElemen.patch
-
-PATCHFILES += 0002-Fix-unresolved-symbols-part-1.patch
+# PATCHFILES += 0001-Force-one-signature-for-CExposedDocFile-Ren###PATCHFILES += 0002-Fix-unresolved-symbols-part-1.patch
+###ols-part-1.patch
 PATCHFILES += 0003-Fix-unresolved-symbols-part-2.patch
 
 VENDOR_URL = http://www.imagemagick.org
@@ -38,15 +42,15 @@ DOCFILES += ChangeLog
 DOCFILES += NEWS
 DOCFILES += README
 
-# Fix for problem introduced between 12101[7-8]-17 and 12101[7-8]-20
-EXTRA_CPPFLAGS += -D_RWSTD_NO_WSTR=1
-
-COMPILERLIBS-sparc-32 = /opt/SUNWspro/lib
-COMPILERLIBS-sparc-64 = /opt/SUNWspro/lib/v9
-COMPILERLIBS-i386-32 = /opt/SUNWspro/lib
+# Fix for problem introduced between 12101[7-8]-17 a###EXTRA_CPPFLAGS += -D_RWSTD_NO_WSTR=1
+###
+###COMPILERLIBS-sparc-32 = /opt/SUNWspro/lib
+###COMPILERLIBS-sparc-64 = /opt/SUNWspro/lib/v9
+###COMPILERLIBS-i386-32 = /opt/SUNWspro/lib
+###opt/SUNWspro/lib
 COMPILERLIBS-i386-64 = /opt/SUNWspro/lib/amd64
 
-# Make sure to include path or we link against libCrun.a
+# Make sure to include path or we link a###gainst libCrun.a
 EXTRA_LINKER_FLAGS += -L$(COMPILERLIBS-$(GARCH)-$(MEMORYMODEL)) -lCrun -lCstd
 
 # For sqrt, atan2, pow
@@ -59,4 +63,3 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(docdir)/libfpx_dev
 	cd $(WORKSRC) && ginstall -m 0644 $(DOCFILES) $(DESTDIR)$(docdir)/libfpx_dev
-	@$(MAKECOOKIE)
