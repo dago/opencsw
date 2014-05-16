@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = poppler
-VERSION = 0.24.0
+VERSION = 0.26.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -26,7 +26,7 @@ PACKAGES += CSWlibpoppler-pp0 = libpoppler_cpp0
 PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpop2\.0)= libpoppler_cpp0
 PKGFILES_CSWlibpoppler-cpp0 += $(call baseisadirs,$(libdir),libpoppler-cpp\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibpoppler-cpp0 += $(DESCRIPTION), libpoppler-cpp.so.0
-RUNTIME_DEP_PKGS_CSWlibpoppler-cpp043
+RUNTIME_DEP_PKGS_CSWlibpoppler-cpp046
 RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibpoppler-cpp0 += CSWlibstdc++6
@@ -53,7 +53,7 @@ RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibpoppler43
+RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibpoppler46
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibpoppler-glib8 += CSWlibstdc++6
@@ -72,23 +72,23 @@ CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibpng15-15
 CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWlibjpeg7
 CHECKPKG_OVERRIDES_CSWlibpoppler-glib8 += surplus-dependency|CSWliblcms2-2
 
-PACKAGES += CSWlibpoppler43
-PKGFILES_CSWlibpoppler43 += $(call baseisadirs,$(libdir),libpoppler\.so\.43\.0\.0)
-PKGFILES_CSWlibpoppler43 += $(call baseisadirs,$(libdir),libpoppler\.so\.43(\.\d+)*)
-SPKG_DESC_CSWlibpoppler43 += $(DESCRIPTION), libpoppler.so.43
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibpng15-15
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibtiff5
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibpoppler43 += CSWlibstdc++6
+PACKAGES += CSWlibpoppler46
+PKGFILES_CSWlibpoppler46 += $(call baseisadirs,$(libdir),libpoppler\.so\.46\.0\.0)
+PKGFILES_CSWlibpoppler46 += $(call baseisadirs,$(libdir),libpoppler\.so\.46(\.\d+)*)
+SPKG_DESC_CSWlibpoppler46 += $(DESCRIPTION), libpoppler.so.46
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibpoppler46 += CSWlibstdc++6
 
 PACKAGES += CSWpoppler-er-dev = poppler_dev
 SPKG_DESC_CSWpoppler-dev += $(DESCRIPTION), development files
 PKGFILES_CSWpoppler-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWpoppler-dev43+= CSWlibpoppler7
+RUNTIME_DEP_PKGS_CSWpoppler-dev46+= CSWlibpoppler7
 RUNTIME_DEP_PKGS_CSWpoppler-dev += CSWlibpoppler-cpp0
 RUNTIME_DEP_PKGS_CSWpoppler-dev += C8Wlibpoppler-glib5
 
@@ -114,7 +114,7 @@ CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftops.
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftotext.1|CSWpoppler|CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdffonts.1|CSWpoppler|CSWxpdf
 CHECKPKG_OVERRIDES_CSWpoppler += file-collision|/opt/csw/share/man/man1/pdftohtml.1|CSWpdftohtml|CSWpoppler
-RUNTIME_DEP_PKGS_CSWpoppler43
+RUNTIME_DEP_PKGS_CSWpoppler46
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWpoppler += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo2eRUNTIME_DEP_PKGS_CSWpoppler += CSWlibgcc-s1
@@ -123,7 +123,7 @@ RUNTIME_DEP_PKGS_CSWpoppler += CSWlibstdc++6er += CSWliblcms1
 # Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
 # when relinking libpoppler-glib during install phaze
 EXTRA_SOS_LD_FLAGS += -L$(abspath $(WORKSRC)/poppler/.libs)
-# EXTRA_CXXFLAGS += path -xnorunpath
+# EXTRA_CXXFLAGS += EXTRA_CFLAGS += -D_FILE_OFFSET_BITS=64 path -xnorunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 ### Install unsupported xpdf headers.
