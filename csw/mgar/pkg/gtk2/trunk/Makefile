@@ -25,7 +25,7 @@ MASTER_SITES = $(GNOME_MIRROR)
 DISTNAME = gtk+-$(VERSION)
 DISTFILES = $(DISTNAME).tar.xz
 DISTFILES += CSWgtk2.postinstall
-DISTFILES += README.CSW
+DISTFILDISTFILES += changelogSTFILES += README.CSW
 
 EXPANDVARS = CSWgtk2.postinstall
 
@@ -52,14 +52,17 @@ RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_intl8
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWpango
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWglib2
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgcc-s1W# This is required for gtk-update-icon-cache, so that it doesn't fail in the
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWpango # This is used to so that pango-querymodules is run
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibpangocairo1-0-0W# This is required for gtk-update-icon-cache, so that it doesn't fail in the
 # postinstall script.
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWhicoloriconthemeWgtk2 += CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWgtk2-printbackends-file
-CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependeCHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWhicoloriconthemeeCHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWglib2e# Remove after -z ignore issue has been resolved
+CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependeCHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWhicoloriconthemeeCHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWglib2eCHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWpangoe# Remove after -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWgtk2 += soname-unused
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibfontconfig1
@@ -68,7 +71,9 @@ RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibfontconfig1
 CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibxrender
 CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibgio2-0-0
-CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibfreetype6ency|CSWgdkpixbuf
+CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibfreetype6eCHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2 += surplus-dependency|CSWlibpangocairo1-0-0
+ency|CSWgdkpixbuf
 
 PACKAGES += CSWgtk2-prARCHALL_CSWgtk2-printbackends-papi = 1
 SPKG_DESC_CSWgtk2-printbackends-papi = $(DESCRIPTION), Print Backend (OBSOLETE)
@@ -83,7 +88,9 @@ RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackendobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgtk-x11-2-0-0-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgcc-s1-# Remove after -z ignore issue has been resolved
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgtk-x11-2-0-0-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgcc-s1-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibpangocairo1-0-0-# Remove after -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += soname-unused
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibintl8
@@ -91,16 +98,17 @@ RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWpango
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-file += CSWlibfontconfig1
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibfontconfig1
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibgmodule2-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibxrender
-CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibatk1-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibfreetype6
-CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibgdk-pixbuf2-0-0rintbackends-papi
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibgdk-pixbuf2-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibpangocairo1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-file += surplus-dependency|CSWlibpango1-0-0rintbackends-papi
 
 PACKAGES += CSWgtk2-printbackends-cups
 SPKG_DESC_CSWgtk2-printbackends-cups = $(DESCRIPTION), CUPS Print Backend
@@ -111,7 +119,9 @@ RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cx11-cups += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackendobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgtk-x11-2-0-0+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgcc-s1+# Remove after -z ignore issue has been resolved
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgtk-x11-2-0-0+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgcc-s1+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibpangocairo1-0-0+# Remove after -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += soname-unused
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibz1
@@ -121,7 +131,6 @@ RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWpango
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgnutls28
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-cups += CSWlibgio2-0-0
@@ -130,13 +139,15 @@ CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibgmodul
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibxrender
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibgpg-error0
-CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibatk1-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibgdk-pixbuf2-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibgnutls28
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibgio2-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibpangocairo1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-cups += surplus-dependency|CSWlibpango1-0-0
 rintbackends-papi
 
 PACKAGES += CSWgtk2-printbackends-lpr
@@ -146,7 +157,9 @@ PKGFILES_CSWgtk2-printbackends-lpr += $(docdir)/gtk2_printbackends_/libprintback
 RUNTIME_DEP_PKGS_CSWgtk2-printbackecairo2+= CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackenobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgtk-x11-2-0-0sRUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgcc-s1s# Remove once -z ignore issue has been resolved
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgtk-x11-2-0-0sRUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgcc-s1sRUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibpangocairo1-0-0s# Remove once -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += soname-unused
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgdk-x11-2-0-0
@@ -155,19 +168,19 @@ RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWpango
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWgtk2-printbackends-lpr += CSWlibatk1-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibfontconfig1
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibgmodule2-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibxrender
-CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWpango
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibgdk-x11-2-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibatk1-0-0
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibgdk-pixbuf2-0-0
-CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibgio2-0-0rintbackends-papi
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibgio2-0-0rCHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibpangocairo1-0-0
+CHECKPKG_OVERRIDES_CSWgtk2-printbackends-lpr += surplus-dependency|CSWlibpango1-0-0rintbackends-papi
 
 PACKAGES += CSWlibgailutil18
 SPKG_DESC_CSWlibgailutil18 = $(DESCRIPTION), libgailutil
@@ -178,7 +191,10 @@ RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgdk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibgaillib += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgailuk-x11-2-0-0 += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibgailutRUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgcc-s1t# Remove once -z ignore issue has been resolved
+RUNTIME_DEP_PKGS_CSWliblibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibpangocairo1-0-0t# Remove once -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWlibgailutil18 += soname-unused
 RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgailutil18 += CSWlibintl8
@@ -195,7 +211,8 @@ CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibcairo2
 CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibxrender
 CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibgio2-0-0
 CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibfreetype6
-CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibgdk-pixbuf2-0-0til18 += CSWpango
+CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibgdk-pixbuf2-0-0tCHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWlibgailutil18 += surplus-dependency|CSWlibpangocairo1-0-0til18 += CSWpango
 
 PACKAGES += CSWlibgdk-x11-2-0-0
 SPKG_DESC_CSWlibgdk-x11-2-0-0 = $(DESCRIPTION), libgdk-x11-2.0
@@ -209,10 +226,13 @@ RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-x11object += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibgdk-x11-2RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibgcc-s1-# Remove once -z ignore issue has been resolved
+RUNTIME_DEP_PKGS_CSWlibgdklibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibpangocairo1-0-0-# Remove once -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWlibgdk-x11-2-0-0 += soname-unused
 RUNTIME_DEP_PKGS_CSWlibgdk-x11-2-0-0 += CSWlibgmodule2-0-0
-CHECKPKG_OVERRIDES_CSWlibgdk-x11-2-0-0 += surplus-dependency|CSWlibgmodule2-0-0-0-0 += CSWpango
+CHECKPKG_OVERRIDES_CSWlibgdk-x11-2-0-0 += surplus-dependency|CSWlibgmodule2-0-0-CHECKPKG_OVERRIDES_CSWlibgdk-x11-2-0-0 += surplus-dependency|CSWlibfreetype6-0-0 += CSWpango
 
 
 PACKAGES += CSWlibgtk-x11-2-0-0
@@ -229,12 +249,16 @@ RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk-x1intl8 += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibgtk-x11-2RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibgcc-s1-# remove after -z ignore issue has been resolved
+RUNTIME_DEP_PKGS_CSWlibgtklibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibpangoft2-1-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWpango # This is used so that pango-querymodules is run-# remove after -z ignore issue has been resolved
 CHECKPKG_OVERRIDES_CSWlibgtk-x11-2-0-0 += soname-unused
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWlibgtk-x11-2-0-0 += CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWlibgtk-x11-2-0-0 += surplus-dependency|CSWlibfreetype6
-CHECKPKG_OVERRIDES_CSWlibgtk-x11-2-0-0 += surplus-dependency|CSWlibxrender-0-0 += CSWpango
+CHECKPKG_OVERRIDES_CSWlibgtk-x11-2-0-0 += surplus-dependency|CSWlibxrender-CHECKPKG_OVERRIDES_CSWlibgtk-x11-2-0-0 += surplus-dependency|CSWpango-0-0 += CSWpango
 
 
 PACKAGES += CSWlibgtk2-dev
@@ -261,18 +285,21 @@ RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibglib2-dev
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWpango
-RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWpangodevel2-dev += CSWpango
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibpango-dev
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibpangocairo1-0-02-dev += CSWpango
 OBSOLETED_BY_CSWlibgtk2-dev = CSWgtk2devel
 CATALOGNAME_CSWgtk2devel = gtk2_devel_stub
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlCHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibcairo-dev
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibatk-dev
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibglib2-dev
-CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWpangodevel
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibpango-dev
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWgtk2
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWgdkpixbuf
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += soname-unused
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibfreetype6
 lgdk-pixbuf-dev
 
 
@@ -288,7 +315,7 @@ BUILD_DEP_PKGS  = CSWpkgconfig
 BUILD_DEP_PKGS += CSWcups-dev
 BUILD_DEP_PKGS += CSWlibglib2-dev
 BUILD_DEP_PKGS += CSWlibatk-dev
-BUILD_DEP_PKGS += CSWpangodevel
+BUILlibpango-dev += CSWpangodevel
 BUILD_DEP_PKGS += CSWlibcairo-dev
 BUILD_DEP_PKGS += CSWlibgdk-pixbuf-dev
 BUILD_DEP_PKGS += CSWsunx11devel
