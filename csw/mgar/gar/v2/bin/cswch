@@ -50,15 +50,33 @@ class TestOpenCSWRev(unittest.TestCase):
 class TestChangeLogHeader(unittest.TestCase):
     """Test ChangeLogHeader"""
 
-    def test_changelogheader(self):
-        """initialize changelog header with keywords"""
+    def test_deb_changelogheader(self):
+        """initialize debian changelog header with keywords"""
         chlg = ChangeLogHeader(package='test', version='0.1', rev='1991.09.04')
+        self.assertEqual(ChangeLogHeader.STYLE_DEB, chlg.style)
         self.assertEqual('test (0.1,REV=1991.09.04)', str(chlg))
 
-    def test_parser(self):
-        """initialize changelog header from line"""
+    def test_deb_parser(self):
+        """initialize debian changelog header from line"""
         chlg = ChangeLogHeader(line='test (0.1,REV=1991.09.04)')
+        self.assertEqual(ChangeLogHeader.STYLE_DEB, chlg.style)
         self.assertEqual('test (0.1,REV=1991.09.04)', str(chlg))
+
+    def test_dam_changelogheader(self):
+        """initialize dam changelog header with keywords"""
+        ts = '2014-01-01T00:01:02+0000'
+        package = 'testdam'
+        header_str = ChangeLogHeader.format_str_dam % {'package': package,
+                                                       'timestamp': ts}
+        chlg = ChangeLogHeader(package=package, timestamp=ts)
+        self.assertEqual(ChangeLogHeader.STYLE_DAM, chlg.style)
+        self.assertEqual(header_str, str(chlg))
+
+    def test_dam_parser(self):
+        """initialize dam changelog header from line"""
+        line = 'testdam (2014-01-01T00:01:02+0300)'
+        chlg = ChangeLogHeader(line=line)
+        self.assertEqual(ChangeLogHeader.STYLE_DAM, chlg.style)
 
     def test_garbled(self):
         """test garbled changelog header"""
@@ -199,7 +217,13 @@ class TestChangeLogEntry(unittest.TestCase):
 
 ### C O D E ###
 
-class GarbledChangeLogHeader(Exception):
+class ChangeLogException(Exception):
+    """Exception Base class"""
+    def __init__(self):
+        super(ChangeLogException, self).__init__()
+
+
+class GarbledChangeLogHeader(ChangeLogException):
     """Garbled ChangeLog header
 
     Raised if parsing of ChangeLog header fails.
@@ -216,7 +240,7 @@ class GarbledChangeLogHeader(Exception):
         return str(self)
 
 
-class GarbledChangeLogFooter(Exception):
+class GarbledChangeLogFooter(ChangeLogException):
     """Garbled ChangeLog footer
 
     Raised if parsing of ChangeLog footer fails.
@@ -233,7 +257,7 @@ class GarbledChangeLogFooter(Exception):
         return str(self)
 
 
-class EmptyChangeLogFile(Exception):
+class EmptyChangeLogFile(ChangeLogException):
     """Empty ChangeLog File
 
     Raised if operation expect existing entries in the ChangeLog File
@@ -246,6 +270,19 @@ class EmptyChangeLogFile(Exception):
 
     def __str__(self):
         return "Empty ChangeLog: %s" % (self.filename,)
+
+    def __repr__(self):
+        return str(self)
+
+
+class OperationNotApplicable(ChangeLogException):
+    """Operation is not applicable to the given changelog file style"""
+    def __init__(self, style):
+        super(OperationNotApplicable, self).__init__()
+        self.style = style
+
+    def __str__(self):
+        return "Operation not applicable to %s style change logs" % (self.style,)
 
     def __repr__(self):
         return str(self)
@@ -277,21 +314,38 @@ class ChangeLogHeader(object):
             self.parse_line(kwargs['line'])
             return
 
-        assert 'package' in kwargs and 'version' in kwargs
+        assert 'package' in kwargs
 
-        self.package = kwargs['package']
-        self.version = kwargs['version']
+        if 'version' in kwargs and kwargs['version'] is not None:
+            # Must be Debian style changelog
+            self.package = kwargs['package']
+            self.version = kwargs['version']
 
-        if 'rev' not in kwargs:
-            self.rev = ChangeLogHeader.opencsw_rev()
+            if 'rev' not in kwargs:
+                self.rev = ChangeLogHeader.opencsw_rev()
+            else:
+                self.rev = kwargs['rev']
+
+            self.style = ChangeLogHeader.STYLE_DEB
         else:
-            self.rev = kwargs['rev']
+            # dam style changelog
+            self.package = kwargs['package']
+            if 'timestamp' in kwargs:
+                self.timestamp = kwargs['timestamp']
+            else:
+                self.timestamp = ChangeLogHeader.get_rfc3339timestamp()
+
+            self.style = ChangeLogHeader.STYLE_DAM
+                                 
 
     def __str__(self):
-        """Get the ChangeLog header"""
-        return ChangeLogHeader.format_str % {'package': self.package,
-                                             'version': self.version,
-                                             'rev': self.rev}
+        """Get the ChangeLog header as string"""
+        if self.style == ChangeLogHeader.STYLE_DEB:
+            return ChangeLogHeader.format_str_deb % {'package': self.package,
+                                                     'version': self.version,
+                                                     'rev': self.rev}
+        return ChangeLogHeader.format_str_dam % {'package': self.package,
+                                                 'timestamp': self.timestamp}
 
     def parse_line(self, line):
         """Parse ChangeLog header
@@ -299,15 +353,39 @@ class ChangeLogHeader(object):
         Dissect a ChangeLog header into package, version, and
         revision.
 
+        It will try to parse Debian style and Dam style header lines
+        and set self.style according to the style.
+
         """
-        matches = ChangeLogHeader.compiled_re.match(line)
+        matches = ChangeLogHeader.compiled_re_deb.match(line)
 
         if matches is None:
-            raise GarbledChangeLogHeader(line)
+            # Now, try dam style
+            matches = ChangeLogHeader.compiled_re_dam.match(line)
+            if matches is None:
+                raise GarbledChangeLogHeader(line)
 
+            self.package = matches.group('package')
+            self.timestamp = matches.group('timestamp')
+            self.style = ChangeLogHeader.STYLE_DAM
+            ## Leave method!
+            return
+
+        # Debian style log
         self.package = matches.group('package')
         self.version = matches.group('version')
         self.rev = matches.group('rev')
+        self.style = ChangeLogHeader.STYLE_DEB
+
+    def refresh_timestamp(self):
+        """Set timestamp to current date/time
+
+        Just a convenience method.
+        """
+        if self.style == ChangeLogHeader.STYLE_DEB:
+            self.rev = ChangeLogHeader.opencsw_rev()
+        else:
+            self.timestamp = ChangeLogHeader.get_rfc3339timestamp()
 
     @classmethod
     def opencsw_rev(cls, date=None):
@@ -321,9 +399,32 @@ class ChangeLogHeader(object):
 
         return date.strftime('%Y.%m.%d')
 
-    format_str = r'%(package)s (%(version)s,REV=%(rev)s)'
-    parse_re = r'(?P<package>[\w-]+) \((?P<version>[\d\.]+),REV=(?P<rev>\d{4}\.\d{2}\.\d{2})\)'
-    compiled_re = re.compile(parse_re)
+    @classmethod
+    def get_rfc3339timestamp(cls, date_obj=None):
+        """Return a timestamp in the format specified in RFC3339, section 5.6
+
+        :param date_obj: datetime object to be formatted. If None, the
+        current time will be taken.
+
+        :retval: datetime formatted as RFC3339 timestamp
+
+        """
+        if date_obj is None:
+            timezone = dateutil.tz.tzlocal()
+            date_obj = datetime.datetime.now(timezone)
+            
+        return date_obj.strftime('%Y-%m-%dT%H:%M:%S%z')
+
+    format_str_deb = r'%(package)s (%(version)s,REV=%(rev)s)'
+    parse_re_deb = r'(?P<package>[\w-]+) \((?P<version>[\d\.]+),REV=(?P<rev>\d{4}\.\d{2}\.\d{2})\)'
+    compiled_re_deb = re.compile(parse_re_deb)
+
+    format_str_dam = r'%(package)s (%(timestamp)s)'
+    parse_re_dam = r'(?P<package>[\w-]+) \((?P<timestamp>[\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2}(?:\+|-)[\d]{4})\)'
+    compiled_re_dam = re.compile(parse_re_dam)
+
+    STYLE_DEB = 'debian'
+    STYLE_DAM = 'dam'
 
 
 class ChangeLogFooter(object):
@@ -357,7 +458,7 @@ class ChangeLogFooter(object):
             self.timestamp = ChangeLogFooter.get_rfc2822timestamp()
 
     def __str__(self):
-        return ChangeLogFooter.format_str % {'maintainer': self.maintainer,
+        return ChangeLogFooter.format_str_deb % {'maintainer': self.maintainer,
                                              'email': self.email,
                                              'timestamp': self.timestamp}
 
@@ -368,7 +469,7 @@ class ChangeLogFooter(object):
         timestamp.
 
         """
-        matches = ChangeLogFooter.compiled_re.match(line)
+        matches = ChangeLogFooter.compiled_re_deb.match(line)
 
         if matches is None:
             raise GarbledChangeLogFooter(line)
@@ -376,6 +477,13 @@ class ChangeLogFooter(object):
         self.maintainer = matches.group('maintainer')
         self.email = matches.group('email')
         self.timestamp = matches.group('timestamp')
+
+    def refresh_timestamp(self):
+        """Set timestamp to current date/time
+
+        Just a convenience method.
+        """
+        self.timestamp = ChangeLogFooter.get_rfc2822timestamp()
 
     @classmethod
     def get_rfc2822timestamp(cls, date_obj=None):
@@ -390,8 +498,7 @@ class ChangeLogFooter(object):
         """
         if date_obj is None:
             timezone = dateutil.tz.tzlocal()
-            today = datetime.datetime.now(timezone)
-            return email.utils.formatdate(time.mktime(today.timetuple()), True)
+            date_obj = datetime.datetime.now(timezone)
 
         return email.utils.formatdate(time.mktime(date_obj.timetuple()), True)
 
@@ -411,9 +518,9 @@ class ChangeLogFooter(object):
 
         return (fullname, m_email)
 
-    format_str = r' -- %(maintainer)s <%(email)s>  %(timestamp)s'
-    parse_re = r' -- (?P<maintainer>[\w\d ]+) <(?P<email>[\w\d@ \.]+)>  (?P<timestamp>\w{3}, \d{1,2} \w{3} \d{4} \d{2}:\d{2}:\d{2} (\+|-)\d{4})'
-    compiled_re = re.compile(parse_re)
+    format_str_deb = r' -- %(maintainer)s <%(email)s>  %(timestamp)s'
+    parse_re_deb = r' -- (?P<maintainer>[\w\d ]+) <(?P<email>[\w\d@ \.]+)>  (?P<timestamp>\w{3}, \d{1,2} \w{3} \d{4} \d{2}:\d{2}:\d{2} (\+|-)\d{4})'
+    compiled_re_deb = re.compile(parse_re_deb)
 
 
 class ChangeLogParagraph(object):
@@ -593,6 +700,12 @@ class ChangeLogFile(object):
         self.changelog_entries = list()
 
     def read(self):
+        """Read the ChangeLogFile
+
+        Raises an exception 'ChangeLogFileEmpty()' if the file is
+        empty, or no ChangeLogEnties could be extracted.
+
+        """
         changelog_entry = None
         current_paragraph = None
         with open(self.filename, "r") as fobj:
@@ -637,6 +750,9 @@ class ChangeLogFile(object):
                 else:
                     current_paragraph.add_line(line)
 
+        if len(self.changelog_entries) < 1:
+            raise EmptyChangeLogFile(self.filename)
+
     def save(self):
         """Save ChangeLog entries to file"""
         with open(self.filename, 'w') as fobj:
@@ -644,10 +760,19 @@ class ChangeLogFile(object):
              self.changelog_entries]
 
     def versions(self):
-        """Return a list of all versions in the ChangeLog file"""
+        """Return a list of all versions in the ChangeLog file
 
-        if (len(self.changelog_entries) < 1):
+        When called on a Dam style changelog file, it throws an
+        exception, since Dam style changelog files do not have a
+        version.
+
+        """
+
+        if len(self.changelog_entries) < 1:
             return None
+
+        if self.changelog_entries[0].header.style == ChangeLogHeader.STYLE_DAM:
+            raise OperationNotApplicable(ChangeLogHeader.STYLE_DAM)
 
         return [changelog_entry.header.version for changelog_entry in
                 self.changelog_entries]
@@ -662,9 +787,11 @@ class ChangeLogFile(object):
         Package name is returned as defined by the first entry of the
         ChangeLog file.
 
+        None is returned if changelog file is empty.
+
         """
         if len(self.changelog_entries) < 1:
-            return ""
+            return None
 
         return self.changelog_entries[0].header.package
 
@@ -718,11 +845,17 @@ class ChangeLogFile(object):
         else:
             self.changelog_entries[0].add_paragraph(paragraph, True)
 
-        latest_header = self.changelog_entries[0].header
-        latest_header.rev = ChangeLogHeader.opencsw_rev()
-        self.changelog_entries[0].add_header(latest_header)
-        self.changelog_entries[0].add_footer(ChangeLogFooter())
+        self.refresh_timestamps()
 
+    def refresh_timestamps(self):
+        """Set the timestamps of the latest entry to the current date
+
+        Timestamps of ChangeLogHeader and ChangeLogFooter will updated.
+        """
+        assert len(self.changelog_entries) > 0
+
+        self.changelog_entries[0].header.refresh_timestamp()
+        self.changelog_entries[0].footer.refresh_timestamp()
 
     def svn_add(self):
         """Add file to svn repository
@@ -731,8 +864,6 @@ class ChangeLogFile(object):
         directory.  Else it does nothing.
 
         """
-        assert len(self.changelog_entries) > 0
-
         # First of all, make sure the file exists
         if not os.path.exists(self.filename):
             raise OSError((errno.ENOENT, 'No such file: %s' % self.filename))
@@ -756,19 +887,59 @@ class ChangeLogFile(object):
         svnclient.add([self.filename])
         logging.info("Scheduled file '%s' for addition to SVN repository", self.filename)
 
+    def in_svn(self):
+        """Checks if ChangeLogFile is added to SVN working directory.
+
+        :returns: True if the file is added to the SVN working
+        directory, else False.
+
+        """
+        # First of all, make sure the file exists
+        if not os.path.exists(self.filename):
+            raise OSError((errno.ENOENT, 'No such file: %s' % self.filename))
+
+        svnclient = pysvn.Client()
+
+        try:
+            svnclient.info(self.filename)
+        except pysvn.ClientError:
+            return False
+
+        return True
+
+    def changelog_style(self):
+        """Get the type of the changelog
+
+        Determines the style of the changelog by reading the first line.
+        """
+        with open(self.filename, "r") as changelog_file:
+            # read and parse the first line
+            changelog_header = ChangeLogHeader(line=changelog_file.readline())
+            return changelog_header.style
+
 
 def new_changelog_entry(filename, version, log):
-    changelog_file = ChangeLogFile(filename)
-    changelog_file.read()
+    """Create a new change log entry
 
-    if changelog_file.versions() is None:
-        raise EmptyChangeLogFile(filename)
+    :param version: has to be None for Dam style log files.
+    """
+    changelog_file = ChangeLogFile(filename)
+    
+    style = changelog_file.changelog_style()
+    if style == ChangeLogHeader.STYLE_DAM and\
+       version is not None:
+        logging.error("Changelog '%s' is Dam style. Version does not apply.",
+                      filename)
+        sys.exit(1)
+
+    changelog_file.read()
 
     # get the package from the first entry
     package = changelog_file.get_package()
 
     header = ChangeLogHeader(package=package,
                              version=version)
+
     paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
     footer = ChangeLogFooter()
 
@@ -776,19 +947,27 @@ def new_changelog_entry(filename, version, log):
     changelog_file.save()
 
 def update_changelog_entry(filename, log):
+
     changelog_file = ChangeLogFile(filename)
     changelog_file.read()
-
-    if changelog_file.versions() is None:
-        raise EmptyChangeLogFile(filename)
 
     [changelog_file.update_latest(ChangeLogParagraph(l)) for l in
      log]
     changelog_file.save()
 
-def create_changelog_file(filename, overwrite, package, version, log, register_svn):
-    header = ChangeLogHeader(package=package,
-                                  version=version)
+def refresh_changelog(filename):
+    changelog_file = ChangeLogFile(filename)
+    changelog_file.read()
+
+    changelog_file.refresh_timestamps()
+
+    changelog_file.save()
+
+def create_changelog_file(filename, style, overwrite, package, 
+                          version, log, register_svn):
+    # For Dam style changelogs, version is expected to be None
+    header = ChangeLogHeader(package=package, version=version)
+
     footer = ChangeLogFooter()
     paragraphs = [ChangeLogParagraph(log_para) for log_para in log]
 
@@ -811,6 +990,33 @@ def get_version(logfile, allversions):
     else:
         print(changelog_file.versions()[0])
 
+def compile_log(logitem, logparagraph):
+    """Create a list of strings having the proper format to be fed to
+    ChangeLogParagraph
+
+    Returns a list of strings that is suitable for feeding to
+    ChangeLogParagraph, i.e. item style entries are prepended with ' *
+    ' and plain paragraphs are left alone.
+
+    """
+    log = list()
+    if logitem:
+        log = ['  * ' + item for item in logitem]
+
+    if logparagraph:
+        log.extend(logparagraph)
+
+    return log
+
+def cond_complain_svn(filename, complain):
+    """Conditionally complain about changelog file not registered in SVN
+
+    :param complain: if True and file is not in SVN, complain. Else do nothin.
+    """
+    changelogfile = ChangeLogFile(filename)
+    if complain and not changelogfile.in_svn():
+        logging.warn("%s is not under version control", changelogfile.filename)
+
 def cmdline_parse():
     """Parse the command line
 
@@ -821,15 +1027,28 @@ def cmdline_parse():
     parser.add_argument('--logfile',
                         help='filename to use (default: %(default)s)',
                         default='files/changelog.CSW')
+    parser.add_argument('--no-svn', help="Do not add file to SVN repository or stop complaining about file not registerd with svn.",
+                               default=False, action='store_const',
+                               const=True)
     subparser = parser.add_subparsers(help='sub-command help',
                                       dest='command')
 
     parser_create = subparser.add_parser('create',
                                          help="create new changelog.CSW file. Existing file will not be overwritten.")
+    group = parser_create.add_mutually_exclusive_group()
+    group.add_argument('--deb-style',
+                       help='Create a Debian style changelog',
+                       action='store_const',
+                       dest='style', const=ChangeLogHeader.STYLE_DEB)
+    group.add_argument('--dam-style',
+                       help='Create a Dam style changelog',
+                       action='store_const',
+                       dest='style', const=ChangeLogHeader.STYLE_DAM)
     parser_create.add_argument('package',
                                help="package name")
-    parser_create.add_argument('version',
-                               help="package version")
+    parser_create.add_argument('--version',
+                               help="package version (only required for Debian style changelog)", 
+                               required=False)
     parser_create.add_argument('--log-item',
                                help="the log entry to be recorded as list item",
                                nargs='*')
@@ -839,14 +1058,12 @@ def cmdline_parse():
     parser_create.add_argument('--force', help="force creation of file. Overwrite existing file.",
                                default=False, action='store_const',
                                const=True)
-    parser_create.add_argument('--no-svn', help="Do not add file to SVN repository.",
-                               default=False, action='store_const',
-                               const=True)
 
     parser_new = subparser.add_parser('new',
                                       help="new changelog entry")
-    parser_new.add_argument('version',
-                            help="new version")
+    parser_new.add_argument('--version',
+                            help="new version (only required for Debian style changelog)",
+                            required=False)
     parser_new.add_argument('--log-item',
                                help="the log entry to be recorded as list item",
                                nargs='*')
@@ -864,6 +1081,9 @@ def cmdline_parse():
                                help="the log entry to be recorded as plain paragraph",
                                nargs='*')
 
+    parser_refresh = subparser.add_parser('refresh',
+                                          help="refresh header and footer of latest changelog entry")
+
     parser_version = subparser.add_parser('version',
                                           help="retrieve version from changelog.CSW")
     parser_version.add_argument('--all-versions',
@@ -880,17 +1100,12 @@ def cmdline_parse():
        arguments.log_item is None:
         parser.error("'%s' requires either '--log-paragraph' or '--log-item'" % arguments.command)
 
+    if arguments.command == "create" and\
+       arguments.style == ChangeLogHeader.STYLE_DAM and\
+       arguments.version is not None:
+        parser.error("Dam style changelogs do not take version")
+
     return arguments
-
-def compile_log(logitem, logparagraph):
-    log = list()
-    if logitem:
-        log = ['  * ' + item for item in logitem]
-
-    if logparagraph:
-        log.extend(logparagraph)
-
-    return log
 
 
 if __name__ == '__main__':
@@ -902,24 +1117,34 @@ if __name__ == '__main__':
         del sys.argv[1:]
         unittest.main()
 
-    if arguments.command == "create":
-        log = compile_log(arguments.log_item, arguments.log_paragraph)
-        create_changelog_file(arguments.logfile,
-                              arguments.force,
-                              arguments.package,
-                              arguments.version,
-                              log,
-                              not arguments.no_svn)
+    try:
+        if arguments.command == "create":
+            log = compile_log(arguments.log_item, arguments.log_paragraph)
+            create_changelog_file(arguments.logfile,
+                                  arguments.style,
+                                  arguments.force,
+                                  arguments.package,
+                                  arguments.version,
+                                  log,
+                                  not arguments.no_svn)
 
-    if arguments.command == "new":
-        log = compile_log(arguments.log_item, arguments.log_paragraph)
-        new_changelog_entry(arguments.logfile,
-                            arguments.version,
-                            log)
+        if arguments.command == "new":
+            log = compile_log(arguments.log_item, arguments.log_paragraph)
+            new_changelog_entry(arguments.logfile,
+                                arguments.version,
+                                log)
+            cond_complain_svn(arguments.logfile, not arguments.no_svn)
 
-    if arguments.command == "update":
-        log = compile_log(arguments.log_item, arguments.log_paragraph)
-        update_changelog_entry(arguments.logfile, log)
+        if arguments.command == "update":
+            log = compile_log(arguments.log_item, arguments.log_paragraph)
+            update_changelog_entry(arguments.logfile, log)
+            cond_complain_svn(arguments.logfile, not arguments.no_svn)
 
-    if arguments.command == "version":
-        get_version(arguments.logfile, arguments.all_versions)
+        if arguments.command == "refresh":
+            refresh_changelog(arguments.logfile)
+            cond_complain_svn(arguments.logfile, not arguments.no_svn)
+
+        if arguments.command == "version":
+            get_version(arguments.logfile, arguments.all_versions)
+    except ChangeLogException as ex:
+        logging.error(str(ex))
