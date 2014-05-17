@@ -1,0 +1,24 @@
+From 7c7fc8caad4ff92b63962ed35f342a28e2c79398 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Sat, 17 May 2014 09:56:50 +0200
+Subject: [PATCH] Disable Tracker autostart
+
+---
+ etc/netatalk/netatalk.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/etc/netatalk/netatalk.c b/etc/netatalk/netatalk.c
+index 4cdc466..1a304d1 100644
+--- a/etc/netatalk/netatalk.c
++++ b/etc/netatalk/netatalk.c
+@@ -419,7 +419,6 @@ int main(int argc, char **argv)
+     setenv("TRACKER_LANGUAGE_STOPWORDS_DIR", TRACKER_PREFIX "/share/tracker/languages", 0);
+ #endif
+     set_sl_volumes();
+-    system(TRACKER_PREFIX "/bin/tracker-control -s");
+ #endif
+ 
+     /* run the event loop */
+-- 
+1.8.4.1
+
