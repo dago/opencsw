@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = setuptools
-VERSION = 1.1.6
+VERSION = 3.6
 CATEGORIES = python
 GARTYPE = v2
 
@@ -11,14 +11,10 @@ PYSETUPTOOLS_RELEASE := $(shell echo $(VERSION) | sed -e 's/^[0-9].[0-9]*//')
 
 DESCRIPTION = Distribution Utilities for Python
 
-define BLURB
-  Distribution Utilities for Python
-endef
-
 # Upstream has rejected our patch. :(
 # https://bitbucket.org/pypa/setuptools/issue/134/spaces-in-file-names-make-it-impossible-to
 # https://bitbucket.org/pypa/setuptools/pull-request/33/rename-script-templatepy-to-script/diff
-PATCHFILES += 0001-Solaris-package-mge-does-not-handle-spaces.patch
+PATCHFILES += 0001-Solaris-packages-can-t-handle-spaces-in-file-names.patch
 
 ARCHALL_CSWpy-setuptools = 1
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
