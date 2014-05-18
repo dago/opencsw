@@ -1,5 +1,5 @@
 NAME = lcms2
-VERSION = 2.4
+VERSION = 2.6
 GARTYPE = v2
 
 # Retry compiling ghostscript 9.07 on version bump as some new API was introduced not in 2.4 yet:
@@ -23,7 +23,7 @@ SF_PROJ = lcms
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$coded-Wall.patch
 
-VENDOR_URL = http://www.littlecms.com/
+VENDOR_URL = http://wwGARCOMPILER = GCC4www.littlecms.com/
 
 PACKAGES += CSWliblcms2-2
 SPKG_DESC_CSWliblcms2-2 = Color management library, liblcms2.so.2
