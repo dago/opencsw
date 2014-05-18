@@ -1,4 +1,5 @@
 #!/bin/sh
 chroot ${PKG_INSTALL_ROOT:-/} /usr/sbin/svccfg delete -f cswnetatalk
+chroot ${PKG_INSTALL_ROOT:-/} /usr/sbin/svccfg delete -f cswnetatalk-dbus
 chroot ${PKG_INSTALL_ROOT:-/} /usr/sbin/svccfg delete -f cswnetatalk-tracker-extract
 chroot ${PKG_INSTALL_ROOT:-/} /usr/sbin/svccfg delete -f cswnetatalk-tracker-miner-fs

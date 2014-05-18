@@ -2,9 +2,9 @@
 <!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
 <!--
         Created by Manifold
---><service_bundle type="manifest" name="cswnetatalk-tracker-extract">
+--><service_bundle type="manifest" name="cswnetatalk-dbus">
 
-    <service name="site/cswnetatalk-tracker-extract" type="service" version="1">
+    <service name="site/cswnetatalk-dbus" type="service" version="1">
 
         <create_default_instance enabled="false"/>
         
@@ -18,10 +18,6 @@
             <service_fmri value="svc:/system/filesystem/local"/>
         </dependency>
 
-        <dependency name="cswnetatalk-dbus" grouping="require_all" restart_on="error" type="service">
-            <service_fmri value="svc:/network/cswnetatalk-dbus:default"/>
-        </dependency>
-
         <method_context>
           <method_environment>
             <envvar name="DBUS_SESSION_BUS_ADDRESS" value="unix:path=/var/opt/csw/netatalk/spotlight.ipc"/>
@@ -31,7 +27,7 @@
           </method_environment>
         </method_context>
 
-        <exec_method type="method" name="start" exec="/opt/csw/libexec/tracker-extract" timeout_seconds="60"/>
+        <exec_method type="method" name="start" exec="/opt/csw/bin/dbus-daemon" timeout_seconds="60"/>
 
         <exec_method type="method" name="stop" exec=":kill" timeout_seconds="60"/>
 
@@ -52,7 +48,7 @@
         <template>
             <common_name>
                 <loctext xml:lang="C">
-                    Netatalk's tracker-extract
+                    Netatalk's dbus
                 </loctext>
             </common_name>
         </template>
