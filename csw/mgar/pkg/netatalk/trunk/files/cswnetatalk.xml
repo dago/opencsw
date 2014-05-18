@@ -20,6 +20,10 @@
             <service_fmri value="svc:/network/dns/multicast"/>
         </dependency>
 
+        <dependency name="cswnetatalk-dbus" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/network/cswnetatalk-dbus:default"/>
+        </dependency>
+
         <method_context>
         </method_context>
 

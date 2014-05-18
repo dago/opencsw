@@ -18,8 +18,8 @@
             <service_fmri value="svc:/system/filesystem/local"/>
         </dependency>
 
-        <dependency name="cswnetatalk" grouping="require_all" restart_on="error" type="service">
-            <service_fmri value="svc:/network/cswnetatalk:default"/>
+        <dependency name="cswnetatalk-dbus" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/network/cswnetatalk-dbus:default"/>
         </dependency>
 
         <method_context>
