@@ -36,7 +36,6 @@
 
 # Import all the needed modules
 import sys
-import string
 import re
 import os
 import shutil
@@ -46,8 +45,8 @@ import MySQLdb
 import datetime
 import ConfigParser
 import logging
+import requests
 
-from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -594,23 +593,18 @@ class UpstreamWatchCommand(AbstractCommand):
 
         try:
             # Request the upstream URL and open it
-            req = Request(url)
-            response = urlopen(req)
+            # req = Request(url)
+            # response = urlopen(req)
+            response = requests.get(url)
+            response.raise_for_status()
 
-        except URLError, e:
-            if hasattr(e, 'reason'):
-                print 'We failed to reach a server during retrieval of : ' + url
-                print 'Reason: ', e.reason
-            elif hasattr(e, 'code'):
-                print 'The server couldn\'t fulfill the request during retrieval of : ' + url
-                print 'Error code: ', e.code
-
-            # Check for response code value. We should get a 200
-            raise UpstreamUrlRetrievalFailedException(url)
-
+        except (requests.exceptions.ConnectionError,
+                requests.exceptions.HTTPError) as e:
+            print e
+            raise UpstreamUrlRetrievalFailedException(' '.join((url, unicode(e))))
         else:
             # everything is fine, retrieve the page content
-            return response.read()
+            return response.text
 
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -621,11 +615,11 @@ class UpstreamWatchCommand(AbstractCommand):
         # an elements can be a string or a number
         # at each step we extract the next elements of the two version strings and compare them
 
-        if isinstance(version1, str) == False:
+        if isinstance(version1, basestring) == False:
             print "Version is not a string. Please check environnement variable UFILES_REGEX"
             print version1
 
-        if isinstance(version2, str) == False:
+        if isinstance(version2, basestring) == False:
             print "Version is not a string. Please check environnement variable UFILES_REGEX"
             print version2
 
