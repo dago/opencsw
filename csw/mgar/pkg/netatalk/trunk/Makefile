@@ -77,9 +77,9 @@ CONFIGURE_ARGS += --with-ldap=/opt/csw
 CONFIGURE_ARGS += --with-mysql-config=no
 K# Path to XML dtd
 CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk.xml
-CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk-tracker-miner-fs.xml
-CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk-tracker-extract.xml
-CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswnetatalk-dbus.xml
+CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/system/cswnetatalk-tracker-miner-fs.xml
+CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/system/cswnetatalk-tracker-extract.xml
+CHECKPKG_OVERRIDES_CSWnetatalk += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/system/cswnetatalk-dbus.xml
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/bin/afppasswd
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_pam.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_passwd.so
@@ -90,7 +90,7 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/network
 	ginstall -m 444 $(FILEDIR)/cswnetatalk.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/
-	ginstall -m 444 $(FILEDIR)/cswnetatalk-dbus.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/
-	ginstall -m 444 $(FILEDIR)/cswnetatalk-tracker-extract.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/
-	ginstall -m 444 $(FILEDIR)/cswnetatalk-tracker-miner-fs.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/
+	ginstall -m 444 $(FILEDIR)/cswnetatalk-dbus.xml $(DESTDIR)/var/opt/csw/svc/manifest/system/
+	ginstall -m 444 $(FILEDIR)/cswnetatalk-tracker-extract.xml $(DESTDIR)/var/opt/csw/svc/manifest/system/
+	ginstall -m 444 $(FILEDIR)/cswnetatalk-tracker-miner-fs.xml $(DESTDIR)/var/opt/csw/svc/manifest/system/
 	@$(MAKECOOKIE)
