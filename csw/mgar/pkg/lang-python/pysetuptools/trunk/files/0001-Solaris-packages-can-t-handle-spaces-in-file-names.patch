@@ -1,0 +1,28 @@
+From 9f85a0682b3cf98845ce149724db1639cebac07d Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 18 May 2014 14:47:41 +0200
+Subject: [PATCH] Solaris packages can't handle spaces in file names
+
+---
+ setuptools/command/easy_install.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/setuptools/command/easy_install.py b/setuptools/command/easy_install.py
+index a5f324e..87f12b2 100644
+--- a/setuptools/command/easy_install.py
++++ b/setuptools/command/easy_install.py
+@@ -756,9 +756,9 @@ Please make the appropriate changes for your system and try again.
+         if is_script:
+             # See https://bitbucket.org/pypa/setuptools/issue/134 for info
+             #  on script file naming and downstream issues with SVR4
+-            template_name = 'script template.py'
++            template_name = 'script_template.py'
+             if dev_path:
+-                template_name = template_name.replace('.py', ' (dev).py')
++                template_name = template_name.replace('.py', '_(dev).py')
+             script_text = (get_script_header(script_text) +
+                 get_template(template_name) % locals())
+         self.write_script(script_name, _to_ascii(script_text), 'b')
+-- 
+1.8.4.1
+
