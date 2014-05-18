@@ -1,5 +1,5 @@
 NAME = nmap
-VERSION = 6.45
+VERSION = 6.46
 GARTYPE = v2
 GARCOMPILER = GCC46 solaris10-sparc
 
@@ -18,6 +18,7 @@ endef
 MASTER_SITES = http://nmap.org = $(NAME)-$(VERSION).tar.bz2
 # Those files are taken from FreeBSD 10.0 and stripped off some #ifdef WHATEVER where necessary.
 DISTFILES += file.h asprintf.c vasprintf.c
+DISTFILES += changelog.CSW
 
 PATCHFILES += 0000-Add-vasprintf-compatibility.patch
 PATCHFILES += 0000-Add-python2.6-site-packages-gtk-2.0-to-python-path-i.patch
@@ -47,6 +48,7 @@ PKGFILES_CSWzenmap += $(bindir)/xnmap
 PKGFILES_CSWzenmap += $(libdir)/python.*
 PKGFILES_CSWzenmap += $(mandir)/.*/zenmap\.1
 PKGFILES_CSWzenmap += $(sharedstatedir)/zenmap/.*
+PKGFILES_CSWzenmap += $(docdir)/zenmap/.*
 # For Zenmap
 RUNTIME_DEP_PKGS_CSWzenmap += CSWnmap
 RUNTIME_DEP_PKGS_CSWzenmap += CSWpy-gtk
