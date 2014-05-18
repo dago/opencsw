@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = WSGIProxy2
-VERSION = 0.1
+VERSION = 0.2
 CATEGORIES = python
 GARTYPE = v2
 
