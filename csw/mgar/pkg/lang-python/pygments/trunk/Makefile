@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = Pygments
-VERSION = 1.4
+VERSION = 1.6
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Syntax highlighting for Python
