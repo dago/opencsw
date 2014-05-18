@@ -3,6 +3,7 @@
 
 import argparse
 import logging
+import itertools
 from lib.python import chkdbcat
 
 class MyCheckDBCatalog(chkdbcat.CheckDBCatalog):
@@ -27,15 +28,22 @@ def argparser():
     parser.add_argument('--debug', help='enable debug output', required=False, default=False, action='store_const', const=True)
     parser.add_argument('--verbose', help='be verbose', required=False, default=False, action='store_const', const=True)
     parser.add_argument('--arch', required=True,
-                        help="i386, sparc")
+                        help="i386, sparc",
+                        nargs="+")
     parser.add_argument('--catalog-release', required=True,
-                        help="unstable, kiel, etc.")
+                        help="unstable, kiel, etc.",
+                        nargs="+")
     parser.add_argument('--os-release', required=True,
-                        help="SunOS5.10, SunOS5.11")
-    parser.add_argument('--timestamp-file', default='/var/cache/chkdbcat/timestamp.json')
-    parser.add_argument('--chkcat-path', default='/opt/csw/bin/chkcat')
+                        help="SunOS5.10, SunOS5.11",
+                        nargs="+")
+    parser.add_argument('--timestamp-file',
+                        help="timestamp filepath (default: %(default)s)",
+                        default='/var/cache/chkdbcat/timestamp.json')
+    parser.add_argument('--chkcat-path',
+                        help="path to chkcat binary (default: %(default)s)",
+                        default='/opt/csw/bin/chkcat')
     parser.add_argument('--gen-catalog-path',
-                        help="path to gen-catalog-index",
+                        help="path to gen-catalog-index (default: %(default)s)",
                         default="/home/web/bin/gen-catalog-index")
     return parser.parse_args()
 
@@ -45,21 +53,29 @@ def main():
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
 
-    if args.verbose: print("Checking Database Catalog {0} {2} {1}".format(args.catalog_release, args.arch, args.os_release))
-    with MyCheckDBCatalog(args.catalog_release, args.arch,
-                          args.os_release, args.timestamp_file,
-                          args.gen_catalog_path,
-                          args.chkcat_path, args.verbose) as checker:
-        success = checker.check()
-        if args.verbose:
-            if success:
-                print("Database Catalog {0} {2} {1}: OK".format(args.catalog_release, args.arch, args.os_release))
-            else:
-                print("Database Catalog {0} {2} {1}: FAILED".format(args.catalog_release, args.arch, args.os_release))
-                print("chkcat output")
-                print checker.stderr
+    had_errors = False
+    for crel_arch_orel in itertools.product(args.catalog_release, args.arch, args.os_release):
+        catalog_release = crel_arch_orel[0]
+        arch = crel_arch_orel[1]
+        os_release = crel_arch_orel[2]
 
-        exit(0) if success else exit(1)
+        if args.verbose: print("Checking Database Catalog {0} {2} {1}".format(catalog_release, arch, os_release))
+        with MyCheckDBCatalog(catalog_release, arch,
+                              os_release, args.timestamp_file,
+                              args.gen_catalog_path,
+                              args.chkcat_path, args.verbose) as checker:
+            success = checker.check()
+            if args.verbose:
+                if success:
+                    print("Database Catalog {0} {2} {1}: OK".format(catalog_release, arch, os_release))
+                else:
+                    print("Database Catalog {0} {2} {1}: FAILED".format(catalog_release, arch, os_release))
+                    print("chkcat output")
+                    print checker.stderr
+
+            had_errors = had_errors or not success
+
+    exit(0) if had_errors else exit(1)
 
 if __name__ == '__main__':
     main()
