@@ -13,6 +13,7 @@ MASTER_SITES = http://argparse.googlecode.com/files/
 DISTFILES = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://pypi.python.org/pypi/argparse
+UPSTREAM_MASTER_SITES = https://code.google.com/p/argparse/downloads/list
 
 PACKAGES = CSWpy-argparse
 ARCHALL_CSWpy-argparse = 1
