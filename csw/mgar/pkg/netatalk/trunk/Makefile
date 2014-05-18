@@ -58,16 +58,6 @@ PATCHFILES += 0001-Disable-dbus.patch
 # will be in 3.1.2:
 PATCHFILES += 33dd614058f32bbe3c88734654228d8715f2403e.patch
 
-REINPLACEMENTS += manifest1
-REINPLACE_MATCH_manifest1 = network/netatalk
-REINPLACE_WITH_manifest1 = network/cswnetatalk
-REINPLACE_FILES_manifest1 += distrib/initscripts/netatalk.xml.tmpl
-
-REINPLACEMENTS += manifest2
-REINPLACE_MATCH_manifest2 = name="netatalk"
-REINPLACE_WITH_manifest2 =  name="cswnetatalk"
-REINPLACE_FILES_manifest2 += distrib/initscripts/netatalk.xml.tmpl
-
 PRESERVECONF += $(sysconfdir)/afp.conf
 PRESERVECONF += $(sysconfdir)/extmap.conf
 
