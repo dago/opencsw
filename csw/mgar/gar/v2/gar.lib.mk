@@ -275,9 +275,9 @@ get-upstream-version-list:
 			exit 1 ; \
 		fi ; \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
-			VERSIONLIST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
+			VERSIONLIST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
 		else \
-			VERSIONLIST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+			VERSIONLIST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
 		fi ; \
 		if [ "$$?" -ne "0" ] ; then \
 			echo "Error occured while executing uwatch get-upstream-version-list. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
@@ -318,9 +318,9 @@ get-upstream-latest-version:
 			exit 1 ; \
 		fi ; \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
 		else \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
 		fi ; \
 		if [ "$$?" -ne "0" ] ; then \
 			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
@@ -357,9 +357,9 @@ check-upstream:
 			exit 1 ; \
 		fi ; \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)" --current-version="$(VERSION)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)" --current-version="$(VERSION)"` ; \
 		else \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
 		fi ; \
 		if [ "$$?" -ne "0" ] ; then \
 			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
@@ -397,9 +397,9 @@ upgrade-to-latest-upstream:
 			exit 1 ; \
 		fi ; \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)" --current-version="$(VERSION)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)" --current-version="$(VERSION)"` ; \
 		else \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
 		fi ; \
 		if [ "$$?" -ne "0" ] ; then \
 			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
@@ -410,7 +410,7 @@ upgrade-to-latest-upstream:
 			if [ ! -d "../branches/upgrade_from_$(VERSION)_to_$$LATEST" ] ; then \
 				if [ -n "$$LATEST" ] ; then \
 					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
-					VERSIONUPGRADE=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version="$(VERSION)" --target-version="$$LATEST"` ; \
+					VERSIONUPGRADE=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version="$(VERSION)" --target-version="$$LATEST"` ; \
 					if [ "$$?" -ne "0" ] ; then \
 						echo "Error occured while executing uwatch upgrade-to-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 						echo "$$VERSIONUPGRADE" ; \
@@ -444,7 +444,7 @@ update-package-version-database:
 			GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
 			CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
 			PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
-			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Upstream Watch is disabled" --uwatch-deactivated` ; \
+			REPORTVERSION=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Upstream Watch is disabled" --uwatch-deactivated` ; \
 			if [ "$$?" -ne "0" ] ; then \
 				echo "Error occured while executing uwatch update-package-version-database --uwatch-deactivated. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 				echo "$$REPORTVERSION" ; \
@@ -472,7 +472,7 @@ update-package-version-database:
 				GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
 				CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
 				PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
-				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Upstream Watch configuration error" ` ; \
+				REPORTVERSION=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Upstream Watch configuration error" ` ; \
 				if [ "$$?" -ne "0" ] ; then \
 					echo "Error occured while executing uwatch update-package-version-database --uwatch-error. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 					echo "$$REPORTVERSION" ; \
@@ -482,9 +482,9 @@ update-package-version-database:
 			exit 1 ; \
 		fi ; \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
 		else \
-			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+			LATEST=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
 		fi ; \
 		if [ "$$?" -ne "0" ] ; then \
 			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
@@ -493,7 +493,7 @@ update-package-version-database:
 				GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
 				CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
 				PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
-				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="$$LATEST" ` ; \
+				REPORTVERSION=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="$$LATEST" ` ; \
 				if [ "$$?" -ne "0" ] ; then \
 					echo "Error occured while executing uwatch update-package-version-database --uwatch-error. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 					echo "$$REPORTVERSION" ; \
@@ -507,14 +507,14 @@ update-package-version-database:
 			CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
 			PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
 			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version="$$LATEST"  --upstream-url="$(UPSTREAM_MASTER_SITES)"  --gar-distfiles="$(DISTFILES)" --uwatch-output="Successful" ` ; \
+				REPORTVERSION=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version="$$LATEST"  --upstream-url="$(UPSTREAM_MASTER_SITES)"  --gar-distfiles="$(DISTFILES)" --uwatch-output="Successful" ` ; \
 			else \
-				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version="$$LATEST"  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Successful" ` ; \
+				REPORTVERSION=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version="$$LATEST"  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Successful" ` ; \
 			fi ; \
 			if [ "$$?" -ne "0" ] ; then \
 				echo "Error occured while executing uwatch update-package-version-database. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 				echo "$$REPORTVERSION" ; \
-				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="$$REPORTVERSION" ` ; \
+				REPORTVERSION=`HTTPS_PROXY=$(https_proxy) HTTP_PROXY=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="$$REPORTVERSION" ` ; \
 				if [ "$$?" -ne "0" ] ; then \
 					echo "Error occured while executing uwatch update-package-version-database --uwatch-error. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 					echo "$$REPORTVERSION" ; \
