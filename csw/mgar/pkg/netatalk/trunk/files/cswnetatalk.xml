@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
-<service_bundle type="manifest" name="netatalk">
+<service_bundle type="manifest" name="cswnetatalk">
 
-    <service name="network/netatalk" type="service" version="1">
+    <service name="network/cswnetatalk" type="service" version="1">
 
         <create_default_instance enabled="false"/>
         
