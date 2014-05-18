@@ -1,7 +1,7 @@
 NAME      = imagemagick
 VERSION   = 6.8.9
 GARSUBREV = 2
-BETAREV   = beta20140516
+BETAREV   = beta20140517
 GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -157,6 +157,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibhalf10
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibz1
