@@ -24,6 +24,8 @@ SPKG_DESC_CSWpy-setuptools = Distribution Utiltiies for Python
 TEST_SCRIPTS =
 LICENSE = LICENSE
 
+CATALOGNAME_CSWpysetuptools = py_setuptools_stub
+
 CHECKPKG_OVERRIDES_CSWpy-setuptools += file-with-bad-content
 
 include gar/category.mk
