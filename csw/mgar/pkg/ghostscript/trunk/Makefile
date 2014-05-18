@@ -1,31 +1,31 @@
 # $Id$
 
 NAME = ghostscript
-VERSION = 9.07
+VERSION = 9.14
 CATEGORIES = apps
 GARTYPE = v2
 
 DESCRIPTION = PostScript and PDF interpreter
 define BLURB
-endef
+endehttp://downloads.ghostscript.com/public/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += map.ghostscript$(# See for details https://www.opencsw.org/mantis/view.php?id=4913
+#PATCHFILES += 0001-Use-ksh-and-GNU-sed-as-reported-in-4913.patch
 
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(# See for details https://www.opencsw.org/mantis/view.php?id=4913
-PATCHFILES += 0001-Use-ksh-and-GNU-sed-as-reported-in-4913.patch$(VENDOR_d|gsx
-
-SPKG_SOURCEURL = http://www.ghostscript.com
+VENDOR_URL = http://www.ghostscript.com
 
 LICENSE = LICENSE
 
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=
-UPST Many more missing
+GARCOMPILER = GCC4
+
+LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.ghostscript)"PST Many more missing
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibtiff-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWcups-dev
 BUILD_DEP_PKGS += CSWlibjbig2dec-dev
-BUILD_DEP_PKGS += CSWfconfig-dev
+BUILD_DEP_PKGS += CSWfontconfig-dev
 BUILD_DEP_PKGS += CSWlibjpeg-dev
 BUILD_DEP_PKGS += CSWlibpaper-dev
 BUILD_DEP_PKGS += CSWlibcairo2inFOREIGN_PACKAGES += CSWlibgs8inPACKAGES += CSWghostscript
@@ -126,6 +126,7 @@ CONFIGURE_ARGS += --enable-dynamic
 CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
 CONFIGURE_ARGS += --enable-cups
 CONFIGURE_ARGS += --with-install-cups
+CONFIGURE_ARGS += --with-system-libtiff
 
 # pentium_pro does not have SSE2 and the detection does not work
 CONFIGURE_ARGS-32-i386 += --disable-sse2
@@ -146,11 +147,11 @@ include gar/category.mkinpost-extract:
 	@#   https://bugzilla.redhat.com/show_bug.cgi?id=912307
 	@#   http://list-archives.org/2013/02/14/gs-devel-ghostscript-com/ghostscript-9-07-and-ghostpdl-9-07/f/6061272699
 	#rm -rf $(WORKSRC)/lcms2
-	rm -rf $(WORKSRC)/zlib
-	rm -rf $(WORKSRC)/jpeg
-	rm -rf $(WORKSRC)/tiff
-	rm -rf $(WORKSRC)/jbig2dec
-	rm -rf $(WORKSRC)/libpng
-	rm -rf $(WORKSRC)/freetype
+	#rm -rf $(WORKSRC)/zlib
+	#rm -rf $(WORKSRC)/jpeg
+	#rm -rf $(WORKSRC)/tiff
+	#rm -rf $(WORKSRC)/jbig2dec
+	#rm -rf $(WORKSRC)/libpng
+	#rm -rf $(WORKSRC)/freetype
 	@$(MAKECOOKIE)
 	
