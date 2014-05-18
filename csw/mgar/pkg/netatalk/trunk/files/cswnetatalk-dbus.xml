@@ -27,7 +27,7 @@
           </method_environment>
         </method_context>
 
-        <exec_method type="method" name="start" exec="/opt/csw/bin/dbus-daemon" timeout_seconds="60"/>
+        <exec_method type="method" name="start" exec="/opt/csw/bin/dbus-daemon --config-file=/etc/opt/csw/dbus-session.conf" timeout_seconds="60"/>
 
         <exec_method type="method" name="stop" exec=":kill" timeout_seconds="60"/>
 
