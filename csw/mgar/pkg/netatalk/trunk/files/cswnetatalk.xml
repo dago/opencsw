@@ -24,6 +24,14 @@
             <service_fmri value="svc:/site/cswnetatalk-dbus:default"/>
         </dependency>
 
+        <dependency name="cswnetatalk-tracker-extract" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/site/cswnetatalk-tracker-extract:default"/>
+        </dependency>
+
+        <dependency name="cswnetatalk-tracker-miner-fs" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/site/cswnetatalk-tracker-miner-fs:default"/>
+        </dependency>
+
         <method_context>
         </method_context>
 
