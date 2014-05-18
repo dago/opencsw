@@ -89,6 +89,7 @@ include gar/category.mk
 
 post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/network
+	ginstall -d -m 755 $(DESTDIR)/var/opt/csw/svc/manifest/system
 	ginstall -m 444 $(FILEDIR)/cswnetatalk.xml $(DESTDIR)/var/opt/csw/svc/manifest/network/
 	ginstall -m 444 $(FILEDIR)/cswnetatalk-dbus.xml $(DESTDIR)/var/opt/csw/svc/manifest/system/
 	ginstall -m 444 $(FILEDIR)/cswnetatalk-tracker-extract.xml $(DESTDIR)/var/opt/csw/svc/manifest/system/
