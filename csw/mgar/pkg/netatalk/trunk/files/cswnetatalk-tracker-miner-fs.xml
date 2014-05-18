@@ -19,7 +19,7 @@
         </dependency>
 
         <dependency name="cswnetatalk-dbus" grouping="require_all" restart_on="error" type="service">
-            <service_fmri value="svc:/network/cswnetatalk-dbus:default"/>
+            <service_fmri value="svc:/site/cswnetatalk-dbus:default"/>
         </dependency>
 
         <method_context>
