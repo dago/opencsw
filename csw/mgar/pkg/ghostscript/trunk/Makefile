@@ -49,6 +49,7 @@ RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWghostscript += CSWliblcms2-2
 
 # These are probably ok
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/lprsetup.sh
@@ -69,23 +70,6 @@ CATALOGNAME_CSWgs = ghostscript_stub
 RUNTIME_DEP_PKGS_CSWgs += CSWlibgs8
 CHECKPKG_OVERRIDES_CSWgs += surplus-dependency|CSWlibgs8
 
-# CUPS filter
-PACKAGES += CSWghostscript-filters
-SPKG_DESC_CSWghostscript-filters = CUPS filter for Ghostscript
-PKGFILES_CSWghostscript-filters += $(libdir)/cups/.*
-PKGFILES_CSWghostscript-filters += $(sharedstatedir)/cups/.*
-PKGFILES_CSWghostscript-filters += $(sysconfdir)/cups/.*
-RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibdbus1-3
-
-# Yes, the filter is 32 bit only
-CHECKPKG_OVERRIDES_CSWghostscript-filters += 64-bit-binaries-missing
-
-# The filter gstopxl calls /opt/csw/bin/gs
-RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWghostscript
-CHECKPKG_OVERRIDES_CSWghostscript-filters += surplus-dependency|CSWghostscript
-
 PRESERVECONF += $(sysconfdir)/cups/gstoraster.convs
 
 PACKAGES += CSWlibgs9
@@ -103,6 +87,7 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpaper1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWliblcms2-2
 
 
 PACKAGES += CSWghostscript-dev
@@ -141,9 +126,6 @@ TEST_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
 INSTALL_ARGS += soinstall
 
 include gar/category.mkinpost-extract:
-	@# Ghostscript 9.07 depends on API not released in the current lcms2 2.4
-	@#   https://bugzilla.redhat.com/show_bug.cgi?id=912307
-	@#   http://list-archives.org/2013/02/14/gs-devel-ghostscript-com/ghostscript-9-07-and-ghostpdl-9-07/f/6061272699
 	# http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html
 	gsed -i 's/ZLIBDIR=src/ZLIBDIR=$$includedir/' $(WORKSRC)/configure.ac $(WORKSRC)/configure
 	rm -rf $(WORKSRC)/lcms2
