@@ -33,7 +33,7 @@ SPKG_DESC_CSWghostscript = PostScript and PDF interpreter
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgs9
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibz1
-RUNTIME_DEP_PKGS_CSWghostscript += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibjbig2dec0 
@@ -78,8 +78,6 @@ PKGFILES_CSWghostscript-filters += $(sysconfdir)/cups/.*
 RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWghostscript-filters += CSWlibdbus1-3
-CHECKPKG_OVERRIDES_CSWghostscript-filters += file-with-bad-content|/usr/share|root/opt/csw/lib/cups/filter/gstoraster
-CHECKPKG_OVERRIDES_CSWghostscript-filters += file-with-bad-content|/usr/share|root/opt/csw/lib/cups/filter/gstopxl
 
 # Yes, the filter is 32 bit only
 CHECKPKG_OVERRIDES_CSWghostscript-filters += 64-bit-binaries-missing
@@ -95,7 +93,7 @@ SPKG_DESC_CSWlibgs9 = Ghostscript library, libgs.so.9
 PKGFILES_CSWlibgs9 += $(call pkgfiles_lib,libgs.so.9)
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpng15-15
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibjbig2dec0
@@ -104,6 +102,8 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpaper1
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgcc-s1
+
 
 PACKAGES += CSWghostscript-dev
 SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
@@ -124,8 +124,6 @@ ISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
 CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
-CONFIGURE_ARGS += --enable-cups
-CONFIGURE_ARGS += --with-install-cups
 CONFIGURE_ARGS += --with-system-libtiff
 
 # pentium_pro does not have SSE2 and the detection does not work
@@ -146,12 +144,16 @@ include gar/category.mkinpost-extract:
 	@# Ghostscript 9.07 depends on API not released in the current lcms2 2.4
 	@#   https://bugzilla.redhat.com/show_bug.cgi?id=912307
 	@#   http://list-archives.org/2013/02/14/gs-devel-ghostscript-com/ghostscript-9-07-and-ghostpdl-9-07/f/6061272699
-	#rm -rf $(WORKSRC)/lcms2
-	#rm -rf $(WORKSRC)/zlib
-	#rm -rf $(WORKSRC)/jpeg
-	#rm -rf $(WORKSRC)/tiff
-	#rm -rf $(WORKSRC)/jbig2dec
-	#rm -rf $(WORKSRC)/libpng
-	#rm -rf $(WORKSRC)/freetype
+	# http://www.linuxfromscratch.org/blfs/view/svn/pst/gs.html
+	gsed -i 's/ZLIBDIR=src/ZLIBDIR=$$includedir/' $(WORKSRC)/configure.ac $(WORKSRC)/configure
+	rm -rf $(WORKSRC)/lcms2
+	rm -rf $(WORKSRC)/zlib
+	rm -rf $(WORKSRC)/jpeg
+	rm -rf $(WORKSRC)/openjpeg
+	rm -rf $(WORKSRC)/tiff
+	rm -rf $(WORKSRC)/jbig2dec
+	rm -rf $(WORKSRC)/libpng
+	rm -rf $(WORKSRC)/freetype
+	rm -rf $(WORKSRC)/expat
 	@$(MAKECOOKIE)
 	
