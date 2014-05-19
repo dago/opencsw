@@ -11,6 +11,8 @@ import os
 import sys
 import tempfile
 
+from contextlib import contextmanager
+
 import cjson
 import lockfile
 import sqlobject
@@ -71,6 +73,20 @@ log_formatter = logging.Formatter(
     '%(filename)s:%(lineno)d %(funcName)s: %(message)s')
 log_handler.setFormatter(log_formatter)
 applogger.addHandler(log_handler)
+
+
+@contextmanager
+def Transaction(cls):
+  """Provide a transactional scope around a series of operations."""
+  transaction = cls._connection.transaction()
+  try:
+    yield transaction
+    transaction.commit()
+  except:
+    transaction.rollback()
+    raise
+  finally:
+    transaction.commit(close=True)
 
 
 class Index(object):
@@ -291,46 +307,53 @@ class Srv4CatalogAssignment(object):
       c = checkpkg_lib.Catalog()
       sqo_osrel, sqo_arch, sqo_catrel = models.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
-      applogger.info('See if there already is a package with that '
-                     'catalogname (%s)', srv4.basename)
-      res = c.GetConflictingSrv4ByCatalognameResult(
-          srv4, srv4.catalogname,
-          sqo_osrel, sqo_arch, sqo_catrel)
-      if res.count() >= 1:
-        for pkg_in_catalog in res:
-          srv4_to_remove = pkg_in_catalog.srv4file
-          applogger.info('Removing %s from the %s catalog',
-                         srv4_to_remove.catalogname, catspec)
-          c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
-      else:
-        applogger.info('Package with the same catalogname (%s) not found in %s (good)',
-                       srv4.catalogname, catspec)
-      # See if there already is a package with that pkgname.
-      res = c.GetConflictingSrv4ByPkgnameResult(
-          srv4, srv4.pkginst.pkgname,
-          sqo_osrel, sqo_arch, sqo_catrel)
-      if res.count() >= 1:
-        # Removing old version of the package from the catalog
-        for pkg_in_catalog in res:
-          srv4_to_remove = pkg_in_catalog.srv4file
-          applogger.info('Removing %s from %s', srv4_to_remove.basename, catspec)
-          c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
+      with Transaction(models.Srv4FileStats) as trans:
+        applogger.info('Looking if catalog %s already contains a package '
+                       'with catalogname %s', catspec, srv4.catalogname)
+        res = c.GetConflictingSrv4ByCatalognameResult(
+            srv4, srv4.catalogname,
+            sqo_osrel, sqo_arch, sqo_catrel,
+            trans)
+        if res.count() >= 1:
+          for pkg_in_catalog in res:
+            srv4_to_remove = pkg_in_catalog.srv4file
+            applogger.info('Removing previous %s catalogname from the %s catalog, '
+                           'matched by catalogname',
+                           srv4_to_remove.catalogname, catspec)
+            c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name, trans)
+        else:
+          applogger.info('Package with the same catalogname (%s) not found in %s',
+                         srv4.catalogname, catspec)
+        # See if there already is a package with that pkgname.
+        res = c.GetConflictingSrv4ByPkgnameResult(
+            srv4, srv4.pkginst.pkgname,
+            sqo_osrel, sqo_arch, sqo_catrel,
+            trans)
+        if res.count() >= 1:
+          # Removing old version of the package from the catalog
+          for pkg_in_catalog in res:
+            srv4_to_remove = pkg_in_catalog.srv4file
+            applogger.info('Removing %s from %s', srv4_to_remove.basename, catspec)
+            c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name, trans)
+        else:
+          applogger.info('Package with the same pkgname (%s) not found in %s',
+                         srv4.pkginst.pkgname, catspec)
 
-      # This is set by basic HTTP auth.
-      username = web.ctx.env.get('REMOTE_USER')
+        # This is set by basic HTTP auth.
+        username = web.ctx.env.get('REMOTE_USER')
 
-      applogger.info('Adding %s to the %s catalog', srv4.basename, catspec)
-      c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, who=username)
-      web.header(
-          'Content-type',
-          'application/x-vnd.opencsw.pkg;type=catalog-update')
-      response = cjson.encode([
-        u"Added to catalog %s %s %s" % (catrel_name, arch_name, osrel_name),
-        u"%s" % srv4.basename,
-        u"%s" % srv4.md5_sum,
-      ])
-      web.header('Content-Length', len(response))
-      return response
+        applogger.info('Adding %s to the %s catalog', srv4.basename, catspec)
+        c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name, username, trans)
+        web.header(
+            'Content-type',
+            'application/x-vnd.opencsw.pkg;type=catalog-update')
+        response = cjson.encode([
+          u"Added to catalog %s %s %s" % (catrel_name, arch_name, osrel_name),
+          u"%s" % srv4.basename,
+          u"%s" % srv4.md5_sum,
+        ])
+        web.header('Content-Length', len(response))
+        return response
     except (
         checkpkg_lib.CatalogDatabaseError,
         sqlobject.dberrors.OperationalError) as exc:

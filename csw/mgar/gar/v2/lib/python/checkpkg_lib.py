@@ -1126,37 +1126,37 @@ class Catalog(SqlobjectHelperMixin):
 
   def GetConflictingSrv4ByCatalognameResult(self,
       sqo_srv4, catalogname,
-      sqo_osrel, sqo_arch, sqo_catrel):
+      sqo_osrel, sqo_arch, sqo_catrel, trans):
     res = m.Srv4FileStats.select(
-            m.Srv4FileStats.q.catalogname==catalogname
-            ).throughTo.in_catalogs.filter(
-                sqlobject.AND(
-                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-                  m.Srv4FileInCatalog.q.arch==sqo_arch,
-                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+        m.Srv4FileStats.q.catalogname==catalogname,
+        forUpdate=True,
+        connection=trans
+    ).throughTo.in_catalogs.filter(
+        sqlobject.AND(
+          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+          m.Srv4FileInCatalog.q.arch==sqo_arch,
+          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+          m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
     return res
 
   def GetConflictingSrv4ByPkgnameResult(self,
       sqo_srv4, pkgname,
-      sqo_osrel, sqo_arch, sqo_catrel):
-    join = [
-        sqlbuilder.INNERJOINOn(None,
-          m.Pkginst,
-          m.Srv4FileStats.q.pkginst==m.Pkginst.q.id),
-    ]
+      sqo_osrel, sqo_arch, sqo_catrel, trans):
+    pkginst = sqo_srv4.pkginst
     res = m.Srv4FileStats.select(
-            m.Pkginst.q.pkgname==pkgname,
-            join=join
-            ).throughTo.in_catalogs.filter(
-                sqlobject.AND(
-                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-                  m.Srv4FileInCatalog.q.arch==sqo_arch,
-                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+        m.Srv4FileStats.q.pkginst==pkginst,
+        forUpdate=True,
+        connection=trans
+    ).throughTo.in_catalogs.filter(
+        sqlobject.AND(
+          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+          m.Srv4FileInCatalog.q.arch==sqo_arch,
+          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+          m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
     return res
 
-  def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel, who=None):
+  def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel,
+                       who, trans):
     """Registers a srv4 file in a catalog."""
     self.logger.debug(
         "AddSrv4ToCatalog(%s, %r, %r, %r, %r)",
@@ -1177,34 +1177,28 @@ class Catalog(SqlobjectHelperMixin):
       raise CatalogDatabaseError(
           "Package %s (%s) is not registered for releases."
           % (sqo_srv4.basename, sqo_srv4.md5_sum))
-    # TODO(maciej): Make sure the package's files are present in the database.
     # Checking for presence of a different srv4 with the same pkginst in the
     # same catalog
-    pkginst = sqo_srv4.pkginst
-    res = m.Srv4FileStats.select(
-            m.Srv4FileStats.q.pkginst==pkginst).throughTo.in_catalogs.filter(
-                sqlobject.AND(
-                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-                  m.Srv4FileInCatalog.q.arch==sqo_arch,
-                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+    res = self.GetConflictingSrv4ByPkgnameResult(
+        sqo_srv4, sqo_srv4.pkginst.pkgname, sqo_osrel, sqo_arch, sqo_catrel, trans)
     if res.count():
       raise CatalogDatabaseError(
           "There already is a package with that pkgname: %s" % pkginst.pkgname)
     res = self.GetConflictingSrv4ByCatalognameResult(
         sqo_srv4, sqo_srv4.catalogname,
-        sqo_osrel, sqo_arch, sqo_catrel)
+        sqo_osrel, sqo_arch, sqo_catrel, trans)
     if res.count():
       raise CatalogDatabaseError(
           "There already is a package with that catalogname: %s"
-          % sqo_srv4.catalogname)
+          % sqo_srv4)
     # Checking for presence of the same srv4 already in the catalog.
     res = m.Srv4FileInCatalog.select(
         sqlobject.AND(
             m.Srv4FileInCatalog.q.osrel==sqo_osrel,
             m.Srv4FileInCatalog.q.arch==sqo_arch,
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-            m.Srv4FileInCatalog.q.srv4file==sqo_srv4))
+            m.Srv4FileInCatalog.q.srv4file==sqo_srv4),
+        connection=trans)
     if res.count():
       self.logger.debug(
           "%s is already part of %s %s %s, count=%d",
@@ -1212,34 +1206,34 @@ class Catalog(SqlobjectHelperMixin):
       # Our srv4 is already part of that catalog.
       return
     # SQL INSERT happens here.
-    m.Srv4FileInCatalog(
+    pkg_in_cat = m.Srv4FileInCatalog(
         arch=sqo_arch,
         osrel=sqo_osrel,
         catrel=sqo_catrel,
         srv4file=sqo_srv4,
-        created_by=who)
-    # The package is now in the catalog.
+        created_by=who,
+        connection=trans)
     self.logger.debug('The package %s was inserted into catalog %s %s %s: %s',
                       sqo_srv4.basename, osrel, arch, catrel, pkg_in_cat)
 
-  def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
+  def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel, trans):
     catspec = CatalogSpec(catrel, arch, osrel)
     self.logger.debug('RemoveSrv4(), %s %s' % (sqo_srv4, catspec))
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
     try:
-      # There's a race condition in here. Maybe SQLObject allows to delete
-      # atomically?
       sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
           sqlobject.AND(
             m.Srv4FileInCatalog.q.arch==sqo_arch,
             m.Srv4FileInCatalog.q.osrel==sqo_osrel,
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-            m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
+            m.Srv4FileInCatalog.q.srv4file==sqo_srv4),
+          forUpdate=True,
+          connection=trans).getOne()
+      sqo_srv4_in_cat.destroySelf()
       self.logger.debug('Package %s should be now gone from %s.' % (sqo_srv4, catspec))
       # Files belonging to this package should not be removed from the catalog
       # as the package might be still present in another catalog.
-      sqo_srv4_in_cat.destroySelf()
     except sqlobject.main.SQLObjectNotFound as e:
       self.logger.debug('The object went away when we were trying to delete it.')
       self.logger.warning(e)
