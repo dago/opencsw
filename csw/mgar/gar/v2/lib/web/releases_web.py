@@ -55,7 +55,6 @@ render = web.template.render(templatedir)
 config = configuration.GetConfig()
 ALLPKGS_DIR = os.path.join(config.get("buildfarm", "opencsw_root"), "allpkgs")
 CAN_UPLOAD_TO_CATALOGS = frozenset([
-    "beanie",
     "bratislava",
     "dublin",
     "kiel",
