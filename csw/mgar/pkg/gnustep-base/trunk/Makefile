@@ -45,7 +45,7 @@ build-sourcegs:
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install DESTDIR=$(DESTDIR)
 	@$(MAKECOOKIE)
 
 test-none :
