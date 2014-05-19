@@ -97,11 +97,14 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
     if "REV" in parsed_basename["revision_info"]:
       rev = parsed_basename["revision_info"]["REV"]
 
-  # If the object already exists in the database, we'll replace all dependent data.
+  # If the object already exists in the database, we'll replace the
+  # object-dependent data, but the gotcha is that we must not delete
+  # assignments of that object to catalogs. If we do so, the package will get
+  # removed from all the catalogs.
   db_pkg_stats = None
   try:
     db_pkg_stats = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-    db_pkg_stats.DeleteAllDependentObjects()
+    db_pkg_stats.DeleteDependentObjectsPopulatedFromPackageItself()
   except sqlobject.main.SQLObjectNotFound:
     logger.debug('Package %s not present in the relational db, '
                  'proceeding with insert.', parsed_basename)

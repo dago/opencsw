@@ -251,9 +251,25 @@ class Srv4FileStats(sqlobject.SQLObject):
     return str(unicode(self))
 
   def DeleteAllDependentObjects(self):
+    """Prepares the object to be deleted.
+
+    Use this function with caution.
+    """
+    self.DeleteDependentObjectsPopulatedFromPackageItself()
+    logger.debug('Removing all dependent objects from %s; it will cause the '
+                 'package to be removed from all catalogs.', self)
     self.RemoveCatalogAssignments()
-    self.RemoveAllCswFiles()
     self.RemoveAllCheckpkgResults()
+
+  def DeleteDependentObjectsPopulatedFromPackageItself(self):
+    """Removing all the objects that only depend on the package contents.
+
+    It doesn't touch rows that are created for other reasons, e.g. assignments
+    of packages to catalogs.
+    """
+    logger.debug('%s - Deleting objects that only depend on the package '
+                 'contents', self)
+    self.RemoveAllCswFiles()
     self.RemoveOverrides()
     self.RemoveDepends()
     self.RemoveIncompatibles()
