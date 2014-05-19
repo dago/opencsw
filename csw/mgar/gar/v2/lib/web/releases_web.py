@@ -242,7 +242,7 @@ class Srv4CatalogAssignment(object):
     stuck and I don't know why.
     """
     # used for logging
-    catspec = (catrel_name, arch_name, osrel_name)
+    catspec = checkpkg_lib.CatalogSpec(catrel_name, arch_name, osrel_name)
     logging.info('PUT %s %s', catspec, md5_sum)
     if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
       # Updates via web are allowed only for the unstable catalog.
