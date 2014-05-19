@@ -62,6 +62,17 @@ CAN_UPLOAD_TO_CATALOGS = frozenset([
 ])
 
 
+applogger = logging.getLogger('opencsw')
+applogger.setLevel(logging.DEBUG)
+log_handler = logging.FileHandler(filename=LOG_FILE_TMPL)
+log_handler.setLevel(logging.DEBUG)
+log_formatter = logging.Formatter(
+    '%(process)d %(levelname)s %(asctime)s '
+    '%(filename)s:%(lineno)d %(funcName)s: %(message)s')
+log_handler.setFormatter(log_formatter)
+applogger.addHandler(log_handler)
+
+
 class Index(object):
 
   def GET(self):
@@ -525,16 +536,6 @@ class Srv4RelationalLevelTwo(object):
     return ''
 
 # web.webapi.internalerror = web.debugerror
-
-applogger = logging.getLogger('releases-web')
-applogger.setLevel(logging.DEBUG)
-log_handler = logging.FileHandler(filename=LOG_FILE_TMPL)
-log_handler.setLevel(logging.DEBUG)
-log_formatter = logging.Formatter(
-    '%(process)d %(levelname)s %(asctime)s '
-    '%(filename)s:%(lineno)d %(funcName)s: %(message)s')
-log_handler.setFormatter(log_formatter)
-applogger.addHandler(log_handler)
 
 app = web.application(urls, globals())
 

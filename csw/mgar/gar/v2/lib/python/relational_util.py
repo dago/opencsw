@@ -28,13 +28,14 @@ from lib.python import representations
 
 
 PACKAGE_STATS_VERSION = 13L
+logger = logging.getLogger('opencsw.relationalutil')
 
 
 def GetOrSetPkginst(pkgname):
   try:
     pkginst = models.Pkginst.selectBy(pkgname=pkgname).getOne()
   except sqlobject.main.SQLObjectNotFound as exc:
-    logging.debug('pkginst %s not found (%r), making a new one'
+    logger.debug('pkginst %s not found (%r), making a new one'
                   % (pkgname, exc))
     pkginst = models.Pkginst(pkgname=pkgname)
   return pkginst
@@ -72,7 +73,7 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
     msg = ('%r is not a valid OS release name. Look into %s metadata. '
            'Probably a problem with the file name: %r'
            % (os_rel_name, md5_sum, pkg_stats["basic_stats"]["pkg_basename"]))
-    logging.warning(msg)
+    logger.warning(msg)
     # This is probably a package with a file name like
     # 'mod_dav-1.0.3-sparc-CSW.pkg.gz'. We have to deal with it somehow,
     # so we'll assume it's a Solaris 8 package.
@@ -82,7 +83,7 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
   try:
     maintainer = models.Maintainer.selectBy(email=maint_email).getOne()
   except sqlobject.main.SQLObjectNotFound as exc:
-    logging.debug(exc)
+    logger.debug(exc)
     # Try to get the maintainer name.
     maint_name = None
     vendor_str = pkg_stats["pkginfo"]["VENDOR"]
@@ -102,8 +103,8 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
     db_pkg_stats = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
     db_pkg_stats.DeleteAllDependentObjects()
   except sqlobject.main.SQLObjectNotFound:
-    logging.debug('Package %s present in the rel db, proceeding with insert.',
-                  parsed_basename)
+    logger.debug('Package %s not present in the relational db, '
+                 'proceeding with insert.', parsed_basename)
 
   register = True
   bundle = pkg_stats['pkginfo'].get("OPENCSW_BUNDLE", None)

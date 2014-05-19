@@ -10,6 +10,7 @@ import re
 import sqlobject
 from sqlobject import sqlbuilder
 
+logger = logging.getLogger('opencsw.models')
 
 def SanitizeDatetime(d):
   if isinstance(d, datetime.datetime):
@@ -243,6 +244,12 @@ class Srv4FileStats(sqlobject.SQLObject):
   def __init__(self, *args, **kwargs):
     super(Srv4FileStats, self).__init__(*args, **kwargs)
 
+  def __unicode__(self):
+    return u'%s/%s, %s' % (self.pkginst.pkgname, self.catalogname, self.md5_sum)
+
+  def __str__(self):
+    return str(unicode(self))
+
   def DeleteAllDependentObjects(self):
     self.RemoveCatalogAssignments()
     self.RemoveAllCswFiles()
@@ -292,7 +299,7 @@ class Srv4FileStats(sqlobject.SQLObject):
             CheckpkgErrorTag.q.catrel==catrel))
 
   def RemoveCheckpkgResults(self, os_rel, arch, catrel):
-    logging.debug("%s: RemoveCheckpkgResults(%s, %s, %s)",
+    logger.debug("%s: RemoveCheckpkgResults(%s, %s, %s)",
                   self, os_rel, arch, catrel)
     sqlobject.sqlhub.processConnection.query(
         sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
@@ -304,21 +311,18 @@ class Srv4FileStats(sqlobject.SQLObject):
             CheckpkgErrorTag.q.catrel==catrel))))
 
   def RemoveAllCheckpkgResults(self):
-    logging.debug("%s: RemoveAllCheckpkgResults()", self)
+    logger.debug("%s: RemoveAllCheckpkgResults()", self)
     sqlobject.sqlhub.processConnection.query(
         sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
           CheckpkgErrorTag.sqlmeta.table,
           CheckpkgErrorTag.q.srv4_file==self)))
 
   def RemoveOverrides(self):
-    logging.debug("%s: RemoveOverrides()", self)
+    logger.debug("%s: RemoveOverrides()", self)
     sqlobject.sqlhub.processConnection.query(
         sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
           CheckpkgOverride.sqlmeta.table,
           CheckpkgOverride.q.srv4_file==self)))
-
-  def __unicode__(self):
-    return (u"%s" % (self.basename))
 
   def GetUnicodeOrNone(self, s):
     """Tries to decode UTF-8.
