@@ -144,6 +144,13 @@ def ExtractBuildUsername(pkginfo):
   return m.group("username") if m else None
 
 
+class CatalogSpec(collections.namedtuple(
+    'CatalogSpec', ['catrel', 'arch', 'osrel'])):
+
+  def __unicode__(self):
+    return u'{%s, %s, %s}' % self
+
+
 class SqlobjectHelperMixin(object):
 
   def __init__(self):
