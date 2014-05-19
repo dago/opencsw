@@ -884,7 +884,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
           pkgname, self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg,
           rest_client=self.rest_client)
       for function in self.individual_checks:
-        logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
+        logger = logging.getLogger("opencsw.%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
         function(pkg_data, check_interface, logger=logger, messenger=messenger)
         pbar.update(count.next())
@@ -908,7 +908,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     # Set checks
     logging.info("Tasting them all at once...")
     for function in self.set_checks:
-      logger = logging.getLogger(function.__name__)
+      logger = logging.getLogger("opencsw." + function.__name__)
       check_interface = SetCheckInterface(
           self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg,
           rest_client=self.rest_client)
@@ -951,12 +951,13 @@ class Catalog(SqlobjectHelperMixin):
   def __init__(self):
     super(Catalog, self).__init__()
     self.pkgs_by_path_cache = {}
+    self.logger = logging.getLogger('opencsw.checkpkg_lib.Catalog')
 
   def GetInstalledPackages(self, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
-    logging.debug("GetInstalledPackages(%s, %s, %s)"
-                  % (osrel, arch, catrel))
+    self.logger.debug("GetInstalledPackages(%s, %s, %s)"
+                      % (osrel, arch, catrel))
 
     # Object defining a filter for our OS release, architecture and catalog
     # release.
@@ -1157,7 +1158,8 @@ class Catalog(SqlobjectHelperMixin):
 
   def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel, who=None):
     """Registers a srv4 file in a catalog."""
-    logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s, %s)",
+    self.logger.debug(
+        "AddSrv4ToCatalog(%s, %r, %r, %r, %r)",
         sqo_srv4, osrel, arch, catrel, who)
     if not who:
       who = 'unknown'
@@ -1204,8 +1206,9 @@ class Catalog(SqlobjectHelperMixin):
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileInCatalog.q.srv4file==sqo_srv4))
     if res.count():
-      logging.debug("%s is already part of %s %s %s",
-                      sqo_srv4, osrel, arch, catrel)
+      self.logger.debug(
+          "%s is already part of %s %s %s, count=%d",
+          sqo_srv4, osrel, arch, catrel, res.count())
       # Our srv4 is already part of that catalog.
       return
     # SQL INSERT happens here.
@@ -1216,8 +1219,12 @@ class Catalog(SqlobjectHelperMixin):
         srv4file=sqo_srv4,
         created_by=who)
     # The package is now in the catalog.
+    self.logger.debug('The package %s was inserted into catalog %s %s %s: %s',
+                      sqo_srv4.basename, osrel, arch, catrel, pkg_in_cat)
 
   def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
+    catspec = CatalogSpec(catrel, arch, osrel)
+    self.logger.debug('RemoveSrv4(), %s %s' % (sqo_srv4, catspec))
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
     try:
@@ -1229,8 +1236,10 @@ class Catalog(SqlobjectHelperMixin):
             m.Srv4FileInCatalog.q.osrel==sqo_osrel,
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
+      self.logger.debug('Package %s should be now gone from %s.' % (sqo_srv4, catspec))
       # Files belonging to this package should not be removed from the catalog
       # as the package might be still present in another catalog.
       sqo_srv4_in_cat.destroySelf()
     except sqlobject.main.SQLObjectNotFound as e:
-      logging.warning(e)
+      self.logger.debug('The object went away when we were trying to delete it.')
+      self.logger.warning(e)
