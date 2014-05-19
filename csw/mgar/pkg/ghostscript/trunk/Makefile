@@ -95,6 +95,18 @@ SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
 PKGFILES_CSWghostscript-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibgs9
 
+###
+# Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgnutls28
+RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibk5crypto3
+endif
+###
+
 REINPLACEMENTS += fontpath
 REINPLACE_MATCH_fontpath = /usr/share/cups/fonts
 REINPLACE_WITH_fontpath = $(sharedstatedir)/cups/fonts
