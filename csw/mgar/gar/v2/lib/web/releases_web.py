@@ -362,9 +362,7 @@ class Srv4CatalogAssignment(object):
       web.header(
           'Content-Type',
           'application/x-vnd.opencsw.pkg;type=error-message')
-      response = cjson.encode({
-        "error_message": unicode(exc),
-      })
+      response = cjson.encode({"error_message": unicode(exc)})
       web.header('Content-Length', str(len(response)))
       # If we are in this state, there's a possibility that a package has been
       # removed from the database, and its replacesment has not been inserted.

@@ -289,8 +289,9 @@ class Srv4FileStats(sqlobject.SQLObject):
     return CheckpkgOverride.select(CheckpkgOverride.q.srv4_file==self)
 
   def GetErrorTagsResult(self, os_rel, arch, catrel):
-    assert arch.name != 'all', ("Asked for the 'all' architecture, this is not valid "
-                                "for GetErrorTagsResult().")
+    assert arch.name != 'all', (
+        "Asked for the 'all' architecture, this is not valid "
+        "for GetErrorTagsResult().")
     return CheckpkgErrorTag.select(
         sqlobject.AND(
             CheckpkgErrorTag.q.srv4_file==self,
