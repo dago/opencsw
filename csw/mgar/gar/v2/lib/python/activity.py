@@ -27,7 +27,8 @@ MAINTAINER_WHITELIST = set([
     # People who haven't released packages in a long time, but are otherwise
     # active.
     'claudio',  # actively works on perl as of 2014-04
-    'daniel',  # answers, email, is on standby, plans to build reSIProcate
+    'daniel',  # answers email, is on standby, plans to build reSIProcate
+    'gmarler',  # answers email, works on IPS packages on his own
     'jcraig',  # wants to keep active status
     'rmottola',  # answers email, works on GNUstep
     'trygvis',  # answers email
