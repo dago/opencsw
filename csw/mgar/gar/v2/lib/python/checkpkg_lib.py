@@ -32,6 +32,7 @@ from lib.python import tag
 
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 
+# This should be the same as the system configuration.
 SYS_DEFAULT_RUNPATH = [
     "/usr/lib/$ISALIST",
     "/usr/lib",
@@ -1163,7 +1164,7 @@ class Catalog(SqlobjectHelperMixin):
         sqo_srv4, osrel, arch, catrel, who)
     if not who:
       who = 'unknown'
-    # There are only i386 and sparc catalogs.
+    # There are only i386 and sparc architectures.
     if arch not in ('i386', 'sparc'):
       raise CatalogDatabaseError("Wrong architecture: %s" % arch)
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(

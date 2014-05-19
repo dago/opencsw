@@ -92,7 +92,7 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
       maint_name = re.sub(r'^.*%s' % maint_name_magic_str, '', vendor_str)
     maintainer = models.Maintainer(email=maint_email, full_name=maint_name)
 
-  rev=None
+  rev = None
   if "revision_info" in parsed_basename:
     if "REV" in parsed_basename["revision_info"]:
       rev = parsed_basename["revision_info"]["REV"]
