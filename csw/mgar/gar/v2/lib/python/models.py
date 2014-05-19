@@ -519,6 +519,10 @@ class Srv4FileInCatalog(sqlobject.SQLObject):
           'arch', 'osrel', 'catrel', 'srv4file',
           unique=True)
 
+  # http://turbogears.org/1.0/docs/SQLObject/Caching.html#what-does-cache-false-do
+  class sqlmeta:
+    cacheValues = False
+
   def __unicode__(self):
     return (u"%s is in catalog %s %s %s"
             % (self.srv4file,
