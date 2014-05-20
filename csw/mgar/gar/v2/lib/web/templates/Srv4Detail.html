@@ -49,7 +49,7 @@ $if pkg.registered_level_two:
 </ul>
 
 $if binary_md5_sums:
-  <h3>ELF inforomation for binaries</h3>
+  <h3>ELF information for binaries</h3>
   <ul>
   $for bin_path, md5_sum in binary_md5_sums:
     <li><a href="../../elfdump/$md5_sum/">$bin_path</a></li>
