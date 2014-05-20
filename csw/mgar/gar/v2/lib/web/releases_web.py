@@ -518,6 +518,15 @@ class QueryExistingSvr4(object):
 class Srv4RelationalLevelOne(object):
   """Registers the package: creates a set of relational database entries."""
 
+  def HEAD(self, md5_sum):
+    try:
+      srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound('Stats not in the database')
+    if not srv4.registered_level_one:
+      raise web.notfound('Stats in the db, but not registered (level 1)')
+    return ''
+
   def PUT(self, md5_sum):
     try:
       relational_util.StatsStructToDatabaseLevelOne(md5_sum)
@@ -552,7 +561,7 @@ class Srv4RelationalLevelTwo(object):
     except sqlobject.main.SQLObjectNotFound:
       raise web.notfound('Stats not in the database')
     if not srv4.registered_level_two:
-      raise web.notfound('Stats in the db, but not registered')
+      raise web.notfound('Stats in the db, but not registered (level 2)')
     return ''
 
 # web.webapi.internalerror = web.debugerror
