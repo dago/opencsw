@@ -104,7 +104,6 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
   db_pkg_stats = None
   try:
     db_pkg_stats = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-    db_pkg_stats.DeleteDependentObjectsPopulatedFromPackageItself()
   except sqlobject.main.SQLObjectNotFound:
     logger.debug('Package %s not present in the relational db, '
                  'proceeding with insert.', parsed_basename)
@@ -159,6 +158,7 @@ def StatsStructToDatabaseLevelOne(md5_sum, use_in_catalogs=True):
         version_string=parsed_basename["full_version_string"],
         bundle=bundle)
   # Inserting overrides as rows into the database
+  db_pkg_stats.RemoveOverrides()
   for override_dict in pkg_stats["overrides"]:
     models.CheckpkgOverride(srv4_file=db_pkg_stats,
                            **override_dict)
