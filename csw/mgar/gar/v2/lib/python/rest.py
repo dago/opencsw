@@ -359,6 +359,19 @@ class RestClient(object):
     url = self.releases_url + "/svr4/%s/db-level-1/" % md5_sum
     return self._CurlPut(url, [])
 
+  def IsRegisteredLevelOne(self, md5_sum):
+    self.ValidateMd5(md5_sum)
+    url = self.releases_url + "/svr4/%s/db-level-1/" % md5_sum
+    http_code = self._HttpHeadRequest(url)
+    if http_code == 404:
+      return False
+    elif http_code == 200:
+      return True
+    else:
+      raise RestCommunicationError("URL %r HTTP code: %d"
+                                   % (url, http_code))
+
+
   @retry_decorator.Retry(tries=DEFAULT_TRIES, delay=DEFAULT_RETRY_DELAY,
                          exceptions=(RestCommunicationError, pycurl.error))
   def IsRegisteredLevelTwo(self, md5_sum):

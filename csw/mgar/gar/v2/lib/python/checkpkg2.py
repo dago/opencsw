@@ -173,7 +173,8 @@ def main():
     entries = [MakeEntry(x) for x in file_list]
     md5_sums_from_files = collector.CollectStatsFromCatalogEntries(entries, False)
     for md5_sum in md5_sums_from_files:
-      rest_client.RegisterLevelOne(md5_sum)
+      if not rest_client.IsRegisteredLevelOne(md5_sum):
+        rest_client.RegisterLevelOne(md5_sum)
   # We need the md5 sums of these files
   md5_sums.extend(md5_sums_from_files)
   assert md5_sums, "The list of md5 sums must not be empty."
