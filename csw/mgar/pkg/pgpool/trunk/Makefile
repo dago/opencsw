@@ -1,6 +1,6 @@
 # $Id$
 NAME = pgpool
-VERSION = 3.0.1
+VERSION = 3.3.3
 CATEGORIES = net
 GARTYPE = v2
 
@@ -14,24 +14,25 @@ define BLURB
 endef
 
 DISTNAME = pgpool-II-$(VERSION)
+MASTEwww.pgpool.net/mediawiki/images/
+# ol-II-$(VERSION)
 MASTER_SITES = http://pgfoundry.org/frs/download.php/2841/
 DISTFILES  = $(DISTNAME).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.TCHFILES += 0001-fix-missing-macro-WIFEXITED.patch?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpgpool
 CATALOGNAME_CSWpgpool = pgpool
 SPKG_DESC_CSWpgpool = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWpgpool += CSWlibpq
-RUNTIME_DEP_PKGS_CSWpgpool += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpgpool += CSWlibpcp0
+RUNTIME_DEP_PKGS_CSWcp0
+RUNTIME_DEP_PKGS_CSWpgpool += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWpgpool += CSWlibpq5ool += CSWlibpcp0
 
 PACKAGES += CSWlibpcp0
 CATALOGNAME_CSWlibpcp0 = libpcp0
 SPKG_DESC_CSWlibpcp0 = Library for PostgreSQL pgpool providing libpcp.so.0
-PKGFILES_CSWlibpcp0 = $(call baseisadirs,$(libdir),libpcp\.so\.0(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibpcp0 += CSWlibgnugetopt
+PKGFILES_CSWlibpcp0 = $(call baseisadirs,$(libdir),libpcp CSWlibgnugetopt
 
 PACKAGES += CSWpgpool-dev
 CATALOGNAME_CSWpgpool-dev = pgpool_dev
@@ -53,7 +54,8 @@ CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
 # Adding OpenSSL breaks detection of libpq, disable for now
 #CONFIGURE_ARGS += --with-openssl
 # We must use gegrep insread if egrep as certain arguments are needed
-CONFIGURE_ARGS += ac_cv_prog_egrep=$(bindir)/gegrep
+CONFIGURE_ARGS += ac_cv_prog_egrep=# CONFIGURE_ARGS += --enable-sequence-lock
+CONFIGURE_ARGS += --enable-table-lock=$(bindir)/gegrep
 
 EXTRA_PAX_ARGS = -s ",\.sample$$,.CSW,p"
 
@@ -61,4 +63,4 @@ PRESERVECONF += $(sysconfdir)/pcp.conf
 PRESERVECONF += $(sysconfdir)/pgpool.conf
 PRESERVECONF += $(sysconfdir)/pool_hba.conf
 
-include gar/category.mk
+include
