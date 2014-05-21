@@ -1,0 +1,10 @@
+--- a/watchdog/watchdog.h
++++ b/watchdog/watchdog.h
+@@ -27,6 +27,7 @@
+ #define WATCHDOG_H
+ 
+ #include <sys/time.h>
++#include <sys/wait.h>
+ #include "libpq-fe.h"
+ 
+ #include "md5.h"
