@@ -1,6 +1,6 @@
 NAME           = vim
 DISTVERSION    = 7.4
-PATCHREV       = 193
+PATCHREV       = 295
 VERSION        = $(DISTVERSION).$(PATCHREV)
 GARTYPE        = v2
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -23,8 +23,7 @@ DISTFILES += gvim.desktop
 DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(
-PATCHFILES += 0005-test-does-not-have--e.patch
-PATCHFILES += 0006-then-should-be-than.patch(
+PATCHFILES += 0007-export-fix-for-solaris-sh.patch(
 PATCHDIRLEVEL = 0
 
 DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
@@ -59,6 +58,7 @@ BUILD_DEP_PKGS += CSWsunx11devel
 BUILD_DEP_PKGS += CSWlibgnomeui-devel
 BUILD_DEP_PKGS += CSWlibgnome-dev
 BUILD_DEP_PKGS += CSWlibgconf-dev
+BUILD_DEP_PKGS += CSWlibbonoboui-dev
 
 
 RUNTIME_DEP_PKGS_CSWgvim  = CSWvimrt
