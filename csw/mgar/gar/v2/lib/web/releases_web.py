@@ -239,7 +239,7 @@ class Srv4CatalogAssignment(object):
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
     except sqlobject.main.SQLObjectNotFound as e:
       raise web.notfound("Object %s not found" % (md5_sum))
-    logging.debug("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
+    applogger.debug("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
     srv4_in_c = models.Srv4FileInCatalog.selectBy(
         osrel=sqo_osrel,
         arch=sqo_arch,
@@ -260,9 +260,8 @@ class Srv4CatalogAssignment(object):
     is to add the 'Content-Length' header.  However, it sometimes still gets
     stuck and I don't know why.
     """
-    # used for logging
     catspec = checkpkg_lib.CatalogSpec(catrel_name, arch_name, osrel_name)
-    logging.info('PUT %s %s', catspec, md5_sum)
+    applogger.info('PUT %s %s', catspec, md5_sum)
     try:
       if arch_name == 'all':
         raise web.badrequest("There is no 'all' catalog, cannot proceed.")
@@ -272,7 +271,7 @@ class Srv4CatalogAssignment(object):
         try:
           srv4, _ = relational_util.StatsStructToDatabaseLevelOne(md5_sum)
         except errors.DataError as exc:
-          logging.warning(exc)
+          applogger.warning(exc)
           # TODO(maciej): Add the exception to the web.conflict() call.
           # webpy 0.37 apparently doesn't allow that.
           raise web.conflict()
