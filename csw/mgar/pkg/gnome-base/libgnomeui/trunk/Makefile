@@ -1,5 +1,5 @@
 NAME = libgnomeui
-VERSION = 2.24.3
+VERSION = 2.24.5
 CATEGORIES = gnome
 GARTYPE = v2
 
@@ -30,7 +30,6 @@ SPKG_DESC_CSWlibgnomeui2-0 = $(DESCRIPTION) providing libgnomeui-2.so.0
 SPKG_DESC_CSWlibgnomeui-devel += $(DESCRIPTION) - developer package
 SPKG_DESC_CSWlibgnomeui-doc += $(DESCRIPTION) - documentation
 
-BUILD_DEP_PKGS += CSWgnomeicontheme
 BUILD_DEP_PKGS += CSWlibgnome
 BUILD_DEP_PKGS += CSWlibgnomecanvas
 BUILD_DEP_PKGS += CSWgtk2devel
@@ -72,7 +71,9 @@ STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
-CONFIGURE_ARGS += --enable-gtk-doc
+CONFIGURE_ARGS += --enable-gtk-doc=no
+CONFIGURE_ARGS += --enable-gtk-doc-html=no
+
 
 ARCHALL_CSWlibgnomeui = 1
 ARCHALL_CSWlibgnomeui-doc = 1
