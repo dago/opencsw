@@ -54,14 +54,6 @@ render = web.template.render(templatedir)
 
 config = configuration.GetConfig()
 ALLPKGS_DIR = os.path.join(config.get("buildfarm", "opencsw_root"), "allpkgs")
-CAN_UPLOAD_TO_CATALOGS = frozenset([
-    "bratislava",
-    "dublin",
-    "kiel",
-    "unstable",
-    "legacy",
-])
-
 
 applogger = logging.getLogger('opencsw')
 applogger.setLevel(logging.DEBUG)
@@ -270,14 +262,6 @@ class Srv4CatalogAssignment(object):
     # used for logging
     catspec = checkpkg_lib.CatalogSpec(catrel_name, arch_name, osrel_name)
     logging.info('PUT %s %s', catspec, md5_sum)
-    if catrel_name not in CAN_UPLOAD_TO_CATALOGS:
-      # Updates via web are allowed only for the unstable catalog.
-      # We should return an error message instead.
-      # Sadly, we cannot return a response body due to webpy's API
-      # limitation.
-      raise web.forbidden(
-          'You can only upload to the following catalogs:'
-          + ' '.join(CAN_UPLOAD_TO_CATALOGS))
     try:
       if arch_name == 'all':
         raise web.badrequest("There is no 'all' catalog, cannot proceed.")
