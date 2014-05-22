@@ -27,7 +27,6 @@ fi
 
 TABLES_ADMIN=(
   architecture
-  catalog_release
   csw_config
   os_release
 )
@@ -37,6 +36,7 @@ TABLES_REL_MGR=(
   csw_file
   maintainer
   elfdump_info_blob
+  catalog_release
 )
 TABLES_REGULAR=(
   pkginst
