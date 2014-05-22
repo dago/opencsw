@@ -18,7 +18,6 @@ DB_SCHEMA_VERSION = 13L
 TABLES = (m.Architecture,
           m.CatalogRelease,
           m.CswConfig,
-          m.Host,
           m.Maintainer,
           m.OsRelease,
           m.Pkginst,
