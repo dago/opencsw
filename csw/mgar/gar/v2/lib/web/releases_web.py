@@ -8,6 +8,7 @@ import datetime
 import hashlib
 import logging
 import os
+import re
 import sys
 import tempfile
 
@@ -547,6 +548,39 @@ class Srv4RelationalLevelTwo(object):
     if not srv4.registered_level_two:
       raise web.notfound('Stats in the db, but not registered (level 2)')
     return ''
+
+
+class CatalogRelease(object):
+  """Manages catalog releases."""
+  def PUT(self, name):
+    if not re.match(r'', name):
+      raise web.conflict()
+    with Transaction(models.Srv4FileStats) as trans:
+      res = models.CatalogRelease.selectBy(name=name)
+      if res.count():
+        return cjson.encode('%s already exists' % name)
+      models.CatalogRelease(name=name, connection=trans)
+    return cjson.encode('%s has been created' % name)
+
+  def DELETE(self, name):
+    try:
+      o = models.CatalogRelease.selectBy(name=name).getOne()
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
+    res = models.Srv4FileInCatalog.select(models.Srv4FileInCatalog.q.catrel==o)
+    if res.count():
+      # There are pacakges in this catalog. Cannot remove.
+      raise web.conflict()
+    o.destroySelf()
+    return cjson.encode('%s has been deleted' % name)
+
+  def GET(self, name):
+    try:
+      o = models.CatalogRelease.selectBy(name=name).getOne()
+      return cjson.encode({'name': name, 'obj': unicode(o)})
+    except sqlobject.main.SQLObjectNotFound:
+      raise web.notfound()
+
 
 # web.webapi.internalerror = web.debugerror
 
