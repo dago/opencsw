@@ -1,6 +1,6 @@
 # $Id$
 NAME = pytz
-VERSION = 2013b
+VERSION = 2014.3
 CATEGORIES = python
 GARTYPE = v2
 
@@ -13,13 +13,10 @@ define BLURB
   Library Reference (datetime.tzinfo).
 endef
 
-MASTER_SITES = http://pypi.python.org/packages/source/p/pytz/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-SPKG_SOURCEURL = http://$(NAME).sourceforge.net/
+MASTER_SITES = $(PYPI_MIRROR)
+DISTFILES  = $(DISTNAME).tar.bz2
+VENDOR_URL = http://$(NAME).sourceforge.net/
 PACKAGES = CSWpy-tz
-CATALOGNAME = py_tz
-
-EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
 LICENSE = LICENSE.txt
 ARCHALL = 1
