@@ -17,51 +17,43 @@ LICENSE = COPYING.LIB
 
 PACKAGES += CSWlibgnomeui
 PACKAGES += CSWlibgnomeui2-0
-PACKAGES += CSWlibgnomeui-devel
+PACKAGES += CSWlibgnomeui-dev
 PACKAGES += CSWlibgnomeui-doc
 
-CATALOGNAME_CSWlibgnomeui = libgnomeui
 CATALOGNAME_CSWlibgnomeui2-0 = libgnomeui2_0
-CATALOGNAME_CSWlibgnomeui-devel = libgnomeui_devel
+CATALOGNAME_CSWlibgnomeui-dev = libgnomeui_dev
 CATALOGNAME_CSWlibgnomeui-doc = libgnomeui_doc
 
-SPKG_DESC_CSWlibgnomeui = Transitional package as contents moved to CSWlibgnomeui2-0
+OBSOLETED_BY_CSWlibgnomeui2-0  = CSWlibgnomeui
+OBSOLETED_BY_CSWlibgnomeui-dev = CSWlibgnomeui-devel
+
 SPKG_DESC_CSWlibgnomeui2-0 = $(DESCRIPTION) providing libgnomeui-2.so.0
-SPKG_DESC_CSWlibgnomeui-devel += $(DESCRIPTION) - developer package
+SPKG_DESC_CSWlibgnomeui-dev += $(DESCRIPTION) - developer package
 SPKG_DESC_CSWlibgnomeui-doc += $(DESCRIPTION) - documentation
 
-BUILD_DEP_PKGS += CSWlibgnome
-BUILD_DEP_PKGS += CSWlibgnomecanvas
-BUILD_DEP_PKGS += CSWgtk2devel
+BUILD_DEP_PKGS += CSWlibgnome-dev
+BUILD_DEP_PKGS += CSWlibgnomecanvas-dev
+BUILD_DEP_PKGS += CSWlibgtk2-dev
 
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibpopt
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgnome
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgnomecanvas
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibatk
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWgnomevfs2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWorbit2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWgconf2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWbonobo2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibbonoboui
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWgnomekeyring
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWpango
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibart
 RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibglade2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWgnomevfs2
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgdk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgdk-pixbuf2-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgnome2-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibbonoboui2-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgnomecanvas2-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibglib2-0-0
 
-RUNTIME_DEP_PKGS_CSWlibgnomeui-devel = CSWlibgnomeui2-0
-
-# Legacy package dependencies, remove after deprecation
-RUNTIME_DEP_PKGS_CSWlibgnomeui = CSWlibgnomeui2-0 CSWlibgnomeui-devel CSWlibgnomeui-doc
-CHECKPKG_OVERRIDES_CSWlibgnomeui += surplus-dependency|CSWlibgnomeui-devel
-CHECKPKG_OVERRIDES_CSWlibgnomeui += surplus-dependency|CSWlibgnomeui-doc
-CHECKPKG_OVERRIDES_CSWlibgnomeui += surplus-dependency|CSWlibgnomeui2-0
+RUNTIME_DEP_PKGS_CSWlibgnomeui-dev = CSWlibgnomeui2-0
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -75,11 +67,9 @@ CONFIGURE_ARGS += --enable-gtk-doc=no
 CONFIGURE_ARGS += --enable-gtk-doc-html=no
 
 
-ARCHALL_CSWlibgnomeui = 1
 ARCHALL_CSWlibgnomeui-doc = 1
 
-PKGFILES_CSWlibgnomeui = NOFILES
-PKGFILES_CSWlibgnomeui-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibgnomeui-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibgnomeui-doc = $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
