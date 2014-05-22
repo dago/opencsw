@@ -43,11 +43,11 @@ urls = (
   r'/svr4/([0-9a-f]{32})/db-level-1/', 'Srv4RelationalLevelOne',
   r'/svr4/([0-9a-f]{32})/db-level-2/', 'Srv4RelationalLevelTwo',
   r'/blob/([^/]+)/([0-9a-f]{32})/', 'JsonStorage',
+  r'/catalog-releases/([a-z]+)/', 'CatalogRelease',
   r'/catalogs/([^/]+)/([^/]+)/([^/]+)/([0-9a-f]{32})/', 'Srv4CatalogAssignment',
   r'/rpc/bulk-existing-svr4/', 'QueryExistingSvr4',
 )
 
-LOG_FILE_TMPL = '/opt/csw/apache2/var/log/buildfarm/releases-web.log'
 
 templatedir = os.path.join(os.path.dirname(__file__), "templates/")
 render = web.template.render(templatedir)
@@ -65,7 +65,7 @@ CAN_UPLOAD_TO_CATALOGS = frozenset([
 
 applogger = logging.getLogger('opencsw')
 applogger.setLevel(logging.DEBUG)
-log_handler = logging.FileHandler(filename=LOG_FILE_TMPL)
+log_handler = logging.FileHandler(filename=config.get("releases_app", "log_file"))
 log_handler.setLevel(logging.DEBUG)
 log_formatter = logging.Formatter(
     '%(process)d %(levelname)s %(asctime)s '

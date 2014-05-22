@@ -22,12 +22,14 @@ from sqlobject import sqlbuilder
 # sys.stderr.write("Python path is {}.\n".format(sys.path))
 
 from lib.python import checkpkg_lib
+from lib.python import configuration
 from lib.python import models
 from lib.python import representations
 from lib.web import web_lib
 
 
-LOG_FILE_TMPL = '/opt/csw/apache2/var/log/buildfarm/pkgdb-web.log'
+config = configuration.GetConfig()
+LOG_FILE_TMPL = config.get("pkgdb_app", "log_file")
 
 urls_html = (
   r'/', 'index',
