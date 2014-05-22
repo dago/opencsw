@@ -29,7 +29,6 @@ TABLES_ADMIN=(
   architecture
   catalog_release
   csw_config
-  host
   os_release
 )
 

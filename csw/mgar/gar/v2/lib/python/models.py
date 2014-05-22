@@ -92,12 +92,6 @@ class Maintainer(sqlobject.SQLObject):
         'maintainer_id': self.id,
     }
 
-class Host(sqlobject.SQLObject):
-  "Hostname, as returned by socket.getfqdn()"
-  fqdn = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
-  arch = sqlobject.ForeignKey('Architecture', notNone=True)
-
-
 class CswConfig(sqlobject.SQLObject):
   option_key = sqlobject.UnicodeCol(length=255, unique=True)
   float_value = sqlobject.FloatCol(default=None)
