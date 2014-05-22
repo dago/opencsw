@@ -55,6 +55,14 @@ RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibglib2-0-0
 
 RUNTIME_DEP_PKGS_CSWlibgnomeui-dev = CSWlibgnomeui2-0
 
+###
+# Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWorbit2
+RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibfreetype6
+endif
+###
+
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 EXTRA_LDFLAGS = -lm
