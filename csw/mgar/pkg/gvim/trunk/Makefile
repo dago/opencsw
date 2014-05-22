@@ -72,7 +72,7 @@ RUNTIME_DEP_PKGS_CSWgvim += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgdk-x11-2-0-0
-RUNTIME_DEP_PKGS_CSWgvim += CSWlibbonoboui RUNTIME_DEP_PKGS_CSWgvim += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWgvim += CSWlibbonoboui2-0 RUNTIME_DEP_PKGS_CSWgvim += CSWlibpango1-0-0
 
 # Needed for the Solaris ld bug
 ifeq ($(shell /usr/bin/uname -p),sparc)
