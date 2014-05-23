@@ -1,1 +1,5 @@
-Source at https://github.com/nxadm/FileMerger
+The source of the filemerger standalone executable in the bin directory can be found at https://github.com/nxadm/FileMerger. 
+
+A script to generate the standalone executable from the FileMerger Perl distribution (CPAN styled and installable) is included as https://github.com/nxadm/FileMerger/blob/master/bin/create_fatpacked_bin.sh.
+
+All the Perl dependencies are included in the standalone executable.
