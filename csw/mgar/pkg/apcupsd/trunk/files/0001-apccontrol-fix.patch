@@ -1,0 +1,21 @@
+index d2297d5..89a3982 100644
+--- a/platforms/sun/apccontrol.in
++++ b/platforms/sun/apccontrol.in
+@@ -55,7 +55,7 @@ case "$1" in
+       printf "Communications with UPS lost." | wall -a
+    ;;
+    commok)
+-      printf "Communciations with UPS restored." | wall -a
++      printf "Communications with UPS restored." | wall -a
+    ;;
+    powerout)
+    ;;
+@@ -85,7 +85,7 @@ case "$1" in
+    ;;
+    doshutdown)
+       printf "Beginning Shutdown Sequence" | wall -a
+-      ${SHUTDOWN} -y -g0 -i0 "apcupsd initiated shutdown"
++      ${SHUTDOWN} -y -g0 -i5 "apcupsd initiated shutdown"
+    ;;
+    annoyme)
+       printf "Power problems please logoff." | wall -a

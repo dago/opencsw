@@ -1,5 +1,5 @@
 NAME = apcupsd
-VERSION = 3.14.10
+VERSION = 3.14.12
 GARTYPE = v2
 
 DESCRIPTION = A daemon for controlling APC UPS
@@ -16,10 +16,9 @@ DISTFILES   += cswapcupsd
 
 LICENSE      = COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 BUILD_DEP_PKGS += CSWlibwrap-dev
+
+PATCHFILES += 0001-apccontrol-fix.patch
 
 PACKAGES += CSWapcupsd
 SPKG_DESC_CSWapcupsd = A daemon for controlling APC UPS
