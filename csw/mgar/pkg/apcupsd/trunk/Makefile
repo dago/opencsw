@@ -42,8 +42,17 @@ RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgconf2-4
 RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWapcups-gui += CSWpango
 RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibgtk-x11-2-0-0
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibpango1-0-0
+
+###
+# Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSWapcups-gui += CSWlibfreetype6
+endif
+###
 
 # We need this for libusb and I definitely want this from Sun
 CHECKPKG_OVERRIDES_CSWapcups-gui += bad-rpath-entry|/usr/sfw/lib|opt/csw/bin/gapcmon
