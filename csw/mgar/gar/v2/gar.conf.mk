@@ -202,6 +202,7 @@ DEF_BASE_PKGS += CSWpy-cheetah
 DEF_BASE_PKGS += CSWpy-cjson
 DEF_BASE_PKGS += CSWpy-dateutil
 DEF_BASE_PKGS += CSWpy-libmagic
+DEF_BASE_PKGS += CSWpy-lockfile
 DEF_BASE_PKGS += CSWpy-mysql
 DEF_BASE_PKGS += CSWpy-progressbar
 DEF_BASE_PKGS += CSWpy-pyelftools
