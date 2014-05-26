@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.36.0
+VERSION = 7.37.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -24,7 +24,8 @@ BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibcares-dev
 BUILD_DEP_PKGS += CSWlibssh2-dev
 BUILD_DEP_PKGS += CSWlibfbopenssl-dev
-BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibidnKGS +BUILD_DEP_PKGS += CSWlibmetalinkKGS +=l3 += CSWcurlrt
+BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibidnKGS +BUILD_DEP_PKGS += CSWlibmetalinkKGS +BUILD_DEP_PKGS += CSWlibfbopenssl-dev
+#BUILD_DEP_PKGS += CSWlibgssapiKGS +=l3 += CSWcurlrt
 
 PACKAGES += CSWlibcurl4
 CATALOGNAME_CSWlibcurl4 = libcurl4
@@ -90,7 +91,8 @@ EXTRA_CONFIGURE_ARGS_features-minimal += --without-librtmp
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ares
 EXTRA_CONFIGURE_ARGS_features-full += --with-spnego=$(libdir)
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ldap
-EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+= --enable-ldaps
+EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-includes=$(includedir)
+#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-libs=$(libdir)+= --enable-ldaps
 
 # Make sure to link to the new libnet. See for details http://wiki.opencsw.org/project-libnet
 EXTRA_LDFLAGS = -L$(libdir)/libnet-new
