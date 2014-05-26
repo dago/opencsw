@@ -42,20 +42,21 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-EXTRA_PAX_ARGS += -s ',^\.\(.*\)/distconfig.php$$,.\1/config.php,'
+EXTRA_PAX_ARGS += -s ',^\.\(.*\)/distconfig.ph.CSW,'
 
-PRESERVECONF = $(sharedstatedir)/www/websvn/include/config.php
+PRESERVECONF += $(sharedstatedir)/www/websvn/htdocsatedir)/www/websvn/include/config.php
 
 ARCHALL = 1
 
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(NAME)"
-	@rm -rf $(DESTDIR)$(sharedstatedir)/www/websvn
-	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/websvn
-	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/websvn/htdocs
-	@find $(DESTDIR)$(prefix) -name .svn -execfind $(DESTDIR)$(prefix) -name .gitprefix) -name .svn -exec rm -rf \{\} \;
-	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/websvn
-	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	@ln -s $(sharedstatedir)/www/websvn/htdocs $(DESTDIR)$(prefix)/apache2/sh
+	@echo " ==> Insrm -rf $(DESTDIR)$(sharedstatedir)/www/websvn
+	ginstall -d $(DESTDIR)$(sharedstatedir)/www/websvn
+	cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/websvn/htdocs
+	find $(DESTDIR)$(prefix) -name .svn -exec rm -rf \{\} \;
+	find $(DESTDIR)$(prefix) -name .git -exec rm -rf \{\} \;
+	rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/websvn
+	ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
+	e2/share/htdocs
+	@ln -s $(sharedstatedir)/www/websvn/htdocs $(DESTDIR)$(prefix)/apache2/sh	@$(MAKECOOKIE)
