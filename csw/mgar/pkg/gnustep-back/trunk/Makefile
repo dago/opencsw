@@ -13,9 +13,10 @@ endef
 #EXTRA_MODULATORS = GRAPHICS
 #MODULATIONS_graphics = xlib cairo
 
-BUILD_DEP_PKGS = SUNWxorg-headers CSWgmake CSWgcc4objc
-DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWgnustep-gui
+BUILD_DEP_PKGS = SUNWxorg-headers CSWgmake CSWgcc4objc CSWlibfreetype-dev
+DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWgnustep-gui CSWlibfreetype6
 
+BUILD_DEP_PKGS += CSWlibcairo-dev
 DEP_PKGS += CSWlibcairo2
 #DEP_PKGS_GRAPHICS_cairo += CSWlibcairo2
 
@@ -37,9 +38,9 @@ SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-#CONFIGURE_ARGS_GRAPHICS_xlib = $(DIRPATHS) --enable-graphics=xlib
-#CONFIGURE_ARGS_GRAPHICS_cairo = $(DIRPATHS) --enable-graphics=cairo
-CONFIGURE_ARGS = $(DIRPATHS) --enable-graphics=cairo
+#CONFIGURE_ARGS_GRAPHICS_xlib += --enable-graphics=xlib
+#CONFIGURE_ARGS_GRAPHICS_cairo += --enable-graphics=cairo
+CONFIGURE_ARGS +== $(DIRPATHS) --enable-graphics=cairo
 
 include gar/category.mk
 
