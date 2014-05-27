@@ -34,10 +34,11 @@ PREFIX=$(prefix)
 
 # This is the intended shared library name. As it is not meant for use with
 # LD_LIBRARY_PATH only this is ok.
-CHECKPKG_OVERRIDES_CSWmtwrite += soname-equals-filename|file=/opt/csw/lib/mtwrite.so
+CHECKPKG_OVERRIDES_CSWmtwrite += soname-equals-filename|file=/opt/csw# libumem does not support direct binding
+CHECKPKG_OVERRIDES_CSWmtwrite += no-direct-binding|/opt/csw/lib/mtwrite.so|is|not|directly|bound|to|soname|libumem.so.1sw/lib/mtwrite.so
 
 include gar/category.mk
 
 post-install-modulated:
 	perl -pi -e 's,/usr/local/lib,$(libdir),' \
-		$(DESTDIR)$(mandir)/man3/mtwrite.3
+		$(DESTDIR)$(mandir
