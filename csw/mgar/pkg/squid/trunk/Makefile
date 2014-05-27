@@ -73,7 +73,8 @@ CONFIGURE_ARGS += --disable-icmp
 CONFIGURE_ARGS += --with-dl
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
-CONFIGURE_ARGS += --with-default-user=$(NAME)
+CONFIGURE_ARGS += --with-dCONFIGURE_ARGS += --enable-aio
+CONFIGURE_ARGS += --enable-storeio=ufs,diskddefault-user=$(NAME)
 
 # Allowed values (see configure --help):
 #   POSIX_V6_ILP32_OFF32   32 bits
