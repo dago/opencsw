@@ -1,5 +1,5 @@
 NAME = perl
-VERSION = 5.18.2
+VERSION = 5.20.0
 VERSION_MAJOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
 #CATEGORIES = lang
 GARTYPE = v2
@@ -18,7 +18,8 @@ MASTER_SITES = manual://
 VENDOR_URL = http://www.perl.org
 #DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # The source has been patched to fix a failing patch (Solaris only). The patch was discussed with upstream (p5p) and committed to BLEAD. The patch is in the files directory.
-DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
+#DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 PACKAGES               = CSWperl
 PKG_DESC_CSWperl	       = $(DESCRIPTION)
@@ -122,7 +123,8 @@ configure-perl:
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) perldtrace.h && $(BUILD_ENV) $(MAKE) $(MAKE_OPT)
+#	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) perldtrace.h && $(BUILD_ENV) $(MAKE) $(MAKE_OPT)
+	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) $(MAKE_OPT)
 	@$(MAKECOOKIE)
 
 # Test
@@ -130,5 +132,5 @@ build-perl:
 # You can always run the test single threaded if needed.
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	cd $(WORKSRC) && $(MAKE) -j1 test
+	cd $(WORKSRC) && $(MAKE) $(MAKE_OPT) test
 	@$(MAKECOOKIE)
