@@ -127,6 +127,11 @@ CONFIGURE_ARGS += --with-system-libtiff
 CONFIGURE_ARGS-32-i386 += --disable-sse2
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)-$(GARCH))
 
+# The arguments used for libijs
+CONFIGURE_ARGS_ijs  = $(DIRPATHS)
+CONFIGURE_ARGS_ijs += --enable-shared
+CONFIGURE_ARGS_ijs += --disable-static
+
 # We want the shared library
 BUILD_ARGS += so
 
@@ -150,4 +155,23 @@ include gar/category.mkinpost-extract:
 	rm -rf $(WORKSRC)/freetype
 	rm -rf $(WORKSRC)/expat
 	@$(MAKECOOKIE)
-	
+
+post-configure:
+	# Specific for libijs
+	cd $(WORKSRC)/ijs && ./autogen.sh
+	cd $(WORKSRC)/ijs && \
+		/usr/bin/env -i $(CONFIGURE_ENV) PWD=$(abspath $(WORKSRC)/ijs) \
+		./configure $(CONFIGURE_ARGS_ijs)
+	@$(MAKECOOKIE)
+
+post-build:
+	# Specific for libijs
+	cd $(WORKSRC)/ijs && \
+		 /usr/bin/env -i $(BUILD_ENV) $(MAKE) MAKEFLAGS= $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS_ijs)
+	@$(MAKECOOKIE)
+
+post-install:
+	# Specific for libijs
+	cd $(WORKSRC)/ijs && \
+		/usr/bin/env -i $(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS_ijs) install
+	@$(MAKECOOKIE)
