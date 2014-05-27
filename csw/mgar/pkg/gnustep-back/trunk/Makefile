@@ -40,7 +40,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 #CONFIGURE_ARGS_GRAPHICS_xlib += --enable-graphics=xlib
 #CONFIGURE_ARGS_GRAPHICS_cairo += --enable-graphics=cairo
-CONFIGURE_ARGS +== $(DIRPATHS) --enable-graphics=cairo
+CONFIGURE_ARGS += --enable-graphics=cairo
 
 include gar/category.mk
 
