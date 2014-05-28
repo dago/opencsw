@@ -114,7 +114,7 @@ TEST_SCRIPTS =
 
 SAMPLECONF = squid.conf
 SAMPLECONF += cachemgr.conf
-SAMPLECONF += mime.conf
+SAMPSAMPLECONF += errorpage.cssPLECONF += mime.conf
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS      = varuser
@@ -130,7 +130,7 @@ REINPLACE_MATCH_conf = /usr/local/squid/etc/
 REINPLACE_WITH_conf = $(sysconfdir)/$(NAME)/
 REINPLACE_FILES_conf += helpers/basic_auth/MSNT/msntauth.conf.default
 
-EXTRA_MERGE_EXCLUDE_FILES += .*/msntauth\.conf\.default
+EXTRA_MERGE_EXCLUDE_FILES += .*\.default
 
 include gar/category.mk.sh
 #	@$(MAKECOOKIE)
