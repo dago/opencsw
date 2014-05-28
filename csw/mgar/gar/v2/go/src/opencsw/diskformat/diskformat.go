@@ -27,6 +27,7 @@ var DryRun bool
 // Keeping PkgdbUrl as a package global variable is probably not the best idea,
 // but let's not refactor without a good plan.
 var PkgdbUrl string
+var ReleasesUrl string
 
 // 3 strings that define a specific catalog, e.g. "unstable sparc 5.10"
 type CatalogSpec struct {
@@ -188,6 +189,17 @@ func (self *CatalogSpec) UnmarshalJSON(data []byte) error {
   return nil
 }
 
+// Returns True when the two catalog specs match in arch and osrel.
+func (s CatalogSpec) Matches(o CatalogSpec) bool {
+  if s.Arch == o.Arch && s.Osrel == o.Osrel {
+    if s.Catrel == o.Catrel {
+      log.Println("We're matching the same catspec against itself: ", s)
+    }
+    return true
+  }
+  return false
+}
+
 func GetCatalogSpecsFromDatabase() ([]CatalogSpec, error) {
   url := fmt.Sprintf("%s/catalogs/", PkgdbUrl)
   resp, err := http.Get(url)
@@ -241,7 +253,7 @@ func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
   return cws, nil
 }
 
-func filterCatspecs(all_catspecs []CatalogSpec, catrel string) []CatalogSpec {
+func FilterCatspecs(all_catspecs []CatalogSpec, catrel string) []CatalogSpec {
   catspecs := make([]CatalogSpec, 0)
   for _, catspec := range all_catspecs {
     if catspec.Catrel == catrel {
@@ -776,10 +788,10 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
 
   all_catspecs, err := GetCatalogSpecsFromDatabase()
   if err != nil {
-    log.Panicln("Could not get the catalog spec list")
+    log.Fatalln("Could not get the catalog spec list")
   }
   // Because of memory constraints, we're only processing 1 catalog in one run
-  catspecs := filterCatspecs(all_catspecs, catrel)
+  catspecs := FilterCatspecs(all_catspecs, catrel)
 
   // The plan:
   // 1. build a data structure representing all the hardlinks and symlinks
