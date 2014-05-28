@@ -90,6 +90,7 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpaper1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWliblcms2-2
 
+# This used to be a separate library and is now maintained as part of Ghostscript
 PACKAGES += CSWlibijs0-35
 CATALOGNAME_CSWlibijs0-35 = libijs0_35
 PKGFILES_CSWlibijs0-35 += $(call baseisadirs,$(libdir),libijs-0\.35\.so)
@@ -102,7 +103,8 @@ CHECKPKG_OVERRIDES_CSWlibijs0-35 += soname-equals-filename
 PACKAGES += CSWghostscript-dev
 SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
 # This remove all the .so symlinks for PKGFILES_DEVEL
-# so only the right ones can be re-added
+# so only the right ones can be re-added, and the versioned .so used
+# in the package above
 PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWghostscript-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWghostscript-dev += $(call baseisadirs,$(libdir),libgs\.so)
