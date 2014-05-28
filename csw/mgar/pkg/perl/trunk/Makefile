@@ -132,5 +132,7 @@ build-perl:
 # You can always run the test single threaded if needed.
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	cd $(WORKSRC) && $(MAKE) $(MAKE_OPT) test
+	echo "PWD is $(PWD)"
+	cd $(WORKSRC) && echo "PWD is now $(PWD)" && $(MAKE) $(MAKE_OPT) test
+	#cd $(WORKSRC) && $(MAKE) $(MAKE_OPT) test
 	@$(MAKECOOKIE)
