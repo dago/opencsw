@@ -13,6 +13,14 @@ endef
 MASTER_SITES = http://www.openprinting.org/download/cups-filters/
 DISTFILES  = $(DISTNAME).tar.gz
 
+GARCOMPILER = GCC4
+
+BUILD_DEP_PKGS += CSWphp5
+BUILD_DEP_PKGS += CSWghostscript
+BUILD_DEP_PKGS += CSWlibjpeg-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibtiff-dev
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
