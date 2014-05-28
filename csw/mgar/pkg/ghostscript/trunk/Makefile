@@ -50,6 +50,7 @@ RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWghostscript += CSWlibijs0-35
 
 # These are probably ok
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/lprsetup.sh
@@ -89,11 +90,26 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpaper1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWliblcms2-2
 
+PACKAGES += CSWlibijs0-35
+CATALOGNAME_CSWlibijs0-35 = libijs0_35
+PKGFILES_CSWlibijs0-35 += $(call baseisadirs,$(libdir),libijs-0\.35\.so)
+PKGFILES_CSWlibijs0-35 += $(call baseisadirs,$(libdir),libijs-0\.35\.so(\.\d+)*)
+SPKG_DESC_CSWlibijs0-35 += $(DESCRIPTION), libijs-0.35.so
+RUNTIME_DEP_PKGS_CSWlibijs0-35 += CSWlibgcc-s1
+OBSOLETED_BY_CSWlibijs0-35 = CSWijs
+CHECKPKG_OVERRIDES_CSWlibijs0-35 += soname-equals-filename
 
 PACKAGES += CSWghostscript-dev
 SPKG_DESC_CSWghostscript-dev = Development files for ghostscript and libgs.so.9
+# This remove all the .so symlinks for PKGFILES_DEVEL
+# so only the right ones can be re-added
+PKGFILES_DEVEL_SHAREDLIBLINK =
 PKGFILES_CSWghostscript-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWghostscript-dev += $(call baseisadirs,$(libdir),libgs\.so)
+PKGFILES_CSWghostscript-dev += $(call baseisadirs,$(libdir),libijs\.so)
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibgs9
+RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibijs0-35
+RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWghostscript
 
 ###
 # Needed for the Solaris ld bug
