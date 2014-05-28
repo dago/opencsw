@@ -134,5 +134,6 @@ test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
 	echo "PWD is $(PWD)"
 	cd $(WORKSRC) && echo "PWD is now $(PWD)" && $(MAKE) $(MAKE_OPT) test
+	
 	#cd $(WORKSRC) && $(MAKE) $(MAKE_OPT) test
 	@$(MAKECOOKIE)
