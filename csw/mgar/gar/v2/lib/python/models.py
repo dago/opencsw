@@ -595,6 +595,7 @@ def GetCatalogGenerationResult(sqo_osrel, sqo_arch, sqo_catrel):
        'mtime',          # 10
        'created_on',     # 11
        'created_by',     # 12
+       'bundle',         # 13
       ],
       where=where,
       orderBy='catalogname',

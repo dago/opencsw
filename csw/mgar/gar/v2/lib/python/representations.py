@@ -24,7 +24,8 @@ CatalogEntry = collections.namedtuple(
 CatalogTimingEntry = collections.namedtuple(
     'CatalogTimingEntry',
     ['catalogname', 'version', 'pkgname', 'basename', 'md5_sum', 'size',
-     'deps', 'category', 'i_deps', 'desc', 'maintainer', 'mtime', 'inserted_on', 'inserted_by'])
+     'deps', 'category', 'i_deps', 'desc', 'maintainer', 'mtime',
+     'inserted_on', 'inserted_by', 'bundle'])
 
 PkgmapEntry = collections.namedtuple(
     'PkgmapEntry',
