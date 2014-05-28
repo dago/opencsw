@@ -764,6 +764,7 @@ class CatalogTiming(object):
         mtime=row[10].isoformat(),
         inserted_on=row[11].isoformat(),
         inserted_by=row[12],
+        bundle=row[13],
       )
       return entry
     rows = [MakeCatalogTimingEntry(x)._asdict() for x in rows]
