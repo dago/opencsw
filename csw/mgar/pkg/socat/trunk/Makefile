@@ -37,10 +37,11 @@ endef
 
 VENDOR_URL   = http://www.dest-unreach.org/socat/
 MASTER_SITES = http://www.dest-unreach.org/socat/download/
-DISTFILES    = $(NAME)-$:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$:VENDOR_URL = http://www.dest-unreach.org/socat/
 
-
-RUNTIlibssl1-0-0 CSWlibreadline6 CSWlibwrap1adline CSWtcpwrap
+RUNTIME_DEP_PKGS_CSWsocat += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWsocat += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWsocat += CSWlibwrap1adline CSWtcpwrap
 
 # test.sh uses unescaped nested double quotes (doesn't work#  with /bin/bash)
 PATCHFILES += 0001-Escape-nested-double-quotes.patch
@@ -50,7 +51,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # 250+ tests take a while. Run them manually when packaging a new version.
 # Note that test.sh tends to see advanced bash feature creep, don't bother
 # getting them all working with /bin/bash, it's only the test suite.
-#TEST_SCRIPTS = /opt/csw/bin/bash $(WORKSRC)/test.sh
+#TEST_SCRIPTS = /opt/csw/bin/bash $(#TEST_SCRIPTS = $(WORKSRC)/test.sh
+
+TEST_SCRIPTS = custom(WORKSRC)/test.sh
 
 # When you run the tests on a non IPV6 system you can set HAVENOT_IP6
 # to shortcut some tests
@@ -119,9 +122,13 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #   ./test.sh <TESTNAME>
 #
 # where TESTNAME is one of the uppercase testnames from above 
-# (for example TEST_SCRIPTS =e PTMXWAITSLAVE).
+# (for example # TEST_SCRIPTS =
 
 include gar/category.mk
+
+test-custom:
+	cd $(WORKSRC) && ./test.sh
+	@$(MAKECOOKIE)e gar/category.mk
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: 

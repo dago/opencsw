@@ -1,0 +1,25 @@
+From 6b4136d6416b1af9f15d8c2662341fb8e5905792 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 28 Oct 2013 13:27:15 +0100
+Subject: [PATCH] Do not use -Wall
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index f319a62..e926aac 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -22,7 +22,7 @@ srcdir = @srcdir@
+ VPATH = @srcdir@
+ 
+ CC = @CC@
+-CCOPTS = $(CCOPT) -Wall -Wno-parentheses
++CCOPTS = $(CCOPT) 
+ 
+ SYSDEFS = @SYSDEFS@
+ CPPFLAGS = -I. @CPPFLAGS@
+-- 
+1.8.3.4
+
