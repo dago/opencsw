@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.9.0
+VERSION = 2.0.0
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -21,22 +21,7 @@ EXTRA_TEST_EXPORTS = NO_SVN_TESTS GIT_TEST_OPTS
 TEST_TARGET = test
 
 PACKAGES  = CSWgit CSWgitk CSWgit-gui CSWgit-svn CSWgit-cvs
-PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-completion CSWgit-dev
-
-OBSOLETED_BY_CSWgit-gui = CSWgitgui
-CATALOGNAME_CSWgitgui = git_gui_stub
-OBSOLETED_BY_CSWgit-svn = CSWgitsvn
-CATALOGNAME_CSWgitsvn = git_svn_stub
-OBSOLETED_BY_CSWgit-emacs = CSWgitemacs
-CATALOGNAME_CSWgitemacs = git_emacs_stub
-OBSOLETED_BY_CSWgit-doc = CSWgitdoc
-CATALOGNAME_CSWgitdoc = git_doc_stub
-OBSOLETED_BY_CSWgit-completion = CSWgitcompletion
-CATALOGNAME_CSWgitcompletion = git_completion_stub
-OBSOLETED_BY_CSWgit-dev = CSWgitdevel
-CATALOGNAME_CSWgitdevel = git_devel_stub
-OBSOLETED_BY_CSWgit-cvs = CSWgitcvs
-CATALOGNAME_CSWgitcvs = git_cvs_stub
+PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-compvs = git_cvs_stub
 
 CATALOGNAME_CSWgit = git
 CATALOGNAME_CSWgit-cvs = git_cvs
@@ -106,7 +91,7 @@ SPKG_DESC_CSWgit-emacs = Git VCS support for Emacs
 SPKG_DESC_CSWgit-completion = Bash completion support for Git
 SPKG_DESC_CSWgit-dev = Headers and static libraries for Git
 
-MASTER_SITES = http://git-core.googlecode.com/files/
+s://www.kernel.org/pub/software/scm/gitooglecode.com/files/
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += CSWgit.postinstall
 
@@ -116,8 +101,7 @@ PATCHFILES += 0003-Use-bash-and-set-PATH-in-contributed-hook-file.patch
 PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # this patch is required on current9s (not necessarily all sparc boxes) due
 # to the selection of available utf8 locales.
-PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-git-svn-test.patch
-PATCHFILES += 0006-Patch-out-a-few-usr-share-references.patch
+PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-e-references.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
