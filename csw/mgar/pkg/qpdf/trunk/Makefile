@@ -17,7 +17,14 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 GARCOMPILER = GCC4
 
+
+PACKAGES += CSWqpdf
+CATALOGNAME_CSWqpdf = qpdf
+SPKG_DESC_CSWqpdf += $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWqpdf += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWqpdf += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWqpdf += CSWlibqpdf13
+# Catchall
 
 PACKAGES += CSWlibqpdf13
 CATALOGNAME_CSWlibqpdf13 = libqpdf13
