@@ -1,0 +1,26 @@
+From cd9dd899f792e478bd90852ef8498ad04d69b0a7 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 30 May 2014 14:51:03 +0200
+Subject: [PATCH] A further small tweak for endianess detection
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ compat/bswap.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/bswap.h b/compat/bswap.h
+index c4293db..f6fd9a6 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -120,7 +120,7 @@ static inline uint64_t git_bswap64(uint64_t x)
+ 
+ # if defined(_BIG_ENDIAN) && !defined(_LITTLE_ENDIAN)
+ #  define GIT_BYTE_ORDER GIT_BIG_ENDIAN
+-# elif defined(_BIG_ENDIAN) && !defined(_LITTLE_ENDIAN)
++# elif defined(_LITTLE_ENDIAN) && !defined(_BIG_ENDIAN)
+ #  define GIT_BYTE_ORDER GIT_LITTLE_ENDIAN
+ # else
+ #  error "Cannot determine endianness"
+-- 
+1.8.4.1
+
