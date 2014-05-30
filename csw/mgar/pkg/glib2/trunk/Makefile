@@ -8,7 +8,7 @@
 # Set max open files to 1024
 
 NAME = glib
-VERSION = 2.40.0
+VERSION = 2.41.0
 GARTYPE = v2
 # for memory synchronisation primitives like __sync_synchronize we need gcc
 GARCOMPILER = GNUOMPILER = SOS12U3
@@ -32,7 +32,8 @@ BUILD_DEP_PKGS += CSWpy-gobject CSWpkgconf
 # To make the tests working
 BUILD_DEP_PKGS += CSWCSWpython CSWdbuspython CSWsharedmimeinfo
 # This is used to adjust paths in documentation
-BUILD_DEPBUILD_DEP_PKGS += CSWlibz-devP_P
+BUILD_DEPBUILD_DEP_PKGS += CSWlibz-devPBUILD_DEP_PKGS += CSWlibffi-dev
+BUILD_DEP_PKGS += CSWggettextP_P
 # Build patches
 #
 PATCHFILES += 0001-Fix-POSIX-and-XOPEN-defines.patch
