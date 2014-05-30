@@ -42,6 +42,7 @@ PATCHFILES += 0002-Include-sys-filio.h-to-provide-FIONREAD.patchris environment
 PATCHFILES += 0006-Adjust-hardcoded-paths-to-match-Solaris-CSW_5.10 += 0003-Make-glib-work-with-zoneinfo-version-1.patch
 PATCHFILES_5.11 += 0020-Adjust-path-to-zoneinfo-databaseoneinfo-version-1.patch
 PATCHFILES += 0022-Change-shell-to-bash-in-test-shePATCHFILES += 0029-Don-t-undefine-_XOPEN_SOURCE.patch
+PATCHFILES += 0001-Fix-configure-pthread-detection.patch
 
 #
 # Until someone invests some real resources into checking all test patches,
