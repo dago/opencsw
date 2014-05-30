@@ -1,0 +1,25 @@
+From 486ad042884089ed48fbc6468d16bf0a727f8473 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 30 May 2014 22:09:06 +0200
+Subject: [PATCH] Fix configure pthread detection
+
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index fa4bbcd..74758e6 100755
+--- a/configure
++++ b/configure
+@@ -26056,7 +26056,7 @@ if  test "x$with_threads" = xyes || test "x$with_threads" = xposix; then :
+ 
+         if  test "x$have_threads" = xno; then :
+ 
+-                cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++                cat <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ #include <pthread.h>
+ int
+-- 
+1.8.4.1
+
