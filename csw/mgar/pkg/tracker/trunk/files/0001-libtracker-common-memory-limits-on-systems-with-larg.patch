@@ -1,0 +1,71 @@
+From faf826c57ee33c9e29388c586f14b26451416934 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <rb@sernet.de>
+Date: Sat, 31 May 2014 09:22:35 +0200
+Subject: [PATCH] libtracker-common: memory limits on systems with large
+ amounts of RAM
+
+On systems with large amounts of RAM get_memory_total() could overflow
+and return a negative value, as a result memory would be limited to
+MEM_LIMIT_MIN (which is 256 MB atm).
+---
+ src/libtracker-common/tracker-os-dependant-unix.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/libtracker-common/tracker-os-dependant-unix.c b/src/libtracker-common/tracker-os-dependant-unix.c
+index 4aa99f6..bc07996 100644
+--- a/src/libtracker-common/tracker-os-dependant-unix.c
++++ b/src/libtracker-common/tracker-os-dependant-unix.c
+@@ -227,11 +227,11 @@ tracker_create_permission_string (struct stat finfo)
+ 
+ #ifndef DISABLE_MEM_LIMITS
+ 
+-static glong
++static guint64
+ get_memory_total (void)
+ {
+ #if defined (__OpenBSD__)
+-	glong total = 0;
++	guint64 total = 0;
+ 	int64_t physmem;
+ 	size_t len;
+ 	static gint mib[] = { CTL_HW, HW_PHYSMEM64 };
+@@ -244,12 +244,12 @@ get_memory_total (void)
+ 		total = physmem;
+ 	}
+ #elif defined (__sun)
+-	glong total = (glong)sysconf(_SC_PAGESIZE) * (glong)sysconf(_SC_PHYS_PAGES);
++	guint64 total = (guint64)sysconf(_SC_PAGESIZE) * (guint64)sysconf(_SC_PHYS_PAGES);
+ #else
+ 	GError      *error = NULL;
+ 	const gchar *filename;
+ 	gchar       *contents = NULL;
+-	glong        total = 0;
++	guint64      total = 0;
+ 
+ 	filename = "/proc/meminfo";
+ 
+@@ -274,7 +274,7 @@ get_memory_total (void)
+ 
+ 			if (end) {
+ 				*end = '\0';
+-				total = 1024L * atol (p);
++				total = 1024L * (guint64)g_ascii_strtoll (p, NULL, 10);
+ 			}
+ 		}
+ 		g_free (contents);
+@@ -291,9 +291,9 @@ tracker_memory_setrlimits (void)
+ {
+ #ifndef DISABLE_MEM_LIMITS
+ 	struct rlimit rl = { 0 };
+-	glong total;
+-	glong total_halfed;
+-	glong limit;
++	guint64 total;
++	guint64 total_halfed;
++	guint64 limit;
+ 
+ 	total = get_memory_total ();
+ 
+-- 
+1.9.3
+
