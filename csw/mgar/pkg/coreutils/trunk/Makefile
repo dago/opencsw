@@ -1,5 +1,5 @@
 NAME = coreutils
-VERSION = 8.17
+VERSION = 8.22
 GARTYPE = v2
 
 # seq has issues related to the handling of long double's with -O2.
