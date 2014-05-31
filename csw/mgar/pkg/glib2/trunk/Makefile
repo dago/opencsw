@@ -157,15 +157,15 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0_5.10_sparc += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgio2-0-0_$(GAROSREL)_$(GARCH))C-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib4000.0
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.4000.0.*/gdb .*/gdb/.*
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib4100.0
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.4100.0.*/gdb .*/gdb/.*
 
 # libgio uses the mime info for determining the type of files
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += surplus-dependency|C-2.0.so.0.3200.4
-CHECKPKG_OVERRID_sparcES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv94000.0o-2.0.so.0.3200.4
-CHECKPKG_OVERRID_sparcES_CSWlibgio2-0-0 += file-with-share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.4000.0o-2.0.so.0.3200.4
-CHECKPKG_OVERRID_i386ES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd644000.0o-2.0.so.0.3200.4
-CHECKPKG_OVERRID_i386 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libgio-2.0.so.0.4000.0
+CHECKPKG_OVERRID_sparcES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv94100.0
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0_sparcS_CSWlibglib2-0-0 += file-with-share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.4100.0o-2.0.so.0.3200.4
+CHECKPKG_OVERRID_i386ES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd644100.0o-2.0.so.0.3200.4
+CHECKPKG_OVERRID_i386ES_CSWlibgio2-0-0 += file-with-share|root/opt/csw/lib/amd64/libgio-2.0.so.0.4100.0
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += $(CHECKPKG_OVERRIDES_CSWlibgio2-0-0_$(GARCH))
 o-2.0.so.0.3200.4
 
@@ -175,8 +175,8 @@ SPKG_DESC_CSWlibglib2-0-0 += $(DESCRIPTION), libglib-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibglib2-0-RUNTIME_DEP_PKGS_CSWlibglib2-0-0 += CSWlibgcc-s1
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.4000.0ve added /opt/csw
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4000.0--2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.4100.0ve added /opt/csw
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4100.0--2.0.so.0.3200.4
 
 
 PACKAGES += CSWlibgmodule2-0-0
@@ -187,12 +187,12 @@ RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_5.10_sparc += CSWlibpcre1
 RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_5.10_sparc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0 += $(RUNTIME_DEP_PKGS_CSWlibgmodule2-0-0_$(GAROSREL)_$(GARCH))0-0 += CSWlibffi4
 # Those are ok: hardcoded search paths which have added /opt/csw
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4000.0
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.4000.0
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0_sparcS_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/4000.0
-CHECKPKG_OVERRIDES_CSWlibglib2-0-0_sparcS_CSWlibglib2-0-0 += file-with-share|root/opt/csw/lib/sparcv9/libglib-2.0.so.0.4000.0b-2.0.so.0.3200.4
-CHECKPKG_OVERRIDE_i386S_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/4000.0b-2.0.so.0.3200.4
-CHECKPKG_OVERRIDE_i386S_CSWlibglib2-0-0 += file-with-share|root/opt/csw/lib/amd64/libglib-2.0.so.0.4000.0b-2.0.so.0.3200.4
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/4100.0
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.4100.0
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0_sparcS_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/4100.0
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0_sparcS_CSWlibglib2-0-0 += file-with-share|root/opt/csw/lib/sparcv9/libglib-2.0.so.0.4100.0b-2.0.so.0.3200.4
+CHECKPKG_OVERRIDE_i386S_CSWlibglib2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/4100.0b-2.0.so.0.3200.4
+CHECKPKG_OVERRIDE_i386S_CSWlibglib2-0-0 += file-with-share|root/opt/csw/lib/amd64/libglib-2.0.so.0.4100.0b-2.0.so.0.3200.4
 CHECKPKG_OVERRIDES_CS$(CHECKPKG_OVERRIDES_CSWlibglib2-0-0_$(GARCH))-0 += CSWlibpcre1
 
 PACKAGES += CSWlibgobject2-0-0
