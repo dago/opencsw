@@ -1,0 +1,39 @@
+From 3497db4f2ed62a01de46e75ab95ad3e77822e427 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 1 Jun 2014 22:21:47 +0200
+Subject: [PATCH] src/df.c:get_dev: Initialize variable v to NULL to avoid
+ warning
+
+Gcc 4.9.0 complained that v may have been used prior to
+initialization. To avoid this, initialize to NULL.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ src/df.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/df.c b/src/df.c
+index 969670e..2431626 100644
+--- a/src/df.c
++++ b/src/df.c
+@@ -921,7 +921,7 @@ get_dev (char const *disk, char const *mount_point, char const* file,
+       char buf[LONGEST_HUMAN_READABLE + 2];
+       char *cell;
+ 
+-      struct field_values_t *v;
++      struct field_values_t *v = NULL;
+       switch (columns[col]->field_type)
+         {
+         case BLOCK_FLD:
+@@ -931,7 +931,7 @@ get_dev (char const *disk, char const *mount_point, char const* file,
+           v = &inode_values;
+           break;
+         case OTHER_FLD:
+-          v = NULL;
++	  /* Rely on the NULL initialization. */
+           break;
+         default:
+           assert (!"bad field_type");
+-- 
+1.8.4.1
+

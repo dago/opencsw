@@ -37,7 +37,7 @@ PATCHFILES += 0001-Backport-some-patches-to-suppress-compiler-errors.patch
 PATCHFILES += 0002-Avoid-compiler-error-by-casting-the-ignore-option-fr.patch
 PATCHFILES += 0003-Only-define-the-out-label-if-it-will-be-used.patch
 PATCHFILES += 0004-Ensure-that-dst_exists-is-used-in-all-cases-to-avoid.patch
-
+PATCHFILES += 0005-src-df.c-get_dev-Initialize-variable-v-to-NULL-to-av.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
