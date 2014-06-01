@@ -6,10 +6,12 @@ package main
 
 import (
   // "bufio"
+  "fmt"
   "flag"
   "log"
   // "os"
   "opencsw/diskformat"
+  "opencsw/mantis"
 )
 
 // Command line flags
@@ -34,6 +36,15 @@ func init() {
 type CatalogSpecTransition struct {
   fromCatspec diskformat.CatalogSpec
   toCatspec diskformat.CatalogSpec
+}
+
+type CatalogWithSpecTransition struct {
+  fromCat diskformat.CatalogExtra
+  toCat diskformat.CatalogExtra
+}
+
+type IntegrationResult struct {
+  noidea string
 }
 
 func groupByOsrelAndArch(cs []diskformat.CatalogSpec) map[diskformat.CatalogSpec]diskformat.CatalogSpec {
@@ -61,18 +72,18 @@ func matchCatspecs(fromCats, toCats []diskformat.CatalogSpec) ([]CatalogSpecTran
   return transitions
 }
 
-func fetchTwo(transition CatalogSpecTransition) (f, t diskformat.CatalogWithSpec) {
-  chf := make(chan diskformat.CatalogWithSpec)
-  go func(ch chan diskformat.CatalogWithSpec) {
-    fromCat, err := diskformat.GetCatalogWithSpec(transition.fromCatspec)
+func fetchTwo(transition CatalogSpecTransition) (f, t diskformat.CatalogExtra) {
+  chf := make(chan diskformat.CatalogExtra)
+  go func(ch chan diskformat.CatalogExtra) {
+    fromCat, err := diskformat.FetchCatalogExtra(transition.fromCatspec)
     if err != nil {
       log.Fatalln("Could not fetch", fromCat, "error:", err)
     }
     ch <- fromCat
   }(chf)
-  cht := make(chan diskformat.CatalogWithSpec)
-  go func(ch chan diskformat.CatalogWithSpec) {
-    toCat, err := diskformat.GetCatalogWithSpec(transition.toCatspec)
+  cht := make(chan diskformat.CatalogExtra)
+  go func(ch chan diskformat.CatalogExtra) {
+    toCat, err := diskformat.FetchCatalogExtra(transition.toCatspec)
     if err != nil {
       log.Fatalln("Could not fetch", toCat, "error:", err)
     }
@@ -92,20 +103,93 @@ func Integrate(transition CatalogSpecTransition) {
   // Package addition and removal times are not taken from the catalog, but
   // from the times when we saw packages appear and/or disappear.
   // How to test these rules? What should be the output of this function?
+  log.Println("Example package:", fromCat.PkgsExtra[0])
+  log.Println("Example package:", toCat.PkgsExtra[0])
+
+  // Mantis:
+  // http://www.opencsw.org/buglist/json
 }
 
-func main() {
-  flag.Parse()
-  log.Println("Program start")
 
+func transitions() []CatalogSpecTransition {
   all_catspecs, err := diskformat.GetCatalogSpecsFromDatabase()
   if err != nil {
     log.Fatalln("Could not get the catalog spec list")
   }
   from_catspecs := diskformat.FilterCatspecs(all_catspecs, from_catrel_flag)
   to_catspecs := diskformat.FilterCatspecs(all_catspecs, to_catrel_flag)
-  transitions := matchCatspecs(from_catspecs, to_catspecs)
-  for _, transition := range transitions {
-    Integrate(transition)
+  return matchCatspecs(from_catspecs, to_catspecs)
+}
+
+// The idea of creating a pipeline in this fashion is that a function call
+// generates a channel and closes it after all data are written to it.
+// The closure inside this function looks weird, but its scope is the same as
+// the scope of the function, so it quickly becomes natural to read, and keeps
+// related pieces of code together.
+
+func pipeStage1() <-chan CatalogSpecTransition {
+  out := make(chan CatalogSpecTransition)
+  go func() {
+    for _, t := range transitions() {
+      out <- t
+    }
+    close(out)
+  }()
+  return out
+}
+
+func pipeStage2(in <-chan CatalogSpecTransition) <-chan CatalogWithSpecTransition {
+  out := make(chan CatalogWithSpecTransition)
+  go func() {
+    for t := range in {
+      fromCat, toCat := fetchTwo(t)
+      out <-CatalogWithSpecTransition{fromCat, toCat}
+    }
+    close(out)
+  }()
+  return out
+}
+
+// Continue from here: write the 3rd stage which just prints the results.
+func pipeStage3(in <-chan CatalogWithSpecTransition) <-chan IntegrationResult {
+  out := make(chan IntegrationResult)
+  go func() {
+    for t := range in {
+      msg := fmt.Sprintf("Processing our fetched data: %+v -> %+v",
+                         t.fromCat.Spec, t.toCat.Spec)
+      out <-IntegrationResult{msg}
+    }
+    close(out)
+  }()
+  return out
+}
+
+func mantisChan() <-chan []mantis.Bug {
+  mch := make(chan []mantis.Bug)
+  go func(ch chan []mantis.Bug) {
+    log.Println("Fetching bugs from mantis")
+    bugs, err := mantis.FetchBugs()
+    if err != nil {
+      log.Fatalln("Fetching bugs failed.")
+    }
+    log.Println("Fetched", len(bugs), "bugs from Mantis")
+    ch <-bugs
+    close(ch)
+  }(mch)
+  return mch
+}
+
+func main() {
+  flag.Parse()
+  log.Println("Program start")
+
+  mch := mantisChan()
+  tch := pipeStage1()
+  cch := pipeStage2(tch)
+  rch := pipeStage3(cch)
+
+  for r := range rch {
+    log.Println("Result:", r)
   }
+  <-mch
 }

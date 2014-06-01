@@ -92,7 +92,7 @@ func (self *PkginstSlice) UnmarshalJSON(data []byte) error {
 
 // A line in the catalog file; plus the extra description field.
 // As described in the manual:
-// http://www.opencsw.org/manual/for-maintainers/catalog-format.html 
+// http://www.opencsw.org/manual/for-maintainers/catalog-format.html
 type Package struct {
   Catalogname string     `json:"catalogname"`
   Version string         `json:"version"`
@@ -131,6 +131,30 @@ func (p *Package) AsDescription() string {
 type CatalogWithSpec struct {
   Spec CatalogSpec
   Pkgs []Package
+}
+
+// Extra information about a package
+type PackageExtra struct {
+  Basename string    `json:"basename"`
+  Bundle string      `json:"bundle"`
+  Catalogname string `json:"catalogname"`
+  Category string    `json:"category"`
+  Deps []string      `json:"deps"`
+  I_deps []string    `json:"i_deps"`
+  Inserted_by string `json:"inserted_by"` // decode?
+  Inserted_on string `json:"inserted_on"` // decode?
+  Maintainer string  `json:"maintainer"`
+  Md5_sum string     `json:"md5_sum"`
+  Mtime string       `json:"mtime"`  // decode?
+  Pkgname string     `json:"pkgname"`
+  Size int           `json:"size"`
+  Version string     `json:"version"`
+}
+
+// I'm not sure if this is a good idea
+type CatalogExtra struct {
+  Spec CatalogSpec
+  PkgsExtra []PackageExtra
 }
 
 const (
@@ -211,7 +235,7 @@ func GetCatalogSpecsFromDatabase() ([]CatalogSpec, error) {
   catspecs := make([]CatalogSpec, 0)
   dec := json.NewDecoder(resp.Body)
   if err := dec.Decode(&catspecs); err != nil {
-    log.Println("Failed to decode JSON from", url)
+    log.Println("Failed to decode JSON from", url, ":", err)
     return nil, err
   }
 
@@ -250,6 +274,30 @@ func GetCatalogWithSpec(catspec CatalogSpec) (CatalogWithSpec, error) {
                            "Please check the log for more information.",
                            cws.Spec)
   }
+  return cws, nil
+}
+
+func FetchCatalogExtra(cs CatalogSpec) (CatalogExtra, error) {
+  url := fmt.Sprintf("%s/catalogs/%s/%s/%s/timing/",
+                     PkgdbUrl, cs.Catrel, cs.Arch, cs.Osrel)
+  log.Println("Making a request to", url)
+  resp, err := http.Get(url)
+  if err != nil {
+    log.Fatalln("Could not retrieve", url, ":", err)
+    return CatalogExtra{}, err
+  }
+  defer resp.Body.Close()
+
+  var pkgs []PackageExtra
+  dec := json.NewDecoder(resp.Body)
+  if err := dec.Decode(&pkgs); err != nil {
+    log.Println("Failed to decode JSON output from", url, ":", err)
+    return CatalogExtra{}, err
+  }
+
+  log.Println("Retrieved timing/extra info for", cs, "with", len(pkgs), "packages")
+
+  cws := CatalogExtra{cs, pkgs}
   return cws, nil
 }
 
@@ -788,7 +836,7 @@ func GenerateCatalogRelease(catrel string, catalog_root string) {
 
   all_catspecs, err := GetCatalogSpecsFromDatabase()
   if err != nil {
-    log.Fatalln("Could not get the catalog spec list")
+    log.Fatalln("Could not get the catalog spec list:", err)
   }
   // Because of memory constraints, we're only processing 1 catalog in one run
   catspecs := FilterCatspecs(all_catspecs, catrel)
