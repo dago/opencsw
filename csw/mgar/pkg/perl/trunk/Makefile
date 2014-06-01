@@ -41,6 +41,7 @@ NOGITPATCH = 1
 # Depends
 RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
 OBSOLETED_BY_CSWperl += CSWperldoc CSWpm-parse-cpan-meta CSWpm-cpan-meta CSWpm-cpan-meta-requirements CSWpm-perl-ostype CSWpm-cpan-meta-yaml CSWpm-module-build CSWpm-json-pp CSWpm-module-metadata
 #OBSOLETED_BY_CSWperl += CSWpm-module-build 
 #OBSOLETED_BY_CSWperl += CSWpm-json-pp 
