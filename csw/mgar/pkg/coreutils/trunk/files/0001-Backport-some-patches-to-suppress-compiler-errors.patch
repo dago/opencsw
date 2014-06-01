@@ -1,0 +1,51 @@
+From 5d13bcc51f639f4106d90206001bc5f6529b2aa5 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 31 May 2014 20:50:02 +0200
+Subject: [PATCH] Backport some patches to suppress compiler errors.
+
+We need to suppress suggest-attribute=(const|pure) in a few cases.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/fadvise.c      | 6 ++++++
+ lib/file-has-acl.c | 7 +++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/lib/fadvise.c b/lib/fadvise.c
+index 8d3af99..5b4c916 100644
+--- a/lib/fadvise.c
++++ b/lib/fadvise.c
+@@ -14,6 +14,12 @@
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+ 
++/* Without this pragma, gcc suggests that (given !HAVE_POSIX_FADVISE)
++   the the fdadvise function might be candidate for attribute 'const'.  */
++#if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
++# pragma GCC diagnostic ignored "-Wsuggest-attribute=const"
++#endif
++
+ #include <config.h>
+ #include "fadvise.h"
+ 
+diff --git a/lib/file-has-acl.c b/lib/file-has-acl.c
+index bb8bae1..7ea4569 100644
+--- a/lib/file-has-acl.c
++++ b/lib/file-has-acl.c
+@@ -23,6 +23,13 @@
+ # pragma GCC diagnostic ignored "-Wsuggest-attribute=const"
+ #endif
+ 
++/* Without this pragma, gcc 4.9 may suggest that the acl_nontrivial
++   and acl_ace_nontrivial functions might be candidates for
++   attribute 'pure'                                                */
++#if (__GNUC__ == 4 && 9 <= __GNUC_MINOR__) || 4 < __GNUC__
++# pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
++#endif
++
+ #include <config.h>
+ 
+ #include "acl.h"
+-- 
+1.8.4.1
+
