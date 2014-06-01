@@ -132,7 +132,7 @@ build-perl:
 # You can always run the test single threaded if needed.
 test-perl:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	
-	# workaround gar pwd bug: http://sourceforge.net/apps/trac/gar/ticket/78	
+	# workaround gar pwd bug (PWD is not changed with cd from Makefile:
+	# http://sourceforge.net/apps/trac/gar/ticket/78	
 	cd $(WORKSRC) && PWD=`pwd` $(MAKE) $(MAKE_OPT) test
 	@$(MAKECOOKIE)
