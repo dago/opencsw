@@ -8,7 +8,7 @@ GARTYPE = v2
 # OPT_FLAGS_GCC = -O1 -pipe
 
 # building with gcc gets us extra tools (eg: stdbuf)
-GARCOMPILER = GCC4
+GARCOMPILER = GNU
 
 SHELL = /opt/csw/bin/bash
 
@@ -31,6 +31,13 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.xz
+
+
+PATCHFILES += 0001-Backport-some-patches-to-suppress-compiler-errors.patch
+PATCHFILES += 0002-Avoid-compiler-error-by-casting-the-ignore-option-fr.patch
+PATCHFILES += 0003-Only-define-the-out-label-if-it-will-be-used.patch
+PATCHFILES += 0004-Ensure-that-dst_exists-is-used-in-all-cases-to-avoid.patch
+
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release

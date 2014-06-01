@@ -1,0 +1,32 @@
+From b97eb8aa1e715da0c308460c2f33304968d161b1 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 1 Jun 2014 10:02:30 +0200
+Subject: [PATCH] Avoid compiler error by casting the ignore option from const
+ char
+
+The hasmntopt definition on Solaris expects the desired option to be a
+char *, but passes a defined constant string. With all errors enabled,
+this causes the build to fail. As a hack, cast the constant string to
+char *.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/mountlist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/mountlist.c b/lib/mountlist.c
+index b839cd1..74fb548 100644
+--- a/lib/mountlist.c
++++ b/lib/mountlist.c
+@@ -134,7 +134,7 @@
+ 
+ #undef MNT_IGNORE
+ #ifdef MNTOPT_IGNORE
+-# define MNT_IGNORE(M) hasmntopt (M, MNTOPT_IGNORE)
++# define MNT_IGNORE(M) hasmntopt (M, (char *) MNTOPT_IGNORE)
+ #else
+ # define MNT_IGNORE(M) 0
+ #endif
+-- 
+1.8.4.1
+

@@ -1,0 +1,31 @@
+From b6215948bf81b5e866ad83f96768eae36a32f273 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 1 Jun 2014 10:50:41 +0200
+Subject: [PATCH] Ensure that dst_exists is used in all cases to avoid compiler
+ issues.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/rename.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/lib/rename.c b/lib/rename.c
+index 7822a63..75ecc68 100644
+--- a/lib/rename.c
++++ b/lib/rename.c
+@@ -458,6 +458,12 @@ rpl_rename (char const *src, char const *dst)
+           goto out;
+         }
+     }
++# else
++  /* Avoid compiler warnings/errors for -Werror=unused-but-set-variable */
++  if (dst_exists)
++    {
++      ;
++    }
+ # endif /* RENAME_DEST_EXISTS_BUG */
+ 
+   ret_val = rename (src_temp, dst_temp);
+-- 
+1.8.4.1
+

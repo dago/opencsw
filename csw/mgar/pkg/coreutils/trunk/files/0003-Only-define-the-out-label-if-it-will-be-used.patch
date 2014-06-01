@@ -1,0 +1,31 @@
+From 1f41af243a161a1591bbca78890dd63c04098b41 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 1 Jun 2014 10:31:35 +0200
+Subject: [PATCH 4/4] Only define the out label if it will be used.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/rename.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/lib/rename.c b/lib/rename.c
+index 3e463ea..7822a63 100644
+--- a/lib/rename.c
++++ b/lib/rename.c
+@@ -462,7 +462,13 @@ rpl_rename (char const *src, char const *dst)
+ 
+   ret_val = rename (src_temp, dst_temp);
+   rename_errno = errno;
++# if (RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG        \
++      || RENAME_HARD_LINK_BUG)
++  /* Avoid compiler warnings from gcc 4.9 about unused labels. Only
++     create this label if it will be used. */
+  out:
++# endif
++
+   if (src_temp != src)
+     free (src_temp);
+   if (dst_temp != dst)
+-- 
+1.8.4.1
+
