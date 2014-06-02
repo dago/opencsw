@@ -50,12 +50,11 @@ DISTFILES += client.conf.CSW
 DISTFILES += CSWcupsclient.README
 
 PATCHFILES += 0001-cswcups-for-the-service-name.patch
-# PATCHFILES += 0002-use-posix-shell-in-install.sh.patch
-# PATCHFILES  = 0001-cswcups-for-service-name.patch
+PATCHFILES += 0002-use-posix-shell-in-install.sh.patch
 # PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 # PATCHFILES += 0003-Reference-counting-for-printers-only.patch
 # PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
-# PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
+PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
 # PATCHFILES += CFLAGS-leaking-to-C++-compiler.patch
 # PATCHFILES += 0008-Adding-CFLAGS-and-CXXFLAGS-to-linker-calls.patch
 # PATCHFILES += 0009-Add-workaround-for-krb5-config-outputting-CFLAGS.patch
