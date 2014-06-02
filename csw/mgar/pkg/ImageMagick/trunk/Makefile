@@ -1,7 +1,7 @@
 NAME      = imagemagick
 VERSION   = 6.8.9
 GARSUBREV = 2
-BETAREV   = beta20140517
+#BETAREV   = beta20140518
 GARTYPE   = v2
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -12,9 +12,11 @@ define BLURB
   PhotoCD, and GIF.
 endef
 
-MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/beta/
+MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
+#MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/beta/
 DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
-DISTFILES  = $(DISTNAME)~$(BETAREV).tar.xz
+DISTFILES  = $(DISTNAME).tar.xz
+#DISTFILES  = $(DISTNAME)~$(BETAREV).tar.xz
 DISTFILES += map.ImageMagick
 
 # libc 1.22.5 for gnutls
