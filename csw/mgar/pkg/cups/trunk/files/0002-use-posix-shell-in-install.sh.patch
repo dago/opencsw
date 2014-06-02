@@ -15,7 +15,7 @@ index baa6e08..5bf1d50 100755
 -#!/bin/sh
 +#!/usr/xpg4/bin/sh
  #
- # "$Id: install-sh 10317 2012-03-01 00:05:55Z mike $"
+ # "$Id: install-sh 10496 2012-05-22 21:38:54Z mike $"
  #
 -- 
 1.7.10.3
