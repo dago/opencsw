@@ -220,7 +220,7 @@ SPKG_DESC_CSWlibcupsimage2 = CUPS libraries, libcupsimage.so.2
 PKGFILES_CSWlibcupsimage2 += $(call pkgfiles_lib,libcupsimage.so.2)
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibtiff5
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibpng15-15
 
 PACKAGES += CSWlibcupsmime1
