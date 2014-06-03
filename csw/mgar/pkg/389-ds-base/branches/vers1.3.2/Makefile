@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = 389-ds-base
-VERSION = 1.3.2.14
+VERSION = 1.3.2.17
 GARTYPE = v2
 
 DESCRIPTION = The enterprise-class Open Source LDAP server
@@ -53,15 +53,15 @@ PATCHFILES += 0014-ldap-include-Makefile.am.patch
 # needed at least on GCC4
 PATCHFILES += 0015-use-PL_strcasestr-acllas.c.patch
 PATCHFILES_GCC4 += 0010-no-Crun-Cstd-lib-config.ac.patch
-PATCHFILES += 0016-fix-bigendian-utf8compare.c
-PATCHFILES += 0017-disable-asm-for-Sparc.patch
+# PATCHFILES += 0016-fix-bigendian-utf8compare.c
+# PATCHFILES += 0017-disable-asm-for-Sparc.patch
 # probably only with openLDAP 
 PATCHFILES += 0018-correct-64bit-ptr-bind.c
 PATCHFILES += 0021-include-lber.h-slapi-plugin.h.patch
 PATCHFILES += 0022-adjust-mozldap-version-sasl_io.c.patch
 PATCHFILES += 0024-strndup.patch
-PATCHFILES += 0025-posix-winsync.rawentry.patch
-PATCHFILES += 0030-reconstruct-memberuid-generation-task.patch
+# PATCHFILES += 0025-posix-winsync.rawentry.patch
+# PATCHFILES += 0030-reconstruct-memberuid-generation-task.patch
 PATCHFILES += $(PATCHFILES_$(GARCOMPILER))
 
 BUILD_DEP_PKGS += CSWautoconf
