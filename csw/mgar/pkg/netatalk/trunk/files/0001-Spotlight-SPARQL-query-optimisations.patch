@@ -1,0 +1,60 @@
+From feb46544b3ca8dcb52f318d05f14ae7ba1b79ec8 Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <rb@sernet.de>
+Date: Wed, 4 Jun 2014 12:11:40 +0200
+Subject: [PATCH 1/2] Spotlight: SPARQL query optimisations
+
+Use tracker:uri-is-descendant FILTER instead of regex for filtering
+results on the base path of the volume.
+
+Signed-off-by: Ralph Boehme <rb@sernet.de>
+---
+ NEWS                                | 4 ++++
+ etc/spotlight/slmod_sparql_parser.c | 4 ++--
+ etc/spotlight/slmod_sparql_parser.y | 4 ++--
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/NEWS b/NEWS
+index 6cdb7df..f9c9052 100644
+--- a/NEWS
++++ b/NEWS
+@@ -1,3 +1,7 @@
++Changes in 3.1.3
++================
++* UPD: Spotlight: more SPARQL query optimisations
++
+ Changes in 3.1.2
+ ================
+ * FIX: Option "vol dbpath" was broken in 3.1.1
+diff --git a/etc/spotlight/slmod_sparql_parser.c b/etc/spotlight/slmod_sparql_parser.c
+index bb06ba7..f70d9ef 100644
+--- a/etc/spotlight/slmod_sparql_parser.c
++++ b/etc/spotlight/slmod_sparql_parser.c
+@@ -1450,8 +1450,8 @@ yyreduce:
+     {
+     ssp_result = talloc_asprintf(ssp_slq,
+                                  "SELECT ?url WHERE "
+-                                 "{ ?obj nie:url ?url FILTER(regex(?url, '^file://%s/')) . %s} LIMIT 100",
+-                                 ssp_slq->slq_vol->v_path, (yyvsp[(1) - (1)].sval));
++                                 "{ %s . ?obj nie:url ?url . FILTER(tracker:uri-is-descendant('file://%s/', ?url)) } LIMIT 100",
++                                 (yyvsp[(1) - (1)].sval), ssp_slq->slq_vol->v_path);
+     (yyval.sval) = ssp_result;
+ }
+     break;
+diff --git a/etc/spotlight/slmod_sparql_parser.y b/etc/spotlight/slmod_sparql_parser.y
+index be0b903..0763b39 100644
+--- a/etc/spotlight/slmod_sparql_parser.y
++++ b/etc/spotlight/slmod_sparql_parser.y
+@@ -73,8 +73,8 @@ line:
+ expr                           {
+     ssp_result = talloc_asprintf(ssp_slq,
+                                  "SELECT ?url WHERE "
+-                                 "{ ?obj nie:url ?url FILTER(regex(?url, '^file://%s/')) . %s} LIMIT 100",
+-                                 ssp_slq->slq_vol->v_path, $1);
++                                 "{ %s . ?obj nie:url ?url . FILTER(tracker:uri-is-descendant('file://%s/', ?url)) } LIMIT 100",
++                                 $1, ssp_slq->slq_vol->v_path);
+     $$ = ssp_result;
+ }
+ ;
+-- 
+1.9.3
+
