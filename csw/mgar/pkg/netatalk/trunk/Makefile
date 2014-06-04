@@ -57,6 +57,7 @@ PATCHFILES += 0001-Disable-dbus-and-Tracker-autostart.patch
 # will be in 3.1.3:
 PATCHFILES += 0001-Spotlight-SPARQL-query-optimisations.patch
 PATCHFILES += 0002-Spotlight-new-options-for-controlling-query-behaviou.patch
+PATCHFILES += 0003-Spotlight-spotlight-expr-false-broke-the-default-Spo.patch
 
 PRESERVECONF += $(sysconfdir)/afp.conf
 PRESERVECONF += $(sysconfdir)/extmap.conf
