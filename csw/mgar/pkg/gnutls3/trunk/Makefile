@@ -1,5 +1,5 @@
 NAME = gnutls
-VERSION = 3.1.23
+VERSION = 3.1.25
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
