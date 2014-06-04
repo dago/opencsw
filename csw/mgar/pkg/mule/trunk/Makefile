@@ -1,5 +1,5 @@
 NAME = mule
-VERSION = 3.2.1
+VERSION = 3.5.0
 GARTYPE = v2
 CATEGORIES = server
 
@@ -50,7 +50,7 @@ PRESERVECONF  = /etc/opt/csw/mule/.*
 USERGROUP     = /etc/opt/csw/pkg/CSWmule/cswusergroup
 
 PROTOTYPE_MODIFIERS          = mule_ugfiles
-MULE_UGFILES                 = /var/opt/csw/mule/logs /var/opt/csw/mule/pid
+MULE_UGFILES                 = /var/opt/csw/mule/logs / /opt/csw/mulevar/opt/csw/mule/pid
 PROTOTYPE_FILES_mule_ugfiles = $(MULE_UGFILES)
 PROTOTYPE_USER_mule_ugfiles  = mule
 PROTOTYPE_GROUP_mule_ugfiles = mule
@@ -105,5 +105,4 @@ install-custom:
 	@ginstall -d $(DESTDIR)/var/opt/csw/mule/pid
 	@$(MAKECOOKIE)
 
-include gar/category.mk
-
+inclu
