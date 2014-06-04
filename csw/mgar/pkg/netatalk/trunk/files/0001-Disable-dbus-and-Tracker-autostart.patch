@@ -1,0 +1,51 @@
+From 6e2404a5a98b110fd061aa2c6f27686869e156bd Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Wed, 4 Jun 2014 21:30:20 +0200
+Subject: [PATCH] Disable dbus and Tracker autostart
+
+---
+ etc/netatalk/netatalk.c | 28 ----------------------------
+ 1 file changed, 28 deletions(-)
+
+diff --git a/etc/netatalk/netatalk.c b/etc/netatalk/netatalk.c
+index 3a470d0..70d25de 100644
+--- a/etc/netatalk/netatalk.c
++++ b/etc/netatalk/netatalk.c
+@@ -411,34 +411,6 @@ int main(int argc, char **argv)
+     sigdelset(&blocksigs, SIGHUP);
+     sigprocmask(SIG_SETMASK, &blocksigs, NULL);
+ 
+-#ifdef HAVE_TRACKER
+-    if (obj.options.flags & OPTION_SPOTLIGHT) {
+-        setenv("DBUS_SESSION_BUS_ADDRESS", "unix:path=" _PATH_STATEDIR "spotlight.ipc", 1);
+-        setenv("XDG_DATA_HOME", _PATH_STATEDIR, 0);
+-        setenv("XDG_CACHE_HOME", _PATH_STATEDIR, 0);
+-        setenv("TRACKER_USE_LOG_FILES", "1", 0);
+-
+-        if (atalk_iniparser_getboolean(obj.iniconfig, INISEC_GLOBAL, "start dbus", 1)) {
+-            dbus_path = atalk_iniparser_getstring(obj.iniconfig, INISEC_GLOBAL, "dbus daemon", DBUS_DAEMON_PATH);
+-            LOG(log_debug, logtype_default, "DBUS: '%s'", dbus_path);
+-            if ((dbus_pid = run_process(dbus_path, "--config-file=" _PATH_CONFDIR "dbus-session.conf", NULL)) == NETATALK_SRV_ERROR) {
+-                LOG(log_error, logtype_default, "Error starting '%s'", dbus_path);
+-                netatalk_exit(EXITERR_CONF);
+-            }
+-
+-            /* Allow dbus some time to start up */
+-            sleep(1);
+-        }
+-
+-        set_sl_volumes();
+-
+-        if (atalk_iniparser_getboolean(obj.iniconfig, INISEC_GLOBAL, "start tracker", 1)) {
+-            system(TRACKER_PREFIX "/bin/tracker-control -s");
+-        }
+-    }
+-#endif
+-
+-
+     /* run the event loop */
+     ret = event_base_dispatch(base);
+ 
+-- 
+1.8.4.1
+
