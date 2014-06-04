@@ -48,6 +48,8 @@ BUILD_DEP_PKGS += CSWfontconfig-dev CSWlibfreetype-dev CSWxproto CSWsunx11devel 
 PATCHFILES += 0003-Replace-uuid_unparse_lower-with-uuid_unparse.patch
 PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
+PATCHFILES += 0001-Ontology-add-indexes-for-nie-mimeType-and-nfo-fileNa.patch
+# will be in 1.0.2:
 PATCHFILES += 0001-libtracker-common-memory-limits-on-systems-with-larg.patch
 
 # Packages
