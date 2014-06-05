@@ -99,7 +99,8 @@ CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/sharee/doc/libssl_dev/CHANGES
 CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/CHANGES
 CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/lib# False alert
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-needed-but-no-package-satisfies-it|/etc/opt/csw/ssl/openssl.cnf|CSWopenssl-utils|contains|symlink|/opt/csw/ssl/openssl.cnf|which|needs|the|target|file:|/etc/opt/csw/ssl/openssl.cnfssl_dev/INSTALL
 
 
 
