@@ -13,7 +13,7 @@ PKCS11 = 1
 ###### Package information #######
 
 NAME = openssl
-VERSION = 0.9.8y
+VERSION = 0.9.8za
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -109,7 +109,7 @@ MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 UPSTREAM_MASTER_SITES = http://www.openssl.org/source/ 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(0.9.8[a-z]).tar.gz
+UFILES_REGEX = $( = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES +l CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
