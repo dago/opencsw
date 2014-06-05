@@ -23,25 +23,11 @@ define BLURB
   commercial-grade, fully featured, and Open Source toolkit implementing the
   Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) as well
   as a full-strength general-purpose cryptography library.
-endelibssl0-9-8 CSWlibssl-dev CSWopenssl-utilsndency|CSWopenssl
+endelibssl0-9-8ndency|CSWopenssl
 
 SPKG_DESC_CSWlibssl0-9-8 = Openssl runtime libraries
 CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
-RUNTIME_DEP_PKGS_CSWlibssl0-9-8 = Cy|CSWlibssl0-9-8
-
-SPKG_DESC_CSWlibssl-dev = Openssl development libraries and headers
-CATALOGNAME_CSWlibssl-dev = libssl_dev
-RUNTIME_DEP_PKGS_CSWlibssl-dev ll-devel-package
-
-SPKG_DESC_CSWopenssl-utils = Openssl binaries and related tools 
-CATALOGNAME_CSWopenssl-utils = openssl_utils
-RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl0-9-8
-SPKG_CLASSES_CSWopenssl-utils = none cswpreserveconf
-OBSOLETED_BY_CSWopenssl-utils = CSWosslutils
-CHECKPKG_OVERRIDES_CSWosslutils += surplus-dependency|CSWSWlibssl0-9-8
-
-# we use sun perl not csw one
-CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
+RUNTIME_DEP_PKGS_CSWlibssl0-9-8 = Cyendency|CSWperl
 
 #CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += surplus-dependency|CSWcacertificates
 
@@ -71,36 +57,10 @@ elseibcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/libcrypto.so.0.9.7
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/libCHECKPKG_OVERRIDES_CSWlibssl0-9-8 += no-direct-binding|/opt/csw/lib/pentium_pro/libssl.so.0.9.7|is|not|directly|bound|to|soname|libcrypto.so.0.9.77/libssl.so.0.9.7
-endif
-
-
-# we do ship .a files in the devel package
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
-ifeq ($(shell /usr/bin/uname -p),sparc) 
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libssl.a
-else
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
-endif
-
-# the /usr/local references in the documents files are relevant
-CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
-CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
-CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/libCHECKPKG_OVERRIDES_CSWlibssl0-9-8 += no-direct-binding|/opt/csw/lib/pentium_pro/libssl.so.0.9.7|is|not|directly|bound|to|soname|libcrypto.so.0.9.77/libssl# the /usr/local references in the documents files are relevantssl_utils/CHANGES
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/shareINSTALLe/doc/openssl/FAQ
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/sharehare/doc/openssl/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/sharee/doc/libssl_dev/CHANGES
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/CHANGES
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/lib# False alert
-CHECKPKG_OVERRIDES_CSWopenssl-utils += file-needed-but-no-package-satisfies-it|/etc/opt/csw/ssl/openssl.cnf|CSWopenssl-utils|contains|symlink|/opt/csw/ssl/openssl.cnf|which|needs|the|target|file:|/etc/opt/csw/ssl/openssl.cnfssl_dev/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/sharee/doc/lisl_dev/INSTALL
 
 
 
@@ -113,9 +73,7 @@ UPSTREAM_MASTER_SITES = http://www.openssl.org/source/
 UFILES_REGEX = $( = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
-DISTFILES +l CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
-DISTFILES += CSWlibssl-dev.prototype-i386 CSWlibssl-dev.prototype-sparc
-DISTFILES += CSWopenssl-utils.prototype 
+DISTFILES +l CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sppe 
 DISTFILES += changelog.CSW README.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
@@ -234,19 +192,10 @@ install-doc:
 	done
 	@$(MAKECOOKIE)
 
-install-certs: 
-	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
-		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
-
-fix-paths:
-	gsed -i -e 's,/usr/local/ssl/lib,/opt/csw/etc/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
-	gsed -i -e 's,/usr/local/ssl,/opt/csw/ssl,' $(PKGROOT)$(bindir)/c_rehash
-	@$(MAKECOOKIE)
-
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
 	@echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"
 	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -
 	@$(MAKECOOKIE)
 
-pre-package: install-certs install-oldlibs install-changelog insta
+pre-oldlibs install-changelog install-doc
