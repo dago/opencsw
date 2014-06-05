@@ -1,6 +1,8 @@
 openssl (0.9.8za,REV=2014.05.06) unstable
 
   * New upstream release.
+  * add a new patch to fix a missing header inclusion:
+    0005-add-missing-limits.h-header-inclusion-for-INT_MAX.patch
 
    -- Yann Rouillard <yann@opencsw.org>  Thu, 05 Jun 2014 15:12:30 +0200
 
