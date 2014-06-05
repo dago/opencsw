@@ -1,3 +1,9 @@
+openssl (1.0.1h,rev=2014.05.06) unstable
+
+  * New upstream release.
+
+   -- yann rouillard <yann@opencsw.org>  Thu, 05 Jun 2014 15:09:12 +0200
+
 openssl (1.0.1g,rev=2014.04.07) unstable
 
   * New upstream release.
