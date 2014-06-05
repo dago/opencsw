@@ -128,7 +128,9 @@ PATCHFILES += opencsw_paths.patch
 
 # Let's always block some compromised CA, whatever the CA configured
 # (patchs taken from Debian Package)
-PATCHFILES += block_bad_cerrtificates.patch
+PATCHFILES += block_bad_cer# the ssl/s3_pkt.c file uses the INT_MAX macro, this requires
+# limits.h to be included on Solaris
+PATCHFILES += 0005-add-missing-limits.h-header-inclusion-for-INT_MAX_bad_cerrtificates.patch
 
 LICENSE=LICENSE
 
