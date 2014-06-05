@@ -15,7 +15,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.1f
+VERSION = 1.0.1g
 CATEGORIES = lib
 GARTYPE = v2
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
@@ -277,4 +277,3 @@ merge-doc:
 	done
 	@$(MAKECO-all: merge-doc install-conf-misc
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=heartbleed
