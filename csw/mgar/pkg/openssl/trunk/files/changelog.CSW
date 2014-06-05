@@ -1,3 +1,9 @@
+openssl (0.9.8za,REV=2014.05.06) unstable
+
+  * New upstream release.
+
+   -- Yann Rouillard <yann@opencsw.org>  Thu, 05 Jun 2014 15:12:30 +0200
+
 openssl (0.9.8y,REV=2013.07.09) unstable
 
   * Removed checkinstall, preinstall and postinstall scripts
