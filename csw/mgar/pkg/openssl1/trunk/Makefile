@@ -93,9 +93,7 @@ PATCHFILES = optimized_configure_targets.patch$(PATCH_SUFFIX)
 # (wonder if they are really worth it)
 PATCHFILES +is-cc
 PATCHFILES = more_config$(PATCH_SUFFIX)ur
-PATCHFILES += CVE-2014-0076.patch
-PATCHFILES += CVE-2014-0160.patch
-ure_targets.patch
+e_targets.patch
 
 #PATCHFILES += fix-test-failure.patch
 
