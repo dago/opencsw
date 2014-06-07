@@ -38,6 +38,7 @@ PATCHFILES += 0002-Avoid-compiler-error-by-casting-the-ignore-option-fr.patch
 PATCHFILES += 0003-Only-define-the-out-label-if-it-will-be-used.patch
 PATCHFILES += 0004-Ensure-that-dst_exists-is-used-in-all-cases-to-avoid.patch
 PATCHFILES += 0005-src-df.c-get_dev-Initialize-variable-v-to-NULL-to-av.patch
+PATCHFILES += 0006-Remove-wmudflap.-It-s-deprecated-with-gcc-4.9.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release

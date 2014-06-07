@@ -1,0 +1,27 @@
+From 66bf842924e2aedc0b0c9eff472e59baf6ada12a Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 7 Jun 2014 22:53:09 +0200
+Subject: [PATCH] Remove -wmudflap. It's deprecated with gcc 4.9.
+
+This was already removed in upstream gnulib.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/configure b/configure
+index 7508b49..331246b 100755
+--- a/configure
++++ b/configure
+@@ -62033,7 +62033,6 @@ $as_echo "$gl_cv_cc_uninitialized_supported" >&6; }
+     -Wmissing-include-dirs \
+     -Wmissing-parameter-type \
+     -Wmissing-prototypes \
+-    -Wmudflap \
+     -Wmultichar \
+     -Wnarrowing \
+     -Wnested-externs \
+-- 
+1.8.4.1
+
