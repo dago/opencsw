@@ -1,4 +1,11 @@
-openssl (1.0.1h,rev=2014.05.06) unstable
+openssl (1.0.1h,rev=2014.06.08) unstable
+
+  * Add the 0011-link-heartbeat_test-with-static-libraries patch to solve a
+  compilation failure for the heartbeat_test file.
+
+   -- yann rouillard <yann@opencsw.org>  Sun, 08 Jun 2014 13:57:57 +0200
+
+openssl (1.0.1h,rev=2014.06.06) unstable
 
   * New upstream release.
 
