@@ -146,6 +146,14 @@ PATCHFILES.sparc.5.11 += openssl-1.0.1f-wanboot.patchlPATCHFILES.sparc.5.11 += o
 PATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine-sparcv9+vis.sparc.5.11.patch
 PATCHFILES += $(PATCHFILES.$(GARCH).$(GAROSREL))
 
+e# Currently the heartbeat_test test file doesn't compile because it is linked 
+# dynamically and try to use an internal symbol of libssl.
+# See bug report http://rt.openssl.org/Ticket/Display.html?id=3378
+# This patch solves the problem by linking to the static libraries instead of 
+# dynamic ones (it doesn't matter for a test).
+# It has been sent upstream by the Debian Maintainer of the openssl package
+# see: https://github.com/openssl/openssl/pull/125
+PATCHFILES += 0011-link-heartbeat_test-with-static-libraries.patch
 en-25
 endif
 endif
