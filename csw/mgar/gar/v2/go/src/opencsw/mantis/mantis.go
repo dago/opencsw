@@ -3,28 +3,32 @@
 package mantis
 
 import (
-  "net/http"
   "encoding/json"
+  "fmt"
   "log"
-
+  "net/http"
 )
 
 // Matches the data structure in http://www.opencsw.org/buglist/json
 // Maybe this should go into a separate package, like opencsw/mantis.
 type Bug struct {
-   bug_assigned_to string          `json:"bug_assigned_to"`
-   bug_assigned_to_fullname string `json:"bug_assigned_to_fullname"`
-   bug_id string                   `json:"bug_id"`
-   bug_last_updated string         `json:"bug_last_updated"`
-   bug_pkg_catalogname string      `json:"bug_pkg_catalogname"`
-   bug_severity string             `json:"bug_severity"`
-   bug_severity_name string        `json:"bug_severity_name"`
-   bug_status string               `json:"bug_status"`
-   bug_status_name string          `json:"bug_status_name"`
-   bug_summary string              `json:"bug_summary"`
-   maintainer_fullname string      `json:"maintainer_fullname"`
-   maintainer_name string          `json:"maintainer_name"`
-   maintainer_status string        `json:"maintainer_status"`
+   AssignedTo string         `json:"bug_assigned_to"`
+   AssignedToFullname string `json:"bug_assigned_to_fullname"`
+   Id string                 `json:"bug_id"`
+   LastUpdated string        `json:"bug_last_updated"`
+   Catalogname string        `json:"bug_pkg_catalogname"`
+   SeverityId string         `json:"bug_severity"`
+   Severity string           `json:"bug_severity_name"`
+   StatusId string           `json:"bug_status"`
+   Status string             `json:"bug_status_name"`
+   Summary string            `json:"bug_summary"`
+   MaintainerFullname string `json:"maintainer_fullname"`
+   Maintainer string         `json:"maintainer_name"`
+   MaintainerStatus string   `json:"maintainer_status"`
+}
+
+func (b Bug) Url() string {
+  return fmt.Sprintf("https://www.opencsw.org/mantis/view.php?id=%s", b.Id)
 }
 
 // Fetches all bugs from Mantis.

@@ -23,11 +23,6 @@ func init() {
   flag.StringVar(&catalog_root_flag, "catalog-root",
                  "/export/mirror/opencsw",
                  "Directory where all the catalogs live, and allpkgs is")
-  flag.StringVar(&diskformat.PkgdbUrl, "pkgdb-url",
-                 "http://buildfarm.opencsw.org/pkgdb/rest",
-                 "Web address of the pkgdb app.")
-  flag.BoolVar(&diskformat.DryRun, "dry-run", false,
-               "Dry run mode, no changes on disk are made")
 }
 
 func main() {
