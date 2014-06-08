@@ -10,10 +10,10 @@ library.
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/test/Makefile b/test/Makefile
-index f1816ac..1dd7bb9 100644
+index 005f2e8..d68e8b0 100644
 --- a/test/Makefile
 +++ b/test/Makefile
-@@ -420,6 +420,13 @@ BUILD_CMD=shlib_target=; if [ -n "$(SHARED_LIBS)" ]; then \
+@@ -358,6 +358,13 @@ BUILD_CMD=shlib_target=; if [ -n "$(SHARED_LIBS)" ]; then \
  		LIBDEPS="$(PEX_LIBS) $$LIBRARIES $(EX_LIBS)" \
  		link_app.$${shlib_target}
  
@@ -24,11 +24,11 @@ index f1816ac..1dd7bb9 100644
 +		LIBDEPS="$(PEX_LIBS) $$LIBRARIES $(EX_LIBS)" \
 +		link_app.$${shlib_target}
 +
- $(RSATEST)$(EXE_EXT): $(RSATEST).o $(DLIBCRYPTO)
- 	@target=$(RSATEST); $(BUILD_CMD)
- 
-@@ -618,7 +625,7 @@ $(V3NAMETEST)$(EXE_EXT): $(V3NAMETEST).o $(DLIBCRYPTO)
- 	@target=$(V3NAMETEST); $(BUILD_CMD)
+ FIPS_BUILD_CMD=shlib_target=; if [ -n "$(SHARED_LIBS)" ]; then \
+ 		shlib_target="$(SHLIB_TARGET)"; \
+ 	fi; \
+@@ -476,7 +483,7 @@ $(SRPTEST)$(EXE_EXT): $(SRPTEST).o $(DLIBCRYPTO)
+ 	@target=$(SRPTEST); $(BUILD_CMD)
  
  $(HEARTBEATTEST)$(EXE_EXT): $(HEARTBEATTEST).o $(DLIBCRYPTO)
 -	@target=$(HEARTBEATTEST); $(BUILD_CMD)
@@ -38,4 +38,3 @@ index f1816ac..1dd7bb9 100644
  #	$(CC) -c $(CFLAGS) -DINTERMEDIATE_VALUE_KAT -DTRACE_KAT_MCT $(AESTEST).c
 -- 
 1.9.3
-
