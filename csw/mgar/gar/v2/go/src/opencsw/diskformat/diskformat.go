@@ -1,11 +1,12 @@
-// Package diskformat contains code and utilities to work with OpenCSW catalogs
-// in the disk format, as they are provided on the master mirror at
-// http://mirror.opencsw.org/
+// Package diskformat works with OpenCSW catalogs in the disk format, as they
+// are provided on the master mirror at http://mirror.opencsw.org/
+
 package diskformat
 
 import (
   "bufio"
   "encoding/json"
+  "flag"
   "fmt"
   "log"
   "net/http"
@@ -20,20 +21,39 @@ import (
   "time"
 )
 
-
-// Do not perform any operations on disk. Read data and process them, but do not
-// write anything. Variable meant to be controlled by a command line flag.
+// When Dry Run is set, do not perform any operations on disk. Read data and
+// process them, but do not write anything. Variable meant to be controlled by
+// a command line flag.
 var DryRun bool
 // Keeping PkgdbUrl as a package global variable is probably not the best idea,
 // but let's not refactor without a good plan.
+var PkgdbWebUrl string
 var PkgdbUrl string
 var ReleasesUrl string
 
+func init() {
+  flag.StringVar(&PkgdbUrl, "pkgdb-url",
+                 "http://buildfarm.opencsw.org/pkgdb/rest",
+                 "Web address of the pkgdb app.")
+  flag.BoolVar(&DryRun, "dry-run", false,
+               "Dry run mode, no changes on disk are made")
+  flag.StringVar(&PkgdbWebUrl, "pkgdb-web-url",
+                 "http://buildfarm.opencsw.org/pkgdb",
+                 "Web address of the pkgdb app.")
+  flag.StringVar(&ReleasesUrl, "releases-url",
+                 "http://buildfarm.opencsw.org/releases",
+                 "Web address of the releases app.")
+}
 // 3 strings that define a specific catalog, e.g. "unstable sparc 5.10"
 type CatalogSpec struct {
   Catrel string
   Arch string
   Osrel string
+}
+
+func (cs CatalogSpec) Url() string {
+  return fmt.Sprintf("%s/catalogs/%s-%s-%s/",
+                     PkgdbWebUrl, cs.Catrel, cs.Arch, cs.Osrel)
 }
 
 func longOsrelAsInt(long_osrel string) int64 {
@@ -128,6 +148,14 @@ func (p *Package) AsDescription() string {
   return strings.Join(lst, " ")
 }
 
+func (p Package) Url() string {
+  return fmt.Sprintf("%s/srv4/%s/", PkgdbWebUrl, p.Md5_sum)
+}
+
+func (p Package) String() string {
+  return fmt.Sprintf("%s", p.Filename)
+}
+
 type CatalogWithSpec struct {
   Spec CatalogSpec
   Pkgs []Package
@@ -151,7 +179,15 @@ type PackageExtra struct {
   Version string     `json:"version"`
 }
 
-// I'm not sure if this is a good idea
+func (p PackageExtra) Url() string {
+  return fmt.Sprintf("%s/srv4/%s/", PkgdbWebUrl, p.Md5_sum)
+}
+
+func (p PackageExtra) String() string {
+  return fmt.Sprintf("%s", p.Basename)
+}
+
+// I'm not sure if this is a good idea.
 type CatalogExtra struct {
   Spec CatalogSpec
   PkgsExtra []PackageExtra
@@ -301,6 +337,7 @@ func FetchCatalogExtra(cs CatalogSpec) (CatalogExtra, error) {
   return cws, nil
 }
 
+// Allows to isolate specs for a given catalog release, e.g. unstable.
 func FilterCatspecs(all_catspecs []CatalogSpec, catrel string) []CatalogSpec {
   catspecs := make([]CatalogSpec, 0)
   for _, catspec := range all_catspecs {
