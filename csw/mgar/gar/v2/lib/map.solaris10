@@ -1,6 +1,6 @@
 # Solaris 10 mapfile with libc Version 1.22.2 which is Update?? Kernel Version
 #   https://github.com/illumos/illumos-gate/blob/master/usr/src/lib/libc/port/mapfile-vers#L339
-libc.so - SUNW_1.22.2 SUNWprivate_1.1 $ADDVERS=SUNW_1.22.2;
+libc.so - SUNW_1.22.5 SUNWprivate_1.1 $ADDVERS=SUNW_1.22.5;
 #   https://github.com/illumos/illumos-gate/blob/master/usr/src/lib/libresolv2/common/mapfile-vers#L46
 libresolv.so - SUNW_2.2.2 SUNWprivate_2.1 $ADDVERS=SUNW_2.2.2;
 #   https://github.com/illumos/illumos-gate/blob/master/usr/src/lib/libnsl/common/mapfile-vers#L47
