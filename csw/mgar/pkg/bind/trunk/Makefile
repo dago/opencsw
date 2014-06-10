@@ -84,6 +84,9 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 CONFIGURE_ARGS += --with-dlz-ldap=/opt/csw
 CONFIGURE_ARGS += --enable-rrl
 
+# Bug in combo of BIND and GCC 4.9 optimization regarding null pointers
+EXTRA_CFLAGS += -fno-delete-null-pointer-checks
+
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la $(mandir)/man1/isc-config.sh.1 $(bindir)/isc-config.sh
 
 #EXTRA_INC = /opt/csw/include
