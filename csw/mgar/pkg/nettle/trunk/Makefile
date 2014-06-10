@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nettle
-VERSION = 2.7.1
+VERSION = 3.0
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -19,29 +19,30 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.lysator.liu.se/~nisse/nettle/
 
-LICENSE = COPYING.LIB
+ESSERv3
 
-PACKAGES += CSWlibhogweed2
-PKGFILES_CSWlibhogweed2 += $(call pkgfiles_lib,libhogweed.so.2)
-SPKG_DESC_CSWlibhogweed2 += A low-level cryptographic library, libhogweed.so.2
-RUNTIME_DEP_PKGS_CSWlibhogweed2 += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibhogweed2 += CSWlibnettle4
+PACKAGES += CSWlibhogweed3
+PKGFILES_CSWlibhogweed3 += $(call pkgfiles_lib,libhogweed.so.3)
+SPKG_DESC_CSWlibhogweed3 += A low-level cryptographic library, libhogweed.so.3
+RUNTIME_DEP_PKGS_CSWlibhogweed3 += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibhogweed3 += CSWlibnettle5
 
-PACKAGES += CSWlibnettle4
-PKGFILES_CSWlibnettle4 += $(call pkgfiles_lib,libnettle.so.4)
-SPKG_DESC_CSWlibnettle4 += A low-level cryptographic library, libnettle.so.4
+PACKAGES += CSWlibnettle5
+PKGFILES_CSWlibnettle5 += $(call pkgfiles_lib,libnettle.so.5)
+SPKG_DESC_CSWlibnettle5 += A low-level cryptographic library, libnettle.so.5ary, libnettle.so.4
 
 PACKAGES += CSWlibnettle-dev
 PKGFILES_CSWlibnettle-dev = $(PKGFILES_DEVEL)
-SPKG_DESC_CSWlibnettle-dev = Development files for libnettle.so.4 and libhogweed.so.2
-RUNTIME_DEP_PKGS_CSWlibnettle-dev += CSWlibhogweed2
-RUNTIME_DEP_PKGS_CSWlibnettle-dev += CSWlibnettle4
+SPKG_DESC_CSWlibnettle-dev = Development file5 and libhogweed.so.3
+RUNTIME_DEP_PKGS_CSWlibnettle-dev += CSWlibhogweed3
+RUNTIME_DEP_PKGS_CSWlibnettle-dev += CSWlibnettle5ev += CSWlibnettle4
 
 PACKAGES += CSWlibnettle-utils
 SPKG_DESC_CSWlibnettle-utils = Utility programs for libnettle
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibhogweed2
-RUNTIME_DEP_PKGS_CSWlibnettle-util
+RUNTIME_DEP_PKGS_CSWlibnettle-uti3
+RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibnettle5
+RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibgmp10l
 # This is just the default locationion after configure
 CHECKPKG_OVERRIDES_CSWlibnettle-utils += file-with-bad-content|/usr/local|root/opt/csw/sharels += CSWlibgmp10
 
