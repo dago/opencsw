@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 """Maintain OpenCSW changelog.
 
-The changelog files generated are modeled after the Debian changelog
+cswch can maintain two styles of changelog files, namely Debian style
+changelog files and Dam style changelog files.
+
+Debian style changelog files are modeled after the Debian changelog
 
  http://www.debian.org/doc/debian-policy/ch-source.html#s-dpkgchangelog
 
@@ -14,13 +17,45 @@ it uses
 
  package (version,REV=revision)
 
+
+Dam style changelog files are similar to Debian style changelog files,
+except for the header line, which looks like
+
+ package (timestamp)
+
+
+Creating a new changelog file is done by
+
+ cswch create [--dam-style|--deb-style --version <version>] <pkg> \
+  --log-item <item1> .. <itemN> [--log-paragraph <par1> .. <parN>]
+
+This will create a changelog.CSW file in the files/ directory and add
+it to SVN working copy.
+
+
+After creating the changelog file, adding a new changelog entry is a
+matter of
+
+ cswch new [--version <version>] --log-item <item1> .. <itemN> \
+  [--log-paragraph <par1> .. <parN>]
+
+where `--version' is only required for Debian style changelogs.
+
+See
+
+ cswch --help
+
+for more information.
+
 $Id$
 
 """
+import ConfigParser
 import argparse
 import datetime
 import dateutil.tz
 import email.utils
+import errno
 import logging
 import os
 import pwd
@@ -29,7 +64,6 @@ import re
 import sys
 import time
 import unittest
-import errno
 
 ### T E S T S ###
 
@@ -288,14 +322,58 @@ class OperationNotApplicable(ChangeLogException):
         return str(self)
 
 
+class Maintainer(object):
+    """
+    """
+    def __init__(self):
+        self.fullname, self.email = Maintainer._get_maintainer_fallback()
+        try:
+            cfg_defaults = { 'fullname': self.fullname,
+                             'email': self.email }
+            cfgfile = ConfigParser.ConfigParser(defaults=cfg_defaults)
+            cfgfile.read(os.path.expanduser('~/.cswch.rc'))
+
+            self.fullname = cfgfile.get('general', 'fullname')
+            self.email = cfgfile.get('general', 'email')
+        except ConfigParser.Error:
+            pass
+
+
+    def __str__(self):
+        return self.fullname + '<' + self.email + '>'
+
+    @classmethod
+    def _get_maintainer_fallback(cls):
+        """Derive maintainer name and email.
+
+        Return maintainer and email as tuple.
+
+        """
+        return (pwd.getpwnam(Maintainer._logname())[4],
+                "%s@opencsw.org" % Maintainer._logname())
+
+    @classmethod
+    def _logname(cls):
+        if 'LOGNAME' in os.environ:
+            return os.environ['LOGNAME']
+        else:
+            return os.getlogin()
+
+
 class ChangeLogHeader(object):
     """Constitutes a changelog header.
 
     It has the form
 
-    package (version,REV=rev)
+     package (version,REV=rev)
 
-    and marks the start of a changelog entry.
+    for Debian style ChangeLog files, or
+
+     package (timestamp)
+
+    for Dam style ChangeLog files.
+
+    In any case, it marks the start of a changelog entry.
 
     """
     def __init__(self, **kwargs):
@@ -336,7 +414,6 @@ class ChangeLogHeader(object):
                 self.timestamp = ChangeLogHeader.get_rfc3339timestamp()
 
             self.style = ChangeLogHeader.STYLE_DAM
-                                 
 
     def __str__(self):
         """Get the ChangeLog header as string"""
@@ -351,7 +428,8 @@ class ChangeLogHeader(object):
         """Parse ChangeLog header
 
         Dissect a ChangeLog header into package, version, and
-        revision.
+        revision, or package, and timestamp, depending on the style of
+        the ChangeLog.
 
         It will try to parse Debian style and Dam style header lines
         and set self.style according to the style.
@@ -412,7 +490,7 @@ class ChangeLogHeader(object):
         if date_obj is None:
             timezone = dateutil.tz.tzlocal()
             date_obj = datetime.datetime.now(timezone)
-            
+
         return date_obj.strftime('%Y-%m-%dT%H:%M:%S%z')
 
     format_str_deb = r'%(package)s (%(version)s,REV=%(rev)s)'
@@ -436,9 +514,9 @@ class ChangeLogFooter(object):
     """
     def __init__(self, **kwargs):
         if len(kwargs) == 0:
-            maintainer = ChangeLogFooter.get_maintainer()
-            self.maintainer = maintainer[0]
-            self.email = maintainer[1]
+            maintainer = Maintainer()
+            self.maintainer = maintainer.fullname
+            self.email = maintainer.email
             self.timestamp = ChangeLogFooter.get_rfc2822timestamp()
 
             return
@@ -501,22 +579,6 @@ class ChangeLogFooter(object):
             date_obj = datetime.datetime.now(timezone)
 
         return email.utils.formatdate(time.mktime(date_obj.timetuple()), True)
-
-    @classmethod
-    def get_maintainer(cls):
-        """Get maintainer name and email.
-
-        Return maintainer and email as tuple.
-
-        """
-        if 'LOGNAME' in os.environ:
-            fullname = pwd.getpwnam(os.environ['LOGNAME'])[4]
-            m_email = "%s@opencsw.org" % os.environ['LOGNAME']
-        else:
-            fullname = pwd.getpwnam(os.getlogin())[4]
-            m_email = "%s@opencsw.org" % os.getlogin()
-
-        return (fullname, m_email)
 
     format_str_deb = r' -- %(maintainer)s <%(email)s>  %(timestamp)s'
     parse_re_deb = r' -- (?P<maintainer>[\w\d ]+) <(?P<email>[\w\d@ \.]+)>  (?P<timestamp>\w{3}, \d{1,2} \w{3} \d{4} \d{2}:\d{2}:\d{2} (\+|-)\d{4})'
@@ -924,7 +986,7 @@ def new_changelog_entry(filename, version, log):
     :param version: has to be None for Dam style log files.
     """
     changelog_file = ChangeLogFile(filename)
-    
+
     style = changelog_file.changelog_style()
     if style == ChangeLogHeader.STYLE_DAM and\
        version is not None:
@@ -963,7 +1025,7 @@ def refresh_changelog(filename):
 
     changelog_file.save()
 
-def create_changelog_file(filename, style, overwrite, package, 
+def create_changelog_file(filename, style, overwrite, package,
                           version, log, register_svn):
     # For Dam style changelogs, version is expected to be None
     header = ChangeLogHeader(package=package, version=version)
@@ -1011,7 +1073,7 @@ def compile_log(logitem, logparagraph):
 def cond_complain_svn(filename, complain):
     """Conditionally complain about changelog file not registered in SVN
 
-    :param complain: if True and file is not in SVN, complain. Else do nothin.
+    :param complain: if True and file is not in SVN, complain. Else do nothing.
     """
     changelogfile = ChangeLogFile(filename)
     if complain and not changelogfile.in_svn():
@@ -1028,8 +1090,8 @@ def cmdline_parse():
                         help='filename to use (default: %(default)s)',
                         default='files/changelog.CSW')
     parser.add_argument('--no-svn', help="Do not add file to SVN repository or stop complaining about file not registerd with svn.",
-                               default=False, action='store_const',
-                               const=True)
+                        default=False, action='store_const',
+                        const=True)
     subparser = parser.add_subparsers(help='sub-command help',
                                       dest='command')
 
@@ -1047,7 +1109,7 @@ def cmdline_parse():
     parser_create.add_argument('package',
                                help="package name")
     parser_create.add_argument('--version',
-                               help="package version (only required for Debian style changelog)", 
+                               help="package version (only required for Debian style changelog)",
                                required=False)
     parser_create.add_argument('--log-item',
                                help="the log entry to be recorded as list item",
@@ -1091,6 +1153,8 @@ def cmdline_parse():
                                 default=False, action='store_const',
                                 const=True)
 
+    parser_useage = subparser.add_parser('usage', help="Show a brief usage description")
+
     parser_test = subparser.add_parser('test', help="test cswch")
 
     arguments = parser.parse_args()
@@ -1116,6 +1180,10 @@ if __name__ == '__main__':
         # arguments.
         del sys.argv[1:]
         unittest.main()
+
+    if arguments.command == "usage":
+        print(__doc__)
+        exit(0)
 
     try:
         if arguments.command == "create":
