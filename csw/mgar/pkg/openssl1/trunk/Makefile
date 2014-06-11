@@ -10,8 +10,6 @@
 # software causes damage.
 #####################################################################
 
-# Note: This build recipe does not work with parallel gmake (-j N) invocation.
-
 ###### Package information #######
 
 NAME = openssl
@@ -154,6 +152,12 @@ e# Currently the heartbeat_test test file doesn't compile because it is linked
 # It has been sent upstream by the Debian Maintainer of the openssl package
 # see: https://github.com/openssl/openssl/pull/125
 PATCHFILES += 0011-link-heartbeat_test-with-static-libraries.patch
+en# Building openssl with "-j" option doesn't work properly because of dependencies
+# in the Makefile.
+# This patch fixes this problem, it's taken from gentoo and adapted so that it works
+# with sh shell.
+# (see http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/dev-libs/openssl/files/)
+PATCHFILES += openssl-1.0.1-parallel-build.patch
 en-25
 endif
 endif
