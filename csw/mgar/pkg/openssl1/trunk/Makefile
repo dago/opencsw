@@ -287,3 +287,16 @@ merge-doc:
 	done
 	@$(MAKECO-all: merge-doc install-conf-misc
 
+
+NUM_CPUS := $(shell psrinfo | wc -l | awk '{ print $$1 }')
+
+package-fast:
+	PARALLELMODULATIONS=1 PARALLELMFLAGS="--jobs=$(NUM_CPUS) --load-average=$(NUM_CPUS)" $(MAKE) package
+
+platforms-fast:
+	mkdir -p work
+	trap "kill -9 `cat  $(foreach P,$(PACKAGING_PLATFORMS),$(WORKROOTDIR)/build-$(PACKAGING_HOST_$P).pid) 2>/dev/null`; stty sane" INT; \
+	$(foreach P,$(_PACKAGING_PLATFORMS),\
+		($(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=\"$($V)\")) $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P package-fast" >work/build-$(PACKAGING_HOST_$P).log 2>&1; echo $$? >work/build-$(PACKAGING_HOST_$P).ret ) & echo $$! >work/build-$(PACKAGING_HOST_$P).pid; ) wait
+	stty sane
+	$(MAKE) platforms
