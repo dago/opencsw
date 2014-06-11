@@ -872,17 +872,17 @@ configure-%/setup.py:
 # build from a standard gnu-style makefile's default rule.
 build-%/Makefile:
 	@echo " ==> Running make in $*"
-	cd $* && /usr/bin/env -i $(BUILD_ENV) $(MAKE) MAKEFLAGS= $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
+	cd $* && /usr/bin/env -i $(BUILD_ENV) MAKEFLAGS= $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/makefile:
 	@echo " ==> Running make in $*"
-	cd $* && /usr/bin/env -i $(BUILD_ENV) $(MAKE) MAKEFLAGS= $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
+	cd $* && /usr/bin/env -i $(BUILD_ENV) MAKEFLAGS= $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/GNUmakefile:
 	@echo " ==> Running make in $*"
-	cd $* && /usr/bin/env -i $(BUILD_ENV) $(MAKE) MAKEFLAGS= $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
+	cd $* && /usr/bin/env -i $(BUILD_ENV) MAKEFLAGS= $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/Jamfile:
