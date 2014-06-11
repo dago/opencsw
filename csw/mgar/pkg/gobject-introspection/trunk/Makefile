@@ -35,8 +35,12 @@ SPKG_DESC_CSWlibgirepository1-0-1 += $(DESCRIPTION), libgirepository-1.0.so.1
 RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1 += $(RUNTIME_DEP_PKGS_CSWlibgirepository1-0-1_$(GARCH))
+
 
 PACKAGES += CSWgobject-introspection-dev
 CATALOGNAME_CSWgobject-introspection-dev = gobject_introspection_dev
@@ -52,13 +56,17 @@ RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibgirepository1-0-1
 RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWpython
 RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgobject-introspection += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgobject-introspection_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgobject-introspection += $(RUNTIME_DEP_PKGS_CSWgobject-introspection_$(GARCH))
 
 # These are just docs
 CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/local|root/opt/csw/share/gir-1.0/GLib-2.0.gir
 CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/share/gir-1.0/Gio-2.0.gir
 CHECKPKG_OVERRIDES_CSWgobject-introspection += file-with-bad-content|/usr/share|root/opt/csw/lib/gobject-introspection/giscanner/transformer.py
+CHECKPKG_OVERRIDES_CSWgobject-introspection += surplus-dependency|CSWpython
 
 # Python isn't 64-bit yet
 #BUILD64 = 1
