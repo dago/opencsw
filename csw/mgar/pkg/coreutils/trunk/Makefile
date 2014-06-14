@@ -53,13 +53,11 @@ CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw
 # handle su manually to avoid needing fakeroot or some such.  this is now
 # explicitly required as we modify both --enable-*install-program  lists
-CONFIGURE_ARGS += --enable-no-install-program=chcon,su
+CONFIGURE_ARGS += --enable-no-install-program=chcon
 CONFIGURE_ARGS += --enable-install-program=hostname,arch
 
 # required for eaccess and not picked up automatically.
 EXTRA_LDFLAGS = -lgen
-
-PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
 
 # move the pegs forward
 # 8.22 fails some tests for acl reasons on /tmp, but behaviour is identical to solaris tools.
@@ -76,8 +74,6 @@ PATH := ~/bin:/opt/csw/gnu:/opt/csw/bin:$(PATH)
 post-install-modulated:
 	@echo Cleaning up install directory...
 	rm -rf $(DESTDIR)/$(libdir)
-	@echo Manually install gsu \(so no root rights required\)
-	cp $(WORKSRC)/src/su $(DESTDIR)$(bindir)/gsu
 
 post-merge:
 	@(cd $(PKGROOT)$(prefix); \
