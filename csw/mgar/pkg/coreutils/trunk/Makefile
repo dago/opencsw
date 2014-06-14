@@ -62,7 +62,9 @@ EXTRA_LDFLAGS = -lgen
 PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
 
 # move the pegs forward
-ifneq ($(VERSION), 8.13)
+# 8.22 fails some tests for acl reasons on /tmp, but behaviour is identical to solaris tools.
+# 8.22 fails some chown tests on nfs, but behaviour is identical to solaris tools.
+ifneq ($(VERSION), 8.22)
 else
 TEST_SCRIPTS =
 endif
