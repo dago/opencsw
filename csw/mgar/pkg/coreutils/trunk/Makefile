@@ -62,9 +62,8 @@ EXTRA_LDFLAGS = -lgen
 # move the pegs forward
 # 8.22 fails some tests for acl reasons on /tmp, but behaviour is identical to solaris tools.
 # 8.22 fails some chown tests on nfs, but behaviour is identical to solaris tools.
-ifneq ($(VERSION), 8.22)
-else
-TEST_SCRIPTS =
+ifeq ($(VERSION), 8.22)
+SKIPTEST = 1
 endif
 
 include gar/category.mk
