@@ -1,0 +1,31 @@
+From c0563d5860dfb6e5f1cbda4da7f055464684d6f2 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 8 Jun 2014 00:35:33 +0200
+Subject: [PATCH] Disable developer compiler warning/error settings
+
+Detecting a .git directory enables additional, heavy weight compiler
+options. Our patching infrastructure trips this. Upstream now has a
+workaround in the codebase, but we'll manually disable it for our use
+case.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 331246b..6b30709 100755
+--- a/configure
++++ b/configure
+@@ -61755,7 +61755,7 @@ if ac_fn_c_try_cpp "$LINENO"; then :
+ fi
+ rm -f conftest.err conftest.i conftest.$ac_ext
+ 
+-
++gl_gcc_warnings=no
+ 
+ fi
+ 
+-- 
+1.8.4.1
+
