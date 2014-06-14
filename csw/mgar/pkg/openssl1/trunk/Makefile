@@ -291,12 +291,30 @@ merge-doc:
 NUM_CPUS := $(shell psrinfo | wc -l | awk '{ print $$1 }')
 
 package-fast:
-	PARALLELMODULATIONS=1 PARALLELMFLAGS="--jobs=$(NUM_CPUS) --load-average=$(NUM_CPUS)" $(MAKE) package
+	PARALLELMODULATIONS=1 PARALLELMFLAGS="-j" $(MAKE) package
+	#PARALLELMODULATIONS=1 PARALLELMFLAGS="--jobs=$(NUM_CPUS)" $(MAKE) package
+	#PARALLELMODULATIONS=1 PARALLELMFLAGS="--jobs=$(NUM_CPUS) --load-average=$(NUM_CPUS)" $(MAKE) package
 
 platforms-fast:
-	mkdir -p work
-	trap "kill -9 `cat  $(foreach P,$(PACKAGING_PLATFORMS),$(WORKROOTDIR)/build-$(PACKAGING_HOST_$P).pid) 2>/dev/null`; stty sane" INT; \
+	@mkdir -p work
+	@echo
+	@echo "Building on all hosts in parallel. Please see the individual logfiles for details:";$(foreach P,$(_PACKAGING_PLATFORMS),echo "- $P: work/build-$(PACKAGING_HOST_$P).log";)
+	@echo
+	@trap "cat $(foreach P,$(_PACKAGING_PLATFORMS),work/build-$(PACKAGING_HOST_$P).pid) 2>/dev/null | xargs -L 1 pkill -9 -P &>/dev/null; \
+	      stty sane" INT; \
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
-		($(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=\"$($V)\")) $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P package-fast" >work/build-$(PACKAGING_HOST_$P).log 2>&1; echo $$? >work/build-$(PACKAGING_HOST_$P).ret ) & echo $$! >work/build-$(PACKAGING_HOST_$P).pid; ) wait
-	stty sane
+		( $(SSH) -t $(PACKAGING_HOST_$P) "$(foreach V,$(_PROPAGATE_ENV),$(if $($V),$V=\"$($V)\")) $(MAKE) -I $(GARDIR) -C $(CURDIR) $(_PASS_GAR_ENV) GAR_PLATFORM=$P package-fast" >work/build-$(PACKAGING_HOST_$P).log 2>&1; echo $$? >work/build-$(PACKAGING_HOST_$P).ret ) & \
+		  echo $$! >work/build-$(PACKAGING_HOST_$P).pid; ) wait; stty sane; trap - INT
+	@$(foreach P,$(_PACKAGING_PLATFORMS),if [ "`cat work/build-$(PACKAGING_HOST_$P).ret`" -ne 0 ]; then \
+		FAILED=1; \
+		echo "Build error on host $(PACKAGING_HOST_$P). For details, please see"; \
+	   	echo "  work/build-$(PACKAGING_HOST_$P).log"; \
+	       	echo "Return code: `cat work/build-$(PACKAGING_HOST_$P).ret`"; \
+	       	echo ; \
+	fi;) if [ $${FAILED} -eq 1 ]; then \
+	       	exit 2; \
+	fi
+	@echo
+	@echo "Calling the standard platforms target to make sure everything is ok..."
+	@echo
 	$(MAKE) platforms
