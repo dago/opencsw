@@ -158,7 +158,7 @@ en# Building openssl with "-j" option doesn't work properly because of dependenc
 # with sh shell.
 # (see http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/dev-libs/openssl/files/)
 PATCHFILES += openssl-1.0.1-parallel-build.patch
-en-25
+e-25
 endif
 endif
 
@@ -243,8 +243,11 @@ EXTRA_LD_OPTIONS = -lc -ldlLAGS += -noex -mt
 INSTALL_ARGS += MANDIR=$(mandir)
 
 # library files are not automatically stripped
-STRIP_DIRS = $(DESTDIR)/$(libdir) $(DESTDIR)/$(libdir)/openssl-$(SONAME)/engines
+STRIP_DIRS = $(DESTDIR)/$(libdir) $(DESTDIR)/$(libdir)/openssl-$(SONAMETARGET = tests
 
+# We define a custom test script to be able to disable -j only for test execution
+# as it doesn't work currently
+TEST_SCRIPTS = custom
 
 TEST_SCRIPTS = 
 
@@ -292,7 +295,6 @@ NUM_CPUS := $(shell psrinfo | wc -l | awk '{ print $$1 }')
 
 package-fast:
 	PARALLELMODULATIONS=1 PARALLELMFLAGS="-j" $(MAKE) package
-	#PARALLELMODULATIONS=1 PARALLELMFLAGS="--jobs=$(NUM_CPUS)" $(MAKE) package
 	#PARALLELMODULATIONS=1 PARALLELMFLAGS="--jobs=$(NUM_CPUS) --load-average=$(NUM_CPUS)" $(MAKE) package
 
 platforms-fast:
@@ -318,3 +320,7 @@ platforms-fast:
 	@echo "Calling the standard platforms target to make sure everything is ok..."
 	@echo
 	$(MAKE) platforms
+
+# The only purpose of this script is to disable the gmake "-j" option for test execution
+test-custom:
+	PARALLELMFLAGS= $(MAKE) test-$(WORKSRC)/Makefile
