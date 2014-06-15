@@ -2,6 +2,8 @@ openssl (1.0.1h,rev=2014.06.08) unstable
 
   * Add the 0011-link-heartbeat_test-with-static-libraries patch to solve a
   compilation failure for the heartbeat_test file.
+  * Enabled parallel build to have a faster package generation process.
+  * Enabled execution of tests.
 
    -- yann rouillard <yann@opencsw.org>  Sun, 08 Jun 2014 13:57:57 +0200
 
