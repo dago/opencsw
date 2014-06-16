@@ -1,0 +1,24 @@
+From 627944fb7bafc470a64c0f46a5d1ca9116aa64d7 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Mon, 16 Jun 2014 16:42:00 +0200
+Subject: [PATCH] remove problematic include
+
+---
+ sbr/terminal.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/sbr/terminal.c b/sbr/terminal.c
+index 14eca97..9c5d538 100644
+--- a/sbr/terminal.c
++++ b/sbr/terminal.c
+@@ -14,7 +14,6 @@
+ #include <sys/ioctl.h>
+ 
+ #include <curses.h>
+-#include <term.h>
+ 
+ #ifdef WINSIZE_IN_PTEM
+ # include <sys/stream.h>
+-- 
+1.8.4.1
+
