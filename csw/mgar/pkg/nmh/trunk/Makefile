@@ -1,6 +1,6 @@
 # $Id$
 NAME = nmh
-VERSION = 1.5
+VERSION = 1.6
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -21,6 +21,8 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibiconv2
 LICENSE = COPYRIGHT
 PRESERVECONF = /etc/opt/csw/nmh/mts.conf
+0-remove-problematic-include.patch \
+ onf
 
 PATCHFILES += 0001-use-csw-locations.patch
 
@@ -29,11 +31,4 @@ CONFIGURE_ARGS = --enable-pop --enable-masquerade='' --with-mts=sendmail \
   --libdir=$(libdir)/nmh --sysconfdir=$(sysconfdir)/nmh 
 TEST_SCRIPTS =
 
-EXTRA_MERGE_EXCLUDE_FILES = $(datadir)/doc/nmh/(contrib.*|INSTALL|COPYRIGHT|README.developers|README.manpages)
-
-CHECKPKG_OVERRIDES_CSWnmh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nmh/FAQ
-CHECKPKG_OVERRIDES_CSWnmh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nmh/MAIL.FILTERING
-CHECKPKG_OVERRIDES_CSWnmh += file-with-bad-content|/export/home|root/opt/csw/share/doc/nmh/README-ATTACHMENTS
-
-
-include gar/category.mk
+EXTRA_MERGE_EXCLUDE_FILES = $(datadir)/doc/nmh/(contrib.*|INSTALL|COPYRIGHT|README.developers|include gar/category.mk
