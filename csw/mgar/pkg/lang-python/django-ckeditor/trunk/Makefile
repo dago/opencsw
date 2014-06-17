@@ -13,14 +13,17 @@ DISTNAME = $(NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWpy-django-ckeditor
+BUILD_DEP_PKGS += CSWpy-setuptools
+BUILD_DEP_PKGS += CSWpy-django
+BUILD_DEP_PKGS += CSWpy-argparse
 
-BUILD_DEP_PKGS += CSWpysetuptools
-RUNTIME_DEP_PKGS += CSWpy-django
+PACKAGES = CSWpy-django-ckeditor
+ARCHALL_CSWpy-django-ckeditor = 1
 
 # checkpkg can't detect python run time dependencies
 CHECKPKG_OVERRIDES_CSWpy-django-ckeditor += surplus-dependency|CSWpy-django
 
-# SKIPTEST=1
+# ImportError: Unable to import test settings: No module named test_settings
+SKIPTEST=1
 
 include gar/category.mk
