@@ -5,7 +5,7 @@ NAME = django-schedule
 VERSION = 0.5b
 CATEGORIES = python
 GARTYPE = v2
-DESCRIPTION = A 
+DESCRIPTION = A calendaring app for Django
 define BLURB
 	simple.
 endef
@@ -14,12 +14,13 @@ GIT_REPOS = git://github.com/thauber/django-schedule.git
 # DISTNAME = $(NAME)-$(VERSION)
 # DISTFILES  = $(DISTNAME).tar.gz
 
-BUILD_DEP_PKGS += CSWpysetuptools
+LICENSE = LICENCSE.txt
+
+BUILD_DEP_PKGS += CSWpy-setuptools
 RUNTIME_DEP_PKGS += CSWpy-django
 
 # checkpkg can't detect python run time dependencies
 
-# SKIPTEST=1
-#TEST_TARGET = check
+SKIPTEST=1
 
 include gar/category.mk
