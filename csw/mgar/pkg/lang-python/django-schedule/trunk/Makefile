@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 NAME = django-schedule
-VERSION = 0.5b
+VERSION = 1.1-alpha
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = A calendaring app for Django
