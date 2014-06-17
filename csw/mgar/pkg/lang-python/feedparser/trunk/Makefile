@@ -7,8 +7,9 @@ VERSION = 5.1.3
 CATEGORIES = python
 GARTYPE = v2
 
-DESCRIPTION = Intelligent schema and data migrations for  Django projects
+DESCRIPTION = RSS feed parser
 define BLURB
+Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds
 endef
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
