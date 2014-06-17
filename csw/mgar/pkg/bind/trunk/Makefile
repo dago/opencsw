@@ -6,23 +6,23 @@ VERSION = 9.9.5
 GARTYPE = v2
 
 # Enable these for Px-releases
-#RELEASE = P2
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
 endef
 
 # Enable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-#DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -85,7 +85,8 @@ CONFIGURE_ARGS += --with-dlz-ldap=/opt/csw
 CONFIGURE_ARGS += --enable-rrl
 
 # Bug in combo of BIND and GCC 4.9 optimization regarding null pointers
-EXTRA_CFLAGS += -fno-delete-null-pointer-checks
+# 2014-06-17 Should not be needed with 9.9.5-P1
+#EXTRA_CFLAGS += -fno-delete-null-pointer-checks
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la $(mandir)/man1/isc-config.sh.1 $(bindir)/isc-config.sh
 
