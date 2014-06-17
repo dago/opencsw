@@ -1,5 +1,5 @@
 NAME       = clamav
-VERSION    = 0.98.4-rc1
+VERSION    = 0.98.4
 GARTYPE = v2
 
 DESCRIPTION = Clam AntiVirus
