@@ -18,6 +18,7 @@ LICENSE = LICENCSE.txt
 
 BUILD_DEP_PKGS += CSWpy-setuptools
 RUNTIME_DEP_PKGS += CSWpy-django
+ARCHALL_CSWpy-django-schedule = 1
 
 # checkpkg can't detect python run time dependencies
 
