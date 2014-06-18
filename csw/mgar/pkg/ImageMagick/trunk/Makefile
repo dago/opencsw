@@ -186,8 +186,10 @@ endif
 
 REINPLACE_USRLOCAL += config/mime.xml
 
-EXTRA_LINKER_FLAGS = -lsocket -lnsl
-EXTRA_LD_OPTIONS = -z nolazyload
+#EXTRA_LINKER_FLAGS = -lsocket -lnsl 
+#EXTRA_LD_OPTIONS = -z nolazyload 
+EXTRA_LINKER_FLAGS = -lsocket -lnsl  -Wl,-z,nolazyload -Wl,-Bdirect
+EXTRA_LD_OPTIONS = -z nolazyload -Bdirect
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
 # This should be reworked after a general rework of ISALIST in GAR
