@@ -17,12 +17,17 @@ PATCHFILES += 0003-Add-sys-sockio.h-to-have-SIOCGIFFLAGS.patch
 
 BUILD_DEP_PKGS += CSWlibncurses-dev-autoreconf.patch
 
-RUNTIME_DEP_PKGS_CSWiftop += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWiftop5
+RUNTIME_DEP_PKGS_CSWiftop += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWiftop += CSWlibpcap1
-RUNTIME_DEP_PKGS_CSWiftop GARCOMPILER = GCC4
 
-EXTRA_CPPFLAGS = -I/opt/csw/include/ncursesw
+GARCOMPILER = GCC4
+
+EXTRA_LDFLAGS = -lcares
+
+EXTRA_CPPFLAGS = -I/opt/csw/include/ncurses
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-resolver=ares
 
 include gar/category.mk
