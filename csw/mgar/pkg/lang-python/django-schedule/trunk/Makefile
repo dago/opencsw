@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 NAME = django-schedule
-VERSION = 1.1-alpha
+VERSION = git
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = A calendaring app for Django
@@ -10,13 +10,13 @@ define BLURB
 	simple.
 endef
 
-GIT_REPOS = git://github.com/thauber/django-schedule.git
+GIT_REPOS = git://github.com/atiberghien/django-schedule.git
 # DISTNAME = $(NAME)-$(VERSION)
 # DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = LICENCSE.txt
 
-PATCHFILES += 0001-add-schedule.conf.patch
+# PATCHFILES += 0001-add-schedule.conf.patch
 
 BUILD_DEP_PKGS += CSWpy-setuptools
 RUNTIME_DEP_PKGS += CSWpy-django
