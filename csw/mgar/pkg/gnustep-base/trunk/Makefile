@@ -16,6 +16,8 @@ DEP_PKGS = CSWgnustep-make CSWlibgnutls28 CSWlibssl1-0-0 CSWlibffi5 CSWlibicuuc5
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-configure-tweak-align.patch
+
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
 
@@ -41,11 +43,11 @@ configure-sourcegs:
 	@$(MAKECOOKIE)
 
 build-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) ; $(MAKE)
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install DESTDIR=$(DESTDIR)
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) ; $(MAKE) install 
 	@$(MAKECOOKIE)
 
 test-none :
