@@ -1,0 +1,19 @@
+--- src.orig/configure	2014/02/02 08:57:42	37670
++++ src/configure	2014/06/20 08:59:35	37954
+@@ -9341,6 +9341,8 @@
+ #--------------------------------------------------------------------
+ # Check if short and int values need to be word aligned
+ #--------------------------------------------------------------------
++saved_CFLAGS="$CFLAGS"
++CFLAGS="$CFLAGS -O0"
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking short/int needs to be word aligned" >&5
+ $as_echo_n "checking short/int needs to be word aligned... " >&6; }
+ if test "$cross_compiling" = yes; then
+@@ -21282,6 +21284,7 @@
+ fi
+ 
+ 
++CFLAGS="$saved_CFLAGS"
+ 
+ cat >>confdefs.h <<_ACEOF
+ #define NEED_WORD_ALIGNMENT $NEED_WORD_ALIGNMENT
