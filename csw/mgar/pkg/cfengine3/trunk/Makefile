@@ -64,6 +64,8 @@ OBSOLETED_BY_CSW$(NAME)utils = CSWlibpromises1 CSW$(NAME)rt
 CATALOGNAME_CSWlibpromises1 = libpromises1_stub
 CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt_stub
 CHECKPKG_OVERRIDES_CSW$(NAME)utils += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)utils|catalogname=$(NAME)_utils|expected-catalogname=$(NAME)utils
+# Perl is is used in one of the examples. This doesn't qualify to depend on perl, IMHO.
+CHECKPKG_OVERRIDES_CSW$(NAME)utils += missing-dependency|CSWperl
 
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
