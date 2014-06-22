@@ -1,0 +1,24 @@
+From 86c74524fd8d2d66b1e72e80dd5f28889de5e0c8 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Sat, 21 Jun 2014 11:38:28 +0200
+Subject: [PATCH] Add #include <sys/loadavg.h> to tests.h.
+
+---
+ tests/unit/test.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/unit/test.h b/tests/unit/test.h
+index e4ce568..0cdf1a7 100644
+--- a/tests/unit/test.h
++++ b/tests/unit/test.h
+@@ -6,6 +6,7 @@
+ #include <setjmp.h>
+ #include <cmockery.h>
+ #include <stdio.h>
++#include <sys/loadavg.h>
+ 
+ #pragma GCC diagnostic ignored "-Wunused-parameter"
+ 
+-- 
+1.8.4.1
+

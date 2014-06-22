@@ -1,18 +1,18 @@
-From 4e30aaf0a0122218639f4232424d3e3b4877f2b7 Mon Sep 17 00:00:00 2001
+From c0101626405b93e56abf29dca8a496552d5a21eb Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <rafi@guengel.ch>
-Date: Sat, 28 Sep 2013 17:26:48 +0200
-Subject: [PATCH] Disable acceptance test.
+Date: Sun, 22 Jun 2014 21:04:57 +0200
+Subject: [PATCH] Disable acceptance tests.
 
-Tried to make it work, but didn't succeed, so I gave up...
+They take an aweful lot of time.
 ---
  tests/Makefile.in | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tests/Makefile.in b/tests/Makefile.in
-index fe93e76..b12df55 100644
+index f0f32be..26c7f3a 100644
 --- a/tests/Makefile.in
 +++ b/tests/Makefile.in
-@@ -285,7 +285,7 @@ top_build_prefix = @top_build_prefix@
+@@ -384,7 +384,7 @@ top_build_prefix = @top_build_prefix@
  top_builddir = @top_builddir@
  top_srcdir = @top_srcdir@
  workdir = @workdir@
@@ -22,5 +22,5 @@ index fe93e76..b12df55 100644
  
  .SUFFIXES:
 -- 
-1.8.3.4
+1.8.4.1
 
