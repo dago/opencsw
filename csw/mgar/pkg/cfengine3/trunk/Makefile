@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = cfengine3
-VERSION = 3.5.3
+VERSION = 3.6.0
 GARTYPE = v2
 GARCOMPILER = GCC4
 
@@ -16,7 +16,7 @@ define BLURB
 endef
 
 DISTNAME = cfengine-$(VERSION)
-MASTER_SITES = http://www.cfengine.com/source-code/download/
+MASTER_SITES = https://s3.amazonaws.com/cfengine.package-repos/tarballs/
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(NAME)rc
 DISTFILES += CSW$(NAME)utils.postinstall
@@ -38,9 +38,12 @@ UFILES_REGEX = cfengine-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES =
 
-PATCHFILES += 0000-Disable-acceptance-test.patch
-PATCHFILES += 0002-Add-z-interpose-to-evalfunction_test-and-set_domainn.patch
-PATCHFILES += 0003-Make-it-compile-under-solaris-11.patch
+#PATCHFILES += 0000-Disable-acceptance-test.patch
+#PATCHFILES += 0003-Make-it-compile-under-solaris-11.patch
+PATCHFILES += 0001-Add-include-sys-loadavg.h-to-tests.h.patch
+PATCHFILES += 0002-Add-z-interpose-where-neccessary-in-unittests.patch
+PATCHFILES += 0003-Fix-lastseen_threaded_load.c.patch
+PATCHFILES += 0004-Disable-acceptance-tests.patch
 
 #
 # CUSTOM VARIABLES
@@ -136,6 +139,8 @@ EXTRA_LDFLAGS += -R$(libdir)/$(NAME)
 EXTRA_CONFIGURE_ENV = LIBS="-lsocket -lnsl"
 
 include gar/category.mk
+# Require GNU id command...
+PATH:=/opt/csw/gnu:$(PATH)
 
 post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc move-libpromises move-binaries
 	@$(MAKECOOKIE)

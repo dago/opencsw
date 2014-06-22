@@ -1,0 +1,62 @@
+From 86c99cf2011c171e34bc3f016c2f80611312439d Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafi@guengel.ch>
+Date: Sun, 22 Jun 2014 20:31:48 +0200
+Subject: [PATCH] Fix lastseen_threaded_load.c.
+
+---
+ tests/load/lastseen_threaded_load.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
+
+diff --git a/tests/load/lastseen_threaded_load.c b/tests/load/lastseen_threaded_load.c
+index a91c55d..9ff4744 100644
+--- a/tests/load/lastseen_threaded_load.c
++++ b/tests/load/lastseen_threaded_load.c
+@@ -17,7 +17,15 @@
+  * from child threads and read from the main one. It's only a test, so
+  * @ediosyncratic please spare me. */
+ time_t START_TIME;
+-char CFWORKDIR[CF_BUFSIZE];
++
++/*
++ * This doesn't work, since CFWORKDIR is defined in libpromises.so. So, whatever
++ * we do to this CFWORKDIR, it ain't be seen by libpromises.so.
++ *
++ * Why it works on FreeBSD, no clue so far...
++ *
++ * char CFWORKDIR[CF_BUFSIZE];
++ */
+ unsigned long      lastsaw_COUNTER[MAX_NUM_THREADS];
+ unsigned long     keycount_COUNTER[MAX_NUM_THREADS];
+ unsigned long scanlastseen_COUNTER[MAX_NUM_THREADS];
+@@ -179,7 +187,8 @@ void *scanlastseen_worker_thread(void *arg)
+ 
+ unsigned long child_COUNTER;
+ int PIPE_FD[2];
+-bool child_START = false;
++/* Hmm, that should be volatile */
++volatile bool child_START = false;
+ 
+ void print_progress_handler(int signum ARG_UNUSED)
+ {
+@@ -203,9 +212,15 @@ void worker_process()
+     int ret;
+ 
+     /* 0. Output stdout to pipe. */
+-    close(1);
+-    dup(PIPE_FD[1]);
+-    close(PIPE_FD[1]);
++    /* Really?
++     *  close(1);
++     *  dup(PIPE_FD[1]);
++     */
++    dup2(PIPE_FD[1], 1);
++    /* Is that smart? I believe it should be like that
++     * close(PIPE_FD[1]);
++     */
++    close(PIPE_FD[0]);
+ 
+     /* 1a. Register SIGUSR1 handler so that we start/finish the test */
+     new_handler = (struct sigaction) { .sa_handler = startstop_handler };
+-- 
+1.8.4.1
+
