@@ -1,6 +1,6 @@
 # $Id$
 NAME = getopt
-VERSION = 1.1.4
+VERSION = 1.1.5
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -15,8 +15,8 @@ endef
 MASTER_SITES = http://software.frodo.looijaard.name/getopt/files/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-Include-locale.h-when-using-gettext.patch
-PATCHFILES += 0002-Do-not-make-standalone-version.patch
+PATCHFILES += 0001-Include-locale.h-when-usi#PATCHFILES += 0002-Do-not-make-standalone-version.patch
+#ne-version.patch
 PATCHFILES += 0003-Makefile-settings.patch
 
 # Patch from http://lists.gnu.org/archive/html/bug-bison/2010-04/msg00046.html
@@ -46,14 +46,16 @@ INSTALL_OVERRIDE_VAR_prefix = $(prefix)
 INSTALL_OVERRIDE_VAR_mandir = $(mandir)
 INSTALL_OVERRIDE_VAR_WITH_GETTEXT = 1
 
-INSTALL_ARGS = install install_doc
+INSTALL_ARGS = inst# Use correct version of 'install'
+INSTALL_ENV_PATH = /opt/csw/gnu:$(PATH)
 
 include gar/category.mk
 
-# Use correct version of 'install'
-PATH := /opt/csw/gnu:$(PATH)
+post-extract:
+	@# Why are these files in the tarball?
+	rm -f $(WORKSRC)/gnu/*.o
+	@$(MAKECOOKIE)
 
-post-install-modulated:
+post-installinstall-modulated:
 	perl -pi -e 's,/usr/local/lib,$(libdir),' \
-		$(DESTDIR)$(mandir)/man1/getopt.1
-
+		$(DESTDIR)$(mandir
