@@ -44,11 +44,13 @@ func init() {
                  "http://buildfarm.opencsw.org/releases",
                  "Web address of the releases app.")
 }
+
 // 3 strings that define a specific catalog, e.g. "unstable sparc 5.10"
+// This turns out to be one of the most fundamental data structures in this code.
 type CatalogSpec struct {
-  Catrel string
-  Arch string
-  Osrel string
+  Catrel string `json:"catrel"`
+  Arch string   `json:"arch"`
+  Osrel string  `json:"osrel"`
 }
 
 func (cs CatalogSpec) Url() string {
@@ -100,13 +102,13 @@ func (p *PkginstSlice) FormatForIndexFile() string {
 }
 
 // Deserialize from the format output by the RESTful interface.
-func (self *PkginstSlice) UnmarshalJSON(data []byte) error {
-  var foo string
-  err := json.Unmarshal(data, &foo)
+func (s *PkginstSlice) UnmarshalJSON(data []byte) error {
+  var st string
+  err := json.Unmarshal(data, &st)
   if err != nil {
     return err
   }
-  *self = parseCatalogFormatPkginstList(foo)
+  *s = parseCatalogFormatPkginstList(st)
   return nil
 }
 
@@ -161,6 +163,9 @@ type CatalogWithSpec struct {
   Pkgs []Package
 }
 
+// To avoid confusion between various things represented as strings.
+type Md5Sum string
+
 // Extra information about a package
 type PackageExtra struct {
   Basename string    `json:"basename"`
@@ -172,7 +177,7 @@ type PackageExtra struct {
   Inserted_by string `json:"inserted_by"` // decode?
   Inserted_on string `json:"inserted_on"` // decode?
   Maintainer string  `json:"maintainer"`
-  Md5_sum string     `json:"md5_sum"`
+  Md5_sum Md5Sum     `json:"md5_sum"`
   Mtime string       `json:"mtime"`  // decode?
   Pkgname string     `json:"pkgname"`
   Size int           `json:"size"`
@@ -247,6 +252,11 @@ func (self *CatalogSpec) UnmarshalJSON(data []byte) error {
   self.Arch = slice[1]
   self.Osrel = slice[0]
   return nil
+}
+
+func (s *CatalogSpec) MarshalJSON() ([]byte, error) {
+  slice := []string{s.Osrel, s.Arch, s.Catrel}
+  return json.Marshal(slice)
 }
 
 // Returns True when the two catalog specs match in arch and osrel.
