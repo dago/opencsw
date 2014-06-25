@@ -29,15 +29,16 @@
 package main
 
 import (
+  "bufio"
+  "encoding/json"
   "flag"
   "fmt"
   "html/template"
   "log"
   "os"
+  "sort"
   "sync"
   "time"
-  "bufio"
-  "encoding/json"
 
   "opencsw/diskformat"
   "opencsw/mantis"
@@ -46,6 +47,8 @@ import (
 // Command line flags
 var from_catrel_flag string
 var to_catrel_flag string
+
+const htmlReportPath = "/home/maciej/public_html/promote-packages.html"
 
 func init() {
   flag.StringVar(&from_catrel_flag, "from-catrel", "unstable",
@@ -77,43 +80,125 @@ type catalogOperation struct {
 
 // Type used to store information about the last time package was seen.
 type PackageTimeInfo struct {
-  Md5sum string       `json:"md5_sum"`
-  Pkgname string      `json:"pkgname"`
-  Present bool        `json:"present"`
-  ChangedAt time.Time `json:"changed_at"`
+  Spec diskformat.CatalogSpec `json:"spec1"`
+  Pkg diskformat.PackageExtra `json:"pkg"`
+  Present bool                `json:"present"`
+  ChangedAt time.Time         `json:"changed_at"`
 }
 
+// Represents information about when certain package's state last changed. For
+// example, when a package appeared in a catalog, and/or when did it disappear.
+// Appearances could be tracked directly in the database, but disappearances
+// couldn't. This is why we're tracking them on the client side.
 type CatalogReleaseTimeInfo struct {
-  Catalogs map[diskformat.CatalogSpec]map[string]PackageTimeInfo `json:"catalogs"`
+  Pkgs []PackageTimeInfo `json:"pkgs"`
+
+  // For faster operations. Indexed by MD5 sums. Not serialized.
+  catalogs map[diskformat.CatalogSpec]map[diskformat.Md5Sum]PackageTimeInfo
 }
 
-func (c *CatalogReleaseTimeInfo) Load() error {
-  const filename = "/home/maciej/.checkpkg/package-times.json"
-  fo, err := os.Open(filename)
+func (t *CatalogReleaseTimeInfo) Get(spec diskformat.CatalogSpec, md5_sum string) PackageTimeInfo {
+  return PackageTimeInfo{}
+}
+
+const packageTimesFilename = "/home/maciej/.checkpkg/package-times.json"
+
+func (t *CatalogReleaseTimeInfo) Load() error {
+  log.Println("Loading", packageTimesFilename)
+  fh, err := os.Open(packageTimesFilename)
   if err != nil {
+    // return err
+    // Maybe just create an empty one?
+    return t.Save()
+  }
+  defer fh.Close()
+  r := bufio.NewReader(fh)
+  dec := json.NewDecoder(r)
+  if err = dec.Decode(t); err != nil {
+    log.Println("Error decoding:", err)
     return err
   }
-  defer fo.Close()
-  r := bufio.NewReader(fo)
-  dec := json.NewDecoder(r)
-  if err = dec.Decode(c); err != nil {
-    return err
+  // Move data to the unexported member.
+  t.catalogs = make(map[diskformat.CatalogSpec]map[diskformat.Md5Sum]PackageTimeInfo)
+  for _, p := range t.Pkgs {
+    if _, ok := t.catalogs[p.Spec]; !ok {
+      t.catalogs[p.Spec] = make(map[diskformat.Md5Sum]PackageTimeInfo)
+    }
+    t.catalogs[p.Spec][p.Pkg.Md5_sum] = p
   }
   return nil
 }
 
-func NewCatalogReleaseTimeInfo() *CatalogReleaseTimeInfo {
-  c := new(CatalogReleaseTimeInfo)
-  c.Catalogs = make(map[diskformat.CatalogSpec]map[string]PackageTimeInfo)
-  return c
+// Serialize the data structure to disk.
+func (t *CatalogReleaseTimeInfo) Save() error {
+  // We need to move all data from the private data structure to the exported
+  // one.
+  t.Pkgs = make([]PackageTimeInfo, 0)
+  for _, tByMd5 := range t.catalogs {
+    for _, p := range tByMd5 {
+      t.Pkgs = append(t.Pkgs, p)
+    }
+  }
+
+  fo, err := os.Create(packageTimesFilename)
+  if err != nil {
+    return err
+  }
+  defer fo.Close()
+  w := bufio.NewWriter(fo)
+  defer w.Flush()
+  return json.NewEncoder(w).Encode(t)
 }
 
-// func (c CatalogTimeInfo) Save() error {
-// }
+// Updates the timing information based on a catalog.
+// Packages are matched by md5 sum. Possible states:
+//
+//   State in cache | State in catalog | Action
+//   ---------------+------------------+--------
+//   nil            | -                | -
+//   nil            | present          | add to cache, update ts
+//   pkg-present    | -                | mark as absent, update ts
+//   pkg-present    | present          | -
+//   pkg-absent     | -                | -
+//   pkg-absent     | present          | add to cache, update ts
+//
+func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
+  if _, ok := t.catalogs[c.Spec]; !ok {
+    // Indexed by MD5 sum.
+    t.catalogs[c.Spec] = make(map[diskformat.Md5Sum]PackageTimeInfo)
+  }
+  inCat := make(map[diskformat.Md5Sum]bool)
+  for _, p := range c.PkgsExtra {
+    if _, ok := t.catalogs[c.Spec][p.Md5_sum]; ok {
+      // We've seen the package before.
+    } else {
+      // Packages we haven't seen yet that are in the catalog.
+      t.catalogs[c.Spec][p.Md5_sum] = PackageTimeInfo{
+        c.Spec,
+        p,
+        true,
+        time.Now(),
+      }
+    }
+    inCat[p.Md5_sum] = true
+  }
+  // What about packages that were removed? They are in the timing data
+  // structure, but not in the catalog.
+  for _, pti := range t.catalogs[c.Spec] {
+    md5 := pti.Pkg.Md5_sum
+    if _, ok := inCat[md5]; !ok {
+      // Packages that aren't in the catalog (any more).
+      p := t.catalogs[c.Spec][md5]
+      p.Present = false
+      p.ChangedAt = time.Now()
+      t.catalogs[c.Spec][md5] = p
+    }
+  }
+}
 
 func (c catalogOperation) String() string {
   if c.Removed != nil && c.Added != nil {
-    return fmt.Sprintf("Upgrade: %v %v -> %v in %v",
+    return fmt.Sprintf("Change: %v %v → %v in %v",
                        c.Removed.Catalogname, c.Removed.Version,
                        c.Added.Version, c.Spec)
   } else if c.Removed != nil && c.Added == nil {
@@ -171,6 +256,26 @@ func (c catalogOperation) Catalogname() string {
     return c.Added.Catalogname
   }
   return "catalogname unknown"
+}
+
+// Returns shell/curl commands to run to perform the action.
+func (c catalogOperation) Commands() []string {
+  ans := make([]string, 0)
+  if c.Removed != nil {
+    msg := fmt.Sprintf("curl --netrc -X DELETE %s/catalogs/%s/%s/%s/%s/",
+                       diskformat.ReleasesUrl,
+                       c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
+                       c.Removed.Md5_sum)
+    ans = append(ans, msg)
+  }
+  if c.Added != nil {
+    msg := fmt.Sprintf("curl --netrc -X PUT    %s/catalogs/%s/%s/%s/%s/",
+                       diskformat.ReleasesUrl,
+                       c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
+                       c.Added.Md5_sum)
+    ans = append(ans, msg)
+  }
+  return ans
 }
 
 type integrationGroup struct {
@@ -343,7 +448,6 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integration
       badops = append(badops, op)
       continue
     }
-    log.Println("catalogOperation:", op, "key:", key)
     if intgroup, ok := groups[key]; !ok {
       oplist := make([]catalogOperation, 0)
       intgroup = &integrationGroup{key, op.Spec, oplist}
@@ -379,6 +483,7 @@ func transitions() []CatalogSpecTransition {
 // the scope of the function, so it quickly becomes natural to read, and keeps
 // related pieces of code together.
 
+// Stage 1 has no input, and produces a series of catalog spec transitions.
 func pipeStage1() <-chan CatalogSpecTransition {
   out := make(chan CatalogSpecTransition)
   go func() {
@@ -390,6 +495,7 @@ func pipeStage1() <-chan CatalogSpecTransition {
   return out
 }
 
+// Fetches data from the REST interface.
 func pipeStage2(in <-chan CatalogSpecTransition) <-chan CatalogWithSpecTransition {
   out := make(chan CatalogWithSpecTransition)
   go func() {
@@ -405,7 +511,7 @@ func pipeStage2(in <-chan CatalogSpecTransition) <-chan CatalogWithSpecTransitio
 func writeReport(rd reportData) {
   t := template.Must(template.ParseFiles(
       "src/promote-packages/report-template.html"))
-  fo, err := os.Create("/home/maciej/public_html/promote-packages.html")
+  fo, err := os.Create(htmlReportPath)
   if err != nil {
     panic(err)
   }
@@ -414,23 +520,31 @@ func writeReport(rd reportData) {
   if err := t.Execute(fo, rd); err != nil {
     log.Fatal("Could not write the report:", err)
   }
+  log.Println("The report has been written.")
 }
 
-// Continue from here: write the 3rd stage which just prints the results.
+type ByKey []*CrossCatIntGroup
+
+func (a ByKey) Len() int { return len(a) }
+func (a ByKey) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a ByKey) Less(i, j int) bool { return a[i].Key < a[j].Key }
+
+// Analyzes the data.
 func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bug) <-chan IntegrationResult {
   out := make(chan IntegrationResult)
   go func() {
     // Catalog timing information
-    timing := NewCatalogReleaseTimeInfo()
+    timing := new(CatalogReleaseTimeInfo)
     if err := timing.Load(); err != nil {
       log.Fatalln("Could not read the timing information:", err,
-                  "If this is the first run, create an empty file with",
-                  "the '{}' contents.")
+                  "-- If this is the first run, please create an empty file with",
+                  "the '{}' contents, location:", packageTimesFilename)
     }
 
     rd := reportData{make([]catalogIntegration, 0),
                      make([]*CrossCatIntGroup, 0)}
     for t := range in {
+      timing.Update(t.fromCat)
       groups, badops := GroupsFromCatalogPair(t)
       rd.Catalogs = append(
           rd.Catalogs,
@@ -440,11 +554,10 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
       out <-IntegrationResult{msg}
     }
 
-    groups := make(map[string]*CrossCatIntGroup)
     // We're walking the reportData structure and populating the
     // CrossCatIntGroup structures. This is about combining updates across all
     // catalogs into one group that will be examined as a whole.
-
+    groups := make(map[string]*CrossCatIntGroup)
     for _, r := range rd.Catalogs {
       for key, srcIntGroup := range r.Groups {
         var group *CrossCatIntGroup
@@ -462,13 +575,14 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
       }
     }
 
+    // Severities from mantis that don't block package promotions.
     lowSeverities := [...]string{
       "Trivial",
       "Minor",
       "Feature",
     }
 
-    // Add Mantis Bugs, only add blocking bugs.
+    // Add blocking Mantis Bugs.
     bugsByCatname := make(map[string][]mantis.Bug)
     for bug := range mantisBugs {
       // Bugs that aren't blockers.
@@ -507,6 +621,7 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
     for _, g := range groups {
       rd.CrossCatGroups = append(rd.CrossCatGroups, g)
     }
+    sort.Sort(ByKey(rd.CrossCatGroups))
 
     // Let's write the HTML report.
     var wg sync.WaitGroup
@@ -517,6 +632,10 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
       writeReport(rd)
     }(rd)
     wg.Wait()
+
+    if err := timing.Save(); err != nil {
+      log.Fatalln("Could not save the timing information:", err)
+    }
 
     // We close the channel as the last thing, because we need to make sure
     // that the main goroutine doesn't exit before we finish writing the report.
@@ -577,9 +696,7 @@ func main() {
   tch := pipeStage1()
   cch1 := pipeStage2(tch)
   cch2 := pipeStage2(tch)
-  cch3 := pipeStage2(tch)
-  cch4 := pipeStage2(tch)
-  rch := pipeStage3(merge(cch1, cch2, cch3, cch4), mch)
+  rch := pipeStage3(merge(cch1, cch2), mch)
   for r := range rch {
     log.Println("Result:", r)
   }
