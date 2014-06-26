@@ -27,7 +27,13 @@ DISTFILES += bug3978-attachment2988.patchQUIDGUARDPATCHES)
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-VENDOR_URL = http://BUILD_DEP_PKGS += CSWbison
+VENDOR_URL = http://# MAX_BUF default to 4096, this is also the default for Squid requests. However, Squid requires
+# also some additional fields passed to the helper like protocol which then gets chopped off.
+# Double this as safeguard.
+REINPLACEMENTS += maxbuf
+REINPLACE_MATCH_maxbuf = \#define MAX_BUF .*
+REINPLACE_WITH_maxbuf = \#define MAX_BUF 8192
+REINPLACE_FILES_maxbuf += src/sg.h.in//BUILD_DEP_PKGS += CSWbison
 BUILD_DEP_PKGS += CSWflex
 BUILD_DEP_PKGS += CSWbdb48devel
 BUILD_DEP_PKGS += CSWopenldap-dev//squidguard.org/
