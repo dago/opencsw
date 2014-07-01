@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = squid
-VERSION = 3.4.59]\).*\.[0-9]*/\1/')
+VERSION = 3.4.69]\).*\.[0-9]*/\1/')
 GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
@@ -38,7 +38,7 @@ INITSMF += /etc/opt/csw/init.d/csw$(NAME)
 PRESERVECONF += /etc/opt/csw/$(NAME)/cachemgr.conf
 PRESERVECONF += /etc/opt/csw/$(NAME)/squid.conf
 PRESERVECONF += /etc/opt/csw/$(NAME)/mime.conf
-PRESERVECONF += /etc/opt/csw/$(NAME)/msntauthopt/csw/$(NAME)/mime.conf
+PRESERVECONF += /etc/opt/csw/$(NAME)/msntauthopt/csPRESERVECONF += /etc/opt/csw/$(NAME)/errorpage.csssw/$(NAME)/mime.conf
 
 MIGRATE_SOURCE_DIR = /opt/csw/etc
 MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)
@@ -109,12 +109,7 @@ GARCOMPILER = GNU
 EXTRA_LIB += $(prefix)/bdb48/lib
 EXTRA_INC += $(prefix)/bdb48/include
 
-# The testsuite requires cppunit
-TEST_SCRIPTS =
-
-SAMPLECONF = squid.conf
-SAMPLECONF += cachemgr.conf
-SAMPSAMPLECONF += errorpage.cssPLECONF += mime.conf
+# The testsuite requires cppuLECONF += mime.conf
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS      = varuser
