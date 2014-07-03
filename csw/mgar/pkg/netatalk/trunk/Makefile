@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.1.2
+VERSION = 3.1.3
 GARTYPE = v2
 
 DESCRIPTION = Open Source AFP fileserver
@@ -53,11 +53,7 @@ RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL)) $(RUNTIME_DEP_PKGS_
 
 PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
 PATCHFILES += 0004-Ensure-gsettings-is-called-from-opt-csw-bin.patch
-PATCHFILES += 0001-Disable-dbus-and-Tracker-autostart.patch
-# will be in 3.1.3:
-PATCHFILES += 0001-Spotlight-SPARQL-query-optimisations.patch
-PATCHFILES += 0002-Spotlight-new-options-for-controlling-query-behaviou.patch
-PATCHFILES += 0003-Spotlight-spotlight-expr-false-broke-the-default-Spo.patch
+PATCHFILES += 0001-Disable-dbus-start-by-default.patch
 
 PRESERVECONF += $(sysconfdir)/afp.conf
 PRESERVECONF += $(sysconfdir)/extmap.conf
