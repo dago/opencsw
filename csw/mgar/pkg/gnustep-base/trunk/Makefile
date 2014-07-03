@@ -31,8 +31,8 @@ BUILD_SCRIPTS = sourcegs
 INSTALL_SCRIPTS = sourcegs
 
 # Disable test scripts for now
-TEST_SCRIPTS = none
-SKIPTEST = 1
+TEST_SCRIPTS = 
+SKIPTEST ?= 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -47,7 +47,7 @@ build-sourcegs:
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) ; $(MAKE) install 
+	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) ; $(MAKE) install DESTDIR=$(DESTDIR)
 	@$(MAKECOOKIE)
 
 test-none :
