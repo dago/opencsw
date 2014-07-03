@@ -25,7 +25,12 @@ prefix = $(BUILD_PREFIX)/GNUstep
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-layout=gnustep 
+CONFIGURE_ARGS += --with-config-file=/etc/opt/csw/GNUstep/GNUstep.conf
 #CONFIGURE_ARGS += LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib"
+
+PRESERVECONF += $(sysconfdir)/installation-domains.conf
 
 include gar/category.mk
 
+post-install:
+	( ginstall -D -m 0644 $(WORKSRC)/installation-domains.conf $(DESTDIR)$(sysconfdir)/installation-domains.conf )
