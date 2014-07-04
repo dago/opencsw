@@ -1,5 +1,5 @@
 NAME = libpcap
-VERSION = 1.5.2
+VERSION = 1.5.3
 CATEGORIES = lib
 GARTYPE = v2
 
