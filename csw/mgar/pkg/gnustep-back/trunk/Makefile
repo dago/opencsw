@@ -14,6 +14,10 @@ endef
 #MODULATIONS_graphics = xlib cairo
 
 BUILD_DEP_PKGS = SUNWxorg-headers CSWgmake CSWgcc4objc CSWlibfreetype-dev
+
+#for cairo:
+BUILD_DEP_PKGS += CSWlibcairo-dev
+
 DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWgnustep-gui CSWlibfreetype6
 
 BUILD_DEP_PKGS += CSWlibcairo-dev
