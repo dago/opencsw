@@ -1,17 +1,17 @@
-From d2d5c9ae7dd66ac2e26fcb5d9ce8b430f645ef25 Mon Sep 17 00:00:00 2001
+From ffd7e2c0d6106adc5e60f5284e79133a694f8392 Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
 Date: Fri, 14 Mar 2014 18:16:21 +0100
-Subject: [PATCH] Ensure gsettings is called from /opt/csw/bin
+Subject: [PATCH 2/4] Ensure gsettings is called from /opt/csw/bin
 
 ---
  etc/netatalk/netatalk.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/etc/netatalk/netatalk.c b/etc/netatalk/netatalk.c
-index 4a20d7b..4cdc466 100644
+index 1ce7bef..3a470d0 100644
 --- a/etc/netatalk/netatalk.c
 +++ b/etc/netatalk/netatalk.c
-@@ -85,13 +85,13 @@ static int set_sl_volumes(void)
+@@ -98,13 +98,13 @@ static int set_sl_volumes(void)
      }
  
      volnamelist = bjoin(vollist, sep);
@@ -28,5 +28,5 @@ index 4a20d7b..4cdc466 100644
  EC_CLEANUP:
      if (cmd)
 -- 
-1.8.4.1
+2.0.0
 

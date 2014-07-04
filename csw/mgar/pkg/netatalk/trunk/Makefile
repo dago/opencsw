@@ -51,9 +51,10 @@ RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_sparc_5.10 = CSWlibgmodule2-0-0 CSWlibintl8 CSWlibk5crypto3 CSWlibcom-err3 CSWlibgpg-error0
 RUNTIME_DEP_PKGS += $(RUNTIME_DEP_PKGS_$(GARCH)_$(GAROSREL)) $(RUNTIME_DEP_PKGS_$(GARCH))
 
-PATCHFILES += 0003-Disable-noinst-binary-fails-to-link-on-SPARC.patch
-PATCHFILES += 0004-Ensure-gsettings-is-called-from-opt-csw-bin.patch
-PATCHFILES += 0001-Disable-dbus-start-by-default.patch
+PATCHFILES += 0001-Disable-noinst-binary-fails-to-link-on-SPARC.patch
+PATCHFILES += 0002-Ensure-gsettings-is-called-from-opt-csw-bin.patch
+PATCHFILES += 0003-Disable-dbus-start-by-default.patch
+PATCHFILES += 0004-Remove-Tracker-Miner-remnants.patch
 
 PRESERVECONF += $(sysconfdir)/afp.conf
 PRESERVECONF += $(sysconfdir)/extmap.conf

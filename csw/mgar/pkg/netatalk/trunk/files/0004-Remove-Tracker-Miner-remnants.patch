@@ -1,0 +1,96 @@
+From 41b1af0923fbf9090f16efb84a02c5d546f08c9a Mon Sep 17 00:00:00 2001
+From: Ralph Boehme <sloowfranklin@gmail.com>
+Date: Fri, 4 Jul 2014 07:10:14 +0200
+Subject: [PATCH 4/4] Remove Tracker Miner remnants
+
+---
+ configure | 73 +--------------------------------------------------------------
+ 1 file changed, 1 insertion(+), 72 deletions(-)
+
+diff --git a/configure b/configure
+index 74a7180..fdedc21 100755
+--- a/configure
++++ b/configure
+@@ -19040,78 +19040,7 @@ $as_echo "yes" >&6; }
+ 	ac_cv_have_tracker_sparql=yes
+ fi
+ 
+-pkg_failed=no
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for TRACKER_MINER" >&5
+-$as_echo_n "checking for TRACKER_MINER... " >&6; }
+-
+-if test -n "$TRACKER_MINER_CFLAGS"; then
+-    pkg_cv_TRACKER_MINER_CFLAGS="$TRACKER_MINER_CFLAGS"
+- elif test -n "$PKG_CONFIG"; then
+-    if test -n "$PKG_CONFIG" && \
+-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"tracker-miner-\$ac_cv_tracker_pkg_version >= \$ac_cv_tracker_pkg_version_min\""; } >&5
+-  ($PKG_CONFIG --exists --print-errors "tracker-miner-$ac_cv_tracker_pkg_version >= $ac_cv_tracker_pkg_version_min") 2>&5
+-  ac_status=$?
+-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+-  test $ac_status = 0; }; then
+-  pkg_cv_TRACKER_MINER_CFLAGS=`$PKG_CONFIG --cflags "tracker-miner-$ac_cv_tracker_pkg_version >= $ac_cv_tracker_pkg_version_min" 2>/dev/null`
+-		      test "x$?" != "x0" && pkg_failed=yes
+-else
+-  pkg_failed=yes
+-fi
+- else
+-    pkg_failed=untried
+-fi
+-if test -n "$TRACKER_MINER_LIBS"; then
+-    pkg_cv_TRACKER_MINER_LIBS="$TRACKER_MINER_LIBS"
+- elif test -n "$PKG_CONFIG"; then
+-    if test -n "$PKG_CONFIG" && \
+-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"tracker-miner-\$ac_cv_tracker_pkg_version >= \$ac_cv_tracker_pkg_version_min\""; } >&5
+-  ($PKG_CONFIG --exists --print-errors "tracker-miner-$ac_cv_tracker_pkg_version >= $ac_cv_tracker_pkg_version_min") 2>&5
+-  ac_status=$?
+-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+-  test $ac_status = 0; }; then
+-  pkg_cv_TRACKER_MINER_LIBS=`$PKG_CONFIG --libs "tracker-miner-$ac_cv_tracker_pkg_version >= $ac_cv_tracker_pkg_version_min" 2>/dev/null`
+-		      test "x$?" != "x0" && pkg_failed=yes
+-else
+-  pkg_failed=yes
+-fi
+- else
+-    pkg_failed=untried
+-fi
+-
+-
+-
+-if test $pkg_failed = yes; then
+-   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-$as_echo "no" >&6; }
+-
+-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+-        _pkg_short_errors_supported=yes
+-else
+-        _pkg_short_errors_supported=no
+-fi
+-        if test $_pkg_short_errors_supported = yes; then
+-	        TRACKER_MINER_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "tracker-miner-$ac_cv_tracker_pkg_version >= $ac_cv_tracker_pkg_version_min" 2>&1`
+-        else
+-	        TRACKER_MINER_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "tracker-miner-$ac_cv_tracker_pkg_version >= $ac_cv_tracker_pkg_version_min" 2>&1`
+-        fi
+-	# Put the nasty error message in config.log where it belongs
+-	echo "$TRACKER_MINER_PKG_ERRORS" >&5
+-
+-	ac_cv_have_tracker_miner=no
+-elif test $pkg_failed = untried; then
+-     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-$as_echo "no" >&6; }
+-	ac_cv_have_tracker_miner=no
+-else
+-	TRACKER_MINER_CFLAGS=$pkg_cv_TRACKER_MINER_CFLAGS
+-	TRACKER_MINER_LIBS=$pkg_cv_TRACKER_MINER_LIBS
+-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+-$as_echo "yes" >&6; }
+-	ac_cv_have_tracker_miner=yes
+-fi
+-
+-    if test x"$ac_cv_have_tracker_sparql" = x"no" -o x"$ac_cv_have_tracker_miner" = x"no" ; then
++    if test x"$ac_cv_have_tracker_sparql" = x"no" ; then
+         if test x"$need_tracker_sparql" = x"yes" ; then
+             as_fn_error $? "$ac_cv_tracker_pkg not found" "$LINENO" 5
+         fi
+-- 
+2.0.0
+

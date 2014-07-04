@@ -1,7 +1,7 @@
-From 1aa56c80e9e1393f15d080228e66b0c5f90fa9c1 Mon Sep 17 00:00:00 2001
+From 92c951a3e34e3f2cc8ca52f09f7968fe3680edee Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
 Date: Thu, 3 Jul 2014 22:21:29 +0200
-Subject: [PATCH] Disable dbus start by default
+Subject: [PATCH 3/4] Disable dbus start by default
 
 ---
  etc/netatalk/netatalk.c | 2 +-
