@@ -10,8 +10,8 @@ define BLURB
   GNUstep-core gui framework, which provides all AppKit classes except the backend dependent. Necessary for all graphical and application-oriented development.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc
-DEP_PKGS = CSWgnustep-make CSWgnustep-base
+BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWlibpng-dev CSWlibtiff-dev CSWlibjpeg-dev CSWlibgif-dev
+DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWlibtiff5 CSWlibpng3 CSWlibjpeg7 CSWlibgif4
 
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
