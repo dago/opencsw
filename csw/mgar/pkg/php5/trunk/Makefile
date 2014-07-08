@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.25
+VERSION  = 5.3.28
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
@@ -56,6 +56,7 @@ BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWlibc-client-dev
 BUILD_DEP_PKGS += CSWopenldap-dev CSWlibkrb5-dev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWmcrypt-dev CSWfreetds CSWmysql-dev CSWunixodbc
 BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp-dev
+BUILD_DEP_PKGS += CSWsqlite
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWlibxpm-dev
@@ -68,13 +69,13 @@ MIGRATE_SOURCE_DIR_CSWphp5 = /opt/csw/php5/lib
 MIGRATE_DEST_DIR = $(sysconfdir)
 
 define php5_subpackage
-PACKAGES += CSWphp5-$(1)
-CATALOGNAME_CSWphp5-$(1) ?= php5_$(1)
-SPKG_DESC_CSWphp5-$(1) ?= The $(1) extention for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-$(1) ?= CSWphp5 $(2)
-OBSOLETED_BY_CSWphp5-$(1) ?= CSWphp5$(1)
-PKGFILES_CSWphp5-$(1) ?= .*lib/php/extensions/.*/$(1).so .*php5/extensions/$(1)
-CHECKPKG_OVERRIDES_CSWphp5-$(1) += surplus-dependency|CSWphp5
+PACKAGES += CSWphp5-$(subst _,-,$(1))
+CATALOGNAME_CSWphp5-$(subst _,-,$(1)) ?= php5_$(subst -,_,$(1))
+SPKG_DESC_CSWphp5-$(subst _,-,$(1)) ?= The $(1) extention for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5 $(2)
+OBSOLETED_BY_CSWphp5-$(subst _,-,$(1)) ?= CSWphp5$(subst _,-,$(1))
+PKGFILES_CSWphp5-$(subst _,-,$(1)) ?= .*lib/php/extensions/.*/$(1).so .*php5/extensions/$(1)
+CHECKPKG_OVERRIDES_CSWphp5-$(subst _,-,$(1)) += surplus-dependency|CSWphp5
 endef
 
 PACKAGES = CSWphp5
@@ -212,6 +213,164 @@ $(eval $(call php5_subpackage,xmlrpc,CSWlibiconv2 CSWlibexpat1))
 $(eval $(call php5_subpackage,xmlwriter,CSWlibxml2-2))
 $(eval $(call php5_subpackage,xsl,CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0))
 $(eval $(call php5_subpackage,zip,CSWlibz1))
+#$(eval $(call php5_subpackage,ibm_db2,))
+
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc52
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWphp5-bz2 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-bcmath += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-openssl += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pcntl += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibxpm4
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibgd3
+RUNTIME_DEP_PKGS_CSWphp5-sqlite += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pdo += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-shmop += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-xmlwriter += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWphp5-xmlwriter += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-dba += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-mcrypt += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWphp5-mcrypt += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-session += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-exif += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pdoodbc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-xsl += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWphp5-xsl += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-mysqli += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWphp5-mysqli += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-dom += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWphp5-dom += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-readline += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWphp5-readline += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-posix += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pdopgsql += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-mbstring += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-gettext += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-tokenizer += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-hash += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-sysvshm += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-tidy += CSWlibtidy0-99-0
+RUNTIME_DEP_PKGS_CSWphp5-tidy += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-gmp += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-sysvmsg += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-mysql += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-ctype += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-xmlreader += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWphp5-xmlreader += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pgsql += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pspell += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-soap += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWphp5-soap += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-json += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-imap += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWphp5-imap += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-sockets += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-iconv += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-ldap += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWphp5-ldap += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-snmp += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWphp5-snmp += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-xmlrpc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-calendar += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-odbc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-ftp += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pdosqlite += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-sysvsem += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-mssql += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-wddx += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-pdomysql += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWphp5-pdomysql += CSWlibz1
+
+CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWlibncurses5
+CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWlibtidy0-99
+CHECKPKG_OVERRIDES_CSWphp5-exif += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-hash += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibidn11
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibpng15-15
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibjpeg7
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibgd2
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibxpm4
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += forbidden-version-interface-dependencies|/opt/csw/apache2/libexec/libphp5.so|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicudata52
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicuuc51
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicui18n51
+CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5 += forbidden-version-interface-dependencies|/opt/csw/php5/bin/php|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWphp5 += forbidden-version-interface-dependencies|/opt/csw/php5/bin/php-cgi|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWphp5 += surplus-dependency|CSWlibicuuc51
+CHECKPKG_OVERRIDES_CSWphp5 += surplus-dependency|CSWlibicui18n51
+CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-ctype += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-dba += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-iconv += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibltdl7
+CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWphp5-mysql += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-json += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWlibz1
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 EXTRA_LIB = /opt/csw/postgresql/lib
@@ -220,10 +379,26 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 # using CC as linker would have made this automatic.
 SUBDIR64-sparc = v9
 SUBDIR64-i386 = amd64
-EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
+EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCrun -lCstd -lz
+
+# We use MySQL which uses a more recent libc than the linker map requires
+LINKER_MAPS =
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
+
+EXTRA_CONFIGURE_EXPORTS += IBM_DB_INCLUDE
+EXTRA_CONFIGURE_EXPORTS += IBM_DB_LIB
+EXTRA_CONFIGURE_EXPORTS += DB2INSTANCE
+EXTRA_CONFIGURE_EXPORTS += DB2DIR
+
+# This is needed for DB2 module
+#CONFIGURE_ENV_IBM_DB_INCLUDE = /opt/IBM/db2/V8.1/include
+#CONFIGURE_ENV_IBM_DB_LIB = /opt/IBM/db2/V8.1/lib
+#CONFIGURE_ENV_DB2INSTANCE = db2inst1
+#CONFIGURE_ENV_DB2DIR = /opt/IBM/db2/V8.1
+
+#EXTRA_RUNPATH_LINKER_FLAGS += -R$(CONFIGURE_ENV_IBM_DB_LIB)
 
 sysconfdir = /etc$(prefix)/php5
 
@@ -280,6 +455,7 @@ CONFIGURE_ARGS += --with-gd=shared,$(prefix)
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
 CONFIGURE_ARGS += --with-gettext=shared,$(prefix)
 CONFIGURE_ARGS += --with-gmp=shared,$(prefix)
+#CONFIGURE_ARGS += --with-ibm-db2=shared,/export/db2inst1/sqllib
 CONFIGURE_ARGS += --with-iconv=shared,$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)
 CONFIGURE_ARGS += --with-imap=shared,$(prefix)
@@ -379,9 +555,9 @@ post-install-modulated:
 
 post-merge:
 	@echo " ==> Fixing php.ini: adding loadable session.so support"
-	@( cd $(PKGROOT)/$(sysconfdir)/; \
+	@-( cd $(PKGROOT)/$(sysconfdir)/; \
 		perl -pi -e 's/extension=bz2.so/extension=session.so\n;extension=bz2.so/' php.ini.CSW; )
-	@( cd $(PKGROOT)/$(sysconfdir)/; \
+	@-( cd $(PKGROOT)/$(sysconfdir)/; \
 		perl -pi -e 's/extension=bz2.so/extension=ctype.so\n;extension=bz2.so/' php.ini.CSW; )
 	@echo " ==> Fixing php.ini: adding loadable ctype.so support"
 	@$(MAKECOOKIE)
