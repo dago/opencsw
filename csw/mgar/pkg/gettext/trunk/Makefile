@@ -1,5 +1,5 @@
 NAME = gettext
-VERSION = 0.18.3.1
+VERSION = 0.19.1
 CATEGORIES = lib
 GARTYPE = v2
 
