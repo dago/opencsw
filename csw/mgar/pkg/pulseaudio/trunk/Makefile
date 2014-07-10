@@ -31,10 +31,16 @@ BUILD_DEP_PKGS += CSWlibdbus-dev
 # BUILD_DEP_PKGS += CSWlibx11-dev
 
 # on OI: 
-# pkg install system/header/header-audio library/json-c
+# pkg install system/header/header-audio library/json-c SFElibatomic-ops
 
 PATCHFILES += 0002-define-pi+typeof.patch
 PATCHFILES += 0001-module.patch
+
+RUNTIME_DEP_PKGS_CSWpulseaudio += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpulseaudio += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWpulseaudio += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWpulseaudio += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpulseaudio += CSWlibiconv2
 
 EXTRA_CFLAGS = 	-std=c99 -Dsun
 EXTRA_LINKER_FLAGS += -lintl
