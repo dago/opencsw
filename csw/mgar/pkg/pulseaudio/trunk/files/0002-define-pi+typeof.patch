@@ -1,0 +1,13 @@
+--- a/config.h.in
++++ b/config.h.in
+@@ -718,3 +718,9 @@
+ 
+ /* Define as `fork' if `vfork' does not work. */
+ #undef vfork
++
++#define M_PI 3.14159265358979323846264338327
++/* #define typeof __typeof__  */
++#define SOUND_PCM_READ_RATE             __OSSIOR ('P', 2, int)
++#define SOUND_PCM_READ_CHANNELS         __OSSIOR ('P', 6, int)
++#define SOUND_PCM_READ_BITS             __OSSIOR ('P', 5, int)
++#define SOUND_PCM_READ_FILTER           __OSSIOR ('P', 7, int)
