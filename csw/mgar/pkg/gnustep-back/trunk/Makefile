@@ -13,7 +13,7 @@ endef
 #EXTRA_MODULATORS = GRAPHICS
 #MODULATIONS_graphics = xlib cairo
 
-BUILD_DEP_PKGS = SUNWxorg-headers CSWgmake CSWgcc4objc CSWlibfreetype-dev
+BUILD_DEP_PKGS = CSWsunx11devel CSWgmake CSWgcc4objc CSWlibfreetype-dev
 
 #for cairo:
 BUILD_DEP_PKGS += CSWlibcairo-dev
