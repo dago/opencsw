@@ -2,7 +2,7 @@
 # - Check http://src.opensolaris.org/source/xref/userland/src/components/samba/samba/ from time to time
 
 NAME    = samba
-VERSION = 3.6.23
+VERSION = 3.6.24
 GARTYPE = v2
 
 DESCRIPTION =er)
@@ -398,8 +398,8 @@ NSS_MODULE_DIR = /usr/lib
 PAM_MODULE_DIR = /usr/lib/security
 
 ifeq ($(MEMORYMODEL),64)
-	NSS_MODULE_DIR = /usr/lib/64
-	PAM_MODULE_DIR = /usr/lib/security/64
+	NSS_MODULE_DIR = /usr/lib/$(ISA)
+	PAM_MODULE_DIR = /usr/lib/security/$(ISA)
 endif
 
 # Define the targets for the links
