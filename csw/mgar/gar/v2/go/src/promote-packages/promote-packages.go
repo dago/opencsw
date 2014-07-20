@@ -47,14 +47,25 @@ import (
 // Command line flags
 var from_catrel_flag string
 var to_catrel_flag string
+var htmlReportFlag string
+var packageTimesFilename string
 
-const htmlReportPath = "/home/maciej/public_html/promote-packages.html"
 
 func init() {
   flag.StringVar(&from_catrel_flag, "from-catrel", "unstable",
                  "Actually, only unstable makes sense here.")
   flag.StringVar(&to_catrel_flag, "to-catrel", "bratislava",
                  "The testing release.")
+  flag.StringVar(&htmlReportFlag, "html-report-path",
+                 "/home/maciej/public_html/promote-packages.html",
+                 "Full path to the file where the HTML report will be " +
+                 "written. If the file already exists, it will be " +
+                 "overwritten. ")
+  flag.StringVar(&packageTimesFilename, "package-times-json-file",
+                 "/home/maciej/.checkpkg/package-times.json",
+                 "JSON file with package times state. This file is used " +
+                 "for persistence: it remembers when each of the packages " +
+                 "was last modified in the unstable catalog.")
 }
 
 type CatalogSpecTransition struct {
@@ -102,8 +113,6 @@ type CatalogReleaseTimeInfo struct {
 func (t *CatalogReleaseTimeInfo) Get(spec diskformat.CatalogSpec, md5_sum string) PackageTimeInfo {
   return PackageTimeInfo{}
 }
-
-const packageTimesFilename = "/home/maciej/.checkpkg/package-times.json"
 
 func (t *CatalogReleaseTimeInfo) Load() error {
   log.Println("Loading", packageTimesFilename)
@@ -536,9 +545,9 @@ func pipeStage2(in <-chan CatalogSpecTransition) <-chan CatalogWithSpecTransitio
 func writeReport(rd reportData) {
   t := template.Must(template.ParseFiles(
       "src/promote-packages/report-template.html"))
-  fo, err := os.Create(htmlReportPath)
+  fo, err := os.Create(htmlReportFlag)
   if err != nil {
-    log.Println("Could not open", htmlReportPath)
+    log.Println("Could not open", htmlReportFlag)
     panic(err)
   }
   defer fo.Close()
