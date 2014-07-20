@@ -76,11 +76,13 @@ type catalogOperation struct {
   Spec diskformat.CatalogSpec
   Removed *diskformat.PackageExtra
   Added *diskformat.PackageExtra
+  // Maybe add timing information here?
+  SourceChanged *time.Time
 }
 
 // Type used to store information about the last time package was seen.
 type PackageTimeInfo struct {
-  Spec diskformat.CatalogSpec `json:"spec1"`
+  Spec diskformat.CatalogSpec `json:"spec"`
   Pkg diskformat.PackageExtra `json:"pkg"`
   Present bool                `json:"present"`
   ChangedAt time.Time         `json:"changed_at"`
@@ -169,9 +171,7 @@ func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
   }
   inCat := make(map[diskformat.Md5Sum]bool)
   for _, p := range c.PkgsExtra {
-    if _, ok := t.catalogs[c.Spec][p.Md5_sum]; ok {
-      // We've seen the package before.
-    } else {
+    if _, ok := t.catalogs[c.Spec][p.Md5_sum]; !ok {
       // Packages we haven't seen yet that are in the catalog.
       t.catalogs[c.Spec][p.Md5_sum] = PackageTimeInfo{
         c.Spec,
@@ -258,24 +258,44 @@ func (c catalogOperation) Catalogname() string {
   return "catalogname unknown"
 }
 
-// Returns shell/curl commands to run to perform the action.
+// Returns shell/curl commands to run to perform the action, and another set to
+// roll the action back.
 func (c catalogOperation) Commands() []string {
   ans := make([]string, 0)
   if c.Removed != nil {
-    msg := fmt.Sprintf("curl --netrc -X DELETE %s/catalogs/%s/%s/%s/%s/",
-                       diskformat.ReleasesUrl,
-                       c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
-                       c.Removed.Md5_sum)
-    ans = append(ans, msg)
+    ans = append(ans,
+                 fmt.Sprintf("curl --netrc -X DELETE %s/catalogs/%s/%s/%s/%s/",
+                 diskformat.ReleasesUrl,
+                 c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
+                 c.Removed.Md5_sum))
   }
   if c.Added != nil {
-    msg := fmt.Sprintf("curl --netrc -X PUT    %s/catalogs/%s/%s/%s/%s/",
-                       diskformat.ReleasesUrl,
-                       c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
-                       c.Added.Md5_sum)
-    ans = append(ans, msg)
+    ans = append(ans,
+                 fmt.Sprintf("curl --netrc -X PUT    %s/catalogs/%s/%s/%s/%s/",
+                 diskformat.ReleasesUrl,
+                 c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
+                 c.Added.Md5_sum))
   }
   return ans
+}
+
+func (c catalogOperation) Rollback() []string {
+  rollback := make([]string, 0)
+  if c.Added != nil {
+    rollback = append(rollback,
+                      fmt.Sprintf("curl --netrc -X DELETE %s/catalogs/%s/%s/%s/%s/",
+                      diskformat.ReleasesUrl,
+                      c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
+                      c.Added.Md5_sum))
+  }
+  if c.Removed != nil {
+    rollback = append(rollback,
+                      fmt.Sprintf("curl --netrc -X PUT    %s/catalogs/%s/%s/%s/%s/",
+                      diskformat.ReleasesUrl,
+                      c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
+                      c.Removed.Md5_sum))
+  }
+  return rollback
 }
 
 type integrationGroup struct {
@@ -294,8 +314,9 @@ type catalogIntegration struct {
   Badops []catalogOperation
 }
 
-// Cross-catalog integration group. Contains the group name, and all the
-// integration groups. Maybe this isn't the best way to represent this.
+// Cross-catalog integration group. Contains the group name, all the disk
+// operations, and bugs associated with the involved packages. Maybe this isn't
+// the best way to represent this.
 type CrossCatIntGroup struct {
   Key string
   Ops map[diskformat.CatalogSpec][]catalogOperation
@@ -311,8 +332,11 @@ func NewCrossCatIntGroup(key string) (*CrossCatIntGroup) {
 }
 
 type reportData struct {
+  CatalogName string
+  GeneratedOn time.Time
   Catalogs []catalogIntegration
   CrossCatGroups []*CrossCatIntGroup
+  TimeInfo map[diskformat.CatalogSpec]map[diskformat.Md5Sum]PackageTimeInfo
 }
 
 func groupByOsrelAndArch(cs []diskformat.CatalogSpec) map[diskformat.CatalogSpec]diskformat.CatalogSpec {
@@ -420,11 +444,11 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integration
         continue
       }
       // There is a package with the same pkgname in the target catalog.
-      op := catalogOperation{t.fromCat.Spec, pkgDestCat, pkgSrcCat}
+      op := catalogOperation{t.toCat.Spec, pkgDestCat, pkgSrcCat, nil}
       oplist = append(oplist, op)
     } else {
       // There is no package with the same pkgname in the target catalog.
-      op := catalogOperation{t.fromCat.Spec, nil, pkgSrcCat}
+      op := catalogOperation{t.toCat.Spec, nil, pkgSrcCat, nil}
       oplist = append(oplist, op)
     }
   }
@@ -432,7 +456,7 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integration
   // Packages that are only in the target catalog.
   for pkgname, topkg := range toByPkgname {
     if _, ok := fromByPkgname[pkgname]; !ok {
-      op := catalogOperation{t.fromCat.Spec, topkg, nil}
+      op := catalogOperation{t.toCat.Spec, topkg, nil, nil}
       oplist = append(oplist, op)
     }
   }
@@ -472,6 +496,7 @@ func transitions() []CatalogSpecTransition {
   if err != nil {
     log.Fatalln("Could not get the catalog spec list")
   }
+  log.Println("Catalogs:", from_catrel_flag, "→", to_catrel_flag)
   from_catspecs := diskformat.FilterCatspecs(all_catspecs, from_catrel_flag)
   to_catspecs := diskformat.FilterCatspecs(all_catspecs, to_catrel_flag)
   return matchCatspecs(from_catspecs, to_catspecs)
@@ -513,6 +538,7 @@ func writeReport(rd reportData) {
       "src/promote-packages/report-template.html"))
   fo, err := os.Create(htmlReportPath)
   if err != nil {
+    log.Println("Could not open", htmlReportPath)
     panic(err)
   }
   defer fo.Close()
@@ -541,8 +567,13 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
                   "the '{}' contents, location:", packageTimesFilename)
     }
 
-    rd := reportData{make([]catalogIntegration, 0),
-                     make([]*CrossCatIntGroup, 0)}
+    rd := reportData{
+      to_catrel_flag,
+      time.Now(),
+      make([]catalogIntegration, 0),
+      make([]*CrossCatIntGroup, 0),
+      timing.catalogs,
+    }
     for t := range in {
       timing.Update(t.fromCat)
       groups, badops := GroupsFromCatalogPair(t)
