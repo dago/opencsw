@@ -56,7 +56,7 @@ BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWlibc-client-dev
 BUILD_DEP_PKGS += CSWopenldap-dev CSWlibkrb5-dev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWmcrypt-dev CSWfreetds CSWmysql-dev CSWunixodbc
 BUILD_DEP_PKGS += CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp-dev
-BUILD_DEP_PKGS += CSWsqlite
+#BUILD_DEP_PKGS += CSWsqlite
 BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWtidy-dev CSWpostgresql-dev
 BUILD_DEP_PKGS += CSWlibfreetype-dev
 BUILD_DEP_PKGS += CSWlibxpm-dev
@@ -201,7 +201,7 @@ $(eval $(call php5_subpackage,shmop,))
 $(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25))
 $(eval $(call php5_subpackage,soap,CSWlibxml2-2))
 $(eval $(call php5_subpackage,sockets,))
-$(eval $(call php5_subpackage,sqlite,CSWsqlite))
+#$(eval $(call php5_subpackage,sqlite,CSWsqlite))
 $(eval $(call php5_subpackage,sysvmsg,))
 $(eval $(call php5_subpackage,sysvsem,))
 $(eval $(call php5_subpackage,sysvshm,))
@@ -231,7 +231,7 @@ RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibxpm4
 RUNTIME_DEP_PKGS_CSWphp5-gd += CSWlibgd3
-RUNTIME_DEP_PKGS_CSWphp5-sqlite += CSWlibz1
+#RUNTIME_DEP_PKGS_CSWphp5-sqlite += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-pdo += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-shmop += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-xmlwriter += CSWlibiconv2
@@ -361,7 +361,7 @@ CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibltdl7
 CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibssl1-0-0
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibz1
@@ -435,7 +435,7 @@ CONFIGURE_ARGS += --enable-session=shared
 CONFIGURE_ARGS += --enable-shmop=shared
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
-CONFIGURE_ARGS += --enable-sqlite-utf8
+#CONFIGURE_ARGS += --enable-sqlite-utf8
 CONFIGURE_ARGS += --enable-sqlite3=shared,$(prefix)
 CONFIGURE_ARGS += --enable-sysvmsg=shared
 CONFIGURE_ARGS += --enable-sysvsem=shared
@@ -480,14 +480,16 @@ CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(bindir)/
-CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
+#CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
+CONFIGURE_ARGS += --without-pdo-sqlite
 CONFIGURE_ARGS += --with-pear=shared
 CONFIGURE_ARGS += --with-pgsql=shared,$(bindir)/
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,/opt/csw
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
-CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
+#CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
+CONFIGURE_ARGS += --without-sqlite
 CONFIGURE_ARGS += --with-t1lib=$(prefix)
 CONFIGURE_ARGS += --with-tidy=shared,$(prefix)
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
@@ -502,10 +504,10 @@ ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 endif
 
-# Disable Tests (report submitted to PHP QA)
-SKIPTEST = 1
-#ENABLE_CHECK = 0
 TEST_TARGET = test
+
+# Disable Tests (report submitted to PHP QA)
+SKIPTEST ?= 1
 
 include gar/category.mk
 
