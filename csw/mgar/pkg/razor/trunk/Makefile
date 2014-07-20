@@ -18,11 +18,14 @@ RUNTIME_DEP_PKGS += CSWpm-digest-hmac
 RUNTIME_DEP_PKGS += CSWpm-digest-sha1
 RUNTIME_DEP_PKGS += CSWpm-net-dns
 RUNTIME_DEP_PKGS += CSWpm-uri
-RUNTIME_DEP_PKGS += CSWpmdigestnilsimsaa CSWpmdigesthmac
-
-# We define upstream file regex so we can be notifed of new upstream #UFILES_REGEX = $(NAME)-agents-(\d+(?:\.\d+)*).tar.bz2
+RUNTIME_DEP_PKGS += CSWpmdigestnilsimsaa CHECKPKG_OVERRIDES_CSWrazor += surplus-dependency|CSWpm-digest-sha1
+CHECKPKG_OVERRIDES_CSWrazor += surplus-dependency|CSWpmdigestnilsimsa
+CHECKPKG_OVERRIDES_CSWrazor += surplus-dependency|CSWpm-digest-hmac
+CHECKPKG_OVERRIDES_CSWrazor += surplus-dependency|CSWpm-uri
+CHECKPKG_OVERRIDES_CSWrazor += surplus-dependency|CSWpm-net-dns
 
 CONFIGURE_SCRIPTS = custom
+# No tests
 TEST_SCRIPTS =_SCRIPTS = custom
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal\.pod
