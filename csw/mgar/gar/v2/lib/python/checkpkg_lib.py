@@ -1236,5 +1236,6 @@ class Catalog(SqlobjectHelperMixin):
       # Files belonging to this package should not be removed from the catalog
       # as the package might be still present in another catalog.
     except sqlobject.main.SQLObjectNotFound as e:
-      self.logger.debug('The object went away when we were trying to delete it.')
+      self.logger.debug(u'The object %s was not found in %s.',
+                        sqo_srv4, catspec)
       self.logger.warning(e)

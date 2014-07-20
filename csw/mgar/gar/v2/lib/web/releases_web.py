@@ -366,12 +366,13 @@ class Srv4CatalogAssignment(object):
             "are not allowed" % osrel_name)
       srv4_to_remove = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       c = checkpkg_lib.Catalog()
-      c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
-      msg = ('Package %s / %s removed successfully'
-             % (srv4_to_remove.basename, md5_sum))
-      response = cjson.encode({'message': msg})
-      web.header('Content-Length', len(response))
-      return response
+      with Transaction(models.Srv4FileStats) as trans:
+        c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name, trans)
+        msg = ('Package %s / %s removed successfully'
+               % (srv4_to_remove.basename, md5_sum))
+        response = cjson.encode({'message': msg})
+        web.header('Content-Length', len(response))
+        return response
 
     except (
         sqlobject.main.SQLObjectNotFound,
@@ -540,13 +541,18 @@ class Srv4RelationalLevelTwo(object):
       raise web.notacceptable(exc)
 
   def HEAD(self, md5_sum):
+    # Will throw an exception.
+    payload = self.GET(md5_sum)
+    return ''
+
+  def GET(self, md5_sum):
     try:
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
     except sqlobject.main.SQLObjectNotFound:
       raise web.notfound('Stats not in the database')
     if not srv4.registered_level_two:
       raise web.notfound('Stats in the db, but not registered (level 2)')
-    return ''
+    return '{"the package is registered"}'
 
 
 class CatalogRelease(object):
@@ -555,23 +561,25 @@ class CatalogRelease(object):
     if not re.match(r'', name):
       raise web.conflict()
     with Transaction(models.Srv4FileStats) as trans:
-      res = models.CatalogRelease.selectBy(name=name)
+      res = models.CatalogRelease.selectBy(name=name, connection=trans)
       if res.count():
         return cjson.encode('%s already exists' % name)
       models.CatalogRelease(name=name, connection=trans)
     return cjson.encode('%s has been created' % name)
 
   def DELETE(self, name):
-    try:
-      o = models.CatalogRelease.selectBy(name=name).getOne()
-    except sqlobject.main.SQLObjectNotFound:
-      raise web.notfound()
-    res = models.Srv4FileInCatalog.select(models.Srv4FileInCatalog.q.catrel==o)
-    if res.count():
-      # There are pacakges in this catalog. Cannot remove.
-      raise web.conflict()
-    o.destroySelf()
-    return cjson.encode('%s has been deleted' % name)
+    with Transaction(models.Srv4FileStats) as trans:
+      try:
+        o = models.CatalogRelease.selectBy(name=name, connection=trans).getOne()
+      except sqlobject.main.SQLObjectNotFound:
+        raise web.notfound()
+      res = models.Srv4FileInCatalog.select(models.Srv4FileInCatalog.q.catrel==o,
+                                            connection=trans)
+      if res.count():
+        # There still are packages in this catalog. We cannot remove it.
+        raise web.conflict()
+      o.destroySelf()
+      return cjson.encode('%s has been deleted' % name)
 
   def GET(self, name):
     try:
