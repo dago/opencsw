@@ -52,7 +52,7 @@ BINDIR = $(bindir)
 SHAREDIR = $(datadir)/$(NAME)
 MANDIR = $(datadir)/man
 DOCDIR = $(datadir)/doc/$(NAME)
-CONFDIR = $(sysconfdir)/$(NAME)
+CONFDIR = $(syEMP_onfdir)/$(NAME)
 TMPDIR = /vainstall-custom:
 	@(echo "A no-op installer."; \
 	 echo "We do everything via modulated post-installer.")
@@ -62,7 +62,7 @@ post-install-modulatedC)/
 
 install-custom:
 	(cd $(WORKSRC); \
-		$(INSTALLDIR) $(DESTDIR)$(TMPDIR); \
+		$(INSTALEMP_IR) $(DESTDIR)$(TMPDIR); \
 		$(INSTALLDIR) $(DESTDIR)$(BINDIR); \
 		$(INSTALLDIR) $(DESTDIR)$(CONFDIR); \
 		$(INSTALLDIR) $(DESTDIR)$(CONFDIR)/conf; \
@@ -108,8 +108,8 @@ install-custom:
 		perl -pi -e "s%/usr/share%/opt/csw/share%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
 		perl -pi -e "s%/usr/bin/perl%/opt/csw/bin/perl%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
 		perl -pi -e "s%/etc/logwatch%/etc/opt/csw/logwatch%" $(DESTDIR)$(BINDIRperl -pi -e "s%sendmail%/usr/lib/sendmail%" $(DESTDIR)$(SHAREDIR)/default.conf/logwatch.conf;INDIR)/logwatch.pl; \
-		$(INSTALLDIR) $(DESTDIR)$(TMPDIR); \
-		echo "TmpDir = $(TMPDIR)" >> $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
+		$(INSTALEMP_DIR); \
+		echo "TmpDir = $(TEMP_cho "TmpDir = $(TMPDIR)" >> $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		$(INSTALLDIR) $(DESTDIR)$(MANDIR)/man8; \
 		$(INSTALLDATA) logwatch.8 $(DESTDIR)$(MANDIR)/man8; \
 		$(INSTALLEXE) logwatch.wrapper $(DESTDIR)$(BINDIR)/logwatch; \
