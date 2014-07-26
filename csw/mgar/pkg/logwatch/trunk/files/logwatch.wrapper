@@ -1,6 +1,0 @@
-#!/bin/sh
-
-PATH=/opt/csw/gnu:/opt/csw/bin:$PATH
-export PATH
-
-exec /opt/csw/bin/logwatch.pl $*

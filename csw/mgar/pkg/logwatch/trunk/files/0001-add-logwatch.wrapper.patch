@@ -1,0 +1,26 @@
+From bc858831aee7d214219f38620950e416bfe5d4fc Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 26 Jul 2014 23:00:27 +0100
+Subject: [PATCH] add logwatch.wrapper
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ logwatch.wrapper | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 logwatch.wrapper
+
+diff --git a/logwatch.wrapper b/logwatch.wrapper
+new file mode 100644
+index 0000000..8a9e096
+--- /dev/null
++++ b/logwatch.wrapper
+@@ -0,0 +1,6 @@
++#!/bin/sh
++
++PATH=/opt/csw/gnu:/opt/csw/bin:$PATH
++export PATH
++
++exec /opt/csw/bin/logwatch.pl $*
+-- 
+2.0.0
+
