@@ -105,12 +105,11 @@ install-custom:
 		touch $(DESTDIR)$(CONFDIR)/conf/override.conf; \
 		perl -pi -e "s%/usr/share%/opt/csw/share%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
 		perl -pi -e "s%/usr/bin/perl%/opt/csw/bin/perl%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
-		perl -pi -e "s%/etc/logwatch%/etc/opt/csw/logwatch%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
+		perl -pi -e "s%/etc/logwatch%/etc/opt/csw/logwatch%" $(DESTDIR)$(BINDIRperl -pi -e "s%sendmail%/usr/lib/sendmail%" $(DESTDIR)$(SHAREDIR)/default.conf/logwatch.confINDIR)/logwatch.pl; \
 		$(INSTALLDIR) $(DESTDIR)$(TMPDIR); \
 		echo "TmpDir = $(TMPDIR)" >> $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		$(INSTALLDIR) $(DESTDIR)$(MANDIR)/man8; \
 		$(INSTALLDATA) logwatch.8 $(DESTDIR)$(MANDIR)/man8; \
 		$(INSTALLEXE) logwatch.wrapper $(DESTDIR)$(BINDIR)/logwatch; \
 		$(INSTALLDIR) $(DESTDIR)$(CRONDIR); \
-		echo "02 4 * * * /opt/csw/bin/logwatch" > $(DESTDIR)$(CRONTABS) )
-	@$(MAKECOOKIE)
+		echo "02 4 * * * /opt/csw/bin/logwatch" > $(DESTDIR)$(CRONTABS
