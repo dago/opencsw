@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = scons
-VERSION = 2.3.0
+VERSION = 2.3.2
 CATEGORIES = python
 GARTYPE = v2
 
