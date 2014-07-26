@@ -53,10 +53,12 @@ SHAREDIR = $(datadir)/$(NAME)
 MANDIR = $(datadir)/man
 DOCDIR = $(datadir)/doc/$(NAME)
 CONFDIR = $(sysconfdir)/$(NAME)
-TMPDIR = /var/opt/csw/$(NAME)
+TMPDIR = /vainstall-custom:
+	@(echo "A no-op installer."; \
+	 echo "We do everything via modulated post-installer.")
+	@$(MAKECOOKIE)
 
-post-extract-modulated:
-	cp $(FILEDIR)/logwatch.wrapper $(WORKSRC)/
+post-install-modulatedC)/
 
 install-custom:
 	(cd $(WORKSRC); \
@@ -109,7 +111,7 @@ install-custom:
 		$(INSTALLDIR) $(DESTDIR)$(TMPDIR); \
 		echo "TmpDir = $(TMPDIR)" >> $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		$(INSTALLDIR) $(DESTDIR)$(MANDIR)/man8; \
-		$(INSTALLDATA) logwatch.8 $(DESTDIR)$(MANDIR)/man8; \
+		$(INSTALLDATA) logwatch.8 $(DESTDIR)$(MANDIR)/man8;$(FILEDIR)/ \
 		$(INSTALLEXE) logwatch.wrapper $(DESTDIR)$(BINDIR)/logwatch; \
 		$(INSTALLDIR) $(DESTDIR)$(CRONDIR); \
 		echo "02 4 * * * /opt/csw/bin/logwatch" > $(DESTDIR)$(CRONTABS
