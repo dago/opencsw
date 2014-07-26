@@ -42,7 +42,7 @@ CHECKPKG_OVERRIDES_CSWscons += surplus-dependency|CSWpython27
 # scons needs Python 2.7
 REINPLACEMENTS += python
 REINPLACE_MATCH_python = \#!.*
-REINPLACE_WITH_python = \#!/opt/csw/bin/python27
+REINPLACE_WITH_python = \#!/opt/csw/bin/python2.7
 REINPLACE_FILES_python += script/scons
 
 CONFIGURE_SCRIPTS =
