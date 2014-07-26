@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cmake
-VERSION = 2.8.12
+VERSION = 3.0.0
 GARTYPE = v2
 
 DESCRIPTION = Cross-platform make
