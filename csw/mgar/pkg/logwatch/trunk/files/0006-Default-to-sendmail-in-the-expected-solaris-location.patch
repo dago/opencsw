@@ -1,0 +1,26 @@
+From 8cd7d408e9198cc5294300c3a68cd0ae88c3c257 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 27 Jul 2014 10:32:59 +0100
+Subject: [PATCH] Default to sendmail in the expected solaris location
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ conf/logwatch.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/conf/logwatch.conf b/conf/logwatch.conf
+index 8eea90c..3d0f5ed 100644
+--- a/conf/logwatch.conf
++++ b/conf/logwatch.conf
+@@ -106,7 +106,7 @@ Service = "-eximstats"      # Prevents execution of eximstats service, which
+ # At this point you can change the mailer to any thing else that can handle that output
+ # stream. TODO test variables in the mailer string to see if the To/From/Subject can be set
+ # From here with out breaking anything. This would allow mail/mailx/nail etc..... -mgt 
+-mailer = "sendmail -t"
++mailer = "/usr/lib/sendmail -t"
+ 
+ #
+ # With this option set to 'Yes', only log entries for this particular host
+-- 
+2.0.0
+
