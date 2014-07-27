@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = ftp://ftp.kaybee.org/pub/linux/
 DISTFILES  = $(NAME)-$(VERSION) = 0001-add-logwatch.wrapper.patch
-PATCHFILES += 0002-fix-manpage-paths= fix-mPATCHFILES += 0003-Patch-out-usr-share-paths-for-opt-csw-share= fix-mPATCHFILES += 0004-Change-usr-bin-refereces-to-opt-csw-bin= fix-manpage-paths.patch
+PATCHFILES += 0002-fix-manpage-paths= fix-mPATCHFILES += 0003-Patch-out-usr-share-paths-for-opt-csw-share= fix-mPATCHFILES += 0004-Change-usr-bin-refereces-to-opt-csw-bin= fix-mPATCHFILES += 0005-Change-etc-logwatch-references-to-etc-opt-csw-logwat= fix-manpage-paths.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -104,8 +104,7 @@ install-custom:
 		$(INSTALLDATA) lib/* $(DESTDIR)$(SHAREDIR)/lib; \
 		touch $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		touch $(DESTDIR)$(CONFDIR)/conf/ignore.conf; \
-		touch $(DESTDIR)$(CONFDIR)/conf/override.conf; \
-		perl -pi -e "s%/etc/logwatch%/etc/opt/csw/logwatch%" $(DESTDIR)$(BINDIRperl -pi -e "s%sendmail%/usr/lib/sendmail%" $(DESTDIR)$(SHAREDIR)/default.conf/logwatch.conf;INDIR)/logwatch.pl; \
+		touch $(DESTDIR)$(CONFDIR)/conf/override.conf; sendmail%/usr/lib/sendmail%" $(DESTDIR)$(SHAREDIR)/default.conf/logwatch.conf;INDIR)/logwatch.pl; \
 		$(INSTALEMP_DIR); \
 		echo "TmpDir = $(TEMP_cho "TmpDir = $(TMPDIR)" >> $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		$(INSTALLDIR) $(DESTDIR)$(MANDIR)/man8; \
