@@ -24,7 +24,7 @@ PATCHFILES += $(PATCHFILES-$(GAROSREL))
 
 # We have only one package and that is archall, choose sparc
 # We need libserf on Solaris 9 for subversion and that requires a current scons
-# Solaris 10 has different link options, so different packages for SOolaris 9 and 10
+# Solaris 10 has different link options, so different packages for Solaris 9 and 10
 PACKAGING_PLATFORMS += solaris9-sparc
 PACKAGING_PLATFORMS += solaris10-sparc
 
