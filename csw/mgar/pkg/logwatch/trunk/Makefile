@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = ftp://ftp.kaybee.org/pub/linux/
 DISTFILES  = $(NAME)-$(VERSION) = 0001-add-logwatch.wrapper.patch
-PATCHFILES += 0002-fix-manpage-paths= fix-manpage-paths.patch
+PATCHFILES += 0002-fix-manpage-paths= fix-mPATCHFILES += 0003-Patch-out-usr-share-paths-for-opt-csw-share= fix-manpage-paths.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -105,7 +105,6 @@ install-custom:
 		touch $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		touch $(DESTDIR)$(CONFDIR)/conf/ignore.conf; \
 		touch $(DESTDIR)$(CONFDIR)/conf/override.conf; \
-		perl -pi -e "s%/usr/share%/opt/csw/share%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
 		perl -pi -e "s%/usr/bin/perl%/opt/csw/bin/perl%" $(DESTDIR)$(BINDIR)/logwatch.pl; \
 		perl -pi -e "s%/etc/logwatch%/etc/opt/csw/logwatch%" $(DESTDIR)$(BINDIRperl -pi -e "s%sendmail%/usr/lib/sendmail%" $(DESTDIR)$(SHAREDIR)/default.conf/logwatch.conf;INDIR)/logwatch.pl; \
 		$(INSTALEMP_DIR); \

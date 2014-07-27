@@ -1,0 +1,271 @@
+From 7627aebcaf10dfce65c534b4fd155ac515eddaa7 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 27 Jul 2014 10:14:48 +0100
+Subject: [PATCH] Patch out /usr/share paths for /opt/csw/share.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ HOWTO-Customize-LogWatch       | 36 ++++++++++++++++++------------------
+ conf/logfiles/clam-update.conf |  6 +++---
+ conf/logwatch.conf             |  2 +-
+ conf/services/clam-update.conf |  6 +++---
+ conf/services/slon.conf        |  4 ++--
+ scripts/logwatch.pl            |  2 +-
+ scripts/services/clam-update   |  6 +++---
+ scripts/services/slon          |  4 ++--
+ 8 files changed, 33 insertions(+), 33 deletions(-)
+
+diff --git a/HOWTO-Customize-LogWatch b/HOWTO-Customize-LogWatch
+index c9bd21a..51b4f3b 100644
+--- a/HOWTO-Customize-LogWatch
++++ b/HOWTO-Customize-LogWatch
+@@ -50,7 +50,7 @@ This section describes the subdirectories and files shipped
+ with the Logwatch distribution, using the names and locations
+ used by default.
+ 
+-The directory /usr/share/logwatch contains both the configuration
++The directory /opt/csw/share/logwatch contains both the configuration
+ and (perl) executable files.  The contents of this directory are
+ the following subdirectories:
+ 
+@@ -76,8 +76,8 @@ The /etc/logwatch directory contains the following subdirectories:
+ A. Configuration Structure
+ --------------------------
+ 
+-The contents of the three directories /usr/share/logwatch/default.conf,
+-/usr/share/logwatch/dist.conf, and /etc/logwatch/conf, all have the
++The contents of the three directories /opt/csw/share/logwatch/default.conf,
++/opt/csw/share/logwatch/dist.conf, and /etc/logwatch/conf, all have the
+ same structure:
+ 
+ 	services:	This subdirectory contains the configuration
+@@ -118,7 +118,7 @@ which is described in section 4, "Customizing the Configuration."
+ B. Executable Structure
+ -----------------------
+ 
+-The contents of the two directories /usr/share/logwatch/scripts
++The contents of the two directories /opt/csw/share/logwatch/scripts
+ and /etc/logwatch/scripts have the same structure:
+ 
+ 	services:	This subdirectory contains the executable
+@@ -156,9 +156,9 @@ Logwatch to be different.
+ You can customize the output of logwatch by modifying variables in the
+ /etc/logwatch/conf directory.
+ 
+-Default values are specified in the /usr/share/logwatch/default.conf
++Default values are specified in the /opt/csw/share/logwatch/default.conf
+ directory.  Your distribution may have set additional defaults in the
+-/usr/share/logwatch/dist.conf directory.  All the variables available
++/opt/csw/share/logwatch/dist.conf directory.  All the variables available
+ are declared in the files under these directories.  You can change the
+ default values to modify how or what is displayed with logwatch.
+ 
+@@ -171,7 +171,7 @@ There are two mechanisms for customizing the variables:
+ 
+ 1. The /etc/logwatch/conf directory is first searched for files with the
+    same name and relative location as the
+-   /usr/share/logwatch/default.conf directory.  Variables declared in
++   /opt/csw/share/logwatch/default.conf directory.  Variables declared in
+    these files override the defaults.
+ 
+    For example, if file /etc/logwatch/conf/services/sendmail.conf has the
+@@ -202,7 +202,7 @@ There are two mechanisms for customizing the variables:
+ 
+    If an executable script is declared in an /etc/logwatch/conf file,
+    all of the executable script declarations in the corresponding file
+-   in /usr/share/logwatch/default.conf or /usr/share/logwatch/dist.conf
++   in /opt/csw/share/logwatch/default.conf or /opt/csw/share/logwatch/dist.conf
+    are ignored.
+ 
+    Because of the way variables and executable scripts are declared,
+@@ -213,7 +213,7 @@ There are two mechanisms for customizing the variables:
+      above, or
+ 
+    - you can copy an entire configuration file from
+-     /usr/share/logwatch/default.conf to its corresponding location in 
++     /opt/csw/share/logwatch/default.conf to its corresponding location in 
+      /etc/logwatch/conf, and then modify those lines that require it.
+      Because duplicates are removed from cumulative variables, and
+      new executable script groups override the old ones, the output
+@@ -229,19 +229,19 @@ There are two mechanisms for customizing the variables:
+       logwatch:
+            This string indicates that the rest of the line is a global
+            configuration option, and uses the same syntax as the
+-           /usr/share/logwatch/default.conf/logwatch.conf file.
++           /opt/csw/share/logwatch/default.conf/logwatch.conf file.
+ 
+       services/service_name:
+            (Where service_name is the name of a service.)  This string
+            indicates that the rest of the line is a configuration
+            option for the specified service, and uses the same syntax
+-           as the /usr/share/logwatch/default.conf/services files.
++           as the /opt/csw/share/logwatch/default.conf/services files.
+ 
+       logfiles/service_name:
+            (Where service_name is the name of a service.)  This string
+            indicates that the rest of the line is a configuration
+            option for the specified service, and uses the same syntax
+-           as the /usr/share/logwatch/default.conf/logfiles files.
++           as the /opt/csw/share/logwatch/default.conf/logfiles files.
+ 
+ 
+    For example, if the file /etc/logwatch/conf/override.conf has the single
+@@ -271,10 +271,10 @@ specified in section 4, you can override the default executable
+ scripts.
+ 
+ This is accomplished by placing an executable file with the same
+-name and relative path (with respect to /usr/share/logwatch/scripts)
++name and relative path (with respect to /opt/csw/share/logwatch/scripts)
+ under the /etc/logwatch/scripts directory.  If such a file is
+ found in the /etc/logwatch/scripts directory, the corresponding
+-file under /usr/share/logwatch/scripts will be ignored.
++file under /opt/csw/share/logwatch/scripts will be ignored.
+ 
+ 
+ 6. Creating New Service Filters
+@@ -285,7 +285,7 @@ executable files, described above, and placing them in the
+ /etc/logwatch directory.  This section provides additional
+ details and examples for creating new service filters, but
+ it might be easier to base the new files on the existing
+-configuration and script files under the /usr/share/logwatch
++configuration and script files under the /opt/csw/share/logwatch
+ directory.
+ 
+ 
+@@ -323,7 +323,7 @@ Now, the general theory is that the LogFile Group should apply the date
+ range requested.  If the logfile is in the standard syslog format, you can
+ use the shared script 'ApplyStdDate' to filter out only the appropriate log
+ entries.  The way to call shared scripts (located under
+-/usr/share/logwatch/scripts/shared) is:
++/opt/csw/share/logwatch/scripts/shared) is:
+ 
+ *ApplyStdDate = 
+ 
+@@ -332,7 +332,7 @@ Anything following the equal sign will be passed to the program as arguments
+ look at the current logfile group config files for examples.
+ 
+ 
+-Finally, if the directory /usr/share/logwatch/scripts/logfiles/<logfile_group_name>/
++Finally, if the directory /opt/csw/share/logwatch/scripts/logfiles/<logfile_group_name>/
+ exists, any scripts in that directory will be executed.  All of these
+ scripts take the contents of all the specified logfiles in through STDIN and
+ output the modified logfile trought STDOUT.
+@@ -368,7 +368,7 @@ You can have commands in the form of:
+ 
+ *SharedScriptName = Arguments
+ 
+-that will execute a script found in the /usr/share/logwatch/scripts/shared/
++that will execute a script found in the /opt/csw/share/logwatch/scripts/shared/
+ directory named 'SharedScriptName' with arguments 'Arguments'.
+ This filter will modify the input to the service's filter.
+ 
+diff --git a/conf/logfiles/clam-update.conf b/conf/logfiles/clam-update.conf
+index 099c1d3..e63458b 100644
+--- a/conf/logfiles/clam-update.conf
++++ b/conf/logfiles/clam-update.conf
+@@ -17,9 +17,9 @@
+ #########################################################################
+ # Files - all shown with default paths:
+ #
+-# /usr/share/logwatch/default.conf/logfiles/clam-update.conf (this file)
+-# /usr/share/logwatch/default.conf/services/clam-update.conf
+-# /usr/share/logwatch/scripts/services/clam-update
++# /opt/csw/share/logwatch/default.conf/logfiles/clam-update.conf (this file)
++# /opt/csw/share/logwatch/default.conf/services/clam-update.conf
++# /opt/csw/share/logwatch/scripts/services/clam-update
+ #
+ # ... and of course
+ #
+diff --git a/conf/logwatch.conf b/conf/logwatch.conf
+index 9fc8573..8eea90c 100644
+--- a/conf/logwatch.conf
++++ b/conf/logwatch.conf
+@@ -73,7 +73,7 @@ Detail = Low
+ 
+ 
+ # The 'Service' option expects either the name of a filter
+-# (in /usr/share/logwatch/scripts/services/*) or 'All'.
++# (in /opt/csw/share/logwatch/scripts/services/*) or 'All'.
+ # The default service(s) to report on.  This should be left as All for
+ # most people.  
+ Service = All
+diff --git a/conf/services/clam-update.conf b/conf/services/clam-update.conf
+index 2497e3d..89bb2af 100644
+--- a/conf/services/clam-update.conf
++++ b/conf/services/clam-update.conf
+@@ -17,9 +17,9 @@
+ #########################################################################
+ # Files - all shown with default paths:
+ #
+-# /usr/share/logwatch/default.conf/logfiles/clam-update.conf
+-# /usr/share/logwatch/default.conf/services/clam-update.conf (this file)
+-# /usr/share/logwatch/scripts/services/clam-update
++# /opt/csw/share/logwatch/default.conf/logfiles/clam-update.conf
++# /opt/csw/share/logwatch/default.conf/services/clam-update.conf (this file)
++# /opt/csw/share/logwatch/scripts/services/clam-update
+ #
+ # ... and of course
+ #
+diff --git a/conf/services/slon.conf b/conf/services/slon.conf
+index 12dfdef..65a4a51 100644
+--- a/conf/services/slon.conf
++++ b/conf/services/slon.conf
+@@ -12,8 +12,8 @@
+ ###########################################################################
+ # This config file assumes that slon is
+ # logging to /var/log/messages, if not, you need to
+-# update the /usr/share/logwatch/default.conf/services/slon.conf and
+-# possibly add a new entry in /usr/share/logwatch/default.conf/logfiles
++# update the /opt/csw/share/logwatch/default.conf/services/slon.conf and
++# possibly add a new entry in /opt/csw/share/logwatch/default.conf/logfiles
+ #
+ ###########################################################################
+ 
+diff --git a/scripts/logwatch.pl b/scripts/logwatch.pl
+index ca9d9ff..e5b7a85 100755
+--- a/scripts/logwatch.pl
++++ b/scripts/logwatch.pl
+@@ -41,7 +41,7 @@ $ENV{'LC_ALL'} = "C";
+ use POSIX qw(locale_h);
+ setlocale(LC_ALL, "C");
+ 
+-my $BaseDir = "/usr/share/logwatch";
++my $BaseDir = "/opt/csw/share/logwatch";
+ my $ConfigDir = "/etc/logwatch";
+ my $PerlVersion = "$^X";
+ 
+diff --git a/scripts/services/clam-update b/scripts/services/clam-update
+index 879ca45..9b279f6 100755
+--- a/scripts/services/clam-update
++++ b/scripts/services/clam-update
+@@ -42,9 +42,9 @@
+ #########################################################################
+ # Files - all shown with default paths:
+ #
+-# /usr/share/logwatch/default.conf/logfiles/clam-update.conf
+-# /usr/share/logwatch/default.conf/services/clam-update.conf
+-# /usr/share/logwatch/scripts/services/clam-update (this file)
++# /opt/csw/share/logwatch/default.conf/logfiles/clam-update.conf
++# /opt/csw/share/logwatch/default.conf/services/clam-update.conf
++# /opt/csw/share/logwatch/scripts/services/clam-update (this file)
+ #
+ # ... and of course
+ #
+diff --git a/scripts/services/slon b/scripts/services/slon
+index e4e0687..e231d78 100644
+--- a/scripts/services/slon
++++ b/scripts/services/slon
+@@ -23,8 +23,8 @@
+ #
+ # This script and config file assumes that slon is 
+ # logging to /var/log/messages, if not, you need to 
+-# update the /usr/share/logwatch/default.conf/services/slon.conf and 
+-# possibly add a new entry in /usr/share/logwatch/default.conf/logfiles
++# update the /opt/csw/share/logwatch/default.conf/services/slon.conf and 
++# possibly add a new entry in /opt/csw/share/logwatch/default.conf/logfiles
+ #
+ # Please send all comments, suggestions, bug reports,
+ #    etc, to jeff.frost@frostconsultingllc.com and
+-- 
+2.0.0
+
