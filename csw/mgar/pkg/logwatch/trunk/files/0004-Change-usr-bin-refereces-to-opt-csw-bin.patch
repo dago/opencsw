@@ -1,0 +1,135 @@
+From ca60c54fd8895c35b10f20dabd860c5444b019c4 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 27 Jul 2014 10:21:02 +0100
+Subject: [PATCH 1/1] Change /usr/bin refereces to /opt/csw/bin.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ conf/services/zz-network.conf | 2 +-
+ lib/Logwatch.pm               | 2 +-
+ scripts/logwatch.pl           | 2 +-
+ scripts/services/amavis       | 4 ++--
+ scripts/services/cisco        | 2 +-
+ scripts/services/courier      | 2 +-
+ scripts/services/postfix      | 2 +-
+ scripts/services/zz-fortune   | 4 ++--
+ scripts/services/zz-network   | 2 +-
+ 9 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/conf/services/zz-network.conf b/conf/services/zz-network.conf
+index 6d65da6..e20ebc2 100644
+--- a/conf/services/zz-network.conf
++++ b/conf/services/zz-network.conf
+@@ -22,7 +22,7 @@ LogFile = NONE
+ # The following variables may be set.  They are commented-out because these
+ # are the same defaults in the zz-network script
+ # $pathto_chkconfig=/sbin/chkconfig
+-# $pathto_vtysh=/usr/bin/vtysh
++# $pathto_vtysh=/opt/csw/bin/vtysh
+ # $pathto_sysctl_conf=/etc/sysctl.conf
+ # $pathto_routeadm=/usr/sbin/routeadm
+ # $pathto_ip=/sbin/ip
+diff --git a/lib/Logwatch.pm b/lib/Logwatch.pm
+index b880aa7..3dda3a3 100644
+--- a/lib/Logwatch.pm
++++ b/lib/Logwatch.pm
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ #
+ # $Id: Logwatch.pm,v 1.18 2007/02/05 02:31:56 bjorn Exp $
+ 
+diff --git a/scripts/logwatch.pl b/scripts/logwatch.pl
+index e5b7a85..9a7f75a 100755
+--- a/scripts/logwatch.pl
++++ b/scripts/logwatch.pl
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ use strict;
+ ##########################################################################
+ # $Id: logwatch.pl,v 1.192 2007/05/20 00:24:20 kirk Exp $
+diff --git a/scripts/services/amavis b/scripts/services/amavis
+index 9f072fd..d59cfe7 100755
+--- a/scripts/services/amavis
++++ b/scripts/services/amavis
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ ##########################################################################
+ # $Id: amavis,v 1.48 2007/05/16 04:27:17 mrc Exp $
+ ##########################################################################
+@@ -873,7 +873,7 @@ while (<>) {
+       $StartInfo{'Code'}{'Loaded'}{$module} = $vers;
+ 
+    } elsif (($code, $location) = ( $p1 =~ /^Found \$(\S+)\s+at\s+(\S+)$/ )) {
+-      #TD Found $file            at /usr/bin/file
++      #TD Found $file            at /opt/csw/bin/file
+       $StartInfo{'Code'}{'Loaded'}{$code} = $location;
+ 
+    } elsif (($code, $location) = ( $p1 =~ /^No \$(\S+),\s+not using it/ )) {
+diff --git a/scripts/services/cisco b/scripts/services/cisco
+index 17c2005..d34dcc6 100755
+--- a/scripts/services/cisco
++++ b/scripts/services/cisco
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ ##########################################################################
+ # $Id: cisco,v 1.9 2007/05/14 19:42:48 bjorn Exp $
+ ##########################################################################
+diff --git a/scripts/services/courier b/scripts/services/courier
+index f20bf5e..d6ada41 100755
+--- a/scripts/services/courier
++++ b/scripts/services/courier
+@@ -577,7 +577,7 @@ while (defined($ThisLine = <STDIN>)) {
+ if ( ( $Detail >= 5 ) and ($PrintMailQueue ) ) {
+    print "\n\n\nCurrent State of the Mail Queue:\n".
+    "================================\n\n";
+-   my $MailqPath = `which mailq` || "/usr/bin/mailq";
++   my $MailqPath = `which mailq` || "/opt/csw/bin/mailq";
+    chomp $MailqPath;
+    if (-x $MailqPath) {
+       print `$MailqPath`;
+diff --git a/scripts/services/postfix b/scripts/services/postfix
+index f746bdc..5e17467 100755
+--- a/scripts/services/postfix
++++ b/scripts/services/postfix
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ ##########################################################################
+ # $Id: postfix,v 1.35 2007/05/14 17:27:27 mrc Exp $
+ ##########################################################################
+diff --git a/scripts/services/zz-fortune b/scripts/services/zz-fortune
+index d0778b6..8ffd16e 100755
+--- a/scripts/services/zz-fortune
++++ b/scripts/services/zz-fortune
+@@ -11,9 +11,9 @@ if (($ENV{'PRINTING'} eq "y" ) && (-f "/usr/games/fortune")) {
+       system("$env /usr/games/fortune");
+       print "\n";
+ }
+-elsif (($ENV{'PRINTING'} eq "y" ) && (-f "/usr/bin/fortune")) {
++elsif (($ENV{'PRINTING'} eq "y" ) && (-f "/opt/csw/bin/fortune")) {
+       #print "\n\n------------------ Fortune --------------------\n\n";
+-      system("$env /usr/bin/fortune");
++      system("$env /opt/csw/bin/fortune");
+       print "\n";
+ }
+ 
+diff --git a/scripts/services/zz-network b/scripts/services/zz-network
+index 3faba5b..dc1986f 100755
+--- a/scripts/services/zz-network
++++ b/scripts/services/zz-network
+@@ -29,7 +29,7 @@ my $Detail = $ENV{'LOGWATCH_DETAIL_LEVEL'} || 0;
+ 
+ my $pathto_chkconfig = $ENV{'pathto_chkconfig'} || '/sbin/chkconfig';
+ my $pathto_sysctl_conf = $ENV{'pathto_sysctl_conf'} || '/etc/sysctl.conf';
+-my $pathto_vtysh = $ENV{'pathto_vtysh'} || '/usr/bin/vtysh';
++my $pathto_vtysh = $ENV{'pathto_vtysh'} || '/opt/csw/bin/vtysh';
+ my $pathto_routeadm = $ENV{'pathto_routeadm'} || '/usr/sbin/routeadm';
+ my $pathto_ip = $ENV{'pathto_ip'} || '/sbin/ip';
+ 
+-- 
+2.0.0
+
