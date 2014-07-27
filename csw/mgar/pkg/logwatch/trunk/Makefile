@@ -37,9 +37,7 @@ CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWfortune
 CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWgawk
 
-include gar/category.mk
-
-sysconfdir = /etc/opt/csw
+includdir = /etc/opt/csw
 CRONDIR = $(sysconfdir)/pkg/CSW$(NAME)/crontabs
 CRONTABS = $(CRONDIR)/root
 
