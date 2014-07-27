@@ -1,7 +1,17 @@
-diff -u -r logwatch-7.3.6.orig/logwatch.8 logwatch-7.3.6/logwatch.8
---- logwatch-7.3.6.orig/logwatch.8	2010-01-17 22:15:53.115085073 +0100
-+++ logwatch-7.3.6/logwatch.8	2010-01-17 22:17:10.483671625 +0100
-@@ -105,12 +105,12 @@
+From 99ef9b4b15e2dcd8a5321ebe71d9d0419eb124fa Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 27 Jul 2014 09:59:50 +0100
+Subject: fix manpage paths
+
+---
+ logwatch.8 | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/logwatch.8 b/logwatch.8
+index c9561d1..4f66c93 100644
+--- a/logwatch.8
++++ b/logwatch.8
+@@ -105,12 +105,12 @@ Displays usage information
  .IP "\fB--help\fR"
  same as --usage.
  .SH FILES
@@ -16,7 +26,7 @@ diff -u -r logwatch-7.3.6.orig/logwatch.8 logwatch-7.3.6/logwatch.8
  .RS
  This directory contains local configuration files that override
  the default configuration.  See \fBMORE INFORMATION\fR below for more
-@@ -127,7 +127,7 @@
+@@ -127,7 +127,7 @@ xferlogs.
  This will print out login information for the previous day...
  .RE
  .SH MORE INFORMATION
@@ -25,3 +35,6 @@ diff -u -r logwatch-7.3.6.orig/logwatch.8 logwatch-7.3.6/logwatch.8
  documentation:
  .RE
  .I HOWTO-Customize-LogWatch
+-- 
+2.0.0
+

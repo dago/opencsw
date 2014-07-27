@@ -14,8 +14,8 @@ Logwatch is a customizable log analysis system. Logwatch parses through your sys
 endef
 
 MASTER_SITES = ftp://ftp.kaybee.org/pub/linux/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES = fix-mPATCHFILES += 0001-add-logwatch.wrapper= fix-manpage-paths.patch
+DISTFILES  = $(NAME)-$(VERSION) = 0001-add-logwatch.wrapper.patch
+PATCHFILES += 0002-fix-manpage-paths= fix-manpage-paths.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
