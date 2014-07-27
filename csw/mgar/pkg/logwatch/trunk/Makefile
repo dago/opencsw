@@ -51,7 +51,9 @@ SHAREDIR = $(datadir)/$(NAME)
 MANDIR = $(datadir)/man
 DOCDIR = $(datadir)/doc/$(NAME)
 CONFDIR = $(syEMP_onfdir)/$(NAME)
-TMPDIR = /vainstall-custom:
+TMPDIR = /vaPRESERVECONF  = $(CONFDIR)/conf/ignore.conf
+PRESERVECONF += $(CONFDIR)/conf/logwatch.conf
+PRESERVECONF += $(CONFDIR)/conf/override.confvainstall-custom:
 	@(echo "A no-op installer."; \
 	 echo "We do everything via modulated post-installer.")
 	@$(MAKECOOKIE)
