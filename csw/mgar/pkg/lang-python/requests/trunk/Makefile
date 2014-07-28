@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = requests
-VERSION = 2.2.1
+VERSION = 2.3.0
 GARTYPE = v2
 CATEGORIES = python
 
