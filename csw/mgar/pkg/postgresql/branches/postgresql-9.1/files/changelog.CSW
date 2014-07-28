@@ -1,3 +1,10 @@
+postgresql91 (9.1.14,REV=2014.07.28)
+
+  * New upstream release 9.1.14.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 28 Jul 2014 10:35:01 +0200
+
+
 postgresql91 (9.1.13,REV=2014.04.12)
 
   * New upstream release 9.1.13.
@@ -38,7 +45,7 @@ postgresql91 (9.1.7,REV=2012.12.09)
   * New upstream release 9.1.7.
 
   * pg_config: do not emit compiler optimization flags (see
-	       https://www.opencsw.org/mantis/view.php?id=5025)
+    https://www.opencsw.org/mantis/view.php?id=5025)
 
  -- Rafael Ostertag <raos@opencsw.org>  Sun, 09 Dec 2012 10:02:08 +0100
 
@@ -47,14 +54,14 @@ postgresql91 (9.1.6,REV=2012.10.03)
 
   * New upstream release 9.1.6.
 
- -- Rafael Ostertag <raos@opencsw.org>  Tue, 02 Oct 2012 15:14:12+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 02 Oct 2012 15:14:12 +0200
 
 
 postgresql91 (9.1.5,REV=2012.08.22)
 
   * New upstream release 9.1.5.
 
- -- Rafael Ostertag <raos@opencsw.org>  Wed, 22 Aug 2012 08:27:06+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Wed, 22 Aug 2012 08:27:06 +0200
 
 
 postgresql91 (9.1.4,REV=2012.06.13)
@@ -63,10 +70,10 @@ postgresql91 (9.1.4,REV=2012.06.13)
 
   * Dropped support for Solaris 9
 
-  * Include changelog.CSW in all packages, thus removing the clustering of
-    changelog.CSW files in CSWpostgresql
+  * Include changelog.CSW in all packages, thus removing the clustering
+    of changelog.CSW files in CSWpostgresql
 
- -- Rafael Ostertag <raos@opencsw.org>  Wed, 13 June 2012 15:46:57+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Wed, 13 Jun 2012 15:46:57 +0200
 
 
 postgresql91 (9.1.3,REV=2012.05.01)
@@ -76,3 +83,5 @@ postgresql91 (9.1.3,REV=2012.05.01)
   * Updated libssl dependencies.
 
  -- Rafael Ostertag <raos@opencsw.org>  Tue, 01 May 2012 08:48:19 +0200
+
+
