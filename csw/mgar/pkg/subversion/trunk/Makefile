@@ -56,7 +56,8 @@ BUILD_DEP_PKGS += $(BUILD_DEP_PKGS-$(GAROSREL))
 PACKAGES += CSWsvn
 SPKG_DESC_CSWsvn = Version control rethought
 CATALOGNAME_CSWsvnNAME_CSWsvn         = subversion
-CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expected-catalogname=svn
+CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expectCHECKPKG_OVERRIDES_CSWsvn += file-needed-but-no-package-satisfies-it|/opt/csw/lib/svn/libsvn_ra_neon-1.so.0.0.0|CSWsvn|contains|symlink|/opt/csw/lib/svn/libsvn_ra_dav-1.so|which|needs|the|target|file:|/opt/csw/lib/svn/libsvn_ra_neon-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWsvn += file-needed-but-no-package-satisfies-it|/opt/csw/lib/svn/libsvn_ra_neon-1.so.0.0.0|CSWsvn|contains|symlink|/opt/csw/lib/svn/libsvn_ra_dav-1.so.0|which|needs|the|target|file:|/opt/csw/lib/svn/libsvn_ra_neon-1.so.0.0.0ted-catalogname=svn
 RUNTI= CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibmagic1
