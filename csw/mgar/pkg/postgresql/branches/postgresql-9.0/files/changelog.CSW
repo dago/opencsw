@@ -1,8 +1,15 @@
+postgresql90 (9.0.18,REV=2014.07.28)
+
+  * New upstream release 9.0.18.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 28 Jul 2014 07:48:50 +0200
+
+
 postgresql90 (9.0.17,REV=2014.04.12)
 
   * New upstream release 9.0.17.
 
- -- Rafael Ostertag <raos@opencsw.org>  Sat, 12 Aprt 2014 10:52:53 +0200
+ -- Rafael Ostertag <raos@opencsw.org>  Sat, 12 Apr 2014 10:52:53 +0200
 
 
 postgresql90 (9.0.16,REV=2014.03.16)
@@ -38,7 +45,7 @@ postgresql90 (9.0.11,REV=2012.12.09)
   * New upstream release 9.0.11.
 
   * pg_config: do not emit compiler optimization flags (see
-	       https://www.opencsw.org/mantis/view.php?id=5025)
+    https://www.opencsw.org/mantis/view.php?id=5025)
 
  -- Rafael Ostertag <raos@opencsw.org>  Sun, 09 Dec 2012 10:02:08 +0100
 
@@ -47,14 +54,14 @@ postgresql90 (9.0.10,REV=2012.10.02)
 
   * New upstream release 9.0.10.
 
- -- Rafael Ostertag <raos@opencsw.org>  Tue, 02 Oct 2012 10:59:08+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Tue, 02 Oct 2012 10:59:08 +0200
 
 
 postgresql90 (9.0.9,REV=2012.08.22)
 
   * New upstream release 9.0.9.
 
- -- Rafael Ostertag <raos@opencsw.org>  Wed, 22 Aug 2012 08:27:06+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Wed, 22 Aug 2012 08:27:06 +0200
 
 
 postgresql90 (9.0.8,REV=2012.06.13)
@@ -63,10 +70,10 @@ postgresql90 (9.0.8,REV=2012.06.13)
 
   * Dropped support for Solaris 9
 
-  * Include changelog.CSW in all packages, thus removing the clustering of
-    changelog.CSW files in CSWpostgresql
+  * Include changelog.CSW in all packages, thus removing the clustering
+    of changelog.CSW files in CSWpostgresql
 
- -- Rafael Ostertag <raos@opencsw.org>  Mon, 13 June 2012 07:26:57+0200
+ -- Rafael Ostertag <raos@opencsw.org>  Mon, 13 Jun 2012 07:26:57 +0200
 
 
 postgresql90 (9.0.7,REV=2012.05.01)
@@ -76,3 +83,5 @@ postgresql90 (9.0.7,REV=2012.05.01)
   * Updated libssl dependencies.
 
  -- Rafael Ostertag <raos@opencsw.org>  Tue, 01 May 2012 08:48:19 +0200
+
+
