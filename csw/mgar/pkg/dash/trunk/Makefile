@@ -5,12 +5,12 @@ VERSION = 0.5.7
 GARTYPE = v2
 
 DESCRIPTION = POSIX-compliant implementation of /bin/sh that aims to be as small as possible
-define BLURB
-endef
 
 VENDOR_URL = http://gondor.apana.org.au/~herbert/dash/
 MASTER_SITES = http://gondor.apana.org.au/~herbert/dash/files/
 DISTFILES  = $(DISTNAME).tar.gz
+
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 
 # I'm too lazy to remove gcc-isms such as -Wall and -include.
 GARCOMPILER = GNU
