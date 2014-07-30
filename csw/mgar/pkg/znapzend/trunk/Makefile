@@ -5,8 +5,6 @@ NAME = znapzend
 VERSION = 0.8.6
 GARTYPE = v2
 
-GARCOMPILER = GCC4
-
 DESCRIPTION = The Multilevel Backup Tool for ZFS
 define BLURB
   ZnapZend is a ZFS centric backup tool. It relies on snapshot, send and receive todo its work. It has the built-in ability to to manage both local snapshots as well as remote copies by thining them out as time progresses.
@@ -25,8 +23,20 @@ CONFIGURE_ARGS = $(DIRPATHS)
 BUILD_DEP_PKGS = CSWpm-pod-simple
 BUILD_DEP_PKGS = CSWpm-mojolicious
 
-RUNTIME_DEP_PKGS = CSWpm-pod-simple
-RUNTIME_DEP_PKGS = CSWpm-mojolicious
+RUNTIME_DEP_PKGS_CSWznapzend += CSWperl
+RUNTIME_DEP_PKGS_CSWznapzend += CSWpm-pod-simple
+CHECKPKG_OVERRIDES_CSWznapzend += surplus-dependency|CSWpm-pod-simple
+RUNTIME_DEP_PKGS_CSWznapzend += CSWpm-mojolicious
+CHECKPKG_OVERRIDES_CSWznapzend += surplus-dependency|CSWpm-mojolicious
+
+ARCHALL_CSWznapzend = 1
+
+# Ok: usage examples
+CHECKPKG_OVERRIDES_CSWznapzend += file-with-bad-content|/usr/local|root/opt/csw/doc/znapzendzetup.pod
+CHECKPKG_OVERRIDES_CSWznapzend += file-with-bad-content|/usr/local|root/opt/csw/bin/znapzendzetup
+
+# Ok: location of DTD
+CHECKPKG_OVERRIDES_CSWznapzend += file-with-bad-content|/usr/share|root/opt/csw/init/znapzend.xml
 
 include gar/category.mk
 
