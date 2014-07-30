@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME       = Mojolicious
-VERSION    = 5.21
+VERSION    = 5.22
 GARTYPE    = v2
 CATEGORIES = cpan
 AUTHOR     = SRI
