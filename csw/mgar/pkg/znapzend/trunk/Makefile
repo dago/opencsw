@@ -22,7 +22,11 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# CSWpm-pod-simple ExtUtils::MakeMaker  ExtUtils::Install 1.46
+BUILD_DEP_PKGS = CSWpm-pod-simple
+BUILD_DEP_PKGS = CSWpm-mojolicious
+
+RUNTIME_DEP_PKGS = CSWpm-pod-simple
+RUNTIME_DEP_PKGS = CSWpm-mojolicious
 
 include gar/category.mk
 
