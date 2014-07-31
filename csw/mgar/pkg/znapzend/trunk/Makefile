@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = znapzend
-VERSION = 0.8.6
+VERSION = 0.8.7
 GARTYPE = v2
 
 DESCRIPTION = The Multilevel Backup Tool for ZFS
@@ -28,6 +28,9 @@ RUNTIME_DEP_PKGS_CSWznapzend += CSWpm-pod-simple
 CHECKPKG_OVERRIDES_CSWznapzend += surplus-dependency|CSWpm-pod-simple
 RUNTIME_DEP_PKGS_CSWznapzend += CSWpm-mojolicious
 CHECKPKG_OVERRIDES_CSWznapzend += surplus-dependency|CSWpm-mojolicious
+# Can be used as an option
+RUNTIME_DEP_PKGS_CSWznapzend += CSWmbuffer
+CHECKPKG_OVERRIDES_CSWznapzend += surplus-dependency|CSWmbuffer
 
 ARCHALL_CSWznapzend = 1
 
