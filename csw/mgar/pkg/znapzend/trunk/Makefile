@@ -20,8 +20,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-BUILD_DEP_PKGS = CSWpm-pod-simple
-BUILD_DEP_PKGS = CSWpm-mojolicious
+BUILD_DEP_PKGS += CSWpm-pod-simple
+BUILD_DEP_PKGS += CSWpm-mojolicious
 
 RUNTIME_DEP_PKGS_CSWznapzend += CSWperl
 RUNTIME_DEP_PKGS_CSWznapzend += CSWpm-pod-simple
