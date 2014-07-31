@@ -14,7 +14,7 @@ endef
 
 
 PACKAGES    = CSWpm-mojo-ioloop-forkcall
-CATALOGNAME = pm_mojo-ioloop-forkcall
+CATALOGNAME = pm_mojo_ioloop_forkcall
 SPKG_DESC_CSWpm-mojo-ioloop-forkcall = $(DESCRIPTION)
 
 ARCHALL = 1
