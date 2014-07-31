@@ -45,6 +45,7 @@ REINPLACE_FILES_pmdir = Makefile.in
 
 CONFIGURE_ARGS =  $(DIRPATHS)
 CONFIGURE_ARGS += --datadir=$(libdir)/perl/csw/
+CONFIGURE_ARGS += PERL5LIB=$(libdir)/perl/csw/
 
 BUILD_DEP_PKGS += CSWpm-pod-simple
 BUILD_DEP_PKGS += CSWpm-mojolicious
