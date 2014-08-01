@@ -1,5 +1,9 @@
 #!/bin/sh
-#AUTOENABLE no      # Before running always manual adjustment of smb.conf is needed
+#
+# ZnapZend SMF method script
+#
+# ### OpenCSW parameters ###
+#AUTOENABLE no      # Don't enable by default
 #FMRI system        # FMRI path for service (S10+), default is /network.
 
 
