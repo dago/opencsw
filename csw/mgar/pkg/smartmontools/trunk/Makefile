@@ -15,12 +15,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-GARCOMPILER = GCC4)-$(VERSION).tar.gz
 
 # smartmontools packages built on 5.9 don't work on 5.10:
 # > Error SMART Thresholds Read failed: I/O error
 # > Smartctl: SMART Read Thresholds failed.
-# However, packages built on 5.10 do work on 5.10.
+# However, packages built on 1.10 do work on 5.10.
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
