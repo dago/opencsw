@@ -28,11 +28,11 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(NAME)
 CONFIGURE_ARGS += --with-initscriptdir=/etc/opt/csw/init.d
 
-INITSMF = $(sysconfdir)/init.d/cswsmartd
+INITSMF = $(sysconfdir)RUNTIME_DEP_PKGS_CSWsmartmontools += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWsmartmontools += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWsmartmontools += CSWcurl
 
-CHECKPKG_OVERRIDES_CSWsmartmontools += file-with-bad-content
-EXTRA_CFLAGS = -xnorunpath
-EXTRA_CXXFLAGS = -norunpath
+CHECKPKG_OVERRIDES_CSWsmartmontools += file-with-bad-contentXFLAGS = -norunpath
 
 include gar/category.mk
 
