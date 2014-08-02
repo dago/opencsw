@@ -31,6 +31,7 @@ CONFIGURE_ARGS += --with-initscriptdir=/etc/opt/csw/init.d
 INITSMF = $(sysconfdir)RUNTIME_DEP_PKGS_CSWsmartmontools += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsmartmontools += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWsmartmontools += CSWcurl
+CHECKPKG_OVERRIDES_CSWsmartmontools += surplus-dependency|CSWcurl
 
 CHECKPKG_OVERRIDES_CSWsmartmontools += file-with-bad-contentXFLAGS = -norunpath
 
