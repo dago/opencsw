@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = smartmontools
-VERSION = 6.2
+VERSION = 6.3
 GARTYPE = v2
 CATEGORIES = utils
 
