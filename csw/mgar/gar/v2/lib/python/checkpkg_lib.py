@@ -445,6 +445,10 @@ class CheckInterfaceBase(object):
       self.pkgs_by_path_cache[key] = pkgs
     return self.pkgs_by_path_cache[key]
 
+  def GetPkgByPkgname(self, pkgname):
+    return self.rest_client.Srv4ByCatalogAndPkgname(
+        self.catrel, self.arch, self.osrel, pkgname)
+
   def GetInstalledPackages(self):
     return self.catalog.GetInstalledPackages(
         self.osrel, self.arch, self.catrel)

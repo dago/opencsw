@@ -1320,3 +1320,40 @@ def Check64bitBinariesPresence(pkg_data, error_mgr, logger, messenger):
     "in the usual locations. "
     "Locations checked for 64-bit binaries: %s."
     % (binaries[0], paths_64_str))
+
+def CheckShouldNotDependOnStub(pkg_data, error_mgr, logger, messenger):
+  """Newly built packages should not declare stubs as dependencies.
+
+  Example data structure:
+  {
+      "arch": "sparc",
+      "basename": "bash-4.3.0,REV=2014.03.15-SunOS5.10-sparc-CSW.pkg.gz",
+      "catalogname": "bash",
+      "file_basename": "bash-4.3.0,REV=2014.03.15-SunOS5.10-sparc-CSW.pkg.gz",
+      "filename_arch": "sparc",
+      "maintainer_email": "yann@opencsw.org",
+      "maintainer_full_name": "Yann Rouillard",
+      "maintainer_id": 50,
+      "md5_sum": "5556f5bb4317267f5b3b4c51a9a13d25",
+      "mtime": "2014-03-15T21:05:47",
+      "osrel": "SunOS5.10",
+      "pkgname": "CSWbash",
+      "repository_url": "https://chninkel/Makefile",
+      "rev": "2014.03.15",
+      "size": 2323045,
+      "vendor_url": "http://tiswww.case.edu/php/chet/bash/bashtop.html",
+      "version": "4.3.0,REV=2014.03.15",
+      "version_string": "4.3.0,REV=2014.03.15"
+  }
+  """
+  for dep_pkgname, _ in pkg_data['depends']:
+    # This package better not be a stub.
+    # But how do we know it's a stub? We test for the presence of...
+    dep_data = error_mgr.GetPkgByPkgname(dep_pkgname)
+    if dep_data['catalogname'].endswith('_stub'):
+      error_mgr.ReportError(
+          'dependency-on-stub',
+          dep_data['catalogname'],
+          'Please not declare dependencies on stubs in newly built packages. '
+          'There is another dependency which you should use. '
+          'You need to find it in e.g. http://www.opencsw.org/packages/')
