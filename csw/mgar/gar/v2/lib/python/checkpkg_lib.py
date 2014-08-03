@@ -981,8 +981,7 @@ class Catalog(SqlobjectHelperMixin):
         ]
 
     res = m.Pkginst.select(oac, join=join)
-    pkgs = [x.pkgname for x in res]
-    return pkgs
+    return [x.pkgname for x in res]
 
   def GetPathsAndPkgnamesByBasename(self, basename, osrel, arch, catrel):
     """Retrieves pkginst names of packages that have certain files.
