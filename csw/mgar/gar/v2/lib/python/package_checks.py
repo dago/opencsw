@@ -1350,6 +1350,8 @@ def CheckShouldNotDependOnStub(pkg_data, error_mgr, logger, messenger):
     # This package better not be a stub.
     # But how do we know it's a stub? We test for the presence of...
     dep_data = error_mgr.GetPkgByPkgname(dep_pkgname)
+    if dep_data is None:
+      continue
     if dep_data['catalogname'].endswith('_stub'):
       error_mgr.ReportError(
           'dependency-on-stub',
