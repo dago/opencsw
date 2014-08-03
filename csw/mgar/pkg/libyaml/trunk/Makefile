@@ -14,6 +14,9 @@ MASTER_SITES = http://pyyaml.org/downlNAME     = yaml-$(VERSION)
 DISTFILES    = $(DISTNAME).tar.gz
 TEST_SCRIPTS =
 
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
+
 PACKAGES += CSWlibyaml0-2
 CATALOGNAME_CSWlibyaml0-2 = libyaml0_2
 PKGFILES_CSWlibyaml0-2 += $(call baseisadirs,$(libdir),libyaml-0\.so\.2(\.\d+)*)
@@ -25,13 +28,11 @@ SPKG_DESC_CSWlibyaml-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWlibyaml-dev += CSWlibyaml0-2
 # PKGFILES is catchall
 
-# CSWlibyaml used to contain the dev bits.
-# It is an old packages that was replaced by CSWlibyaml0_1  
-CHECKPKG_OVERRIDES_CSWlibyaml-dev += file-collision|/opt/csw/lib/libyaml.so|CSWlibyaml|CSWlibyaml-dev
-CHECKPKG_OVERRIDES_CSWlibyaml-dev += file-collision|/opt/csw/include/yaml.h|CSWlibyaml|CSWlibyaml-dev
+OBSOLETED_BY_CSWlibyaml-dev = CSWlibyaml
+OBSOLETED_BY_CSWlibyaml0-1 = CSWlibyaml
+FOREIGN_PACKAGES = CSWlibyaml0-1
 
-C
-TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD
+BUILD64_LIBS_ONLY = 1
+
 include gar/category.mk
