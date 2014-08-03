@@ -15,8 +15,6 @@ import mox
 import os.path
 import pprint
 
-from lib.python.testdata.djvulibre_rt_stats import pkgstats as djvulibre_rt_stats
-
 from lib.python import checkpkg_lib
 from lib.python import fake_pkgstats_composer
 from lib.python import package_checks as pc
@@ -26,10 +24,7 @@ from lib.python.testdata import rpaths
 from lib.python.testdata import stubs
 
 from lib.python.testdata.berkeleydb48_stats import pkgstats as bdb48_stats
-# from lib.python.testdata.cadaver_stats import pkgstats as cadaver_stats
-# from lib.python.testdata.ivtools_stats import pkgstats as ivtools_stats
-# from lib.python.testdata.javasvn_stats import pkgstats as javasvn_stats
-# from lib.python.testdata.mercurial_stats import pkgstats as mercurial_stats
+from lib.python.testdata.djvulibre_rt_stats import pkgstats as djvulibre_rt_stats
 from lib.python.testdata.neon_stats import pkgstats as neon_stats
 from lib.python.testdata.rsync_stats import pkgstats as rsync_stats
 from lib.python.testdata.sudo_stats import pkgstats as sudo_stats

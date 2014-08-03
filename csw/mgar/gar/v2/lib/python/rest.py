@@ -70,7 +70,9 @@ class RestClient(object):
     self.ValidateMd5(md5_sum)
     return self.GetBlob('pkgstats', md5_sum)
 
-  @retry_decorator.Retry(tries=DEFAULT_TRIES, exceptions=(RestCommunicationError, httplib.BadStatusLine))
+  @retry_decorator.Retry(tries=DEFAULT_TRIES,
+                         exceptions=(RestCommunicationError,
+                                     httplib.BadStatusLine))
   def GetCatalogData(self, md5_sum):
     self.ValidateMd5(md5_sum)
     url = self.pkgdb_url + "/srv4/%s/catalog-data/" % md5_sum
