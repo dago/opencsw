@@ -1,0 +1,33 @@
+From 4b174c3e9d937ea5276341c2e2bda7392d8a4571 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 3 Aug 2014 21:40:27 +0200
+Subject: [PATCH] Solaris headers are different
+
+---
+ src/yaml_private.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/yaml_private.h b/src/yaml_private.h
+index f0e1001..1d3fc7f 100644
+--- a/src/yaml_private.h
++++ b/src/yaml_private.h
+@@ -10,7 +10,7 @@
+ #include <stddef.h>
+ 
+ #ifndef _MSC_VER
+-#include <stdint.h>
++#include <inttypes.h>
+ #else
+ #ifdef _WIN64
+ #define PTRDIFF_MAX _I64_MAX
+@@ -18,6 +18,7 @@
+ #define PTRDIFF_MAX INT_MAX
+ #endif
+ #endif
++#define PTRDIFF_MAX INT_MAX
+ 
+ /*
+  * Memory management.
+-- 
+1.7.10.3
+

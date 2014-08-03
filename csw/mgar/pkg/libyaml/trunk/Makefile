@@ -3,7 +3,7 @@
 # $Id$
 
 NAME    = libyaml
-VERSION = 0.1.4
+VERSION = 0.1.6
 GARTYPE = v2
 
 DESCRIPTION = A YAML 1.1 parser and emitter written in C
@@ -16,6 +16,8 @@ TEST_SCRIPTS =
 
 PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
+
+PATCHFILES += 0001-Solaris-headers-are-different.patch
 
 PACKAGES += CSWlibyaml0-2
 CATALOGNAME_CSWlibyaml0-2 = libyaml0_2
