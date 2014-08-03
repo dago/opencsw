@@ -6,7 +6,7 @@ It's a toy as of 2014-04-05.
 
 To draw a histogram of package ages, run this in R:
 
-data <- read.table(file="/media/ivy-shared/package-ages.txt", header=TRUE,
+data <- read.table(file="package-ages.txt", header=TRUE,
                    colClasses=c("factor", "factor", "Date"))
 
 png(filename="package-ages.png", width=1024, height=1024)
