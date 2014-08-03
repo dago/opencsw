@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>unstable → {{ .CatalogName }} report for {{ .GeneratedOn }}</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="promote-packages.css">
+</head>
+<body>
+  <h1>unstable → {{ .CatalogName }} report for {{ .GeneratedOn }}</h1>
+  <h2>Groups of packages (based on bundles)</h2>
+  <div>
+  <ul class="group-summary-list">
+    {{ $ti := .TimeInfo }}
+    {{ range $ccg := .CrossCatGroups }}
+    <li>
+      <a href="#{{ $ccg.Key }}" class="{{ if $ccg.Evaluated }}{{ if $ccg.CanBeIntegratedNow }}can-be-integrated{{ else }}cannot-be-integrated{{ end }}{{ else }}not-evaluated{{ end }}">{{ $ccg.Key }}</a>
+      {{ if $ccg.Bugs }}
+      (blocking bugs!)
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+  </div>
+  <h2 style="clear: both;">Details</h2>
+  <ul class="cross-cat-groups">
+    {{ range $ccg := .CrossCatGroups }}
+    <li>
+      <a id="{{ $ccg.Key }}"></a>
+      <table class="ccatgroup grid">
+        <tr>
+          <td colspan="3" class="comment">
+            Bundle of packages ‒ all these packages need to be moved together.
+          </td>
+        </tr>
+      <tr>
+        <th class="key {{ if $ccg.Evaluated }}{{ if $ccg.CanBeIntegratedNow }}can-be-integrated{{ else }}cannot-be-integrated{{ end }}{{ else }}not-evaluated{{ end }}" colspan="2">
+          {{ $ccg.Key }}
+        </th>
+        <th>{{ $ccg.LatestMod}}</th>
+      </tr>
+
+      {{ if $ccg.Bugs }} <!-- bugs -->
+      <tr>
+        <th colspan="3">Blocking bugs</th>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <table class="blocking-bugs grid">
+            <tr>
+              <th>Severity</th>
+              <th>Status</th>
+              <th>Summary</th>
+            </tr>
+            {{ range $bug := $ccg.Bugs }}
+            <tr>
+              <td>
+              {{ $bug.Severity }}
+              </td>
+              <td>
+              {{ $bug.Status }}
+              </td>
+              <td>
+                <a href="{{ $bug.Url }}">{{ $bug.Summary }}</a>
+              </td>
+            </tr>
+            {{ end }}
+          </table>
+        </td>
+      </tr>
+      {{ end }} <!-- bugs end -->
+
+      {{ if $ccg.Messages }} <!-- Messages -->
+      {{ range $msg := $ccg.Messages }}
+      <tr>
+        <td colspan="3">
+          {{ $msg }}
+        </td>
+      </tr>
+      {{ end }}
+      {{ end }} <!-- Messages -->
+
+      <tr>
+        <th>Removed package</th>
+        <th>Added package</th>
+        <th>Latest operation on</th>
+      </tr>
+      {{ range $spec, $ops := $ccg.Ops }}
+        <tr>
+          <td class="spec" colspan="3">
+            <a href="{{ $spec.Url }}">{{ $spec }}</a>
+          </td>
+        </tr>
+        {{ range $op := $ops }}
+        <tr>
+          <td>
+            {{ if $op.Removed }}
+            <a href="{{ $op.Removed.Url }}">{{ $op.Removed }}</a>
+            {{ else }}
+            &mdash;
+            {{ end }}
+          </td>
+          <td>
+            {{ if $op.Added }}
+            <a href="{{ $op.Added.Url }}">{{ $op.Added }}</a>
+            {{ else }}
+            &mdash;
+            {{ end }}
+          </td>
+          <td>
+            {{ $op.SourceChanged }}
+          </td>
+        </tr>
+        {{ end }}
+      {{ end }}
+      {{ if $ccg.Dependencies }}
+      <tr>
+        <th colspan="3">
+          Dependencies
+        </th>
+      </tr>
+      <tr>
+        <td colspan="3" class="comment">
+          1+ of packages from this group depends on 1+ packages added by group(s) listed below.
+        </td>
+      </tr>
+      {{ range $_, $dependency := $ccg.Dependencies }}
+      <tr>
+        <td colspan="3">
+          <a href="#{{ $dependency.Key }}">{{ $dependency.Key }}</a>
+        </td>
+      </tr>
+      {{ end }}
+      {{ end }}
+      </table>
+
+      Commands to run:
+      <ul class="commands-to-run">
+      {{ range $spec, $ops := $ccg.Ops }}
+      {{ range $op := $ops }}
+      {{ range $command := $op.Commands }}
+      <li>
+      <code>{{ $command }}</code>
+      </li>
+      {{ end }}
+      {{ end }}
+      {{ end }}
+      </ul>
+
+      If you need to roll back:
+      <ul class="commands-to-run">
+      {{ range $spec, $ops := $ccg.Ops }}
+      {{ range $op := $ops }}
+      {{ range $command := $op.Rollback }}
+      <li>
+      <code>{{ $command }}</code>
+      </li>
+      {{ end }}
+      {{ end }}
+      {{ end }}
+      </ul>
+
+    </li>
+    {{ end }}
+  </ul>
+  <h2>Not handled by automation</h2>
+  <p>These packages don't have a defined bundle.</p>
+  <ul>
+    {{ range $catalogReport := .Catalogs }}
+    {{ range $badop := $catalogReport.Badops }}
+    <li>
+      {{ $badop }}
+    </li>
+    {{ end }}
+    {{ end }}
+  </ul>
+  Commands to run:
+  <ul class="commands-to-run">
+    {{ range $catalogReport := .Catalogs }}
+    {{ range $badop := $catalogReport.Badops }}
+    {{ range $command := $badop.Commands }}
+    <li>
+      <code>{{ $command }}</code>
+    </li>
+    {{ end }}
+    {{ end }}
+    {{ end }}
+  </ul>
+</body>
+</html>

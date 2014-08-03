@@ -1,6 +1,6 @@
 // Command promote-packages analyzes the state of the catalogs, and promotes
-// packages from one catalog (unstable) to another one, based on a set of
-// rules.
+// packages from one catalog release (unstable) to another one (testing, but
+// needs to be called by name, e.g. bratislava), based on a set of rules.
 //
 // Packages are put in groups. Groups are defined as:
 // - we start with a single package
@@ -15,16 +15,19 @@
 // When the same group is identified across all catalog pairs, the group is
 // scheduled to be promoted in all catalogs.
 //
-// Features missing:
-// - adding dependencies to a group
-// - tracking the times when a package appeared or disappeared in a catalog
-//   (for time accounting)
-// - making changes to the testing catalog
+// TODO:
+// - making actual changes
+//   HTTP Basic auth reading credentials
+//   Installing GCC-4.8.2 on experimental10s
 //
-// This program has to be compiled with gcc-4.8.2, because gcc-4.9.0 produces
-// a binary which segfaults (or the go runtime segfauls, hard to tell). 
-// The bug is filed in the gcc bugzilla:
-// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61303
+// Known issues:
+// - There can be a dependency cycle between package groups. In such cases
+//   integration will not work, unless the two groups are merged into one.
+//   There is no code to merge groups yet.
+// - This program has to be compiled with gcc-4.8.x, because gcc-4.9.{0,1}
+//   produce a binary which segfaults (or the go runtime segfauls, hard to
+//   tell). The bug is filed in the gcc bugzilla:
+//   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61303
 
 package main
 
@@ -34,9 +37,14 @@ import (
   "flag"
   "fmt"
   "html/template"
+  "io"
   "log"
+  "net/http"
   "os"
+  "os/exec"
+  "path"
   "sort"
+  "strings"
   "sync"
   "time"
 
@@ -47,25 +55,40 @@ import (
 // Command line flags
 var from_catrel_flag string
 var to_catrel_flag string
-var htmlReportFlag string
+var htmlReportDir string
 var packageTimesFilename string
+var htmlReportTemplate string
+var daysOldRequired int64
+var logFile string
 
+const (
+  htmlReportFile = "promote-packages.html"
+)
 
 func init() {
   flag.StringVar(&from_catrel_flag, "from-catrel", "unstable",
                  "Actually, only unstable makes sense here.")
   flag.StringVar(&to_catrel_flag, "to-catrel", "bratislava",
                  "The testing release.")
-  flag.StringVar(&htmlReportFlag, "html-report-path",
-                 "/home/maciej/public_html/promote-packages.html",
+  flag.StringVar(&htmlReportDir, "html-report-path",
+                 "/home/maciej/public_html",
                  "Full path to the file where the HTML report will be " +
                  "written. If the file already exists, it will be " +
                  "overwritten. ")
+  flag.StringVar(&htmlReportTemplate, "html-report-template",
+                 "src/promote-packages/report-template.html",
+                 "HTML template used to generate the report.")
   flag.StringVar(&packageTimesFilename, "package-times-json-file",
                  "/home/maciej/.checkpkg/package-times.json",
                  "JSON file with package times state. This file is used " +
                  "for persistence: it remembers when each of the packages " +
                  "was last modified in the unstable catalog.")
+  flag.Int64Var(&daysOldRequired, "required-age-in-days", 14,
+                "Packages must be this number of days old before they can " +
+                "be integrated.")
+  flag.StringVar(&logFile, "log-file",
+                 "/var/tmp/promote-packages.log",
+                 "The log file contains rollback information.")
 }
 
 type CatalogSpecTransition struct {
@@ -73,8 +96,6 @@ type CatalogSpecTransition struct {
   toCatspec diskformat.CatalogSpec
 }
 
-// CONTINUE FROM HERE: The challenge is to plug in the time information. We
-// need to combine the data from REST with previously serialized data.
 type CatalogWithSpecTransition struct {
   fromCat diskformat.CatalogExtra
   toCat diskformat.CatalogExtra
@@ -87,8 +108,7 @@ type catalogOperation struct {
   Spec diskformat.CatalogSpec
   Removed *diskformat.PackageExtra
   Added *diskformat.PackageExtra
-  // Maybe add timing information here?
-  SourceChanged *time.Time
+  SourceChanged time.Time
 }
 
 // Type used to store information about the last time package was seen.
@@ -106,12 +126,21 @@ type PackageTimeInfo struct {
 type CatalogReleaseTimeInfo struct {
   Pkgs []PackageTimeInfo `json:"pkgs"`
 
-  // For faster operations. Indexed by MD5 sums. Not serialized.
+  // For faster operations. Indexed by MD5 sums. Not serialized directly.
   catalogs map[diskformat.CatalogSpec]map[diskformat.Md5Sum]PackageTimeInfo
 }
 
-func (t *CatalogReleaseTimeInfo) Get(spec diskformat.CatalogSpec, md5_sum string) PackageTimeInfo {
-  return PackageTimeInfo{}
+func (t *CatalogReleaseTimeInfo) Time(sourceSpec diskformat.CatalogSpec, md5Sum diskformat.Md5Sum) (time.Time, error) {
+  // return PackageTimeInfo{}
+  sourceSpec.Catrel = from_catrel_flag
+
+  if catTime, ok := t.catalogs[sourceSpec]; ok {
+    if pti, ok := catTime[md5Sum]; ok {
+      return pti.ChangedAt, nil
+    }
+    return time.Time{}, fmt.Errorf("Could not find timing for %v in %v", md5Sum, sourceSpec)
+  }
+  return time.Time{}, fmt.Errorf("Could not find timing information for catalog %v", sourceSpec)
 }
 
 func (t *CatalogReleaseTimeInfo) Load() error {
@@ -162,7 +191,7 @@ func (t *CatalogReleaseTimeInfo) Save() error {
 }
 
 // Updates the timing information based on a catalog.
-// Packages are matched by md5 sum. Possible states:
+// SVR4 files are identified by md5 sum. Possible states:
 //
 //   State in cache | State in catalog | Action
 //   ---------------+------------------+--------
@@ -175,7 +204,6 @@ func (t *CatalogReleaseTimeInfo) Save() error {
 //
 func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
   if _, ok := t.catalogs[c.Spec]; !ok {
-    // Indexed by MD5 sum.
     t.catalogs[c.Spec] = make(map[diskformat.Md5Sum]PackageTimeInfo)
   }
   inCat := make(map[diskformat.Md5Sum]bool)
@@ -198,6 +226,7 @@ func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
     if _, ok := inCat[md5]; !ok {
       // Packages that aren't in the catalog (any more).
       p := t.catalogs[c.Spec][md5]
+      // This field is not actually read anywhere. It's enough that an entry exists.
       p.Present = false
       p.ChangedAt = time.Now()
       t.catalogs[c.Spec][md5] = p
@@ -206,21 +235,26 @@ func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
 }
 
 func (c catalogOperation) String() string {
+  var t string = " (last change time unknown)"
+  if (!c.SourceChanged.IsZero()) {
+    t = (" (" + c.SourceChanged.String() + ", that is " +
+         (time.Now().Sub(c.SourceChanged)).String() + " ago)")
+  }
   if c.Removed != nil && c.Added != nil {
-    return fmt.Sprintf("Change: %v %v → %v in %v",
+    return fmt.Sprintf("Change: %v %v → %v in %v %v",
                        c.Removed.Catalogname, c.Removed.Version,
-                       c.Added.Version, c.Spec)
+                       c.Added.Version, c.Spec, t)
   } else if c.Removed != nil && c.Added == nil {
-    return fmt.Sprintf("Removal: %v %v in %v",
+    return fmt.Sprintf("Removal: %v %v in %v %v",
                        c.Removed.Catalogname, c.Removed.Version,
-                       c.Spec)
+                       c.Spec, t)
   }
   if c.Removed == nil && c.Added != nil {
-    return fmt.Sprintf("Addition: %v %v in %v",
+    return fmt.Sprintf("Addition: %v %v in %v %v",
                        c.Added.Catalogname, c.Added.Version,
-                       c.Spec)
+                       c.Spec, t)
   }
-  return fmt.Sprintf("What?")
+  return fmt.Sprintf("This operation does not remove nor add anything.")
 }
 
 // Returns the identifier of the group to which this operation should belong.
@@ -228,7 +262,8 @@ func (c catalogOperation) String() string {
 func (c catalogOperation) GroupKey() (string, error) {
   if c.Removed != nil && c.Added != nil {
     if c.Removed.Bundle == "" && c.Added.Bundle == "" {
-      return "", fmt.Errorf("Either source or target package's bundle is empty, or both: %v -> %v.", c.Removed, c.Added)
+      return "", fmt.Errorf("Either source or target package's bundle is " +
+                            "empty, or both: %v -> %v.", c.Removed, c.Added)
     }
     if c.Removed.Bundle == "" {
       // The removed package doesn't have a bundle but the added package has.
@@ -272,18 +307,10 @@ func (c catalogOperation) Catalogname() string {
 func (c catalogOperation) Commands() []string {
   ans := make([]string, 0)
   if c.Removed != nil {
-    ans = append(ans,
-                 fmt.Sprintf("curl --netrc -X DELETE %s/catalogs/%s/%s/%s/%s/",
-                 diskformat.ReleasesUrl,
-                 c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
-                 c.Removed.Md5_sum))
+    ans = append(ans, c.Removed.CurlInvocation(c.Spec, "DELETE"))
   }
   if c.Added != nil {
-    ans = append(ans,
-                 fmt.Sprintf("curl --netrc -X PUT    %s/catalogs/%s/%s/%s/%s/",
-                 diskformat.ReleasesUrl,
-                 c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
-                 c.Added.Md5_sum))
+    ans = append(ans, c.Added.CurlInvocation(c.Spec, "PUT   "))
   }
   return ans
 }
@@ -291,30 +318,90 @@ func (c catalogOperation) Commands() []string {
 func (c catalogOperation) Rollback() []string {
   rollback := make([]string, 0)
   if c.Added != nil {
-    rollback = append(rollback,
-                      fmt.Sprintf("curl --netrc -X DELETE %s/catalogs/%s/%s/%s/%s/",
-                      diskformat.ReleasesUrl,
-                      c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
-                      c.Added.Md5_sum))
+    rollback = append(rollback, c.Added.CurlInvocation(c.Spec, "DELETE"))
   }
   if c.Removed != nil {
-    rollback = append(rollback,
-                      fmt.Sprintf("curl --netrc -X PUT    %s/catalogs/%s/%s/%s/%s/",
-                      diskformat.ReleasesUrl,
-                      c.Spec.Catrel, c.Spec.Arch, c.Spec.Osrel,
-                      c.Removed.Md5_sum))
+    rollback = append(rollback, c.Removed.CurlInvocation(c.Spec, "PUT   "))
   }
   return rollback
 }
 
+type credentials struct {
+  username, password string
+}
+
+// One of the messier parts. We're running on web, so we need to ssh back to
+// the login host to get the password.
+func GetCredentials() credentials {
+  // os.user.Current() seems not to work.
+  u := os.Getenv("LOGNAME")
+  args := []string{"login", "cat"}
+  args = append(args, fmt.Sprintf("/etc/opt/csw/releases/auth/%s", u))
+  log.Println("Running ssh", args)
+  passwdBytes, err := exec.Command("ssh", args...).Output()
+  passwd := strings.TrimSpace(string(passwdBytes))
+  if err != nil {
+    log.Fatalln(err);
+  }
+  return credentials{
+    u,
+    passwd,
+  }
+}
+
+func RestRequest(client *http.Client, cr credentials, verb, url string) error {
+  req, err := http.NewRequest(verb, url, nil)
+  if err != nil {
+    return err
+  }
+  req.SetBasicAuth(cr.username, cr.password)
+  resp, err := client.Do(req)
+  if err != nil {
+    return err
+  }
+  defer resp.Body.Close()
+  if resp.StatusCode >= 200 && resp.StatusCode < 300 {
+    log.Println(verb, "to", url, "successful:", resp.StatusCode)
+  } else {
+    return fmt.Errorf("Response to %s is not a success: %+v", req, resp)
+  }
+  return nil
+}
+
+func (c catalogOperation) Perform(client *http.Client, cr credentials, w *os.File) error {
+  if c.Removed != nil {
+    url := c.Removed.UrlInCat(c.Spec)
+    if !diskformat.DryRun {
+      w.WriteString(fmt.Sprintf("# DELETE %s\n", url))
+      if err := RestRequest(client, cr, "DELETE", url); err != nil {
+        return err
+      }
+    } else {
+      w.WriteString(fmt.Sprintf("# (dry run) DELETE %s\n", url))
+      log.Println("Dry run: DELETE", url)
+    }
+  }
+  if c.Added != nil {
+    url := c.Added.UrlInCat(c.Spec)
+    if !diskformat.DryRun {
+      w.WriteString(fmt.Sprintf("# PUT %s\n", url))
+      if err := RestRequest(client, cr, "PUT", url); err != nil {
+        return err
+      }
+    } else {
+      w.WriteString(fmt.Sprintf("# (dry run) PUT %s\n", url))
+      log.Println("Dry run: PUT", url)
+    }
+  }
+  return nil
+}
+
+// Group of packages to be moved, specific to one catalog.
 type integrationGroup struct {
   Key string
   Spec diskformat.CatalogSpec
   Ops []catalogOperation
-}
-
-type IntegrationResult struct {
-  noidea string
+  LatestMod time.Time
 }
 
 type catalogIntegration struct {
@@ -330,6 +417,15 @@ type CrossCatIntGroup struct {
   Key string
   Ops map[diskformat.CatalogSpec][]catalogOperation
   Bugs []mantis.Bug
+  LatestMod time.Time
+  // Which other cross catalog groups this group depends on. Catalog operations
+  // which belong to this group must not be applied before applying operations
+  // from all the dependencies.
+  Dependencies map[string]*CrossCatIntGroup
+
+  Evaluated bool
+  CanBeIntegratedNow bool
+  Messages []string
 }
 
 func NewCrossCatIntGroup(key string) (*CrossCatIntGroup) {
@@ -337,7 +433,17 @@ func NewCrossCatIntGroup(key string) (*CrossCatIntGroup) {
   g.Key = key
   g.Ops = make(map[diskformat.CatalogSpec][]catalogOperation)
   g.Bugs = make([]mantis.Bug, 0)
+  g.Dependencies = make(map[string]*CrossCatIntGroup)
   return g
+}
+
+func (g CrossCatIntGroup) HasOperations() bool {
+  for _, ops := range g.Ops {
+    if len(ops) > 0 {
+      return true
+    }
+  }
+  return false
 }
 
 type reportData struct {
@@ -433,8 +539,7 @@ func intGroupSane(c diskformat.CatalogExtra, i *integrationGroup) error {
   return nil
 }
 
-func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integrationGroup, []catalogOperation) {
-  // No Mantis integration yet.
+func GroupsFromCatalogPair(t CatalogWithSpecTransition, timing *CatalogReleaseTimeInfo) (map[string]*integrationGroup, []catalogOperation) {
   log.Println("GroupsFromCatalogPair from", t.fromCat.Spec,
               "to", t.toCat.Spec)
 
@@ -453,20 +558,33 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integration
         continue
       }
       // There is a package with the same pkgname in the target catalog.
-      op := catalogOperation{t.toCat.Spec, pkgDestCat, pkgSrcCat, nil}
-      oplist = append(oplist, op)
+      if pkgTime, err := timing.Time(t.toCat.Spec, pkgSrcCat.Md5_sum); err == nil {
+        op := catalogOperation{t.toCat.Spec, pkgDestCat, pkgSrcCat, pkgTime}
+        oplist = append(oplist, op)
+      } else {
+        log.Fatalln(err)
+      }
     } else {
       // There is no package with the same pkgname in the target catalog.
-      op := catalogOperation{t.toCat.Spec, nil, pkgSrcCat, nil}
-      oplist = append(oplist, op)
+      if pkgTime, err := timing.Time(t.toCat.Spec, pkgSrcCat.Md5_sum); err == nil {
+        op := catalogOperation{t.toCat.Spec, nil, pkgSrcCat, pkgTime}
+        oplist = append(oplist, op)
+      } else {
+        log.Fatalln(err)
+      }
     }
   }
 
   // Packages that are only in the target catalog.
   for pkgname, topkg := range toByPkgname {
     if _, ok := fromByPkgname[pkgname]; !ok {
-      op := catalogOperation{t.toCat.Spec, topkg, nil, nil}
-      oplist = append(oplist, op)
+      if pkgTime, err := timing.Time(t.toCat.Spec, topkg.Md5_sum); err == nil {
+        // Deleted package information is still in the timing information.
+        op := catalogOperation{t.toCat.Spec, topkg, nil, pkgTime}
+        oplist = append(oplist, op)
+      } else {
+        log.Fatalln("Could not get timing information for", topkg.Md5_sum)
+      }
     }
   }
   log.Println("Found", len(oplist), "oplist")
@@ -483,10 +601,21 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integration
     }
     if intgroup, ok := groups[key]; !ok {
       oplist := make([]catalogOperation, 0)
-      intgroup = &integrationGroup{key, op.Spec, oplist}
+      intgroup = &integrationGroup{key, op.Spec, oplist, time.Time{}}
       groups[key] = intgroup
     }
     groups[key].Ops = append(groups[key].Ops, op)
+  }
+
+  for key := range groups {
+    // Set the group's latest change.
+    var youngest time.Time
+    for _, op := range groups[key].Ops {
+      if youngest.IsZero() || op.SourceChanged.Before(youngest) {
+        youngest = op.SourceChanged
+      }
+    }
+    groups[key].LatestMod = youngest
   }
 
   // We need to make sure that all the dependencies are present in the target
@@ -496,6 +625,7 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition) (map[string]*integration
     if err := intGroupSane(t.toCat, group); err != nil {
       log.Println("Group", key, "it not sane:", err)
     }
+
   }
   return groups, badops
 }
@@ -543,19 +673,18 @@ func pipeStage2(in <-chan CatalogSpecTransition) <-chan CatalogWithSpecTransitio
 }
 
 func writeReport(rd reportData) {
-  t := template.Must(template.ParseFiles(
-      "src/promote-packages/report-template.html"))
-  fo, err := os.Create(htmlReportFlag)
+  t := template.Must(template.ParseFiles(htmlReportTemplate))
+  outFile := path.Join(htmlReportDir, htmlReportFile)
+  fo, err := os.Create(outFile)
   if err != nil {
-    log.Println("Could not open", htmlReportFlag)
+    log.Println("Could not open", outFile)
     panic(err)
   }
   defer fo.Close()
-  log.Println("Writing HTML")
   if err := t.Execute(fo, rd); err != nil {
     log.Fatal("Could not write the report:", err)
   }
-  log.Println("The report has been written.")
+  log.Println("The report has been written to", outFile)
 }
 
 type ByKey []*CrossCatIntGroup
@@ -564,9 +693,167 @@ func (a ByKey) Len() int { return len(a) }
 func (a ByKey) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 func (a ByKey) Less(i, j int) bool { return a[i].Key < a[j].Key }
 
+func addBlockingBugs(groups map[string]*CrossCatIntGroup, mantisBugs <-chan mantis.Bug) {
+  // Severities from mantis that don't block package promotions.
+  lowSeverities := [...]string{
+    "Trivial",
+    "Minor",
+    "Feature",
+  }
+
+  // Add blocking Mantis Bugs.
+  bugsByCatname := make(map[string][]mantis.Bug)
+  for bug := range mantisBugs {
+    // Bugs that aren't blockers.
+    if bug.Status == "Closed" || bug.Status == "Resolved" {
+      continue
+    }
+    shouldSkip := false
+    for _, sev := range lowSeverities {
+      if bug.Severity == sev {
+        shouldSkip = true
+        break
+      }
+    }
+    if shouldSkip {
+      continue
+    }
+    c := bug.Catalogname
+    if _, ok := bugsByCatname[c]; !ok {
+      bugsByCatname[c] = make([]mantis.Bug, 0)
+    }
+    bugsByCatname[c] = append(bugsByCatname[c], bug)
+  }
+
+  for _, g := range groups {
+    catNames := make(map[string]bool)
+    for _, ops := range g.Ops {
+      for _, op := range ops {
+        catNames[op.Catalogname()] = true
+      }
+    }
+    for catName, _ := range catNames {
+      g.Bugs = append(g.Bugs, bugsByCatname[catName]...)
+    }
+  }
+}
+
+// Find the last time.
+func setLatestModifications(groups map[string]*CrossCatIntGroup) {
+  // The latest operation in the group is the time of the whole group.
+  for key := range groups {
+    var t time.Time
+    for _, opslice := range groups[key].Ops {
+      for _, op := range opslice {
+        if t.IsZero() || t.Before(op.SourceChanged) {
+          t = op.SourceChanged
+        }
+      }
+    }
+    groups[key].LatestMod = t
+  }
+}
+
+// Add dependencies. In every group:
+// - For each catalog
+//   - For each added package
+//     - For each dependency of an added package
+//       - If there is another group which changes/adds this package,
+//         that group must be included in this group.
+//       - If there isn't another group which adds the package, the package
+//         must be already in the target catalog.
+//
+// Ingredients needed:
+// - groups to modify
+// - contents of the target catalog
+func addDependencies(groups map[string]*CrossCatIntGroup, targetCatByPkgname map[diskformat.CatalogSpec]map[string]*diskformat.PackageExtra) {
+  groupProvides := make(map[diskformat.CatalogSpec]map[string]*CrossCatIntGroup)
+  for _, group := range groups {
+    for spec, ops := range group.Ops {
+      for _, op := range ops {
+        if _, ok := groupProvides[spec]; !ok {
+          groupProvides[spec] = make(map[string]*CrossCatIntGroup)
+        }
+        if op.Added != nil {
+          groupProvides[spec][op.Added.Pkgname] = group
+        }
+      }
+    }
+  }
+
+  for _, group := range groups {
+    for spec, ops := range group.Ops {
+      for _, op := range ops {
+        if op.Added != nil {
+          for _, dep := range op.Added.Deps {
+            // A dependency of this group
+            //
+            // What if one group removes a package and another group depends on it?
+            // This is only possible if the source catalog is broken.
+            // Maybe we should still add some checks for it?
+
+            if pkgByPkgname, ok := targetCatByPkgname[spec]; ok {
+              if _, ok := pkgByPkgname[dep]; !ok {
+                // No catalog provides this dependency. But there is stil hope!
+                // Maybe one of the groups provides the package?
+                if groupByPkgname, ok := groupProvides[spec]; ok {
+                  if groupProviding, ok := groupByPkgname[dep]; ok {
+                    if groupProviding.Key != group.Key {
+                      group.Dependencies[groupProviding.Key] = groupProviding
+                      // We could also add some information why this dependency is needed here.
+                    }
+                  } else {
+                    log.Fatalln("The", groupProviding.Key, "group doesn't provide", dep)
+                  }
+                } else {
+                  log.Fatalln("Catalog", spec, "does not provide package", dep,
+                              "which is required by package",
+                              op.Added.Basename, op.Added.Md5_sum)
+                }
+              }
+            } else {
+              log.Fatalln("targetCatByPkgname does not provide catalog", spec)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+func canBeIntegrated(groups map[string]*CrossCatIntGroup) {
+  requiredAge := time.Duration(time.Hour * (-24) * time.Duration(daysOldRequired))
+  now := time.Now()
+  for key := range groups {
+    problems := make([]string, 0)
+    // I can't make sense of the Before/After thing here.
+    if now.Add(requiredAge).Before(groups[key].LatestMod) {
+      msg := fmt.Sprintf("Not old enough: %v, but %v age is required (%v days)",
+                         now.Sub(groups[key].LatestMod), (-1) * requiredAge,
+                         daysOldRequired)
+      problems = append(problems, msg)
+    }
+    if len(groups[key].Bugs) > 0 {
+      msg := fmt.Sprintf("Critical bugs")
+      problems = append(problems, msg)
+    }
+    if len(groups[key].Dependencies) > 0 {
+      msg := ("This group depends on other groups. We cannot " +
+          "evaluate all groups recursively because of a potential graph " +
+          "cycle. " +
+          "You will need to integrate the dependencies first, and then " +
+          "proceed to this group in the next iteration.")
+      problems = append(problems, msg)
+    }
+    groups[key].CanBeIntegratedNow = len(problems) == 0
+    groups[key].Evaluated = true
+    groups[key].Messages = append(groups[key].Messages, problems...)
+  }
+}
+
 // Analyzes the data.
-func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bug) <-chan IntegrationResult {
-  out := make(chan IntegrationResult)
+func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bug) <-chan reportData {
+  out := make(chan reportData)
   go func() {
     // Catalog timing information
     timing := new(CatalogReleaseTimeInfo)
@@ -575,7 +862,6 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
                   "-- If this is the first run, please create an empty file with",
                   "the '{}' contents, location:", packageTimesFilename)
     }
-
     rd := reportData{
       to_catrel_flag,
       time.Now(),
@@ -583,15 +869,26 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
       make([]*CrossCatIntGroup, 0),
       timing.catalogs,
     }
+
+    // To discover dependencies later.
+    // We need to go from package name to md5 sum
+    // Then from package name to another integration group
+    //
+    // Pointer business again, to save memory. It will probably not work as expected.
+    targetCatByPkgname := make(map[diskformat.CatalogSpec]map[string]*diskformat.PackageExtra)
+
     for t := range in {
       timing.Update(t.fromCat)
-      groups, badops := GroupsFromCatalogPair(t)
+      groups, badops := GroupsFromCatalogPair(t, timing)
       rd.Catalogs = append(
           rd.Catalogs,
           catalogIntegration{t.fromCat.Spec, groups, badops})
-      msg := fmt.Sprintf("Processed data for: %+v → %+v",
-                         t.fromCat.Spec, t.toCat.Spec)
-      out <-IntegrationResult{msg}
+      if _, ok := targetCatByPkgname[t.toCat.Spec]; !ok {
+        targetCatByPkgname[t.toCat.Spec] = make(map[string]*diskformat.PackageExtra)
+      }
+      for i := range t.toCat.PkgsExtra {
+        targetCatByPkgname[t.toCat.Spec][t.toCat.PkgsExtra[i].Pkgname] = &t.toCat.PkgsExtra[i]
+      }
     }
 
     // We're walking the reportData structure and populating the
@@ -606,7 +903,7 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
           group = NewCrossCatIntGroup(key)
           groups[key] = group
         }
-        // We have our CrossCatIntGroup here
+        // We have our CrossCatIntGroup now.
         if _, ok := group.Ops[srcIntGroup.Spec]; !ok {
           group.Ops[srcIntGroup.Spec] = make([]catalogOperation, 0)
         }
@@ -615,63 +912,18 @@ func pipeStage3(in <-chan CatalogWithSpecTransition, mantisBugs <-chan mantis.Bu
       }
     }
 
-    // Severities from mantis that don't block package promotions.
-    lowSeverities := [...]string{
-      "Trivial",
-      "Minor",
-      "Feature",
-    }
+    setLatestModifications(groups)
+    addBlockingBugs(groups, mantisBugs)
+    addDependencies(groups, targetCatByPkgname)
+    canBeIntegrated(groups)
 
-    // Add blocking Mantis Bugs.
-    bugsByCatname := make(map[string][]mantis.Bug)
-    for bug := range mantisBugs {
-      // Bugs that aren't blockers.
-      if bug.Status == "Closed" || bug.Status == "Resolved" {
-        continue
-      }
-      shouldSkip := false
-      for _, sev := range lowSeverities {
-        if bug.Severity == sev {
-          shouldSkip = true
-          break
-        }
-      }
-      if shouldSkip {
-        continue
-      }
-      c := bug.Catalogname
-      if _, ok := bugsByCatname[c]; !ok {
-        bugsByCatname[c] = make([]mantis.Bug, 0)
-      }
-      bugsByCatname[c] = append(bugsByCatname[c], bug)
-    }
-
-    for _, g := range groups {
-      catNames := make(map[string]bool)
-      for _, ops := range g.Ops {
-        for _, op := range ops {
-          catNames[op.Catalogname()] = true
-        }
-      }
-      for catName, _ := range catNames {
-        g.Bugs = append(g.Bugs, bugsByCatname[catName]...)
-      }
-    }
-
+    // Sort by group / bundle name
     for _, g := range groups {
       rd.CrossCatGroups = append(rd.CrossCatGroups, g)
     }
     sort.Sort(ByKey(rd.CrossCatGroups))
 
-    // Let's write the HTML report.
-    var wg sync.WaitGroup
-    wg.Add(1)
-    go func(rd reportData) {
-      log.Println("Starting a goroutine to write the report.")
-      defer wg.Done()
-      writeReport(rd)
-    }(rd)
-    wg.Wait()
+    out <- rd
 
     if err := timing.Save(); err != nil {
       log.Fatalln("Could not save the timing information:", err)
@@ -728,16 +980,94 @@ func merge(cs ...<-chan CatalogWithSpecTransition) <-chan CatalogWithSpecTransit
     return out
 }
 
+func maybeApplyChanges(rd reportData, cr credentials) {
+  // Depends on dry_run.
+  logBasename := fmt.Sprintf(time.Now().Format("catalog-integrations-2006-01.log"))
+  runLog := path.Join(htmlReportDir, logBasename)
+  fo, err := os.OpenFile(runLog, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0644)
+  if err != nil {
+    log.Fatalln("Could not write to", runLog)
+  }
+  defer fo.Close()
+
+  timestampWritten := false
+  client := new(http.Client)
+  for _, group := range rd.CrossCatGroups {
+    if !group.Evaluated {
+      log.Println("Group", group.Key, "was not evaluated, changes will not be applied.")
+      continue
+    }
+    if !group.CanBeIntegratedNow {
+      log.Println("Group", group.Key, "is not marked for integration now.")
+      continue
+    }
+    if !group.HasOperations() {
+      log.Println("Group", group.Key, "has no operations to perform.")
+      continue
+    }
+    if !timestampWritten {
+      fo.WriteString(fmt.Sprintf("# STARTED %s\n", rd.GeneratedOn))
+      timestampWritten = true
+    }
+    log.Println("Continuing to process changes for", group.Key)
+    fo.WriteString(fmt.Sprintf("# PERFORMING %s\n", group.Key))
+    for _, ops := range group.Ops {
+      for _, op := range ops {
+        if err := op.Perform(client, cr, fo); err != nil {
+          // This error contains auth info.
+          // fo.WriteString(fmt.Sprintf("# ERROR: %s\n", err))
+          log.Fatalf("Performing '%s' has failed: %s", op, err)
+        }
+      }
+    }
+    fo.WriteString(fmt.Sprintf("# ROLLBACK FOR %s\n", group.Key))
+    for _, ops := range group.Ops {
+      for _, op := range ops {
+        for _, line := range op.Rollback() {
+          fo.WriteString(fmt.Sprintf("%s\n", line))
+        }
+      }
+    }
+  }
+  if timestampWritten {
+    fo.WriteString(fmt.Sprintf("# FINISHED %s\n", rd.GeneratedOn))
+  }
+}
+
 func main() {
+  programStart := time.Now()
   flag.Parse()
+
+  log.SetFlags(log.Llongfile | log.Ldate | log.Ltime)
+  if logFile != "-" {
+    fo, err := os.OpenFile(logFile, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0644)
+    if err != nil {
+      log.Println("Could not create the log file:", err)
+      return
+    }
+    defer fo.Close()
+    log.Println("Writing an additional copy of the log to", logFile)
+    log.SetOutput(io.MultiWriter(os.Stdout, fo))
+  }
+
   log.Println("Program start")
+
+  crch := make(chan credentials)
+  go func(crch chan credentials) {
+    crch <- GetCredentials()
+  }(crch)
 
   mch := mantisChan()
   tch := pipeStage1()
+  // Parallelization of the pipeline.
   cch1 := pipeStage2(tch)
   cch2 := pipeStage2(tch)
-  rch := pipeStage3(merge(cch1, cch2), mch)
-  for r := range rch {
-    log.Println("Result:", r)
+  cch3 := pipeStage2(tch)
+  rch := pipeStage3(merge(cch1, cch2, cch3), mch)
+
+  for rd := range rch {
+    writeReport(rd)
+    maybeApplyChanges(rd, <-crch)
   }
+  log.Println("Finished, running time: ", time.Since(programStart))
 }

@@ -1,0 +1,77 @@
+body, p, li, h1, h2, h3, h4, h5 {
+  font-family: sans-serif;
+}
+body, p, li {
+  font-size: 12px;
+}
+span.group-name {
+  font-weight: bold;
+}
+ul.commands-to-run {
+  list-style: none;
+  background-color: #DDD;
+}
+table.grid {
+  border-collapse: collapse;
+}
+table.grid td, table.grid th {
+  border: 1px solid #DDD;
+}
+
+/* Blocking bugs */
+table.blocking-bugs {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+table.blocking-bugs th {
+  background-color: #FDD7E4;
+  font-size: 120%;
+  font-weight: bold;
+}
+
+ul.commands-to-run li code {
+  white-space: pre;
+}
+table.ccatgroup {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+table.ccatgroup th {
+  font-size: 120%;
+}
+table.ccatgroup th.key {
+  font-size: 250%;
+  font-weight: bold;
+}
+ul.group-summary-list {
+  list-style-type: none;
+}
+ul.group-summary-list li {
+  margin: 1px;
+  float: left;
+  width: 10em;
+}
+.can-be-integrated {
+  background-color: lightgreen;
+}
+.cannot-be-integrated {
+  background-color: pink;
+}
+.not-evaluated {
+  background-color: #EEE;
+}
+table.ccatgroup td.spec {
+  background-color: white;
+}
+table.ccatgroup td.spec a {
+  color: #AAA;
+  font-weight: bold;
+  text-decoration: none;
+}
+table.ccatgroup td.comment {
+  color: #AAA;
+}
+ul.cross-cat-groups {
+  list-style-type: none;
+}
