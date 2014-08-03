@@ -120,7 +120,7 @@ type Package struct {
   Version string         `json:"version"`
   Pkginst string         `json:"pkgname"`
   Filename string        `json:"basename"`
-  Md5_sum string         `json:"md5_sum"`
+  Md5_sum Md5Sum         `json:"md5_sum"`
   Size uint64            `json:"size"`
   Depends PkginstSlice   `json:"deps"`
   Category string        `json:"category"`
@@ -135,7 +135,9 @@ func (p *Package) AsCatalogEntry() string {
     p.Version,
     p.Pkginst,
     p.Filename,
-    p.Md5_sum,
+    // Md5_sum is of type which is an alias to string, but this means we have
+    // to explicitly convert it to a string.
+    fmt.Sprintf("%v", p.Md5_sum),
     fmt.Sprintf("%v", p.Size),
     p.Depends.FormatForIndexFile(),
     p.Category,
@@ -166,6 +168,11 @@ type CatalogWithSpec struct {
 // To avoid confusion between various things represented as strings.
 type Md5Sum string
 
+// One more to do: pkginst as a type:
+// type PkginstType string
+// This one would require changing a number of places, including transformation
+// from []string to []PkginstType.
+
 // Extra information about a package
 type PackageExtra struct {
   Basename string    `json:"basename"`
@@ -190,6 +197,17 @@ func (p PackageExtra) Url() string {
 
 func (p PackageExtra) String() string {
   return fmt.Sprintf("%s", p.Basename)
+}
+
+func (p PackageExtra) UrlInCat(spec CatalogSpec) string {
+  return fmt.Sprintf("%s/catalogs/%s/%s/%s/%s/",
+                     ReleasesUrl,
+                     spec.Catrel, spec.Arch, spec.Osrel,
+                     p.Md5_sum)
+}
+
+func (p PackageExtra) CurlInvocation(spec CatalogSpec, verb string) string {
+  return fmt.Sprintf("curl --netrc -X %s %s", verb, p.UrlInCat(spec))
 }
 
 // I'm not sure if this is a good idea.
@@ -667,7 +685,7 @@ func getCatalogFromIndexFile(catalog_root string,
       fields[1],
       fields[2],
       fields[3],
-      fields[4],
+      Md5Sum(fields[4]),
       size,
       deps,
       fields[7],
