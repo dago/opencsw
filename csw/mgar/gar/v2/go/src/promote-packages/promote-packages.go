@@ -208,7 +208,7 @@ func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
   }
   inCat := make(map[diskformat.Md5Sum]bool)
   for _, p := range c.PkgsExtra {
-    if _, ok := t.catalogs[c.Spec][p.Md5_sum]; !ok {
+    if pti, ok := t.catalogs[c.Spec][p.Md5_sum]; !ok || !pti.Present {
       // Packages we haven't seen yet that are in the catalog.
       t.catalogs[c.Spec][p.Md5_sum] = PackageTimeInfo{
         c.Spec,
@@ -226,10 +226,13 @@ func (t *CatalogReleaseTimeInfo) Update(c diskformat.CatalogExtra) {
     if _, ok := inCat[md5]; !ok {
       // Packages that aren't in the catalog (any more).
       p := t.catalogs[c.Spec][md5]
-      // This field is not actually read anywhere. It's enough that an entry exists.
-      p.Present = false
-      p.ChangedAt = time.Now()
-      t.catalogs[c.Spec][md5] = p
+      // Only update the last-seen time the first time the package goes from
+      // present to absent. Otherwise the entry wouldn't age.
+      if p.Present {
+        p.Present = false
+        p.ChangedAt = time.Now()
+        t.catalogs[c.Spec][md5] = p
+      }
     }
   }
 }
