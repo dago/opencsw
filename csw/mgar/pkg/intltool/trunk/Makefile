@@ -9,15 +9,17 @@ CATEGORIES = utils
 GARTYPE = v2
 ARCHALL_CSWintltool = 1
 
-DESCRIPTION =  A collection of tools for internationalization
-define BLURB
-  The intltool package is a set of tools for translating the contents of data files using the gettext translation framework.
+DESCRIPTION =  A collection of tools for internationaliz	The intltool package is a set of tools for translating the contents of data
+	e contents of data files using the gettext translation framework.
 endhttps://launchpad.net/$(NAME)/trunk/$(VERSION)/+download/
-DISTFILES  = $(DISTNAMEAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(DISTNAMEAME)-(\d+(PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
-RUNTIME_DEP_PKGS_CSWintltool = CSWperl CSWpmxmlparser
+RUNTIME_DEP_PKGS_CSWintltool  = CSWperl
+RUNTIME_DEP_PKGS_CSWintltool += CSWpm-xml-parser
 
-CONFIGURE_ACHECKPKG_OVERRIDES_CSWintltool += surplus-dependency|CSWpmxmlparser
+CONFIGURE_ARGS = $(DIRPATHS)
+
+CHECKPKG_OVERRIDES_CSWintltool += surplus-dependency|CSWpm-xml-parser
 CHECKPKG_OVERRIDES_CSWintltool += surplus-dependency|CSWperl
 
 include gar/category.mk
