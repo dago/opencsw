@@ -1,28 +1,24 @@
 NAME = Pod-Coverage
-VERSION = 0.20
+VERSION = 0.23
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RCLAMP
 
-DESCRIPTION = Checks if the documentation of a module is comprehensive
+DESCRIPTION = 
 define BLURB
-  Developers hate writing documentation. They'd hate it even more if their
-  computer tattled on them, but maybe they'll be even more thankful in the
-  long run. Even if not, perlmodstyle tells you to, so you must obey.  This
-  module provides a mechanism for determining if the pod for a given module is
-  comprehensive.
 endef
 
-BUILD_DEP_PKGS = CSWpmmodulebuild CSWpmtestpod
-RUNTIME_DEP_PKGS = CSWpmdevelsymdump
+CATALOG_RELEASE = unstable
 
-DISTFILES = COPYING
+LICENSE_TEXT = This module is licensed under the unknown license
 
-PACKAGES = CSWpmpodcoverage
-CATALOGNAME = pm_podcoverage
-
-ARCHALL = 1
-
-CHECKPKG_OVERRIDES_CSWpmpodcoverage += surplus-dependency|CSWpmdevelsymdump
+PACKAGES += CSWpm-pod-coverage
+CATALOGNAME_CSWpm-pod-coverage = pm_pod_coverage
+SPKG_DESC_CSWpm-pod-coverage = Checks if the documentation of a module is comprehensive
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-pod-coverage = 1
+RUNTIME_DEP_PKGS_CSWpm-pod-coverage += CSWpm-devel-symdump
+OBSOLETED_BY_CSWpm-pod-coverage += CSWpmpodcoverage
+CATALOGNAME_CSWpmpodcoverage = pm_podcoverage_stub
 
 include gar/category.mk
