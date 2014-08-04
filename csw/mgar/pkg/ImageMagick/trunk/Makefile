@@ -1,6 +1,6 @@
 NAME      = imagemagick
 VERSION   = 6.8.9
-GARSUBREV = 2
+GARSUBREV = 6
 #BETAREV   = beta20140518
 GARTYPE   = v2
 
@@ -61,7 +61,6 @@ RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibfftw3-3
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibmagickcore6q16hdri2 += CSWlibmagickcore6q16hdri1
 
 PACKAGES += CSWlibmagickwand6q16hdri2
 CATALOGNAME_CSWlibmagickwand6q16hdri2 = libmagickwand6q16hdri2
@@ -73,7 +72,6 @@ PKGFILES_CSWlibmagickwand6q16hdri2 += $(call baseisadirs,$(libdir),libMagickWand
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibmagickwand6q16hdri2 += CSWlibmagickwand6q16hdri1
 
 PACKAGES += CSWlibmagick++6q16hdri4
 CATALOGNAME_CSWlibmagick++6q16hdri4 = libmagick++6q16hdri4
@@ -186,10 +184,8 @@ endif
 
 REINPLACE_USRLOCAL += config/mime.xml
 
-#EXTRA_LINKER_FLAGS = -lsocket -lnsl 
-#EXTRA_LD_OPTIONS = -z nolazyload 
-EXTRA_LINKER_FLAGS = -lsocket -lnsl  -Wl,-z,nolazyload -Wl,-Bdirect
-EXTRA_LD_OPTIONS = -z nolazyload -Bdirect
+EXTRA_LINKER_FLAGS = -lsocket -lnsl 
+EXTRA_LD_OPTIONS = -z nolazyload 
 
 # We especially don't want ISALIST for the above /usr/openwin/lib
 # This should be reworked after a general rework of ISALIST in GAR
