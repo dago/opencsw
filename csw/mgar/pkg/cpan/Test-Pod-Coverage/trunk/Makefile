@@ -1,24 +1,24 @@
 NAME = Test-Pod-Coverage
-VERSION = 1.08
+VERSION = 1.10
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = PETDANCE
+AUTHOR = NEILB
 
 DESCRIPTION = Check for pod coverage in your distribution
 define BLURB
 endef
 
-BUILD_DEP_PKGS = CSWpmtstbldrtester CSWpmpodcoverage
-RUNTIME_DEP_PKGS = CSWpmpodsimple CSWpmiostringy
+CATALOG_RELEASE = unstable
 
-DISTFILES = COPYING
+LICENSE_TEXT = This module is licensed under the artistic_2 license
 
-PACKAGES = CSWpmtestpodcoverage
-CATALOGNAME = pm_testpodcoverage
-
-ARCHALL = 1
-
-CHECKPKG_OVERRIDES_CSWpmtestpodcoverage += surplus-dependency|CSWpmpodsimple
-CHECKPKG_OVERRIDES_CSWpmtestpodcoverage += surplus-dependency|CSWpmiostringy
+PACKAGES += CSWpm-test-pod-coverage
+CATALOGNAME_CSWpm-test-pod-coverage = pm_test_pod_coverage
+SPKG_DESC_CSWpm-test-pod-coverage = Check for pod coverage in your distribution
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-test-pod-coverage = 1
+RUNTIME_DEP_PKGS_CSWpm-test-pod-coverage += CSWpm-pod-coverage
+OBSOLETED_BY_CSWpm-test-pod-coverage += CSWpmtestpodcoverage
+CATALOGNAME_CSWpmtestpodcoverage = pm_testpodcoverage_stub
 
 include gar/category.mk
