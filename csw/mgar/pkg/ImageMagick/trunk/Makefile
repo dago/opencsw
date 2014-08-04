@@ -73,15 +73,15 @@ RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgcc-s1
 
-PACKAGES += CSWlibmagick++6q16hdri4
-CATALOGNAME_CSWlibmagick++6q16hdri4 = libmagick++6q16hdri4
-PKGFILES_CSWlibmagick++6q16hdri4 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.4\.0\.0)
-PKGFILES_CSWlibmagick++6q16hdri4 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.4(\.\d+)*)
-SPKG_DESC_CSWlibmagick++6q16hdri4 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.4
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibmagickcore6q16hdri2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibmagickwand6q16hdri2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibstdc++6
+PACKAGES += CSWlibmagick++6q16hdri5
+CATALOGNAME_CSWlibmagick++6q16hdri5 = libmagick++6q16hdri5
+PKGFILES_CSWlibmagick++6q16hdri5 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.5\.0\.0)
+PKGFILES_CSWlibmagick++6q16hdri5 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.5(\.\d+)*)
+SPKG_DESC_CSWlibmagick++6q16hdri5 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.5
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibmagickcore6q16hdri2
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibmagickwand6q16hdri2
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibstdc++6
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
@@ -92,7 +92,7 @@ PKGFILES_CSWimagemagick-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWimagemagick
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand6q16hdri2
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri4
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri5
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWperl
 
 PACKAGES += CSWimagemagick
@@ -157,17 +157,17 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibgomp1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri4 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibfftw3-3
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWliblqr1-0
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibgomp1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibglib2-0-0
 endif
 ###
 
