@@ -215,7 +215,12 @@ CONFIGURE_ARGS += --with-openjp2
 CONFIGURE_ARGS += --without-perl
 #CONFIGURE_ARGS-32 += --with-perl=$(bindir)/perl
 #CONFIGURE_ARGS-64 += --without-perl
-CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
+
+# Needed so no extra instruction set is built in
+CONFIGURE_ARGS-32-i386 += --with-gcc-arch=pentiumpro
+CONFIGURE_ARGS-64-i386 += --with-gcc-arch=opteron
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) $(CONFIGURE_ARGS-$(MEMORYMODEL)-$(GARCH))
 
 # One test is failing:
 #   FAIL: Magick++/tests/attributes.sh
