@@ -1,5 +1,5 @@
 NAME    = pidgin-sipe
-VERSION = 1.15.1
+VERSION = 1.18.2
 GARTYPE = v2
 
 DESCRIPTION = The SIPE Project - A third-party Pidgin plugin for Microsoft LCS/OCS
@@ -25,7 +25,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWpidgin
 RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibsmime3
 RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibxml2-2
@@ -47,5 +46,7 @@ BUILD_DEP_PKGS += CSWlibid3-dev
 BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWpidgin
+
+EXTRA_LD_OPTIONS = -lsocket -lnsl
 
 include gar/category.mk
