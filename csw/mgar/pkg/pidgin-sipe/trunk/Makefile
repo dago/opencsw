@@ -34,6 +34,18 @@ RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibnspr4
 
 CHECKPKG_OVERRIDES_CSWpidgin-sipe += surplus-dependency|CSWpidgin
 
+###
+# Needed for the Solaris ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
+RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibplc4
+RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibssl3
+RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibnssutil3
+RUNTIME_DEP_PKGS_CSWpidgin-sipe += CSWlibplds4
+endif
+###
+
 BUILD_DEP_PKGS += CSWintltool
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibgtk2-dev
