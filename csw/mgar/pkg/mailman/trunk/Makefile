@@ -26,12 +26,16 @@ prefix=$(BUILD_PREFIX)/$(NAME)
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --without-permcheck
 CONFIGURE_ARGS += --with-python=/opt/csw/bin/python2.7
+CONFIGURE_ARGS += --with-mailhost=mailhost
+CONFIGURE_ARGS += --with-urlhost=example.com
 
 # There is no testsuite
 TEST_SCRIPTS =
 
 PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES = .*\.py[co]
+
+USERGROUP = /etc/opt/csw/pkg/CSWmailman/cswusergroup
 
 CHECKPKG_OVERRIDES_CSWmailman += binary-architecture-does-not-match-placement|file=opt/csw/mailman/mail/mailman|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWmailman += binary-architecture-does-not-match-placement|file=opt/csw/mailman/mail/mailman|arch_id=3|arch_name=i386
