@@ -1,8 +1,7 @@
 # $Id: Makefile 18185 2012-06-01 02:30:46Z bdwalton $
 
 NAME = httpd
-VERSION = 2.4.7
-CATEGORIES = server
+VERSION = 2.4.10
 GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
@@ -70,6 +69,10 @@ PRESERVECONF += $(sysconfdir)/apache2/extra/httpd-ssl.conf
 PRESERVECONF += $(sysconfdir)/apache2/envvars-std
 PRESERVECONF += $(sysconfdir)/apache2/magic
 PRESERVECONF += $(sysconfdir)/apache2/httpd.conf
+
+# These two are link destinations and put in place via PRESERVECONF
+CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars|CSWapache24|contains|symlink|/opt/csw/sbin/envvars|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars
+CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars-std|CSWapache24|contains|symlink|/opt/csw/sbin/envvars-std|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars-std
 
 SSLCERT = /etc/opt/csw/apache2/server
 
