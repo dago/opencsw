@@ -1,6 +1,8 @@
 openssl (0.9.8zb,REV=2014.08.07) unstable
 
   * New upstream release.
+  * Removed patch applied upstream:
+    0005-add-missing-limits.h-header-inclusion-for-INT_MAX.patch
 
    -- Yann Rouillard <yann@opencsw.org>  Thu, 07 Aug 2014 21:20:12 +0200
 
