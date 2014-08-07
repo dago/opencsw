@@ -216,6 +216,7 @@ LIBDIR_64 = --libdir=lib/64
 LIBDIR = $(LIBDIR_$(MEMORYMODEL))aris64-sparcv9-cc
 
 CONFIGURE_ARGS = -
+CONFIGURE_ARGS += --openssldir=$(sysconfdir)/ssl
 CONFIGURE_ARGS += --install_prefix=$(DESTDIR) $(LIBDIR)
 CONFIGURE_ARGS += $(CONFIGURE_FLAGS)
 CONFIGURE_ARGS += $($(ISA)_$(GARCOMPILER_TYPE)_CONFIGURE_TARGET)
@@ -273,14 +274,10 @@ pre-configure-modulated:
 	ln -nf $(WORKDIR)/map.openssl.engines $(WORKSRC)/engines/ccgost/map.openssl.libgost
 indir)/c_rehash
 
-istall-conf-misc: 
-	if [ -f "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ] && [ ! -h "$(PKGROOT)$(prefix)/ssl/openssl.cnf" ]; then \
-		ginstall -d "$(PKGROOT)$(sysconfdir)/ssl"; \
-		mv "$(PKGROOT)$(prefix)/ssl/openssl.cnf" $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW; \
-		ln -sf ../../..$(sysconfdir)/ssl/openssl.cnf $(PKGROOT)$(prefix)/ssl/oenssl.cnf; \
-	fi	
+ist[ ! -f "$(PKGROOT)$(sysconfdir)/ssl/openssl.cnf" ] || \
+		mv "$(PKGROOT)$(sysconfdir)/ssl/openssl.cnf" $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
 	[ ! -d "$(PKGROOT)$(sysconfdir)/ssl/misc" ] || \
-		mv "$(PKGROOT)$(sysconfdir)/ssl/misc" "$(PKGROOT)(prefix)/ssl/"
+		( ginstall -d "$(PKGROOT)/$(prefix)/ssl/" && mv "$(PKGROOT)$(sysconfdir)/ssl/misc/" "$(PKGROOT)/$(prefix)/ssl/" ))(prefix)/ssl/"
 		
 merge-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
