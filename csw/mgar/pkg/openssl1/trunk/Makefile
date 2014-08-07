@@ -59,9 +59,7 @@ CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/li
 
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv8plus+vis/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
 CHECKPKG_OVERRID_sparcES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=C
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0_i386ES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=Cr# This is a false alarm, this is a configuration file added at install time
-# through the preserveconf class
-CHECKPKG_OVERRIDES_CSWopenssl-utils += file-needed-but-no-package-satisfies-it|/etc/opt/csw/ssl/openssl.cnf|CSWopenssl-utils|contains|symlink|/opt/csw/ssl/openssl.cnf|which|needs|the|target|file:|/etc/opt/csw/ssl/openssl.cnfCrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0_i386ES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=Cr# o1-0-0
 endif
 
 
