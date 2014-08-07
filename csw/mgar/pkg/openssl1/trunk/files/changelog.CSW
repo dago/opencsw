@@ -1,6 +1,8 @@
 openssl (1.0.1i,rev=2014.08.07) unstable
 
   * New upstream release.
+  * Remove patch 0011-link-heartbeat_test-with-static-libraries
+    that has been applied upstream.
 
    -- yann rouillard <yann@opencsw.org>  Thu, 07 Aug 2014 22:57:06 +0200
 
