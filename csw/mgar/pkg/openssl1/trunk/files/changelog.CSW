@@ -1,3 +1,9 @@
+openssl (1.0.1i,rev=2014.08.07) unstable
+
+  * New upstream release.
+
+   -- yann rouillard <yann@opencsw.org>  Thu, 07 Aug 2014 22:57:06 +0200
+
 openssl (1.0.1h,rev=2014.06.08) unstable
 
   * Add the 0011-link-heartbeat_test-with-static-libraries patch to solve a
