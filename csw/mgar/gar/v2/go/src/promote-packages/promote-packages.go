@@ -15,11 +15,6 @@
 // When the same group is identified across all catalog pairs, the group is
 // scheduled to be promoted in all catalogs.
 //
-// TODO:
-// - making actual changes
-//   HTTP Basic auth reading credentials
-//   Installing GCC-4.8.2 on experimental10s
-//
 // Known issues:
 // - There can be a dependency cycle between package groups. In such cases
 //   integration will not work, unless the two groups are merged into one.
@@ -131,7 +126,6 @@ type CatalogReleaseTimeInfo struct {
 }
 
 func (t *CatalogReleaseTimeInfo) Time(sourceSpec diskformat.CatalogSpec, md5Sum diskformat.Md5Sum) (time.Time, error) {
-  // return PackageTimeInfo{}
   sourceSpec.Catrel = from_catrel_flag
 
   if catTime, ok := t.catalogs[sourceSpec]; ok {
@@ -147,8 +141,6 @@ func (t *CatalogReleaseTimeInfo) Load() error {
   log.Println("Loading", packageTimesFilename)
   fh, err := os.Open(packageTimesFilename)
   if err != nil {
-    // return err
-    // Maybe just create an empty one?
     return t.Save()
   }
   defer fh.Close()
@@ -831,9 +823,11 @@ func canBeIntegrated(groups map[string]*CrossCatIntGroup) {
     problems := make([]string, 0)
     // I can't make sense of the Before/After thing here.
     if now.Add(requiredAge).Before(groups[key].LatestMod) {
-      msg := fmt.Sprintf("Not old enough: %v, but %v age is required (%v days)",
-                         now.Sub(groups[key].LatestMod), (-1) * requiredAge,
-                         daysOldRequired)
+      age := now.Sub(groups[key].LatestMod)
+      reqAge := (-1) * requiredAge
+      timeLeft := reqAge - age
+      msg := fmt.Sprintf("Not old enough: %v, but %v age is required (%v days), %v left.",
+                         age, reqAge, daysOldRequired, timeLeft)
       problems = append(problems, msg)
     }
     if len(groups[key].Bugs) > 0 {
@@ -844,8 +838,8 @@ func canBeIntegrated(groups map[string]*CrossCatIntGroup) {
       msg := ("This group depends on other groups. We cannot " +
           "evaluate all groups recursively because of a potential graph " +
           "cycle. " +
-          "You will need to integrate the dependencies first, and then " +
-          "proceed to this group in the next iteration.")
+          "Dependencies will be integrated first, this " +
+          "group will be processed in the next iteration.")
       problems = append(problems, msg)
     }
     groups[key].CanBeIntegratedNow = len(problems) == 0
