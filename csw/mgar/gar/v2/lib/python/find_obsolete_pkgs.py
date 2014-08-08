@@ -143,14 +143,13 @@ def processCat(catrel, arch, osrel, rest_client):
         # RevDepsByPkg returns only md5 sums and pkgnames, so we need to map
         # them back to CatSubSet
         revdeps = rev_deps_access.RevDepsByPkg(catrel, arch, osrel, pkgname)
-        # rev_deps_by_pkg[pkg] = [pkg_by_pkgname[pkgname] for _, pkgname in revdeps]
         revdep_pkgs = []
         for _, pkgname in revdeps:
           revdep_pkg = pkg_by_pkgname[pkgname]
           revdep_pkgs.append(revdep_pkg)
         try:
           rev_deps_by_pkg[pkg] = revdep_pkgs
-        except TypeError as exc:
+        except TypeError:
           logging.fatal('pkg: %r', pkg)
           raise
 
