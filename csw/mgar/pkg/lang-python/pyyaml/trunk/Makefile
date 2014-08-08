@@ -35,16 +35,13 @@ VENDOR_URL = http://pyyaml.org
 LICENSE = LICENSE
 
 PACKAGES = CSWpy-yaml
-RUNTIME_DEP_PKGS_CSWpy-yaml = CSWpy-yaml-rt
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
-ARCHALL_CSWpy-yaml = 1
+RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibyaml0-1
+RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibpython2-6-1-0
 CHECKPKG_OVERRIDES_CSWpy-yaml += surplus-dependency|CSWpy-yaml-rt
 
-PACKAGES += CSWpy-yaml-rt
-DEP_PKGS_CSWpy-yaml-rt += CSWlibpython2-6-1-0
-DEP_PKGS_CSWpy-yaml-rt += CSWlibyaml0-2
-SPKG_DESC_CSWpy-yaml-rt = Runtime libraries for YAML parser and emitter
-PKGFILES_CSWpy-yaml-rt = /opt/csw/lib/python.*/site-packages/.*\.so
+OBSOLETED_BY_CSWpy-yaml = CSWpy-yaml-rt
+CHECKPKG_OVERRIDES_CSWpy-yaml-rt += python-package-missing-py26-files
 CHECKPKG_OVERRIDES_CSWpy-yaml-rt += python-package-missing-py-files
 
 BUILD_SCRIPTS = py-yaml
