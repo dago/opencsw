@@ -36,7 +36,7 @@ LICENSE = LICENSE
 
 PACKAGES = CSWpy-yaml
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
-RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibyaml0-1
+RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibyaml0-2
 RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibpython2-6-1-0
 CHECKPKG_OVERRIDES_CSWpy-yaml += surplus-dependency|CSWpy-yaml-rt
 
