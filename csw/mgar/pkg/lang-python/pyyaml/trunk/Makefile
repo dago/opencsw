@@ -38,11 +38,6 @@ PACKAGES = CSWpy-yaml
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
 RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibyaml0-2
 RUNTIME_DEP_PKGS_CSWpy-yaml += CSWlibpython2-6-1-0
-CHECKPKG_OVERRIDES_CSWpy-yaml += surplus-dependency|CSWpy-yaml-rt
-
-OBSOLETED_BY_CSWpy-yaml = CSWpy-yaml-rt
-CHECKPKG_OVERRIDES_CSWpy-yaml-rt += python-package-missing-py26-files
-CHECKPKG_OVERRIDES_CSWpy-yaml-rt += python-package-missing-py-files
 
 BUILD_SCRIPTS = py-yaml
 
