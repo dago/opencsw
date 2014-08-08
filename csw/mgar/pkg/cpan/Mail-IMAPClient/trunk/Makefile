@@ -1,5 +1,5 @@
 NAME = Mail-IMAPClient
-VERSION = 3.15
+VERSION = 3.16
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MARKOV
@@ -10,9 +10,14 @@ define BLURB
   scripts to interact with IMAP message stores.
 endef
 
-PACKAGES = CSWpmmailimapclient
-CATALOGNAME = pm_mailimapclient
+PACKAGES = CSWpm-mailimapclient
+SPKG_DESC_CSWpm-mailimapclient = $(DESCRIPTION)
 ARCHALL = 1
+
+OBSOLETED_BY_CSWpm-mailimapclient = CSWpmmailimapclient
+CATALOGNAME_CSWpmmailimapclient = pm_mailimapclient_stub
+
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 
 LICENSE = COPYRIGHT
 
