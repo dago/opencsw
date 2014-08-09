@@ -424,6 +424,7 @@ type CrossCatIntGroup struct {
 
   Evaluated bool
   CanBeIntegratedNow bool
+  NeedsAttention bool
   Messages []string
 }
 
@@ -837,6 +838,7 @@ func canBeIntegrated(groups map[string]*CrossCatIntGroup) {
     if len(groups[key].Bugs) > 0 {
       msg := fmt.Sprintf("Critical bugs")
       problems = append(problems, msg)
+      groups[key].NeedsAttention = true
     }
     if len(groups[key].Dependencies) > 0 {
       msg := ("This group depends on other groups. We cannot " +
