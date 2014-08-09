@@ -330,6 +330,10 @@ type credentials struct {
 func GetCredentials() credentials {
   // os.user.Current() seems not to work.
   u := os.Getenv("LOGNAME")
+  if diskformat.DryRun {
+    log.Println("dry run: Not trying to get the password.")
+    return credentials{u, "password not necessary"}
+  }
   args := []string{"login", "cat"}
   args = append(args, fmt.Sprintf("/etc/opt/csw/releases/auth/%s", u))
   log.Println("Running ssh", args)
