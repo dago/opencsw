@@ -50,12 +50,16 @@ ul.group-summary-list {
 ul.group-summary-list li {
   margin: 1px;
   float: left;
-  width: 10em;
+  width: 14em;
+  border: 1px solid #DDD;
 }
 .can-be-integrated {
   background-color: lightgreen;
 }
 .cannot-be-integrated {
+  background-color: pink;
+}
+.needs-attention {
   background-color: pink;
 }
 .not-evaluated {

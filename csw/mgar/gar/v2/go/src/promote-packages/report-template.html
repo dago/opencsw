@@ -13,7 +13,8 @@
     {{ $ti := .TimeInfo }}
     {{ range $ccg := .CrossCatGroups }}
     <li>
-      <a href="#{{ $ccg.Key }}" class="{{ if $ccg.Evaluated }}{{ if $ccg.CanBeIntegratedNow }}can-be-integrated{{ else }}cannot-be-integrated{{ end }}{{ else }}not-evaluated{{ end }}">{{ $ccg.Key }}</a>
+      <a href="#{{ $ccg.Key }}" class="{{ if $ccg.NeedsAttention }}needs-attention{{ end }}"
+        >{{ $ccg.Key }}</a>
       {{ if $ccg.Bugs }}
       (blocking bugs!)
       {{ end }}
@@ -33,7 +34,7 @@
           </td>
         </tr>
       <tr>
-        <th class="key {{ if $ccg.Evaluated }}{{ if $ccg.CanBeIntegratedNow }}can-be-integrated{{ else }}cannot-be-integrated{{ end }}{{ else }}not-evaluated{{ end }}" colspan="2">
+        <th class="key {{ if $ccg.NeedsAttention }}needs-attention{{ end }}" colspan="2">
           {{ $ccg.Key }}
         </th>
         <th>{{ $ccg.LatestMod}}</th>
