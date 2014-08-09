@@ -82,7 +82,7 @@ func init() {
                 "Packages must be this number of days old before they can " +
                 "be integrated.")
   flag.StringVar(&logFile, "log-file",
-                 "/var/tmp/promote-packages.log",
+                 "-",
                  "The log file contains rollback information.")
 }
 
