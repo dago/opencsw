@@ -30,12 +30,24 @@ REINPLACE_USRLOCAL += README
 
 POSTMSG		+= /opt/csw/share/doc/nagios-plugins/README.CSW
 
+# check_swap won't be compiled if --enable-largefile is provided. So
+# we employ a modulation using --disable-largefile which builds
+# check_swap. This is the only file from that particular modulation
+# that makes it into the final package (so far).
+EXTRA_MODULATORS = FILEBITS
+MODULATIONS_FILEBITS = large small
+
+CONFIGURE_ARGS_isa-sparcv8plus-filebits-large = --enable-largefile
+CONFIGURE_ARGS_isa-sparcv8plus-filebits-small = --disable-largefile
+
+CONFIGURE_ARGS_isa-pentium_pro-filebits-large = --enable-largefile
+CONFIGURE_ARGS_isa-pentium_pro-filebits-small = --disable-largefile
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --with-trusted-path=/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin
 CONFIGURE_ARGS += --with-mysql=/opt/csw
 CONFIGURE_ARGS += --with-pgsql=/opt/csw/postgresql
-CONFIGURE_ARGS += --enable-largefile
 CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-openssl=/opt/csw
@@ -45,6 +57,7 @@ CONFIGURE_ARGS += --with-trusted-path=/usr/bin:/usr/sbin:/opt/csw/bin:/opt/csw/s
 CONFIGURE_ARGS += --with-ping6-command="/usr/sbin/ping -A inet6 -s %s 56 %d"
 CONFIGURE_ARGS += --with-snmpget-command=/opt/csw/bin/snmpget
 CONFIGURE_ARGS += --with-snmpgetnext-command=/opt/csw/bin/snmpgetnext
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 
 # We currently fix on 1.22.5, libmysql needs a higher level due to getpagesize2
 LINKER_MAPS =
@@ -77,13 +90,18 @@ BUILD_DEP_PKGS	+= CSWlibnet-dev
 # Testsuite is interactive
 SKIPTEST ?= 1
 
-include gar/category.mk
-
 DOCS += FAQ README REQUIREMENTS SUPPORT COPYING 
 DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 ROOT_PLUGINS = check_dhcp check_icmp pst3
 PLUGINDEST = $(DESTDIR)$(libexecdir)
 
+MERGE_SCRIPTS_isa-sparcv8plus-filebits-large = copy-all
+MERGE_SCRIPTS_isa-sparcv8plus-filebits-small = copy-fb-small-only
+
+MERGE_SCRIPTS_isa-pentium_pro-filebits-large = copy-all
+MERGE_SCRIPTS_isa-pentium_pro-filebits-small = copy-fb-small-only
+
+include gar/category.mk
 post-install-modulated:
 	@ginstall -m 755 -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
@@ -99,3 +117,6 @@ post-merge:
 	@rm $(PKGROOT)$(libdir)/charset.alias
 	@$(MAKECOOKIE)
 
+merge-copy-fb-small-only:
+	cp $(INSTALLISADIR)$(libexecdir)/check_swap $(PKGROOT)$(libexecdir)/check_swap
+	@$(MAKECOOKIE)
