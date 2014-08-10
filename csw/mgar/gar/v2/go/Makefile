@@ -8,6 +8,9 @@ BINARIES += bin/catalog-release-to-disk
 BINARIES += bin/gen-catalog-index
 BINARIES += bin/promote-packages
 
+# On GNU/Linux, 'install'
+INSTALL = ginstall
+
 all: bin $(BINARIES)
 
 bin:
@@ -29,10 +32,10 @@ bin/promote-packages: src/promote-packages/promote-packages.go opencsw/diskforma
 	gccgo -g -o $@ $^
 
 opencsw/diskformat.o: opencsw src/opencsw/diskformat/diskformat.o
-	ginstall -m 755 src/opencsw/diskformat/diskformat.o opencsw/diskformat.o
+	$(INSTALL) -m 755 src/opencsw/diskformat/diskformat.o opencsw/diskformat.o
 
 opencsw/mantis.o: opencsw src/opencsw/mantis/mantis.o
-	# ginstall -m 755 src/opencsw/mantis/mantis.o opencsw/mantis.o
+	# $(INSTALL)
 	cp src/opencsw/mantis/mantis.o opencsw/mantis.o
 
 %.o: %.go
