@@ -93,6 +93,12 @@ PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmy
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
+
+PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
+SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r18 += CSWlibmysqlclient18
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
@@ -122,21 +128,22 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(bindir)/$(b
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(sbindir)/$(bin_name))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
-
-CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += bad-rpath-entry
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-collision
 
 PACKAGES += CSW$(NAME)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/sparcv9/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/amd64/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 INCOMPATIBLE_PKGS_CSW$(NAME) = CSWmysql5
+CHECKPKG_OVERRIDES_CSW$(NAME) += file-collision
 
 # An example:
 # s9_preload.so.1|is|needed|by|/opt/csw/bin/innochecksum|but|never|used
