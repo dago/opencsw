@@ -114,7 +114,7 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge:
-	@rm $(PKGROOT)$(libdir)/charset.alias
+	@-rm $(PKGROOT)$(libdir)/charset.alias
 	@$(MAKECOOKIE)
 
 merge-copy-fb-small-only:
