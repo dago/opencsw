@@ -88,6 +88,8 @@ PKGFILES_CSW$(NAME)-dev  += $(foreach bin_name,$(CSW$(NAME)-dev_programs),$(sbin
 PKGFILES_CSW$(NAME)-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSW$(NAME)-dev  += $(prefix)/include.*
 INCOMPATIBLE_PKGS_CSW$(NAME)-dev = CSWmysql-dev
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += file-collision
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += surplus-dependency|CSWlibmysqlclient-$(MYSQL_LIB_VER)
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -99,7 +101,7 @@ RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibgcc-s1
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSWlibmysqlclient-r18 += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibmysqlclient$(MYSQL_LIB_VER)
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
