@@ -89,7 +89,7 @@ PKGFILES_CSW$(NAME)-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSW$(NAME)-dev  += $(prefix)/include.*
 INCOMPATIBLE_PKGS_CSW$(NAME)-dev = CSWmysql-dev
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += file-collision
-CHECKPKG_OVERRIDES_CSW$(NAME)-dev += surplus-dependency|CSWlibmysqlclient-$(MYSQL_LIB_VER)
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += surplus-dependency|CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
