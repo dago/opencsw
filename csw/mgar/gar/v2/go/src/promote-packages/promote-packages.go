@@ -137,6 +137,24 @@ func (t *CatalogReleaseTimeInfo) Time(sourceSpec diskformat.CatalogSpec, md5Sum 
   return time.Time{}, fmt.Errorf("Could not find timing information for catalog %v", sourceSpec)
 }
 
+// This means "we notice that this package is missing from the source catalog
+// now." It's used when there's a package missing from the source / unstable
+// catalog, and present in the testing catalog. We want to know the approximated
+// deletion time. If we don't have any information, we call this function and
+// this starts the timer for deletion.
+func (t *CatalogReleaseTimeInfo) AddMissing(spec diskformat.CatalogSpec, p diskformat.PackageExtra) {
+  spec.Catrel = from_catrel_flag
+  if _, ok := t.catalogs[spec]; !ok {
+    t.catalogs[spec] = make(map[diskformat.Md5Sum]PackageTimeInfo)
+  }
+  t.catalogs[spec][p.Md5_sum] = PackageTimeInfo{
+    spec,
+    p,
+    false,
+    time.Now(),
+  }
+}
+
 func (t *CatalogReleaseTimeInfo) Load() error {
   log.Println("Loading", packageTimesFilename)
   fh, err := os.Open(packageTimesFilename)
@@ -583,7 +601,14 @@ func GroupsFromCatalogPair(t CatalogWithSpecTransition, timing *CatalogReleaseTi
         op := catalogOperation{t.toCat.Spec, topkg, nil, pkgTime}
         oplist = append(oplist, op)
       } else {
-        log.Fatalln("Could not get timing information for", topkg.Md5_sum)
+        log.Println("Package", topkg.Md5_sum, topkg.Basename,
+                    "has been removed from unstable, and we have never seen " +
+                    "the package in unstable, and so we have no idea when it " +
+                    "was removed. We'll act as if the package was removed " +
+                    "just now.")
+        timing.AddMissing(t.toCat.Spec, *topkg)
+        op := catalogOperation{t.toCat.Spec, topkg, nil, time.Now()}
+        oplist = append(oplist, op)
       }
     }
   }
