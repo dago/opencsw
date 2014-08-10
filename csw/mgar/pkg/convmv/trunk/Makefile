@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = convmv
-VERSION = 1.14
+VERSION = 1.15
 GARTYPE = v2
 
 DESCRIPTION = Converts filenames from one encoding to another
@@ -23,11 +25,14 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = GPL2
 ARCHALL = 1
 
-CONFIGURE_SCRIPTS = 
-BUILD_SCRIPTS = 
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
 
 INSTALL_ARGS = MANDIR=$(mandir) PREFIX=$(prefix)
 TEST_ARGS = TAR=gtar
+TEST_TARGET = test
 
 REINPLACEMENTS += perl
 REINPLACE_MATCH_perl = /usr/bin/perl
@@ -46,4 +51,5 @@ post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@(cd $(WORKSRC); cp CREDITS Changes TODO $(DOCDEST))
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@gunzip $(DESTDIR)$(mandir)/man1/convmv.1.gz
 	@$(MAKECOOKIE)
