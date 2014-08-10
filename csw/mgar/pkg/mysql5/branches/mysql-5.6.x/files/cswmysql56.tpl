@@ -118,15 +118,15 @@ esac
 parse_server_arguments() {
   for arg do
     case "$arg" in
-      # $mysql5_arch must have been set (or left empty) for Solaris
+      # $mysql56_arch must have been set (or left empty) for Solaris
       # by the OpenCSW architecture selection bit
       --basedir=*)  basedir=`echo "$arg" | sed -e 's/^[^=]*=//'`
-                    bindir="$basedir/bin/$mysql5_arch"
+                    bindir="$basedir/bin/$mysql56_arch"
 		    if test -z "$datadir_set"; then
 		      datadir="$basedir/data"
 		    fi
-		    sbindir="$basedir/sbin/$mysql5_arch"
-		    libexecdir="$basedir/libexec/$mysql5_arch"
+		    sbindir="$basedir/sbin/$mysql56_arch"
+		    libexecdir="$basedir/libexec/$mysql56_arch"
         ;;
       --datadir=*)  datadir=`echo "$arg" | sed -e 's/^[^=]*=//'`
 		    datadir_set=1
@@ -205,33 +205,33 @@ wait_for_pid () {
 [ -r @sysconfdir@/csw.conf ] && . @sysconfdir@/csw.conf
 
 # If the package-specific variable is not set, try the default
-if [ -z "$mysql5_arch" ]; then
+if [ -z "$mysql56_arch" ]; then
   if [ -n "$default_arch" ]; then
-    mysql5_arch="$default_arch"
+    mysql56_arch="$default_arch"
   fi
 else
   # In that specific case, by default, there is no subdir
-  if [ "$mysql5_arch" = "i386" -o "$mysql5_arch" = "sparc" ]; then
-    mysql5_arch=""
+  if [ "$mysql56_arch" = "i386" -o "$mysql56_arch" = "sparc" ]; then
+    mysql56_arch=""
   fi
 fi
 
 # If a value was found
-if [ -n "$mysql5_arch" ]; then
-  if [ "$mysql5_arch" = "kernel" ]; then
+if [ -n "$mysql56_arch" ]; then
+  if [ "$mysql56_arch" = "kernel" ]; then
     # Use the system's default arch
-    mysql5_arch=`isainfo -k`
+    mysql56_arch=`isainfo -k`
   fi
 
   # Add the architecture suffix to the executables' directories, if it exists
   # The binaries themselves are tested below, so the script should fail
   # mostly gracefully if a non-present arch is set up.
-  if [ -d "$bindir/$mysql5_arch" -a \
-       -d "$sbindir/$mysql5_arch" -a \
-       -d "$libexecdir/$mysql5_arch" ]; then
-    bindir="$bindir/$mysql5_arch"
-    sbindir="$sbindir/$mysql5_arch"
-    libexecdir="$libexecdir/$mysql5_arch"
+  if [ -d "$bindir/$mysql56_arch" -a \
+       -d "$sbindir/$mysql56_arch" -a \
+       -d "$libexecdir/$mysql56_arch" ]; then
+    bindir="$bindir/$mysql56_arch"
+    sbindir="$sbindir/$mysql56_arch"
+    libexecdir="$libexecdir/$mysql56_arch"
   fi
 fi
 ### END OPENCSW ARCHITECTURE SELECTION

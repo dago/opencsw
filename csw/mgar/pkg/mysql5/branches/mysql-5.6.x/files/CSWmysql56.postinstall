@@ -12,10 +12,10 @@
 #
 prefix="/opt/csw"
 BASEDIR="${prefix}"
-MYSQL_HOME="/var${prefix}/mysql5"
+MYSQL_HOME="/var${prefix}/mysql56"
 sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
-DEFAULTS_FILE="${prefix}/share/mysql5/support-files/my-small.cnf
+DEFAULTS_FILE="${sysconfdir}/my.cnf"
 MYSQLD_USER="mysql"
 MYSQLD_GROUP="mysql"
 # Provide the default data directory
@@ -33,7 +33,7 @@ if [ -r "${DEPRECATED_DEFAULTS_FILE}" ]; then
 fi
 
 if [ ! -f "$DEFAULTS_FILE" ]; then
-    IN_DEFAULTS_FILE=$BASEDIR/share/mysql5/support-files/my-small.cnf
+    IN_DEFAULTS_FILE=${prefix}/share/mysql56/support-files/my-small.cnf
     echo "Using $IN_DEFAULTS_FILE to create the options file."
 else
     IN_DEFAULTS_FILE=$DEFAULTS_FILE
@@ -67,9 +67,8 @@ echo
 echo "###  The following messages are from mysql_install_db."
 "$BASEDIR/bin/mysql_install_db" \
     --defaults-extra-file="$DEFAULTS_FILE" \
-    --user="$MYSQLD_USER" \
-    --basedir="$BASEDIR" \
-    --datadir="$MYSQLD_DATADIR"
+    --user="$MYSQLD_USER"
+echo "### End mysql_install_db messages."
 
 # Fix permissions on the data directory, since mysql_install_db was run as
 # root.
@@ -77,14 +76,14 @@ chown -R ${MYSQLD_USER}:${MYSQLD_GROUP} $MYSQLD_DATADIR
 
 # Update --datadir in the cnf file with the correct value if file was copied
 if [ x"$CNFCOPIED" = xyes ]; then
-    sed -e "s|/var/opt/csw/mysql5|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
+    sed -e "s|/var/opt/csw/mysql56|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
     mv $DEFAULTS_FILE.new $DEFAULTS_FILE
 fi
 
 # Ending message
 echo
 echo "###  The following messages are from $0."
-echo "See ${prefix}/share/doc/mysql5/README.CSW for packaging changes."
+echo "See ${prefix}/share/doc/mysql56/README.CSW for packaging changes."
 echo "Please ignore references to starting mysqld_safe in the messages above."
 echo "  These messages are from mysql_install_db."
 
