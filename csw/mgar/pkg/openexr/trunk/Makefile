@@ -1,5 +1,5 @@
 NAME = openexr
-VERSION = 2.0.1
+VERSION = 2.1.0
 GARTYPE = v2
 
 DESCRIPTION = High dynamic-rangenamic-range (HDR) image file format developed by Industrial Light & Magic
@@ -71,3 +71,8 @@ EXTRA_LD_OPTIONS = -z nolazyload
 
 include gar/category.mk
 
+post-install-modulated:
+	perl -ip \
+		-e 's/-pthread/-lpthread -D_REENTRANT -D_PTHREADS/g' \
+		$(DESTDIR)$(libdir)/pkgconfig/*.pc
+	@$(MAKECOOKIE)
