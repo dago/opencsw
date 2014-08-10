@@ -14,7 +14,7 @@
     {{ range $ccg := .CrossCatGroups }}
     <li>
       <a href="#{{ $ccg.Key }}"
-        class="key {{ if not $ccg.Evaluated }}not-evaluated{{ else if $ccg.NeedsAttention }}needs-attention{{ else if $ccg.CanBeIntegratedNow }}can-be-integrated{{ end }}" colspan="2"
+        class="key {{ if not $ccg.Evaluated }}not-evaluated{{ else }}{{ if $ccg.NeedsAttention }}needs-attention{{ else }}{{ if $ccg.CanBeIntegratedNow }}can-be-integrated{{ end }}{{ end }}{{ end }}"
         >{{ $ccg.Key }}</a>
       {{ if $ccg.Bugs }}
       (blocking bugs!)
@@ -35,7 +35,8 @@
           </td>
         </tr>
       <tr>
-        <th class="key {{ if not $ccg.Evaluated }}not-evaluated{{ else if $ccg.NeedsAttention }}needs-attention{{ else if $ccg.CanBeIntegratedNow }}can-be-integrated{{ end }}"
+        <th
+          class="key {{ if not $ccg.Evaluated }}not-evaluated{{ else }}{{ if $ccg.NeedsAttention }}needs-attention{{ else }}{{ if $ccg.CanBeIntegratedNow }}can-be-integrated{{ end }}{{ end }}{{ end }}"
           colspan="2">
           {{ $ccg.Key }}
         </th>
