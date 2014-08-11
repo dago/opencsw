@@ -28,6 +28,9 @@ CONFIGURE_ARGS += --without-permcheck
 CONFIGURE_ARGS += --with-python=/opt/csw/bin/python2.7
 CONFIGURE_ARGS += --with-mailhost=mailhost
 CONFIGURE_ARGS += --with-urlhost=example.com
+CONFIGURE_ARGS += --with-mail-gid=mail
+CONFIGURE_ARGS += --with-cgi-gid=nobody
+CONFIGURE_ARGS += --with-var-prefix=/var/opt/csw/mailman
 
 # There is no testsuite
 TEST_SCRIPTS =
