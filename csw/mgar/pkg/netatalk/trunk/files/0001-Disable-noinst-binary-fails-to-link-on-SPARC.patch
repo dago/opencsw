@@ -1,25 +1,25 @@
-From 9da02be4332b0effc5d3f8470867a01c33d39c28 Mon Sep 17 00:00:00 2001
+From 6d6b03a66fd97da3adf7a6766260487ba49497f7 Mon Sep 17 00:00:00 2001
 From: Ralph Boehme <sloowfranklin@gmail.com>
-Date: Wed, 30 Oct 2013 11:37:56 +0100
-Subject: [PATCH 1/4] Disable noinst binary, fails to link on SPARC
+Date: Tue, 12 Aug 2014 13:08:13 +0200
+Subject: [PATCH] Disable noinst binary, fails to link on SPARC
 
 ---
  etc/spotlight/Makefile.in | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/etc/spotlight/Makefile.in b/etc/spotlight/Makefile.in
-index c126a9e..c03983a 100644
+index 7734292..439db1b 100644
 --- a/etc/spotlight/Makefile.in
 +++ b/etc/spotlight/Makefile.in
-@@ -172,7 +172,7 @@ slmod_sparql_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+@@ -141,7 +141,7 @@ libspotlight_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+ 	$(libspotlight_la_CFLAGS) $(CFLAGS) $(libspotlight_la_LDFLAGS) \
  	$(LDFLAGS) -o $@
- @HAVE_TRACKER_SPARQL_TRUE@am_slmod_sparql_la_rpath = -rpath \
- @HAVE_TRACKER_SPARQL_TRUE@	$(moduledir)
--@HAVE_TRACKER_SPARQL_TRUE@am__EXEEXT_1 = srp$(EXEEXT)
-+@HAVE_TRACKER_SPARQL_TRUE@am__EXEEXT_1 =
+ @HAVE_TRACKER_TRUE@am_libspotlight_la_rpath =
+-@HAVE_TRACKER_TRUE@am__EXEEXT_1 = srp$(EXEEXT)
++@HAVE_TRACKER_TRUE@am__EXEEXT_1 =
  PROGRAMS = $(noinst_PROGRAMS)
- am__srp_SOURCES_DIST = slmod_sparql_map.c slmod_sparql_parser.y \
+ am__srp_SOURCES_DIST = sparql_map.c sparql_parser.y \
  	spotlight_rawquery_lexer.l
 -- 
-2.0.0
+2.0.3
 
