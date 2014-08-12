@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME       = Mojolicious
-VERSION    = 5.22
+VERSION    = 5.27
 GARTYPE    = v2
 CATEGORIES = cpan
 AUTHOR     = SRI
@@ -22,4 +22,9 @@ ARCHALL = 1
 CHECKPKG_OVERRIDES_CSWpm-mojolicious += file-with-bad-content|/usr/local|root/opt/csw/bin/morbo
 
 include gar/category.mk
+
+post-install:
+	# Ensure that OpenCSW perl is used
+	gsed -i '1,1s!perl!/opt/csw/bin/perl!' $(DESTDIR)$(bindir)/*
+	@$(MAKECOOKIE)
 
