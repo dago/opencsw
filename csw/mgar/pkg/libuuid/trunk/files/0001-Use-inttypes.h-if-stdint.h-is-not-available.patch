@@ -1,0 +1,32 @@
+From e017c3595cafcdd1bf239e7f9980d6a724848d1c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Aug 2014 09:34:54 +0200
+Subject: [PATCH 1/2] Use inttypes.h if stdint.h is not available
+
+---
+ c.h |    8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/c.h b/c.h
+index 103c15a..68baf01 100644
+--- a/c.h
++++ b/c.h
+@@ -11,7 +11,15 @@
+ 
+ #include <limits.h>
+ #include <stddef.h>
++
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++# include <inttypes.h>
++# endif
++#endif
++
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdarg.h>
+-- 
+1.7.10.3
+
