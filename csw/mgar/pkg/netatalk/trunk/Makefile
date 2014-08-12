@@ -84,6 +84,8 @@ CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/bin/afppasswd
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_pam.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_dhx_passwd.so
 CHECKPKG_OVERRIDES_CSWnetatalk += bad-rpath-entry|/opt/csw|opt/csw/lib/netatalk/uams_randnum.so
+CHECKPKG_OVERRIDES_CSWnetatalk_sparc_5.10 = surplus-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWnetatalk += $(CHECKPKG_OVERRIDES_CSWnetatalk_$(GARCH)_$(GAROSREL))
 
 include gar/category.mk
 
