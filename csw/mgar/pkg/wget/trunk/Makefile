@@ -21,7 +21,9 @@ endef
 MASTER_SITESMASTER_SITES += ftp://alpha.gnu.org/gnu/wget/S = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.xz
 
-VENDOR_URL = http://www.gnu.org/software/wget/
+VENDOR_URL = http://www.gnu.org# We need wget for pkgutil downlaod and GAR
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386rg/software/wget/
 
 PACKAGES += CSWwget
 SPKG_DESC_CSWwget = A network utility to retrieve files from the web
@@ -49,7 +51,7 @@ REINPLACE_FILES_cswperl += tests/*.px
 REINPLACE_FILES_cswperl += tests/run-px
 
 EXTRA_CONFIGURE_STATIC-disable += --with-ssl
-# NTLM can only be enabled when used with OpenSSL instead of the defaulting GnuTLS
+# NTLM can only be enabled when used with OpenSSL instead of the dfaulting GnuTLS
 #EXTRA_CONFIGURE_STATIC-disable += --enable-ntlm
 
 EXTRA_CONFIGURE_STATIC-enable += --without-ssl
