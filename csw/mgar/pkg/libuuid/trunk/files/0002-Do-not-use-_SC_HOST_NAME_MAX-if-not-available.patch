@@ -1,0 +1,42 @@
+From 773778dffb6f5a30670d97732f6d6bbde2a987d4 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Aug 2014 09:36:37 +0200
+Subject: [PATCH 2/2] Do not use _SC_HOST_NAME_MAX if not available
+
+---
+ c.h          |    2 ++
+ configure.ac |    1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/c.h b/c.h
+index 68baf01..0814985 100644
+--- a/c.h
++++ b/c.h
+@@ -252,10 +252,12 @@ static inline int dirfd(DIR *d)
+  */
+ static inline size_t get_hostname_max(void)
+ {
++#if HAVE_DECL__SC_HOST_NAME_MAX
+ 	long len = sysconf(_SC_HOST_NAME_MAX);
+ 
+ 	if (0 < len)
+ 		return len;
++#endif
+ 
+ #ifdef MAXHOSTNAMELEN
+ 	return MAXHOSTNAMELEN;
+diff --git a/configure.ac b/configure.ac
+index aeb53f2..4e7cbbf 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -21,6 +21,7 @@ AC_SUBST([SOCKET_LIBS])
+ 
+ # Checks for header files.
+ AC_CHECK_HEADERS([fcntl.h inttypes.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/socket.h sys/time.h unistd.h])
++AC_CHECK_DECLS([_SC_HOST_NAME_MAX])
+ 
+ # Checks for typedefs, structures, and compiler characteristics.
+ AC_TYPE_INT32_T
+-- 
+1.7.10.3
+
