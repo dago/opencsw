@@ -11,22 +11,8 @@ MASTER_SITES += http://shibboleth.net/downloads/log4shib/latest/
 DISTFILES += $(DISTNAME).tar.gz
 
 # separate packages
-PACKAGES += CSWliblog4shib1
-CATALOGNAME_CSWliblog4shib1 = liblog4shib1
-PKGFILES_CSWliblog4shib1 += $(call baseisadirs,$(libdir),liblog4shib\.so\.1\.0\.8)
-PKGFILES_CSWliblog4shib1 += $(call baseisadirs,$(libdir),liblog4shib\.so\.1(\.\d+)*)
-SPKG_DESC_CSWliblog4shib1 += $(DESCRIPTION), liblog4shib.so.1
-RUNTIME_DEP_PKGS_CSWlog4shib += CSWliblog4shib1
-RUNTIME_DEP_PKGS_CSWlog4shib-dev += CSWliblog4shib1
 RUNTIME_DEP_PKGS_CSWliblog4shib1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWliblog4shib1 += CSWlibstdc++6
-
-# The end of CSWliblog4shib1 definition
-# (If CSWlog4shib-dev doesn't exist yet)
-PACKAGES += CSWlog4shib-dev
-CATALOGNAME_CSWlog4shib-dev = log4shib_dev
-SPKG_DESC_CSWlog4shib-dev += $(DESCRIPTION), development files
-PKGFILES_CSWlog4shib-dev += /opt/csw/lib/liblog4shib.so
 
 GARCOMPILER = GCC4
 #BUILD64 = 1
@@ -34,6 +20,11 @@ GARCOMPILER = GCC4
 #IGNORE_DESTDIR = 1
 # We want 64 bit binaries
 #MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
+
+#OVERRIDES
+CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/liblog4shib.so
+CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblog4shib.so.1.0.8|soname=liblog4shib.so.1|pkgname=CSWlog4shib|expected=CSWliblog4shib1
+CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/liblog4shib.so
 
 #CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWlog4shib += CSWlibgcc-s1
