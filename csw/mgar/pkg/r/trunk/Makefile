@@ -2,12 +2,11 @@
 # Only builds on Solaris 10
 
 NAME = R
-VERSION = 3.1.0
+VERSION = 3.1.1
 CATEGORIES = apps
 GARTYPE = v2
 
-DESCRIPTION = A language and environment for statistical computing and graphics
-define BLURB
+DESCRIPTION = A language and environment for statistical compuefine BLURB
 endef
 
 MASTER_SITES = http://stat.ethz.c$(shell echo $(VERSION) | awk -F. '{print $$1}')/CRAN/src/base/R-2/
