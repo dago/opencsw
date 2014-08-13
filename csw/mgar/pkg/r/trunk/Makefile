@@ -88,4 +88,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check-recommended
 
+INTERNET_LIBS = -lsocket -lnsl
+
+EXTRA_COMMON_EXPORTS = INTERNET_LIBS
+
 include gar/category.mk
