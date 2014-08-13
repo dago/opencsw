@@ -15,6 +15,8 @@ RUNTIME_DEP_PKGS_CSWliblog4shib1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWliblog4shib1 += CSWlibstdc++6
 
 GARCOMPILER = GCC4
+MAKE_OPT_unstable10s = -j 24
+MAKE_OPT_unstable10x = -j 4
 BUILD64 = 1
 ISAEXEC = 1
 #IGNORE_DESTDIR = 1
