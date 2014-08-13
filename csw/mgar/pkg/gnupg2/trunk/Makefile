@@ -3,7 +3,7 @@
 # $Id$
 
 NAME    = gnupg
-VERSION = 2.0.22
+VERSION = 2.0.26
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -13,9 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gnupg/
-DISTFILES = $(DISTNAME).tar.bz2
-
-PATCHFILES += 0001-Fix-mutex-stream-return-args-in-macro.patch
+DISTFILES = $(Ds-in-macro.patch
 
 VENDOR_URL = http:GARCOMPILER = GCC4p://www.gnupg.org/
 
