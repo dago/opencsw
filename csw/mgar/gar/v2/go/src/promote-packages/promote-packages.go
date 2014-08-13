@@ -444,6 +444,7 @@ type CrossCatIntGroup struct {
   CanBeIntegratedNow bool
   NeedsAttention bool
   Messages []string
+  DaysLeft float64
 }
 
 func NewCrossCatIntGroup(key string) (*CrossCatIntGroup) {
@@ -851,11 +852,17 @@ func canBeIntegrated(groups map[string]*CrossCatIntGroup) {
   now := time.Now()
   for key := range groups {
     problems := make([]string, 0)
+
+    age := now.Sub(groups[key].LatestMod)
+    reqAge := (-1) * requiredAge
+    timeLeft := reqAge - age
+    groups[key].DaysLeft = timeLeft.Hours() / 24.0
+    if groups[key].DaysLeft < 0 {
+      groups[key].DaysLeft = 0
+    }
+
     // I can't make sense of the Before/After thing here.
     if now.Add(requiredAge).Before(groups[key].LatestMod) {
-      age := now.Sub(groups[key].LatestMod)
-      reqAge := (-1) * requiredAge
-      timeLeft := reqAge - age
       msg := fmt.Sprintf("Not old enough: %v, but %v age is required (%v days), %v left.",
                          age, reqAge, daysOldRequired, timeLeft)
       problems = append(problems, msg)
