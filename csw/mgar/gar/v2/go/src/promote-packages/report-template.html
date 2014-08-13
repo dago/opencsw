@@ -19,6 +19,7 @@
       {{ if $ccg.Bugs }}
       (blocking bugs!)
       {{ end }}
+      {{ printf "%.02f" $ccg.DaysLeft }} days left
     </li>
     {{ end }}
   </ul>
