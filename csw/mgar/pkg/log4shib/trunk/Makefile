@@ -17,6 +17,10 @@ PKGFILES_CSWliblog4shib1 += $(call baseisadirs,$(libdir),liblog4shib\.so\.1\.0\.
 PKGFILES_CSWliblog4shib1 += $(call baseisadirs,$(libdir),liblog4shib\.so\.1(\.\d+)*)
 SPKG_DESC_CSWliblog4shib1 += $(DESCRIPTION), liblog4shib.so.1
 RUNTIME_DEP_PKGS_CSWlog4shib += CSWliblog4shib1
+RUNTIME_DEP_PKGS_CSWlog4shib-dev += CSWliblog4shib1
+RUNTIME_DEP_PKGS_CSWliblog4shib1 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWliblog4shib1 += CSWlibstdc++6
+
 # The end of CSWliblog4shib1 definition
 # (If CSWlog4shib-dev doesn't exist yet)
 PACKAGES += CSWlog4shib-dev
