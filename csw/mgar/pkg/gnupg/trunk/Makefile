@@ -1,5 +1,5 @@
 NAME = gnupg
-VERSION = 1.4.16
+VERSION = 1.4.18
 CATEGORIES = apps
 GARTYPE = v2
 
