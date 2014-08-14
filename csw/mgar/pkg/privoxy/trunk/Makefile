@@ -22,6 +22,7 @@ MASTER_SITES = $(SFECT_MIRRORS)
 SF_PNAME = $(NAME)-$(VERSION)-stable
 DISTFILES += $(DISTNAME)-src.tar.gz
 DISTFILES += cswprivoxy
+EXPANDVARS += cswprivoxy
 DISTFILES += cswusergroup
 
 VENDOR_URL = http://www.privoxy.org/
@@ -39,6 +40,14 @@ CONFFILES += user.action
 CONFFILES += user.filter
 PRESERVECONF += $(addprefix $(sysconfdir)/,$(CONFFILES))
 
+PIDDIR = $(localstatedir)/privoxy
+
+PROTOTYPE_MODIFIERS += chownprivoxy
+PROTOTYPE_FILES_chownprivoxy += $(PIDDIR)
+PROTOTYPE_FILES_chownprivoxy += $(sysconfdir)(/.*)?
+PROTOTYPE_USER_chownprivoxy = privoxy
+PROTOTYPE_GROUP_chownprivoxy = privoxy
+
 # This is just an example
 CHECKPKG_OVERRIDES_CSWprivoxy += file-with-bad-content|/usr/share|root/etc/opt/csw/privoxy/config.CSW
 
@@ -47,8 +56,8 @@ TEST_SCRIPTS =r/opt/csw/privoxy
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# Supress sub directories for logs and pid f+= LOGS_DEST=$(localstatedir)
-INSTALL_ARGS += PIDS_DEST=$(localstatedir)
+# Supress sub directories for logs and pid f+= LOGS_DEST=$(localstatedir)/privoxy
+INSTALL_ARGS += PIDS_DEST=$(localstatedir)/privoxy
 
 include gar/category.mk
 
@@ -70,4 +79,6 @@ post-install-modulated:
 
 		@echo --- Installing cswinginstall -d $(DESTDIR)/etc/opt/csw/init.d
 		cp $(WORKDIR)/cswprivoxy $(DESTDIR)/etc/opt/csw/init.d/
+
+		mkdir -p $(DESTDIR)$(PIDDIR)
 		@$(MAKECOOKIE)
