@@ -24,9 +24,6 @@ ISAEXEC = 1
 MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
 
 #OVERRIDES: let not split -dev for now
-CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/liblog4shib.so
-CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblog4shib.so.1.0.8|soname=liblog4shib.so.1|pkgname=CSWlog4shib|expected=CSWliblog4shib1
-CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/liblog4shib.so
 CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/liblog4shib.so
 CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/liblog4shib.so.1.0.8|soname=liblog4shib.so.1|pkgname=CSWlog4shib|expected=CSWliblog4shib1
 CHECKPKG_OVERRIDES_CSWlog4shib += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/liblog4shib.so
