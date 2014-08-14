@@ -102,10 +102,10 @@ P_NAME=Privoxy
 # Path to executable.
 P_DAEMON=privoxy
 # Full path to location of Privoxy config file. 
-P_CONF_FILE=/opt/csw/etc/privoxy/config
+P_CONF_FILE=@sysconfdir@/config
 # Full path to PID file location. Location must be writable by 
 # whoever runs this script and by Privoxy itself.
-P_PIDFILE=/var/opt/csw/privoxy/privoxy.pid
+P_PIDFILE=@PIDDIR@/privoxy.pid
 # If uncommented, this script will try to run as USER=privoxy, which
 # may require special handling of config, *.action, trust, logfile, 
 # jarfile, and pidfile.
