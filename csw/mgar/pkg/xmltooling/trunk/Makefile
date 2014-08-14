@@ -13,8 +13,8 @@ DISTFILES += $(NAME)-$(VERSION).tar.gz
 GARCOMPILER = GCC4
 MAKE_OPT_unstable10s = -j 24
 MAKE_OPT_unstable10x = -j 4
-BUILD64 = 1
-ISAEXEC = 1
+#BUILD64 = 1
+#ISAEXEC = 1
 #IGNORE_DESTDIR = 1
 # We want 64 bit binaries
 MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
@@ -24,7 +24,13 @@ MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
 #CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWlog4shib += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlog4shib += CSWlibstdc++6
-CONFIGURE_ARGS = --disable-static --disable-doxygen --prefix=/opt/csw --mandir=/opt/csw/share/man --libdir=$(libdir)
+
+
+BUILD_DEP_PKGS += CSWboost-gcc-dev
+
+#SCONS_ENV = LIBPATH=$(prefix)/gxx/lib
+
+CONFIGURE_ARGS = --disable-static --disable-doxygen --prefix=/opt/csw --mandir=/opt/csw/share/man --libdir=$(libdir) --with-boost=/opt/csw/gxx
 
 include gar/category.mk
 #  --with-boost=DIR        prefix of Boost [guess]
