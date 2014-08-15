@@ -2,15 +2,17 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = gsoap
-VERSION = 2.8
+BASEVERSION = 2.8
 SUBVERSION = 17
+VERSION = $(BASEVERSION).$(SUBVERSION)
+DISTNAME = $(NAME)-$(BASEVERSION)
 GARTYPE = v2
 
 DESCRIPTION = Development toolkit for Web services and XML
 
 SF_PROJECT = gsoap2
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(NAME)_$(VERSION).$(SUBVERSION).zip
+DISTFILES  = $(NAME)_$(VERSION).zip
 
 PACKAGES += CSWgsoap
 SPKG_DESC_CSWgsoap = Development toolkit for Web services and XML
