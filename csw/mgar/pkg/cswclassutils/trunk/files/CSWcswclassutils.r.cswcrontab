@@ -41,13 +41,14 @@ remove_cron_lines() {
       if echo "${LINE}" | grep "^# ${crontab_tag} ${cron_id}\$" >/dev/null; then
         state=2
         continue
-      fi
-      if [ ${state} -eq 2 ]; then
-        echo >/dev/null # ...since /bin/sh doesn't understand negation
-        state=1
       else
         echo "${LINE}" >> "${cron_file}"
       fi
+		fi
+
+    if [ ${state} -eq 2 ]; then
+        echo >/dev/null # ...since /bin/sh doesn't understand negation
+        state=1
     fi
   done
 }
