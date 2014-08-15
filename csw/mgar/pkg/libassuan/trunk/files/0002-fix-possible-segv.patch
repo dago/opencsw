@@ -1,0 +1,23 @@
+From d081ab69a6d726528d0ea1ba88736a76fce99950 Mon Sep 17 00:00:00 2001
+From: Werner Koch <wk@gnupg.org>
+Date: Thu, 14 Aug 2014 17:15:04 +0200
+Subject: [PATCH] Fix possible segv in a call to _assuan_debug.
+
+* src/context.c (assuan_set_error): Do not pass NULL for %s in the trace function.
+---
+ src/context.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/context.c b/src/context.c
+index b4d4d49..62b7f57 100644
+--- a/src/context.c
++++ b/src/context.c
+@@ -190,7 +190,7 @@ assuan_set_error (assuan_context_t ctx, gpg_error_t err, const char *text)
+ {
+   TRACE4 (ctx, ASSUAN_LOG_CTX, "assuan_set_error", ctx,
+          "err=%i (%s,%s),text=%s", err, gpg_strsource (err),
+-         gpg_strerror (err), text);
++         gpg_strerror (err), text?text:"(none)");
+ 
+   ctx->err_no = err;
+   ctx->err_str = text;

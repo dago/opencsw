@@ -16,13 +16,13 @@ BUILD_DEP_-erroGS += C# Related to:
 # https://bugs.g10code.com/gnupg/msg4081
 # http://bugs.g10code.com/gnupg/issue1477
 # http://bugs.g10code.com/gnupg/issue1350
-PATCHFILES += 0001-Fix-usage-of-variadic-arguments.patch CSWlibgpgerr-dev
+PATCHFILES += 0001-Fix-usage-of-variadic-arguments.patch C# Patch provided by upstream to avoid segv in gnupg 2.0.26 tests
+PATCHFILES += 0002-fix-possible-segv.patch CSWlibgpgerr-dev
 
 PACKAGES += CSWlibassuan0
 SPKG_DESC_CSWlibassuan0 = IPC library used by some GnuPG related software, libassuan.so.0
 PKGFILES_CSWlibassuan0 += $(call pkgfiles_lib,libassuan.so.0)
-RUNTIME_DEP_PKGS_CSWlibassuan0 += CSWlibgpg-error0
-OBSOLETED_BY_CSWlibassuan0 += CSWlibassuan
+RUNTIME_DEP_PKGS_CSWlibassuan0 +=  += CSWlibassuan
 
 PACKAGES += CSWlibassuan-dev
 SPKG_DESC_CSWlibassuan-dev = Development files for libassuan.so.0
