@@ -3,43 +3,42 @@
 # $Id$
 
 NAME = Sphinx
-VERSION = 1.1.3
+VERSION = 1.2.2
 PACKAGES = CSWpy-sphinx
 CATEGORIES = python
 GARTYPE = v2
-DESCRIPTION = Helps create documentation consisting of reStructuredText sources
-define BLURB
-endef
+DESCRIPTION = Documentation generator, outputs HTML, PDF, epub and man
+
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-fix-infodir.patch
 
-BUILD_DEP_PKGS	+=	CSWpython-dev
-BUILD_DEP_PKGS	+=	CSWpython27-dev
-BUILD_DEP_PKGS	+=	CSWpy-docutils
-BUILD_DEP_PKGS	+=	CSWpy-jinja2
-BUILD_DEP_PKGS	+=	CSWpy-pygments
-BUILD_DEP_PKGS	+=	CSWpysetuptools
-BUILD_DEP_PKGS	+=	CSWtexinfo
+BUILD_DEP_PKGS += CSWpy-docutils
+BUILD_DEP_PKGS += CSWpy-jinja2
+BUILD_DEP_PKGS += CSWpy-pygments
+BUILD_DEP_PKGS += CSWpy-setuptools
+BUILD_DEP_PKGS += CSWpython-dev
+BUILD_DEP_PKGS += CSWpython27-dev
+BUILD_DEP_PKGS += CSWtexinfo
 
-PACKAGES					+=	CSWpy-sphinx
-CATALOGNAME_CSWpy-sphinx	=	py_sphinx
-SPKG_DESC_CSWpy-sphinx		+=	$(DESCRIPTION)
-ARCHALL_CSWpy-sphinx		=	1
+PACKAGES += CSWpy-sphinx
+SPKG_DESC_CSWpy-sphinx += $(DESCRIPTION)
+ARCHALL_CSWpy-sphinx = 1
 RUNTIME_DEP_PKGS_CSWpy-sphinx += CSWpy-docutils
 RUNTIME_DEP_PKGS_CSWpy-sphinx += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWpy-sphinx += CSWpy-pygments
-RUNTIME_DEP_PKGS_CSWpy-sphinx += CSWpysetuptools
+RUNTIME_DEP_PKGS_CSWpy-sphinx += CSWpy-setuptools
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-docutils
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-jinja2
 CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
-CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-setuptools
 
-PACKAGES							+=	CSWpy-sphinx-doc
-CATALOGNAME_CSWpy-sphinx-doc		=	py_sphinx_doc
-SPKG_DESC_CSWpy-sphinx-doc			+=	$(DESCRIPTION), documentation
-PKGFILES_CSWpy-sphinx-doc			+=	/opt/csw/share/info/.*
-ARCHALL_CSWpy-sphinx-doc			=	1
-CHECKPKG_OVERRIDES_CSWpy-sphinx-doc	+=	python-package-missing-py26-files
+PACKAGES +=  CSWpy-sphinx-doc
+CATALOGNAME_CSWpy-sphinx-doc  =  py_sphinx_doc
+SPKG_DESC_CSWpy-sphinx-doc    +=  $(DESCRIPTION), documentation
+PKGFILES_CSWpy-sphinx-doc     +=  /opt/csw/share/info/.*
+ARCHALL_CSWpy-sphinx-doc      =  1
+CHECKPKG_OVERRIDES_CSWpy-sphinx-doc += python-package-missing-py26-files
+CHECKPKG_OVERRIDES_CSWpy-sphinx-doc += python-package-missing-py-files
 
 include gar/category.mk
 
