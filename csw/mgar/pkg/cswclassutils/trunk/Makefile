@@ -1,7 +1,7 @@
 # $HeadURL$
 
 NAME = cswclassutils
-VERSION = 1.49
+VERSION = 1.50
 GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
@@ -45,12 +45,6 @@ endef
 define catname
 $(call set,$(call var_name,CATALOGNAME,$(1)),$(call catname_val,$(1)))
 endef
-
-# checkpkg understands this relationship now, so no need to override it
-# any more.  keep it here in case it ever becomes useful for something else
-# define surplus_dep
-# $(eval CHECKPKG_OVERRIDES_CSWcswclassutils += surplus-dependency|$(call csw_pkgname,$(1)))
-# endef
 
 define bad_location
 $(eval CHECKPKG_OVERRIDES_CSWcas-$(1) += bad-location-of-file|file=/usr/sadm/install/scripts/$(2).csw$(1))
