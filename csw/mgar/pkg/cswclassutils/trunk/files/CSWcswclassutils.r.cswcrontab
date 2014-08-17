@@ -7,6 +7,7 @@
 #
 #   Written and   maintained by Dagobert Michelsen
 # Rewritten and unmaintained by Maciej Bliziński
+# Updated    to  use    perl by Ben Walton
 
 set -e
 set -u
@@ -20,37 +21,33 @@ fi
 echo "Removing class <cswcrontab> ..."
 
 if [ -z "${PKGINST}" ]; then
-  echo 'PKGINST is empty!'
+  echo 'PKGINST is empty! Not removing cron entries.'
+  # It is too dangerous to continue
+  exit 0
 fi
-
-crontab_tag="Added by cswcrontab for"
-readonly crontab_tag
 
 remove_cron_lines() {
   # Removed marked lines from a file.
   # states: 1: reading a line, switching to 2 if matches
   #         2: removing a line
-  cron_id="$1"
-  cron_file="$2"
-  state=1
-  rm -f "${cron_file}"
-  touch "${cron_file}"
-  chown "${USERNAME}" "${cron_file}"
-  while read LINE; do
-    if [ ${state} -eq 1 ]; then
-      if echo "${LINE}" | grep "^# ${crontab_tag} ${cron_id}\$" >/dev/null; then
-        state=2
-        continue
-      else
-        echo "${LINE}" >> "${cron_file}"
-      fi
-		fi
+  perl -ne '
+    BEGIN {
+      $state = 1;
+    }
 
-    if [ ${state} -eq 2 ]; then
-        echo >/dev/null # ...since /bin/sh doesn't understand negation
-        state=1
-    fi
-  done
+    if ($state == 1) {
+      if ($_ =~ /Added by cswcrontab for $ENV{PKGINST}/) {
+        $state = 2;
+        next;
+      } else {
+        printf $_;
+      }
+    }
+
+    if ($state == 2) {
+      $state = 1;
+      next;
+    }' /dev/stdin
 }
 
 debug() {
@@ -60,7 +57,6 @@ debug() {
 }
 
 while read dest; do
-
   echo $dest
   rm -f $dest
 
@@ -68,8 +64,11 @@ while read dest; do
   TMPFILE=/tmp/cswcrontab.${PKGINST}.$$
 
   umask 177
-  /usr/bin/crontab -l ${USERNAME} | remove_cron_lines "${PKGINST}" "${TMPFILE}"
+  rm -f "${TMPFILE}"
+  touch "${TMPFILE}"
+  chown "${USERNAME}" "${TMPFILE}"
 
+  /usr/bin/crontab -l ${USERNAME} | remove_cron_lines > "${TMPFILE}"
 
   if [ -n "${classutils_debug:-}" ]; then
     debug "Installing crontab for user '${USERNAME}'"
@@ -78,7 +77,6 @@ while read dest; do
 
   su ${USERNAME} -c "/usr/bin/crontab \"${TMPFILE}\""
   rm -f "${TMPFILE}"
-
 done
 
 exit 0
