@@ -48,7 +48,7 @@ RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibldap2-4-2e# For gpg-agent. Pinentry is not because of shared libraries.
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWpinentry
 CHECKPKG_OVERRIDES_CSWgnupg2 += surplus-dependency|CSWpinentry
-OBSOLETED_BY_CSWgnupg2 = CSWgnupg-agentndman1/gpg-agent.BUILD64 = 1
+dman1/gpg-agent.BUILD64 = 1
 ISAEXEC#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
