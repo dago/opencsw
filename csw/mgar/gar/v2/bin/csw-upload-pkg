@@ -3,6 +3,6 @@
 set -e
 set -u
 
-basedir=$(dirname $0)/..
+basedir=$(dirname $(realpath $0))/..
 export PYTHONPATH=$basedir
 exec /opt/csw/bin/python2.6 "$basedir/lib/python/csw_upload_pkg.py" "$@"
