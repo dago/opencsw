@@ -31,13 +31,10 @@ RUNxerces-c += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibstdc++6bxerces-c-3.1.so)
+RUNTIME_DEP_PKGS_CSWlibxercidn11
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibssl1-0-0bxerces-c-3.1.so)
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWlibxercz1= CSWlibicui18n48
 
 # The version number is in the base and not appended to .so as usual
 CHECKPKG_OVERRIDES_CSWlibxerces-c3-1 += soname-equals-filename
