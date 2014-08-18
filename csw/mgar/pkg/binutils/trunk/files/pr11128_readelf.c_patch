@@ -1,0 +1,27 @@
+Index: binutils/readelf.c
+===================================================================
+RCS file: /cvs/src/src/binutils/readelf.c,v
+retrieving revision 1.476
+diff -c -3 -p -r1.476 readelf.c
+*** binutils/readelf.c	18 Dec 2009 16:21:50 -0000	1.476
+--- binutils/readelf.c	4 Jan 2010 12:22:39 -0000
+*************** dump_section_as_strings (Elf_Internal_Sh
+*** 8624,8630 ****
+        if (data < end)
+  	{
+  #ifndef __MSVCRT__
+! 	  printf ("  [%6tx]  %s\n", data - start, data);
+  #else
+  	  printf ("  [%6Ix]  %s\n", (size_t) (data - start), data);
+  #endif
+--- 8624,8633 ----
+        if (data < end)
+  	{
+  #ifndef __MSVCRT__
+! 	  /* PR 11128: Use two separate invocations in order to work
+!              around bugs in the Solaris 8 implementation of printf.  */
+! 	  printf ("  [%6tx]  ", data - start);
+! 	  printf ("%s\n", data);
+  #else
+  	  printf ("  [%6Ix]  %s\n", (size_t) (data - start), data);
+  #endif
