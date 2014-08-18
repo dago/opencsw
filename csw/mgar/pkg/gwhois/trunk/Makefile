@@ -38,6 +38,8 @@ CHECKPKG_OVERRIDES_CSWgwhois += surplus-dependency|CSWpm-libwww-perl
 REINPLACE_USRSHARE += $(docdir)/$(NAME)/INSTALL
 REINPLACE_WHEN_USRSHARE = postinstall
 
+CHECKPKG_OVERRIDES_CSWgwhois += file-collision|/opt/csw/gnu/whois|CSWgnulinks|CSWgwhois
+
 include gar/category.mk
 
 install-gwhois:
