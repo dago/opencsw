@@ -1,5 +1,5 @@
 NAME = libassuan
-VERSION = 2.1.1
+VERSION = 2.1.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -16,8 +16,7 @@ BUILD_DEP_-erroGS += C# Related to:
 # https://bugs.g10code.com/gnupg/msg4081
 # http://bugs.g10code.com/gnupg/issue1477
 # http://bugs.g10code.com/gnupg/issue1350
-PATCHFILES += 0001-Fix-usage-of-variadic-arguments.patch C# Patch provided by upstream to avoid segv in gnupg 2.0.26 tests
-PATCHFILES += 0002-fix-possible-segv.patch CSWlibgpgerr-dev
+PATCHFILES += 0001-Fix-usage-of-variadic-arguments.patch CSWlibgpgerr-dev
 
 PACKAGES += CSWlibassuan0
 SPKG_DESC_CSWlibassuan0 = IPC library used by some GnuPG related software, libassuan.so.0
