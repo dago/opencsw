@@ -54,7 +54,8 @@ RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibz1
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWxerces-c += # Rebuild with GCC
+GARCOMPILER = GCC4= CSWlibicui18n48
 
 BUILD64 = 1
 ISAEXEC = 1
@@ -62,4 +63,4 @@ ISAEXEC = 1
 EXTRA_CONFIGURE_EXPORTS = icu_config
 EXTRA_CONFIGURE_ENV_icu_config = $(bindir)/icu-config
 
-include gar/category.mk
+include
