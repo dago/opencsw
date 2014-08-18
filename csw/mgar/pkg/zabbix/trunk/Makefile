@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = zabbix
-VERSION = 2.2.1
+VERSION = 2.2.5
 GARTYPE = v2
 CATEGORIES = server
 
