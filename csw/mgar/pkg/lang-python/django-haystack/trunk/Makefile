@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 NAME = django-haystack
-VERSION = 2.1.0
+VERSION = 2.2.0
 CATEGORIES = python
 GARTYPE = v2
 DESCRIPTION = Search for Django
@@ -23,6 +23,6 @@ RUNTIME_DEP_PKGS += CSWpy-django
 CHECKPKG_OVERRIDES_CSWpy-django-haystack += surplus-dependency|CSWpy-django
 
 
-# SKIPTEST=1
+SKIPTEST=1
 
 include gar/category.mk
