@@ -48,14 +48,7 @@ PACKAGES += CSWxerces-c
 CATALOGNAME_CSWxerces-c = xerces_c
 SPKG_DESC_CSWxerces-c = Utility programs from the Xerces XML parser
 PKGFILES_CSWxerces-c = $(bindir)/.*
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibxerces-c3-1
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibz1
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWxerces-c += # Rebuild with GCC
+RUNTIME_DEP_PKGS_CSWxerces-c += C # Rebuild with GCC
 GARCOMPILER = GCC4= CSWlibicui18n48
 
 BUILD64 = 1
