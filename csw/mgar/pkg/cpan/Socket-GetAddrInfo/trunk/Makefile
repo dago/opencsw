@@ -1,19 +1,26 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
-#
 NAME = Socket-GetAddrInfo
-VERSION = X.Y
+VERSION = 0.22
+CATEGORIES = cpan
 GARTYPE = v2
+AUTHOR = PEVANS
 
-DESCRIPTION = Brief description
+DESCRIPTION = Address-family independent name resolving functions
 define BLURB
-  Long description
 endef
 
-MASTER_SITES =
+LICENSE_TEXT = This module is licensed under the Perl license
+
 DISTFILES  = $(DISTNAME).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES = CSWpm-socket-getaddrinfo
+CATALOGNAME = pm_socket_getaddrinfo
+
+BUILD_DEP_PKGS += CSWpm-extutils-cchecker
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
-
