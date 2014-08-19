@@ -35,6 +35,7 @@ RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-proc-daemon
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-proc-pid-file
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-net-ip
+RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-socket-getaddrinfo
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-text-template
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-universal-require
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-xml-treepp
