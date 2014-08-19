@@ -11,6 +11,8 @@ endef
 
 LICENSE_TEXT = This module is licensed under the Perl license
 
+ARCHALL = 1
+
 PACKAGES = CSWpm-extutils-cchecker
 CATALOGNAME = pm_extutils_cchecker
 
