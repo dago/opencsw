@@ -1,5 +1,5 @@
 NAME = libserf
-VERSION = 1.3.6
+VERSION = 1.3.7
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 GARTYPE = v2
@@ -11,7 +11,8 @@ define BLURB
     running the read/write communication asynchronously. Memory copies
     and transformations are kept to a minimum to provide high performance
     oGOOGLE_PROJECT = serf
-MASTER_SITES = $(GOOGLE_MIRROR)
+#MASTER_SITES = $(GOOGLE_MIRROR)
+MASTER_SITES = http://serf.googlecode.com/svn/src_releases/
 DISTFILES += $(DISTNAME).tar.bz2
 PATCHFILES  += 0001-mark-solaris-as-posix-for-scons.patch
 
