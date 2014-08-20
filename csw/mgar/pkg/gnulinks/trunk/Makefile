@@ -3,9 +3,8 @@ VERSION = 1.4
 CATEGORIES = xtra
 GARTYPE = v2
 
-VENDOR_URL = http://opencsw.org
-
-GLINKPKGS =  CSWbinutils CSWggetopt CSWgwhois
+VENDOR_URL = ht#GLINKPKGS =  CSWbinutils CSWggetopt CSWgwhois
+#ggetopt CSWgwhois
 BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil CSWbash
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
@@ -14,8 +13,14 @@ define BLURB
   /opt/csw/gnu.
 endef
 
-MASTER_SITES = http://www.opencsw.org
+MASTER_SITES = http/
 DISTFILES += COPYING
+
+PACKAGES += CSWgnulinks
+CATALOGNAME_CSWgnulinks = gnulinks_stub
+SPKG_DESC_CSWgnulinks = Transitional package. Content moved to individual packages.
+# Thats the purpose
+CHECKPKG_OVERRIDES_CSWgnulinks += catalogname-does-not-match-pkgnameSTFILES += COPYING
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
@@ -29,10 +34,7 @@ SHELL = /opt/csw/bin/bash
 # We point to these packages, but do not depend on them on purpose.
 CHECKPKG_OVERRIDES_CSWgnulinks += $(foreach P,$(GLINKPKGS),missing-dependency|$P)
 
-include gar/category.mk
-
-pre-build-modulated:
-	@(cd $(WORKSRC); cp ../COPYING .; )
+include ../COPYING .; )
 
 install-custom:
 	@mkdir -p $(DESTDIR)
@@ -62,4 +64,4 @@ newproto:
 	@echo Installing new prototype.
 	@mv $(FILEDIR)/CSWgnulinks.prototype.new \
 		 $(FILEDIR)/CSWgnulinks.prototype
-	@$(MAKE) makesums
+	
