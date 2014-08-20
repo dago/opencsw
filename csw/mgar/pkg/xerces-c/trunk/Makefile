@@ -31,9 +31,9 @@ RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWlibxercidn11
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibssl1-0-0bxerces-c-3.1.so)
-RUNTIME_DEP_PKGS_CSWlibxercicudata48
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicuuc48
-RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicui18n48= CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWlibxercicuuc52
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicui18n52
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicudata52= CSWlibicui18n48
 
 # The version number is in the base and not appended to .so as usual
 CHECKPKG_OVERRIDES_CSWlibxerces-c3-1 += soname-equals-filename
@@ -48,14 +48,16 @@ CATALOGNAME_CSWxerces-c = xerces_c
 SPKG_DESC_CSWxerces-c = Utility programs from the Xerces XML parser
 PKGFILES_CSWxerces-c = $(bindir)/.*
 RUNTIME_DEP_PKGS_CSWxerces-c += CRUNTIME_DEP_PKGS_CSWxerces-c += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicudata48
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicudata52
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibz1
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicuuc52
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicui18n48= CSWlibicui18n48
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicui18n52
 
 BUILD64 = 1
+ISAEXEC = 1
+EXTRA_LINKER_FLAGS += -norunpath4 = 1
 ISAEXEC = 1
 
 EXTRA_CONFIGURE_EXPORTS = icu_config
