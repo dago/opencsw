@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tracker
-VERSION = 1.0.1
+VERSION = 1.1.3
 GARTYPE = v2
 
 DESCRIPTION = Gnome Tracker, semantic data storage
@@ -48,9 +48,6 @@ BUILD_DEP_PKGS += CSWfontconfig-dev CSWlibfreetype-dev CSWxproto CSWsunx11devel 
 PATCHFILES += 0003-Replace-uuid_unparse_lower-with-uuid_unparse.patch
 PATCHFILES += 0004-_XOPEN_SOURCE-hides-non-standard-stuff-__EXTENSIONS_.patch
 PATCHFILES += 0005-exempi-xmp.h-is-missing-a-stdbool.h-include.patch
-PATCHFILES += 0001-Ontology-add-indexes-for-nie-mimeType-and-nfo-fileNa.patch
-# will be in 1.0.2:
-PATCHFILES += 0001-libtracker-common-memory-limits-on-systems-with-larg.patch
 
 # Packages
 PACKAGES += CSWtracker
@@ -67,7 +64,6 @@ RUNTIME_DEP_PKGS_CSWtracker += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibpoppler-glib8
-RUNTIME_DEP_PKGS_CSWtracker += CSWlibiptcdata
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWtracker += CSWlibgcc-s1
