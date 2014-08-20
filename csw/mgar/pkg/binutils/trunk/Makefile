@@ -47,6 +47,9 @@ GARCOMPILER = GNU
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbinutils += CSWlibz1
+RUNTIME_DEP_PKGS_CSWbinutils-i386 += CSWlibfl2
+RUNTIME_DEP_PKGS_CSWbinutils += $(RUNTIME_DEP_PKGS_CSWbinutils-$(GARCH))
+
 CHECKPKG_OVERRIDES_CSWbinutils += file-with-bad-content
 #Until removed from GDB:
 CHECKPKG_OVERRIDES_CSWbinutils += file-collision|/opt/csw/share/locale/uk/LC_MESSAGES/bfd.mo|CSWbinutils|CSWgdb
