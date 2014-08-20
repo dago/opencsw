@@ -18,6 +18,7 @@ MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)
 
 BUILD_DEP_PKGS += CSWpysetuptools
 RUNTIME_DEP_PKGS += CSWpy-django
+CHECKPKG_OVERRIDES_CSWpy-django-pdb += surplus-dependency|CSWpy-django
 
 ARCHALL_CSWpy-django-pdb = 1
 
