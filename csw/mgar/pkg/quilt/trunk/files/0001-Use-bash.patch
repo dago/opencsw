@@ -1,0 +1,34 @@
+From 71ecdefe73947d2d6871529a11522c3e05ef064f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 18 Aug 2014 16:34:53 +0200
+Subject: [PATCH] Use bash
+
+---
+ test/run | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test/run b/test/run
+index fb8b10b..1e1a2e6 100755
+--- a/test/run
++++ b/test/run
+@@ -184,7 +184,7 @@ sub exec_test($$) {
+ 		while (<IN>) {
+ 			#print "< $_";
+ 			if ($needs_shell) {
+-				s#^/bin/sh: line \d+: ##;
++				s#^/bin/bash: line \d+: ##;
+ 			}
+ 			push @$result, $_;
+ 		}
+@@ -206,7 +206,7 @@ sub exec_test($$) {
+ 			or die "Can't join STDOUT and STDERR: $!";
+ 
+ 		if ($needs_shell) {
+-			exec ('/bin/sh', '-c', $raw_prog);
++			exec ('/bin/bash', '-c', $raw_prog);
+ 		} else {
+ 			exec @$prog;
+ 		}
+-- 
+2.0.3
+
