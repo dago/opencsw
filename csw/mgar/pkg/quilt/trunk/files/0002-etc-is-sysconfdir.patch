@@ -1,0 +1,25 @@
+From c1c1ec8268493d453a56fee4a42370b28c67a333 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 20 Aug 2014 11:32:25 +0200
+Subject: [PATCH] etc is sysconfdir
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index d03591a..af180bc 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -13,7 +13,7 @@ docdir :=	@docdir@
+ mandir :=	@mandir@
+ localedir :=	$(datadir)/locale
+ emacsdir :=	$(datadir)/emacs/site-lisp
+-etcdir :=	$(subst /usr/etc,/etc,$(prefix)/etc)
++etcdir :=	@sysconfdir@
+ 
+ INSTALL :=	@INSTALL@
+ POD2MAN :=	@POD2MAN@
+-- 
+2.0.3
+

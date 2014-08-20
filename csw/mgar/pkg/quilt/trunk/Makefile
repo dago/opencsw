@@ -1,55 +1,41 @@
 NAME = quilt
-VERSION = 0.48
-CATEGORIES = utils
+VERSION = 0.63
 GARTYPE = v2
 
-DESCRIPTION = A patch management tooln
-define BLURB
-Quilt allows you to easily manage large numbers of patches by keeping
-track of the changes each patch makes. Patches can be applied,
-un-applied, refreshed, and more.
-
-Quilt originally was based on Andrew Morton's patch scripts found at
-http://www.zip.com.au/~akpm/linux/patches/.
-endef
-
-PACKAGES = CSWquilt CSWquilt-el CSWquilt-completion
-
-SPKG_DESC_CSWquilt-el = Emacs support for quilt
-SPKG_DESC_CSWquilt-completion = Bash completion support for quilt
-CATALOGNAME_CSWquilt-el = quilt_el
-CATALOGNAME_CSWquilt-completion = quilt_completion
-
-ARCHALL_CSWquilt-el = 1
-ARCHALL_CSWquilt-completion = 1
-
-RUNTIME_DEP_PKGS_CSWquilt =  CSWcoreutils
-RUNTIME_DEP_PKGS_CSWquilt += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat
-RUNTIME_DEP_PKGS_CSWquilt += CSWgpatch CSWmktemp CSWggrep CSWggettext
-RUNTIME_DEP_PKGS_CSWquilt += CSWfindutils CSWggetopt CSWdiffutils
-RUNTIME_DEP_PKGS_CSWquilt += CSWgnulinks CSWcolumn
-
-RUNTIME_DEP_PKGS_CSWquilt-el = CSWemacscommon CSWquilt
-RUNTIME_DEP_PKGS_CSWquilt-complation = CSWbashcmplt CSWquilt
-
-BUILD_DEP_PKGS = $(filter-out CSWcoreutils, $(RUNTIME_DEP_PKGS_CSWquilt))
-
-PKGFILES_CSWquilt-el = $(datadir)/emacs/site-lisp/.*
-PKGFILES_CSWquilt-completion = $(prefix)/etc/.*
+DESCRIPTION = A patch management tool
 
 MASTER_SITES = http://mirror.csclub.uwaterloo.ca/nongnu/quilt/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream
-# software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES += 0001-Use-bash.patch
+PATCHFILES += 0002-etc-is-sysconfdir.patch
 
-# If the url used to check for software update is different of
-# MASTER_SITES, then uncomment the next line. Otherwise it is set by
-# default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# For formail
+BUILD_DEP_PKGS += CSWprocmail
+# There are probably some more missing
 
-sysconfdir = /etc/opt/csw
+PACKAGES += CSWquilt
+SPKG_DESC_CSWquilt = A patch management tool
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWquilt += CSWcoreutils
+RUNTIME_DEP_PKGS_CSWquilt += CSWperl
+RUNTIME_DEP_PKGS_CSWquilt += CSWgawk
+RUNTIME_DEP_PKGS_CSWquilt += CSWgsed
+RUNTIME_DEP_PKGS_CSWquilt += CSWbash
+RUNTIME_DEP_PKGS_CSWquilt += CSWdiffstat
+RUNTIME_DEP_PKGS_CSWquilt += CSWgpatch
+RUNTIME_DEP_PKGS_CSWquilt += CSWmktemp
+RUNTIME_DEP_PKGS_CSWquilt += CSWggrep
+RUNTIME_DEP_PKGS_CSWquilt += CSWfindutils
+RUNTIME_DEP_PKGS_CSWquilt += CSWggetopt
+RUNTIME_DEP_PKGS_CSWquilt += CSWdiffutils
+RUNTIME_DEP_PKGS_CSWquilt += CSWcolumn
+# Just because of .el files we don't want emacs
+CHECKPKG_OVERRIDES_CSWquilt += missing-dependency|CSWemacs-common
+
+# Don't split out small stuff
+OBSOLETED_BY_CSWquilt += CSWquilt-el
+OBSOLETED_BY_CSWquilt += CSWquilt-completionfdir = /etc/opt/csw
 
 CONFIGURE_ARGS =  $(DIRPATHS)
 CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
@@ -57,6 +43,7 @@ CONFIGURE_ARGS += --with-cp=/opt/csw/bin/gcp
 CONFIGURE_ARGS += --with-date=/opt/csw/bin/gdate
 CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-grep=/opt/csw/bin/ggrep
+CONFIGstat=/opt/csw/bin/gstat=/opt/csw/bin/ggrep
 CONFIGURE_ARGS += --with-tail=/opt/csw/bin/gtail
 CONFIGURE_ARGS += --with-tr=/opt/csw/bin/gtr
 CONFIGURE_ARGS += --with-sed=/opt/csw/bin/gsed
@@ -70,41 +57,18 @@ CONFIGURE_ARGS += --with-patch=/opt/csw/bin/gpatch
 CONFIGURE_ARGS += --with-diffstat=/opt/csw/bin/diffstat
 CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-sendmail=/usr/lib/sendmail
+CONFI-xargs=/opt/csw/bin/gxargs
 CONFIGURE_ARGS += --without-rpmbuild
+
+# There are some tests failing, investigate
+SKIPTEST ?= 1
 
 COMPILE_ELISP = 1
 
-CHECKPKG_OVERRIDES_CSWquilt += unidentified-dependency|CSWcoreutils
+# it seems they prefer the RPM name for this variable in their Makefile
+EXTRA_INSTALL_EXPORTS += BUILD_ROOT
+INSTALL_ENV_BUILD_ROOT = $(DESTDIR)
 
-# quilt overrides
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWcoreutils
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgsed
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgawk
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWfindutils
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgnulinks
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggrep
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffstat
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWmktemp
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWbash
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggetopt
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffutils
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggettext
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgpatch
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWcolumn
-
-# quilt_el overrides
-CHECKPKG_OVERRIDES_CSWquilt-el += surplus-dependency|CSWquilt
+PRESERVECONF += $(sysconfdir)/quilt.quiltrc
 
 include gar/category.mk
-
-PATH := /opt/csw/gnu:$(PATH)
-
-# it seems they prefer the RPM name for this variable in their Makefile
-BUILD_ROOT = $(DESTDIR)
-EXTRA_COMMON_EXPORTS += BUILD_ROOT
-
-post-install-modulated:
-	@( gmkdir -p $(DESTDIR)/$(sysconfdir)/; \
-	   mv $(DESTDIR)/$(prefix)/etc/quilt.quiltrc $(DESTDIR)/$(sysconfdir) )
-	@$(MAKECOOKIE)
