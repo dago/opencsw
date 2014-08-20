@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.10.5
+VERSION = 1.12.0
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -8,22 +8,19 @@ define BLURB
   Wireshark is the world's foremost network protocol analyzer, and is the
   de facto (and often de jure) standard across many industries and
   educational institutions.
-endef
-
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-
-#new glib2 only on Solaris 10
+endehttps://1.eu.dl.wireshark.org/src/
+DISTFILES  = $(DISTNAME).tar.bz2
+only on Solaris 10
 PACKAGING_PLATFORMS = solaris10-spar solaris10-i386
 
 
 VENDOR_URL = http://wwGARCOMPILER = GCC4www.wireshark.org/
 
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
-BUILD_DEP_PKGS += CSWglib2devel
+BUIlibglib2-dev
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
-BUILD_DEP_PKGS += CSWgtk2devel
-BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibgtk2-dev
+BUILD_DEP_PKGS += CSWlibpango-devS += CSWpangodevel
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibcares-dev
@@ -61,6 +58,9 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWwilib2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-hark +RUNTIME_DEP_PKGS_CSWwireshark += CSWliblua5-2+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcc-s1
 
+# Needed for the presence of /opt/csw/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+RUNTIME_DEP_PKGS_CSWwireshark += CSWgdkpixbuf
+
 ###
 # For the ld bug
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibfreetype6
@@ -83,6 +83,9 @@ EXTRA_CFLAGS += -DG_CONST_RETURN=const
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-usr-local=no
+CONFIGUgtk2=yes
+CONFIGURE_ARGS += --with-gtk3=no
+CONFIGURE_ARGS += --with-qt--enable-usr-local=no
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 
 include gar/category.mk
