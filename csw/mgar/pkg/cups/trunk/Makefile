@@ -150,9 +150,10 @@ RUNTIME_DEP_PKGS_CSWcupsd_sparc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibldap2-4-2
+RUNTIME_DEP_PKGS_CSWcupsd += $(RUNTIME_DEP_PKGS_CSWcupsd_$(GARCH))
 # pdftops filter needs poppler's /opt/csw/bin/pdftops
 RUNTIME_DEP_PKGS_CSWcupsd += CSWpoppler
-RUNTIME_DEP_PKGS_CSWcupsd += $(RUNTIME_DEP_PKGS_CSWcupsd_$(GARCH))
+CHECKPKG_OVERRIDES_CSWcupsd += surplus-dependency|CSWpoppler
 
 PACKAGES += CSWcupsclient
 SPKG_DESC_CSWcupsclient = CUPS client binaries
