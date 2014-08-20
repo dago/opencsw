@@ -38,7 +38,6 @@ BUILD_DEP_PKGS += CSWgeoip-dev
 PACKAGES += CSWwireshark
 SPKG_DESC_CSWwireshark = Wireshark (was Ethereal) is a free network protocol analyzer
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_Clibpango1-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibpangocairo1-0-0 eshark += CSWpango
@@ -57,6 +56,8 @@ RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWwilib2-0-0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgtk-x11-hark +RUNTIME_DEP_PKGS_CSWwireshark += CSWliblua5-2+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcrypt20
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcom-err3
 
 # Needed for the presence of /opt/csw/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 RUNTIME_DEP_PKGS_CSWwireshark += CSWgdkpixbuf
