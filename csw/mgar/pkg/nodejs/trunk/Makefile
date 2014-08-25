@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nodejs
-VERSION = 0.10.30
+VERSION = 0.10.31
 GARTYPE = v2
 CATEGORIES = lib
 
