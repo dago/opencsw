@@ -38,6 +38,11 @@ RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibiconv2
 
+# Linker differences between x86 and sparc
+CHECKPKG_OVERRIDES_CSWrapidsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWrapidsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWrapidsvn += surplus-dependency|CSWlibexpat1
+
 PACKAGES += CSWlibsvncpp3
 SPKG_DESC_CSWlibsvncpp3 = Subversion C++ language binding
 PKGFILES_CSWlibsvncpp3 += $(call pkgfiles_lib,libsvncpp.so.3)
