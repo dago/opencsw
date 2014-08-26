@@ -34,6 +34,9 @@ RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibsvncpp3
 RUNTIME_DEP_PKGS_CSWrapidsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrapidsvn += CSWwxwidgetsgtk2
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibaprutil1-0
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibiconv2
 
 PACKAGES += CSWlibsvncpp3
 SPKG_DESC_CSWlibsvncpp3 = Subversion C++ language binding
