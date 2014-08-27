@@ -1,5 +1,5 @@
 NAME = SDL
-VERSION = 1.2.14
+VERSION = 1.2.15
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -25,13 +25,11 @@ OBSOLETED_BY_CSWlibsdl1-2-0 += CSWlibsdl
 PACKAGES += CSWlibsdl-dev
 SPKG_DESC_CSWlibsdl-dev  = Simple DirectMedia Layer library development files for libsdl-1.2.so.0
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS += CSWlibsdl1-2-0
-OBSOLETED_BY_CSWlibsdl-dev += CSWlibsdldevel
-CATALOGNAME_CSWlibsdldevel = libsdl_devel
+RUNTIME_DEP_PKGS +l = libsdl_devel
 
 BUILD64_LIBS_ONLY = 1
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 
 TEST_TARGET = test
 
-include gar/category.mk
+include
