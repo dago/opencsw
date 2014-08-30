@@ -1,0 +1,25 @@
+From 536f556c5fc10ebd08b69844494072bc02f49500 Mon Sep 17 00:00:00 2001
+From: Jake Goerzen <jgoerzen@opencsw.org>
+Date: Sat, 30 Aug 2014 03:31:11 +0200
+Subject: [PATCH] restore previous version tile.h
+
+---
+ common/tile.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/common/tile.h b/common/tile.h
+index ba1923d..5e06f4a 100644
+--- a/common/tile.h
++++ b/common/tile.h
+@@ -78,7 +78,7 @@ struct tile {
+ 
+ 
+ /* Tile accessor functions. */
+-#define tile_index(_pt_) (_pt_)->index
++int tile_index(const struct tile *ptile);
+ 
+ struct city *tile_city(const struct tile *ptile);
+ 
+-- 
+2.0.3
+

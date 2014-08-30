@@ -1,5 +1,5 @@
 NAME = freeciv
-VERSION = 2.4.2
+VERSION = 2.4.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -40,7 +40,7 @@ RUNTIME_DEP_PKGS_CSWfreeciv += CSWlibmysqlclient18 += CSWlibgio2-0-0
 
 GARCOMPILER = GNU
 
-PATCHFILES += 0001-use-finite-i-functionnstead-of-isfinite.patch
+PATCHFILES += 0001-use-finite-i-functionnstead-PATCHFILES += 0002-restore-previous-version-tile.hnstead-of-isfinite.patch
 
 TEST_SCRIPTS =
 
