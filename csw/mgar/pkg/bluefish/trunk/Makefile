@@ -34,10 +34,10 @@ RUNTIME_DEP_PKGS_CSWbluefish += CSWlibatk1-0-0
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWbluefish += CSWlibfreetype6
 
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibpangoft2-1-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibatk1-0-0
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibfontconfig1
-CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibfreetype6
+CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibpangoft2-1-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibatk1-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibfontconfig1
+CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWlibfreetype6
 
 EXTRA_MERGE_EXCLUDE_FILES = .*treemagic.*
 EXTRA_MERGE_EXCLUDE_FILES += .*globs.*
