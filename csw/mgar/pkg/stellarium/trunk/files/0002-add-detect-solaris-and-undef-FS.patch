@@ -1,0 +1,28 @@
+From a9fbcb5ca7160a39a311a95551561595f8eca7d2 Mon Sep 17 00:00:00 2001
+From: Jake Goerzen <jgoerzen@opencsw.org>
+Date: Mon, 1 Sep 2014 07:47:51 +0200
+Subject: [PATCH] add detect solaris and undef FS
+
+---
+ src/core/modules/Skybright.cpp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/core/modules/Skybright.cpp b/src/core/modules/Skybright.cpp
+index 5af3879..a74b5dd 100644
+--- a/src/core/modules/Skybright.cpp
++++ b/src/core/modules/Skybright.cpp
+@@ -33,6 +33,11 @@
+ #undef FS
+ #endif
+ 
++#if defined(__sun) && defined(__SVR4)
++#undef FS
++#endif
++
++
+ Skybright::Skybright() : SN(1.f)
+ {
+ 	setDate(2003, 8, 0);
+-- 
+2.0.3
+
