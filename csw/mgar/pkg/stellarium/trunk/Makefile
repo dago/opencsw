@@ -40,6 +40,7 @@ CHECKPKG_OVERRIDES_CSWstellarium += no-direct-binding|/opt/csw/bin/stellarium|is
 CHECKPKG_OVERRIDES_CSWstellarium += no-direct-binding|/opt/csw/bin/stellarium|is|not|directly|bound|to|soname|libQtScript.so.4
 CHECKPKG_OVERRIDES_CSWstellarium += no-direct-binding|/opt/csw/bin/stellarium|is|not|directly|bound|to|soname|libintl.so.8
 CHECKPKG_OVERRIDES_CSWstellarium += no-direct-binding|/opt/csw/bin/stellarium|is|not|directly|bound|to|soname|libstdc++.so.6
+CHECKPKG_OVERRIDES_CSWstellarium += no-direct-binding|/opt/csw/bin/stellarium|is|not|directly|bound|to|soname|libGLU.so.1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
