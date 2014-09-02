@@ -1,5 +1,5 @@
 NAME = zsh
-VERSION = 5.0.5
+VERSION = 5.0.6
 CATEGORIES = devel
 GARTYPE = v2
 
