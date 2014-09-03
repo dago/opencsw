@@ -1,0 +1,58 @@
+Index: Modules/Debuggers/ProjectCenter/PTYView.m
+===================================================================
+--- src.orig/Modules/Debuggers/ProjectCenter/PTYView.m	(revision 38050)
++++ src/Modules/Debuggers/ProjectCenter/PTYView.m	(working copy)
+@@ -20,8 +20,20 @@
+ **  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+ 
++#import "PTYView.h"
+ 
++/* define this if you need the forkpty replacement and it is not automatically
++activated */
++#undef USE_FORKPTY_REPLACEMENT
+ 
++/* check for solaris */
++#if (defined (__SVR4) && defined (__sun)) || defined(__SOLARIS__)
++#ifndef __SOLARIS__
++#define __SOLARIS__ 1
++#endif
++#define USE_FORKPTY_REPLACEMENT 0
++#endif
++
+ #include <sys/stat.h>
+ #include <signal.h>
+ 
+@@ -50,11 +62,6 @@
+ #define NOTIFICATION_CENTER [NSNotificationCenter defaultCenter]
+ #endif
+ 
+-/* check for solaris */
+-#if defined (__SVR4) && defined (__sun)
+-#define __SOLARIS__ 1
+-#define USE_FORKPTY_REPLACEMENT 1
+-#endif
+ 
+ #if defined(__SOLARIS__)
+ #include <stropts.h>
+@@ -65,7 +72,6 @@
+ #  include <pty.h>
+ #endif
+ 
+-#import "PTYView.h"
+ 
+ #ifdef USE_FORKPTY_REPLACEMENT
+ int openpty(int *amaster, int *aslave, char *name, const struct termios *termp, const struct winsize *winp)
+Index: Modules/Debuggers/ProjectCenter/GNUmakefile
+===================================================================
+--- src.oric/Modules/Debuggers/ProjectCenter/GNUmakefile	(revision 38050)
++++ src/Modules/Debuggers/ProjectCenter/GNUmakefile	(working copy)
+@@ -49,7 +49,7 @@
+     PTYView.m
+ 
+ 
+-ADDITIONAL_NATIVE_LIBS += util
++#ADDITIONAL_NATIVE_LIBS += util
+ 
+ include ../../GNUmakefile.bundles
+ include $(GNUSTEP_MAKEFILES)/bundle.make
