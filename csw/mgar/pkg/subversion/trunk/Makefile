@@ -74,6 +74,7 @@ RUNTIME_DEP_PKGS_CSWsvn_5.9 += CSWglib2
 RUNTIME_DEP_PKGS_CSWsvn_5.10 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn_$(GAROSREL))
 
+
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev = Subversion Development Support
 PKGFILES_CSWsvn-dev += $(PKGFILES_DEVEL)
@@ -95,6 +96,7 @@ RUNTIME_DEP_PKGS_CSWap2svn += CSWlibz1
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWap2svn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibiconv2
+
 
 PACKAGES += CSWjavasvn
 SPKG_DESC_CSWjavasvn = Subversion Java Language Binding
@@ -145,7 +147,7 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
 RUNTIME_DEP_Plibapr1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1vRUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby1-9-1-1vRUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibz1
@@ -155,7 +157,6 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibserf1-1
 
-CHECKPKG_OVERRIDES_CSWrbsvn += dependency-on-stub|ruby_stub
 
 PACKAGES += CSWpythonsvn
 SPKG_DESC_CSWpythonsvn = Subversion Python Language Binding
@@ -177,50 +178,50 @@ RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibserf1-1n += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWpythCHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|GS_CSWpyth
 # These are all due to linker problems with -z ignore
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibiconv2
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibintl8
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWbdb48
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibz1
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibmagic1
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibexpat1
-#CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibsqlite3-0
-#HECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsasl2-2
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibaprutil1-0
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWbdb48
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibiconv2
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibz1
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibmagic1
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibexpat1
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsqlite3-0
-#CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibaprutil1-0
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibintl8
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibiconv2
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibz1
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibmagic1
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibexpat1
-#CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibsqlite3-0
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibserf1-1
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsasl2-2
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibintl8
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsqlite3-0
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibaprutil1-0
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWbdb48
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibz1
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibmagic1
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibexpat1
-#CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibiconv2
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibserf1-1
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsasl2-2
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibaprutil1-0
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWbdb48
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibiconv2
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibz1
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibmagic1
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibexpat1
-#CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsqlite3-0
-#CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibiconv2n-of-bindings.patch
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsasl2-2
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibaprutil1-0
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibiconv2
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibmagic1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibexpat1
+CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibiconv2n-of-bindings.patch
 
 # should be in lib ... put something below to at least make it compile.
 # on the svn mailing list people say we should not build the package
