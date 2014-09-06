@@ -147,7 +147,8 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
 RUNTIME_DEP_Plibapr1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby1-9-1-1vRUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1
+#RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby1-9-1-1vRUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibz1
@@ -156,6 +157,7 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWrbsvn += dependency-on-stub|ruby_stub
 
 
 PACKAGES += CSWpythonsvn
