@@ -36,7 +36,7 @@ index 2ec73b5..2ef6b79 100644
  users with a 'message of the
 -day'. Typically installed in a global /local/etc/screenrc. 
 +day'. Typically installed in a global /etc/opt/csw/screenrc. 
- The option \*Q-n\*U may be used to suppress the line feed.
+ The option \*Q\-n\*U may be used to suppress the line feed.
  See also \*Qsleep\*U.
  Echo is also useful for online checking of environment variables.
 @@ -4846,21 +4846,17 @@ Examples in the
@@ -51,17 +51,17 @@ index 2ec73b5..2ef6b79 100644
  .IP $HOME/.screenrc
 -Read in after /usr/local/etc/screenrc
 +Read in after /etc/opt/csw/screenrc
- .IP $SCREENDIR/S-<login>
--.IP /local/screens/S-<login>
-+.IP /var/opt/csw/run/screens/S-<login>
+ .IP $SCREENDIR/S\-<login>
+-.IP /local/screens/S\-<login>
++.IP /var/opt/csw/run/screens/S\-<login>
  Socket directories (default)
--.IP /usr/tmp/screens/S-<login>
+-.IP /usr/tmp/screens/S\-<login>
 -Alternate socket directories.
  .IP "<socket directory>/.termcap"
  Written by the "termcap" output function
--.IP /usr/tmp/screens/screen-exchange
+-.IP /usr/tmp/screens/screen\-exchange
 -or
- .IP /tmp/screen-exchange
+ .IP /tmp/screen\-exchange
  .I screen
  `interprocess communication buffer'
 diff --git a/doc/screen.texinfo b/doc/screen.texinfo
