@@ -12,7 +12,7 @@
 ###### Package information #######
 
 NAME = openssh
-VERSION = 6.6p1
+VERSION = 6.7p1
 GSSKEX_PATCH_VERSION = 6.6p1
 GSSKEX_PATCH_DATE = 20140320
 CATEGORIES = server
@@ -34,7 +34,6 @@ CATALOGNAME_CSWopenssh = openssh
 SPKG_DESC_CSWopenssh = OpenSSH Secure Shell server 
 BUILD_DEP_PKGS = CSWautoconf CSWlibssl-dev CSWlibz-dev
 RUNTIME_DEP_PKGS_CSWopenssh += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWopenssh += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSWopenssh += CSWlibz1
 RUNTIME_DEP_PKGS_CSWopenssh += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWopenssh += CSWlibcom-err3
@@ -115,13 +114,15 @@ CHECKPKG_OVERRIDES_CSWopenCKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/
 
 ###### Upstream and OpenCSW files information #######
 
-MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
-UPSTREAM_MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
+MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.u http://www.mindrot.org/openssh_snap/
+UPSTREAM_nformation #######
+
+MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
-
-DISTFILES  = $(NAME)-$(VERSION).CSWopenssh.cswreleasenotes
+UFILES_REGEX = $(NAME)-(\d+(?:\#DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = openssh-SNAP-20140907.tar.gz
+DISTNAME   = opensshE)-$(VERSION).CSWopenssh.cswreleasenotes
 DISTFILES += CSWopenssh_client.cswreleasenotesLES += changelog.CSW
 DISTFILES += cswusergroup
 

@@ -1,3 +1,10 @@
+openssh (6.7p1,REV=UNRELEASED) unstable
+
+  * New upstream release.
+  * Updated the GSSAPI key exchange patch
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 07 Sep 2014 12:27:42 +0100
+
 openssh (6.6p1,REV=2014.03.20) unstable
 
   * New upstream release.
