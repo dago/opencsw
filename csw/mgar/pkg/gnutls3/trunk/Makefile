@@ -84,3 +84,4 @@ include gar/category.mk
 # We simply delete them as they will be regenerated thanks to the Makefile rules
 pre-build:
 	gfind $(WORKSRC) -regex ".*/src/.*-args.c" -delete
+	@$(MAKECOOKIE)
