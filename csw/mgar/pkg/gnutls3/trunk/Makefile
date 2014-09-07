@@ -79,3 +79,8 @@ LD_OPTIONS = $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNORE)
 
 include gar/category.mk
 
+# We must regerenere this file with autogen otherwise we run into an error like this:
+#    error option template version mismatches autoopts/options.h header
+# We simply delete them as they will be regenerated thanks to the Makefile rules
+pre-build:
+	gfind $(WORKSRC) -regex ".*/src/.*-args.c" -delete
