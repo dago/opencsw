@@ -23,7 +23,7 @@ index 3446281..139f565 100644
 +.I "/etc/opt/csw/lftp.conf"
 +system-wide startup file.
  .TP
- .I "~/.lftp/rc," "~/.lftprc"
+ .I "~/.config/lftp/rc \fPor\fI ~/.lftp/rc, ~/.lftprc"
  These files are executed on lftp startup after \fI/etc/lftp.conf\fR.
 -- 
 1.7.6

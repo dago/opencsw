@@ -29,7 +29,7 @@ RUNTIME_DEP_PKGS += CSWlibiconv2
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWlibsocks
 RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS +=RUNTIME_DEP_PKGS += CSWlibz1=# necessary when compiled with gcc
+RUNTIME_DEP_PKGS +=RUNTIME_DEP_PKGS += CSWlibz1=RUNTIME_DEP_PKGS += CSWlibidn11=# necessary when compiled with gcc
 RUNTIME_DEP_PKGS += CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibstdc+++= CSWlibreadline6
 
