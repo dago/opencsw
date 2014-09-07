@@ -863,7 +863,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/gss-serv.c openssh-5.8p1.n
  #ifdef KRB5
  extern ssh_gssapi_mech gssapi_kerberos_mech;
 @@ -81,25 +86,32 @@
- 	char lname[MAXHOSTNAMELEN];
+	char lname[NI_MAXHOST];
  	gss_OID_set oidset;
  
 -	gss_create_empty_oid_set(&status, &oidset);
@@ -872,11 +872,11 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/gss-serv.c openssh-5.8p1.n
 +		gss_create_empty_oid_set(&status, &oidset);
 +		gss_add_oid_set_member(&status, ctx->oid, &oidset);
  
--	if (gethostname(lname, MAXHOSTNAMELEN)) {
+-	if (gethostname(lname, sizeof(lname))) {
 -		gss_release_oid_set(&status, &oidset);
 -		return (-1);
 -	}
-+		if (gethostname(lname, MAXHOSTNAMELEN)) {
++		if (gethostname(lname, sizeof(lname))) {
 +			gss_release_oid_set(&status, &oidset);
 +			return (-1);
 +		}
@@ -1160,7 +1160,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kex.c openssh-5.8p1.new/ke
 @@ -94,6 +98,11 @@
  #ifdef HAVE_EVP_SHA256
  	{ KEX_CURVE25519_SHA256, KEX_C25519_SHA256, 0, SSH_DIGEST_SHA256 },
- #endif
+ #endif /* HAVE_EVP_SHA256 */
 +#ifdef GSSAPI
 +	{ KEX_GSS_GEX_SHA1_ID, KEX_GSS_GEX_SHA1, 0, EVP_sha1 },
 +	{ KEX_GSS_GRP1_SHA1_ID, KEX_GSS_GRP1_SHA1, 0, EVP_sha1 },
@@ -1549,7 +1549,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgssc.c openssh-5.8p1.ne
 diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.new/kexgsss.c
 --- openssh-5.8p1/kexgsss.c	1970-01-01 01:00:00.000000000 +0100
 +++ openssh-5.8p1.new/kexgsss.c	2011-02-12 18:07:11.186584789 +0100
-@@ -0,0 +1,288 @@
+@@ -0,0 +1,289 @@
 +/*
 + * Copyright (c) 2001-2009 Simon Wilkinson. All rights reserved.
 + *
@@ -1594,6 +1594,7 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +#include "dh.h"
 +#include "ssh-gss.h"
 +#include "monitor_wrap.h"
++#include "misc.h"
 +#include "servconf.h"
 +
 +extern ServerOptions options;
@@ -1838,28 +1839,6 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/kexgsss.c openssh-5.8p1.ne
 +		ssh_gssapi_rekey_creds();
 +}
 +#endif /* GSSAPI */
-diff --speed-large-files --minimal -Nru openssh-5.8p1/key.c openssh-5.8p1.new/key.c
---- openssh-5.8p1/key.c	2011-02-04 01:48:34.000000000 +0100
-+++ openssh-5.8p1.new/key.c	2011-02-12 18:07:11.202089386 +0100
-@@ -929,6 +929,7 @@
- 	{ "ecdsa-sha2-nistp521-cert-v01@openssh.com", "ECDSA-CERT",
- 	    KEY_ECDSA_CERT, NID_secp521r1, 1 },
- #endif /* OPENSSL_HAS_ECC */
-+	{ "null", "null", KEY_NULL, 0, 0 },
- 	{ "ssh-rsa-cert-v00@openssh.com", "RSA-CERT-V00",
- 	    KEY_RSA_CERT_V00, 0, 1 },
- 	{ "ssh-dss-cert-v00@openssh.com", "DSA-CERT-V00",
-diff --speed-large-files --minimal -Nru openssh-5.8p1/key.h openssh-5.8p1.new/key.h
---- openssh-5.8p1/key.h	2010-11-05 00:19:49.000000000 +0100
-+++ openssh-5.8p1.new/key.h	2011-02-12 18:07:11.216270794 +0100
-@@ -44,6 +44,7 @@
- 	KEY_ECDSA_CERT,
- 	KEY_RSA_CERT_V00,
- 	KEY_DSA_CERT_V00,
-+	KEY_NULL,
- 	KEY_UNSPEC
- };
- enum fp_type {
 diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.new/monitor.c
 --- openssh-5.8p1/monitor.c	2010-09-10 03:23:34.000000000 +0200
 +++ openssh-5.8p1.new/monitor.c	2011-02-12 18:07:11.241713537 +0100
@@ -1890,9 +1869,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.ne
 +    {MONITOR_REQ_GSSSIGN, 0, mm_answer_gss_sign},
 +    {MONITOR_REQ_GSSUPCREDS, 0, mm_answer_gss_updatecreds},
 +#endif
+ #ifdef WITH_OPENSSL
      {MONITOR_REQ_MODULI, 0, mm_answer_moduli},
-     {MONITOR_REQ_SIGN, 0, mm_answer_sign},
-     {MONITOR_REQ_PTY, 0, mm_answer_pty},
+ #endif
 @@ -357,6 +366,10 @@
  		/* Permit requests for moduli and signatures */
  		monitor_permit(mon_dispatch, MONITOR_REQ_MODULI, 1);
@@ -1916,9 +1895,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/monitor.c openssh-5.8p1.ne
  		mon_dispatch = mon_dispatch_postauth15;
  		monitor_permit(mon_dispatch, MONITOR_REQ_TERM, 1);
 @@ -1692,7 +1709,14 @@
- 	kex->kex[KEX_DH_GEX_SHA1] = kexgex_server;
  	kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
  	kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+ #endif
 	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 +#ifdef GSSAPI
 +	if (options.gss_keyex) {
@@ -2582,9 +2561,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshconnect2.c openssh-5.8p
  		packet_set_rekey_limits((u_int32_t)options.rekey_limit,
  
 @@ -206,11 +242,31 @@
- 	kex->kex[KEX_DH_GEX_SHA1] = kexgex_client;
  	kex->kex[KEX_DH_GEX_SHA256] = kexgex_client;
  	kex->kex[KEX_ECDH_SHA2] = kexecdh_client;
+ #endif
 	kex->kex[KEX_C25519_SHA256] = kexc25519_client;
 +#ifdef GSSAPI
 +	if (options.gss_keyex) {
@@ -2731,16 +2710,16 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshd.c openssh-5.8p1.new/s
 --- openssh-5.8p1/sshd.c	2011-01-11 07:20:31.000000000 +0100
 +++ openssh-5.8p1.new/sshd.c	2011-02-12 18:07:11.656005267 +0100
 @@ -120,6 +120,10 @@
- #include "roaming.h"
+ #include "ssh-sandbox.h"
  #include "version.h"
  
 +#ifdef USE_SECURITY_SESSION_API
 +#include <Security/AuthSession.h>
 +#endif
 +
- #ifdef LIBWRAP
- #include <tcpd.h>
- #include <syslog.h>
+ #ifndef O_NOCTTY
+ #define O_NOCTTY	0
+ #endif
 @@ -1590,10 +1594,13 @@
  		logit("Disabling protocol version 1. Could not load host key");
  		options.protocol &= ~SSH_PROTO_1;
@@ -2866,9 +2845,9 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshd.c openssh-5.8p1.new/s
  	kex = kex_setup(myproposal);
  	kex->kex[KEX_DH_GRP1_SHA1] = kexdh_server;
 @@ -2310,6 +2413,13 @@
- 	kex->kex[KEX_DH_GEX_SHA1] = kexgex_server;
  	kex->kex[KEX_DH_GEX_SHA256] = kexgex_server;
  	kex->kex[KEX_ECDH_SHA2] = kexecdh_server;
+ #endif
 	kex->kex[KEX_C25519_SHA256] = kexc25519_server;
 +#ifdef GSSAPI
 +	if (options.gss_keyex) {
@@ -2936,3 +2915,23 @@ diff --speed-large-files --minimal -Nru openssh-5.8p1/sshd_config.5 openssh-5.8p
  .It Cm HostbasedAuthentication
  Specifies whether rhosts or /etc/hosts.equiv authentication together
  with successful public key client host authentication is allowed
+--- openssh/sshkey.h	Wed Aug 20 03:06:51 2014
++++ openssh/sshkey.h.new	Sat Sep  6 20:40:56 2014
+@@ -64,6 +64,7 @@
+ 	KEY_ED25519_CERT,
+ 	KEY_RSA_CERT_V00,
+ 	KEY_DSA_CERT_V00,
++	KEY_NULL,
+ 	KEY_UNSPEC
+ };
+ 
+--- openssh/sshkey.c	Mon Jul 21 17:07:11 2014
++++ openssh/sshkey.c.new	Sat Sep  6 21:02:02 2014
+@@ -105,6 +105,7 @@
+ 	    KEY_ECDSA_CERT, NID_secp521r1, 1 },
+ #  endif /* OPENSSL_HAS_NISTP521 */
+ # endif /* OPENSSL_HAS_ECC */
++	{ "null", "null", KEY_NULL, 0, 0 },
+ 	{ "ssh-rsa-cert-v00@openssh.com", "RSA-CERT-V00",
+ 	    KEY_RSA_CERT_V00, 0, 1 },
+ 	{ "ssh-dss-cert-v00@openssh.com", "DSA-CERT-V00",
