@@ -1,3 +1,9 @@
+bash (4.3.24,REV=2014.09.07) unstable
+
+  * Added bash patches bash43-001 to bash43-024
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 07 sep 2014 12:16:48 +0100
+
 bash (4.3.0,REV=2014.03.15) unstable
 
   * New upstream release.
