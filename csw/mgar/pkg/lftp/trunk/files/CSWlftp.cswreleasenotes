@@ -1,3 +1,9 @@
+lftp (4.5.5,REV=2014.09.07) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 07 Sep 2014 12:25:42 +0100
+
 lftp (4.4.15,REV=2014.02.18) unstable
 
   * New upstream release.
