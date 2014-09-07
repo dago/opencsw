@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = jq
-VERSION = 1.3
+VERSION = 1.4
 GARTYPE = v2
 
 DESCRIPTION = A lightweight and flexible command-line JSON processor.
