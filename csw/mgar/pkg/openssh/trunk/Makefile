@@ -175,7 +175,7 @@ CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
 
 # We don't want to use lazy load because of
 # the chroot usage by sshd
-EXTRA_LD_OPTIONS = -z nolazyloshclient = 
+EXTRA_LD_OPTIONS = TARGET	= testsloshclient = 
 endif
 
 
