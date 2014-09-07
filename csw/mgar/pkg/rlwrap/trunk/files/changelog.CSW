@@ -1,3 +1,9 @@
+rlwrap (0.41,REV=2014.09.07) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 07 Sep 2014 13:30:31 +0200
+
 rlwrap (0.37,REV=2012.08.24) unstable
 
   * Enabled symbols direct binding during build.
