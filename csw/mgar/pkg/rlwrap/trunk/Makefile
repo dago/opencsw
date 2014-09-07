@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = rlwrap
-VERSION = 0.37
+VERSION = 0.41
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -64,5 +64,3 @@ post-merge:
 	        @ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
 	        @( for FILE in AUTHORS BUGS INSTALL NEWS README TODO; do \
 	                 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(NAME)/`basename $$FILE`; \
-	         done )
-
