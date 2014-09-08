@@ -205,7 +205,7 @@ $(eval $(call php5_subpackage,sockets,))
 $(eval $(call php5_subpackage,sysvmsg,))
 $(eval $(call php5_subpackage,sysvsem,))
 $(eval $(call php5_subpackage,sysvshm,))
-$(eval $(call php5_subpackage,tidy,CSWlibtidy0-99))
+$(eval $(call php5_subpackage,tidy,CSWlibtidy0-99-0))
 $(eval $(call php5_subpackage,tokenizer,))
 $(eval $(call php5_subpackage,wddx,))
 $(eval $(call php5_subpackage,xmlreader,CSWlibxml2-2))
@@ -257,7 +257,6 @@ RUNTIME_DEP_PKGS_CSWphp5-gettext += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-tokenizer += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-hash += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-sysvshm += CSWlibz1
-RUNTIME_DEP_PKGS_CSWphp5-tidy += CSWlibtidy0-99-0
 RUNTIME_DEP_PKGS_CSWphp5-tidy += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-gmp += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-sysvmsg += CSWlibz1
@@ -480,8 +479,8 @@ CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(bindir)/
-#CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
-CONFIGURE_ARGS += --without-pdo-sqlite
+CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
+#CONFIGURE_ARGS += --without-pdo-sqlite
 CONFIGURE_ARGS += --with-pear=shared
 CONFIGURE_ARGS += --with-pgsql=shared,$(bindir)/
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
