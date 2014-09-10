@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = Python
-VERSION = 2.7.6
+VERSION = 2.7.8
 VER = 2.7
 DVER = 2-7
 UVER = 2_7
@@ -17,7 +17,7 @@ CVER = 27
 #     - Python-2.6.1/Modules/_ctypes/libffi/src/x86/sysv.S
 # - test_threading locks up on Solaris 9: http://bugs.python.org/issue6643
 
-SPKG_SOURCEURL = http://python.org/download/releases/$(VERSION)
+VENDOR_URL = http://python.org/download/releases/$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
