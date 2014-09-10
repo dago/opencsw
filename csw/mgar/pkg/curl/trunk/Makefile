@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.37.0
+VERSION = 7.38.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -23,9 +23,9 @@ BUILD_DEP_PKGS += CSWopenldap-dev
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWlibcares-dev
 BUILD_DEP_PKGS += CSWlibssh2-dev
-BUILD_DEP_PKGS += CSWlibfbopenssl-dev
-BUILD_DEP_PKGS +BUILD_DEP_PKGS += CSWlibidnKGS +BUILD_DEP_PKGS += CSWlibmetalinkKGS +BUILD_DEP_PKGS += CSWlibfbopenssl-dev
-#BUILD_DEP_PKGS += CSWlibgssapiKGS +=l3 += CSWcurlrt
+BUILD_Drtmp-dev
+BUILD_DEP_PKGS += CSWlibidn-dev
+BUILD_DEP_PKGS += CSWlibmetalinkKGS +=l3 += CSWcurlrt
 
 PACKAGES += CSWlibcurl4
 CATALOGNAME_CSWlibcurl4 = libcurl4
@@ -42,15 +42,17 @@ PACKAGES += CSWlibcurl4-feature
 CATALOGNAME_CSWlibcurl4-feature = libcurl4_feature
 SPKG_DESC_CSWlibcurl4-feature = Full-features library for client-side URL transfers superseding libcurl.so.4
 PKGFILES_CSWlibcurl4-feature = $(call pkgfiles_lib,libcurl-feature.so.4)
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibz1
-#RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibfbopenssl0
+RUNTIME_DEP_PKGS_CSWlibcurl4-feaCSWlibfbopenssl0
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcares2
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibrtmp0
+RUNTIME_DEP_PKGS_CSWlibcurl4-featurRUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcom-err3re += CSWlibrtmp0
 # Without the base lib the feature lib is not pulled in
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcurl4
 # There is no dependency from feature to base as feature is an optional dependency
@@ -78,7 +80,7 @@ SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfer
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibz1
 #RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWcurRUNTIME_DEP_PKGS_CSWcurl += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWcurl += CSWlibmetalink3+e://curl.haxx.se
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibmetalink3+RUNTIME_DEP_PKGS_CSWcurl += CSWlibintl8+e://curl.haxx.se
 
 EXTRA_MODULATORS = FEATURES
 MODULATIONS_FEATURES = minimal full
@@ -92,7 +94,7 @@ EXTRA_CONFIGURE_ARGS_features-full += --enable-ares
 EXTRA_CONFIGURE_ARGS_features-full += --with-spnego=$(libdir)
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ldap
 EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-includes=$(includedir)
-#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-libs=$(libdir)+= --enable-ldaps
+#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-libs=$(libdir)+EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi=$(prefix)+= --enable-ldaps
 
 # Make sure to link to the new libnet. See for details http://wiki.opencsw.org/project-libnet
 EXTRA_LDFLAGS = -L$(libdir)/libnet-new
