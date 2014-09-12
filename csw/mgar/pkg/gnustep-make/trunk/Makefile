@@ -18,6 +18,9 @@ DISTFILES  = $(DISTNAME).tar.gz
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
 
+#we override this, it is harmless, it is for Debian only
+CHECKPKG_OVERRIDES_CSWgnustep-make += file-with-bad-content|/usr/share|root/opt/csw/GNUstep/System/Library/Makefiles/deb-equivs-control.template
+
 #we have no tests anyway
 SKIPTEST = 1
 
