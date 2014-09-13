@@ -1,0 +1,26 @@
+From 800c809cabd225881c7015ea304e086045e37656 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej.blizinski@gmail.com>
+Date: Wed, 3 Sep 2014 22:26:28 +0100
+Subject: [PATCH 6/8] subs.c includes config.h to get HAVE_PANGO
+
+---
+ subs.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/subs.c b/subs.c
+index 3ff6163..21ac637 100644
+--- a/subs.c
++++ b/subs.c
+@@ -27,6 +27,9 @@
+ #include <time.h>
+ #include <string.h>
+ #include <ctype.h>
++
++#include "config.h"  /* for HAVE_PANGO */
++
+ #ifdef HAVE_PANGO
+ #include <pango/pangocairo.h>
+ #include <pango/pangofc-font.h>
+-- 
+2.0.3
+

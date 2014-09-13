@@ -1,0 +1,35 @@
+From 11a50a6a7d2a0dca42204611b64e9ca9c0794cf6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej.blizinski@gmail.com>
+Date: Wed, 3 Sep 2014 22:32:41 +0100
+Subject: [PATCH 3/8] Remove the custom config.h
+
+---
+ config.h | 16 ----------------
+ 1 file changed, 16 deletions(-)
+ delete mode 100644 config.h
+
+diff --git a/config.h b/config.h
+deleted file mode 100644
+index 9c82344..0000000
+--- a/config.h
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/* config.h.in */
+-
+-/* uncomment to handle the european A4 format.  */
+-//#define A4_FORMAT 1
+-
+-/* uncomment to have ~ as roll instead of twiddle.  */
+-//#define DECO_IS_ROLL 1
+-
+-/* comment if you have not mmap() */
+-#define HAVE_MMAP 1
+-
+-/* default directory to search for format files */
+-#define DEFAULT_FDIR "/usr/local/share/abcm2ps"
+-
+-#define VERSION "8.2.1"
+-#define VDATE "September 3, 2014"
+-- 
+2.0.3
+
