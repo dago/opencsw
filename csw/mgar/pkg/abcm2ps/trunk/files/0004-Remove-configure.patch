@@ -1,0 +1,94 @@
+From 8d373e7d60b5c19571629df9e38f8222d2d80ee3 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 12 Sep 2014 02:45:34 +0200
+Subject: [PATCH 4/8] Remove configure
+
+---
+ configure | 75 ---------------------------------------------------------------
+ 1 file changed, 75 deletions(-)
+ delete mode 100755 configure
+
+diff --git a/configure b/configure
+deleted file mode 100755
+index adbc44a..0000000
+--- a/configure
++++ /dev/null
+@@ -1,75 +0,0 @@
+-#! /bin/sh
+-
+-### custom variables ###
+-
+-CC=gcc
+-CFLAGS="-g -O2 -Wall -pipe"
+-
+-INSTALL="/usr/bin/install -c"
+-INSTALL_DATA='${INSTALL} -m 644'
+-INSTALL_PROGRAM='${INSTALL}'
+-
+-prefix=/usr/local
+-exec_prefix='${prefix}'
+-srcdir=.
+-bindir='${exec_prefix}/bin'
+-libdir='${exec_prefix}/lib'
+-datarootdir='${prefix}/share'
+-docdir='${prefix}/doc'
+-DEFAULT_FDIR="$prefix/share/abcm2ps"
+-
+-### custom end ###
+-
+-if test -f ./custom; then
+-	. ./custom
+-fi
+-
+-VERSION=8.2.1
+-VDATE='September 3, 2014'
+-
+-case "$1" in
+-	--*=*)
+-		cmd=${1#--}
+-		eval $cmd
+-		;;
+-esac
+-
+-if which pkg-config > /dev/null ; then
+-	if pkg-config --exists freetype2 ; then
+-		if pkg-config --exists pangocairo ; then
+-			CPPFLAGS="-DHAVE_PANGO=1"
+-			CPPPANGO="`pkg-config pango cairo freetype2 --cflags`"
+-			LDFLAGS="$LDFLAGS `pkg-config pangocairo pangoft2 freetype2 --libs`"
+-		else
+-			echo "pangocairo not found - no pango support"
+-		fi
+-	else
+-		echo "freetype2 not found - no pango support"
+-	fi
+-else
+-	echo "pkg-config not found - no pango support"
+-fi
+-
+-sed "s+@CC@+$CC+
+-s+@CPPFLAGS@+$CPPFLAGS+
+-s+@CPPPANGO@+$CPPPANGO+
+-s+@CFLAGS@+$CFLAGS+
+-s+@LDFLAGS@+$LDFLAGS+
+-s+@INSTALL@+$INSTALL+
+-s+@INSTALL_DATA@+$INSTALL_DATA+
+-s+@INSTALL_PROGRAM@+$INSTALL_PROGRAM+
+-s+@prefix@+$prefix+
+-s+@exec_prefix@+$exec_prefix+
+-s+@srcdir@+$srcdir+
+-s+@bindir@+$bindir+
+-s+@libdir@+$libdir+
+-s+@datarootdir@+$datarootdir+
+-s+@docdir@+$docdir+
+-s+@VERSION@+$VERSION+" Makefile.in > Makefile
+-echo "Makefile created"
+-
+-sed "s/define VERSION xxx/\define VERSION \"$VERSION\"/
+-s/define VDATE xxx/define VDATE \"$VDATE\"/
+-s+define DEFAULT_FDIR xxx+define DEFAULT_FDIR \"$DEFAULT_FDIR\"+
+-" config.h.in > config.h
+-echo "config.h created"
+-- 
+2.0.3
+

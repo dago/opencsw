@@ -1,0 +1,43 @@
+From e67c0b024e7303027ee701c6fc578de4908ca288 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej.blizinski@gmail.com>
+Date: Wed, 3 Sep 2014 22:26:55 +0100
+Subject: [PATCH 5/8] Add a smoke test.
+
+---
+ smoketest.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100755 smoketest.sh
+
+diff --git a/smoketest.sh b/smoketest.sh
+new file mode 100755
+index 0000000..f1b2bac
+--- /dev/null
++++ b/smoketest.sh
+@@ -0,0 +1,24 @@
++#!/bin/bash
++
++set -e
++
++FILES=(
++  accordion
++  chinese
++  deco
++  newfeatures
++  sample
++  sample2
++  sample3
++  sample4
++  sample5
++  voices
++)
++
++for f in ${FILES[@]}; do
++  ./abcm2ps -O "${f}.ps" "${f}.abc"
++  rm -f "${f}.ps"
++done
++
++echo PASS
++exit 0
+-- 
+2.0.3
+

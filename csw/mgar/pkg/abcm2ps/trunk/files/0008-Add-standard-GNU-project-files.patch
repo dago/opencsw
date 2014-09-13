@@ -1,0 +1,39 @@
+From 81fe0f0a9737478df1a9652f26ce207f6bc06654 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <maciej.blizinski@gmail.com>
+Date: Wed, 3 Sep 2014 22:25:01 +0100
+Subject: [PATCH 8/8] Add standard GNU project files.
+
+AUTHORS
+ChangeLog (symlink to Changes)
+NEWS
+---
+ AUTHORS   | 2 ++
+ ChangeLog | 1 +
+ NEWS      | 0
+ 3 files changed, 3 insertions(+)
+ create mode 100644 AUTHORS
+ create mode 120000 ChangeLog
+ create mode 100644 NEWS
+
+diff --git a/AUTHORS b/AUTHORS
+new file mode 100644
+index 0000000..25f0b08
+--- /dev/null
++++ b/AUTHORS
+@@ -0,0 +1,2 @@
++abc2ps was developped by Michael Methfessel:
++abcm2ps by moinejf (at) free (dot) fr
+diff --git a/ChangeLog b/ChangeLog
+new file mode 120000
+index 0000000..c38de3d
+--- /dev/null
++++ b/ChangeLog
+@@ -0,0 +1 @@
++Changes
+\ No newline at end of file
+diff --git a/NEWS b/NEWS
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.0.3
+
