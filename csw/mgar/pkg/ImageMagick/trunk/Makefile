@@ -11,7 +11,7 @@ define BLURB
   PhotoCD, and GIF.
 endef
 
-MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
+MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/releases/
 DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 DISTFILES  = $(DISTNAME).tar.xz
 
