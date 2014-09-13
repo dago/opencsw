@@ -145,6 +145,8 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibhalf10
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibstdc++6
+
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri3 += CSWlibz1
