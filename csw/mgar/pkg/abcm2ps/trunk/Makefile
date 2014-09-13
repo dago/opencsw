@@ -40,11 +40,14 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibpango1-0-0
 RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibpangoft2-1-0-0
-RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWabcm2ps += CSWlibpangocairo1-0-0
+
+# libintl18 is only linked on sparc
+RUNTIME_DEP_PKGS_CSWabcm2ps_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWabcm2ps += $(RUNTIME_DEP_PKGS_CSWabcm2ps_$(GARCH))
 
 include gar/category.mk
 
