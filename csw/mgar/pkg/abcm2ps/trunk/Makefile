@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = abcm2ps
-VERSION = 8.2.1
+VERSION = 8.2.2
 GARTYPE = v2
 
 DESCRIPTION = Convert ABC to music sheet in PostScript or SVG
@@ -25,10 +25,6 @@ DISTFILES  = $(DISTNAME).tar.gz
 #
 # --Maciej, 2014-09-12
 
-PATCHFILES += 0001-Remove-custom-Makefile.patch
-PATCHFILES += 0002-Remove-the-custom-Makefile.in-and-config.h.in.patch
-PATCHFILES += 0003-Remove-the-custom-config.h.patch
-PATCHFILES += 0004-Remove-configure.patch
 PATCHFILES += 0005-Add-a-smoke-test.patch
 PATCHFILES += 0006-subs.c-includes-config.h-to-get-HAVE_PANGO.patch
 PATCHFILES += 0007-Add-Makefile.am-and-configure.ac.patch
@@ -52,5 +48,6 @@ RUNTIME_DEP_PKGS_CSWabcm2ps += $(RUNTIME_DEP_PKGS_CSWabcm2ps_$(GARCH))
 include gar/category.mk
 
 pre-configure:
+	(cd $(WORKSRC); rm -f Makefile Makefile.in configure configure.in config.h)
 	(cd $(WORKSRC); autoreconf -fi)
 	@$(MAKECOOKIE)
