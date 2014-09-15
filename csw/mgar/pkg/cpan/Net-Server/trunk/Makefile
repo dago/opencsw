@@ -1,22 +1,22 @@
 NAME = Net-Server
-VERSION = 0.97
+VERSION = 2.008
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = RHANDOM
 
 DESCRIPTION = Extensible, general Perl server engine
 define BLURB
-  Net::Server is an extensible, generic Perl server engine.
-  Net::Server combines the good properties from Net::Daemon (0.34),
-  NetServer::Generic (1.03), and Net::FTPServer (1.0), and also from various
-  concepts in the Apache Webserver.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmnetserver
-CATALOGNAME = pm_netserver
+LICENSE_TEXT = This module is licensed under the unknown license
 
-ARCHALL = 1
+PACKAGES += CSWpm-net-server
+CATALOGNAME_CSWpm-net-server = pm_net_server
+SPKG_DESC_CSWpm-net-server = Extensible, general Perl server engine
+ARCHALL_CSWpm-net-server = 1
+OBSOLETED_BY_CSWpm-net-server += CSWpmnetserver
+CATALOGNAME_CSWpmnetserver = pm_netserver_stub
 
 include gar/category.mk
