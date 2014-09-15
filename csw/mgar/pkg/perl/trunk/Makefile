@@ -14,7 +14,8 @@ define BLURB
   libraries.
 endef
 
-MASTER_SITES = manual://
+#MASTER_SITES = manual://
+MASTER_SITES = http://www.cpan.org/src/5.0/
 VENDOR_URL = http://www.perl.org
 #DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # The source has been patched to fix a failing patch (Solaris only). The patch was discussed with upstream (p5p) and committed to BLEAD. The patch is in the files directory.
