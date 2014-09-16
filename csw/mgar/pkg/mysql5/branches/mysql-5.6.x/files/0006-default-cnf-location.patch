@@ -1,5 +1,3 @@
-diff --git a/scripts/mysql_install_db.pl.in b/scripts/mysql_install_db.pl.in
-index 6a12a40..dfe2317 100644
 --- a/scripts/mysql_install_db.pl.in
 +++ b/scripts/mysql_install_db.pl.in
 @@ -474,8 +474,8 @@ $config_file= "$basedir/my.$cnfext";
