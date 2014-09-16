@@ -81,6 +81,9 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilcclient1-1-3
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
 
+# Apparently needed for icons
+RUNTIME_DEP_PKGS_CSWpidgin += CSWgtk2
+
 ###
 # due to the ld bug
 ifeq ($(shell /usr/bin/uname -p),sparc)
