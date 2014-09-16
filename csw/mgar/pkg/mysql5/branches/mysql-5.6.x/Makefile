@@ -44,6 +44,9 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
+# DB install script looks at the wrong place
+PATCHFILES += 0006-default-cnf-location.patch
+
 # Comes from the MySQL5.5 recipe, though only one compiler will be kept in 5.6
 ### For GCC4
 EXTRA_CFLAGS_GCC4_sparc += -mno-app-regs

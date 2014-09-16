@@ -1,0 +1,15 @@
+diff --git a/scripts/mysql_install_db.pl.in b/scripts/mysql_install_db.pl.in
+index 6a12a40..dfe2317 100644
+--- a/scripts/mysql_install_db.pl.in
++++ b/scripts/mysql_install_db.pl.in
+@@ -474,8 +474,8 @@ $config_file= "$basedir/my.$cnfext";
+ my $cfg_template= find_in_basedir($opt,"file","my-default.$cnfext",
+ 				  ".", "share","share/mysql","support-files");
+ # Distros might move files
+-if ((! -r $cfg_template) && (-r "@pkgdatadir@/my-default.cnf")) {
+-  $cfg_template = "@pkgdatadir@/my-default.cnf";
++if ((! -r $cfg_template) && (-r "@pkgdatadir@/support-files/my-default.cnf")) {
++  $cfg_template = "@pkgdatadir@/support-files/my-default.cnf";
+ }
+ 
+ -e $cfg_template or cannot_find_file("my-default.$cnfext");
