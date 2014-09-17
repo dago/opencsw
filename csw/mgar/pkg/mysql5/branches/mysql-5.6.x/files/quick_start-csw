@@ -109,7 +109,8 @@ $MYSQL_HOME/bin/mysql_install_db \
     --defaults-extra-file=$DEFAULTS_FILE \
     --user=$MYSQLD_USER \
     --basedir=$MYSQL_HOME \
-    --datadir=$MYSQLD_DATADIR
+    --datadir=$MYSQLD_DATADIR \
+    --keep-my-cnf
 
 #
 # Fix permissions on the data directory
