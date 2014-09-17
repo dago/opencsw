@@ -14,11 +14,11 @@ prefix=/opt/csw
 MYSQL_HOME=${prefix}
 MYSQL_VAR=/var${prefix}
 sysconfdir=/etc${prefix}
-DEFAULTS_FILE=${prefix}/support-files/my-small.cnf
+DEFAULTS_FILE=${prefix}/share/mysql5/support-files/my-small.cnf
 MYSQLD_USER=mysql
 #
 # Provide a default data directory
-MYSQLD_DATADIR=$MYSQL_VAR
+MYSQLD_DATADIR=$MYSQL_VAR/mysql5
 #
 echo
 echo  "This is the start script to setup a MySQL-5 database"
