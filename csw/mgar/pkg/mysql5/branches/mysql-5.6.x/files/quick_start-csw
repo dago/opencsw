@@ -18,7 +18,7 @@ DEFAULTS_FILE=${prefix}/share/mysql5/support-files/my-small.cnf
 MYSQLD_USER=mysql
 #
 # Provide a default data directory
-MYSQLD_DATADIR=$MYSQL_VAR/mysql5
+MYSQLD_DATADIR=$MYSQL_VAR/mysql56
 #
 echo
 echo  "This is the start script to setup a MySQL-5 database"
