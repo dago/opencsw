@@ -16,6 +16,10 @@ DEP_PKGS = CSWgnustep-make CSWlibgnutls28 CSWlibssl1-0-0 CSWlibffi5 CSWlibicuuc5
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
 
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 PATCHFILES += 0001-configure-tweak-align.patch
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
