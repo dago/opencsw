@@ -10,8 +10,13 @@ define BLURB
   GNUstep-core base framework, which provides all Foundation equivalent classes, useful for all non-gui objective-c development. A prerequisite for all GNUstep tools as well as applications.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWlibgnutls-dev CSWlibffi-dev CSWlibicu-dev
-DEP_PKGS = CSWgnustep-make CSWlibgnutls28 CSWlibssl1-0-0 CSWlibffi5 CSWlibicuuc52
+BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWlibgnutls-dev CSWlibffi-dev CSWlibicu-dev CSWlibxml2-dev CSWlibxslt-dev 
+DEP_PKGS = CSWgnustep-make 
+DEP_PKGS += CSWlibffi5 
+DEP_PGKS += CSWlibicui18n52 CSWlibicuuc52 CSWlibicudata52
+DEP_PGKS += CSWlibobjc4 CSWlibgcc-s1 CSWlibgmp10
+DEP_PGKS += CSWlibssl1-0-0 CSWlibgnutls28 CSWlibgcrypt20
+DEP_PGKS += CSWlibxslt1 CSWlibxml2-2
 
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
