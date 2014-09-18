@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = znapzend
-VERSION = 0.11.2
+VERSION = 0.13.0
 GARTYPE = v2
 
 DESCRIPTION = The Multilevel Backup Tool for ZFS
