@@ -1,0 +1,52 @@
+From 6baf9db175be1599a9eb1123b9882321d7443d9c Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 17 Sep 2014 16:46:37 +0200
+Subject: [PATCH] fix directory entry portability Use portable directory entry
+ type determination: lstat instead of dirent->d_type
+
+---
+ configparser.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/configparser.c b/configparser.c
+index 11e4852..475d7c7 100644
+--- a/configparser.c
++++ b/configparser.c
+@@ -18,12 +18,17 @@
+ #include <errno.h>
+ #include <assert.h>
+ #include <limits.h>
++#if defined(sun)
++#include <fcntl.h>
++#endif /* : defined(sun) */
+ #include <sys/types.h>
++#if defined(sun)
++#include <sys/stat.h>
++#endif /* : defined(sun) */
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <dirent.h>
+-
+ #include "error.h"
+ #include "names.h"
+ #include "atoms.h"
+@@ -472,8 +477,15 @@ static retvalue configfile_parse_multi(/*@only@*/char *fullfilename, bool ignore
+ 		}
+ 		while ((errno = 0, de = readdir(dir)) != NULL) {
+ 			size_t l;
++#if defined(sun)
++			struct stat statbuff;
++			if(lstat(de->d_name, &statbuff) == -1)
++				continue;
++			if(!(S_ISREG(statbuff.st_mode)) && !(S_ISLNK(statbuff.st_mode)))
++#else /* : defined(sun) */
+ 			if (de->d_type != DT_REG && de->d_type != DT_LNK
+ 					&& de->d_type != DT_UNKNOWN)
++#endif /* : defined(sun) */
+ 				continue;
+ 			if (de->d_name[0] == '.')
+ 				continue;
+-- 
+2.0.3
+

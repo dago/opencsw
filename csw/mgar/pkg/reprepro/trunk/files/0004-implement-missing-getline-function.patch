@@ -1,0 +1,95 @@
+From 56f66ab9c83381279384f93e13c114de3ca7e4a8 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 17 Sep 2014 17:09:35 +0200
+Subject: [PATCH] implement missing getline function Simple implementation of
+ the getline function based on iterative fgets.
+
+---
+ globals.h   |  5 +++++
+ rredpatch.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+)
+
+diff --git a/globals.h b/globals.h
+index 0d634fe..35d4aee 100644
+--- a/globals.h
++++ b/globals.h
+@@ -93,6 +93,11 @@ enum compression { c_none, c_gzip, c_bzip2, c_lzma, c_xz, c_lunzip, c_COUNT };
+ 
+ #if defined(sun)
+ char *strndup(const char *s, size_t n);
++#include <sys/types.h>
++#include <stdio.h>
++ssize_t getline (char ** lineptr,
++			    size_t * n,
++			    FILE * stream);
+ #ifndef HAVE_DPRINTF
+ int dprintf(int fd, const char *format, ...);
+ #endif /* : HAVE_DPRINTF*/
+diff --git a/rredpatch.c b/rredpatch.c
+index a59bc49..7a2836c 100644
+--- a/rredpatch.c
++++ b/rredpatch.c
+@@ -770,3 +770,60 @@ retvalue modification_addstuff(const char *source, struct modification **patch_p
+ 	return RET_OK;
+ }
+ 
++#if defined(sun)
++ssize_t getline(char **lineptr, size_t *n, FILE *stream)
++{
++	int rc = 0;
++	static const size_t initialSize = 64;
++
++	if(lineptr == (char**)0 || n == (size_t*)0 || stream == (FILE*)0)
++	{
++		rc= -1;
++		errno = EINVAL;
++	}
++	else
++	{
++		if(*lineptr == (char*)0)
++		{
++			*lineptr = (char*)malloc(sizeof(char) * initialSize);
++			*n = initialSize;
++		}
++		if(*lineptr != (char*)0)
++		{
++			size_t haveRead = 0;
++			**lineptr = '\0';
++			while(1)
++			{
++				if(fgets((*lineptr + haveRead), *n, stream) != (char*)0)
++				{
++					haveRead += strlen((*lineptr + haveRead));
++					if(*(*lineptr + haveRead - 1) == '\n')
++					{
++						rc = haveRead;
++						break;
++					}
++					else
++					{
++						*n = haveRead + initialSize;
++						*lineptr = (char*)realloc(*lineptr, *n);
++						if(*lineptr == (char*)0)
++						{
++							rc = -1;
++							break;
++						}
++					}
++					continue;
++				}
++				rc = -1;
++				break;
++			}
++		}
++		else
++		{
++			rc = -1;
++		}
++	}
++
++	return(rc);
++}
++#endif /* : defined(sun) */
+-- 
+2.0.3
+
