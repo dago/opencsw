@@ -1,0 +1,29 @@
+From c7cfb51c3fcb2cc5165f8d4d0679d5f4fb559e28 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Wed, 17 Sep 2014 16:52:01 +0200
+Subject: [PATCH] fix make temporary file Small variation in temporary file
+ creation.
+
+---
+ outhook.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/outhook.c b/outhook.c
+index 2ca6d1f..cc7bde5 100644
+--- a/outhook.c
++++ b/outhook.c
+@@ -52,7 +52,11 @@ retvalue outhook_start(void) {
+ 			global.logdir, (unsigned long long)time(NULL));
+ 	if (FAILEDTOALLOC(template))
+ 		return RET_ERROR_OOM;
++#if defined(sun)
++	fd = mkstemp(template);
++#else /* : defined(sun) */
+ 	fd = mkstemps(template, 7);
++#endif /* : defined(sun) */
+ 	if (fd < 0) {
+ 		int e = errno;
+ 		fprintf(stderr, "Error %d creating new file in %s: %s\n",
+-- 
+2.0.3
+
