@@ -53,7 +53,7 @@ DISTFILES += vimrc.tiny
 DISTFILES += gvimrc
 DISTFILES += COPYING
 
-PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVEFILES += 0007-export-fix-for-solaris-sh.patch(DISTVEDIRLEVEL = 0of-whitespace.patch
+PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVEDIRLEVEL = 0of-whitespace.patch
 
 DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
 
