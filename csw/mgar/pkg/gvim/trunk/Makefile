@@ -23,7 +23,6 @@ DISTFILES += gvim.desktop
 DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(
-PATCHFILES += 0007-export-fix-for-solaris-sh.patch(
 PATCHDIRLEVEL = 0
 
 DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
