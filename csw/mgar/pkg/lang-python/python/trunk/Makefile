@@ -197,7 +197,7 @@ BUILD_DEP_PKGS += CSWlibgcrypt-dev
 # this is rebuilt in the merge phase
 
 ALTERNATIVES_CSWpython$(CVER) = python-$(VER)
-ALTERNATIVE_python-$(VER) = $(bindir)/python2 python $(bindir)/python$(VER) 2600
+ALTERNATIVE_python-$(VER) = $(bindir)/python2 python $(bindir)/python$(VER) 260
 ALTERNATIVE_python-$(VER) += $(bindir)/python python2 $(bindir)/python2
 ALTERNATIVE_python-$(VER) += $(bindir)/2to3 2to3 $(bindir)/2to32
 ALTERNATIVE_python-$(VER) += $(bindir)/2to32 2to32 $(bindir)/2to3$(VER)
