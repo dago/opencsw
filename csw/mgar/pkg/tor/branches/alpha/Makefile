@@ -1,6 +1,6 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.5.3-alpha
+VERSION = 0.2.5.8-rc
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
@@ -12,8 +12,7 @@ def# This is where the source git repo is located but we are building from the
 endef
 
 MASTER_SITES = http://www.torproject.org/dist/
-DISTFILES  = $(DPATCHFILES += pulled-from-gitrepo-fixes-bug11426.patch
-PATCHFILES += 0001-add-test-to-detech-we-are-on-Solaris.patch(DISTNAME).tar.gz
+DISTFILES  = $(DPATCHFILES += 0001-add-test-to-detech-we-are-on-Solaris.patch(DISTNAME).tar.gz
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
