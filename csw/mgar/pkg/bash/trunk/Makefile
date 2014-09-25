@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash
-VERSION = 4.3.24
+VERSION = 4.3.25
 GARTYPE = v2
 
 DESCRIPTION = A sh-compatible command language interpreter
