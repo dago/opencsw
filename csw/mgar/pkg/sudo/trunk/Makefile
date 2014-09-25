@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.10p3
+VERSION = 1.8.11
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -27,7 +27,9 @@ LICENSE = doc/LICENSE
 VENDOR_URL = http://www.sudo.ws
 
 # To have least Priv Support for Solaris 10 build on all Platforms
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386  solaris10-sparc solaris10-i386
+P+= solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS += solaris11-sparc solaris11s10-sparc solaris10-i386
 
 #Use custom map for solaris 10
 
@@ -73,7 +75,8 @@ CATALOGNAME_CSWsudolda#on solaris9 this is still a dep. Should be checked
 CHECKPKG_OVERRIDES_CSWsudo-ldap += surplus-dependency|CSWliblber2-4-2oc/sudo/README.LDAP
 
 # This is a private library
-CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-not-part-of-filename|soname=sudoers.so|filenam# Looks like these are still needed
+CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-not-part-of-filename|soname=sudoers.so|filenam# This is needed AFAIK due to libtool
+CHECKPKG_OVERRIDES_CSWsudo += discouraged-path-in-pkgmap|/opt/csw/libexec/sudo/libsudo_util.laam# Looks like these are still needed
 CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/sbin/visudo|but|never|used
 CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers.so|but|never|used
 CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudo_noexec.so|but|never|used
@@ -100,12 +103,19 @@ CONFIGURE_ARGS += --with-logpath=$(LOGPATH)/sudolog
 CONFIGURE_ARGS += --with-iologdir=$(IOLOGPATH)
 CONFIGrundir=$(TIMEPATH)
 CONFIGURE_ARGS += --with-vardir=$(VARDIR-timedir=$(TIMEPATH)
-CONFIGURE_ARGSCONFIGURE_ARGS += --with-fqdnS += --with-project
+CONFIGURE_ARGSCONFIGURE_ARGS += --with-fqdnS# Looks like even Solaris 10 is missing some defined for BSM
+#CONFIGURE_ARGS-5.9 += --with-bsm-audit
+#CONFIGURE_ARGS-5.10 += --with-bsm-audit
+CONFIGURE_ARGS-5.11 += --with-solaris-audit
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))S += --with-project
 
 CONFIGURE_ARGS_LDAP-enabled += --with-ldap=$(prefix)
 CONFIGURE_ARGS_LDAP-enabled += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_LDAP-$(LDAP))
+CONFIGURE_ARGS += $(CONFIGURE_A# This default to installation as user 'root' which we don't want here as we set it in the package prototype
+INSTALL_OVERRIDE_VARS += INSTALL_OWNER
+INSTALL_OVERRIDE_VAR_INSTALL_OWNER = _ARGS_LDAP-$(LDAP))
 
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
