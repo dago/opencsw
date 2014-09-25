@@ -51,14 +51,12 @@ include gar/category.mk
 eSRCDIR-sparcv9 = v9
 SRCDIR-amd64   = amd64
 
-install-custom-i3864
-
-install-custom:
-	ginstall -d $(DESTDIR)$(libdir)
+install-custom-pentium_pro:
+	ginstall -d $(DESTDIR)$(libdir(DESTDIR)$(libdir)
 	$(foreach L,$(FLIBS-$(GARCH)),if [ -f $(SOS12_CC_HOME)/lib/$L ]; then ginstall $(SOS12_CC_HOME)/lib/$L $($(ISA_SS32-$(GARCH))/$L; fi;)
 	@$(MAKECOOKIE)
 
-install-custom-sparc:
+install-custom-sparcv8plus:
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall -d $(DESTDIR)$(libdir)/v8
 	ln -s v8/$(FLIBS-sparc) $(DESTDIR)$(libdir)/$(FLIBS-sparc(DESTDIR)$(libdir)
