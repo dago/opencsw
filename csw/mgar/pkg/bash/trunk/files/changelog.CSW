@@ -1,5 +1,11 @@
 bash (4.3.25,REV=2014.09.25) unstable
 
+  * Added patch eol-pushback.patch to fix CVE-2014-7169
+
+ -- Yann Rouillard <yann@opencsw.org>  Thu, 25 Sep 2014 20:35:06 +0200
+
+bash (4.3.25,REV=2014.09.25) unstable
+
   * Added bash patch bash43-025 to fix CVE-2014-6271
 
  -- Yann Rouillard <yann@opencsw.org>  Thu, 25 Sep 2014 08:45:14 +0200
