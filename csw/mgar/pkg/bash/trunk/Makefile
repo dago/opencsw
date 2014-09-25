@@ -74,6 +74,10 @@ PATCHFILES += use_system_bashrc_and_logout.patch
 # add /opt/csw/bin in the hardcoded paths used for auto-selecting the EDITOR variable
 PATCHFILES += 0001-bashbug-editor-path.patch
 
+# Current patch proposed to fix CVE-2014-7169 
+# see http://www.openwall.com/lists/oss-security/2014/09/25/10
+PATCHFILES += eol-pushback.patch
+
 LICENSE = COPYING
 
 # we add CSW bash to the /etc/shells files using the build script
