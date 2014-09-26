@@ -121,7 +121,7 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(bindir)/
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(sbindir)/$(bin_name))
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
-CHECKPKG_OVERRIDES_CSW$(NAME)-dev += file-collision                             
+CHECKPKG_OVERRIDES_CSWmysql-dev += file-collision                             
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -173,7 +173,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROS
 ### For GCC4
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
-CHECKPKG_OVERRIDES_CSW$(NAME) += file-collision
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-collision
 #CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
