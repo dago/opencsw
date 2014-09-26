@@ -1,8 +1,10 @@
-bash (4.3.25,REV=2014.09.25) unstable
+bash (4.3.25,REV=2014.09.26) unstable
 
-  * Added patch eol-pushback.patch to fix CVE-2014-7169
+  * Added patches bash-4.2-cve-2014-7169-{0,1,2}.patch to fix CVE-2014-7169
+    Patches are taken from fedora, see https://access.redhat.com/articles/1200223
+    for impacts of the patch
 
- -- Yann Rouillard <yann@opencsw.org>  Thu, 25 Sep 2014 20:35:06 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 26 Sep 2014 17:17:22 +0200
 
 bash (4.3.25,REV=2014.09.25) unstable
 

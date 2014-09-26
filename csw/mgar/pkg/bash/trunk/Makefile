@@ -74,9 +74,11 @@ PATCHFILES += use_system_bashrc_and_logout.patch
 # add /opt/csw/bin in the hardcoded paths used for auto-selecting the EDITOR variable
 PATCHFILES += 0001-bashbug-editor-path.patch
 
-# Current patch proposed to fix CVE-2014-7169 
-# see http://www.openwall.com/lists/oss-security/2014/09/25/10
-PATCHFILES += eol-pushback.patch
+# Serie of patches taken from fedora to fix CVE-2014-7169 
+# see https://access.redhat.com/articles/1200223 for impacts of the patch
+PATCHFILES += bash-4.2-cve-2014-7169-0.patch
+PATCHFILES += bash-4.2-cve-2014-7169-1.patch
+PATCHFILES += bash-4.2-cve-2014-7169-2.patch
 
 LICENSE = COPYING
 
