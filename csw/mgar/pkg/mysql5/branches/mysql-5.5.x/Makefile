@@ -173,6 +173,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += $(RUNTIME_DEP_PKGS_CSW$(NAME)client_$(GAROS
 ### For GCC4
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSW$(NAME) += file-collision
 #CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 # It's intentional. There's a sparcv8-incompatible assembler code there, so we
@@ -202,6 +203,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/sparcv9/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
 CHECKPKG_OVERRIDES_CSW$(NAME) += no-direct-binding|/opt/csw/libexec/amd64/mysqld|is|not|directly|bound|to|soname|libmtmalloc.so.1
+CHECKPKG_OVERRIDES_CSW$(NAME) += file-collision
 
 # An example:
 # s9_preload.so.1|is|needed|by|/opt/csw/bin/innochecksum|but|never|used
