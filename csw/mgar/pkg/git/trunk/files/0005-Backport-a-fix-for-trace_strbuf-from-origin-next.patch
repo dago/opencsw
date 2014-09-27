@@ -1,0 +1,26 @@
+From b5283517ab288ed1efee604e646894b08e995eae Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 27 Sep 2014 12:01:20 +0100
+Subject: [PATCH] Backport a fix for trace_strbuf from origin/next.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/trace.c b/trace.c
+index e583dc6..17015fd 100644
+--- a/trace.c
++++ b/trace.c
+@@ -216,7 +216,7 @@ void trace_argv_printf(const char **argv, const char *format, ...)
+ 	va_end(ap);
+ }
+ 
+-void trace_strbuf(const char *key, const struct strbuf *data)
++void trace_strbuf(struct trace_key *key, const struct strbuf *data)
+ {
+ 	trace_strbuf_fl(NULL, 0, key, data);
+ }
+-- 
+2.0.3
+
