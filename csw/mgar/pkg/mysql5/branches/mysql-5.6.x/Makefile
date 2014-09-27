@@ -137,6 +137,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 CHECKPKG_OVERRIDES_CSW$(NAME)client += file-collision
+INCOMPATIBLE_PKGS_CSW$(NAME)client = CSWmysql5client
 
 PACKAGES += CSW$(NAME)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
