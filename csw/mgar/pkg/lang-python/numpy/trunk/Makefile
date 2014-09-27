@@ -20,6 +20,9 @@ DISTFILES = $(DISTNAME).tar.gz
 
 # PATCHFILES += 0001-mvec-is-a-SPARC-only-library.patch
 
+# This is a special library, Solaris 10 only, sorry
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-7-1-0
