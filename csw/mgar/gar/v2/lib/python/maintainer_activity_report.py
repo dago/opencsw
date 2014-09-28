@@ -208,7 +208,9 @@ def main():
   parser.add_argument('--load-from', dest="load_from",
                       help='Load data from file')
   args = parser.parse_args()
-  catrels = ['kiel', 'bratislava', 'unstable']
+  # stable, testing, unstable
+  # This has to be updated when a new stable is released.
+  catrels = ['bratislava', 'munich', 'unstable']
   if args.load_from:
     with open(args.load_from, 'r') as fd:
       results_by_catrel = cPickle.load(fd)

@@ -75,6 +75,7 @@ DEFAULT_CATALOG_RELEASES = frozenset([
     'dublin',
     'kiel',
     'legacy',
+    'munich',
     'unstable',
 ])
 
