@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = squid
-VERSION = 3.4.69]\).*\.[0-9]*/\1/')
+VERSION = 3.4.79]\).*\.[0-9]*/\1/')
 GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
@@ -74,7 +74,9 @@ CONFIGURE_ARGS += --with-dl
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-dCONFIGURE_ARGS += --enable-aio
-CONFIGURE_ARGS += --enable-storeio=ufs,diskddefault-user=$(NAME)
+CONFIGURE_ARGS += --enable-storeio=ufs,diskdd# These are needed for Cisco integration, as requested by email
+CONFIGURE_ARGS += --enable-wccp
+CONFIGURE_ARGS += --enable-wccpv2default-user=$(NAME)
 
 # Allowed values (see configure --help):
 #   POSIX_V6_ILP32_OFF32   32 bits
