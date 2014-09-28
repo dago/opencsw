@@ -89,6 +89,7 @@ CATALOGS_ALLOWED_TO_GENERATE = frozenset([
   "bratislava",
   "dublin",
   "kiel",
+  "munich",
   "unstable",
 ])
 CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
@@ -97,6 +98,7 @@ CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
   "dublin",
   "kiel",
   "legacy",
+  "munich",
   "unstable",
 ])
 
