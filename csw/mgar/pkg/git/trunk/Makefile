@@ -101,6 +101,7 @@ PATCHFILES += 0003-Use-bash-and-set-PATH-in-contributed-hook-file.patch
 PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instaweb# TODO(bdwalton) Remove this post 2.1.1
 PATCHFILES += 0005-Backport-a-fix-for-trace_strbuf-from-origin-next.patch
 bPATCHFILES += 0006-Do-not-make-trace.c-getnanotime-and-inlined-function.patch
+PATCHFILES += 0007-Fix-a-hashbang-issue-in-the-test-suite.patch
 b-search-path.patch
 # this patch is required on current9s (not necessarily all sparc boxes) due
 # to the selection of available utf8 locales.
