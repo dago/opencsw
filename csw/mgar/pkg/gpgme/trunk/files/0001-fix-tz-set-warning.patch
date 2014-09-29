@@ -1,0 +1,26 @@
+From 1639c1d75b0629d4dfdab82c56e980fbf01fae87 Mon Sep 17 00:00:00 2001
+From: Peter Felecan <pfelecan@opencsw.org>
+Date: Sat, 27 Sep 2014 18:22:57 +0200
+Subject: [PATCH] fix tz set warning
+
+---
+ src/conversion.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/conversion.c b/src/conversion.c
+index d04a6be..6f98441 100644
+--- a/src/conversion.c
++++ b/src/conversion.c
+@@ -402,7 +402,8 @@ _gpgme_parse_timestamp (const char *timestamp, char **endp)
+         putenv ("TZ=UTC");
+         tim = mktime (&buf);
+ #ifdef __GNUC__
+-#warning fixme: we must somehow reset TZ here.  It is not threadsafe anyway.
++/* #warning fixme: we must somehow reset TZ here.  It is not threadsafe anyway. */
++		tzset();
+ #endif
+         return tim;
+       }
+-- 
+2.0.3
+
