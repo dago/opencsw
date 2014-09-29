@@ -52,6 +52,7 @@ RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgcc-s1
 CHECKPKG_OVERRIDES_CSWlibgpgme-pthread11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/libgpgme-pthread.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 CHECKPKG_OVERRIDES_CSWlibgpgme-pthread11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/sparcv9/libgpgme-pthread.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWlibgpgme-pthread11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/amd64/libgpgme-pthread.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 
 PACKAGES += CSWlibgpgme11
 CATALOGNAME_CSWlibgpgme11 = libgpgme11
@@ -62,6 +63,7 @@ RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgcc-s1
 CHECKPKG_OVERRIDES_CSWlibgpgme11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/libgpgme.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 CHECKPKG_OVERRIDES_CSWlibgpgme11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/sparcv9/libgpgme.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWlibgpgme11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/amd64/libgpgme.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 
 PACKAGES += CSWgpgme-dev
 CATALOGNAME_CSWgpgme-dev = gpgme_dev
