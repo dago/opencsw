@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = gpgme
-VERSION = 1.4.3
+VERSION = 1.5.1
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -17,9 +17,17 @@ endef
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gpgme/
 DISTFILES  = $(NAME)-$mVENDOR_gme,)
 
-SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.eGARCOMPILER = GCC4
+SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.e# this is necessary to have vasprintf which is available only with
+# libc from SUNW_1.22.7 up; if the map file is not inhibited any user
+# of the library which also uses the vasprintf() will get the private
+# reference which core dumps in most of the cases.
+LINKER_MAP_RELEASE	=	
 
-PATCHFILES += 0001_need_posix_shell.patch
+GARCOMPILER		=	GNU
+#GARFLAVOR		=	DBG
+
+PATCHFILES += 0001-fix-tz-set-warning.patch
+PATCHFILES += 0002-fix-trace-macros-in-non-void-return.patch
 
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWlibpth-dev
@@ -55,11 +63,12 @@ RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme-pthread11
 BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-gpg-version=2
-CONFIGURE_ARGS += --with-gpgsm-version=2
-CONFIGURE_ARGS += --with-gpgconf-version=2
-CONFIGURE_ARGS += --with-gpgconf=$(prefix)/bin
-CONFIGURE_ARGS += --with-gpg=$(prefix)/bin
-CONFIGURE_ARGS += --with-gpgsm=$(prefix)/bin
+CONFIGURE_ARGS += --disable-fd-passing
+# CONFIGURE_ARGS += --with-gpg-version=2
+# CONFIGURE_ARGS += --with-gpgsm-version=2
+# CONFIGURE_ARGS += --with-gpgconf-version=2
+# CONFIGURE_ARGS += --with-gpgconf=$(prefix)/bin
+# CONFIGURE_ARGS += --with-gpg=$(prefix)/bin
+# CONFIGURE_ARGS += --with-gpgsm=$(prefix)/bin
 
 include gar/category.mk
