@@ -29,6 +29,11 @@ GARCOMPILER		=	GNU
 PATCHFILES += 0001-fix-tz-set-warning.patch
 PATCHFILES += 0002-fix-trace-macros-in-non-void-return.patch
 
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-fd-passing
+
+BUILD64_LIBS_ONLY = 1
+
 BUILD_DEP_PKGS += CSWlibgpg-error-dev
 BUILD_DEP_PKGS += CSWlibpth-dev
 BUILD_DEP_PKGS += CSWlibassuan-dev
@@ -45,6 +50,8 @@ SPKG_DESC_CSWlibgpgme-pthread11 += $(DESCRIPTION), libgpgme-pthread.so.11
 RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibassuan0
 RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibgpgme-pthread11 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibgpgme-pthread11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/libgpgme-pthread.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWlibgpgme-pthread11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/sparcv9/libgpgme-pthread.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 
 PACKAGES += CSWlibgpgme11
 CATALOGNAME_CSWlibgpgme11 = libgpgme11
@@ -53,22 +60,13 @@ SPKG_DESC_CSWlibgpgme11 += $(DESCRIPTION), libgpgme.so.11
 RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibassuan0
 RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWlibgpgme11 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibgpgme11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/libgpgme.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
+CHECKPKG_OVERRIDES_CSWlibgpgme11	+=	forbidden-version-interface-dependencies|/opt/csw/lib/sparcv9/libgpgme.so.11.13.0|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
 
 PACKAGES += CSWgpgme-dev
 CATALOGNAME_CSWgpgme-dev = gpgme_dev
 SPKG_DESC_CSWgpgme-dev += $(DESCRIPTION), development files
 RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme11
 RUNTIME_DEP_PKGS_CSWgpgme-dev += CSWlibgpgme-pthread11
-
-BUILD64_LIBS_ONLY = 1
-
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-fd-passing
-# CONFIGURE_ARGS += --with-gpg-version=2
-# CONFIGURE_ARGS += --with-gpgsm-version=2
-# CONFIGURE_ARGS += --with-gpgconf-version=2
-# CONFIGURE_ARGS += --with-gpgconf=$(prefix)/bin
-# CONFIGURE_ARGS += --with-gpg=$(prefix)/bin
-# CONFIGURE_ARGS += --with-gpgsm=$(prefix)/bin
 
 include gar/category.mk
