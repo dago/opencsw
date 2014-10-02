@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = jansson
-VERSION = 2.6
+VERSION = 2.7
 GARTYPE = v2
 
 DESCRIPTION = C library for encoding, decoding and manipulating JSON data
