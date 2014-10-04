@@ -1,16 +1,12 @@
 NAME = Crypt-DES
-VERSION = 2.05
+VERSION = 2.07
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = DPARIS
 
 DESCRIPTION = Perl DES encryption module
-define BLURB
-  The module implements the Crypt::CBC interface, which has the following
-  methods
-endef
 
-CATALOGNAME = pm_cryptdes
-PACKAGES = CSWpmcryptdes
+CATALOGNAME = pm_crypt_des
+PACKAGES = CSWpm-crypt-des
 
 include gar/category.mk
