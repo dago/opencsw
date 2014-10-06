@@ -1,5 +1,5 @@
 NAME = make
-VERSION = 4.0
+VERSION = 4.1
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -31,7 +31,8 @@ CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|roo-noguilot/opt
 
 # These are just examples
 CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|root/opt/csw/share/info/make.info-1
-CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|root/opt/csw/sharePACKAGES += CSWgmake-guile
+CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|root/opt/csw/share# This is handled by alternatives
+CHECKPKG_OVERRIDES_CSWgmake += file-needed-but-no-package-satisfies-it|/opt/csw/bin/gmake|CSWgmake|contains|symlink|/opt/csw/gnu/make|which|needs|the|target|file:|/opt/csw/bin/gmakerePACKAGES += CSWgmake-guile
 SPKG_DESC_CSWgmake-guile = GNU Make with GUILE support
 PKGFILES_CSWgmake-guile += $(bindir)/gmake-guile
 RUNTIME_DEP_PKGS_CSWgmake-guile += CSWlibintl8
