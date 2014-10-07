@@ -54,8 +54,8 @@ PKGFILES_CSWfi-agent-task-inventory += $(mandir)/man1/fusioninventory-inventory.
 PKGFILES_CSWfi-agent-task-inventory += $(datadir)/fusioninventory/lib/FusionInventory/Agent/Task/Inventory.*
 CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/BSD/i386.pm
-CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/i386/CPU.pm
-CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/i386/Bios.pm
+CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/BSD/i386/CPU.pm
+CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/BSD/i386/Bios.pm
 CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Linux/i386.pm
 CHECKPKG_OVERRIDES_CSWfi-agent-task-inventory += archall-with-arch-paths|/opt/csw/share/fusioninventory/lib/FusionInventory/Agent/Task/Inventory/Linux/i386/CPU.pm
 
