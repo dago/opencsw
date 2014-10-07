@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = fusioninventory-agent
-VERSION = 2.3.11.1
+VERSION = 2.3.12
 GARTYPE = v2
 CATEGORIES = cpan
 
@@ -35,7 +35,6 @@ RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-proc-daemon
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-proc-pid-file
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-net-ip
-RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-socket-getaddrinfo
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-text-template
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-universal-require
 RUNTIME_DEP_PKGS_CSWfi-agent += CSWpm-xml-treepp
