@@ -59,8 +59,6 @@ CONFIGURE_ARGS += --with-snmpget-command=/opt/csw/bin/snmpget
 CONFIGURE_ARGS += --with-snmpgetnext-command=/opt/csw/bin/snmpgetnext
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 
-# We currently fix on 1.22.5, libmysql needs a higher level due to getpagesize2
-LINKER_MAPS =
 CHECKPKG_OVERRIDES_CSWnagios-plugins += forbidden-version-interface-dependencies
 
 libexecdir 	?= $(prefix)/libexec/nagios-plugins
