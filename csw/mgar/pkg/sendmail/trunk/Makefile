@@ -31,7 +31,7 @@
 # + #4150 Sendmail 8.14.4 released -> this is 8.14.5
 
 NAME = sendmail
-VERSION = 8.14.7
+VERSION = 8.14.9
 GARTYPE = v2
 
 DESCRIPTION = Sendmail MTA
