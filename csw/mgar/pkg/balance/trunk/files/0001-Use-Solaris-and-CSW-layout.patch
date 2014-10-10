@@ -1,18 +1,18 @@
-From 9d63fa77ffd0512d2446741753c57133946fd112 Mon Sep 17 00:00:00 2001
+From fffc9c3bdecc88385040013f5c2a26faa6fd5fc1 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Fri, 14 Jan 2011 15:26:17 +0100
+Date: Fri, 10 Oct 2014 10:58:37 +0200
 Subject: [PATCH] Use Solaris and CSW layout
 
 ---
- Makefile |   23 +++++++++++++----------
- 1 files changed, 13 insertions(+), 10 deletions(-)
+ Makefile | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 8cb0b1b..a2b1274 100644
+index 3fc914b..d5c5cc5 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1,26 +1,27 @@
- # $Id: Makefile,v 1.12 2010/12/03 12:49:15 t Exp $
+ # $Id: Makefile,v 1.13 2013/11/06 10:55:58 t Exp t $
  
  #CFLAGS=-g -I.
 -CFLAGS=-O2 -Wall -Wstrict-prototypes -Wuninitialized
@@ -44,7 +44,7 @@ index 8cb0b1b..a2b1274 100644
  
 -CC=gcc
 +# CC=gcc
- RELEASE=3.54
+ RELEASE=3.56
  
  all: balance 
 @@ -48,9 +49,11 @@ clean:
@@ -62,5 +62,5 @@ index 8cb0b1b..a2b1274 100644
  	mkdir -p $(DESTDIR)/var/run/balance
  	chmod 1777 $(DESTDIR)/var/run/balance
 -- 
-1.7.3.2
+2.0.3
 
