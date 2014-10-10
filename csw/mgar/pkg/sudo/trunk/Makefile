@@ -29,7 +29,7 @@ VENDOR_URL = http://www.sudo.ws
 # To have least Priv Support for Solaris 10 build on all Platforms
 P+= solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS += solaris11-sparc solaris11s10-sparc solaris10-i386
+#PACKAGING_PLATFORMS += solaris11-sparc solaris11s10-sparc solaris10-i386
 
 #Use custom map for solaris 10
 
