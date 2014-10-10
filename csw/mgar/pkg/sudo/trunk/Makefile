@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.11
+VERSION = 1.8.11p1
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -106,7 +106,7 @@ CONFIGURE_ARGS += --with-vardir=$(VARDIR-timedir=$(TIMEPATH)
 CONFIGURE_ARGSCONFIGURE_ARGS += --with-fqdnS# Looks like even Solaris 10 is missing some defined for BSM
 #CONFIGURE_ARGS-5.9 += --with-bsm-audit
 #CONFIGURE_ARGS-5.10 += --with-bsm-audit
-CONFIGURE_ARGS-5.11 += --with-solaris-audit
+#CONFIGURE_ARGS-5.11 += --with-solaris-audit
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))S += --with-project
 
