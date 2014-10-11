@@ -13,8 +13,8 @@
 
 NAME = openssh
 VERSION = 6.7p1
-GSSKEX_PATCH_VERSION = 6.6p1
-GSSKEX_PATCH_DATE = 20140320
+GSSKEX_PATCH_VERSION = 6.7p1
+GSSKEX_PATCH_DATE = 20140907
 CATEGORIES = server
 GARTYPE = v2
 
@@ -151,7 +151,9 @@ PATCHFILES += 0004-no-lastlog-file.patch
 # Rename the pidfile to use cswsshd.pid instead of sshd.pid in order to
 # avoid a clash with sun native ssh pid file
 # see https://www.opencsw.org/mantis/view.php?id=4398
-PATCHFILES += 0005-rename-pidfile.patch
+PATCHFILES += 0005-renaThe regress/Makefile uses "id -un" to retrieve the id of the current user
+# but that command doesn't work on Solaris, this patch fixes that issue
+PATCHFILES += fix-user-id-retrieval-for-solaris 0005-rename-pidfile.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
