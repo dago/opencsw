@@ -120,8 +120,7 @@ UPSTREAM_nformation #######
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\#DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES  = openssh-SNAP-20140907.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTNAME   = opensshE)-$(VERSION).CSWopenssh.cswreleasenotes
 DISTFILES += CSWopenssh_client.cswreleasenotesLES += changelog.CSW
 DISTFILES += cswusergroup
