@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru a/regress/Makefile b/regress/Makefile
+--- a/regress/Makefile
++++ b/regress/Makefile
+@@ -72,7 +72,7 @@
+ 
+ #LTESTS= 	cipher-speed
+ 
+-USER!=		id -un
++USER!=		/usr/ucb/whoami 2>/dev/null || whoami 2>/dev/null || logname 2>/dev/null || id -un
+ CLEANFILES=	t2.out t3.out t6.out1 t6.out2 t7.out t7.out.pub copy.1 copy.2 \
+ 		t8.out t8.out.pub t9.out t9.out.pub t10.out t10.out.pub \
+ 		authorized_keys_${USER} known_hosts pidfile testdata \
