@@ -152,7 +152,9 @@ PATCHFILES += 0004-no-lastlog-file.patch
 # see https://www.opencsw.org/mantis/view.php?id=4398
 PATCHFILES += 0005-renaThe regress/Makefile uses "id -un" to retrieve the id of the current user
 # but that command doesn't work on Solaris, this patch fixes that issue
-PATCHFILES += fix-user-id-retrieval-for-solaris 0005-rename-pidfile.patch
+PATCHFILES += fix-user-id-retrieval-for-solaris 0005-rena Disable unittest fuzz ed25519 sig as it doesn't work correctly under Solaris
+#  see: https://bugzilla.mindrot.org/show_bug.cgi?id=2271
+PATCHFILES += disable-unittest-fuzz-ed25519-sig 0005-rename-pidfile.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
