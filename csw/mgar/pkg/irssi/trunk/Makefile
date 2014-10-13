@@ -1,5 +1,5 @@
 NAME = irssi
-VERSION = 0.8.15
+VERSION = 0.8.17
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -35,7 +35,6 @@ EXTRA_INC += $(prefix)/bdb47/include
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
-RUNTIME_DEP_PKGS += CSWlibintl8
 RUNTIME_DEP_PKGS += CSWlibsocks
 RUNTIME_DEP_PKGS += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS += CSWperl
@@ -47,4 +46,4 @@ REINPLACE_USRLOCAL += docs/help/load
 
 REINPLACE_USRSHARE += docs/irssi.1
 
-include gar/category.mk
+includ
