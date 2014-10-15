@@ -1,4 +1,8 @@
-openssl (0.9.8zb,REV=2014.08.07) unstable
+openssl (0.9.8zc,REV=2014.10.15) unstable
+
+  * New upstream release.
+
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 15 Oct 2014 17:16:59 +0200
 
   * New upstream release.
   * Removed patch applied upstream:
