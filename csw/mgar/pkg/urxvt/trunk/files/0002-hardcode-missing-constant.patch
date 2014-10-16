@@ -1,0 +1,32 @@
+From 06cf0665727d6052b93a5ca838ba0db2200dec65 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Thu, 16 Oct 2014 09:42:22 +0200
+Subject: [PATCH] hardcode missing constant
+
+---
+ src/rxvtimg.C | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/rxvtimg.C b/src/rxvtimg.C
+index d561e59..5ff1963 100644
+--- a/src/rxvtimg.C
++++ b/src/rxvtimg.C
+@@ -685,13 +685,13 @@ rxvt_img::brightness (int32_t r, int32_t g, int32_t b, int32_t a)
+       if (extract (-65535, 0, r, g, b, a, mask_c.red, mask_c.green, mask_c.blue, mask_c.alpha))
+         {
+           XRenderColor mask_w = { 65535, 65535, 65535, 65535 };
+-          XRenderFillRectangle (dpy, PictOpDifference, dst, &mask_w, 0, 0, w, h);
++          XRenderFillRectangle (dpy, 39, dst, &mask_w, 0, 0, w, h);
+           mask_c.red   = -mask_c.red; //TODO: verify that doing clamp, assign, and negation does the right thing
+           mask_c.green = -mask_c.green;
+           mask_c.blue  = -mask_c.blue;
+           mask_c.alpha = -mask_c.alpha;
+           XRenderFillRectangle (dpy, PictOpAdd, dst, &mask_c, 0, 0, w, h);
+-          XRenderFillRectangle (dpy, PictOpDifference, dst, &mask_w, 0, 0, w, h);
++          XRenderFillRectangle (dpy, 39, dst, &mask_w, 0, 0, w, h);
+         }
+     }
+ 
+-- 
+2.0.3
+
