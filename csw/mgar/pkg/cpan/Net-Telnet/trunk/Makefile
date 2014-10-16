@@ -1,29 +1,22 @@
 NAME = Net-Telnet
-VERSION = 3.03
+VERSION = 3.04
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = JROGERS
 
 DESCRIPTION = Interact with TELNET port or other TCP ports
 define BLURB
-  Net::Telnet allows you to make client connections to a TCP port and do
-  network I/O, especially to a port using the TELNET protocol. Simple I/O
-  methods such as print, get, and getline are provided. More sophisticated
-  interactive features are provided because connecting to a TELNET port
-  ultimately means communicating with a program designed for human
-  interaction. These interactive features include the ability to specify a
-  time-out and to wait for patterns to appear in the input stream, such as
-  the prompt from a shell.
 endef
 
-PACKAGES = CSWpmnettelnet
-CATALOGNAME = pm_nettelnet
-ARCHALL = 1
+CATALOG_RELEASE = unstable
+
+LICENSE_TEXT = This module is licensed under the unknown license
+
+PACKAGES += CSWpm-net-telnet
+CATALOGNAME_CSWpm-net-telnet = pm_net_telnet
+SPKG_DESC_CSWpm-net-telnet = Interact with TELNET port or other TCP ports
+ARCHALL_CSWpm-net-telnet = 1
+OBSOLETED_BY_CSWpm-net-telnet += CSWpmnettelnet
+CATALOGNAME_CSWpmnettelnet = pm_nettelnet_stub
 
 include gar/category.mk
-
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
