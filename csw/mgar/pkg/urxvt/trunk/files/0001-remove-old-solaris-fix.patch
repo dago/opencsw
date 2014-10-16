@@ -1,0 +1,25 @@
+From 5265afa04ab6b31f50b0de46f47d1a5d0c03f465 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Wed, 3 Sep 2014 17:30:29 +0200
+Subject: [PATCH] remove old solaris fix
+
+---
+ configure | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/configure b/configure
+index c756724..46fca6b 100755
+--- a/configure
++++ b/configure
+@@ -7146,8 +7146,6 @@ fi
+ case $host in
+    *-*-solaris*)
+ 
+-$as_echo "#define _XOPEN_SOURCE 500" >>confdefs.h
+-
+       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing sendmsg" >&5
+ $as_echo_n "checking for library containing sendmsg... " >&6; }
+ if ${ac_cv_search_sendmsg+:} false; then :
+-- 
+2.0.3
+

@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = rxvt-unicode
-VERSION = 9.07
+VERSION = 9.20
 CATEGORIES = apps
 GARTYPE = 
 
@@ -21,16 +21,28 @@ end= http://dist.schmorp.de/rxvt-unicode/
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += urxvt-wrapper
 VENDOR_URL = http://software.schmorp.de/pkg/rxvt-unicode.html
-PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 GARCOMPILER = GNU
 
-PATCHFILES += rxvt-unicode-9.06-solaris8.patch
+EXTRA_INC = /opt/csw/X11/include
+EXTRA_LIB = /opt/csw/X11/lib
+EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
+PATCHFILES += 0001-remove-old-solaris-fix.patch
+PATCHFILES += 0002-hardcode-missing-constant.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-perl
 CONFIGURE_ARGS += --with-terminfo=/opt/csw/share/terminfo
+EXTRA_LDFLAGS  = -Wl,-zignore -Wl,-zcombreloc -Wl,-Bdirect
+EXTRA_LINKER_FLAGS = -lrt
 
 PACKAGES = CSWrxvt-unicode
 SPKG_DESC_CSWrxvt-unicode = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWstartupnotif
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo
 CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo
 OBSOLETED_BY_CSWrxvt-unicode = CSWurxvt= /opt/csw/X11/lib
