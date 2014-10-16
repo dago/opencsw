@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = meld
-VERSION = 1.8.3
+VERSION = 1.8.6
 GARTYPE = v2
 
 DESCRIPTION = Visual diff and merge tool
