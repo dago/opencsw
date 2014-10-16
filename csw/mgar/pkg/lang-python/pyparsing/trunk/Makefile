@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = pyparsing
-VERSION = 2.0.1
+VERSION = 2.0.3
 CATEGORIES = python
 GARTYPE = v2
 
@@ -13,7 +13,7 @@ define BLURB
   code uses to construct the grammar directly in Python code.
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://pypi.python.org/packages/source/p/pyparsing/
 DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = LICENSE
 TEST_SCRIPTS =
