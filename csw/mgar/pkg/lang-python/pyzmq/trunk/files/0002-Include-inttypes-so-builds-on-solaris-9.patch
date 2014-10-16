@@ -1,14 +1,14 @@
-From 64e5cb62c43bedf150987ee308ebbad432860a54 Mon Sep 17 00:00:00 2001
-From: Romeo Theriault <romeotheriault@opencsw.org>
-Date: Tue, 10 Jul 2012 05:35:53 +0200
+From 00ff60e45eb1c49011e880b6566528ddf14488a8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 16 Oct 2014 10:26:03 +0200
 Subject: [PATCH] Include inttypes so builds on solaris 9
 
 ---
- zmq/utils/zmq_compat.h |    4 ++++
+ zmq/utils/zmq_compat.h | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/zmq/utils/zmq_compat.h b/zmq/utils/zmq_compat.h
-index 388a569..44953fa 100644
+index 50a8ea8..39ac5b3 100644
 --- a/zmq/utils/zmq_compat.h
 +++ b/zmq/utils/zmq_compat.h
 @@ -7,6 +7,10 @@
@@ -23,5 +23,5 @@ index 388a569..44953fa 100644
  #include <stdint.h>
  #define pyzmq_int64_t int64_t
 -- 
-1.7.10.3
+2.0.3
 
