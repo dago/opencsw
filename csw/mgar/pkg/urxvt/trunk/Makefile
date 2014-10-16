@@ -23,6 +23,12 @@ DISTFILES += urxvt-wrapper
 VENDOR_URL = http://software.schmorp.de/pkg/rxvt-unicode.html
 GARCOMPILER = GNU
 
+PACKAGES = CSWrxvt-unicode CSWterminfo-rxvt-unicode
+SPKG_DESC_CSWrxvt-unicode = $(DESCRIPTION)
+SPKG_DESC_CSWterminfo-rxvt-unicode = Entries for rxvt-unicode in terminal information database
+ARCHALL_CSWterminfo-rxvt-unicode = 1
+PKGFILES_CSWterminfo-rxvt-unicode = $(datadir)/terminfo.*
+
 EXTRA_INC = /opt/csw/X11/include
 EXTRA_LIB = /opt/csw/X11/lib
 EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
@@ -34,8 +40,7 @@ CONFIGURE_ARGS += --with-terminfo=/opt/csw/share/terminfo
 EXTRA_LDFLAGS  = -Wl,-zignore -Wl,-zcombreloc -Wl,-Bdirect
 EXTRA_LINKER_FLAGS = -lrt
 
-PACKAGES = CSWrxvt-unicode
-SPKG_DESC_CSWrxvt-unicode = $(DESCRIPTION)
+BUILD_DEP_PKGS += CSWncurses
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibxft2
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibxrender
@@ -55,4 +60,5 @@ post-install-modulated:
 	  mv $(DESTDIR)$(bindir)/$${b} $(DESTDIR)$(libexecdir); \
 	  ln -s ../libexec/urxvt-wrapper $(DESTDIR)$(bindir)/$${b}; \
 	done
-	ginstall -m 755 $(FILEDIR)/urxvt-wrapper $(DESTDIR)$(libexecdir
+	ginstall -m 755 $(FILEDIR)/urxvt-wrapper $(DESTD/opt/csw/bin/tic -x -s -o $(DESTDIR)$(datadir)/terminfo $(WORKSRC)/doc/etc/rxvt-unicode.terminfo
+	@$(MAKECOOKIE)
