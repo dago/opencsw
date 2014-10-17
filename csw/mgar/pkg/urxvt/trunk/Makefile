@@ -49,7 +49,9 @@ RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWstartupnotif
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo-rxvt-unicode
 CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo
+CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo-rxvt-unicode
 OBSOLETED_BY_CSWrxvt-unicode = CSWurxvt= /opt/csw/X11/lib
 
 include gar/category.mk
