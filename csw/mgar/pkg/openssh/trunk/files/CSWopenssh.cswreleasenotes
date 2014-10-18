@@ -1,9 +1,10 @@
 openssh (6.7p1,REV=2014.10.11) unstable
 
   * New upstream release.
-  * Updated the GSSAPI key exchange patch
+  * Updated the GSSAPI key exchange patch.
   * Removed ed25519 unit test while waiting for a related bug
-    to be fixed
+    to be fixed.
+  * Restored tcp wrapper support which was dropped by upstream.
 
  -- Yann Rouillard <yann@opencsw.org>  Sat, 11 Oct 2014 12:05:40 +0200
 
