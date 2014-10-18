@@ -1,0 +1,21 @@
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sat, 18 Oct 2014 18:00:07 +0200
+Subject: [PATCH] Remove ed25519 from unit tests
+
+---
+ regress/unittests/keytype.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/regress/keytype.sh b/regress/keytype.sh
+index 9752acb..dd310d5 100644
+--- a/regress/keytype.sh
++++ b/regress/keytype.sh
+@@ -12,7 +12,7 @@ cp $OBJ/sshd_proxy $OBJ/sshd_proxy_bak
+ cp $OBJ/ssh_proxy $OBJ/ssh_proxy_bak
+
+ # Traditional and builtin key types.
+-ktypes="dsa-1024 rsa-2048 rsa-3072 ed25519-512"
++ktypes="dsa-1024 rsa-2048 rsa-3072"
+ # Types not present in all OpenSSL versions.
+ for i in `$SSH -Q key`; do
+        case "$i" in
