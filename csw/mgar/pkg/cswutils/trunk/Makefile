@@ -39,6 +39,8 @@ RUNTIME_DEP_PKGS += CSWpy-pyelftools
 RUNTIME_DEP_PKGS += CSWpy-progressbar
 RUNTIME_DEP_PKGS += CSWpy-sqlobject
 RUNTIME_DEP_PKGS += CSWpy-curl
+RUNTIME_DEP_PKGS += CSWpy-cjson
+RUNTIME_DEP_PKGS += CSWpy-dateutil
 RUNTIME_DEP_PKGS += CSWpython
 
 CONFIGURE_SCRIPTS =
