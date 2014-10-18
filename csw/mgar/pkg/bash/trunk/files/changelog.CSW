@@ -1,3 +1,11 @@
+bash (4.3.30,REV=2014.10.18) unstable
+
+  * Added bash patch bash43-026 to bash43-030
+  * Removed security patches bash-4.2-cve-2014-7169-{0,1,2}.patch 
+    that were replaced with upstream patches.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 18 Oct 2014 14:32:25 +0200
+
 bash (4.3.25,REV=2014.09.26) unstable
 
   * Added patches bash-4.2-cve-2014-7169-{0,1,2}.patch to fix CVE-2014-7169
