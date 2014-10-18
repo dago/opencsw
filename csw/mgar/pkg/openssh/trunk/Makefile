@@ -155,7 +155,10 @@ PATCHFILES += 0005-renaThe regress/Makefile uses "id -un" to retrieve the id of 
 PATCHFILES += fix-user-id-retrieval-for-solaris 0005-rena Disable unittest fuzz ed25519 sig as it doesn't work correctly under Solaris
 #  see: https://bugzilla.mindrot.org/show_bug.cgi?id=2271
 PATCHFILES += disable-unittest-fuzz-ed25519-sig 0005-r# Same thing for ed25519 key test, see: https://bugzilla.mindrot.org/show_bug.cgi?id=2297
-PATCHFILES += remote-unittest-key-ed25519 0005-rename-pidfile.patch
+PATCHFILES += remote-unittest-key-ed25519 0005-renaKeep tcp wrapper support which was dropped from openssh since 6.7, 
+# so that ours users are not caught by surprise
+# Patch taken from Debian
+PATCHFILES += restore-tcp-wrappers 0005-rename-pidfile.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
