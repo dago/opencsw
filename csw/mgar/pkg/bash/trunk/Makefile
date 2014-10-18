@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash
-VERSION = 4.3.25
+VERSION = 4.3.30
 GARTYPE = v2
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -73,12 +73,6 @@ PATCHFILES += use_system_bashrc_and_logout.patch
 
 # add /opt/csw/bin in the hardcoded paths used for auto-selecting the EDITOR variable
 PATCHFILES += 0001-bashbug-editor-path.patch
-
-# Serie of patches taken from fedora to fix CVE-2014-7169 
-# see https://access.redhat.com/articles/1200223 for impacts of the patch
-PATCHFILES += bash-4.2-cve-2014-7169-0.patch
-PATCHFILES += bash-4.2-cve-2014-7169-1.patch
-PATCHFILES += bash-4.2-cve-2014-7169-2.patch
 
 LICENSE = COPYING
 
