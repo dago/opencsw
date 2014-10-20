@@ -1,0 +1,25 @@
+From 5ef2501d3be90d74c5711c96b7590505ab9aab99 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Mon, 20 Oct 2014 16:18:42 +0200
+Subject: [PATCH] avoid bashism in install
+
+---
+ src/Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index c51d3f7..5821ec1 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -107,7 +107,7 @@ install-perl:
+ @IF_PERL@	$(INSTALL_DATA) $(srcdir)/urxvt.pm $(DESTDIR)$(libdir)/urxvt/urxvt.pm
+ @IF_PERL@	for ext in $(srcdir)/perl/*; do \
+ @IF_PERL@	   test -f "$$ext" || continue; \
+-@IF_PERL@	   base="$${ext##*/}"; \
++@IF_PERL@	   base="`basename $${ext}`"; \
+ @IF_PERL@	   $(INSTALL_DATA) "$$ext" $(DESTDIR)$(libdir)/urxvt/perl/; \
+ @IF_PERL@	   < "$$ext" \
+ @IF_PERL@	   $(PERL) -MPod::Man -e '(new Pod::Man name => "'urxvt-$$base'", $(PODOPTS))->parse_from_file' \
+-- 
+2.0.3
+

@@ -1,0 +1,36 @@
+From 6536c5cd044cbb5c79c958072dc1566a4efed05e Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Mon, 20 Oct 2014 15:35:43 +0200
+Subject: [PATCH 5/5] set options for perl
+
+---
+ configure | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 46fca6b..811ff53 100755
+--- a/configure
++++ b/configure
+@@ -7845,8 +7845,8 @@ $as_echo_n "checking for $PERL suitability... " >&6; }
+ 
+      save_CXXFLAGS="$CXXFLAGS"
+      save_LIBS="$LIBS"
+-     CXXFLAGS="$CXXFLAGS `$PERL -MExtUtils::Embed -e ccopts`"
+-     LIBS="$LIBS `$PERL -MExtUtils::Embed -e ldopts`"
++     CXXFLAGS="$CXXFLAGS `$PERL -MExtUtils::Embed -e ccopts|sed 's/-xarch=sparc//'` -I/opt/csw/lib/perl/5.10.1/CORE"
++     LIBS="$LIBS `$PERL -MExtUtils::Embed -e ldopts|sed 's/-xarch=sparc//'`"
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -7882,7 +7882,7 @@ $as_echo "#define ENABLE_PERL 1" >>confdefs.h
+ 
+         IF_PERL=
+         PERL_O=rxvtperl.o
+-        PERLFLAGS="`$PERL -MExtUtils::Embed -e ccopts`"
++        PERLFLAGS="`$PERL -MExtUtils::Embed -e ccopts|sed 's/-xarch=sparc//'` -I/opt/csw/lib/perl/5.10.1/CORE"
+         PERLLIB="`$PERL -MExtUtils::Embed -e ldopts`"
+         PERLPRIVLIBEXP="`$PERL -MConfig -e 'print $Config{privlibexp}'`"
+      else
+-- 
+2.0.3
+
