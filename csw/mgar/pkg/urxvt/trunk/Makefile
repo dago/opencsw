@@ -34,8 +34,11 @@ EXTRA_LIB = /opt/csw/X11/lib
 EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
 PATCHFILES += 0001-remove-old-solaris-fix.patch
 PATCHFILES += 0002-hardcode-missing-constant.patch
+PATCHFILES += 0003-handle-old-X-render.patch
+PATCHFILES += 0004-set-options-for-perl.patch
+PATCHFILES += 0005-avoid-bashism-in-install.patch
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-perl
+CONFIGURE_ARGS += --enable-perl PERL=/opt/csw/bin/perl
 CONFIGURE_ARGS += --with-terminfo=/opt/csw/share/terminfo
 EXTRA_LDFLAGS  = -Wl,-zignore -Wl,-zcombreloc -Wl,-Bdirect
 EXTRA_LINKER_FLAGS = -lrt
@@ -50,6 +53,7 @@ RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo-rxvt-unicode
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWperl
 CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo
 CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo-rxvt-unicode
 OBSOLETED_BY_CSWrxvt-unicode = CSWurxvt= /opt/csw/X11/lib

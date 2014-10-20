@@ -1,0 +1,34 @@
+From 54e91b730926bce0c42bd8e4299370a130980cd5 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Mon, 20 Oct 2014 14:57:15 +0200
+Subject: [PATCH] handle old X render
+
+---
+ src/rxvtperl.xs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/rxvtperl.xs b/src/rxvtperl.xs
+index 92ad48c..6b8e10c 100644
+--- a/src/rxvtperl.xs
++++ b/src/rxvtperl.xs
+@@ -968,6 +968,8 @@ BOOT:
+     const_iv (PictOpConjointAtopReverse),
+     const_iv (PictOpConjointXor),
+     // 0.11+
++#endif
++#   if 0
+     const_iv (PictOpMultiply),
+     const_iv (PictOpScreen),
+     const_iv (PictOpOverlay),
+@@ -983,8 +985,6 @@ BOOT:
+     const_iv (PictOpHSLSaturation),
+     const_iv (PictOpHSLColor),
+     const_iv (PictOpHSLLuminosity),
+-#endif
+-#   if 0
+     const_iv (XIMForwardChar),
+     const_iv (XIMBackwardChar),
+     const_iv (XIMForwardWord),
+-- 
+2.0.3
+
