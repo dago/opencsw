@@ -44,7 +44,6 @@ EXTRA_LDFLAGS  = -Wl,-zignore -Wl,-zcombreloc -Wl,-Bdirect
 EXTRA_LINKER_FLAGS = -lrt
 
 BUILD_DEP_PKGS += CSWncurses
-RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibxft2
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibgobject2-0-0
