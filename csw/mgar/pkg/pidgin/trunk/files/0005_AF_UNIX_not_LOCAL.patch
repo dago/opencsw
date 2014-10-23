@@ -1,0 +1,51 @@
+index 0e362b2..04db360 100644
+--- a/libpurple/protocols/gg/lib/libgadu.c
++++ b/libpurple/protocols/gg/lib/libgadu.c
+@@ -197,7 +197,7 @@ int gg_get_dummy_fd(struct gg_session *sess)
+ 	if (p->dummyfds_created)
+ 		return p->dummyfds[0];
+ 
+-	if (socketpair(AF_LOCAL, SOCK_STREAM, 0, p->dummyfds) == -1) {
++	if (socketpair(AF_UNIX, SOCK_STREAM, 0, p->dummyfds) == -1) {
+ 		gg_debug(GG_DEBUG_MISC | GG_DEBUG_ERROR, "// gg_get_dummy_fd() "
+ 			"unable to create pipes (errno=%d, %s)\n",
+ 			errno, strerror(errno));
+@@ -2868,7 +2868,7 @@ static void gg_socket_manager_error(struct gg_session *sess, enum gg_failure_t f
+ 
+ 	p->socket_failure = failure;
+ 
+-	if (socketpair(AF_LOCAL, SOCK_STREAM, 0, pipes) == -1) {
++	if (socketpair(AF_UNIX, SOCK_STREAM, 0, pipes) == -1) {
+ 		gg_debug(GG_DEBUG_MISC, "// gg_socket_manager_error() unable to"
+ 			" create pipes (errno=%d, %s)\n", errno,
+ 			strerror(errno));
+index d07dab0..67b3360 100644
+--- a/libpurple/protocols/gg/lib/resolver.c
++++ b/libpurple/protocols/gg/lib/resolver.c
+@@ -407,7 +407,7 @@ static int gg_resolver_fork_start(int *fd, void **priv_data, const char *hostnam
+ 		return -1;
+ 	}
+ 
+-	if (socketpair(AF_LOCAL, SOCK_STREAM, 0, pipes) == -1) {
++	if (socketpair(AF_UNIX, SOCK_STREAM, 0, pipes) == -1) {
+ 		gg_debug(GG_DEBUG_MISC, "// gg_resolver_fork_start() unable "
+ 			"to create pipes (errno=%d, %s)\n",
+ 			errno, strerror(errno));
+@@ -578,7 +578,7 @@ static int gg_resolver_pthread_start(int *fd, void **priv_data, const char *host
+ 		return -1;
+ 	}
+ 
+-	if (socketpair(AF_LOCAL, SOCK_STREAM, 0, pipes) == -1) {
++	if (socketpair(AF_UNIX, SOCK_STREAM, 0, pipes) == -1) {
+ 		gg_debug(GG_DEBUG_MISC, "// gg_resolver_pthread_start() unable "
+ 			"to create pipes (errno=%d, %s)\n",
+ 			errno, strerror(errno));
+@@ -706,7 +706,7 @@ static int gg_resolver_win32_start(int *fd, void **priv_data, const char *hostna
+ 	data->orphan = 0;
+ 	data->finished = 0;
+ 
+-	if (socketpair(AF_LOCAL, SOCK_STREAM, 0, pipes) == -1) {
++	if (socketpair(AF_UNIX, SOCK_STREAM, 0, pipes) == -1) {
+ 		gg_debug(GG_DEBUG_MISC, "// gg_resolver_win32_start() unable to "
+ 			"create pipes (errno=%d, %s)\n",
+ 			errno, strerror(errno));
