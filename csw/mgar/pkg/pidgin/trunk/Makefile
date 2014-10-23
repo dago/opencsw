@@ -64,7 +64,6 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWtcl
 RUNTIME_DEP_PKGS_CSWpidgin += CSWtk
 RUNTIME_DEP_PKGS_CSWpidgin += CSWdbus
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgdk-x11-2-0-0
@@ -74,7 +73,7 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpanelw5
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilc1-1-2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilcclient1-1-3
@@ -83,6 +82,7 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
 
 # Apparently needed for icons
 RUNTIME_DEP_PKGS_CSWpidgin += CSWgtk2
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWgtk2
 
 ###
 # due to the ld bug
