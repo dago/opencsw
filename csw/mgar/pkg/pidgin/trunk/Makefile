@@ -1,7 +1,7 @@
 # $Id$
 
 NAME    = pidgin
-VERSION = 2.10.9
+VERSION = 2.10.10
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -40,8 +40,8 @@ CONFIGURE_ARGS += --enable-cyrus-sasl
 # For msgfmt, msgmerge, xgettext and gettext to be used from GNU
 CONFIGURE_ENV_PATH = $(prefix)/gnu:$(PATH)
 
-EXTRA_CFLAGS  = -xc99 -D_XPG6 -D__EXTENSIONS__
-EXTRA_LD_OPTIONS = -z nolazyload
+EXTRA_CFLAGS  = -xc99 -D_XPG6 -D__EXTENSIONS__ -D__unix__
+#EXTRA_LD_OPTIONS = -z nolazyload
 
 NCURSES_HEADERS = /opt/csw/include/ncursesw
 EXTRA_CONFIGURE_EXPORTS += CFLAGS NCURSES_HEADERS
@@ -120,7 +120,7 @@ BUILD_DEP_PKGS += CSWsasl-devdBUILD_DEP_PKGS += CSWlibpango-devdBUILD_DEP_PKGS +
 PATCHFILES += patch-pidgin-Makefile.in
 PATCHFILES += patch-pidgin-plugin.c
 PATCHFILES += patch-pidgin-plugins-perl-common-Makefile.PL.in
-PATCHFILES += patch-libpurple-plugins-perl-commPATCHFILES += 0004-irc-with-sasl.patchmoCHECKPKG_OVERRIDES_CSWpidgin += file-with-bad-content|/usr/local|root/opt/csw/lib/pidgin/musicmessaging.so 
+PATCHFILES += patch-libpurple-plugins-perl-commPATCHFILES += 0004-irc-with-sasl.patchmPATCHFILES += 0005_AF_UNIX_not_LOCAL.patchmoCHECKPKG_OVERRIDES_CSWpidgin += file-with-bad-content|/usr/local|root/opt/csw/lib/pidgin/musicmessaging.so 
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libgnt.so
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libpurple-client.so
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libpurple.so
