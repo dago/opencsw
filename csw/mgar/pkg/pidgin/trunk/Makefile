@@ -128,8 +128,8 @@ CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/purple-2/liboscar.so
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/purple-2/libymsg.so
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libgnt.so.0.8.10|soname=libgnt.so.0|pkgname=CSWpidgin|expected=CSWlibgnt0
-CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpurple-client.so.0.10.9|soname=libpurple-client.so.0|pkgname=CSWpidgin|expected=CSWlibpurple-client0
-CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpurple.so.0.10.9|soname=libpurple.so.0|pkgname=CSWpidgin|expected=CSWlibpurple0
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpurple-client.so.0.10.10|soname=libpurple-client.so.0|pkgname=CSWpidgin|expected=CSWlibpurple-client0
+CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpurple.so.0.10.10|soname=libpurple.so.0|pkgname=CSWpidgin|expected=CSWlibpurple0
 
 CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWaspell
 CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWtcl
