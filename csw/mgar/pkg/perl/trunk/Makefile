@@ -12,6 +12,7 @@ define BLURB
   expression matching and replacement, a dataflow mechanism to improve security
   with setuid scripts and is extendable via modules that can interface to C
   libraries.
+  This package is built with gcc.
 endef
 
 #MASTER_SITES = manual://
@@ -22,9 +23,9 @@ VENDOR_URL = http://www.perl.org
 #DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
-PACKAGES               = CSWperl
-PKG_DESC_CSWperl	       = $(DESCRIPTION)
-SPKG_DESC_CSWperl	       = $(DESCRIPTION)
+PACKAGES               = CSWperlgcc
+PKG_DESC_CSWperlgcc	       = $(DESCRIPTION)
+SPKG_DESC_CSWperlgcc	       = $(DESCRIPTION)
 LICENSE = Copying
 
 # GCC build (Sun Studio build has been fixed)
@@ -39,36 +40,33 @@ IGNORE_DESTDIR = 1
 # a .git directory will cause failing upstream author tests (the source will be considered blead)
 NOGITPATCH = 1
 
+# Let put perl in a separate dir as a migration strategy
+prefix = $(BUILD_PREFIX)/perlgcc
+
 # Depends
-RUNTIME_DEP_PKGS_CSWperl += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWperl += CSWlibssp0
-RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm4
-OBSOLETED_BY_CSWperl += CSWperldoc CSWpm-parse-cpan-meta CSWpm-cpan-meta CSWpm-cpan-meta-requirements CSWpm-perl-ostype CSWpm-cpan-meta-yaml CSWpm-module-build CSWpm-json-pp CSWpm-module-metadata CSWpm-experimental
-#OBSOLETED_BY_CSWperl += CSWpm-module-build 
-#OBSOLETED_BY_CSWperl += CSWpm-json-pp 
-#OBSOLETED_BY_CSWperl += CSWpm-cpan-meta
-#OBSOLETED_BY_CSWperl += CSWpm-parse-cpan-meta
-#OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-yaml
-#OBSOLETED_BY_CSWperl += CSWpm-module-metadata
+RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibssp0
+#RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgdbm4
+#OBSOLETED_BY_CSWperlgcc += CSWperlgccdoc CSWpm-parse-cpan-meta CSWpm-cpan-meta CSWpm-cpan-meta-requirements CSWpm-perl-ostype CSWpm-cpan-meta-yaml CSWpm-module-build CSWpm-json-pp CSWpm-module-metadata CSWpm-experimental
 #CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
-#OBSOLETED_BY_CSWperl += CSWpm-cpan-meta-requirements
-#OBSOLETED_BY_CSWperl += CSWpm-perl-ostype
-#INCOMPATIBLE_PKGS = CSWperldoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
-#CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
-#CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
+#OBSOLETED_BY_CSWperlgcc += CSWpm-cpan-meta-requirements
+#OBSOLETED_BY_CSWperlgcc += CSWpm-perl-ostype
+#INCOMPATIBLE_PKGS = CSWperlgccdoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
+#CHECKPKG_OVERRIDES_CSWperlgcc += file-with-bad-content
+#CHECKPKG_OVERRIDES_CSWperlgccdoc += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWpm-module-metadata += file-with-bad-content
-#CHECKPKG_OVERRIDES_CSWpm-parse-cpan-meta += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-cpan-meta += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-perl-ostype += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-cpan-meta-yaml += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-module-build += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-json-pp += surplus-dependency|CSWperl
-#CHECKPKG_OVERRIDES_CSWpm-module-metadata += surplus-dependency|CSWperl
+#CHECKPKG_OVERRIDES_CSWpm-parse-cpan-meta += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-cpan-meta += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-perl-ostype += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-cpan-meta-yaml += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-module-build += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-json-pp += surplus-dependency|CSWperlgcc
+#CHECKPKG_OVERRIDES_CSWpm-module-metadata += surplus-dependency|CSWperlgcc
 
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
-CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWperl += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
+CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
