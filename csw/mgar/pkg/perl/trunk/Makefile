@@ -46,13 +46,15 @@ prefix = $(BUILD_PREFIX)/perlgcc
 # Depends
 RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibssp0
-#RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgdbm4
+RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgdbm4
+CHECKPKG_OVERRIDES_CSWperlgcc += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWperlgcc += 64-bit-binaries-missing
 #OBSOLETED_BY_CSWperlgcc += CSWperlgccdoc CSWpm-parse-cpan-meta CSWpm-cpan-meta CSWpm-cpan-meta-requirements CSWpm-perl-ostype CSWpm-cpan-meta-yaml CSWpm-module-build CSWpm-json-pp CSWpm-module-metadata CSWpm-experimental
 #CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
 #OBSOLETED_BY_CSWperlgcc += CSWpm-cpan-meta-requirements
 #OBSOLETED_BY_CSWperlgcc += CSWpm-perl-ostype
 #INCOMPATIBLE_PKGS = CSWperlgccdoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
-#CHECKPKG_OVERRIDES_CSWperlgcc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWperlgcc += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWperlgccdoc += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWpm-module-metadata += file-with-bad-content
 #CHECKPKG_OVERRIDES_CSWpm-parse-cpan-meta += surplus-dependency|CSWperlgcc
@@ -65,8 +67,8 @@ RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibssp0
 #CHECKPKG_OVERRIDES_CSWpm-module-metadata += surplus-dependency|CSWperlgcc
 
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
-CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
-CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
+#CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
+#CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libssp.so.0
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
