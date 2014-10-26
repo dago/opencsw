@@ -18,9 +18,6 @@ endef
 #MASTER_SITES = manual://
 MASTER_SITES = http://www.cpan.org/src/5.0/
 VENDOR_URL = http://www.perl.org
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
-# The source has been patched to fix a failing patch (Solaris only). The patch was discussed with upstream (p5p) and committed to BLEAD. The patch is in the files directory.
-#DISTFILES  = $(NAME)-$(VERSION)-patched.tar.gz
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGING_PLATFORMS += solaris10-i386 solaris10-sparc
 PACKAGES               = CSWperlgcc
@@ -42,6 +39,7 @@ NOGITPATCH = 1
 
 # Let put perl in a separate dir as a migration strategy
 prefix = $(BUILD_PREFIX)/perlgcc
+EXTRA_RUNPATH_DIRS = $(libdir)
 
 # Depends
 RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgcc-s1
@@ -49,22 +47,7 @@ RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibssp0
 RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgdbm4
 CHECKPKG_OVERRIDES_CSWperlgcc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWperlgcc += 64-bit-binaries-missing
-#OBSOLETED_BY_CSWperlgcc += CSWperlgccdoc CSWpm-parse-cpan-meta CSWpm-cpan-meta CSWpm-cpan-meta-requirements CSWpm-perl-ostype CSWpm-cpan-meta-yaml CSWpm-module-build CSWpm-json-pp CSWpm-module-metadata CSWpm-experimental
-#CATALOGNAME_CSWpm-cpan-meta-requirements = pm_cpan_meta_reqs_stub
-#OBSOLETED_BY_CSWperlgcc += CSWpm-cpan-meta-requirements
-#OBSOLETED_BY_CSWperlgcc += CSWpm-perl-ostype
-#INCOMPATIBLE_PKGS = CSWperlgccdoc CSWpm-module-build CSWpm-json-pp CSWpm-cpan-meta CSWpm-cpan-meta-yaml CSWpm-module-metadata CSWpm-cpan-meta-requirements CSWpm-perl-ostype 
 CHECKPKG_OVERRIDES_CSWperlgcc += file-with-bad-content
-#CHECKPKG_OVERRIDES_CSWperlgccdoc += file-with-bad-content
-#CHECKPKG_OVERRIDES_CSWpm-module-metadata += file-with-bad-content
-#CHECKPKG_OVERRIDES_CSWpm-parse-cpan-meta += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-cpan-meta += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-cpan-meta-requirements += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-perl-ostype += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-cpan-meta-yaml += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-module-build += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-json-pp += surplus-dependency|CSWperlgcc
-#CHECKPKG_OVERRIDES_CSWpm-module-metadata += surplus-dependency|CSWperlgcc
 
 # Overridden because "/usr/ccs/bin/elfdump -y <file>" returns output
 #CHECKPKG_OVERRIDES_CSWperlgcc += no-direct-binding|/opt/csw/lib/perl/5.18/CORE/libperl.so|is|not|directly|bound|to|soname|libgcc_s.so.1
@@ -125,7 +108,6 @@ configure-perl:
 build-perl: BUILD_EXPORTS = LD_OPTIONS
 build-perl:
 	@echo " ==> Running make in $*"
-#	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) perldtrace.h && $(BUILD_ENV) $(MAKE) $(MAKE_OPT)
 	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) $(MAKE_OPT)
 	@$(MAKECOOKIE)
 
