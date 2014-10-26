@@ -1,6 +1,6 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.5.9-rc
+VERSION = 0.2.5.10
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
@@ -33,7 +33,7 @@ PRESERVECONF += $(sysconfdir)/tor/tor-tsocks.conf
 PRESERVECONF += $(sysconfdir)/tor/torrc
 
 MIGRATE_FILES += tor/tor-tsocks.conf
-MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILES += tor/torrc
+MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILUSERGROUP = /etc/opt/csw/pkg/CSWtor/cswusergroupILES += tor/torrc
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -47,5 +47,10 @@ post-install-modulated:
 	# Copy README.CSW to docs
 	ginstall -m 444 $(FILEDIR)/README.CSW \
 		$(DESTDIR)/opt/csw/share/doc/tor/
+
+	# Copy cswusergroup
+	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWtor
+	ginstall -m 444 $(FILEDIR)/cswusergroup \
+		$(DESTDIR)/etc/opt/csw/pkg/CSWtor/
 
 	@$(MAKECOOKIE)
