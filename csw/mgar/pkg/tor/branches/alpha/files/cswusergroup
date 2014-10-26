@@ -1,1 +1,1 @@
-tor:tor:The Onion Router:/tmp:/bin/false:::NP
+tor:tor:The Onion Router:/var/opt/csw/tor:/bin/false:::NP
