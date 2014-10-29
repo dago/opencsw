@@ -10,6 +10,8 @@ DESCRIPTION = ANSI color to HTML converter
 MASTER_SITES = https://github.com/theZiz/aha/archive/
 DISTFILES  = $(VERSION).tar.gz
 
+GARCOMPILER = GNU
+
 CONFIGURE_SCRIPTS =
 
 # There is no testsuite
