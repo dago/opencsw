@@ -1,7 +1,8 @@
 # $Id$
 
 NAME = gmp
-VERSION = 5.1.3
+VERSION = 6.0.0
+SUBVERSION = a
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -20,15 +21,15 @@ define BLURB
   operations, since GMP in many cases has asymptotically faster algorithms.
 endef
 
-MASTER_SITES = $(GNU_MIRRORDISTNAME).tar.bz2
+MASTER_SITES = $(GNU_MIRRORDISTNAME)$(SUBVERSION).tar.lz
 
 SPKG_SOURCEURL = http://gmplib.org/
 
-PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
+#PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc
 BUILD64_LIBS_ONLY = 1
 
-PATCHFILES += 0001-Add-missing-cmath-includes.patch
-PATCHFILES += 0002-Work-around-a-compilation-issue.patchD64_LIBS_ONLY = 1
+#PATCHFILES += 0001-Add-missing-cmath-includes.patch
+#PATCHFILES += 0002-Work-around-a-compilation-issue.patchD64_LIBS_ONLY = 1
 
 # Disabling sparcv8plus with GCC
 # /var/tmp//ccPKyHnL.s: Assembler messages:
