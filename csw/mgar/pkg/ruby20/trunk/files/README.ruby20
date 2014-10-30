@@ -1,0 +1,6 @@
+If you have an older version of ruby installed you have to enable
+ruby20 via alternatives(8):
+
+  /opt/csw/sbin/alternatives --config ruby
+
+See http://wiki.opencsw.org/alternatives-package for further details.
