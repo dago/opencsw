@@ -1,0 +1,26 @@
+From 6a3069cba087e39c479014fb26151e48ab2589be Mon Sep 17 00:00:00 2001
+From: Toni Schmidbauer <toni@stderr.at>
+Date: Mon, 27 Oct 2014 17:15:58 +0100
+Subject: [PATCH] modify LDFLAGS to add /opt/csw/lib to the runtime linker
+ search path
+
+---
+ ext/augeas/extconf.rb | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ext/augeas/extconf.rb b/ext/augeas/extconf.rb
+index 00675c6..a4443ec 100644
+--- a/ext/augeas/extconf.rb
++++ b/ext/augeas/extconf.rb
+@@ -21,6 +21,8 @@
+ ##
+ require 'mkmf'
+ 
++$LDFLAGS << " -R/opt/csw/lib"
++
+ extension_name = '_augeas'
+ 
+ unless pkg_config("augeas")
+-- 
+1.8.4.1
+

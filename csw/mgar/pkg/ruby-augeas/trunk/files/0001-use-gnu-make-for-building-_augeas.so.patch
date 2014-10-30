@@ -1,0 +1,25 @@
+From 8772ffafc540776bfa35fd7759334e6ea699bb59 Mon Sep 17 00:00:00 2001
+From: Toni Schmidbauer <toni@stderr.at>
+Date: Mon, 27 Oct 2014 16:48:43 +0100
+Subject: [PATCH] use gnu make for building _augeas.so
+
+---
+ Rakefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Rakefile b/Rakefile
+index 47361ae..6d77289 100644
+--- a/Rakefile
++++ b/Rakefile
+@@ -43,7 +43,7 @@ file MAKEFILE => EXT_CONF do |t|
+ end
+ file AUGEAS_MODULE => [ MAKEFILE, AUGEAS_SRC ] do |t|
+     Dir::chdir(File::dirname(EXT_CONF)) do
+-         unless sh "make"
++         unless sh "gmake"
+              $stderr.puts "make failed"
+              break
+          end
+-- 
+1.8.4.1
+
