@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.7.1
+VERSION = 1.7.6
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -24,7 +24,7 @@ DISTFILES      = $(NAME)-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://puppetlabs.com/
 LICENSE        = LICENSE
 
-RUNTIME_DEP_PKGS = CSWruby18
+RUNTIME_20P_PKGS = CSWruby18
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 
 ARCHALL = 1
@@ -40,5 +40,7 @@ CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/li
 include gar/category.mk
 
 install-facter:
-	(cd $(WORKDIR)/$(DISTNAME); ruby install.rb --destdir=$(DESTDIR))
-	gunzip $(DESTDIR)/$(mandir)
+	(cd $(WORKDIR)2.0 install.rb --destdir=$(DESTDIR))
+	# we depend on ruby20 so fix the shebang
+	find $(DESTDIR)$(bindir) -type f -depth -print | xargs -n 1 gsed -i -e '1 s|ruby$$|ruby2.0|g'
+	gunzip $(DESTDIR)/$(mandir)/man8/facter.8.gz
