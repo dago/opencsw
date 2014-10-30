@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = puppet3
-VERSION = 3.4.1
+VERSION = 3.6.2
 GARTYPE = v2
 
 define BLURB
@@ -44,12 +44,14 @@ INCOMPATIBLE_PKGS += CSWpuppetmaster
 SPKG_DESC_CSWpuppet3       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster3 = System configuration management tool, server
 
-RUNTIME_DEP_PKGS                  = CSWfacter
-RUNTIME_DEP_PKGS                  += CSWruby18
-RUNTIME_DEP_PKGS				  += CSWrubyaugeas
-RUNTIME_DEP_PKGS_CSWpuppetmaster3 += CSWpuppet3
-RUNTIME_DEP_PKGS_CSWpuppetmaster3 += CSWruby18
-BUILD_DEP_PKGS  				  = $(RUNTIME_DEP_PKGS)
+RUNTIME_DEP_PKGS = CSWfacter
+RUNTIME_DEP_PKGS += CSWrubyaugeas
+RUNTIME_DEP_PKGS += CSWruby20
+
+RUNTIME_DEP_PKGS_CSWpuppetmaster3 = $(RUNTIME_DEP_PKGS)
+RUNTIME_DEP_PKGS_CSWpuppetmaster3 += CSWhiera
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWpuppetmaster3)
 
 PKGFILES_CSWpuppetmaster3  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster3 += $(sbindir)/puppetmasterd
@@ -68,9 +70,8 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
-CHECKPKG_OVERRIDES_CSWpuppetmaster3  = surplus-dependency|CSWruby18
+CHECKPKG_OVERRIDES_CSWpuppetmaster3  = surplus-dependency|CSWruby20
 CHECKPKG_OVERRIDES_CSWpuppet3        = surplus-dependency|CSWfacter
-CHECKPKG_OVERRIDES_CSWpuppet3	    += surplus-dependency|CSWrubyaugeas
 CHECKPKG_OVERRIDES_CSWpuppet3       += missing-dependency|CSWpython
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
 # /usr/share and /usr/local.
@@ -102,11 +103,14 @@ install-puppet:
 	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)/etc$(prefix)/init.d
-	cd $(WORKSRC) && $(INSTALL_ENV) ruby install.rb \
+	cd $(WORKSRC) && ruby2.0 install.rb \
+		--destdir=$(DESTDIR) \
 		--configdir=$(sysconfdir)/puppet \
 		--bindir=$(bindir) \
 		--sbindir=$(sbindir) \
 		--full
+	# we depend on ruby20 so fix the shebang
+	find $(DESTDIR)$(bindir) -type f -depth -print | xargs -n 1 gsed -i -e '1 s|ruby$$|ruby2.0|g'
 	cd $(DESTDIR)$(mandir)/man8 && gunzip *
 	mv $(DESTDIR)$(sysconfdir)/puppet/auth.conf $(DESTDIR)$(sysconfdir)/puppet/auth.conf.example
 	ginstall -m 644 $(FILEDIR)/puppet.conf.example-CSW $(DESTDIR)$(sysconfdir)/puppet/puppet.conf.example
