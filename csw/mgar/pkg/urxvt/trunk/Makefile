@@ -53,6 +53,9 @@ RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWterminfo-rxvt-unicode
 RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWperl
+# libintl somehow only gets pulled in on sparc
+RUNTIME_DEP_PKGS_CSWrxvt-unicode += CSWlibintl8
+CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo
 CHECKPKG_OVERRIDES_CSWrxvt-unicode += surplus-dependency|CSWterminfo-rxvt-unicode
 OBSOLETED_BY_CSWrxvt-unicode = CSWurxvt= /opt/csw/X11/lib
