@@ -125,49 +125,15 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgs9
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcgraph6
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgvc6
 
-
-### 
+###
 # Needed for the Solaris ld bug
 ifeq ($(shell /usr/bin/uname -p),sparc)
 RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagickcore6q16hdri2 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibimath2-0-10
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcdt5
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfontconfig1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibilmthread2-0-10
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibiex2-0-10
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibhalf10
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgomp1
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibfftw3-3
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWliblcms2-2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWliblqr1-0
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibgomp1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibglib2-0-0
 endif
 ###
 
