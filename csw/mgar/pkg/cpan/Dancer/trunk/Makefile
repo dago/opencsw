@@ -1,8 +1,8 @@
 NAME = Dancer
-VERSION = 1.3080
+VERSION = 1.3132
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = XSAWYERX
+AUTHOR = YANICK
 
 DESCRIPTION = A minimal-effort oriented web application framework
 define BLURB
@@ -12,12 +12,15 @@ LICENSE = LICENSE
 
 PACKAGES += CSWpm-dancer
 CATALOGNAME_CSWpm-dancer = pm_dancer
+
 ARCHALL_CSWpm-dancer = 1
-RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-server-simple-psgi
-RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmuri
+
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-hash-merge-simple
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-body
-RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmmimetypes
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-server-simple-psgi
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-libwww-perl
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-uri
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmmimetypes
 
 include gar/category.mk
 
