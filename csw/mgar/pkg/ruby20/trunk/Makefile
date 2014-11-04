@@ -23,9 +23,36 @@ RUNTIME_DEP_PKGS += CSWlibtcl8-5
 RUNTIME_DEP_PKGS += CSWlibyaml0-2
 RUNTIME_DEP_PKGS += CSWlibncurses5
 RUNTIME_DEP_PKGS += CSWlibz1
+RUNTIME_DEP_PKGS += CSWlibgdbm4
+RUNTIME_DEP_PKGS += CSWlibreadline6
 
 # checkpkg just supports ruby18 and ruby19 
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibtcl8-5
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibtk8-5
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibyaml0-2
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibffi5
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibncurses5
+
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.0.so.2
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libruby2.0.0.so.2|soname=libruby2.0.0.so.2|pkgname=CSWruby20|expected=CSWlibruby2-0-0-2
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
+CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibgdbm4
+CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibreadline6
+
+CHECKPKG_OVERRIDES_CSWruby20-ri += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibtcl8-5
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibtk8-5
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibyaml0-2
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibffi5
+CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibncurses5
+
 
 # these files include a reference to /usr/local in comments
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
