@@ -114,15 +114,3 @@ install-custom:
 
 post-install:
 	find $(DESTDIR)$(bindir) -type f -depth -print | xargs -n 1 gsed -i -e '1 s|ruby$$|ruby2.0|g'
-#	cd $(DESTDIR)$(bindir) && test -f irb && mv -f irb irb$(SHORTVER)
-#	cd $(DESTDIR)$(bindir) && test -f erb && mv -f erb erb$(SHORTVER)
-#	cd $(DESTDIR)$(bindir) && test -f rdoc && mv -f rdoc rdoc$(SHORTVER)
-#	cd $(DESTDIR)$(bindir) && test -f ri && mv -f ri ri$(SHORTVER)
-#	cd $(DESTDIR)$(bindir) && test -f testrb && mv -f testrb testrb$(SHORTVER)
-#	cd $(DESTDIR)$(bindir) && test -f gem && mv -f gem gem$(SHORTVER)
-#	cd $(DESTDIR)$(bindir) && test -f rake && mv -f rake rake$(SHORTVER)
-#	cd $(DESTDIR)$(mandir)/man1 && test -f ruby.1 && mv -f ruby.1 ruby$(SHORTVER).1
-#	cd $(DESTDIR)$(mandir)/man1 && test -f erb.1 && mv -f erb.1 erb$(SHORTVER).1
-#	cd $(DESTDIR)$(mandir)/man1 && test -f irb.1 && mv -f irb.1 irb$(SHORTVER).1
-#	cd $(DESTDIR)$(mandir)/man1 && test -f rake.1 && mv -f rake.1 rake$(SHORTVER).1
-#	cd $(DESTDIR)$(mandir)/man1 && test -f ri.1 && mv -f ri.1 ri$(SHORTVER).1
