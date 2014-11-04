@@ -1,0 +1,39 @@
+From d272bb6dea02518e2da14619cb5df229dfac4706 Mon Sep 17 00:00:00 2001
+From: Toni Schmidbauer <toni@stderr.at>
+Date: Tue, 4 Nov 2014 21:01:35 +0100
+Subject: [PATCH] add csw paths to dln.c and dln_find.c
+
+---
+ dln.c      | 2 +-
+ dln_find.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dln.c b/dln.c
+index 9eb659c..4ab882f 100644
+--- a/dln.c
++++ b/dln.c
+@@ -157,7 +157,7 @@ static const char funcname_prefix[sizeof(FUNCNAME_PREFIX) - 1] = FUNCNAME_PREFIX
+ #endif
+ 
+ #ifndef DLN_DEFAULT_LIB_PATH
+-#  define DLN_DEFAULT_LIB_PATH "/lib:/usr/lib:/usr/local/lib:."
++#  define DLN_DEFAULT_LIB_PATH "/lib:/usr/lib:/opt/csw/lib:/usr/local/lib:."
+ #endif
+ 
+ #include <errno.h>
+diff --git a/dln_find.c b/dln_find.c
+index 12f05fb..3e38e47 100644
+--- a/dln_find.c
++++ b/dln_find.c
+@@ -87,7 +87,7 @@ dln_find_exe_r(const char *fname, const char *path, char *buf, size_t size)
+ #if defined(_WIN32)
+ 	path = "/usr/local/bin;/usr/ucb;/usr/bin;/bin;.";
+ #else
+-	path = "/usr/local/bin:/usr/ucb:/usr/bin:/bin:.";
++	path = "/opt/csw/bin:/usr/local/bin:/usr/ucb:/usr/bin:/bin:.";
+ #endif
+     }
+     buf = dln_find_1(fname, path, buf, size, 1);
+-- 
+2.0.3
+

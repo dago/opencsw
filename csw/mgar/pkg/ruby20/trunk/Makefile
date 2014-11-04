@@ -16,7 +16,7 @@ GARTYPE = v2
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
-RUNTIME_DEP_PKGS_CSWruby20 = CSWlibruby20-2
+RUNTIME_DEP_PKGS_CSWruby20 = CSWlibruby2-0-0
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtk8-5
@@ -31,11 +31,6 @@ RUNTIME_DEP_PKGS_CSWruby20 += CSWlibreadline6
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
 
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.0.so.2
-CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
-CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libruby2.0.0.so.2|soname=libruby2.0.0.so.2|pkgname=CSWruby20|expected=CSWlibruby2-0-0-2
-CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
-CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibgdbm4
-CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibreadline6
 
 # these files include a reference to /usr/local in comments
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
@@ -47,10 +42,12 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 
 BUILD_DEP_PKGS   = CSWlibssl-dev
 
-PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri CSWlibruby20-2
+PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri CSWlibruby2-0-0
 
-PKGFILES_CSWlibruby20-2 += /opt/csw/lib/libruby.*.so.2
-PKGFILES_CSWlibruby20-2 += /opt/csw/lib/libruby.*.so.2.*
+PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
+
+PKGFILES_CSWlibruby2-0-0 += /opt/csw/lib/libruby.*.so.2
+PKGFILES_CSWlibruby2-0-0 += /opt/csw/lib/libruby.*.so.2.*
 
 PKGFILES_CSWruby20-dev = $(includedir)/.* 
 PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
@@ -71,6 +68,7 @@ endef
 SPKG_DESC_CSWruby20 = $(DESCRIPTION)
 SPKG_DESC_CSWruby20-dev = Ruby 2.0 Extension Development Files
 SPKG_DESC_CSWruby20-ri = Documentation for Ruby 2.0
+SPKG_DESC_CSWlibruby2-0-0 = Ruby 2.0 Runtime Library
 
 ALTERNATIVES_CSWruby20 = ruby20
 ALTERNATIVE_ruby20  = $(bindir)/ruby ruby $(bindir)/ruby$(SHORTVER) 20 
