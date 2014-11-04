@@ -14,4 +14,6 @@ SPKG_DESC_CSWpm-gssapi = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWpm-gssapi += CSWlibkrb5-3
 
+CHECKPKG_OVERRIDES_CSWpm-gssapi += missing-dependency|CSWlibintl8
+
 include gar/category.mk
