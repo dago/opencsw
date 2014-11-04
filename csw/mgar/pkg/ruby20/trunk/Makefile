@@ -2,17 +2,39 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = ruby20
+
 SHORTVER = 2.0
 DISTVERSION = $(SHORTVER).0
+VERSION = $(DISTVERSION)
+API_VERSION = $(VERSION)
+
 PATCHLEVEL = p576
 DISTNAME = ruby-$(VERSION)-$(PATCHLEVEL)
-VERSION = $(DISTVERSION)
+
 GARTYPE = v2
 
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
 RUNTIME_DEP_PKGS = CSWlibssl1-0-0
+RUNTIME_DEP_PKGS += CSWlibffi5
+RUNTIME_DEP_PKGS += CSWlibtk8-5
+RUNTIME_DEP_PKGS += CSWlibtcl8-5
+RUNTIME_DEP_PKGS += CSWlibyaml0-2
+RUNTIME_DEP_PKGS += CSWlibncurses5
+RUNTIME_DEP_PKGS += CSWlibz1
+
+# checkpkg just supports ruby18 and ruby19 
+CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+
+# these files include a reference to /usr/local in comments
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/open3.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/tkextlib/itcl/setup.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/tkextlib/itk/setup.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/rubygems/specification.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/rubygems/installer.rb
+
 BUILD_DEP_PKGS   = CSWlibssl-dev
 
 PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri
@@ -66,11 +88,19 @@ EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/rake.1
 EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/ri.1
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared
+CONFIGURE_ARGS += --program-suffix=2.0
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --with-soname=ruby$(API_VERSION)
 
+# make test works, but there are tests failing with make check
 TEST_TARGET = test
 
 POSTMSG = $(docdir)/$(NAME)/README.$(NAME)
 DISTFILES +=$(notdir $(POSTMSG))
+
+# There is no fix for objcopy available yet and both Oracle /usr/gnu/bin/objcopy and also our own
+# /opt/csw/gnu/objcopy is affected, so disable objcopy completely for now:
+EXTRA_CONFIGURE_ENV += OBJCOPY=/bin/true
 
 include gar/category.mk
 
@@ -80,16 +110,15 @@ install-custom:
 
 post-install:
 	find $(DESTDIR)$(bindir) -type f -depth -print | xargs -n 1 gsed -i -e '1 s|ruby$$|ruby2.0|g'
-	cd $(DESTDIR)$(bindir) && test -f ruby && mv -f ruby ruby$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f irb && mv -f irb irb$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f erb && mv -f erb erb$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f rdoc && mv -f rdoc rdoc$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f ri && mv -f ri ri$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f testrb && mv -f testrb testrb$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f gem && mv -f gem gem$(SHORTVER)
-	cd $(DESTDIR)$(bindir) && test -f rake && mv -f rake rake$(SHORTVER)
-	cd $(DESTDIR)$(mandir)/man1 && test -f ruby.1 && mv -f ruby.1 ruby$(SHORTVER).1
-	cd $(DESTDIR)$(mandir)/man1 && test -f erb.1 && mv -f erb.1 erb$(SHORTVER).1
-	cd $(DESTDIR)$(mandir)/man1 && test -f irb.1 && mv -f irb.1 irb$(SHORTVER).1
-	cd $(DESTDIR)$(mandir)/man1 && test -f rake.1 && mv -f rake.1 rake$(SHORTVER).1
-	cd $(DESTDIR)$(mandir)/man1 && test -f ri.1 && mv -f ri.1 ri$(SHORTVER).1
+#	cd $(DESTDIR)$(bindir) && test -f irb && mv -f irb irb$(SHORTVER)
+#	cd $(DESTDIR)$(bindir) && test -f erb && mv -f erb erb$(SHORTVER)
+#	cd $(DESTDIR)$(bindir) && test -f rdoc && mv -f rdoc rdoc$(SHORTVER)
+#	cd $(DESTDIR)$(bindir) && test -f ri && mv -f ri ri$(SHORTVER)
+#	cd $(DESTDIR)$(bindir) && test -f testrb && mv -f testrb testrb$(SHORTVER)
+#	cd $(DESTDIR)$(bindir) && test -f gem && mv -f gem gem$(SHORTVER)
+#	cd $(DESTDIR)$(bindir) && test -f rake && mv -f rake rake$(SHORTVER)
+#	cd $(DESTDIR)$(mandir)/man1 && test -f ruby.1 && mv -f ruby.1 ruby$(SHORTVER).1
+#	cd $(DESTDIR)$(mandir)/man1 && test -f erb.1 && mv -f erb.1 erb$(SHORTVER).1
+#	cd $(DESTDIR)$(mandir)/man1 && test -f irb.1 && mv -f irb.1 irb$(SHORTVER).1
+#	cd $(DESTDIR)$(mandir)/man1 && test -f rake.1 && mv -f rake.1 rake$(SHORTVER).1
+#	cd $(DESTDIR)$(mandir)/man1 && test -f ri.1 && mv -f ri.1 ri$(SHORTVER).1
