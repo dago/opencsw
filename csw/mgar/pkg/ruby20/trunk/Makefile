@@ -16,8 +16,7 @@ GARTYPE = v2
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
-RUNTIME_DEP_PKGS_CSWruby20 = CSWlibruby2-0-0
-RUNTIME_DEP_PKGS_CSWruby20 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWruby20 = CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtcl8-5
@@ -30,8 +29,6 @@ RUNTIME_DEP_PKGS_CSWruby20 += CSWlibreadline6
 # checkpkg just supports ruby18 and ruby19 
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
 
-CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.0.so.2
-
 # these files include a reference to /usr/local in comments
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/open3.rb
@@ -42,12 +39,9 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 
 BUILD_DEP_PKGS   = CSWlibssl-dev
 
-PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri CSWlibruby2-0-0
+PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri 
 
 PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
-
-PKGFILES_CSWlibruby2-0-0 += /opt/csw/lib/libruby.*.so.2
-PKGFILES_CSWlibruby2-0-0 += /opt/csw/lib/libruby.*.so.2.*
 
 PKGFILES_CSWruby20-dev = $(includedir)/.* 
 PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
@@ -68,7 +62,6 @@ endef
 SPKG_DESC_CSWruby20 = $(DESCRIPTION)
 SPKG_DESC_CSWruby20-dev = Ruby 2.0 Extension Development Files
 SPKG_DESC_CSWruby20-ri = Documentation for Ruby 2.0
-SPKG_DESC_CSWlibruby2-0-0 = Ruby 2.0 Runtime Library
 
 ALTERNATIVES_CSWruby20 = ruby20
 ALTERNATIVE_ruby20  = $(bindir)/ruby ruby $(bindir)/ruby$(SHORTVER) 20 
