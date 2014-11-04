@@ -16,26 +16,19 @@ GARTYPE = v2
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
-RUNTIME_DEP_PKGS = CSWlibssl1-0-0
-RUNTIME_DEP_PKGS += CSWlibffi5
-RUNTIME_DEP_PKGS += CSWlibtk8-5
-RUNTIME_DEP_PKGS += CSWlibtcl8-5
-RUNTIME_DEP_PKGS += CSWlibyaml0-2
-RUNTIME_DEP_PKGS += CSWlibncurses5
-RUNTIME_DEP_PKGS += CSWlibz1
-RUNTIME_DEP_PKGS += CSWlibgdbm4
-RUNTIME_DEP_PKGS += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWruby20 = CSWlibruby20-2
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibyaml0-2
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibgdbm4
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibreadline6
 
 # checkpkg just supports ruby18 and ruby19 
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
-
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibtcl8-5
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibtk8-5
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibyaml0-2
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibffi5
-CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWlibncurses5
 
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.0.so.2
 CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
@@ -43,16 +36,6 @@ CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-pkgname-mismatch|file=opt/csw/lib/lib
 CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibgdbm4
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibreadline6
-
-CHECKPKG_OVERRIDES_CSWruby20-ri += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibtcl8-5
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibtk8-5
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibyaml0-2
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibffi5
-CHECKPKG_OVERRIDES_CSWruby20-ri += surplus-dependency|CSWlibncurses5
-
 
 # these files include a reference to /usr/local in comments
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
@@ -64,10 +47,13 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 
 BUILD_DEP_PKGS   = CSWlibssl-dev
 
-PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri
+PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri CSWlibruby20-2
+
+PKGFILES_CSWlibruby20-2 += /opt/csw/lib/libruby.*.so.2
+PKGFILES_CSWlibruby20-2 += /opt/csw/lib/libruby.*.so.2.*
 
 PKGFILES_CSWruby20-dev = $(includedir)/.* 
-PKGFILES_CSWruby20-ri =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
+PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
 
 ARCHALL_CSWruby20-ri = 1
 
