@@ -5,6 +5,7 @@ NAME = ruby20
 
 SHORTVER = 2.0
 DISTVERSION = $(SHORTVER).0
+
 VERSION = $(DISTVERSION)
 API_VERSION = $(VERSION)
 
@@ -108,9 +109,9 @@ EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/rake.1
 EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/ri.1
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared
-CONFIGURE_ARGS += --program-suffix=2.0
+CONFIGURE_ARGS += --program-suffix=$(SHORTVER)
+CONFIGURE_ARGS += --with-soname=ruby$(SHORTVER)
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-soname=ruby$(API_VERSION)
 
 # make test works, but there are tests failing with make check
 TEST_TARGET = test
