@@ -24,6 +24,8 @@ SPKG_DESC_CSWpm-params-validate = Validate method/function parameters
 RUNTIME_DEP_PKGS_CSWpm-params-validate += CSWpm-module-implementation
 OBSOLETED_BY_CSWpm-params-validate += CSWpmparamsvalidate
 CATALOGNAME_CSWpmparamsvalidate = pm_paramsvalidate_stub
+OBSOLETED_BY_CSWpm-params-validate += CSWpmprmsvldt
+CATALOGNAME_CSWpmparamsvalidate = pm_prmsvldt_stub
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
