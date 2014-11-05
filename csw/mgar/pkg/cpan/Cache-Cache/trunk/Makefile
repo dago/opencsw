@@ -1,29 +1,25 @@
 NAME = Cache-Cache
-VERSION = 1.06
+VERSION = 1.07
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = JSWARTZ
+AUTHOR = RJBS
 
-DESCRIPTION = Cache interface
+DESCRIPTION = Unknown
 define BLURB
-  The Cache modules are designed to assist a developer in persisting data for
-  a specified period of time. Often these modules are used in web applications
-  to store data locally to save repeated and redundant expensive calls to
-  remote machines or databases. People have also been known to use
-  Cache::Cache for its straightforward interface in sharing data between runs
-  of an application or invocations of a CGI-style script or simply as an easy
-  to use abstraction of the filesystem or shared memory.
 endef
 
-PACKAGES = CSWpmcachecache
-CATALOGNAME = pm_cachecache
+CATALOG_RELEASE = unstable
 
-DEP_PKGS = CSWpmdigestsha1 CSWpmerror CSWpmipcshrlite
+LICENSE = COPYING
 
-ARCHALL = 1
-
-CHECKPKG_OVERRIDES_CSWpmcachecache += surplus-dependency|CSWpmipcshrlite
-CHECKPKG_OVERRIDES_CSWpmcachecache += surplus-dependency|CSWpmerror
-CHECKPKG_OVERRIDES_CSWpmcachecache += surplus-dependency|CSWpmdigestsha1
+PACKAGES += CSWpm-cache-cache
+CATALOGNAME_CSWpm-cache-cache = pm_cache_cache
+SPKG_DESC_CSWpm-cache-cache = Unknown
+ARCHALL_CSWpm-cache-cache = 1
+RUNTIME_DEP_PKGS_CSWpm-cache-cache += CSWpm-error
+RUNTIME_DEP_PKGS_CSWpm-cache-cache += CSWpm-ipc-sharelite
+RUNTIME_DEP_PKGS_CSWpm-cache-cache += CSWpm-digest-sha1
+OBSOLETED_BY_CSWpm-cache-cache += CSWpmcachecache
+CATALOGNAME_CSWpmcachecache = pm_cachecache_stub
 
 include gar/category.mk
