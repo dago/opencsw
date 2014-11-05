@@ -26,22 +26,38 @@ RUNTIME_DEP_PKGS_CSWruby20 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibreadline6
 
-# checkpkg just supports ruby18 and ruby19 
+# checkpkg just supports ruby18 and ruby19 and ruby20 clearly does not depend on these packages
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
 
-# these files include a reference to /usr/local in comments
+# the files dln.c and dln_find.c contain a reference to /usr/local
+# we've added /opt/csw/bin and /opt/csw/lib to the path where
+# ruby searches for loadable modules.
+# also we do not provide a separate package for libruby
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.0.so.2
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libruby2.0.0.so.2|soname=libruby2.0.0.so.2|pkgname=CSWruby20|expected=CSWlibruby2-0-0-2
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
+
+# these files contain a reference to /usr/local just in comments
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/open3.rb
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/tkextlib/itcl/setup.rb
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/tkextlib/itk/setup.rb
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/rubygems/specification.rb
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/rubygems/installer.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/shell.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/fileutils.rb
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/pathname.rb
+
+# we've added /opt/csw/bin to find_executable0
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/mkmf.rb
 
 BUILD_DEP_PKGS   = CSWlibssl-dev
 
 PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri 
 
 PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
+PATCHFILES += 0002-added-opt-csw-bin-to-find_exectuable0.patch
 
 PKGFILES_CSWruby20-dev = $(includedir)/.* 
 PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
