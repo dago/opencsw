@@ -14,9 +14,18 @@ MASTER_SITES = http://download.augeas.net/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
-BUILD_DEP_PKGS    = CSWlibxml2-2 CSWlibxml2-dev CSWgcc4core CSWlibreadline-dev CSWlibgnugetopt-dev CSWpkgconfig CSWcoreutils
-RUNTIME_DEP_PKGS  = CSWlibgnugetopt0 CSWlibgcc-s1
-RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibxml2-2
+BUILD_DEP_PKGS = CSWlibxml2-2
+BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWgcc4core
+BUILD_DEP_PKGS += CSWlibreadline-dev
+BUILD_DEP_PKGS += CSWlibgnugetopt-dev
+BUILD_DEP_PKGS += CSWpkgconfig
+BUILD_DEP_PKGS += CSWcoreutils
+
+RUNTIME_DEP_PKGS = CSWlibgcc-s1
+RUNTIME_DEP_PKGS += CSWlibreadline6
+RUNTIME_DEP_PKGS += CSWlibxml2-2
+
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
 
@@ -32,9 +41,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # test are currently failing (sudo, sip_conf)
 SKIPTEST=1
 
-CHECKPKG_OVERRIDES_CSWaugeas += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWaugeas += non-uniform-lib-versions-in-package|sonames=libaugeas.so.0,libfa.so.1
 CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-package-contains-so-symlink
+CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaugeas.so.0.18.0|soname=libaugeas.so.0|pkgname=CSWaugeas|expected=CSWlibaugeas0
+CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libfa.so.1.4.0|soname=libfa.so.1|pkgname=CSWaugeas|expected=CSWlibfa1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/charset.alias
 MERGE_DIRS_isa-extra = $(libdir)
