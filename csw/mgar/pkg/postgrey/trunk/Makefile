@@ -1,11 +1,9 @@
-NAME       = postgrey
-VERSION    = 1.34
+NAME    = postgrey
+VERSION = 1.35
 CATEGORIES = net
 GARTYPE = v2
 
-DESCRIPTION = Postfix policy server implementing greylisting
-define BLURB
-  Postfix policy server implementing greylisting
+DESCRIPTION = Postfix policy server implementing greylistting greylisting
 endef
 
 MASTER_SITES = http://postgrey.schweikert.ch/pub/
@@ -13,7 +11,7 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS  = CSWperl
 RUNTIME_DEP_PKGS += CSWpmiomultiplex
-RUNTIME_DEP_PKGS += CSWpmnetserver
+RUNTIME_-net-_PKGS += CSWpmnetserver
 RUNTIME_DEP_PKGS += CSWpostfix
 RUNTIME_DEP_PKGS += CSWpmberkeleydb
 
@@ -32,7 +30,7 @@ SAMPLECONF += /etc/opt/csw/postgrey
 PATCHFILES = postgrey.p
 
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmnetserver
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-net-pendency|CSWpmnetserver
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmiomultiplex
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmberkeleydb
 
@@ -58,4 +56,3 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man1
 	@pod2man --section=1 $(WORKSRC)/$(NAME) > $(DESTDIR)$(mandir)/man1/$(NAME).1
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)
-	@$(MAKECOOKIE)
