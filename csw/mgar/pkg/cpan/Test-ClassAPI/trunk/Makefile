@@ -6,17 +6,21 @@ AUTHOR = ADAMK
 
 DESCRIPTION = Provides basic first-pass API testing for large class trees
 define BLURB
-  For many APIs with large numbers of classes, it can be very useful to be
-  able to do a quick once-over to make sure that classes, methods, and
-  inheritance is correct, before doing more comprehensive testing. This
-  module aims to provide such a capability.
 endef
 
-RUNTIME_DEP_PKGS = CSWpmclassinspector CSWpmconfigtiny CSWpmparamsutil
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmtestclassapi
-CATALOGNAME = pm_testclassapi
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-test-classapi
+CATALOGNAME_CSWpm-test-classapi = pm_test_classapi
+SPKG_DESC_CSWpm-test-classapi = Provides basic first-pass API testing for large class trees
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-test-classapi = 1
+RUNTIME_DEP_PKGS_CSWpm-test-classapi += CSWpm-class-inspector
+RUNTIME_DEP_PKGS_CSWpm-test-classapi += CSWpm-params-util
+RUNTIME_DEP_PKGS_CSWpm-test-classapi += CSWpm-config-tiny
+OBSOLETED_BY_CSWpm-test-classapi += CSWpmtestclassapi
+CATALOGNAME_CSWpmtestclassapi = pm_testclassapi_stub
 
 include gar/category.mk
