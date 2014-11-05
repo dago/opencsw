@@ -8,16 +8,13 @@ DESCRIPTION = A perl module for processing XSLT
 define BLURB
 endef
 
-DISTFILES += COPYING
-
 PACKAGES = CSWpm-xml-xslt
 CATALOGNAME = pm_xml_xslt
 SPKG_DESC_CSWpm-xml-xslt = $(DESCRIPTION)
-OBSOLETED_BY_CSWpm-xml-xslt = CSWpmxmlxslt
-CATALOGNAME_CSWpmxmlxslt = pm_xmlxslt
 
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmxmldom
+RUNTIME_DEP_PKGS += CSWpm-xmldom
+RUNTIME_DEP_PKGS += CSWpm-xml-parser
 
 include gar/category.mk
