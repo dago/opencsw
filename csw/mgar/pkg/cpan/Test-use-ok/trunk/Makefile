@@ -1,5 +1,5 @@
 NAME = Test-use-ok
-VERSION = 0.02
+VERSION = 0.11
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = AUDREYT
@@ -8,15 +8,16 @@ DESCRIPTION = Alternative to Test::More::use_ok
 define BLURB
 endef
 
-DISTFILES += COPYING
-
 CATALOG_RELEASE = unstable
 
-PACKAGES += CSWpm-ok
-CATALOGNAME_CSWpm-ok = pm_ok
-SPKG_DESC_CSWpm-ok = Alternative to Test::More::use_ok
-ARCHALL_CSWpm-ok = 1
-OBSOLETED_BY_CSWpm-ok += CSWpmtestuseok
-CATALOGNAME_CSWpmtestuseok = pm_testuseok_stub
+LICENSE_TEXT = This module is licensed under the unrestricted license
+
+PACKAGES += CSWpm-test-use-ok
+CATALOGNAME_CSWpm-test-use-ok = pm_test_use_ok
+SPKG_DESC_CSWpm-test-use-ok = Alternative to Test::More::use_ok
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-test-use-ok = 1
+OBSOLETED_BY_CSWpm-test-use-ok += CSWpm-ok
+CATALOGNAME_CSWpm-ok = pm_ok_stub
 
 include gar/category.mk
