@@ -1,22 +1,22 @@
 NAME = File-Remove
-VERSION = 1.42
+VERSION = 1.52
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = ADAMK
 
 DESCRIPTION = Remove files and directories
 define BLURB
-  File::Remove::remove removes files and directories. It acts like /bin/rm,
-  for the most part. Although unlink can be given a list of files, it will not
-  remove directories; this module remedies that. It also accepts wildcards, *
-  and ?, as arguments for filenames.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmfileremove
-CATALOGNAME = pm_fileremove
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-file-remove
+CATALOGNAME_CSWpm-file-remove = pm_file_remove
+SPKG_DESC_CSWpm-file-remove = Remove files and directories
+ARCHALL_CSWpm-file-remove = 1
+OBSOLETED_BY_CSWpm-file-remove += CSWpmfileremove
+CATALOGNAME_CSWpmfileremove = pm_fileremove_stub
 
 include gar/category.mk
