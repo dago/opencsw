@@ -1,0 +1,44 @@
+From 5d06ae096572d29eb2e221de06c3499ec9d6944c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 5 Apr 2013 11:32:41 +0200
+Subject: [PATCH] Do not make functions static which are used by inline
+ functions
+
+---
+ src/libFLAC/bitwriter.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/libFLAC/bitwriter.c b/src/libFLAC/bitwriter.c
+index 9b15aff..9b7b246 100644
+--- a/src/libFLAC/bitwriter.c
++++ b/src/libFLAC/bitwriter.c
+@@ -78,7 +78,7 @@ struct FLAC__BitWriter {
+ };
+ 
+ /* * WATCHOUT: The current implementation only grows the buffer. */
+-static FLAC__bool bitwriter_grow_(FLAC__BitWriter *bw, unsigned bits_to_add)
++FLAC__bool bitwriter_grow_(FLAC__BitWriter *bw, unsigned bits_to_add)
+ {
+ 	unsigned new_capacity;
+ 	uint32_t *new_buffer;
+@@ -260,7 +260,7 @@ void FLAC__bitwriter_release_buffer(FLAC__BitWriter *bw)
+ 	(void)bw;
+ }
+ 
+-inline FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsigned bits)
++FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsigned bits)
+ {
+ 	unsigned n;
+ 
+@@ -298,7 +298,7 @@ inline FLAC__bool FLAC__bitwriter_write_zeroes(FLAC__BitWriter *bw, unsigned bit
+ 	return true;
+ }
+ 
+-inline FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FLAC__uint32 val, unsigned bits)
++FLAC__bool FLAC__bitwriter_write_raw_uint32(FLAC__BitWriter *bw, FLAC__uint32 val, unsigned bits)
+ {
+ 	register unsigned left;
+ 
+-- 
+1.8.1.4
+

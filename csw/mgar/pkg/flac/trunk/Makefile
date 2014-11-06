@@ -1,18 +1,7 @@
 NAME = libflac
-VERSION = 1.2.1
+VERSION = 1.3.0pre4
 CATEGORIES = lib
 GARTYPE = v2
-
-EXTRA_MODULATORS = VERSION
-# Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
-MODULATIONS_VERSION = 1.0.4 1.1.2 1.2.1
-
-# There was no 64 bit legacy version. Do not provide it as new binaries should
-# link against the new version.
-SKIP_MODULATIONS = isa-sparcv9-version-1.0.4
-SKIP_MODULATIONS += isa-amd64-version-1.0.4
-SKIP_MODULATIONS += isa-sparcv9-version-1.1.2
-SKIP_MODULATIONS += isa-amd64-version-1.1.2
 
 DESCRIPTION = Free lossless audio codec
 define BLURB
@@ -26,97 +15,104 @@ define BLURB
 endef
 
 SF_PROJ = flac
-MASTER_SITES = $(SF_MIRRORS)
-DISECTTNAME = $(SF_PROJ)-$(VERSION)
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VECT)-$(VERSION).tar.gz)
-DISTFILES = $(SOURCEFILES)
+MASTER_SITESMASTER_SITES += http://downloads.xiph.org/releases/flac/beta/
+DISTNAME = $(SF_PROJECT)-$(VERSION)
+DISTFILES = $(DISTNAME).tar.xz
 
-NOEXTRACT = $(filter-out $(SF_PROJECTter-out $(SF_PROJ)-$(VERSION).tar.gz,$(SOURCEFILES))
+#PATCHFILES += libtool-64bit.patch
+#PATCHFILES += strip-nasm-1.2.1.patch
+#PATCHFILES += no-stdint.patch
+#PATCHFILES += 0004-Preserve-norunpath-in-libtool.patch
 
-PATCHFILES_isa-sparcv8-version-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-sparcv9-version-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-sparcv8-version-1.2.1 = libtool-64bit.patch no-stdint.patch
-PATCHFILES_isa-sparcv9-version-1.2.1 = libtool-64bit.patch no-stdint.patch
+#PATCHFILES += 0001-Do-not-make-functions-static-which-are-used-by-inlin.patch
+#PATCHFILES += 0001-Provide-implementation-for-MIN-and-MAX-if-system-doe.patch
 
-PATCHFILES_isa-i386-version-1.0.4 = strip-nasm-1.0.4.patch
-PATCHFILES_isa-i386-version-1.1.2 = strip-nasm-1.1.2.patch libtool-64bit.patch
-PATCHFILES_isa-amd64-version-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-i386-version-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
-PATCHFILES_isa-amd64-version-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
+GARCOMPILER = GNU-in-libtool.patch
 
-PACKAGES = CSWflac CSWxmmsflac
-CATALOGNAME_CSWflac = libflac
-CATALOGNAME_CSWxmmsflac = xmms_flac
+BUILD_DEP_PKGS += CSWbash
 
-BUILD_DEP_PKGS = CSWbash CSWnasm
+PACKAGES += CSWlibflac8
+CATALOGNAME_CSWlibflac8 = libflac8
+SPKG_DESC_CSWlibflac8 = Free lossless audio codec library, libflac.so.8
+PKGFILES_CSWlibflac8 = $(call pkgfiles_lib,libFLAC.so.8)
+RUNTIME_DEP_PKGS_CSWlibflac8 += CSWlibogg0
+OBSOLETED_BY_CSWlibflac8 = CSWlibflac
 
-RUNTIME_DEP_PKGS_CSWflac = CSWiconv CSWlibogg
-RUNTIME_DEP_PKGS_CSWxmmsflac = CSWglib CSWgtk CSWxmms CSWflac CSWiconv CSWlibogg
+PACKAGES += CSWlibflac++6
+CATALOGNAME_CSWlibflac++6 = libflac++6
+SPKG_DESC_CSWlibflac++6 = Free lossless audio codec library, libFLAC++.so.6
+PKGFILES_CSWlibflac++6 = $(call pkgfiles_lib,libFLAC++.so.6)
+RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibflac8
+OBSOLETED_BY_CSWlibflac++6 = CSWlibflac
 
-SPKG_DESC_CSWflac = Free lossless audio codec
-SPKG_DESC_CSWxmmsflac = FLAC plugin for XMMS
+PACKAGES += CSWlibflac-dev
+CATALOGNAME_CSWlibflac-dev = libflac_dev
+SPKG_DESC_CSWlibflac-dev = Development files for libflac.so.8
+PKGFILES_CSWlibflac-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibflac-dev += $(docdir)/flac/.*
+RUNTIME_DEP_PKGS_CSWlibflac-dev = CSWlibflac8
+RUNTIME_DEP_PKGS_CSWlibflac-dev += CSWlibflac++6
 
-SPKG_SOURCEURL = http://flac.sourceforge.net/
+PACKAGES += CSWflac
+CATALOGNAME_CSWflac = flac
+SPKG_DESC_CSWflac = Utility programs for the Free Lossless Audio Codec (FLAC)
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_iconv2Wflac += CSWiconv
+RUNTIME_DEP_PKGS_CSWflac += CSWlibflac8
+# Dependencies for legacy packages needing old libs but depending on CSWflac
+RUNTIME_DEP_PKGS_CSWflac += CSWlibflac4
+CHECKPKG_OVERRIDES_CSWflac += surplus-dependency|CSWlibflac4
+RUNTIME_DEP_PKGS_CSWflac += CSWlibflac7
+CHECKPKG_OVERRIDES_CSWflac += surplus-dependency|CSWlibflac7
+
+PACKAGES += CSWxmms-flac
+PKGFILES_CSWxmms-flac = $(libdir)/xmms/.*
+SPKG_DESC_CSWxmms-flac = XMMS plugin for the FLAC audio file format
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWglib
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWgtk
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibflac8
+RUNTIME_DEP_PKGS_CSWxmms-flaRUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibiconv2
+OBSOLETED_BY_CSWxmms-flac = CSWxmmsflac
+CATALOGNAME_CSWxmmsflac = xmms_flac_stub
+
+# This is because XMMS is not available in 64 bit
+CHECKPKG_OVERRIDES_CSWxmms-flac += 64bits-binaries-missing
+
+VENDOR_URL = http://flac.sourceforge.net/
 
 LICENSE = $(foreach lic,FDL GPL LGPL Xiph,COPYING.$(lic))
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=13478
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = flac-(\d+(?:\.\d+)*)-src
+#¤COPYING.$(lic))
 
-BUILD64 = 1
+EXTRA_LINKER_FLAGS = -norunpath
 
-# For 1.0.4
-EXTRA_LINKER_FLAGS = -liconv
-
-NODIRPATHS = --includedir
+# Must be defined and empty or -I$(includedir) is#CPPFLAGS =
+#early
 CPPFLAGS =
+EXTRA_CFLAGS = $(INCLUDE_FLAGS) -D__inline=
 
-# Must be defined and empty or -I$(includedir) is added too early
-EXTRA_CFLAGS = -D__inline=
-EXTRA_BUILD_EXPORTS = AM_CFLAGS
+STRIP_LIBTOOL = 1
+
+BUILD6#EXTRA_CFLAGS += -xc99=all
+GARFLAVOR = DBGD64_LIBS_ONLY = 1
+
+CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_CONFIGURE_ARGS_mm-64 = --disable-xmms-plugin
-CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 # XXX: Assembler optimization just doesn't work. Disable for now.
 CONFIGURE_ARGS += --disable-asm-optimizations
 
-MERGE_SCRIPTS_isa-default-version-1.0.4 = copy-only
-MERGE_DIRS_isa-default-version-1.0.4 = $(libdir)
-MERGE_SCRIPTS_isa-extra-version-1.0.4 = copy-relocated-only
-MERGE_DIRS_isa-extra-version-1.0.4 = $(libdir)
+# Testsuite takes forever, disable once# for new version
+SKIPTEST ?= 1
 
-MERGE_SCRIPTS_isa-default-version-1.1.2 = copy-only
-MERGE_DIRS_isa-default-version-1.1.2 = $(libdir)
-MERGE_SCRIPTS_isa-extra-version-1.1.2 = copy-relocated-only
-MERGE_DIRS_isa-extra-version-1.1.2 = $(libdir)
+EXTRA_PAX_ARGS = -s ',$(docdir)/flac-$(VERSION),$(docdir)/flac,'
 
-MERGE_SCRIPTS_isa-default-version-1.2.1 = copy-all
-MERGE_SCRIPTS_isa-extra-version-1.2.1 = copy-relocated-only
-MERGE_DIRS_isa-extra-version-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+include gar/cextract:
+	cd $(WORKSRC)/test && perl -e 's,#!/bin/sh,#!/bin/bash,' -npi *.sh
+	@$(MAKECOOKIE)e gar/category.mk
 
-PKGFILES_CSWxmmsflac = $(libdir)/xmms/.*
-
-include gar/category.mk
-
-CC := $(abspath ./bin/cc)
-CXX := $(abspath ./bin/CC)
-PATH := ./bin:$(PATH):/usr/ccs/bin
-
-post-patch-isa-i386-version-1.0.4:
-	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
-	$(MAKECOOKIE)
-
-post-patch-isa-i386-version-1.1.2:
-	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
-	$(MAKECOOKIE)
-
-post-patch-isa-sparcv8-version-1.0.4:
-	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
-	$(MAKECOOKIE)
-
-post-patch-isa-sparcv8-version-1.1.2:
-	perl -pi -e "s/-O2 //g" $(WORKSRC)/configur
+post-install-modulated:
+	perl -pi -e 's,/usr/share/doc,$(docdir),' \
+		$(DESTDIR)$(man

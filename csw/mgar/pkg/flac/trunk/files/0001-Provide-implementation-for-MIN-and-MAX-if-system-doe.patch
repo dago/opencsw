@@ -1,0 +1,39 @@
+From 4839e96f85cb2fb3a3a15fa97ea355169cc2bd7c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 5 Apr 2013 12:50:14 +0200
+Subject: [PATCH] Provide implementation for MIN and MAX if system doesn't
+ provide one
+
+---
+ src/libFLAC/include/private/macros.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/libFLAC/include/private/macros.h b/src/libFLAC/include/private/macros.h
+index 63dc3e5..94a76f0 100644
+--- a/src/libFLAC/include/private/macros.h
++++ b/src/libFLAC/include/private/macros.h
+@@ -49,7 +49,7 @@
+ #define flac_min(A,B) MIN_IMPL(A,B,__COUNTER__)
+ 
+ /* Whatever other unix that has sys/param.h */
+-#elif defined(HAVE_SYS_PARAM_H)
++#elif defined(HAVE_SYS_PARAM_H) && !defined(__sun) && !defined(__sun__)
+ #include <sys/param.h>
+ #define flac_max(a,b) MAX(a,b)
+ #define flac_min(a,b) MIN(a,b)
+@@ -59,6 +59,12 @@
+ #include <stdlib.h>
+ #define flac_max(a,b) __max(a,b)
+ #define flac_min(a,b) __min(a,b)
++
++/* No system provided implementation, use naive macro */
++#else
++#define flac_max(x, y) ((x) > (y) ? (x) : (y))
++#define flac_min(x, y) ((x) < (y) ? (x) : (y))
++
+ #endif
+ 
+ #if !defined(__cplusplus) && defined(_MSC_VER)
+-- 
+1.8.1.4
+
