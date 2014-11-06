@@ -16,7 +16,7 @@ SPKG_DESC_CSWpm-html-mason = $(DESCRIPTION)
 
 BUILD_DEP_PKGS += CSWpm-test-deep
 
-RUNTIME_DEP_PKGS += CSWpmcachecache
+RUNTIME_DEP_PKGS += CSWpm-cache-cache
 RUNTIME_DEP_PKGS += CSWpm-class-container
 RUNTIME_DEP_PKGS += CSWpm-exception-class
 RUNTIME_DEP_PKGS += CSWpm-html-parser
