@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.38.0
+VERSION = 7.39.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -51,8 +51,8 @@ RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWlibcurl4-featurRUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcom-err3re += CSWlibrtmp0
+#RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibk5crypto3
+#RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcom-err3re += CSWlibrtmp0
 # Without the base lib the feature lib is not pulled in
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcurl4
 # There is no dependency from feature to base as feature is an optional dependency
@@ -93,7 +93,7 @@ EXTRA_CONFIGURE_ARGS_features-minimal += --without-librtmp
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ares
 EXTRA_CONFIGURE_ARGS_features-full += --with-spnego=$(libdir)
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ldap
-EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-includes=$(includedir)
+EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-includes=$(includedir)
 #EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-libs=$(libdir)+EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi=$(prefix)+= --enable-ldaps
 
 # Make sure to link to the new libnet. See for details http://wiki.opencsw.org/project-libnet
