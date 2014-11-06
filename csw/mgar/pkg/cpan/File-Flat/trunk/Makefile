@@ -8,15 +8,21 @@ DESCRIPTION = Implements a flat filesystem
 define BLURB
 endef
 
-PACKAGES = CSWpmfileflat
-CATALOGNAME = pm_fileflat
-
-RUNTIME_DEP_PKGS = CSWpmprefork CSWpmfileslurp CSWpmfileremove CSWpmfilecpyrecurs
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
-BUILD_DEP_PKGS += CSWpmtestclassapi
+CATALOG_RELEASE = unstable
 
 LICENSE = LICENSE
 
-ARCHALL = 1
+BUILD_DEP_PKGS += CSWpm-test-classapi
+
+PACKAGES += CSWpm-file-flat
+CATALOGNAME_CSWpm-file-flat = pm_file_flat
+SPKG_DESC_CSWpm-file-flat = Implements a flat filesystem
+# There was no information if this is pure Perl or not. Please remove if necessary.
+ARCHALL_CSWpm-file-flat = 1
+RUNTIME_DEP_PKGS_CSWpm-file-flat += CSWpm-file-copy-recursive
+RUNTIME_DEP_PKGS_CSWpm-file-flat += CSWpm-prefork
+RUNTIME_DEP_PKGS_CSWpm-file-flat += CSWpm-file-remove
+OBSOLETED_BY_CSWpm-file-flat += CSWpmfileflat
+CATALOGNAME_CSWpmfileflat = pm_fileflat_stub
 
 include gar/category.mk
