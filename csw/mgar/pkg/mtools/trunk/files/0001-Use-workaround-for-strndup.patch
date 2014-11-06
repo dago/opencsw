@@ -1,0 +1,42 @@
+From 77581d3bfd7d1f2fe4a16584b97332a2c1ef421a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 6 Nov 2014 10:24:58 +0100
+Subject: [PATCH] Use workaround for strndup
+
+---
+ config.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/config.c b/config.c
+index f086883..2a7a05b 100644
+--- a/config.c
++++ b/config.c
+@@ -173,6 +173,25 @@ static switches_t dswitches[]= {
+     { "CODEPAGE", OFFS(codepage), T_UINT }
+ };
+ 
++char *strndup( const char *s, size_t n )
++{
++    size_t nAvail;
++    char *p;
++                                                                                                                                                             
++    if ( !s )
++        return 0;
++                                                                                                                                                             
++    nAvail = min( strlen(s) + 1, n + 1 );
++    p      = malloc( nAvail );
++    memcpy( p, s, nAvail );
++    p[nAvail - 1] = '\0';
++                                                                                                                                                             
++/*
++printf( "[PAH][%s][%d] nAvail=%d p=(%s)\n", __FILE__, __LINE__, nAvail, p );
++*/
++    return p;
++}
++
+ static void maintain_default_drive(char drive)
+ {
+     if(default_drive == ':')
+-- 
+2.0.3
+

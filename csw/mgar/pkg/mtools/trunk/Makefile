@@ -1,5 +1,5 @@
 NAME = mtools
-VERSION = 4.0.17
+VERSION = 4.0.18
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -11,10 +11,13 @@ define BLURB
   3 1/2 disk).
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(DISTNAME).tar.lz
+MASTER_SITES = $(GNU+= $(DISTNAME).tar.lz
 
-RUNTIME_DEP_PKGS = CSWiconv
+# Use patch until this is fixed
+#   https://lists.gnu.org/archive/html/info-mtools/2013-01/msg00003.html
+PATCHFILES += 0001-Use-workaround-for-strndup.patch
+
+RUNTIME_DEP_PKGS_CSWmtools += CSWlibiconv2
 
 EXTRA_LINKER_FLAGS = -liconv -lnsl
 
