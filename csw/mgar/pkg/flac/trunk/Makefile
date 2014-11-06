@@ -54,8 +54,9 @@ RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibgtk1-2-0
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibgdk1-2-0ms-flac += CSWgtk
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibflac8
 RUNTIME_DEP_PKGS_CSWxmms-flaRUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWxmms-flac-sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWxmms-flac += $(RUNTIME_DEP_PKGS_CSWxmms-flac-$(GARCH))
 OBSOLETED_BY_CSWxmms-flac = CSWxmmsflac
 CATALOGNAME_CSWxmmsflac = xmms_flac_stub
 
