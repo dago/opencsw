@@ -1,6 +1,6 @@
 NAME = neon
 VERSION = 0.30.1
-SONAME_MINOR = 3.0
+SONAME_MINOR = 3.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -49,7 +49,7 @@ RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibneon27-expat1
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibgssapi-krb5-2= CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibkrb5-3= CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibpakchois0
 OBSOLETED_BY_CSWlibneon27-feature = CSWneonfull
 
