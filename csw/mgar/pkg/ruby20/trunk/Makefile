@@ -125,6 +125,8 @@ EXTRA_CONFIGURE_ENV += OBJCOPY=/bin/true
 
 include gar/category.mk
 
+SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
+
 install-custom:
 	ginstall -Dm 644 $(FILEDIR)/README.$(NAME) \
 		$(DESTDIR)$(docdir)/$(NAME)/README.$(NAME)
