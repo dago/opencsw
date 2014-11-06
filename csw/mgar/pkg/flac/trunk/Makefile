@@ -1,5 +1,5 @@
-NAME = libflac
-VERSION = 1.3.0pre4
+NAME = flac
+VERSION = 1.3.0
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -11,21 +11,8 @@ define BLURB
   you will get much better compression because it is designed specifically
   for audio, and you can play back compressed FLAC files in your favorite
   player (or your car or home stereo, see supported devices) just like you
-  would an MP3 filECTe.
-endef
-
-SF_PROJ = flac
-MASTER_SITESMASTER_SITES += http://downloads.xiph.org/releases/flac/beta/
-DISTNAME = $(SF_PROJECT)-$(VERSION)
-DISTFILES = $(DISTNAME).tar.xz
-
-#PATCHFILES += libtool-64bit.patch
-#PATCHFILES += strip-nasm-1.2.1.patch
-#PATCHFILES += no-stdint.patch
-#PATCHFILES += 0004-Preserve-norunpath-in-libtool.patch
-
-#PATCHFILES += 0001-Do-not-make-functions-static-which-are-used-by-inlin.patch
-#PATCHFILES += 0001-Provide-implementation-for-MIN-and-MAX-if-system-doe.patch
+  would an MASTER_SITES += http://downloads.xiph.org/releases/flac/
+DISTFILES += $(DISTNAME).tar.xz
 
 GARCOMPILER = GNU-in-libtool.patch
 
@@ -35,15 +22,14 @@ PACKAGES += CSWlibflac8
 CATALOGNAME_CSWlibflac8 = libflac8
 SPKG_DESC_CSWlibflac8 = Free lossless audio codec library, libflac.so.8
 PKGFILES_CSWlibflac8 = $(call pkgfiles_lib,libFLAC.so.8)
-RUNTIME_DEP_PKGS_CSWlibflac8 += CSWlibogg0
-OBSOLETED_BY_CSWlibflac8 = CSWlibflac
+RUNTIME_DEP_PKGS_CSWlibflaRUNTIME_DEP_PKGS_CSWlibflac8 += CSWlibgcc-s1lac8 = CSWlibflac
 
 PACKAGES += CSWlibflac++6
 CATALOGNAME_CSWlibflac++6 = libflac++6
 SPKG_DESC_CSWlibflac++6 = Free lossless audio codec library, libFLAC++.so.6
 PKGFILES_CSWlibflac++6 = $(call pkgfiles_lib,libFLAC++.so.6)
-RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibflac8
-OBSOLETED_BY_CSWlibflac++6 = CSWlibflac
+RUNTIME_DEP_PKGS_CSWlibflac++RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibstdc++6c++6 = CSWlibflac
 
 PACKAGES += CSWlibflac-dev
 CATALOGNAME_CSWlibflac-dev = libflac_dev
@@ -58,33 +44,29 @@ CATALOGNAME_CSWflac = flac
 SPKG_DESC_CSWflac = Utility programs for the Free Lossless Audio Codec (FLAC)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_iconv2Wflac += CSWiconv
-RUNTIME_DEP_PKGS_CSWflac += CSWlibflac8
-# Dependencies for legacy packages needing old libs but depending on CSWflac
-RUNTIME_DEP_PKGS_CSWflac += CSWlibflac4
-CHECKPKG_OVERRIDES_CSWflac += surplus-dependency|CSWlibflac4
-RUNTIME_DEP_PKGS_CSWflac += CSWlibflac7
-CHECKPKG_OVERRIDES_CSWflac += surplus-dependency|CSWlibflac7
+RUNTIME_DEP_PKGS_CSWflaency|CSWlibflac7
 
 PACKAGES += CSWxmms-flac
 PKGFILES_CSWxmms-flac = $(libdir)/xmms/.*
 SPKG_DESC_CSWxmms-flac = XMMS plugin for the FLAC audio file format
-RUNTIME_DEP_PKGS_CSWxmms-flac += CSWglib
-RUNTIME_DEP_PKGS_CSWxmms-flac += CSWgtk
+RUNTIME_DEP_PKGS_CSlibglib1-2-0
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibgtk1-2-0
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibgdk1-2-0ms-flac += CSWgtk
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibflac8
 RUNTIME_DEP_PKGS_CSWxmms-flaRUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibgcc-s1
 OBSOLETED_BY_CSWxmms-flac = CSWxmmsflac
 CATALOGNAME_CSWxmmsflac = xmms_flac_stub
 
 # This is because XMMS is not available in 64 bit
-CHECKPKG_OVERRIDES_CSWxmms-flac += 64bits-binaries-missing
+CHECKPKG_OVERRIDES_CSWxmms-flac += 64-bit-binaries-missing
 
 VENDOR_URL = http://flac.sourceforge.net/
 
 LICENSE = $(foreach lic,FDL GPL LGPL Xiph,COPYING.$(lic))
 
-#¤COPYING.$(lic))
-
-EXTRA_LINKER_FLAGS = -norunpath
+#S = -norunpath
 
 # Must be defined and empty or -I$(includedir) is#CPPFLAGS =
 #early
@@ -94,17 +76,17 @@ EXTRA_CFLAGS = $(INCLUDE_FLAGS) -D__inline=
 STRIP_LIBTOOL = 1
 
 BUILD6#EXTRA_CFLAGS += -xc99=all
-GARFLAVOR = DBGD64_LIBS_ONLY = 1
+#GARFLAVOR = DBG
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# There is no XMMS in 64 bitGS = $(DIRPATHS)
 
 EXTRA_CONFIGURE_ARGS_mm-64 = --disable-xmms-plugin
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 # XXX: Assembler optimization just doesn't work. Disable for now.
-CONFIGURE_ARGS += --disable-asm-optimizations
-
-# Testsuite takes forever, disable once# for new version
+CONFIGURE_ARGS += --disable-asn
 SKIPTEST ?= 1
 
 EXTRA_PAX_ARGS = -s ',$(docdir)/flac-$(VERSION),$(docdir)/flac,'
