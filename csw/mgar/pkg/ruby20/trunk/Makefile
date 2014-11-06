@@ -34,10 +34,10 @@ CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|
 # we've added /opt/csw/bin and /opt/csw/lib to the path where
 # ruby searches for loadable modules.
 # also we do not provide a separate package for libruby
-CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.0.so.2
-CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
-CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libruby2.0.0.so.2|soname=libruby2.0.0.so.2|pkgname=CSWruby20|expected=CSWlibruby2-0-0-2
-CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.0.so
+CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/libruby2.0.so.2
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.so
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libruby2.0.so.2|soname=libruby2.0.so.2|pkgname=CSWruby20|expected=CSWlibruby2-0-2
+CHECKPKG_OVERRIDES_CSWruby20 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.0.so
 
 # these files contain a reference to /usr/local just in comments
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.0.0/tk/dialog.rb
