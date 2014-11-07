@@ -17,9 +17,6 @@ GARTYPE = v2
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
-
 PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri 
 
 RUNTIME_DEP_PKGS_CSWruby20 = CSWlibssl1-0-0
