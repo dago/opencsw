@@ -57,6 +57,9 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 # we've added /opt/csw/bin to find_executable0
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/mkmf.rb
 
+# ruby20-dev only includes header files, libruby is in CSWruby20
+CHECKPKG_OVERRIDES_CSWruby20-dev += archall-devel-package
+
 PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
 PATCHFILES += 0002-added-opt-csw-bin-to-find_exectuable0.patch
 
