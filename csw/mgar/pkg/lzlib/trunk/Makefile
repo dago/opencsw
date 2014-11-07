@@ -1,5 +1,5 @@
 NAME = lzlib
-VERSION = 1.5
+VERSION = 1.6
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -10,7 +10,7 @@ define BLURB
   data. The compressed data format used by the library is the lzip format. 
 endef
 
-MASTER_SITES = http://download.savannah.gnu.org/releases+= $(DISTNAME).tar.lz
+MASTER_SITES = http://download.savannah.gnu.olzliborg/releases+= $(DISTNAME).tar.lz
 PATCHFILES += 0001-Use-Sun-Studio-syntax-for-shared-libs.patch
 PATCHFILES += 0001-sh-does-not-support-ecc-to-sunstudio-2.patch
 
@@ -27,7 +27,7 @@ SPKG_DESC_CSWliblz-dev = Development files for liblz.so.1
 RUNTIME_DEP_PKGS_CSWliblz-dev = CFLAGS = -xc99=all-dev = CSWliblz1
 
 EXTRA_CXXFLAGS = -xcode=pic32
-EXTRA_LINKER_FLAGS = -lCrun -norunpath
+EXTRA_LINK-lCrun -norunpath
 
 BUILD64_LIBS_ONLY = 1
 NOISALIST = 1
