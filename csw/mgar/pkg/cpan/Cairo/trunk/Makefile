@@ -1,28 +1,25 @@
 NAME = Cairo
-VERSION = 1.061
+VERSION = 1.104
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = TSCH
+AUTHOR = XAOC
 
-DESCRIPTION = Perl interface to the cairo library
+DESCRIPTION = Perl interface to the cairo 2d vector graphics library
 define BLURB
 endef
 
-# 3/73 skipped: Test::Number::Delta not available
-# all skipped: need Cairo with FreeType support and Font::FreeType
-BUILD_DEP_PKGS = CSWlibcairodevel
-RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWlibcairo CSWzlib
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmcairo
-CATALOGNAME = pm_cairo
+LICENSE = LICENSE
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+PACKAGES += CSWpm-cairo
+CATALOGNAME_CSWpm-cairo = pm_cairo
+SPKG_DESC_CSWpm-cairo = Perl interface to the cairo 2d vector graphics library
+RUNTIME_DEP_PKGS_CSWpm-cairo += CSWlibcairo2
+OBSOLETED_BY_CSWpm-cairo += CSWpmcairo
+CATALOGNAME_CSWpmcairo = pm_cairo_stub
+
+# This is for the font path /usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf
+CHECKPKG_OVERRIDES_CSWpm-cairo += file-with-bad-content|/usr/share|root/opt/csw/lib/perl/csw/Cairo.pm
 
 include gar/category.mk
-
-
-
-
-
