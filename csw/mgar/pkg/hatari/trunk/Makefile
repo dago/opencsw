@@ -27,11 +27,6 @@ INSTALL_SCRIPTS = custom
 
 TEST_SCRIPTS =
 
-# override the bad-rpath-entry even though it looks correct.
-CHECKPKG_OVERRIDES_CSWhatari += bad-rpath-entry|-R/opt/csw/lib/\$$ISALIST|opt/csw/bin/gst2ascii
-CHECKPKG_OVERRIDES_CSWhatari += bad-rpath-entry|-R/opt/csw/lib/\$$ISALIST|opt/csw/bin/hatari
-CHECKPKG_OVERRIDES_CSWhatari += bad-rpath-entry|-R/opt/csw/lib/\$$ISALIST|opt/csw/bin/hmsa
-
 # override no-direct-binding until we can figure out how to enable -Bdirect in cmake (see below)
 CHECKPKG_OVERRIDES_CSWhatari += no-direct-binding|/opt/csw/bin/hatari|is|not|directly|bound|to|soname|libICE.so.6
 CHECKPKG_OVERRIDES_CSWhatari += no-direct-binding|/opt/csw/bin/hatari|is|not|directly|bound|to|soname|libSDL-1.2.so.0
@@ -54,7 +49,7 @@ configure-custom:
 	-DCMAKE_INSTALL_PREFIX=/opt/csw \
 	-DCMAKE_INCLUDE_PATH=/opt/csw/include \
 	-DCMAKE_LIBRARY_PATH=/opt/csw/lib \
-	-DCMAKE_INSTALL_RPATH=-R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib \
+	-DCMAKE_INSTALL_RPATH=/opt/csw/lib/\$$ISALIST /opt/csw/lib \
 	-DCMAKE_EXE_LINKER_FLAGS=-Bdirect \
 	-DCMAKE_C_COMPILER=gcc ..
 	@$(MAKECOOKIE)
