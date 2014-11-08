@@ -25,6 +25,7 @@ BUILD_DEP_PKGS += CSWcoreutils
 RUNTIME_DEP_PKGS = CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibreadline6
 RUNTIME_DEP_PKGS += CSWlibxml2-2
+RUNTIME_DEP_PKGS += CSWlibgnugetopt0
 
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
