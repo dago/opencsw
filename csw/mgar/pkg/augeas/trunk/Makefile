@@ -20,8 +20,8 @@ SPKG_DESC_CSWaugeas = $(DESCRIPTION)
 SPKG_DESC_CSWlibaugeas0-19-0 = The libaugeas.so.0.* files 
 SPKG_DESC_CSWlibfa1-4-0 = The libfa.so.1.* files
 
-PKGFILES_CSWlibaugeas0-19-0 = $(libdir)/libaugeas.so.0.*
-PKGFILES_CSWlibfa1-4-0 = $(libdir)/libfa.so.1.*
+PKGFILES_CSWlibaugeas0-19-0 = $(libdir)/libaugeas.so.*
+PKGFILES_CSWlibfa1-4-0 = $(libdir)/libfa.so.*
 
 BUILD_DEP_PKGS = CSWlibxml2-2
 BUILD_DEP_PKGS += CSWlibxml2-dev
@@ -31,13 +31,16 @@ BUILD_DEP_PKGS += CSWlibgnugetopt-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWcoreutils
 
-RUNTIME_DEP_PKGS_CSWaugeas = CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWaugeas += CSWlibgnugetopt0
-RUNTIME_DEP_PKGS_CSWaugeas += CSWlibfa1-4-0
-RUNTIME_DEP_PKGS_CSWaugeas += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWaugeas += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_augeas = CSWlibreadline6
+RUNTIME_DEP_PKGS_augeas += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_augeas += CSWlibfa1-4-0
+RUNTIME_DEP_PKGS_augeas += CSWlibxml2-2
+RUNTIME_DEP_PKGS_augeas += CSWlibgcc-s1
 
-RUNTIME_DEP_PKGS_CSWlibaugeas0-19-0 = $(RUNTIME_DEP_PKGS_CSWaugeas)
+RUNTIME_DEP_PKGS_CSWaugeas = $(RUNTIME_DEP_PKGS_augeas) 
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibaugeas0-19-0
+
+RUNTIME_DEP_PKGS_CSWlibaugeas0-19-0 = $(RUNTIME_DEP_PKGS_augeas)
 
 RUNTIME_DEP_PKGS_CSWlibfa1-4-0 = CSWlibgnugetop0
 RUNTIME_DEP_PKGS_CSWlibfa1-4-0 = CSWlibgcc-s1
