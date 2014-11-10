@@ -14,6 +14,15 @@ MASTER_SITES = http://download.augeas.net/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
+PACKAGES = CSWaugeas CSWlibaugeas0-19-0 CSWlibfa1-4-0
+
+SPKG_DESC_CSWaugeas = $(DESCRIPTION)
+SPKG_DESC_CSWlibaugeas0-19-0 = The libaugeas.so.0.* files 
+SPKG_DESC_CSWlibfa1-4-0 = The libfa.so.1.* files
+
+PKGFILES_CSWlibaugeas0-19-0 = $(libdir)/libaugeas.so.0.*
+PKGFILES_CSWlibfa1-4-0 = $(libdir)/libfa.so.1.*
+
 BUILD_DEP_PKGS = CSWlibxml2-2
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWgcc4core
@@ -22,10 +31,16 @@ BUILD_DEP_PKGS += CSWlibgnugetopt-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWcoreutils
 
-RUNTIME_DEP_PKGS = CSWlibgcc-s1
-RUNTIME_DEP_PKGS += CSWlibreadline6
-RUNTIME_DEP_PKGS += CSWlibxml2-2
-RUNTIME_DEP_PKGS += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWaugeas = CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibfa1-4-0
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibgcc-s1
+
+RUNTIME_DEP_PKGS_CSWlibaugeas0-19-0 = $(RUNTIME_DEP_PKGS_CSWaugeas)
+
+RUNTIME_DEP_PKGS_CSWlibfa1-4-0 = CSWlibgnugetop0
+RUNTIME_DEP_PKGS_CSWlibfa1-4-0 = CSWlibgcc-s1
 
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
@@ -38,13 +53,7 @@ EXTRA_LDFLAGS = -lgnugetopt
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # test are currently failing (sudo, sip_conf)
-SKIPTEST=1
-
-CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaugeas.so.0.19.0|soname=libaugeas.so.0|pkgname=CSWaugeas|expected=CSWlibaugeas0
-CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libfa.so.1.4.0|soname=libfa.so.1|pkgname=CSWaugeas|expected=CSWlibfa1
-CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibgnugetopt0
-
+#SKIPTEST=1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/charset.alias
 MERGE_DIRS_isa-extra = $(libdir)
