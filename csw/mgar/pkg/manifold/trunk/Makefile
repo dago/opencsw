@@ -22,11 +22,12 @@ ARCHALL_CSWmanifold = 1
 RUNTIME_DEP_PKGS_CSWmanifold += CSWgenshi
 CHECKPKG_OVERRIDES_CSWmanifold += surplus-dependency|CSWgenshi
 # As reported in https://www.opencsw.org/mantis/view.php?id=4920
-RUNTIME_DEP_PKGS_CSWmanifold += CSWpysetuptools
-CHECKPKG_OVERRIDES_CSWmanifold += surplus-dependency|CSWpysetuptools
+RUNTIME_DEP_PKGS_CSWmanifold += CSWpy-setuptools
+CHECKPKG_OVERRIDES_CSWmanifold += surplus-dependency|CSWpy-setuptools
 
 # That is the URL of the DTD to check against
-CHECKPKG_OVERRIDES_CSWmanifold += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/manifold/manifold.py
+CHECKPKG_OVERRIDES_CSWmanifold += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/manifold/manifold.py
+CHECKPKG_OVERRIDES_CSWmanifold += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/manifold/manifold.py
 
 # This is just a binary with a private lib
 CHECKPKG_OVERRIDES_CSWmanifold += catalogname-does-not-start-with-py_
