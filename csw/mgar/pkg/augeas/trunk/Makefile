@@ -30,8 +30,6 @@ RUNTIME_DEP_PKGS += CSWlibgnugetopt0
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
 
-PATCHFILES = 0001-import-GH-89-xymon_alerting.aug-fix.patch
-
 # Building on Solaris 10 doesn't work as it support C99 and the above fixes are
 # not necessary there.
 # Disable 64 bit for now.
