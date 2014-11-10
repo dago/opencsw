@@ -41,7 +41,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 SKIPTEST=1
 
 CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaugeas.so.0.18.0|soname=libaugeas.so.0|pkgname=CSWaugeas|expected=CSWlibaugeas0
+CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaugeas.so.0.19.0|soname=libaugeas.so.0|pkgname=CSWaugeas|expected=CSWlibaugeas0
 CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-pkgname-mismatch|file=opt/csw/lib/libfa.so.1.4.0|soname=libfa.so.1|pkgname=CSWaugeas|expected=CSWlibfa1
 CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibgnugetopt0
 
