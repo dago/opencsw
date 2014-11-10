@@ -16,7 +16,8 @@ DISTFILES = $(NAxE)-$(VERSION).tar.gz
 PACKAGES += CSWhelp2man
 SPKG_DESC_CSWhelp2man = A tool for automatically generating simple manual pages from program output
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWhelp2man += CSWpm-locale-gettext
+RUNTIME_DEP_PKGS_CSWhelp2man += CS# Perl module dependency cannot be tracked by checkpkg
+CHECKPKG_OVERRIDES_CSWhelp2man += surplus-dependency|KGS_CSWhelp2man += CSWpm-locale-gettext
 
 REINPLACE_USRSHARE += help2man.info
 
