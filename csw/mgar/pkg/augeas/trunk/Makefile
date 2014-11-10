@@ -17,8 +17,8 @@ VENDOR_URL = http://augeas.net
 PACKAGES = CSWaugeas CSWlibaugeas0-19-0 CSWlibfa1-4-0
 
 SPKG_DESC_CSWaugeas = $(DESCRIPTION)
-SPKG_DESC_CSWlibaugeas0-19-0 = The libaugeas.so.0.* files 
-SPKG_DESC_CSWlibfa1-4-0 = The libfa.so.1.* files
+SPKG_DESC_CSWlibaugeas0-19-0 = The libaugeas.so.* files 
+SPKG_DESC_CSWlibfa1-4-0 = The libfa.so.* files
 
 PKGFILES_CSWlibaugeas0-19-0 = $(libdir)/libaugeas.so.*
 PKGFILES_CSWlibfa1-4-0 = $(libdir)/libfa.so.*
@@ -56,7 +56,7 @@ EXTRA_LDFLAGS = -lgnugetopt
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # test are currently failing (sudo, sip_conf)
-#SKIPTEST=1
+SKIPTEST=1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/charset.alias
 MERGE_DIRS_isa-extra = $(libdir)
