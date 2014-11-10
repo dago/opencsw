@@ -1,0 +1,25 @@
+From fba1e08c0c6177bc434abb05ff6ce4e7b15f4159 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 10 Nov 2014 15:46:28 +0100
+Subject: [PATCH] Use correct signature for compress
+
+---
+ lzip.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lzip.h b/lzip.h
+index df05905..6784069 100644
+--- a/lzip.h
++++ b/lzip.h
+@@ -162,7 +162,7 @@ void xwait( pthread_cond_t * const cond, pthread_mutex_t * const mutex );
+ void xsignal( pthread_cond_t * const cond );
+ void xbroadcast( pthread_cond_t * const cond );
+ int compress( const int data_size, const int dictionary_size,
+-              const int match_len_limit, int num_workers,
++              const int match_len_limit, const int num_workers,
+               const int infd, const int outfd,
+               const Pretty_print & pp, const int debug_level );
+ 
+-- 
+2.0.3
+
