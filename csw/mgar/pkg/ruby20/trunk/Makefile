@@ -15,7 +15,7 @@ DISTNAME = ruby-$(VERSION)-$(PATCHLEVEL)
 GARTYPE = v2
 
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
-DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
+DISTFILES = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
 PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
 PATCHFILES += 0002-added-opt-csw-bin-to-find_exectuable0.patch
@@ -33,7 +33,7 @@ endef
 
 PACKAGES = CSWruby20 
 SPKG_DESC_CSWruby20 = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWruby20 = CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWruby20 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtcl8-5
@@ -53,7 +53,7 @@ SPKG_DESC_CSWruby20-ri = Documentation for Ruby 2.0
 PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
 ARCHALL_CSWruby20-ri = 1
 
-BUILD_DEP_PKGS   = CSWlibssl-dev
+BUILD_DEP_PKGS = CSWlibssl-dev
 
 # checkpkg just supports ruby18 and ruby19 and ruby20 clearly does not depend on these packages
 CHECKPKG_OVERRIDES_CSWruby20 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
@@ -82,7 +82,7 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/mkmf.rb
 
 ALTERNATIVES_CSWruby20 = ruby20
-ALTERNATIVE_ruby20  = $(bindir)/ruby ruby $(bindir)/ruby$(SHORTVER) 20 
+ALTERNATIVE_ruby20 += $(bindir)/ruby ruby $(bindir)/ruby$(SHORTVER) 20 
 ALTERNATIVE_ruby20 += $(bindir)/irb irb $(bindir)/irb$(SHORTVER)
 ALTERNATIVE_ruby20 += $(bindir)/erb erb $(bindir)/erb$(API_SORT)
 ALTERNATIVE_ruby20 += $(bindir)/rdoc rdoc $(bindir)/rdoc$(SHORTVER)
@@ -109,7 +109,7 @@ EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/irb.1
 EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/rake.1
 EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man1/ri.1
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-shared
+CONFIGURE_ARGS += $(DIRPATHS) --enable-shared
 CONFIGURE_ARGS += --program-suffix=$(SHORTVER)
 CONFIGURE_ARGS += --with-soname=ruby$(SHORTVER)
 CONFIGURE_ARGS += --enable-shared
