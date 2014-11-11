@@ -24,7 +24,11 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = hiera
 
+# currently checkpkg does not know anything about ruby20
 CHECKPKG_OVERRIDES_CSWhiera += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+
+# we really depend on ruby20
+CHECKPKG_OVERRIDES_CSWhiera += surplus-dependency|CSWruby20
 
 include gar/category.mk
 
