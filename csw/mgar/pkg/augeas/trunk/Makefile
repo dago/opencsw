@@ -39,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWlibaugeas0 = $(RUNTIME_DEP_PKGS_augeas)
 PACKAGES += CSWlibfa1
 SPKG_DESC_CSWlibfa1 = The libfa.so.* files
 PKGFILES_CSWlibfa1 += $(call pkgfiles_lib,libfa.so.1)   
-RUNTIME_DEP_PKGS_CSWlibfa1 = CSWlibgnugetop0
+RUNTIME_DEP_PKGS_CSWlibfa1 = CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSWlibfa1 += CSWlibgcc-s1
 
 BUILD64_LIBS_ONLY = 1
