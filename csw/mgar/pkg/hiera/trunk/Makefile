@@ -10,6 +10,8 @@ define BLURB
   Long description
 endef
 
+RUNTIME_DEP_PKGS = CSWruby20
+
 MASTER_SITES = http://downloads.puppetlabs.com/hiera/
 DISTFILES  = $(DISTNAME).tar.gz
 
@@ -21,6 +23,8 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = hiera
+
+CHECKPKG_OVERRIDES_CSWhiera += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
 
 include gar/category.mk
 
