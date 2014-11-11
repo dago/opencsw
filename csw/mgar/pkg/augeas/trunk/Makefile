@@ -14,14 +14,29 @@ MASTER_SITES = http://download.augeas.net/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
-PACKAGES = CSWaugeas CSWlibaugeas0 CSWlibfa1
+RUNTIME_DEP_PKGS_augeas = CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_augeas += CSWlibfa1
+RUNTIME_DEP_PKGS_augeas += CSWlibxml2-2
+RUNTIME_DEP_PKGS_augeas += CSWlibgcc-s1
 
+PACKAGES = CSWaugeas
 SPKG_DESC_CSWaugeas = $(DESCRIPTION)
-SPKG_DESC_CSWlibaugeas0 = The libaugeas.so.* files 
-SPKG_DESC_CSWlibfa1 = The libfa.so.* files
+RUNTIME_DEP_PKGS_CSWaugeas = $(RUNTIME_DEP_PKGS_augeas)
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWaugeas += CSWlibaugeas0
 
+PACKAGES += CSWlibaugeas0
+SPKG_DESC_CSWlibaugeas0 = The libaugeas.so.* files 
 PKGFILES_CSWlibaugeas0 = $(libdir)/libaugeas.so.0.*
+RUNTIME_DEP_PKGS_CSWlibaugeas0 = $(RUNTIME_DEP_PKGS_augeas)
+
+PACKAGES += CSWlibfa1
+SPKG_DESC_CSWlibfa1 = The libfa.so.* files
 PKGFILES_CSWlibfa1 = $(libdir)/libfa.so.1.*
+RUNTIME_DEP_PKGS_CSWlibfa1 = CSWlibgnugetop0
+RUNTIME_DEP_PKGS_CSWlibfa1 += CSWlibgcc-s1
+
+BUILD64_LIBS_ONLY = 1
 
 BUILD_DEP_PKGS = CSWlibxml2-2
 BUILD_DEP_PKGS += CSWlibxml2-dev
@@ -31,22 +46,8 @@ BUILD_DEP_PKGS += CSWlibgnugetopt-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWcoreutils
 
-RUNTIME_DEP_PKGS_augeas += CSWlibgnugetopt0
-RUNTIME_DEP_PKGS_augeas += CSWlibfa1
-RUNTIME_DEP_PKGS_augeas += CSWlibxml2-2
-RUNTIME_DEP_PKGS_augeas += CSWlibgcc-s1
-
 CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibxml2-2
 CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibgcc-s1
-
-RUNTIME_DEP_PKGS_CSWaugeas = $(RUNTIME_DEP_PKGS_augeas) CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWaugeas += CSWlibaugeas0
-
-RUNTIME_DEP_PKGS_CSWlibaugeas0 = $(RUNTIME_DEP_PKGS_augeas)
-
-RUNTIME_DEP_PKGS_CSWlibfa1 = CSWlibgnugetop0
-RUNTIME_DEP_PKGS_CSWlibfa1 = CSWlibgcc-s1
-
 CHECKPKG_OVERRIDES_CSWlibfa1 += missing-dependency|CSWlibgnugetopt0
 
 GARCOMPILER = GCC4
