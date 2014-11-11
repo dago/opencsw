@@ -14,37 +14,37 @@ MASTER_SITES = http://download.augeas.net/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
-RUNTIME_DEP_PKGS_augeas = CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_augeas += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_augeas += CSWlibfa1
 RUNTIME_DEP_PKGS_augeas += CSWlibxml2-2
 RUNTIME_DEP_PKGS_augeas += CSWlibgcc-s1
 
 PACKAGES = CSWaugeas
 SPKG_DESC_CSWaugeas = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWaugeas = $(RUNTIME_DEP_PKGS_augeas)
+RUNTIME_DEP_PKGS_CSWaugeas += $(RUNTIME_DEP_PKGS_augeas)
 RUNTIME_DEP_PKGS_CSWaugeas += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWaugeas += CSWlibaugeas0
 
 PACKAGES += CSWlibaugeas-dev
 SPKG_DESC_CSWlibaugeas-dev = The libaugeas development files
 PKGFILES_CSWlibaugeas-dev = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibaugeas-dev = CSWlibfa1
+RUNTIME_DEP_PKGS_CSWlibaugeas-dev += CSWlibfa1
 RUNTIME_DEP_PKGS_CSWlibaugeas-dev += CSWlibaugeas0
 
 PACKAGES += CSWlibaugeas0
 SPKG_DESC_CSWlibaugeas0 = The libaugeas.so.* files 
-PKGFILES_CSWlibaugeas0 += $(call pkgfiles_lib,libaugeas.so.0)   
+PKGFILES_CSWlibaugeas0 = $(call pkgfiles_lib,libaugeas.so.0)   
 RUNTIME_DEP_PKGS_CSWlibaugeas0 = $(RUNTIME_DEP_PKGS_augeas)
 
 PACKAGES += CSWlibfa1
 SPKG_DESC_CSWlibfa1 = The libfa.so.* files
-PKGFILES_CSWlibfa1 += $(call pkgfiles_lib,libfa.so.1)   
-RUNTIME_DEP_PKGS_CSWlibfa1 = CSWlibgnugetopt0
+PKGFILES_CSWlibfa1 = $(call pkgfiles_lib,libfa.so.1)   
+RUNTIME_DEP_PKGS_CSWlibfa1 += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSWlibfa1 += CSWlibgcc-s1
 
 BUILD64_LIBS_ONLY = 1
 
-BUILD_DEP_PKGS = CSWlibxml2-2
+BUILD_DEP_PKGS += CSWlibxml2-2
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWgcc4core
 BUILD_DEP_PKGS += CSWlibreadline-dev
