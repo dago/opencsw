@@ -14,7 +14,7 @@ define BLURB
 DISTFILES += $(DISTNAME).tar.gz
 
 # Use patch until this is fixed:
-#   http://lists.nongnu.org/archive/html/lzip-bug/2014-10/threads.html
+#   http://lists.nongnu.org/archive/html/lzip-bug/2014-11/msg00000.html
 PATCHFILES += 0001-Use-correct-signature-for-compress.patch
 
 BUILD_DEP_PKGS += CSWliblz-dev
