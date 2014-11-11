@@ -33,9 +33,14 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = facter
 
-CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/ssh.rb
-CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/Cfkey.rb
-CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/util/manufacturer.rb
+CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/l2.0.0/facter/ssh.rbCRIPTS   = facter
+
+CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/l2.0.0ruby/site_ruby/1.8/facter/Cfkey.rb
+CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/l2.0.0/facter/util/manufacturer.rb
+
+# we depend on ruby20 but checkpkg does not know anything about it
+CHECKPKG_OVERRIDES_CSWfacter += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+CHECKPKG_OVERRIDES_CSWfacter += surplus-dependency|CSWruby20il/manufacturer.rb
 
 include gar/category.mk
 
