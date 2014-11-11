@@ -17,8 +17,22 @@ GARTYPE = v2
 MASTER_SITES = http://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.gz
 
-PACKAGES = CSWruby20 CSWruby20-dev CSWruby20-ri 
+PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
+PATCHFILES += 0002-added-opt-csw-bin-to-find_exectuable0.patch
 
+DESCRIPTION = An object-oriented language for quick and easy programming.
+define BLURB
+  Ruby is a language for quick and easy programming. Similar in scope to Perl
+  and Python, it has high-level data types, automatic memory management,
+  dynamic typing, a module system, exceptions, and a rich standard library.
+  What sets Ruby apart is a clean and consistent language design where
+  everything is an object. Other distinguishing features are CLU-style
+  iterators for loop abstraction, singleton classes/methods and lexical
+  closures.
+endef
+
+PACKAGES = CSWruby20 
+SPKG_DESC_CSWruby20 = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWruby20 = CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibtk8-5
@@ -28,6 +42,16 @@ RUNTIME_DEP_PKGS_CSWruby20 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWruby20 += CSWlibreadline6
+
+PACKAGES += CSWruby20-dev
+SPKG_DESC_CSWruby20-dev = Ruby 2.0 Extension Development Files
+PKGFILES_CSWruby20-dev = $(includedir)/.* 
+RUNTIME_DEP_PKGS_CSWruby20-dev = CSWruby20
+
+PACKAGES += CSWruby20-ri 
+SPKG_DESC_CSWruby20-ri = Documentation for Ruby 2.0
+PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
+ARCHALL_CSWruby20-ri = 1
 
 BUILD_DEP_PKGS   = CSWlibssl-dev
 
@@ -56,29 +80,6 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 
 # we've added /opt/csw/bin to find_executable0
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/mkmf.rb
-
-PATCHFILES += 0001-add-csw-paths-to-dln.c-and-dln_find.c.patch
-PATCHFILES += 0002-added-opt-csw-bin-to-find_exectuable0.patch
-
-PKGFILES_CSWruby20-dev = $(includedir)/.* 
-PKGFILES_CSWruby20-ri  =  $(datadir)/ri/.* $(bindir)/ri$(API_SHORT)
-
-ARCHALL_CSWruby20-ri = 1
-
-DESCRIPTION = An object-oriented language for quick and easy programming.
-define BLURB
-  Ruby is a language for quick and easy programming. Similar in scope to Perl
-  and Python, it has high-level data types, automatic memory management,
-  dynamic typing, a module system, exceptions, and a rich standard library.
-  What sets Ruby apart is a clean and consistent language design where
-  everything is an object. Other distinguishing features are CLU-style
-  iterators for loop abstraction, singleton classes/methods and lexical
-  closures.
-endef
-
-SPKG_DESC_CSWruby20 = $(DESCRIPTION)
-SPKG_DESC_CSWruby20-dev = Ruby 2.0 Extension Development Files
-SPKG_DESC_CSWruby20-ri = Documentation for Ruby 2.0
 
 ALTERNATIVES_CSWruby20 = ruby20
 ALTERNATIVE_ruby20  = $(bindir)/ruby ruby $(bindir)/ruby$(SHORTVER) 20 
