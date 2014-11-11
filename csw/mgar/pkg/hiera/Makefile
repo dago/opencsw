@@ -1,19 +1,15 @@
-# Copyright 2012 OpenCSW
-# Distributed under the terms of the GNU General Public License v2
-# $Id$
+# vim: ft=make ts=4 sw=4 noet
 
-NAME = hiera
-VERSION = 1.3.4
-GARTYPE = v2
+default:
+	@echo "You are in the pkg/ directory."
 
-define BLURB
-  Hiera is a key/value lookup tool for configuration data, 
-  built to make Puppet better and let you set node-specific 
-  data without repeating yourself.
-endef
+%:
+	$(MAKE) -C trunk $* 
 
-DISTNAME = puppet-${VERSION}
-MASTER_SITES = http://downloads.puppetlabs.com/hiera/
-DISTFILES  = ${DISTNAME}.tar.gz
-SPKG_SOURCEURL = http://puppetlabs.com/
-LICENSE_CSWhiera = LICENSE
+paranoid-%:
+	$(MAKE) -C trunk $* || exit 2 
+
+export BUILDLOG ?= $(shell pwd)/buildlog.txt
+
+report-%:
+	$(MAKE) -C trunk $* || echo "	*** make $* in $$i failed ***" >> $(BUILDLOG) 
