@@ -45,11 +45,11 @@ SPKG_DESC_CSWpuppet3       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster3 = System configuration management tool, server
 
 RUNTIME_DEP_PKGS = CSWfacter
+RUNTIME_DEP_PKGS += CSWhiera
 RUNTIME_DEP_PKGS += CSWrubyaugeas
 RUNTIME_DEP_PKGS += CSWruby20
 
 RUNTIME_DEP_PKGS_CSWpuppetmaster3 = $(RUNTIME_DEP_PKGS)
-RUNTIME_DEP_PKGS_CSWpuppetmaster3 += CSWhiera
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWpuppetmaster3)
 
@@ -87,7 +87,6 @@ CHECKPKG_OVERRIDES_CSWpuppet3 		+= bad-location-of-file|file=/var/lib/puppet
 # INCOMPATIBLE_PKGS
 CHECKPKG_OVERRIDES_CSWpuppet3 		+= file-collision
 CHECKPKG_OVERRIDES_CSWpuppetmaster3	+= file-collision
-
 
 include gar/category.mk
 
