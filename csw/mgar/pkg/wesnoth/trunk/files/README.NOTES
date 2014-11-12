@@ -1,0 +1,29 @@
+CMAKE_EXE_LINKER_FLAGS:STRING=-lintl -lsocket
+
+
+//Flags used by the CXX compiler during normal builds.
+CMAKE_CXX_FLAGS:STRING='-O2 -W -Wall -std=c++98 -Werror -Wno-strict-aliasing -Wn
+o-unused-local-typedefs -Wno-literal-suffix -Wno-delete-non-virtual-dtor '-
+
+
+
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWemacs-common
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlnet
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlttf
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlimage
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlmixer
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibglib2-0-0
+
+need to take out RPATH from CMake build
+
