@@ -38,6 +38,10 @@ RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-regex1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-iostreams1-49-0-gxx
 
+# Overriding these since they do no harm
+CHECKPKG_OVERRIDES_CSWwesnoth += file-with-bad-content|/usr/local|root/opt/csw/bin/wesnoth
+CHECKPKG_OVERRIDES_CSWwesnoth += file-with-bad-content|/usr/share|root/opt/csw/bin/wesnoth
+
 # Temporarily overriding till we can figure out how to pass -Bdirect thru cmake
 CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL-1.2.so.0
 CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL_image-1.2.so.0
