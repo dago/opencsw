@@ -34,7 +34,7 @@ RUNTIME_DEP_PKGS_CSWlibaugeas-dev += CSWlibaugeas0
 PACKAGES += CSWlibaugeas0
 SPKG_DESC_CSWlibaugeas0 = The libaugeas.so.* files 
 PKGFILES_CSWlibaugeas0 += $(call pkgfiles_lib,libaugeas.so.0)   
-PKGFILES_CSWlibaugeas0 += $(datadir)/augeas/*
+PKGFILES_CSWlibaugeas0 += $(datadir)/augeas/.*
 RUNTIME_DEP_PKGS_CSWlibaugeas0 = $(RUNTIME_DEP_PKGS_augeas)
 
 PACKAGES += CSWlibfa1
