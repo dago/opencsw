@@ -1,0 +1,25 @@
+From f9fb4d7c8a01c8d7ab7f4b0b8894853e0f99a493 Mon Sep 17 00:00:00 2001
+From: Toni Schmidbauer <toni@stderr.at>
+Date: Wed, 12 Nov 2014 22:23:23 +0100
+Subject: [PATCH] change config dir to /etc/opt/csw
+
+---
+ lib/hiera/util.rb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/hiera/util.rb b/lib/hiera/util.rb
+index be09a11..29716ab 100644
+--- a/lib/hiera/util.rb
++++ b/lib/hiera/util.rb
+@@ -23,7 +23,7 @@ class Hiera
+       if microsoft_windows?
+          File.join(common_appdata, 'PuppetLabs', 'hiera', 'etc')
+       else
+-        '/etc'
++        '/etc/opt/csw'
+       end
+     end
+ 
+-- 
+2.0.3
+
