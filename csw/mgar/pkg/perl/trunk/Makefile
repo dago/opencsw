@@ -27,8 +27,8 @@ LICENSE = Copying
 
 # GCC build (Sun Studio build has been fixed)
 GARCOMPILER = GCC4
-MAKE_OPT_unstable10s = -j 24
-MAKE_OPT_unstable10x = -j 4
+#MAKE_OPT_unstable10s = -j 24
+#MAKE_OPT_unstable10x = -j 4
 MAKE_OPT = $(MAKE_OPT_$(shell hostname))
 BUILD64 = 1
 ISAEXEC = 1
