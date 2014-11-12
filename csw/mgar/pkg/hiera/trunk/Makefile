@@ -10,6 +10,8 @@ define BLURB
   Long description
 endef
 
+PATCHFILES += 0001-change-config-dir-to-etc-opt-csw.patch
+
 RUNTIME_DEP_PKGS = CSWruby20
 
 MASTER_SITES = http://downloads.puppetlabs.com/hiera/
