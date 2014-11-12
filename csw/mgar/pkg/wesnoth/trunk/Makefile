@@ -38,6 +38,30 @@ RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-prog-opts1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-regex1-49-0-gxx
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-iostreams1-49-0-gxx
 
+# Temporarily overriding till we can figure out how to pass -Bdirect thru cmake
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL-1.2.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL_image-1.2.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL_mixer-1.2.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL_net-1.2.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libSDL_ttf-2.0.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libboost_iostreams.so.1.49.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libboost_program_options.so.1.49.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libboost_regex.so.1.49.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libboost_system.so.1.49.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libcairo.so.2
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libdbus-1.so.3
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libgobject-2.0.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libpango-1.0.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libpangocairo-1.0.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnoth|is|not|directly|bound|to|soname|libstdc++.so.6
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnothd|is|not|directly|bound|to|soname|libSDL-1.2.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnothd|is|not|directly|bound|to|soname|libSDL_net-1.2.so.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnothd|is|not|directly|bound|to|soname|libboost_iostreams.so.1.49.0
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnothd|is|not|directly|bound|to|soname|libintl.so.8
+CHECKPKG_OVERRIDES_CSWwesnoth += no-direct-binding|/opt/csw/bin/wesnothd|is|not|directly|bound|to|soname|libstdc++.so.6
 
 NOGITPATCH = 1pt/csw/gxx/include
 
