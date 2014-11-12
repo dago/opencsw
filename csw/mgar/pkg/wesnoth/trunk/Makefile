@@ -33,6 +33,11 @@ RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibpangocairo1-0-0
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlmixer
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-system1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-prog-opts1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-regex1-49-0-gxx
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibboost-iostreams1-49-0-gxx
+
 
 NOGITPATCH = 1pt/csw/gxx/include
 
