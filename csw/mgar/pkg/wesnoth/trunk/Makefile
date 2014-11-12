@@ -1,4 +1,3 @@
-# NOTE: Autotools build depreciated switching to cmake.
 # NOTE: cmake finds boost library but "mgar build" step can't find boost 
 #	headers and setting EXTRA_INC or EXTRA_CPPFLAGS doesn't help.
 NAME = wesnoth
@@ -17,11 +16,25 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=89495
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibpango1-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWemacs-common
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlnet
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlttf
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlimage
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibpangocairo1-0-0
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWsdlmixer
+RUNTIME_DEP_PKGS_CSWwesnoth += CSWlibglib2-0-0
 
-NOGITPATCH = 1
-
-EXTRA_INC = /opt/csw/gxx/include
+NOGITPATCH = 1pt/csw/gxx/include
 
 GARCOMPILER = GNU
 
@@ -34,24 +47,38 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include gar/category.mk
 
+# ./configure needs this to find ggettext
+PATH := /opt/csw/gnu:$(PATH)
+
 # Autotools build depreciated now using cmake
 configure-custom:
 	mkdir $(WORKSRC)/build
 	cd $(WORKSRC)/build && \
-	CMAKE_INCLUDE_PATH=/opt/csw/gxx/include:/opt/csw/include \
-	CMAKE_LIBRARY_PATH=/opt/csw/gxx/lib:/opt/csw/lib \
-	CC=gcc CXX=g++ \
-	/opt/csw/bin/cmake \
+	CC=gcc CXX=g++ CXXFLAGS=-Wno-delete-non-virtual-dtor \
+	CPPFLAGS=-I/opt/csw/gxx/include LDFLAGS="-lintl -lsocket -Bdirect" \
+	/opt/csw/bin/cmake VERBOSE=1 \
 	-DCMAKE_INSTALL_PREFIX=/opt/csw \
-	-DCMAKE_VERBOSE_MAKEFILE=TRUE \
-	-DCMAKE_CPP_FLAGS=-I/opt/csw/gxx/include \
-	-DBoost_INCLUDE_DIR=/opt/csw/gxx/include ..
+	-DCMAKE_INCLUDE_PATH=/opt/csw/gxx/include /opt/csw/include \
+	-DCMAKE_LIBRARY_PATH=/opt/csw/gxx/lib /opt/csw/lib \
+	-DCMAKE_INSTALL_RPATH:STRING="/opt/csw/lib/\$$ISALIST:/opt/csw/lib:/opt/csw/gxx/lib" \
+	-DBoost_DEBUG:BOOL=ON \
+	-DBOOST_INCLUDEDIR=/opt/csw/gxx/include \
+	..
 	@$(MAKECOOKIE)
 
 build-custom:
-	cd $(WORKSRC)/build && /opt/csw/bin/gmake
+	# Link the boost headers to the build/src directory in order to work-
+	# around boost headers not being found even though we try to include
+	# them see above (CPPFLAGS) and (-DCMAKE_INCLUDE_PATH).
+	ln -s /opt/csw/gxx/include/boost $(WORKSRC)/build/src/
+	cd $(WORKSRC)/build && /opt/csw/bin/gmake VERBOSE=1
 	@$(MAKECOOKIE)
 
 install-custom:
 	cd $(WORKSRC)/build && /opt/csw/bin/gmake install DESTDIR=$(DESTDIR)
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	# remove .gitignore files from the package install
+	find $(DESTDIR) -type f -name ".gitignore" -exec rm -f {} \;
 	@$(MAKECOOKIE)
