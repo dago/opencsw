@@ -27,8 +27,8 @@ LICENSE = Copying
 
 # GCC build (Sun Studio build has been fixed)
 GARCOMPILER = GCC4
-#MAKE_OPT_unstable10s = -j 24
-#MAKE_OPT_unstable10x = -j 4
+MAKE_OPT_unstable10s = -j 24
+MAKE_OPT_unstable10x = -j 4
 MAKE_OPT = $(MAKE_OPT_$(shell hostname))
 BUILD64 = 1
 ISAEXEC = 1
@@ -39,7 +39,7 @@ NOGITPATCH = 1
 
 # Let put perl in a separate dir as a migration strategy
 prefix = $(BUILD_PREFIX)/perlgcc
-EXTRA_RUNPATH_DIRS = $(prefix)/$(libdir)
+#EXTRA_RUNPATH_DIRS = $(prefix)/$(libdir)
 
 # Depends
 RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgcc-s1
