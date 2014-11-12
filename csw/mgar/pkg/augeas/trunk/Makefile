@@ -54,7 +54,9 @@ BUILD_DEP_PKGS += CSWcoreutils
 
 CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibxml2-2
 CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibgcc-s1
-CHECKPKG_OVERRIDES_CSWlibfa1 += missing-dependency|CSWlibgnugetopt0
+CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibgnugetopt0
+CHECKPKG_OVERRIDES_CSWlibfa1 += surplus-dependency|CSWlibgnugetopt0
+CHECKPKG_OVERRIDES_CSWlibaugeas0 += surplus-dependency|CSWlibgnugetopt0
 
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
