@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = ghostscript
-VERSION = 9.14
+VERSION = 9.15
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -11,6 +11,8 @@ endehttp://downloads.ghostscript.com/public/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += map.ghostscript$(# See for details https://www.opencsw.org/mantis/view.php?id=4913
 #PATCHFILES += 0001-Use-ksh-and-GNU-sed-as-reported-in-4913.patch
+
+PATCHFILES += 0001-Fix-for-latest-autotools.patch
 
 VENDOR_URL = http://www.ghostscript.com
 
@@ -51,6 +53,8 @@ RUNTIME_DEP_PKGS_CSWghostscript += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibgtk-x11-2-0-0
 RUNTIME_DEP_PKGS_CSWghostscript += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWghostscript += CSWlibijs0-35
+RUNTIME_DEP_PKGS_CSWghostscript-sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWghostscript += $(RUNTIME_DEP_PKGS_CSWghostscript-$(GARCH))
 
 # These are probably ok
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/lprsetup.sh
@@ -61,8 +65,6 @@ CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/lprsetup.sh
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/lprsetup.sh
 CHECKPKG_OVERRIDES_CSWghostscript += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/unix-lpr.sh
-
-CHECKPKG_OVERRIDES_CSWghostscript += missing-dependency|CSWemacs-common
 
 # This was the old package
 OBSOLETED_BY_CSWghostscript += CSWgs
@@ -89,13 +91,14 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibpaper1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgs9 += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWlibgs9-sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgs9 += $(RUNTIME_DEP_PKGS_CSWlibgs9-$(GARCH))
+
 
 # This used to be a separate library and is now maintained as part of Ghostscript
 PACKAGES += CSWlibijs0-35
-CATALOGNAME_CSWlibijs0-35 = libijs0_35
-PKGFILES_CSWlibijs0-35 += $(call baseisadirs,$(libdir),libijs-0\.35\.so)
-PKGFILES_CSWlibijs0-35 += $(call baseisadirs,$(libdir),libijs-0\.35\.so(\.\d+)*)
-SPKG_DESC_CSWlibijs0-35 += $(DESCRIPTION), libijs-0.35.so
+PKGFILES_CSWlibijs0-35 += $(call pkgfiles_lib,libijs-0.35.so)
+SPKG_DESC_CSWlibijs0-35 = $(DESCRIPTION), libijs-0.35.so
 RUNTIME_DEP_PKGS_CSWlibijs0-35 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibijs0-35 = CSWijs
 CHECKPKG_OVERRIDES_CSWlibijs0-35 += soname-equals-filename
@@ -112,18 +115,6 @@ PKGFILES_CSWghostscript-dev += $(call baseisadirs,$(libdir),libijs\.so)
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibgs9
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWlibijs0-35
 RUNTIME_DEP_PKGS_CSWghostscript-dev += CSWghostscript
-
-###
-# Needed for the Solaris ld bug
-ifeq ($(shell /usr/bin/uname -p),sparc)
-RUNTIME_DEP_PKGS_CSWghostscript += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgpg-error0
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibgnutls28
-RUNTIME_DEP_PKGS_CSWlibgs9 += CSWlibk5crypto3
-endif
-###
 
 REINPLACEMENTS += fontpath
 REINPLACE_MATCH_fontpath = /usr/share/cups/fonts
@@ -154,9 +145,9 @@ CONFIGURE_ARGS_ijs += --disable-static
 BUILD_ARGS += so
 
 # This is needed because libidn.so and libpaper.so are not linked with LDFLAGS set
-BUILD_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
+#BUILD_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
 
-TEST_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
+#TEST_ARGS += XTRALIBS="$(strip $(LINKER_FLAGS))"
 
 INSTALL_ARGS += soinstall
 
@@ -173,6 +164,9 @@ include gar/category.mkinpost-extract:
 	rm -rf $(WORKSRC)/freetype
 	rm -rf $(WORKSRC)/expat
 	@$(MAKECOOKIE)
+
+# For building IJS take this into account:
+#   http://bugs.ghostscript.com/show_bug.cgi?id=692040
 
 post-configure:
 	# Specific for libijs
