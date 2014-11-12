@@ -81,6 +81,8 @@ CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/li
 # we've added /opt/csw/bin to find_executable0
 CHECKPKG_OVERRIDES_CSWruby20 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.0.0/mkmf.rb
 
+CHECKPKG_OVERRIDES_CSWruby20-dev += surplus-dependency|CSWruby20
+
 ALTERNATIVES_CSWruby20 = ruby20
 ALTERNATIVE_ruby20 += $(bindir)/ruby ruby $(bindir)/ruby$(SHORTVER) 20 
 ALTERNATIVE_ruby20 += $(bindir)/irb irb $(bindir)/irb$(SHORTVER)
