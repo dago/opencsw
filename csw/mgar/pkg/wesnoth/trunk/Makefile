@@ -94,6 +94,7 @@ configure-custom:
 	-DCMAKE_INCLUDE_PATH=/opt/csw/gxx/include /opt/csw/include \
 	-DCMAKE_LIBRARY_PATH=/opt/csw/gxx/lib /opt/csw/lib \
 	-DCMAKE_INSTALL_RPATH:STRING="/opt/csw/lib/\$$ISALIST:/opt/csw/lib:/opt/csw/gxx/lib" \
+	-DFIFO_DIR:STRING=/var/opt/csw/run/wesnothd \
 	-DBoost_DEBUG:BOOL=ON \
 	-DBOOST_INCLUDEDIR=/opt/csw/gxx/include \
 	..
