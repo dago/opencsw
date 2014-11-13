@@ -15,13 +15,13 @@ PACKAGES    = CSWrubyaugeas
 CATALOGNAME = ruby_augeas
 
 RUNTIME_DEP_PKGS_CSWrub20 += CSWlibruby18-1
-RUNTIME_DEP_PKGS_CSlibaugeas0ugeas += CSWaugeas
-CHECKPKG_OVERRIDES_CSWrubyaugeas += catalogname-does-not-match-pkgname|pkgname=CSWrubyaugeas|catalogname=ruby_augeas|expected-catalogname=rubyaugeas
-# covered by CSWaugeas - and agreed not to split
-CHECKPKG_OVERRIDES_CSWrubyaugeas += soname-not-found|libaugeas.so.0|is|needed|by|opt/csw/lib/ruby/site_ruby/1.8/sparc-solarPATCHFILES = 0001-use-gnu-make-for-building-_augeas.so.patch
+RUNTIME_DEP_PKGS_CSlibaugeas0uRUNTIME_DEP_PKGS_CSWrubyaugeas += CSWlibxml2-2
+ugeas += CSWaugeas
+CHECKPKG_OVERRIDES_CSWrubyaugeas += catalogname-does-not-match-pkgname|pkgname=CSWrubyaugeas|catalogname=ruby_augeas|expected-catal
+PATCHFILES += 0001-use-gnu-make-for-building-_augeas.so.patch
 PATCHFILES += 0002-modify-LDFLAGS-to-add-opt-csw-lib-to-the-runtime-lin.patch
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWrubyaugeas)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWrubyaugeas)
 BUILD_DEP_PKGS += CSWruby20-dev
 BUILD_DEP_PKGS += CSWlibaugeas-dev
 GS    += CSWruby18

@@ -16,7 +16,7 @@ index 00675c6..a4443ec 100644
  ##
  require 'mkmf'
  
-+$LDFLAGS << " -R/opt/csw/lib"
++$LDFLAGS << " -R/opt/csw/lib -Bdirect"
 +
  extension_name = '_augeas'
  
