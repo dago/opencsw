@@ -33,25 +33,23 @@ INITSMF += $(sysconfdir)/init\.d/cswpuppetd
 INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
+PACKAGES += CSWpuppet3
+SPKG_DESC_CSWpuppet3 = System configuration management tool, client daemon
+RUNTIME_DEP_PKGS_CSWpuppet3 += CSWfacter
+RUNTIME_DEP_PKGS_CSWpuppet3 += CSWhiera
+RUNTIME_DEP_PKGS_CSWpuppet3 += CSWrubyaugeas
+RUNTIME_DEP_PKGS_CSWpuppet3 += CSWruby20
+BUILD_DEP_PKGS_CSWpuppet3 = $(RUNTIME_DEP_PKGS_CSWpuppet3)
+
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
 # service isn't started upon the installation of CSWpuppet.
 PACKAGES += CSWpuppetmaster3
-PACKAGES += CSWpuppet3
+SPKG_DESC_CSWpuppetmaster3 = System configuration management tool, server
+RUNTIME_DEP_PKGS_CSWpuppetmaster3 = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS_CSWpuppet3 = $(RUNTIME_DEP_PKGS_CSWpuppet3)
 
 INCOMPATIBLE_PKGS += CSWpuppet
 INCOMPATIBLE_PKGS += CSWpuppetmaster
-
-SPKG_DESC_CSWpuppet3       = System configuration management tool, client daemon
-SPKG_DESC_CSWpuppetmaster3 = System configuration management tool, server
-
-RUNTIME_DEP_PKGS = CSWfacter
-RUNTIME_DEP_PKGS += CSWhiera
-RUNTIME_DEP_PKGS += CSWrubyaugeas
-RUNTIME_DEP_PKGS += CSWruby20
-
-RUNTIME_DEP_PKGS_CSWpuppetmaster3 = $(RUNTIME_DEP_PKGS)
-
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWpuppetmaster3)
 
 PKGFILES_CSWpuppetmaster3  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster3 += $(sbindir)/puppetmasterd
@@ -70,23 +68,33 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
-CHECKPKG_OVERRIDES_CSWpuppetmaster3  = surplus-dependency|CSWruby20
-CHECKPKG_OVERRIDES_CSWpuppet3        = surplus-dependency|CSWfacter
-CHECKPKG_OVERRIDES_CSWpuppet3       += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpuppet3 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWruby20
+CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWrubyaugeas
+CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWhiera
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
 # /usr/share and /usr/local.
-CHECKPKG_OVERRIDES_CSWpuppet3 	    += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWpuppet3 += file-with-bad-content
 # These files are quite deliberate - without them users will not get CSW
 # behaviour. The README explains
-CHECKPKG_OVERRIDES_CSWpuppet3 	    += bad-location-of-file|file=/etc/puppet
-CHECKPKG_OVERRIDES_CSWpuppet3 	    += bad-location-of-file|file=/etc/puppet/README.CSW
-CHECKPKG_OVERRIDES_CSWpuppet3 	    += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
-CHECKPKG_OVERRIDES_CSWpuppet3 		+= bad-location-of-file|file=/var/lib
-CHECKPKG_OVERRIDES_CSWpuppet3 		+= bad-location-of-file|file=/var/lib/puppet
-# yes, yes, we know it conflicts with puppet{,.asmter} - that's the point of
+CHECKPKG_OVERRIDES_CSWpuppet3 += bad-location-of-file|file=/etc/puppet
+CHECKPKG_OVERRIDES_CSWpuppet3 += bad-location-of-file|file=/etc/puppet/README.CSW
+CHECKPKG_OVERRIDES_CSWpuppet3 += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
+CHECKPKG_OVERRIDES_CSWpuppet3 += bad-location-of-file|file=/var/lib
+CHECKPKG_OVERRIDES_CSWpuppet3 += bad-location-of-file|file=/var/lib/puppet
+# yes, yes, we know it conflicts with puppet{,master} - that's the point of
 # INCOMPATIBLE_PKGS
-CHECKPKG_OVERRIDES_CSWpuppet3 		+= file-collision
-CHECKPKG_OVERRIDES_CSWpuppetmaster3	+= file-collision
+CHECKPKG_OVERRIDES_CSWpuppet3 += file-collision
+
+CHECKPKG_OVERRIDES_CSWpuppetmaster3 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWrubyaugeas
+CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWhiera
+CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWruby20
+# yes, yes, we know it conflicts with puppet{,master} - that's the point of
+# INCOMPATIBLE_PKGS
+CHECKPKG_OVERRIDES_CSWpuppetmaster += file-collision
 
 include gar/category.mk
 
