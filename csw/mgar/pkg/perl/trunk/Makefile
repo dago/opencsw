@@ -39,7 +39,8 @@ NOGITPATCH = 1
 
 # Let put perl in a separate dir as a migration strategy
 prefix = $(BUILD_PREFIX)/perlgcc
-#EXTRA_RUNPATH_DIRS = $(prefix)/$(libdir)
+##EXTRA_RUNPATH_DIRS = $(prefix)/$(libdir)
+EXTRA_RUNPATH_LINKER_FLAGS += $(prefix)/$(libdir)/perl/5.20/CORE
 
 # Depends
 RUNTIME_DEP_PKGS_CSWperlgcc += CSWlibgcc-s1
