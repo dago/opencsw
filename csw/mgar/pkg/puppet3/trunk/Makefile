@@ -94,7 +94,7 @@ CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWhiera
 CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWruby20
 # yes, yes, we know it conflicts with puppet{,master} - that's the point of
 # INCOMPATIBLE_PKGS
-CHECKPKG_OVERRIDES_CSWpuppetmaster += file-collision
+CHECKPKG_OVERRIDES_CSWpuppetmaster3 += file-collision
 
 include gar/category.mk
 
