@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = gnustep-base
-VERSION = 1.24.6
+VERSION = 1.24.7
 GARTYPE = v2
 
 DESCRIPTION = GNUstep-core base
@@ -10,22 +10,38 @@ define BLURB
   GNUstep-core base framework, which provides all Foundation equivalent classes, useful for all non-gui objective-c development. A prerequisite for all GNUstep tools as well as applications.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWlibgnutls-dev CSWlibffi-dev CSWlibicu-dev CSWlibxml2-dev CSWlibxslt-dev 
-DEP_PKGS = CSWgnustep-make 
-DEP_PKGS += CSWlibffi5 
-DEP_PGKS += CSWlibicui18n52 CSWlibicuuc52 CSWlibicudata52
-DEP_PGKS += CSWlibobjc4 CSWlibgcc-s1 CSWlibgmp10
-DEP_PGKS += CSWlibssl1-0-0 CSWlibgnutls28 CSWlibgcrypt20
-DEP_PGKS += CSWlibxslt1 CSWlibxml2-2
+BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWgnustep-make
+RUNTIME_DEP_PKGS = CSWgnustep-make
+
+BUILD_DEP_PKGS += CSWlibffi-dev
+RUNTIME_DEP_PKGS += CSWlibffi5 
+
+BUILD_DEP_PKGS += CSWlibicu-dev
+RUNTIME_DEP_PGKS += CSWlibicui18n52 CSWlibicuuc52 CSWlibicudata52
+
+RUNTIME_DEP_PGKS += CSWlibobjc4 CSWlibgcc-s1 CSWlibgmp10
+
+BUILD_DEP_PKGS += CSWlibgnutls-dev
+RUNTIME_DEP_PGKS += CSWlibssl1-0-0 CSWlibgnutls28 CSWlibgcrypt20
+
+BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibxslt-dev
+RUNTIME_DEP_PGKS += CSWlibxslt1 CSWlibxml2-2
+BUILD_DEP_PKGS += CSWlibiconv-dev
+RUNTIME_DEP_PKGS += CSWlibiconv2
+
+#some known overrides
+CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
 
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
 
-#where can we build?
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-PATCHFILES += 0001-configure-tweak-align.patch
+
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-sparc
+
+#PATCHFILES += 0001-configure-tweak-align.patch
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
