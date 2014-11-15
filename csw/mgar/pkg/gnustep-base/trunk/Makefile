@@ -29,8 +29,6 @@ RUNTIME_DEP_PGKS_CSWgnustep-base += CSWlibxslt1 CSWlibxml2-2
 BUILD_DEP_PKGS_CSWgnustep-base += CSWlibiconv-dev
 RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibiconv2
 
-#some known overrides
-CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
 
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -46,6 +44,7 @@ PACKAGING_PLATFORMS += solaris10-sparc
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
 
+EXTRA_RUNPATH_DIRS = /opt/csw/GNUstep/System/Library/Libraries
 
 #we disable linker maps (needed for gnutls)
 LINKER_MAPS =
@@ -80,3 +79,5 @@ test-none :
 	@$(MAKECOOKIE)
 
 #overrides
+CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWgnustep-base += file-with-bad-content|/usr/local|root/opt/csw/GNUstep/System/Library/Libraries/gnustep-base/Versions/1.24/Resources/NSTimeZones/README
