@@ -1,6 +1,5 @@
 NAME = asciidoc
-VERSION = 8.6.6
-GARTYPE = v2
+VERSION = 8.6.9
 
 DESCRIPTION = A Documentation Generator
 define BLURB
@@ -13,30 +12,20 @@ define BLURB
 	SGML/XML markup) can be customized and extended by the user.
 endef
 
-PACKAGES = CSWasciidoc
-CATALOGNAME_CSWasciidoc = asciidoc
-
-ARCHALL_CSWasciidoc = 1
-
-RUNTIME_DEP_PKGS_CSWasciidoc = CSWpython CSWggetopt
-
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(AUTOFILES)
+DISTFILES += $(NAME)-$(VERSION).tar.gz
 
-PATCHFILES = handle-csw-etc-paths.patch
-PATCHFILES += 0002-Add-opt-csw-gnu-bin-to-PATH-in-a2x.py.patch
+PATCHFILES += 0001-Add-opt-csw-gnu-bin-to-PATH-in-a2x.py.patch
+
+PACKAGES = CSWasciidoc
+ARCHALL_CSWasciidoc = 1
+RUNTIME_DEP_PKGS_CSWasciidoc += CSWpython
+RUNTIME_DEP_PKGS_CSWasciidoc += CSWggetopt
+# This can not be detected by checkpkg
+CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWggetopt
 
 TEST_TARGET = test
 
-INSTALL_ARGS = vimdir=/opt/csw/etc/vim
-
-CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWggetopt
-
 include gar/category.mk
 
-# until the autoconf stuff is included upstream, we'll maintain and import our
-# own.
-pre-configure-modulated:
-	( cd $(WORKSRC); autoconf )
-	@$(MAKECOOKIE)
