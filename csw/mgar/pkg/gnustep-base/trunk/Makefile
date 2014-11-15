@@ -10,24 +10,24 @@ define BLURB
   GNUstep-core base framework, which provides all Foundation equivalent classes, useful for all non-gui objective-c development. A prerequisite for all GNUstep tools as well as applications.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWgnustep-make
-RUNTIME_DEP_PKGS = CSWgnustep-make
+BUILD_DEP_PKGS_CSWgnustep-base = CSWgmake CSWgcc4objc CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgnustep-base = CSWgnustep-make
 
-BUILD_DEP_PKGS += CSWlibffi-dev
-RUNTIME_DEP_PKGS += CSWlibffi5 
+BUILD_DEP_PKGS_CSWgnustep-base += CSWlibffi-dev
+RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibffi5 
 
-BUILD_DEP_PKGS += CSWlibicu-dev
-RUNTIME_DEP_PGKS += CSWlibicui18n52 CSWlibicuuc52 CSWlibicudata52
+BUILD_DEP_PKGS_CSWgnustep-base += CSWlibicu-dev
+RUNTIME_DEP_PGKS_CSWgnustep-base += CSWlibicui18n52 CSWlibicuuc52 CSWlibicudata52
 
-RUNTIME_DEP_PGKS += CSWlibobjc4 CSWlibgcc-s1 CSWlibgmp10
+RUNTIME_DEP_PGKS_CSWgnustep-base += CSWlibobjc4 CSWlibgcc-s1 CSWlibgmp10
 
-BUILD_DEP_PKGS += CSWlibgnutls-dev
-RUNTIME_DEP_PGKS += CSWlibssl1-0-0 CSWlibgnutls28 CSWlibgcrypt20
+BUILD_DEP_PKGS_CSWgnustep-base += CSWlibgnutls-dev
+RUNTIME_DEP_PGKS_CSWgnustep-base += CSWlibssl1-0-0 CSWlibgnutls28 CSWlibgcrypt20
 
-BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibxslt-dev
-RUNTIME_DEP_PGKS += CSWlibxslt1 CSWlibxml2-2
-BUILD_DEP_PKGS += CSWlibiconv-dev
-RUNTIME_DEP_PKGS += CSWlibiconv2
+BUILD_DEP_PKGS_CSWgnustep-base += CSWlibxml2-dev CSWlibxslt-dev
+RUNTIME_DEP_PGKS_CSWgnustep-base += CSWlibxslt1 CSWlibxml2-2
+BUILD_DEP_PKGS_CSWgnustep-base += CSWlibiconv-dev
+RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibiconv2
 
 #some known overrides
 CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
@@ -45,6 +45,7 @@ PACKAGING_PLATFORMS += solaris10-sparc
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
+
 
 #we disable linker maps (needed for gnutls)
 LINKER_MAPS =
@@ -77,3 +78,5 @@ install-sourcegs:
 
 test-none :
 	@$(MAKECOOKIE)
+
+#overrides
