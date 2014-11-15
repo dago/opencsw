@@ -39,8 +39,9 @@ NOGITPATCH = 1
 
 # Let put perl in a separate dir as a migration strategy
 prefix = $(BUILD_PREFIX)/perlgcc
-#EXTRA_RUNPATH_DIRS = $(prefix)/$(libdir)/perl/5.20/CORE
-EXTRA_LIB = $(prefix)/$(libdir)/perl/5.20/CORE
+EXTRA_RUNPATH_DIRS = $(libdir)/perl/5.20/CORE
+EXTRA_RUNPATH_ISALIST = $(EXTRA_RUNPATH_DIRS)
+#EXTRA_LIB = $(prefix)/$(libdir)/perl/5.20/CORE
 #EXTRA_RUNPATH_LINKER_FLAGS += $(prefix)/$(libdir)/perl/5.20/CORE/libperl.so
 
 # Depends
