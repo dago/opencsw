@@ -11,6 +11,7 @@
 #   the one provided from CSWpm-module-build
 # - package name is inferred from the requested module, e.g. System::Log::Syslog whereas the module file
 #   is called System-Log. That one should also be used for the main package.
+# - Add functionality from MegaDistro (same for RPM)
 
 use strict;
 use warnings;
@@ -50,10 +51,16 @@ if ( !defined $modname ) {
 ### Main ###
 
 say STDERR "Expanding CPAN module name";
-logoutput(); # Start logging
-my $mod = ( CPAN::Shell->expand( "Module", $modname ) )[0]
-	or die "can not locate CPAN module $modname";
-endlog();    # End logging
+#logoutput(); # Start logging
+#print Dumper( CPAN::Shell->expand( "Module", $modname ) );
+#print Dumper( @mod );
+my $mod = CPAN::Shell->expand( "Module", $modname );
+#my $mod = CPAN::Shell->expand( "Module", $modname )->{RO}
+#	or die "can not locate CPAN module $modname\n";
+#endlog();    # End logging
+
+#print Dumper( $mod );
+print "Module name: $mod\n";
 
 # We need this so dependencies can be retreived
 #logoutput();
@@ -62,8 +69,8 @@ endlog();    # End logging
 #endlog();
 # print "Make done\n";
 
-say STDERR "Analyzing filename";
 my $filename = $mod->cpan_file;
+say STDERR "Analyzing filename: $filename";
 my $author   = ( split( /\//, $filename ) )[2];
 my $author1  = substr( $author, 0, 1 );
 my $author2  = substr( $author, 0, 2 );
@@ -74,7 +81,7 @@ my ( $notstandard, $fileonly ) = ( $filename =~ m,^${author1}/${author2}/${autho
 
 # That is the version of the module which may be different than the one from the file
 # my $version = $mod->cpan_version;
-my ( $name, $fileversion ) = ( $fileonly =~ /^(.*)-(\d+(?:\.\d+)*)/ );
+my ( $name, $fileversion ) = ( $fileonly =~ /^(.*)-v?(\d+(?:\.\d+)*)/ );
 
 croak( "The package name is not defined on file $fileonly" ) if( !$name );
 
@@ -87,6 +94,7 @@ croak( "The package name is not defined on file $fileonly" ) if( !$name );
 
 my $cswpkg = lc($modname);
 $cswpkg =~ s/::/-/g;
+$cswpkg =~ s/_/-/g;
 $cswpkg = "CSWpm-" . $cswpkg;
 
 my $cswcatalog = lc($modname);
@@ -149,13 +157,14 @@ $description //= $mod->distribution->as_glimpse;
 $description //= "";
 $description = ucfirst($description);
 $description =~ s/\.$//;		# Strip trailing .
+$description =~ s/\n/ /g;		# Strip newlines
 chomp($description);
 
 # Come back from cpan module build directory to GAR cpan/
 chdir($cpandir) or die($!);
 
 if ( !-d $name ) {
-	system("pwd; gmake newpkg-$name");
+	system("pwd; PATH=/opt/csw/bin:\$PATH gmake newpkg-$name");
 }
 
 say STDERR "Writing GAR Makefile";
@@ -387,6 +396,7 @@ sub guess_name_from_module {
 	my ( $name, $fileversion ) = ( $filename =~ /^(\D+\d*)-(\d+(?:\.\d+)*)/ );
 	my $dirname = $name;
 	my $pkgname = lc($name);
+	$pkgname =~ s/_/-/g;
 	$pkgname = "CSWpm-" . $pkgname;
 	return ( $pkgname, $dirname );
 }
