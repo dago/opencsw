@@ -1,0 +1,18 @@
+Index: apcupsd-3.14.12-svn/src/apctest.c
+===================================================================
+--- apcupsd-3.14.12-svn/src/apctest.c	(revision 2267)
++++ apcupsd-3.14.12-svn/src/apctest.c	(working copy)
+@@ -336,7 +336,12 @@
+    }
+ 
+    pmsg("Setting up the port ...\n");
+-   setup_device(ups);
++   if (!setup_device(ups))
++   {
++      Error_abort0("Unable to open UPS device.\n"
++                  "  If apcupsd or apctest is already running,\n"
++                  "  please stop it and run this program again.\n");
++   }
+ 
+    if (hibernate_ups) {
+       pmsg("apctest: bad option, I cannot do a killpower\n");
