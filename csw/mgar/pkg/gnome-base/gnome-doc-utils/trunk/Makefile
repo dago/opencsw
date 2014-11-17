@@ -20,6 +20,8 @@ BUILD_DEP_PKGS += CSWpm-xml-parser
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
 
+EXTRA_MERGE_EXCLUDE_FILES = /var/lib.*
+SKIPTEST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
