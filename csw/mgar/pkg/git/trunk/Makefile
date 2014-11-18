@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 2.1.1
+VERSION = 2.1.3
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -42,14 +42,14 @@ ARCHALL_CSWgit-doc = 1
 ARCHALL_CSWgit-completion = 1
 
 BUILD_DEP_PKGS = CSWasciidoc CSWlibssl-dev CSWxmlto CSWbash CSWlibcurl-dev
-BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
+BUILD_DEP_sed CSWgnulinks CSWperl CSWtk CSWexpat
 BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 BUILD_DEP_PKGS += CSWpython
 BUILD_DEP_PKGS += CSWlibiconv-dev
 
 RUNTIME_DEP_PKGS_CSWgit = CSWlibz1 CSWperl CSWrsync CSWlibcurl4
-RUNTIME_DEP_PKGS_CSWgit += CSWosshclient CSWlibiconv2 CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgit += CSWbash CSWpmerror CSWpmtermreadkey
+RUNTIME_DEP_penssh-client CSWlibiconv2 CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWgit += CSWbash CSWpm-error CSWpm-sh CSWpmerror CSWpmtermreadkey
 RUNTIME_DEP_PKGS_CSWgit += CSWpmnetsmtpssl CSWless
 RUNTIME_DEP_PKGS_CSWgit += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgit += CSWlibssl1-0-0
