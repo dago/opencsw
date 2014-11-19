@@ -9,9 +9,11 @@ DESCRIPTION = PostScript and PDF interpreter
 define BLURB
 endehttp://downloads.ghostscript.com/public/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += map.ghostscript$(# See for details https://www.opencsw.org/mantis/view.php?id=4913
+#DISTFILES += map.ghostscript$(# See for details https://www.opencsw.org/mantis/view.php?id=4913
 #PATCHFILES += 0001-Use-ksh-and-GNU-sed-as-reported-in-4913.patch
 
+# Use patch until this is fixed:
+#   http://bugs.ghostscript.com/show_bug.cgi?id=695692
 PATCHFILES += 0001-Fix-for-latest-autotools.patch
 
 VENDOR_URL = http://www.ghostscript.com
@@ -20,7 +22,9 @@ LICENSE = LICENSE
 
 GARCOMPILER = GCC4
 
-LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.ghostscript)"PST Many more missing
+#GARFLAVOR = DBG
+
+#LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.ghostscript)"PST Many more missing
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibtiff-dev
@@ -94,7 +98,6 @@ RUNTIME_DEP_PKGS_CSWlibgs9 += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWlibgs9-sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgs9 += $(RUNTIME_DEP_PKGS_CSWlibgs9-$(GARCH))
 
-
 # This used to be a separate library and is now maintained as part of Ghostscript
 PACKAGES += CSWlibijs0-35
 PKGFILES_CSWlibijs0-35 += $(call pkgfiles_lib,libijs-0.35.so)
@@ -135,6 +138,10 @@ CONFIGURE_ARGS += --with-system-libtiff
 # pentium_pro does not have SSE2 and the detection does not work
 CONFIGURE_ARGS-32-i386 += --disable-sse2
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)-$(GARCH))
+
+# This makes debugging much easier, remove for production
+CONFIGURE_ARGS-DBG += --disable-compile-inits
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GARFLAVOR))
 
 # The arguments used for libijs
 CONFIGURE_ARGS_ijs  = $(DIRPATHS)
