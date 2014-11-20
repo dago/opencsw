@@ -722,9 +722,11 @@ func (a ByKey) Less(i, j int) bool { return a[i].Key < a[j].Key }
 func addBlockingBugs(groups map[string]*CrossCatIntGroup, mantisBugs <-chan mantis.Bug) {
   // Severities from mantis that don't block package promotions.
   lowSeverities := [...]string{
-    "Trivial",
-    "Minor",
     "Feature",
+    "Trivial",
+    "Text",
+    "Tweak",
+    "Minor",
   }
 
   // Add blocking Mantis Bugs.
