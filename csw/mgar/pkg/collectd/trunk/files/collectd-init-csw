@@ -1,7 +1,7 @@
 #!/sbin/sh
 
-PIDFILE=/var/opt/csw/run/collectd.pid
-DAEMON=/opt/csw/sbin/collectd
+PIDFILE=/var/opt/csw/run/collectdmon.pid
+DAEMON=/opt/csw/sbin/collectdmon
 
 . /lib/svc/share/smf_include.sh
 
@@ -12,9 +12,13 @@ case "$1" in
       PID=`cat $PIDFILE`
       echo "$PIDFILE contains $PID"
       ps -p $PID
-      exit $SMF_EXIT_ERR_FATAL
+      if [ $? -ne 0 ] ; then
+        rm $PIDFILE
+      fi
     fi
-    $DAEMON
+    PATH=/opt/csw/sbin:$PATH
+    export PATH
+    $DAEMON -P $PIDFILE -- -C /etc/opt/csw/collectd.conf
     if [ $? -ne 0 ] ; then
       echo $DAEMON faild to start
       exit $SMF_EXIT_ERR_FATAL
@@ -30,7 +34,7 @@ case "$1" in
     $0 start
   ;;
   status)
-    ps -ef | grep collectd | grep -v status | grep -v grep
+    ps -ef | grep collectdmon | grep -v status | grep -v grep
   ;;
   *)
     echo "Usage: $0 [ start | stop | restart | status ]"
