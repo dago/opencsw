@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = collectd
-VERSION = 5.2.0
+VERSION = 5.4.1
 GARTYPE = v2
 
 DESCRIPTION = Collects sistema performance statistics periodically
@@ -28,7 +28,7 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-dns
 CONFIGURE_ARGS += --disable-nfs
-CONFIGURE_ARGS += --disable-zfs_arc
+# CONFIGURE_ARGS += --disable-zfs_arc
 
 PACKAGES += CSWlibcollectdclient1
 PKGFILES_CSWlibcollectdclient1 += $(call baseisadirs,$(libdir),libcollectdclient\.so\.1(\.\d+)*)
