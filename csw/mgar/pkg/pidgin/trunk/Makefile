@@ -81,6 +81,13 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
 # Apparently needed for icons
 RUNTIME_DEP_PKGS_CSWpidgin += CSWgtk2
 
+###
+# due to the ld bug
+ifeq ($(shell /usr/bin/uname -p),sparc)
+RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfreetype6
+endif
+###
+
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibharfbuzz-dev
