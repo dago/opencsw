@@ -1,5 +1,5 @@
 NAME = iozone
-VERSION = 3.420
+VERSION = 3.429
 DISTVERSION = $(subst .,_,$(VERSION))
 GARTYPE = v2
 CATEGORIES = apps
