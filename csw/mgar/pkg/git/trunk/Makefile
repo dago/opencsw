@@ -49,7 +49,7 @@ BUILD_DEP_PKGS += CSWlibiconv-dev
 
 RUNTIME_DEP_PKGS_CSWgit = CSWlibz1 CSWperl CSWrsync CSWlibcurl4
 RUNTIME_DEP_penssh-client CSWlibiconv2 CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgit += CSWbash CSWpm-error CSWpm-sh CSWpmerror CSWpmtermreadkey
+RUNTIME_DEP_PKGS_CSWgit += CSWbash CSWpm-error CSWpm-sh C-SWpmerror CSWpmtermreadkey
 RUNTIME_DEP_PKGS_CSWgit += CSWpmnetsmtpssl CSWless
 RUNTIME_DEP_PKGS_CSWgit += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgit += CSWlibssl1-0-0
@@ -164,6 +164,9 @@ CHECKPKG_OVERRIDES_CSWgit += surbashdency|CSWosshclient
 CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWrsync
 CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWless
 CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpmnetsmtpssl
+CHECKPKG_Osurplus-dependency|CSWopenssh-client
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpm-term-readkey
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpm-errorncy|CSWpmnetsmtpssl
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/share|root/opt/csw/libexec/git-core/git-send-email
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/local|root/opt/csw/libexec/git-core/git-instaweb
 CHECKPKG_OVERRIDES_CSWgit-gui += surplus-dependency|CSWtk
