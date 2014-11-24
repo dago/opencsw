@@ -1,7 +1,7 @@
 # $Id$
 
 NAME    = pidgin
-VERSION = 2.10.10
+VERSION = 2.10.11
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -41,7 +41,6 @@ CONFIGURE_ARGS += --enable-cyrus-sasl
 CONFIGURE_ENV_PATH = $(prefix)/gnu:$(PATH)
 
 EXTRA_CFLAGS  = -xc99 -D_XPG6 -D__EXTENSIONS__ -D__unix__
-#EXTRA_LD_OPTIONS = -z nolazyload
 
 NCURSES_HEADERS = /opt/csw/include/ncursesw
 EXTRA_CONFIGURE_EXPORTS += CFLAGS NCURSES_HEADERS
@@ -79,21 +78,8 @@ RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilc1-1-2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsilcclient1-1-3
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgnutls28
-
 # Apparently needed for icons
 RUNTIME_DEP_PKGS_CSWpidgin += CSWgtk2
-CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWgtk2
-
-###
-# due to the ld bug
-ifeq ($(shell /usr/bin/uname -p),sparc)
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpangoft2-1-0-0
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfreetype6
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibfontconfig1
-RUNTIME_DEP_PKGS_CSWpidgin += CSWlibpangocairo1-0-0
-endif
-###
 
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWlibxml2-dev
@@ -120,7 +106,7 @@ BUILD_DEP_PKGS += CSWsasl-devdBUILD_DEP_PKGS += CSWlibpango-devdBUILD_DEP_PKGS +
 PATCHFILES += patch-pidgin-Makefile.in
 PATCHFILES += patch-pidgin-plugin.c
 PATCHFILES += patch-pidgin-plugins-perl-common-Makefile.PL.in
-PATCHFILES += patch-libpurple-plugins-perl-commPATCHFILES += 0004-irc-with-sasl.patchmPATCHFILES += 0005_AF_UNIX_not_LOCAL.patchmoCHECKPKG_OVERRIDES_CSWpidgin += file-with-bad-content|/usr/local|root/opt/csw/lib/pidgin/musicmessaging.so 
+PATCHFILES += patch-libpurple-plugins-perl-commPATCHFILES += 0004-irc-with-sasl.patchmoCHECKPKG_OVERRIDES_CSWpidgin += file-with-bad-content|/usr/local|root/opt/csw/lib/pidgin/musicmessaging.so 
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libgnt.so
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libpurple-client.so
 CHECKPKG_OVERRIDES_CSWpidgin += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libpurple.so
@@ -136,6 +122,7 @@ CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWtcl
 CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWtk
 CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWdbus
-mon-Makefile.PL.in
+CHECKPKG_OVERRIDES_CSWpidgin += surplus-dependency|CSWgtk2
 
-includ
+
+include gar/category.mk
