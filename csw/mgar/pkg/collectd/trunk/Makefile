@@ -22,6 +22,7 @@ BUILD64 = 1
 BUILD_DEP_PKGS += CSWlibgcrypt-dev
 EXTRA_CPPFLAGS = -DSOLARIS2=10 -D__EXTENSIONS__
 EXTRA_LINKER_FLAGS = -R/opt/csw/lib/collectd -R/usr/openwin/lib -lrt
+EXTRA_MERGE_EXCLUDE_FILES = .*perllocal\.pod
 
 GARCOMPILER = GNU
 
@@ -31,10 +32,10 @@ CONFIGURE_ARGS += --disable-nfs
 # CONFIGURE_ARGS += --disable-zfs_arc
 
 PACKAGES += CSWlibcollectdclient1
-PKGFILES_CSWlibcollectdclient1 += $(call baseisadirs,$(libdir),libcollectdclient\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcollectdclient1 += $(DESCRIPTION), libcollectdclient.so.1
+PKGFILES_CSWlibcollectdclient1 += $(call baseisadirs,$(libdir),libcollectdclient\.so\.1(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibcollectdclient1 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibcollectdclient1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcollectdclient1 += CSWlibgcrypt20
 
 PACKAGES += CSWcollectd-dev
 CATALOGNAME_CSWcollectd-dev = collectd_dev
@@ -44,20 +45,25 @@ RUNTIME_DEP_PKGS_CSWcollectd-dev += CSWlibcollectdclient1
 
 PACKAGES += CSWcollectd
 SPKG_DESC_CSWcollectd += $(DESCRIPTION)
-
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibcollectdclient1
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibdbi1
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibganglia0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibpq5
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibrrd-th4
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibstatgrab6
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWcollectd += CSWperl
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxmms1
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibglib1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgdk1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibmysqlclient18
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgtk1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt20
+
 
 RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8
 RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
