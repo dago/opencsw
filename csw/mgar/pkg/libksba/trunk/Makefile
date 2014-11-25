@@ -1,5 +1,5 @@
 NAME = libksba
-VERSION = 1.3.0
+VERSION = 1.3.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -27,6 +27,9 @@ SPKG_DESC_CSWlibksba-dev = Development files for libksba.so.8
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibksba-dev += CSWlibksba8
 
-BUILD64_LIBS_ONLY = 1
+BUILD6# We don't need it and if defined the test breaks:
+#   https://bugs.g10code.com/gnupg/issue1771
+LD_OPTIONS = $(strip $($(GARCOMPILER)_LD_OPTIONS) $(LINKER_MAPS) $(LINKER_DIRECT) $(LINKER_IGNORE) $(EXTRA_LD_OPTIONS) $(_CATEGORY_LD_OPTIONS))
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 include gar/category.mk
