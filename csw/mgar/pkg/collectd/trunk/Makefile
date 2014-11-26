@@ -61,16 +61,14 @@ RUNTIME_DEP_PKGS_CSWcollectd += CSWlibrrd-th4
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWcollectd += CSWperl
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxmms1
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibglib1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibmysqlclient18
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgtk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt20
 
 RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibgdk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibglib1-2-0
-RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibggtk1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibgtk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
 
 RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8 CSWlibfl2
