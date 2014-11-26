@@ -1,22 +1,22 @@
 NAME = IO-Multiplex
-VERSION = 1.10
+VERSION = 1.13
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = BBB
+AUTHOR = MARKOV
 
 DESCRIPTION = Manage IO on many file handles
 define BLURB
-	IO::Multiplex is designed to take the effort out of managing multiple file handles.
-	It is essentially a really fancy front end to the select system call.
-	In addition to maintaining the select loop, it buffers all input and output to/from the file handles.
-	It can also accept incoming connections on one or more listen sockets.
 endef
 
-DISTFILES = COPYING
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmiomultiplex
-CATALOGNAME = pm_iomultiplex
+LICENSE_TEXT = This module is licensed under the unknown license
 
-ARCHALL = 1
+PACKAGES += CSWpm-io-multiplex
+CATALOGNAME_CSWpm-io-multiplex = pm_io_multiplex
+SPKG_DESC_CSWpm-io-multiplex = Manage IO on many file handles
+ARCHALL_CSWpm-io-multiplex = 1
+OBSOLETED_BY_CSWpm-io-multiplex += CSWpmiomultiplex
+CATALOGNAME_CSWpmiomultiplex = pm_iomultiplex_stub
 
 include gar/category.mk
