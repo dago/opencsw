@@ -62,16 +62,25 @@ RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWcollectd += CSWperl
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxmms1
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibglib1-2-0
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgdk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibpython2-7-1-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibmysqlclient18
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgtk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt20
 
-
-RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8
+RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibgdk1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibglib1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibggtk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
+
+RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8 CSWlibfl2
+RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
+
+CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibgdk1-2-0
+CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibglib1-2-0
+CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibgtk1-2-0
+
 
 INITSMF = $(sysconfdir)/init\.d/collectd
 
