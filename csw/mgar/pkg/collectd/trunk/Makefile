@@ -68,9 +68,6 @@ RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt20
 RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8
 RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
 
-CHECKPKG_OVERRIDES_CSWcollectd += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/collectd.1
-CHECKPKG_OVERRIDES_CSWcollectd += file-with-bad-content|/usr/share|root/opt/csw/share/man/man5/collectd-unixsock.5
-
 INITSMF = $(sysconfdir)/init\.d/collectd
 
 include gar/category.mk
