@@ -1,20 +1,27 @@
 NAME = Text-Format
-VERSION = 0.52
+VERSION = 0.59
 CATEGORIES = cpan
 GARTYPE = v2
-AUTHOR = GABOR
+AUTHOR = SHLOMIF
 
-DESCRIPTION = Various subroutines to format text
+DESCRIPTION = Format text
 define BLURB
 endef
 
-DISTFILES = COPYING
-DISTNAME = $(NAME)$(VERSION)
-MODDIST = $(DISTNAME).tar.gz
+CATALOG_RELEASE = unstable
 
-PACKAGES = CSWpmtextformat
-CATALOGNAME = pm_textformat
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-text-format
+CATALOGNAME_CSWpm-text-format = pm_text_format
+SPKG_DESC_CSWpm-text-format = Format text
+ARCHALL_CSWpm-text-format = 1
+OBSOLETED_BY_CSWpm-text-format += CSWpmtextformat
+CATALOGNAME_CSWpmtextformat = pm_textformat_stub
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 include gar/category.mk
