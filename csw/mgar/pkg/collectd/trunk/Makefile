@@ -74,12 +74,6 @@ RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
 RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8 CSWlibfl2
 RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
 
-CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibgdk1-2-0
-CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibglib1-2-0
-CHECKPKG_OVERRIDES_CSWcollectd += surplus-dependency|CSWlibgtk1-2-0
-
-
 INITSMF = $(sysconfdir)/init\.d/collectd
 
 include gar/category.mk
