@@ -4,8 +4,13 @@ NAME = collectd
 VERSION = 5.4.1
 GARTYPE = v2
 
-DESCRIPTION = Collects sistema performance statistics periodically
+DESCRIPTION = The system statistics collection daemon
 define BLURB
+collectd gathers statistics about the system it is running on and stores this information. 
+Those statistics can then be used to find current performance bottlenecks 
+(i.e. performance analysis) and predict future system load (i.e. capacity planning). 
+Or if you just want pretty graphs of your private server and are fed up with some 
+homegrown solution you're at the right place, too ;).
 endef
 
 MASTER_SITES = http://collectd.org/files/
