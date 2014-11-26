@@ -1,19 +1,22 @@
 NAME = Text-CSV
-VERSION = 1.15
+VERSION = 1.32
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = MAKAMAKA
 
-DESCRIPTION = Perl Text::CSV module
+DESCRIPTION = Comma-separated values manipulator (using XS or PurePerl)
 define BLURB
-  Text::CSV provides facilities for the composition and decomposition of
-  comma-separated values.  An instance of the Text::CSV class can combine
-  fields into a CSV string and parse a CSV string into fields.
 endef
 
-PACKAGES = CSWpmtextcsv
-CATALOGNAME = pm_textcsv
+CATALOG_RELEASE = unstable
 
-ARCHALL = 1
+LICENSE_TEXT = This module is licensed under the perl license
+
+PACKAGES += CSWpm-text-csv
+CATALOGNAME_CSWpm-text-csv = pm_text_csv
+SPKG_DESC_CSWpm-text-csv = Comma-separated values manipulator (using XS or PurePerl)
+ARCHALL_CSWpm-text-csv = 1
+OBSOLETED_BY_CSWpm-text-csv += CSWpmtextcsv
+CATALOGNAME_CSWpmtextcsv = pm_textcsv_stub
 
 include gar/category.mk
