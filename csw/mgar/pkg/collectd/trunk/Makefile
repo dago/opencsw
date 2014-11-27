@@ -69,10 +69,10 @@ RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibgdk1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibglib1-2-0
 RUNTIME_DEP_PKGS_CSWcollectd_sparc += CSWlibgtk1-2-0
-RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
 
 RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8
 RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibfl2
+
 RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
 
 INITSMF = $(sysconfdir)/init\.d/collectd
