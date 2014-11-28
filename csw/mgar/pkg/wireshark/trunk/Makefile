@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.12.0
+VERSION = 1.12.2
 CATEGORIES = apps
 GARTYPE = v2
 
