@@ -27,7 +27,7 @@ LICENSE = COPYING
 PACKAGES = CSWmupdf CSWmupdf-tools
 SPKG_DESC_CSWmupdf = $(DESCRIPTION)
 SPKG_DESC_CSWmupdf-tools = Commmand line tools for the MuPDF viewer
-PKGFILES_CSWmupdf = $(docdir)/$(NAME)/* $(bindir)/mupdf $(mandir)/man1/mupdf.1
+PKGFILES_CSWmupdf = $(docdir)/$(NAME)/.* $(bindir)/mupdf $(mandir)/man1/mupdf.1
 PKGFILES_CSWmupdf-tools = $(bindir)/mudraw $(bindir)/mutool \
   $(mandir)/man1/mudraw.1 $(mandir)/man1/mutool.1
 
