@@ -98,7 +98,8 @@ RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibmenu5
 PACKAGES += CSWterminfo
 SPKG_DESC_CSWterminfo = Database of terminal information, part of ncurses
 ARCHALL_CSWterminfo = 1
-PKGFILES_CSWterminfo = $(datadir)/terminfo.*
+PKGFILES_CSWterminfo = $(datRUNTIME_DEP_PKGS_CSWterminfo += CSWterminfo-rxvt-unicode
+CHECKPKG_OVERRIDES_CSWterminfo += surplus-dependency|CSWterminfo-rxvt-unicodetadir)/terminfo.*
 
 VENDOR_URL = http://www.gnu.org/software/ncurses/ncurses.html
 
@@ -162,4 +163,4 @@ CHECKPKG_OVERRIDES_CSWterminfo += file-with-bad-content|/usr/share|root/opt/csw/
 
 include gar/category.mk
 
-LDFLAGS := $(filter-out -L%,$(LDFLAGS))
+LDFLAGS := $(filter-out
