@@ -1,0 +1,43 @@
+From d2659db20be238e1fcba56ccb85ddace59e9f51a Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <opk@opencsw.org>
+Date: Fri, 28 Nov 2014 19:13:59 +0100
+Subject: [PATCH] adjust Makefile for Solaris
+
+---
+ Makerules | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/Makerules b/Makerules
+index 75573da..00f59c2 100644
+--- a/Makerules
++++ b/Makerules
+@@ -5,7 +5,7 @@ OS := $(OS:MINGW%=MINGW)
+ OS := $(OS:Windows_NT=MINGW)
+ OS := $(OS:Darwin=MACOS)
+ 
+-CFLAGS += -Wall
++#CFLAGS += -Wall
+ 
+ ifeq "$(build)" "debug"
+ CFLAGS += -pipe -g -DDEBUG
+@@ -21,8 +21,6 @@ else ifeq "$(build)" "native"
+ CFLAGS += -pipe -O2 -DNDEBUG -fomit-frame-pointer -march=native -mfpmath=sse
+ else ifeq "$(build)" "memento"
+ CFLAGS += -pipe -g -DMEMENTO -DDEBUG
+-else
+-$(error unknown build setting: '$(build)')
+ endif
+ 
+ # Windows (MINGW) build doesn't use system libraries.
+@@ -54,7 +52,7 @@ LD = xcrun ld
+ RANLIB_CMD = xcrun ranlib $@
+ 
+ # Linux uses pkg-config for system libraries.
+-else ifeq "$(OS)" "Linux"
++else
+ 
+ HAVE_X11 ?= yes
+ 
+-- 
+2.0.3
+
