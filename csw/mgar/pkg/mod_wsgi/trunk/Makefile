@@ -1,22 +1,19 @@
 # $Id$
 
 NAME = mod_wsgi
-VERSION = 3.4
+VERSION = 4.4.0
 GARTYPE = v2lib
 GARTYPE = v2
 
 
 DESCRIPTION = Apache/Python WSGI adapter module.
 define BLURB
-  Mod_wsgi is a python WSGI adapter module for Apache.
-endef
+  Mod_wsgi is a python WSGI adapter module foMASTER_SITES    =       $(GITHUB_MIRROR)
+GITHUB_USER     =       GrahamDumpleton
+DISTFILES      +=       postinstall preremove
 
-GOOGLE_PROJECT = modwsgi
-MASTER_SITES = $(GOOGLE_M+= $(DISTNAME).tar.gz
-DISTFILES += postinstall preremove
-
-VENDOR_URL = https://code.google.com/p/modwsgi/
-LICENSE = LICENCE
+VENDOR_URL      = https://github.com/GrahamDumpleton/mod_wsgi/
+LICENSE         = LICENCE
 
 PACKAGES = CSWap2modwsgi
 CATALOGNAME_CSWap2modwsgi   = ap2_modwsgi
