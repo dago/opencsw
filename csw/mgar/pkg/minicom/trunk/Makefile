@@ -18,10 +18,18 @@ VENDOR_URL = http://alioth.debian.org/projects/minicom/
 # The device cannot be forced if it doesn't exist on the build machine
 PATCHFILES += 0001-force-device.patch
 
+BUILD_DEP_PKGS += CSWggettext
+BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
+
 CONFIGURE_ARGS = $(DIRPATHS)
 # Cleaner than the default of /usr/spool, IMO
 CONFIGURE_ARGS += --enable-lock-dir=/var/spool/locks
 # If the device does not exist, it doesn't use default to it
 CONFIGURE_ARGS += --enable-dfl-port=/dev/tty01
+
+RUNTIME_DEP_PKGS_CSWminicom += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWminicom += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWminicom += CSWlibiconv2
 
 include gar/category.mk
