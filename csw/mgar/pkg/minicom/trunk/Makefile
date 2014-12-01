@@ -1,25 +1,27 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = minicom
-VERSION = 2.4
-CATEGORIES = apps
+VERSION = 2.7
 GARTYPE = v2
 
-DESCRIPTION = Serial communication program
+DESCRIPTION = A text-based modem control and terminal emulation program for Unix-like operating systems
 define BLURB
+Minicom is a text-based modem control and terminal emulation program for Unix-like operating systems, originally written by Miquel van Smoorenburg, and modeled after the popular MS-DOS program Telix. Minicom includes a dialing directory, ANSI and VT100 emulation, an scripting language, and other features. Minicom is a menu-driven communications program. It also has an auto ZMODEM download.
 endef
 
-WGET_OPTS = --no-check-certificate
-MASTER_SITES = https://alioth.debian.org/frs/download.php/3195/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+GARCOMPILER = GCC4
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = https://alioth.debian.org/frs/download.php/file/3977/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://alioth.debian.org/projects/minicom/
 
-# Compilation doesn't work unless this is fixed:
-Ã#   https://alioth.debian.org/tracker/index.php?func=detail&aid=312462&group_id=30018&atid=100031
+# The device cannot be forced if it doesn't exist on the build machine
+PATCHFILES += 0001-force-device.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
+# Cleaner than the default of /usr/spool, IMO
+CONFIGURE_ARGS += --enable-lock-dir=/var/spool/locks
+# If the device does not exist, it doesn't use default to it
+CONFIGURE_ARGS += --enable-dfl-port=/dev/tty01
 
 include gar/category.mk
