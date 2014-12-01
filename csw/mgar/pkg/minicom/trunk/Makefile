@@ -18,6 +18,8 @@ VENDOR_URL = http://alioth.debian.org/projects/minicom/
 # The device cannot be forced if it doesn't exist on the build machine
 PATCHFILES += 0001-force-device.patch
 
+REINPLACE_USRLOCAL += src/rwconf.c
+
 BUILD_DEP_PKGS += CSWggettext
 BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWlibiconv-dev
