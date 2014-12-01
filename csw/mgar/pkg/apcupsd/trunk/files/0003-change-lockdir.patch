@@ -1,0 +1,12 @@
+index 49663a8..c8a0f7c 100755
+--- a/configure
++++ b/configure
+@@ -13235,7 +13235,7 @@ sun)
+    SERIALDEV=/dev/ttya
+    PWRFAILDIR=/etc
+    PIDDIR=/var/run
+-   LOCKDIR=/var/spool/locks
++   LOCKDIR=/var/run
+    LOGDIR=${sysconfdir}
+    APCUPSD_MAIL=/usr/bin/mailx
+    PTHREAD_CFLAGS="-D_POSIX_PTHREAD_SEMANTICS"
