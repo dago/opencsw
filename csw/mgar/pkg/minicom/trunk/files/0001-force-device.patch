@@ -1,0 +1,12 @@
+index 59effa1..bd9f300 100755
+--- a/configure
++++ b/configure
+@@ -8653,7 +8653,7 @@ $as_echo_n "checking for default serial port device... " >&6; }
+ 
+ if test "x$DFL_PORT" != x
+ then
+-	if test -c $DFL_PORT
++	if true
+ 	then
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $DFL_PORT" >&5
+ $as_echo "$DFL_PORT" >&6; }
