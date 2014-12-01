@@ -20,6 +20,7 @@ BUILD_DEP_PKGS += CSWlibwrap-dev
 
 PATCHFILES += 0001-apccontrol-fix.patch
 PATCHFILES += 0002-apctest.patch
+PATCHFILES += 0003-change-lockdir.patch
 
 PACKAGES += CSWapcupsd
 SPKG_DESC_CSWapcupsd = A daemon for controlling APC UPS
