@@ -104,7 +104,7 @@ EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqlaccess
 EXTRA_ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/mysqlaccess.conf
 
 PATCHFILES += 0003-I-HATE-CMAKE.patch
-PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
+#PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 PATCHFILES += 0003-Use-bash-for-mysqld_safe.patch
 # https://java.net/projects/solaris-userland/sources/gate/content/components/mysql-5-1/patches/xO4_optimization.patch?rev=1502
 PATCHFILES += 0004-xO4-fix.patch
@@ -268,6 +268,7 @@ CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_VERBOSE_MAKEFILE=ON
 CMAKE_ARGS += -DBISON_EXECUTABLE=$(prefix)/bin/bison
+CMAKE_ARGS += "-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON"
 
 # The line below come from the official MySQL build configuration
 CMAKE_ARGS += "-DENABLED_PROFILING:BOOL=ON"
