@@ -33,7 +33,11 @@ PRESERVECONF += $(sysconfdir)/tor/tor-tsocks.conf
 PRESERVECONF += $(sysconfdir)/tor/torrc
 
 MIGRATE_FILES += tor/tor-tsocks.conf
-MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILUSERGROUP = /etc/opt/csw/pkg/CSWtor/cswusergroupILES += tor/torrc
+MIGRATE_FILINITSMF = /etc/opt/csw/init.d/cswtorILUSERGROUP = /etc/opt/csw/pkg/CSWtor/cswusergroupILEROTOTYPE_MODIFIERS += tor
+PROTOTYPE_FILES_tor += /var/opt/csw/tor
+PROTOTYPE_PERMS_tor = 0700
+PROTOTYPE_USER_tor = tor
+PROTOTYPE_GROUP_tor = torILES += tor/torrc
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
