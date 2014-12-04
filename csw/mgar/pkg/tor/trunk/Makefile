@@ -53,4 +53,7 @@ post-install-modulated:
 	ginstall -m 444 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)/etc/opt/csw/pkg/CSWtor/
 
+	# Create directory and set permsissions
+	ginstall -m 700 -d $(DESTDIR)/var/opt/csw/tor
+
 	@$(MAKECOOKIE)
