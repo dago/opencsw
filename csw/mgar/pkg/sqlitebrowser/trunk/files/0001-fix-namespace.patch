@@ -1,0 +1,11 @@
+--- a/libs/antlr-2.7.7/antlr/config.hpp
++++ b/libs/antlr-2.7.7/antlr/config.hpp
+@@ -15,7 +15,7 @@
+  *
+  * These are the defaults. Per compiler these are amended.
+  */
+-#define ANTLR_USE_NAMESPACE(_x_) _x_::
++#define ANTLR_USE_NAMESPACE(_x_) ::_x_::
+ #define ANTLR_USING_NAMESPACE(_x_) using namespace _x_;
+ #define ANTLR_CXX_SUPPORTS_NAMESPACE 1
+ #define ANTLR_C_USING(_x_)
