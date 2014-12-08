@@ -1,5 +1,5 @@
 NAME = flac
-VERSION = 1.3.0
+VERSION = 1.3.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -18,29 +18,25 @@ GARCOMPILER = GNU-in-libtool.patch
 
 BUILD_DEP_PKGS += CSWbash
 
-PACKAGES += CSWlibflac8
-CATALOGNAME_CSWlibflac8 = libflac8
+PACKAGEflac8 = libflac8
 SPKG_DESC_CSWlibflac8 = Free lossless audio codec library, libflac.so.8
 PKGFILES_CSWlibflac8 = $(call pkgfiles_lib,libFLAC.so.8)
 RUNTIME_DEP_PKGS_CSWlibflaRUNTIME_DEP_PKGS_CSWlibflac8 += CSWlibgcc-s1lac8 = CSWlibflac
 
-PACKAGES += CSWlibflac++6
-CATALOGNAME_CSWlibflac++6 = libflac++6
+PACKAGES ++6 = libflac++6
 SPKG_DESC_CSWlibflac++6 = Free lossless audio codec library, libFLAC++.so.6
 PKGFILES_CSWlibflac++6 = $(call pkgfiles_lib,libFLAC++.so.6)
 RUNTIME_DEP_PKGS_CSWlibflac++RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibstdc++6c++6 = CSWlibflac
 
-PACKAGES += CSWlibflac-dev
-CATALOGNAME_CSWlibflac-dev = libflac_dev
+PACKAGES +ev = libflac_dev
 SPKG_DESC_CSWlibflac-dev = Development files for libflac.so.8
 PKGFILES_CSWlibflac-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibflac-dev += $(docdir)/flac/.*
 RUNTIME_DEP_PKGS_CSWlibflac-dev = CSWlibflac8
 RUNTIME_DEP_PKGS_CSWlibflac-dev += CSWlibflac++6
 
-PACKAGES += CSWflac
-CATALOGNAME_CSWflac = flac
+PACE_CSWflac = flac
 SPKG_DESC_CSWflac = Utility programs for the Free Lossless Audio Codec (FLAC)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_iconv2Wflac += CSWiconv
