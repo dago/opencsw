@@ -10,11 +10,27 @@ define BLURB
   GNUstep-core gui framework, which provides all AppKit classes except the backend dependent. Necessary for all graphical and application-oriented development.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc CSWlibpng-dev CSWlibtiff-dev CSWlibjpeg-dev CSWlibgif-dev
-DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWlibtiff5 CSWlibpng3 CSWlibjpeg7 CSWlibgif4
-
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
+
+BUILD_DEP_PKGS += CSWgmake
+BUILD_DEP_PKGS += CSWgcc4objc
+BUILD_DEP_PKGS += CSWgnustep-make
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibtiff-dev
+BUILD_DEP_PKGS += CSWlibjpeg-dev
+BUILD_DEP_PKGS += CSWlibgif-dev
+
+RUNTIME_DEP_PKGS_CSWgnustep-gui += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgnustep-gui += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWgnustep-gui += CSWlibtiff5
+RUNTIME_DEP_PKGS_CSWgnustep-gui += CSWlibpng3
+RUNTIME_DEP_PKGS_CSWgnustep-gui += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWgnustep-gui += CSWlibgif4
+
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-sparc
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
@@ -29,21 +45,20 @@ INSTALL_SCRIPTS = sourcegs
 TEST_SCRIPTS = none
 SKIPTEST = 1
 
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
 configure-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) ; $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
+	$(CONFIGURE_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) ; $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 build-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
+	$(BUILD_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && $(MAKE)
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install DESTDIR=$(DESTDIR)
+	$(INSTALL_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && $(MAKE) install DESTDIR=$(DESTDIR)
 	@$(MAKECOOKIE)
 
 test-none :
