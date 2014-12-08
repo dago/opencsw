@@ -1,5 +1,5 @@
 NAME = SDL_mixer
-VERSION = 1.2.11
+VERSION = 1.2.12
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -21,4 +21,4 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = --prefix=$(prefix) --disable-static
 TEST_SCRIPTS =
 
-include gar/category.mk
+include
