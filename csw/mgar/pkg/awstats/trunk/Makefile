@@ -75,6 +75,7 @@ install-custom:
 		> $(DESTDIR)$(sysconfdir)/awstats.conf
 
 	rm -f $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/awstats.model.conf
+	rm -f $(DESTDIR)$(sharedstatedir)/awstats/webmin/.gitignore
 
 	# Substitute defaults with OpenCSW locations
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra/
