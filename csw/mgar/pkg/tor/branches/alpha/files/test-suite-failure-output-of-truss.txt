@@ -1,0 +1,60 @@
+jgoerzen@unstable10s [unstable10s]:/home/jgoerzen/opencsw/tor/branches/alpha/work/solaris10-sparc/build-isa-sparcv8plus/tor-0.2.6.1-alpha > truss src/test/test
+execve("src/test/test", 0xFFBFF9B4, 0xFFBFF9BC)  argc = 1
+sysinfo(SI_MACHINE, "sun4v", 257)               = 6
+mmap(0x00000000, 32, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANON, -1, 0) = 0xFF3E0000
+mmap(0x00000000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0) = 0xFF390000
+mmap(0x00000000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0) = 0xFF380000
+mmap(0x00000000, 8192, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANON, -1, 0) = 0xFF370000
+memcntl(0xFF3A0000, 18176, MC_ADVISE, MADV_WILLNEED, 0, 0) = 0
+mmap(0x00000000, 16384, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANON, -1, 0) = 0xFF360000
+memcntl(0x00010000, 168300, MC_ADVISE, MADV_WILLNEED, 0, 0) = 0
+resolvepath("/usr/lib/ld.so.1", "/lib/ld.so.1", 1023) = 12
+getcwd("/home/jgoerzen/opencsw/tor/branches/alpha/work/solaris10-sparc/build-isa-sparcv8plus/tor-0.2.6.1-alpha", 1009) = 0
+resolvepath("/home/jgoerzen/opencsw/tor/branches/alpha/work/solaris10-sparc/build-isa-sparcv8plus/tor-0.2.6.1-alpha/src/test/test", "/home/jgoerzen/opencsw/tor/branches/alpha/work/solaris10-sparc/build-isa-sparcv8plus/tor-0.2.6.1-alpha/src/test/test", 1023) = 116
+stat64("/home/jgoerzen/opencsw/tor/branches/alpha/work/solaris10-sparc/build-isa-sparcv8plus/tor-0.2.6.1-alpha/src/test/test", 0xFFBFF478) = 0
+open("/var/ld/ld.config", O_RDONLY)             Err#2 ENOENT
+sysinfo(SI_ISALIST, "sparcv9+vis2 sparcv9+vis sparcv9 sparcv8plus+vis2 sparcv8plus+vis sparcv8plus sparcv8 sparcv8-fsmuld sparcv7 sparc", 257) = 115
+stat64("/opt/csw/lib/sparcv9+vis2/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv9+vis/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv9/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv8plus+vis2/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv8plus+vis/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv8plus/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv8/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv8-fsmuld/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparcv7/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/sparc/libc.so.1", 0xFFBFEBD8) Err#2 ENOENT
+stat64("/opt/csw/lib/libc.so.1", 0xFFBFEBD8)    Err#2 ENOENT
+stat64("/lib/libc.so.1", 0xFFBFEBD8)            = 0
+resolvepath("/lib/libc.so.1", "/lib/libc.so.1", 1023) = 14
+open("/lib/libc.so.1", O_RDONLY)                = 3
+mmap(0x00010000, 32768, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_ALIGN, 3, 0) = 0xFF350000
+mmap(0x00010000, 1368064, PROT_NONE, MAP_PRIVATE|MAP_NORESERVE|MAP_ANON|MAP_ALIGN, -1, 0) = 0xFF200000
+mmap(0xFF200000, 1247149, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_TEXT, 3, 0) = 0xFF200000
+mmap(0xFF342000, 35965, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_INITDATA, 3, 1253376) = 0xFF342000
+mmap(0xFF34C000, 1608, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_ANON, -1, 0) = 0xFF34C000
+munmap(0xFF332000, 65536)                       = 0
+munmap(0xFF350000, 32768)                       = 0
+close(3)                                        = 0
+mmap(0x00000000, 16384, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANON, -1, 0) = 0xFF350000
+memcntl(0xFF200000, 146112, MC_ADVISE, MADV_WILLNEED, 0, 0) = 0
+mmap(0x00010000, 24576, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_PRIVATE|MAP_ANON|MAP_ALIGN, -1, 0) = 0xFF1F0000
+getcontext(0xFFBFF2E8)
+getrlimit(RLIMIT_STACK, 0xFFBFF2C8)             = 0
+getpid()                                        = 16232 [16231]
+setustack(0xFF1F2A88)
+time()                                          = 1418062808
+brk(0x003DA290)                                 = 0
+brk(0x003DC290)                                 = 0
+stat64("/platform/SUNW,SPARC-Enterprise-T5220/lib/libc_psr.so.1", 0xFFBFEBC8) = 0
+resolvepath("/platform/SUNW,SPARC-Enterprise-T5220/lib/libc_psr.so.1", "/platform/sun4v/lib/libc_psr.so.1", 1023) = 33
+open("/platform/SUNW,SPARC-Enterprise-T5220/lib/libc_psr.so.1", O_RDONLY) = 3
+mmap(0x00010000, 9244, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_ALIGN, 3, 0) = 0xFF1E0000
+munmap(0xFF1E2000, 1052)                        = 0
+close(3)                                        = 0
+sysconfig(_CONFIG_PAGESIZE)                     = 8192
+    Incurred fault #6, FLTBOUNDS  %pc = 0x0024B6C4
+      siginfo: SIGSEGV SEGV_MAPERR addr=0x00000004
+    Received signal #11, SIGSEGV [default]
+      siginfo: SIGSEGV SEGV_MAPERR addr=0x00000004
+
