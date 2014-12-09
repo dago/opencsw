@@ -1,0 +1,11 @@
+--- a/Makefile.top
++++ b/Makefile.top
+@@ -44,7 +44,7 @@ LN_S		= @LN_S@
+ AUTOCONF	= @AUTOCONF@
+ AUTOHEADER	= @AUTOHEADER@
+ PERL            = @PERLPROG@
+-PYTHON          = @PYTHONPROG@
++PYTHON          ?= @PYTHONPROG@
+ FIND            = @FIND@
+ 
+ #

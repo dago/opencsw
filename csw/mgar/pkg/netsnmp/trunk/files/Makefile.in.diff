@@ -5,7 +5,7 @@
  PYMAKE=$(PYTHON) setup.py $(PYTHONARGS)
  pythonmodules: subdirs
 -	@(dir=`pwd`; cd python; $(PYMAKE) build --basedir=$$dir) ; \
-+	@(dir=`pwd`; cd python; LDFLAGS= $(PYMAKE) build --basedir=$$dir) ; \
++	(dir=`pwd`; cd python; unset CC; CFLAGS=$(filter-out -Usolaris2,$($(filter-out -m32,$(CFLAGS)))) LDFLAGS="$(LD_OPTIONS)" $(PYMAKE) build --basedir=$$dir) ; \
          if test $$? != 0 ; then \
             exit 1 ; \
          fi

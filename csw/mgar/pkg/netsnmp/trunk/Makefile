@@ -32,20 +32,32 @@ PATCHFILES = perl_makefiles.diff
 PATCHFILES += Makefile.in.diff
 PATCHFILES PATCHFILES += 0001-fixing-init-scripts.patch
 PATCHFILES += 0002-workaround-ksh-stop-alias-problem.patch
-+= setup-py.patch
+PATCHFILES += 0003-configure-disable-perl-cc-checks.patch
+PATCHFILES += 0004-enable-python-version-select.patch
 
 VENDOR_URL = http://www.net-snmp.org/
 
-GARCOMPILER = SOS12U3
-BUILD_DEP_PKGS = CSWpysetuptools
+# GARCOMPILER = SOS12U3
+GARCOMPILER = GCC4
+BUILD_DEP_PKGS = CSWpy-D_DEP_PKGS = CSWpysetuptools
 PACKAGING_PLATFORMS += solaris10-sparINITSMF = $(sysconfdir)/init.d/netsnmpd
-INITSMF += $(sysconfdir)/init.d/netsnmptrapdarc solaris10-i386
+INITSMF += $(sysconfdir)/init.d/netsnmptrapdar
+EXTRA_MODULATORS += PYTHON_VERSION
+MODULATIONS_PYTHON_VERSION = 2.6 2.7
+# We need 64 bit just once as it is without python anyway
+SKIP_MODULATIONS += isa-sparcv9-python_version-2.7
+SKIP_MODULATIONS += isa-amd64-python_version-2.7
+PYTHON = $(bindir)/python$(PYTHON_VERSION)
+MERGE_SCRIPTS_isa-default-python_version-2.6 += copy-all
+MERGE_SCRIPTS_isa-default-python_version-2.7 += copy-all
+MERGE_SCRIPTS_isa-default64-python_version-2.6 += copy-relocated-only
+MERGE_DIRS_isa-default64-python_version-2.6 += $(libdir)arc solaris10-i386
 
 PACKAGES += CSWnetsnmp-dev
 CATALOGNAME_CSWnetsnmp-dev = netsnmp_dev
 SPKG_DESC_CSWnetsnmp-dev += $(DESCRIPTION), development files
 PKGFILES_CSWnetsnmp-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CS30
+RUNTIME_DEP_PKS_CSWnetsnmp-dev += CS30
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmpmibs30
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmptrapd30
 RUNTIME_DEP_PKGS_CSWnetsnmp-dev += CSWlibnetsnmp30
@@ -57,6 +69,7 @@ CATALOGNAME_CSWlibnetsnmp30 = libnetsnmp30
 SPKG_DESC_CSWlibnetsnmp30 += $(DESCRIPTION), libsnmp.so.30
 PKGFILES_CSWlibnetsnmp30 += $(call baseisadirs,$(libdir),libnetsnmp\.so\.30(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnetsnmp30 += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibnetsnmp30 += CSWlibgcc-s1
 
 
 PACKAGES += CSWlibnetsnmpagent30
@@ -64,11 +77,13 @@ CATALOGNAME_CSWlibnetsnmpagent30 = libnetsnmpagent30
 SPKG_DESC_CSWlibnetsnmpagent30 += $(DESCRIPTION), libsnmpagent.so.30
 PKGFILES_CSWlibnetsnmpagent30 += $(call baseisadirs,$(libdir),libnetsnmpagent\.so\.30(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnetsnmpagent30 += CSWlibnetsnmp30
+RUNTIME_DEP_PKGS_CSWlibnetsnmpagent30 += CSWlibgcc-s1
 
 PACKAGES += CSWlibnetsnmphelpers30
 CATALOGNAME_CSWlibnetsnmphelpers30 = libnetsnmphelpers30
 SPKG_DESC_CSWlibnetsnmphelpers30 += $(DESCRIPTION), libsnmphelpers.so.30
 PKGFILES_CSWlibnetsnmphelpers30 += $(call baseisadirs,$(libdir),libnetsnmphelpers\.so\.30(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibnetsnmphelpers30 += CSWlibgcc-s1
 
 PACKAGES += CSWlibnetsnmpmibs30
 CATALOGNAME_CSWlibnetsnmpmibs30 = libnetsnmpmibs30
@@ -76,6 +91,7 @@ SPKG_DESC_CSWlibnetsnmpmibs30 += $(DESCRIPTION), libsnmpmibs.so.30
 PKGFILES_CSWlibnetsnmpmibs30 += $(call baseisadirs,$(libdir),libnetsnmpmibs\.so\.30(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnetsnmpmibs30 += CSWlibnetsnmp30
 RUNTIME_DEP_PKGS_CSWlibnetsnmpmibs30 += CSWlibnetsnmpagent30
+RUNTIME_DEP_PKGS_CSWlibnetsnmpmibs30 += CSWlibgcc-s1
 
 PACKAGES += CSWlibnetsnmptrapd30
 CATALOGNAME_CSWlibnetsnmptrapd30 = libnetsnmptrapd30
@@ -83,7 +99,7 @@ SPKG_DESC_CSWlibnetsnmptrapd30 += $(DESCRIPTION), libsnmptrapd.so.30
 PKGFILES_CSWlibnetsnmptrapd30 += $(call baseisadirs,$(libdir),libnetsnmptrapd\.so\.30(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd30 += CSWlibnetsnmpmibs30
 RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd30 += CSWlibnetsnmp30
-RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd30 += CSWlibnetsnmpagent30W+= CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWlibnetsnmptrapd30 += CSWlibnetsnmpagent30WRUNTIME_DEP_PKGS_CSWlibnetsnmptrapd30 += CSWlibgcc-s1W+= CSWlibssl1-0-0
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
 PACKAGES += CSWpmnetsnmp
@@ -102,7 +118,9 @@ SPKG_DESC_CSWpy-netsnmp += $(DESCRIPTION), Python binding
 PKGFILES_CSWpy-netsnmp = $(libdir)/python.*
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpy-netsnm30+CHECKPKG_OVERRIDES_CSWpy-netsnmp += surplus-dependency|CSWpython++= CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWpy-netsnm30+RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibpython2-7-1-0
+RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibnetsnmp25+CHECKPKG_OVERRIDES_CSWpy-netsnmp += surplus-dependency|CSWpython++= CSWlibssl1-0-0
 
 PACKAGES += CSWnetsnmp
 SPKG_DESC_CSWnetsnmp += $(DESCRIPTION), Base
@@ -134,11 +152,11 @@ NOISALIST = 1
 CPPFLAGS =
 EXTRA_CFLAGS = $(INCLUDE_FLAGS)
 # link not to the old alrea# LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -xnorunpath
+# EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -xnorunpath
 # EXTRA_LDFLAGS = $(LD_OPTIONS)FLAGS) -xnorunpath
 
 CONFIGURE_ARGS_mm-32  = --disable-embedded-perl
-CONFIGURE_ARGS_mm-32  += --with-perl-modules=yes
+CONFIGURE_ARGS_mm-32  += --wit --disable-perl-cc-checkth-perl-modules=yes
 CONFIGURE_ARGS_mm-32  += --with-python-modules=yes
 # Enable Perl for 64 bit later
 #
@@ -155,17 +173,20 @@ CONFIGURE_ARGS += --with-sys-contact=unknown
 CONFIGURE_ARGS += --with-sys-location=unknown
 CONFIGURE_ARGS += --with-logfile=/var/opt/csw/log/snmpd.log
 CONFIGURE_ARGS += --with-persistent-directory=/var/opt/csw/net-snmp
-CONFIGURE_ARGS += --with-mib-modules="ucd-snmp/diskio agentx mibII/mta_sendmail"
+CONFIGURE_ARGS += --host ucd-snmp/diskio agentx mibII/mta_sendmail ucd-snmp/lmSensorsmibII/mta_sendmail"
 # Disable for now
 # CONFIGURE_ARGS += --with-libwrap=/opt/csw/lib
 CONFIGURE_ARGS += --enable-ipv6
+COenable-mfd-rewritesS += --enable-ipv6
 CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 # Solaris /bin/bash does not allow empty lists in "for i in ; do echo; done"
 EXTRA_CONFIGURE_EXPORTS = CONFIG_SHELL
-EXTRA_CONFIGURE_ENV_CONFIG_SHELL = /opt/csw/bin/bash
+EXTRA_CONFIGURE_ENV_CONFIG_SHELL = # use gmake for make
+EXTRA_BUILD_ENV += PATH=/opt/csw/gnu:$(PATH) PYTHON=$(PYTHON)
+EXTRA_INSTALL_ENV += PATH=/opt/csw/gnu:$(PATH) PYTHON=$(PYTHON) /opt/csw/bin/bash
 
 # TBD: Make alternatives
 # - with embedded Perl and disabled modules
@@ -174,7 +195,7 @@ EXTRA_CONFIGURE_ENV_CONFIG_SHELL = /opt/csw/bin/bash
 # - without embedded Perl and all modules
 
 # Disable testsuite until this has been fixed or /tmp will fill up:
-#   https://sourceforge.net/tracker/?func=detail&aid=3006962&group_id=12694&atid=112694
+#   https://sourceforge.net/tracker/?func=detail&aid=3006962&group_id=12694&ati=112694
 SKIPTEST ?= 1
 
 TEST_TARGET = test
@@ -196,28 +217,11 @@ pre-configure-modulated:
 
 # if find the header in /opt/csw/include first use the old header from
 # installed older version, thats why remove /opt/csw/include
-CFLAGS := $(filter-out -I/opt/csw/include,$(CFLAGS))
+CFLAGS := $(filter-out -I/opt/csw/iCFLAGS := $(filter-out -march=%-I/opt/csw/include,$(CFLAGS))
 # LDFLAGS := $(filter-out -R/opt/csw/lib% -L/opt/cswpost-install:
 	ginstall -d $(DESTDIR)/$(sysconfdir)/init.d
 	ginstall -d $(DESTDIR)/$(sysconfdir)/snmp
 	ginstall -m 755	$(WORKSRC)/dist/snmpd-init.d $(DESTDIR)/$(sysconfdir)/init.d/netsnmpd
 	ginstall -m 755	$(WORKSRC)/dist/snmptrapd-init.d $(DESTDIR)/$(sysconfdir)/init.d/netsnmptrapd
 	ginstall -m 755	$(WORKSRC)/EXAMPLE.conf $(DESTDIR)/$(sysconfdir)/snmp/snmpd.conf
-	@$(MAKECOOKIEcsw/lib,$(LDFLAGS))
-
-#post-install-isa-sparcv8:
-#	( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/old_libs_s.tar.gz |tar xf -)
-#	ln -s libnetsnmp.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmp.so.10
-#	ln -s libnetsnmpagent.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmpagent.so.10
-#	ln -s libnetsnmphelpers.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmphelpers.so.10
-#	ln -s libnetsnmpmibs.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmpmibs.so.10
-#	ln -s libnetsnmptrapd.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmptrapd.so.10
-#	@$(MAKECOOKIE)
-
-#post-install-isa-i386:
-#	( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/old_libs_i.tar.gz |tar xf -)
-#	ln -s libnetsnmp.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmp.so.10
-#	ln -s libnetsnmpagent.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmpagent.so.10
-#	ln -s libnetsnmphelpers.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmphelpers.so.10
-#	ln -s libnetsnmpmibs.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmpmibs.so.10
-#	@ln -s libnetsnmptrapd.so.10.0.1 $(INSTALLISADIR)$(libdir)/libnetsnmptrapd.so.10
+	@$(MAKECOOKIEcs
