@@ -26,4 +26,5 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = --prefix=$(prefix) --disable-staticCHECKPKG_OVERRIDES_CSWlibsdl-mixer1-2-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libSDL_mixer.so
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 include gar/category.mk
