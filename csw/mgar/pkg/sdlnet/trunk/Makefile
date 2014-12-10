@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWlibsdl-net1-2-0 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibsdl-net1-2-0-dev += CSWlibsdl-net1-2-0$lnet, prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:BUILD64_LIBS_ONLY = 1?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:BUILD64_LIBS_ONLY = 1?:EXTRA_LDFLAGS = -lsocket -lnsl?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 TEST_SCRIPTS =
