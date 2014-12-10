@@ -1,5 +1,5 @@
 NAME = SDL_image
-VERSION = 1.2.10
+VERSION = 1.2.12
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -14,8 +14,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES = CSWsdlimage
 RUNTIME_DEP_PKGS = CSWlibsdl
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:BUILD64_LIBS_ONLY = 1?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 TEST_SCRIPTS =
-include gar/category.mk
+include
