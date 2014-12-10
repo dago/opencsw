@@ -9,13 +9,28 @@ SDL image library loads images as SDL surfaces, and supports the following forma
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).+= CSWlibsdl-image1-2-0
+CATALOGNAME_CSWlibsdl-image1-2-0 = libsdl_image1_2_0
+PKGFILES_CSWlibsdl-image1-2-0 += $(call baseisadirs,$(libdir),libSDL_image-1\.2\.so\.0\.8\.4)
+PKGFILES_CSWlibsdl-image1-2-0 += $(call baseisadirs,$(libdir),libSDL_image-1\.2\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibsdl-image1-2-0 += $(DESCRIPTION), libSDL_image-1.2.so.0
 
-PACKAGES = CSWsdlimage
-RUNTIME_DEP_PKGS = CSWlibsdl
+# This creates the stub package that older packages depend on.
+OBSOLETED_BY_CSWlibsdl-image1-2-0 += CSWsdlimage
+
+# Split development files into separate package. 
+PACKAGES += CSWsdlimage-dev
+CATALOGNAME_CSWsdlimage-dev = sdlimage_dev
+SPKG_DESC_CSWsdlimage-dev += $(DESCRIPTION), development files
+PKGFILES_CSWsdlimage-dev += /opt/csw/lib/libSDL_image.so
+PKGFILES_CSWsdlimage-dev += $(PKGFILES_DEVEL)
+
+RUNTIME_DEP_PKGS_CSWsdlimage-dev += CSWlibsdl-image1-2-0
+RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibsdl1-2-0_PKGS = CSWlibsdl
 
 UFILES_REGEX = $(NAME)-(\d+(?:BUILD64_LIBS_ONLY = 1?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS) --disable-static
+CONFIGURE_ARGS = $(DIRPATHS) 
 TEST_SCRIPTS =
-include
+
+include gar/category.mk
