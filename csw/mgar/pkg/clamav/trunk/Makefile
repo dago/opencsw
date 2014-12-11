@@ -93,7 +93,6 @@ CHECKPKG_OVERRIDES_CSWclamav += missing-dependency|CSWperl
 
 # These are harmless examples
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamd.conf.CSW
-#CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.23
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamav-milter.conf.CSW
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sbin/clamav-milter
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sbin/clamd
@@ -107,15 +106,12 @@ CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bi
 CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.22
 
 # We don't split to three separate packages
-#CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.23|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
-#CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.23|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
-#CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.23|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
 CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.22|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
 CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.22|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
 CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.22|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
 
 # Weirdly needed for sparc
-#CHECKPKG_OVERRIDES_CSWlibclam6 += surplus-dependency|CSWlibstdc++6
+CHECKPKG_OVERRIDES_CSWlibclam6 += surplus-dependency|CSWlibstdc++6
 
 # Weirdly needed for i386
 CHECKPKG_OVERRIDES_CSWclamav += surplus-dependency|CSWlibbz2-1-0
