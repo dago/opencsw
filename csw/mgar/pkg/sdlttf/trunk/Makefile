@@ -12,12 +12,20 @@ MASTER_SITES = http://www.libsdl.org/projects/SDL_ttf/release/
 DISTFILES  = $(NAME)-$iles,CSWsdlttf,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:EXTRA_LDFLAGS = -lm -L/opt/csw/lib -liconv = SDL_ttf.c.diff
+UFILES_REGEX = $(NAME)-(\d+(?:PACKAGES += CSWlibsdl-ttf2-0-0
+CATALOGNAME_CSWlibsdl-ttf2-0-0 = libsdl_ttf2_0_0
+PKGFILES_CSWlibsdl-ttf2-0-0 += $(call baseisadirs,$(libdir),libSDL_ttf-2\.0\.so\.0\.10\.1)
+PKGFILES_CSWlibsdl-ttf2-0-0 += $(call baseisadirs,$(libdir),libSDL_ttf-2\.0\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibsdl-ttf2-0-0 += $(DESCRIPTION), libSDL_ttf-2.0.so.0
+OBSOLETED_BY_CSWlibsdl-ttf2-0-0 = CSWsdlttf
+
+RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibfreetype6
+
+EXTRA_LDFLAGS = -lm -L/opt/csw/lib -liconv
 
 TEST_SCRIPTS =
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
-
-#pre-configure:
-#	( cd $(WORKSRC) ; ./autogen.sh )
