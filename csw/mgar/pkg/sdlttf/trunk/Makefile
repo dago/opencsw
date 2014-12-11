@@ -28,6 +28,7 @@ PKGFILES_CSWlibsdl-ttf2-0-0-dev += $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0-dev += CSWlibsdl-ttf2-0-0
 
 EXTRA_LDFLAGS = -lm -L/opt/csw/lib -liconv
