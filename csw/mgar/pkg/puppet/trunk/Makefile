@@ -50,7 +50,7 @@ INCOMPATIBLE_PKGS += CSWpuppetmaster3KAGES += CSWpuppet
 SPKG_DESC_CSWpuppet       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 
-RUNTIME_DEP_PKGS                  = CSWfacter
+RUNTIME_DEP_PKGS           -ruby18       = CSWfacter
 RUNTIME_DEP_PKGS                 += CSWruby18
 RUNTIME_DEP_PKGS				 += CSWrubyaugeas
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
