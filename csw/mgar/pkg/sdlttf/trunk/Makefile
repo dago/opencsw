@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_ttf/release/
-DISTFILES  = $(NAME)-$iles,CSWsdlttf,)
+DISTFILES  = $(NAME)-$iGARCOMPILER = GCC4$iles,CSWsdlttf,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:PACKAGES += CSWlibsdl-ttf2-0-0
@@ -33,6 +33,8 @@ RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0-dev += CSWlibsdl-ttf2-0-0
 EXTRA_LDFLAGS = -lm -L/opt/csw/lib -liconv
 
 TEST_SCRIPTS =
+
+BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
