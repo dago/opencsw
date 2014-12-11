@@ -1,5 +1,5 @@
 NAME       = clamav
-VERSION    = 0.98.4
+VERSION    = 0.98.5
 GARTYPE = v2
 
 DESCRIPTION = Clam AntiVirus
@@ -38,7 +38,7 @@ SPKG_DESC_CSWlibclam6-dev         = $(DESCRIPTION) Development
 RUNTIME_DEP_PKGS_CSWlibclam6-dev  = CSWlibclam6
 INCOMPATIBLE_PKGS_CSWlibclam6-dev = CSWlibclamav-devel CSWlibclamav6-devel
 
-PATCHFILES += 0001-Enable-conf-files-fix-some-paths.patch
+PATCHFILES += 0001-config.patch
 
 # Must have 64-bit libmilter for this to work
 #BUILD64 = 1
@@ -93,15 +93,29 @@ CHECKPKG_OVERRIDES_CSWclamav += missing-dependency|CSWperl
 
 # These are harmless examples
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamd.conf.CSW
-CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.23
+#CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.23
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamav-milter.conf.CSW
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sbin/clamav-milter
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sbin/clamd
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/sigtool
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamdtop
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamscan
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamconf
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamdscan
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clambc
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/freshclam
+CHECKPKG_OVERRIDES_CSWlibclam6 += file-with-bad-content|/usr/local|root/opt/csw/lib/libclamav.so.6.1.22
 
 # We don't split to three separate packages
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.23|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.23|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.23|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+#CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.23|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
+#CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.23|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
+#CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.23|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.22|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.22|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.22|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
 
 # Weirdly needed for sparc
-CHECKPKG_OVERRIDES_CSWlibclam6 += surplus-dependency|CSWlibstdc++6
+#CHECKPKG_OVERRIDES_CSWlibclam6 += surplus-dependency|CSWlibstdc++6
 
 # Weirdly needed for i386
 CHECKPKG_OVERRIDES_CSWclamav += surplus-dependency|CSWlibbz2-1-0
