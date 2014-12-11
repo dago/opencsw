@@ -26,7 +26,7 @@ PKGFILES_CSWsdlimage-dev += /opt/csw/lib/libSDL_image.so
 PKGFILES_CSWsdlimage-dev += $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWsdlimage-dev += CSWlibsdl-image1-2-0
-RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibsdl1-2-0_PKGS = CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibsdl1-2-0_RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibgcc-s1_PKGS = CSWlibsdl
 
 UFILES_REGEX = $(NAME)-(\d+(?:BUILD64_LIBS_ONLY = 1?:\.\d+)*).tar.gz
 
