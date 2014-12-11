@@ -9,7 +9,7 @@ SDL image library loads images as SDL surfaces, and supports the following forma
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
-DISTFILES  = $(NAME)-$(VERSION).+= CSWlibsdl-image1-2-0
+DISTFILES  = $(NAME)-$(GARCOMPILER = GCC4$(VERSION).+= CSWlibsdl-image1-2-0
 CATALOGNAME_CSWlibsdl-image1-2-0 = libsdl_image1_2_0
 PKGFILES_CSWlibsdl-image1-2-0 += $(call baseisadirs,$(libdir),libSDL_image-1\.2\.so\.0\.8\.4)
 PKGFILES_CSWlibsdl-image1-2-0 += $(call baseisadirs,$(libdir),libSDL_image-1\.2\.so\.0(\.\d+)*)
