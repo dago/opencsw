@@ -1,5 +1,5 @@
 NAME = unbound
-VERSION = 1.4.22
+VERSION = 1.5.1
 CATEGORIES = server
 GARTYPE = v2
 DESCRIPTION = A validating, recursive, and caching DNS resolver
