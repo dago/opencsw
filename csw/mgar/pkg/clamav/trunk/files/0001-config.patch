@@ -1,0 +1,62 @@
+From c3a191a59fd3f45c594ff54b571549725b6cdd88 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Thu, 11 Dec 2014 16:00:10 +0100
+Subject: [PATCH] config
+
+---
+ etc/clamav-milter.conf.sample | 2 +-
+ etc/clamd.conf.sample         | 4 ++--
+ etc/freshclam.conf.sample     | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/etc/clamav-milter.conf.sample b/etc/clamav-milter.conf.sample
+index b7d66a4..cdf54c5 100644
+--- a/etc/clamav-milter.conf.sample
++++ b/etc/clamav-milter.conf.sample
+@@ -3,7 +3,7 @@
+ ##
+ 
+ # Comment or remove the line below.
+-Example
++#Example
+ 
+ 
+ ##
+diff --git a/etc/clamd.conf.sample b/etc/clamd.conf.sample
+index 30515cb..75371d4 100644
+--- a/etc/clamd.conf.sample
++++ b/etc/clamd.conf.sample
+@@ -5,7 +5,7 @@
+ 
+ 
+ # Comment or remove the line below.
+-Example
++#Example
+ 
+ # Uncomment this option to enable logging.
+ # LogFile must be writable for the user running daemon.
+@@ -82,7 +82,7 @@ Example
+ 
+ # Path to a local socket file the daemon will listen on.
+ # Default: disabled (must be specified by a user)
+-#LocalSocket /tmp/clamd.socket
++LocalSocket /tmp/clamd.socket
+ 
+ # Sets the group ownership on the unix socket.
+ # Default: disabled (the primary group of the user running clamd)
+diff --git a/etc/freshclam.conf.sample b/etc/freshclam.conf.sample
+index 1cc4a81..c5c2bbf 100644
+--- a/etc/freshclam.conf.sample
++++ b/etc/freshclam.conf.sample
+@@ -5,7 +5,7 @@
+ 
+ 
+ # Comment or remove the line below.
+-Example
++#Example
+ 
+ # Path to the database directory.
+ # WARNING: It must match clamd.conf's directive!
+-- 
+2.1.3
+
