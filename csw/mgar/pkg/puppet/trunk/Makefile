@@ -74,7 +74,7 @@ TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
 CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby18
-CHECKPKG_OVERRIDES_CSWpuppet        = surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppet        = surplus-de-ruby18pendency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppet	   += surplus-dependency|CSWrubyaugeas
 CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
