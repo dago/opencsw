@@ -13,10 +13,8 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-ip-country
 CATALOGNAME = pm_ip_country
 SPKG_DESC_CSWpm-ip-country = $(DESCRIPTION)
-OBSOLETED_BY_CSWpm-ip-country = CSWpmipcountry
-CATALOGNAME_CSWpmipcountry = pm_ipcountry
 
-RUNTIME_DEP_PKGS += CSWpmgeocountries
+RUNTIME_DEP_PKGS += CSWpm-geography-countries
 
 ARCHALL = 1
 
