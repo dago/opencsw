@@ -51,8 +51,7 @@ SPKG_DESC_CSWpuppet       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 
 RUNTIME_DEP_PKGS           -ruby18       = CSWfacter
-RUNTIME_DEP_PKGS                 += CSWruby18
-RUNTIME_DEP_PKGS				 += CSWrubyaugeas
+RUNTIME_DEP_PKGS                 += CSWruby1s
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby18
 
@@ -66,7 +65,7 @@ ARCHALL = 1
 
 sysconfdir     = /etc$(prefix)
 localstatedir  = /var$(prefix)
-rubysitelibdir = $(shell ruby -rrbconfig -e "puts Config::CONFIG['sitelibdir']")
+rubysitelib18dir = $(shell ruby -rrbconfig -e "puts Config::CONFIG['sitelibdir']")
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
@@ -100,7 +99,7 @@ install-puppet:
 	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)/etc$(prefix)/init.d
-	cd $(WORKSRC) && $(INSTALL_ENV) ruby install.rb \
+	cd $(WORKSRC) && $18(INSTALL_ENV) ruby install.rb \
 		--configdir=$(sysconfdir)/puppet \
 		--bindir=$(bindir) \
 		--sbindir=$(sbindir) \
