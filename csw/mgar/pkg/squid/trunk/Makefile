@@ -76,8 +76,11 @@ CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-dCONFIGURE_ARGS += --enable-aio
 CONFIGURE_ARGS += --enable-storeio=ufs,diskdd# These are needed for Cisco integration, as requested by email
 CONFIGURE_ARGS += --enable-wccp
-CONFIGURE_ARGS += --enable-wccpv2d# This fixes #5221
-#CONFIGURE_ARGS += --disable-arch-nativedefault-user=$(NAME)
+CONFIGURE_ARGS += --enable-wccpv2d
+# Native instructions need to be disabled for zones as reported in #5221
+# This is described in detail in
+#   http://wiki.squid-cache.org/KnowledgeBase/IllegalInstructionError
+CONFIGURE_ARGS += --disable-arch-nativedefault-user=$(NAME)
 
 # Allowed values (see configure --help):
 #   POSIX_V6_ILP32_OFF32   32 bits
