@@ -20,7 +20,7 @@ RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-body
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-server-simple-psgi
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-libwww-perl
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-uri
-RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmmimetypes
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-mime-types
 
 include gar/category.mk
 
