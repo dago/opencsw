@@ -12,7 +12,7 @@ PACKAGES = CSWpm-text-csv-encoded
 CATALOGNAME = pm_text_csv_encoded
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmtextcsv
+RUNTIME_DEP_PKGS += CSWpm-text-csv
 
 CONFIGURE_ARGS = 
 
