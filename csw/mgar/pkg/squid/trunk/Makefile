@@ -61,8 +61,8 @@ CONFIGURE_ARGS += --enable-forw-via-db
 CONFIGURE_ARGS += --enable-htcp
 CONFIGURE_ARGS += --enable-large-cache-files
 CONFIGURE_ARGS += --enable-referer-log
-CONFIGURE_ARGS += --enable-removal-policies=heap,lru
-CONFIGURE_ARGS += --enable-select
+CONFIGURE_ARGS += --enable-remova# Use devpoll in favor of select as it is much faster
+CONFIGURE_ARGS += --enable-devpollS += --enable-select
 CONFIGURE_ARGS += --enable-snmp
 CONFIGURE_ARGS += --enable-ssl
 CONFIGURE_ARGS += --enable-useragent-log
