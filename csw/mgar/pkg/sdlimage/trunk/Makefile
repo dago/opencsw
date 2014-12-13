@@ -1,5 +1,5 @@
 NAME = SDL_image
-VERSION = 1.2.12
+VERSION = 1.2.10
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -9,7 +9,8 @@ SDL image library loads images as SDL surfaces, and supports the following forma
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
-DISTFILES  = $(NAME)-$(GARCOMPILER = GCC4$(VERSION).+= CSWlibsdl-image1-2-0
+DISTFILES  = $(NAME)-$(# http://hg.libsdl.org/SDL_image/rev/7264bae1db63
+PATCHFILES = IMG_png.c.patch$(VERSION).+= CSWlibsdl-image1-2-0
 CATALOGNAME_CSWlibsdl-image1-2-0 = libsdl_image1_2_0
 PKGFILES_CSWlibsdl-image1-2-0 += $(call baseisadirs,$(libdir),libSDL_image-1\.2\.so\.0\.8\.4)
 PKGFILES_CSWlibsdl-image1-2-0 += $(call baseisadirs,$(libdir),libSDL_image-1\.2\.so\.0(\.\d+)*)
@@ -26,7 +27,7 @@ PKGFILES_CSWsdlimage-dev += /opt/csw/lib/libSDL_image.so
 PKGFILES_CSWsdlimage-dev += $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWsdlimage-dev += CSWlibsdl-image1-2-0
-RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibsdl1-2-0_RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibgcc-s1_PKGS = CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibsdl-image1-2-0 += CSWlibsdl1-2-0_PKGS = CSWlibsdl
 
 UFILES_REGEX = $(NAME)-(\d+(?:BUILD64_LIBS_ONLY = 1?:\.\d+)*).tar.gz
 
