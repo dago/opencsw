@@ -28,7 +28,9 @@ DISTFILES += CSWbindchroot.postinstall
 
 LICENSE = COPYRIGHT
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+# Special one-off build for Solaris 9
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
 PACKAGES += CSWbind
 CATALOGNAME_CSWbind = bind
@@ -49,11 +51,11 @@ RUNTIME_DEP_PKGS_CSWbind-dev += CSWlibbind
 PACKAGES += CSWlibbind
 CATALOGNAME_CSWlibbind = libbind
 SPKG_DESC_CSWlibbind = ISC BIND DNS library package
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
+#RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
+#RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
+#RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibz1
@@ -63,7 +65,7 @@ CATALOGNAME_CSWbindutils = bind_utils
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibbind
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWbindutils += CSWlibkrb5-3
+#RUNTIME_DEP_PKGS_CSWbindutils += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibreadline6
 
 PACKAGES += CSWbindchroot
