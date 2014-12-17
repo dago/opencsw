@@ -1,6 +1,6 @@
 NAME      = imagemagick
-VERSION   = 6.8.9
-GARSUBREV = 9
+VERSION   = 6.9.0
+GARSUBREV = 0
 #BETAREV   = beta20140518
 GARTYPE   = v2
 
