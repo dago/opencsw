@@ -1,12 +1,12 @@
 NAME = libgpg-error
-VERSION = 1.13
+VERSION = 1.17
 CATEGORIES = lib
 GARTYPE = v2
 
 DESCRIPTION = GNU gpg related library
 define BLURB
   Libgpg-error is a small library with error codes and descriptions
-  shared by most GnuPG related software.
+  shared by most GnuPG related GARCOMPILER = GCC4d software.
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgpg-error/
