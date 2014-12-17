@@ -23,6 +23,18 @@ DISTFILES  = $(DISTNAME).tar.bz2
 
 BUILD64 = 1
 
+PACKAGES += CSWlibnpth0
+CATALOGNAME_CSWlibnpth0 = libnpth0
+PKGFILES_CSWlibnpth0 += $(call baseisadirs,$(libdir),libnpth\.so\.0\.0\.4)
+PKGFILES_CSWlibnpth0 += $(call baseisadirs,$(libdir),libnpth\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibnpth0 += $(DESCRIPTION), libnpth.so.0
+RUNTIME_DEP_PKGS_CSWlibnpth0 += CSWlibgcc-s1
+
+PKGFILES_CSWnpth-dev += $(PKGFILES_DEVEL)
+
+RUNTIME_DEP_PKGS_CSWnpth += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWnpth += CSWlibnpth0
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_CFLAGS = -std=c99
