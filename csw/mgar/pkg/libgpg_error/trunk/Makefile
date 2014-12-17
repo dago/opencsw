@@ -25,7 +25,7 @@ CATALOGNAME_CSWlibgpg-error0 = libgpg_error0
 SPKG_DESC_CSWlibgpg-error0 = GNU gpg related library, libgpg-error.so.0
 PKGFILES_CSWlibgpg-error0 += $(call pkgfiles_lib,libgpg-error.so.0)
 PKGFILES_CSWlibgpg-error0 += .*/libgpg-error.mo
-RUNTIME_DEP_PKGS_CSWlibgpg-error0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgpg-errorRUNTIME_DEP_PKGS_CSWlibgpg-error0 += CSWlibgcc-s1r0 += CSWlibintl8
 OBSOLETED_BY_libgpg-error0 = CSWgpgerr
 
 PACKAGES += CSWlibgpg-error-dev
@@ -39,7 +39,8 @@ VENDOR_URL = http://www.gnupg.org/download/
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
-BUILD6EXTRA_LINKER_FLAGS = -lrt
+BUILD6# Some test binaries dump core on sparc only since 1.13
+SKIPTESTBUILD6EXTRA_LINKER_FLAGS = -lrt
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threads=posix
