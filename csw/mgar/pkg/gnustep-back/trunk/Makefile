@@ -10,22 +10,36 @@ define BLURB
   GNUstep-core, backend dependent part of GNUstep AppKit.
 endef
 
+MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
+DISTFILES  = $(DISTNAME).tar.gz
+
 #EXTRA_MODULATORS = GRAPHICS
 #MODULATIONS_graphics = xlib cairo
 
-BUILD_DEP_PKGS = CSWsunx11devel CSWgmake CSWgcc4objc CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWgmake
+BUILD_DEP_PKGS += CSWgcc4objc
+BUILD_DEP_PKGS += CSWsunx11devel
+BUILD_DEP_PKGS += CSWlibfreetype-dev
+
+
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-make
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-base
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-gui
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibfreetype6
 
 #for cairo:
 BUILD_DEP_PKGS += CSWlibcairo-dev
-
-DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWgnustep-gui CSWlibfreetype6
-
-BUILD_DEP_PKGS += CSWlibcairo-dev
-DEP_PKGS += CSWlibcairo2
+#for cairo, add these. Perhaps these hould be pulled in by other packages
+BUILD_DEP_PKGS += CSWfontconfig-dev
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibcairo2
 #DEP_PKGS_GRAPHICS_cairo += CSWlibcairo2
 
-MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
-DISTFILES  = $(DISTNAME).tar.gz
+#overrides
+CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-sparc
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
@@ -37,27 +51,27 @@ BUILD_SCRIPTS = sourcegs
 INSTALL_SCRIPTS = sourcegs
 
 # Disable test scripts for now
-TEST_SCRIPTS = none
-SKIPTEST = 1
+TEST_SCRIPTS = 
+SKIPTEST ?= 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 #CONFIGURE_ARGS_GRAPHICS_xlib += --enable-graphics=xlib
 #CONFIGURE_ARGS_GRAPHICS_cairo += --enable-graphics=cairo
-CONFIGURE_ARGS += --enable-graphics=cairo
+CONFIGURE_ARGS += --enable-graphics=cairo $(DIRPATHS)
 
 include gar/category.mk
 
 configure-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) ; $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
+	 $(CONFIGURE_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) ; ./configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 build-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
+	$(BUILD_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && $(MAKE)
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install DESTDIR=$(DESTDIR)
+	$(INSTALL_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && $(MAKE) install DESTDIR=$(DESTDIR)
 	@$(MAKECOOKIE)
 
 test-none :
