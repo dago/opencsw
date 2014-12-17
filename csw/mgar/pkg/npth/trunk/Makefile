@@ -30,15 +30,16 @@ PKGFILES_CSWlibnpth0 += $(call baseisadirs,$(libdir),libnpth\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibnpth0 += $(DESCRIPTION), libnpth.so.0
 RUNTIME_DEP_PKGS_CSWlibnpth0 += CSWlibgcc-s1
 
-PKGFILES_CSWnpth-dev += $(PKGFILES_DEVEL)
 
-RUNTIME_DEP_PKGS_CSWnpth += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWnpth += CSWlibnpth0
+PACKAGES += CSWnpth-dev
+CATALOGNAME_CSWnpth-dev = npth_dev
+SPKG_DESC_CSWnpth-dev = Development files for libnpth.so.0
+PKGFILES_CSWnpth-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWnpth-dev += CSWlibnpth0
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_CFLAGS = -std=c99
-# -pedantic -Wall -W -D__EXTENSIONS__ -D_XPG6
 
 include gar/category.mk
 
