@@ -42,5 +42,6 @@ RUNTIME_DEP_PKGS = CSWggettextrt
 BUILD6EXTRA_LINKER_FLAGS = -lrt
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-threads=posix
 
 include gar/category.mk
