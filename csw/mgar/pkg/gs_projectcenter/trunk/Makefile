@@ -10,13 +10,25 @@ define BLURB
   GNUstep IDE for creating Tools and Applications with Makefile generation.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc
-DEP_PKGS = CSWgnustep-make CSWgnustep-base CSWgnustep-gui CSWgnustep-back
-
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/dev-apps/
 DISTFILES  = $(DISTNAME).tar.gz
 
+BUILD_DEP_PKGS += CSWgmake
+BUILD_DEP_PKGS += CSWgcc4objc
+
+CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-base
+CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-gui
+CHECKPKG_OVERRIDES_CSWProjectCenter += CSWgnustep-back
+
 PATCHFILES += 0001-solaris-fix.patch
+
+#overrides
+CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc
+PACKAGING_PLATFORMS += solaris10-sparc
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
@@ -31,17 +43,17 @@ BUILD_SCRIPTS = sourcegs
 INSTALL_SCRIPTS = sourcegs
 
 # Disable test scripts for now
-TEST_SCRIPTS = none
-SKIPTEST = 1
+TEST_SCRIPTS = 
+SKIPTEST = ?1
 
 include gar/category.mk
 
 build-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(BUILD_ENV) && $(MAKE)
+	$(BUILD_ENV) && . $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && $(MAKE)
 	@$(MAKECOOKIE)
 
 install-sourcegs:
-	. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && /usr/bin/env -i $(INSTALL_ENV) && $(MAKE) install DESTDIR=$(DESTDIR)
+	$(INSTALL_ENV) &&. $(BUILD_PREFIX)/GNUstep/System/Library/Makefiles/GNUstep.sh && cd $(WORKSRC) && $(MAKE) install DESTDIR=$(DESTDIR)
 	@$(MAKECOOKIE)
 
 test-none :
