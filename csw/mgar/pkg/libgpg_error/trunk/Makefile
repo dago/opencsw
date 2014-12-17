@@ -41,4 +41,6 @@ RUNTIME_DEP_PKGS = CSWggettextrt
 
 BUILD6EXTRA_LINKER_FLAGS = -lrt
 
+CONFIGURE_ARGS  = $(DIRPATHS)
+
 include gar/category.mk
