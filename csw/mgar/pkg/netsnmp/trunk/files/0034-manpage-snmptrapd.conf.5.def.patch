@@ -1,0 +1,19 @@
+--- a/man/snmptrapd.conf.5.def
++++ b/man/snmptrapd.conf.5.def
+@@ -203,12 +203,11 @@ SNMPv1 traps being converted as per RFC 2576, before being passed to the
+ program.
+ The input format is as follows, one entry per line:
+ .RS
+-.IP HOSTNAME
+-The name of the host that sent the notification, as determined by
+-.IR gethostbyaddr(3) .
++.IP HOSTDETAILS
++The details of the host that sent the notification in the format :
++.IP
++Host : HOSTNAME (PROTOCOL: [IPADDRESS]:PORTNO)
+ .br
+-.IP IPADDRESS
+-The IP address of the host that sent the notification.
+ .\"
+ .\" XXX - What about non-IPv4 transports?
+ .\"

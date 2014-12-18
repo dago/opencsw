@@ -34,6 +34,16 @@ PATCHFILES PATCHFILES += 0001-fixing-init-scripts.patch
 PATCHFILES += 0002-workaround-ksh-stop-alias-problem.patch
 PATCHFILES += 0003-configure-disable-perl-cc-checks.patch
 PATCHFILES += 0004-enable-python-version-select.patch
+PATCHFILES += 0002-pkcs.patch
+PATCHFILES += 0011-Makefile.in.patch
+PATCHFILES += 0012-Makefile.PL.patch
+PATCHFILES += 0015+0016-vmstat_solaris2.patch
+PATCHFILES += 0024-kernel_sunos5.patch
+PATCHFILES += 0034-manpage-snmptrapd.conf.5.def.patch
+PATCHFILES += 0035-bug-1849903.patch
+PATCHFILES += 0048+0027-mnt-cache-hr_filesys.patch
+PATCHFILES += 0051-CVE-2014-2285.patch
+PATCHFILES += 0052-dyn-cpu-cpu_kstat.patch
 
 VENDOR_URL = http://www.net-snmp.org/
 
