@@ -2,7 +2,7 @@
 # ! Move ap2xs into devel package
 
 NAME = httpd
-VERSION = 2.2.27
+VERSION = 2.2.29
 GARTYPE = v2
 
 DESCRIPTION = A high performance HTTP server.
@@ -139,7 +139,7 @@ CHECKPKG_OVERRIDES_CSWap2worker += catalogname-does-not-match-pkgname|pkgname=CS
 CHECKPKG_OVERRIDES_CSWap2prefork += catalogname-does-not-match-pkgname|pkgname=CSWap2prefork|catalogname=ap2_prefork|expected-catalogname=ap2prefork
 
 # This is ok as etc/envvars is preserved and packaged as envvars.CSW
-CHECKPKG_OVERRIDES_CSWapache2 += file-needed-but-no-package-satisfies-it|/opt/csw/apache2/etc/envvars|CSWapache2|contains|'/opt/csw/apache2/sbin/envvars'|(a|symlink)|which|needs|the|target|file:|'/opt/csw/apache2/etc/envvars'.
+CHECKPKG_OVERRIDES_CSWapache2 += file-needed-but-no-package-satisfies-it|/opt/csw/apache2/etc/envvars|CSWapache2|contains|symlink|/opt/csw/apache2/sbin/envvars|which|needs|the|target|file:|/opt/csw/apache2/etc/envvars
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
