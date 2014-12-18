@@ -1,0 +1,82 @@
+--- a/agent/mibgroup/ucd-snmp/vmstat_solaris2.c
++++ b/agent/mibgroup/ucd-snmp/vmstat_solaris2.c
+@@ -590,6 +590,7 @@ update_stats(unsigned int registrationNumber, void *clientarg)
+             cpu_sum += (css_new->css_cpu[i] - css_old->css_cpu[i]);
+         }
+ 
++        if (cpu_sum == 0) { cpu_sum = 1; }
+         /*
+          * Now calculate the absolute percentage values 
+          * Looks somewhat complicated sometimes but tries to get around using floats to increase speed 
+--- a/agent/mibgroup/ucd-snmp/vmstat_solaris2.c
++++ b/agent/mibgroup/ucd-snmp/vmstat_solaris2.c
+@@ -703,7 +704,12 @@ var_extensible_vmstat(struct variable *vp,
+     case CPUIDLE:
+         return ((u_char *) (&cpu_perc[CPU_IDLE]));
+     case CPURAWUSER:
+-        take_snapshot(&raw_values);
++	/* Take the current snapshot */
++	if ((take_snapshot(&raw_values) == -1) && (raw_values.css_cpus == 0)) {
++		snmp_log(LOG_WARNING,
++		    "vmstat_solaris2 (var_extensible_vmstat): Something went wrong with take_snapshot.\n");
++		return (NULL);
++	}
+         /*
+          * LINTED has to be 'long' 
+          */
+@@ -717,7 +723,12 @@ var_extensible_vmstat(struct variable *vp,
+          * (Has been changed to Counter32 in the latest MIB version!) 
+          */
+     case CPURAWSYSTEM:
+-        take_snapshot(&raw_values);
++	/* Take the current snapshot */
++	if ((take_snapshot(&raw_values) == -1) && (raw_values.css_cpus == 0)) {
++		snmp_log(LOG_WARNING,
++		    "vmstat_solaris2 (var_extensible_vmstat): Something went wrong with take_snapshot.\n");
++		return (NULL);
++	}
+         /*
+          * LINTED has to be 'long' 
+          */
+@@ -726,7 +737,12 @@ var_extensible_vmstat(struct variable *vp,
+                      raw_values.css_cpu[CPU_WAIT]) / raw_values.css_cpus);
+         return ((u_char *) (&long_ret));
+     case CPURAWIDLE:
+-        take_snapshot(&raw_values);
++	/* Take the current snapshot */
++	if ((take_snapshot(&raw_values) == -1) && (raw_values.css_cpus == 0)) {
++		snmp_log(LOG_WARNING,
++		    "vmstat_solaris2 (var_extensible_vmstat): Something went wrong with take_snapshot.\n");
++		return (NULL);
++	}
+         /*
+          * LINTED has to be 'long' 
+          */
+@@ -734,7 +750,12 @@ var_extensible_vmstat(struct variable *vp,
+             (long) (raw_values.css_cpu[CPU_IDLE] / raw_values.css_cpus);
+         return ((u_char *) (&long_ret));
+     case CPURAWWAIT:
+-        take_snapshot(&raw_values);
++	/* Take the current snapshot */
++	if ((take_snapshot(&raw_values) == -1) && (raw_values.css_cpus == 0)) {
++		snmp_log(LOG_WARNING,
++		    "vmstat_solaris2 (var_extensible_vmstat): Something went wrong with take_snapshot.\n");
++		return (NULL);
++	}
+         /*
+          * LINTED has to be 'long' 
+          */
+@@ -742,7 +763,12 @@ var_extensible_vmstat(struct variable *vp,
+             (long) (raw_values.css_cpu[CPU_WAIT] / raw_values.css_cpus);
+         return ((u_char *) (&long_ret));
+     case CPURAWKERNEL:
+-        take_snapshot(&raw_values);
++	/* Take the current snapshot */
++	if ((take_snapshot(&raw_values) == -1) && (raw_values.css_cpus == 0)) {
++		snmp_log(LOG_WARNING,
++		    "vmstat_solaris2 (var_extensible_vmstat): Something went wrong with take_snapshot.\n");
++		return (NULL);
++	}
+         /*
+          * LINTED has to be 'long' 
+          */

@@ -1,0 +1,64 @@
+--- a/agent/Makefile.in
++++ b/agent/Makefile.in
+@@ -276,7 +276,10 @@ FTOBJS		= $(LLIBAGENTFTS) $(FTAGENTOBJS) mib_modules.ft auto_nlist.ft
+ 
+ FEATUREFILE     = $(top_builddir)/include/net-snmp/agent/features.h
+ 
+-all: agentlib subdirs miblib $(INSTALLBINPROGS) $(INSTALLSBINPROGS)
++LIB_LD_ADD_AGENT	=-lnetsnmp -lnetsnmphelpers
++LIB_LD_ADD_PATH_MIBS	=-Lhelpers -L../snmplib
++
++all: agentlib subdirs miblib relinklib $(INSTALLBINPROGS) $(INSTALLSBINPROGS)
+ 
+ #
+ # build stuff targets
+@@ -306,6 +309,10 @@ libnetsnmpmibs.$(LIB_EXTENSION)$(LIB_VERSION): ${LMIBOBJS} $(AGENTLIB) $(USELIBS
+ 
+ agentlib: $(AGENTLIB)
+ 
++relinklib:     ${LLIBAGENTOBJS} $(USELIBS)
++	$(LIB_LD_CMD) $(AGENTLIB) $(LIB_LD_ADD_PATH_MIBS) ${LLIBAGENTOBJS} $(USELIBS) ${LAGENTLIBS} $(LDFLAGS) $(PERLLDOPTS_FOR_LIBS) $(LIB_LD_LIBS) $(LIB_LD_ADD_AGENT)
++	$(RANLIB) $(AGENTLIB) $(LIB_LD_ADD_AGENT)
++
+ miblib: $(MIBLIB)
+ 
+ libs: $(AGENTLIB) $(MIBLIB)
+--- a/agent/helpers/Makefile.in
++++ b/agent/helpers/Makefile.in
+@@ -31,8 +31,11 @@ OBJS = dummy.o
+ 
+ LOBJS = dummy.lo
+ 
++LIB_LD_ADD	=-lnetsnmp
++LIB_LD_ADD_PATH	=-L../../snmplib
++
+ all: standardall
+ 
+ libnetsnmphelpers.$(LIB_EXTENSION)$(LIB_VERSION):    $(LOBJS)
+-	$(LIB_LD_CMD) $@ $(LOBJS) @LD_NO_UNDEFINED@ $(LDFLAGS) $(LIB_LD_LIBS)
+-	$(RANLIB) $@
++	$(LIB_LD_CMD) $@ $(LIB_LD_ADD_PATH) $(LOBJS) @LD_NO_UNDEFINED@ $(LDFLAGS) $(LIB_LD_LIBS) $(LIB_LD_ADD)
++	$(RANLIB) $@ $(LIB_LD_ADD)
+--- a/snmplib/Makefile.in
++++ b/snmplib/Makefile.in
+@@ -223,6 +223,9 @@ TOBJS=$(LOBJS)
+ 
+ FEATUREFILE     = $(top_builddir)/include/net-snmp/library/features.h
+ 
++# To satisfy -zdefs
++LIB_LD_ADD	=-lnsl -lsocket -L$(libdir)
++
+ # 
+ CPPFLAGS = $(TOP_INCLUDES) -I. 	$(SNMPLIB_INCLUDES) @CPPFLAGS@
+ 
+@@ -230,8 +233,8 @@ all: standardall
+ 
+ # how to build the libraries.
+ libnetsnmp.$(LIB_EXTENSION)$(LIB_VERSION):    $(TOBJS)
+-	$(LIB_LD_CMD) $@ $(TOBJS) @LD_NO_UNDEFINED@ $(LDFLAGS) @LNETSNMPLIBS@
+-	$(RANLIB) $@
++	$(LIB_LD_CMD) $@ $(TOBJS) @LD_NO_UNDEFINED@ $(LDFLAGS) @LNETSNMPLIBS@ $(LIB_LD_ADD)
++	$(RANLIB) $@ $(LIB_LD_ADD)
+ 
+ libsnmp.$(LIB_EXTENSION)$(LIB_VERSION):    $(TOBJS)
+ 	$(LIB_LD_CMD) $@ $(TOBJS) @LD_NO_UNDEFINED@ $(LDFLAGS) @LNETSNMPLIBS@
