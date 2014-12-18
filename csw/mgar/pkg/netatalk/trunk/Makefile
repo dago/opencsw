@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = netatalk
-VERSION = 3.1.6
+VERSION = 3.1.7
 GARTYPE = v2
 
 DESCRIPTION = Open Source AFP fileserver
