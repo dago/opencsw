@@ -28,7 +28,7 @@ index ce8b2c5..95bb514 100644
 index f255496..f5dc114 100644
 --- a/include/config.h.in
 +++ b/include/config.h.in
-@@ -442,3 +442,14 @@
+@@ -442,3 +442,12 @@
  
  /* type to use in place of socklen_t if not defined */
  #undef socklen_t
