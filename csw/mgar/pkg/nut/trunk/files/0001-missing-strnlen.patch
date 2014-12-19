@@ -1,12 +1,13 @@
 index ce3c573..e7ec2a8 100644
 --- a/common/common.c
 +++ b/common/common.c
-@@ -661,3 +661,11 @@ int select_write(const int fd, const void *buf, const size_t buflen, const long
+@@ -661,3 +661,12 @@ int select_write(const int fd, const void *buf, const size_t buflen, const long
  
  	return write(fd, buf, buflen);
  }
 +
 +#ifndef HAVE_STRNLEN
++#include <strings.h>
 +size_t strnlen (const char *str, size_t max)
 +{
 +	const char *end = memchr (str, 0, max);
