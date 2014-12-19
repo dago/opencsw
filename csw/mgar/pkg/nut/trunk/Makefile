@@ -36,3 +36,7 @@ CONFIGURE_ARGS += --with-group=noaccess
 
 include gar/category.mk
 
+pre-configure:
+	cd $(WORKSRC) && autoconf
+	$(MAKECOOKIE)
+
