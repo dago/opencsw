@@ -1,0 +1,45 @@
+index ce3c573..e7ec2a8 100644
+--- a/common/common.c
++++ b/common/common.c
+@@ -661,3 +661,11 @@ int select_write(const int fd, const void *buf, const size_t buflen, const long
+ 
+ 	return write(fd, buf, buflen);
+ }
++
++#ifndef HAVE_STRNLEN
++size_t strnlen (const char *str, size_t max)
++{
++	const char *end = memchr (str, 0, max);
++	return end ? (size_t)(end - str) : max;
++}
++#endif /* HAVE_STRNLEN */
+index ce8b2c5..95bb514 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -110,7 +110,7 @@ AC_C_VARARRAYS
+ AC_CHECK_FUNCS(flock lockf fcvt fcvtl)
+ AC_CHECK_FUNCS(cfsetispeed tcsendbreak)
+ AC_CHECK_FUNCS(seteuid setsid getpassphrase)
+-AC_CHECK_FUNCS(on_exit strptime setlogmask)
++AC_CHECK_FUNCS(on_exit strptime setlogmask strnlen)
+ AC_CHECK_DECLS(LOG_UPTO, [], [], [#include <syslog.h>])
+ 
+ dnl the following may add stuff to LIBOBJS (is this still needed?)
+index f255496..f5dc114 100644
+--- a/include/config.h.in
++++ b/include/config.h.in
+@@ -442,3 +442,14 @@
+ 
+ /* type to use in place of socklen_t if not defined */
+ #undef socklen_t
++
++/* #undef inline */
++#endif
++
++/* type to use in place of socklen_t if not defined */
++/* #undef socklen_t */
++
++/* Missing on Solaris 10*/
++#ifndef HAVE_STRNLEN
++size_t strnlen (const char *str, size_t max);
++#endif
