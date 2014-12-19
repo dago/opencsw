@@ -185,3 +185,111 @@
  int
  _cpu_status( char *state)
  {
+--- a/agent/mibgroup/hardware/cpu/cpu.c
++++ b/agent/mibgroup/hardware/cpu/cpu.c
+@@ -271,4 +271,60 @@ void _cpu_copy_stats( netsnmp_cpu_info *cpu )
+     cpu2->pageIn     = cpu->pageIn;
+     cpu2->pageOut    = cpu->pageOut;
+ }
++
++    /*
++     * Updates the cpu list, keeping the cpus whose indices are passed
++     * assumes the passed linked list of indices is sorted in ascending order
++     * returns the number of deleted cpus
++     */
++int netsnmp_update_cpu_list( struct cpu_idx *new_cpu_list )
++{
++    netsnmp_cpu_info *prev, *current, *temp1, *temp2;
++    int n=0;
++    netsnmp_cpu_info *cpu;
++
++    for( prev=current=_cpu_head; current && new_cpu_list ;
++        current=current->next, new_cpu_list=new_cpu_list->next ) {
++        if ( current->idx == new_cpu_list->idx ) {
++            prev=current;
++        } else {
++            current=current->next;
++            while ( current && (current->idx != new_cpu_list->idx) )
++                current = current->next;
++            if ( !current ) {
++                /*This shouldn't happen. Something went really wrong */
++                return -1;
++            }
++
++            temp1 = prev->next;
++            prev->next = current;
++            prev = current;
++                /* remove the unassigned cpus */
++            while ( temp1 != current ) {
++                temp2 = temp1;
++                temp1 = temp1->next;
++                n++;
++                SNMP_FREE(temp2->history);
++                SNMP_FREE(temp2);
++            }
++        }
++    } /*end of for */
++
++    if ( !current && new_cpu_list ) {
++        /* This shouldn't happen. */
++        return -1;
++    }
++
++    /* Delete the unassigned trailing cpus from the list */
++    while ( current ) {
++        temp2 = current;
++        current = current->next;
++        n++;
++        SNMP_FREE(temp2->history);
++        SNMP_FREE(temp2);
++     }
++     prev->next = NULL;
++     return n;
++}
++
+ #endif /* NETSNMP_FEATURE_REMOVE_HARDWARE_CPU_COPY_STATS */
+--- a/agent/mibgroup/hardware/cpu/cpu_kstat.c
++++ b/agent/mibgroup/hardware/cpu/cpu_kstat.c
+@@ -18,7 +18,9 @@ extern kstat_ctl_t  *kstat_fd;
+ extern int           cpu_num;
+ int _cpu_status(char *state);
+ static void add_new_kstat_cpu_entry(kstat_t *ksp);
++
+ static struct cpu_idx * add_cpu_idx(struct cpu_idx * head, int idx);
++int netsnmp_update_cpu_list( struct cpu_idx * ); /* returns the number of deleted cpus */
+  
+     /*
+      * Initialise the list of CPUs on the system
+@@ -49,7 +51,7 @@ void init_cpu_kstat( void ) {
+ }
+ 
+     /*
+-     * adds the new cpu entry to the exisitng list
++     * adds the new cpu entry to the existing list
+      */
+ static void
+ add_new_kstat_cpu_entry( kstat_t *ksp ) {
+@@ -211,7 +213,8 @@ add_cpu_idx(struct cpu_idx * head, int idx)
+             return head;
+         }
+     }
+-
++    DEBUGMSG(("cpu", "(cpu_idx creation failed)\n"));
++    return head; 
+ }
+ 
+ int
+--- a/include/net-snmp/agent/hardware/cpu.h
++++ b/include/net-snmp/agent/hardware/cpu.h
+@@ -66,3 +66,11 @@ netsnmp_cpu_info *netsnmp_cpu_get_byName( char*, int );
+ 
+ netsnmp_cache *netsnmp_cpu_get_cache( void );
+ int netsnmp_cpu_load( void );
++
++   /* Auxilary structure used for updating the new cpu list */
++struct cpu_idx {
++        int idx;
++        struct cpu_idx *next;
++};
++
++

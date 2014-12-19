@@ -1,18 +1,5 @@
 --- a/agent/mibgroup/if-mib/ifTable/ifTable_data_access.c
 +++ b/agent/mibgroup/if-mib/ifTable/ifTable_data_access.c
-@@ -14,6 +14,12 @@
- 
- netsnmp_feature_require(container_linked_list)
- 
-+typedef struct cd_container_s {
-+    netsnmp_container *current;
-+    netsnmp_container *deleted;
-+} cd_container;
-+
-+
- /*
-  * include our parent header 
-  */
 @@ -485,8 +491,21 @@ static void
  _add_new_interface(netsnmp_interface_entry *ifentry,
                     netsnmp_container *container)
@@ -37,28 +24,6 @@
      DEBUGMSGTL(("ifTable:access", "creating new entry\n"));
  
      /*
-@@ -533,6 +552,21 @@ _add_new_interface(netsnmp_interface_entry *ifentry,
-         }
-     }
- }
-+ 
-+/**
-+ * delete removed entry
-+ */
-+static void
-+_delete_missing_interface(ifTable_rowreq_ctx *rowreq_ctx,
-+                          netsnmp_container *container)
-+{
-+    DEBUGMSGTL(("ifTable:access", "removing missing entry %s\n",
-+                rowreq_ctx->data.ifName));
-+
-+    CONTAINER_REMOVE(container, rowreq_ctx);
-+
-+    ifTable_release_rowreq_ctx(rowreq_ctx);
-+}
- 
- /**
-  * add new entry
 --- a/agent/mibgroup/if-mib/ifTable/ifTable_data_access.h
 +++ b/agent/mibgroup/if-mib/ifTable/ifTable_data_access.h
 @@ -50,6 +50,8 @@ extern          "C" {
