@@ -38,7 +38,7 @@ PATCHFILES += 0002-pkcs.patch
 PATCHFILES += 0011-Makefile.in.patch
 PATCHFILES += 0012-Makefile.PL.patch
 PATCHFILES += 0015+0016-vmstat_solaris2.patch
-PATCHFILES += 0024-kernel_sunos5.patch
+PATCHFILES += 0024-kernel_sunos5.$(GAROSREL).patch
 PATCHFILES += 0034-manpage-snmptrapd.conf.5.def.patch
 PATCHFILES += 0035-bug-1849903.patch
 PATCHFILES += 0048+0027-mnt-cache-hr_filesys.patch
@@ -50,7 +50,7 @@ VENDOR_URL = http://www.net-snmp.org/
 # GARCOMPILER = SOS12U3
 GARCOMPILER = GCC4
 BUILD_DEP_PKGS = CSWpy-D_DEP_PKGS = CSWpysetuptools
-PACKAGING_PLATFORMS += solaris10-sparINITSMF = $(sysconfdir)/init.d/netsnmpd
+PACKAGING_PLATFORMS += solaris10-sp solaris11-sparc solaris1110-sparINITSMF = $(sysconfdir)/init.d/netsnmpd
 INITSMF += $(sysconfdir)/init.d/netsnmptrapdar
 EXTRA_MODULATORS += PYTHON_VERSION
 MODULATIONS_PYTHON_VERSION = 2.6 2.7
