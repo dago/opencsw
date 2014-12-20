@@ -11,7 +11,8 @@ DISTFILES = $(DISTNAME).tar.gz
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/logtool
 
 # There are no tests
 SKIPTEST = 1
