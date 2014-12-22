@@ -1,1 +1,1 @@
-openntpd:openntpd:CSW OpenNTPD:/var/opt/csw/openntpd:/bin/false:m:r:NP
+openntpd:openntpd:CSW OpenNTPD:/var/opt/csw/openntpd:/bin/false:::NP
