@@ -32,3 +32,4 @@ post-install:
 	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWopenntpd
 	ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWopenntpd/
 	rm -rf $(DESTDIR)/var
+	ginstall -m 755 -d $(DESTDIR)/var/opt/csw/openntpd
