@@ -1,5 +1,5 @@
 NAME = apr
-VERSION = 1.5.0
+VERSION = 1.5.1
 GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime
