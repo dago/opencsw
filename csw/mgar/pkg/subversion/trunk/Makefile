@@ -187,6 +187,7 @@ CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsqlite3-0
 CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
+CHECKPKG_OVERRIDES_CSWpmsvn += missing-dependency|CSWlibapr1-0
 CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibserf1-1
 CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsasl2-2
 CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibintl8
