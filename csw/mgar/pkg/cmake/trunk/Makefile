@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cmake
-VERSION = 3.1.0-rc1-1
+VERSION = 3.1.0
 GARTYPE = v2
 
 DESCRIPTION = Cross-platform make
@@ -17,7 +17,7 @@ endef
 RELVER = $(shell echo $(VERSION) | cut -d. -f1-2)
 SPKG_SOURCEURL = http://cmake.org/
 MASTER_SITES = http://cmake.org/files/v$(RELVER)/
-DISTFILES = $(NAME)-$(VERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 LICENSE = Copyright.txt
 # temporary for cmake-2.8.8, see http://public.kitware.com/Bug/view.php?id=13199
 #PATCHFILES += 0001-bootstrap-Port-back-to-old-shells-13199.patch
