@@ -30,7 +30,7 @@ LICENSE = fdl-1.3.txt
 
 BUILD_DEP_PKGS += CSWpy-sphinx
 BUILD_DEP_PKGS += CSWrsync
-BUILD_DEP_PKGS += # This is a documentation package, so references to /usr are fine.
+BUILD_-DEP_PKGS += # This is a documentation package, so references to /usr are fine.
 CHECKPKG_OVERRIDES_CSWopencsw-manual += file-with-bad-content= CSWpysetuptools
 
 include gar/category.mk
