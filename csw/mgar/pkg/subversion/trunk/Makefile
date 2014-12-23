@@ -20,7 +20,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.8.10
+VERSION = 1.8.11
 GARTYPE = v2
 utils
 GARTYPE = v2
@@ -79,7 +79,6 @@ PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev = Subversion Development Support
 PKGFILES_CSWsvn-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-dev += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
-OBSOLETED_BY_CSWsvn-dev += CSWsvn-devel
 
 PACKAGES += CSWap2svn
 SPKG_DESC_CSWap2svn = Subversion Modules for Apache 2.2
@@ -118,7 +117,6 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibserf1-1
 # This would go away when -norunpath would make it to the linker, but at this point this is difficult.
 # Override for now as it is not harmful.
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/libopt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entropt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entryrw7opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entrysparcad-rpath-entry|/lib|opt/csw/lib/svn/libsv
 PACKAGES += CSWpmsvn
