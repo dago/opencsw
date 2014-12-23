@@ -50,6 +50,9 @@ CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/
 CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracModPython
 CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracFastCgi
 CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracInstall
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracRepositoryAdmin
+CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracRepositoryAdmin
+CHECKPKG_OVERRIDES_CSWtrac += dependency-on-stub|py_setuptools_stub
 
 
 TEST_SCRIPTS           =
