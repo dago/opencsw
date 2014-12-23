@@ -68,7 +68,6 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibserf1-1
-RUNTIME_DEP_PKGS_CSWsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn_5.9 += CSWglib2
 RUNTIME_DEP_PKGS_CSWsvn_5.10 += CSWlibglib2-0-0
@@ -118,7 +117,7 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibserf1-1
 # Override for now as it is not harmful.
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/libopt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entryrw7opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entrysparcad-rpath-entry|/lib|opt/csw/lib/svn/libsvCHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entr|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 v
 PACKAGES += CSWpmsvn
 SPKG_DESC_CSWpmsvn = Subversion Perl Language Binding
@@ -128,15 +127,7 @@ PKGFILES_CSWpmsvn += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn += $(mandir)/.*swig_perl.*
 PKGFILES_CSWpmsvnES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
-RUNTIME_DEP_PKGSapr1vn RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibz1
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibaprutil1-0
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibsqlite3-0
-
+RUNTIME_DEP_PKGS_
 PACKAGES += CSWrbsvn
 SPKG_DESC_CSWrbsvn = Subversion Ruby Language Binding
 PKGFILES_CSWrbsvn += $(libdir)/ruby.*
@@ -196,13 +187,6 @@ CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibsqlite3-0
 CHECKPKG_OVERRIDES_CSWjavasvn += surplus-dependency|CSWlibserf1-1
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibexpat1
-CHECKPKG_OVERRIDES_CSWpmsvn += surplus-dependency|CSWlibsqlite3-0
 CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibserf1-1
 CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibsasl2-2
 CHECKPKG_OVERRIDES_CSWpythonsvn += surplus-dependency|CSWlibintl8
@@ -222,7 +206,7 @@ CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibexpat1
 CHECKPKG_OVERRIDES_CSWrbsvn += surplus-dependency|CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWsvn += surplus-dependency|CSWlibiconv2n-of-bindings.patch
+-of-bindings.patch
 
 # should be in lib ... put something below to at least make it compile.
 # on the svn mailing list people say we should not build the package
