@@ -1,5 +1,5 @@
 NAME = apr-util
-VERSION = 1.5.3
+VERSION = 1.5.4
 GARTYPE = v2
 
 DESCRIPTION = Apache Portable Runtime Utilities
