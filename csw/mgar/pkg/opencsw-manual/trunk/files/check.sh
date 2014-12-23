@@ -11,7 +11,9 @@ DATESTAMP_CLOCK=$(date '+0.%Y.%m')
 if [[ "${DATESTAMP_CONF}" != "${DATESTAMP_CLOCK}" ]]; then
   echo >&2
   echo >&2 '*****'
-  echo >&2 "Please update the version setting in conf.py to ${DATESTAMP_CLOCK}"
+  echo >&2 "Please update the version setting in trunk/files/conf.py to ${DATESTAMP_CLOCK}"
+  echo >&2 'and run "mgar clean package"'
+  echo >&2 'or "mgar clean install copy-to-web" for testing'
   echo >&2 '*****'
   echo >&2
   exit 1
