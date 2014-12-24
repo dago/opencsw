@@ -20,7 +20,7 @@ DISTFILES              = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX           = (\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWtrac
-RUNTIME_DEP_PKGS_CSWtrac  = CSWpysetuptools CSWpythonsvn CSWgenshi
+RUNTIME_DEP_PKGS_CSWtrac  = CSWpy-setuptools CSWpythonsvn CSWgenshi
 ARCHALL_CSWtrac = 1
 
 CATALOGNAME_CSWtrac    = trac
@@ -28,7 +28,7 @@ SPKG_DESC_CSWtrac      = Integrated SCM and Project Management
 
 CHECKPKG_OVERRIDES_CSWtrac += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWtrac += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpy-setuptools
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWgenshi
 CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpythonsvn
 
@@ -52,7 +52,6 @@ CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/
 CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracInstall
 CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/trac/wiki/default-pages/TracRepositoryAdmin
 CHECKPKG_OVERRIDES_CSWtrac += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.7/site-packages/trac/wiki/default-pages/TracRepositoryAdmin
-CHECKPKG_OVERRIDES_CSWtrac += dependency-on-stub|py_setuptools_stub
 
 
 TEST_SCRIPTS           =
