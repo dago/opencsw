@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.8.7
+VERSION = 1.8.9
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -10,9 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
-DISTFILES  = $(DIS# Replacement for configure script as reported here:
-#   https://bugzilla.gnome.org/show_bug.cgi?id=728654
-DISTFILES += attachment-275069ISto-QCString.patch
+DISTFILES  = $(DISto-QCString.patch
 
 VENDOR_URL = http://www.stack.nl/~dimitri/doxygen/
 
@@ -75,8 +73,3 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/core
 # some time...
 
 inclu
-# Replacement for configure script as reported here:
-#   https://bugzilla.gnome.org/show_bug.cgi?id=728654
-post-extract:
-	cp $(WORKDIR)/attachment-275069 $(WORKSRC)/configure
-	@$(MAKECOOKIE)
