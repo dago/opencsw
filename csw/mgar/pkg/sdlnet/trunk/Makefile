@@ -9,7 +9,7 @@ This is a small sample cross-platform networking library, with a sample chat cli
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_net/release/
-DISTFILES  = $(NAME)-$lPACKAGES += CSWlibsdl-net1-2-0
+DISTFILES  = $(NAME)-$lGARCOMPILER = GCC4$lPACKAGES += CSWlibsdl-net1-2-0
 CATALOGNAME_CSWlibsdl-net1-2-0 = libsdl_net1_2_0
 SPKG_DESC_CSWlibsdl-net1-2-0 += $(DESCRIPTION), libSDL_net-1.2.so.0
 OBSOLETED_BY_CSWlibsdl-net1-2-0 = CSWsdlnet
@@ -22,6 +22,7 @@ PKGFILES_CSWlibsdl-net1-2-0-dev += /opt/csw/lib/libSDL_net.so
 PKGFILES_CSWlibsdl-net1-2-0-dev += $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWlibsdl-net1-2-0 += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWlibsdl-net1-2-0 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibsdl-net1-2-0-dev += CSWlibsdl-net1-2-0$lnet, prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
