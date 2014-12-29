@@ -9,11 +9,12 @@ SDL mixer supports any number of simultaneously playing channels of 16 bit stere
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_mixer/release/
-DISTFILES  = $(NAME)-$(VERSION).+= CSWlibsdl-mixer1-2-0
+DISTFILES  = $(NAME)-$(GARCOMPILER = GCC4$(VERSION).+= CSWlibsdl-mixer1-2-0
 CATALOGNAME_CSWlibsdl-mixer1-2-0 = libsdl_mixer1_2_0
 OBSOLETED_BY_CSWlibsdl-mixer1-2-0 = CSWsdlmixer
 SPKG_DESC_CSWlibsdl-mixer1-2-0 += $(DESCRIPTION), libSDL_mixer-1.2.so.0
 RUNTIME_DEP_PKGS_CSWlibsdl-mixer1-2-0 += CSWlibsdl1-2-0
+RUNTIME_DEP_PKGS_CSWlibsdl-mixer1-2-0 += CSWlibgcc-s1
 
 # Split development files into a separate package.
 PACKAGES += CSWlibsdl-mixer1-2-0-dev
@@ -31,4 +32,7 @@ REINPLACE_USRSHARE += timidity/config.hTRA_LDFLAGS = -lm
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = --prefix=$(prefix) --disable-staticinclude gar/category.mk
+$(DIRPATHS) --disable-static
+TEST_SCRIPTS =
+
+include gar/category.mk
