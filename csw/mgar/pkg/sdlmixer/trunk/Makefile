@@ -17,12 +17,12 @@ RUNTIME_DEP_PKGS_CSWlibsdl-mixer1-2-0 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibsdl-mixer1-2-0 += CSWlibgcc-s1
 
 # Split development files into a separate package.
-PACKAGES += CSWlibsdl-mixer1-2-0-dev
-CATALOGNAME_CSWlibsdl-mixer1-2-0-dev = libsdl_mixer1_2_0_dev
-SPKG_DESC_CSWlibsdl-mixer1-2-0-dev += $(DESCRIPTION), development files
-PKGFILES_CSWlibsdl-mixer1-2-0-dev += /opt/csw/lib/libSDL_mixer.so
-PKGFILES_CSWlibsdl-mixer1-2-0-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibsdl-mixer1-2-0-dev += CSWlibsdl-mixer1-2-0
+PACKAGES += CSWlibsdl-mixer-dev
+CATALOGNAME_CSWlibsdl-mixer-dev = libsdl_mixer_dev
+SPKG_DESC_CSWlibsdl-mixer-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibsdl-mixer-dev += /opt/csw/lib/libSDL_mixer.so
+PKGFILES_CSWlibsdl-mixer-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibsdl-mixer-dev += CSWlibsdl-mixer1-2-0
 
 EXTRA_LDFLAGS = -lm
 
