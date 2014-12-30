@@ -20,16 +20,16 @@ SPKG_DESC_CSWlibsdl-ttf2-0-0 += $(DESCRIPTION), libSDL_ttf-2.0.so.0
 OBSOLETED_BY_CSWlibsdl-ttf2-0-0 = CSWsdlttf
 
 # Split the development files into a separate package.
-PACKAGES += CSWlibsdl-ttf2-0-0-dev
-CATALOGNAME_CSWlibsdl-ttf2-0-0-dev = libsdl_ttf2_0_0_dev
-SPKG_DESC_CSWlibsdl-ttf2-0-0-dev += $(DESCRIPTION), development files
-PKGFILES_CSWlibsdl-ttf2-0-0-dev += /opt/csw/lib/libSDL_net.so
-PKGFILES_CSWlibsdl-ttf2-0-0-dev += $(PKGFILES_DEVEL)
+PACKAGES += CSWlibsdl-ttf-dev
+CATALOGNAME_CSWlibsdl-ttf-dev = libsdl_ttf_dev
+SPKG_DESC_CSWlibsdl-ttf-dev += $(DESCRIPTION), development files
+PKGFILES_CSWlibsdl-ttf-dev += /opt/csw/lib/libSDL_net.so
+PKGFILES_CSWlibsdl-ttf-dev += $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibsdl1-2-0
 RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibfreetype6
 RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibsdl-ttf2-0-0-dev += CSWlibsdl-ttf2-0-0
+RUNTIME_DEP_PKGS_CSWlibsdl-ttf-dev += CSWlibsdl-ttf2-0-0
 
 EXTRA_LDFLAGS = -lm -L/opt/csw/lib -liconv
 
