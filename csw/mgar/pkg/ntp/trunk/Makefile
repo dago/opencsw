@@ -15,6 +15,7 @@ PACKAGES += CSWntp
 CATALOGNAME_CSWntp = ntp
 SPKG_DESC_CSWntp = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWntp += CSWlibssl1-0-0
+RUNTIME_DEP_PKGS_CSWntp += CSWlibintl8
 
 PACKAGES += CSWpm-ntp-util
 CATALOGNAME_CSWpm-ntp-util = pm_ntp_util
@@ -31,6 +32,7 @@ PKGFILES_CSWntp-sntp = .*sntp.*
 RUNTIME_DEP_PKGS_CSWntp-sntp += CSWlibevent-pthreads2-0-5
 RUNTIME_DEP_PKGS_CSWntp-sntp += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWntp-sntp += CSWlibevent-core2-0-5
+RUNTIME_DEP_PKGS_CSWntp-sntp += CSWlibintl8
 
 #PACKAGES += CSWntp-snmp
 #CATALOGNAME_CSWntp-snmp = ntp_snmp
@@ -54,6 +56,10 @@ CONFIGURE_ARGS += --with-openssl-incdir=/opt/csw/include
 # Doesn't make much sense without parent package
 #CHECKPKG_OVERRIDES_CSWntp-snmp += surplus-dependency|CSWntp                     
 CHECKPKG_OVERRIDES_CSWpm-ntp-util += surplus-dependency|CSWntp
+
+# Deps only needed for Sparc for some reason
+CHECKPKG_OVERRIDES_CSWntp-sntp += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWntp += surplus-dependency|CSWlibintl8
 
 include gar/category.mk
 
