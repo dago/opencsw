@@ -53,6 +53,7 @@ CONFIGURE_ARGS += --with-openssl-incdir=/opt/csw/include
 
 # Doesn't make much sense without parent package
 #CHECKPKG_OVERRIDES_CSWntp-snmp += surplus-dependency|CSWntp                     
+CHECKPKG_OVERRIDES_CSWpm-ntp-util += surplus-dependency|CSWntp
 
 include gar/category.mk
 
