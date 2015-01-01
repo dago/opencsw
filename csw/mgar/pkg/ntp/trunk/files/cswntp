@@ -1,7 +1,7 @@
 #!/sbin/sh
 
 # rc-script for CSW NTP
-# Peter Bonivart, 2013-04-07
+# Peter Bonivart, 2015-01-01
 
 # Source config file
 [ -r /etc/opt/csw/pkg/CSWntp/ntp ] && . /etc/opt/csw/pkg/CSWntp/ntp
@@ -10,9 +10,9 @@ ZONE= # used for initialization, do not change
 
 case "$1" in
   start)
-    if [ -f /opt/csw/bin/ntpd -a -f /etc/opt/csw/ntp.conf ]; then
+    if [ -f /opt/csw/libexec/ntpd -a -f /etc/opt/csw/ntp.conf ]; then
       echo "Starting ntp."
-      /opt/csw/bin/ntpd $OPTIONS
+      /opt/csw/libexec/ntpd $OPTIONS
     fi
     ;;
   stop)
