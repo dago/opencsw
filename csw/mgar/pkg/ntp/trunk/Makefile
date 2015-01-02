@@ -44,6 +44,7 @@ RUNTIME_DEP_PKGS_CSWntp-sntp += CSWlibintl8
 #PKGFILES_CSWntp-snmp = .*ntpsnmpd.*
 
 INITSMF = /etc/opt/csw/init.d/cswntp
+SAMPLECONF = /etc/opt/csw/ntp.conf
 
 GARCOMPILER = GNU
 
