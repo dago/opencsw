@@ -4,7 +4,7 @@
 # investigated.
 
 NAME = graphviz
-VERSION = 2.36.0
+VERSION = 2.38.0
 CATEGORIES = utils
 GARTYPE = v2
 
