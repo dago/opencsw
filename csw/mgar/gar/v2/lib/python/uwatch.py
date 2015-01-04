@@ -609,7 +609,7 @@ class UpstreamWatchCommand(AbstractCommand):
             print version2
 
         # Retrieve the tokens from both version. Use . - , and _ as splitters
-    	splittingRegExp = "(?:[\.,_-])"
+        splittingRegExp = "(?:[\.,_-])"
         tokens1 = re.split(splittingRegExp, version1)
         tokens2 = re.split(splittingRegExp, version2)
 
