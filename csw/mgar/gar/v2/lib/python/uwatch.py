@@ -705,11 +705,14 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
             # Need a way to check that all options needed are available
             self.checkArgument()
 
-            # Call the method in charge of retrieving upstream content
-            content = self.UrlContentRetrieve(self.config.getUpstreamURL())
+            url = self.config.getUpstreamURL()
+            version_finding_regex = self.config.getRegexp()
+
+            logging.info("Will use %r against %r", version_finding_regex, url)
+            content = self.UrlContentRetrieve(url)
 
             # Search the strings matching the regexp passed through command line arguments
-            p = re.compile(self.config.getRegexp())
+            p = re.compile(version_finding_regex)
             matches = p.findall(content)
             logging.info("CheckUpstreamCommand.execute(): matches=%s",
                          repr(matches))
@@ -1607,9 +1610,8 @@ class UwatchRegexGenerator(object):
     # The first approach is to split by '-'
     assert filename
     parts = filename.split('-')
-    parts_c_or_v = map(
-        lambda x: self._CanBeSoftwareName(x, catalogname),
-        parts)
+    parts_c_or_v = map(lambda x: self._CanBeSoftwareName(x, catalogname),
+                       parts)
     if False in parts_c_or_v:
       i = parts_c_or_v.index(False)
     else:
