@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = p7zip
 VERSION = 9.20.1
 CATEGORIES = utils
@@ -31,7 +33,10 @@ PATCHFILES += patch-install.sh
 PATCHFILES += 0001-Disable-unrecognized-pragma.patch
 
 VENDOR_URL = http://p7zip.sourceforge.net/
-LICENSE = DOCS/License.txt
+LICENSE =UPSTREAM_MASTER_SITES = https://sourceforge.net/projects/p7zip/files/p7zip/
+UFILES_REGEX = p7zip_(\d\.)+_src_all.tar.bz2
+
+PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc = DOCS/License.txt
 
 # since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
@@ -57,11 +62,4 @@ BUILD_OVERRIDE_VAR_LOCAL_LIBS_DLL += -norunpath
 BUILD_OVERRIDE_VAR_OBJ_CRC32 = $$(OBJ_CRC32_C)
 
 INSTALL_ARGS = DEST_HOME="$(DESTDIR)$(prefix)"
-INSTALL_ARGS += DEST_MAN="$(DESTDIR)$(mandir)"
-
-# Location of the system locale
-CHECKPKG_OVERRIDES_CSWp7zip += file-with-bad-content|/usr/share|root/opt/csw/share/doc/p7zip/README
-# This is an example
-CHECKPKG_OVERRIDES_CSWp7zip += file-with-bad-content|/usr/local|root/opt/csw/share/doc/p7zip/README
-
-include gar/category.mk
+INSTALL_ARGS += DEST_MAN="$(Dinclude gar/category.mk
