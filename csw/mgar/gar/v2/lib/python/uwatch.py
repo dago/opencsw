@@ -240,38 +240,31 @@ class UwatchConfiguration(object):
         if os.path.isfile( os.path.expanduser("~/.uwatchrc") ):
             # Yes thus load values from the configuration file before processing args parameter
             # This allow to override from the command line some values stored in the config file
-            fileParser = ConfigParser.ConfigParser()
+            fileParser = ConfigParser.SafeConfigParser()
             fileParser.read( [os.path.expanduser("~/.uwatchrc") ] )
 
+            vars = {
+                "database-schema": None,
+                "database-host": None,
+                "database-user": None,
+                "database-password": None,
+                "uwatch-pkg-root": None,
+            }
+
             # Read the database schema from the config file
-            try:
-                self._database_schema = fileParser.get("main", "database-schema")
-            except Config.NoOptionError:
-                self._database_schema = None
+            self._database_schema = fileParser.get("main", "database-schema", vars=vars)
 
             # Read the database hostname from the config file
-            try:
-                self._database_host = fileParser.get("main", "database-host")
-            except Config.NoOptionError:
-                self._database_host = None
+            self._database_host = fileParser.get("main", "database-host", vars=vars)
 
             # Read the database user from the config file
-            try:
-                self._database_user = fileParser.get("main", "database-user")
-            except Config.NoOptionError:
-                self._database_user = None
+            self._database_user = fileParser.get("main", "database-user", vars=vars)
 
             # Read the database password from the config file
-            try:
-                self._database_password = fileParser.get("main", "database-password")
-            except Config.NoOptionError:
-                self._database_password = None
+            self._database_password = fileParser.get("main", "database-password", vars=vars)
 
             # Read the package root working dir from the config file
-            try:
-                self._uwatch_pkg_root = fileParser.get("main", "uwatch-pkg-root")
-            except Config.NoOptionError:
-                self._uwatch_pkg_root = None
+            self._uwatch_pkg_root = fileParser.get("main", "uwatch-pkg-root", vars =vars)
 
         # This member variable is a flag which defines the status of the verbose mode (True : activated)
         logging_level = logging.INFO
