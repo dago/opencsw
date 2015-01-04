@@ -285,7 +285,7 @@ class UwatchConfiguration(object):
         # This member variable defines the value of the version of the package
         # Current revision is not passed as a separated argument. It is part of the opencsw version number.
         # Package version are defined as follow : version[,REV=revision]*
-        if args.current_version != None:
+        if args.current_version is not None:
 
             # Parse the version string
             ver = re.split(r"(?P<version>.*),REV=(?P<revision>.*)", args.current_version)
@@ -312,87 +312,87 @@ class UwatchConfiguration(object):
                         raise InvalidArgumentException(msg)
 
         # This member variable defines the value of the regexp used to match the upstream web page
-        if args.regexp != None:
+        if args.regexp is not None:
             self._regexp = args.regexp
 
         # This member variable defines the url of the upstream web page used to check for new version
-        if args.upstream_url != None:
+        if args.upstream_url is not None:
             self._upstream_url = args.upstream_url
 
         # This member variable defines the target version of the package during upgrade
-        if args.target_version != None:
+        if args.target_version is not None:
             self._target_version = args.target_version
 
         # This member variable defines the target directory of the package during upgrade. This is the location of the new branch
-        if args.target_location != None:
+        if args.target_location is not None:
             self._target_location = args.target_location
 
         # This member variable defines the source directory of the package during upgrade. This is the location of the trunk (most of the time)
-        if args.source_directory != None:
+        if args.source_directory is not None:
             self._source_directory = args.source_directory
 
         # This member variable defines the version of the package stored in the gar build description
-        if args.gar_version != None:
+        if args.gar_version is not None:
             self._gar_version = args.gar_version
 
         # This member variable defines the upstream version of package
-        if args.upstream_version != None:
+        if args.upstream_version is not None:
             self._upstream_version = args.upstream_version
 
         # This member variable defines the relative path in the svn repository
-        if args.gar_path != None:
+        if args.gar_path is not None:
             self._gar_path = args.gar_path
 
         # This member variable defines the catalog name of the package
-        if args.catalog_name != None:
+        if args.catalog_name is not None:
             self._catalog_name = args.catalog_name
 
         # This member variable defines the package name
-        if args.package_name != None:
+        if args.package_name is not None:
             self._package_name = args.package_name
 
         # This member variable defines the date of the execution (it is useful to be able to define a date to construct history of versions)
-        if args.execution_date != None:
+        if args.execution_date is not None:
             self._execution_date = args.execution_date
 
         # This member variable defines the database to use in the connection string
-        if args.database_schema != None:
+        if args.database_schema is not None:
             self._database_schema = args.database_schema
 
         # This member variable defines the database host to use in the connection string
-        if args.database_host != None:
+        if args.database_host is not None:
             self._database_host = args.database_host
-	
+
         # This member variable defines the database user to use in the connection string
-        if args.database_user != None:
+        if args.database_user is not None:
             self._database_user = args.database_user
 
         # This member variable defines the database password to use in the connection string
-        if args.database_password != None:
+        if args.database_password is not None:
             self._database_password = args.database_password
 
         # This member variable defines the uwatch activation status
-        if args.uwatch_deactivated != None:
+        if args.uwatch_deactivated is not None:
             self._uwatch_deactivated = True
         else:
             self._uwatch_deactivated = False
 
         # This member variable defines the uwatch last report result
-        if args.uwatch_error != None:
+        if args.uwatch_error is not None:
             self._uwatch_error = True
         else:
             self._uwatch_error = False
 
         # This member variable defines the uwatch last report result
-        if args.uwatch_pkg_root != None:
+        if args.uwatch_pkg_root is not None:
             self._uwatch_pkg_root = args.uwatch_pkg_root
 
         # This member variable defines the uwatch last report output
-        if args.uwatch_output != None:
+        if args.uwatch_output is not None:
             self._uwatch_output = args.uwatch_output
 
         # This member variable defines the gar distfiles
-        if args.gar_distfiles != None:
+        if args.gar_distfiles is not None:
             self._gar_distfiles = args.gar_distfiles
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -438,7 +438,7 @@ class UwatchConfiguration(object):
 
     def getRegexp(self):
         # In case the regexp is not define, we try to guess it using the distfile
-        if (self._regexp == None) & (self._gar_distfiles != None):
+        if (self._regexp == None) & (self._gar_distfiles is not None):
             # Instanciate a regexp generator
             urg = UwatchRegexGenerator()
 
