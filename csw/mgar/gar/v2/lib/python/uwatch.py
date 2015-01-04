@@ -267,12 +267,8 @@ class UwatchConfiguration(object):
             self._uwatch_pkg_root = fileParser.get("main", "uwatch-pkg-root", vars =vars)
 
         # This member variable is a flag which defines the status of the verbose mode (True : activated)
-        logging_level = logging.INFO
-        if args.verbose is not None:
-            self._verbose = args.verbose
-            logging_level = logging.DEBUG
-        else:
-            self._verbose = False
+        self._verbose = args.verbose
+        logging_level = logging.DEBUG if self._verbose else logging.INFO
         logging.basicConfig(level=logging_level)
 
         # This member variable defines the value of the version of the package
