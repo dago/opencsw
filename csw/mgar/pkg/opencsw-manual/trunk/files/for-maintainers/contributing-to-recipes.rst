@@ -2,30 +2,31 @@
 Contributing to recipes
 -----------------------
 
-It often happens that a maintainer wants to make a change or an update to
-another maintainer's package.
+When you need a change to a package uploaded by somebody else, check their
+maintainer status via `http://www.opencsw.org/maintainers/<name>/` and the
+`maintainer activity report`_ which shows inactive maintainers (retired or
+not).
 
+- When the maintainer is active:
 
-- The maintainer is retired:
+  (This means that the maintainer uploads packages, answers to bug reports and
+  email.)
 
-  On the maintainers mailing list, announce your intention to work on
-  the recipe and eventually take up the maintenance.
+  Ask them about the change you want. In many cases they will just make the
+  change for you. They might ask you to do it instead. Do whatever you've
+  agreed on.
 
-  When you have a working recipe and generated the package, upload-it
-  and you became the active maintainer.
+- The maintainer is inactive or retired:
 
-- The maintainer is inactive:
+  (Inactive means there were no uploaded packages in a long time.)
 
-  Contact them before starting your work, and allow them 1 to 2 weeks to
-  respond. If you don't get an answer, proceed as described above.
+  Send them a note that you will be updating such-and-such package, then go
+  ahead, make your change and upload the updated package.
 
-- The maintainer is active, i.e. answers to bug reports, messages sent
-  on the maintainers mailing list or private messages:
-
-  `Work in a branch`_, and when you obtain satisfying results explain your
-  changes to the maintainer such as he or she can use what you've done and/or,
-  if you obtain his or her explicit permission, merge your modifications on
-  the trunk.
+Use common sense. For example, if you're making a change to CSWpython, you
+really don't want to mess it up. Talk to people, ask on maintainers@, and get
+help if you need it. The bigger the change you're making, the more need to
+discuss it. When in doubt, write to maintainers@.
 
 References
 ==========
@@ -39,3 +40,5 @@ References
 .. [#branch] `Working in a branch`_ in OpenCSW wiki
 .. [#source] The original post on the maintainers mailing list:
   `[csw-maintainers] reminder on contributing on recipes`_
+.. _maintainer activity report:
+   http://buildfarm.opencsw.org/obsolete-pkgs/maintainer-activity.html
