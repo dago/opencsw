@@ -742,7 +742,7 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
             # Exit after processing, eveythin gis ok, return true to the command processor
             return True
 
-        except MissingArgumentException, (instance):
+        except MissingArgumentException as instance:
 
             # Display a cool error message :)
             print instance.parameter
@@ -750,12 +750,12 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except UpstreamUrlRetrievalFailedException, (instance):
+        except UpstreamUrlRetrievalFailedException as instance:
 
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except NoUpstreamVersionFoundException, (instance):
+        except NoUpstreamVersionFoundException as instance:
 
             # Exits through exception handling, thus return false to the command processor
             return False
@@ -835,7 +835,7 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             # Exit after processing, eveythin gis ok, return true to the command processor
             return True
 
-        except MissingArgumentException, (instance):
+        except MissingArgumentException as instance:
 
             # Display a cool error message :)
             print instance.parameter
@@ -843,12 +843,12 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except UpstreamUrlRetrievalFailedException, (instance):
+        except UpstreamUrlRetrievalFailedException as instance:
 
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except NoUpstreamVersionFoundException, (instance):
+        except NoUpstreamVersionFoundException as instance:
 
             # Exits through exception handling, thus return false to the command processor
             return False
@@ -940,7 +940,7 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
             # Exit after processing, eveythin gis ok, return true to the command processor
             return True
 
-        except MissingArgumentException, (instance):
+        except MissingArgumentException as instance:
 
             # Display a cool error message :)
             print instance.parameter
@@ -948,12 +948,12 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except UpstreamUrlRetrievalFailedException, (instance):
+        except UpstreamUrlRetrievalFailedException as instance:
 
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except NoUpstreamVersionFoundException, (instance):
+        except NoUpstreamVersionFoundException as instance:
 
             # Exits through exception handling, thus return false to the command processor
             return False
@@ -1509,7 +1509,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             # Exit after processing, eveythin gis ok, return true to the command processor
             return True
 
-        except MissingArgumentException, (instance):
+        except MissingArgumentException as instance:
 
             # Display a cool error message :)
             print instance.parameter
@@ -1517,7 +1517,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except InvalidArgumentException, (instance):
+        except InvalidArgumentException as instance:
 
             # Display a cool error message :)
             print instance.parameter
@@ -1525,7 +1525,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except DatabaseConnectionException, (instance):
+        except DatabaseConnectionException as instance:
 
             # Display a cool error message :)
             print instance.message
@@ -1688,4 +1688,3 @@ def main():
 if __name__ == '__main__':
     res = main()
     sys.exit(res)
-
