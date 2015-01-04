@@ -33,8 +33,8 @@ PATCHFILES += patch-install.sh
 PATCHFILES += 0001-Disable-unrecognized-pragma.patch
 
 VENDOR_URL = http://p7zip.sourceforge.net/
-LICENSE =UPSTREAM_MASTER_SITES = https://sourceforge.net/projects/p7zip/files/p7zip/
-UFILES_REGEX = p7zip_(\d\.)+_src_all.tar.bz2
+LICENSE =UPSTREAM_MASTER_SITES = http://sourceforge.net/projects/p7zip/files/p7zip/
+UFILES_REGEX = p7zip_([\d\.]+)
 
 PACKAGING_PLATFORMS = solaris9-i386 solaris9-sparc = DOCS/License.txt
 
