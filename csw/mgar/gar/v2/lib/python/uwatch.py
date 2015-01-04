@@ -243,31 +243,31 @@ class UwatchConfiguration(object):
             fileParser = ConfigParser.ConfigParser()
             fileParser.read( [os.path.expanduser("~/.uwatchrc") ] )
 
-            # Read the database schema from the config file            
+            # Read the database schema from the config file
             try:
                 self._database_schema = fileParser.get("main", "database-schema")
             except Config.NoOptionError:
                 self._database_schema = None
 
-            # Read the database hostname from the config file            
+            # Read the database hostname from the config file
             try:
                 self._database_host = fileParser.get("main", "database-host")
             except Config.NoOptionError:
                 self._database_host = None
 
-            # Read the database user from the config file            
+            # Read the database user from the config file
             try:
                 self._database_user = fileParser.get("main", "database-user")
             except Config.NoOptionError:
                 self._database_user = None
 
-            # Read the database password from the config file            
+            # Read the database password from the config file
             try:
                 self._database_password = fileParser.get("main", "database-password")
             except Config.NoOptionError:
                 self._database_password = None
 
-            # Read the package root working dir from the config file            
+            # Read the package root working dir from the config file
             try:
                 self._uwatch_pkg_root = fileParser.get("main", "uwatch-pkg-root")
             except Config.NoOptionError:
@@ -283,10 +283,10 @@ class UwatchConfiguration(object):
         logging.basicConfig(level=logging_level)
 
         # This member variable defines the value of the version of the package
-        # Current revision is not passed as a separated argument. It is part of the opencsw version number. 
+        # Current revision is not passed as a separated argument. It is part of the opencsw version number.
         # Package version are defined as follow : version[,REV=revision]*
         if args.current_version != None:
-    
+
             # Parse the version string
             ver = re.split(r"(?P<version>.*),REV=(?P<revision>.*)", args.current_version)
 
@@ -295,7 +295,7 @@ class UwatchConfiguration(object):
                 # No, thus raise an exception
                 msg = "Unable to parse %(version)s as a valid package version" % { 'version' : args.current_version }
                 raise InvalidArgumentException(msg)
-            else:      
+            else:
                 # If the length of array is one, the no revision is provided
                 if len(ver) == 1:
                     self._current_version = ver[0]
@@ -806,7 +806,7 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
 
             # Need a way to check that all options needed are available
             self.checkArgument()
-    
+
             # Call the method in charge of retrieving upstream content
             content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
@@ -825,7 +825,7 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             if len(matches) == 0:
                 raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
             else:
-                newestVersion = matches.pop(0)                
+                newestVersion = matches.pop(0)
                 while len(matches) > 0:
                     newestVersion = self.CompareVersionAndGetNewest(newestVersion, matches.pop(0))
 
@@ -858,7 +858,7 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
 #
 class GetUpstreamVersionListCommand(UpstreamWatchCommand):
     """GetUpstreamVersionList command. This command retrieve the upstream web page and search for all the versions.
-    Version check is done by matching the regexp from the makefile on the page. 
+    Version check is done by matching the regexp from the makefile on the page.
     """
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -894,7 +894,7 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
         the newest version of the two arguments. Since sort method used on list need to have an integer return value, this
         wrapper do the call to CompareVersionAndGetNewest and returns an int
         """
-    
+
         if self.CompareVersionAndGetNewest(a,b) == a:
             return 1
         else:
@@ -967,7 +967,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
     Current files in trunk are copied to a new branch. Branch is named accord to the following pattern :
     PKG/branches/upgrade_from_CURRENTVERSION_to_DESTVERSION. After copy, version in the Makefile is modified.
     An optional argument can be passed to commit after branch creation.
-    
+
     """
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -1012,7 +1012,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         if os.path.isfile(self.config.getSourceDirectory() + "/Makefile") == False:
             # No it does not exist, thus generate an error message
             msg = "Error : there is no Makefile under %(src)s" % { "src" : os.path.abspath(self.config.getSourceDirectory()) }
-    
+
             # Then raise an exception
             raise InvalidSourceDirectoryContentException(msg)
 
@@ -1020,18 +1020,18 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         if os.path.isdir(self.config.getSourceDirectory() + "/gar") == False:
             # No it does not exist, thus generate an error message
             msg = "Error : there is no gar directory under %(src)s" % { "src" : os.path.abspath(self.config.getSourceDirectory()) }
-    
+
             # Then raise an exception
             raise InvalidSourceDirectoryContentException(msg)
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def getGarRelativeTargetDirectory(self):
-        """ This method return None if gar directory is an actual directory, or a relative path if gar is a symlink to 
+        """ This method return None if gar directory is an actual directory, or a relative path if gar is a symlink to
             a real directory. In case of a symlink pointing to another symlink, we do not try to get the absolute path
-            having one level of indirection is enough. 
+            having one level of indirection is enough.
             The target directory is a relative path. This path is adjusted to be consistent from the target directory. It
-            has to be modified since it is basically a relative path from the source directory.            
+            has to be modified since it is basically a relative path from the source directory.
         """
 
         # Get the newgar information
@@ -1040,15 +1040,15 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
             garTarget = os.path.relpath(os.path.abspath(os.readlink(garDir)), os.path.abspath(targetDir))
         else:
             garTarget = None
-    
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def getGarRelativeTargetDirectory(self):
-        """ This method return None if gar directory is an actual directory, or a relative path if gar is a symlink to 
+        """ This method return None if gar directory is an actual directory, or a relative path if gar is a symlink to
             a real directory. In case of a symlink pointing to another symlink, we do not try to get the absolute path
-            having one level of indirection is enough. 
+            having one level of indirection is enough.
             The target directory is a relative path. This path is adjusted to be consistent from the target directory. It
-            has to be modified since it is basically a relative path from the source directory.            
+            has to be modified since it is basically a relative path from the source directory.
         """
 
         # Get the newgar information
@@ -1072,7 +1072,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
     # -----------------------------------------------------------------------------------------------------------------
 
     def copySvnSourceToTarget(self, garRelativeTarget):
-        """ This method copy sources from the working copy to the target in the same working copy. If garRelativeTarget is not 
+        """ This method copy sources from the working copy to the target in the same working copy. If garRelativeTarget is not
             None, it means gar directory is a symlink. Then once copy is done it is deleted in the target directory and
             recreated to point to the new relative directory
         """
@@ -1092,7 +1092,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
 
             # Test if gar relative path is defined
             if garRelativeTarget:
-                # Test if gar directory is a symlink and 
+                # Test if gar directory is a symlink and
                 if os.path.islink("./gar"):
                     os.remove("./gar")
                     os.symlink(garRelativeTarget, "./gar")
@@ -1105,7 +1105,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
             # Restore the working directory
             os.chdir(curDir)
 
-        # SVN client exception handling    
+        # SVN client exception handling
         except pysvn.ClientError , e:
             # Generate a cool error message
             msg = "SVN Client error : " + e.args[0] + "\n" + "Error occured when executing command svnClient.copy(%(src)s, %(dest)s)" \
@@ -1117,8 +1117,8 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
     # -----------------------------------------------------------------------------------------------------------------
 
     def modifyVersion(self):
-        """ This method modifies the version in the Makefile. It replaces current version by new version. 
-            Version has to be defined on a single line strting by VERSION, having some spaces or tabs then 
+        """ This method modifies the version in the Makefile. It replaces current version by new version.
+            Version has to be defined on a single line strting by VERSION, having some spaces or tabs then
             and egal sign = then some tabs or spaces and the version vaue to finish the line
         """
 
@@ -1131,23 +1131,23 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         # Array storing the Makefile lines
         lines = []
 
-        # Iterate each line in  the file                
+        # Iterate each line in  the file
         for line in open("./Makefile", 'r'):
-            # Match the file line by line               
+            # Match the file line by line
             m = re.match(r"\s*VERSION\s*=\s*(?P<version>.*)", line)
 
             # Test if this is a match
             if m == None:
                 # No, thus output the current line without modifications
                 lines.append(line)
-            else:   
+            else:
                 # Yes it is a match, thus output the modified line
                 lines.append("VERSION = " + self.config.getTargetVersion() + "\n")
 
         # Open the new Makefile for output
         f = open("./Makefile", 'w')
 
-        # Iterates the array of lines and write each one to the Makefile 
+        # Iterates the array of lines and write each one to the Makefile
         for element in lines:
             f.write(element)
 
@@ -1198,7 +1198,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
 
         # Handles SVN client exception
         except SvnClientException , e:
-            
+
             # Display a cool error message :)
             print e.message
 
@@ -1207,7 +1207,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
 
         # Handles exceptions which might occur while checking source directory content
         except InvalidSourceDirectoryContentException , e:
-            
+
             # Display a cool error message :)
             print e.message
 
@@ -1218,7 +1218,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
 #
 #
 class ReportPackageVersionCommand(UpstreamWatchCommand):
-    """ReportPackageVersion command. This command report and store in the database the values of version and date passed 
+    """ReportPackageVersion command. This command report and store in the database the values of version and date passed
     by arguments to upstream watch. Unique key is the composed by garpath and catalog name. It means the same package can
     lie into different path in the svn repository.
     """
@@ -1232,7 +1232,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
     # -----------------------------------------------------------------------------------------------------------------
 
     def openDatabaseConnection(self):
-        """This method open a connection to the mysql database using value from the configuration parser. The result of 
+        """This method open a connection to the mysql database using value from the configuration parser. The result of
         connect method is stored into a connection object
         """
 
@@ -1256,7 +1256,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
     # -----------------------------------------------------------------------------------------------------------------
 
     def closeDatabaseConnection(self):
-        """This method close the connection opened by openDatabaseConnection. 
+        """This method close the connection opened by openDatabaseConnection.
         """
 
         # Check that the connection object is valid
@@ -1274,7 +1274,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
     # -----------------------------------------------------------------------------------------------------------------
 
     def updateVersionInDatabase(self):
-        """This method updates the version in the database. First it checks for the package to update using a unique 
+        """This method updates the version in the database. First it checks for the package to update using a unique
         key composed of gar svn path and catalog name. If not found the package is created, otherwise it is updated.
         In both case, if data are writtent to the database, entries in history table are created.
         """
@@ -1282,14 +1282,14 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         try:
             # Flag used to keep track of the fact we have created a new package. Used in some case to choose behavior
             isNewlyCreatedPackage = False
-            
+
             # Check that the connection is defined
             if self.conn == None:
                 # No,  raise a DatabaseConnectionException
                 msg = "Unable to query the database. Connection objet is not defined"
                 raise DatabaseConnectionException(msg)
 
-            # Get a cursor object        
+            # Get a cursor object
             cursor = self.conn.cursor(MySQLdb.cursors.DictCursor)
 
             # First retrieve the id_pkg and deletion flag from the database
@@ -1323,7 +1323,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             pkg = cursor.fetchone()
 
             # Test if the deleted flag is set
-            if pkg["PKG_IS_DELETED"] == 1:                
+            if pkg["PKG_IS_DELETED"] == 1:
                 # Yes thus package has to be undeleted
                 cursor.execute("update UWATCH_PKG_VERSION set PKG_IS_DELETED = 0 where ID_PKG='%s'" , ( pkg["ID_PKG"] ) )
 
@@ -1331,10 +1331,10 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 if self.config.getVerbose() == True:
                     print "Package %(pkg)s has been undeleted" % { 'pkg' : self.config.getCatalogName() }
 
-            # Test if the package has just been created. If yes the history line for gar version has to be inserted 	 
-            if isNewlyCreatedPackage: 	 
+            # Test if the package has just been created. If yes the history line for gar version has to be inserted
+            if isNewlyCreatedPackage:
                 cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.config.getGarVersion() , self.config.getExecutionDate() ) )
-                
+
             # In all cases (update or not) we update the last version check according to the argument
             cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s , PKG_GAR_PATH = %s where ID_PKG= %s" , ( self.config.getExecutionDate(), self.config.getGarPath() , pkg["ID_PKG"] ) )
 
@@ -1363,7 +1363,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                     cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s , PKG_GAR_PATH = %s where ID_PKG= %s" , ( self.config.getExecutionDate(), self.config.getGarPath() , pkg["ID_PKG"] ) )
 
                     # Yes, compare current upstream version from commandline and database
-                    if self.config.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:                
+                    if self.config.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:
                         # Yes thus package has to be updated
                         cursor.execute("update UWATCH_PKG_VERSION set PKG_UPSTREAM_VERSION = %s  where ID_PKG= %s" , ( self.config.getUpstreamVersion(), pkg["ID_PKG"] ) )
                         cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
@@ -1376,15 +1376,15 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                     else:
                         # Output some more information if verbose mode is activated
                         if self.config.getVerbose() == True:
-                            print "%(pkg) GAR version is up to date (%(current)s)" % { 'pkg' : self.config.getCatalogName(), 'current' : self.config.getUpstreamVersion() }         
-    
+                            print "%(pkg) GAR version is up to date (%(current)s)" % { 'pkg' : self.config.getCatalogName(), 'current' : self.config.getUpstreamVersion() }
+
             # Test if gar version is passed (it is mandatory to have a value in database)
             if self.config.getGarVersion():
                 # In all cases (update or not) we update the last version check according to the argument
                 cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_GAR_CHECK_DATE = %s  where ID_PKG= %s" , ( self.config.getExecutionDate(), pkg["ID_PKG"] ) )
 
                 # Yes, compare current gar version from commandline and database
-                if self.config.getGarVersion() != pkg["PKG_GAR_VERSION"]:                
+                if self.config.getGarVersion() != pkg["PKG_GAR_VERSION"]:
                     # Yes thus package has to be updated
                     cursor.execute("update UWATCH_PKG_VERSION set PKG_GAR_VERSION = %s  where ID_PKG= %s" , ( self.config.getGarVersion(), pkg["ID_PKG"] ) )
                     cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
@@ -1480,7 +1480,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         if self.config.getUpstreamURL() == None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
-    
+
         # If arguments are not valid raise an exception
         if argsValid == False:
             raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
