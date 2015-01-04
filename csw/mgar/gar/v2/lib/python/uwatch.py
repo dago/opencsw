@@ -427,14 +427,10 @@ class UwatchConfiguration(object):
 
     def getRegexp(self):
         # In case the regexp is not define, we try to guess it using the distfile
-        if (self._regexp == None) & (self._gar_distfiles is not None):
-            # Instanciate a regexp generator
+        if (self._regexp is None) and (self._gar_distfiles is not None):
             urg = UwatchRegexGenerator()
-
-            # Retrieve the regexp list
             auto_regex_list = urg.GenerateRegex(self._catalog_name, self._gar_distfiles)
-
-            # Use the first item as current regexp
+            # There are many possible regexes, use the first one.
             self._regexp = auto_regex_list[0]
 
         return self._regexp
