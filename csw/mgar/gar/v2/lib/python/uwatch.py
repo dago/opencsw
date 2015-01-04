@@ -35,19 +35,18 @@
 #
 
 # Import all the needed modules
-import sys
-import re
+import ConfigParser
+import MySQLdb
+import argparse
+import datetime
+import logging
 import os
+import pysvn
+import re
+import requests
 import shutil
 import subprocess
-import pysvn
-import MySQLdb
-import datetime
-import ConfigParser
-import logging
-import requests
-
-from optparse import OptionParser
+import sys
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -181,42 +180,45 @@ class CommandLineParser(object):
 
     def __init__(self):
         # Create the parser object
-        self.optionParser = OptionParser()
+        self.optionParser = argparse.ArgumentParser()
+
+        self.optionParser.add_argument(
+            "commands", help="Command to run, e.g.  check-upstream", nargs="*")
 
         # Add options to parser
-        self.optionParser.add_option("--verbose",     help="Activate verbose mode", action="store_true", dest="verbose")
-        self.optionParser.add_option("--current-version",    help="Current package version", action="store", dest="current_version")
-        self.optionParser.add_option("--target-location",    help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
-        self.optionParser.add_option("--regexp",            help="Version matching regular expression", action="store", dest="regexp")
-        self.optionParser.add_option("--source-directory",  help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
-        self.optionParser.add_option("--target-version",    help="Package target version", action="store", dest="target_version")
-        self.optionParser.add_option("--upstream-url",      help="Upstream version page url", action="store", dest="upstream_url")
+        self.optionParser.add_argument("--verbose",     help="Activate verbose mode", action="store_true", dest="verbose")
+        self.optionParser.add_argument("--current-version",    help="Current package version", action="store", dest="current_version")
+        self.optionParser.add_argument("--target-location",    help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
+        self.optionParser.add_argument("--regexp",            help="Version matching regular expression", action="store", dest="regexp")
+        self.optionParser.add_argument("--source-directory",  help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
+        self.optionParser.add_argument("--target-version",    help="Package target version", action="store", dest="target_version")
+        self.optionParser.add_argument("--upstream-url",      help="Upstream version page url", action="store", dest="upstream_url")
 
         # Option used for reporting uwatch result
-        self.optionParser.add_option("--uwatch-error",      help="Flag used to report a uwatch error", action="store_true", dest="uwatch_error")
-        self.optionParser.add_option("--uwatch-output",     help="Flag used to report the uwatch output", action="store", dest="uwatch_output")
-        self.optionParser.add_option("--uwatch-deactivated",help="Flag used to report a uwatch error", action="store_true", dest="uwatch_deactivated")
-        self.optionParser.add_option("--uwatch-pkg-root",   help="Defines the uwatch package root working directory", action="store", dest="uwatch_pkg_root")
+        self.optionParser.add_argument("--uwatch-error",      help="Flag used to report a uwatch error", action="store_true", dest="uwatch_error")
+        self.optionParser.add_argument("--uwatch-output",     help="Flag used to report the uwatch output", action="store", dest="uwatch_output")
+        self.optionParser.add_argument("--uwatch-deactivated",help="Flag used to report a uwatch error", action="store_true", dest="uwatch_deactivated")
+        self.optionParser.add_argument("--uwatch-pkg-root",   help="Defines the uwatch package root working directory", action="store", dest="uwatch_pkg_root")
 
         # Option used for storing version information in the database
-        self.optionParser.add_option("--gar-distfiles",     help="Gar version of the package", action="store", dest="gar_distfiles")
-        self.optionParser.add_option("--gar-version",       help="Gar version of the package", action="store", dest="gar_version")
-        self.optionParser.add_option("--upstream-version",  help="Upstream version of the package", action="store", dest="upstream_version")
-        self.optionParser.add_option("--gar-path",          help="Relative path in svn repository", action="store", dest="gar_path")
-        self.optionParser.add_option("--catalog-name",      help="Catalog name", action="store", dest="catalog_name")
-        self.optionParser.add_option("--package-name",      help="Package name", action="store", dest="package_name")
-        self.optionParser.add_option("--execution-date",    help="Check date to be stored in the database", action="store", dest="execution_date")
+        self.optionParser.add_argument("--gar-distfiles",     help="Gar version of the package", action="store", dest="gar_distfiles")
+        self.optionParser.add_argument("--gar-version",       help="Gar version of the package", action="store", dest="gar_version")
+        self.optionParser.add_argument("--upstream-version",  help="Upstream version of the package", action="store", dest="upstream_version")
+        self.optionParser.add_argument("--gar-path",          help="Relative path in svn repository", action="store", dest="gar_path")
+        self.optionParser.add_argument("--catalog-name",      help="Catalog name", action="store", dest="catalog_name")
+        self.optionParser.add_argument("--package-name",      help="Package name", action="store", dest="package_name")
+        self.optionParser.add_argument("--execution-date",    help="Check date to be stored in the database", action="store", dest="execution_date")
 
-        self.optionParser.add_option("--database-schema",   help="Defines the database to use in the connection string", action="store", dest="database_schema")
-        self.optionParser.add_option("--database-host",     help="Defines the database host to use in the connection string", action="store", dest="database_host")
-        self.optionParser.add_option("--database-user",     help="Defines the database user to use in the connection string", action="store", dest="database_user")
-        self.optionParser.add_option("--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
+        self.optionParser.add_argument("--database-schema",   help="Defines the database to use in the connection string", action="store", dest="database_schema")
+        self.optionParser.add_argument("--database-host",     help="Defines the database host to use in the connection string", action="store", dest="database_host")
+        self.optionParser.add_argument("--database-user",     help="Defines the database user to use in the connection string", action="store", dest="database_user")
+        self.optionParser.add_argument("--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def parse(self):
-        (self.options, self.args) = self.optionParser.parse_args()
-        return self.options, self.args
+        self.args = self.optionParser.parse_args()
+        return self.args
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -560,7 +562,7 @@ class AbstractCommand(object):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, arguments):
+    def execute(self, arguments):
         print "Internal error : Abstract command method called\n"
         raise AbstractCommandMethodCallException("execute")
 
@@ -693,12 +695,12 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, args):
+    def execute(self, args):
 
         try:
 
             # Initialize configuration
-            self.config.initialize(opts)
+            self.config.initialize(args)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -782,12 +784,12 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, args):
+    def execute(self, args):
 
         try:
 
             # Initialize configuration
-            self.config.initialize(opts)
+            self.config.initialize(args)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -887,12 +889,12 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, args):
+    def execute(self, args):
 
         try:
 
             # Initialize configuration
-            self.config.initialize(opts)
+            self.config.initialize(args)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -1144,12 +1146,12 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, args):
+    def execute(self, args):
 
         try:
 
             # Initialize configuration
-            self.config.initialize(opts)
+            self.config.initialize(args)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -1472,12 +1474,12 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, args):
+    def execute(self, args):
 
         try:
 
             # Initialize configuration
-            self.config.initialize(opts)
+            self.config.initialize(args)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -1533,39 +1535,39 @@ class CommandProcessor(object):
         """
 
         # Defines the map storing the concrete commands
-        self.commandArray = {}
+        self.commandsByName = {}
 
         # Creates all the concrete commands
         cmd = CheckUpstreamCommand("check-upstream")
-        self.commandArray[cmd.getName()] = cmd
+        self.commandsByName[cmd.getName()] = cmd
 
         cmd = GetUpstreamLatestVersionCommand("get-upstream-latest-version")
-        self.commandArray[cmd.getName()] = cmd
+        self.commandsByName[cmd.getName()] = cmd
 
         cmd = GetUpstreamVersionListCommand("get-upstream-version-list")
-        self.commandArray[cmd.getName()] = cmd
+        self.commandsByName[cmd.getName()] = cmd
 
         cmd = UpgradeToVersionCommand("upgrade-to-version")
-        self.commandArray[cmd.getName()] = cmd
+        self.commandsByName[cmd.getName()] = cmd
 
         cmd = ReportPackageVersionCommand("update-package-version-database")
-        self.commandArray[cmd.getName()] = cmd
+        self.commandsByName[cmd.getName()] = cmd
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def execute(self, opts, arguments):
+    def execute(self, arguments):
         """This method checks that an action is supplied and call the action handler
         """
 
         # Check that an action verb is supplied. If none an error is returned
-        if len(arguments) == 0:
+        if not arguments.commands:
             print "Error : no action supplied"
             return 1
 
         # The first element in the arguments array is the action verb. Retrieve the command
         # using action verb as key
-        if self.commandArray.has_key(arguments[0]):
-            res =  self.commandArray[arguments[0]].execute(opts, arguments)
+        if self.commandsByName.has_key(arguments.commands[0]):
+            res = self.commandsByName[arguments.commands[0]].execute(arguments)
             if res:
                 return 0
             else:
@@ -1664,10 +1666,10 @@ def main():
     cliParser  = CommandLineParser()
 
     # Call the command line parser
-    (opts, args) = cliParser.parse()
+    args = cliParser.parse()
 
     # Call the execute method on the command processor. This method is in charge to find the concrete command
-    return commandProcessor.execute(opts, args)
+    return commandProcessor.execute(args)
 
 # Exit with main return code
 if __name__ == '__main__':
