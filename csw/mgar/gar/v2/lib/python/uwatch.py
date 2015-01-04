@@ -280,7 +280,7 @@ class UwatchConfiguration(object):
             ver = re.split(r"(?P<version>.*),REV=(?P<revision>.*)", args.current_version)
 
             # Test if this is a match
-            if ver == None:
+            if ver is None:
                 # No, thus raise an exception
                 msg = "Unable to parse %(version)s as a valid package version" % { 'version' : args.current_version }
                 raise InvalidArgumentException(msg)
@@ -604,11 +604,11 @@ class UpstreamWatchCommand(AbstractCommand):
         # an elements can be a string or a number
         # at each step we extract the next elements of the two version strings and compare them
 
-        if isinstance(version1, basestring) == False:
+        if not isinstance(version1, basestring):
             print "Version is not a string. Please check environnement variable UFILES_REGEX"
             print version1
 
-        if isinstance(version2, basestring) == False:
+        if not isinstance(version2, basestring):
             print "Version is not a string. Please check environnement variable UFILES_REGEX"
             print version2
 
@@ -677,22 +677,22 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Current version is mandatory
-        if self.config.getCurrentVersion() == None:
+        if self.config.getCurrentVersion() is None:
             print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
             argsValid = False
 
         # Regexp is mandatory
-        if self.config.getRegexp() == None:
+        if self.config.getRegexp() is None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.config.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() is None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
         # If arguments are not valid raise an exception
-        if argsValid == False:
+        if not argsValid:
             raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -771,17 +771,17 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Regexp is mandatory
-        if self.config.getRegexp() == None:
+        if self.config.getRegexp() is None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.config.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() is None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
         # If arguments are not valid raise an exception
-        if argsValid == False:
+        if not argsValid:
             raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -863,17 +863,17 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Regexp is mandatory
-        if self.config.getRegexp() == None:
+        if self.config.getRegexp() is None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.config.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() is None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
         # If arguments are not valid raise an exception
-        if argsValid == False:
+        if not argsValid:
             raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -972,22 +972,22 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         argsValid = True
 
         # FromVersion is mandatory
-        if self.config.getCurrentVersion() == None:
+        if self.config.getCurrentVersion() is None:
             print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
             argsValid = False
 
         # ToVersion is mandatory
-        if self.config.getTargetVersion() == None:
+        if self.config.getTargetVersion() is None:
             print "Error : Target version is not defined. Please use --target-version flag, or --help to display help"
             argsValid = False
 
         # ToVersion is mandatory
-        if self.config.getTargetLocation() == None:
+        if self.config.getTargetLocation() is None:
             print "Error : Target directory is not defined. Please use --target-location flag, or --help to display help"
             argsValid = False
 
         # If arguments are not valid raise an exception
-        if argsValid == False:
+        if not argsValid:
             raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -998,7 +998,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         """
 
         # Check that the Makefile exist
-        if os.path.isfile(self.config.getSourceDirectory() + "/Makefile") == False:
+        if not os.path.isfile(self.config.getSourceDirectory() + "/Makefile"):
             # No it does not exist, thus generate an error message
             msg = "Error : there is no Makefile under %(src)s" % { "src" : os.path.abspath(self.config.getSourceDirectory()) }
 
@@ -1006,7 +1006,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
             raise InvalidSourceDirectoryContentException(msg)
 
         # Check that the gar directory exists (can be a directory or symlink)
-        if os.path.isdir(self.config.getSourceDirectory() + "/gar") == False:
+        if not os.path.isdir(self.config.getSourceDirectory() + "/gar"):
             # No it does not exist, thus generate an error message
             msg = "Error : there is no gar directory under %(src)s" % { "src" : os.path.abspath(self.config.getSourceDirectory()) }
 
@@ -1126,7 +1126,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
             m = re.match(r"\s*VERSION\s*=\s*(?P<version>.*)", line)
 
             # Test if this is a match
-            if m == None:
+            if m is None:
                 # No, thus output the current line without modifications
                 lines.append(line)
             else:
@@ -1237,7 +1237,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             raise DatabaseConnectionException(msg)
 
         # Check that the object we got in return if defiend
-        if self.conn == None:
+        if self.conn is None:
             # No, raise a DatabaseConnectionException
             msg = "Unable to connect to database using host = %(host)s, db = %(db)s, user = %(user)s, passwd = %(passwd)% " % { "host" : self.config.getDatabaseHost(), "passwd" : self.config.getDatabasePassword(), "db" : self.config.getDatabaseSchema(), "user" : self.config.getDatabaseUser() }
             raise DatabaseConnectionException(msg)
@@ -1273,7 +1273,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             isNewlyCreatedPackage = False
 
             # Check that the connection is defined
-            if self.conn == None:
+            if self.conn is None:
                 # No,  raise a DatabaseConnectionException
                 msg = "Unable to query the database. Connection objet is not defined"
                 raise DatabaseConnectionException(msg)
@@ -1301,7 +1301,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 isNewlyCreatedPackage = True
 
                 # Output some more information if verbose mode is activated
-                if self.config.getVerbose() == True:
+                if self.config.getVerbose():
                     print "Package %(pkg)s added to the database" % { 'pkg' : self.config.getCatalogName() }
 
                 # Now the package is inserted. Retrieve the newly inserted package and update other versions
@@ -1317,7 +1317,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 cursor.execute("update UWATCH_PKG_VERSION set PKG_IS_DELETED = 0 where ID_PKG='%s'" , ( pkg["ID_PKG"] ) )
 
                 # Output some more information if verbose mode is activated
-                if self.config.getVerbose() == True:
+                if self.config.getVerbose():
                     print "Package %(pkg)s has been undeleted" % { 'pkg' : self.config.getCatalogName() }
 
             # Test if the package has just been created. If yes the history line for gar version has to be inserted
@@ -1328,22 +1328,22 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s , PKG_GAR_PATH = %s where ID_PKG= %s" , ( self.config.getExecutionDate(), self.config.getGarPath() , pkg["ID_PKG"] ) )
 
             # Test if uwatch deactivated flag is set
-            if self.config.getUwatchDeactivated() == True:
+            if self.config.getUwatchDeactivated():
                 # Yes thus package has to be deactivated
                 cursor.execute("update UWATCH_PKG_VERSION set PKG_UWATCH_ACTIVATED='0' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
-                if self.config.getVerbose() == True:
+                if self.config.getVerbose():
                     print "%(pkg) uWatch is deactivated, updating database"  % { 'pkg' : self.config.getCatalogName() }
             else:
                 cursor.execute("update UWATCH_PKG_VERSION set PKG_UWATCH_ACTIVATED='1' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
                 # Change execution status only if activated
-                if self.config.getUwatchError() == True:
+                if self.config.getUwatchError():
                     # Yes thus package has to be updated
                     cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_STATUS='0' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
-                    if self.config.getVerbose() == True:
+                    if self.config.getVerbose():
                         print "%(pkg)s uWatch reported an error, updating database"  % { 'pkg' : self.config.getCatalogName() }
                 else:
                     cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_STATUS='1' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
-                    if self.config.getVerbose() == True:
+                    if self.config.getVerbose():
                         print "%(pkg)s uWatch successfully ran, updating database"  % { 'pkg' : self.config.getCatalogName() }
 
                 # Test if upstream version is passed
@@ -1359,12 +1359,12 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                                         values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "upstream", self.config.getUpstreamVersion() , self.config.getExecutionDate() ) )
 
                         # Output some more information if verbose mode is activated
-                        if self.config.getVerbose() == True:
+                        if self.config.getVerbose():
                             print "Upgrading %(pkg)s upstream version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
                                     'next' : self.config.getUpstreamVersion() , 'current' : pkg["PKG_UPSTREAM_VERSION"] }
                     else:
                         # Output some more information if verbose mode is activated
-                        if self.config.getVerbose() == True:
+                        if self.config.getVerbose():
                             print "%(pkg) GAR version is up to date (%(current)s)" % { 'pkg' : self.config.getCatalogName(), 'current' : self.config.getUpstreamVersion() }
 
             # Test if gar version is passed (it is mandatory to have a value in database)
@@ -1380,7 +1380,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                                     values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.config.getGarVersion() , self.config.getExecutionDate() ) )
 
                     # Output some more information if verbose mode is activated
-                    if self.config.getVerbose() == True:
+                    if self.config.getVerbose():
                         print "Upgrading %(pkg)s gar version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
                                 'next' : self.config.getGarVersion() , 'current' : pkg["PKG_GAR_VERSION"] }
 
@@ -1405,73 +1405,73 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Gar path is mandatory
-        if self.config.getGarPath() == None:
+        if self.config.getGarPath() is None:
             print "Error : Gar path is not defined. Please use --gar-path flag, or --help to display help"
             argsValid = False
 
         # Gar distfiles is mandatory
-        if self.config.getGarDistfiles() == None:
+        if self.config.getGarDistfiles() is None:
             print "Error : Gar distfiles is not defined. Please use --gar-distfiles flag, or --help to display help"
             argsValid = False
 
         # Gar distfiles is mandatory
-        if self.config.getUwatchOutput() == None:
+        if self.config.getUwatchOutput() is None:
             print "Error : uWatch output is not defined. Please use --uwatch-output flag, or --help to display help"
             argsValid = False
 
         # Catalog name is mandatory
-        if self.config.getCatalogName() == None:
+        if self.config.getCatalogName() is None:
             print "Error : Catalog name is not defined. Please use --catalog-name flag, or --help to display help"
             argsValid = False
 
         # Package name is mandatory
-        if self.config.getPackageName() == None:
+        if self.config.getPackageName() is None:
             print "Error : Package name is not defined. Please use --package-name flag, or --help to display help"
             argsValid = False
 
         # Execution date is mandatory
-        if self.config.getExecutionDate() == None:
+        if self.config.getExecutionDate() is None:
             print "Error : Execution date is not defined. Please use --execution-date flag, or --help to display help"
             argsValid = False
 
         # Gar version is mandatory, other version are optional. Gar the version is the only mandatory in the database
         # It has to be passed in argument in case the package does not exist yet
-        if self.config.getGarVersion() == None:
+        if self.config.getGarVersion() is None:
             print "Error : Gar version is not defined. Please use --gar-version flag, or --help to display help"
             argsValid = False
 
         # Database schema is mandatory
-        if self.config.getDatabaseSchema() == None:
+        if self.config.getDatabaseSchema() is None:
             print "Error : Database schema is not defined. Please define the value in the ~/.uwatchrc file, use --database-schema flag, or --help to display help"
             argsValid = False
 
         # Database host is mandatory
-        if self.config.getDatabaseHost() == None:
+        if self.config.getDatabaseHost() is None:
             print "Error : Database host is not defined. Please define the value in the ~/.uwatchrc file, use --database-host flag, or --help to display help"
             argsValid = False
 
         # Database user is mandatory
-        if self.config.getDatabaseUser() == None:
+        if self.config.getDatabaseUser() is None:
             print "Error : Database user is not defined. Please define the value in the ~/.uwatchrc file, use --database-user flag, or --help to display help"
             argsValid = False
 
         # Database password is mandatory
-        if self.config.getDatabasePassword() == None:
+        if self.config.getDatabasePassword() is None:
             print "Error : Database password is not defined. Please define the value in the ~/.uwatchrc file, use --database-password flag, or --help to display help"
             argsValid = False
 
         # Regexp is mandatory
-        if self.config.getRegexp() == None:
+        if self.config.getRegexp() is None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.config.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() is None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
         # If arguments are not valid raise an exception
-        if argsValid == False:
+        if not argsValid:
             raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
 
     # -----------------------------------------------------------------------------------------------------------------
