@@ -100,6 +100,9 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 CONFIGURE_ARGS += --with-http_spdy_module
 # Enable when we have 64 bit perl
 # CONFIGURE_ARGS += --with-http_perl_module
+# Specifically enable legacy method for people who want that
+CONFIGURE_ARGS += --with-select_module
+CONFIGURE_ARGS += --with-poll_module
 
 TEST_SCRIPTS =
 
