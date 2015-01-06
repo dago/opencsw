@@ -787,7 +787,7 @@ BERLIOS_PROJECT ?= $(NAME)
 BERLIOS_MIRROR ?= http://download.berlios.de/$(BERLIOS_PROJECT)/ http://download2.berlios.de/$(BERLIOS_PROJECT)/
 
 # GNU
-GNU_SITE     = http://ftp.gnu.org
+GNU_SITE     = http://ftpmirror.gnu.org/
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
 $(if $(GNU_PROJ),$(warning GNU_PROJ is deprecated, please use GNU_PROJECT instead))
