@@ -1,9 +1,9 @@
 NAME = automake
-VERSION = 1.14.1
+VERSION = 1.15
 GARTYPE = v2
 
 EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.6 1.12.6 1.13.4 1.14.1
+MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.6 1.12.6 1.13.4 1.14.1 1.15
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
@@ -45,30 +45,7 @@ CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.12
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.13
 CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.14
-# These are just docs, override for now
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.9/py-compile
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.10/py-compile
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.11/py-compile
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.12/py-compile
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.13/py-compile
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.14/py-compile
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.6/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.7/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.8/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.9/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.10/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.11/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.12/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.13/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.14/INSTALL
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/info/automake.info-1
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/info/automake.info-1
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/info/automake.info-2
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.10/texinfo.tex
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.11/texinfo.tex
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.12/texinfo.tex
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.13/texinfo.tex
-CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.14/texinfo.tex
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.15
 
 # Lots of test fail on Solaris, but they are safe to ignore for now:
 #   <http://lists.gnu.org/archive/html/bug-automake/2009-07/msg00001.html>
@@ -115,11 +92,12 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.10.3 = $(bindir)/automake $(bind
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.11.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.12.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.13.4 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-1.14.1 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 
 #     alternatives [options] --install link name path priority  [-
 #     -slave link name path]...  [--initscript service]
 
-ALTERNATIVES = 1.6 1.7 1.8 1.9 1.10 1.11 1.12 1.13 1.14
+ALTERNATIVES = 1.6 1.7 1.8 1.9 1.10 1.11 1.12 1.13 1.14 1.15
 ALTERNATIVE_1.6 = $(bindir)/automake automake $(bindir)/automake-1.6 60
 ALTERNATIVE_1.6 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.6
 ALTERNATIVE_1.7 = $(bindir)/automake automake $(bindir)/automake-1.7 70
@@ -138,6 +116,8 @@ ALTERNATIVE_1.13 = $(bindir)/automake automake $(bindir)/automake-1.13 130
 ALTERNATIVE_1.13 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.13
 ALTERNATIVE_1.14 = $(bindir)/automake automake $(bindir)/automake-1.14 140
 ALTERNATIVE_1.14 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.14
+ALTERNATIVE_1.15 = $(bindir)/automake automake $(bindir)/automake-1.15 150
+ALTERNATIVE_1.15 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.15
 
 include gar/category.mk
 
