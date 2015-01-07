@@ -1,5 +1,5 @@
 NAME = squidclamav
-VERSION = 4.0
+VERSION = 6.12
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -12,35 +12,29 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += squidclamav.conf.CSW
-DISTFILES += CSWsquidclamav.postinstall
+DISTFILES  = $(NAME)-$(VERSION).taCSWsquidclamav.postinstall
 
 PACKAGES = CSWsquidclamav
-CATALOGNAME_CSWsquidclamav = squidclamav
-SPKG_DESC_CSWsquidclamav = $(DESCRIPTION)
+SPKG_DESC_CSWsquidclamav = A Dedicated ClamAV AntiVirus Redirector for Squid
+RUNTIME_DEP_PKGS_CSWsquidclamav += CSWlibgcc-s1
 
-RUNTIME_DEP_PKGS_CSWsquidclamav = CSWcurlrt
+GARCOMPILER = GNU
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+REINPLACEMENTS += squidguard
+REINPLACE_MATCH_squidguard = /usr/local/squidGuard/bin
+REINPLACE_WITH_squidguard = $(bindir)
+REINPLACE_FILES_squidguard += etc/squidclamav.conf
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+EXTRA_MERGE_EXCLUDE_FILES += .*\.default
 
-EXTRA_LINKER_FLAGS += -lrt -lnsl -lsocket
+PRESERVECONF += /etc/opt/csw/c-icap/squidclamav.conf
 
 EXTRA_DOCFILES = AUTHORS ChangeLog INSTALL NEWS README
 
-post-install-modulated:
-	@ginstall -d $(DESTDIR)$(sysconfdir)
-	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
-	@ginstall -d $(DESTDIR)$(libexecdir)/cgi-bin
-	@cp $(DOWNLOADDIR)/squidclamav.conf.CSW $(DESTDIR)$(sysconfdir)
+post-install:
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	R)$(sysconfdir)
 	@( for file in $(EXTRA_DOCFILES); do \
-		cp $(abspath $(WORKSRC)/$$file) $(DESTDIR)$(docdir)/$(NAME); \
-	done )
-	@cp $(WORKSRC)/clwarn.cgi* $(DESTDIR)$(libexecdir)/cgi-bin
-	@$(MAKECOOKIE)
+		cp $(abspath $(WORKSRC)/$$file) $(DESTDIR)$(docdir)/$(N$(MAKECOOKIE)
 
 include gar/category.mk
