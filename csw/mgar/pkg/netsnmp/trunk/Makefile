@@ -34,6 +34,7 @@ PATCHFILES PATCHFILES += 0001-fixing-init-scripts.patch
 PATCHFILES += 0002-workaround-ksh-stop-alias-problem.patch
 PATCHFILES += 0003-configure-disable-perl-cc-checks.patch
 PATCHFILES += 0004-enable-python-version-select.patch
+PATCHFILES += 0005-autotools-config_os_progs.patch
 # the following patches inspired by https://java.net/projects/solaris-userland of different authors
 PATCHFILES += 0002-pkcs.patch
 PATCHFILES += 0011-Makefile.in.patch

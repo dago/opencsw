@@ -1,0 +1,16 @@
+--- a/configure.d/config_os_progs
++++ b/configure.d/config_os_progs
+@@ -62,11 +62,11 @@ AC_PATH_PROG([PYTHONPROG],python)
+ AC_PATH_PROG([UNAMEPROG], uname)
+ AC_DEFINE_UNQUOTED(UNAMEPROG,"$UNAMEPROG", [Where is the uname command])
+ 
+-if test "x$ac_cv_prog_AUTOCONF" = "x"; then
++if test "x$ac_cv_path_AUTOCONF" = "x"; then
+ 	AUTOCONF=":"
+ 	AC_SUBST(AUTOCONF)
+ fi
+-if test "x$ac_cv_prog_AUTOHEADER" = "x"; then
++if test "x$ac_cv_path_AUTOHEADER" = "x"; then
+ 	AUTOHEADER=":"
+ 	AC_SUBST(AUTOHEADER)
+ fi

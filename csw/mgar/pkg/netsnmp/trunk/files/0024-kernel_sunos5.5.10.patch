@@ -1,6 +1,6 @@
 --- a/agent/mibgroup/kernel_sunos5.c
 +++ b/agent/mibgroup/kernel_sunos5.c
-@@ -82,15 +84,15 @@ kstat_ctl_t    *kstat_fd = 0;
+@@ -82,15 +82,15 @@ kstat_ctl_t    *kstat_fd = 0;
  static
  mibcache        Mibcache[MIBCACHE_SIZE+1] = {
      {MIB_SYSTEM, 0, (void *) -1, 0, 0, 0, 0},
@@ -20,7 +20,7 @@
       300, 0, 0},
      {MIB_ICMP, sizeof(mib2_icmp_t), (void *) -1, 0, 60, 0, 0},
      {MIB_TCP, sizeof(mib2_tcp_t), (void *) -1, 0, 60, 0, 0},
-@@ -105,13 +107,13 @@ mibcache        Mibcache[MIBCACHE_SIZE+1] = {
+@@ -105,13 +105,13 @@ mibcache        Mibcache[MIBCACHE_SIZE+1] = {
      {MIB_SNMP, 0, (void *) -1, 0, 0, 0, 0},
  #ifdef SOLARIS_HAVE_IPV6_MIB_SUPPORT
  #ifdef SOLARIS_HAVE_RFC4293_SUPPORT
@@ -38,16 +38,16 @@
      {MIB_TCP6_CONN, 1000 * sizeof(mib2_tcp6ConnEntry_t), (void *) -1, 0, 30,
       0, 0},
      {MIB_UDP6_ENDPOINT, 1000 * sizeof(mib2_udp6Entry_t), (void *) -1, 0, 30,
-@@ -184,7 +186,7 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type, mib2_ifEntry_t *resp,
+@@ -184,7 +184,7 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type, mib2_ifEntry_t *resp,
        size_t *length, int (*comp)(void *, void *), void *arg);
  static void 
  set_if_info(mib2_ifEntry_t *ifp, unsigned index, char *name, uint64_t flags,
 -            int mtu);
 +            boolean_t flags_unknown, int mtu);
  static int get_if_stats(mib2_ifEntry_t *ifp);
-
+ 
  #if defined(HAVE_IF_NAMEINDEX) && defined(NETSNMP_INCLUDE_IFTABLE_REWRITES)
-@@ -294,7 +296,9 @@ getKstatInt(const char *classname, const char *statname,
+@@ -294,7 +294,9 @@ getKstatInt(const char *classname, const char *statname,
      kstat_t        *ks;
      kid_t           kid;
      kstat_named_t  *named;
@@ -57,7 +57,7 @@
  
      if (kstat_fd == 0) {
  	kstat_fd = kstat_open();
-@@ -305,27 +309,88 @@ getKstatInt(const char *classname, const char *statname,
+@@ -305,27 +307,88 @@ getKstatInt(const char *classname, const char *statname,
      if ((ksc = kstat_fd) == NULL) {
  	goto Return;
      }
@@ -166,7 +166,7 @@
      ret = 0;                /* maybe successful */
      switch (named->data_type) {
  #ifdef KSTAT_DATA_INT32         /* Solaris 2.6 and up */
-@@ -442,11 +507,20 @@ getKstat(const char *statname, const char *varname, void *value)
+@@ -442,11 +505,20 @@ getKstat(const char *statname, const char *varname, void *value)
      /*
       * Get the named statistics 
       */
@@ -191,7 +191,7 @@
      if (kstat_read(ksc, ks, NULL) <= 0) {
  	ret = -10;
  	goto Return;        /* kstat errors */
-@@ -1080,18 +1154,21 @@ getmib(int groupname, int subgroupname, void **statbuf, size_t *size,
+@@ -1080,18 +1152,21 @@ getmib(int groupname, int subgroupname, void **statbuf, size_t *size,
  static int
  _dlpi_open(const char *devname)
  {
@@ -218,7 +218,7 @@
      DEBUGMSGTL(("kernel_sunos5:dlpi", "devstr(%s)\n", devstr));
      /*
       * First try opening the device using style 1, if the device does not
-@@ -1102,13 +1179,49 @@ _dlpi_open(const char *devname)
+@@ -1102,13 +1177,49 @@ _dlpi_open(const char *devname)
      DEBUGMSGTL(("kernel_sunos5:dlpi", "style1 open(%s)\n", devstr));
      if ((fd = open(devstr, O_RDWR | O_NONBLOCK)) < 0) {
          DEBUGMSGTL(("kernel_sunos5:dlpi", "style1 open failed\n"));
@@ -239,8 +239,7 @@
 +
 +    if(ret > sizeof(devstrcpy) - 1)
 +        return -1;
- 
--            if ((fd = open(devstr, O_RDWR | O_NONBLOCK)) != -1) {
++
 +    DEBUGMSGTL(("kernel_sunos5:dlpi", "devstrcpy(%s)\n", devstrcpy));
 +
 +
@@ -253,7 +252,8 @@
 +      DEBUGMSGTL(("kernel_sunos5:dlpi", "devstr(%s)\n", devstr));
 +      
 +      /* try style 2 */
-+
+ 
+-            if ((fd = open(devstr, O_RDWR | O_NONBLOCK)) != -1) {
 +     if ((fd = open(devstr, O_RDWR | O_NONBLOCK)) < 0) {
 +        DEBUGMSGTL(("kernel_sunos5:dlpi", "style2 open failed\n"));
 +	fd = -1;
@@ -274,7 +274,7 @@
                  if (_dlpi_attach(fd, ppa) == 0) {
                      DEBUGMSGTL(("kernel_sunos5:dlpi", "attached\n"));
                  } else {
-@@ -1117,16 +1230,11 @@ _dlpi_open(const char *devname)
+@@ -1117,16 +1228,11 @@ _dlpi_open(const char *devname)
                      fd = -1;
                  }
              } else {
@@ -292,7 +292,7 @@
      return (fd);
  }
  
-@@ -1141,7 +1249,9 @@ _dlpi_get_phys_address(int fd, char *addr, int maxlen, int *addrlen)
+@@ -1141,7 +1247,9 @@ _dlpi_get_phys_address(int fd, char *addr, int maxlen, int *addrlen)
      struct strbuf       ctlbuf;
      char                buf[MAX(DL_PHYS_ADDR_ACK_SIZE+64, DL_ERROR_ACK_SIZE)];
      int                 flag = 0;
@@ -303,7 +303,7 @@
      DEBUGMSGTL(("kernel_sunos5:dlpi", "_dlpi_get_phys_address\n"));
  
      paddr_req.dl_primitive = DL_PHYS_ADDR_REQ;
-@@ -1154,7 +1264,22 @@ _dlpi_get_phys_address(int fd, char *addr, int maxlen, int *addrlen)
+@@ -1154,7 +1262,22 @@ _dlpi_get_phys_address(int fd, char *addr, int maxlen, int *addrlen)
      ctlbuf.maxlen = sizeof(buf);
      ctlbuf.len = 0;
      ctlbuf.buf = buf;
@@ -327,7 +327,7 @@
          return (-1);
  
      if (ctlbuf.len < sizeof(uint32_t))
-@@ -1196,6 +1321,8 @@ _dlpi_get_iftype(int fd, unsigned int *iftype)
+@@ -1196,6 +1319,8 @@ _dlpi_get_iftype(int fd, unsigned int *iftype)
      struct strbuf       ctlbuf;
      char                buf[MAX(DL_INFO_ACK_SIZE, DL_ERROR_ACK_SIZE)];
      int                 flag = 0;
@@ -336,7 +336,7 @@
  
      DEBUGMSGTL(("kernel_sunos5:dlpi", "_dlpi_get_iftype\n"));
  
-@@ -1210,7 +1337,22 @@ _dlpi_get_iftype(int fd, unsigned int *iftype)
+@@ -1210,7 +1335,22 @@ _dlpi_get_iftype(int fd, unsigned int *iftype)
      ctlbuf.maxlen = sizeof(buf);
      ctlbuf.len = 0;
      ctlbuf.buf = buf;
@@ -360,7 +360,7 @@
          DEBUGMSGTL(("kernel_sunos5:dlpi", "getmsg failed: %d\n", errno));
          return (-1);
      }
-@@ -1367,8 +1509,9 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
+@@ -1367,8 +1507,9 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
      mib2_ifEntry_t *ifp;
      int             nentries = size / sizeof(mib2_ifEntry_t);
      found_e         result = NOT_FOUND;
@@ -371,7 +371,7 @@
      struct if_nameindex *ifname, *ifnp;
  
      lifrp = &lifreq; 
-@@ -1400,6 +1543,7 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
+@@ -1400,6 +1541,7 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
          memcpy(lifrp->lifr_name, ifnp->if_name, LIFNAMSIZ);
          if_isv6 = B_FALSE;
  
@@ -379,7 +379,7 @@
          if (ioctl(ifsd, SIOCGLIFFLAGS, lifrp) < 0) {
              if (ifsd6 == -1) {
                  if ((ifsd6 = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
-@@ -1408,17 +1552,19 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
+@@ -1408,17 +1550,19 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
                  }
              }
              if (ioctl(ifsd6, SIOCGLIFFLAGS, lifrp) < 0) {
@@ -403,7 +403,7 @@
          }
  
          memset(ifp, 0, sizeof(mib2_ifEntry_t));
-@@ -1433,11 +1579,12 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
+@@ -1433,11 +1577,12 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
          }
  
          set_if_info(ifp, ifnp->if_index, ifnp->if_name, if_flags, 
@@ -418,7 +418,7 @@
          }
  
          /*
-@@ -1614,11 +1761,109 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
+@@ -1614,11 +1759,109 @@ getif(mib2_ifEntry_t *ifbuf, size_t size, req_e req_type,
  }
  #endif /*defined(HAVE_IF_NAMEINDEX)&&defined(NETSNMP_INCLUDE_IFTABLE_REWRITES)*/
  
@@ -529,7 +529,7 @@
  
      /*
       * Set basic information 
-@@ -1627,7 +1918,10 @@ set_if_info(mib2_ifEntry_t *ifp, unsigned index, char *name, uint64_t flags,
+@@ -1627,7 +1870,10 @@ set_if_info(mib2_ifEntry_t *ifp, unsigned index, char *name, uint64_t flags,
      ifp->ifDescr.o_length = strlen(name);
      strcpy(ifp->ifDescr.o_bytes, name);
      ifp->ifAdminStatus = (flags & IFF_UP) ? 1 : 2;
@@ -541,21 +541,13 @@
      ifp->ifLastChange = 0;      /* Who knows ...  */
      ifp->flags = flags;
      ifp->ifMtu = mtu;
-@@ -1649,14 +1943,16 @@ set_if_info(mib2_ifEntry_t *ifp, unsigned index, char *name, uint64_t flags,
+@@ -1644,7 +1890,8 @@ set_if_info(mib2_ifEntry_t *ifp, unsigned index, char *name, uint64_t flags,
+             ifp->ifSpeed *= 1000000;
+         }
+ 	havespeed = B_TRUE;
+-    } else if (getKstatInt(NULL, name, "ifSpeed", &ifp->ifSpeed) == 0) {
++    } else if ((getKstatInt(NULL, name, "ifspeed", &ifp->ifSpeed) == 0) || 
++                getKstatInt(NULL, name, "ifSpeed", &ifp->ifSpeed) == 0) {
+         /*
           * this is good 
           */
- 	havespeed = B_TRUE;
-+    } else if ((getKstatInt("link", name, "ifspeed", &ifp->ifSpeed) == 0) ||
-+               (getKstatInt("link", name, "ifSpeed", &ifp->ifSpeed) == 0)) {
-+        havespeed = B_TRUE;
-     }
--
-     /* make ifOperStatus depend on link status if available */
-     if (ifp->ifAdminStatus == 1) {
-         int i_tmp;
-         /* only UPed interfaces get correct link status - if any */
-         if (getKstatInt(NULL, name,"link_up",&i_tmp) == 0) {
-             ifp->ifOperStatus = i_tmp ? 1 : 2;
- #ifdef IFF_FAILED
-         } else if (flags & IFF_FAILED) {
-             /*
