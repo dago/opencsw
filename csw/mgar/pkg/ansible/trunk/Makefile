@@ -1,5 +1,5 @@
 NAME = ansible
-VERSION = 1.5.3
+VERSION = 1.8.2
 GARTYPE = v2
 CATEGORIES = python
 
@@ -10,7 +10,7 @@ endef
 GITHUB_USER     =       ansible
 GITHUB_REFERENCE=       release$(VERSION)
 MASTER_SITES    =       $(GITHUB_MIRROR)
-DISTNAME	=	$(GITHUB_USER)-$(NAME)-157b783
+DISTNAME	=	$(GITHUB_USER)-$(NAME)-6f568bd
 DISTFILES       =       $(GITHUB_REFERENCE)$(GITHUB_BALL_EXT)
 DISTFILES	+=	README.CSW
 DISTFILES	+=	hosts.CSW
@@ -28,6 +28,7 @@ CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/l
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/callbacks.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/playbook/__init__.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/runner/__init__.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/runner/__init__.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/module_utils/basic.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/module_utils/urls.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/module_utils/urls.py
