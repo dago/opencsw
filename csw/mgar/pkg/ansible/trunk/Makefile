@@ -48,6 +48,7 @@ REINPLACE_MATCH_usr = /usr/share/ansible
 REINPLACE_WITH_usr  = /opt/csw/share/ansible
 REINPLACE_FILES_usr = lib/ansible/constants.py
 
+RUNTIME_DEP_PKGS  = CSWpython
 RUNTIME_DEP_PKGS  = CSWpy-jinja2
 RUNTIME_DEP_PKGS += CSWpy-markupsafe
 RUNTIME_DEP_PKGS += CSWpy-yaml
