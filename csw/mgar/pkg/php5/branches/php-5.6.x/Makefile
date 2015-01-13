@@ -1,5 +1,5 @@
 NAME = php
-VERSION = 5.6-201404160230
+VERSION = 5.6.0
 GARTYPE = v2
 
 DESCRIPTION = A high-level scripting language.
@@ -39,7 +39,7 @@ EXTRA_INSTALL_ENV   = INSTALL_ROOT=$(DESTDIR)
 VENDOR_URL = http://www.php.net/
 LICENSE = LICENSE
 
-DISTNAME = $(NAME)$(VERSION)
+DISTNAME = $(NAME)-$(VERSION)
 DISTFILES += $(DISTNAME).tar.xz
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
