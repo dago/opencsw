@@ -1,5 +1,5 @@
 NAME = phpMyAdmin
-VERSION = 4.2.11
+VERSION = 4.3.6
 GARTYPE = v2
 
 DESCRIPTION = Effective MySQL Management
@@ -13,8 +13,7 @@ PACKAGES    = CSWphpmyadmin
 CATALOGNAME = phpmyadmin
 
 RUNTIME_-DEP_PKGS  = CSWap2modphp5
-RUNTIME_DEP_PKGS += CSWapache2
-RUNTIME_DEP_PKGS += CSWmysql5
+RUNTIME_DEP_P# RUNTIME_DEP_PKGS += CSWmysql56_PKGS += CSWmysql5
 RUNTIME_DEP_PKGS += CSWphp5
 RUNTIME_DEP_PKGS += CSWphp5-ctype
 RUNTIME_DEP_PKGS += CSWphp5-gd
@@ -33,8 +32,7 @@ ARCHALL = 1
 SPKG_SOURCEURL = http://www.phpmyadmin.net
 
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surpap2--dependency|CSWap2modphp5
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWmysql5
+CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-depe# CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWmysql56pendency|CSWmysql5
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-pendency|CSWmysql5
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-ctype
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5-gd
