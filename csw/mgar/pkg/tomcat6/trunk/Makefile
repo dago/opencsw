@@ -9,26 +9,42 @@ endef
 
 VENDOR_URL = http://tomcat.apache.org/
 MASTER_SITES += http://mirror.dkd.de/apache/tomcat/tomcat-6/v$(VERSION)/bin/
-DISTFILES += apache-tomcat-$(VERSION).tar.gz
+DISTNAME = apache-tomcat-$(VERSION)
+DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswtomcat6
-DISTFILES += LICENSE
 
 # Otherwise we copy .git into the package
 NOGITPATCH = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = v(\d+(?:\.\d+)*)
-
 PACKAGES += CSWtomcat6
-LICENSE = LICENSE
-ARCHALL = 1
+SPKG_DESC_CSWtomcat6 = Apache Jakarta Tomcat 6 Servlet/JSP Container
+# PKGFILES is catchall
+ARCHALL_CSWtomcat6 = 1
 
-CONFIGURE_SCRIPTS = none
-BUILD_SCRIPTS     = none
-TEST_SCRIPTS	  = none
-INSTALL_SCRIPTS   = tomcat
-prefix            = /
+PACKAGES += CSWlibtcnative1-0
+SPKG_DESC_CSWlibtcnative1-0 = Tomcat Native Java library
+PKGFILES_CSWlibtcnative1-0 += $(call pkgfiles_lib,libtcnative-1.so.0)
+RUNTIME_DEP_PKGS_CSWlibtcnative1-0 += CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWlibtcnative1-0 += CSWlibssl1-0-0
+
+PACKAGES += CSWlibtcnative-dev
+SPKG_DESC_CSWlibtcnative-dev = Development files for Tomcat Native Java library
+PKGFILES_CSWlibtcnative-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibtcnative-dev += CSWlibtcnative1-0
+
+LICENSE = LICENSE
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/bin/tomcat-native-1.1.32-src/jni/native/configure
+BUILD_SCRIPTS = $(WORKSRC)/bin/tomcat-native-1.1.32-src/jni/native/Makefile
+TEST_SCRIPTS =
+INSTALL_SCRIPTS += tomcat
+INSTALL_SCRIPTS += $(WORKSRC)/bin/tomcat-native-1.1.32-src/jni/native/Makefile
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
+CONFIGURE_ARGS += --with-ssl=$(prefix)
+CONFIGURE_ARGS += --with-java-home=/usr/jdk1.6.0_20
 
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
@@ -46,58 +62,42 @@ PROTOTYPE_GROUP_etcperm = tomcat
 
 MIGRATE_SOURCE_DIR = /opt/csw/etc/$(NAME)/conf
 MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)/conf
-MIGRATE_FILES  = catalina.policy
-MIGRATE_FILES += catalina.properties
-MIGRATE_FILES += context.xml
-MIGRATE_FILES += logging.properties
-MIGRATE_FILES += server.xml
-MIGRATE_FILES += tomcat-users.xml
-MIGRATE_FILES += web.xml
-
-# Reviewed and fine to override
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/RUNNING.txt
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/virtual-hosting-howto.html
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/manager-howto.html
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/RUNNING.txt
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/ssl-howto.html
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/appdev/processes.html
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat6/webapps/docs/building.html
-CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat6/webapps/docs/BUILDING.txt
+MIGRATE_FILES_CSWtomcat6 += catalina.policy
+MIGRATE_FILES_CSWtomcat6 += catalina.properties
+MIGRATE_FILES_CSWtomcat6 += context.xml
+MIGRATE_FILES_CSWtomcat6 += logging.properties
+MIGRATE_FILES_CSWtomcat6 += server.xml
+MIGRATE_FILES_CSWtomcat6 += tomcat-users.xml
+MIGRATE_FILES_CSWtomcat6 += web.xml
 
 include gar/category.mk
 
-configure-none:
-	@$(MAKECOOKIE)
-
-test-none:
-	@$(MAKECOOKIE)
-
-build-none:
-	@$(MAKECOOKIE)
-
 post-extract:
-	( mv $(WORKDIR)/apache-tomcat-$(VERSION) $(WORKDIR)/$(DISTNAME) )
-	( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
+	#( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
+	cd $(WORKSRC)/bin && gtar zxf tomcat-native.tar.gz
 	@$(MAKECOOKIE)
 
 install-tomcat:
-	( mkdir -p $(DESTDIR)/etc/opt/csw/init.d )
-	( mkdir -p $(DESTDIR)/etc/opt/csw/pkg/$(NAME) )
-	( mkdir -p $(DESTDIR)/etc/opt/csw/$(NAME) )
-	( mkdir -p $(DESTDIR)/opt/csw/etc/$(NAME) )
-	( mkdir -p $(DESTDIR)/var/opt/csw/$(NAME) )
-	( mkdir -p $(DESTDIR)/opt/csw/share )
-	( cp -fr $(WORKDIR)/tomcat6-$(VERSION) $(DESTDIR)/opt/csw/share/$(NAME) )
-	( cp -fr $(FILEDIR)/csw$(NAME) $(DESTDIR)/etc/opt/csw/init.d )
-	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/conf $(DESTDIR)/etc/opt/csw/$(NAME)/conf )
-	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/logs $(DESTDIR)/var/opt/csw/$(NAME) )
-	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/work $(DESTDIR)/var/opt/csw/$(NAME) )
-	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/temp $(DESTDIR)/var/opt/csw/$(NAME) )
-	( rm $(DESTDIR)/var/opt/csw/tomcat6/temp/safeToDelete.tmp )
-	( ln -s ../../../../etc/opt/csw/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
-	( ln -s ../../../../var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs )
-	( ln -s ../../../../var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work )
-	( ln -s ../../../../var/opt/csw/$(NAME)/temp $(DESTDIR)/opt/csw/share/$(NAME)/temp )
-	( ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME) )
+	mkdir -p $(DESTDIR)/etc/opt/csw/init.d
+	mkdir -p $(DESTDIR)/etc/opt/csw/pkg/$(NAME)
+	mkdir -p $(DESTDIR)/etc/opt/csw/$(NAME)
+	mkdir -p $(DESTDIR)/opt/csw/etc/$(NAME)
+	mkdir -p $(DESTDIR)/var/opt/csw/$(NAME)
+	mkdir -p $(DESTDIR)/opt/csw/share
+	cp -fr $(WORKSRC) $(DESTDIR)/opt/csw/share/$(NAME)
+	@# The native library stuff goes into another package
+	rm -rf $(DESTDIR)/opt/csw/share/$(NAME)/bin/tomcat-native-1.1.32-src
+	cp -fr $(FILEDIR)/csw$(NAME) $(DESTDIR)/etc/opt/csw/init.d
+	mv $(DESTDIR)/opt/csw/share/$(NAME)/conf $(DESTDIR)/etc/opt/csw/$(NAME)/conf
+	mv $(DESTDIR)/opt/csw/share/$(NAME)/logs $(DESTDIR)/var/opt/csw/$(NAME)
+	mv $(DESTDIR)/opt/csw/share/$(NAME)/work $(DESTDIR)/var/opt/csw/$(NAME)
+	mv $(DESTDIR)/opt/csw/share/$(NAME)/temp $(DESTDIR)/var/opt/csw/$(NAME)
+	rm $(DESTDIR)/var/opt/csw/tomcat6/temp/safeToDelete.tmp
+	ln -s ../../../../etc/opt/csw/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf
+	ln -s ../../../../var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs
+	ln -s ../../../../var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work
+	ln -s ../../../../var/opt/csw/$(NAME)/temp $(DESTDIR)/opt/csw/share/$(NAME)/temp
+	ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME)
+	cd $(WORKSRC)/bin/tomcat-native-1.1.32-src/jni/native && /usr/bin/env -i $(INSTALL_ENV) gmake $(INSTALL_ARGS)
 	@$(MAKECOOKIE)
 
