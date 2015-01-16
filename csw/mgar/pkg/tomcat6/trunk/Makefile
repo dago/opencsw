@@ -24,12 +24,15 @@ ARCHALL_CSWtomcat6 = 1
 
 PACKAGES += CSWlibtcnative1-0
 SPKG_DESC_CSWlibtcnative1-0 = Tomcat Native Java library
-PKGFILES_CSWlibtcnative1-0 += $(call pkgfiles_lib,libtcnative-1.so.0)
+PKGFILES_CSWlibtcnative1-0 += $(call pkgfiles_lib,libtcnative-1.so)
 RUNTIME_DEP_PKGS_CSWlibtcnative1-0 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibtcnative1-0 += CSWlibssl1-0-0
 
 PACKAGES += CSWlibtcnative-dev
 SPKG_DESC_CSWlibtcnative-dev = Development files for Tomcat Native Java library
+# The .so *must* go into the library package as this name id dlopen'ed by java
+PKGFILES_DEVEL_SHAREDLIBLINK =
+CHECKPKG_OVERRIDES_CSWlibtcnative1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libtcnative-1.so
 PKGFILES_CSWlibtcnative-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibtcnative-dev += CSWlibtcnative1-0
 
