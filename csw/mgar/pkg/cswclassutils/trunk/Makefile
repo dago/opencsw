@@ -23,7 +23,7 @@ $(1)_$(call csw_pkgname,$(2))
 endef
 
 define spkg_desc_val
-Class action script $(call cas_shortname,$(1))
+$(call cas_shortname,$(1)) class action script for CSW packages
 endef
 
 define pkgfiles_val
@@ -52,7 +52,7 @@ endef
 
 # end of handy functions
 
-DESCRIPTION = CSW class action utilities
+DESCRIPTION = Class action scripts for CSW packages
 
 MASTER_SITES =
 DISTFILES = COPYING CSWcas-initsmf.cswreleasenotes cas-ssl.conf
@@ -64,7 +64,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-SPKG_SOURCEURL = http://www.opencsw.org
+VENDOR_URL = http://wiki.opencsw.org/cswclassutils-package
 
 FILEDIR = files
 
