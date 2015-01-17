@@ -23,7 +23,7 @@ $(1)_$(call csw_pkgname,$(2))
 endef
 
 define spkg_desc_val
-$(call cas_shortname,$(1)) class action script for CSW packages
+The $(call cas_shortname,$(1)) class action script for CSW packages
 endef
 
 define pkgfiles_val
