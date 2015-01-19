@@ -5,6 +5,7 @@
 NAME = facter2
 VERSION = 2.3.0
 GARTYPE = v2
+DISTNAME = facter-$(VERSION)
 
 DESCRIPTION = A system fact gatherer
 define BLURB
