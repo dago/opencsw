@@ -36,11 +36,9 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = facter
 
-CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/ssh.rb
-CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/Cfkey.rb
-CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/util/manufacturer.rb
-CHECKPKG_OVERRIDES_CSWfacter += file-collision|/opt/csw/bin/facter|CSWfacter|CSWfacter-ruby18
-CHECKPKG_OVERRIDES_CSWfacter += file-collision|/opt/csw/share/man/man8/facter.8|CSWfacter|CSWfacter-ruby18
+CHECKPKG_OVERRIDES_CSWfacter2 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/ssh.rb
+CHECKPKG_OVERRIDES_CSWfacter2 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/Cfkey.rb
+CHECKPKG_OVERRIDES_CSWfacter2 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/util/manufacturer.rb
 
 include gar/category.mk
 
