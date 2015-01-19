@@ -50,9 +50,6 @@ BUILD_DEP_PKGS += CSWlibreadline-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 BUILD_DEP_PKGS += CSWcoreutils
 
-CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibxml2-2
-CHECKPKG_OVERRIDES_CSWaugeas += surplus-dependency|CSWlibgcc-s1
-
 GARCOMPILER = GCC4
 
 CONFIGURE_ARGS = $(DIRPATHS)
