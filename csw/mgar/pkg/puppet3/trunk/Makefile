@@ -45,8 +45,9 @@ BUILD_DEP_PKGS_CSWpuppet3 = $(RUNTIME_DEP_PKGS_CSWpuppet3)
 # service isn't started upon the installation of CSWpuppet.
 PACKAGES += CSWpuppetmaster3
 SPKG_DESC_CSWpuppetmaster3 = System configuration management tool, server
-RUNTIME_DEP_PKGS_CSWpuppetmaster3 = $(RUNTIME_DEP_PKGS)
-BUILD_DEP_PKGS_CSWpuppet3 = $(RUNTIME_DEP_PKGS_CSWpuppet3)
+RUNTIME_DEP_PKGS_CSWpuppetmaster3 += CSWhiera
+RUNTIME_DEP_PKGS_CSWpuppetmaster3 += CSWruby20
+BUILD_DEP_PKGS_CSWpuppetmaster3 = $(RUNTIME_DEP_PKGS_CSWpuppetmaster3)
 
 INCOMPATIBLE_PKGS += CSWpuppet
 INCOMPATIBLE_PKGS += CSWpuppetmaster
@@ -68,9 +69,6 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
-CHECKPKG_OVERRIDES_CSWpuppet3 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
-CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWruby20
-CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWrubyaugeas
 CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWhiera
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
@@ -87,9 +85,6 @@ CHECKPKG_OVERRIDES_CSWpuppet3 += bad-location-of-file|file=/var/lib/puppet
 # INCOMPATIBLE_PKGS
 CHECKPKG_OVERRIDES_CSWpuppet3 += file-collision
 
-CHECKPKG_OVERRIDES_CSWpuppetmaster3 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
-CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWrubyaugeas
-CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWhiera
 CHECKPKG_OVERRIDES_CSWpuppetmaster3 += surplus-dependency|CSWruby20
 # yes, yes, we know it conflicts with puppet{,master} - that's the point of
