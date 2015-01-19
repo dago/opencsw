@@ -41,8 +41,8 @@ CHECKPKG_OVERRIDES_CSWfacter += file-collision|/opt/csw/bin/facter|CSWfacter|CSW
 CHECKPKG_OVERRIDES_CSWfacter += file-collision|/opt/csw/share/man/man8/facter.8|CSWfacter|CSWfacter-ruby18
 
 # we depend on ruby20 but checkpkg does not know anything about it
-CHECKPKG_OVERRIDES_CSWfacter += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
-CHECKPKG_OVERRIDES_CSWfacter += surplus-dependency|CSWruby20il/manufacturer.rb
+# CHECKPKG_OVERRIDES_CSWfacter += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+# CHECKPKG_OVERRIDES_CSWfacter += surplus-dependency|CSWruby20il/manufacturer.rb
 
 include gar/category.mk
 
