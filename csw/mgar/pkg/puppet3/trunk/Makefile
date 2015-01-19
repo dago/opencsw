@@ -71,6 +71,7 @@ INSTALL_SCRIPTS   = puppet
 
 CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWhiera
+CHECKPKG_OVERRIDES_CSWpuppet3 += surplus-dependency|CSWrubyaugeas
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
 # /usr/share and /usr/local.
 CHECKPKG_OVERRIDES_CSWpuppet3 += file-with-bad-content
