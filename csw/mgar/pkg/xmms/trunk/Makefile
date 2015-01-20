@@ -21,8 +21,10 @@ DISTFILES = $(NAME)-$(VERSION).tar.bz2
 PACKAGES += CSWlibxmms1
 SPKG_DESC_CSWlibxmms1 += The X MultiMedia System library, libxmms.so.1
 PKGFILES_CSWlibxmms1 += $(call pkgfiles_lib,libxmms.so.1)
-RUNTIME_DEP_PKGS_CSWlibxmms1 += CSWglib
-RUNTIME_DEP_PKGS_CSWlibxmms1 += CSWgtk
+RUNTIME_DEP_PKGS_CSWlibxmms1 += CSWlibglib1-2-0
+RUNTIME_DEP_PKGS_CSWlibxmms1 += CSWlibgtk1-2-0
+RUNTIME_DEP_PKGS_CSWlibxmms1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibxmms1 += CSWlibgdk1-2-0
 
 PACKAGES += CSWlibxmms-dev
 SPKG_DESC_CSWlibxmms-dev = Development files for libxmms.so.1
@@ -31,13 +33,15 @@ RUNTIME_DEP_PKGS_CSWlibxmms-dev += CSWlibxmms1
 
 PACKAGES += CSWxmms
 SPKG_DESC_CSWxmms = The X MultiMedia System
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWxmms += CSWlibxmms1
-RUNTIME_DEP_PKGS_CSWxmms += CSWiconv
-RUNTIME_DEP_PKGS_CSWxmms += CSWzlib
+RUNTIME_DEP_PKGS_CSWxmms += CSWlibz1
 RUNTIME_DEP_PKGS_CSWxmms += CSWmesa
-RUNTIME_DEP_PKGS_CSWxmms += CSWglib
+RUNTIME_DEP_PKGS_CSWxmms += CSWlibglib1-2-0
 RUNTIME_DEP_PKGS_CSWxmms += CSWmikmod
-RUNTIME_DEP_PKGS_CSWxmms += CSWgtk
+RUNTIME_DEP_PKGS_CSWxmms += CSWlibgthread1-2-0
+RUNTIME_DEP_PKGS_CSWxmms += CSWlibgdk1-2-0
+RUNTIME_DEP_PKGS_CSWxmms += CSWlibgtk1-2-0
 RUNTIME_DEP_PKGS_CSWxmms += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWxmms += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWxmms += CSWlibvorbis0
