@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = zabbix
-VERSION = 2.2.5
+VERSION = 2.2.8
 GARTYPE = v2
 CATEGORIES = server
 
@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWzacurl4
 RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWlibmysqlclient18
-RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWlibnetsnmp25
+RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWlibnetsnmp30
 RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWzabbix-agent += CSWliblber2-4-2
 
@@ -50,7 +50,7 @@ RUNTIME_DEP_PKGS_CSWzabmysqlclient18 CSWlibmysqlclient18
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWzabcurl4
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWliblber2-4-2
-RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibnetsnmp25
+RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibnetsnmp30
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibssh2-1
 RUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibldap2-4-2eRUNTIME_DEP_PKGS_CSWzabbix-server += CSWlibiksemel3er# MySQL uses gcc, so we need to do also or the compiler flags bust
 GARCOMPILER = GCC4erver += CSWlibidn11
@@ -76,9 +76,9 @@ CONFIGURE_ARGS += --with-mysql
 
 # CONFIGURE_ARGS += --with-sqlite3
 # CONFIGURE_ARGS += --with-postgresql
-CONFIGURE_ARGS += --with-libcurl=$(bindir)/curl-config
+CONFIGURE_ARGS += --with-libcurl=$(prefix)/bin/curl-config
 
-CONFIGURE_ARGS += --with-net-snmp=$(bindir)/net-snmp-configRECONFIGURE_ARGS += --with-jabberREL)-$(MEMORYMODEL))
+CONFIGURE_ARGS += --with-net-snmp=$(prefix)/bin/net-snmp-configRECONFIGURE_ARGS += --with-jabberREL)-$(MEMORYMODEL))
 
 PRESERVECONF += $(sysconfdir)/zabbix_agent.conf
 PRESERVECONF += $(sysconfdir)/zabbix_agentd.conf
