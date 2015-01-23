@@ -1,5 +1,5 @@
 NAME = phpldapadmin
-VERSION = 1.2.2
+VERSION = 1.2.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -70,5 +70,3 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	@ln -s $(sharedstatedir)/www/phpldapadmin/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
-	@$(MAKECOOKIE)
-
