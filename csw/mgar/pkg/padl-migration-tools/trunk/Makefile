@@ -13,6 +13,7 @@ PACKAGES += CSWpadl-ldap-migration-tools
 SPKG_DESC_CSWpadl-ldap-migration-tools = PADL LDAP Mirgation Tools
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWpadl-ldap-migration-tools += CSWperl
+ARCHALL_CSWpadl-ldap-migration-tools = 1
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
