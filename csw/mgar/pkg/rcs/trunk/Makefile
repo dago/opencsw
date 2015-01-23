@@ -1,5 +1,5 @@
 NAME = rcs
-VERSION = 5.9.2
+VERSION = 5.9.4
 GARTYPE = v2
 
 DESCRIPTION = GNU Revision Control System
