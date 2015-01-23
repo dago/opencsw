@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.1k
+VERSION = 1.0.1l
 CATEGORIES = lib
 GARTYPE = v2
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
