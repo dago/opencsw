@@ -16,10 +16,17 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://augeas.net
 
-PACKAGES = CSWpyaugeas
+PACKAGES = CSWpy-augeas
+SPKG_DESC_CSWpy-augeas = Augeas Python Bindings
 CATALOGNAME = py_augeas
 
+OBSOLETED_BY_CSWpy-augeas = CSWpyaugeas
+
+
 DEP_PKGS = CSWaugeas
+#Lib needed:
+CHECKPKG_OVERRIDES_CSWpy-augeas += surplus-dependency|CSWaugeas
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
