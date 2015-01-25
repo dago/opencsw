@@ -31,6 +31,9 @@ RUNTIME_DEP_PKGS_CSWsqlitebrowser += CSWlibqtnetwork4
 RUNTIME_DEP_PKGS_CSWsqlitebrowser += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWsqlitebrowser += CSWlibqtgui4
 RUNTIME_DEP_PKGS_CSWsqlitebrowser += CSWlibgcc-s1
+# QT apps need fonconfig
+RUNTIME_DEP_PKGS_CSWsqlitebrowser += CSWfontconfig
+CHECKPKG_OVERRIDES_CSWsqlitebrowser += surplus-dependency|CSWfontconfig
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
