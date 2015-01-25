@@ -42,7 +42,7 @@ CHECKPKG_OVERRIDES_CSWgnustep-base += file-with-bad-content|/usr/local|root/opt/
 CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/autogsdoc|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWgnustep-base += file-with-bad-content|/usr/share|root/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7
 
-#overrides for binaries on own package, these are expected:
+#overrides for binaries on own package, these are expected, not bound, not found. It is done at runtime by sourcing the GNUstep script
 CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/plget
 CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/xmlparse
 CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/pl2link
@@ -58,6 +58,46 @@ CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|i
 CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/defaults
 CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/make_strings
 CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/plser
+
+CHECKPKG_OVERRIDES_CSWgnustep-base += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/gdnc
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/xmlparse|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/sfparse|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/plser|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/plparse|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/plmerge|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/plget|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/pldes|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/pl2link|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/pl|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/make_strings|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/gspath|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/gdnc|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/defaults|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/cvtenc|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/autogsdoc|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Tools/HTMLLinker|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+
+
+#we don't care about sparcv8+ binary placement
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/make_strings|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plser|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/sfparse|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/HTMLLinker|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gdomap|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plmerge|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plget|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gspath|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plparse|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/cvtenc|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gdnc|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pl|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pl2link|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/xmlparse|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pldes|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/defaults|arch_id=18|arch_name=sparcv8+
+
+
 
 #where can we build?
 PACKAGING_PLATFORMS += solaris9-sparc
