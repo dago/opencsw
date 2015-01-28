@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = squid
-VERSION = 3.4.109]\).*\.[0-9]*/\1/')
+VERSION = 3.4.119]\).*\.[0-9]*/\1/')
 GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
@@ -14,6 +14,18 @@ V12 = $(shell echo $(VERSION) | cut -d. -f1,2)
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(V1)/$(V12)/
 DISTFILES += $(DISTNAME).tar.bz2
 
+# ssl_crtd fails to build on OpenSolaris/OpenIndiana/Solaris 11
+# From http://bugs.squid-cache.org/show_bug.cgi?id=3664
+#PATCHFILES += bug3664.patch
+
+# configure doesnt detect IPFilter 5.1.2 system headers
+# From http://bugs.squid-cache.org/show_bug.cgi?id=3754
+#PATCHFILES += solaris10_fix_bug3754_mk3.patch
+
+# Squid 3.4.5 crashes when adaptation_access is used
+# From http://bugs.squid-cache.org/show_bug.cgi?id=4057
+#PATCHFILES += bug4057.patch
+
 PACKAGES = CSWsquid
 RUNTIME_DEP_PKGS_CSWsquid += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibldap2-4-2
@@ -23,7 +35,7 @@ RUNTIME_DEP_PKGS_CSWsquid += CSWperl
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWsquid += CSWbdb48
+#RUNTIME_DEP_PKGS_CSWsquid += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibcom-err3
@@ -44,7 +56,7 @@ MIGRATE_SOURCE_DIR = /opt/csw/etc
 MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)
 MIGRATE_FILES  = cachemgr.conf
 MIGRATE_FILES += mime.conf
-MIGRATE_FCONFIGURE_ARGS  = $(DIRPATHS)
+MIGRATE_F# ./configure '--prefix=/usr/local/squid' '--enable-translation' '--enable-external-acl-helpers=file_userip' '--enable-icap-client' '--enable-ipf-transparent' '--enable-storeio=diskd' '--enable-removal-policies=lru,heap' '--enable-devpoll' '--disable-wccp' '--enable-wccpv2' '--enable-http-violations' '--enable-follow-x-forwarded-for' '--enable-arp-acl' '--enable-htcp' '--enable-cache-digests' '--with-dl' '--enable-auth-negotiate=none' '--disable-auth-digest' '--disable-auth-ntlm' '--enable-auth-basic' '--enable-storeid-rewrite-helpers=file' '--enable-log-daemon-helpers=file' '--enable-ssl' '--enable-ssl-crtd' '--enable-zph-qos' '--with-filedescriptors=131072' '--disable-snmp' '--enable-inline' '--with-build-environment=POSIX_V6_LP64_OFF64' 'CFLAGS=-O3 -m64 -fPIE -fstack-protector -mtune=core2 --param=ssp-buffer-size=4 -pipe' 'CXXFLAGS=-O3 -m64 -fPIE -fstack-protector -mtune=core2 --param=ssp-buffer-size=4 -pipe' 'CPPFLAGS=-I/opt/csw/include' 'LDFLAGS=-fPIE -pie -Wl,-z,now' --enable-build-info="Intercept/WCCPv2/SSL/CRTD/DISKD/64/GCC Production"_FCONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/$(NAME)onfdir=${sysconfdir}
 CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
@@ -57,24 +69,31 @@ CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 CONFIGURE_ARGS += --enable-cache-digests
 CONFIGURE_ARGS += --enable-carp
 CONFIGURE_ARGS += --enable-delay-pools
+CONFIGUexternal-acl-helpers=file_userip--enable-delay-pools
 CONFIGURE_ARGS += --enable-forw-via-db
 CONFIGURE_ARGS += --enable-htcp
+CONFIGUhttp-violations
+CONFIGURE_ARGS += --enable-follow-x-forwarded-for
+CONFIGURE_ARGS += --enable-inlineRGS += --enable-htcp
 CONFIGURE_ARGS += --enable-large-cache-files
 CONFIGURE_ARGS += --enable-referer-log
 CONFIGURE_ARGS += --enable-remova# Use devpoll in favor of select as it is much faster
 CONFIGURE_ARGS += --enable-devpollS += --enable-select
 CONFIGURE_ARGS += --enable-snmp
 CONFIGURE_ARGS += --enable-ssl
+CONFIGUssl-crtdARGS += --enable-ssl
 CONFIGURE_ARGS += --enable-useragent-log
 CONFIGURE_ARGS += --enable-ipf-transparent
 CONFIGURE_ARGS += --enable-icap-client
+enable-zph-qos--enable-icap-client
 CONFIGURE_ARGS += --disable-ident-lookups
 CONFIGURE_ARGS += --disable-icmp
 CONFIGURE_ARGS += --with-dl
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
-CONFIGURE_ARGS += --with-dCONFIGURE_ARGS += --enable-aio
-CONFIGURE_ARGS += --enable-storeio=ufs,diskdd# These are needed for Cisco integration, as requested by email
+CONFIGURE_ARGS += --with-dCONFIGURE_ARGS += --with-filedescriptors=131072dCONFIGURE_ARGS += --enable-aio
+CONFIGURE_ARGS += --enable-storeio=ufs,diskddCONFIGURE_ARGS += --enable-storeid-rewrite-helpers=file
+CONFIGURE_ARGS += --enable-log-daemon-helpers=filed# These are needed for Cisco integration, as requested by email
 CONFIGURE_ARGS += --enable-wccp
 CONFIGURE_ARGS += --enable-wccpv2d
 # Native instructions need to be disabled for zones as reported in #5221
