@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = paramiko
-VERSION = 1.10.1
+VERSION = 1.15.2
 GARTYPE = v2
 CATEGORIES = python
 
@@ -14,18 +14,25 @@ define BLURB
   platform-dependent code.
 endef
 
-MASTER_SITES = http://pypi.python.org/packages/source/p/paramiko/
-DISTFILES    = $(DISTNAME).tar.gz
-ARCHALL      = 1
+MASTER_SITES = $(PYPI_MIRROR)
+DISTFILES += $(DISTNAME).tar.gz
 
-RUNTIME_DEP_PKGS   = CSWpy-crypto
-CHECKPKG_OVERRIDES = surplus-dependency|CSWpy-crypto
+PACKAGES += CSWparamiko
+# We stick with upstream naming
+CHECKPKG_OVERRIDES_CSWparamiko += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWparamiko += catalogname-does-not-start-with-py_
+SPKG_DESC_CSWparamiko = Python module that implements the SSH2 protocol
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWparamiko += CSWpy-crypto
+# checkpkg cannot track this
+CHECKPKG_OVERRIDES_CSWparamiko += surplus-dependency|CSWpy-crypto
+ARCHALL_CSWparamiko = 1
+
+REINPLACEMENTS += moduli
+REINPLACE_MATCH_moduli += /usr/local/etc/moduli
+REINPLACE_WITH_moduli += /etc/opt/csw/ssh/moduli
+REINPLACE_FILES_moduli += paramiko/transport.py
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
-
-post-merge-modulated:
-	gsed -i 's,/usr/local/etc/moduli,/opt/csw/etc/ssh/moduli,' \
-		$(PKGROOT)/opt/csw/lib/python/site-packages/paramiko/transport.py
-	@$(MAKECOOKIE)
