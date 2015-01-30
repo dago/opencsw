@@ -60,7 +60,7 @@ CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/l
 
 REINPLACEMENTS += etc
 REINPLACE_MATCH_etc = /etc/ansible
-REINPLACE_WITH_etc  = /etc/opt/csw/ansible
+REINPLACE_WITH_etc  = $(sysconfdir)/ansible
 REINPLACE_FILES_etc = lib/ansible/constants.py
 
 REINPLACEMENTS += usr
@@ -75,15 +75,10 @@ LICENSE = COPYING
 
 MODULATIONS_PYTHON_VERSION = 2_6
 
+PRESERVECONF += $(sysconfdir)/ansible/hosts
+
 include gar/category.mk
 
-post-merge:
-	if [ -d $(PKGROOT)/usr/share/ansible ] ; then \
-		mv $(PKGROOT)/usr/share $(PKGROOT)$(prefix)/share ; \
-		rmdir $(PKGROOT)/usr || exit 1 ; \
-	fi
-	if [ ! -d $(PKGROOT)$(sysconfdir)/ansible ] ; then \
-		ginstall -d $(PKGROOT)$(sysconfdir)/ansible ; \
-	fi
-	cp $(FILEDIR)/hosts.CSW $(PKGROOT)$(sysconfdir)/ansible/
+post-install:
+	ginstall -D -m 0644 $(WORKDIR)/hosts.CSW $(DESTDIR)$(sysconfdir)/ansible/hosts.CSW
 	@$(MAKECOOKIE)
