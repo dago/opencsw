@@ -17,16 +17,17 @@ endef
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
 
-PACKAGES += CSWparamiko
+PACKAGES += CSWpy-paramiko
 # We stick with upstream naming
-CHECKPKG_OVERRIDES_CSWparamiko += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWparamiko += catalogname-does-not-start-with-py_
-SPKG_DESC_CSWparamiko = Python module that implements the SSH2 protocol
+CHECKPKG_OVERRIDES_CSWpy-paramiko += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpy-paramiko += catalogname-does-not-start-with-py_
+SPKG_DESC_CSWpy-paramiko = Python module that implements the SSH2 protocol
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWparamiko += CSWpy-crypto
+RUNTIME_DEP_PKGS_CSWpy-paramiko += CSWpy-crypto
 # checkpkg cannot track this
-CHECKPKG_OVERRIDES_CSWparamiko += surplus-dependency|CSWpy-crypto
+CHECKPKG_OVERRIDES_CSWpy-paramiko += surplus-dependency|CSWpy-crypto
 ARCHALL_CSWparamiko = 1
+OBSOLETED_BY_CSWpy-paramiko = CSWparamiko
 
 REINPLACEMENTS += moduli
 REINPLACE_MATCH_moduli += /usr/local/etc/moduli
