@@ -26,7 +26,7 @@ SPKG_DESC_CSWpy-paramiko = Python module that implements the SSH2 protocol
 RUNTIME_DEP_PKGS_CSWpy-paramiko += CSWpy-crypto
 # checkpkg cannot track this
 CHECKPKG_OVERRIDES_CSWpy-paramiko += surplus-dependency|CSWpy-crypto
-ARCHALL_CSWparamiko = 1
+ARCHALL_CSWpy-paramiko = 1
 OBSOLETED_BY_CSWpy-paramiko = CSWparamiko
 
 REINPLACEMENTS += moduli
