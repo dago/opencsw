@@ -26,6 +26,7 @@ GARCOMPILER = GNU
 PACKAGES += CSWlibcheck0
 SPKG_DESC_CSWlibcheck0 = A unit test framework for C, libcheck.so.0
 PKGFILES_CSWlibcheck0 += $(call pkgfiles_lib,libcheck.so.0)
+RUNTIME_DEP_PKGS_CSWlibcheck0 += CSWlibgcc-s1
 
 PACKAGES += CSWlibcheck-dev
 SPKG_DESC_CSWlibcheck-dev = Development files for libckeck.so.0
@@ -38,4 +39,10 @@ CONFIGURE_ARGS += $(DIRPATHS)
 
 include gar/category.mk
 
-PATH := /usr/xpg6/bin:/usr/xpg4/bin:/usr/ccs/bin:/usr/bin:/sbin:/usr/sbin:/opt/csw/bin:$(PATH)
+OUR_PATH = /usr/xpg6/bin:/usr/xpg4/bin:/usr/ccs/bin:/usr/bin:/sbin:/usr/sbin:/opt/csw/bin:$(PATH)
+
+CONFIGURE_ENV_PATH = $(OUR_PATH)
+BUILD_ENV_PATH     = $(OUR_PATH)
+TEST_ENV_PATH      = $(OUR_PATH)
+INSTALL_ENV_PATH   = $(OUR_PATH)
+
