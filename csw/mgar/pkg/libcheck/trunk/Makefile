@@ -1,7 +1,7 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = check
+NAME    = check
 VERSION = 0.9.14
 GARTYPE = v2
 
@@ -19,9 +19,11 @@ endef
 VENDOR_URL = http://check.sourceforge.net/
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES    = $(DISTNAME).tar.gz
 
-GARCOMPILER = GNU
+LICENSE      = COPYING.LESSER
+
+GARCOMPILER  = GNU
 
 PACKAGES += CSWlibcheck0
 SPKG_DESC_CSWlibcheck0 = A unit test framework for C, libcheck.so.0
@@ -37,8 +39,6 @@ BUILD64 = 1
 
 CONFIGURE_ARGS += $(DIRPATHS)
 
-include gar/category.mk
-
 OUR_PATH = /usr/xpg6/bin:/usr/xpg4/bin:/usr/ccs/bin:/usr/bin:/sbin:/usr/sbin:/opt/csw/bin:$(PATH)
 
 CONFIGURE_ENV_PATH = $(OUR_PATH)
@@ -46,3 +46,4 @@ BUILD_ENV_PATH     = $(OUR_PATH)
 TEST_ENV_PATH      = $(OUR_PATH)
 INSTALL_ENV_PATH   = $(OUR_PATH)
 
+include gar/category.mk
