@@ -2,10 +2,10 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 # Recipe sent in by Freddy DISSAUX freddy.dsx free.fr
 NAME = fossil
-VERSION = 1.29
+VERSION = 1.30
 GARTYPE = v2
 GARCOMPILER = GNU
-DISTVERSION = 20140612172556
+DISTVERSION = 20150119112900
 DESCRIPTION = DSCM with built-in wiki, http interface and server, tickets database
 define BLURB
 Fossil is an easy-to-use Distributed Source Control Management system (DSCM)
@@ -18,7 +18,6 @@ MASTER_SITES = http://www.fossil-scm.org/download/
 DISTFILES = $(NAME)-src-$(DISTVERSION).tar.gz
 WORKSRC = $(WORKDIR)/$(NAME)-src-$(DISTVERSION)
 PATCHDIR = $(WORKSRC)
-PATCHFILES += 0001-Include-string.h-to-mitigate-warnings.patch
 
 BUILD_DEP_PKGS = CSWlibssl-dev
 
@@ -32,5 +31,6 @@ TEST_SCRIPTS =
 
 RUNTIME_DEP_PKGS_CSWfossil = CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWfossil += CSWlibz1
+RUNTIME_DEP_PKGS_CSWfossil += CSWlibreadline6
 
 include gar/category.mk
