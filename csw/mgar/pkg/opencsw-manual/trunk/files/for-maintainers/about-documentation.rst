@@ -9,31 +9,33 @@ Introduction
 
 There are 5 places for documentation at OpenCSW:
 
-* `OpenCSW wiki`_
+* `OpenCSW wiki`_ .a.k.a. wikidot
 
   * Optimized for frequent changes.
   * Used for ongoing issues, such as projects in progress.
   * Powered by Wikidot, has own user name space, separate sign-up and login.
- 
-* `OpenCSW manual`_ (this document is part of it)
- 
+
+* `OpenCSW manual`_ (you are here)
+
   * Less frequently changing, but more reviewed and polished documentation.
   * Part of the source code repository.
- 
-* `GAR documentation`_
- 
+
+* `GAR documentation`_ a.k.a. Trac wiki
+
   * Used for GAR / build system specific documentation.
   * Lives in the GAR project SourceForge area.
   * Uses SourceForge credentials.
- 
-* `Main OpenCSW website`_
- 
+  * A copy exists in https://sourceforge.net/p/gar/tracwiki/Home/ and comes up
+    higher in Google searches than the buildfarm one does.
+
+* `Main OpenCSW website`_ a.k.a. wordpress
+
   * Used for general project information
   * Lives in the project Wordpress site
   * Own user name space, separate sign-up and login
- 
-* `Community Q&A`_
- 
+
+* `Community Q&A`_ a.k.a. OSQA
+
   * Used for questions from users.
   * Own user name space, separate sign-up and login, but accepts
     Google accounts, Facebook and Twitter.
