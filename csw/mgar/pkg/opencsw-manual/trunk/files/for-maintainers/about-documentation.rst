@@ -7,21 +7,24 @@ About Documentation at OpenCSW
 Introduction
 ------------
 
-There are 5 places for documentation at OpenCSW:
+There are 6 places for documentation at OpenCSW:
 
 * `OpenCSW wiki`_ .a.k.a. wikidot
 
+  * http://wiki.opencsw.org/buildfarm
   * Optimized for frequent changes.
   * Used for ongoing issues, such as projects in progress.
   * Powered by Wikidot, has own user name space, separate sign-up and login.
 
 * `OpenCSW manual`_ (you are here)
 
+  * http://www.opencsw.org/manual/
   * Less frequently changing, but more reviewed and polished documentation.
   * Part of the source code repository.
 
-* `GAR documentation`_ a.k.a. Trac wiki
+* `GAR documentation`_ a.k.a. Trac wiki (account for 2 places)
 
+  * http://gar.opencsw.org/
   * Used for GAR / build system specific documentation.
   * Lives in the GAR project SourceForge area.
   * Uses SourceForge credentials.
@@ -30,17 +33,25 @@ There are 5 places for documentation at OpenCSW:
 
 * `Main OpenCSW website`_ a.k.a. wordpress
 
+  * http://www.opencsw.org/
   * Used for general project information
   * Lives in the project Wordpress site
   * Own user name space, separate sign-up and login
 
 * `Community Q&A`_ a.k.a. OSQA
 
+  * http://www.opencsw.org/community/
   * Used for questions from users.
   * Own user name space, separate sign-up and login, but accepts
     Google accounts, Facebook and Twitter.
   * Receives spam, and needs to be cleaned up manually.
 
+Additionally, there are places where we are on the web:
+
+* Twitter: https://twitter.com/opencsw
+* Google+: https://plus.google.com/+OpenCSWorg
+* Facebook: https://www.facebook.com/opencsw
+* LinkedIn: https://www.linkedin.com/groups/OpenCSW-1693847
 
 Editing documentation
 ---------------------
@@ -93,7 +104,7 @@ the list in the source code, which is just as easy to read, and is less likely
 to be incorrect.
 
 
-.. _OpenCSW wiki: http://wiki.opencsw.org/buildfarm
+.. _OpenCSW wiki: http://wiki.opencsw.org/
 .. _OpenCSW manual: http://www.opencsw.org/manual/
 .. _GAR documentation: http://gar.opencsw.org/
 .. _Main OpenCSW website: http://www.opencsw.org/
