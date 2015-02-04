@@ -2,6 +2,13 @@
 Frequently Asked Questions
 --------------------------
 
+Please provide me with a Solaris binary for <something>.
+========================================================
+
+You don't get a Solaris 10 binary from a human, please don't ask maintainers
+to send you anything. All packages are publicly available from package
+catalogs. Please follow the :ref:`installation instructions <getting-started>`.
+
 Are services started by default?
 ================================
 
