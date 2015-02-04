@@ -1,5 +1,5 @@
 NAME = apcupsd
-VERSION = 3.14.12
+VERSION = 3.14.13
 GARTYPE = v2
 
 DESCRIPTION = A daemon for controlling APC UPS
@@ -19,7 +19,6 @@ LICENSE      = COPYING
 BUILD_DEP_PKGS += CSWlibwrap-dev
 
 PATCHFILES += 0001-apccontrol-fix.patch
-PATCHFILES += 0002-apctest.patch
 PATCHFILES += 0003-change-lockdir.patch
 
 PACKAGES += CSWapcupsd
@@ -99,6 +98,7 @@ CONFIGURE_ARGS += --with-nisip=127.0.0.1
 CONFIGURE_ARGS += --disable-install-distdir
 CONFIGURE_ARGS += --enable-cgi
 CONFIGURE_ARGS += --enable-usb
+CONFIGURE_ARGS += --enable-modbus-usb
 CONFIGURE_ARGS += --with-cgi-bin=$(sharedstatedir)/www/apcupsd/cgi
 # This is obviously not present yet, relocate during merge until this is integrated
 #CONFIGURE_ARGS += --with-css-dir=$(sharedstatedir)/www/apcupsd/html
