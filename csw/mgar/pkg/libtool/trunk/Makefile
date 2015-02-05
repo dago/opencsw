@@ -1,5 +1,5 @@
 NAME = libtool
-VERSION = 2.4.2
+VERSION = 2.4.5
 CATEGORIES = devel
 GARTYPE = v2
 
@@ -51,29 +51,20 @@ CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl7
 # These *may* be ok, as users could have installed stuff to /usr/local
 # However, I think it is best to make linkage to /opt/csw/lib explicit and not
 # auto-enable this as a simple replacement.
-CHECKPKG_OVERRIDES_CSWlibtool += file-with-bad-content
-
-# This is built from pkgs/libltdl3
-FOREIGN_PACKAGES += CSWlibltdl3
-OBSOLETED_BY_CSWlibltdl3 += CSWlibtoolrt
-CATALOGNAME_CSWlibtoolrt = libtool_rt_stub
+CHECKPKG_OVERRIDES_CSWlibtool += file= libtool_rt_stub
 
 PACKAGES += CSWlibltdl7
 CATALOGNAME_CSWlibltdl7 = libltdl7
 SPKG_DESC_CSWlibltdl7 = Libtool libltdl.so.7 from libtool 2.x
-PKGFILES_CSWlibltdl7 += $(PKGFILES_RT)
-OBSOLETED_BY_CSWlibltdl7 += CSWlibtoolrt
+PKGFILEcall pkgfiles_lib,libltdl.so.7)dl7 += CSWlibtoolrt
 
 # To get around __sync_fetch_and_add_4 either the buildlevel could be raised to Solaris 10
 # which is not acceptable for libtool or the base ISA could be raised to pentium_pro allowing
 # the specific command set.
 ISA_DEFAULT_i386-5.9 = pentium_pro
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-BUILD64 = 1
-
-# Some Fortran-specific tests fail which is probably not that important
+CONFIGURE_ARGS = $(DIRPATHFor SOS12 the following tests fail: 137 138 143 153 154 156 157 169
+ot that important
 #SKIPTEST ?= 1
 
    MERGE_SCRIPTS_isa-default-garcompiler-SOS12 = copy-all
@@ -83,10 +74,8 @@ BUILD64 = 1
     MERGE_SCRIPTS_isa-default-garcompiler-GCC3 = copy-tags
     MERGE_SCRIPTS_isa-default-garcompiler-GCC4 = copy-tags
 
-include gar/category.mk
-
-post-install-modulated: $(if $(PATCHFILES_POSTINSTALL_$(MODULATION)),patch-libtool)
-post-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-$(COMPILER_TAGNAME_$(GARCOMPILER)))
+include gar/catego: $(if $(PATCHFILES_POSTINSTALL_$(MODULATION)),patch-libtool)
+post-installt-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-$(COMPILER_TAGNAME_$(GARCOMPILER)))
 	ginstall -d $(DESTDIR)$(docdir)/libtool
 	ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/libtool/README.CSW
 	@$(MAKECOOKIE)

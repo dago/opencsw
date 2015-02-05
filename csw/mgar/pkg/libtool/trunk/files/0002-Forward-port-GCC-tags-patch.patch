@@ -1,15 +1,15 @@
---- libtool	2013-11-18 14:15:21.212825370 +0100
-+++ libtool.new	2013-11-18 14:18:36.734017047 +0100
-@@ -576,6 +576,8 @@
+--- libtool	2015-01-21 10:15:39.000000000 +0100
++++ libtool.new	2015-02-05 16:06:43.026764861 +0100
+@@ -915,6 +915,8 @@
  # positional parameter $0, within a function call, is the name of the
  # function.
- progpath="$0"
+ progpath=$0
 +confpath="$0"
 +tagspath="$0"
  
- 
- 
-@@ -1342,11 +1344,11 @@
+ # The name of this program.
+ progname=`$ECHO "$progpath" |$SED "$sed_basename"`
+@@ -2641,11 +2643,11 @@
      re_endcf='^# ### END LIBTOOL'
  
      # Default configuration.
@@ -23,45 +23,45 @@
      done
  
      exit $?
-@@ -1396,14 +1398,14 @@
-   case $tagname in
-     CC) ;;
+@@ -2699,14 +2701,14 @@
+     case $tagname in
+         CC) ;;
      *)
--      if $GREP "$re_begincf" "$progpath" >/dev/null 2>&1; then
-+      if $GREP "$re_begincf" "$tagspath" >/dev/null 2>&1; then
- 	taglist="$taglist $tagname"
+-        if $GREP "$re_begincf" "$progpath" >/dev/null 2>&1; then
++        if $GREP "$re_begincf" "$tagspath" >/dev/null 2>&1; then
+ 	  taglist="$taglist $tagname"
  
- 	# Evaluate the configuration.  Be careful to quote the path
- 	# and the sed script, to avoid splitting on whitespace, but
- 	# also don't use non-portable quotes within backquotes within
- 	# quotes we have to do it in 2 steps:
--	extractedcf=`$SED -n -e "$sed_extractcf" < "$progpath"`
-+	extractedcf=`$SED -n -e "$sed_extractcf" < "$tagspath"`
- 	eval "$extractedcf"
-       else
- 	func_error "ignoring unknown tag $tagname"
-@@ -1609,6 +1611,12 @@
- 
-   # save first non-option argument
-   if test "$#" -gt 0; then
-+    case `which "$opt"` in
-+      /opt/csw/gcc4/bin/*|/opt/csw/bin/gcc|/opt/csw/bin/g++|/opt/csw/bin/gcc-4.8|/opt/csw/bin/g++-4.8)
-+        . /opt/csw/share/libtool/gcc4.conf
-+        tagspath=/opt/csw/share/libtool/gcc4.tags
-+        ;;
-+    esac
-     nonopt="$opt"
-     shift
-   fi
-@@ -1828,9 +1836,9 @@
+ 	  # Evaluate the configuration.  Be careful to quote the path
+ 	  # and the sed script, to avoid splitting on whitespace, but
+ 	  # also don't use non-portable quotes within backquotes within
+ 	  # quotes we have to do it in 2 steps:
+-	  extractedcf=`$SED -n -e "$sed_extractcf" < "$progpath"`
++	  extractedcf=`$SED -n -e "$sed_extractcf" < "$tagspath"`
+ 	  eval "$extractedcf"
+         else
+ 	  func_error "ignoring unknown tag $tagname"
+@@ -2910,6 +2912,12 @@
+ {
+     # save first non-option argument
+     if test 0 -lt $#; then
++      case `which "$opt"` in
++        /opt/csw/gcc4/bin/*|/opt/csw/bin/gcc|/opt/csw/bin/g++|/opt/csw/bin/gcc-4.*|/opt/csw/bin/g++-4.*)
++          . /opt/csw/share/libtool/gcc4.conf
++          tagspath=/opt/csw/share/libtool/gcc4.tags
++          ;;
++      esac
+       nonopt=$1
+       shift
+     fi
+@@ -3170,9 +3178,9 @@
        # if we don't check for them as well.
        *)
  	for z in $available_tags; do
 -	  if $GREP "^# ### BEGIN LIBTOOL TAG CONFIG: $z$" < "$progpath" > /dev/null; then
 +	  if $GREP "^# ### BEGIN LIBTOOL TAG CONFIG: $z$" < "$tagspath" > /dev/null; then
  	    # Evaluate the configuration.
--	    eval "`${SED} -n -e '/^# ### BEGIN LIBTOOL TAG CONFIG: '$z'$/,/^# ### END LIBTOOL TAG CONFIG: '$z'$/p' < $progpath`"
-+	    eval "`${SED} -n -e '/^# ### BEGIN LIBTOOL TAG CONFIG: '$z'$/,/^# ### END LIBTOOL TAG CONFIG: '$z'$/p' < $tagspath`"
+-	    eval "`$SED -n -e '/^# ### BEGIN LIBTOOL TAG CONFIG: '$z'$/,/^# ### END LIBTOOL TAG CONFIG: '$z'$/p' < $progpath`"
++	    eval "`$SED -n -e '/^# ### BEGIN LIBTOOL TAG CONFIG: '$z'$/,/^# ### END LIBTOOL TAG CONFIG: '$z'$/p' < $tagspath`"
  	    CC_quoted=
  	    for arg in $CC; do
  	      # Double-quote args containing other shell metacharacters.
