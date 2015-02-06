@@ -26,6 +26,8 @@ CHECKPKG_OVERRIDES_CSWansible += catalogname-does-not-start-with-py_
 SPKG_DESC_CSWansible = Deploy, manage, and orchestrate computer systems
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWansible += CSWpython
+# We really want Python 2.6 which checkpkg cannot detect
+CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWpython
 RUNTIME_DEP_PKGS_CSWansible += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWansible += CSWpy-markupsafe
 RUNTIME_DEP_PKGS_CSWansible += CSWpy-yaml
