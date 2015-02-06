@@ -1,0 +1,37 @@
+From 84718156e3fe9cd76acb8578a2ce3f4ce42f50e0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Feb 2015 13:43:47 +0100
+Subject: [PATCH] Use termios instead of stty for compatibility
+
+---
+ bin/ansible-doc | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/bin/ansible-doc b/bin/ansible-doc
+index 4420036..8bab0e7 100755
+--- a/bin/ansible-doc
++++ b/bin/ansible-doc
+@@ -25,6 +25,10 @@ import re
+ import optparse
+ import datetime
+ import subprocess
++import fcntl
++import termios
++import struct
++
+ from ansible import utils
+ from ansible.utils import module_docs
+ import ansible.constants as C
+@@ -167,7 +171,8 @@ def get_snippet_text(doc):
+ def get_module_list_text(module_list):
+     tty_size = 0
+     if os.isatty(0):
+-        tty_size = int(os.popen('stty size', 'r').read().split()[1])
++        tty_size = struct.unpack('HHHH',
++            fcntl.ioctl(0, termios.TIOCGWINSZ, struct.pack('HHHH', 0, 0, 0, 0)))[1]
+     columns = max(60, tty_size)
+     displace = max(len(x) for x in module_list)
+     linelimit = columns - displace - 5
+-- 
+2.0.3
+
