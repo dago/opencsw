@@ -52,7 +52,15 @@ VENDOR_URL = http://www.net-snmp.org/
 
 # GARCOMPILER = SOS12U3
 GARCOMPILER = GCC4
-BUILD_DEP_PKGS = CSWpy-D_DEP_PKGS = CSWpysetuptools
+
+BUILD_DEP_PKGS = CSWpy-setuptools
+BUILD_DEP_PKGS += CSWautomake
+BUILD_DEP_PKGS += CSWautoconf
+BUILD_DEP_PKGS += CSWlibtool
+BUILD_DEP_PKGS += CSWlibssl-dev
+BUILD_DEP_PKGS += CSWpython-dev
+BUILD_DEP_PKGS += CSWpython27-dev
+ = CSWpysetuptools
 PACKAGING_PLATFORMS += solaris10-sp solaris11-sparc solaris1110-sparINITSMF = $(sysconfdir)/init.d/netsnmpd
 INITSMF += $(sysconfdir)/init.d/netsnmptrapdar
 EXTRA_MODULATORS += PYTHON_VERSION
