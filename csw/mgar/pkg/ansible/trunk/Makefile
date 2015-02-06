@@ -14,6 +14,10 @@ DISTFILES += hosts.CSW
 PATCHFILES += 0003-Extended-sbin_paths-by-opt-csw-sbin.patch
 PATCHFILES += 0003-Add-etc-opt-csw-ssl-certs-to-the-path-searched-for-..patch
 
+# Use patch until pull request is applied
+#   https://github.com/ansible/ansible/pull/10174
+PATCHFILES += 0001-Use-termios-instead-of-stty-for-compatibility.patch
+
 PACKAGES += CSWansible
 # Stick with upstream naming
 CHECKPKG_OVERRIDES_CSWansible += pkgname-does-not-start-with-CSWpy-
@@ -21,7 +25,7 @@ CHECKPKG_OVERRIDES_CSWansible += catalogname-does-not-start-with-py_
 SPKG_DESC_CSWansible = Deploy, manage, and orchestrate computer systems
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWansible += CSWpython
-RUNTIME_DEP_PKGS_CSWansible = CSWpy-jinja2
+RUNTIME_DEP_PKGS_CSWansible += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWansible += CSWpy-markupsafe
 RUNTIME_DEP_PKGS_CSWansible += CSWpy-yaml
 RUNTIME_DEP_PKGS_CSWansible += CSWpy-paramiko
