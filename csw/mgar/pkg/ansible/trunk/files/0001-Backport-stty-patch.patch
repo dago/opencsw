@@ -1,0 +1,35 @@
+From a7ade49525efa8e96cc5be6470c83ad950388fbc Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Feb 2015 15:45:19 +0100
+Subject: [PATCH] Backport stty patch
+
+---
+ bin/ansible-doc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/bin/ansible-doc b/bin/ansible-doc
+index 0ba84b9..bf40a8c 100755
+--- a/bin/ansible-doc
++++ b/bin/ansible-doc
+@@ -25,6 +25,9 @@ import re
+ import optparse
+ import datetime
+ import subprocess
++import fcntl
++import termios
++import struct
+ from ansible import utils
+ from ansible.utils import module_docs
+ import ansible.constants as C
+@@ -165,7 +168,7 @@ def get_snippet_text(doc):
+     return "\n".join(text)
+ 
+ def get_module_list_text(module_list):
+-    columns = max(60, int(os.popen('stty size', 'r').read().split()[1]))
++    columns = max(60, struct.unpack('HHHH', fcntl.ioctl(0, termios.TIOCGWINSZ, struct.pack('HHHH', 0, 0, 0, 0)))[1])
+     displace = max(len(x) for x in module_list)
+     linelimit = columns - displace - 5
+     text = []
+-- 
+2.2.1
+
