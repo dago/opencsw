@@ -3,7 +3,7 @@
 #
 NAME = ruby
 SHORTVER = 2.1
-VERSION = $(SHORTVER).3
+VERSION = $(SHORTVER).5
 API_VERSION = $(VERSION)
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
@@ -23,17 +23,44 @@ DISTFILES += $(DISTNAME).tar.gz
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
+# Use patch until this is fixed:
+#   https://bugs.ruby-lang.org/issues/10830
+PATCHFILES += 0001-Use-LDFLAGS-for-libruby.so.patch
+
 PACKAGES += CSWruby21
 SPKG_DESC_CSWruby21 = Ruby 2.1.x
-RUNTIME_DEP_PKGS_CSWruby21 += CSWlibgdbm3
+RUNTIME_DEP_PKGS_CSWruby21 += CSWlibgdbm4
 RUNTIME_DEP_PKGS_CSWruby21 += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWruby21 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWruby21 += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWruby21 += CSWlibtcl8-5
 RUNTIME_DEP_PKGS_CSWruby21 += CSWlibtk8-5
 RUNTIME_DEP_PKGS_CSWruby21 += CSWlibyaml0-2
-RUNTIME_DEP_PKGS_CSWruby21 += CSWlibffi5
-RUNTIME_DEP_PKGS_CSWruby21 += CSWlibreadline5
+RUNTIME_DEP_PKGS_CSWruby21 += CSWlibreadline6
+
+# These are all comments, checked by inspection
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/pathname.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/fileutils.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/shell.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/rubygems/installer.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/rubygems/basic_specification.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/rubygems/specification.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/tkextlib/itcl/setup.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/2.1.0/tkextlib/itk/setup.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.1.0/open3.rb
+CHECKPKG_OVERRIDES_CSWruby21 += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/2.1.0/tk/dialog.rb
+
+# We don't split off the library - without lots of ruby files it is not usable anyway
+CHECKPKG_OVERRIDES_CSWruby21 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libruby2.1.5.so
+CHECKPKG_OVERRIDES_CSWruby21 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libruby2.1.5.so.2|soname=libruby2.1.5.so.2|pkgname=CSWruby21|expected=CSWlibruby2-1-5-2
+
+# The reason is that there are *.rb files which normally require a ruby library, but we don't split this any more
+CHECKPKG_OVERRIDES_CSWruby21 += missing-dependency|CSWlibruby1-9-1-1|or|CSWruby|or|CSWruby18|or|CSWruby191
+
+# path = %w[/usr/local/bin /usr/ucb /usr/bin /bin]
+REINPLACE_USRLOCAL += lib/mkmf.rb
+# path = "/usr/local/bin:/usr/ucb:/usr/bin:/bin:.";
+REINPLACE_USRLOCAL += dln_find.c
 
 GARCOMPILER = SOS12U2
 #GARCOMPILER = GNU
@@ -55,13 +82,12 @@ EXTRA_CONFIGURE_ENV += OBJCOPY=/bin/true
 CONFIGURE_ARGS += $(DIRPATHS)
 
 # Enabled DTrace support has problems during linking
-CONFIGURE_ARGS += --disable-dtrace
+# CONFIGURE_ARGS += --disable-dtrace
 
 CONFIGURE_ARGS += --program-suffix=21
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-soname=ruby$(API_VERSION)
 #CONFIGURE_ARGS += --with-out-ext=tk
-
 
 # There are tests failing
 SKIPTEST ?= 1
