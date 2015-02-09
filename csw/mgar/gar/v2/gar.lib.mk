@@ -1002,17 +1002,17 @@ test-%/setup.py:
 # just run make install and hope for the best.
 install-%/Makefile:
 	@echo " ==> Running make install in $*"
-	@cd $* && /usr/bin/env -i $(INSTALL_ENV) MAKEFLAGS= $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
+	@cd $* && /usr/bin/env -i $(INSTALL_ENV) MAKEFLAGS= $(MAKE) $(foreach TTT,$(filter-out $(NO_CONFIGURE_EXPORTS),DESTDIR $(INSTALL_OVERRIDE_VARS)),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/makefile:
 	@echo " ==> Running make install in $*"
-	@cd $* && $(INSTALL_ENV) MAKEFLAGS= $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
+	@cd $* && $(INSTALL_ENV) MAKEFLAGS= $(MAKE) $(foreach TTT,$(filter-out $(NO_CONFIGURE_EXPORTS),DESTDIR $(INSTALL_OVERRIDE_VARS)),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/GNUmakefile:
 	@echo " ==> Running make install in $*"
-	@cd $* && $(INSTALL_ENV) MAKEFLAGS= $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
+	@cd $* && $(INSTALL_ENV) MAKEFLAGS= $(MAKE) $(foreach TTT,$(filter-out $(NO_CONFIGURE_EXPORTS),DESTDIR $(INSTALL_OVERRIDE_VARS)),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 # Ruby makefiles
