@@ -441,7 +441,7 @@
 +        dladm_phys_attr_t dpa;
 +        dladm_handle_t handle;
 +
-+        if (dladm_open(&handle, NULL) != DLADM_STATUS_OK) {
++        if (dladm_open(&handle) != DLADM_STATUS_OK) {
 +            DEBUGMSGTL(("kernel_sunos5","dladm_open failed "
 +                       "with errno=%d\n",errno));
 +            return (-1);
@@ -627,3 +627,14 @@
  #ifdef IFF_FAILED
          } else if (flags & IFF_FAILED) {
              /*
+--- a/snmplib/Makefile.in
++++ b/snmplib/Makefile.in
+@@ -224,7 +224,7 @@ TOBJS=$(LOBJS)
+ FEATUREFILE     = $(top_builddir)/include/net-snmp/library/features.h
+ 
+ # To satisfy -zdefs
+-LIB_LD_ADD	=-lnsl -lsocket -L$(libdir)
++LIB_LD_ADD	=-lnsl -lsocket -ldladm -L$(libdir)
+ 
+ # 
+ CPPFLAGS = $(TOP_INCLUDES) -I. 	$(SNMPLIB_INCLUDES) @CPPFLAGS@

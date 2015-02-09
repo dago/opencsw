@@ -141,7 +141,7 @@ RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-netsnm30+RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibpython2-7-1-0
-RUNTIME_DEP_PKGS_CSWpy-netsnmp += CSWlibnetsnmp25+CHECKPKG_OVERRIDES_CSWpy-netsnmp += surplus-dependency|CSWpython++= CSWlibssl1-0-0
+CHECKPKG_OVERRIDES_CSWpy-netsnmp += surplus-dependency|CSWpython++= CSWlibssl1-0-0
 
 PACKAGES += CSWnetsnmp
 SPKG_DESC_CSWnetsnmp += $(DESCRIPTION), Base
@@ -203,9 +203,7 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
-# Solaris /bin/bash does not allow empty lists in "for i in ; do echo; done"
-EXTRA_CONFIGURE_EXPORTS = CONFIG_SHELL
-EXTRA_CONFIGURE_ENV_CONFIG_SHELL = # use gmake for make
+# Solaris /bin/bash does not allow empty lists in "for i in ; do echo; done"NV += CONFIG_SHELL=NV_CONFIG_SHELL = # use gmake for make
 EXTRA_BUILD_ENV += PATH=/opt/csw/gnu:$(PATH) PYTHON=$(PYTHON)
 EXTRA_INSTALL_ENV += PATH=/opt/csw/gnu:$(PATH) PYTHON=$(PYTHON) /opt/csw/bin/bash
 
@@ -242,6 +240,7 @@ CFLAGS := $(filter-out -I/opt/csw/iCFLAGS := $(filter-out -march=%-I/opt/csw/inc
 # LDFLAGS := $(filter-out -R/opt/csw/lib% -L/opt/cswpost-install:
 	ginstall -d $(DESTDIR)/$(sysconfdir)/init.d
 	ginstall -d $(DESTDIR)/$(sysconfdir)/snmp
+	ginstall -d $(DESTDIR)/$(localstatedir)/log
 	ginstall -m 755	$(WORKSRC)/dist/snmpd-init.d $(DESTDIR)/$(sysconfdir)/init.d/netsnmpd
 	ginstall -m 755	$(WORKSRC)/dist/snmptrapd-init.d $(DESTDIR)/$(sysconfdir)/init.d/netsnmptrapd
 	ginstall -m 755	$(WORKSRC)/EXAMPLE.conf $(DESTDIR)/$(sysconfdir)/snmp/snmpd.conf
