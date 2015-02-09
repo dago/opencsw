@@ -1,0 +1,25 @@
+From 5f26e9efeb90452ddcc14acfdc7f4694478dd37e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 5 Feb 2015 15:31:33 +0100
+Subject: [PATCH] Use LDFLAGS for libruby.so
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index d3313be..d7c8cd3 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -225,7 +225,7 @@ $(LIBRUBY_A):
+ $(LIBRUBY_SO):
+ 		@-$(PRE_LIBRUBY_UPDATE)
+ 		$(ECHO) linking shared-library $@
+-		$(Q) $(LDSHARED) $(DLDFLAGS) $(OBJS) $(DLDOBJS) $(DTRACE_OBJ) $(SOLIBS) $(EXTSOLIBS) $(OUTFLAG)$@
++		$(Q) $(LDSHARED) $(DLDFLAGS) $(OBJS) $(DLDOBJS) $(DTRACE_OBJ) $(LDFLAGS) $(SOLIBS) $(EXTSOLIBS) $(OUTFLAG)$@
+ 		-$(Q) $(OBJCOPY) -w -L '$(SYMBOL_PREFIX)Init_*' -L '$(SYMBOL_PREFIX)*_threadptr_*' $@
+ 		$(Q) $(POSTLINK)
+ 		@-$(MINIRUBY) -e 'ARGV.each{|link| File.delete link rescue nil; \
+-- 
+2.2.1
+
