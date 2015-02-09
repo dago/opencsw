@@ -21,7 +21,8 @@ MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/$(SHORTVER)/
 DISTFILES += $(DISTNAME).tar.gz
 
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
+# Solaris 11 has build problems, skip for now
+# PACKAGING_PLATFORMS += solaris11-sparc solaris11-i386
 
 # Use patch until this is fixed:
 #   https://bugs.ruby-lang.org/issues/10830
