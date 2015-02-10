@@ -1,7 +1,7 @@
 # $Id: Makefile 18185 2012-06-01 02:30:46Z bdwalton $
 
 NAME = httpd
-VERSION = 2.4.10
+VERSION = 2.4.12
 GARTYPE = v2
 
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
@@ -95,6 +95,8 @@ CONFIGURE_ARGS += --with-ssl=$(prefix)
 # As requested in https://www.opencsw.org/mantis/view.php?id=5152
 CONFIGURE_ARGS += --enable-proxy-html
 
+EXTRA_CFLAGS += -DSSL_EXPERIMENTAL -DSSL_ENGINE
+
 # Fixup target variables
 APACHE_ROOT   = $(DESTDIR)$(prefix)
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
@@ -104,26 +106,16 @@ TEST_TARGET = test
 
 include gar/category.mk
 
-CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
-
-post-install-modulated:
-	@(cd $(DESTDIR)/$(sbindir); \
+post-install:
+	(cd $(DESTDIR)$(sbindir); \
 	   for f in envvars*; do \
-		mv $$f $(DESTDIR)/$(sysconfdir)/apache2/; \
+		mv $$f $(DESTDIR)$(sysconfdir)/apache2/; \
 		ln -s $(sysconfdir)/apache2/$$f $$f; \
 	   done )
-	@$(MAKECOOKIE)
-
-post-merge:
-	@(cd $(PKGROOT)/$(sysconfdir)/apache2; \
-		rm -rf original; \
-		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' httpd.conf.CSW ; \
-	  cd $(PKGROOT)/$(mandir); \
-		perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache2|g' man1/*; \
-		perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' man8/* )
-	@( ginstall -d $(PKGROOT)/etc/opt/csw/init.d; \
-	    ginstall $(WORKSRC_FIRSTMOD)/../cswapache24 $(PKGROOT)/etc/opt/csw/init.d )
-
-	@(cd $(PKGROOT)/$(sysconfdir)/apache2; \
-		echo "# create server.(crt|csr)/server.key" > server )
+	rm -rf $(DESTDIR)$(sysconfdir)/apache2/original
+	perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' $(DESTDIR)$(sysconfdir)/apache2/httpd.conf
+	perl -pi -e 's|usr/local/etc/apache|etc/opt/csw/apache2|g' $(DESTDIR)$(mandir)/man1/*
+	perl -pi -e 's|/usr/local/apache2|/etc/opt/csw/apache2|g' $(DESTDIR)$(mandir)/man8/*
+	ginstall -D -m 0755 $(WORKDIR)/cswapache24 $(DESTDIR)/etc/opt/csw/init.d/cswapache24
+	echo "# create server.(crt|csr)/server.key" > $(DESTDIR)$(sysconfdir)/apache2/server
 	@$(MAKECOOKIE)
