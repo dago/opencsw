@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = libev
-VERSION = 3.9
+VERSION = 4.19
 CATEGORIES = lib
 GARTYPE = v2
 DESCRIPTION = A high performance event handling library
@@ -15,23 +15,24 @@ define BLURB
 SPKG_SOURCEURL = http://software.schmorp.de/pkg/libev.h+= http://dist.schmorp.de/libev/
 MASTER_SITES += http://dist.schmorp.de/libev/Attic.schmorp.de/libev/
 DISTFILES  = $(NAME)-$:\.\d+)*).tar.gz
-CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGCONFIGURE_ARGS += ac_cv_header_sys_inotify_h=no
+GARCOMPILER = GNU
+
 BUILD64_LIBS_ONLY = 1
 LICENSE = LICENSE
-CHECKPKG_OVERRIDES_CSWlibev += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd6
-PACKAGES = CSWlibev3
-CATALOGNAME_CSWlibev3 = libev3
-PKGFILES_CSWlibev3 += $(call baseisadirs,$(libdir),libev\.so\.3\.0\.0)
-PKGFILES_CSWlibev3 += $(call baseisadirs,$(libdir),libev\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibev3 += $(DESCRIPTION), libev.so.3
-OBSOLETED_BY_CSWlibev3 = CSWlibev
+
+PACKAGES = CSWlibev4
+CATALOGNAME_CSWlibev4 = libev4
+PKGFILES_CSWlibev4 += $(call baseisadirs,$(libdir),libev\.so\.4\.0\.0)
+PKGFILES_CSWlibev4 += $(call baseisadirs,$(libdir),libev\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibev4 += $(DESCRIPTION), libev.so.4
+RUNTIME_DEP_PKGS_CSWlibev4 += CSWlibgcc-s1
 
 PACKAGES += CSWlibev-dev
 CATALOGNAME_CSWlibev-dev = libev_dev
 SPKG_DESC_CSWlibev-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibev-dev += /opt/csw/lib/sparcv9/libev.so
-RUNTIME_DEP_PKGS_CSWlibev-dev += CSWlibev3
-OBSOLETED_BY_CSWlibev-dev = CSWlibev
+RUNTIME_DEP_PKGS_CSWlibev-dev += CSWlibev4
 64/libev.so.3.0.0
 include gar/category.mk
 
