@@ -40,6 +40,10 @@ CHECKPKG_OVERRIDES_CSWfacter2 += file-with-bad-content|/usr/local|root/opt/csw/l
 CHECKPKG_OVERRIDES_CSWfacter2 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/Cfkey.rb
 CHECKPKG_OVERRIDES_CSWfacter2 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/2.0.0/facter/util/manufacturer.rb
 
+# we know there conflicts with CSWfacter, that's the reason
+# why it's incompatible...
+CHECKPKG_OVERRIDES_CSWfacter2 += file-collision
+
 include gar/category.mk
 
 install-facter:
