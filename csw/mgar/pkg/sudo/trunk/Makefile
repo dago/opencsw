@@ -2,7 +2,7 @@
 #
 
 NAME = sudo
-VERSION = 1.8.11p2
+VERSION = 1.8.12
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -29,12 +29,9 @@ VENDOR_URL = http://www.sudo.ws
 # To have least Priv Support for Solaris 10 build on all Platforms
 P+= solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-#PACKAGING_PLATFORMS += solaris11-sparc solaris11s10-sparc solaris10-i386
-
-#Use custom map for solaris 10
-
-ifneq ($(shell /usr/bin/uname -r),5.9)
-        LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.sudo)"
+#PACKAGING_PLATFORMS += solaris11-sparc solaris11s10-spar Use custom map for Solaris 10
+LINKER_MAPS-5.10 += -M "$(abspath $(WORKDIR)/map.sudo)"
+LINKER_MAPS += $(LINKER_MAPS-$(GAROSREL)))/map.sudo)"
 endif
 
 
@@ -42,14 +39,11 @@ PACKAGES += CSWsudo
 SPKG_DESC_CSWsudo = Provides limited super user privileges
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWsudo += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWsudo += CSWlibz1
+RUNTIME_DEP_PKGS_C#SWsudo += CSWlibz1
 OBSOLETED_BY_CSWsudo = CSWsudo-common
 
 # These are just docs
-CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-conteetc/opt/csw/sudoers.CSW/doc/sudo/ChangeLog
-
-# This is a private library
-CHECKPKG_OVERRIDES_CSWsudo += soname-not-part-of-filename|soname=libsudo_noexec.so|filename=sudo_noexec.so
+CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-conteetc/opt/csw/sudoers.CSW/dme=sudo_noexec.so
 
 LDAP_DOCFILES += $(docdir)/sudo/README.LDAP
 LDAP_DOCFILES += $(docdir)/sudo/schema.ActiveDirectory
@@ -68,20 +62,19 @@ RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibz1
 # This logical dependency can not be tracked via checkpkg
-RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWsudo
-CHECKPKG_OVERRIDES_CSWsudo-ldap += surplus-dependency|CSWsudo
-OBSOLETED_BY_CSWsudo-ldap += CSWsudoldap
-CATALOGNAME_CSWsudolda#on solaris9 this is still a dep. Should be checked
-CHECKPKG_OVERRIDES_CSWsudo-ldap += surplus-dependency|CSWliblber2-4-2oc/sudo/README.LDAP
+RUNTIME_DEP_PKGS_CSWsu#OBSOLETED_BY_CSWsudo-ldap += CSWsudoldap
+CATALOGNAME_CSWsudoldap = sudo_ldap_stub
+
+# This is for /usr/share/lib/zoneinfo
+CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/share|root/opt/csw/libexec/sudo/sudoers.so
+CHECKPKG_OVERRIDES_CSWsudo-ldap += file-with-bad-content|/usr/share|root/opt/csw/libexec/sudo/sudoers-ldap.sooc/sudo/README.LDAP
 
 # This is a private library
-CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-not-part-of-filename|soname=sudoers.so|filenam# This is needed AFAIK due to libtool
-CHECKPKG_OVERRIDES_CSWsudo += discouraged-path-in-pkgmap|/opt/csw/libexec/sudo/libsudo_util.laam# Looks like these are still needed
-CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/sbin/visudo|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers.so|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudo_noexec.so|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/bin/sudoreplay|but|never|used
-CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-unused|s9_preload.so.1|is|needed|by|/opt/csw/libexec/sudo/sudoers-ldap.so|but|never|usedmme=sudoers-ldap.so
+CHECKPKG_OVERRIDES_CSWsudo-ldap += soname-not-part-of-filename|soname=sudoers.so|filenam# This is needed AFAIK due to libtool and dlopen
+CHECKPKG_OVERRIDES_CSWsudo += discouraged-path-in-pkgmap|/opt/csw/libexec/sudo/libsudo_util.la
+
+CHECKPKG_OVERRIDES_CSWsudo += $(CHECKPKG_OVERRIDES_CSWsudo-$(GAROSREL))
+CHECKPKG_OVERRIDES_CSWsudo-ldap += $(CHECKPKG_OVERRIDES_CSWsudo-ldap-$(GAROSREL))mme=sudoers-ldap.so
 
 LOGPATH    = $(localVARDIR     = $(localstatedir)/sudo
 # It is important that this really gets cleaned on reboot
@@ -153,10 +146,8 @@ MIGRATE_FILES_CSWsudo += sudoers
 PRESERVECONF += $(sysconfdir)/sudoers
 PRESERVECONF += $(sysconfdir)/sudo.conf
 
-include gar/category.mk
-
-post-install-modulated:
+include gar/categot-install-modulated:
 	ginstall -d $(DESTDIR)$(IOLOGPATH)
-	ginstall -d $(DESTDIR)$(TIMEPATH)
-	ginstall -d $(DESTDIR)$(sysconfdir)
-	ginstall $(WORKDIR)/sudo.conf.CSW $(DESTDIR)$(sysconfdir
+	ginstall -d $(DESTDIR)$(TID $(WORKDIR)/sudo.conf.CSW $(DESTDIR)$(sysconfdir)/sudo.conf.CSW
+	@$(MAKECOOKIE)
+
