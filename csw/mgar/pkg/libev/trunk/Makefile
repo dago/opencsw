@@ -32,6 +32,7 @@ PACKAGES += CSWlibev-dev
 CATALOGNAME_CSWlibev-dev = libev_dev
 SPKG_DESC_CSWlibev-dev += $(DESCRIPTION), development files
 PKGFILES_CSWlibev-dev += /opt/csw/lib/sparcv9/libev.so
+PKGFILES_CSWlibev-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibev-dev += CSWlibev4
 64/libev.so.3.0.0
 include gar/category.mk
