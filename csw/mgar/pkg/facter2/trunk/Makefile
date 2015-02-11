@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter2
-VERSION = 2.3.0
+VERSION = 2.4.0
 GARTYPE = v2
 DISTNAME = facter-$(VERSION)
 
