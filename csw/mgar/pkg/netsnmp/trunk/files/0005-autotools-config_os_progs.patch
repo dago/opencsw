@@ -1,16 +1,29 @@
 --- a/configure.d/config_os_progs
 +++ b/configure.d/config_os_progs
-@@ -62,11 +62,11 @@ AC_PATH_PROG([PYTHONPROG],python)
+@@ -53,8 +53,8 @@ fi
+ AC_CHECK_PROGS(FIND,   find)
+ AC_CHECK_PROGS(WHOAMI, whoami logname, whoami)
+ 
+-AC_PATH_PROG(AUTOCONF,    autoconf)
+-AC_PATH_PROG(AUTOHEADER,  autoheader)
++AC_PATH_PROG(AUTOCONF,    autoconf, [:])
++AC_PATH_PROG(AUTOHEADER,  autoheader, [:])
+ AC_PATH_PROG([PERLPROG],  perl)
+ AC_PATH_PROG([PSPROG],    ps)
+ AC_PATH_PROG([PYTHONPROG],python)
+@@ -62,15 +62,6 @@ AC_PATH_PROG([PYTHONPROG],python)
  AC_PATH_PROG([UNAMEPROG], uname)
  AC_DEFINE_UNQUOTED(UNAMEPROG,"$UNAMEPROG", [Where is the uname command])
  
 -if test "x$ac_cv_prog_AUTOCONF" = "x"; then
-+if test "x$ac_cv_path_AUTOCONF" = "x"; then
- 	AUTOCONF=":"
- 	AC_SUBST(AUTOCONF)
- fi
+-	AUTOCONF=":"
+-	AC_SUBST(AUTOCONF)
+-fi
 -if test "x$ac_cv_prog_AUTOHEADER" = "x"; then
-+if test "x$ac_cv_path_AUTOHEADER" = "x"; then
- 	AUTOHEADER=":"
- 	AC_SUBST(AUTOHEADER)
- fi
+-	AUTOHEADER=":"
+-	AC_SUBST(AUTOHEADER)
+-fi
+-
+ MAKE=${MAKE-"make"}
+ $MAKE -v -f /dev/null 2>/dev/null | $GREP GNU >/dev/null
+ have_gnu_make=$?
