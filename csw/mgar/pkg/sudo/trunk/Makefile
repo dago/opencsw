@@ -65,6 +65,9 @@ RUNTIME_DEP_PKGS_CSWsudo-ldap += CSWlibz1
 RUNTIME_DEP_PKGS_CSWsu#OBSOLETED_BY_CSWsudo-ldap += CSWsudoldap
 CATALOGNAME_CSWsudoldap = sudo_ldap_stub
 
+# This is for the sparc/x86 linker anomaly
+CHECKPKG_OVERRIDES_CSWsudo-ldap += surplus-dependency|CSWliblber2-4-2
+
 # This is for /usr/share/lib/zoneinfo
 CHECKPKG_OVERRIDES_CSWsudo += file-with-bad-content|/usr/share|root/opt/csw/libexec/sudo/sudoers.so
 CHECKPKG_OVERRIDES_CSWsudo-ldap += file-with-bad-content|/usr/share|root/opt/csw/libexec/sudo/sudoers-ldap.sooc/sudo/README.LDAP
