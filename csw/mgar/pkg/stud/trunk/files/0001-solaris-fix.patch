@@ -4,46 +4,10 @@ Date: Thu, 12 Feb 2015 16:21:02 +0100
 Subject: [PATCH] solaris-fix
 
 ---
- Makefile        | 20 +++++++++++++++-----
  configuration.c | 13 +++++++++++++
  stud.c          | 30 +++++++++++++++---------------
- 3 files changed, 43 insertions(+), 20 deletions(-)
+ 2 files changed, 43 insertions(+), 20 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index eba3e9c..75e6402 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2,15 +2,25 @@
- #
- # USE_SHARED_CACHE   :   enable/disable a shared session cache (disabled by default)
- 
--DESTDIR =
--PREFIX  = /usr/local
-+DESTDIR?=
-+PREFIX = /opt/csw
- BINDIR  = $(PREFIX)/bin
--MANDIR  = $(PREFIX)/share/man
-+MANDIR  = $(PREFIX)/$(PKGMANDIR)
- 
--CFLAGS  = -O2 -g -std=c99 -fno-strict-aliasing -Wall -W -D_GNU_SOURCE -I/usr/local/include
--LDFLAGS = -lssl -lcrypto -lev -L/usr/local/lib
-+CFLAGS += -O2 -g -std=c99 -fno-strict-aliasing -Wall -W -D_GNU_SOURCE -I$(PREFIX)/include
-+LDFLAGS+= -lssl -lcrypto -lev -L$(PREFIX)/lib
- OBJS    = stud.o ringbuffer.o configuration.o
- 
-+UNAME := $(shell uname)
-+
-+ifeq ($(UNAME),SunOS)
-+    # need __EXTENSIONS__ to get signal handling and getopt
-+    CFLAGS += -D__EXTENSIONS__
-+    LDFLAGS += -lnsl -lsocket
-+else
-+    CFLAGS += -DUSE_KEEPIDLE
-+endif
-+
- all: realall
- 
- # Shared cache feature
 diff --git a/configuration.c b/configuration.c
 index 0e3fd4c..9b5b103 100644
 --- a/configuration.c

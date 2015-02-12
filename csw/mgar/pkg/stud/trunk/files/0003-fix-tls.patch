@@ -1,0 +1,36 @@
+From 3a6ed4397f7bbec3ea7ffb6c4d015bda1002f49b Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Thu, 12 Feb 2015 16:46:55 +0100
+Subject: [PATCH] fix-tls
+
+---
+ stud.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/stud.c b/stud.c
+index 8c7fd08..b6db900 100644
+--- a/stud.c
++++ b/stud.c
+@@ -606,15 +606,13 @@ SSL_CTX *make_ctx(const char *pemfile) {
+ #endif
+ 
+     if (CONFIG->ETYPE == ENC_TLS) {
+-        ctx = SSL_CTX_new((CONFIG->PMODE == SSL_CLIENT) ?
+-                TLSv1_client_method() : TLSv1_server_method());
+-    } else if (CONFIG->ETYPE == ENC_SSL) {
+-        ctx = SSL_CTX_new((CONFIG->PMODE == SSL_CLIENT) ?
+-                SSLv23_client_method() : SSLv23_server_method());
+-    } else {
++        ssloptions |= SSL_OP_NO_SSLv3;
++    } else if (CONFIG->ETYPE != ENC_SSL) {
+         assert(CONFIG->ETYPE == ENC_TLS || CONFIG->ETYPE == ENC_SSL);
+         return NULL; // Won't happen, but gcc was complaining
+     }
++    ctx = SSL_CTX_new((CONFIG->PMODE == SSL_CLIENT) ?
++             SSLv23_client_method() : SSLv23_server_method());
+ 
+     SSL_CTX_set_options(ctx, ssloptions);
+     SSL_CTX_set_info_callback(ctx, info_callback);
+-- 
+2.2.1
+
