@@ -1,0 +1,159 @@
+From a364c6cbb2a7462867f8de50be39f33bdd0dc2a8 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Thu, 12 Feb 2015 16:21:02 +0100
+Subject: [PATCH] solaris-fix
+
+---
+ Makefile        | 20 +++++++++++++++-----
+ configuration.c | 13 +++++++++++++
+ stud.c          | 30 +++++++++++++++---------------
+ 3 files changed, 43 insertions(+), 20 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index eba3e9c..75e6402 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,15 +2,25 @@
+ #
+ # USE_SHARED_CACHE   :   enable/disable a shared session cache (disabled by default)
+ 
+-DESTDIR =
+-PREFIX  = /usr/local
++DESTDIR?=
++PREFIX = /opt/csw
+ BINDIR  = $(PREFIX)/bin
+-MANDIR  = $(PREFIX)/share/man
++MANDIR  = $(PREFIX)/$(PKGMANDIR)
+ 
+-CFLAGS  = -O2 -g -std=c99 -fno-strict-aliasing -Wall -W -D_GNU_SOURCE -I/usr/local/include
+-LDFLAGS = -lssl -lcrypto -lev -L/usr/local/lib
++CFLAGS += -O2 -g -std=c99 -fno-strict-aliasing -Wall -W -D_GNU_SOURCE -I$(PREFIX)/include
++LDFLAGS+= -lssl -lcrypto -lev -L$(PREFIX)/lib
+ OBJS    = stud.o ringbuffer.o configuration.o
+ 
++UNAME := $(shell uname)
++
++ifeq ($(UNAME),SunOS)
++    # need __EXTENSIONS__ to get signal handling and getopt
++    CFLAGS += -D__EXTENSIONS__
++    LDFLAGS += -lnsl -lsocket
++else
++    CFLAGS += -DUSE_KEEPIDLE
++endif
++
+ all: realall
+ 
+ # Shared cache feature
+diff --git a/configuration.c b/configuration.c
+index 0e3fd4c..9b5b103 100644
+--- a/configuration.c
++++ b/configuration.c
+@@ -637,13 +637,19 @@ void config_param_validate (char *k, char *v, stud_config *cfg, char *file, int
+   else if (strcmp(k, CFG_SYSLOG_FACILITY) == 0) {
+     r = 1;
+     if (!strcmp(v, "auth") || !strcmp(v, "authpriv"))
++#ifdef LOG_AUTHPRIV
+       cfg->SYSLOG_FACILITY = LOG_AUTHPRIV;
++#else
++      cfg->SYSLOG_FACILITY = LOG_AUTH;
++#endif
+     else if (!strcmp(v, "cron"))
+       cfg->SYSLOG_FACILITY = LOG_CRON;
+     else if (!strcmp(v, "daemon"))
+       cfg->SYSLOG_FACILITY = LOG_DAEMON;
++#ifdef LOG_FTP
+     else if (!strcmp(v, "ftp"))
+       cfg->SYSLOG_FACILITY = LOG_FTP;
++#endif
+     else if (!strcmp(v, "local0"))
+       cfg->SYSLOG_FACILITY = LOG_LOCAL0;
+     else if (!strcmp(v, "local1"))
+@@ -813,14 +819,21 @@ char * config_disp_hostport (char *host, char *port) {
+ const char * config_disp_log_facility (int facility) {
+   switch (facility)
+   {
++#ifdef LOG_AUTHPRIV
+     case LOG_AUTHPRIV:
+       return "authpriv";
++#else
++    case LOG_AUTH:
++      return "auth";
++#endif
+     case LOG_CRON:
+       return "cron";
+     case LOG_DAEMON:
+       return "daemon";
++#ifdef LOG_FTP
+     case LOG_FTP:
+       return "ftp";
++#endif
+     case LOG_LOCAL0:
+       return "local0";
+     case LOG_LOCAL1:
+diff --git a/stud.c b/stud.c
+index 1e83617..8c7fd08 100644
+--- a/stud.c
++++ b/stud.c
+@@ -189,9 +189,17 @@ typedef struct proxystate {
+ 
+ /* Set a file descriptor (socket) to non-blocking mode */
+ static void setnonblocking(int fd) {
+-    int flag = 1;
+-
+-    assert(ioctl(fd, FIONBIO, &flag) == 0);
++    int flag;
++#if defined(O_NONBLOCK)
++    /* O_NONBLOCK is more portable and POSIX-standard */
++    flag = O_NONBLOCK;
++    assert (fcntl(fd, F_SETFL, flag) == 0);
++#elif defined(FIONBIO)
++    flag = 1;
++    assert (ioctl(fd, FIONBIO, &flag) == 0);
++#else
++# error O_NONBLOCK and FIONBIO are both undefined for this platform
++#endif
+ }
+ 
+ /* set a tcp socket to use TCP Keepalive */
+@@ -203,9 +211,9 @@ static void settcpkeepalive(int fd) {
+         ERR("Error activating SO_KEEPALIVE on client socket: %s", strerror(errno));
+     }
+ 
++#ifdef TCP_KEEPIDLE
+     optval = CONFIG->TCP_KEEPALIVE_TIME;
+     optlen = sizeof(optval);
+-#ifdef TCP_KEEPIDLE
+     if(setsockopt(fd, SOL_TCP, TCP_KEEPIDLE, &optval, optlen) < 0) {
+         ERR("Error setting TCP_KEEPIDLE on client socket: %s", strerror(errno));
+     }
+@@ -1751,24 +1759,16 @@ void daemonize () {
+         exit(0);
+     }
+ 
+-    /* close standard streams */
+-    fclose(stdin);
+-    fclose(stdout);
+-    fclose(stderr);
+-
+     /* reopen standard streams to null device */
+-    stdin = fopen(NULL_DEV, "r");
+-    if (stdin == NULL) {
++    if (freopen(NULL_DEV, "r", stdin) == NULL) {
+         ERR("Unable to reopen stdin to %s: %s\n", NULL_DEV, strerror(errno));
+         exit(1);
+     }
+-    stdout = fopen(NULL_DEV, "w");
+-    if (stdout == NULL) {
++    if (freopen(NULL_DEV, "w", stdout) == NULL) {
+         ERR("Unable to reopen stdout to %s: %s\n", NULL_DEV, strerror(errno));
+         exit(1);
+     }
+-    stderr = fopen(NULL_DEV, "w");
+-    if (stderr == NULL) {
++    if (freopen(NULL_DEV, "w", stderr) == NULL) {
+         ERR("Unable to reopen stderr to %s: %s\n", NULL_DEV, strerror(errno));
+         exit(1);
+     }
+-- 
+2.2.1
+
