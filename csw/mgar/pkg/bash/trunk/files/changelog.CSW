@@ -1,3 +1,9 @@
+bash (4.3.33,REV=2015.02.15) unstable
+
+  * Added bash patch bash43-031 to bash43-033
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 15 Feb 2015 16:27:12 +0100
+
 bash (4.3.30,REV=2014.10.18) unstable
 
   * Added bash patch bash43-026 to bash43-030
