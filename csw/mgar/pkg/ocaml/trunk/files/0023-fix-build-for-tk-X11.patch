@@ -1,21 +1,20 @@
 --- a/configure
 +++ b/configure
-@@ -1383,13 +1383,13 @@ if test "$x11_include" = "not found"; then
-        test -f $dir/libX11.dylib || \
-        test -f $dir/libX11.sa; then
-       if test $dir = /usr/lib; then
--        x11_link="-lX11"
-+        x11_link="-lX11 -lXext"
-       else
-         x11_libs="-L$dir"
-         case "$host" in
-           *-kfreebsd*-gnu) x11_link="-L$dir -lX11";;
-           *-*-*bsd*) x11_link="-R$dir -L$dir -lX11";;
--          *) x11_link="-L$dir -lX11";;
-+          *) x11_link="-L$dir -lX11 -lXext";;
-         esac
-       fi
-       break
+@@ -1366,12 +1366,12 @@ do
+      test -f $dir/libX11.dylib || \
+      test -f $dir/libX11.sa; then
+     if test $dir = /usr/lib; then
+-      x11_link="-lX11"
++      x11_link="-lX11 -lXext"
+     else
+       x11_libs="-L$dir"
+       case "$host" in
+         *-*-*bsd*) x11_link="-R$dir -L$dir -lX11";;
+-        *) x11_link="-L$dir -lX11";;
++        *) x11_link="-L$dir -lX11 -lXext";;
+       esac
+     fi
+     break
 @@ -1506,16 +1506,16 @@ if test $has_tk = true; then
    elif sh ./hasgot $tk_libs -ltcl$tclmaj$tclmin $tkauxlibs Tcl_DoOneEvent
    then

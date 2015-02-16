@@ -13,26 +13,20 @@
  
  # The profiler
  
-@@ -79,13 +80,14 @@ ocamloptp: ocamloptp.cmo
- opt:: profiling.cmx
+@@ -71,9 +71,10 @@ ocamlcp: ocamlcp.cmo
+ 	$(CAMLC) $(LINKFLAGS) -o ocamlcp warnings.cmo main_args.cmo ocamlcp.cmo
  
  install::
 -	cp ocamlprof $(BINDIR)/ocamlprof$(EXE)
 -	cp ocamlcp $(BINDIR)/ocamlcp$(EXE)
--	cp ocamloptp $(BINDIR)/ocamloptp$(EXE)
 -	cp profiling.cmi profiling.cmo $(LIBDIR)
 +	ginstall -m 755 -d $(DESTDIR)$(LIBDIR)
 +	cp ocamlprof $(DESTDIR)$(BINDIR)/ocamlprof$(EXE)
 +	cp ocamlcp $(DESTDIR)$(BINDIR)/ocamlcp$(EXE)
-+	cp ocamloptp $(DESTDIR)$(BINDIR)/ocamloptp$(EXE)
 +	cp profiling.cmi profiling.cmo $(DESTDIR)$(LIBDIR)
  
- installopt::
--	cp profiling.cmx profiling.o $(LIBDIR)
-+	cp profiling.cmx profiling.o $(DESTDIR)$(LIBDIR)
- 
  clean::
- 	rm -f ocamlprof ocamlcp ocamloptp
+ 	rm -f ocamlprof ocamlcp
 @@ -106,7 +108,7 @@ myocamlbuild_config.ml: ../config/Makefile ../build/mkmyocamlbuild_config.sh
  	cp ../myocamlbuild_config.ml .
  
@@ -42,6 +36,15 @@
  
  clean::
  	rm -f ocamlmklib
+@@ -119,7 +119,7 @@ clean::
+ # To make custom toplevels (see Makefile/Makefile.nt)
+ 
+ install::
+-	cp ocamlmktop $(BINDIR)/   # no $(EXE) here, ocamlmktop is a script
++	cp ocamlmktop $(DESTDIR)$(BINDIR)/   # no $(EXE) here, ocamlmktop is a script
+ 
+ clean::
+ 	rm -f ocamlmktop
 @@ -291,8 +293,8 @@ objinfo: objinfo_helper$(EXE) $(OBJINFO)
  	$(CAMLC) -o objinfo $(OBJINFO)
  

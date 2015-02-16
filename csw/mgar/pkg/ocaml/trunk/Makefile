@@ -1,6 +1,6 @@
 NAME = ocaml
-VERSION = 4.02.1
-# VERSION = 3.12.1
+# VERSION = 4.02.1
+VERSION = 3.12.1
 GARTYPE = v2
 
 DESCRIPTION = Objective Caml programming language
@@ -15,28 +15,28 @@ LICENSE = LICENSE
 
 REINPLACE_USRLOCAL += configure
 
-# PATCHFILES += 0-patch
-# PATCHFILES += 10-patch
-# PATCHFILES += 12-patch
+PATCHFILES += 0-patch
+PATCHFILES += 10-patch
+PATCHFILES += 12-patch
 # PATCHFILES += 13-patch
-# PATCHFILES += 14-patch
-# PATCHFILES += 15-patch
-# PATCHFILES += 16-patch
-# PATCHFILES += 17-patch
-# PATCHFILES += 18-patch
-# PATCHFILES += 19-patch
-# PATCHFILES += 2-patch
-# PATCHFILES += 20-patch
-# PATCHFILES += 21-patch
-# PATCHFILES += 3-patch
-# PATCHFILES += 4-patch
-# PATCHFILES += 5-patch
-# PATCHFILES += 6-patch
-# PATCHFILES += 7-patch
-# PATCHFILES += 8-patch
-# PATCHFILES += 9-patch
+PATCHFILES += 14-patch
+PATCHFILES += 15-patch
+PATCHFILES += 16-patch
+PATCHFILES += 17-patch
+PATCHFILES += 18-patch
+PATCHFILES += 19-patch
+PATCHFILES += 2-patch
+PATCHFILES += 20-patch
+PATCHFILES += 21-patch
+PATCHFILES += 3-patch
+PATCHFILES += 4-patch
+PATCHFILES += 5-patch
+PATCHFILES += 6-patch
+PATCHFILES += 7-patch
+PATCHFILES += 8-patch
+PATCHFILES += 9-patch
 # PATCHFILES += 22-patch
-# PATCHFILES += 0023-fix-build-for-tk-X11.patch
+PATCHFILES += 0023-fix-build-for-tk-X11.patch
 #
 # this is only a error ignor patch taken from here:
 # http://caml.inria.fr/mantis/view.php?id=4663
@@ -47,8 +47,8 @@ PATCHFILES += 01-nfs-close-bug.patch
 PACKAGES +=  CSWocaml
 SPKG_DESC_CSWocaml = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWocaml += CSWlibgcc-s1
-# RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
-# RUNTIME_DEP_PKGS_CSWocaml += CSWlibtk8-5
+RUNTIME_DEP_PKGS_CSWocaml += CSWlibtcl8-5
+RUNTIME_DEP_PKGS_CSWocaml += CSWlibtk8-5
 
 # include static libs
 MERGE_EXCLUDE_STATICLIBS =
