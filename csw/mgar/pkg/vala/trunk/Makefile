@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = vala
-VERSION = 0.20.1
+VERSION = 0.27.1
 GARTYPE = v2
 
 DESCRIPTION = Compiler for the GObject type system
@@ -24,21 +24,27 @@ BUILD_DEP_PKGS += CSWlibffi-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
 BUILD_DEP_PKGS += CSWpkgconfig
 
-RUNTIME_DEP_PKGS += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS += CSWpcre
-RUNTIME_DEP_PKGS += CSWlibxslt
-RUNTIME_DEP_PKGS += CSWlibgcc-s1
-RUNTIME_DEP_PKGS += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS += CSWlibgobject2-0-0
+PACKAGES += CSWvala
+SPKG_DESC_CSWvala = Compiler for the GObject type system
+# PKGFILES is catchall for now
+CHECKPKG_OVERRIDES_CSWvala += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libvala-0.28.so
+CHECKPKG_OVERRIDES_CSWvala += shared-lib-pkgname-mismatch|file=opt/csw/lib/libvala-0.28.so.0.0.0|soname=libvala-0.28.so.0|pkgname=CSWvala|expected=CSWlibvala0-28-0
+RUNTIME_DEP_PKGS_CSWvala += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWvala += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWvala += CSWpcre
+RUNTIME_DEP_PKGS_CSWvala += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWvala += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWvala += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWvala += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWvala += CSWlibgobject2-0-0
+
+# Testsuite fails for 64 bit, disable for now
+#BUILD64_LIBS_ONLY = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# Will fail with "error: Package `GLib-2.0' not found in specified Vala API directories or GObject-Introspection GIR directories"
-TEST_SCRIPTS =
-
-CHECKPKG_OVERRIDES_CSWvala += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libvala-0.20.so
-CHECKPKG_OVERRIDES_CSWvala += shared-lib-pkgname-mismatch|file=opt/csw/lib/libvala-0.20.so.0.0.0|soname=libvala-0.20.so.0|pkgname=CSWvala|expected=CSWlibvala0-20-0
+# The testsuite expect "grep" to take -q
+TEST_ENV_PATH = /opt/csw/gnu:$(PATH)
 
 include gar/category.mk
 
