@@ -38,6 +38,9 @@ RUNTIME_DEP_PKGS_CSWvala += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWvala += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWvala += CSWlibgobject2-0-0
 
+# Linker anomaly between sparc and i386
+CHECKPKG_OVERRIDES_CSWvala += surplus-dependency|CSWlibintl8
+
 # Testsuite fails for 64 bit, disable for now
 #BUILD64_LIBS_ONLY = 1
 
