@@ -1,5 +1,5 @@
 NAME = ansible
-VERSION = 1.8.2
+VERSION = 1.8.3
 GARTYPE = v2
 CATEGORIES = python
 
@@ -11,13 +11,11 @@ MASTER_SITES += http://releases.ansible.com/ansible/
 DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += hosts.CSW
 
+# The .git makes the build system think we have a checkout out repo and not a tarball
+NOGITPATCH = 1
+
 PATCHFILES += 0003-Extended-sbin_paths-by-opt-csw-sbin.patch
 PATCHFILES += 0003-Add-etc-opt-csw-ssl-certs-to-the-path-searched-for-..patch
-
-# Use patch until pull request is applied
-#   https://github.com/ansible/ansible/pull/10174
-#PATCHFILES += 0001-Use-termios-instead-of-stty-for-compatibility.patch
-PATCHFILES += 0001-Backport-stty-patch.patch
 
 PACKAGES += CSWansible
 # Stick with upstream naming
