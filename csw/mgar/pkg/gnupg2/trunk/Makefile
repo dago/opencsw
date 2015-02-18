@@ -3,7 +3,7 @@
 # $Id$
 
 NAME    = gnupg
-VERSION = 2.0.26
+VERSION = 2.0.27
 CATEGORIES = apps
 GARTYPE = v2
 
