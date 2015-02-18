@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = unison
-VERSION = 2.40.102
+VERSION = 2.48.3
 GARTYPE = v2
 
 DESCRIPTION = File Synchronizer 
