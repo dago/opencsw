@@ -1,7 +1,7 @@
 # TBD:
 
 NAME = lsof
-VERSION = 4.87
+VERSION = 4.88
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -41,7 +41,10 @@ BUILD64-sparc-5.10 = 1
 BUILD64-i386-5.10 = 1
 BUILD64-sparc-5.11 = 1
 BUILD64-i386-5.11 = 1
-BUILD64 = $(BUILD64-$(GARCH)-$(GAROSREL))
+BUILD64 = $(BUILD64-$(GAGARCOMPILER-5.9 = SOS12
+GARCOMPILER-5.10 = SOS12U3
+GARCOMPILER-5.11 = SOS12U3
+GARCOMPILER = $(GARCOMPILER $(BUILD64-$(GARCH)-$(GAROSREL))
 
 EXTRA_BUILD_ISAS = sparcv8plus
 
@@ -126,10 +129,6 @@ test-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(NAME) $(VERSION) for $(MODULATION)"
-	echo DESTDIR: $(DESTDIR)
-	@( cd $(WORKSRC) ; \
-		ginstall -d $(DESTDIR)$(bindir) ; \
-		ginstall -m 755 lsof $(DESTDIR)$(bindir) ; \
-		ginstall -d $(DESTDIR)$(mandir)/man8 ; \
-		ginstall -m 444 lsof.8 $(DESTDIR)$(mandir)/man8
+	@echo " ==> Installing $(NAME) $(VERSION) fginstall -D -m 755 $(WORKSRC)/lsof $(DESTDIR)$(bindir)/lsof
+	ginstall -D -m 444 $(WORKSRC)/lsof.8 $(DESTDIR)$(mandir)/man8/lsof.8
+	@$(MAKECOOKIE)
