@@ -2,7 +2,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pyelftools
-VERSION = 0.23
+# In 0.23 minimal Python support is raised to 2.7, stick at 0.22 until checkpkg is updated to use 2.7
+VERSION = 0.22
 GARTYPE = v2
 
 DESCRIPTION = Library for analyzing ELF files and DWARF debugging information
