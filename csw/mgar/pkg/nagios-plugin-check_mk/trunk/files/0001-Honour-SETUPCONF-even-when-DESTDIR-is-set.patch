@@ -1,0 +1,25 @@
+From e4e4801a34084964a908298990ad0ea0addadf8f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 18 Feb 2015 17:32:07 +0100
+Subject: [PATCH] Honour SETUPCONF even when DESTDIR is set
+
+---
+ setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.sh b/setup.sh
+index 7e576b3..c64a03b 100755
+--- a/setup.sh
++++ b/setup.sh
+@@ -212,7 +212,7 @@ then
+     fi
+ fi
+ 
+-if [ -z "$DESTDIR" -a -e "$SETUPCONF" ] && . $SETUPCONF
++if [ -f "$SETUPCONF" ] && . $SETUPCONF
+ then
+     if [ -z "$YES" ] ; then
+         printf "[1;37;43m %-71s [0m\n" "* Read $(grep = $SETUPCONF | wc -l) settings from previous setup from $SETUPCONF."
+-- 
+2.2.1
+
