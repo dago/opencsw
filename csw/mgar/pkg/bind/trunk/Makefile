@@ -1,12 +1,13 @@
 # readme for chroot pkg?
 # owner/group for device files? (root:sys)
+# dlz extensions problematic, remove source: /bin/tests/system, rm -rf dlzexternal
 
 NAME = bind
 VERSION = 9.9.6
 GARTYPE = v2
 
 # Enable these for Px-releases
-RELEASE = P1
+RELEASE = P2
 DISTVERSION = $(VERSION)-$(RELEASE)
 SPKG_VERSION = $(VERSION)$(RELEASE)
 DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
@@ -28,9 +29,7 @@ DISTFILES += CSWbindchroot.postinstall
 
 LICENSE = COPYRIGHT
 
-# Special one-off build for Solaris 9
-#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES += CSWbind
 CATALOGNAME_CSWbind = bind
@@ -38,7 +37,6 @@ SPKG_DESC_CSWbind = ISC BIND DNS main package
 RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
 RUNTIME_DEP_PKGS_CSWbind += CSWlibbind
 RUNTIME_DEP_PKGS_CSWbind += CSWlibiconv2
-#RUNTIME_DEP_PKGS_CSWbind += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWbind += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
 
@@ -51,11 +49,11 @@ RUNTIME_DEP_PKGS_CSWbind-dev += CSWlibbind
 PACKAGES += CSWlibbind
 CATALOGNAME_CSWlibbind = libbind
 SPKG_DESC_CSWlibbind = ISC BIND DNS library package
-#RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibiconv2
-#RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
-#RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibbind += CSWlibz1
@@ -65,7 +63,7 @@ CATALOGNAME_CSWbindutils = bind_utils
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibbind
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
-#RUNTIME_DEP_PKGS_CSWbindutils += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWbindutils += CSWlibreadline6
 
 PACKAGES += CSWbindchroot
@@ -87,8 +85,6 @@ CONFIGURE_ARGS += --enable-rrl
 #CONFIGURE_ARGS += --with-dlz-ldap=/opt/csw
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la $(mandir)/man1/isc-config.sh.1 $(bindir)/isc-config.sh
-
-#EXTRA_INC = /opt/csw/include
 
 PKGFILES_CSWbindutils  = $(bindir)/dig
 PKGFILES_CSWbindutils += $(bindir)/host
@@ -125,7 +121,7 @@ CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=C
 
 # Will not split out all these libs
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libbind9.so.90.0.11|soname=libbind9.so.90|pkgname=CSWlibbind|expected=CSWlibbind9-90
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.104.1.0|soname=libdns.so.104|pkgname=CSWlibbind|expected=CSWlibdns104
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libdns.so.104.1.1|soname=libdns.so.104|pkgname=CSWlibbind|expected=CSWlibdns104
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisc.so.95.8.0|soname=libisc.so.95|pkgname=CSWlibbind|expected=CSWlibisc95
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/libisccfg.so.90.2.3|soname=libisccfg.so.90|pkgname=CSWlibbind|expected=CSWlibisccfg90
 CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-pkgname-mismatch|file=opt/csw/lib/liblwres.so.91.0.0|soname=liblwres.so.91|pkgname=CSWlibbind|expected=CSWliblwres91
@@ -148,7 +144,6 @@ install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
-#	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw
 	@ginstall -m 644 $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWbind
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWbind/
