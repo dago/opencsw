@@ -1,0 +1,24 @@
+From 436df63038d14f85986c8464743a41b97d9d52f0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 18 Feb 2015 15:55:45 +0100
+Subject: [PATCH] Allow setting SETUPCONF externally
+
+---
+ setup.sh | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/setup.sh b/setup.sh
+index 288be33..7e576b3 100755
+--- a/setup.sh
++++ b/setup.sh
+@@ -28,7 +28,6 @@ VERSION=1.2.4p5
+ NAME=check_mk
+ LANG=
+ LC_ALL=
+-SETUPCONF=~/.check_mk_setup.conf
+ 
+ # Find path to ourselves
+ SRCDIR=${0%/*}
+-- 
+2.2.1
+
