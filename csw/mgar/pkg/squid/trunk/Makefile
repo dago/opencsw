@@ -2,7 +2,7 @@
 # $Id$
 #
 NAME = squid
-VERSION = 3.4.129]\).*\.[0-9]*/\1/')
+VERSION = 3.5.29]\).*\.[0-9]*/\1/')
 GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
@@ -40,6 +40,7 @@ RUNTIME_DEP_PKGS_CSWsquid += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWsquid += CSWlibnettle4
+RUNTIME_DEP_PKGS_CSWsquid += CSWlibgnutls28
 
 # Linker anomaly
 CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWlibintl8
