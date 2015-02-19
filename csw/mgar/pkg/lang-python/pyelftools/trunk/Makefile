@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = pyelftools
-VERSION = 0.22
+VERSION = 0.23
 GARTYPE = v2
 
 DESCRIPTION = Library for analyzing ELF files and DWARF debugging information
