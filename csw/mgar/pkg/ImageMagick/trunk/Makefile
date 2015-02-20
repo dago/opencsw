@@ -73,15 +73,15 @@ RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWlibmagickwand6q16hdri2 += CSWlibgcc-s1
 
-PACKAGES += CSWlibmagick++6q16hdri5
-CATALOGNAME_CSWlibmagick++6q16hdri5 = libmagick++6q16hdri5
-PKGFILES_CSWlibmagick++6q16hdri5 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.5\.0\.0)
-PKGFILES_CSWlibmagick++6q16hdri5 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.5(\.\d+)*)
-SPKG_DESC_CSWlibmagick++6q16hdri5 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.5
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibmagickcore6q16hdri2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibmagickwand6q16hdri2
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri5 += CSWlibstdc++6
+PACKAGES += CSWlibmagick++6q16hdri6
+CATALOGNAME_CSWlibmagick++6q16hdri6 = libmagick++6q16hdri6
+PKGFILES_CSWlibmagick++6q16hdri6 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.6\.0\.0)
+PKGFILES_CSWlibmagick++6q16hdri6 += $(call baseisadirs,$(libdir),libMagick\+\+-6\.Q16HDRI\.so\.6(\.\d+)*)
+SPKG_DESC_CSWlibmagick++6q16hdri6 += Library from ImageMagick, libMagick++-6.Q16HDRI.so.6
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri6 += CSWlibmagickcore6q16hdri2
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri6 += CSWlibmagickwand6q16hdri2
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri6 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibmagick++6q16hdri6 += CSWlibstdc++6
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
@@ -92,7 +92,7 @@ PKGFILES_CSWimagemagick-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWimagemagick
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickcore6q16hdri2
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagickwand6q16hdri2
-RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri5
+RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++6q16hdri6
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWperl
 
 PACKAGES += CSWimagemagick
@@ -124,6 +124,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgs9
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcgraph6
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgvc6
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgomp1
 
 ###
 # Needed for the Solaris ld bug
