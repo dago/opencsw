@@ -205,7 +205,6 @@ SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) \
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
-SPKG_CLASSES   ?= none
 SPKG_OSNAME    := $(if $(SPKG_OSNAME),$(SPKG_OSNAME),$(shell /usr/bin/uname -s)$(shell /usr/bin/uname -r))
 
 SPKG_SPOOLROOT ?= $(DESTROOT)
@@ -709,9 +708,7 @@ $(foreach P,$(SPKG_SPECS),\
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),cswalternatives)
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "build")')),build)
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES = $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++ if($$F[0] ne "i")};$(foreach C,none cswalternatives build $(_CSWCLASSES),print "$C\n" if( delete $$c{$C});)print join("\n",keys %c);')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
