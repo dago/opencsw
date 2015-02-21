@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+
+<!--
+
+Copyright (c) 2007, Matthew Flanagan
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice,
+       this list of conditions and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+
+    3. Neither the name of the project nor the names of its contributors may
+       be used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+
+<service_bundle type='manifest' name='cswbuildslave'>
+
+<service name='site/application/cswbuildslave' type='service' version='2'>
+
+	<dependency name='filesystem_local'
+		grouping='require_all'
+		restart_on='none'
+		type='service'>
+		<service_fmri value='svc:/system/filesystem/local:default'/>
+	</dependency>
+
+	<dependency name='milestone_network'
+		grouping='require_all'
+		restart_on='none'
+		type='service'>
+		<service_fmri value='svc:/milestone/network:default'/>
+	</dependency>
+
+    <method_context>
+        <method_credential user='buildslave' group='buildslave' />
+        <method_environment>
+            <envvar name='PATH' value='/usr/bin:/usr/sbin:/usr/ccs/bin:/opt/csw/bin:/opt/csw/sbin:/usr/sfw/bin' />
+        </method_environment>
+    </method_context>
+
+	<exec_method
+		type='method'
+		name='start'
+		exec='/opt/csw/bin/buildslave start %{buildslave/config}'
+		timeout_seconds='60' />
+
+	<exec_method
+		type='method'
+		name='stop'
+		exec='/opt/csw/bin/buildslave stop %{buildslave/config}'
+		timeout_seconds='60' />
+
+	<exec_method
+		type='method'
+		name='restart'
+		exec='/opt/csw/bin/buildslave restart %{buildslave/config}'
+		timeout_seconds='60' />
+
+	<property_group name="startd" type="framework">
+		<!-- sub-process core dumps shouldn't restart
+			session -->
+		<propval name='ignore_error' type='astring'
+			value='core,signal' />
+	</property_group>
+
+    <!-- 'default' instance is the buildslave -->
+    <instance name='default' enabled='false'>
+        <property_group name='buildslave' type='application'>
+            <propval name='config' type='astring' value='/home/buildbot/slave' />
+        </property_group>
+    </instance>
+
+	<stability value='Evolving' />
+
+	<template>
+		<common_name>
+			<loctext xml:lang='C'>
+				buildbot automated test environment.
+			</loctext>
+		</common_name>
+		<documentation>
+			<doc_link name='buildbot.net'
+				uri='http://buildbot.net' />
+		</documentation>
+	</template>
+</service>
+
+</service_bundle>
