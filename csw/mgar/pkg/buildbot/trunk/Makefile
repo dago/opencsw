@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = buildbot
-VERSION = 0.8.8
+VERSION = 0.8.10
 CATEGORIES = python
 GARTYPE = v2
 
@@ -24,8 +24,8 @@ endef
 
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES += $(DISTNAME).tar.gz
-# Wrapper
-DISTFILES += buildbot
+
+DISTFILES += cswbuildbot.xml
 
 # Buildbot is 2.7 only and the server is Solaris 10 only
 MODULATIONS_PYTHON_VERSION = 2_7
@@ -40,10 +40,6 @@ RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-tempita
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-decorator
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-openssl
-# This is in fact an old 0.7.10 version private to buildbot. The documentation says
-#   "The requirement to install SQLAlchemy-0.7.10 is due to a conflict between newer
-#    versions of SQLAlchemy and SQLAlchemy-Migrate."
-RUNTIME_DEP_PKGS_CSWbuildbot += CSWbuildbot-sqlalchemy
 
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-zope-interface
@@ -53,26 +49,21 @@ CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-decorator
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-openssl
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWbuildbot-sqlalchemy
 
+# That is the URI for the DTD
+CHECKPKG_OVERRIDES_CSWbuildbot += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/cswbuildbot.xml
+
 # This is more like an application than a python module
 CHECKPKG_OVERRIDES_CSWbuildbot += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWbuildbot += catalogname-does-not-start-with-py_
 
 ARCHALL_CSWbuildbot = 1
 
-# logwatcher uses 'tail -f -n 0' only available on XPG4 tail or GNU tail, let's prefer XPG4
-REINPLACEMENTS += tail
-REINPLACE_MATCH_tail = /usr/bin/tail
-REINPLACE_WITH_tail = /usr/xpg4/bin/tail
-REINPLACE_FILES_tail += buildbot/scripts/logwatcher.py
-
-# There seems to be 'trial' missing
-SKIPTEST ?= 1
+PROTOTYPE_MODIFIERS += smf
+PROTOTYPE_FILES_smf += /var/opt/csw/svc/manifest/cswbuildbot.xml
+PROTOTYPE_CLASS_smf = manifest
 
 include gar/category.mk
 
 post-install:
-	ginstall -d $(DESTDIR)$(libexecdir)
-	mv $(DESTDIR)$(bindir)/buildbot $(DESTDIR)$(libexecdir)/buildbot
-	ginstall -m 0755 $(WORKDIR)/buildbot $(DESTDIR)$(bindir)/buildbot
+	ginstall -D -m 0644 $(WORKDIR)/cswbuildbot.xml $(DESTDIR)/var/opt/csw/svc/manifest/cswbuildbot.xml
 	@$(MAKECOOKIE)
-	
