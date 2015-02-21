@@ -40,6 +40,9 @@ RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-jinja2
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-tempita
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-decorator
 RUNTIME_DEP_PKGS_CSWbuildbot += CSWpy-openssl
+# This was a private version of the library which is no longer necessary.
+# The current buildbot version is compatible with the latest sqlalchemy.
+INCOMPATIBLE_PKGS_CSWbuildbot += CSWbuildbot-sqlalchemy
 
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-twisted
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWpy-zope-interface
