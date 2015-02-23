@@ -82,6 +82,11 @@ GARCHIVEDIR ?= /home/src
 # Space separated list of paths to search for DISTFILES.
 GARCHIVEPATH ?= $(GARCHIVEDIR)
 
+# Architecture
+GARCHLIST ?= sparc i386
+GARCH    := $(if $(GARCH),$(GARCH),$(shell /usr/bin/uname -p))
+GAROSREL := $(if $(GAROSREL),$(GAROSREL),$(shell /usr/bin/uname -r))
+
 # Select compiler
 # GARCOMPILER can be either GNU/SUN which selects the default
 # Sun or GNU compiler, or the specific verions SOS11/SOS12/SOS12U1/SOS12U2/SOS12U3/GCC3/GCC4
@@ -91,25 +96,24 @@ GARCOMPILER ?= SUN
 # We have parameters for the following compilers
 GARCOMPILERS = GCC3 GCC4 SOS11 SOS12 SOS12U1 SOS12U2 SOS12U3
 
+GARCOMPILER-SUN-5.9 = SOS12
+GARCOMPILER-SUN-5.10 = SOS12
+GARCOMPILER-SUN-5.11 = SOS12U3
+
 ifeq ($(GARCOMPILER),SUN)
-  GARCOMPILER = SOS12
+  GARCOMPILER = $(GARCOMPILER-SUN-$(GAROSREL))
 endif
 
 ifeq ($(GARCOMPILER),GNU)
   GARCOMPILER = GCC4
 endif
 
-# Build flavor (OPT/DBG)
-GARFLAVOR ?= OPT
-
-# Architecture
-GARCHLIST ?= sparc i386
-GARCH    := $(if $(GARCH),$(GARCH),$(shell /usr/bin/uname -p))
-GAROSREL := $(if $(GAROSREL),$(GAROSREL),$(shell /usr/bin/uname -r))
-
 ifeq (,$(filter $(GARCOMPILER),$(GARCOMPILERS)))
   $(error The compiler '$(GARCOMPILER)' is unknown. Please select one of $(GARCOMPILERS))
 endif
+
+# Build flavor (OPT/DBG)
+GARFLAVOR ?= OPT
 
 # These are the standard directory name variables from all GNU
 # makefiles.  They're also used by autoconf, and can be adapted
