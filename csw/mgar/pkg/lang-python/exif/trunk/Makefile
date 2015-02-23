@@ -18,6 +18,8 @@ GIT_TREEISH_exif-git.git = $(GIT_VERSION)
 
 LICENSE = LICENSE.txt
 
+ARCHALL_CSWpy-exif-py = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
