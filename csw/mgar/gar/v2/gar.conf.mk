@@ -708,10 +708,10 @@ RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /
 LINKER_FLAGS ?= $(PREPEND_LINKER_FLAGS) $(foreach ELIB,$(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
-CC       = $($(GARCOMPILER)_CC)
-CXX      = $($(GARCOMPILER)_CXX)
-F77      = $($(GARCOMPILER)_F77)
-FC       = $($(GARCOMPILER)_FC)
+CC       = $(strip $($(GARCOMPILER)_CC) $(CC_EXTRA))
+CXX      = $(strip $($(GARCOMPILER)_CXX) $(CXX_EXTRA))
+F77      = $(strip $($(GARCOMPILER)_F77) $(F77_EXTRA))
+FC       = $(strip $($(GARCOMPILER)_FC) $(FC_EXTRA))
 
 CFLAGS   ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(_CATEGORY_CFLAGS) $(EXTRA_CFLAGS))
 CXXFLAGS ?= $(strip $($(GARCOMPILER)_CXX_FLAGS) $(_CATEGORY_CXXFLAGS) $(EXTRA_CXXFLAGS))
