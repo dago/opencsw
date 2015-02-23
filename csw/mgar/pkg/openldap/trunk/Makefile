@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = openldap
-VERSION = 2.4.38
+VERSION = 2.4.40
 GARTYPE = v2
 CATEGORIES = server
 
@@ -33,7 +33,7 @@ PATCHFILES += patch-libtool-64bit.diff
 
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
-#PATCHFILES += 0001-Do-not-hardcode-name-of-make.patchdap-2.4.16-ntlm.diff
+p-2.4.16-ntlm.diff
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -199,7 +199,11 @@ CONFIGURE_ARGS += --enable-wrappers
 CONFIGURE_ARGS += --enable-backends=mod
 CONFIGURE_ARGS += --enable-overlays=mod
 CONFIGURE_ARGS += --enable-spasswd
-CONFIGURE_ARGS += --with-cyrus-sasl
+CONFIGURE_ARGS +CONFIGURE_ARGS += --enable-mdb=mod
+
+# Legacy backends
+CONFIGURE_ARGS += --enable-bdb=mod
+CONFIGURE_ARGS += --enable-hdb=mod+= --with-cyrus-sasl
 
 # Is the absence of this arg causing https://www.opencsw.org/mantis/view.php?id=4468 ?
 CONFIGURE_ARGS += --enable-dynamic
