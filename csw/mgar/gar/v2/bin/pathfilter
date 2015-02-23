@@ -71,7 +71,7 @@ while( <STDIN> ) {
   my @line = split /\s+/;
   my $ftype = $line[0];
   my $path = $line[2];
-  $path =~ s/=.*//;
+  $path =~ s/=.*// if( $ftype eq 's' || $ftype eq 'l' );
   
   # First we remove all directories and then put back what is needed
   if( $ftype eq 'd' ) {
