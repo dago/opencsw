@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.39.0
+VERSION = 7.41.0
 CATEGORIES = net
 GARTYPE = v2
 
@@ -15,6 +15,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://curl.haxx.se/dow+= $(NAME)-$(VERSION).tar.lzma(VVENDOR_URL = http://curl.haxx.se
+
+PATCHFILES += 0001-Use-KRB5CONFIG.patch
 
 # Because of OpenSSL 1.0 update
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386+ency|CSWlibcurl3
@@ -62,7 +64,9 @@ CHECKPKG_OVERRIDES_CSWlibcurl4-feature += surplus-dependency|CSWlibcurl4
 # As it is never linked against the soname doesn't matter here and the package name
 # is obviously different from the soname in this case.
 CHECKPKG_OVERRIDES_CSWlibcurl4-feature += shared-lib-pkgname-mismatch
-CHECKPKG_OVERRIDES_CSWlibcurl4-feature += soname-not-part-of-filename
+CHECKPKG_OVERRIDES_CSWlibcurl4-feature += soname-not-p# Linker anomaly
+CHECKPKG_OVERRIDES_CSWcurl-feature-i386 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWcurl-feature += $(CHECKPKG_OVERRIDES_CSWcurl-feature-$(GARCH))-part-of-filename
 
 PACKAGES += CSWlibcurl-dev
 CATALOGNAME_CSWlibcurl-dev = libcurl_dev
@@ -80,7 +84,9 @@ SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfer
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibz1
 #RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWcurRUNTIME_DEP_PKGS_CSWcurl += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWcurl += CSWlibmetalink3+RUNTIME_DEP_PKGS_CSWcurl += CSWlibintl8+e://curl.haxx.se
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibmetalink3+RUNTIME_DEP_PKGS_CSWcurl += CSWlibintl8+e# Linker anomaly
+CHECKPKG_OVERRIDES_CSWcurl-i386 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWcurl += $(CHECKPKG_OVERRIDES_CSWcurl-$(GARCH))+e://curl.haxx.se
 
 EXTRA_MODULATORS = FEATURES
 MODULATIONS_FEATURES = minimal full
@@ -93,8 +99,13 @@ EXTRA_CONFIGURE_ARGS_features-minimal += --without-librtmp
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ares
 EXTRA_CONFIGURE_ARGS_features-full += --with-spnego=$(libdir)
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ldap
-EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-includes=$(includedir)
-#EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi-libs=$(libdir)+EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi=$(prefix)+= --enable-ldaps
+EXTRA_CONFIGURE_ARGS_features-full +EXTRA_CONFIGURE_ARGS_features-full += --with-libmetalink+# The problem is that krb5-config is taken from $GSSAPI_ROOT/bin/krb5-config which does not take
+# the isa-specific /opt/csw/bin/(sparcv9|amd64)/krb5-config into account. Use workaround until this is fixed:
+#   https://sourceforge.net/p/curl/bugs/1486/
+EXTRA_CONFIGURE_ARGS_features-full += --with-gssapi=$(prefix)
+EXTRA_CONFIGURE_EXPORTS_features-full += KRB5CONFIG
+EXTRA_CONFIGURE_EXPORTS += $(EXTRA_CONFIGURE_EXPORTS_features-$(FEATURES))
+CONFIGURE_ENV_KRB5CONFIG = $(bindir)/krb5-config+= --enable-ldaps
 
 # Make sure to link to the new libnet. See for details http://wiki.opencsw.org/project-libnet
 EXTRA_LDFLAGS = -L$(libdir)/libnet-new
