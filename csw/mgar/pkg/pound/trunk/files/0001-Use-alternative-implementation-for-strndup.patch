@@ -1,0 +1,52 @@
+From e91d0e5b5d253b3dae80b735367c33cc1f078ce0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 25 Feb 2015 13:30:51 +0100
+Subject: [PATCH] Use alternative implementation for strndup
+
+---
+ config.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/config.c b/config.c
+index de1e163..d471bd9 100644
+--- a/config.c
++++ b/config.c
+@@ -33,6 +33,35 @@
+ 
+ #include    <openssl/x509v3.h>
+ 
++/* Implementation of strndup() for libc's that don't have it. */
++
++#include <stdio.h>
++#include <string.h>
++#include <sys/types.h>
++#include <malloc.h>
++
++/* Find the length of STRING, but scan at most MAXLEN characters.
++   If no '\0' terminator is found in that many characters, return MAXLEN.  */
++size_t
++strnlen (const char *string, size_t maxlen)
++{
++  const char *end = memchr (string, '\0', maxlen);
++  return end ? end - string : maxlen;
++}
++
++char *
++strndup (const char *s, size_t n)
++{
++  size_t len = strnlen (s, n);
++  char *new = malloc (len + 1);
++
++  if (new == NULL)
++    return NULL;
++
++  new[len] = '\0';
++  return memcpy (new, s, len);
++}
++
+ #ifdef MISS_FACILITYNAMES
+ 
+ /* This is lifted verbatim from the Linux sys/syslog.h */
+-- 
+2.2.1
+

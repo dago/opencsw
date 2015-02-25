@@ -1,5 +1,5 @@
 NAME = pound
-VERSION = 2.6
+VERSION = 2.7
 CATEGORIES = net
 GARTYPE = v2
 
@@ -14,10 +14,9 @@ endef
 
 MASTER_SITES = http://www.apsNAME = Pound-$(VERSION)
 DISTFILES += $(DISTNAME).tgz
+DISTFILES += pound.cfg
 
-# adjust log/run files
-#PATCHFILES  = patch-pound.h
-#PATCHFILES += patch-pound.8
+PATCHFILES += 0001-Use-alternative-implementation-for-strndup.patch
 
 VENDOR_URL = http://www.apsis.ch/pound/
 
@@ -82,19 +81,15 @@ TEST_SCRIPTS =
 # use a custom install
 INSTALL_SCRIPTS = custom
 
-PRESERVECONF = $(POUNDCFG)onfdir)/pound.cfg
+PRESERVECONF += $(POUNDCFG)onfdir)/pound.cfg
 
 include gar/category.mk
 
-install-custom: 
-	ginstall -d $(DESTDIR)$(sbindir)
-	ginstall -m 555 $(WORKSRC)/pound $(DESTDIR
-	ginstall -m 555 $(WORKSRC)/poundctl $(DESTDIR)$(sbindir)/poundctl
-	ginstall -d $(DESTDIR)$(mandir)/man8
-	ginstall -m 644 $(WORKSRC)/pound.8 $(DESTDIR)$(mandir)/man8/pound.8
-	ginstall -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/poundandir)/man8/poundctl.8
-	ginstall -d $(DESTDIR)$(sysconfdir)/$(NAME)
-	ginstall -m 644 $(FILEDIR)/pound2-samplePOUNDCFG)
+install-cusD -m 555 $(WORKSRC)/pound $(DESTDIR)$(sbindir)/pound
+	ginstall -D -m 555 $(WORKSRC)/poundctl $(DESTDIR)$(sbindir)/poundctl
+	ginstall -D -m 644 $(WORKSRC)/pound.8 $(DESTDIR)$(mandir)/man8/pound.8
+	ginstall -D -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/poundctl.8
+	ginstall -D -m 644 $(WORKDIR)/poundIR)/pound2-samplePOUNDCFG)
 	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 644 $(addprefix $(WORKSRC)/,$(EXTRA_DOCS)) $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)
