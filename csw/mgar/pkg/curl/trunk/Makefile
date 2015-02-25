@@ -65,8 +65,8 @@ CHECKPKG_OVERRIDES_CSWlibcurl4-feature += surplus-dependency|CSWlibcurl4
 # is obviously different from the soname in this case.
 CHECKPKG_OVERRIDES_CSWlibcurl4-feature += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWlibcurl4-feature += soname-not-p# Linker anomaly
-CHECKPKG_OVERRIDES_CSWcurl-feature-i386 += surplus-dependency|CSWlibintl8
-CHECKPKG_OVERRIDES_CSWcurl-feature += $(CHECKPKG_OVERRIDES_CSWcurl-feature-$(GARCH))-part-of-filename
+CHECKPKG_OVERRIDES_CSWlibcurl4-feature-i386 += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibcurl4-feature += $(CHECKPKG_OVERRIDES_CSWlibcurl4-feature-$(GARCH))-part-of-filename
 
 PACKAGES += CSWlibcurl-dev
 CATALOGNAME_CSWlibcurl-dev = libcurl_dev
