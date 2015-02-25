@@ -313,7 +313,7 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibintl8
 endif
 ###CS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
-EXTRA_LINKER_FLAGS += -z ignore -z lazyloadA_# 32 bit only on Solaris 9 - just to save build time
+EXTRA_LINKER_FLAGS += -z ignore -z nolazyloadA_# 32 bit only on Solaris 9 - just to save build time
 BUILD64-5.9 =
 BUILD64-5.10 = 1
 BUILD64 = $(BUILD64-$(GAROSREL))lintl
