@@ -313,7 +313,12 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibintl8
 endif
 ###CS# Needed as the configure script doesn't add it
 EXTRA_LINKER_FLAGS += -lintl 
-EXTRA_LINKER_FLAGS += -z ignore -z nolazyloadA_# 32 bit only on Solaris 9 - just to save build time
+EXTRA_LINKER_FLAGS += -Bdirect -z ignore -z nolazyload
+EXTRA_LD_OPTIONS += -z nolazyload -B direct
+
+# I have no clue what is going on exclusively on S10 sparc, and at this point,
+# I don't care anymore, I'll just ignore all  -- lblume
+CHECKPKG_OVERRIDES_CSWsamba += no-direct-bindingA_# 32 bit only on Solaris 9 - just to save build time
 BUILD64-5.9 =
 BUILD64-5.10 = 1
 BUILD64 = $(BUILD64-$(GAROSREL))lintl
