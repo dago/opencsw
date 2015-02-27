@@ -1,6 +1,6 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.6.2-alpha
+VERSION = 0.2.6.3-alpha
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
@@ -12,7 +12,7 @@ def# This is where the source git repo is located but we are building from the
 endef
 
 MASTER_SITES = http://www.torproject.org/dist/
-DISTFILES  = $(DPATCHFILES += 0001-add-test-to-detect-we-are-on-Solaris.patch(DISTNAME).tar.gz
+DISTFILES  = $(DGARCOMPILER = GCC4(DISTNAME).tar.gz
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
