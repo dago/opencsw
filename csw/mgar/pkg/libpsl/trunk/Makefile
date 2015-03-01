@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = libpsl
-VERSION = 0.7.0
+VERSION = 0.7.1
 GARTYPE = v2
 
 DESCRIPTION = Provides functions to check domains against the Mozilla Public Suffix List
