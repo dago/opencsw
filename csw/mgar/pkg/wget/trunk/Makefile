@@ -25,7 +25,8 @@ DISTFILES += map.wget
 LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.wget)"$(VERSION).tar.xz
 
 VENDOR_URL = http://www.gnu.org# We need wget for pkgutil downlaod and GAR
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+# ...but libpsl has issues on Solaris 9. Don't bother fixing it.
+# PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386rgBUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibidn-dev
 BUILD_DEP_PKGS += CSWlibpcre-dev
