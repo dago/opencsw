@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = fusioninventory-agent
-VERSION = 2.3.15
+VERSION = 2.3.16
 GARTYPE = v2
 CATEGORIES = cpan
 
