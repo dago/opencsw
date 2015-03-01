@@ -4,7 +4,7 @@
 #     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
 
 NAME = wget
-VERSION = 1.15 net
+VERSION = 1.16.2 net
 GARTYPE = v2
 
 DESCRIPTION = A network utility to retrieve files from the Web
@@ -18,12 +18,19 @@ define BLURB
   whole file has been retrieved.
 endef
 
-MASTER_SITESMASTER_SITES += ftp://alpha.gnu.org/gnu/wget/S = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.xz
+MASTER_SITESMASTER_SITES += ftp://ftp.gnu.org/gnu/wget/
+DISTFILES += $(DISTNAME).tar.xz
+DISTFILES += map.wget
+
+LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.wget)"$(VERSION).tar.xz
 
 VENDOR_URL = http://www.gnu.org# We need wget for pkgutil downlaod and GAR
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386rg/software/wget/
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386rgBUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibidn-dev
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWlibuuid-dev
+BUILD_DEP_PKGS += CSWlibpsl-devrg/software/wget/
 
 PACKAGES += CSWwget
 SPKG_DESC_CSWwget = A network utility to retrieve files from the web
@@ -32,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWwget += CSWlibiconv2
 RUNTIME_DEP_PKGS_z1
 RUNTIME_DEP_PKGS_CSWwget += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWwget += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWwget += CSWlibpcregeRUNTIME_DEP_PKGS_CSWwget += CSWlibuuidget += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWwget += CSWlibpcregeRUNTIME_DEP_PKGS_CSWwget += CSWlibuuidgeRUNTIME_DEP_PKGS_CSWwget += CSWlibpsl0et += CSWlibidn11
 
 EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
