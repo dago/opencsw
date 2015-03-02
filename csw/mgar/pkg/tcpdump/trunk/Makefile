@@ -1,5 +1,5 @@
 NAME = tcpdump
-VERSION = 4.5.1
+VERSION = 4.6.2
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -31,6 +31,6 @@ CONFIGURE_ARGS += --with-smi
 # There is a versioned tcpdump, which is not a hardlink. No need for that.
 EXTRA_MERGE_EXCLUDE_FILES = $(sbi# There is a failing test:
 #   https://github.com/the-tcpdump-group/tcpdump/issues/351
-SKIPTEST ?= 1
+# SKIPTEST ?= 1
 
 include gar/category.mk
