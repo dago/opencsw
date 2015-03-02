@@ -1,0 +1,98 @@
+From bbc1db515ef27a477072d6b0be5dbec50108706e Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 1 Mar 2015 11:39:44 +0000
+Subject: [PATCH] Use unsigned char to squash compiler warnings
+
+Sun Studio CC issues warnings that GCC doesn't about improper
+initializers being used when defining tolower_trans_tbl in ctype.c. To
+resolve this, declare tolower_trans_tbl explicitly as unsigned char.
+Update all appropriate references to the new type.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ ctype.c           | 2 +-
+ git-compat-util.h | 2 +-
+ kwset.c           | 8 ++++----
+ kwset.h           | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/ctype.c b/ctype.c
+index 0bfebb4..fc0225c 100644
+--- a/ctype.c
++++ b/ctype.c
+@@ -30,7 +30,7 @@ const unsigned char sane_ctype[256] = {
+ };
+ 
+ /* For case-insensitive kwset */
+-const char tolower_trans_tbl[256] = {
++const unsigned char tolower_trans_tbl[256] = {
+ 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+ 	0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
+ 	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+diff --git a/git-compat-util.h b/git-compat-util.h
+index a51c144..fc1d142 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -691,7 +691,7 @@ static inline size_t xsize_t(off_t len)
+ }
+ 
+ /* in ctype.c, for kwset users */
+-extern const char tolower_trans_tbl[256];
++extern const unsigned char tolower_trans_tbl[256];
+ 
+ /* Sane ctype - no locale, and works with signed chars */
+ #undef isascii
+diff --git a/kwset.c b/kwset.c
+index a0f49b3..4ebaa34 100644
+--- a/kwset.c
++++ b/kwset.c
+@@ -80,13 +80,13 @@ struct kwset
+   struct trie *next[NCHAR];	/* Table of children of the root. */
+   char *target;			/* Target string if there's only one. */
+   int mind2;			/* Used in Boyer-Moore search for one string. */
+-  char const *trans;		/* Character translation table. */
++  unsigned char const *trans;		/* Character translation table. */
+ };
+ 
+ /* Allocate and initialize a keyword set object, returning an opaque
+    pointer to it.  Return NULL if memory is not available. */
+ kwset_t
+-kwsalloc (char const *trans)
++kwsalloc (unsigned char const *trans)
+ {
+   struct kwset *kwset;
+ 
+@@ -381,7 +381,7 @@ kwsprep (kwset_t kws)
+   register struct kwset *kwset;
+   register int i;
+   register struct trie *curr;
+-  register char const *trans;
++  register unsigned char const *trans;
+   unsigned char delta[NCHAR];
+ 
+   kwset = (struct kwset *) kws;
+@@ -590,7 +590,7 @@ cwexec (kwset_t kws, char const *text, size_t len, struct kwsmatch *kwsmatch)
+   register int d;
+   register char const *end, *qlim;
+   register struct tree const *tree;
+-  register char const *trans;
++  register unsigned char const *trans;
+ 
+   accept = NULL;
+ 
+diff --git a/kwset.h b/kwset.h
+index a21b2ea..61a134f 100644
+--- a/kwset.h
++++ b/kwset.h
+@@ -39,7 +39,7 @@ typedef struct kwset_t* kwset_t;
+    if enough memory cannot be obtained.  The argument if non-NULL
+    specifies a table of character translations to be applied to all
+    pattern and search text. */
+-extern kwset_t kwsalloc(char const *);
++extern kwset_t kwsalloc(unsigned char const *);
+ 
+ /* Incrementally extend the keyword set to include the given string.
+    Return NULL for success, or an error message.  Remember an index
+-- 
+2.2.1
+
