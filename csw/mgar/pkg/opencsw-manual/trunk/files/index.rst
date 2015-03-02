@@ -16,6 +16,10 @@ First time here? Go to :ref:`getting started <getting-started>`.
    for-developers/index
    for-maintainers/index
 
+This document is in the source code repository:
+
+http://sourceforge.net/p/gar/code/HEAD/tree/csw/mgar/pkg/opencsw-manual/trunk/files/
+
 .. Indices and tables
    ==================
    * :ref:`genindex`

@@ -19,8 +19,8 @@ There are 6 places for documentation at OpenCSW:
 * `OpenCSW manual`_ (you are here)
 
   * http://www.opencsw.org/manual/
-  * Less frequently changing, but more reviewed and polished documentation.
-  * Part of the source code repository.
+  * Less frequently changing than the wiki
+  * Kept in the source code repository.
 
 * `GAR documentation`_ a.k.a. Trac wiki (account for 2 places)
 
@@ -53,13 +53,18 @@ Additionally, there are places where we are on the web:
 * Facebook: https://www.facebook.com/opencsw
 * LinkedIn: https://www.linkedin.com/groups/OpenCSW-1693847
 
+
 Editing documentation
 ---------------------
 
-Many documentation locations have own user name spaces, and require separate
-account applications and approvals. If you're a maintainer and you don't have
-permissions to edit the wiki, set up an account on wikidot.com and write to
-maintainers@ or ask on the IRC channel to get your user added to the project.
+This document:
+
+http://sourceforge.net/p/gar/code/HEAD/tree/csw/mgar/pkg/opencsw-manual/trunk/files/
+
+Each documentation location has own user name space, unfortunately.  If you're
+a maintainer and you don't have permissions to edit the wikidot wiki, set up
+an account on wikidot.com and write to maintainers@ or ask on the IRC channel
+to get your user added to the project.
 
 If you're a maintainer and you notice something wrong or missing in any of the
 above places, don't leave it broken!  If you're not sure what's supposed to be
@@ -79,6 +84,7 @@ and so is the source code repository. We can always recover content if we need
 to. Once you've deleted the offending piece of text, ask on maintainers@ or IRC
 about given topic and if it's worth documenting, write it down in an
 appropriate place (may not be the place where you originally found it).
+
 
 Moving documentation
 --------------------
