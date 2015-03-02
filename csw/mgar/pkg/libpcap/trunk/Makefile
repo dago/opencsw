@@ -1,5 +1,5 @@
 NAME = libpcap
-VERSION = 1.5.3
+VERSION = 1.6.2
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -18,7 +18,7 @@ LICENSE = LICENSE
 PACKAGES += CSWlibpcap1
 SPKG_DESC_CSWlibpcap1 = System-independent interface for user-level packet capture, libpcap.so.1
 PKGFILES_CSWlibpcap1 += $(call pkgfiles_lib,libpcap.so.1)
-PKGFILES_CSWlibpcap1 += $(mandir)/man5/.*
+PKGFILES_CSWlibpcap1 += $#(mandir)/man5/.*
 OBSOLETED_BY_CSWlibpcap1 += CSWlibpcap
 
 PACKAGES += CSWlibpcap-dev
@@ -26,8 +26,8 @@ SPKG_DESC_CSWlibpcap-dev = Development files for libpcap
 RUNTIME_DEP_PKGS_CSWlibpcap-dev = CSWlibpcap1
 # PKGFILES is catchall
 # Lots of packages require libpcap.so as the old library didn't have a SONAME set.
-# As this link is only in CSWlibpcap-dev the old CSWlibpcap needs to depend on it.
-OBSOLETED_BY_CSWlibpcap-dev += CSWlibpcap
+# As this link is only in CSWlibpcap-dev the old CSWlibpcap needs #OBSOLETED_BY_CSWlibpcap-dev += CSWlibpcap
+#ev += CSWlibpcap
 OBSOLETED_BY_CSWlibpcap-dev += CSWlibpcapdevel
 CATALOGNAME_CSWlibpcapdevel = libpcap_devel_stCONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
