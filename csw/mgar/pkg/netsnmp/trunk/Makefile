@@ -5,7 +5,7 @@
 #
 
 NAME = netsnmp
-VERSION = 5.7.2
+VERSION = 5.7.3
 CATEGORIES = apps
 GARTYPE = v2
 
@@ -42,10 +42,12 @@ PATCHFILES += 0011-Makefile.in.patch
 PATCHFILES += 0012-Makefile.PL.patch
 PATCHFILES += 0015+0016-vmstat_solaris2.patch
 PATCHFILES += 0024-kernel_sunos5.$(GAROSREL).patch
-PATCHFILES += 0034-manpage-snmptrapd.conf.5.def.patch
+# this manpage patch is suspect - upstream has changed the same section in 5.7.3 in a different way
+# PATCHFILES += 0034-manpage-snmptrapd.conf.5.def.patch
 PATCHFILES += 0035-bug-1849903.patch
 PATCHFILES += 0048+0027-mnt-cache-hr_filesys.patch
-PATCHFILES += 0051-CVE-2014-2285.patch
+# this CVE is already fixed in 5.7.3
+# PATCHFILES += 0051-CVE-2014-2285.patch
 PATCHFILES += 0052-dyn-cpu-cpu_kstat.patch
 
 VENDOR_URL = http://www.net-snmp.org/

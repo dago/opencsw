@@ -8,8 +8,6 @@
          /*
           * Now calculate the absolute percentage values 
           * Looks somewhat complicated sometimes but tries to get around using floats to increase speed 
---- a/agent/mibgroup/ucd-snmp/vmstat_solaris2.c
-+++ b/agent/mibgroup/ucd-snmp/vmstat_solaris2.c
 @@ -703,7 +704,12 @@ var_extensible_vmstat(struct variable *vp,
      case CPUIDLE:
          return ((u_char *) (&cpu_perc[CPU_IDLE]));
