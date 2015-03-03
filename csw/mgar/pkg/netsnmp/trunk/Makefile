@@ -64,7 +64,7 @@ BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWpython27-dev
  = CSWpysetuptools
 PACKAGING_PLATFORMS += solaris10-sp solaris11-sparc solaris1110-sparINITSMF = $(sysconfdir)/init.d/netsnmpd
-INITSMF += $(sysconfdir)/init.d/netsnmptrapdar
+INITSMF += $(sysconfdir)/init.d/netsnmptrapdarPRESERVECONF = $(sysconfdir)/snmp/snmpd.confr
 EXTRA_MODULATORS += PYTHON_VERSION
 MODULATIONS_PYTHON_VERSION = 2.6 2.7
 # We need 64 bit just once as it is without python anyway
@@ -245,5 +245,5 @@ CFLAGS := $(filter-out -I/opt/csw/iCFLAGS := $(filter-out -march=%-I/opt/csw/inc
 	ginstall -d $(DESTDIR)/$(localstatedir)/log
 	ginstall -m 755	$(WORKSRC)/dist/snmpd-init.d $(DESTDIR)/$(sysconfdir)/init.d/netsnmpd
 	ginstall -m 755	$(WORKSRC)/dist/snmptrapd-init.d $(DESTDIR)/$(sysconfdir)/init.d/netsnmptrapd
-	ginstall -m 755	$(WORKSRC)/EXAMPLE.conf $(DESTDIR)/$(sysconfdir)/snmp/snmpd.conf
-	@$(MAKECOOKIEcs
+	ginstall -m 755	$(WORKSRC)/EXAMPLE.conf $(DESTDIR)/$(sysconfdir)/snmp/snmpd.conf.CSW
+	@$(MAKECOOKIE)
