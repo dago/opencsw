@@ -1,6 +1,6 @@
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -198,13 +198,13 @@ perlrealclean:
+@@ -224,13 +224,13 @@ perlcleanfeatures:
  #
  PYMAKE=$(PYTHON) setup.py $(PYTHONARGS)
  pythonmodules: subdirs

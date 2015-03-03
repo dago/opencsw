@@ -1,12 +1,13 @@
 --- a/agent/mibgroup/hardware/cpu/cpu_kstat.c
 +++ b/agent/mibgroup/hardware/cpu/cpu_kstat.c
-@@ -17,16 +17,16 @@
+@@ -17,16 +17,18 @@
  extern kstat_ctl_t  *kstat_fd;
  extern int           cpu_num;
  int _cpu_status(char *state);
--
 +static void add_new_kstat_cpu_entry(kstat_t *ksp);
+ 
 +static struct cpu_idx * add_cpu_idx(struct cpu_idx * head, int idx);
++int netsnmp_update_cpu_list( struct cpu_idx * ); /* returns the number of deleted cpus */
 + 
      /*
       * Initialise the list of CPUs on the system
@@ -21,7 +22,7 @@
      netsnmp_cpu_info *cpu = netsnmp_cpu_get_byIdx( -1, 1 );
      strcpy(cpu->name, "Overall CPU statistics");
  
-@@ -41,45 +41,61 @@ void init_cpu_kstat( void ) {
+@@ -41,45 +43,61 @@ void init_cpu_kstat( void ) {
          if ((strcmp(ksp->ks_module, "cpu_info") == 0) &&
              (strcmp(ksp->ks_class,  "misc"    ) == 0)) {
              kstat_read(kstat_fd, ksp, NULL );
@@ -57,7 +58,7 @@
  }
  
 +    /*
-+     * adds the new cpu entry to the exisitng list
++     * adds the new cpu entry to the existing list
 +     */
 +static void
 +add_new_kstat_cpu_entry( kstat_t *ksp ) {
@@ -108,7 +109,7 @@
  
          /* Clear overall stats, ready for summing individual CPUs */
      cpu->user_ticks = 0;
-@@ -94,6 +110,32 @@ int netsnmp_cpu_arch_load( netsnmp_cache *cache, void *magic ) {
+@@ -94,6 +112,32 @@ int netsnmp_cpu_arch_load( netsnmp_cache
  
      kstat_chain_update( kstat_fd );
      DEBUGMSGTL(("cpu", "cpu_kstat load\n "));
@@ -141,7 +142,7 @@
      for (ksp = kstat_fd->kc_chain; ksp != NULL; ksp = ksp->ks_next) {
          if (ksp->ks_flags & KSTAT_FLAG_INVALID)
              continue;
-@@ -135,9 +177,43 @@ int netsnmp_cpu_arch_load( netsnmp_cache *cache, void *magic ) {
+@@ -137,9 +181,44 @@ int netsnmp_cpu_arch_load( netsnmp_cache
              cpu->nCtxSwitches += (unsigned long long)cs.cpu_sysinfo.pswitch;
          }
      }
@@ -179,7 +180,8 @@
 +            return head;
 +        }
 +    }
-+
++    DEBUGMSG(("cpu", "(cpu_idx creation failed)\n"));
++    return head; 
 +}
 +
  int
@@ -187,7 +189,7 @@
  {
 --- a/agent/mibgroup/hardware/cpu/cpu.c
 +++ b/agent/mibgroup/hardware/cpu/cpu.c
-@@ -271,4 +271,60 @@ void _cpu_copy_stats( netsnmp_cpu_info *cpu )
+@@ -271,4 +271,60 @@ void _cpu_copy_stats( netsnmp_cpu_info *
      cpu2->pageIn     = cpu->pageIn;
      cpu2->pageOut    = cpu->pageOut;
  }
@@ -248,40 +250,9 @@
 +}
 +
  #endif /* NETSNMP_FEATURE_REMOVE_HARDWARE_CPU_COPY_STATS */
---- a/agent/mibgroup/hardware/cpu/cpu_kstat.c
-+++ b/agent/mibgroup/hardware/cpu/cpu_kstat.c
-@@ -18,7 +18,9 @@ extern kstat_ctl_t  *kstat_fd;
- extern int           cpu_num;
- int _cpu_status(char *state);
- static void add_new_kstat_cpu_entry(kstat_t *ksp);
-+
- static struct cpu_idx * add_cpu_idx(struct cpu_idx * head, int idx);
-+int netsnmp_update_cpu_list( struct cpu_idx * ); /* returns the number of deleted cpus */
-  
-     /*
-      * Initialise the list of CPUs on the system
-@@ -49,7 +51,7 @@ void init_cpu_kstat( void ) {
- }
- 
-     /*
--     * adds the new cpu entry to the exisitng list
-+     * adds the new cpu entry to the existing list
-      */
- static void
- add_new_kstat_cpu_entry( kstat_t *ksp ) {
-@@ -211,7 +213,8 @@ add_cpu_idx(struct cpu_idx * head, int idx)
-             return head;
-         }
-     }
--
-+    DEBUGMSG(("cpu", "(cpu_idx creation failed)\n"));
-+    return head; 
- }
- 
- int
 --- a/include/net-snmp/agent/hardware/cpu.h
 +++ b/include/net-snmp/agent/hardware/cpu.h
-@@ -66,3 +66,11 @@ netsnmp_cpu_info *netsnmp_cpu_get_byName( char*, int );
+@@ -66,3 +66,11 @@ netsnmp_cpu_info *netsnmp_cpu_get_byName
  
  netsnmp_cache *netsnmp_cpu_get_cache( void );
  int netsnmp_cpu_load( void );
