@@ -1,5 +1,1 @@
-08153de5eadceb2e22ee24083d13dc4d  Makefile.in.patch
-76eebb10e449d11374c09661d448ca99  ffi64.c.patch
-c280f263ff0eab3248ea8abd9d0be21c  ffi_common.h.patch
-0e72bc1c6b8f797377f502e36b8df294  ffi_target.h.patch
-1f300a7a7f975d4046f51c3022fa5ff1  libffi-3.0.9.tar.gz
+83b89587607e3eb65c70d361f13bab43  libffi-3.2.1.tar.gz
