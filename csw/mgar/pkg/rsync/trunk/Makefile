@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = rsync
-VERSION = 3.1.0
+VERSION = 3.1.1
 CATEGORIES = utils
 GARTYPE = v2
 
@@ -60,3 +60,6 @@ include gar/categot-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/cs	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -m 0644 $(WORKDIR)/rsyncd.conf.CSW $(DESTDIR)$(sysconfdir)
+	ginstall -d $(DESTDIR)$(sharedstatedir)/rsync/support/
+	ginstall -m 0755 $(WORKSRC)/support/* $(DESTDIR)$(sharedstatedir)/rsync/support/
+	@$(MAKECOOKIE)
