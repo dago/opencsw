@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = libffi
-VERSION = 3.0.9
+VERSION = 3.2.1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -18,39 +18,39 @@ endef
 
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$
 # Not needed unless using SOS compiler
+#ing SOS compiler
 PATCHFILES += Makefile.in.patch
-# Not really needed for build, but for SOS compiler using libffi
-PATCHFILES += ffi_common.h.patch
-PATCHFILES += ffi_target.h.patch
+# Not really needed for build, but for SOS comp (not neeeded for recent libffi)
+#PATCHFILES += ffi_common.h.patch
+
+#PATCHFILES += ffi_target.h.patch
+fi_target.h.patch
 # Fix needed for amd64 using SOS compiler
 # found at http://software.intel.com/en-us/forums/showthread.php?t=56652
-# originally for icc, but at least get the stuff to compile
-PATCHFILES += ffi64.c.patch
-PATCHFILES += 0005-libffi.pc-should-point-at-opt-csw-include.patch
-PATCHFILES += 0006-Set-libdir-to-opt-csw-lib-ffi.patch
+# originally for icc, but at least get the # PATCHFILES += ffi64.c.patch
+#PATCHFILES += 0005-libffi.pc-should-point-at-opt-csw-include.patch
+#PATCHFILES += 0006-Set-libdir-to-opt-csw-lib-ffi.patch
 
-OBSOLETED_BY_CSWlibffi5 = CSWlibffi
-OBSOLETED_BY_CSWlibffi5-dev = CSWlibffi
-INCOMPATIBLE_PKGS_CSWlibffi5 = CSWlibffi
 
-PACK5
-PKGFILES_CSWlibffi5 += $(call baseisadirs,$(libdir),libffi\.so\.5(\.\d+)*)
-SPKG_DESC_CSWlibffi5 += $(DESCRIPTION), libffi.so.5
+PACKAGES += CSWlibffi6
+PKGFILES_CSWlibffi6 += $(call baseisadirs,$(libdir),libffi\.so\.6(\.\d+)*)
+SPKG_DESC_CSWlibffi6 += $(DESCRIPTION), libffi.so.6
+
+RUNTIME_DEP_PKGS_CSWlibffi6 += CSWlibgcc-s1
 
 PACKAGES += CSWlibffi-dev
 SPKG_DESC_CSWlibffi-dev = $(DESCRIPTION) - developer package
-RUNTIME_DEP_PKGS_CSWlibffi-dev += CSWlibffi5*/libffi\.so\.5.*
+RUNTIME_DEP_PKGS_CSWlibffi-dev += CSWlibffi6
+
 
 LICENSE = LICENSE
 
-BUILD64_LIBS_ONLY = 1
-
+GARCOMPILER = GNU
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-# Tests fail since they are wri
-# But they also fails on 64-bit even when using gcc
+# disabled because they need DejaGNU
 #TEST_TARGET = check
 TEST_TARGET =ck
 TEST_TARGET = 
@@ -74,7 +74,7 @@ pre-configure-isa-sparcv9:
 post-install-modulated:
 	rm $(DESTDIR)$(libdir)/libffi.so
 	ginstall -m 755 -d $(DESTDIR)$(libdir)/ffi
-	ln -s ../libffi.so.5.0.10 $(DESTDIR)$(libdir)/ffi/libffi.so
+	ln6.0.4/libffi.so.5.0.10 $(DESTDIR)$(libdir)/ffi/libffi.so
 	ginstall -d -m 755 $(DESTDIR)$(includedir)
 	# By default, libffi installer puts include files into a subdirectory under
 	# /opt/csw/lib, which makes the header files hard to find.  We're moving
