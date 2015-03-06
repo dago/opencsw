@@ -1,0 +1,25 @@
+From 1aa0fed54964d61fab9479937c45ae2aea1770a6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 3 Mar 2015 14:09:37 +0100
+Subject: [PATCH] Prefer local header files
+
+---
+ buildtools/wafadmin/Tools/cc.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/buildtools/wafadmin/Tools/cc.py b/buildtools/wafadmin/Tools/cc.py
+index 903a1c5..083fd18 100644
+--- a/buildtools/wafadmin/Tools/cc.py
++++ b/buildtools/wafadmin/Tools/cc.py
+@@ -88,7 +88,7 @@ def c_hook(self, node):
+ 		raise Utils.WafError('Have you forgotten to set the feature "cc" on %s?' % str(self))
+ 	return task
+ 
+-cc_str = '${CC} ${CCFLAGS} ${CPPFLAGS} ${_CCINCFLAGS} ${_CCDEFFLAGS} ${CC_SRC_F}${SRC} ${CC_TGT_F}${TGT}'
++cc_str = '${CC} ${CCFLAGS} ${_CCINCFLAGS} ${CPPFLAGS} ${_CCDEFFLAGS} ${CC_SRC_F}${SRC} ${CC_TGT_F}${TGT}'
+ cls = Task.simple_task_type('cc', cc_str, 'GREEN', ext_out='.o', ext_in='.c', shell=False)
+ cls.scan = ccroot.scan
+ cls.vars.append('CCDEPS')
+-- 
+2.2.1
+
