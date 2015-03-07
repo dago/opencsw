@@ -19,6 +19,9 @@ endef
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
 DISTFILES  = $(NAME)-$
+#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386$
 # Not needed unless using SOS compiler
 #ing SOS compiler
 PATCHFILES += Makefile.in.patch
