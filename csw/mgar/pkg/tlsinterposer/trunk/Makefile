@@ -2,13 +2,14 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = tlsinterposer
-VERSION = 1.1.0
+VERSION = 1.3.0
 GARTYPE = v2
 
 DESCRIPTION = OpenSSL library interposer to make existing binary software use more secure TLS protocol variants
 
 MASTER_SITES = https://github.com/Netfuture/tlsinterposer/archive/
 DISTFILES  = v$(VERSION).tar.gz
+PATCHFILES += 0001-create_ssl_version.patch
 
 LICENSE = LICENSE.txt
 

@@ -1,0 +1,20 @@
+From 246b9216d53e6327b96591f493c3196b3384e836 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Mon, 9 Mar 2015 12:53:49 +0100
+Subject: [PATCH] create_ssl_version
+
+---
+ ssl-version.h | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 ssl-version.h
+
+diff --git a/ssl-version.h b/ssl-version.h
+new file mode 100644
+index 0000000..6adb966
+--- /dev/null
++++ b/ssl-version.h
+@@ -0,0 +1 @@
++#define DEFAULT_SSLLIB "libssl.so.1.0.0"
+-- 
+2.3.1
+
