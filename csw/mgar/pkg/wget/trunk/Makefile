@@ -4,7 +4,7 @@
 #     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
 
 NAME = wget
-VERSION = 1.16.2 net
+VERSION = 1.16.3 net
 GARTYPE = v2
 
 DESCRIPTION = A network utility to retrieve files from the Web
