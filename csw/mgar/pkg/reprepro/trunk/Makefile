@@ -43,6 +43,7 @@ PATCHFILES	+=	0004-implement-missing-getline-function.patch
 INSTALL_SCRIPTS		=	nominal
 INSTALL_SCRIPTS		+=	custom
 
+RUNTIME_DEP_PKGS_CSWreprepro	+=	CSWlibgpgme11
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
