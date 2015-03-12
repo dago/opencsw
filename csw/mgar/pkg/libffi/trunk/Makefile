@@ -54,7 +54,12 @@ LICENSE = LICENSE
 
 BUILD64 = 1
 GARCOMPILER = GNU
-CONFIGURE_ARGS  = $(DIRPATHS)
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --enable-portable-binary
+
+# We need objdump
+CONFIGURE_ENV_PATH = $(PATH):/opt/csw/gnu
 
 # disabled because they need DejaGNU
 #TEST_TARGET = check
