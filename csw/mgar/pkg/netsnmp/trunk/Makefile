@@ -49,6 +49,9 @@ PATCHFILES += 0048+0027-mnt-cache-hr_filesys.patch
 # this CVE is already fixed in 5.7.3
 # PATCHFILES += 0051-CVE-2014-2285.patch
 PATCHFILES += 0052-dyn-cpu-cpu_kstat.patch
+# upstream patch https://sourceforge.net/p/net-snmp/patches/1297/
+# has been included upstream and can be removed when moving to next higher version
+PATCHFILES += 0053-three-seconds.patch
 
 VENDOR_URL = http://www.net-snmp.org/
 
