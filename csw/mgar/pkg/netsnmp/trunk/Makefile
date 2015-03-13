@@ -21,6 +21,8 @@ SF_PROJ = net-snmp
 MASTER_SITES = $(SF_MIRRORS)
 DIECT)-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
+DISTFILES += map.special
+
 
 REINPLACE_USRLOCAL += perl/TrapReceiver/TrapReceiver.pm
 REINPLACE_USRLOCAL += local/ipf-mod.pl
@@ -55,7 +57,7 @@ PATCHFILES += 0053-three-seconds.patch
 
 VENDOR_URL = http://www.net-snmp.org/
 
-# GARCOMPILER = SOS12U3
+#GARCOMPILER = SOS12U3
 GARCOMPILER = GCC4
 
 BUILD_DEP_PKGS = CSWpy-setuptools
@@ -179,7 +181,8 @@ CPPFLAGS =
 EXTRA_CFLAGS = $(INCLUDE_FLAGS)
 # link not to the old alrea# LD_OPTIONS =
 # EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -xnorunpath
-# EXTRA_LDFLAGS = $(LD_OPTIONS)FLAGS) -xnorunpath
+# EXTRA_LDFLAGS = $(LD_OPTIONS)F#map file broken somehow user special on
+LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.special)"FLAGS) -xnorunpath
 
 CONFIGURE_ARGS_mm-32  = --disable-embedded-perl
 CONFIGURE_ARGS_mm-32  += --wit --disable-perl-cc-checkth-perl-modules=yes
