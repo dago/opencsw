@@ -1,0 +1,11 @@
+--- a/configure.orig	Sun Mar 15 22:01:08 2015
++++ b/configure	Sun Mar 15 22:01:40 2015
+@@ -18571,7 +18571,7 @@
+ 	# we ensure that we can compile _and_ link an assembly file containing an @unwind section
+ 	# since the compiler can support it and not the linker (ie old binutils)
+ 	if $CC -Wa,--fatal-warnings $CFLAGS -c conftest1.s > /dev/null 2>&1 && \
+-           $CC conftest2.c conftest1.o > /dev/null 2>&1 ; then
++           $CC $CFLAGS conftest2.c conftest1.o > /dev/null 2>&1 ; then
+ 	    libffi_cv_as_x86_64_unwind_section_type=yes
+ 	fi
+ 
