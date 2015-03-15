@@ -24,6 +24,8 @@ PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386$
 BUILD64 = 1
 $
+#fix unwind test
+PATCHFILES += configure.patch
 # Not needed unless using SOS compiler
 #ing SOS compiler
 PATCHFILES += Makefile.in.patch
