@@ -67,7 +67,8 @@ BUILD_DEP_PKGS += CSWlibtool
 BUILD_DEP_PKGS += CSWlibssl-dev
 BUILD_DEP_PKGS += CSWpython-dev
 BUILD_DEP_PKGS += CSWpython27-dev
- = CSWpysetuptools
+ ### 20150312/hjb - solaris 11 doesn't build
+#= CSWpysetuptools
 PACKAGING_PLATFORMS += solaris10-sp solaris11-sparc solaris1110-sparINITSMF = $(sysconfdir)/init.d/netsnmpd
 INITSMF += $(sysconfdir)/init.d/netsnmptrapdarPRESERVECONF = $(sysconfdir)/snmp/snmpd.confr
 EXTRA_MODULATORS += PYTHON_VERSION
@@ -182,6 +183,14 @@ EXTRA_CFLAGS = $(INCLUDE_FLAGS)
 # link not to the old alrea# LD_OPTIONS =
 # EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS) -xnorunpath
 # EXTRA_LDFLAGS = $(LD_OPTIONS)F#map file broken somehow user special on
+# 20150316/hjb this is due to a "bug" in ld which fails if a mapfile
+# is specified twice to -M. That happens here because LD_OPTIONS is set
+# during build of python modules - the compiler/linker flags are inherited
+# from pythons' build itself - so we end up with -M <mapfile> set twice.
+# ld then complains about ADDVERS beeing specified but not used, even if
+# it should just ignore that. Note this only happens with libs that are
+# explicitely linked via -l<lib>, -lnsl in this case.
+# The special mapfile contains no libnsl.so specification to "solve" this.
 LINKER_MAPS ?= -M "$(abspath $(WORKDIR)/map.special)"FLAGS) -xnorunpath
 
 CONFIGURE_ARGS_mm-32  = --disable-embedded-perl
