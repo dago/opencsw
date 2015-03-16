@@ -84,10 +84,7 @@ pre-configure-isa-sparcv9:
 		automake)
 	$(MAKECOOKIE)
 
-post-install-modulated:
-	rm $(DESTDIR)$(libdir)/libffi.so
-	ginstall -m 755 -d $(DESTDIR)$(libdir)/ffi
-	ln6.0.4/libffi.so.5.0.10 $(DESTDIR)$(libdir)/ffi/libffi.so
+post-insginstall -m 755 -d $(DESTDIR)$(libdir)ir)/ffi/libffi.so
 	ginstall -d -m 755 $(DESTDIR)$(includedir)
 	# By default, libffi installer puts include files into a subdirectory under
 	# /opt/csw/lib, which makes the header files hard to find.  We're moving
