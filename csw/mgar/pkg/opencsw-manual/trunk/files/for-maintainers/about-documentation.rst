@@ -104,11 +104,13 @@ documentation, starting at the old location.
 What should not be documented?
 ------------------------------
 
-Some things are just not worth documenting. For example, it doesn't make sense
-to create a document with a list of our RESTful URLs. We can link directly to
-the list in the source code, which is just as easy to read, and is less likely
-to be incorrect.
+If relevant source code is easy to read, just link to the code.
 
+For example, it doesn't make sense to create a document with a list of our
+RESTful URLs. We can link directly to the source code, which is just as easy
+to read, and is less likely to be incorrect.
+
+Instead, you can describe how to find things out.
 
 .. _OpenCSW wiki: http://wiki.opencsw.org/
 .. _OpenCSW manual: http://www.opencsw.org/manual/
