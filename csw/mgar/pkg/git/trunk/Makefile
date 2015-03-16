@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 2.3.1
+VERSION = 2.3.3
 #PATCHLEVEL = rc4
 DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = devel
@@ -98,7 +98,7 @@ DISTFILES += CSWgit.postinstall
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
 PATCHFILES += 0002-Alter-the-value-of-_PATH_DEFPATH-when-paths.h-not-pr.patch
 PATCHFILES += 0003-Use-bash-and-set-PATH-in-contributed-hook-file.patch
-PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instawebPATCHFILES += 0005-Use-unsigned-char-instead-of-char-to-ensure-squash-cnstawebb-search-path.patch
+PATCHFILES += 0004-Add-OpenCSW-apache2-path-to-instawebb-search-path.patch
 # this patch is required on current9s (not necessarily all sparc boxes) due
 # to the selection of available utf8 locales.
 PATCHFILES_isa-sparcv8 += 0005-Force-en_US.UTF-8-for-a-e-references.patch
