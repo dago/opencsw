@@ -1,3 +1,5 @@
+.. $Id$
+
 ===============================
 OpenCSW for Package Maintainers
 ===============================
@@ -18,3 +20,4 @@ package repositories, either at OpenCSW or at their own organization.
   buildfarm-setup
   32-bit-and-64-bit
   catalog-releases
+  automated-release-process
