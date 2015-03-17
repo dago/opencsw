@@ -93,6 +93,7 @@ RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnetsnmpagent30
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplds4
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibnss3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibplc4
+RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibfreebl3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWbdb48
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSW389-ds-base += CSWlibkrb5-3
