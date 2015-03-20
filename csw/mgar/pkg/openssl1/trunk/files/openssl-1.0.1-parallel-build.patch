@@ -182,7 +182,7 @@ http://rt.openssl.org/Ticket/Display.html?id=2084
  
  apps:
  	@(cd ..; $(MAKE) DIRS=apps all)
-@@ -365,109 +365,109 @@
+@@ -388,118 +388,118 @@
  		link_app.$${shlib_target}
  
  $(RSATEST)$(EXE_EXT): $(RSATEST).o $(DLIBCRYPTO)
@@ -301,6 +301,10 @@ http://rt.openssl.org/Ticket/Display.html?id=2084
 -	@target=$(EVPTEST); $(BUILD_CMD)
 +	+@target=$(EVPTEST); $(BUILD_CMD)
  
+ $(EVPEXTRATEST)$(EXE_EXT): $(EVPEXTRATEST).o $(DLIBCRYPTO)
+-	@target=$(EVPEXTRATEST); $(BUILD_CMD)
++	+@target=$(EVPEXTRATEST); $(BUILD_CMD)
+ 
  $(ECDSATEST)$(EXE_EXT): $(ECDSATEST).o $(DLIBCRYPTO)
 -	@target=$(ECDSATEST); $(BUILD_CMD)
 +	+@target=$(ECDSATEST); $(BUILD_CMD)
@@ -324,6 +328,14 @@ http://rt.openssl.org/Ticket/Display.html?id=2084
  $(SRPTEST)$(EXE_EXT): $(SRPTEST).o $(DLIBCRYPTO)
 -	@target=$(SRPTEST); $(BUILD_CMD)
 +	+@target=$(SRPTEST); $(BUILD_CMD)
+ 
+ $(HEARTBEATTEST)$(EXE_EXT): $(HEARTBEATTEST).o $(DLIBCRYPTO)
+-	@target=$(HEARTBEATTEST); $(BUILD_CMD_STATIC)
++	+@target=$(HEARTBEATTEST); $(BUILD_CMD_STATIC)
+ 
+ $(CONSTTIMETEST)$(EXE_EXT): $(CONSTTIMETEST).o
+-	@target=$(CONSTTIMETEST) $(BUILD_CMD)
++	+@target=$(CONSTTIMETEST) $(BUILD_CMD)
  
  #$(AESTEST).o: $(AESTEST).c
  #	$(CC) -c $(CFLAGS) -DINTERMEDIATE_VALUE_KAT -DTRACE_KAT_MCT $(AESTEST).c
