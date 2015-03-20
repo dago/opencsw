@@ -14,7 +14,9 @@ DISTFILES = $(SOURCEFILES)
 
 VENDOR_URL = http://icu-project.org/
 
-LICENSE#solaris 9 specific patch for missing PTR_MAX
+LICENSE#where can we build?
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386SE#solaris 9 specific patch for missing PTR_MAX
 PATCHFILES_5.9 += LETypes_ptr_sol9.patch
 
 PATCHFILES += $(PATCHFILES_$(GAROSREL))SE = license.html
