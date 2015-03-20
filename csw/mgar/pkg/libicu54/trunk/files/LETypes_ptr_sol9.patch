@@ -1,0 +1,20 @@
+--- a/source/layout/LETypes.h.orig	Fri Mar 20 09:23:20 2015
++++ b/source/layout/LETypes.h	Fri Mar 20 09:43:47 2015
+@@ -296,17 +296,9 @@
+  * Max value representable by a uintptr
+  */
+ 
+-#ifndef UINT32_MAX
+ #define LE_UINT32_MAX 0xFFFFFFFFU
+-#else
+-#define LE_UINT32_MAX UINT32_MAX
+-#endif
+ 
+-#ifndef UINTPTR_MAX
+ #define LE_UINTPTR_MAX LE_UINT32_MAX
+-#else
+-#define LE_UINTPTR_MAX UINTPTR_MAX
+-#endif
+ 
+ /**
+  * Range check for overflow
