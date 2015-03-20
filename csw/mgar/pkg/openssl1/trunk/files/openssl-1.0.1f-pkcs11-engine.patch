@@ -156,9 +156,9 @@
 --- crypto/dso/dso_lib.c Thu Sep  5 12:59:50 2013
 +++ openssl-1.0.1e/crypto/dso/dso_lib.c Thu Sep  5 12:59:50 2013
 @@ -426,6 +426,26 @@
- 		DSOerr(DSO_F_DSO_CONVERT_FILENAME,DSO_R_NO_FILENAME);
- 		return(NULL);
- 		}
+         DSOerr(DSO_F_DSO_CONVERT_FILENAME, DSO_R_NO_FILENAME);
+         return (NULL);
+     }
 +	/*
 +	 * For pkcs11 engine, use libpk11.so (instead of libpkcs11.so) to
 +	 * avoid the name collision with PKCS#11 library.
@@ -179,9 +179,9 @@
 +		BUF_strlcpy(result, fullpath, strlen(fullpath) + 1);
 +		return (result);
 +		}
- 	if((dso->flags & DSO_FLAG_NO_NAME_TRANSLATION) == 0)
- 		{
- 		if(dso->name_converter != NULL)
+     if ((dso->flags & DSO_FLAG_NO_NAME_TRANSLATION) == 0) {
+         if (dso->name_converter != NULL)
+             result = dso->name_converter(dso, filename);
 --- /tmp/engine.h       Fri Feb 11 14:46:24 2011
 +++ openssl-1.0.0d/crypto/engine/engine.h       Fri Feb 11 14:47:32 2011
 @@ -351,6 +351,7 @@
