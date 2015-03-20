@@ -14,7 +14,10 @@ DISTFILES = $(SOURCEFILES)
 
 VENDOR_URL = http://icu-project.org/
 
-LICENSE = license.html
+LICENSE#solaris 9 specific patch for missing PTR_MAX
+PATCHFILES_5.9 += LETypes_ptr_sol9.patch
+
+PATCHFILES += $(PATCHFILES_$(GAROSREL))SE = license.html
 
 PACKAGES54
 SPKG_DESC_CSWlibicudata54 = International Components for Unicode, libicudata.so.54
