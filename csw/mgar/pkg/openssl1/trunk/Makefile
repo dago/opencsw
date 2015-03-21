@@ -121,11 +121,15 @@ PATCHFILES += 0007-enables-symbols-veropenssl currently only uses issetugid on f
 # We make issetugid support configurable via preprocessor flag
 # to be able to enable it for Solaris
 # Bug opened upstream: http://rt.openssl.org/Ticket/Display.html?id=3153
-PATCHFILES += make_issetugid_support_configurableymbols-versioning.patch
+PATCHFILES += make_issetugid_support_configurableymbols-verPatch taken from Oracle upstream (PSARC/2014/077 OpenSSL Thread and Fork Safety 17822462) 
+# from https://hg.openindiana.org/upstream/oracle/userland-gate/
+# This patch solves a bug with thread and fork safety and is also needed so that
+# upstream wanboot patch can be applied out of the box
+PATCHFILES += openssl-1.0.1m-fork_safeymbols-versioning.patch
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integratee
 ifdef PKCS11
-ifneq ($(shell /usr/bi       PATCHFILES += openssl-1.0.1f-pkcs11-engine.patch
+ifneq ($(shell /usr/bi       PATCHFILES += openssl-1.0.1m-pkcs11-engine.patch
        ENGINES += pk11.patch.4-30
 endif
 endif
@@ -138,7 +142,8 @@ endif
 
 # The upstream t4 engine patch depends on the wanboot one
 # so we will apply the wanboot patch even if we will not enable wanboot
-PATCHFILES.sparc.5.11 += openssl-1.0.1f-wanboot.patchlPATCHFILES.sparc.5.11 += openssl-1.0.1f-t4-engine.sparc.5.11.patch
+PATCHFILES.sparc.5.11 += openssl-1.0.1m-wanboot.patch
+PATCHFILES.sparc.5.11 += openssl-1.0.1m-t4-engine.sparc.5.11.patch
 PATCHFILES.sparc.5.11 += openssl-1.0.1e-t4-engine-sparcv9+vis.sparc.5.11.patch
 PATCHFILES += $(PATCHFILES.$(GARCH).$(GAROSREL))
 
