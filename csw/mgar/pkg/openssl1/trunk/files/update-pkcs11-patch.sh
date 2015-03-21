@@ -5,7 +5,8 @@
 #           
 
 PKCS11_ENGINE_FILES="e_pk11.c e_pk11.h e_pk11_err.c e_pk11_err.h e_pk11_pub.c e_pk11_uri.c e_pk11_uri.h"
-SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
+#SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
+SOURCE_URL="https://hg.openindiana.org/upstream/oracle/userland-gate/raw-file/default/components/openssl/openssl-1.0.1/"
 WGET_OPTIONS="--quiet"
 
 
