@@ -37,20 +37,16 @@ fi_target.h.patch
 # Fix needed for amd64 using SOS compiler
 # found at http://software.intel.com/en-us/forums/showthread.php?t=56652
 # originally for icc, but at least get the # PATCHFILES += ffi64.c.patch
-#PATCHFILES += 0005-libffi.pc-should-point-at-opt-csw-include.patch
-#PATCHFILES += 0006-Set-libdir-to-opt-csw-lib-ffi.patch
-
 
 PACKAGES += CSWlibffi6
-PKGFILES_CSWlibffi6 += $(call baseisadirs,$(libdir),libffi\.so\.6(\.\d+)*)
 SPKG_DESC_CSWlibffi6 += $(DESCRIPTION), libffi.so.6
-
+PKGFILES_CSWlibffi6 += $(call pkgfiles_lib,libffi.so.6)
 RUNTIME_DEP_PKGS_CSWlibffi6 += CSWlibgcc-s1
 
 PACKAGES += CSWlibffi-dev
 SPKG_DESC_CSWlibffi-dev = $(DESCRIPTION) - developer package
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibffi-dev += CSWlibffi6
-
 
 LICENSE = LICENSE
 
@@ -64,8 +60,7 @@ CONFIGURE_ARGS += --enable-portable-binary
 CONFIGURE_ENV_PATH = $(PATH):/opt/csw/gnu
 
 # disabled because they need DejaGNU
-#TEST_TARGET = check
-TEST_TARGET =ck
+SKIPTEST ?= 1ck
 TEST_TARGET = 
 
 include gar/category.mk
@@ -81,14 +76,4 @@ pre-configure-isa-sparcv8:
 pre-configure-isa-sparcv9:
 	@( cd $(WORKSRC); gsed -e "s|src/sparc/v8.S||" -e "s/AM_CFLAGS = .*/AM_CFLAGS = /" -i Makefile.am ; \
 		aclocal; \
-		automake)
-	$(MAKECOOKIE)
-
-post-insginstall -m 755 -d $(DESTDIR)$(libdir)ir)/ffi/libffi.so
-	ginstall -d -m 755 $(DESTDIR)$(includedir)
-	# By default, libffi installer puts include files into a subdirectory under
-	# /opt/csw/lib, which makes the header files hard to find.  We're moving
-	# them to /opt/csw/include.
-	gmv -v $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)/include/* $(DESTDIR)$(includedir)
-	rmdir $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)/include
-	rmdir $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)
+		automake
