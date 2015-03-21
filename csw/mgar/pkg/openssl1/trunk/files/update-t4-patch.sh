@@ -5,7 +5,9 @@
 #           
 
 T4_ENGINE_FILES="sparc_arch.h md5-sparcv9.pl aest4-sparcv9.pl dest4-sparcv9.pl sparcv9_modes.pl vis3-mont.pl sparcv9-gf2m.pl sparct4-mont.pl"
-SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
+MAIN_T4_PATCH_FILE="37_openssl_t4_inline.patch"
+#SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
+SOURCE_URL="https://hg.openindiana.org/upstream/oracle/userland-gate/raw-file/default/components/openssl/openssl-1.0.1/"
 WGET_OPTIONS="--quiet"
 
 
@@ -21,7 +23,7 @@ PATCH_DATE=$(date +"%Y-%m-%d %H:%M:%S.%N %z")
 echo "Updating t4 engine patch from ${SOURCE_URL}..."
 (
 	# ar in in /usr/ccs/bin under Solaris 9 and 10 so we change the path
-	wget $WGET_OPTIONS --output-document=- ${SOURCE_URL}/patches/openssl-t4-inline.sparc-patch | \
+	wget $WGET_OPTIONS --output-document=- ${SOURCE_URL}/patches/${MAIN_T4_PATCH_FILE} | \
 		sed -e 's/\/usr\/bin\/ar/\/usr\/ccs\/bin\/ar/g'
 
 	# in the repository, the new files are not part of the patch, but we merge them

@@ -5,7 +5,8 @@
 #           
 
 WANBOOT_FILES=""
-SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
+#SOURCE_URL="http://buildfarm.opencsw.org/source/raw/solaris-userland/components/openssl/openssl-1.0.1/"
+SOURCE_URL="https://hg.openindiana.org/upstream/oracle/userland-gate/raw-file/default/components/openssl/openssl-1.0.1/"
 WGET_OPTIONS="--quiet"
 
 
