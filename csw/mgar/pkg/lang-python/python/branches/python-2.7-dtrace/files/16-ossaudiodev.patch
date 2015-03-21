@@ -1,0 +1,58 @@
+--- Python-2.7.7/Modules/ossaudiodev.c.~1~	2014-05-31 11:58:40.000000000 -0700
++++ Python-2.7.7/Modules/ossaudiodev.c	2014-06-02 10:58:12.132478970 -0700
+@@ -1037,6 +1037,7 @@
+     _EXPORT_INT(m, SOUND_MIXER_MONITOR);
+ #endif
+ 
++#ifndef __sun
+     /* Expose all the ioctl numbers for masochists who like to do this
+        stuff directly. */
+     _EXPORT_INT(m, SNDCTL_COPR_HALT);
+@@ -1049,6 +1050,7 @@
+     _EXPORT_INT(m, SNDCTL_COPR_SENDMSG);
+     _EXPORT_INT(m, SNDCTL_COPR_WCODE);
+     _EXPORT_INT(m, SNDCTL_COPR_WDATA);
++#endif
+ #ifdef SNDCTL_DSP_BIND_CHANNEL
+     _EXPORT_INT(m, SNDCTL_DSP_BIND_CHANNEL);
+ #endif
+@@ -1070,8 +1072,12 @@
+     _EXPORT_INT(m, SNDCTL_DSP_GETSPDIF);
+ #endif
+     _EXPORT_INT(m, SNDCTL_DSP_GETTRIGGER);
++#ifdef SNDCTL_DSP_MAPINBUF
+     _EXPORT_INT(m, SNDCTL_DSP_MAPINBUF);
++#endif
++#ifdef SNDCTL_DSP_MAPOUTBUF
+     _EXPORT_INT(m, SNDCTL_DSP_MAPOUTBUF);
++#endif
+     _EXPORT_INT(m, SNDCTL_DSP_NONBLOCK);
+     _EXPORT_INT(m, SNDCTL_DSP_POST);
+ #ifdef SNDCTL_DSP_PROFILE
+@@ -1091,6 +1097,7 @@
+     _EXPORT_INT(m, SNDCTL_DSP_STEREO);
+     _EXPORT_INT(m, SNDCTL_DSP_SUBDIVIDE);
+     _EXPORT_INT(m, SNDCTL_DSP_SYNC);
++#ifndef __sun
+     _EXPORT_INT(m, SNDCTL_FM_4OP_ENABLE);
+     _EXPORT_INT(m, SNDCTL_FM_LOAD_INSTR);
+     _EXPORT_INT(m, SNDCTL_MIDI_INFO);
+@@ -1132,4 +1139,5 @@
+     _EXPORT_INT(m, SNDCTL_TMR_STOP);
+     _EXPORT_INT(m, SNDCTL_TMR_TEMPO);
+     _EXPORT_INT(m, SNDCTL_TMR_TIMEBASE);
++#endif
+ }
+--- Python-2.7.8/setup.py.~5~	2014-07-17 20:47:50.251398063 -0700
++++ Python-2.7.8/setup.py	2014-07-17 20:47:50.359537973 -0700
+@@ -1638,8 +1638,8 @@
+         else:
+             missing.append('linuxaudiodev')
+ 
+-        if (host_platform in ('linux2', 'freebsd4', 'freebsd5', 'freebsd6',
+-                        'freebsd7', 'freebsd8')
++        if (host_platform in ('sunos5', 'linux2', 'freebsd4', 'freebsd5',
++                        'freebsd6', 'freebsd7', 'freebsd8')
+             or host_platform.startswith("gnukfreebsd")):
+             exts.append( Extension('ossaudiodev', ['ossaudiodev.c']) )
+         else:
