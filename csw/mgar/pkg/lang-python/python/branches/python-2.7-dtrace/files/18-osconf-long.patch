@@ -1,0 +1,11 @@
+--- Python-2.7.7/Modules/posixmodule.c.~2~	2014-06-02 11:01:10.919544709 -0700
++++ Python-2.7.7/Modules/posixmodule.c	2014-06-02 11:01:11.009553336 -0700
+@@ -8499,7 +8499,7 @@
+     int name;
+ 
+     if (PyArg_ParseTuple(args, "O&:sysconf", conv_sysconf_confname, &name)) {
+-        int value;
++        long value;
+ 
+         errno = 0;
+         value = sysconf(name);
