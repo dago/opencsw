@@ -21,3 +21,4 @@ package repositories, either at OpenCSW or at their own organization.
   32-bit-and-64-bit
   catalog-releases
   automated-release-process
+  releasing-stable
