@@ -33,9 +33,8 @@ PRESERVECONF += $(sysconfdir)/scl\.confsyslog-ng\.conf\.CSW
 
 # Syslog links against glib2, which is packaged in different packages on
 # Solaris 9 and Solaris 10. Therefore, we need to build separately on 9 and
-# 10, and declare different dependencies.
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sp# Need XPG4v2 for struct msghdr
+# 10, and declare diff# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS ACKAGING_PLATFORMS += solaris10-sp# Need XPG4v2 for struct msghdr
 EXTRA_CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1 -D__EXTENSIONS__
 # ...and -XPG6 to allow C99 with the flags above
 EXTRA_CFLAGS += -std=gnu99 -D_XPG6
