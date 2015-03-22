@@ -4,6 +4,9 @@
 Getting started
 ---------------
 
+.. index::
+   pair: pkgutil; setup
+
 Solaris 10 and Solaris 11:
 
 ::
@@ -15,6 +18,8 @@ Solaris 10 and Solaris 11:
   /opt/csw/bin/vim
 
 Done!
+
+Continue to :ref:`Full setup <installation-full-setup>`, or:
 
 More complex cases:
 
@@ -28,4 +33,3 @@ Optional steps:
 - :ref:`setting up cryptographic verification <setting-up-cryptograhic-verification>`
 - :ref:`selecting the catalog release <selecting-catalog-release>`
 
-Continue to :ref:`Full setup <installation-full-setup>`.

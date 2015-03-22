@@ -2,7 +2,7 @@
 Migrating from Blastwave to OpenCSW
 -----------------------------------
 
-You cannot mix Blastwave packages with OpenCSW packages.
+You cannot mix :index:`Blastwave` packages with OpenCSW packages.
 
 You need to migrate your packages, which means you need to uninstall all
 Blastwave packages and install corresponding OpenCSW packages.

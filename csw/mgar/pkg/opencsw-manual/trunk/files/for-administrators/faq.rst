@@ -2,6 +2,9 @@
 Frequently Asked Questions
 --------------------------
 
+.. index::
+   single: FAQ
+
 Please provide me with a Solaris binary for <something>.
 ========================================================
 

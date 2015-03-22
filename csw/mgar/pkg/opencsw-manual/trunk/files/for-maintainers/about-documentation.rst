@@ -7,7 +7,7 @@ About Documentation at OpenCSW
 Introduction
 ------------
 
-There are 6 places for documentation at OpenCSW:
+There are 6 places for :index:`documentation` at OpenCSW:
 
 * `OpenCSW wiki`_ .a.k.a. wikidot
 

@@ -1,4 +1,7 @@
 .. $Id$
+.. index::
+   pair: automated; release
+   single: csw-upload-pkg
 
 -------------------------
 Automated release process
@@ -90,5 +93,3 @@ http://buildfarm.opencsw.org/package-promotions/promote-packages.html
    <http://buildfarm.opencsw.org/pkgdb/catalogs/>`_
 .. [#opencsw-future] `opencsw-future catalog tree
    <http://mirror.opencsw.org/opencsw-future/>`_
-
-
