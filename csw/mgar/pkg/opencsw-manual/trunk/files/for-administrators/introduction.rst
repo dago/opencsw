@@ -29,10 +29,10 @@ Support for different Solaris versions
 
 As of April 2014:
 
-* Solaris 11 – can use OpenCSW packages thanks to the backward binary compatibility
+* :index:`Solaris 11` – can use OpenCSW packages thanks to the backward binary compatibility
 * **Solaris 10 – is the main focus**
-* Solaris 9 – best effort, occasional updates
-* Solaris 8 – no package updates at all
+* :index:`Solaris 9` – most packages not updated any more
+* :index:`Solaris 8` – no package updates at all
 
 Mailing lists
 =============

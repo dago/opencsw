@@ -1,6 +1,9 @@
 Releasing stable
 ================
 
+.. index::
+   pair: stable, release
+
 Gotchas
 -------
 

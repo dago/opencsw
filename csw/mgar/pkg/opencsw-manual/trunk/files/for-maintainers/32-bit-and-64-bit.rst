@@ -2,11 +2,17 @@
 32-bit and 64-bit packages
 --------------------------
 
+.. index::
+   single: 32-bit
+   single: 64-bit
+   single: isaexec
+   single: BUILD64
+
 64-bit binaries aren't always best
 ----------------------------------
 
-It's counter-intuitive, but :index:`64-bit` binaries are more memory-hungry and
-often slower than 32-bit ones. It makes sense to build 64-bit binaries when:
+It's counter-intuitive, but 64-bit binaries are more memory-hungry and often
+slower than 32-bit ones. It makes sense to build 64-bit binaries when:
 
 * There's a measurable speed boost.
 * The application needs to access more than 2G of RAM.

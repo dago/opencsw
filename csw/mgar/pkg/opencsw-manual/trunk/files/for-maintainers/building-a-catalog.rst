@@ -1,3 +1,6 @@
+.. index::
+   pair: building; catalog
+
 .. _building-a-catalog:
 
 --------------------------

@@ -1,4 +1,7 @@
 .. _old-solaris:
+.. index::
+   single: Solaris 8
+   single: Solaris 9
 
 Solaris 8 or 9
 ==============

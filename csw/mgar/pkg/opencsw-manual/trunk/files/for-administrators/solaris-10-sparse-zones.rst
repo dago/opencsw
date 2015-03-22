@@ -1,6 +1,9 @@
---------------------------------
-Solaris 10 :index:`sparse zones`
---------------------------------
+.. index::
+   pair: sparse; zones
+
+-----------------------
+Solaris 10 sparse zones
+-----------------------
 
 1. set inherit-pkg-dir on ``/opt/csw``
 2. install OpenCSW packages in the global zone
@@ -29,7 +32,7 @@ You need to install cswclassutils scripts (CSWcas-*) in the global zone.
 
 Otherwise your setup won't work with OpenCSW packages, because the CSWcas-*
 package family installs `class action scripts`_ into /usr. See the
-`cswclassutils wants to write in /usr`_ thread for more information. 
+`cswclassutils wants to write in /usr`_ thread for more information.
 
 .. _class action scripts:
    http://wiki.opencsw.org/cswclassutils-package

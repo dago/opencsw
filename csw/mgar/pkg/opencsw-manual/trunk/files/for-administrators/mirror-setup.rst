@@ -2,9 +2,12 @@
 
 .. _setting-up-local-mirror:
 
-----------------------------------
-Setting up a :index:`local mirror`
-----------------------------------
+-------------------------
+Setting up a local mirror
+-------------------------
+
+.. index::
+   triplet: local; mirror; setup
 
 Sometimes it is sufficient to simply use a mirror on the Internet.
 However, there are situations where a local mirror can be useful. When you have

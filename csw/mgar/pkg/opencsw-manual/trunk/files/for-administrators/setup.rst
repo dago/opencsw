@@ -88,7 +88,7 @@ time.
 pkgutil
 =======
 
-pkgutil can use two configuration files:
+:index:`pkgutil` can use two configuration files:
 
 - ``/etc/opt/csw/pkgutil.conf``
 - ``/opt/csw/etc/pkgutil.conf``
@@ -99,7 +99,7 @@ this scenario you use configurations in ``/opt/csw/etc`` for global settings
 and ``/etc/opt/csw`` for zone-specific setting. Both ``pkgutil.conf`` are
 identical on installation with all configuration options commented out, so you
 can just pick one for now. As a rule of thumb it is recommended to prefer the
-more prominent ``/etc/opt/csw``. 
+more prominent ``/etc/opt/csw``.
 
 
 preserveconf
