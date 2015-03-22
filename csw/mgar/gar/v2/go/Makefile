@@ -7,6 +7,7 @@ BINARIES += bin/catalog-release-to-disk
 # BINARIES += bin/crashtest
 BINARIES += bin/gen-catalog-index
 BINARIES += bin/promote-packages
+BINARIES += bin/package-gar-status
 
 # On GNU/Linux, 'install'
 INSTALL = ginstall
@@ -29,6 +30,9 @@ bin/gen-catalog-index: opencsw/diskformat.o src/gen-catalog-index/gen-catalog-in
 # 	gccgo -g -o $@ $^
 
 bin/promote-packages: src/promote-packages/promote-packages.go opencsw/diskformat.o opencsw/mantis.o
+	gccgo -g -o $@ $^
+
+bin/package-gar-status: src/package-gar-status/package-gar-status.go opencsw/diskformat.o opencsw/mantis.o
 	gccgo -g -o $@ $^
 
 opencsw/diskformat.o: opencsw src/opencsw/diskformat/diskformat.o
