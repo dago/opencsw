@@ -100,6 +100,7 @@ PREPEND_LINKER_FLAGS += -L$(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
+EXTRA_BUILD_ENV = DFLAGS=-32
 
 # To fix https://www.opencsw.org/mantis/view.php?id=5040
 LINKER_IGNORE =
