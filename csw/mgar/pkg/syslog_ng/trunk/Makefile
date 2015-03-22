@@ -18,10 +18,7 @@ DISTFILES += $(NAME).conf.CSW
 DISTFILES += cswsyslog_ng
 DISTFILES += CSWsyslog-ng.preinstall
 DISTFILES += CSWsyslog-ng.postremove
-DISTFILES += CSWsyslog-# Patch taken from
-#   https://www.redhat.com/archives/open-scap-list/2011-May/msg00021.html
-# PATCHFILES += 0001-Add-substitute-for-getline-on-Solaris.patch
-# Solaris <11 does not contain ntohll() and htonll()
+DISTFILES += CSWsyslog-# Solaris <11 does not contain ntohll, htonll and asprintf
 PATCHFILES += 0001-Added-definition-for-htonll-and-ntohll.patch
 PATCHFILES += 0002-Add-asprintf.patch
 
@@ -33,7 +30,7 @@ PRESERVECONF += $(sysconfdir)/scl\.confsyslog-ng\.conf\.CSW
 
 # Syslog links against glib2, which is packaged in different packages on
 # Solaris 9 and Solaris 10. Therefore, we need to build separately on 9 and
-# 10, and declare diff# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+# 10, and declare diff# Don't build for Solaris 9f# PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS ACKAGING_PLATFORMS += solaris10-sp# Need XPG4v2 for struct msghdr
 EXTRA_CFLAGS += -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1 -D__EXTENSIONS__
 # ...and -XPG6 to allow C99 with the flags above
@@ -83,9 +80,9 @@ RUNTIME_DEP_PKGS_CSWsyslog-ng_5.10 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWsyslgthread.10 +=
 RUNTIME_DEP_PKGS_CSWsyslog-ng_5.9 += CSWglib2.9 += CSWlibssl0-9-8
 
-RUNTIME_DEP_PKGS_CSWsyslog-ng += $(RUNTIME_DEP_PKGS_CSWsyslog-ng_$(GAROSREL))
-
-OBSOLETED_BY_CSWsyslog-ng = CSWsyslogng
+RUNTIME_DEP_PKGS_CSWsyslog-ng += $(RUNTIME_DEP_PKGS_CSWsysl# Stub package refers to an older version, we don't need it
+# OBSOLETED_BY_CSWsyslog-ng = CSWsyslogng
+# og-ng = CSWsyslogng
 CATALOGNAME_CSWsyslogng = syslog_ng_stub
 
 # It it were split, it'd look like this:
