@@ -1,3 +1,9 @@
+openssl (0.9.8zf,REV=2015.03.21) unstable
+
+  * New upstream release.
+
+   -- Yann Rouillard <yann@opencsw.org>  Sun, 22 Mar 2015 10:37:22 +0100
+
 openssl (0.9.8ze,REV=2015.02.08) unstable
 
   * New upstream release.
