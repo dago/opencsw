@@ -7,15 +7,16 @@
 package main
 
 import (
-  "fmt"
-  "flag"
-  "net/http"
   "encoding/json"
+  "flag"
+  "fmt"
   "log"
+  "net/http"
   "opencsw/diskformat"
-  "time"
-  "text/template"
   "os"
+  "sort"
+  "text/template"
+  "time"
 )
 
 var outputFile string
@@ -52,16 +53,16 @@ type PackageStats struct {
   Pkginfo map[string]string    `json:"pkginfo"`
 }
 
-func FindOutIfPackageIsInGar(md5 diskformat.Md5Sum) (bool, error) {
+func GetPkgstats(md5 diskformat.Md5Sum) (PackageStats, error) {
   url := fmt.Sprintf("%s/srv4/%s/pkg-stats/", diskformat.PkgdbUrl, md5)
   log.Println("Fetching", url)
   var resp *http.Response
   resp, err := http.Get(url)
   if err != nil {
-    // Try again maybe?
+    log.Println("HTTP GET failed: ", err, " but we'll try again.")
     resp, err = http.Get(url)
     if err != nil {
-      return false, err
+      return PackageStats{}, err
     }
   }
   defer resp.Body.Close()
@@ -70,10 +71,9 @@ func FindOutIfPackageIsInGar(md5 diskformat.Md5Sum) (bool, error) {
   dec := json.NewDecoder(resp.Body)
   if err := dec.Decode(&stats); err != nil {
     log.Println("Failed to decode JSON from", url, ":", err)
-    return false, err
+    return PackageStats{}, err
   }
-  _, inGar := stats.Pkginfo["OPENCSW_REPOSITORY"]
-  return inGar, nil
+  return stats, nil
 }
 
 type PackageWithExtraData struct {
@@ -81,9 +81,17 @@ type PackageWithExtraData struct {
   InGar bool
 }
 
+type ByCatalogname []PackageWithExtraData
+
 type TemplateData struct {
-  Pkgs []PackageWithExtraData
+  Pkgs ByCatalogname
   Date time.Time
+}
+
+func (a ByCatalogname) Len() int { return len(a) }
+func (a ByCatalogname) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a ByCatalogname) Less(i, j int) bool {
+  return a[i].Pkg.Catalogname < a[j].Pkg.Catalogname
 }
 
 func main() {
@@ -108,15 +116,17 @@ func main() {
     var count = 0
     for _, pkg := range cws.Pkgs {
       log.Println("Processing", fmt.Sprintf("%+v", pkg))
-      if inGar, err := FindOutIfPackageIsInGar(pkg.Md5_sum); err != nil {
+      stats, err := GetPkgstats(pkg.Md5_sum)
+      if err != nil {
         log.Fatalln("Failed to fetch: ", pkg.Md5_sum, " because ", err)
-      } else {
-        log.Println("Result: ", pkg.Md5_sum, "is", inGar)
-        var pwed PackageWithExtraData
-        pwed.Pkg = pkg
-        pwed.InGar = inGar
-        inGarByPkgname[pkg.Catalogname] = pwed
       }
+      _, inGar := stats.Pkginfo["OPENCSW_REPOSITORY"]
+      log.Println("Result: ", pkg.Md5_sum, "is", inGar)
+      var pwed PackageWithExtraData
+      pwed.Pkg = pkg
+      pwed.InGar = inGar
+      inGarByPkgname[pkg.Catalogname] = pwed
+
       count += 1
       if testingRun && count > 10 {
         break
@@ -133,6 +143,7 @@ func main() {
   for _, pkg := range inGarByPkgname {
     td.Pkgs = append(td.Pkgs, pkg)
   }
+  sort.Sort(ByCatalogname(td.Pkgs))
   td.Date = time.Now()
   if err := t.Execute(f, td); err != nil {
     log.Fatal(err)
