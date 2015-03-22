@@ -1,0 +1,98 @@
+From a5df4fa76caf2b468d4edf0cbb4a67f4639755cc Mon Sep 17 00:00:00 2001
+From: Christian Walther <cwalther@opencsw.org>
+Date: Sat, 21 Mar 2015 22:15:35 +0100
+Subject: [PATCH 2/2] Add asprintf
+
+---
+ modules/afamqp/rabbitmq-c/tools/asprintf.h | 63 ++++++++++++++++++++++++++++++
+ modules/afamqp/rabbitmq-c/tools/common.c   |  4 ++
+ 2 files changed, 67 insertions(+)
+ create mode 100644 modules/afamqp/rabbitmq-c/tools/asprintf.h
+
+diff --git a/modules/afamqp/rabbitmq-c/tools/asprintf.h b/modules/afamqp/rabbitmq-c/tools/asprintf.h
+new file mode 100644
+index 0000000..dac119b
+--- /dev/null
++++ b/modules/afamqp/rabbitmq-c/tools/asprintf.h
+@@ -0,0 +1,63 @@
++/* $Id$ */
++
++/*
++ * Copyright (c) 2006 Nicholas Marriott <nicm@users.sourceforge.net>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF MIND, USE, DATA OR PROFITS, WHETHER
++ * IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
++ * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++#include <stdarg.h>
++#include <stdio.h>
++#ifdef HAVE_STDINT_H
++#include <stdint.h>
++#else
++#include <inttypes.h>
++#endif
++#include <string.h>
++
++int
++asprintf(char **ret, const char *fmt, ...)
++{
++	va_list	ap;
++	int	n;
++
++	va_start(ap, fmt);
++	n = vasprintf(ret, fmt, ap);
++	va_end(ap);
++
++	return (n);
++}
++
++int
++vasprintf(char **ret, const char *fmt, va_list ap)
++{
++	int	 n;
++	va_list  ap2;
++
++	va_copy(ap2, ap);
++
++	if ((n = vsnprintf(NULL, 0, fmt, ap)) < 0)
++		goto error;
++
++	*ret = malloc(n + 1);
++	if ((n = vsnprintf(*ret, n + 1, fmt, ap2)) < 0) {
++		free(*ret);
++		goto error;
++	}
++
++	return (n);
++
++error:
++	*ret = NULL;
++	return (-1);
++}
+diff --git a/modules/afamqp/rabbitmq-c/tools/common.c b/modules/afamqp/rabbitmq-c/tools/common.c
+index 70f3bca..9d01f43 100644
+--- a/modules/afamqp/rabbitmq-c/tools/common.c
++++ b/modules/afamqp/rabbitmq-c/tools/common.c
+@@ -51,6 +51,10 @@
+ #include "compat.h"
+ #endif
+ 
++#ifndef asprintf
++#include "asprintf.h"
++#endif
++
+ void die(const char *fmt, ...)
+ {
+ 	va_list ap;
+-- 
+2.3.1
+

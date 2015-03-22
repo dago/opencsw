@@ -1,0 +1,39 @@
+From 2bb001058cb1f36642ba5604193ac9af4713fdc8 Mon Sep 17 00:00:00 2001
+From: Christian Walther <cwalther@opencsw.org>
+Date: Sat, 21 Mar 2015 20:52:12 +0100
+Subject: [PATCH] Added definition for htonll and ntohll
+
+---
+ modules/afamqp/rabbitmq-c/librabbitmq/amqp_private.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/modules/afamqp/rabbitmq-c/librabbitmq/amqp_private.h b/modules/afamqp/rabbitmq-c/librabbitmq/amqp_private.h
+index bbee792..7640218 100644
+--- a/modules/afamqp/rabbitmq-c/librabbitmq/amqp_private.h
++++ b/modules/afamqp/rabbitmq-c/librabbitmq/amqp_private.h
+@@ -33,6 +33,22 @@
+  * ***** END LICENSE BLOCK *****
+  */
+ 
++/* cwalther@opencsw.org:
++ * Fix missing htonll and ntohll by providing one.
++ * The following code is based on:
++ * https://web.archive.org/web/20090221024054/http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=5007142
++ */
++
++#ifndef htonll
++#ifdef _BIG_ENDIAN
++#define htonll(x)   (x)
++#define ntohll(x)   (x)
++#else
++#define htonll(x)   ((((uint64_t)htonl(x)) << 32) + htonl(x >> 32))
++#define ntohll(x)   ((((uint64_t)ntohl(x)) << 32) + ntohl(x >> 32))
++#endif
++#endif
++
+ #ifdef HAVE_CONFIG_H
+ #include "config.h"
+ #endif
+-- 
+2.3.1
+
