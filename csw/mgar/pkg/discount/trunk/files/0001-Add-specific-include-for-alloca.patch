@@ -1,0 +1,24 @@
+From 0189c08c5bd3836c2907fa9733a8facdb4f34f9a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 23 Mar 2015 13:59:35 +0100
+Subject: [PATCH] Add specific include for alloca()
+
+---
+ theme.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/theme.c b/theme.c
+index 407a68f..fae97ff 100644
+--- a/theme.c
++++ b/theme.c
+@@ -33,6 +33,7 @@
+ #include "mkdio.h"
+ #include "cstring.h"
+ #include "amalloc.h"
++#include <alloca.h>
+ 
+ char *pgm = "theme";
+ char *output = 0;
+-- 
+2.3.3
+
