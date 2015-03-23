@@ -37,7 +37,10 @@ REINPLACE_WITH_words = /usr/share/lib/dict/words
 REINPLACE_FILES_words += util/create-cracklib-dict
 
 # Yes, this is ok - we just replaced it with the correct file
-CHECKPKG_OVERRIDES_CSWcracklib += file-with-bad-content|/usr/share|root/opt/csw/sbin/create-cracklib-dict
+CHECKPKG_OVERRIDES_CSWcracklib += file-with-bad-content|/usr/share|root/opt/csw/sbin/sparcv8plus/create-cracklib-dict
+CHECKPKG_OVERRIDES_CSWcracklib += file-with-bad-content|/usr/share|root/opt/csw/sbin/sparcv9/create-cracklib-dict
+CHECKPKG_OVERRIDES_CSWcracklib += file-with-bad-content|/usr/share|root/opt/csw/sbin/pentium_pro/create-cracklib-dict
+CHECKPKG_OVERRIDES_CSWcracklib += file-with-bad-content|/usr/share|root/opt/csw/sbin/amd64/create-cracklib-dict
 
 BUILD64 = 1
 ISAEXEC = 1
