@@ -1,0 +1,34 @@
+From e822b6b672238d10a3dcb3e026b93cd0d8e3e5d5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 23 Mar 2015 16:03:53 +0100
+Subject: [PATCH] We don't have ldconfig and the line forces exitcode 1
+
+---
+ configure.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.inc b/configure.inc
+index 7b4ac48..d17edef 100755
+--- a/configure.inc
++++ b/configure.inc
+@@ -1304,7 +1304,7 @@ make)   FLAGS="$AC_CFLAGS -shared"
+ 	test "$USE_SONAME" && VFLAGS="-Wl,-soname,\$LIBNAME.\$MAJOR"
+ 
+ 	rm -f \$LIBRARY \$LIBNAME \$LIBNAME.\$MAJOR
+-	if $AC_CC \$FLAGS \$VFLAGS -o \$FULLNAME "\$@"; then
++	if $AC_CC \$FLAGS \$LDFLAGS \$VFLAGS -o \$FULLNAME "\$@"; then
+ 	    $PROG_LN_S \$FULLNAME \$LIBRARY
+ 	    $PROG_LN_S \$FULLNAME \$LIBNAME
+ 	    $PROG_LN_S \$FULLNAME \$LIBNAME.\$MAJOR
+@@ -1315,7 +1315,7 @@ files)  echo "\$FULLNAME" "\$LIBNAME" "\$LIBNAME.\$MAJOR"
+ install)$PROG_INSTALL -c \$FULLNAME "\$1"
+ 	$PROG_LN_S -f \$FULLNAME \$1/\$LIBNAME.\$MAJOR
+ 	$PROG_LN_S -f \$FULLNAME \$1/\$LIBNAME
+-	test "$LDCONFIG" && $LDCONFIG "\$1"
++	#test "$LDCONFIG" && $LDCONFIG "\$1"
+ 	;;
+ esac
+ EOF
+-- 
+2.3.3
+
