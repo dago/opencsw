@@ -1,0 +1,39 @@
+From 861498ed190776f0cf9e6ff74108444c7cd2778f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 22 Mar 2015 16:34:06 +0100
+Subject: [PATCH] Set proper types instead of void*
+
+---
+ lib/packlib.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/lib/packlib.c b/lib/packlib.c
+index f851424..b450275 100644
+--- a/lib/packlib.c
++++ b/lib/packlib.c
+@@ -408,7 +408,7 @@ PutPW(pwp, string)
+ 	fwrite((char *) &datum, sizeof(datum), 1, pwp->ifp);
+ 
+ 	fputs(pwp->data_put[0], pwp->dfp);
+-	putc(0, pwp->dfp);
++	putc(0, (FILE *) pwp->dfp);
+ 
+ 	ostr = pwp->data_put[0];
+ 
+@@ -421,10 +421,10 @@ PutPW(pwp, string)
+ 	    if (nstr[0])
+ 	    {
+ 		for (j = 0; ostr[j] && nstr[j] && (ostr[j] == nstr[j]); j++);
+-		putc(j & 0xff, pwp->dfp);
+-		fputs(nstr + j, pwp->dfp);
++		putc(j & 0xff, (FILE *) pwp->dfp);
++		fputs(nstr + j, (FILE *) pwp->dfp);
+ 	    }
+-	    putc(0, pwp->dfp);
++	    putc(0, (FILE *) pwp->dfp);
+ 
+ 	    ostr = nstr;
+ 	}
+-- 
+2.3.3
+
