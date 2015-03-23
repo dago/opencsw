@@ -1,0 +1,25 @@
+From 678bc69db4ea655d9f9e12d1084232bc99325808 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 23 Mar 2015 16:48:26 +0100
+Subject: [PATCH] Honour DESTDIR
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 66be288..b55abd4 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -828,7 +828,7 @@ uninstall-am: uninstall-libLTLIBRARIES
+ #DEFS =
+ 
+ install: .libs/libmodmarkdown.so
+-	install $< $(apache_LIBEXECDIR)/mod_markdown.so
++	install -D $< $(DESTDIR)$(apache_LIBEXECDIR)/mod_markdown.so
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+-- 
+2.3.3
+

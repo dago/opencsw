@@ -1,0 +1,25 @@
+From 650d6da99a11725585313542523e06fb1af12c2c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 23 Mar 2015 16:30:41 +0100
+Subject: [PATCH] Do not unconditionally use -Wall
+
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index d8f9526..66be288 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -334,7 +334,7 @@ lib_LTLIBRARIES = libmodmarkdown.la
+ apache_CFLAGS = `@apxs@ -q CFLAGS` -I`@apxs@ -q INCLUDEDIR`
+ apache_LIBEXECDIR = `@apxs@ -q LIBEXECDIR`
+ libmodmarkdown_la_SOURCES = mod_markdown.c
+-libmodmarkdown_la_CFLAGS = -Wall $(apache_CFLAGS) -I@discount_dir@/include
++libmodmarkdown_la_CFLAGS = $(apache_CFLAGS) -I@discount_dir@/include
+ libmodmarkdown_la_LDFLAGS = -L@discount_dir@/lib -lmarkdown
+ INCLUDES = -D_LARGEFILE64_SOURCE
+ all: config.h
+-- 
+2.3.3
+
