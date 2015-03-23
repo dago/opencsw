@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibgnutls28
 RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibobjc4
 RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibicudata54
-RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibffi6
 RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibicui18n54
 RUNTIME_DEP_PKGS_CSWgnustep-base += CSWlibiconv2
 
@@ -102,7 +102,7 @@ CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placeme
 CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/defaults|arch_id=18|arch_name=sparcv8+
 
 #this is linkin against other csw packages, should perhapes be fixed, ignored for now
-CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libffi.so.5
+CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libffi.so.6
 CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libgnutls.so.28
 CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libiconv.so.2
 CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libicui18n.so.54
