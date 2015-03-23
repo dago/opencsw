@@ -1,0 +1,44 @@
+From 29f2d8e582b4a41909ccdebc843de12af201df97 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 23 Mar 2015 14:56:54 +0100
+Subject: [PATCH] Honour LDFLAGS during linking
+
+---
+ Makefile.in | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 4c11369..48fff11 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -20,22 +20,23 @@ HAVE_CHPASS_CRYPT  	= -D@HAVE_CHPASS_CRYPT@
+ inc_files       = msg.h cgipaf_defs.h cgipaf_vars.h cgipaf_acl.c cgipaf_pwlocation.c cgipaf_init.c
+ CC=@CC@
+ CFLAGS=@CFLAGS@
++LDFLAGS=@LDFLAGS@
+ 
+ CONFIGFILE=$(sysconfdir)/cgipaf.conf
+ 
+ all: passwd.cgi viewmailcfg.cgi mailcfg.cgi changepass
+ 
+ passwd.cgi: cgipaf.c ${OBJS} ${inc_files}
+-	$(CC) $(CFLAGS) -o passwd.cgi cgipaf.c ${OBJS} @LIBS@ ${ARG} -DCONFIGFILE=\"$(CONFIGFILE)\" -DCGIPAF_PASSWD
++	$(CC) $(CFLAGS) -o passwd.cgi cgipaf.c ${OBJS} $(LDFLAGS) @LIBS@ ${ARG} -DCONFIGFILE=\"$(CONFIGFILE)\" -DCGIPAF_PASSWD
+ 
+ mailcfg.cgi: mailcfg.c ${OBJS} mailconfig.o ${inc_files}
+-	$(CC) $(CFLAGS) -o mailcfg.cgi mailcfg.c ${OBJS} mailconfig.o @LIBS@ ${ARG} -DCONFIGFILE=\"$(CONFIGFILE)\" -DCGIPAF_MAILCFG
++	$(CC) $(CFLAGS) -o mailcfg.cgi mailcfg.c ${OBJS} mailconfig.o $(LDFLAGS) @LIBS@ ${ARG} -DCONFIGFILE=\"$(CONFIGFILE)\" -DCGIPAF_MAILCFG
+ 
+ viewmailcfg.cgi: cgipaf.c ${OBJS} mailconfig.o ${inc_files}
+-	$(CC) $(CFLAGS) -o viewmailcfg.cgi cgipaf.c ${OBJS} mailconfig.o @LIBS@ ${ARG} -DCONFIGFILE=\"$(CONFIGFILE)\" -DCGIPAF_VIEWMAILCFG
++	$(CC) $(CFLAGS) -o viewmailcfg.cgi cgipaf.c ${OBJS} mailconfig.o $(LDFLAGS) @LIBS@ ${ARG} -DCONFIGFILE=\"$(CONFIGFILE)\" -DCGIPAF_VIEWMAILCFG
+ 	
+ changepass: changepass.c ${CHPASSOBJS} ${inc_files}
+-	$(CC) $(CFLAGS) -o changepass changepass.c ${CHPASSOBJS} @LIBS@ ${ARG} ${HAVE_CHPASS_CRYPT}
++	$(CC) $(CFLAGS) -o changepass changepass.c ${CHPASSOBJS} $(LDFLAGS) @LIBS@ ${ARG} ${HAVE_CHPASS_CRYPT}
+ 
+ install: all
+ 	 su root -c "/bin/sh ./install.sh"
+-- 
+2.3.3
+
