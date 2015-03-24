@@ -1,5 +1,5 @@
 NAME     = php5
-VERSION  = 5.3.28
+VERSION  = 5.3.29
 GARTYPE = v2
 SF_PROJECT  = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJECT)-$(VERSION)
@@ -50,7 +50,7 @@ PATCHFILES += 0003-Do-not-activate-php5-module-during-package-build.patch
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWlibcurl-dev CSWjpeg
-BUILD_DEP_PKGS += CSWlibpng-dev CSWt1lib CSWlibgdbm-dev CSWlibgmp10
+BUILD_DEP_PKGS += CSWlibpng-dev CSWlibt1-5 CSWlibgdbm-dev CSWlibgmp10
 BUILD_DEP_PKGS += CSWggettext-dev CSWlibssl-dev CSWlibgd2 CSWbdb42devel
 BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWlibc-client-dev
 BUILD_DEP_PKGS += CSWopenldap-dev CSWlibkrb5-dev CSWsasl CSWlibltdl7
@@ -82,8 +82,8 @@ PACKAGES = CSWphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWlibexpat1 CSWlibz1
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n51
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n54
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc54
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
@@ -130,8 +130,8 @@ CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibexpat1 CSWlibz1
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n51
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc51
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n54
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc54
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
@@ -198,7 +198,7 @@ $(eval $(call php5_subpackage,readline,CSWlibreadline6))
 $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop,))
-$(eval $(call php5_subpackage,snmp,CSWlibnetsnmp25))
+$(eval $(call php5_subpackage,snmp,CSWlibnetsnmp30))
 $(eval $(call php5_subpackage,soap,CSWlibxml2-2))
 $(eval $(call php5_subpackage,sockets,))
 #$(eval $(call php5_subpackage,sqlite,CSWsqlite))
@@ -215,12 +215,9 @@ $(eval $(call php5_subpackage,xsl,CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0))
 $(eval $(call php5_subpackage,zip,CSWlibz1))
 #$(eval $(call php5_subpackage,ibm_db2,))
 
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc52
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n52
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicuuc52
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n52
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicudata52
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicuuc54
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibicui18n54
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibicui18n54
 RUNTIME_DEP_PKGS_CSWphp5-bz2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-bcmath += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-openssl += CSWlibz1
@@ -263,6 +260,7 @@ RUNTIME_DEP_PKGS_CSWphp5-sysvmsg += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibz1
+RUNTIME_DEP_PKGS_CSWphp5-curl += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWphp5-mysql += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-ctype += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-xmlreader += CSWlibiconv2
@@ -291,85 +289,82 @@ RUNTIME_DEP_PKGS_CSWphp5-wddx += CSWlibz1
 RUNTIME_DEP_PKGS_CSWphp5-pdomysql += CSWlibssl1-0-0
 RUNTIME_DEP_PKGS_CSWphp5-pdomysql += CSWlibz1
 
-CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWlibncurses5
-CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWlibtidy0-99
-CHECKPKG_OVERRIDES_CSWphp5-exif += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-hash += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWlibsasl2-2
+#CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWlibncurses5
+#CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWlibssl1-0-0
+#CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWlibtidy0-99
+#CHECKPKG_OVERRIDES_CSWphp5-exif += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-hash += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWlibiconv2
+#CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWlibsasl2-2
 CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibidn11
+#CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibssl1-0-0
+#CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWlibidn11
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibpng15-15
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibjpeg7
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibfreetype6
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibgd2
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWlibxpm4
-CHECKPKG_OVERRIDES_CSWap2-modphp5 += forbidden-version-interface-dependencies|/opt/csw/apache2/libexec/libphp5.so|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
-CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicudata52
-CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicuuc51
-CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicui18n51
-CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5 += forbidden-version-interface-dependencies|/opt/csw/php5/bin/php|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
-CHECKPKG_OVERRIDES_CSWphp5 += forbidden-version-interface-dependencies|/opt/csw/php5/bin/php-cgi|requires|forbidden|interface|version|SUNW_1.22.7|in|library|libc.so.1
-CHECKPKG_OVERRIDES_CSWphp5 += surplus-dependency|CSWlibicuuc51
-CHECKPKG_OVERRIDES_CSWphp5 += surplus-dependency|CSWlibicui18n51
-CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-ctype += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-dba += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-iconv += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibltdl7
-CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicudata52
+#CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicuuc51
+#CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibiconv2
+#CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWlibicui18n51
+#CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5 += surplus-dependency|CSWlibicuuc51
+#CHECKPKG_OVERRIDES_CSWphp5 += surplus-dependency|CSWlibicui18n51
+#CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWlibssl1-0-0
+#CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWlibiconv2
+#CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-ctype += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWlibiconv2
+#CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-dba += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-iconv += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWlibltdl7
+#CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWlibz1
 #CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibssl1-0-0
-CHECKPKG_OVERRIDES_CSWphp5-mysql += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-json += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWlibiconv2
-CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWlibssl1-0-0
+#CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWlibssl1-0-0
+#CHECKPKG_OVERRIDES_CSWphp5-mysql += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-json += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWlibz1
+#CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWlibiconv2
+#CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWlibz1
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 EXTRA_LIB = /opt/csw/postgresql/lib
@@ -379,9 +374,6 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 SUBDIR64-sparc = v9
 SUBDIR64-i386 = amd64
 EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCrun -lCstd -lz
-
-# We use MySQL which uses a more recent libc than the linker map requires
-LINKER_MAPS =
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
@@ -504,6 +496,10 @@ CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 endif
 
 TEST_TARGET = test
+
+#User newer compiler
+GARCOMPILER = SOS12U3
+
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST ?= 1
