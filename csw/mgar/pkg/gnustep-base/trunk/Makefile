@@ -101,6 +101,28 @@ CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placeme
 CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pldes|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/defaults|arch_id=18|arch_name=sparcv8+
 
+#we don't care about placement on intel either
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plparse|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pl|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pldes|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/cvtenc|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gspath|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/defaults|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/make_strings|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/pl2link|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/xmlparse|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/HTMLLinker|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plget|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/sfparse|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plmerge|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/plser|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/autogsdoc|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gdnc|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gdomap|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-base += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|arch_id=3|arch_name=i386
+
+
+
 #this is linkin against other csw packages, should perhapes be fixed, ignored for now
 CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libffi.so.6
 CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/Library/Libraries/libgnustep-base.so.1.24.7|is|not|directly|bound|to|soname|libgnutls.so.28
