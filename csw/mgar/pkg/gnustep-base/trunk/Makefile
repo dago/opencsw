@@ -138,7 +138,7 @@ CHECKPKG_OVERRIDES_CSWgnustep-base += no-direct-binding|/opt/csw/GNUstep/System/
 #where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc
 PACKAGING_PLATFORMS += solaris10-sparc
-#PACKAGING_PLATFORMS += solaris10-x86
+PACKAGING_PLATFORMS += solaris10-x86
 
 #PATCHFILES += 0001-configure-tweak-align.patch
 PATCHFILES += 0002-timezone.patch
