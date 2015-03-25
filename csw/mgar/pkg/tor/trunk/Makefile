@@ -1,6 +1,6 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.5.10
+VERSION = 0.2.5.11
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
@@ -22,7 +22,9 @@ LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS_CSWtor += CSWlibevent2-0-5
 RUNTIME_DEP_PKGS_CSWtor += CSWlibssl1-0-0
-RUNTIME_DEP_PKGS_CSWtor += CSWlibz1
+RUNTIME_DEP_PKGS_CSRUNTIME_DEP_PKGS_CSWtor += CSWlibssp0
+
+GARCOMPILER = GNUSWtor += CSWlibz1
 
 sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
