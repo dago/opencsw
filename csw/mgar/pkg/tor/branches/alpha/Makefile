@@ -1,14 +1,12 @@
 # $Id$
 NAME = tor
-VERSION = 0.2.6.3-alpha
+VERSION = 0.2.6.6
 GARTYPE = v2
 
 DESCRIPTION = Secure network traffic router
 define BLURB
 Basically tor provides a distributed network of servers (onion routers). Users bounce their TCP streams (web traffic, ftp, ssh, etc) around the routers, and recipients, observers, and even the routers themselves have difficulty tracking the source of the stream.uter
-def# This is where the source git repo is located but we are building from the
-# official alpha release tar.gz distfile downloaded from MATER_SITES.
-# GIT_REPOS = git://git.torproject.org/tor.gitefine BLURB
+define BLURB
 endef
 
 MASTER_SITES = http://www.torproject.org/dist/
