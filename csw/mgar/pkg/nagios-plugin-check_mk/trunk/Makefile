@@ -22,9 +22,19 @@ SPKG_DESC_CSWnagios-plugin-checkmk = A new general purpose Nagios-plugin for ret
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWapache2
 RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWperl
+RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWap2modpython
+RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWnagios
+
+# Checkpkg cannot track this
+CHECKPKG_OVERRIDES_CSWnagios-plugin-checkmk += surplus-dependency|CSWap2modpython
 
 # This is a comment
 CHECKPKG_OVERRIDES_CSWnagios-plugin-checkmk += file-with-bad-content|/usr/share|root/etc/opt/csw/check_mk/multisite.mk.CSW
+
+PACKAGES += CSWnagios-checkmk-agent
+SPKG_DESC_CSWnagios-checkmk-agent = CheckMK agent for client systems
+PKGFILES_CSWnagios-checkmk-agent += $(sharedstatedir)/check_mk/agents/.*
+ARCHALL_CSWnagios-checkmk-agent = 1
 
 GARCOMPILER = GCC4
 
@@ -34,14 +44,13 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+# This is also in CSWnagios-mk-livestatus
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/unixcat
+
 PRESERVECONF += $(sysconfdir)/check_mk/main.mk
 PRESERVECONF += $(sysconfdir)/check_mk/multisite.mk
 
 include gar/category.mk
-
-#post-extract:
-#	-cd $(WORKSRC) && gtar zxvf livestatus.tar.gz
-#	@$(MAKECOOKIE)
 
 install-custom:
 	cd $(WORKSRC) && DESTDIR=$(DESTDIR) PATH=/opt/csw/gnu:/usr/xpg4/bin:$(PATH) SETUPCONF=$(abspath $(WORKDIR)/check_mk_setup.conf) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" LD_OPTIONS="$(LD_OPTIONS)" CC="$(CC)" ./setup.sh
