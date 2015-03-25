@@ -24,6 +24,7 @@ RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWapache2
 RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWperl
 RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWap2modpython
 RUNTIME_DEP_PKGS_CSWnagios-plugin-checkmk += CSWnagios
+ARCHALL_CSWnagios-plugin-checkmk = 1
 
 # Checkpkg cannot track this
 CHECKPKG_OVERRIDES_CSWnagios-plugin-checkmk += surplus-dependency|CSWap2modpython
