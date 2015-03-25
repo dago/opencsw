@@ -480,12 +480,12 @@ post-extract-gitsnap: $(EXTRACT_TARGETS)
 extract-p:
 	@$(foreach COOKIEFILE,$(EXTRACT_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# The rule takes all files from EXPANDVARS and replaces all occurrences of @<var>@ in the file
+# The rule takes all files from EXPANDVARS and replaces all occurrences of @<var>@ (but not @@<var>@@ as this is used by patch) in the file
 # with the values of <var> from the Makefile.
-_var_definitions = $(foreach VAR,$(shell perl -ne 'print "$$1 " while( /@([^@]+)@/g );' <$1),$(VAR)="$($(VAR))")
+_var_definitions = $(foreach VAR,$(shell perl -ne 'print "$$1 " while( /(?<!@)@([^@]+)@(?!@)/g );' <$1),$(VAR)="$($(VAR))")
 
 expandvars-%:
-	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/@([^@]+)@/$$ENV{$$1}/eg' $(WORKDIR)/$*
+	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/(?<!@)@([^@]+)@(?!@)/$$ENV{$$1}/eg' $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 post-extract-reinplace-%:
