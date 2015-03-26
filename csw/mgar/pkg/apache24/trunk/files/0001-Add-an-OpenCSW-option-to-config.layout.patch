@@ -19,26 +19,26 @@ index 35a325a..acf6efb 100644
 +
 +# CSW Layout
 +<Layout OpenCSW>
-+    prefix:          /opt/csw
-+    exec_prefix:     ${prefix}
-+    bindir:          ${prefix}/bin
-+    sbindir:         ${prefix}/sbin
-+    libdir:          ${prefix}/lib/apache2
++    prefix:          @prefix@
++    exec_prefix:     @exec_prefix@
++    bindir:          @bindir@
++    sbindir:         @sbindir@
++    libdir:          @libdir@/apache2
 +    libexecdir:      ${libdir}/modules
 +    installbuilddir: ${libdir}/build
-+    sysconfdir:      /etc${prefix}/apache2
-+    mandir:          ${prefix}/share/man
-+    datadir:         /var${prefix}/apache2
++    sysconfdir:      @sysconfdir@/apache2
++    mandir:          @mandir@
++    datadir:         @localstatedir@/apache2
 +    errordir:        ${datadir}/error
 +    iconsdir:        ${datadir}/icons
 +    htdocsdir:       ${datadir}/htdocs
 +    manualdir:       ${datadir}/manual
 +    cgidir:          ${datadir}/cgi-bin
-+    includedir:      ${prefix}/include/apache2
-+    localstatedir:   /var${prefix}
++    includedir:      @includedir@/apache2
++    localstatedir:   @localstatedir@
 +    runtimedir:      /var/run
 +    logfiledir:      ${localstatedir}/log/apache2
-+    proxycachedir:   ${localstatedir}/apache2/proxy
++    proxycachedir:   ${datadir}/proxy
 +</Layout>
 -- 
 1.7.12
