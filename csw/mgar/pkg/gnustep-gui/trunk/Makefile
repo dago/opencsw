@@ -178,6 +178,24 @@ CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placemen
 CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libgnustep-gui.so.0.24.0|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Services/GSspell.service/GSspell|arch_id=18|arch_name=sparcv8+
 
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/TextConverters/RTFConverter.bundle/RTFConverter|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/libgmodel.bundle/libgmodel|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/AudioOutput.nssound/AudioOutput|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/Sndfile.nssound/Sndfile|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/GSPrinting/GSLPR.bundle/GSLPR|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/GSPrinting/GSCUPS.bundle/GSCUPS|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Libraries/libgnustep-gui.so.0.24.0|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/ColorPickers/WheelPicker.bundle/WheelPicker|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/ColorPickers/NamedPicker.bundle/NamedPicker|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/ColorPickers/StandardPicker.bundle/StandardPicker|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Services/GSspell.service/GSspell|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/set_show_service|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gopen|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gclose|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/make_services|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-gui += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gcloseall|arch_id=3|arch_name=i386
+
+
 
 
 
