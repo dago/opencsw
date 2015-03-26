@@ -17,8 +17,14 @@ DISTFILES += $(DISTNAME).tar.gz
 DISTFILES += cswapache24
 EXPANDVARS += cswapache24
 
-PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
 PATCHFILES += 0002-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
+
+#PATCHFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
+DISTFILES += 0001-Add-an-OpenCSW-option-to-config.layout.patch
+
+EXPANDVARS += 0001-Add-an-OpenCSW-option-to-config.layout.patch
+
+# SKIP_MODULATIONS += isa-sparcv8plus
 
 VENDOR_URL = http://httpd.apache.org/
 LICENSE = LICENSE
@@ -34,6 +40,9 @@ RUNTIME_DEP_PKGS_CSWapache24 += CSWliblua5-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibldap2-4-2
 RUNTIME_DEP_PKGS_CSWapache24 += CSWlibxml2-2
+
+# This is because /opt/csw/sbin/sparcv9 is missing, most certainly an checkpkg issue
+CHECKPKG_OVERRIDES_CSWapache24 += missing-dependency|CSWbonnie++|or|CSWcollectd|or|CSWleafnode|or|CSWlighttpd|or|CSWlogrotate|or|CSWopenldap|or|CSWproftpd|or|CSWsysstat|or|CSWzabbix-agent|or|CSWzabbix-server
 
 PACKAGES += CSWapache24-manual
 ARCHALL_CSWapache24-manual = 1
@@ -74,26 +83,36 @@ PRESERVECONF += $(sysconfdir)/apache2/httpd.conf
 # These two are link destinations and put in place via PRESERVECONF
 CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars|CSWapache24|contains|symlink|/opt/csw/sbin/envvars|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars
 CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars-std|CSWapache24|contains|symlink|/opt/csw/sbin/envvars-std|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars-std
+CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars|CSWapache24|contains|symlink|/opt/csw/sbin/sparcv9/envvars|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars
+CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars-std|CSWapache24|contains|symlink|/opt/csw/sbin/sparcv9/envvars-std|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars-std
+CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars|CSWapache24|contains|symlink|/opt/csw/sbin/amd64/envvars|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars
+CHECKPKG_OVERRIDES_CSWapache24 += file-needed-but-no-package-satisfies-it|/etc/opt/csw/apache2/envvars-std|CSWapache24|contains|symlink|/opt/csw/sbin/amd64/envvars-std|which|needs|the|target|file:|/etc/opt/csw/apache2/envvars-std
 
 SSLCERT = /etc/opt/csw/apache2/server
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
 
+BUILD64 = 1
+
 # Build Configuration
 CONFIGURE_ARGS  = --with-apr=$(prefix)
-CONFIGURE_ARGS += --with-pcre=$(prefix)
+CONFIGURE_ARGS += --with-pcre=$(bindir)/pcre-config
 CONFIGURE_ARGS += --with-libxml2=$(includedir)/libxml2
-CONFIGURE_ARGS += --with-lua=$(prefix)
+CONFIGURE_ARGS-32 += --with-lua=$(prefix)
+#CONFIGURE_ARGS-64 += --without-lua
 CONFIGURE_ARGS += --enable-mpms-shared=all
 CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-layout=OpenCSW
 CONFIGURE_ARGS += --enable-mods-shared=all
 CONFIGURE_ARGS += --enable-privileges
 CONFIGURE_ARGS += --enable-vhost-alias
-CONFIGURE_ARGS += --with-ssl=$(prefix)
+#CONFIGURE_ARGS += --with-ssl=$(prefix)
+CONFIGURE_ARGS += --with-ssl
 # As requested in https://www.opencsw.org/mantis/view.php?id=5152
 CONFIGURE_ARGS += --enable-proxy-html
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 EXTRA_CFLAGS += -DSSL_EXPERIMENTAL -DSSL_ENGINE
 
@@ -105,6 +124,11 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 TEST_TARGET = test
 
 include gar/category.mk
+
+# We need this special construct because the patch should have expandvars
+post-patch:
+	cd $(WORKSRC) && gpatch -p1 <$(abspath $(WORKDIR)/0001-Add-an-OpenCSW-option-to-config.layout.patch)
+	@$(MAKECOOKIE)
 
 post-install:
 	(cd $(DESTDIR)$(sbindir); \
