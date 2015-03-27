@@ -29,6 +29,13 @@ RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-make
 RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-base
 RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-gui
 RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibfreetype6
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWmesa
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibfontconfig1
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibobjc4
+
 
 #for cairo:
 BUILD_DEP_PKGS += CSWlibcairo-dev
@@ -62,7 +69,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 #CONFIGURE_ARGS_GRAPHICS_xlib += --enable-graphics=xlib
 #CONFIGURE_ARGS_GRAPHICS_cairo += --enable-graphics=cairo
-CONFIGURE_ARGS += --enable-graphics=cairo $(DIRPATHS)
+CONFIGURE_ARGS += --enable-graphics=cairo 
 
 include gar/category.mk
 
