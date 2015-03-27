@@ -45,7 +45,41 @@ RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibcairo2
 #DEP_PKGS_GRAPHICS_cairo += CSWlibcairo2
 
 #overrides
-CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+CHECKPKG_OVERRIDES_CSWgnustep-back += surplus-dependency|CSWgnustep-gui
+CHECKPKG_OVERRIDES_CSWgnustep-back += surplus-dependency|CSWgnustep-base
+CHECKPKG_OVERRIDES_CSWgnustep-back += surplus-dependency|CSWgnustep-make
+
+
+#this is by bundle design
+CHECKPKG_OVERRIDES_CSWgnustep-back += shared-library-missing-dot-so|file=opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024
+
+#we do not care about placement
+CHECKPKG_OVERRIDES_CSWgnustep-back += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-back += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gpbs|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWgnustep-back += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|arch_id=3|arch_name=i386
+CHECKPKG_OVERRIDES_CSWgnustep-back += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/System/Tools/gpbs|arch_id=3|arch_name=i386
+
+
+#we do not link directly yet
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libGL.so.1
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libXcursor.so.1
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libXext.so.0
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libXmu.so.4
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libXrender.so.1
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libcairo.so.2
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libfontconfig.so.1
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Tools/gpbs|is|not|directly|bound|to|soname|libX11.so.4
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Tools/gpbs|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Tools/gpbs|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWgnustep-back += no-direct-binding|/opt/csw/GNUstep/System/Tools/gpbs|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWgnustep-back += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024
+CHECKPKG_OVERRIDES_CSWgnustep-back += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/System/Tools/gpbs
+CHECKPKG_OVERRIDES_CSWgnustep-back += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Tools/gpbs
+CHECKPKG_OVERRIDES_CSWgnustep-back += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/System/Library/Bundles/libgnustep-back-024.bundle/libgnustep-back-024
 
 #where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc
