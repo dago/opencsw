@@ -1,5 +1,5 @@
 NAME = ansible
-VERSION = 1.8.4
+VERSION = 1.9.0.1
 GARTYPE = v2
 CATEGORIES = python
 
@@ -39,7 +39,6 @@ CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWopenssh-client
 CHECKPKG_OVERRIDES_CSWansible += surplus-dependency|CSWpy-jinja2
 
 # There are many OS specific (Linux, FreeBSD, etc.) paths stored in those files.
-CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/module_common.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/callbacks.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/playbook/__init__.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/runner/__init__.py
@@ -62,6 +61,9 @@ CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/l
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/modules/core/system/service.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/modules/extras/system/alternatives.py
 CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/modules/core/packaging/os/rhn_register.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/modules/extras/system/svc.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/local|root/opt/csw/lib/python2.6/site-packages/ansible/modules/extras/packaging/os/dnf.py
+CHECKPKG_OVERRIDES_CSWansible += file-with-bad-content|/usr/share|root/opt/csw/lib/python2.6/site-packages/ansible/modules/extras/system/locale_gen.py
 
 REINPLACEMENTS += etc
 REINPLACE_MATCH_etc = /etc/ansible
