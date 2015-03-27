@@ -38,8 +38,9 @@ RUNTIME_DEP_PKGS_CSWgnustep-back += CSWlibcairo2
 CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
 
 #where can we build?
-PACKAGING_PLATFORMS += solaris9-sparc
+#PACKAGING_PLATFORMS += solaris9-sparc
 PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
 
 #we absolutely need GCC for Objective-C support. The only alternative in the future would be clang
 GARCOMPILER = GNU
