@@ -20,6 +20,9 @@ BUILD_DEP_PKGS += CSWgmake
 BUILD_DEP_PKGS += CSWgcc4objc
 BUILD_DEP_PKGS += CSWsunx11devel
 BUILD_DEP_PKGS += CSWlibfreetype-dev
+BUILD_DEP_PKGS += CSWgnustep-make
+BUILD_DEP_PKGS += CSWgnustep-base
+BUILD_DEP_PKGS += CSWgnustep-gui
 
 
 RUNTIME_DEP_PKGS_CSWgnustep-back += CSWgnustep-make
