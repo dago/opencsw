@@ -48,7 +48,7 @@ CHECKPKG_OVERRIDES_CSWpca += file-with-bad-content|/usr/local|root/opt/csw/share
 
 include gar/category.mk
 
-post-extract-modulated:
+post-ecpract-modulated:
 	mv $(WORKSRC)/$(DISTNAME) $(WORKSRC)/pca
 	@$(MAKECOOKIE)
 
