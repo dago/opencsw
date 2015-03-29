@@ -18,12 +18,16 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
+TEST_TARGET =
 
-PATCHFILES += 0001-Adjust-Makefile-settings-for-Solaris.patch
+PATCHFILES = 0001-Adjust-Makefile-to-accept-common-env-variables.patch
 
-# EXTRA_CFLAGS = -DSYSV=1 -DNEED_ALPHASORT
-# EXTRA_INC = /usr/ucbinclude
-# EXTRA_LIB = -L/usr/ucb -lucb
+GARCOMPILER = GNU
+
+EXTRA_CFLAGS = -DSYSV=1 -DNEED_ALPHASORT
+EXTRA_INC = /usr/ucbinclude
+EXTRA_LIB = /usr/ucblib
+EXTRA_LINKER_FLAGS = -lucb
 
 include gar/category.mk
 
