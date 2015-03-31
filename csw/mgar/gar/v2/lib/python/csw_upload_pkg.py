@@ -379,8 +379,8 @@ class Srv4Uploader(object):
         print "To see the errors, run:"
         print " ", " ".join(args_by_cat[(arch, osrel)])
         print "Or check on the buildfarm:"
-	for md5s in md5_sums:
-	  print "http://buildfarm.opencsw.org/pkgdb/srv4/%s/" % md5s
+        for md5s in md5_sums:
+          print "http://buildfarm.opencsw.org/pkgdb/srv4/%s/" % md5s
       print ("Your packages have not been submitted to the %s catalog."
              % self.catrel)
     return not checks_failed_for_catalogs
