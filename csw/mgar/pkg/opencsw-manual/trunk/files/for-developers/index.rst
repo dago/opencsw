@@ -68,7 +68,7 @@ tell the compiler to do the following:
 2. Look into ``/opt/csw/lib`` for the ``.so`` files. In GCC, it's achieved
    with ``-L/opt/csw/lib``. Without it, linking will fail.
 3. Put ``/opt/csw/lib`` into the ``RPATH`` field in the ELF header. In GCC,
-   this is achieved with ``-R/otp/csw/lib/``. Without it, binaries will build,
+   this is achieved with ``-R/opt/csw/lib/``. Without it, binaries will build,
    but won't run.
 
 For 64-bit builds, use ``/opt/csw/lib/64``.
