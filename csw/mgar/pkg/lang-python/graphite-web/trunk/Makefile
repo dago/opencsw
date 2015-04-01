@@ -13,6 +13,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 PACKAGES += CSWgraphite-web
 SPKG_DESC_CSWgraphite-web = Enterprise scalable realtime graphing
 # PKGFILES is catchall
+ARCHALL_CSWgraphite-web = 1
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-django
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-django-tagging
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-carbon
