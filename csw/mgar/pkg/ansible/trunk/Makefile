@@ -69,11 +69,10 @@ REINPLACEMENTS += etc
 REINPLACE_MATCH_etc = /etc/ansible
 REINPLACE_WITH_etc  = $(sysconfdir)/ansible
 REINPLACE_FILES_etc = lib/ansible/constants.py
+REINPLACE_FILES_etc = examples/ansible.cfg
 
-REINPLACEMENTS += usr
-REINPLACE_MATCH_usr = /usr/share/ansible
-REINPLACE_WITH_usr = /opt/csw/share/ansible
-REINPLACE_FILES_usr = lib/ansible/constants.py
+REINPLACE_USRSHARE += lib/ansible/constants.py
+REINPLACE_USRSHARE += examples/ansible.cfg
 
 ARCHALL = 1
 
@@ -83,9 +82,11 @@ LICENSE = COPYING
 MODULATIONS_PYTHON_VERSION = 2_6
 
 PRESERVECONF += $(sysconfdir)/ansible/hosts
+PRESERVECONF += $(sysconfdir)/ansible/ansible.cfg
 
 include gar/category.mk
 
 post-install:
 	ginstall -D -m 0644 $(WORKDIR)/hosts.CSW $(DESTDIR)$(sysconfdir)/ansible/hosts.CSW
+	ginstall -D -m 0644 $(WORKSRC)/examples/ansible.cfg $(DESTDIR)/$(sysconfdir)/ansible/ansible.cfg.CSW
 	@$(MAKECOOKIE)
