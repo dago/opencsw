@@ -63,6 +63,10 @@ CONFIG_FILES += graphite.wsgi
 TEST_SCRIPTS =
 
 PRESERVECONF += $(prefix)/apache2/etc/extra/graphite-vhost.conf
+
+# TBD: This needs customization of pathes
+PRESERVECONF += /opt/csw/lib/python2.6/site-packages/graphite/local_settings.py
+PRESERVECONF += /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
 PRESERVECONF += $(foreach F,$(CONFIG_FILES),$(localstatedir)/graphite/conf/$F)
 
 include gar/category.mk
@@ -73,6 +77,8 @@ post-extract:
 
 post-install:
 	ginstall -D -m 0644 $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/graphite-vhost.conf.CSW
-	rm -f $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf
+	rm -f $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf	
+	mv $(DESTDIR)/opt/csw/lib/python*/site-packages/graphite/local_settings.py.example \
+	   $(DESTDIR)/opt/csw/lib/python*/site-packages/graphite/local_settings.py.CSW
 	cd $(DESTDIR)$(localstatedir)/graphite/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $F.CSW;)
 	@$(MAKECOOKIE)
