@@ -23,6 +23,9 @@ RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-cairo
 RUNTIME_DEP_PKGS_CSWgraphite-web += CSWpy-simplejson
 # python-hashlib is included in Python 2.5+
 
+# That is because the vhost setting we ship is for Apache 2
+RUNTIME_DEP_PKGS_CSWgraphite-web += CSWapache2
+
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-django
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-django-tagging
 CHECKPKG_OVERRIDES_CSWgraphite-web += surplus-dependency|CSWpy-carbon
@@ -50,8 +53,17 @@ CHECKPKG_OVERRIDES_CSWgraphite-web += catalogname-does-not-start-with-py_
 #            python-sqlite2
 #            python-hashlib
 
+EXTRA_INSTALL_ARGS += --install-data=$(localstatedir)/graphite
+
+CONFIG_FILES += dashboard.conf
+CONFIG_FILES += graphTemplates.conf
+CONFIG_FILES += graphite.wsgi
+
 # There is no testsuite
 TEST_SCRIPTS =
+
+PRESERVECONF += $(prefix)/apache2/etc/extra/graphite-vhost.conf
+PRESERVECONF += $(foreach F,$(CONFIG_FILES),$(localstatedir)/graphite/conf/$F)
 
 include gar/category.mk
 
@@ -59,3 +71,8 @@ post-extract:
 	-cd $(WORKSRC) && mv setup.cfg setup.cfg.orig
 	@$(MAKECOOKIE)
 
+post-install:
+	ginstall -D -m 0644 $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/graphite-vhost.conf.CSW
+	rm -f $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf
+	cd $(DESTDIR)$(localstatedir)/graphite/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $F.CSW;)
+	@$(MAKECOOKIE)
