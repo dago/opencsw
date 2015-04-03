@@ -19,7 +19,7 @@ CONFIGURE_SCRIPTS ?=
 # gar.lib.mk contains implicit targets for setup.py
 BUILD_SCRIPTS ?= $(WORKSRC)/setup.py
 INSTALL_SCRIPTS ?= $(WORKSRC)/setup.py
-INSTALL_ARGS ?= --root=$(DESTDIR) --prefix=$(prefix)
+INSTALL_ARGS ?= --root=$(DESTDIR) --prefix=$(prefix) $(EXTRA_INSTALL_ARGS)
 TEST_SCRIPTS ?= $(WORKSRC)/setup.py
 TEST_TARGET ?= test
 LICENSE ?= PKG-INFO
