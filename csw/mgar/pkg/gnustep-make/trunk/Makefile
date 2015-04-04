@@ -10,7 +10,9 @@ define BLURB
   GNUstep-core make infrastructure and configuration files. Needed for all GNUstep setups.
 endef
 
-BUILD_DEP_PKGS = CSWgmake CSWgcc4objc
+BUILD_DEP_PKGS = CSWgmake
+BUILD_DEP_PKGS += CSWgcc4objc
+BUILD_DEP_PKGS += CSWgtar
 
 MASTER_SITES = ftp://ftp.gnustep.org/pub/gnustep/core/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -33,6 +35,7 @@ prefix = $(BUILD_PREFIX)/GNUstep
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-layout=gnustep 
 CONFIGURE_ARGS += --with-config-file=/etc/opt/csw/GNUstep/GNUstep.conf
+CONFIGURE_ARGS += TAR=gtar
 #CONFIGURE_ARGS += LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib"
 
 PRESERVECONF += $(sysconfdir)/installation-domains.conf
