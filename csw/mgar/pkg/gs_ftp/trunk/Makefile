@@ -20,9 +20,26 @@ RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-make
 RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-base
 RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-gui 
 RUNTIME_DEP_PKGS_CSWFTP += CSWgnustep-back
+RUNTIME_DEP_PKGS_CSWFTP += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWFTP += CSWlibobjc4
 
-#overrides
-CHECKPKG_OVERRIDES_CSWgnustep-base += surplus-dependency|CSWgnustep-make
+#we know about these, but they are needed at runtime
+CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-gui
+CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-base
+CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-back
+CHECKPKG_OVERRIDES_CSWFTP += surplus-dependency|CSWgnustep-make
+
+#these are due to our bundles
+CHECKPKG_OVERRIDES_CSWFTP += binary-architecture-does-not-match-placement|file=opt/csw/GNUstep/Local/Applications/FTP.app/FTP|arch_id=18|arch_name=sparcv8+
+
+#we do not directly bind
+CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgcc_s.so.1
+CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-base.so.1.24
+CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libgnustep-gui.so.0.24
+CHECKPKG_OVERRIDES_CSWFTP += no-direct-binding|/opt/csw/GNUstep/Local/Applications/FTP.app/FTP|is|not|directly|bound|to|soname|libobjc.so.4
+CHECKPKG_OVERRIDES_CSWFTP += soname-not-found|libgnustep-gui.so.0.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
+CHECKPKG_OVERRIDES_CSWFTP += soname-not-found|libgnustep-base.so.1.24|is|needed|by|opt/csw/GNUstep/Local/Applications/FTP.app/FTP
+
 
 #where can we build?
 #PACKAGING_PLATFORMS += solaris9-sparc
