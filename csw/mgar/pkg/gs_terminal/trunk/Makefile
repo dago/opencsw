@@ -15,6 +15,10 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 BUILD_DEP_PKGS += CSWgmake
 BUILD_DEP_PKGS += CSWgcc4objc
+BUILD_DEP_PKGS += CSWgnustep-make
+BUILD_DEP_PKGS += CSWgnustep-base
+BUILD_DEP_PKGS += CSWgnustep-gui
+BUILD_DEP_PKGS += CSWgnustep-back
 
 RUNTIME_DEP_PKGS_CSWTerminal += CSWgnustep-make
 RUNTIME_DEP_PKGS_CSWTerminal += CSWgnustep-base
