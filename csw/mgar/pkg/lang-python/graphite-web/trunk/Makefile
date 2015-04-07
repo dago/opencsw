@@ -53,7 +53,53 @@ CHECKPKG_OVERRIDES_CSWgraphite-web += catalogname-does-not-start-with-py_
 #            python-sqlite2
 #            python-hashlib
 
-EXTRA_INSTALL_ARGS += --install-data=$(localstatedir)/graphite
+CONFDIR = $(sysconfdir)/graphite
+STORAGEDIR = $(localstatedir)/graphite
+
+CONFDIR = $(sysconfdir)/graphite
+STORAGEDIR = $(localstatedir)/graphite
+WEBAPPDIR = $(sharedstatedir)/graphite
+
+REINPLACEMENTS += conf
+REINPLACE_MATCH_conf = /opt/graphite/conf
+REINPLACE_WITH_conf = $(CONFDIR)
+REINPLACE_FILES_conf += examples/example-graphite-vhost.conf
+
+REINPLACEMENTS += storage
+REINPLACE_MATCH_storage = /opt/graphite/storage
+REINPLACE_WITH_storage = $(STORAGEDIR)
+REINPLACE_FILES_storage += examples/example-graphite-vhost.conf
+        
+REINPLACEMENTS += webapp
+REINPLACE_MATCH_webapp = /opt/graphite/webapp
+REINPLACE_WITH_webapp = $(WEBAPPDIR)/webapp
+REINPLACE_FILES_webapp += conf/graphite.wsgi.example
+REINPLACE_FILES_webapp += examples/example-graphite-vhost.conf
+
+# Taken from local_settings.py.example
+# Most installs done outside of a separate tree such as /opt/graphite will only
+# need to change these three settings. Note that the default settings for each
+# of these is relative to GRAPHITE_ROOT
+#CONF_DIR = '/opt/graphite/conf'
+#STORAGE_DIR = '/opt/graphite/storage'
+#CONTENT_DIR = '/opt/graphite/webapp/content'
+
+REINPLACEMENTS += localsettings_conf
+REINPLACE_MATCH_localsettings_conf = \#CONF_DIR.*
+REINPLACE_WITH_localsettings_conf = CONF_DIR = $(CONFDIR)
+REINPLACE_FILES_localsettings_conf += webapp/graphite/local_settings.py.example
+
+REINPLACEMENTS += localsettings_storage
+REINPLACE_MATCH_localsettings_storage = \#STORAGE_DIR.*
+REINPLACE_WITH_localsettings_storage = STORAGE_DIR = $(STORAGEDIR)
+REINPLACE_FILES_localsettings_storage += webapp/graphite/local_settings.py.example
+
+REINPLACEMENTS += localsettings_content
+REINPLACE_MATCH_localsettings_content = \#CONTENT_DIR.*
+REINPLACE_WITH_localsettings_content = CONTENT_DIR = $(WEBAPPDIR)/webapp/content
+REINPLACE_FILES_localsettings_content += webapp/graphite/local_settings.py.example
+
+EXTRA_INSTALL_ARGS += --install-data=$(CONFDIR)
 
 CONFIG_FILES += dashboard.conf
 CONFIG_FILES += graphTemplates.conf
@@ -67,7 +113,7 @@ PRESERVECONF += $(prefix)/apache2/etc/extra/graphite-vhost.conf
 # TBD: This needs customization of pathes
 PRESERVECONF += /opt/csw/lib/python2.6/site-packages/graphite/local_settings.py
 PRESERVECONF += /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
-PRESERVECONF += $(foreach F,$(CONFIG_FILES),$(localstatedir)/graphite/conf/$F)
+PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/$C)
 
 include gar/category.mk
 
@@ -79,9 +125,16 @@ V2_6 = 2.6
 V2_7 = 2.7
 
 post-install:
-	ginstall -D -m 0644 $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/graphite-vhost.conf.CSW
-	rm -f $(DESTDIR)$(localstatedir)/graphite/examples/example-graphite-vhost.conf	
+	ginstall -D -m 0644 $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf $(DESTDIR)$(prefix)/apache2/etc/extra/graphite-vhost.conf.CSW
+	rm -f $(DESTDIR)$(CONFDIR)/examples/example-graphite-vhost.conf	
 	mv $(DESTDIR)/opt/csw/lib/python$(V$(PYTHON_VERSION))/site-packages/graphite/local_settings.py.example \
 	   $(DESTDIR)/opt/csw/lib/python$(V$(PYTHON_VERSION))/site-packages/graphite/local_settings.py.CSW
-	cd $(DESTDIR)$(localstatedir)/graphite/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $F.CSW;)
+	cd $(DESTDIR)$(CONFDIR)/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $(DESTDIR)$(CONFDIR)/$F.CSW;)
+	rmdir $(DESTDIR)$(CONFDIR)/conf
+	ginstall -d -m 0755 $(DESTDIR)$(WEBAPPDIR)
+	mv $(DESTDIR)$(CONFDIR)/webapp $(DESTDIR)$(WEBAPPDIR)/webapp
+	mv $(DESTDIR)$(CONFDIR)/examples $(DESTDIR)$(WEBAPPDIR)/examples
+	ginstall -d -m 0755 $(DESTDIR)$(STORAGEDIR)
+	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
+	rmdir $(DESTDIR)$(CONFDIR)/storage
 	@$(MAKECOOKIE)
