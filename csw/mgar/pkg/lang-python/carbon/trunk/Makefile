@@ -54,7 +54,7 @@ PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/conf/$C)
 
 REINPLACEMENTS += loc
 REINPLACE_MATCH_loc = \#LOCAL_DATA_DIR.*
-REINPLACE_WITH_loc = GRAPHITE_ROOT = $(prefix)\nGRAPHITE_CONF_DIR = $(CONFDIR)/conf\nGRAPHITE_STORAGE_DIR = $(STORAGEDIR)/storage\nPID_DIR = /var/run
+REINPLACE_WITH_loc = GRAPHITE_ROOT = $(prefix)\nGRAPHITE_CONF_DIR = $(CONFDIR)\nGRAPHITE_STORAGE_DIR = $(STORAGEDIR)\nPID_DIR = /var/run
 REINPLACE_FILES_loc += conf/carbon.conf.example
 
 include gar/category.mk
@@ -64,7 +64,9 @@ post-extract:
 	@$(MAKECOOKIE)
 
 post-install:
-	cd $(DESTDIR)$(CONFDIR)/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $F.CSW;)
+	cd $(DESTDIR)$(CONFDIR)/conf; $(foreach F,$(CONFIG_FILES),mv $F.example $(DESTDIR)$(CONFDIR)/$F.CSW;)
+	rmdir $(DESTDIR)$(CONFDIR)/conf
 	ginstall -d -m 0755 $(DESTDIR)$(STORAGEDIR)
-	mv $(DESTDIR)$(CONFDIR)/storage $(DESTDIR)$(STORAGEDIR)/storage
+	mv $(DESTDIR)$(CONFDIR)/storage/* $(DESTDIR)$(STORAGEDIR)
+	rmdir $(DESTDIR)$(CONFDIR)/storage
 	@$(MAKECOOKIE)
