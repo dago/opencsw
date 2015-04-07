@@ -33,7 +33,7 @@ CONFIG_FILES += storage-aggregation.conf
 CONFIG_FILES += storage-schemas.conf
 CONFIG_FILES += whitelist.conf
 
-PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/conf/$C)
+PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/$C)
 
 #   GRAPHITE_ROOT        - Root directory of the graphite installation.
 #                          Defaults to ../
