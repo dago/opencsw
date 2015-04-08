@@ -32,8 +32,8 @@ PACKAGES = CSWgitosis
 CATALOGNAME_CSWgitosis = $(NAME)
 SPKG_DESC_CSWgitosis = $(DESCRIPTION)
 ARCHALL_CSWgitosis = 1
-BUILD_DEP_PKGS_CSWgitosis = CSWpython CSWpysetuptools
-RUNTIME_DEP_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
+BUILD_DEP_PKGS_CSWgitosis = CSWpython CSWpy-setuptools
+RUNTIME_DEP_PKGS_CSWgitosis = CSWgit CSWpy-setuptools CSWbash
 
 # this is not for release.
 PACKAGES += CSWgitosis-test
@@ -77,7 +77,7 @@ PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles";
 CHECKPKG_OVERRIDES_CSWgitosis += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWgitosis += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWbash
-CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWpy-setuptools
 CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWgit
 
 LICENSE = COPYING
