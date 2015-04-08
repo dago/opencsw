@@ -46,13 +46,6 @@ CHECKPKG_OVERRIDES  = binary-architecture-does-not-match-placement
 CHECKPKG_OVERRIDES += bad-rpath-entry
 CHECKPKG_OVERRIDES += soname-not-found
 
-# Can't check the library depepdency as this is done via LD_LIBRARY_PATH in the run scri√pt
-CHECKPKG_OVERRIDES_sparc += surplus-dependency|CSWpango
-CHECKPKG_OVERRIDES += $(CHECKPKG_OVERRIDES_$(GARCH))
-
-RUNTIME_DEP_PKGS_sparc = CSWpango
-RUNTIME_DEP_PKGS  = $(RUNTIME_DEP_PKGS_$(GARCH))
-
 include gar/category.mk
 
 install-custom:
@@ -77,8 +70,3 @@ post-install-modulated:
 	done;
 	@$(MAKECOOKIE)
 
-# The older Sparc version needs libpangoxft-1.0.so.0 from CSWpango (or another location)
-# Make sure it can be found by explicitly setting LD_LIBRARY_PATH in environment setting
-post-install-isa-sparcv8:
-	perl -i -npe 'if( /^ACRO_LD_LIBRARY_PATH=/ ) { print "LD_LIBRARY_PATH=$(libdir)\n" }' $(DESTDIR)$(sharedstatedir)/Adobe/Reader$(MAJORVERSION_$(GARCH))/bin/acroread
-	@$(MAKECOOKIE)
