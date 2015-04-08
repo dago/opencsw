@@ -65,6 +65,16 @@ REINPLACE_MATCH_loc = \#LOCAL_DATA_DIR.*
 REINPLACE_WITH_loc = GRAPHITE_ROOT = $(prefix)\nGRAPHITE_CONF_DIR = $(CONFDIR)\nGRAPHITE_STORAGE_DIR = $(STORAGEDIR)\nPID_DIR = /var/run
 REINPLACE_FILES_loc += conf/carbon.conf.example
 
+REINPLACEMENTS += conf
+REINPLACE_MATCH_conf = join\(graphite_root, "conf"\)
+REINPLACE_WITH_conf = "$(CONFDIR)"
+REINPLACE_FILES_conf += lib/carbon/conf.py
+
+REINPLACEMENTS += stor
+REINPLACE_MATCH_stor = join\(graphite_root, "storage"\)
+REINPLACE_WITH_stor = "$(STORAGEDIR)"
+REINPLACE_FILES_stor += lib/carbon/conf.py
+
 include gar/category.mk
 
 post-extract:
