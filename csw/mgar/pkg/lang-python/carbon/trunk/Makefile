@@ -14,6 +14,9 @@ PACKAGES += CSWpy-carbon
 SPKG_DESC_CSWpy-carbon = Backend data caching and persistence daemon for Graphite
 # PKGFILES is catchall
 ARCHALL_CSWpy-carbon = 1
+# The binaries like carbon-cache.py need this
+RUNTIME_DEP_PKGS_CSWpy-carbon += CSWpython27
+CHECKPKG_OVERRIDES_CSWpy-carbon += surplus-dependency|CSWpython27
 
 CONFDIR = $(sysconfdir)/graphite
 STORAGEDIR = $(localstatedir)/graphite
