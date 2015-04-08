@@ -2,7 +2,7 @@ NAME = gitosis
 VERSION = 0.2
 # This represents the tip of master as of 20090516.  It is ahead of
 # release/0.2
-PATCHLEVEL = 73a03Z
+PATCHLEVEL = 73a03
 CATEGORIES = python
 GARTYPE = v2
 
@@ -91,7 +91,7 @@ _MERGE_EXCLUDE_CATEGORY =
 
 # Set a slightly altered revstamp to indicate that we're not using a
 # pressed release.
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)Z
 
 post-install-modulated:
 	@( gmkdir -p $(CSWPKGD); \
