@@ -53,11 +53,11 @@ RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgcrypt20
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWcollectd += CSWperl
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibxmms1
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgdk1-2-0
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibglib1-2-0
-RUNTIME_DEP_PKGS_CSWcollectd += CSWlibgtk1-2-0
+# These are pulled in because of a linker anomaly
+RUNTIME_DEP_PKGS_CSWcollectd-sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcollectd-i386 += CSWlibmemcached8
+RUNTIME_DEP_PKGS_CSWcollectd-i386 += CSWlibfl2
+RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd-$(GARCH))
 
 PACKAGES += CSWcollectd-plugin-dbi
 SPKG_DESC_CSWcollectd-plugin-dbi = CollectD Plugin for DBI
@@ -82,12 +82,14 @@ RUNTIME_DEP_PKGS_CSWcollectd-plugin-mysql += CSWlibmysqlclient18
 PACKAGES += CSWcollectd-plugin-postgresql
 SPKG_DESC_CSWcollectd-plugin-postgresql = CollectD Plugin for PostgreSQL
 PKGFILES_CSWcollectd-plugin-postgresql += $(call pkgfiles_lib,collectd/postgresql.so)
+PKGFILES_CSWcollectd-plugin-postgresql += $(sharedstatedir)/collectd/postgresql_default.conf
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-postgresql += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-postgresql += CSWlibpq5
 
 PACKAGES += CSWcollectd-plugin-python
 SPKG_DESC_CSWcollectd-plugin-python = CollectD Plugin for Python
 PKGFILES_CSWcollectd-plugin-python += $(call pkgfiles_lib,collectd/python.so)
+PKGFILES_CSWcollectd-plugin-python += $(mandir)/man5/collectd-python.5
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-python += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-python += CSWlibpython2-7-1-0
 # No 64 bit Python yet
@@ -103,8 +105,23 @@ RUNTIME_DEP_PKGS_CSWcollectd-plugin-rrdtool += CSWlibrrd-th4
 PACKAGES += CSWcollectd-plugin-snmp
 SPKG_DESC_CSWcollectd-plugin-snmp = CollectD Plugin for NetSNMP
 PKGFILES_CSWcollectd-plugin-snmp += $(call pkgfiles_lib,collectd/snmp.so)
+PKGFILES_CSWcollectd-plugin-snmp += $(mandir)/man5/collectd-snmp.5
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-snmp += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWcollectd-plugin-snmp += CSWlibnetsnmp30
+
+PACKAGES += CSWcollectd-plugin-xmms
+SPKG_DESC_CSWcollectd-plugin-xmms = CollectD Plugin for XMMS
+PKGFILES_CSWcollectd-plugin-xmms += $(call pkgfiles_lib,collectd/xmms.so)
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms += CSWlibxmms1
+# This is due to a linker anomaly, these are pulled in also from libxmms.so.1
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms-sparc += CSWlibgdk1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms-sparc += CSWlibglib1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms-sparc += CSWlibgtk1-2-0
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms-sparc += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms += $(RUNTIME_DEP_PKGS_CSWcollectd-plugin-xmms-$(GARCH))
+# No 64 bit XMMS yet
+CHECKPKG_OVERRIDES_CSWcollectd-plugin-xmms += 64-bit-binaries-missing
 
 PACKAGES += CSWcollectd-plugins-all
 SPKG_DESC_CSWcollectd-plugins-all = CollectD Metapackage that pulls in all plugins
@@ -117,14 +134,9 @@ RUNTIME_DEP_PKGS_CSWcollectd-plugins-all += CSWcollectd-plugin-postgresql
 RUNTIME_DEP_PKGS_CSWcollectd-plugins-all += CSWcollectd-plugin-python
 RUNTIME_DEP_PKGS_CSWcollectd-plugins-all += CSWcollectd-plugin-rrdtool
 RUNTIME_DEP_PKGS_CSWcollectd-plugins-all += CSWcollectd-plugin-snmp
+RUNTIME_DEP_PKGS_CSWcollectd-plugins-all += CSWcollectd-plugin-xmms
 # These are all sort of surplus as this is a meta package
 CHECKPKG_OVERRIDES_CSWcollectd-plugins-all += surplus-dependency
-
-# RUNTIME_DEP_PKGS_CSWcollectd_i386 += CSWlibmemcached8
-# RUNTIME_DEP_PKGS_CSWcollectd += $(RUNTIME_DEP_PKGS_CSWcollectd_$(GARCH))
-
-# CHECKPKG_OVERRIDES_CSWcollectd += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/collectd.1
-# CHECKPKG_OVERRIDES_CSWcollectd += file-with-bad-content|/usr/share|root/opt/csw/share/man/man5/collectd-unixsock.5
 
 INITSMF = $(sysconfdir)/init\.d/cswcollectd
 
