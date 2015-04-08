@@ -2,7 +2,7 @@ NAME = gitosis
 VERSION = 0.2
 # This represents the tip of master as of 20090516.  It is ahead of
 # release/0.2
-PATCHLEVEL = 73a03-1
+PATCHLEVEL = 73a03Z
 CATEGORIES = python
 GARTYPE = v2
 
