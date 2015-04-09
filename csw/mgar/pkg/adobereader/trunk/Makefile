@@ -41,10 +41,15 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+PACKAGES += CSWadobereader
+SPKG_DESC_CSWadobereader = Adobe Acrobat Reader
+# PKGFILES is catchall
 # They have strange pathes all over the place and fix it with LD_LIBRARY_PATH during execution
-CHECKPKG_OVERRIDES  = binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES += bad-rpath-entry
-CHECKPKG_OVERRIDES += soname-not-found
+CHECKPKG_OVERRIDES_CSWadobereader += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWadobereader += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWadobereader += soname-not-found
+CHECKPKG_OVERRIDES_CSWadobereader += no-direct-binding
+CHECKPKG_OVERRIDES_CSWadobereader += shared-library-missing-dot-so
 
 include gar/category.mk
 
