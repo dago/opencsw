@@ -1,0 +1,11 @@
+Installation of Graphite
+------------------------
+
+pkgutil -y -i graphite_web
+
+carbon-cache.py start
+
+/opt/csw/apache2/etc/httpd.conf:
+  Include etc/extra/graphite-vhost.conf
+
+

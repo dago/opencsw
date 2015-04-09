@@ -76,6 +76,16 @@ REINPLACE_WITH_webapp = $(WEBAPPDIR)/webapp
 REINPLACE_FILES_webapp += conf/graphite.wsgi.example
 REINPLACE_FILES_webapp += examples/example-graphite-vhost.conf
 
+REINPLACEMENTS += wsgi
+REINPLACE_MATCH_wsgi = modules/mod_wsgi.so
+REINPLACE_WITH_wsgi = libexec/mod_wsgi-2.7.so
+REINPLACE_FILES_wsgi += examples/example-graphite-vhost.conf
+
+REINPLACEMENTS += noprefix
+REINPLACE_MATCH_noprefix = ^WSGISocketPrefix
+REINPLACE_WITH_noprefix = \#WSGISocketPrefix
+REINPLACE_FILES_noprefix += examples/example-graphite-vhost.conf
+
 # Taken from local_settings.py.example
 # Most installs done outside of a separate tree such as /opt/graphite will only
 # need to change these three settings. Note that the default settings for each
@@ -86,17 +96,17 @@ REINPLACE_FILES_webapp += examples/example-graphite-vhost.conf
 
 REINPLACEMENTS += localsettings_conf
 REINPLACE_MATCH_localsettings_conf = \#CONF_DIR.*
-REINPLACE_WITH_localsettings_conf = CONF_DIR = $(CONFDIR)
+REINPLACE_WITH_localsettings_conf = CONF_DIR = '$(CONFDIR)'
 REINPLACE_FILES_localsettings_conf += webapp/graphite/local_settings.py.example
 
 REINPLACEMENTS += localsettings_storage
 REINPLACE_MATCH_localsettings_storage = \#STORAGE_DIR.*
-REINPLACE_WITH_localsettings_storage = STORAGE_DIR = $(STORAGEDIR)
+REINPLACE_WITH_localsettings_storage = STORAGE_DIR = '$(STORAGEDIR)'
 REINPLACE_FILES_localsettings_storage += webapp/graphite/local_settings.py.example
 
 REINPLACEMENTS += localsettings_content
 REINPLACE_MATCH_localsettings_content = \#CONTENT_DIR.*
-REINPLACE_WITH_localsettings_content = CONTENT_DIR = $(WEBAPPDIR)/webapp/content
+REINPLACE_WITH_localsettings_content = CONTENT_DIR = '$(WEBAPPDIR)/webapp/content'
 REINPLACE_FILES_localsettings_content += webapp/graphite/local_settings.py.example
 
 EXTRA_INSTALL_ARGS += --install-data=$(CONFDIR)
@@ -114,6 +124,12 @@ PRESERVECONF += $(prefix)/apache2/etc/extra/graphite-vhost.conf
 PRESERVECONF += /opt/csw/lib/python2.6/site-packages/graphite/local_settings.py
 PRESERVECONF += /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
 PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/$C)
+
+# The logdir is written by Apache which runs as nobody/nobody
+PROTOTYPE_MODIFIERS += weblog
+PROTOTYPE_FILES_weblog += $(STORAGEDIR)/log/webapps
+PROTOTYPE_USER_weblog = nobody
+PROTOTYPE_GROUP_weblog = nobody
 
 include gar/category.mk
 
