@@ -1,5 +1,5 @@
 NAME = ExtUtils-Manifest
-VERSION = 1.61
+VERSION = 1.70
 CATEGORIES = cpan
 GARTYPE = v2
 AUTHOR = FLORA
@@ -13,8 +13,6 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-extutils-manifest
 CATALOGNAME = pm_extutils_manifest
 SPKG_DESC_CSWpm-extutils-manifest = $(DESCRIPTION)
-OBSOLETED_BY_CSWpm-extutils-manifest = CSWpmextutilsmft
-CATALOGNAME_CSWpmextutilsmft = pm_extutilsmft
 
 ARCHALL = 1
 
