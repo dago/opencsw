@@ -65,6 +65,12 @@ REINPLACE_MATCH_loc = \#LOCAL_DATA_DIR.*
 REINPLACE_WITH_loc = GRAPHITE_ROOT = $(prefix)\nGRAPHITE_CONF_DIR = $(CONFDIR)\nGRAPHITE_STORAGE_DIR = $(STORAGEDIR)\nPID_DIR = /var/run
 REINPLACE_FILES_loc += conf/carbon.conf.example
 
+# This is only useful on Linux and causes warning on Solaris
+REINPLACEMENTS += nofalloc
+REINPLACE_MATCH_nofalloc = WHISPER_FALLOCATE_CREATE = .*
+REINPLACE_WITH_nofalloc = WHISPER_FALLOCATE_CREATE = False
+REINPLACE_FILES_nofalloc += conf/carbon.conf.example
+
 REINPLACEMENTS += conf
 REINPLACE_MATCH_conf = join\(graphite_root, "conf"\)
 REINPLACE_WITH_conf = "$(CONFDIR)"
