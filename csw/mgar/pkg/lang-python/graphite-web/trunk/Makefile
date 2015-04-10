@@ -76,6 +76,11 @@ REINPLACE_WITH_webapp = $(WEBAPPDIR)/webapp
 REINPLACE_FILES_webapp += conf/graphite.wsgi.example
 REINPLACE_FILES_webapp += examples/example-graphite-vhost.conf
 
+REINPLACEMENTS += webperms
+REINPLACE_MATCH_webperms = </Directory>
+REINPLACE_WITH_webperms = </Directory>\n        <Directory /opt/csw/share/graphite/webapp>\n                Order deny,allow\n                Allow from all\n        </Directory>
+REINPLACE_FILES_webperms += examples/example-graphite-vhost.conf
+
 REINPLACEMENTS += wsgi
 REINPLACE_MATCH_wsgi = modules/mod_wsgi.so
 REINPLACE_WITH_wsgi = libexec/mod_wsgi-2.7.so
@@ -124,12 +129,6 @@ PRESERVECONF += $(prefix)/apache2/etc/extra/graphite-vhost.conf
 PRESERVECONF += /opt/csw/lib/python2.6/site-packages/graphite/local_settings.py
 PRESERVECONF += /opt/csw/lib/python2.7/site-packages/graphite/local_settings.py
 PRESERVECONF += $(foreach C,$(CONFIG_FILES),$(CONFDIR)/$C)
-
-# The logdir is written by Apache which runs as nobody/nobody
-PROTOTYPE_MODIFIERS += weblog
-PROTOTYPE_FILES_weblog += $(STORAGEDIR)/log/webapps
-PROTOTYPE_USER_weblog = nobody
-PROTOTYPE_GROUP_weblog = nobody
 
 include gar/category.mk
 
