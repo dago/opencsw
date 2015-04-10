@@ -8,4 +8,6 @@ carbon-cache.py start
 /opt/csw/apache2/etc/httpd.conf:
   Include etc/extra/graphite-vhost.conf
 
+python2.7 /opt/csw/lib/python2.7/site-packages/graphite/manage.py syncdb
+chown -R nobody:nobody /var/opt/csw/graphite
 
